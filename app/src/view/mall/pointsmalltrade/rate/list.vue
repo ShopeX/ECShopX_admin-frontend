@@ -95,7 +95,7 @@
             <template slot-scope="scope">
               <!-- 订单状态 -->
               <span>
-                <el-tag v-if="scope.row.is_reply" type="success" size="mini">已回复</el-tag>
+                <el-tag v-if="scope.row.is_reply==1" type="success" size="mini">已回复</el-tag>
                 <el-tag v-else type="danger" size="mini">未回复</el-tag>
               </span>
               <el-tag type="danger" v-if="scope.row.disabled" size="mini">已删除</el-tag>
@@ -198,10 +198,11 @@
               <el-col :span="4" class="col-3 content-right">评价图：</el-col>
               <el-col :span="20" v-if="details.rateInfo.rate_pic">
                 <img
-                  v-for="pic in details.rateInfo.rate_pic"
+                  v-for="(pic,index) in details.rateInfo.rate_pic"
                   :src="pic"
                   width="100"
                   @click="showImg(pic)"
+                  :key="index"
                 />
               </el-col>
             </el-row>

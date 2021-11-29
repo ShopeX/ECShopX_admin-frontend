@@ -98,7 +98,7 @@
                 <el-tag v-if="scope.row.is_reply==1" type="success" size="mini">已回复</el-tag>
                 <el-tag v-else type="danger" size="mini">未回复</el-tag>
               </span>
-              <el-tag type="danger" v-if="scope.row.disabled" size="mini">已删除</el-tag>
+              <el-tag type="danger" v-if="scope.row.disabled==1" size="mini">已删除</el-tag>
             </template>
           </el-table-column>
           <el-table-column width="140" label="操作">
@@ -106,13 +106,13 @@
               <el-button type="text" @click="detailsDialog(scope.row)">详情</el-button>
               <el-button
                 type="text"
-                v-if="scope.row.is_reply === false"
+                v-if="scope.row.is_reply == 0"
                 @click="replyDialog(scope.row)"
                 >回复</el-button
               >
               <el-button
                 type="text"
-                v-if="scope.row.disabled === false"
+                v-if="scope.row.disabled == 0"
                 @click="rateDelete(scope.row.rate_id)"
                 >删除</el-button
               >

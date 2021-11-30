@@ -47,6 +47,11 @@ export default {
       component: () => import('@/view/base/setting/dataAnalysis')
     },
     {
+      path: 'mapsetting',
+      name: `地图配置`, 
+      component: () => import('@/view/base/setting/mapsetting')
+    },
+    {
       path: 'domain_setting',
       name: `域名设置`, 
       component: () => import('@/view/base/setting/companys/domain')

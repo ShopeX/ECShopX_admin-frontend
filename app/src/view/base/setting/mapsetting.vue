@@ -17,39 +17,39 @@
 
           <el-form-item label="Key" prop="app_key" style="margin-bottom: 10px">
             <el-input
-            style="width:50%"
-            type="textarea"
-            :rows="5"
-            v-model="form.app_key" 
-          />
+              style="width:60%"
+              type="textarea"
+              v-model="form.app_key" 
+              :rows="6"
+            />
           </el-form-item>
-          <el-form-item label="  ">
+          <el-form-item label="">
             <div class="row-tip">Key 不填写或填写错误将导致该功能无法使用，请确保填写正确。</div>
           </el-form-item>
 
           <el-form-item label="密钥" prop="app_secret" class="passwords">
             <el-input
-              style="width:50%"
+              style="width:60%"
               v-model="form.app_secret"
-              type="textarea"
-              :rows="5"
+              :type="pass_type"
+              :rows="6"
             />
-              <i
+            <i
+              v-if="pass_type == 'textarea'"
               title="隐藏密码"
-              v-if="pass_type == 'eye'"
               class="iconfont icon-eye1 icons-class"
-              @click="changePassIcon('hide')"
+              @click="onChangePassIcon('password')"
             />
-              <i
+            <i
               v-else
               title="隐藏密码"
               class="iconfont icon-eye-slash1 icons-class"
-              @click="changePassIcon('eye')"
+              @click="onChangePassIcon('textarea')"
             />
           </el-form-item>
 
           <div class="section-footer with-border content-center">
-            <el-button type="primary" v-loading="loading" @click="onSubmit">保存</el-button>
+            <el-button type="primary" v-loading="loading" @click="onSubmitChange">保存</el-button>
           </div>
         </el-form>
       </el-tab-pane>
@@ -63,6 +63,7 @@ export default {
     return {
       loading: false,
       activeName: 'first',
+      pass_type: 'password',
       form: {
         app_key: '',
         app_secret: ''
@@ -70,57 +71,61 @@ export default {
       rules: {
         app_key: { required: true, message: '请输入', trigger: 'blur' },
         app_secret: { required: true, message: '请输入', trigger: 'blur' }
-      },
-      pass_type: 'eye'
+      }
     }
   },
   methods: {
-    getConfig () {
+    onGetConfig () {
       getMapSetting().then(response => {
-        console.log(response)
         this.form = response.data.data.list[0]
       })
     },
-    onSubmit () {
+    onSubmitChange () {
       this.loading = true
       let query = {
-        ...this.form
+        app_key: this.form.app_key,
+        app_secret: this.form.app_secret,
+        map_type: 'amap',
+        is_default: 1
       }
       setMapSetting(query).then(response => {
         this.$message({
           type: 'success',
           message: '保存成功'
         })
-        this.getConfig()
+        this.pass_type = 'password'
+        this.onGetConfig()
         this.loading = false
-      })
-      .catch(error => {
+      }).catch(error => {
         this.loading = false
       })
     },
-    changePassIcon (type) {
-      console.log(type)
+    onChangePassIcon (type) {
       this.pass_type = type
     }
   },
   mounted() {
-    this.getConfig()
+    this.onGetConfig()
   }
 }
 </script>
-<style scoped lang="scss">
+<style lang="scss">
 .map-setting {
   .icons-class {
     position: absolute;
     top:35%;
-    left: 53%;
-    font-size: 18px;
+    left: 63%;
+    font-size: 16px;
     cursor: pointer;
   }
   .passwords {
     .el-input {
       width: 50%;
       position: relative;
+      height: 138px;
+    }
+    .el-input__inner {
+      height: 138px;
     }
   }
   .el-row {

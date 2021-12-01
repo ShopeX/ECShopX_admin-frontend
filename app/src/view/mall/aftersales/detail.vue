@@ -288,7 +288,7 @@
       </template>
 
       <!-- 退货退款审核 -->
-      <template v-else-if="aftersalesInfo.aftersales_type == 'REFUND_GOODS' && aftersalesInfo.distributor_id=='0'">
+      <template v-else-if="aftersalesInfo.aftersales_type == 'REFUND_GOODS' && aftersalesInfo.distributor_id=='0'|| aftersalesInfo.aftersales_type == 'REFUND_GOODS' &&  $store.getters.login_type=='distributor' ">
         <div class="section-header with-border">
           <h3>商家处理信息</h3>
         </div>

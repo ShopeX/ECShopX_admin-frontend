@@ -302,7 +302,6 @@
           <nearbyShopEditor
             :res="editorData"
             @tagSelectVisibleHandle='tagSelectVisibleHandle'
-            @bindImgs="showImgs"
           >
           </nearbyShopEditor>
           <couponEditor
@@ -413,7 +412,8 @@
         :type='tagType' 
         :seletedTags="editorData.seletedTags"
         @visibleHandle='tagSelectVisibleHandle'
-        @seletedTagsHandle='seletedTagsHandle'>
+        @seletedTagsHandle='seletedTagsHandle'
+        @getOldDateHandle='getData'>
       </TagSelect>
     </template>
   </el-dialog>
@@ -991,7 +991,7 @@ export default {
     seletedTagsHandle(seletedTags){
       this.editorData.seletedTags = seletedTags;
       this.components[this.editorIndex].seletedTags = seletedTags;
-      this.tagSelectVisibleHandle();
+      // this.tagSelectVisibleHandle();
     },
     /* ---------------------------------------------选择标签------------------------------------------ */
 
@@ -1397,6 +1397,7 @@ export default {
         this.getData()
       }
     },
+    
     initData: {
       handler(val) {},
       deep: true

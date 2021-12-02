@@ -3,6 +3,8 @@
     class="new_tagselect"
     title="选择标签"
     :visible.sync="visible"
+    :close-on-click-modal="false"
+    :close-on-press-escape="false"
     :append-to-body="true"
     width="60%"
     :before-close="handleClose"
@@ -47,6 +49,7 @@
       :total="total"
     >
     </el-pagination>
+    <p>已选择：{{ multipleSelection.length }} 包</p>
     <span slot="footer" class="dialog-footer">
       <el-button size="small" @click="handleClose">取 消</el-button>
       <el-button size="small" type="primary" @click="confirm">确 定</el-button>
@@ -55,7 +58,7 @@
 </template>
 
 <script>
-import { saveTag, getTagList, updateTag, deleteTag } from '@/api/marketing'
+import { getTagList } from '@/api/marketing'
 export default {
   props: {
     visible: {
@@ -67,6 +70,11 @@ export default {
     },
     seletedTags: {
       type: Array
+    }
+  },
+  watch:{
+    multipleSelection(){
+      this.$emit('seletedTagsHandle', this.multipleSelection)
     }
   },
   data() {
@@ -89,31 +97,34 @@ export default {
   },
   methods: {
     async getConfig() {
+      this.loading = true
       let type = this.type
+
       if (type == 'nearby_shop') {
         const result = await getTagList({ ...this.query, ...this.params })
-        console.log(result)
-        const { data } = result.data
-        this.tableData = data.list
-        this.total = data.total_count
-      }
-
-      if (this.seletedTags.length > 0) {
-        this.$refs.multipleTable.clearSelection()
-        this.toggleSelection(this.seletedTags)
+        this.loading = false
+        const { list, total_count } = result.data.data
+        this.tableData = list
+        this.total = total_count
+        if (this.seletedTags !== undefined && this.seletedTags.length > 0) {
+          this.$refs.multipleTable.clearSelection()
+          this.toggleSelection(this.seletedTags)
+        }
       }
     },
     confirm() {
-      console.log(this.multipleSelection)
       this.$emit('seletedTagsHandle', this.multipleSelection)
+       this.$emit('visibleHandle')
     },
     queryHandle() {
       this.getConfig()
     },
+
     handleClose() {
       this.$emit('visibleHandle')
     },
     handleSelectionChange(val) {
+       console.log('handleSelectionChange', val)
       if (val.length > 0) {
         this.multipleSelection = val
       }
@@ -132,8 +143,8 @@ export default {
         rows.forEach((row) => {
           this.$refs.multipleTable.toggleRowSelection(row)
         })
-      } else {
-        this.$refs.multipleTable.clearSelection()
+      }else{
+         this.$refs.multipleTable.clearSelection()
       }
     },
     getRowKeys(val) {

@@ -21,12 +21,12 @@
           >
           <p>
             <draggable
-              v-if="seletedTags.length > 0"
-              v-model="seletedTags"
+              v-if="data.length > 0"
+              v-model="data"
               :options="dragItemsOptions"
               @end="onEnd"
             >
-              <span class="tag" v-for="(item, index) in seletedTags" :key="item.id"
+              <span class="tag" v-for="(item, index) in data" :key="item.tag_id"
                 >{{ item.tag_name }} <span class="el-icon-close" @click="deleteTag(index)"></span
               ></span>
             </draggable>
@@ -64,7 +64,7 @@ export default {
           this.setData(value)
         }
       }
-    }
+    },
   },
   data() {
     return {
@@ -72,6 +72,7 @@ export default {
       base: {},
       config: {},
       seletedTags: [], // tab
+      data:[],
       activeName: '',
       tabIndex: 0,
       dragItemsOptions: {
@@ -83,10 +84,11 @@ export default {
   },
   methods: {
     setData(val) {
-      console.log('============', val)
+      console.log('================',val);
       this.name = val.name
       this.base = val.base
       this.seletedTags = val.seletedTags
+      this.data = val.seletedTags
     },
     addTab() {
       this.$emit('tagSelectVisibleHandle', 'nearby_shop')
@@ -96,14 +98,9 @@ export default {
       console.log(index)
     },
     onEnd(evt) {
-      console.log(evt)
-      // this.temp = this.data[evt.oldIndex]
       const temp = this.seletedTags[evt.oldIndex]
-      // console.log(temp);
       this.seletedTags.splice(evt.oldIndex, 1)
       this.seletedTags.splice(evt.newIndex, 0, temp)
-      
-      // console.log(this.seletedTags);
     }
   },
   mounted() {

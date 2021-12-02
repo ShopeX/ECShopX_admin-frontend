@@ -86,6 +86,7 @@ export default {
         bgImg
       },
       base: {},
+      data:[],
       seletedTags: [], // tab
       shoplist: [],
       checkde: 0,
@@ -102,6 +103,7 @@ export default {
     },
     async getShop(val) {
       if (val.length <= 0) {
+        this.shoplist =[]
         return
       }
       const tag_id = val[this.checkde].tag_id
@@ -193,6 +195,7 @@ export default {
           white-space: nowrap;
           height: 20px;
           border: 1px solid #ff6700;
+          border-radius: 3px;
           text-align: center;
           margin: 0px auto 10px;
           color: #ff6700;

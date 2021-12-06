@@ -124,12 +124,21 @@ export default {
     },
     
     confirm() {
+      
       if (this.type == 'store') {
         if ( this.multipleSelection.length >3 ) {
            return this.$message.error('最多选择3个标签')
         }
        
       }
+
+
+      if (this.type == 'nearby_shop') {
+        if ( this.multipleSelection.length >10 ) {
+           return this.$message.error('最多选择10个标签')
+        }
+      }
+
       this.$emit('seletedTagsHandle', this.multipleSelection)
       this.$emit('visibleHandle')
     },

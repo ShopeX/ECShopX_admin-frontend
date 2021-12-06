@@ -11,7 +11,12 @@
       </div> -->
     </div>
     <div class="">
-      <div v-for="store in data" class="store-card">
+      <div
+        v-for="store in data"
+        class="store-card"
+        :key="store.id"
+        :style="{ background: base.backgroundColor }"
+      >
         <template v-if="store.id">
           <div class="view-flex view-flex-middle">
             <img
@@ -19,11 +24,24 @@
               :src="store.logo || 'https://fakeimg.pl/120x120/EFEFEF/CCC/?text=logo&font=lobster'"
               alt=""
             />
-            <div class="store-name">{{ store.name }}</div>
+            <div class="store-name">
+              <p class="name">{{ store.name }}</p>
+              <p class="tags">
+                <span v-for="item in seletedTags" :key="item.tag_id">{{ item.tag_name }}</span>
+              </p>
+            </div>
+          </div>
+          <div class="picture">
+            <img :src="base.imgUrl" alt="" />
           </div>
           <div class="store-items">
-            <div v-for="(item, idx) in store.items" v-if="idx < 4" class="store-item">
-              <img class="store-item-thumb" :src="item.imgUrl" alt="" />
+            <div v-for="item in store.items.slice(0, 4)" :key="item.goodsId" class="store-item">
+              <img
+                class="store-item-thumb"
+                :src="item.imgUrl"
+                alt=""
+                :style="{ 'border-color': base.borderColor || '#000' }"
+              />
               <div class="store-item-amount">
                 <span class="price">¥{{ item.price / 100 }}</span>
               </div>
@@ -77,17 +95,21 @@ export default {
     }
   },
   watch: {
-    res(value) {
-      if (value) {
-        this.setData(value)
+    res: {
+      deep: true,
+      handler(value) {
+        if (value) {
+          this.setData(value)
+        }
       }
-    }
+    },
   },
   data() {
     return {
       base: {},
       config: {},
-      data: []
+      data: [],
+      seletedTags: []
     }
   },
   methods: {
@@ -95,6 +117,7 @@ export default {
       this.base = val.base
       this.config = val.config
       this.data = val.data
+      this.seletedTags = val.seletedTags
     }
   },
   mounted() {
@@ -104,6 +127,14 @@ export default {
 </script>
 
 <style scoped lang="scss">
+.picture {
+  width: 100%;
+  margin-top: 5px;
+  img {
+    display: block;
+    width: 100%;
+  }
+}
 .store-card {
   width: 300px;
   position: relative;
@@ -131,13 +162,15 @@ export default {
       background: #efefef;
     }
     .item {
-      padding-top: 10px;
+      padding-top: 5px;
       .thumb {
         margin-bottom: 5px;
         margin-right: 10px;
         width: 60px;
         height: 60px;
         background: #efefef;
+        // border-width: 1px;
+        // border-style:solid;
       }
       .price {
         width: 30px;
@@ -150,11 +183,25 @@ export default {
     margin-right: 10px;
     width: 40px;
     height: 40px;
-    border-radius: 100%;
+    border-radius: 10px;
   }
   .store-name {
-    font-size: 14px;
-    color: #333;
+    .name {
+      font-size: 15px;
+      font-weight: 600;
+      color: #333;
+    }
+    .tags{
+      font-size: 12px;
+      margin-top:3px;
+      span{
+        border:1px solid #c3c3c3;
+        padding: 2px 6px;
+        border-radius: 5px;
+        margin-right:8px;
+        color:#c3c3c3;
+      }
+    }
   }
   .store-items {
     display: flex;
@@ -164,6 +211,9 @@ export default {
         margin-right: 10px;
         width: 60px;
         height: 60px;
+        border-width: 1px;
+        border-style: solid;
+        border-radius: 4px;
       }
       .store-item-amount {
         height: 28px;

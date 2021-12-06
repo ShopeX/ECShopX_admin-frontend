@@ -1,8 +1,6 @@
 <template>
   <section v-if="name === 'store'" class="section">
-    <div class="section-header with-border">
-      设置
-    </div>
+    <div class="section-header with-border">设置</div>
     <div class="section-body">
       <el-form label-width="100px">
         <el-form-item label="标题">
@@ -30,14 +28,18 @@
                       class="store-logo"
                       :src="
                         store.logo ||
-                          'https://fakeimg.pl/120x120/EFEFEF/CCC/?text=logo&font=lobster'
+                        'https://fakeimg.pl/120x120/EFEFEF/CCC/?text=logo&font=lobster'
                       "
                       alt=""
                     />
                     <div class="store-name">{{ store.name }}</div>
                   </div>
                   <div class="store-items">
-                    <div v-for="(item, idx) in store.items" v-if="idx < 4" class="store-item">
+                    <div
+                      v-for="item in store.items.slice(0, 4)"
+                      :key="item.goodsId"
+                      class="store-item"
+                    >
                       <img class="store-item-thumb" :src="item.imgUrl" alt="" />
                       <div class="store-item-amount">
                         <span class="price">¥{{ item.price / 100 }}</span>
@@ -75,23 +77,50 @@
                   </div>
                 </template>
                 <div class="setting-modal">
-                  <div class="iconfont icon-arrows-alt"></div>
+                  <!-- <div class="iconfont icon-arrows-alt"></div> -->
                   <div class="iconfont icon-cog" @click="handleGoods(index)"></div>
-                  <div class="iconfont icon-trash-alt1" @click="handleRemove(index)"></div>
+                  <!-- <div class="iconfont icon-trash-alt1" @click="handleRemove(index)"></div> -->
                 </div>
               </div>
             </div>
           </draggable>
-          <div>
-            <el-button
-              :disabled="data.length >= 5"
-              type="default"
-              class="iconfont icon-plus-circle banner-button-uploader"
-              @click="addItem"
-            >
-              添加推荐</el-button
-            >
+        </el-form-item>
+        <el-form-item label="背景色">
+          <el-color-picker v-model="base.backgroundColor"></el-color-picker>
+        </el-form-item>
+        <el-form-item label="商品边框色">
+          <el-color-picker v-model="base.borderColor"></el-color-picker>
+        </el-form-item>
+        <el-form-item label="宣传图">
+          <span>点击图片可更换，图片大小不能超过 2MB（建议尺寸：700px*116px）</span>
+          <div class="setting-item slider">
+            <div class="upload-box" v-if="base.imgUrl">
+              <img
+                :style="{ width: '350px', height: '50px' }"
+                :src="wximageurl + base.imgUrl"
+                class="banner-uploader"
+                @click="handleImgChange"
+              />
+            </div>
+            <div class="banner-uploader" v-else @click="handleImgChange">
+              <i class="iconfont icon-camera"></i>上传图片
+            </div>
           </div>
+        </el-form-item>
+        <el-form-item label="设置标签">
+          <el-button
+            size="mini"
+            type="default"
+            class="iconfont icon-plus-circle banner-button-uploader"
+            @click="setTag"
+          >
+            设置标签</el-button
+          >
+          <p>
+            <span class="tag" v-for="(item, index) in seletedTags" :key="item.tag_id"
+              >{{ item.tag_name }} <span class="el-icon-close" @click="deleteTag(index)"></span
+            ></span>
+          </p>
         </el-form-item>
       </el-form>
     </div>
@@ -122,9 +151,8 @@ export default {
     return {
       name: '',
       base: {},
-      config: {},
       data: [],
-      temp: '',
+      seletedTags: [],
       dragItemsOptions: {
         animation: 300,
         forceFallback: false,
@@ -139,10 +167,14 @@ export default {
   },
   methods: {
     setData(val) {
+      // debugger
       this.name = val.name
       this.base = val.base
-      this.config = val.config
       this.data = val.data
+      this.seletedTags = val.seletedTags
+    },
+    handleImgChange(index) {
+      this.$emit('bindImgs', index)
     },
     handleGoods(idx) {
       this.$emit('bindGoods', idx)
@@ -158,17 +190,11 @@ export default {
       this.data.splice(evt.oldIndex, 1)
       this.data.splice(evt.newIndex, 0, this.temp)
     },
-    addItem() {
-      if (!this.data) {
-        this.data = []
-      }
-      let item = {
-        id: '',
-        name: '',
-        logo: '',
-        items: []
-      }
-      this.data.push(item)
+    setTag() {
+      this.$emit('tagSelectVisibleHandle', 'store')
+    },
+    deleteTag(index) {
+      this.seletedTags.splice(index, 1)
     }
   },
   mounted() {
@@ -178,6 +204,14 @@ export default {
 </script>
 
 <style scoped lang="scss">
+.tag {
+  margin: 10px;
+  cursor: pointer;
+  white-space: nowrap;
+  &:hover {
+    color: #1480e3;
+  }
+}
 .store-card {
   width: 300px;
   position: relative;

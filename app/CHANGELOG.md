@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [2.1.0](https://git.ishopex.cn/onex/espier-shop/compare/v2.0.5...v2.1.0) (2021-12-16)
+
+
+### Features
+
+* 附近商家 ([1c4b90c](https://git.ishopex.cn/onex/espier-shop/commit/1c4b90c632f23a55a65ef24e771539e2733b8540))
+
 ### [2.0.5](https://git.ishopex.cn/onex/espier-shop/compare/v2.0.2...v2.0.5) (2021-12-16)
 
 

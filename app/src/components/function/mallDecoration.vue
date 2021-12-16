@@ -15,7 +15,13 @@
         class="components-view"
       >
         <div v-for="(item, index) in initData" :key="index" class="component-control">
-          <template v-if="item.name === 'nearbyShop' && system_mode === 'platform' && $store.getters.login_type !== 'distributor'">
+          <template
+            v-if="
+              item.name === 'nearbyShop' &&
+              system_mode === 'platform' &&
+              $store.getters.login_type !== 'distributor'
+            "
+          >
             <svg class="svg-icon" aria-hidden="true">
               <use xlink:href="#icon-scroll"></use>
             </svg>
@@ -87,7 +93,13 @@
             </svg>
             轮播
           </template>
-          <template v-if="item.name === 'store' && system_mode === 'platform' && $store.getters.login_type !== 'distributor'">
+          <template
+            v-if="
+              item.name === 'store' &&
+              system_mode === 'platform' &&
+              $store.getters.login_type !== 'distributor'
+            "
+          >
             <svg class="svg-icon" aria-hidden="true">
               <use xlink:href="#icon-store"></use>
             </svg>
@@ -191,7 +203,8 @@
                 <nearbyShop
                   v-if="item.name === 'nearbyShop'"
                   :res="item"
-                  :active="index == editorIndex">
+                  :active="index == editorIndex"
+                >
                 </nearbyShop>
                 <coupon
                   v-if="item.name === 'coupon'"
@@ -299,10 +312,7 @@
         </div>
         <template v-else>
           <!-- {{editorData}} -->
-          <nearbyShopEditor
-            :res="editorData"
-            @tagSelectVisibleHandle='tagSelectVisibleHandle'
-          >
+          <nearbyShopEditor :res="editorData" @tagSelectVisibleHandle="tagSelectVisibleHandle">
           </nearbyShopEditor>
           <couponEditor
             :res="editorData"
@@ -360,7 +370,12 @@
           <headlineEditor :res="editorData"></headlineEditor>
           <hotTopicEditor :res="editorData" @bindLinks="showLinks"></hotTopicEditor>
           <imgGifEditor :res="editorData" @bindImgs="showImgs"></imgGifEditor>
-          <storeEditor :res="editorData" @bindGoods="showGoods" @bindImgs="showImgs"  @tagSelectVisibleHandle='tagSelectVisibleHandle'></storeEditor>
+          <storeEditor
+            :res="editorData"
+            @bindGoods="showGoods"
+            @bindImgs="showImgs"
+            @tagSelectVisibleHandle="tagSelectVisibleHandle"
+          ></storeEditor>
         </template>
       </div>
     </section>
@@ -407,14 +422,14 @@
       ></couponPackageSelect>
     </template>
     <template v-if="tagSelectVisible">
-      <TagSelect 
+      <TagSelect
         :visible="tagSelectVisible"
-        :type='tagType' 
+        :type="tagType"
         :seletedTags="editorData.seletedTags"
         :storeID="storeID"
-        @visibleHandle='tagSelectVisibleHandle'
-        @seletedTagsHandle='seletedTagsHandle'
-        >
+        @visibleHandle="tagSelectVisibleHandle"
+        @seletedTagsHandle="seletedTagsHandle"
+      >
       </TagSelect>
     </template>
   </el-dialog>
@@ -450,7 +465,7 @@ import floorImgTwo from '@/components/template/floorImg-two'
 import headline from '@/components/template/headline'
 import hotTopic from '@/components/template/hotTopic'
 import imgGif from '@/components/template/img-gif'
-import nearbyShop from '@/components/template/nearby_shop';
+import nearbyShop from '@/components/template/nearby_shop'
 
 // control层组件
 import couponEditor from '@/components/template_editor/coupon'
@@ -470,7 +485,7 @@ import floorImgTwoEditor from '@/components/template_editor/floorImg-two'
 import headlineEditor from '@/components/template_editor/headline'
 import hotTopicEditor from '@/components/template_editor/hotTopic'
 import imgGifEditor from '@/components/template_editor/img-gif'
-import nearbyShopEditor from '@/components/template_editor/nearby_shop';
+import nearbyShopEditor from '@/components/template_editor/nearby_shop'
 
 // 第三方组件
 import draggable from 'vuedraggable'
@@ -507,7 +522,7 @@ export default {
     },
     templateName: {
       type: String
-    },
+    }
   },
   components: {
     coupon,
@@ -556,12 +571,12 @@ export default {
     // 第三方组件
     draggable
   },
-   
+
   data() {
     return {
-      tagSelectVisible:false,
-      tagType:'',  // nearby_shop || store
-      storeID:null,
+      tagSelectVisible: false,
+      tagType: '', // nearby_shop || store
+      storeID: null,
       couponPackageVisible: false,
       componentHeight: '',
       editorIndex: null,
@@ -589,13 +604,13 @@ export default {
       isSouponPackage: false, //是否为劵包 （用来判断图片选择）
       initData: [
         {
-          name:'nearbyShop',
-          base:{
-            title:'附近商家',
+          name: 'nearbyShop',
+          base: {
+            title: '附近商家',
             padded: true,
-            show_coupon:true,
+            show_coupon: true
           },
-          seletedTags:[],
+          seletedTags: []
         },
         {
           name: 'coupon',
@@ -971,8 +986,7 @@ export default {
       app_page_type: {
         wechat: 'wechat',
         alipay: 'alipay'
-      },
-
+      }
     }
   },
   computed: {
@@ -983,24 +997,24 @@ export default {
   },
   methods: {
     /* ---------------------------------------------选择标签------------------------------------------ */
-    tagSelectVisibleHandle(type){
-      if (type=='store') {
-          this.storeID = this.components[this.editorIndex].data[0].id;
+    tagSelectVisibleHandle(type) {
+      if (type == 'store') {
+        this.storeID = this.components[this.editorIndex].data[0].id
       }
-      
-      this.tagSelectVisible = !this.tagSelectVisible ;
+
+      this.tagSelectVisible = !this.tagSelectVisible
       if (this.tagSelectVisible) {
         this.tagType = type
-      }else{
+      } else {
         this.tagType = ''
       }
     },
-    seletedTagsHandle(seletedTags){
-      console.log('this.editorData====================',this.editorData);
-      console.log('this.components==========',this.components[this.editorIndex]);
-      this.editorData.seletedTags = seletedTags; // editor
-      this.components[this.editorIndex].seletedTags = seletedTags; // view
-       
+    seletedTagsHandle(seletedTags) {
+      console.log('this.editorData====================', this.editorData)
+      console.log('this.components==========', this.components[this.editorIndex])
+      this.editorData.seletedTags = seletedTags // editor
+      this.components[this.editorIndex].seletedTags = seletedTags // view
+
       // this.tagSelectVisibleHandle();
     },
 
@@ -1014,8 +1028,6 @@ export default {
       this.couponPackageVisible = false
     },
     seletedDataHandle(seletedCoupon) {
-
-
       // for (let i = 0; i < seletedCoupon.length; i++) {
       //   for (let j = 0; j < this.editorData.voucher_package.length; j++) {
       //     if (this.editorData.voucher_package[j].package_id == seletedCoupon[i].package_id) {
@@ -1023,12 +1035,11 @@ export default {
       //     }
       //   }
       // }
-     
+
       // seletedCoupon = [...this.editorData.voucher_package,...seletedCoupon];
 
-
       this.editorData.voucher_package = seletedCoupon
-      this.components[this.editorIndex].voucher_package = seletedCoupon;
+      this.components[this.editorIndex].voucher_package = seletedCoupon
       // this.closeHandle()
     },
     /* ---------------------------------------------劵包组件方法结束------------------------------------------ */
@@ -1092,21 +1103,25 @@ export default {
         this.components[this.editorIndex].config.imgUrl = data.url
       } else if (
         this.components[this.editorIndex].name === 'floorImg' ||
-        this.components[this.editorIndex].name === 'goodsScroll' 
+        this.components[this.editorIndex].name === 'goodsScroll'
       ) {
         if (this.editorDataIndex == 'backImg') {
           this.components[this.editorIndex].base.backgroundImg = data.url
         } else {
           this.components[this.editorIndex].data[this.editorDataIndex].imgUrl = data.url
         }
-      }else if(this.components[this.editorIndex].name === 'store'){
+      } else if (this.components[this.editorIndex].name === 'store') {
         this.components[this.editorIndex].base.imgUrl = data.url
       } else {
         if (this.isSouponPackage) {
           // this.components[this.editorIndex].voucher_package[this.editorDataIndex].imgUrl = data.url   //无法触发watch。
-          this.$set(this.components[this.editorIndex].voucher_package[this.editorDataIndex],'imgUrl', data.url);
+          this.$set(
+            this.components[this.editorIndex].voucher_package[this.editorDataIndex],
+            'imgUrl',
+            data.url
+          )
         } else {
-          this.components[this.editorIndex].data[this.editorDataIndex].imgUrl = data.url  // 这里却可以。。。
+          this.components[this.editorIndex].data[this.editorDataIndex].imgUrl = data.url // 这里却可以。。。
         }
       }
       this.imgsVisible = false
@@ -1178,8 +1193,7 @@ export default {
       }
 
       if (this.editorDataIndex !== null) {
-        console.log('store.id====',store.id);
-
+        console.log('store.id====', store.id)
 
         if (!store.id) {
           this.relItemsIds.splice(0)
@@ -1192,16 +1206,17 @@ export default {
       }
 
       /* 店铺标签逻辑 */
-      const oldStoreID = this.components[this.editorIndex].data[0].id
-      console.log(store.id);
-      if (oldStoreID != store.id) {
-        this.editorData.seletedTags = []; // template
-        this.components[this.editorIndex].seletedTags = [] //view
+      if (this.components[this.editorIndex].name == 'store') {
+        const oldStoreID = this.components[this.editorIndex].data[0].id
+        console.log(store.id)
+        if (oldStoreID != store.id) {
+          this.editorData.seletedTags = [] // template
+          this.components[this.editorIndex].seletedTags = [] //view
+        }
+        this.storeID = store.id
       }
-      this.storeID = store.id
+       /* 店铺标签逻辑结束 */
 
-    
-    
       this.relItemsIds = data
       this.curStore = store
       let values = []
@@ -1365,9 +1380,9 @@ export default {
               title: '推荐商铺',
               subtitle: '热门商铺，官方推荐',
               padded: true,
-              backgroundColor:'#FFF',
-              borderColor:'#FF6700',
-              imgUrl:'',
+              backgroundColor: '#FFF',
+              borderColor: '#FF6700',
+              imgUrl: ''
             },
             data: [
               {
@@ -1377,7 +1392,7 @@ export default {
                 items: []
               }
             ],
-            seletedTags:[]
+            seletedTags: []
           })
         }
       }
@@ -1410,13 +1425,10 @@ export default {
           }
         })
         this.platformComponents = platformComponents
-        
-        this.components = shopComponents
 
-      
+        this.components = shopComponents
       } else {
         this.components = [...this.initData]
-        
       }
     },
     cancelAction() {
@@ -1425,7 +1437,7 @@ export default {
   },
   watch: {
     dialogVisible(newVal, oldVal) {
-      console.log('==================');
+      console.log('==================')
       if (newVal) {
         this.curStore = this.relStore
         this.editorData = {}
@@ -1433,7 +1445,7 @@ export default {
         this.getData()
       }
     },
-    
+
     initData: {
       handler(val) {},
       deep: true

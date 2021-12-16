@@ -2,12 +2,21 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
-### [2.0.2](https://git.ishopex.cn/onex/espier-shop/compare/v2.0.1...v2.0.2) (2021-12-16)
+### [2.0.4](https://git.ishopex.cn/onex/espier-shop/compare/v2.0.1...v2.0.4) (2021-12-16)
 
 
 ### Bug Fixes
 
 * 兑换券创建失败 ([ad7782f](https://git.ishopex.cn/onex/espier-shop/commit/ad7782f850fcef2108107bb01c1286d9d0a10e99))
+
+### [2.0.3](https://git.ishopex.cn/onex/espier-shop/compare/v2.0.1...v2.0.3) (2021-12-16)
+
+
+### Bug Fixes
+
+* 兑换券创建失败 ([ad7782f](https://git.ishopex.cn/onex/espier-shop/commit/ad7782f850fcef2108107bb01c1286d9d0a10e99))
+
+### [2.0.2](https://git.ishopex.cn/onex/espier-shop/compare/v2.0.1...v2.0.2) (2021-12-01)
 
 ### [2.0.1](https://git.ishopex.cn/onex/espier-shop/compare/v2.0.0...v2.0.1) (2021-12-01)
 

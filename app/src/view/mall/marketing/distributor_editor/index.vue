@@ -23,9 +23,9 @@
 
       <DadaForm :rules="rules" ref="dadaFormRef" :externalForm="form" @onChangeData="handleChangeData" />
 
-      <FashionForm ref="fashionFormRef" :externalForm="form" />
+      <!-- <FashionForm ref="fashionFormRef" :externalForm="form" /> -->
 
-      <GlobalFooter>
+      <!-- <GlobalFooter> -->
         <div class="section-footer content-center">
           <el-button size="large" @click="cancelSubmit">取消</el-button>
           <el-button
@@ -35,7 +35,7 @@
             >{{ submitLoading ? "提交中" : "保存" }}</el-button
           >
         </div>
-      </GlobalFooter>
+      <!-- </GlobalFooter> -->
     </el-form>
   </section>
 </template>
@@ -109,7 +109,8 @@ export default {
       return result;
     },
     submitItemsActionConfirm() {
-      
+      console.log('=================1221=============');
+      // debugger
 
       let nodada={
         is_dada:undefined,
@@ -125,19 +126,21 @@ export default {
           console.log("this.$refs.imageFormRef.form",this.$refs.imageFormRef.form)
           console.log("this.$refs.shopFormRef.form",this.$refs.shopFormRef.form)
           console.log("this.$refs.dadaFormRef.form",this.$refs.dadaFormRef.form)
-          console.log("this.$refs.fashionFormRef.form",this.$refs.fashionFormRef.form)
+          // console.log("this.$refs.fashionFormRef.form",this.$refs.fashionFormRef.form)
+          
           const filterParams = {
             ...this.$refs.baseFormRef.form,
             ...this.$refs.imageFormRef.form,
-            ...this.deleteParams(['name','logo','contact','mobile','contract_phone','is_audit_goods','is_ziti'],this.$refs.shopFormRef.form),
+            ...this.deleteParams(['name','logo','contact','mobile','contract_phone','is_audit_goods','is_ziti','banner'],this.$refs.shopFormRef.form),
             ...this.$refs.dadaFormRef.form,
-            ...this.$refs.fashionFormRef.form,
+            // ...this.$refs.fashionFormRef.form,
             hour:
               this.$refs.baseFormRef.startTime +
               "-" +
               this.$refs.baseFormRef.endTime,
             distributor_id: this.distributor_id, 
           }; 
+          console.log('filterParams=============',filterParams);
           if(this.dadaShow){
             nodada={
               is_dada:this.$refs.dadaFormRef.form.is_dada,

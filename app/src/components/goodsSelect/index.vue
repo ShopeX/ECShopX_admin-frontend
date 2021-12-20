@@ -302,6 +302,11 @@ export default {
       this.getNewsList()
     },
     handleStoreChange(val) {
+      if (Object.keys(val).length == 0) {
+        // 代表进行了关闭店铺 设置为总店的操作
+        val.id = 0;
+      }
+      console.log(val);
       this.store = val
       this.$refs.multipleTable.clearSelection()
       this.selectRows = []
@@ -426,7 +431,6 @@ export default {
           this.params.distributor_id == '0'
         ) {
           getItemsList(param).then((response) => {
-            console.log('11111111111111111111111111111111111');
             this.itemsData = response.data.data.list
             this.total_count = parseInt(response.data.data.total_count)
             this.loading = false
@@ -531,7 +535,6 @@ export default {
             !param.distributor_id ||
             param.distributor_id == '0'
           ) {
-            console.log('222222222222222222');
             getSkuList(param).then((res) => {
               const selectRows = res.data.data.list
               // console.log();

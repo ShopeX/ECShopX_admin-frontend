@@ -14,7 +14,10 @@
           <el-input class="input-m" placeholder="订单号" v-model="identifier">
             <el-button slot="append" icon="el-icon-search" @click="search"></el-button>
           </el-input>
-          <export-tip @exportHandle='exportData'>
+          <el-input class="input-m" placeholder="售后单号" v-model="AfterSalesOrder">
+            <el-button slot="append" icon="el-icon-search" @click="search2"></el-button>
+          </el-input>
+          <export-tip @exportHandle="exportData">
             <el-button type="primary">导出</el-button>
           </export-tip>
           <el-popover
@@ -109,7 +112,8 @@ export default {
       time_start_end: '',
       total_count: 0,
       list: [],
-      identifier: ''
+      identifier: '',
+      AfterSalesOrder: ''
     }
   },
   computed: {
@@ -125,6 +129,14 @@ export default {
     search(e) {
       this.params.page = 1
       this.getParams()
+      this.getAftersalesList(this.params)
+    },
+    search2(){
+      this.params.page = 1
+      this.params.time_start_begin = this.time_start_begin
+      this.params.time_start_end = this.time_start_end
+      this.params.AfterSalesOrder = this.AfterSalesOrder
+       this.params.order_id = ''
       this.getAftersalesList(this.params)
     },
     dateChange(val) {
@@ -156,6 +168,7 @@ export default {
       this.params.time_start_begin = this.time_start_begin
       this.params.time_start_end = this.time_start_end
       this.params.order_id = this.identifier
+      this.params.AfterSalesOrder = ''
     },
     dateStrToTimeStamp(str) {
       return Date.parse(new Date(str)) / 1000
@@ -166,6 +179,7 @@ export default {
         this.list = response.data.data.list
         this.total_count = Number(response.data.data.total_count)
         this.loading = false
+
       })
     },
     querySearch(queryString, cb) {

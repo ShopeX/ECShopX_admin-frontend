@@ -33,7 +33,7 @@
             size="mini"
           ></el-date-picker>
         </el-col>
-        <el-col :md="4" :lg="8">
+        <!-- <el-col :md="4" :lg="8">
           <el-select
             v-model="params.item_type"
             @change="itemTypeChange"
@@ -43,10 +43,10 @@
             size="mini"
           >
             <el-option label="全部" value="0"></el-option>
-            <!-- <el-option label="服务类商品" value="service"></el-option> -->
+            <el-option label="服务类商品" value="service"></el-option>
             <el-option label="实体类商品" value="normal"></el-option>
           </el-select>
-        </el-col>
+        </el-col> -->
         <el-col :md="4" :lg="8">
           <el-button size="mini" type="primary" icon="plus" @click="addActivityData"
             >添加满折促销</el-button

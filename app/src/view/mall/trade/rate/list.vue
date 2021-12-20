@@ -80,7 +80,7 @@
                 <router-link
                   target="_blank"
                   :to="{
-                    path: matchInternalRoute('tradenormalorders_detail'),
+                    path: '/order/entitytrade/tradenormalorders/detail',
                     query: { orderId: scope.row.order_id }
                   }"
                   >{{ scope.row.order_id }}</router-link

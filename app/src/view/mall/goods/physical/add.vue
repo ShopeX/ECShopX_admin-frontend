@@ -36,11 +36,11 @@
                     <el-input v-model="form.brief" :maxlength="30" placeholder=""></el-input>
                   </el-form-item>
                 </el-col>
-                <el-col :span="8">
+                <!-- <el-col :span="8">
                   <el-form-item label="外文标题">
                     <el-input v-model="form.item_en_name" :maxlength="100" placeholder=""></el-input>
                   </el-form-item>
-                </el-col>
+                </el-col> -->
                 <el-col :span="8">
                   <el-form-item label="* 运费模板">
                     <el-select v-model="form.templates_id" placeholder="请选择" class="wid100">
@@ -686,7 +686,7 @@
           tax_rate: 0,
           item_bn: '',
           brief: '',
-          item_en_name: '',
+          // item_en_name: '',
           weight: '',
           volume: '',
           price: '',
@@ -1502,7 +1502,7 @@
               tax_rate: itemsDetailData.tax_rate,
               item_bn: _self.is_new ? '' : itemsDetailData.item_bn,
               brief: itemsDetailData.brief,
-              item_en_name: itemsDetailData.item_en_name,
+              // item_en_name: itemsDetailData.item_en_name,
               weight: itemsDetailData.weight,
               volume: itemsDetailData.volume,
               price: itemsDetailData.price/100,

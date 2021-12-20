@@ -12,7 +12,9 @@
 .store-address {
   color: #888;
 }
+
 </style>
+
 <template>
   <div>
     <div v-if="$route.path.indexOf('editor') === -1 && $route.path.indexOf('details') === -1 && $route.path.indexOf('template') === -1">
@@ -199,16 +201,19 @@
               </el-tooltip>
             </template>
           </el-table-column>
-          <el-table-column v-if="system_mode === 'platform'" prop="tagList" label="标签">
+          <el-table-column v-if="system_mode === 'platform'" prop="tagList" label="标签" class="tab">
             <template slot-scope="scope">
               <el-tag
-                v-for="taglist in scope.row.tagList"
+                closable
+                v-for="(taglist) in scope.row.tagList"
                 :key="taglist.index"
                 :color="taglist.tag_color"
                 size="mini"
                 :style="'color:'+ taglist.font_color"
                 style="display: inline-block; margin-right:3px;"
-              >{{taglist.tag_name}}</el-tag>
+                @close="handleClose(tag,scope.row,taglist)"
+              >{{taglist.tag_name}}
+              </el-tag>
             </template>
           </el-table-column>
           <el-table-column width="180" label="操作">
@@ -295,6 +300,7 @@
             <span v-for="item in tag.editItem" :key="item">{{item}}，</span>
           </div>
         </div>
+       
         <div class="selected-tags view-flex">
           <div class="label">已选中标签：</div>
           <div class="view-flex-item">
@@ -308,7 +314,9 @@
             >{{tag.tag_name}}</el-tag>
           </div>
         </div>
+        <hr>
         <div>
+           <div class="label">全部标签：</div>
           <el-tag
             class="tag-item"
             :key="index"
@@ -404,7 +412,7 @@
 </template>
 <script>
 import { mapGetters } from 'vuex'
-import { saveDistributor, getDistributorList, getWxaDristributorCodeStream, setDefaultDistributor, saveOpen } from '../../../api/marketing'
+import { saveDistributor, getDistributorList, getWxaDristributorCodeStream, setDefaultDistributor, saveOpen,NewdeleteTag } from '@/api/marketing'
 import { getTagList, distributorRelTags, getDistance, setDistance } from '@/api/marketing'
 import { getDistributorMeiQia, setDistributorMeiQia } from '@/api/im'
 import district from '../../../common/district.json'
@@ -512,6 +520,18 @@ export default {
     ...mapGetters(['wheight']),
   },
   methods: {
+    async handleClose(tag,{distributor_id},{tag_id}){
+      const obj ={
+        distributor_ids:[distributor_id],
+        tag_ids:[tag_id]
+      }
+      
+      const result = await NewdeleteTag(obj);
+      this.$message.success('删除成功')
+      this.getList();
+      console.log(result);
+
+    },
     linkTemplates(distributor) {
       const { distributor_id, address, name } = distributor
       this.$store.dispatch('setTemplateName', 'yykweishop')

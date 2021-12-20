@@ -6,7 +6,7 @@
     :close-on-click-modal="false"
     :before-close="cancelAction"
   >
-    <div style="margin-bottom: 15px;">
+    <div style="margin-bottom: 15px">
       <el-input
         :placeholder="isSynchronize ? '请选择店铺所在地' : '输入店铺名称'"
         v-model="name"
@@ -55,7 +55,13 @@ export default {
   props: {
     relDataIds: {
       type: Array,
-      default: function() {
+      default: function () {
+        return []
+      }
+    },
+    oldData:{
+      type: Array,
+      default: function () {
         return []
       }
     },
@@ -92,9 +98,6 @@ export default {
     isSynchronize: {
       type: Boolean,
       default: false
-    },
-    getStatus:{
-      type: Boolean, 
     }
   },
   data() {
@@ -109,25 +112,25 @@ export default {
         page: 1,
         pageSize: 10,
         is_valid: 'true',
-        is_app:1
+        is_app: 1
       },
       name: '',
       selectRows: []
     }
   },
+  mounted() {
+    this.getDistributor()
+  },
   methods: {
     getDistributor() {
       getDistributorList(this.params).then((response) => {
         this.storeData = response.data.data.list
-        this.total_count = parseInt(response.data.data.total_count)
+        this.total_count = response.data.data.total_count
         this.loading = false
-        this.multipleSelection = []
-        // this.$refs.multipleTable.clearSelection()
-        if (this.selectRows) {
-          this.selectRows.forEach((item) => {
-            console.log('this.selectRows', this.selectRows)
-            this.$refs.multipleTable.toggleRowSelection(item)
-          })
+
+        if (this.relDataIds.length > 0) {
+          this.$refs.multipleTable.clearSelection()
+          this.toggleSelection(this.relDataIds)
         }
       })
     },
@@ -152,21 +155,17 @@ export default {
       }
     },
     handleSelectionChange(val) {
-      if (val) {
+      if (val.length > 0) {
         this.multipleSelection = val
-        val.forEach((item) => {
-          let isInArr = this.selectRows.findIndex((n) => n.distributor_id == item.distributor_id)
-          if (isInArr == -1) {
-            this.selectRows.push(item)
-          }
-        })
       }
     },
     cancelAction() {
       this.$emit('closeStoreDialog')
+      this.$emit('chooseStore', this.oldData)
     },
     saveStoreAction() {
       this.$emit('chooseStore', this.multipleSelection)
+      this.$emit('closeStoreDialog')
     },
     saveAllStoreAction() {
       this.$emit('chooseAllStore')
@@ -181,13 +180,8 @@ export default {
     sourceType(newVal, oldVal) {
       this.dataType = this.sourceType
     },
-    relDataIds(newVal, oldVal) {
-      this.selectRows = newVal
-    },
-    getStatus(newVal, oldVal) {
-      if (newVal) {
-        this.getDistributor()
-      }
+    multipleSelection() {
+      this.$emit('chooseStore', this.multipleSelection)
     }
   }
 }

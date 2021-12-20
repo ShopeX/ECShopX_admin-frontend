@@ -43,7 +43,7 @@ export function creatCard(query) {
 export function updateCard(query) {
   return fetch({
     url: '/discountcard',
-    method: 'patch',
+    method: 'PATCH',
     params: query
   })
 }

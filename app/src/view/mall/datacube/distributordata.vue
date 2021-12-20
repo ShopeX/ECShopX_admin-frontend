@@ -25,7 +25,7 @@
             placeholder="请选择门店"
             @change="DistributorChange"
           >
-            <el-option label="总店" key="0" value="0">总店或全部</el-option>
+            <el-option label="总店" key="0" value="0">总店</el-option>
             <el-option
               v-for="item in distributorOption"
               :key="item.distributor_id"

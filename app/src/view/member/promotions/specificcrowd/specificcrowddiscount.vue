@@ -272,8 +272,8 @@ export default {
       this.getDataLists()
     },
     submitAction() {
-      this.form.start_time = this.dateStrToTimeStamp(this.form.start_time)
-      this.form.end_time = this.dateStrToTimeStamp(this.form.end_time)
+      // this.form.start_time = this.dateStrToTimeStamp(this.form.start_time)
+      // this.form.end_time = this.dateStrToTimeStamp(this.form.end_time)
       const obj = {
         start_time: this.dateStrToTimeStamp(this.form.start_time),
         end_time: this.dateStrToTimeStamp(this.form.end_time)
@@ -286,6 +286,7 @@ export default {
         })
       } else {
         createSpecificcrowddiscount({...this.form,...obj}).then((res) => {
+          this.$message.success('创建成功')
           this.getDataLists()
           this.activityItemDialog = false
         })

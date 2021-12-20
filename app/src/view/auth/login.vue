@@ -214,6 +214,9 @@
 <script>
 import { mapMutations } from 'vuex'
 import { isMobile } from '@/utils/validate'
+    const system = process.env.VUE_APP_PRODUCT_MODEL == 'standard' ? 'onex' : 'ecshopx'
+    const brand = require(`@/assets/img/${system}/logo.jpg`)
+    const login_bg = require(`@/assets/img/${system}/login_bg.jpg`)
 // import fetch from '../utils/fetch'
 // import { login, getAdminInfo, getAuthorizeUrl, getAuthorizeLogin } from '@/api'
 export default {
@@ -232,9 +235,9 @@ export default {
         callback()
       }
     }
-    const system = process.env.VUE_APP_PRODUCT_MODEL == 'standard' ? 'onex' : 'ecshopx'
-    const brand = require(`@/assets/img/${system}/logo.jpg`)
-    const login_bg = require(`@/assets/img/${system}/login_bg.jpg`)
+    // const system = process.env.VUE_APP_PRODUCT_MODEL == 'standard' ? 'onex' : 'ecshopx'
+    // const brand = require(`@/assets/img/${system}/logo.jpg`)
+    // const login_bg = require(`@/assets/img/${system}/login_bg.jpg`)
     return {
       isAuto: false,
       isIframe: false,

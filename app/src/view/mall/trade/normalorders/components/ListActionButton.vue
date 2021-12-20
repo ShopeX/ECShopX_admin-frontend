@@ -9,7 +9,7 @@
           :show-file-list="false"
           class="upload"
         >
-          <el-button type="primary" icon="el-icon-box" :size="size">批量发货</el-button>
+          <!-- <el-button type="primary" icon="el-icon-box" :size="size">批量发货222222</el-button> -->
         </el-upload>
       </div>
       <exportTip @exportHandle='exportInvoice'>

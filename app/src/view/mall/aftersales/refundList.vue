@@ -227,7 +227,7 @@
             </template>
           </el-table-column>
 
-          <el-table-column width="100" label="退款数据">
+          <!-- <el-table-column width="100" label="退款数据">
             <template slot-scope="scope">
               <el-popover placement="left" trigger="click" @show="getRefundOrderInfo(scope.row)">
                 <div v-loading="refundloading">
@@ -238,7 +238,7 @@
                 </div>
               </el-popover>
             </template>
-          </el-table-column>
+          </el-table-column> -->
 
           <!-- 退款状态 -->
           <el-table-column prop="refund_status" width="100" label="退款状态">

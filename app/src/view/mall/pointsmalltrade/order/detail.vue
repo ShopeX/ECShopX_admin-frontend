@@ -47,7 +47,8 @@
           <el-col :span="3" class="content-right"><h4>会员手机：</h4></el-col>
           <el-col :span="5"> {{memberInfo.mobile}} </el-col>
           <el-col :span="3" class="content-right"><h4>会员等级：</h4></el-col>
-          <el-col :span="5">{{memberInfo.gradeInfo ? memberInfo.gradeInfo.grade_name : "无"}}</el-col>
+          <el-col :span="5" v-if="memberInfo.vipgrade && memberInfo.vipgrade.is_vip">{{memberInfo.vipgrade.grade_name}}</el-col>
+          <el-col :span="5" v-else>{{memberInfo.gradeInfo ? memberInfo.gradeInfo.grade_name : "无"}}</el-col>
         </el-row>
         <el-row >
           <el-col :span="3" class="content-right"><h4>商品价格：</h4></el-col>

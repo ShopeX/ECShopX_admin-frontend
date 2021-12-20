@@ -462,3 +462,23 @@ export function addDealer(params) {
     params: params
   })
 }
+
+// 根据商家tag查找对应商家
+export function queryTagShop(params) {
+  return fetch({
+    url:'/distributors',
+    method:'get',
+    params
+  })
+}
+
+
+
+// 删除tag
+export function NewdeleteTag(params) {
+  return fetch({
+    url:'/distributor/deltag',
+    method:'post',
+    params
+  })
+}

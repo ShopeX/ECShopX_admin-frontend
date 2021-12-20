@@ -36,11 +36,11 @@
         </div>
       </div>
       <div class="section-white mini-setting" v-if="relStore.id == '0'">
-        <el-button type="text" @click="handleShowConfig" style="margin-right: 10px;">
-          <i class="iconfont icon-cog" style="color: #8080FF;"></i> 小程序配置
+        <el-button type="text" @click="handleShowConfig" style="margin-right: 10px">
+          <i class="iconfont icon-cog" style="color: #8080ff"></i> 小程序配置
         </el-button>
         <el-button type="text" @click="handleShowTabConfig">
-          <i class="iconfont icon-cog" style="color: #8080FF;"></i> 小程序导航配置
+          <i class="iconfont icon-cog" style="color: #8080ff"></i> 小程序导航配置
         </el-button>
       </div>
     </div>
@@ -64,7 +64,9 @@
             <img class="template-pic" :src="item.template_pic" />
             <div class="tag" v-if="item.template_type == 1">同步模板</div>
           </div>
-          <div class="template-name">{{ item.template_title }}</div>
+          <div class="template-name">
+              {{ item.template_title }}
+          </div>
           <div class="template-common" v-if="relStore.id == '0'">
             <span class="temp-label">店铺可编辑挂件</span>
             <el-switch
@@ -179,11 +181,11 @@
             v-model="form.template_title"
             maxlength="10"
             show-word-limit
-            style="width: 55%;"
+            style="width: 55%"
           ></el-input>
         </el-form-item>
         <el-form-item label="模板封面">
-          <div class="setting-item slider" style="width: 55%;">
+          <div class="setting-item slider" style="width: 55%">
             <img
               v-if="form.template_pic"
               :src="form.template_pic"
@@ -212,7 +214,7 @@
             @change="toggleOpenRecommend"
           ></el-switch>
         </el-form-item>
-        <el-form-item label="开启小程序定位">
+        <!-- <el-form-item label="开启小程序定位">
           <el-switch
             v-model="is_open_wechatapp_location"
             :active-value="1"
@@ -220,7 +222,7 @@
             active-color="#13ce66"
             @change="toggleOpenWechatappLocation"
           ></el-switch>
-        </el-form-item>
+        </el-form-item> -->
         <el-form-item label="开启扫码功能">
           <el-switch
             v-model="is_open_scan_qrcode"
@@ -332,7 +334,7 @@ export default {
       orgin_index_type: 'platform',
       is_enforce_sync: 2,
       is_open_recommend: 2,
-      is_open_wechatapp_location: 2,
+      is_open_wechatapp_location: 1,
       is_open_scan_qrcode: 2,
       is_open_official_account: 2,
       templateList: [],
@@ -444,7 +446,7 @@ export default {
     getList(status) {
       let params = {
         ...this.params,
-        distributor_id: this.relStore.id,
+        distributor_id: this.relStore.id
         // page_type: this.app_page_type[this.app_type]
       }
       getPagesTemplateList(params).then((res) => {
@@ -551,7 +553,7 @@ export default {
         this.orgin_index_type = type
       }
       let params = {
-        index_type: this.index_type,
+        index_type: this.index_type
         // page_type: this.app_page_type[this.app_type]
       }
       setPagesTemplate(params).then((res) => {
@@ -563,7 +565,7 @@ export default {
     },
     toggleSynchronizeShop(val) {
       let params = {
-        is_enforce_sync: val,
+        is_enforce_sync: val
         // page_type: this.app_page_type[this.app_type]
       }
       setPagesTemplate(params).then((res) => {
@@ -575,7 +577,7 @@ export default {
     },
     toggleOpenRecommend(val) {
       let params = {
-        is_open_recommend: val,
+        is_open_recommend: val
         // page_type: this.app_page_type[this.app_type]
       }
       setPagesTemplate(params).then((res) => {
@@ -587,7 +589,7 @@ export default {
     },
     toggleOpenWechatappLocation(val) {
       let params = {
-        is_open_wechatapp_location: val,
+        is_open_wechatapp_location: val
         // page_type: this.app_page_type[this.app_type]
       }
       setPagesTemplate(params).then((res) => {
@@ -599,7 +601,7 @@ export default {
     },
     toggleOpenScanQrcode(val) {
       let params = {
-        is_open_scan_qrcode: val,
+        is_open_scan_qrcode: val
         // page_type: this.app_page_type[this.app_type]
       }
       setPagesTemplate(params).then((res) => {
@@ -611,7 +613,7 @@ export default {
     },
     toggleOpenOfficialAccount(val) {
       let params = {
-        is_open_official_account: val,
+        is_open_official_account: val
         // page_type: this.app_page_type[this.app_type]
       }
       setPagesTemplate(params).then((res) => {
@@ -635,7 +637,7 @@ export default {
             ...this.form,
             template_name: this.template_name,
             // template_name: this.app_type === 'wechat' ?  this.template_name : this.ali_template_name,
-            distributor_id: this.relStore.id,
+            distributor_id: this.relStore.id
             // page_type: this.app_page_type[this.app_type]
           }
           addPagesTemplate(params).then((res) => {
@@ -747,7 +749,7 @@ export default {
     },
     copyTemplate(pages_template_id) {
       let params = {
-        pages_template_id: pages_template_id,
+        pages_template_id: pages_template_id
         // page_type: this.app_page_type[this.app_type]
       }
       this.$confirm('确认拷贝当前模板？', '拷贝模板', {
@@ -817,7 +819,7 @@ export default {
     handelSaveTab() {
       let param = JSON.stringify(this.editorData)
       let params = {
-        tab_bar: param,
+        tab_bar: param
         // page_type: this.app_page_type[this.app_type]
       }
       setPagesTemplate(params).then((res) => {
@@ -936,6 +938,9 @@ export default {
     .template-name {
       font-size: 15px;
       margin: 15px;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
     }
     .template-common {
       margin: 0 15px 15px;

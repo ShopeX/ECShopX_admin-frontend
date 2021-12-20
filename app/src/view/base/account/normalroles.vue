@@ -54,7 +54,7 @@
           </el-form-item>
           <el-form-item label="角色权限">
             <el-tree
-              :data="$store.getters.menus"
+              :data="menu"
               ref="tree"
               :default-checked-keys="defaultCheckedKeys"
               node-key="alias_name"
@@ -85,6 +85,7 @@ import {
 export default {
   data() {
     return {
+      menu:[],
       defaultProps: {
         children: 'children',
         label: 'name'
@@ -108,6 +109,7 @@ export default {
       }
     }
   },
+
   computed: {
     ...mapGetters(['wheight'])
   },
@@ -221,6 +223,19 @@ export default {
   },
   mounted() {
     this.getRolesDataList()
+    
+    const menu = this.$store.getters.menus;
+    menu.forEach((item)=>{
+      if (item.alias_name=='setting') {
+        item.children.forEach((itemy,indexy)=>{
+          if (itemy.is_super == 'Y') {
+           item.children.splice(indexy,1);
+          }
+        })
+      }
+    })
+
+    this.menu = menu;
   }
 }
 </script>

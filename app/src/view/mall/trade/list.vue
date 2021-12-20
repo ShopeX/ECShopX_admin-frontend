@@ -133,7 +133,7 @@
             <span v-if="scope.row.payType =='hfpay'">汇付支付</span>
           </template>
         </el-table-column>
-        <el-table-column width="100" label="支付数据">
+        <!-- <el-table-column width="100" label="支付数据">
           <template slot-scope="scope">
             <el-popover  placement="left"  trigger="click"  @show="getPayOrderInfo(scope.row)">
               <div  v-loading="payloading">
@@ -144,7 +144,7 @@
               </div>
             </el-popover>
           </template>
-        </el-table-column>
+        </el-table-column> -->
         <el-table-column width="100" label="订单金额">
           <template slot-scope="scope">
             <template v-if="scope.row.payType=='point'">

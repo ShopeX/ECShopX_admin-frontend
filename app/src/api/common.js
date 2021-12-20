@@ -45,3 +45,14 @@ export function getAddress() {
     method: 'get'
   })
 }
+
+export function download(){
+  return fetch({
+    url:'/espier/upload_template',
+    method:'get',
+    params:{
+      file_type:'normal_orders',
+      file_name:'批量发货'
+    }
+  })
+}

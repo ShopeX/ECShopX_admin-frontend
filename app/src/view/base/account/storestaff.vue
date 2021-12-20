@@ -75,7 +75,12 @@
           </el-form-item>
           <el-form-item label="姓名">
             <el-col :span="10"
-              ><el-input required v-model="form.username" placeholder="请填写昵称" :disabled="datapass_block == 1"></el-input
+              ><el-input
+                required
+                v-model="form.username"
+                placeholder="请填写昵称"
+                :disabled="datapass_block == 1"
+              ></el-input
             ></el-col>
           </el-form-item>
           <el-form-item label="登录密码">
@@ -116,14 +121,16 @@
         <el-button type="primary" @click="submitAction">保存</el-button>
       </div>
     </el-dialog>
-    <DistributorSelect
-      :store-visible="DistributorVisible"
-      :is-valid="isValid"
-      :rel-data-ids="relDistributors"
-      :get-status="DistributorStatus"
-      @chooseStore="DistributorChooseAction"
-      @closeStoreDialog="closeDialogAction"
-    ></DistributorSelect>
+    <template v-if="DistributorVisible">
+      <DistributorSelect
+        :store-visible="DistributorVisible"
+        :is-valid="isValid"
+        :rel-data-ids="relDistributors"
+        @chooseStore="DistributorChooseAction"
+        @closeStoreDialog="closeDialogAction"
+        :oldData="oldData"
+      ></DistributorSelect>
+    </template>
   </div>
 </template>
 <script>
@@ -154,7 +161,6 @@ export default {
   data() {
     return {
       isValid: true,
-      DistributorStatus: false,
       relDistributors: [],
       DistributorVisible: false,
       login_type: 'default',
@@ -193,18 +199,18 @@ export default {
   },
   methods: {
     DistributoreHandleClose(index) {
-      this.DistributorStatus = false
       this.DistributorVisible = false
       this.relDistributors.splice(index, 1)
     },
     addDistributoreAction() {
+      // debugger
       this.DistributorVisible = true
-      this.DistributorStatus = true
     },
     getDistributor(ids) {
       let param = { distributor_id: ids }
       getDistributorList(param).then((res) => {
         this.relDistributors = res.data.data.list
+        this.oldData = res.data.data.list
       })
     },
     handleCancel() {
@@ -262,6 +268,7 @@ export default {
       }
     },
     submitAction() {
+      debugger
       // 提交物料
       this.form.shop_ids = []
       this.form.distributor_ids = []
@@ -342,14 +349,16 @@ export default {
       })
     },
     DistributorChooseAction(data) {
-      this.DistributorVisible = false
-      this.DistributorStatus = false
+      console.log(data)
+      // debugger
+      // this.DistributorVisible = false
       if (data === null || data.length <= 0) return
       this.relDistributors = data
     },
     closeDialogAction() {
-      this.DistributorStatus = false
       this.DistributorVisible = false
+      // this.relDistributors = []
+      // this.getDistributor();
     }
   },
   mounted() {

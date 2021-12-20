@@ -45,7 +45,7 @@
       <el-row>
         <el-col :span="3" class="col-3 content-right">申请时间:</el-col>
         <el-col :span="20">{{
-          aftersalesInfo.create_time | datetime("YYYY-MM-DD hh:mm:ss")
+          aftersalesInfo.create_time |datetime('YYYY-MM-DD HH:mm:ss')
         }}</el-col>
       </el-row>
       <el-row>
@@ -288,7 +288,7 @@
       </template>
 
       <!-- 退货退款审核 -->
-      <template v-else-if="aftersalesInfo.aftersales_type == 'REFUND_GOODS' && aftersalesInfo.distributor_id=='0'">
+      <template v-else-if="aftersalesInfo.aftersales_type == 'REFUND_GOODS' && aftersalesInfo.distributor_id=='0'|| aftersalesInfo.aftersales_type == 'REFUND_GOODS' &&  $store.getters.login_type=='distributor' ">
         <div class="section-header with-border">
           <h3>商家处理信息</h3>
         </div>
@@ -375,7 +375,7 @@
     <!-- 退货 -->
     <template  v-if="aftersalesInfo.distributor_id == '0'  && aftersalesInfo.progress == '0' || $store.getters.login_type=='distributor' && aftersalesInfo.progress == '0'" >
       <div class="section-header with-border">
-        <h3>商家处理信息2</h3>
+        <h3>商家处理信息</h3>
       </div>
       <div class="section-body">
         <template>

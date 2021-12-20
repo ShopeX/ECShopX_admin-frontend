@@ -10,6 +10,20 @@
 <template>
   <div>
     <el-tabs v-model="activeName" type="border-card" @tab-click="handleClick">
+      <div style="display:flex">
+        <el-button type="primary" icon="el-icon-box" @click="downloadtemplate" style="margin-right:20px"
+          >下载模板 </el-button
+        >
+        <el-upload
+          action=""
+          :on-change="uploadHandleChange"
+          :auto-upload="false"
+          :show-file-list="false"
+          class="upload"
+        >
+          <el-button type="primary" icon="el-icon-box">批量发货</el-button>
+        </el-upload>
+      </div>
       <div class="tip-info">
         <p>
           上传文件如果有处理失败的行数后将会生成错误文件，请及时查看错误信息修改后重新下载，错误描述文件只保留<strong>15天</strong>。
@@ -92,7 +106,8 @@ import {
   handleUploadFile,
   getUploadLists,
   exportUploadErrorFile,
-  exportUploadTemplate
+  exportUploadTemplate,
+  download
 } from '../../../../api/common'
 
 export default {
@@ -111,6 +126,32 @@ export default {
     ...mapGetters(['wheight'])
   },
   methods: {
+    async downloadtemplate() {
+      const result = await download()
+      let { data } = result.data
+      if (data.file) {
+        var a = document.createElement('a')
+        a.href = data.file
+        a.download = data.name
+        document.body.appendChild(a)
+        a.click()
+        a.remove()
+      }
+      console.log(result)
+    },
+    uploadHandleChange(file) {
+      let params = {
+        isUploadFile: true,
+        file_type: 'normal_orders',
+        file: file.raw
+      }
+      handleUploadFile(params).then(() => {
+        this.$message({
+          type: 'success',
+          message: '上传成功，等待处理'
+        })
+      })
+    },
     handleClick() {
       this.getUploadList()
     },

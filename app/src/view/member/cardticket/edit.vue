@@ -225,7 +225,7 @@
           ></el-switch>
         </el-form-item>
         <el-form-item label="领券限制">
-          <el-input type="number" v-model="form.get_limit" style="width: 120px"></el-input>
+          <el-input type="number" v-model="form.get_limit" style="width: 120px" min='1'  oninput="value=value.replace(/[^\d.]/g,'')"></el-input>
           <p class="frm-tips">每个用户领券上限，如不填，则默认为1。</p>
         </el-form-item>
         <el-form-item label="适用平台" v-if="is_distributor == false && form.card_type == 'gift'">

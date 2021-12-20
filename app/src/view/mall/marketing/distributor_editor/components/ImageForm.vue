@@ -9,16 +9,16 @@
     <el-row>
       <el-col :span="8">
         <el-form-item>
-          <div>店铺Logo</div>
+          <div>店铺Logo <span class="tips">推荐尺寸：140px * 140px</span></div>
           <div @click="handleImgPicker('logo')" class="upload-box">
             <img v-if="form.logo" :src="form.logo" class="avatar" />
             <i v-else class="iconfont icon-camera avatar-uploader-icon"></i>
           </div>
         </el-form-item>
       </el-col>
-      <el-col :span="8">
+      <el-col :span="12">
         <el-form-item>
-          <div>扫码购页面banner配置</div>
+          <div>商铺背景图片<span class="tips">推荐尺寸：400px * 260px</span></div>
           <div @click="handleImgPicker('banner')" class="upload-box">
             <img v-if="form.banner" :src="form.banner" class="avatar" />
             <i v-else class="iconfont icon-camera avatar-uploader-icon"></i>
@@ -37,70 +37,76 @@
 </template>
 
 <script>
-import { getDadaInfo } from "@/api/mall/dada";
-import imgPicker from "@/components/imageselect";
+import { getDadaInfo } from '@/api/mall/dada'
+import imgPicker from '@/components/imageselect'
 export default {
   components: {
-    imgPicker,
+    imgPicker
   },
   data() {
     return {
-      pickerImgType: "logo",
+      pickerImgType: 'logo',
       imgDialog: false,
       isGetImage: false,
-      form:{
-        logo:"",
-        banner:""
+      form: {
+        logo: '',
+        banner: ''
       }
-    };
-  }, 
-  props:['externalForm'],
+    }
+  },
+  props: ['externalForm'],
   watch: {
     externalForm: {
-      handler(val) { 
+      handler(val) {
         if (val.logo) {
-          this.form.logo = val.logo;
+          this.form.logo = val.logo
         }
         if (val.banner) {
-          this.form.banner = val.banner;
-        } 
+          this.form.banner = val.banner
+        }
       },
-      deep: true,
-    },
+      deep: true
+    }
   },
   methods: {
     closeImgDialog() {
-      this.imgDialog = false;
-      this.isGetImage = false;
+      this.imgDialog = false
+      this.isGetImage = false
     },
     handleImgPicker: function (pickerImgType) {
-      this.pickerImgType = pickerImgType;
-      this.imgDialog = true;
-      this.isGetImage = true;
+      this.pickerImgType = pickerImgType
+      this.imgDialog = true
+      this.isGetImage = true
     },
     pickImg(data) {
-      if (this.pickerImgType == "logo") {
-        this.form.logo = data.url;
+      if (this.pickerImgType == 'logo') {
+        this.form.logo = data.url
       } else {
-        this.form.banner = data.url;
+        this.form.banner = data.url
       }
-      this.imgDialog = false;
-    },
+      this.imgDialog = false
+    }
   },
-  mounted() {},
-};
+  mounted() {}
+}
 </script>
 
 <style scoped lang="scss">
-  .upload-box {
-    width: 150px;
-    height: 150px;
-    align-items: center;
-    display: flex;
-    border: 1px dashed #ccc;
-    border-radius: 5px;
-    img {
-      width: 100%;
-    }
+.upload-box {
+  width: 150px;
+  height: 150px;
+  align-items: center;
+  display: flex;
+  border: 1px dashed #ccc;
+  border-radius: 5px;
+  img {
+    width: 100%;
   }
+}
+.tips {
+  color: #8d8d8d;
+  line-height: 1.5;
+  font-size: 12px;
+  padding: 10px 0;
+}
 </style>

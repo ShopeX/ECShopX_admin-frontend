@@ -927,6 +927,8 @@ export default {
           })
           this.getGoodsList()
         }
+      }).catch(e => {
+        this.getGoodsList()
       })
     },
     tagSearchUserChange() {

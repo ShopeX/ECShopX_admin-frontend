@@ -111,8 +111,8 @@ import { log, isInSalesCenter } from '@/utils'
 import store from '@/store'
 export default {
   beforeRouteEnter(to, from, next) {
-    next(vm => {
-      vm.activeIndex = to.matched[0].path || '/'
+    next(vm => {  
+      vm.activeIndex = to.matched[0].path || '/'   
     })
   },
   data() {
@@ -141,7 +141,7 @@ export default {
       }
     }),
     submenuList() {
-      let list = []
+      let list = [] 
       const fd = this.menuList.find((item) => {
         // const paths = item.url.match(/\/[a-z]+/g)
         const paths = item.url.match(/\/\w+/g)
@@ -225,6 +225,8 @@ export default {
         window.location.href = `/shopadmin/login`
       }else if(this.$store.getters.login_type =='dealer'){
         window.location.href = `/dealer/login`
+      }else if(this.$store.getters.login_type =='merchant'){
+        window.location.href = `/merchant/login`
       }else{
         window.location.href = `/login`
       }

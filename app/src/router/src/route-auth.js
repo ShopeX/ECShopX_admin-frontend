@@ -19,6 +19,14 @@ export default [
     },
     name: '授权-店铺登录'
   },
+  {
+    path: '/merchant/login',
+    component: () => import( '@/view/merchantlogin' ),
+    meta: {
+      auth: false
+    },
+    name: '授权-商户登陆'
+  },
   // {
   //   path:'/dealer/login',
   //   component:()=> import('@/view/auth/login'),
@@ -30,6 +38,10 @@ export default [
   {
     path: '/shopadmin',
     redirect: '/shopadmin/login'
+  },
+  {
+    path: '/merchant',
+    redirect: '/merchant/login'
   },
   {
     path:'/dealer/login',

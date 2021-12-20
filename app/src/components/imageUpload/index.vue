@@ -72,8 +72,7 @@ export default {
     uploadHandle(val) {
       console.log(val)
     },
-    handleAvatarSuccess(res, file) {
-      debugger
+    handleAvatarSuccess(res, file) { 
       this.$emit('successHandle', res.data.data)
       this.loading = false
     },

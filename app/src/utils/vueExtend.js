@@ -243,7 +243,7 @@ Vue.prototype.theme = {
   $submenu_text: '#666'
 }
 
-Vue.prototype.companyBrand = '云店新零售系统'
+Vue.prototype.companyBrand = '商派ECShopX'
 Vue.prototype.companyBrandImg = process.env.PRODUCT_MODEL === 'standard' ? 'onex' : 'ecshopx'
 // 动态改变页面的title
 document.title = Vue.prototype.companyBrand

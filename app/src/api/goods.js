@@ -177,11 +177,11 @@ export function getItemWarningStore(query) {
   })
 }
 
-export function getCategory(query) {
+export function getCategory(params) {
   return fetch({
     url: '/goods/category',
     method: 'get',
-    params: query
+    params
   })
 }
 

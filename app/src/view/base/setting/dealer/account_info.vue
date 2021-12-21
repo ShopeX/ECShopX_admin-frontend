@@ -336,15 +336,15 @@
         </div>
       </el-card> -->
       <el-form-item style="text-align: center; margin: 50px 0; margin-right: 280px">
-        <!-- <el-button type="primary" @click="submitForm('ruleForm')"
-          >提交审核</el-button> -->
-        <loading-btn
+        <el-button type="primary" @click="submitForm"
+          >提交审核</el-button>
+        <!-- <loading-btn
           ref="loadingBtn"
           size="medium"
           type="primary"
           text="审核提交"
           @clickHandle="submitForm('ruleForm', 'loadingBtn')"
-        />
+        /> -->
       </el-form-item>
     </el-form>
     <Result-cpn
@@ -353,6 +353,15 @@
       v-if="processed == '已填'"
       @processedHandle="processedHandle"
     />
+
+    <check-box
+      :visible="checkBoxConfig.visible"
+      :message="checkBoxConfig.message"
+      :info="checkBoxConfig.info"
+      :isNote='checkBoxConfig.is_sms'
+      @checkBoxConfirmHandle="checkBoxConfirmHandle"
+      @checkBoxVisibleHandle="checkBoxVisibleHandle"
+    ></check-box>
   </div>
 </template>
 
@@ -360,11 +369,14 @@
 import ResultCpn from './cpn/result.vue'
 import areaData from '@/common/area.json'
 import loadingBtn from '@/components/loading-btn'
+import checkBox from './cpn/checkBox.vue'
+
 import { MaxRules, requiredRules } from './tools'
 export default {
   components: {
     ResultCpn,
-    loadingBtn
+    loadingBtn,
+    checkBox
   },
   data() {
     return {
@@ -379,6 +391,12 @@ export default {
         time: '',
         info: '',
         title: ''
+      },
+      checkBoxConfig: {
+        visible: false,
+        message: '请确认信息无误！',
+        info: [{type:'checkbox',value:'审核结果将有短信提醒发送至注册手机号'}],
+        is_sms:'',
       },
       props_city: {
         lazy: true,
@@ -399,49 +417,83 @@ export default {
           }
         }
       },
-      // 选中地区
-      form: {
-        // 企业信息
-        mer_name: '', // 商户名称
-        mer_short_name: '', // 商户名简称
-        license_code: '', //营业执照号
-        mer_start_valid_date_type: '', //商户有效日期type
-        mer_valid_date_full: '', //商户有效日期(完整、自有)
-        mer_valid_date_start: '', //商户有效日期 （开始）(因为选了长期、自有)
-
-        mer_start_valid_date: '', //商户有效日期 （开始）
-        mer_valid_date: '', //商户有效日期 （结束）
-
-        entry_mer_type: '1', // 商户类型
-        legal_name: '', // 法人负责人姓名
-        legal_idno: '', // 法人负责人身份证
-        legal_mp: '', //法人负责人身份证手机
-
-        legal_id_expires_type: '', // 法人/负责人身份证有效期type
-        legal_id_expires_full: '', //  法人/负责人身份证有效期 (完整、自有)
-        legal_id_expires_start: '', // 开始）(因为选了长期、自有)
-        legal_start_cert_id_expires: '', //法人/负责人身份证有效期（始）格式 YYYYMMDD
-        legal_id_expires: '', // 法人/负责人身份证有效期（至）格式 YYYYMMDD
-
-        usr_phone: '', //注册手机号
-        reg_addr: '', //注册地址
-        cust_addr: '', //经营地址
-        cust_tel: '', //商户电话（座机）
-        // 联系人信息
-        cont_name: '', // 联系人姓名
-        cont_phone: '', // 联系人手机号
-        customer_email: '', // 电子邮箱
-        // 结算账户信息
-        card_id_mask: '', //结算银行卡号
-        bank_code: '', //结算银行卡所属银行
-        bank_name: '',
-        card_name: '', //结算银行卡开户姓名
-        bank_acct_type: '', //结算银行账户类型
-        area: '',
-        prov_code: '', //结算银行卡省份编码
-        area_code: '' // 结算银行卡地区
-        //  isUploadFile: true
+            form: {
+        'mer_name': '张三',
+        'mer_short_name': '张三',
+        'license_code': '2121212121',
+        'mer_start_valid_date_type': '短期',
+        'mer_valid_date_full': ['20211130', '20220112'],
+        'mer_valid_date_start': '',
+        'mer_start_valid_date': '20211130',
+        'mer_valid_date': '20220112',
+        'entry_mer_type': '1',
+        'legal_name': '张三',
+        'legal_idno': '140481199602072376',
+        'legal_mp': '19921909090',
+        'legal_id_expires_type': '长期',
+        'legal_id_expires_full': '',
+        'legal_id_expires_start': '20211215',
+        'legal_start_cert_id_expires': '20211215',
+        'legal_id_expires': '20991231',
+        'usr_phone': '19921909090',
+        'reg_addr': '12321321',
+        'cust_addr': '21212121',
+        'cust_tel': '12321321',
+        'cont_name': '张三',
+        'cont_phone': '19921909090',
+        'customer_email': '19921909090@21.com',
+        'card_id_mask': '32178378217831287',
+        'bank_code': '建设银行',
+        'bank_name': '01050000',
+        'card_name': '张三',
+        'bank_acct_type': '2',
+        'area': ['0013', '1302'],
+        'prov_code': '0013',
+        'area_code': '1302'
       },
+      // 选中地区
+      // form: {
+      //   // 企业信息
+      //   mer_name: '', // 商户名称
+      //   mer_short_name: '', // 商户名简称
+      //   license_code: '', //营业执照号
+      //   mer_start_valid_date_type: '', //商户有效日期type
+      //   mer_valid_date_full: '', //商户有效日期(完整、自有)
+      //   mer_valid_date_start: '', //商户有效日期 （开始）(因为选了长期、自有)
+
+      //   mer_start_valid_date: '', //商户有效日期 （开始）
+      //   mer_valid_date: '', //商户有效日期 （结束）
+
+      //   entry_mer_type: '1', // 商户类型
+      //   legal_name: '', // 法人负责人姓名
+      //   legal_idno: '', // 法人负责人身份证
+      //   legal_mp: '', //法人负责人身份证手机
+
+      //   legal_id_expires_type: '', // 法人/负责人身份证有效期type
+      //   legal_id_expires_full: '', //  法人/负责人身份证有效期 (完整、自有)
+      //   legal_id_expires_start: '', // 开始）(因为选了长期、自有)
+      //   legal_start_cert_id_expires: '', //法人/负责人身份证有效期（始）格式 YYYYMMDD
+      //   legal_id_expires: '', // 法人/负责人身份证有效期（至）格式 YYYYMMDD
+
+      //   usr_phone: '', //注册手机号
+      //   reg_addr: '', //注册地址
+      //   cust_addr: '', //经营地址
+      //   cust_tel: '', //商户电话（座机）
+      //   // 联系人信息
+      //   cont_name: '', // 联系人姓名
+      //   cont_phone: '', // 联系人手机号
+      //   customer_email: '', // 电子邮箱
+      //   // 结算账户信息
+      //   card_id_mask: '', //结算银行卡号
+      //   bank_code: '', //结算银行卡所属银行
+      //   bank_name: '',
+      //   card_name: '', //结算银行卡开户姓名
+      //   bank_acct_type: '', //结算银行账户类型
+      //   area: '',
+      //   prov_code: '', //结算银行卡省份编码
+      //   area_code: '' // 结算银行卡地区
+      //   //  isUploadFile: true
+      // },
       rules: {
         mer_name: requiredRules('商户名称'),
         mer_short_name: requiredRules('商户名简称'),
@@ -573,8 +625,8 @@ export default {
       this.form.area_code = value[1]
     },
 
-    submitForm(formName, ref) {
-      this.$refs[formName].validate(async (valid) => {
+    submitForm() {
+      this.$refs['ruleForm'].validate((valid) => {
         if (valid) {
           if (this.form.bank_acct_type == '2') {
             const res = this.form.legal_name == this.form.card_name
@@ -583,25 +635,9 @@ export default {
               return
             }
           }
-          try {
-            const result = await this.$api.adapay.accountCreate(this.form)
-            const { status } = result.data.data
-            this.$refs[ref].closeLoading()
-            if (status) {
-              this.processed = '已填'
-              this.currentStatus = {
-                resultStatus: 'pending',
-                title: '开户',
-                time: '',
-                info: ''
-              }
-            }
-          } catch (error) {
-             this.$refs[ref].closeLoading()
-          }
+          this.checkBoxVisibleHandle()
         } else {
           console.log('error submit!!')
-          this.$refs[ref].closeLoading()
           return false
         }
       })
@@ -618,7 +654,8 @@ export default {
         mer_valid_date,
         mer_start_valid_date,
         area_code,
-        prov_code
+        prov_code,
+        is_sms
       } = this.form
       // 法人证件照有效期
       if (legal_id_expires == '20991231') {
@@ -638,6 +675,8 @@ export default {
       }
 
       this.form.area = [prov_code, area_code]
+      this.checkBoxConfig.is_sms = is_sms
+
 
       console.log(this.form)
       this.processed = '未填'
@@ -689,7 +728,32 @@ export default {
         return `上传图片大小不能超过 ${MAX_IMG_SIZE}MB!`
       }
       return true
+    },
+    /* ----------------------------------checkBox start----------------------------------- */
+    async checkBoxConfirmHandle(data) {
+      try {
+        const result = await this.$api.adapay.accountCreate({ ...this.form, ...data })
+        const { status } = result.data.data
+        if (status) {
+          this.processed = '已填'
+          this.currentStatus = {
+            resultStatus: 'pending',
+            title: '开户',
+            time: '',
+            info: ''
+          }
+        }
+        console.log(this.$refs);
+        
+        this.checkBoxVisibleHandle()
+      } catch (error) {
+        this.checkBoxVisibleHandle()
+      }
+    },
+    checkBoxVisibleHandle() {
+      this.checkBoxConfig.visible = !this.checkBoxConfig.visible;
     }
+    /* ----------------------------------checkBox  end ----------------------------------- */
   }
 }
 </script>

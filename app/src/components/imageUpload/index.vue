@@ -9,7 +9,6 @@
         :on-success="handleAvatarSuccess"
         :before-upload="beforeAvatarUpload"
         :http-request="handleUpload"
-        
       >
         <i class="iconfont el-icon-plus avatar-uploader-icon"></i>
       </el-upload>
@@ -45,6 +44,7 @@ export default {
   methods: {
     // 自定义上传
     handleUpload: function (e) {
+      console.log('========');
       console.log(e)
       console.log(e.file)
       console.log(this.type)
@@ -73,6 +73,7 @@ export default {
       console.log(val)
     },
     handleAvatarSuccess(res, file) {
+      debugger
       this.$emit('successHandle', res.data.data)
       this.loading = false
     },
@@ -84,18 +85,12 @@ export default {
 
       if (!isJPG && !isPNG) {
         this.$message.error('上传图片只能是 JPG 或者 PNG 格式!')
-        return
+        return  this.loading = false
       }
       if (!isLt2M) {
         this.$message.error('上传图片大小不能超过 1MB!')
-      }
-      if (isJPG && isLt2M) {
-       
-      }else{
-        this.loading = false
-      }
-      return isJPG && isLt2M
-
+          return  this.loading = false
+      } 
     }
   }
 }

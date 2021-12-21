@@ -192,7 +192,7 @@
 </template>
 <script>
   import { mapGetters } from 'vuex'
-  import { getTradeList, tradeExport, getPayOrderInfo } from '../../../api/trade'
+  import { getTradeList, tradeExport, getPayOrderInfo } from '@/api/trade'
   import shopSelect from '@/components/shopSelect'
 
   export default {
@@ -310,7 +310,15 @@
       exportData() {
         this.getParams()
         this.params.page = 1
-        tradeExport(this.params).then(response => {
+        //        mobile: '',
+        // orderId: '',
+        tradeExport({
+          ...this.params,
+          mobile:this.mobile,
+          orderId:this.orderId,
+          date_begin:this.date_begin,
+          date_end:this.date_end
+          }).then(response => {
           if (response.data.data.status) {
               this.$message({
                   type: 'success',

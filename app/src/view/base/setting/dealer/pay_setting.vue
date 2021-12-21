@@ -84,15 +84,14 @@
               </el-input>
             </el-form-item>
           </el-col>
-          <!-- <el-col :span="24">
-            <el-form-item label="入驻渠道" prop="bank_acct_type">
-               <el-checkbox-group v-model="form.type">
-                <el-checkbox label="支付宝" name="zfb"></el-checkbox>
-                <el-checkbox label="微信" name="wx"></el-checkbox>
-              </el-checkbox-group>
-             <p>请先选择收款方式再选择经营类目</p>
+          <el-col :span="12">
+            <el-form-item label="手续费扣费方式" prop="adapay_fee_mode">
+              <el-select v-model="form.adapay_fee_mode" style="width: 100%">
+                <el-option label="内扣" value="I"> </el-option>
+                <el-option label="外扣" value="O"> </el-option>
+              </el-select>
             </el-form-item>
-          </el-col> -->
+          </el-col>
         </el-row>
       </el-card>
       <!-- <el-card class="box-card" shadow="never">
@@ -128,14 +127,14 @@
         </el-row>
       </el-card> -->
       <el-form-item style="text-align: center; margin: 50px 0; margin-right: 130px">
-        <!-- <el-button type="primary" @click="submitForm('ruleForm')">提交审核</el-button> -->
-        <loading-btn
+        <el-button type="primary" @click="submitForm">提交审核</el-button>
+        <!-- <loading-btn
           ref="loadingBtn"
           size="medium"
           type="primary"
           text="审核提交"
           @clickHandle="submitForm('ruleForm', 'loadingBtn')"
-        />
+        /> -->
       </el-form-item>
     </el-form>
     <Result-cpn
@@ -144,6 +143,12 @@
       v-if="processed == '已填'"
       @processedHandle="processedHandle"
     />
+    <check-box
+      :visible="checkBoxConfig.visible"
+      :message="checkBoxConfig.message"
+      @checkBoxConfirmHandle="checkBoxConfirmHandle"
+      @checkBoxVisibleHandle="checkBoxVisibleHandle"
+    ></check-box>
   </div>
 </template>
 
@@ -152,10 +157,12 @@ import district from '@/common/district.json'
 import ResultCpn from './cpn/result.vue'
 import loadingBtn from '@/components/loading-btn'
 import { MaxRules, requiredRules } from './tools'
+import checkBox from './cpn/checkBox.vue'
 export default {
   components: {
     ResultCpn,
-    loadingBtn
+    loadingBtn,
+    checkBox
   },
   data() {
     return {
@@ -174,6 +181,10 @@ export default {
         info: '',
         title: ''
       },
+      checkBoxConfig: {
+        visible: false,
+        message: '请确认信息无误！'
+      },
       form: {
         fee_type: '', //费率类型
         wx_category: '', // 经营类目
@@ -183,7 +194,8 @@ export default {
         city_code: '', //城市编码
         district_code: '', //区县编码
         authorizer_appid: '', //微信小程序appid
-        select_regions_value: ''
+        select_regions_value: '',
+        adapay_fee_mode: '' //小程序扣费方式
       },
       rules: {
         fee_type: requiredRules('费率类型', 'change'),
@@ -193,16 +205,15 @@ export default {
         // city_code:{ required: true, message: '请选择', trigger: 'change' },
         // district_code:{ required: true, message: '请选择', trigger: 'change' },
         wx_category: requiredRules('经营类目', 'change'),
-        authorizer_appid: [requiredRules('微信小程序appid'), MaxRules(40)]
+        authorizer_appid: [requiredRules('微信小程序appid'), MaxRules(40)],
+        adapay_fee_mode: requiredRules('手续费扣费方式', 'change')
       },
       isEcho: false // 是否回显
     }
   },
   mounted() {
-    // this.getArea('pro');
     this.getOptions()
     this.getStepHandle()
-    // this.form.select_regions_value = ['110000','110100','110101']
   },
   methods: {
     // 查询开户步骤
@@ -244,30 +255,11 @@ export default {
       const result = await this.$api.adapay.getMerTypeOption(obj)
       this.mer_type_options = result.data.data.mer_type
     },
-    submitForm(formName, ref) {
-      this.$refs[formName].validate(async (valid) => {
+    submitForm() {
+      this.$refs['ruleForm'].validate(async (valid) => {
         if (valid) {
-          try {
-            const result = await this.$api.adapay.submitPay(this.form)
-            this.$refs[ref].closeLoading()
-            const { status } = result.data.data
-            if (status) {
-              this.processed = '已填'
-              this.currentStatus = {
-                resultStatus: 'pending',
-                time: '',
-                info: '',
-                title: '入驻'
-              }
-            }
-
-          } catch (error) {
-             this.$refs[ref].closeLoading()
-          }
-
-          console.log(result)
+          this.checkBoxVisibleHandle()
         } else {
-          this.$refs[ref].closeLoading()
           console.log('error submit!!')
           return false
         }
@@ -295,15 +287,41 @@ export default {
 
       console.log(this.form)
       this.processed = '未填'
+    },
+    /* ----------------------------------checkBox start----------------------------------- */
+    async checkBoxConfirmHandle() {
+      try {
+        const result = await this.$api.adapay.submitPay(this.form)
+        const { status } = result.data.data
+        if (status) {
+          this.processed = '已填'
+          this.currentStatus = {
+            resultStatus: 'pending',
+            time: '',
+            info: '',
+            title: '入驻'
+          }
+        }
+        this.checkBoxVisibleHandle()
+      } catch (error) {
+        // this.$refs['loadingBtn'].closeLoading()
+        this.checkBoxVisibleHandle()
+      }
+    },
+    checkBoxVisibleHandle() {
+      this.checkBoxConfig.visible = !this.checkBoxConfig.visible
+      // if (this.checkBoxConfig.visible) {
+      //   this.$refs['loadingBtn'].closeLoading()
+      // }
     }
+    /* ----------------------------------checkBox  end ----------------------------------- */
   },
   watch: {
     'form.fee_type'(val) {
       this.getCategoryOptions({
         fee_type: val
       })
-      if (this.isEcho && this.from.wx_category) {
-        this.isEcho = false
+      if (this.isEcho && this.form.wx_category) {
         return
       }
       this.form.wx_category = ''

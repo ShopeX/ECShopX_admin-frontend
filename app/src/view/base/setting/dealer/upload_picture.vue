@@ -279,14 +279,14 @@
         </el-row>
       </el-card>
       <el-form-item style="text-align: center; margin: 50px 0; margin-right: 130px">
-        <!-- <el-button type="primary" @click="submitForm('ruleForm')">提交审核</el-button> -->
-        <loading-btn
+        <el-button type="primary" @click="submitForm('ruleForm')">提交审核</el-button>
+        <!-- <loading-btn
           ref="loadingBtn"
           size="medium"
           type="primary"
           text="提交审核"
           @clickHandle="submitForm('ruleForm', 'loadingBtn')"
-        />
+        /> -->
       </el-form-item>
     </el-form>
 
@@ -296,6 +296,14 @@
       v-if="processed == '已填'"
       @processedHandle="processedHandle"
     />
+    <check-box
+      :visible="checkBoxConfig.visible"
+      :message="checkBoxConfig.message"
+      :info="checkBoxConfig.info"
+      :isNote="checkBoxConfig.is_sms"
+      @checkBoxConfirmHandle="checkBoxConfirmHandle"
+      @checkBoxVisibleHandle="checkBoxVisibleHandle"
+    ></check-box>
   </div>
 </template>
 
@@ -303,11 +311,13 @@
 import ResultCpn from './cpn/result.vue'
 import imageUpload from '@/components/imageUpload'
 import loadingBtn from '@/components/loading-btn'
+import checkBox from './cpn/checkBox.vue'
 export default {
   components: {
     ResultCpn,
     imageUpload,
-    loadingBtn
+    loadingBtn,
+    checkBox
   },
   data() {
     return {
@@ -316,6 +326,12 @@ export default {
       pickerImgType: '',
       resultStatus: '',
       processed: '',
+      checkBoxConfig: {
+        visible: false,
+        message: '请确认信息无误！',
+        info: [{ type: 'checkbox', value: '审核结果将有短信提醒发送至注册手机号' }],
+        is_sms: ''
+      },
       currentStatus: {
         resultStatus: '',
         time: '',
@@ -455,40 +471,48 @@ export default {
       }
       this.$message.success('上传成功')
     },
-    submitForm(formName, ref) {
-      this.$refs[formName].validate(async (valid) => {
+    submitForm() {
+      this.$refs['ruleForm'].validate(async (valid) => {
         if (valid) {
-          try {
-            const result = await this.$api.adapay.submitPhoto({
-              ...this.apiData,
-              business_add: this.form.business_add,
-              cert_name: this.form.cert_name,
-              cert_id: this.form.cert_id,
-              industry_qualify_doc_type: this.form.industry_qualify_doc_type
-            })
-            this.$refs[ref].closeLoading()
-            const { status } = result.data.data
-            if (status) {
-              this.processed = '已填'
-              this.currentStatus = {
-                resultStatus: 'pending',
-                time: '',
-                info: '',
-                title: '证照信息'
-              }
-            }
-          } catch (error) {
-            this.$refs[ref].closeLoading()
-            return
-          }
-          
+          this.checkBoxVisibleHandle()
         } else {
-          this.$refs[ref].closeLoading()
           console.log('error submit!!')
           return false
         }
       })
     },
+    /* ----------------------------------checkBox start----------------------------------- */
+    async checkBoxConfirmHandle(data) {
+      try {
+        const result = await this.$api.adapay.submitPhoto({
+          ...this.apiData,
+          business_add: this.form.business_add,
+          cert_name: this.form.cert_name,
+          cert_id: this.form.cert_id,
+          industry_qualify_doc_type: this.form.industry_qualify_doc_type,
+           ...data
+        })
+
+        const { status } = result.data.data
+        if (status) {
+          this.processed = '已填'
+          this.currentStatus = {
+            resultStatus: 'pending',
+            time: '',
+            info: '',
+            title: '证照信息'
+          }
+        }
+        this.checkBoxVisibleHandle();
+      } catch (error) {
+        this.checkBoxVisibleHandle()
+        return
+      }
+    },
+    checkBoxVisibleHandle() {
+      this.checkBoxConfig.visible = !this.checkBoxConfig.visible
+    },
+    /* ----------------------------------checkBox  end ----------------------------------- */
     nextPage() {
       this.$router.push('/setting/adapay_merchant/pay_setting')
     },

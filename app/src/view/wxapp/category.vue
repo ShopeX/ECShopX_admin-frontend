@@ -624,7 +624,7 @@ $txt-placeholder: #f5f5f7;
             <div class="layout-view">
               <el-tabs v-if="series.length > 0" v-model="editableSeries" @tab-click="handleClick">
                 <el-tab-pane
-                  v-for="(item, index) in series"
+                  v-for="item in series"
                   :key="item.name"
                   :label="item.title"
                   :name="item.name"
@@ -702,7 +702,7 @@ $txt-placeholder: #f5f5f7;
                       "
                       alt=""
                     />
-                    <div v-for="item in 3" class="child-goods-view">
+                    <div v-for="item in 3" class="child-goods-view" :key="item">
                       <div class="child-item">
                         <img class="item-img" src="https://fakeimg.pl/70x70/EFEFEF/CCC/" alt="" />
                         <div class="item-caption">
@@ -768,7 +768,7 @@ $txt-placeholder: #f5f5f7;
                   @tab-click="handleClick"
                 >
                   <el-tab-pane
-                    v-for="(item, index) in series"
+                    v-for="item in series"
                     :key="item.name"
                     :label="item.title"
                     :name="item.name"
@@ -846,11 +846,13 @@ $txt-placeholder: #f5f5f7;
                           :class="{
                             ' iconfont icon-link': !sitem.main_category_id && !sitem.category_id
                           }"
-                          @click="showCategory(fidx, sidx)"
+                          @click="showCategory(fidx, sidx, '', sitem)"
                         >
-                          {{ sitem.main_category_id ? '主类目：' : ''
-                          }}{{ sitem.category_id ? '商品分类：' : ''
-                          }}{{ sitem.category_name ? sitem.category_name : '绑定分类' }}
+                          <template v-if="sitem">
+                            {{ sitem.main_category_id ? '主类目：' : '' }}
+                            {{ sitem.category_id ? '商品分类：' : '' }}
+                            {{ sitem.category_name ? sitem.category_name : '绑定分类' }}
+                          </template>
                         </div>
                         <div class="control-bar move iconfont icon-stream"></div>
                         <div
@@ -881,7 +883,15 @@ $txt-placeholder: #f5f5f7;
                                   'iconfont icon-link':
                                     !litem.main_category_id && !litem.category_id
                                 }"
-                                @click="showCategory(fidx, sidx, lidx)"
+                                @click="
+                                  showCategory(
+                                    fidx,
+                                    sidx,
+                                    lidx,
+
+                                    litem
+                                  )
+                                "
                               >
                                 {{ litem.main_category_id ? '主类目：' : ''
                                 }}{{ litem.category_id ? '商品分类：' : ''
@@ -928,13 +938,15 @@ $txt-placeholder: #f5f5f7;
       <el-dialog title="绑定分类" :visible.sync="categoryDialog" :before-close="hideCategory">
         <el-form>
           <el-form-item>
-            <el-radio-group v-model="curCateType">
+            <el-radio-group v-model="curCateType" @change="curCateTypeChange">
               <el-radio-button label="goodsCate">商品分类</el-radio-button>
               <el-radio-button label="mainCate">主类目</el-radio-button>
             </el-radio-group>
           </el-form-item>
           <el-form-item label="选择分类">
             <el-cascader
+              v-model="goodsCateValue"
+              :key='goodsCateValueKey'
               v-if="curCateType === 'goodsCate'"
               placeholder="选择商品分类"
               :options="category"
@@ -944,6 +956,8 @@ $txt-placeholder: #f5f5f7;
             >
             </el-cascader>
             <el-cascader
+              v-model="mainCategoryValue"
+              :key='mainCategoryValueKey'
               v-if="curCateType === 'mainCate'"
               placeholder="选择主类目"
               :options="mainCategory"
@@ -997,6 +1011,12 @@ import { savePageParams, getParamByTempName, getCustomPageList } from '@/api/wxa
 export default {
   data() {
     return {
+      goodsCateValue: '',
+      goodsCateValueKey: 0,
+
+      mainCategoryValue: '',
+      mainCategoryValueKey: 0,
+
       currentFidx: 0,
       currentSidx: 0,
       currentLidx: 0,
@@ -1073,6 +1093,15 @@ export default {
       curTabIndex: 0
     }
   },
+  watch:{
+    category(){
+      this.goodsCateValueKey++
+    },
+    mainCategory(){
+      this.mainCategoryValueKey++
+    }
+
+  },
   components: {
     imgPicker,
     // 第三方组件
@@ -1082,14 +1111,39 @@ export default {
     ...mapGetters(['wheight', 'template_name'])
   },
   methods: {
-    handleCateChange(val) {
-      this.currentCategory = {
-        main_category_id: '',
-        category_id: val[val.length - 1],
-        category_name: this.findCateName(val, this.category)
+    curCateTypeChange(val){
+      console.log(val);
+      if (val=='mainCate') {
+        this.currentCategory ={};
+        // this.goodsCateValue =''
+         this.mainCategoryValue =''
+        // this.
+      }else{
+          this.currentCategory ={};
+        // this.mainCategoryValue =''
+        this.goodsCateValue =''
+
+        // mainCategoryValue
       }
     },
+    handleCateChange(val) {
+      if (val.length == 0) {
+        this.currentCategory = ''
+      } else {
+        this.currentCategory = {
+          main_category_id: '',
+          category_id: val[val.length - 1],
+          category_name: this.findCateName(val, this.category)
+        }
+      }
+
+      console.log(this.currentCategory)
+    },
     handleMainCateChange(val) {
+      if (val.length == 0) {
+        this.currentCategory = ''
+        return
+      }
       this.currentCategory = {
         main_category_id: val[val.length - 1],
         category_id: '',
@@ -1267,8 +1321,104 @@ export default {
     closeimgsVisible() {
       this.imgsVisible = false
     },
+    // 递归
+    recursive(list, id) {
+      console.log(list)
+      let result = ''
+
+      // list.forEach((item) => {
+      //   const loop = (data) => {
+      //     if (data.category_id == id) {
+      //       result = data
+      //       return result
+      //     }
+      //     let children = data.children
+      //     if (children) {
+      //       for (let i = 0; i < children.length; i++) {
+      //         loop(children[i], id)
+      //       }
+      //     }
+      //   }
+      //   loop(item)
+      // })
+      list.forEach((item) => {
+        const loop = (data) => {
+          if (data.value == id) {
+            result = data
+            return result
+          }
+          let children = data.children
+          if (children) {
+            for (let i = 0; i < children.length; i++) {
+              loop(children[i], id)
+            }
+          }
+        }
+        loop(item)
+      })
+      return result
+    },
     // 分类设置绑定事件
-    showCategory(fidx, sidx, lidx) {
+    async showCategory(fidx, sidx, lidx, info = null) {
+      const response = await getCategory();
+      this.category = this.initCategory(response.data.data)
+      const response2 = await getCategory({is_main_category:true});
+      this.mainCategory =   this.initCategory(response2.data.data)
+      console.log(this.category);
+      console.log(this.mainCategory);
+
+      // getCategory().then((response) => {
+      //   debugger
+      //   this.category = this.initCategory(response.data.data)
+      // }).catch(()=>{
+      //   console.log(1111);
+      // })
+      // getCategory({ is_main_category: true }).then((response) => {
+      //   this.mainCategory = this.initCategory(response.data.data)
+      // })
+      // debugger
+      if (info) {
+        if (!info.main_category_id) {
+          // debugger
+          this.curCateType = 'goodsCate'
+          const category_id = info.category_id
+          const result = this.recursive(this.category, category_id)
+          console.log(result)
+          if (result) {
+            this.goodsCateValue = result.value
+            this.currentCategory = {
+              main_category_id: '',
+              category_id: result.value,
+              category_name: result.label
+            }
+            console.log(this.currentCategory)
+          } else {
+            this.currentCategory = []
+            this.goodsCateValue = []
+
+          }
+        } else {
+          this.curCateType = 'mainCate'
+          // debugger
+          const result = this.recursive(this.mainCategory, info.main_category_id)
+          console.log(result)
+          if (result) {
+            this.mainCategoryValue = result.value
+
+            this.currentCategory = {
+              main_category_id: result.value,
+              category_id: '',
+              category_name: result.label
+            }
+            console.log(this.currentCategory)
+          } else {
+            this.currentCategory = []
+            this.mainCategoryValue = []
+          }
+        }
+      }
+
+      // debugger
       this.currentFidx = fidx
       this.currentCategory = ''
       if (lidx !== undefined) {
@@ -1285,12 +1435,7 @@ export default {
       }
       this.categoryDialog = true
       this.categoryLoading = true
-      getCategory().then((response) => {
-        this.category = this.initCategory(response.data.data)
-      })
-      getCategory({ is_main_category: true }).then((response) => {
-        this.mainCategory = this.initCategory(response.data.data)
-      })
+
     },
     initCategory(data) {
       let categorys = []

@@ -3,10 +3,11 @@
     class="store-dialog"
     :title="isSynchronize ? '同步模板到店铺' : '选择店铺'"
     :visible.sync="showDialog"
+    :show-close="false"
     :close-on-click-modal="false"
     :before-close="cancelAction"
   >
-    <div style="margin-bottom: 15px">
+    <div style="margin-bottom: 15px;">
       <el-input
         :placeholder="isSynchronize ? '请选择店铺所在地' : '输入店铺名称'"
         v-model="name"
@@ -15,6 +16,7 @@
       ></el-input>
     </div>
     <el-table
+      v-if='storeVisible'
       ref="multipleTable"
       :data="storeData"
       tooltip-effect="dark"
@@ -39,7 +41,7 @@
       </el-pagination>
     </div>
     <span slot="footer" class="dialog-footer">
-      <el-button @click="cancelAction">取 消</el-button>
+      <!-- <el-button @click="cancelAction">取 消</el-button> -->
       <el-button type="primary" v-if="!isSynchronize" @click="saveStoreAction">确 定</el-button>
       <el-button type="primary" v-else @click="saveStoreAction">确 定 同 步</el-button>
       <el-button type="primary" v-if="isSynchronize" @click="saveAllStoreAction"
@@ -55,34 +57,16 @@ export default {
   props: {
     relDataIds: {
       type: Array,
-      default: function () {
+      default: function() {
         return []
       }
-    },
-    oldData:{
+    },  
+    oldData: {
       type: Array,
-      default: function () {
+      default: function() {
         return []
       }
-    },
-    // data () {
-    //   return {
-    //     dataType: 'distributor',
-    //     loading: false,
-    //     storeData: [],
-    //     multipleSelection: [],
-    //     pageLimit: 10,
-    //     total_count: '',
-    //     params: {
-    //       page: 1,
-    //       pageSize: 10,
-    //       is_valid: 'true',
-    //       is_app:1
-    //     },
-    //     name: '',
-    //     selectRows: []
-    //   }
-    // },
+    },  
     isValid: {
       type: Boolean,
       default: false
@@ -98,6 +82,9 @@ export default {
     isSynchronize: {
       type: Boolean,
       default: false
+    },
+    getStatus:{
+      type: Boolean, 
     }
   },
   data() {
@@ -112,25 +99,41 @@ export default {
         page: 1,
         pageSize: 10,
         is_valid: 'true',
-        is_app: 1
+        is_app:1
       },
       name: '',
-      selectRows: []
+      selectRows: [],
+      isFristLoad:true
     }
   },
-  mounted() {
-    this.getDistributor()
-  },
   methods: {
+    initState(){
+      this.isFristLoad = true
+      this.storeData = []
+      // this.selectRows = []
+      // this.params = {
+      //   page: 1,
+      //   pageSize: 10,
+      //   is_valid: 'true',
+      //   is_app:1
+      // }
+    },
     getDistributor() {
-      getDistributorList(this.params).then((response) => {
+      getDistributorList(this.params).then((response) => {        
+        if(this.storeData.length > 0) this.isFristLoad = false
         this.storeData = response.data.data.list
-        this.total_count = response.data.data.total_count
+        this.total_count = parseInt(response.data.data.total_count)
         this.loading = false
-
-        if (this.relDataIds.length > 0) {
-          this.$refs.multipleTable.clearSelection()
-          this.toggleSelection(this.relDataIds)
+        this.multipleSelection = []
+        // this.$refs.multipleTable.clearSelection()
+        console.log('this.isFristLoad',this.isFristLoad)
+        console.log('this.selectRows',this.selectRows)
+        // 如果是 首次加载，并且是回显 状态 则执行
+        if (this.isFristLoad && this.selectRows) {
+          console.log('this.selectRows-test',this.selectRows.length, this.selectRows)
+          this.selectRows.forEach((item) => {            
+            this.$refs.multipleTable.toggleRowSelection(item)
+          })
         }
       })
     },
@@ -154,18 +157,25 @@ export default {
         this.$refs.multipleTable.clearSelection()
       }
     },
-    handleSelectionChange(val) {
-      if (val.length > 0) {
+    handleSelectionChange(val) {               
+      if (val) {
+        // console.log('handleSelectionChange',val)
         this.multipleSelection = val
+        val.forEach((item) => {
+          let isInArr = this.selectRows.findIndex((n) => n.distributor_id == item.distributor_id)
+          if (isInArr == -1) {
+            this.selectRows.push(item)
+          }
+        })
       }
     },
     cancelAction() {
+      this.initState()
       this.$emit('closeStoreDialog')
-      this.$emit('chooseStore', this.oldData)
     },
     saveStoreAction() {
+      this.initState()
       this.$emit('chooseStore', this.multipleSelection)
-      this.$emit('closeStoreDialog')
     },
     saveAllStoreAction() {
       this.$emit('chooseAllStore')
@@ -180,8 +190,13 @@ export default {
     sourceType(newVal, oldVal) {
       this.dataType = this.sourceType
     },
-    multipleSelection() {
-      this.$emit('chooseStore', this.multipleSelection)
+    relDataIds(newVal, oldVal) {
+      this.selectRows = newVal
+    },
+    getStatus(newVal, oldVal) {
+      if (newVal) {
+        this.getDistributor()
+      }
     }
   }
 }

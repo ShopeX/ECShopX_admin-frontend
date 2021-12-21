@@ -16,7 +16,7 @@
       <el-table-column prop="tag_id" label="ID" width="100"></el-table-column>
       <el-table-column prop="tag_name" label="标签名称" width="250">
         <template slot-scope="scope">
-          <el-tag :color="scope.row.tag_color" size="mini" style="color:#ffffff">{{
+          <el-tag :style="{color:scope.row.font_color,backgroundColor:scope.row.tag_color}" size="mini">{{
             scope.row.tag_name
           }}</el-tag>
         </template>

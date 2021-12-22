@@ -1243,7 +1243,6 @@ export default {
           let s = this.components[this.editorIndex].base.listIndex
           console.log(this.editorData.list[s].goodsList) // 源数据
           if (values.length>=this.editorData.list[s].goodsList.length) {
-            debugger
             for (let i = 0; i < this.editorData.list[s].goodsList.length; i++) {
               for (let j = 0; j < values.length; j++) {
                 if (this.editorData.list[s].goodsList[i].goodsId == values[j].goodsId) {

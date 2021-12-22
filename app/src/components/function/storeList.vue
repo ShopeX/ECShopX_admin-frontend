@@ -35,13 +35,7 @@
             :key="item.id"
             @click="handleItemClick(item)"
             :class="
-              multiple
-                ? current.findIndex((cur) => cur.id === item.id) !== -1
-                  ? 'active'
-                  : ''
-                : current.id === item.id
-                ? 'active'
-                : ''
+              multiple? (current && current.findIndex((cur) => cur.id === item.id) !== -1? 'active': ''): (current.id === item.id? 'active': '')
             "
           >
             <div class="store-name">{{ item.name }}</div>

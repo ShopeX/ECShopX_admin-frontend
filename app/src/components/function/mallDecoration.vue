@@ -621,30 +621,30 @@ export default {
             padded: true
           },
           data: [
-            {
-              type: 'cash',
-              id: '',
-              amount: '50',
-              imgUrl: '../../images/coupon_brand_demo.jpg',
-              title: '巴黎欧莱雅',
-              desc: '全场商品满900减50'
-            },
-            {
-              type: 'discount',
-              id: '',
-              amount: '8',
-              imgUrl: '../../images/coupon_brand_demo.jpg',
-              title: '巴黎欧莱雅',
-              desc: '全场商品满900减50'
-            },
-            {
-              type: 'cash',
-              id: '',
-              amount: '100',
-              imgUrl: '../../images/coupon_brand_demo.jpg',
-              title: '巴黎欧莱雅',
-              desc: '全场商品满900减50'
-            }
+            // {
+            //   type: 'cash',
+            //   id: '',
+            //   amount: '50',
+            //   imgUrl: '../../images/coupon_brand_demo.jpg',
+            //   title: '巴黎欧莱雅',
+            //   desc: '全场商品满900减50'
+            // },
+            // {
+            //   type: 'discount',
+            //   id: '',
+            //   amount: '8',
+            //   imgUrl: '../../images/coupon_brand_demo.jpg',
+            //   title: '巴黎欧莱雅',
+            //   desc: '全场商品满900减50'
+            // },
+            // {
+            //   type: 'cash',
+            //   id: '',
+            //   amount: '100',
+            //   imgUrl: '../../images/coupon_brand_demo.jpg',
+            //   title: '巴黎欧莱雅',
+            //   desc: '全场商品满900减50'
+            // }
           ],
           voucher_package: [
             // {

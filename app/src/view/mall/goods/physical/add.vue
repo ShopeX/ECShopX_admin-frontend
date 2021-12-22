@@ -320,7 +320,7 @@
           item_main_cat_id: goodsDetail.item_main_cat_id,
           itemVideo: {
             media_id: goodsDetail.videos,
-            url: goodsDetail.videos_url
+            url: goodsDetail.videos
           },
         }
 

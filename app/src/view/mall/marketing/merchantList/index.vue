@@ -83,6 +83,9 @@ export default {
 
 <style lang="scss">
 .merchantList {
+    .yahh{
+    color: #ff6700;
+  }
   .sp-finder-search .el-input__inner {
     height: 40px;
     line-height: 40px;
@@ -112,6 +115,7 @@ export default {
 
 <style lang="scss" scoped>
 .zyk_adapay_account {
+
   .group {
     margin: 30px 0;
     border: 1px solid #f5f5f5;

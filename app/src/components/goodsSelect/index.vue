@@ -303,7 +303,7 @@ export default {
         // 代表进行了关闭店铺 设置为总店的操作
         val.id = 0;
       }
-      console.log(val);
+      console.log("==handleStoreChange==",val);
       this.store = val
       this.$refs.multipleTable.clearSelection()
       this.selectRows = []
@@ -501,7 +501,7 @@ export default {
   },
   watch: {
     itemsVisible(val) {
-      console.log(val);
+      console.log("itemsVisible==",val,this.relStore);
       if (val) {
         if (this.relStore.id) {
           this.params.distributor_id = this.relStore.id
@@ -549,7 +549,7 @@ export default {
               console.log('sku------------'+ this.selectRows);
               this.loading = false
             })
-          } else {
+          } else { 
             getDistributorItems(param).then((res) => {
               const selectRows = res.data.data.list
               this.selectRows = selectRows

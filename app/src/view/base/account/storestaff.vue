@@ -2,7 +2,7 @@
   <div>
     <el-row :gutter="20">
       <el-col :span="12">
-        <el-button type="primary" icon="plus" @click="addLabels">添加2222账号</el-button>
+        <el-button type="primary" icon="plus" @click="addLabels">添加账号</el-button>
       </el-col>
       <el-col :span="12">
         <el-input placeholder="手机号" v-model="mobile"

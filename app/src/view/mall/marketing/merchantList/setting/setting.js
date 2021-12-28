@@ -16,42 +16,28 @@ export default (vm) => {
       { key: 'merchant_name', name: '商户名称' },
       { key: 'legal_name', name: '联系人' },
       { key: 'legal_mobile', name: '联系电话' },
-      { key: 'test', name: '入驻时间', slot: 'date' },
+      { key: 'time_start', name: '入驻时间',type:'date-range' ,defaultTime:['00:00:00', '23:59:59'] },
+
     ],
     columns: [
       { name: '商户名称', key: 'merchant_name' },
       { name: '联系人', key: 'legal_name' },
       { name: '联系电话', key: 'legal_mobile' },
-      { name: '入驻时间', key: 'settled_succ_sendsms' },
+      { name: '入驻时间', key: 'created',formatter:formatDate,width:'160px' },
       {
         name: "商品审核（商户商家商品是否需通过平台审核）",
         key: "audit_goods",
-        // showType: "text",
-        // componentProps: {
-        //   inactiveValue: false,
-        //   activeValue: true,
-        //   handler(val, row) {
-        //     console.log(val);
-        //     console.log(row);
-        //   },
-        //   // onChange:(v,row)=>{
-        //   //   console.log(v);
-        //   //   console.log(row);
-
-        //   // }
-
-
-        // },
+        width:'100px',
         render: (h, {row}) =>
           h(
             'el-button',
             {
               class:'yahh',
               props: { type: 'text' },
-              on: { click: () => { console.log(row) } },
+              on: { click: () => { vm.fnAffirm(row) } },
 
             },
-            [h('span',{class:'aaa'},row.audit_goods? '是':'否'),h('i',{class:'el-icon-question'},'')]
+            [h('span',{class:'aaa'},row.audit_goods? ' 是 ':' 否 '),h('i',{class:'el-icon-s-tools'},'')]
         
         ),
 
@@ -77,13 +63,53 @@ export default (vm) => {
         action: {
           type: 'link',
           handler: async val => {
-            console.log(val[0].log_id);
-            const result = await vm.$api.adapay.logDetail(val[0].log_id);
-            vm.result = result.data.data.result;
-            vm.params = result.data.data.params;
-            vm.visible = true;
+            vm.$router.push({ path: vm.matchHidePage('editor'),query:{type:'detail',merchantId:val[0].id} })
           }
         }
+      },
+      {
+        name: '编辑',
+        key: 'editor',
+        type: 'button',
+        buttonType: 'text',
+        action: {
+          type: 'link',
+          handler: async val => {
+            vm.$router.push({ path: vm.matchHidePage('editor'),query:{type:'editor',merchantId:val[0].id} })
+          }
+        }
+      },
+      {
+        name: '禁用',
+        key: 'off',
+        type: 'button',
+        buttonType: 'text',
+        action: {
+          type: 'link',
+          handler: async val => {
+            vm.fnMerchantsState(val,false)
+          },
+          
+        },
+        visible:(val)=>{
+          return val.disabled;
+        },
+      },
+      {
+        name: '开启',
+        key: 'off',
+        type: 'button',
+        buttonType: 'text',
+        action: {
+          type: 'link',
+          handler: async val => {
+            vm.fnMerchantsState(val,true)
+          },
+          
+        },
+        visible:(val)=>{
+          return !val.disabled;
+        },
       }
     ],
   })

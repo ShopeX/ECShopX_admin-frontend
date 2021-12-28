@@ -1,6 +1,6 @@
 import fetch from '@/utils/fetch'
 
-/* 商家设置 */
+/* 商家入驻 */
 
 // 商家分类列表
 export function getMerchantsClassification(params = {}) {
@@ -20,7 +20,7 @@ export function addMerchantsClassification(params = {}) {
 }
 
 // 编辑商家分类
-export function editMerchantsClassification(id,params = {}) {
+export function editMerchantsClassification(id, params = {}) {
     return fetch({
         url: `/merchant/type/${id}`,
         method: 'put',
@@ -39,24 +39,76 @@ export function deleteMerchantsClassification(id) {
 //获取商家基础配置
 export function getShopConfig() {
     return fetch({
-        url:'/merchant/basesetting',
-        method:'get'
+        url: '/merchant/basesetting',
+        method: 'get'
     })
 }
 // b保存商家基础设置
 export function saveShopConfig(params) {
     return fetch({
-        url:'/merchant/basesetting',
-        method:'post',
+        url: '/merchant/basesetting',
+        method: 'post',
         params
     })
 }
 
 // 添加/更新 商家
-export function addTheBusinessman(params,id) {
+export function addTheBusinessman(params, id) {
     return fetch({
-        url:`/api/merchant${id?`/${id}`:''}`,
-        method:'post',
+        url: `/merchant${id ? `/${id}` : ''}`,
+        method: 'post',
         params
+    })
+}
+
+// 商户入驻申请列表
+export function getApplicationListForMerchantEntry(params = {}) {
+    return fetch({
+        url: `/merchant/settlement/apply/list`,
+        method: 'get',
+        params
+    })
+
+}
+
+// 商户账号管理列表
+export function getMerchantAccountList(params = {}) {
+    return fetch({
+        url: '/merchant/operator',
+        method: 'get',
+        params
+    })
+}
+
+// 获取商户详情
+export function getTheMerchant(params, id) {
+    return fetch({
+        url: `/merchant/detail/${id}`,
+        method: 'get',
+        params
+    })
+}
+
+//更新商户的商品审核状态
+export function setCommodityAudit(params, id) {
+    return fetch({
+        url: `/merchant/auditgoods/update/${id}`,
+        method: 'post',
+        params
+    })
+}
+export function setMerchantsState(params, id) {
+    return fetch({
+        url: `/merchant/disabled/update/${id}`,
+        method: 'post',
+        params
+    })
+}
+
+// 重置商户密码
+export function setChangePassword(id) {
+    return fetch({
+        url: `/merchant/operator/${id}`,
+        method: 'put',
     })
 }

@@ -22,6 +22,7 @@
       />
 
       <DadaForm :rules="rules" ref="dadaFormRef" :externalForm="form" @onChangeData="handleChangeData" />
+      <IntroduceForm ref='introduceFormRef' :externalForm="form"></IntroduceForm>
 
       <!-- <FashionForm ref="fashionFormRef" :externalForm="form" /> -->
 
@@ -46,6 +47,7 @@ import FashionForm from "./components/FashionForm";
 import ImageForm from "./components/ImageForm";
 import ShopForm from "./components/ShopForm";
 import BaseForm from "./components/BaseForm";
+import IntroduceForm from './components/IntroduceForm.vue'
 import GlobalFooter from "@/components/global_footer";
 
 export default {
@@ -56,6 +58,7 @@ export default {
     ImageForm,
     ShopForm,
     BaseForm,
+    IntroduceForm
   },
   data() {
     return {
@@ -126,6 +129,8 @@ export default {
           console.log("this.$refs.imageFormRef.form",this.$refs.imageFormRef.form)
           console.log("this.$refs.shopFormRef.form",this.$refs.shopFormRef.form)
           console.log("this.$refs.dadaFormRef.form",this.$refs.dadaFormRef.form)
+          console.log("this.$refs.introduceFormRef.form",this.$refs.introduceFormRef.form)
+
           // console.log("this.$refs.fashionFormRef.form",this.$refs.fashionFormRef.form)
           
           const filterParams = {
@@ -134,6 +139,7 @@ export default {
             ...this.deleteParams(['name','logo','contact','mobile','contract_phone','is_audit_goods','is_ziti','banner'],this.$refs.shopFormRef.form),
             ...this.$refs.dadaFormRef.form,
             // ...this.$refs.fashionFormRef.form,
+            ...this.$refs.introduceFormRef.form,
             hour:
               this.$refs.baseFormRef.startTime +
               "-" +

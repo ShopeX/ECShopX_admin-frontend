@@ -17,6 +17,11 @@ export default {
       component: () => import('@/view/base/account/storestaff')
     },
     {
+      path: 'staff/storemanager',
+      name: `账号管理-商户账号管理`, 
+      component: () => import('@/view/mall/marketing/merchantAccount')
+    },
+    {
       path: 'staff/Merchantstaffroles',
       name: `账号管理-店铺员工角色`, 
       component: () => import('@/view/base/account/storeroles')

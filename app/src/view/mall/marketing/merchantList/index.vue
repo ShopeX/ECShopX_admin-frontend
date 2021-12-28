@@ -7,7 +7,7 @@
         </div>
         <SpFinder
           ref="finder"
-          :split-count="2"
+          :split-count="3"
           :search-row-count="2"
           :fixed-row-action="true"
           :setting="setting"
@@ -17,20 +17,6 @@
           }"
           url="/merchant/list"
         >
-          <template v-slot:date>
-            <!-- 默认今天，时间最长一周 -->
-            <el-date-picker
-              v-model="time"
-              style="width: 100%"
-              type="daterange"
-              value-format="yyyy-MM-dd"
-              range-separator="-"
-              start-placeholder="开始日期"
-              end-placeholder="结束日期"
-              @change="timeHandle"
-            >
-            </el-date-picker>
-          </template>
           <template v-slot:tableTop>
             <div style="text-align:right;margin-bottom:20px">
               <el-button size='small' type="primary" plain @click="addMerchant">新增商户</el-button>
@@ -45,15 +31,8 @@
 
 <script>
 import setting_ from './setting/setting'
+import { setCommodityAudit,setMerchantsState } from '@/api/mall/marketing.js'
 export default {
-  data() {
-    return {
-      time: [],
-      operator: '',
-      begin_time: '',
-      end_time: ''
-    }
-  },
   mounted() {
     // this.currentDay();
     //  this.$refs.finder.refresh()
@@ -64,27 +43,49 @@ export default {
     }
   },
   methods: {
-    timeHandle(val) {
-      this.begin_time = val[0]
-      this.end_time = val[1]
+    fnAffirm(row){
+      const message = row.audit_goods?'关闭后商户商品上架是无需审核，请确认是否关闭':'开启后商户商品上架是需要审核，请确认是否开启';
+       this.$confirm(message, '通知消息', {
+          confirmButtonText: '确定',
+          cancelButtonText: '取消',
+          type: 'warning',
+          center: true
+        }).then(async () => {
+          const result = await setCommodityAudit({audit_goods:!row.audit_goods},row.id);
+          if (result.data.data.status) {
+            this.$message({
+              type: 'success',
+              message: '更新成功!'
+            });
+            this.$refs.finder.refresh()
+          }
+        })
+      console.log(row);
+    },
+    fnMerchantsState(row,status){
+      const id = row[0].id;
+      const message = status?'开启后且该商户及其关联店铺的账号可登录商家端以及店铺端，该商户及其关联店铺在小程序显示，请确认是否开启。':'禁用后该商户及其关联店铺不在小程序显示，且该商户及其关联店铺的账号无法登录商家端以及店铺端，请确认是否禁用该商户。';
+       this.$confirm(message, '通知消息', {
+          confirmButtonText: '确定',
+          cancelButtonText: '取消',
+          type: 'warning',
+          center: true
+        }).then(async () => {
+          const result = await setMerchantsState({disabled:status},id);
+          if (result.data.data.status) {
+            this.$message({
+              type: 'success',
+              message: '更新成功!'
+            });
+            this.$refs.finder.refresh()
+          }
+      })
+
     },
     addMerchant(){
-      console.log( this.matchHidePage('editor'));
       this.$router.push({ path: this.matchHidePage('editor') })
-       
-    },
-    day(n) {
-      const startTimestamp = new Date(this.begin_time).getTime()
-      const endTimestamp = new Date(this.end_time).getTime()
-      if (endTimestamp - startTimestamp > n * 24 * 60 * 60 * 1000) {
-        this.$message.error('查询范围不能超过一周')
-      }
     },
     beforeSearch(params) {
-      params.begin_time = this.begin_time
-      params.end_time = this.end_time
-
-      this.day(7)
       return { ...params }
     }
   }
@@ -94,7 +95,10 @@ export default {
 <style lang="scss">
 .merchantList {
   .yahh {
-    color: #ff6700;
+    color: #409EFF;
+  }
+  .el-table .cell.el-tooltip {
+    text-align: center;
   }
   .sp-finder-search .el-input__inner {
     height: 40px;
@@ -116,6 +120,7 @@ export default {
   .el-table th {
     background: #f5f5f5;
     color: #000;
+    text-align: center;
   }
   .btn {
     border: none;

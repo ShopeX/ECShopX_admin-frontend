@@ -60,6 +60,8 @@
               <span v-if="index == 'promotions'">营销权益</span>
               <span v-if="index == 'member'">会员关怀</span>
               <span v-if="index == 'trade'">交易提醒</span>
+              <span v-if="index == 'registration'">活动报名</span>
+              <span v-if="index == 'merchant'">商户入驻</span>
             </div>
             <div class="section-body">
               <div

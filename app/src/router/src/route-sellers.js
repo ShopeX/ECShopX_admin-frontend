@@ -8,33 +8,32 @@ export default {
   children: [
     {
       path: 'storemanager/marketingdistributor',
+      name: `店铺列表`,
+      component: () => import('@/view/mall/marketing/distributor'),
+      children: [
+        {
+          path: 'editor/:itemId?',
+          component: () =>
+            import('@/view/mall/marketing/distributor_editor')
+        },
+        {
+          path: 'template/:distributor_id?',
+          component: () => import('@/view/mall/marketing/distributor_template')
+        }
+      ]
+    },
+    {
+      path: 'storemanager/list',
       name: `商家列表`,
       component: () => import('@/view/mall/marketing/merchantList/index.vue'),
       children: [
         {
           path: 'editor',
           component: () => import('@/view/mall/marketing/merchantList/editor.vue')
-          
+
         }
       ]
     },
-    // 旧商家列表
-    // {
-    //   path: 'storemanager/marketingdistributor',
-    //   name: `商家列表`,
-    //   component: () => import( '@/view/mall/marketing/distributor' ),
-    //   children: [
-    //     {
-    //       path: 'editor/:itemId?',
-    //       component: () =>
-    //         import( '@/view/mall/marketing/distributor_editor' )
-    //     },
-    //     {
-    //       path: 'template/:distributor_id?',
-    //       component: () =>import('@/view/mall/marketing/distributor_template')
-    //     }
-    //   ]
-    // },
     {
       path: 'storemanager/distributortags',
       name: `商家标签`,
@@ -44,6 +43,17 @@ export default {
       path: 'storemanager/distributoraftersalesaddress',
       name: `售后地址`,
       component: () => import('@/view/mall/marketing/distributorAftersalesAddress')
+    },
+    {
+      path: 'storemanager/application',
+      name: `入驻审核`,
+      component: () => import('@/view/mall/marketing/merchantVerify'),
+      children: [
+        {
+          path: 'approve/:id?',
+          component: () => import('@/view/mall/marketing/openingapproval/approve')
+        }
+      ]
     },
     {
       path: 'storemanager/setting',

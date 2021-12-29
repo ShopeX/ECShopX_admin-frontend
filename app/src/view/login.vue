@@ -316,7 +316,7 @@ export default {
               }
             })
           })
-          console.log("----setmenu----",res.data.data) 
+          console.log("----setmenu----",res.data.data)  
           this.$store.dispatch('setMenu', res.data.data)
         } else {
           this.$message({

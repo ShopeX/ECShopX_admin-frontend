@@ -23,7 +23,7 @@ const router = new VueRouter({
 
 
 // 动态路由
-router.beforeEach(( to, from, next ) => {
+router.beforeEach(( to, from, next ) => {  
   NProgress.start();
   // 加载PC模版设计器
   if ( to.path == '/pc/design' ) {
@@ -108,7 +108,7 @@ router.beforeEach(( to, from, next ) => {
               }
               _route.children = route.children.filter( ( item ) => {
                 if ( item.name == 'dashboard' ) {
-                  return customRouterUrls.includes( `/` )||customRouterUrls.includes( `/merchantmenu` )
+                  return customRouterUrls.includes( `/` )||customRouterUrls.includes( `/merchant` )
                 } else {
                   return customRouterUrls.includes( `${route.path}/${item.path}` )
                 }
@@ -161,6 +161,8 @@ router.beforeEach(( to, from, next ) => {
     } else {
       if ( to.path.includes('/shopadmin') ) {
         window.location.href = constantRouterMap.RouteAuth[1].path
+      } else if ( to.path.includes('/merchant') ){
+        window.location.href = constantRouterMap.RouteAuth[2].path
       } else {
         // 登录
         window.location.href = constantRouterMap.RouteAuth[0].path

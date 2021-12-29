@@ -3,7 +3,7 @@ const name = '概况'
 import Layout from '@/view/layout' // 主框架
 
 export default {
-  path: '/merchantmenu',
+  path: '/merchant',
   component: Layout,
   children: [
     {

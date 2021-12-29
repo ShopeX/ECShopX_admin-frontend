@@ -38,11 +38,7 @@ export default [
   {
     path: '/shopadmin',
     redirect: '/shopadmin/login'
-  },
-  {
-    path: '/merchant',
-    redirect: '/merchant/login'
-  },
+  }, 
   {
     path:'/dealer/login',
     component:()=> import('@/view/auth/dealer_login'),

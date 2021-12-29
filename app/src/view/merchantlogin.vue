@@ -155,8 +155,8 @@ export default {
               duration: 2 * 1000,
               onClose() {
                 _self.SET_USERINFO(info.data.data)
-                _self.SET_LOGIN_TYPE({ loginType: _self.symbol }) 
-                _self.$router.push({ path: '/merchantmenu' }) 
+                _self.SET_LOGIN_TYPE({ loginType: _self.symbol })  
+                _self.$router.push({ path: '/merchant' }) 
                 _self.$router.go(0)
               }
             })
@@ -181,7 +181,7 @@ export default {
           var params = {
             username: this.ruleForm1.account,
             password: this.ruleForm1.checkPass,
-            logintype: 'merchant'
+            logintype: this.symbol
           }
           try {
             const res = await this.$api.auth.login(params)

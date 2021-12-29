@@ -56,14 +56,13 @@
               <el-form-item label="申请日期">
                 <el-date-picker
                   class="input-m"
-                  v-model="create_time"
+                  v-model="query.time_start"
                   :default-time="['00:00:00', '23:59:59']"
                   type="daterange"
                   format="yyyy-MM-dd"
-                  value-format="timestamp"
+                  value-format="yyyy-MM-dd HH:mm:ss"
                   start-placeholder="开始日期"
                   end-placeholder="结束日期"
-                  @change="dateChange"
                 />
               </el-form-item>
             </el-col>
@@ -122,7 +121,7 @@
             <el-col class="cus-row-btn" :span="3" :offset="item.audit_status !== '1'?0:5">
               <router-link
                 v-if="item.audit_status === '1'"
-                :to="{ path: matchHidePage('approve'), query: { id: item.id } }"
+               :to="{ path:matchHidePage('verify'), query: { type:'verify',merchantId: item.id } }"
               >
                 <el-button type="primary">审批</el-button>
               </router-link>
@@ -166,8 +165,7 @@ export default {
         merchant_name: '',
         audit_status: '',
         settled_type: '',
-        time_start_begin: '',
-        time_start_end: ''
+        time_start:[]
       },
       regions_value: [],
       approveStatusList: [
@@ -186,13 +184,9 @@ export default {
     this.getList()
   },
   methods: {
-    dateChange(val) {
-      console.log(val)
-      this.query.time_start_begin = val[0] || ''
-      this.query.time_start_end = val[1] || ''
-    },
     searchData(e) {
       this.query.page = 1
+      this.getList()
       console.log(this.query)
     },
     handleCurrentChange(val) {
@@ -240,7 +234,8 @@ export default {
     resetForm(formName) {
         this.$refs[formName].resetFields()
         this.regions_value = []
-        this.create_time = []
+        this.time_start = []
+        this.getList();
     },
     createTimeFilter(time) {
       return moment(time * 1000).format('YYYY-MM-DD HH:mm:ss')

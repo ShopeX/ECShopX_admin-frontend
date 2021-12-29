@@ -418,7 +418,6 @@ export default {
     this.init();
   },
   methods:{
-
     async init(){
       console.log(this.$route);
       const { type,merchantId } = this.$route.query;

@@ -137,3 +137,10 @@ export function getTheMerchantInfo() {
         method:'get'
     })
 }
+export function updateTheMerchantInfo(params={}) {
+    return fetch({
+        url:'/merchant/operator',
+        method:'post',
+        params
+    })
+}

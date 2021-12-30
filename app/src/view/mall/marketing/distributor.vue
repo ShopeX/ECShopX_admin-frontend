@@ -62,7 +62,9 @@
         <el-col>
           <el-button-group v-if="!is_distributor">
             <el-button type="primary" @click="addDistributorSelf()" v-if="!distributor_self">新增总部自提点</el-button>
-            <el-button type="primary" @click="editDistributorSelf()" v-else>编辑总部自提点</el-button>
+            <template v-else>
+               <el-button type="primary" @click="editDistributorSelf()" v-if="$store.getters.login_type!='merchant'">编辑总部自提点</el-button>
+            </template>
             <el-button
               type="primary"
               v-if="system_mode === 'platform'"
@@ -188,7 +190,7 @@
               <span v-else class="muted">废弃</span>
             </template>
           </el-table-column>
-          <el-table-column width="80" label="是否默认">
+          <el-table-column width="80" label="是否默认" v-if="$store.getters.login_type!='merchant'">
             <template slot-scope="scope" v-if="scope.row.is_valid !== 'delete'">
               <el-tooltip effect="dark" content="请先启用店铺" placement="top-start">
                 <el-switch

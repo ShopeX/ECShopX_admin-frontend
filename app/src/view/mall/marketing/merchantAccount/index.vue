@@ -24,13 +24,13 @@
             <!-- <el-input v-model="form.mobile" autocomplete="off"></el-input> -->
           </el-form-item>
           <el-form-item label="登录密码">
-            <el-input type='password' v-model="form.password" autocomplete="off"></el-input>
-            <span style="color:#999;">密码6-16位，支持字母、数字、下划线</span>
+            <el-input type='password' v-model="form.password" autocomplete="off" style="max-width:160px"></el-input>
+            <span style="color:#999;"> 密码6-16位，支持字母、数字、下划线</span>
           </el-form-item>
       </el-form>
       <span slot="footer" class="dialog-footer">
-        <el-button @click="visible = false" size='small'>取 消</el-button>
-        <el-button type="primary" @click="visible = false" size='small'>确 定</el-button>
+        <el-button @click="handleClose" size='small'>取 消</el-button>
+        <el-button type="primary" @click="fnConfirm" size='small'>确 定</el-button>
       </span>
     </el-dialog>
   </div>
@@ -38,7 +38,7 @@
 
 <script>
 import setting_ from './setting'
-import { setChangePassword } from '@/api/mall/marketing.js'
+import { setChangePassword ,updateTheMerchantInfo} from '@/api/mall/marketing.js'
 export default {
   data(){
     return{
@@ -46,6 +46,9 @@ export default {
       form:{
         mobile:'',
         password:''
+      },
+      currentUser:{
+        id:'',
       }
     }
   },
@@ -78,14 +81,27 @@ export default {
     beforeSearch(params) {
       return { ...params }
     },
+    async fnConfirm(){
+      const result = await updateTheMerchantInfo({
+        operator_id:this.currentUser.id,
+        password:this.form.password
+      });
+      if (result.data.data.status) {
+        this.$message.success('修改成功');
+        this.handleClose();
+      }
+    },
     editHandler(row){
+      console.log(row);
       this.visible = true
       this.form.mobile = row.mobile
-      console.log(row);
+      this.currentUser.id = row.operator_id
+      
     },
     handleClose(){
       this.visible =false
       this.form.password = '';
+      this.currentUser.id = ''
     }
   }
 }

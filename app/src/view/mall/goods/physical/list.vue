@@ -658,10 +658,6 @@ export default {
         this.params.type = 0
       }
       this.login_type = this.$store.getters.login_type
-      console.log(this.categoryList);
-      if (this.categoryList.length==0) {
-        this.getCategory()
-      }
       if (this.$route.query.category) {
         this.params.category = this.$route.query.category
         this.select_category_value = this.params.category.split(',')
@@ -678,7 +674,7 @@ export default {
 
       this.getGoodsList()
       this.getShippingTemplatesList()
-      // this.getCategory()
+      this.getCategory()
       this.getCurrencyInfo()
       this.getAllTagLists()
       this.getGoodsBranchList()
@@ -1312,7 +1308,7 @@ export default {
     getCategory() {
       getCategory({ is_show: false }).then((response) => {
         this.categoryList = response.data.data
-        this.init()
+        // this.init()
       })
       
     },
@@ -1443,7 +1439,7 @@ export default {
     }
   },
   mounted() {
-    this.getCategory()
+    this.init()
   },
 
   destroyed() {

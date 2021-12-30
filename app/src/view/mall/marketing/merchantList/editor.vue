@@ -127,12 +127,12 @@
                       v-for="item in MerchantsType"
                       :key="item.id"
                       :label="item.name"
-                      :value="item.name">
+                      :value="item.id">
                     </el-option>
                 </el-select>
               </el-form-item>
           </el-col>
-          <el-col :span="8" v-if="form.merchant_type">
+          <el-col :span="8" v-if="form.merchant_type && WorkingGroupList.length>0">
               <el-form-item label="经营范围" prop='merchant_type_id'>
                 <el-select v-model="form.merchant_type_id" placeholder="请选择" style="width:100%" :disabled="disabled">
                     <el-option
@@ -243,6 +243,7 @@
 
         </el-row>
       </el-card>
+      <!-- 按钮 -->
       <template v-if="$route.query.type=='edit' || !$route.query.type && $store.getters.login_type!='merchant'">
         <el-form-item label-width='0px' style="text-align: center;margin-top:60px">
           <el-button type="primary" style="padding:10px 50px" @click="submitFn('form')">保存</el-button>
@@ -305,7 +306,7 @@ export default {
       //   merchant_name:'张三的烧饼店',
       //   social_credit_code_id:'888898981209876543',
       //   regions_id:['140000','140100','140107'],
-      //   regions:['山西省', '太原市', '杏花岭区'],
+      //   regions:[],
       //   address:'张村',
       //   legal_name:'张三',
       //   legal_cert_id:'343672981078223457',
@@ -317,7 +318,7 @@ export default {
       //   bank_mobile:'13909098888',
       //   card_id_mask:'343672981078223457',
       //   // 入驻信息
-      //   merchant_type:'贸易类x',
+      //   merchant_type:'',
       //   merchant_type_id:'6',
       //   audit_goods:'true',
       //   // 证照信息
@@ -377,6 +378,7 @@ export default {
         bank_mobile:[requiredRules('银行预留手机号'),MaxRules('11')],
         card_id_mask:[requiredRules('结算银行卡号'),MaxRules('19')],
         merchant_type:[requiredRules('商户类型','change')],
+        merchant_type_id:[requiredRules('经营类型','change')],
         audit_goods:requiredRules('是否审核商品','change'),
         license_url:requiredRules('营业执照','change'),
         legal_certid_front_url:requiredRules('法人手持身份证正面','change'),
@@ -390,9 +392,10 @@ export default {
   },
   watch:{
     'form.merchant_type':{
-      immediate: true,
+      // immediate: true,
       handler(value){
         if (this.$store.getters.login_type!='merchant') {
+          console.log(value);
           this.getWorkingGroupList(value)
         }
         
@@ -414,6 +417,11 @@ export default {
           this.form.mobile =''
         }
       }
+    }
+  },
+  computed:{
+    merchant_type(){
+      return this.form.merchant_type
     }
   },
   mounted(){
@@ -452,18 +460,24 @@ export default {
       }
     },
     resultHandler(result){
-        this.form = result.data.data;
-        this.form.regions_id = JSON.parse(this.form.regions_id);
-        this.form.merchant_type = this.form.merchant_type_parent_name;
-        this.form.audit_goods = JSON.stringify(this.form.audit_goods);
-        this.form.regions = [this.form.province,this.form.city,this.form.area]
-        console.log(result);
+      const {settled_type,merchant_name,regions_id,province,city,area,social_credit_code_id,legal_name,legal_cert_id,legal_mobile,email,bank_acct_type,bank_name,bank_mobile,card_id_mask,merchant_type_id,audit_goods,license_url,legal_certid_front_url,legal_cert_id_back_url,bank_card_front_url,contract_url,merchant_type_parent_id}  = result.data.data;
+      this.form = {
+        settled_type,merchant_name,regions_id,social_credit_code_id,legal_name,legal_cert_id,legal_mobile,email,bank_acct_type,bank_name,bank_mobile,card_id_mask,merchant_type_id,license_url,legal_certid_front_url,legal_cert_id_back_url,bank_card_front_url,contract_url,
+        audit_goods:JSON.stringify(audit_goods),
+        regions_id: JSON.parse(regions_id),
+        regions:[province,city,area],
+        merchant_type:merchant_type_parent_id
+      };
+      console.log(result);
     },
     submitFn(formName){
       this.$refs[formName].validate(async (valid) => {
         if (valid) {
           const { type,merchantId } = this.$route.query;
-          const result = await addTheBusinessman(this.form,type=='editor'?merchantId:null); 
+          if (!this.form.merchant_type_id) {
+            this.form.merchant_type_id = this.form.merchant_type;
+          }
+          const result = await addTheBusinessman(this.form,type=='edit'?merchantId:null); 
           if (result.data.data.status) {
             this.$message.success('保存成功');
             this.$router.go(-1)
@@ -534,12 +548,15 @@ export default {
     
     // 获取商户类型及经营范围
     async getMerchantsTypeList(){
-      const result = await getMerchantsClassification({sort_order_by:this.sort_order_by});
+      const result = await getMerchantsClassification({sort_order_by:this.sort_order_by,is_show: 'true'});
       this.MerchantsType = result.data.data;
     },
-    async getWorkingGroupList(name){
-      const result = await getMerchantsClassification({sort_order_by:this.sort_order_by,name});
-      this.WorkingGroupList = result.data.data[0].children;
+    async getWorkingGroupList(id){
+      const currentInfo = this.MerchantsType.find((item)=>{
+        return item.id == id
+      })     
+      const result = await getMerchantsClassification({sort_order_by:this.sort_order_by,name:currentInfo?currentInfo.name:''});
+      this.WorkingGroupList = (result.data.data.length>0 && result.data.data[0].children) || [];
     },
     // 结算所属银行
     async querySearch(queryString, cb) {
@@ -569,20 +586,20 @@ export default {
       this.form.bank_name = val.value
     },
     merchantType_change(val){
-      this.form.merchant_type = val;
-      this.form.merchant_type_id = ''
-      this.getWorkingGroupList(val)
-      console.log(val);
+      // this.form.merchant_type = val;
+      // this.form.merchant_type_id = ''
+      // this.getWorkingGroupList(val)
+      // console.log(val);
     },
     regionChange(value){      
       console.log(value);
       var vals = this.getCascaderObj(value, AreaJson)
       if (vals.length > 0) {
-        this.regions = [vals[0].label,vals[1].label,vals[2].label]
+        this.form.regions = [vals[0].label,vals[1].label,vals[2].label]
       } else {
-        this.regions = []
+        this.form.regions = []
       }
-      console.log(this.regions);
+      console.log(this.form.regions);
     },
     getCascaderObj(val, opt) {
       return val.map(function (value) {

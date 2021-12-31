@@ -164,6 +164,7 @@ export default {
   data() {
     return {
       isValid: true,
+      oldData:[],
       relDistributors: [],
       DistributorVisible: false,
       login_type: 'default',

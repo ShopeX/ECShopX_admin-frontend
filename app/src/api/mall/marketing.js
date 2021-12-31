@@ -153,3 +153,12 @@ export function updateTheMerchantInfo(params={}) {
         params
     })
 }
+
+// 获取商户类型
+export function getMerchantsType(params) {
+    return fetch({
+        url:'/merchant/visibletype/list',
+        method:'get',
+        params
+    })
+}

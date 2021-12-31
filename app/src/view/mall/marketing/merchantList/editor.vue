@@ -132,7 +132,7 @@
                 </el-select>
               </el-form-item>
           </el-col>
-          <el-col :span="8" v-if="form.merchant_type && WorkingGroupList.length>0">
+          <el-col :span="8" v-if="form.merchant_type_id">
               <el-form-item label="经营范围" prop='merchant_type_id'>
                 <el-select v-model="form.merchant_type_id" placeholder="请选择" style="width:100%" :disabled="disabled">
                     <el-option
@@ -275,7 +275,7 @@
 
 <script>
 import { MaxRules, requiredRules } from '@/view/base/setting/dealer/tools'
-import { getMerchantsClassification,addTheBusinessman,getTheMerchant,merchantsInDetail,setCheckTheEntryOfMerchants,getTheMerchantInfo,getArea } from '@/api/mall/marketing.js'
+import { getMerchantsClassification,addTheBusinessman,getTheMerchant,merchantsInDetail,setCheckTheEntryOfMerchants,getTheMerchantInfo,getArea,getMerchantsType } from '@/api/mall/marketing.js'
 import imgPicker from '@/components/imageselect'
 import checkBox from '@/view/base/setting/dealer/cpn/checkBox.vue'
 
@@ -472,15 +472,12 @@ export default {
       };
       this.audit_status = audit_status;
       console.log(this.form);
-      // console.log(result);
+      console.log(result);
     },
     submitFn(formName){
       this.$refs[formName].validate(async (valid) => {
         if (valid) {
           const { type,merchantId } = this.$route.query;
-          if (!this.form.merchant_type_id) {
-            this.form.merchant_type_id = this.form.merchant_type;
-          }
           const result = await addTheBusinessman(this.form,type=='edit'?merchantId:null); 
           if (result.data.data.status) {
             this.$message.success('保存成功');
@@ -552,16 +549,12 @@ export default {
     
     // 获取商户类型及经营范围
     async getMerchantsTypeList(){
-      const result = await getMerchantsClassification({sort_order_by:this.sort_order_by,is_show: 'true'});
+      const result = await getMerchantsType();
       this.MerchantsType = result.data.data;
     },
     async getWorkingGroupList(id){
-      const currentInfo = this.MerchantsType.find((item)=>{
-        return item.id == id
-      })  
-      const result = await getMerchantsClassification({sort_order_by:this.sort_order_by,is_show: 'true',name:currentInfo?currentInfo.name:''});
-      // debugger
-      this.WorkingGroupList = (result.data.data.length>0 && result.data.data[0].children) || [];
+      const result = await getMerchantsType({parent_id:id});
+      this.WorkingGroupList = (result.data.data.length>0 && result.data.data) || [];
     },
     // 结算所属银行
     async querySearch(queryString, cb) {
@@ -591,7 +584,6 @@ export default {
       this.form.bank_name = val.value
     },
     merchantType_change(val){
-      debugger
       this.form.merchant_type = val;
       this.form.merchant_type_id = ''
       // this.getWorkingGroupList(val)

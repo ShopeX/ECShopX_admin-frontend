@@ -251,7 +251,7 @@
       </template>
       <template v-if="$route.query.type=='verify'">
         <el-form-item label-width='0px' style="text-align: center;margin-top:60px">
-          <template v-if="form.audit_status=='1'">
+          <template v-if="audit_status=='1'">
             <el-button type="success" style="padding:10px 50px" @click="fnPass">通过</el-button>
             <el-button type="danger" style="padding:10px 50px" @click="fnReject">驳回</el-button>
           </template>
@@ -289,6 +289,7 @@ export default {
         is_idea:true
       },
       currentCheckBoxStatus:'',
+      audit_status:'',
       AreaJson: [],
       MerchantsType:[],
       WorkingGroupList:[],
@@ -461,7 +462,7 @@ export default {
       
     },
     resultHandler(result){
-      const {settled_type,merchant_name,regions_id,address,province,city,area,social_credit_code_id,legal_name,legal_cert_id,legal_mobile,email,bank_acct_type,bank_name,bank_mobile,card_id_mask,merchant_type_id,audit_goods,license_url,legal_certid_front_url,legal_cert_id_back_url,bank_card_front_url,contract_url,merchant_type_parent_id}  = result.data.data;
+      const {settled_type,merchant_name,regions_id,address,province,city,area,social_credit_code_id,legal_name,legal_cert_id,legal_mobile,email,bank_acct_type,bank_name,bank_mobile,card_id_mask,merchant_type_id,audit_goods,license_url,legal_certid_front_url,legal_cert_id_back_url,bank_card_front_url,contract_url,merchant_type_parent_id,audit_status}  = result.data.data;
       this.form = {
         settled_type,merchant_name,address,social_credit_code_id,legal_name,legal_cert_id,legal_mobile,email,bank_acct_type,bank_name,bank_mobile,card_id_mask,merchant_type_id,license_url,legal_certid_front_url,legal_cert_id_back_url,bank_card_front_url,contract_url,
         audit_goods:JSON.stringify(audit_goods),
@@ -469,6 +470,7 @@ export default {
         regions:[province,city,area],
         merchant_type:merchant_type_parent_id
       };
+      this.audit_status = audit_status;
       console.log(this.form);
       // console.log(result);
     },
@@ -554,15 +556,6 @@ export default {
       this.MerchantsType = result.data.data;
     },
     async getWorkingGroupList(id){
-      // setTimeout(async()=>{
-      //   console.log(this.MerchantsType); 
-      //   const currentInfo = this.MerchantsType.find((item)=>{
-      //     return item.id == id
-      //   })  
-      //   const result = await getMerchantsClassification({sort_order_by:this.sort_order_by,is_show: 'true',name:currentInfo?currentInfo.name:''});
-      //   this.WorkingGroupList = (result.data.data.length>0 && result.data.data[0].children) || [];
-      // },100)
-
       const currentInfo = this.MerchantsType.find((item)=>{
         return item.id == id
       })  
@@ -598,8 +591,9 @@ export default {
       this.form.bank_name = val.value
     },
     merchantType_change(val){
-      // this.form.merchant_type = val;
-      // this.form.merchant_type_id = ''
+      debugger
+      this.form.merchant_type = val;
+      this.form.merchant_type_id = ''
       // this.getWorkingGroupList(val)
       // console.log(val);
     },

@@ -15,12 +15,11 @@
     <div class="list">
         <el-table
             @sort-change='fnFort'
-            
             :loading='loading'
             :data="merchantsClassificationList"
             style="width: 100%;margin-bottom: 20px;" 
             row-key="id" default-expand-all
-            :default-sort = "{prop: 'sort', order: 'descending'}"
+            :default-sort = "{prop: 'sort', order: 'ascending'}"
             :tree-props="{children: 'children', hasChildren: 'hasChildren'}">
             <el-table-column prop="name" label="分类名称"></el-table-column>
             <el-table-column prop="is_show" label="是否可见">
@@ -143,8 +142,9 @@ export default {
             console.log(row,type);
             console.log(this.editInfo);
             if (type=='edit') {
+                debugger
                 const {name,sort,is_show} =row
-                const result = await editMerchantsClassification(this.editInfo && this.editInfo.id || row.id,{name,sort,is_show});
+                const result = await editMerchantsClassification( row.id || this.editInfo && this.editInfo.id,{name,sort,is_show});
                 console.log(result);
                 if (result.data.data.status) {
                     this.$message.success('编辑成功')

@@ -46,7 +46,7 @@
             content="导出任务会以队列执行，点击导出后，请至‘设置-导出列表’页面中查看及下载数据">
             <i class="el-icon-question" slot="reference"></i>
           </el-popover>
-          <el-button type="primary" @click="aftersalesRemindAction">售后提醒内容</el-button>
+          <el-button v-if="$store.getters.login_type!='merchant' && $store.getters.login_type!='distributor'" type="primary" @click="aftersalesRemindAction">售后提醒内容</el-button>
         </el-col>
       </el-row>
       <el-card>

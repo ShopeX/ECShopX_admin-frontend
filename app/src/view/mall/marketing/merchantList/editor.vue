@@ -244,7 +244,7 @@
         </el-row>
       </el-card>
       <!-- 审核详情 -->
-      <template v-if="audit_status!='1'">
+      <template v-if="audit_status && audit_status!='1'">
         <p><span :class="['audit_status',audit_status=='2'?'success':'fail']" ></span>{{audit_status=='2'&&'通过' || audit_status=='3'&&'拒绝' }} </p>
         <p>审批备注: {{ audit_memo || '-' }}</p>
       </template>

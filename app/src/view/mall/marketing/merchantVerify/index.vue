@@ -81,13 +81,13 @@
           <el-row class="cus-row">
             <el-col :span="3">
               <img
-                v-if="item.source === 'h5'"
+                v-if="item.settled_type === 'soletrader'"
                 class="cus-row-img"
                 src="@/assets/img/adapay/distributor.png"
                 alt=""
               />
               <img
-                v-if="item.source === 'admin'"
+                v-else
                 class="cus-row-img"
                 src="@/assets/img/adapay/dealer.png"
                 alt=""

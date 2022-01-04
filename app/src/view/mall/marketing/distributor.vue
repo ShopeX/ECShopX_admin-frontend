@@ -75,13 +75,13 @@
               @click="addDistributorTag"
             >打标签</el-button>
           </el-button-group>
-          <el-button
+          <!-- <el-button
             v-if="!is_distributor"
             type="primary"
             plain
             icon="el-icon-circle-plus"
             @click="dialogOpen()"
-          >添加店铺</el-button>
+          >添加店铺</el-button> -->
           <el-button
             v-if="!is_distributor"
             type="primary"

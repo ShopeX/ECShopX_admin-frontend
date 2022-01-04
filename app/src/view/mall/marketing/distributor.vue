@@ -75,15 +75,16 @@
               @click="addDistributorTag"
             >打标签</el-button>
           </el-button-group>
-          <!-- <el-button
+          <el-button
             v-if="!is_distributor"
+            :disabled="$store.getters.login_type!='merchant'"
             type="primary"
             plain
             icon="el-icon-circle-plus"
             @click="dialogOpen()"
-          >添加店铺</el-button> -->
+          >添加店铺</el-button>
           <el-button
-            v-if="!is_distributor"
+            v-if="!is_distributor && $store.getters.login_type!='merchant'"
             type="primary"
             icon="el-icon-circle-plus"
             @click="showSettingDistance()"

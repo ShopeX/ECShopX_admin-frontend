@@ -402,6 +402,7 @@
       },
       // 商品skus
       getGoodsSkus(list, value) {
+        this.skuData.skus = []
         list.forEach(item => {
           const specs = []
           item.attribute_values.list.forEach(attr => {

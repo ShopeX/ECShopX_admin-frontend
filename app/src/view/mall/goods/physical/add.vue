@@ -603,7 +603,8 @@
           tdk_content: JSON.stringify(this.tdk_info),
           item_main_cat_id: item_id ? item_main_cat_id : this.selectedMainCategory[this.selectedMainCategory.length-1]
         }
-
+        
+        // 多规格
         if(!nospec) {
           const specImages = this.skuData.specImages.map(item => {
             return {
@@ -640,9 +641,9 @@
                 item_bn: item.item_bn,
                 weight: item.weight,
                 volume: item.volume,
-                price: item.price * 100,
-                cost_price: item.cost_price * 100,
-                market_price: item.market_price * 100,
+                price: item.price,
+                cost_price: item.cost_price,
+                market_price: item.market_price,
                 barcode: item.barcode,
                 point_num: item.point_num
               }

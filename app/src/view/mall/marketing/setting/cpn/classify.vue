@@ -38,7 +38,7 @@
                         <el-button @click.native.prevent="addRow(scope.row)" type="text" size="small">新增子类</el-button>
                     </template>
                     <el-button @click.native.prevent="editRow(scope.row)" type="text" size="small">编辑</el-button>
-                    <el-button @click.native.prevent="deleteRow(scope.row.id)" type="text" size="small">删除</el-button>
+                    <el-button @click.native.prevent="deleteRow(scope.row)" type="text" size="small">删除</el-button>
                 </template>
             </el-table-column>
 
@@ -130,13 +130,22 @@ export default {
                 return item.id == id
             })
         },
-        async deleteRow(id){
+        async deleteRow(row){
+            const { id , children } = row
+            const message = children.length > 0?'该分类下有商家或有流程中的商家，请核实后再试':'确认删除吗？'
             console.log(id);
-            const result = await deleteMerchantsClassification(id);
-            if (result.data.data.status) {
-                this.$message.success('删除成功')
-                this.getConfig()
-            }
+            console.log(row);
+            this.$confirm(message, '通知', {
+                confirmButtonText: '确定',
+                cancelButtonText: '取消',
+                type: 'warning',
+                }).then(async () => {
+                    const result = await deleteMerchantsClassification(id);
+                    if (result.data.data.status) {
+                        this.$message.success('删除成功')
+                        this.getConfig()
+                    }
+                })
         },
         async callbackConfirm(row,type){
             console.log(row,type);

@@ -423,7 +423,7 @@ export default {
       }
     },
     fetchMainCate: function() {
-      getCategory({ is_main_category: true }).then((response) => {
+      getCategory({ is_main_category: true,ignore_none:true }).then((response) => {
         this.categoryList = response.data.data
         console.log(this.categoryList);
       })

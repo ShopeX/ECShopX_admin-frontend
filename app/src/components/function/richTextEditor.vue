@@ -267,6 +267,20 @@ export default {
   watch: {
     data(val) {
       this.components = val
+    }, 
+    dialogVisible:{
+      handler(newVal){
+        if(!newVal){
+          console.log("===this.data",this.data,this.components)
+          let oldData=[...this.data];
+          if(this.data.length!==this.components.length){
+            // debugger;
+            //说明没有保存 
+            this.$emit('change', oldData)
+          }
+          
+        }
+      }, 
     }
   },
   methods: {

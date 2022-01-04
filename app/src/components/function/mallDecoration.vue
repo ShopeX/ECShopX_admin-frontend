@@ -495,6 +495,7 @@ import { savePageParams, getParamByTempName } from '@/api/wxa'
 import { getPagesTemplateDetail, savePagesTemplate } from '@/api/template'
 import { getRecommendLikeItemList } from '@/api/promotions'
 import { getItemsList } from '@/api/goods'
+import { forEach } from 'jszip'
 
 export default {
   props: {
@@ -620,30 +621,30 @@ export default {
             padded: true
           },
           data: [
-            {
-              type: 'cash',
-              id: '',
-              amount: '50',
-              imgUrl: '../../images/coupon_brand_demo.jpg',
-              title: '巴黎欧莱雅',
-              desc: '全场商品满900减50'
-            },
-            {
-              type: 'discount',
-              id: '',
-              amount: '8',
-              imgUrl: '../../images/coupon_brand_demo.jpg',
-              title: '巴黎欧莱雅',
-              desc: '全场商品满900减50'
-            },
-            {
-              type: 'cash',
-              id: '',
-              amount: '100',
-              imgUrl: '../../images/coupon_brand_demo.jpg',
-              title: '巴黎欧莱雅',
-              desc: '全场商品满900减50'
-            }
+            // {
+            //   type: 'cash',
+            //   id: '',
+            //   amount: '50',
+            //   imgUrl: '../../images/coupon_brand_demo.jpg',
+            //   title: '巴黎欧莱雅',
+            //   desc: '全场商品满900减50'
+            // },
+            // {
+            //   type: 'discount',
+            //   id: '',
+            //   amount: '8',
+            //   imgUrl: '../../images/coupon_brand_demo.jpg',
+            //   title: '巴黎欧莱雅',
+            //   desc: '全场商品满900减50'
+            // },
+            // {
+            //   type: 'cash',
+            //   id: '',
+            //   amount: '100',
+            //   imgUrl: '../../images/coupon_brand_demo.jpg',
+            //   title: '巴黎欧莱雅',
+            //   desc: '全场商品满900减50'
+            // }
           ],
           voucher_package: [
             // {
@@ -1241,31 +1242,33 @@ export default {
           // goodsGrid数据结构变化，数据另存到list里面
           let s = this.components[this.editorIndex].base.listIndex
           console.log(this.editorData.list[s].goodsList) // 源数据
-          for (let i = 0; i < this.editorData.list[s].goodsList.length; i++) {
-            for (let j = 0; j < values.length; j++) {
-              if (this.editorData.list[s].goodsList[i].goodsId == values[j].goodsId) {
-                values.splice(j, 1)
+          if (values.length>=this.editorData.list[s].goodsList.length) {
+            for (let i = 0; i < this.editorData.list[s].goodsList.length; i++) {
+              for (let j = 0; j < values.length; j++) {
+                if (this.editorData.list[s].goodsList[i].goodsId == values[j].goodsId) {
+                  values.splice(j, 1)
+                }
               }
             }
+            values = [...this.editorData.list[s].goodsList, ...values]
           }
-          values = [...this.editorData.list[s].goodsList, ...values]
           console.log(values)
           this.editorData.list[s].goodsList = values
           this.components[this.editorIndex].list[s].goodsList = values
         } else {
-          // debugger;
           console.log(values) // 新数据
           console.log(this.editorData.data) // 源数据
-          for (let i = 0; i < this.editorData.data.length; i++) {
-            for (let j = 0; j < values.length; j++) {
-              if (this.editorData.data[i].goodsId == values[j].goodsId) {
-                values.splice(j, 1)
+          if (values.length>=this.editorData.data.length) {
+            for (let i = 0; i < this.editorData.data.length; i++) {
+              for (let j = 0; j < values.length; j++) {
+                if (this.editorData.data[i].goodsId == values[j].goodsId) {
+                  values.splice(j, 1)
+                }
               }
             }
+            values = [...this.editorData.data, ...values]
           }
 
-          values = [...this.editorData.data, ...values]
-          console.log(values)
           this.editorData.data = values
           this.components[this.editorIndex].data = values
         }

@@ -1,47 +1,54 @@
 <template>
-  <el-dialog
-    title="设置路径内容"
-    :visible="linksVisible"
-    @close="closeDialog"
-    customClass="dialog"
-    append-to-body
-  >
-    <div class="view-flex">
-      <Tabs :showlinks="links" :type="type" @onClick="handleTabsClick" />
-      <div class="link-data">
-        <Finder
-          v-if="
-            type !== 'category' && type !== 'marketing' && type !== 'link' && type !== 'other_wxapp'
-          "
-          :type="type"
-          @onSearch="handleSearch"
-        >
-          <div
-            v-if="type === 'goods' || type === 'article' || type === 'planting'"
-            class="store view-flex-item"
+  <div class="templateLinks">
+    <el-dialog
+      title="设置路径内容"
+      :visible="linksVisible"
+      @close="closeDialog"
+      customClass="dialog"
+      width="60%"
+      append-to-body
+    >
+      <div class="view-flex">
+        <Tabs :showlinks="links" :type="type" @onClick="handleTabsClick" />
+        <div class="link-data">
+          <Finder
+            v-if="
+              type !== 'category' &&
+              type !== 'marketing' &&
+              type !== 'link' &&
+              type !== 'other_wxapp'
+            "
+            :type="type"
+            @onSearch="handleSearch"
           >
-            <StoreFilter :data="store" :lock="lockStore" @change="handleStoreChange" />
-          </div>
-        </Finder>
-        <Wxalink
-          v-if="type === 'other_wxapp'"
-          @selectChange="selectChange"
-          @onsearch="handleSearch"
-        />
-        <List
-          :type="type"
-          :store="store"
-          :keywords="keywords"
-          :appid="appid"
-          @onClick="handleRowClick"
-        />
+            <div
+              v-if="type === 'goods' || type === 'article' || type === 'planting'"
+              class="store view-flex-item"
+            >
+              <StoreFilter :data="store" :lock="lockStore" @change="handleStoreChange" />
+            </div>
+          </Finder>
+          <Wxalink
+            v-if="type === 'other_wxapp'"
+            @selectChange="selectChange"
+            @onsearch="handleSearch"
+          />
+          <List
+            :type="type"
+            :store="store"
+            :keywords="keywords"
+            :appid="appid"
+            @onClick="handleRowClick"
+          />
+        </div>
       </div>
-    </div>
-    <span slot="footer" class="dialog-footer">
-      <el-button @click="closeDialog">取 消</el-button>
-      <el-button type="primary" @click="setComfirm">确 定</el-button>
-    </span>
-  </el-dialog>
+      <span slot="footer" class="dialog-footer">
+        <el-button @click="closeDialog">取 消</el-button>
+        <el-button type="primary" @click="setComfirm">确 定</el-button>
+      </span>
+    </el-dialog>
+  </div>
+
 </template>
 
 <script>
@@ -63,7 +70,7 @@ export default {
     },
     links: {
       type: Array,
-      default: function() {
+      default: function () {
         return []
       }
     },
@@ -141,7 +148,6 @@ export default {
   }
 }
 </script>
-
 <style scoped lang="scss">
 .dialog {
   min-width: 800px;
@@ -154,3 +160,4 @@ export default {
   padding-left: 30px;
 }
 </style>
+

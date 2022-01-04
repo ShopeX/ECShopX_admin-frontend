@@ -57,7 +57,7 @@
         </el-table-column>
         <el-table-column label="操作" width="100">
           <template slot-scope="scope">
-            <el-button type="text" @click="handleUpdate(scope.row)">编辑</el-button>
+            <el-button v-if="datapass_block=='0'" type="text" @click="handleUpdate(scope.row)">编辑</el-button>
             <el-button type="text" @click="handleDelete(scope.row)">删除</el-button>
           </template>
         </el-table-column>

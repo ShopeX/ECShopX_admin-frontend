@@ -84,9 +84,11 @@
       :store-visible="ShopVisible" 
       :is-valid="isValid" 
       :rel-data-ids="relShops" 
+       :oldData="oldData"
       :get-status="ShopStatus" 
       @chooseStore="ShopChooseAction" 
       @closeStoreDialog="closeDialogAction">
+      
     </ShopSelect>
   </div>
 </template>
@@ -110,6 +112,7 @@
     },
     data () {
       return {
+        oldData:[],
         isValid: true,
         DistributorStatus: false,
         ShopStatus: false,
@@ -177,6 +180,7 @@
         let param = {distributor_id: ids}
         getDistributorList({...param,is_app:1}).then( res => {
           this.relDistributors = res.data.data.list
+          this.oldData = [...res.data.data.list]
         })
       },
       handleCancel () {
@@ -318,10 +322,12 @@
         this.ShopStatus = false
         if (data === null || data.length <= 0) return
         this.relShops = data
+        this.relDistributors = data;
       },
       closeDialogAction () {
         this.ShopVisible = false
         this.ShopStatus = false
+         this.relDistributors = this.oldData
         this.DistributorStatus = false
         this.DistributorVisible = false
       },

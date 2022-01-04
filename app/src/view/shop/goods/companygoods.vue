@@ -239,6 +239,7 @@ export default {
       this.show_sideBar = true
       this.itemSkuParam.item_id = row.item_id
       this.itemSkuParam.distributor_id = row.distributor_id
+       debugger;
       getDistributorItems(this.itemSkuParam).then((res) => {
         this.itemSkuList = res.data.data.list
       })
@@ -263,7 +264,7 @@ export default {
       this.params.page = page_num
       this.getList()
     },
-    getList() {
+    getList() { 
       getDistributorItems(this.params).then((response) => {
         if (response.data.data.list) {
           this.list = response.data.data.list

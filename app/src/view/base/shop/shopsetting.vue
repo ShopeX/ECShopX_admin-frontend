@@ -129,7 +129,7 @@ export default {
       this.pic = this.wximageurl + res.data.data.logo
       this.form.intro = res.data.data.intro
       this.form.brand_name = res.data.data.brand_name
-      this.remnant = res.data.data.intro.length
+      this.remnant = (res.data.data.intro||"").length
     })
   }
 }

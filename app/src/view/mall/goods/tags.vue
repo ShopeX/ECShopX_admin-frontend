@@ -148,7 +148,6 @@ export default {
     },
     editAction(index, row) {
       // 编辑商品弹框
-      row.front_show = JSON.stringify(row.front_show)
       this.form = row
       this.show_sideBar = true
     },
@@ -161,21 +160,13 @@ export default {
       this.params.page = 1
       this.getDataList()
     },
-    getDataList() {
+    async getDataList() {
       this.loading = true
-      getTagList(this.params)
-        .then((response) => {
-          this.tagsList = response.data.data.list
-          this.total_count = response.data.data.total_count
-          this.loading = false
-        })
-        .catch((error) => {
-          this.loading = false
-          this.$message({
-            type: 'error',
-            message: '获取列表信息出错'
-          })
-        })
+      const response = await getTagList(this.params)
+      this.tagsList = response.data.data.list
+      this.total_count = response.data.data.total_count
+      this.loading = false
+        
     },
     deleteAction(index, row) {
       this.$confirm('此操作将删除数据, 是否继续?', '提示', {

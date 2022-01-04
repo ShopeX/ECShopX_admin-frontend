@@ -128,6 +128,7 @@
       <DistributorSelect
         :store-visible="DistributorVisible"
         :is-valid="isValid"
+        :get-status="DistributorStatus"
         :rel-data-ids="relDistributors"
         @chooseStore="DistributorChooseAction"
         @closeStoreDialog="closeDialogAction"
@@ -163,10 +164,12 @@ export default {
   },
   data() {
     return {
+      oldData:[],
       isValid: true,
       oldData:[],
       relDistributors: [],
       DistributorVisible: false,
+      DistributorStatus: false,
       login_type: 'default',
       isEdit: false,
       editVisible: false,
@@ -207,14 +210,16 @@ export default {
       this.relDistributors.splice(index, 1)
     },
     addDistributoreAction() {
-      // debugger
+      this.DistributorStatus = true
       this.DistributorVisible = true
+      
+      
     },
     getDistributor(ids) {
       let param = { distributor_id: ids }
       getDistributorList(param).then((res) => {
         this.relDistributors = res.data.data.list
-        this.oldData = res.data.data.list
+        this.oldData = [...res.data.data.list]
       })
     },
     handleCancel() {
@@ -271,8 +276,7 @@ export default {
         this.getDistributor(ids)
       }
     },
-    submitAction() {
-      debugger
+    submitAction() { 
       // 提交物料
       this.form.shop_ids = []
       this.form.distributor_ids = []
@@ -353,14 +357,18 @@ export default {
       })
     },
     DistributorChooseAction(data) {
+      debugger
       console.log(data)
-      // debugger
-      // this.DistributorVisible = false
+      this.DistributorVisible = false
       if (data === null || data.length <= 0) return
       this.relDistributors = data
+      this.oldData = data;
     },
     closeDialogAction() {
       this.DistributorVisible = false
+      this.relDistributors = this.oldData;
+      this.DistributorStatus = false
+      
       // this.relDistributors = []
       // this.getDistributor();
     }

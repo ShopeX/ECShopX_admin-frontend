@@ -90,6 +90,7 @@
                   <el-row :gutter="10">
                     <el-col :span="12"
                       ><el-button
+                        :loading='loadingbtn'
                         type="primary"
                         style="width: 100%"
                         @click="saveStore(scope.$index, scope.row.operationType)"
@@ -207,6 +208,7 @@ export default {
   data() {
     return {
       loading: false,
+      loadingbtn:false,
       sendoutVisible: false,
       currSendout: 1,
       checkedType: {},
@@ -410,6 +412,7 @@ export default {
       }
     },
     saveStore(index, operationType) {
+       this.loadingbtn = true
       let reg = /^[1-9]\d*$/
       if (!reg.test(this.cardList[index].storeValue)) {
         this.$message({
@@ -435,10 +438,16 @@ export default {
         card_id: this.cardList[index].card_id,
         type: this.cardList[index].operationType,
         quantity: this.cardList[index].storeValue
-      }
+      }     
       updateStore(param).then((response) => {
+        //  this.loadingbtn = false
+        setTimeout(()=>{
+          this.loadingbtn = false
+        },1000)
         this.getCardList()
+        
       })
+      
     },
     handleSelectionChange(val) {
       this.multipleSelection = val

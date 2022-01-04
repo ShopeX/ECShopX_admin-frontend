@@ -273,6 +273,7 @@
       },
       getSkuList(){
         const { list,...restParams}=this.itemSku;
+         debugger;
         getDistributorItems({...this.itemSkuParam,...restParams}).then(res => {
           this.itemSku.list = res.data.data.list
           this.itemSku.total=res.data.data.total_count;
@@ -330,7 +331,7 @@
           }
         })
       },
-      getList () {
+      getList () { 
         getDistributorItems(this.params).then(response => {
           if(response.data.data.list) {
             this.list = response.data.data.list

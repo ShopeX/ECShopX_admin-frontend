@@ -58,7 +58,7 @@
           <el-cascader
             placeholder="商品分类"
             :options="categoryList"
-            :props="{value:'category_id', checkStrictly: true}"
+            :props="{value:'category_id',checkStrictly:true}"
             v-model='select_category_value'
             clearable
             @change="searchAction">
@@ -660,6 +660,7 @@ export default {
       this.login_type = this.$store.getters.login_type
       if (this.$route.query.category) {
         this.params.category = this.$route.query.category
+        this.select_category_value = this.params.category.split(',')
       }
       this.params.main_cat_id = this.$route.query.main_cat_id
 
@@ -789,8 +790,9 @@ export default {
         this.params.regions_id = this.select_regions_value
       }
 
-      this.params.category = this.select_category_value.pop()
-
+       
+     const category = [...this.select_category_value]
+      this.params.category = category.pop()
       if (this.select_tags_value) {
         this.params.tag_id = this.select_tags_value[0]
       }
@@ -1306,7 +1308,9 @@ export default {
     getCategory() {
       getCategory({ is_show: false }).then((response) => {
         this.categoryList = response.data.data
+        // this.init()
       })
+      
     },
     getCurrencyInfo() {
       getDefaultCurrency().then((res) => {

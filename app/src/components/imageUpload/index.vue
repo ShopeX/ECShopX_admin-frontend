@@ -72,7 +72,12 @@ export default {
     uploadHandle(val) {
       console.log(val)
     },
+<<<<<<< HEAD
     handleAvatarSuccess(res, file) { 
+=======
+    handleAvatarSuccess(res, file) {
+       
+>>>>>>> develop
       this.$emit('successHandle', res.data.data)
       this.loading = false
     },

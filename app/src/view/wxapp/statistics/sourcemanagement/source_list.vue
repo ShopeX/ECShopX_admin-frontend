@@ -294,6 +294,9 @@ export default {
         })
     },
     checkMemberTags() {
+      if (this.checkSource.length==0) {
+        return this.$message.error('还未选择来源')
+      }
       this.tagdialogVisible = true
       this.dialogVisible = true
       // this.$refs.multipleTable.clearSelection();

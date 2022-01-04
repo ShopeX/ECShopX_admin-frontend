@@ -295,6 +295,7 @@
 
 <script>
 import Treeselect from '@riophae/vue-treeselect'
+import '@riophae/vue-treeselect/dist/vue-treeselect.css'
 import {
   addMarketingActivity,
   updateMarketingActivity,
@@ -628,7 +629,7 @@ export default {
       }
     },
     fetchMainCate: function() {
-      getCategory({ is_main_category: true }).then((response) => {
+      getCategory({ is_main_category: true,ignore_none:true }).then((response) => {
         this.categoryList = response.data.data
       })
     },

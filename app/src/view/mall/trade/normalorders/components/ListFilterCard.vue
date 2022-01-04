@@ -186,13 +186,13 @@ export default {
         { name: "全部", value: "" },
         { name: "团购订单", value: "groups" },
         { name: "秒杀订单", value: "seckill" },
-        { name: "导购订单", value: "shopguide" },
-        { name: "跨境订单", value: "crossborder" },
-        { name: "助力订单", value: "bargain" },
-        { name: "社区订单", value: "community" },
+        // { name: "导购订单", value: "shopguide" },
+        // { name: "跨境订单", value: "crossborder" },
+        // { name: "助力订单", value: "bargain" },
+        // { name: "社区订单", value: "community" },
         { name: "普通订单", value: "normal" },
         // { name: "服务类订单", value: "services" },
-        { name: "兑换订单", value: "excard"}
+        // { name: "兑换订单", value: "excard"}
       ],
       order_status_list: [
         { name: "全部", value: "" },

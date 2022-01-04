@@ -17,7 +17,7 @@
         <el-row :gutter="20">
           <el-col :span="20">
             <p class="frm-tips"></p>
-            <div class="logo-box">
+            <div class="logo-box"  @click="changeItem">
               <div class="bran-img">
                 <div v-if="goods.pics" class="groups-addgoods">
                   <img :src="wximageurl + goods.pics[0]" class="groups-goodspic" />
@@ -31,7 +31,7 @@
                   <i class="el-icon-plus"></i>
                 </div>
               </div>
-              <el-button size="small" type="primary" @click="changeItem">选择商品</el-button>
+              <!-- <el-button size="small" type="primary" @click="changeItem">选择商品</el-button> -->
             </div>
           </el-col>
         </el-row>
@@ -195,8 +195,8 @@
         </el-pagination>
       </div>
       <span slot="footer" class="dialog-footer">
-        <el-button @click="centerDialogVisible = false">关 闭</el-button>
-        <el-button type="primary" @click="centerDialogVisible = false">确 定</el-button>
+        <el-button @click="goodsDialogVisible = false">关 闭</el-button>
+        <el-button type="primary" @click="goodsDialogVisible = false">确 定</el-button>
       </span>
     </el-dialog>
   </el-form>

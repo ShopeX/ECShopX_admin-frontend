@@ -23,7 +23,7 @@ export function saveOpen(data) {
     params: data
   })
 }
-export function getDistributorList(query) {
+export function getDistributorList(query) { 
   return fetch({
     url: '/distributors',
     method: 'get',
@@ -100,6 +100,7 @@ export function saveDistributorItems(query) {
 }
 
 export function getDistributorItems(query) {
+  debugger
   return fetch({
     url: '/distributor/items',
     method: 'get',

@@ -173,6 +173,7 @@
               is_valid: true,
               name: this.keywords
             })
+            
             api.marketing.getDistributorList(query).then(res => {
               let list = []
               res.data.data.list.map(item => {

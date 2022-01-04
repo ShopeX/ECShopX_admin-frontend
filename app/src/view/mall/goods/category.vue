@@ -95,7 +95,7 @@
               <router-link
                 :to="{
                   path: login_type == 'distributor' ? '/shopadmin/entity/goodsphysical' : '/entity/goods/goodsphysical',
-                  query: { category: scope.row.category_id }
+                  query: { category: scope.row.path }
                 }"
                 >查看商品</router-link
               >

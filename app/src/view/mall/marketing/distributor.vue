@@ -226,7 +226,7 @@
           <el-table-column width="180" label="操作">
             <template slot-scope="scope">
               <router-link
-                v-if="scope.row.is_valid !== 'delete'"
+                v-if="scope.row.is_valid !== 'delete' && datapass_block=='0'"
                 :to="{ path: matchHidePage('editor'), query: { distributor_id: scope.row.distributor_id}}"
               ><span style="margin-right: 5px">编辑</span></router-link>
               
@@ -445,6 +445,7 @@ function getCascaderObj(val, opt) {
 export default {
   data() {
     return {
+      datapass_block:1,
       is_distributor: false,
       dialogVisible: false,
       current: '', // 当前店铺id
@@ -589,6 +590,7 @@ export default {
           this.list = response.data.data.list
           this.total_count = response.data.data.total_count
           this.distributor_self = response.data.data.distributor_self
+          this.datapass_block = response.data.data.datapass_block;
         }
         this.loading = false
       })

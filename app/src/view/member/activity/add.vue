@@ -153,7 +153,7 @@
               :key="item.index"
               v-if="levelItem.grade_id === item.id"
             >
-              <div class="promotion-card">
+              <!-- <div class="promotion-card">
                 <div class="promotion-card-header">
                   商品
                   <a class="promotion-card-btn" @click="showModal('goods', item.id)" href="#"
@@ -181,7 +181,7 @@
                     </li>
                   </ul>
                 </div>
-              </div>
+              </div> -->
             </el-col>
           </el-row>
         </el-form-item>

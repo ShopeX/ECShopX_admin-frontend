@@ -135,7 +135,7 @@
                 this.total = res.data.data.total_count
                 this.loading = false
               })
-            } else {
+            } else { 
               api.marketing.getDistributorItems(query).then(res => {
                 let list = []
                 res.data.data.list.map(item => {

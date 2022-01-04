@@ -1039,7 +1039,7 @@ export default {
       }
     },
     fetchMainCate() {
-      getCategory({ is_main_category: true }).then((response) => {
+      getCategory({ is_main_category: true,ignore_none:true }).then((response) => {
         this.categoryList = response.data.data
       })
     },

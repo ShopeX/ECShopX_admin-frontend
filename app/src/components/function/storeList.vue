@@ -35,13 +35,7 @@
             :key="item.id"
             @click="handleItemClick(item)"
             :class="
-              multiple
-                ? current.findIndex((cur) => cur.id === item.id) !== -1
-                  ? 'active'
-                  : ''
-                : current.id === item.id
-                ? 'active'
-                : ''
+              multiple? (current && current.findIndex((cur) => cur.id === item.id) !== -1? 'active': ''): (current.id === item.id? 'active': '')
             "
           >
             <div class="store-name">{{ item.name }}</div>
@@ -191,9 +185,10 @@ export default {
     },
     fetch() {
       this.loading = true
-      this.params.page += 1
+      this.params.page += 1 
       api.marketing.getDistributorList(this.params).then((res) => {
         let list = []
+        this.$emit('changeStore', res.data.data.list)
         res.data.data.list.map((item) => {
           let tags = []
           item.tagList.map((tag) => {

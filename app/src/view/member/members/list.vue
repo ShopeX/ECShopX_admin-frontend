@@ -339,7 +339,7 @@
             <template slot-scope="scope">
               <el-button type="text" @click="getDetail(scope.row.user_id)">详情</el-button>
               <el-button
-                v-if="$store.getters.login_type != 'distributor'"
+                v-if="$store.getters.login_type != 'distributor' && datapass_block == 0"
                 type="text"
                 @click="infoUpdate(scope.row)"
                 >编辑基础信息</el-button
@@ -725,7 +725,11 @@
             <el-table-column prop="old_data" label="原手机号"></el-table-column>
             <el-table-column prop="new_data" label="修改后手机号"></el-table-column>
             <el-table-column prop="operater" label="操作员"></el-table-column>
-            <el-table-column prop="created" label="操作时间"></el-table-column>
+            <el-table-column prop="created" label="操作时间">
+              <template slot-scope="scope">
+                <span>{{scope.row.created |formatTimestamp}}</span>
+              </template>
+            </el-table-column>
           </el-table>
         </template>
       </el-dialog>

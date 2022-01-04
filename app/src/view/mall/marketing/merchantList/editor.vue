@@ -249,11 +249,11 @@
           <el-button type="primary" style="padding:10px 50px" @click="submitFn('form')">保存</el-button>
         </el-form-item>
       </template>
-      <template v-if="$route.query.type=='verify' && datapass_block == 0">
+      <template v-if="$route.query.type=='verify'">
         <el-form-item label-width='0px' style="text-align: center;margin-top:60px">
           <template v-if="audit_status=='1'">
-            <el-button type="success" style="padding:10px 50px" @click="fnPass">通过</el-button>
-            <el-button type="danger" style="padding:10px 50px" @click="fnReject">驳回</el-button>
+            <el-button type="success" style="padding:10px 50px" :disabled="datapass_block != 0" @click="fnPass">通过</el-button>
+            <el-button type="danger" style="padding:10px 50px"  :disabled="datapass_block != 0" @click="fnReject">驳回</el-button>
           </template>
           <template v-else>
              <el-button type="info" style="padding:10px 50px">已审批</el-button>

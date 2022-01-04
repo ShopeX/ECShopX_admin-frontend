@@ -131,11 +131,8 @@ export default {
             })
         },
         async deleteRow(row){
-            const { id , children } = row
-            const message = children.length > 0?'该分类下有商家或有流程中的商家，请核实后再试':'确认删除吗？'
-            console.log(id);
-            console.log(row);
-            this.$confirm(message, '通知', {
+            const { id  } = row
+            this.$confirm('确认删除吗？','', {
                 confirmButtonText: '确定',
                 cancelButtonText: '取消',
                 type: 'warning',

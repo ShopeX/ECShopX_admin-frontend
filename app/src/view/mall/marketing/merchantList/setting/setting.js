@@ -90,7 +90,7 @@ export default (vm) => {
         action: {
           type: 'link',
           handler: async val => {
-            vm.fnMerchantsState(val,true)
+            vm.fnMerchantsState(val,false)
           },
           
         },
@@ -106,7 +106,7 @@ export default (vm) => {
         action: {
           type: 'link',
           handler: async val => {
-            vm.fnMerchantsState(val,false)
+            vm.fnMerchantsState(val,true)
           },
           
         },

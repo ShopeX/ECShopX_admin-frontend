@@ -49,7 +49,7 @@ export default {
 
     //  this.$refs.finder.refresh()
     fnAffirm(row){
-      const message = row.audit_goods?'关闭后商户商品上架是无需审核，请确认是否关闭':'开启后商户商品上架是需要审核，请确认是否开启';
+      const message = row.audit_goods?'关闭后商户商品上架时无需审核，请确认是否关闭':'开启后商户商品上架时需要审核，请确认是否开启';
        this.$confirm(message, '通知消息', {
           confirmButtonText: '确定',
           cancelButtonText: '取消',

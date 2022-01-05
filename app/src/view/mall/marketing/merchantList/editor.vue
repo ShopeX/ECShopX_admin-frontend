@@ -649,7 +649,7 @@ export default {
       color: #999;
     }
     img {
-      width: 100%;
+      max-width: 100%;
       max-height: 140px;
     }
     &:hover{

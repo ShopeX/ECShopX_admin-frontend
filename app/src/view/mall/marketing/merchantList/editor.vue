@@ -64,7 +64,7 @@
       <el-card class="box-card" shadow="never">
         <div slot="header" class="clearfix">
           <span class="theme">结算账户信息 </span>
-          <span style="fons-size:10px;color:#999"> （结算银行卡姓名要与法人姓名一致）</span>
+          <span style="fons-size:10px;color:#999"> （结算银行卡姓名要与{{form.enterprise=='enterprise'?'法人':'负责人'}}姓名一致）</span>
         </div>
         <el-row :gutter="20">
           <el-col :span="8">
@@ -222,12 +222,12 @@
                 <i class="el-icon-warning-outline"></i>
               </el-tooltip>
               <el-radio-group v-model="form.createAccount" :disabled="disabled">
-                <el-radio label="1">法人手机号</el-radio>
+                <el-radio label="1">{{form.settled_type=='enterprise'?'法人':'负责人'}}手机号</el-radio>
                 <el-radio label="2">其他</el-radio>
               </el-radio-group>
               <template v-if="form.createAccount =='2'" >
                 <el-form-item prop="mobile">
-                  <el-input placeholder="请填写手机号" v-model="form.mobile" :disabled="disabled"></el-input>
+                  <el-input placeholder="请填写手机号" v-model="form.mobile" :disabled="disabled" style="width:300px"></el-input>
                 </el-form-item>
               </template>
             </el-form-item>

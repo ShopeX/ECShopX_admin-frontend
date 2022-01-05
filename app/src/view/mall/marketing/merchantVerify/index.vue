@@ -235,7 +235,9 @@ export default {
     resetForm(formName) {
         this.$refs[formName].resetFields()
         this.regions_value = []
-        this.time_start = []
+        this.query.time_start = []
+        this.currentArea ={}
+        
         this.getList();
     },
     createTimeFilter(time) {

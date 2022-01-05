@@ -3,7 +3,7 @@
     <el-row :gutter="20">
       <el-col :span="12">
         <el-button type="primary" icon="plus" @click="addLabels">添加账号 </el-button>
-        <el-tooltip style="margin-left:10px" effect="light" :content="'请在【'+ wxAuthCallbackUrl+'shopadmin/login】登录'" placement="top-start">
+        <el-tooltip style="margin-left:10px" effect="light" :content="'请在【'+ origin +'/shopadmin/login】登录'" placement="top-start">
           <i class="el-icon-warning-outline"></i>
         </el-tooltip>
       </el-col>
@@ -173,6 +173,7 @@ export default {
       login_type: 'default',
       isEdit: false,
       editVisible: false,
+      origin:'',
       editTitle: '',
       form: {
         operator_type: 'distributor',
@@ -374,6 +375,7 @@ export default {
     }
   },
   mounted() {
+    this.origin = window.location.origin;
     this.login_type = this.$store.getters.login_type
     this.getAccountListData()
     this.getRolesListData()

@@ -22,7 +22,7 @@ export default (vm) => {
       columns: [
         {
           name: '手机号（账号名称）', key: 'mobile', render: (h, { row }) => {
-            if (row.settled_type == 'soletrader') {
+            if (row.settled_type === 'soletrader') {
               return [(
                 h(
                   'span',
@@ -36,7 +36,7 @@ export default (vm) => {
                 {
                   props: { type: 'text', type: 'warning', size: "medium" },
                 },
-                '企业'
+                '个体户'
               )]
             } else {
               return [(
@@ -52,7 +52,7 @@ export default (vm) => {
                 {
                   props: { type: 'text', type: 'success', size: "medium" },
                 },
-                '个体户'
+                '企业'
               )]
             }
 

@@ -30,10 +30,10 @@
       <el-row :gutter="20">
         <el-col>
           <el-button-group>
-            <export-tip @exportHandle='exportData()' params='normal_master_order'>
+            <export-tip @exportHandle='exportData' params='normal_master_order'>
               <el-button type="primary">导出主订单</el-button>
             </export-tip>
-             <export-tip @exportHandle='exportData()' params='normal_order'>
+             <export-tip @exportHandle='exportData' params='normal_order'>
               <el-button type="primary">导出子订单</el-button>
              </export-tip>
           </el-button-group>

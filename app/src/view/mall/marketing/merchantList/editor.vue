@@ -281,7 +281,7 @@
 
 <script>
 import { MaxRules, requiredRules } from '@/view/base/setting/dealer/tools'
-import { getMerchantsClassification,addTheBusinessman,getTheMerchant,merchantsInDetail,setCheckTheEntryOfMerchants,getTheMerchantInfo,getArea,getMerchantsType } from '@/api/mall/marketing.js'
+import { addTheBusinessman,getTheMerchant,merchantsInDetail,setCheckTheEntryOfMerchants,getTheMerchantInfo,getArea,getMerchantsType } from '@/api/mall/marketing.js'
 import imgPicker from '@/components/imageselect'
 import checkBox from '@/view/base/setting/dealer/cpn/checkBox.vue'
 
@@ -515,7 +515,7 @@ export default {
       console.log(this.form);
       const obj = {
         id:this.form.id,
-        audit_status:this.currentCheckBoxStatus?'3':'2',
+        audit_status:this.currentCheckBoxStatus?'2':'3',
         audit_memo:data.comments,
         audit_goods:this.form.audit_goods?'1':'0'
       }

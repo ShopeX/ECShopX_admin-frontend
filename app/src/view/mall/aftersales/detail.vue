@@ -500,8 +500,9 @@
 
     <div
       class="section-footer with-border content-center"
-      v-if="aftersalesInfo.progress == '0'"
+      v-if="aftersalesInfo.distributor_id == '0'  && aftersalesInfo.progress == '0' || $store.getters.login_type=='distributor' && aftersalesInfo.progress == '0'" 
     >
+    //v-if="aftersalesInfo.progress == '0'"
       <el-button type="primary" @click="reviewSubmit" v-if="IsBind" disabled
         >提交审核</el-button
       >

@@ -88,10 +88,9 @@
             ></el-switch>
           </el-form-item>
         </el-col>
-        <el-col :span="8">
+        <el-col :span="8" v-if="$store.getters.login_type!='merchant' && externalForm.distribution_type!='0'">
           <el-form-item
             label="审核商品"
-
           >
             <el-switch
               v-model="form.is_audit_goods"

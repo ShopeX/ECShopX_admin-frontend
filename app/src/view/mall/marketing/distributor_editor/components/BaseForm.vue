@@ -88,7 +88,7 @@
             ></el-switch>
           </el-form-item>
         </el-col>
-        <el-col :span="8" v-if="$store.getters.login_type!='merchant' && externalForm.distribution_type!='0'">
+        <el-col :span="8" v-if="$store.getters.login_type!='merchant' && externalForm.distribution_type!='1'">
           <el-form-item
             label="审核商品"
           >

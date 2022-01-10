@@ -7,6 +7,7 @@
           <el-input
             style="width: 100%"
             type="textarea"
+            :rows="8"
             placeholder="请输入内容"
             v-model="form.introduce"
             maxlength="1000"

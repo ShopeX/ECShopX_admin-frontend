@@ -121,7 +121,7 @@
               </div>
             </template>
           </el-table-column>
-          <el-table-column width="80" label="是否分账" v-if="isOpen">
+          <!-- <el-table-column width="80" label="是否分账" v-if="isOpen">
             <template slot-scope="scope" v-if="scope.row.is_valid !== 'delete'">
               <el-switch
                 v-model="scope.row.is_open"
@@ -132,7 +132,7 @@
                 @change="switchChangeOpen(scope.$index, scope.row)"
               ></el-switch>
             </template>
-          </el-table-column>
+          </el-table-column> -->
           <el-table-column width="80" label="商品自动上架且总部发货" v-if="system_mode === 'standard'">
             <template slot-scope="scope" v-if="scope.row.is_valid !== 'delete'">
               <el-switch

@@ -26,7 +26,7 @@
 
       <!-- <FashionForm ref="fashionFormRef" :externalForm="form" /> -->
 
-      <!-- <GlobalFooter> -->
+      <GlobalFooter>
         <div class="section-footer content-center">
           <el-button size="large" @click="cancelSubmit">取消</el-button>
           <el-button
@@ -36,7 +36,7 @@
             >{{ submitLoading ? "提交中" : "保存" }}</el-button
           >
         </div>
-      <!-- </GlobalFooter> -->
+      </GlobalFooter>
     </el-form>
   </section>
 </template>

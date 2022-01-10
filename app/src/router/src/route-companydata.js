@@ -38,6 +38,17 @@ export default {
         import(
           /* webpackChunkName: "companydata-distributordata" */ '@/view/mall/datacube/distributordata'
         )
-    }
+    },
+    {
+      path: 'memberstatistics',
+      name: `memberstatistics`,
+      meta: {
+        title: `${name}-会员统计`
+      },
+      component: () =>
+        import(
+          /* webpackChunkName: "companydata-memberstatistics" */ '@/view/mall/datacube/companydata/member'
+        )
+    },
   ]
 }

@@ -468,6 +468,7 @@ export default {
         this.disabled = true;
         this.resultHandler(result)  
         console.log('商户端');
+        this.$route.query.type ='detail'
         return
       }
 

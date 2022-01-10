@@ -571,14 +571,6 @@
         </section>
         <!-- <section class="section-card fn-b-20"><a href="http://wpa.qq.com/msgrd?v=3&uin=714165655&site=qq&menu=yes" target="_blank">QQ客服</a></section> -->
         <section
-          class="section-card fn-b-20 demo-img"
-          v-show="activateInfo.source == 'demo'"
-          :style="'background:  url(' + img.bcg_1 + ')'"
-        >
-          <div class="sl-img-hd">扫码体验DEMO</div>
-          <img :src="img.demo" alt="" class="img-demo" />
-        </section>
-        <section
           class="section-card fn-b-20 sl-img"
           v-show="activateInfo.source == 'demo'"
           :style="'background:  url(' + img.bcg_2 + ')'"

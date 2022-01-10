@@ -288,7 +288,7 @@ export default {
       this.params.distributor = val
     },
     getDistributorData() {
-      getDistributorList().then((res) => {
+      getDistributorList({is_valid:true}).then((res) => {
         this.distributorOption = res.data.data.list
       })
     },

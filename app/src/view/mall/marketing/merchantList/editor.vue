@@ -2,7 +2,7 @@
   <div class="MerchantsEditor">
     <h5>选择商家类型</h5>
     <el-divider></el-divider>
-    <span v-if="$route.query.type=='detail'">{{form.settled_type=='enterprise'?'企业':'个体户'}}</span>
+    <span v-if="$route.query.type=='detail' || $route.query.type=='verify'">{{form.settled_type=='enterprise'?'企业':'个体户'}}</span>
     <el-select v-else v-model="form.settled_type" placeholder="请选择" :disabled="disabled || editDisabled" >
       <el-option label="企业" value="enterprise"></el-option>
       <el-option label="个体户" value="soletrader"></el-option>
@@ -18,19 +18,19 @@
           <el-row :gutter="20">
             <el-col :span="8">
               <el-form-item :label="form.settled_type=='enterprise'?'企业全称':'商户名称'" prop='merchant_name'>
-                <span v-if="$route.query.type=='detail'">{{form.merchant_name}}</span>
+                <span v-if="$route.query.type=='detail' || $route.query.type=='verify'">{{form.merchant_name}}</span>
                 <el-input v-else :disabled="disabled || editDisabled" v-model="form.merchant_name"></el-input>
               </el-form-item>
             </el-col>
             <el-col :span="8">
               <el-form-item label="统一社会信用代码" prop='social_credit_code_id'>
-                <span v-if="$route.query.type=='detail'">{{form.social_credit_code_id}}</span>
+                <span v-if="$route.query.type=='detail' || $route.query.type=='verify'">{{form.social_credit_code_id}}</span>
                 <el-input v-else :disabled="disabled || editDisabled" v-model="form.social_credit_code_id"></el-input>
               </el-form-item>
             </el-col>
             <el-col :span="8">
               <el-form-item label="所在省市区" prop="regions_id">
-                <span v-if="$route.query.type=='detail'">{{form.regions.join('/')}}</span>
+                <span v-if="$route.query.type=='detail' || $route.query.type=='verify'">{{form.regions.join('/')}}</span>
                 <el-cascader v-else style="width: 100%" v-model="form.regions_id" :options="AreaJson" clearable
                   :props="{ value: 'value',label: 'label',children: 'children'}" @change="regionChange" :disabled="disabled">
                 </el-cascader>
@@ -38,31 +38,31 @@
             </el-col>
             <el-col :span="8">
               <el-form-item label="详细地址" prop='address'>
-                <span v-if="$route.query.type=='detail'">{{form.address}}</span>
+                <span v-if="$route.query.type=='detail' || $route.query.type=='verify'">{{form.address}}</span>
                 <el-input v-else v-model="form.address" :disabled="disabled"></el-input>
               </el-form-item>
             </el-col>
             <el-col :span="8">
               <el-form-item :label="form.settled_type=='enterprise'?'法人姓名':'负责人姓名'" prop='legal_name'>
-                <span v-if="$route.query.type=='detail'">{{form.legal_name}}</span>
+                <span v-if="$route.query.type=='detail' || $route.query.type=='verify'">{{form.legal_name}}</span>
                 <el-input v-else v-model="form.legal_name" :disabled="disabled || editDisabled"></el-input>
               </el-form-item>
             </el-col>
             <el-col :span="8">
               <el-form-item :label="form.settled_type=='enterprise'?'法人身份证号':'负责人身份证号'" prop='legal_cert_id'>
-                <span v-if="$route.query.type=='detail'">{{form.legal_cert_id}}</span>
+                <span v-if="$route.query.type=='detail' || $route.query.type=='verify'">{{form.legal_cert_id}}</span>
                 <el-input v-else v-model="form.legal_cert_id" :disabled="disabled || editDisabled"></el-input>
               </el-form-item>
             </el-col>
             <el-col :span="8">
               <el-form-item :label="form.settled_type=='enterprise'?'法人手机号':'负责人手机号'"  prop='legal_mobile'>
-                <span v-if="$route.query.type=='detail'">{{form.legal_mobile}}</span>
+                <span v-if="$route.query.type=='detail' || $route.query.type=='verify'">{{form.legal_mobile}}</span>
                 <el-input v-else v-model="form.legal_mobile" :disabled="disabled"></el-input>
               </el-form-item>
             </el-col>
             <el-col :span="8">
               <el-form-item label="联系邮箱" prop='email'>
-                <span v-if="$route.query.type=='detail'">{{form.email}}</span>
+                <span v-if="$route.query.type=='detail' || $route.query.type=='verify'">{{form.email}}</span>
                 <el-input v-else v-model="form.email" :disabled="disabled"></el-input>
               </el-form-item>
             </el-col>
@@ -78,7 +78,7 @@
         <el-row :gutter="20">
           <el-col :span="8">
             <el-form-item label="结算银行账户类型" prop="bank_acct_type">
-              <span v-if="$route.query.type=='detail'">{{form.bank_acct_type=='1'?'对公':'对私'}}</span>
+              <span v-if="$route.query.type=='detail' || $route.query.type=='verify'">{{form.bank_acct_type=='1'?'对公':'对私'}}</span>
               <template v-else>
                 <el-radio-group v-model="form.bank_acct_type" :disabled="disabled || editDisabled">
                   <el-radio label="1">对公</el-radio>
@@ -97,14 +97,14 @@
           </el-col>
           <el-col :span="8" v-if="form.bank_acct_type =='2'">
             <el-form-item label="银行预留手机号" prop="bank_mobile" >
-              <span v-if="$route.query.type=='detail'">{{form.bank_mobile}}</span>
+              <span v-if="$route.query.type=='detail' || $route.query.type=='verify'">{{form.bank_mobile}}</span>
               <el-input v-else v-model="form.bank_mobile" :disabled="disabled || editDisabled"></el-input>
             </el-form-item>
           </el-col>
           <el-col :span="8" v-else>
             <el-form-item label="结算银行卡所属银行" prop="bank_name">
               <div class="flex">
-                <span v-if="$route.query.type=='detail'">{{form.bank_name}}</span>
+                <span v-if="$route.query.type=='detail' || $route.query.type=='verify'">{{form.bank_name}}</span>
                 <el-autocomplete
                   v-else
                   :disabled="disabled || editDisabled"
@@ -121,7 +121,7 @@
           </el-col>
           <el-col :span="8">
             <el-form-item label="结算银行卡号" prop="card_id_mask">
-              <span v-if="$route.query.type=='detail'">{{form.card_id_mask}}</span>
+              <span v-if="$route.query.type=='detail' || $route.query.type=='verify'">{{form.card_id_mask}}</span>
               <el-input v-else v-model="form.card_id_mask" :disabled="disabled || editDisabled"></el-input>
             </el-form-item>
           </el-col>
@@ -136,7 +136,7 @@
         <el-row :gutter="20">
           <el-col :span="8">
               <el-form-item label="商户类型" prop='merchant_type'>
-                <span v-if="$route.query.type=='detail'">{{form.merchant_type_parent_name}}</span>
+                <span v-if="$route.query.type=='detail' || $route.query.type=='verify'">{{form.merchant_type_parent_name}}</span>
                 <el-select v-else v-model="form.merchant_type" placeholder="请选择" style="width:100%" :disabled="disabled" @change="merchantType_change">
                     <el-option
                       v-for="item in MerchantsType"
@@ -149,7 +149,7 @@
           </el-col>
           <el-col :span="8">
               <el-form-item label="经营范围" prop='merchant_type_id'>
-                <span v-if="$route.query.type=='detail'">{{form.merchant_type_name}}</span>
+                <span v-if="$route.query.type=='detail' || $route.query.type=='verify'">{{form.merchant_type_name}}</span>
                 <el-select v-else v-model="form.merchant_type_id" placeholder="请选择" style="width:100%" :disabled="disabled">
                     <el-option
                       v-for="item in WorkingGroupList"

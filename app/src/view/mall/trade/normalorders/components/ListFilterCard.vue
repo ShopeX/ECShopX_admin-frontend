@@ -121,12 +121,11 @@
           </el-form-item>
         </el-col>
       </el-row>
-      <el-row v-if="!isMicorMall">
+      <el-row v-if="!isMicorMall || loginType != 'distributor'">
         <el-col :span="12">
           <el-form-item label="选择店铺:">
             <shop-select
               :size="size"
-              v-if="loginType != 'distributor'"
               distributors
               @update="storeSearch"
               ref="shopSelect"

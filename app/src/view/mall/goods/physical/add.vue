@@ -361,7 +361,9 @@
             point_num: goodsDetail.point_num
           }
         }
-        this.tdk_info = JSON.parse(goodsDetail.tdk_content)
+        if(goodsDetail.tdk_content) {
+          this.tdk_info = JSON.parse(goodsDetail.tdk_content)
+        }
         if (typeof goodsDetail.intro === 'object') {
           this.mode = 'component'
           this.content = goodsDetail.intro

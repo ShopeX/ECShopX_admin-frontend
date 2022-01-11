@@ -249,7 +249,7 @@ export default {
     if (to.path.indexOf('verify') === -1) {
       this.getList()
     }
-  },
+  }
 }
 </script>
 <style lang="scss" scoped>

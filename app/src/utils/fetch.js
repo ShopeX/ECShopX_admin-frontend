@@ -31,7 +31,7 @@ export function errorToast( data ) {
   console.log(data,'toast数据');
  
   const { status_code, message } = data  
-  if ( status_code == 40101 || status_code == 403 ) {
+  if ( status_code == 40101 ) {
     Vue.prototype.$message.error( '账号密码错误，请重新登录' )
   } else if ( status_code == 401 ) {
     // Token has expired

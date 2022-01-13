@@ -102,8 +102,9 @@ export default {
     }
   },
   mounted() {
-    this.getExportLogLists(this.params);
     this.activeTabHandler();
+    this.getExportLogLists(this.params);
+    
   },
 
   computed: {

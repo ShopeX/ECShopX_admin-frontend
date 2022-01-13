@@ -99,7 +99,19 @@ export default {
     {
       path: 'datamessage',
       name: `短信账户`, 
-      component: () => import('@/view/base/shortmessage/index')
+      component: () => import('@/view/base/shortmessage/index'),
+      children:[
+        {
+          path:'ali_sms',
+          name:'阿里短信',
+          component:() =>  import('@/view/base/shortmessage/ali_sms'),
+        },
+        {
+          path:'shopex_sms',
+          name:'商派短信',
+          component:() =>  import('@/view/base/shortmessage/shopex_sms'),
+        }
+      ]
     },
     {
       path: 'basecurrency',

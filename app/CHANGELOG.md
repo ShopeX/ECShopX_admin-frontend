@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [2.3.0](https://git.ishopex.cn/onex/espier-shop/compare/v2.2.1...v2.3.0) (2022-01-13)
+
+
+### Features
+
+* relase ([1298124](https://git.ishopex.cn/onex/espier-shop/commit/12981242711dd0880a1bb2f18f27eb63029c2ef0))
+
 ## [2.2.0](https://git.ishopex.cn/onex/espier-shop/compare/v2.1.3...v2.2.0) (2022-01-06)
 
 

@@ -1,0 +1,72 @@
+html,
+body {
+  margin: 0;
+  height: 100%;
+  #app {
+    height: 100%;
+  }
+}
+
+a {
+  text-decoration: none;
+}
+
+.view-flex {
+  display: flex;
+}
+.view-flex-item {
+  flex: 1;
+}
+
+.dom-link {
+  cursor: pointer;
+}
+
+.filter-header {
+  .el-input {
+    width: 220px;
+    margin: 0 5px 5px 0;
+  }
+}
+
+.logout-popper {
+  .popover-row {
+    display: flex;
+    align-items: center;
+    color: #888;
+    &:first-child {
+      border-bottom: 1px solid #efefef;
+      padding-bottom: 5px;
+      margin-bottom: 10px;
+    }
+    .user-avatar {
+      width: 40px;
+      height: 40px;
+      border-radius: 20px;
+      margin-right: 10px;
+    }
+  }
+}
+
+// el-css
+.el-button {
+  &-group {
+    margin-right: 5px;
+  }
+  &+.el-button {
+    margin-left: 5px;
+  }
+}
+
+.el-row {
+  margin-bottom: 10px !important;
+}
+
+.copy-link {
+  position: absolute;
+  left: 0;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  visibility: hidden;
+}

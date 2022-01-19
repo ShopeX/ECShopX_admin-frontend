@@ -4,29 +4,37 @@
       <router-link class="link" to="{}">切换短信商</router-link>
     </div>
     <el-tabs v-model="activeName" @tab-click="handleClick">
-      <el-tab-pane label="基础配置" name="baseConfig">
-        <base-config></base-config>
-      </el-tab-pane>
-      <el-tab-pane label="发送短信" name="second">配置管理</el-tab-pane>
-      <el-tab-pane label="角色管理" name="third">角色管理</el-tab-pane>
-      <el-tab-pane label="定时任务补偿" name="fourth">定时任务补偿</el-tab-pane>
+      <el-tab-pane label="基础配置" name="base_config"> </el-tab-pane>
+      <el-tab-pane label="发送短信" name="send_sms"> </el-tab-pane>
+      <el-tab-pane label="短信签名" name="sms_signatures"> </el-tab-pane>
     </el-tabs>
+
+    <router-view />
   </div>
 </template>
 
 <script>
-import baseConfig from './cpn/base_config.vue'
 export default {
-  components:{
-    baseConfig
-  },
   data() {
     return {
-      activeName: 'baseConfig'
+      activeName: 'base_config'
     }
   },
+  mounted(){
+    console.log(this.$route);
+  },
   methods: {
-    handleClick() {},
+    handleClick(tab, event) {
+      console.log(tab);
+      this.activeName = tab.name
+      if (tab.name=='base_config') {
+        this.$router.push({ path:`/setting/datamessage/ali_sms`})
+      }else{
+        this.$router.push({ path:`/setting/datamessage/ali_sms/${tab.name}`})
+      }
+      
+      
+    },
     switchSMS() {
       console.log(1)
     }

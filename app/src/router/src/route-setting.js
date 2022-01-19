@@ -105,6 +105,29 @@ export default {
           path:'ali_sms',
           name:'阿里短信',
           component:() =>  import('@/view/base/shortmessage/ali_sms'),
+          children:[
+            {
+              path:'/',
+              name:'基础配置',
+              component:()=> import('@/view/base/shortmessage/cpn/base_config'),
+            },
+            {
+              path:'send_sms',
+              name:'发送短信',
+              component:()=> import('@/view/base/shortmessage/cpn/send_sms')
+            },
+            {
+              path:'sms_signatures',
+              name:'短信签名',
+              component:()=> import('@/view/base/shortmessage/cpn/sms_signatures'),
+              children:[
+                {
+                  path:'edit',
+                  component:()=> import('@/view/base/shortmessage/cpn/sms_signatures_edit'),
+                }
+              ]
+            }
+          ]
         },
         {
           path:'shopex_sms',

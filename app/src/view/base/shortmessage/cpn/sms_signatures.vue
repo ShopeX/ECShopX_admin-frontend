@@ -1,0 +1,100 @@
+<template>
+  <div>
+    <div class="sms_signatures" v-if="$route.path.indexOf('edit')===-1">
+      <el-card class="box-card" shadow="never">
+        <div slot="header" class="clearfix">
+          <span>短信签名</span>
+        </div>
+        <SpFinder
+          ref="finder"
+          :split-count="3"
+          :search-row-count="2"
+          :fixed-row-action="true"
+          :setting="setting"
+          noSelection
+          :hooks="{
+            beforeSearch: beforeSearch,
+            afterSearch: afterSearch
+          }"
+          url="/aliyunsms/sign/list"
+        >
+          <template v-slot:tableTop>
+            <div style="text-align: right; margin-bottom: 20px">
+              <el-button size="small" type="primary" @click="addSignature">新增签名</el-button>
+            </div>
+          </template>
+        </SpFinder>
+      </el-card>
+    </div>
+    <router-view />
+  </div>
+</template>
+
+<script>
+import setting_ from '../finder-setting/sms_signatures'
+export default {
+  computed: {
+    setting() {
+      return setting_(this)
+    }
+  },
+  data() {
+    return {
+      search_options: [
+        { key: '审核中', value: '0' },
+        { key: '审核通过', value: '1' },
+        { key: '审核失败', value: '2' }
+      ]
+    }
+  },
+  methods: {
+    addSignature() {
+      this.$router.push({ path: this.matchHidePage('edit') })
+    },
+    beforeSearch(params) {
+      return { ...params }
+    },
+    afterSearch() {}
+  }
+}
+</script>
+<style lang="scss">
+.sms_signatures {
+  .status-icon {
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    background: #409eff;
+    display: inline-block;
+    margin-right: 4px;
+    &.fail {
+      background: red;
+    }
+    &.success {
+      background: #67c23a;
+    }
+  }
+  .sp-finder-search .el-input__inner {
+    height: 40px;
+    line-height: 40px;
+  }
+  .clearfix span {
+    font-weight: 700;
+  }
+  .search-field {
+    width: 500px !important;
+  }
+  label {
+    font-size: 12px;
+    color: #000;
+  }
+  .el-row {
+    margin-bottom: 0px;
+  }
+  .el-table th {
+    background: #f5f5f5;
+    color: #000;
+    text-align: center;
+  }
+}
+</style>

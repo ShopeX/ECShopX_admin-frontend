@@ -203,6 +203,8 @@ Vue.prototype.matchHidePage = function(name) {
 
   return `${this.$route.path}/${name}`
 }
+
+
 Vue.prototype.orderType = [
   {
     type: 'service',

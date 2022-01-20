@@ -159,7 +159,7 @@
       <template v-else>
         <div class="sub-label"></div>
         <div class="sub-block">
-          {{value.skus}}
+          <!-- {{value.skus}} -->
           <div class="sku-row" v-for="(item, index) in value.skus" :key='index'>
             <div class="sku-name">
               {{item.sku_name}}：
@@ -180,7 +180,7 @@
           </div>
         </div>
         <div class="sub-label">设置规格图片</div>
-        {{value.specImages}}
+        <!-- {{value.specImages}} -->
         <div class="sub-block">
           <el-table
             :data="value.specImages"

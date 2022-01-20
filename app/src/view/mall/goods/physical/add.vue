@@ -486,16 +486,19 @@
           // console.log('temp:', temp)
           return temp
         })
-        // 查找规格图片
-        const imgSkus = this.skuData.skus.find(item => item.is_image == 'true')
+        console.log('specItems:', this.skuData.specItems)
+        // 查找规格图片, 取最后一行
+        const skus = JSON.parse(JSON.stringify(this.skuData.skus))
+        const imgSkus = skus.reverse().find(item => item.is_image == 'true')
         if(imgSkus) {
           const checkedImgSkus = imgSkus.sku_value.filter(item => imgSkus.checked_sku.indexOf(item.attribute_value_id) > -1)
           this.skuData.specImages = checkedImgSkus.map(skuItem => {
+            const fd = this.skuData.specImages.find(item => item.spec_value_id == skuItem.attribute_value_id)
             return {
               spec_value_id: skuItem.attribute_value_id,
               spec_custom_value_name: skuItem.custom_attribute_value,
               spec_value_name: skuItem.attribute_value,
-              item_image_url: skuItem.image_url ? [skuItem.image_url] : []
+              item_image_url: fd ? fd.item_image_url : skuItem.image_url ? [skuItem.image_url] : []
             }
           })
         }
@@ -554,19 +557,20 @@
         if(!this.skuData.nospec) {
           this.getGoodsSkus(detail.goods_spec, [])
         }
-        const imgSpec = detail.goods_spec.find(item => item.is_image == 'true')
-        if(imgSpec) {
-          this.skuData.specImages = imgSpec.attribute_values.list.map(item => {
-            return {
-              spec_custom_value_name: item.attribute_value,
-              spec_image_url: item.image_url,
-              spec_value_id: item.attribute_value_id,
-              spec_value_name: item.attribute_value,
-              item_image_url: [ item.image_url]
-            }
-          })
-        }
-        this.skuData.specImages
+        // const goodsSpec = JSON.parse(JSON.stringify(detail.goods_spec))
+        // const imgSpec = goodsSpec.reverse().find(item => item.is_image == 'true')
+        // if(imgSpec) {
+        //   this.skuData.specImages = imgSpec.attribute_values.list.map(item => {
+        //     return {
+        //       spec_custom_value_name: item.attribute_value,
+        //       // spec_image_url: item.image_url,
+        //       spec_value_id: item.attribute_value_id,
+        //       spec_value_name: item.attribute_value,
+        //       item_image_url: [ item.image_url]
+        //     }
+        //   })
+        // }
+        this.skuData.specImages = []
         this.loading = false
       },
       specOnChange() {

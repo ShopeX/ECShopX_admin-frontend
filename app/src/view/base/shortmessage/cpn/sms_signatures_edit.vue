@@ -126,12 +126,15 @@ export default {
       })
     },
     /* -------------------------图片选择------------------------- */
-    pickImg({ url }) {
-      if (url && this.pickerImgType) {
-        const that = this.form
-        that[this.pickerImgType] = url
-        this.imgDialog = false
-      }
+    // pickImg({ url }) {
+    //   if (url && this.pickerImgType) {
+    //     const that = this.form
+    //     that[this.pickerImgType] = url
+    //     this.imgDialog = false
+    //   }
+    // },
+    pickImg(a) {
+      console.log(a);
     },
     closeImgDialog() {
       this.imgDialog = false

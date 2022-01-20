@@ -256,14 +256,17 @@
           :key="index"
           :style="index === currentTab ? `color:${tabs.config.selectedColor}` : ''"
         >
-          <svg
+         <i  v-if="!item.iconPath" :class="`icon-${item.name} iconfont`"></i>
+          <!-- <svg
             v-if="!item.iconPath"
             class="svg-icon"
             aria-hidden="true"
             :style="index === currentTab ? `color:${tabs.config.selectedColor}` : ''"
           >
             <use :xlink:href="`#icon-${item.name}`"></use>
-          </svg>
+            
+          </svg> -->
+          
           <template v-else>
             <img
               v-if="index === currentTab"
@@ -440,6 +443,7 @@ export default {
         }
         if (data.tab_bar) {
           this.tabs = JSON.parse(data.tab_bar)
+          console.log(this.tabs);
         }
       })
     },

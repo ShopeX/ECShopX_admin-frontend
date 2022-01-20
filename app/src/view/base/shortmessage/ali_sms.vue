@@ -21,11 +21,12 @@ export default {
     }
   },
   mounted(){
+    this.activeName = this.$route.meta
     console.log(this.$route);
   },
   methods: {
     handleClick(tab, event) {
-      console.log(tab);
+      // console.log(tab);
       this.activeName = tab.name
       if (tab.name=='base_config') {
         this.$router.push({ path:`/setting/datamessage/ali_sms`})

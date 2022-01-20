@@ -109,21 +109,25 @@ export default {
             {
               path:'/',
               name:'基础配置',
+              meta:'base_config',
               component:()=> import('@/view/base/shortmessage/cpn/base_config'),
             },
             {
               path:'send_sms',
               name:'发送短信',
+              meta:'send_sms',
               component:()=> import('@/view/base/shortmessage/cpn/send_sms')
             },
             {
               path:'sms_signatures',
               name:'短信签名',
               component:()=> import('@/view/base/shortmessage/cpn/sms_signatures'),
+              meta:"sms_signatures",
               children:[
                 {
                   path:'edit',
                   component:()=> import('@/view/base/shortmessage/cpn/sms_signatures_edit'),
+                  meta:"sms_signatures",
                 }
               ]
             }
@@ -173,7 +177,8 @@ export default {
       children:[
         {
           path:'/',
-          component: () => import('@/view/base/setting/dealer/account_info')
+          component: () => import('@/view/base/setting/dealer/account_info'),
+  
         },
         {
           path:'picture',

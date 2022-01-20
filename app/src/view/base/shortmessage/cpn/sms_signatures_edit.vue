@@ -68,22 +68,37 @@
         </ul>
       </el-form-item>
       <el-form-item>
-        <el-button type="primary" @click="submitForm('ruleForm')">确定</el-button>
-        <el-button @click="resetForm('ruleForm')">取消</el-button>
+        <el-button type="primary" @click="submitForm('form')">确定</el-button>
+        <el-button>取消</el-button>
         <ul class="tips">
           <li>预计两小时完成审核，政企签名预计在 48 小时工作时间内审核</li>
           <li>审核工作时间：周一至周日 9:00-23:00（法定节日顺延）</li>
         </ul>
       </el-form-item>
     </el-form>
+    <!-- 图片选择 -->
+    <imgPicker
+      :dialog-visible="imgDialog"
+      :sc-status="isGetImage"
+      @chooseImg="pickImg"
+      @closeImgDialog="closeImgDialog"
+    ></imgPicker>
   </div>
 </template>
 
 <script>
 import { requiredRules, MaxRules, MinRules } from '@/utils/validate'
+import imgPicker from '@/components/imageselect'
 export default {
+  components:{
+    imgPicker
+  },
   data() {
     return {
+      // 图片选择
+      imgDialog: false,
+      isGetImage: false,
+      pickerImgType:'',
       form: {
         sign_name: '', //签名名称
         sign_source: '',
@@ -93,11 +108,43 @@ export default {
         reason: ''
       },
       rules: {
-          sign_name:[requiredRules('签名名称'),MaxRules(12),MinRules(2)],
-          sign_source:[requiredRules('签名来源','change')],
-          remark:[requiredRules('申请说明'),MaxRules(200)],
+        sign_name: [requiredRules('签名名称'), MaxRules(12), MinRules(2)],
+        sign_source: [requiredRules('签名来源', 'change')],
+        remark: [requiredRules('申请说明'), MaxRules(200)]
       }
     }
+  },
+  methods: {
+    submitForm(formName) {
+      this.$refs[formName].validate((valid) => {
+        if (valid) {
+          alert('submit!')
+        } else {
+          console.log('error submit!!')
+          return false
+        }
+      })
+    },
+    /* -------------------------图片选择------------------------- */
+    pickImg({ url }) {
+      if (url && this.pickerImgType) {
+        const that = this.form
+        that[this.pickerImgType] = url
+        this.imgDialog = false
+      }
+    },
+    closeImgDialog() {
+      this.imgDialog = false
+      this.isGetImage = false
+    },
+    handleImgPicker(pickerImgType) {
+
+      this.pickerImgType = pickerImgType
+      this.imgDialog = true
+      this.isGetImage = true
+      
+    }
+    /* -------------------------图片选择------------------------- */
   }
 }
 </script>

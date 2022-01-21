@@ -306,6 +306,7 @@ export default {
   props:['props_type'],
   data() {
     return {
+      isEditCheckBox:false, //编辑状态是否弹窗 离开页面丢失数据
       checkBoxConfig:{
         visible:false,
         message:'',
@@ -513,6 +514,7 @@ export default {
           const result = await addTheBusinessman(this.form,type=='edit'?merchantId:null); 
           if (result.data.data.status) {
             this.$message.success('保存成功');
+            this.isEditCheckBox = true
             this.$router.go(-1)
           }
           console.log(result);
@@ -654,7 +656,7 @@ export default {
   beforeRouteLeave(to, from, next) {
     const { type } = this.$route.query;
     console.log(to,type);
-    if (type == 'add' || type=='edit') {
+    if (type == 'add' || type=='edit' && !this.isEditCheckBox) {
       this.$confirm('确定要离开当前页面，您将丢失已编辑的数据？！', '提示', {
         confirmButtonText: '确定',
         cancelButtonText: '取消',

@@ -1,7 +1,7 @@
 <template>
   <div class="baseSetting">
     <el-form :model="form" ref="ruleForm" label-width="150px" class="demo-ruleForm">
-      <el-form-item label="是否允许加盟商入住">
+      <el-form-item label="是否允许加盟商入驻">
         <el-radio-group v-model="form.status">
           <el-radio :label="true">允许</el-radio>
           <el-radio :label="false">关闭</el-radio>

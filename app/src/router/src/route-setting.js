@@ -7,33 +7,6 @@ export default {
   component: Layout,
   children: [
     {
-      path: 'wxappmanage',
-      name: `小程序管理`,
-      component: () => import( '@/view/wxapp/wxappmanage/list' ),
-      children: [
-        {
-          path: 'policy',
-          component: () => import('@/view/wxapp/authorize/policy')
-        },
-        {
-          path: 'policy/editdashboard',
-          component: () => import('@/view/wxapp/statistics/dataanalysis/index')
-        },
-        {
-          path: 'policy/editsourcemanagement',
-          component: () => import('@/view/wxapp/statistics/sourcemanagement/index')
-        },
-        {
-          path: 'policy/editsourcemanagement/detail',
-          component: () => import('@/view/wxapp/statistics/sourcemanagement/monito_detail')
-        },
-        {
-          path: 'policy/noticemessage',
-          component: () => import('@/view/wxapp/messages')
-        }
-      ]
-    },
-    {
       path: 'staff/staffleader',
       name: `账号管理-门店管理员`, 
       component: () => import('@/view/base/shopstaff/salesperson/leaderlist')

@@ -120,6 +120,7 @@
     },
     data () {
       return {
+        wxapp_id: '',
         formLabelWidth: '120px',
         loading: false,
         dialogVisibleMonitors: false,
@@ -158,12 +159,6 @@
         sourceList: [],
         selectSourceList: []
       }
-    },
-    computed: {
-      ...mapGetters([
-        'wxapp_id',
-        'template_name'
-      ])
     },
     methods: {
       saveMonitor: function () { // 保存监控链接
@@ -360,6 +355,8 @@
         this.getSourcesLists()
       },
       getMonitorsList: function () {
+        console.log(this.wxapp_id)
+
         this.loading = true
         let params = {page: this.monitorsParams.page, pageSize: this.monitorsParams.pageSize, wxappid: this.wxapp_id}
         listMonitors(params).then(response => {
@@ -376,6 +373,9 @@
       }
     },
     mounted () {
+      if (this.$route.query && this.$route.query.app_id) {
+        this.wxapp_id = this.$route.query.app_id
+      }
       this.getMonitorsList()
     }
   }

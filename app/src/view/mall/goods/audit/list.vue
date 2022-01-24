@@ -146,6 +146,8 @@
                 >
               </template>
             </el-table-column>
+            <el-table-column prop="price" label="商品价格">
+            </el-table-column>
             <el-table-column
               prop="store"
               label="库存"

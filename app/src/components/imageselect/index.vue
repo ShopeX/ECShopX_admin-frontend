@@ -314,6 +314,8 @@ export default {
           duration: 5 * 1000
         })
         this.localisLoadData = false
+        this.locali = -1 // 选中的index
+        this.localcheckedItem =[]  // 选中的内容
         this.getLocalImageList()
       })
       // }

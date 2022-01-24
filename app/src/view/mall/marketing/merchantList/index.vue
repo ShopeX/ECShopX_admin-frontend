@@ -99,25 +99,25 @@ export default {
       this.datapass_block = datapass_block
     }
   },
-  beforeRouteLeave(to, from, next) {
-    const { type } = this.$route.query;
-    console.log(to,type);
-    if (type == 'add') {
-      this.$confirm('确定要离开当前页面，您将丢失已编辑的数据？！', '提示', {
-        confirmButtonText: '确定',
-        cancelButtonText: '取消',
-        type: 'warning'
-      })
-        .then((res) => {
-          next()
-        })
-        .catch(() => {
-          next(false)
-        })
-    } else {
-      next()
-    }
-  },
+  // beforeRouteLeave(to, from, next) {
+  //   const { type } = this.$route.query;
+  //   console.log(to,type);
+  //   if (type == 'add') {
+  //     this.$confirm('确定要离开当前页面，您将丢失已编辑的数据？！', '提示', {
+  //       confirmButtonText: '确定',
+  //       cancelButtonText: '取消',
+  //       type: 'warning'
+  //     })
+  //       .then((res) => {
+  //         next()
+  //       })
+  //       .catch(() => {
+  //         next(false)
+  //       })
+  //   } else {
+  //     next()
+  //   }
+  // },
 }
 </script>
 

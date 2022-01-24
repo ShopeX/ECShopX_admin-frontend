@@ -168,6 +168,9 @@ import DataAnalysis from '@/view/base/setting/dataAnalysis' // 数据分析配�
 
 import GoodsShareSetting from '@/view/base/setting/goodsShareSetting' // 商品分享设置
 
+import Wxappmanage from '@/view/wxapp/wxappmanage/list' // 小程序列表
+
+
 // import Basic_setting from '@/view/mall/marketing/basicSetting' // 基础配置
 // import Onecode from '@/view/brand/codegoods/thingslist' // 商品码管理
 // import Things from '@/view/brand/codegoods/thingsedit' // 新增编辑物品
@@ -321,7 +324,8 @@ import Salesreportlist from '@/view/mall/trade/financial/list' // 财务-销售�
 import Whitelistlist from '@/view/member/whitelist/list' // 会员-白名单
 import Whitelistuploade from '@/view/member/whitelist/uploadeindex' // 会员-白名单导入
 
-import Shopmenu from '@/view/menus/shopmenu' // 菜单管理
+import Shopmenu from '@/view/menus/shopmenu' // 商城菜单管理
+import Distributormenu from '@/view/menus/distributormenu' // 店铺菜单管理
 
 import Regionauth from '@/view/regionauth/list' // 地区权限
 
@@ -666,8 +670,10 @@ export default {
   // 小程序外链
   Extminilink,
   Extminilink_editor,
-  // 菜单管理
+  //商城菜单管理
   Shopmenu,
+  //店铺菜单管理
+  Distributormenu,
   // 地区权限
   Regionauth,
   // 积分商城相关
@@ -711,7 +717,8 @@ export default {
   Exportstoreitems,
 
   // 万宁-店铺-店铺交易统计
-  TransactionStatistics
+  TransactionStatistics,
+  Wxappmanage
 }
 
 // 如果路由通过页面传值那么需要定义当前值的字段名称

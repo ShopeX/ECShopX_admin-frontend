@@ -86,7 +86,8 @@ export default {
   props: ['getStatus'],
   data() {
     return {
-      activeName: this.$store.getters.login_type == 'dealer'?'adapay_tradedata' : 'member',
+      // activeName: this.$store.getters.login_type == 'dealer' ? 'adapay_tradedata' : 'member',
+      activeName: '',
       create_time: '',
       exportLogLists: [],
       loading: false,
@@ -100,10 +101,29 @@ export default {
       }
     }
   },
+  mounted() {
+    this.activeTabHandler();
+    this.getExportLogLists(this.params);
+    
+  },
+
   computed: {
     ...mapGetters(['wheight'])
   },
   methods: {
+    activeTabHandler() {
+      const active = this.$store.getters.login_type
+      console.log(active);
+      if (active == 'dealer') {
+        this.activeName = 'adapay_tradedata'
+      } else if (active == 'merchant') {
+        this.activeName = 'normal_master_order'
+      } else {
+        this.activeName = 'member'
+      }
+      // console.log(active);
+      console.log(this.activeName);
+    },
     // 切换tab
     handleClick(tab, event) {
       this.activeName = tab.name
@@ -155,9 +175,6 @@ export default {
       const dataBlob = new Blob([`\ufeff${encoded}`], { type: 'text/plain;charset=utf-8' }) //返回的格式
       return window.URL.createObjectURL(dataBlob)
     }
-  },
-  mounted() {
-    this.getExportLogLists(this.params)
   },
   watch: {
     getStatus(val) {

@@ -98,7 +98,7 @@
                   <img v-if="avatar" class="user-avatar" :src="avatar" />
                   <i v-else class="user-avatar iconfont icon-user-circle1"></i>
                 </div>
-                <div class="username">
+                <div class="username" >
                   <div>{{ nick_name || name }}</div>
                   <small class="muted">基础信息</small>
                 </div>
@@ -229,12 +229,15 @@ export default {
       })
     },
     handleUserInfo() {
-      // this.$router.push({
-      //   path: '/admininfo'
-      // })
+      // debugger
+      console.log(this.matchInternalRoute('admininfo'));
+      // debugger
       this.$router.push({
-        path: this.matchInternalRoute('admininfo')
+        path: '/admininfo'
       })
+      // this.$router.push({
+      //   path: this.matchInternalRoute('admininfo')
+      // })
     },
     async logout() {
       await this.$api.login.getAuthorizelogout()
@@ -394,10 +397,12 @@ export default {
 <style>
 .popover-row.base {
   padding: 10px;
+  cursor:pointer
 }
 .popover-row.exit-system {
   padding: 0px 12px 7px;
-  cursor: pointer;
   font-size: 12px;
+  cursor:pointer
+
 }
 </style>

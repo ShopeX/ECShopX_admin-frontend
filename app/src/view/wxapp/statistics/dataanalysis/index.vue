@@ -32,11 +32,9 @@ export default {
     survey,
     user
   },
-  computed: {
-    ...mapGetters(['wxapp_id'])
-  },
   data() {
     return {
+      wxapp_id: '',
       activeName: 'survey',
       currentApp: '',
       loaded: false,
@@ -53,6 +51,10 @@ export default {
     }
   },
   mounted() {
+    if (this.$route.query && this.$route.query.app_id) {
+      this.wxapp_id=this.$route.query.app_id
+      this.currentApp = this.$route.query.app_id
+    }
     if (this.wxapps) {
       this.currentApp = this.wxapp_id
       this.loaded = true

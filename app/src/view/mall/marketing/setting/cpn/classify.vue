@@ -14,7 +14,7 @@
     </div>
     <div class="list">
         <el-table
-            @sort-change='fnFort'
+            @sort-change='fnSort'
             :loading='loading'
             :data="merchantsClassificationList"
             style="width: 100%;margin-bottom: 20px;" 
@@ -27,7 +27,7 @@
                     <span>{{scope.row.is_show=='1'?'可见':'不可见'}}</span>
                 </template>
             </el-table-column>
-            <el-table-column prop="sort" label="排序" :sortable='true'>
+            <el-table-column prop="sort" label="排序" sortable='custom'>
                 <template slot-scope="scope">
                     <el-input type='number' min='0' :style="{width:'100px'}" v-model="scope.row.sort" @change="callbackConfirm(scope.row,'edit')"></el-input>
                 </template>
@@ -95,7 +95,7 @@ export default {
             this.editInfo ={}
             this.switchBoxHandle();
         },
-        fnFort({ column, prop, order }){
+        fnSort({ column, prop, order }){
             if (order=='ascending') {
                 this.query.sort_order_by ='asc'
                 this.getConfig();

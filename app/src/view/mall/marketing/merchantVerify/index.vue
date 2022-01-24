@@ -243,6 +243,12 @@ export default {
     createTimeFilter(time) {
       return moment(time * 1000).format('YYYY-MM-DD HH:mm:ss')
     }
+  },
+  beforeRouteUpdate(to, from, next) {
+    next()
+    if (to.path.indexOf('verify') === -1) {
+      this.getList()
+    }
   }
 }
 </script>

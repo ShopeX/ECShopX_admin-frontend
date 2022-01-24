@@ -71,6 +71,12 @@ export default {
       let params = {}
       this.loading = true
 
+      if (!this.form.brand_name || !this.form.brand_name.trim()) {
+        this.$message.error('请输入商城名称') 
+        this.loading = false
+        return
+      }
+
       params = {
         intro: this.form.intro,
         logo: this.form.logo,

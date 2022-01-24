@@ -14,6 +14,14 @@ export default {
         hidemenu: true
       },
       component: () => import(/* webpackChunkName: "dashboard" */ '@/view/base/index')
+    },
+    {
+      path: 'admininfo',
+      name: `dashboard`,
+      meta: {
+        hidemenu: true
+      },
+      component: () => import('@/view/base/shop/admininfo')
     }
   ]
 }

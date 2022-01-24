@@ -367,11 +367,11 @@
         <i class="el-icon-warning icon-wr"></i
         ><span>店铺使用期限即将到期，如需继续使用请点击购买订购产品</span>
       </div>
-      <div class="btn">
+      <!-- <div class="btn">
         <el-button @click="handleBuy" size="mini" type="danger"
           >立即购买</el-button
         >
-      </div>
+      </div> -->
     </div>
     <el-row :gutter="20">
       <el-col :span="20">

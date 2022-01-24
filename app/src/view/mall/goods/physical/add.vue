@@ -361,7 +361,9 @@
             point_num: goodsDetail.point_num
           }
         }
-        this.tdk_info = JSON.parse(goodsDetail.tdk_content)
+        if(goodsDetail.tdk_content) {
+          this.tdk_info = JSON.parse(goodsDetail.tdk_content)
+        }
         if (typeof goodsDetail.intro === 'object') {
           this.mode = 'component'
           this.content = goodsDetail.intro
@@ -442,13 +444,16 @@
         })
         const _specItmes = this.cartesianProductOf(...skuMartix )
         const cacheItems = {}
+        console.log('specItems:', this.skuData.specItems)
         this.skuData.specItems.forEach(sitem => {
           const itemSpecs = sitem.item_spec.map(k => {
             return k.spec_value_id
           })
           cacheItems[itemSpecs.join('_')] = sitem
         })
+        console.log('cacheItems:', cacheItems)
         this.skuData.specItems = _specItmes.map(item => {
+          // console.log('item:', item)
           const key = item.join('_')
           const temp = {
             sku_id: key,
@@ -464,13 +469,41 @@
             market_price: cacheItems[key] ? cacheItems[key].market_price: '',
             barcode: cacheItems[key] ? cacheItems[key].barcode : '',
             point_num: cacheItems[key] ? cacheItems[key].point_num : '',
-            item_spec: cacheItems[key] ? cacheItems[key].item_spec : []
+            item_spec: cacheItems[key] ? cacheItems[key].item_spec : item.map((m, n) => {
+              const { sku_id, sku_value } = this.skuData.skus[n]
+              const fd = sku_value.find( sv => sv.attribute_value_id == m)
+              return {
+                spec_id: sku_id,
+                spec_value_id: m,
+                spec_value_name: fd.attribute_value,
+                spec_custom_value_name: fd.custom_attribute_value
+              }
+            })
           }
           if(this.isEditor) {
             temp['item_id'] = cacheItems[key] ? cacheItems[key].item_id : ''
           }
+          // console.log('temp:', temp)
           return temp
         })
+        console.log('specItems:', this.skuData.specItems)
+        // 查找规格图片, 取最后一行
+        const skus = JSON.parse(JSON.stringify(this.skuData.skus))
+        const imgSkus = skus.reverse().find(item => item.is_image == 'true')
+        if(imgSkus) {
+          const checkedImgSkus = imgSkus.sku_value.filter(item => imgSkus.checked_sku.indexOf(item.attribute_value_id) > -1)
+          this.skuData.specImages = checkedImgSkus.map(skuItem => {
+            const fd = this.skuData.specImages.find(item => item.spec_value_id == skuItem.attribute_value_id)
+            return {
+              spec_value_id: skuItem.attribute_value_id,
+              spec_custom_value_name: skuItem.custom_attribute_value,
+              spec_value_name: skuItem.attribute_value,
+              item_image_url: fd ? fd.item_image_url : skuItem.image_url ? [skuItem.image_url] : []
+            }
+          })
+        }
+        console.log(this.skuData.specImages)
+
       },
       cartesianProductOf() {
         return Array.prototype.reduce.call(arguments, function(a, b) {
@@ -524,19 +557,20 @@
         if(!this.skuData.nospec) {
           this.getGoodsSkus(detail.goods_spec, [])
         }
-        const imgSpec = detail.goods_spec.find(item => item.is_image == 'true')
-        if(imgSpec) {
-          this.skuData.specImages = imgSpec.attribute_values.list.map(item => {
-            return {
-              spec_custom_value_name: item.attribute_value,
-              spec_image_url: item.image_url,
-              spec_value_id: item.attribute_value_id,
-              spec_value_name: item.attribute_value,
-              item_image_url: [ item.image_url]
-            }
-          })
-        }
-         this.skuData.specImages
+        // const goodsSpec = JSON.parse(JSON.stringify(detail.goods_spec))
+        // const imgSpec = goodsSpec.reverse().find(item => item.is_image == 'true')
+        // if(imgSpec) {
+        //   this.skuData.specImages = imgSpec.attribute_values.list.map(item => {
+        //     return {
+        //       spec_custom_value_name: item.attribute_value,
+        //       // spec_image_url: item.image_url,
+        //       spec_value_id: item.attribute_value_id,
+        //       spec_value_name: item.attribute_value,
+        //       item_image_url: [ item.image_url]
+        //     }
+        //   })
+        // }
+        this.skuData.specImages = []
         this.loading = false
       },
       specOnChange() {
@@ -617,6 +651,7 @@
               item_image_url: item.item_image_url
             }
           })
+          // debugger
           params = {
             ...params,
             spec_images: JSON.stringify(specImages)

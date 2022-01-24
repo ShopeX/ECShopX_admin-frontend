@@ -116,11 +116,11 @@
 <script>
 import { mapGetters } from 'vuex'
 export default {
+  props: ['wxappId', 'templateName', 'weappName', 'isLoad'],
   name: '',
   data() {
     return {
-      wxapp_id: '',
-      weappName: '',
+      applet_detail: false,
       privacyList: [],
       privacyDescList: [],
       settingList: [],
@@ -147,26 +147,12 @@ export default {
     }
   },
   created() {
-    if (this.$route.query && this.$route.query.app_id) {
-      this.wxapp_id = this.$route.query.app_id
-    }
-    if (this.$route.query && this.$route.query.nick_name) {
-      this.weappName = this.$route.query.nick_name
-    }
     this.getPolicyConfig()
-  },
-  mounted() {
-    if (this.$route.query && this.$route.query.app_id) {
-      this.wxapp_id = this.$route.query.app_id
-    }
-    if (this.$route.query && this.$route.query.nick_name) {
-      this.weappName = this.$route.query.nick_name
-    } 
   },
   methods: {
     async getPolicyConfig() {
       const result = await this.$api.policy.getPolicyConfig({
-        wxaAppId: this.wxapp_id
+        wxaAppId: this.wxappId
       });
       this.privacyDescList = result.data.data.privacy_desc.privacy_desc_list;
       this.settingList = result.data.data.setting_list;
@@ -222,7 +208,7 @@ export default {
     },
     async onChangeUpload(file) {
       const res = await this.$api.policy.uploadPolicyFile({
-        wxaAppId: this.wxapp_id,
+        wxaAppId: this.wxappId,
         isUploadFile: true,
         file: file.raw
       })
@@ -289,12 +275,13 @@ export default {
       }
 
       await this.$api.policy.savePolicyConfig({
-        wxaAppId: this.wxapp_id,
+        wxaAppId: this.wxappId,
         owner_setting: JSON.stringify(this.ownerSetting), 
         setting_list: JSON.stringify(settingList)
       })
       this.$message.success('保存成功')
       this.$router.go(-1)
+      
     },
     getPrivacyDesc(key) {
       const fd = this.privacyDescList.find(item => item.privacy_key == key)

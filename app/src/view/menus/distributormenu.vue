@@ -432,7 +432,7 @@ export default {
 
   data() {
     return {
-      version: 1,
+      version: 3,
       dragOptions: {
         animation: 120,
         disabled: true,

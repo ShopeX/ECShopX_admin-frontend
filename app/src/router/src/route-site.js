@@ -94,10 +94,37 @@ export default {
       name: `商城基本信息`, 
       component: () => import('@/view/base/shop/shopsetting')
     },
+    //{
+    //  path: 'wechat/wxaindex',
+    //  name: `服务号管理-授权管理`, 
+    //  component: () => import( '@/view/base/wxa/index')
+    //},
     {
       path: 'wechat/wxaindex',
-      name: `服务号管理-授权管理`, 
-      component: () => import( '@/view/base/wxa/index')
+      name: `服务号管理-小程序管理`, 
+      component: () => import( '@/view/wxapp/wxappmanage/list'),
+      children: [
+        {
+          path: 'policy',
+          component: () => import('@/view/wxapp/authorize/policy')
+        },
+        {
+          path: 'policy/editdashboard',
+          component: () => import('@/view/wxapp/statistics/dataanalysis/index')
+        },
+        {
+          path: 'policy/editsourcemanagement',
+          component: () => import('@/view/wxapp/statistics/sourcemanagement/index')
+        },
+        {
+          path: 'policy/editsourcemanagement/detail',
+          component: () => import('@/view/wxapp/statistics/sourcemanagement/monito_detail')
+        },
+        {
+          path: 'policy/noticemessage',
+          component: () => import('@/view/wxapp/messages')
+        }
+      ]
     },
     {
       path: 'wechat/brand',

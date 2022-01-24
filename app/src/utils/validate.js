@@ -97,5 +97,5 @@ export const MaxRules = (size)=>{
 }
 
 export const MinRules = (size)=>{
-  return  { max: size, message: `长度最少在${size}个字符`, trigger: 'blur' }
+  return  { min: size, message: `长度最少在${size}个字符`, trigger: 'blur' }
 }

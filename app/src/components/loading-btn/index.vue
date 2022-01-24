@@ -4,7 +4,18 @@
 
 <script>
 export default {
-  props:['size','type','text'],
+  props:{
+    size:{
+      default:'medium'
+    },
+    type:{
+      default:'primary'
+    },
+    text:{
+      default:'确定'
+    }
+  },
+
   data(){
     return{
       loading:false

@@ -1,13 +1,13 @@
 <template>
   <div>
-    <div class="sms_signatures" v-if="$route.path.indexOf('edit')===-1">
+    <div class="sms_signatures" v-if="$route.path.indexOf('edit') === -1">
       <el-card class="box-card" shadow="never">
         <div slot="header" class="clearfix">
           <span>短信签名</span>
         </div>
         <SpFinder
           ref="finder"
-          :split-count="3"
+          :split-count="4"
           :search-row-count="2"
           :fixed-row-action="true"
           :setting="setting"
@@ -32,6 +32,7 @@
 
 <script>
 import setting_ from '../finder-setting/sms_signatures'
+import { deleteTheSignature } from '@/api/sms'
 export default {
   computed: {
     setting() {
@@ -40,10 +41,11 @@ export default {
   },
   data() {
     return {
+      failVisible: false,
       search_options: [
-        { key: '审核中', value: '0' },
-        { key: '审核通过', value: '1' },
-        { key: '审核失败', value: '2' }
+        { label: '审核中', value: '0' },
+        { label: '审核通过', value: '1' },
+        { label: '审核失败', value: '2' }
       ]
     }
   },
@@ -54,7 +56,12 @@ export default {
     beforeSearch(params) {
       return { ...params }
     },
-    afterSearch() {}
+    afterSearch() {},
+    async deleteSignatureHandle(id) {
+      const result = await deleteTheSignature(id)
+      this.$message.success('删除成功')
+      console.log(result)
+    }
   }
 }
 </script>

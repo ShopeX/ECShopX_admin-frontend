@@ -11,22 +11,7 @@ export default (vm) => {
     var ss = date.getSeconds() < 10 ? '0' + date.getSeconds() : date.getSeconds()
     return YY + MM + DD + ' ' + hh + mm + ss
   }
-  const formatStatus = (status) => {
-    switch (status) {
-      case '0':
-        return `企事业单位的全称或简称`
-      case '1':
-        return `工信部备案网站的全称或简称`
-      case '2':
-        return `App 应用的全称或简称`
-      case '3':
-        return `公众号或小程序的全称或简称`
-      case '4':
-        return `电商平台店铺名的全称或简称`
-      case '5':
-        return `商标名的全称或简称`
-    }
-  }
+
   const a = (status) => {
     switch (status) {
       case 0:
@@ -38,54 +23,48 @@ export default (vm) => {
     }
   }
   return createSetting({
-    search: [
-      { key: 'status', name: '审核状态', type: 'select', options: vm.search_options },
-      { key: 'sign_name', name: '签名名称' }
-    ],
     columns: [
-      { name: '签名名称', key: 'sign_name' },
-      { name: '签名来源', key: 'sign_source', formatter: formatStatus },
-      { name: '申请说明', key: 'remark' },
-      { name: '创建时间', key: 'created', formatter: formatDate, width: '160px' },
-      {
-        name: '审核状态',
-        key: 'status',
-        width: '100px',
-        render: (h, { row }) =>
-          h(
-            'div',
-            {
-              class: 'yahh'
-            },
-            [
-              h('div', {
-                class: `status-icon ${row.status == '1' && 'success'} ${
-                  row.status == '2' && 'fail'
-                }`
-              }),
-              h(
-                'span',
-                {},
-                (row.status == '0' && '审核中') ||
-                  (row.status == '1' && '审核通过') ||
-                  (row.status == '2' && '审核失败 ')
-              ),
-              row.status == 2 && row.reason  &&
-              h(
-                'el-tooltip',
-                {
-                  class:'tips',
-                  props: {
-                    effect: 'dark',
-                    content: row.reason,
-                    placement:'top'
-                  }
-                },
-                [h('i',{class:'el-icon-warning-outline'},'')]
-              )
-            ]
-          )
-      }
+      { name: '签名', key: 'sign_name' },
+    //   { name: '模板', key: 'sign_source', formatter: formatStatus },
+    //   {
+    //     name: '审核状态',
+    //     key: 'status',
+    //     width: '100px',
+    //     render: (h, { row }) =>
+    //       h(
+    //         'div',
+    //         {
+    //           class: 'yahh'
+    //         },
+    //         [
+    //           h('div', {
+    //             class: `status-icon ${row.status == '1' && 'success'} ${
+    //               row.status == '2' && 'fail'
+    //             }`
+    //           }),
+    //           h(
+    //             'span',
+    //             {},
+    //             (row.status == '0' && '审核中') ||
+    //               (row.status == '1' && '审核通过') ||
+    //               (row.status == '2' && '审核失败 ')
+    //           ),
+    //           row.status == 2 && row.reason  &&
+    //           h(
+    //             'el-tooltip',
+    //             {
+    //               class:'tips',
+    //               props: {
+    //                 effect: 'dark',
+    //                 content: row.reason,
+    //                 placement:'top'
+    //               }
+    //             },
+    //             [h('i',{class:'el-icon-warning-outline'},'')]
+    //           )
+    //         ]
+    //     )
+    //   }
     ],
     actions: [
       {

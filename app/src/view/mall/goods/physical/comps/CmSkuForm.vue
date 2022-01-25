@@ -137,7 +137,7 @@
               </el-form-item>
             </el-col>
             <el-col :span="8">
-              <el-form-item label="原价">
+              <el-form-item label="市场价">
                 <el-input type="number" required min="0" v-model="value.specData.market_price" placeholder=""><template slot="prepend">¥</template></el-input>
               </el-form-item>
             </el-col>

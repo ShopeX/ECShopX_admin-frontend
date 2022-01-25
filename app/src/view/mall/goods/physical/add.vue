@@ -68,7 +68,7 @@
 
       <div class="comp-tdk">
         <div class="form-block-head clearfix">
-          <div class="block-head-hd">TDK设置</div>
+          <div class="block-head-hd">PC关键词搜索引擎</div>
         </div>
         <div class="form-block-body">
           <el-form label-position="right" label-width="80px">

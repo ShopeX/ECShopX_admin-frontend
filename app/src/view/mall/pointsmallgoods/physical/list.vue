@@ -501,8 +501,7 @@ export default {
       if (this.select_regions_value) {
         this.params.regions_id = this.select_regions_value
       }
-
-      this.params.category = this.select_category_value.pop()
+      this.params.category =  this.select_category_value && this.select_category_value.pop()
       this.params.brand_id = this.select_branch_value
       this.getGoodsList()
     },

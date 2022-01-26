@@ -151,3 +151,38 @@ export function getTemplateContentLabel(params={}) {
     params
   })
 }
+
+// 添加短信模板
+export function addSmsTemplate(params={}) {
+  return fetch({
+    url: `/aliyunsms/template/add`,
+    method: 'post',
+    params
+  })
+}
+
+// 短信模板detail
+export function SmsTemplateDetail(params={}) {
+  return fetch({
+    url: `/aliyunsms/template/info`,
+    method: 'get',
+    params
+  })
+}
+
+// 修改短信模板
+export function editSmsTemplate(params={}) {
+  return fetch({
+    url: `/aliyunsms/template/modify`,
+    method: 'post',
+    params
+  })
+}
+
+// 删除短信模板
+export function deleteSmsTemplate(id) {
+  return fetch({
+    url: `/aliyunsms/template/delete/${id}`,
+    method: 'detele',
+  })
+}

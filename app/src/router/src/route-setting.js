@@ -143,6 +143,18 @@ export default {
                   meta:"sms_signatures",
                 }
               ]
+            },
+            {
+              path:'sms_sendLog',
+              name:'短信发送记录',
+              component:()=> import('@/view/base/shortmessage/cpn/sms_sendLog'),
+              meta:"sms_sendLog",
+            },
+            {
+              path:'sms_MassLog',
+              name:'短信群发送记录',
+              component:()=> import('@/view/base/shortmessage/cpn/sms_MassLog'),
+              meta:"sms_sendLog",
             }
           ]
         },

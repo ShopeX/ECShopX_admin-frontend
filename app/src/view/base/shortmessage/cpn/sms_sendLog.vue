@@ -3,7 +3,7 @@
     <div class="sms_signatures" v-if="$route.path.indexOf('edit') === -1">
       <el-card class="box-card" shadow="never">
         <div slot="header" class="clearfix">
-          <span>短信签名</span>
+          <span>短信发送记录</span>
         </div>
         <SpFinder
           ref="finder"
@@ -16,13 +16,8 @@
             beforeSearch: beforeSearch,
             afterSearch: afterSearch
           }"
-          url="/aliyunsms/template/list"
+          url="/aliyunsms/record/list"
         >
-          <template v-slot:tableTop>
-            <div style="text-align: right; margin-bottom: 20px">
-              <el-button size="small" type="primary" @click="addTemplate">添加模板</el-button>
-            </div>
-          </template>
         </SpFinder>
       </el-card>
     </div>
@@ -31,7 +26,7 @@
 </template>
 
 <script>
-import setting_ from '../finder-setting/sms_template'
+import setting_ from '../finder-setting/sms_sendLog'
 import { deleteSmsTemplate } from '@/api/sms'
 export default {
   computed: {
@@ -46,6 +41,11 @@ export default {
         { label: '审核中', value: '0' },
         { label: '审核通过', value: '1' },
         { label: '审核失败', value: '2' }
+      ],
+      smeType_options:[
+        { label: '验证码', value: '0' },
+        { label: '短信通知', value: '1' },
+        { label: '推广短信', value: '2' }
       ]
     }
   },

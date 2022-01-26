@@ -194,12 +194,12 @@ export default {
           //启用
           const result = await onDisablingSms({ id })
           this.$message.success('已启用')
-          this.initQuery()
+          this.initQuery(id)
           this.init('serch')
         } else {
           const result = await offDisablingSms({ id })
           this.$message.success('已停用')
-          this.initQuery()
+          this.initQuery(id)
           this.init('serch')
         }
       })
@@ -213,7 +213,7 @@ export default {
         type: 'warning'
       }).then(async () => {
         const result = await deletedDisablingSms(id)
-        this.initQuery()
+        this.initQuery(id)
         this.init('serch')
         this.$message.success('删除成功')
       })
@@ -237,10 +237,10 @@ export default {
       }
       this.init('serch')
     },
-    initQuery() {
+    initQuery(id=3) {
       // 初始化一下 （修改状态）
       this.query = {
-        page_size: 3,
+        page_size: id,
         page: 1,
         scene_name: ''
       }

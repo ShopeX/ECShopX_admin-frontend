@@ -4,11 +4,12 @@
       <router-link class="link" to="{}">切换短信商</router-link>
     </div>
     <el-tabs v-model="activeName" @tab-click="handleClick">
-      <el-tab-pane label="基础配置" name="base_config"> </el-tab-pane>
-      <el-tab-pane label="发送短信" name="send_sms"> </el-tab-pane>
-      <el-tab-pane label="短信签名" name="sms_signatures"> </el-tab-pane>
-      <el-tab-pane label="短信模板" name="sms_template"> </el-tab-pane>
-
+      <el-tab-pane label="基础配置" name="base_config"></el-tab-pane>
+      <el-tab-pane label="发送短信" name="send_sms"></el-tab-pane>
+      <el-tab-pane label="短信签名" name="sms_signatures"></el-tab-pane>
+      <el-tab-pane label="短信模板" name="sms_template"></el-tab-pane>
+      <el-tab-pane label="短信发送记录" name="sms_sendLog"></el-tab-pane>
+      <el-tab-pane label="短信群发记录" name="sms_MassLog"></el-tab-pane>
     </el-tabs>
 
     <router-view />

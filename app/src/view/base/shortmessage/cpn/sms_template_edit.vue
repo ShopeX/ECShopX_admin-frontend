@@ -10,7 +10,7 @@
         </el-radio-group>
       </el-form-item>
       <el-form-item label='短信场景' prop='scene_id' v-if="form.template_type">
-        <el-select v-model="form.scene_id" placeholder="请选择" style="width:400px">
+        <el-select v-model="form.scene_id" placeholder="请选择" style="width:400px" :disabled="disabled">
           <el-option
             v-for="item in template_type_options"
             :key="item.id"
@@ -31,7 +31,7 @@
       </el-form-item>
       <el-form-item label='模板内容' prop='template_content'>
         <nav>
-          <span class="key" @click="fnKey(item)" v-for="item in variables" :key="item.var_name">${ {{item.var_title}} }</span>
+          <span :class="['key' , {'detail':$route.query.type=='detail'}]" @click="fnKey(item)" v-for="item in variables" :key="item.var_name">${ {{item.var_title}} }</span>
         </nav>
         <el-input
           :disabled="disabled"
@@ -42,6 +42,9 @@
           show-word-limit
           placeholder="短信模板申请说明，请描述您的业务使用场景，长度为1-500个字符。"
         ></el-input>
+        <ul class="tips">
+          <li>短信字数含 " 签名 + 模版内容 + 变量内容”，短信 70 个字数含以内，按 1 条短信计费；超出 70 个字为长短信，按照 67 个字数记为 1 条短信费用。</li>
+        </ul>
       </el-form-item>
       <el-form-item label="申请说明" prop="remark">
         <el-input
@@ -85,7 +88,7 @@
         <template slot="extra">
           <el-button type="primary" @click="fnBack" size="medium">返回列表</el-button>
           <el-button v-if="!$route.query.type" size="medium" @click="resultVisible = false"
-            >再添加一个签名</el-button
+            >再添加一个模板</el-button
           >
         </template>
       </el-result>
@@ -100,11 +103,9 @@ import loadingBtn from '@/components/loading-btn'
 import {
   getTemplateSeleteList,
   getTemplateContentLabel,
-
-  setTheNewSignature,
-  getTheSignature,
-  editTheSignature,
-  deleteTheSignature
+  addSmsTemplate,
+  SmsTemplateDetail,
+  editSmsTemplate,
 } from '@/api/sms'
 
 export default {
@@ -141,6 +142,10 @@ export default {
       template_type_options:[],
       variables:[] , //可用的模板变量
 
+      // 页面 edit 状态下 判断是否是首页加载 首次加载不用清空关联项
+      isEditFirst:true
+
+
 
     }
   },
@@ -151,11 +156,20 @@ export default {
     async 'form.template_type'(template_type){
       const result = await getTemplateSeleteList({template_type})
       this.template_type_options = result.data.data.list;
+      // 如是创建状态  把关联状态都清空
+      const { type } = this.$route.query
+      if (type == 'detail' || type=='edit' && this.isEditFirst) {
+        return this.isEditFirst = false
+      }
+      this.form.scene_id = '';
+      this.form.template_content = '';
+      this.variables = [];
     },
     async 'form.scene_id'(id){
       const result = await getTemplateContentLabel({id});
       this.variables = result.data.data.variables
-      console.log(result);
+      this.form.template_content = result.data.data.default_template
+      // console.log(result);
     }
   },
   methods: {
@@ -164,7 +178,7 @@ export default {
       console.log(type, id)
 
       if (type) {
-        const result = await getTheSignature({ id })
+        const result = await SmsTemplateDetail({ id })
         this.resultHandler(result)
         if (type == 'detail') {
           this.disabled = true
@@ -172,15 +186,18 @@ export default {
       }
     },
     resultHandler(result) {
-      const { sign_name, sign_source, remark, sign_file, delegate_file } = result.data.data
-      console.log(sign_name)
+      console.log(result);
+      const { template_type, scene_id, template_name, template_content, remark } = result.data.data
+      console.log(template_content);
       this.form = {
-        sign_name,
-        sign_source: sign_source + '',
-        remark,
-        sign_file,
-        delegate_file
+        template_type,
+        scene_id:scene_id+'',
+        template_name,
+        template_content:template_content,
+        remark
       }
+      
+      console.log(this.form);
     },
     submitForm(formName) {
       const { type, id } = this.$route.query
@@ -188,10 +205,12 @@ export default {
         if (valid) {
           try {
             if (type == 'edit') {
-              const result = await editTheSignature({id,...this.form})
+              const result = await editSmsTemplate({id,...this.form})
               this.submitFormResult(result)
             } else {
-              const result = await setTheNewSignature(this.form)
+              // 增加
+              const result = await addSmsTemplate(this.form)
+
               this.submitFormResult(result)
             }
           } catch (error) {
@@ -212,7 +231,7 @@ export default {
     },
     fnBack() {
       this.$router.push({
-        path: `/setting/datamessage/ali_sms/sms_signatures`
+        path: `/setting/datamessage/ali_sms/sms_template`
       })
     },
     /* -------------------------图片选择------------------------- */
@@ -241,8 +260,9 @@ export default {
  
     },
     fnKey(item){
+      const { type } = this.$route.query;
+      if (type=='detail') return
       console.log(item);
-      
       this.form.template_content = this.form.template_content+' ${'+item.var_title+'}'+' '
       
     }
@@ -279,6 +299,10 @@ export default {
     margin-right: 10px;
     border-radius: 10px;
     border:1px solid #409EFF;
+    cursor:pointer;
+    &.detail{
+      background: #E4E7ED;
+    }
   }
   padding-bottom: 50px;
   .el-radio-group {

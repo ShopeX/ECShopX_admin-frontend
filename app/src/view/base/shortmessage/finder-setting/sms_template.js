@@ -116,7 +116,7 @@ export default (vm) => {
         action: {
           type: 'link',
           handler: async (val) => {
-            vm.deleteSignatureHandle(val[0].id)
+            vm.deleteTemplateHandle(val[0].id)
           }
         },
         visible: (val) => {

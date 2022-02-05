@@ -154,7 +154,14 @@ export default {
               path:'sms_MassLog',
               name:'短信群发送记录',
               component:()=> import('@/view/base/shortmessage/cpn/sms_MassLog'),
-              meta:"sms_sendLog",
+              meta:"sms_MassLog",
+              children:[
+                {
+                  path:'edit',
+                  component:()=> import('@/view/base/shortmessage/cpn/sms_MassLog_edit'),
+                  meta:"sms_MassLog",
+                }
+              ]
             }
           ]
         },

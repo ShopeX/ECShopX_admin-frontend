@@ -186,3 +186,15 @@ export function deleteSmsTemplate(id) {
     method: 'detele',
   })
 }
+
+
+// 群发信息
+
+// 群发任务详情
+export function taskSmsDetail(params={}) {
+  return fetch({
+    url: `/aliyunsms/task/info`,
+    method: 'get',
+    params
+  })
+}

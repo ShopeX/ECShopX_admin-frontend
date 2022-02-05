@@ -32,22 +32,15 @@ export default (vm) => {
         startPlaceholder: '开始日期',
         endPlaceholder: '结束日期'
       },
-
-      { key: 'status', name: '短信类型', type: 'select', options: vm.smeType_options },
-      { key: 'template_type	', name: '发送状态', type: 'select', options: vm.search_options },
-      { key: 'template_code', name: '模板CODE' },
-      { key: 'mobile', name: '手机号' },
-      { key: 'sms_content', name: '短信内容' },
-      { key: 'task_name', name: '任务名称' }
-
+      { key: 'status	', name: '发送状态', type: 'select', options: vm.search_options },
+      { key: 'task_name', name: '任务名称' },
+      { key: 'template_name', name: '短信模板' }
     ],
     columns: [
-      { name: '接受短信的手机号', key: 'mobile',width:'140px' },
-      { name: '模板CODE', key: 'template_code',width:'120px' },
-      { name: '短信内容', key: 'sms_content' },
-      { name: '短信类型', key: 'template_type', formatter: formatTemplate_type,width:'100px' },
-      { name: '短信场景', key: 'scene_name' },
-      { name: '发送时间', key: 'created', formatter: formatDate,width:'170px' },
+      { name: '任务名称', key: 'task_name', width: '140px' },
+      { name: '创建时间', key: 'created', formatter: formatDate, width: '170px' },
+      { name: '定时发送', key: 'send_at', formatter: formatDate, width: '170px' },
+      { name: '短信模板', key: 'template_name' },
       {
         name: '发送状态',
         key: 'status',
@@ -59,17 +52,18 @@ export default (vm) => {
               class: 'yahh'
             },
             [
-              h('div', {
-                class: `status-icon ${row.status == '1' && 'success'} ${
-                  row.status == '2' && 'fail'
-                }`
-              }),
+              //   h('div', {
+              //     class: `status-icon ${row.status == '1' && 'success'} ${
+              //       row.status == '2' && 'fail'
+              //     }`
+              //   }),
               h(
                 'span',
                 {},
-                (row.status == '0' && '发送中') ||
-                  (row.status == '1' && '发送成功') ||
-                  (row.status == '2' && '发送失败 ')
+                (row.status == '1' && '等待中') ||
+                  (row.status == '2' && '群发成功') ||
+                  (row.status == '3' && '群发失败 ') ||
+                  (row.status == '4' && '已撤销 ')
               ),
               row.status == 2 &&
                 row.reason &&
@@ -87,6 +81,39 @@ export default (vm) => {
                 )
             ]
           )
+      },
+      {
+        name: '号码数量',
+        key: 'total_num',
+        render: (h, { row }) =>
+          h(
+            'span',
+            {
+              type: 'text',
+              class:'e-button--text',
+              style:{color: '#409EFF',cursor:'pointer'}
+              
+            },
+            row.total_num
+          )
+      },
+      { name: '号码数量', key: 'failed_num' }
+    ],
+    actions: [
+      {
+        name: '详情',
+        key: 'detail',
+        type: 'button',
+        buttonType: 'text',
+        action: {
+          type: 'link',
+          handler: async (val) => {
+            vm.$router.push({
+              path: vm.matchHidePage('edit'),
+              query: { type: 'detail', id: val[0].id }
+            })
+          }
+        }
       }
     ]
   })

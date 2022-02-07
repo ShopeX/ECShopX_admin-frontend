@@ -959,6 +959,7 @@ import {
   getCompanyStatistics,
   ydleadsInfo,
 } from "../../api/company";
+import { version } from '../../../package.json'
  
 
 const phone = require("@/assets/img/saas/phone.png");
@@ -1336,7 +1337,7 @@ export default {
         // this.activateInfo.source = 'demo'
         this.SET_PRODUCTION_CODE({ productionCode: res.data.data.product_code })
 
-        this.activateInfo.vue_ecshopx_verion = process.env.VUE_APP_PRODUCT_MODEL;
+        this.activateInfo.vue_ecshopx_verion = `${process.env.VUE_APP_PRODUCT_MODEL}-${version}`;
       });
       this.getUrl();
       getCompanyStatistics().then((res) => {

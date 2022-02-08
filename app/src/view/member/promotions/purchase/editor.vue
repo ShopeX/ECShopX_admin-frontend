@@ -76,7 +76,7 @@
       <el-card header="活动商品" shadow="naver">
         <el-form-item label="适用商品">
           <el-radio-group v-model="form.use_bound" @change="itemTypeChange">
-            <el-radio label="all">全部商品适用</el-radio>
+            <el-radio label="all">全部商品</el-radio>
             <el-radio label="item">指定商品适用</el-radio>
             <el-radio label="category">指定分类适用</el-radio>
             <el-radio label="tag">指定商品标签适用</el-radio>
@@ -239,15 +239,10 @@ import '@riophae/vue-treeselect/dist/vue-treeselect.css'
 import { handleUploadFile, exportUploadTemplate } from '../../../../api/common'
 import { getItemsList, getCategory, getTagList, getGoodsAttr } from '@/api/goods'
 import { createPurchase, editPurchase } from '@/api/purchase'
-import {
-  addMarketingActivity,
-  updateMarketingActivity,
-  getMarketingActivityInfo,
-  seckillActivityGetItemsList
-} from '../../../../api/promotions'
+import { seckillActivityGetItemsList } from '../../../../api/promotions'
 
 export default {
-  // inject: ['refresh'],
+  inject: ['refresh'],
   components: {
     imgBox,
     imgPicker,
@@ -271,6 +266,7 @@ export default {
         dependents_limitfee: '',
         is_share_limitfee: false,
         used_roles: ['employee'],
+        use_bound: 'all',
         item_limit: 1 // item_type=all时为数字,否则为数组{id:标签id,limit_num:每人限购,limit_fee:限额}
       },
       activity_date: [],
@@ -282,7 +278,7 @@ export default {
         { key: 'employee', name: '员工' },
         { key: 'dependents', name: '家属' }
       ],
-      allHiden: true,
+      allHiden: false,
       zdItemHidden: true,
       relItems: [],
       categoryHidden: true,
@@ -473,8 +469,8 @@ export default {
     },
     getGoodsList: function () {
       let params = JSON.parse(JSON.stringify(this.params))
-      if (this.$route.params.marketing_id) {
-        params.activity_id = this.$route.params.marketing_id
+      if (this.$route.params.purchase_id) {
+        params.activity_id = this.$route.params.purchase_id
       }
       params.marketing_type = this.form.marketing_type
       params.activity_release_time = params.activity_begin_time = this.activity_date[0]
@@ -664,9 +660,9 @@ export default {
       }
       console.log('form-->', this.form)
       // return
-      if (this.form.marketing_id) {
+      if (this.form.purchase_id) {
         editPurchase(this.form).then((res) => {
-          if (res.data.data.marketing_id) {
+          if (res.data.data.purchase_id) {
             this.loading = false
             this.$message({
               message: '更新成功',
@@ -684,7 +680,7 @@ export default {
         })
       } else {
         createPurchase(this.form).then((res) => {
-          if (res.data.data.marketing_id) {
+          if (res.data.data.purchase_id) {
             this.loading = false
             this.$message({
               message: '添加成功',

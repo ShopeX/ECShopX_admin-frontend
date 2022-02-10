@@ -1,6 +1,8 @@
 <template>
   <div class="alisms_sendSms">
-    <tips :title="tips"></tips>
+    <tips>
+      {{tips}}
+    </tips>
     <div class="list"
       v-infinite-scroll="load"
       infinite-scroll-distance="20"

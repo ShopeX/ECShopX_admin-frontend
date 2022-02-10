@@ -1,14 +1,12 @@
 <template>
-  <div class="tips" v-html='title' :style="{'background':bgColor}"></div>
+  <div class="tips" :style="{'background':bgColor}">
+    <slot></slot>
+  </div>
 </template>
 
 <script>
 export default {
     props:{
-      title:{
-        type:String,
-        reqired:true
-      },
       bgColor:{
         default:'#eef8fd'
       }

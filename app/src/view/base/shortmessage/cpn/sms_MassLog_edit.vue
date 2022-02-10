@@ -1,5 +1,12 @@
 <template>
   <el-dialog title="群发短信" :visible="visible" :before-close="handleClose">
+    <tips v-if="exterior">
+      <p>
+        推广短信由 [签名+模板] 组成，当前场景仅支持「推广短信」类型的模板，如需添加模板：点这里。
+      </p>
+      <p>单次最多可向1000个手机号码发送同样内容的短信，会有一定延迟。</p>
+      <p>发送结果可在「设置-短信服务-短信发送记录-推广短信」查看。</p>
+    </tips>
     <div class="sms_signatures_edit">
       <el-form :model="form" :rules="rules" ref="form" label-width="100px" class="demo-ruleForm">
         <el-form-item label="任务名称" prop="task_name">
@@ -15,7 +22,7 @@
         <el-form-item label="短信签名" prop="sign_id">
           <el-select
             v-model="form.sign_id"
-            placeholder="请选择"
+            placeholder="请选择签名"
             style="width: 400px"
             :disabled="disabled"
           >
@@ -27,25 +34,38 @@
             >
             </el-option>
           </el-select>
+          <div class="subtitle">
+            没有需要的签名，马上
+            <router-link to="/">添加签名</router-link>
+          </div>
         </el-form-item>
         <el-form-item label="短信模板" prop="template_id">
           <el-select
             v-model="form.template_id"
-            placeholder="请选择"
+            placeholder="请选择模板"
             style="width: 400px"
             :disabled="disabled"
           >
             <el-option
               v-for="item in template_options"
               :key="item.id"
-              :label="item.scene_name"
+              :label="item.template_name"
               :value="item.id"
             >
             </el-option>
           </el-select>
+          <div class="subtitle">
+            没有需要的签名，马上
+            <router-link to="/">添加模板</router-link>
+          </div>
         </el-form-item>
         <el-form-item label="定时发送">
-          <el-switch v-model="form.timing" active-color="#13ce66" inactive-color="#ff4949" :disabled="disabled">
+          <el-switch
+            v-model="form.timing"
+            active-color="#13ce66"
+            inactive-color="#ff4949"
+            :disabled="disabled"
+          >
           </el-switch>
         </el-form-item>
         <el-form-item label="" prop="send_at" v-if="form.timing">
@@ -92,23 +112,30 @@
 <script>
 import { requiredRules, MaxRules, MinRules } from '@/utils/validate'
 import loadingBtn from '@/components/loading-btn'
+import tips from '@/components/tips'
 import {
   getSmsSignatureList,
   getSmsTemplateList,
   taskSmsDetail,
   editTaskSms,
+  addTaskSms
 } from '@/api/sms'
 
 export default {
   components: {
-    loadingBtn
+    loadingBtn,
+    tips
   },
   props: {
-    visible:{
-      type:Boolean
+    visible: {
+      type: Boolean
     },
-    info:{
-      
+    info: {},
+    exterior: {
+      default: false
+    },
+    user_id: {
+      default: []
     }
   },
   data() {
@@ -146,7 +173,7 @@ export default {
       const { type, id } = this.info
       console.log(type, id)
 
-      if (type) {
+      if (type != 'add') {
         const result = await taskSmsDetail({ id })
         this.resultHandler(result)
         if (type == 'detail') {
@@ -163,7 +190,7 @@ export default {
         template_id: template_id + '',
         send_at: send_at * 1000 + '' || '',
         user_id,
-        timing:send_at?true:false
+        timing: send_at ? true : false
       }
 
       console.log(this.form)
@@ -178,9 +205,25 @@ export default {
               this.submitFormResult(result)
             } else {
               // 增加
-              const result = await addSmsTemplate(this.form)
+              var message = '确定发送该短信给勾选会员？'
+              if (this.user_id.length == 0) {
+                message = '确定发送该短信给全部会员？'
+              }
+              this.$confirm(message, '', {
+                confirmButtonText: '确定',
+                cancelButtonText: '取消',
+                type: 'warning'
+              }).then(async () => {
+                const result = await addTaskSms({ ...this.form, user_id: this.user_id })
+                 this.$refs['loadingBtn'].closeLoading()
+                this.submitFormResult(result)
+              }).catch(()=>{
+                 this.$refs['loadingBtn'].closeLoading()
+              })
 
-              this.submitFormResult(result)
+              
+
+             
             }
           } catch (error) {
             this.$refs['loadingBtn'].closeLoading()
@@ -194,14 +237,14 @@ export default {
     },
     submitFormResult(result) {
       if (result.data.data.status) {
-        this.$message.success('成功');
-        this.handleClose();
+        this.$message.success('成功')
+        this.handleClose()
       }
       this.$refs['loadingBtn'].closeLoading()
-      console.log(result);
+      console.log(result)
     },
     fnBack() {
-      this.handleClose();
+      this.handleClose()
     },
     // 获取短信签名下拉列表
     getSmsList() {
@@ -213,14 +256,14 @@ export default {
         this.template_options = res.data.data.list
       })
     },
-    dateTimeChange(val){
+    dateTimeChange(val) {
       this.form.send_at = val + ''
     },
 
     /* 群发短信弹框 */
-    handleClose(){
+    handleClose() {
       this.$emit('smsMassLogEditHandler')
-    },
+    }
   }
 }
 </script>
@@ -244,6 +287,10 @@ export default {
   .demo-ruleForm {
     max-width: 960px;
     padding: 20px;
+  }
+  .subtitle {
+    color: #999;
+    font-size: 12px;
   }
 }
 </style>

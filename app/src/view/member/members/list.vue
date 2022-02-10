@@ -750,6 +750,9 @@
           </el-form>
         </template>
       </el-dialog>
+      <template v-if="aliyunsmsDialogVisible">
+        <aliyunsmsDialog :exterior='true' :visible='aliyunsmsDialogVisible' :user_id="user_id" :info='aliyunsmsDialogInfo' @smsMassLogEditHandler='switchAliyunsmsDialog'/>
+      </template>
     </div>
     <router-view></router-view>
   </div>
@@ -758,6 +761,7 @@
 <script>
 import store from '@/store'
 import exportTip from '@/components/export_tips'
+import aliyunsmsDialog from '@/view/base/shortmessage/cpn/sms_MassLog_edit.vue'
 import { mapGetters } from 'vuex'
 import {
   getMembers,
@@ -776,6 +780,8 @@ import {
   getMemberRegisterSetting,
   updateMemberBasicInfo
 } from '../../../api/member'
+import { getaliSmsStatus } from '@/api/sms';
+
 import { getGradeList } from '../../../api/membercard'
 import { getSalesmanList, setMemberSalesman, getDistributorEasyList } from '../../../api/marketing'
 import { getEffectiveCardList } from '../../../api/cardticket'
@@ -787,10 +793,17 @@ import shopSelect from '@/components/shopSelect'
 export default {
   components: {
     shopSelect,
-    exportTip
+    exportTip,
+    aliyunsmsDialog
   },
   data() {
     return {
+      aliyunsms_status:false, //ali 短信状态
+      aliyunsmsDialogVisible:false,
+      aliyunsmsDialogInfo:{
+        type:'add'
+      },
+
       panel: {
         search: false
       },
@@ -946,7 +959,53 @@ export default {
   computed: {
     ...mapGetters(['wheight', 'isMicorMall'])
   },
+  mounted() {
+    if (store.getters.login_type === 'distributor') {
+      this.is_distributor = true
+    }
+    if (this.$route.query.salesman_mobile) {
+      this.params.salesman_mobile = this.$route.query.salesman_mobile
+    }
+    if (this.$route.query.wechat_nickname) {
+      this.params.wechat_nickname = this.$route.query.wechat_nickname
+    }
+    this.getParams()
+    if (this.$route.query.mobile) {
+      this.params.mobile = this.$route.query.mobile
+    }
+    if (this.$route.query.orderRecords) {
+      this.params.have_consume = this.$route.query.orderRecords + ''
+    }
+    if (this.$route.query.grade_id) {
+      this.params.grade_id = this.$route.query.grade_id
+    }
+    if (this.$route.query.currentPage) {
+      this.params.page = Number(this.$route.query.currentPage)
+    }
+    this.getMembers(this.params)
+    let param = {
+      page: 1,
+      pageSize: 100,
+      is_disabled: false
+    }
+    this.getGradeList()
+    this.getAllTagLists()
+    this.getVipList()
+    this.getShopsList(param)
+    getMemberRegisterSetting().then((response) => {
+      delete response.data.data.content_agreement
+      this.membersSetting = response.data.data.setting
+    })
+
+    // 获取短信type 
+    this.getAliSMS();
+    
+  },
   methods: {
+    async getAliSMS(){
+      const result = await getaliSmsStatus();
+      this.aliyunsms_status = result.data.data.aliyunsms_status;
+    },
     gradeUpdate(row) {
       this.params.action_type = 'set_grade'
       this.dialogTitle = '修改指定会员等级'
@@ -1579,6 +1638,14 @@ export default {
     },
     batchActionDialog(actiontype) {
       this.params.action_type = actiontype
+
+      if (actiontype == 'send_sms' && this.aliyunsms_status) {
+        // 展示阿里短信的
+        this.switchAliyunsmsDialog(true)
+        console.log(this.user_id);
+        return
+      }
+
       this.dialogIsShow = true
       if (actiontype == 'rel_tag') {
         this.dialogTitle = '为会员打标签'
@@ -1607,45 +1674,15 @@ export default {
       } else if (actiontype == 'set_saleman') {
         this.dialogTitle = '设置导购员'
       }
+    },
+
+    /* ali短信 相关 */
+    switchAliyunsmsDialog(val=false){
+      this.aliyunsmsDialogVisible = val
     }
+
+    
   },
-  mounted() {
-    if (store.getters.login_type === 'distributor') {
-      this.is_distributor = true
-    }
-    if (this.$route.query.salesman_mobile) {
-      this.params.salesman_mobile = this.$route.query.salesman_mobile
-    }
-    if (this.$route.query.wechat_nickname) {
-      this.params.wechat_nickname = this.$route.query.wechat_nickname
-    }
-    this.getParams()
-    if (this.$route.query.mobile) {
-      this.params.mobile = this.$route.query.mobile
-    }
-    if (this.$route.query.orderRecords) {
-      this.params.have_consume = this.$route.query.orderRecords + ''
-    }
-    if (this.$route.query.grade_id) {
-      this.params.grade_id = this.$route.query.grade_id
-    }
-    if (this.$route.query.currentPage) {
-      this.params.page = Number(this.$route.query.currentPage)
-    }
-    this.getMembers(this.params)
-    let param = {
-      page: 1,
-      pageSize: 100,
-      is_disabled: false
-    }
-    this.getGradeList()
-    this.getAllTagLists()
-    this.getVipList()
-    this.getShopsList(param)
-    getMemberRegisterSetting().then((response) => {
-      delete response.data.data.content_agreement
-      this.membersSetting = response.data.data.setting
-    })
-  }
+
 }
 </script>

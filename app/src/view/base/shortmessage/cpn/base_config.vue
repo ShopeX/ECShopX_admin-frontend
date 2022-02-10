@@ -1,6 +1,8 @@
 <template>
   <div class="alisms_baseConfig">
-    <tips :title="tips"></tips>
+    <tips>
+      <p>{{tips}}</p>
+    </tips>
     <el-form label-width="200px" :model="form">
       <section class="card">
         <nav>

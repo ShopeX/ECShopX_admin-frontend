@@ -1,5 +1,13 @@
 import fetch from '@/utils/fetch'
 
+// 获取短信状态
+export function getaliSmsStatus() {
+  return fetch({
+    url: `/aliyunsms/status`,
+    method: 'get',
+  })
+}
+
 // 基础配置
 
 export function getSmsConfig(params={}) {
@@ -189,6 +197,15 @@ export function deleteSmsTemplate(id) {
 
 
 // 群发信息
+
+// 添加短信任务
+export function addTaskSms(params={}){
+  return fetch({
+    url: `/aliyunsms/task/add`,
+    method: 'post',
+    params
+  })
+}
 
 // 群发任务详情
 export function taskSmsDetail(params={}) {

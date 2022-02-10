@@ -304,7 +304,7 @@ import Treeselect from '@riophae/vue-treeselect'
 import '@riophae/vue-treeselect/dist/vue-treeselect.css'
 import { handleUploadFile, exportUploadTemplate } from '../../../../api/common'
 import { getCategory, getTagList, getGoodsAttr } from '@/api/goods'
-import { createPurchase, editPurchase } from '@/api/purchase'
+import { createPurchase, editPurchase, getPurchaseInfo } from '@/api/purchase'
 
 export default {
   inject: ['refresh'],
@@ -317,6 +317,7 @@ export default {
   data() {
     return {
       form: {
+        purchase_id: '',
         purchase_name: '',
         ad_pic: '',
         item_type: 'all',
@@ -329,7 +330,7 @@ export default {
         dependents_limitfee: '',
         is_share_limitfee: false,
         used_roles: ['employee'],
-        item_limit: 1 // item_type=all时为数字,否则为数组{id:标签id,limit_num:每人限购,limit_fee:限额}
+        item_limit: '' // item_type=all时为数字,否则为数组{id:标签id,limit_num:每人限购,limit_fee:限额}
       },
       activity_date: [],
       rules: {},
@@ -344,9 +345,6 @@ export default {
       relItems: [],
       categoryHidden: true,
       categoryList: [],
-      category: {
-        currentCategory: []
-      },
       good: {
         currentGoods: []
       },
@@ -372,6 +370,19 @@ export default {
   },
 
   mounted() {
+    if (this.$route.query.id) {
+      let filter = { purchase_id: this.$route.query.id }
+      getPurchaseInfo(filter).then((res) => {
+        this.form = res.data.data
+        this.form.used_roles = eval(this.form.used_roles)
+        this.activity_date = [this.form.begin_date, this.form.end_date]
+        if (this.form.item_type === 'category') {
+          this.categoryHidden = false
+          this.allHiden = true
+          this.form.item_category = this.form.item_limit
+        }
+      })
+    }
     this.fetchMainCate()
     this.getAllTagLists()
     this.getBrandList('', true)
@@ -585,13 +596,13 @@ export default {
       this.brand.currentBrands.splice(index, 1)
     },
     brandAdd: function (item, index) {
-      if (this.activity_date.length <= 0) {
-        this.$message({
-          type: 'error',
-          message: '请选择活动时间!'
-        })
-        return false
-      }
+      // if (this.activity_date.length <= 0) {
+      //   this.$message({
+      //     type: 'error',
+      //     message: '请选择活动时间!'
+      //   })
+      //   return false
+      // }
       let isInArr = this.brand.currentBrands.findIndex((n) => n.attribute_id == item.attribute_id)
       if (isInArr == -1) {
         this.brand.currentBrands.push(item)

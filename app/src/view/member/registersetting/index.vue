@@ -63,7 +63,7 @@
           ></el-pagination>
         </div>
       </el-tab-pane>
-      <el-tab-pane label="协议政策相关" class="paneSecond" name="second">
+      <el-tab-pane label="注册协议与隐私政策" class="paneSecond" name="second">
         <div class="mainSecond">
           <el-form ref="privacy" :model="privacyForm" :rles="rules" label-width="100px">
             <div class="section-white content-padded">

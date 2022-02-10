@@ -439,6 +439,13 @@ export default {
       this.isGetImage = true
     },
     pickImg(data) {
+      if (data.image_type !== 'image/jpeg' && data.image_type !== 'image/png') {
+        this.$message({
+          type: 'warning',
+          message: '仅支持格式为png、jpg的图片'
+        })
+        return
+      }
       this.form.ad_pic = data.url
       this.imgDialog = false
     },

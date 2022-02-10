@@ -75,8 +75,7 @@
                     >查看</router-link
                   >
                 </el-button>
-                <!-- v-if="scope.row.activity_status == 'waiting'" -->
-                <el-button type="text">
+                <el-button type="text" v-if="scope.row.activity_status == 'waiting'">
                   <router-link
                     :to="{
                       path: matchHidePage('editor'),

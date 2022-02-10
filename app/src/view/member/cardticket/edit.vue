@@ -760,11 +760,6 @@ export default {
       showTab: true
     }
   },
-  watch: {
-    'form.item_category'(val) {
-      console.log('????', val)
-    }
-  },
   methods: {
     getItems(data) {
       let ids = []
@@ -1341,6 +1336,7 @@ export default {
         }
         this.$nextTick(() => {
           this.relItems = response.itemTreeLists
+          console.log('???==>', response.itemTreeLists)
         })
         this.titleChange(this.form.title)
         this.descriptionChange(this.form.description)

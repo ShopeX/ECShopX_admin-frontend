@@ -36,13 +36,12 @@
           </template>
         </el-table-column>
 
-
         <el-table-column
           prop="created"
           label="创建时间"
-          width="120">
+          width="150">
           <template slot-scope="scope">
-            {{ scope.row.created | datetime }}
+            {{ scope.row.created | datetime('YYYY-MM-DD HH:mm:ss') }}
           </template>
         </el-table-column>
         <el-table-column

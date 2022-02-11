@@ -109,6 +109,7 @@
             >批量设置</el-button
           >
           <el-table :data="good.currentGoods">
+            <el-table-column prop="item_id" label="ID" width="180"> </el-table-column>
             <el-table-column prop="itemName" label="商品名称" width="180"> </el-table-column>
             <el-table-column prop="item_spec_desc" label="规格" width="180"> </el-table-column>
             <el-table-column prop="limit_num" label="每人限购" width="280">
@@ -149,6 +150,7 @@
               >批量设置</el-button
             >
             <el-table :data="item_category">
+              <el-table-column prop="category_id" label="ID" width="180"> </el-table-column>
               <el-table-column prop="category_name" label="分类名称" width="180"> </el-table-column>
               <el-table-column label="每人限购" width="280">
                 <template slot-scope="scope">
@@ -201,6 +203,7 @@
             >批量设置</el-button
           >
           <el-table :data="tag.currentTags">
+            <el-table-column prop="tag_id" label="ID" width="180"> </el-table-column>
             <el-table-column prop="tag_name" label="标签名称" width="180"> </el-table-column>
             <el-table-column prop="limit_num" label="每人限购" width="280">
               <template slot-scope="scope">
@@ -255,6 +258,7 @@
             >批量设置</el-button
           >
           <el-table :data="brand.currentBrands">
+            <el-table-column prop="attribute_id" label="ID" width="180"> </el-table-column>
             <el-table-column prop="attribute_name" label="品牌名称" width="180"> </el-table-column>
             <el-table-column prop="limit_num" label="每人限购" width="280">
               <template slot-scope="scope">
@@ -368,13 +372,8 @@ export default {
         limit_num: '',
         limit_fee: ''
       },
-      invalidItemsList: []
-    }
-  },
-
-  watch: {
-    'item_category'(val) {
-      console.log('val==>', val)
+      invalidItemsList: [],
+      itemTreeLists: []
     }
   },
 
@@ -424,9 +423,8 @@ export default {
         if (this.form.item_type === 'item') {
           this.zdItemHidden = false
           this.allHiden = true
-          this.good.currentGoods = this.form.item_limit.map((item) => {
-            item.itemName = item.name
-            return item
+          this.$nextTick(() => {
+            this.relItems = res.data.data.itemTreeLists
           })
         }
       })
@@ -458,7 +456,7 @@ export default {
       this.categoryHidden = true
       this.tagHidden = true
       this.brandHidden = true
-      this.form.itemTreeLists = []
+      this.itemTreeLists = []
       this.item_category = []
       this.tag.currentTags = []
       this.form.item_type = val
@@ -493,7 +491,15 @@ export default {
       })
     },
     getItems(data) {
-      this.good.currentGoods = data
+      this.good.currentGoods = data.map((item) => {
+        this.form.item_limit.forEach((limitItem) => {
+          if (item.itemId === limitItem.item_id) {
+            item.limit_fee = limitItem.limit_fee
+            item.limit_num = limitItem.limit_num
+          }
+        })
+        return item
+      })
     },
 
     /**
@@ -692,7 +698,7 @@ export default {
       if (this.form.item_type === 'item') {
         const newArr = this.good.currentGoods.map((item) => {
           const newItem = {}
-          newItem.id = item.goods_id
+          newItem.id = item.itemId
           newItem.limit_fee = item.limit_fee
           newItem.limit_num = item.limit_num
           return newItem

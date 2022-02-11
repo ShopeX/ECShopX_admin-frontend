@@ -1336,7 +1336,6 @@ export default {
         }
         this.$nextTick(() => {
           this.relItems = response.itemTreeLists
-          console.log('???==>', response.itemTreeLists)
         })
         this.titleChange(this.form.title)
         this.descriptionChange(this.form.description)

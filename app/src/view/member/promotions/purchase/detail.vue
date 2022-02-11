@@ -28,6 +28,7 @@
         <el-form-item :label="itemTypeTransform(detail.item_type) + '限购：'">
           <p v-if="detail.item_type == 'all'">每人限购{{ detail.item_limit }}件</p>
           <el-table v-else :data="detail.item_limit">
+            <el-table-column prop="item_id" label="ID"> </el-table-column>
             <el-table-column prop="name" label="名称"> </el-table-column>
             <el-table-column
               prop="item_spec_desc"

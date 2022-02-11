@@ -75,7 +75,8 @@
                     >查看</router-link
                   >
                 </el-button>
-                <el-button type="text" v-if="scope.row.activity_status == 'waiting'">
+                <!-- v-if="scope.row.activity_status == 'waiting'" -->
+                <el-button type="text">
                   <router-link
                     :to="{
                       path: matchHidePage('editor'),
@@ -169,7 +170,6 @@ export default {
       this.fetchParams.pageSize = val
       this.getPurchaseList()
     },
-    handleClick(tab, event) {},
     addCoupon() {
       this.$router.push({ path: this.matchHidePage('editor') })
     },

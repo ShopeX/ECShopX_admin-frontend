@@ -75,7 +75,7 @@
                     >查看</router-link
                   >
                 </el-button>
-                <el-button type="text" v-if="scope.row.activity_status == 'ongoing'">
+                <el-button type="text" v-if="scope.row.activity_status == 'waiting'">
                   <router-link
                     :to="{
                       path: matchHidePage('editor'),
@@ -174,6 +174,7 @@ export default {
       this.$router.push({ path: this.matchHidePage('editor') })
     },
     deleteCard(id, index) {
+      const that = this
       this.$confirm('确定要终止该活动？', '提示', {
         cancelButtonText: '取消',
         confirmButtonText: '确定',
@@ -183,7 +184,10 @@ export default {
             endPurchase({ 'purchase_id': id })
             this.$message({
               type: 'success',
-              message: '终止成功'
+              message: '终止成功',
+              onClose() {
+                that.getPurchaseList()
+              }
             })
           }
           done()
@@ -201,8 +205,12 @@ export default {
       getPurchaseList(params)
         .then((res) => {
           if (res.data.data.list.length > 0) {
-            this.cardList = res.data.data.list
-            this.pagers.total = res.data.data.pagers.total
+            this.cardList = res.data.data.list.map((item) => {
+              item.dependents_limitfee = (item.dependents_limitfee / 100).toFixed(2)
+              item.employee_limitfee = (item.employee_limitfee / 100).toFixed(2)
+              return item
+            })
+            this.pagers.total = res.data.data.total_count
             this.loading = false
           } else {
             this.cardList = []

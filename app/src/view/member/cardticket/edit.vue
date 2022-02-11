@@ -12,154 +12,162 @@
       <GiftCoupon v-if="form.card_type === 'new_gift'" @haddleShowTab="haddleShowTab" />
       <template v-else>
         <el-card shadow="never" header="基础信息">
-        <el-form-item label="兑换商品名称" prop="gift" v-if="form.card_type === 'gift'">
-          <el-input
-            :maxlength="20"
-            placeholder="兑换商品名称"
-            v-model="form.gift"
-            style="width: 240px"
-            @change="giftChange"
-          ></el-input
-          >&nbsp;<span class="frm-tips"
-            >{{ inputValue.gift_length }}/{{ inputValue.gift_max }}</span
-          >
-        </el-form-item>
-        <el-form-item label="折扣额度" prop="discount" v-if="form.card_type === 'discount'">
-          <el-input
-            :disabled="form.card_id ? true : false"
-            v-model="form.discount"
-            placeholder="只能是大于等于1,小于10的数字"
-            style="width: 240px"
-            max="9.9"
-            min="1"
-          ></el-input>
-        </el-form-item>
-        <el-form-item label="减免金额" prop="reduce_cost" v-if="form.card_type === 'cash'">
-          <el-input
-            type="number"
-            :disabled="form.card_id ? true : false"
-            v-model="form.reduce_cost"
-            placeholder="只能是大于0的数字"
-            style="width: 240px"
-          ></el-input
-          >&nbsp;元
-        </el-form-item>
-        <el-form-item label="发放数量" prop="quantity">
-          <el-input
-            min="1"
-            :disabled="form.card_id ? true : false"
-            type="number"
-            oninput="value=value.replace(/[^\d.]/g,'')"
-            v-model.number="form.quantity"
-            placeholder="只能是大于0的数字"
-            style="width: 20%"
-          ></el-input
-          >&nbsp;份
-        </el-form-item>
-        <el-form-item label="卡券标题" prop="title">
-          <el-input
-            :disabled="form.card_id ? true : false"
-            v-model="form.title"
-            placeholder="字数上限为9个汉字"
-            style="width: 240px"
-            @change="titleChange"
-          ></el-input
-          >&nbsp;<span class="frm-tips"
-            >{{ inputValue.title_length }}/{{ inputValue.title_max }}</span
-          >
-          <p class="frm-tips">建议填写满减券“减免金额”及自定义内容，描述卡券提供的具体优惠</p>
-        </el-form-item>
-        <el-form-item label="使用条件" prop="useCondition">
-          <el-radio-group
-            :disabled="form.card_id ? true : false"
-            v-model="form.useCondition"
-            @change="conditionChange"
-          >
-            <template v-if="form.card_type != 'cash'"
-              ><el-radio :label="1">不限制</el-radio></template
+          <el-form-item label="兑换商品名称" prop="gift" v-if="form.card_type === 'gift'">
+            <el-input
+              :maxlength="20"
+              placeholder="兑换商品名称"
+              v-model="form.gift"
+              style="width: 240px"
+              @change="giftChange"
+            ></el-input
+            >&nbsp;<span class="frm-tips"
+              >{{ inputValue.gift_length }}/{{ inputValue.gift_max }}</span
             >
-            <template v-if="form.card_type !== 'gift'">
-              <el-radio :label="2"
-                >满 &nbsp;<el-input
-                  type="number"
-                  min="0"
-                  :disabled="form.card_id || form.useCondition == 1 ? true : false"
-                  v-model="form.least_cost"
-                  style="width: 100px"
-                ></el-input
-                >&nbsp; 元可用&nbsp;&nbsp;
-                <template v-if="form.card_type === 'discount'">
-                  最高限额&nbsp;<el-input
+          </el-form-item>
+          <el-form-item label="折扣额度" prop="discount" v-if="form.card_type === 'discount'">
+            <el-input
+              :disabled="form.card_id ? true : false"
+              v-model="form.discount"
+              placeholder="只能是大于等于1,小于10的数字"
+              style="width: 240px"
+              max="9.9"
+              min="1"
+            ></el-input>
+          </el-form-item>
+          <el-form-item label="减免金额" prop="reduce_cost" v-if="form.card_type === 'cash'">
+            <el-input
+              type="number"
+              :disabled="form.card_id ? true : false"
+              v-model="form.reduce_cost"
+              placeholder="只能是大于0的数字"
+              style="width: 240px"
+            ></el-input
+            >&nbsp;元
+          </el-form-item>
+          <el-form-item label="发放数量" prop="quantity">
+            <el-input
+              min="1"
+              :disabled="form.card_id ? true : false"
+              type="number"
+              oninput="value=value.replace(/[^\d.]/g,'')"
+              v-model.number="form.quantity"
+              placeholder="只能是大于0的数字"
+              style="width: 20%"
+            ></el-input
+            >&nbsp;份
+          </el-form-item>
+          <el-form-item label="卡券标题" prop="title">
+            <el-input
+              :disabled="form.card_id ? true : false"
+              v-model="form.title"
+              placeholder="字数上限为9个汉字"
+              style="width: 240px"
+              @change="titleChange"
+            ></el-input
+            >&nbsp;<span class="frm-tips"
+              >{{ inputValue.title_length }}/{{ inputValue.title_max }}</span
+            >
+            <p class="frm-tips">建议填写满减券“减免金额”及自定义内容，描述卡券提供的具体优惠</p>
+          </el-form-item>
+          <el-form-item label="使用条件" prop="useCondition">
+            <el-radio-group
+              :disabled="form.card_id ? true : false"
+              v-model="form.useCondition"
+              @change="conditionChange"
+            >
+              <template v-if="form.card_type != 'cash'"
+                ><el-radio :label="1">不限制</el-radio></template
+              >
+              <template v-if="form.card_type !== 'gift'">
+                <el-radio :label="2"
+                  >满 &nbsp;<el-input
+                    type="number"
+                    min="0"
                     :disabled="form.card_id || form.useCondition == 1 ? true : false"
-                    v-model="form.most_cost"
+                    v-model="form.least_cost"
                     style="width: 100px"
                   ></el-input
-                  >&nbsp; 元</template
-                >
-              </el-radio>
-            </template>
-          </el-radio-group>
-        </el-form-item>
-        <el-form-item label="有效期" prop="date_type">
-          <el-radio-group v-model="form.date_type" @change="changeDatetime">
-            <div
-              v-if="
-                !form.card_id || (form.card_id && form.date_type === 'DATE_TYPE_FIX_TIME_RANGE')
-              "
-              style="margin-bottom: 20px"
-            >
-              <el-radio
-                :disabled="
-                  form.card_id != '' && form.date_type == 'DATE_TYPE_FIX_TERM' ? true : false
+                  >&nbsp; 元可用&nbsp;&nbsp;
+                  <template v-if="form.card_type === 'discount'">
+                    最高限额&nbsp;<el-input
+                      :disabled="form.card_id || form.useCondition == 1 ? true : false"
+                      v-model="form.most_cost"
+                      style="width: 100px"
+                    ></el-input
+                    >&nbsp; 元</template
+                  >
+                </el-radio>
+              </template>
+            </el-radio-group>
+          </el-form-item>
+          <el-form-item label="有效期" prop="date_type">
+            <el-radio-group v-model="form.date_type" @change="changeDatetime">
+              <div
+                v-if="
+                  !form.card_id || (form.card_id && form.date_type === 'DATE_TYPE_FIX_TIME_RANGE')
                 "
-                label="DATE_TYPE_FIX_TIME_RANGE"
-                >固定日期</el-radio
+                style="margin-bottom: 20px"
               >
-              <el-date-picker
-                v-model="date_range"
-                type="datetimerange"
-                value-format="timestamp"
-                :picker-options="form.card_id ? '' : pickerOptions"
-                style="width: 380px"
-                :disabled="form.date_type == 'DATE_TYPE_FIX_TERM' ? true : false"
-              ></el-date-picker>
-            </div>
-            <div v-if="!form.card_id || (form.card_id && form.date_type === 'DATE_TYPE_FIX_TERM')">
-              <el-radio
-                label="DATE_TYPE_FIX_TERM"
-                :disabled="
-                  form.card_id != '' && form.date_type == 'DATE_TYPE_FIX_TIME_RANGE' ? true : false
-                "
-                >领取后,&nbsp;
-                <el-select
-                  v-model="form.begin_time"
+                <el-radio
                   :disabled="
-                    form.card_id != '' && form.date_type == 'DATE_TYPE_FIX_TERM'
-                      ? true
-                      : datetimeStatus
+                    form.card_id != '' && form.date_type == 'DATE_TYPE_FIX_TERM' ? true : false
+                  "
+                  label="DATE_TYPE_FIX_TIME_RANGE"
+                  >固定日期</el-radio
+                >
+                <el-date-picker
+                  v-model="date_range"
+                  type="datetimerange"
+                  value-format="timestamp"
+                  :picker-options="form.card_id ? '' : pickerOptions"
+                  style="width: 380px"
+                  :disabled="form.date_type == 'DATE_TYPE_FIX_TERM' ? true : false"
+                ></el-date-picker>
+              </div>
+              <div
+                v-if="!form.card_id || (form.card_id && form.date_type === 'DATE_TYPE_FIX_TERM')"
+              >
+                <el-radio
+                  label="DATE_TYPE_FIX_TERM"
+                  :disabled="
+                    form.card_id != '' && form.date_type == 'DATE_TYPE_FIX_TIME_RANGE'
                       ? true
                       : false
                   "
-                  size="5"
-                >
-                  <el-option
-                    v-for="item in totalDays"
-                    :key="item.value"
-                    :label="item.text"
-                    :value="item.value"
-                  ></el-option> </el-select
-                >&nbsp;生效，有效天数&nbsp;
+                  >领取后,&nbsp;
+                  <el-select
+                    v-model="form.begin_time"
+                    :disabled="
+                      form.card_id != '' && form.date_type == 'DATE_TYPE_FIX_TERM'
+                        ? true
+                        : datetimeStatus
+                        ? true
+                        : false
+                    "
+                    size="5"
+                  >
+                    <el-option
+                      v-for="item in totalDays"
+                      :key="item.value"
+                      :label="item.text"
+                      :value="item.value"
+                    ></el-option> </el-select
+                  >&nbsp;生效，有效天数&nbsp;
 
-                <el-input style="width:120px"  v-model.number="form.days"  :disabled="
-                    form.card_id != '' && form.date_type == 'DATE_TYPE_FIX_TERM'
-                      ? true
-                      : datetimeStatus
-                      ? true
-                      : false
-                  ">
-                  <template slot="append">天</template>
-                </el-input>
-                <!-- <el-select
+                  <el-input
+                    style="width: 120px"
+                    v-model.number="form.days"
+                    :disabled="
+                      form.card_id != '' && form.date_type == 'DATE_TYPE_FIX_TERM'
+                        ? true
+                        : datetimeStatus
+                        ? true
+                        : false
+                    "
+                  >
+                    <template slot="append">天</template>
+                  </el-input>
+                  <!-- <el-select
                   v-model="form.days"
                   :disabled="
                     form.card_id != '' && form.date_type == 'DATE_TYPE_FIX_TERM'
@@ -177,85 +185,95 @@
                     :value="item.value"
                   ></el-option>
                 </el-select> -->
-                统一过期时间&nbsp;<el-date-picker
-                  v-model="form.end_time"
-                  type="datetime"
-                  value-format="timestamp"
-                  :picker-options="pickerOptions"
-                  :disabled="
-                    form.card_id != '' && form.date_type == 'DATE_TYPE_FIX_TERM'
-                      ? true
-                      : datetimeStatus
-                      ? true
-                      : false
-                  "
-                ></el-date-picker>
-              </el-radio>
-            </div>
-          </el-radio-group>
-        </el-form-item>
-        <el-form-item label="卡券使用说明" prop="description">
-          <el-input
-            required
-            type="textarea"
-            :rows="6"
-            resize="none"
-            v-model="form.description"
-            style="width: 600px"
-            placeholder="请填写使用本优惠券的注意事项"
-            @change="descriptionChange"
-          ></el-input
-          >&nbsp;<span class="frm-tips"
-            >{{ inputValue.description_length }}/{{ inputValue.description_max }}</span
-          >
-        </el-form-item>
-        <!-- <el-form-item label="优惠券模板ID" prop="card_code">
+                  统一过期时间&nbsp;<el-date-picker
+                    v-model="form.end_time"
+                    type="datetime"
+                    value-format="timestamp"
+                    :picker-options="pickerOptions"
+                    :disabled="
+                      form.card_id != '' && form.date_type == 'DATE_TYPE_FIX_TERM'
+                        ? true
+                        : datetimeStatus
+                        ? true
+                        : false
+                    "
+                  ></el-date-picker>
+                </el-radio>
+              </div>
+            </el-radio-group>
+          </el-form-item>
+          <el-form-item label="卡券使用说明" prop="description">
+            <el-input
+              required
+              type="textarea"
+              :rows="6"
+              resize="none"
+              v-model="form.description"
+              style="width: 600px"
+              placeholder="请填写使用本优惠券的注意事项"
+              @change="descriptionChange"
+            ></el-input
+            >&nbsp;<span class="frm-tips"
+              >{{ inputValue.description_length }}/{{ inputValue.description_max }}</span
+            >
+          </el-form-item>
+          <!-- <el-form-item label="优惠券模板ID" prop="card_code">
            <el-input :maxlength="255" placeholder="优惠券模板ID" v-model="form.card_code" style="width: 240px;"></el-input>&nbsp;<span class="frm-tips">{{inputValue.card_code}}</span>
         </el-form-item>
         <el-form-item label="优惠券规则ID" prop="card_rule_code">
            <el-input :maxlength="255" placeholder="优惠券规则ID" v-model="form.card_rule_code" style="width: 240px;"></el-input>&nbsp;<span class="frm-tips">{{inputValue.card_rule_code}}</span>
         </el-form-item> -->
-      </el-card>
-      <el-card shadow="never" header="适用规则">
-        <el-form-item label="前台直接领取">
-          <el-switch
-            v-model="form.receive"
-            active-color="#13ce66"
-            inactive-color="#d2d4db"
-          ></el-switch>
-        </el-form-item>
-        <el-form-item label="领券限制">
-          <el-input type="number" v-model="form.get_limit" style="width: 120px" min='1'  oninput="value=value.replace(/[^\d.]/g,'')"></el-input>
-          <p class="frm-tips">每个用户领券上限，如不填，则默认为1。</p>
-        </el-form-item>
-        <el-form-item label="适用平台" v-if="is_distributor == false && form.card_type == 'gift'">
-          <el-radio-group
-            v-model="form.use_platform"
-            :disabled="form.card_id != ''"
-            @change="usePlatformChange"
+        </el-card>
+        <el-card shadow="never" header="适用规则">
+          <el-form-item label="前台直接领取">
+            <el-switch
+              v-model="form.receive"
+              active-color="#13ce66"
+              inactive-color="#d2d4db"
+            ></el-switch>
+          </el-form-item>
+          <el-form-item label="领券限制">
+            <el-input
+              type="number"
+              v-model="form.get_limit"
+              style="width: 120px"
+              min="1"
+              oninput="value=value.replace(/[^\d.]/g,'')"
+            ></el-input>
+            <p class="frm-tips">每个用户领券上限，如不填，则默认为1。</p>
+          </el-form-item>
+          <el-form-item label="适用平台" v-if="is_distributor == false && form.card_type == 'gift'">
+            <el-radio-group
+              v-model="form.use_platform"
+              :disabled="form.card_id != ''"
+              @change="usePlatformChange"
+            >
+              <el-radio label="store" v-if="is_distributor == false">门店专用</el-radio>
+              <el-radio label="mall" v-if="form.card_type != 'gift'">线上商城专用</el-radio>
+            </el-radio-group>
+          </el-form-item>
+          <el-form-item
+            label="核销场景"
+            prop="use_scenes"
+            v-if="is_distributor == false && form.card_type == 'gift'"
           >
-            <el-radio label="store" v-if="is_distributor == false">门店专用</el-radio>
-            <el-radio label="mall" v-if="form.card_type != 'gift'">线上商城专用</el-radio>
-          </el-radio-group>
-        </el-form-item>
-        <el-form-item
-          label="核销场景"
-          prop="use_scenes"
-          v-if="is_distributor == false && form.card_type == 'gift'"
-        >
-          <el-radio-group v-model="form.use_scenes" :disabled="form.card_id != ''">
-            <el-radio v-if="form.card_type != 'gift' && form.use_platform == 'mall'" label="ONLINE"
-              >线上商城使用</el-radio
-            >
-            <el-radio v-if="form.card_type != 'gift' && form.use_platform == 'store'" label="QUICK"
-              >快捷买单使用</el-radio
-            >
-            <el-radio label="SELF" v-if="form.use_platform == 'store'"
-              >自助核销（到店使用）</el-radio
-            >
-          </el-radio-group>
-        </el-form-item>
-        <!-- <el-form-item
+            <el-radio-group v-model="form.use_scenes" :disabled="form.card_id != ''">
+              <el-radio
+                v-if="form.card_type != 'gift' && form.use_platform == 'mall'"
+                label="ONLINE"
+                >线上商城使用</el-radio
+              >
+              <el-radio
+                v-if="form.card_type != 'gift' && form.use_platform == 'store'"
+                label="QUICK"
+                >快捷买单使用</el-radio
+              >
+              <el-radio label="SELF" v-if="form.use_platform == 'store'"
+                >自助核销（到店使用）</el-radio
+              >
+            </el-radio-group>
+          </el-form-item>
+          <!-- <el-form-item
           label="仅总店商品可用"
           v-if="system_mode == 'platform' && is_distributor == false && form.use_platform == 'mall'"
         >
@@ -266,192 +284,197 @@
             inactive-color="#d2d4db"
           ></el-switch>
         </el-form-item> -->
-        <el-form-item v-if="form.use_scenes == 'SELF'" label="验证码">
-          <el-radio-group v-model="self_rcode" :disabled="form.card_id != ''">
-            <el-radio label="1">启用验证码</el-radio>
-            <el-radio label="0">不启用验证码</el-radio>
-          </el-radio-group>
-          <br />
-          <el-input
-            v-if="self_rcode === '1'"
-            v-model="form.self_consume_code"
-            style="width: 220px"
-            placeholder="请输入验证码"
-            maxlength="4"
-            minlength="4"
-          ></el-input>
-        </el-form-item>
-      </el-card>
-      <el-card
-        v-if="form.use_platform == 'mall' && form.card_type != 'gift' && form.store_self == false"
-        header="商品"
-        shadow="naver"
-      >
-        <el-form-item label="适用商品">
-          <el-radio-group v-model="form.use_all_items" @change="itemTypeChange">
-            <el-radio label="true">全部商品适用</el-radio>
-            <el-radio label="false">指定商品适用</el-radio>
-            <el-radio label="category">指定分类适用</el-radio>
-            <el-radio label="tag">指定商品标签适用</el-radio>
-            <el-radio label="brand">指定品牌适用</el-radio>
-          </el-radio-group>
-        </el-form-item>
+          <el-form-item v-if="form.use_scenes == 'SELF'" label="验证码">
+            <el-radio-group v-model="self_rcode" :disabled="form.card_id != ''">
+              <el-radio label="1">启用验证码</el-radio>
+              <el-radio label="0">不启用验证码</el-radio>
+            </el-radio-group>
+            <br />
+            <el-input
+              v-if="self_rcode === '1'"
+              v-model="form.self_consume_code"
+              style="width: 220px"
+              placeholder="请输入验证码"
+              maxlength="4"
+              minlength="4"
+            ></el-input>
+          </el-form-item>
+        </el-card>
+        <el-card
+          v-if="form.use_platform == 'mall' && form.card_type != 'gift' && form.store_self == false"
+          header="商品"
+          shadow="naver"
+        >
+          <el-form-item label="适用商品">
+            <el-radio-group v-model="form.use_all_items" @change="itemTypeChange">
+              <el-radio label="true">全部商品适用</el-radio>
+              <el-radio label="false">指定商品适用</el-radio>
+              <el-radio label="category">指定分类适用</el-radio>
+              <el-radio label="tag">指定商品标签适用</el-radio>
+              <el-radio label="brand">指定品牌适用</el-radio>
+            </el-radio-group>
+          </el-form-item>
 
-        <div v-if="!zdItemHidden" style="position: relative">
-          <SkuSelector @change="getItems" :data="relItems"></SkuSelector>
-          <div style="position: absolute; bottom: 0px; left: 112px">
-            <el-upload
-              style="display: inline-block; height: 0"
-              action=""
-              :on-change="uploadHandleChange"
-              :auto-upload="false"
-              :show-file-list="false"
-            >
-              <el-button type="primary">批量上传</el-button>
-            </el-upload>
-            <el-button style="margin-left: 10px" type="primary" @click="uploadHandleTemplate()"
-              >下载模板</el-button
-            >
+          <div v-if="!zdItemHidden" style="position: relative">
+            <SkuSelector @change="getItems" :data="relItems"></SkuSelector>
+            <div style="position: absolute; bottom: 0px; left: 112px">
+              <el-upload
+                style="display: inline-block; height: 0"
+                action=""
+                :on-change="uploadHandleChange"
+                :auto-upload="false"
+                :show-file-list="false"
+              >
+                <el-button type="primary">批量上传</el-button>
+              </el-upload>
+              <el-button style="margin-left: 10px" type="primary" @click="uploadHandleTemplate()"
+                >下载模板</el-button
+              >
+            </div>
           </div>
-        </div>
 
-        <el-col :xs="12" :sm="12" :md="12">
-          <div style="height: 350px" v-if="!categoryHidden" class="custom_tree">
-            <treeselect
-              :options="categoryList"
-              :show-count="true"
-              :multiple="true"
-              :disable-branch-nodes="true"
-              v-model="form.item_category"
-            >
-            </treeselect>
-          </div>
-        </el-col>
-        <template v-if="!tagHidden">
-          <div class="selected-tags view-flex">
-            <div class="label">已选中标签：</div>
-            <div class="view-flex-item">
+          <el-col :xs="12" :sm="12" :md="12">
+            <div style="height: 350px" v-if="!categoryHidden" class="custom_tree">
+              <treeselect
+                :options="categoryList"
+                :show-count="true"
+                :multiple="true"
+                :disable-branch-nodes="true"
+                v-model="form.item_category"
+              >
+              </treeselect>
+            </div>
+          </el-col>
+          <template v-if="!tagHidden">
+            <div class="selected-tags view-flex">
+              <div class="label">已选中标签：</div>
+              <div class="view-flex-item">
+                <el-tag
+                  :key="index"
+                  v-for="(tag, index) in tag.currentTags"
+                  closable
+                  size="small"
+                  :disable-transitions="false"
+                  @close="tagRemove(index)"
+                >
+                  {{ tag.tag_name }}
+                </el-tag>
+              </div>
+            </div>
+            <div>
               <el-tag
+                class="tag-item"
                 :key="index"
-                v-for="(tag, index) in tag.currentTags"
-                closable
-                size="small"
+                v-for="(tag, index) in tag.tags"
+                size="medium"
+                color="#ffffff"
                 :disable-transitions="false"
-                @close="tagRemove(index)"
+                @click.native="tagAdd(tag, index)"
               >
                 {{ tag.tag_name }}
               </el-tag>
             </div>
-          </div>
-          <div>
-            <el-tag
-              class="tag-item"
-              :key="index"
-              v-for="(tag, index) in tag.tags"
-              size="medium"
-              color="#ffffff"
-              :disable-transitions="false"
-              @click.native="tagAdd(tag, index)"
-            >
-              {{ tag.tag_name }}
-            </el-tag>
-          </div>
-        </template>
-        <template v-if="!brandHidden">
-          <div class="selected-tags view-flex">
-            <div class="label">已选中品牌：</div>
-            <div class="view-flex-item">
+          </template>
+          <template v-if="!brandHidden">
+            <div class="selected-tags view-flex">
+              <div class="label">已选中品牌：</div>
+              <div class="view-flex-item">
+                <el-tag
+                  :key="index"
+                  v-for="(brand, index) in brand.currentBrands"
+                  closable
+                  size="small"
+                  :disable-transitions="false"
+                  @close="brandRemove(index)"
+                >
+                  {{ brand.attribute_name }}
+                </el-tag>
+              </div>
+            </div>
+            <div>
               <el-tag
+                class="tag-item"
                 :key="index"
-                v-for="(brand, index) in brand.currentBrands"
-                closable
-                size="small"
+                v-for="(brand, index) in brand.brands"
+                size="medium"
+                color="#ffffff"
                 :disable-transitions="false"
-                @close="brandRemove(index)"
+                @click.native="brandAdd(brand, index)"
               >
                 {{ brand.attribute_name }}
               </el-tag>
             </div>
-          </div>
-          <div>
-            <el-tag
-              class="tag-item"
-              :key="index"
-              v-for="(brand, index) in brand.brands"
-              size="medium"
-              color="#ffffff"
-              :disable-transitions="false"
-              @click.native="brandAdd(brand, index)"
-            >
-              {{ brand.attribute_name }}
-            </el-tag>
-          </div>
-        </template>
-      </el-card>
-      <el-card
-        header="门店"
-        shadow="naver"
-        v-if="is_distributor == false && form.use_platform == 'store'"
-      >
-        <el-form-item label="适用门店">
-          <el-radio-group v-model="form.use_all_shops" @change="shopTypeChange">
-            <el-radio label="true">全部门店适用</el-radio>
-            <el-radio label="false">指定门店适用</el-radio>
-          </el-radio-group>
-        </el-form-item>
-        <div v-if="!zdShopHidden">
-          <el-button type="primary" @click="addStoreAction">选择门店</el-button>
-          <el-table v-if="relStores.length > 0" :data="relStores" style="line-height: normal">
-            <el-table-column label="ID" prop="wxShopId" width="60"></el-table-column>
-            <el-table-column label="名称" prop="storeName"></el-table-column>
-            <el-table-column prop="address" label="地址" show-overflow-tooltip></el-table-column>
-            <el-table-column label="操作" width="50">
-              <template slot-scope="scope">
-                <i class="iconfont icon-trash-alt" @click="deleteRow(scope.$index, form.items)"></i>
-              </template>
-            </el-table-column>
-          </el-table>
-        </div>
-      </el-card>
-
-      <el-card
-        header="店铺"
-        shadow="naver"
-        v-if="system_mode !== 'platform' && is_distributor == false && form.use_platform == 'mall'"
-      >
-        <el-form-item label="适用店铺">
-          <el-radio-group v-model="form.use_all_shops" @change="shopTypeChange">
-            <el-radio label="true">全部店铺适用</el-radio>
-            <el-radio label="false">指定店铺适用</el-radio>
-          </el-radio-group>
-        </el-form-item>
-        <div v-if="!zdShopHidden">
-          <el-button type="primary" @click="addDistributorAction">选择店铺</el-button>
-          <el-table
-            v-if="distributor_info.length > 0"
-            :data="distributor_info"
-            style="line-height: normal"
-          >
-            <el-table-column label="ID" prop="distributor_id" width="60"></el-table-column>
-            <el-table-column label="名称" prop="name"></el-table-column>
-            <el-table-column prop="address" label="地址" show-overflow-tooltip></el-table-column>
-            <el-table-column label="操作" width="50">
-              <template slot-scope="scope">
-                <i
-                  class="iconfont icon-trash-alt"
-                  @click="deleteDistritutorRow(scope.$index, form.items)"
-                ></i>
-              </template>
-            </el-table-column>
-          </el-table>
-        </div>
-      </el-card>
-      <div class="content-center">
-        <el-button @click="cancelSubmit">取消</el-button>
-        <el-button type="primary" @click="submitForm('form')" :disabled="submitDisabled"
-          >提交</el-button
+          </template>
+        </el-card>
+        <el-card
+          header="门店"
+          shadow="naver"
+          v-if="is_distributor == false && form.use_platform == 'store'"
         >
-      </div>
+          <el-form-item label="适用门店">
+            <el-radio-group v-model="form.use_all_shops" @change="shopTypeChange">
+              <el-radio label="true">全部门店适用</el-radio>
+              <el-radio label="false">指定门店适用</el-radio>
+            </el-radio-group>
+          </el-form-item>
+          <div v-if="!zdShopHidden">
+            <el-button type="primary" @click="addStoreAction">选择门店</el-button>
+            <el-table v-if="relStores.length > 0" :data="relStores" style="line-height: normal">
+              <el-table-column label="ID" prop="wxShopId" width="60"></el-table-column>
+              <el-table-column label="名称" prop="storeName"></el-table-column>
+              <el-table-column prop="address" label="地址" show-overflow-tooltip></el-table-column>
+              <el-table-column label="操作" width="50">
+                <template slot-scope="scope">
+                  <i
+                    class="iconfont icon-trash-alt"
+                    @click="deleteRow(scope.$index, form.items)"
+                  ></i>
+                </template>
+              </el-table-column>
+            </el-table>
+          </div>
+        </el-card>
+
+        <el-card
+          header="店铺"
+          shadow="naver"
+          v-if="
+            system_mode !== 'platform' && is_distributor == false && form.use_platform == 'mall'
+          "
+        >
+          <el-form-item label="适用店铺">
+            <el-radio-group v-model="form.use_all_shops" @change="shopTypeChange">
+              <el-radio label="true">全部店铺适用</el-radio>
+              <el-radio label="false">指定店铺适用</el-radio>
+            </el-radio-group>
+          </el-form-item>
+          <div v-if="!zdShopHidden">
+            <el-button type="primary" @click="addDistributorAction">选择店铺</el-button>
+            <el-table
+              v-if="distributor_info.length > 0"
+              :data="distributor_info"
+              style="line-height: normal"
+            >
+              <el-table-column label="ID" prop="distributor_id" width="60"></el-table-column>
+              <el-table-column label="名称" prop="name"></el-table-column>
+              <el-table-column prop="address" label="地址" show-overflow-tooltip></el-table-column>
+              <el-table-column label="操作" width="50">
+                <template slot-scope="scope">
+                  <i
+                    class="iconfont icon-trash-alt"
+                    @click="deleteDistritutorRow(scope.$index, form.items)"
+                  ></i>
+                </template>
+              </el-table-column>
+            </el-table>
+          </div>
+        </el-card>
+        <div class="content-center">
+          <el-button @click="cancelSubmit">取消</el-button>
+          <el-button type="primary" @click="submitForm('form')" :disabled="submitDisabled"
+            >提交</el-button
+          >
+        </div>
       </template>
     </el-form>
     <StoreSelect
@@ -820,15 +843,15 @@ export default {
       this.$router.go(-1)
     },
     submitForm(formName) {
-      if(this.form.days <= 0){
-        this.$message.error('有效天数必须大于0');
+      if (this.form.days <= 0) {
+        this.$message.error('有效天数必须大于0')
         return
       }
-      if(typeof this.form.days !=='number'){
-         this.$message.error('请输入有效的数字');
-         return
+      if (typeof this.form.days !== 'number') {
+        this.$message.error('请输入有效的数字')
+        return
       }
-      
+
       const that = this
       if (this.form.date_type == 'DATE_TYPE_FIX_TIME_RANGE' && this.date_range.length > 0) {
         this.form.begin_time = this.date_range[0]
@@ -1039,7 +1062,7 @@ export default {
       }
     },
     fetchMainCate() {
-      getCategory({ is_main_category: true,ignore_none:true }).then((response) => {
+      getCategory({ is_main_category: true, ignore_none: true }).then((response) => {
         this.categoryList = response.data.data
       })
     },
@@ -1200,7 +1223,7 @@ export default {
         })
       })
     },
-    haddleShowTab(value){
+    haddleShowTab(value) {
       this.showTab = value
     }
   },
@@ -1313,12 +1336,13 @@ export default {
         }
         this.$nextTick(() => {
           this.relItems = response.itemTreeLists
+          console.log('???==>', response.itemTreeLists)
         })
         this.titleChange(this.form.title)
         this.descriptionChange(this.form.description)
       })
     }
-    if(this.form.card_type !== 'new_gift'){
+    if (this.form.card_type !== 'new_gift') {
       this.fetchMainCate()
       this.getAllTagLists()
       this.getBrandList('', true)
@@ -1445,6 +1469,5 @@ export default {
   }
 }
 .custom_tree {
-   
 }
 </style>

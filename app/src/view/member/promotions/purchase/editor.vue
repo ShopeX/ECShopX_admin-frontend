@@ -108,7 +108,7 @@
           <el-button type="primary" plain style="margin-top: 10px" @click="dialogFormVisible = true"
             >批量设置</el-button
           >
-          <el-table :data="good.currentGoods">
+          <el-table :data="good.currentGoods" :key="Math.random()">
             <el-table-column prop="item_id" label="ID" width="180"> </el-table-column>
             <el-table-column prop="itemName" label="商品名称" width="180"> </el-table-column>
             <el-table-column prop="item_spec_desc" label="规格" width="180"> </el-table-column>
@@ -149,7 +149,7 @@
               @click="dialogFormVisible = true"
               >批量设置</el-button
             >
-            <el-table :data="item_category">
+            <el-table :data="item_category" :key="Math.random()">
               <el-table-column prop="category_id" label="ID" width="180"> </el-table-column>
               <el-table-column prop="category_name" label="分类名称" width="180"> </el-table-column>
               <el-table-column label="每人限购" width="280">
@@ -202,7 +202,7 @@
           <el-button type="primary" plain style="margin-top: 10px" @click="dialogFormVisible = true"
             >批量设置</el-button
           >
-          <el-table :data="tag.currentTags">
+          <el-table :data="tag.currentTags" :key="Math.random()">
             <el-table-column prop="tag_id" label="ID" width="180"> </el-table-column>
             <el-table-column prop="tag_name" label="标签名称" width="180"> </el-table-column>
             <el-table-column prop="limit_num" label="每人限购" width="280">
@@ -257,7 +257,7 @@
           <el-button type="primary" plain style="margin-top: 10px" @click="dialogFormVisible = true"
             >批量设置</el-button
           >
-          <el-table :data="brand.currentBrands">
+          <el-table :data="brand.currentBrands" :key="Math.random()">
             <el-table-column prop="attribute_id" label="ID" width="180"> </el-table-column>
             <el-table-column prop="attribute_name" label="品牌名称" width="180"> </el-table-column>
             <el-table-column prop="limit_num" label="每人限购" width="280">
@@ -276,7 +276,7 @@
             </el-table-column>
           </el-table>
         </template>
-        <el-dialog title="批量设置限购" :visible.sync="dialogFormVisible" width="500px">
+        <el-dialog title="批量设置限购" :visible="dialogFormVisible" width="500px">
           <el-form :model="dialogForm">
             <el-form-item label="每人限购：" style="display: flex">
               <el-input v-model="dialogForm.limit_num" autocomplete="off"
@@ -469,20 +469,17 @@ export default {
       }
       if (val === 'item') {
         this.zdItemHidden = false
-        this.form.item_limit = []
+        // this.good.currentGoods = []
       } else if (val === 'category') {
-        this.form.item_limit = []
         this.categoryHidden = false
-        this.item_category = []
+        // this.item_category = []
       } else if (val === 'tag') {
         this.tagHidden = false
-        this.tag.currentTags = []
-        this.form.item_limit = []
+        // this.tag.currentTags = []
         this.showTags()
       } else if (val === 'brand') {
         this.brandHidden = false
-        this.brand.currentBrands = []
-        this.form.item_limit = []
+        // this.brand.currentBrands = []
         this.showBrands()
       } else if (val === 'all') {
         this.allHiden = false
@@ -494,15 +491,20 @@ export default {
       })
     },
     getItems(data) {
-      this.good.currentGoods = data.map((item) => {
-        this.form.item_limit.forEach((limitItem) => {
-          if (item.itemId === limitItem.item_id) {
-            item.limit_fee = limitItem.limit_fee
-            item.limit_num = limitItem.limit_num
-          }
+      const { item_limit } = this.form
+      if (Array.isArray(item_limit) && item_limit.length > 0) {
+        this.good.currentGoods = data.map((item) => {
+          this.form.item_limit.forEach((limitItem) => {
+            if (item.itemId === limitItem.item_id) {
+              item.limit_fee = limitItem.limit_fee
+              item.limit_num = limitItem.limit_num
+            }
+          })
+          return item
         })
-        return item
-      })
+      } else {
+        this.good.currentGoods = data
+      }
     },
 
     /**
@@ -774,6 +776,8 @@ export default {
         item.limit_num = limit_num
         item.limit_fee = limit_fee
       })
+      this.$forceUpdate()
+      console.log('???==>', this.dialogForm, currentArr)
       this.dialogFormVisible = false
     }
   }

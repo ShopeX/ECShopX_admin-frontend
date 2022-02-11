@@ -327,7 +327,7 @@
                 </el-form-item>
               </el-col>
               <el-col :xs="24" :sm="12" :md="8">
-                <el-form-item label="原价">
+                <el-form-item label="市场价">
                   <el-input
                     type="number"
                     required
@@ -491,7 +491,7 @@
                   ></el-input>
                 </template>
               </el-table-column>
-              <el-table-column label="原价">
+              <el-table-column label="市场价">
                 <template slot-scope="scope">
                   <el-input
                     type="number"
@@ -628,7 +628,7 @@
                   ></el-input>
                 </template>
               </el-table-column>
-              <el-table-column label="原价">
+              <el-table-column label="市场价">
                 <template slot-scope="scope">
                   <el-input
                     type="number"
@@ -1041,7 +1041,7 @@ export default {
     submitItemsAction: function() {
       // 提交商品
       // if (+this.form.market_price < +this.form.rebate) {
-      //   this.$confirm('当前店铺佣金大于商品原价, 是否继续保存?', '提示', {
+      //   this.$confirm('当前店铺佣金大于商品市场价, 是否继续保存?', '提示', {
       //     confirmButtonText: '确定',
       //     cancelButtonText: '取消',
       //     type: 'warning'

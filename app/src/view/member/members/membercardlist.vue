@@ -23,7 +23,7 @@
             v-model="vipGradeAddDay[item.lv_type].day"
             :blur="updateVipGradeDate(item.vip_grade_id, item.lv_type)"
           >
-            <template slot="prepend">未购买过改会员卡，当天延期</template
+            <template slot="prepend">未购买过该会员卡，当天延期</template
             ><template slot="append">天</template>
           </el-input>
         </el-col>

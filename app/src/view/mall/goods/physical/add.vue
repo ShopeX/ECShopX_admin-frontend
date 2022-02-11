@@ -68,7 +68,7 @@
 
       <div class="comp-tdk">
         <div class="form-block-head clearfix">
-          <div class="block-head-hd">TDK设置</div>
+          <div class="block-head-hd">PC关键词搜索引擎</div>
         </div>
         <div class="form-block-body">
           <el-form label-position="right" label-width="80px">
@@ -406,34 +406,37 @@
       // 商品skus
       getGoodsSkus(list, value) {
         this.skuData.skus = []
-        list.forEach(item => {
-          const specs = []
-          item.attribute_values.list.forEach(attr => {
-            specs.push({
-              image_url: attr.image_url ? attr.image_url : '',
-              attribute_value_id: attr.attribute_value_id,
-              custom_attribute_value: attr.custom_attribute_value || attr.attribute_value,
-              attribute_value: attr.attribute_value
+
+        if(list) { 
+          list.forEach(item => {
+            const specs = []
+            item.attribute_values.list.forEach(attr => {
+              specs.push({
+                image_url: attr.image_url ? attr.image_url : '',
+                attribute_value_id: attr.attribute_value_id,
+                custom_attribute_value: attr.custom_attribute_value || attr.attribute_value,
+                attribute_value: attr.attribute_value
+              })
             })
-          })
-          const checked_sku = []
-          value.forEach(spec => {
-            spec.item_spec.forEach(sitem => {
-              if(item.attribute_id == sitem.spec_id) {
-                if(checked_sku.indexOf(sitem.spec_value_id) < 0) { 
-                  checked_sku.push(sitem.spec_value_id)
+            const checked_sku = []
+            value.forEach(spec => {
+              spec.item_spec.forEach(sitem => {
+                if(item.attribute_id == sitem.spec_id) {
+                  if(checked_sku.indexOf(sitem.spec_value_id) < 0) { 
+                    checked_sku.push(sitem.spec_value_id)
+                  }
                 }
-              }
+              })
+            })
+            this.skuData.skus.push({
+              sku_id: item.attribute_id,
+              sku_name: item.attribute_name,
+              is_image: item.is_image,
+              sku_value: specs,
+              checked_sku
             })
           })
-          this.skuData.skus.push({
-            sku_id: item.attribute_id,
-            sku_name: item.attribute_name,
-            is_image: item.is_image,
-            sku_value: specs,
-            checked_sku
-          })
-        })
+        }
       },
       // 生成skuItems
       getSkuItems() {

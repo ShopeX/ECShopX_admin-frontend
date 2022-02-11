@@ -389,7 +389,7 @@ export default {
         }
       })
     },
-    itemTypeChange: function(val) {
+    itemTypeChange: function (val) {
       this.params.main_cat_id = ''
       this.params.tag_id = ''
       this.params.brand_id = ''
@@ -412,7 +412,6 @@ export default {
         this.categoryHidden = false
         this.form.item_category = []
       } else if (val === 'tag') {
-       
         this.tagHidden = false
         this.tag.currentTags = []
         this.showTags()
@@ -422,13 +421,13 @@ export default {
         this.showBrands()
       }
     },
-    fetchMainCate: function() {
-      getCategory({ is_main_category: true,ignore_none:true }).then((response) => {
+    fetchMainCate: function () {
+      getCategory({ is_main_category: true, ignore_none: true }).then((response) => {
         this.categoryList = response.data.data
-        console.log(this.categoryList);
+        console.log(this.categoryList)
       })
     },
-    addItemTag: function() {
+    addItemTag: function () {
       this.tag.currentTags = []
       if (this.item_id.length) {
         this.showTags()
@@ -440,14 +439,14 @@ export default {
         })
       }
     },
-    showTags: function() {
+    showTags: function () {
       this.tag.tags = [...this.tag.list]
       this.tag.tags.forEach((item, index) => {
         let isInArr = this.tag.currentTags.findIndex((n) => n.tag_id == item.tag_id)
         if (isInArr != -1) this.tag.tags.splice(index, 1)
       })
     },
-    tagRemove: function(index) {
+    tagRemove: function (index) {
       this.tag.tags.unshift(this.tag.currentTags[index])
       this.tag.currentTags.splice(index, 1)
       this.form.tag_ids = []
@@ -472,7 +471,7 @@ export default {
       this.invalidItemsList = tagInvalidItems
       this.getItems(this.ItemsList)
     },
-    tagAdd: function(item, index) {
+    tagAdd: function (item, index) {
       if (this.activity_date.length <= 0) {
         this.$message({
           type: 'error',
@@ -492,7 +491,7 @@ export default {
       this.params.tag_id = item.tag_id
       this.getGoodsList()
     },
-    getAllTagLists: function() {
+    getAllTagLists: function () {
       let params = {
         page: 1,
         pageSize: 500
@@ -502,7 +501,7 @@ export default {
       })
     },
     // 获取品牌列表
-    getBrandList: function(searchVal = '', isInit = false) {
+    getBrandList: function (searchVal = '', isInit = false) {
       const list = []
       getGoodsAttr({
         page: 1,
@@ -517,14 +516,14 @@ export default {
         this.brand.list = list
       })
     },
-    showBrands: function() {
+    showBrands: function () {
       this.brand.brands = [...this.brand.list]
       this.brand.brands.forEach((item, index) => {
         let isInArr = this.brand.currentBrands.findIndex((n) => n.attribute_id == item.attribute_id)
         if (isInArr != -1) this.brand.brands.splice(index, 1)
       })
     },
-    brandAdd: function(item, index) {
+    brandAdd: function (item, index) {
       if (this.activity_date.length <= 0) {
         this.$message({
           type: 'error',
@@ -544,7 +543,7 @@ export default {
       this.params.brand_id = item.attribute_id
       this.getGoodsList()
     },
-    brandRemove: function(index) {
+    brandRemove: function (index) {
       let items = []
       this.ItemsList.forEach((item) => {
         if (this.brand.currentBrands[index].attribute_id != item.brand_id) items.push(item)
@@ -565,7 +564,7 @@ export default {
         this.form.brand_ids.push(item.attribute_id)
       })
     },
-    getGoodsList: function() {
+    getGoodsList: function () {
       let params = JSON.parse(JSON.stringify(this.params))
       if (this.$route.params.limit_id) {
         params.activity_id = this.$route.params.limit_id
@@ -611,11 +610,11 @@ export default {
         this.getItems(this.ItemsList)
       })
     },
-    categorySelect: function(node, instanceId) {
+    categorySelect: function (node, instanceId) {
       this.params.main_cat_id = node.category_id
       this.getGoodsList()
     },
-    categoryDeselect: function(node, instanceId) {
+    categoryDeselect: function (node, instanceId) {
       let items
       items = []
       this.ItemsList.forEach((item, index) => {

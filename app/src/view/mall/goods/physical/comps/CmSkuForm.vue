@@ -137,7 +137,7 @@
               </el-form-item>
             </el-col>
             <el-col :span="8">
-              <el-form-item label="原价">
+              <el-form-item label="市场价">
                 <el-input type="number" required min="0" v-model="value.specData.market_price" placeholder=""><template slot="prepend">¥</template></el-input>
               </el-form-item>
             </el-col>
@@ -261,7 +261,7 @@
                 <el-input type="number" required min="0" v-model="scope.row.cost_price" size="mini" placeholder=""></el-input>
               </template>
             </el-table-column>
-            <el-table-column label="原价">
+            <el-table-column label="市场价">
               <template slot-scope="scope">
                 <el-input type="number" required min="0" v-model="scope.row.market_price" size="mini" placeholder=""></el-input>
               </template>
@@ -332,7 +332,7 @@
                 <el-input type="number" required min="0" v-model="scope.row.cost_price" size="mini" placeholder=""></el-input>
               </template>
             </el-table-column>
-            <el-table-column label="原价">
+            <el-table-column label="市场价">
               <template slot-scope="scope">
                 <el-input type="number" required min="0" v-model="scope.row.market_price" size="mini" placeholder=""></el-input>
               </template>

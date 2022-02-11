@@ -1,14 +1,14 @@
 <template>
   <transition name="fade" mode="out-in">
-    <storeDefault v-if="template_name === 'yykmembership'"></storeDefault>
+    <!-- <storeDefault v-if="template_name === 'yykmembership'"></storeDefault>
     <storeSport v-if="template_name === 'yykmendian'"></storeSport>
-    <storeUniversal v-if="template_name === 'yykuniversal'"></storeUniversal>
-    <mallDefault v-if="template_name === 'yykweishop'"></mallDefault>
-    <appleBaDefault v-if="template_name === 'appleweishop'"></appleBaDefault>
+    <storeUniversal v-if="template_name === 'yykuniversal'"></storeUniversal> -->
+    <mallDefault></mallDefault>
+    <!-- <appleBaDefault v-if="template_name === 'appleweishop'"></appleBaDefault>
     <marketingCard v-if="template_name === 'marketingCard'"></marketingCard>
     <marketingGroup v-if="template_name === 'yykcutdown'"></marketingGroup>
     <mallCommunity v-if="template_name === 'yykcommunity'"></mallCommunity>
-    <communityManagement v-if="template_name === 'yykcommunitypms'"></communityManagement>
+    <communityManagement v-if="template_name === 'yykcommunitypms'"></communityManagement> -->
   </transition>
 </template>
 

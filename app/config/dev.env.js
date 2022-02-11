@@ -6,6 +6,6 @@ module.exports = {
   WXIMG_URL: '""',
   WXAUTHCALL_Url: '"https://ecshopx.shopex123.com"',
   PREFIXES: '""',
-  IS_SAAS:'"false"'
+  IS_SAAS: '"false"'
   // VUE_APP_INSET: '"true"',
 }

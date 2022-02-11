@@ -74,7 +74,7 @@
               <el-radio label="1">不限制社区</el-radio>
               <el-radio label="2">指定社区</el-radio>
             </el-radio-group>
-            <div style="margin-left: 1.5%;" v-if="community == 2">
+            <div style="margin-left: 1.5%" v-if="community == 2">
               <template>
                 <el-table
                   ref="multipleTable"
@@ -160,9 +160,7 @@
                 </template>
               </el-table-column>
               <el-table-column label="付费会员价" v-if="vipGrade.length == 0" width="150">
-                <template slot-scope="scope">
-                  无付费会员等级，不需要设置价格
-                </template>
+                <template slot-scope="scope"> 无付费会员等级，不需要设置价格 </template>
               </el-table-column>
               <el-table-column label="库存" width="90">
                 <template slot-scope="scope">
@@ -359,7 +357,7 @@ export default {
     closeItemDialogAction() {
       this.itemVisible = false
     },
-    deleteItemRow: function(index, rows) {
+    deleteItemRow: function (index, rows) {
       rows.splice(index, 1)
       this.form.items = rows
       this.setItemStatus = false
@@ -458,7 +456,7 @@ export default {
         this.relItemsIds = response.itemLists
       })
     },
-    handleCancel: function() {
+    handleCancel: function () {
       this.$router.go(-1)
     }
   },

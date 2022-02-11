@@ -9,7 +9,7 @@ const user = {
     license_authorize: '',
     route_app: '',
     wxapp_id: '',
-    template_name: '',
+    template_name: 'yykweishop',
     login_type: '',
     nick_name: '',
     avatar: '',

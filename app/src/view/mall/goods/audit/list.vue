@@ -106,14 +106,15 @@
             <el-table-column label="操作" width="100" fixed>
               <template slot-scope="scope">
                 <el-button type="text" class="btn-gap">
+                  <span @click="editItemsAction(scope.$index, scope.row)"
+                    > 查看 </span
+                  >
                   <span
                     v-if="scope.row.audit_status == 'processing'"
                     @click="batchItemsAudit(scope.row, $event)"
-                    >审核</span
+                    > 审核 </span
                   >
-                  <span v-else @click="editItemsAction(scope.$index, scope.row)"
-                    >查看</span
-                  >
+
                 </el-button>
               </template>
             </el-table-column>

@@ -57,7 +57,9 @@
             <el-form-item label="商户logo">
               <div>
                 <div @click="handleImgChange" class="upload-box">
-                  <img v-if="form.logo_url" :src="wximageurl + form.logo_url" class="avatar" />
+                  <HoverDelete v-if="form.logo_url" @delete="form.logo_url = ''">
+                    <img v-if="form.logo_url" :src="wximageurl + form.logo_url" class="avatar" />
+                  </HoverDelete>
                   <i v-else class="el-icon-plus avatar-uploader-icon"></i>
                 </div>
               </div>
@@ -72,11 +74,12 @@
             <el-form-item label="商户自定义会员卡背景图">
               <div>
                 <div @click="handleImgBgChange" class="upload-box">
-                  <img
+                  <HoverDelete
                     v-if="form.background_pic_url"
-                    :src="wximageurl + form.background_pic_url"
-                    class="avatar"
-                  />
+                    @delete="form.background_pic_url = ''"
+                  >
+                    <img :src="wximageurl + form.background_pic_url" class="avatar" />
+                  </HoverDelete>
                   <i v-else class="el-icon-plus avatar-uploader-icon"></i>
                 </div>
               </div>
@@ -92,7 +95,7 @@
               <el-input
                 v-model="form.brand_name"
                 placeholder="字数上限为12个汉字"
-                style="width: 240px;"
+                style="width: 240px"
                 :maxlength="12"
               ></el-input
               >&nbsp;<span class="frm-tips">{{ form.brand_name.length }}/12</span>
@@ -101,13 +104,13 @@
               <el-input
                 v-model="form.title"
                 placeholder="字数上限为9个汉字"
-                style="width: 240px;"
+                style="width: 240px"
                 :maxlength="9"
               ></el-input
               >&nbsp;<span class="frm-tips">{{ form.title.length }}/9</span>
               <p class="frm-tips">卡券名，字数上限为9个汉字(建议涵盖卡券属性、服务及金额)。</p>
             </el-form-item>
-            <el-form-item label="卡券颜色" prop="color" style="margin-bottom: 0;">
+            <el-form-item label="卡券颜色" prop="color" style="margin-bottom: 0">
               <el-color-picker v-model="form.color"></el-color-picker>
             </el-form-item>
             <!-- <el-form-item label="券面码型">

@@ -28,11 +28,12 @@
 
             <div>
               <div @click="handleImgChange(item, index)" class="upload-box">
-                <img
-                  v-if="item.background_pic_url"
-                  :src="wximageurl + item.background_pic_url"
-                  class="avatar"
-                />
+                <HoverDelete   v-if="item.background_pic_url" @delete="handleImgDelete(index)">
+                  <img 
+                    :src="wximageurl + item.background_pic_url"
+                    class="avatar"
+                  />
+                </HoverDelete>
                 <i v-else class="el-icon-plus avatar-uploader-icon"></i>
               </div>
             </div>
@@ -91,7 +92,7 @@
                 </template>
               </div>
             </div>
-<!-- ----------------------------------------------卷包功能-------------------------------------------- -->
+            <!-- ----------------------------------------------卷包功能-------------------------------------------- -->
             <!-- <div class="clearfix">
               <div class="f_l">
                 <template>
@@ -117,7 +118,7 @@
                 </template>
               </div>
             </div> -->
-<!-- ----------------------------------------------卷包功能-------------------------------------------- -->
+            <!-- ----------------------------------------------卷包功能-------------------------------------------- -->
 
             <div class="clearfix" v-if="item.crm_open == 'true'">
               <span class="txt f_l">等级ID</span>
@@ -149,7 +150,7 @@
         @openHandle="pickHanle"
         @closeHandle="closeHandle"
         @seletedDataHandle="seletedDataHandle"
-        @oldDataHandle='getGradeList'
+        @oldDataHandle="getGradeList"
         :isModel="true"
         :type="'grade'"
       ></coupon-select>
@@ -379,6 +380,9 @@ export default {
       this.imgDialog = true
       this.isGetImage = true
       this.curIndex = index
+    },
+    handleImgDelete(index){
+      this.levelData[index].background_pic_url = ''
     },
     pickImg(data) {
       this.levelData[this.curIndex].background_pic_url = data.url

@@ -18,6 +18,9 @@
           }"
           url="/aliyunsms/record/list"
         >
+          <template v-slot:task_name>
+            <el-input v-model="task_name" placeholder="请输入任务名称" clearable />
+          </template>
         </SpFinder>
       </el-card>
     </div>
@@ -34,13 +37,19 @@ export default {
       return setting_(this)
     }
   },
+  mounted(){
+     const { task_name } = this.$route.query;
+     console.log(task_name);
+     this.task_name = task_name
+  },
   data() {
     return {
+      task_name:'',
       failVisible: false,
       search_options: [
-        { label: '审核中', value: '0' },
-        { label: '审核通过', value: '1' },
-        { label: '审核失败', value: '2' }
+        { label: '发送中', value: '0' },
+        { label: '发送成功', value: '1' },
+        { label: '发送失败', value: '2' }
       ],
       smeType_options:[
         { label: '验证码', value: '0' },
@@ -54,14 +63,14 @@ export default {
       this.$router.push({ path: this.matchHidePage('edit') })
     },
     beforeSearch(params) {
-      return { ...params }
+      return { ...params,task_name:this.task_name }
+
     },
     afterSearch() {},
     async deleteTemplateHandle(id) {
       const result = await deleteSmsTemplate(id)
       this.$message.success('删除成功')
       this.$refs.finder.refresh()
-      console.log(result)
     }
   }
 }

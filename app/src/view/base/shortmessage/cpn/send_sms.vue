@@ -1,9 +1,14 @@
 <template>
   <div class="alisms_sendSms">
     <tips>
-      {{tips}}
+      <ul>
+        根据场景配置好短信，用户进入对应场景时即可触发系统发送对应给用户，支持短信验证码，订单通知，快递提醒等场景。
+        <li>· 一条完整的短信由「签名+模板」组成。</li>
+        <li>· 每一个场景只能启用一条模板。</li>
+      </ul>
     </tips>
-    <div class="list"
+    <div
+      class="list"
       v-infinite-scroll="load"
       infinite-scroll-distance="20"
       infinite-scroll-delay="200"
@@ -26,7 +31,15 @@
         <nav>
           <h4>短信场景：{{ item.scene_name }}</h4>
           <div class="type">短信类型：{{ item.template_type }}</div>
-          <div class="btn"><el-button v-if="item.itemList.length < 3" size="small" type="primary" @click="fnAddSms(item.id)">添加短信</el-button></div>
+          <div class="btn">
+            <el-button
+              v-if="item.itemList.length < 3"
+              size="small"
+              type="primary"
+              @click="fnAddSms(item.id)"
+              >添加短信</el-button
+            >
+          </div>
         </nav>
         <el-table :data="item.itemList" style="width: 100%" border>
           <el-table-column prop="sign_name" label="签名" width="240"> </el-table-column>
@@ -56,22 +69,26 @@
       </div>
     </div>
     <!-- 添加短信 -->
-    <el-dialog
-      title="添加短信"
-      :visible="visible"
-      width="30%"
-      :before-close="handleClose">
-      <el-form :model="form" :rules='rules' ref="form" label-width="80px">
-        <el-form-item label="签名" prop='sign_id'>
-          <el-select v-model="form.sign_id" placeholder="请选择签名" style="width:85%">
-            <el-option :label="item.sign_name" :value="item.id" v-for="item in SmsSignatureList" :key="item.id"></el-option>
-            
+    <el-dialog title="添加短信" :visible="visible" width="30%" :before-close="handleClose">
+      <el-form :model="form" :rules="rules" ref="form" label-width="80px">
+        <el-form-item label="签名" prop="sign_id">
+          <el-select v-model="form.sign_id" placeholder="请选择签名" style="width: 85%">
+            <el-option
+              :label="item.sign_name"
+              :value="item.id"
+              v-for="item in SmsSignatureList"
+              :key="item.id"
+            ></el-option>
           </el-select>
         </el-form-item>
-        <el-form-item label="模板" prop='template_id'>
-          <el-select v-model="form.template_id" placeholder="请选择模板" style="width:85%">
-            <el-option :label="item.scene_name" :value="item.id" v-for="item in SmsTemplateList" :key="item.id"></el-option>
-            
+        <el-form-item label="模板" prop="template_id">
+          <el-select v-model="form.template_id" placeholder="请选择模板" style="width: 85%">
+            <el-option
+              :label="item.scene_name"
+              :value="item.id"
+              v-for="item in SmsTemplateList"
+              :key="item.id"
+            ></el-option>
           </el-select>
         </el-form-item>
       </el-form>
@@ -86,7 +103,15 @@
 <script>
 import tips from '@/components/tips'
 import { requiredRules } from '@/utils/validate'
-import { getScenarioList, offDisablingSms, onDisablingSms,deletedDisablingSms,getSmsSignatureList,getSmsTemplateList,addSceneItem } from '@/api/sms'
+import {
+  getScenarioList,
+  offDisablingSms,
+  onDisablingSms,
+  deletedDisablingSms,
+  getSmsSignatureList,
+  getSmsTemplateList,
+  addSceneItem
+} from '@/api/sms'
 
 export default {
   components: {
@@ -102,9 +127,6 @@ export default {
   },
   data() {
     return {
-      tips: `<p>根据场景配置好短信，用户进入对应场景时即可触发系统发送对应给用户，支持短信验证码，订单通知，快递提醒等场景。</p>
-            <p>· 一条完整的短信由「签名+模板」组成。</p>
-            <p>· 每一个场景只能启用一条模板。</p>`,
       smsScenarioList: [],
       query: {
         page_size: 3,
@@ -114,20 +136,19 @@ export default {
       count: 23,
       loading: false,
       serchNameList: [],
-      // 
-      visible:false,
-      form:{
-        scene_id:'',
-        sign_id:'',
-        template_id:''
+      //
+      visible: false,
+      form: {
+        scene_id: '',
+        sign_id: '',
+        template_id: ''
       },
-      SmsSignatureList:[],//短信签名
-      SmsTemplateList:[],//短信模板
+      SmsSignatureList: [], //短信签名
+      SmsTemplateList: [], //短信模板
       rules: {
         sign_id: [requiredRules('签名', 'change')],
-        template_id:  [requiredRules('模板', 'change')]
+        template_id: [requiredRules('模板', 'change')]
       }
-
     }
   },
   mounted() {
@@ -153,34 +174,34 @@ export default {
       this.loading = false
     },
     // 添加短信
-    async fnAddSms(id){
+    async fnAddSms(id) {
       this.visible = true
       // 获取选项
-      getSmsSignatureList({params:{status:'1'}}).then(res=>{
+      getSmsSignatureList({ params: { status: '1' } }).then((res) => {
         this.SmsSignatureList = res.data.data.list
       })
-      getSmsTemplateList({params:{status:'1',scene_id:id}}).then(res=>{
+      getSmsTemplateList({ params: { status: '1', scene_id: id } }).then((res) => {
         this.SmsTemplateList = res.data.data.list
-      })  
-      this.form.scene_id = id;
-      console.log(id);
+      })
+      this.form.scene_id = id
+      console.log(id)
     },
-    fnPass(formName){
-       this.$refs[formName].validate(async (valid) => {
-         const result  = await addSceneItem(this.form)
-         this.$message.success('添加成功')
-         this.handleClose();
-         this.initQuery()
-         this.init('serch');
-       })
+    fnPass(formName) {
+      this.$refs[formName].validate(async (valid) => {
+        const result = await addSceneItem(this.form)
+        this.$message.success('添加成功')
+        this.handleClose()
+        this.initQuery()
+        this.init('serch')
+      })
     },
-    handleClose(){
-       this.visible = false
-       this.form = {
-          scene_id:'',
-          sign_id:'',
-          template_id:''
-       }
+    handleClose() {
+      this.visible = false
+      this.form = {
+        scene_id: '',
+        sign_id: '',
+        template_id: ''
+      }
     },
     // 停用/启用/删除
     fnDisablingSms(id, flag) {
@@ -196,30 +217,30 @@ export default {
           //启用
           const result = await onDisablingSms({ id })
           this.$message.success('已启用')
-          this.initQuery(id)
+          this.initQuery()
           this.init('serch')
         } else {
           const result = await offDisablingSms({ id })
           this.$message.success('已停用')
-          this.initQuery(id)
+          this.initQuery()
           this.init('serch')
         }
       })
     },
 
-    async deteleSms(id){
-      const message = '移除后，该短信将不在当前场景。如果移除的是已启用的短信，移除后当前场景可不会触发短信。'
+    async deteleSms(id) {
+      const message =
+        '移除后，该短信将不在当前场景。如果移除的是已启用的短信，移除后当前场景可不会触发短信。'
       this.$confirm(message, '', {
         confirmButtonText: '确定',
         cancelButtonText: '取消',
         type: 'warning'
       }).then(async () => {
         const result = await deletedDisablingSms(id)
-        this.initQuery(id)
+        this.initQuery()
         this.init('serch')
         this.$message.success('删除成功')
       })
-    
     },
     // 下拉加载
     load() {
@@ -239,7 +260,7 @@ export default {
       }
       this.init('serch')
     },
-    initQuery(id=3) {
+    initQuery(id = 3) {
       // 初始化一下 （修改状态）
       this.query = {
         page_size: id,
@@ -354,10 +375,10 @@ export default {
 
 <style lang="scss">
 .alisms_sendSms {
-  .el-form{
+  .el-form {
     width: 80%;
   }
-  .el-dialog__body{
+  .el-dialog__body {
     display: flex;
     justify-content: center;
   }

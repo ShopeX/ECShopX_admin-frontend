@@ -91,8 +91,18 @@ export default (vm) => {
             {
               type: 'text',
               class:'e-button--text',
-              style:{color: '#409EFF',cursor:'pointer'}
-              
+              style:{color: '#409EFF',cursor:'pointer'},  
+              on:{
+                click:()=>{
+                  vm.$router.push({
+                    path:'/setting/datamessage/ali_sms/sms_sendLog',
+                    query:{
+                      task_name:row.task_name
+                    }
+                  })
+
+                }
+              }
             },
             row.total_num
           )
@@ -116,7 +126,6 @@ export default (vm) => {
           }
         },
         visible:(val)=>{
-          console.log(val);
           return val.status != '4'
         }
       },

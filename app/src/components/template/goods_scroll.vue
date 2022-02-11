@@ -41,16 +41,6 @@
           <div class="thumbnail">
             <img class="goods-img" :src="wximageurl + item.imgUrl" />
           </div>
-          <div class="activity-label">
-            <p v-for="(s, i) in item.promotionActivity" :key="i">
-              {{ s.tag_type == 'single_group' ? '团购' : '' }}
-              {{ s.tag_type == 'full_minus' ? '满减' : '' }}
-              {{ s.tag_type == 'full_discount' ? '满折' : '' }}
-              {{ s.tag_type == 'full_gift' ? '满赠' : '' }}
-              {{ s.tag_type == 'normal' ? '秒杀' : '' }}
-              {{ s.tag_type == 'limited_time_sale' ? '限时特惠' : '' }}
-            </p>
-          </div>
           <div class="marketing-title">
             {{ item.title }}
           </div>
@@ -65,6 +55,16 @@
             <template v-else>
               <span class="cur">¥</span>{{ item.price ? item.price / 100 : '0.00' }}
             </template>
+          </div>
+          <div class="activity-label">
+            <p v-for="(s, i) in item.promotionActivity" :key="i">
+              {{ s.tag_type == 'single_group' ? '团购' : '' }}
+              {{ s.tag_type == 'full_minus' ? '满减' : '' }}
+              {{ s.tag_type == 'full_discount' ? '满折' : '' }}
+              {{ s.tag_type == 'full_gift' ? '满赠' : '' }}
+              {{ s.tag_type == 'normal' ? '秒杀' : '' }}
+              {{ s.tag_type == 'limited_time_sale' ? '限时特惠' : '' }}
+            </p>
           </div>
         </div>
         <div class="scroll-item" v-if="base.backgroundImg">
@@ -221,15 +221,13 @@ export default {
     .activity-label {
       display: flex;
       flex-wrap: wrap;
-
       p {
-        background: #00081c;
-        border-radius: 2px;
-        flex-shrink: 0;
+        border-radius: 4px;
+        border: 1px solid #D9D9D9;
+        color: #595959;
+        padding: 0px 4px;
         font-size: 10px;
-        color: #fff;
-        margin: 0 4px 5px 0;
-        padding: 2px 5px;
+        line-height: 16px;
       }
     }
     &:first-child {

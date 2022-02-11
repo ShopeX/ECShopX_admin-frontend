@@ -28,9 +28,13 @@
                 :src="
                   item.brand
                     ? wximageurl + item.brand
-                    : 'https://fakeimg.pl/60x60/EFEFEF/CCC/?text=brand&font=lobster'
-                "
+                    : 'https://fakeimg.pl/60x60/EFEFEF/CCC/?text=brand&font=lobster'"
               />
+              <div class="goods-title">{{ item.title }}</div>
+              <div class="goods-title">{{ item.itemEnName }}</div>
+              <div v-if="config.showPrice" class="price">
+                <span class="cur">¥</span>{{ item.price / 100 }}
+              </div>
               <div class="activity-label">
                 <p v-for="(s,i) in item.promotionActivity" :key="i">
                   {{s.tag_type=='single_group'?'团购':''}}
@@ -41,11 +45,6 @@
                   {{s.tag_type=='limited_time_sale'?'限时特惠':''}}
                   {{s.tag_type == 'plus_price_buy' ? '换购' : ''}}
                 </p>
-              </div>
-              <div class="goods-title">{{ item.title }}</div>
-              <div class="goods-title">{{ item.itemEnName }}</div>
-              <div v-if="config.showPrice" class="price">
-                <span class="cur">¥</span>{{ item.price / 100 }}
               </div>
             </div>
           </div>
@@ -121,15 +120,13 @@ export default {
   .activity-label {
     display: flex;
     flex-wrap: wrap;
-
     p {
-      background: #00081c;
-      border-radius: 2px;
-      flex-shrink: 0;
+      border-radius: 4px;
+      border: 1px solid #D9D9D9;
+      color: #595959;
+      padding: 0px 4px;
       font-size: 10px;
-      color: #fff;
-      margin: 0 4px 5px 0;
-      padding: 2px 5px;
+      line-height: 16px;
     }
   }
   .grid-item {

@@ -9,13 +9,25 @@
     <el-form v-model="form" label-width="200px">
       <el-form-item label="是否带门店参数">
         <el-switch v-model="form.distributor_param_status" @change="paramShareChange()"></el-switch>
-        <div class='wrapper-tips'>
-          <div class='margin-top-10'>已开启：</div> 
-          <div>1. 从小程序分享出去的 太阳码和小程序链接 带店铺参，其他消费者通过此链接或者太阳码进入商城会切换成参数对应的店铺，同时本地缓存也会切换成参数对应的新店铺。</div>
-          <div>2. 顾客通过「管理后台-店铺-店铺商品」生成的商品二维码或其他带店铺参数的二维码进入商城时，其所在店铺将切换为二维码所带参数对应的店铺，同时本地缓存也会切换成参数对应的新店铺。</div>
-          <div class='margin-top-20'>已关闭：</div>
-          <div>1. 从小程序分享出去的 太阳码和小程序链接 不带店铺参，其他消费者通过此链接或者太阳码进入商城不会切换成参数对应的店铺，本地缓存也不会切换成参数对应的新店铺，即按照商城原本的进店逻辑进入店铺。</div>
-          <div>2. 顾客通过「管理后台-店铺-店铺商品」生成的商品二维码或其他带店铺参数的二维码进入商城时，其所在店铺将切换为二维码所带参数对应的店铺，同时本地缓存也会切换成参数对应的新店铺。</div>
+        <div class="wrapper-tips">
+          <div class="margin-top-10">已开启：</div>
+          <div>
+            1. 从小程序分享出去的 太阳码和小程序链接
+            带店铺参，其他消费者通过此链接或者太阳码进入商城会切换成参数对应的店铺，同时本地缓存也会切换成参数对应的新店铺。
+          </div>
+          <div>
+            2.
+            顾客通过「管理后台-店铺-店铺商品」生成的商品二维码或其他带店铺参数的二维码进入商城时，其所在店铺将切换为二维码所带参数对应的店铺，同时本地缓存也会切换成参数对应的新店铺。
+          </div>
+          <div class="margin-top-20">已关闭：</div>
+          <div>
+            1. 从小程序分享出去的 太阳码和小程序链接
+            不带店铺参，其他消费者通过此链接或者太阳码进入商城不会切换成参数对应的店铺，本地缓存也不会切换成参数对应的新店铺，即按照商城原本的进店逻辑进入店铺。
+          </div>
+          <div>
+            2.
+            顾客通过「管理后台-店铺-店铺商品」生成的商品二维码或其他带店铺参数的二维码进入商城时，其所在店铺将切换为二维码所带参数对应的店铺，同时本地缓存也会切换成参数对应的新店铺。
+          </div>
         </div>
       </el-form-item>
     </el-form>
@@ -31,7 +43,7 @@
       </el-form-item>
     </el-form>
 
-    <selection  v-if="!isMicorMall">
+    <selection v-if="!isMicorMall">
       <div class="clearfix">
         <h2 class="f_l">
           <span>提货码设置：</span>
@@ -45,7 +57,7 @@
       </el-form>
     </selection>
 
-    <!-- <div class="clearfix">
+    <div class="clearfix">
       <h2 class="f_l">
         <span>会员白名单设置：</span>
       </h2>
@@ -55,7 +67,7 @@
       <el-form-item label="是否开启白名单">
         <el-switch v-model="form.whitelist_status" @change="whitelistStatusChange()"></el-switch>
       </el-form-item>
-    </el-form> -->
+    </el-form>
     <div class="clearfix">
       <h2 class="f_l">
         <span>赠品设置：</span>
@@ -177,15 +189,15 @@
   </div>
 </template>
 <style scoped lang='scss'>
-.wrapper-tips{
-  div{
+.wrapper-tips {
+  div {
     line-height: 1.5;
-    font-size:13px;
-  }    
-  .margin-top-10{
+    font-size: 13px;
+  }
+  .margin-top-10 {
     margin-top: 10px;
   }
-  .margin-top-20{
+  .margin-top-20 {
     margin-top: 20px;
   }
 }

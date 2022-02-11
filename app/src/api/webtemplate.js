@@ -38,3 +38,22 @@ export const getTemplateContent = (params) => {
     params
   })
 }
+
+// 保存页面模版装修内容
+export const saveTemplateContent = (params) => {
+  return fetch({
+    url: '/pctemplate/saveTemplateContent',
+    method: 'post',
+    params
+  })
+}
+
+
+// 保存头部或尾部
+export const saveHeaderOrFooter = (params) => {
+  return fetch({
+    url: '/pctemplate/saveHeaderOrFooter',
+    method: 'post',
+    params
+  })
+}

@@ -228,6 +228,7 @@ export default {
         padding: 0px 4px;
         font-size: 10px;
         line-height: 16px;
+        margin: 0px 2px 2px 0px;
       }
     }
     &:first-child {

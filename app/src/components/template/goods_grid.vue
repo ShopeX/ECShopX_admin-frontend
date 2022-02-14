@@ -36,7 +36,7 @@
                 <span class="cur">¥</span>{{ item.price / 100 }}
               </div>
               <div class="activity-label">
-                <p v-for="(s,i) in item.promotionActivity" :key="i">
+                <p v-for="(s,i) in item.promotionActivity" :key="i" :style="`color: ${colorPrimary};border: 1px solid ${colorPrimary}`">
                   {{s.tag_type=='single_group'?'团购':''}}
                   {{s.tag_type=='full_minus'?'满减':''}}
                   {{s.tag_type=='full_discount'?'满折':''}}
@@ -85,7 +85,8 @@ export default {
       config: {},
       data: [],
       list: [],
-      checkde: 0
+      checkde: 0,
+      colorPrimary: ''
     }
   },
   methods: {
@@ -100,6 +101,7 @@ export default {
   },
   mounted() {
     this.setData(this.res)
+    this.colorPrimary = this.$store.getters.color_theme.primary
   }
 }
 </script>
@@ -122,8 +124,6 @@ export default {
     flex-wrap: wrap;
     p {
       border-radius: 4px;
-      border: 1px solid #D9D9D9;
-      color: #595959;
       padding: 0px 4px;
       font-size: 10px;
       line-height: 16px;

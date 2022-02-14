@@ -80,8 +80,9 @@
                   >
                     <img :src="wximageurl + form.background_pic_url" class="avatar" />
                   </HoverDelete>
-                  <i v-else class="el-icon-plus avatar-uploader-icon"></i>
+                  <i v-else class="el-icon-plus avatar-uploader-icon"></i> 
                 </div>
+                （建议尺寸：400px * 250px）
               </div>
               <imgPicker
                 :dialog-visible="imgBgDialog"

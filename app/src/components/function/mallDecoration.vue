@@ -1243,7 +1243,8 @@ export default {
           // goodsGrid数据结构变化，数据另存到list里面
           let s = this.components[this.editorIndex].base.listIndex
           console.log(this.editorData.list[s].goodsList) // 源数据
-          if (values.length>=this.editorData.list[s].goodsList.length) {
+          // if (values.length>=this.editorData.list[s].goodsList.length) {
+          if (values.length>=1) {
             for (let i = 0; i < this.editorData.list[s].goodsList.length; i++) {
               for (let j = 0; j < values.length; j++) {
                 if (this.editorData.list[s].goodsList[i].goodsId == values[j].goodsId) {
@@ -1254,12 +1255,13 @@ export default {
             values = [...this.editorData.list[s].goodsList, ...values]
           }
           console.log(values)
+          // values = [...this.editorData.list[s].goodsList, ...values]
           this.editorData.list[s].goodsList = values
           this.components[this.editorIndex].list[s].goodsList = values
         } else {
           console.log(values) // 新数据
           console.log(this.editorData.data) // 源数据
-          if (values.length>=this.editorData.data.length) {
+          if (values.length>=1) {
             for (let i = 0; i < this.editorData.data.length; i++) {
               for (let j = 0; j < values.length; j++) {
                 if (this.editorData.data[i].goodsId == values[j].goodsId) {

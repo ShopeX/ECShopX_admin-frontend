@@ -313,7 +313,9 @@ export default {
       this.store = val
       this.$refs.multipleTable.clearSelection()
       this.selectRows = []
-      this.params.distributor_id = val.id
+      this.params.distributor_id = val.id;
+      this.params.templates_id = ''
+      this.getShippingTemplatesList(val.id);
       this.getNewsList()
     },
     getTemplateRow(index, row) {
@@ -447,9 +449,10 @@ export default {
         }
       }
     },
-    getShippingTemplatesList() {
+    // 获取  运费模板 options
+    getShippingTemplatesList(distributor_id=0) {
       this.loading = true
-      getShippingTemplatesList(this.templatesParams).then((response) => {
+      getShippingTemplatesList({distributor_id}).then((response) => {
         this.templatesList = response.data.data.list
       })
     },

@@ -75,7 +75,7 @@
           <el-input v-model="form.accesskey_secret" placeholder="阿里云RAM用户的 Accesskey Secret">
           </el-input>
         </el-form-item>
-        <a href="">如何获取 AccessKey ID 和 AccessKey Secret。</a>
+        <a href="https://help.aliyun.com/document_detail/53045.html" target="_blank">如何获取 AccessKey ID 和 AccessKey Secret。</a>
       </el-form>
       <span slot="footer" class="dialog-footer">
         <el-button @click="handleClose">取 消</el-button>

@@ -1,5 +1,8 @@
 <template>
-  <div>
+  <div class="shopex-sms-page">
+    <div class="btn">
+      <router-link class="link" to="/setting/datamessage">切换短信商</router-link>
+    </div>
     <el-tabs v-model="activeName" type="border-card">
       <el-tab-pane label="短信账户" name="first">
         <el-alert
@@ -45,7 +48,7 @@
                   :rows="5"
                   v-model="currentTemplate.content"
                   :readonly="true"
-                  style="width: 60%;"
+                  style="width: 60%"
                 ></el-input>
               </el-form-item>
               <div class="section-footer with-border content-center" style="width: 100%">
@@ -201,6 +204,23 @@ export default {
 }
 </script>
 <style scoped type="text/css" lang="scss">
+.shopex-sms-page {
+  .btn {
+    position: absolute;
+    right: 40px;
+    text-align: right;
+    z-index: 999;
+    .link {
+      color: #999;
+      font-size: 14px;
+      line-height: 40px;
+      &:hover {
+        color: #1480e3;
+      }
+    }
+  }
+}
+
 .el-tab-pane {
   min-height: 700px;
 }

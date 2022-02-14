@@ -8,7 +8,7 @@ export default {
   children: [
     {
       path: 'entitytrade/tradenormalorders',
-      name: `实物订单`,
+      name: `全部订单`,
       component: () => import('@/view/mall/trade/normalorders/list'),
       children: [
         {

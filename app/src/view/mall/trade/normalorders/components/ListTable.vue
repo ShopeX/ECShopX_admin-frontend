@@ -1,346 +1,356 @@
 <template>
   <div>
-    <el-table :data="list" v-loading="loading" element-loading-text="数据加载中" :size="size">
-      <el-table-column width="200" prop="order_id" label="订单信息">
-        <template slot-scope="scope">
-          <div class="order-num">
-            {{ scope.row.order_id }}
-            <el-tooltip effect="dark" content="复制" placement="top-start">
-              <i
-                v-clipboard:copy="scope.row.order_id"
-                v-clipboard:success="onCopy"
-                class="el-icon-document-copy"
-              ></i>
-            </el-tooltip>
-          </div>
-          <div v-if="scope.row.distributor_id !== '0'" class="order-store">
-            <el-tooltip effect="dark" content="店铺名" placement="top-start">
-              <i class="el-icon-office-building"></i>
-            </el-tooltip>
-            {{ scope.row.distributor_name }}
-          </div>
-          <div class="order-time">
-            <el-tooltip effect="dark" content="下单时间" placement="top-start">
-              <i class="el-icon-time"></i>
-            </el-tooltip>
-            {{ scope.row.create_time | datetime('YYYY-MM-DD HH:mm:ss') }}
-          </div>
-        </template>
-      </el-table-column>
-
-      <el-table-column prop="total_fee" width="115" label="订单金额（¥）">
-        <template slot-scope="scope">
-          {{ (scope.row.total_fee / 100).toFixed(2) }}
-        </template>
-      </el-table-column>
-      <el-table-column width="90" label="运费（¥）">
-        <template slot-scope="scope">
-          {{ scope.row.freight_fee / 100 }}
-        </template>
-      </el-table-column>
-      <el-table-column prop="mobile" width="120" label="客户手机号">
-        <template slot-scope="scope">
-          <template v-if="!scope.row.user_delete">
-            <router-link
-              target="_blank"
-              :to="{
-                path: `${
-                  $store.getters.login_type != 'distributor'
-                    ? '/member/member/detail'
-                    : '/shopadmin/member/member/detail'
-                }`,
-                query: { user_id: scope.row.user_id }
-              }"
-              >{{ scope.row.mobile }}</router-link
-            >
-            <el-tooltip v-if="dataPass == 0" effect="dark" content="复制" placement="top-start">
-              <i
-                v-clipboard:copy="scope.row.mobile"
-                v-clipboard:success="onCopy"
-                class="el-icon-document-copy"
-              ></i>
-            </el-tooltip>
-          </template>
-          <template slot-scope="scope" v-else>
-            <span>{{ scope.row.mobile }}</span>
-            <el-tooltip v-if="dataPass == 0" effect="dark" content="复制" placement="top-start">
-              <i
-                v-clipboard:copy="scope.row.mobile"
-                v-clipboard:success="onCopy"
-                class="el-icon-document-copy"
-              ></i>
-            </el-tooltip>
-          </template>
-        </template>
-      </el-table-column>
-      <template v-if="$store.getters.login_type!='merchant'">
-        <el-table-column width="90" label="订单类型" v-if="!isMicorMall ">
+    <el-tabs type="border-card" v-model="activeName" @tab-click="handleClick">
+      <el-tab-pane label="全部" name="all" />
+      <el-tab-pane label="待发货" name="notship" />
+      <el-tab-pane label="待退款" name="cancelapply" />
+      <el-tab-pane label="待收货" name="shipping" />
+      <el-tab-pane label="待自提" name="ziti" />
+      <el-tab-pane label="未支付" name="notpay" />
+      <el-tab-pane label="已取消/已关闭" name="cancel" />
+      <el-tab-pane label="已完成" name="done" />
+      <el-table :data="list" v-loading="loading" element-loading-text="数据加载中" :size="size">
+        <el-table-column width="200" prop="order_id" label="订单信息">
           <template slot-scope="scope">
-            <span v-if="scope.row.order_class == 'normal'">
-              <span v-if="scope.row.type == '1'">跨境订单</span>
-              <span v-else>普通订单</span>
-            </span>
-            <span v-if="scope.row.order_class == 'groups'">团购订单</span>
-            <span v-if="scope.row.order_class == 'seckill'">秒杀订单</span>
-            <span v-if="scope.row.order_class == 'community'">社区订单</span>
-            <span v-if="scope.row.order_class == 'shopguide'">导购订单</span>
-            <span v-if="scope.row.order_class == 'bargain'">助力订单</span>
-            <span v-if="scope.row.order_class == 'excard'">兑换订单</span>
+            <div class="order-num">
+              {{ scope.row.order_id }}
+              <el-tooltip effect="dark" content="复制" placement="top-start">
+                <i
+                  v-clipboard:copy="scope.row.order_id"
+                  v-clipboard:success="onCopy"
+                  class="el-icon-document-copy"
+                ></i>
+              </el-tooltip>
+            </div>
+            <div v-if="scope.row.distributor_id !== '0'" class="order-store">
+              <el-tooltip effect="dark" content="店铺名" placement="top-start">
+                <i class="el-icon-office-building"></i>
+              </el-tooltip>
+              {{ scope.row.distributor_name }}
+            </div>
+            <div class="order-time">
+              <el-tooltip effect="dark" content="下单时间" placement="top-start">
+                <i class="el-icon-time"></i>
+              </el-tooltip>
+              {{ scope.row.create_time | datetime('YYYY-MM-DD HH:mm:ss') }}
+            </div>
           </template>
         </el-table-column>
-      </template>
-      <el-table-column width="100" prop="order_status" label="订单状态">
-        <template slot-scope="scope">
-          <!-- 订单状态 -->
-          <template v-if="scope.row.receipt_type == 'dada'">
-            <span v-if="scope.row.order_status == 'NOTPAY'">待支付</span>
-            <span v-if="scope.row.order_status == 'NOTPAY'">待支付</span>
-            <span v-if="scope.row.order_status_des == 'CANCEL'">已取消</span>
-            <span v-if="scope.row.order_status_des == 'CLOSED'">{{
-              scope.row.order_status_msg
-            }}</span>
-            <span v-if="scope.row.order_status == 'DONE'">已完成</span>
-            <template
-              v-if="
-                scope.row.order_status != 'CANCEL' &&
-                scope.row.order_status != 'REFUND_SUCCESS' &&
-                scope.row.order_status != 'WAIT_GROUPS_SUCCESS'
-              "
-            >
-              <!-- 发货状态 -->
-              <span v-if="scope.row.cancel_status == 'WAIT_PROCESS'">取消待退款</span>
-            </template>
-            <span v-if="scope.row.pay_status == 'PAYED' && scope.row.dada.dada_status == '0'"
-              >商家待接单</span
-            >
-            <span v-if="scope.row.pay_status == 'PAYED' && scope.row.dada.dada_status == '1'"
-              >骑士待接单</span
-            >
-            <span v-if="scope.row.pay_status == 'PAYED' && scope.row.dada.dada_status == '2'"
-              >待取货</span
-            >
-            <span v-if="scope.row.pay_status == 'PAYED' && scope.row.dada.dada_status == '100'"
-              >骑士到店</span
-            >
-            <span v-if="scope.row.pay_status == 'PAYED' && scope.row.dada.dada_status == '3'"
-              >配送中</span
-            >
-            <span v-if="scope.row.pay_status == 'PAYED' && scope.row.dada.dada_status == '9'"
-              >未妥投</span
-            >
-            <span v-if="scope.row.pay_status == 'PAYED' && scope.row.dada.dada_status == '10'"
-              >妥投异常</span
-            >
+
+        <el-table-column prop="total_fee" width="115" label="订单金额（¥）">
+          <template slot-scope="scope">
+            {{ (scope.row.total_fee / 100).toFixed(2) }}
           </template>
-          <template v-if="scope.row.receipt_type != 'dada'">
-            <span v-if="scope.row.order_status == 'PAYED'">已支付</span>
-            <span v-if="scope.row.order_status == 'NOTPAY'">未支付</span>
-            <span v-if="scope.row.order_status_des == 'CANCEL'">已取消</span>
-            <span v-if="scope.row.order_status_des == 'CLOSED'">{{
-              scope.row.order_status_msg
-            }}</span>
-            <span v-if="scope.row.order_status == 'WAIT_BUYER_CONFIRM'">待收货</span>
-            <span v-if="scope.row.order_status == 'REFUND_SUCCESS'">已退款</span>
-            <span v-if="scope.row.order_status == 'WAIT_GROUPS_SUCCESS'">等待成团</span>
-            <span v-if="scope.row.order_status == 'DONE'">已完成</span>
-            <template
-              v-if="
-                scope.row.order_status != 'CANCEL' &&
-                scope.row.order_status != 'REFUND_SUCCESS' &&
-                scope.row.order_status != 'WAIT_GROUPS_SUCCESS'
-              "
-            >
-              <!-- 发货状态 -->
-              <span v-if="scope.row.cancel_status == 'WAIT_PROCESS'">取消待退款</span>
-              <span v-if="scope.row.delivery_status == 'PARTAIL'">部分发货</span>
-              <span v-if="scope.row.receipt_type == 'ziti' && scope.row.ziti_status == 'PENDING'"
-                >待自提</span
+        </el-table-column>
+        <el-table-column width="90" label="运费（¥）">
+          <template slot-scope="scope">
+            {{ scope.row.freight_fee / 100 }}
+          </template>
+        </el-table-column>
+        <el-table-column prop="mobile" width="120" label="客户手机号">
+          <template slot-scope="scope">
+            <template v-if="!scope.row.user_delete">
+              <router-link
+                target="_blank"
+                :to="{
+                  path: `${
+                    $store.getters.login_type != 'distributor'
+                      ? '/member/member/detail'
+                      : '/shopadmin/member/member/detail'
+                  }`,
+                  query: { user_id: scope.row.user_id }
+                }"
+                >{{ scope.row.mobile }}</router-link
               >
-              <span
+              <el-tooltip v-if="dataPass == 0" effect="dark" content="复制" placement="top-start">
+                <i
+                  v-clipboard:copy="scope.row.mobile"
+                  v-clipboard:success="onCopy"
+                  class="el-icon-document-copy"
+                ></i>
+              </el-tooltip>
+            </template>
+            <template slot-scope="scope" v-else>
+              <span>{{ scope.row.mobile }}</span>
+              <el-tooltip v-if="dataPass == 0" effect="dark" content="复制" placement="top-start">
+                <i
+                  v-clipboard:copy="scope.row.mobile"
+                  v-clipboard:success="onCopy"
+                  class="el-icon-document-copy"
+                ></i>
+              </el-tooltip>
+            </template>
+          </template>
+        </el-table-column>
+        <template v-if="$store.getters.login_type!='merchant'">
+          <el-table-column width="90" label="订单类型" v-if="!isMicorMall ">
+            <template slot-scope="scope">
+              <span v-if="scope.row.order_class == 'normal'">
+                <span v-if="scope.row.type == '1'">跨境订单</span>
+                <span v-else>普通订单</span>
+              </span>
+              <span v-if="scope.row.order_class == 'groups'">团购订单</span>
+              <span v-if="scope.row.order_class == 'seckill'">秒杀订单</span>
+              <span v-if="scope.row.order_class == 'community'">社区订单</span>
+              <span v-if="scope.row.order_class == 'shopguide'">导购订单</span>
+              <span v-if="scope.row.order_class == 'bargain'">助力订单</span>
+              <span v-if="scope.row.order_class == 'excard'">兑换订单</span>
+            </template>
+          </el-table-column>
+        </template>
+        <el-table-column width="100" prop="order_status" label="订单状态">
+          <template slot-scope="scope">
+            <!-- 订单状态 -->
+            <template v-if="scope.row.receipt_type == 'dada'">
+              <span v-if="scope.row.order_status == 'NOTPAY'">待支付</span>
+              <span v-if="scope.row.order_status == 'NOTPAY'">待支付</span>
+              <span v-if="scope.row.order_status_des == 'CANCEL'">已取消</span>
+              <span v-if="scope.row.order_status_des == 'CLOSED'">{{
+                scope.row.order_status_msg
+              }}</span>
+              <span v-if="scope.row.order_status == 'DONE'">已完成</span>
+              <template
                 v-if="
-                  scope.row.receipt_type == 'logistics' && scope.row.delivery_status == 'PENDING'
+                  scope.row.order_status != 'CANCEL' &&
+                  scope.row.order_status != 'REFUND_SUCCESS' &&
+                  scope.row.order_status != 'WAIT_GROUPS_SUCCESS'
                 "
-                >待发货</span
+              >
+                <!-- 发货状态 -->
+                <span v-if="scope.row.cancel_status == 'WAIT_PROCESS'">取消待退款</span>
+              </template>
+              <span v-if="scope.row.pay_status == 'PAYED' && scope.row.dada.dada_status == '0'"
+                >商家待接单</span
+              >
+              <span v-if="scope.row.pay_status == 'PAYED' && scope.row.dada.dada_status == '1'"
+                >骑士待接单</span
+              >
+              <span v-if="scope.row.pay_status == 'PAYED' && scope.row.dada.dada_status == '2'"
+                >待取货</span
+              >
+              <span v-if="scope.row.pay_status == 'PAYED' && scope.row.dada.dada_status == '100'"
+                >骑士到店</span
+              >
+              <span v-if="scope.row.pay_status == 'PAYED' && scope.row.dada.dada_status == '3'"
+                >配送中</span
+              >
+              <span v-if="scope.row.pay_status == 'PAYED' && scope.row.dada.dada_status == '9'"
+                >未妥投</span
+              >
+              <span v-if="scope.row.pay_status == 'PAYED' && scope.row.dada.dada_status == '10'"
+                >妥投异常</span
               >
             </template>
+            <template v-if="scope.row.receipt_type != 'dada'">
+              <span v-if="scope.row.order_status == 'PAYED'">已支付</span>
+              <span v-if="scope.row.order_status == 'NOTPAY'">未支付</span>
+              <span v-if="scope.row.order_status_des == 'CANCEL'">已取消</span>
+              <span v-if="scope.row.order_status_des == 'CLOSED'">{{
+                scope.row.order_status_msg
+              }}</span>
+              <span v-if="scope.row.order_status == 'WAIT_BUYER_CONFIRM'">待收货</span>
+              <span v-if="scope.row.order_status == 'REFUND_SUCCESS'">已退款</span>
+              <span v-if="scope.row.order_status == 'WAIT_GROUPS_SUCCESS'">等待成团</span>
+              <span v-if="scope.row.order_status == 'DONE'">已完成</span>
+              <template
+                v-if="
+                  scope.row.order_status != 'CANCEL' &&
+                  scope.row.order_status != 'REFUND_SUCCESS' &&
+                  scope.row.order_status != 'WAIT_GROUPS_SUCCESS'
+                "
+              >
+                <!-- 发货状态 -->
+                <span v-if="scope.row.cancel_status == 'WAIT_PROCESS'">取消待退款</span>
+                <span v-if="scope.row.delivery_status == 'PARTAIL'">部分发货</span>
+                <span v-if="scope.row.receipt_type == 'ziti' && scope.row.ziti_status == 'PENDING'"
+                  >待自提</span
+                >
+                <span
+                  v-if="
+                    scope.row.receipt_type == 'logistics' && scope.row.delivery_status == 'PENDING'
+                  "
+                  >待发货</span
+                >
+              </template>
+            </template>
           </template>
-        </template>
-      </el-table-column>
-      <el-table-column width="80" label="配送方式">
-        <template slot-scope="scope">
-          <span v-if="scope.row.receipt_type == 'logistics'">普通快递</span>
-          <span v-if="scope.row.receipt_type == 'ziti'">自提</span>
-          <span v-if="scope.row.receipt_type == 'dada'">同城配</span>
-        </template>
-      </el-table-column>
-      <el-table-column width="120" label="海关审批状态" v-if="$store.getters.login_type!='merchant'">
-        <template slot-scope="scope">
-          <template v-if="scope.row.type == 1">
-            <span v-if="scope.row.audit_status == 'approved'">审核通过</span>
-            <span v-if="scope.row.audit_status == 'processing'">审核中</span>
-            <span v-if="scope.row.audit_status == 'rejected'">审核失败</span>
+        </el-table-column>
+        <el-table-column width="80" label="配送方式">
+          <template slot-scope="scope">
+            <span v-if="scope.row.receipt_type == 'logistics'">普通快递</span>
+            <span v-if="scope.row.receipt_type == 'ziti'">自提</span>
+            <span v-if="scope.row.receipt_type == 'dada'">同城配</span>
           </template>
-          <template v-else>-</template>
-        </template>
-      </el-table-column>
+        </el-table-column>
+        <el-table-column width="120" label="海关审批状态" v-if="$store.getters.login_type!='merchant'">
+          <template slot-scope="scope">
+            <template v-if="scope.row.type == 1">
+              <span v-if="scope.row.audit_status == 'approved'">审核通过</span>
+              <span v-if="scope.row.audit_status == 'processing'">审核中</span>
+              <span v-if="scope.row.audit_status == 'rejected'">审核失败</span>
+            </template>
+            <template v-else>-</template>
+          </template>
+        </el-table-column>
 
-      <el-table-column prop="source_name" label="来源"></el-table-column>
+        <el-table-column prop="source_name" label="来源"></el-table-column>
 
-      <!-- <el-table-column
-        width="120"
-        label="快递公司"
-        prop="delivery_corp"
-      ></el-table-column> -->
+        <!-- <el-table-column
+          width="120"
+          label="快递公司"
+          prop="delivery_corp"
+        ></el-table-column> -->
 
-      <el-table-column width="200" label="操作">
-        <template slot-scope="scope">
-          <el-button type="text">
-            <router-link
-              :to="{
-                path: matchHidePage('detail'),
-                query: { orderId: scope.row.order_id, resource: $route.path }
-              }"
-              >详情</router-link
-            >
-          </el-button>
-          <!-- 非同城配的取消订单按钮 -->
-          <template v-if="scope.row.distributor_id == '0' || $store.getters.login_type=='distributor'">
-            <el-button
-              type="text"
-              :size="size"
-              v-if="
-                (system_mode == 'standard' || is_distributor || scope.row.distributor_id == 0) &&
-                scope.row.receipt_type != 'dada' &&
-                scope.row.cancel_status == 'NO_APPLY_CANCEL' &&
-                (scope.row.order_status == 'NOTPAY' || scope.row.order_status == 'PAYED') &&
-                scope.row.ziti_status != 'DONE'
-              "
-              @click="cancelOrderAction(scope.row.order_id)"
-              >取消订单</el-button
-            >
-            <!-- 同城配的取消订单按钮 -->
-            <el-button
-              type="text"
-              :size="size"
-              v-if="
-                (system_mode == 'standard' || is_distributor || scope.row.distributor_id == 0) &&
-                scope.row.receipt_type == 'dada' &&
-                scope.row.cancel_status == 'NO_APPLY_CANCEL' &&
-                (scope.row.order_status == 'NOTPAY' || scope.row.order_status == 'PAYED') &&
-                scope.row.ziti_status != 'DONE' &&
-                (scope.row.dada.dada_status == '0' || scope.row.dada.dada_status == '1')
-              "
-              @click="cancelOrderAction(scope.row.order_id)"
-              >取消订单</el-button
-            >
+        <el-table-column width="200" label="操作">
+          <template slot-scope="scope">
             <el-button type="text">
               <router-link
                 :to="{
-                  path: matchHidePage('process'),
+                  path: matchHidePage('detail'),
                   query: { orderId: scope.row.order_id, resource: $route.path }
                 }"
-                >日志</router-link
+                >详情</router-link
               >
             </el-button>
-            <el-button
-              :size="size"
-              type="text"
-              v-if="
-                (system_mode == 'standard' || is_distributor || scope.row.distributor_id == 0) &&
-                scope.row.order_status == 'PAYED' &&
-                scope.row.receipt_type == 'ziti' &&
-                scope.row.ziti_status == 'PENDING'
-              "
-              @click="writeoffOrderAction(scope.row.order_id)"
-              >核销</el-button
-            >
-            <el-button
-              type="text"
-              :size="size"
-              v-if="
-                (system_mode == 'standard' || is_distributor || scope.row.distributor_id == 0) &&
-                scope.row.receipt_type == 'dada' &&
-                (scope.row.cancel_status == 'NO_APPLY_CANCEL' ||
-                  scope.row.cancel_status == 'FAILS') &&
-                scope.row.order_status == 'PAYED' &&
-                scope.row.delivery_status != 'DONE' &&
-                scope.row.dada.dada_status == '0'
-              "
-              @click="businessReceiptAction(scope.row)"
-              >接单</el-button
-            >
-
-            <el-button
-              type="text"
-              :size="size"
-              v-if="
-                (system_mode == 'standard' || is_distributor || scope.row.distributor_id == 0) &&
-                scope.row.receipt_type == 'dada' &&
-                scope.row.pay_status == 'PAYED' &&
-                scope.row.dada.dada_status == '9'
-              "
-              @click="confirmBack(scope.row)"
-              >确认退回</el-button
-            >
-
-            <template
-              v-if="
-                !IsBind &&
-                (system_mode == 'standard' || is_distributor || scope.row.distributor_id == 0)
-              "
-            >
+            <!-- 非同城配的取消订单按钮 -->
+            <template v-if="scope.row.distributor_id == '0' || $store.getters.login_type=='distributor'">
               <el-button
                 type="text"
                 :size="size"
                 v-if="
-                  (scope.row.receipt_type == 'logistics' || scope.row.is_logistics) &&
+                  (system_mode == 'standard' || is_distributor || scope.row.distributor_id == 0) &&
                   scope.row.receipt_type != 'dada' &&
+                  scope.row.cancel_status == 'NO_APPLY_CANCEL' &&
+                  (scope.row.order_status == 'NOTPAY' || scope.row.order_status == 'PAYED') &&
+                  scope.row.ziti_status != 'DONE'
+                "
+                @click="cancelOrderAction(scope.row.order_id)"
+                >取消订单</el-button
+              >
+              <!-- 同城配的取消订单按钮 -->
+              <el-button
+                type="text"
+                :size="size"
+                v-if="
+                  (system_mode == 'standard' || is_distributor || scope.row.distributor_id == 0) &&
+                  scope.row.receipt_type == 'dada' &&
+                  scope.row.cancel_status == 'NO_APPLY_CANCEL' &&
+                  (scope.row.order_status == 'NOTPAY' || scope.row.order_status == 'PAYED') &&
+                  scope.row.ziti_status != 'DONE' &&
+                  (scope.row.dada.dada_status == '0' || scope.row.dada.dada_status == '1')
+                "
+                @click="cancelOrderAction(scope.row.order_id)"
+                >取消订单</el-button
+              >
+              <el-button type="text">
+                <router-link
+                  :to="{
+                    path: matchHidePage('process'),
+                    query: { orderId: scope.row.order_id, resource: $route.path }
+                  }"
+                  >日志</router-link
+                >
+              </el-button>
+              <el-button
+                :size="size"
+                type="text"
+                v-if="
+                  (system_mode == 'standard' || is_distributor || scope.row.distributor_id == 0) &&
+                  scope.row.order_status == 'PAYED' &&
+                  scope.row.receipt_type == 'ziti' &&
+                  scope.row.ziti_status == 'PENDING'
+                "
+                @click="writeoffOrderAction(scope.row.order_id)"
+                >核销</el-button
+              >
+              <el-button
+                type="text"
+                :size="size"
+                v-if="
+                  (system_mode == 'standard' || is_distributor || scope.row.distributor_id == 0) &&
+                  scope.row.receipt_type == 'dada' &&
+                  (scope.row.cancel_status == 'NO_APPLY_CANCEL' ||
+                    scope.row.cancel_status == 'FAILS') &&
                   scope.row.order_status == 'PAYED' &&
                   scope.row.delivery_status != 'DONE' &&
-                  scope.row.receipt_type != 'ziti'
+                  scope.row.dada.dada_status == '0'
                 "
-                @click="deliveryAction(scope.row)"
-                >发货</el-button
+                @click="businessReceiptAction(scope.row)"
+                >接单</el-button
               >
 
               <el-button
-                :size="size"
                 type="text"
+                :size="size"
                 v-if="
-                  scope.row.cancel_status == 'WAIT_PROCESS' && scope.row.order_status == 'PAYED'
+                  (system_mode == 'standard' || is_distributor || scope.row.distributor_id == 0) &&
+                  scope.row.receipt_type == 'dada' &&
+                  scope.row.pay_status == 'PAYED' &&
+                  scope.row.dada.dada_status == '9'
                 "
-                @click="confirmCancelOrderAction(scope.row.order_id)"
-                >退款</el-button
+                @click="confirmBack(scope.row)"
+                >确认退回</el-button
+              >
+
+              <template
+                v-if="
+                  !IsBind &&
+                  (system_mode == 'standard' || is_distributor || scope.row.distributor_id == 0)
+                "
+              >
+                <el-button
+                  type="text"
+                  :size="size"
+                  v-if="
+                    (scope.row.receipt_type == 'logistics' || scope.row.is_logistics) &&
+                    scope.row.receipt_type != 'dada' &&
+                    scope.row.order_status == 'PAYED' &&
+                    scope.row.delivery_status != 'DONE' &&
+                    scope.row.receipt_type != 'ziti'
+                  "
+                  @click="deliveryAction(scope.row)"
+                  >发货</el-button
+                >
+
+                <el-button
+                  :size="size"
+                  type="text"
+                  v-if="
+                    scope.row.cancel_status == 'WAIT_PROCESS' && scope.row.order_status == 'PAYED'
+                  "
+                  @click="confirmCancelOrderAction(scope.row.order_id)"
+                  >退款</el-button
+                >
+              </template>
+              <el-button
+                type="text"
+                :size="size"
+                v-if="scope.row.is_invoiced == '0' && scope.row.invoice"
+                @click="IsInvoiced(scope.row, 1)"
+                >待开票</el-button
+              >
+
+              <el-button type="text" :size="size" @click="clickShowRemark(scope.row, 'normalList')"
+                >备注</el-button
               >
             </template>
-            <el-button
-              type="text"
-              :size="size"
-              v-if="scope.row.is_invoiced == '0' && scope.row.invoice"
-              @click="IsInvoiced(scope.row, 1)"
-              >待开票</el-button
-            >
-
-            <el-button type="text" :size="size" @click="clickShowRemark(scope.row, 'normalList')"
-              >备注</el-button
-            >
           </template>
-        </template>
-      </el-table-column>
-    </el-table>
-    <div class="content-padded content-center">
-      <el-pagination
-        background
-        layout="total, sizes, prev, pager, next"
-        @current-change="handleCurrentChange"
-        @size-change="handleSizeChange"
-        :current-page.sync="params.page"
-        :page-sizes="[10, 20, 50]"
-        :total="total_count"
-        :page-size="params.pageSize"
-      >
-      </el-pagination>
-    </div>
+        </el-table-column>
+      </el-table>
+      <div class="content-padded content-center">
+        <el-pagination
+          background
+          layout="total, sizes, prev, pager, next"
+          @current-change="handleCurrentChange"
+          @size-change="handleSizeChange"
+          :current-page.sync="params.page"
+          :page-sizes="[10, 20, 50]"
+          :total="total_count"
+          :page-size="params.pageSize"
+        >
+        </el-pagination>
+      </div>
+    </el-tabs>
     <RemarkModal ref="modalRef" @onDone="handleRemarksDone" />
   </div>
 </template>
@@ -365,7 +375,8 @@ export default {
   data() {
     return {
       IsBind: false,
-      is_distributor: false
+      is_distributor: false,
+      activeName: "all",
     }
   },
   components: {
@@ -489,6 +500,7 @@ export default {
         order_status: tab.name == 'all' ? '' : tab.name,
         page: 1
       })
+      this.activeName = tab.name
     },
     IsInvoiced(row, status) {
       if (!row.invoice) {

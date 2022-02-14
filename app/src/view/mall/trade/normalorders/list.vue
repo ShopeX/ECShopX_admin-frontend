@@ -1,11 +1,6 @@
 <template>
   <div class="">
-    <div
-      v-if="
-        $route.path.indexOf('detail') === -1 &&
-        $route.path.indexOf('process') === -1
-      "
-    >
+    <div v-if="$route.path.indexOf('detail') === -1 && $route.path.indexOf('process') === -1">
       <ListFilterCard
         :loginType="$store.getters.login_type"
         @onChangeData="handleChangeData"
@@ -13,9 +8,7 @@
         ref="filterCard"
       />
 
-      <el-card>
         <ListActionButton :size="size" :params="params" :filterParams="filterParams" @onChangeData="handleChangeData" />
-
         <ListTable
           @onChangeData="handleChangeData"
           @refreshList="getOrders"
@@ -26,7 +19,6 @@
           :total_count="dataSource.total_count"
           :loading="dataSource.loading"
         />
-      </el-card>
       <!-- 发货-开始 -->
       <ListDeliveryDialog
         :visible="deliveryVisible"
@@ -214,9 +206,9 @@ export default {
 <style>
 .el-row {
   margin-bottom: 20px;
-  &:last-child {
-    margin-bottom: 0;
-  }
+}
+.el-row:last-child {
+  margin-bottom: 0;
 }
 .el-col {
   border-radius: 4px;

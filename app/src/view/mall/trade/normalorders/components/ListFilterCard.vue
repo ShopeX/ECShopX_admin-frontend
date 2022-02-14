@@ -104,7 +104,7 @@
             </el-select>
           </el-form-item>
         </el-col>
-        <el-col :span="16">
+        <el-col :span="8">
           <el-form-item label="下单时间:">
             <el-date-picker
               :size="size"
@@ -118,6 +118,24 @@
               :default-time="['00:00:00','23:59:59']"
               @change="dateChange"
             ></el-date-picker>
+          </el-form-item>
+        </el-col>
+        <el-col :span="6">
+          <el-form-item label="订单分类:">
+            <el-select
+              v-model="orderForm.distributor_type"
+              placeholder="请选择订单分类"
+              :size="size"
+              @change="handleSubmit"
+            >
+              <el-option
+                v-for="(item, index) in distributor_type_list"
+                :key="index"
+                :label="item.name"
+                :value="item.value"
+              >
+              </el-option>
+            </el-select>
           </el-form-item>
         </el-col>
       </el-row>
@@ -167,6 +185,7 @@ export default {
         time_start_begin: "",
         time_start_end: "",
         distributor_id: "",
+        distributor_type: ""
       },
       size: "",
 
@@ -192,6 +211,11 @@ export default {
         { name: "普通订单", value: "normal" },
         // { name: "服务类订单", value: "services" },
         // { name: "兑换订单", value: "excard"}
+      ],
+      distributor_type_list: [
+        { name: "全部", value: "" },
+        { name: "自营订单", value: "self" },
+        { name: "商家订单", value: "shop" },
       ],
       order_status_list: [
         { name: "全部", value: "" },
@@ -239,6 +263,7 @@ export default {
         time_start_begin: "",
         time_start_end: "",
         distributor_id: "",
+        distributor_type: ""
       };
       this.$refs.shopSelect.init();
     },
@@ -254,6 +279,7 @@ export default {
         time_start_begin,
         time_start_end,
         distributor_id,
+        distributor_type
       } = this.orderForm;
       this.filterFormValues = {
         order_id:
@@ -278,6 +304,7 @@ export default {
           time_start_begin === "" ? undefined : time_start_begin,
         time_start_end: time_start_end === "" ? undefined : time_start_end,
         distributor_id: distributor_id === "" ? undefined : distributor_id,
+        distributor_type: distributor_type === "" ? undefined : distributor_type,
       };
       this.$emit("onFilter", { ...this.filterFormValues });
     },

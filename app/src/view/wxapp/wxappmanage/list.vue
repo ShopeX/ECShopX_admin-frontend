@@ -216,209 +216,211 @@
       </div>
     </el-drawer>
 
-    <el-dialog :title="getwxcodeTitle" :visible.sync="wxaCodeVisible" width="30%">
-        <div class="content-center">
-          <img :src="wxaCodeImage" />
-        </div>
-      </el-dialog>
-      <el-dialog title="配置" class="right-dialog" :visible.sync="wxaConfigVisible">
-        <el-form ref="configForm" :model="configForm" label-position="left" label-width="180px">
-          <div class="section-body">
-            <el-form-item label="自动发布：">
-              <el-switch
-                v-model="configForm.auto_publish"
-                :active-value="1"
-                :inactive-value="0"
-              ></el-switch>
-            </el-form-item>
-            <el-form-item label="appsecret：">
-              <el-col :span="18">
-                <el-input
-                  placeholder="请输入小程序appsecret"
-                  v-model="configForm.authorizer_appsecret"
-                  show-password
-                ></el-input>
-              </el-col>
-            </el-form-item>
-          </div>
-          <div class="section-footer with-border content-center">
-            <el-button type="primary" @click="configSave">保 存</el-button>
-          </div>
-        </el-form>
-      </el-dialog>
-      <el-dialog title="域名" class="right-dialog" :visible.sync="wxaDomainVisible">
-        <p class="frm-tips">
-          对比当前小程序域名和本地实际配置的域名，判断小程序域名是否一致，否则可能导致小程序报错，因为域名不在白名单内
-        </p>
-        <el-form label-width="160px" size="mini">
-          <el-collapse accordion>
-            <el-collapse-item title="当前小程序域名" name="1">
-              <el-form-item label="request合法域名:">
-                <div v-for="requestdomain in domainform.wxDomain.requestdomain">
-                  {{ requestdomain }}
-                </div>
-              </el-form-item>
-              <el-form-item label="socket合法域名:">
-                <div v-for="wsrequestdomain in domainform.wxDomain.wsrequestdomain">
-                  {{ wsrequestdomain }}
-                </div>
-              </el-form-item>
-              <el-form-item label="uploadFile合法域名:">
-                <div v-for="uploaddomain in domainform.wxDomain.uploaddomain">{{ uploaddomain }}</div>
-              </el-form-item>
-              <el-form-item label="downloadFile合法域名:">
-                <div v-for="downloaddomain in domainform.wxDomain.downloaddomain">
-                  {{ downloaddomain }}
-                </div>
-              </el-form-item>
-              <el-form-item label="业务域名:">
-                <div v-for="webviewdomain in domainform.wxDomain.webviewdomain">
-                  {{ webviewdomain }}
-                </div>
-              </el-form-item>
-            </el-collapse-item>
-          </el-collapse>
+    <el-dialog :title="getwxcodeTitle" :visible.sync="wxaCodeVisible" width="500px">
+      <div class="content-center">
+        <img :src="wxaCodeImage" />
+      </div>
+    </el-dialog>
 
-          <el-collapse accordion>
-            <el-collapse-item title="本地配置的域名" name="2">
-              <el-form-item label="request合法域名:">
-                <div v-for="requestdomain in domainform.localDomain.requestdomain">
-                  {{ requestdomain }}
-                </div>
-              </el-form-item>
-              <el-form-item label="socket合法域名:">
-                <div v-for="wsrequestdomain in domainform.localDomain.wsrequestdomain">
-                  {{ wsrequestdomain }}
-                </div>
-              </el-form-item>
-              <el-form-item label="uploadFile合法域名:">
-                <div v-for="uploaddomain in domainform.localDomain.uploaddomain">
-                  {{ uploaddomain }}
-                </div>
-              </el-form-item>
-              <el-form-item label="downloadFile合法域名:">
-                <div v-for="downloaddomain in domainform.localDomain.downloaddomain">
-                  {{ downloaddomain }}
-                </div>
-              </el-form-item>
-              <el-form-item label="业务域名:">
-                <div v-for="webviewdomain in domainform.localDomain.webviewdomain">
-                  {{ webviewdomain }}
-                </div>
-              </el-form-item>
-            </el-collapse-item>
-          </el-collapse>
-        </el-form>
-        <div class="section-footer with-border content-center">
-          <el-button type="primary" @click="domainSave">推 送</el-button>
+    <el-dialog title="配置" class="right-dialog" :visible.sync="wxaConfigVisible">
+      <el-form ref="configForm" :model="configForm" label-position="left" label-width="180px">
+        <div class="section-body">
+          <el-form-item label="自动发布：">
+            <el-switch
+              v-model="configForm.auto_publish"
+              :active-value="1"
+              :inactive-value="0"
+            ></el-switch>
+          </el-form-item>
+          <el-form-item label="appsecret：">
+            <el-col :span="18">
+              <el-input
+                placeholder="请输入小程序appsecret"
+                v-model="configForm.authorizer_appsecret"
+                show-password
+              ></el-input>
+            </el-col>
+          </el-form-item>
         </div>
-      </el-dialog>
+        <div class="section-footer with-border content-center">
+          <el-button type="primary" @click="configSave">保 存</el-button>
+        </div>
+      </el-form>
+    </el-dialog>
+    
+    <el-dialog title="域名" class="right-dialog" :visible.sync="wxaDomainVisible">
+      <p class="frm-tips">
+        对比当前小程序域名和本地实际配置的域名，判断小程序域名是否一致，否则可能导致小程序报错，因为域名不在白名单内
+      </p>
+      <el-form label-width="160px" size="mini">
+        <el-collapse accordion>
+          <el-collapse-item title="当前小程序域名" name="1">
+            <el-form-item label="request合法域名:">
+              <div v-for="requestdomain in domainform.wxDomain.requestdomain">
+                {{ requestdomain }}
+              </div>
+            </el-form-item>
+            <el-form-item label="socket合法域名:">
+              <div v-for="wsrequestdomain in domainform.wxDomain.wsrequestdomain">
+                {{ wsrequestdomain }}
+              </div>
+            </el-form-item>
+            <el-form-item label="uploadFile合法域名:">
+              <div v-for="uploaddomain in domainform.wxDomain.uploaddomain">{{ uploaddomain }}</div>
+            </el-form-item>
+            <el-form-item label="downloadFile合法域名:">
+              <div v-for="downloaddomain in domainform.wxDomain.downloaddomain">
+                {{ downloaddomain }}
+              </div>
+            </el-form-item>
+            <el-form-item label="业务域名:">
+              <div v-for="webviewdomain in domainform.wxDomain.webviewdomain">
+                {{ webviewdomain }}
+              </div>
+            </el-form-item>
+          </el-collapse-item>
+        </el-collapse>
+
+        <el-collapse accordion>
+          <el-collapse-item title="本地配置的域名" name="2">
+            <el-form-item label="request合法域名:">
+              <div v-for="requestdomain in domainform.localDomain.requestdomain">
+                {{ requestdomain }}
+              </div>
+            </el-form-item>
+            <el-form-item label="socket合法域名:">
+              <div v-for="wsrequestdomain in domainform.localDomain.wsrequestdomain">
+                {{ wsrequestdomain }}
+              </div>
+            </el-form-item>
+            <el-form-item label="uploadFile合法域名:">
+              <div v-for="uploaddomain in domainform.localDomain.uploaddomain">
+                {{ uploaddomain }}
+              </div>
+            </el-form-item>
+            <el-form-item label="downloadFile合法域名:">
+              <div v-for="downloaddomain in domainform.localDomain.downloaddomain">
+                {{ downloaddomain }}
+              </div>
+            </el-form-item>
+            <el-form-item label="业务域名:">
+              <div v-for="webviewdomain in domainform.localDomain.webviewdomain">
+                {{ webviewdomain }}
+              </div>
+            </el-form-item>
+          </el-collapse-item>
+        </el-collapse>
+      </el-form>
+      <div class="section-footer with-border content-center">
+        <el-button type="primary" @click="domainSave">推 送</el-button>
+      </div>
+    </el-dialog>
 
       <!--编辑模板-->
-      <el-dialog
-        title="编辑模板"
-        width="60%"
-        :visible.sync="TemplateEditDialog"
-        :before-close="handleCancelLabelsDialog"
-      >
-        <template>
-          <el-form ref="form" :model="weappTemplate" class="demo-ruleForm" label-width="200px">
-            <el-form-item
-              class="content-left"
-              label="小程序唯一标示(英文)"
-              prop="key_name"
-              :rules="[{ required: true, message: '请输入英文标识', trigger: 'blur' }]"
-            >
-              <el-input
-                placeholder="例如：yykweishop"
-                v-if="weappTemplate.id"
-                disabled
-                v-model="weappTemplate.key_name"
-              ></el-input>
-              <el-input
-                placeholder="例如：yykweishop"
-                v-else
-                v-model="weappTemplate.key_name"
-              ></el-input>
-            </el-form-item>
-            <el-form-item class="content-left" label="小程序模板名称">
-              <el-input
-                placeholder="例如：yykweishop"
-                disabled
-                v-model="weappTemplate.name"
-              ></el-input>
-            </el-form-item>
-            <el-form-item class="content-left" label="模板id">
-              <el-input placeholder="例如：30" v-model="weappTemplate.template_id"></el-input>
-            </el-form-item>
-            <el-form-item class="content-left" label="模板版本">
-              <el-input placeholder="例如：v2.0" v-model="weappTemplate.version"></el-input>
-            </el-form-item>
-            <el-form-item class="content-center">
-              <el-button type="primary" @click="saveTemplate">确定保存</el-button>
-            </el-form-item>
-          </el-form>
-        </template>
-      </el-dialog>
-
-      <!--    设置小程序合法域名-->
-      <el-dialog title="设置小程序合法域名" width="60%" :visible.sync="domainDialog">
-        <el-alert
-          title="请添加每个域名后回车"
-          description="mmbiz.qpic.cn,wx.qlogo.cn"
-          type="info"
-          show-icon
-          :closable="false"
-        ></el-alert>
-        <br />
-        <el-form label-width="200px" v-loading="domainloading">
-          <el-form-item label="request合法域名">
+    <el-dialog
+      title="编辑模板"
+      width="60%"
+      :visible.sync="TemplateEditDialog"
+      :before-close="handleCancelLabelsDialog"
+    >
+      <template>
+        <el-form ref="form" :model="weappTemplate" class="demo-ruleForm" label-width="200px">
+          <el-form-item
+            class="content-left"
+            label="小程序唯一标示(英文)"
+            prop="key_name"
+            :rules="[{ required: true, message: '请输入英文标识', trigger: 'blur' }]"
+          >
             <el-input
-              type="textarea"
-              :rows="3"
-              placeholder="请输入合法域名"
-              v-model="domainData.requestdomain"
-              prop="domain.requestdomain"
-              :rules="[{ required: true, message: 'request合法域名', trigger: 'blur' }]"
+              placeholder="例如：yykweishop"
+              v-if="weappTemplate.id"
+              disabled
+              v-model="weappTemplate.key_name"
+            ></el-input>
+            <el-input
+              placeholder="例如：yykweishop"
+              v-else
+              v-model="weappTemplate.key_name"
             ></el-input>
           </el-form-item>
-          <el-form-item label="socket合法域名">
+          <el-form-item class="content-left" label="小程序模板名称">
             <el-input
-              type="textarea"
-              :rows="3"
-              placeholder="请输入合法域名"
-              v-model="domainData.wsrequestdomain"
+              placeholder="例如：yykweishop"
+              disabled
+              v-model="weappTemplate.name"
             ></el-input>
           </el-form-item>
-          <el-form-item label="uploadFile合法域名">
-            <el-input
-              type="textarea"
-              :rows="3"
-              placeholder="请输入合法域名"
-              v-model="domainData.uploaddomain"
-            ></el-input>
+          <el-form-item class="content-left" label="模板id">
+            <el-input placeholder="例如：30" v-model="weappTemplate.template_id"></el-input>
           </el-form-item>
-          <el-form-item label="downloadFile合法域名">
-            <el-input
-              type="textarea"
-              :rows="6"
-              placeholder="请输入合法域名"
-              v-model="domainData.downloaddomain"
-            ></el-input>
+          <el-form-item class="content-left" label="模板版本">
+            <el-input placeholder="例如：v2.0" v-model="weappTemplate.version"></el-input>
           </el-form-item>
-          <el-form-item label="业务合法域名">
-            <el-input
-              type="textarea"
-              :rows="6"
-              placeholder="请输入合法域名"
-              v-model="domainData.webviewdomain"
-            ></el-input>
+          <el-form-item class="content-center">
+            <el-button type="primary" @click="saveTemplate">确定保存</el-button>
           </el-form-item>
         </el-form>
-        <span slot="footer">
-          <el-button type="primary" @click="setdomain">确 定</el-button>
-        </span>
-      </el-dialog>
+      </template>
+    </el-dialog>
+
+      <!--    设置小程序合法域名-->
+    <el-dialog title="设置小程序合法域名" width="60%" :visible.sync="domainDialog">
+      <el-alert
+        title="请添加每个域名后回车"
+        description="mmbiz.qpic.cn,wx.qlogo.cn"
+        type="info"
+        show-icon
+        :closable="false"
+      ></el-alert>
+      <br />
+      <el-form label-width="200px" v-loading="domainloading">
+        <el-form-item label="request合法域名">
+          <el-input
+            type="textarea"
+            :rows="3"
+            placeholder="请输入合法域名"
+            v-model="domainData.requestdomain"
+            prop="domain.requestdomain"
+            :rules="[{ required: true, message: 'request合法域名', trigger: 'blur' }]"
+          ></el-input>
+        </el-form-item>
+        <el-form-item label="socket合法域名">
+          <el-input
+            type="textarea"
+            :rows="3"
+            placeholder="请输入合法域名"
+            v-model="domainData.wsrequestdomain"
+          ></el-input>
+        </el-form-item>
+        <el-form-item label="uploadFile合法域名">
+          <el-input
+            type="textarea"
+            :rows="3"
+            placeholder="请输入合法域名"
+            v-model="domainData.uploaddomain"
+          ></el-input>
+        </el-form-item>
+        <el-form-item label="downloadFile合法域名">
+          <el-input
+            type="textarea"
+            :rows="6"
+            placeholder="请输入合法域名"
+            v-model="domainData.downloaddomain"
+          ></el-input>
+        </el-form-item>
+        <el-form-item label="业务合法域名">
+          <el-input
+            type="textarea"
+            :rows="6"
+            placeholder="请输入合法域名"
+            v-model="domainData.webviewdomain"
+          ></el-input>
+        </el-form-item>
+      </el-form>
+      <span slot="footer">
+        <el-button type="primary" @click="setdomain">确 定</el-button>
+      </span>
+    </el-dialog>
   </div>
 </template>
 <script>
@@ -461,11 +463,7 @@ export default {
   data() {
     return {
       activeName: 'wechat',
-      dataLists: [
-        {name:"wemall",key_name:"wemall"},
-        {name:"wemall1",key_name:"wemall1", authorizer:{authorizer_appid:'wx3e1c17c88abf3e45',is_direct:0,nick_name:"源源客"}},
-        {name:"wemall2",key_name:"wemall2", authorizer:{authorizer_appid:'wx4f25fb911393034b',is_direct:1,nick_name:"源源客"}},
-      ],
+      dataLists: [],
       loading: false,
       pageLimit: 10,
       total_count: 0,

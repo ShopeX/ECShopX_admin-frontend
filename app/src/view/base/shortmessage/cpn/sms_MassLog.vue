@@ -3,7 +3,7 @@
     <div class="sms_signatures">
       <el-card class="box-card" shadow="never">
         <div slot="header" class="clearfix">
-          <span>短信发送记录</span>
+          <span>短信群发记录</span>
         </div>
         <SpFinder
           ref="finder"
@@ -26,6 +26,7 @@
         :visible="visible"
         :info="info"
         @smsMassLogEditHandler="smsMassLogEditHandler"
+        @updateFinder='updateFinder'
       />
     </template>
   </div>
@@ -69,7 +70,7 @@ export default {
     },
     afterSearch() {},
     async deleteSMS(id) {
-      const message = '选择确定后，群发定时任务将会撤销。。'
+      const message = '选择确定后，群发定时任务将会撤销。'
       this.$confirm(message, '', {
         confirmButtonText: '确定',
         cancelButtonText: '取消',
@@ -82,6 +83,9 @@ export default {
     },
     smsMassLogEditHandler() {
       this.visible = false
+    },
+    updateFinder(){
+      this.$refs.finder.refresh()
     }
   }
 }

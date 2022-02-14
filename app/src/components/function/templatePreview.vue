@@ -677,7 +677,7 @@ export default {
         }
 
         .subtitle {
-          padding-left: 5px;
+          padding-left: 8px;
           font-size: 12px;
           color: #999;
         }

@@ -26,7 +26,7 @@ const router = new VueRouter({
 router.beforeEach(( to, from, next ) => {  
   NProgress.start();
   // 加载PC模版设计器
-  if ( to.path == '/pc/design' ) {
+  if ( to.path == '/wxapp/pcmall/design' ) {
     const { id } = to.query
     console.log( `【shop】pageid is: ${id}` )
     actions.setGlobalState( {

@@ -97,14 +97,13 @@
     </div>
     <div class="log-footer">
       <span>友情链接：</span>
-      <a href="https://mp.weixin.qq.com/cgi-bin/loginpage?t=wxm2-login&lang=zh_CN" target="_blank"
-        >微信公众平台</a
-      >
+      <a href="https://www.shopex.cn" target="_blank">商派</a>
       <span>|</span>
-      <a href="https://www.alipay.com/" target="_blank">支付宝</a>
+      <a href="https://mp.weixin.qq.com" target="_blank">微信公众平台</a>
       <span>|</span>
-      <a href="http://e.qq.com/ads" target="_blank">腾讯社交广告</a>
+      <a href="https://open.weixin.qq.com" target="_blank">微信开放平台</a>
     </div>
+
   </div>
 </template>
 

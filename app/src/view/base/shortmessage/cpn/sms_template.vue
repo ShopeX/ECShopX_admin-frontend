@@ -3,7 +3,7 @@
     <div class="sms_signatures" v-if="$route.path.indexOf('edit') === -1">
       <el-card class="box-card" shadow="never">
         <div slot="header" class="clearfix">
-          <span>短信签名</span>
+          <span>短信模板</span>
         </div>
         <SpFinder
           ref="finder"

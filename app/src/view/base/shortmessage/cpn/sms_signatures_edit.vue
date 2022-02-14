@@ -37,7 +37,7 @@
         <div class="upload-box" @click="handleImgPicker('sign_file')">
           <template v-if="form.sign_file">
             <img class="avatar" v-if="form.sign_file" :src="form.sign_file" />
-            <i class="el-icon-error close" @click.stop="deleteUrl('sign_file')"></i>
+            <i v-if="$route.query.type!='detail'" class="el-icon-error close" @click.stop="deleteUrl('sign_file')"></i>
           </template>
           <i v-else slot="default" class="el-icon-plus"></i>
         </div>
@@ -53,7 +53,7 @@
         <div class="upload-box" @click="handleImgPicker('delegate_file')">
           <template v-if="form.delegate_file">
             <img class="avatar"  :src="form.delegate_file" />
-            <i class="el-icon-error close" @click.stop="deleteUrl('delegate_file')"></i>
+            <i class="el-icon-error close" v-if="$route.query.type!='detail'" @click.stop="deleteUrl('delegate_file')"></i>
           </template>
           <i v-else slot="default" class="el-icon-plus"></i>
           

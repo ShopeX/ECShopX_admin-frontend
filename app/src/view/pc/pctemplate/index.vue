@@ -164,7 +164,7 @@ export default {
     },
     handleRenovation({ theme_pc_template_id }) {
       // this.$router.push({ path: `/pc/design?id=${theme_pc_template_id}` });
-      this.$router.push({ path: '/pc/design?id=' + theme_pc_template_id })
+      this.$router.push({ path: '/wxapp/pcmall/design?id=' + theme_pc_template_id })
     },
     async handleDisable({ status, created, updated, deleted_at, ...rest }) {
       try {

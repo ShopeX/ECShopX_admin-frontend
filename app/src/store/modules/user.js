@@ -18,7 +18,8 @@ const user = {
     product_code: '',
     ali_appid: '',
     ali_template_name: '',
-    app_type: ''
+    app_type: '',
+    color_theme: '',
   },
 
   mutations: {
@@ -59,8 +60,6 @@ const user = {
       const { productionCode } = payload
       state.product_code = productionCode
     },
-
-
     setUserInfo(state, payload) {
       const { username, head_portrait } = payload
       state.userInfo = {
@@ -110,6 +109,9 @@ const user = {
     setAppType: (state, app_type) => {
       state.app_type = app_type
     },
+    setThemeColor: (state, color_theme) => {
+      state.color_theme = color_theme
+    }
   },
 
   actions: {
@@ -172,6 +174,9 @@ const user = {
     },
     setAppType({ commit }, app_type) {
       commit('setAppType', app_type)
+    },
+    setThemeColor: ({ commit }, color_theme) => {
+      commit('setThemeColor', color_theme)
     },
   }
 }

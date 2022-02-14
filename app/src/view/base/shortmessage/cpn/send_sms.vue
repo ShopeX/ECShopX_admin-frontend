@@ -70,9 +70,9 @@
     </div>
     <!-- 添加短信 -->
     <el-dialog title="添加短信" :visible="visible" width="30%" :before-close="handleClose">
-      <el-form :model="form" :rules="rules" ref="form" label-width="80px">
+      <el-form :model="form" :rules="rules" ref="form" label-width="60px">
         <el-form-item label="签名" prop="sign_id">
-          <el-select v-model="form.sign_id" placeholder="请选择签名" style="width: 85%">
+          <el-select v-model="form.sign_id" placeholder="请选择签名" style="width: 95%">
             <el-option
               :label="item.sign_name"
               :value="item.id"
@@ -82,7 +82,7 @@
           </el-select>
         </el-form-item>
         <el-form-item label="模板" prop="template_id">
-          <el-select v-model="form.template_id" placeholder="请选择模板" style="width: 85%">
+          <el-select v-model="form.template_id" placeholder="请选择模板" style="width: 95%">
             <el-option
               :label="item.scene_name"
               :value="item.id"
@@ -377,6 +377,9 @@ export default {
 .alisms_sendSms {
   .el-form {
     width: 80%;
+  }
+  .el-dialog{
+    min-width: 540px;
   }
   .el-dialog__body {
     display: flex;

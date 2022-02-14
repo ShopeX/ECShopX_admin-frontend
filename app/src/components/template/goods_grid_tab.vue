@@ -18,6 +18,7 @@
           @click="handleClick(index)"
           v-for="(item, index) in list"
           :key="index"
+          :style="checkde == index ? `color: ${colorPrimary}` : ''"
         >
           {{ item.tabTitle }}
         </div>
@@ -37,14 +38,15 @@
               <img
                 class="goods-brand"
                 v-if="config.brand && config.style !== 'grids'"
-                :src="
-                  item.brand
-                    ? wximageurl + item.brand
-                    : 'https://fakeimg.pl/60x60/EFEFEF/CCC/?text=brand&font=lobster'
-                "
+                :src="item.brand ? wximageurl + item.brand : 'https://fakeimg.pl/60x60/EFEFEF/CCC/?text=brand&font=lobster'"
               />
+              <div class="goods-title">{{ item.title }}</div>
+              <div class="goods-title">{{ item.itemEnName }}</div>
+              <div v-if="config.showPrice" class="price">
+                <span class="cur">¥</span>{{ item.price / 100 }}
+              </div>
               <div class="activity-label">
-                <p v-for="(s, i) in item.promotionActivity" :key="i">
+                <p v-for="(s, i) in item.promotionActivity" :key="i" :style="`color: ${colorPrimary};border: 1px solid ${colorPrimary}`">
                   {{ s.tag_type == 'single_group' ? '团购' : '' }}
                   {{ s.tag_type == 'full_minus' ? '满减' : '' }}
                   {{ s.tag_type == 'full_discount' ? '满折' : '' }}
@@ -53,11 +55,6 @@
                   {{ s.tag_type == 'limited_time_sale' ? '限时特惠' : '' }}
                   {{ s.tag_type == 'plus_price_buy' ? '换购' : '' }}
                 </p>
-              </div>
-              <div class="goods-title">{{ item.title }}</div>
-              <div class="goods-title">{{ item.itemEnName }}</div>
-              <div v-if="config.showPrice" class="price">
-                <span class="cur">¥</span>{{ item.price / 100 }}
               </div>
             </div>
           </div>
@@ -99,7 +96,8 @@ export default {
       config: {},
       data: [],
       list: [],
-      checkde: 0
+      checkde: 0,
+      colorPrimary: ''
     }
   },
   methods: {
@@ -115,6 +113,7 @@ export default {
   },
   mounted() {
     this.setData(this.res)
+    this.colorPrimary = this.$store.getters.color_theme.primary
   }
 }
 </script>
@@ -135,15 +134,12 @@ export default {
   .activity-label {
     display: flex;
     flex-wrap: wrap;
-
     p {
-      background: #00081c;
-      border-radius: 2px;
-      flex-shrink: 0;
+      border-radius: 4px;
+      padding: 0px 4px;
       font-size: 10px;
-      color: #fff;
-      margin: 0 4px 5px 0;
-      padding: 2px 5px;
+      line-height: 16px;
+      margin: 0px 2px 2px 0px;
     }
   }
   .grid-item {
@@ -185,7 +181,7 @@ export default {
           text-overflow: ellipsis;
           -webkit-line-clamp: 2;
           -webkit-box-orient: vertical;
-          height: 30px;
+          // height: 30px;
           margin-top: 5px;
           line-height: 1.4;
           font-size: 12px;
@@ -224,15 +220,16 @@ export default {
   .tab-l {
     padding: 0 10px;
     white-space: nowrap;
-    font-size: 12px;
-    font-weight: 500;
-    color: #c7c7c7;
+    font-size: 14px;
+    color: #222;
     line-height: 12px;
     letter-spacing: 1px;
-    border-left: 1px solid #c7c7c7;
+    border-left: 1px solid #DDDDDD;
   }
   .checked {
     color: #00081c;
+    font-weight:bold;
+    font-size: 18px;
   }
   .tab-l:nth-of-type(1) {
     border-left: none;

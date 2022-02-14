@@ -32,7 +32,7 @@ export default (vm) => {
         startPlaceholder: '开始日期',
         endPlaceholder: '结束日期'
       },
-      { key: 'status	', name: '发送状态', type: 'select', options: vm.search_options },
+      { key: 'status	', name: '任务状态', type: 'select', options: vm.search_options },
       { key: 'task_name', name: '任务名称' },
       { key: 'template_name', name: '短信模板' }
     ],
@@ -107,7 +107,7 @@ export default (vm) => {
             row.total_num
           )
       },
-      { name: '号码数量', key: 'failed_num' }
+      { name: '失败号码数量', key: 'failed_num' }
     ],
     actions: [
       {

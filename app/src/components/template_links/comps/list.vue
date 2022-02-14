@@ -86,8 +86,7 @@
     },
     computed: {
       ...mapGetters([
-        'template_name',
-        'wxapp_id'
+        'template_name'
       ])
     },
     watch: {
@@ -345,7 +344,7 @@
             break;
           case 'liverooms':
             Object.assign(query, {
-              wxapp_id: this.wxapp_id
+              template_name: this.template_name
             })
             api.promotions.getLiverooms(query).then(res => {
               let list = []

@@ -70,7 +70,7 @@ export default {
       },
       rules: {
         app_key: { required: true, message: '请输入', trigger: 'blur' },
-        app_secret: { required: true, message: '请输入', trigger: 'blur' }
+        app_secret: { required: false, message: '请输入', trigger: 'blur' }
       }
     }
   },

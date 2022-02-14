@@ -36,7 +36,7 @@
           </el-select>
           <div class="subtitle">
             没有需要的签名，马上
-            <router-link to="/">添加签名</router-link>
+            <router-link to="/setting/datamessage/ali_sms/sms_signatures/edit">添加签名</router-link>
           </div>
         </el-form-item>
         <el-form-item label="短信模板" prop="template_id">
@@ -56,7 +56,8 @@
           </el-select>
           <div class="subtitle">
             没有需要的签名，马上
-            <router-link to="/">添加模板</router-link>
+            <router-link to="/setting/datamessage/ali_sms/sms_template/edit">添加模板</router-link>
+            <p>仅支持推广短信类型</p>
           </div>
         </el-form-item>
         <el-form-item label="定时发送">
@@ -202,6 +203,7 @@ export default {
           try {
             if (type == 'edit') {
               const result = await editTaskSms({ id, ...this.form })
+              this.$emit('updateFinder')
               this.submitFormResult(result)
             } else {
               // 增加

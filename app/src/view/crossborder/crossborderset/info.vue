@@ -30,7 +30,7 @@
             <span class="tip"
               >说明：跨境商品税率设置权重按 商品 -> 类目 ->
               全局，当商品及类目未设置时，按全局计算，以此类推
-              <a href="/entity/goods/goodsmaincategory">类目税率设置</a></span
+              <a href="/entity/goodsbase/goodsmaincategory">类目税率设置</a></span
             >
           </el-form-item>
           <el-form-item label="个人额度提醒">

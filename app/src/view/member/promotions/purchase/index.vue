@@ -54,7 +54,7 @@
               {{ scope.row.activity_status | formatStatus }}
             </template>
           </el-table-column>
-          <el-table-column width="300" label="活动有效期">
+          <el-table-column width="301" label="活动有效期">
             <template slot-scope="scope">
               {{ scope.row.begin_date }}
               <template v-if="scope.row.end_date">~</template>

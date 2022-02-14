@@ -4,7 +4,7 @@ import ElementUI from 'element-ui'
 import 'element-ui/lib/theme-chalk/index.css'
 
 import { install as apiInstall } from '@/api'
-import { micrApp } from '@/utils/micr-app'
+// import { micrApp } from '@/utils/micr-app'
 import VueClipboard from 'vue-clipboard2'
 import { VueMasonryPlugin } from 'vue-masonry'
 
@@ -62,7 +62,7 @@ Vue.use(VueMasonryPlugin)
 Vue.use(VueVideoPlayer)
 
 Vue.use(Filter)
-micrApp.init()
+// micrApp.init()
 
 // import fetch from './utils/fetch'
 

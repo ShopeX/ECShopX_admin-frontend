@@ -1,7 +1,7 @@
 <template>
   <div class="ali-sms-page">
     <div class="btn">
-      <router-link class="link" to="{}">切换短信商</router-link>
+      <router-link class="link" to="/setting/datamessage">切换短信商</router-link>
     </div>
     <el-tabs v-model="activeName" @tab-click="handleClick">
       <el-tab-pane label="基础配置" name="base_config"></el-tab-pane>
@@ -25,11 +25,9 @@ export default {
   },
   mounted(){
     this.activeName = this.$route.meta
-    console.log(this.$route);
   },
   methods: {
     handleClick(tab, event) {
-      // console.log(tab);
       this.activeName = tab.name
       if (tab.name=='base_config') {
         this.$router.push({ path:`/setting/datamessage/ali_sms`})
@@ -42,6 +40,9 @@ export default {
     switchSMS() {
       console.log(1)
     }
+  },
+  updated(){
+     this.activeName = this.$route.meta
   }
 }
 </script>

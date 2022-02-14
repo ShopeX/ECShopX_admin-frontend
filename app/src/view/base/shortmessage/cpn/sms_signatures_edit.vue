@@ -4,7 +4,7 @@
     <el-form :model="form" :rules="rules" ref="form" label-width="150px" class="demo-ruleForm">
       <el-form-item label="签名名称" prop="sign_name">
         <el-input
-          :disabled="disabled"
+          :disabled="disabled || disabled_edit"
           v-model="form.sign_name"
           minlength="2"
           maxlength="12"
@@ -35,34 +35,40 @@
       </el-form-item>
       <el-form-item label="证明文件">
         <div class="upload-box" @click="handleImgPicker('sign_file')">
-          <img class="avatar" v-if="form.sign_file" :src="form.sign_file" />
+          <template v-if="form.sign_file">
+            <img class="avatar" v-if="form.sign_file" :src="form.sign_file" />
+            <i class="el-icon-error close" @click.stop="deleteUrl('sign_file')"></i>
+          </template>
           <i v-else slot="default" class="el-icon-plus"></i>
         </div>
         <span>签名归属方的三证合一</span>
         <ul class="tips">
           <li>
-            说明：个别场景下，申请签名需要上传证明文件。详细说明，请参见 <a>短信签名规范。</a>
+            说明：个别场景下，申请签名需要上传证明文件。详细说明，请参见 <a target="_blank" href="https://help.aliyun.com/document_detail/108076.htm?spm=a2c4g.11186623.0.0.236c3d26hyj4yl">短信签名规范。</a>
           </li>
           <li>支持 JPG、PNG、GIF 或 JPEG 格式的图片，图片不超过 2 MB。</li>
         </ul>
       </el-form-item>
       <el-form-item label="委托授权书">
         <div class="upload-box" @click="handleImgPicker('delegate_file')">
-          <img class="avatar" v-if="form.delegate_file" :src="form.delegate_file" />
+          <template v-if="form.delegate_file">
+            <img class="avatar"  :src="form.delegate_file" />
+            <i class="el-icon-error close" @click.stop="deleteUrl('delegate_file')"></i>
+          </template>
           <i v-else slot="default" class="el-icon-plus"></i>
+          
         </div>
 
         <ul class="tips">
           <li>
             说明：
             如果签名用途为他用或个人认证用户的自用签名来源为企事业单位名时，还需上传证明文件和委托授权书，详情请参见
-            <a>证明文件</a>和 <a>授权委托书</a>。
+            <a target="_blank" href="https://help.aliyun.com/document_detail/108076.htm?spm=a2c4g.11186623.0.0.236c25a11W2iBL"> 证明文件 </a>和 <a target="_blank" href="https://help.aliyun.com/document_detail/56741.htm?spm=a2c4g.11186623.0.0.236c25a1zODsEU">授权委托书</a>。
           </li>
           <li>支持 JPG、PNG、GIF 或 JPEG 格式的图片，图片不超过 2 MB。</li>
         </ul>
       </el-form-item>
       <el-form-item v-if="$route.query.type !== 'detail'">
-        <!-- <el-button type="primary" @click="submitForm('form')">确定</el-button> -->
         <loadingBtn @clickHandle="submitForm('form')" ref="loadingBtn" />
         <el-button @click="fnBack">取消</el-button>
         <ul class="tips">
@@ -72,12 +78,12 @@
       </el-form-item>
     </el-form>
     <!-- 图片选择 -->
-    <imgPicker
-      :dialog-visible="imgDialog"
-      :sc-status="isGetImage"
-      @chooseImg="pickImg"
-      @closeImgDialog="closeImgDialog"
-    ></imgPicker>
+      <imgPicker
+        :dialog-visible="imgDialog"
+        :sc-status="isGetImage"
+        @chooseImg="pickImg"
+        @closeImgDialog="closeImgDialog"
+      ></imgPicker>
 
     <!-- result -->
     <el-dialog :visible="resultVisible" class="result" :show-close="false">
@@ -108,7 +114,6 @@ import {
   setTheNewSignature,
   getTheSignature,
   editTheSignature,
-  deleteTheSignature
 } from '@/api/sms'
 
 export default {
@@ -120,6 +125,7 @@ export default {
     return {
       // 页面状态
       disabled: false,
+      disabled_edit:false,
       // 图片选择
       imgDialog: false,
       isGetImage: false,
@@ -153,6 +159,10 @@ export default {
         this.resultHandler(result)
         if (type == 'detail') {
           this.disabled = true
+        }
+
+        if (type=='edit') {
+          this.disabled_edit = true
         }
       }
     },
@@ -218,6 +228,9 @@ export default {
         this.imgDialog = true
         this.isGetImage = true
       }
+    },
+    deleteUrl(url){
+      this.form[url] = ''
     }
     /* -------------------------图片选择------------------------- */
   }
@@ -257,6 +270,7 @@ export default {
     }
   }
   .upload-box {
+    position: relative;
     width: 150px;
     height: 150px;
     align-items: center;
@@ -275,6 +289,16 @@ export default {
     }
     &:hover {
       border-color: #409eff;
+    }
+    .close{
+      position: absolute;
+      top:3px;
+      right:3px;
+      font-size: 20px;
+      color: #999;
+      &:hover{
+        color: #1480e3;
+      }
     }
   }
   .tips {

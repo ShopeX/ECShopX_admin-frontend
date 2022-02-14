@@ -1,7 +1,13 @@
 <template>
   <div class="alisms_baseConfig">
     <tips>
-      <p>{{tips}}</p>
+      <p>
+        短信服务由阿里云提供，是广大企业客户快速触达手机用户所优选使用的通信能力，国内验证短信秒级触达，到达率最高可达99%。开始使用前您需要<a
+          href="https://www.aliyun.com/product/sms?spm=a2c4g.11186623.0.0.659712cdoHMKdV"
+          target="_blank"
+          >前往阿里云购买服务。</a
+        >
+      </p>
     </tips>
     <el-form label-width="200px" :model="form">
       <section class="card">
@@ -28,7 +34,8 @@
               <el-form-item label="AccessKey Secret：">
                 <span>{{ form.accesskey_secret }}</span>
               </el-form-item>
-              <a href="">如何获取 AccessKey ID 和 AccessKey Secret。</a>
+
+              <a href="https://help.aliyun.com/document_detail/53045.html" target="_blank">如何获取 AccessKey ID 和 AccessKey Secret。</a>
             </div>
             <div class="right">
               <el-button type="primary" class="btn" plain @click="fnEdit">编辑</el-button>
@@ -46,7 +53,7 @@
               </el-form-item>
             </div>
             <div class="right">
-              <el-button type="primary" class="btn" plain>{{ item.btn }}</el-button>
+              <el-button type="primary" class="btn" plain @click="fnGo(item.tabName)">{{ item.btn }}</el-button>
             </div>
           </div>
         </div>
@@ -89,7 +96,6 @@ export default {
   },
   data() {
     return {
-      tips: "短信服务由阿里云提供，是广大企业客户快速触达手机用户所优选使用的通信能力，国内验证短信秒级触达，到达率最高可达99%。开始使用前您需要前往 <a href='https://www.aliyun.com/product/sms?spm=a2c4g.11186623.0.0.659712cdoHMKdV'>阿里云购买服务</a>。",
       form: {
         accesskey_id: '',
         accesskey_secret: ''
@@ -99,19 +105,22 @@ export default {
           title: '自动发送短信',
           info: '自动发送短信场景 (个)：',
           btn: '管理短信',
-          label: 'scene_num'
+          label: 'scene_num',
+          tabName:'send_sms'
         },
         {
           title: '短信签名',
           info: '已有短信签名 (个)：',
           btn: '管理签名',
-          label: 'sign_num'
+          label: 'sign_num',
+          tabName:'sms_signatures'
         },
         {
           title: '短信模板',
           info: '已有短信模板 (个)：',
           btn: '管理模板',
-          label: 'template_num'
+          label: 'template_num',
+          tabName:'sms_template'
         }
       ],
       info: {
@@ -152,23 +161,36 @@ export default {
       })
     },
     async fnSwitch(status) {
+      let message = '关闭阿里云短信后，商派短信将会自动开启。'
       if (status) {
-        const message = '开启阿里云短信后，商派短信将会自动关闭。'
+        message = '开启阿里云短信后，商派短信将会自动关闭。'
         this.$confirm(message, '', {
           confirmButtonText: '确定',
           cancelButtonText: '取消',
           type: 'warning'
-        }).then(async () => {
-          const result = await setAlisms({ status })
-          this.$message.success('成功')
-          this.init()
-        }).catch(()=>{
-          this.info.status = !status
         })
+          .then(async () => {
+            const result = await setAlisms({ status })
+            this.$message.success('成功')
+            this.init()
+          })
+          .catch(() => {
+            this.info.status = !status
+          })
       } else {
-        const result = await setAlisms({ status })
-        this.$message.success('成功')
-        this.init()
+        this.$confirm(message, '', {
+          confirmButtonText: '确定',
+          cancelButtonText: '取消',
+          type: 'warning'
+        })
+          .then(async () => {
+            const result = await setAlisms({ status })
+            this.$message.success('成功')
+            this.init()
+          })
+          .catch(() => {
+            this.info.status = !status
+          })
       }
       console.log(status)
     },
@@ -178,6 +200,9 @@ export default {
         accesskey_id: '',
         accesskey_secret: ''
       }
+    },
+    fnGo(tabName){
+      this.$router.push({ path:`/setting/datamessage/ali_sms/${tabName}`})
     }
   }
 }

@@ -1,5 +1,4 @@
 import { createSetting } from '@shopex/finder'
-import { Divider, Message, MessageBox } from 'element-ui'
 export default (vm) => {
   const formatDate = (timestamp) => {
     var date = new Date(timestamp * 1000) //时间戳为10位需*1000，时间戳为13位的话不需乘1000
@@ -38,7 +37,7 @@ export default (vm) => {
       { key: 'template_code', name: '模板CODE' },
       { key: 'mobile', name: '手机号' },
       { key: 'sms_content', name: '短信内容' },
-      { key: 'task_name', name: '任务名称' }
+      { key: 'task_name', name: '任务名称', slot: 'task_name' }
 
     ],
     columns: [

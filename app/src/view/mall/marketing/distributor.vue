@@ -769,6 +769,7 @@ export default {
     handleCancelLabelsDialog() {
       this.editValidDialog = false
       this.tag.dialog = false
+      this.getList()
     },
     tagUpdate(row) {
       this.tag.editItem = [row.itemName]
@@ -845,9 +846,9 @@ export default {
       if (val === 'true') {
         msg = '确定开启店铺？'
       } else if (val === 'false') {
-        msg = '确定禁用店铺？'
+        msg = '禁用后该店铺的订单将无法处理，同时如首页装修有该店铺或店铺商品将无法正常购买，请确认是否禁用？'
       } else if (val === 'delete') {
-        msg = '该店铺废弃后将不可再找回,确定废弃？'
+        msg = '废弃后该店铺的订单将无法处理，同时如首页装修有该店铺或店铺商品将无法正常购买，且该店铺废弃后不可找回，请确认是否废弃？'
       }
       this.$confirm(msg, '提示', {
         confirmButtonText: '确定',

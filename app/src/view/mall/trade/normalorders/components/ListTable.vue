@@ -1,14 +1,7 @@
 <template>
   <div>
     <el-tabs type="border-card" v-model="activeName" @tab-click="handleClick">
-      <el-tab-pane label="全部" name="all" />
-      <el-tab-pane label="待发货" name="notship" />
-      <el-tab-pane label="待退款" name="cancelapply" />
-      <el-tab-pane label="待收货" name="shipping" />
-      <el-tab-pane label="待自提" name="ziti" />
-      <el-tab-pane label="未支付" name="notpay" />
-      <el-tab-pane label="已取消/已关闭" name="cancel" />
-      <el-tab-pane label="已完成" name="done" />
+      <el-tab-pane v-for="item in order_status_list" :label="item.name" :name="item.value" :key="item.value" />
       <el-table :data="list" v-loading="loading" element-loading-text="数据加载中" :size="size">
         <el-table-column width="200" prop="order_id" label="订单信息">
           <template slot-scope="scope">
@@ -377,6 +370,22 @@ export default {
       IsBind: false,
       is_distributor: false,
       activeName: "all",
+      order_status_list: [
+        { name: "全部", value: "all" },
+        { name: "待支付", value: "notpay" },
+        { name: "待发货", value: "notship" },
+        { name: "待收货", value: "shipping" },
+        { name: "待退款", value: "cancelapply" },
+        { name: "待自提", value: "ziti" },
+        { name: "已取消", value: "cancel" },
+        { name: "已完成", value: "finish" },
+        { name: "待接单", value: "dada_0" },
+        { name: "待骑士接单", value: "dada_1" },
+        { name: "待取货", value: "dada_2" },
+        { name: "骑士到店", value: "dada_100" },
+        { name: "配送中", value: "dada_3" },
+        { name: "未妥投", value: "dada_9" }
+      ]
     }
   },
   components: {
@@ -496,6 +505,7 @@ export default {
       this.$emit('onChangeData', 'deliveryInfo', { order_id })
     },
     handleClick(tab) {
+      console.log(tab.name, 'tab.name')
       this.$emit('onChangeData', 'params', {
         order_status: tab.name == 'all' ? '' : tab.name,
         page: 1

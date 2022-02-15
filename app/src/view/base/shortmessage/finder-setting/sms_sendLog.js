@@ -59,7 +59,7 @@ export default (vm) => {
             },
             [
               h('div', {
-                class: `status-icon ${row.status == '1' && 'success'} ${
+                class: `status-icon ${row.status == '3' && 'success'} ${
                   row.status == '2' && 'fail'
                 }`
               }),

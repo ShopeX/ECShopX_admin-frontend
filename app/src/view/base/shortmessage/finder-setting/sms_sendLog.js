@@ -32,8 +32,8 @@ export default (vm) => {
         endPlaceholder: '结束日期'
       },
 
-      { key: 'status', name: '短信类型', type: 'select', options: vm.smeType_options },
-      { key: 'template_type', name: '发送状态', type: 'select', options: vm.search_options },
+      { key: 'template_type', name: '短信类型', type: 'select', options: vm.smeType_options },
+      { key: 'status', name: '发送状态', type: 'select', options: vm.search_options },
       { key: 'template_code', name: '模板CODE' },
       { key: 'mobile', name: '手机号' },
       { key: 'sms_content', name: '短信内容' },

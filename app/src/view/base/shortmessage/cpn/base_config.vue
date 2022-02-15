@@ -60,6 +60,7 @@
       </section>
     </el-form>
     <!-- 添加短信 -->
+    
     <el-dialog
       title="阿里云短信服务基础配置"
       :visible="visible"
@@ -131,8 +132,8 @@ export default {
       },
       visible: false,
       rules: {
-        accesskey_id: [requiredRules('Accesskey ID')],
-        accesskey_secret: [requiredRules('Accesskey secret')]
+        accesskey_id: [requiredRules('Accesskey ID','change')],
+        accesskey_secret: [requiredRules('Accesskey secret'),'change']
       }
     }
   },
@@ -142,12 +143,9 @@ export default {
   methods: {
     async init() {
       const result = await getSmsConfig()
-      const { accesskey_id, accesskey_secret, template_num, status, sign_num, scene_num } =
-        result.data.data
+      const { accesskey_id, accesskey_secret, template_num, status, sign_num, scene_num } = result.data.data
       this.info = { scene_num, sign_num, status, template_num }
       this.form = { accesskey_id, accesskey_secret }
-
-      console.log(result)
     },
     fnEdit() {
       this.visible = true
@@ -196,10 +194,7 @@ export default {
     },
     handleClose() {
       this.visible = false
-      this.form = {
-        accesskey_id: '',
-        accesskey_secret: ''
-      }
+      this.init()
     },
     fnGo(tabName){
       this.$router.push({ path:`/setting/datamessage/ali_sms/${tabName}`})

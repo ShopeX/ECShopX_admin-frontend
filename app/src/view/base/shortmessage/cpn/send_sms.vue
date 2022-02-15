@@ -188,11 +188,14 @@ export default {
     },
     fnPass(formName) {
       this.$refs[formName].validate(async (valid) => {
-        const result = await addSceneItem(this.form)
-        this.$message.success('添加成功')
-        this.handleClose()
-        this.initQuery()
-        this.init('serch')
+        if (valid) {
+          const result = await addSceneItem(this.form)
+          this.$message.success('添加成功')
+          this.handleClose()
+          this.initQuery()
+          this.init('serch')
+        }
+
       })
     },
     handleClose() {

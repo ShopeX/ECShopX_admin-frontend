@@ -127,7 +127,7 @@ export default {
 
       // 
       form: {
-        template_type: '',
+        template_type: '0',
         scene_id: '',
         template_name: '',
         template_content: '',

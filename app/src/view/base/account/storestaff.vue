@@ -14,7 +14,7 @@
       </el-col>
     </el-row>
     <el-table :data="accountsList" v-loading="loading">
-      <el-table-column prop="login_name" label="账号名称"></el-table-column>
+      <el-table-column prop="login_name" label="登陆账号"></el-table-column>
       <el-table-column prop="mobile" label="手机号"></el-table-column>
       <el-table-column prop="username" label="姓名"></el-table-column>
       <el-table-column prop="roles" label="角色" v-if="login_type == 'distributor'">

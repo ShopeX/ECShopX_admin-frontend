@@ -37,7 +37,7 @@
             <el-form label-position="left" inline class="demo-table-expand">
               <el-form-item label="订单号：">
                 <router-link :to="{
-                  path: $route.path.indexOf('servicetrade') === -1 ? '/order/entitytrade/tradenormalorders/detail' : '/order/servicetrade/tradeservice/detail', 
+                  path: fnPath(), 
                   query: { orderId: scope.row.orderId, resource: '/mall/trade/payment' }}">{{scope.row.orderId}}</router-link>
               </el-form-item>
               <el-form-item label="支付方式：">
@@ -244,6 +244,15 @@
           message: '复制成功',
           showClose: true
         });
+      },
+      fnPath(){
+        if (this.$store.getters.login_type == 'merchant' ) {
+          return `/merchant/order/tradenormalorders/detail`
+        }
+
+        return this.$route.path.indexOf('servicetrade') === -1 ? '/order/entitytrade/tradenormalorders/detail' : '/order/servicetrade/tradeservice/detail' 
+
+
       },
       // 切换tab
       handleClick(tab, event) {

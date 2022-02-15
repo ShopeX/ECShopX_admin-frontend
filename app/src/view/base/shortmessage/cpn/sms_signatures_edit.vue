@@ -11,6 +11,12 @@
           show-word-limit
           placeholder="长度限2-12个字符，建议为用户真是应用名/网站名/公司名"
         ></el-input>
+        <ul class="tips">
+          <li>· 签名发送自带【】符号，无须添加【】、()、[] 符号，避免重复</li>
+          <li>· 不支持如 “客户服务”、“友情提醒” 等过于宽泛内容、不支持 “测试” 字样的签名</li>
+          <li>· 了解更多<a target="_blank" href="https://help.aliyun.com/document_detail/55324.html?spm=5176.12212999.0.0.4b2b1cbe7AQAyL">签名 / 模板申请规范</a></li>
+
+        </ul>
       </el-form-item>
       <el-form-item label="签名来源" prop="sign_source">
         <el-radio-group v-model="form.sign_source" :disabled="disabled">
@@ -313,6 +319,7 @@ export default {
       color: #999;
       font-size: 12px;
       line-height: 16px;
+      margin-bottom: 4px;
     }
   }
   .el-dialog {

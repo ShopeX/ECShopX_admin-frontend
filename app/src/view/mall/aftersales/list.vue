@@ -54,7 +54,9 @@
           <el-table-column prop="create_time" width="200" label="售后单">
             <template slot-scope="scope">
               <div class="order-num">
-                <router-link target="_blank" :to="{ path: `${$store.getters.login_type != 'distributor' ? '/order/entitytrade/aftersaleslist/detail' : '/shopadmin/order/aftersaleslist/detail'}`, query: { aftersales_bn: scope.row.aftersales_bn }}">{{scope.row.aftersales_bn}}</router-link>
+                <router-link target="_blank" 
+                :to="{ path: `${$store.getters.login_type}` == 'distributor' && '/shopadmin/order/entitytrade/aftersaleslist/detail' ||
+                 `${$store.getters.login_type}` == 'merchant' && '/merchant/order/aftersaleslist/detail' || '/order/entitytrade/aftersaleslist/detail' , query: { aftersales_bn: scope.row.aftersales_bn }}">{{scope.row.aftersales_bn}}</router-link>
                 <el-tooltip effect="dark" content="复制" placement="top-start">
                   <i v-clipboard:copy="scope.row.aftersales_bn" v-clipboard:success="onCopy" class="el-icon-document-copy"></i>
                 </el-tooltip>
@@ -70,7 +72,8 @@
           <el-table-column min-width="150" label="订单">
             <template slot-scope="scope">
               <div class="order-num">
-                <router-link target="_blank" :to="{ path: `${$store.getters.login_type != 'distributor' ? '/order/entitytrade/tradenormalorders/detail' : '/shopadmin/order/tradenormalorders/detail'}`, query: { orderId: scope.row.order_id }}">{{scope.row.order_id}}</router-link>
+                <router-link target="_blank" :to="{ path: `${$store.getters.login_type}` == 'distributor' && '/shopadmin/order/entitytrade/tradenormalorders/detail' || 
+                 `${$store.getters.login_type}` == 'merchant' && '/merchant/order/tradenormalorders/detail' || '/order/entitytrade/tradenormalorders/detail', query: { orderId: scope.row.order_id }}">{{scope.row.order_id}}</router-link>
                 <el-tooltip effect="dark" content="复制" placement="top-start">
                   <i v-clipboard:copy="scope.row.order_id" v-clipboard:success="onCopy" class="el-icon-document-copy"></i>
                 </el-tooltip>
@@ -79,7 +82,7 @@
           </el-table-column>
           <el-table-column min-width="150" label="手机号">
             <template slot-scope="scope">
-              <div class="order-num" v-if="!scope.row.user_delete">
+              <div class="order-num" v-if="!scope.row.user_delete &&  $store.getters.login_type!=='merchant'">
                 <router-link target="_blank" :to="{ path: `${$store.getters.login_type != 'distributor' ? '' : '/shopadmin'}` + '/member/member/detail', query: { user_id: scope.row.user_id }}">{{scope.row.mobile}}</router-link>
               </div>
               <template v-else>

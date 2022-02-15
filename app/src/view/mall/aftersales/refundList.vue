@@ -130,7 +130,8 @@
                 <router-link
                   target="_blank"
                   :to="{
-                    path: '/order/entitytrade/aftersaleslist/detail',
+                    path: `${$store.getters.login_type}` == 'merchant' && '/merchant/order/aftersaleslist/detail' || '/order/entitytrade/aftersaleslist/detail',
+
                     query: { aftersales_bn: scope.row.aftersales_bn }
                   }"
                   >{{ scope.row.aftersales_bn }}</router-link
@@ -166,7 +167,7 @@
                 <router-link
                   target="_blank"
                   :to="{
-                    path: '/order/entitytrade/tradenormalorders/detail',
+                    path: `${$store.getters.login_type}` == 'merchant' && '/merchant/order/tradenormalorders/detail' || '/order/entitytrade/tradenormalorders/detail',
                     query: { orderId: scope.row.order_id }
                   }"
                   >{{ scope.row.order_id }}</router-link

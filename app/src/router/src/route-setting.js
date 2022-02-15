@@ -140,7 +140,7 @@ export default {
                 {
                   path:'edit',
                   component:()=> import('@/view/base/shortmessage/cpn/sms_template_edit'),
-                  meta:"sms_signatures",
+                  meta:"sms_template",
                 }
               ]
             },

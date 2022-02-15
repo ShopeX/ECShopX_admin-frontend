@@ -47,8 +47,8 @@ export default {
       task_name:'',
       failVisible: false,
       search_options: [
-        { label: '发送中', value: '0' },
-        { label: '发送成功', value: '1' },
+        { label: '发送中', value: '1' },
+        { label: '发送成功', value: '3' },
         { label: '发送失败', value: '2' }
       ],
       smeType_options:[

@@ -108,7 +108,7 @@
           <el-button type="primary" plain style="margin-top: 10px" @click="dialogFormVisible = true"
             >批量设置</el-button
           >
-          <el-table :data="good.currentGoods" :key="Math.random()">
+          <el-table :data="good.currentGoods" key="currentGoodKey">
             <el-table-column prop="item_id" label="ID" width="180"> </el-table-column>
             <el-table-column prop="itemName" label="商品名称" width="180"> </el-table-column>
             <el-table-column prop="item_spec_desc" label="规格" width="180"> </el-table-column>
@@ -149,7 +149,7 @@
               @click="dialogFormVisible = true"
               >批量设置</el-button
             >
-            <el-table :data="item_category" :key="Math.random()">
+            <el-table :data="item_category" key="categoryKey">
               <el-table-column prop="category_id" label="ID" width="180"> </el-table-column>
               <el-table-column prop="category_name" label="分类名称" width="180"> </el-table-column>
               <el-table-column label="每人限购" width="280">
@@ -202,7 +202,7 @@
           <el-button type="primary" plain style="margin-top: 10px" @click="dialogFormVisible = true"
             >批量设置</el-button
           >
-          <el-table :data="tag.currentTags" :key="Math.random()">
+          <el-table :data="tag.currentTags" key="currentTagKey">
             <el-table-column prop="tag_id" label="ID" width="180"> </el-table-column>
             <el-table-column prop="tag_name" label="标签名称" width="180"> </el-table-column>
             <el-table-column prop="limit_num" label="每人限购" width="280">
@@ -257,7 +257,7 @@
           <el-button type="primary" plain style="margin-top: 10px" @click="dialogFormVisible = true"
             >批量设置</el-button
           >
-          <el-table :data="brand.currentBrands" :key="Math.random()">
+          <el-table :data="brand.currentBrands" key="currentBrandKey">
             <el-table-column prop="attribute_id" label="ID" width="180"> </el-table-column>
             <el-table-column prop="attribute_name" label="品牌名称" width="180"> </el-table-column>
             <el-table-column prop="limit_num" label="每人限购" width="280">

@@ -6,7 +6,10 @@
           >创建优惠券</el-button
         >
       </div>
-      <el-card>
+      <el-tabs type="border-card" v-model="fetchParams.date_status" @tab-click="handleClick">
+        <el-tab-pane label="已生效" :name="2" />
+        <el-tab-pane label="待生效" :name="1" />
+        <el-tab-pane label="已过期" :name="3" />
         <el-table
           :data="cardList"
           @filter-change="filterTag"
@@ -164,12 +167,12 @@
           >
           </el-pagination>
         </div>
-      </el-card>
+      </el-tabs>
       <el-dialog title="您可以通过以下方式投放" :visible.sync="sendoutVisible">
         <div
           class="sendout-item"
           v-for="(item, index) in sedoutList"
-          :key=""
+          :key="index"
           :class="{ 'checked': currSendout === index }"
           @click="chooseSendout(index)"
         >
@@ -275,7 +278,8 @@ export default {
         currentPage: 1,
         card_type: '',
         status: '',
-        pageSize: 10
+        pageSize: 10,
+        date_status: 2
       },
       multipleSelection: []
     }
@@ -311,7 +315,10 @@ export default {
       this.fetchParams.pageSize = val
       this.getCardList()
     },
-    handleClick(tab, event) {},
+    handleClick(tab, event) {
+      this.fetchParams.date_status = tab.name
+      this.getCardList()
+    },
     addCoupon() {
       this.$router.push({ path: this.matchHidePage('editor') })
     },
@@ -384,7 +391,8 @@ export default {
         card_type: this.fetchParams.card_type,
         page_no: this.fetchParams.currentPage,
         page_size: this.fetchParams.pageSize,
-        store_self: this.fetchParams.store_self
+        store_self: this.fetchParams.store_self,
+        date_status: this.fetchParams.date_status
       }
       getCardList(params)
         .then((res) => {

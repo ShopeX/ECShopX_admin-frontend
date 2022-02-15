@@ -65,7 +65,8 @@
             <div class="tag" v-if="item.template_type == 1">同步模板</div>
           </div>
           <div class="template-name">
-              {{ item.template_title }}
+            <span>{{ item.template_title }}</span>
+            <span class="el-icon-edit edit-css" @click="AddOrEditDialog('edit', item)"></span>
           </div>
           <div class="template-common" v-if="relStore.id == '0'">
             <span class="temp-label">店铺可编辑挂件</span>
@@ -123,7 +124,7 @@
         </div>
       </el-col>
       <el-col :xs="12" :sm="12" :md="8" :lg="6" :xl="4">
-        <div class="template-item add-btn" @click="openDialog">
+        <div class="template-item add-btn" @click="AddOrEditDialog('add')">
           <div class="template-wrap">
             <img class="add-img" src="@/assets/img/add-template.png" alt="添加" />
             <div class="add-text">添加模板</div>
@@ -353,6 +354,8 @@ export default {
       relDistributors: [],
       distributorStatus: false,
       dialogVisible: false,
+      dialogType: '',
+      dialogData: {},
       imgsVisible: false,
       isGetImage: false,
       isSynchronize: false,
@@ -627,9 +630,15 @@ export default {
         })
       })
     },
-    openDialog() {
+    AddOrEditDialog(type, item) {
       this.dialogVisible = true
+      this.dialogType = type
+      this.dialogData = item
       this.editorDataIndex = null
+      if (item) {
+        this.form.template_title = item.template_title
+        this.form.template_pic = item.template_pic
+      }
     },
     closeAddDialog() {
       this.resetForm('form')
@@ -637,14 +646,17 @@ export default {
     addTemplate(formName) {
       this.$refs[formName].validate((valid) => {
         if (valid) {
-          let params = {
-            ...this.form,
-            template_name: this.template_name,
-            // template_name: this.app_type === 'wechat' ?  this.template_name : this.ali_template_name,
-            distributor_id: this.relStore.id
-            // page_type: this.app_page_type[this.app_type]
+          let params = this.form
+          let requestApi
+          if (this.dialogType == 'add') {
+            requestApi = addPagesTemplate
+            params.template_name = this.template_name
+            params.distributor_id = this.relStore.id
+          } else {
+            requestApi = savePagesTemplate
+            params.pages_template_id = this.dialogData.pages_template_id
           }
-          addPagesTemplate(params).then((res) => {
+          requestApi(params).then((res) => {
             this.getList()
             this.resetForm(formName)
           })
@@ -654,7 +666,9 @@ export default {
     resetForm(formName) {
       this.dialogVisible = false
       this.$refs[formName].resetFields()
-      this.form.template_pic = ''
+      this.form = {}
+      this.dialogType = ''
+      this.dialogData = {}
     },
     previewTemplate(pages_template_id) {
       this.previewVisible = true
@@ -945,6 +959,13 @@ export default {
       white-space: nowrap;
       overflow: hidden;
       text-overflow: ellipsis;
+      display: flex;
+      justify-content: space-between;
+      .edit-css {
+        font-size: 14px;
+        color: #409EFF;
+        cursor: pointer;
+      }
     }
     .template-common {
       margin: 0 15px 15px;

@@ -52,7 +52,7 @@
           </el-table-column>
           <el-table-column prop="sign_name" label="操作" width="140">
             <template slot-scope="scope">
-              <el-button type="text" size="small" @click="deteleSms(scope.row.id)">移除</el-button>
+              <el-button type="text" size="small" @click="deteleSms(scope.row.id,item.scene_name)">移除</el-button>
               <el-button
                 type="text"
                 size="small"
@@ -232,7 +232,8 @@ export default {
       })
     },
 
-    async deteleSms(id) {
+    async deteleSms(id,scene_name) {
+      console.log(scene_name);
       const message =
         '移除后，该短信将不在当前场景。如果移除的是已启用的短信，移除后当前场景可不会触发短信。'
       this.$confirm(message, '', {
@@ -241,7 +242,7 @@ export default {
         type: 'warning'
       }).then(async () => {
         const result = await deletedDisablingSms(id)
-        this.initQuery()
+        this.initQuery(scene_name)
         this.init('serch')
         this.$message.success('删除成功')
       })
@@ -264,12 +265,12 @@ export default {
       }
       this.init('serch')
     },
-    initQuery(id = 3) {
+    initQuery(scene_name='') {
       // 初始化一下 （修改状态）
       this.query = {
-        page_size: id,
+        page_size: 3,
         page: 1,
-        scene_name: ''
+        scene_name: scene_name
       }
     },
     changeSelect(val) {

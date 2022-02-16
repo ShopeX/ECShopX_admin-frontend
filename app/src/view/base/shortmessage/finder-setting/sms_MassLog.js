@@ -105,9 +105,11 @@ export default (vm) => {
               }
             },
             row.total_num
-          )
+          ),
+        align:'center'
+        
       },
-      { name: '失败号码数量', key: 'failed_num' }
+      { name: '失败号码数量', key: 'failed_num', align:'center' }
     ],
     actions: [
       {

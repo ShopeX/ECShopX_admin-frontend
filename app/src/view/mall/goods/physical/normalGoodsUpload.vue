@@ -140,7 +140,7 @@ export default {
     },
     uploadHandleTemplate() {
       if (this.activeName == 'normal_goods') {
-        var fileName = '新增实体商品'
+        var fileName = '新增商品'
       }
       let params = { file_type: this.activeName, file_name: fileName }
       exportUploadTemplate(params).then((response) => {

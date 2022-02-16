@@ -65,31 +65,35 @@
           </el-select>
         </el-col>
         <span class="search-tips" v-if="setSearch">选择商品数量不可超过200件</span>
-        <el-select
-          placeholder="选择品牌"
-          remote
-          filterable
-          :remote-method="getGoodsBranchList"
-          clearable
-          v-model="select_branch_value"
-          @change="searchByKey"
-        >
-          <el-option
-            v-for="item in goodsBranchList"
-            :key="item.attribute_id"
-            :label="item.attribute_name"
-            :value="item.attribute_id"
-          ></el-option>
-        </el-select>
-        <el-cascader
-          placeholder="商品分类"
-          :options="categoryList"
-          :props="{ value: 'category_id', checkStrictly: true }"
-          v-model="select_category_value"
-          clearable
-          @change="searchByKey"
-        >
-        </el-cascader>
+        <el-col :span="6">
+          <el-select
+            placeholder="选择品牌"
+            remote
+            filterable
+            :remote-method="getGoodsBranchList"
+            clearable
+            v-model="select_branch_value"
+            @change="searchByKey"
+          >
+            <el-option
+              v-for="item in goodsBranchList"
+              :key="item.attribute_id"
+              :label="item.attribute_name"
+              :value="item.attribute_id"
+            ></el-option>
+          </el-select>
+        </el-col>
+        <el-col :span="6" class='last-col'>
+          <el-cascader
+            placeholder="商品分类"
+            :options="categoryList"
+            :props="{ value: 'category_id', checkStrictly: true }"
+            v-model="select_category_value"
+            clearable
+            @change="searchByKey"
+          >
+          </el-cascader>
+        </el-col>
         <!--<el-col :span="8">
           <el-input placeholder="0" v-model="store_value" class="input-with-select" clearable>
             <el-select v-model="storeSelect" slot="prepend" placeholder="库存筛选" style="width: 110px">
@@ -346,14 +350,12 @@ export default {
       }
       console.log('==handleStoreChange==', val)
       this.store = val
-6
+      6
       // this.selectRows = []
-      this.params.distributor_id = val.id;
+      this.params.distributor_id = val.id
       this.params.templates_id = ''
-      this.getShippingTemplatesList(val.id);
+      this.getShippingTemplatesList(val.id)
       this.getNewsList()
-
-
     },
     getTemplateRow(index, row) {
       this.selectRows = new Array(row)
@@ -481,8 +483,8 @@ export default {
             this.loading = false
             // 回显
             this.toggleSelection(this.relItemsIds)
-          }) 
-        } else {  
+          })
+        } else {
           getDistributorItems(param).then((response) => {
             this.itemsData = response.data.data.list
             this.total_count = parseInt(response.data.data.total_count)
@@ -491,7 +493,7 @@ export default {
         }
       }
     },
-      toggleSelection(rows) {
+    toggleSelection(rows) {
       if (rows) {
         rows.forEach((row) => {
           this.$refs.multipleTable.toggleRowSelection(row)
@@ -501,9 +503,9 @@ export default {
       }
     },
     // 获取  运费模板 options
-    getShippingTemplatesList(distributor_id=0) {
+    getShippingTemplatesList(distributor_id = 0) {
       this.loading = true
-      getShippingTemplatesList({distributor_id}).then((response) => {
+      getShippingTemplatesList({ distributor_id }).then((response) => {
         this.templatesList = response.data.data.list
       })
     },
@@ -571,7 +573,7 @@ export default {
     ...mapGetters(['wheight'])
   },
   watch: {
-    itemsVisible(val) { 
+    itemsVisible(val) {
       if (val) {
         if (this.relStore.id) {
           this.params.distributor_id = this.relStore.id
@@ -643,7 +645,7 @@ export default {
       }
     },
     relItemsIds(newVal, oldVal) {
-      console.log('==================');
+      console.log('==================')
       if (newVal.length > 0) {
         this.multipleSelection = newVal
       }
@@ -799,5 +801,8 @@ export default {
 }
 .search-tips {
   line-height: 40px;
+}
+.last-col{
+  margin-top:8px;
 }
 </style>

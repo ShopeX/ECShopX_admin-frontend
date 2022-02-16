@@ -5,9 +5,6 @@
         class="bg"
         :style="{
           backgroundImage: 'url(' + login_bg + ')',
-          backgroundSize: 'cover',
-          backgroundPosition: 'center',
-          backgroundRepeat: 'no-repeat',
           height: size + 'px',
           width: size + 'px'
         }"
@@ -23,9 +20,9 @@
           class="form"
         >
           <div class="box">
-            <h3>平台管理中心</h3>
-            <el-tabs v-model="activeName" class="tab">
-              <el-tab-pane label="管理员账号登录" name="first">
+            <h3>{{ title }}</h3>
+            <el-tabs v-model="activeName" class="tab" v-if="$route.meta.type=='admin'">
+              <el-tab-pane label="管理员账号登录" name="first" >
                 <el-form-item label="账户" prop="account">
                   <el-input v-model="form.account"></el-input>
                 </el-form-item>
@@ -41,11 +38,19 @@
                   <el-input type="password" v-model="form.checkPass"></el-input>
                 </el-form-item>
               </el-tab-pane>
-              <el-form-item style="margin-top: 40px">
-                <!-- <div class="btn" @click="fnLogin('form')">登录</div> -->
-                <loadingBtn class="btn" @clickHandle="fnLogin('form')" ref="loadingBtn" />
-              </el-form-item>
             </el-tabs>
+            <div class="tab" v-else>
+              <el-form-item label="账户" prop="account">
+                <el-input v-model="form.account"></el-input>
+              </el-form-item>
+              <el-form-item label="密码" prop="checkPass">
+                <el-input type="password" v-model="form.checkPass"></el-input>
+              </el-form-item>
+            </div>
+            <el-form-item style="margin-top: 40px;margin-bottom:10px" label-wdith='0px'>
+              <loadingBtn class="btn" @clickHandle="fnLogin('form')" ref="loadingBtn" />
+            </el-form-item>
+            <p v-if="loginType!='admin'" class="tip">忘记密码，请联系管理员重置</p>
           </div>
         </el-form>
       </section>
@@ -54,17 +59,25 @@
 </template>
 
 <script>
-const login_bg = require('@/assets/img/cover/normal.png')
+const login_bg_admin = require(`@/assets/img/cover/normal.png`);
+const login_bg_merchant = require(`@/assets/img/cover/merchant.png`);
+const login_bg_shopadmin = require(`@/assets/img/cover/shopadmin.png`);
+
+
 import { requiredRules, MinRules } from '@/utils/validate'
 import loadingBtn from '@/components/loading-btn'
 import { mapMutations } from 'vuex'
+import fetch from '@/utils/fetch'
+import { getAdminInfo } from '@/api/login'
+
 export default {
   components: {
-    loadingBtn
+    loadingBtn,
   },
   data() {
     return {
-      login_bg,
+      title:'平台管理中心',
+      login_bg:login_bg_admin,
       size: 0,
       activeName: 'first',
       form: {
@@ -80,28 +93,49 @@ export default {
   },
   mounted() {
     window.addEventListener('resize', this.fnSize())
-    this.$store.dispatch('setLoginType', 'default')
+    this.init()
   },
   destroyed() {
     window.removeEventListener('resize', this.fnSize)
   },
   methods: {
     ...mapMutations(['SET_TOKEN', 'SET_TOKEN_EXP', 'SET_USERINFO', 'SET_LOGIN_TYPE']),
+    init(){
+      this.loginType = this.$route.meta.type;
+      console.log(this.loginType);
+      
+      switch (this.loginType) {
+        case 'distributor':
+          this.title = '店铺管理中心'
+          this.login_bg = login_bg_shopadmin
+          break;
+        case 'dealer':
+          this.title = '经销商管理中心'
+          this.login_bg = login_bg_merchant
+          break;
+        case 'merchant':
+          this.title = '商户管理中心'
+          this.login_bg = login_bg_merchant
+          break;
+      }
+      this.$store.dispatch('setLoginType', this.loginType)
+    },
     fnSize() {
       this.size = document.body.clientHeight
     },
     fnLogin(formName) {
       this.$refs[formName].validate(async (valid) => {
         if (valid) {
-          let obj = {
+          const params = {
             username: this.form.account,
             password: this.form.checkPass,
             logintype: this.loginType
           }
           try {
-            const res = await this.$api.auth.login(obj)
+            const res = await this.$api.auth.login(params)
             const { token } = res.data.data
             if (token) {
+
               this.loginSuccess(token)
             } else {
               this.$message({
@@ -121,16 +155,31 @@ export default {
     async loginSuccess(token) {
       this.SET_TOKEN({ token })
       this.SET_TOKEN_EXP({ exp: new Date().getTime() })
+      this.SET_LOGIN_TYPE({ loginType: this.loginType })
       this.$message({
         message: '登录成功',
         type: 'success'
       })
       const userInfo = await this.$api.login.getAdminInfo()
-      this.loading = false
       this.SET_USERINFO(userInfo.data.data)
-      this.SET_LOGIN_TYPE({ loginType: 'normal' })
-      window.location.href = '/'
-    }
+      if (this.loginType=='distributor') {
+        this.$router.push({ path: '/shopadmin/shoplist' })
+      }else if(this.loginType=='dealer'){
+        const isShow = localStorage.getItem('dealer_isShow')
+        if (isShow) {
+          this.$router.push({
+            path: '/dealer/adapay_member/info'
+          })
+          return
+        }
+        this.$router.push({ path: '/dealer/index' })
+      }else if(this.loginType=='marchant'){
+           this.$router.push({ path: '/merchant' }) 
+      }else{
+        window.location.href = '/'
+      }
+     
+    },
   }
 }
 </script>
@@ -141,9 +190,9 @@ export default {
     display: flex;
     width: 100vw;
     .bg {
-      //   width: 55%;
-      //   height: auto;
-      //   min-height: 768px;
+      background-size: cover;
+      background-position: left;
+      background-repeat: no-repeat;
     }
     .content {
       flex: 1;
@@ -166,17 +215,23 @@ export default {
           color: #888888;
           text-align: center;
         }
-        .tab {
-          .btn {
-            width: 100%;
-            background: #cb060f;
-            border-radius: 40px;
-            text-align: center;
-            color: #fff;
-            cursor: pointer;
-            border: none;
-          }
+         
+        .btn {
+          width: 100%;
+          padding: 12px;
+          background: #cb060f;
+          border-radius: 40px;
+          text-align: center;
+          color: #fff;
+          cursor: pointer;
+          border: none;
         }
+        .tip{
+          text-align: center;
+          font-size: 12px;
+          color: #999;
+        }
+        
       }
     }
   }
@@ -209,10 +264,9 @@ export default {
   .el-tabs__active-bar {
     background-color: #cb060f;
   }
-  .tab {
     .el-form-item__content {
       margin-left: 0px !important;
     }
-  }
+  
 }
 </style>

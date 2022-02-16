@@ -186,6 +186,7 @@ export default {
           }
           try { 
             const res = await this.$api.auth.login(params) 
+            debugger
             const { token } = res.data.data
             this.setTokenAndGetRoute(token)  
           } catch(e) {  

@@ -7,23 +7,27 @@ export default [
     path: '/login',
     component: () => import('@/view/auth/login'),
     meta: {
-      auth: false
+      auth: false,
+      type:'admin'
     },
     name: '授权-登录'
   },
   {
     path: '/shopadmin/login',
-    component: () => import( '@/view/shoplogin' ),
+    component: () => import( '@/view/auth/login' ),
     meta: {
-      auth: false
+      auth: false,
+      type:'distributor'
     },
     name: '授权-店铺登录'
   },
   {
     path: '/merchant/login',
-    component: () => import( '@/view/merchantlogin' ),
+    // component: () => import( '@/view/merchantlogin' ),
+    component: () => import( '@/view/auth/login' ),
     meta: {
-      auth: false
+      auth: false,
+      type:'merchant'
     },
     name: '授权-商户登陆'
   },
@@ -41,9 +45,11 @@ export default [
   }, 
   {
     path:'/dealer/login',
-    component:()=> import('@/view/auth/dealer_login'),
+    // component:()=> import('@/view/auth/dealer_login'),
+    component:()=> import('@/view/auth/login'),
     meta:{
-      auth:false
+      auth:false,
+      type:'dealer'
     },
     name:'授权-经销商登录'
   },

@@ -191,7 +191,7 @@ export function editSmsTemplate(params={}) {
 export function deleteSmsTemplate(id) {
   return fetch({
     url: `/aliyunsms/template/delete/${id}`,
-    method: 'detele',
+    method: 'delete',
   })
 }
 

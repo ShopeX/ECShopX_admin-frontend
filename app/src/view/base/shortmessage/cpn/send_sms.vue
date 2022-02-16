@@ -84,7 +84,7 @@
         <el-form-item label="模板" prop="template_id">
           <el-select v-model="form.template_id" placeholder="请选择模板" style="width: 95%">
             <el-option
-              :label="item.scene_name"
+              :label="item.template_name"
               :value="item.id"
               v-for="item in SmsTemplateList"
               :key="item.id"

@@ -200,11 +200,12 @@ export default {
     },
     handleClose() {
       this.visible = false
-      this.form = {
-        scene_id: '',
-        sign_id: '',
-        template_id: ''
-      }
+      // this.form = {
+      //   scene_id: '',
+      //   sign_id: '',
+      //   template_id: ''
+      // }
+      this.$refs['form'].resetFields();
     },
     // 停用/启用/删除
     fnDisablingSms(id, flag) {

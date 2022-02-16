@@ -35,7 +35,9 @@
                 <span>{{ form.accesskey_secret }}</span>
               </el-form-item>
 
-              <a href="https://help.aliyun.com/document_detail/53045.html" target="_blank">如何获取 AccessKey ID 和 AccessKey Secret。</a>
+              <a href="https://help.aliyun.com/document_detail/53045.html" target="_blank"
+                >如何获取 AccessKey ID 和 AccessKey Secret。</a
+              >
             </div>
             <div class="right">
               <el-button type="primary" class="btn" plain @click="fnEdit">编辑</el-button>
@@ -53,14 +55,16 @@
               </el-form-item>
             </div>
             <div class="right">
-              <el-button type="primary" class="btn" plain @click="fnGo(item.tabName)">{{ item.btn }}</el-button>
+              <el-button type="primary" class="btn" plain @click="fnGo(item.tabName)">{{
+                item.btn
+              }}</el-button>
             </div>
           </div>
         </div>
       </section>
     </el-form>
     <!-- 添加短信 -->
-    
+
     <el-dialog
       title="阿里云短信服务基础配置"
       :visible="visible"
@@ -76,7 +80,9 @@
           <el-input v-model="form.accesskey_secret" placeholder="阿里云RAM用户的 Accesskey Secret">
           </el-input>
         </el-form-item>
-        <a href="https://help.aliyun.com/document_detail/53045.html" target="_blank">如何获取 AccessKey ID 和 AccessKey Secret。</a>
+        <a href="https://help.aliyun.com/document_detail/53045.html" target="_blank"
+          >如何获取 AccessKey ID 和 AccessKey Secret。</a
+        >
       </el-form>
       <span slot="footer" class="dialog-footer">
         <el-button @click="handleClose">取 消</el-button>
@@ -107,21 +113,21 @@ export default {
           info: '自动发送短信场景 (个)：',
           btn: '管理短信',
           label: 'scene_num',
-          tabName:'send_sms'
+          tabName: 'send_sms'
         },
         {
           title: '短信签名',
           info: '已有短信签名 (个)：',
           btn: '管理签名',
           label: 'sign_num',
-          tabName:'sms_signatures'
+          tabName: 'sms_signatures'
         },
         {
           title: '短信模板',
           info: '已有短信模板 (个)：',
           btn: '管理模板',
           label: 'template_num',
-          tabName:'sms_template'
+          tabName: 'sms_template'
         }
       ],
       info: {
@@ -132,8 +138,8 @@ export default {
       },
       visible: false,
       rules: {
-        accesskey_id: [requiredRules('Accesskey ID','change')],
-        accesskey_secret: [requiredRules('Accesskey secret'),'change']
+        accesskey_id: [requiredRules('Accesskey ID', 'change')],
+        accesskey_secret: [requiredRules('Accesskey secret'), 'change']
       }
     }
   },
@@ -143,7 +149,8 @@ export default {
   methods: {
     async init() {
       const result = await getSmsConfig()
-      const { accesskey_id, accesskey_secret, template_num, status, sign_num, scene_num } = result.data.data
+      const { accesskey_id, accesskey_secret, template_num, status, sign_num, scene_num } =
+        result.data.data
       this.info = { scene_num, sign_num, status, template_num }
       this.form = { accesskey_id, accesskey_secret }
     },
@@ -152,10 +159,12 @@ export default {
     },
     fnPass(formName) {
       this.$refs[formName].validate(async (valid) => {
-        const result = await setSmsConfig(this.form)
-        this.$message.success('成功')
-        this.handleClose()
-        this.init()
+        if (valid) {
+          const result = await setSmsConfig(this.form)
+          this.$message.success('成功')
+          this.handleClose()
+          this.init()
+        }
       })
     },
     async fnSwitch(status) {
@@ -196,8 +205,8 @@ export default {
       this.visible = false
       this.init()
     },
-    fnGo(tabName){
-      this.$router.push({ path:`/setting/datamessage/ali_sms/${tabName}`})
+    fnGo(tabName) {
+      this.$router.push({ path: `/setting/datamessage/ali_sms/${tabName}` })
     }
   }
 }

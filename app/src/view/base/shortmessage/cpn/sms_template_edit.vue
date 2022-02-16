@@ -167,8 +167,12 @@ export default {
       this.variables = [];
     },
     async 'form.scene_id'(id){
+      console.log(id,`============`);
       const result = await getTemplateContentLabel({id});
       this.variables = result.data.data.variables
+      if (this.$route.query.type=='edit' || this.$route.query.type=='detail') {
+        return
+      }
       this.form.template_content = result.data.data.default_template
       // console.log(result);
     }
@@ -194,7 +198,7 @@ export default {
         template_type,
         scene_id:scene_id+'',
         template_name,
-        template_content:template_content,
+        template_content,
         remark
       }
       

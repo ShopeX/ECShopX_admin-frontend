@@ -1083,7 +1083,7 @@ export default {
           link: "/entity/goods/goodsphysical/editor",
           icon: "box",
           color: "#fa888b",
-          text: "新增实体商品",
+          text: "新增商品",
         },
         // {
         //   link: "/entity/service_goods/servicegoods/editor",
@@ -1125,7 +1125,7 @@ export default {
           link: "/order/entitytrade/tradenormalorders",
           icon: "clipboard-list",
           color: "#7cc0f4",
-          text: "实体订单处理",
+          text: "订单处理",
         },
         {
           link: "/order/entitytrade/aftersaleslist",

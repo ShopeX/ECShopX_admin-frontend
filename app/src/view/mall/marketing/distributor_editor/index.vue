@@ -97,6 +97,17 @@ export default {
     BaseForm,
     IntroduceForm
   },
+  watch:{
+    form:{
+      handler:function(val){  
+        if(val.merchant_id==0){
+          this.form.merchant_id=undefined
+        }
+      },
+      immediate: true,
+      deep:true
+    }
+  },
   data() {
     return {
       submitLoading: false,

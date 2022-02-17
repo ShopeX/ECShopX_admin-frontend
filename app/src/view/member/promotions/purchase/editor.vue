@@ -114,14 +114,18 @@
             <el-table-column prop="item_spec_desc" label="规格" width="180"> </el-table-column>
             <el-table-column prop="limit_num" label="每人限购" width="280">
               <template slot-scope="scope">
-                <el-input v-model="scope.row.limit_num"
+                <el-input
+                  v-model="scope.row.limit_num"
+                  @input="inputChange(scope.$index, 'good.currentGoods')"
                   ><template slot="append">件</template></el-input
                 >
               </template>
             </el-table-column>
             <el-table-column prop="limit_fee" label="每人限额" width="280">
               <template slot-scope="scope">
-                <el-input v-model="scope.row.limit_fee"
+                <el-input
+                  v-model="scope.row.limit_fee"
+                  @input="inputChange(scope.$index, 'good.currentGoods')"
                   ><template slot="append">元</template></el-input
                 >
               </template>
@@ -154,14 +158,18 @@
               <el-table-column prop="category_name" label="分类名称" width="180"> </el-table-column>
               <el-table-column label="每人限购" width="280">
                 <template slot-scope="scope">
-                  <el-input v-model="scope.row.limit_num"
+                  <el-input
+                    v-model="scope.row.limit_num"
+                    @input="inputChange(scope.$index, 'item_category')"
                     ><template slot="append">件</template></el-input
                   >
                 </template>
               </el-table-column>
               <el-table-column prop="limit_fee" label="每人限额" width="280">
                 <template slot-scope="scope">
-                  <el-input v-model="scope.row.limit_fee"
+                  <el-input
+                    v-model="scope.row.limit_fee"
+                    @input="inputChange(scope.$index, 'item_category')"
                     ><template slot="append">元</template></el-input
                   >
                 </template>
@@ -207,14 +215,18 @@
             <el-table-column prop="tag_name" label="标签名称" width="180"> </el-table-column>
             <el-table-column prop="limit_num" label="每人限购" width="280">
               <template slot-scope="scope">
-                <el-input v-model="scope.row.limit_num"
+                <el-input
+                  v-model="scope.row.limit_num"
+                  @input="inputChange(scope.$index, 'tag.currentTags')"
                   ><template slot="append">件</template></el-input
                 >
               </template>
             </el-table-column>
             <el-table-column prop="limit_fee" label="每人限额" width="280">
               <template slot-scope="scope">
-                <el-input v-model="scope.row.limit_fee"
+                <el-input
+                  v-model="scope.row.limit_fee"
+                  @input="inputChange(scope.$index, 'tag.currentTags')"
                   ><template slot="append">元</template></el-input
                 >
               </template>
@@ -262,22 +274,31 @@
             <el-table-column prop="attribute_name" label="品牌名称" width="180"> </el-table-column>
             <el-table-column prop="limit_num" label="每人限购" width="280">
               <template slot-scope="scope">
-                <el-input v-model="scope.row.limit_num"
+                <el-input
+                  v-model="scope.row.limit_num"
+                  @input="inputChange(scope.$index, 'brand.currentBrands')"
                   ><template slot="append">件</template></el-input
                 >
               </template>
             </el-table-column>
             <el-table-column prop="limit_fee" label="每人限额" width="280">
               <template slot-scope="scope">
-                <el-input v-model="scope.row.limit_fee"
+                <el-input
+                  v-model="scope.row.limit_fee"
+                  @input="inputChange(scope.$index, 'brand.currentBrands')"
                   ><template slot="append">元</template></el-input
                 >
               </template>
             </el-table-column>
           </el-table>
         </template>
-        <el-dialog title="批量设置限购" :visible="dialogFormVisible" width="500px">
-          <el-form :model="dialogForm">
+        <el-dialog
+          title="批量设置限购"
+          :visible="dialogFormVisible"
+          width="500px"
+          @close="dialogClose"
+        >
+          <el-form :model="dialogForm" key="dialogFormKey">
             <el-form-item label="每人限购：" style="display: flex">
               <el-input v-model="dialogForm.limit_num" autocomplete="off"
                 ><template slot="append">件</template></el-input
@@ -510,6 +531,15 @@ export default {
       } else {
         this.good.currentGoods = data
       }
+    },
+    dialogClose() {
+      this.dialogFormVisible = false
+    },
+    inputChange(index, arr) {
+      const curObj = eval('this.' + arr)
+      const tempObj = curObj[index]
+      this.$set(curObj, index, tempObj)
+      this.$forceUpdate()
     },
 
     /**
@@ -781,11 +811,12 @@ export default {
         default:
           break
       }
-      currentArr.forEach((item) => {
+      currentArr.forEach((item, index) => {
         item.limit_num = limit_num
         item.limit_fee = limit_fee
+        this.$set(currentArr, index, item)
+        this.$forceUpdate()
       })
-      this.$forceUpdate()
       this.dialogFormVisible = false
     }
   }

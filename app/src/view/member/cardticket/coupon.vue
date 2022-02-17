@@ -42,7 +42,7 @@
               <template v-else>
                 {{ scope.row.begin_time | datetime('YYYY-MM-DD HH:mm:ss') }}
                 <template v-if="scope.row.end_time">~</template> {{ scope.row.end_time | datetime('YYYY-MM-DD HH:mm:ss') }}
-                {{ Date.parse(new Date()) > scope.row.end_time * 1000 ? '已过期' : '' }}
+                <!-- {{ Date.parse(new Date()) > scope.row.end_time * 1000 ? '已过期' : '' }} -->
               </template>
             </template>
           </el-table-column>
@@ -396,14 +396,14 @@ export default {
       }
       getCardList(params)
         .then((res) => {
-          if (res.data.data.list.length > 0) {
+          // if (res.data.data.list.length > 0) {
             this.cardList = res.data.data.list
             this.pagers.total = res.data.data.pagers.total
             this.loading = false
-          } else {
-            this.cardList = []
-            this.loading = false
-          }
+          // } else {
+          //   this.cardList = []
+          //   this.loading = false
+          // }
         })
         .catch((error) => {
           this.loading = false

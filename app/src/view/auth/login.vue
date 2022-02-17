@@ -95,9 +95,20 @@ export default {
   destroyed() {
     window.removeEventListener('resize', this.fnSize)
   },
+  watch:{
+    activeName(val){
+      if (val=='second') {
+        this.loginType = 'staff'
+      }else{
+         this.loginType = 'admin'
+      }
+    }
+  },
   methods: {
     ...mapMutations(['SET_TOKEN', 'SET_TOKEN_EXP', 'SET_USERINFO', 'SET_LOGIN_TYPE']),
     init() {
+
+      
       this.loginType = this.$route.meta.type
       console.log(this.loginType)
 
@@ -115,6 +126,8 @@ export default {
           this.login_bg = login_bg_merchant
           break
       }
+
+
       this.$store.dispatch('setLoginType', this.loginType)
     },
     fnSize() {

@@ -4,14 +4,14 @@
       <el-form-item label="活动名称：">
         <el-input
           v-model="form.purchase_name"
-          style="width: 240px"
+          style="width: 400px"
           maxlength="30"
           type="textarea"
           show-word-limit
         ></el-input>
       </el-form-item>
       <el-form-item label="活动封面：">
-        <div class="frm-tips">建议上传尺寸大小为300*300且格式为png、jpg图片；文件大小为1M内。</div>
+        <div class="frm-tips">建议上传尺寸大小为300*300且格式为png、jpg图片；文件大小为2M内。</div>
         <div>
           <imgBox :imgUrl="form.ad_pic" inline @click="handleImgChange"></imgBox>
         </div>
@@ -83,7 +83,7 @@
           </el-radio-group>
         </el-form-item>
         <el-form-item label="每人限购：" v-if="!allHiden">
-          <el-input style="width: 240px" v-model="form.item_limit"
+          <el-input style="width: 240px" v-model="allLimit"
             ><template slot="append">件</template></el-input
           >
         </el-form-item>
@@ -108,7 +108,8 @@
           <el-button type="primary" plain style="margin-top: 10px" @click="dialogFormVisible = true"
             >批量设置</el-button
           >
-          <el-table :data="good.currentGoods">
+          <el-table :data="good.currentGoods" key="currentGoodKey">
+            <el-table-column prop="item_id" label="ID" width="180"> </el-table-column>
             <el-table-column prop="itemName" label="商品名称" width="180"> </el-table-column>
             <el-table-column prop="item_spec_desc" label="规格" width="180"> </el-table-column>
             <el-table-column prop="limit_num" label="每人限购" width="280">
@@ -148,7 +149,8 @@
               @click="dialogFormVisible = true"
               >批量设置</el-button
             >
-            <el-table :data="item_category">
+            <el-table :data="item_category" key="categoryKey">
+              <el-table-column prop="category_id" label="ID" width="180"> </el-table-column>
               <el-table-column prop="category_name" label="分类名称" width="180"> </el-table-column>
               <el-table-column label="每人限购" width="280">
                 <template slot-scope="scope">
@@ -200,7 +202,8 @@
           <el-button type="primary" plain style="margin-top: 10px" @click="dialogFormVisible = true"
             >批量设置</el-button
           >
-          <el-table :data="tag.currentTags">
+          <el-table :data="tag.currentTags" key="currentTagKey">
+            <el-table-column prop="tag_id" label="ID" width="180"> </el-table-column>
             <el-table-column prop="tag_name" label="标签名称" width="180"> </el-table-column>
             <el-table-column prop="limit_num" label="每人限购" width="280">
               <template slot-scope="scope">
@@ -254,7 +257,8 @@
           <el-button type="primary" plain style="margin-top: 10px" @click="dialogFormVisible = true"
             >批量设置</el-button
           >
-          <el-table :data="brand.currentBrands">
+          <el-table :data="brand.currentBrands" key="currentBrandKey">
+            <el-table-column prop="attribute_id" label="ID" width="180"> </el-table-column>
             <el-table-column prop="attribute_name" label="品牌名称" width="180"> </el-table-column>
             <el-table-column prop="limit_num" label="每人限购" width="280">
               <template slot-scope="scope">
@@ -272,7 +276,7 @@
             </el-table-column>
           </el-table>
         </template>
-        <el-dialog title="批量设置限购" :visible.sync="dialogFormVisible" width="500px">
+        <el-dialog title="批量设置限购" :visible="dialogFormVisible" width="500px">
           <el-form :model="dialogForm">
             <el-form-item label="每人限购：" style="display: flex">
               <el-input v-model="dialogForm.limit_num" autocomplete="off"
@@ -304,7 +308,7 @@ import imgPicker from '@/components/imageselect'
 import SkuSelector from '@/components/function/skuSelector'
 import Treeselect from '@riophae/vue-treeselect'
 import '@riophae/vue-treeselect/dist/vue-treeselect.css'
-import { handleUploadFile, exportUploadTemplate } from '../../../../api/common'
+import { handleUploadFile, exportUploadTemplate } from '@/api/common'
 import { getCategory, getTagList, getGoodsAttr } from '@/api/goods'
 import { createPurchase, editPurchase, getPurchaseInfo } from '@/api/purchase'
 
@@ -342,6 +346,7 @@ export default {
         { key: 'dependents', name: '家属' }
       ],
       allHiden: false,
+      allLimit: '',
       zdItemHidden: true,
       relItems: [],
       categoryHidden: true,
@@ -368,13 +373,8 @@ export default {
         limit_num: '',
         limit_fee: ''
       },
-      invalidItemsList: []
-    }
-  },
-
-  watch: {
-    'item_category'(val) {
-      console.log('val==>', val)
+      invalidItemsList: [],
+      itemTreeLists: []
     }
   },
 
@@ -401,6 +401,7 @@ export default {
           this.categoryHidden = false
           this.allHiden = true
           this.item_category = this.form.item_limit.map((item) => {
+            item.category_id = item.item_id
             item.category_name = item.name
             return item
           })
@@ -409,6 +410,7 @@ export default {
           this.tagHidden = false
           this.allHiden = true
           this.tag.currentTags = this.form.item_limit.map((item) => {
+            item.tag_id = item.item_id
             item.tag_name = item.name
             return item
           })
@@ -417,6 +419,7 @@ export default {
           this.brandHidden = false
           this.allHiden = true
           this.brand.currentBrands = this.form.item_limit.map((item) => {
+            item.attribute_id = item.item_id
             item.attribute_name = item.name
             return item
           })
@@ -424,10 +427,13 @@ export default {
         if (this.form.item_type === 'item') {
           this.zdItemHidden = false
           this.allHiden = true
-          this.good.currentGoods = this.form.item_limit.map((item) => {
-            item.itemName = item.name
-            return item
+          this.$nextTick(() => {
+            this.relItems = res.data.data.itemTreeLists
           })
+        }
+        if (this.form.item_type === 'all') {
+          this.allHiden = false
+          this.allLimit = this.form.item_limit
         }
       })
     }
@@ -458,7 +464,7 @@ export default {
       this.categoryHidden = true
       this.tagHidden = true
       this.brandHidden = true
-      this.form.itemTreeLists = []
+      this.itemTreeLists = []
       this.item_category = []
       this.tag.currentTags = []
       this.form.item_type = val
@@ -468,20 +474,17 @@ export default {
       }
       if (val === 'item') {
         this.zdItemHidden = false
-        this.form.item_limit = []
+        this.good.currentGoods = []
       } else if (val === 'category') {
-        this.form.item_limit = []
         this.categoryHidden = false
         this.item_category = []
       } else if (val === 'tag') {
         this.tagHidden = false
         this.tag.currentTags = []
-        this.form.item_limit = []
         this.showTags()
       } else if (val === 'brand') {
         this.brandHidden = false
         this.brand.currentBrands = []
-        this.form.item_limit = []
         this.showBrands()
       } else if (val === 'all') {
         this.allHiden = false
@@ -493,14 +496,28 @@ export default {
       })
     },
     getItems(data) {
-      this.good.currentGoods = data
+      const { item_limit } = this.form
+      if (Array.isArray(item_limit) && item_limit.length > 0) {
+        this.good.currentGoods = data.map((item) => {
+          this.form.item_limit.forEach((limitItem) => {
+            if (item.itemId === limitItem.item_id) {
+              item.limit_fee = limitItem.limit_fee
+              item.limit_num = limitItem.limit_num
+            }
+          })
+          return item
+        })
+      } else {
+        this.good.currentGoods = data
+      }
     },
 
     /**
      * 上传模板
      * */
     uploadHandleChange(file, fileList) {
-      let params = { isUploadFile: true, file_type: 'marketing_goods', file: file.raw }
+      console.log('file', file)
+      let params = { isUploadFile: true, file_type: 'purchase_goods', file: file.raw }
       handleUploadFile(params).then((response) => {
         this.$message({
           type: 'success',
@@ -539,7 +556,7 @@ export default {
      * 下载模板
      * */
     uploadHandleTemplate() {
-      let params = { file_type: 'marketing_goods', file_name: '商品模板' }
+      let params = { file_type: 'purchase_goods', file_name: '商品模板' }
       exportUploadTemplate(params).then((response) => {
         let { data } = response.data
         if (data.file) {
@@ -692,12 +709,16 @@ export default {
       if (this.form.item_type === 'item') {
         const newArr = this.good.currentGoods.map((item) => {
           const newItem = {}
-          newItem.id = item.goods_id
+          newItem.id = item.itemId
           newItem.limit_fee = item.limit_fee
           newItem.limit_num = item.limit_num
           return newItem
         })
         this.form.item_limit = newArr
+      }
+
+      if (this.form.item_type === 'all') {
+        this.form.item_limit = this.allLimit
       }
       // console.log('this.form==>', this.form)
       // return
@@ -764,6 +785,7 @@ export default {
         item.limit_num = limit_num
         item.limit_fee = limit_fee
       })
+      this.$forceUpdate()
       this.dialogFormVisible = false
     }
   }

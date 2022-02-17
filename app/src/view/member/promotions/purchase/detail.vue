@@ -19,15 +19,22 @@
         }}</el-form-item>
         <el-form-item
           label="每位家属额度："
-          v-if="detail.used_roles.includes('dependents') && !detail.is_share_limitfee"
+          v-if="
+            detail.used_roles &&
+            detail.used_roles.indexOf('dependents') > -1 &&
+            !detail.is_share_limitfee
+          "
           >{{ detail.dependents_limitfee }}</el-form-item
         >
-        <el-form-item label="员工邀请家属上限：" v-if="detail.used_roles.includes('dependents')">{{
-          detail.dependents_limit
-        }}</el-form-item>
+        <el-form-item
+          label="员工邀请家属上限："
+          v-if="detail.used_roles && detail.used_roles.indexOf('dependents') > -1"
+          >{{ detail.dependents_limit }}</el-form-item
+        >
         <el-form-item :label="itemTypeTransform(detail.item_type) + '限购：'">
           <p v-if="detail.item_type == 'all'">每人限购{{ detail.item_limit }}件</p>
           <el-table v-else :data="detail.item_limit">
+            <el-table-column prop="item_id" label="ID"> </el-table-column>
             <el-table-column prop="name" label="名称"> </el-table-column>
             <el-table-column
               prop="item_spec_desc"
@@ -36,15 +43,9 @@
             >
             </el-table-column>
             <el-table-column prop="limit_num" label="每人限购"> </el-table-column>
-            <el-table-column prop="limit_fee" label="每人额度"> </el-table-column>
+            <el-table-column prop="limit_fee" label="每人限额"> </el-table-column>
           </el-table>
         </el-form-item>
-        <el-form-item label="创建时间：">{{
-          detail.created | datetime('YYYY-MM-DD HH:mm:ss')
-        }}</el-form-item>
-        <el-form-item label="更新时间：">{{
-          detail.updated | datetime('YYYY-MM-DD HH:mm:ss')
-        }}</el-form-item>
       </el-form>
     </div>
   </div>
@@ -61,10 +62,13 @@ export default {
   },
   methods: {
     roleTransform(role) {
-      let textArr = []
-      role.includes('employee') && textArr.push('员工')
-      role.includes('dependents') && textArr.push('家属')
-      return textArr.toString()
+      if (role) {
+        let transRole = eval(role)
+        let textArr = []
+        transRole.length > 0 && transRole.indexOf('employee') > -1 && textArr.push('员工')
+        transRole.length > 0 && transRole.indexOf('dependents') > -1 && textArr.push('家属')
+        return textArr.toString()
+      }
     },
     itemTypeTransform(type) {
       switch (type) {

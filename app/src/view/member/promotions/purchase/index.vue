@@ -17,8 +17,13 @@
           </el-select>
         </el-col>
         <el-col :span="8">
-          <el-input clearable placeholder="请输入活动名称" v-model="fetchParams.purchase_name">
-            <el-select
+          <el-input
+            clearable
+            placeholder="请输入活动名称"
+            v-model="fetchParams.purchase_name"
+            @change="dataSearch"
+          >
+            <!-- <el-select
               v-model="fetchParams.purchase_name"
               clearable
               slot="prepend"
@@ -28,17 +33,18 @@
             >
               <el-option
                 v-for="item in cardList"
-                :key="item.purchase_name"
+                :key="item.purchase_id"
                 :label="item.purchase_name"
                 :value="item.purchase_name"
               >
               </el-option>
-            </el-select>
+            </el-select> -->
+            <template slot="prepend">活动名称</template>
             <el-button slot="append" icon="el-icon-search" @click="dataSearch"></el-button>
           </el-input>
         </el-col>
         <el-col :span="4">
-          <el-button type="primary" icon="el-icon-circle-plus" @click="addCoupon"
+          <el-button type="primary" icon="el-icon-circle-plus" @click="addPurchase"
             >新增活动</el-button
           >
         </el-col>
@@ -54,14 +60,14 @@
               {{ scope.row.activity_status | formatStatus }}
             </template>
           </el-table-column>
-          <el-table-column width="280" label="活动有效期">
+          <el-table-column width="301" label="活动有效期">
             <template slot-scope="scope">
               {{ scope.row.begin_date }}
               <template v-if="scope.row.end_date">~</template>
               {{ scope.row.end_date }}
             </template>
           </el-table-column>
-          <el-table-column width="120" label="操作">
+          <el-table-column width="150" label="操作">
             <template slot-scope="scope">
               <div class="operating-icons">
                 <el-button type="text">
@@ -169,8 +175,7 @@ export default {
       this.fetchParams.pageSize = val
       this.getPurchaseList()
     },
-    handleClick(tab, event) {},
-    addCoupon() {
+    addPurchase() {
       this.$router.push({ path: this.matchHidePage('editor') })
     },
     deleteCard(id, index) {

@@ -36,7 +36,7 @@
               v-if="item.itemList.length < 3"
               size="small"
               type="primary"
-              @click="fnAddSms(item.id)"
+              @click="fnAddSms(item.id,item.scene_name)"
               >添加短信</el-button
             >
           </div>
@@ -56,7 +56,7 @@
               <el-button
                 type="text"
                 size="small"
-                @click="fnDisablingSms(scope.row.id, scope.row.status == '0' ? true : false)"
+                @click="fnDisablingSms(scope.row.id, scope.row.status == '0' ? true : false,item.scene_name)"
                 >{{ scope.row.status == '0' ? '启用' : '停用' }}</el-button
               >
             </template>
@@ -133,7 +133,7 @@ export default {
         page: 1,
         scene_name: ''
       },
-      count: 23,
+      count: 24,
       loading: false,
       serchNameList: [],
       //
@@ -145,6 +145,7 @@ export default {
       },
       SmsSignatureList: [], //短信签名
       SmsTemplateList: [], //短信模板
+      activeScene_name:'',
       rules: {
         sign_id: [requiredRules('签名', 'change')],
         template_id: [requiredRules('模板', 'change')]
@@ -157,7 +158,7 @@ export default {
   },
   methods: {
     async getSerchNameList() {
-      const result = await getScenarioList({ page_size: 23 })
+      const result = await getScenarioList({ page_size: 24 })
       this.serchNameList = result.data.data.list.map((item) => {
         return { value: item.scene_name }
       })
@@ -174,8 +175,9 @@ export default {
       this.loading = false
     },
     // 添加短信
-    async fnAddSms(id) {
+    async fnAddSms(id,scene_name) {
       this.visible = true
+      this.activeScene_name = scene_name;
       // 获取选项
       getSmsSignatureList({ params: { status: '1' } }).then((res) => {
         this.SmsSignatureList = res.data.data.list
@@ -191,8 +193,9 @@ export default {
         if (valid) {
           const result = await addSceneItem(this.form)
           this.$message.success('添加成功')
+          this.initQuery(this.activeScene_name)
+          this.activeScene_name = ''
           this.handleClose()
-          this.initQuery()
           this.init('serch')
         }
 
@@ -200,15 +203,10 @@ export default {
     },
     handleClose() {
       this.visible = false
-      // this.form = {
-      //   scene_id: '',
-      //   sign_id: '',
-      //   template_id: ''
-      // }
       this.$refs['form'].resetFields();
     },
     // 停用/启用/删除
-    fnDisablingSms(id, flag) {
+    fnDisablingSms(id, flag,scene_name) {
       const message = flag
         ? '每个场景仅可启用一条短信。启用后，该短信将作为当前场景短信使用。'
         : '停用后当前场景将不会触发短信；您仍可启用其他短信作为当前场景短信使用。'
@@ -221,12 +219,12 @@ export default {
           //启用
           const result = await onDisablingSms({ id })
           this.$message.success('已启用')
-          this.initQuery()
+          this.initQuery(scene_name)
           this.init('serch')
         } else {
           const result = await offDisablingSms({ id })
           this.$message.success('已停用')
-          this.initQuery()
+          this.initQuery(scene_name)
           this.init('serch')
         }
       })

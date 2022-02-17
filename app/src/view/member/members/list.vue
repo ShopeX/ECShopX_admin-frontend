@@ -334,7 +334,7 @@
             </template>
           </el-table-column>
 
-          <!-- <el-table-column label="备注">
+          <el-table-column label="备注">
             <template slot-scope="scope">
               <span v-if="scope.row.remarks">{{ scope.row.remarks }}</span>
               <span v-else class="muted">暂无备注</span>
@@ -347,7 +347,7 @@
                 ></el-button>
               </el-tooltip>
             </template>
-          </el-table-column> -->
+          </el-table-column>
           <el-table-column label="操作" width="180">
             <template slot-scope="scope">
               <el-button type="text" @click="getDetail(scope.row.user_id)">详情</el-button>

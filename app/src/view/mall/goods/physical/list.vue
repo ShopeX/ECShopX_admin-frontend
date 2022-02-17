@@ -795,9 +795,7 @@ export default {
       this.params.page = 1
       if (this.select_regions_value) {
         this.params.regions_id = this.select_regions_value
-      }
-
-       
+      } 
      const category = [...this.select_category_value]
       this.params.category = category.pop()
       if (this.select_tags_value) {

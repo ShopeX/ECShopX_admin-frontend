@@ -25,6 +25,9 @@
             inactive-color="#ff4949"
           ></el-switch>
         </el-form-item>
+        <el-form-item label="功能说明">
+          <el-link type="primary" href="http://www.kdniao.com/product-track1" :underline="false" target="_blank">快递鸟快递物流跟踪</el-link>
+        </el-form-item>
         <div class="section-footer with-border content-center">
           <el-button type="primary" v-loading="loading" @click="onSubmit">保存</el-button>
         </div>
@@ -44,6 +47,9 @@
             active-color="#13ce66"
             inactive-color="#ff4949"
           ></el-switch>
+        </el-form-item>
+        <el-form-item label="功能说明">
+          <el-link type="primary" href="https://api.kuaidi100.com/product/query/" :underline="false" target="_blank">快递100实时快递查询</el-link>
         </el-form-item>
         <div class="section-footer with-border content-center">
           <el-button type="primary" v-loading="loading" @click="onSubmit">保存</el-button>

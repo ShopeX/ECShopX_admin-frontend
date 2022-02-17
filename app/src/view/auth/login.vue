@@ -48,7 +48,7 @@
               </el-form-item>
             </div>
             <el-form-item style="margin-top: 40px; margin-bottom: 10px" label-wdith="0px">
-              <loadingBtn class="btn" @clickHandle="fnLogin('form')" ref="loadingBtn" />
+              <loadingBtn class="btn" @clickHandle="fnLogin('form')" ref="loadingBtn" text='登录'/>
             </el-form-item>
             <p v-if="loginType != 'admin'" class="tip">忘记密码，请联系管理员重置</p>
           </div>
@@ -200,9 +200,9 @@ export default {
         left: 50%;
         top: 50%;
         transform: translate(-50%, -60%);
-        min-width: 500px;
+        min-width: 300px;
         max-width: 600px;
-        padding: 50px;
+        // padding: 50px;
 
         h3 {
           margin-bottom: 40px;
@@ -214,6 +214,7 @@ export default {
         .btn {
           width: 100%;
           padding: 12px;
+          height: 40px;
           background: #cb060f;
           border-radius: 40px;
           text-align: center;
@@ -246,11 +247,15 @@ export default {
   .el-tabs__nav-wrap::after {
     background-color: transparent;
   }
+  .el-form-item__label{
+    color: #888;
+  }
   .el-tabs__item {
     color: #999;
-    &:hover {
-      color: #000;
-    }
+    font-size: 16px;
+    // &:hover {
+    //   color: #000;
+    // }
   }
   .el-tabs__item.is-active {
     color: #cb060f;

@@ -80,7 +80,7 @@
     <el-dialog :visible="resultVisible" class="result" :show-close="false">
       <el-result icon="success" title="提交成功" subTitle="请根据提示进行操作">
         <template slot="subTitle">
-          <h5>签名已提交审核，审核结果可在签名列表中查看。</h5>
+          <h5>模板已提交审核，审核结果可在模板列表中查看。</h5>
           <ul class="tips">
             <li>预计两小时完成审核，政企签名预计在 48 小时工作时间内审核</li>
             <li>审核工作时间：周一至周日 9:00-23:00（法定节日顺延）</li>

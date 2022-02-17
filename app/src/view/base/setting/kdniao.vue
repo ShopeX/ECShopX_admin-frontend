@@ -26,7 +26,7 @@
           ></el-switch>
         </el-form-item>
         <el-form-item label="功能说明">
-          <el-link type="primary" href="http://www.kdniao.com/product-track1" :underline="false" target="_blank">电商平台快递物流跟踪</el-link>
+          <el-link type="primary" href="http://www.kdniao.com/product-track1" :underline="false" target="_blank">快递鸟快递物流跟踪</el-link>
         </el-form-item>
         <div class="section-footer with-border content-center">
           <el-button type="primary" v-loading="loading" @click="onSubmit">保存</el-button>

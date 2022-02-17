@@ -46,7 +46,7 @@
               </el-select>
             </el-form-item>
           </el-col>
-          <el-col :span="8" v-if="$store.getters.login_type=='normal'">
+          <el-col :span="8" v-if="$store.getters.login_type=='admin'">
             <el-form-item label="手续费扣费方式" prop='adapay_fee_mode'>
               <el-select v-model="form.adapay_fee_mode" style="width: 100%">
                 <el-option label="内扣" value="I"></el-option>
@@ -173,7 +173,7 @@
                   <span v-else-if="scope.row.adapayDivStatus =='DIVED'">已分账</span>
                 </template>
               </el-table-column>
-              <template v-if="$store.getters.login_type=='normal'">
+              <template v-if="$store.getters.login_type=='admin'">
                 <el-table-column
                   label="手续费扣费方式"
                   prop="adapayFeeMode">

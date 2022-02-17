@@ -100,7 +100,7 @@
         </div>
       </div>
     </div>
-    <el-descriptions :column="2" title="手续费信息" v-if="list.adapay_fee && $store.getters.login_type=='normal'">
+    <el-descriptions :column="2" title="手续费信息" v-if="list.adapay_fee && $store.getters.login_type=='admin'">
       <el-descriptions-item label="手续费扣费方式">
         <span v-if="list.adapay_fee_mode == 'O'">外扣</span>
         <span v-else-if="list.adapay_fee_mode == 'I'">内扣</span>

@@ -110,10 +110,13 @@
              </export-tip>
             <el-button size="small" type="primary" @click="syncItems">同步商品数据</el-button>
             <router-link to="/entity/goods/goodsphysical/physicalstoreupload">
-              <el-button size="small" type="primary">商品库存导入</el-button>
+              <el-button size="small" type="primary">库存导入</el-button>
             </router-link>
             <router-link to="/entity/goods/goodsphysical/physicalprofitupload">
-              <el-button size="small" type="primary">商品分润导入</el-button>
+              <el-button size="small" type="primary">分润导入</el-button>
+            </router-link>
+            <router-link to="/entity/goods/goodsphysical/physicalupload">
+              <el-button size="small" type="primary">商品导入</el-button>
             </router-link>
           </el-button-group>
           <el-button size="small" type="primary" icon="el-icon-circle-plus" plain @click="addItems">添加商品</el-button>

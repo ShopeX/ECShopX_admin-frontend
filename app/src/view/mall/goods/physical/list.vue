@@ -13,7 +13,24 @@
 <template>
   <div>
     <div v-if="$route.path.indexOf('editor') === -1 && $route.path.indexOf('physicalstoreupload') === -1 && $route.path.indexOf('physicalprofitupload') === -1 && $route.path.indexOf('physicalupload') === -1">
-      <el-row class="filter-header" :gutter="20">
+      <div class="action-container">
+        <el-button type="primary" icon="iconfont icon-xinzengcaozuo-01" @click="addItems">添加商品</el-button>
+        <el-dropdown>
+          <el-button type="primary" plain icon="iconfont icon-daorucaozuo-01">
+            导入<i class="el-icon-arrow-down el-icon--right"></i>
+          </el-button>
+          <el-dropdown-menu slot="dropdown">
+            <router-link to="/entity/goods/goodsphysical/physicalupload">
+              <el-dropdown-item>商品导入</el-dropdown-item>
+            </router-link>
+            <router-link to="/entity/goods/goodsphysical/physicalstoreupload">
+              <el-dropdown-item>库存导入</el-dropdown-item>
+            </router-link>
+          </el-dropdown-menu>
+        </el-dropdown>
+      </div>
+
+      <el-row class="filter-header filter-container" :gutter="20">
         <el-col>
           <el-input class="input-m" placeholder="商品名称" v-model="params.keywords">
             <el-button slot="append" icon="el-icon-search" @click="goodsSearch"></el-button>
@@ -71,57 +88,27 @@
             clearable
             @change="searchAction">
           </el-cascader>
-          <!-- <el-select v-model="params.special_type" clearable placeholder="商品类型" @change="searchAction">
-            <el-option
-              placeholder="商品类型"
-              v-for="item in special_type_list"
-              :key="item.value"
-              :label="item.name"
-              :value="item.value">
-            </el-option>
-          </el-select> -->
-        </el-col>
-        <!--
-        <el-col :md="3" :lg="3">
-          <el-select size="small" v-model="params.is_gift" placeholder="是否赠品" @change="searchAction" style="width: 110px">
-            <el-option label="全部" value="all"></el-option>
-            <el-option label="赠品" :value="true"></el-option>
-            <el-option label="商品" :value="false"></el-option>
-          </el-select>
-        </el-col>
-        -->
-      </el-row>
-      <el-row :gutter="20">
-        <el-col>
-          <el-button-group>
-            <el-button size="small" type="primary" @click="addCategory">更改商品分类</el-button>
-            <el-button size="small" type="primary" @click="addTemplates">更改运费模板</el-button>
-            <el-button size="small" type="primary" @click="addItemTag">打标签</el-button>
-            <el-button size="small" type="primary" @click="batchItemsStore">统一库存</el-button>
-            <el-button size="small" type="primary" @click="batchItemsStatus('onsale')">批量上架</el-button>
-            <el-button size="small" type="primary" @click="batchItemsStatus('instock')">批量下架</el-button>
-            <el-button size="small" type="primary" @click="batchGifts('true')">批量设置为赠品</el-button>
-            <el-button size="small" type="primary" @click="batchGifts('false')">批量设置为非赠品</el-button>
-            <export-tip @exportHandle='exportItemsData'>
-              <el-button size="small" type="primary">导出商品信息</el-button>
-            </export-tip>
-             <export-tip @exportHandle='exportItemsTagData'>
-            <el-button size="small" type="primary">导出商品标签</el-button>
-             </export-tip>
-            <el-button size="small" type="primary" @click="syncItems">同步商品数据</el-button>
-            <router-link to="/entity/goods/goodsphysical/physicalstoreupload">
-              <el-button size="small" type="primary">库存导入</el-button>
-            </router-link>
-            <!-- <router-link to="/entity/goods/goodsphysical/physicalprofitupload">
-              <el-button size="small" type="primary">分润导入</el-button>
-            </router-link> -->
-            <router-link to="/entity/goods/goodsphysical/physicalupload">
-              <el-button size="small" type="primary">商品导入</el-button>
-            </router-link>
-          </el-button-group>
-          <el-button size="small" type="primary" icon="el-icon-circle-plus" plain @click="addItems">添加商品</el-button>
         </el-col>
       </el-row>
+
+      <div class="action-container">
+        <el-button type="primary" plain @click="addCategory">更改商品分类</el-button>
+        <el-button type="primary" plain @click="addTemplates">更改运费模板</el-button>
+        <el-button type="primary" plain @click="addItemTag">打标签</el-button>
+        <el-button type="primary" plain @click="batchItemsStore">统一库存</el-button>
+        <el-button type="primary" plain @click="batchItemsStatus('onsale')">批量上架</el-button>
+        <el-button type="primary" plain @click="batchItemsStatus('instock')">批量下架</el-button>
+        <el-button type="primary" plain @click="batchGifts('true')">批量设置为赠品</el-button>
+        <el-button type="primary" plain @click="batchGifts('false')">批量设置为非赠品</el-button>
+        <export-tip @exportHandle='exportItemsData'>
+          <el-button type="primary" plain>导出商品信息</el-button>
+        </export-tip>
+          <export-tip @exportHandle='exportItemsTagData'>
+        <el-button type="primary" plain>导出商品标签</el-button>
+          </export-tip>
+        <el-button type="primary" plain @click="syncItems">同步商品数据</el-button>
+      </div>
+
       <el-tabs v-model="activeName" type="border-card" @tab-click="handleClick">
         <el-tab-pane v-for="(item, index) in tabList" :key="index" :label="item.name" :name="item.activeName">
           <div v-if="activeName == 'second'" style="margin-bottom: 15px; width:280px;">

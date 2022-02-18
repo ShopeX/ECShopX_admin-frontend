@@ -314,21 +314,21 @@ export default {
     padding: 0 8px !important;
     &.is-active {
       a {
-        color: #1480E3;
+        color: $color-primary;
         background: rgba(255, 255, 255, 0.1);
         border-radius: 2px;
       }
       .iconfont {
-        color: #1480E3;
+        color: $color-primary;
       }
     }
     &:hover {
       background: transparent;
       a {
-        color: #1480E3;
+        color: $color-primary;
       }
       .iconfont {
-        color: #1480E3;
+        color: $color-primary;
       }
     }
     > a {
@@ -372,13 +372,13 @@ export default {
       > a {
         background: rgba(20, 128, 227, 0.1);
         border-radius: 2px;
-        color: #1480E3;
+        color: $color-primary;
       }
     }
     &:hover {
       background: transparent;
       a {
-        color: #1480E3;
+        color: $color-primary;
       }
     }
     a {
@@ -414,6 +414,14 @@ export default {
     border-radius: 20px;
   }
 }
+
+.el-main {
+  padding: 16px;
+  .content-wrapper {
+    background-color: #fff;
+    padding: 16px;
+  }
+}
 </style>
 <style lang="scss">
 .popover-row.base {
@@ -435,8 +443,9 @@ export default {
     display: inline-block;
   }
   .el-menu-item-group__title {
-    padding-left: 16px !important;
+    padding: 0 0 0 10px !important;
     height: 40px;
+    line-height: 40px;
     color: #3D4355;
     font-size: 14px;
   }

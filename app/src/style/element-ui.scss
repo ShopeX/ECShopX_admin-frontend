@@ -1,0 +1,19 @@
+.el-button {
+  padding: 10px 16px;
+  .icon-xinzengcaozuo-01 {
+    font-size: 14px;
+    margin-right: 4px;
+  }
+  .icon-daorucaozuo-01 {
+    font-size: 14px;
+    margin-right: 4px;
+  }
+  &.is-plain {
+    background-color: #fff;
+    color: $color-primary;
+    border-color: $color-primary;
+    &:hover {
+      color: $color-primary;
+    }
+  }
+}

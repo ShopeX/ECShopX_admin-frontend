@@ -47,7 +47,7 @@
                 class="menu-group"
                 :key="`cmenu-${cindex}`"
               >
-                <template slot="title">{{ child.name }}</template>
+                <template slot="title"><i class="iconfont icon-shouqijiantouxiao"></i>{{ child.name }}</template>
                 <template v-for="sub in child.children" v-if="sub.is_show && sub.is_menu">
                   <el-menu-item
                     :key="sub.url"
@@ -75,7 +75,7 @@
     </el-aside>
 
     <el-container>
-      <el-header class="header" height="50px" v-if="isShowHeader()">
+      <el-header class="header" height="48px" v-if="isShowHeader()">
         <div class="header-left">
           <!-- activeIndex: {{activeIndex}}
           activeSubIndex: {{activeSubIndex}} -->
@@ -111,7 +111,7 @@
           </div>
         </div>
       </el-header>
-      <el-main style="position: relative">
+      <el-main style="position: relative; background: #F0F2F5;">
         <section id="container" class="content-container">
           <el-col :span="24" class="content-wrapper">
             <transition name="fade" mode="out-in">
@@ -269,15 +269,16 @@ export default {
   height: 100%;
 }
 .brand-con {
-  width: 100%;
-
-  padding: 20px;
+  margin-top: 6px;
   .brand-link {
     display: block;
   }
   .img-wrap {
-    height: 85px;
-    width: 85px;
+    height: 50px;
+    width: 50px;
+    border-radius: 50%;
+    margin: 0 auto;
+    overflow: hidden;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -290,83 +291,102 @@ export default {
   }
 }
 .main-menu {
-  width: 125px;
-  background: $auxiliary_hue;
+  width: 92px;
+  background: #353439;
   position: relative;
   &__con {
     position: absolute;
-    top: 125px;
+    top: 72px;
     right: 0;
     bottom: 0;
     left: 0;
     overflow-y: auto;
   }
   .el-menu {
-    background: $auxiliary_hue;
+    background: #353439;
     border-right-width: 0;
   }
   .el-menu-item {
-    height: 45px;
-    line-height: 45px;
+    height: 40px;
+    line-height: 40px;
     display: flex;
     align-items: center;
+    padding: 0 8px !important;
     &.is-active {
-      background-color: #fff;
       a {
-        color: #1f273a;
+        color: #1480E3;
+        background: rgba(255, 255, 255, 0.1);
+        border-radius: 2px;
       }
       .iconfont {
-        color: #1f273a;
+        color: #1480E3;
       }
     }
     &:hover {
-      background-color: #f4f4f4;
+      background: transparent;
       a {
-        color: #1f273a;
+        color: #1480E3;
       }
       .iconfont {
-        color: #1f273a;
+        color: #1480E3;
       }
     }
-    a {
+    > a {
       display: block;
       color: #fff;
       flex: 1;
       display: flex;
       align-items: center;
+      justify-content: center;
     }
     .iconfont {
-      color: $dominant_hue;
-      font-size: 14px;
-      width: 14px;
+      color: #fff;
+      font-size: 15px;
+      margin-right: 6px;
     }
   }
 }
 .sub-menu {
-  width: 125px;
+  width: 116px;
   overflow-y: auto;
-  background: #f4f4f4;
-  .menu-group {
-    margin-bottom: 20px;
+  background: #F6F7F9;
+  box-shadow: 1px 0px 0px 0px rgba(0, 0, 0, 0.06);
+  &::-webkit-scrollbar {
+    display: none; /* Chrome Safari */
   }
+  // .menu-group {
+  //   margin-bottom: 20px;
+  // }
   .el-menu {
-    background: #f4f4f4;
+    background: #F6F7F9;
     border-right-width: 0;
-    margin-top: 30px;
+    margin-top: 8px;
   }
   .el-menu-item {
-    height: 45px;
-    line-height: 45px;
+    height: 40px;
+    line-height: 40px;
+    padding: 0 8px !important;
     display: flex;
     align-items: center;
     &.is-active {
-      background-color: #fff;
+      > a {
+        background: rgba(20, 128, 227, 0.1);
+        border-radius: 2px;
+        color: #1480E3;
+      }
+    }
+    &:hover {
+      background: transparent;
+      a {
+        color: #1480E3;
+      }
     }
     a {
       display: block;
-      color: #666;
+      color: #545D7A;
       flex: 1;
       display: flex;
+      padding-left: 24px;
     }
     i {
       color: $dominant_hue;
@@ -374,7 +394,6 @@ export default {
   }
 }
 .header {
-  border-bottom: 1px solid #e6e6e6;
   display: flex;
   justify-content: space-between;
   &-right {
@@ -396,7 +415,7 @@ export default {
   }
 }
 </style>
-<style>
+<style lang="scss">
 .popover-row.base {
   padding: 10px;
   cursor:pointer
@@ -406,5 +425,20 @@ export default {
   font-size: 12px;
   cursor:pointer
 
+}
+.menu-group {
+  .icon-shouqijiantouxiao {
+    font-size: 12px;
+    color: #3D4355;
+    margin-right: 4px;
+    transform: scale(.8);
+    display: inline-block;
+  }
+  .el-menu-item-group__title {
+    padding-left: 16px !important;
+    height: 40px;
+    color: #3D4355;
+    font-size: 14px;
+  }
 }
 </style>

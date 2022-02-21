@@ -469,8 +469,7 @@ export default {
   },
   methods: {
     async queryUserStatus() {
-      const result = await this.$api.dealerReInfo.userStatus()
-      const { audit_state, update_time, audit_desc, member_type } = result.data.data
+      const { audit_state, update_time, audit_desc, member_type } = await this.$api.dealerReInfo.userStatus()
       switch (audit_state) {
         case 'D': //待提交
           this.processed = '未填'
@@ -512,8 +511,8 @@ export default {
         if (valid) {
           if (this.form.member_id) {
             // 更新
-            const result = await this.$api.adapay.accountUpdate(this.form)
-            if (result.data.data.status) {
+            const { status } = await this.$api.adapay.accountUpdate(this.form)
+            if (status) {
               this.$message.success('提交成功')
               this.currentStatus = {
                 resultStatus: 'pending',
@@ -528,8 +527,8 @@ export default {
           } else {
             // 创建
             try {
-              const result = await createCorp(this.form)
-              if (result.data.data.status) {
+              const { status } = await createCorp(this.form)
+              if (status) {
                 this.$message.success('提交成功')
                 this.currentStatus = {
                   resultStatus: 'pending',
@@ -561,8 +560,8 @@ export default {
           if (this.personForm.member_id) {
             // 更新
             try {
-              const result = await this.$api.adapay.accountUpdatePerson(this.personForm)
-              if (result.data.data.status) {
+              const { status } = await this.$api.adapay.accountUpdatePerson(this.personForm)
+              if (status) {
                 this.$message.success('提交成功')
                 this.currentStatus = {
                   resultStatus: 'pending',
@@ -579,8 +578,8 @@ export default {
             }
           } else {
             try {
-              const result = await this.$api.adapay.accountCreatePerson(this.personForm)
-              if (result.data.data.status) {
+              const { status } = await this.$api.adapay.accountCreatePerson(this.personForm)
+              if (status) {
                 this.$message.success('提交成功')
                 this.currentStatus = {
                   resultStatus: 'pending',
@@ -627,15 +626,13 @@ export default {
     },
     async processedHandle() {
       if (this.member_type == 'corp') {
-        const result = await this.$api.adapay.accountQueryCorp()
+        this.form = await this.$api.adapay.accountQueryCorp()
         this.processed = '未填'
-        this.form = result.data.data
         this.form.area = [this.form.prov_code, this.form.area_code]
         console.log(result)
       } else {
-        const result = await this.$api.adapay.accountQueryCorp()
+        this.personForm = await this.$api.adapay.accountQueryCorp()
         this.processed = '未填'
-        this.personForm = result.data.data
         this.activeName = 'person'
         console.log(result)
       }
@@ -682,10 +679,9 @@ export default {
     },
     // 结算所属银行
     async querySearch(queryString, cb) {
-      const result = await this.$api.adapay.getBank({
+      this.AllBank = await this.$api.adapay.getBank({
         bank_name: this.form.bank_name
       })
-      this.AllBank = result.data.data
 
       var restaurants = this.AllBank.map((item) => {
         return {

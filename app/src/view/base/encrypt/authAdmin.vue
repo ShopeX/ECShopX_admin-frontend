@@ -132,8 +132,8 @@ export default {
         obj = { ...this.form, range: '' }
       }
 
-      const result = await this.$api.encrypt.createEncrypt(obj)
-      if (result.data.data.status) {
+      const { status, message } = await this.$api.encrypt.createEncrypt(obj)
+      if (status) {
         this.$message.success('提交成功')
         this.$refs.finder.refresh()
         this.getDate()
@@ -141,7 +141,7 @@ export default {
         this.form.reason = ''
         this.form.date_type = '0'
       } else {
-        this.open(result.data.data.message)
+        this.open(message)
       }
     },
     open(message) {

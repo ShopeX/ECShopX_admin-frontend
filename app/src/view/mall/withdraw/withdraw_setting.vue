@@ -109,14 +109,14 @@ export default {
   },
   methods:{
     async getConfig(){
-      const result = await this.$api.adapay.getChildWithdraw();
-      this.form.draw_limit = result.data.data.draw_limit / 100 || '';
+      const { draw_limit } = await this.$api.adapay.getChildWithdraw();
+      this.form.draw_limit = draw_limit / 100 || '';
     },
     confirm(formName,ref){
       this.$refs[formName].validate(async (valid) => {
         if (valid) {
-        const result = await this.$api.adapay.setChildWithdraw(this.form);
-        if (result.data.data.status) {
+        const { status } = await this.$api.adapay.setChildWithdraw(this.form);
+        if (status) {
           this.$message.success('设置成功')
           this.$refs[ref].closeLoading();
           this.getConfig();

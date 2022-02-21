@@ -278,8 +278,7 @@ export default {
         }
         this.isAuto = true
         try {
-          const loginRes = await this.$api.login.getAuthorizeLogin(obj)
-          const { token } = loginRes.data.data
+          const { token } = await this.$api.login.getAuthorizeLogin(obj)
           if(token) {
             this.loginSuccess(token)
           } else {
@@ -297,8 +296,8 @@ export default {
           }, 1500)
         }
       } else {
-        const res = await this.$api.login.getAuthorizeUrl()
-        this.autoSrc = res.data.data.url
+        const { url } = await this.$api.login.getAuthorizeUrl()
+        this.autoSrc = url
         this.bool = true
       }
     },
@@ -320,8 +319,7 @@ export default {
             logintype: this.ruleForm1.loginType
           }
           try {
-            const res = await this.$api.auth.login(params)
-            const { token } = res.data.data
+            const { token } = await this.$api.auth.login(params)
             if(token) {
               this.loginSuccess(token)
             } else {
@@ -351,7 +349,7 @@ export default {
       })
       const userInfo = await this.$api.login.getAdminInfo()
       this.loading = false
-      this.SET_USERINFO(userInfo.data.data)
+      this.SET_USERINFO(userInfo)
       this.SET_LOGIN_TYPE({ loginType: 'normal' })
       window.location.href = '/'
     }

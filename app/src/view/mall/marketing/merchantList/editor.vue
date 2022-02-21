@@ -817,10 +817,9 @@ export default {
     },
     // 结算所属银行
     async querySearch(queryString, cb) {
-      const result = await this.$api.adapay.getBank({
+      this.AllBank = await this.$api.adapay.getBank({
         bank_name: this.form.bank_name
       })
-      this.AllBank = result.data.data
       var restaurants = this.AllBank.map((item) => {
         return {
           value: item.bank_name,

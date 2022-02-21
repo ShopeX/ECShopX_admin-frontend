@@ -133,8 +133,7 @@ export default {
             // logintype: 'distributor'
           }
           try {
-            const res = await this.$api.auth.login(params)
-            const { token } = res.data.data
+            const { token } = await this.$api.auth.login(params)
             this.SET_TOKEN({ token })
             this.SET_TOKEN_EXP({ exp: new Date().getTime() })
             this.$message({
@@ -143,9 +142,9 @@ export default {
             })
             const userInfo = await this.$api.login.getAdminInfo()
             this.loading = false
-            this.SET_USERINFO(userInfo.data.data)
+            this.SET_USERINFO(userInfo)
             this.SET_LOGIN_TYPE({ loginType: 'dealer' })
-            const { adapay_open_account_time } = userInfo.data.data || {}
+            const { adapay_open_account_time } = userInfo || {}
 
             const isShow = localStorage.getItem('dealer_isShow')
             if (isShow) {

@@ -151,13 +151,13 @@ export default {
   },
   methods: {
     async getPolicyConfig() {
-      const result = await this.$api.policy.getPolicyConfig({
+      const { privacy_desc, setting_list, owner_setting, privacy_list } = await this.$api.policy.getPolicyConfig({
         wxaAppId: this.wxappId
       });
-      this.privacyDescList = result.data.data.privacy_desc.privacy_desc_list;
-      this.settingList = result.data.data.setting_list;
-      this.ownerSetting = result.data.data.owner_setting;
-      this.privacyList = result.data.data.privacy_list
+      this.privacyDescList = privacy_desc.privacy_desc_list;
+      this.settingList = setting_list;
+      this.ownerSetting = owner_setting;
+      this.privacyList = privacy_list
 
       if(this.ownerSetting.store_expire_timestamp) {
         this.storeType = '1'
@@ -207,14 +207,14 @@ export default {
       })
     },
     async onChangeUpload(file) {
-      const res = await this.$api.policy.uploadPolicyFile({
+      const { ext_file_media_id } = await this.$api.policy.uploadPolicyFile({
         wxaAppId: this.wxappId,
         isUploadFile: true,
         file: file.raw
       })
       this.fileName = file.name
       this.$message.success('文件上传成功')
-      this.ownerSetting.ext_file_media_id = res.data.data.ext_file_media_id
+      this.ownerSetting.ext_file_media_id = ext_file_media_id
     },
     async savePolicyConfig() {
       if(this.storeType == "2") {

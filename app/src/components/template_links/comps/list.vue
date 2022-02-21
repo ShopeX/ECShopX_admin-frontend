@@ -226,7 +226,7 @@
             Object.assign(query, {
               tag_name: this.keywords
             })
-            api.goods.getTagList(query).then((list, total_count) => {
+            api.goods.getTagList(query).then(({ list, total_count }) => {
               let _list = []
               list.map(item => {
                 _list.push({

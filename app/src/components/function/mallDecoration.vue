@@ -606,15 +606,6 @@ export default {
       isSouponPackage: false, //是否为劵包 （用来判断图片选择）
       initData: [
         {
-          name: 'nearbyShop',
-          base: {
-            title: '附近商家',
-            padded: true,
-            show_coupon: true
-          },
-          seletedTags: []
-        },
-        {
           name: 'coupon',
           base: {
             title: '到店优惠',
@@ -1377,7 +1368,7 @@ export default {
       })
     },
     async getData() {
-      if (this.system_mode === 'platform') {
+      if (this.system_mode === 'platform' && this.relStore.id == '0') {
         const isHaveStore = this.initData.some((item) => item.name === 'store')
         if (!isHaveStore) {
           this.initData.push({
@@ -1401,6 +1392,17 @@ export default {
             seletedTags: []
           })
         }
+      }
+      if (this.relStore.id == '0') {
+        this.initData.unshift({
+          name: 'nearbyShop',
+          base: {
+            title: '附近商家',
+            padded: true,
+            show_coupon: true
+          },
+          seletedTags: []
+        })
       }
 
       const faverite = await getRecommendLikeItemList()

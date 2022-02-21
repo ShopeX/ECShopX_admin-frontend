@@ -163,13 +163,11 @@ export default {
   methods: {
     async getConfig() {
       this.loading = true
-      const result = await this.$api.coupons_package.couponList({
+      const { list, total_count } = await this.$api.coupons_package.couponList({
         ...this.query,
         ...this.paging
       })
       this.loading = false
-
-      const { list, total_count } = result.data.data
 
       list.forEach((element) => {
         element.give_num = 0

@@ -185,9 +185,7 @@ export default {
             logintype: this.symbol
           }
           try { 
-            const res = await this.$api.auth.login(params) 
-            debugger
-            const { token } = res.data.data
+            const { token } = await this.$api.auth.login(params) 
             this.setTokenAndGetRoute(token)  
           } catch(e) {  
             this.submitDisabled = false

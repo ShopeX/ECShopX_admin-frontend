@@ -70,3 +70,17 @@ a {
   bottom: 0;
   visibility: hidden;
 }
+
+/***** action-container *****/
+.action-container {
+  margin-bottom: 8px;
+  button {
+    margin: 0 8px 8px 0 !important;
+  }
+}
+
+/***** filter-container *****/
+.filter-container {
+  background: #F6F7F9;
+  border-radius: 2px;
+}

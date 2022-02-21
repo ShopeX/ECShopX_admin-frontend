@@ -121,10 +121,10 @@ export default {
   },
   methods: {
     async getConfig() {
-      const result = await this.$api.closeAccount.getInfo({
+      const { member_logout_config } = await this.$api.closeAccount.getInfo({
         type:'member_logout_config'
       });
-      const { title ,new_rights} =  result.data.data.member_logout_config;
+      const { title ,new_rights} =  member_logout_config;
 
        // member_logout_config  注销配置。 member_resgiter  注销协议
       if (title) {
@@ -133,10 +133,10 @@ export default {
       }
     },
     async getConfig2() {
-      const result = await this.$api.closeAccount.getInfo({
+      const { member_logout } = await this.$api.closeAccount.getInfo({
         type:'member_logout'
       });
-      const { content,update_date,take_effect_date } =  result.data.data.member_logout;
+      const { content,update_date,take_effect_date } =  member_logout;
        // member_logout_config  注销配置。 member_resgiter  注销协议
       if (content) {
         this.privacyForm.update_date = update_date;

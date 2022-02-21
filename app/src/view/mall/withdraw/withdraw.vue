@@ -110,9 +110,9 @@ export default {
       this.$refs[formName].validate(async (valid) => {
         if (valid) {
           try {
-            const result = await this.$api.adapay.applyForWithdrawal(this.form)
+            const { status } = await this.$api.adapay.applyForWithdrawal(this.form)
             this.$refs[ref].closeLoading()
-            if (result.data.data.status) {
+            if (status) {
               this.$message.success('提现成功')
               this.$refs[formName].resetFields()
               this.getConfig()
@@ -139,8 +139,7 @@ export default {
       return { ...params }
     },
     async getConfig() {
-      const result = await this.$api.adapay.withdrawList()
-      const { cash_balance, cash_limit } = result.data.data
+      const { cash_balance, cash_limit } = await this.$api.adapay.withdrawList()
       this.cash_balance = cash_balance
       this.cash_limit = cash_limit
     }

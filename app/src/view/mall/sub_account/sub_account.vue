@@ -312,8 +312,7 @@ export default {
     },
     async getSub_account(){
       this.loading = true;
-      const result = await this.$api.adapay.subAccount({...this.form,...this.params,...this.time});
-      const {list,total ,total_count} = result.data.data;
+      const {list,total ,total_count}  = await this.$api.adapay.subAccount({...this.form,...this.params,...this.time});
       this.total = total;
       this.list = list;
       this.total_count = total_count
@@ -349,8 +348,8 @@ export default {
 
     },
     async exportFile(){
-      const result = await this.$api.adapay.exportFileList({...this.form,...this.params,...this.time})
-      if (result.data.data.status) {
+      const { status } = await this.$api.adapay.exportFileList({...this.form,...this.params,...this.time})
+      if (status) {
         this.$message.success(`已加入执行队列，请在设置-导出列表中下载`)
       }else{
         this.$message.error(`导出失败`)

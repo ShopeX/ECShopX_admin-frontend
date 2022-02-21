@@ -33,9 +33,8 @@ export default {
   methods: {
     // 查询开户步骤
     async getStepHandle(){
-      const result  = await this.$api.adapay.getStep();
-      const { step } = result.data.data
-       const {MerchantEntry, MerchantResident,SubmitLicense } = result.data.data.info
+      const { step, info }  = await this.$api.adapay.getStep();
+       const {MerchantEntry, MerchantResident,SubmitLicense } = info
       this.active = step - 1;
       
       if (this.active==1) {

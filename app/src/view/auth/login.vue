@@ -142,8 +142,7 @@ export default {
             logintype: this.loginType
           }
           try {
-            const res = await this.$api.auth.login(params)
-            const { token } = res.data.data
+            const { token } = await this.$api.auth.login(params)
             if (token) {
               this.loginSuccess(token)
             } else {
@@ -170,7 +169,7 @@ export default {
         type: 'success'
       })
       const userInfo = await this.$api.login.getAdminInfo()
-      this.SET_USERINFO(userInfo.data.data)
+      this.SET_USERINFO(userInfo)
       if (this.loginType == 'distributor') {
         this.$router.push({ path: '/shopadmin/shoplist' })
       } else if (this.loginType == 'dealer') {

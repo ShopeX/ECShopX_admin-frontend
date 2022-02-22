@@ -44,7 +44,9 @@
                     <span v-else-if="scope.row.authorizer.weapp.audit_status == '2'" type="primary">审核中</span>
                   </el-descriptions-item>
                   <el-descriptions-item label="审核失败原因" :contentStyle="{'text-align': 'left'}">
-                    <div class="content-item" v-html="scope.row.authorizer.weapp.reason"></div>
+                      <span v-if="scope.row.authorizer.weapp.audit_status == '1' && scope.row.authorizer.weapp.reason">
+                          <div class="content-item" v-html="scope.row.authorizer.weapp.reason"></div>
+                      </span>
                   </el-descriptions-item>
                 </el-descriptions>
                 <div class="content-center" v-if="scope.row.authorizer && scope.row.authorizer.is_direct == 0" >

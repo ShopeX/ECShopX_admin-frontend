@@ -68,6 +68,8 @@
             @init="resetSearch"
             :shopIdDefault="params.distributor_id"
           ></shop-select>
+
+          <SpSelectShop />
           <!--distributors wxshops 需要哪个api传哪个-->
         </el-col>
       </el-row>

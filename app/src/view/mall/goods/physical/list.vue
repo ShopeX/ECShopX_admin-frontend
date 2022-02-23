@@ -987,13 +987,13 @@ export default {
         }
       } else {
         params = {
-          ...this.params,
-          export_type: exportType
+          ...this.params
         }
       }
       const { status } = await this.$api.goods.exportGoodsCode({
         ...params,
-        source: 'item'
+        source: 'item',
+        export_type: exportType
       })
       if(status) {
         this.$message.success("已加入执行队列，请在设置-导出列表中下载")

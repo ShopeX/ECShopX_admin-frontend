@@ -28,7 +28,7 @@
 
 <script>
 const normal = require(`@/assets/img/ecshopx/1-Normal.png`)
-const wechat = require(`@/assets/img/ecshopx/wechat.jpg`)
+const wechat = require(`@/assets/img/ecshopx/kefu.png`)
 export default {
     data(){
         return {
@@ -96,6 +96,7 @@ export default {
             }
             .img{
                 margin-top:16px;
+                height:310px;
             }
         }
     }

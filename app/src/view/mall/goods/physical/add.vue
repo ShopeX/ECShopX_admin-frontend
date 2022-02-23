@@ -26,7 +26,7 @@
   position: fixed;
   bottom: 0;
   right: 0;
-  left: 250px;
+  left: 208px;
   background: #fff;
   text-align: center;
   border-top: 1px solid #efefef;

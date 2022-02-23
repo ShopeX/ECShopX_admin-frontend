@@ -168,7 +168,7 @@ export default {
         return
       }
       
-      ExportLogFileDown({ 'log_id': val }).then((response) => {
+      ExportLogFileDown({ 'log_id': log_id }).then((response) => {
         const url = this.genUrl(response.data.data.csv_data, {}) //{}指的是表头，response.data.data.csv_data是后台返回来的数据
         const a = document.createElement('a')
         a.href = url

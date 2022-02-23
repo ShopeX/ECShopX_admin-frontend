@@ -125,7 +125,7 @@
                     >
                     <el-button  v-if="scope.row.authorizer.is_direct == 0"
                       size="mini" type="text" plain
-                      @click="handleBind">更换绑定</el-button
+                      @click="handleBind(scope.row)">更换绑定</el-button
                     >
                     <el-button
                       size="mini" type="text" plain
@@ -134,7 +134,7 @@
                     ></el-button-group>
                 </div>
                 <div v-else>
-                  <el-button-group><el-button size="mini" type="text" plain @click="handleBind">授权第三方</el-button>
+                  <el-button-group><el-button size="mini" type="text" plain @click="handleBind(scope.row)">授权第三方</el-button>
                   <el-button size="mini" type="text" plain @click="bindWxapp(scope.row)">添加直连小程序</el-button></el-button-group>
                 </div>
               </template>
@@ -590,9 +590,9 @@ export default {
         this.getDataList()
       })
     },
-    handleBind() {
+    handleBind({key_name}) {
       let params = {
-        callback_url: this.wxAuthCallbackUrl + 'auth/wxa'
+        callback_url: `${this.wxAuthCallbackUrl}auth/wxa?template_name=${key_name}`
       }
       getWechatPreAuthUrl(params).then((response) => {
         this.authorizerUrl = response.data.data.url

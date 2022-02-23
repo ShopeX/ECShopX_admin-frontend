@@ -44,6 +44,7 @@
         <el-tab-pane label="分账统计导出" name="hfpay_order_record"></el-tab-pane>
         <el-tab-pane label="提现记录导出" name="hfpay_withdraw_record"></el-tab-pane>
         <el-tab-pane label="分账导出" name="adapay_tradedata"></el-tab-pane>
+        <el-tab-pane label="商品码导出" name="itemcode"></el-tab-pane>
       </template>
 
       <el-table :data="exportLogLists" :height="wheight - 220" v-loading="loading">

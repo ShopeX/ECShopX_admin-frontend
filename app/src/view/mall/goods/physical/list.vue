@@ -991,7 +991,10 @@ export default {
           export_type: exportType
         }
       }
-      const { status } = await this.$api.goods.exportGoodsCode(params)
+      const { status } = await this.$api.goods.exportGoodsCode({
+        ...params,
+        source: 'item'
+      })
       if(status) {
         this.$message.success("已加入执行队列，请在设置-导出列表中下载")
       } else {

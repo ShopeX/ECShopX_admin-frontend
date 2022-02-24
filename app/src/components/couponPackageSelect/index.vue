@@ -119,15 +119,13 @@ export default {
     async getConfig() {
 
       this.loading = true
-      const result = await this.$api.coupons_package.packageList({
+      const { list, count } = await this.$api.coupons_package.packageList({
         params: {
           ...this.query,
           ...this.paging
         }
       })
       this.loading = false
-
-      const { list, count } = result.data.data
 
       this.tableData = list
       this.total = count
@@ -172,11 +170,10 @@ export default {
         grade_id: this.seletedCouponPackage[packageId][type]
       }
 
-      const result = await this.$api.coupons_package.checkCouponPackage(obj)
-      const { data } = result.data
+      const res = await this.$api.coupons_package.checkCouponPackage(obj)
 
-      if (data.length > 0) {
-        this.modelInfo = data
+      if (res.length > 0) {
+        this.modelInfo = res
         this.modelVisible = true
       } else {
         this.$emit('closeHandle')

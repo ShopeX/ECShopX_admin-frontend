@@ -104,6 +104,8 @@
           :id="pageForm.id"
           @saved="closeDialog"
           usage="page"
+          pagetype="cuspage"
+          :rel-store="store"
           :template_name="template_name"
         />
       </el-dialog>
@@ -143,7 +145,8 @@ export default {
         page_share_imageUrl: '',
         is_open: true
       },
-      list: []
+      list: [],
+      store: null
     }
   },
   computed: {
@@ -259,6 +262,7 @@ export default {
   },
   mounted() {
     this.fetchPageList()
+    this.store = { id: '0' }
   }
 }
 </script>

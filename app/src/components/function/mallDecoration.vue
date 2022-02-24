@@ -606,15 +606,6 @@ export default {
       isSouponPackage: false, //是否为劵包 （用来判断图片选择）
       initData: [
         {
-          name: 'nearbyShop',
-          base: {
-            title: '附近商家',
-            padded: true,
-            show_coupon: true
-          },
-          seletedTags: []
-        },
-        {
           name: 'coupon',
           base: {
             title: '到店优惠',
@@ -1377,30 +1368,43 @@ export default {
       })
     },
     async getData() {
-      if (this.system_mode === 'platform') {
-        const isHaveStore = this.initData.some((item) => item.name === 'store')
-        if (!isHaveStore) {
-          this.initData.push({
-            name: 'store',
-            base: {
-              title: '推荐商铺',
-              subtitle: '热门商铺，官方推荐',
-              padded: true,
-              backgroundColor: '#FFF',
-              borderColor: '#FF6700',
-              imgUrl: ''
-            },
-            data: [
-              {
-                id: '',
-                name: '',
-                logo: '',
-                items: []
-              }
-            ],
-            seletedTags: []
-          })
-        }
+      // 当店铺类型为0（自营）时或者为小程序编辑模板时，展示附近商家和推荐店铺，则店铺类型为加盟不展示
+      const isHaveStore = this.initData.some((item) => item.name === 'store')
+      // if ((this.relStore.id == '0' ||  this.$route.query.distribution_type == '0' && !isHaveStore)) {
+      if (this.system_mode === 'platform' && this.relStore.id == '0' && !isHaveStore) {
+        this.initData.push({
+          name: 'store',
+          base: {
+            title: '推荐商铺',
+            subtitle: '热门商铺，官方推荐',
+            padded: true,
+            backgroundColor: '#FFF',
+            borderColor: '#FF6700',
+            imgUrl: ''
+          },
+          data: [
+            {
+              id: '',
+              name: '',
+              logo: '',
+              items: []
+            }
+          ],
+          seletedTags: []
+        })
+      }
+      const isHaveNearbyShop = this.initData.some((item) => item.name === 'nearbyShop')
+      // if ((this.relStore.id == '0' || this.$route.query.distribution_type == '0') && !isHaveNearbyShop) {
+        if (this.relStore.id == '0' && !isHaveNearbyShop) {
+        this.initData.unshift({
+          name: 'nearbyShop',
+          base: {
+            title: '附近商家',
+            padded: true,
+            show_coupon: true
+          },
+          seletedTags: []
+        })
       }
 
       const faverite = await getRecommendLikeItemList()

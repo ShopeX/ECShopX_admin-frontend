@@ -50,10 +50,9 @@ export default {
     }
   },
   async mounted() {
-    const res = await api.wxa.getWxLinkListSetting({
+    const { list } = await api.wxa.getWxLinkListSetting({
       page: 1
     })
-    const { list = [] } = res.data.data
     this.options = list.map((item) => {
       return {
         label: item.app_name,

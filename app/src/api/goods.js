@@ -486,3 +486,12 @@ export function saveShareSetting (query) {
     params: query
   })
 }
+
+// 导出小程序太阳码/h5二维码
+export function exportGoodsCode (params) {
+  return fetch({
+    url: '/goods/code/export',
+    method: 'post',
+    params
+  })
+}

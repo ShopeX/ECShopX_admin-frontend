@@ -1,0 +1,95 @@
+.el-button {
+  padding: 10px 16px;
+  // .icon-xinzengcaozuo-01 {
+  //   font-size: 14px;
+  //   margin-right: 4px;
+  // }
+  // .icon-daorucaozuo-01 {
+  //   font-size: 14px;
+  //   margin-right: 4px;
+  // }
+  .iconfont {
+    font-size: 14px;
+    margin-right: 4px;
+  }
+  .icon-zhankai {
+    transform: scale(.8);
+    display: inline-block;
+  }
+  &.is-plain {
+    background-color: #fff;
+    color: $color-primary;
+    border-color: $color-primary;
+    &:hover {
+      color: rgba($color-primary, 0.6);
+      border-color: rgba($color-primary, 0.6);
+      background-color: #fff;
+    }
+  };
+  &--text {
+    padding: 0;
+  }
+  &+ .el-button {
+    margin-left: 8px;
+  }
+}
+
+.el-input {
+  &__inner {
+    border-radius: 2px;
+    border: 1px solid #D9D9D9;
+    height: 36px;
+    padding: 0 12px;
+    &::-webkit-input-placeholder{
+      color: #BBB;
+      font-size: 14px;
+    }
+  }
+}
+
+.el-cascader {
+  line-height: 36px;
+}
+
+.el-tabs {
+  &--card {
+    .el-tabs__header {
+      border-bottom-width: 0;
+      margin-bottom: 8px;
+    }
+    .el-tabs__nav {
+      height: 36px;
+      background: #F0F2F5;
+      border-radius: 2px !important;
+      padding: 4px;
+      border-width: 0 !important;
+    }
+    .el-tabs__item {
+      height: 28px;
+      line-height: 28px;
+      font-size: 13px;
+      color: #545D7A;
+      border-left-width: 0 !important;
+      &.is-active {
+        background: #fff;
+        color: $color-primary;
+      }
+    }
+  }
+}
+
+.el-table {
+  &--border {
+    .el-table__header {
+      th {
+        background: #F0F2F5;
+        color: #222;
+        padding: 6px 0;
+        font-weight: 400;
+      }
+    }
+    td {
+      border-right-width: 0;
+    }
+  }
+}

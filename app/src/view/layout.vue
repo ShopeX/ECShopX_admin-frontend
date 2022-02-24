@@ -47,7 +47,7 @@
                 class="menu-group"
                 :key="`cmenu-${cindex}`"
               >
-                <template slot="title">{{ child.name }}</template>
+                <template slot="title"><i class="iconfont icon-shouqijiantouxiao"></i>{{ child.name }}</template>
                 <template v-for="sub in child.children" v-if="sub.is_show && sub.is_menu">
                   <el-menu-item
                     :key="sub.url"
@@ -75,7 +75,7 @@
     </el-aside>
 
     <el-container>
-      <el-header class="header" height="50px" v-if="isShowHeader()">
+      <el-header class="header" height="48px" v-if="isShowHeader()">
         <div class="header-left">
           <!-- activeIndex: {{activeIndex}}
           activeSubIndex: {{activeSubIndex}} -->
@@ -111,14 +111,17 @@
           </div>
         </div>
       </el-header>
-      <el-main style="position: relative">
-        <section id="container" class="content-container">
+      <el-main style="position: relative; background: #F0F2F5;">
+        <div class="content-container">
+          <router-view></router-view>
+        </div>
+        <!-- <section id="container" class="content-container">
           <el-col :span="24" class="content-wrapper">
             <transition name="fade" mode="out-in">
               <router-view></router-view>
             </transition>
           </el-col>
-        </section>
+        </section> -->
         <div id="design-view"></div>
       </el-main>
     </el-container>
@@ -202,9 +205,9 @@ export default {
     },
     // 获取系统配置信息
     async getSystemSetting() {
-      const res = await this.$api.system.getBrandLogo()
-      if (res.data.data.logo) {
-        this.brandIco = res.data.data.logo
+      const { logo } = await this.$api.system.getBrandLogo()
+      if (logo) {
+        this.brandIco = logo
       } else {
         const companyBrandImg =
           process.env.VUE_APP_PRODUCT_MODEL === 'standard' ? 'onex' : 'ecshopx'
@@ -269,15 +272,16 @@ export default {
   height: 100%;
 }
 .brand-con {
-  width: 100%;
-
-  padding: 20px;
+  margin-top: 6px;
   .brand-link {
     display: block;
   }
   .img-wrap {
-    height: 85px;
-    width: 85px;
+    height: 50px;
+    width: 50px;
+    border-radius: 50%;
+    margin: 0 auto;
+    overflow: hidden;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -290,83 +294,102 @@ export default {
   }
 }
 .main-menu {
-  width: 125px;
-  background: $auxiliary_hue;
+  width: 92px;
+  background: #353439;
   position: relative;
   &__con {
     position: absolute;
-    top: 125px;
+    top: 72px;
     right: 0;
     bottom: 0;
     left: 0;
     overflow-y: auto;
   }
   .el-menu {
-    background: $auxiliary_hue;
+    background: #353439;
     border-right-width: 0;
   }
   .el-menu-item {
-    height: 45px;
-    line-height: 45px;
+    height: 40px;
+    line-height: 40px;
     display: flex;
     align-items: center;
+    padding: 0 8px !important;
     &.is-active {
-      background-color: #fff;
       a {
-        color: #1f273a;
+        color: $color-primary;
+        background: rgba(255, 255, 255, 0.1);
+        border-radius: 2px;
       }
       .iconfont {
-        color: #1f273a;
+        color: $color-primary;
       }
     }
     &:hover {
-      background-color: #f4f4f4;
+      background: transparent;
       a {
-        color: #1f273a;
+        color: $color-primary;
       }
       .iconfont {
-        color: #1f273a;
+        color: $color-primary;
       }
     }
-    a {
+    > a {
       display: block;
       color: #fff;
       flex: 1;
       display: flex;
       align-items: center;
+      justify-content: center;
     }
     .iconfont {
-      color: $dominant_hue;
-      font-size: 14px;
-      width: 14px;
+      color: #fff;
+      font-size: 15px;
+      margin-right: 6px;
     }
   }
 }
 .sub-menu {
-  width: 125px;
+  width: 116px;
   overflow-y: auto;
-  background: #f4f4f4;
-  .menu-group {
-    margin-bottom: 20px;
+  background: #F6F7F9;
+  box-shadow: 1px 0px 0px 0px rgba(0, 0, 0, 0.06);
+  &::-webkit-scrollbar {
+    display: none; /* Chrome Safari */
   }
+  // .menu-group {
+  //   margin-bottom: 20px;
+  // }
   .el-menu {
-    background: #f4f4f4;
+    background: #F6F7F9;
     border-right-width: 0;
-    margin-top: 30px;
+    margin-top: 8px;
   }
   .el-menu-item {
-    height: 45px;
-    line-height: 45px;
+    height: 40px;
+    line-height: 40px;
+    padding: 0 8px !important;
     display: flex;
     align-items: center;
     &.is-active {
-      background-color: #fff;
+      > a {
+        background: rgba(20, 128, 227, 0.1);
+        border-radius: 2px;
+        color: $color-primary;
+      }
+    }
+    &:hover {
+      background: transparent;
+      a {
+        color: $color-primary;
+      }
     }
     a {
       display: block;
-      color: #666;
+      color: #545D7A;
       flex: 1;
       display: flex;
+      padding-left: 24px;
     }
     i {
       color: $dominant_hue;
@@ -374,7 +397,6 @@ export default {
   }
 }
 .header {
-  border-bottom: 1px solid #e6e6e6;
   display: flex;
   justify-content: space-between;
   &-right {
@@ -395,8 +417,17 @@ export default {
     border-radius: 20px;
   }
 }
+
+.el-main {
+  padding: 16px;
+  .content-container {
+    background-color: #fff;
+    padding: 16px;
+    border-radius: 0;
+  }
+}
 </style>
-<style>
+<style lang="scss">
 .popover-row.base {
   padding: 10px;
   cursor:pointer
@@ -406,5 +437,21 @@ export default {
   font-size: 12px;
   cursor:pointer
 
+}
+.menu-group {
+  .icon-shouqijiantouxiao {
+    font-size: 12px;
+    color: #3D4355;
+    margin-right: 4px;
+    transform: scale(.8);
+    display: inline-block;
+  }
+  .el-menu-item-group__title {
+    padding: 0 0 0 10px !important;
+    height: 40px;
+    line-height: 40px;
+    color: #3D4355;
+    font-size: 14px;
+  }
 }
 </style>

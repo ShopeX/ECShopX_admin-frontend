@@ -121,31 +121,31 @@
               distributor_id: this.store.id || ''
             })
             if(this.system_mode == 'platform' || query.distributor_id == '0' || !query.distributor_id) {
-              api.goods.getItemsList(query).then(res => {
-                let list = []
-                res.data.data.list.map(item => {
-                  list.push({
+              api.goods.getItemsList(query).then(({ list, total_count }) => {
+                let _list = []
+                list.map(item => {
+                  _list.push({
                     id: item.itemId,
                     title: item.itemName,
                     imgUrl: item.pics[0]
                   })
                 })
-                this.list = list
-                this.total = res.data.data.total_count
+                this.list = _list
+                this.total = total_count
                 this.loading = false
               })
             } else {
-              api.marketing.getDistributorItems(query).then(res => {
-                let list = []
-                res.data.data.list.map(item => {
-                  list.push({
+              api.marketing.getDistributorItems(query).then(({ list, total_count }) => {
+                let _list = []
+                list.map(item => {
+                  _list.push({
                     id: item.itemId,
                     title: item.itemName,
                     imgUrl: item.pics[0]
                   })
                 })
-                this.list = list
-                this.total = res.data.data.total_count
+                this.list = _list
+                this.total = total_count
                 this.loading = false
               })
             }
@@ -154,16 +154,16 @@
             Object.assign(query, {
               is_valid: true
             })
-            api.selfhelpform.regActivityEasylist(query).then(res => {
-              let list = []
-              res.data.data.list.map(item => {
-                list.push({
+            api.selfhelpform.regActivityEasylist(query).then(({ list, total_count }) => {
+              let _list = []
+              list.map(item => {
+                _list.push({
                   id: item.activity_id,
                   title: item.activity_name
                 })
               })
-              this.list = list
-              this.total = res.data.data.total_count
+              this.list = _list
+              this.total = total_count
               this.loading = false
             })
             break;
@@ -173,23 +173,23 @@
               name: this.keywords
             })
             
-            api.marketing.getDistributorList(query).then(res => {
-              let list = []
-              res.data.data.list.map(item => {
-                list.push({
+            api.marketing.getDistributorList(query).then(({ list, total_count }) => {
+              let _list = []
+              list.map(item => {
+                _list.push({
                   id: item.distributor_id,
                   title: item.name
                 })
               })
-              this.list = list
-              this.total = res.data.data.total_count
+              this.list = _list
+              this.total = total_count
               this.loading = false
             })
             break;
           case 'category':
             api.goods.getCategory(this.params).then(res => {
               let items = []
-              res.data.data.map(item => {
+              res.map(item => {
                 let itemObj = {
                   id: item.category_id,
                   title: item.category_name
@@ -226,16 +226,16 @@
             Object.assign(query, {
               tag_name: this.keywords
             })
-            api.goods.getTagList(query).then(res => {
-              let list = []
-              res.data.data.list.map(item => {
-                list.push({
+            api.goods.getTagList(query).then(({ list, total_count }) => {
+              let _list = []
+              list.map(item => {
+                _list.push({
                   id: item.tag_id,
                   title: item.tag_name
                 })
               })
-              this.list = list
-              this.total = res.data.data.total_count
+              this.list = _list
+              this.total = total_count
               this.loading = false
             })
             break;
@@ -243,16 +243,16 @@
             Object.assign(query, {
               title: this.keywords
             })
-            api.article.getArticleList(this.params).then(res => {
-              let list = []
-              res.data.data.list.map(item => {
-                list.push({
+            api.article.getArticleList(this.params).then(({ list, total_count }) => {
+              let _list = []
+              list.map(item => {
+                _list.push({
                   id: item.article_id,
                   title: item.title
                 })
               })
-              this.list = list
-              this.total = res.data.data.total_count
+              this.list = _list
+              this.total = total_count
               this.loading = false
             })
             break;
@@ -264,16 +264,16 @@
               distributor_id: this.store.id
             })
             console.log(query)
-            api.article.getArticleList(query).then(res => {
-              let list = []
-              res.data.data.list.map(item => {
-                list.push({
+            api.article.getArticleList(query).then(({list, total_count}) => {
+              let _list = []
+              list.map(item => {
+                _list.push({
                   id: item.article_id,
                   title: item.title
                 })
               })
-              this.list = list
-              this.total = res.data.data.total_count
+              this.list = _list
+              this.total = total_count
               this.loading = false
             })
             break;
@@ -311,16 +311,16 @@
               status: 'valid',
               name: this.keywords
             })
-            api.promotions.seckillActivityGetList(query).then(res => {
-              let list = []
-              res.data.data.list.map(item => {
-                list.push({
+            api.promotions.seckillActivityGetList(query).then((list, total_count) => {
+              let _list = []
+              list.map(item => {
+                _list.push({
                   id: item.seckill_id,
                   title: item.activity_name
                 })
               })
-              this.list = list
-              this.total = res.data.data.total_count
+              this.list = _list
+              this.total = total_count
               this.loading = false
             })
             break;
@@ -329,16 +329,16 @@
               template_name: this.template_name,
               page_name: this.keywords
             })
-            api.wxa.getCustomPageList(query).then(res => {
-              let list = []
-              res.data.data.list.map(item => {
+            api.wxa.getCustomPageList(query).then(({ list, total_count }) => {
+              let _list = []
+              list.map(item => {
                 list.push({
                   id: item.id,
                   title: item.page_name
                 })
               })
-              this.list = list
-              this.total = res.data.data.total_count
+              this.list = _list
+              this.total = total_count
               this.loading = false
             })
             break;
@@ -346,16 +346,16 @@
             Object.assign(query, {
               template_name: this.template_name
             })
-            api.promotions.getLiverooms(query).then(res => {
-              let list = []
-              res.data.data.list.map(item => {
-                list.push({
+            api.promotions.getLiverooms(query).then(({ list, total_count }) => {
+              let _list = []
+              list.map(item => {
+                _list.push({
                   id: item.roomid,
                   title: item.name
                 })
               })
-              this.list = list
-              this.total = res.data.data.total_count
+              this.list = _list
+              this.total = total_count
               this.loading = false
             })
             break;
@@ -365,16 +365,16 @@
               page_size: 10,
               route_info: this.keywords
             })
-            api.wxa.getWxConfigLink(query).then(res => {
-              let list = []
-              res.data.data.list.map(item => {
-                list.push({
+            api.wxa.getWxConfigLink(query).then(({ list, total_count }) => {
+              let _list = []
+              list.map(item => {
+                _list.push({
                   id: item.app_id,
                   title: item.route_info
                 })
               })
-              this.list = list
-              this.total = Number(res.data.data.total_count)
+              this.list = _list
+              this.total = total_count
               this.loading = false
             })
             break;

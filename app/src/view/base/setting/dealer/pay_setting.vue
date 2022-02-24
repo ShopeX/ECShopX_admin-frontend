@@ -218,9 +218,9 @@ export default {
   methods: {
     // 查询开户步骤
     async getStepHandle() {
-      const result = await this.$api.adapay.getStep()
+      const { info } = await this.$api.adapay.getStep()
       console.log(result)
-      const { MerchantResident } = result.data.data.info
+      const { MerchantResident } = info
       if (MerchantResident.length <= 0) {
         this.processed = '未填'
       } else {
@@ -239,21 +239,20 @@ export default {
     },
     // 获取options
     async getOptions() {
-      const result = await this.$api.adapay.pay_options()
-      const { fee_type, mer_type, model_type } = result.data.data
+      const { fee_type, mer_type, model_type } = await this.$api.adapay.pay_options()
       this.fee_type_options = fee_type
       this.mer_type_options = mer_type
       this.model_type_options = model_type
     },
     // 获取经营类目options
     async getCategoryOptions(obj) {
-      const result = await this.$api.adapay.getCategoryList(obj)
-      this.category_options = result.data.data.list
+      const { list } = await this.$api.adapay.getCategoryList(obj)
+      this.category_options = list
     },
     // 获取商户种类options
     async getMerTypeOptions(obj) {
-      const result = await this.$api.adapay.getMerTypeOption(obj)
-      this.mer_type_options = result.data.data.mer_type
+      const { mer_type } = await this.$api.adapay.getMerTypeOption(obj)
+      this.mer_type_options = mer_type
     },
     submitForm() {
       this.$refs['ruleForm'].validate(async (valid) => {
@@ -273,9 +272,8 @@ export default {
     },
     // 重新填写
     async processedHandle() {
-      const result = await this.$api.adapay.getStep()
-      console.log(result)
-      const { MerchantResident } = result.data.data.info
+      const { info } = await this.$api.adapay.getStep()
+      const { MerchantResident } = info
       this.isEcho = true
       this.form = { ...this.form, ...MerchantResident }
       this.form.select_regions_value = [
@@ -291,8 +289,7 @@ export default {
     /* ----------------------------------checkBox start----------------------------------- */
     async checkBoxConfirmHandle() {
       try {
-        const result = await this.$api.adapay.submitPay(this.form)
-        const { status } = result.data.data
+        const { status } = await this.$api.adapay.submitPay(this.form)
         if (status) {
           this.processed = '已填'
           this.currentStatus = {

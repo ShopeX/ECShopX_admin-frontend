@@ -83,20 +83,19 @@ export default {
       this.$emit('change', this.current)
       this.visible = false
     },
-    fetch() {
-      api.marketing.getDistributorList(this.params).then((res) => {
-        let list = []
-        res.data.data.list.map((item) => {
-          list.push({
-            id: item.distributor_id,
-            name: item.name,
-            address: item.store_address
-          })
+    async fetch() {
+      const { list, total_count } = await this.$api.marketing.getDistributorList(this.params)
+      let _list = []
+      list.map((item) => {
+        _list.push({
+          id: item.distributor_id,
+          name: item.name,
+          address: item.store_address
         })
-        this.list = list
-        this.total = res.data.data.total_count
-        this.loading = false
       })
+      this.list = _list
+      this.total = total_count
+      this.loading = false
     }
   },
   mounted() {

@@ -621,9 +621,9 @@ export default {
       })
       api.marketing
         .getDistributorList({ page: 1, pageSize: 200, is_valid: true, distributor_id: ids })
-        .then((res) => {
+        .then(({ tagList }) => {
           let tags = []
-          res.data.data.tagList.map((item) => {
+          tagList.map((item) => {
             tags.push({
               name: item.tag_name,
               id: item.tag_id

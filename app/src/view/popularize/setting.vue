@@ -20,17 +20,17 @@
           >
           </el-alert>
         </el-form-item>
-        <el-form-item label="推广商品">
+        <el-form-item label="分销商品">
           <el-radio-group v-model="form.goods">
             <el-radio label="all">全部商品</el-radio>
-            <el-radio label="select">指定推广商品</el-radio>
+            <el-radio label="select">指定分销商品</el-radio>
           </el-radio-group>
           <div class="frm-tips">
             <p>
-              全部商品，表示所有的商品推广进行返佣。指定推广商品后，只有设置指定的商品可以进行推广返佣
+              全部商品，表示所有的商品推广进行返佣。指定分销商品后，只有设置指定的商品可以进行推广返佣
             </p>
             <p>
-              注意：将指定推广商品模式切换到全部商品模式，不会清空以前的选择，重新再切回指定商品模式，保留以前的选择商品
+              注意：将指定分销商品模式切换到全部商品模式，不会清空以前的选择，重新再切回指定商品模式，保留以前的选择商品
             </p>
           </div>
         </el-form-item>

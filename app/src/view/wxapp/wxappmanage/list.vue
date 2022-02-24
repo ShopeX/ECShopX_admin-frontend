@@ -44,7 +44,9 @@
                     <span v-else-if="scope.row.authorizer.weapp.audit_status == '2'" type="primary">审核中</span>
                   </el-descriptions-item>
                   <el-descriptions-item label="审核失败原因" :contentStyle="{'text-align': 'left'}">
-                    <div class="content-item" v-html="scope.row.authorizer.weapp.reason"></div>
+                      <span v-if="scope.row.authorizer.weapp.audit_status == '1' && scope.row.authorizer.weapp.reason">
+                          <div class="content-item" v-html="scope.row.authorizer.weapp.reason"></div>
+                      </span>
                   </el-descriptions-item>
                 </el-descriptions>
                 <div class="content-center" v-if="scope.row.authorizer && scope.row.authorizer.is_direct == 0" >
@@ -67,6 +69,13 @@
                     @click="handleAddWxaAction('false')"
                     >上传代码并提交审核</el-button
                   >
+                  <el-button
+                      type="success"
+                      v-else-if="scope.row.authorizer.weapp.audit_status == '1'"
+                      @click="handleAddWxaAction('false')"
+                      >重新提审</el-button
+                  >
+
                   <!---  v-if="scope.row.authorizer.weapp.audit_status === 3 || scope.row.authorizer.weapp.audit_status === 2" -->
                   <el-button type="info" v-if="scope.row.authorizer.weapp.audit_status === 2" @click="handleUndocodeaudit"
                     >审核撤回</el-button
@@ -123,7 +132,7 @@
                     >
                     <el-button  v-if="scope.row.authorizer.is_direct == 0"
                       size="mini" type="text" plain
-                      @click="handleBind">更换绑定</el-button
+                      @click="handleBind(scope.row)">更换绑定</el-button
                     >
                     <el-button
                       size="mini" type="text" plain
@@ -132,7 +141,7 @@
                     ></el-button-group>
                 </div>
                 <div v-else>
-                  <el-button-group><el-button size="mini" type="text" plain @click="handleBind">授权第三方</el-button>
+                  <el-button-group><el-button size="mini" type="text" plain @click="handleBind(scope.row)">授权第三方</el-button>
                   <el-button size="mini" type="text" plain @click="bindWxapp(scope.row)">添加直连小程序</el-button></el-button-group>
                 </div>
               </template>
@@ -588,9 +597,9 @@ export default {
         this.getDataList()
       })
     },
-    handleBind() {
+    handleBind({key_name}) {
       let params = {
-        callback_url: this.wxAuthCallbackUrl + 'auth/wxa'
+        callback_url: `${this.wxAuthCallbackUrl}auth/wxa?template_name=${key_name}`
       }
       getWechatPreAuthUrl(params).then((response) => {
         this.authorizerUrl = response.data.data.url
@@ -607,6 +616,7 @@ export default {
       this.applet_detail = true
       getWxa(data.authorizer.authorizer_appid).then((response) => {
         this.detail = response.data.data
+        this.weappTemplate = this.detail.weappTemplate
         console.log(this.detail)
       })
     },

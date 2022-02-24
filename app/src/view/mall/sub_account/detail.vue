@@ -141,8 +141,8 @@ export default {
   methods: {
     async getOrderList() {
       const { order_id } = this.$route.params
-      const result = await this.$api.adapay.subAccountDetail(order_id)
-      this.list = result.data.data
+      const res = await this.$api.adapay.subAccountDetail(order_id)
+      this.list = res
     }
   }
 }

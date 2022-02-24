@@ -83,6 +83,12 @@
             <el-button type="primary" @click="batchItemsStatus('instock')"
               >强制下架</el-button
             >
+            <el-button type="primary" @click="exportItemsWxappCode('wxa')"
+              >小程序码</el-button
+            >
+            <el-button type="primary" @click="exportItemsWxappCode('h5')"
+              >H5二维码</el-button
+            >
           </el-button-group>
         </el-col>
       </el-row>
@@ -288,6 +294,28 @@ export default {
         this.dialogVisible = false;
         this.getGoodsList();
       });
+    },
+    async exportItemsWxappCode(exportType) {
+      let params
+      if (this.goods_id.length) {
+        params = {
+          item_id: this.goods_id
+        }
+      } else {
+        params = {
+          ...this.params
+        }
+      }
+      const { status } = await this.$api.goods.exportGoodsCode({
+        ...params,
+        source: 'distributor',
+        export_type: exportType
+      })
+      if(status) {
+        this.$message.success("已加入执行队列，请在设置-导出列表中下载")
+      } else {
+        this.$message.error('导出失败')
+      }
     },
     AuditHandle() {
       console.log(this.goods_id);

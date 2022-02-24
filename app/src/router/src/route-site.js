@@ -162,6 +162,11 @@ export default {
       component: () => import('@/view/base/setting/im/list')
     },
     {
+      path: 'cs/wxappchat',
+      name: `客服-美洽客服`, 
+      component: () => import('@/view/base/setting/im/wxappchat')
+    },
+    {
       path: 'site/extminilink',
       name: `外部小程序配置`, 
       component: () => import( '@/view/base/wxa/extMiniLink' ),

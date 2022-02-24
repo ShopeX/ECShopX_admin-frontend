@@ -68,6 +68,30 @@ Vue.use(VueMasonryPlugin)
 Vue.use(VueVideoPlayer)
 
 Vue.use(Filter)
+
+const installComponent = (Vue) => {
+  const baseContext = require.context('./components', true, /index(\.vue|\.js)$/)
+  const components = {}
+
+  function resloveModule(mod) {
+    Object.keys(mod).forEach((key) => {
+      mod[key].name && (components[mod[key].name] = mod[key])
+    })
+  }
+
+  baseContext.keys().forEach((key) => {
+    const mod = baseContext(key)
+    resloveModule(mod)
+  })
+
+  console.log('components:', components)
+  Object.keys(components).forEach((key) => {
+    const comp = components[key]
+    Vue.component(comp.name, comp)
+  })
+}
+
+installComponent(Vue)
 // micrApp.init()
 
 // import fetch from './utils/fetch'

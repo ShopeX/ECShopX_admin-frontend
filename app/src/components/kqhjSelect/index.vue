@@ -19,7 +19,7 @@
           <div>
             <div class="shop_module_item shop_module_banner js_shopModuleWrapper">
               <strong class="shop_banner_title">Onex平台</strong>
-              <span class="banner_logo"><img src="@/assets/img/logo2.31693aa.png" alt=""/></span>
+              <!-- <span class="banner_logo"><img src="@/assets/img/logo2.31693aa.png" alt=""/></span> -->
               <span class="banner_bg"><img src="" alt="" class="banner_pic"/></span>
               <div class="pic_mask"></div>
             </div>

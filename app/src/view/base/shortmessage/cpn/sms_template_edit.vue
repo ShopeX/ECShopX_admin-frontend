@@ -44,7 +44,7 @@
         ></el-input>
         <ul class="tips">
           <li>短信字数含 " 签名 + 模版内容 + 变量内容”，短信 70 个字数含以内，按 1 条短信计费；超出 70 个字为长短信，按照 67 个字数记为 1 条短信费用。</li>
-          <li>短信服务的模板都需要经过审核，审核通过后才可以使用该模板，请参见<a target="_blank" href="https://help.aliyun.com/document_detail/108253.htm?spm=a2c4g.11186623.0.0.7c8e2918ZCtnlV"></a>短信模板规范。</li>
+          <li>短信服务的模板都需要经过审核，审核通过后才可以使用该模板，请参见 <a target="_blank" href="https://help.aliyun.com/document_detail/108253.htm?spm=a2c4g.11186623.0.0.7c8e2918ZCtnlV">短信模板规范。</a></li>
         </ul>
       </el-form-item>
       <el-form-item label="申请说明" prop="remark">

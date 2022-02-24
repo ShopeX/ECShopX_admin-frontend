@@ -155,8 +155,7 @@
       @select="handleSelectChange"
       @select-all="handleSelectAll"
       v-loading="loading"
-      :row-key="getRowKeys"
-      :select-on-indeterminate="false"
+      :row-key="getRowKeys" 
     >
       <el-table-column
         type="selection"

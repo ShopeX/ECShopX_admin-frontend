@@ -72,8 +72,7 @@ export default {
   },
   methods: {
     async createKey() {
-      const result = await this.$api.adapay.getAdapayPaySettingKey()
-      const { private_key, public_key } = result.data.data
+      const { private_key, public_key } = await this.$api.adapay.getAdapayPaySettingKey()
       if (private_key && public_key) {
         this.form.public_key = public_key
         this.form.private_key = private_key
@@ -87,11 +86,11 @@ export default {
     async onSubmit(formName) {
       this.$refs[formName].validate(async valid => {
         if (valid) {
-          const result = await this.$api.adapay.postAdapayPaySetting({
+          const {status} = await this.$api.adapay.postAdapayPaySetting({
             ...this.form,
             pay_type: 'adapay'
           })
-          if (result.data.data.status) {
+          if (status) {
             this.$message.success('保存成功')
             this.getConfig()
           } else {

@@ -185,32 +185,31 @@ export default {
       this.showModal = false
       this.$emit('onClose')
     },
-    fetch() {
+    async fetch() {
       this.loading = true
       this.params.page += 1 
-      api.marketing.getDistributorList(this.params).then((res) => {
-        let list = []
-        this.$emit('changeStore', res.data.data.list)
-        res.data.data.list.map((item) => {
-          let tags = []
-          item.tagList.map((tag) => {
-            tags.push({
-              id: tag.tag_id,
-              name: tag.tag_name
-            })
-          })
-          list.push({
-            id: item.distributor_id,
-            name: item.name,
-            address: item.store_address,
-            logo: item.logo,
-            tags
+      const { list, total_count } = await api.marketing.getDistributorList(this.params)
+      let _list = []
+      this.$emit('changeStore', list)
+      list.map((item) => {
+        let tags = []
+        item.tagList.map((tag) => {
+          tags.push({
+            id: tag.tag_id,
+            name: tag.tag_name
           })
         })
-        this.list = [...this.list, ...list]
-        this.total = res.data.data.total_count
-        this.loading = false
+        _list.push({
+          id: item.distributor_id,
+          name: item.name,
+          address: item.store_address,
+          logo: item.logo,
+          tags
+        })
       })
+      this.list = [...this.list, ..._list]
+      this.total = total_count
+      this.loading = false
     },
     resetFilter() {
       this.params.page = 0

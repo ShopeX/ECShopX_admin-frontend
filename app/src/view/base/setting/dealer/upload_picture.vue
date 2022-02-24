@@ -376,9 +376,8 @@ export default {
   methods: {
     // 查询开户步骤
     async getStepHandle() {
-      const result = await this.$api.adapay.getStep()
-      console.log(result)
-      const { SubmitLicense } = result.data.data.info
+      const { info } = await this.$api.adapay.getStep()
+      const { SubmitLicense } = info
       if (SubmitLicense.length <= 0) {
         this.processed = '未填'
       } else {
@@ -484,7 +483,7 @@ export default {
     /* ----------------------------------checkBox start----------------------------------- */
     async checkBoxConfirmHandle(data) {
       try {
-        const result = await this.$api.adapay.submitPhoto({
+        const { status } = await this.$api.adapay.submitPhoto({
           ...this.apiData,
           business_add: this.form.business_add,
           cert_name: this.form.cert_name,
@@ -493,7 +492,6 @@ export default {
            ...data
         })
 
-        const { status } = result.data.data
         if (status) {
           this.processed = '已填'
           this.currentStatus = {
@@ -518,9 +516,8 @@ export default {
     },
     // 重新填写
     async processedHandle() {
-      const result = await this.$api.adapay.getStep()
-      console.log(result)
-      const { SubmitLicense } = result.data.data.info
+      const { info } = await this.$api.adapay.getStep()
+      const { SubmitLicense } = info
 
       this.form = { ...this.form, ...SubmitLicense }
       console.log(this.form)

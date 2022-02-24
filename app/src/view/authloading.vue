@@ -19,6 +19,7 @@ export default {
         auth_code: this.$route.query.auth_code, 
         auth_type: this.$route.params.auth_type
       }
+      const { template_name } = this.$route.query
       getWechatBind(query).then(response => {
         console.log("--response--",response)
         this.$store.dispatch('setAuthorizer', true)
@@ -31,7 +32,9 @@ export default {
         if (query.auth_type == 'woa') {
           this.$router.push({path: homePath})
         } else {
-          this.$router.push({path: '/wxapp/manage/editauthorize', query: { newBind: true, wxapp_id: response.data.data.authorizer_appid, nick_name:response.data.data.nick_name}})
+          const { authorizer_appid, nick_name } = response.data.data
+          this.uploadWeapp(authorizer_appid, nick_name, template_name)
+          // this.$router.push({path: '/wxapp/manage/editauthorize', query: { newBind: true, wxapp_id: response.data.data.authorizer_appid, nick_name:response.data.data.nick_name}})
         }
       })
       .catch(error => {
@@ -44,11 +47,23 @@ export default {
         if (query.auth_type == 'woa') {
           this.$router.push({path: homePath, query: { isBindFail: true }})
         } else {
-          this.$router.push({path: '/wxapp/manage/editauthorize' })
+          this.$router.push({path: '/site/wechat/wxaindex' })
         }
       })
     } else {
       this.$router.push({ path: homePath, query: { isBindFail: true }})
+    }
+  },
+  methods: {
+    async uploadWeapp(wxapp_id, nick_name, template_name) {
+      const params = {
+        wxaAppId: wxapp_id,
+        wxa_name: nick_name,
+        templateName: template_name
+      }
+      await this.$api.wxa.submitWxa(params)
+      this.$message.success('上传代码成功')
+      this.$router.push({ path: '/site/wechat/wxaindex' })
     }
   }
 }

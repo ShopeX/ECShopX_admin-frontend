@@ -565,9 +565,8 @@ export default {
   methods: {
     // 查询开户步骤
     async getStepHandle() {
-      const result = await this.$api.adapay.getStep()
-      console.log(result)
-      const { MerchantEntry } = result.data.data.info
+      const { info } = await this.$api.adapay.getStep()
+      const { MerchantEntry } = info
       if (MerchantEntry.length <= 0) {
         this.processed = '未填'
       } else {
@@ -585,18 +584,17 @@ export default {
     async getProHandle(id) {
       const result = await this.$api.adapay.getPro({ pid: id })
       if (!id) {
-        this.All_pro = result.data.data
+        this.All_pro = result
       } else {
-        return result.data.data
+        return result
       }
     },
 
     // 结算所属银行
     async querySearch(queryString, cb) {
-      const result = await this.$api.adapay.getBank({
+      this.AllBank = await this.$api.adapay.getBank({
         bank_name: this.form.bank_name
       })
-      this.AllBank = result.data.data
       var restaurants = this.AllBank.map((item) => {
         return {
           value: item.bank_name,
@@ -644,9 +642,8 @@ export default {
     },
     // 重新填写
     async processedHandle() {
-      const result = await this.$api.adapay.getStep()
-      console.log(result)
-      const { MerchantEntry } = result.data.data.info
+      const { info } = await this.$api.adapay.getStep()
+      const { MerchantEntry } = info
       this.form = { ...this.form, ...MerchantEntry }
       const {
         legal_id_expires,
@@ -733,8 +730,7 @@ export default {
     async checkBoxConfirmHandle(data) {
       console.log(data);
       try {
-        const result = await this.$api.adapay.accountCreate({ ...this.form, ...data })
-        const { status } = result.data.data
+        const { status } = await this.$api.adapay.accountCreate({ ...this.form, ...data })
         if (status) {
           this.processed = '已填'
           this.currentStatus = {

@@ -143,10 +143,9 @@ export default {
       if (type == 'edit') {
         this.disabled = true
       }
-      const result = await this.$api.coupons_package.couponDetail({
+      const { title, package_describe, limit_count, discount_cards } = await this.$api.coupons_package.couponDetail({
         package_id
       })
-      const { title, package_describe, limit_count, discount_cards } = result.data.data
       this.ruleForm.title = title
       this.ruleForm.package_describe = package_describe
       this.ruleForm.limit_count = limit_count
@@ -173,12 +172,12 @@ export default {
       if (type == 'edit') {
         this.$refs[formName].validate(async (valid) => {
           if (valid) {
-            const result = await this.$api.coupons_package.editCouponPackage({
+            const { status } = await this.$api.coupons_package.editCouponPackage({
               ...this.ruleForm,
               package_id: package_id
             })
 
-            if (result.data.data.status) {
+            if (status) {
               this.$message.success('成功')
               this.$router.push({
                 path: this.$route.matched[1].path
@@ -200,12 +199,12 @@ export default {
               package_content.push({ card_id: item.card_id, give_num: item.give_num })
             })
 
-            const result = await this.$api.coupons_package.createdCoupons({
+            const { status } = await this.$api.coupons_package.createdCoupons({
               ...this.ruleForm,
               package_content
             })
 
-            if (result.data.data.status) {
+            if (status) {
               this.$message.success('成功')
               this.$router.push({
                 path: this.$route.matched[1].path

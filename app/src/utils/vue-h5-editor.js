@@ -119,21 +119,23 @@ const options = {
     'font',
     'align',
     'list',
-    // 'image',
+    'image',
     // 'link',
     // 'unlink',
     'tabulation',
     'hr',
     'eraser',
     'undo',
-    'full-screen'
+    'full-screen',
+    'uploader'
     // 'info'
   ],
   // 扩展模块，具体可以参考examples或查看源码
   // extended modules
-  modules: {
-    // omit,reference to source code of build-in modules
-  }
+  modules:[{
+    icon:'iconfont icon-image',
+    name:'uploader'
+  }],
 }
 
 

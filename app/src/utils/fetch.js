@@ -63,7 +63,6 @@ function createAxios (inst, isJson = true) {
     const isDeleteMethod = config.method === 'delete'
     const showError = config.showError === undefined ? true : config.showError
     config.headers['Authorization'] = 'Bearer ' + store.getters.token
-
     if (isGetMethod || isDeleteMethod) {
       config.params = {
         ...config.params

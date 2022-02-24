@@ -60,7 +60,7 @@
                   </el-menu-item>
                 </template>
               </el-menu-item-group>
-              <div v-else-if="child.is_show && child.is_menu" :key="`cmenu-${cindex}`">
+              <div class="sub-menu-item" v-else-if="child.is_show && child.is_menu" :key="`cmenu-${cindex}`">
                 <el-menu-item
                   :index="child.url"
                   :class="{ 'is-active': child.url == activeSubIndex }"
@@ -387,14 +387,18 @@ export default {
     a {
       display: block;
       color: #545D7A;
-      flex: 1;
-      display: flex;
-      padding-left: 24px;
+      // flex: 1;
+      // display: flex;
+      // padding-left: 24px;
+      padding: 0 4px;
     }
     i {
       color: $dominant_hue;
     }
   }
+}
+.sub-menu-item {
+  margin-left: 14px;
 }
 .header {
   display: flex;
@@ -452,6 +456,9 @@ export default {
     line-height: 40px;
     color: #3D4355;
     font-size: 14px;
+  }
+  > ul {
+    margin-left: 14px;
   }
 }
 </style>

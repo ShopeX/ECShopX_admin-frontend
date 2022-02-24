@@ -1,5 +1,6 @@
 import { mapState, mapActions } from 'vuex'
 import moment from 'moment'
+export { default as pageMixin } from './pageMixin'
 export default {
   methods: {
     onCopySuccess() {

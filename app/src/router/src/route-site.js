@@ -147,6 +147,11 @@ export default {
       component: () => import('@/view/brand/wechat/reply')
     },
     {
+      path: 'cs/wxappchat',
+      name: `客服-小程序客服`, 
+      component: () => import('@/view/brand/wechat/wxapp')
+    },
+    {
       path: 'cs/brandcustomer',
       name: `客服-微信客服`, 
       component: () => import('@/view/brand/wechat/customservice')

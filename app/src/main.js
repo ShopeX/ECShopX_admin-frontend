@@ -23,7 +23,8 @@ import { install as Filter } from '@/filters'
 import './style/common.scss'
 import './style/index.scss'
 
-import fetch from '@/api/req'
+// import fetch from '@/api/req'
+import fetch from '@/utils/fetch'
 import { initFinder } from '@shopex/finder'
 import '@shopex/finder/lib/finder.css'
 import exportTip from '@/utils/components'
@@ -37,15 +38,22 @@ initFinder(Vue, {
         let params = {
           ...p,
           page_size: p.pageSize,
-          page: p.pageNum
+          page: p.pageNum,
+          finderId: 100
         }
         delete params.pageSize
         delete params.pageNum
         return params
       },
-      afterRequest:({status_code,message})=>{
+      afterQuery:(response)=>{
+        const { status_code, message } = response.data.data
         if (status_code == 500) {
-         Vue.prototype.$message.error(message)
+          return Vue.prototype.$message.error(message)
+        } else {
+          return {
+            ...response.data.data,
+            count: response.data.data.total_count,
+          }
         }
       }
     },

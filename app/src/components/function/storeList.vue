@@ -208,7 +208,7 @@ export default {
         })
       })
       this.list = [...this.list, ..._list]
-      this.total = res.data.data.total_count
+      this.total = total_count
       this.loading = false
     },
     resetFilter() {

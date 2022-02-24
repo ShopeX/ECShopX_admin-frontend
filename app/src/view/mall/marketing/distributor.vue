@@ -565,11 +565,11 @@ export default {
 
     },
     linkTemplates(distributor) {
-      const { distributor_id, address, name } = distributor
+      const { distributor_id, address, name, distribution_type } = distributor
       this.$store.dispatch('setTemplateName', 'yykweishop')
       this.$router.push({
         path: this.matchHidePage('template'),
-        query: { distributor_id, address, name },
+        query: { distributor_id, address, name, distribution_type },
       })
     },
     dialogShow(id, type) {

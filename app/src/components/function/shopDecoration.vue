@@ -9,6 +9,14 @@
         class="components-view"
       >
         <div v-for="(item, index) in initData" class="component-control" :key="index">
+           <template
+            v-if="item.name === 'nearbyShop' && pagetype == 'cuspage'"
+          >
+            <svg class="svg-icon" aria-hidden="true">
+              <use xlink:href="#icon-scroll"></use>
+            </svg>
+            附近商家
+          </template>
           <template v-if="item.name === 'coupon'">
             <svg class="svg-icon" aria-hidden="true">
               <use xlink:href="#icon-tag"></use>
@@ -63,6 +71,12 @@
             </svg>
             轮播
           </template>
+          <template v-if="item.name === 'store' && pagetype == 'cuspage'">
+            <svg class="svg-icon" aria-hidden="true">
+              <use xlink:href="#icon-store"></use>
+            </svg>
+            推荐店铺
+          </template>
         </div>
       </draggable>
       <div class="template-view">
@@ -100,6 +114,12 @@
                     @click="removeCurrent"
                   ></div>
                 </transition>
+                <nearbyShop
+                  v-if="item.name === 'nearbyShop'"
+                  :res="item"
+                  :active="index == editorIndex"
+                >
+                </nearbyShop>
                 <coupon
                   v-if="item.name === 'coupon'"
                   :res="item"
@@ -145,6 +165,11 @@
                   :res="item"
                   :active="index == editorIndex"
                 ></slider>
+                <store
+                  v-if="item.name === 'store'"
+                  :res="item"
+                  :active="index == editorIndex"
+                ></store>
               </div>
             </draggable>
           </div>
@@ -155,6 +180,7 @@
           <i class="iconfont icon-shapes"></i>
           请拖选左侧挂件
         </div>
+        <nearbyShopEditor :res="editorData" @tagSelectVisibleHandle="tagSelectVisibleHandle" />
         <couponEditor
           :res="editorData"
           @bindCoupons="showCoupons"
@@ -180,6 +206,12 @@
           @bindLinks="showLinks"
         ></showcaseEditor>
         <sliderEditor :res="editorData" @bindImgs="showImgs" @bindLinks="showLinks"></sliderEditor>
+        <storeEditor
+          :res="editorData"
+          @bindGoods="showGoods"
+          @bindImgs="showImgs"
+          @tagSelectVisibleHandle="tagSelectVisibleHandle"
+        ></storeEditor>
       </div>
     </section>
     <section slot="footer" class="content-center">
@@ -200,15 +232,29 @@
     <goodsSelect
       :items-visible="goodsVisible"
       :get-status="setItemStatus"
+      :rel-store="curStore"
       :rel-items-ids="relItemsIds"
+      :lock-store="relStore.id == '0' ? false : true"
       @chooseStore="pickGoods"
       @closeStoreDialog="closeDialog"
+      :isChangeStore="true"
     ></goodsSelect>
     <couponPicker
       :visible="couponsVisible"
       @pickCoupon="pickCoupon"
       @closeDialog="closeDialog"
     ></couponPicker>
+    <template v-if="tagSelectVisible">
+      <TagSelect
+        :visible="tagSelectVisible"
+        :type="tagType"
+        :seletedTags="editorData.seletedTags"
+        :storeID="storeID"
+        @visibleHandle="tagSelectVisibleHandle"
+        @seletedTagsHandle="seletedTagsHandle"
+      >
+      </TagSelect>
+    </template>
   </div>
 </template>
 
@@ -221,6 +267,7 @@ import linkSetter from '@/components/template_links_guide'
 
 import goodsSelect from '@/components/goodsSelect'
 import couponPicker from '@/components/coupon_picker'
+import TagSelect from '@/components/new_tagselect'
 // 店铺装修组件
 // view层组件
 import coupon from '@/components/template/coupon'
@@ -232,6 +279,8 @@ import navigation from '@/components/template/navigation'
 import search from '@/components/template/search'
 import showcase from '@/components/template/showcase'
 import slider from '@/components/template/slider'
+import nearbyShop from '@/components/template/nearby_shop'
+import store from '@/components/template/store' //推荐商铺
 // control层组件
 import couponEditor from '@/components/template_editor/coupon'
 import goodsGridEditor from '@/components/template_editor/goods_grid'
@@ -242,6 +291,8 @@ import navigationEditor from '@/components/template_editor/navigation'
 import searchEditor from '@/components/template_editor/search'
 import showcaseEditor from '@/components/template_editor/showcase'
 import sliderEditor from '@/components/template_editor/slider'
+import nearbyShopEditor from '@/components/template_editor/nearby_shop'
+import storeEditor from '@/components/template_editor/store'
 
 // 第三方组件
 import draggable from 'vuedraggable'
@@ -266,11 +317,21 @@ export default {
       type: String,
       default: 'template' // usage=='page'为页面编辑
     },
+    pagetype: { // pagetype：cuspage为自定义页面
+      type: String
+    },
     template_name: {
       type: String
+    },
+    relStore: {
+      type: Object,
+      default: () => {
+        return {}
+      }
     }
   },
   components: {
+    nearbyShop,
     coupon,
     goodsGrid,
     goodsScroll,
@@ -280,6 +341,7 @@ export default {
     search,
     showcase,
     slider,
+    store,
     couponEditor,
     goodsGridEditor,
     goodsScrollEditor,
@@ -289,17 +351,23 @@ export default {
     searchEditor,
     showcaseEditor,
     sliderEditor,
+    storeEditor,
+    nearbyShopEditor,
     // 其他组件
     imgPicker,
     linkSetter,
     goodsSelect,
     couponPicker,
+    TagSelect,
     // 第三方组件
     draggable
   },
   data() {
     return {
       componentHeight: '',
+      tagSelectVisible: false,
+      storeID: null,
+      tagType: '', // nearby_shop || store
       editorIndex: null,
       editorData: {},
       editorDataIndex: null,
@@ -323,6 +391,15 @@ export default {
       },
       saveInit: '',
       initData: [
+        {
+          name: 'nearbyShop',
+          base: {
+            title: '附近商家',
+            padded: true,
+            show_coupon: true
+          },
+          seletedTags: []
+        },
         {
           name: 'coupon',
           base: {
@@ -497,19 +574,39 @@ export default {
           },
           data: []
         },
+        // {
+        //   name: 'marquees',
+        //   base: {
+        //     title: '',
+        //     subtitle: '',
+        //     padded: true
+        //   },
+        //   config: {
+        //     direction: 'vertical',
+        //     bgcolor: '',
+        //     fontcolor: ''
+        //   },
+        //   data: []
+        // },
         {
-          name: 'marquees',
+          name: 'store',
           base: {
-            title: '',
-            subtitle: '',
-            padded: true
+            title: '推荐商铺',
+            subtitle: '热门商铺，官方推荐',
+            padded: true,
+            backgroundColor: '#FFF',
+            borderColor: '#FF6700',
+            imgUrl: ''
           },
-          config: {
-            direction: 'vertical',
-            bgcolor: '',
-            fontcolor: ''
-          },
-          data: []
+          data: [
+            {
+              id: '',
+              name: '',
+              logo: '',
+              items: []
+            }
+          ],
+          seletedTags: []
         }
       ],
       faverite: {
@@ -593,7 +690,8 @@ export default {
       // 开启猜你喜欢
       isOpenFaverite: true,
       // 开启扫码功能
-      isOpenScancode: true
+      isOpenScancode: true,
+      curStore: {},
     }
   },
   mounted() {
@@ -629,6 +727,24 @@ export default {
     }
   },
   methods: {
+    tagSelectVisibleHandle(type) {
+      if (type == 'store') {
+        this.storeID = this.components[this.editorIndex].data[0].id
+      }
+
+      this.tagSelectVisible = !this.tagSelectVisible
+      if (this.tagSelectVisible) {
+        this.tagType = type
+      } else {
+        this.tagType = ''
+      }
+    },
+    seletedTagsHandle(seletedTags) {
+      this.editorData.seletedTags = seletedTags // editor
+      this.components[this.editorIndex].seletedTags = seletedTags // view
+
+      // this.tagSelectVisibleHandle();
+    },
     // 拖拽绑定事件
     onStart(evt) {
       if (evt.target.className === 'components-view') {
@@ -711,7 +827,7 @@ export default {
           items = this.editorData.data
         }
       }
-      if (items.length > 0 && items[0].goodsId) {
+      if (items && items.length > 0 && items[0].goodsId) {
         items.forEach((item) => {
           ids.push(item.key || item.goodsId)
         })
@@ -719,7 +835,8 @@ export default {
           item_id: ids,
           page: 1,
           pageSize: 100,
-          item_type: 'normal'
+          item_type: 'normal',
+          audit_status: 'approved'
         }
         if (index !== undefined) {
           Object(itemParams, { distributor_id: this.relStore.id })
@@ -739,9 +856,48 @@ export default {
         }, 500)
       }
     },
-    pickGoods(data) {
+    pickGoods(data, store) {
+      if (
+        this.editorData.name === 'store' &&
+        this.system_mode === 'platform' &&
+        Number(store.id) == 0
+      ) {
+        this.$message({
+          message: '推荐店铺不能为总店',
+          type: 'error'
+        })
+        return false
+      }
+
+      if (this.editorDataIndex !== null) {
+        console.log('store.id====', store.id)
+
+        if (!store.id) {
+          this.relItemsIds.splice(0)
+          this.$message({
+            message: '请选择店铺',
+            type: 'error'
+          })
+          return
+        }
+      }
+
+      /* 店铺标签逻辑 */
+      if (this.components[this.editorIndex].name == 'store') {
+        const oldStoreID = this.components[this.editorIndex].data[0].id
+        console.log(store.id)
+        if (oldStoreID != store.id) {
+          this.editorData.seletedTags = [] // template
+          this.components[this.editorIndex].seletedTags = [] //view
+        }
+        this.storeID = store.id
+      }
+       /* 店铺标签逻辑结束 */
+
       this.relItemsIds = data
+      this.curStore = store
       let values = []
+
       if (data.length > 0) {
         data.forEach((item) => {
           let obj = {
@@ -749,13 +905,61 @@ export default {
             title: item.itemName,
             goodsId: item.itemId,
             brand: item.brand_logo,
-            price: item.price
+            price: item.price,
+            distributor_id: item.distributor_id,
+            itemEnName: item.item_en_name,
+            promotionActivity: item.promotion_activity
           }
           values.push(obj)
         })
       }
-      this.editorData.data = values
-      this.components[this.editorIndex].data = values
+      if (!this.editorDataIndex && this.editorDataIndex !== 0) {
+        if (this.editorData.name == 'goodsGridTab') {
+          // goodsGrid数据结构变化，数据另存到list里面
+          let s = this.components[this.editorIndex].base.listIndex
+          console.log(this.editorData.list[s].goodsList) // 源数据
+          // if (values.length>=this.editorData.list[s].goodsList.length) {
+          if (values.length>=1) {
+            for (let i = 0; i < this.editorData.list[s].goodsList.length; i++) {
+              for (let j = 0; j < values.length; j++) {
+                if (this.editorData.list[s].goodsList[i].goodsId == values[j].goodsId) {
+                  values.splice(j, 1)
+                }
+              }
+            }
+            values = [...this.editorData.list[s].goodsList, ...values]
+          }
+          console.log(values)
+          // values = [...this.editorData.list[s].goodsList, ...values]
+          this.editorData.list[s].goodsList = values
+          this.components[this.editorIndex].list[s].goodsList = values
+        } else {
+          console.log(values) // 新数据
+          console.log(this.editorData.data) // 源数据
+          if (values.length>=1) {
+            for (let i = 0; i < this.editorData.data.length; i++) {
+              for (let j = 0; j < values.length; j++) {
+                if (this.editorData.data[i].goodsId == values[j].goodsId) {
+                  values.splice(j, 1)
+                }
+              }
+            }
+            values = [...this.editorData.data, ...values]
+          }
+
+          this.editorData.data = values
+          this.components[this.editorIndex].data = values
+        }
+      } else {
+        this.editorData.data[this.editorDataIndex].id = store.id
+        this.editorData.data[this.editorDataIndex].name = store.name
+        this.editorData.data[this.editorDataIndex].logo = store.logo
+        this.editorData.data[this.editorDataIndex].items = values
+        this.components[this.editorIndex].data[this.editorDataIndex].id = store.id
+        this.components[this.editorIndex].data[this.editorDataIndex].name = store.name
+        this.components[this.editorIndex].data[this.editorDataIndex].logo = store.logo
+        this.components[this.editorIndex].data[this.editorDataIndex].items = values
+      }
       this.goodsVisible = false
     },
     // 更新跑马灯数据

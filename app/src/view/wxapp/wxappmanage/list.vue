@@ -69,6 +69,13 @@
                     @click="handleAddWxaAction('false')"
                     >上传代码并提交审核</el-button
                   >
+                  <el-button
+                      type="success"
+                      v-else-if="scope.row.authorizer.weapp.audit_status == '1'"
+                      @click="handleAddWxaAction('false')"
+                      >重新提审</el-button
+                  >
+
                   <!---  v-if="scope.row.authorizer.weapp.audit_status === 3 || scope.row.authorizer.weapp.audit_status === 2" -->
                   <el-button type="info" v-if="scope.row.authorizer.weapp.audit_status === 2" @click="handleUndocodeaudit"
                     >审核撤回</el-button

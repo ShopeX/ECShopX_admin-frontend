@@ -161,8 +161,8 @@
                 type="info" close-text=" " class="alert-text" show-icon>
               </el-alert> -->
               <el-alert
-                title="比例计算"
-                description="现金 计算方式: 返佣金额 ，其中返佣金额为满足条件自定义，如果不填则不进行返佣"
+                :title="alertTip.title"
+                :description="alertTip.description"
                 type="info"
                 close-text=" "
                 class="alert-text"
@@ -370,7 +370,7 @@
       </slot>
     </SideBar>
     <el-dialog title="更改商品返佣任务制支持" :visible.sync="changeRebateTypeVisible" width="30%">
-      <el-radio-group v-model="changeRebateType">
+      <el-radio-group v-model="changeRebateType" >
         <el-radio label="default">不支持任务制</el-radio>
         <el-radio label="total_money">任务制-按总金额</el-radio>
         <el-radio label="total_num">任务制-按总数量</el-radio>
@@ -389,6 +389,24 @@ import { mapGetters } from 'vuex'
 import SideBar from '@/components/element/sideBar'
 import { getPopularizeSetting } from '../../api/promotions'
 import { getItemsList, updateItemRebateConf, updateGoodsInfo } from '@/api/goods'
+
+let changeRebateTypeMap = {
+  default: {
+    title: '不支持任务制：商品不按任务制模式获得佣金',
+    description: ''
+  },
+  total_money: {
+    title: '任务制：商品月度销售金额设置',
+    description:
+      '任务制说明：阶梯设置商品月度销售金额目标及对应返佣佣金，每月月底达标后可获得佣金。'
+  },
+  total_num: {
+    title: '任务制：商品月度销售数量设置',
+    description:
+      '任务制说明：阶梯设置商品月度销售数量目标及对应返佣佣金，每月月底达标后可获得佣金。'
+  }
+}
+
 export default {
   components: {
     SideBar
@@ -408,6 +426,7 @@ export default {
       total_count: 0,
       loading: false,
       itemsList: [],
+      changeRebateTypeMap,
       params: {
         item_type: 'normal',
         page: 1,
@@ -439,17 +458,24 @@ export default {
           property: 'name'
         }
       ],
-      statusOptions:[
-        {value:1,label:'启用'},
-        {value:2,label:'未启用'},
+      statusOptions: [
+        { value: 1, label: '启用' },
+        { value: 2, label: '未启用' }
       ],
-      status:''
+      status: '',
+      alertTip: {
+        title: '',
+        description: ''
+      }
     }
   },
   computed: {
     ...mapGetters(['wheight'])
   },
   methods: {
+    handleChangeRebate:function(e){
+      console.log("===",e)
+    },
     filterHandler(filters) {
       this.params.page = 1
       this.params.rebate = filters.rebate[0]
@@ -649,8 +675,8 @@ export default {
     },
     getGoodsList(status) {
       this.loading = true
-      if(status===1||status===2||!status){
-        this.params.rebate=status?status===1?1:0:undefined;
+      if (status === 1 || status === 2 || !status) {
+        this.params.rebate = status ? (status === 1 ? 1 : 0) : undefined
       }
       getItemsList(this.params).then((response) => {
         this.itemsList = response.data.data.list
@@ -716,11 +742,21 @@ export default {
       this.getGoodsList()
     })
   },
-  watch:{
-    status:{
-      handler:function(val){
-        this.getGoodsList(val) 
+  watch: {
+    status: {
+      handler: function (val) {
+        this.getGoodsList(val)
       }
+    },
+    'current.rebate_type': {
+      handler: function (val) { 
+        val=val?val:'default';
+        this.alertTip = {
+          title: changeRebateTypeMap[val].title,
+          description: changeRebateTypeMap[val].description
+        }
+      },
+      immediate:true
     }
   }
 }

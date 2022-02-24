@@ -1393,7 +1393,8 @@ export default {
           })
         }
       }
-      if (this.relStore.id == '0') {
+      const isHaveNearbyShop = this.initData.some((item) => item.name === 'nearbyShop')
+      if (this.relStore.id == '0' && !isHaveNearbyShop) {
         this.initData.unshift({
           name: 'nearbyShop',
           base: {

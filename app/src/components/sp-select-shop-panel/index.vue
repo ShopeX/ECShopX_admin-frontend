@@ -152,7 +152,10 @@ export default {
     },
     handleSelectionChange() {},
     onRowClick({ distributor_id, name }) {
-      this.$emit('change', name)
+      this.$emit('change', {
+        name,
+        value: distributor_id
+      })
     },
     async onChangeCascader() {
       this.fetch()

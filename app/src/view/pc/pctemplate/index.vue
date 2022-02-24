@@ -152,7 +152,7 @@
       }) {
         // this.$router.push({ path: `/pc/design?id=${theme_pc_template_id}` });
         this.$router.push({
-          path: '/pc/design?id=' + theme_pc_template_id
+          path: '/wxapp/pcmall/design?id=' + theme_pc_template_id
         })
       },
       async handleDisable({

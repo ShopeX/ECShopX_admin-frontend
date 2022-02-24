@@ -44,6 +44,7 @@
         <el-tab-pane label="分账统计导出" name="hfpay_order_record"></el-tab-pane>
         <el-tab-pane label="提现记录导出" name="hfpay_withdraw_record"></el-tab-pane>
         <el-tab-pane label="分账导出" name="adapay_tradedata"></el-tab-pane>
+        <el-tab-pane label="商品码导出" name="itemcode"></el-tab-pane>
       </template>
 
       <el-table :data="exportLogLists" :height="wheight - 220" v-loading="loading">
@@ -60,7 +61,7 @@
         </el-table-column>
         <el-table-column label="操作" min-width="150" fixed="right">
           <template slot-scope="scope">
-            <a href=" " @click.prevent="handleDown(scope.row.log_id)">下载</a>
+            <a href=" " @click.prevent="handleDown(scope.row)">下载</a>
           </template>
         </el-table-column>
       </el-table>
@@ -161,8 +162,13 @@ export default {
     dateStrToTimeStamp(str) {
       return Date.parse(new Date(str)) / 1000
     },
-    handleDown(val) {
-      ExportLogFileDown({ 'log_id': val }).then((response) => {
+    handleDown({ log_id, file_url }) {
+      if(this.activeName == 'itemcode') {
+        window.open(file_url)
+        return
+      }
+      
+      ExportLogFileDown({ 'log_id': log_id }).then((response) => {
         const url = this.genUrl(response.data.data.csv_data, {}) //{}指的是表头，response.data.data.csv_data是后台返回来的数据
         const a = document.createElement('a')
         a.href = url

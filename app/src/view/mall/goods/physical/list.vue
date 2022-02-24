@@ -169,12 +169,22 @@
           <el-dropdown-menu slot="dropdown">
             <el-dropdown-item>
               <export-tip @exportHandle="exportItemsData"
-                >导出商品信息</export-tip
+                >商品信息</export-tip
               ></el-dropdown-item
             >
             <el-dropdown-item
               ><export-tip @exportHandle="exportItemsTagData"
-                >导出商品标签</export-tip
+                >商品标签</export-tip
+              ></el-dropdown-item
+            >
+            <el-dropdown-item
+              ><export-tip @exportHandle="exportItemsWxappCode('wxa')"
+                >小程序码</export-tip
+              ></el-dropdown-item
+            >
+            <el-dropdown-item
+              ><export-tip @exportHandle="exportItemsWxappCode('h5')"
+                >H5二维码</export-tip
               ></el-dropdown-item
             >
           </el-dropdown-menu>
@@ -967,6 +977,28 @@ export default {
             })
           }
         })
+      }
+    },
+    async exportItemsWxappCode(exportType) {
+      let params
+      if (this.item_id.length) {
+        params = {
+          item_id: this.item_id
+        }
+      } else {
+        params = {
+          ...this.params
+        }
+      }
+      const { status } = await this.$api.goods.exportGoodsCode({
+        ...params,
+        source: 'item',
+        export_type: exportType
+      })
+      if(status) {
+        this.$message.success("已加入执行队列，请在设置-导出列表中下载")
+      } else {
+        this.$message.error('导出失败')
       }
     },
     syncItems() {

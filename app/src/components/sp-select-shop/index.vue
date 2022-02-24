@@ -17,13 +17,31 @@
     ref="reference"
     class="sp-select-shop"
     v-clickoutside="clickOutSide"
+    @mouseenter="inputHover = true"
+    @mouseleave="inputHover = false"
     @click="toggleDropDownVisible(true)"
   >
     <el-input
       readonly
+      :value="selectValue ? selectValue.name : ''"
       :placeholder="placeholder"
-      :suffix-icon="`el-icon-arrow-down, ${dropDownVisible ? 'is-reverse' : ''}`"
-    ></el-input>
+    >
+      <template slot="suffix">
+        <i
+          v-if="clearBtnVisible"
+          key="clear"
+          class="el-input__icon el-icon-circle-close"
+          @click.stop="handleClear"></i>
+        <i
+          v-else
+          key="arrow-down"
+          :class="[
+            'el-input__icon',
+            'el-icon-arrow-down',
+            dropDownVisible && 'is-reverse'
+          ]"></i>
+      </template>
+    </el-input>
     <transition name="el-zoom-in-top" @after-leave="handleDropdownLeave">
       <div v-show="dropDownVisible" ref="popper" :class="['el-popper', 'el-cascader__dropdown']">
         <SpSelectShopPanel
@@ -66,17 +84,42 @@ export default {
   directives: { Clickoutside },
   mixins: [PopperMixin],
   props: {
-    value: Number || String || Object,
-    placeholder: String
+    value: [Number, String],
+    placeholder: String,
+    clearable: Boolean,
+  },
+  provide() {
+    return {
+      selectShop: this
+    }
   },
   data() {
     return {
       dropDownVisible: false,
       cascaderPanelVisible: false,
-      cascaderPanelVisibleDelay: true
+      cascaderPanelVisibleDelay: true,
+      selectValue: null,
+      inputHover: false,
+      initialValue: this.value
     }
   },
   created() {},
+  watch: {
+    value(newVal, oldVal) {
+      if (newVal == this.initialValue) {
+        this.selectValue = null;
+        this.$emit('input', this.initialValue )
+      }
+    }
+  },
+  computed: {
+    clearBtnVisible() {
+      if (!this.clearable || !this.inputHover || !this.selectValue) {
+        return false;
+      }
+      return true
+    },
+  },
   methods: {
     toggleDropDownVisible(visible) {
       const { dropDownVisible } = this
@@ -115,8 +158,12 @@ export default {
       }
     },
     onChange(obj) {
-      this.$emit('input', obj)
-    }
+      this.selectValue = obj
+      this.$emit('input', obj ? obj.value : '' )
+    },
+    handleClear() {
+      this.onChange(null)
+    },
   }
 }
 </script>

@@ -54,16 +54,20 @@
       <el-table
         v-loading="loading"
         :data="list"
-        :showHeader="false"
-        @selection-change="handleSelectionChange"
+        :show-header="false"
         @row-click="onRowClick"
       >
-        <el-table-column type="selection" width="55"> </el-table-column>
-        <el-table-column prop="name" label="店铺名称"> </el-table-column>
+        <el-table-column width="30">
+          <template slot-scope="scope">
+            <el-radio :value="getRadioValue(scope.row)" :label="true" @click.native.stop />
+          </template>
+        </el-table-column>
+        
+        <el-table-column prop="name" label="店铺名称"></el-table-column>
       </el-table>
     </div>
     <div>
-      <el-pagination background layout="total, prev, pager, next" :total="total"> </el-pagination>
+      <el-pagination background layout="total, prev, pager, next" :total="total" @current-change="onCurrentChange"> </el-pagination>
     </div>
 
     <!-- <SpFinder
@@ -89,6 +93,7 @@ import district from '@/common/district.json'
 export default {
   name: 'SpSelectShopPanel',
   props: {},
+  inject: ['selectShop'],
   data() {
     return {
       district,
@@ -99,7 +104,8 @@ export default {
       pageSize: 10,
       total: 0,
       loading: false,
-      selected: []
+      selected: [],
+      radio: 0
     }
   },
   created() {
@@ -127,7 +133,6 @@ export default {
         }
       }
       getRegionLabel(this.district, 0)
-      console.log('regionLabels:', regionLabels)
       const [province = '', city = '', area = ''] = regionLabels
       params['province'] = province
       params['city'] = city
@@ -138,24 +143,34 @@ export default {
       this.total = total_count
       this.loading = false
     },
-    // beforeSearch({ page, finderId }) {
-    //   return {
-    //     page,
-    //     pageSize: 10,
-    //     finderId
-    //   }
-    // },
     reset() {
       this.keywords = ''
       this.region = []
       this.fetch()
     },
-    handleSelectionChange() {},
+    onCurrentChange(pageIndex) {
+      this.pageIndex = pageIndex
+      this.fetch()
+    },
     onRowClick({ distributor_id, name }) {
-      this.$emit('change', {
+      let resValue = {
         name,
         value: distributor_id
-      })
+      }
+      if( this.selectShop.selectValue && this.selectShop.selectValue.value == distributor_id) {
+        resValue = null
+      } 
+      this.$emit('change', resValue)
+    },
+    getRadioValue({ distributor_id }) {
+      if(!this.selectShop.selectValue) {
+        return false
+      } else if(this.selectShop.selectValue.value == distributor_id) {
+        return true
+      } else {
+        return false
+      }
+      // debugger
     },
     async onChangeCascader() {
       this.fetch()

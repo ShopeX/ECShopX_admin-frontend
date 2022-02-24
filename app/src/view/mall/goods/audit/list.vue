@@ -10,8 +10,8 @@
         /></SpFilterFormItem>
         <SpFilterFormItem prop="regions_id" label="商品产地:">
           <el-cascader
-            placeholder="请选择"
             clearable
+            placeholder="请选择"
             v-model="params.regions_id"
             :options="regions"
           >
@@ -29,7 +29,7 @@
           </el-select>
         </SpFilterFormItem>
         <SpFilterFormItem prop="distributor_id" label="店铺:">
-          <SpSelectShop placeholder="请选择" v-model="params.distributor_id" />
+          <SpSelectShop clearable placeholder="请选择" v-model="params.distributor_id" />
         </SpFilterFormItem>
       </SpFilterForm>
 
@@ -56,12 +56,12 @@
         </el-dropdown>
       </div>
 
-      <el-tabs v-model="activeName" type="card" @tab-click="handleClick">
+      <el-tabs v-model="params.audit_status" type="card" @tab-click="onSearch">
         <el-tab-pane
           v-for="(item, index) in tabList"
           :key="index"
-          :label="item.name"
-          :name="item.activeName"
+          :label="item.label"
+          :name="item.name"
         >
           <el-table
             border
@@ -214,8 +214,8 @@ export default {
       dialogVisible: false,
       regions: district,
       tabList: [
-        { name: "全部商品", value: null, activeName: "first" },
-        { name: "待审核", value: "processing", activeName: "processing" },
+        { label: "全部商品", name: "" },
+        { label: "待审核", name: "processing" },
       ],
       form: {
         audit_status: "approved",
@@ -230,7 +230,8 @@ export default {
         item_bn: '',
         regions_id: [],
         approve_status: '',
-        distributor_id: 'all_distributor'
+        distributor_id: 'all_distributor',
+        audit_status: ''
       },
       salesStatus: SALES_STATUS
     };
@@ -266,6 +267,7 @@ export default {
       }
     },
 
+    // 批量审批
     Examine() {
       if (this.goods_id.length === 0) {
         this.$message.error('请选择至少一个商品')
@@ -288,15 +290,6 @@ export default {
       console.log(row);
       this.goods_id = [row.goods_id];
       this.dialogVisible = true;
-    },
-
-    handleClick() {
-      if (this.activeName == "first") {
-        delete this.params.audit_status;
-      } else if (this.activeName == "processing") {
-        this.params.audit_status = "processing";
-      }
-      this.onSearch()
     },
 
     handleSelectionChange(val) {

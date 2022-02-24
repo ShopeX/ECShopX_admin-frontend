@@ -97,6 +97,7 @@ export default {
             .img{
                 margin-top:16px;
                 height:310px;
+                display:block;
             }
         }
     }

@@ -7,11 +7,7 @@
     :close-on-click-modal="false"
     :before-close="cancelAction"
     append-to-body
-  >
-    <!-- <el-tabs v-model="params.item_type" type="card" @tab-click="handleTabClick">
-      <el-tab-pane label="实体类商品" name="normal"></el-tab-pane>
-      <el-tab-pane label="服务类商品" name="services"></el-tab-pane>
-    </el-tabs> -->
+  > 
     <div v-if="params.item_type === 'normal'" style="margin-bottom: 15px">
       <StoreFilter
         v-if="!filter"
@@ -93,27 +89,8 @@
             @change="searchByKey"
           >
           </el-cascader>
-        </el-col>
-        <!--<el-col :span="8">
-          <el-input placeholder="0" v-model="store_value" class="input-with-select" clearable>
-            <el-select v-model="storeSelect" slot="prepend" placeholder="库存筛选" style="width: 110px">
-              <el-option label="库存大于" value="gt"></el-option>
-              <el-option label="库存小于" value="lt"></el-option>
-            </el-select>
-            <el-button slot="append" icon="el-icon-search" @click="storeChangeSelect"></el-button>
-          </el-input>
-        </el-col>-->
-      </el-row>
-      <!--
-      <el-row :gutter="10">
-        <el-col :span="6">
-          <el-select v-model="params.is_gift" placeholder="是否赠品" style="width: 110px">
-            <el-option label="赠品" :value="true"></el-option>
-            <el-option label="非赠品" :value="false"></el-option>
-          </el-select>
-        </el-col>
-      </el-row>
-      -->
+        </el-col> 
+      </el-row> 
     </div>
     <el-table
       ref="multipleTable"
@@ -459,6 +436,7 @@ export default {
       if (this.selectRows.length > this.limitCount) {
         this.$message.error('最多支持选择' + this.limitCount + '件商品！')
       } else {
+        this.multipleSelection=this.selectRows;
         this.$emit('chooseStore', this.selectRows, this.store)
       }
     },

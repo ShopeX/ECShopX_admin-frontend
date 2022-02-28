@@ -69,28 +69,19 @@
             :data="tableList"
             @selection-change="handleSelectionChange"
           >
-            <el-table-column
-              type="selection"
-              align="center"
-              label="全选"
-            ></el-table-column>
-            <el-table-column
-              prop="goods_id"
-              label="商品ID"
-            ></el-table-column>
+            <el-table-column type="selection" align="center" label="全选"></el-table-column>
+            <el-table-column prop="goods_id" label="商品ID"></el-table-column>
             <el-table-column prop="itemName" label="商品名称">
               <template slot-scope="scope">
                 {{ scope.row.item_name }}
-                <el-tag type="danger" v-if="scope.row.special_type == 'drug'"
-                  >处方药</el-tag
-                >
+                <el-tag type="danger" v-if="scope.row.special_type == 'drug'">处方药</el-tag>
               </template>
             </el-table-column>
             <el-table-column label="排序编号">
               <template slot-scope="scope">
                 <el-input
                   size="mini"
-                  style="width: 60px;"
+                  style="width: 60px"
                   v-model="scope.row.sort"
                   @change="editItemsSort(scope.$index, scope.row)"
                 ></el-input>
@@ -106,15 +97,10 @@
             </el-table-column>
             <el-table-column prop="market_price" label="原价（¥）" />
             <el-table-column prop="price" label="销售价（¥）" />
-            <el-table-column
-              prop="store"
-              label="库存"
-            ></el-table-column>
+            <el-table-column prop="store" label="库存"></el-table-column>
             <el-table-column label="状态">
               <template slot-scope="scope">
-                <span v-if="scope.row.audit_status == 'processing'"
-                  >等待审核</span
-                >
+                <span v-if="scope.row.audit_status == 'processing'">等待审核</span>
                 <el-popover
                   v-else-if="scope.row.audit_status == 'rejected'"
                   placement="top-start"
@@ -124,30 +110,22 @@
                 >
                   <el-button type="text" slot="reference">审核驳回</el-button>
                 </el-popover>
-                <span v-else-if="scope.row.approve_status == 'onsale'"
-                  >前台可销</span
-                >
-                <span v-else-if="scope.row.approve_status == 'offline_sale'"
-                  >可线下销售</span
-                >
-                <span v-else-if="scope.row.approve_status == 'only_show'"
-                  >前台仅展示</span
-                >
+                <span v-else-if="scope.row.approve_status == 'onsale'">前台可销</span>
+                <span v-else-if="scope.row.approve_status == 'offline_sale'">可线下销售</span>
+                <span v-else-if="scope.row.approve_status == 'only_show'">前台仅展示</span>
                 <span v-else>不可销售</span>
               </template>
             </el-table-column>
             <el-table-column label="操作">
               <template slot-scope="scope">
                 <el-button type="text" class="btn-gap">
-                  <span @click="editItemsAction(scope.$index, scope.row)"
-                    > 查看 </span
-                  >
+                  <span @click="editItemsAction(scope.$index, scope.row)"> 查看 </span>
                   <span
                     v-if="scope.row.audit_status == 'processing'"
                     @click="batchItemsAudit(scope.row, $event)"
-                    > 审核 </span
                   >
-
+                    审核
+                  </span>
                 </el-button>
               </template>
             </el-table-column>
@@ -167,11 +145,7 @@
         </el-tab-pane>
       </el-tabs>
 
-      <el-dialog
-        title="批量审核店铺商品"
-        :visible.sync="dialogVisible"
-        width="30%"
-      >
+      <el-dialog title="批量审核店铺商品" :visible.sync="dialogVisible" width="30%">
         <el-form ref="form" :model="form" label-width="80px">
           <el-form-item label="审核状态">
             <el-radio-group v-model="form.audit_status">
@@ -193,39 +167,39 @@
   </div>
 </template>
 <script>
-import { mapGetters } from "vuex";
-import "@riophae/vue-treeselect/dist/vue-treeselect.css";
-import district from "@/common/district.json";
-import { getItemsList, auditItems, updateItemsStatus } from "@/api/goods";
+import { mapGetters } from 'vuex'
+import '@riophae/vue-treeselect/dist/vue-treeselect.css'
+import district from '@/common/district.json'
+import { getItemsList, auditItems, updateItemsStatus } from '@/api/goods'
 import { pageMixin } from '@/mixins'
 import { SALES_STATUS } from '@/consts'
 
 export default {
-  props: ["getStatus"],
+  props: ['getStatus'],
   mixins: [pageMixin],
   provide() {
     return {
-      refresh: this.fetchList,
-    };
+      refresh: this.fetchList
+    }
   },
   data() {
     return {
       dialogVisible: false,
       regions: district,
       tabList: [
-        { label: "全部商品", name: "" },
-        { label: "待审核", name: "processing" },
+        { label: '全部商品', name: '' },
+        { label: '待审核', name: 'processing' }
       ],
       form: {
-        audit_status: "approved",
-        audit_reason: "",
+        audit_status: 'approved',
+        audit_reason: ''
       },
-      activeName: "first",
+      activeName: 'first',
       ItemsList: [],
       goods_id: [],
       loading: false,
       params: {
-        keywords: "",
+        keywords: '',
         item_bn: '',
         regions_id: [],
         approve_status: '',
@@ -233,13 +207,13 @@ export default {
         audit_status: ''
       },
       salesStatus: SALES_STATUS
-    };
+    }
   },
   computed: {
-    ...mapGetters(["wheight"]),
+    ...mapGetters(['wheight'])
   },
   mounted() {
-    this.fetchList();
+    this.fetchList()
   },
   methods: {
     // 导出
@@ -259,8 +233,9 @@ export default {
         source: 'distributor',
         export_type: exportType
       })
-      if(status) {
-        this.$message.success("已加入执行队列，请在设置-导出列表中下载")
+      if (status) {
+        this.$message.success('已加入执行队列，请在设置-导出列表中下载')
+        this.$export_open('itemcode')
       } else {
         this.$message.error('导出失败')
       }
@@ -270,40 +245,40 @@ export default {
     Examine() {
       if (this.goods_id.length === 0) {
         this.$message.error('请选择至少一个商品')
-        return false;
+        return false
       }
 
-      this.dialogVisible = true;
+      this.dialogVisible = true
     },
     // 审核确定
     onSubmit() {
-      this.form.goods_id = this.goods_id;
+      this.form.goods_id = this.goods_id
       auditItems(this.form).then((res) => {
         this.$message.success('保存成功')
-        this.dialogVisible = false;
-        this.fetchList();
-      });
+        this.dialogVisible = false
+        this.fetchList()
+      })
     },
 
     batchItemsAudit(row, e) {
-      console.log(row);
-      this.goods_id = [row.goods_id];
-      this.dialogVisible = true;
+      console.log(row)
+      this.goods_id = [row.goods_id]
+      this.dialogVisible = true
     },
 
     handleSelectionChange(val) {
-      let goods_id = [];
+      let goods_id = []
       for (let i in val) {
-        goods_id.push(val[i].goods_id);
+        goods_id.push(val[i].goods_id)
       }
-      this.goods_id = goods_id;
+      this.goods_id = goods_id
     },
 
     editItemsAction(index, row) {
       // 编辑商品弹框
       var routeData = this.$router.push({
-        path: this.matchHidePage("editor/") + row.itemId,
-      });
+        path: this.matchHidePage('editor/') + row.itemId
+      })
     },
 
     async fetchList() {
@@ -317,52 +292,52 @@ export default {
       }
       const { list, total_count } = await this.$api.goods.getItemsList(params)
       list.forEach((item) => {
-        item.price = item.price / 100;
-        item.link = `pages/item/espier-detail?gid=${item.goods_id}&id=${item.item_id}`;
-      });
+        item.price = item.price / 100
+        item.link = `pages/item/espier-detail?gid=${item.goods_id}&id=${item.item_id}`
+      })
       this.tableList = list
-      this.page.total = total_count;
-      this.loading = false;
+      this.page.total = total_count
+      this.loading = false
     },
 
     batchItemsStatus(status) {
       if (this.goods_id.length === 0) {
         this.$message.error('请选择至少一个商品')
-        return false;
+        return false
       }
-      this.skuLoading = true;
-      let params = {};
+      this.skuLoading = true
+      let params = {}
       if (this.goods_id.length > 0) {
-        let data = [];
+        let data = []
         this.goods_id.forEach((goods_id) => {
-          data.push({ goods_id: goods_id });
-        });
+          data.push({ goods_id: goods_id })
+        })
         params = {
           items: JSON.stringify(data),
-          status: status,
-        };
+          status: status
+        }
       }
-      this.submitLoading = true;
+      this.submitLoading = true
       updateItemsStatus(params).then((res) => {
         if (res.data.data.status) {
           this.$message({
-            message: "修改成功",
-            type: "success",
-            duration: 2 * 1000,
-          });
-          this.fetchList();
+            message: '修改成功',
+            type: 'success',
+            duration: 2 * 1000
+          })
+          this.fetchList()
         }
-        this.submitLoading = false;
-        this.skuLoading = false;
-      });
-    },
-  },
+        this.submitLoading = false
+        this.skuLoading = false
+      })
+    }
+  }
   // watch: {
   //   $route() {
   //     this.getGoodsList();
   //   },
   // },
-};
+}
 </script>
 <style scoped lang="scss">
 .el-row {
@@ -445,7 +420,7 @@ export default {
 }
 .copy-btn {
   position: relative;
-  [class^="copy-link"] {
+  [class^='copy-link'] {
     position: absolute;
     left: 0;
     top: 0;

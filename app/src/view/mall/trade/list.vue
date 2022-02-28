@@ -333,6 +333,7 @@
                   type: 'success',
                   message: '已加入执行队列，请在设置-导出列表中下载'
               })
+              this.$export_open('tradedata');
               return
           } else if (response.data.data.url) {
               this.downloadUrl = response.data.data.url

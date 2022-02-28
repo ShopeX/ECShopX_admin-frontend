@@ -40,14 +40,12 @@
       <el-row>
         <el-col>
           <el-button-group>
-            <export-tip @exportHandle="exportData" params='normal_master_order'>
-              <el-button type="primary"
-                >导出主订单</el-button
-              >
+            <export-tip @exportHandle="exportData" params="normal_master_order">
+              <el-button type="primary">导出主订单</el-button>
             </export-tip>
-             <export-tip @exportHandle="exportData" params='normal_order'>
+            <export-tip @exportHandle="exportData" params="normal_order">
               <el-button type="primary">导出子订单</el-button>
-             </export-tip>
+            </export-tip>
           </el-button-group>
           <el-popover
             placement="top-start"
@@ -140,7 +138,12 @@
             <template slot-scope="scope">
               <i class="el-icon-mobile"></i>
               {{ scope.row.mobile }}
-              <el-tooltip v-if="datapass_block == 0" effect="dark" content="复制" placement="top-start">
+              <el-tooltip
+                v-if="datapass_block == 0"
+                effect="dark"
+                content="复制"
+                placement="top-start"
+              >
                 <i
                   v-clipboard:copy="scope.row.mobile"
                   v-clipboard:success="onCopy"
@@ -186,8 +189,8 @@
               <template
                 v-if="
                   scope.row.order_status != 'CANCEL' &&
-                    scope.row.order_status != 'REFUND_SUCCESS' &&
-                    scope.row.order_status != 'WAIT_GROUPS_SUCCESS'
+                  scope.row.order_status != 'REFUND_SUCCESS' &&
+                  scope.row.order_status != 'WAIT_GROUPS_SUCCESS'
                 "
               >
                 <!-- 发货状态 -->
@@ -219,15 +222,60 @@
           <el-table-column width="200" label="操作">
             <template slot-scope="scope">
               <el-button type="text">
-                <router-link :to="{ path: matchHidePage('detail'), query: { orderId: scope.row.order_id, resource: $route.path }}">
+                <router-link
+                  :to="{
+                    path: matchHidePage('detail'),
+                    query: { orderId: scope.row.order_id, resource: $route.path }
+                  }"
+                >
                   详情
                 </router-link>
               </el-button>
-              <el-button type="text" v-if="(system_mode == 'standard' || is_distributor || scope.row.distributor_id==0) && scope.row.cancel_status=='NO_APPLY_CANCEL' && (scope.row.order_status == 'NOTPAY' || scope.row.order_status == 'PAYED')" @click="cancelOrderAction(scope.row.order_id)">取消订单</el-button>
-              <el-button type="text" v-if="(system_mode == 'standard' || is_distributor || scope.row.distributor_id==0) && scope.row.order_status == 'PAYED' && scope.row.receipt_type == 'ziti' && scope.row.ziti_status == 'PENDING'" @click="writeoffOrderAction(scope.row.order_id)">核销</el-button>
-              <template v-if="!IsBind && (system_mode == 'standard' || is_distributor || scope.row.distributor_id==0)">
-                <el-button type="text" v-if="scope.row.receipt_type=='logistics' && scope.row.order_status == 'PAYED' && scope.row.delivery_status != 'DONE'" @click="deliveryAction(scope.row)">发货</el-button>
-                <el-button type="text" v-if="scope.row.cancel_status=='WAIT_PROCESS' && scope.row.order_status == 'PAYED'" @click="confirmCancelOrderAction(scope.row.order_id)">退款</el-button>
+              <el-button
+                type="text"
+                v-if="
+                  (system_mode == 'standard' || is_distributor || scope.row.distributor_id == 0) &&
+                  scope.row.cancel_status == 'NO_APPLY_CANCEL' &&
+                  (scope.row.order_status == 'NOTPAY' || scope.row.order_status == 'PAYED')
+                "
+                @click="cancelOrderAction(scope.row.order_id)"
+                >取消订单</el-button
+              >
+              <el-button
+                type="text"
+                v-if="
+                  (system_mode == 'standard' || is_distributor || scope.row.distributor_id == 0) &&
+                  scope.row.order_status == 'PAYED' &&
+                  scope.row.receipt_type == 'ziti' &&
+                  scope.row.ziti_status == 'PENDING'
+                "
+                @click="writeoffOrderAction(scope.row.order_id)"
+                >核销</el-button
+              >
+              <template
+                v-if="
+                  !IsBind &&
+                  (system_mode == 'standard' || is_distributor || scope.row.distributor_id == 0)
+                "
+              >
+                <el-button
+                  type="text"
+                  v-if="
+                    scope.row.receipt_type == 'logistics' &&
+                    scope.row.order_status == 'PAYED' &&
+                    scope.row.delivery_status != 'DONE'
+                  "
+                  @click="deliveryAction(scope.row)"
+                  >发货</el-button
+                >
+                <el-button
+                  type="text"
+                  v-if="
+                    scope.row.cancel_status == 'WAIT_PROCESS' && scope.row.order_status == 'PAYED'
+                  "
+                  @click="confirmCancelOrderAction(scope.row.order_id)"
+                  >退款</el-button
+                >
               </template>
               <el-button
                 type="text"
@@ -597,7 +645,7 @@
                 type="text"
                 v-model="writeoffOrderForm.pickupcode"
                 placeholder="请输入提货码"
-                style="width:180px"
+                style="width: 180px"
               >
               </el-input>
             </el-form-item>
@@ -643,9 +691,9 @@ import {
   getWriteoff,
   doWriteoff,
   getPickupcode
-} from '../../../../api/trade'
-import { getSourcesList } from '../../../../api/datacube'
-import { handleUploadFile } from '../../../../api/common'
+} from '@/api/trade'
+import { getSourcesList } from '@/api/datacube'
+import { handleUploadFile } from '@/api/common'
 import shopSelect from '@/components/shopSelect'
 import store from '@/store'
 
@@ -742,7 +790,8 @@ export default {
       downloadUrl: '',
       downloadName: '',
       deliveryVisibleNew: false,
-      datapass_block: 1
+      datapass_block: 1,
+      exportTab: ''
     }
   },
   computed: {
@@ -1067,7 +1116,6 @@ export default {
       this.getOrders(this.params)
     },
     exportData(type) {
-      console.log(type);
       this.getParams()
       if (type) {
         this.params.type = type
@@ -1086,6 +1134,7 @@ export default {
             type: 'success',
             message: '已加入执行队列，请在设置-导出列表中下载'
           })
+          this.$export_open(type)
           return
         } else if (response.data.data.url) {
           this.downloadUrl = response.data.data.url
@@ -1109,6 +1158,7 @@ export default {
               type: 'success',
               message: '已加入执行队列，请在设置-导出列表中下载'
             })
+            this.$export_open('normal_order')
             return
           } else if (response.data.data.url) {
             this.downloadUrl = response.data.data.url

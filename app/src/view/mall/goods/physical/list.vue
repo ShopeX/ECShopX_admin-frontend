@@ -28,7 +28,6 @@
       margin: 0 8px;
     }
     label {
-      
     }
   }
 }
@@ -73,11 +72,7 @@
           ><el-input placeholder="请输入商品编号条形码" v-model="params.barcode"
         /></SpFilterFormItem>
         <SpFilterFormItem prop="templates_id" label="运费模板:">
-          <el-select
-            v-model="params.templates_id"
-            placeholder="请选择"
-            clearable
-          >
+          <el-select v-model="params.templates_id" placeholder="请选择" clearable>
             <el-option
               v-for="item in templatesList"
               :key="item.template_id"
@@ -168,9 +163,7 @@
           </el-button>
           <el-dropdown-menu slot="dropdown">
             <el-dropdown-item>
-              <export-tip @exportHandle="exportItemsData"
-                >商品信息</export-tip
-              ></el-dropdown-item
+              <export-tip @exportHandle="exportItemsData">商品信息</export-tip></el-dropdown-item
             >
             <el-dropdown-item
               ><export-tip @exportHandle="exportItemsTagData"
@@ -200,11 +193,11 @@
           :label="item.name"
           :name="item.activeName"
         >
-          <div class='tab-tools' v-if="activeName == 'second'">
+          <div class="tab-tools" v-if="activeName == 'second'">
             <div class="warn-input">
               <label class="label">预警数量:</label>
               <el-input size="small" v-model="warning_store" value="warning_store" />
-              <el-button type='text' @click="setWarningStore">保存</el-button>
+              <el-button type="text" @click="setWarningStore">保存</el-button>
             </div>
           </div>
           <el-table
@@ -255,7 +248,7 @@
                 <el-input
                   size="mini"
                   v-model="scope.row.sort"
-                  style="width: 60px;"
+                  style="width: 60px"
                   @change="editItemsSort(scope.$index, scope.row)"
                 ></el-input>
               </template>
@@ -263,7 +256,7 @@
             <el-table-column prop="store" label="库存" width="80" />
             <el-table-column prop="market_price" label="原价（¥）" width="100" />
             <el-table-column prop="price" label="销售价（¥）" width="100" />
-            <el-table-column label="状态" >
+            <el-table-column label="状态">
               <template slot-scope="scope">
                 <span v-if="scope.row.audit_status == 'processing'">等待审核</span>
                 <el-popover
@@ -689,16 +682,14 @@
         </span>
       </el-dialog>
     </template>
-    <router-view></router-view>  
+    <router-view></router-view>
   </div>
 </template>
 <script>
 import { mapGetters } from 'vuex'
-import { getPopularizeSetting } from '@/api/promotions'
 import Treeselect from '@riophae/vue-treeselect'
 import SideBar from '@/components/element/sideBar'
 import '@riophae/vue-treeselect/dist/vue-treeselect.css'
-import { Message } from 'element-ui'
 import { getDefaultCurrency } from '@/api/company'
 import district from '@/common/district.json'
 import {
@@ -714,11 +705,9 @@ import {
   updateItemRebateConf,
   getTagList,
   itemsRelTags,
-  tagSearchItem,
   updateItemsStore,
   updateItemsStatus,
   getGoodsAttr,
-  getGoodsExport,
   exportItemsData,
   exportItemsTagData,
   getGoodsProfitPrice,
@@ -923,6 +912,7 @@ export default {
               type: 'success',
               message: '已加入执行队列，请在设置-导出列表中下载'
             })
+            this.$export_open('items')
           } else {
             this.$message({
               type: 'error',
@@ -938,6 +928,7 @@ export default {
               type: 'success',
               message: '已加入执行队列，请在设置-导出列表中下载'
             })
+            this.$export_open('items')
           } else {
             this.$message({
               type: 'error',
@@ -956,6 +947,7 @@ export default {
               type: 'success',
               message: '已加入执行队列，请在设置-导出列表中下载'
             })
+            this.$export_open('normal_items_tag')
           } else {
             this.$message({
               type: 'error',
@@ -971,6 +963,7 @@ export default {
               type: 'success',
               message: '已加入执行队列，请在设置-导出列表中下载'
             })
+            this.$export_open('normal_items_tag')
           } else {
             this.$message({
               type: 'error',
@@ -996,8 +989,9 @@ export default {
         source: 'item',
         export_type: exportType
       })
-      if(status) {
-        this.$message.success("已加入执行队列，请在设置-导出列表中下载")
+      if (status) {
+        this.$message.success('已加入执行队列，请在设置-导出列表中下载')
+        this.$export_open('itemcode');
       } else {
         this.$message.error('导出失败')
       }
@@ -1447,7 +1441,7 @@ export default {
         pageSize,
         ...this.params
       }
-      if(params.category.length > 0) {
+      if (params.category.length > 0) {
         params.category = params.category[params.category.length - 1]
       }
       const { list, total_count, warning_store } = await this.$api.goods.getItemsList(params)

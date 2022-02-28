@@ -125,8 +125,15 @@ export function getPropByPath(obj, path, strict) {
   };
 };
 
+function export_open(tab){
+  setTimeout(()=>{
+    window.open(`/setting/baseexport?tab=${tab}`)
+  },1000); 
+}
+
 export {
-  log
+  log,
+  export_open
 }
 
 

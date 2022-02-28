@@ -28,6 +28,7 @@ import fetch from '@/utils/fetch'
 import { initFinder } from '@shopex/finder'
 import '@shopex/finder/lib/finder.css'
 import exportTip from '@/utils/components'
+import { export_open } from '@/utils';
 Vue.use(exportTip)
 initFinder(Vue, {
   fetchLibrary: fetch,
@@ -105,9 +106,9 @@ installComponent(Vue)
 // import fetch from './utils/fetch'
 
 // import { Base64 } from 'js-base64';
-// Vue.use( Base64 )
-
+// Vue.use( Base64 ) 
 Vue.config.productionTip = false
+Vue.prototype.$export_open=export_open;
 new Vue({
   router,
   store,

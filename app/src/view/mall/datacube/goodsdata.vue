@@ -115,6 +115,7 @@ export default {
               type: 'success',
               message: '已加入执行队列，请在设置-导出列表中下载'
             })
+            this.$export_open('goods_data');
             return
           } else if (res.data.data.url) {
             this.downloadUrl = res.data.data.url

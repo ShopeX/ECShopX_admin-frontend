@@ -103,9 +103,8 @@ export default {
     }
   },
   mounted() {
-    this.activeTabHandler();
-    this.getExportLogLists(this.params);
-    
+    this.activeTabHandler()
+    this.getExportLogLists(this.params)
   },
 
   computed: {
@@ -113,17 +112,19 @@ export default {
   },
   methods: {
     activeTabHandler() {
-      const active = this.$store.getters.login_type
-      console.log(active);
-      if (active == 'dealer') {
-        this.activeName = 'adapay_tradedata'
-      } else if (active == 'merchant') {
-        this.activeName = 'normal_master_order'
+      const active = this.$store.getters.login_type 
+      const { tab } = this.$route.query
+      if (tab) {
+        this.activeName=tab;
       } else {
-        this.activeName = 'member'
-      }
-      // console.log(active);
-      console.log(this.activeName);
+        if (active == 'dealer') {
+          this.activeName = 'adapay_tradedata'
+        } else if (active == 'merchant') {
+          this.activeName = 'normal_master_order'
+        } else {
+          this.activeName = 'member'
+        }
+      } 
     },
     // 切换tab
     handleClick(tab, event) {
@@ -163,11 +164,11 @@ export default {
       return Date.parse(new Date(str)) / 1000
     },
     handleDown({ log_id, file_url }) {
-      if(this.activeName == 'itemcode') {
+      if (this.activeName == 'itemcode') {
         window.open(file_url)
         return
       }
-      
+
       ExportLogFileDown({ 'log_id': log_id }).then((response) => {
         const url = this.genUrl(response.data.data.csv_data, {}) //{}指的是表头，response.data.data.csv_data是后台返回来的数据
         const a = document.createElement('a')

@@ -149,7 +149,8 @@ export default {
     {
       path: 'cs/wxappchat',
       name: `客服-小程序客服`, 
-      component: () => import('@/view/brand/wechat/wxapp')
+      component: () => import('@/view/base/setting/im/wxappchat')
+      // component: () => import('@/view/brand/wechat/wxapp')
     },
     {
       path: 'cs/brandcustomer',
@@ -165,12 +166,7 @@ export default {
       path: 'cs/meiqia',
       name: `客服-美洽客服`, 
       component: () => import('@/view/base/setting/im/list')
-    },
-    {
-      path: 'cs/wxappchat',
-      name: `客服-美洽客服`, 
-      component: () => import('@/view/base/setting/im/wxappchat')
-    },
+    }, 
     {
       path: 'site/extminilink',
       name: `外部小程序配置`, 

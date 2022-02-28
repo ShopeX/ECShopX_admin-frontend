@@ -100,6 +100,7 @@ export default {
             type: "success",
             message: "已加入执行队列，请在设置-导出列表中下载",
           });
+          this.$export_open(type)
           return;
         } else if (url) {
           this.downloadUrl = url;
@@ -127,6 +128,7 @@ export default {
             type: "success",
             message: "已加入执行队列，请在设置-导出列表中下载",
           });
+          this.$export_open('normal');
           return;
         } else if (url) {
           this.downloadUrl = url;

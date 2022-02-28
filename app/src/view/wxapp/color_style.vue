@@ -88,7 +88,7 @@
               <img :src="item.img" />
               <div
                 class="ab-view"
-                v-if="index == 5"
+                v-if="index == 0"
                 style="bottom: 0; left: 82px; width: 84px; height: 33px;"
                 :style="'background:' + form.data[0].accent"
               ></div>

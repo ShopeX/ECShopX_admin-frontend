@@ -88,7 +88,7 @@ export default {
     },
     {
       path: 'marketing/apply/registrationactivity',
-      name: `报名活动管理`,
+      name: `报名活动`,
       component: () => import('@/view/member/selfservice/registrationactivity'),
       children: [
         {
@@ -97,9 +97,10 @@ export default {
         }
       ]
     },
+
     {
       path: 'marketing/apply/Registrationrecord',
-      name: `报名记录管理`,
+      name: `报名记录`,
       component: () => import('@/view/member/selfservice/registrationrecord'),
       children: [
         {
@@ -112,6 +113,32 @@ export default {
         }
       ]
     },
+
+    {
+      path: 'marketing/apply/formattrs',
+      name: `表单元素`, 
+      component: () => import( '@/view/member/selfservice/formsettinglist'),
+      children: [
+        {
+          path: 'editor/:itemId?',
+          name: `表单元素配置-编辑`,  
+          component: () => import('@/view/member/selfservice/formsettingadd')
+        }
+      ]
+    },
+    {
+      path: 'marketing/apply/formtemplate', 
+      name: `表单模板`,  
+      component: () => import('@/view/member/selfservice/formtemplatelist'),
+      children: [
+        {
+          path: 'editor/:itemId?',
+          name: `表单模板配置-编辑`,
+          component: () => import('@/view/member/selfservice/formtemplateadd')
+        }
+      ]
+    },
+
     // {
     //   path: 'purchase',
     //   name: `员工内购`,

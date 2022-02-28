@@ -155,38 +155,38 @@ export default {
         ]
       },
       pages: [
-        {
-          type: 'primary',
-          img: page01
-        },
-        {
-          type: 'primary',
-          img: page02
-        },
-        {
-          type: 'primary',
-          img: page03
-        },
-        {
-          type: 'marketing',
-          img: page04
-        },
-        {
-          type: 'primary',
-          img: page05
-        },
+        // {
+        //   type: 'primary',
+        //   img: page01
+        // },
+        // {
+        //   type: 'primary',
+        //   img: page02
+        // },
+        // {
+        //   type: 'primary',
+        //   img: page03
+        // },
+        // {
+        //   type: 'marketing',
+        //   img: page04
+        // },
+        // {
+        //   type: 'primary',
+        //   img: page05
+        // },
         {
           type: 'primary',
           img: page07
         },
-        {
-          type: 'primary',
-          img: page08
-        },
-        {
-          type: 'primary',
-          img: page09
-        },
+        // {
+        //   type: 'primary',
+        //   img: page08
+        // },
+        // {
+        //   type: 'primary',
+        //   img: page09
+        // },
         {
           type: 'marketing',
           img: page10
@@ -195,74 +195,74 @@ export default {
           type: 'primary',
           img: page11
         },
-        {
-          type: 'primary',
-          img: page12
-        },
-        {
-          type: 'primary',
-          img: page13
-        },
-        {
-          type: 'primary',
-          img: page14
-        },
-        {
-          type: 'primary',
-          img: page15
-        },
-        {
-          type: 'primary',
-          img: page16
-        },
-        {
-          type: 'primary',
-          img: page17
-        },
-        {
-          type: 'primary',
-          img: page18
-        },
-        {
-          type: 'marketing',
-          img: page19
-        },
-        {
-          type: 'primary',
-          img: page20
-        },
-        {
-          type: 'marketing',
-          img: page21
-        },
-        {
-          type: 'primary',
-          img: page22
-        },
-        {
-          type: 'primary',
-          img: page23
-        },
-        {
-          type: 'marketing',
-          img: page24
-        },
-        {
-          type: 'primary',
-          img: page25
-        },
-        {
-          type: 'marketing',
-          img: page26
-        },
-        {
-          type: 'primary',
-          img: page27
-        },
-        {
-          type: 'primary',
-          img: page28
-        }
+        // {
+        //   type: 'primary',
+        //   img: page12
+        // },
+        // {
+        //   type: 'primary',
+        //   img: page13
+        // },
+        // {
+        //   type: 'primary',
+        //   img: page14
+        // },
+        // {
+        //   type: 'primary',
+        //   img: page15
+        // },
+        // {
+        //   type: 'primary',
+        //   img: page16
+        // },
+        // {
+        //   type: 'primary',
+        //   img: page17
+        // },
+        // {
+        //   type: 'primary',
+        //   img: page18
+        // },
+        // {
+        //   type: 'marketing',
+        //   img: page19
+        // },
+        // {
+        //   type: 'primary',
+        //   img: page20
+        // },
+        // {
+        //   type: 'marketing',
+        //   img: page21
+        // },
+        // {
+        //   type: 'primary',
+        //   img: page22
+        // },
+        // {
+        //   type: 'primary',
+        //   img: page23
+        // },
+        // {
+        //   type: 'marketing',
+        //   img: page24
+        // },
+        // {
+        //   type: 'primary',
+        //   img: page25
+        // },
+        // {
+        //   type: 'marketing',
+        //   img: page26
+        // },
+        // {
+        //   type: 'primary',
+        //   img: page27
+        // },
+        // {
+        //   type: 'primary',
+        //   img: page28
+        // }
       ]
     }
   },

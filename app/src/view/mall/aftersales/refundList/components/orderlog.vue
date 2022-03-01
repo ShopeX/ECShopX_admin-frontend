@@ -1,23 +1,25 @@
+<style scoped lang="scss">
+.sp-filter-form {
+  margin-bottom: 16px;
+}
+</style>
+ 
 <template>
-  <div>
-    <el-row :gutter="20">
-      <el-col :span="6">
-        <el-input placeholder="请输入订单号" v-model="params.order_id"
-          ><el-button slot="append" icon="el-icon-search" @click="dataSearch"></el-button
-        ></el-input>
-      </el-col>
-      <el-col :span="6">
+  <div class="page-body">
+    <SpFilterForm :model="params" @onSearch="onSearch" @onReset="onReset">
+      <SpFilterFormItem prop="order_id" label="订单号:">
+        <el-input placeholder="请输入订单号" v-model="params.order_id"> </el-input>
+      </SpFilterFormItem>
+      <SpFilterFormItem prop="create_time" label="日期范围:">
         <el-date-picker
-          v-model="create_time"
+          v-model="params.create_time"
           type="daterange"
           value-format="yyyy/MM/dd"
           placeholder="添加时间筛选"
-          style="width: 100%"
-          @change="dateChange"
-        ></el-date-picker>
-      </el-col>
-      <el-col :span="6">
-        <el-select v-model="status" placeholder="请选择处理状态" @change="statusChange">
+        />
+      </SpFilterFormItem>
+      <SpFilterFormItem prop="status" label="处理状态:">
+        <el-select v-model="params.status" placeholder="请选择处理状态">
           <el-option
             v-for="(item, index) in statusList"
             :key="index"
@@ -26,10 +28,10 @@
           >
           </el-option>
         </el-select>
-      </el-col>
-    </el-row>
+      </SpFilterFormItem>
+    </SpFilterForm>
 
-    <el-table :data="dataList" v-loading="loading" :height="wheight - 150">
+    <el-table border :data="tableList" v-loading="loading" :height="wheight - 150">
       <el-table-column prop="order_id" label="订单号" width="180"></el-table-column>
       <el-table-column prop="status" label="错误状态" width="120"></el-table-column>
       <el-table-column prop="error_code" label="错误码" width="100"></el-table-column>
@@ -59,12 +61,12 @@
       <el-pagination
         background
         layout="total, sizes, prev, pager, next"
-        @current-change="handleCurrentChange"
-        @size-change="handleSizeChange"
-        :current-page.sync="params.page"
+        :current-page.sync="page.pageIndex"
         :page-sizes="[10, 20, 50]"
-        :total="total_count"
-        :page-size="params.pageSize"
+        :total="page.total"
+        :page-size="page.pageSize"
+        @current-change="onCurrentChange"
+        @size-change="onSizeChange"
       >
       </el-pagination>
     </div>
@@ -72,23 +74,23 @@
 </template>
 
 <script>
-import { mapGetters } from 'vuex'
-import { getRefundErrorLogsList, refundResubmit } from '@/api/trade'
+import { mapGetters } from 'vuex' 
+import mixin, { pageMixin } from '@/mixins'
 
 export default {
+  mixins: [mixin, pageMixin],
   data() {
-    return {
+    const initialParams = {
       create_time: '',
+      order_id: undefined,
+      status: 'all'
+    }
+    return {
+      initialParams,
       loading: false,
-      total_count: 0,
-      dataList: [],
       params: {
-        page: 1,
-        pageSize: 20,
-        order_id: '',
-        status: 'waiting'
+        ...initialParams
       },
-      status: 'all',
       statusList: [
         { name: '全部', value: 'all' },
         { name: '已处理', value: 'is_resubmit' },
@@ -100,59 +102,59 @@ export default {
     ...mapGetters(['wheight'])
   },
   methods: {
-    dataSearch() {
-      this.params.start_time = ''
-      this.params.end_time = ''
-      this.create_time = ''
-      this.params.page = 1
-      this.getDataList(this.params)
-    },
-    statusChange() {
-      this.params.status = this.status
-      this.params.page = 1 
-      this.getDataList(this.params)
-    },
-    getDataList(filter) {
-      this.loading = true
-      getRefundErrorLogsList(filter).then((response) => {
-        this.dataList = response.data.data.list
-        this.total_count = response.data.data.total_count
-        this.loading = false
-      })
-    },
-    dateChange(val) {
-      this.params.status = ''
-      if (val && val.length > 0) {
-        this.params.start_time = this.dateStrToTimeStamp(val[0] + ' 00:00:00')
-        this.params.end_time = this.dateStrToTimeStamp(val[1] + ' 23:59:59')
-      } else {
-        this.params.start_time = ''
-        this.params.end_time = ''
-      }
-      this.params.page = 1
-      this.getDataList(this.params)
-    },
     dateStrToTimeStamp(str) {
       return Date.parse(new Date(str)) / 1000
     },
-    refundResubmit(row) {
-      refundResubmit(row.id).then((res) => {
-        this.$message.success('提交成功!')
-        this.getDataList(this.params)
+    dateTransfer(val) {
+      let time_start_begin = undefined
+      let time_start_end = undefined
+      if (val.length > 0) {
+        time_start_begin = this.dateStrToTimeStamp(val[0] + ' 00:00:00')
+        time_start_end = this.dateStrToTimeStamp(val[1] + ' 23:59:59')
+      }
+      return {
+        time_start_begin,
+        time_start_end
+      }
+    },
+    getParams() {
+      let params = {
+        ...this.dateTransfer(this.params.create_time), 
+        order_id: this.params.order_id || undefined, 
+        status:this.params.status||undefined
+      }
+      return params
+    },
+    async fetchList() {
+      this.loading = true
+      const { pageIndex: page, pageSize } = this.page
+      let params = {
+        page,
+        pageSize,
+        ...this.getParams()
+      }
+      const { list, total_count } = await this.$api.trade.getRefundErrorLogsList(params)
+      this.tableList = list
+      this.page.total = total_count
+      this.loading = false
+    },  
+    async refundResubmit(row) {
+      await this.$api.trade.refundResubmit(row.id);
+      this.$message.success('提交成功!') 
+    }, 
+    onSearch() {
+      this.page.pageIndex = 1
+      this.$nextTick(() => {
+        this.fetchList()
       })
     },
-    handleCurrentChange(page_num) {
-      this.params.page = page_num
-      this.getDataList(this.params)
+    onReset() {
+      this.params = { ...this.initialParams } 
+      this.onSearch()
     },
-    handleSizeChange(pageSize) {
-      this.params.page = 1
-      this.params.pageSize = pageSize
-      this.getDataList(this.params)
-    }
   },
   mounted() {
-    this.getDataList(this.params)
+    this.fetchList()
   }
 }
 </script>

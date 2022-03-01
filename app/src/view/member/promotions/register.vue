@@ -37,6 +37,36 @@
             @closeImgDialog="closeImgDialog"
           ></imgPicker>
         </el-form-item>
+        <el-form-item label="注册引导跳转路径">
+          <div class="uploader-setting">
+            <div class="goods-select">
+              <div class="link-content" v-if="JSON.stringify(form.register_jump_path) !== '{}'">
+                <span @click="handleGoodsChange()">
+                  <template v-if="form.register_jump_path.linkPage === 'goods'">商品：</template>
+                  <template v-if="form.register_jump_path.linkPage === 'category'">分类：</template>
+                  <template v-if="form.register_jump_path.linkPage === 'article'">文章：</template>
+                  <template v-if="form.register_jump_path.linkPage === 'planting'">软文：</template>
+                  <!--template v-if="form.register_jump_path.linkPage === 'planting'">种草：</template-->
+                  <template v-if="form.register_jump_path.linkPage === 'link'">页面：</template>
+                  <template v-if="form.register_jump_path.linkPage === 'marketing'">营销：</template>
+                  <template v-if="form.register_jump_path.linkPage === 'custom_page'">自定义页：</template>
+                  {{ form.register_jump_path.title }}
+                </span>
+                <span style="margin-left: 10px">
+                  <i
+                    style="color: #f56c6c"
+                    class="el-icon-delete"
+                    v-if="JSON.stringify(form.register_jump_path) !== '{}'"
+                    @click="clear_pic_url"
+                  ></i>
+                </span>
+              </div>
+              <div v-else @click="handleGoodsChange()" class="content-center">
+                <i class="iconfont icon-link"></i>设置路径
+              </div>
+            </div>
+          </div>
+        </el-form-item>
         <el-form-item label="注册送权益：">
           <el-transfer
             v-model="form.promotions_value.items"
@@ -49,7 +79,7 @@
                 v-if="total_count > params.pageSize"
                 small
                 layout="prev, pager, next"
-                @current-change="handleGoodsChange"
+                @current-change="handlePagesChange"
                 :total="total_count"
                 :page-size="params.pageSize"
               >
@@ -137,8 +167,8 @@
         <el-radio-button label="gift" value="gift">兑换券</el-radio-button>
       </el-radio-group>
       <ul class="dialog-list clearfix" v-loading="coupons.loading">
-        <template v-for="item in coupons.list">
-          <li :class="item.checked ? 'checked' : ''" @click="selectItems(item)">
+        <template v-for="(item, index) in coupons.list">
+          <li :class="item.checked ? 'checked' : ''" @click="selectItems(item)" :key="index">
             <i v-if="item.checked" class="el-icon-check"></i> {{ item.title }}
           </li>
         </template>
@@ -156,7 +186,7 @@
       </div>
       <div style="display: none;">
         <template v-for="(item, index) in coupons.temp">
-          <li>{{ item.title }}</li>
+          <li :key="index">{{ item.title }}</li>
         </template>
       </div>
       <span slot="footer" class="dialog-footer">
@@ -179,7 +209,7 @@
       </el-radio-group>
       <ul class="dialog-list clearfix" v-loading="staffCoupons.loading">
         <template v-for="item in staffCoupons.list">
-          <li :class="item.checked ? 'checked' : ''" @click="selectStaffItems(item)">
+          <li :class="item.checked ? 'checked' : ''" @click="selectStaffItems(item)" :key="item">
             <i v-if="item.checked" class="el-icon-check"></i> {{ item.title }}
           </li>
         </template>
@@ -197,7 +227,7 @@
       </div>
       <div style="display: none;">
         <template v-for="(item, index) in staffCoupons.temp">
-          <li>{{ item.title }}</li>
+          <li :key="index">{{ item.title }}</li>
         </template>
       </div>
       <span slot="footer" class="dialog-footer">
@@ -205,16 +235,30 @@
         <el-button type="primary" @click="submitSelected(true)">确 定</el-button>
       </span>
     </el-dialog>
+    <linkSetter
+      :links="linksArr"
+      :visible="linksVisible"
+      @setLink="setLink"
+      @closeDialog="closeDialog"
+      :show_article="false"
+      :show_planting="false"
+      :show_page="false"
+      :show_marketing="false"
+      :show_store="false"
+    >
+    </linkSetter>
   </div>
 </template>
 <script>
-import imgPicker from '../../../components/imageselect'
-import { getItemsList } from '../../../api/goods'
-import { getCardList, getEffectiveCardList } from '../../../api/cardticket'
-import { saveRegisterPromotions, getRegisterPromotions } from '../../../api/promotions'
+import imgPicker from '@/components/imageselect'
+import { getItemsList } from '@/api/goods'
+import { getCardList, getEffectiveCardList } from '@/api/cardticket'
+import { saveRegisterPromotions, getRegisterPromotions } from '@/api/promotions'
+import linkSetter from '@/components/template_links' // 添加导航连接
 export default {
   components: {
-    imgPicker
+    imgPicker,
+    linkSetter
   },
   data() {
     return {
@@ -236,7 +280,8 @@ export default {
           items: [],
           itemsList: [],
           coupons: []
-        }
+        },
+        register_jump_path: {}
       },
       coupons: {
         dialog: false,
@@ -260,7 +305,9 @@ export default {
           total: 0
         }
       },
-      card_type: 'all'
+      card_type: 'all',
+      linksVisible: false, // 路径设置组件
+      linksArr: []
     }
   },
   methods: {
@@ -276,7 +323,7 @@ export default {
       this.imgDialog = false
     },
     //选择商品分页
-    handleGoodsChange(val) {
+    handlePagesChange(val) {
       this.params.page = val
       this.form.promotions_value.itemsList = []
       this.goodsList.forEach((row) => {
@@ -502,6 +549,7 @@ export default {
         this.form.id = response.data.data.id
         this.form.is_open = response.data.data.is_open
         this.form.ad_title = response.data.data.ad_title
+        this.form.register_jump_path = response.data.data.register_jump_path
         if (response.data.data.promotions_value) {
           if (response.data.data.promotions_value.items) {
             this.form.promotions_value.items = response.data.data.promotions_value.items
@@ -517,7 +565,20 @@ export default {
             : []
         }
       })
-    }
+    },
+    handleGoodsChange() {
+      this.linksVisible = true
+    },
+    closeDialog() {
+      this.linksVisible = false
+    },
+    clear_pic_url() {
+      this.form.register_jump_path = {}
+    },
+    setLink(data, type) {
+      let obj = Object.assign(data, { 'linkPage': type })
+      this.form.register_jump_path = obj
+    },
   },
   mounted() {
     this.getRegisterData()
@@ -540,6 +601,9 @@ export default {
   border-radius: 6px;
   cursor: pointer;
   overflow: hidden;
+}
+.uploader-setting {
+  width: 70%;
 }
 .promotion-card {
   border: 1px solid #dcdfe6;

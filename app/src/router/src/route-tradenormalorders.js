@@ -13,7 +13,10 @@ export default {
       children: [
         {
           path: 'detail/:itemId?',
-          component: () => import('@/view/mall/trade/order/detail')
+          component: () => import('@/view/mall/trade/order/detail'),
+          meta: {
+            footerFixed: true
+          }
         },
         {
           path: 'process/:itemId?',

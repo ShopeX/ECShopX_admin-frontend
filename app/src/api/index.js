@@ -4,8 +4,9 @@ import req, { createAxios } from '@/utils/fetch'
 const api = {}
 
 const callbackWrap = (fn) => {
-  const _fn = async (args) => {
-    const res = await fn(args)
+  const _fn = async (...arg) => {
+    // console.log(arguments.length, ...arg)
+    const res = await fn(...arg)
     return res.data.data
   }
   return _fn

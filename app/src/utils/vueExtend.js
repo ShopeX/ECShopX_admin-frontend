@@ -1,4 +1,5 @@
 import Vue from 'vue'
+import { VERSION_STANDARD } from '@/utils'
 import CommonUtil from '@/common/js/util'
 // import moment from 'moment'
 // import district from '@/common/district.json'
@@ -222,6 +223,7 @@ Vue.prototype.orderType = [
 // console.log("---process.env.IS_SAAS--",process.env)
 Vue.prototype.system_is_saas = process.env.VUE_APP_IS_SAAS||'false'
 Vue.prototype.system_mode = process.env.VUE_APP_PRODUCT_MODEL
+Vue.prototype.VERSION_STANDARD = VERSION_STANDARD
 Vue.prototype.path_prefixes = process.env.VUE_APP_PREFIXES
 Vue.prototype.BASE_API = process.env.VUE_APP_BASE_API.indexOf('http') !== -1 ? process.env.VUE_APP_BASE_API : window.location.origin + '/api'
 Vue.prototype.wximageurl = process.env.VUE_APP_WXIMG_URL

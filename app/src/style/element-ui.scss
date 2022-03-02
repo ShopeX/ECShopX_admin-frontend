@@ -93,3 +93,43 @@
     }
   }
 }
+
+.el-card {
+  &--normal {
+    box-shadow: none !important;
+    border-width: 0;
+    .el-card__header {
+      padding: 0 0 0 10px;
+      color: #333;
+      font-weight: 500;
+      font-size: 16px;
+      position: relative;
+      // border-width: 0;
+      border-bottom: 1px solid #f1f2f5;
+      &:before {
+        position: absolute;
+        top: 6px;
+        bottom: 6px;
+        left: 0;
+        width: 2px;
+        background-color: #298dff;
+        content: "";
+      }
+    }
+    .el-card__body {
+      padding: 10px 6px;
+    }
+    .card-panel {
+      &-item {
+        margin-bottom: 6px;
+      }
+      &__label {
+        color: #333;
+      }
+      &__value {
+        color: #999;
+        margin-left: 10px;
+      }
+    }
+  }
+}

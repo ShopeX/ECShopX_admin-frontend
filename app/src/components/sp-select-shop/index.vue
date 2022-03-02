@@ -141,7 +141,7 @@ export default {
       console.log('handleDropdownLeave...')
     },
     clickOutSide() {
-      console.log('clickOutSide：', this.cascaderPanelVisible)
+      // console.log('clickOutSide：', this.cascaderPanelVisible)
       if (!this.cascaderPanelVisible && this.cascaderPanelVisibleDelay) {
         this.toggleDropDownVisible(false)
       }

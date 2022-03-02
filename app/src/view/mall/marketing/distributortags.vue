@@ -1,24 +1,32 @@
+<style scoped lang="scss">
+.sp-filter-form {
+  margin-bottom: 16px;
+}
+</style>
+
 <template>
-  <div>
-    <el-row :gutter="20">
-      <el-col :span="3">
-        <el-button type="primary" icon="plus" @click="addTemplate" style="width: 100%" size="mini"
-          >添加标签</el-button
-        >
-      </el-col>
-      <el-col :span="5">
-        <el-input placeholder="标签名" v-model="params.tag_name" style="width: 100%" size="mini"
-          ><el-button slot="append" icon="el-icon-search" @click="searchData"></el-button
-        ></el-input>
-      </el-col>
-    </el-row>
-    <el-table :data="tagsList" :height="wheight - 130" v-loading="loading">
+  <div class="page-body">
+    <div class="action-container">
+      <el-button type="primary" icon="iconfont icon-xinzengcaozuo-01" @click="addTemplate"
+        >添加标签</el-button
+      >
+    </div>
+
+    <SpFilterForm :model="params" @onSearch="onSearch" @onReset="onReset">
+      <SpFilterFormItem prop="tag_name" label="标签名:">
+        <el-input placeholder="标签名" v-model="params.tag_name"> </el-input>
+      </SpFilterFormItem>
+    </SpFilterForm>
+
+    <el-table border :data="tableList" :height="wheight - 130" v-loading="loading">
       <el-table-column prop="tag_id" label="ID" width="100"></el-table-column>
       <el-table-column prop="tag_name" label="标签名称" width="250">
         <template slot-scope="scope">
-          <el-tag :style="{color:scope.row.font_color,backgroundColor:scope.row.tag_color}" size="mini">{{
-            scope.row.tag_name
-          }}</el-tag>
+          <el-tag
+            :style="{ color: scope.row.font_color, backgroundColor: scope.row.tag_color }"
+            size="mini"
+            >{{ scope.row.tag_name }}</el-tag
+          >
         </template>
       </el-table-column>
       <el-table-column prop="description" label="标签描述" width="250"></el-table-column>
@@ -34,13 +42,14 @@
         </template>
       </el-table-column>
     </el-table>
-    <div v-if="total_count > params.page_size" class="content-center content-top-padded">
+    <div v-if="params.total_count > params.page_size" class="content-center content-top-padded">
       <el-pagination
         layout="prev, pager, next"
-        @current-change="handleCurrentChange"
-        :current-page.sync="params.page"
-        :total="total_count"
-        :page-size="params.page_size"
+        :current-page.sync="page.pageIndex"
+        :total="page.total"
+        :page-size="page.page_size"
+        @current-change="onCurrentChange"
+        @size-change="onSizeChange"
       >
       </el-pagination>
     </div>
@@ -103,18 +112,15 @@
 </template>
 <script>
 import { mapGetters } from 'vuex'
-import { Message } from 'element-ui'
 import { saveTag, getTagList, updateTag, deleteTag } from '@/api/marketing'
+import mixin, { pageMixin } from '@/mixins'
 export default {
+  mixins: [mixin, pageMixin],
   data() {
     return {
-      isEdit: false,
-      tagsList: [],
-      loading: false,
-      total_count: 0,
+      isEdit: false, 
+      loading: false, 
       params: {
-        page: 1,
-        pageSize: 20,
         tag_name: ''
       },
       form: {
@@ -132,11 +138,7 @@ export default {
   computed: {
     ...mapGetters(['wheight'])
   },
-  methods: {
-    handleCurrentChange(page_num) {
-      this.params.page = page_num
-      this.getDataList()
-    },
+  methods: { 
     addTemplate() {
       // 添加商品
       this.memberTagDialog = true
@@ -148,37 +150,36 @@ export default {
         description: '',
         front_show: '0'
       }
+    }, 
+    onSearch() {
+      this.page.pageIndex = 1
+      this.$nextTick(() => {
+        this.fetchList()
+      })
+    }, 
+    onReset() {
+      this.params = { ...this.initialParams } 
+      this.onSearch()
     },
     editAction(index, row) {
       // 编辑商品弹框
       this.form = row
       this.memberTagDialog = true
-    },
-    preview(index, row) {
-      // 预览弹框
-      this.dialogVisible = true
-      this.dataInfo = row
-    },
-    searchData() {
-      this.params.page = 1
-      this.getDataList()
-    },
-    getDataList() {
+    },  
+    async fetchList() {
       this.loading = true
-      getTagList(this.params)
-        .then((response) => {
-          this.tagsList = response.data.data.list
-          this.total_count = response.data.data.total_count
-          this.loading = false
-        })
-        .catch((error) => {
-          this.loading = false
-          this.$message({
-            type: 'error',
-            message: '获取列表信息出错'
-          })
-        })
+      const { pageIndex: page, pageSize } = this.page
+      let params = {
+        page,
+        pageSize,
+        ...this.params
+      }
+      const { list, total_count } = await this.$api.marketing.getTagList(params)
+      this.tableList = list
+      this.page.total = total_count
+      this.loading = false
     },
+     
     deleteAction(index, row) {
       this.$confirm('此操作将删除数据, 是否继续?', '提示', {
         confirmButtonText: '确定',
@@ -226,7 +227,6 @@ export default {
       this.memberTagDialog = false
     },
     saveTagData() {
-      
       if (this.form.tag_id) {
         updateTag(this.form.tag_id, this.form).then((res) => {
           if (res.data.data) {
@@ -253,7 +253,7 @@ export default {
     }
   },
   mounted() {
-    this.getDataList()
+    this.fetchList()
   }
 }
 </script>

@@ -42,7 +42,7 @@
         </template>
       </el-table-column>
     </el-table>
-    <div v-if="total_count > params.page_size" class="content-center content-top-padded">
+    <div v-if="params.total_count > params.page_size" class="content-center content-top-padded">
       <el-pagination
         layout="prev, pager, next"
         :current-page.sync="page.pageIndex"

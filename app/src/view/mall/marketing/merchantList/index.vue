@@ -37,8 +37,7 @@ export default {
   data() {
     return {
       datapass_block: 0
-    }
-    // this.currentDay();
+    } 
   },
   computed: {
     setting() {

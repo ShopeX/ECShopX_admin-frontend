@@ -290,8 +290,7 @@
         :page-sizes="[10, 20, 50]"
         :total="page.total"
         :page-size="page.pageSize"
-        @current-change="onCurrentChange"
-        @size-change="onSizeChange"
+       
       >
       </el-pagination>
     </el-form>

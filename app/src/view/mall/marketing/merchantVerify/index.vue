@@ -1,108 +1,82 @@
+<style scoped lang="scss">
+.sp-filter-form {
+  margin-bottom: 16px;
+}
+</style>
+
 <template>
   <div class="merchantVerify">
     <div v-if="$route.path.indexOf('verify') === -1">
-      <div class="query">
-        <el-form :model="query" ref="myForm" label-width="80px">
-          <el-row :gutter="20">
-            <el-col :span="8">
-              <el-form-item label="审批状态" prop='audit_status'>
-                <el-select
-                  v-model="query.audit_status"
-                  placeholder="请选择审批状态"
-                  class="input-m"
-                >
-                  <el-option
-                    v-for="(item, index) in approveStatusList"
-                    :key="index"
-                    :label="item.name"
-                    :value="item.value"
-                  />
-                </el-select>
-              </el-form-item>
-            </el-col>
-            <el-col :span="8">
-              <el-form-item label="商户名称" prop='merchant_name'>
-                <el-input
-                  class="input-m"
-                  placeholder="请输入"
-                  clearable
-                  v-model="query.merchant_name"
-                ></el-input>
-              </el-form-item>
-            </el-col>
-            <el-col :span="8">
-              <el-form-item label="所属地区">
-                <el-cascader
-                  placeholder="根据地区筛选"
-                  :options="regions"
-                  filterable
-                  clearable
-                  v-model="regions_value"
-                  :props="{ checkStrictly: true }"
-                  @change="RegionChangeSearch"
-                  class="input-m"
-                />
-              </el-form-item>
-            </el-col>
-            <el-col :span="8">
-              <el-form-item label="入驻类型" prop='settled_type'>
-                <el-select v-model="query.settled_type" placeholder="请选择" class="input-m">
-                  <el-option label="企业" value="enterprise"></el-option>
-                  <el-option label="个体户" value="soletrader"></el-option>
-                </el-select>
-              </el-form-item>
-            </el-col>
-            <el-col :span="8">
-              <el-form-item label="申请日期">
-                <el-date-picker
-                  class="input-m"
-                  v-model="query.time_start"
-                  :default-time="['00:00:00', '23:59:59']"
-                  type="daterange"
-                  format="yyyy-MM-dd"
-                  value-format="yyyy-MM-dd HH:mm:ss"
-                  start-placeholder="开始日期"
-                  end-placeholder="结束日期"
-                />
-              </el-form-item>
-            </el-col>
-            <el-col :span="8">
-              <el-form-item style="text-align: right;width:91%">
-                <el-button type="primary" @click="searchData">查询</el-button>
-                <el-button @click="resetForm('myForm')">重置</el-button>
-              </el-form-item>
-            </el-col>
-          </el-row>
-        </el-form>
-      </div>
-      <el-divider></el-divider>
-      <el-card v-if="list.length>0"  shadow="never">
-        <div class="cus-list" v-for="item in list" :key="item.id">
+      <SpFilterForm :model="params" @onSearch="onSearch" @onReset="onReset">
+        <SpFilterFormItem prop="audit_status" label="审批状态:">
+          <el-select v-model="params.audit_status" placeholder="请选择审批状态" class="input-m">
+            <el-option
+              v-for="(item, index) in approveStatusList"
+              :key="index"
+              :label="item.name"
+              :value="item.value"
+            />
+          </el-select>
+        </SpFilterFormItem>
+        <SpFilterFormItem prop="merchant_name" label="商户名称:">
+          <el-input placeholder="请输入" clearable v-model="params.merchant_name"></el-input>
+        </SpFilterFormItem>
+        <SpFilterFormItem prop="regions_value" label="所属地区:">
+          <el-cascader
+            placeholder="根据地区筛选"
+            :options="regions"
+            filterable
+            clearable
+            v-model="params.regions_value"
+            :props="{ checkStrictly: true }" 
+          />
+        </SpFilterFormItem>
+        <SpFilterFormItem prop="settled_type" label="入驻类型:">
+          <el-select v-model="params.settled_type" placeholder="请选择">
+            <el-option label="企业" value="enterprise"></el-option>
+            <el-option label="个体户" value="soletrader"></el-option>
+          </el-select>
+        </SpFilterFormItem>
+        <SpFilterFormItem prop="time_start" label="申请日期:">
+          <el-date-picker
+            v-model="params.time_start"
+            :default-time="['00:00:00', '23:59:59']"
+            type="daterange"
+            format="yyyy-MM-dd"
+            value-format="yyyy-MM-dd HH:mm:ss"
+            start-placeholder="开始日期"
+            end-placeholder="结束日期"
+          />
+        </SpFilterFormItem>
+      </SpFilterForm>
+
+      <el-card v-if="tableList.length > 0" shadow="never">
+        <div class="cus-list" v-for="item in tableList" :key="item.id">
           <el-row class="cus-row">
             <el-col :span="3">
               <img
                 v-if="item.settled_type === 'soletrader'"
                 class="cus-row-img"
-                style="width:90px;height:90px"
+                style="width: 90px; height: 90px"
                 src="@/assets/img/adapay/distributor.png"
                 alt=""
               />
-              <img
-                v-else
-                class="cus-row-img"
-                src="@/assets/img/adapay/dealer.png"
-                alt=""
-              />
+              <img v-else class="cus-row-img" src="@/assets/img/adapay/dealer.png" alt="" />
             </el-col>
             <el-col :span="13">
-              <router-link :to="{ path:matchHidePage('verify'), query: { type:'verify',merchantId: item.id } }">
+              <router-link
+                :to="{
+                  path: matchHidePage('verify'),
+                  query: { type: 'verify', merchantId: item.id }
+                }"
+              >
                 <span class="cus-row-name">{{ item.merchant_name }}</span>
               </router-link>
               <div class="cus-row-time">
+                <span>申请时间：{{ item.created ? createTimeFilter(item.created) : '-' }}</span>
                 <span
-                  >申请时间：{{ item.created ? createTimeFilter(item.created) : '-' }}</span
+                  >所属地区：{{ item.province + '-' + item.city + '-' + item.area || '-' }}</span
                 >
-                <span>所属地区：{{ item.province+'-'+item.city+'-'+item.area || '-' }}</span>
               </div>
             </el-col>
             <el-col :span="5">
@@ -119,10 +93,13 @@
                 style="width: 92px; height: 92px"
               />
             </el-col>
-            <el-col class="cus-row-btn" :span="3" :offset="item.audit_status !== '1'?0:5">
+            <el-col class="cus-row-btn" :span="3" :offset="item.audit_status !== '1' ? 0 : 5">
               <router-link
                 v-if="item.audit_status === '1'"
-               :to="{ path:matchHidePage('verify'), query: { type:'verify',merchantId: item.id } }"
+                :to="{
+                  path: matchHidePage('verify'),
+                  query: { type: 'verify', merchantId: item.id }
+                }"
               >
                 <el-button type="primary">审批</el-button>
               </router-link>
@@ -134,12 +111,12 @@
           <el-pagination
             background
             layout="total, sizes, prev, pager, next, jumper"
-            @current-change="handleCurrentChange"
-            @size-change="handleSizeChange"
-            :current-page.sync="query.page"
+            :current-page.sync="page.pageIndex"
             :page-sizes="[10, 20, 50]"
-            :total="count"
-            :page-size="query.page_size"
+            :total="page.total"
+            :page-size="page.pageSize"
+            @current-change="onCurrentChange"
+            @size-change="onSizeChange"
           >
           </el-pagination>
         </div>
@@ -152,74 +129,60 @@
 import { mapGetters } from 'vuex'
 import moment from 'moment'
 import district from '@/common/district.json'
-import { getApplicationListForMerchantEntry } from '@/api/mall/marketing.js'
+import mixin, { pageMixin } from '@/mixins'
 export default {
+  mixins: [mixin, pageMixin],
   data() {
-    return {
-      loading: true,
-      regions: district,
-      create_time: [],
-      currentArea: {},
-      query: {
-        page: 1,
-        page_size: 20,
-        merchant_name: '',
-        audit_status: '',
-        settled_type: '',
-        time_start:[]
-      },
+    const initialParams = {
+      audit_status: undefined,
+      merchant_name: undefined,
       regions_value: [],
+      settled_type: undefined,
+      time_start: undefined
+    }
+    return {
+      initialParams,
+      params: { ...initialParams },
+      regions: district, 
+      loading: true, 
       approveStatusList: [
         { name: '待审批', value: '1' },
         { name: '通过', value: '2' },
         { name: '驳回', value: '3' }
-      ],
-      count: 0,
-      list: []
+      ], 
     }
   },
   computed: {
     ...mapGetters(['wheight'])
   },
   mounted() {
-    this.getList()
+    this.fetchList()
   },
   methods: {
-    searchData(e) {
-      this.query.page = 1
-      this.getList()
-      console.log(this.query)
+    onSearch() {
+      this.page.pageIndex = 1
+      this.$nextTick(() => {
+        this.fetchList()
+      })
     },
-    handleCurrentChange(val) {
-      this.query.page = val
-      this.loading = false
-      this.getList()
+    onReset() {
+      this.params = { ...this.initialParams }
+      this.onSearch()
     },
-    handleSizeChange(page_size) {
-      this.loading = false
-      this.query.page = 1
-      this.query.page_size = page_size
-      this.getList()
-    },
-    async getList() {
-      this.loading = true
-      const result = await getApplicationListForMerchantEntry({ ...this.query, ...this.currentArea })
-      this.list = result.data.data.list
-      this.count = result.data.data.count
-      this.loading = false
-    },
-    RegionChangeSearch(value) {
-      console.log(value)
+    regionChangeSearch(value) { 
       var vals = this.getCascaderObj(value, this.regions)
+      let currentArea={}
       if (vals.length == 1) {
-        this.currentArea.province = vals[0].label
+        currentArea.province = vals[0].label
       } else if (vals.length == 2) {
-        this.currentArea.city = vals[1].label
+        currentArea.province = vals[0].label
+        currentArea.city = vals[1].label
       } else if (vals.length == 3) {
-        this.currentArea.area = vals[2].label
-      } else {
-        this.currentArea = {}
+        currentArea.province = vals[0].label
+        currentArea.city = vals[1].label
+        currentArea.area = vals[2].label
       }
+      return currentArea;
     },
     getCascaderObj(val, opt) {
       return val.map(function (value, index, array) {
@@ -232,14 +195,34 @@ export default {
         return null
       })
     },
-    resetForm(formName) {
-        this.$refs[formName].resetFields()
-        this.regions_value = []
-        this.query.time_start = []
-        this.currentArea ={}
-        
-        this.getList();
+    getParams() {
+      let area={};
+      if(this.params.regions_value.length>0){
+        area=this.regionChangeSearch(this.params.regions_value);
+      }
+      let params = { 
+        ...this.params,
+        regions_value:[],
+        ...area
+      } 
+      return params
+    }, 
+    async fetchList() {
+      this.loading = true
+      const { pageIndex: page, pageSize:page_size } = this.page
+      let params = {
+        page,
+        page_size,
+        ...this.getParams()
+      }
+      const { list, count } = await this.$api.mall_marketing.getApplicationListForMerchantEntry(
+        params
+      )
+      this.tableList = list 
+      this.page.total = count
+      this.loading = false
     },
+    
     createTimeFilter(time) {
       return moment(time * 1000).format('YYYY-MM-DD HH:mm:ss')
     }
@@ -247,7 +230,7 @@ export default {
   beforeRouteUpdate(to, from, next) {
     next()
     if (to.path.indexOf('verify') === -1) {
-      this.getList()
+      this.fetchList()
     }
   }
 }

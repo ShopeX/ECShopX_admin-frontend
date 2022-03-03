@@ -1,0 +1,135 @@
+.el-button {
+  padding: 10px 16px;
+  // .icon-xinzengcaozuo-01 {
+  //   font-size: 14px;
+  //   margin-right: 4px;
+  // }
+  // .icon-daorucaozuo-01 {
+  //   font-size: 14px;
+  //   margin-right: 4px;
+  // }
+  .iconfont {
+    font-size: 14px;
+    margin-right: 4px;
+  }
+  .icon-zhankai {
+    transform: scale(0.8);
+    display: inline-block;
+  }
+  &.is-plain {
+    background-color: #fff;
+    color: $color-primary;
+    border-color: $color-primary;
+    &:hover {
+      color: rgba($color-primary, 0.6);
+      border-color: rgba($color-primary, 0.6);
+      background-color: #fff;
+    }
+  }
+  &--text {
+    padding: 0;
+  }
+  & + .el-button {
+    margin-left: 8px;
+  }
+}
+
+.el-input {
+  &__inner {
+    border-radius: 2px;
+    border: 1px solid #d9d9d9;
+    height: 36px;
+    padding: 0 12px;
+    &::-webkit-input-placeholder {
+      color: #bbb;
+      font-size: 14px;
+    }
+  }
+}
+
+.el-cascader {
+  line-height: 36px;
+}
+
+.el-tabs {
+  &--card {
+    .el-tabs__header {
+      border-bottom-width: 0;
+      margin-bottom: 8px;
+    }
+    .el-tabs__nav {
+      height: 36px;
+      background: #f0f2f5;
+      border-radius: 2px !important;
+      padding: 4px;
+      border-width: 0 !important;
+    }
+    .el-tabs__item {
+      height: 28px;
+      line-height: 28px;
+      font-size: 13px;
+      color: #545d7a;
+      border-left-width: 0 !important;
+      &.is-active {
+        background: #fff;
+        color: $color-primary;
+      }
+    }
+  }
+}
+
+.el-table {
+  &--border {
+    .el-table__header {
+      th {
+        background: #f0f2f5;
+        color: #222;
+        padding: 6px 0;
+        font-weight: 400;
+      }
+    }
+    td {
+      border-right-width: 0;
+    }
+  }
+}
+
+.el-card {
+  &--normal {
+    box-shadow: none !important;
+    border-width: 0;
+    .el-card__header {
+      padding: 0 0 0 10px;
+      color: #333;
+      font-weight: 500;
+      font-size: 16px;
+      position: relative;
+      // border-width: 0;
+      border-bottom: 1px solid #f1f2f5;
+      &:before {
+        position: absolute;
+        top: 6px;
+        bottom: 6px;
+        left: 0;
+        width: 2px;
+        background-color: #298dff;
+        content: '';
+      }
+    }
+    .el-card__body {
+      padding: 10px 6px;
+    }
+    .card-panel {
+      &-item {
+        margin-bottom: 6px;
+      }
+      &__label {
+        color: #333;
+      }
+      &__value {
+        color: #999;
+        margin-left: 10px;
+      }
+    }
+  }
+}

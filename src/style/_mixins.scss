@@ -1,0 +1,89 @@
+@import 'variables';
+
+@mixin text-overflow() {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+@mixin pdt-img($width, $height: '', $type: contain, $offset: 0) {
+  $height: $width;
+  @if $height != '' {
+    $height: $width;
+  }
+
+  $offset: strip-unit($offset);
+  width: $width;
+  height: $height;
+  text-align: center;
+  position: relative;
+  overflow: hidden;
+  @if $type == contain {
+    img {
+      display: block;
+      max-width: 100%;
+      max-height: 100%;
+      position: absolute;
+      left: 50%;
+      top: 50%;
+      transform: translate(-50%, -50%);
+    }
+  } @else if $type == cover {
+    img {
+      display: block;
+      position: absolute;
+      width: $width;
+      left: 50%;
+      top: 50%;
+      transform: translate(-50%, -50%);
+      @if $offset > 0 {
+        margin: #{$offset}px 0 0 #{$offset}px;
+      }
+    }
+  }
+}
+
+@mixin clearfix() {
+  &:after {
+    content: '\0020';
+    display: block;
+    height: 0;
+    clear: both;
+    visibility: hidden;
+    overflow: hidden;
+  }
+  overflow: hidden;
+}
+
+@mixin avatar($size, $radius: $border-radius) {
+  background: rgba(#fff, 0.5);
+  width: $size;
+  height: $size;
+  overflow: hidden;
+  text-align: center;
+  border-radius: $radius;
+  img {
+    max-width: 100%;
+    max-height: 100%;
+    vertical-align: middle;
+  }
+}
+
+@mixin mult-ellipsis($line) {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: $line;
+}
+
+@mixin arrow($size: 4px) {
+  content: '';
+  border: $size / 2 solid $color-border-gray;
+  display: block;
+  width: $size;
+  height: $size;
+  border-left: 0;
+  border-top: 0;
+  transform: rotate(45deg);
+}

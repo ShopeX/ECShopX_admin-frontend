@@ -1,54 +1,34 @@
 <template>
   <div class="section-white content-padded">
     <el-card class="box-card">
-      <div
-        slot="header"
-        class="clearfix"
-      >
+      <div slot="header" class="clearfix">
         <span>会员权益</span>
       </div>
       <div class="text item">
-        <el-form
-          ref="form_content"
-          :model="form_content"
-          :rles="rules"
-          label-width="80px"
-        >
-          <el-form-item
-            label="会员权益"
-            prop="content"
-          >
+        <el-form ref="form_content" :model="form_content" :rles="rules" label-width="80px">
+          <el-form-item label="会员权益" prop="content">
             <vue-html5-editor
-              ref="editor"
               :content="form_content.content"
-              :height="360"
               @change="updateContent"
-            />
-            <span
-              class="tpl_item img"
-              style=""
-              @click="addImgPreview"
-            >
-              <i class="iconfont icon-image" />图片
+              ref="editor"
+              :height="360"
+            ></vue-html5-editor>
+            <span class="tpl_item img" @click="addImgPreview" style="">
+              <i class="iconfont icon-image"></i>图片
             </span>
           </el-form-item>
           <div class="section-footer with-border content-center">
-            <el-button
-              type="primary"
-              @click="saveContent"
-            >
-              保存
-            </el-button>
+            <el-button type="primary" @click="saveContent">保存</el-button>
           </div>
         </el-form>
       </div>
       <imgPicker
         :dialog-visible="thumbDialog"
         :sc-status="isGetThumb"
-        :is-most="true"
+        :isMost="true"
         @chooseImg="pickThumb"
         @closeImgDialog="closeThumbDialog"
-      />
+      ></imgPicker>
     </el-card>
   </div>
 </template>
@@ -60,7 +40,7 @@ export default {
   components: {
     imgPicker
   },
-  data () {
+  data() {
     return {
       form_content: {
         content: ''
@@ -72,16 +52,11 @@ export default {
       isGetThumb: false
     }
   },
-  mounted () {
-    getMemberanalysisrightsContent().then((response) => {
-      this.form_content.content = response.data.data.content
-    })
-  },
   methods: {
-    updateContent: function (data) {
+    updateContent: function(data) {
       this.form_content.content = data
     },
-    saveContent () {
+    saveContent() {
       this.$refs['form_content'].validate((valid) => {
         if (valid) {
           setMemberanalysisrightsContent(this.form_content).then((response) => {
@@ -94,12 +69,12 @@ export default {
       })
     },
     // 详情中的上传图片
-    addImgPreview: function () {
+    addImgPreview: function() {
       this.thumbDialog = true
       this.isGetThumb = true
     },
 
-    pickThumb: function (arr) {
+    pickThumb: function(arr) {
       if (arr.length != 0) {
         arr.forEach((data) => {
           if (data && data.url !== '') {
@@ -125,9 +100,14 @@ export default {
         })
       }
     },
-    closeThumbDialog: function () {
+    closeThumbDialog: function() {
       this.thumbDialog = false
     }
+  },
+  mounted() {
+    getMemberanalysisrightsContent().then((response) => {
+      this.form_content.content = response.data.data.content
+    })
   }
 }
 </script>

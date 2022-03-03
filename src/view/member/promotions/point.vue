@@ -1,16 +1,8 @@
 <template>
   <div class="section section-white">
-    <el-form
-      ref="form"
-      :model="form"
-      label-position="left"
-      label-width="180px"
-    >
+    <el-form ref="form" :model="form" label-position="left" label-width="180px">
       <div class="section-body">
-        <el-form-item
-          label="是否开启："
-          prop="ad_title"
-        >
+        <el-form-item label="是否开启：" prop="ad_title">
           <el-switch
             v-model="form.is_open"
             :width="60"
@@ -20,41 +12,30 @@
             active-text="开启"
             inactive-text="关闭"
             active-color="#13ce66"
-          />
+          ></el-switch>
         </el-form-item>
-        <el-form-item
-          label="注册赠送积分："
-          prop="ad_title"
-        >
+        <el-form-item label="注册赠送积分：" prop="ad_title">
           <el-input-number
-            v-model="form.point"
             controls-position="right"
+            v-model="form.point"
             placeholder="注册赠送积分"
-            style="width: 120px"
+            style="width: 120px;"
             :min="0"
             :max="9999999"
           />
         </el-form-item>
-        <el-form-item
-          label="注册返上级积分："
-          prop="ad_title"
-        >
+        <el-form-item label="注册返上级积分：" prop="ad_title">
           <el-input-number
-            v-model="form.rebate"
             controls-position="right"
+            v-model="form.rebate"
             placeholder="注册返上级积分"
-            style="width: 120px"
+            style="width: 120px;"
             :min="0"
             :max="9999999"
           />
         </el-form-item>
         <div class="section-footer with-border content-center">
-          <el-button
-            type="primary"
-            @click="save"
-          >
-            保 存
-          </el-button>
+          <el-button type="primary" @click="save">保 存</el-button>
         </div>
       </div>
     </el-form>
@@ -63,7 +44,7 @@
 <script>
 import { saveRegisterPoint, getRegisterPoint } from '../../../api/promotions'
 export default {
-  data () {
+  data() {
     return {
       activeName: 'fourth',
       form: {
@@ -74,24 +55,14 @@ export default {
       }
     }
   },
-  watch: {
-    getStatus (newVal, oldVal) {
-      if (newVal) {
-        this.getRegisterData()
-      }
-    }
-  },
-  mounted () {
-    this.getRegisterData()
-  },
   methods: {
-    getRegisterData () {
+    getRegisterData() {
       var params = { type: 'point' }
       getRegisterPoint(params).then((response) => {
         this.form = response.data.data
       })
     },
-    save () {
+    save() {
       saveRegisterPoint(this.form).then((response) => {
         this.getRegisterData()
         this.$message({
@@ -99,6 +70,16 @@ export default {
           type: 'success'
         })
       })
+    }
+  },
+  mounted() {
+    this.getRegisterData()
+  },
+  watch: {
+    getStatus(newVal, oldVal) {
+      if (newVal) {
+        this.getRegisterData()
+      }
     }
   }
 }

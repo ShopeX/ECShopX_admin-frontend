@@ -1,6 +1,6 @@
 import fetch from '../utils/fetch'
 
-export function getWechatPreAuthUrl (query) {
+export function getWechatPreAuthUrl(query) {
   return fetch({
     url: '/wechat/pre_auth_url',
     method: 'get',
@@ -8,7 +8,7 @@ export function getWechatPreAuthUrl (query) {
   })
 }
 
-export function getWechatBind (query) {
+export function getWechatBind(query) {
   return fetch({
     url: '/wechat/bind',
     method: 'post',
@@ -16,21 +16,21 @@ export function getWechatBind (query) {
   })
 }
 
-export function getAuthorizerInfo () {
+export function getAuthorizerInfo() {
   return fetch({
     url: 'wechat/authorizerinfo',
     method: 'get'
   })
 }
 
-export function getWechatKfs () {
+export function getWechatKfs() {
   return fetch({
     url: '/wechat/kfs',
     method: 'get'
   })
 }
 
-export function createWechatKfs (query) {
+export function createWechatKfs(query) {
   return fetch({
     url: '/wechat/kfs',
     method: 'post',
@@ -38,7 +38,7 @@ export function createWechatKfs (query) {
   })
 }
 
-export function updateWechatKfs (query) {
+export function updateWechatKfs(query) {
   return fetch({
     url: '/wechat/update/kfs',
     method: 'post',
@@ -46,7 +46,7 @@ export function updateWechatKfs (query) {
   })
 }
 
-export function deleteWechatKfs (query) {
+export function deleteWechatKfs(query) {
   return fetch({
     url: '/wechat/kfs',
     method: 'delete',
@@ -54,7 +54,7 @@ export function deleteWechatKfs (query) {
   })
 }
 
-export function uploadMaterial (query) {
+export function uploadMaterial(query) {
   return fetch({
     url: '/wechat/material',
     method: 'post',
@@ -62,7 +62,7 @@ export function uploadMaterial (query) {
   })
 }
 
-export function getWechatMaterial (query) {
+export function getWechatMaterial(query) {
   return fetch({
     url: '/wechat/material',
     method: 'get',
@@ -70,14 +70,14 @@ export function getWechatMaterial (query) {
   })
 }
 
-export function getMaterialStats (query) {
+export function getMaterialStats(query) {
   return fetch({
     url: '/wechat/material/stats',
     method: 'get'
   })
 }
 
-export function deleteWechatMaterial (query) {
+export function deleteWechatMaterial(query) {
   return fetch({
     url: '/wechat/material',
     method: 'delete',
@@ -85,7 +85,7 @@ export function deleteWechatMaterial (query) {
   })
 }
 
-export function pushNewsImage (file) {
+export function pushNewsImage(file) {
   return fetch({
     url: '/wechat/news/image',
     method: 'post',
@@ -93,14 +93,14 @@ export function pushNewsImage (file) {
   })
 }
 
-export function getOpenKfReply () {
+export function getOpenKfReply() {
   return fetch({
     url: '/wechat/openkf/reply',
     method: 'get'
   })
 }
 
-export function setOpenKfReply (query) {
+export function setOpenKfReply(query) {
   return fetch({
     url: '/wechat/openkf/reply',
     method: 'post',
@@ -108,7 +108,7 @@ export function setOpenKfReply (query) {
   })
 }
 
-export function setSubscribeReply (query) {
+export function setSubscribeReply(query) {
   return fetch({
     url: '/wechat/subscribe/reply',
     method: 'post',
@@ -116,7 +116,7 @@ export function setSubscribeReply (query) {
   })
 }
 
-export function getSubscribeReply (query) {
+export function getSubscribeReply(query) {
   return fetch({
     url: '/wechat/subscribe/reply',
     method: 'get',
@@ -124,7 +124,7 @@ export function getSubscribeReply (query) {
   })
 }
 
-export function setDefaultReply (query) {
+export function setDefaultReply(query) {
   return fetch({
     url: '/wechat/default/reply',
     method: 'post',
@@ -132,7 +132,7 @@ export function setDefaultReply (query) {
   })
 }
 
-export function getDefaultReply (query) {
+export function getDefaultReply(query) {
   return fetch({
     url: '/wechat/default/reply',
     method: 'get',
@@ -140,7 +140,7 @@ export function getDefaultReply (query) {
   })
 }
 
-export function addKeywordReply (query) {
+export function addKeywordReply(query) {
   return fetch({
     url: '/wechat/keyword/reply',
     method: 'post',
@@ -148,7 +148,7 @@ export function addKeywordReply (query) {
   })
 }
 
-export function updateKeywordReply (query) {
+export function updateKeywordReply(query) {
   return fetch({
     url: '/wechat/keyword/reply',
     method: 'put',
@@ -156,7 +156,7 @@ export function updateKeywordReply (query) {
   })
 }
 
-export function deleteKeywordReply (query) {
+export function deleteKeywordReply(query) {
   return fetch({
     url: '/wechat/keyword/reply',
     method: 'delete',
@@ -164,14 +164,14 @@ export function deleteKeywordReply (query) {
   })
 }
 
-export function getKeywordReply () {
+export function getKeywordReply() {
   return fetch({
     url: '/wechat/keyword/reply',
     method: 'get'
   })
 }
 
-export function createArtical (query) {
+export function createArtical(query) {
   return fetch({
     url: '/wechat/news',
     method: 'post',
@@ -179,7 +179,7 @@ export function createArtical (query) {
   })
 }
 
-export function updateArtical (query) {
+export function updateArtical(query) {
   return fetch({
     url: '/wechat/news',
     method: 'put',
@@ -187,35 +187,35 @@ export function updateArtical (query) {
   })
 }
 
-export function getArtical (media_id) {
+export function getArtical(media_id) {
   return fetch({
     url: '/wechat/news/' + media_id,
     method: 'get'
   })
 }
 
-export function getUserWeekSummary () {
+export function getUserWeekSummary() {
   return fetch({
     url: '/wechat/stats/userweeksummary',
     method: 'get'
   })
 }
 
-export function openUserPlatform () {
+export function openUserPlatform() {
   return fetch({
     url: '/wechat/open',
     method: 'post'
   })
 }
 
-export function getWorkWechatConfig () {
+export function getWorkWechatConfig() {
   return fetch({
     url: '/workwechat/config',
     method: 'get'
   })
 }
 
-export function setWorkWechatConfig (params) {
+export function setWorkWechatConfig(params) {
   return fetch({
     url: '/workwechat/config',
     method: 'post',
@@ -223,7 +223,7 @@ export function setWorkWechatConfig (params) {
   })
 }
 
-export function getWorkWechatRelList (salesperson_id, params) {
+export function getWorkWechatRelList(salesperson_id, params) {
   return fetch({
     url: '/workwechat/rellist/' + salesperson_id,
     method: 'get',
@@ -231,7 +231,7 @@ export function getWorkWechatRelList (salesperson_id, params) {
   })
 }
 
-export function getWorkWechatRelLogsList (user_id, params) {
+export function getWorkWechatRelLogsList(user_id, params) {
   return fetch({
     url: '/workwechat/rellogs/' + user_id,
     method: 'get',
@@ -239,21 +239,21 @@ export function getWorkWechatRelLogsList (user_id, params) {
   })
 }
 
-export function getWorkWechatTemplateList () {
+export function getWorkWechatTemplateList() {
   return fetch({
     url: '/workwechat/messagetemplate',
     method: 'get'
   })
 }
 
-export function getWorkWechatTemplate (template_id) {
+export function getWorkWechatTemplate(template_id) {
   return fetch({
     url: '/workwechat/messagetemplate/' + template_id,
     method: 'get'
   })
 }
 
-export function saveWorkWechatTemplate (template_id, params) {
+export function saveWorkWechatTemplate(template_id, params) {
   return fetch({
     url: '/workwechat/messagetemplate/' + template_id,
     method: 'put',
@@ -261,7 +261,7 @@ export function saveWorkWechatTemplate (template_id, params) {
   })
 }
 
-export function openWorkWechatTemplate (template_id, params) {
+export function openWorkWechatTemplate(template_id, params) {
   return fetch({
     url: '/workwechat/messagetemplate/open/' + template_id,
     method: 'put',
@@ -269,7 +269,7 @@ export function openWorkWechatTemplate (template_id, params) {
   })
 }
 
-export function closeWorkWechatTemplate (template_id, params) {
+export function closeWorkWechatTemplate(template_id, params) {
   return fetch({
     url: '/workwechat/messagetemplate/close/' + template_id,
     method: 'put',
@@ -277,21 +277,22 @@ export function closeWorkWechatTemplate (template_id, params) {
   })
 }
 
+
 // 2021.6.1 zyk -update
 
 // 获取店务自建应用
-export function getBaseConfig () {
+export function getBaseConfig() {
   return fetch({
-    url: '/workwechat/distributor/config',
-    method: 'get'
+    url:'/workwechat/distributor/config',
+    method:'get',
   })
 }
 
 // 设置店务自建应用
-export function setBaseConfig (params) {
+export function setBaseConfig(params) {
   return fetch({
-    url: '/workwechat/distributor/config',
-    method: 'post',
+    url:'/workwechat/distributor/config',
+    method:'post',
     params: params
   })
 }

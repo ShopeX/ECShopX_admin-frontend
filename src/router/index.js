@@ -6,63 +6,69 @@ import ErrorPage from '@/view/404'
 import NProgress from 'nprogress'
 import 'nprogress/nprogress.css'
 import { log, isBoolean, isInSalesCenter } from '@/utils'
-import { actions } from '@/utils/micr-app'
+import { actions } from "@/utils/micr-app";
 
 import constantRouterMap from './src'
 Vue.use(VueRouter)
 
 const { RouteAuth, RouteShopAdminShopList, RouteDealerIndex } = constantRouterMap
 const router = new VueRouter({
-  routes: [...RouteAuth, RouteShopAdminShopList, RouteDealerIndex],
+  routes: [
+    ...RouteAuth,
+    RouteShopAdminShopList,
+    RouteDealerIndex
+  ],
   mode: 'history'
 })
 
+
 // 动态路由
-router.beforeEach((to, from, next) => {
-  NProgress.start()
+router.beforeEach(( to, from, next ) => {  
+  NProgress.start();
   // 加载PC模版设计器
-  if (to.path == '/wxapp/pcmall/design') {
+  if ( to.path == '/wxapp/pcmall/design' ) {
     const { id } = to.query
-    console.log(`【shop】pageid is: ${id}`)
-    actions.setGlobalState({
+    console.log( `【shop】pageid is: ${id}` )
+    actions.setGlobalState( {
       mode: 'pc',
       token: store.getters.token,
       pageid: id,
       baseUrl: process.env.VUE_APP_BASE_API
-    })
+    } )
   }
-  if (isInSalesCenter()) {
-    const { token } = qs.parse(self.location.search.replace(/\?/, ''))
-    if (token) {
-      store.commit('SET_TOKEN', { token })
+  if ( isInSalesCenter() ) {
+    const { token } = qs.parse(self.location.search.replace(/\?/, ""));
+    if ( token ) {
+      store.commit( "SET_TOKEN", { token } );
     }
   }
-
+  
   const _token = store.getters.token
   const _menus = store.getters.menus
-
-  if (_token) {
-    const curPath = constantRouterMap.RouteAuth.find((item) => item.path == to.path)
-    if (curPath || to.path == '/shopadmin/shoplist' || to.path == '/dealer/index') {
+  
+  if ( _token ) {
+    const curPath = constantRouterMap.RouteAuth.find( item => item.path == to.path )
+    if ( curPath || to.path == '/shopadmin/shoplist' || to.path == '/dealer/index') {
       return next()
-    }
-    if (_menus.length == 0) {
+    } 
+    if ( _menus.length == 0 ) {
+    
       const shopId = store.getters.shopId
-      const login_type = store.getters.login_type
+      const login_type = store.getters.login_type 
       let permissionParams = {}
-      if (login_type == 'distributor') {
+      if ( login_type == 'distributor' ) {
         permissionParams['distributor_id'] = shopId
       }
-      store.dispatch('getPermission', permissionParams).then(() => {
+      store.dispatch( 'getPermission', permissionParams).then(() => {
         // 根据权限菜单动态加载路由
         const customRouterUrls = []
         const menus = store.getters.menus
         // 无权限
-        if (menus.length == 0) {
-          if (isInSalesCenter()) {
-            next('/notExistAuth')
+        if ( menus.length == 0 ) {
+          if( isInSalesCenter() ) {
+            next( '/notExistAuth' )
           } else {
-            next('/login')
+            next( '/login' )
           }
         }
 
@@ -86,22 +92,24 @@ router.beforeEach((to, from, next) => {
 
         const newRouter = []
         // console.log(Object.keys(constantRouterMap))
-        // console.log('menu:', customRouterUrls)
+        // console.log('menu:', customRouterUrls) 
+        
 
-        Object.keys(constantRouterMap).forEach((key) => {
-          if (key != 'RouteAuth') {
-            const route = constantRouterMap[key]
+        Object.keys( constantRouterMap ).forEach( ( key ) => {
+          if ( key != 'RouteAuth' ) {
+          
+            const route = constantRouterMap[key] 
             // 二级菜单
-            if (route.children) {
+            if ( route.children ) {
               const _route = {
                 ...route,
                 children: []
               }
-              _route.children = route.children.filter((item) => {
-                if (item.name == 'dashboard') {
-                  return customRouterUrls.includes(`/`) || customRouterUrls.includes(`/merchant`)
+              _route.children = route.children.filter( ( item ) => {
+                if ( item.name == 'dashboard' ) {
+                  return customRouterUrls.includes( `/` )||customRouterUrls.includes( `/merchant` )
                 } else {
-                  return customRouterUrls.includes(`${route.path}/${item.path}`)
+                  return customRouterUrls.includes( `${route.path}/${item.path}` )
                 }
                 // // 三级菜单呢
                 // if (item.children) {
@@ -111,13 +119,13 @@ router.beforeEach((to, from, next) => {
                 // } else {
                 //   return customRouterUrls.includes(`${route.path}/${item.path}`)
                 // }
-              })
-              if (_route.children.length > 0) {
-                newRouter.push(_route)
+              } ) 
+              if ( _route.children.length > 0 ) {
+                newRouter.push( _route )
               }
             } else {
               // 一级菜单
-              if (customRouterUrls.includes(route.path)) {
+              if ( customRouterUrls.includes( route.path ) ) {
                 newRouter.push(route)
               }
             }
@@ -134,25 +142,25 @@ router.beforeEach((to, from, next) => {
         //   }
         // )
         // log.debug(`newRouter: `, newRouter)
-
+       
         router.addRoutes(newRouter)
-        if (to.path == '/') {
-          next(customRouterUrls[0])
+        if ( to.path == '/' ) {
+          next( customRouterUrls[0] )
         } else {
-          next({ ...to })
+          next( { ...to } )
         }
         // next( customRouterUrls[0] )
       })
-    } else {
+    } else { 
       next()
     }
   } else {
-    if (isBoolean(to.meta.auth) && !to.meta.auth) {
+    if(isBoolean(to.meta.auth) && !to.meta.auth) {
       next()
     } else {
-      if (to.path.includes('/shopadmin')) {
+      if ( to.path.includes('/shopadmin') ) {
         window.location.href = constantRouterMap.RouteAuth[1].path
-      } else if (to.path.includes('/merchant')) {
+      } else if ( to.path.includes('/merchant') ){
         window.location.href = constantRouterMap.RouteAuth[2].path
       } else {
         // 登录
@@ -162,7 +170,7 @@ router.beforeEach((to, from, next) => {
   }
 })
 
-router.afterEach((to, form) => {
+router.afterEach((to,form) => {
   //进度条消失
   NProgress.done()
 })

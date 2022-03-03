@@ -2,10 +2,10 @@ const errLog = {
   state: {
     errLog: []
   },
-  pushLog (log) {
+  pushLog(log) {
     this.state.errLog.unshift(log)
   },
-  clearLog () {
+  clearLog() {
     this.state.errLog = []
   }
 }

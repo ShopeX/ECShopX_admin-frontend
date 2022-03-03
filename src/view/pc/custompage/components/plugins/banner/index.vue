@@ -1,10 +1,10 @@
 <template>
   <div>
-    <slot />
+    <slot></slot>
     <div class="banner">
       <div
-        ref="bg"
         class="bg"
+        ref="bg"
         @mouseover="bgOver($refs.bg)"
         @mousemove="bgMove($refs.bg, $event)"
         @mouseout="bgOut($refs.bg)"
@@ -14,45 +14,41 @@
             v-for="(item, i) in t_data"
             v-if="i === mark"
             :key="i"
-            style="position: absolute"
+            style="position:absolute"
             @mouseover="stopTimer"
             @mouseout="startTimer"
           >
-            <img
-              v-if="item.imgUrl"
-              class="img1"
-              :src="item.imgUrl"
-            >
+            <img v-if="item.imgUrl" class="img1" :src="item.imgUrl" />
           </div>
         </transition>
       </div>
       <div class="page">
         <ul class="dots">
           <li
-            v-for="(item, i) in t_data"
-            :key="i"
             class="dot-active"
+            v-for="(item, i) in t_data"
             :class="{ 'dot': i != mark }"
+            :key="i"
             @click="change(i)"
-          />
+          ></li>
         </ul>
       </div>
-      <div />
+      <div></div>
     </div>
   </div>
 </template>
 <script>
 export default {
-  name: 'Banner',
+  name: 'banner',
   props: {
     data: {
       type: Object,
-      default: function () {
+      default: function() {
         return {}
       }
     }
   },
-  data () {
+  data() {
     return {
       t_data: this.data.data,
       mark: 0,
@@ -64,40 +60,40 @@ export default {
       }
     }
   },
-  created () {
+  created() {
     this.play()
   },
-  mounted () {
+  mounted() {
     // console.log(this.data)
   },
   methods: {
-    autoPlay () {
+    autoPlay() {
       this.mark++
       if (this.mark > this.t_data.length - 1) {
         // 当遍历到最后一张图片置零
         this.mark = 0
       }
     },
-    play () {
+    play() {
       // 每2.5s自动切换
       this.timer = setInterval(this.autoPlay, 2500)
     },
-    change (i) {
+    change(i) {
       this.mark = i
     },
-    startTimer () {
+    startTimer() {
       this.timer = setInterval(this.autoPlay, 2500)
     },
-    stopTimer () {
+    stopTimer() {
       clearInterval(this.timer)
     },
-    bgOver (e) {
+    bgOver(e) {
       this.bgOpt.px = e.offsetLeft
       this.bgOpt.py = e.offsetTop
       this.bgOpt.w = e.offsetWidth
       this.bgOpt.h = e.offsetHeight
     },
-    bgMove (dom, eve) {
+    bgMove(dom, eve) {
       let bgOpt = this.bgOpt
       let X, Y
       let mouseX = eve.pageX - bgOpt.px
@@ -115,7 +111,7 @@ export default {
       dom.style['transform'] = `rotateY(${X / 50}deg) rotateX(${Y / 50}deg)`
       dom.style.transform = `rotateY(${X / 50}deg) rotateX(${Y / 50}deg)`
     },
-    bgOut (dom) {
+    bgOut(dom) {
       dom.style['transform'] = 'rotateY(0deg) rotateX(0deg)'
       dom.style.transform = 'rotateY(0deg) rotateX(0deg)'
     }

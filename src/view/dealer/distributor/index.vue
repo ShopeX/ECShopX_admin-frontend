@@ -3,7 +3,7 @@
     <el-card>
       <SpFinder
         ref="finder"
-        :no-selection="true"
+        :noSelection='true'
         :hooks="{
           beforeSearch: beforeSearch
         }"
@@ -13,9 +13,9 @@
       >
         <template v-slot:address>
           <el-cascader
-            v-model="checkedRegions"
             clearable
             style="width: 100%"
+            v-model="checkedRegions"
             :props="{ checkStrictly: true }"
             :options="regions"
             filterable
@@ -28,39 +28,27 @@
 </template>
 
 <script>
-import district from '@/common/district.json'
+import district from "@/common/district.json"
 import { createSetting } from '@shopex/finder'
 
 // 取选中地区的值
-function getCascaderObj (val, opt) {
-  return (
-    val &&
-    val.map(function (value, index, array) {
-      for (var itm of opt) {
-        if (itm.value === value) {
-          opt = itm.children
-          return itm
-        }
+function getCascaderObj(val, opt) {
+  return val && val.map(function (value, index, array) {
+    for (var itm of opt) {
+      if (itm.value === value) {
+        opt = itm.children
+        return itm
       }
-      return null
-    })
-  )
+    }
+    return null
+  })
 }
 export default {
-  data () {
-    return {
-      province: '',
-      city: '',
-      area: '',
-      regions: district,
-      checkedRegions: []
-    }
-  },
   computed: {
     setting () {
       return createSetting({
         columns: [
-          { name: '店铺名称', key: 'name' },
+          { name: '店铺名称', key: 'name'  },
           { name: '负责人', key: 'contact' },
           { name: '联系方式', key: 'mobile' },
           { name: '经营地址', key: 'address' }
@@ -72,6 +60,15 @@ export default {
           { key: 'address', name: '经营地址', slot: 'address' }
         ]
       })
+    }
+  },
+  data () {
+    return {
+      province: '',
+      city: '',
+      area: '',
+      regions: district,
+      checkedRegions: []
     }
   },
   methods: {

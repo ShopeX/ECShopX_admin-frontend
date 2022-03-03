@@ -1,48 +1,24 @@
 <template>
   <div class="">
-    <el-table
-      v-loading="loading"
-      :data="logsList"
-      style="width: 100%"
-      border
-      height="500"
-    >
-      <el-table-column
-        prop="operator_name"
-        label="操作内容"
-        width="160"
-      />
-      <el-table-column
-        prop="username"
-        label="操作者"
-        width="160"
-      />
-      <el-table-column
-        prop="ip"
-        label="IP"
-        width="160"
-      />
-      <el-table-column
-        prop="created"
-        label="时间"
-        width="160"
-      >
+    <el-table :data="logsList" style="width: 100%" border height="500" v-loading="loading">
+      <el-table-column prop="operator_name" label="操作内容" width="160"></el-table-column>
+      <el-table-column prop="username" label="操作者" width="160"></el-table-column>
+      <el-table-column prop="ip" label="IP" width="160"></el-table-column>
+      <el-table-column prop="created" label="时间" width="160">
         <template slot-scope="scope">
           <span>{{ scope.row.created | datetime('YYYY-MM-DD HH:mm:ss') }}</span>
         </template>
       </el-table-column>
     </el-table>
-    <div
-      v-if="total_count > params.pageSize"
-      class="content-left content-top-padded"
-    >
+    <div v-if="total_count > params.pageSize" class="content-left content-top-padded">
       <el-pagination
         layout="prev, pager, next"
+        @current-change="handleCurrentChange"
         :current-page.sync="params.page"
         :total="total_count"
         :page-size="params.pageSize"
-        @current-change="handleCurrentChange"
-      />
+      >
+      </el-pagination>
     </div>
   </div>
 </template>
@@ -51,7 +27,7 @@ import { Message } from 'element-ui'
 import { getCompanysLogs } from '@/api/company'
 
 export default {
-  data () {
+  data() {
     return {
       logsList: [],
       companyList: [],
@@ -67,15 +43,12 @@ export default {
       renderable: true
     }
   },
-  mounted () {
-    this.getDataList()
-  },
   methods: {
-    handleCurrentChange (page_num) {
+    handleCurrentChange(page_num) {
       this.params.page = page_num
       this.getDataList()
     },
-    getDataList () {
+    getDataList() {
       this.loading = true
       getCompanysLogs(this.params).then((response) => {
         this.logsList = response.list
@@ -83,6 +56,9 @@ export default {
         this.loading = false
       })
     }
+  },
+  mounted() {
+    this.getDataList()
   }
 }
 </script>

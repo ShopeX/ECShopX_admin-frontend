@@ -1,52 +1,35 @@
 <template>
   <div>
     <div v-if="$route.path.indexOf('detail') === -1">
-      <el-row
-        class="filter-header"
-        :gutter="20"
-      >
+      <el-row class="filter-header" :gutter="20">
         <el-col>
-          <el-input
-            v-model="identifier"
-            class="input-m"
-            placeholder="订单号"
-          />
-          <el-input
-            v-model="brand"
-            class="input-m"
-            placeholder="品牌"
-          />
-          <el-input
-            v-model="main_category"
-            class="input-m"
-            placeholder="商品品类"
-          />
+          <el-input class="input-m" placeholder="订单号" v-model="identifier"></el-input>
+          <el-input class="input-m" placeholder="品牌" v-model="brand"></el-input>
+          <el-input class="input-m" placeholder="商品品类" v-model="main_category"></el-input>
         </el-col>
         <el-col>
           下单日期
           <el-date-picker
-            v-model="create_time"
             class="input-m"
+            v-model="create_time"
             type="daterange"
             value-format="yyyy/MM/dd"
             placeholder="选择日期范围"
             @change="dateChange"
-          />
+          ></el-date-picker>
         </el-col>
         <el-col>
           发货日期
           <el-date-picker
-            v-model="delivery_time"
             class="input-m"
+            v-model="delivery_time"
             type="daterange"
             value-format="yyyy/MM/dd"
             placeholder="选择日期范围"
             @change="dateDeliveryChange"
-          />
+          ></el-date-picker>
           <export-tip @exportHandle="exportData">
-            <el-button type="primary">
-              导出
-            </el-button>
+            <el-button type="primary">导出</el-button>
           </export-tip>
           <el-popover
             placement="top-start"
@@ -54,22 +37,19 @@
             trigger="hover"
             content="导出任务会以队列执行，点击导出后，请至‘设置-导出列表’页面中查看及下载数据"
           >
-            <i
-              slot="reference"
-              class="el-icon-question"
-            />
+            <i class="el-icon-question" slot="reference"></i>
           </el-popover>
         </el-col>
       </el-row>
     </div>
-    <router-view />
+    <router-view></router-view>
   </div>
 </template>
 <script>
 import { mapGetters } from 'vuex'
 import { exportSalesReport } from '../../../../api/trade'
 export default {
-  data () {
+  data() {
     return {
       currentShop: '',
       loading: false,
@@ -95,13 +75,13 @@ export default {
     ...mapGetters(['wheight'])
   },
   methods: {
-    onCopy () {
+    onCopy() {
       this.$notify.success({
         message: '复制成功',
         showClose: true
       })
     },
-    dateChange (val) {
+    dateChange(val) {
       if (val && val.length > 0) {
         this.time_start_begin = this.dateStrToTimeStamp(val[0] + ' 00:00:00')
         this.time_start_end = this.dateStrToTimeStamp(val[1] + ' 23:59:59')
@@ -110,7 +90,7 @@ export default {
         this.time_start_end = ''
       }
     },
-    dateDeliveryChange (val) {
+    dateDeliveryChange(val) {
       if (val && val.length > 0) {
         this.delivery_time_start_begin = this.dateStrToTimeStamp(val[0] + ' 00:00:00')
         this.delivery_time_start_end = this.dateStrToTimeStamp(val[1] + ' 23:59:59')
@@ -119,7 +99,7 @@ export default {
         this.delivery_time_start_end = ''
       }
     },
-    getParams () {
+    getParams() {
       this.params.time_start_begin = this.time_start_begin
       this.params.time_start_end = this.time_start_end
       this.params.delivery_time_start_begin = this.delivery_time_start_begin
@@ -128,21 +108,21 @@ export default {
       this.params.brand = this.brand
       this.params.main_category = this.main_category
     },
-    dateStrToTimeStamp (str) {
+    dateStrToTimeStamp(str) {
       return Date.parse(new Date(str)) / 1000
     },
-    querySearch (queryString, cb) {
+    querySearch(queryString, cb) {
       var restaurants = this.source_list
       var results = queryString ? restaurants.filter(this.createFilter(queryString)) : restaurants
       // 调用 callback 返回建议列表的数据
       cb(results)
     },
-    createFilter (queryString) {
+    createFilter(queryString) {
       return (restaurant) => {
         return restaurant.value.toLowerCase().indexOf(queryString.toLowerCase()) === 0
       }
     },
-    exportData () {
+    exportData() {
       this.getParams()
       this.params.page = 1
       exportSalesReport(this.params).then((response) => {
@@ -168,7 +148,7 @@ export default {
 }
 </script>
 <style lang="scss" scoped>
-.input-m {
+.input-m{
   width: 400px !important;
 }
 </style>

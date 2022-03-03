@@ -1,55 +1,36 @@
 <template>
-  <div
-    v-loading="loading"
-    class="menu_content send"
-  >
+  <div class="menu_content send" v-loading="loading">
     <div class="msg_sender">
       <div class="msg_tab">
         <div class="tab_navs_panel">
           <ul class="tab_navs">
             <li class="tab_nav tab_appmsg width6">
-              <a
-                :class="{ 'cur': currentName === 'news' }"
-                @click="msgTypeAction('news')"
-              ><span
-                class="msg_tab_title tab_appmsg"
-              ><i class="icon_msg_sender" />图文消息</span></a>
+              <a :class="{ 'cur': currentName === 'news' }" @click="msgTypeAction('news')"
+                ><span class="msg_tab_title tab_appmsg"
+                  ><i class="icon_msg_sender"></i>图文消息</span
+                ></a
+              >
             </li>
             <li class="tab_nav tab_appmsg width6">
-              <a
-                :class="{ 'cur': currentName === 'text' }"
-                @click="msgTypeAction('text')"
-              ><span class="msg_tab_title tab_text"><i class="icon_msg_sender" />文字</span></a>
+              <a :class="{ 'cur': currentName === 'text' }" @click="msgTypeAction('text')"
+                ><span class="msg_tab_title tab_text"><i class="icon_msg_sender"></i>文字</span></a
+              >
             </li>
             <li class="tab_nav tab_appmsg width6">
-              <a
-                :class="{ 'cur': currentName === 'image' }"
-                @click="msgTypeAction('image')"
-              ><span class="msg_tab_title tab_img"><i class="icon_msg_sender" />图片</span></a>
+              <a :class="{ 'cur': currentName === 'image' }" @click="msgTypeAction('image')"
+                ><span class="msg_tab_title tab_img"><i class="icon_msg_sender"></i>图片</span></a
+              >
             </li>
           </ul>
         </div>
-        <div
-          ref="msg"
-          class="tab_panel"
-        >
-          <div
-            v-if="currentName === 'news'"
-            class="tab_content"
-          >
+        <div class="tab_panel" ref="msg">
+          <div class="tab_content" v-if="currentName === 'news'">
             <div class="inner">
-              <div
-                v-if="!data.news"
-                class="tab_cont_cover"
-              >
+              <div class="tab_cont_cover" v-if="!data.news">
                 <div class="media_cover">
                   <span class="create_access">
-                    <a
-                      href="javascript:;"
-                      class="add_gray_wrap"
-                      @click="newsShowDialog"
-                    >
-                      <i class="el-icon-plus" />
+                    <a href="javascript:;" @click="newsShowDialog" class="add_gray_wrap">
+                      <i class="el-icon-plus"></i>
                       <strong>从素材库中选择</strong>
                     </a>
                   </span>
@@ -60,16 +41,13 @@
                       :to="{ path: matchInternalRoute('brandmaterial_editor') }"
                       class="add_gray_wrap"
                     >
-                      <i class="el-icon-edit" />
+                      <i class="el-icon-edit"></i>
                       <strong>自建图文</strong>
                     </router-link>
                   </span>
                 </div>
               </div>
-              <div
-                v-else
-                class="msgSender_media_1"
-              >
+              <div class="msgSender_media_1" v-else>
                 <div class="msgSender_content">
                   <div
                     class="msg msg-item has-first-cover"
@@ -92,17 +70,16 @@
                             backgroundImage:
                               'url(' + wximageurl + data.news.content.news_item[0].thumb_url + ')'
                           }"
-                        />
+                        ></div>
                         <a
                           :href="data.news.content.news_item[0].url"
                           class="edit-mask preview-mask"
                         >
-                          <div class="edit-mask-content">预览文章</div>
+                          <div class="edit-mask-content">
+                            预览文章
+                          </div>
                         </a>
-                        <p
-                          v-if="data.news.content.news_item.length === 1"
-                          class="msg-desc"
-                        >
+                        <p class="msg-desc" v-if="data.news.content.news_item.length === 1">
                           {{ data.news.content.news_item[0].digest }}
                         </p>
                       </div>
@@ -112,72 +89,55 @@
                         :key=""
                       >
                         <div
-                          v-if="data.news.content.news_item.length > 1"
                           class="article-msg-item has-cover clearfix"
+                          v-if="data.news.content.news_item.length > 1"
                         >
                           <div
                             class="msg-thumb-wrap"
                             :style="{ backgroundImage: 'url(' + wximageurl + item.thumb_url + ')' }"
-                          />
+                          ></div>
                           <h4 class="msg-title">
                             <a>{{ item.title }}</a>
                           </h4>
-                          <a
-                            :href="item.url"
-                            class="edit-mask preview-mask"
-                          >
-                            <div class="edit-mask-content">预览文章</div>
+                          <a :href="item.url" class="edit-mask preview-mask">
+                            <div class="edit-mask-content">
+                              预览文章
+                            </div>
                           </a>
                         </div>
                       </div>
                     </div>
                   </div>
                 </div>
-                <a
-                  class="link"
-                  @click.prevent="removeMsg(currentName)"
-                >删除</a>
+                <a @click.prevent="removeMsg(currentName)" class="link">删除</a>
               </div>
             </div>
           </div>
 
-          <div
-            v-if="currentName === 'text'"
-            class="tab_content"
-          >
+          <div class="tab_content" v-if="currentName === 'text'">
             <div class="emotion_editor">
               <el-input
-                v-model="data.text"
                 type="textarea"
                 :maxlength="600"
                 :rows="8"
+                v-model="data.text"
                 resize="none"
                 class="edit_area"
                 @change="wordChange"
-              />
+              ></el-input>
               <div class="editor_toolbar tr">
                 <span class="frm-tips">{{ data.text.length }}/600</span>
               </div>
             </div>
           </div>
 
-          <div
-            v-if="currentName === 'image'"
-            class="tab_content"
-          >
+          <div class="tab_content" v-if="currentName === 'image'">
             <div class="inner">
-              <div
-                v-if="!data.image"
-                class="tab_cont_cover"
-              >
+              <div class="tab_cont_cover" v-if="!data.image">
                 <div class="media_cover">
                   <span class="create_access">
-                    <a
-                      href="javascript:;"
-                      class="add_gray_wrap"
-                      @click="imgShowDialog"
-                    >
-                      <i class="el-icon-plus" />
+                    <a href="javascript:;" class="add_gray_wrap" @click="imgShowDialog">
+                      <i class="el-icon-plus"></i>
                       <strong>从素材库中选择</strong>
                     </a>
                   </span>
@@ -193,76 +153,43 @@
                   </span>
                 </div> -->
               </div>
-              <div
-                v-else
-                class="msgSender_content_2"
-              >
+              <div class="msgSender_content_2" v-else>
                 <div class="appmsgSendedItem simple_img">
-                  <a
-                    class="title_wrp"
-                    href=""
-                    target="_blank"
-                  >
+                  <a class="title_wrp" href="" target="_blank">
                     <span
                       class="js_media_img icon cover"
                       :style="{ backgroundImage: 'url(' + wximageurl + data.image.url + ')' }"
-                    />
+                    ></span>
                   </a>
                 </div>
-                <a
-                  class="link"
-                  @click.prevent="removeMsg(currentName)"
-                >删除</a>
+                <a class="link" @click.prevent="removeMsg(currentName)">删除</a>
               </div>
             </div>
           </div>
 
-          <div
-            v-if="currentName === 'card'"
-            class="tab_content"
-          >
-            <div
-              v-if="!data.card"
-              class="tab_cont_cover"
-            >
+          <div class="tab_content" v-if="currentName === 'card'">
+            <div class="tab_cont_cover" v-if="!data.card">
               <div class="media_cover">
                 <span class="create_access">
-                  <a
-                    href="javascript:;"
-                    class="add_gray_wrap"
-                    @click="cardShowDialog"
-                  >
-                    <i class="el-icon-plus" />
+                  <a href="javascript:;" @click="cardShowDialog" class="add_gray_wrap">
+                    <i class="el-icon-plus"></i>
                     <strong>从素材库中选择</strong>
                   </a>
                 </span>
               </div>
             </div>
-            <div
-              v-else
-              class="cardmsgArea inner"
-            >
+            <div class="cardmsgArea inner" v-else>
               <div class="msg_card">
                 <div class="card_content clearfix">
-                  <img
-                    class="logo f_l"
-                    :src="wximageurl + data.card.logo_url"
-                  >
+                  <img class="logo f_l" :src="wximageurl + data.card.logo_url" />
                   <div class="card_info">
-                    <h4 class="card_title">
-                      {{ data.card.title }}
-                    </h4>
+                    <h4 class="card_title">{{ data.card.title }}</h4>
                   </div>
-                  <div class="deco" />
+                  <div class="deco"></div>
                 </div>
-                <p class="store">
-                  {{ data.card.brand_name }}
-                </p>
+                <p class="store">{{ data.card.brand_name }}</p>
               </div>
-              <a
-                class="link"
-                @click.prevent="removeMsg(currentName)"
-              >删除</a>
+              <a class="link" @click.prevent="removeMsg(currentName)">删除</a>
             </div>
           </div>
         </div>
@@ -273,13 +200,13 @@
       :sc-status="isGetNews"
       @chooseSC="newsPicker"
       @closeSCDialog="newsHideDialog"
-    />
+    ></SCSelect>
     <ImgSelect
       :dialog-visible="imgVisible"
       :sc-status="isGetImage"
       @chooseImg="imgPicker"
       @closeImgDialog="imgHideDialog"
-    />
+    ></ImgSelect>
   </div>
 </template>
 
@@ -290,7 +217,7 @@ import { validatUploadImage } from '../../utils/validate'
 import { uploadMaterial } from '../../api/wechat'
 
 export default {
-  name: 'MsgInput',
+  name: 'msg-input',
   components: {
     SCSelect,
     ImgSelect
@@ -304,7 +231,19 @@ export default {
       default: null
     }
   },
-  data () {
+  watch: {
+    type(value) {
+      if (value) {
+        this.setCurrentName(value)
+      }
+    },
+    value(value) {
+      if (value) {
+        this.setCurrentValue(value)
+      }
+    }
+  },
+  data() {
     return {
       loading: false,
       currentName: '',
@@ -322,59 +261,39 @@ export default {
       cardVisible: false
     }
   },
-  watch: {
-    type (value) {
-      if (value) {
-        this.setCurrentName(value)
-      }
-    },
-    value (value) {
-      if (value) {
-        this.setCurrentValue(value)
-      }
-    }
-  },
-  mounted () {
-    if (this.type) {
-      this.setCurrentName(this.type)
-    } else {
-      this.setCurrentName('news')
-    }
-    this.setCurrentValue(this.value)
-  },
   methods: {
-    msgTypeAction (type) {
+    msgTypeAction(type) {
       this.currentName = type
     },
-    newsShowDialog () {
+    newsShowDialog() {
       this.newsVisible = true
       this.isGetNews = true
     },
-    imgShowDialog () {
+    imgShowDialog() {
       this.imgVisible = true
       this.isGetImage = true
     },
-    cardShowDialog () {
+    cardShowDialog() {
       this.cardVisible = true
       this.isGetCard = true
     },
-    newsHideDialog () {
+    newsHideDialog() {
       this.newsVisible = false
     },
-    imgHideDialog () {
+    imgHideDialog() {
       this.imgVisible = false
     },
-    cardHideDialog () {
+    cardHideDialog() {
       this.cardVisible = false
     },
-    newsPicker (data) {
+    newsPicker(data) {
       this.newsVisible = false
       if (data.html !== '') {
         this.data.news = data.selectedItem
         this.$emit('change', data.selectedItem, this.currentName)
       }
     },
-    imgPicker (data) {
+    imgPicker(data) {
       console.log(data.url)
       if (data && data.url !== '') {
         this.data.image = data
@@ -401,7 +320,7 @@ export default {
     //     this.loading = false
     //   })
     // },
-    cardPicker (data) {
+    cardPicker(data) {
       this.cardVisible = false
       console.log(data)
       if (data) {
@@ -409,16 +328,16 @@ export default {
         this.$emit('change', data, this.currentName)
       }
     },
-    wordChange (val) {
+    wordChange(val) {
       if (this.currentName === 'text') {
         this.data.text = val
         this.$emit('change', val, this.currentName)
       }
     },
-    setCurrentName (val) {
+    setCurrentName(val) {
       this.currentName = val
     },
-    setCurrentValue (val) {
+    setCurrentValue(val) {
       if (this.type === 'news') {
         this.data.news = val
       }
@@ -432,13 +351,21 @@ export default {
         this.data.card = val
       }
     },
-    removeMsg (name) {
+    removeMsg(name) {
       if (name === 'text') {
         this.data[name] = ''
       } else {
         this.data[name] = null
       }
     }
+  },
+  mounted() {
+    if (this.type) {
+      this.setCurrentName(this.type)
+    } else {
+      this.setCurrentName('news')
+    }
+    this.setCurrentValue(this.value)
   }
 }
 </script>

@@ -1,18 +1,10 @@
 <template>
-  <div
-    class="component-wrap"
-    :class="{ 'component-padded': base.padded, 'active': active }"
-  >
-    <div class="current-active" />
-    <div
-      v-if="base.title"
-      class="component-header"
-    >
+  <div class="component-wrap" :class="{ 'component-padded': base.padded, 'active': active }">
+    <div class="current-active"></div>
+    <div v-if="base.title" class="component-header">
       <div class="component-title">
-        <div>{{ base.title }}</div>
-        <div class="subtitle">
-          {{ base.subtitle }}
-        </div>
+        <div>{{ base.title }} </div>
+        <div class="subtitle">{{ base.subtitle }}</div>
       </div>
       <!-- <div class="component-more">
         <div class="three-dot"></div>
@@ -33,7 +25,8 @@
           notSupportedMessage: '无可播放媒体资源',
           controlBar: false
         }"
-      />
+      >
+      </video-player>
     </div>
   </div>
 </template>
@@ -51,40 +44,42 @@ export default {
       default: false
     }
   },
-  data () {
-    return {
-      base: {},
-      data: [],
-      aspectRatio: '16:9'
-    }
-  },
   watch: {
     res: {
       deep: true,
-      handler (value) {
+      handler(value) {
         if (value) {
           this.setData(value)
         }
       }
     }
   },
-  mounted () {
-    this.setData(this.res)
+  data() {
+    return {
+      base: {},
+      data: [],
+      aspectRatio: '16:9'
+    }
   },
   methods: {
-    setData (val) {
+    setData(val) {
       this.base = val.base
       const { proportion = 0 } = val.base
       this.data = val.data
       this.aspectRatio = aspectRatios[proportion]
     }
+  },
+  mounted() {
+    this.setData(this.res)
   }
 }
 </script>
 
 <style scoped lang="scss">
-.component-title {
+
+.component-title{
   display: flex;
-  justify-content: flex-start;
+  justify-content:flex-start;
 }
+
 </style>

@@ -3,16 +3,9 @@
     <div v-if="$route.path.indexOf('editor') === -1">
       <el-row :gutter="20">
         <el-col :span="4">
-          <el-input
-            v-model="params.name"
-            placeholder="活动名称"
-          >
-            <el-button
-              slot="append"
-              icon="el-icon-search"
-              @click="dataSearch"
-            />
-          </el-input>
+          <el-input placeholder="活动名称" v-model="params.name"
+            ><el-button slot="append" icon="el-icon-search" @click="dataSearch"></el-button
+          ></el-input>
         </el-col>
         <el-col :span="6">
           <el-date-picker
@@ -20,80 +13,32 @@
             type="daterange"
             value-format="yyyy/MM/dd"
             placeholder="添加时间筛选"
-            style="width: 100%"
+            style="width: 100%;"
             @change="dateChange"
-          />
+          ></el-date-picker>
         </el-col>
         <el-col :span="4">
-          <el-button
-            type="primary"
-            icon="plus"
-            @click="addActivityData"
-          >
-            添加活动
-          </el-button>
+          <el-button type="primary" icon="plus" @click="addActivityData">添加活动</el-button>
         </el-col>
       </el-row>
-      <el-tabs
-        v-model="activeName"
-        type="border-card"
-        @tab-click="handleClick"
-      >
-        <el-tab-pane
-          label="全部"
-          name="all"
-        />
-        <el-tab-pane
-          label="未开始"
-          name="waiting"
-        />
-        <el-tab-pane
-          label="预告中"
-          name="in_the_notice"
-        />
-        <el-tab-pane
-          label="售卖中"
-          name="in_sale"
-        />
-        <el-tab-pane
-          label="已结束"
-          name="it_has_ended"
-        />
-        <el-table
-          v-loading="loading"
-          :data="activityLists"
-          :height="wheight - 200"
-        >
-          <el-table-column
-            prop="seckill_id"
-            label="ID"
-            width="80"
-          />
-          <el-table-column
-            prop="activity_name"
-            label="活动名称"
-            min-width="180"
-          />
-          <el-table-column
-            prop="created_date"
-            label="创建时间"
-            min-width="150"
-          />
-          <el-table-column
-            label="活动时间"
-            min-width="150"
-          >
+      <el-tabs type="border-card" v-model="activeName" @tab-click="handleClick">
+        <el-tab-pane label="全部" name="all"></el-tab-pane>
+        <el-tab-pane label="未开始" name="waiting"></el-tab-pane>
+        <el-tab-pane label="预告中" name="in_the_notice"></el-tab-pane>
+        <el-tab-pane label="售卖中" name="in_sale"></el-tab-pane>
+        <el-tab-pane label="已结束" name="it_has_ended"></el-tab-pane>
+        <el-table :data="activityLists" :height="wheight - 200" v-loading="loading">
+          <el-table-column prop="seckill_id" label="ID" width="80"></el-table-column>
+          <el-table-column prop="activity_name" label="活动名称" min-width="180"></el-table-column>
+          <el-table-column prop="created_date" label="创建时间" min-width="150"></el-table-column>
+          <el-table-column label="活动时间" min-width="150">
             <template slot-scope="scope">
               <div>{{ scope.row.activity_start_date }}</div>
               <div>~</div>
               <div>{{ scope.row.activity_end_date }}</div>
             </template>
           </el-table-column>
-          <el-table-column
-            prop="status"
-            label="状态"
-            min-width="100"
-          >
+          <el-table-column prop="status" label="状态" min-width="100">
             <template slot-scope="scope">
               <span v-if="scope.row.status == 'waiting'">待开始</span>
               <span v-else-if="scope.row.status == 'in_the_notice'">预告中</span>
@@ -102,102 +47,66 @@
               <span v-else-if="scope.row.status == 'close'">已终止</span>
             </template>
           </el-table-column>
-          <el-table-column
-            min-width="70"
-            prop="source_name"
-            label="店铺"
-          />
-          <el-table-column
-            label="操作"
-            width="250"
-          >
+          <el-table-column min-width="70" prop='source_name' label="店铺">
+           </el-table-column>
+          <el-table-column label="操作" width="250">
             <template slot-scope="scope">
-              <a
-                v-show="false"
-                ref="download"
-                :href="downloadUrl"
-                :download="downloadfilename"
-              />
-              <template v-if="scope.row.edit_btn == 'Y'">
+              <a ref="download" v-show="false" :href="downloadUrl" :download="downloadfilename"></a>
+              <template v-if="scope.row.edit_btn=='Y'">
                 <el-button
-                  v-if="scope.row.status !== 'it_has_ended'"
                   type="text"
+                  v-if="scope.row.status !== 'it_has_ended'"
                   @click="editAction(scope.$index, scope.row)"
+                  >编辑活动</el-button
                 >
-                  编辑活动
-                </el-button>
               </template>
               <el-button
+                type="text"
                 v-if="scope.row.status !== 'it_has_ended'"
-                type="text"
                 @click="updateStatusCommunityAction(scope.row)"
+                >终止活动</el-button
               >
-                终止活动
-              </el-button>
               <el-button
-                v-if="scope.row.status == 'it_has_ended'"
                 type="text"
+                v-if="scope.row.status == 'it_has_ended'"
                 @click="editAction(scope.$index, scope.row)"
+                >查看活动</el-button
               >
-                查看活动
-              </el-button>
             </template>
           </el-table-column>
         </el-table>
-        <div
-          v-if="total_count > params.pageSize"
-          class="content-center content-top-padded"
-        >
+        <div v-if="total_count > params.pageSize" class="content-center content-top-padded">
           <el-pagination
             background
             layout="total, sizes, prev, pager, next"
+            @current-change="handleCurrentChange"
+            @size-change="handleSizeChange"
             :page-sizes="[10, 20, 50]"
             :current-page.sync="params.page"
             :total="total_count"
             :page-size="params.pageSize"
-            @current-change="handleCurrentChange"
-            @size-change="handleSizeChange"
-          />
+          >
+          </el-pagination>
         </div>
       </el-tabs>
     </div>
 
-    <el-dialog
-      title="活动支持店铺列表"
-      :visible.sync="dialogVisible"
-      width="50%"
-    >
-      <el-table
-        v-loading="loading"
-        :data="distributors.distributor_info"
-        :height="wheight - 500"
-      >
-        <el-table-column
-          prop="name"
-          label="店铺名称"
-          min-width="180"
-        />
-        <el-table-column
-          prop="address"
-          label="地址"
-          min-width="180"
-        />
-        <el-table-column
-          label="操作"
-          width="250"
-        >
+    <el-dialog title="活动支持店铺列表" :visible.sync="dialogVisible" width="50%">
+      <el-table :data="distributors.distributor_info" :height="wheight - 500" v-loading="loading">
+        <el-table-column prop="name" label="店铺名称" min-width="180"></el-table-column>
+        <el-table-column prop="address" label="地址" min-width="180"></el-table-column>
+        <el-table-column label="操作" width="250">
           <template slot-scope="scope">
             <el-button
               type="text"
               @click="uploadActionWxaCode(scope.$index, distributors, scope.row.distributor_id)"
+              >下载小程序码</el-button
             >
-              下载小程序码
-            </el-button>
           </template>
         </el-table-column>
       </el-table>
     </el-dialog>
-    <router-view />
+    <router-view></router-view>
   </div>
 </template>
 <script>
@@ -212,12 +121,12 @@ import {
 } from '../../../../api/promotions'
 export default {
   props: ['getStatus'],
-  provide () {
+  provide() {
     return {
       refresh: this.refresh
     }
   },
-  data () {
+  data() {
     return {
       create_time: '',
       activeName: 'all',
@@ -252,19 +161,8 @@ export default {
   computed: {
     ...mapGetters(['wheight'])
   },
-  watch: {
-    getStatus (val) {
-      if (val) {
-        this.getActivityLists()
-      }
-    }
-  },
-  mounted () {
-    this.getActivityLists()
-    this.getCurrencyInfo()
-  },
   methods: {
-    uploadActionWxaCode (index, row, distributor_id = 0) {
+    uploadActionWxaCode(index, row, distributor_id = 0) {
       var params = { seckill_type: row.seckill_type, seckill_id: row.seckill_id }
       if (distributor_id) {
         params.distributor_id = distributor_id
@@ -286,37 +184,37 @@ export default {
         }, 200)
       })
     },
-    handleClick (tab, event) {
+    handleClick(tab, event) {
       this.activeName = tab.name
       this.params.status = tab.name == 'all' ? '' : tab.name
       this.params.page = 1
       this.getActivityLists()
     },
-    handleSizeChange (pageSize) {
+    handleSizeChange(pageSize) {
       this.params.page = 1
       this.params.pageSize = pageSize
       this.getActivityLists()
     },
-    handleCurrentChange (page_num) {
+    handleCurrentChange(page_num) {
       this.params.page = page_num
       this.getActivityLists()
     },
-    addActivityData () {
+    addActivityData() {
       // 添加物料弹框
       this.$router.push({ path: this.matchHidePage('editor') })
     },
-    editAction (index, row) {
+    editAction(index, row) {
       // 编辑物料弹框
       this.$router.push({ path: this.matchHidePage('editor/') + row.seckill_id })
     },
-    dataSearch () {
+    dataSearch() {
       this.params.start_time = ''
       this.params.end_time = ''
       this.create_time = ''
       this.params.page = 1
       this.getActivityLists()
     },
-    getActivityLists () {
+    getActivityLists() {
       this.loading = true
       seckillActivityGetList(this.params).then((response) => {
         this.activityLists = response.data.data.list
@@ -324,7 +222,7 @@ export default {
         this.loading = false
       })
     },
-    updateStatusCommunityAction (row) {
+    updateStatusCommunityAction(row) {
       var msg = '此操作将永久终止该活动, 是否继续?'
       this.$confirm(msg, '提示', {
         cancelButtonText: '取消',
@@ -345,7 +243,7 @@ export default {
         }
       })
     },
-    dateChange (val) {
+    dateChange(val) {
       this.params.status = ''
       if (val && val.length > 0) {
         this.params.start_time = this.dateStrToTimeStamp(val[0] + ' 00:00:00')
@@ -357,27 +255,27 @@ export default {
       this.params.page = 1
       this.getActivityLists()
     },
-    dateStrToTimeStamp (str) {
+    dateStrToTimeStamp(str) {
       return Date.parse(new Date(str)) / 1000
     },
-    viewCouponList (ids) {
+    viewCouponList(ids) {
       this.couponVisible = true
     },
-    handleCancel () {
+    handleCancel() {
       this.communityVisible = false
       this.couponVisible = false
       this.goodsVisible = false
     },
-    getCurrencyInfo () {
+    getCurrencyInfo() {
       getDefaultCurrency().then((res) => {
         this.currency = res.data.data
         this.cursymbol = this.currency.symbol
       })
     },
-    updateActivityData (params) {
+    updateActivityData(params) {
       updateActivityItemData(params).then((res) => {})
     },
-    editItemPrice (row) {
+    editItemPrice(row) {
       let form = {
         'id': row.id,
         'item_id': row.item_id,
@@ -389,9 +287,20 @@ export default {
       }
       this.updateActivityData(form)
     },
-    refresh () {
+    refresh() {
       this.getActivityLists()
       this.getCurrencyInfo()
+    }
+  },
+  mounted() {
+    this.getActivityLists()
+    this.getCurrencyInfo()
+  },
+  watch: {
+    getStatus(val) {
+      if (val) {
+        this.getActivityLists()
+      }
     }
   }
 }

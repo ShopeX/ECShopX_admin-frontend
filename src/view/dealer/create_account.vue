@@ -1,101 +1,64 @@
 <template>
   <div>
-    <div
-      v-if="processed == '未填'"
-      class="zyk_page_register_Info_edit"
-    >
-      <el-tabs
-        v-model="activeName"
-        type="border-card"
-      >
-        <el-tab-pane
-          v-if="member_type == 'corp' || allShow"
-          name="corp"
-          label="企业"
-        >
+    <div class="zyk_page_register_Info_edit" v-if="processed == '未填'">
+      <el-tabs v-model="activeName" type="border-card">
+        <el-tab-pane name="corp" v-if="member_type == 'corp' || allShow" label="企业">
           <el-form
-            ref="ruleForm"
             :model="form"
+            ref="ruleForm"
             label-width="130px"
             class="demo-ruleForm"
             :rules="rules"
           >
             <!-- 企业信息 -->
-            <el-card
-              class="box-card"
-              shadow="never"
-            >
-              <div
-                slot="header"
-                class="clearfix"
-              >
+            <el-card class="box-card" shadow="never">
+              <div slot="header" class="clearfix">
                 <span>企业信息</span>
               </div>
 
               <div class="content">
                 <el-row :gutter="20">
                   <el-col :span="8">
-                    <el-form-item
-                      label="企业名称"
-                      prop="name"
-                    >
-                      <el-input v-model="form.name" />
+                    <el-form-item label="企业名称" prop="name">
+                      <el-input v-model="form.name"></el-input>
                     </el-form-item>
                   </el-col>
                   <el-col :span="8">
-                    <el-form-item
-                      label="营业执照号"
-                      prop="social_credit_code"
-                    >
-                      <el-input v-model="form.social_credit_code" />
+                    <el-form-item label="营业执照号" prop="social_credit_code">
+                      <el-input v-model="form.social_credit_code"></el-input>
                     </el-form-item>
                   </el-col>
                   <el-col :span="8">
-                    <el-form-item
-                      label="商户有效日期"
-                      prop="social_credit_code_expires"
-                    >
+                    <el-form-item label="商户有效日期" prop="social_credit_code_expires">
                       <el-date-picker
                         v-model="form.social_credit_code_expires"
                         type="date"
                         value-format="yyyyMMdd"
                         placeholder="选择日期"
                         style="width: 100%"
-                      />
+                      ></el-date-picker>
                     </el-form-item>
                   </el-col>
                   <el-col :span="8">
-                    <el-form-item
-                      label="企业电话"
-                      prop="telphone"
-                    >
-                      <el-input v-model="form.telphone" />
+                    <el-form-item label="企业电话" prop="telphone">
+                      <el-input v-model="form.telphone"></el-input>
                     </el-form-item>
                   </el-col>
                   <el-col :span="8">
-                    <el-form-item
-                      label="企业邮箱"
-                      prop="email"
-                    >
-                      <el-input v-model="form.email" />
+                    <el-form-item label="企业邮箱" prop="email">
+                      <el-input v-model="form.email"></el-input>
                     </el-form-item>
                   </el-col>
                   <el-col :span="8">
-                    <el-form-item
-                      label="邮编"
-                      prop="zip_code"
-                    >
-                      <el-input v-model="form.zip_code" />
+                    <el-form-item label="邮编" prop="zip_code">
+                      <el-input v-model="form.zip_code"></el-input>
                     </el-form-item>
                   </el-col>
                   <el-col :span="8">
-                    <el-form-item
-                      label="所在省市"
-                      prop="area"
-                    >
+                    <el-form-item label="所在省市" prop="area">
                       <el-cascader
-                        v-model="form.area"
                         style="width: 100%"
+                        v-model="form.area"
                         :options="AllArea"
                         clearable
                         :props="{
@@ -103,120 +66,84 @@
                           label: 'title',
                           children: 'cities'
                         }"
-                      />
+                      >
+                      </el-cascader>
                     </el-form-item>
                   </el-col>
                   <el-col :span="8">
-                    <el-form-item
-                      label="企业地址"
-                      prop="address"
-                    >
-                      <el-input v-model="form.address" />
+                    <el-form-item label="企业地址" prop="address">
+                      <el-input v-model="form.address"></el-input>
                     </el-form-item>
                   </el-col>
                   <el-col :span="16">
-                    <el-form-item
-                      label="经营范围"
-                      prop="business_scope"
-                    >
+                    <el-form-item label="经营范围" prop="business_scope">
                       <el-input
-                        v-model="form.business_scope"
                         maxlength="500"
                         show-word-limit
+                        v-model="form.business_scope"
                         type="textarea"
                         placeholder="请输入内容"
                         rows="7"
-                      />
+                      ></el-input>
                     </el-form-item>
                   </el-col>
                 </el-row>
               </div>
             </el-card>
             <!-- 法人信息 -->
-            <el-card
-              class="box-card"
-              shadow="never"
-            >
-              <div
-                slot="header"
-                class="clearfix"
-              >
+            <el-card class="box-card" shadow="never">
+              <div slot="header" class="clearfix">
                 <span>法人信息</span>
               </div>
               <el-row :gutter="20">
                 <el-col :span="8">
-                  <el-form-item
-                    label="法人姓名"
-                    prop="legal_person"
-                  >
-                    <el-input v-model="form.legal_person" />
+                  <el-form-item label="法人姓名" prop="legal_person">
+                    <el-input v-model="form.legal_person"></el-input>
                   </el-form-item>
                 </el-col>
                 <el-col :span="8">
-                  <el-form-item
-                    label="法人身份证号码"
-                    prop="legal_cert_id"
-                  >
+                  <el-form-item label="法人身份证号码" prop="legal_cert_id">
                     <div class="flex">
-                      <el-input v-model="form.legal_cert_id" />
+                      <el-input v-model="form.legal_cert_id"></el-input>
                       <el-tooltip
                         content="身份证信息字母X需大写"
                         placement="top-end"
                         effect="light"
                       >
-                        <i class="el-icon-warning-outline" />
+                        <i class="el-icon-warning-outline"></i>
                       </el-tooltip>
                     </div>
                   </el-form-item>
                 </el-col>
                 <el-col :span="8">
-                  <el-form-item
-                    label="法人手机号码"
-                    prop="legal_mp"
-                  >
-                    <el-input v-model="form.legal_mp" />
+                  <el-form-item label="法人手机号码" prop="legal_mp">
+                    <el-input v-model="form.legal_mp"></el-input>
                   </el-form-item>
                 </el-col>
                 <el-col :span="8">
-                  <el-form-item
-                    label="法人证件有效期"
-                    prop="legal_cert_id_expires"
-                  >
+                  <el-form-item label="法人证件有效期" prop="legal_cert_id_expires">
                     <el-date-picker
                       v-model="form.legal_cert_id_expires"
                       type="date"
                       value-format="yyyyMMdd"
                       placeholder="选择日期"
                       style="width: 100%"
-                    />
+                    ></el-date-picker>
                   </el-form-item>
                 </el-col>
               </el-row>
             </el-card>
             <!-- 结算账户信息 -->
-            <el-card
-              class="box-card"
-              shadow="never"
-            >
-              <div
-                slot="header"
-                class="clearfix"
-              >
+            <el-card class="box-card" shadow="never">
+              <div slot="header" class="clearfix">
                 <span>结算账户信息</span>
               </div>
               <el-row :gutter="20">
                 <el-col :span="8">
-                  <el-form-item
-                    label="结算银行账户类型"
-                    prop="bank_acct_type"
-                  >
+                  <el-form-item label="结算银行账户类型" prop="bank_acct_type">
                     <el-radio-group v-model="form.bank_acct_type">
-                      <el-radio label="1">
-                        对公
-                      </el-radio>
-                      <el-radio label="2">
-                        对私
-                      </el-radio>
+                      <el-radio label="1">对公</el-radio>
+                      <el-radio label="2">对私</el-radio>
                     </el-radio-group>
                     <el-tooltip
                       :style="{ 'margin-left': 30 + 'px' }"
@@ -224,61 +151,43 @@
                       placement="top-end"
                       effect="light"
                     >
-                      <i class="el-icon-warning-outline" />
+                      <i class="el-icon-warning-outline"></i>
                     </el-tooltip>
                   </el-form-item>
                 </el-col>
                 <el-col :span="8">
-                  <el-form-item
-                    label="结算银行卡所属银行"
-                    prop="bank_name"
-                  >
+                  <el-form-item label="结算银行卡所属银行" prop="bank_name">
                     <div class="flex">
                       <el-autocomplete
-                        v-model="form.bank_name"
                         style="width: 100%"
                         prefix-icon="el-icon-search"
                         class="inline-input"
+                        v-model="form.bank_name"
                         :fetch-suggestions="querySearch"
                         placeholder="请输入选择内容"
                         @select="handleSelectBank"
-                      />
+                      ></el-autocomplete>
                     </div>
                   </el-form-item>
                 </el-col>
                 <el-col :span="8">
-                  <el-form-item
-                    label="结算银行卡开户名"
-                    prop="card_name"
-                  >
-                    <el-input v-model="form.card_name" />
+                  <el-form-item label="结算银行卡开户名" prop="card_name">
+                    <el-input v-model="form.card_name"></el-input>
                   </el-form-item>
                 </el-col>
                 <el-col :span="8">
-                  <el-form-item
-                    label="结算银行卡号"
-                    prop="card_no"
-                  >
-                    <el-input v-model="form.card_no" />
+                  <el-form-item label="结算银行卡号" prop="card_no">
+                    <el-input v-model="form.card_no"></el-input>
                   </el-form-item>
                 </el-col>
               </el-row>
             </el-card>
-            <el-card
-              class="box-card"
-              shadow="never"
-            >
-              <div
-                slot="header"
-                class="clearfix"
-              >
+            <el-card class="box-card" shadow="never">
+              <div slot="header" class="clearfix">
                 <span>其他信息</span>
               </div>
               <div class="other_content">
-                <el-form-item
-                  label="上传附件"
-                  prop="attach_file"
-                >
+                <el-form-item label="上传附件" prop="attach_file">
                   <el-upload
                     class="upload-demo"
                     drag
@@ -289,16 +198,9 @@
                     :http-request="handleUpload"
                     :multiple="false"
                   >
-                    <i class="el-icon-upload" />
-                    <div v-if="form.attach_file_name">
-                      {{ form.attach_file_name }}
-                    </div>
-                    <div
-                      v-else
-                      class="el-upload__text"
-                    >
-                      将文件拖到此处，或<em>点击上传</em>
-                    </div>
+                    <i class="el-icon-upload"></i>
+                    <div v-if="form.attach_file_name">{{ form.attach_file_name }}</div>
+                    <div v-else class="el-upload__text">将文件拖到此处，或<em>点击上传</em></div>
                   </el-upload>
                 </el-form-item>
                 <el-form-item>
@@ -326,11 +228,7 @@
           </el-form>
         </el-tab-pane>
         <!-- 个人 -->
-        <el-tab-pane
-          v-if="member_type == 'person' || allShow"
-          name="person"
-          label="个人"
-        >
+        <el-tab-pane name="person" v-if="member_type == 'person' || allShow" label="个人">
           <el-form
             ref="personForm"
             :model="personForm"
@@ -339,41 +237,26 @@
             :rules="personRules"
           >
             <!-- 基本信息-->
-            <el-card
-              class="box-card"
-              shadow="never"
-            >
-              <div
-                slot="header"
-                class="clearfix"
-              >
+            <el-card class="box-card" shadow="never">
+              <div slot="header" class="clearfix">
                 <span>基本信息</span>
               </div>
               <el-row :gutter="20">
                 <el-col :span="8">
-                  <el-form-item
-                    label="用户姓名"
-                    prop="user_name"
-                  >
-                    <el-input v-model="personForm.user_name" />
+                  <el-form-item label="用户姓名" prop="user_name">
+                    <el-input v-model="personForm.user_name"></el-input>
                   </el-form-item>
                 </el-col>
                 <el-col :span="8">
-                  <el-form-item
-                    label="用户手机号码"
-                    prop="tel_no"
-                  >
+                  <el-form-item label="用户手机号码" prop="tel_no">
                     <div class="flex">
-                      <el-input v-model="personForm.tel_no" />
+                      <el-input v-model="personForm.tel_no"></el-input>
                     </div>
                   </el-form-item>
                 </el-col>
                 <el-col :span="8">
-                  <el-form-item
-                    label="用户身份证号码"
-                    prop="cert_id"
-                  >
-                    <el-input v-model="personForm.cert_id" />
+                  <el-form-item label="用户身份证号码" prop="cert_id">
+                    <el-input v-model="personForm.cert_id"></el-input>
                   </el-form-item>
                 </el-col>
                 <!-- <el-col :span="8">
@@ -384,49 +267,31 @@
               </el-row>
             </el-card>
             <!-- 结算账户信息 -->
-            <el-card
-              class="box-card"
-              shadow="never"
-            >
-              <div
-                slot="header"
-                class="clearfix"
-              >
+            <el-card class="box-card" shadow="never">
+              <div slot="header" class="clearfix">
                 <span>结算账户信息</span>
               </div>
               <el-row :gutter="20">
                 <el-col :span="8">
-                  <el-form-item
-                    label="开户人姓名"
-                    prop="bank_card_name"
-                  >
-                    <el-input v-model="personForm.bank_card_name" />
+                  <el-form-item label="开户人姓名" prop="bank_card_name">
+                    <el-input v-model="personForm.bank_card_name"></el-input>
                   </el-form-item>
                 </el-col>
                 <el-col :span="8">
-                  <el-form-item
-                    label="银行预留手机号"
-                    prop="bank_tel_no"
-                  >
+                  <el-form-item label="银行预留手机号" prop="bank_tel_no">
                     <div class="flex">
-                      <el-input v-model="personForm.bank_tel_no" />
+                      <el-input v-model="personForm.bank_tel_no"></el-input>
                     </div>
                   </el-form-item>
                 </el-col>
                 <el-col :span="8">
-                  <el-form-item
-                    label="银行账号"
-                    prop="bank_card_id"
-                  >
-                    <el-input v-model="personForm.bank_card_id" />
+                  <el-form-item label="银行账号" prop="bank_card_id">
+                    <el-input v-model="personForm.bank_card_id"></el-input>
                   </el-form-item>
                 </el-col>
                 <el-col :span="8">
-                  <el-form-item
-                    label="开户人证件号码"
-                    prop="bank_cert_id"
-                  >
-                    <el-input v-model="personForm.bank_cert_id" />
+                  <el-form-item label="开户人证件号码" prop="bank_cert_id">
+                    <el-input v-model="personForm.bank_cert_id"></el-input>
                   </el-form-item>
                 </el-col>
               </el-row>
@@ -446,8 +311,8 @@
       </el-tabs>
     </div>
     <Result-cpn
+      :currentStatus="currentStatus"
       v-if="processed == '已填'"
-      :current-status="currentStatus"
       @processedHandle="processedHandle"
     />
   </div>
@@ -472,7 +337,7 @@ export default {
     ResultCpn,
     loadingBtn
   },
-  data () {
+  data() {
     return {
       // 初始打开tab
       activeName: 'corp',
@@ -599,13 +464,12 @@ export default {
       id: ''
     }
   },
-  mounted () {
+  mounted() {
     this.queryUserStatus()
   },
   methods: {
-    async queryUserStatus () {
-      const { audit_state, update_time, audit_desc, member_type } =
-        await this.$api.dealerReInfo.userStatus()
+    async queryUserStatus() {
+      const { audit_state, update_time, audit_desc, member_type } = await this.$api.dealerReInfo.userStatus()
       switch (audit_state) {
         case 'D': //待提交
           this.processed = '未填'
@@ -639,7 +503,7 @@ export default {
 
       // console.log(result);
     },
-    submitForm (formName, isSubmit, ref) {
+    submitForm(formName, isSubmit, ref) {
       this.form.submit_review = isSubmit
       this.form.isUploadFile = true
       console.log(this.form)
@@ -679,6 +543,7 @@ export default {
               this.$refs[ref].closeLoading()
             }
           }
+       
         } else {
           this.$message.error('请完善您的信息~')
           this.$refs[ref].closeLoading()
@@ -687,7 +552,7 @@ export default {
         }
       })
     },
-    submitFormPerson (formName, isSubmit, ref) {
+    submitFormPerson(formName, isSubmit, ref) {
       this.personForm.submit_review = isSubmit
       this.$refs[formName].validate(async (valid) => {
         if (valid) {
@@ -737,14 +602,14 @@ export default {
         }
       })
     },
-    handleAvatarSuccess (file) {
+    handleAvatarSuccess(file) {
       console.log(file)
     },
     handleUpload: function (file) {
       this.form.attach_file_name = file.file.name
       this.form.attach_file = file.file
     },
-    beforeAvatarUpload (file) {
+    beforeAvatarUpload(file) {
       console.log(file)
       const isZip = file.type === 'application/zip' || file.type === 'application/x-zip-compressed'
       const isLt2M = file.size / 1024 / 1024 < 8
@@ -756,10 +621,10 @@ export default {
       }
       return isZip && isLt2M
     },
-    goback () {
+    goback() {
       this.$router.back(-1)
     },
-    async processedHandle () {
+    async processedHandle() {
       if (this.member_type == 'corp') {
         this.form = await this.$api.adapay.accountQueryCorp()
         this.processed = '未填'
@@ -774,7 +639,7 @@ export default {
     },
 
     // type 判断结果 （获取保存的结果）
-    async getResult (id, type, member_type) {
+    async getResult(id, type, member_type) {
       this.id = id
 
       if (id && member_type == 'corp') {
@@ -813,7 +678,7 @@ export default {
       }
     },
     // 结算所属银行
-    async querySearch (queryString, cb) {
+    async querySearch(queryString, cb) {
       this.AllBank = await this.$api.adapay.getBank({
         bank_name: this.form.bank_name
       })
@@ -829,16 +694,16 @@ export default {
       //调用 callback 返回建议列表的数据
       cb(results)
     },
-    createFilter (queryString) {
+    createFilter(queryString) {
       return (restaurant) => {
         return restaurant.value.toLowerCase().indexOf(queryString.toLowerCase()) === 0
       }
     },
-    async get_bank () {
+    async get_bank() {
       const result = await getBankList()
       this.AllBank = result.data.data
     },
-    handleSelectBank (val) {
+    handleSelectBank(val) {
       console.log(val)
       this.form.bank_code = val.bank_code
       this.form.bank_name = val.value

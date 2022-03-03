@@ -1,53 +1,25 @@
 <template>
   <div class="video_pick_panel section-white">
     <div class="upload_box">
-      <el-button
-        type="primary"
-        icon="plus"
-        @click="addVideo"
-      >
-        上传视频
-      </el-button>
+      <el-button type="primary" icon="plus" @click="addVideo">上传视频</el-button>
     </div>
-    <div
-      v-loading="loading"
-      class="video_pick"
-    >
+    <div class="video_pick" v-loading="loading">
       <ul class="clearfix">
-        <li
-          v-for="(videoitem, index) in localvideosList.list"
-          :key="index"
-          class="video_item"
-        >
+        <li class="video_item" v-for="(videoitem, index) in localvideosList.list" :key="index">
           <div class="video_item_bd">
-            <video
-              class="video-html"
-              :src="videoitem.image_full_url"
-              controls="controls"
-            >
+            <video class="video-html" :src="videoitem.image_full_url" controls="controls">
               您的浏览器不支持 video 标签。
             </video>
             <div class="check_content">
-              <span
-                class="video_name"
-                :title="videoitem.name"
-              >{{ videoitem.image_name }}</span>
+              <span class="video_name" :title="videoitem.name">{{ videoitem.image_name }}</span>
             </div>
           </div>
           <div class="msg_card">
             <el-row>
               <el-col :span="24">
-                <div
-                  class="opr_item"
-                  @click="removeItem(videoitem, index)"
-                >
-                  <el-tooltip
-                    class="item"
-                    effect="dark"
-                    content="删除"
-                    placement="top"
-                  >
-                    <i class="el-icon-delete" />
+                <div class="opr_item" @click="removeItem(videoitem, index)">
+                  <el-tooltip class="item" effect="dark" content="删除" placement="top">
+                    <i class="el-icon-delete"></i>
                   </el-tooltip>
                 </div>
               </el-col>
@@ -60,40 +32,26 @@
       <el-pagination
         background
         layout="total, sizes, prev, pager, next"
+        @current-change="handleCurrentChange"
+        @size-change="handleSizeChange"
         :current-page.sync="params.page"
         :page-sizes="[10, 20, 50]"
         :total="localvideosList.total_count"
         :page-size="params.pageSize"
-        @current-change="handleCurrentChange"
-        @size-change="handleSizeChange"
-      />
+      >
+      </el-pagination>
     </div>
-    <el-dialog
-      title="上传视频文件"
-      :visible.sync="uploadDialog"
-      :before-close="handleCancel"
-    >
+    <el-dialog title="上传视频文件" :visible.sync="uploadDialog" :before-close="handleCancel">
       <template>
-        <el-form
-          ref="form"
-          :model="videoForm"
-          class="demo-ruleForm"
-          label-width="90px"
-        >
+        <el-form ref="form" :model="videoForm" class="demo-ruleForm" label-width="90px">
           <el-form-item label="视频标题">
             <el-col :span="14">
-              <el-input
-                v-model="videoForm.title"
-                maxlength="20"
-              />
+              <el-input v-model="videoForm.title" maxlength="20"></el-input>
             </el-col>
           </el-form-item>
           <el-form-item label="视频描述">
             <el-col :span="14">
-              <el-input
-                v-model="videoForm.description"
-                maxlength="20"
-              />
+              <el-input v-model="videoForm.description" maxlength="20"></el-input>
             </el-col>
           </el-form-item>
           <el-form-item label="视频文件">
@@ -109,15 +67,8 @@
                 :before-upload="beforeVideoUpload"
                 :on-success="handleVideoSuccess"
               >
-                <el-button type="primary">
-                  本地上传
-                </el-button>
-                <div
-                  slot="tip"
-                  class="el-upload__tip"
-                >
-                  只能上传mp4文件，且不超过50M
-                </div>
+                <el-button type="primary">本地上传</el-button>
+                <div slot="tip" class="el-upload__tip">只能上传mp4文件，且不超过50M</div>
               </el-upload>
             </el-col>
           </el-form-item>
@@ -138,7 +89,7 @@ import UploadUtil from '../../../../utils/uploadUtil'
 
 export default {
   props: ['activeName', 'getStatus'],
-  data () {
+  data() {
     return {
       actionPath: 'https://upload-z2.qiniup.com',
       uploadDialog: false,
@@ -162,16 +113,8 @@ export default {
       }
     }
   },
-  watch: {
-    getStatus (newV, oldV) {
-      if (newV) {
-        this.params = { storage: 'videos', page: 1, pageSize: this.params.pageSize }
-        this.getList()
-      }
-    }
-  },
   methods: {
-    beforeVideoUpload (file) {
+    beforeVideoUpload(file) {
       if (this.videoForm.title.length <= 0) {
         this.$message({
           message: '视频标题必填',
@@ -201,9 +144,9 @@ export default {
 
       this.postData.fname = file.name
 
-      let tokenParams = { filename: file.name, filesystem: 'video' }
+      let tokenParams = { filename: file.name, filesystem: 'video' } 
     },
-    handleVideoSuccess (res, file) {
+    handleVideoSuccess(res, file) {
       let uploadParams = {
         image_cat_id: 2, //视频分类必填,必须为整数
         image_name: this.videoForm.title, //视频名称必填,不能超过50个字符
@@ -226,7 +169,7 @@ export default {
       })
       // }
     },
-    getList () {
+    getList() {
       if (!this.isLoadData) {
         this.loading = true
         getQiniuVideoList(this.params)
@@ -240,18 +183,18 @@ export default {
           })
       }
     },
-    handleCurrentChange (page_num) {
+    handleCurrentChange(page_num) {
       this.isLoadData = false
       this.params.page = page_num
       this.getList()
     },
-    handleSizeChange (pageSize) {
+    handleSizeChange(pageSize) {
       this.isLoadData = false
       this.params.page = 1
       this.params.pageSize = pageSize
       this.getList()
     },
-    removeItem (item, index) {
+    removeItem(item, index) {
       this.$confirm('确定删除此视频吗？', '提示', {
         confirmButtonText: '确定',
         cancelButtonText: '取消',
@@ -274,14 +217,14 @@ export default {
           })
         })
     },
-    addVideo () {
+    addVideo() {
       this.uploadDialog = true
     },
-    handleCancel () {
+    handleCancel() {
       this.uploadDialog = false
     },
     // 自定义上传
-    handleUpload: function (e) {
+    handleUpload: function(e) {
       const upload = new UploadUtil('videos')
       // 上传
       upload
@@ -293,8 +236,16 @@ export default {
         .catch((err) => e.onError(err))
     },
     // 上传错误回调
-    uploadError: function (e) {
+    uploadError: function(e) {
       console.error(e)
+    }
+  },
+  watch: {
+    getStatus(newV, oldV) {
+      if (newV) {
+        this.params = { storage: 'videos', page: 1, pageSize: this.params.pageSize }
+        this.getList()
+      }
     }
   }
 }

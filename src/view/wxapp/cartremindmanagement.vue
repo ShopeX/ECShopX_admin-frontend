@@ -1,10 +1,7 @@
 <template>
-  <transition
-    name="fade"
-    mode="out-in"
-  >
-    <storeDefault v-if="template_name === 'yykweishop'" />
-    <marketingGroup v-if="template_name !== 'yykweishop'" />
+  <transition name="fade" mode="out-in">
+    <storeDefault v-if="template_name === 'yykweishop'"></storeDefault>
+    <marketingGroup v-if="template_name !== 'yykweishop'"></marketingGroup>
   </transition>
 </template>
 
@@ -14,16 +11,16 @@ import storeDefault from '@/view/wxapp/cartremind'
 import marketingGroup from '@/view/wxapp/template/marketing/group'
 
 export default {
-  components: {
-    storeDefault: storeDefault,
-    marketingGroup: marketingGroup
-  },
-  data () {
+  data() {
     return {
       activeIndex: '',
       currentCode: '',
       wxapps: []
     }
+  },
+  components: {
+    storeDefault: storeDefault,
+    marketingGroup: marketingGroup
   },
   computed: {
     ...mapGetters(['template_name'])

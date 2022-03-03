@@ -2,6 +2,7 @@
 const name = '店铺'
 import Layout from '@/view/layout' // 主框架
 
+
 export default {
   path: '/dealer/distributor',
   component: Layout,
@@ -9,7 +10,7 @@ export default {
     {
       path: 'list',
       name: `店铺管理`,
-      component: () => import('@/view/dealer/distributor')
+      component: () => import( '@/view/dealer/distributor' )
     }
   ]
 }

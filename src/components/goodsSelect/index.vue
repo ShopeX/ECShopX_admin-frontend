@@ -7,32 +7,25 @@
     :close-on-click-modal="false"
     :before-close="cancelAction"
     append-to-body
-  >
-    <div
-      v-if="params.item_type === 'normal'"
-      style="margin-bottom: 15px"
-    >
+  > 
+    <div v-if="params.item_type === 'normal'" style="margin-bottom: 15px">
       <StoreFilter
         v-if="!filter"
         class="store"
         :data="store"
         :lock="lockStore"
-        :is-change-store="isChangeStore"
+        :isChangeStore="isChangeStore"
         @change="handleStoreChange"
       />
       <el-row :gutter="10">
         <el-col :span="6">
           <el-input
-            v-model="params.keywords"
             placeholder="输入商品名称"
+            v-model="params.keywords"
             clearable
             class="input-with-select"
           >
-            <el-button
-              slot="append"
-              icon="el-icon-search"
-              @click="searchByKey"
-            />
+            <el-button slot="append" icon="el-icon-search" @click="searchByKey"></el-button>
           </el-input>
         </el-col>
         <el-col :span="5">
@@ -40,47 +33,42 @@
             v-model="params.approve_status"
             placeholder="选择状态"
             clearable
-            :disabled="setSearch"
             @change="searchByKey"
+            :disabled="setSearch"
           >
             <el-option
               v-for="item in statusOption"
               :key="item.value"
               :label="item.title"
               :value="item.value"
-            />
+            >
+            </el-option>
           </el-select>
         </el-col>
-        <el-col
-          v-if="!setSearch"
-          :span="5"
-        >
+        <el-col v-if="!setSearch" :span="5">
           <el-select
             v-model="params.templates_id"
+            @change="searchByKey"
             clearable
             placeholder="选择运费模板"
-            @change="searchByKey"
           >
             <el-option
               v-for="item in templatesList"
               :key="item.template_id"
               :label="item.name"
               :value="item.template_id"
-            />
+            ></el-option>
           </el-select>
         </el-col>
-        <span
-          v-if="setSearch"
-          class="search-tips"
-        >选择商品数量不可超过200件</span>
+        <span class="search-tips" v-if="setSearch">选择商品数量不可超过200件</span>
         <el-col :span="6">
           <el-select
-            v-model="select_branch_value"
             placeholder="选择品牌"
             remote
             filterable
             :remote-method="getGoodsBranchList"
             clearable
+            v-model="select_branch_value"
             @change="searchByKey"
           >
             <el-option
@@ -88,142 +76,98 @@
               :key="item.attribute_id"
               :label="item.attribute_name"
               :value="item.attribute_id"
-            />
+            ></el-option>
           </el-select>
         </el-col>
-        <el-col
-          :span="6"
-          class="last-col"
-        >
+        <el-col :span="6" class='last-col'>
           <el-cascader
-            v-model="select_category_value"
             placeholder="商品分类"
             :options="categoryList"
             :props="{ value: 'category_id', checkStrictly: true }"
+            v-model="select_category_value"
             clearable
             @change="searchByKey"
-          />
-        </el-col>
-      </el-row>
+          >
+          </el-cascader>
+        </el-col> 
+      </el-row> 
     </div>
     <el-table
-      v-if="singleData"
       ref="multipleTable"
-      v-loading="loading"
+      v-if="singleData"
       :height="wheight - 190"
       :data="itemsData"
       tooltip-effect="dark"
       style="width: 100%"
+      v-loading="loading"
     >
-      <el-table-column
-        label="选择"
-        width="70"
-      >
+      <el-table-column label="选择" width="70">
         <template slot-scope="scope">
           <el-radio
-            v-model="templateRadio"
             :label="scope.row.itemId"
+            v-model="templateRadio"
             @change.native="getTemplateRow(scope.$index, scope.row)"
-          >
-&nbsp;
+            >&nbsp;
           </el-radio>
         </template>
       </el-table-column>
-      <el-table-column
-        prop="itemId"
-        label="商品ID"
-        width="70"
-      />
-      <el-table-column
-        prop="itemName"
-        label="商品名称"
-      />
-      <el-table-column
-        prop="item_spec_desc"
-        label="规格"
-      />
+      <el-table-column prop="itemId" label="商品ID" width="70"></el-table-column>
+      <el-table-column prop="itemName" label="商品名称"></el-table-column>
+      <el-table-column prop="item_spec_desc" label="规格"></el-table-column>
       <el-table-column
         prop="price"
         label="价格"
         width="80"
         :formatter="priceformatter"
         show-overflow-tooltip
-      />
-      <el-table-column
-        prop="store"
-        label="库存"
-        width="80"
-        show-overflow-tooltip
-      />
+      ></el-table-column>
+      <el-table-column prop="store" label="库存" width="80" show-overflow-tooltip></el-table-column>
     </el-table>
     <el-table
-      v-else
       ref="multipleTable"
-      v-loading="loading"
+      v-else
       :data="itemsData"
       tooltip-effect="dark"
       style="width: 100%"
-      :row-key="getRowKeys"
       @select="handleSelectChange"
       @select-all="handleSelectAll"
+      v-loading="loading"
+      :row-key="getRowKeys" 
     >
       <el-table-column
         type="selection"
         :selectable="disabledItem"
         :reserve-selection="true"
         width="50"
-      />
-      <el-table-column
-        prop="itemId"
-        label="商品ID"
-        width="70"
-      />
-      <el-table-column
-        prop="itemName"
-        label="商品名称"
-      />
-      <el-table-column
-        prop="item_spec_desc"
-        label="规格"
-      />
+      ></el-table-column>
+      <el-table-column prop="itemId" label="商品ID" width="70"></el-table-column>
+      <el-table-column prop="itemName" label="商品名称"></el-table-column>
+      <el-table-column prop="item_spec_desc" label="规格"></el-table-column>
       <el-table-column
         prop="price"
         label="价格"
         width="80"
         :formatter="priceformatter"
         show-overflow-tooltip
-      />
-      <el-table-column
-        prop="store"
-        label="库存"
-        width="80"
-        show-overflow-tooltip
-      />
+      ></el-table-column>
+      <el-table-column prop="store" label="库存" width="80" show-overflow-tooltip></el-table-column>
     </el-table>
-    <div
-      v-if="total_count > params.pageSize"
-      class="pager"
-    >
+    <div v-if="total_count > params.pageSize" class="pager">
       <el-pagination
         background
         layout="total, sizes, prev, pager, next"
+        @current-change="handleCurrentChange"
+        @size-change="handleSizeChange"
         :current-page.sync="params.page"
         :page-sizes="[10, 20, 30, 50]"
         :total="total_count"
         :page-size="params.pageSize"
-        @current-change="handleCurrentChange"
-        @size-change="handleSizeChange"
-      />
+      >
+      </el-pagination>
     </div>
-    <span
-      slot="footer"
-      class="dialog-footer"
-    >
+    <span slot="footer" class="dialog-footer">
       <el-button @click="cancelAction">取 消</el-button>
-      <el-button
-        type="primary"
-        @click="saveStoreAction"
-      >确 定</el-button>
+      <el-button type="primary" @click="saveStoreAction">确 定</el-button>
     </span>
   </el-dialog>
 </template>
@@ -237,9 +181,6 @@ import { getDefaultCurrency } from '@/api/company'
 import { getDistributorItems } from '@/api/marketing'
 
 export default {
-  components: {
-    StoreFilter
-  },
   props: {
     itemsVisible: {
       type: Boolean,
@@ -311,7 +252,7 @@ export default {
       default: false
     }
   },
-  data () {
+  data() {
     return {
       loading: false,
       itemsData: [],
@@ -371,26 +312,14 @@ export default {
       templateRadio: ''
     }
   },
-  mounted () {
-    if (this.filter) {
-      let filters = this.filter
-      let params = this.params
-      if (typeof filters === 'string') {
-        filters = JSON.parse(filters)
-      }
-      Object.assign(params, filters)
-      this.params = params
-    }
-    this.getShippingTemplatesList()
-    this.getCurrencyInfo()
-    this.getGoodsBranchList()
-    this.getCategory()
+  components: {
+    StoreFilter
   },
   methods: {
-    handleTabClick () {
+    handleTabClick() {
       this.getNewsList()
     },
-    handleStoreChange (val) {
+    handleStoreChange(val) {
       if (Object.keys(val).length == 0) {
         // 代表进行了关闭店铺 设置为总店的操作
         val.id = 0
@@ -404,35 +333,35 @@ export default {
       this.getShippingTemplatesList(val.id)
       this.getNewsList()
     },
-    getTemplateRow (index, row) {
+    getTemplateRow(index, row) {
       this.selectRows = new Array(row)
     },
-    disabledItem (row, index) {
+    disabledItem(row, index) {
       if (this.hiddenItem.indexOf(row.itemId) > -1) {
         return false
       } else {
         return true
       }
     },
-    getRowKeys (row) {
+    getRowKeys(row) {
       return row.itemId
     },
-    handleCurrentChange (page_num) {
+    handleCurrentChange(page_num) {
       this.$refs.multipleTable.clearSelection()
       this.params.page = page_num
       this.getNewsList()
     },
-    handleSizeChange (pageSize) {
+    handleSizeChange(pageSize) {
       this.$refs.multipleTable.clearSelection()
       this.params.page = 1
       this.params.pageSize = pageSize
       this.getNewsList()
     },
-    searchByKey () {
+    searchByKey() {
       this.params.page = 1
       this.getNewsList()
     },
-    storeChangeSelect () {
+    storeChangeSelect() {
       if (this.storeSelect == 'gt') {
         this.params.store_gt = this.store_value
         delete this.params.store_lt
@@ -444,7 +373,7 @@ export default {
       this.params.page = 1
       this.getNewsList()
     },
-    handleSelectAll (val) {
+    handleSelectAll(val) {
       if (this.limitNum) {
         this.$message({ message: '当前组件不支持全选', type: 'warning' })
         this.$refs.multipleTable.clearSelection()
@@ -472,7 +401,7 @@ export default {
         })
       }
     },
-    handleSelectChange (val, row) {
+    handleSelectChange(val, row) {
       let inChecked = this.selectRows.findIndex((item) => row.itemId === item.itemId)
       if (inChecked !== -1) {
         this.selectRows.splice(inChecked, 1)
@@ -499,19 +428,19 @@ export default {
         this.selectRows.push(row)
       }
     },
-    cancelAction () {
+    cancelAction() {
       this.selectRows = []
       this.$emit('closeStoreDialog')
     },
-    saveStoreAction () {
+    saveStoreAction() {
       if (this.selectRows.length > this.limitCount) {
         this.$message.error('最多支持选择' + this.limitCount + '件商品！')
       } else {
-        this.multipleSelection = this.selectRows
+        this.multipleSelection=this.selectRows;
         this.$emit('chooseStore', this.selectRows, this.store)
       }
     },
-    getNewsList () {
+    getNewsList() {
       if (this.getStatus) {
         this.loading = true
         let param = {
@@ -541,7 +470,7 @@ export default {
         }
       }
     },
-    toggleSelection (rows) {
+    toggleSelection(rows) {
       if (rows) {
         rows.forEach((row) => {
           this.$refs.multipleTable.toggleRowSelection(row)
@@ -551,27 +480,27 @@ export default {
       }
     },
     // 获取  运费模板 options
-    getShippingTemplatesList (distributor_id = 0) {
+    getShippingTemplatesList(distributor_id = 0) {
       this.loading = true
       getShippingTemplatesList({ distributor_id }).then((response) => {
         this.templatesList = response.data.data.list
       })
     },
-    getCurrencyInfo () {
+    getCurrencyInfo() {
       getDefaultCurrency().then((res) => {
         this.currency = res.data.data
         this.cursymbol = this.currency.symbol
       })
     },
-    getCategory () {
+    getCategory() {
       getCategory([]).then((response) => {
         this.categoryList = response.data.data
       })
     },
-    priceformatter (row, column) {
+    priceformatter(row, column) {
       return this.cursymbol + row.price / 100
     },
-    changeGoods (type) {
+    changeGoods(type) {
       switch (type) {
         case 'every':
           this.$set(this.params, 'consume_type', 'every')
@@ -586,7 +515,7 @@ export default {
       }
       this.getNewsList()
     },
-    getGoodsBranchList (searchVal = '') {
+    getGoodsBranchList(searchVal = '') {
       // this.loading = true
       // console.log(searchVal)
       this.goodsBranchParams.attribute_name = searchVal
@@ -596,17 +525,32 @@ export default {
       })
     }
   },
+  mounted() {
+    if (this.filter) {
+      let filters = this.filter
+      let params = this.params
+      if (typeof filters === 'string') {
+        filters = JSON.parse(filters)
+      }
+      Object.assign(params, filters)
+      this.params = params
+    }
+    this.getShippingTemplatesList()
+    this.getCurrencyInfo()
+    this.getGoodsBranchList()
+    this.getCategory()
+  },
   computed: {
-    showDialog () {
+    showDialog() {
       return this.itemsVisible
     },
-    singleData () {
+    singleData() {
       return this.single
     },
     ...mapGetters(['wheight'])
   },
   watch: {
-    itemsVisible (val) {
+    itemsVisible(val) {
       if (val) {
         if (this.relStore.id) {
           this.params.distributor_id = this.relStore.id
@@ -677,20 +621,20 @@ export default {
         }
       }
     },
-    relItemsIds (newVal, oldVal) {
+    relItemsIds(newVal, oldVal) {
       console.log('==================')
       if (newVal.length > 0) {
         this.multipleSelection = newVal
       }
     },
-    relStore (newVal, oldVal) {
+    relStore(newVal, oldVal) {
       if (newVal.id) {
         this.params.distributor_id = newVal.id
         this.store = newVal
         this.getNewsList()
       }
     },
-    itemsData (val) {
+    itemsData(val) {
       if (this.selectRows.length > 0) {
         this.itemsData.forEach((item) => {
           let checked = this.selectRows.find((n) => n.itemId === item.itemId)
@@ -700,7 +644,7 @@ export default {
         })
       }
     },
-    itemType (newVal, oldVal) {
+    itemType(newVal, oldVal) {
       if (newVal) {
         this.params.item_type = newVal
         if (this.unwantedGift == false) {
@@ -764,14 +708,14 @@ export default {
         }
       }
     },
-    relStore (newVal, oldVal) {
+    relStore(newVal, oldVal) {
       if (newVal.id) {
         this.params.distributor_id = newVal.id
         this.store = newVal
         this.getNewsList()
       }
     },
-    itemsData (val) {
+    itemsData(val) {
       if (this.selectRows.length > 0) {
         this.itemsData.forEach((item) => {
           let checked = this.selectRows.find((n) => n.itemId === item.itemId)
@@ -781,27 +725,27 @@ export default {
         })
       }
     },
-    getStatus (newVal, oldVal) {
+    getStatus(newVal, oldVal) {
       if (newVal) {
         this.getNewsList()
       }
     },
-    itemType (newVal, oldVal) {
+    itemType(newVal, oldVal) {
       if (newVal) {
         this.params.item_type = newVal
       }
     },
-    hiddenData (val) {
+    hiddenData(val) {
       this.hiddenItem = val
     },
-    single (val) {
+    single(val) {
       this.singleData = val
     }
   },
-  hiddenData (val) {
+  hiddenData(val) {
     this.hiddenItem = val
   },
-  single (val) {
+  single(val) {
     this.singleData = val
   }
 }
@@ -835,7 +779,7 @@ export default {
 .search-tips {
   line-height: 40px;
 }
-.last-col {
-  margin-top: 8px;
+.last-col{
+  margin-top:8px;
 }
 </style>

@@ -1,16 +1,8 @@
 <template>
   <div class="section section-white">
-    <el-form
-      ref="form"
-      :model="form"
-      label-position="left"
-      label-width="180px"
-    >
+    <el-form ref="form" :model="form" label-position="left" label-width="180px">
       <div class="section-body">
-        <el-form-item
-          label="是否开启："
-          prop="ad_title"
-        >
+        <el-form-item label="是否开启：" prop="ad_title">
           <el-switch
             v-model="form.is_open"
             :width="60"
@@ -20,39 +12,22 @@
             active-text="开启"
             inactive-text="关闭"
             active-color="#13ce66"
-          />
+          ></el-switch>
         </el-form-item>
-        <el-form-item
-          label="注册引导广告标题："
-          prop="ad_title"
-        >
+        <el-form-item label="注册引导广告标题：" prop="ad_title">
           <el-input
             v-model="form.ad_title"
             placeholder="用于门店小程序注册引导入口标题"
-            style="width: 340px"
+            style="width: 340px;"
           />
         </el-form-item>
         <el-form-item label="注册引导图片：">
-          <div class="frm-tips">
-            只能上传jpg/png文件，且不超过2M （建议尺寸：400px * 450px）
-          </div>
-          <div class="frm-tips">
-            引导用户授权手机号注册，类似新用户专享广告图片
-          </div>
+          <div class="frm-tips">只能上传jpg/png文件，且不超过2M （建议尺寸：400px * 450px）</div>
+          <div class="frm-tips">引导用户授权手机号注册，类似新用户专享广告图片</div>
           <div>
-            <div
-              class="upload-box"
-              @click="handleImgChange"
-            >
-              <img
-                v-if="form.ad_pic"
-                :src="wximageurl + form.ad_pic"
-                class="avatar"
-              >
-              <i
-                v-else
-                class="el-icon-plus avatar-uploader-icon"
-              />
+            <div @click="handleImgChange" class="upload-box">
+              <img v-if="form.ad_pic" :src="wximageurl + form.ad_pic" class="avatar" />
+              <i v-else class="el-icon-plus avatar-uploader-icon"></i>
             </div>
           </div>
           <imgPicker
@@ -60,7 +35,7 @@
             :sc-status="isGetImage"
             @chooseImg="pickImg"
             @closeImgDialog="closeImgDialog"
-          />
+          ></imgPicker>
         </el-form-item>
         <el-form-item label="请选择分销商：">
           <el-transfer
@@ -69,23 +44,18 @@
             :button-texts="['移除', '添加']"
             :data="distributorList"
           >
-            <div
-              slot="left-footer"
-              class="transfer-footer"
-            >
+            <div class="transfer-footer" slot="left-footer">
               <el-pagination
                 v-if="dis_total_count > dis_params.pageSize"
                 small
                 layout="prev, pager, next"
+                @current-change="handleGoodsChange"
                 :total="dis_total_count"
                 :page-size="dis_params.pageSize"
-                @current-change="handleGoodsChange"
-              />
+              >
+              </el-pagination>
             </div>
-            <div
-              slot="right-footer"
-              class="transfer-footer"
-            />
+            <div class="transfer-footer" slot="right-footer"></div>
           </el-transfer>
         </el-form-item>
         <!-- <el-form-item label="注册送商品：">
@@ -112,33 +82,23 @@
               <div class="promotion-card">
                 <div class="promotion-card-header">
                   优惠券
-                  <a
-                    class="promotion-card-btn"
-                    href="#"
-                    @click="showModal"
-                  >新增</a>
+                  <a class="promotion-card-btn" @click="showModal" href="#">新增</a>
                 </div>
                 <div class="promotion-card-body">
                   <ul class="promotion-card-list">
-                    <li
-                      v-for="(item, index) in coupons.checked"
-                      :key="index"
-                    >
+                    <li v-for="(item, index) in coupons.checked" :key="index">
                       <div class="promotion-name">
                         {{ item.title }}
                       </div>
                       <el-input-number
-                        v-model="item.count"
                         size="mini"
                         controls-position="right"
+                        v-model="item.count"
                         :min="1"
                         :max="10"
                         label="描述文字"
-                      />
-                      <i
-                        class="remove-btn el-icon-delete"
-                        @click="removeChecked(index)"
-                      />
+                      ></el-input-number>
+                      <i class="remove-btn el-icon-delete" @click="removeChecked(index)"></i>
                     </li>
                   </ul>
                 </div>
@@ -148,34 +108,20 @@
         </el-form-item>
       </div>
       <div class="section-footer with-border content-center">
-        <el-button
-          type="primary"
-          @click="save"
-        >
-          保 存
-        </el-button>
+        <el-button type="primary" @click="save">保 存</el-button>
       </div>
     </el-form>
     <el-dialog
       title="选择优惠券"
       :visible.sync="coupons.dialog"
-      width="30%"
       @open="onshowModal"
       @close="oncloseModal"
+      width="30%"
     >
-      <ul
-        v-loading="coupons.loading"
-        class="dialog-list clearfix"
-      >
+      <ul class="dialog-list clearfix" v-loading="coupons.loading">
         <template v-for="item in coupons.list">
-          <li
-            :class="item.checked ? 'checked' : ''"
-            @click="selectItems(item)"
-          >
-            <i
-              v-if="item.checked"
-              class="el-icon-check"
-            /> {{ item.title }}
+          <li :class="item.checked ? 'checked' : ''" @click="selectItems(item)">
+            <i v-if="item.checked" class="el-icon-check"></i> {{ item.title }}
           </li>
         </template>
       </ul>
@@ -183,26 +129,21 @@
         <el-pagination
           background
           layout="prev, pager, next"
+          @current-change="changeCouponsPage"
           :current-page="coupons.page.currentPage"
           :page-size="coupons.page.pageSize"
           :total="coupons.page.total"
-          @current-change="changeCouponsPage"
-        />
+        >
+        </el-pagination>
       </div>
-      <div style="display: none">
+      <div style="display: none;">
         <template v-for="(item, index) in coupons.temp">
           <li>{{ item.title }}</li>
         </template>
       </div>
-      <span
-        slot="footer"
-        class="dialog-footer"
-      >
+      <span slot="footer" class="dialog-footer">
         <el-button @click="cancelSelected">取 消</el-button>
-        <el-button
-          type="primary"
-          @click="submitSelected"
-        >确 定</el-button>
+        <el-button type="primary" @click="submitSelected">确 定</el-button>
       </span>
     </el-dialog>
   </div>
@@ -216,7 +157,7 @@ export default {
   components: {
     imgPicker
   },
-  data () {
+  data() {
     return {
       isGetImage: false,
       imgDialog: false,
@@ -263,46 +204,16 @@ export default {
       options: []
     }
   },
-  mounted () {
-    var id = this.$route.params.id
-    if (id) {
-      getRegisterInfo(id).then((response) => {
-        this.form.id = response.data.data.id
-        this.form.ad_pic = response.data.data.ad_pic
-        this.form.is_open = response.data.data.is_open
-        this.form.ad_title = response.data.data.ad_title
-        this.form.distributor_id = response.data.data.distributor_id
-        this.form.register_type = response.data.data.register_type
-        if (response.data.data.promotions_value) {
-          // if(response.data.data.promotions_value.items) {
-          //   this.form.promotions_value.items = response.data.data.promotions_value.items
-          //   this.form.promotions_value.itemsList = response.data.data.promotions_value.itemsList
-          // }
-          this.form.promotions_value.coupons = this.coupons.checked = response.data.data
-            .promotions_value.coupons
-            ? response.data.data.promotions_value.coupons
-            : []
-        }
-        if (response.data.data.distributor_id.ids) {
-          this.form.distributor_id = response.data.data.distributor_id.ids
-          this.checkedDistributorIds = response.data.data.distributor_id.list
-        }
-      })
-      this.dis_params.id = id
-    }
-    this.getDustributorData()
-    //this.getGoodsList()
-  },
   methods: {
-    handleImgChange () {
+    handleImgChange() {
       this.imgDialog = true
       this.isGetImage = true
     },
-    pickImg (data) {
+    pickImg(data) {
       this.form.ad_pic = data.url
       this.imgDialog = false
     },
-    closeImgDialog () {
+    closeImgDialog() {
       this.imgDialog = false
     },
     //选择商品分页
@@ -342,24 +253,24 @@ export default {
     //     this.goods_total_count = response.data.data.total_count
     //   })
     // },
-    showModal () {
+    showModal() {
       this.coupons.dialog = true
     },
-    onshowModal () {
+    onshowModal() {
       this.coupons.loading = true
       for (var i = 0; i < this.coupons.checked.length; i++) {
         this.coupons.temp.push(this.coupons.checked[i])
       }
       this.getCoupons(this.coupons.page.currentPage)
     },
-    changeCouponsPage (currentPage) {
+    changeCouponsPage(currentPage) {
       this.coupons.page.currentPage = currentPage
       this.getCoupons(currentPage)
     },
-    oncloseModal () {
+    oncloseModal() {
       this.coupons.temp = []
     },
-    selectItems (item) {
+    selectItems(item) {
       if (item.checked) {
         for (var i = 0; i < this.coupons.temp.length; i++) {
           if (this.coupons.temp[i].card_id === item.card_id) {
@@ -380,7 +291,7 @@ export default {
         this.coupons.temp.push(item)
       }
     },
-    submitSelected () {
+    submitSelected() {
       this.coupons.dialog = false
       this.coupons.checked = this.coupons.temp
       for (var i = 0; i < this.coupons.checked.length; i++) {
@@ -388,14 +299,14 @@ export default {
       }
       this.coupons.temp = []
     },
-    cancelSelected () {
+    cancelSelected() {
       this.coupons.dialog = false
       this.coupons.temp = []
     },
-    removeChecked (type, index) {
+    removeChecked(type, index) {
       this.coupons.checked.splice(index, 1)
     },
-    getCoupons (current) {
+    getCoupons(current) {
       getCardList({
         page_no: current,
         page_size: this.coupons.page.pageSize
@@ -413,7 +324,7 @@ export default {
         this.coupons.loading = false
       })
     },
-    save () {
+    save() {
       const that = this
       let couponArr = []
       for (var i = 0; i < this.coupons.checked.length; i++) {
@@ -438,14 +349,14 @@ export default {
           message: '更新成功',
           type: 'success',
           duration: 2 * 1000,
-          onClose () {
+          onClose() {
             that.$router.go(-1)
           }
         })
       })
     },
     //选择商品分页
-    handleDistributorChange (val) {
+    handleDistributorChange(val) {
       this.dis_params.page = val
       this.checkedDistributorIds = []
       this.distributorList.forEach((row) => {
@@ -457,7 +368,7 @@ export default {
       })
       this.getDustributorData()
     },
-    getDustributorData () {
+    getDustributorData() {
       getDistributorList(this.dis_params).then((response) => {
         let list = []
         response.data.data.list.forEach((row) => {
@@ -481,6 +392,36 @@ export default {
         this.dis_total_count = response.data.data.total_count
       })
     }
+  },
+  mounted() {
+    var id = this.$route.params.id
+    if (id) {
+      getRegisterInfo(id).then((response) => {
+        this.form.id = response.data.data.id
+        this.form.ad_pic = response.data.data.ad_pic
+        this.form.is_open = response.data.data.is_open
+        this.form.ad_title = response.data.data.ad_title
+        this.form.distributor_id = response.data.data.distributor_id
+        this.form.register_type = response.data.data.register_type
+        if (response.data.data.promotions_value) {
+          // if(response.data.data.promotions_value.items) {
+          //   this.form.promotions_value.items = response.data.data.promotions_value.items
+          //   this.form.promotions_value.itemsList = response.data.data.promotions_value.itemsList
+          // }
+          this.form.promotions_value.coupons = this.coupons.checked = response.data.data
+            .promotions_value.coupons
+            ? response.data.data.promotions_value.coupons
+            : []
+        }
+        if (response.data.data.distributor_id.ids) {
+          this.form.distributor_id = response.data.data.distributor_id.ids
+          this.checkedDistributorIds = response.data.data.distributor_id.list
+        }
+      })
+      this.dis_params.id = id
+    }
+    this.getDustributorData()
+    //this.getGoodsList()
   }
 }
 </script>

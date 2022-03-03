@@ -1,34 +1,23 @@
 <template>
-  <div
-    class="component-wrap"
-    :class="{ 'component-padded': base.padded, 'active': active }"
-  >
-    <div class="current-active" />
-    <div
-      v-if="base.title"
-      class="component-header"
-    >
+  <div class="component-wrap" :class="{ 'component-padded': base.padded, 'active': active }">
+    <div class="current-active"></div>
+    <div v-if="base.title" class="component-header">
       <div class="component-title">
         <div>{{ base.title }}</div>
-        <div class="subtitle">
-          {{ base.subtitle }}
-        </div>
+        <div class="subtitle">{{ base.subtitle }}</div>
       </div>
       <!-- <div class="component-more">
         <div class="three-dot"></div>
       </div> -->
     </div>
-    <div
-      class="slider-wrap"
-      :class="{ 'padded': config.padded }"
-    >
+    <div class="slider-wrap" :class="{ 'padded': config.padded }">
       <img
         class="scale-placeholder"
         :src="
           (data[0] && data[0].imgUrl) ||
             'https://fakeimg.pl/320x240/EFEFEF/CCC/?text=image&font=lobster'
         "
-      >
+      />
 
       <el-carousel
         class="sliderimg"
@@ -50,25 +39,19 @@
                 item.imgUrl ||
                   'https://fakeimg.pl/320x' + config.height + '/EFEFEF/CCC/?text=image&font=lobster'
               "
-            >
+            />
             <!-- 图片文字配置 -->
             <div class="text-deploy">
               <!-- 模板1 -->
               <div
-                v-if="item.template == 'one'"
                 class="template"
                 :class="config.current == index ? 'current-page' : ''"
                 :style="'color:' + base.WordColor"
+                v-if="item.template == 'one'"
               >
-                <div class="text1 animation1">
-                  {{ data[config.current].mainTitle }}
-                </div>
-                <div class="text2 animation2">
-                  {{ data[config.current].subtitle }}
-                </div>
-                <div class="text3 animation3">
-                  {{ data[config.current].subtitleTow }}
-                </div>
+                <div class="text1 animation1">{{ data[config.current].mainTitle }}</div>
+                <div class="text2 animation2">{{ data[config.current].subtitle }}</div>
+                <div class="text3 animation3">{{ data[config.current].subtitleTow }}</div>
                 <div
                   v-if="data[config.current].button"
                   class="text4 animation4"
@@ -80,20 +63,14 @@
 
               <!-- 模板2 -->
               <div
-                v-if="item.template == 'two'"
                 class="template"
                 :class="config.current == index ? 'current-page' : ''"
                 :style="'color:' + base.WordColor"
+                v-if="item.template == 'two'"
               >
-                <div class="text2 animation1">
-                  {{ data[config.current].mainTitle }}
-                </div>
-                <div class="text1 animation2">
-                  {{ data[config.current].subtitle }}
-                </div>
-                <div class="text3 animation3">
-                  {{ data[config.current].subtitleTow }}
-                </div>
+                <div class="text2 animation1">{{ data[config.current].mainTitle }}</div>
+                <div class="text1 animation2">{{ data[config.current].subtitle }}</div>
+                <div class="text3 animation3">{{ data[config.current].subtitleTow }}</div>
                 <div
                   v-if="data[config.current].button"
                   class="text4 animation4"
@@ -105,20 +82,14 @@
 
               <!-- 模板3 -->
               <div
-                v-if="item.template == 'three'"
                 class="template"
                 :class="config.current == index ? 'current-page' : ''"
                 :style="'color:' + base.WordColor"
+                v-if="item.template == 'three'"
               >
-                <div class="text2 animation1">
-                  {{ data[config.current].mainTitle }}
-                </div>
-                <div class="text1 animation2">
-                  {{ data[config.current].subtitle }}
-                </div>
-                <div class="text3 animation3">
-                  {{ data[config.current].subtitleTow }}
-                </div>
+                <div class="text2 animation1">{{ data[config.current].mainTitle }}</div>
+                <div class="text1 animation2">{{ data[config.current].subtitle }}</div>
+                <div class="text3 animation3">{{ data[config.current].subtitleTow }}</div>
                 <div
                   v-if="data[config.current].button"
                   class="text4 animation4"
@@ -130,17 +101,13 @@
 
               <!-- 模板4 -->
               <div
-                v-if="item.template == 'four'"
                 class="template_four template"
                 :class="config.current == index ? 'current-page' : ''"
                 :style="'color:' + base.WordColor"
+                v-if="item.template == 'four'"
               >
-                <div class="text2 animation1">
-                  {{ data[config.current].mainTitle }}
-                </div>
-                <div class="text1 animation2">
-                  {{ data[config.current].subtitle }}
-                </div>
+                <div class="text2 animation1">{{ data[config.current].mainTitle }}</div>
+                <div class="text1 animation2">{{ data[config.current].subtitle }}</div>
                 <div
                   v-if="data[config.current].button"
                   class="text4 animation3"
@@ -166,11 +133,11 @@
         ]"
       >
         <div
+          class="dot"
           v-for="(item, index) in data"
           :key="index"
-          class="dot"
           :class="{ 'active': config.current == index }"
-        />
+        ></div>
       </div>
       <div
         v-if="!config.dot && data.length > 1"
@@ -201,7 +168,17 @@ export default {
       default: false
     }
   },
-  data () {
+  watch: {
+    res: {
+      deep: true,
+      handler(value) {
+        if (value) {
+          this.setData(value)
+        }
+      }
+    }
+  },
+  data() {
     return {
       base: {},
       config: {},
@@ -211,28 +188,18 @@ export default {
       ssssssss: ''
     }
   },
-  watch: {
-    res: {
-      deep: true,
-      handler (value) {
-        if (value) {
-          this.setData(value)
-        }
-      }
-    }
-  },
-  mounted () {
-    this.setData(this.res)
-  },
   methods: {
-    setData (val) {
+    setData(val) {
       this.base = val.base
       this.config = val.config
       this.data = val.data
     },
-    change (e) {
+    change(e) {
       this.config.current = e
     }
+  },
+  mounted() {
+    this.setData(this.res)
   }
 }
 </script>

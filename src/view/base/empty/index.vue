@@ -1,11 +1,11 @@
 <template>
   <div class="empty-box">
-    <p><i class="iconfont icon-meh" />&nbsp;暂无数据</p>
+    <p><i class="iconfont icon-meh"></i>&nbsp;暂无数据</p>
   </div>
 </template>
 <script>
 export default {
-  data () {
+  data() {
     return {}
   }
 }

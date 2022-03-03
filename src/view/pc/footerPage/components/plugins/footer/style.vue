@@ -1,84 +1,43 @@
 <template>
-  <el-card
-    header="设置"
-    class="footer-style-wrap"
-  >
+  <el-card header="设置" class="footer-style-wrap">
     <el-form label-width="80px">
-      <div
-        v-for="(item, index) in t_data"
-        class="view-flex"
-      >
-        <el-form-item
-          label="文字内容"
-          style="flex: 2"
-        >
-          <el-input
-            v-model="item.content"
-            placeholder="文字内容"
-            style="width: 100%"
-          />
+      <div class="view-flex" v-for="(item, index) in t_data">
+        <el-form-item label="文字内容" style="flex: 2">
+          <el-input v-model="item.content" placeholder="文字内容" style="width: 100%"></el-input>
         </el-form-item>
-        <el-form-item
-          label="文字链接"
-          style="flex: 2"
-        >
-          <el-input
-            v-model="item.url"
-            placeholder="文字链接"
-            style="width: 100%"
-          />
+        <el-form-item label="文字链接" style="flex: 2">
+          <el-input v-model="item.url" placeholder="文字链接" style="width: 100%"></el-input>
         </el-form-item>
-        <el-form-item
-          label="字号"
-          style="flex: 1"
-        >
-          <el-select
-            v-model="item.fontsize"
-            placeholder="字号"
-          >
+        <el-form-item label="字号" style="flex: 1">
+          <el-select v-model="item.fontsize" placeholder="字号">
             <el-option
               v-for="(option, index) in fontSizes"
               :key="index"
               :label="option.label"
               :value="option.value"
-            />
+            >
+            </el-option>
           </el-select>
         </el-form-item>
-        <el-form-item
-          label="位置"
-          style="flex: 1"
-        >
-          <el-select
-            v-model="item.position"
-            placeholder="位置"
-          >
+        <el-form-item label="位置" style="flex: 1">
+          <el-select v-model="item.position" placeholder="位置">
             <el-option
               v-for="(option, index) in position"
               :key="index"
               :label="option.label"
               :value="option.value"
-            />
+            >
+            </el-option>
           </el-select>
         </el-form-item>
-        <el-form-item
-          label="文字颜色"
-          style="flex: 1"
-        >
-          <el-color-picker v-model="item.color" />
+        <el-form-item label="文字颜色" style="flex: 1">
+          <el-color-picker v-model="item.color"></el-color-picker>
         </el-form-item>
-        <div
-          class="iconfont icon-times"
-          @click="handleRemove(index)"
-        />
+        <div class="iconfont icon-times" @click="handleRemove(index)"></div>
       </div>
-      <el-button
-        type="primary"
-        plain
-        icon="el-icon-circle-plus"
-        @click="handleClick"
+      <el-button type="primary" plain icon="el-icon-circle-plus" @click="handleClick"
+        >添加内容项</el-button
       >
-        添加内容项
-      </el-button>
     </el-form>
   </el-card>
 </template>
@@ -89,7 +48,7 @@ export default {
     imgPicker
   },
   props: ['info'],
-  data () {
+  data() {
     return {
       t_data: this.info,
       fontSizes: [
@@ -133,7 +92,7 @@ export default {
     // }
   },
   methods: {
-    handleClick () {
+    handleClick() {
       this.t_data.push({
         content: '',
         url: '',
@@ -142,7 +101,7 @@ export default {
         color: ''
       })
     },
-    handleRemove (n) {
+    handleRemove(n) {
       this.t_data.splice(n, 1)
     }
   }

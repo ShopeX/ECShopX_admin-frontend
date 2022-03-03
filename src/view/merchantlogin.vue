@@ -2,15 +2,8 @@
   <div>
     <div class="log-header">
       <div class="log-container">
-        <div class="brand">
-          <img
-            :src="brand"
-            alt=""
-          >
-        </div>
-        <div class="log-welcome">
-          欢迎登录
-        </div>
+        <div class="brand"><img :src="brand" alt="" /></div>
+        <div class="log-welcome">欢迎登录</div>
       </div>
     </div>
     <div
@@ -23,65 +16,51 @@
       }"
     >
       <div class="log-container">
-        <el-tabs
-          type="border-card"
-          value="admin"
-          style="width: 400px"
-          class="login-type-tab"
-        >
-          <el-tab-pane
-            name="admin"
-            label="管理员登录"
-          >
-            <div class="log-img" />
+        <el-tabs type="border-card" value="admin" style="width:400px" class="login-type-tab">
+          <el-tab-pane name="admin" label="管理员登录">
+            <div class="log-img"></div>
             <el-form
-              ref="ruleForm1"
               :model="ruleForm1"
               :rules="rules1"
+              ref="ruleForm1"
               label-position="left"
               label-width="0px"
               class="login-log-container"
             >
-              <h3 class="title" />
+              <h3 class="title"></h3>
               <el-form-item prop="account">
                 <el-input
-                  v-model="ruleForm1.account"
                   type="text"
+                  v-model="ruleForm1.account"
                   name="account"
                   auto-complete="off"
                   placeholder="请输入手机号"
-                />
+                ></el-input>
               </el-form-item>
               <el-form-item prop="checkPass">
                 <el-input
-                  v-model="ruleForm1.checkPass"
                   type="password"
+                  v-model="ruleForm1.checkPass"
                   name="password"
                   auto-complete="off"
                   placeholder="密码"
-                />
+                ></el-input>
               </el-form-item>
-              <el-form-item class="log-opr clearfix">
-                <el-checkbox
-                  v-model="checked"
-                  checked
-                  class="remember f_l"
-                >
-                  记住密码
-                </el-checkbox>
+             <el-form-item class="log-opr clearfix">
+                <el-checkbox v-model="checked" checked class="remember f_l">记住密码</el-checkbox>
+              
               </el-form-item>
-              <el-form-item style="width: 100%">
+              <el-form-item style="width:100%">
                 <el-button
                   type="primary"
-                  style="width: 100%"
+                  style="width:100%"
+                  @click.native.prevent="handleSubmit1"
                   :loading="logining"
                   :disabled="submitDisabled"
-                  @click.native.prevent="handleSubmit1"
+                  >登录</el-button
                 >
-                  登录
-                </el-button>
               </el-form-item>
-              <el-form-item class="log-opr clearfix title">
+                <el-form-item class="log-opr clearfix title">
                 忘记密码，请联系管理员后台重置
               </el-form-item>
             </el-form>
@@ -91,21 +70,13 @@
     </div>
     <div class="log-footer">
       <span>友情链接：</span>
-      <a
-        href="https://www.shopex.cn"
-        target="_blank"
-      >商派</a>
+      <a href="https://www.shopex.cn" target="_blank">商派</a>
       <span>|</span>
-      <a
-        href="https://mp.weixin.qq.com"
-        target="_blank"
-      >微信公众平台</a>
+      <a href="https://mp.weixin.qq.com" target="_blank">微信公众平台</a>
       <span>|</span>
-      <a
-        href="https://open.weixin.qq.com"
-        target="_blank"
-      >微信开放平台</a>
+      <a href="https://open.weixin.qq.com" target="_blank">微信开放平台</a>
     </div>
+
   </div>
 </template>
 
@@ -116,7 +87,7 @@ import fetch from '../utils/fetch'
 import { login, getAdminInfo } from '../api/login'
 import { mapMutations } from 'vuex'
 export default {
-  data () {
+  data() {
     const validateEmail = (rule, value, callback) => {
       if (!isMobile(value)) {
         callback(new Error('请输入正确的合法手机号'))
@@ -134,38 +105,39 @@ export default {
     const system = process.env.VUE_APP_PRODUCT_MODEL == 'standard' ? 'onex' : 'ecshopx'
     const brand = require(`@/assets/img/${system}/logo.jpg`)
     const login_bg = require(`@/assets/img/${system}/login_bg.jpg`)
-    let self = this
-    return {
-      symbol: 'merchant',
+    let self=this;
+    return {    
+      symbol:'merchant',
       brand,
       login_bg,
       logining: false,
       ruleForm1: {
         account: '',
         checkPass: '',
-        loginType: self.symbol
+        loginType:self.symbol
       },
       rules1: {
         account: [{ required: true, trigger: 'blur' }],
         checkPass: [{ required: true, trigger: 'blur', validator: validatePass }]
       },
       checked: true,
-      submitDisabled: false
+      submitDisabled: false,
+      
     }
   },
   methods: {
     ...mapMutations(['SET_TOKEN', 'SET_TOKEN_EXP', 'SET_USERINFO', 'SET_LOGIN_TYPE']),
-    setTokenAndGetRoute (token) {
+     setTokenAndGetRoute(token) {
       this.SET_TOKEN({ token })
       this.SET_TOKEN_EXP({ exp: new Date().getTime() })
       this.loading = false
       fetch({ url: '/permission', method: 'get' }).then((res) => {
         if (res.data.data) {
           // const url = this.path_prefixes ? (res.data.data[0]['url'] == '/' ? `/${this.path_prefixes}` : `${this.path_prefixes}${res.data.data[0]['url']}`) : res.data.data[0]['url']
-          let url = ''
+          let url = '' 
           const _menu = res.data.data
-          if (_menu[0].children) {
-            if (_menu[0].children[0].children) {
+          if(_menu[0].children) {
+            if(_menu[0].children[0].children) {
               url = _menu[0].children[0].children[0].url
             } else {
               url = _menu[0].children[0].url
@@ -182,14 +154,14 @@ export default {
               message: '登录成功',
               type: 'success',
               duration: 2 * 1000,
-              onClose () {
+              onClose() {
                 _self.SET_USERINFO(info.data.data)
-                _self.SET_LOGIN_TYPE({ loginType: _self.symbol })
-                _self.$router.push({ path: '/merchant' })
+                _self.SET_LOGIN_TYPE({ loginType: _self.symbol })  
+                _self.$router.push({ path: '/merchant' }) 
                 _self.$router.go(0)
               }
             })
-          })
+          }) 
           this.$store.dispatch('setMenu', res.data.data)
         } else {
           this.$message({
@@ -201,7 +173,7 @@ export default {
         }
       })
     },
-    handleSubmit1 () {
+    handleSubmit1() {
       this.$store.dispatch('setLoginType', this.symbol)
       this.$refs.ruleForm1.validate(async (valid) => {
         if (valid) {
@@ -212,10 +184,10 @@ export default {
             password: this.ruleForm1.checkPass,
             logintype: this.symbol
           }
-          try {
-            const { token } = await this.$api.auth.login(params)
-            this.setTokenAndGetRoute(token)
-          } catch (e) {
+          try { 
+            const { token } = await this.$api.auth.login(params) 
+            this.setTokenAndGetRoute(token)  
+          } catch(e) {  
             this.submitDisabled = false
           }
         } else {
@@ -225,7 +197,7 @@ export default {
       })
     }
   },
-  mounted () {
+  mounted() {
     this.$store.dispatch('setLoginType', this.symbol)
   }
 }

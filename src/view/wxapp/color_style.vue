@@ -54,38 +54,22 @@
 </style>
 
 <template>
-  <transition
-    name="el-fade-in-linear"
-    mode="out-in"
-  >
+  <transition name="el-fade-in-linear" mode="out-in">
     <div>
-      <section
-        class="color-style-warp"
-        :style="'height: ' + (wheight - 160) + 'px;'"
-      >
+      <section class="color-style-warp" :style="'height: ' + (wheight - 160) + 'px;'">
         <div class="form-header">
-          <el-form
-            class="view-flex-item"
-            :inline="true"
-            label-width="80px"
-          >
+          <el-form class="view-flex-item" :inline="true" label-width="80px">
             <el-form-item label="主色调">
-              <el-color-picker v-model="form.data[0].primary" />
+              <el-color-picker v-model="form.data[0].primary"></el-color-picker>
             </el-form-item>
             <el-form-item label="辅色调">
-              <el-color-picker v-model="form.data[0].accent" />
+              <el-color-picker v-model="form.data[0].accent"></el-color-picker>
             </el-form-item>
             <el-form-item label="会员色">
-              <el-color-picker v-model="form.data[0].marketing" />
+              <el-color-picker v-model="form.data[0].marketing"></el-color-picker>
             </el-form-item>
           </el-form>
-          <el-button
-            class="btn-save"
-            type="primary"
-            @click="saveConfig"
-          >
-            保存
-          </el-button>
+          <el-button class="btn-save" type="primary" @click="saveConfig">保存</el-button>
         </div>
         <div class="pages-view-warp">
           <div
@@ -101,26 +85,19 @@
                   : 'background:' + form.data[0].marketing
               "
             >
-              <img :src="item.img">
+              <img :src="item.img" />
               <div
+                class="ab-view"
                 v-if="index == 0"
-                class="ab-view"
-                style="bottom: 0; left: 82px; width: 84px; height: 33px"
+                style="bottom: 0; left: 82px; width: 84px; height: 33px;"
                 :style="'background:' + form.data[0].accent"
-              />
+              ></div>
               <div
-                v-if="index == 8"
                 class="ab-view"
-                style="
-                  top: 91.5px;
-                  left: 50%;
-                  transform: translateX(-50%);
-                  border-radius: 15px;
-                  width: 36px;
-                  height: 15px;
-                "
+                v-if="index == 8"
+                style="top: 91.5px; left: 50%; transform: translateX(-50%); border-radius: 15px; width: 36px; height: 15px;"
                 :style="'background:' + form.data[0].primary"
-              />
+              ></div>
             </div>
           </div>
         </div>
@@ -164,7 +141,7 @@ import { mapGetters } from 'vuex'
 // api
 import { savePageParams, getParamByTempName } from '@/api/wxa'
 export default {
-  data () {
+  data() {
     return {
       listWidth: '820',
       form: {
@@ -217,7 +194,7 @@ export default {
         {
           type: 'primary',
           img: page11
-        }
+        },
         // {
         //   type: 'primary',
         //   img: page12
@@ -292,17 +269,9 @@ export default {
   computed: {
     ...mapGetters(['wheight', 'wwidth', 'template_name'])
   },
-  mounted () {
-    let filter = { template_name: this.template_name, version: 'v1.0.1', page_name: 'color_style' }
-    getParamByTempName(filter).then((res) => {
-      if (res.data.data.list.length !== 0) {
-        this.form = res.data.data.list[0].params
-      }
-    })
-  },
   methods: {
     // 保存设置
-    saveConfig () {
+    saveConfig() {
       let param = {
         template_name: this.template_name,
         config: JSON.stringify([this.form]),
@@ -317,6 +286,14 @@ export default {
         }
       })
     }
+  },
+  mounted() {
+    let filter = { template_name: this.template_name, version: 'v1.0.1', page_name: 'color_style' }
+    getParamByTempName(filter).then((res) => {
+      if (res.data.data.list.length !== 0) {
+        this.form = res.data.data.list[0].params
+      }
+    })
   }
 }
 </script>

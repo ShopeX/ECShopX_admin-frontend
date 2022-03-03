@@ -2,234 +2,124 @@
   <div class="">
     <div v-if="$route.path.indexOf('detail') === -1">
       <el-row :gutter="10">
-        <el-col
-          :md="12"
-          :lg="12"
-        >
+        <el-col :md="12" :lg="12">
           <shop-select
             v-if="$store.getters.login_type != 'distributor'"
             distributors
             @update="storeSearch"
-          />
+          ></shop-select>
           <!--distributors wxshops 需要哪个api传哪个-->
         </el-col>
-        <el-col
-          :md="10"
-          :lg="8"
-        >
+        <el-col :md="10" :lg="8">
           <el-date-picker
             v-model="create_time"
             type="daterange"
             value-format="yyyy/MM/dd"
             placeholder="选择日期范围"
-            style="width: 100%"
-            size="mini"
+            style="width: 100%;"
             @change="dateChange"
-          />
+            size="mini"
+          ></el-date-picker>
         </el-col>
       </el-row>
       <el-row :gutter="10">
-        <el-col
-          :md="7"
-          :lg="5"
-        >
+        <el-col :md="7" :lg="5">
           <el-autocomplete
-            v-model="source_name"
             class="inline-input"
+            v-model="source_name"
             :fetch-suggestions="querySearch"
             placeholder="请输入来源"
-            size="mini"
             @select="sourceSearch"
-          />
-        </el-col>
-        <el-col
-          :md="7"
-          :lg="5"
-        >
-          <el-input
-            v-model="salesman_mobile"
-            placeholder="导购员手机号"
             size="mini"
-          >
-            <el-button
-              slot="append"
-              icon="el-icon-search"
-              @click="numberSearch"
-            />
-          </el-input>
+          ></el-autocomplete>
         </el-col>
-        <el-col
-          :md="7"
-          :lg="5"
-        >
-          <el-input
-            v-model="identifier"
-            placeholder="手机号/订单号"
-            size="mini"
-          >
-            <el-button
-              slot="append"
-              icon="el-icon-search"
-              @click="numberSearch"
-            />
-          </el-input>
+        <el-col :md="7" :lg="5">
+          <el-input placeholder="导购员手机号" v-model="salesman_mobile" size="mini"
+            ><el-button slot="append" icon="el-icon-search" @click="numberSearch"></el-button
+          ></el-input>
+        </el-col>
+        <el-col :md="7" :lg="5">
+          <el-input placeholder="手机号/订单号" v-model="identifier" size="mini"
+            ><el-button slot="append" icon="el-icon-search" @click="numberSearch"></el-button
+          ></el-input>
         </el-col>
         <el-col :span="3">
-          <el-button
-            size="mini"
-            type="primary"
-            @click="exportData"
-          >
-            导出
-          </el-button>
+          <el-button size="mini" type="primary" @click="exportData">导出</el-button>
           <el-popover
             placement="top-start"
             width="200"
             trigger="hover"
             content="当导出数据大于500条时，导出任务会以队列执行，点击导出后，请至‘设置-导出列表’页面中查看及下载数据"
           >
-            <i
-              slot="reference"
-              class="el-icon-question"
-            />
+            <i class="el-icon-question" slot="reference"></i>
           </el-popover>
         </el-col>
       </el-row>
-      <el-dialog
-        title="订单下载"
-        :visible.sync="downloadView"
-        :close-on-click-modal="false"
-      >
+      <el-dialog title="订单下载" :visible.sync="downloadView" :close-on-click-modal="false">
         <template v-if="downloadUrl">
-          <a
-            :href="downloadUrl"
-            download
-          >{{ downloadName }}</a>
+          <a :href="downloadUrl" download>{{ downloadName }}</a>
         </template>
       </el-dialog>
-      <el-tabs
-        v-model="activeName"
-        type="border-card"
-        @tab-click="handleClick"
-      >
-        <el-tab-pane
-          label="全部"
-          name="all"
-        />
-        <el-tab-pane
-          label="待审核"
-          name="notpay"
-        />
-        <el-tab-pane
-          label="待自提"
-          name="done"
-        />
-        <el-tab-pane
-          label="已取消"
-          name="cancel"
-        />
+      <el-tabs type="border-card" v-model="activeName" @tab-click="handleClick">
+        <el-tab-pane label="全部" name="all"></el-tab-pane>
+        <el-tab-pane label="待审核" name="notpay"></el-tab-pane>
+        <el-tab-pane label="待自提" name="done"></el-tab-pane>
+        <el-tab-pane label="已取消" name="cancel"></el-tab-pane>
         <el-table
-          v-loading="loading"
           :data="list"
           style="width: 100%"
           :height="wheight - 190"
+          v-loading="loading"
           element-loading-text="数据加载中"
         >
-          <el-table-column
-            prop="order_id"
-            width="150"
-            label="订单号"
-            fixed
-          />
-          <el-table-column
-            prop="create_time"
-            width="160"
-            label="创建时间"
-          >
+          <el-table-column prop="order_id" width="150" label="订单号" fixed></el-table-column>
+          <el-table-column prop="create_time" width="160" label="创建时间">
             <template slot-scope="scope">
               <span>{{ scope.row.create_time | datetime('YYYY-MM-DD HH:mm:ss') }}</span>
             </template>
           </el-table-column>
-          <el-table-column
-            prop="distributor_name"
-            label="所属店铺"
-          >
+          <el-table-column prop="distributor_name" label="所属店铺">
             <template slot-scope="scope">
               <span v-if="scope.row.distributor_name">{{ scope.row.distributor_name }}</span>
               <span v-else>总部</span>
             </template>
           </el-table-column>
-          <el-table-column
-            width="70"
-            label="运费"
-          >
+          <el-table-column width="70" label="运费">
             <template slot-scope="scope">
               {{ scope.row.fee_symbol }}{{ scope.row.freight_fee / 100 }}
             </template>
           </el-table-column>
-          <el-table-column
-            prop="total_fee"
-            width="70"
-            label="金额"
-          >
+          <el-table-column prop="total_fee" width="70" label="金额">
             <template slot-scope="scope">
               {{ scope.row.fee_symbol }}{{ scope.row.total_fee / 100 }}
             </template>
           </el-table-column>
-          <el-table-column
-            prop="mobile"
-            width="110"
-            label="手机号"
-          />
-          <el-table-column
-            prop="order_status"
-            label="订单状态"
-          >
+          <el-table-column prop="mobile" width="110" label="手机号"></el-table-column>
+          <el-table-column prop="order_status" label="订单状态">
             <template slot-scope="scope">
               <!-- 订单状态 -->
-              <el-tag
-                v-if="scope.row.order_status == 'CANCEL'"
-                type="danger"
-                size="mini"
+              <el-tag v-if="scope.row.order_status == 'CANCEL'" type="danger" size="mini"
+                >已取消</el-tag
               >
-                已取消
-              </el-tag>
               <template v-if="scope.row.order_status != 'CANCEL'">
                 <!-- 发货状态 -->
-                <el-tag
-                  v-if="scope.row.ziti_status == 'APPROVE'"
-                  type="success"
-                  size="mini"
+                <el-tag v-if="scope.row.ziti_status == 'APPROVE'" type="success" size="mini"
+                  >审核通过</el-tag
                 >
-                  审核通过
-                </el-tag>
-                <el-tag
-                  v-else
-                  type="primary"
-                  size="mini"
-                >
-                  待审核
-                </el-tag>
+                <el-tag v-else type="primary" size="mini">待审核</el-tag>
               </template>
             </template>
           </el-table-column>
-          <el-table-column
-            prop="source_name"
-            label="来源"
-          />
-          <el-table-column
-            label="操作"
-            fixed="right"
-          >
+          <el-table-column prop="source_name" label="来源"></el-table-column>
+          <el-table-column label="操作" fixed="right">
             <template slot-scope="scope">
               <router-link
                 :to="{
                   path: matchHidePage('detail'),
                   query: { orderId: scope.row.order_id, resource: $route.path }
                 }"
+                >详情</router-link
               >
-                详情
-              </router-link>
             </template>
           </el-table-column>
         </el-table>
@@ -237,17 +127,18 @@
           <el-pagination
             background
             layout="total, sizes, prev, pager, next"
+            @current-change="handleCurrentChange"
+            @size-change="handleSizeChange"
             :current-page.sync="params.page"
             :page-sizes="[10, 20, 50]"
             :total="total_count"
             :page-size="params.pageSize"
-            @current-change="handleCurrentChange"
-            @size-change="handleSizeChange"
-          />
+          >
+          </el-pagination>
         </div>
       </el-tabs>
     </div>
-    <router-view />
+    <router-view></router-view>
   </div>
 </template>
 <script>
@@ -267,7 +158,7 @@ export default {
   components: {
     shopSelect
   },
-  data () {
+  data() {
     return {
       IsDisabled: false,
       activeName: 'all',
@@ -297,34 +188,28 @@ export default {
   computed: {
     ...mapGetters(['wheight'])
   },
-  mounted () {
-    this.params.order_type = this.order_type
-    this.params.order_class = this.order_class
-    this.getOrders(this.params)
-    this.getAllSourcesList()
-  },
   methods: {
     // 切换tab
-    handleClick (tab, event) {
+    handleClick(tab, event) {
       this.activeName = tab.name
       this.params.order_status = tab.name == 'all' ? '' : tab.name
       this.params.page = 1
       this.getParams()
       this.getOrders(this.params)
     },
-    storeSearch (val) {
+    storeSearch(val) {
       val && val.shop_id
       this.params.distributor_id = val.shop_id
       this.params.page = 1
       this.getParams()
       this.getOrders(this.params)
     },
-    numberSearch (e) {
+    numberSearch(e) {
       this.params.page = 1
       this.getParams()
       this.getOrders(this.params)
     },
-    dateChange (val) {
+    dateChange(val) {
       if (val.length > 0) {
         this.time_start_begin = this.dateStrToTimeStamp(val[0] + ' 00:00:00')
         this.time_start_end = this.dateStrToTimeStamp(val[1] + ' 23:59:59')
@@ -336,26 +221,26 @@ export default {
       this.getParams()
       this.getOrders(this.params)
     },
-    sourceSearch (item) {
+    sourceSearch(item) {
       this.params.source_id = item.source_id
       this.params.page = 1
       this.getParams()
       this.getOrders(this.params)
     },
-    handleCurrentChange (page_num) {
+    handleCurrentChange(page_num) {
       this.loading = false
       this.params.page = page_num
       this.getParams()
       this.getOrders(this.params)
     },
-    handleSizeChange (pageSize) {
+    handleSizeChange(pageSize) {
       this.loading = false
       this.params.page = 1
       this.params.pageSize = pageSize
       this.getParams()
       this.getOrders(this.params)
     },
-    getParams () {
+    getParams() {
       this.params.time_start_begin = this.time_start_begin
       this.params.time_start_end = this.time_start_end
       this.params.order_type = this.order_type
@@ -368,10 +253,10 @@ export default {
         this.params.order_id = this.identifier
       }
     },
-    dateStrToTimeStamp (str) {
+    dateStrToTimeStamp(str) {
       return Date.parse(new Date(str)) / 1000
     },
-    getOrders (filter) {
+    getOrders(filter) {
       this.loading = true
       getOrderList(filter).then((response) => {
         this.list = response.data.data.list
@@ -379,7 +264,7 @@ export default {
         this.loading = false
       })
     },
-    getAllSourcesList () {
+    getAllSourcesList() {
       let params = { page: 1, pageSize: 1000 }
       getSourcesList(params).then((response) => {
         if (response.data.data.list) {
@@ -389,18 +274,18 @@ export default {
         }
       })
     },
-    querySearch (queryString, cb) {
+    querySearch(queryString, cb) {
       var restaurants = this.source_list
       var results = queryString ? restaurants.filter(this.createFilter(queryString)) : restaurants
       // 调用 callback 返回建议列表的数据
       cb(results)
     },
-    createFilter (queryString) {
+    createFilter(queryString) {
       return (restaurant) => {
         return restaurant.value.toLowerCase().indexOf(queryString.toLowerCase()) === 0
       }
     },
-    exportData () {
+    exportData() {
       this.getParams()
       this.params.page = 1
       if (this.params.order_type != 'normal') {
@@ -430,6 +315,12 @@ export default {
         }
       })
     }
+  },
+  mounted() {
+    this.params.order_type = this.order_type
+    this.params.order_class = this.order_class
+    this.getOrders(this.params)
+    this.getAllSourcesList()
   }
 }
 </script>

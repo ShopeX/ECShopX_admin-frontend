@@ -1,13 +1,7 @@
 <template>
   <div class="gift-edit">
-    <el-card
-      class="box-card"
-      shadow="never"
-    >
-      <div
-        slot="header"
-        class="clearfix"
-      >
+    <el-card class="box-card" shadow="never">
+      <div slot="header" class="clearfix">
         <span>适用店铺信息</span>
         <el-button
           :disabled="listData.is_active"
@@ -15,25 +9,20 @@
           type="primary"
           size="mini"
           @click="addDistributorAction"
+          >选择店铺</el-button
         >
-          选择店铺
-        </el-button>
       </div>
       <div class="content store-content">
         <template v-if="distributorList && distributorList.length > 0">
           <div class="account">
-            <div
-              v-for="item in showDistributorList"
-              :key="item.distributor_id"
-              class="list"
-            >
+            <div class="list" v-for="item in showDistributorList" :key="item.distributor_id">
               <div class="item">
                 <div>{{ item.name }}</div>
                 <i
                   v-if="!listData.is_active"
                   class="el-icon-error close-icon"
                   @click="deleteStore(item)"
-                />
+                ></i>
               </div>
             </div>
           </div>
@@ -44,141 +33,92 @@
               :page-size="storePageSize"
               :current-page.sync="storeCurrentPage"
               @current-change="handleCurrentChange"
-            />
+            >
+            </el-pagination>
           </div>
         </template>
 
-        <div
-          v-else
-          class="tips"
-        >
+        <div v-else class="tips">
           默认全部店铺适用，若该券只适用于部分店铺请点击右上角
           <span class="primary-color">「选择店铺」</span>
         </div>
       </div>
     </el-card>
 
-    <el-card
-      class="box-card goods"
-      shadow="never"
-    >
-      <div
-        slot="header"
-        class="clearfix"
-      >
+    <el-card class="box-card goods" shadow="never">
+      <div slot="header" class="clearfix">
         <span>可兑商品信息</span>
-        <span
-          v-if="goodsList && goodsList.length > 0"
-          class="tips"
+        <span class="tips" v-if="goodsList && goodsList.length > 0">
+          (多规格商品支持SPU级别，如只能兑换其中一个规格产品请选择相应规格)</span
         >
-          (多规格商品支持SPU级别，如只能兑换其中一个规格产品请选择相应规格)</span>
         <div style="float: right">
           <template v-if="goodsList && goodsList.length > 0">
             <span>商品查询：</span>
             <el-input
-              v-model="searchGoodsName"
               size="small"
               placeholder="请输入内容"
               style="width: 220px"
+              v-model="searchGoodsName"
               class="goods-input"
             >
-              <el-button
-                slot="append"
-                icon="el-icon-search"
-                @click="searchGoods"
-              />
-            </el-input>
-          </template>&nbsp;
+              <el-button slot="append" icon="el-icon-search" @click="searchGoods"></el-button>
+            </el-input> </template
+          >&nbsp;
 
           <el-button
             :disabled="listData.is_active"
             type="primary"
             size="mini"
             @click="handleGoodsDialogShow"
+            >选择商品</el-button
           >
-            选择商品
-          </el-button>
           <el-button
             :disabled="listData.is_active"
             type="primary"
             size="mini"
             @click="showUpload = true"
+            >批量上传</el-button
           >
-            批量上传
-          </el-button>
         </div>
       </div>
       <div class="content">
         <template v-if="goodsList && goodsList.length > 0">
           <div class="goods-content">
-            <div
-              v-for="item in showGoodsList"
-              :key="item.itemId"
-              class="goods-list"
-            >
-              <div
-                style="width: 10%"
-                class="item goods-id"
-              >
-                <div class="title-tips">
-                  商品ID
-                </div>
+            <div class="goods-list" v-for="item in showGoodsList" :key="item.itemId">
+              <div style="width: 10%" class="item goods-id">
+                <div class="title-tips">商品ID</div>
                 <div>{{ item.itemId }}</div>
               </div>
-              <div
-                style="width: 50%"
-                class="item goods-info"
-              >
-                <img
-                  v-if="item.pics"
-                  :src="item.pics[0]"
-                  alt=""
-                >
+              <div style="width: 50%" class="item goods-info">
+                <img v-if="item.pics" :src="item.pics[0]" alt="" />
                 <div class="goods-sku">
                   <div>
                     {{ item.itemName }}
                   </div>
-                  <div class="title-tips">
-                    {{ item.item_spec_desc }}
-                  </div>
+                  <div class="title-tips">{{ item.item_spec_desc }}</div>
                 </div>
               </div>
 
-              <div
-                style="width: 10%"
-                class="item goods-price"
-              >
-                <div class="title-tips">
-                  价格
-                </div>
+              <div style="width: 10%" class="item goods-price">
+                <div class="title-tips">价格</div>
                 <div>￥ {{ item.price / 100 }}</div>
               </div>
-              <div
-                style="width: 10%"
-                class="item goods-count"
-              >
-                <div class="title-tips">
-                  库存
-                </div>
+              <div style="width: 10%" class="item goods-count">
+                <div class="title-tips">库存</div>
                 <div>{{ item.store }}</div>
               </div>
-              <div
-                style="width: 20%"
-                class="item goods-limit"
-              >
-                <div class="title-tips">
-                  兑换上限
-                </div>
+              <div style="width: 20%" class="item goods-limit">
+                <div class="title-tips">兑换上限</div>
                 <div>
                   <el-input
-                    v-model="item.limit"
                     :disabled="listData.is_active"
                     style="width: 80px"
                     size="small"
                     type="number"
+                    v-model="item.limit"
                     min="0"
                     @input="changeLimit(arguments[0], item.itemId)"
-                  />
+                  ></el-input>
                 </div>
               </div>
             </div>
@@ -190,40 +130,30 @@
               :page-size="goodsPageSize"
               :current-page.sync="goodsCurrentPage"
               @current-change="handleCurrentGoodsChange"
-            />
+            >
+            </el-pagination>
           </div>
         </template>
-        <div
-          v-else
-          class="tips"
-        >
+        <div v-else class="tips">
           暂未无可兑商品，请点击右上角<span class="primary-color">「选择商品」</span>进行添加
         </div>
       </div>
     </el-card>
 
     <div class="content-center">
-      <el-button @click="cancelSubmit">
-        取消
-      </el-button>
-      <el-button
-        v-loading="loading"
-        type="primary"
-        @click="submitDetail"
-      >
-        提交
-      </el-button>
+      <el-button @click="cancelSubmit">取消</el-button>
+      <el-button type="primary" @click="submitDetail" v-loading="loading">提交</el-button>
     </div>
 
     <DistributorSelect
       :store-visible="distributorVisible"
       :is-valid="true"
-      :rel-data-ids="distributorList"
+      :relDataIds="distributorList"
       :get-status="setDistributorStatus"
-      return-type="selectRow"
       @chooseStore="chooseDistributorAction"
       @closeStoreDialog="closeDistributorDialogAction"
-    />
+      returnType="selectRow"
+    ></DistributorSelect>
 
     <GoodsSelector
       :items-visible="itemVisible"
@@ -234,13 +164,10 @@
       :set-search="true"
       @chooseStore="handleGoodsSubmit"
       @closeStoreDialog="handleGoodsDialogHide"
-    />
+    ></GoodsSelector>
 
     <!-- 上传 -->
-    <UploadGoods
-      v-model="showUpload"
-      @uploadFile="uploadFile"
-    />
+    <UploadGoods v-model="showUpload" @uploadFile="uploadFile"></UploadGoods>
   </div>
 </template>
 
@@ -261,7 +188,7 @@ export default {
       defalut: {}
     }
   },
-  data () {
+  data() {
     return {
       loading: false,
       distributorVisible: false,
@@ -289,15 +216,12 @@ export default {
       showUpload: false,
 
       uploadList: [], // 上传的全部商品数据
-      selectGoodsList: [] // 选择器选择的全部商品
+      selectGoodsList: []  // 选择器选择的全部商品
     }
-  },
-  mounted () {
-    this.init()
   },
   methods: {
     // 截取分页数据
-    getRowList (list, currentPage, pageSize) {
+    getRowList(list, currentPage, pageSize) {
       let newList = []
       if (list && list.length > 0) {
         let startRow = (currentPage - 1) * pageSize
@@ -307,7 +231,7 @@ export default {
       return newList
     },
     // 关键字查询
-    searchkeyWord (list, keyWord) {
+    searchkeyWord(list, keyWord) {
       let arr = []
       list.forEach((v) => {
         if (v.itemName.indexOf(keyWord) >= 0) {
@@ -318,7 +242,7 @@ export default {
     },
 
     // 获取初始数据
-    init () {
+    init() {
       const { itemTreeLists = [], distributor_info = [] } = this.listData
       itemTreeLists &&
         itemTreeLists.forEach((v) => {
@@ -327,17 +251,17 @@ export default {
       this.initStoreList(distributor_info)
       this.initGoodsList(itemTreeLists)
     },
-    cancelSubmit () {
+    cancelSubmit() {
       this.refresh()
       this.$emit('changeShowEdit', false)
       this.$router.push({ path: '/marketing/coupon/membermarketing' })
     },
-    submitDetail () {
+    submitDetail() {
       if (this.goodsList.length < 1) {
         this.$alert('您还未选择商品，请选择商品后再提交', '警告消息', {
           confirmButtonText: '确定',
           type: 'warning',
-          callback: (action) => {}
+          callback: action => {}
         })
       } else {
         this.$confirm(
@@ -372,29 +296,29 @@ export default {
     },
 
     // 店铺操作-----
-    initStoreList (data) {
+    initStoreList(data) {
       this.distributorList = data
       this.showDistributorList = this.getRowList(data, 1, this.storePageSize)
     },
-    addDistributorAction () {
+    addDistributorAction() {
       this.distributorVisible = true
       this.setDistributorStatus = true
     },
-    closeDistributorDialogAction () {
+    closeDistributorDialogAction() {
       this.distributorVisible = false
     },
-    chooseDistributorAction (data) {
+    chooseDistributorAction(data) {
       this.distributorList = data
       this.showDistributorList = this.getRowList(data, this.storeCurrentPage, this.storePageSize)
       this.distributorVisible = false
     },
-    handleCurrentChange (val) {
+    handleCurrentChange(val) {
       this.storeCurrentPage = val
       this.showDistributorList = this.getRowList(this.distributorList, val, this.storePageSize)
     },
 
     // 删除门店
-    deleteStore (item) {
+    deleteStore(item) {
       let index = this.distributorList.findIndex((v) => item.distributor_id === v.distributor_id)
       if (index !== -1) {
         this.distributorList.splice(index, 1)
@@ -409,7 +333,7 @@ export default {
 
     // 商品操作------
     // 初始化商品数据
-    initGoodsList (data) {
+    initGoodsList(data) {
       this.searchGoodsName = ''
       this.goodsList = data
       this.allShowGoodsList = data
@@ -417,7 +341,7 @@ export default {
     },
 
     // 上传选择商品后数据处理
-    changeGoodsList () {
+    changeGoodsList() {
       let allData = this.selectGoodsList || []
       this.uploadList.forEach((v) => {
         let index = allData.findIndex((item) => item.itemId === v.itemId)
@@ -429,34 +353,34 @@ export default {
       this.initGoodsList(allData.concat(this.uploadList))
     },
 
-    handleGoodsDialogShow () {
+    handleGoodsDialogShow() {
       this.itemVisible = true
       this.setItemStatus = true
     },
-    handleGoodsSubmit (data) {
-      data.forEach((v) => {
+    handleGoodsSubmit(data) {
+      data.forEach(v => {
         v.limit = v.store
       })
       this.itemVisible = false
       this.selectGoodsList = data
       this.changeGoodsList()
     },
-    handleCurrentGoodsChange (val) {
+    handleCurrentGoodsChange(val) {
       this.goodsCurrentPage = val
       this.showGoodsList = this.getRowList(this.allShowGoodsList, val, this.goodsPageSize)
     },
-    handleGoodsDialogHide () {
+    handleGoodsDialogHide() {
       this.itemVisible = false
     },
 
     // 商品查询
-    searchGoods () {
+    searchGoods() {
       this.allShowGoodsList = this.searchkeyWord(this.goodsList, this.searchGoodsName)
       this.showGoodsList = this.getRowList(this.allShowGoodsList, 1, this.goodsPageSize)
     },
 
     // 上传
-    uploadFile (uploadList) {
+    uploadFile(uploadList) {
       uploadList.forEach((v) => {
         v.limit = Number(v.limit_num)
         // let index = this.uploadList.findIndex((item) => item.itemId === v.itemId)
@@ -471,7 +395,7 @@ export default {
     },
 
     // 变更限制
-    changeLimit (value, itemId) {
+    changeLimit(value, itemId) {
       // 展示数据和原数据都需要变更
       let index = this.showGoodsList.findIndex((v) => v.itemId === itemId)
       this.showGoodsList[index].limit = Number(value)
@@ -486,6 +410,9 @@ export default {
         this.changeGoodsList()
       })
     }
+  },
+  mounted() {
+    this.init()
   }
 }
 </script>

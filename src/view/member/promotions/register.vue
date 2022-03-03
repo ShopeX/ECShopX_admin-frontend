@@ -1,16 +1,8 @@
 <template>
   <div class="section section-white">
-    <el-form
-      ref="form"
-      :model="form"
-      label-position="left"
-      label-width="180px"
-    >
+    <el-form ref="form" :model="form" label-position="left" label-width="180px">
       <div class="section-body">
-        <el-form-item
-          label="是否开启："
-          prop="ad_title"
-        >
+        <el-form-item label="是否开启：" prop="ad_title">
           <el-switch
             v-model="form.is_open"
             :width="60"
@@ -20,40 +12,22 @@
             active-text="开启"
             inactive-text="关闭"
             active-color="#13ce66"
-          />
+          ></el-switch>
         </el-form-item>
-        <el-form-item
-          label="注册引导广告标题："
-          prop="ad_title"
-        >
+        <el-form-item label="注册引导广告标题：" prop="ad_title">
           <el-input
             v-model="form.ad_title"
             placeholder="用于门店小程序注册引导入口标题"
-            style="width: 340px"
+            style="width: 340px;"
           />
         </el-form-item>
         <el-form-item label="注册引导图片：">
-          <div class="frm-tips">
-            只能上传jpg/png文件，且不超过2M （建议尺寸：400px * 450px）
-          </div>
-          <div class="frm-tips">
-            引导用户授权手机号注册，类似新用户专享广告图片
-          </div>
+          <div class="frm-tips">只能上传jpg/png文件，且不超过2M （建议尺寸：400px * 450px）</div>
+          <div class="frm-tips">引导用户授权手机号注册，类似新用户专享广告图片</div>
           <div>
-            <div
-              class="upload-box"
-              @click="handleImgChange"
-            >
-              <img
-                v-if="form.ad_pic"
-                :src="wximageurl + form.ad_pic"
-                class="avatar"
-                width="200"
-              >
-              <i
-                v-else
-                class="el-icon-plus avatar-uploader-icon"
-              />
+            <div @click="handleImgChange" class="upload-box">
+              <img v-if="form.ad_pic" :src="wximageurl + form.ad_pic" class="avatar" width="200"/>
+              <i v-else class="el-icon-plus avatar-uploader-icon"></i>
             </div>
           </div>
           <imgPicker
@@ -61,15 +35,12 @@
             :sc-status="isGetImage"
             @chooseImg="pickImg"
             @closeImgDialog="closeImgDialog"
-          />
+          ></imgPicker>
         </el-form-item>
         <el-form-item label="注册引导跳转路径">
           <div class="uploader-setting">
             <div class="goods-select">
-              <div
-                v-if="JSON.stringify(form.register_jump_path) !== '{}'"
-                class="link-content"
-              >
+              <div class="link-content" v-if="JSON.stringify(form.register_jump_path) != '{}' && JSON.stringify(form.register_jump_path) != '[]'">
                 <span @click="handleGoodsChange()">
                   <template v-if="form.register_jump_path.linkPage === 'goods'">商品：</template>
                   <template v-if="form.register_jump_path.linkPage === 'category'">分类：</template>
@@ -77,29 +48,21 @@
                   <template v-if="form.register_jump_path.linkPage === 'planting'">软文：</template>
                   <!--template v-if="form.register_jump_path.linkPage === 'planting'">种草：</template-->
                   <template v-if="form.register_jump_path.linkPage === 'link'">页面：</template>
-                  <template
-                    v-if="form.register_jump_path.linkPage === 'marketing'"
-                  >营销：</template>
-                  <template
-                    v-if="form.register_jump_path.linkPage === 'custom_page'"
-                  >自定义页：</template>
+                  <template v-if="form.register_jump_path.linkPage === 'marketing'">营销：</template>
+                  <template v-if="form.register_jump_path.linkPage === 'custom_page'">自定义页：</template>
                   {{ form.register_jump_path.title }}
                 </span>
                 <span style="margin-left: 10px">
                   <i
-                    v-if="JSON.stringify(form.register_jump_path) !== '{}'"
                     style="color: #f56c6c"
                     class="el-icon-delete"
+                    v-if="JSON.stringify(form.register_jump_path) != '{}' && JSON.stringify(form.register_jump_path) != '[]'"
                     @click="clear_pic_url"
-                  />
+                  ></i>
                 </span>
               </div>
-              <div
-                v-else
-                class="content-center"
-                @click="handleGoodsChange()"
-              >
-                <i class="iconfont icon-link" />设置路径
+              <div v-else @click="handleGoodsChange()" class="content-center">
+                <i class="iconfont icon-link"></i>设置路径
               </div>
             </div>
           </div>
@@ -111,23 +74,18 @@
             :button-texts="['移除赠送', '添加赠送']"
             :data="goodsList"
           >
-            <div
-              slot="left-footer"
-              class="transfer-footer"
-            >
+            <div class="transfer-footer" slot="left-footer">
               <el-pagination
                 v-if="total_count > params.pageSize"
                 small
                 layout="prev, pager, next"
+                @current-change="handlePagesChange"
                 :total="total_count"
                 :page-size="params.pageSize"
-                @current-change="handlePagesChange"
-              />
+              >
+              </el-pagination>
             </div>
-            <div
-              slot="right-footer"
-              class="transfer-footer"
-            />
+            <div class="transfer-footer" slot="right-footer"></div>
           </el-transfer>
         </el-form-item>
         <el-form-item label="注册送优惠券：">
@@ -136,33 +94,23 @@
               <div class="promotion-card">
                 <div class="promotion-card-header">
                   优惠券
-                  <a
-                    class="promotion-card-btn"
-                    href="#"
-                    @click="showModal"
-                  >新增</a>
+                  <a class="promotion-card-btn" @click="showModal" href="#">新增</a>
                 </div>
                 <div class="promotion-card-body">
                   <ul class="promotion-card-list">
-                    <li
-                      v-for="(item, index) in coupons.checked"
-                      :key="index"
-                    >
+                    <li v-for="(item, index) in coupons.checked" :key="index">
                       <div class="promotion-name">
                         {{ item.title }}
                       </div>
                       <el-input-number
-                        v-model="item.count"
                         size="mini"
                         controls-position="right"
+                        v-model="item.count"
                         :min="1"
                         :max="10"
                         label="描述文字"
-                      />
-                      <i
-                        class="remove-btn el-icon-delete"
-                        @click="removeChecked(index)"
-                      />
+                      ></el-input-number>
+                      <i class="remove-btn el-icon-delete" @click="removeChecked(index)"></i>
                     </li>
                   </ul>
                 </div>
@@ -176,33 +124,23 @@
               <div class="promotion-card">
                 <div class="promotion-card-header">
                   员工优惠券
-                  <a
-                    class="promotion-card-btn"
-                    href="#"
-                    @click="showStaffModal"
-                  >新增</a>
+                  <a class="promotion-card-btn" @click="showStaffModal" href="#">新增</a>
                 </div>
                 <div class="promotion-card-body">
                   <ul class="promotion-card-list">
-                    <li
-                      v-for="(item, index) in staffCoupons.checked"
-                      :key="index"
-                    >
+                    <li v-for="(item, index) in staffCoupons.checked" :key="index">
                       <div class="promotion-name">
                         {{ item.title }}
                       </div>
                       <el-input-number
-                        v-model="item.count"
                         size="mini"
                         controls-position="right"
+                        v-model="item.count"
                         :min="1"
                         :max="10"
                         label="描述文字"
-                      />
-                      <i
-                        class="remove-btn el-icon-delete"
-                        @click="removeStaffChecked(index)"
-                      />
+                      ></el-input-number>
+                      <i class="remove-btn el-icon-delete" @click="removeStaffChecked(index)"></i>
                     </li>
                   </ul>
                 </div>
@@ -212,64 +150,26 @@
         </el-form-item>
       </div>
       <div class="section-footer with-border content-center">
-        <el-button
-          type="primary"
-          @click="save"
-        >
-          保 存
-        </el-button>
+        <el-button type="primary" @click="save">保 存</el-button>
       </div>
     </el-form>
     <el-dialog
       title="选择优惠券"
       :visible.sync="coupons.dialog"
-      width="30%"
       @open="onshowModal"
       @close="oncloseModal"
+      width="30%"
     >
-      <el-radio-group
-        v-model="card_type"
-        @change="cardTypeChange(false)"
-      >
-        <el-radio-button
-          label="all"
-          value="all"
-        >
-          全部
-        </el-radio-button>
-        <el-radio-button
-          label="cash"
-          value="cash"
-        >
-          满减券
-        </el-radio-button>
-        <el-radio-button
-          label="discount"
-          value="discount"
-        >
-          折扣券
-        </el-radio-button>
-        <el-radio-button
-          label="gift"
-          value="gift"
-        >
-          兑换券
-        </el-radio-button>
+      <el-radio-group v-model="card_type" @change="cardTypeChange(false)">
+        <el-radio-button label="all" value="all">全部</el-radio-button>
+        <el-radio-button label="cash" value="cash">满减券</el-radio-button>
+        <el-radio-button label="discount" value="discount">折扣券</el-radio-button>
+        <el-radio-button label="gift" value="gift">兑换券</el-radio-button>
       </el-radio-group>
-      <ul
-        v-loading="coupons.loading"
-        class="dialog-list clearfix"
-      >
+      <ul class="dialog-list clearfix" v-loading="coupons.loading">
         <template v-for="(item, index) in coupons.list">
-          <li
-            :key="index"
-            :class="item.checked ? 'checked' : ''"
-            @click="selectItems(item)"
-          >
-            <i
-              v-if="item.checked"
-              class="el-icon-check"
-            /> {{ item.title }}
+          <li :class="item.checked ? 'checked' : ''" @click="selectItems(item)" :key="index">
+            <i v-if="item.checked" class="el-icon-check"></i> {{ item.title }}
           </li>
         </template>
       </ul>
@@ -277,80 +177,40 @@
         <el-pagination
           background
           layout="prev, pager, next"
+          @current-change="changeCouponsPage"
           :current-page="coupons.page.currentPage"
           :page-size="coupons.page.pageSize"
           :total="coupons.page.total"
-          @current-change="changeCouponsPage"
-        />
+        >
+        </el-pagination>
       </div>
-      <div style="display: none">
+      <div style="display: none;">
         <template v-for="(item, index) in coupons.temp">
-          <li :key="index">
-            {{ item.title }}
-          </li>
+          <li :key="index">{{ item.title }}</li>
         </template>
       </div>
-      <span
-        slot="footer"
-        class="dialog-footer"
-      >
+      <span slot="footer" class="dialog-footer">
         <el-button @click="cancelSelected">取 消</el-button>
-        <el-button
-          type="primary"
-          @click="submitSelected(false)"
-        >确 定</el-button>
+        <el-button type="primary" @click="submitSelected(false)">确 定</el-button>
       </span>
     </el-dialog>
     <el-dialog
       title="选择优惠券"
       :visible.sync="staffCoupons.dialog"
-      width="30%"
       @open="onshowStaffModal"
       @close="oncloseModal"
+      width="30%"
     >
-      <el-radio-group
-        v-model="card_type"
-        @change="cardTypeChange(true)"
-      >
-        <el-radio-button
-          label="all"
-          value="all"
-        >
-          全部
-        </el-radio-button>
-        <el-radio-button
-          label="cash"
-          value="cash"
-        >
-          满减券
-        </el-radio-button>
-        <el-radio-button
-          label="discount"
-          value="discount"
-        >
-          折扣券
-        </el-radio-button>
-        <el-radio-button
-          label="gift"
-          value="gift"
-        >
-          兑换券
-        </el-radio-button>
+      <el-radio-group v-model="card_type" @change="cardTypeChange(true)">
+        <el-radio-button label="all" value="all">全部</el-radio-button>
+        <el-radio-button label="cash" value="cash">满减券</el-radio-button>
+        <el-radio-button label="discount" value="discount">折扣券</el-radio-button>
+        <el-radio-button label="gift" value="gift">兑换券</el-radio-button>
       </el-radio-group>
-      <ul
-        v-loading="staffCoupons.loading"
-        class="dialog-list clearfix"
-      >
+      <ul class="dialog-list clearfix" v-loading="staffCoupons.loading">
         <template v-for="item in staffCoupons.list">
-          <li
-            :key="item"
-            :class="item.checked ? 'checked' : ''"
-            @click="selectStaffItems(item)"
-          >
-            <i
-              v-if="item.checked"
-              class="el-icon-check"
-            /> {{ item.title }}
+          <li :class="item.checked ? 'checked' : ''" @click="selectStaffItems(item)" :key="item">
+            <i v-if="item.checked" class="el-icon-check"></i> {{ item.title }}
           </li>
         </template>
       </ul>
@@ -358,41 +218,35 @@
         <el-pagination
           background
           layout="prev, pager, next"
+          @current-change="changeStaffCouponsPage"
           :current-page="staffCoupons.page.currentPage"
           :page-size="staffCoupons.page.pageSize"
           :total="staffCoupons.page.total"
-          @current-change="changeStaffCouponsPage"
-        />
+        >
+        </el-pagination>
       </div>
-      <div style="display: none">
+      <div style="display: none;">
         <template v-for="(item, index) in staffCoupons.temp">
-          <li :key="index">
-            {{ item.title }}
-          </li>
+          <li :key="index">{{ item.title }}</li>
         </template>
       </div>
-      <span
-        slot="footer"
-        class="dialog-footer"
-      >
+      <span slot="footer" class="dialog-footer">
         <el-button @click="cancelSelected">取 消</el-button>
-        <el-button
-          type="primary"
-          @click="submitSelected(true)"
-        >确 定</el-button>
+        <el-button type="primary" @click="submitSelected(true)">确 定</el-button>
       </span>
     </el-dialog>
     <linkSetter
       :links="linksArr"
       :visible="linksVisible"
+      @setLink="setLink"
+      @closeDialog="closeDialog"
       :show_article="false"
       :show_planting="false"
       :show_page="false"
       :show_marketing="false"
       :show_store="false"
-      @setLink="setLink"
-      @closeDialog="closeDialog"
-    />
+    >
+    </linkSetter>
   </div>
 </template>
 <script>
@@ -406,7 +260,7 @@ export default {
     imgPicker,
     linkSetter
   },
-  data () {
+  data() {
     return {
       isGetImage: false,
       imgDialog: false,
@@ -456,32 +310,20 @@ export default {
       linksArr: []
     }
   },
-  watch: {
-    getStatus (newVal, oldVal) {
-      if (newVal) {
-        this.getRegisterData()
-        this.getGoodsList()
-      }
-    }
-  },
-  mounted () {
-    this.getRegisterData()
-    this.getGoodsList()
-  },
   methods: {
-    handleImgChange () {
+    handleImgChange() {
       this.imgDialog = true
       this.isGetImage = true
     },
-    pickImg (data) {
+    pickImg(data) {
       this.form.ad_pic = data.url
       this.imgDialog = false
     },
-    closeImgDialog () {
+    closeImgDialog() {
       this.imgDialog = false
     },
     //选择商品分页
-    handlePagesChange (val) {
+    handlePagesChange(val) {
       this.params.page = val
       this.form.promotions_value.itemsList = []
       this.goodsList.forEach((row) => {
@@ -493,7 +335,7 @@ export default {
       })
       this.getGoodsList()
     },
-    getGoodsList () {
+    getGoodsList() {
       getItemsList(this.params).then((response) => {
         let list = []
         response.data.data.list.forEach((row) => {
@@ -517,39 +359,39 @@ export default {
         this.total_count = response.data.data.total_count
       })
     },
-    showModal () {
+    showModal() {
       this.coupons.dialog = true
     },
-    showStaffModal () {
+    showStaffModal() {
       this.staffCoupons.dialog = true
     },
-    onshowModal () {
+    onshowModal() {
       this.coupons.loading = true
       for (var i = 0; i < this.coupons.checked.length; i++) {
         this.coupons.temp.push(this.coupons.checked[i])
       }
       this.getCoupons(this.coupons.page.currentPage, false)
     },
-    changeCouponsPage (currentPage) {
+    changeCouponsPage(currentPage) {
       this.coupons.page.currentPage = currentPage
       this.getCoupons(currentPage, false)
     },
-    onshowStaffModal () {
+    onshowStaffModal() {
       this.staffCoupons.loading = true
       for (var i = 0; i < this.staffCoupons.checked.length; i++) {
         this.staffCoupons.temp.push(this.staffCoupons.checked[i])
       }
       this.getCoupons(this.staffCoupons.page.currentPage, true)
     },
-    changeStaffCouponsPage (currentPage) {
+    changeStaffCouponsPage(currentPage) {
       this.staffCoupons.page.currentPage = currentPage
       this.getCoupons(currentPage, true)
     },
-    oncloseModal () {
+    oncloseModal() {
       this.coupons.temp = []
       this.staffCoupons.temp = []
     },
-    selectItems (item) {
+    selectItems(item) {
       if (item.checked) {
         for (var i = 0; i < this.coupons.temp.length; i++) {
           if (this.coupons.temp[i].card_id === item.card_id) {
@@ -570,7 +412,7 @@ export default {
         this.coupons.temp.push(item)
       }
     },
-    selectStaffItems (item) {
+    selectStaffItems(item) {
       if (item.checked) {
         for (var i = 0; i < this.staffCoupons.temp.length; i++) {
           if (this.staffCoupons.temp[i].card_id === item.card_id) {
@@ -591,14 +433,14 @@ export default {
         this.staffCoupons.temp.push(item)
       }
     },
-    cardTypeChange (isStaff) {
+    cardTypeChange(isStaff) {
       if (isStaff) {
         this.getCoupons(1, true)
       } else {
         this.getCoupons(1, false)
       }
     },
-    submitSelected (isStaff) {
+    submitSelected(isStaff) {
       if (isStaff) {
         this.staffCoupons.dialog = false
         this.staffCoupons.checked = this.staffCoupons.temp
@@ -616,20 +458,20 @@ export default {
       }
       this.card_type = 'all'
     },
-    cancelSelected () {
+    cancelSelected() {
       this.coupons.dialog = false
       this.coupons.temp = []
       this.card_type = 'all'
       this.staffCoupons.dialog = false
       this.staffCoupons.temp = []
     },
-    removeChecked (index) {
+    removeChecked(index) {
       this.coupons.checked.splice(index, 1)
     },
-    removeStaffChecked (index) {
+    removeStaffChecked(index) {
       this.staffCoupons.checked.splice(index, 1)
     },
-    getCoupons (current, isStaff) {
+    getCoupons(current, isStaff) {
       getEffectiveCardList({
         page_no: current,
         page_size: this.coupons.page.pageSize,
@@ -661,7 +503,7 @@ export default {
         }
       })
     },
-    save () {
+    save() {
       this.form.promotions_value.itemsList = []
       //处理优惠券
       let couponArr = []
@@ -700,7 +542,7 @@ export default {
         })
       })
     },
-    getRegisterData () {
+    getRegisterData() {
       var params = { register_type: 'general' }
       getRegisterPromotions(params).then((response) => {
         this.form.ad_pic = response.data.data.ad_pic
@@ -724,18 +566,30 @@ export default {
         }
       })
     },
-    handleGoodsChange () {
+    handleGoodsChange() {
       this.linksVisible = true
     },
-    closeDialog () {
+    closeDialog() {
       this.linksVisible = false
     },
-    clear_pic_url () {
+    clear_pic_url() {
       this.form.register_jump_path = {}
     },
-    setLink (data, type) {
+    setLink(data, type) {
       let obj = Object.assign(data, { 'linkPage': type })
       this.form.register_jump_path = obj
+    },
+  },
+  mounted() {
+    this.getRegisterData()
+    this.getGoodsList()
+  },
+  watch: {
+    getStatus(newVal, oldVal) {
+      if (newVal) {
+        this.getRegisterData()
+        this.getGoodsList()
+      }
     }
   }
 }

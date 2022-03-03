@@ -1,56 +1,31 @@
 <template>
   <div>
     <el-alert
-      v-if="form_solo.status == 4"
       title="审核失败"
       type="error"
+      v-if="form_solo.status == 4"
       show-icon
       center
       :description="form_solo.resp_desc"
       :closable="false"
-    />
-    <el-divider v-if="form_solo.status == 4" />
+    ></el-alert>
+    <el-divider v-if="form_solo.status == 4"></el-divider>
     <div class="formClass">
-      <el-form
-        ref="form_solo"
-        :model="form_solo"
-        label-width="150px"
-        :rules="rules"
-      >
+      <el-form ref="form_solo" :model="form_solo" label-width="150px" :rules="rules">
         <el-form-item label="账号认证类型">
-          <el-button
-            type="success"
-            round
-            size="mini"
-          >
-            个体户
-          </el-button>
+          <el-button type="success" round size="mini">个体户</el-button>
         </el-form-item>
-        <el-form-item
-          label="个体户名称"
-          prop="solo_name"
-        >
-          <el-input
-            v-model="form_solo.solo_name"
-            :disabled="disabled"
-          />
+        <el-form-item label="个体户名称" prop="solo_name">
+          <el-input v-model="form_solo.solo_name" :disabled="disabled"></el-input>
         </el-form-item>
         <el-row>
-          <el-form-item
-            label="营业执照注册号"
-            prop="business_code"
-            :rules="[{ required: true, message: '请填写营业执照注册号', trigger: 'blur' }]"
-          >
-            <el-input
-              v-model="form_solo.business_code"
-              :disabled="disabled"
-            />
+          <el-form-item label="营业执照注册号" prop="business_code" :rules="[{ required: true, message: '请填写营业执照注册号', trigger: 'blur' }]">
+            <el-input v-model="form_solo.business_code" :disabled="disabled"></el-input>
           </el-form-item>
           <el-form-item
             label="营业执照"
             prop="business_code_img"
-            :rules="[{ required: true, message: '请上传营业执照', trigger: 'change' }]"
-          >
+            :rules="[{ required: true, message: '请上传营业执照', trigger: 'change' }]">
             <el-upload
               class="avatar-uploader"
               :disabled="disabled"
@@ -67,143 +42,81 @@
                 v-if="fileList.business_code_img"
                 :src="fileList.business_code_img"
                 class="avatar"
-              >
-              <i
-                v-else
-                class="el-icon-plus avatar-uploader-icon"
               />
+              <i v-else class="el-icon-plus avatar-uploader-icon"></i>
             </el-upload>
           </el-form-item>
         </el-row>
-        <el-form-item
-          label="营业执照起始日期"
-          prop="license_start_date"
-        >
+        <el-form-item label="营业执照起始日期" prop="license_start_date">
           <el-date-picker
+            type="date"
+            value-format="yyyyMMdd"
+            placeholder="选择日期"
             v-model="form_solo.license_start_date"
-            type="date"
-            value-format="yyyyMMdd"
-            placeholder="选择日期"
-            style="width: 100%"
+            style="width: 100%;"
             :disabled="disabled"
-          />
+          ></el-date-picker>
         </el-form-item>
-        <el-form-item
-          label="营业执照结束日期"
-          prop="license_end_date"
-        >
+        <el-form-item label="营业执照结束日期" prop="license_end_date">
           <el-date-picker
-            v-model="form_solo.license_end_date"
             type="date"
             value-format="yyyyMMdd"
             placeholder="选择日期"
-            style="width: 100%"
+            v-model="form_solo.license_end_date"
+            style="width: 100%;"
             :disabled="disabled"
             @change="$forceUpdate()"
-          />
+          ></el-date-picker>
         </el-form-item>
-        <el-form-item
-          label="个体户经营地址"
-          prop="solo_business_address"
-        >
-          <el-input
-            v-model="form_solo.solo_business_address"
-            :disabled="disabled"
-          />
+        <el-form-item label="个体户经营地址" prop="solo_business_address">
+          <el-input v-model="form_solo.solo_business_address" :disabled="disabled"></el-input>
         </el-form-item>
-        <el-form-item
-          label="个体户注册地址"
-          prop="solo_reg_address"
-        >
-          <el-input
-            v-model="form_solo.solo_reg_address"
-            :disabled="disabled"
-          />
+        <el-form-item label="个体户注册地址" prop="solo_reg_address">
+          <el-input v-model="form_solo.solo_reg_address" :disabled="disabled"></el-input>
         </el-form-item>
-        <el-form-item
-          label="个体户固定电话"
-          prop="solo_fixed_telephone"
-        >
-          <el-input
-            v-model="form_solo.solo_fixed_telephone"
-            :disabled="disabled"
-          />
+        <el-form-item label="个体户固定电话" prop="solo_fixed_telephone">
+          <el-input v-model="form_solo.solo_fixed_telephone" :disabled="disabled"></el-input>
         </el-form-item>
-        <el-form-item
-          label="经营范围"
-          prop="business_scope"
-        >
-          <el-input
-            v-model="form_solo.business_scope"
-            :disabled="disabled"
-          />
+        <el-form-item label="经营范围" prop="business_scope">
+          <el-input v-model="form_solo.business_scope" :disabled="disabled"></el-input>
         </el-form-item>
-        <el-form-item
-          label="法人姓名"
-          prop="legal_name"
-        >
-          <el-input
-            v-model="form_solo.legal_name"
-            :disabled="disabled"
-          />
+        <el-form-item label="法人姓名" prop="legal_name">
+          <el-input v-model="form_solo.legal_name" :disabled="disabled"></el-input>
         </el-form-item>
-        <el-form-item
-          label="法人证件类型"
-          prop="legal_id_card_type"
-        >
-          <el-select
+        <el-form-item label="法人证件类型" prop="legal_id_card_type">
+          <el-select 
             v-model="form_solo.legal_id_card_type"
             placeholder="选择法人代表证件类"
             :disabled="disabled"
-            @visible-change="(bool) => (isEdit = bool)"
+            @visible-change="(bool)=>isEdit=bool"
           >
-            <el-option
-              v-for="item in cardType"
-              :key="item.card_type"
-              :label="item.label"
-              :value="item.card_type"
-            />
+            <el-option v-for="item in cardType" :key="item.card_type" :label="item.label" :value="item.card_type"></el-option>
           </el-select>
         </el-form-item>
-        <el-form-item
-          label="法人证件号码"
-          prop="legal_id_card"
-        >
-          <el-input
-            v-model="form_solo.legal_id_card"
-            :disabled="disabled"
-          />
+        <el-form-item label="法人证件号码" prop="legal_id_card">
+          <el-input v-model="form_solo.legal_id_card" :disabled="disabled"></el-input>
         </el-form-item>
-        <el-form-item
-          label="法人证件起始日期"
-          prop="legal_cert_start_date"
-        >
+        <el-form-item label="法人证件起始日期" prop="legal_cert_start_date">
           <el-date-picker
+            type="date"
+            value-format="yyyyMMdd"
+            placeholder="选择日期"
             v-model="form_solo.legal_cert_start_date"
-            type="date"
-            value-format="yyyyMMdd"
-            placeholder="选择日期"
-            style="width: 100%"
+            style="width: 100%;"
             :disabled="disabled"
-          />
+          ></el-date-picker>
         </el-form-item>
-        <el-form-item
-          label="法人证件结束日期"
-          prop="legal_cert_end_date"
-        >
+        <el-form-item label="法人证件结束日期" prop="legal_cert_end_date">
           <el-date-picker
-            v-model="form_solo.legal_cert_end_date"
             type="date"
             value-format="yyyyMMdd"
             :disabled="disabled"
             placeholder="选择日期"
-            style="width: 100%"
-          />
+            v-model="form_solo.legal_cert_end_date"
+            style="width: 100%;"
+          ></el-date-picker>
         </el-form-item>
-        <el-form-item
-          label="法人证件正面"
-          prop="legal_card_imgz"
-        >
+        <el-form-item label="法人证件正面" prop="legal_card_imgz">
           <el-upload
             class="avatar-uploader"
             action="#"
@@ -216,21 +129,11 @@
               }
             "
           >
-            <img
-              v-if="fileList.legal_card_imgz"
-              :src="fileList.legal_card_imgz"
-              class="avatar"
-            >
-            <i
-              v-else
-              class="el-icon-plus avatar-uploader-icon"
-            />
+            <img v-if="fileList.legal_card_imgz" :src="fileList.legal_card_imgz" class="avatar" />
+            <i v-else class="el-icon-plus avatar-uploader-icon"></i>
           </el-upload>
         </el-form-item>
-        <el-form-item
-          label="法人证件反面"
-          prop="legal_card_imgf"
-        >
+        <el-form-item label="法人证件反面" prop="legal_card_imgf">
           <el-upload
             class="avatar-uploader"
             action="#"
@@ -243,61 +146,24 @@
               }
             "
           >
-            <img
-              v-if="fileList.legal_card_imgf"
-              :src="fileList.legal_card_imgf"
-              class="avatar"
-            >
-            <i
-              v-else
-              class="el-icon-plus avatar-uploader-icon"
-            />
+            <img v-if="fileList.legal_card_imgf" :src="fileList.legal_card_imgf" class="avatar" />
+            <i v-else class="el-icon-plus avatar-uploader-icon"></i>
           </el-upload>
         </el-form-item>
-        <el-form-item
-          label="法人手机号码"
-          prop="legal_mobile"
-        >
-          <el-input
-            v-model="form_solo.legal_mobile"
-            :disabled="disabled"
-          />
+        <el-form-item label="法人手机号码" prop="legal_mobile">
+          <el-input v-model="form_solo.legal_mobile" :disabled="disabled"></el-input>
         </el-form-item>
-        <el-form-item
-          label="企业联系人姓名"
-          prop="contact_name"
-        >
-          <el-input
-            v-model="form_solo.contact_name"
-            :disabled="disabled"
-          />
+        <el-form-item label="企业联系人姓名" prop="contact_name">
+          <el-input v-model="form_solo.contact_name" :disabled="disabled"></el-input>
         </el-form-item>
-        <el-form-item
-          label="企业联系人手机号"
-          prop="contact_mobile"
-        >
-          <el-input
-            v-model="form_solo.contact_mobile"
-            :disabled="disabled"
-          />
+        <el-form-item label="企业联系人手机号" prop="contact_mobile">
+          <el-input v-model="form_solo.contact_mobile" :disabled="disabled"></el-input>
         </el-form-item>
-        <el-form-item
-          label="企业联系人邮箱"
-          prop="contact_email"
-        >
-          <el-input
-            v-model="form_solo.contact_email"
-            :disabled="disabled"
-          />
+        <el-form-item label="企业联系人邮箱" prop="contact_email">
+          <el-input v-model="form_solo.contact_email" :disabled="disabled"></el-input>
         </el-form-item>
-        <el-form-item
-          label="银行卡号"
-          prop="bank_acct_num"
-        >
-          <el-input
-            v-model="form_solo.bank_acct_num"
-            :disabled="disabled"
-          />
+        <el-form-item label="银行卡号" prop="bank_acct_num">
+          <el-input v-model="form_solo.bank_acct_num" :disabled="disabled"></el-input>
         </el-form-item>
         <!-- <el-form-item label="银行卡正面" prop="bank_acct_num_imgz">
           <el-upload
@@ -333,22 +199,14 @@
             <i v-else class="el-icon-plus avatar-uploader-icon"></i>
           </el-upload>
         </el-form-item> -->
-        <el-form-item
-          label="职业"
-          prop="occupation"
-        >
-          <el-select
+        <el-form-item label="职业" prop="occupation">
+          <el-select 
             v-model="form_solo.occupation"
             placeholder="选择职业"
             :disabled="disabled"
-            @visible-change="(bool) => (isEdit = bool)"
+            @visible-change="(bool)=>isEdit=bool"
           >
-            <el-option
-              v-for="item in occupationList"
-              :key="item.occupation_key"
-              :label="item.label"
-              :value="item.occupation_key"
-            />
+            <el-option v-for="item in occupationList" :key="item.occupation_key" :label="item.label" :value="item.occupation_key"></el-option>
           </el-select>
         </el-form-item>
         <!-- <el-form-item label="企业联系人证件号" prop="contact_cert_num">
@@ -358,13 +216,7 @@
           <el-input v-model="form_solo.open_license_no" :disabled="disabled"></el-input>
         </el-form-item> -->
         <el-form-item>
-          <el-button
-            v-if="!disabled"
-            type="primary"
-            @click="onSoloSubmit"
-          >
-            保存
-          </el-button>
+          <el-button type="primary" @click="onSoloSubmit" v-if="!disabled">保存</el-button>
         </el-form-item>
       </el-form>
     </div>
@@ -377,7 +229,7 @@ import bankData from '@/common/hfpayBankData.json'
 import UploadUtil from '@/utils/uploadUtil'
 import { vaildateIdCard, isMobile, validEmail } from '@/utils/validate'
 export default {
-  data () {
+  data() {
     let vaildIdCard = (rule, value, callback) => {
       if (!vaildateIdCard(value)) {
         callback(new Error('请填写正确的身份证号码'))
@@ -517,10 +369,10 @@ export default {
         license_start_date: [{ required: true, message: '请选择日期', trigger: 'change' }],
         license_end_date: [{ required: true, message: '请选择日期', trigger: 'change' }],
         legal_name: [{ required: true, message: '请填写法人代表姓名', trigger: 'blur' }],
-        legal_id_card_type: [
-          { required: true, message: '请选择法人代表证件类型', trigger: 'change' }
+        legal_id_card_type: [{ required: true, message: '请选择法人代表证件类型', trigger: 'change' }],
+        legal_id_card: [
+          { required: true, message: '请填写法人代表证件号码', trigger: 'blur' },
         ],
-        legal_id_card: [{ required: true, message: '请填写法人代表证件号码', trigger: 'blur' }],
         legal_card_imgz: [{ required: true, message: '请上传证件正面', trigger: 'change' }],
         legal_card_imgf: [{ required: true, message: '请上传证件反面', trigger: 'change' }],
         legal_cert_start_date: [{ required: true, message: '请选择日期', trigger: 'change' }],
@@ -541,15 +393,12 @@ export default {
         bank_acct_num: [{ required: true, message: '请填写开户银行账号', trigger: 'blur' }],
         bank_acct_num_imgz: [{ required: true, message: '请上传银行卡正面', trigger: 'change' }],
         bank_acct_num_imgf: [{ required: true, message: '请上传银行卡反面', trigger: 'change' }],
-        occupation: [{ required: true, message: '请选择', trigger: 'change' }],
-        solo_business_address: [
-          { required: true, message: '请填写个体户经营地址', trigger: 'blur' }
-        ],
+        occupation:[{ required: true, message: '请选择', trigger: 'change' }],
+        solo_business_address: [{ required: true, message: '请填写个体户经营地址', trigger: 'blur' }],
         solo_reg_address: [{ required: true, message: '请填写个体户注册地址', trigger: 'blur' }],
-        solo_fixed_telephone: [
-          { required: true, message: '请填写个体户固定电话', trigger: 'blur' }
-        ],
+        solo_fixed_telephone: [{ required: true, message: '请填写个体户固定电话', trigger: 'blur' }],
         business_scope: [{ required: true, message: '请填写经营范围', trigger: 'blur' }]
+
       },
       fileList: {
         business_code_img: '',
@@ -567,7 +416,7 @@ export default {
       }
     }
   },
-  mounted () {
+  mounted() {
     let { id, type } = this.$route.query
     this.form_solo.distributor_id = id
     let disabled = type == 0 ? true : false
@@ -576,11 +425,11 @@ export default {
     this.getSoloData()
   },
   methods: {
-    async getSoloData () {
+    async getSoloData() {
       let distributor_id = this.form_solo.distributor_id
       let apply_type = this.form_solo.apply_type
       let res = await getHffile({ distributor_id, apply_type })
-      if (res.data.data.length == 0) {
+      if (res.data.data.length==0) {
         return
       }
       let { data } = res
@@ -597,11 +446,11 @@ export default {
       this.fileList = fileList
       this.form_solo = data
     },
-    onSoloSubmit () {
+    onSoloSubmit() {
       this.$refs['form_solo'].validate((valid) => {
         if (valid) {
           let obj = JSON.parse(JSON.stringify(this.form_solo))
-
+          
           saveHffile(obj).then((res) => {
             this.$message({
               message: '保存成功',
@@ -616,7 +465,7 @@ export default {
         }
       })
     },
-    handleSoloChange (ctx, type) {
+    handleSoloChange(ctx, type) {
       let { file } = ctx
       if (file) {
         if (file.type != 'image/jpeg' && file.type != 'image/png') {
@@ -649,37 +498,37 @@ export default {
 }
 </script>
 <style lang="scss" scoped>
-.formClass {
-  width: 600px;
-  margin: 0 auto;
-}
-.el-row {
-  margin-bottom: 0px !important;
-}
+  .formClass {
+    width: 600px;
+    margin: 0 auto;
+  }
+  .el-row {
+    margin-bottom: 0px !important;
+  }
 
-.avatar-uploader {
-  .el-upload {
-    border: 1px dashed #d9d9d9;
-    border-radius: 6px;
-    cursor: pointer;
-    position: relative;
-    overflow: hidden;
+  .avatar-uploader {
+    .el-upload {
+      border: 1px dashed #d9d9d9;
+      border-radius: 6px;
+      cursor: pointer;
+      position: relative;
+      overflow: hidden;
+    }
+    &:hover {
+      border-color: #409eff;
+    }
+    .avatar-uploader-icon {
+      font-size: 28px;
+      color: #8c939d;
+      width: 148px;
+      height: 148px;
+      line-height: 148px;
+      text-align: center;
+    }
   }
-  &:hover {
-    border-color: #409eff;
-  }
-  .avatar-uploader-icon {
-    font-size: 28px;
-    color: #8c939d;
+  .avatar {
     width: 148px;
     height: 148px;
-    line-height: 148px;
-    text-align: center;
+    display: block;
   }
-}
-.avatar {
-  width: 148px;
-  height: 148px;
-  display: block;
-}
 </style>

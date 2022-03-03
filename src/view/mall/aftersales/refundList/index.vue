@@ -1,34 +1,26 @@
 <template>
   <div>
     <div v-if="$route.path.indexOf('detail') === -1">
-      <el-tabs
-        v-model="activeName"
-        type="card"
-        @tab-click="handleTabClick"
-      >
+      <el-tabs v-model="activeName" type="card" @tab-click="handleTabClick">
         <el-tab-pane
           v-for="(item, index) in tabList"
           :key="index"
           :label="item.name"
           :name="item.activeName"
         >
-          <order v-if="activeName == 'order'" />
-          <orderlog v-if="activeName == 'orderlog'" />
+          <order v-if="activeName == 'order'"/>
+          <orderlog v-if="activeName == 'orderlog'"/>
         </el-tab-pane>
       </el-tabs>
     </div>
-    <router-view />
+    <router-view></router-view>
   </div>
 </template>
 <script>
 import order from './components/order'
 import orderlog from './components/orderlog'
 export default {
-  components: {
-    order,
-    orderlog
-  },
-  data () {
+  data() {
     return {
       activeName: 'order',
       tabList: [
@@ -37,9 +29,15 @@ export default {
       ]
     }
   },
-  mounted () {},
+  components: {
+    order,
+    orderlog
+  },
   methods: {
-    handleTabClick: function () {}
-  }
+    handleTabClick:function(){
+
+    }
+  },
+  mounted() {}
 }
 </script>

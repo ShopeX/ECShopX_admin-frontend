@@ -1,25 +1,13 @@
 <template>
-  <el-form
-    ref="form"
-    :model="form"
-    class="box-set"
-    label-width="120px"
-  >
-    <el-card
-      header="积分升值活动"
-      shadow="naver"
-    >
+  <el-form ref="form" :model="form" class="box-set" label-width="120px">
+    <el-card header="积分升值活动" shadow="naver">
       <el-form-item
         label="活动名称"
         prop="title"
         :rules="{ required: true, message: '活动名称必填', trigger: 'blur' }"
       >
         <el-col :span="8">
-          <el-input
-            v-model="form.title"
-            :maxlength="30"
-            placeholder="请输入活动名称"
-          />
+          <el-input v-model="form.title" :maxlength="30" placeholder="请输入活动名称"></el-input>
         </el-col>
       </el-form-item>
       <el-form-item label="活动时间">
@@ -35,82 +23,62 @@
           :disabled="form.is_forever"
           :default-time="['00:00:00', '23:59:59']"
           :picker-options="pickerOptions2"
-        />
+        >
+        </el-date-picker>
         &nbsp;&nbsp;&nbsp;
-        <el-checkbox v-model="form.is_forever">
-          长期有效
-        </el-checkbox>
+        <el-checkbox v-model="form.is_forever">长期有效</el-checkbox>
       </el-form-item>
       <el-form-item label="日期">
         <el-radio-group v-model="condition">
-          <el-radio label="every_year">
-            每年
-          </el-radio>
-          <el-radio label="every_month">
-            每月
-          </el-radio>
-          <el-radio label="every_week">
-            每周
-          </el-radio>
-          <el-radio label="date">
-            指定日期
-          </el-radio>
+          <el-radio label="every_year">每年</el-radio>
+          <el-radio label="every_month">每月</el-radio>
+          <el-radio label="every_week">每周</el-radio>
+          <el-radio label="date">指定日期</el-radio>
         </el-radio-group>
         <transition name="el-fade-in-linear">
           <div v-if="condition === 'every_year'">
-            <el-select
-              v-model="memberDay.month"
-              placeholder="请选择月份"
-            >
+            <el-select v-model="memberDay.month" placeholder="请选择月份">
               <el-option
                 v-for="item in monthOptions"
                 :key="item.value"
                 :label="item.label"
                 :value="item.value"
-              />
+              >
+              </el-option>
             </el-select>
-            <el-select
-              v-model="memberDay.day"
-              placeholder="请选择日期"
-            >
+            <el-select v-model="memberDay.day" placeholder="请选择日期">
               <el-option
                 v-for="item in dayOptions"
                 :key="item.value"
                 :label="item.label"
                 :value="item.value"
-              />
+              >
+              </el-option>
             </el-select>
           </div>
           <div v-if="condition === 'every_month'">
-            <el-select
-              v-model="memberDay.day"
-              placeholder="请选择日期"
-            >
+            <el-select v-model="memberDay.day" placeholder="请选择日期">
               <el-option
                 v-for="item in dayOptions"
                 :key="item.value"
                 :label="item.label"
                 :value="item.value"
-              />
+              >
+              </el-option>
             </el-select>
           </div>
           <div v-if="condition === 'every_week'">
-            <el-select
-              v-model="memberDay.week"
-              placeholder="请选择星期"
-            >
+            <el-select v-model="memberDay.week" placeholder="请选择星期">
               <el-option
                 v-for="item in weekOptions"
                 :key="item.value"
                 :label="item.label"
                 :value="item.value"
-              />
+              >
+              </el-option>
             </el-select>
           </div>
-          <div
-            v-if="condition === 'date'"
-            style="width: 350px"
-          >
+          <div v-if="condition === 'date'" style="width: 350px;">
             <el-date-picker
               v-model="memberDay.date"
               type="daterange"
@@ -119,10 +87,11 @@
               range-separator="至"
               start-placeholder="开始日期"
               end-placeholder="结束日期"
-              style="width: 100%"
+              style="width: 100%;"
               value-format="yyyy-MM-dd"
               @change="dateChange"
-            />
+            >
+            </el-date-picker>
           </div>
         </transition>
       </el-form-item>
@@ -135,17 +104,17 @@
           v-model="form.upvaluation"
           :maxlength="30"
           placeholder="请输入升值倍数"
-          style="width: 150px"
-        />
+          style="width: 150px;"
+        ></el-input>
         倍
       </el-form-item>
       <el-form-item label="每日升值上限">
         每日可使用升值积分上限
         <el-input
-          v-model="form.max_up_point"
           type="number"
+          v-model="form.max_up_point"
           placeholder=""
-          style="width: 150px"
+          style="width: 150px;"
           :min="1"
           :max="9999999"
         />
@@ -153,48 +122,25 @@
       </el-form-item>
       <el-form-item label="适用会员">
         <el-checkbox-group v-model="form.valid_grade">
-          <el-checkbox
-            v-for="grade in memberGrade"
-            :key="grade.grade_id"
-            :label="grade.grade_id"
+          <el-checkbox v-for="grade in memberGrade" :label="grade.grade_id" :key="grade.grade_id">{{
+            grade.grade_name
+          }}</el-checkbox>
+          <el-checkbox v-for="vipdata in vipGrade" :label="vipdata.lv_type" :key="vipdata.lv_type"
+            >付费{{ vipdata.grade_name }}</el-checkbox
           >
-            {{
-              grade.grade_name
-            }}
-          </el-checkbox>
-          <el-checkbox
-            v-for="vipdata in vipGrade"
-            :key="vipdata.lv_type"
-            :label="vipdata.lv_type"
-          >
-            付费{{ vipdata.grade_name }}
-          </el-checkbox>
         </el-checkbox-group>
       </el-form-item>
       <el-form-item label="应用场景">
         <el-checkbox-group v-model="form.used_scene">
-          <el-checkbox
-            v-for="(value, key) in used_scene"
-            :key="key"
-            :label="key"
-          >
-            {{
-              value
-            }}
-          </el-checkbox>
+          <el-checkbox v-for="(value, key) in used_scene" :label="key" :key="key">{{
+            value
+          }}</el-checkbox>
         </el-checkbox-group>
       </el-form-item>
     </el-card>
     <div class="content-center">
-      <el-button @click.native="handleCancel">
-        返回
-      </el-button>
-      <el-button
-        type="primary"
-        @click="submitActivityAction()"
-      >
-        保存
-      </el-button>
+      <el-button @click.native="handleCancel">返回</el-button>
+      <el-button type="primary" @click="submitActivityAction()">保存</el-button>
     </div>
   </el-form>
 </template>
@@ -215,13 +161,13 @@ export default {
   components: {
     imgBox
   },
-  data () {
+  data() {
     return {
       pickerOptions2: {
         shortcuts: [
           {
             text: '最近一周',
-            onClick (picker) {
+            onClick(picker) {
               const end = new Date()
               end.setHours(23, 59, 59, 0)
               const start = new Date()
@@ -232,7 +178,7 @@ export default {
           },
           {
             text: '最近一个月',
-            onClick (picker) {
+            onClick(picker) {
               const end = new Date()
               end.setHours(23, 59, 59, 0)
               const start = new Date()
@@ -243,7 +189,7 @@ export default {
           },
           {
             text: '最近三个月',
-            onClick (picker) {
+            onClick(picker) {
               const end = new Date()
               end.setHours(23, 59, 59, 0)
               const start = new Date()
@@ -290,8 +236,129 @@ export default {
       imgDialog: false
     }
   },
-  mounted () {
-    function filter (val) {
+  methods: {
+    dateChange(val) {
+      console.log(val)
+      this.memberDay.date = val
+    },
+    submitActivityAction() {
+      const that = this
+      let date_start_time = ''
+      let date_end_time = ''
+      if (this.memberDay.date.length > 0) {
+        date_start_time = this.memberDay.date[0]
+        date_end_time = this.memberDay.date[1]
+      }
+      let obj = {
+        type: this.condition,
+        month: this.memberDay.month,
+        week: this.memberDay.week,
+        day: this.memberDay.day,
+        begin_time: date_start_time,
+        end_time: date_end_time
+      }
+      this.form.trigger_condition = { trigger_time: obj }
+
+      if (this.activity_date.length > 0) {
+        this.form.begin_time = this.activity_date[0]
+        this.form.end_time = this.activity_date[1]
+      }
+      let params = JSON.stringify(this.form)
+      params = JSON.parse(params)
+      params.items = JSON.stringify(params.items)
+      params.item_category = JSON.stringify(params.item_category)
+      if (this.form.activity_id) {
+        updatePointupvaluation(params).then((res) => {
+          if (res.data.data.activity_id) {
+            this.loading = false
+            this.$message({
+              message: '更新成功',
+              type: 'success',
+              duration: 2 * 1000,
+              onClose() {
+                that.refresh()
+                that.$router.go(-1)
+              }
+            })
+          } else {
+            this.$message.error('保存失败!')
+            return false
+          }
+        })
+      } else {
+        createPointupvaluation(params).then((res) => {
+          if (res.data.data.activity_id) {
+            this.loading = false
+            this.$message({
+              message: '添加成功',
+              type: 'success',
+              duration: 2 * 1000,
+              onClose() {
+                that.refresh()
+                that.$router.go(-1)
+              }
+            })
+          } else {
+            this.$message.error('保存失败!')
+            return false
+          }
+        })
+      }
+    },
+    getTaskTime(strDate) {
+      let date = new Date(strDate)
+      let y = date.getFullYear()
+      let m = date.getMonth() + 1
+      m = m < 10 ? '0' + m : m
+      let d = date.getDate()
+      d = d < 10 ? '0' + d : d
+      let str = y + '-' + m + '-' + d
+      return str
+    },
+    getActivityDetail(id) {
+      getPointupvaluationInfo({ activity_id: id }).then((res) => {
+        let response = res.data.data
+        let data = {
+          activity_id: response.activity_id,
+          title: response.title,
+          trigger_condition: response.trigger_condition,
+          begin_time: response.begin_time,
+          end_time: response.end_time,
+          upvaluation: response.upvaluation,
+          max_up_point: response.max_up_point,
+          valid_grade: response.valid_grade,
+          used_scene: response.used_scene,
+          is_forever: response.is_forever
+        }
+        Object.assign(this.form, data)
+        const trigger_time = response.trigger_condition.trigger_time
+        this.activity_date = [response.begin_date, response.end_date]
+        this.condition = trigger_time.type
+        this.memberDay.day = Number(trigger_time.day || 1)
+        this.memberDay.month = Number(trigger_time.month || 1)
+        this.memberDay.week = Number(trigger_time.week || 1)
+        const { begin_date, end_date } = trigger_time
+        this.memberDay.date = [begin_date || '', end_date || '']
+        console.log(this.memberDay, 1)
+      })
+    },
+    formatDate(type, num) {
+      const newNum = Number(num) || 1
+      const weeks = ['一', '二', '三', '四', '五', '六', '日']
+      console.log(weeks[newNum])
+      const returnType = {
+        week: `星期${weeks[newNum - 1]}`,
+        month: `${newNum}月`,
+        day: `${newNum}日`
+      }
+      return returnType[type]
+    },
+    handleCancel: function() {
+      this.$router.go(-1)
+    }
+  },
+  mounted() {
+    function filter(val) {
       var x = ''
       switch (val) {
         case 1:
@@ -359,127 +426,6 @@ export default {
     })
     if (this.$route.params.id) {
       this.getActivityDetail(this.$route.params.id)
-    }
-  },
-  methods: {
-    dateChange (val) {
-      console.log(val)
-      this.memberDay.date = val
-    },
-    submitActivityAction () {
-      const that = this
-      let date_start_time = ''
-      let date_end_time = ''
-      if (this.memberDay.date.length > 0) {
-        date_start_time = this.memberDay.date[0]
-        date_end_time = this.memberDay.date[1]
-      }
-      let obj = {
-        type: this.condition,
-        month: this.memberDay.month,
-        week: this.memberDay.week,
-        day: this.memberDay.day,
-        begin_time: date_start_time,
-        end_time: date_end_time
-      }
-      this.form.trigger_condition = { trigger_time: obj }
-
-      if (this.activity_date.length > 0) {
-        this.form.begin_time = this.activity_date[0]
-        this.form.end_time = this.activity_date[1]
-      }
-      let params = JSON.stringify(this.form)
-      params = JSON.parse(params)
-      params.items = JSON.stringify(params.items)
-      params.item_category = JSON.stringify(params.item_category)
-      if (this.form.activity_id) {
-        updatePointupvaluation(params).then((res) => {
-          if (res.data.data.activity_id) {
-            this.loading = false
-            this.$message({
-              message: '更新成功',
-              type: 'success',
-              duration: 2 * 1000,
-              onClose () {
-                that.refresh()
-                that.$router.go(-1)
-              }
-            })
-          } else {
-            this.$message.error('保存失败!')
-            return false
-          }
-        })
-      } else {
-        createPointupvaluation(params).then((res) => {
-          if (res.data.data.activity_id) {
-            this.loading = false
-            this.$message({
-              message: '添加成功',
-              type: 'success',
-              duration: 2 * 1000,
-              onClose () {
-                that.refresh()
-                that.$router.go(-1)
-              }
-            })
-          } else {
-            this.$message.error('保存失败!')
-            return false
-          }
-        })
-      }
-    },
-    getTaskTime (strDate) {
-      let date = new Date(strDate)
-      let y = date.getFullYear()
-      let m = date.getMonth() + 1
-      m = m < 10 ? '0' + m : m
-      let d = date.getDate()
-      d = d < 10 ? '0' + d : d
-      let str = y + '-' + m + '-' + d
-      return str
-    },
-    getActivityDetail (id) {
-      getPointupvaluationInfo({ activity_id: id }).then((res) => {
-        let response = res.data.data
-        let data = {
-          activity_id: response.activity_id,
-          title: response.title,
-          trigger_condition: response.trigger_condition,
-          begin_time: response.begin_time,
-          end_time: response.end_time,
-          upvaluation: response.upvaluation,
-          max_up_point: response.max_up_point,
-          valid_grade: response.valid_grade,
-          used_scene: response.used_scene,
-          is_forever: response.is_forever
-        }
-        Object.assign(this.form, data)
-        const trigger_time = response.trigger_condition.trigger_time
-        this.activity_date = [response.begin_date, response.end_date]
-        this.condition = trigger_time.type
-        this.memberDay.day = Number(trigger_time.day || 1)
-        this.memberDay.month = Number(trigger_time.month || 1)
-        this.memberDay.week = Number(trigger_time.week || 1)
-        const { begin_date, end_date } = trigger_time
-        this.memberDay.date = [begin_date || '', end_date || '']
-        console.log(this.memberDay, 1)
-      })
-    },
-    formatDate (type, num) {
-      const newNum = Number(num) || 1
-      const weeks = ['一', '二', '三', '四', '五', '六', '日']
-      console.log(weeks[newNum])
-      const returnType = {
-        week: `星期${weeks[newNum - 1]}`,
-        month: `${newNum}月`,
-        day: `${newNum}日`
-      }
-      return returnType[type]
-    },
-    handleCancel: function () {
-      this.$router.go(-1)
     }
   }
 }

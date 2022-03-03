@@ -31,22 +31,22 @@ export default {
       children: [
         {
           path: 'detail/:itemId?',
-          component: () => import('@/view/mall/trade/order/detail')
+          component: () => import( '@/view/mall/trade/order/detail')
         }
       ]
     },
     {
       path: 'entitytrade/aftersaleslist',
       name: `售后列表`,
-      component: () => import('@/view/mall/aftersales/list'),
+      component: () => import( '@/view/mall/aftersales/list'),
       children: [
         {
           path: 'detail/:itemId?',
-          component: () => import('@/view/mall/aftersales/detail')
+          component: () => import( '@/view/mall/aftersales/detail')
         }
       ]
     },
-
+    
     {
       path: 'entitytrade/normalordersupload',
       name: `批量发货`,
@@ -65,7 +65,7 @@ export default {
     {
       path: 'aftersalesrefundlist',
       name: `退款单`,
-      component: () => import('@/view/mall/aftersales/refundList'),
+      component: () => import( '@/view/mall/aftersales/refundList' ),
       children: [
         {
           path: 'detail/:itemId?',
@@ -97,7 +97,7 @@ export default {
     {
       path: 'reservation/mallreservation',
       name: `预约管理`,
-      component: () => import('@/view/mall/reservation/resourcesetting/index'),
+      component: () => import( '@/view/mall/reservation/resourcesetting/index' ),
       children: [
         {
           path: 'editor',
@@ -133,33 +133,35 @@ export default {
     {
       path: 'Yilianyun',
       name: `易联云配置`,
-      component: () => import('@/view/base/setting/yilianyun/index')
+      component: () =>
+        import('@/view/base/setting/yilianyun/index')
     },
     {
       path: 'aftersalesreason',
       name: `售后原因`,
-      component: () => import('@/view/mall/aftersales/reason')
+      component: () =>
+        import('@/view/mall/aftersales/reason')
     },
     {
       path: 'tradesetting',
       name: `交易配置`,
-      component: () => import('@/view/base/setting/tradesetting/index')
+      component: () => import( '@/view/base/setting/tradesetting/index')
     },
     {
-      path: 'adapay_trades',
-      name: '交易单',
-      component: () => import('@/view/mall/sub_account/sub_account'),
-      children: [
+      path:'adapay_trades',
+      name:'交易单',
+      component:() => import('@/view/mall/sub_account/sub_account'),
+      children:[
         {
-          path: 'detail/:order_id',
-          component: () => import('@/view/mall/sub_account/detail')
+          path:'detail/:order_id',
+          component:() => import('@/view/mall/sub_account/detail'),
         }
       ]
     },
     {
-      path: 'adapay_cash',
-      name: '提现',
-      component: () => import('@/view/mall/withdraw/withdraw')
+      path:'adapay_cash',
+      name:'提现',
+      component:() =>import('@/view/mall/withdraw/withdraw')
     }
   ]
 }

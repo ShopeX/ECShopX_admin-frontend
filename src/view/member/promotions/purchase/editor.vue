@@ -1,11 +1,6 @@
 <template>
   <div>
-    <el-form
-      ref="form"
-      :rules="rules"
-      :model="form"
-      label-width="110px"
-    >
+    <el-form ref="form" :rules="rules" :model="form" label-width="110px">
       <el-form-item label="活动名称：">
         <el-input
           v-model="form.purchase_name"
@@ -13,25 +8,19 @@
           maxlength="30"
           type="textarea"
           show-word-limit
-        />
+        ></el-input>
       </el-form-item>
       <el-form-item label="活动封面：">
-        <div class="frm-tips">
-          建议上传尺寸大小为300*300且格式为png、jpg图片；文件大小为2M内。
-        </div>
+        <div class="frm-tips">建议上传尺寸大小为300*300且格式为png、jpg图片；文件大小为2M内。</div>
         <div>
-          <imgBox
-            :img-url="form.ad_pic"
-            inline
-            @click="handleImgChange"
-          />
+          <imgBox :imgUrl="form.ad_pic" inline @click="handleImgChange"></imgBox>
         </div>
         <imgPicker
           :dialog-visible="imgDialog"
           :sc-status="isGetImage"
           @chooseImg="pickImg"
           @closeImgDialog="closeImgDialog"
-        />
+        ></imgPicker>
       </el-form-item>
       <el-form-item label="活动时间：">
         <el-col :span="20">
@@ -43,15 +32,16 @@
             end-placeholder="结束时间"
             value-format="yyyy-MM-dd HH:mm:ss"
             :default-time="['00:00:00', '23:59:59']"
-          />
+          >
+          </el-date-picker>
         </el-col>
       </el-form-item>
       <el-form-item label="适用角色：">
         <el-checkbox-group v-model="form.used_roles">
           <el-checkbox
             v-for="roleItem in roleArr"
-            :key="roleItem.key"
             :label="roleItem.key"
+            :key="roleItem.key"
             :disabled="roleItem.key === 'employee'"
             :value="roleItem.key"
           >
@@ -61,85 +51,41 @@
       </el-form-item>
       <div style="display: flex">
         <el-form-item label="员工额度：">
-          <el-input
-            v-model="form.employee_limitfee"
-            style="width: 240px"
+          <el-input style="width: 240px" v-model="form.employee_limitfee"
+            ><template slot="append">元</template></el-input
           >
-            <template slot="append">
-              元
-            </template>
-          </el-input>
         </el-form-item>
         <el-form-item v-if="form.used_roles.includes('dependents')">
-          <el-checkbox v-model="form.is_share_limitfee">
-            是否共享额度
-          </el-checkbox>
+          <el-checkbox v-model="form.is_share_limitfee">是否共享额度</el-checkbox>
         </el-form-item>
       </div>
       <el-form-item
-        v-if="form.used_roles.includes('dependents') && !form.is_share_limitfee"
         label="家属额度："
+        v-if="form.used_roles.includes('dependents') && !form.is_share_limitfee"
       >
-        <el-input
-          v-model="form.dependents_limitfee"
-          style="width: 240px"
+        <el-input style="width: 240px" v-model="form.dependents_limitfee"
+          ><template slot="append">元</template></el-input
         >
-          <template slot="append">
-            元
-          </template>
-        </el-input>
       </el-form-item>
-      <el-form-item
-        v-if="form.used_roles.includes('dependents')"
-        label="员工邀请上限："
-      >
-        <el-input
-          v-model="form.dependents_limit"
-          style="width: 240px"
+      <el-form-item label="员工邀请上限：" v-if="form.used_roles.includes('dependents')">
+        <el-input style="width: 240px" v-model="form.dependents_limit"
+          ><template slot="append">人</template></el-input
         >
-          <template slot="append">
-            人
-          </template>
-        </el-input>
       </el-form-item>
-      <el-card
-        header="活动商品"
-        shadow="naver"
-      >
+      <el-card header="活动商品" shadow="naver">
         <el-form-item label="适用商品">
-          <el-radio-group
-            v-model="form.item_type"
-            @change="itemTypeChange"
-          >
-            <el-radio label="all">
-              全部商品
-            </el-radio>
-            <el-radio label="item">
-              指定商品适用
-            </el-radio>
-            <el-radio label="category">
-              指定分类适用
-            </el-radio>
-            <el-radio label="tag">
-              指定商品标签适用
-            </el-radio>
-            <el-radio label="brand">
-              指定品牌适用
-            </el-radio>
+          <el-radio-group v-model="form.item_type" @change="itemTypeChange">
+            <el-radio label="all">全部商品</el-radio>
+            <el-radio label="item">指定商品适用</el-radio>
+            <el-radio label="category">指定分类适用</el-radio>
+            <el-radio label="tag">指定商品标签适用</el-radio>
+            <el-radio label="brand">指定品牌适用</el-radio>
           </el-radio-group>
         </el-form-item>
-        <el-form-item
-          v-if="!allHiden"
-          label="每人限购："
-        >
-          <el-input
-            v-model="allLimit"
-            style="width: 240px"
+        <el-form-item label="每人限购：" v-if="!allHiden">
+          <el-input style="width: 240px" v-model="allLimit"
+            ><template slot="append">件</template></el-input
           >
-            <template slot="append">
-              件
-            </template>
-          </el-input>
         </el-form-item>
         <div v-if="!zdItemHidden">
           <div style="position: relative">
@@ -151,80 +97,37 @@
                 :auto-upload="false"
                 :show-file-list="false"
               >
-                <el-button type="primary">
-                  批量上传
-                </el-button>
+                <el-button type="primary">批量上传</el-button>
               </el-upload>
-              <el-button
-                style="margin-left: 10px"
-                type="primary"
-                @click="uploadHandleTemplate()"
+              <el-button style="margin-left: 10px" type="primary" @click="uploadHandleTemplate()"
+                >下载模板</el-button
               >
-                下载模板
-              </el-button>
             </div>
-            <SkuSelector
-              :data="relItems"
-              @change="getItems"
-            />
+            <SkuSelector @change="getItems" :data="relItems"></SkuSelector>
           </div>
-          <el-button
-            type="primary"
-            plain
-            style="margin-top: 10px"
-            @click="dialogFormVisible = true"
+          <el-button type="primary" plain style="margin-top: 10px" @click="dialogFormVisible = true"
+            >批量设置</el-button
           >
-            批量设置
-          </el-button>
-          <el-table
-            key="currentGoodKey"
-            :data="good.currentGoods"
-          >
-            <el-table-column
-              prop="item_id"
-              label="ID"
-              width="180"
-            />
-            <el-table-column
-              prop="itemName"
-              label="商品名称"
-              width="180"
-            />
-            <el-table-column
-              prop="item_spec_desc"
-              label="规格"
-              width="180"
-            />
-            <el-table-column
-              prop="limit_num"
-              label="每人限购"
-              width="280"
-            >
+          <el-table :data="good.currentGoods" key="currentGoodKey">
+            <el-table-column prop="item_id" label="ID" width="180"> </el-table-column>
+            <el-table-column prop="itemName" label="商品名称" width="180"> </el-table-column>
+            <el-table-column prop="item_spec_desc" label="规格" width="180"> </el-table-column>
+            <el-table-column prop="limit_num" label="每人限购" width="280">
               <template slot-scope="scope">
                 <el-input
                   v-model="scope.row.limit_num"
                   @input="inputChange(scope.$index, 'good.currentGoods')"
+                  ><template slot="append">件</template></el-input
                 >
-                  <template slot="append">
-                    件
-                  </template>
-                </el-input>
               </template>
             </el-table-column>
-            <el-table-column
-              prop="limit_fee"
-              label="每人限额"
-              width="280"
-            >
+            <el-table-column prop="limit_fee" label="每人限额" width="280">
               <template slot-scope="scope">
                 <el-input
                   v-model="scope.row.limit_fee"
                   @input="inputChange(scope.$index, 'good.currentGoods')"
+                  ><template slot="append">元</template></el-input
                 >
-                  <template slot="append">
-                    元
-                  </template>
-                </el-input>
               </template>
             </el-table-column>
           </el-table>
@@ -233,66 +136,42 @@
           <div>
             <div style="width: 300px">
               <treeselect
-                v-model="item_category"
                 :options="categoryList"
                 :show-count="true"
                 :multiple="true"
                 :disable-branch-nodes="true"
                 :clearable="false"
                 value-format="object"
-              />
+                v-model="item_category"
+              >
+              </treeselect>
             </div>
             <el-button
               type="primary"
               plain
               style="margin-top: 10px"
               @click="dialogFormVisible = true"
+              >批量设置</el-button
             >
-              批量设置
-            </el-button>
-            <el-table
-              key="categoryKey"
-              :data="item_category"
-            >
-              <el-table-column
-                prop="category_id"
-                label="ID"
-                width="180"
-              />
-              <el-table-column
-                prop="category_name"
-                label="分类名称"
-                width="180"
-              />
-              <el-table-column
-                label="每人限购"
-                width="280"
-              >
+            <el-table :data="item_category" key="categoryKey">
+              <el-table-column prop="category_id" label="ID" width="180"> </el-table-column>
+              <el-table-column prop="category_name" label="分类名称" width="180"> </el-table-column>
+              <el-table-column label="每人限购" width="280">
                 <template slot-scope="scope">
                   <el-input
                     v-model="scope.row.limit_num"
                     @input="inputChange(scope.$index, 'item_category')"
+                    ><template slot="append">件</template></el-input
                   >
-                    <template slot="append">
-                      件
-                    </template>
-                  </el-input>
                 </template>
               </el-table-column>
-              <el-table-column
-                prop="limit_fee"
-                label="每人限额"
-                width="280"
-              >
+              <el-table-column prop="limit_fee" label="每人限额" width="280">
                 <template slot-scope="scope">
                   <el-input
                     v-model="scope.row.limit_fee"
                     @input="inputChange(scope.$index, 'item_category')"
+                    ><template slot="append">元</template></el-input
                   >
-                    <template slot="append">
-                      元
-                    </template>
-                  </el-input>
                 </template>
               </el-table-column>
             </el-table>
@@ -300,13 +179,11 @@
         </el-col>
         <template v-if="!tagHidden">
           <div class="view-flex">
-            <div class="label">
-              未选标签：
-            </div>
+            <div class="label">未选标签：</div>
             <el-tag
-              v-for="(tag, index) in tag.tags"
-              :key="index"
               class="tag-item"
+              :key="index"
+              v-for="(tag, index) in tag.tags"
               size="medium"
               color="#ffffff"
               :disable-transitions="false"
@@ -315,17 +192,12 @@
               {{ tag.tag_name }}
             </el-tag>
           </div>
-          <div
-            class="selected-tags view-flex"
-            style="margin-top: 10px"
-          >
-            <div class="label">
-              已选标签：
-            </div>
+          <div class="selected-tags view-flex" style="margin-top: 10px">
+            <div class="label">已选标签：</div>
             <div class="view-flex-item">
               <el-tag
-                v-for="(tag, index) in tag.currentTags"
                 :key="index"
+                v-for="(tag, index) in tag.currentTags"
                 closable
                 size="small"
                 :disable-transitions="false"
@@ -335,72 +207,40 @@
               </el-tag>
             </div>
           </div>
-          <el-button
-            type="primary"
-            plain
-            style="margin-top: 10px"
-            @click="dialogFormVisible = true"
+          <el-button type="primary" plain style="margin-top: 10px" @click="dialogFormVisible = true"
+            >批量设置</el-button
           >
-            批量设置
-          </el-button>
-          <el-table
-            key="currentTagKey"
-            :data="tag.currentTags"
-          >
-            <el-table-column
-              prop="tag_id"
-              label="ID"
-              width="180"
-            />
-            <el-table-column
-              prop="tag_name"
-              label="标签名称"
-              width="180"
-            />
-            <el-table-column
-              prop="limit_num"
-              label="每人限购"
-              width="280"
-            >
+          <el-table :data="tag.currentTags" key="currentTagKey">
+            <el-table-column prop="tag_id" label="ID" width="180"> </el-table-column>
+            <el-table-column prop="tag_name" label="标签名称" width="180"> </el-table-column>
+            <el-table-column prop="limit_num" label="每人限购" width="280">
               <template slot-scope="scope">
                 <el-input
                   v-model="scope.row.limit_num"
                   @input="inputChange(scope.$index, 'tag.currentTags')"
+                  ><template slot="append">件</template></el-input
                 >
-                  <template slot="append">
-                    件
-                  </template>
-                </el-input>
               </template>
             </el-table-column>
-            <el-table-column
-              prop="limit_fee"
-              label="每人限额"
-              width="280"
-            >
+            <el-table-column prop="limit_fee" label="每人限额" width="280">
               <template slot-scope="scope">
                 <el-input
                   v-model="scope.row.limit_fee"
                   @input="inputChange(scope.$index, 'tag.currentTags')"
+                  ><template slot="append">元</template></el-input
                 >
-                  <template slot="append">
-                    元
-                  </template>
-                </el-input>
               </template>
             </el-table-column>
           </el-table>
         </template>
         <template v-if="!brandHidden">
           <div class="view-flex">
-            <div class="label">
-              未选品牌：
-            </div>
+            <div class="label">未选品牌：</div>
             <div class="view-flex-item">
               <el-tag
-                v-for="(brand, index) in brand.brands"
-                :key="index"
                 class="tag-item"
+                :key="index"
+                v-for="(brand, index) in brand.brands"
                 size="medium"
                 color="#ffffff"
                 :disable-transitions="false"
@@ -411,17 +251,12 @@
             </div>
           </div>
 
-          <div
-            class="selected-tags view-flex"
-            style="margin-top: 10px"
-          >
-            <div class="label">
-              已选品牌：
-            </div>
+          <div class="selected-tags view-flex" style="margin-top: 10px">
+            <div class="label">已选品牌：</div>
             <div class="view-flex-item">
               <el-tag
-                v-for="(brand, index) in brand.currentBrands"
                 :key="index"
+                v-for="(brand, index) in brand.currentBrands"
                 closable
                 size="small"
                 :disable-transitions="false"
@@ -431,58 +266,28 @@
               </el-tag>
             </div>
           </div>
-          <el-button
-            type="primary"
-            plain
-            style="margin-top: 10px"
-            @click="dialogFormVisible = true"
+          <el-button type="primary" plain style="margin-top: 10px" @click="dialogFormVisible = true"
+            >批量设置</el-button
           >
-            批量设置
-          </el-button>
-          <el-table
-            key="currentBrandKey"
-            :data="brand.currentBrands"
-          >
-            <el-table-column
-              prop="attribute_id"
-              label="ID"
-              width="180"
-            />
-            <el-table-column
-              prop="attribute_name"
-              label="品牌名称"
-              width="180"
-            />
-            <el-table-column
-              prop="limit_num"
-              label="每人限购"
-              width="280"
-            >
+          <el-table :data="brand.currentBrands" key="currentBrandKey">
+            <el-table-column prop="attribute_id" label="ID" width="180"> </el-table-column>
+            <el-table-column prop="attribute_name" label="品牌名称" width="180"> </el-table-column>
+            <el-table-column prop="limit_num" label="每人限购" width="280">
               <template slot-scope="scope">
                 <el-input
                   v-model="scope.row.limit_num"
                   @input="inputChange(scope.$index, 'brand.currentBrands')"
+                  ><template slot="append">件</template></el-input
                 >
-                  <template slot="append">
-                    件
-                  </template>
-                </el-input>
               </template>
             </el-table-column>
-            <el-table-column
-              prop="limit_fee"
-              label="每人限额"
-              width="280"
-            >
+            <el-table-column prop="limit_fee" label="每人限额" width="280">
               <template slot-scope="scope">
                 <el-input
                   v-model="scope.row.limit_fee"
                   @input="inputChange(scope.$index, 'brand.currentBrands')"
+                  ><template slot="append">元</template></el-input
                 >
-                  <template slot="append">
-                    元
-                  </template>
-                </el-input>
               </template>
             </el-table-column>
           </el-table>
@@ -493,61 +298,27 @@
           width="500px"
           @close="dialogClose"
         >
-          <el-form
-            key="dialogFormKey"
-            :model="dialogForm"
-          >
-            <el-form-item
-              label="每人限购："
-              style="display: flex"
-            >
-              <el-input
-                v-model="dialogForm.limit_num"
-                autocomplete="off"
+          <el-form :model="dialogForm" key="dialogFormKey">
+            <el-form-item label="每人限购：" style="display: flex">
+              <el-input v-model="dialogForm.limit_num" autocomplete="off"
+                ><template slot="append">件</template></el-input
               >
-                <template slot="append">
-                  件
-                </template>
-              </el-input>
             </el-form-item>
-            <el-form-item
-              label="每人限额："
-              style="display: flex"
-            >
-              <el-input
-                v-model="dialogForm.limit_fee"
-                autocomplete="off"
+            <el-form-item label="每人限额：" style="display: flex">
+              <el-input v-model="dialogForm.limit_fee" autocomplete="off"
+                ><template slot="append">元</template></el-input
               >
-                <template slot="append">
-                  元
-                </template>
-              </el-input>
             </el-form-item>
             <div>设置后将更新所有参与活动的商品规格限购数量</div>
           </el-form>
-          <div
-            slot="footer"
-            class="dialog-footer"
-          >
-            <el-button @click="dialogFormVisible = false">
-              取 消
-            </el-button>
-            <el-button
-              type="primary"
-              @click="dialogFormConfirm()"
-            >
-              确 定
-            </el-button>
+          <div slot="footer" class="dialog-footer">
+            <el-button @click="dialogFormVisible = false">取 消</el-button>
+            <el-button type="primary" @click="dialogFormConfirm()">确 定</el-button>
           </div>
         </el-dialog>
       </el-card>
       <div class="content-center">
-        <el-button
-          type="primary"
-          @click="submitActivityAction()"
-        >
-          保存
-        </el-button>
+        <el-button type="primary" @click="submitActivityAction()">保存</el-button>
       </div>
     </el-form>
   </div>
@@ -570,7 +341,7 @@ export default {
     SkuSelector,
     Treeselect
   },
-  data () {
+  data() {
     return {
       form: {
         purchase_id: '',
@@ -628,7 +399,7 @@ export default {
     }
   },
 
-  mounted () {
+  mounted() {
     this.fetchMainCate()
     this.getAllTagLists()
     this.getBrandList('', true)
@@ -690,11 +461,11 @@ export default {
   },
 
   methods: {
-    handleImgChange () {
+    handleImgChange() {
       this.imgDialog = true
       this.isGetImage = true
     },
-    pickImg (data) {
+    pickImg(data) {
       if (data.image_type !== 'image/jpeg' && data.image_type !== 'image/png') {
         this.$message({
           type: 'warning',
@@ -705,7 +476,7 @@ export default {
       this.form.ad_pic = data.url
       this.imgDialog = false
     },
-    closeImgDialog () {
+    closeImgDialog() {
       this.imgDialog = false
     },
     itemTypeChange: function (val) {
@@ -745,7 +516,7 @@ export default {
         this.categoryList = response.data.data
       })
     },
-    getItems (data) {
+    getItems(data) {
       const { item_limit } = this.form
       if (Array.isArray(item_limit) && item_limit.length > 0) {
         this.good.currentGoods = data.map((item) => {
@@ -761,10 +532,10 @@ export default {
         this.good.currentGoods = data
       }
     },
-    dialogClose () {
+    dialogClose() {
       this.dialogFormVisible = false
     },
-    inputChange (index, arr) {
+    inputChange(index, arr) {
       const curObj = eval('this.' + arr)
       const tempObj = curObj[index]
       this.$set(curObj, index, tempObj)
@@ -774,7 +545,7 @@ export default {
     /**
      * 上传模板
      * */
-    uploadHandleChange (file, fileList) {
+    uploadHandleChange(file, fileList) {
       console.log('file', file)
       let params = { isUploadFile: true, file_type: 'purchase_goods', file: file.raw }
       handleUploadFile(params).then((response) => {
@@ -814,7 +585,7 @@ export default {
     /**
      * 下载模板
      * */
-    uploadHandleTemplate () {
+    uploadHandleTemplate() {
       let params = { file_type: 'purchase_goods', file_name: '商品模板' }
       exportUploadTemplate(params).then((response) => {
         let { data } = response.data
@@ -923,7 +694,7 @@ export default {
         this.brand.brands.splice(index, 1)
       }
     },
-    submitActivityAction () {
+    submitActivityAction() {
       const that = this
       if (this.activity_date.length > 0) {
         this.form.begin_time = this.activity_date[0]
@@ -989,7 +760,7 @@ export default {
               message: '更新成功',
               type: 'success',
               duration: 2 * 1000,
-              onClose () {
+              onClose() {
                 that.refresh()
                 that.$router.go(-1)
               }
@@ -1007,7 +778,7 @@ export default {
               message: '添加成功',
               type: 'success',
               duration: 2 * 1000,
-              onClose () {
+              onClose() {
                 that.refresh()
                 that.$router.go(-1)
               }
@@ -1020,7 +791,7 @@ export default {
       }
     },
     // 批量设置限购
-    dialogFormConfirm () {
+    dialogFormConfirm() {
       const type = this.form.item_type
       let currentArr = []
       const { limit_num, limit_fee } = this.dialogForm
@@ -1051,5 +822,7 @@ export default {
   }
 }
 </script>
-<style scoped lang="scss"></style>
-<style type="text/css" lang="scss"></style>
+<style scoped lang="scss">
+</style>
+<style type="text/css" lang="scss">
+</style>

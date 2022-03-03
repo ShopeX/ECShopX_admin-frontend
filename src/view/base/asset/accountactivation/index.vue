@@ -3,50 +3,22 @@
     <div class="section-box view-flex view-flex-vertical view-flex-center view-flex-middle">
       <div class="slogn">
         <div class="logo-box">
-          <img
-            :src="logoIcon"
-            alt=""
-          >
+          <img :src="logoIcon" alt="" />
         </div>
-        <div v-if="companyBrand == '超新星'">
-          <h3>超新星因你而更好</h3>
-        </div>
+        <div v-if="companyBrand == '超新星'"><h3>超新星因你而更好</h3></div>
       </div>
-      <div
-        v-if="loginType != 'distributor'"
-        class="content-center"
-      >
-        <el-input
-          v-model="active_code"
-          placeholder="请输入激活码"
-          style="width: 300px"
-        />
-        <p class="desc">
-          购买或续费产品请联系：400-9213-522 &nbsp;&nbsp; QQ: 800058282
-        </p>
+      <div class="content-center" v-if="loginType != 'distributor'">
+        <el-input v-model="active_code" placeholder="请输入激活码" style="width: 300px;"></el-input>
+        <p class="desc">购买或续费产品请联系：400-9213-522 &nbsp;&nbsp; QQ: 800058282</p>
       </div>
-      <div
-        v-if="loginType == 'distributor'"
-        class="content-center"
-      >
-        <p class="desc">
-          您的授权已过期，请联系平台管理员处理授权
-        </p>
+      <div class="content-center" v-if="loginType == 'distributor'">
+        <p class="desc">您的授权已过期，请联系平台管理员处理授权</p>
       </div>
       <div class="active-opr">
-        <el-button
-          v-if="loginType != 'distributor'"
-          type="primary"
-          @click="activetionAction"
+        <el-button type="primary" @click="activetionAction" v-if="loginType != 'distributor'"
+          >激活</el-button
         >
-          激活
-        </el-button>
-        <el-button
-          type="default"
-          @click="closeDialog"
-        >
-          返回登录
-        </el-button>
+        <el-button type="default" @click="closeDialog">返回登录</el-button>
       </div>
     </div>
     <el-dialog
@@ -57,29 +29,15 @@
     >
       <div class="brand">
         <div class="logo-box">
-          <img
-            :src="logoIcon"
-            alt=""
-          >
+          <img :src="logoIcon" alt="" />
         </div>
         <span>{{ resultTxt }}</span>
       </div>
-      <p
-        class="frm-tips content-center"
-        style="margin-top: 20px"
-      >
+      <p class="frm-tips content-center" style="margin-top: 20px;">
         此资源包到期时间为&nbsp; <span>{{ expired_at | datetime('YYYY-MM-DD HH:mm:ss') }}</span>
       </p>
-      <div
-        slot="footer"
-        class="dialog-footer content-center active-opr"
-      >
-        <el-button
-          type="primary"
-          @click="closeDialog"
-        >
-          {{ btnTxt }}
-        </el-button>
+      <div slot="footer" class="dialog-footer content-center active-opr">
+        <el-button type="primary" @click="closeDialog">{{ btnTxt }}</el-button>
       </div>
     </el-dialog>
   </div>
@@ -87,7 +45,7 @@
 <script>
 import { activate, getActivateInfo } from '@/api/company'
 export default {
-  data () {
+  data() {
     return {
       activateInfo: {},
       logoIcon: '',
@@ -99,13 +57,8 @@ export default {
       loginType: 'default'
     }
   },
-  mounted () {
-    this.loginType = this.$store.getters.login_type
-    const system = process.env.VUE_APP_PRODUCT_MODEL == 'standard' ? 'onex' : 'ecshopx'
-    this.logoIcon = require(`@/assets/img/${system}/logo.jpg`)
-  },
   methods: {
-    activetionAction () {
+    activetionAction() {
       if (this.active_code == '') {
         this.$message({ message: '请输入激活码', type: 'error' })
         return
@@ -121,14 +74,14 @@ export default {
         }
       })
     },
-    closeDialog () {
+    closeDialog() {
       const loginPath = this.path_prefixes ? `/${this.path_prefixes}/login` : '/login'
       this.dialogVisible = false
       this.$store.dispatch('unsetToken').then(() => {
         this.$router.push({ path: loginPath })
       })
     },
-    getActivateInfo () {
+    getActivateInfo() {
       getActivateInfo().then((res) => {
         this.activateInfo = res.data.data
         if (res.data.data.is_valid) {
@@ -138,6 +91,11 @@ export default {
         }
       })
     }
+  },
+  mounted() {
+    this.loginType = this.$store.getters.login_type
+    const system = process.env.VUE_APP_PRODUCT_MODEL == 'standard' ? 'onex' : 'ecshopx'
+    this.logoIcon = require(`@/assets/img/${system}/logo.jpg`)
   }
 }
 </script>

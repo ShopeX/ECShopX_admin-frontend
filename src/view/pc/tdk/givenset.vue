@@ -4,58 +4,43 @@
 
     <el-card>
       <el-table
-        v-loading="loading"
         :data="list"
         :height="wheight - 300"
+        v-loading="loading"
         element-loading-text="数据加载中"
       >
-        <el-table-column
-          label="操作"
-          width="150"
-        >
+        <el-table-column label="操作" width="150">
           <template slot-scope="scope">
-            <el-button
-              type="text"
-              @click="handleEdit(scope.row)"
-            >
-              编辑
-            </el-button>
+            <el-button type="text" @click="handleEdit(scope.row)">编辑</el-button>
           </template>
         </el-table-column>
-        <el-table-column
-          prop="page"
-          label="页面"
-        />
+        <el-table-column prop="page" label="页面"> </el-table-column>
       </el-table>
     </el-card>
 
     <!--新增修改-->
 
-    <sideBar
-      :visible.sync="show_sideBar"
-      :title="title"
-    >
+    <sideBar :visible.sync="show_sideBar" :title="title">
       <el-form>
         <el-form-item
           label="
 TITLE(页面标题）"
         >
           <el-input
-            v-model="form['title']"
             type="textarea"
             :rows="2"
             placeholder="请选择"
+            v-model="form['title']"
             disabled
           />
           <div>
             <el-tag
               v-for="(tag, index) in tags"
               :key="index"
-              :type="tagType('title', tag.value)"
               @click="handelClick('title', tag)"
+              :type="tagType('title', tag.value)"
+              >{{ tag.label }}</el-tag
             >
-              {{ tag.label }}
-            </el-tag>
           </div>
         </el-form-item>
 
@@ -64,21 +49,20 @@ TITLE(页面标题）"
 MATE_DESCRIPTION(页面描述）"
         >
           <el-input
-            v-model="form['mate_description']"
             type="textarea"
             :rows="2"
             placeholder="请选择"
+            v-model="form['mate_description']"
             disabled
           />
           <div>
             <el-tag
               v-for="(tag, index) in tags"
               :key="index"
-              :type="tagType('mate_description', tag.value)"
               @click="handelClick('mate_description', tag)"
+              :type="tagType('mate_description', tag.value)"
+              >{{ tag.label }}</el-tag
             >
-              {{ tag.label }}
-            </el-tag>
           </div>
         </el-form-item>
         <el-form-item
@@ -86,30 +70,24 @@ MATE_DESCRIPTION(页面描述）"
 MATE_KEYWORDS (关键词）"
         >
           <el-input
-            v-model="form['mate_keywords']"
             type="textarea"
             :rows="2"
             placeholder="请选择"
+            v-model="form['mate_keywords']"
             disabled
           />
           <div>
             <el-tag
               v-for="(tag, index) in tags"
               :key="index"
-              :type="tagType('mate_keywords', tag.value)"
               @click="handelClick('mate_keywords', tag)"
+              :type="tagType('mate_keywords', tag.value)"
+              >{{ tag.label }}</el-tag
             >
-              {{ tag.label }}
-            </el-tag>
           </div>
         </el-form-item>
         <el-form-item>
-          <el-button
-            type="primary"
-            @click="save"
-          >
-            提交
-          </el-button>
+          <el-button type="primary" @click="save">提交</el-button>
         </el-form-item>
       </el-form>
     </sideBar>
@@ -130,7 +108,7 @@ export default {
     sideBar
   },
 
-  data () {
+  data() {
     return {
       loading: false,
       title: '配置',
@@ -196,10 +174,10 @@ export default {
       }
     }
   },
-  mounted () {},
+  mounted() {},
 
   methods: {
-    tagType (type, value) {
+    tagType(type, value) {
       let bool = this.tageArr[type].findIndex((item) => item == value)
       if (bool == -1) {
         return ''
@@ -208,7 +186,7 @@ export default {
       }
     },
     // 编辑
-    handleEdit (data) {
+    handleEdit(data) {
       this.show_sideBar = true
       this.resetData()
       this.type = data.id
@@ -216,7 +194,7 @@ export default {
       this.title = data.page
       this.getList()
     },
-    handelClick (type, tag) {
+    handelClick(type, tag) {
       let index = this.tageArr[type].findIndex((item) => tag.value == item)
       if (index == -1) {
         this.tageArr[type].push(tag.value)
@@ -231,7 +209,7 @@ export default {
       }
     },
     // 初始化
-    resetData () {
+    resetData() {
       this.form = {
         title: '',
         mate_description: '',
@@ -244,7 +222,7 @@ export default {
       }
     },
     // 保存数据
-    save () {
+    save() {
       if (this.type == 'detailTags') {
         saveTdkgivensetDetail(this.form).then((res) => {
           this.$message({ type: 'success', message: '操作成功' })
@@ -260,7 +238,7 @@ export default {
     },
 
     // 获取列表
-    getList () {
+    getList() {
       if (this.type == 'detailTags') {
         getTdkgivensetDetail().then((res) => {
           let data = res.data.data

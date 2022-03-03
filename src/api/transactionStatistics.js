@@ -8,10 +8,11 @@ export function get_all (params) {
   })
 }
 
-export function exportData (params) {
+
+export function exportData(params){
   return fetch({
-    url: '/hfpay/statistics/exportData',
-    method: 'get',
+    url:'/hfpay/statistics/exportData',
+    method:'get',
     params
   })
 }

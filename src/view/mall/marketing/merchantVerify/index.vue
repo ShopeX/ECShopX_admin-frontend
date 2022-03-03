@@ -7,20 +7,9 @@
 <template>
   <div class="merchantVerify">
     <div v-if="$route.path.indexOf('verify') === -1">
-      <SpFilterForm
-        :model="params"
-        @onSearch="onSearch"
-        @onReset="onReset"
-      >
-        <SpFilterFormItem
-          prop="audit_status"
-          label="审批状态:"
-        >
-          <el-select
-            v-model="params.audit_status"
-            placeholder="请选择审批状态"
-            class="input-m"
-          >
+      <SpFilterForm :model="params" @onSearch="onSearch" @onReset="onReset">
+        <SpFilterFormItem prop="audit_status" label="审批状态:">
+          <el-select v-model="params.audit_status" placeholder="请选择审批状态" class="input-m">
             <el-option
               v-for="(item, index) in approveStatusList"
               :key="index"
@@ -29,51 +18,26 @@
             />
           </el-select>
         </SpFilterFormItem>
-        <SpFilterFormItem
-          prop="merchant_name"
-          label="商户名称:"
-        >
-          <el-input
-            v-model="params.merchant_name"
-            placeholder="请输入"
-            clearable
-          />
+        <SpFilterFormItem prop="merchant_name" label="商户名称:">
+          <el-input placeholder="请输入" clearable v-model="params.merchant_name"></el-input>
         </SpFilterFormItem>
-        <SpFilterFormItem
-          prop="regions_value"
-          label="所属地区:"
-        >
+        <SpFilterFormItem prop="regions_value" label="所属地区:">
           <el-cascader
-            v-model="params.regions_value"
             placeholder="根据地区筛选"
             :options="regions"
             filterable
             clearable
-            :props="{ checkStrictly: true }"
+            v-model="params.regions_value"
+            :props="{ checkStrictly: true }" 
           />
         </SpFilterFormItem>
-        <SpFilterFormItem
-          prop="settled_type"
-          label="入驻类型:"
-        >
-          <el-select
-            v-model="params.settled_type"
-            placeholder="请选择"
-          >
-            <el-option
-              label="企业"
-              value="enterprise"
-            />
-            <el-option
-              label="个体户"
-              value="soletrader"
-            />
+        <SpFilterFormItem prop="settled_type" label="入驻类型:">
+          <el-select v-model="params.settled_type" placeholder="请选择">
+            <el-option label="企业" value="enterprise"></el-option>
+            <el-option label="个体户" value="soletrader"></el-option>
           </el-select>
         </SpFilterFormItem>
-        <SpFilterFormItem
-          prop="time_start"
-          label="申请日期:"
-        >
+        <SpFilterFormItem prop="time_start" label="申请日期:">
           <el-date-picker
             v-model="params.time_start"
             :default-time="['00:00:00', '23:59:59']"
@@ -86,15 +50,8 @@
         </SpFilterFormItem>
       </SpFilterForm>
 
-      <el-card
-        v-if="tableList.length > 0"
-        shadow="never"
-      >
-        <div
-          v-for="item in tableList"
-          :key="item.id"
-          class="cus-list"
-        >
+      <el-card v-if="tableList.length > 0" shadow="never">
+        <div class="cus-list" v-for="item in tableList" :key="item.id">
           <el-row class="cus-row">
             <el-col :span="3">
               <img
@@ -103,13 +60,8 @@
                 style="width: 90px; height: 90px"
                 src="@/assets/img/adapay/distributor.png"
                 alt=""
-              >
-              <img
-                v-else
-                class="cus-row-img"
-                src="@/assets/img/adapay/dealer.png"
-                alt=""
-              >
+              />
+              <img v-else class="cus-row-img" src="@/assets/img/adapay/dealer.png" alt="" />
             </el-col>
             <el-col :span="13">
               <router-link
@@ -122,7 +74,9 @@
               </router-link>
               <div class="cus-row-time">
                 <span>申请时间：{{ item.created ? createTimeFilter(item.created) : '-' }}</span>
-                <span>所属地区：{{ item.province + '-' + item.city + '-' + item.area || '-' }}</span>
+                <span
+                  >所属地区：{{ item.province + '-' + item.city + '-' + item.area || '-' }}</span
+                >
               </div>
             </el-col>
             <el-col :span="5">
@@ -131,19 +85,15 @@
                 src="@/assets/img/adapay/pass.png"
                 alt=""
                 style="width: 85px; height: 85px"
-              >
+              />
               <img
                 v-if="item.audit_status === '3'"
                 src="@/assets/img/adapay/reject.png"
                 alt=""
                 style="width: 92px; height: 92px"
-              >
+              />
             </el-col>
-            <el-col
-              class="cus-row-btn"
-              :span="3"
-              :offset="item.audit_status !== '1' ? 0 : 5"
-            >
+            <el-col class="cus-row-btn" :span="3" :offset="item.audit_status !== '1' ? 0 : 5">
               <router-link
                 v-if="item.audit_status === '1'"
                 :to="{
@@ -151,18 +101,9 @@
                   query: { type: 'verify', merchantId: item.id }
                 }"
               >
-                <el-button type="primary">
-                  审批
-                </el-button>
+                <el-button type="primary">审批</el-button>
               </router-link>
-              <el-button
-                v-else
-                type="info"
-                plain
-                disabled
-              >
-                已审批
-              </el-button>
+              <el-button v-else type="info" plain disabled>已审批</el-button>
             </el-col>
           </el-row>
         </div>
@@ -176,11 +117,12 @@
             :page-size="page.pageSize"
             @current-change="onCurrentChange"
             @size-change="onSizeChange"
-          />
+          >
+          </el-pagination>
         </div>
       </el-card>
     </div>
-    <router-view />
+    <router-view></router-view>
   </div>
 </template>
 <script>
@@ -190,7 +132,7 @@ import district from '@/common/district.json'
 import mixin, { pageMixin } from '@/mixins'
 export default {
   mixins: [mixin, pageMixin],
-  data () {
+  data() {
     const initialParams = {
       audit_status: undefined,
       merchant_name: undefined,
@@ -201,35 +143,35 @@ export default {
     return {
       initialParams,
       params: { ...initialParams },
-      regions: district,
-      loading: true,
+      regions: district, 
+      loading: true, 
       approveStatusList: [
         { name: '待审批', value: '1' },
         { name: '通过', value: '2' },
         { name: '驳回', value: '3' }
-      ]
+      ], 
     }
   },
   computed: {
     ...mapGetters(['wheight'])
   },
-  mounted () {
+  mounted() {
     this.fetchList()
   },
   methods: {
-    onSearch () {
+    onSearch() {
       this.page.pageIndex = 1
       this.$nextTick(() => {
         this.fetchList()
       })
     },
-    onReset () {
+    onReset() {
       this.params = { ...this.initialParams }
       this.onSearch()
     },
-    regionChangeSearch (value) {
+    regionChangeSearch(value) { 
       var vals = this.getCascaderObj(value, this.regions)
-      let currentArea = {}
+      let currentArea={}
       if (vals.length == 1) {
         currentArea.province = vals[0].label
       } else if (vals.length == 2) {
@@ -240,9 +182,9 @@ export default {
         currentArea.city = vals[1].label
         currentArea.area = vals[2].label
       }
-      return currentArea
+      return currentArea;
     },
-    getCascaderObj (val, opt) {
+    getCascaderObj(val, opt) {
       return val.map(function (value, index, array) {
         for (var itm of opt) {
           if (itm.value === value) {
@@ -253,21 +195,21 @@ export default {
         return null
       })
     },
-    getParams () {
-      let area = {}
-      if (this.params.regions_value.length > 0) {
-        area = this.regionChangeSearch(this.params.regions_value)
+    getParams() {
+      let area={};
+      if(this.params.regions_value.length>0){
+        area=this.regionChangeSearch(this.params.regions_value);
       }
-      let params = {
+      let params = { 
         ...this.params,
-        regions_value: [],
+        regions_value:[],
         ...area
-      }
+      } 
       return params
-    },
-    async fetchList () {
+    }, 
+    async fetchList() {
       this.loading = true
-      const { pageIndex: page, pageSize: page_size } = this.page
+      const { pageIndex: page, pageSize:page_size } = this.page
       let params = {
         page,
         page_size,
@@ -276,16 +218,16 @@ export default {
       const { list, count } = await this.$api.mall_marketing.getApplicationListForMerchantEntry(
         params
       )
-      this.tableList = list
+      this.tableList = list 
       this.page.total = count
       this.loading = false
     },
-
-    createTimeFilter (time) {
+    
+    createTimeFilter(time) {
       return moment(time * 1000).format('YYYY-MM-DD HH:mm:ss')
     }
   },
-  beforeRouteUpdate (to, from, next) {
+  beforeRouteUpdate(to, from, next) {
     next()
     if (to.path.indexOf('verify') === -1) {
       this.fetchList()
@@ -334,3 +276,4 @@ export default {
   }
 }
 </style>
+

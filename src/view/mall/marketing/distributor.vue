@@ -22,33 +22,19 @@
     <template
       v-if="
         $route.path.indexOf('editor') === -1 &&
-          $route.path.indexOf('details') === -1 &&
-          $route.path.indexOf('template') === -1
+        $route.path.indexOf('details') === -1 &&
+        $route.path.indexOf('template') === -1
       "
     >
-      <div
-        v-if="system_mode === 'standard'"
-        class="content-bottom-padded"
-      >
-        <el-alert
-          type="info"
-          title="操作说明"
-          show-icon
-        >
+      <div class="content-bottom-padded" v-if="system_mode === 'standard'">
+        <el-alert type="info" title="操作说明" show-icon>
           <div>
             自动同步：开启自动同步后，总部添加编辑商品会自动同步上架到到店铺，保留开启前的商品状态。关闭同步后将保留已同步的商品数据
           </div>
         </el-alert>
       </div>
-      <div
-        v-if="$store.getters.login_type === 'merchant'"
-        style="margin-bottom: 10px"
-      >
-        <el-alert
-          type="info"
-          title=""
-          show-icon
-        >
+      <div style="margin-bottom: 10px" v-if="$store.getters.login_type === 'merchant'">
+        <el-alert type="info" title="" show-icon>
           <div>可在设置-店铺管理员添加店铺端账号，登录地址 【 {{ origin }}/shopadmin/login 】</div>
         </el-alert>
       </div>
@@ -60,191 +46,117 @@
             type="primary"
             icon="el-icon-circle-plus"
             @click="dialogOpen()"
+            >添加店铺</el-button
           >
-            添加店铺
-          </el-button>
-          <el-button
-            v-if="!distributor_self"
-            type="primary"
-            @click="addDistributorSelf()"
+          <el-button type="primary" @click="addDistributorSelf()" v-if="!distributor_self"
+            >新增总部自提点</el-button
           >
-            新增总部自提点
-          </el-button>
           <template v-else>
             <el-button
-              v-if="$store.getters.login_type != 'merchant'"
               type="primary"
               @click="editDistributorSelf()"
+              v-if="$store.getters.login_type != 'merchant'"
+              >编辑总部自提点</el-button
             >
-              编辑总部自提点
-            </el-button>
           </template>
         </el-button-group>
       </div>
 
-      <SpFilterForm
-        :model="params"
-        @onSearch="onSearch"
-        @onReset="onReset"
-      >
-        <SpFilterFormItem
-          prop="is_valid"
-          label="启用状态:"
-        >
-          <el-select
-            v-model="params.is_valid"
-            placeholder="是否启用"
-          >
+      <SpFilterForm :model="params" @onSearch="onSearch" @onReset="onReset">
+        <SpFilterFormItem prop="is_valid" label="启用状态:">
+          <el-select v-model="params.is_valid" placeholder="是否启用">
             <el-option
               v-for="(item, index) in isValidList"
               :key="index"
               :label="item.name"
               :value="item.value"
-            />
+            ></el-option>
           </el-select>
         </SpFilterFormItem>
-        <SpFilterFormItem
-          prop="distributor_id"
-          label="店铺:"
-        >
-          <SpSelectShop
-            v-model="params.distributor_id"
-            clearable
-            placeholder="请选择"
-          />
+        <SpFilterFormItem prop="distributor_id" label="店铺:">
+          <SpSelectShop clearable placeholder="请选择" v-model="params.distributor_id" />
         </SpFilterFormItem>
-        <SpFilterFormItem
-          prop="tag_id"
-          label="标签:"
-        >
+        <SpFilterFormItem prop="tag_id" label="标签:">
           <el-cascader
             v-if="system_mode === 'platform'"
-            v-model="params.tag_id"
             placeholder="选择标签"
             :options="tag.list"
             :props="{ value: 'tag_id', label: 'tag_name' }"
+            v-model="params.tag_id"
             clearable
-          />
+          ></el-cascader>
         </SpFilterFormItem>
-        <SpFilterFormItem
-          prop="mobile"
-          label="联系手机:"
-        >
-          <el-input
-            v-model="params.mobile"
-            placeholder="联系人手机号"
-          />
+        <SpFilterFormItem prop="mobile" label="联系手机:">
+          <el-input placeholder="联系人手机号" v-model="params.mobile" />
         </SpFilterFormItem>
-        <SpFilterFormItem
-          prop="distribution_type"
-          label="店铺类型:"
-        >
+        <SpFilterFormItem prop="distribution_type" label="店铺类型:">
           <el-select
-            v-if="$store.getters.login_type == 'admin'"
             v-model="params.distribution_type"
             clearable
             placeholder="选择店铺类型"
+            v-if="$store.getters.login_type == 'admin'"
           >
-            <el-option
-              label="加盟"
-              value="1"
-            >
-              加盟
-            </el-option>
-            <el-option
-              label="自营"
-              value="0"
-            >
-              自营
-            </el-option>
+            <el-option label="加盟" value="1">加盟</el-option>
+            <el-option label="自营" value="0">自营</el-option>
           </el-select>
         </SpFilterFormItem>
-        <SpFilterFormItem
-          prop="merchant_name"
-          label="所属商家:"
-        >
+        <SpFilterFormItem prop="merchant_name" label="所属商家:">
           <el-input
-            v-if="$store.getters.login_type == 'admin'"
-            v-model="params.merchant_name"
             placeholder="所属商家"
+            v-model="params.merchant_name"
+            v-if="$store.getters.login_type == 'admin'"
           />
         </SpFilterFormItem>
       </SpFilterForm>
 
       <div class="action-container">
-        <el-button
-          v-if="system_mode === 'platform'"
-          plain
-          type="primary"
-          @click="addDistributorTag"
+        <el-button plain type="primary" v-if="system_mode === 'platform'" @click="addDistributorTag"
+          >打标签</el-button
         >
-          打标签
-        </el-button>
         <el-button
           v-if="!is_distributor && $store.getters.login_type != 'merchant'"
           type="primary"
           plain
           icon="el-icon-circle-plus"
           @click="showSettingDistance()"
+          >店铺范围配置</el-button
         >
-          店铺范围配置
-        </el-button>
       </div>
 
-      <el-table
-        v-loading="loading"
-        :data="tableList"
-        @selection-change="handleSelectionChange"
-      >
-        <el-table-column
-          type="selection"
-          align="center"
-          label="全选"
-        />
-        <el-table-column
-          width="50"
-          prop="distributor_id"
-          label="ID"
-        />
+      <el-table :data="tableList" @selection-change="handleSelectionChange" v-loading="loading">
+        <el-table-column type="selection" align="center" label="全选"></el-table-column>
+        <el-table-column width="50" prop="distributor_id" label="ID"></el-table-column>
         <el-table-column label="店铺">
           <template slot-scope="scope">
-            <div class="store-name">
-              {{ scope.row.name }}
-            </div>
+            <div class="store-name">{{ scope.row.name }}</div>
             <div class="store-contact">
               <span v-if="scope.row.contact">
-                <i class="el-icon-user" />
+                <i class="el-icon-user"></i>
                 {{ scope.row.contact }}
               </span>
               <span>
-                <i class="el-icon-mobile" />
+                <i class="el-icon-mobile"></i>
                 {{ scope.row.mobile }}
               </span>
             </div>
-            <div
-              v-if="scope.row.store_address"
-              class="store-address"
-            >
-              <i class="el-icon-place" />
+            <div v-if="scope.row.store_address" class="store-address">
+              <i class="el-icon-place"></i>
               {{ scope.row.store_address }}
             </div>
           </template>
         </el-table-column>
         <el-table-column
-          v-if="system_mode === 'standard'"
           width="80"
           label="商品自动上架且总部发货"
+          v-if="system_mode === 'standard'"
         >
-          <template
-            v-if="scope.row.is_valid !== 'delete'"
-            slot-scope="scope"
-          >
+          <template slot-scope="scope" v-if="scope.row.is_valid !== 'delete'">
             <el-switch
               v-model="scope.row.auto_sync_goods"
               active-color="#13ce66"
               inactive-color="#cccccc"
               @change="switchChangeAutoSyncGoods(scope.$index, scope.row)"
-            />
+            ></el-switch>
           </template>
         </el-table-column>
         <!-- <el-table-column label="审核商品">
@@ -252,14 +164,8 @@
               <el-switch v-model="scope.row.is_audit_goods"  active-color="#13ce66" inactive-color="#cccccc" @change="switchChangeAuditGoods(scope.$index, scope.row)"></el-switch>
             </template>
           </el-table-column>-->
-        <el-table-column
-          width="80"
-          label="是否自提"
-        >
-          <template
-            v-if="scope.row.is_valid !== 'delete'"
-            slot-scope="scope"
-          >
+        <el-table-column width="80" label="是否自提">
+          <template slot-scope="scope" v-if="scope.row.is_valid !== 'delete'">
             <el-tooltip
               v-if="!scope.row.lng && !scope.row.lat"
               effect="dark"
@@ -267,11 +173,11 @@
               placement="top-start"
             >
               <el-switch
-                v-model="scope.row.is_ziti"
                 disabled
+                v-model="scope.row.is_ziti"
                 active-color="#13ce66"
                 inactive-color="#cccccc"
-              />
+              ></el-switch>
             </el-tooltip>
             <el-switch
               v-else
@@ -279,124 +185,78 @@
               active-color="#13ce66"
               inactive-color="#cccccc"
               @change="switchChange(scope.$index, scope.row)"
-            />
+            ></el-switch>
           </template>
         </el-table-column>
-        <el-table-column
-          width="80"
-          label="快递配送"
-        >
-          <template
-            v-if="scope.row.is_valid !== 'delete'"
-            slot-scope="scope"
-          >
+        <el-table-column width="80" label="快递配送">
+          <template slot-scope="scope" v-if="scope.row.is_valid !== 'delete'">
             <el-switch
               v-model="scope.row.is_delivery"
               active-color="#13ce66"
               inactive-color="#cccccc"
               @change="switchChange(scope.$index, scope.row)"
-            />
+            ></el-switch>
           </template>
         </el-table-column>
-        <el-table-column
-          width="70"
-          label="状态"
-        >
+        <el-table-column width="70" label="状态">
           <template slot-scope="scope">
             <el-button
+              @click="editValid(scope.row)"
               v-if="scope.row.is_valid !== 'delete'"
               type="text"
-              @click="editValid(scope.row)"
             >
-              <span
-                v-if="scope.row.is_valid == 'true'"
-                class="green"
-              >
+              <span class="green" v-if="scope.row.is_valid == 'true'">
                 启用
-                <i class="el-icon-s-tools" />
+                <i class="el-icon-s-tools"></i>
               </span>
-              <span
-                v-else
-                class="red"
-              >
+              <span class="red" v-else>
                 禁用
-                <i class="el-icon-s-tools" />
+                <i class="el-icon-s-tools"></i>
               </span>
             </el-button>
-            <span
-              v-else
-              class="muted"
-            >废弃</span>
+            <span v-else class="muted">废弃</span>
           </template>
         </el-table-column>
-        <el-table-column
-          v-if="$store.getters.login_type == 'admin'"
-          label="店铺类型"
-          width="80"
-        >
+        <el-table-column label="店铺类型" width="80" v-if="$store.getters.login_type == 'admin'">
           <template slot-scope="scope">
             <span v-if="scope.row.distribution_type == '1'">加盟</span>
             <span v-else-if="scope.row.distribution_type == '0'">自营</span>
           </template>
         </el-table-column>
-        <el-table-column
-          v-if="$store.getters.login_type == 'admin'"
-          width="80"
-          label="是否默认"
-        >
-          <template
-            v-if="scope.row.is_valid !== 'delete'"
-            slot-scope="scope"
-          >
-            <el-tooltip
-              effect="dark"
-              content="请先启用店铺"
-              placement="top-start"
-            >
+        <el-table-column width="80" label="是否默认" v-if="$store.getters.login_type == 'admin'">
+          <template slot-scope="scope" v-if="scope.row.is_valid !== 'delete'">
+            <el-tooltip effect="dark" content="请先启用店铺" placement="top-start">
               <el-switch
                 v-model="scope.row.is_default"
                 active-color="#13ce66"
                 inactive-color="#cccccc"
                 :disabled="scope.row.is_default || scope.row.is_valid != 'true' ? true : false"
                 @change="defaultSwitchChange(scope.row)"
-              />
+              ></el-switch>
             </el-tooltip>
           </template>
         </el-table-column>
-        <el-table-column
-          v-if="system_mode === 'platform'"
-          prop="tagList"
-          label="标签"
-          class="tab"
-        >
+        <el-table-column v-if="system_mode === 'platform'" prop="tagList" label="标签" class="tab">
           <template slot-scope="scope">
             <el-tag
+              closable
               v-for="taglist in scope.row.tagList"
               :key="taglist.index"
-              closable
               :color="taglist.tag_color"
               size="mini"
               :style="'color:' + taglist.font_color"
               style="display: inline-block; margin-right: 3px"
               @close="handleClose(tag, scope.row, taglist)"
-            >
-              {{ taglist.tag_name }}
+              >{{ taglist.tag_name }}
             </el-tag>
           </template>
         </el-table-column>
-        <el-table-column
-          v-if="$store.getters.login_type != 'merchant'"
-          label="所属商家"
-          width="80"
-        >
+        <el-table-column label="所属商家" width="80" v-if="$store.getters.login_type != 'merchant'">
           <template slot-scope="scope">
             <span>{{ scope.row.merchant_name || '-' }}</span>
           </template>
         </el-table-column>
-        <el-table-column
-          width="180"
-          label="操作"
-        >
+        <el-table-column width="180" label="操作">
           <template slot-scope="scope">
             <router-link
               v-if="scope.row.is_valid !== 'delete' && datapass_block == '0'"
@@ -404,9 +264,8 @@
                 path: matchHidePage('editor'),
                 query: { distributor_id: scope.row.distributor_id }
               }"
+              ><span style="margin-right: 5px">编辑</span></router-link
             >
-              <span style="margin-right: 5px">编辑</span>
-            </router-link>
 
             <router-link
               v-if="system_mode !== 'platform' && $store.getters.login_type == 'distributor'"
@@ -418,16 +277,10 @@
                 query: { distributor_id: scope.row.distributor_id }
               }"
               style="margin: 0px 5px"
+              >商品</router-link
             >
-              商品
-            </router-link>
 
-            <el-button
-              type="text"
-              @click="linkTemplates(scope.row)"
-            >
-              店铺装修
-            </el-button>
+            <el-button type="text" @click="linkTemplates(scope.row)">店铺装修</el-button>
             <!-- <el-button v-if="system_mode == 'platform'" type="text" @click="dialogShow(scope.row.distributor_id)">店铺装修</el-button> -->
             <!-- <el-button
                 v-if="system_mode === 'platform'"
@@ -435,46 +288,34 @@
                 @click="dialogShow(scope.row.distributor_id,'pc')"
                 style="margin-left:0px;margin-top:5px;"
               >PC店铺装修</el-button> -->
+            <el-button type="text" @click="showSettingMeiQia(scope.row.distributor_id)"
+              >客服</el-button
+            >
             <el-button
               type="text"
-              @click="showSettingMeiQia(scope.row.distributor_id)"
-            >
-              客服
-            </el-button>
-            <el-button
               v-if="system_mode === 'platform'"
-              type="text"
               @click="downDistributor(scope.row, 'store')"
+              >下载店铺码</el-button
             >
-              下载店铺码
-            </el-button>
-            <el-button
-              v-else
-              type="text"
-              @click="downDistributor(scope.row, 'index')"
+            <el-button type="text" v-else @click="downDistributor(scope.row, 'index')"
+              >下载店铺码</el-button
             >
-              下载店铺码
-            </el-button>
             <router-link
-              v-if="scope.row.is_openAccount"
               :to="{
                 path: matchHidePage('details'),
                 query: { distributor_id: scope.row.distributor_id }
               }"
+              v-if="scope.row.is_openAccount"
             >
               <span style="padding: 0px 5px">详情</span>
             </router-link>
             <el-button
-              v-clipboard:copy="scope.row.link"
-              v-clipboard:success="onCopy"
               class="copy-btn"
               type="text"
+              v-clipboard:copy="scope.row.link"
+              v-clipboard:success="onCopy"
             >
-              <input
-                v-model="scope.row.link"
-                class="copy-link"
-                type="text"
-              >复制店铺链接
+              <input class="copy-link" type="text" v-model="scope.row.link" />复制店铺链接
             </el-button>
             <!--<el-button type="text" @click="downDistributor(scope.row, 'scancode')">扫码购页面码(微商城)</el-button>-->
             <!-- <router-link :to="{  path: matchInternalRoute('Storeshopitemanagement'), query: {distributor_id: scope.row.distributor_id}}">商品码</router-link> -->
@@ -492,7 +333,7 @@
           :total="page.total"
           @current-change="onCurrentChange"
           @size-change="onSizeChange"
-        />
+        ></el-pagination>
       </div>
       <el-dialog
         title="下载店铺码"
@@ -501,12 +342,9 @@
       >
         <el-row>
           <el-col :span="8">
-            <el-button
-              type="text"
-              @click="downDistributorCode(rowdata, 'yykweishop')"
+            <el-button type="text" @click="downDistributorCode(rowdata, 'yykweishop')"
+              >微商城小程序</el-button
             >
-              微商城小程序
-            </el-button>
           </el-col>
         </el-row>
       </el-dialog>
@@ -517,10 +355,7 @@
         fullscreen
         lock-scroll
       >
-        <shopDecoration
-          :id="current"
-          @saved="closeDialog"
-        />
+        <shopDecoration :id="current" @saved="closeDialog" />
       </el-dialog>
       <el-dialog
         :visible.sync="pcDialogVisible"
@@ -529,12 +364,7 @@
         fullscreen
         lock-scroll
       >
-        <pc-decoration
-          v-if="pcDialogVisible"
-          :id="current"
-          usage="store"
-          @saved="closeDialog"
-        />
+        <pc-decoration v-if="pcDialogVisible" :id="current" @saved="closeDialog" usage="store" />
       </el-dialog>
 
       <el-dialog
@@ -544,58 +374,43 @@
         :before-close="handleCancelLabelsDialog"
       >
         <div class="tag-users view-flex view-flex-middle">
-          <i class="iconfont icon-user-circle1" />
+          <i class="iconfont icon-user-circle1"></i>
           <div class="view-flex-item">
-            <span
-              v-for="item in tag.editItem"
-              :key="item"
-            >{{ item }}，</span>
+            <span v-for="item in tag.editItem" :key="item">{{ item }}，</span>
           </div>
         </div>
 
         <div class="selected-tags view-flex">
-          <div class="label">
-            已选中标签：
-          </div>
+          <div class="label">已选中标签：</div>
           <div class="view-flex-item">
             <el-tag
-              v-for="(tag, index) in tag.currentTags"
               :key="index"
+              v-for="(tag, index) in tag.currentTags"
               closable
               size="small"
               :disable-transitions="false"
               @close="tagRemove(index)"
+              >{{ tag.tag_name }}</el-tag
             >
-              {{ tag.tag_name }}
-            </el-tag>
           </div>
         </div>
-        <hr>
+        <hr />
         <div>
-          <div class="label">
-            全部标签：
-          </div>
+          <div class="label">全部标签：</div>
           <el-tag
-            v-for="(tag, index) in tag.tags"
-            :key="index"
             class="tag-item"
+            :key="index"
+            v-for="(tag, index) in tag.tags"
             size="medium"
             color="#ffffff"
             :disable-transitions="false"
             @click.native="tagAdd(tag, index)"
+            >{{ tag.tag_name }}</el-tag
           >
-            {{ tag.tag_name }}
-          </el-tag>
         </div>
-        <span
-          slot="footer"
-          class="dialog-footer"
-        >
+        <span slot="footer" class="dialog-footer">
           <el-button @click="tag.dialog = false">取 消</el-button>
-          <el-button
-            type="primary"
-            @click="submitItemTag"
-          >确 定</el-button>
+          <el-button type="primary" @click="submitItemTag">确 定</el-button>
         </span>
       </el-dialog>
       <el-dialog
@@ -605,19 +420,10 @@
         :before-close="handleCancelLabelsDialog"
       >
         <template>
-          <el-radio-group
-            v-model="editValidData.is_valid"
-            @change="editValidSubmit"
-          >
-            <el-radio label="true">
-              启用
-            </el-radio>
-            <el-radio label="false">
-              禁用
-            </el-radio>
-            <el-radio label="delete">
-              废弃
-            </el-radio>
+          <el-radio-group v-model="editValidData.is_valid" @change="editValidSubmit">
+            <el-radio label="true">启用</el-radio>
+            <el-radio label="false">禁用</el-radio>
+            <el-radio label="delete">废弃</el-radio>
           </el-radio-group>
         </template>
       </el-dialog>
@@ -629,19 +435,14 @@
         :before-close="handleMeiQiaCancel"
       >
         <template>
-          <el-form
-            ref="meiqia_form"
-            :model="meiqia_form"
-            class="demo-ruleForm"
-            label-width="90px"
-          >
+          <el-form ref="meiqia_form" :model="meiqia_form" class="demo-ruleForm" label-width="90px">
             <el-form-item label="企业ID">
               <el-col :span="14">
                 <el-input
                   v-model="meiqia_form.meiqia_id"
                   :maxlength="30"
                   placeholder="企业ID"
-                />
+                ></el-input>
               </el-col>
             </el-form-item>
             <el-form-item label="客服token">
@@ -650,24 +451,14 @@
                   v-model="meiqia_form.meiqia_token"
                   :maxlength="50"
                   placeholder="toekn"
-                />
+                ></el-input>
               </el-col>
             </el-form-item>
           </el-form>
         </template>
-        <div
-          slot="footer"
-          class="dialog-footer"
-        >
-          <el-button @click.native="handleMeiQiaCancel">
-            取消
-          </el-button>
-          <el-button
-            type="primary"
-            @click="handleSubmitMeiQia"
-          >
-            保存
-          </el-button>
+        <div slot="footer" class="dialog-footer">
+          <el-button @click.native="handleMeiQiaCancel">取消</el-button>
+          <el-button type="primary" @click="handleSubmitMeiQia">保存</el-button>
         </div>
       </el-dialog>
       <!-- 添加、编辑基础物料-结束 -->
@@ -688,40 +479,31 @@
           >
             <el-form-item label="距离">
               <el-input
-                v-model.number="distanceForm.distance"
                 min="1"
                 type="number"
                 oninput="value=value.replace(/[^\d.]/g,'')"
+                v-model.number="distanceForm.distance"
                 placeholder="只能是大于0的数字"
                 style="width: 30%"
-              />&nbsp;km
+              ></el-input
+              >&nbsp;km
             </el-form-item>
           </el-form>
         </template>
-        <div
-          slot="footer"
-          class="dialog-footer"
-        >
-          <el-button @click.native="handleDistanceCancel">
-            取消
-          </el-button>
-          <el-button
-            type="primary"
-            @click="handleSubmitDistance"
-          >
-            保存
-          </el-button>
+        <div slot="footer" class="dialog-footer">
+          <el-button @click.native="handleDistanceCancel">取消</el-button>
+          <el-button type="primary" @click="handleSubmitDistance">保存</el-button>
         </div>
       </el-dialog>
       <!-- 编辑距离-结束 -->
     </template>
-    <router-view />
+    <router-view></router-view>
   </div>
 </template>
 <script>
 import { mapGetters } from 'vuex'
 import {
-  saveDistributor,
+  saveDistributor, 
   getWxaDristributorCodeStream,
   setDefaultDistributor,
   saveOpen,
@@ -738,7 +520,7 @@ import mixin, { pageMixin } from '@/mixins'
 
 import store from '@/store'
 // 取选中地区的值
-function getCascaderObj (val, opt) {
+function getCascaderObj(val, opt) {
   return val.map(function (value, index, array) {
     for (var itm of opt) {
       if (itm.value === value) {
@@ -751,9 +533,8 @@ function getCascaderObj (val, opt) {
 }
 
 export default {
-  components: { shopDecoration, pcDecoration, shopSelect },
   mixins: [mixin, pageMixin],
-  data () {
+  data() {
     const initialParams = {
       is_valid: undefined,
       distributor_id: undefined,
@@ -832,45 +613,33 @@ export default {
       isOpen: false
     }
   },
+  components: { shopDecoration, pcDecoration, shopSelect },
   computed: {
     ...mapGetters(['wheight']),
-    isLoginTypeNormal () {
+    isLoginTypeNormal() {
       return (
         this.$store.getters.login_type === 'normal' || this.$store.getters.login_type === 'admin'
       )
     }
   },
-
-  mounted () {
-    this.origin = window.location.origin
-    if (store.getters.login_type === 'distributor') {
-      this.is_distributor = true
-    }
-    this.fetchList()
-    this.getAllTagList()
-    getSetting().then((res) => {
-      let data = res.data.data
-      this.isOpen = data.is_open == 'true'
-    })
-  },
   methods: {
-    onSearch () {
+    onSearch() {
       this.page.pageIndex = 1
       this.$nextTick(() => {
         this.fetchList()
       })
     },
-    onReset () {
+    onReset() {
       this.params = { ...this.initialParams }
       this.onSearch()
     },
-    getParams () {
+    getParams() {
       let params = {
         ...this.params
       }
       return params
     },
-    async fetchList () {
+    async fetchList() {
       this.loading = true
       const { pageIndex: page, pageSize } = this.page
       let params = {
@@ -878,15 +647,14 @@ export default {
         pageSize,
         ...this.getParams()
       }
-      const { list, total_count, distributor_self, datapass_block } =
-        await this.$api.marketing.getDistributorList(params)
+      const { list, total_count,distributor_self,datapass_block } = await this.$api.marketing.getDistributorList(params)
       this.tableList = list
       this.page.total = total_count
-      this.distributor_self = distributor_self
-      this.datapass_block = datapass_block
+      this.distributor_self=distributor_self
+      this.datapass_block=datapass_block
       this.loading = false
     },
-    async handleClose (tag, { distributor_id }, { tag_id }) {
+    async handleClose(tag, { distributor_id }, { tag_id }) {
       const obj = {
         distributor_ids: [distributor_id],
         tag_ids: [tag_id]
@@ -897,7 +665,7 @@ export default {
       this.fetchList()
       console.log(result)
     },
-    linkTemplates (distributor) {
+    linkTemplates(distributor) {
       const { distributor_id, address, name, distribution_type } = distributor
       this.$store.dispatch('setTemplateName', 'yykweishop')
       this.$router.push({
@@ -905,37 +673,37 @@ export default {
         query: { distributor_id, address, name, distribution_type }
       })
     },
-    dialogShow (id, type) {
+    dialogShow(id, type) {
       this.current = id
       type === 'pc' ? (this.pcDialogVisible = true) : (this.dialogVisible = true)
     },
-    closeDialog () {
+    closeDialog() {
       this.dialogVisible = false
       this.pcDialogVisible = false
-    },
-    dialogOpen (detail = null) {
+    }, 
+    dialogOpen(detail = null) {
       this.$router.push({ path: this.matchHidePage('editor') })
     },
-    handleDistance () {
+    handleDistance() {
       this.distanceForm.distance = ''
       // this.resetInfo();
       // this.operate = "create";
       // this.dialogVisible = true;
     },
-    addDistributorSelf () {
+    addDistributorSelf() {
       this.$router.push({
         path: this.matchHidePage('editor'),
         query: { distributor_type: 'distributor_self' }
       })
     },
-    editDistributorSelf () {
+    editDistributorSelf() {
       this.$router.push({
         path: this.matchHidePage('editor'),
         query: { distributor_type: 'distributor_self', distributor_id: this.distributor_self }
       })
     },
-
-    downDistributorCode (row, template_name) {
+  
+    downDistributorCode(row, template_name) {
       let params = { distributor_id: row.distributor_id, codetype: this.codetype }
       if (template_name) {
         params.template_name = template_name
@@ -951,14 +719,14 @@ export default {
         a.click()
       })
     },
-    storeSearch (val) {
+    storeSearch(val) { 
       this.params.page = 1
       val && val.shop_id
       this.params.distributor_id = val.shop_id
       this.fetchList()
     },
 
-    RegionChangeSearch (value) {
+    RegionChangeSearch(value) {
       var vals = getCascaderObj(value, this.regions)
       if (vals.length == 1) {
         this.params.province = vals[0].label
@@ -973,14 +741,14 @@ export default {
         this.params.city = vals[1].label
         this.params.area = vals[2].label
       }
-      this.params.page = 1
+      this.params.page = 1 
     },
-    downDistributor (row, codetype) {
+    downDistributor(row, codetype) {
       this.codetype = codetype
       this.rowdata = row
       this.downDistributorVal = true
     },
-    defaultSwitchChange (row) {
+    defaultSwitchChange(row) {
       var params = {
         distributor_id: row.distributor_id
       }
@@ -994,7 +762,7 @@ export default {
         }
       })
     },
-    switchChangeAuditGoods (index, row) {
+    switchChangeAuditGoods(index, row) {
       var params = {
         distributor_id: row.distributor_id,
         is_audit_goods: row.is_audit_goods
@@ -1008,7 +776,7 @@ export default {
         })
       })
     },
-    switchChangeAutoSyncGoods (index, row) {
+    switchChangeAutoSyncGoods(index, row) {
       var params = {
         distributor_id: row.distributor_id,
         auto_sync_goods: row.auto_sync_goods
@@ -1022,7 +790,7 @@ export default {
         })
       })
     },
-    switchChangeOpen (index, row) {
+    switchChangeOpen(index, row) {
       var params = {
         distributor_id: row.distributor_id,
         is_open: row.is_open
@@ -1036,7 +804,7 @@ export default {
         })
       })
     },
-    switchChange (index, row) {
+    switchChange(index, row) {
       var params = {
         distributor_id: row.distributor_id,
         is_ziti: row.is_ziti,
@@ -1051,14 +819,14 @@ export default {
         })
       })
     },
-    handleSelectionChange (val) {
+    handleSelectionChange(val) {
       let distributor_id = []
       for (let i in val) {
         distributor_id.push(val[i].distributor_id)
       }
       this.distributor_id = distributor_id
     },
-    getAllTagList () {
+    getAllTagList() {
       let params = {
         page: 1,
         pageSize: 500
@@ -1067,18 +835,18 @@ export default {
         this.tag.list = response.data.data.list
       })
     },
-    handleCancelLabelsDialog () {
+    handleCancelLabelsDialog() {
       this.editValidDialog = false
       this.tag.dialog = false
       this.fetchList()
     },
-    tagUpdate (row) {
+    tagUpdate(row) {
       this.tag.editItem = [row.itemName]
       this.tag.currentTags = row.tagList || []
       this.tag.form.distributor_id = row.distributor_id
       this.showTags()
     },
-    addDistributorTag () {
+    addDistributorTag() {
       this.tag.currentTags = []
       if (this.distributor_id.length) {
         this.showTags()
@@ -1090,7 +858,7 @@ export default {
         })
       }
     },
-    showTags () {
+    showTags() {
       this.tag.tags = [...this.tag.list]
       this.tag.tags.forEach((item, index) => {
         let isInArr = this.tag.currentTags.findIndex((n) => n.tag_id == item.tag_id)
@@ -1098,18 +866,18 @@ export default {
       })
       this.tag.dialog = true
     },
-    tagRemove (index) {
+    tagRemove(index) {
       this.tag.tags.unshift(this.tag.currentTags[index])
       this.tag.currentTags.splice(index, 1)
     },
-    tagAdd (item, index) {
+    tagAdd(item, index) {
       let isInArr = this.tag.currentTags.findIndex((n) => n.tag_id == item.tag_id)
       if (isInArr == -1) {
         this.tag.currentTags.push(item)
         this.tag.tags.splice(index, 1)
       }
     },
-    submitItemTag () {
+    submitItemTag() {
       this.tag.form.tag_ids = []
       this.tag.currentTags.forEach((item) => {
         this.tag.form.tag_ids.push(item.tag_id)
@@ -1132,17 +900,17 @@ export default {
         }
       })
     },
-    tagSearchUserChange () {
+    tagSearchUserChange() {
       this.currentPage = 1
       this.getParams()
       this.getItemsList(this.params)
       this.loading = false
     },
-    editValid (row) {
+    editValid(row) {
       this.editValidDialog = true
       this.editValidData = row
     },
-    editValidSubmit (val) {
+    editValidSubmit(val) {
       let msg = ''
       if (val === 'true') {
         msg = '确定开启店铺？'
@@ -1180,7 +948,7 @@ export default {
           })
         })
     },
-    showSettingMeiQia (distributor_id) {
+    showSettingMeiQia(distributor_id) {
       // 设置美洽参数
       this.setMeiQiaVisible = true
       let that = this
@@ -1191,14 +959,14 @@ export default {
       that.meiqia_form.distributor_id = distributor_id
       console.log(this.meiqia_form)
     },
-    handleMeiQiaCancel () {
+    handleMeiQiaCancel() {
       // 美洽设置窗口关闭
       this.setMeiQiaVisible = false
       this.meiqia_form.distributor_id = ''
       this.meiqia_form.meiqia_id = ''
       this.meiqia_form.meiqia_token = ''
     },
-    handleSubmitMeiQia () {
+    handleSubmitMeiQia() {
       // 提交美洽配置
       let params = {
         meiqia_id: this.meiqia_form.meiqia_id,
@@ -1212,7 +980,7 @@ export default {
         this.handleMeiQiaCancel()
       })
     },
-    showSettingDistance () {
+    showSettingDistance() {
       // 设置距离参数
       this.setDistanceVisible = true
       let that = this
@@ -1221,12 +989,12 @@ export default {
       })
       console.log(this.distanceForm)
     },
-    handleDistanceCancel () {
+    handleDistanceCancel() {
       // 距离设置窗口关闭
       this.setDistanceVisible = false
       this.distanceForm.distance = ''
     },
-    handleSubmitDistance () {
+    handleSubmitDistance() {
       // 提交距离配置
       let params = {
         distance: this.distanceForm.distance
@@ -1239,19 +1007,32 @@ export default {
         this.handleDistanceCancel()
       })
     },
-    handleSizeChange (pageSize) {
+    handleSizeChange(pageSize) {
       this.params.page = 1
       this.params.pageSize = pageSize
       this.fetchList()
     },
-    onCopy () {
+    onCopy() {
       this.$notify.success({
         message: '复制成功',
         showClose: true
       })
     }
   },
-  beforeRouteUpdate (to, from, next) {
+
+  mounted() {  
+    this.origin = window.location.origin
+    if (store.getters.login_type === 'distributor') {
+      this.is_distributor = true
+    }
+    this.fetchList()
+    this.getAllTagList()
+    getSetting().then((res) => {
+      let data = res.data.data
+      this.isOpen = data.is_open == 'true'
+    })
+  },
+  beforeRouteUpdate(to, from, next) {
     next()
     if (to.path.indexOf('editor') === -1 && to.path.indexOf('details') === -1) {
       this.fetchList()

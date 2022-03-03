@@ -1,15 +1,8 @@
 /* eslint-disable */
-<div style="max-width: 403px; max-height: 300px" id="container123"></div>
+<div style="max-width:403px;max-height:300px" id="container123"></div>
 <template>
-  <section
-    class="section section-white content-padded"
-    onload="init()"
-  >
-    <el-form
-      ref="form"
-      :model="form"
-      label-width="110px"
-    >
+  <section class="section section-white content-padded" onload="init()">
+    <el-form ref="form" :model="form" label-width="110px">
       <el-form-item label="地理位置">
         <div>
           <el-col :span="4">
@@ -17,31 +10,15 @@
               v-model="form.regions_id"
               :options="regions"
               @change="handleRegionChange"
-            />
+            ></el-cascader>
           </el-col>
           <el-col :span="7">
-            <el-input
-              id="keyword"
-              v-model="form.address"
-              placeholder="请输入具体地址"
-            />
+            <el-input v-model="form.address" id="keyword" placeholder="请输入具体地址"></el-input>
           </el-col>
-          <el-col
-            :span="1"
-            class="content-center"
+          <el-col :span="1" class="content-center">&nbsp;</el-col>
+          <el-col :span="3"
+            ><el-button type="primary" @click="searchKeyword()">搜索定位</el-button></el-col
           >
-&nbsp;
-          </el-col>
-          <el-col
-            :span="3"
-          >
-            <el-button
-              type="primary"
-              @click="searchKeyword()"
-            >
-              搜索定位
-            </el-button>
-          </el-col>
         </div>
       </el-form-item>
       <el-form-item label="地图定位">
@@ -50,172 +27,102 @@
         </div> -->
         <div>
           <el-col :span="4">
-            <div id="qqmap_rslist" />
+            <div id="qqmap_rslist"></div>
           </el-col>
           <el-col :span="12">
-            <div id="qqmap_container" />
+            <div id="qqmap_container"></div>
           </el-col>
         </div>
       </el-form-item>
-      <el-form-item
-        inline="true"
-        class="demo-form-inline"
-        label="社区经纬度"
-      >
-        <el-col
-          :span="3"
-        >
-          <el-input
-            v-model="form.lng"
-            readonly
-            placeholder="经度"
-          />
-        </el-col>
-        <el-col
-          :span="1"
-          class="content-center"
-        >
-          -
-        </el-col>
-        <el-col
-          :span="3"
-        >
-          <el-input
-            v-model="form.lat"
-            readonly
-            placeholder="纬度"
-          />
-        </el-col>
+      <el-form-item inline="true" class="demo-form-inline" label="社区经纬度">
+        <el-col :span="3"
+          ><el-input v-model="form.lng" readonly placeholder="经度"></el-input
+        ></el-col>
+        <el-col :span="1" class="content-center">-</el-col>
+        <el-col :span="3"
+          ><el-input v-model="form.lat" readonly placeholder="纬度"></el-input
+        ></el-col>
       </el-form-item>
-      <el-form-item
-        inline="true"
-        class="demo-form-inline"
-        label="社区详细地址"
-      >
+      <el-form-item inline="true" class="demo-form-inline" label="社区详细地址">
         <div>
-          <el-col
-            :span="8"
-          >
-            <el-input
-              id="keyword"
+          <el-col :span="8"
+            ><el-input
               v-model="form.address"
+              id="keyword"
               placeholder="请输入具体提货地址"
-            />
-          </el-col>
+            ></el-input
+          ></el-col>
         </div>
       </el-form-item>
       <el-form-item label="社区名称">
         <div>
-          <el-col :span="8">
-            <el-input v-model="form.community_name" />
-          </el-col>
+          <el-col :span="8"><el-input v-model="form.community_name"></el-input></el-col>
         </div>
       </el-form-item>
       <el-form-item label="团长姓名">
         <div>
-          <el-col :span="8">
-            <el-input v-model="form.leader_name" />
-          </el-col>
+          <el-col :span="8"><el-input v-model="form.leader_name"></el-input></el-col>
         </div>
       </el-form-item>
       <el-form-item label="团长手机">
         <div>
-          <el-col :span="8">
-            <el-input v-model="form.leader_mobile" />
-          </el-col>
+          <el-col :span="8"><el-input v-model="form.leader_mobile"></el-input></el-col>
         </div>
       </el-form-item>
       <el-form-item label="团长身份证">
         <div>
-          <el-col :span="8">
-            <el-input v-model="form.leader_id_card" />
-          </el-col>
+          <el-col :span="8"><el-input v-model="form.leader_id_card"></el-input></el-col>
         </div>
       </el-form-item>
       <el-form-item label="团长昵称">
         <div>
-          <el-col :span="8">
-            <el-input v-model="form.leader_nickname" />
-          </el-col>
+          <el-col :span="8"><el-input v-model="form.leader_nickname"></el-input></el-col>
         </div>
       </el-form-item>
       <el-form-item label="备注说明">
         <div>
-          <el-col :span="8">
-            <el-input v-model="form.description" />
-          </el-col>
+          <el-col :span="8"><el-input v-model="form.description"></el-input></el-col>
         </div>
       </el-form-item>
       <el-form-item label="推荐人">
         <div>
-          <el-col :span="8">
-            <el-input v-model="form.referrer" />
-          </el-col>
+          <el-col :span="8"><el-input v-model="form.referrer"></el-input></el-col>
         </div>
       </el-form-item>
       <el-form-item label="BD">
         <div>
-          <el-col :span="8">
-            <el-input v-model="form.bd" />
-          </el-col>
+          <el-col :span="8"><el-input v-model="form.bd"></el-input></el-col>
         </div>
       </el-form-item>
       <el-form-item label="社区人数">
         <div>
-          <el-col :span="8">
-            <el-input v-model="form.num" />
-          </el-col>
+          <el-col :span="8"><el-input v-model="form.num"></el-input></el-col>
         </div>
       </el-form-item>
       <el-form-item label="小区商圈">
         <div>
-          <el-col :span="8">
-            <el-input v-model="form.business_district" />
-          </el-col>
+          <el-col :span="8"><el-input v-model="form.business_district"></el-input></el-col>
         </div>
       </el-form-item>
       <el-form-item label="店号">
         <div>
-          <el-col :span="8">
-            <el-input v-model="form.shop_number" />
-          </el-col>
+          <el-col :span="8"><el-input v-model="form.shop_number"></el-input></el-col>
         </div>
       </el-form-item>
       <el-form-item label="站点号">
         <div>
-          <el-col :span="8">
-            <el-input v-model="form.site_number" />
-          </el-col>
+          <el-col :span="8"><el-input v-model="form.site_number"></el-input></el-col>
         </div>
       </el-form-item>
       <el-form-item>
-        <el-button
-          type="primary"
-          size="large"
-          @click="onSubmit"
-        >
-          提交
-        </el-button>
-        <el-button
-          size="large"
-          @click.native.prevent
-        >
-          取消
-        </el-button>
+        <el-button type="primary" size="large" @click="onSubmit">提交</el-button>
+        <el-button size="large" @click.native.prevent>取消</el-button>
       </el-form-item>
     </el-form>
-    <div
-      v-show="qqmap_infowin_flag"
-      id="qqmap_infowin"
-    >
-      <el-col>
-        <el-button
-          type="primary"
-          @click="imp_poi(poi_info)"
-        >
-          导入社区地址信息
-        </el-button>
-      </el-col>
+    <div id="qqmap_infowin" v-show="qqmap_infowin_flag">
+      <el-col
+        ><el-button type="primary" @click="imp_poi(poi_info)">导入社区地址信息</el-button></el-col
+      >
       <el-col>{{ poi_info.address }}</el-col>
     </div>
   </section>
@@ -225,8 +132,8 @@ import district from '../../../../common/district.json'
 import { communityCreate, communityUpdate, getCommunityDetail } from '../../../../api/community'
 
 // 取选中地区的值
-function getCascaderObj (val, opt) {
-  return val.map(function (value, index, array) {
+function getCascaderObj(val, opt) {
+  return val.map(function(value, index, array) {
     for (var itm of opt) {
       if (itm.value === value) {
         opt = itm.children
@@ -239,7 +146,7 @@ function getCascaderObj (val, opt) {
 
 export default {
   inject: ['refresh'],
-  data () {
+  data() {
     return {
       form: {
         community_id: '',
@@ -272,29 +179,8 @@ export default {
       add_flag: 1
     }
   },
-  mounted () {
-    if (this.$route.params.community_id) {
-      // 初始化门店数据
-      //this.add_flag = 0;
-      getCommunityDetail(this.$route.params.community_id)
-        .then((response) => {
-          this.form = response.data.data
-          if (this.form.regions.length > 0) {
-            this.region = this.form.regions[this.form.regions.length - 1]
-          }
-          // 编辑门店时初始化地图
-          this.qqmapinit(this.form.lat, this.form.lng)
-        })
-        .catch((error) => {
-          this.$router.go(-1)
-        })
-    } else {
-      // 添加门店时初始化地图
-      this.qqmapinit(39.916527, 116.397128)
-    }
-  },
   methods: {
-    onSubmit () {
+    onSubmit() {
       const that = this
       this.loading = true
       if (this.form.community_id) {
@@ -307,7 +193,7 @@ export default {
               message: '更新成功',
               type: 'success',
               duration: 2 * 1000,
-              onClose () {
+              onClose() {
                 that.refresh()
                 that.$router.go(-1)
               }
@@ -326,7 +212,7 @@ export default {
               message: '添加成功',
               type: 'success',
               duration: 2 * 1000,
-              onClose () {
+              onClose() {
                 that.refresh()
                 that.$router.go(-1)
               }
@@ -338,7 +224,7 @@ export default {
         })
       }
     },
-    handleRegionChange: function (value) {
+    handleRegionChange: function(value) {
       var vals = getCascaderObj(value, this.regions)
       this.region = vals[vals.length - 1].label
       this.form.regions_id = []
@@ -348,7 +234,7 @@ export default {
         this.form.regions[i] = vals[i].label
       }
     },
-    qqmapinit: function (lat, lng) {
+    qqmapinit: function(lat, lng) {
       // var center = new qq.maps.LatLng(39.916527, 116.397128);
       var center = new qq.maps.LatLng(lat, lng)
       var map = new qq.maps.Map(document.getElementById('qqmap_container'), {
@@ -365,7 +251,7 @@ export default {
       this.searchService = new qq.maps.SearchService({
         panel: document.getElementById('qqmap_rslist'),
         //检索成功的回调函数
-        complete: function (results) {
+        complete: function(results) {
           //设置回调函数参数
           var pois = results.detail.pois
           var infoWin = new qq.maps.InfoWindow({
@@ -376,7 +262,7 @@ export default {
             var poi = pois[i]
             //扩展边界范围，用来包含搜索到的Poi点
             latlngBounds.extend(poi.latLng)
-            ;(function (n) {
+            ;(function(n) {
               var marker = new qq.maps.Marker({
                 map: map
               })
@@ -384,7 +270,7 @@ export default {
 
               marker.setTitle(i + 1)
               that.markers.push(marker)
-              qq.maps.event.addListener(marker, 'click', function () {
+              qq.maps.event.addListener(marker, 'click', function() {
                 infoWin.open()
                 that.qqmap_infowin_flag = true
                 that.poi_info = pois[n] //将选点位置信息存入poi_info
@@ -397,19 +283,19 @@ export default {
           map.fitBounds(latlngBounds)
         },
         //若服务请求失败，则运行以下函数
-        error: function () {
+        error: function() {
           this.$message.error('搜索地址失败!')
         }
       })
     },
-    clearOverlays: function (overlays) {
+    clearOverlays: function(overlays) {
       //清除地图上的marker
       var overlay
       while ((overlay = overlays.pop())) {
         overlay.setMap(null)
       }
     },
-    searchKeyword: function () {
+    searchKeyword: function() {
       //设置搜索的范围和关键字等属性
       if (!this.region) {
         this.$message({
@@ -439,15 +325,36 @@ export default {
       //根据输入的关键字在搜索范围内检索
       this.searchService.search(keyword)
     },
-    imp_poi: function (poi_info) {
+    imp_poi: function(poi_info) {
       this.form.lng = poi_info.latLng.lng
       this.form.lat = poi_info.latLng.lat
       this.form.address = poi_info.address
     },
-    isDomesticChange (val) {
+    isDomesticChange(val) {
       if (val == 1) {
         this.qqmapinit(39.916527, 116.397128)
       }
+    }
+  },
+  mounted() {
+    if (this.$route.params.community_id) {
+      // 初始化门店数据
+      //this.add_flag = 0;
+      getCommunityDetail(this.$route.params.community_id)
+        .then((response) => {
+          this.form = response.data.data
+          if (this.form.regions.length > 0) {
+            this.region = this.form.regions[this.form.regions.length - 1]
+          }
+          // 编辑门店时初始化地图
+          this.qqmapinit(this.form.lat, this.form.lng)
+        })
+        .catch((error) => {
+          this.$router.go(-1)
+        })
+    } else {
+      // 添加门店时初始化地图
+      this.qqmapinit(39.916527, 116.397128)
     }
   }
 }

@@ -1,21 +1,13 @@
 <template>
-  <div
-    class="component-wrap"
-    :class="{ 'component-padded': base.padded, 'active': active }"
-  >
-    <div class="current-active" />
-    <div
-      v-if="base.title"
-      class="component-header"
-    >
+  <div class="component-wrap" :class="{ 'component-padded': base.padded, 'active': active }">
+    <div class="current-active"></div>
+    <div v-if="base.title" class="component-header">
       <div class="component-title">
         <div>{{ base.title }}</div>
-        <div class="subtitle">
-          {{ base.subtitle }}
-        </div>
+        <div class="subtitle">{{ base.subtitle }}</div>
       </div>
       <div class="component-more">
-        <div class="three-dot" />
+        <div class="three-dot"></div>
       </div>
     </div>
     <div class="component-body with-padding">
@@ -24,53 +16,34 @@
         class="grid-goods out-padding"
         :class="config.style === 'grids' ? 'three-inrow' : 'two-inrow'"
       >
-        <div
-          v-for="(item, index) in data.slice(0, 50)"
-          :key="index"
-          class="grid-item"
-        >
+        <div v-for="(item, index) in data.slice(0,50)" :key="index" class="grid-item">
           <div class="goods-wrap">
             <div class="thumbnail">
-              <img
-                class="goods-img"
-                :src="wximageurl + item.imgUrl"
-              >
+              <img class="goods-img" :src="wximageurl + item.imgUrl" />
             </div>
             <div class="caption">
               <img
-                v-if="config.brand && config.style !== 'grids'"
                 class="goods-brand"
+                v-if="config.brand && config.style !== 'grids'"
                 :src="
                   item.brand
                     ? wximageurl + item.brand
-                    : 'https://fakeimg.pl/60x60/EFEFEF/CCC/?text=brand&font=lobster'
-                "
-              >
-              <div class="goods-title">
-                {{ item.title }}
-              </div>
-              <div class="goods-title">
-                {{ item.itemEnName }}
-              </div>
-              <div
-                v-if="config.showPrice"
-                class="price"
-              >
+                    : 'https://fakeimg.pl/60x60/EFEFEF/CCC/?text=brand&font=lobster'"
+              />
+              <div class="goods-title">{{ item.title }}</div>
+              <div class="goods-title">{{ item.itemEnName }}</div>
+              <div v-if="config.showPrice" class="price">
                 <span class="cur">¥</span>{{ item.price / 100 }}
               </div>
               <div class="activity-label">
-                <p
-                  v-for="(s, i) in item.promotionActivity"
-                  :key="i"
-                  :style="`color: ${colorPrimary};border: 1px solid ${colorPrimary}`"
-                >
-                  {{ s.tag_type == 'single_group' ? '团购' : '' }}
-                  {{ s.tag_type == 'full_minus' ? '满减' : '' }}
-                  {{ s.tag_type == 'full_discount' ? '满折' : '' }}
-                  {{ s.tag_type == 'full_gift' ? '满赠' : '' }}
-                  {{ s.tag_type == 'normal' ? '秒杀' : '' }}
-                  {{ s.tag_type == 'limited_time_sale' ? '限时特惠' : '' }}
-                  {{ s.tag_type == 'plus_price_buy' ? '换购' : '' }}
+                <p v-for="(s,i) in item.promotionActivity" :key="i" :style="`color: ${colorPrimary};border: 1px solid ${colorPrimary}`">
+                  {{s.tag_type=='single_group'?'团购':''}}
+                  {{s.tag_type=='full_minus'?'满减':''}}
+                  {{s.tag_type=='full_discount'?'满折':''}}
+                  {{s.tag_type=='full_gift'?'满赠':''}}
+                  {{s.tag_type=='normal'?'秒杀':''}}
+                  {{s.tag_type=='limited_time_sale'?'限时特惠':''}}
+                  {{s.tag_type == 'plus_price_buy' ? '换购' : ''}}
                 </p>
               </div>
             </div>
@@ -96,7 +69,17 @@ export default {
       default: false
     }
   },
-  data () {
+  watch: {
+    res: {
+      deep: true,
+      handler(value) {
+        if (value) {
+          this.setData(value)
+        }
+      }
+    }
+  },
+  data() {
     return {
       base: {},
       config: {},
@@ -106,29 +89,19 @@ export default {
       colorPrimary: ''
     }
   },
-  watch: {
-    res: {
-      deep: true,
-      handler (value) {
-        if (value) {
-          this.setData(value)
-        }
-      }
-    }
-  },
-  mounted () {
-    this.setData(this.res)
-    this.colorPrimary = this.$store.getters.color_theme.primary
-  },
   methods: {
-    setData (val) {
+    setData(val) {
       this.base = val.base
       this.config = val.config
       this.data = val.data
     },
-    handleClick (i) {
+    handleClick(i) {
       this.checkde = i
     }
+  },
+  mounted() {
+    this.setData(this.res)
+    this.colorPrimary = this.$store.getters.color_theme.primary
   }
 }
 </script>

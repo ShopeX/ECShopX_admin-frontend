@@ -1,17 +1,8 @@
 <template>
   <div>
-    <div
-      v-if="$route.path.indexOf('edit') === -1"
-      class="sms_signatures"
-    >
-      <el-card
-        class="box-card"
-        shadow="never"
-      >
-        <div
-          slot="header"
-          class="clearfix"
-        >
+    <div class="sms_signatures" v-if="$route.path.indexOf('edit') === -1">
+      <el-card class="box-card" shadow="never">
+        <div slot="header" class="clearfix">
           <span>短信模板</span>
         </div>
         <SpFinder
@@ -20,7 +11,7 @@
           :search-row-count="2"
           :fixed-row-action="true"
           :setting="setting"
-          no-selection
+          noSelection
           :hooks="{
             beforeSearch: beforeSearch,
             afterSearch: afterSearch
@@ -29,13 +20,7 @@
         >
           <template v-slot:tableTop>
             <div style="text-align: right; margin-bottom: 20px">
-              <el-button
-                size="small"
-                type="primary"
-                @click="addTemplate"
-              >
-                添加模板
-              </el-button>
+              <el-button size="small" type="primary" @click="addTemplate">添加模板</el-button>
             </div>
           </template>
         </SpFinder>
@@ -49,7 +34,12 @@
 import setting_ from '../finder-setting/sms_template'
 import { deleteSmsTemplate } from '@/api/sms'
 export default {
-  data () {
+  computed: {
+    setting() {
+      return setting_(this)
+    }
+  },
+  data() {
     return {
       failVisible: false,
       search_options: [
@@ -59,20 +49,15 @@ export default {
       ]
     }
   },
-  computed: {
-    setting () {
-      return setting_(this)
-    }
-  },
   methods: {
-    addTemplate () {
+    addTemplate() {
       this.$router.push({ path: this.matchHidePage('edit') })
     },
-    beforeSearch (params) {
+    beforeSearch(params) {
       return { ...params }
     },
-    afterSearch () {},
-    async deleteTemplateHandle (id) {
+    afterSearch() {},
+    async deleteTemplateHandle(id) {
       const result = await deleteSmsTemplate(id)
       this.$message.success('删除成功')
       this.$refs.finder.refresh()

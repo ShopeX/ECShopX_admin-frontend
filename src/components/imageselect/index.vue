@@ -11,18 +11,9 @@
     <div class="img_pick_panel inner_container_box">
       <el-row>
         <el-col>
-          <el-tabs
-            v-model="activeName"
-            @tab-click="handleClick"
-          >
-            <el-tab-pane
-              label="本地上传"
-              name="localimages"
-            >
-              <div
-                v-loading="loading"
-                class="inner_main"
-              >
+          <el-tabs v-model="activeName" @tab-click="handleClick"> 
+            <el-tab-pane label="本地上传" name="localimages">
+              <div class="inner_main" v-loading="loading">
                 <div class="img_pick_area">
                   <div class="sub_title_bar in_dialog">
                     <div class="upload_box">
@@ -38,9 +29,7 @@
                         :on-success="handleAvatarSuccess"
                         :on-error="uploadError"
                       >
-                        <el-button type="primary">
-                          本地上传
-                        </el-button>
+                        <el-button type="primary">本地上传</el-button>
                       </el-upload>
                     </div>
                   </div>
@@ -49,9 +38,9 @@
                     <div class="img_pick">
                       <div class="img_list">
                         <div
+                          class="img_item"
                           v-for="(item, index) in localimgList"
                           :key="index"
-                          class="img_item"
                           @click="localcheckedImg(item, index)"
                         >
                           <div
@@ -61,15 +50,12 @@
                             "
                           >
                             <div class="pic_box">
-                              <img
-                                :src="item.image_full_url"
-                                class="pic"
-                              >
+                              <img :src="item.image_full_url" class="pic" />
                             </div>
                             <span class="lbl_content">{{ item.image_name }}</span>
                             <div class="selected_mask">
-                              <div class="selected_mask_inner" />
-                              <div class="selected_mask_icon el-icon-check" />
+                              <div class="selected_mask_inner"></div>
+                              <div class="selected_mask_icon el-icon-check"></div>
                             </div>
                           </div>
                         </div>
@@ -78,33 +64,21 @@
                   </div>
                 </div>
 
-                <div
-                  v-if="localimgData.total_count > localparams.pageSize"
-                  class="pager-wrap tc"
-                >
+                <div v-if="localimgData.total_count > localparams.pageSize" class="pager-wrap tc">
                   <el-pagination
                     layout="total, sizes, prev, pager, next"
+                    @current-change="localhandleCurrentChange"
                     :current-page.sync="localparams.page"
                     :page-sizes="[localparams.pageSize]"
                     :total="localimgData.total_count"
                     :page-size="localparams.pageSize"
-                    @current-change="localhandleCurrentChange"
-                  />
+                  >
+                  </el-pagination>
                 </div>
 
-                <div
-                  slot="footer"
-                  class="dialog-footer"
-                >
-                  <el-button @click="cancelAction">
-                    取 消
-                  </el-button>
-                  <el-button
-                    type="primary"
-                    @click="localsaveAction"
-                  >
-                    确 定
-                  </el-button>
+                <div slot="footer" class="dialog-footer">
+                  <el-button @click="cancelAction">取 消</el-button>
+                  <el-button type="primary" @click="localsaveAction">确 定</el-button>
                 </div>
               </div>
             </el-tab-pane>
@@ -127,7 +101,7 @@ import {
 } from '../../api/qiniu'
 export default {
   props: ['dialogVisible', 'scStatus', 'isMost'],
-  data () {
+  data() {
     return {
       name: 'ImgSelect',
       checkedItem: [],
@@ -164,30 +138,12 @@ export default {
       locali: -1
     }
   },
-  watch: {
-    scStatus (newV, oldV) {
-      if (newV) {
-        this.params.page = 1
-        if (this.$store.getters.login_type != 'distributor') {
-          this.getImageList()
-        } else {
-          this.activeName = 'localimages'
-        }
-        this.localparams.page = 1
-        this.getLocalImageList()
-      }
-    },
-    dialogVisible (newV, oldV) {
-      this.showDialog = newV
-      this.checkedItem = []
-    }
-  },
   methods: {
-    handleCurrentChange (page_num) {
+    handleCurrentChange(page_num) {
       this.params.page = page_num
       this.getImageList()
     },
-    checkedImg (item, index) {
+    checkedImg(item, index) {
       if (this.isMost) {
         item.selected = !item.selected
         item.selected ? this.checkedItem.push(item) : this.checkedItem.pop(item)
@@ -196,7 +152,7 @@ export default {
       }
       this.i = index
     },
-    uploadImage (file, filelist) {
+    uploadImage(file, filelist) {
       let check = validatUploadImage(file)
       if (check !== true) {
         this.$message({
@@ -211,7 +167,7 @@ export default {
         this.getImageList()
       })
     },
-    saveAction () {
+    saveAction() {
       this.$emit('chooseImg', this.checkedItem)
       if (this.isMost) {
         this.checkedItem = []
@@ -220,10 +176,10 @@ export default {
         })
       }
     },
-    cancelAction () {
+    cancelAction() {
       this.$emit('closeImgDialog')
     },
-    getImageList () {
+    getImageList() {
       // let that = this
       // that.loading = true
       // getWechatMaterial(this.params)
@@ -241,14 +197,14 @@ export default {
       //     that.loading = false
       //   })
     },
-    handleClick (tab, event) {},
+    handleClick(tab, event) {},
     //本地上传
-    localhandleCurrentChange (page_num) {
+    localhandleCurrentChange(page_num) {
       this.localparams.page = page_num
       this.localisLoadData = false
       this.getLocalImageList()
     },
-    beforeAvatarUpload (file) {
+    beforeAvatarUpload(file) {
       const isJPG = file.type === 'image/jpeg'
       const isPNG = file.type === 'image/png'
       const isGIF = file.type === 'image/gif'
@@ -273,7 +229,7 @@ export default {
       //   this.actionPath  = `https://upload-${!response.data.data.region ? 'z2' : response.data.data.region}.qiniup.com`
       // })
     },
-    handleAvatarSuccess (res, file) {
+    handleAvatarSuccess(res, file) {
       let uploadParams = {
         image_cat_id: 2, //图片分类必填,必须为整数
         image_name: file.name, //图片名称必填,不能超过50个字符
@@ -290,12 +246,12 @@ export default {
         })
         this.localisLoadData = false
         this.locali = -1 // 选中的index
-        this.localcheckedItem = [] // 选中的内容
+        this.localcheckedItem =[]  // 选中的内容
         this.getLocalImageList()
       })
       // }
     },
-    getLocalImageList () {
+    getLocalImageList() {
       let that = this
       if (!this.localisLoadData) {
         that.localloading = true
@@ -316,7 +272,7 @@ export default {
           })
       }
     },
-    localcheckedImg (item, index) {
+    localcheckedImg(item, index) {
       if (this.isMost && this.localcheckedItem && this.localcheckedItem.url) {
         this.localcheckedItem = []
       }
@@ -328,7 +284,7 @@ export default {
       }
       this.locali = index
     },
-    localsaveAction () {
+    localsaveAction() {
       this.$emit('chooseImg', this.localcheckedItem)
       if (this.isMost) {
         this.localcheckedItem = []
@@ -338,7 +294,7 @@ export default {
       }
     },
     // 自定义上传
-    handleUpload: function (e) {
+    handleUpload: function (e) { 
       const upload = new UploadUtil()
       // 上传
       upload
@@ -352,6 +308,24 @@ export default {
     // 上传错误回调
     uploadError: function (e) {
       console.error(e)
+    }
+  },
+  watch: {
+    scStatus(newV, oldV) {
+      if (newV) {
+        this.params.page = 1
+        if (this.$store.getters.login_type != 'distributor') {
+          this.getImageList()
+        } else {
+          this.activeName = 'localimages'
+        }
+        this.localparams.page = 1
+        this.getLocalImageList()
+      }
+    },
+    dialogVisible(newV, oldV) {
+      this.showDialog = newV
+      this.checkedItem = []
     }
   }
 }

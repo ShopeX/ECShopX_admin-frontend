@@ -3,27 +3,14 @@
   margin-bottom: 16px;
 }
 </style>
-
+ 
 <template>
   <div class="page-body">
-    <SpFilterForm
-      :model="params"
-      @onSearch="onSearch"
-      @onReset="onReset"
-    >
-      <SpFilterFormItem
-        prop="order_id"
-        label="订单号:"
-      >
-        <el-input
-          v-model="params.order_id"
-          placeholder="请输入订单号"
-        />
+    <SpFilterForm :model="params" @onSearch="onSearch" @onReset="onReset">
+      <SpFilterFormItem prop="order_id" label="订单号:">
+        <el-input placeholder="请输入订单号" v-model="params.order_id"> </el-input>
       </SpFilterFormItem>
-      <SpFilterFormItem
-        prop="create_time"
-        label="日期范围:"
-      >
+      <SpFilterFormItem prop="create_time" label="日期范围:">
         <el-date-picker
           v-model="params.create_time"
           type="daterange"
@@ -31,81 +18,41 @@
           placeholder="添加时间筛选"
         />
       </SpFilterFormItem>
-      <SpFilterFormItem
-        prop="status"
-        label="处理状态:"
-      >
-        <el-select
-          v-model="params.status"
-          placeholder="请选择处理状态"
-        >
+      <SpFilterFormItem prop="status" label="处理状态:">
+        <el-select v-model="params.status" placeholder="请选择处理状态">
           <el-option
             v-for="(item, index) in statusList"
             :key="index"
             :label="item.name"
             :value="item.value"
-          />
+          >
+          </el-option>
         </el-select>
       </SpFilterFormItem>
     </SpFilterForm>
 
-    <el-table
-      v-loading="loading"
-      border
-      :data="tableList"
-      :height="wheight - 150"
-    >
-      <el-table-column
-        prop="order_id"
-        label="订单号"
-        width="180"
-      />
-      <el-table-column
-        prop="status"
-        label="错误状态"
-        width="120"
-      />
-      <el-table-column
-        prop="error_code"
-        label="错误码"
-        width="100"
-      />
-      <el-table-column
-        prop="error_desc"
-        label="错误描述"
-      />
-      <el-table-column
-        prop="create_time"
-        label="创建时间"
-        width="200"
-      >
+    <el-table border :data="tableList" v-loading="loading" :height="wheight - 150">
+      <el-table-column prop="order_id" label="订单号" width="180"></el-table-column>
+      <el-table-column prop="status" label="错误状态" width="120"></el-table-column>
+      <el-table-column prop="error_code" label="错误码" width="100"></el-table-column>
+      <el-table-column prop="error_desc" label="错误描述"></el-table-column>
+      <el-table-column prop="create_time" label="创建时间" width="200">
         <template slot-scope="scope">
           <span>{{ scope.row.create_time | datetime('YYYY-MM-DD HH:mm:ss') }}</span>
         </template>
       </el-table-column>
-      <el-table-column
-        prop="is_resubmit"
-        label="是否已重新提交"
-        width="120"
-      >
+      <el-table-column prop="is_resubmit" label="是否已重新提交" width="120">
         <template slot-scope="scope">
           <span v-if="scope.row.is_resubmit"> 已提交</span>
           <span v-else> 未提交</span>
         </template>
       </el-table-column>
-      <el-table-column
-        label="操作"
-        width="100"
-      >
+      <el-table-column label="操作" width="100">
         <template slot-scope="scope">
           <el-link v-if="scope.row.is_resubmit === false">
-            <el-button
-              type="primary"
-              size="mini"
-              @click="refundResubmit(scope.row)"
+            <el-button type="primary" size="mini" @click="refundResubmit(scope.row)"
+              >重新提交</el-button
             >
-              重新提交
-            </el-button>
           </el-link>
         </template>
       </el-table-column>
@@ -120,18 +67,19 @@
         :page-size="page.pageSize"
         @current-change="onCurrentChange"
         @size-change="onSizeChange"
-      />
+      >
+      </el-pagination>
     </div>
   </div>
 </template>
 
 <script>
-import { mapGetters } from 'vuex'
+import { mapGetters } from 'vuex' 
 import mixin, { pageMixin } from '@/mixins'
 
 export default {
   mixins: [mixin, pageMixin],
-  data () {
+  data() {
     const initialParams = {
       create_time: '',
       order_id: undefined,
@@ -153,14 +101,11 @@ export default {
   computed: {
     ...mapGetters(['wheight'])
   },
-  mounted () {
-    this.fetchList()
-  },
   methods: {
-    dateStrToTimeStamp (str) {
+    dateStrToTimeStamp(str) {
       return Date.parse(new Date(str)) / 1000
     },
-    dateTransfer (val) {
+    dateTransfer(val) {
       let time_start_begin = undefined
       let time_start_end = undefined
       if (val.length > 0) {
@@ -172,15 +117,15 @@ export default {
         time_start_end
       }
     },
-    getParams () {
+    getParams() {
       let params = {
-        ...this.dateTransfer(this.params.create_time),
-        order_id: this.params.order_id || undefined,
-        status: this.params.status || undefined
+        ...this.dateTransfer(this.params.create_time), 
+        order_id: this.params.order_id || undefined, 
+        status:this.params.status||undefined
       }
       return params
     },
-    async fetchList () {
+    async fetchList() {
       this.loading = true
       const { pageIndex: page, pageSize } = this.page
       let params = {
@@ -192,21 +137,24 @@ export default {
       this.tableList = list
       this.page.total = total_count
       this.loading = false
-    },
-    async refundResubmit (row) {
-      await this.$api.trade.refundResubmit(row.id)
-      this.$message.success('提交成功!')
-    },
-    onSearch () {
+    },  
+    async refundResubmit(row) {
+      await this.$api.trade.refundResubmit(row.id);
+      this.$message.success('提交成功!') 
+    }, 
+    onSearch() {
       this.page.pageIndex = 1
       this.$nextTick(() => {
         this.fetchList()
       })
     },
-    onReset () {
-      this.params = { ...this.initialParams }
+    onReset() {
+      this.params = { ...this.initialParams } 
       this.onSearch()
-    }
+    },
+  },
+  mounted() {
+    this.fetchList()
   }
 }
 </script>

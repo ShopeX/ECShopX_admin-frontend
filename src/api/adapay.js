@@ -95,7 +95,7 @@ export const getCategoryList = (params) => {
 }
 
 // 获取商户种类
-export const getMerTypeOption = (params) => {
+export const getMerTypeOption = (params) =>{
   return fetch({
     url: '/adapay/other/cat',
     method: 'get',
@@ -141,8 +141,8 @@ export const subAccount = (params) => {
 // 导出分账文件
 export const exportFileList = (params) => {
   return fetch({
-    url: '/adapay/trade/exportdata',
-    method: 'get',
+    url:'/adapay/trade/exportdata',
+    method:'get',
     params
   })
 }
@@ -173,40 +173,41 @@ export const applyForWithdrawal = (params) => {
   })
 }
 
+
 // adapay支付配置
-export const getAdapayPaySettingKey = () => {
+export const getAdapayPaySettingKey = () =>{
   return fetch({
-    url: '/adapay/generate/key',
-    method: 'get'
+    url:'/adapay/generate/key',
+    method:'get'
   })
 }
-export const getAdapayPaySetting = () => {
+export const getAdapayPaySetting = () =>{
   return fetch({
-    url: '/trade/payment/setting',
-    method: 'get'
+    url:'/trade/payment/setting',
+    method:'get',
   })
 }
-export const postAdapayPaySetting = (params) => {
+export const postAdapayPaySetting = (params) =>{
   return fetch({
-    url: '/trade/payment/setting',
-    method: 'post',
+    url:'/trade/payment/setting',
+    method:'post',
     params
   })
 }
 
 // 设置子商户每日提现额度
-export const setChildWithdraw = (params) => {
+export const setChildWithdraw = (params)=>{
   return fetch({
-    url: '/adapay/sub_approve/draw_limit',
-    method: 'post',
+    url:'/adapay/sub_approve/draw_limit',
+    method:'post',
     params
   })
 }
 
 // 获取子商户每日提现额度
-export const getChildWithdraw = () => {
+export const getChildWithdraw = ()=>{
   return fetch({
-    url: '/adapay/sub_approve/draw_limit',
-    method: 'get'
+    url:'/adapay/sub_approve/draw_limit',
+    method:'get'
   })
 }

@@ -1,43 +1,22 @@
 <template>
-  <el-dialog
-    title="选择图标"
-    :visible="iconsVisible"
-    width="732px"
-    @close="closeDialog"
-  >
-    <el-row
-      class="icons-list"
-      :gutter="10"
-    >
-      <el-col
-        v-for="item in icons"
-        :key="item.index"
-        :span="2"
-      >
+  <el-dialog title="选择图标" :visible="iconsVisible" @close="closeDialog" width="732px">
+    <el-row class="icons-list" :gutter="10">
+      <el-col v-for="item in icons" :key="item.index" :span="2">
         <div
           class="tab-icon"
           :class="{ 'active': selectedClassName === item }"
           @click="setCurrent(item)"
         >
-          <div class="current-active" />
-          <svg
-            class="svg-icon"
-            aria-hidden="true"
-          >
-            <use :xlink:href="`#icon-${item}`" />
+          <div class="current-active"></div>
+          <svg class="svg-icon" aria-hidden="true">
+            <use :xlink:href="`#icon-${item}`"></use>
           </svg>
         </div>
       </el-col>
     </el-row>
-    <span
-      slot="footer"
-      class="dialog-footer"
-    >
+    <span slot="footer" class="dialog-footer">
       <el-button @click="closeDialog">取 消</el-button>
-      <el-button
-        type="primary"
-        @click="iconComfirm"
-      >确 定</el-button>
+      <el-button type="primary" @click="iconComfirm">确 定</el-button>
     </span>
   </el-dialog>
 </template>
@@ -50,7 +29,14 @@ export default {
       default: false
     }
   },
-  data () {
+  watch: {
+    visible(val) {
+      if (val) {
+        this.iconsVisible = val
+      }
+    }
+  },
+  data() {
     return {
       iconsVisible: false,
       loading: false,
@@ -69,23 +55,16 @@ export default {
       ]
     }
   },
-  watch: {
-    visible (val) {
-      if (val) {
-        this.iconsVisible = val
-      }
-    }
-  },
   methods: {
-    setCurrent (name) {
+    setCurrent(name) {
       this.selectedClassName = name
     },
-    iconComfirm () {
+    iconComfirm() {
       this.iconsVisible = false
       this.$emit('pickIcon', this.selectedClassName)
       this.selectedClassName = ''
     },
-    closeDialog () {
+    closeDialog() {
       this.iconsVisible = false
       this.$emit('closeDialog', 'icon')
     }

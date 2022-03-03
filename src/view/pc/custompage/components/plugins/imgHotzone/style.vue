@@ -7,10 +7,10 @@
       <div class="section-body">
         <el-form label-width="100px">
           <el-form-item label="标题">
-            <el-input v-model="t_data.base.title" />
+            <el-input v-model="t_data.base.title"></el-input>
           </el-form-item>
           <el-form-item label="副标题">
-            <el-input v-model="t_data.base.subtitle" />
+            <el-input v-model="t_data.base.subtitle"></el-input>
           </el-form-item>
           <el-form-item label="展示图">
             <div class="setting-item slider">
@@ -19,13 +19,9 @@
                 :src="wximageurl + t_data.config.imgUrl"
                 class="banner-uploader"
                 @click="handleImgChange"
-              >
-              <div
-                v-else
-                class="banner-uploader"
-                @click="handleImgChange"
-              >
-                <i class="iconfont icon-camera" />上传图片
+              />
+              <div class="banner-uploader" v-else @click="handleImgChange">
+                <i class="iconfont icon-camera"></i>上传图片
               </div>
             </div>
           </el-form-item>
@@ -33,50 +29,25 @@
             <hotzone
               class="hotzone"
               :image="t_data.config.imgUrl"
-              :zones-init="zonesList"
+              :zonesInit="zonesList"
               @add="handleAdd"
               @change="handleChange"
               @remove="handleRemove"
-            />
-            <div
-              v-for="(item, index) in t_data.data"
-              class="setting-item slider"
-            >
+            ></hotzone>
+            <div class="setting-item slider" v-for="(item, index) in t_data.data">
               <div class="uploader-setting">
-                <div
-                  class="goods-select"
-                  @click="handleGoodsChange(index)"
-                >
-                  <div
-                    v-if="item.id"
-                    class="link-content"
-                  >
-                    <template v-if="item.linkPage === 'goods'">
-                      商品：
-                    </template>
-                    <template v-if="item.linkPage === 'category'">
-                      分类：
-                    </template>
-                    <template v-if="item.linkPage === 'article'">
-                      文章：
-                    </template>
+                <div class="goods-select" @click="handleGoodsChange(index)">
+                  <div class="link-content" v-if="item.id">
+                    <template v-if="item.linkPage === 'goods'">商品：</template>
+                    <template v-if="item.linkPage === 'category'">分类：</template>
+                    <template v-if="item.linkPage === 'article'">文章：</template>
                     <!--template v-if="item.linkPage === 'planting'">种草：</template-->
-                    <template v-if="item.linkPage === 'link'">
-                      页面：
-                    </template>
-                    <template v-if="item.linkPage === 'marketing'">
-                      营销：
-                    </template>
+                    <template v-if="item.linkPage === 'link'">页面：</template>
+                    <template v-if="item.linkPage === 'marketing'">营销：</template>
                     {{ item.title }}
                   </div>
-                  <div
-                    v-else
-                    class="content-center"
-                  >
-                    <i
-                      class="iconfont icon-link"
-                      @click="handleGoodsChange(index)"
-                    />设置路径
+                  <div v-else class="content-center">
+                    <i class="iconfont icon-link" @click="handleGoodsChange(index)"></i>设置路径
                   </div>
                 </div>
               </div>
@@ -90,17 +61,17 @@
       :sc-status="isGetImage"
       @chooseImg="pickImg"
       @closeImgDialog="closeimgsVisible"
-    />
+    ></imgPicker>
     <linkSetter
       :visible="linksVisible"
+      @setLink="setLink"
+      @closeDialog="closeDialog"
       :show_article="false"
       :show_planting="false"
       :show_page="false"
       :show_marketing="false"
       :show_store="false"
-      @setLink="setLink"
-      @closeDialog="closeDialog"
-    />
+    ></linkSetter>
   </div>
 </template>
 <script>
@@ -109,21 +80,16 @@ import imgPicker from '@/components/imageselect'
 import linkSetter from '@/components/template_links'
 import { setTimeout } from 'timers'
 export default {
-  name: 'ImgHotzoneStyle',
-  components: {
-    hotzone,
-    imgPicker,
-    linkSetter
-  },
+  name: 'imgHotzoneStyle',
   props: {
     data: {
       type: Object,
-      default: function () {
+      default: function() {
         return {}
       }
     }
   },
-  data () {
+  data() {
     return {
       t_data: this.data,
       isGetImage: false,
@@ -135,7 +101,7 @@ export default {
   },
   watch: {
     zonesList: {
-      handler (newVal, oldVal) {
+      handler(newVal, oldVal) {
         console.log('zonesList watch-->', newVal)
         this.t_data.data = newVal
       },
@@ -143,7 +109,7 @@ export default {
     }
   },
   methods: {
-    handleAdd (zone) {
+    handleAdd(zone) {
       console.log('2handleAdd', zone)
       let item = {
         linkPage: '',
@@ -154,7 +120,7 @@ export default {
       // this.zonesList.push(item)
       // this.t_data.data.push(item)
     },
-    handleChange (zone) {
+    handleChange(zone) {
       console.log('1handleChange', zone)
       setTimeout(() => {
         zone.forEach((item, index) => {
@@ -173,36 +139,41 @@ export default {
       }, 1000)
       //   console.log('handleChange', this.t_data.data)
     },
-    handleRemove (index) {
+    handleRemove(index) {
       this.t_data.data.splice(index, 1)
     },
     // 图片选择器绑定事件
-    handleImgChange (index) {
+    handleImgChange(index) {
       this.imgsVisible = true
       this.isGetImage = true
       //   if (typeof index !== undefined) {
       //     this.cur_index = index
       //   }
     },
-    handleGoodsChange (index) {
+    handleGoodsChange(index) {
       this.linksVisible = true
       this.cur_index = index
     },
-    setLink (data, type) {
+    setLink(data, type) {
       let tmp = [...this.t_data.data] // 利用索引直接修改数组值，vue无法监听数组变化的解决方案
       tmp[this.cur_index] = Object.assign({}, tmp[this.cur_index], { 'linkPage': type }, data)
       this.t_data.data = tmp
     },
-    pickImg (data) {
+    pickImg(data) {
       this.t_data.config.imgUrl = data.url
       this.imgsVisible = false
     },
-    closeimgsVisible () {
+    closeimgsVisible() {
       this.imgsVisible = false
     },
-    closeDialog () {
+    closeDialog() {
       this.linksVisible = false
     }
+  },
+  components: {
+    hotzone,
+    imgPicker,
+    linkSetter
   }
 }
 </script>

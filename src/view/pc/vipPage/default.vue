@@ -4,20 +4,14 @@
       <draggable
         v-model="initData"
         :options="dragIssuesOptions"
-        class="components-view"
         @start="onStart"
         @end="onEnd"
+        class="components-view"
       >
-        <div
-          v-for="(item, index) in initData"
-          class="component-control"
-        >
+        <div v-for="(item, index) in initData" class="component-control">
           <template v-if="item.name === 'poster'">
-            <svg
-              class="svg-icon"
-              aria-hidden="true"
-            >
-              <use xlink:href="#icon-slider" />
+            <svg class="svg-icon" aria-hidden="true">
+              <use xlink:href="#icon-slider"></use>
             </svg>
             图片
           </template>
@@ -28,60 +22,51 @@
       <div class="template-view el-col el-col-16">
         <div class="template">
           <draggable
-            v-model="components"
             class="components-wrap"
+            v-model="components"
             :options="dragViewOptions"
-            :style="'height: ' + (wheight - 220) + 'px;'"
             @start="onStart"
             @end="onEnd"
+            :style="'height: ' + (wheight - 220) + 'px;'"
           >
             <component
-              :is="widget.name"
-              v-for="(widget, k) in components"
               v-if="renderable"
-              :key="widget.uuid"
+              v-for="(widget, k) in components"
+              :is="widget.name"
               :data-uuid="widget.uuid"
               :data="widget"
-              :class="[k == editorIndex ? 'active' : '', 'component-item']"
+              :key="widget.uuid"
               @click.native="setCurrent(k)"
+              :class="[k == editorIndex ? 'active' : '', 'component-item']"
             >
               <transition name="el-fade-in-linear">
                 <div
                   v-if="k == editorIndex"
                   class="iconfont icon-trash-alt1"
                   @click="removeCurrent"
-                />
+                ></div>
               </transition>
             </component>
           </draggable>
         </div>
       </div>
       <div class="setting-view el-col el-col-8">
-        <div
-          v-if="editorIndex === null"
-          class="view-placeholder"
-        >
-          <i class="iconfont icon-shapes" />
+        <div class="view-placeholder" v-if="editorIndex === null">
+          <i class="iconfont icon-shapes"></i>
           请选择左侧挂件
         </div>
         <template v-else>
           <component
-            :is="components[editorIndex].name + 'Style'"
             v-if="renderable"
+            :is="components[editorIndex].name + 'Style'"
             :data.sync="editorData"
             :data-uuid="components[editorIndex].uuid"
-          />
+          ></component>
         </template>
       </div>
     </section>
     <section class="content-padded-s section-white content-center">
-      <el-button
-        class="btn-save"
-        type="primary"
-        @click="saveConfig"
-      >
-        保存
-      </el-button>
+      <el-button class="btn-save" type="primary" @click="saveConfig">保存</el-button>
     </section>
   </div>
 </template>
@@ -98,7 +83,7 @@ export default {
   components: {
     draggable
   },
-  data () {
+  data() {
     return {
       renderable: true,
       componentHeight: '',
@@ -140,9 +125,17 @@ export default {
   computed: {
     ...mapGetters(['wheight'])
   },
+  created() {
+    console.log('plugins', plugins)
+    Object.keys(plugins).forEach((key) => {
+      let widget = plugins[key].widget
+      console.log('widget', widget)
+      Vue.component(key, widget)
+    })
+  },
   watch: {
     editorData: {
-      handler (newVal, oldVal) {
+      handler(newVal, oldVal) {
         this.renderable = false
         this.components[this.editorIndex] = newVal
         console.log('outer watch', this.components)
@@ -153,15 +146,64 @@ export default {
       deep: true
     }
   },
-  created () {
-    console.log('plugins', plugins)
-    Object.keys(plugins).forEach((key) => {
-      let widget = plugins[key].widget
-      console.log('widget', widget)
-      Vue.component(key, widget)
-    })
+  methods: {
+    // 拖拽绑定事件
+    onStart(evt) {
+      if (evt.target.className === 'components-view') {
+        let item = this.initData[evt.oldIndex]
+        item.uuid = generate(str, 10)
+        this.saveInit = JSON.stringify(item)
+      } else {
+        console.log('onstart')
+        this.setCurrent(evt.oldIndex)
+      }
+      evt.preventDefault()
+    },
+    onEnd(evt) {
+      console.log('onend')
+      this.setCurrent(evt.newIndex)
+      if (evt.target.className === 'components-view' && evt.to.className === 'components-wrap') {
+        this.initData.splice(evt.oldIndex, 0, JSON.parse(this.saveInit))
+      }
+      evt.preventDefault()
+      // console.log('initData', this.initData)
+    },
+    setCurrent(val) {
+      this.editorIndex = val
+      // this.editorData = {...this.components[val]}
+      this.editorData = this.components[val]
+      console.log('setCurrent', this.editorIndex, this.components)
+      // console.log('editorData', this.editorData)
+    },
+    removeCurrent() {
+      this.$confirm('确认删除当前组件？')
+        .then((_) => {
+          this.editorData = {}
+          this.components.splice(this.editorIndex, 1)
+          this.editorIndex = null
+          this.editorDataIndex = null
+        })
+        .catch((_) => {})
+    },
+    saveConfig() {
+      let filter = {
+        template_name: 'pc',
+        version: 'v1.0.1',
+        config: JSON.stringify(this.components),
+        page_name: 'member'
+      }
+      console.log('save', filter)
+      savePageParams(filter).then((res) => {
+        if (res.data.data.status) {
+          this.$message({
+            message: '保存成功',
+            type: 'success'
+          })
+        }
+      })
+    }
   },
-  mounted () {
+  mounted() {
     let filter = {
       template_name: 'pc',
       version: 'v1.0.1',
@@ -189,63 +231,6 @@ export default {
     //       {'imgUrl': 'https://s1.ax1x.com/2018/05/19/Ccdiid.png'}
     //     ]
     //   }]
-  },
-  methods: {
-    // 拖拽绑定事件
-    onStart (evt) {
-      if (evt.target.className === 'components-view') {
-        let item = this.initData[evt.oldIndex]
-        item.uuid = generate(str, 10)
-        this.saveInit = JSON.stringify(item)
-      } else {
-        console.log('onstart')
-        this.setCurrent(evt.oldIndex)
-      }
-      evt.preventDefault()
-    },
-    onEnd (evt) {
-      console.log('onend')
-      this.setCurrent(evt.newIndex)
-      if (evt.target.className === 'components-view' && evt.to.className === 'components-wrap') {
-        this.initData.splice(evt.oldIndex, 0, JSON.parse(this.saveInit))
-      }
-      evt.preventDefault()
-      // console.log('initData', this.initData)
-    },
-    setCurrent (val) {
-      this.editorIndex = val
-      // this.editorData = {...this.components[val]}
-      this.editorData = this.components[val]
-      console.log('setCurrent', this.editorIndex, this.components)
-      // console.log('editorData', this.editorData)
-    },
-    removeCurrent () {
-      this.$confirm('确认删除当前组件？')
-        .then((_) => {
-          this.editorData = {}
-          this.components.splice(this.editorIndex, 1)
-          this.editorIndex = null
-          this.editorDataIndex = null
-        })
-        .catch((_) => {})
-    },
-    saveConfig () {
-      let filter = {
-        template_name: 'pc',
-        version: 'v1.0.1',
-        config: JSON.stringify(this.components),
-        page_name: 'member'
-      }
-      console.log('save', filter)
-      savePageParams(filter).then((res) => {
-        if (res.data.data.status) {
-          this.$message({
-            message: '保存成功',
-            type: 'success'
-          })
-        }
-      })
-    }
   }
 }
 </script>

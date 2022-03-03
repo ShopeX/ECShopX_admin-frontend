@@ -1,7 +1,7 @@
 import fetch from '../utils/fetch'
 
 // 获取部门列表
-export function getWorkwechat (params = {}) {
+export function getWorkwechat(params = {}) {
   return fetch({
     url: '/workwechat/report',
     method: 'get',
@@ -10,7 +10,7 @@ export function getWorkwechat (params = {}) {
 }
 
 // 获取部门成员
-export function getMemberByClub (departmentId) {
+export function getMemberByClub(departmentId) {
   return fetch({
     url: `/workwechat/report/${departmentId}`,
     method: 'get'
@@ -18,7 +18,7 @@ export function getMemberByClub (departmentId) {
 }
 
 // 同步部门信息到店铺
-export function syncClubToStore (data) {
+export function syncClubToStore(data) {
   return fetch({
     url: '/workwechat/report/syncDistributor',
     method: 'post',
@@ -27,7 +27,7 @@ export function syncClubToStore (data) {
 }
 
 // 同步成员到导购员
-export function syncMemberToGuide (data) {
+export function syncMemberToGuide(data) {
   return fetch({
     url: '/workwechat/report/syncSalesperson',
     method: 'post',

@@ -1,32 +1,16 @@
 <template>
   <div>
     <div>
-      <el-tabs
-        v-model="activeName"
-        type="border-card"
-        @tab-click="handleClick"
-      >
-        <el-tab-pane
-          label="发票配置"
-          name="first"
-        >
-          <fapiaoTemplates
-            ref="fapiaoTemplates"
-            :get-status="fapiaoTemplates"
-          />
+      <el-tabs v-model="activeName" type="border-card" @tab-click="handleClick">
+        <el-tab-pane label="发票配置" name="first">
+          <fapiaoTemplates :get-status="fapiaoTemplates" ref="fapiaoTemplates"></fapiaoTemplates>
         </el-tab-pane>
-        <el-tab-pane
-          label="航信配置"
-          name="second"
-        >
-          <hangxinemplates
-            ref="hangxinemplates"
-            :get-status="hangxinemplates"
-          />
+        <el-tab-pane label="航信配置" name="second">
+          <hangxinemplates :get-status="hangxinemplates" ref="hangxinemplates"></hangxinemplates>
         </el-tab-pane>
       </el-tabs>
     </div>
-    <router-view />
+    <router-view></router-view>
   </div>
 </template>
 
@@ -39,7 +23,7 @@ export default {
     hangxinemplates,
     fapiaoTemplates
   },
-  data () {
+  data() {
     return {
       loading: false,
       hangxinemplates: false,
@@ -48,18 +32,18 @@ export default {
       list: []
     }
   },
-  mounted () {
-    if ('undefined' != typeof this.$route.query.activeName) {
-      this.activeName = this.$route.query.activeName
-    }
-  },
   methods: {
-    handleClick (tab, event) {
+    handleClick(tab, event) {
       if (this.activeName === 'first') {
         this.hangxinemplates = true
       } else if (this.activeName === 'second') {
         this.fapiaoTemplates = true
       }
+    }
+  },
+  mounted() {
+    if ('undefined' != typeof this.$route.query.activeName) {
+      this.activeName = this.$route.query.activeName
     }
   }
 }

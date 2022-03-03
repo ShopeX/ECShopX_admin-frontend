@@ -1,35 +1,14 @@
 <template>
   <div class="smsAccountPage">
-    <div
-      v-if="$route.path.indexOf('shopex_sms') === -1 && $route.path.indexOf('ali_sms') === -1"
-      class="smsBox"
-    >
-      <section
-        v-for="(item, index) in sms"
-        :key="item.title"
-        class="box-card"
-        @click="tabClick(index)"
-      >
-        <img
-          :src="item.img"
-          alt=""
-        >
-        <span>{{ item.title }}</span>
-        <div
-          v-if="index == 0"
-          class="title"
-        >
-          {{ aliyunsms_status ? '已启用' : '未启用' }}
-        </div>
-        <div
-          v-else
-          class="title"
-        >
-          {{ aliyunsms_status ? '未启用' : '已启用' }}
-        </div>
-      </section>
+    <div class="smsBox" v-if="$route.path.indexOf('shopex_sms') === -1 && $route.path.indexOf('ali_sms') === -1">
+        <section class="box-card" v-for="(item, index) in sms"  :key="item.title" @click="tabClick(index)">
+          <img :src="item.img" alt="" />
+          <span>{{ item.title }}</span>
+          <div class="title" v-if="index==0">{{aliyunsms_status? '已启用':'未启用'}}</div>
+          <div class="title" v-else>{{aliyunsms_status?'未启用':'已启用'}}</div>
+        </section>
     </div>
-    <router-view />
+    <router-view></router-view>
   </div>
 </template>
 
@@ -39,35 +18,31 @@ const shopex = require('@/assets/img/aliNote/shopex.png')
 import { getaliSmsStatus } from '@/api/sms'
 
 export default {
-  data () {
+  data() {
     return {
       sms: [
         {
           title: '阿里云短信',
-          img: ali
+          img: ali,
         },
         {
           title: '商派短信',
-          img: shopex
+          img: shopex,
         }
       ],
-      aliyunsms_status: false
+      aliyunsms_status:false
     }
   },
-  async mounted () {
-    const result = await getaliSmsStatus()
-    this.aliyunsms_status = result.data.data.aliyunsms_status
-  },
-  async updated () {
-    const result = await getaliSmsStatus()
-    this.aliyunsms_status = result.data.data.aliyunsms_status
+  async mounted(){
+    const result = await getaliSmsStatus();
+    this.aliyunsms_status = result.data.data.aliyunsms_status;
   },
   methods: {
-    tabClick (index) {
+    tabClick(index) {
       switch (index) {
         case 0:
           this.$router.push({
-            path: this.matchHidePage('ali_sms')
+             path: this.matchHidePage('ali_sms')
           })
           break
         default:
@@ -77,6 +52,10 @@ export default {
           break
       }
     }
+  },
+  async updated(){
+    const result = await getaliSmsStatus();
+    this.aliyunsms_status = result.data.data.aliyunsms_status;
   }
 }
 </script>
@@ -105,7 +84,7 @@ export default {
       left: 22%;
       transform: translate(-50%, -50%);
     }
-    .title {
+    .title{
       text-align: center;
       padding: 10px 0;
     }

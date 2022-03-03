@@ -1,7 +1,7 @@
 import Vue from 'vue'
 export default () => {
   Vue.directive('scroll', {
-    bind (el, binding) {
+    bind(el, binding) {
       let SCROLL_DOM = el.querySelector('.el-select-dropdown .el-select-dropdown__wrap')
       SCROLL_DOM.addEventListener('scroll', function () {
         const scrollDistance = this.scrollHeight - this.scrollTop - this.clientHeight

@@ -12,53 +12,25 @@
         :on-success="handleAvatarSuccess"
         :on-error="uploadError"
       >
-        <el-button type="primary">
-          本地上传
-        </el-button>
-        <div
-          slot="tip"
-          class="el-upload__tip"
-        >
-          只能上传jpg/png文件，且不超过2M
-        </div>
+        <el-button type="primary">本地上传</el-button>
+        <div slot="tip" class="el-upload__tip">只能上传jpg/png文件，且不超过2M</div>
       </el-upload>
     </div>
-    <div
-      v-loading="loading"
-      class="localimg_pick"
-    >
+    <div class="localimg_pick" v-loading="loading">
       <ul class="clearfix">
-        <li
-          v-for="(item, index) in localimagesList.list"
-          :key="index"
-          class="localimg_item"
-        >
+        <li class="localimg_item" v-for="(item, index) in localimagesList.list" :key="index">
           <div class="localimg_item_bd">
-            <div
-              class="pic"
-              :style="{ backgroundImage: 'url(' + item.image_full_url + ')' }"
-            />
+            <div class="pic" :style="{ backgroundImage: 'url(' + item.image_full_url + ')' }"></div>
             <div class="check_content">
-              <span
-                class="localimg_name"
-                :title="item.image_name"
-              >{{ item.image_name }}</span>
+              <span class="localimg_name" :title="item.image_name">{{ item.image_name }}</span>
             </div>
           </div>
           <div class="msg_card">
             <el-row>
               <el-col :span="24">
-                <div
-                  class="opr_item"
-                  @click="removeItem(item, index)"
-                >
-                  <el-tooltip
-                    class="item"
-                    effect="dark"
-                    content="删除"
-                    placement="top"
-                  >
-                    <i class="el-icon-delete" />
+                <div class="opr_item" @click="removeItem(item, index)">
+                  <el-tooltip class="item" effect="dark" content="删除" placement="top">
+                    <i class="el-icon-delete"></i>
                   </el-tooltip>
                 </div>
               </el-col>
@@ -71,13 +43,14 @@
       <el-pagination
         background
         layout="total, sizes, prev, pager, next"
+        @current-change="handleCurrentChange"
+        @size-change="handleSizeChange"
         :current-page.sync="params.page"
         :page-sizes="[10, 20, 50]"
         :total="localimagesList.total_count"
         :page-size="params.pageSize"
-        @current-change="handleCurrentChange"
-        @size-change="handleSizeChange"
-      />
+      >
+      </el-pagination>
     </div>
   </div>
 </template>
@@ -94,7 +67,7 @@ import {
 } from '../../../../api/qiniu'
 export default {
   props: ['activeName', 'getStatus'],
-  data () {
+  data() {
     return {
       actionPath: 'https://upload-z2.qiniup.com',
       image_prefix: '',
@@ -112,16 +85,8 @@ export default {
       }
     }
   },
-  watch: {
-    getStatus (newV, oldV) {
-      if (newV) {
-        this.params = { page: 1, pageSize: this.params.pageSize }
-        this.getList()
-      }
-    }
-  },
   methods: {
-    beforeAvatarUpload (file) {
+    beforeAvatarUpload(file) {
       const isJPG = file.type === 'image/jpeg'
       const isPNG = file.type === 'image/png'
       const isGIF = file.type === 'image/gif'
@@ -146,7 +111,7 @@ export default {
       //   this.actionPath  = `https://upload-${!response.data.data.region ? 'z2' : response.data.data.region}.qiniup.com`
       // })
     },
-    handleAvatarSuccess (res, file) {
+    handleAvatarSuccess(res, file) {
       let uploadParams = {
         image_cat_id: 2, //图片分类必填,必须为整数
         image_name: file.name, //图片名称必填,不能超过50个字符
@@ -167,7 +132,7 @@ export default {
       })
       // }
     },
-    getList () {
+    getList() {
       if (!this.isLoadData) {
         this.loading = true
         getQiniuPicList({ ...this.params, storage: 'image' })
@@ -176,23 +141,23 @@ export default {
             this.isLoadData = true
             this.loading = false
           })
-          .catch(function (error) {
+          .catch(function(error) {
             this.loading = false
           })
       }
     },
-    handleCurrentChange (page_num) {
+    handleCurrentChange(page_num) {
       this.isLoadData = false
       this.params.page = page_num
       this.getList()
     },
-    handleSizeChange (pageSize) {
+    handleSizeChange(pageSize) {
       this.isLoadData = false
       this.params.page = 1
       this.params.pageSize = pageSize
       this.getList()
     },
-    removeItem (item, index) {
+    removeItem(item, index) {
       this.$confirm('确定删除此图片吗？', '提示', {
         confirmButtonText: '确定',
         cancelButtonText: '取消',
@@ -216,7 +181,7 @@ export default {
         })
     },
     // 自定义上传
-    handleUpload: function (e) {
+    handleUpload: function(e) {
       const upload = new UploadUtil()
       // 上传
       upload
@@ -228,8 +193,16 @@ export default {
         .catch((err) => e.onError(err))
     },
     // 上传错误回调
-    uploadError: function (e) {
+    uploadError: function(e) {
       console.error(e)
+    }
+  },
+  watch: {
+    getStatus(newV, oldV) {
+      if (newV) {
+        this.params = { page: 1, pageSize: this.params.pageSize }
+        this.getList()
+      }
     }
   }
 }

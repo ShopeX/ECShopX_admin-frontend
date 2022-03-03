@@ -1,6 +1,6 @@
 import fetch from '../utils/fetch'
 
-export function getLogisticsLists (query) {
+export function getLogisticsLists(query) {
   return fetch({
     url: '/company/logistics/list',
     method: 'get',
@@ -8,7 +8,7 @@ export function getLogisticsLists (query) {
   })
 }
 
-export function createCompanyLogistics (params) {
+export function createCompanyLogistics(params) {
   return fetch({
     url: '/company/logistics/create',
     method: 'post',
@@ -19,7 +19,7 @@ export function createCompanyLogistics (params) {
   })
 }
 
-export function deleteCompanyLogistics (id) {
+export function deleteCompanyLogistics(id) {
   return fetch({
     url: '/company/logistics/' + id,
     method: 'delete'
@@ -27,7 +27,7 @@ export function deleteCompanyLogistics (id) {
 }
 
 /** 获取同城配详情 */
-export function getCityLogisticsInfo (query) {
+export function getCityLogisticsInfo(query) {
   return fetch({
     url: '/company/dada/info',
     method: 'get',
@@ -36,7 +36,7 @@ export function getCityLogisticsInfo (query) {
 }
 
 /** 保存同城配 */
-export function saveCityLogisticsInfo (params) {
+export function saveCityLogisticsInfo(params) {
   return fetch({
     url: '/company/dada/create',
     method: 'post',
@@ -48,10 +48,10 @@ export function saveCityLogisticsInfo (params) {
 }
 
 /** 保存同城配 */
-export function getLogisticsList (query) {
+export function getLogisticsList(query) {
   return fetch({
     url: '/company/logistics/list',
     method: 'get',
-    params: query
+    params: query 
   })
 }

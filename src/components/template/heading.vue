@@ -1,9 +1,6 @@
 <template>
-  <div
-    class="component-wrap"
-    :class="{ 'component-padded': base.padded, 'active': active }"
-  >
-    <div class="current-active" />
+  <div class="component-wrap" :class="{ 'component-padded': base.padded, 'active': active }">
+    <div class="current-active"></div>
     <div
       class="content"
       :class="{ 'bold': config.bold, 'italic': config.italic }"
@@ -26,29 +23,29 @@ export default {
       default: false
     }
   },
-  data () {
+  watch: {
+    res(value) {
+      if (value) {
+        this.setData(value)
+      }
+    }
+  },
+  data() {
     return {
       base: {},
       config: {},
       data: []
     }
   },
-  watch: {
-    res (value) {
-      if (value) {
-        this.setData(value)
-      }
-    }
-  },
-  created () {
-    this.setData(this.res)
-  },
   methods: {
-    setData (val) {
+    setData(val) {
       this.base = val.base
       this.config = val.config
       this.data = val.data
     }
+  },
+  created() {
+    this.setData(this.res)
   }
 }
 </script>

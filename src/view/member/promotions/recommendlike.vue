@@ -6,155 +6,68 @@
           <shop-select  distributors  @update="storeSearch" :shopIdDefault="params.distributor_id"></shop-select>
       </el-col> -->
         <el-button-group>
-          <el-button
-            type="primary"
-            @click="DelItemData('true')"
-          >
-            清除所有商品
-          </el-button>
-          <el-button
-            type="primary"
-            @click="AddRecommendLikeItem"
-          >
-            添加商品
-          </el-button>
+          <el-button type="primary" @click="DelItemData('true')">清除所有商品</el-button>
+          <el-button type="primary" @click="AddRecommendLikeItem">添加商品</el-button>
         </el-button-group>
       </el-col>
     </el-row>
     <el-card>
-      <el-table
-        ref="multipleItemsTable"
-        v-loading="loading"
-        :data="list"
-      >
-        <el-table-column
-          type="selection"
-          width="55"
-        />
+      <el-table :data="list" v-loading="loading" ref="multipleItemsTable">
+        <el-table-column type="selection" width="55"></el-table-column>
         <!-- <el-table-column prop="itemName" label="商品图片" width="300"></el-table-column> -->
-        <el-table-column
-          prop="itemName"
-          label="商品名称"
-          width="300"
-        />
-        <el-table-column
-          prop="price"
-          label="商品价格"
-          width="120"
-        >
+        <el-table-column prop="itemName" label="商品名称" width="300"></el-table-column>
+        <el-table-column prop="price" label="商品价格" width="120">
+          <template slot-scope="scope"> {{ scope.row.price / 100 }}元 </template>
+        </el-table-column>
+        <el-table-column prop="sort" label="商品排序" width="120">
           <template slot-scope="scope">
-            {{ scope.row.price / 100 }}元
+            <el-input v-model="scope.row.sort" @change="editItemSort(scope.$index, scope.row)"
+              ><i slot="suffix" class="el-input__icon el-icon-edit"></i
+            ></el-input>
           </template>
         </el-table-column>
-        <el-table-column
-          prop="sort"
-          label="商品排序"
-          width="120"
-        >
+        <el-table-column prop="approve_status" label="状态" width="100">
           <template slot-scope="scope">
-            <el-input
-              v-model="scope.row.sort"
-              @change="editItemSort(scope.$index, scope.row)"
-            >
-              <i
-                slot="suffix"
-                class="el-input__icon el-icon-edit"
-              />
-            </el-input>
-          </template>
-        </el-table-column>
-        <el-table-column
-          prop="approve_status"
-          label="状态"
-          width="100"
-        >
-          <template slot-scope="scope">
-            <div
-              v-if="scope.row.approve_status === 'onsale'"
-              class="grid-content"
-            >
-              前台可销售
-            </div>
-            <div
-              v-else-if="scope.row.approve_status === 'offline_sale'"
-              class="grid-content"
-            >
+            <div v-if="scope.row.approve_status === 'onsale'" class="grid-content">前台可销售</div>
+            <div v-else-if="scope.row.approve_status === 'offline_sale'" class="grid-content">
               可线下销售
             </div>
-            <div
-              v-else
-              class="grid-content"
-            >
-              不可销售
-            </div>
+            <div v-else class="grid-content">不可销售</div>
           </template>
         </el-table-column>
         <el-table-column label="操作">
           <template slot-scope="scope">
-            <el-button
-              type="text"
-              @click="DelItemData('false', scope.row)"
-            >
-              删除关联
-            </el-button>
+            <el-button type="text" @click="DelItemData('false', scope.row)">删除关联</el-button>
           </template>
         </el-table-column>
       </el-table>
-      <div
-        v-if="total_count > params.pageSize"
-        class="content-padded content-center"
-      >
+      <div v-if="total_count > params.pageSize" class="content-padded content-center">
         <el-pagination
           background
           layout="prev, pager, next"
+          @current-change="handleCurrentChange"
           :current-page.sync="params.page"
           :total="total_count"
           :page-size="params.pageSize"
-          @current-change="handleCurrentChange"
-        />
+        >
+        </el-pagination>
       </div>
     </el-card>
-    <sideBar
-      :visible.sync="show_sideBar"
-      title="选择商品"
-      width="60"
-    >
+    <sideBar :visible.sync="show_sideBar" title="选择商品" width="60">
       <slot v-if="editItemSortVisible">
         <el-row>
           <el-col :span="4">
-            <el-button
-              type="primary"
-              :loading="loading"
-              size="mini"
-              @click="submitActivityAction"
+            <el-button type="primary" @click="submitActivityAction" :loading="loading" size="mini"
+              >保存</el-button
             >
-              保存
-            </el-button>
           </el-col>
         </el-row>
-        <el-table
-          v-if="form.items.length > 0"
-          :data="form.items"
-          style="line-height: normal"
-        >
-          <el-table-column
-            label="ID"
-            prop="item_id"
-            width="60"
-          />
-          <el-table-column
-            label="名称"
-            prop="item_name"
-          />
-          <el-table-column
-            label="排序"
-            width="80"
-          >
+        <el-table v-if="form.items.length > 0" :data="form.items" style="line-height: normal">
+          <el-table-column label="ID" prop="item_id" width="60"></el-table-column>
+          <el-table-column label="名称" prop="item_name"></el-table-column>
+          <el-table-column label="排序" width="80">
             <template slot-scope="scope">
-              <el-input
-                v-model="scope.row.sort"
-                size="mini"
-              />
+              <el-input v-model="scope.row.sort" size="mini"></el-input>
             </template>
           </el-table-column>
         </el-table>
@@ -162,68 +75,33 @@
       <slot v-else>
         <el-row>
           <el-col :span="8">
-            <el-button
-              type="primary"
-              class="el-icon-plus"
-              size="mini"
-              @click="relItems"
+            <el-button type="primary" class="el-icon-plus" @click="relItems" size="mini"
+              >选择商品</el-button
             >
-              选择商品
-            </el-button>
           </el-col>
           <el-col :span="4">
-            <el-button
-              size="mini"
-              @click.native="handleCancel"
-            >
-              返回
-            </el-button>
+            <el-button @click.native="handleCancel" size="mini">返回</el-button>
           </el-col>
           <el-col :span="4">
-            <el-button
-              type="primary"
-              :loading="loading"
-              size="mini"
-              @click="submitActivityAction"
+            <el-button type="primary" @click="submitActivityAction" :loading="loading" size="mini"
+              >保存</el-button
             >
-              保存
-            </el-button>
           </el-col>
         </el-row>
-        <el-table
-          v-if="form.items.length > 0"
-          :data="form.items"
-          style="line-height: normal"
-        >
-          <el-table-column
-            label="ID"
-            prop="item_id"
-            width="60"
-          />
-          <el-table-column
-            label="名称"
-            prop="item_name"
-          />
-          <el-table-column
-            label="排序"
-            width="80"
-          >
+        <el-table v-if="form.items.length > 0" :data="form.items" style="line-height: normal">
+          <el-table-column label="ID" prop="item_id" width="60"></el-table-column>
+          <el-table-column label="名称" prop="item_name"></el-table-column>
+          <el-table-column label="排序" width="80">
             <template slot-scope="scope">
-              <el-input
-                v-model="scope.row.sort"
-                size="mini"
-              />
+              <el-input v-model="scope.row.sort" size="mini"></el-input>
             </template>
           </el-table-column>
-          <el-table-column
-            label="操作"
-            width="50"
-          >
+          <el-table-column label="操作" width="50">
             <template slot-scope="scope">
               <i
                 class="iconfont icon-trash-alt"
                 @click="deleteItemRow(scope.$index, form.items)"
-              />
+              ></i>
             </template>
           </el-table-column>
         </el-table>
@@ -235,7 +113,7 @@
       :rel-items-ids="relItemsIds"
       @chooseStore="chooseItemsAction"
       @closeStoreDialog="closeItemDialogAction"
-    />
+    ></GoodsSelect>
   </div>
 </template>
 <script>
@@ -258,7 +136,7 @@ export default {
     GoodsSelect
   },
   props: ['isLoad'],
-  data () {
+  data() {
     return {
       editItemSortVisible: false,
       itemVisible: false,
@@ -291,20 +169,8 @@ export default {
   computed: {
     ...mapGetters(['wheight'])
   },
-  watch: {
-    isLoad (val) {
-      if (val) {
-        this.getList()
-        //this.getDistributorItemList()
-      }
-    }
-  },
-  mounted () {
-    //this.getDistributorItemList()
-    this.getList()
-  },
   methods: {
-    AddRecommendLikeItem () {
+    AddRecommendLikeItem() {
       this.show_sideBar = true
       getRecommendLikeItems().then((res) => {
         if (res.data.data.list) {
@@ -312,7 +178,7 @@ export default {
         }
       })
     },
-    DelItemData (isAll, row) {
+    DelItemData(isAll, row) {
       let title = '将删除该商品推荐，是否继续?'
       let param = ''
       if (row) {
@@ -350,14 +216,14 @@ export default {
         })
       }
     },
-    relItems () {
+    relItems() {
       this.itemVisible = true
       this.setItemStatus = true
     },
-    handleCancel () {
+    handleCancel() {
       this.show_sideBar = false
     },
-    submitActivityAction () {
+    submitActivityAction() {
       saveRecommendLikeItem(this.form).then((res) => {
         this.getList()
         this.$message({
@@ -368,7 +234,7 @@ export default {
         this.itemVisible = false
       })
     },
-    chooseItemsAction (data) {
+    chooseItemsAction(data) {
       this.itemVisible = false
       this.relItemsIds = data
       if (data === null || data.length <= 0) return
@@ -390,20 +256,20 @@ export default {
       })
       this.form.items = arr
     },
-    closeItemDialogAction () {
+    closeItemDialogAction() {
       this.itemVisible = false
     },
-    handleCurrentChange (page_num) {
+    handleCurrentChange(page_num) {
       this.params.page = page_num
       this.getList()
     },
-    deleteItemRow (index, rows) {
+    deleteItemRow(index, rows) {
       rows.splice(index, 1)
       this.form.items = rows
       this.setItemStatus = false
       this.relItemsIds.splice(index, 1)
     },
-    editItemSort (index, rows) {
+    editItemSort(index, rows) {
       let params = {
         id: rows.id,
         item_id: rows.item_id,
@@ -418,7 +284,7 @@ export default {
         }
       })
     },
-    getList () {
+    getList() {
       getRecommendLikeItemList(this.params).then((response) => {
         if (response.data.data.list) {
           this.list = response.data.data.list
@@ -427,7 +293,7 @@ export default {
         this.loading = false
       })
     },
-    editItemsStore (index, row) {
+    editItemsStore(index, row) {
       if (row.is_total_store === false && (row.store == '' || row.store <= 0)) {
         this.$message({
           type: 'error',
@@ -443,10 +309,22 @@ export default {
       }
       this.updateDistributorItem(form)
     },
-    async getDistributorItemList () {
+    async getDistributorItemList() {
       let distributor = await this.getDefaultDistributor()
       if (distributor) {
         this.params.distributor_id = distributor.distributor_id
+      }
+    }
+  },
+  mounted() {
+    //this.getDistributorItemList()
+    this.getList()
+  },
+  watch: {
+    isLoad(val) {
+      if (val) {
+        this.getList()
+        //this.getDistributorItemList()
       }
     }
   }

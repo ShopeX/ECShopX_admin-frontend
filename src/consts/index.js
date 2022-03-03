@@ -95,21 +95,21 @@ export const PAY_TYPE = {
 }
 
 export const PAY_STATUS = {
-  SUCCESS: '支付成功',
-  REFUND: '转入退款',
-  CANCEL_CLOSED: '已取消',
-  REFUND_SUCCESS: '退款成功',
-  NOTPAY: '未支付',
-  CLOSED: '已关闭',
-  REVOKED: '已撤销',
-  PAYERROR: '支付失败(其他原因，如银行返回失败)'
+  SUCCESS: "支付成功",
+  REFUND: "转入退款",
+  CANCEL_CLOSED: "已取消",
+  REFUND_SUCCESS: "退款成功",
+  NOTPAY: "未支付",
+  CLOSED: "已关闭",
+  REVOKED: "已撤销",
+  PAYERROR: "支付失败(其他原因，如银行返回失败)"
 }
 
 export const PICKER_DATE_OPTIONS = {
   shortcuts: [
     {
       text: '最近一周',
-      onClick (picker) {
+      onClick(picker) {
         const end = new Date()
         const start = new Date()
         start.setTime(start.getTime() - 3600 * 1000 * 24 * 7)
@@ -118,7 +118,7 @@ export const PICKER_DATE_OPTIONS = {
     },
     {
       text: '最近一个月',
-      onClick (picker) {
+      onClick(picker) {
         const end = new Date()
         const start = new Date()
         start.setTime(start.getTime() - 3600 * 1000 * 24 * 30)
@@ -127,7 +127,7 @@ export const PICKER_DATE_OPTIONS = {
     },
     {
       text: '最近三个月',
-      onClick (picker) {
+      onClick(picker) {
         const end = new Date()
         const start = new Date()
         start.setTime(start.getTime() - 3600 * 1000 * 24 * 90)

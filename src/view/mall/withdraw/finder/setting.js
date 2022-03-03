@@ -11,27 +11,29 @@ export default (vm) => {
     var ss = date.getSeconds() < 10 ? '0' + date.getSeconds() : date.getSeconds()
     return YY + MM + DD + ' ' + hh + mm + ss
   }
-  const formatStatus = (val) => {
-    if (val == 'pending') {
+  const formatStatus = (val) => { 
+    if(val=='pending'){
       return '提现处理中'
-    } else if (val == 'succeeded') {
+    }else if(val=='succeeded'){
       return '提现成功'
-    } else if (val == 'failed') {
+    }else if(val=='failed'){
       return '提现失败'
     }
   }
-  const formatMoney = (money) => {
+  const formatMoney = (money) =>{
     return (money / 100).toFixed(2).toLocaleString()
   }
   return createSetting({
     columns: [
-      { name: '提现日期', key: 'create_time', width: 150, formatter: formatDate },
+      { name: '提现日期', key: 'create_time', width: 150,formatter: formatDate  },
       { name: '提现账户', key: 'user_name', width: 150 },
       { name: '提现卡号', key: 'bank_card', width: 150 },
       { name: '提现类型', key: 'cash_type', width: 150 },
-      { name: '提现状态', key: 'status', width: 150, formatter: formatStatus },
-      { name: '提现金额', key: 'cash_amt', width: 150, formatter: formatMoney },
-      { name: '备注', key: 'remark' }
-    ]
+      { name: '提现状态', key: 'status', width: 150, formatter:formatStatus },
+      { name: '提现金额', key: 'cash_amt', width: 150 , formatter:formatMoney},
+      { name: '备注', key: 'remark'},
+    ],
+
   })
+
 }

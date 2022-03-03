@@ -1,9 +1,6 @@
 <template>
   <el-card class="box-card">
-    <div
-      slot="header"
-      class="clearfix"
-    >
+    <div slot="header" class="clearfix">
       <span>充值</span>
     </div>
     <div class="content">
@@ -12,30 +9,24 @@
           <span>账户可用余额</span> <span>{{ account }} 元</span>
         </p>
         <el-form
-          ref="numberValidateForm"
           :rules="rules"
           :model="numberValidateForm"
+          ref="numberValidateForm"
           label-width="100px"
           class="demo-ruleForm"
         >
-          <el-form-item
-            class="item"
-            label="充值金额"
-            prop="money"
-          >
+          <el-form-item class="item" label="充值金额" prop="money">
             <el-input
-              v-model="numberValidateForm.money"
               type="money"
+              v-model="numberValidateForm.money"
               autocomplete="off"
-            />
+            >
+            </el-input>
           </el-form-item>
           <el-form-item class="formItem">
-            <el-button
-              class="btn"
-              @click="submitForm('numberValidateForm')"
+            <el-button class="btn" @click="submitForm('numberValidateForm')"
+              >确定充值</el-button
             >
-              确定充值
-            </el-button>
           </el-form-item>
         </el-form>
       </div>
@@ -44,72 +35,73 @@
 </template>
 
 <script>
-import { get_DD_Account, getRechargeURL } from '@/api/account.js'
-import { Message } from 'element-ui'
+import { get_DD_Account, getRechargeURL } from "@/api/account.js";
+import { Message } from "element-ui";
 export default {
-  data () {
+  data() {
     return {
       account: 1000,
       numberValidateForm: {
-        money: null
+        money: null,
       },
       rules: {
         money: [
-          { required: true, message: '充值金额不能为空', trigger: 'blur' },
-          { validator: this.validateMoney, trigger: 'change' }
-        ]
-      }
-    }
+          { required: true, message: "充值金额不能为空", trigger: "blur" },
+          { validator: this.validateMoney, trigger: "change" },
+        ],
+      },
+    };
   },
-  mounted () {
-    this.getAccount()
+  mounted() {
+    this.getAccount();
   },
   methods: {
-    submitForm (formName) {
+    submitForm(formName) {
       this.$refs[formName].validate(async (valid) => {
         if (valid) {
-          const amount = {
-            amount: Number(this.numberValidateForm.money)
-          }
-          try {
-            const { data } = await getRechargeURL(amount)
-            window.location.href = data.data.link
-            // 清空不会触发验证
-            this.$refs[formName].resetFields()
-          } catch (err) {
-            Message.error('充值失败')
-          }
-        } else {
-          console.log('error submit!!')
-          return false
+            const amount = {
+              amount:Number(this.numberValidateForm.money)
+            }
+            try {
+              const {data} = await getRechargeURL(amount);
+              window.location.href = data.data.link;
+              // 清空不会触发验证
+              this.$refs[formName].resetFields();
+            } catch (err) {
+              Message.error('充值失败')
+            }
+           
+          } else {
+            console.log('error submit!!');
+            return false;
         }
-      })
+      });
     },
-    async getAccount () {
-      const result = await get_DD_Account()
-      console.log(result)
+    async getAccount() {
+      const result = await get_DD_Account();
+      console.log(result);
       if (result.status == 200) {
-        console.log(result.data.data.deliverBalance)
-        this.account = result.data.data.deliverBalance
+        console.log(result.data.data.deliverBalance);
+        this.account = result.data.data.deliverBalance;
       }
     },
 
-    validateMoney (rule, value, callback) {
+    validateMoney(rule, value, callback) {
       const reg = /^(([1-9][0-9]*)|(([0]\.\d{1,2}|[1-9][0-9]*\.\d{1,2})))$/
-      if (!Number(value)) {
+      if(!(Number(value))){
         callback(new Error('请输入正确的数字'))
-      } else {
+      }else{
         if (!reg.test(value)) {
-          callback(new Error('请输入正确的金额，最多保留两位小数'))
-        } else if (Number(value) > 10000) {
+           callback(new Error('请输入正确的金额，最多保留两位小数'))
+        }else if(Number(value)>10000){
           callback(new Error('每次充值不得超过10000元'))
-        } else {
-          callback()
+        }else{
+          callback();
         }
       }
-    }
-  }
-}
+    },
+  },
+};
 </script>
 
 <style scoped lang="scss">
@@ -152,7 +144,7 @@ export default {
   .el-input {
     position: relative;
     &::after {
-      content: '元';
+      content: "元";
       position: absolute;
       right: 0.5%;
       top: 8%;

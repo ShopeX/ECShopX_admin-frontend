@@ -8,45 +8,33 @@
 -->
 
 <template>
-  <div
-    class="wechat-share"
-    :style="{ width: width, 'background-color': backgroundColor }"
-  >
+  <div class="wechat-share" :style="{ width: width, 'background-color': backgroundColor }">
     <div class="wechat-share-content">
       <div class="header">
-        <div class="header_avatar" />
-        <div class="header_shopname">
-          {{ name }}
-        </div>
+        <div class="header_avatar"></div>
+        <div class="header_shopname">{{ name }}</div>
       </div>
-      <div class="title">
-        {{ title }}
-      </div>
-      <div
-        class="img"
-        :style="{ height: calcHeight }"
-      >
-        <div v-if="!contentImgSrc">
-          小程序图片
-        </div>
+      <div class="title">{{ title }}</div>
+      <div class="img" :style="{ height: calcHeight }">
+        <div v-if="!contentImgSrc">小程序图片</div>
         <img
-          v-if="contentImgSrc"
-          ref="contentImg"
           :src="contentImgSrc"
+          ref="contentImg"
+          v-if="contentImgSrc"
           :class="{ 'normalImg': imgType === 0 || imgType === 2, 'heightImg': imgType === 1 }"
-        >
+        />
       </div>
       <div class="footer">
         <div class="link">
-          <img :src="link">
+          <img :src="link" />
         </div>
         <div>小程序</div>
       </div>
     </div>
     <div class="wechat-share-avatar">
-      <img :src="avatarImgSrc">
+      <img :src="avatarImgSrc" />
     </div>
-    <div />
+    <div></div>
   </div>
 </template>
 
@@ -84,7 +72,10 @@ export default {
       default: '小程序'
     }
   },
-  data () {
+  mounted() {
+    this.calcHeight = ('300px'.slice(0, -2) - 32) * (4 / 5) + 'px'
+  },
+  data() {
     return {
       calcHeight: '',
       link,
@@ -93,18 +84,15 @@ export default {
     }
   },
   watch: {
-    contentImgSrc (val) {
+    contentImgSrc(val) {
       const self = this
       this.loadImgPromise(val).then((img) => {
         self.clipPic(img.width, img.height)
       })
     }
   },
-  mounted () {
-    this.calcHeight = ('300px'.slice(0, -2) - 32) * (4 / 5) + 'px'
-  },
   methods: {
-    loadImgPromise (src) {
+    loadImgPromise(src) {
       return new Promise((resolve, reject) => {
         let img = new Image()
         img.src = src
@@ -114,7 +102,7 @@ export default {
         }
       })
     },
-    clipPic (width, height) {
+    clipPic(width, height) {
       if (width === height) {
         this.imgType = 0
       } else if (height > width) {

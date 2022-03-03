@@ -76,45 +76,27 @@
       <!-- <button class='listkeybtn' @click="goBack">返回</button> -->
       <div class="top-select">
         时间筛选：
-        <select
-          v-model="timeChoosed.time"
-          class="select-style"
-          @change="timeSelected"
-        >
-          <option
-            v-for="(item, index) in timeList"
-            :key="index"
-            :value="item.record_date"
-          >
-            {{ item.record_date_str }}
-          </option>
+        <select class="select-style" @change="timeSelected" v-model="timeChoosed.time">
+          <option :key="index" v-for="(item, index) in timeList" :value="item.record_date">{{
+            item.record_date_str
+          }}</option>
         </select>
       </div>
     </div>
-    <div class="all-title">
-      关键指标
-    </div>
-    <div
-      v-for="(item, index) in labels_num"
-      :key="index"
-      class="canvas-div"
-    >
-      <div class="this_labels">
-        {{ item.thisweek }}
-      </div>
-      <canvas :id="item.fieldkey" />
+    <div class="all-title">关键指标</div>
+    <div v-for="(item, index) in labels_num" :key="index" class="canvas-div">
+      <div class="this_labels">{{ item.thisweek }}</div>
+      <canvas :id="item.fieldkey"></canvas>
     </div>
     <div>
-      <div class="all-title">
-        全部指标
-      </div>
+      <div class="all-title">全部指标</div>
       <div class="allbtn">
         <button
-          v-for="(item, index) in listKeyData"
-          :key="index"
           class="listkeybtn"
+          :key="index"
           :class="item.fieldkey == click_color ? 'listkeybtn_active' : ''"
           @click="showCharts(item, index)"
+          v-for="(item, index) in listKeyData"
         >
           {{ item.fieldname }}
         </button>
@@ -130,7 +112,7 @@
         </div>
         <div class="clearfloat">
           <span class="span_left">5周趋势</span>
-          <canvas :id="canvas_fieldkey" />
+          <canvas :id="canvas_fieldkey"></canvas>
         </div>
       </div>
     </div>

@@ -33,11 +33,11 @@ export default {
     {
       path: 'tmpl/shopDecoration',
       name: `移动商城`,
-      component: () => import('@/view/mall/marketing/shopDecoration'),
+      component: () => import( '@/view/mall/marketing/shopDecoration'),
       children: [
         {
           path: 'detail/:itemId?',
-          component: () => import('@/view/mall/aftersales/detail')
+          component: () => import( '@/view/mall/aftersales/detail')
         }
       ]
     },
@@ -48,14 +48,14 @@ export default {
       children: [
         {
           path: 'editor/:itemId?',
-          component: () => import('@/view/base/planting/editor')
+          component: () => import( '@/view/base/planting/editor')
         }
       ]
     },
     {
-      path: 'adapay_member_entry',
-      name: '开户管理',
-      component: () => import('@/view/dealer/create_account.vue')
+      path:'adapay_member_entry',
+      name:'开户管理',
+      component:() => import('@/view/dealer/create_account.vue')
     }
   ]
 }

@@ -1,45 +1,16 @@
 <template>
-  <el-form
-    ref="form"
-    :model="form"
-    :rules="rules"
-    label-width="200px"
-    label-suffix="："
-    class="fenzhang"
-  >
+  <el-form ref="form" :model="form" :rules="rules" label-width="200px" label-suffix="：" class="fenzhang">
     <el-form-item label="提现方式">
-      <el-radio-group
-        v-model="form.withdraw_method"
-        @change="onChange"
-      >
-        <el-radio :label="1">
-          自动提现
-        </el-radio>
-        <el-radio :label="2">
-          手动提现
-        </el-radio>
+      <el-radio-group @change="onChange" v-model="form.withdraw_method">
+        <el-radio :label="1">自动提现</el-radio>
+        <el-radio :label="2">手动提现</el-radio>
       </el-radio-group>
     </el-form-item>
-    <el-form-item
-      label="提现限额"
-      prop="distributor_money"
-    >
-      满
-      <el-input
-        v-model="form.distributor_money"
-        size="mini"
-        :precision="2"
-        @input="oninput"
-      />元，可提现
+    <el-form-item label="提现限额" prop="distributor_money">
+      满 <el-input v-model="form.distributor_money" size="mini" :precision="2" @input="oninput"/>元，可提现
     </el-form-item>
-    <el-form-item
-      v-if="withdraw_method === 1"
-      label="提现设置说明"
-    >
-      <div
-        style="width: 40%"
-        class="content-box"
-      >
+    <el-form-item v-if="withdraw_method === 1" label="提现设置说明">
+      <div style="width: 40%" class="content-box">
         <p class="frm-tips">
           1、提现限额为0时，表示不限制提现底限，如提现限额大于0时，表示可提现金额大于或等于该金额才可进行全额提现；
         </p>
@@ -50,24 +21,10 @@
           3、根据支付公司逻辑，申请提现后一个工作日到账，节假日顺延具体提现信息请查询提现记录。
         </p>
       </div>
-      <el-button
-        v-loading="loading"
-        type="primary"
-        size="medium"
-        class="footer-btn"
-        @click="onSubmit"
-      >
-        保存配置
-      </el-button>
+      <el-button type="primary" size="medium" v-loading="loading" @click="onSubmit" class="footer-btn">保存配置</el-button>
     </el-form-item>
-    <el-form-item
-      v-else
-      label="提现设置说明"
-    >
-      <div
-        style="width: 40%"
-        class="content-box"
-      >
+    <el-form-item v-else label="提现设置说明">
+      <div style="width: 40%" class="content-box">
         <p class="frm-tips">
           1、提现限额为0时，表示不限制提现底限，如提现限额大于0时，表示可提现金额大于或等于该金额才可进行全额提现；
         </p>
@@ -78,15 +35,7 @@
           3、根据支付公司逻辑，申请提现后一个工作日到账，节假日顺延具体提现信息请查询提现记录。
         </p>
       </div>
-      <el-button
-        v-loading="loading"
-        type="primary"
-        size="medium"
-        class="footer-btn"
-        @click="onSubmit"
-      >
-        保存配置
-      </el-button>
+      <el-button type="primary" size="medium" v-loading="loading" @click="onSubmit" class="footer-btn">保存配置</el-button>
     </el-form-item>
   </el-form>
 </template>
@@ -95,8 +44,8 @@
 import { getWithdrawset, saveWithdrawset } from '@/api/fenzhang'
 
 export default {
-  name: 'Fenzhang',
-  data () {
+  name: 'fenzhang',
+  data() {
     return {
       form: {
         // 费率
@@ -105,30 +54,26 @@ export default {
       },
       rules: {
         distributor_money: [
-          { type: 'string', message: '请输入金额', required: false, trigger: 'blur' },
-          {
-            pattern: /(^[1-9]([0-9]+)?(\.[0-9]{1,2})?$)|(^(0){1}$)|(^[0-9]\.[0-9]([0-9])?$)/,
-            message: '请输入正确格式,可保留两位小数'
-          }
+          { type: 'string', message: '请输入金额', required: false, trigger: 'blur'},
+          { pattern: /(^[1-9]([0-9]+)?(\.[0-9]{1,2})?$)|(^(0){1}$)|(^[0-9]\.[0-9]([0-9])?$)/, message: '请输入正确格式,可保留两位小数' } 
         ]
       },
       loading: false,
       withdraw_method: 1
     }
   },
-  created () {
+  created() {
     this.getDetail()
   },
   methods: {
-    oninput (e) {
-      // 过滤小数点后两位
-      e.replace(/[^0-9.]/g, '')
+    oninput (e) { // 过滤小数点后两位
+      e.replace(/[^0-9.]/g,'')
     },
     onChange (val) {
       this.withdraw_method = val
     },
     // 获取配置数据
-    async getDetail () {
+    async getDetail() {
       const res = await getWithdrawset()
       let data = res.data.data
       this.withdraw_method = data.withdraw_method
@@ -137,8 +82,8 @@ export default {
     },
     // 费率输入
 
-    async onSubmit () {
-      let { distributor_money, withdraw_method } = this.form
+    async onSubmit() {
+      let {  distributor_money, withdraw_method } = this.form
       let params = {
         distributor_money,
         withdraw_method
@@ -149,8 +94,8 @@ export default {
         message: '保存成功'
       })
       this.getDetail()
-    }
-  }
+    },
+  },
 }
 </script>
 

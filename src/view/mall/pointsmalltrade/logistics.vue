@@ -1,37 +1,22 @@
 <template>
   <div>
-    <el-table
-      v-loading="loading"
-      :data="logisticsList"
-      :height="wheight - 160"
-    >
-      <el-table-column
-        prop="corp_name"
-        label="物流公司简称"
-      />
-      <el-table-column
-        prop="is_default"
-        label="是否启用"
-      >
+    <el-table :data="logisticsList" :height="wheight - 160" v-loading="loading">
+      <el-table-column prop="corp_name" label="物流公司简称"></el-table-column>
+      <el-table-column prop="is_default" label="是否启用">
         <template slot-scope="scope">
-          <el-switch
-            v-model="scope.row.is_enable"
-            @change="setEnable(scope.row)"
-          />
+          <el-switch v-model="scope.row.is_enable" @change="setEnable(scope.row)"></el-switch>
         </template>
       </el-table-column>
     </el-table>
-    <div
-      v-if="total_count > params.pageSize"
-      class="content-center content-top-padded"
-    >
+    <div v-if="total_count > params.pageSize" class="content-center content-top-padded">
       <el-pagination
         layout="prev, pager, next"
+        @current-change="handleCurrentChange"
         :current-page.sync="params.page"
         :total="total_count"
         :page-size="params.pageSize"
-        @current-change="handleCurrentChange"
-      />
+      >
+      </el-pagination>
     </div>
   </div>
 </template>
@@ -44,7 +29,7 @@ import {
   deleteCompanyLogistics
 } from '../../../api/logistics'
 export default {
-  data () {
+  data() {
     return {
       logisticsList: [],
       loading: false,
@@ -58,19 +43,16 @@ export default {
   computed: {
     ...mapGetters(['wheight'])
   },
-  mounted () {
-    this.getLogisticsListData()
-  },
   methods: {
-    handleCurrentChange (page_num) {
+    handleCurrentChange(page_num) {
       this.params.page = page_num
       this.getLogisticsListData()
     },
-    dataSearch () {
+    dataSearch() {
       this.params.page = 1
       this.getLogisticsListData()
     },
-    getLogisticsListData () {
+    getLogisticsListData() {
       this.loading = true
       getLogisticsLists(this.params).then((response) => {
         this.logisticsList = response.data.data.list
@@ -78,7 +60,7 @@ export default {
         this.loading = false
       })
     },
-    setEnable (row) {
+    setEnable(row) {
       if (row.is_enable) {
         createCompanyLogistics(row).then((response) => {
           this.getLogisticsListData()
@@ -89,6 +71,9 @@ export default {
         })
       }
     }
+  },
+  mounted() {
+    this.getLogisticsListData()
   }
 }
 </script>

@@ -3,10 +3,10 @@
     :type="inputType"
     readonly
     :class="classStyle"
+    @click="btnClick($event)"
     :disabled="classStyle === 'disabled-btn'"
     :value="text"
-    @click="btnClick($event)"
-  >
+  />
 </template>
 <script>
 export default {
@@ -25,7 +25,7 @@ export default {
     }
   },
   methods: {
-    btnClick (event) {
+    btnClick(event) {
       this.$emit('btnClick', event)
     }
   }

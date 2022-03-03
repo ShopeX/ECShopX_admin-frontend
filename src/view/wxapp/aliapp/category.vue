@@ -504,10 +504,7 @@ $txt-placeholder: #f5f5f7;
 </style>
 
 <template>
-  <transition
-    name="el-fade-in-linear"
-    mode="out-in"
-  >
+  <transition name="el-fade-in-linear" mode="out-in">
     <div>
       <section
         class="section section-white category-view-warp"
@@ -523,35 +520,32 @@ $txt-placeholder: #f5f5f7;
             >
               <div class="layout">
                 <div class="layout-left">
-                  <div
-                    class="layout-item"
-                    :class="{ active: form.name === 'base' }"
-                  />
-                  <div class="layout-item" />
+                  <div class="layout-item" :class="{ active: form.name === 'base' }"></div>
+                  <div class="layout-item"></div>
                 </div>
                 <div class="layout-right">
                   <div class="layout-group">
-                    <div class="layout-banner" />
+                    <div class="layout-banner"></div>
                     <div class="layout-item-list">
                       <div class="layout-item">
-                        <div class="item-icon" />
-                        <div class="item-name" />
+                        <div class="item-icon"></div>
+                        <div class="item-name"></div>
                       </div>
                       <div class="layout-item">
-                        <div class="item-icon" />
-                        <div class="item-name" />
+                        <div class="item-icon"></div>
+                        <div class="item-name"></div>
                       </div>
                       <div class="layout-item">
-                        <div class="item-icon" />
-                        <div class="item-name" />
+                        <div class="item-icon"></div>
+                        <div class="item-name"></div>
                       </div>
                       <div class="layout-item">
-                        <div class="item-icon" />
-                        <div class="item-name" />
+                        <div class="item-icon"></div>
+                        <div class="item-name"></div>
                       </div>
                       <div class="layout-item">
-                        <div class="item-icon" />
-                        <div class="item-name" />
+                        <div class="item-icon"></div>
+                        <div class="item-name"></div>
                       </div>
                     </div>
                   </div>
@@ -628,17 +622,14 @@ $txt-placeholder: #f5f5f7;
         <div class="category-view">
           <div class="template">
             <div class="layout-view">
-              <el-tabs
-                v-if="series.length > 0"
-                v-model="editableSeries"
-                @tab-click="handleClick"
-              >
+              <el-tabs v-if="series.length > 0" v-model="editableSeries" @tab-click="handleClick">
                 <el-tab-pane
                   v-for="(item, index) in series"
                   :key="item.name"
                   :label="item.title"
                   :name="item.name"
-                />
+                >
+                </el-tab-pane>
               </el-tabs>
             </div>
             <div v-if="form.name == 'base' && editableData.length > 0">
@@ -651,10 +642,8 @@ $txt-placeholder: #f5f5f7;
                     :class="{ active: index === currentFidx }"
                     @click="switchTab(index)"
                   >
-                    <span
-                      v-if="item.hot"
-                      class="hot-tag"
-                    />{{ item.name ? item.name : '分类' }}
+                    <span class="hot-tag" v-if="item.hot"></span
+                    >{{ item.name ? item.name : '分类' }}
                   </div>
                 </div>
                 <div class="child-layout-view">
@@ -667,29 +656,20 @@ $txt-placeholder: #f5f5f7;
                           : 'https://fakeimg.pl/250x100/EFEFEF/CCC/'
                       "
                       alt=""
-                    >
+                    />
                     <div
+                      class="child"
                       v-for="(sitem, sidx) in editableData[currentFidx].children"
                       :key="sidx"
-                      class="child"
                     >
-                      <div
-                        v-if="sitem.name"
-                        class="second-title"
-                      >
-                        {{ sitem.name }}
-                      </div>
+                      <div v-if="sitem.name" class="second-title">{{ sitem.name }}</div>
                       <div class="child-view">
-                        <div
-                          v-for="(litem, lidx) in sitem.children"
-                          :key="lidx"
-                          class="child-item"
-                        >
+                        <div class="child-item" v-for="(litem, lidx) in sitem.children" :key="lidx">
                           <img
                             class="child-img"
                             :src="litem.img ? litem.img : 'https://fakeimg.pl/50x50/EFEFEF/CCC/'"
                             alt=""
-                          >
+                          />
                           <div>{{ litem.name ? litem.name : '子分类' }}</div>
                         </div>
                       </div>
@@ -721,29 +701,16 @@ $txt-placeholder: #f5f5f7;
                           : 'https://fakeimg.pl/250x100/EFEFEF/CCC/'
                       "
                       alt=""
-                    >
-                    <div
-                      v-for="item in 3"
-                      class="child-goods-view"
-                    >
+                    />
+                    <div v-for="item in 3" class="child-goods-view">
                       <div class="child-item">
-                        <img
-                          class="item-img"
-                          src="https://fakeimg.pl/70x70/EFEFEF/CCC/"
-                          alt=""
-                        >
+                        <img class="item-img" src="https://fakeimg.pl/70x70/EFEFEF/CCC/" alt="" />
                         <div class="item-caption">
                           <div>
-                            <div class="item-title">
-                              当前类目商品标题
-                            </div>
-                            <div class="item-desc">
-                              当前类目商品描述
-                            </div>
+                            <div class="item-title">当前类目商品标题</div>
+                            <div class="item-desc">当前类目商品描述</div>
                           </div>
-                          <div class="item-icon">
-                            <div class="iconfont icon-cart-plus" />
-                          </div>
+                          <div class="item-icon"><div class="iconfont icon-cart-plus"></div></div>
                         </div>
                       </div>
                     </div>
@@ -755,39 +722,26 @@ $txt-placeholder: #f5f5f7;
               <div class="layout-view layout-second">
                 <div class="child-layout-view">
                   <div
-                    v-for="(item, index) in editableData"
-                    :key="index"
                     class="layout-group"
                     :class="{ active: index === currentFidx }"
+                    v-for="(item, index) in editableData"
+                    :key="index"
                   >
                     <img
                       class="parent-img"
                       :src="item.img ? item.img : 'https://fakeimg.pl/320x120/EFEFEF/CCC/'"
                       alt=""
                       @click="switchTab(index)"
-                    >
-                    <div
-                      v-for="(sitem, sidx) in item.children"
-                      :key="sidx"
-                      class="child"
-                    >
-                      <div
-                        v-if="sitem.name"
-                        class="second-title"
-                      >
-                        {{ sitem.name }}
-                      </div>
+                    />
+                    <div class="child" v-for="(sitem, sidx) in item.children" :key="sidx">
+                      <div v-if="sitem.name" class="second-title">{{ sitem.name }}</div>
                       <div class="child-view">
-                        <div
-                          v-for="(litem, lidx) in sitem.children"
-                          :key="lidx"
-                          class="child-item"
-                        >
+                        <div class="child-item" v-for="(litem, lidx) in sitem.children" :key="lidx">
                           <img
                             class="child-img"
                             :src="litem.img ? litem.img : 'https://fakeimg.pl/70x70/EFEFEF/CCC/'"
                             alt=""
-                          >
+                          />
                           <div>{{ litem.name ? litem.name : '子分类' }}</div>
                         </div>
                       </div>
@@ -796,11 +750,8 @@ $txt-placeholder: #f5f5f7;
                 </div>
               </div>
             </div>
-            <div
-              v-if="!editableData.length"
-              class="no-category-placeholder"
-            >
-              <div class="iconfont icon-th-list" />
+            <div class="no-category-placeholder" v-if="!editableData.length">
+              <div class="iconfont icon-th-list"></div>
               <div>请添加分类</div>
             </div>
           </div>
@@ -822,89 +773,47 @@ $txt-placeholder: #f5f5f7;
                     :label="item.title"
                     :name="item.name"
                   >
-                    <span
-                      v-if="editableSeries === item.name"
-                      slot="label"
-                    >
+                    <span v-if="editableSeries === item.name" slot="label">
                       <el-input
-                        v-model="item.title"
                         size="mini"
                         class="series-name-input"
-                      />
-                      <i
-                        class="iconfont icon-times"
-                        @click="removeTab(item.name)"
-                      />
+                        v-model="item.title"
+                      ></el-input>
+                      <i class="iconfont icon-times" @click="removeTab(item.name)"></i>
                     </span>
                   </el-tab-pane>
                 </el-tabs>
-                <el-popover
-                  v-model="seriesVisible"
-                  placement="top"
-                  width="160"
-                >
+                <el-popover placement="top" width="160" v-model="seriesVisible">
                   <div class="content-bottom-padded">
                     <el-input
-                      v-model="seriesTitle"
                       type="text"
                       size="small"
+                      v-model="seriesTitle"
                       placeholder="请输入系列名称"
                     />
                   </div>
                   <div style="text-align: right; margin: 0">
-                    <el-button
-                      size="mini"
-                      type="text"
-                      @click="handleCancel"
-                    >
-                      取消
-                    </el-button>
-                    <el-button
-                      type="primary"
-                      size="mini"
-                      @click="addSeries"
-                    >
-                      确定
-                    </el-button>
+                    <el-button size="mini" type="text" @click="handleCancel">取消</el-button>
+                    <el-button type="primary" size="mini" @click="addSeries">确定</el-button>
                   </div>
-                  <el-button
-                    slot="reference"
-                    type="text"
-                    class="add-btn iconfont icon-plus-circle"
+                  <el-button type="text" slot="reference" class="add-btn iconfont icon-plus-circle">
+                    添加系列</el-button
                   >
-                    添加系列
-                  </el-button>
                 </el-popover>
               </div>
             </div>
-            <draggable
-              v-model="editableData"
-              :options="dragParentOptions"
-            >
-              <div
-                v-for="(item, fidx) in editableData"
-                :key="fidx"
-                class="form-parent"
-              >
+            <draggable v-model="editableData" :options="dragParentOptions">
+              <div v-for="(item, fidx) in editableData" :key="fidx" class="form-parent">
                 <div class="form-item">
-                  <div
-                    class="setting-img"
-                    @click="showImgs(fidx)"
-                  >
+                  <div class="setting-img" @click="showImgs(fidx)">
                     <img
                       v-if="item.img"
                       :src="item.img ? item.img : 'https://fakeimg.pl/50x50'"
                       alt=""
-                    >
-                    <div
-                      v-else
-                      class="iconfont icon-images"
                     />
+                    <div v-else class="iconfont icon-images"></div>
                   </div>
-                  <el-input
-                    v-model="item.name"
-                    placeholder="名称"
-                  />
+                  <el-input placeholder="名称" v-model="item.name"></el-input>
                   <div
                     v-if="form.name === 'fresh'"
                     class="bind-btn iconfont icon-link"
@@ -912,53 +821,26 @@ $txt-placeholder: #f5f5f7;
                   >
                     {{ item.category_name ? item.category_name : '绑定分类' }}
                   </div>
-                  <div
-                    class="bind-btn iconfont icon-link"
-                    @click="openPageDialog(fidx)"
-                  >
+                  <div @click="openPageDialog(fidx)" class="bind-btn iconfont icon-link">
                     {{ item.page_name ? item.page_name : '绑定自定义页面' }}
                   </div>
-                  <el-checkbox v-model="item.hot">
-                    热推
-                  </el-checkbox>
-                  <div class="control-bar move iconfont icon-stream" />
-                  <div
-                    class="control-bar remove iconfont icon-trash"
-                    @click="remove(fidx)"
-                  />
+                  <el-checkbox v-model="item.hot">热推</el-checkbox>
+                  <div class="control-bar move iconfont icon-stream"></div>
+                  <div class="control-bar remove iconfont icon-trash" @click="remove(fidx)"></div>
                 </div>
-                <div
-                  v-if="form.name !== 'fresh'"
-                  class="form-child"
-                >
-                  <draggable
-                    v-model="item.children"
-                    :options="dragSecondOptions"
-                  >
-                    <div
-                      v-for="(sitem, sidx) in item.children"
-                      :key="sidx"
-                      class="form-second"
-                    >
+                <div v-if="form.name !== 'fresh'" class="form-child">
+                  <draggable v-model="item.children" :options="dragSecondOptions">
+                    <div v-for="(sitem, sidx) in item.children" :key="sidx" class="form-second">
                       <div class="form-item">
-                        <div
-                          class="setting-img"
-                          @click="showImgs(fidx, sidx)"
-                        >
+                        <div class="setting-img" @click="showImgs(fidx, sidx)">
                           <img
                             v-if="sitem.img"
                             :src="sitem.img ? sitem.img : 'https://fakeimg.pl/50x50'"
                             alt=""
-                          >
-                          <div
-                            v-else
-                            class="iconfont icon-images"
                           />
+                          <div v-else class="iconfont icon-images"></div>
                         </div>
-                        <el-input
-                          v-model="sitem.name"
-                          placeholder="名称"
-                        />
+                        <el-input placeholder="名称" v-model="sitem.name"></el-input>
                         <div
                           class="bind-btn"
                           :class="{
@@ -970,41 +852,29 @@ $txt-placeholder: #f5f5f7;
                           }}{{ sitem.category_id ? '商品分类：' : ''
                           }}{{ sitem.category_name ? sitem.category_name : '绑定分类' }}
                         </div>
-                        <div class="control-bar move iconfont icon-stream" />
+                        <div class="control-bar move iconfont icon-stream"></div>
                         <div
                           class="control-bar remove iconfont icon-trash"
                           @click="remove(fidx, sidx)"
-                        />
+                        ></div>
                       </div>
                       <div class="form-child">
-                        <draggable
-                          v-model="sitem.children"
-                          :options="dragLastOptions"
-                        >
+                        <draggable v-model="sitem.children" :options="dragLastOptions">
                           <div
                             v-for="(litem, lidx) in sitem.children"
                             :key="lidx"
                             class="form-last"
                           >
                             <div class="form-item">
-                              <div
-                                class="setting-img"
-                                @click="showImgs(fidx, sidx, lidx)"
-                              >
+                              <div class="setting-img" @click="showImgs(fidx, sidx, lidx)">
                                 <img
                                   v-if="litem.img"
                                   :src="litem.img ? litem.img : 'https://fakeimg.pl/50x50'"
                                   alt=""
-                                >
-                                <div
-                                  v-else
-                                  class="iconfont icon-images"
                                 />
+                                <div v-else class="iconfont icon-images"></div>
                               </div>
-                              <el-input
-                                v-model="litem.name"
-                                placeholder="名称"
-                              />
+                              <el-input placeholder="名称" v-model="litem.name"></el-input>
                               <div
                                 class="bind-btn"
                                 :class="{
@@ -1017,11 +887,11 @@ $txt-placeholder: #f5f5f7;
                                 }}{{ litem.category_id ? '商品分类：' : ''
                                 }}{{ litem.category_name ? litem.category_name : '绑定分类' }}
                               </div>
-                              <div class="control-bar move iconfont icon-stream" />
+                              <div class="control-bar move iconfont icon-stream"></div>
                               <div
                                 class="control-bar remove iconfont icon-trash"
                                 @click="remove(fidx, sidx, lidx)"
-                              />
+                              ></div>
                             </div>
                           </div>
                         </draggable>
@@ -1030,8 +900,8 @@ $txt-placeholder: #f5f5f7;
                           class="child-add-btn iconfont icon-plus-circle"
                           @click="add(fidx, sidx)"
                         >
-                          添加三级分类
-                        </el-button>
+                          添加三级分类</el-button
+                        >
                       </div>
                     </div>
                   </draggable>
@@ -1040,44 +910,27 @@ $txt-placeholder: #f5f5f7;
                     class="child-add-btn iconfont icon-plus-circle"
                     @click="add(fidx)"
                   >
-                    添加二级分类
-                  </el-button>
+                    添加二级分类</el-button
+                  >
                 </div>
               </div>
             </draggable>
-            <el-button
-              class="parent-add-btn iconfont icon-plus"
-              @click="add()"
+            <el-button class="parent-add-btn iconfont icon-plus" @click="add()">
+              添加分类</el-button
             >
-              添加分类
-            </el-button>
           </div>
         </div>
       </section>
       <section class="content-padded-s section-white content-center">
-        <el-button
-          class="btn-save"
-          type="primary"
-          @click="saveConfig"
-        >
-          保存
-        </el-button>
+        <el-button class="btn-save" type="primary" @click="saveConfig">保存</el-button>
       </section>
       <!-- 分类选择器弹窗 -->
-      <el-dialog
-        title="绑定分类"
-        :visible.sync="categoryDialog"
-        :before-close="hideCategory"
-      >
+      <el-dialog title="绑定分类" :visible.sync="categoryDialog" :before-close="hideCategory">
         <el-form>
           <el-form-item>
             <el-radio-group v-model="curCateType">
-              <el-radio-button label="goodsCate">
-                商品分类
-              </el-radio-button>
-              <el-radio-button label="mainCate">
-                主类目
-              </el-radio-button>
+              <el-radio-button label="goodsCate">商品分类</el-radio-button>
+              <el-radio-button label="mainCate">主类目</el-radio-button>
             </el-radio-group>
           </el-form-item>
           <el-form-item label="选择分类">
@@ -1088,7 +941,8 @@ $txt-placeholder: #f5f5f7;
               :props="{ checkStrictly: true }"
               clearable
               @change="handleCateChange"
-            />
+            >
+            </el-cascader>
             <el-cascader
               v-if="curCateType === 'mainCate'"
               placeholder="选择主类目"
@@ -1096,49 +950,29 @@ $txt-placeholder: #f5f5f7;
               :props="{ checkStrictly: true }"
               clearable
               @change="handleMainCateChange"
-            />
+            >
+            </el-cascader>
           </el-form-item>
         </el-form>
-        <span
-          slot="footer"
-          class="dialog-footer"
-        >
+        <span slot="footer" class="dialog-footer">
           <el-button @click="categoryDialog = false">取 消</el-button>
-          <el-button
-            type="primary"
-            @click="setCategory"
-          >确 定</el-button>
+          <el-button type="primary" @click="setCategory">确 定</el-button>
         </span>
       </el-dialog>
       <!-- 选择自定义页面 -->
-      <el-dialog
-        title="选择页面"
-        :visible.sync="pageDialogVisible"
-      >
-        <el-select
-          v-model="selectedCustomPage"
-          placeholder="请选择"
-        >
+      <el-dialog title="选择页面" :visible.sync="pageDialogVisible">
+        <el-select v-model="selectedCustomPage" placeholder="请选择">
           <el-option
             v-for="(item, index) in customPageList"
             :key="index"
             :label="item.page_name"
             :value="item.id"
-          />
-        </el-select>
-        <div
-          slot="footer"
-          class="dialog-footer"
-        >
-          <el-button @click="pageDialogVisible = false">
-            取 消
-          </el-button>
-          <el-button
-            type="primary"
-            @click="confirmPageDialog"
           >
-            确 定
-          </el-button>
+          </el-option>
+        </el-select>
+        <div slot="footer" class="dialog-footer">
+          <el-button @click="pageDialogVisible = false">取 消</el-button>
+          <el-button type="primary" @click="confirmPageDialog">确 定</el-button>
         </div>
       </el-dialog>
       <imgPicker
@@ -1146,7 +980,7 @@ $txt-placeholder: #f5f5f7;
         :sc-status="isGetImage"
         @chooseImg="pickImg"
         @closeImgDialog="closeimgsVisible"
-      />
+      ></imgPicker>
     </div>
   </transition>
 </template>
@@ -1161,12 +995,7 @@ import draggable from 'vuedraggable'
 import { getCategory } from '@/api/goods'
 import { saveALiPageParams, getALiParamByTempName, getALiCustomPageList } from '@/api/ali'
 export default {
-  components: {
-    imgPicker,
-    // 第三方组件
-    draggable
-  },
-  data () {
+  data() {
     return {
       currentFidx: 0,
       currentSidx: 0,
@@ -1244,58 +1073,30 @@ export default {
       curTabIndex: 0
     }
   },
+  components: {
+    imgPicker,
+    // 第三方组件
+    draggable
+  },
   computed: {
     ...mapGetters(['wheight', 'ali_template_name'])
   },
-  mounted () {
-    let filter = { template_name: this.ali_template_name, version: 'v1.0.1', page_name: 'category' }
-    getALiParamByTempName(filter).then((res) => {
-      if (res.data.data.list.length !== 0) {
-        let results = res.data.data.list[0].params
-        if (!results.hasSeries) {
-          results.data.map((item) => {
-            item.children.map((child) => {
-              if (!child.children) {
-                Object.assign(child, { children: [] })
-              }
-            })
-          })
-          this.form = results
-          this.editableData = results.data
-        } else {
-          results.data.map((item) => {
-            item.content.map((series) => {
-              series.children.map((child) => {
-                if (!child.children) {
-                  Object.assign(child, { children: [] })
-                }
-              })
-            })
-          })
-          this.form = results
-          this.series = results.data
-          this.editableData = this.series[0].content
-          this.editableSeries = results.data[0].name
-        }
-      }
-    })
-  },
   methods: {
-    handleCateChange (val) {
+    handleCateChange(val) {
       this.currentCategory = {
         main_category_id: '',
         category_id: val[val.length - 1],
         category_name: this.findCateName(val, this.category)
       }
     },
-    handleMainCateChange (val) {
+    handleMainCateChange(val) {
       this.currentCategory = {
         main_category_id: val[val.length - 1],
         category_id: '',
         category_name: this.findCateName(val, this.mainCategory)
       }
     },
-    findCateName (val, data) {
+    findCateName(val, data) {
       const fidx = data.findIndex((n) => val[0] === n.value)
       const cidx = val[1] ? data[fidx].children.findIndex((n) => val[1] === n.value) : ''
       const gidx = val[2]
@@ -1314,7 +1115,7 @@ export default {
       return name
     },
     // 添加系列
-    addSeries () {
+    addSeries() {
       if (!this.seriesTitle) {
         this.$message({ message: '系列名称必填', type: 'error' })
         return
@@ -1336,12 +1137,12 @@ export default {
       this.form.hasSeries = true
     },
     // 取消添加
-    handleCancel () {
+    handleCancel() {
       this.seriesTitle = ''
       this.seriesVisible = false
     },
     // 移除系列
-    removeTab (targetName) {
+    removeTab(targetName) {
       console.log(targetName)
       this.$confirm('删除系列将删除该系列下配置的分类, 是否继续?', '提示', {
         confirmButtonText: '确定',
@@ -1377,13 +1178,13 @@ export default {
         .catch(() => {})
     },
     // 点击tab
-    handleClick (data) {
+    handleClick(data) {
       this.curTabIndex = data.index
       this.currentFidx = 0
       this.editableData = this.series[data.index].content
     },
     // 添加菜单
-    add (idx, sidx) {
+    add(idx, sidx) {
       let item = {
         name: '',
         img: '',
@@ -1404,7 +1205,7 @@ export default {
       }
     },
     // 移除菜单
-    remove (fidx, sidx, lidx) {
+    remove(fidx, sidx, lidx) {
       if (lidx !== undefined) {
         this.$confirm('确认删除？')
           .then((_) => {
@@ -1424,15 +1225,15 @@ export default {
       }
     },
     // 模版演示父级菜单切换
-    switchTab (index) {
+    switchTab(index) {
       this.currentFidx = index
     },
     // 模板类型切换
-    switchType (type) {
+    switchType(type) {
       this.form.name = type
     },
     // 图片选择器绑定事件
-    showImgs (fidx, sidx, lidx) {
+    showImgs(fidx, sidx, lidx) {
       this.imgsVisible = true
       this.isGetImage = true
       this.currentFidx = fidx
@@ -1449,7 +1250,7 @@ export default {
         this.currentLidx = ''
       }
     },
-    pickImg (data) {
+    pickImg(data) {
       if (this.currentLidx !== '') {
         this.editableData[this.currentFidx].children[this.currentSidx].children[
           this.currentLidx
@@ -1463,11 +1264,11 @@ export default {
       }
       this.imgsVisible = false
     },
-    closeimgsVisible () {
+    closeimgsVisible() {
       this.imgsVisible = false
     },
     // 分类设置绑定事件
-    showCategory (fidx, sidx, lidx) {
+    showCategory(fidx, sidx, lidx) {
       this.currentFidx = fidx
       this.currentCategory = ''
       if (lidx !== undefined) {
@@ -1491,7 +1292,7 @@ export default {
         this.mainCategory = this.initCategory(response.data.data)
       })
     },
-    initCategory (data) {
+    initCategory(data) {
       let categorys = []
       data.map((item) => {
         let fitem = {
@@ -1522,7 +1323,7 @@ export default {
       })
       return categorys
     },
-    setCategory () {
+    setCategory() {
       if (this.currentLidx !== '') {
         Object.assign(
           this.editableData[this.currentFidx].children[this.currentSidx].children[this.currentLidx],
@@ -1540,12 +1341,12 @@ export default {
       }
       this.categoryDialog = false
     },
-    hideCategory () {
+    hideCategory() {
       this.currentCategory = ''
       this.categoryDialog = false
     },
     // 保存设置
-    saveConfig () {
+    saveConfig() {
       if (!this.form.hasSeries) {
         this.form.data = this.editableData
       } else {
@@ -1566,7 +1367,7 @@ export default {
         }
       })
     },
-    async _getALiCustomPageList () {
+    async _getALiCustomPageList() {
       const res = await getALiCustomPageList({
         page: 1,
         pageSize: 100,
@@ -1574,18 +1375,51 @@ export default {
       })
       this.customPageList = res.data.data.list
     },
-    confirmPageDialog () {
+    confirmPageDialog() {
       this.pageDialogVisible = false
       const index = this.currentFidx
       this.editableData[index].id = this.selectedCustomPage
       const cur = this.customPageList.find((v) => v.id == this.selectedCustomPage)
       cur && (this.editableData[index].page_name = cur.page_name)
     },
-    openPageDialog (index) {
+    openPageDialog(index) {
       !this.customPageList.length && this._getALiCustomPageList()
       this.pageDialogVisible = true
       this.currentFidx = index
     }
+  },
+  mounted() {
+    let filter = { template_name: this.ali_template_name, version: 'v1.0.1', page_name: 'category' }
+    getALiParamByTempName(filter).then((res) => {
+      if (res.data.data.list.length !== 0) {
+        let results = res.data.data.list[0].params
+        if (!results.hasSeries) {
+          results.data.map((item) => {
+            item.children.map((child) => {
+              if (!child.children) {
+                Object.assign(child, { children: [] })
+              }
+            })
+          })
+          this.form = results
+          this.editableData = results.data
+        } else {
+          results.data.map((item) => {
+            item.content.map((series) => {
+              series.children.map((child) => {
+                if (!child.children) {
+                  Object.assign(child, { children: [] })
+                }
+              })
+            })
+          })
+          this.form = results
+          this.series = results.data
+          this.editableData = this.series[0].content
+          this.editableSeries = results.data[0].name
+        }
+      }
+    })
   }
 }
 </script>

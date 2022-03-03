@@ -1,237 +1,115 @@
 <template>
-  <el-form
-    ref="form"
-    :model="form"
-    class="box-set"
-    label-width="120px"
-  >
-    <el-card
-      header="基础信息"
-      shadow="naver"
-    >
-      <el-form-item
-        label="名称"
-        prop="marketing_name"
-        :rules="{ required: true, message: '活动名称必填', trigger: 'blur' }"
-      >
+  <el-form ref="form" :model="form" class="box-set" label-width="120px">
+    <el-card header="基础信息" shadow="naver">
+      <el-form-item label="名称" prop="marketing_name" :rules="{required: true, message: '活动名称必填', trigger: 'blur'}">
         <el-col :span="20">
-          <el-input
-            v-model="form.marketing_name"
-            :disabled="form.status == 'waiting' ? false : true"
-            :maxlength="30"
-            placeholder="最多30个字"
-          />
+          <el-input :disabled="form.status == 'waiting'? false : true" v-model="form.marketing_name" :maxlength=30 placeholder="最多30个字"></el-input>
         </el-col>
       </el-form-item>
       <el-form-item label="适用会员">
-        <el-checkbox-group
-          v-model="validGrade"
-          :disabled="form.status == 'waiting' ? false : true"
-        >
-          <el-checkbox
-            v-for="grade in memberGrade"
-            :key="grade.grade_id"
-            :label="grade.grade_id"
-          >
-            {{
-              grade.grade_name
-            }}
-          </el-checkbox>
-          <el-checkbox
-            v-for="vipdata in vipGrade"
-            :key="vipdata.lv_type"
-            :label="vipdata.lv_type"
-          >
-            付费{{ vipdata.grade_name }}
-          </el-checkbox>
+        <el-checkbox-group :disabled="form.status == 'waiting'? false : true" v-model="validGrade">
+          <el-checkbox v-for="grade in memberGrade" :label="grade.grade_id" :key="grade.grade_id">{{grade.grade_name}}</el-checkbox>
+          <el-checkbox v-for="vipdata in vipGrade" :label="vipdata.lv_type" :key="vipdata.lv_type">付费{{vipdata.grade_name}}</el-checkbox>
         </el-checkbox-group>
       </el-form-item>
       <el-form-item label="有效期">
         <el-col :span="20">
-          <el-date-picker
+          <el-date-picker :disabled="form.status == 'waiting'? false : true"
             v-model="activity_date"
-            :disabled="form.status == 'waiting' ? false : true"
             type="datetimerange"
             range-separator="至"
             start-placeholder="生效时间"
             end-placeholder="过期时间"
             value-format="yyyy-MM-dd HH:mm:ss"
-            :default-time="['00:00:00', '23:59:59']"
-          />
+            :default-time="['00:00:00', '23:59:59']">
+          </el-date-picker>
         </el-col>
       </el-form-item>
     </el-card>
-    <el-card
-      header="选择商品"
-      shadow="naver"
-    >
+    <el-card header="选择商品" shadow="naver">
       <el-form-item label="适用商品">
-        <el-radio-group
-          v-model="form.use_bound"
-          @change="itemTypeChange"
-        >
-          <el-radio label="goods">
-            指定商品适用
-          </el-radio>
-          <el-radio label="category">
-            指定分类适用
-          </el-radio>
-          <el-radio label="tag">
-            指定商品标签适用
-          </el-radio>
-          <el-radio label="brand">
-            指定品牌适用
-          </el-radio>
+        <el-radio-group v-model="form.use_bound" @change="itemTypeChange">
+          <el-radio label="goods">指定商品适用</el-radio>
+          <el-radio label="category">指定分类适用</el-radio>
+          <el-radio label="tag">指定商品标签适用</el-radio>
+          <el-radio label="brand">指定品牌适用</el-radio>
         </el-radio-group>
       </el-form-item>
-      <div
-        v-if="!zdItemHidden"
-        style="position: relative"
-      >
-        <SkuSelector
-          :data="relItems"
-          @change="getItems"
-        />
-        <div style="position: absolute; bottom: 0px; left: 112px">
-          <el-upload
-            style="display: inline-block; height: 0"
-            action=""
-            :on-change="uploadHandleChange"
-            :auto-upload="false"
-            :show-file-list="false"
-          >
-            <el-button type="primary">
-              批量上传
-            </el-button>
-          </el-upload>
-          <el-button
-            style="margin-left: 10px"
-            type="primary"
-            @click="uploadHandleTemplate()"
-          >
-            下载模板
-          </el-button>
+        <div v-if="!zdItemHidden" style="position: relative">
+            <SkuSelector  @change="getItems" :data="relItems"></SkuSelector>
+            <div style="position: absolute; bottom: 0px; left: 112px">
+                <el-upload style="display: inline-block; height: 0" action="" :on-change="uploadHandleChange" :auto-upload="false" :show-file-list="false">
+                    <el-button type="primary">批量上传</el-button>
+                </el-upload>
+                <el-button style="margin-left: 10px" type="primary" @click="uploadHandleTemplate()">下载模板</el-button>
+            </div>
         </div>
-      </div>
-      <el-col
-        :xs="12"
-        :sm="12"
-        :md="12"
-      >
-        <div
-          v-if="!categoryHidden"
-          style="height: 350px"
-        >
+        <el-col :xs="12" :sm="12" :md="12">
+        <div style="height: 350px" v-if="!categoryHidden">
           <treeselect
-            v-model="form.item_category"
-            :options="categoryList"
-            :show-count="true"
-            :multiple="true"
-            :disable-branch-nodes="true"
-            :clearable="false"
-            @select="categorySelect"
-            @deselect="categoryDeselect"
-          />
+                  :options="categoryList"
+                  :show-count="true"
+                  :multiple="true"
+                  :disable-branch-nodes="true"
+                  :clearable="false"
+                  v-model="form.item_category"
+                  @select="categorySelect"
+                  @deselect="categoryDeselect"
+          >
+          </treeselect>
         </div>
       </el-col>
       <template v-if="!tagHidden">
-        <div class="selected-tags view-flex">
-          <div class="label">
-            已选中标签：
+          <div class="selected-tags view-flex">
+              <div class="label">已选中标签：</div>
+              <div class="view-flex-item">
+                  <el-tag :key="index" v-for="(tag, index) in tag.currentTags" closable size="small" :disable-transitions="false" @close="tagRemove(index)">
+                      {{tag.tag_name}}
+                  </el-tag>
+              </div>
           </div>
-          <div class="view-flex-item">
-            <el-tag
-              v-for="(tag, index) in tag.currentTags"
-              :key="index"
-              closable
-              size="small"
-              :disable-transitions="false"
-              @close="tagRemove(index)"
-            >
-              {{ tag.tag_name }}
-            </el-tag>
+          <div>
+              <el-tag class="tag-item" :key="index" v-for="(tag, index) in tag.tags" size="medium" color="#ffffff" :disable-transitions="false" @click.native="tagAdd(tag, index)">
+                  {{tag.tag_name}}
+              </el-tag>
           </div>
-        </div>
-        <div>
-          <el-tag
-            v-for="(tag, index) in tag.tags"
-            :key="index"
-            class="tag-item"
-            size="medium"
-            color="#ffffff"
-            :disable-transitions="false"
-            @click.native="tagAdd(tag, index)"
-          >
-            {{ tag.tag_name }}
-          </el-tag>
-        </div>
       </template>
       <template v-if="!brandHidden">
-        <div class="selected-tags view-flex">
-          <div class="label">
-            已选中品牌：
+          <div class="selected-tags view-flex">
+              <div class="label">已选中品牌：</div>
+              <div class="view-flex-item">
+                  <el-tag :key="index" v-for="(brand, index) in brand.currentBrands" closable size="small" :disable-transitions="false" @close="brandRemove(index)">
+                      {{brand.attribute_name}}
+                  </el-tag>
+              </div>
           </div>
-          <div class="view-flex-item">
-            <el-tag
-              v-for="(brand, index) in brand.currentBrands"
-              :key="index"
-              closable
-              size="small"
-              :disable-transitions="false"
-              @close="brandRemove(index)"
-            >
-              {{ brand.attribute_name }}
-            </el-tag>
+          <div>
+              <el-tag class="tag-item" :key="index" v-for="(brand, index) in brand.brands" size="medium" color="#ffffff" :disable-transitions="false" @click.native="brandAdd(brand, index)">
+                  {{brand.attribute_name}}
+              </el-tag>
           </div>
-        </div>
-        <div>
-          <el-tag
-            v-for="(brand, index) in brand.brands"
-            :key="index"
-            class="tag-item"
-            size="medium"
-            color="#ffffff"
-            :disable-transitions="false"
-            @click.native="brandAdd(brand, index)"
-          >
-            {{ brand.attribute_name }}
-          </el-tag>
-        </div>
       </template>
     </el-card>
     <div class="content-center">
-      <el-button
-        v-if="hasSaveButton"
-        type="primary"
-        @click="submitActivityAction()"
-      >
-        保存
-      </el-button>
-      <el-button @click.native="handleCancel">
-        返回
-      </el-button>
+      <el-button type="primary" v-if="hasSaveButton" @click="submitActivityAction()">保存</el-button>
+      <el-button @click.native="handleCancel">返回</el-button>
     </div>
   </el-form>
 </template>
 
 <script>
 import Treeselect from '@riophae/vue-treeselect'
-import {
-  addMarketingActivity,
-  updateMarketingActivity,
-  getMarketingActivityInfo,
-  seckillActivityGetItemsList
-} from '../../../../api/promotions'
+import { addMarketingActivity, updateMarketingActivity, getMarketingActivityInfo, seckillActivityGetItemsList } from '../../../../api/promotions'
 import { getGradeList } from '../../../../api/membercard'
 import { listVipGrade } from '../../../../api/cardticket'
 import { getDefaultCurrency } from '../../../../api/company'
 import SkuSelector from '@/components/function/skuSelector'
 import { getItemsList, getCategory, getTagList, getGoodsAttr } from '@/api/goods'
-import { handleUploadFile, exportUploadTemplate } from '../../../../api/common'
+import {handleUploadFile, exportUploadTemplate} from '../../../../api/common'
 import store from '@/store'
 export default {
   inject: ['refresh'],
-  components: {
+  components:{
     SkuSelector,
     Treeselect
   },
@@ -265,11 +143,13 @@ export default {
         status: 'waiting',
         item_category: [],
         tag_ids: [],
-        brand_ids: []
+        brand_ids: [],
       },
       vipGrade: [],
       memberGrade: [],
-      conditionValue: [{ full: '', discount: '' }],
+      conditionValue: [
+        {full:'', discount:''},
+      ],
       validGrade: [],
       activity_date: '',
       selectItemType: 'normal',
@@ -287,7 +167,7 @@ export default {
       tag: {
         list: [],
         form: {
-          tag_ids: []
+          tag_ids: [],
         },
         currentTags: [],
         tags: []
@@ -296,7 +176,7 @@ export default {
       brand: {
         list: [],
         form: {
-          brand_ids: []
+          brand_ids: [],
         },
         currentBrands: [],
         brands: []
@@ -315,70 +195,39 @@ export default {
         is_gift: 'all',
         type: 0,
         is_sku: 'true',
-        item_id: ''
-      }
+        item_id: '',
+      },
     }
   },
   watch: {
     'form.item_ids': {
-      handler: function (val) {
+      handler: function(val) {
         if (val) {
           //this.form.use_bound = val.length > 0 ? 1 : 0
         }
       }
     },
-    relStores (val) {
+    relStores(val) {
       if (val) {
         this.form.use_shop = val.length > 0 ? 1 : 0
       }
     }
   },
-  mounted () {
-    if (store.getters.login_type === 'distributor') {
-      this.is_distributor = true
-    }
-    if (this.$route.params.marketing_id) {
-      this.getActivityDetail(this.$route.params.marketing_id)
-    }
-
-    if (this.$route.query.isnodata) {
-      this.hasSaveButton = false
-    }
-
-    listVipGrade().then((response) => {
-      if (response != undefined && response.data.data && response.data.data.length > 0) {
-        this.vipGrade = response.data.data
-      }
-    })
-
-    getGradeList().then((response) => {
-      if (response != undefined && response.data.data && response.data.data.length > 0) {
-        var result = response.data.data
-        if (result) {
-          this.memberGrade = result
-        }
-      }
-    })
-
-    this.fetchMainCate()
-    this.getAllTagLists()
-    this.getBrandList('', true)
-  },
-  methods: {
-    getItems (data) {
+  methods:{
+    getItems(data) {
       let ids = []
-      data.forEach((item) => {
+      data.forEach(item => {
         ids.push(item.itemId)
       })
       this.form.item_ids = ids
     },
     addRules () {
-      this.conditionValue.push({ full: '', discount: '' })
+      this.conditionValue.push({full:'', discount:''})
     },
-    delRules (index) {
-      this.conditionValue.splice(index, 1)
+    delRules(index){
+      this.conditionValue.splice(index,1)
     },
-    relStoresClick () {
+    relStoresClick(){
       this.storeVisible = true
       this.setStatus = true
     },
@@ -391,9 +240,9 @@ export default {
     closeStoreDialogAction () {
       this.storeVisible = false
     },
-    deleteStoreRow (index) {
+    deleteStoreRow (index, ) {
       this.setStatus = false
-      this.relStores.splice(index, 1)
+      this.relStores.splice(index,1)
     },
     submitActivityAction () {
       const that = this
@@ -411,9 +260,9 @@ export default {
 
       this.form.shop_ids = []
       if (this.relStores && this.relStores.length > 0) {
-        this.relStores.forEach((item) => {
-          this.form.shop_ids.push(item.distributor_id)
-        })
+          this.relStores.forEach( item => {
+            this.form.shop_ids.push(item.distributor_id)
+          })
       }
 
       if (this.form.use_bound != 'all') {
@@ -421,12 +270,12 @@ export default {
           this.$message.error('参加活动的商品必填!')
           return false
         }
-      }
+      }      
       //this.use_bound = 1
 
       if (this.form.marketing_id) {
-        updateMarketingActivity(this.form).then((res) => {
-          if (res.data.data.marketing_id) {
+        updateMarketingActivity(this.form).then(res => {
+          if(res.data.data.marketing_id){
             this.loading = false
             this.$message({
               message: '更新成功',
@@ -443,8 +292,8 @@ export default {
           }
         })
       } else {
-        addMarketingActivity(this.form).then((res) => {
-          if (res.data.data.marketing_id) {
+        addMarketingActivity(this.form).then(res => {
+          if(res.data.data.marketing_id){
             this.loading = false
             this.$message({
               message: '添加成功',
@@ -462,8 +311,8 @@ export default {
         })
       }
     },
-    getActivityDetail (id) {
-      getMarketingActivityInfo({ marketing_id: id }).then((res) => {
+    getActivityDetail(id) {
+      getMarketingActivityInfo({marketing_id:id}).then(res => {
         let response = res.data.data
         let data = {
           marketing_type: 'member_preference',
@@ -502,11 +351,11 @@ export default {
         this.categoryHidden = true
         this.tagHidden = true
         this.brandHidden = true
-
+        
         if (response.use_bound == 0) {
           this.form.use_bound = 'all'
         }
-
+        
         if (response.use_bound == 1) {
           this.form.use_bound = 'goods'
           this.zdItemHidden = false
@@ -553,25 +402,25 @@ export default {
       this.form.item_category = []
       this.form.item_category = []
       this.tag.currentTags = []
-      if (val === 'goods') {
+      if (val === "goods") {
         this.zdItemHidden = false
-      } else if (val === 'category') {
+      } else if (val === "category") {
         this.form.rel_item_ids = []
         this.form.itemTreeLists = []
         this.categoryHidden = false
         this.form.item_category = []
-      } else if (val === 'tag') {
+      } else if (val === "tag") {
         this.tagHidden = false
         this.tag.currentTags = []
         this.showTags()
-      } else if (val === 'brand') {
+      } else if (val === "brand") {
         this.brandHidden = false
         this.brand.currentBrands = []
         this.showBrands()
       }
     },
     fetchMainCate: function () {
-      getCategory({ is_main_category: true }).then((response) => {
+      getCategory({is_main_category: true}).then(response => {
         this.categoryList = response.data.data
       })
     },
@@ -600,17 +449,17 @@ export default {
       this.form.tag_ids = []
       let tagItems = []
       let tagInvalidItems = []
-      this.tag.currentTags.forEach((item) => {
+      this.tag.currentTags.forEach(item => {
         this.form.tag_ids.push(item.tag_id)
         let items = []
 
-        this.ItemsList.forEach((i) => {
+        this.ItemsList.forEach(i => {
           if (i.tag_ids.indexOf(item.tag_id) != -1) items.push(i)
         })
         tagItems = items
 
         let invalidItems = []
-        this.invalidItemsList.forEach((i) => {
+        this.invalidItemsList.forEach(i => {
           if (i.tag_ids.indexOf(item.tag_id) != -1) invalidItems.push(i)
         })
         tagInvalidItems = invalidItems
@@ -627,13 +476,13 @@ export default {
         })
         return false
       }
-      let isInArr = this.tag.currentTags.findIndex((n) => n.tag_id == item.tag_id)
+      let isInArr = this.tag.currentTags.findIndex(n => n.tag_id == item.tag_id)
       if (isInArr == -1) {
         this.tag.currentTags.push(item)
         this.tag.tags.splice(index, 1)
       }
       this.form.tag_ids = []
-      this.tag.currentTags.forEach((item) => {
+      this.tag.currentTags.forEach(item => {
         this.form.tag_ids.push(item.tag_id)
       })
       this.params.tag_id = item.tag_id
@@ -644,7 +493,7 @@ export default {
         page: 1,
         pageSize: 500
       }
-      getTagList(params).then((response) => {
+      getTagList(params).then(response => {
         this.tag.list = response.data.data.list
       })
     },
@@ -657,9 +506,9 @@ export default {
         attribute_type: 'brand',
         attribute_name: searchVal,
         attribute_ids: isInit ? this.form.brand_id : ''
-      }).then((res) => {
+      }).then(res => {
         for (let item of res.data.data.list) {
-          list.push({ attribute_name: item.attribute_name, attribute_id: item.attribute_id })
+          list.push({attribute_name: item.attribute_name, attribute_id: item.attribute_id})
         }
         this.brand.list = list
       })
@@ -679,13 +528,13 @@ export default {
         })
         return false
       }
-      let isInArr = this.brand.currentBrands.findIndex((n) => n.attribute_id == item.attribute_id)
+      let isInArr = this.brand.currentBrands.findIndex(n => n.attribute_id == item.attribute_id)
       if (isInArr == -1) {
         this.brand.currentBrands.push(item)
         this.brand.brands.splice(index, 1)
       }
       this.form.brand_ids = []
-      this.brand.currentBrands.forEach((item) => {
+      this.brand.currentBrands.forEach(item => {
         this.form.brand_ids.push(item.attribute_id)
       })
       this.params.brand_id = item.attribute_id
@@ -693,11 +542,11 @@ export default {
     },
     brandRemove: function (index) {
       let items = []
-      this.ItemsList.forEach((item) => {
+      this.ItemsList.forEach(item => {
         if (this.brand.currentBrands[index].attribute_id != item.brand_id) items.push(item)
       })
       let invalidItems = []
-      this.invalidItemsList.forEach((i) => {
+      this.invalidItemsList.forEach(i => {
         if (this.brand.currentBrands[index].attribute_id != i.brand_id) invalidItems.push(i)
       })
 
@@ -708,7 +557,7 @@ export default {
       this.brand.brands.unshift(this.brand.currentBrands[index])
       this.brand.currentBrands.splice(index, 1)
       this.form.brand_ids = []
-      this.brand.currentBrands.forEach((item) => {
+      this.brand.currentBrands.forEach(item => {
         this.form.brand_ids.push(item.attribute_id)
       })
     },
@@ -723,16 +572,16 @@ export default {
       if (params.is_gift == 'all') {
         this.$delete(params, 'is_gift')
       }
-      seckillActivityGetItemsList(params).then((response) => {
+      seckillActivityGetItemsList(params).then(response => {
         let itemList = response.data.data.list.validItems.concat(this.ItemsList)
         let invalidItemList = response.data.data.list.invalidItems.concat(this.invalidItemsList)
         let newItemList = []
         let invalidItems = []
         let obj = {}
         let obj1 = {}
-        itemList.forEach((item) => {
+        itemList.forEach(item => {
           let tag_ids = []
-          item.tagList.forEach((tag) => {
+          item.tagList.forEach(tag => {
             tag_ids.push(tag.tag_id)
           })
           item.tag_ids = tag_ids
@@ -741,9 +590,9 @@ export default {
             obj[item.item_id] = true
           }
         })
-        invalidItemList.forEach((item) => {
+        invalidItemList.forEach(item => {
           let tag_ids = []
-          item.tagList.forEach((tag) => {
+          item.tagList.forEach(tag => {
             tag_ids.push(tag.tag_id)
           })
           item.tag_ids = tag_ids
@@ -763,13 +612,13 @@ export default {
       this.getGoodsList()
     },
     categoryDeselect: function (node, instanceId) {
-      let items
-      items = []
+      let items;
+      items = [];
       this.ItemsList.forEach((item, index) => {
         if (node.category_id != item.item_main_cat_id) items.push(item)
       })
       let invalidItems = []
-      this.invalidItemsList.forEach((i) => {
+      this.invalidItemsList.forEach(i => {
         if (node.category_id != i.item_main_cat_id) invalidItems.push(i)
       })
 
@@ -777,12 +626,12 @@ export default {
       this.ItemsList = items
       this.getItems(this.ItemsList)
     },
-    generateSku () {
-      let noSkuItem
-      noSkuItem = []
+    generateSku() {
+      let noSkuItem;
+      noSkuItem = [];
       let response = []
       let goodsList = JSON.parse(JSON.stringify(this.relItems))
-      goodsList.forEach((item) => {
+      goodsList.forEach(item => {
         if (!item.nospec && item.spec_items.length === 0) {
           noSkuItem.push(item.default_item_id)
         }
@@ -790,17 +639,17 @@ export default {
       if (noSkuItem.length > 0) {
         let param = this.params
         param.item_id = noSkuItem
-        getItemsList(this.params).then((res) => {
-          goodsList.forEach((item) => {
+        getItemsList(this.params).then(res => {
+          goodsList.forEach(item => {
             if (!item.nospec) {
-              res.data.data.list.forEach((sku) => {
+              res.data.data.list.forEach(sku => {
                 if (item.item_id === sku.default_item_id) {
                   item.spec_items.push(sku)
                 }
               })
             }
           })
-          goodsList.forEach((item) => {
+          goodsList.forEach(item => {
             if (!item.nospec) {
               response = [...response, ...item.spec_items]
             } else {
@@ -811,7 +660,7 @@ export default {
           this.getItems(response)
         })
       } else {
-        goodsList.forEach((item) => {
+        goodsList.forEach(item => {
           if (!item.nospec) {
             response = [...response, ...item.spec_items]
           } else {
@@ -825,10 +674,10 @@ export default {
     /**
      * 下载模板
      * */
-    uploadHandleTemplate () {
-      let params = { file_type: 'marketing_goods', file_name: '商品模板' }
-      exportUploadTemplate(params).then((response) => {
-        let { data } = response.data
+    uploadHandleTemplate() {
+      let params = {file_type: 'marketing_goods', file_name: '商品模板'}
+      exportUploadTemplate(params).then(response => {
+        let {data} = response.data
         if (data.file) {
           var a = document.createElement('a')
           a.href = data.file
@@ -847,18 +696,19 @@ export default {
     /**
      * 上传模板
      * */
-    uploadHandleChange (file, fileList) {
-      let params = { isUploadFile: true, file_type: 'marketing_goods', file: file.raw }
-      handleUploadFile(params).then((response) => {
+    uploadHandleChange(file, fileList) {
+
+      let params = {isUploadFile: true, file_type: 'marketing_goods', file: file.raw}
+      handleUploadFile(params).then(response => {
         this.$message({
           type: 'success',
           message: '上传成功'
         })
 
-        let { data } = response.data
+        let {data} = response.data
 
         if (data.fail.length > 0) {
-          let str = data.fail.map((item) => {
+          let str = data.fail.map(item => {
             return item.item_bn
           })
 
@@ -874,15 +724,46 @@ export default {
         if (data.succ.length <= 0) return
         this.relItems = data.succ
         let list = []
-        data.succ.forEach((item) => {
+        data.succ.forEach(item => {
           if (!item.nospec) {
-            list.push(Object.assign(item, { spec_items: [] }))
+            list.push(Object.assign(item, {spec_items: []}))
           } else {
             list.push(item)
           }
         })
       })
+    },
+  },
+  mounted () {
+    if (store.getters.login_type === 'distributor') {
+      this.is_distributor = true
     }
+    if (this.$route.params.marketing_id) {
+      this.getActivityDetail(this.$route.params.marketing_id)
+    }
+
+    if (this.$route.query.isnodata) {
+      this.hasSaveButton = false
+    }
+
+    listVipGrade().then(response => {
+      if(response != undefined && response.data.data && response.data.data.length >0) {
+        this.vipGrade = response.data.data
+      }
+    })
+
+    getGradeList().then(response => {
+      if(response != undefined && response.data.data && response.data.data.length >0) {
+        var result = response.data.data
+        if(result) {
+          this.memberGrade = result
+        }
+      }
+    })
+
+    this.fetchMainCate()
+    this.getAllTagLists()
+    this.getBrandList('', true)
   }
 }
 </script>

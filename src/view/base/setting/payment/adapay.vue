@@ -1,79 +1,48 @@
 <template>
-  <el-form
-    ref="form"
-    :model="form"
-    label-width="100px"
-    :rules="rules"
-  >
-    <el-form-item
-      label="API_KEY"
-      prop="api_key"
-    >
-      <el-input
-        v-model="form.api_key"
-        style="width: 500px"
-      />
+  <el-form ref="form" :model="form" label-width="100px" :rules="rules">
+    <el-form-item label="API_KEY" prop="api_key">
+      <el-input v-model="form.api_key" style="width: 500px"></el-input>
     </el-form-item>
-    <el-form-item
-      label="接口RSA公钥"
-      prop="agent_public_key"
-    >
+    <el-form-item label="接口RSA公钥" prop="agent_public_key">
       <el-input
-        v-model="form.agent_public_key"
         style="width: 880px"
         type="textarea"
         :rows="5"
         placeholder="请输入内容"
-      />
-      <br>
+        v-model="form.agent_public_key"
+      >
+      </el-input>
+      <br />
       <span class="frm-tips">请确保您上传的RSA公钥的正确性，以免影响交易</span>
     </el-form-item>
-    <el-form-item
-      label="商户RSA公钥"
-      prop="public_key"
-    >
+    <el-form-item label="商户RSA公钥" prop="public_key">
       <div class="flex">
         <el-input
-          v-model="form.public_key"
           style="width: 880px"
           type="textarea"
           :rows="5"
-        />
-        <br>
+          v-model="form.public_key"
+        ></el-input>
+        <br />
         <span class="frm-tips">请确保您上传的RSA公钥的正确性，以免影响交易</span>
       </div>
     </el-form-item>
     <el-form-item>
-      <el-button
-        type="primary"
-        @click="createKey"
-      >
-        生成RSA秘钥
-      </el-button>
-      <p class="tips">
-        您可以选择直接生成RSA密钥
-      </p>
+      <el-button type="primary" @click="createKey">生成RSA秘钥</el-button>
+      <p class="tips">您可以选择直接生成RSA密钥</p>
     </el-form-item>
-    <el-form-item
-      label="是否启用"
-      prop="is_open"
-    >
+    <el-form-item label="是否启用" prop="is_open">
       <el-switch
         v-model="form.is_open"
         active-color="#13ce66"
         inactive-color="#ff4949"
         :active-value="true"
         :inactive-value="false"
-      />
+      >
+      </el-switch>
     </el-form-item>
     <div class="section-footer with-border content-center">
-      <el-button
-        v-loading="loading"
-        type="primary"
-        @click="onSubmit('form')"
-      >
-        保存
-      </el-button>
+      <el-button type="primary" v-loading="loading" @click="onSubmit('form')">保存</el-button>
     </div>
   </el-form>
 </template>
@@ -81,7 +50,7 @@
 import { getPaymentSetting } from '@/api/trade'
 
 export default {
-  data () {
+  data() {
     return {
       activeName: 'alipay',
       loading: false,
@@ -101,11 +70,8 @@ export default {
       }
     }
   },
-  mounted () {
-    this.getConfig()
-  },
   methods: {
-    async createKey () {
+    async createKey() {
       const { private_key, public_key } = await this.$api.adapay.getAdapayPaySettingKey()
       if (private_key && public_key) {
         this.form.public_key = public_key
@@ -117,10 +83,10 @@ export default {
         })
       }
     },
-    async onSubmit (formName) {
-      this.$refs[formName].validate(async (valid) => {
+    async onSubmit(formName) {
+      this.$refs[formName].validate(async valid => {
         if (valid) {
-          const { status } = await this.$api.adapay.postAdapayPaySetting({
+          const {status} = await this.$api.adapay.postAdapayPaySetting({
             ...this.form,
             pay_type: 'adapay'
           })
@@ -136,7 +102,7 @@ export default {
         }
       })
     },
-    getConfig () {
+    getConfig() {
       let query = { pay_type: 'adapay' }
       getPaymentSetting(query).then((response) => {
         if (response.data.data.length == 0) {
@@ -146,6 +112,9 @@ export default {
         }
       })
     }
+  },
+  mounted() {
+    this.getConfig()
   }
 }
 </script>

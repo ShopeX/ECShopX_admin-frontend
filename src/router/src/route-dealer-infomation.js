@@ -2,6 +2,7 @@
 const name = '信息管理'
 import Layout from '@/view/layout' // 主框架
 
+
 export default {
   path: '/dealer/adapay_member',
   component: Layout,
@@ -14,7 +15,7 @@ export default {
     {
       path: 'info',
       name: `开户信息`,
-      component: () => import('@/view/mall/marketing/dealer_accountopen')
+      component: () => import( '@/view/mall/marketing/dealer_accountopen' )
     }
   ]
 }

@@ -1,46 +1,26 @@
 <template>
-  <el-tabs
-    v-model="activeName"
-    type="card"
-    @tab-click="handleClick"
-  >
+  <el-tabs v-model="activeName" type="card" @tab-click="handleClick">
     <el-tab-pane
       v-for="(item, index) in tabList"
       :key="index"
       :label="item.name"
       :name="item.activeName"
     >
-      <el-form
-        v-if="activeName == 'kdniao'"
-        ref="form"
-        label-width="100px"
-      >
+      <el-form ref="form" label-width="100px" v-if="activeName == 'kdniao'">
         <el-form-item label="EBusinessID">
-          <el-input
-            v-model="kdniao_form.config.EBusinessID"
-            style="width: 300px"
-          />
+          <el-input v-model="kdniao_form.config.EBusinessID" style="width: 300px"></el-input>
         </el-form-item>
         <el-form-item label="AppKey">
-          <el-input
-            v-model="kdniao_form.config.appkey"
-            style="width: 300px"
-          />
+          <el-input v-model="kdniao_form.config.appkey" style="width: 300px"></el-input>
         </el-form-item>
         <!--  <el-form-item label="扣量方式选择">
           <el-input v-model="kdniao_form.config.request_type" style="width:300px"></el-input>
         </el-form-item> -->
         <el-form-item label="扣量方式选择">
           <el-radio-group v-model="kdniao_form.config.request_type">
-            <el-radio label="1002">
-              免费版
-            </el-radio>
-            <el-radio label="8001">
-              增值版（按单）
-            </el-radio>
-            <el-radio label="8002">
-              增值版（按次）
-            </el-radio>
+            <el-radio label="1002">免费版</el-radio>
+            <el-radio label="8001">增值版（按单）</el-radio>
+            <el-radio label="8002">增值版（按次）</el-radio>
           </el-radio-group>
         </el-form-item>
         <el-form-item label="是否启用">
@@ -48,7 +28,7 @@
             v-model="kdniao_form.config.is_open"
             active-color="#13ce66"
             inactive-color="#ff4949"
-          />
+          ></el-switch>
         </el-form-item>
         <el-form-item label="功能说明">
           <el-link
@@ -56,43 +36,26 @@
             href="http://www.kdniao.com/product-track1"
             :underline="false"
             target="_blank"
+            >快递鸟快递物流跟踪</el-link
           >
-            快递鸟快递物流跟踪
-          </el-link>
         </el-form-item>
         <div class="section-footer with-border content-center">
-          <el-button
-            v-loading="loading"
-            type="primary"
-            @click="onSubmit"
-          >
-            保存
-          </el-button>
+          <el-button type="primary" v-loading="loading" @click="onSubmit">保存</el-button>
         </div>
       </el-form>
-      <el-form
-        v-if="activeName == 'kuaidi100'"
-        ref="form"
-        label-width="100px"
-      >
+      <el-form ref="form" label-width="100px" v-if="activeName == 'kuaidi100'">
         <el-form-item label="Key">
-          <el-input
-            v-model="form.config.app_key"
-            style="width: 300px"
-          />
+          <el-input v-model="form.config.app_key" style="width: 300px"></el-input>
         </el-form-item>
         <el-form-item label="Customer">
-          <el-input
-            v-model="form.config.app_secret"
-            style="width: 300px"
-          />
+          <el-input v-model="form.config.app_secret" style="width: 300px"></el-input>
         </el-form-item>
         <el-form-item label="是否启用">
           <el-switch
             v-model="form.config.is_open"
             active-color="#13ce66"
             inactive-color="#ff4949"
-          />
+          ></el-switch>
         </el-form-item>
         <el-form-item label="功能说明">
           <el-link
@@ -100,58 +63,32 @@
             href="https://api.kuaidi100.com/product/query/"
             :underline="false"
             target="_blank"
+            >快递100实时快递查询</el-link
           >
-            快递100实时快递查询
-          </el-link>
         </el-form-item>
         <div class="section-footer with-border content-center">
-          <el-button
-            v-loading="loading"
-            type="primary"
-            @click="onSubmit"
-          >
-            保存
-          </el-button>
+          <el-button type="primary" v-loading="loading" @click="onSubmit">保存</el-button>
         </div>
       </el-form>
-      <el-form
-        v-if="activeName == 'sfbsp'"
-        ref="form"
-        label-width="100px"
-      >
+      <el-form ref="form" label-width="100px" v-if="activeName == 'sfbsp'">
         <el-form-item label="接入地址">
-          <el-input
-            v-model="sfbsp_form.config.url"
-            style="width: 300px"
-          />
+          <el-input v-model="sfbsp_form.config.url" style="width: 300px"></el-input>
         </el-form-item>
         <el-form-item label="接入编码">
-          <el-input
-            v-model="sfbsp_form.config.accesscode"
-            style="width: 300px"
-          />
+          <el-input v-model="sfbsp_form.config.accesscode" style="width: 300px"></el-input>
         </el-form-item>
         <el-form-item label="Checkword">
-          <el-input
-            v-model="sfbsp_form.config.checkword"
-            style="width: 300px"
-          />
+          <el-input v-model="sfbsp_form.config.checkword" style="width: 300px"></el-input>
         </el-form-item>
         <el-form-item label="是否启用">
           <el-switch
             v-model="sfbsp_form.config.is_open"
             active-color="#13ce66"
             inactive-color="#ff4949"
-          />
+          ></el-switch>
         </el-form-item>
         <div class="section-footer with-border content-center">
-          <el-button
-            v-loading="loading"
-            type="primary"
-            @click="onSubmit"
-          >
-            保存
-          </el-button>
+          <el-button type="primary" v-loading="loading" @click="onSubmit">保存</el-button>
         </div>
       </el-form>
     </el-tab-pane>
@@ -165,7 +102,7 @@ import {
   seSfbspSetting
 } from '../../../api/trade'
 export default {
-  data () {
+  data() {
     return {
       activeName: 'kdniao',
       loading: false,
@@ -201,14 +138,11 @@ export default {
       ]
     }
   },
-  mounted () {
-    this.getConfig()
-  },
   methods: {
-    handleClick () {
+    handleClick() {
       this.getConfig()
     },
-    getConfig () {
+    getConfig() {
       let query = {}
       if (this.activeName === 'kdniao') {
         query = { kuaidi_type: 'kdniao' }
@@ -238,7 +172,7 @@ export default {
         })
       }
     },
-    onSubmit () {
+    onSubmit() {
       this.loading = true
       let query = {}
       if (this.activeName === 'sfbsp') {
@@ -273,6 +207,9 @@ export default {
           })
       }
     }
+  },
+  mounted() {
+    this.getConfig()
   }
 }
 </script>

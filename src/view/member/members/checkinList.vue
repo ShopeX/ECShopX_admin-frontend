@@ -1,63 +1,35 @@
 <template>
   <div>
     <el-row :gutter="10">
-      <el-col
-        :md="8"
-        :lg="7"
-      >
-        <el-input
-          v-model="mobile"
-          placeholder="手机号"
-          clearable
-        >
-          <el-button
-            slot="append"
-            icon="el-icon-search"
-            @click="numberSearch"
-          />
-        </el-input>
+      <el-col :md="8" :lg="7">
+        <el-input placeholder="手机号" v-model="mobile" clearable
+          ><el-button slot="append" icon="el-icon-search" @click="numberSearch"></el-button
+        ></el-input>
       </el-col>
-      <el-col
-        :md="8"
-        :lg="7"
-      >
+      <el-col :md="8" :lg="7">
         <el-date-picker
           v-model="datetime"
           type="daterange"
           value-format="yyyy/MM/dd"
           placeholder="选择日期范围"
-          style="width: 100%"
+          style="width: 100%;"
           @change="dateChange"
-        />
+        ></el-date-picker>
       </el-col>
     </el-row>
-    <el-table
-      v-loading="loading"
-      :data="checkInList"
-      :height="wheight - 80"
-    >
-      <el-table-column
-        prop="user_name"
-        label="会员"
-        width="170"
-      />
-      <el-table-column
-        prop="create_time"
-        label="签到时间"
-        width="100"
-      />
+    <el-table :data="checkInList" :height="wheight - 80" v-loading="loading">
+      <el-table-column prop="user_name" label="会员" width="170"></el-table-column>
+      <el-table-column prop="create_time" label="签到时间" width="100"></el-table-column>
     </el-table>
-    <div
-      v-if="total_count > params.pageSize"
-      class="content-center content-top-padded"
-    >
+    <div v-if="total_count > params.pageSize" class="content-center content-top-padded">
       <el-pagination
         layout="prev, pager, next"
+        @current-change="handleCurrentChange"
         :current-page.sync="params.page"
         :total="total_count"
         :page-size="params.page_size"
-        @current-change="handleCurrentChange"
-      />
+      >
+      </el-pagination>
     </div>
   </div>
 </template>
@@ -66,7 +38,7 @@ import { mapGetters } from 'vuex'
 import { Message } from 'element-ui'
 import { listCheckInList } from '../../../api/promotions'
 export default {
-  data () {
+  data() {
     return {
       checkInList: [],
       loading: false,
@@ -85,20 +57,17 @@ export default {
   computed: {
     ...mapGetters(['wheight'])
   },
-  mounted () {
-    this.getDataList()
-  },
   methods: {
-    handleCurrentChange (page_num) {
+    handleCurrentChange(page_num) {
       this.params.page = page_num
       this.getDataList()
     },
-    numberSearch () {
+    numberSearch() {
       this.params.mobile = this.mobile
       this.params.page = 1
       this.getDataList()
     },
-    dateChange (val) {
+    dateChange(val) {
       if (val && val.length > 0) {
         this.params.start_date = val[0]
         this.params.end_date = val[1]
@@ -109,10 +78,10 @@ export default {
       this.params.page = 1
       this.getDataList(this.params)
     },
-    dateStrToTimeStamp (str) {
+    dateStrToTimeStamp(str) {
       return Date.parse(new Date(str)) / 1000
     },
-    getDataList () {
+    getDataList() {
       this.loading = true
       listCheckInList(this.params).then((response) => {
         this.checkInList = response.data.data.list
@@ -120,6 +89,9 @@ export default {
         this.loading = false
       })
     }
+  },
+  mounted() {
+    this.getDataList()
   }
 }
 </script>

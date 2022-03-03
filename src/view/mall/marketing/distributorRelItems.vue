@@ -2,55 +2,34 @@
   <div>
     <div v-if="$route.path.indexOf('detail') === -1">
       <div class="content-bottom-padded">
-        <el-alert
-          type="info"
-          title="上架总部商品说明"
-          show-icon
-        >
-          <div>通过选择店铺和选择商品，则会将选择的总部商品上架到店铺</div>
+        <el-alert type="info" title="上架总部商品说明" show-icon>
+          <div>
+            通过选择店铺和选择商品，则会将选择的总部商品上架到店铺
+          </div>
         </el-alert>
       </div>
       <el-card class="box-card">
-        <div
-          slot="header"
-          class="clearfix"
-        >
+        <div slot="header" class="clearfix">
           <span>选择店铺</span>
         </div>
-        <el-row
-          class="content-bottom-padded"
-          :gutter="20"
-        >
+        <el-row class="content-bottom-padded" :gutter="20">
           <el-col :span="6">
-            <el-input
-              v-model="distributors.params.name"
-              placeholder="店铺姓名"
-            />
+            <el-input placeholder="店铺姓名" v-model="distributors.params.name"></el-input>
           </el-col>
           <el-col :span="6">
-            <el-input
-              v-model="distributors.params.mobile"
-              placeholder="店铺手机号"
-            >
-              <el-button
-                slot="append"
-                icon="el-icon-search"
-                @click="numberSearch"
-              />
-            </el-input>
+            <el-input placeholder="店铺手机号" v-model="distributors.params.mobile"
+              ><el-button slot="append" icon="el-icon-search" @click="numberSearch"></el-button
+            ></el-input>
           </el-col>
         </el-row>
         <el-table
-          ref="multipleDistributorsTable"
-          v-loading="distributors.loading"
           :data="distributors.list"
-          border
           @selection-change="handleDistributorsSelectionChange"
+          border
+          v-loading="distributors.loading"
+          ref="multipleDistributorsTable"
         >
-          <el-table-column
-            type="selection"
-            width="55"
-          />
+          <el-table-column type="selection" width="55"></el-table-column>
           <el-table-column label="商品操作">
             <template slot-scope="scope">
               <router-link
@@ -62,29 +41,16 @@
                     parentPath: '/mall/marketing/distributor/rel_items'
                   }
                 }"
+                >商品管理</router-link
               >
-                商品管理
-              </router-link>
-              <el-button
-                type="text"
-                @click="handleRelItem('_all', scope.row.distributor_id)"
+              <el-button type="text" @click="handleRelItem('_all', scope.row.distributor_id)"
+                >上架全部商品</el-button
               >
-                上架全部商品
-              </el-button>
             </template>
           </el-table-column>
-          <el-table-column
-            prop="name"
-            label="店铺名称"
-          />
-          <el-table-column
-            prop="contact"
-            label="联系人"
-          />
-          <el-table-column
-            prop="mobile"
-            label="联系方式"
-          />
+          <el-table-column prop="name" label="店铺名称"></el-table-column>
+          <el-table-column prop="contact" label="联系人"></el-table-column>
+          <el-table-column prop="mobile" label="联系方式"></el-table-column>
         </el-table>
         <div
           v-if="distributors.total_count > distributors.params.pageSize"
@@ -93,78 +59,50 @@
           <el-pagination
             background
             layout="prev, pager, next"
+            @current-change="handleDistributorsCurrentChange"
             :current-page.sync="distributors.params.page"
             :total="distributors.total_count"
             :page-size="distributors.params.pageSize"
-            @current-change="handleDistributorsCurrentChange"
-          />
+          >
+          </el-pagination>
         </div>
       </el-card>
-      <el-card
-        class="box-card"
-        style="margin-top: 20px"
-      >
-        <div
-          slot="header"
-          class="clearfix"
-        >
+      <el-card class="box-card" style="margin-top: 20px;">
+        <div slot="header" class="clearfix">
           <span>选择商品</span>
         </div>
-        <el-row
-          class="content-bottom-padded"
-          :gutter="20"
-        >
+        <el-row class="content-bottom-padded" :gutter="20">
           <el-col :span="6">
-            <el-input
-              v-model="items.params.keywords"
-              placeholder="商品名称"
-            >
-              <el-button
-                slot="append"
-                icon="el-icon-search"
-                @click="goodsNumberSearch"
-              />
-            </el-input>
+            <el-input placeholder="商品名称" v-model="items.params.keywords"
+              ><el-button slot="append" icon="el-icon-search" @click="goodsNumberSearch"></el-button
+            ></el-input>
           </el-col>
         </el-row>
         <el-table
-          ref="multipleItemsTable"
-          v-loading="items.loading"
           :data="items.list"
+          @selection-change="handleItemsSelectionChange"
           height="400"
           style="width: 100%"
           border
-          @selection-change="handleItemsSelectionChange"
+          v-loading="items.loading"
+          ref="multipleItemsTable"
         >
-          <el-table-column
-            type="selection"
-            width="55"
-          />
-          <el-table-column
-            prop="itemName"
-            label="商品名称"
-          />
+          <el-table-column type="selection" width="55"></el-table-column>
+          <el-table-column prop="itemName" label="商品名称"></el-table-column>
           <el-table-column
             prop="price"
             label="价格"
             :formatter="priceformatter"
             width="120"
-          />
-          <el-table-column
-            prop="store"
-            label="库存"
-            width="100"
-          />
+          ></el-table-column>
+          <el-table-column prop="store" label="库存" width="100"></el-table-column>
           <el-table-column
             prop="rebate"
             label="店铺佣金"
             :formatter="rebateformatter"
             width="100"
-          />
-          <el-table-column
-            label="状态"
-            width="120"
-          >
+          ></el-table-column>
+          <el-table-column label="状态" width="120">
             <template slot-scope="scope">
               <span v-if="scope.row.approve_status == 'onsale'">前台可销售</span>
               <span v-else-if="scope.row.approve_status == 'offline_sale'">可线下销售</span>
@@ -179,26 +117,19 @@
           <el-pagination
             background
             layout="prev, pager, next"
+            @current-change="handleItemsCurrentChange"
             :current-page.sync="items.params.page"
             :total="items.total_count"
             :page-size="items.params.pageSize"
-            @current-change="handleItemsCurrentChange"
-          />
+          >
+          </el-pagination>
         </div>
       </el-card>
-      <div
-        class="content-bottom-padded"
-        style="margin-top: 20px"
-      >
-        <el-button
-          type="primary"
-          @click="handleRelItem()"
-        >
-          上架总部商品
-        </el-button>
+      <div class="content-bottom-padded" style="margin-top:20px;">
+        <el-button type="primary" @click="handleRelItem()">上架总部商品</el-button>
       </div>
     </div>
-    <router-view />
+    <router-view></router-view>
   </div>
 </template>
 <script>
@@ -218,7 +149,7 @@ import {
 } from '../../../api/marketing'
 
 export default {
-  data () {
+  data() {
     return {
       distributor_ids: [],
       item_ids: [],
@@ -252,20 +183,15 @@ export default {
       cursymbol: '￥'
     }
   },
-  mounted () {
-    this.getItemsList()
-    this.getDistributorsList()
-    this.getCurrencyInfo()
-  },
   methods: {
-    numberSearch () {
+    numberSearch() {
       if (1 == this.distributors.params.page) {
         this.getDistributorsList()
       } else {
         this.distributors.params.page = 1
       }
     },
-    goodsNumberSearch () {
+    goodsNumberSearch() {
       if (1 == this.items.params.page) {
         this.getItemsList()
       } else {
@@ -275,16 +201,16 @@ export default {
     // 工具部分代码
 
     // 商品部分代码
-    handleItemsSelectionChange: function (val) {
+    handleItemsSelectionChange: function(val) {
       // 商品选择
       this.items.itemsChecked = val
     },
-    handleItemsCurrentChange: function (page_num) {
+    handleItemsCurrentChange: function(page_num) {
       // 商品分页
       this.items.params.page = page_num
       this.getItemsList()
     },
-    getItemsList: function () {
+    getItemsList: function() {
       // 店铺列表
       this.items.loading = true
       getItemsList(this.items.params).then((response) => {
@@ -293,23 +219,23 @@ export default {
         this.items.loading = false
       })
     },
-    priceformatter: function (row, column) {
+    priceformatter: function(row, column) {
       return this.cursymbol + row.price / 100
     },
-    rebateformatter: function (row, column) {
+    rebateformatter: function(row, column) {
       return this.cursymbol + row.rebate / 100
     },
     // 店铺部分代码
-    handleDistributorsSelectionChange: function (val) {
+    handleDistributorsSelectionChange: function(val) {
       // 店铺选择
       this.distributors.distributorsChecked = val
     },
-    handleDistributorsCurrentChange: function (page_num) {
+    handleDistributorsCurrentChange: function(page_num) {
       // 店铺分页
       this.distributors.params.page = page_num
       this.getDistributorsList()
     },
-    getDistributorsList: function () {
+    getDistributorsList: function() {
       // 店铺列表
       this.distributors.loading = true
       getDistributorList(this.distributors.params).then((response) => {
@@ -319,7 +245,7 @@ export default {
       })
     },
     // 公共部分代码
-    handleRelItem: function (isAll = false, distributor_ids) {
+    handleRelItem: function(isAll = false, distributor_ids) {
       if (isAll) {
         this.$confirm('当前店铺将上架所有总部商品, 是否继续?', '提示', {
           confirmButtonText: '确定',
@@ -394,12 +320,17 @@ export default {
         }
       )
     },
-    getCurrencyInfo () {
+    getCurrencyInfo() {
       getDefaultCurrency().then((res) => {
         this.currency = res.data.data
         this.cursymbol = this.currency.symbol
       })
     }
+  },
+  mounted() {
+    this.getItemsList()
+    this.getDistributorsList()
+    this.getCurrencyInfo()
   }
 }
 </script>

@@ -1,13 +1,13 @@
 import fetch from '../utils/fetch'
 
-export function getSetting () {
+export function getSetting() {
   return fetch({
     url: '/reservation/setting',
     method: 'get'
   })
 }
 
-export function saveSetting (query) {
+export function saveSetting(query) {
   return fetch({
     url: '/reservation/setting',
     method: 'post',
@@ -15,7 +15,7 @@ export function saveSetting (query) {
   })
 }
 
-export function createResourceLevel (query) {
+export function createResourceLevel(query) {
   return fetch({
     url: '/resource/level',
     method: 'post',
@@ -23,7 +23,7 @@ export function createResourceLevel (query) {
   })
 }
 
-export function updateResourceLevel (query) {
+export function updateResourceLevel(query) {
   return fetch({
     url: '/resource/level',
     method: 'patch',
@@ -31,7 +31,7 @@ export function updateResourceLevel (query) {
   })
 }
 
-export function deleteResourceLevel (query) {
+export function deleteResourceLevel(query) {
   return fetch({
     url: '/resource/level/',
     method: 'delete',
@@ -39,13 +39,13 @@ export function deleteResourceLevel (query) {
   })
 }
 
-export function getResourceLevel (levelId) {
+export function getResourceLevel(levelId) {
   return fetch({
     url: '/resource/level/' + levelId,
     method: 'get'
   })
 }
-export function getListResourceLevel (query) {
+export function getListResourceLevel(query) {
   return fetch({
     url: '/resource/levellist',
     method: 'get',
@@ -53,7 +53,7 @@ export function getListResourceLevel (query) {
   })
 }
 
-export function createShiftType (query) {
+export function createShiftType(query) {
   return fetch({
     url: '/shifttype',
     method: 'post',
@@ -61,7 +61,7 @@ export function createShiftType (query) {
   })
 }
 
-export function updateShiftType (query) {
+export function updateShiftType(query) {
   return fetch({
     url: '/shifttype',
     method: 'patch',
@@ -69,14 +69,14 @@ export function updateShiftType (query) {
   })
 }
 
-export function deleteShiftType (typeId) {
+export function deleteShiftType(typeId) {
   return fetch({
     url: '/shifttype/' + typeId,
     method: 'delete'
   })
 }
 
-export function getListShiftType (query) {
+export function getListShiftType(query) {
   return fetch({
     url: '/shifttype',
     method: 'get',
@@ -84,7 +84,7 @@ export function getListShiftType (query) {
   })
 }
 
-export function createWorkShift (query) {
+export function createWorkShift(query) {
   return fetch({
     url: '/workshift',
     method: 'post',
@@ -92,7 +92,7 @@ export function createWorkShift (query) {
   })
 }
 
-export function updateWorkShift (query) {
+export function updateWorkShift(query) {
   return fetch({
     url: '/workshift',
     method: 'patch',
@@ -100,7 +100,7 @@ export function updateWorkShift (query) {
   })
 }
 
-export function deleteWorkShift (query) {
+export function deleteWorkShift(query) {
   return fetch({
     url: '/workshift',
     method: 'delete',
@@ -108,7 +108,7 @@ export function deleteWorkShift (query) {
   })
 }
 
-export function getListWorkShift (query) {
+export function getListWorkShift(query) {
   return fetch({
     url: '/workshift',
     method: 'get',
@@ -116,7 +116,7 @@ export function getListWorkShift (query) {
   })
 }
 
-export function getweekday (query) {
+export function getweekday(query) {
   return fetch({
     url: '/getweekday',
     method: 'get',
@@ -124,7 +124,7 @@ export function getweekday (query) {
   })
 }
 
-export function getReservationRecord (query) {
+export function getReservationRecord(query) {
   return fetch({
     url: '/reservation',
     method: 'get',
@@ -132,7 +132,7 @@ export function getReservationRecord (query) {
   })
 }
 
-export function addReservationRecord (query) {
+export function addReservationRecord(query) {
   return fetch({
     url: '/reservation',
     method: 'post',
@@ -140,7 +140,7 @@ export function addReservationRecord (query) {
   })
 }
 
-export function getTimePeriodTitle (query) {
+export function getTimePeriodTitle(query) {
   return fetch({
     url: '/reservation/period',
     method: 'get',
@@ -148,7 +148,7 @@ export function getTimePeriodTitle (query) {
   })
 }
 
-export function getDefaultShift (query) {
+export function getDefaultShift(query) {
   return fetch({
     url: '/workshift/default',
     method: 'get',
@@ -156,14 +156,14 @@ export function getDefaultShift (query) {
   })
 }
 
-export function createDefautlShift (query) {
+export function createDefautlShift(query) {
   return fetch({
     url: '/workshift/default',
     method: 'post',
     params: query
   })
 }
-export function updateResourceLevelStatus (query) {
+export function updateResourceLevelStatus(query) {
   return fetch({
     url: '/resource/setlevelstatus',
     method: 'put',

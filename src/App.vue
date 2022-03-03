@@ -1,23 +1,24 @@
 <template>
   <div id="app">
-    <router-view />
+    <router-view></router-view>
   </div>
 </template>
 
 <script>
-import { mapGetters } from 'vuex'
+import { mapGetters } from "vuex";
 
 export default {
-  data () {
+  data() {
     return {
-      throttleTimer: null
-    }
+      throttleTimer: null,
+    };
   },
   computed: {
-    ...mapGetters(['isInFrame'])
+    ...mapGetters(["isInFrame"]),
   },
   methods: {}
-}
+};
 </script>
 
-<style lang="scss"></style>
+<style lang="scss">
+</style>

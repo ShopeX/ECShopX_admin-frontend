@@ -1,12 +1,6 @@
 <template>
   <section class="section section-white">
-    <el-form
-      ref="form"
-      :model="form"
-      label-width="100px"
-      label-position="left"
-      size="mini"
-    >
+    <el-form ref="form" :model="form" label-width="100px" label-position="left" size="mini">
       <div class="section-header with-border">
         批次管理
       </div>
@@ -20,80 +14,54 @@
         </el-form-item>
         <el-form-item label="批次编号">
           <el-row :gutter="20">
-            <el-col
-              v-if="form.batch_id"
-              :span="6"
-            >
+            <el-col :span="6" v-if="form.batch_id">
               {{ form.batch_number }}
             </el-col>
-            <el-col
-              v-else
-              :span="6"
-            >
+            <el-col :span="6" v-else>
               <el-input
-                v-model="form.batch_number"
                 type="text"
                 placeholder="请输入批次编号，限20位"
-              />
+                v-model="form.batch_number"
+              ></el-input>
             </el-col>
           </el-row>
         </el-form-item>
         <el-form-item label="批次名称">
           <el-row :gutter="20">
-            <el-col
-              v-if="form.batch_id"
-              :span="6"
-            >
+            <el-col :span="6" v-if="form.batch_id">
               {{ form.batch_name }}
             </el-col>
-            <el-col
-              v-else
-              :span="6"
-            >
+            <el-col :span="6" v-else>
               <el-input
-                v-model="form.batch_name"
                 type="text"
                 placeholder="仅用于后台展示，便于维护"
-              />
+                v-model="form.batch_name"
+              ></el-input>
             </el-col>
           </el-row>
         </el-form-item>
         <el-form-item label="批次件数">
           <el-row :gutter="20">
-            <el-col
-              v-if="form.batch_id"
-              :span="6"
-            >
+            <el-col :span="6" v-if="form.batch_id">
               {{ form.batch_quantity }}
             </el-col>
-            <el-col
-              v-else
-              :span="6"
-            >
+            <el-col :span="6" v-else>
               <el-input
-                v-model="form.batch_quantity"
                 type="number"
                 placeholder="请输入该批次件数"
-              />
+                v-model="form.batch_quantity"
+              ></el-input>
             </el-col>
           </el-row>
         </el-form-item>
         <el-form-item label="流通信息">
           <el-row :gutter="20">
-            <el-switch v-model="form.show_trace" />
+            <el-switch v-model="form.show_trace"></el-switch>
           </el-row>
           <el-row :gutter="20">
             <template>
-              <el-table
-                :data="traceData"
-                border
-                style="width: 100%"
-              >
-                <el-table-column
-                  prop="date"
-                  label="日期"
-                  width="250"
-                >
+              <el-table :data="traceData" border style="width: 100%">
+                <el-table-column prop="date" label="日期" width="250">
                   <template slot-scope="scope">
                     <span>
                       <el-date-picker
@@ -102,65 +70,36 @@
                         format="yyyy-MM-dd"
                         type="date"
                         placeholder="选择日期"
-                      />
+                      ></el-date-picker>
                     </span>
                   </template>
                 </el-table-column>
-                <el-table-column
-                  prop="info"
-                  label="信息"
-                  width="300"
-                >
+                <el-table-column prop="info" label="信息" width="300">
                   <template slot-scope="scope">
                     <span>
-                      <el-input
-                        v-model="scope.row.info"
-                        placeholder="请输入信息"
-                      />
+                      <el-input v-model="scope.row.info" placeholder="请输入信息"></el-input>
                     </span>
                   </template>
                 </el-table-column>
-                <el-table-column
-                  fixed="right"
-                  label="操作"
-                  width="300"
-                >
+                <el-table-column fixed="right" label="操作" width="300">
                   <template slot-scope="scope">
                     <el-button
+                      @click.native.prevent="deleteRow(scope.$index, traceData)"
                       type="danger"
                       size="mini"
-                      @click.native.prevent="deleteRow(scope.$index, traceData)"
+                      >移除</el-button
                     >
-                      移除
-                    </el-button>
                   </template>
                 </el-table-column>
               </el-table>
-              <el-button
-                size="mini"
-                type="success"
-                circle
-                @click="addTraceInfo"
-              >
-                添加
-              </el-button>
+              <el-button size="mini" type="success" circle @click="addTraceInfo">添加</el-button>
             </template>
           </el-row>
         </el-form-item>
       </div>
       <div class="section-footer with-border content-center">
-        <el-button
-          type="default"
-          @click.native="handleCancel"
-        >
-          返回
-        </el-button>
-        <el-button
-          type="primary"
-          @click="submitThingsAction"
-        >
-          生成并下载二维码
-        </el-button>
+        <el-button type="default" @click.native="handleCancel">返回</el-button>
+        <el-button type="primary" @click="submitThingsAction">生成并下载二维码</el-button>
       </div>
     </el-form>
     <el-dialog
@@ -172,20 +111,18 @@
     >
       <template>
         <div
-          v-for="(item, index) in dataSpan"
           class="code-span"
+          v-for="(item, index) in dataSpan"
           :class="{ 'cur': index === codespanIndex }"
           @click="codeSpanChoose(index)"
         >
           <span>{{ item.start }} ~ {{ item.end }}</span>
-          <span
-            v-if="index === codespanIndex && !isdownloadOk"
-            class="bg-waiting"
-          ><i class="el-icon-loading" /></span>
-          <span
-            v-if="index === codespanIndex && isdownloadOk"
-            class="download-ok"
-          ><i class="el-icon-circle-check" /></span>
+          <span class="bg-waiting" v-if="index === codespanIndex && !isdownloadOk"
+            ><i class="el-icon-loading"></i
+          ></span>
+          <span class="download-ok" v-if="index === codespanIndex && isdownloadOk"
+            ><i class="el-icon-circle-check"></i
+          ></span>
         </div>
       </template>
     </el-dialog>
@@ -217,7 +154,7 @@ const getWxaCodeImg = (url) => {
   })
 }
 export default {
-  data () {
+  data() {
     return {
       things: {},
       form: {
@@ -252,33 +189,8 @@ export default {
       }
     }
   },
-  mounted () {
-    if (this.$route.query.thing_id) {
-      this.form.thing_id = this.$route.query.thing_id
-      // 获取物品信息
-      getThingsDetail(this.$route.query.thing_id)
-        .then((response) => {
-          this.things = response.data.data
-        })
-        .catch((error) => {
-          this.$router.push({ path: '/brand/onecode' })
-        })
-    }
-    if (this.$route.query.batch_id) {
-      this.form.batch_id = this.$route.query.batch_id
-      // 获取物品信息
-      getBatchsDetail(this.$route.query.batch_id)
-        .then((response) => {
-          this.form = response.data.data
-          this.traceData = response.data.data.trace_info
-        })
-        .catch((error) => {
-          this.$router.push({ path: '/brand/onecode' })
-        })
-    }
-  },
   methods: {
-    submitThingsAction: function () {
+    submitThingsAction: function() {
       // 提交商品
       // return
       this.form.trace_info = []
@@ -319,23 +231,23 @@ export default {
           })
       }
     },
-    handleCancel: function () {
+    handleCancel: function() {
       this.$router.push({ path: '/brand/onecode' })
     },
-    addTraceInfo: function () {
+    addTraceInfo: function() {
       this.traceData.push({
         date: Date.now(),
         info: ''
       })
     },
-    deleteRow: function (index, rows) {
+    deleteRow: function(index, rows) {
       rows.splice(index, 1)
     },
-    handleCancelDownloadDialog: function () {
+    handleCancelDownloadDialog: function() {
       this.codeDialogVisible = false
       this.downParams = {}
     },
-    handleCodeDownload: function (row) {
+    handleCodeDownload: function(row) {
       this.codeDialogVisible = true
       this.codespanIndex = -1
       this.isdownloadOk = false
@@ -369,7 +281,7 @@ export default {
         this.dataSpan.push({ 'start': totalSpan * this.codeInterval + 1, 'end': batch_number })
       }
     },
-    codeSpanChoose: function (index) {
+    codeSpanChoose: function(index) {
       this.isdownloadOk = false
       this.codespanIndex = index
       var arry = this.dataSpan[index]
@@ -378,7 +290,7 @@ export default {
 
       this.handleBatchDownload()
     },
-    handleBatchDownload: function () {
+    handleBatchDownload: function() {
       const zip = new JSZip()
       const cache = {}
       const promises = []
@@ -408,6 +320,31 @@ export default {
           that.downParams.end = ''
         })
       })
+    }
+  },
+  mounted() {
+    if (this.$route.query.thing_id) {
+      this.form.thing_id = this.$route.query.thing_id
+      // 获取物品信息
+      getThingsDetail(this.$route.query.thing_id)
+        .then((response) => {
+          this.things = response.data.data
+        })
+        .catch((error) => {
+          this.$router.push({ path: '/brand/onecode' })
+        })
+    }
+    if (this.$route.query.batch_id) {
+      this.form.batch_id = this.$route.query.batch_id
+      // 获取物品信息
+      getBatchsDetail(this.$route.query.batch_id)
+        .then((response) => {
+          this.form = response.data.data
+          this.traceData = response.data.data.trace_info
+        })
+        .catch((error) => {
+          this.$router.push({ path: '/brand/onecode' })
+        })
     }
   }
 }

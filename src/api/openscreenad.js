@@ -1,7 +1,7 @@
 import fetch from '../utils/fetch'
 
 // 获取开屏广告设置
-export function getOpenScreenADSet (query) {
+export function getOpenScreenADSet(query) {
   return fetch({
     url: '/openscreenad/set',
     method: 'get',
@@ -10,7 +10,7 @@ export function getOpenScreenADSet (query) {
 }
 
 // 保存开屏广告设置
-export function saveOpenScreenADSet (data) {
+export function saveOpenScreenADSet(data) {
   return fetch({
     url: '/openscreenad/set',
     method: 'post',

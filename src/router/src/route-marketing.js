@@ -35,6 +35,7 @@ export default {
           component: () => import('@/view/member/cardticket/couponspackage/detail')
         }
       ]
+
     },
     {
       path: 'coupon/coupongive',
@@ -43,7 +44,8 @@ export default {
       children: [
         {
           path: 'detail/:id?',
-          component: () => import('@/view/member/coupon/giveErrorLog')
+          component: () =>
+            import('@/view/member/coupon/giveErrorLog')
         }
       ]
     },
@@ -114,19 +116,19 @@ export default {
 
     {
       path: 'marketing/apply/formattrs',
-      name: `表单元素`,
-      component: () => import('@/view/member/selfservice/formsettinglist'),
+      name: `表单元素`, 
+      component: () => import( '@/view/member/selfservice/formsettinglist'),
       children: [
         {
           path: 'editor/:itemId?',
-          name: `表单元素配置-编辑`,
+          name: `表单元素配置-编辑`,  
           component: () => import('@/view/member/selfservice/formsettingadd')
         }
       ]
     },
     {
-      path: 'marketing/apply/formtemplate',
-      name: `表单模板`,
+      path: 'marketing/apply/formtemplate', 
+      name: `表单模板`,  
       component: () => import('@/view/member/selfservice/formtemplatelist'),
       children: [
         {

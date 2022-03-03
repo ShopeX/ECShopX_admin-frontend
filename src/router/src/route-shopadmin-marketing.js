@@ -24,7 +24,7 @@ export default {
     {
       path: 'coupon/coupongive',
       name: `优惠券发放日志`,
-      component: () => import('@/view/member/coupon/giveLog'),
+      component: () => import( '@/view/member/coupon/giveLog' ),
       children: [
         {
           path: 'detail/:id',
@@ -35,11 +35,11 @@ export default {
     {
       path: 'marketingsfullminus',
       name: `满减管理`,
-      component: () => import('@/view/member/promotions/fullminus/list'),
+      component: () => import( '@/view/member/promotions/fullminus/list'),
       children: [
         {
           path: 'editor/:marketing_id?',
-          component: () => import('@/view/member/promotions/fullminus/add')
+          component: () => import( '@/view/member/promotions/fullminus/add')
         }
       ]
     },
@@ -50,7 +50,7 @@ export default {
       children: [
         {
           path: 'editor/:marketing_id?',
-          component: () => import('@/view/member/promotions/fulldiscount/add')
+          component: () => import( '@/view/member/promotions/fulldiscount/add')
         }
       ]
     },
@@ -61,7 +61,7 @@ export default {
       children: [
         {
           path: 'editor/:marketing_id?',
-          component: () => import('@/view/member/promotions/fullgift/add')
+          component: () => import( '@/view/member/promotions/fullgift/add')
         }
       ]
     },
@@ -72,7 +72,7 @@ export default {
       children: [
         {
           path: 'editor/:seckill_id?',
-          component: () => import('@/view/member/promotions/limitedtimesale/add')
+          component: () => import( '@/view/member/promotions/limitedtimesale/add')
         }
       ]
     }

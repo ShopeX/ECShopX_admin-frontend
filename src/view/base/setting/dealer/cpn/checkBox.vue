@@ -1,58 +1,31 @@
 <template>
   <div class="checkBoxDialog">
-    <el-dialog
-      :visible.sync="visible"
-      :before-close="handleClose"
-      :modal-append-to-body="false"
-    >
-      <div
-        slot="title"
-        class="title"
-      >
-        <i class="el-icon-info" /> 提交审批
-      </div>
-      <p
-        class="message"
-        v-html="message"
-      />
+    <el-dialog :visible.sync="visible" :before-close="handleClose" :modal-append-to-body="false">
+      <div class="title" slot="title"><i class="el-icon-info"></i> 提交审批</div>
+      <p class="message" v-html="message"></p>
 
-      <el-form
-        ref="form"
-        :model="form"
-      >
-        <el-form-item
-          v-if="is_sms"
-          style="justify-content: center"
-        >
-          <el-checkbox-group v-model="form.is_sms">
-            <el-checkbox
-              :key="info[0].value"
-              value="1"
-            >
-              {{ info[0].value }}<br>(短信费用将在短信余额中扣除)
-            </el-checkbox>
-          </el-checkbox-group>
-        </el-form-item>
-        <el-form-item
-          v-if="is_idea"
-          style="justify-content: center"
-        >
-          <el-input
-            v-model="form.comments"
-            style="width: 350px"
-            type="textarea"
-            :rows="5"
-            :maxlength="300"
-            :show-word-limit="true"
-            placeholder="请填写审批意见"
-          />
-        </el-form-item>
-      </el-form>
+        <el-form :model="form" ref="form">
+          <el-form-item style="justify-content: center" v-if="is_sms">
+            <el-checkbox-group v-model="form.is_sms">
+              <el-checkbox value="1" :key="info[0].value"
+                >{{ info[0].value }}<br />(短信费用将在短信余额中扣除)</el-checkbox>
+            </el-checkbox-group>
+          </el-form-item>
+          <el-form-item  style="justify-content: center;" v-if="is_idea">
+            <el-input
+              style="width:350px"
+              v-model="form.comments"
+              type="textarea"
+              :rows="5"
+              :maxlength="300"
+              :show-word-limit="true"
+              placeholder="请填写审批意见"
+            />
+          </el-form-item>
+        </el-form>
 
-      <div
-        slot="footer"
-        class="dialog-footer"
-      >
+
+      <div slot="footer" class="dialog-footer">
         <!-- <el-button type="primary" size="mini" @click="confirm">确 定</el-button> -->
         <loading-btn
           ref="loadingBtn"
@@ -82,51 +55,53 @@ export default {
     info: {
       default: ''
     },
-    is_sms: {},
-    is_idea: {
-      type: Boolean,
-      default: false
+    is_sms:{
+
+    },
+    is_idea:{
+      type:Boolean,
+      default:false
     },
     comments: {
-      default: ''
-    }
+      default: '',
+    },
   },
   // mounted(){
   //   debugger
   //   this.form.is_sms = this.isNote=='1'?true:false
   // },
-  data () {
+  data() {
     return {
       form: {
         is_sms: '',
-        comments: ''
+        comments:''
       }
     }
   },
   methods: {
-    confirm () {
-      this.$refs['loadingBtn'].loading = true
+    confirm() {
+      this.$refs['loadingBtn'].loading = true;
       if (this.form.is_sms) {
         this.form.is_sms = '1'
       } else {
         this.form.is_sms = '0'
       }
       this.$emit('checkBoxConfirmHandle', this.form)
-      this.closeLoading()
+      this.closeLoading();
     },
-    handleClose () {
+    handleClose() {
       this.$emit('checkBoxVisibleHandle')
-      this.clearForm()
+      this.clearForm();
     },
-    closeLoading () {
+    closeLoading() {
       this.clearForm()
       this.$refs['loadingBtn'].closeLoading()
     },
-    clearForm () {
-      this.form.is_sms = ''
-      this.form.comments = ''
+    clearForm(){
+      this.form.is_sms = '';
+      this.form.comments = '';
     }
-  }
+  },
   // watch: {
   //   isNote(val) {
   //     this.form.is_sms = val == '1' ? true : false
@@ -156,9 +131,9 @@ export default {
   .el-dialog__body {
     padding: 20px 10px 0px;
   }
-  .el-checkbox__input.is-checked + .el-checkbox__label {
+  .el-checkbox__input.is-checked+.el-checkbox__label {
     color: #606266;
-  }
+}
   .el-dialog {
     max-width: 500px;
     min-width: 400px;

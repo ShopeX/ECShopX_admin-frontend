@@ -5,34 +5,22 @@
         <el-col :span="4">
           <el-select
             v-model="fetchParams.activity_status"
+            @change="dataSearch"
             placeholder="请选择活动状态"
             clearable
             style="width: 100%"
-            @change="dataSearch"
           >
-            <el-option
-              label="全部"
-              value="0"
-            />
-            <el-option
-              label="未开始"
-              value="waiting"
-            />
-            <el-option
-              label="进行中"
-              value="ongoing"
-            />
-            <el-option
-              label="已结束"
-              value="it_has_ended"
-            />
+            <el-option label="全部" value="0"></el-option>
+            <el-option label="未开始" value="waiting"></el-option>
+            <el-option label="进行中" value="ongoing"></el-option>
+            <el-option label="已结束" value="it_has_ended"></el-option>
           </el-select>
         </el-col>
         <el-col :span="8">
           <el-input
-            v-model="fetchParams.purchase_name"
             clearable
             placeholder="请输入活动名称"
+            v-model="fetchParams.purchase_name"
             @change="dataSearch"
           >
             <!-- <el-select
@@ -51,72 +39,35 @@
               >
               </el-option>
             </el-select> -->
-            <template slot="prepend">
-              活动名称
-            </template>
-            <el-button
-              slot="append"
-              icon="el-icon-search"
-              @click="dataSearch"
-            />
+            <template slot="prepend">活动名称</template>
+            <el-button slot="append" icon="el-icon-search" @click="dataSearch"></el-button>
           </el-input>
         </el-col>
         <el-col :span="4">
-          <el-button
-            type="primary"
-            icon="el-icon-circle-plus"
-            @click="addPurchase"
+          <el-button type="primary" icon="el-icon-circle-plus" @click="addPurchase"
+            >新增活动</el-button
           >
-            新增活动
-          </el-button>
         </el-col>
       </el-row>
       <el-card>
-        <el-table
-          v-loading="loading"
-          :data="cardList"
-          @selection-change="handleSelectionChange"
-        >
-          <el-table-column
-            prop="purchase_id"
-            label="活动ID"
-          />
-          <el-table-column
-            prop="purchase_name"
-            label="活动名称"
-          />
-          <el-table-column
-            prop="employee_limitfee"
-            label="员工额度"
-          />
-          <el-table-column
-            prop="dependents_limitfee"
-            label="家属额度"
-          />
-          <el-table-column
-            prop="activity_status"
-            label="活动状态"
-          >
+        <el-table :data="cardList" v-loading="loading" @selection-change="handleSelectionChange">
+          <el-table-column prop="purchase_id" label="活动ID"></el-table-column>
+          <el-table-column prop="purchase_name" label="活动名称"></el-table-column>
+          <el-table-column prop="employee_limitfee" label="员工额度"> </el-table-column>
+          <el-table-column prop="dependents_limitfee" label="家属额度"> </el-table-column>
+          <el-table-column prop="activity_status" label="活动状态">
             <template slot-scope="scope">
               {{ scope.row.activity_status | formatStatus }}
             </template>
           </el-table-column>
-          <el-table-column
-            width="301"
-            label="活动有效期"
-          >
+          <el-table-column width="301" label="活动有效期">
             <template slot-scope="scope">
               {{ scope.row.begin_date }}
-              <template v-if="scope.row.end_date">
-                ~
-              </template>
+              <template v-if="scope.row.end_date">~</template>
               {{ scope.row.end_date }}
             </template>
           </el-table-column>
-          <el-table-column
-            width="150"
-            label="操作"
-          >
+          <el-table-column width="150" label="操作">
             <template slot-scope="scope">
               <div class="operating-icons">
                 <el-button type="text">
@@ -127,30 +78,24 @@
                         id: scope.row.purchase_id
                       }
                     }"
+                    >查看</router-link
                   >
-                    查看
-                  </router-link>
                 </el-button>
-                <el-button
-                  v-if="scope.row.activity_status == 'waiting'"
-                  type="text"
-                >
+                <el-button type="text" v-if="scope.row.activity_status == 'waiting'">
                   <router-link
                     :to="{
                       path: matchHidePage('editor'),
                       query: { id: scope.row.purchase_id }
                     }"
+                    >编辑</router-link
                   >
-                    编辑
-                  </router-link>
                 </el-button>
                 <el-button
-                  v-if="scope.row.activity_status != 'it_has_ended'"
                   type="text"
+                  v-if="scope.row.activity_status != 'it_has_ended'"
                   @click="deleteCard(scope.row.purchase_id, scope.$index)"
+                  ><span style="color: #f56c6c">终止活动</span></el-button
                 >
-                  <span style="color: #f56c6c">终止活动</span>
-                </el-button>
               </div>
             </template>
           </el-table-column>
@@ -158,15 +103,16 @@
         <div class="content-padded content-center">
           <el-pagination
             layout="total, sizes, prev, pager, next, jumper"
-            :total="pagers.total"
-            :page-size="pageSize"
             @size-change="handleSizeChange"
             @current-change="handleCurrentChange"
-          />
+            :total="pagers.total"
+            :page-size="pageSize"
+          >
+          </el-pagination>
         </div>
       </el-card>
     </div>
-    <router-view />
+    <router-view></router-view>
   </div>
 </template>
 
@@ -174,29 +120,12 @@
 import { mapGetters } from 'vuex'
 import { getPurchaseList, endPurchase } from '@/api/purchase'
 export default {
-  provide () {
+  provide() {
     return {
       refresh: this.getPurchaseList
     }
   },
-  filters: {
-    formatStatus (status) {
-      var str = ''
-      switch (status) {
-        case 'waiting':
-          str = '未开始'
-          break
-        case 'ongoing':
-          str = '进行中'
-          break
-        case 'it_has_ended':
-          str = '已结束'
-          break
-      }
-      return str
-    }
-  },
-  data () {
+  data() {
     return {
       loading: false,
       loadingbtn: false,
@@ -217,25 +146,39 @@ export default {
       multipleSelection: []
     }
   },
+  filters: {
+    formatStatus(status) {
+      var str = ''
+      switch (status) {
+        case 'waiting':
+          str = '未开始'
+          break
+        case 'ongoing':
+          str = '进行中'
+          break
+        case 'it_has_ended':
+          str = '已结束'
+          break
+      }
+      return str
+    }
+  },
   computed: {
     ...mapGetters(['wheight'])
   },
-  mounted () {
-    this.getPurchaseList()
-  },
   methods: {
-    handleCurrentChange (val) {
+    handleCurrentChange(val) {
       this.fetchParams.page = val
       this.getPurchaseList()
     },
-    handleSizeChange (val) {
+    handleSizeChange(val) {
       this.fetchParams.pageSize = val
       this.getPurchaseList()
     },
-    addPurchase () {
+    addPurchase() {
       this.$router.push({ path: this.matchHidePage('editor') })
     },
-    deleteCard (id, index) {
+    deleteCard(id, index) {
       const that = this
       this.$confirm('确定要终止该活动？', '提示', {
         cancelButtonText: '取消',
@@ -247,7 +190,7 @@ export default {
             this.$message({
               type: 'success',
               message: '终止成功',
-              onClose () {
+              onClose() {
                 that.getPurchaseList()
               }
             })
@@ -256,7 +199,7 @@ export default {
         }
       })
     },
-    getPurchaseList () {
+    getPurchaseList() {
       this.loading = true
       var params = {
         activity_status: this.fetchParams.activity_status,
@@ -283,13 +226,16 @@ export default {
           this.loading = false
         })
     },
-    handleSelectionChange (val) {
+    handleSelectionChange(val) {
       this.multipleSelection = val
     },
-    dataSearch () {
+    dataSearch() {
       this.fetchParams.page = 1
       this.getPurchaseList(this.fetchParams)
     }
+  },
+  mounted() {
+    this.getPurchaseList()
   }
 }
 </script>

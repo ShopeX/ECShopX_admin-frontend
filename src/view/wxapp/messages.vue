@@ -1,18 +1,8 @@
 <template>
   <div>
-    <div
-      v-if="!wxapp_id"
-      class="content-center no-bind"
-    >
-      <div>
-        <i
-          class="iconfont icon-info-circle"
-          style="font-size: 70px"
-        />
-      </div>
-      <div class="content-padded">
-        未绑定小程序，请先绑定小程序
-      </div>
+    <div class="content-center no-bind" v-if="!wxapp_id">
+      <div><i class="iconfont icon-info-circle" style="font-size: 70px;"></i></div>
+      <div class="content-padded">未绑定小程序，请先绑定小程序</div>
     </div>
     <el-dialog
       title="小程序消息模版详情"
@@ -29,7 +19,7 @@
               inactive-text=" "
               active-color="#13ce66"
               @change="openChange"
-            />
+            ></el-switch>
           </el-form-item>
           <el-form-item label="模版id">
             {{ currentTemplate.template_id }}
@@ -39,7 +29,7 @@
             <span v-if="currentTemplate.send_time_desc.time_list">
               <el-select
                 v-model="currentTemplate.send_time_desc.value"
-                style="width: 80px"
+                style="width:80px"
                 placeholder="请选择"
                 @change="openChange"
               >
@@ -48,20 +38,15 @@
                   :key="item"
                   :label="item"
                   :value="item"
-                />
+                >
+                </el-option>
               </el-select>
               分钟{{ currentTemplate.send_time_desc.end_title }}
             </span>
           </el-form-item>
           <el-form-item label="内容">
-            <el-card
-              class="box-card"
-              shadow="never"
-            >
-              <div
-                v-for="data in currentTemplate.content"
-                :key="data.column"
-              >
+            <el-card class="box-card" shadow="never">
+              <div v-for="data in currentTemplate.content" :key="data.column">
                 {{ data.title }}
               </div>
             </el-card>
@@ -74,41 +59,19 @@
         <div
           v-for="row in temlateList"
           class="item"
-          :class="row.is_open ? 'succ-open-sms' : 'not-open-sms'"
           @click="toDetail(row)"
+          :class="row.is_open ? 'succ-open-sms' : 'not-open-sms'"
         >
-          <div class="item-title clearfix">
-            {{ row.title }} <i class="el-icon-arrow-right" />
-          </div>
-          <div
-            v-if="row.send_time_desc.value"
-            class="item-content"
-          >
+          <div class="item-title clearfix">{{ row.title }} <i class="el-icon-arrow-right"></i></div>
+          <div class="item-content" v-if="row.send_time_desc.value">
             {{ row.send_time_desc.title }}{{ row.send_time_desc.value }}分钟{{
               row.send_time_desc.end_title
             }}
           </div>
-          <div
-            v-else
-            class="item-content"
-          >
-            {{ row.send_time_desc.title }}
-          </div>
+          <div class="item-content" v-else>{{ row.send_time_desc.title }}</div>
           <div class="item-footer">
-            <el-button
-              v-if="row.is_open"
-              type="default"
-              size="small"
-            >
-              启用中
-            </el-button>
-            <el-button
-              v-else
-              type="default"
-              size="small"
-            >
-              未启用
-            </el-button>
+            <el-button type="default" size="small" v-if="row.is_open">启用中</el-button>
+            <el-button type="default" size="small" v-else>未启用</el-button>
           </div>
         </div>
       </div>
@@ -119,7 +82,7 @@
 import { mapGetters } from 'vuex'
 import { getWxaMessageTemplateList, openWxaMessageTemplate } from '@/api/wxa'
 export default {
-  data () {
+  data() {
     return {
       detailDialog: false,
       temlateList: [],
@@ -135,21 +98,11 @@ export default {
   computed: {
     ...mapGetters(['wxapp_id', 'template_name'])
   },
-  mounted () {
-    if (this.wxapp_id) {
-      getWxaMessageTemplateList({
-        wxapp_appid: this.wxapp_id,
-        template_name: this.template_name
-      }).then((res) => {
-        this.temlateList = res.data.data.list
-      })
-    }
-  },
   methods: {
-    closeDialog () {
+    closeDialog() {
       this.detailDialog = false
     },
-    openChange () {
+    openChange() {
       let params = {
         template_name: this.template_name,
         wxapp_appid: this.wxapp_id,
@@ -163,9 +116,19 @@ export default {
         this.$message({ message: '保存成功', type: 'success' })
       })
     },
-    toDetail (params) {
+    toDetail(params) {
       this.detailDialog = true
       this.currentTemplate = params
+    }
+  },
+  mounted() {
+    if (this.wxapp_id) {
+      getWxaMessageTemplateList({
+        wxapp_appid: this.wxapp_id,
+        template_name: this.template_name
+      }).then((res) => {
+        this.temlateList = res.data.data.list
+      })
     }
   }
 }

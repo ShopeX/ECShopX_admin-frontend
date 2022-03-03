@@ -1,66 +1,44 @@
 <template>
-  <section
-    v-if="name === 'tabs'"
-    class="section"
-  >
+  <section v-if="name === 'tabs'" class="section">
     <div class="section-header with-border">
       设置
     </div>
     <div class="section-body">
       <el-form label-width="100px">
         <el-form-item label="背景色">
-          <el-color-picker v-model="config.backgroundColor" />
+          <el-color-picker v-model="config.backgroundColor"></el-color-picker>
         </el-form-item>
         <el-form-item label="默认颜色">
-          <el-color-picker v-model="config.color" />
+          <el-color-picker v-model="config.color"></el-color-picker>
         </el-form-item>
         <el-form-item label="选中颜色">
-          <el-color-picker v-model="config.selectedColor" />
+          <el-color-picker v-model="config.selectedColor"></el-color-picker>
         </el-form-item>
         <el-form-item label="设置tabBar">
-          <div
-            v-for="(item, index) in data"
-            class="setting-item"
-          >
-            <div
-              v-if="index > 1"
-              class="setting-remove"
-              @click="removeItem(index)"
-            >
-              <i class="iconfont icon-trash-alt" />
+          <div class="setting-item" v-for="(item, index) in data">
+            <div v-if="index > 1" class="setting-remove" @click="removeItem(index)">
+              <i class="iconfont icon-trash-alt"></i>
             </div>
             <img
               v-if="item.iconPath"
               :src="item.iconPath"
               class="icon-setter"
               @click="handleIconChange(index)"
-            >
-            <div
-              v-else
-              class="icon-setter"
-              @click="handleIconChange(index)"
-            >
-              <i class="iconfont icon-image muted" />
+            />
+            <div class="icon-setter" v-else @click="handleIconChange(index)">
+              <i class="iconfont icon-image muted"></i>
             </div>
             <img
               v-if="item.selectedIconPath"
               :src="item.selectedIconPath"
               class="icon-setter"
               @click="handleSelectedIconChange(index)"
-            >
-            <div
-              v-else
-              class="icon-setter"
-              @click="handleSelectedIconChange(index)"
-            >
-              <i class="iconfont icon-image muted" />
+            />
+            <div class="icon-setter" v-else @click="handleSelectedIconChange(index)">
+              <i class="iconfont icon-image muted"></i>
             </div>
             <div class="uploader-setting">
-              <el-input
-                v-model="item.text"
-                placeholder="tab名称"
-                maxlength=""
-              />
+              <el-input placeholder="tab名称" v-model="item.text" maxlength=""></el-input>
             </div>
             <div class="uploader-setting">
               <el-select
@@ -74,21 +52,20 @@
                   :key="item.value"
                   :label="item.label"
                   :value="item.value"
-                />
+                >
+                </el-option>
               </el-select>
             </div>
           </div>
-          <div class="frm-tips">
-            只能上传jpg/png文件，且不超过2M （建议尺寸：50px * 50px）
-          </div>
+          <div class="frm-tips">只能上传jpg/png文件，且不超过2M （建议尺寸：50px * 50px）</div>
           <el-button
             :disabled="data.length >= 5"
             type="default"
             class="iconfont icon-plus-circle banner-button-uploader"
             @click="addItem"
           >
-            添加菜单项
-          </el-button>
+            添加菜单项</el-button
+          >
         </el-form-item>
       </el-form>
     </div>
@@ -103,7 +80,17 @@ export default {
       default: {}
     }
   },
-  data () {
+  watch: {
+    res: {
+      deep: true,
+      handler(value) {
+        if (value) {
+          this.setData(value)
+        }
+      }
+    }
+  },
+  data() {
     return {
       name: '',
       config: {},
@@ -146,30 +133,18 @@ export default {
           value: '/pages/item/list?isTabBar=true',
           name: 'allGoods',
           label: '全部商品'
-        }
+        },
+
       ]
     }
   },
-  watch: {
-    res: {
-      deep: true,
-      handler (value) {
-        if (value) {
-          this.setData(value)
-        }
-      }
-    }
-  },
-  mounted () {
-    this.setData(this.res)
-  },
   methods: {
-    setData (val) {
+    setData(val) {
       this.name = val.name
       this.config = val.config
       this.data = val.data
     },
-    addItem () {
+    addItem() {
       if (!this.data) {
         this.data = []
       }
@@ -190,24 +165,27 @@ export default {
         this.data.push(item)
       }
     },
-    removeItem (index) {
+    removeItem(index) {
       this.data.splice(index, 1)
     },
-    handleClick (index) {
+    handleClick(index) {
       this.current = index
     },
-    handleChange (value) {
+    handleChange(value) {
       let n = this.pathOptions.find((item) => item.value === value)
       if (n) {
         this.data[this.current].name = n.name
       }
     },
-    handleIconChange (index) {
+    handleIconChange(index) {
       this.$emit('bindImgs', index, 'default')
     },
-    handleSelectedIconChange (index) {
+    handleSelectedIconChange(index) {
       this.$emit('bindImgs', index, 'selected')
     }
+  },
+  mounted() {
+    this.setData(this.res)
   }
 }
 </script>

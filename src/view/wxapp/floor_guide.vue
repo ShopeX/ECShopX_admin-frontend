@@ -277,10 +277,7 @@ $txt-placeholder: #f5f5f7;
 </style>
 
 <template>
-  <transition
-    name="el-fade-in-linear"
-    mode="out-in"
-  >
+  <transition name="el-fade-in-linear" mode="out-in">
     <div>
       <section
         class="section section-white category-view-warp"
@@ -290,17 +287,14 @@ $txt-placeholder: #f5f5f7;
         <div class="category-view">
           <div class="template">
             <div class="layout-view">
-              <el-tabs
-                v-if="series.length > 0"
-                v-model="editableSeries"
-                @tab-click="handleClick"
-              >
+              <el-tabs v-if="series.length > 0" v-model="editableSeries" @tab-click="handleClick">
                 <el-tab-pane
                   v-for="(item, index) in series"
                   :key="item.name"
                   :label="item.title"
                   :name="item.name"
-                />
+                >
+                </el-tab-pane>
               </el-tabs>
             </div>
             <div v-if="editableData.length > 0">
@@ -317,10 +311,7 @@ $txt-placeholder: #f5f5f7;
                   </div>
                 </div>
                 <div class="child-layout-view">
-                  <div
-                    v-if="editableData[curIdx].tags.length"
-                    class="tags-view"
-                  >
+                  <div v-if="editableData[curIdx].tags.length" class="tags-view">
                     <div class="tags-wrap">
                       <ul class="tags">
                         <li
@@ -331,8 +322,8 @@ $txt-placeholder: #f5f5f7;
                           全部
                         </li>
                         <li
-                          v-for="(item, idx) in editableData[curIdx].tags"
                           class="tag-item"
+                          v-for="(item, idx) in editableData[curIdx].tags"
                           :class="{ active: currentTag === item.id }"
                           @click="handleTagClick(item.id)"
                         >
@@ -341,48 +332,37 @@ $txt-placeholder: #f5f5f7;
                       </ul>
                     </div>
                   </div>
-                  <div
-                    v-if="editableData[curIdx].stores.length"
-                    class="stores-list"
-                  >
+                  <div v-if="editableData[curIdx].stores.length" class="stores-list">
                     <div
+                      class="store-item"
                       v-for="item in editableData[curIdx].stores"
                       v-if="
                         currentTag === '' || item.tags.findIndex((n) => n.id === currentTag) !== -1
                       "
                       :key="item.distributor_id"
-                      class="store-item"
                     >
                       <img
                         class="store-img"
                         :src="item.logo ? item.logo : 'https://fakeimg.pl/50x50/EFEFEF/CCC/'"
                         alt=""
-                      >
+                      />
                       <div class="store-caption">
-                        <div class="store-name">
-                          {{ item.name }}
-                        </div>
+                        <div class="store-name">{{ item.name }}</div>
                         <div class="store-tag">
                           <span v-for="tag in item.tags">{{ tag.name }}</span>
                         </div>
                       </div>
                     </div>
                   </div>
-                  <div
-                    v-else
-                    class="view-placeholder"
-                  >
-                    <i class="iconfont icon-shapes" />
+                  <div v-else class="view-placeholder">
+                    <i class="iconfont icon-shapes"></i>
                     请绑定楼层店铺
                   </div>
                 </div>
               </div>
             </div>
-            <div
-              v-if="!editableData.length"
-              class="no-category-placeholder"
-            >
-              <div class="iconfont icon-cubes" />
+            <div class="no-category-placeholder" v-if="!editableData.length">
+              <div class="iconfont icon-cubes"></div>
               <div>请添加楼层</div>
             </div>
           </div>
@@ -405,90 +385,46 @@ $txt-placeholder: #f5f5f7;
                     :key="item.name"
                     :label="item.title"
                     :name="item.name"
-                  />
+                  >
+                  </el-tab-pane>
                 </el-tabs>
-                <el-popover
-                  v-model="seriesVisible"
-                  placement="top"
-                  width="160"
-                >
+                <el-popover placement="top" width="160" v-model="seriesVisible">
                   <div class="content-bottom-padded">
                     <el-input
-                      v-model="seriesTitle"
                       type="text"
                       size="small"
+                      v-model="seriesTitle"
                       placeholder="请输入系列名称"
                     />
                   </div>
                   <div style="text-align: right; margin: 0">
-                    <el-button
-                      size="mini"
-                      type="text"
-                      @click="handleCancel"
-                    >
-                      取消
-                    </el-button>
-                    <el-button
-                      type="primary"
-                      size="mini"
-                      @click="addSeries"
-                    >
-                      确定
-                    </el-button>
+                    <el-button size="mini" type="text" @click="handleCancel">取消</el-button>
+                    <el-button type="primary" size="mini" @click="addSeries">确定</el-button>
                   </div>
-                  <el-button
-                    slot="reference"
-                    type="text"
-                    class="add-btn iconfont icon-plus-circle"
+                  <el-button type="text" slot="reference" class="add-btn iconfont icon-plus-circle">
+                    添加区域</el-button
                   >
-                    添加区域
-                  </el-button>
                 </el-popover>
               </div>
             </div>
-            <draggable
-              v-model="editableData"
-              :options="dragOptions"
-            >
-              <div
-                v-for="(item, idx) in editableData"
-                :key="idx"
-                class="form-parent"
-              >
+            <draggable v-model="editableData" :options="dragOptions">
+              <div v-for="(item, idx) in editableData" :key="idx" class="form-parent">
                 <div class="form-item">
-                  <div class="control-bar move iconfont icon-stream" />
-                  <div
-                    class="control-bar remove iconfont icon-cog"
-                    @click="showStore(idx)"
-                  />
-                  <el-input
-                    v-model="item.name"
-                    placeholder="楼层"
-                  />
-                  <div
-                    class="control-bar remove iconfont icon-trash"
-                    @click="remove(idx)"
-                  />
+                  <div class="control-bar move iconfont icon-stream"></div>
+                  <div class="control-bar remove iconfont icon-cog" @click="showStore(idx)"></div>
+                  <el-input placeholder="楼层" v-model="item.name"></el-input>
+                  <div class="control-bar remove iconfont icon-trash" @click="remove(idx)"></div>
                 </div>
               </div>
             </draggable>
-            <el-button
-              class="parent-add-btn iconfont icon-plus"
-              @click="add()"
+            <el-button class="parent-add-btn iconfont icon-plus" @click="add()">
+              添加楼层</el-button
             >
-              添加楼层
-            </el-button>
           </div>
         </div>
       </section>
       <section class="content-padded-s section-white content-center">
-        <el-button
-          class="btn-save"
-          type="primary"
-          @click="saveConfig"
-        >
-          保存
-        </el-button>
+        <el-button class="btn-save" type="primary" @click="saveConfig">保存</el-button>
       </section>
       <storeList
         :visible="storePickerVisible"
@@ -497,53 +433,31 @@ $txt-placeholder: #f5f5f7;
         @onClose="handleClose"
         @change="handleChange"
       />
-      <sideBar
-        :visible.sync="storeVisible"
-        title="编辑商铺"
-        width="24"
-      >
-        <div
-          v-if="curStores.length"
-          class="stores-list"
-        >
-          <div
-            v-for="(item, idx) in curStores"
-            :key="item.distributor_id"
-            class="store-item"
-          >
+      <sideBar :visible.sync="storeVisible" title="编辑商铺" width="24">
+        <div v-if="curStores.length" class="stores-list">
+          <div class="store-item" v-for="(item, idx) in curStores" :key="item.distributor_id">
             <img
               class="store-img"
               :src="item.logo ? item.logo : 'https://fakeimg.pl/50x50/EFEFEF/CCC/'"
               alt=""
-            >
-            <div class="store-caption">
-              {{ item.name }}
-            </div>
-            <div
-              class="iconfont icon-trash"
-              @click="handleStoreRemove(idx)"
             />
+            <div class="store-caption">{{ item.name }}</div>
+            <div class="iconfont icon-trash" @click="handleStoreRemove(idx)"></div>
           </div>
         </div>
-        <div
-          v-else
-          class="view-placeholder"
-        >
-          <i class="iconfont icon-store" />
+        <div v-else class="view-placeholder">
+          <i class="iconfont icon-store"></i>
           请绑定楼层店铺
         </div>
-        <div
-          slot="footer"
-          class="content-center"
-        >
+        <div slot="footer" class="content-center">
           <el-button
             type="primary"
             plain
             class="control-bar bind iconfont icon-cog"
             @click="bindStore()"
           >
-            选择商铺
-          </el-button>
+            选择商铺</el-button
+          >
         </div>
       </sideBar>
     </div>
@@ -562,13 +476,7 @@ import draggable from 'vuedraggable'
 import { getCategory } from '@/api/goods'
 import { savePageParams, getParamByTempName, getCustomPageList } from '@/api/wxa'
 export default {
-  components: {
-    storeList,
-    sideBar,
-    // 第三方组件
-    draggable
-  },
-  data () {
+  data() {
     return {
       curIdx: 0,
       seriesVisible: false,
@@ -600,28 +508,18 @@ export default {
       currentTag: ''
     }
   },
+  components: {
+    storeList,
+    sideBar,
+    // 第三方组件
+    draggable
+  },
   computed: {
     ...mapGetters(['wheight', 'template_name'])
   },
-  mounted () {
-    let filter = { template_name: this.template_name, version: 'v1.0.1', page_name: 'floor_guide' }
-    getParamByTempName(filter).then((res) => {
-      if (res.data.data.list.length !== 0) {
-        this.form = res.data.data.list[0].params
-        if (!this.form.hasSeries) {
-          this.editableData = res.data.data.list[0].params.data
-          this.editableSeries = res.data.data.list[0].params.data.name
-        } else {
-          this.series = res.data.data.list[0].params.data
-          this.editableData = this.series[0].content
-          this.editableSeries = res.data.data.list[0].params.data[0].name
-        }
-      }
-    })
-  },
   methods: {
     // 添加系列
-    addSeries () {
+    addSeries() {
       if (!this.seriesTitle) {
         this.$message({ message: '区域名称必填', type: 'error' })
         return
@@ -639,12 +537,12 @@ export default {
       this.form.hasSeries = true
     },
     // 取消添加
-    handleCancel () {
+    handleCancel() {
       this.seriesTitle = ''
       this.seriesVisible = false
     },
     // 移除系列
-    removeTab (targetName) {
+    removeTab(targetName) {
       this.$confirm('删除系列将删除该区域下绑定的所有店铺, 是否继续?', '提示', {
         confirmButtonText: '确定',
         cancelButtonText: '取消',
@@ -676,12 +574,12 @@ export default {
         .catch(() => {})
     },
     // 点击tab
-    handleClick (data) {
+    handleClick(data) {
       this.editableData = this.series[data.index].content
       this.curIdx = 0
     },
     // 添加楼层
-    add () {
+    add() {
       let item = {
         name: '',
         tags: [],
@@ -690,7 +588,7 @@ export default {
       this.editableData.push(item)
     },
     // 移除楼层
-    remove (idx) {
+    remove(idx) {
       this.$confirm('确认删除？')
         .then((_) => {
           this.editableData.splice(idx, 1)
@@ -698,25 +596,25 @@ export default {
         .catch((_) => {})
     },
     // 模版演示父级菜单切换
-    switchTab (index) {
+    switchTab(index) {
       this.curIdx = index
       this.curStores = JSON.parse(JSON.stringify(this.editableData[this.curIdx].stores))
     },
     // 分类设置绑定事件
-    showStore (idx) {
+    showStore(idx) {
       this.storeVisible = true
       this.curIdx = idx
       this.curStores = this.editableData[idx].stores
     },
-    bindStore () {
+    bindStore() {
       this.storePickerVisible = true
     },
-    handleClose () {
+    handleClose() {
       this.storePickerVisible = false
     },
-    handleChange (val) {
+    handleChange(val) {
       this.editableData[this.curIdx].stores = JSON.parse(JSON.stringify(val))
-      this.curStores = JSON.parse(JSON.stringify(val))
+      this.curStores = JSON.parse(JSON.stringify(val)) 
       let ids = []
       val.map((item) => {
         ids.push(item.id)
@@ -735,15 +633,15 @@ export default {
         })
       this.storePickerVisible = false
     },
-    handleStoreRemove (idx) {
+    handleStoreRemove(idx) {
       this.editableData[this.curIdx].stores.splice(idx, 1)
       this.curStores.splice(idx, 1)
     },
-    handleTagClick (id) {
+    handleTagClick(id) {
       this.currentTag = id
     },
     // 保存设置
-    saveConfig () {
+    saveConfig() {
       if (!this.form.hasSeries) {
         this.form.data = this.editableData
       } else {
@@ -763,6 +661,22 @@ export default {
         }
       })
     }
+  },
+  mounted() {
+    let filter = { template_name: this.template_name, version: 'v1.0.1', page_name: 'floor_guide' }
+    getParamByTempName(filter).then((res) => {
+      if (res.data.data.list.length !== 0) {
+        this.form = res.data.data.list[0].params
+        if (!this.form.hasSeries) {
+          this.editableData = res.data.data.list[0].params.data
+          this.editableSeries = res.data.data.list[0].params.data.name
+        } else {
+          this.series = res.data.data.list[0].params.data
+          this.editableData = this.series[0].content
+          this.editableSeries = res.data.data.list[0].params.data[0].name
+        }
+      }
+    })
   }
 }
 </script>

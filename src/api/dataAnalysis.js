@@ -1,6 +1,6 @@
 import fetch from '../utils/fetch'
 
-export function setSetting (query) {
+export function setSetting(query) {
   return fetch({
     url: '/dataAnalysis/youshu/setting',
     method: 'post',
@@ -8,7 +8,7 @@ export function setSetting (query) {
   })
 }
 
-export function getSetting () {
+export function getSetting() {
   return fetch({
     url: '/dataAnalysis/youshu/query',
     method: 'get'

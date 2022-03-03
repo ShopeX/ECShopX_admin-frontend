@@ -10,7 +10,7 @@
         :before-upload="beforeAvatarUpload"
         :http-request="handleUpload"
       >
-        <i class="iconfont el-icon-plus avatar-uploader-icon" />
+        <i class="iconfont el-icon-plus avatar-uploader-icon"></i>
       </el-upload>
     </div>
     <!-- <div class="row">
@@ -35,16 +35,16 @@ export default {
       type: String
     }
   },
-  data () {
+  data() {
     return {
       loading: ''
     }
   },
-  mounted () {},
+  mounted() {},
   methods: {
     // 自定义上传
     handleUpload: function (e) {
-      console.log('========')
+      console.log('========');
       console.log(e)
       console.log(e.file)
       console.log(this.type)
@@ -60,7 +60,7 @@ export default {
           (err) => e.onError(err)
         )
         .catch((err) => {
-          this.loading = false
+          this.loading = false;
           this.$message.error('请重新上传')
         })
 
@@ -69,14 +69,14 @@ export default {
       // .then(res => e.onSuccess(res), err => e.onError(err))
       // .catch(err => e.onError(err))
     },
-    uploadHandle (val) {
+    uploadHandle(val) {
       console.log(val)
     },
-    handleAvatarSuccess (res, file) {
+    handleAvatarSuccess(res, file) {
       this.$emit('successHandle', res.data.data)
       this.loading = false
     },
-    beforeAvatarUpload (file) {
+    beforeAvatarUpload(file) {
       this.loading = true
       const isJPG = file.type === 'image/jpeg'
       const isPNG = file.type === 'image/png'
@@ -84,16 +84,18 @@ export default {
 
       if (!isJPG && !isPNG) {
         this.$message.error('上传图片只能是 JPG 或者 PNG 格式!')
-        return (this.loading = false)
+        return  this.loading = false
       }
       if (!isLt2M) {
         this.$message.error('上传图片大小不能超过 1MB!')
-        return (this.loading = false)
-      }
+          return  this.loading = false
+      } 
     }
   }
 }
 </script>
+
+
 
 <style lang="scss">
 .cpnUploadPicture {

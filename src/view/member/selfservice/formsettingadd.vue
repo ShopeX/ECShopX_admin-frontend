@@ -22,7 +22,7 @@
               :maxlength="30"
               placeholder="身高(cm)"
               @change="fieldTitleChange"
-            />
+            ></el-input>
           </el-col>
         </el-form-item>
         <el-form-item
@@ -31,46 +31,22 @@
           :rules="[{ required: true, message: '请选择表单元素', trigger: 'change' }]"
         >
           <el-col :span="15">
-            <el-radio-group
-              v-model="form.form_element"
-              @change="ElementChange"
-            >
-              <el-radio label="text">
-                单文本框
-              </el-radio>
-              <el-radio label="number">
-                数字(纯数字)
-              </el-radio>
-              <el-radio label="checkbox">
-                复选框
-              </el-radio>
-              <el-radio label="select">
-                下拉选择
-              </el-radio>
-              <el-radio label="radio">
-                单选按钮
-              </el-radio>
-              <el-radio label="textarea">
-                多文本域
-              </el-radio>
-              <el-radio label="date">
-                日期选择
-              </el-radio>
-              <el-radio label="area">
-                地区选择
-              </el-radio>
+            <el-radio-group v-model="form.form_element" @change="ElementChange">
+              <el-radio label="text">单文本框</el-radio>
+              <el-radio label="number">数字(纯数字)</el-radio>
+              <el-radio label="checkbox">复选框</el-radio>
+              <el-radio label="select">下拉选择</el-radio>
+              <el-radio label="radio">单选按钮</el-radio>
+              <el-radio label="textarea">多文本域</el-radio>
+              <el-radio label="date">日期选择</el-radio>
+              <el-radio label="area">地区选择</el-radio>
             </el-radio-group>
           </el-col>
         </el-form-item>
         <el-form-item
           v-for="(domain, index) in form.options"
-          v-if="
-            form.form_element == 'radio' ||
-              form.form_element == 'checkbox' ||
-              form.form_element == 'select'
-          "
-          :key="domain.key"
           :label="'选择项' + index"
+          :key="domain.key"
           :prop="'options.' + index + '.value'"
           :rules="{
             required: true,
@@ -78,31 +54,28 @@
             trigger: 'blur'
           }"
           :span="10"
+          v-if="
+            form.form_element == 'radio' ||
+              form.form_element == 'checkbox' ||
+              form.form_element == 'select'
+          "
         >
           <el-row>
             <el-col :span="15">
-              <el-input
-                v-model="domain.value"
-                width="20"
-              />
+              <el-input v-model="domain.value" width="20"></el-input>
             </el-col>
-            <el-col
-              v-if="index > 1"
-              :span="5"
-            >
-              <el-button @click.prevent="removeDomain(domain)">
-                删除
-              </el-button>
+            <el-col :span="5" v-if="index > 1">
+              <el-button @click.prevent="removeDomain(domain)">删除</el-button>
             </el-col>
           </el-row>
           <el-row>
             <el-col :span="5">
               <div>
                 <imgBox
-                  :img-url="wximageurl + domain.image_url"
+                  :imgUrl="wximageurl + domain.image_url"
                   inline
                   @click="handleImgChange(index)"
-                />
+                ></imgBox>
               </div>
               <div class="frm-tips">
                 只能上传jpg/png文件，且不超过2M （建议尺寸：400px * 450px）
@@ -112,7 +85,7 @@
                 :sc-status="isGetImage"
                 @chooseImg="pickImg"
                 @closeImgDialog="closeImgDialog"
-              />
+              ></imgPicker>
             </el-col>
           </el-row>
         </el-form-item>
@@ -124,13 +97,7 @@
           "
         >
           <el-col :span="15">
-            <el-button
-              type="primary"
-              circle
-              @click="addOption"
-            >
-              增
-            </el-button>
+            <el-button type="primary" circle @click="addOption">增</el-button>
           </el-col>
         </el-form-item>
         <!-- field_name：{{form.field_name}} | defalutFileName:{{defalutFileName}} -->
@@ -139,24 +106,13 @@
           :rules="[{ required: true, message: '请输入英文标识', trigger: 'blur' }]"
         >
           <el-col :span="15">
-            <el-select
-              v-model="defalutFileName"
-              placeholder="请选择英文标识"
-              style="width: 90%"
-              @change="handleOnChageCtrlFields"
-            >
-              <el-option
-                v-for="(data, index) in ctrlFields"
-                :key="index"
-                :label="data.name"
-                :value="data.value"
-              />
+            <el-select v-model="defalutFileName" placeholder="请选择英文标识" @change="handleOnChageCtrlFields" style="width: 90%;">
+              <el-option :label="data.name" :value="data.value" v-for="(data, index) in ctrlFields" :key="index"></el-option>
             </el-select>
           </el-col>
         </el-form-item>
         <el-form-item>
-          需填写姓名请选择字符username、生日为birthday、
-          身份证号码为idcard、手机号码为mobile、银行卡号为bankcard、地址为address，若都不是，选其他。
+          需填写姓名请选择字符username、生日为birthday、 身份证号码为idcard、手机号码为mobile、银行卡号为bankcard、地址为address，若都不是，选其他。
         </el-form-item>
         <el-form-item
           v-if="defalutFileName == 'other'"
@@ -169,42 +125,30 @@
               v-model.trim="form.field_name"
               placeholder="height 或者 shengao"
               @blur="fieldNameChange"
-            />
+            ></el-input>
           </el-col>
         </el-form-item>
-        <el-form-item
-          label="图片"
-          prop="image_url"
-        >
+        <el-form-item label="图片" prop="image_url">
           <el-col :span="15">
             <div>
               <imgBox
-                :img-url="wximageurl + form.image_url"
+                :imgUrl="wximageurl + form.image_url"
                 inline
                 @click="handleImgBChange"
-              />
+              ></imgBox>
             </div>
-            <div class="frm-tips">
-              只能上传jpg/png文件，且不超过2M （建议尺寸：400px * 450px）
-            </div>
+            <div class="frm-tips">只能上传jpg/png文件，且不超过2M （建议尺寸：400px * 450px）</div>
             <imgPicker
               :dialog-visible="imgDialog"
               :sc-status="isGetImage"
               @chooseImg="pickImg"
               @closeImgDialog="closeImgDialog"
-            />
+            ></imgPicker>
           </el-col>
         </el-form-item>
         <el-form-item>
-          <el-button @click.native="handleCancel">
-            取消
-          </el-button>
-          <el-button
-            type="primary"
-            @click="submitAction"
-          >
-            保存
-          </el-button>
+          <el-button @click.native="handleCancel">取消</el-button>
+          <el-button type="primary" @click="submitAction">保存</el-button>
         </el-form-item>
       </el-form>
     </div>
@@ -223,7 +167,7 @@ export default {
     imgPicker,
     imgBox
   },
-  data () {
+  data() {
     return {
       form: {
         id: '',
@@ -253,30 +197,16 @@ export default {
         { name: 'mobile', value: 'mobile' },
         { name: 'bankcard', value: 'bankcard' },
         { name: 'address', value: 'address' },
-        { name: 'other', value: 'other' }
+        { name: 'other', value: 'other' },
       ],
       defalutFileName: 'username'
     }
   },
-  mounted () {
-    if (this.$route.query.id) {
-      getSettingInfo(this.$route.query.id).then((res) => {
-        this.form = res.data.data
-        this.defalutFileName = res.data.data.field_name
-        if (!this.form.options) {
-          this.form.options = [
-            { value: '', image_url: '' },
-            { value: '', image_url: '' }
-          ]
-        }
-      })
-    }
-  },
   methods: {
-    handleOnChageCtrlFields (v) {
+    handleOnChageCtrlFields(v) {
       this.form.field_name = v
     },
-    ElementChange (value) {
+    ElementChange(value) {
       if (value == 'text' || value == 'textarea') {
         this.form.options = [
           { value: '', image_url: '' },
@@ -284,26 +214,26 @@ export default {
         ]
       }
     },
-    fieldTitleChange (value) {
+    fieldTitleChange(value) {
       this.formLable = value
     },
-    fieldNameChange (value) {
+    fieldNameChange(value) {
       this.formName = value
     },
-    addOption () {
+    addOption() {
       let cope = {
         value: '',
         key: Date.now()
       }
       this.form.options.push(cope)
     },
-    removeDomain (item) {
+    removeDomain(item) {
       var index = this.form.options.indexOf(item)
       if (index !== -1) {
         this.form.options.splice(index, 1)
       }
     },
-    submitAction () {
+    submitAction() {
       const that = this
       this.$refs['form'].validate((valid) => {
         if (valid) {
@@ -314,7 +244,7 @@ export default {
                   message: '更新成功',
                   type: 'success',
                   duration: 2 * 1000,
-                  onClose () {
+                  onClose() {
                     that.refresh()
                     that.$router.go(-1)
                   }
@@ -328,7 +258,7 @@ export default {
                   message: '添加成功',
                   type: 'success',
                   duration: 2 * 1000,
-                  onClose () {
+                  onClose() {
                     that.refresh()
                     that.$router.go(-1)
                   }
@@ -345,15 +275,15 @@ export default {
         }
       })
     },
-    handleCancel () {
+    handleCancel() {
       this.$router.go(-1)
     },
-    handleImgChange (index) {
+    handleImgChange(index) {
       this.imgIndex = index
       this.imgDialog = true
       this.isGetImage = true
     },
-    pickImg (data) {
+    pickImg(data) {
       if (this.imgIndex == 'all') {
         this.form.image_url = data.url
       } else {
@@ -361,13 +291,27 @@ export default {
       }
       this.imgDialog = false
     },
-    closeImgDialog () {
+    closeImgDialog() {
       this.imgDialog = false
     },
-    handleImgBChange () {
+    handleImgBChange() {
       this.imgIndex = 'all'
       this.imgDialog = true
       this.isGetImage = true
+    }
+  },
+  mounted() {
+    if (this.$route.query.id) {
+      getSettingInfo(this.$route.query.id).then((res) => {
+        this.form = res.data.data
+        this.defalutFileName = res.data.data.field_name
+        if (!this.form.options) {
+          this.form.options = [
+            { value: '', image_url: '' },
+            { value: '', image_url: '' }
+          ]
+        }
+      })
     }
   }
 }

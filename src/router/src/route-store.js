@@ -13,7 +13,7 @@ export default {
       children: [
         {
           path: 'editor/:wxShopId?',
-          component: () => import('@/view/base/shop/editshop')
+          component: () => import( '@/view/base/shop/editshop' )
         }
       ]
     },
@@ -39,33 +39,33 @@ export default {
     {
       path: 'storemanager/Storeshopitemanagement',
       name: `店铺商品`,
-      component: () => import('@/view/mall/storeshop/itemlist')
+      component: () => import('@/view/mall/storeshop/itemlist' )
     },
     {
       path: 'storemanager/marketingdistribution_orders',
       name: `店铺订单`,
-      component: () => import('@/view/mall/marketing/distributionOrders'),
+      component: () => import( '@/view/mall/marketing/distributionOrders' ),
       children: [
         {
           path: 'detail',
-          component: () => import('@/view/mall/trade/order/detail')
+          component: () => import('@/view/mall/trade/order/detail' )
         }
       ]
     },
     {
       path: 'storemanager/distributoraftersalesaddress',
       name: `售后地址`,
-      component: () => import('@/view/mall/marketing/distributorAftersalesAddress')
+      component: () => import( '@/view/mall/marketing/distributorAftersalesAddress' )
     },
     {
       path: 'storemanager/exportstoreitems',
       name: `店铺商品更新`,
-      component: () => import('@/view/mall/marketing/productUpdate')
+      component: () => import( '@/view/mall/marketing/productUpdate' )
     },
     {
       path: 'storemanager/marketinglog',
       name: `店铺记录`,
-      component: () => import('@/view/mall/marketing/distributionLog')
+      component: () => import( '@/view/mall/marketing/distributionLog' )
     }
   ]
 }

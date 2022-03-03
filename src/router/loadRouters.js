@@ -4,15 +4,15 @@ import store from '@/store'
 const pathPrefix = process.env.PREFIXES
 
 export default {
-  getComponentName: function (path) {
+  getComponentName: function(path) {
     let name = path.split('/')
     name = name[name.length - 1]
     return `${name.substr(0, 1).toUpperCase()}${name.substr(1)}`
   },
   addRouters: function (menu) {
-    console.log('...addRouters')
+    console.log("...addRouters")
     const menus = menu || store.getters.menus
-    console.log('...menus', menus)
+    console.log("...menus",menus)
     if (menus) {
       let _routes = []
       menus.forEach((item, index) => {
@@ -145,7 +145,7 @@ export default {
       return _routes
     }
   },
-  matchRouter: function (path) {
+  matchRouter: function(path) {
     const homePath = pathPrefix ? `/${pathPrefix}` : '/'
     if (path !== homePath) {
       let name = this.getComponentName(path)

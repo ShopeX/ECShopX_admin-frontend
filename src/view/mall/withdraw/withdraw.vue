@@ -1,13 +1,7 @@
 <template>
   <div class="zyk_adapay_withdraw">
-    <el-card
-      class="box-card"
-      shadow="never"
-    >
-      <div
-        slot="header"
-        class="clearfix"
-      >
+    <el-card class="box-card" shadow="never">
+      <div slot="header" class="clearfix">
         <span>分账提现</span>
       </div>
       <div class="content">
@@ -15,48 +9,34 @@
           <div style="margin-right: 50px">
             <div style="margin-left: 30px; margin-bottom: 20px; color: #333">
               <span>可提现金额：￥{{ (cash_balance / 100) | formatNumMoney }}</span>
-              <span
-                v-if="$store.getters.login_type != 'normal'"
-                style="margin-left: 30px"
-              >限制额度：￥{{ (cash_limit / 100) | formatNumMoney }}</span>
+              <span v-if="$store.getters.login_type != 'normal'" style="margin-left: 30px"
+                >限制额度：￥{{ (cash_limit / 100) | formatNumMoney }}</span
+              >
             </div>
             <el-form
-              ref="ruleForm"
               :model="form"
+              ref="ruleForm"
               class="demo-ruleForm"
               label-width="100px"
               :rules="rules"
             >
-              <el-form-item
-                label="提现金额"
-                prop="cash_amt"
-              >
-                <el-input
-                  v-model="form.cash_amt"
-                  placeholder="请输入"
-                  style="width: 400px"
-                >
-                  <template slot="append">
-                    元
-                  </template>
+              <el-form-item label="提现金额" prop="cash_amt">
+                <el-input placeholder="请输入" v-model="form.cash_amt" style="width: 400px">
+                  <template slot="append">元</template>
                 </el-input>
-                <span
-                  style="margin-left: 12px; color: #0079fe; cursor: pointer"
-                  @click="allHandle"
-                >全部提现</span>
+                <span style="margin-left: 12px; color: #0079fe; cursor: pointer" @click="allHandle"
+                  >全部提现</span
+                >
               </el-form-item>
-              <el-form-item
-                label="提现类型"
-                prop="cash_type"
-              >
+              <el-form-item label="提现类型" prop="cash_type">
                 <el-select
                   v-model="form.cash_type"
                   placeholder="请选择提现类型"
                   style="width: 400px"
                 >
-                  <el-option value="D0" />
-                  <el-option value="D1" />
-                  <el-option value="T1" />
+                  <el-option value="D0"></el-option>
+                  <el-option value="D1"></el-option>
+                  <el-option value="T1"></el-option>
                 </el-select>
               </el-form-item>
               <el-form-item>
@@ -81,7 +61,7 @@
         <div class="list">
           <SpFinder
             ref="finder"
-            :no-selection="true"
+            :noSelection="true"
             :setting="setting"
             url="/adapay/drawcash/getList"
             :hooks="{
@@ -102,7 +82,7 @@ export default {
   components: {
     loadingBtn
   },
-  data () {
+  data() {
     return {
       form: {
         cash_amt: '',
@@ -116,17 +96,17 @@ export default {
       }
     }
   },
-  computed: {
-    setting () {
-      return setting_(this)
-    }
-  },
-  mounted () {
+  mounted() {
     this.getConfig()
     console.log(this.$store.getters.login_type)
   },
+  computed: {
+    setting() {
+      return setting_(this)
+    }
+  },
   methods: {
-    btnClick (formName, ref) {
+    btnClick(formName, ref) {
       this.$refs[formName].validate(async (valid) => {
         if (valid) {
           try {
@@ -152,13 +132,13 @@ export default {
         }
       })
     },
-    allHandle () {
+    allHandle() {
       this.form.cash_amt = this.cash_balance / 100
     },
-    beforeSearch (params) {
+    beforeSearch(params) {
       return { ...params }
     },
-    async getConfig () {
+    async getConfig() {
       const { cash_balance, cash_limit } = await this.$api.adapay.withdrawList()
       this.cash_balance = cash_balance
       this.cash_limit = cash_limit
@@ -166,6 +146,7 @@ export default {
   }
 }
 </script>
+
 
 <style lang="scss">
 .zyk_adapay_withdraw {

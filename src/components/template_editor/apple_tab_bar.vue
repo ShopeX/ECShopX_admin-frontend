@@ -1,8 +1,5 @@
 <template>
-  <section
-    v-if="name === 'tabs'"
-    class="section"
-  >
+  <section v-if="name === 'tabs'" class="section">
     <div class="section-header with-border">
       设置
     </div>
@@ -18,16 +15,9 @@
           <el-color-picker v-model="config.selectedColor"></el-color-picker>
         </el-form-item>-->
         <el-form-item label="设置tabBar">
-          <div
-            v-for="(item, index) in data"
-            class="setting-item"
-          >
-            <div
-              v-if="index > 1"
-              class="setting-remove"
-              @click="removeItem(index)"
-            >
-              <i class="iconfont icon-trash-alt" />
+          <div class="setting-item" v-for="(item, index) in data">
+            <div v-if="index > 1" class="setting-remove" @click="removeItem(index)">
+              <i class="iconfont icon-trash-alt"></i>
             </div>
             <!--
             <img v-if="item.iconPath" :src="item.iconPath" class="icon-setter" @click="handleIconChange(index)"/>
@@ -39,11 +29,7 @@
               <i class="iconfont icon-image muted"></i>
             </div>-->
             <div class="uploader-setting">
-              <el-input
-                v-model="item.text"
-                placeholder="tab名称"
-                maxlength=""
-              />
+              <el-input placeholder="tab名称" v-model="item.text" maxlength=""></el-input>
             </div>
             <div class="uploader-setting">
               <el-select
@@ -57,7 +43,8 @@
                   :key="item.value"
                   :label="item.label"
                   :value="item.value"
-                />
+                >
+                </el-option>
               </el-select>
             </div>
           </div>
@@ -68,47 +55,21 @@
             class="iconfont icon-plus-circle banner-button-uploader"
             @click="addItem"
           >
-            添加菜单项
-          </el-button>
-          <div
-            class="goods-select"
-            @click="handleGoodsChange"
+            添加菜单项</el-button
           >
-            <div
-              v-if="base.title"
-              class="link-content"
-            >
-              <template v-if="base.linkPage === 'goods'">
-                商品：
-              </template>
-              <template v-if="base.linkPage === 'category'">
-                分类：
-              </template>
-              <template v-if="base.linkPage === 'article'">
-                文章：
-              </template>
-              <template v-if="base.linkPage === 'planting'">
-                软文：
-              </template>
-              <template v-if="base.linkPage === 'link'">
-                页面：
-              </template>
-              <template v-if="base.linkPage === 'marketing'">
-                营销：
-              </template>
-              <template v-if="base.linkPage === 'custom_page'">
-                自定义页面：
-              </template>
+          <div class="goods-select" @click="handleGoodsChange">
+            <div class="link-content" v-if="base.title">
+              <template v-if="base.linkPage === 'goods'">商品：</template>
+              <template v-if="base.linkPage === 'category'">分类：</template>
+              <template v-if="base.linkPage === 'article'">文章：</template>
+              <template v-if="base.linkPage === 'planting'">软文：</template>
+              <template v-if="base.linkPage === 'link'">页面：</template>
+              <template v-if="base.linkPage === 'marketing'">营销：</template>
+              <template v-if="base.linkPage === 'custom_page'">自定义页面：</template>
               {{ base.title }}
             </div>
-            <div
-              v-else
-              class="content-center"
-            >
-              <i
-                class="iconfont icon-link"
-                @click="handleGoodsChange"
-              />服务页面设置路径
+            <div v-else class="content-center">
+              <i class="iconfont icon-link" @click="handleGoodsChange"></i>服务页面设置路径
             </div>
           </div>
         </el-form-item>
@@ -125,7 +86,17 @@ export default {
       default: {}
     }
   },
-  data () {
+  watch: {
+    res: {
+      deep: true,
+      handler(value) {
+        if (value) {
+          this.setData(value)
+        }
+      }
+    }
+  },
+  data() {
     return {
       name: '',
       config: {},
@@ -164,28 +135,15 @@ export default {
       ]
     }
   },
-  watch: {
-    res: {
-      deep: true,
-      handler (value) {
-        if (value) {
-          this.setData(value)
-        }
-      }
-    }
-  },
-  mounted () {
-    this.setData(this.res)
-  },
   methods: {
-    setData (val) {
+    setData(val) {
       this.name = val.name
       this.config = val.config
       this.data = val.data
       this.base = val.base && val.base.length > 0 ? val.base[0] : []
       this.editItem()
     },
-    addItem () {
+    addItem() {
       if (!this.data) {
         this.data = []
       }
@@ -206,7 +164,7 @@ export default {
         this.data.push(item)
       }
     },
-    editItem () {
+    editItem() {
       if (this.base && this.base.linkPage && this.base.linkPage === 'custom_page') {
         this.data.map((item) => {
           if (item.name === 'service') {
@@ -215,27 +173,30 @@ export default {
         })
       }
     },
-    removeItem (index) {
+    removeItem(index) {
       this.data.splice(index, 1)
     },
-    handleClick (index) {
+    handleClick(index) {
       this.current = index
     },
-    handleChange (value) {
+    handleChange(value) {
       let n = this.pathOptions.find((item) => item.value === value)
       if (n) {
         this.data[this.current].name = n.name
       }
     },
-    handleIconChange (index) {
+    handleIconChange(index) {
       this.$emit('bindImgs', index, 'default')
     },
-    handleSelectedIconChange (index) {
+    handleSelectedIconChange(index) {
       this.$emit('bindImgs', index, 'selected')
     },
-    handleGoodsChange () {
+    handleGoodsChange() {
       this.$emit('bindLinks')
     }
+  },
+  mounted() {
+    this.setData(this.res)
   }
 }
 </script>

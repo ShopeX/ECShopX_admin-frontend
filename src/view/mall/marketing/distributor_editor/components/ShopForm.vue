@@ -12,45 +12,26 @@
       <el-col :span="10">
         <el-form-item label="所属区域">
           <div>
-            <el-select
-              v-model="form.regionauth_id"
-              placeholder="区域"
-              style="width: 100%"
-            >
+            <el-select v-model="form.regionauth_id" placeholder="区域" style="width: 100%">
               <el-option
                 v-for="(item, index) in regionauthList"
                 :key="index"
                 :label="item.regionauth_name"
                 :value="item.regionauth_id"
-              />
+              >
+              </el-option>
             </el-select>
           </div>
         </el-form-item>
       </el-col>
       <el-col :span="12">
-        <el-form-item
-          inline="true"
-          label="店铺经纬度"
-        >
+        <el-form-item inline="true" label="店铺经纬度">
           <el-col :span="8">
-            <el-input
-              v-model="form.lng"
-              readonly
-              placeholder="经度"
-            />
+            <el-input v-model="form.lng" readonly placeholder="经度"></el-input>
           </el-col>
-          <el-col
-            :span="4"
-            class="content-center"
-          >
-            -
-          </el-col>
+          <el-col :span="4" class="content-center">-</el-col>
           <el-col :span="8">
-            <el-input
-              v-model="form.lat"
-              readonly
-              placeholder="纬度"
-            />
+            <el-input v-model="form.lat" readonly placeholder="纬度"></el-input>
           </el-col>
         </el-form-item>
       </el-col>
@@ -60,46 +41,31 @@
         <el-cascader
           v-model="form.regions_id"
           :options="regions"
-          style="width: 200px"
           @change="handleRegionChange"
-        />
+          style="width: 200px"
+        ></el-cascader>
         <el-input
-          id="keyword"
           v-model="form.address"
+          id="keyword"
           placeholder="请输入详细地址（去除省市县）"
           style="width: 500px"
-        />
-        <el-button
-          type="primary"
-          @click="searchKeyword()"
-        >
-          搜索定位
-        </el-button>
+        ></el-input>
+        <el-button type="primary" @click="searchKeyword()">搜索定位</el-button>
       </el-form-item>
     </el-row>
 
     <el-row>
       <el-col :span="20">
-        <div id="qqmap_container" />
+        <div id="qqmap_container"></div>
       </el-col>
     </el-row>
 
-    <div
-      v-show="qqmap_infowin_flag"
-      id="qqmap_infowin"
-    >
+    <div id="qqmap_infowin" v-show="qqmap_infowin_flag">
       <el-col>
-        <el-button
-          type="primary"
-          @click="imp_poi(poi_info)"
-        >
-          导入该位置信息
-        </el-button>
+        <el-button type="primary" @click="imp_poi(poi_info)">导入该位置信息</el-button>
       </el-col>
       <el-col>{{ poi_info.name }}</el-col>
-      <div class="frm-tips">
-        {{ poi_info.address }}
-      </div>
+      <div class="frm-tips">{{ poi_info.address }}</div>
     </div>
   </el-card>
 </template>
@@ -110,7 +76,7 @@ import { getRegionauth } from '@/api/regionauth'
 import { getDistributorInfo } from '@/api/marketing'
 
 // 取选中地区的值
-function getCascaderObj (val, opt) {
+function getCascaderObj(val, opt) {
   return val.map(function (value, index, array) {
     for (var itm of opt) {
       if (itm.value === value) {
@@ -123,8 +89,7 @@ function getCascaderObj (val, opt) {
 }
 
 export default {
-  props: ['externalForm'],
-  data () {
+  data() {
     const { regionauth_id, lng, lat, regions_id, address } = this.externalForm
     return {
       form: {
@@ -144,49 +109,7 @@ export default {
       qqmap_infowin_flag: false
     }
   },
-  mounted () {
-    this.getRegionauthList()
-    this.distributor_id = this.$route.query.distributor_id
-
-    this.$emit('onChangeData', 'distributor_id', this.distributor_id)
-
-    if (this.distributor_id || this.$store.getters.login_type == 'distributor') {
-      getDistributorInfo({ distributor_id: this.distributor_id }).then((res) => {
-        let formData = res.data.data
-        this.form = res.data.data
-
-        this.$emit('onChangeData', 'form', formData)
-
-        if (
-          this.form.regions[0] == '北京市' ||
-          this.form.regions[0] == '天津市' ||
-          this.form.regions[0] == '上海市' ||
-          this.form.regions[0] == '重庆市'
-        ) {
-          this.searchRegion = this.form.regions[0] + this.form.regions[2]
-        } else {
-          this.searchRegion = this.form.regions[0] + this.form.regions[1] + this.form.regions[2]
-        }
-
-        if (!this.form.lat) {
-          this.qqmapinit(39.916527, 116.397128)
-        } else {
-          this.qqmapinit(this.form.lat, this.form.lng)
-        }
-        this.$emit('onChangeData', 'disabled', formData.shop_code ? true : false)
-        this.$emit('initForm', formData)
-      })
-    } else {
-      // 添加门店时初始化地图
-      this.qqmapinit(39.916527, 116.397128)
-    }
-    let distributor_type = this.$route.query.distributor_type
-
-    this.$emit('onChangeData', 'distributor_type', distributor_type)
-    if (distributor_type) {
-      this.form.distributor_self = 1
-    }
-  },
+  props: ['externalForm'],
   // watch: {
   //   externalForm: {
   //     handler(val) {
@@ -307,7 +230,7 @@ export default {
         this.searchRegion = this.form.regions[0] + this.form.regions[1] + this.form.regions[2]
       }
     },
-    getRegionauthList () {
+    getRegionauthList() {
       getRegionauth().then((res) => {
         this.regionauthList = res.data.data.list
       })
@@ -358,6 +281,49 @@ export default {
         lng: this.form.lng,
         lat: this.form.lat
       })
+    }
+  },
+  mounted() {
+    this.getRegionauthList()
+    this.distributor_id = this.$route.query.distributor_id
+
+    this.$emit('onChangeData', 'distributor_id', this.distributor_id)
+
+    if (this.distributor_id || this.$store.getters.login_type == 'distributor') {
+      getDistributorInfo({ distributor_id: this.distributor_id }).then((res) => {
+        let formData = res.data.data
+        this.form = res.data.data
+
+        this.$emit('onChangeData', 'form', formData)
+
+        if (
+          this.form.regions[0] == '北京市' ||
+          this.form.regions[0] == '天津市' ||
+          this.form.regions[0] == '上海市' ||
+          this.form.regions[0] == '重庆市'
+        ) {
+          this.searchRegion = this.form.regions[0] + this.form.regions[2]
+        } else {
+          this.searchRegion = this.form.regions[0] + this.form.regions[1] + this.form.regions[2]
+        }
+
+        if (!this.form.lat) {
+          this.qqmapinit(39.916527, 116.397128)
+        } else {
+          this.qqmapinit(this.form.lat, this.form.lng)
+        }
+        this.$emit('onChangeData', 'disabled', formData.shop_code ? true : false)
+        this.$emit('initForm', formData)
+      })
+    } else {
+      // 添加门店时初始化地图
+      this.qqmapinit(39.916527, 116.397128)
+    }
+    let distributor_type = this.$route.query.distributor_type
+
+    this.$emit('onChangeData', 'distributor_type', distributor_type)
+    if (distributor_type) {
+      this.form.distributor_self = 1
     }
   }
 }

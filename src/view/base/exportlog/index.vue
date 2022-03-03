@@ -1,186 +1,57 @@
 <template>
   <div>
     <div class="content-bottom-padded">
-      <el-alert
-        type="info"
-        title="下载提示"
-        show-icon
-      >
+      <el-alert type="info" title="下载提示" show-icon>
         <div>已经生成的文件只保留一天，请及时下载</div>
       </el-alert>
     </div>
-    <el-tabs
-      v-model="activeName"
-      type="border-card"
-      @tab-click="handleClick"
-    >
+    <el-tabs type="border-card" v-model="activeName" @tab-click="handleClick">
       <template v-if="$store.getters.login_type == 'dealer'">
-        <el-tab-pane
-          label="分账导出"
-          name="adapay_tradedata"
-        />
+        <el-tab-pane label="分账导出" name="adapay_tradedata"></el-tab-pane>
       </template>
       <template v-else-if="$store.getters.login_type == 'merchant'">
-        <el-tab-pane
-          label="主订单导出"
-          name="normal_master_order"
-        />
-        <el-tab-pane
-          label="子订单导出"
-          name="normal_order"
-        />
-        <el-tab-pane
-          label="待开票订单导出"
-          name="invoice"
-        />
-        <el-tab-pane
-          label="售后列表导出"
-          name="aftersale_record_count"
-        />
-        <el-tab-pane
-          label="交易单导出"
-          name="tradedata"
-        />
-        <el-tab-pane
-          label="退款单导出"
-          name="refund_record_count"
-        />
-        <el-tab-pane
-          label="商品统计导出"
-          name="goods_data"
-        />
+        <el-tab-pane label="主订单导出" name="normal_master_order"></el-tab-pane>
+        <el-tab-pane label="子订单导出" name="normal_order"></el-tab-pane>
+        <el-tab-pane label="待开票订单导出" name="invoice"></el-tab-pane>
+        <el-tab-pane label="售后列表导出" name="aftersale_record_count"></el-tab-pane>
+        <el-tab-pane label="交易单导出" name="tradedata"></el-tab-pane>
+        <el-tab-pane label="退款单导出" name="refund_record_count"></el-tab-pane>
+        <el-tab-pane label="商品统计导出" name="goods_data"></el-tab-pane>
       </template>
       <template v-else>
-        <el-tab-pane
-          label="会员导出"
-          name="member"
-        />
-        <el-tab-pane
-          label="服务订单导出"
-          name="service_order"
-        />
-        <el-tab-pane
-          label="实体主订单导出"
-          name="normal_master_order"
-        />
-        <el-tab-pane
-          label="实体子订单导出"
-          name="normal_order"
-        />
-        <el-tab-pane
-          label="发票信息导出"
-          name="invoice"
-        />
-        <el-tab-pane
-          label="药品需求单"
-          name="drug_order"
-        />
-        <el-tab-pane
-          label="商品统计导出"
-          name="goods_data"
-        />
-        <el-tab-pane
-          label="商品导出"
-          name="items"
-        />
-        <el-tab-pane
-          label="商品标签导出"
-          name="normal_items_tag"
-        />
-        <el-tab-pane
-          label="店铺商品导出"
-          name="distributor_items"
-        />
-        <el-tab-pane
-          label="积分商品导出"
-          name="pointsmallitems"
-        />
-        <el-tab-pane
-          label="权益导出"
-          name="right"
-        />
-        <el-tab-pane
-          label="权益核销记录导出"
-          name="right_consume"
-        />
-        <el-tab-pane
-          label="交易单导出"
-          name="tradedata"
-        />
-        <el-tab-pane
-          label="社区团购-积分提现记录导出"
-          name="community_withdraw"
-        />
-        <el-tab-pane
-          label="报名导出"
-          name="selform_registration_record"
-        />
-        <el-tab-pane
-          label="售后列表导出"
-          name="aftersale_record_count"
-        />
-        <el-tab-pane
-          label="退款单列表导出"
-          name="refund_record_count"
-        />
-        <el-tab-pane
-          label="推广员业绩导出"
-          name="popularize"
-        />
-        <el-tab-pane
-          label="财务售后单导出"
-          name="aftersale_financial"
-        />
-        <el-tab-pane
-          label="财务销售报表导出"
-          name="salesreport_financial"
-        />
-        <el-tab-pane
-          label="交易统计导出"
-          name="hfpay_trade_record"
-        />
-        <el-tab-pane
-          label="分账统计导出"
-          name="hfpay_order_record"
-        />
-        <el-tab-pane
-          label="提现记录导出"
-          name="hfpay_withdraw_record"
-        />
-        <el-tab-pane
-          label="分账导出"
-          name="adapay_tradedata"
-        />
-        <el-tab-pane
-          label="商品码导出"
-          name="itemcode"
-        />
+        <el-tab-pane label="会员导出" name="member"></el-tab-pane>
+        <el-tab-pane label="服务订单导出" name="service_order"></el-tab-pane>
+        <el-tab-pane label="实体主订单导出" name="normal_master_order"></el-tab-pane>
+        <el-tab-pane label="实体子订单导出" name="normal_order"></el-tab-pane>
+        <el-tab-pane label="发票信息导出" name="invoice"></el-tab-pane>
+        <el-tab-pane label="药品需求单" name="drug_order"></el-tab-pane>
+        <el-tab-pane label="商品统计导出" name="goods_data"></el-tab-pane>
+        <el-tab-pane label="商品导出" name="items"></el-tab-pane>
+        <el-tab-pane label="商品标签导出" name="normal_items_tag"></el-tab-pane>
+        <el-tab-pane label="店铺商品导出" name="distributor_items"></el-tab-pane>
+        <el-tab-pane label="积分商品导出" name="pointsmallitems"></el-tab-pane>
+        <el-tab-pane label="权益导出" name="right"></el-tab-pane>
+        <el-tab-pane label="权益核销记录导出" name="right_consume"></el-tab-pane>
+        <el-tab-pane label="交易单导出" name="tradedata"></el-tab-pane>
+        <el-tab-pane label="社区团购-积分提现记录导出" name="community_withdraw"></el-tab-pane>
+        <el-tab-pane label="报名导出" name="selform_registration_record"></el-tab-pane>
+        <el-tab-pane label="售后列表导出" name="aftersale_record_count"></el-tab-pane>
+        <el-tab-pane label="退款单列表导出" name="refund_record_count"></el-tab-pane>
+        <el-tab-pane label="推广员业绩导出" name="popularize"></el-tab-pane>
+        <el-tab-pane label="财务售后单导出" name="aftersale_financial"></el-tab-pane>
+        <el-tab-pane label="财务销售报表导出" name="salesreport_financial"></el-tab-pane>
+        <el-tab-pane label="交易统计导出" name="hfpay_trade_record"></el-tab-pane>
+        <el-tab-pane label="分账统计导出" name="hfpay_order_record"></el-tab-pane>
+        <el-tab-pane label="提现记录导出" name="hfpay_withdraw_record"></el-tab-pane>
+        <el-tab-pane label="分账导出" name="adapay_tradedata"></el-tab-pane>
+        <el-tab-pane label="商品码导出" name="itemcode"></el-tab-pane>
       </template>
 
-      <el-table
-        v-loading="loading"
-        :data="exportLogLists"
-        :height="wheight - 220"
-      >
-        <el-table-column
-          prop="log_id"
-          label="ID"
-          width="80"
-        />
-        <el-table-column
-          prop="file_name"
-          label="文件名称"
-        />
-        <el-table-column
-          prop="finish_date"
-          label="处理完成时间"
-          width="160"
-        />
-        <el-table-column
-          prop="handle_status"
-          label="处理状态"
-          width="80"
-        >
+      <el-table :data="exportLogLists" :height="wheight - 220" v-loading="loading">
+        <el-table-column prop="log_id" label="ID" width="80"></el-table-column>
+        <el-table-column prop="file_name" label="文件名称"></el-table-column>
+        <el-table-column prop="finish_date" label="处理完成时间" width="160"> </el-table-column>
+        <el-table-column prop="handle_status" label="处理状态" width="80">
           <template slot-scope="scope">
             <span v-if="scope.row.handle_status == 'wait'">等待处理</span>
             <span v-if="scope.row.handle_status == 'finish'">处理完成</span>
@@ -188,31 +59,22 @@
             <span v-if="scope.row.handle_status == 'fail'">处理失败</span>
           </template>
         </el-table-column>
-        <el-table-column
-          label="操作"
-          min-width="150"
-          fixed="right"
-        >
+        <el-table-column label="操作" min-width="150" fixed="right">
           <template slot-scope="scope">
-            <a
-              href=" "
-              @click.prevent="handleDown(scope.row)"
-            >下载</a>
+            <a href=" " @click.prevent="handleDown(scope.row)">下载</a>
           </template>
         </el-table-column>
       </el-table>
-      <div
-        v-if="total_count > params.pageSize"
-        class="content-center content-top-padded"
-      >
+      <div v-if="total_count > params.pageSize" class="content-center content-top-padded">
         <el-pagination
           background
           layout="prev, pager, next, total"
+          @current-change="handleCurrentChange"
           :current-page.sync="params.page"
           :total="total_count"
           :page-size="params.pageSize"
-          @current-change="handleCurrentChange"
-        />
+        >
+        </el-pagination>
       </div>
     </el-tabs>
   </div>
@@ -223,7 +85,7 @@ import { Message } from 'element-ui'
 import { ExportLogList, ExportLogFileDown } from '../../../api/trade'
 export default {
   props: ['getStatus'],
-  data () {
+  data() {
     return {
       // activeName: this.$store.getters.login_type == 'dealer' ? 'adapay_tradedata' : 'member',
       activeName: '',
@@ -240,7 +102,7 @@ export default {
       }
     }
   },
-  mounted () {
+  mounted() {
     this.activeTabHandler()
     this.getExportLogLists(this.params)
   },
@@ -249,11 +111,11 @@ export default {
     ...mapGetters(['wheight'])
   },
   methods: {
-    activeTabHandler () {
-      const active = this.$store.getters.login_type
+    activeTabHandler() {
+      const active = this.$store.getters.login_type 
       const { tab } = this.$route.query
       if (tab) {
-        this.activeName = tab
+        this.activeName=tab;
       } else {
         if (active == 'dealer') {
           this.activeName = 'adapay_tradedata'
@@ -262,23 +124,23 @@ export default {
         } else {
           this.activeName = 'member'
         }
-      }
+      } 
     },
     // 切换tab
-    handleClick (tab, event) {
+    handleClick(tab, event) {
       this.activeName = tab.name
       this.params.page = 1
       this.getExportLogLists(this.params)
     },
-    handleCurrentChange (page_num) {
+    handleCurrentChange(page_num) {
       this.params.page = page_num
       this.getExportLogLists(this.params)
     },
-    dataSearch () {
+    dataSearch() {
       this.params.page = 1
       this.getExportLogLists(this.params)
     },
-    getExportLogLists (params) {
+    getExportLogLists(params) {
       this.loading = true
       params.export_type = this.activeName
       ExportLogList(params).then((response) => {
@@ -287,7 +149,7 @@ export default {
         this.loading = false
       })
     },
-    dateChange (val) {
+    dateChange(val) {
       if (val && val.length > 0) {
         this.params.start_time = this.dateStrToTimeStamp(val[0] + ' 00:00:00')
         this.params.end_time = this.dateStrToTimeStamp(val[1] + ' 23:59:59')
@@ -298,10 +160,10 @@ export default {
       this.params.page = 1
       this.getExportLogLists(this.params)
     },
-    dateStrToTimeStamp (str) {
+    dateStrToTimeStamp(str) {
       return Date.parse(new Date(str)) / 1000
     },
-    handleDown ({ log_id, file_url }) {
+    handleDown({ log_id, file_url }) {
       if (this.activeName == 'itemcode') {
         window.open(file_url)
         return
@@ -316,13 +178,13 @@ export default {
         window.URL.revokeObjectURL(url)
       })
     },
-    genUrl (encoded, options) {
+    genUrl(encoded, options) {
       const dataBlob = new Blob([`\ufeff${encoded}`], { type: 'text/plain;charset=utf-8' }) //返回的格式
       return window.URL.createObjectURL(dataBlob)
     }
   },
   watch: {
-    getStatus (val) {
+    getStatus(val) {
       if (val) {
         this.getExportLogLists(this.params)
       }

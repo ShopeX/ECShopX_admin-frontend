@@ -2,81 +2,46 @@
   <div>
     <div v-if="$route.path.indexOf('detail') === -1 && $route.path.indexOf('editor') === -1">
       <div class="content-bottom-padded">
-        <el-button
-          type="primary"
-          icon="el-icon-circle-plus"
-          @click="addCoupon"
+        <el-button type="primary" icon="el-icon-circle-plus" @click="addCoupon"
+          >创建优惠券</el-button
         >
-          创建优惠券
-        </el-button>
       </div>
-      <el-tabs
-        v-model="fetchParams.date_status"
-        type="border-card"
-        @tab-click="handleClick"
-      >
-        <el-tab-pane
-          label="已生效"
-          :name="2"
-        />
-        <el-tab-pane
-          label="待生效"
-          :name="1"
-        />
-        <el-tab-pane
-          label="已过期"
-          :name="3"
-        />
+      <el-tabs type="border-card" v-model="fetchParams.date_status" @tab-click="handleClick">
+        <el-tab-pane label="已生效" :name="2" />
+        <el-tab-pane label="待生效" :name="1" />
+        <el-tab-pane label="已过期" :name="3" />
         <el-table
-          v-loading="loading"
           :data="cardList"
           @filter-change="filterTag"
+          v-loading="loading"
           @selection-change="handleSelectionChange"
         >
           <!-- <el-table-column type="selection" width="55"></el-table-column> -->
-          <el-table-column
-            prop="card_type"
-            column-key="type"
-            label="卡券类型"
-            width="120"
-            :filter-multiple="false"
-            :filters="typeFilters"
-            filter-placement="bottom-end"
-          >
+          <el-table-column prop="card_type" column-key="type" label="卡券类型" width="120" :filter-multiple="false" :filters="typeFilters" filter-placement="bottom-end">
             <template slot-scope="scope">
               <el-tag
                 :type="
                   scope.row.card_type === 'discount'
                     ? 'primary'
                     : scope.row.card_type === 'cash'
-                      ? 'danger'
-                      : 'warning'
+                    ? 'danger'
+                    : 'warning'
                 "
                 size="mini"
+                >{{ scope.row.card_type | formatCardStr }}</el-tag
               >
-                {{ scope.row.card_type | formatCardStr }}
-              </el-tag>
             </template>
           </el-table-column>
-          <el-table-column
-            prop="title"
-            label="卡券标题"
-          />
-          <el-table-column
-            width="280"
-            label="卡券有效期"
-          >
+          <el-table-column prop="title" label="卡券标题"></el-table-column>
+          <el-table-column width="280" label="卡券有效期">
             <template slot-scope="scope">
-              <i class="el-icon-time" />
+              <i class="el-icon-time"></i>
               <template v-if="scope.row.takeEffect">
                 {{ scope.row.takeEffect }}
               </template>
               <template v-else>
                 {{ scope.row.begin_time | datetime('YYYY-MM-DD HH:mm:ss') }}
-                <template v-if="scope.row.end_time">
-                  ~
-                </template>
-                {{ scope.row.end_time | datetime('YYYY-MM-DD HH:mm:ss') }}
+                <template v-if="scope.row.end_time">~</template> {{ scope.row.end_time | datetime('YYYY-MM-DD HH:mm:ss') }}
                 <!-- {{ Date.parse(new Date()) > scope.row.end_time * 1000 ? '已过期' : '' }} -->
               </template>
             </template>
@@ -94,113 +59,69 @@
               {{ scope.row.status | formatStatusStr }}
             </template>
           </el-table-column> -->
-          <el-table-column
-            width="120"
-            label="可领取库存"
-          >
+          <el-table-column width="120" label="可领取库存">
             <template slot-scope="scope">
               <span v-if="scope.row.quantity > scope.row.get_num">{{
                 scope.row.quantity - scope.row.get_num
               }}</span>
               <span v-else>0</span>
               <el-popover
-                v-if="scope.row.edit_btn === 'Y'"
-                v-model="scope.row.storePop"
                 placement="bottom"
                 width="300"
                 trigger="click"
+                v-model="scope.row.storePop"
+                v-if="scope.row.edit_btn === 'Y'"
               >
-                <div
-                  ref="store"
-                  class="store-pop"
-                >
+                <div ref="store" class="store-pop">
                   <div class="store-content">
-                    <el-radio-group
-                      v-model="scope.row.operationType"
-                      class="content-bottom-padded"
-                    >
-                      <el-radio label="increase">
-                        增加
-                      </el-radio>
-                      <el-radio label="reduce">
-                        减少
-                      </el-radio>
+                    <el-radio-group v-model="scope.row.operationType" class="content-bottom-padded">
+                      <el-radio label="increase">增加</el-radio>
+                      <el-radio label="reduce">减少</el-radio>
                     </el-radio-group>
                     <el-row>
                       <el-col :span="22">
                         <el-input
-                          v-model="scope.row.storeValue"
                           placeholder="库存不能少于1"
-                        />
+                          v-model="scope.row.storeValue"
+                        ></el-input>
                       </el-col>
-                      <el-col
-                        :span="2"
-                        style="line-height: 36px"
-                        class="content-center"
+                      <el-col :span="2" style="line-height: 36px;" class="content-center"
+                        >份</el-col
                       >
-                        份
-                      </el-col>
                     </el-row>
                   </div>
                   <el-row :gutter="10">
-                    <el-col
-                      :span="12"
-                    >
-                      <el-button
-                        :loading="loadingbtn"
+                    <el-col :span="12"
+                      ><el-button
+                        :loading='loadingbtn'
                         type="primary"
                         style="width: 100%"
                         @click="saveStore(scope.$index, scope.row.operationType)"
-                      >
-                        确定
-                      </el-button>
-                    </el-col>
-                    <el-col
-                      :span="12"
+                        >确定</el-button
+                      ></el-col
                     >
-                      <el-button
-                        style="width: 100%"
-                        @click="scope.row.storePop = false"
-                      >
-                        取消
-                      </el-button>
-                    </el-col>
+                    <el-col :span="12"
+                      ><el-button style="width: 100%" @click="scope.row.storePop = false"
+                        >取消</el-button
+                      ></el-col
+                    >
                   </el-row>
                 </div>
-                <el-button
-                  slot="reference"
-                  type="text"
-                >
-                  <i class="el-icon-edit" />
-                </el-button>
+                <el-button slot="reference" type="text"><i class="el-icon-edit"></i></el-button>
               </el-popover>
             </template>
           </el-table-column>
-          <el-table-column
-            width="80"
-            prop="get_num"
-            label="领取量"
-          >
+          <el-table-column width="80" prop="get_num" label="领取量">
             <!-- <template v-if="scope.row.get_num">{{scope.row.get_num}}</template> -->
             <!-- <template>0</template> -->
           </el-table-column>
-          <el-table-column
-            width="80"
-            prop="use_num"
-            label="使用量"
-          >
+          <el-table-column width="80" prop="use_num" label="使用量">
             <!-- <template v-if="scope.row.use_num">{{scope.row.use_num}}</template> -->
             <!-- <template>0</template> -->
           </el-table-column>
-          <el-table-column
-            width="80"
-            prop="source_name"
-            label="店铺"
-          />
-          <el-table-column
-            width="120"
-            label="操作"
-          >
+          <el-table-column width="80" prop="source_name" label="店铺">
+          </el-table-column>
+          <el-table-column width="120" label="操作">
             <template slot-scope="scope">
               <div class="operating-icons">
                 <el-button type="text">
@@ -213,30 +134,24 @@
                         title: scope.row.title
                       }
                     }"
+                    >查看</router-link
                   >
-                    查看
-                  </router-link>
                 </el-button>
-                <el-button
-                  v-if="scope.row.edit_btn == 'Y'"
-                  type="text"
-                >
+                <el-button type="text" v-if="scope.row.edit_btn=='Y'"> 
                   <router-link
                     :to="{
                       path: matchHidePage('editor'),
                       query: { chooseCardtype: scope.row.card_type, cardId: scope.row.card_id }
                     }"
+                    >编辑</router-link
                   >
-                    编辑
-                  </router-link>
                 </el-button>
                 <el-button
-                  v-if="scope.row.status != 'CARD_STATUS_DISPATCH'"
                   type="text"
+                  v-if="scope.row.status != 'CARD_STATUS_DISPATCH'"
                   @click="deleteCard(scope.row.card_id, scope.$index)"
+                  >删除</el-button
                 >
-                  删除
-                </el-button>
               </div>
               <!-- <a v-if="!scope.row.ifpass" href="#" @click="sendoutShowAction(scope.row.card_id, scope.$index)">投放</a> -->
             </template>
@@ -245,46 +160,34 @@
         <div class="content-padded content-center">
           <el-pagination
             layout="total, sizes, prev, pager, next, jumper"
-            :total="pagers.total"
-            :page-size="pageSize"
             @size-change="handleSizeChange"
             @current-change="handleCurrentChange"
-          />
+            :total="pagers.total"
+            :page-size="pageSize"
+          >
+          </el-pagination>
         </div>
       </el-tabs>
-      <el-dialog
-        title="您可以通过以下方式投放"
-        :visible.sync="sendoutVisible"
-      >
+      <el-dialog title="您可以通过以下方式投放" :visible.sync="sendoutVisible">
         <div
+          class="sendout-item"
           v-for="(item, index) in sedoutList"
           :key="index"
-          class="sendout-item"
           :class="{ 'checked': currSendout === index }"
           @click="chooseSendout(index)"
         >
           <div>{{ item.name }}</div>
           <div class="icon-checked">
-            <i class="el-icon-circle-check" />
+            <i class="el-icon-circle-check"></i>
           </div>
         </div>
-        <div
-          slot="footer"
-          class="dialog-footer"
-        >
-          <el-button @click.native="sendoutVisible = false">
-            取消
-          </el-button>
-          <el-button
-            type="primary"
-            @click.native="sendoutAction"
-          >
-            确定
-          </el-button>
+        <div slot="footer" class="dialog-footer">
+          <el-button @click.native="sendoutVisible = false">取消</el-button>
+          <el-button type="primary" @click.native="sendoutAction">确定</el-button>
         </div>
       </el-dialog>
     </div>
-    <router-view />
+    <router-view></router-view>
   </div>
 </template>
 
@@ -300,34 +203,15 @@ import {
 } from '../../../api/cardticket'
 import util from '../../../common/js/util'
 export default {
-  provide () {
+  provide() {
     return {
       refresh: this.getCardList
     }
   },
-  filters: {
-    formatStatusStr (str) {
-      switch (str) {
-        case 'CARD_STATUS_NOT_VERIFY':
-          str = '待审核'
-          break
-        case 'CARD_STATUS_VERIFY_OK':
-          str = '待投放'
-          break
-        case 'CARD_STATUS_DISPATCH':
-          str = '已投放'
-          break
-        case 'CARD_STATUS_VERIFY_FAIL':
-          str = '审核失败'
-          break
-      }
-      return str
-    }
-  },
-  data () {
+  data() {
     return {
       loading: false,
-      loadingbtn: false,
+      loadingbtn:false,
       sendoutVisible: false,
       currSendout: 1,
       checkedType: {},
@@ -366,7 +250,7 @@ export default {
         {
           text: '兑换券',
           value: 'new_gift'
-        }
+        },
         // {
         //   text: '现金券',
         //   value: 'money'
@@ -400,38 +284,50 @@ export default {
       multipleSelection: []
     }
   },
+  filters: {
+    formatStatusStr(str) {
+      switch (str) {
+        case 'CARD_STATUS_NOT_VERIFY':
+          str = '待审核'
+          break
+        case 'CARD_STATUS_VERIFY_OK':
+          str = '待投放'
+          break
+        case 'CARD_STATUS_DISPATCH':
+          str = '已投放'
+          break
+        case 'CARD_STATUS_VERIFY_FAIL':
+          str = '审核失败'
+          break
+      }
+      return str
+    }
+  },
   computed: {
     ...mapGetters(['wheight'])
   },
-  mounted () {
-    this.fetchParams.store_self = false
-    if (this.system_mode === 'platform' && store.getters.login_type !== 'distributor') {
-      this.fetchParams.store_self = true
-    }
-    this.getCardList()
-  },
   methods: {
-    handleCurrentChange (val) {
+    handleCurrentChange(val) {
       this.fetchParams.currentPage = val
       this.getCardList()
     },
-    handleSizeChange (val) {
+    handleSizeChange(val) {
       this.fetchParams.pageSize = val
       this.getCardList()
     },
-    handleClick (tab, event) {
+    handleClick(tab, event) {
       this.fetchParams.date_status = tab.name
       this.getCardList()
     },
-    addCoupon () {
+    addCoupon() {
       this.$router.push({ path: this.matchHidePage('editor') })
     },
-    sendoutShowAction (id) {
+    sendoutShowAction(id) {
       this.sendoutVisible = true
       this.typeId = id
       this.currSendout = 0
     },
-    sendoutAction () {
+    sendoutAction() {
       if (this.currSendout == 0) {
         if (this.typeId) {
           getQRcode(this.typeId).then((res) => {
@@ -444,11 +340,11 @@ export default {
       }
       this.sendoutVisible = false
     },
-    chooseType (item, index) {
+    chooseType(item, index) {
       this.i = index
       this.checkedType = item
     },
-    deleteCard (id, index) {
+    deleteCard(id, index) {
       this.$confirm('确定要删除该卡券？', '提示', {
         cancelButtonText: '取消',
         confirmButtonText: '确定',
@@ -463,10 +359,10 @@ export default {
         }
       })
     },
-    chooseSendout (index) {
+    chooseSendout(index) {
       this.currSendout = index
     },
-    pullWechatCard () {
+    pullWechatCard() {
       this.$confirm('确定同步微信优惠券到本系统吗？', '提示', {
         confirmButtonText: '确定',
         cancelButtonText: '取消',
@@ -488,7 +384,7 @@ export default {
           })
         })
     },
-    getCardList () {
+    getCardList() {
       this.loading = true
       var params = {
         status: this.fetchParams.status,
@@ -501,9 +397,9 @@ export default {
       getCardList(params)
         .then((res) => {
           // if (res.data.data.list.length > 0) {
-          this.cardList = res.data.data.list
-          this.pagers.total = res.data.data.pagers.total
-          this.loading = false
+            this.cardList = res.data.data.list
+            this.pagers.total = res.data.data.pagers.total
+            this.loading = false
           // } else {
           //   this.cardList = []
           //   this.loading = false
@@ -513,7 +409,7 @@ export default {
           this.loading = false
         })
     },
-    filterTag (value) {
+    filterTag(value) {
       if (value.type) {
         this.fetchParams.card_type = value.type[0]
         this.getCardList()
@@ -523,8 +419,8 @@ export default {
         this.getCardList()
       }
     },
-    saveStore (index, operationType) {
-      this.loadingbtn = true
+    saveStore(index, operationType) {
+       this.loadingbtn = true
       let reg = /^[1-9]\d*$/
       if (!reg.test(this.cardList[index].storeValue)) {
         this.$message({
@@ -550,19 +446,21 @@ export default {
         card_id: this.cardList[index].card_id,
         type: this.cardList[index].operationType,
         quantity: this.cardList[index].storeValue
-      }
+      }     
       updateStore(param).then((response) => {
         //  this.loadingbtn = false
-        setTimeout(() => {
+        setTimeout(()=>{
           this.loadingbtn = false
-        }, 1000)
+        },1000)
         this.getCardList()
+        
       })
+      
     },
-    handleSelectionChange (val) {
+    handleSelectionChange(val) {
       this.multipleSelection = val
     },
-    pushWechatCard () {
+    pushWechatCard() {
       var selectCardId = []
       for (var i = 0; i < this.multipleSelection.length; i++) {
         selectCardId.push(this.multipleSelection[i].card_id)
@@ -591,6 +489,13 @@ export default {
         })
       })
     }
+  },
+  mounted() {
+    this.fetchParams.store_self = false
+    if (this.system_mode === 'platform' && store.getters.login_type !== 'distributor') {
+      this.fetchParams.store_self = true
+    }
+    this.getCardList()
   }
 }
 </script>

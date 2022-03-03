@@ -2,64 +2,33 @@
   <div>
     <el-row :gutter="20">
       <el-col>
-        <el-button
-          type="primary"
-          :disabled="isDisable"
-          @click="updateCategory"
+        <el-button type="primary" @click="updateCategory" :disabled="isDisable">保存分类</el-button>
+        <el-button type="primary" plain icon="el-icon-circle-plus" @click="appendTop(categoryList)"
+          >新增商品分类</el-button
         >
-          保存分类
-        </el-button>
-        <el-button
-          type="primary"
-          plain
-          icon="el-icon-circle-plus"
-          @click="appendTop(categoryList)"
-        >
-          新增商品分类
-        </el-button>
       </el-col>
     </el-row>
     <el-card>
       <el-table
-        ref="tableTree"
-        v-loading="loading"
         :data="categoryList"
         row-key="id"
+        ref="tableTree"
         default-expand-all
+        v-loading="loading"
         :height="wheight - 180"
         :tree-props="{ children: 'children' }"
       >
-        <el-table-column
-          label="分类名称"
-          min-width="280"
-        >
+        <el-table-column label="分类名称" min-width="280">
           <template slot-scope="scope">
-            <el-input
-              v-model="scope.row.category_name"
-              class="input-b"
-              size="mini"
-            />
+            <el-input class="input-b" size="mini" v-model="scope.row.category_name"></el-input>
           </template>
         </el-table-column>
-        <el-table-column
-          prop="sort"
-          label="分类排序"
-          sortable
-          width="150"
-        >
+        <el-table-column prop="sort" label="分类排序" sortable width="150">
           <template slot-scope="scope">
-            <el-input
-              v-model="scope.row.sort"
-              class="input-s"
-              type="number"
-              size="mini"
-            />
+            <el-input class="input-s" type="number" size="mini" v-model="scope.row.sort"></el-input>
           </template>
         </el-table-column>
-        <el-table-column
-          label="分类图片"
-          width="150"
-        >
+        <el-table-column label="分类图片" width="150">
           <template slot-scope="scope">
             <el-image
               v-if="scope.row.image_url"
@@ -67,53 +36,33 @@
               :src="scope.row.image_url"
               :preview-src-list="[scope.row.image_url]"
               fit="cover"
-            />
-            <el-button
-              type="text"
-              class="el-icon-upload2"
-              @click="handleImgChange(scope.row)"
             >
-              上传
-            </el-button>
+            </el-image>
+            <el-button type="text" class="el-icon-upload2" @click="handleImgChange(scope.row)"
+              >上传</el-button
+            >
           </template>
         </el-table-column>
-        <el-table-column
-          prop="created"
-          label="创建时间"
-          width="120"
-        >
+        <el-table-column prop="created" label="创建时间" width="120">
           <template slot-scope="scope">
             {{ scope.row.created | datetime }}
           </template>
         </el-table-column>
-        <el-table-column
-          width="180"
-          label="操作"
-        >
+        <el-table-column width="180" label="操作">
           <template slot-scope="scope">
             <router-link
               :to="{
                 path: '/pointsmall/pointsmallgoods/pointsmallphysical',
                 query: { category: scope.row.category_id }
               }"
+              >查看商品</router-link
             >
-              查看商品
-            </router-link>
-            <el-button
-              v-if="scope.row.level < 2"
-              type="text"
-              style="margin-left: 5px"
-              @click="append(scope.row)"
+            <el-button type="text" v-if="scope.row.level < 2" style="margin-left: 5px;" @click="append(scope.row)"
+              >新增子类</el-button
             >
-              新增子类
-            </el-button>
-            <el-button
-              type="text"
-              style="margin-left: 5px"
-              @click.native.prevent="deleteCategory(scope.row)"
+            <el-button type="text" style="margin-left: 5px;" @click.native.prevent="deleteCategory(scope.row)"
+              >删除</el-button
             >
-              删除
-            </el-button>
           </template>
         </el-table-column>
       </el-table>
@@ -123,7 +72,7 @@
       :sc-status="isGetImage"
       @chooseImg="pickImg"
       @closeImgDialog="closeImgDialog"
-    />
+    ></imgPicker>
   </div>
 </template>
 <script>
@@ -135,7 +84,7 @@ export default {
   components: {
     imgPicker
   },
-  data () {
+  data() {
     return {
       isDisable: false,
       loading: false,
@@ -151,12 +100,8 @@ export default {
   computed: {
     ...mapGetters(['wheight'])
   },
-
-  mounted () {
-    this.getCategory()
-  },
   methods: {
-    getCategory () {
+    getCategory() {
       this.loading = true
       getCategory(this.params).then((response) => {
         this.categoryList = response.data.data
@@ -164,7 +109,7 @@ export default {
         this.spaceInput = false
       })
     },
-    updateCategory () {
+    updateCategory() {
       for (var i = 0; i < this.categoryList.length; i++) {
         for (var a = 0; a < this.categoryList.length - 1 - i; a++) {
           if (this.categoryList[a].category_name == this.categoryList[a + 1].category_name) {
@@ -216,7 +161,7 @@ export default {
         this.getCategory()
       })
     },
-    deleteCategory (data) {
+    deleteCategory(data) {
       this.$confirm('此操作将删除该分类, 是否继续?', '提示', {
         confirmButtonText: '确定',
         cancelButtonText: '取消',
@@ -240,7 +185,7 @@ export default {
             let key = level === 0 ? id : parent_id
             const categoryList = this.categoryList
             const parentIndex = categoryList.findIndex((item) => item.id === key)
-            const deleteList = function (children, delId) {
+            const deleteList = function(children, delId) {
               if (!children) return
               for (let i = 0; i < children.length; i++) {
                 if (children[i].id === delId) {
@@ -267,7 +212,7 @@ export default {
           })
         })
     },
-    append (row) {
+    append(row) {
       console.log(row)
       let { children: data, level = 0, id, parent_id = '' } = row
       let newParentId = level === 0 ? id : parent_id
@@ -283,7 +228,7 @@ export default {
       }
       data.push(newChild)
     },
-    appendTop (data) {
+    appendTop(data) {
       const newChild = {
         id: Date.parse(new Date()) / 1000,
         category_name: '',
@@ -299,7 +244,7 @@ export default {
         container.scrollTop = container.scrollHeight
       })
     },
-    catNameCheck (catName) {
+    catNameCheck(catName) {
       let catNameLength = 0
       if (catName) {
         for (var i = 0; i < catName.length; i++) {
@@ -325,12 +270,12 @@ export default {
         return false
       }
     },
-    handleImgChange (data) {
+    handleImgChange(data) {
       this.imgDialog = true
       this.isGetImage = true
       this.current = data
     },
-    pickImg (data) {
+    pickImg(data) {
       if (!this.current.parent_id || this.current.parent_id == 0) {
         const index = this.categoryList.findIndex((d) => d.id === this.current.id)
         this.categoryList[index].image_url = data.url
@@ -355,9 +300,13 @@ export default {
       }
       this.imgDialog = false
     },
-    closeImgDialog () {
+    closeImgDialog() {
       this.imgDialog = false
     }
+  },
+
+  mounted() {
+    this.getCategory()
   }
 }
 </script>

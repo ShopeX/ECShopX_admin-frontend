@@ -1,8 +1,5 @@
 <template>
-  <div
-    v-if="$route.path.indexOf('editor') === -1"
-    class="extMiniLink"
-  >
+  <div class="extMiniLink" v-if="$route.path.indexOf('editor') === -1">
     <el-card class="elCard">
       <div slot="header">
         <h3>外部小程序设置</h3>
@@ -11,78 +8,25 @@
       <div class="search">
         <div class="left">
           <el-input
-            v-model="params.app_name"
             class="appName"
+            v-model="params.app_name"
             placeholder="请输入小程序名称"
-          />
-          <el-button
-            class="button"
-            type="primary"
-            @click="getList"
-          >
-            查询
-          </el-button>
-          <el-button
-            class="button"
-            type="default"
-            @click="reset"
-          >
-            重置
-          </el-button>
+          ></el-input>
+          <el-button class="button" type="primary" @click="getList">查询</el-button>
+          <el-button class="button" type="default" @click="reset">重置</el-button>
         </div>
-        <el-button
-          type="primary"
-          @click="showEditModal('')"
-        >
-          新增
-        </el-button>
+        <el-button type="primary" @click="showEditModal('')">新增</el-button>
       </div>
-      <el-table
-        v-loading="tableLoading"
-        class="table"
-        stripe
-        border
-        :data="list"
-      >
-        <el-table-column
-          prop="created_at"
-          label="创建日期"
-        />
-        <el-table-column
-          prop="app_id"
-          label="小程序APPID"
-        />
-        <el-table-column
-          prop="app_name"
-          label="小程序名称"
-        />
-        <el-table-column
-          prop="app_desc"
-          label="描述"
-        />
+      <el-table class="table" stripe border v-loading="tableLoading" :data="list">
+        <el-table-column prop="created_at" label="创建日期"> </el-table-column>
+        <el-table-column prop="app_id" label="小程序APPID"> </el-table-column>
+        <el-table-column prop="app_name" label="小程序名称"> </el-table-column>
+        <el-table-column prop="app_desc" label="描述"> </el-table-column>
         <el-table-column label="操作">
           <template slot-scope="scope">
-            <el-button
-              class="actBtn"
-              type="text"
-              @click="showEditModal(scope.row)"
-            >
-              编辑
-            </el-button>
-            <el-button
-              class="actBtn"
-              type="text"
-              @click="jumpDetail(scope.row)"
-            >
-              页面路径
-            </el-button>
-            <el-button
-              class="actBtn"
-              type="text"
-              @click="removeCurrent(scope.row)"
-            >
-              删除
-            </el-button>
+            <el-button class="actBtn" type="text" @click="showEditModal(scope.row)">编辑</el-button>
+            <el-button class="actBtn" type="text" @click="jumpDetail(scope.row)">页面路径</el-button>
+            <el-button class="actBtn" type="text" @click="removeCurrent(scope.row)">删除</el-button>
           </template>
         </el-table-column>
       </el-table>
@@ -91,9 +35,9 @@
         class="pagination"
         layout="total, prev, pager, next, jumper"
         background
+        @current-change="handleCurrentChange"
         :total="total_count"
         :page-size="params.page_size"
-        @current-change="handleCurrentChange"
       >
         >
       </el-pagination>
@@ -106,56 +50,42 @@
       @close="closeModal"
     >
       <el-form
-        ref="editForm"
         label-suffix=":"
         label-width="120px"
         class="form"
+        ref="editForm"
         :rules="rules"
         :model="editInfo"
       >
-        <el-form-item
-          label="小程序名称"
-          prop="app_name"
-        >
+        <el-form-item label="小程序名称" prop="app_name">
           <el-input v-model="editInfo.app_name" />
         </el-form-item>
-        <el-form-item
-          label="小程序APPID"
-          prop="app_id"
-        >
-          <el-input v-model="editInfo.app_id" />
+        <el-form-item label="小程序APPID" prop="app_id">
+          <el-input
+            v-model="editInfo.app_id"
+          />
         </el-form-item>
         <el-form-item label="描述">
           <el-input
-            v-model="editInfo.app_desc"
             type="textarea"
             placeholder="请输入内容（非必填）"
             resize="none"
             maxlength="30"
             show-word-limit
             :rows="3"
+            v-model="editInfo.app_desc"
           />
         </el-form-item>
       </el-form>
       <div class="btns">
-        <el-button
-          class="btn"
-          @click="closeModal"
+        <el-button class="btn" @click="closeModal">取 消</el-button>
+        <el-button class="btn" type="primary" @click.stop="editWxConfig" :loading="isHttping"
+          >确 定</el-button
         >
-          取 消
-        </el-button>
-        <el-button
-          class="btn"
-          type="primary"
-          :loading="isHttping"
-          @click.stop="editWxConfig"
-        >
-          确 定
-        </el-button>
       </div>
     </el-dialog>
   </div>
-  <router-view v-else />
+  <router-view v-else></router-view>
 </template>
 
 <script>
@@ -167,8 +97,8 @@ import {
 } from '../../../api/wxa.js'
 
 export default {
-  name: 'ExtMiniLink',
-  data () {
+  name: 'extMiniLink',
+  data() {
     return {
       // 查询参数
       params: {
@@ -213,26 +143,23 @@ export default {
       }
     }
   },
-  mounted () {
-    this.init()
-  },
   methods: {
     // 初始化
-    init () {
+    init() {
       this.getList()
     },
     // 重置搜索
-    reset () {
+    reset() {
       this.params.app_name = ''
       this.getList()
     },
     // 切换page
-    handleCurrentChange (page) {
+    handleCurrentChange(page) {
       this.params.page = page
       this.getList(false)
     },
     // 显示modal事件
-    showEditModal (info = {}) {
+    showEditModal(info = {}) {
       if (info && info.wx_external_config_id) {
         this.modalTitle = '修改小程序'
         this.editInfo = {
@@ -246,7 +173,7 @@ export default {
       this.showModal = true
     },
     // 关闭modal事件
-    closeModal () {
+    closeModal() {
       this.editInfo = {
         app_id: '',
         app_name: '',
@@ -256,7 +183,7 @@ export default {
       this.showModal = false
     },
     // 新增&编辑小程序配置
-    async editWxConfig () {
+    async editWxConfig() {
       if (this.isHttping) return false
       this.isHttping = true
       const params = this.editInfo
@@ -272,7 +199,7 @@ export default {
       this.isHttping = false
     },
     // 跳转详情
-    jumpDetail (info) {
+    jumpDetail(info) {
       const path = this.matchHidePage('editor')
       // return false
       this.$router.push({
@@ -283,17 +210,16 @@ export default {
       })
     },
     // 删除当前设置
-    removeCurrent (info) {
+    removeCurrent(info) {
       const _self = this
-      this.$confirm('确认删除当前设置？')
-        .then((_) => {
-          removeWxLinkSetting({ id: info.wx_external_config_id }).then((response) => {
+      this.$confirm("确认删除当前设置？")
+        .then(_ => {
+          removeWxLinkSetting({id:info.wx_external_config_id}).then(response => {
             this.$message({
               message: '删除成功',
               type: 'success',
-              onClose () {
-                if (_self.total_count % _self.params.page_size == 1 && _self.params.page > 1) {
-                  //当前页只有一条数据被删除, 删除后跳回上一页
+              onClose() {
+                if(_self.total_count % _self.params.page_size == 1 && _self.params.page > 1) { //当前页只有一条数据被删除, 删除后跳回上一页
                   _self.params.page -= 1
                   _self.getList(true)
                 } else {
@@ -303,9 +229,9 @@ export default {
             })
           })
         })
-        .catch((_) => {})
+        .catch(_ => {});
     },
-    // 获取列表
+    // 获取列表 
     async getList (isInit = true) {
       this.tableLoading = true
       if (isInit) {
@@ -317,6 +243,9 @@ export default {
       this.total_count = total_count
       this.tableLoading = false
     }
+  },
+  mounted() {
+    this.init()
   }
 }
 </script>

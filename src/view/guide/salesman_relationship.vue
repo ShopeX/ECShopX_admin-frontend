@@ -6,17 +6,13 @@
           {{ scope.row.salesperson_info.salesman_name }}
         </template>
       </el-table-column>
-      <el-table-column
-        prop="work_userid"
-        label="导购员企业微信userid"
-      />
+      <el-table-column prop="work_userid" label="导购员企业微信userid"></el-table-column>
       <el-table-column label="会员">
         <template slot-scope="scope">
           <router-link
             :to="{ path: '/member/member/detail', query: { user_id: scope.row.user_id } }"
+            >{{ scope.row.user_info.username }}</router-link
           >
-            {{ scope.row.user_info.username }}
-          </router-link>
         </template>
       </el-table-column>
       <el-table-column label="是否是朋友">
@@ -35,20 +31,21 @@
     <el-pagination
       class="content-padded content-center"
       background
+      @size-change="handleSizeChange"
+      @current-change="handleCurrentChange"
       :current-page="params.page"
       :page-sizes="[10, 20, 50, 100]"
       :page-size="params.pageSize"
       layout="total, sizes, prev, pager, next, jumper"
       :total="total_count"
-      @size-change="handleSizeChange"
-      @current-change="handleCurrentChange"
-    />
+    >
+    </el-pagination>
   </el-card>
 </template>
 <script>
 import { getWorkWechatRelList } from '@/api/wechat'
 export default {
-  data () {
+  data() {
     return {
       loading: false,
       salesperson_id: 0,
@@ -62,7 +59,21 @@ export default {
       }
     }
   },
-  mounted () {
+  methods: {
+    handleCurrentChange(page_num) {
+      this.params.page = page_num
+      this.getWorkWechatRelList()
+    },
+    getWorkWechatRelList() {
+      this.loading = true
+      getWorkWechatRelList(this.salesperson_id, this.params).then((res) => {
+        this.list = res.data.data.list
+        this.total_count = res.data.data.total_count
+        this.loading = false
+      })
+    }
+  },
+  mounted() {
     if (this.$route.query.salesperson_id) {
       this.salesperson_id = this.$route.query.salesperson_id
     }
@@ -73,20 +84,6 @@ export default {
       this.params.is_bind = this.$route.query.is_bind
     }
     this.getWorkWechatRelList()
-  },
-  methods: {
-    handleCurrentChange (page_num) {
-      this.params.page = page_num
-      this.getWorkWechatRelList()
-    },
-    getWorkWechatRelList () {
-      this.loading = true
-      getWorkWechatRelList(this.salesperson_id, this.params).then((res) => {
-        this.list = res.data.data.list
-        this.total_count = res.data.data.total_count
-        this.loading = false
-      })
-    }
   }
 }
 </script>

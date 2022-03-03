@@ -1,31 +1,19 @@
 <template>
   <div>
-    <div
-      class="clearfix"
-      style="margin: 0.6%"
-    >
+    <div class="clearfix" style="margin: .6%;">
       <div class="f_l">
-        <el-button
-          type="primary"
-          @click="editNewsItem()"
-        >
-          新增图文消息
-        </el-button>
+        <el-button type="primary" @click="editNewsItem()">新增图文消息</el-button>
       </div>
     </div>
     <div
-      ref="masonry"
       v-masonry
-      v-loading="loading"
       transition-duration="0.3s"
+      ref="masonry"
       item-selector=".msg-item"
       class="msg-list"
+      v-loading="loading"
     >
-      <template
-        v-for="(item, index) in list_news.item"
-        v-if="activeName === 'imagetext'"
-        :key=""
-      >
+      <template v-if="activeName === 'imagetext'" v-for="(item, index) in list_news.item" :key="">
         <div
           v-masonry-tile
           class="msg-item has-first-cover"
@@ -35,10 +23,7 @@
             <div class="msg-info">
               <span>更新于 {{ item.update_time | datetime }}</span>
             </div>
-            <div
-              class="sub-msg-item"
-              :class="{ coverMsgItem: item.content.news_item[1] }"
-            >
+            <div class="sub-msg-item" :class="{ coverMsgItem: item.content.news_item[1] }">
               <h4 class="msg-title">
                 <a>{{ item.content.news_item[0].title }}</a>
               </h4>
@@ -47,42 +32,31 @@
                 :style="{
                   backgroundImage: 'url(' + wximageurl + item.content.news_item[0].thumb_url + ')'
                 }"
-              />
-              <a
-                :href="item.content.news_item[0].url"
-                class="edit-mask preview-mask"
-              >
-                <div class="edit-mask-content">预览文章</div>
+              ></div>
+              <a :href="item.content.news_item[0].url" class="edit-mask preview-mask">
+                <div class="edit-mask-content">
+                  预览文章
+                </div>
               </a>
-              <p
-                v-if="!item.content.news_item[1]"
-                class="msg-desc"
-              >
+              <p class="msg-desc" v-if="!item.content.news_item[1]">
                 {{ item.content.news_item[0].digest }}
               </p>
             </div>
-            <div
-              v-for="n in item.content.news_item.length - 1"
-              :key=""
-            >
-              <div
-                v-if="item.content.news_item[1]"
-                class="article-msg-item has-cover clearfix"
-              >
+            <div v-for="n in item.content.news_item.length - 1" :key="">
+              <div class="article-msg-item has-cover clearfix" v-if="item.content.news_item[1]">
                 <div
                   class="msg-thumb-wrap"
                   :style="{
                     backgroundImage: 'url(' + wximageurl + item.content.news_item[n].thumb_url + ')'
                   }"
-                />
+                ></div>
                 <h4 class="msg-title">
                   <a>{{ item.content.news_item[n].title }}</a>
                 </h4>
-                <a
-                  :href="item.content.news_item[n].url"
-                  class="edit-mask preview-mask"
-                >
-                  <div class="edit-mask-content">预览文章</div>
+                <a :href="item.content.news_item[n].url" class="edit-mask preview-mask">
+                  <div class="edit-mask-content">
+                    预览文章
+                  </div>
                 </a>
               </div>
             </div>
@@ -91,28 +65,15 @@
             <el-row>
               <el-col :span="12">
                 <div @click="editNewsItem(item.media_id)">
-                  <el-tooltip
-                    :key="item.id"
-                    effect="dark"
-                    content="编辑"
-                    placement="top"
-                  >
-                    <a><i class="el-icon-edit" /></a>
+                  <el-tooltip effect="dark" content="编辑" placement="top" :key="item.id">
+                    <a><i class="el-icon-edit"></i></a>
                   </el-tooltip>
                 </div>
               </el-col>
               <el-col :span="12">
-                <div
-                  class="opr_item"
-                  @click="removeNewsItem(item, index)"
-                >
-                  <el-tooltip
-                    :key="item.id"
-                    effect="dark"
-                    content="删除"
-                    placement="top"
-                  >
-                    <i class="el-icon-delete" />
+                <div class="opr_item" @click="removeNewsItem(item, index)">
+                  <el-tooltip effect="dark" content="删除" placement="top" :key="item.id">
+                    <i class="el-icon-delete"></i>
                   </el-tooltip>
                 </div>
               </el-col>
@@ -125,13 +86,14 @@
       <el-pagination
         background
         layout="total, sizes, prev, pager, next"
+        @current-change="handleCurrentChange"
+        @size-change="handleSizeChange"
         :current-page.sync="params.page"
         :page-sizes="[10, 20, 50]"
         :total="total_count"
         :page-size="params.pageSize"
-        @current-change="handleCurrentChange"
-        @size-change="handleSizeChange"
-      />
+      >
+      </el-pagination>
     </div>
   </div>
 </template>
@@ -141,12 +103,12 @@ import Vue from 'vue'
 import VueMasonryPlugin from 'vue-masonry'
 export default {
   props: ['activeName', 'getStatus'],
-  provide () {
+  provide() {
     return {
       refresh: this.getList
     }
   },
-  data () {
+  data() {
     return {
       loading: false,
       isLoadData: false,
@@ -159,31 +121,19 @@ export default {
       }
     }
   },
-  watch: {
-    getStatus (newVal, oldVal) {
-      if (newVal) {
-        this.getList()
-      }
-    }
-  },
-  mounted () {
-    if (this.activeName == 'imagetext' && this.getStatus) {
-      this.getList()
-    }
-  },
   methods: {
-    handleCurrentChange (page_num) {
+    handleCurrentChange(page_num) {
       this.isLoadData = false
       this.params.page = page_num
       this.getList()
     },
-    handleSizeChange (pageSize) {
+    handleSizeChange(pageSize) {
       this.isLoadData = false
       this.params.page = 1
       this.params.pageSize = pageSize
       this.getList()
     },
-    getList () {
+    getList() {
       if (!this.isLoadData) {
         this.loading = true
         getWechatMaterial(this.params)
@@ -201,14 +151,14 @@ export default {
           })
       }
     },
-    editNewsItem (media_id) {
+    editNewsItem(media_id) {
       if (media_id) {
         this.$router.push({ path: this.matchHidePage('editor/') + media_id })
       } else {
         this.$router.push({ path: this.matchHidePage('editor/') })
       }
     },
-    removeNewsItem (item, index) {
+    removeNewsItem(item, index) {
       this.$confirm('确定删除此图文吗？', '提示', {
         confirmButtonText: '确定',
         cancelButtonText: '取消',
@@ -231,6 +181,18 @@ export default {
             message: '已取消'
           })
         })
+    }
+  },
+  mounted() {
+    if (this.activeName == 'imagetext' && this.getStatus) {
+      this.getList()
+    }
+  },
+  watch: {
+    getStatus(newVal, oldVal) {
+      if (newVal) {
+        this.getList()
+      }
     }
   }
 }

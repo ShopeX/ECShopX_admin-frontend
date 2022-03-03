@@ -6,75 +6,45 @@
     :close-on-click-modal="false"
     :before-close="cancelAction"
   >
-    <div style="margin-bottom: 15px">
-      <el-input
-        v-model="name"
-        placeholder="输入店铺名称"
-        clearable
-      >
-        <el-button
-          slot="append"
-          icon="el-icon-search"
-          @click="handleIconClick"
-        />
+    <div style="margin-bottom: 15px;">
+      <el-input placeholder="输入店铺名称" v-model="name" clearable>
+        <el-button slot="append" icon="el-icon-search" @click="handleIconClick"></el-button>
       </el-input>
     </div>
     <el-table
       ref="multipleTable"
-      v-loading="loading"
       :data="storeData"
       tooltip-effect="dark"
       style="width: 100%"
+      v-loading="loading"
     >
       <el-table-column label="选择">
         <template slot-scope="scope">
           <el-radio
-            v-model="templateRadio"
             :label="scope.row.distributor_id"
+            v-model="templateRadio"
             @change.native="getTemplateRow(scope.$index, scope.row)"
-          >
-            &nbsp;
+            >&nbsp;
           </el-radio>
         </template>
       </el-table-column>
-      <el-table-column
-        prop="name"
-        label="店铺名称"
-      />
-      <el-table-column
-        prop="contact"
-        label="联系人"
-      />
-      <el-table-column
-        prop="store_name"
-        label="门店"
-      />
-      <el-table-column
-        prop="address"
-        label="地址"
-        show-overflow-tooltip
-      />
+      <el-table-column prop="name" label="店铺名称"></el-table-column>
+      <el-table-column prop="contact" label="联系人"></el-table-column>
+      <el-table-column prop="store_name" label="门店"></el-table-column>
+      <el-table-column prop="address" label="地址" show-overflow-tooltip></el-table-column>
     </el-table>
-    <div
-      v-if="total_count > params.pageSize"
-      class="tr"
-    >
+    <div v-if="total_count > params.pageSize" class="tr">
       <el-pagination
         layout="prev, pager, next"
+        @current-change="handleCurrentChange"
         :total="total_count"
         :page-size="pageLimit"
-        @current-change="handleCurrentChange"
-      />
+      >
+      </el-pagination>
     </div>
-    <span
-      slot="footer"
-      class="dialog-footer"
-    >
+    <span slot="footer" class="dialog-footer">
       <el-button @click="cancelAction">取 消</el-button>
-      <el-button
-        type="primary"
-        @click="saveStoreAction"
-      >确 定</el-button>
+      <el-button type="primary" @click="saveStoreAction">确 定</el-button>
     </span>
   </el-dialog>
 </template>
@@ -86,7 +56,7 @@ export default {
   props: {
     relDataIds: {
       type: Array,
-      default: function () {
+      default: function() {
         return []
       }
     },
@@ -107,7 +77,7 @@ export default {
       default: ''
     }
   },
-  data () {
+  data() {
     return {
       templateRadio: '',
       dataType: 'distributor',
@@ -124,27 +94,12 @@ export default {
       name: ''
     }
   },
-  computed: {
-    showDialog () {
-      return this.storeVisible
-    }
-  },
-  watch: {
-    sourceType (newVal, oldVal) {
-      this.dataType = this.sourceType
-    },
-    relDataIds (newVal, oldVal) {
-      this.selectRows = newVal
-    },
-    getStatus (newVal, oldVal) {
-      this.getDistributor()
-    }
-  },
   methods: {
-    getTemplateRow (index, row) {
+    getTemplateRow(index, row) {
       this.multipleSelection = new Array(row)
     },
-    getDistributor () {
+    getDistributor() {
+     
       getDistributorList(this.params).then((response) => {
         this.storeData = response.data.data.list
         this.total_count = parseInt(response.data.data.total_count)
@@ -152,19 +107,35 @@ export default {
         this.multipleSelection = []
       })
     },
-    handleCurrentChange (page_num) {
+    handleCurrentChange(page_num) {
       this.params.page = page_num
       this.getDistributor()
     },
-    handleIconClick () {
+    handleIconClick() {
       this.params.name = this.name
       this.getDistributor()
     },
-    cancelAction () {
+    cancelAction() {
       this.$emit('closeStoreDialog')
     },
-    saveStoreAction () {
+    saveStoreAction() {
       this.$emit('chooseStore', this.multipleSelection)
+    }
+  },
+  computed: {
+    showDialog() {
+      return this.storeVisible
+    }
+  },
+  watch: {
+    sourceType(newVal, oldVal) {
+      this.dataType = this.sourceType
+    },
+    relDataIds(newVal, oldVal) {
+      this.selectRows = newVal
+    },
+    getStatus(newVal, oldVal) {
+      this.getDistributor()
     }
   }
 }

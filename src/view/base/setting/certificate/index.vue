@@ -1,143 +1,55 @@
 <template>
   <div>
     <div class="cer-box">
-      <el-form
-        :model="creInfo"
-        label-width="150px"
-      >
+      <el-form :model="creInfo" label-width="150px">
         <el-row>
-          <el-col
-            :span="4"
-            class="col-right"
-          >
-            Shopex通行证书
-          </el-col>
+          <el-col :span="4" class="col-right">Shopex通行证书</el-col>
         </el-row>
         <el-form-item label="通行证账号：">
-          <el-input
-            v-model="creInfo.cert_id"
-            type="text"
-            readonly
-          />
+          <el-input type="text" v-model="creInfo.cert_id" readonly></el-input>
         </el-form-item>
         <el-row>
-          <el-col
-            :span="4"
-            class="col-right"
-          >
-            Shopex证书
-          </el-col>
+          <el-col :span="4" class="col-right">Shopex证书</el-col>
         </el-row>
         <el-form-item label="当前证书节点号：">
-          <el-input
-            v-model="creInfo.node_id"
-            type="text"
-            readonly
-          />
+          <el-input type="text" v-model="creInfo.node_id" readonly></el-input>
         </el-form-item>
         <el-form-item label="当前证书节点号：">
-          <el-input
-            v-model.number="creInfo.shopex_uid"
-            readonly
-          />
+          <el-input v-model.number="creInfo.shopex_uid" readonly></el-input>
         </el-form-item>
       </el-form>
       <el-row>
-        <el-col
-          :span="4"
-          :offset="3"
-        >
-          <el-button
-            type="primary"
-            @click="deleteCer"
-          >
-            删除证书
-          </el-button>
+        <el-col :span="4" :offset="3">
+          <el-button type="primary" @click="deleteCer">删除证书</el-button>
         </el-col>
       </el-row>
     </div>
     <div class="cer-box">
       <el-row>
-        <el-col
-          :span="4"
-          class="col-right"
+        <el-col :span="4" class="col-right">电商ERP关系绑定</el-col>
+        <el-col :span="4" :offset="1"
+          ><el-button type="primary" @click="bindRelation">申请绑定</el-button></el-col
         >
-          电商ERP关系绑定
-        </el-col>
-        <el-col
-          :span="4"
-          :offset="1"
+        <el-col :span="4"
+          ><el-button type="primary" @click="lookRelation">查看绑定关系</el-button></el-col
         >
-          <el-button
-            type="primary"
-            @click="bindRelation"
-          >
-            申请绑定
-          </el-button>
-        </el-col>
-        <el-col
-          :span="4"
-        >
-          <el-button
-            type="primary"
-            @click="lookRelation"
-          >
-            查看绑定关系
-          </el-button>
-        </el-col>
       </el-row>
     </div>
-    <el-dialog
-      title="申请绑定"
-      :visible.sync="dialogBindVisible"
-      fullscreen
-    >
+    <el-dialog title="申请绑定" :visible.sync="dialogBindVisible" fullscreen>
       <div>
-        <iframe
-          :src="bindUrl"
-          width="1200"
-          height="980"
-          frameborder="0"
-          scrolling="auto"
-        />
+        <iframe :src="bindUrl" width="1200" height="980" frameborder="0" scrolling="auto"> </iframe>
       </div>
-      <div
-        slot="footer"
-        class="dialog-footer"
-      >
-        <el-button
-          type="primary"
-          @click="dialogBindVisible = false"
-        >
-          关 闭
-        </el-button>
+      <div slot="footer" class="dialog-footer">
+        <el-button type="primary" @click="dialogBindVisible = false">关 闭</el-button>
       </div>
     </el-dialog>
 
-    <el-dialog
-      title="查看绑定关系"
-      :visible.sync="dialogLookVisible"
-      fullscreen
-    >
+    <el-dialog title="查看绑定关系" :visible.sync="dialogLookVisible" fullscreen>
       <div>
-        <iframe
-          :src="lookUrl"
-          width="1200"
-          height="980"
-          frameborder="0"
-          scrolling="auto"
-        />
+        <iframe :src="lookUrl" width="1200" height="980" frameborder="0" scrolling="auto"> </iframe>
       </div>
-      <div
-        slot="footer"
-        class="dialog-footer"
-      >
-        <el-button
-          type="primary"
-          @click="dialogLookVisible = false"
-        >
-          关 闭
-        </el-button>
+      <div slot="footer" class="dialog-footer">
+        <el-button type="primary" @click="dialogLookVisible = false">关 闭</el-button>
       </div>
     </el-dialog>
   </div>
@@ -146,7 +58,7 @@
 import { Message } from 'element-ui'
 import { getCertificate, deleteCertificateInfo, bindRelation, acceptRelation } from '@/api/company'
 export default {
-  data () {
+  data() {
     return {
       creInfo: {
         cert_id: '',
@@ -160,11 +72,8 @@ export default {
       lookUrl: ''
     }
   },
-  mounted () {
-    this.getCerInfo()
-  },
   methods: {
-    getCerInfo () {
+    getCerInfo() {
       this.loading = true
       getCertificate().then((response) => {
         this.creInfo = {
@@ -175,7 +84,7 @@ export default {
         this.loading = false
       })
     },
-    deleteCer () {
+    deleteCer() {
       this.$confirm(
         '删除订单后，将无法使用“云起物流”，“天工收银”,需要重新激活系统才能使用',
         '提示',
@@ -201,18 +110,21 @@ export default {
           })
         })
     },
-    bindRelation () {
+    bindRelation() {
       bindRelation().then((response) => {
         this.bindUrl = response.data.data.url
         this.dialogBindVisible = true
       })
     },
-    lookRelation () {
+    lookRelation() {
       acceptRelation().then((response) => {
         this.lookUrl = response.data.data.url
         this.dialogLookVisible = true
       })
     }
+  },
+  mounted() {
+    this.getCerInfo()
   }
 }
 </script>

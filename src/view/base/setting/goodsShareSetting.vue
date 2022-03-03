@@ -1,89 +1,51 @@
 <template>
   <div class="goodsShareSetting">
-    <el-form
-      ref="form"
-      label-width="180px"
-      :rules="rules"
-      :model="form"
-    >
+    <el-form label-width="180px" :rules="rules" ref="form" :model="form">
       <el-form-item label="商品分享是否限制">
-        <el-switch v-model="form.is_open" />
+        <el-switch v-model="form.is_open"></el-switch>
       </el-form-item>
       <template v-if="form.is_open">
-        <el-form-item
-          label="可分享会员等级"
-          prop="valid_grade"
-        >
+        <el-form-item label="可分享会员等级" prop="valid_grade">
           <el-checkbox-group v-model="form.valid_grade">
-            <el-checkbox
-              v-for="grade in memberGrade"
-              :key="grade.grade_id"
-              :label="grade.grade_id"
+            <el-checkbox v-for="grade in memberGrade" :label="grade.grade_id" :key="grade.grade_id">{{
+              grade.grade_name
+            }}</el-checkbox>
+            <el-checkbox v-for="vipdata in vipGrade" :label="vipdata.lv_type" :key="vipdata.lv_type"
+              >{{ vipdata.grade_name }}</el-checkbox
             >
-              {{ grade.grade_name }}
-            </el-checkbox>
-            <el-checkbox
-              v-for="vipdata in vipGrade"
-              :key="vipdata.lv_type"
-              :label="vipdata.lv_type"
-            >
-              {{ vipdata.grade_name }}
-            </el-checkbox>
           </el-checkbox-group>
         </el-form-item>
-        <el-form-item
-          label="分享限制提示语"
-          prop="msg"
-        >
-          <el-input
-            v-model="form.msg"
-            style="width: 260px"
-            type="text"
-            placeholder="请输入分享限制提示语"
-          />
+        <el-form-item label="分享限制提示语" prop="msg">
+          <el-input style="width: 260px" type="text" v-model="form.msg" placeholder="请输入分享限制提示语" />
         </el-form-item>
-        <el-form-item
-          label="提示后跳转页面路径"
-          prop="page"
-        >
-          <div
-            class="path"
-            @click="showSetLink"
-          >
-            <span
-              v-show="form.page.linkPage"
-              class="pathTitle"
-            >{{ linkPage }}:</span>
+        <el-form-item label="提示后跳转页面路径" prop="page">
+          <div class="path" @click="showSetLink">
+            <span v-show="form.page.linkPage" class="pathTitle">{{ linkPage }}:</span>
             {{ form.page.title ? form.page.title : '设置路径' }}
           </div>
         </el-form-item>
       </template>
       <el-form-item>
-        <el-button
-          type="primary"
-          @click="save"
-        >
-          保存
-        </el-button>
+        <el-button type="primary" @click="save">保存</el-button>
       </el-form-item>
     </el-form>
 
-    <linkSetter
-      :visible="linksVisible"
-      @setLink="setLink"
-      @closeDialog="closeDialog"
-    />
+    <linkSetter :visible="linksVisible" @setLink="setLink" @closeDialog="closeDialog"></linkSetter>
+
   </div>
 </template>
 
 <script>
-import linkSetter from '@/components/template_links'
+import linkSetter from "@/components/template_links";
 import { listVipGrade } from '../../../api/cardticket'
 import { getGradeList } from '../../../api/membercard'
-import { getShareSetting, saveShareSetting } from '../../../api/goods'
+import { 
+  getShareSetting,
+  saveShareSetting
+} from '../../../api/goods'
 
 export default {
-  name: 'GoodsShareSetting',
+  name: 'goodsShareSetting',
   components: {
     linkSetter
   },
@@ -98,13 +60,22 @@ export default {
         page: {}
       },
       rules: {
-        valid_grade: [{ required: true, message: '请选择可以分享的会员等级', trigger: 'blur' }],
-        msg: [{ required: true, message: '请输入分享限制提示语', trigger: 'blur' }],
-        page: [{ required: true, message: '请选择跳转页面路径', trigger: 'change' }]
+        valid_grade: [
+          { required: true, message: '请选择可以分享的会员等级', trigger: 'blur'}
+        ],
+        msg: [
+          { required: true, message: '请输入分享限制提示语', trigger: 'blur'}
+        ],
+        page: [
+          { required: true, message: '请选择跳转页面路径', trigger: 'change'}
+        ]
       },
       vipGrade: [],
-      memberGrade: []
+      memberGrade: [],
     }
+  },
+  mounted () {
+    this.init()
   },
   computed: {
     linkPage ({ form }) {
@@ -121,9 +92,6 @@ export default {
       }
       return types[page.linkPage]
     }
-  },
-  mounted () {
-    this.init()
   },
   methods: {
     async init () {
@@ -153,14 +121,14 @@ export default {
       this.linksVisible = true
     },
     setLink (links, type) {
-      this.$set(this.form, 'page', { ...links, linkPage: type })
+      this.$set(this.form, 'page', {...links, linkPage: type})
     },
     closeDialog () {
       this.linksVisible = false
     },
     // 保存表单
     save () {
-      this.$refs['form'].validate(async (vaild) => {
+      this.$refs['form'].validate(async vaild => {
         if (vaild) {
           const { form } = this
           const data = await saveShareSetting(form)

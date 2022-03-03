@@ -8,102 +8,49 @@
           height: size + 'px',
           width: size + 'px'
         }"
-      />
+      ></section>
 
       <section class="content">
         <el-form
-          ref="form"
           :model="form"
           :rules="rules"
+          ref="form"
           label-position="left"
           label-width="100px"
           class="form"
         >
           <div class="box">
             <h3>{{ title }}</h3>
-            <el-tabs
-              v-if="$route.meta.type == 'admin'"
-              v-model="activeName"
-              class="tab"
-            >
-              <el-tab-pane
-                label="管理员账号登录"
-                name="first"
-              >
-                <el-form-item
-                  label="账户"
-                  prop="account"
-                >
-                  <el-input v-model="form.account" />
+            <el-tabs v-model="activeName" class="tab" v-if="$route.meta.type == 'admin'">
+              <el-tab-pane label="管理员账号登录" name="first">
+                <el-form-item label="账户" prop="account">
+                  <el-input v-model="form.account"></el-input>
                 </el-form-item>
-                <el-form-item
-                  label="密码"
-                  prop="checkPass"
-                >
-                  <el-input
-                    v-model="form.checkPass"
-                    type="password"
-                  />
+                <el-form-item label="密码" prop="checkPass">
+                  <el-input type="password" v-model="form.checkPass"></el-input>
                 </el-form-item>
               </el-tab-pane>
-              <el-tab-pane
-                label="员工账号登录"
-                name="second"
-              >
-                <el-form-item
-                  label="账户"
-                  prop="account"
-                >
-                  <el-input v-model="form.account" />
+              <el-tab-pane label="员工账号登录" name="second">
+                <el-form-item label="账户" prop="account">
+                  <el-input v-model="form.account"></el-input>
                 </el-form-item>
-                <el-form-item
-                  label="密码"
-                  prop="checkPass"
-                >
-                  <el-input
-                    v-model="form.checkPass"
-                    type="password"
-                  />
+                <el-form-item label="密码" prop="checkPass">
+                  <el-input type="password" v-model="form.checkPass"></el-input>
                 </el-form-item>
               </el-tab-pane>
             </el-tabs>
-            <div
-              v-else
-              class="tab"
-            >
-              <el-form-item
-                label="账户"
-                prop="account"
-              >
-                <el-input v-model="form.account" />
+            <div class="tab" v-else>
+              <el-form-item label="账户" prop="account">
+                <el-input v-model="form.account"></el-input>
               </el-form-item>
-              <el-form-item
-                label="密码"
-                prop="checkPass"
-              >
-                <el-input
-                  v-model="form.checkPass"
-                  type="password"
-                />
+              <el-form-item label="密码" prop="checkPass">
+                <el-input type="password" v-model="form.checkPass"></el-input>
               </el-form-item>
             </div>
-            <el-form-item
-              style="margin-top: 40px; margin-bottom: 10px"
-              label-wdith="0px"
-            >
-              <loadingBtn
-                ref="loadingBtn"
-                class="btn"
-                text="登录"
-                @clickHandle="fnLogin('form')"
-              />
+            <el-form-item style="margin-top: 40px; margin-bottom: 10px" label-wdith="0px">
+              <loadingBtn class="btn" @clickHandle="fnLogin('form')" ref="loadingBtn" text='登录'/>
             </el-form-item>
-            <p
-              v-if="loginType != 'admin'"
-              class="tip"
-            >
-              忘记密码，请联系管理员重置
-            </p>
+            <p v-if="loginType != 'admin'" class="tip">忘记密码，请联系管理员重置</p>
           </div>
         </el-form>
       </section>
@@ -124,7 +71,7 @@ export default {
   components: {
     loadingBtn
   },
-  data () {
+  data() {
     return {
       title: '平台管理中心',
       login_bg: login_bg_admin,
@@ -141,25 +88,27 @@ export default {
       }
     }
   },
-  watch: {
-    activeName (val) {
-      if (val == 'second') {
-        this.loginType = 'staff'
-      } else {
-        this.loginType = 'admin'
-      }
-    }
-  },
-  mounted () {
+  mounted() {
     window.addEventListener('resize', this.fnSize())
     this.init()
   },
-  destroyed () {
+  destroyed() {
     window.removeEventListener('resize', this.fnSize)
+  },
+  watch:{
+    activeName(val){
+      if (val=='second') {
+        this.loginType = 'staff'
+      }else{
+         this.loginType = 'admin'
+      }
+    }
   },
   methods: {
     ...mapMutations(['SET_TOKEN', 'SET_TOKEN_EXP', 'SET_USERINFO', 'SET_LOGIN_TYPE']),
-    init () {
+    init() {
+
+      
       this.loginType = this.$route.meta.type
       console.log(this.loginType)
 
@@ -178,12 +127,13 @@ export default {
           break
       }
 
+
       this.$store.dispatch('setLoginType', this.loginType)
     },
-    fnSize () {
+    fnSize() {
       this.size = document.body.clientHeight
     },
-    fnLogin (formName) {
+    fnLogin(formName) {
       this.$refs[formName].validate(async (valid) => {
         if (valid) {
           const params = {
@@ -210,7 +160,7 @@ export default {
         }
       })
     },
-    async loginSuccess (token) {
+    async loginSuccess(token) {
       this.SET_TOKEN({ token })
       this.SET_TOKEN_EXP({ exp: new Date().getTime() })
       this.SET_LOGIN_TYPE({ loginType: this.loginType })
@@ -309,7 +259,7 @@ export default {
   .el-tabs__nav-wrap::after {
     background-color: transparent;
   }
-  .el-form-item__label {
+  .el-form-item__label{
     color: #888;
   }
   .el-tabs__item {

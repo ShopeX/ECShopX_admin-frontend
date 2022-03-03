@@ -1,10 +1,7 @@
 <template>
   <div class="view-flex-item">
     <div class="store-picker view-flex view-flex-middle">
-      <div
-        v-if="checked"
-        class="store-info view-flex-item"
-      >
+      <div class="store-info view-flex-item" v-if="checked">
         <div class="store-name">
           {{ checked.name }}
         </div>
@@ -12,55 +9,25 @@
           {{ checked.address }}
         </div>
       </div>
-      <div
-        v-else
-        class="view-flex-item"
-      >
-        全部店铺
-      </div>
-      <div
-        v-if="checked"
-        class="iconfont icon-times"
-        @click="handleResetClick"
-      />
-      <div
-        class="iconfont icon-sync-alt"
-        @click="handleClick"
-      />
+      <div class="view-flex-item" v-else>全部店铺</div>
+      <div v-if="checked" class="iconfont icon-times" @click="handleResetClick"></div>
+      <div class="iconfont icon-sync-alt" @click="handleClick"></div>
     </div>
-    <el-dialog
-      title="选择店铺"
-      :visible.sync="visible"
-      width="500px"
-      append-to-body
-    >
-      <ul
-        v-loading="loading"
-        class="store-list"
-      >
+    <el-dialog title="选择店铺" :visible.sync="visible" width="500px" append-to-body>
+      <ul class="store-list" v-loading="loading">
         <li
-          v-for="item in list"
           class="store-list-item"
-          :class="current.id === item.id ? 'active' : ''"
+          v-for="item in list"
           @click="handleItemClick(item)"
+          :class="current.id === item.id ? 'active' : ''"
         >
-          <div class="store-name">
-            {{ item.name }}
-          </div>
-          <div class="store-address">
-            {{ item.address }}
-          </div>
+          <div class="store-name">{{ item.name }}</div>
+          <div class="store-address">{{ item.address }}</div>
         </li>
       </ul>
-      <span
-        slot="footer"
-        class="dialog-footer"
-      >
+      <span slot="footer" class="dialog-footer">
         <el-button @click="visible = false">取 消</el-button>
-        <el-button
-          type="primary"
-          @click="handleConfirm"
-        >确 定</el-button>
+        <el-button type="primary" @click="handleConfirm">确 定</el-button>
       </span>
     </el-dialog>
   </div>
@@ -78,7 +45,7 @@ export default {
       }
     }
   },
-  data () {
+  data() {
     return {
       visible: false,
       loading: false,
@@ -94,7 +61,7 @@ export default {
     }
   },
   watch: {
-    data (val) {
+    data(val) {
       if (val.id) {
         this.checked = val
       } else {
@@ -102,27 +69,21 @@ export default {
       }
     }
   },
-  mounted () {
-    if (this.data.id) {
-      this.checked = this.data
-    }
-    this.fetch()
-  },
   methods: {
-    handleClick () {
+    handleClick() {
       this.visible = true
     },
-    handleItemClick (val) {
+    handleItemClick(val) {
       this.current = val
     },
-    handleResetClick () {
+    handleResetClick() {
       this.$emit('change', {})
     },
-    handleConfirm () {
+    handleConfirm() {
       this.$emit('change', this.current)
       this.visible = false
     },
-    async fetch () {
+    async fetch() {
       const { list, total_count } = await this.$api.marketing.getDistributorList(this.params)
       let _list = []
       list.map((item) => {
@@ -136,6 +97,12 @@ export default {
       this.total = total_count
       this.loading = false
     }
+  },
+  mounted() {
+    if (this.data.id) {
+      this.checked = this.data
+    }
+    this.fetch()
   }
 }
 </script>

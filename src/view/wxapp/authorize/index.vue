@@ -1,311 +1,176 @@
 <template>
   <div>
     <div v-if="$route.path.indexOf('policy') === -1">
-      <section
-        v-loading="loading"
-        class="section section-white content-padded-b"
-      >
+      <section class="section section-white content-padded-b" v-loading="loading">
         <div v-if="wxapp_id && detail && detail.weapp && detail.weappTemplate">
           <div class="content-center">
             <div v-if="detail.head_img">
-              <img
-                class="app-img"
-                :src="wximageurl + detail.head_img"
-                height="60"
-              >
+              <img class="app-img" :src="wximageurl + detail.head_img" height="60" />
             </div>
             <div v-else>
-              <i
-                class="iconfont icon-image fa-3x"
-                aria-hidden="true"
-              />
+              <i class="iconfont icon-image fa-3x" aria-hidden="true"></i>
             </div>
-            <div
-              v-if="detail.nick_name"
-              class="app-name"
-            >
+            <div class="app-name" v-if="detail.nick_name">
               {{ detail.nick_name }}
             </div>
             <div class="demo">
               <div
-                v-if="detail.weapp.release_status == '1' && detail.weapp.release_ver"
                 class="demo-qrcode"
+                v-if="detail.weapp.release_status == '1' && detail.weapp.release_ver"
                 @click="downloadWxaCode"
               >
-                <img
-                  src="@/assets/img/code.png"
-                  alt=""
-                >
+                <img src="@/assets/img/code.png" alt="" />
               </div>
             </div>
           </div>
           <ul class="info-list">
             <li class="info-item">
-              <div class="label">
-                模板
-              </div>
+              <div class="label">模板</div>
               <div class="content">
-                <div class="content-item">
-                  {{ detail.weappTemplate.name }}
-                </div>
+                <div class="content-item">{{ detail.weappTemplate.name }}</div>
                 <div>线上版本：{{ detail.weapp.release_ver }}</div>
               </div>
             </li>
             <li class="info-item">
-              <div class="label">
-                版本
-              </div>
+              <div class="label">版本</div>
               <div class="content">
-                <div class="content-item">
-                  {{ detail.weappTemplate.version }}
-                </div>
+                <div class="content-item">{{ detail.weappTemplate.version }}</div>
                 <div>
                   <div v-if="detail.weappTemplate.template_id > detail.weapp.template_id">
                     请更新到最新版本
                   </div>
-                  <div v-else>
-                    当前已是最新版本
-                  </div>
+                  <div v-else>当前已是最新版本</div>
                 </div>
               </div>
             </li>
             <li class="info-item">
-              <div class="label">
-                上架状态
-              </div>
+              <div class="label">上架状态</div>
               <div class="content">
                 <div class="content-item">
                   <span v-if="detail.weapp.release_status == '1'">已上架</span>
-                  <span
-                    v-else
-                    type="gray"
-                  >未上架</span>
+                  <span v-else type="gray">未上架</span>
                 </div>
               </div>
             </li>
-            <li
-              v-if="detail.weapp.release_status != '1'"
-              class="info-item"
-            >
-              <div class="label">
-                审核状态
-              </div>
+            <li class="info-item" v-if="detail.weapp.release_status != '1'">
+              <div class="label">审核状态</div>
               <div class="content">
                 <div class="content-item">
                   <span v-if="detail.weapp.audit_status == '1'">审核失败</span>
                   <!--审核成功并且已经上架则不需要显示-->
                   <span
-                    v-else-if="
-                      detail.weapp.audit_status == '0' && detail.weapp.release_status != '1'
-                    "
+                    v-else-if="detail.weapp.audit_status == '0' && detail.weapp.release_status != '1'"
                     type="success"
-                  >审核成功</span>
-                  <span
-                    v-else-if="detail.weapp.audit_status == '3'"
-                    type="success"
-                  >待提交</span>
-                  <span
-                    v-else-if="detail.weapp.audit_status == '2'"
-                    type="primary"
-                  >审核中</span>
+                    >审核成功</span
+                  >
+                  <span v-else-if="detail.weapp.audit_status == '3'" type="success">待提交</span>
+                  <span v-else-if="detail.weapp.audit_status == '2'" type="primary">审核中</span>
                 </div>
               </div>
             </li>
-            <li
-              v-if="detail.weapp.audit_status == '1' && detail.weapp.reason"
-              class="info-item"
-            >
-              <div class="label">
-                审核失败原因
-              </div>
+            <li class="info-item" v-if="detail.weapp.audit_status == '1' && detail.weapp.reason">
+              <div class="label">审核失败原因</div>
               <div class="content">
-                <div
-                  class="content-item"
-                  v-html="detail.weapp.reason"
-                />
+                <div class="content-item" v-html="detail.weapp.reason"></div>
               </div>
             </li>
           </ul>
           <div class="content-center">
-            <el-button
-              type="success"
-              @click="config"
-            >
-              配置
-            </el-button>
+            <el-button type="success" @click="config">配置</el-button>
             <!--<el-checkbox v-model="form.params.autoPublish" @change="configSave">自动发布</el-checkbox>-->
             <el-button
-              v-if="detail.weappTemplate.template_id > detail.weapp.template_id"
               type="success"
+              v-if="detail.weappTemplate.template_id > detail.weapp.template_id"
               @click="handleAddWxaAction"
+              >上传代码</el-button
             >
-              上传代码
-            </el-button>
             <!-- <el-button type="success" v-if="detail.weappTemplate.template_id > detail.weapp.template_id" @click="handleAddWxaActionSubmitReview">上传代码</el-button> -->
             <el-button
+              type="success"
               v-if="detail.weapp.audit_status === 3"
-              type="success"
               @click="handleAddWxaActionSubmitReview"
+              >提交审核</el-button
             >
-              提交审核
-            </el-button>
             <el-button
-              v-else-if="isForceUpdate || detail.weapp.audit_status === 1"
               type="success"
+              v-else-if="isForceUpdate || detail.weapp.audit_status === 1"
               @click="handleAddWxaAction"
+              >重新提交</el-button
             >
-              重新提交
-            </el-button>
-            <el-button
-              v-if="detail.weapp.audit_status === 2"
-              type="info"
-              @click="handleUndocodeaudit"
+            <el-button type="info" v-if="detail.weapp.audit_status === 2" @click="handleUndocodeaudit"
+              >审核撤回</el-button
             >
-              审核撤回
-            </el-button>
             <el-button
-              v-if="detail.weapp.audit_status === 0"
               type="warning"
+              v-if="detail.weapp.audit_status === 0"
               @click="handleRevertcoderelease"
+              >回退版本</el-button
             >
-              回退版本
-            </el-button>
             <!--只有在审核中才需要查看体验二维码-->
             <el-button
-              v-if="detail.weapp.audit_status === 3 || detail.weapp.audit_status === 2"
               type="info"
+              v-if="detail.weapp.audit_status === 3 || detail.weapp.audit_status === 2"
               @click="downloadTextWxaCode"
+              >体验二维码</el-button
             >
-              体验二维码
-            </el-button>
-            <el-button
-              type="success"
-              @click="tryRelease"
+            <el-button type="success" @click="tryRelease">尝试发布</el-button>
+            <el-button type="primary" @click="handleBind">更新授权</el-button>
+            <el-button type="success" @click="domain">域名</el-button>
+            <el-button v-if="system_is_saas == 'false'" type="success" @click="handleEditTemplate"
+              >编辑模板</el-button
             >
-              尝试发布
-            </el-button>
-            <el-button
-              type="primary"
-              @click="handleBind"
+            <el-button v-if="system_is_saas == 'false'" type="primary" @click="getdomain"
+              >小程序合法域名</el-button
             >
-              更新授权
-            </el-button>
-            <el-button
-              type="success"
-              @click="domain"
-            >
-              域名
-            </el-button>
-            <el-button
-              v-if="system_is_saas == 'false'"
-              type="success"
-              @click="handleEditTemplate"
-            >
-              编辑模板
-            </el-button>
-            <el-button
-              v-if="system_is_saas == 'false'"
-              type="primary"
-              @click="getdomain"
-            >
-              小程序合法域名
-            </el-button>
-            <router-link
-              :to="`/wxapp/manage/editauthorize/policy?app_id=${detail.authorizer_appid}&nick_name=${detail.nick_name}`"
-              style="margin-left: 5px"
-            >
-              <el-button type="success">
-                用户隐私保护指引
-              </el-button>
-            </router-link>
+            <router-link :to="`/wxapp/manage/editauthorize/policy?app_id=${detail.authorizer_appid}&nick_name=${detail.nick_name}`" style="margin-left: 5px;">
+              <el-button type="success">用户隐私保护指引</el-button>
+            </router-link> 
           </div>
         </div>
-        <div
-          v-else
-          class="content-center no-bind"
-        >
-          <div>
-            <i
-              class="iconfont icon-info-circle"
-              style="font-size: 70px"
-            />
-          </div>
-          <div class="content-padded">
-            未绑定小程序
-          </div>
-          <el-button
-            type="primary"
-            @click="handleBind"
-          >
-            授权小程序
-          </el-button>
+        <div class="content-center no-bind" v-else>
+          <div><i class="iconfont icon-info-circle" style="font-size: 70px;"></i></div>
+          <div class="content-padded">未绑定小程序</div>
+          <el-button type="primary" @click="handleBind">授权小程序</el-button>
         </div>
       </section>
-      <el-dialog
-        title="小程序码"
-        :visible.sync="wxaCodeVisible"
-      >
+      <el-dialog title="小程序码" :visible.sync="wxaCodeVisible">
         <div class="content-center">
-          <img :src="wxaCodeImage">
+          <img :src="wxaCodeImage" />
         </div>
       </el-dialog>
-      <el-dialog
-        title="配置"
-        class="right-dialog"
-        :visible.sync="wxaConfigVisible"
-      >
-        <el-form
-          ref="form"
-          :model="form"
-          label-position="left"
-          label-width="180px"
-        >
+      <el-dialog title="配置" class="right-dialog" :visible.sync="wxaConfigVisible">
+        <el-form ref="form" :model="form" label-position="left" label-width="180px">
           <div class="section-body">
             <el-form-item label="自动发布：">
               <el-switch
                 v-model="form.auto_publish"
                 :active-value="1"
                 :inactive-value="0"
-              />
+              ></el-switch>
             </el-form-item>
             <el-form-item label="appsecret：">
               <el-col :span="18">
                 <el-input
-                  v-model="form.authorizer_appsecret"
                   placeholder="请输入小程序appsecret"
+                  v-model="form.authorizer_appsecret"
                   show-password
-                />
+                ></el-input>
               </el-col>
             </el-form-item>
           </div>
           <div class="section-footer with-border content-center">
-            <el-button
-              type="primary"
-              @click="configSave"
-            >
-              保 存
-            </el-button>
+            <el-button type="primary" @click="configSave">保 存</el-button>
           </div>
         </el-form>
       </el-dialog>
 
-      <el-dialog
-        title="域名"
-        class="right-dialog"
-        :visible.sync="wxaDomainVisible"
-      >
+      <el-dialog title="域名" class="right-dialog" :visible.sync="wxaDomainVisible">
         <p class="frm-tips">
           对比当前小程序域名和本地实际配置的域名，判断小程序域名是否一致，否则可能导致小程序报错，因为域名不在白名单内
         </p>
-        <el-form
-          label-width="160px"
-          size="mini"
-        >
+        <el-form label-width="160px" size="mini">
           <el-collapse accordion>
-            <el-collapse-item
-              title="当前小程序域名"
-              name="1"
-            >
+            <el-collapse-item title="当前小程序域名" name="1">
               <el-form-item label="request合法域名:">
                 <div v-for="requestdomain in domainform.wxDomain.requestdomain">
                   {{ requestdomain }}
@@ -317,9 +182,7 @@
                 </div>
               </el-form-item>
               <el-form-item label="uploadFile合法域名:">
-                <div v-for="uploaddomain in domainform.wxDomain.uploaddomain">
-                  {{ uploaddomain }}
-                </div>
+                <div v-for="uploaddomain in domainform.wxDomain.uploaddomain">{{ uploaddomain }}</div>
               </el-form-item>
               <el-form-item label="downloadFile合法域名:">
                 <div v-for="downloaddomain in domainform.wxDomain.downloaddomain">
@@ -335,10 +198,7 @@
           </el-collapse>
 
           <el-collapse accordion>
-            <el-collapse-item
-              title="本地配置的域名"
-              name="2"
-            >
+            <el-collapse-item title="本地配置的域名" name="2">
               <el-form-item label="request合法域名:">
                 <div v-for="requestdomain in domainform.localDomain.requestdomain">
                   {{ requestdomain }}
@@ -368,12 +228,7 @@
           </el-collapse>
         </el-form>
         <div class="section-footer with-border content-center">
-          <el-button
-            type="primary"
-            @click="domainSave"
-          >
-            推 送
-          </el-button>
+          <el-button type="primary" @click="domainSave">推 送</el-button>
         </div>
       </el-dialog>
 
@@ -385,12 +240,7 @@
         :before-close="handleCancelLabelsDialog"
       >
         <template>
-          <el-form
-            ref="form"
-            :model="weappTemplate"
-            class="demo-ruleForm"
-            label-width="200px"
-          >
+          <el-form ref="form" :model="weappTemplate" class="demo-ruleForm" label-width="200px">
             <el-form-item
               class="content-left"
               label="小程序唯一标示(英文)"
@@ -398,127 +248,97 @@
               :rules="[{ required: true, message: '请输入英文标识', trigger: 'blur' }]"
             >
               <el-input
-                v-if="weappTemplate.id"
-                v-model="weappTemplate.key_name"
                 placeholder="例如：yykweishop"
+                v-if="weappTemplate.id"
                 disabled
-              />
+                v-model="weappTemplate.key_name"
+              ></el-input>
               <el-input
+                placeholder="例如：yykweishop"
                 v-else
                 v-model="weappTemplate.key_name"
-                placeholder="例如：yykweishop"
-              />
+              ></el-input>
             </el-form-item>
-            <el-form-item
-              class="content-left"
-              label="小程序模板名称"
-            >
+            <el-form-item class="content-left" label="小程序模板名称">
               <el-input
-                v-model="weappTemplate.name"
                 placeholder="例如：yykweishop"
                 disabled
-              />
+                v-model="weappTemplate.name"
+              ></el-input>
             </el-form-item>
-            <el-form-item
-              class="content-left"
-              label="模板id"
-            >
-              <el-input
-                v-model="weappTemplate.template_id"
-                placeholder="例如：30"
-              />
+            <el-form-item class="content-left" label="模板id">
+              <el-input placeholder="例如：30" v-model="weappTemplate.template_id"></el-input>
             </el-form-item>
-            <el-form-item
-              class="content-left"
-              label="模板版本"
-            >
-              <el-input
-                v-model="weappTemplate.version"
-                placeholder="例如：v2.0"
-              />
+            <el-form-item class="content-left" label="模板版本">
+              <el-input placeholder="例如：v2.0" v-model="weappTemplate.version"></el-input>
             </el-form-item>
             <el-form-item class="content-center">
-              <el-button
-                type="primary"
-                @click="saveTemplate"
-              >
-                确定保存
-              </el-button>
+              <el-button type="primary" @click="saveTemplate">确定保存</el-button>
             </el-form-item>
           </el-form>
         </template>
       </el-dialog>
 
       <!--    设置小程序合法域名-->
-      <el-dialog
-        title="设置小程序合法域名"
-        width="60%"
-        :visible.sync="domainDialog"
-      >
+      <el-dialog title="设置小程序合法域名" width="60%" :visible.sync="domainDialog">
         <el-alert
           title="请添加每个域名后回车"
           description="mmbiz.qpic.cn,wx.qlogo.cn"
           type="info"
           show-icon
           :closable="false"
-        />
-        <br>
-        <el-form
-          v-loading="domainloading"
-          label-width="200px"
-        >
+        ></el-alert>
+        <br />
+        <el-form label-width="200px" v-loading="domainloading">
           <el-form-item label="request合法域名">
             <el-input
-              v-model="domainData.requestdomain"
               type="textarea"
               :rows="3"
               placeholder="请输入合法域名"
+              v-model="domainData.requestdomain"
               prop="domain.requestdomain"
               :rules="[{ required: true, message: 'request合法域名', trigger: 'blur' }]"
-            />
+            ></el-input>
           </el-form-item>
           <el-form-item label="socket合法域名">
             <el-input
-              v-model="domainData.wsrequestdomain"
               type="textarea"
               :rows="3"
               placeholder="请输入合法域名"
-            />
+              v-model="domainData.wsrequestdomain"
+            ></el-input>
           </el-form-item>
           <el-form-item label="uploadFile合法域名">
             <el-input
-              v-model="domainData.uploaddomain"
               type="textarea"
               :rows="3"
               placeholder="请输入合法域名"
-            />
+              v-model="domainData.uploaddomain"
+            ></el-input>
           </el-form-item>
           <el-form-item label="downloadFile合法域名">
             <el-input
-              v-model="domainData.downloaddomain"
               type="textarea"
               :rows="6"
               placeholder="请输入合法域名"
-            />
+              v-model="domainData.downloaddomain"
+            ></el-input>
           </el-form-item>
           <el-form-item label="业务合法域名">
             <el-input
-              v-model="domainData.webviewdomain"
               type="textarea"
               :rows="6"
               placeholder="请输入合法域名"
-            />
+              v-model="domainData.webviewdomain"
+            ></el-input>
           </el-form-item>
         </el-form>
         <span slot="footer">
-          <el-button
-            type="primary"
-            @click="setdomain"
-          >确 定</el-button>
+          <el-button type="primary" @click="setdomain">确 定</el-button>
         </span>
       </el-dialog>
     </div>
-    <router-view />
+    <router-view></router-view>
   </div>
 </template>
 
@@ -543,7 +363,7 @@ import {
   saveTemplate
 } from '../../../api/wxa'
 export default {
-  data () {
+  data() {
     return {
       domainDialog: false,
       domainloading: false,
@@ -608,51 +428,18 @@ export default {
   computed: {
     ...mapGetters(['wxapp_id', 'template_name'])
   },
-  mounted () {
-    console.log('是否saas1111', this.system_is_saas)
-    if (!this.wxapp_id && this.$route.query && this.$route.query.newBind) {
-      let params = {
-        wxaAppId: this.$route.query.wxapp_id,
-        wxa_name: this.$route.query.nick_name,
-        templateName: this.template_name
-      }
-      submitWxa(params).then((response) => {
-        this.$message({
-          message: '上传代码成功',
-          type: 'success',
-          duration: 5 * 1000
-        })
-        getWxa(this.$route.query.wxapp_id).then((response) => {
-          this.detail = response.data.data
-          this.$store.dispatch('setWxappId', this.$route.query.wxapp_id)
-          this.$router.push({ path: this.matchInternalRoute('editauthorize') })
-        })
-      })
-    } else {
-      if (this.wxapp_id) {
-        this.loading = true
-        getWxa(this.wxapp_id).then((response) => {
-          this.detail = response.data.data
-          this.weappTemplate = response.data.data.weappTemplate
-          this.form.auto_publish = response.data.data.auto_publish
-          this.form.authorizer_appsecret = response.data.data.authorizer_appsecret
-          this.loading = false
-        })
-      }
-    }
-  },
   methods: {
     // 编辑模板
-    handleEditTemplate () {
+    handleEditTemplate() {
       // 编辑商品弹框
       this.TemplateEditDialog = true
       this.isEdit = true
     },
-    handleCancelLabelsDialog () {
+    handleCancelLabelsDialog() {
       this.TemplateEditDialog = false
     },
     // 保存小程序模板
-    saveTemplate () {
+    saveTemplate() {
       let data = {
         id: this.weappTemplate.id,
         template_id: this.weappTemplate.template_id,
@@ -663,7 +450,7 @@ export default {
       })
     },
     // 获取小程序域名（全局）
-    getdomain () {
+    getdomain() {
       this.domainDialog = true
       this.domainloading = true
       getdomain().then((res) => {
@@ -672,7 +459,7 @@ export default {
       })
     },
     // 设置小程序域名
-    setdomain () {
+    setdomain() {
       setdomain({ domain: this.domainData }).then((res) => {
         if (res.data.data.status === true) {
           this.domainDialog = false
@@ -682,7 +469,7 @@ export default {
         }
       })
     },
-    handleBind () {
+    handleBind() {
       let params = {
         callback_url: this.wxAuthCallbackUrl + 'auth/wxa'
       }
@@ -697,7 +484,7 @@ export default {
         window.open(this.authorizerUrl, '_self')
       })
     },
-    getWxa () {
+    getWxa() {
       this.loading = true
       getWxa(this.wxapp_id).then((response) => {
         this.detail = response.data.data
@@ -705,7 +492,7 @@ export default {
       })
     },
     // 撤销审核
-    handleUndocodeaudit () {
+    handleUndocodeaudit() {
       this.$confirm(
         '单个帐号每天审核撤回次数最多不超过1次，一个月不超过10次, 是否撤销审核?',
         '提示',
@@ -733,7 +520,7 @@ export default {
         })
     },
     // 回退版本
-    handleRevertcoderelease () {
+    handleRevertcoderelease() {
       this.$confirm('回退到上一个小程序版本, 是否继续?', '提示', {
         confirmButtonText: '确定',
         cancelButtonText: '取消',
@@ -756,7 +543,7 @@ export default {
           })
         })
     },
-    handleAddWxaActionOnliCode () {
+    handleAddWxaActionOnliCode() {
       this.submitWeappForm.wxaAppId = this.detail.authorizer_appid
       this.submitWeappForm.wxa_name = this.detail.nick_name
       this.submitWeappForm.templateName = this.detail.weapp.template_name
@@ -769,7 +556,7 @@ export default {
         this.getWxa()
       })
     },
-    handleAddWxaActionSubmitReview () {
+    handleAddWxaActionSubmitReview() {
       this.submitWeappForm.wxaAppId = this.detail.authorizer_appid
       this.submitWeappForm.wxa_name = this.detail.nick_name
       this.submitWeappForm.templateName = this.detail.weapp.template_name
@@ -783,7 +570,7 @@ export default {
       })
     },
     // 上架小程序
-    handleAddWxaAction (type) {
+    handleAddWxaAction(type) {
       this.submitWeappForm.wxaAppId = this.detail.authorizer_appid
       this.submitWeappForm.wxa_name = this.detail.nick_name
       this.submitWeappForm.templateName = this.detail.weapp.template_name
@@ -821,14 +608,14 @@ export default {
         })
       }
     },
-    downloadTextWxaCode () {
+    downloadTextWxaCode() {
       let params = { wxaAppId: this.detail.authorizer_appid }
       getTestQrcode(params).then((response) => {
         this.wxaCodeImage = response.data.data.base64Image
         this.wxaCodeVisible = true
       })
     },
-    tryRelease () {
+    tryRelease() {
       let params = { wxaAppId: this.detail.authorizer_appid }
       tryRelease(params).then((response) => {
         this.$message({
@@ -839,7 +626,7 @@ export default {
         this.getWxa()
       })
     },
-    downloadWxaCode () {
+    downloadWxaCode() {
       this.getwxcodeloading = true
       let params = { wxaAppId: this.detail.authorizer_appid }
       getCodeUnlimit(params)
@@ -852,10 +639,10 @@ export default {
           this.getwxcodeloading = false
         })
     },
-    config () {
+    config() {
       this.wxaConfigVisible = true
     },
-    configSave () {
+    configSave() {
       let params = this.form
       configSubmitHandle(this.wxapp_id, params).then((response) => {
         this.wxaConfigVisible = false
@@ -866,7 +653,7 @@ export default {
         })
       })
     },
-    domain () {
+    domain() {
       this.wxaDomainVisible = true
       let params = {
         wxaAppId: this.wxapp_id,
@@ -879,7 +666,7 @@ export default {
         this.domainform.localDomain = res.data.data.localDomain
       })
     },
-    domainSave () {
+    domainSave() {
       let params = {
         wxaAppId: this.wxapp_id,
         templateName: this.template_name
@@ -892,6 +679,39 @@ export default {
           duration: 5 * 1000
         })
       })
+    }
+  },
+  mounted() {
+    console.log('是否saas1111', this.system_is_saas)
+    if (!this.wxapp_id && this.$route.query && this.$route.query.newBind) {
+      let params = {
+        wxaAppId: this.$route.query.wxapp_id,
+        wxa_name: this.$route.query.nick_name,
+        templateName: this.template_name
+      }
+      submitWxa(params).then((response) => {
+        this.$message({
+          message: '上传代码成功',
+          type: 'success',
+          duration: 5 * 1000
+        })
+        getWxa(this.$route.query.wxapp_id).then((response) => {
+          this.detail = response.data.data
+          this.$store.dispatch('setWxappId', this.$route.query.wxapp_id)
+          this.$router.push({ path: this.matchInternalRoute('editauthorize') })
+        })
+      })
+    } else {
+      if (this.wxapp_id) {
+        this.loading = true
+        getWxa(this.wxapp_id).then((response) => {
+          this.detail = response.data.data
+          this.weappTemplate = response.data.data.weappTemplate
+          this.form.auto_publish = response.data.data.auto_publish
+          this.form.authorizer_appsecret = response.data.data.authorizer_appsecret
+          this.loading = false
+        })
+      }
     }
   }
 }

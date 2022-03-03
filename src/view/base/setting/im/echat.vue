@@ -1,19 +1,10 @@
 <template>
   <div>
     <div>
-      <el-tabs
-        v-model="activeName"
-        type="border-card"
-      >
-        <el-tab-pane
-          label="客服配置"
-          name="first"
-        >
+      <el-tabs v-model="activeName" type="border-card">
+        <el-tab-pane label="客服配置" name="first">
           <template>
-            <el-form
-              ref="form"
-              label-width="130px"
-            >
+            <el-form label-width="130px" ref="form">
               <el-form-item label="开启一洽客服">
                 <el-switch
                   v-model="form.is_open"
@@ -23,30 +14,25 @@
                   active-text="开启"
                   inactive-text="关闭"
                   active-color="#13ce66"
-                />
+                ></el-switch>
               </el-form-item>
               <el-form-item label="一洽客服链接地址">
                 <el-input
                   v-model="form.echat_url"
-                  style="width: 300px"
+                  style="width:300px"
                   placeholder="请输入内容"
-                />
+                ></el-input>
               </el-form-item>
 
               <div class="section-footer with-border content-center">
-                <el-button
-                  type="primary"
-                  @click="onSubmit"
-                >
-                  一洽客服保存
-                </el-button>
+                <el-button @click="onSubmit" type="primary">一洽客服保存</el-button>
               </div>
             </el-form>
           </template>
         </el-tab-pane>
       </el-tabs>
     </div>
-    <router-view />
+    <router-view></router-view>
   </div>
 </template>
 
@@ -54,7 +40,7 @@
 import { getECahtSetting, saveEChatSetting } from '../../../../api/im'
 
 export default {
-  data () {
+  data() {
     return {
       loading: false,
       form: {
@@ -64,16 +50,13 @@ export default {
       activeName: 'first'
     }
   },
-  mounted () {
-    this.getInfo()
-  },
   methods: {
-    getInfo () {
+    getInfo() {
       getECahtSetting().then((response) => {
         this.form = response.data.data
       })
     },
-    onSubmit () {
+    onSubmit() {
       saveEChatSetting(this.form)
         .then((response) => {
           this.$message({ message: '保存成功', type: 'success' })
@@ -81,6 +64,9 @@ export default {
         })
         .catch()
     }
+  },
+  mounted() {
+    this.getInfo()
   }
 }
 </script>

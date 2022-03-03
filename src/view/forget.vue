@@ -2,15 +2,8 @@
   <div>
     <div class="log-header">
       <div class="log-container">
-        <div class="brand">
-          <img
-            :src="brand"
-            alt=""
-          >
-        </div>
-        <div class="log-welcome">
-          找回密码
-        </div>
+        <div class="brand"><img :src="brand" alt="" /></div>
+        <div class="log-welcome">找回密码</div>
       </div>
     </div>
     <div
@@ -23,17 +16,12 @@
       }"
     >
       <div class="log-container">
-        <el-tabs
-          type="border-card"
-          value="admin"
-          style="width: 400px"
-          class="login-type-tab"
-        >
-          <div class="log-img" />
+        <el-tabs type="border-card" value="admin" style="width:400px" class="login-type-tab">
+          <div class="log-img"></div>
           <el-form
-            ref="ruleForm"
             :model="ruleForm"
             :rules="rules"
+            ref="ruleForm"
             label-position="left"
             label-width="0px"
             class="login-log-container"
@@ -42,79 +30,65 @@
               <router-link
                 :to="path_prefixes ? '/' + path_prefixes + '/login' : '/login'"
                 class="signup"
+                >返回登录</router-link
               >
-                返回登录
-              </router-link>
             </h3>
             <el-form-item prop="account">
               <el-input
-                v-model="ruleForm.account"
                 type="text"
+                v-model="ruleForm.account"
                 name="account"
                 auto-complete="new-account"
                 placeholder="请输入手机号"
-              />
+              ></el-input>
             </el-form-item>
-            <el-form-item
-              class="imageyzm"
-              prop="yzm"
-            >
+            <el-form-item class="imageyzm" prop="yzm">
               <el-input
-                v-model="yzm"
                 type="text"
+                v-model="yzm"
                 name="yzm"
                 auto-complete="new-yzm"
                 placeholder="图片验证码"
               >
                 <img
-                  slot="append"
                   :src="yzmcode"
-                  style="width: auto; height: 38px; cursor: pointer"
                   @click="getImageCode"
-                >
+                  style="width: auto;height: 38px;cursor: pointer"
+                  slot="append"
+                />
               </el-input>
             </el-form-item>
-            <el-form-item
-              class="smscode"
-              prop="code"
-            >
+            <el-form-item class="smscode" prop="code">
               <el-input
-                v-model="ruleForm.code"
                 type="text"
+                v-model="ruleForm.code"
                 name="code"
                 autocomplete="new-code"
                 placeholder="请输入手机6位验证码"
               >
-                <el-button
-                  slot="append"
-                  :disabled="yzmbutton"
-                  @click="sendSmsCode"
-                >
-                  {{
-                    yzmcontent
-                  }}
-                </el-button>
+                <el-button @click="sendSmsCode" slot="append" :disabled="yzmbutton">{{
+                  yzmcontent
+                }}</el-button>
               </el-input>
             </el-form-item>
             <el-form-item prop="newpassword">
               <el-input
-                v-model="ruleForm.newpassword"
                 type="password"
+                v-model="ruleForm.newpassword"
                 name="newpassword"
                 auto-complete="new-password"
                 placeholder="密码"
                 show-password
-              />
+              ></el-input>
             </el-form-item>
-            <el-form-item style="width: 100%">
+            <el-form-item style="width:100%">
               <el-button
                 type="primary"
-                style="width: 100%"
+                style="width:100%"
+                @click.native.prevent="handleResetPassword"
                 :loading="logining"
                 :disabled="submitDisabled"
-                @click.native.prevent="handleResetPassword"
-              >
-                修改密码
+                >修改密码
               </el-button>
             </el-form-item>
           </el-form>
@@ -123,21 +97,13 @@
     </div>
     <div class="log-footer">
       <span>友情链接：</span>
-      <a
-        href="https://www.shopex.cn"
-        target="_blank"
-      >商派</a>
+      <a href="https://www.shopex.cn" target="_blank">商派</a>
       <span>|</span>
-      <a
-        href="https://mp.weixin.qq.com"
-        target="_blank"
-      >微信公众平台</a>
+      <a href="https://mp.weixin.qq.com" target="_blank">微信公众平台</a>
       <span>|</span>
-      <a
-        href="https://open.weixin.qq.com"
-        target="_blank"
-      >微信开放平台</a>
+      <a href="https://open.weixin.qq.com" target="_blank">微信开放平台</a>
     </div>
+
   </div>
 </template>
 
@@ -147,7 +113,7 @@ import { isMobile } from '../utils/validate'
 import { getImageCode, getSmsCode, resetPassword } from '../api/login'
 
 export default {
-  data () {
+  data() {
     const validateEmail = (rule, value, callback) => {
       if (!isMobile(value)) {
         callback(new Error('请输入正确的合法手机号'))
@@ -197,23 +163,8 @@ export default {
       submitDisabled: false
     }
   },
-  watch: {
-    yzm (val) {
-      if (val.length == 4) {
-        this.smsData.yzm = val
-        this.smsData.mobile = this.ruleForm.account
-      }
-    }
-  },
-  mounted () {
-    console.log('-----5')
-    this.$store.dispatch('setLoginType', 'staff')
-    this.brand = require('@/assets/img/' + this.companyBrandImg + '/logo.svg')
-    this.login_bg = require('@/assets/img/' + this.companyBrandImg + '/login_bg.jpg')
-    this.getImageCode()
-  },
   methods: {
-    getSmsCode () {
+    getSmsCode() {
       getSmsCode(this.smsData)
         .then((response) => {
           if (response.data.data.status == true) {
@@ -228,13 +179,13 @@ export default {
           this.yzmbutton = false
         })
     },
-    getImageCode () {
+    getImageCode() {
       getImageCode().then((response) => {
         this.yzmcode = response.data.data.imageData
         this.smsData.token = response.data.data.imageToken
       })
     },
-    handleResetPassword () {
+    handleResetPassword() {
       const loginPath = this.path_prefixes ? `/${this.path_prefixes}/login` : '/login'
       this.$refs.ruleForm.validate((valid) => {
         if (valid) {
@@ -247,13 +198,13 @@ export default {
         }
       })
     },
-    sendSmsCode () {
+    sendSmsCode() {
       if (this.yzm.length == 4) {
         this.yzmbutton = true
         this.getSmsCode()
       }
     },
-    countDown () {
+    countDown() {
       if (!this.yzmbutton) return //改动的是这两行代码
       this.yzmcontent = this.yzmTotalTime + 's后重新发送'
       let clock = window.setInterval(() => {
@@ -266,6 +217,21 @@ export default {
           this.yzmbutton = false //这里重新开启
         }
       }, 1000)
+    }
+  },
+  mounted() {
+    console.log('-----5')
+    this.$store.dispatch('setLoginType', 'staff')
+    this.brand = require('@/assets/img/' + this.companyBrandImg + '/logo.svg')
+    this.login_bg = require('@/assets/img/' + this.companyBrandImg + '/login_bg.jpg')
+    this.getImageCode()
+  },
+  watch: {
+    yzm(val) {
+      if (val.length == 4) {
+        this.smsData.yzm = val
+        this.smsData.mobile = this.ruleForm.account
+      }
     }
   }
 }

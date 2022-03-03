@@ -3,7 +3,7 @@
     <div class="store-picker view-flex view-flex-middle">
       <div class="store-info view-flex-item">
         <div class="store-name">
-          {{ isChangeStore ? (checked.name ? checked.name : '总店') : currentStoreName }}
+          {{ isChangeStore ? (checked.name? checked.name:'总店') : currentStoreName}}
         </div>
         <div class="store-address">
           {{ checked.address }}
@@ -15,21 +15,11 @@
           v-if="checked.id && checked.id != '0'"
           class="iconfont icon-times"
           @click="handleResetClick"
-        />
-        <div
-          v-if="isChangeStore"
-          class="iconfont icon-sync-alt"
-          @click="handleClick"
-        />
+        ></div>
+        <div class="iconfont icon-sync-alt" @click="handleClick" v-if="isChangeStore"></div>
       </template>
     </div>
-    <storeList
-      :visible="visible"
-      :data="checked"
-      @changeStore="handleChangeStore"
-      @onClose="handleClose"
-      @change="handleChange"
-    />
+    <storeList :visible="visible" :data="checked" @changeStore="handleChangeStore" @onClose="handleClose" @change="handleChange" />
   </div>
 </template>
 
@@ -39,9 +29,6 @@ import district from '@/common/district.json'
 import storeList from './storeList'
 
 export default {
-  components: {
-    storeList
-  },
   props: {
     data: {
       type: Object,
@@ -49,20 +36,20 @@ export default {
         return {}
       }
     },
-    isChangeStore: {
-      type: Boolean,
-      default: true
+    isChangeStore:{
+      type:Boolean,
+      default:true
     },
     lock: {
       type: Boolean,
       default: false
     },
-    isChangeStore: {
-      type: Boolean,
-      default: true
+    isChangeStore:{
+      type:Boolean,
+      default:true
     }
   },
-  data () {
+  data() {
     return {
       visible: false,
       loading: false,
@@ -76,44 +63,47 @@ export default {
       list: [],
       regions: district,
       checked: {},
-      currentStoreName: ''
+      currentStoreName:''
     }
   },
+  components: {
+    storeList
+  },
   watch: {
-    data (val) {
+    data(val) {
       if (val.id) {
         this.checked = val
       } else {
         this.checked = {}
       }
     },
-    checked (val) {
-      console.log('---checked--->', val)
-    }
-  },
-  mounted () {
-    if (this.data.id) {
-      this.checked = this.data
+    checked(val){
+      console.log("---checked--->",val)
     }
   },
   methods: {
-    handleClick () {
+    handleClick() {
       this.visible = true
     },
-    handleResetClick () {
+    handleResetClick() {
       this.$emit('change', {})
     },
-    handleChange (val) {
+    handleChange(val) {
       this.$emit('change', val)
       this.visible = false
     },
-    handleClose () {
+    handleClose() {
       this.visible = false
     },
-    handleChangeStore (list) {
+    handleChangeStore(list){ 
       //如果返回只有一个则为店铺端
-      this.currentStoreName = list.length === 1 ? list[0].name : '总店'
-      console.log('==currentStoreName', list, this.currentStoreName)
+      this.currentStoreName=list.length===1?list[0].name:'总店';
+      console.log("==currentStoreName",list,this.currentStoreName)
+    }
+  },
+  mounted() {
+    if (this.data.id) {
+      this.checked = this.data
     }
   }
 }

@@ -31,9 +31,9 @@ export default (vm) => {
       { name: '模板名称', key: 'template_name' },
       { name: '模板CODE', key: 'template_code' },
       { name: '模板内容', key: 'template_content' },
-      { name: '短信类型', key: 'template_type', formatter: formatTemplate_type },
+      { name: '短信类型', key: 'template_type',formatter:formatTemplate_type },
       { name: '短信场景', key: 'scene_name' },
-      { name: '创建时间', key: 'created', formatter: formatDate },
+      { name: '创建时间', key: 'created',formatter:formatDate },
       {
         name: '审核状态',
         key: 'status',
@@ -57,22 +57,21 @@ export default (vm) => {
                   (row.status == '1' && '审核通过') ||
                   (row.status == '2' && '审核失败 ')
               ),
-              row.status == 2 &&
-                row.reason &&
-                h(
-                  'el-tooltip',
-                  {
-                    class: 'tips',
-                    props: {
-                      effect: 'dark',
-                      content: row.reason,
-                      placement: 'top'
-                    }
-                  },
-                  [h('i', { class: 'el-icon-warning-outline' }, '')]
-                )
+              row.status == 2 && row.reason  &&
+              h(
+                'el-tooltip',
+                {
+                  class:'tips',
+                  props: {
+                    effect: 'dark',
+                    content: row.reason,
+                    placement:'top'
+                  }
+                },
+                [h('i',{class:'el-icon-warning-outline'},'')]
+              )
             ]
-          )
+        )
       }
     ],
     actions: [

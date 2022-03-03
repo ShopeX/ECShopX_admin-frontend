@@ -1,25 +1,22 @@
 <template>
   <div>
-    <slot />
+    <slot></slot>
     <div class="gray-box">
       <div class="floor">
-        <img
-          :src="t_data.config.imgUrl"
-          alt=""
-        >
+        <img :src="t_data.config.imgUrl" alt="" />
       </div>
     </div>
   </div>
 </template>
 <script>
 export default {
-  name: 'ImgHotzone',
+  name: 'imgHotzone',
   props: {
     data: {
       type: Object
     }
   },
-  data () {
+  data() {
     return {
       t_data: this.data
     }

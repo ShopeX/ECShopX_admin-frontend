@@ -24,11 +24,11 @@ export default {
     {
       path: 'aftersaleslist',
       name: `售后列表`,
-      component: () => import('@/view/mall/aftersales/list'),
+      component: () => import( '@/view/mall/aftersales/list'),
       children: [
         {
           path: 'detail/:itemId?',
-          component: () => import('@/view/mall/aftersales/detail')
+          component: () => import( '@/view/mall/aftersales/detail')
         }
       ]
     },
@@ -40,7 +40,7 @@ export default {
     {
       path: 'aftersalesrefundlist',
       name: `退款单`,
-      component: () => import('@/view/mall/aftersales/refundList'),
+      component: () => import( '@/view/mall/aftersales/refundList' ),
       children: [
         {
           path: 'detail/:itemId?',
@@ -52,6 +52,6 @@ export default {
       path: 'Refunderrorlogs',
       name: `退款失败日志`,
       component: () => import('@/view/mall/trade/refunderrorlogs')
-    }
+    },
   ]
 }

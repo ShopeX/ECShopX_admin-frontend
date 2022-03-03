@@ -1,25 +1,19 @@
 <template>
   <div class="floorStyle">
-    <div class="section-header with-border">
-      设置
-    </div>
+    <div class="section-header with-border">设置</div>
     <el-row :gutter="10">
-      <el-form
-        ref="dataForm"
-        :model="dataForm"
-        label-width="120px"
-      >
+      <el-form ref="dataForm" :model="dataForm" label-width="120px">
         <!-- 标题 -->
         <el-form-item label="标题：">
-          <el-input v-model="dataForm.title" />
+          <el-input v-model="dataForm.title"></el-input>
         </el-form-item>
         <!-- 左侧导航背景颜色 -->
         <el-form-item label="左侧导航背景:">
-          <el-color-picker v-model="dataForm.LeftBackgroundColor" />
+          <el-color-picker v-model="dataForm.LeftBackgroundColor"></el-color-picker>
         </el-form-item>
         <!-- 左侧字体颜色 -->
         <el-form-item label="左侧字体背景:">
-          <el-color-picker v-model="dataForm.LeftFontColor" />
+          <el-color-picker v-model="dataForm.LeftFontColor"></el-color-picker>
         </el-form-item>
         <!-- 左侧图片挂件 -->
         <el-form-item label="左侧图片挂件： 图片大小 250*440">
@@ -30,23 +24,16 @@
                   :src="dataForm.leftImg.url"
                   class="img-pendant__uploader"
                   @click="handleImgChange(0)"
-                >
+                />
               </div>
-              <div
-                v-else
-                class="banner-uploader"
-                @click="handleImgChange(0)"
-              >
-                <i class="iconfont icon-camera" />上传图片
+              <div v-else class="banner-uploader" @click="handleImgChange(0)">
+                <i class="iconfont icon-camera"></i>上传图片
               </div>
             </div>
           </el-col>
           <el-col :span="12">
-            <el-button
-              size="mini"
-              @click="setTypeNavLink(-1, 0)"
-            >
-              <i class="el-icon-circle-plus" />
+            <el-button size="mini" @click="setTypeNavLink(-1, 0)">
+              <i class="el-icon-circle-plus"></i>
               {{ dataForm.leftImg.children ? dataForm.leftImg.children.data.title : '设置路径' }}
             </el-button>
           </el-col>
@@ -60,23 +47,16 @@
                   :src="dataForm.rightImg1.url"
                   class="img-pendant__uploader"
                   @click="handleImgChange(1)"
-                >
+                />
               </div>
-              <div
-                v-else
-                class="banner-uploader"
-                @click="handleImgChange(1)"
-              >
-                <i class="iconfont icon-camera" />上传图片
+              <div v-else class="banner-uploader" @click="handleImgChange(1)">
+                <i class="iconfont icon-camera"></i>上传图片
               </div>
             </div>
           </el-col>
           <el-col :span="12">
-            <el-button
-              size="mini"
-              @click="setTypeNavLink(-1, 1)"
-            >
-              <i class="el-icon-circle-plus" />
+            <el-button size="mini" @click="setTypeNavLink(-1, 1)">
+              <i class="el-icon-circle-plus"></i>
               {{
                 dataForm.rightImg1.children ? dataForm.rightImg1.children.data.title : '设置路径'
               }}
@@ -92,23 +72,16 @@
                   :src="dataForm.rightImg2.url"
                   class="img-pendant__uploader"
                   @click="handleImgChange(2)"
-                >
+                />
               </div>
-              <div
-                v-else
-                class="banner-uploader"
-                @click="handleImgChange(2)"
-              >
-                <i class="iconfont icon-camera" />上传图片
+              <div v-else class="banner-uploader" @click="handleImgChange(2)">
+                <i class="iconfont icon-camera"></i>上传图片
               </div>
             </div>
           </el-col>
           <el-col :span="12">
-            <el-button
-              size="mini"
-              @click="setTypeNavLink(-1, 2)"
-            >
-              <i class="el-icon-circle-plus" />
+            <el-button size="mini" @click="setTypeNavLink(-1, 2)">
+              <i class="el-icon-circle-plus"></i>
               {{
                 dataForm.rightImg2.children ? dataForm.rightImg2.children.data.title : '设置路径'
               }}
@@ -118,40 +91,21 @@
         <!-- 类型导航项 -->
         <el-form-item label="类型导航项：">
           <template v-for="(item, index) in dataForm.leftNavList">
-            <el-col
-              :key="item.uuid"
-              :span="18"
-            >
-              <el-input v-model="item.titleName" />
-              <el-button
-                size="mini"
-                class="btn-width__100"
-                @click="setTypeNavLink(index)"
-              >
-                {{
-                  item.id ? item.title : '设置路径'
-                }}
-              </el-button>
+            <el-col :span="18" :key="item.uuid">
+              <el-input v-model="item.titleName"></el-input>
+              <el-button size="mini" class="btn-width__100" @click="setTypeNavLink(index)">{{
+                item.id ? item.title : '设置路径'
+              }}</el-button>
             </el-col>
-            <el-col
-              :key="item.uuid2"
-              :span="6"
-            >
+            <el-col :span="6" :key="item.uuid2">
               <div class="del-or-add-nav">
-                <i
-                  class="iconfont icon-trash-alt"
-                  @click="delTypeNav(index)"
-                />
+                <i @click="delTypeNav(index)" class="iconfont icon-trash-alt"></i>
               </div>
             </el-col>
           </template>
           <el-col :span="24">
-            <el-button
-              :disabled="dataForm.leftNavList.length >= 9"
-              size="mini"
-              @click="addTypeNav"
-            >
-              <i class="el-icon-circle-plus" />
+            <el-button :disabled="dataForm.leftNavList.length >= 9" size="mini" @click="addTypeNav">
+              <i class="el-icon-circle-plus"></i>
               设置项目
             </el-button>
           </el-col>
@@ -159,79 +113,51 @@
         <!-- Tab类型切换 -->
         <el-form-item label="Tab类型切换：">
           <template v-for="(item, index) in dataForm.tabList">
-            <el-col
-              :key="item.uuid"
-              :span="18"
-            >
-              <el-input v-model="item.title" />
+            <el-col :span="18" :key="item.uuid">
+              <el-input v-model="item.title"></el-input>
             </el-col>
-            <el-col
-              :key="item.uuid2"
-              :span="6"
-            >
+            <el-col :span="6" :key="item.uuid2">
               <div>
-                <i
-                  class="iconfont icon-trash-alt"
-                  @click="delTabList(index)"
-                />
+                <i @click="delTabList(index)" class="iconfont icon-trash-alt"></i>
               </div>
             </el-col>
           </template>
           <el-col :span="24">
-            <el-button
-              :disabled="dataForm.leftNavList.length >= 9"
-              size="mini"
-              @click="addTabList"
-            >
-              <i class="el-icon-circle-plus" />
+            <el-button :disabled="dataForm.leftNavList.length >= 9" size="mini" @click="addTabList">
+              <i class="el-icon-circle-plus"></i>
               设置Tap
             </el-button>
           </el-col>
         </el-form-item>
         <!-- 选择商品 -->
         <el-form-item label="选择商品：">
-          <el-tabs
-            v-model="dataForm.activeName"
-            type="card"
-          >
+          <el-tabs v-model="dataForm.activeName" type="card">
             <el-tab-pane
               v-for="(items, index) in dataForm.tabList"
-              :key="items.uuid"
               :label="items.title"
               :name="index + ''"
+              :key="items.uuid"
             >
-              <el-col
-                v-for="(item, i) in items.children"
-                :key="item.id"
-                :span="24"
-              >
+              <el-col :span="24" v-for="(item, i) in items.children" :key="item.id">
                 <el-col :span="4">
                   <el-image
                     style="width: 60px; height: 60px"
                     :src="item.pics[0]"
                     fit="cover"
-                  />
+                  ></el-image>
                 </el-col>
                 <el-col :span="14">
-                  <p class="goods-name">
-                    {{ item.itemName }}
-                  </p>
+                  <p class="goods-name">{{ item.itemName }}</p>
                 </el-col>
                 <el-col :span="6">
                   <div class="del-or-add-nav">
-                    <i
-                      class="iconfont icon-trash-alt"
-                      @click="delGoods(i)"
-                    />
+                    <i @click="delGoods(i)" class="iconfont icon-trash-alt"></i>
                   </div>
                 </el-col>
               </el-col>
               <el-col :span="24">
-                <el-button
-                  size="mini"
-                  @click="addGoods"
-                >
-                  <i class="el-icon-circle-plus" />
+                <el-button size="mini" @click="addGoods">
+                  <i class="el-icon-circle-plus"></i>
                   设置商品
                 </el-button>
               </el-col>
@@ -245,19 +171,19 @@
       :sc-status="isGetImage"
       @chooseImg="pickImg"
       @closeImgDialog="imgsVisible = false"
-    />
+    ></imgPicker>
     <linkSetter
       :visible="linksVisible"
       @setLink="setLink"
       @closeDialog="linksVisible = false"
-    />
+    ></linkSetter>
     <goodsSelect
       :items-visible="goodsVisible"
       :get-status="setItemStatus"
       :rel-items-ids="relItemsIds"
       @chooseStore="pickGoods"
       @closeStoreDialog="goodsVisible = false"
-    />
+    ></goodsSelect>
   </div>
 </template>
 <script>
@@ -269,18 +195,18 @@ import { getItemsList } from '@/api/goods'
 import { setTimeout } from 'timers'
 
 export default {
-  name: 'FloorStyle',
   components: {
     linkSetter,
     imgPicker,
     goodsSelect
   },
+  name: 'floorStyle',
   props: {
     data: {
       type: Object
     }
   },
-  data () {
+  data() {
     return {
       linksVisible: false, //添加类型导航设置路径 组建
       typeNavIndex: 0, //添加导航路径的 位置
@@ -296,7 +222,7 @@ export default {
       dataForm: this.data.data
     }
   },
-  mounted () {
+  mounted() {
     this.goodsVisible = false //商品选择组建
     this.setItemStatus = true
   },
@@ -305,7 +231,7 @@ export default {
     /**
      * 添加 tab类型
      */
-    addTabList () {
+    addTabList() {
       this.dataForm.tabList.push({
         uuid: Date.now(),
         uuid2: Date.now() + 1,
@@ -316,13 +242,13 @@ export default {
     /**
      *删除选中的 Tab类型
      */
-    delTabList (index) {
+    delTabList(index) {
       this.dataForm.tabList.splice(index, 1)
     },
     /**
      * 添加类型导航项
      */
-    addTypeNav () {
+    addTypeNav() {
       this.dataForm.leftNavList.push({
         uuid: Date.now(),
         uuid2: Date.now() + 1,
@@ -334,13 +260,13 @@ export default {
     /**
      *删除选中的类型导航项
      */
-    delTypeNav (index) {
+    delTypeNav(index) {
       this.dataForm.leftNavList.splice(index, 1)
     },
     /**
      * 调用 添加类型导航设置路径 组建
      */
-    setTypeNavLink (index, i) {
+    setTypeNavLink(index, i) {
       this.typeNavIndex = index
       this.imgIndex = i
 
@@ -349,7 +275,7 @@ export default {
     /**
      * 添加类型导航设置路径 || 添加图片挂件路径
      */
-    setLink (data, type) {
+    setLink(data, type) {
       console.log('setLink---')
       console.log(data)
       console.log(type)
@@ -393,7 +319,7 @@ export default {
     /**
      * 显示上传图片组建
      */
-    handleImgChange (index) {
+    handleImgChange(index) {
       this.imgIndex = index
       this.imgsVisible = true
       this.isGetImage = true
@@ -405,7 +331,7 @@ export default {
     /**
      * 显示上传图片组建 回调
      */
-    pickImg (data) {
+    pickImg(data) {
       console.log('pickImg---')
       console.log(data)
       console.log(this.imgIndex)
@@ -428,7 +354,7 @@ export default {
     /**
      * 添加商品
      */
-    addGoods () {
+    addGoods() {
       if (this.dataForm.tabList.length > 0) {
         let i = Number(this.dataForm.activeName)
         this.relItemsIds = this.dataForm.tabList[i].children
@@ -442,7 +368,7 @@ export default {
     /**
      * 删除选中的商品
      */
-    delGoods (index) {
+    delGoods(index) {
       let i = Number(this.dataForm.activeName)
       // let index =
       this.dataForm.tabList[i].children.splice(index, 1)
@@ -451,7 +377,7 @@ export default {
     /**
      * 选择商品组建回调
      * */
-    pickGoods (data) {
+    pickGoods(data) {
       console.log('pickGoods')
       console.log(data)
       let i = Number(this.dataForm.activeName)

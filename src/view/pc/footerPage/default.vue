@@ -1,27 +1,19 @@
 <template>
   <div>
-    <section
-      v-if="renderable"
-      class="section section-white view-warp el-row"
-    >
+    <section class="section section-white view-warp el-row" v-if="renderable">
       <div class="template-view">
         <div class="template">
           <div class="components-wrap">
-            <footers :info="info" />
+            <footers :info="info"></footers>
           </div>
         </div>
       </div>
       <div class="setting-view el-col el-col-24">
-        <footer-style :info="info" />
+        <footer-style :info="info"></footer-style>
       </div>
     </section>
     <section class="content-padded-s section-white content-center">
-      <el-button
-        type="primary"
-        @click="saveConfig"
-      >
-        保存
-      </el-button>
+      <el-button type="primary" @click="saveConfig">保存</el-button>
     </section>
   </div>
 </template>
@@ -32,7 +24,7 @@ import { savePageParams, getParamByTempName } from '@/api/pctemplate'
 import { Footers, FooterStyle } from './components/plugins'
 export default {
   components: { Footers, FooterStyle },
-  data () {
+  data() {
     return {
       renderable: true,
       componentHeight: '',
@@ -41,33 +33,15 @@ export default {
   },
   watch: {
     info: {
-      handler (newVal, oldVal) {
+      handler(newVal, oldVal) {
         console.log('watch info----->', newVal)
       }
     },
     deep: true,
     immediate: true
   },
-  mounted () {
-    this.renderable = false
-    let filter = { template_name: 'pc', version: 'v1.0.1', page_name: 'footer' }
-    getParamByTempName(filter).then((res) => {
-      const data = res.data.data.config
-      if (data.length !== 0) {
-        this.info = data[0].data
-        this.info.forEach((item, i) => {
-          if (!item.content) {
-            this.info.splice(i, 1)
-          }
-        })
-      }
-      this.$nextTick((_) => {
-        this.renderable = true
-      })
-    })
-  },
   methods: {
-    saveConfig () {
+    saveConfig() {
       const params = [
         {
           name: 'footer',
@@ -91,6 +65,24 @@ export default {
         }
       })
     }
+  },
+  mounted() {
+    this.renderable = false
+    let filter = { template_name: 'pc', version: 'v1.0.1', page_name: 'footer' }
+    getParamByTempName(filter).then((res) => {
+      const data = res.data.data.config
+      if (data.length !== 0) {
+        this.info = data[0].data
+        this.info.forEach((item, i) => {
+          if (!item.content) {
+            this.info.splice(i, 1)
+          }
+        })
+      }
+      this.$nextTick((_) => {
+        this.renderable = true
+      })
+    })
   }
 }
 </script>

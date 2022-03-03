@@ -2,68 +2,47 @@
   <div class="zyk_page_account_info">
     <el-form
       v-if="processed == '未填'"
-      ref="ruleForm"
       :model="form"
+      ref="ruleForm"
       label-width="145px"
       class="demo-ruleForm"
       :rules="rules"
     >
       <!-- 企业信息 -->
-      <el-card
-        class="box-card"
-        shadow="never"
-      >
-        <div
-          slot="header"
-          class="clearfix"
-        >
+      <el-card class="box-card" shadow="never">
+        <div slot="header" class="clearfix">
           <span>企业信息</span>
         </div>
 
         <div class="content">
           <el-row :gutter="20">
             <el-col :span="8">
-              <el-form-item
-                label="商户名称"
-                prop="mer_name"
-              >
-                <el-input v-model="form.mer_name" />
+              <el-form-item label="商户名称" prop="mer_name">
+                <el-input v-model="form.mer_name"></el-input>
               </el-form-item>
             </el-col>
             <el-col :span="8">
-              <el-form-item
-                label="商户名简称"
-                prop="mer_short_name"
-              >
-                <el-input v-model="form.mer_short_name" />
+              <el-form-item label="商户名简称" prop="mer_short_name">
+                <el-input v-model="form.mer_short_name"></el-input>
               </el-form-item>
             </el-col>
             <el-col :span="8">
-              <el-form-item
-                label="营业执照号"
-                prop="license_code"
-              >
+              <el-form-item label="营业执照号" prop="license_code">
                 <div class="flex">
-                  <el-input
-                    v-model="form.license_code"
-                    placeholder=""
-                  />
+                  <el-input placeholder="" v-model="form.license_code"></el-input>
                   <el-tooltip
                     :style="{ 'margin-left': 30 + 'px' }"
                     content="如三证合一传三证合一码"
                     placement="top-end"
                     effect="light"
                   >
-                    <i class="el-icon-warning-outline" />
+                    <i class="el-icon-warning-outline"></i>
                   </el-tooltip>
                 </div>
               </el-form-item>
             </el-col>
             <el-col :span="8">
-              <el-form-item
-                label="商户有效日期"
-                prop="mer_start_valid_date_type"
-              >
+              <el-form-item label="商户有效日期" prop="mer_start_valid_date_type">
                 <div style="width: 100%">
                   <el-tooltip
                     :style="{ 'margin-right': 5 + 'px' }"
@@ -71,33 +50,23 @@
                     placement="top-end"
                     effect="light"
                   >
-                    <i class="el-icon-warning-outline" />
+                    <i class="el-icon-warning-outline"></i>
                   </el-tooltip>
                   <el-radio-group
                     v-model="form.mer_start_valid_date_type"
                     @change="dateTypeHandle($event, 'mer')"
                   >
-                    <el-radio label="长期">
-                      长期有效
-                    </el-radio>
-                    <el-radio label="短期">
-                      时间节点
-                    </el-radio>
+                    <el-radio label="长期">长期有效</el-radio>
+                    <el-radio label="短期">时间节点</el-radio>
                   </el-radio-group>
                 </div>
               </el-form-item>
             </el-col>
-            <el-col
-              v-if="form.mer_start_valid_date_type == '短期'"
-              :span="8"
-            >
-              <el-form-item
-                prop="mer_valid_date_full"
-                label="商户有效日期"
-              >
+            <el-col :span="8" v-if="form.mer_start_valid_date_type == '短期'">
+              <el-form-item prop="mer_valid_date_full" label="商户有效日期">
                 <el-date-picker
-                  v-model="form.mer_valid_date_full"
                   style="width: 100%"
+                  v-model="form.mer_valid_date_full"
                   type="daterange"
                   value-format="yyyyMMdd"
                   placeholder="选择日期"
@@ -105,25 +74,20 @@
                   start-placeholder="开始日期"
                   end-placeholder="结束日期"
                   @change="shortDateHandle($event, 'mer')"
-                />
+                ></el-date-picker>
               </el-form-item>
             </el-col>
-            <el-col
-              v-if="form.mer_start_valid_date_type == '长期'"
-              :span="8"
-            >
-              <el-form-item
-                prop="mer_valid_date_start"
-                label="商户有效期开始日期"
-              >
+            <el-col :span="8" v-if="form.mer_start_valid_date_type == '长期'">
+              <el-form-item prop="mer_valid_date_start" label="商户有效期开始日期">
                 <el-date-picker
-                  v-model="form.mer_valid_date_start"
                   style="width: 100%"
+                  v-model="form.mer_valid_date_start"
                   type="date"
                   placeholder="请选择有效开始日期"
                   value-format="yyyyMMdd"
                   @change="longDateStartHandle($event, 'mer')"
-                />
+                >
+                </el-date-picker>
               </el-form-item>
             </el-col>
             <!-- <el-col :span="8">
@@ -135,85 +99,54 @@
               </el-form-item>
             </el-col> -->
             <el-col :span="8">
-              <el-form-item
-                label="法人/负责人姓名"
-                prop="legal_name"
-              >
-                <el-input
-                  v-model="form.legal_name"
-                  placeholder=""
-                />
+              <el-form-item label="法人/负责人姓名" prop="legal_name">
+                <el-input placeholder="" v-model="form.legal_name"></el-input>
               </el-form-item>
             </el-col>
             <el-col :span="8">
-              <el-form-item
-                label="法人/负责人身份证号"
-                prop="legal_idno"
-              >
+              <el-form-item label="法人/负责人身份证号" prop="legal_idno">
                 <div class="flex">
-                  <el-input
-                    v-model="form.legal_idno"
-                    placeholder=""
-                  />
+                  <el-input placeholder="" v-model="form.legal_idno"></el-input>
                   <el-tooltip
                     :style="{ 'margin-left': 30 + 'px' }"
                     content="身份证信息字母X需大写"
                     placement="top-end"
                     effect="light"
                   >
-                    <i class="el-icon-warning-outline" />
+                    <i class="el-icon-warning-outline"></i>
                   </el-tooltip>
                 </div>
               </el-form-item>
             </el-col>
             <el-col :span="8">
-              <el-form-item
-                label="法人/负责人手机号码"
-                prop="legal_mp"
-              >
-                <el-input
-                  v-model="form.legal_mp"
-                  placeholder=""
-                />
+              <el-form-item label="法人/负责人手机号码" prop="legal_mp">
+                <el-input placeholder="" v-model="form.legal_mp"></el-input>
               </el-form-item>
             </el-col>
             <el-col :span="8">
-              <el-form-item
-                label="法人/负责人证件有效期"
-                prop="legal_id_expires_type"
-              >
+              <el-form-item label="法人/负责人证件有效期" prop="legal_id_expires_type">
                 <el-tooltip
                   :style="{ 'margin-right': 5 + 'px' }"
                   content="长期有效：设置默认截止时间为2099年"
                   placement="top-end"
                   effect="light"
                 >
-                  <i class="el-icon-warning-outline" />
+                  <i class="el-icon-warning-outline"></i>
                 </el-tooltip>
                 <el-radio-group
                   v-model="form.legal_id_expires_type"
                   @change="dateTypeHandle($event, 'legal')"
                 >
-                  <el-radio label="长期">
-                    长期有效
-                  </el-radio>
-                  <el-radio label="短期">
-                    时间节点
-                  </el-radio>
+                  <el-radio label="长期">长期有效</el-radio>
+                  <el-radio label="短期">时间节点</el-radio>
                 </el-radio-group>
               </el-form-item>
             </el-col>
-            <el-col
-              v-if="form.legal_id_expires_type == '短期'"
-              :span="8"
-            >
-              <el-form-item
-                prop="legal_id_expires_full"
-                label="请选择法人/负责人证件有效期"
-              >
+            <el-col :span="8" v-if="form.legal_id_expires_type == '短期'">
+              <el-form-item prop="legal_id_expires_full" label="请选择法人/负责人证件有效期">
                 <el-date-picker
-                  v-model="form.legal_id_expires_full"
                   style="width: 100%"
+                  v-model="form.legal_id_expires_full"
                   type="daterange"
                   value-format="yyyyMMdd"
                   placeholder="选择日期"
@@ -221,75 +154,61 @@
                   start-placeholder="开始日期"
                   end-placeholder="结束日期"
                   @change="shortDateHandle($event, 'legal')"
-                />
+                ></el-date-picker>
               </el-form-item>
             </el-col>
-            <el-col
-              v-if="form.legal_id_expires_type == '长期'"
-              :span="8"
-            >
+            <el-col :span="8" v-if="form.legal_id_expires_type == '长期'">
               <el-form-item
                 prop="legal_id_expires_start"
                 label="请选择法人/负责人证件有效期开始日期"
               >
                 <el-date-picker
-                  v-model="form.legal_id_expires_start"
                   style="width: 100%"
+                  v-model="form.legal_id_expires_start"
                   type="date"
                   placeholder="请选择开始日期"
                   value-format="yyyyMMdd"
                   @change="longDateStartHandle($event, 'legal')"
-                />
+                >
+                </el-date-picker>
               </el-form-item>
             </el-col>
             <el-col :span="8">
-              <el-form-item
-                label="注册手机号"
-                prop="usr_phone"
-              >
+              <el-form-item label="注册手机号" prop="usr_phone">
                 <div class="flex">
-                  <el-input v-model="form.usr_phone" />
+                  <el-input v-model="form.usr_phone"></el-input>
                   <el-tooltip
                     :style="{ 'margin-left': 30 + 'px' }"
                     content="用于登录汇付商户后台"
                     placement="top-end"
                     effect="light"
                   >
-                    <i class="el-icon-warning-outline" />
+                    <i class="el-icon-warning-outline"></i>
                   </el-tooltip>
                 </div>
               </el-form-item>
             </el-col>
             <el-col :span="8">
-              <el-form-item
-                label="注册地址"
-                prop="reg_addr"
-              >
-                <el-input v-model="form.reg_addr" />
+              <el-form-item label="注册地址" prop="reg_addr">
+                <el-input v-model="form.reg_addr"></el-input>
               </el-form-item>
             </el-col>
             <el-col :span="8">
-              <el-form-item
-                label="经营地址"
-                prop="cust_addr"
-              >
-                <el-input v-model="form.cust_addr" />
+              <el-form-item label="经营地址" prop="cust_addr">
+                <el-input v-model="form.cust_addr"></el-input>
               </el-form-item>
             </el-col>
             <el-col :span="8">
-              <el-form-item
-                label="商户座机电话"
-                prop="cust_tel"
-              >
+              <el-form-item label="商户座机电话" prop="cust_tel">
                 <div class="flex">
-                  <el-input v-model="form.cust_tel" />
+                  <el-input v-model="form.cust_tel"></el-input>
                   <el-tooltip
                     :style="{ 'margin-left': 30 + 'px' }"
                     content="地区代码(区号)-电话号码 比如：021-123456"
                     placement="top-end"
                     effect="light"
                   >
-                    <i class="el-icon-warning-outline" />
+                    <i class="el-icon-warning-outline"></i>
                   </el-tooltip>
                 </div>
               </el-form-item>
@@ -298,106 +217,66 @@
         </div>
       </el-card>
       <!-- 联系人信息 -->
-      <el-card
-        class="box-card"
-        shadow="never"
-      >
-        <div
-          slot="header"
-          class="clearfix"
-        >
+      <el-card class="box-card" shadow="never">
+        <div slot="header" class="clearfix">
           <span>联系人信息</span>
         </div>
         <el-row :gutter="20">
           <el-col :span="8">
-            <el-form-item
-              label="联系人姓名"
-              prop="cont_name"
-            >
-              <el-input
-                v-model="form.cont_name"
-                style="width: 100%"
-              />
+            <el-form-item label="联系人姓名" prop="cont_name">
+              <el-input style="width: 100%" v-model="form.cont_name"></el-input>
             </el-form-item>
           </el-col>
           <el-col :span="8">
-            <el-form-item
-              label="联系人手机号"
-              prop="cont_phone"
-            >
+            <el-form-item label="联系人手机号" prop="cont_phone">
               <div class="flex">
-                <el-input v-model="form.cont_phone" />
+                <el-input v-model="form.cont_phone"></el-input>
               </div>
             </el-form-item>
           </el-col>
           <el-col :span="8">
-            <el-form-item
-              label="电子邮箱"
-              prop="customer_email"
-            >
-              <el-input v-model="form.customer_email" />
+            <el-form-item label="电子邮箱" prop="customer_email">
+              <el-input v-model="form.customer_email"></el-input>
             </el-form-item>
           </el-col>
         </el-row>
       </el-card>
       <!-- 结算账户信息 -->
-      <el-card
-        class="box-card"
-        shadow="never"
-      >
-        <div
-          slot="header"
-          class="clearfix"
-        >
+      <el-card class="box-card" shadow="never">
+        <div slot="header" class="clearfix">
           <span>结算账户信息</span>
         </div>
         <el-row :gutter="20">
           <el-col :span="8">
-            <el-form-item
-              label="结算银行卡号"
-              prop="card_id_mask"
-            >
-              <el-input v-model="form.card_id_mask" />
+            <el-form-item label="结算银行卡号" prop="card_id_mask">
+              <el-input v-model="form.card_id_mask"></el-input>
             </el-form-item>
           </el-col>
           <el-col :span="8">
-            <el-form-item
-              label="结算银行卡所属银行"
-              prop="bank_code"
-            >
+            <el-form-item label="结算银行卡所属银行" prop="bank_code">
               <div class="flex">
                 <el-autocomplete
-                  v-model="form.bank_name"
                   style="width: 100%"
                   prefix-icon="el-icon-search"
                   class="inline-input"
+                  v-model="form.bank_name"
                   :fetch-suggestions="querySearch"
                   placeholder="请输入选择内容"
                   @select="handleSelectBank"
-                />
+                ></el-autocomplete>
               </div>
             </el-form-item>
           </el-col>
           <el-col :span="8">
-            <el-form-item
-              label="结算银行卡开户名"
-              prop="card_name"
-            >
-              <el-input v-model="form.card_name" />
+            <el-form-item label="结算银行卡开户名" prop="card_name">
+              <el-input v-model="form.card_name"></el-input>
             </el-form-item>
           </el-col>
           <el-col :span="8">
-            <el-form-item
-              label="结算银行账户类型"
-              prop="bank_acct_type"
-            >
+            <el-form-item label="结算银行账户类型" prop="bank_acct_type">
               <el-radio-group v-model="form.bank_acct_type">
-                <el-radio label="1">
-                  对公
-                </el-radio>
-                <el-radio label="2">
-                  对私
-                </el-radio>
+                <el-radio label="1">对公</el-radio>
+                <el-radio label="2">对私</el-radio>
               </el-radio-group>
               <el-tooltip
                 :style="{ 'margin-left': 30 + 'px' }"
@@ -405,18 +284,16 @@
                 placement="top-end"
                 effect="light"
               >
-                <i class="el-icon-warning-outline" />
+                <i class="el-icon-warning-outline"></i>
               </el-tooltip>
             </el-form-item>
           </el-col>
           <el-col :span="8">
-            <el-form-item
-              label="结算银行卡开户省市"
-              prop="area"
-            >
+            <el-form-item label="结算银行卡开户省市" prop="area">
               <el-cascader
-                v-model="form.area"
+                @change="areaChange"
                 style="width: 100%"
+                v-model="form.area"
                 :options="AllArea"
                 clearable
                 :props="{
@@ -424,8 +301,8 @@
                   label: 'title',
                   children: 'cities'
                 }"
-                @change="areaChange"
-              />
+              >
+              </el-cascader>
             </el-form-item>
           </el-col>
         </el-row>
@@ -459,12 +336,8 @@
         </div>
       </el-card> -->
       <el-form-item style="text-align: center; margin: 50px 0; margin-right: 280px">
-        <el-button
-          type="primary"
-          @click="submitForm"
-        >
-          提交审核
-        </el-button>
+        <el-button type="primary" @click="submitForm"
+          >提交审核</el-button>
         <!-- <loading-btn
           ref="loadingBtn"
           size="medium"
@@ -475,9 +348,9 @@
       </el-form-item>
     </el-form>
     <Result-cpn
-      v-if="processed == '已填'"
-      :current-status="currentStatus"
       @nextPage="nextPage"
+      :currentStatus="currentStatus"
+      v-if="processed == '已填'"
       @processedHandle="processedHandle"
     />
 
@@ -485,10 +358,10 @@
       :visible="checkBoxConfig.visible"
       :message="checkBoxConfig.message"
       :info="checkBoxConfig.info"
-      :is_sms="checkBoxConfig.is_sms"
+      :is_sms='checkBoxConfig.is_sms'
       @checkBoxConfirmHandle="checkBoxConfirmHandle"
       @checkBoxVisibleHandle="checkBoxVisibleHandle"
-    />
+    ></check-box>
   </div>
 </template>
 
@@ -505,7 +378,7 @@ export default {
     loadingBtn,
     checkBox
   },
-  data () {
+  data() {
     return {
       // 全部地区
       AllArea: areaData,
@@ -522,8 +395,8 @@ export default {
       checkBoxConfig: {
         visible: false,
         message: '请确认信息无误！',
-        info: [{ type: 'checkbox', value: '审核结果将有短信提醒发送至注册手机号' }],
-        is_sms: true
+        info: [{type:'checkbox',value:'审核结果将有短信提醒发送至注册手机号'}],
+        is_sms:true,
       },
       props_city: {
         lazy: true,
@@ -544,7 +417,7 @@ export default {
           }
         }
       },
-      form: {
+            form: {
         'mer_name': '张三',
         'mer_short_name': '张三',
         'license_code': '2121212121',
@@ -680,18 +553,18 @@ export default {
       }
     }
   },
-  computed: {},
-  created () {},
-  mounted () {
+  created() {},
+  mounted() {
     this.getStepHandle()
     this.getProHandle()
 
     // this.processedHandle();
     // this.get_city_Handle();
   },
+  computed: {},
   methods: {
     // 查询开户步骤
-    async getStepHandle () {
+    async getStepHandle() {
       const { info } = await this.$api.adapay.getStep()
       const { MerchantEntry } = info
       if (MerchantEntry.length <= 0) {
@@ -708,7 +581,7 @@ export default {
     },
 
     // 获取省
-    async getProHandle (id) {
+    async getProHandle(id) {
       const result = await this.$api.adapay.getPro({ pid: id })
       if (!id) {
         this.All_pro = result
@@ -718,7 +591,7 @@ export default {
     },
 
     // 结算所属银行
-    async querySearch (queryString, cb) {
+    async querySearch(queryString, cb) {
       this.AllBank = await this.$api.adapay.getBank({
         bank_name: this.form.bank_name
       })
@@ -733,24 +606,24 @@ export default {
       //调用 callback 返回建议列表的数据
       cb(results)
     },
-    createFilter (queryString) {
+    createFilter(queryString) {
       return (restaurant) => {
         return restaurant.value.toLowerCase().indexOf(queryString.toLowerCase()) === 0
       }
     },
-    handleSelectBank (val) {
+    handleSelectBank(val) {
       console.log(val)
       this.form.bank_code = val.bank_code
       this.form.bank_name = val.value
     },
-    areaChange (value) {
+    areaChange(value) {
       console.log(value)
       this.form.area = value
       this.form.prov_code = value[0]
       this.form.area_code = value[1]
     },
 
-    submitForm () {
+    submitForm() {
       this.$refs['ruleForm'].validate((valid) => {
         if (valid) {
           if (this.form.bank_acct_type == '2') {
@@ -768,7 +641,7 @@ export default {
       })
     },
     // 重新填写
-    async processedHandle () {
+    async processedHandle() {
       const { info } = await this.$api.adapay.getStep()
       const { MerchantEntry } = info
       this.form = { ...this.form, ...MerchantEntry }
@@ -801,14 +674,15 @@ export default {
       this.form.area = [prov_code, area_code]
       this.checkBoxConfig.is_sms = is_sms
 
+
       console.log(this.form)
       this.processed = '未填'
     },
-    nextPage () {
+    nextPage() {
       this.$router.push('/setting/adapay_merchant/pay_setting')
     },
     // 有效日期类型
-    dateTypeHandle (value, type) {
+    dateTypeHandle(value, type) {
       console.log(value, type)
       if (type == 'mer') {
         this.form.mer_valid_date_start = ''
@@ -821,7 +695,7 @@ export default {
       }
     },
     /* 商户有效短期日期 */
-    shortDateHandle (value, type) {
+    shortDateHandle(value, type) {
       console.log(value, type)
       if (type == 'mer') {
         this.form.mer_start_valid_date = value[0]
@@ -834,7 +708,7 @@ export default {
       }
     },
     /* 商户有效长期日期 */
-    longDateStartHandle (value, type) {
+    longDateStartHandle(value, type) {
       if (type == 'mer') {
         this.form.mer_start_valid_date = value
         this.form.mer_valid_date = '20991231'
@@ -844,7 +718,7 @@ export default {
       }
     },
     /* 上传文件验证 */
-    validatUpload (file) {
+    validatUpload(file) {
       const MAX_IMG_SIZE = 8
       let isLt2M = file.raw.size / 1024 / 1024 <= MAX_IMG_SIZE
       if (!isLt2M) {
@@ -853,8 +727,8 @@ export default {
       return true
     },
     /* ----------------------------------checkBox start----------------------------------- */
-    async checkBoxConfirmHandle (data) {
-      console.log(data)
+    async checkBoxConfirmHandle(data) {
+      console.log(data);
       try {
         const { status } = await this.$api.adapay.accountCreate({ ...this.form, ...data })
         if (status) {
@@ -866,15 +740,15 @@ export default {
             info: ''
           }
         }
-        console.log(this.$refs)
-
+        console.log(this.$refs);
+        
         this.checkBoxVisibleHandle()
       } catch (error) {
         this.checkBoxVisibleHandle()
       }
     },
-    checkBoxVisibleHandle () {
-      this.checkBoxConfig.visible = !this.checkBoxConfig.visible
+    checkBoxVisibleHandle() {
+      this.checkBoxConfig.visible = !this.checkBoxConfig.visible;
     }
     /* ----------------------------------checkBox  end ----------------------------------- */
   }

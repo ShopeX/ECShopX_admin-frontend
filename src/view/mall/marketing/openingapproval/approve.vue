@@ -9,13 +9,13 @@
               class="cus-approve-img"
               src="@/assets/img/adapay/dealer.png"
               alt=""
-            >
+            />
             <img
               v-if="apply_type === 'distributor'"
               class="cus-approve-img"
               src="@/assets/img/adapay/store.png"
               alt=""
-            >
+            />
           </el-col>
         </el-col>
         <el-col :span="20">
@@ -24,7 +24,7 @@
               {{ apply_type === 'distributor' ? distributor_info.name : dealer_info.username }}
             </p>
             <div class="cus-approve-pfonts cus-margin-40">
-              <i class="el-icon-location-outline cus-icon" />
+              <i class="el-icon-location-outline cus-icon"></i>
               <span>{{
                 apply_type === 'distributor'
                   ? distributor_info.province + distributor_info.city
@@ -36,38 +36,29 @@
             </div>
           </div>
           <p class="cus-approve-pfonts">
-            <i class="el-icon-s-custom cus-icon" />
+            <i class="el-icon-s-custom cus-icon"></i>
             <span>{{ entry_apply_info ? entry_apply_info.user_name : '-' }}</span>
           </p>
-          <p
-            v-if="apply_type === 'distributor'"
-            class="cus-approve-pfonts"
-          >
-            <i class="el-icon-time cus-icon" />
+          <p v-if="apply_type === 'distributor'" class="cus-approve-pfonts">
+            <i class="el-icon-time cus-icon"></i>
             <span>{{ distributor_info ? distributor_info.hour : '-' }}</span>
           </p>
           <div class="cus-approve-flex">
             <div class="cus-approve-pfonts">
-              <i class="el-icon-phone cus-icon" />
+              <i class="el-icon-phone cus-icon"></i>
               <span>{{
                 (apply_type === 'distributor' ? distributor_info.mobile : dealer_info.mobile) +
                   '（企业电话）' || '-'
               }}</span>
             </div>
-            <div
-              v-if="apply_type === 'distributor'"
-              class="cus-approve-pfonts cus-margin-50"
-            >
-              <i class="el-icon-message cus-icon" />
+            <div v-if="apply_type === 'distributor'" class="cus-approve-pfonts cus-margin-50">
+              <i class="el-icon-message cus-icon"></i>
               <span>{{ entry_info.email ? `${entry_info.email}（企业邮箱）` : '-' }}</span>
             </div>
           </div>
         </el-col>
       </el-row>
-      <el-row
-        v-if="apply_type === 'distributor'"
-        style="margin-top: 10px"
-      >
+      <el-row v-if="apply_type === 'distributor'" style="margin-top: 10px">
         <el-tag
           v-for="item in tagsList"
           :key="item.name"
@@ -81,50 +72,24 @@
     </el-card>
     <el-card>
       <el-tabs v-model="activeName">
-        <el-tab-pane
-          v-if="apply_type === 'distributor'"
-          label="基本信息"
-          name="first"
-        >
-          <BaseModal
-            :span="20"
-            :label-list="baseInfo"
-            :info="distributor_info"
-            title="地理位置"
-          />
+        <el-tab-pane v-if="apply_type === 'distributor'" label="基本信息" name="first">
+          <BaseModal :span="20" :labelList="baseInfo" :info="distributor_info" title="地理位置" />
           <el-card v-if="infoList.is_rel_dealer">
-            <div slot="header">
-              其他信息
-            </div>
+            <div slot="header">其他信息</div>
             <div class="body">
               <el-row>
-                <el-col
-                  :span="4"
-                  style="text-align: right; padding-right: 10px"
+                <el-col :span="4" style="text-align: right; padding-right: 10px"
+                  >关联经销商:</el-col
                 >
-                  关联经销商:
-                </el-col>
-                <el-col
-                  :span="20"
-                  class="cus-btn"
-                >
+                <el-col :span="20" class="cus-btn">
                   <span>{{ dealer_info.username }}</span>
                 </el-col>
               </el-row>
             </div>
           </el-card>
         </el-tab-pane>
-        <el-tab-pane
-          v-if="apply_type === 'dealer'"
-          label="开户信息"
-          name="first"
-        >
-          <el-row
-            style="height: 350px"
-            type="flex"
-            justify="center"
-            align="middle"
-          >
+        <el-tab-pane v-if="apply_type === 'dealer'" label="开户信息" name="first">
+          <el-row style="height: 350px" type="flex" justify="center" align="middle">
             <span style="color: #ccc">--暂无开户信息--</span>
             <!-- <el-col :span='4' style="text-align:right;padding-right:10px">关联店铺：</el-col>
             <el-col :span='20' style="color: #1480e3" class="cus-btn">
@@ -141,16 +106,12 @@
       width='70%'
     >
      <p class="">入户审批</p> -->
-    <!-- <RegisterInfo :list="member_type === 'person' ? personInfo : enterPersonInfo" :info='entry_info' title="证件信息" />
+      <!-- <RegisterInfo :list="member_type === 'person' ? personInfo : enterPersonInfo" :info='entry_info' title="证件信息" />
       <RegisterInfo :list="member_type === 'person' ? accountList : enterAccountList" :info='entry_info' title="结算账户信息" />
       <AccountInfo v-if="status === 'WAIT_APPROVE'" :subTitle='subTitle' :info='infoList' @handleClose='onChange' />
       <RegisterInfo v-if="status !== 'WAIT_APPROVE'" :list='isBool ? enterSplitAccountList : splitAccountList' :info='split_ledger_info' :subTitle='subTitle' title="分账信息" />
     </el-drawer>  -->
-    <drawer
-      :visible-drawer="visibleDrawer"
-      title="入户审批"
-      @close="onHandleDrawer"
-    >
+    <drawer  @close='onHandleDrawer' :visibleDrawer='visibleDrawer' title='入户审批'>
       <div>
         <RegisterInfo
           :list="member_type === 'person' ? personInfo : enterPersonInfo"
@@ -164,7 +125,7 @@
         />
         <AccountInfo
           v-if="status === 'WAIT_APPROVE'"
-          :sub-title="subTitle"
+          :subTitle="subTitle"
           :info="infoList"
           @handleClose="onChange"
         />
@@ -172,7 +133,7 @@
           v-if="status !== 'WAIT_APPROVE'"
           :list="isBool ? enterSplitAccountList : splitAccountList"
           :info="split_ledger_info"
-          :sub-title="subTitle"
+          :subTitle="subTitle"
           title="分账信息"
         />
       </div>
@@ -184,11 +145,7 @@
       :close-on-click-modal="false"
       @before-close="handleDialogOpen(false)"
     >
-      <StoreModal
-        :info="modalData"
-        :data="storeList"
-        @click="getDistributor"
-      />
+      <StoreModal @click="getDistributor" :info="modalData" :data="storeList" />
     </el-dialog>
   </div>
 </template>
@@ -205,7 +162,7 @@ import drawer from './component/drawer.vue'
 
 export default {
   components: { BaseModal, RegisterInfo, AccountInfo, StoreModal, drawer },
-  data () {
+  data() {
     return {
       loading: true,
       regions: district,
@@ -311,17 +268,8 @@ export default {
   computed: {
     ...mapGetters(['wheight'])
   },
-  mounted () {
-    if (this.$route.query.id) {
-      const { id } = this.$route.query || {}
-      this.id = id
-      this.getDetail(id)
-      let params = { page: 1, pageSize: 10, is_valid: 'true' }
-      this.getDistributor(params)
-    }
-  },
   methods: {
-    getDetail (id) {
+    getDetail(id) {
       getOpenApproveDetail(id)
         .then((response) => {
           const { is_rel_dealer, distributor_info, entry_apply_info, entry_info, dealer_info } =
@@ -388,17 +336,17 @@ export default {
           })
         })
     },
-    onChange (type) {
+    onChange(type) {
       if (type === 'update') {
         this.getDetail(this.id)
       }
       this.onHandleDrawer(true)
     },
-    onHandleDrawer (visible) {
+    onHandleDrawer(visible) {
       this.visibleDrawer = visible
       // this.visibleModal = false
     },
-    statusFilter () {
+    statusFilter() {
       let returnValue = ''
       switch (this.entry_apply_info.status) {
         case 'WAIT_APPROVE':
@@ -416,7 +364,7 @@ export default {
       }
       return returnValue
     },
-    addressFilter () {
+    addressFilter() {
       const { lat, lng } = this.distributor_info || {}
       if (lat && lng) {
         return lng + ' - ' + lat
@@ -424,19 +372,19 @@ export default {
         return '-'
       }
     },
-    headquartersFilter () {
+    headquartersFilter() {
       // 总部分账占比过滤
       let { headquarters_proportion } = this.split_ledger_info
       let value = this.split_ledger_info.headquarters_proportion
       return value ? value + '%' : '-'
     },
-    dealerFilter () {
+    dealerFilter() {
       // 经销商分账占比过滤
       let { dealer_proportion } = this.split_ledger_info
       let value = this.split_ledger_info.dealer_proportion
       return value ? value + '%' : '-'
     },
-    adapayFilter () {
+    adapayFilter() {
       let { adapay_fee_mode } = this.split_ledger_info
       let returnValue = ''
       switch (adapay_fee_mode) {
@@ -449,7 +397,7 @@ export default {
       }
       return returnValue
     },
-    bankFilter () {
+    bankFilter() {
       let { bank_acct_type } = this.entry_info
       let returnValue = ''
       switch (bank_acct_type) {
@@ -462,16 +410,25 @@ export default {
       }
       return returnValue
     },
-    handleDialogOpen (visible) {
+    handleDialogOpen(visible) {
       // 查看店铺弹框
       this.visibleModal = visible
     },
-    getDistributor (parmas) {
+    getDistributor(parmas) {
       getDistributorList(parmas).then((response) => {
         this.storeList = response.data.data.list
         this.modalData.total_count = parseInt(response.data.data.total_count)
         this.modalData.loading = false
       })
+    }
+  },
+  mounted() {
+    if (this.$route.query.id) {
+      const { id } = this.$route.query || {}
+      this.id = id
+      this.getDetail(id)
+      let params = { page: 1, pageSize: 10, is_valid: 'true' }
+      this.getDistributor(params)
     }
   }
 }
@@ -534,3 +491,4 @@ export default {
   }
 }
 </style>
+

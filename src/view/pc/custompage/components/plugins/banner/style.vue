@@ -1,20 +1,20 @@
 <template>
-  <product-map :data="data" />
+  <product-map :data="data"></product-map>
 </template>
 <script>
 import ProductMap from '../../../pluginscomponents/ProductMap'
 export default {
-  name: 'BannerStyle',
-  components: {
-    ProductMap
-  },
+  name: 'bannerStyle',
   props: {
     data: {
       type: Object,
-      default: function () {
+      default: function() {
         return {}
       }
     }
+  },
+  components: {
+    ProductMap
   }
 }
 </script>

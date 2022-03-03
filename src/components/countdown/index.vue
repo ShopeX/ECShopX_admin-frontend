@@ -1,14 +1,9 @@
 <template>
   <div>
-    <slot
-      :day="day"
-      :hour="hour"
-      :min="min"
-      :sec="sec"
-      :content="content"
-    >
+    <slot :day="day" :hour="hour" :min="min" :sec="sec" :content="content">
       <div v-if="!content">
-        <span v-if="day > 0">{{ day }}天</span><span v-if="hour > 0">{{ hour }}时</span><span v-if="min > 0">{{ min }}分</span><span v-if="sec > 0">{{ sec }}秒</span>
+        <span v-if="day > 0">{{ day }}天</span><span v-if="hour > 0">{{ hour }}时</span
+        ><span v-if="min > 0">{{ min }}分</span><span v-if="sec > 0">{{ sec }}秒</span>
       </div>
       <div v-else>
         {{ content }}
@@ -18,6 +13,17 @@
 </template>
 <script>
 export default {
+  data() {
+    return {
+      content: '',
+      day: '',
+      hour: '',
+      min: '',
+      sec: '',
+      timer: '',
+      time: ''
+    }
+  },
   props: {
     endTime: {
       type: Number,
@@ -32,35 +38,21 @@ export default {
       default: ''
     }
   },
-  data () {
-    return {
-      content: '',
-      day: '',
-      hour: '',
-      min: '',
-      sec: '',
-      timer: '',
-      time: ''
-    }
-  },
   watch: {
-    endTime (val) {
+    endTime(val) {
       this.setData(val)
     }
   },
-  mounted () {
-    this.setData(this.endTime)
-  },
   methods: {
-    setData (val) {
+    setData(val) {
       this.time = val
       this.countdowm(this.time)
     },
-    countdowm (timestamp) {
+    countdowm(timestamp) {
       let self = this
       clearInterval(self.timer)
       self.content = ''
-      this.timer = setInterval(function () {
+      this.timer = setInterval(function() {
         let endTime = new Date(timestamp * 1000)
         let nowTime = new Date()
         let t = endTime.getTime() - nowTime.getTime()
@@ -83,11 +75,14 @@ export default {
         }
       }, 1000)
     },
-    _callback () {
+    _callback() {
       if (this.callback && this.callback instanceof Function) {
         this.callback(...this)
       }
     }
+  },
+  mounted() {
+    this.setData(this.endTime)
   }
 }
 </script>

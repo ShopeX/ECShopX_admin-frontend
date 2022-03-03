@@ -1,10 +1,12 @@
 <template>
-  <div>转发送礼</div>
+  <div>
+    转发送礼
+  </div>
 </template>
 
 <script>
 export default {
-  data () {
+  data() {
     return {}
   }
 }

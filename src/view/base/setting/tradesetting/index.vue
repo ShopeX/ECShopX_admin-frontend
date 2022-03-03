@@ -1,45 +1,22 @@
 <template>
-  <el-tabs
-    v-model="activeName"
-    type="border-card"
-    @tab-click="handleClick"
-  >
-    <el-tab-pane
-      label="基础配置"
-      name="base"
-    >
-      <el-form
-        ref="form"
-        label-width="200px"
-      >
+  <el-tabs v-model="activeName" type="border-card" @tab-click="handleClick">
+    <el-tab-pane label="基础配置" name="base">
+      <el-form ref="form" label-width="200px">
         <el-form-item label="是否开启交易包装选项：">
           <el-switch
             v-model="form.config.is_open"
             active-color="#13ce66"
             inactive-color="#ff4949"
-          />
+          ></el-switch>
         </el-form-item>
         <el-form-item label="包装名称：">
-          <el-input
-            v-model="form.config.packName"
-            style="width: 300px"
-          />
+          <el-input v-model="form.config.packName" style="width:300px"></el-input>
         </el-form-item>
         <el-form-item label="包装说明：">
-          <el-input
-            v-model="form.config.packDes"
-            type="textarea"
-            style="width: 300px"
-          />
+          <el-input type="textarea" v-model="form.config.packDes" style="width:300px"></el-input>
         </el-form-item>
         <div class="section-footer with-border content-center">
-          <el-button
-            v-loading="loading"
-            type="primary"
-            @click="onSubmit"
-          >
-            保存
-          </el-button>
+          <el-button type="primary" v-loading="loading" @click="onSubmit">保存</el-button>
         </div>
       </el-form>
     </el-tab-pane>
@@ -48,7 +25,7 @@
 <script>
 import { getTeadeSetting, setTradeSetting } from '../../../../api/trade'
 export default {
-  data () {
+  data() {
     return {
       activeName: 'base',
       loading: false,
@@ -61,19 +38,16 @@ export default {
       }
     }
   },
-  mounted () {
-    this.getConfig()
-  },
   methods: {
-    handleClick () {
+    handleClick() {
       this.getConfig()
     },
-    getConfig () {
+    getConfig() {
       getTeadeSetting().then((response) => {
         this.form.config = response.data.data
       })
     },
-    onSubmit () {
+    onSubmit() {
       this.loading = true
       setTradeSetting(this.form)
         .then((response) => {
@@ -87,6 +61,9 @@ export default {
           this.loading = false
         })
     }
+  },
+  mounted() {
+    this.getConfig()
   }
 }
 </script>

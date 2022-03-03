@@ -1,19 +1,10 @@
 <template>
   <div>
-    <el-form
-      ref="dataForm"
-      :model="dataForm"
-      label-width="80px"
-    >
+    <el-form ref="dataForm" :model="dataForm" label-width="80px">
       <el-row>
         <el-col :span="6">
           <el-form-item label="">
-            <el-button
-              type="primary"
-              @click="handleClickUpload"
-            >
-              上传封面
-            </el-button>
+            <el-button type="primary" @click="handleClickUpload">上传封面</el-button>
           </el-form-item>
         </el-col>
         <el-col :span="18">
@@ -21,66 +12,50 @@
             style="width: 200px; height: 200px"
             :src="dataForm.article_cover"
             :preview-src-list="coverList"
-          />
+          ></el-image>
         </el-col>
         <el-col :span="24">
           <el-form-item label="标题">
-            <el-input
-              v-model="dataForm.article_title"
-              maxlength="20"
-            />
+            <el-input maxlength="20" v-model="dataForm.article_title"></el-input>
           </el-form-item>
         </el-col>
         <el-col :span="24">
           <el-form-item label="描述">
-            <el-input
-              v-model="dataForm.article_subtitle"
-              maxlength="100"
-            />
+            <el-input maxlength="100" v-model="dataForm.article_subtitle"></el-input>
           </el-form-item>
         </el-col>
         <el-col :span="24">
           <el-form-item label="内容">
             <vue-html5-editor
-              ref="editor"
               :content="dataForm.article_content"
-              :height="260"
+              ref="editor"
               @change="updateWithdrawDescContent"
-            />
+              :height="260"
+            ></vue-html5-editor>
           </el-form-item>
         </el-col>
         <el-col :span="24">
           <el-form-item label="连接">
-            <el-button @click="showVisible = true">
-              {{ buttonLinkText }}
-            </el-button>
+            <el-button @click="showVisible = true">{{ buttonLinkText }}</el-button>
           </el-form-item>
         </el-col>
-        <el-col
-          :span="24"
-          class="center"
-        >
-          <el-button
-            type="primary"
-            @click="_setActivearticle"
-          >
-            {{ buttonText }}
-          </el-button>
+        <el-col :span="24" class="center">
+          <el-button @click="_setActivearticle" type="primary">{{ buttonText }}</el-button>
         </el-col>
       </el-row>
     </el-form>
     <imgPicker
       :dialog-visible="picsDialog"
       :sc-status="isGetPics"
-      :is-most="false"
+      :isMost="false"
       @chooseImg="pickPics"
       @closeImgDialog="picsDialog = false"
-    />
+    ></imgPicker>
     <linkSetter
       :visible="showVisible"
       @setLink="handleClickSetLink"
       @closeDialog="showVisible = false"
-    />
+    ></linkSetter>
   </div>
 </template>
 <script>
@@ -93,7 +68,7 @@ export default {
     imgPicker,
     linkSetter
   },
-  data () {
+  data() {
     return {
       dataForm: {
         article_cover: '',
@@ -112,7 +87,7 @@ export default {
       buttonLinkText: '设置路径'
     }
   },
-  mounted () {
+  mounted() {
     console.log(this.$route.query)
     let { id } = this.$route.query
     if (id) {
@@ -124,7 +99,7 @@ export default {
     /**
      * 图片上传组件 show
      * */
-    handleClickUpload (index) {
+    handleClickUpload(index) {
       this.picsDialog = true
       this.isGetPics = true
     },
@@ -132,7 +107,7 @@ export default {
     /**
      * 上传封面
      * */
-    pickPics (item) {
+    pickPics(item) {
       this.picsDialog = false
       this.dataForm.article_cover = item.url
       this.coverList = [item.url]
@@ -141,14 +116,14 @@ export default {
     /**
      * 富文本编辑器
      * */
-    updateWithdrawDescContent (data) {
+    updateWithdrawDescContent(data) {
       this.dataForm.article_content = data
     },
 
     /**
      * 设置路径
      * */
-    handleClickSetLink (row, type) {
+    handleClickSetLink(row, type) {
       console.log('row', row, type)
       this.showVisible = false
       this.buttonLinkText = row.title
@@ -158,7 +133,7 @@ export default {
     /**
      * 获取详情
      * */
-    async _getActivearticle (id) {
+    async _getActivearticle(id) {
       let { data } = await getActivearticle(id)
       this.dataForm = data.data
       this.coverList = [data.data.article_cover]
@@ -167,7 +142,7 @@ export default {
     /**
      * 保存或修改
      * */
-    async _setActivearticle () {
+    async _setActivearticle() {
       let params = this.dataForm
       try {
         if (this.$route.query.id) {
@@ -197,7 +172,7 @@ export default {
       }
     },
 
-    handleFilterLink (type, id) {
+    handleFilterLink(type, id) {
       let url = ''
 
       switch (type) {

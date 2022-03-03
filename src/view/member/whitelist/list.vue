@@ -2,89 +2,39 @@
   <div>
     <el-row :gutter="20">
       <el-col :span="12">
-        <el-button
-          type="primary"
-          icon="plus"
-          @click="addData"
-        >
-          添加白名单
-        </el-button>
-        <el-button
-          type="primary"
-          icon="plus"
-          @click="setTips"
-        >
-          白名单提示
-        </el-button>
+        <el-button type="primary" icon="plus" @click="addData">添加白名单</el-button>
+        <el-button type="primary" icon="plus" @click="setTips">白名单提示</el-button>
       </el-col>
       <el-col :span="12">
-        <el-input
-          v-model="mobile"
-          placeholder="手机号"
-        >
-          <el-button
-            slot="append"
-            icon="el-icon-search"
-            @click="dataSearch"
-          />
-        </el-input>
+        <el-input placeholder="手机号" v-model="mobile"
+          ><el-button slot="append" icon="el-icon-search" @click="dataSearch"></el-button
+        ></el-input>
       </el-col>
     </el-row>
-    <el-table
-      v-loading="loading"
-      :data="whitelistList"
-      :height="wheight - 160"
-    >
-      <el-table-column
-        prop="mobile"
-        label="手机号"
-      />
-      <el-table-column
-        prop="name"
-        label="姓名"
-      />
+    <el-table :data="whitelistList" :height="wheight - 160" v-loading="loading">
+      <el-table-column prop="mobile" label="手机号"></el-table-column>
+      <el-table-column prop="name" label="姓名"></el-table-column>
       <el-table-column label="操作">
         <template slot-scope="scope">
-          <el-button
-            size="mini"
-            @click="editAction(scope.$index, scope.row)"
-          >
-            编辑
-          </el-button>
-          <el-button
-            size="mini"
-            @click="deleteAction(scope.$index, scope.row)"
-          >
-            删除
-          </el-button>
+          <el-button size="mini" @click="editAction(scope.$index, scope.row)">编辑</el-button>
+          <el-button size="mini" @click="deleteAction(scope.$index, scope.row)">删除</el-button>
         </template>
       </el-table-column>
     </el-table>
-    <div
-      v-if="total_count > params.pageSize"
-      class="content-center content-top-padded"
-    >
+    <div v-if="total_count > params.pageSize" class="content-center content-top-padded">
       <el-pagination
         layout="prev, pager, next"
+        @current-change="handleCurrentChange"
         :current-page.sync="params.page"
         :total="total_count"
         :page-size="params.pageSize"
-        @current-change="handleCurrentChange"
-      />
+      >
+      </el-pagination>
     </div>
     <!-- 添加、编辑标识-开始 -->
-    <el-dialog
-      :title="editTitle"
-      :visible.sync="editVisible"
-      :before-close="handleCancel"
-    >
+    <el-dialog :title="editTitle" :visible.sync="editVisible" :before-close="handleCancel">
       <template>
-        <el-form
-          ref="form"
-          :model="form"
-          class="demo-ruleForm"
-          label-width="120px"
-        >
+        <el-form ref="form" :model="form" class="demo-ruleForm" label-width="120px">
           <el-form-item label="手机号">
             <el-col :span="10">
               <el-input
@@ -92,82 +42,36 @@
                 v-model="form.mobile"
                 :maxlength="11"
                 placeholder="请输入11位手机号"
-              />
-              <el-input
-                v-else
-                v-model="editMobile"
-                :disabled="true"
-              />
+              ></el-input>
+              <el-input v-else v-model="editMobile" :disabled="true"></el-input>
             </el-col>
           </el-form-item>
           <el-form-item label="姓名">
-            <el-col
-              :span="10"
-            >
-              <el-input
-                v-model="form.name"
-                required
-                placeholder="请填写名称"
-                :disabled="datapass_block == 1 && isEdit"
-              />
-            </el-col>
+            <el-col :span="10"
+              ><el-input required v-model="form.name" placeholder="请填写名称" :disabled="datapass_block == 1 && isEdit"></el-input
+            ></el-col>
           </el-form-item>
         </el-form>
       </template>
-      <div
-        slot="footer"
-        class="dialog-footer"
-      >
-        <el-button @click.native="handleCancel">
-          取消
-        </el-button>
-        <el-button
-          type="primary"
-          @click="submitAction"
-        >
-          保存
-        </el-button>
+      <div slot="footer" class="dialog-footer">
+        <el-button @click.native="handleCancel">取消</el-button>
+        <el-button type="primary" @click="submitAction">保存</el-button>
       </div>
     </el-dialog>
     <!-- 设置提示语句 -->
-    <el-dialog
-      :title="editTitle"
-      :visible.sync="editTipsVisible"
-      :before-close="handleCancelTips"
-    >
+    <el-dialog :title="editTitle" :visible.sync="editTipsVisible" :before-close="handleCancelTips">
       <template>
-        <el-form
-          ref="form"
-          :model="form"
-          class="demo-ruleForm"
-          label-width="120px"
-        >
+        <el-form ref="form" :model="form" class="demo-ruleForm" label-width="120px">
           <el-form-item label="提示">
-            <el-col
-              :span="20"
-            >
-              <el-input
-                v-model="form.tips"
-                required
-                placeholder="请填写提示"
-              />
-            </el-col>
+            <el-col :span="20"
+              ><el-input required v-model="form.tips" placeholder="请填写提示"></el-input
+            ></el-col>
           </el-form-item>
         </el-form>
       </template>
-      <div
-        slot="footer"
-        class="dialog-footer"
-      >
-        <el-button @click.native="handleCancelTips">
-          取消
-        </el-button>
-        <el-button
-          type="primary"
-          @click="submitTipsAction"
-        >
-          保存
-        </el-button>
+      <div slot="footer" class="dialog-footer">
+        <el-button @click.native="handleCancelTips">取消</el-button>
+        <el-button type="primary" @click="submitTipsAction">保存</el-button>
       </div>
     </el-dialog>
   </div>
@@ -190,7 +94,7 @@ export default {
       default: false
     }
   },
-  data () {
+  data() {
     return {
       isValid: true,
       isEdit: false,
@@ -220,33 +124,23 @@ export default {
   computed: {
     ...mapGetters(['wheight'])
   },
-  watch: {
-    status (val) {
-      if (val) {
-        this.getListData()
-      }
-    }
-  },
-  mounted () {
-    this.getListData()
-  },
   methods: {
-    handleClose (index) {
+    handleClose(index) {
       this.relDistributors.splice(index, 1)
       this.form.distributor_ids.splice(index, 1)
     },
-    handleCancel () {
+    handleCancel() {
       this.editVisible = false
       this.whitelist_id = ''
       this.editMobile = ''
       this.form.mobile = ''
       this.form.name = ''
     },
-    handleCurrentChange (page_num) {
+    handleCurrentChange(page_num) {
       this.params.page = page_num
       this.getListData()
     },
-    addData () {
+    addData() {
       this.handleCancel()
       this.editTitle = '添加白名单'
       this.editVisible = true
@@ -256,7 +150,7 @@ export default {
       this.whitelist_id = ''
       this.editMobile = ''
     },
-    editAction (index, row) {
+    editAction(index, row) {
       // 编辑物料弹框
       this.handleCancel()
       this.editTitle = '编辑白名单信息'
@@ -267,7 +161,7 @@ export default {
       this.form.name = row.name
       this.whitelist_id = row.whitelist_id
     },
-    submitAction () {
+    submitAction() {
       // 提交物料
       if (this.whitelist_id) {
         updateMembersWhitelist(this.whitelist_id, this.form).then((response) => {
@@ -284,12 +178,12 @@ export default {
         })
       }
     },
-    dataSearch () {
+    dataSearch() {
       this.params.mobile = this.mobile
       this.params.page = 1
       this.getListData()
     },
-    getListData () {
+    getListData() {
       this.loading = true
       getMembersWhitelistList(this.params).then((response) => {
         this.whitelistList = response.data.data.list
@@ -298,7 +192,7 @@ export default {
         this.loading = false
       })
     },
-    deleteAction (index, row) {
+    deleteAction(index, row) {
       this.$confirm('此操作将删除该白名单, 是否继续?', '提示', {
         confirmButtonText: '确定',
         cancelButtonText: '取消',
@@ -328,7 +222,7 @@ export default {
           })
         })
     },
-    setTips (data) {
+    setTips(data) {
       this.handleCancel()
       this.handleCancelTips()
       this.editTitle = '白名单提示'
@@ -337,17 +231,27 @@ export default {
         this.form.tips = response.data.data.whitelist_tips
       })
     },
-    handleCancelTips () {
+    handleCancelTips() {
       this.editTipsVisible = false
       this.form.tips = ''
     },
-    submitTipsAction () {
+    submitTipsAction() {
       // 提交物料
       const params = { whitelist_tips: this.form.tips }
       setWhitelistSetting(params).then((response) => {
         this.editTipsVisible = false
         this.handleTipsCancel()
       })
+    }
+  },
+  mounted() {
+    this.getListData()
+  },
+  watch: {
+    status(val) {
+      if (val) {
+        this.getListData()
+      }
     }
   }
 }

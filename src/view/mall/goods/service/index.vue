@@ -6,23 +6,14 @@
       type="border-card"
       @tab-click="handleClick"
     >
-      <el-tab-pane
-        label="基础物料"
-        name="first"
-      >
-        <service :get-status="service" />
+      <el-tab-pane label="基础物料" name="first">
+        <service :get-status="service"></service>
       </el-tab-pane>
-      <el-tab-pane
-        label="商品"
-        name="second"
-      >
-        <goods
-          ref="goods"
-          :get-status="goods"
-        />
+      <el-tab-pane label="商品" name="second">
+        <goods :get-status="goods" ref="goods"></goods>
       </el-tab-pane>
     </el-tabs>
-    <router-view />
+    <router-view></router-view>
   </div>
 </template>
 
@@ -31,7 +22,7 @@ import goods from './items/list.vue'
 import service from './servicelabels/list.vue'
 
 export default {
-  provide () {
+  provide() {
     return {
       refresh: this.getGoodsList
     }
@@ -40,14 +31,27 @@ export default {
     goods,
     service
   },
-  data () {
+  data() {
     return {
       activeName: 'first',
       service: false,
       goods: false
     }
   },
-  mounted () {
+  methods: {
+    //充值送钱
+    handleClick(tab, event) {
+      if (this.activeName === 'first') {
+        this.service = true
+      } else if (this.activeName === 'second') {
+        this.goods = true
+      }
+    },
+    getGoodsList() {
+      this.$refs.getGoodsList
+    }
+  },
+  mounted() {
     if (this.$route.query.name) {
       this.activeName = this.$route.query.name
     }
@@ -55,19 +59,6 @@ export default {
       this.service = true
     } else if (this.activeName === 'second') {
       this.goods = true
-    }
-  },
-  methods: {
-    //充值送钱
-    handleClick (tab, event) {
-      if (this.activeName === 'first') {
-        this.service = true
-      } else if (this.activeName === 'second') {
-        this.goods = true
-      }
-    },
-    getGoodsList () {
-      this.$refs.getGoodsList
     }
   }
 }

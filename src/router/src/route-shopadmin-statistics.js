@@ -25,8 +25,8 @@ export default {
       component: () =>
         import(
           /* webpackChunkName: "companydata-accountingStatistics" */ '@/view/mall/datacube/accountingstatistics'
-        ),
-      children: [
+      ),
+      children:[
         {
           path: 'detail/:itemId?',
           meta: {
@@ -42,8 +42,8 @@ export default {
     {
       path: 'cashRecord',
       name: `提现记录`,
-      component: () => import('@/view/mall/datacube/cashrecord')
-    }
+      component: () => import( '@/view/mall/datacube/cashrecord')
+    },
     // {
     //   path: 'accountingStatistics',
     //   name: `accountingStatistics`,

@@ -5,7 +5,7 @@ import CommonUtil from '@/common/js/util'
 // import district from '@/common/district.json'
 
 //格式化时间
-Vue.filter('datetime', function (time, pattern) {
+Vue.filter('datetime', function(time, pattern) {
   if (time !== -1) {
     return CommonUtil.formatDate.format(new Date(time * 1000), pattern)
   } else {
@@ -15,7 +15,7 @@ Vue.filter('datetime', function (time, pattern) {
 })
 
 //格式化时间
-Vue.filter('formatDataTime', function (time, pattern = 'yyyy-MM-dd hh:mm:ss') {
+Vue.filter('formatDataTime', function(time, pattern = 'yyyy-MM-dd hh:mm:ss') {
   if (time !== -1) {
     return CommonUtil.formatDate.format(new Date(time * 1000), pattern)
   } else {
@@ -25,7 +25,7 @@ Vue.filter('formatDataTime', function (time, pattern = 'yyyy-MM-dd hh:mm:ss') {
 })
 
 //
-Vue.filter('subStr', function (str, n) {
+Vue.filter('subStr', function(str, n) {
   var r = /[^\x00-\xff]/g
   if (str.replace(r, 'mm').length <= n) {
     return str
@@ -39,7 +39,7 @@ Vue.filter('subStr', function (str, n) {
   return str
 })
 //匹配省市区
-Vue.filter('formatCityData', function (areaValue, district, defaultValue = true) {
+Vue.filter('formatCityData', function(areaValue, district, defaultValue = true) {
   if (areaValue == 0 || typeof areaValue === 'undefined') {
     if (!defaultValue) return ''
     return '全国（默认）'
@@ -78,7 +78,7 @@ Vue.filter('formatCityData', function (areaValue, district, defaultValue = true)
   return area_str.substring(0, area_str.lastIndexOf(','))
 })
 //格式化价格保留小数点后两位
-Vue.filter('keepTwoDecimalFull', function (num) {
+Vue.filter('keepTwoDecimalFull', function(num) {
   var result = parseFloat(num)
   if (isNaN(result)) {
     console.log('传递参数错误，请检查！')
@@ -98,12 +98,12 @@ Vue.filter('keepTwoDecimalFull', function (num) {
 })
 
 // 格式化金钱
-Vue.filter('formatNumMoney', function formatNum (number) {
+Vue.filter('formatNumMoney',function formatNum(number) {
   return number.toFixed(2).toLocaleString()
 })
 
 // 格式化时间
-Vue.filter('formatTimestamp', function formatTimestamp (timestamp) {
+Vue.filter('formatTimestamp',function formatTimestamp(timestamp) {
   if (timestamp) {
     var date = new Date(timestamp * 1000) //时间戳为10位需*1000，时间戳为13位的话不需乘1000
     var YY = date.getFullYear() + '-'
@@ -119,7 +119,7 @@ Vue.filter('formatTimestamp', function formatTimestamp (timestamp) {
 })
 
 //匹配券类别字符串
-Vue.filter('formatCardStr', function (str) {
+Vue.filter('formatCardStr', function(str) {
   switch (str) {
     case 'groupon':
       str = '团购券'
@@ -164,12 +164,12 @@ Vue.filter('formatCardStr', function (str) {
   return str
 })
 
-Vue.prototype.matchInternalRoute = function (name) {
+Vue.prototype.matchInternalRoute = function(name) {
   let menus = this.$router.options.routes
   if (menus) {
     return findName(menus, name)
   }
-  function findName (menus, name) {
+  function findName(menus, name) {
     for (let item of menus) {
       let url = item.path
       let path = ''
@@ -196,7 +196,7 @@ Vue.prototype.matchInternalRoute = function (name) {
   }
 }
 
-Vue.prototype.matchHidePage = function (name) {
+Vue.prototype.matchHidePage = function(name) {
   // let componentName = this.$route.path.split( '/' )
   // debugger
   // componentName = componentName[componentName.length-1]
@@ -204,6 +204,7 @@ Vue.prototype.matchHidePage = function (name) {
 
   return `${this.$route.path}/${name}`
 }
+
 
 Vue.prototype.orderType = [
   {
@@ -220,21 +221,15 @@ Vue.prototype.orderType = [
   // }
 ]
 // console.log("---process.env.IS_SAAS--",process.env)
-Vue.prototype.system_is_saas = process.env.VUE_APP_IS_SAAS || 'false'
+Vue.prototype.system_is_saas = process.env.VUE_APP_IS_SAAS||'false'
 Vue.prototype.system_mode = process.env.VUE_APP_PRODUCT_MODEL
 Vue.prototype.VERSION_STANDARD = VERSION_STANDARD
-Vue.prototype.VUE_APP_SYSTEM_NAME = process.env.VUE_APP_SYSTEM_NAME
+Vue.prototype.VUE_APP_SYSTEM_NAME = VUE_APP_SYSTEM_NAME
 Vue.prototype.path_prefixes = process.env.VUE_APP_PREFIXES
-Vue.prototype.BASE_API =
-  process.env.VUE_APP_BASE_API.indexOf('http') !== -1
-    ? process.env.VUE_APP_BASE_API
-    : window.location.origin + '/api'
+Vue.prototype.BASE_API = process.env.VUE_APP_BASE_API.indexOf('http') !== -1 ? process.env.VUE_APP_BASE_API : window.location.origin + '/api'
 Vue.prototype.wximageurl = process.env.VUE_APP_WXIMG_URL
 Vue.prototype.BEIAN = process.env.BEIAN
-Vue.prototype.wxAuthCallbackUrl =
-  process.env.VUE_APP_WXAUTHCALL_Url.indexOf('http') !== -1
-    ? process.env.VUE_APP_WXAUTHCALL_Url
-    : window.location.origin + '/'
+Vue.prototype.wxAuthCallbackUrl = process.env.VUE_APP_WXAUTHCALL_Url.indexOf('http') !== -1 ? process.env.VUE_APP_WXAUTHCALL_Url : window.location.origin + '/'
 Vue.prototype.routeApp = ''
 Vue.prototype.chartColors = {
   red: 'rgb(255, 99, 132)',
@@ -257,3 +252,4 @@ Vue.prototype.companyBrand = '商派ECShopX'
 Vue.prototype.companyBrandImg = process.env.PRODUCT_MODEL === 'standard' ? 'onex' : 'ecshopx'
 // 动态改变页面的title
 document.title = Vue.prototype.companyBrand
+

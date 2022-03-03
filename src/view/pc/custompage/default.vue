@@ -4,55 +4,37 @@
       <draggable
         v-model="initData"
         :options="dragIssuesOptions"
-        class="components-view"
         @start="onStart"
         @end="onEnd"
+        class="components-view"
       >
-        <div
-          v-for="(item, index) in initData"
-          class="component-control"
-        >
+        <div v-for="(item, index) in initData" class="component-control">
           <template v-if="item.name === 'banner'">
-            <svg
-              class="svg-icon"
-              aria-hidden="true"
-            >
+            <svg class="svg-icon" aria-hidden="true">
               <use xlink:href="#icon-slider" />
             </svg>
             轮播
           </template>
           <template v-if="item.name === 'goodsGrid'">
-            <svg
-              class="svg-icon"
-              aria-hidden="true"
-            >
+            <svg class="svg-icon" aria-hidden="true">
               <use xlink:href="#icon-grid" />
             </svg>
             商品栅格
           </template>
           <template v-if="item.name === 'imgHotzone'">
-            <svg
-              class="svg-icon"
-              aria-hidden="true"
-            >
+            <svg class="svg-icon" aria-hidden="true">
               <use xlink:href="#icon-hotzone" />
             </svg>
             热区图
           </template>
           <template v-if="item.name === 'panel' && usage !== 'store'">
-            <svg
-              class="svg-icon"
-              aria-hidden="true"
-            >
+            <svg class="svg-icon" aria-hidden="true">
               <use xlink:href="#icon-navigation" />
             </svg>
             图片导航
           </template>
           <template v-if="item.name === 'floor'">
-            <svg
-              class="svg-icon"
-              aria-hidden="true"
-            >
+            <svg class="svg-icon" aria-hidden="true">
               <use xlink:href="#icon-floor" />
             </svg>
             楼层挂件
@@ -65,62 +47,53 @@
         <div class="template">
           <!-- <Navbar @click.native="setCurrent('nav')" :usage="usage" :data="navConfig"></Navbar> -->
           <draggable
-            v-model="components"
             class="components-wrap"
+            v-model="components"
             :options="dragViewOptions"
-            :style="'height: ' + (wheight - 220) + 'px;'"
             @start="onStart"
             @end="onEnd"
+            :style="'height: ' + (wheight - 220) + 'px;'"
           >
             <component
-              :is="widget.name"
-              v-for="(widget, k) in components"
               v-if="renderable"
-              :key="widget.uuid"
+              v-for="(widget, k) in components"
+              :is="widget.name"
               :data-uuid="widget.uuid"
               :data="widget"
+              :key="widget.uuid"
+              @click.native="setCurrent(k)"
               :class="[k == editorIndex ? 'active' : '', 'component-item']"
               :usage="usage"
-              @click.native="setCurrent(k)"
             >
               <transition name="el-fade-in-linear">
                 <div
                   v-if="k == editorIndex"
                   class="iconfont icon-trash-alt1"
                   @click="removeCurrent"
-                />
+                ></div>
               </transition>
             </component>
           </draggable>
         </div>
       </div>
       <div class="setting-view el-col el-col-8">
-        <div
-          v-if="editorIndex === null && editorData"
-          class="view-placeholder"
-        >
-          <i class="iconfont icon-shapes" />
+        <div class="view-placeholder" v-if="editorIndex === null && editorData">
+          <i class="iconfont icon-shapes"></i>
           请选择左侧挂件
         </div>
         <template v-else>
           <component
-            :is="editorData.name == 'nav' ? 'navStyle' : components[editorIndex].name + 'Style'"
             v-if="renderable"
+            :is="editorData.name == 'nav' ? 'navStyle' : components[editorIndex].name + 'Style'"
             :data="editorData"
             :data-uuid="editorData.name == 'nav' ? '' : components[editorIndex].uuid"
             :usage="usage"
-          />
+          ></component>
         </template>
       </div>
     </section>
     <section class="content-padded-s section-white content-center">
-      <el-button
-        class="btn-save"
-        type="primary"
-        @click="saveConfig"
-      >
-        保存
-      </el-button>
+      <el-button class="btn-save" type="primary" @click="saveConfig">保存</el-button>
     </section>
   </div>
 </template>
@@ -154,7 +127,7 @@ export default {
       type: String
     }
   },
-  data () {
+  data() {
     return {
       renderable: true,
       componentHeight: '',
@@ -299,9 +272,16 @@ export default {
   computed: {
     ...mapGetters(['wheight'])
   },
+  created() {
+    Object.keys(plugins).forEach((key) => {
+      let widget = plugins[key].widget
+      Vue.component(key, widget)
+    })
+    this.$store.dispatch('setTemplateName', 'pc')
+  },
   watch: {
     id: {
-      handler (newName, oldName) {
+      handler(newName, oldName) {
         if (newName === oldName) return
         this.editorIndex = null
         this.components = []
@@ -310,18 +290,11 @@ export default {
       immediate: true
     }
   },
-  created () {
-    Object.keys(plugins).forEach((key) => {
-      let widget = plugins[key].widget
-      Vue.component(key, widget)
-    })
-    this.$store.dispatch('setTemplateName', 'pc')
-  },
   methods: {
     /**
      * 拖拽事件开始
      */
-    onStart (evt) {
+    onStart(evt) {
       if (evt.target.className === 'components-view') {
         let item = this.initData[evt.oldIndex]
         item.uuid = generate(str, 10)
@@ -335,11 +308,14 @@ export default {
     /**
      * 拖拽事件结束
      */
-    onEnd (evt) {
-      console.log('onend')
-      this.setCurrent(evt.newIndex)
-      if (evt.target.className === 'components-view' && evt.to.className === 'components-wrap') {
-        this.initData.splice(evt.oldIndex, 0, JSON.parse(this.saveInit))
+    onEnd(evt) { 
+      console.log("onend");
+      this.setCurrent(evt.newIndex);
+      if (
+        evt.target.className === "components-view" &&
+        evt.to.className === "components-wrap"
+      ) {
+        this.initData.splice(evt.oldIndex, 0, JSON.parse(this.saveInit));
       }
       evt.preventDefault()
       // console.log('initData', this.initData)
@@ -347,7 +323,7 @@ export default {
     /**
      * 设置
      */
-    setCurrent (val) {
+    setCurrent(val) {
       this.editorIndex = val
       if (val === 'nav') {
         console.log('set', plugins.navStyle.widget)
@@ -361,7 +337,7 @@ export default {
     /**
      * 确认删除当前组件
      */
-    removeCurrent () {
+    removeCurrent() {
       this.$confirm('确认删除当前组件？')
         .then((_) => {
           this.editorData = {}
@@ -374,7 +350,7 @@ export default {
     /**
      * 保存
      */
-    saveConfig () {
+    saveConfig() {
       const tmp = this.components.find((v) => v.name === 'nav')
       this.components = tmp ? this.components : [...this.components, ...[this.navConfig]]
       console.log('save components', this.components)
@@ -401,7 +377,7 @@ export default {
     /**
      * 获取
      */
-    _getParamByTempName (newName) {
+    _getParamByTempName(newName) {
       let filter = {
         template_name: this.template_name,
         version: 'v1.0.1',

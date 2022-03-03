@@ -1,43 +1,38 @@
 <template>
-  <el-button
-    :type="type"
-    :size="size"
-    :loading="loading"
-    @click="btnHandle"
-  >
-    {{ text }}
-  </el-button>
+  <el-button :type='type' :size='size' :loading='loading' @click="btnHandle">{{text}}</el-button>
 </template>
 
 <script>
 export default {
-  props: {
-    size: {
-      default: 'medium'
+  props:{
+    size:{
+      default:'medium'
     },
-    type: {
-      default: 'primary'
+    type:{
+      default:'primary'
     },
-    text: {
-      default: '确定'
+    text:{
+      default:'确定'
     }
   },
 
-  data () {
-    return {
-      loading: false
+  data(){
+    return{
+      loading:false
     }
   },
-  methods: {
-    btnHandle () {
-      this.loading = true
-      this.$emit('clickHandle')
+  methods:{
+    btnHandle(){
+      this.loading = true;
+      this.$emit('clickHandle');
     },
-    closeLoading () {
+    closeLoading() {
       this.loading = false
     }
   }
 }
 </script>
 
-<style></style>
+<style>
+
+</style>

@@ -1,21 +1,22 @@
 <template>
-  <Result-cpn :current-status="currentStatus" />
+  <Result-cpn :currentStatus="currentStatus"/>
 </template>
 
 <script>
 import ResultCpn from './cpn/result.vue'
 export default {
-  components: {
+  components:{
     ResultCpn
   },
-  data () {
-    return {
-      currentStatus: {
-        resultStatus: 'netin',
-        time: '',
-        info: ''
+  data(){
+    return{
+      currentStatus:{
+        resultStatus:'netin',
+        time:'',
+        info:''
       }
     }
   }
+
 }
 </script>

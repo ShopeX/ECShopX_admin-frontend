@@ -8,20 +8,10 @@
         label-position="right"
         class="demo-ruleForm"
       >
-        <div
-          v-if="!form.id"
-          class="content-center content-bottom-padded"
-        >
-          <el-radio-group
-            v-model="form.tem_type"
-            @change="handleTypeChange"
-          >
-            <el-radio-button label="basic_entry">
-              基础录入(统计报表)
-            </el-radio-button>
-            <el-radio-button label="ask_answer_paper">
-              问卷调查
-            </el-radio-button>
+        <div v-if="!form.id" class="content-center content-bottom-padded">
+          <el-radio-group v-model="form.tem_type" @change="handleTypeChange">
+            <el-radio-button label="basic_entry">基础录入(统计报表)</el-radio-button>
+            <el-radio-button label="ask_answer_paper">问卷调查</el-radio-button>
           </el-radio-group>
         </div>
         <el-form-item
@@ -34,7 +24,7 @@
               v-model.trim="form.tem_name"
               :maxlength="30"
               placeholder="体测表单"
-            />
+            ></el-input>
           </el-col>
         </el-form-item>
         <el-form-item
@@ -43,16 +33,9 @@
           prop="form_style"
           :rules="[{ required: true, message: '请输入标题', trigger: 'blur' }]"
         >
-          <el-row
-            :gutter="20"
-          >
-            <el-col :span="5">
-              <el-radio
-                v-model="form.form_style"
-                label="single"
-              >
-                单页问卷(多项集合)
-              </el-radio>
+          <el-row :gutter="20"
+            ><el-col :span="5">
+              <el-radio v-model="form.form_style" label="single">单页问卷(多项集合)</el-radio>
               <!-- <el-radio v-model="form.form_style" label="multiple">多页问卷(每页一项)</el-radio> -->
             </el-col>
             <el-col :span="10">
@@ -62,16 +45,15 @@
                 :closable="false"
                 title="单页问卷方式不支持图片显示"
                 type="warning"
-              />
+              ></el-alert>
               <el-alert
                 v-if="form.form_style == 'multiple'"
                 show-icon
                 :closable="false"
                 title="多页问卷方式提供图片显示"
                 type="warning"
-              />
-            </el-col>
-          </el-row>
+              ></el-alert> </el-col
+          ></el-row>
         </el-form-item>
         <el-form-item
           v-if="form.tem_type == 'ask_answer_paper' && form.form_style == 'single'"
@@ -79,11 +61,11 @@
         >
           <el-col :span="20">
             <el-input
-              v-model.trim="form.header_link_title"
               type="textarea"
+              v-model.trim="form.header_link_title"
               :maxlength="500"
               placeholder="头部文字超级链接"
-            />
+            ></el-input>
           </el-col>
         </el-form-item>
         <el-form-item
@@ -92,11 +74,11 @@
         >
           <el-col :span="20">
             <el-input
-              v-model="form.header_title"
               type="textarea"
+              v-model="form.header_title"
               :maxlength="500"
               placeholder="体测表单"
-            />
+            ></el-input>
           </el-col>
         </el-form-item>
         <el-form-item
@@ -105,11 +87,11 @@
         >
           <el-col :span="20">
             <el-input
-              v-model="form.bottom_title"
               type="textarea"
+              v-model="form.bottom_title"
               :maxlength="500"
               placeholder="体测表单"
-            />
+            ></el-input>
           </el-col>
         </el-form-item>
         <el-form-item
@@ -117,115 +99,62 @@
           prop="content"
           :rules="[{ required: true, message: '请选择表单内容', trigger: 'change' }]"
         >
-          <el-row
-            v-for="(item, index) in form.content"
-            :key="index"
-            :gutter="2"
-          >
+          <el-row :gutter="2" v-for="(item, index) in form.content" :key="index">
             <el-col :span="18">
               <el-card class="box-card">
-                <div
-                  slot="header"
-                  class="clearfix"
-                >
-                  <template
-                    v-if="form.tem_type == 'ask_answer_paper'"
-                  >
-                    <span>区块一标题:</span><el-input
+                <div slot="header" class="clearfix">
+                  <template v-if="form.tem_type == 'ask_answer_paper'"
+                    ><span>区块一标题:</span
+                    ><el-input
                       v-model="item.title"
                       placeholder="区块标题"
                       size="mini"
-                      style="width: 200px"
-                    />
-                    <span>排序:</span><el-input
-                      v-model="item.sort"
-                      size="mini"
-                      style="width: 50px"
-                    />
-                  </template>
+                      style="width:200px"
+                    ></el-input>
+                    <span>排序:</span
+                    ><el-input v-model="item.sort" size="mini" style="width:50px"></el-input
+                  ></template>
                   <el-button
                     style="float: right; padding: 3px 0"
-                    type="text"
                     @click="checkContent(index)"
+                    type="text"
+                    >选择表单内容</el-button
                   >
-                    选择表单内容
-                  </el-button>
                 </div>
                 <el-col v-if="item.formdata.length > 0">
-                  <el-table
-                    :data="item.formdata"
-                    style="width: 100%"
-                  >
-                    <el-table-column
-                      prop="id"
-                      label="ID"
-                      width="40"
-                    />
-                    <el-table-column
-                      prop="field_title"
-                      label="标题"
-                      width="100"
-                    />
-                    <el-table-column
-                      prop="sort"
-                      label="排序"
-                      width="100"
-                    >
+                  <el-table :data="item.formdata" style="width: 100%">
+                    <el-table-column prop="id" label="ID" width="40"></el-table-column>
+                    <el-table-column prop="field_title" label="标题" width="100"></el-table-column>
+                    <el-table-column prop="sort" label="排序" width="100">
                       <template slot-scope="scope">
-                        <el-input
-                          v-model="scope.row.sort"
-                          width="80"
-                          size="small"
-                        />
+                        <el-input width="80" size="small" v-model="scope.row.sort"></el-input>
                       </template>
                     </el-table-column>
-                    <el-table-column
-                      prop="sort"
-                      label="是否必填"
-                      width="100"
-                    >
+                    <el-table-column prop="sort" label="是否必填" width="100">
                       <template slot-scope="scope">
                         <el-checkbox
                           v-model="scope.row.is_required"
                           :checked="scope.row.is_required"
-                        />
+                        ></el-checkbox>
                       </template>
                     </el-table-column>
-                    <el-table-column
-                      v-if="keyIndexIsShow"
-                      label="设置关键指数(最多设置5个)"
-                    >
+                    <el-table-column label="设置关键指数(最多设置5个)" v-if="keyIndexIsShow">
                       <template slot-scope="scope">
                         <el-checkbox
                           v-model="scope.row.key_index"
                           @change="checkKeyIndex(scope.$index, scope.row)"
-                        />
+                        ></el-checkbox>
                       </template>
                     </el-table-column>
                   </el-table>
                 </el-col>
               </el-card>
             </el-col>
-            <el-col
-              v-if="form.tem_type == 'ask_answer_paper'"
-              :span="2"
-            >
-              <el-button
-                v-if="index == 0"
-                circle
-                type="primary"
-                @click="addCard"
+            <el-col :span="2" v-if="form.tem_type == 'ask_answer_paper'">
+              <el-button v-if="index == 0" circle type="primary" @click="addCard">增</el-button>
+              <el-button v-if="index != 0" circle type="primary" @click="delCard(index)"
+                >删</el-button
               >
-                增
-              </el-button>
-              <el-button
-                v-if="index != 0"
-                circle
-                type="primary"
-                @click="delCard(index)"
-              >
-                删
-              </el-button>
             </el-col>
           </el-row>
         </el-form-item>
@@ -235,42 +164,24 @@
           prop="tem_name"
         >
           <el-row>
-            <el-col
-              v-for="(item, index) in form.key_index"
-              :key="index"
-              :span="4"
-            >
+            <el-col :span="4" v-for="(item, index) in form.key_index" :key="index">
               <div>{{ item.field_title }}</div>
             </el-col>
           </el-row>
         </el-form-item>
         <el-form-item>
-          <el-button @click.native="handleCancel">
-            取消
-          </el-button>
-          <el-button
-            type="primary"
-            @click="submitAction"
-          >
-            保存
-          </el-button>
+          <el-button @click.native="handleCancel">取消</el-button>
+          <el-button type="primary" @click="submitAction">保存</el-button>
         </el-form-item>
       </el-form>
     </div>
-    <SideBar
-      :visible.sync="showElementList"
-      title="选择表单元素"
-      width="40"
-    >
+    <SideBar :visible.sync="showElementList" title="选择表单元素" width="40">
       <slot>
-        <el-row
-          class="content-bottom-padded"
-          :gutter="20"
-        >
+        <el-row class="content-bottom-padded" :gutter="20">
           <el-col :span="6">
             <el-select
-              v-model="params.form_element"
               placeholder="请选择表单元素"
+              v-model="params.form_element"
               style="width: 100%"
               @change="searchData"
             >
@@ -279,82 +190,48 @@
                 :key="item.value"
                 :label="item.name"
                 :value="item.value"
-              />
+              >
+              </el-option>
             </el-select>
           </el-col>
           <el-col :span="6">
-            <el-input
-              v-model="params.field_title"
-              placeholder="标题"
-              style="width: 100%"
-            >
-              <el-button
-                slot="append"
-                icon="el-icon-search"
-                @click="searchData"
-              />
-            </el-input>
+            <el-input placeholder="标题" v-model="params.field_title" style="width: 100%"
+              ><el-button slot="append" icon="el-icon-search" @click="searchData"></el-button
+            ></el-input>
           </el-col>
         </el-row>
         <el-table
           ref="multipleTable"
-          v-loading="loading"
           :data="ItemsList"
           tooltip-effect="dark"
           style="width: 100%"
-          :row-key="getRowKeys"
-          :select-on-indeterminate="false"
           @select="handleSelectChange"
           @select-all="handleSelectAll"
+          v-loading="loading"
+          :row-key="getRowKeys"
+          :select-on-indeterminate="false"
         >
-          <el-table-column
-            type="selection"
-            :reserve-selection="true"
-            width="50"
-          />
-          <el-table-column
-            prop="id"
-            label="ID"
-            width="40"
-          />
-          <el-table-column
-            prop="field_title"
-            label="标题"
-            width="150"
-          />
-          <el-table-column
-            prop="form_element"
-            label="元素"
-            width="80"
-          />
+          <el-table-column type="selection" :reserve-selection="true" width="50"></el-table-column>
+          <el-table-column prop="id" label="ID" width="40"></el-table-column>
+          <el-table-column prop="field_title" label="标题" width="150"></el-table-column>
+          <el-table-column prop="form_element" label="元素" width="80"></el-table-column>
           <el-table-column label="选择项">
             <template slot-scope="scope">
-              <span
-                v-for="(item, index) in scope.row.options"
-                :key="index"
-              > {{ item.value }}</span>
+              <span v-for="(item, index) in scope.row.options" :key="index"> {{ item.value }}</span>
             </template>
           </el-table-column>
         </el-table>
-        <div
-          v-if="total_count > params.pageSize"
-          class="tr"
-        >
+        <div v-if="total_count > params.pageSize" class="tr">
           <el-pagination
             layout="prev, pager, next"
+            @current-change="handleCurrentChange"
             :total="total_count"
             :page-size="params.pageSize"
-            @current-change="handleCurrentChange"
-          />
+          >
+          </el-pagination>
         </div>
-        <span
-          slot="footer"
-          class="dialog-footer"
-        >
-          <el-button
-            type="primary"
-            @click="saveStoreAction"
-          >确 定</el-button>
+        <span slot="footer" class="dialog-footer">
+          <el-button type="primary" @click="saveStoreAction">确 定</el-button>
         </span>
       </slot>
     </SideBar>
@@ -376,7 +253,7 @@ export default {
   components: {
     SideBar
   },
-  data () {
+  data() {
     return {
       form: {
         id: '',
@@ -416,20 +293,8 @@ export default {
       selectdata: []
     }
   },
-  mounted () {
-    if (this.$route.query.id) {
-      getTemplateInfo(this.$route.query.id).then((res) => {
-        this.form = res.data.data
-        if (this.form.tem_type === 'basic_entry') {
-          this.keyIndexIsShow = true
-        } else {
-          this.keyIndexIsShow = false
-        }
-      })
-    }
-  },
   methods: {
-    getDataList () {
+    getDataList() {
       this.loading = true
       getSettingList(this.params).then((response) => {
         this.ItemsList = response.data.data.list
@@ -444,7 +309,7 @@ export default {
         this.total_count = response.data.data.total_count
       })
     },
-    submitAction () {
+    submitAction() {
       const that = this
       this.$refs['form'].validate((valid) => {
         if (valid) {
@@ -466,7 +331,7 @@ export default {
                   message: '更新成功',
                   type: 'success',
                   duration: 2 * 1000,
-                  onClose () {
+                  onClose() {
                     that.refresh()
                     that.$router.go(-1)
                   }
@@ -481,7 +346,7 @@ export default {
                     message: '添加成功',
                     type: 'success',
                     duration: 2 * 1000,
-                    onClose () {
+                    onClose() {
                       that.refresh()
                       that.$router.go(-1)
                     }
@@ -504,10 +369,10 @@ export default {
         }
       })
     },
-    handleCancel () {
+    handleCancel() {
       this.$router.go(-1)
     },
-    handleTypeChange (val) {
+    handleTypeChange(val) {
       this.showElementList = false
       this.form.tem_type = val
       if (val === 'basic_entry') {
@@ -516,10 +381,10 @@ export default {
         this.keyIndexIsShow = false
       }
     },
-    checkIsRequired (index, val) {
+    checkIsRequired(index, val) {
       // console.log(val)
     },
-    checkKeyIndex (index, val) {
+    checkKeyIndex(index, val) {
       if (val.key_index && this.form.key_index.length >= 5) {
         this.form.content[index].key_index = false
         this.$message({
@@ -539,7 +404,7 @@ export default {
         this.form.key_index.push(val)
       }
     },
-    checkContent (index) {
+    checkContent(index) {
       if (this.form.tem_type == 'basic_entry') {
         this.params.form_element = 'number'
         this.formElement = [{ name: '数字', value: 'number' }]
@@ -561,27 +426,27 @@ export default {
       this.selectdata = this.form.content[index].formdata
       this.getDataList()
     },
-    searchData () {
+    searchData() {
       this.params.page = 1
       this.getDataList()
     },
-    handleCurrentChange (page_num) {
+    handleCurrentChange(page_num) {
       this.params.page = page_num
       this.getDataList()
     },
-    handleSizeChange (pageSize) {
+    handleSizeChange(pageSize) {
       this.loading = false
       this.params.page = 1
       this.params.pageSize = pageSize
       this.getDataList()
     },
-    getRowKeys (row) {
+    getRowKeys(row) {
       return row.id
     },
-    getTemplateRow (index, row) {
+    getTemplateRow(index, row) {
       this.selectRows = new Array(row)
     },
-    saveStoreAction () {
+    saveStoreAction() {
       let index = this.formcontentindex
       this.showElementList = false
       let newselectrows = JSON.parse(JSON.stringify(this.form.content[index].formdata))
@@ -590,7 +455,7 @@ export default {
       })
       this.form.content[index].formdata = newselectrows
     },
-    handleSelectAll (val) {
+    handleSelectAll(val) {
       let index = this.formcontentindex
       if (val.length > 0) {
         this.form.content[index].formdata = []
@@ -609,7 +474,7 @@ export default {
         })
       }
     },
-    handleSelectChange (val, row) {
+    handleSelectChange(val, row) {
       let index = this.formcontentindex
       let inChecked = this.form.content[index].formdata.findIndex((item) => row.id === item.id)
       if (inChecked !== -1) {
@@ -618,7 +483,7 @@ export default {
         this.form.content[index].formdata.push(row)
       }
     },
-    addCard () {
+    addCard() {
       let carddata = {
         title: '',
         formdata: [],
@@ -626,8 +491,20 @@ export default {
       }
       this.form.content.push(carddata)
     },
-    delCard (index) {
+    delCard(index) {
       this.form.content.splice(index, 1)
+    }
+  },
+  mounted() {
+    if (this.$route.query.id) {
+      getTemplateInfo(this.$route.query.id).then((res) => {
+        this.form = res.data.data
+        if (this.form.tem_type === 'basic_entry') {
+          this.keyIndexIsShow = true
+        } else {
+          this.keyIndexIsShow = false
+        }
+      })
     }
   }
 }

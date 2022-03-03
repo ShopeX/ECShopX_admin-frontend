@@ -3,47 +3,25 @@
     <div slot="header">
       <div style="display: flex; align-items: center">
         <div>店铺图片</div>
-        <div class="frm-tips">
-          （只能上传jpg/png文件，且不超过2M）
-        </div>
+        <div class="frm-tips">（只能上传jpg/png文件，且不超过2M）</div>
       </div>
     </div>
     <el-row>
       <el-col :span="8">
         <el-form-item>
           <div>店铺Logo <span class="tips">推荐尺寸：140px * 140px</span></div>
-          <div
-            class="upload-box"
-            @click="handleImgPicker('logo')"
-          >
-            <img
-              v-if="form.logo"
-              :src="form.logo"
-              class="avatar"
-            >
-            <i
-              v-else
-              class="iconfont icon-camera avatar-uploader-icon"
-            />
+          <div @click="handleImgPicker('logo')" class="upload-box">
+            <img v-if="form.logo" :src="form.logo" class="avatar" />
+            <i v-else class="iconfont icon-camera avatar-uploader-icon"></i>
           </div>
         </el-form-item>
       </el-col>
       <el-col :span="12">
         <el-form-item>
           <div>商铺背景图片<span class="tips">推荐尺寸：400px * 260px</span></div>
-          <div
-            class="upload-box"
-            @click="handleImgPicker('banner')"
-          >
-            <img
-              v-if="form.banner"
-              :src="form.banner"
-              class="avatar"
-            >
-            <i
-              v-else
-              class="iconfont icon-camera avatar-uploader-icon"
-            />
+          <div @click="handleImgPicker('banner')" class="upload-box">
+            <img v-if="form.banner" :src="form.banner" class="avatar" />
+            <i v-else class="iconfont icon-camera avatar-uploader-icon"></i>
           </div>
         </el-form-item>
       </el-col>
@@ -54,7 +32,7 @@
       :sc-status="isGetImage"
       @chooseImg="pickImg"
       @closeImgDialog="closeImgDialog"
-    />
+    ></imgPicker>
   </el-card>
 </template>
 
@@ -65,8 +43,7 @@ export default {
   components: {
     imgPicker
   },
-  props: ['externalForm'],
-  data () {
+  data() {
     return {
       pickerImgType: 'logo',
       imgDialog: false,
@@ -77,9 +54,10 @@ export default {
       }
     }
   },
+  props: ['externalForm'],
   watch: {
     externalForm: {
-      handler (val) {
+      handler(val) {
         if (val.logo) {
           this.form.logo = val.logo
         }
@@ -90,9 +68,8 @@ export default {
       deep: true
     }
   },
-  mounted () {},
   methods: {
-    closeImgDialog () {
+    closeImgDialog() {
       this.imgDialog = false
       this.isGetImage = false
     },
@@ -101,7 +78,7 @@ export default {
       this.imgDialog = true
       this.isGetImage = true
     },
-    pickImg (data) {
+    pickImg(data) {
       if (this.pickerImgType == 'logo') {
         this.form.logo = data.url
       } else {
@@ -109,7 +86,8 @@ export default {
       }
       this.imgDialog = false
     }
-  }
+  },
+  mounted() {}
 }
 </script>
 

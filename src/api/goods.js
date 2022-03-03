@@ -1,7 +1,7 @@
 import fetch from '../utils/fetch'
 
 // 基础物料
-export function getServiceLabelsList (query) {
+export function getServiceLabelsList(query) {
   return fetch({
     url: '/goods/servicelabels',
     method: 'get',
@@ -9,14 +9,14 @@ export function getServiceLabelsList (query) {
   })
 }
 
-export function getServiceLabelsDetail (labelId) {
+export function getServiceLabelsDetail(labelId) {
   return fetch({
     url: '/goods/servicelabels/' + labelId,
     method: 'get'
   })
 }
 
-export function createServiceLabels (query) {
+export function createServiceLabels(query) {
   return fetch({
     url: '/goods/servicelabels',
     method: 'post',
@@ -24,7 +24,7 @@ export function createServiceLabels (query) {
   })
 }
 
-export function updateServiceLabels (labelId, query) {
+export function updateServiceLabels(labelId, query) {
   return fetch({
     url: '/goods/servicelabels/' + labelId,
     method: 'put',
@@ -32,7 +32,7 @@ export function updateServiceLabels (labelId, query) {
   })
 }
 
-export function deleteServiceLabels (labelId) {
+export function deleteServiceLabels(labelId) {
   return fetch({
     url: '/goods/servicelabels/' + labelId,
     method: 'delete'
@@ -40,7 +40,7 @@ export function deleteServiceLabels (labelId) {
 }
 
 // 商品类型
-export function getItemsTypeList (query) {
+export function getItemsTypeList(query) {
   return fetch({
     url: '/goods/itemstype',
     method: 'get',
@@ -48,21 +48,21 @@ export function getItemsTypeList (query) {
   })
 }
 
-export function getItemsTypeDetail (typeId) {
+export function getItemsTypeDetail(typeId) {
   return fetch({
     url: '/goods/itemstype/' + typeId,
     method: 'get'
   })
 }
 
-export function getItemsTypeLabelsDetail (typeId) {
+export function getItemsTypeLabelsDetail(typeId) {
   return fetch({
     url: '/goods/itemstypelabels/' + typeId,
     method: 'get'
   })
 }
 
-export function createItemsType (query) {
+export function createItemsType(query) {
   return fetch({
     url: '/goods/itemstype',
     method: 'post',
@@ -70,7 +70,7 @@ export function createItemsType (query) {
   })
 }
 
-export function updateItemsType (typeId, query) {
+export function updateItemsType(typeId, query) {
   return fetch({
     url: '/goods/itemstype/' + typeId,
     method: 'put',
@@ -78,7 +78,7 @@ export function updateItemsType (typeId, query) {
   })
 }
 
-export function deleteItemsType (typeId) {
+export function deleteItemsType(typeId) {
   return fetch({
     url: '/goods/itemstype/' + typeId,
     method: 'delete'
@@ -86,7 +86,7 @@ export function deleteItemsType (typeId) {
 }
 
 // 商品
-export function getItemsList (query) {
+export function getItemsList(query) {
   return fetch({
     url: '/goods/items',
     method: 'get',
@@ -97,7 +97,7 @@ export function getItemsList (query) {
   })
 }
 
-export function getSkuList (query) {
+export function getSkuList(query) {
   return fetch({
     url: '/goods/sku',
     method: 'get',
@@ -105,14 +105,14 @@ export function getSkuList (query) {
   })
 }
 
-export function getItemsDetail (itemId) {
+export function getItemsDetail(itemId) {
   return fetch({
     url: '/goods/items/' + itemId,
     method: 'get'
   })
 }
 
-export function createItems (query) {
+export function createItems(query) {
   return fetch({
     url: '/goods/items',
     method: 'post',
@@ -121,7 +121,7 @@ export function createItems (query) {
   })
 }
 
-export function updateItems (itemId, query) {
+export function updateItems(itemId, query) {
   return fetch({
     url: '/goods/items/' + itemId,
     method: 'put',
@@ -130,7 +130,7 @@ export function updateItems (itemId, query) {
   })
 }
 
-export function setItemsTemplate (params) {
+export function setItemsTemplate(params) {
   return fetch({
     url: '/goods/setItemsTemplate',
     method: 'post',
@@ -138,7 +138,7 @@ export function setItemsTemplate (params) {
   })
 }
 
-export function setItemsSort (params) {
+export function setItemsSort(params) {
   return fetch({
     url: '/goods/setItemsSort',
     method: 'post',
@@ -146,7 +146,7 @@ export function setItemsSort (params) {
   })
 }
 
-export function setItemsCategory (params) {
+export function setItemsCategory(params) {
   return fetch({
     url: '/goods/setItemsCategory',
     method: 'post',
@@ -154,14 +154,14 @@ export function setItemsCategory (params) {
   })
 }
 
-export function deleteItems (itemId) {
+export function deleteItems(itemId) {
   return fetch({
     url: '/goods/items/' + itemId,
     method: 'delete'
   })
 }
 
-export function getDistributionGoodsWxaCode (query) {
+export function getDistributionGoodsWxaCode(query) {
   return fetch({
     url: '/goods/distributionGoodsWxaCodeStream',
     method: 'get',
@@ -169,7 +169,7 @@ export function getDistributionGoodsWxaCode (query) {
   })
 }
 
-export function getItemWarningStore (query) {
+export function getItemWarningStore(query) {
   return fetch({
     url: '/goods/warning_store',
     method: 'post',
@@ -177,7 +177,7 @@ export function getItemWarningStore (query) {
   })
 }
 
-export function getCategory (params) {
+export function getCategory(params) {
   return fetch({
     url: '/goods/category',
     method: 'get',
@@ -185,7 +185,7 @@ export function getCategory (params) {
   })
 }
 
-export function addCategory (params) {
+export function addCategory(params) {
   return fetch({
     url: '/goods/createcategory',
     method: 'post',
@@ -193,7 +193,7 @@ export function addCategory (params) {
   })
 }
 
-export function editCategory (params) {
+export function editCategory(params) {
   return fetch({
     url: '/goods/category/' + params.category_id,
     method: 'put',
@@ -201,7 +201,7 @@ export function editCategory (params) {
   })
 }
 
-export function saveCategory (params) {
+export function saveCategory(params) {
   return fetch({
     url: '/goods/category',
     method: 'post',
@@ -209,14 +209,14 @@ export function saveCategory (params) {
   })
 }
 
-export function deleteCategory (category_id) {
+export function deleteCategory(category_id) {
   return fetch({
     url: '/goods/category/' + category_id,
     method: 'delete'
   })
 }
 
-export function updateCategory (category_id, query) {
+export function updateCategory(category_id, query) {
   return fetch({
     url: '/goods/category/' + category_id,
     method: 'put',
@@ -224,14 +224,14 @@ export function updateCategory (category_id, query) {
   })
 }
 
-export function getCategoryInfo (category_id) {
+export function getCategoryInfo(category_id) {
   return fetch({
     url: '/goods/category/' + category_id,
     method: 'get'
   })
 }
 
-export function getGoodsAttr (query) {
+export function getGoodsAttr(query) {
   return fetch({
     url: '/goods/attributes',
     method: 'get',
@@ -239,7 +239,7 @@ export function getGoodsAttr (query) {
   })
 }
 
-export function addGoodsAttr (query) {
+export function addGoodsAttr(query) {
   return fetch({
     url: '/goods/attributes',
     method: 'post',
@@ -247,7 +247,7 @@ export function addGoodsAttr (query) {
   })
 }
 
-export function updateGoodsAttr (attributes_id, query) {
+export function updateGoodsAttr(attributes_id, query) {
   return fetch({
     url: '/goods/attributes/' + attributes_id,
     method: 'put',
@@ -255,14 +255,14 @@ export function updateGoodsAttr (attributes_id, query) {
   })
 }
 
-export function deleteGoodsAttr (attributes_id) {
+export function deleteGoodsAttr(attributes_id) {
   return fetch({
     url: '/goods/attributes/' + attributes_id,
     method: 'delete'
   })
 }
 
-export function updateGoodsInfo (query) {
+export function updateGoodsInfo(query) {
   return fetch({
     url: '/goods/itemsupdate',
     method: 'put',
@@ -270,21 +270,21 @@ export function updateGoodsInfo (query) {
   })
 }
 
-export function getGoodsPrice (id) {
+export function getGoodsPrice(id) {
   return fetch({
     url: '/goods/memberprice/' + id,
     method: 'get'
   })
 }
 
-export function getGoodsProfitPrice (id) {
+export function getGoodsProfitPrice(id) {
   return fetch({
     url: '/goods/profit/' + id,
     method: 'get'
   })
 }
 
-export function saveGoodsProfitPrice (params) {
+export function saveGoodsProfitPrice(params) {
   return fetch({
     url: '/goods/profit/save',
     method: 'post',
@@ -292,7 +292,7 @@ export function saveGoodsProfitPrice (params) {
   })
 }
 
-export function saveCategoryProfitPrice (params) {
+export function saveCategoryProfitPrice(params) {
   return fetch({
     url: '/goods/category/profit/save',
     method: 'post',
@@ -300,7 +300,7 @@ export function saveCategoryProfitPrice (params) {
   })
 }
 
-export function updateGoodsPrice (query) {
+export function updateGoodsPrice(query) {
   return fetch({
     url: '/goods/memberprice/save',
     method: 'post',
@@ -308,7 +308,7 @@ export function updateGoodsPrice (query) {
   })
 }
 
-export function updateItemRebateConf (query) {
+export function updateItemRebateConf(query) {
   return fetch({
     url: '/goods/rebateconf',
     method: 'post',
@@ -316,7 +316,7 @@ export function updateItemRebateConf (query) {
   })
 }
 
-export function saveTag (query) {
+export function saveTag(query) {
   return fetch({
     url: '/goods/tag',
     method: 'post',
@@ -324,7 +324,7 @@ export function saveTag (query) {
   })
 }
 
-export function getTagList (query) {
+export function getTagList(query) {
   return fetch({
     url: '/goods/tag',
     method: 'get',
@@ -332,14 +332,14 @@ export function getTagList (query) {
   })
 }
 
-export function getTagInfo (tagId) {
+export function getTagInfo(tagId) {
   return fetch({
     url: '/goods/tag/' + tagId,
     method: 'get'
   })
 }
 
-export function updateTag (query) {
+export function updateTag(query) {
   return fetch({
     url: '/goods/tag',
     method: 'put',
@@ -347,14 +347,14 @@ export function updateTag (query) {
   })
 }
 
-export function deleteTag (tagId) {
+export function deleteTag(tagId) {
   return fetch({
     url: '/goods/tag/' + tagId,
     method: 'delete'
   })
 }
 
-export function itemsRelTags (query) {
+export function itemsRelTags(query) {
   return fetch({
     url: '/goods/reltag',
     method: 'post',
@@ -362,7 +362,7 @@ export function itemsRelTags (query) {
   })
 }
 
-export function tagSearchItem (query) {
+export function tagSearchItem(query) {
   return fetch({
     url: '/goods/tagsearch',
     method: 'GET',
@@ -370,7 +370,7 @@ export function tagSearchItem (query) {
   })
 }
 
-export function setHotKeywords (query) {
+export function setHotKeywords(query) {
   return fetch({
     url: '/goods/hotkeywords',
     method: 'post',
@@ -378,14 +378,14 @@ export function setHotKeywords (query) {
   })
 }
 
-export function getHotKeywords () {
+export function getHotKeywords() {
   return fetch({
     url: '/goods/hotkeywords',
     method: 'get'
   })
 }
 
-export function updateItemsStore (query) {
+export function updateItemsStore(query) {
   return fetch({
     url: '/goods/itemstoreupdate',
     method: 'put',
@@ -393,7 +393,7 @@ export function updateItemsStore (query) {
   })
 }
 
-export function updateItemsStatus (query) {
+export function updateItemsStatus(query) {
   return fetch({
     url: '/goods/itemstatusupdate',
     method: 'put',
@@ -401,7 +401,7 @@ export function updateItemsStatus (query) {
   })
 }
 
-export function auditItems (query) {
+export function auditItems(query) {
   return fetch({
     url: '/goods/audit/items',
     method: 'put',
@@ -409,7 +409,7 @@ export function auditItems (query) {
   })
 }
 
-export function getGoodsExport (query) {
+export function getGoodsExport(query) {
   return fetch({
     url: '/goods/export',
     method: 'get',
@@ -417,7 +417,7 @@ export function getGoodsExport (query) {
   })
 }
 
-export function exportItemsData (data) {
+export function exportItemsData(data) {
   return fetch({
     url: '/goods/export',
     method: 'post',
@@ -425,7 +425,7 @@ export function exportItemsData (data) {
   })
 }
 
-export function exportItemsTagData (data) {
+export function exportItemsTagData(data) {
   return fetch({
     url: '/goods/tag/export',
     method: 'post',
@@ -440,28 +440,28 @@ export function syncItems () {
   })
 }
 
-export function syncMainCategory () {
+export function syncMainCategory() {
   return fetch({
     url: '/goods/sync/itemCategory',
     method: 'post'
   })
 }
 
-export function syncItemSpec () {
+export function syncItemSpec() {
   return fetch({
     url: '/goods/sync/itemSpec',
     method: 'post'
   })
 }
 
-export function syncBrand () {
+export function syncBrand() {
   return fetch({
     url: '/goods/sync/brand',
     method: 'post'
   })
 }
 
-export function saveIsGifts (query) {
+export function saveIsGifts(query) {
   return fetch({
     url: '/goods/itemsisgiftupdate',
     method: 'put',

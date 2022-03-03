@@ -58,7 +58,7 @@
           bottom: 20%;
           width: 1px;
           background: #efefef;
-          content: '';
+          content: "";
         }
         &:first-child::after {
           content: none;
@@ -74,7 +74,7 @@
   align-items: center;
   justify-content: center;
   height: 285px;
-  .logo {
+  .logo { 
     width: 70px;
     height: 70px;
     border-radius: 100%;
@@ -106,7 +106,7 @@
   }
   .real-data {
     font-size: 20px;
-    font-family: 'Helvetica Neue';
+    font-family: "Helvetica Neue";
     font-weight: 500;
   }
   .history-data {
@@ -360,17 +360,12 @@
 </style>
 
 <template>
-  <div
-    v-if="bool"
-    class="main"
-  >
+  <div class="main" v-if="bool">
     <!-- v-if="activateInfo.due_reminder" -->
-    <div
-      v-if="activateInfo.due_reminder"
-      class="to-become"
-    >
+    <div class="to-become" v-if="activateInfo.due_reminder">
       <div class="text-icon">
-        <i class="el-icon-warning icon-wr" /><span>店铺使用期限即将到期，如需继续使用请点击购买订购产品</span>
+        <i class="el-icon-warning icon-wr"></i
+        ><span>店铺使用期限即将到期，如需继续使用请点击购买订购产品</span>
       </div>
       <!-- <div class="btn">
         <el-button @click="handleBuy" size="mini" type="danger"
@@ -380,18 +375,18 @@
     </div>
     <el-row :gutter="20">
       <el-col :span="20">
-        <el-row :gutter="20">
+        <el-row :gutter="20"> 
           <el-col :span="24">
             <section
-              v-loading="userloading"
               class="section-card realtime-statics"
+              v-loading="userloading"
             >
               <div class="section-card-header">
-                <div class="section-card-title">
-                  实时概况
-                </div>
+                <div class="section-card-title">实时概况</div>
                 <div class="header-small">
-                  更新时间：{{ (Date.now() / 1000) | datetime('YYYY-MM-DD HH:mm:ss') }}
+                  更新时间：{{
+                    (Date.now() / 1000) | datetime("YYYY-MM-DD HH:mm:ss")
+                  }}
                 </div>
                 <!-- <ul class="header-filters">
 										<li class="filter-item">全店</li>
@@ -400,40 +395,37 @@
 									</ul> -->
               </div>
               <div>
-                <el-row
-                  class="analysis"
-                  :gutter="20"
-                >
+                <el-row class="analysis" :gutter="20">
                   <el-col :span="12">
                     <div class="view-flex">
                       <div class="view-flex-item">
-                        <div class="label">
-                          实付金额(元)
+                        <div class="label">实付金额(元)</div>
+                        <div class="real-data" v-if="staticsData">
+                          {{
+                            (staticsData.today_data.real_payed_fee / 100)
+                              | keepTwoDecimalFull
+                          }}
                         </div>
-                        <div
-                          v-if="staticsData"
-                          class="real-data"
-                        >
-                          {{ (staticsData.today_data.real_payed_fee / 100) | keepTwoDecimalFull }}
-                        </div>
-                        <div
-                          v-if="staticsData"
-                          class="history-data"
-                        >
+                        <div class="history-data" v-if="staticsData">
                           昨日：{{
-                            (staticsData.yesterday_data.real_payed_fee / 100) | keepTwoDecimalFull
+                            (staticsData.yesterday_data.real_payed_fee / 100)
+                              | keepTwoDecimalFull
                           }}
                         </div>
                       </div>
                       <div class="view-flex-item">
-                        <div class="label">
-                          支付订单数
-                        </div>
+                        <div class="label">支付订单数</div>
                         <div class="real-data">
-                          {{ staticsData && staticsData.today_data.real_payed_orders }}
+                          {{
+                            staticsData &&
+                            staticsData.today_data.real_payed_orders
+                          }}
                         </div>
                         <div class="history-data">
-                          昨日：{{ staticsData && staticsData.yesterday_data.real_payed_orders }}
+                          昨日：{{
+                            staticsData &&
+                            staticsData.yesterday_data.real_payed_orders
+                          }}
                         </div>
                       </div>
                     </div>
@@ -441,60 +433,50 @@
                   <el-col :span="12">
                     <div class="view-flex">
                       <div class="view-flex-item">
-                        <div class="label">
-                          实付会员数
-                        </div>
+                        <div class="label">实付会员数</div>
                         <div class="real-data">
-                          {{ staticsData && staticsData.today_data.real_payed_members }}
+                          {{
+                            staticsData &&
+                            staticsData.today_data.real_payed_members
+                          }}
                         </div>
                         <div class="history-data">
-                          昨日：{{ staticsData && staticsData.yesterday_data.real_payed_members }}
+                          昨日：{{
+                            staticsData &&
+                            staticsData.yesterday_data.real_payed_members
+                          }}
                         </div>
                       </div>
                       <div class="view-flex-item">
-                        <div class="label">
-                          客单价(元)
+                        <div class="label">客单价(元)</div>
+                        <div class="real-data" v-if="staticsData">
+                          {{
+                            (staticsData.today_data.real_atv / 100)
+                              | keepTwoDecimalFull
+                          }}
                         </div>
-                        <div
-                          v-if="staticsData"
-                          class="real-data"
-                        >
-                          {{ (staticsData.today_data.real_atv / 100) | keepTwoDecimalFull }}
-                        </div>
-                        <div
-                          v-if="staticsData"
-                          class="history-data"
-                        >
+                        <div class="history-data" v-if="staticsData">
                           昨日：{{
-                            (staticsData.yesterday_data.real_atv / 100) | keepTwoDecimalFull
+                            (staticsData.yesterday_data.real_atv / 100)
+                              | keepTwoDecimalFull
                           }}
                         </div>
                       </div>
                     </div>
                   </el-col>
                 </el-row>
-                <el-row
-                  class="analysis"
-                  :gutter="20"
-                >
+                <el-row class="analysis" :gutter="20">
                   <el-col :span="12">
                     <div class="view-flex">
                       <div class="view-flex-item">
-                        <div class="label">
-                          退款金额(元)
-                        </div>
-                        <div
-                          v-if="staticsData"
-                          class="real-data"
-                        >
+                        <div class="label">退款金额(元)</div>
+                        <div class="real-data" v-if="staticsData">
                           {{
-                            (staticsData.today_data.real_refunded_fee / 100) | keepTwoDecimalFull
+                            (staticsData.today_data.real_refunded_fee / 100)
+                              | keepTwoDecimalFull
                           }}
                         </div>
-                        <div
-                          v-if="staticsData"
-                          class="history-data"
-                        >
+                        <div class="history-data" v-if="staticsData">
                           昨日：{{
                             (staticsData.yesterday_data.real_refunded_fee / 100)
                               | keepTwoDecimalFull
@@ -502,18 +484,23 @@
                         </div>
                       </div>
                       <div class="view-flex-item">
-                        <div class="label">
-                          售后订单数
-                        </div>
+                        <div class="label">售后订单数</div>
                         <div class="real-data">
-                          {{ staticsData && staticsData.today_data.real_aftersale_count }}
+                          {{
+                            staticsData &&
+                            staticsData.today_data.real_aftersale_count
+                          }}
                         </div>
                         <div class="history-data">
-                          昨日：{{ staticsData && staticsData.yesterday_data.real_aftersale_count }}
+                          昨日：{{
+                            staticsData &&
+                            staticsData.yesterday_data.real_aftersale_count
+                          }}
                         </div>
                       </div>
                     </div>
                   </el-col>
+                  
                 </el-row>
               </div>
             </section>
@@ -521,106 +508,77 @@
         </el-row>
         <el-row :gutter="20">
           <el-col :span="10">
-            <section
-              v-loading="userloading"
-              class="section-card"
-            >
+            <section class="section-card" v-loading="userloading">
               <div class="section-card-header">
-                <div class="section-card-title">
-                  重要提醒
-                </div>
+                <div class="section-card-title">重要提醒</div>
               </div>
               <div class="notices">
                 <div class="notices-group">
-                  <div class="subtitle">
-                    订单相关
-                  </div>
+                  <div class="subtitle">订单相关</div>
                   <el-row>
-                    <el-col
-                      class="notice-item"
-                      :span="12"
-                    >
-                      <router-link
+                    <el-col class="notice-item" :span="12"
+                      ><router-link
                         to="/merchant/order/tradenormalorders?tab=notship"
-                      >
-                        待发货订单：{{
-                          staticsData && staticsData.notice_data.wait_delivery_count
-                        }}
-                      </router-link>
-                    </el-col>
-                    <el-col
-                      class="notice-item"
-                      :span="12"
+                        >待发货订单：{{
+                          staticsData &&
+                          staticsData.notice_data.wait_delivery_count
+                        }}</router-link
+                      ></el-col
                     >
-                      <router-link
-                        to="/merchant/order/aftersaleslist"
-                      >
-                        待处理退款：{{
-                          staticsData && staticsData.notice_data.aftersales_count
-                        }}
-                      </router-link>
-                    </el-col>
-                    <el-col
-                      class="notice-item"
-                      :span="12"
+                    <el-col class="notice-item" :span="12"
+                      ><router-link to="/merchant/order/aftersaleslist"
+                        >待处理退款：{{
+                          staticsData &&
+                          staticsData.notice_data.aftersales_count
+                        }}</router-link>
+                      </el-col
                     >
-                      <router-link
-                        to="/merchant/order/aftersalesrefundlist"
-                      >
-                        退款失败待处理：{{
-                          staticsData && staticsData.notice_data.refund_errorlogs_count
-                        }}
-                      </router-link>
-                    </el-col>
+                    <el-col class="notice-item" :span="12"
+                      ><router-link to="/merchant/order/aftersalesrefundlist"
+                        >退款失败待处理：{{
+                          staticsData &&
+                          staticsData.notice_data.refund_errorlogs_count
+                        }}</router-link
+                      ></el-col
+                    >
                   </el-row>
-                </div>
+                </div>  
               </div>
             </section>
-          </el-col>
-        </el-row>
+          </el-col> 
+        </el-row> 
       </el-col>
       <el-col :span="4">
         <section
-          v-show="activateInfo.source != 'demo'"
           class="section-card fn-b-20 card-right"
+          v-show="activateInfo.source != 'demo'"
         >
           <div class="phone-card">
-            <img
-              class="phone-icon"
-              :src="img.phone"
-              alt="客服电话"
-            >
+            <img class="phone-icon" :src="img.phone" alt="客服电话" />
             <span class="phone-text">客服电话 </span>
           </div>
-          <h4 class="phone-num">
-            400-921-3522 转 3
-          </h4>
+          <h4 class="phone-num">400-921-3522 转 3</h4>
           <div class="phone-btn">
-            <img
-              class="phone-icon"
-              :src="img.qq"
-              alt="在线客服"
+            <img class="phone-icon" :src="img.qq" alt="在线客服" />
+            <span
+              ><a
+                href="https://wpa.b.qq.com/cgi/wpa.php?ln=1&key=XzgwMDA1ODI4Ml80OTM4NjNfODAwMDU4MjgyXw"
+                target="_blank"
+                >在线客服</a
+              ></span
             >
-            <span><a
-              href="https://wpa.b.qq.com/cgi/wpa.php?ln=1&key=XzgwMDA1ODI4Ml80OTM4NjNfODAwMDU4MjgyXw"
-              target="_blank"
-            >在线客服</a></span>
           </div>
         </section>
         <!-- <section class="section-card fn-b-20"><a href="http://wpa.qq.com/msgrd?v=3&uin=714165655&site=qq&menu=yes" target="_blank">QQ客服</a></section> -->
         <section
-          v-show="activateInfo.source == 'demo'"
           class="section-card fn-b-20 sl-img"
+          v-show="activateInfo.source == 'demo'"
           :style="'background:  url(' + img.bcg_2 + ')'"
         >
           <div class="sl-img-hd">
-            <i class="el-icon-user-solid" />售前客户经理
+            <i class="el-icon-user-solid"></i>售前客户经理
           </div>
-          <img
-            :src="img.customerService"
-            alt=""
-            class="img-demo"
-          >
+          <img :src="img.customerService" alt="" class="img-demo" />
         </section>
       </el-col>
     </el-row>
@@ -632,10 +590,7 @@
       </span>
     </el-dialog> -->
   </div>
-  <div
-    v-else
-    class="main"
-  >
+  <div class="main" v-else>
     <!-- <div>
       <el-button size="medium" @click="bool = true">暂不订购</el-button>
     </div> -->
@@ -654,23 +609,14 @@
         </div>
         <div class="buy-item-ft">
           <div class="buy-item-ft-text">
-            <img
-              :src="img.suo"
-              alt=""
-              class="suo"
-            >
+            <img :src="img.suo" alt="" class="suo" />
             <p>当前版本为免费试用版本</p>
             <p>升级解锁享受更多服务</p>
           </div>
           <div class="buy-item-btn">
-            <el-button
-              size="medium"
-              disabled
-            >
-              {{
-                activateInfo.source == 'demo' ? '使用中' : '已体验'
-              }}
-            </el-button>
+            <el-button size="medium" disabled>{{
+              activateInfo.source == "demo" ? "使用中" : "已体验"
+            }}</el-button>
           </div>
         </div>
       </div>
@@ -689,45 +635,41 @@
                 :src="img.check"
                 alt=""
                 class="check-icon"
-              >小程序、公众号、PC一体化商城
+              />小程序、公众号、PC一体化商城
             </p>
             <p>
               <img
                 :src="img.check"
                 alt=""
                 class="check-icon"
-              >种草粉丝内容点赞、分享传播
+              />种草粉丝内容点赞、分享传播
             </p>
             <p>
               <img
                 :src="img.check"
                 alt=""
                 class="check-icon"
-              >粉丝、员工、网红分销卖货
+              />粉丝、员工、网红分销卖货
             </p>
             <p>
               <img
                 :src="img.check"
                 alt=""
                 class="check-icon"
-              >拼团/砍价/秒杀丰富的营销玩法
+              />拼团/砍价/秒杀丰富的营销玩法
             </p>
             <p>
               <img
                 :src="img.check"
                 alt=""
                 class="check-icon"
-              >直播预约、点赞、分享、互动
+              />直播预约、点赞、分享、互动
             </p>
           </div>
           <div>
-            <el-button
-              size="medium"
-              type="danger"
-              @click="dingHandel('商城')"
+            <el-button size="medium" type="danger" @click="dingHandel('商城')"
+              >立即订购</el-button
             >
-              立即订购
-            </el-button>
           </div>
         </div>
       </div>
@@ -742,13 +684,11 @@
         </div>
         <div class="buy-item-ft">
           <div>
-            <p>适用于有门店的商家构建私域流量中心，打造门店&云店运营闭环，赋能实体门店业务</p>
             <p>
-              <img
-                :src="img.check"
-                alt=""
-                class="check-icon"
-              >
+              适用于有门店的商家构建私域流量中心，打造门店&云店运营闭环，赋能实体门店业务
+            </p>
+            <p>
+              <img :src="img.check" alt="" class="check-icon" />
               千店千面，门店运营线上化
             </p>
             <p>
@@ -756,117 +696,82 @@
                 :src="img.check"
                 alt=""
                 class="check-icon"
-              >实现门店差异化促销及服务
+              />实现门店差异化促销及服务
             </p>
             <p>
               <img
                 :src="img.check"
                 alt=""
                 class="check-icon"
-              >门店导购拉新、服务、激励数字化
+              />门店导购拉新、服务、激励数字化
             </p>
             <p>
               <img
                 :src="img.check"
                 alt=""
                 class="check-icon"
-              >建立门店触达私域用户渠道与方式
+              />建立门店触达私域用户渠道与方式
             </p>
             <p>
               <img
                 :src="img.check"
                 alt=""
                 class="check-icon"
-              >多维度进行全链路经营数据跟踪
+              />多维度进行全链路经营数据跟踪
             </p>
           </div>
           <div>
-            <el-button
-              size="medium"
-              type="danger"
-              @click="dingHandel('连锁')"
+            <el-button size="medium" type="danger" @click="dingHandel('连锁')"
+              >立即订购</el-button
             >
-              立即订购
-            </el-button>
           </div>
         </div>
       </div>
     </div>
 
-    <el-dialog
-      title=""
-      :visible.sync="dialogVisible"
-      width="580px"
-    >
-      <div
-        slot="title"
-        class="title"
-      >
-        申请订购版本
-      </div>
+    <el-dialog title="" :visible.sync="dialogVisible" width="580px">
+      <div slot="title" class="title">申请订购版本</div>
       <p class="title-span">
         您所提交的信息仅用于您的专属顾问与您沟通，不会透露给任何第三方机构或个人
       </p>
       <div>
         <el-form
-          ref="dingInfo"
           :model="dingInfo"
+          ref="dingInfo"
           label-width="100px"
           class="demo-dingInfo"
         >
-          <el-form-item
-            label="订购版本"
-            prop="goods_name"
-          >
+          <el-form-item label="订购版本" prop="goods_name">
             <span style="font-weight: bold">{{ dingInfo.goods_name }}</span>
           </el-form-item>
-          <el-form-item
-            label="姓名"
-            prop="call_name"
-          >
+          <el-form-item label="姓名" prop="call_name">
             <el-input
               v-model="dingInfo.call_name"
               placeholder="请输入姓名"
-            />
+            ></el-input>
           </el-form-item>
 
-          <el-form-item
-            label="性别"
-            prop="sex"
-          >
+          <el-form-item label="性别" prop="sex">
             <el-radio-group v-model="dingInfo.sex">
-              <el-radio label="男" />
-              <el-radio label="女" />
+              <el-radio label="男"></el-radio>
+              <el-radio label="女"></el-radio>
             </el-radio-group>
           </el-form-item>
-          <el-form-item
-            label="手机号码"
-            prop="mobile"
-          >
+          <el-form-item label="手机号码" prop="mobile">
             <el-input
               v-model="dingInfo.mobile"
               placeholder="请输入电话号码"
-            />
+            ></el-input>
           </el-form-item>
         </el-form>
       </div>
-      <div
-        slot="footer"
-        class="dialog-footer"
-      >
-        <el-button
-          class="btn-ft"
-          @click="dialogVisible = false"
+      <div slot="footer" class="dialog-footer">
+        <el-button @click="dialogVisible = false" class="btn-ft"
+          >取 消</el-button
         >
-          取 消
-        </el-button>
-        <el-button
-          class="btn-ft"
-          type="danger"
-          @click="submit"
+        <el-button class="btn-ft" type="danger" @click="submit"
+          >确 定</el-button
         >
-          确 定
-        </el-button>
       </div>
     </el-dialog>
   </div>
@@ -876,35 +781,36 @@
 import { isInSalesCenter } from '@/utils'
 import Chart from 'chart.js'
 import { mapMutations } from 'vuex'
-import store from '../../store'
+import store from "../../store";
 import {
   getWechatPreAuthUrl,
   getWechatBind,
   getAuthorizerInfo,
-  getUserWeekSummary
-} from '../../api/wechat'
+  getUserWeekSummary,
+} from "../../api/wechat";
 import {
   getActivateInfo,
   updateCompanyInfo,
   getResourceList,
   getCompanyStatistics,
-  ydleadsInfo
-} from '../../api/company'
+  ydleadsInfo,
+} from "../../api/company";
+ 
 
-const phone = require('@/assets/img/saas/phone.png')
-const qq = require('@/assets/img/saas/qq.png')
-const check = require('@/assets/img/saas/check.png')
-const customerService = require('@/assets/img/saas/customerService.jpg')
-const suo = require('@/assets/img/saas/suo.png')
-const bcg_2 = require('@/assets/img/saas/bcg_2.png')
-const try_1 = require('@/assets/img/saas/try.png')
-const liansuo = require('@/assets/img/saas/liansuo.png')
-const bcg_1 = require('@/assets/img/saas/bcg_1.png')
-const demo = require('@/assets/img/saas/demo.png')
-const biaozun = require('@/assets/img/saas/biaozun.png')
+const phone = require("@/assets/img/saas/phone.png");
+const qq = require("@/assets/img/saas/qq.png");
+const check = require("@/assets/img/saas/check.png");
+const customerService = require("@/assets/img/saas/customerService.jpg");
+const suo = require("@/assets/img/saas/suo.png");
+const bcg_2 = require("@/assets/img/saas/bcg_2.png");
+const try_1 = require("@/assets/img/saas/try.png");
+const liansuo = require("@/assets/img/saas/liansuo.png");
+const bcg_1 = require("@/assets/img/saas/bcg_1.png");
+const demo = require("@/assets/img/saas/demo.png");
+const biaozun = require("@/assets/img/saas/biaozun.png");
 
 export default {
-  data () {
+  data() {
     return {
       img: {
         phone,
@@ -917,22 +823,22 @@ export default {
         liansuo,
         bcg_1,
         demo,
-        biaozun
+        biaozun,
       },
       bool: true,
       userloading: true,
       dialogVisible: false,
       dingInfo: {
-        goods_name: '标准版',
-        call_name: '',
-        sex: '男',
-        mobile: ''
+        goods_name: "标准版",
+        call_name: "",
+        sex: "男",
+        mobile: "",
       },
       authorizerData: {
-        principal_name: ''
+        principal_name: "",
       },
       activateInfo: {},
-      url: '',
+      url: "",
       isBind: false,
       isBindFail: false,
       state: 1,
@@ -943,7 +849,7 @@ export default {
       waitingDialog: false,
       checkedGuide: {},
       checkedStore: {},
-      staticsData: '',
+      staticsData: "",
       userTimeArr: [],
       userData: [],
       vipData: [],
@@ -951,69 +857,69 @@ export default {
       i: -1,
       guideList: [
         {
-          id: '1',
-          icon: 'icon-marketing',
-          name: '超市便利',
-          desc: '大型商超，超市，便利店，小卖部等'
+          id: "1",
+          icon: "icon-marketing",
+          name: "超市便利",
+          desc: "大型商超，超市，便利店，小卖部等",
         },
         {
-          id: '2',
-          icon: 'icon-baking',
-          name: '烘培奶茶',
-          desc: '蛋糕店，奶茶店，甜品店，面包房等'
+          id: "2",
+          icon: "icon-baking",
+          name: "烘培奶茶",
+          desc: "蛋糕店，奶茶店，甜品店，面包房等",
         },
         {
-          id: '3',
-          icon: 'icon-play',
-          name: '娱乐休闲',
-          desc: 'KTV，桌球，桑拿汗蒸，按摩足浴等'
+          id: "3",
+          icon: "icon-play",
+          name: "娱乐休闲",
+          desc: "KTV，桌球，桑拿汗蒸，按摩足浴等",
         },
         {
-          id: '4',
-          icon: 'icon-fresh',
-          name: '水果生鲜',
-          desc: '水果摊，生鲜菜场等'
+          id: "4",
+          icon: "icon-fresh",
+          name: "水果生鲜",
+          desc: "水果摊，生鲜菜场等",
         },
         {
-          id: '5',
-          icon: 'icon-housekeeping',
-          name: '生活服务',
-          desc: '保洁，保姆，钟点工，月嫂等'
+          id: "5",
+          icon: "icon-housekeeping",
+          name: "生活服务",
+          desc: "保洁，保姆，钟点工，月嫂等",
         },
         {
-          id: '6',
-          icon: 'icon-beauty',
-          name: '美容健身',
-          desc: '健身房，美容店，美发店，美甲店等'
+          id: "6",
+          icon: "icon-beauty",
+          name: "美容健身",
+          desc: "健身房，美容店，美发店，美甲店等",
         },
         {
-          id: '7',
-          icon: 'icon-coffee',
-          name: '咖啡桌游',
-          desc: '咖啡馆，桌游室，棋牌室，轰趴馆等'
+          id: "7",
+          icon: "icon-coffee",
+          name: "咖啡桌游",
+          desc: "咖啡馆，桌游室，棋牌室，轰趴馆等",
         },
         {
-          id: '8',
-          icon: 'icon-food',
-          name: '餐饮',
-          desc: '小吃店，菜馆，自助餐，快餐店等'
-        }
+          id: "8",
+          icon: "icon-food",
+          name: "餐饮",
+          desc: "小吃店，菜馆，自助餐，快餐店等",
+        },
       ],
       storeList: [
-        { id: 1, icon: 'icon-store', text: '1家门店', bgOther: false },
-        { id: 2, icon: 'icon-stores', text: '2-4家门店', bgOther: true },
-        { id: 3, icon: 'icon-stores', text: '5-30家门店', bgOther: true },
-        { id: 4, icon: 'icon-stores', text: '31-100家门店', bgOther: true },
-        { id: 3, icon: 'icon-stores', text: '100家以上', bgOther: true }
+        { id: 1, icon: "icon-store", text: "1家门店", bgOther: false },
+        { id: 2, icon: "icon-stores", text: "2-4家门店", bgOther: true },
+        { id: 3, icon: "icon-stores", text: "5-30家门店", bgOther: true },
+        { id: 4, icon: "icon-stores", text: "31-100家门店", bgOther: true },
+        { id: 3, icon: "icon-stores", text: "100家以上", bgOther: true },
       ],
       currGuide: {},
       links: [
         {
-          link: '/entity/goods/goodsphysical/editor',
-          icon: 'box',
-          color: '#fa888b',
-          text: '新增商品'
-        }
+          link: "/entity/goods/goodsphysical/editor",
+          icon: "box",
+          color: "#fa888b",
+          text: "新增商品",
+        },
         // {
         //   link: "/entity/service_goods/servicegoods/editor",
         //   icon: "user-clock",
@@ -1068,162 +974,162 @@ export default {
         //   color: "#fa9679",
         //   text: "提现处理",
         // },
-      ]
-    }
+      ],
+    };
   },
   methods: {
     ...mapMutations(['SET_PRODUCTION_CODE']),
-    dingHandel (type) {
-      this.dialogVisible = true
-      this.dingInfo.goods_name = type
+    dingHandel(type) {
+      this.dialogVisible = true;
+      this.dingInfo.goods_name = type;
     },
-    submit () {
-      let obj = JSON.parse(JSON.stringify(this.dingInfo))
+    submit() {
+      let obj = JSON.parse(JSON.stringify(this.dingInfo));
       ydleadsInfo(obj).then((res) => {
         this.$message({
-          message: '订购提交成功',
-          type: 'success'
-        })
-        this.bool = true
-        this.dialogVisible = false
-        this.dingInfo = {}
-      })
+          message: "订购提交成功",
+          type: "success",
+        });
+        this.bool = true;
+        this.dialogVisible = false;
+        this.dingInfo = {};
+      });
     },
-    toLink (link) {
-      this.$router.push({ path: this.matchInternalRoute(link) })
+    toLink(link) {
+      this.$router.push({ path: this.matchInternalRoute(link) });
     },
-    handleBuy () {
-      this.bool = false
+    handleBuy() {
+      this.bool = false;
     },
-    handleBind () {
+    handleBind() {
       if (this.url) {
-        var metadata = document.getElementsByTagName('meta')
+        var metadata = document.getElementsByTagName("meta");
         for (var i = 0; i < metadata.length; i++) {
-          if (metadata[i]['name'] == 'referrer') {
-            metadata[i]['content'] = 'default'
+          if (metadata[i]["name"] == "referrer") {
+            metadata[i]["content"] = "default";
           }
         }
-        window.open(this.url, '_blank')
+        window.open(this.url, "_blank");
       }
     },
-    accountactivate () {
+    accountactivate() {
       this.$router.push({
-        path: this.matchInternalRoute('assetaccountactivation')
-      })
+        path: this.matchInternalRoute("assetaccountactivation"),
+      });
     },
     // 获取用户列表
     getUrl: function () {
       // NProgress.start()
       let params = {
-        callback_url: this.wxAuthCallbackUrl + 'auth/woa'
-      }
+        callback_url: this.wxAuthCallbackUrl + "auth/woa",
+      };
       getWechatPreAuthUrl(params).then((response) => {
-        this.url = response.data.data.url
-      })
+        this.url = response.data.data.url;
+      });
     },
     guideChoose: function (item, index) {
-      this.currGuide = item
-      this.i = index
-      this.guideHidden = false
-      this.storeHidden = true
-      this.state = 2
-      this.checkedGuide = item
+      this.currGuide = item;
+      this.i = index;
+      this.guideHidden = false;
+      this.storeHidden = true;
+      this.state = 2;
+      this.checkedGuide = item;
       let params = {
-        industry: item.name
-      }
-      updateCompanyInfo(params).then((res) => {})
+        industry: item.name,
+      };
+      updateCompanyInfo(params).then((res) => {});
     },
     storeChoose: function (item, index) {
-      this.state = 3
-      this.storeHidden = false
-      this.webchatHidden = true
-      this.checkedStore = item
+      this.state = 3;
+      this.storeHidden = false;
+      this.webchatHidden = true;
+      this.checkedStore = item;
     },
     bindWebChat: function () {
-      this.webchatHidden = false
-      this.waitingDialog = true
-      this.industryVisible = false
+      this.webchatHidden = false;
+      this.waitingDialog = true;
+      this.industryVisible = false;
       if (this.url) {
         for (var i = 0; i < metadata.length; i++) {
-          if (metadata[i]['name'] == 'referrer') {
-            metadata[i]['content'] = 'default'
+          if (metadata[i]["name"] == "referrer") {
+            metadata[i]["content"] = "default";
           }
         }
-        window.open(this.url, '_blank')
+        window.open(this.url, "_blank");
       }
     },
     doneBind: function () {
       if (!this.isBind) {
-        this.industryVisible = true
-        this.webchatHidden = true
+        this.industryVisible = true;
+        this.webchatHidden = true;
       }
-      this.waitingDialog = false
+      this.waitingDialog = false;
     },
     bindWebChatagain: function () {
       if (this.url) {
         for (var i = 0; i < metadata.length; i++) {
-          if (metadata[i]['name'] == 'referrer') {
-            metadata[i]['content'] = 'default'
+          if (metadata[i]["name"] == "referrer") {
+            metadata[i]["content"] = "default";
           }
         }
-        window.open(this.url, '_blank')
+        window.open(this.url, "_blank");
       }
     },
-    unBind () {
-      this.industryVisible = false
-      this.waitingDialog = false
+    unBind() {
+      this.industryVisible = false;
+      this.waitingDialog = false;
     },
-    chartInit () {
+    chartInit() {
       window.chartColors = {
-        red: 'rgb(255, 99, 132)',
-        orange: 'rgb(255, 159, 64)',
-        yellow: 'rgb(255, 205, 86)',
-        green: 'rgb(75, 192, 192)',
-        blue: 'rgb(54, 162, 235)',
-        purple: 'rgb(153, 102, 255)',
-        grey: 'rgb(201, 203, 207)'
-      }
+        red: "rgb(255, 99, 132)",
+        orange: "rgb(255, 159, 64)",
+        yellow: "rgb(255, 205, 86)",
+        green: "rgb(75, 192, 192)",
+        blue: "rgb(54, 162, 235)",
+        purple: "rgb(153, 102, 255)",
+        grey: "rgb(201, 203, 207)",
+      };
       var config = {
-        type: 'line',
+        type: "line",
         data: {
           labels: this.userTimeArr,
           datasets: [
             {
-              label: '新增人数',
+              label: "新增人数",
               backgroundColor: window.chartColors.red,
               borderColor: window.chartColors.red,
               data: this.userData,
-              fill: false
+              fill: false,
             },
             {
-              label: '新增vip',
+              label: "新增vip",
               backgroundColor: window.chartColors.orange,
               borderColor: window.chartColors.orange,
               data: this.vipData,
-              fill: false
+              fill: false,
             },
             {
-              label: '新增svip',
+              label: "新增svip",
               backgroundColor: window.chartColors.yellow,
               borderColor: window.chartColors.yellow,
               data: this.svipData,
-              fill: false
-            }
-          ]
+              fill: false,
+            },
+          ],
         },
         options: {
           responsive: true,
           title: {
             display: true,
-            text: '近7天用户趋势'
+            text: "近7天用户趋势",
           },
           tooltips: {
-            mode: 'index',
-            intersect: true
+            mode: "index",
+            intersect: true,
           },
           hover: {
-            mode: 'nearest',
-            intersect: true
+            mode: "nearest",
+            intersect: true,
           },
           scales: {
             xAxes: [
@@ -1231,77 +1137,78 @@ export default {
                 display: true,
                 scaleLabel: {
                   display: true,
-                  labelString: ''
-                }
-              }
+                  labelString: "",
+                },
+              },
             ],
             yAxes: [
               {
                 display: true,
                 scaleLabel: {
-                  display: false
-                }
-              }
-            ]
-          }
-        }
-      }
-      var ctx = document.getElementById('canvas').getContext('2d')
-      window.myLine = new Chart(ctx, config)
+                  display: false,
+                },
+              },
+            ],
+          },
+        },
+      };
+      var ctx = document.getElementById("canvas").getContext("2d");
+      window.myLine = new Chart(ctx, config);
     },
-    isSassAndInCenter () {
-      const isInSaleCenter = isInSalesCenter()
-      const isSass = this.system_is_saas
-      return isInSaleCenter && isSass
-    },
-    mountedFunc () {
+    isSassAndInCenter(){ 
+      const isInSaleCenter=isInSalesCenter();
+      const isSass=this.system_is_saas;
+      return isInSaleCenter && isSass;
+    },  
+    mountedFunc() {  
       getActivateInfo().then((res) => {
-        this.activateInfo = res.data.data
+        this.activateInfo = res.data.data;
         if (!res.data.data.is_valid) {
           this.$router.push({
-            path: this.matchInternalRoute('assetaccountactivation')
-          })
+            path: this.matchInternalRoute("assetaccountactivation"),
+          });
         }
         // this.activateInfo.source = 'demo'
         this.SET_PRODUCTION_CODE({ productionCode: res.data.data.product_code })
 
-        this.activateInfo.vue_ecshopx_verion = process.env.VUE_APP_PRODUCT_MODEL
-      })
-      //   this.getUrl();
+        this.activateInfo.vue_ecshopx_verion = process.env.VUE_APP_PRODUCT_MODEL;
+      });
+    //   this.getUrl();
       getCompanyStatistics().then((res) => {
-        this.staticsData = res.data.data
-        let memberData = res.data.data.member_data
+        this.staticsData = res.data.data;
+        let memberData = res.data.data.member_data;
         for (var key in memberData) {
-          this.userTimeArr.push(key)
-          this.userData.push(memberData[key].newAddMember)
-          this.vipData.push(memberData[key].vipMember)
-          this.svipData.push(memberData[key].svipMember)
+          this.userTimeArr.push(key);
+          this.userData.push(memberData[key].newAddMember);
+          this.vipData.push(memberData[key].vipMember);
+          this.svipData.push(memberData[key].svipMember);
         }
-
+     
         this.$nextTick(() => {
-          //   this.chartInit();
-          this.userloading = false
-        })
-      })
+        //   this.chartInit();
+          this.userloading = false;
+        });
+      });
       if (this.$route.query) {
-        this.isBindFail = this.$route.query.isBindFail
+        this.isBindFail = this.$route.query.isBindFail;
       }
       if (this.isBindFail) {
-        this.waitingDialog = true
-        return
+        this.waitingDialog = true;
+        return;
       }
       if (store.getters.is_authorizer || this.isSassAndInCenter()) {
-        this.isBind = true
+        this.isBind = true;
         getAuthorizerInfo().then((response) => {
-          this.authorizerData = response.data.data
-        })
+          this.authorizerData = response.data.data;
+        });
       } else {
-        this.industryVisible = true
+        this.industryVisible = true;
       }
-    }
+    },
   },
-  mounted () {
+  mounted() {
     this.mountedFunc()
-  }
-}
+  },
+};
 </script>
+

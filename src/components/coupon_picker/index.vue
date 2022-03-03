@@ -5,41 +5,33 @@
     :append-to-body="true"
     :modal-append-to-body="false"
     :visible="couponsVisible"
-    width="1000px"
     @close="closeDialog"
+    width="1000px"
   >
     <template>
       <el-transfer
-        v-model="selectedCoupons"
         v-loading="loading"
+        v-model="selectedCoupons"
         :titles="['优惠券列表', '已选中']"
         :button-texts="['移除选择', '添加选择']"
-        :data="couponList"
         @change="couponsSelector"
+        :data="couponList"
       >
-        <div
-          slot="left-footer"
-          class="transfer-footer"
-        >
+        <div class="transfer-footer" slot="left-footer">
           <el-pagination
             v-if="total_count > params.page_size"
             small
             layout="prev, pager, next"
+            @current-change="pageChange"
             :total="total_count"
             :page-size="params.page_size"
-            @current-change="pageChange"
-          />
+          >
+          </el-pagination>
         </div>
       </el-transfer>
-      <span
-        slot="footer"
-        class="dialog-footer"
-      >
+      <span slot="footer" class="dialog-footer">
         <el-button @click="closeDialog">取 消</el-button>
-        <el-button
-          type="primary"
-          @click="couponsComfirm"
-        >确 定</el-button>
+        <el-button type="primary" @click="couponsComfirm">确 定</el-button>
       </span>
     </template>
   </el-dialog>
@@ -55,7 +47,29 @@ export default {
       default: false
     }
   },
-  data () {
+  watch: {
+    visible(val) {
+      if (val) {
+        this.couponsVisible = val
+        this.getCouponList()
+      }
+    },
+    selectedCoupons(val) {
+      if (val.length) {
+        let list = []
+        this.couponList.forEach((item) => {
+          val.forEach((key) => {
+            if (item.key == key) {
+              list.push(item)
+            }
+          })
+        })
+        this.selectList = list
+      } else {
+      }
+    }
+  },
+  data() {
     return {
       couponsVisible: false,
       loading: false,
@@ -71,37 +85,14 @@ export default {
       selectList: []
     }
   },
-  watch: {
-    visible (val) {
-      if (val) {
-        this.couponsVisible = val
-        this.getCouponList()
-      }
-    },
-    selectedCoupons (val) {
-      if (val.length) {
-        let list = []
-        this.couponList.forEach((item) => {
-          val.forEach((key) => {
-            if (item.key == key) {
-              list.push(item)
-            }
-          })
-        })
-        this.selectList = list
-      } else {
-      }
-    }
-  },
-  mounted () {},
   methods: {
     //选择商品分页
-    pageChange (val) {
+    pageChange(val) {
       this.params.page_no = val
       this.getCouponList()
     },
     //选择商品触发事件
-    couponsSelector (value, direction, movedKeys) {
+    couponsSelector(value, direction, movedKeys) {
       if (value.length > 3) {
         this.$message({
           message: '最多选择三张优惠券',
@@ -112,7 +103,7 @@ export default {
       }
     },
     //选择商品确认
-    couponsComfirm () {
+    couponsComfirm() {
       let values = []
       if (this.selectedCoupons.length > 0) {
         this.couponList.forEach((item) => {
@@ -141,9 +132,9 @@ export default {
       this.couponsVisible = false
       this.$emit('pickCoupon', values)
     },
-    getCouponList () {
+    getCouponList() { 
       this.loading = true
-      getCardList({ ...this.params, from: 'btn' })
+      getCardList({...this.params,from:'btn'})
         .then((res) => {
           let list = []
           res.data.data.list.forEach((item) => {
@@ -175,11 +166,12 @@ export default {
           this.loading = false
         })
     },
-    closeDialog () {
+    closeDialog() {
       this.couponsVisible = false
       this.$emit('closeDialog', 'coupon')
     }
-  }
+  },
+  mounted() {}
 }
 </script>
 

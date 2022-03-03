@@ -12,20 +12,16 @@
             range-separator="至"
             start-placeholder="开始日期"
             end-placeholder="结束日期"
-            style="width: 100%"
+            style="width: 100%;"
             :picker-options="pickerOptions"
             value-format="yyyy-MM-dd"
             @change="dateChange"
-          />
+          >
+          </el-date-picker>
         </el-col>
         <el-col :span="12">
-          <export-tip @exportHandle="exportData">
-            <el-button
-              v-loading="exportloading"
-              type="primary"
-            >
-              导出
-            </el-button>
+          <export-tip @exportHandle='exportData' >
+            <el-button type="primary" v-loading="exportloading">导出</el-button>
           </export-tip>
           <el-popover
             placement="top-start"
@@ -33,10 +29,7 @@
             trigger="hover"
             content="导出任务会以队列执行，点击导出后，请至‘设置-导出列表’页面中查看及下载数据"
           >
-            <i
-              slot="reference"
-              class="el-icon-question"
-            />
+            <i class="el-icon-question" slot="reference"></i>
           </el-popover>
         </el-col>
       </el-form-item>
@@ -47,47 +40,16 @@
       type="border-card"
       @tab-click="handleClick"
     >
-      <el-tab-pane
-        v-loading="loading"
-        label="商品统计"
-        name="goods_count"
-      >
+      <el-tab-pane label="商品统计" name="goods_count" v-loading="loading">
         <template>
-          <el-table
-            :data="allListData"
-            stripe
-            border
-            style="width: 100%"
-            :height="wheight - 230"
-          >
-            <el-table-column
-              prop="no"
-              label="No"
-            />
-            <el-table-column
-              prop="sap_code"
-              label="商品编号"
-            />
-            <el-table-column
-              prop="top_level"
-              label="分类"
-            />
-            <el-table-column
-              prop="product"
-              label="商品名称"
-            />
-            <el-table-column
-              prop="quantity"
-              label="销量"
-            />
-            <el-table-column
-              prop="fix_price"
-              label="销售额"
-            />
-            <el-table-column
-              prop="settle_price"
-              label="实付额"
-            />
+          <el-table :data="allListData" stripe border style="width: 100%" :height="wheight - 230">
+            <el-table-column prop="no" label="No"></el-table-column>
+            <el-table-column prop="sap_code" label="商品编号"></el-table-column>
+            <el-table-column prop="top_level" label="分类"></el-table-column>
+            <el-table-column prop="product" label="商品名称"></el-table-column>
+            <el-table-column prop="quantity" label="销量"></el-table-column>
+            <el-table-column prop="fix_price" label="销售额"></el-table-column>
+            <el-table-column prop="settle_price" label="实付额"></el-table-column>
           </el-table>
         </template>
       </el-tab-pane>
@@ -99,7 +61,7 @@ import { mapGetters } from 'vuex'
 import json2csv from 'json2csv'
 import { getGoodsData } from '../../../api/datacube'
 export default {
-  data () {
+  data() {
     return {
       vdate: '',
       loading: true,
@@ -116,7 +78,7 @@ export default {
         shortcuts: [
           {
             text: '最近一天',
-            onClick (picker) {
+            onClick(picker) {
               const start = new Date()
               const end = new Date()
               start.setTime(start.getTime() - 3600 * 1000 * 24 * 1)
@@ -126,7 +88,7 @@ export default {
           },
           {
             text: '最近一周',
-            onClick (picker) {
+            onClick(picker) {
               const start = new Date()
               const end = new Date()
               start.setTime(start.getTime() - 3600 * 1000 * 24 * 7)
@@ -141,16 +103,8 @@ export default {
   computed: {
     ...mapGetters(['wheight'])
   },
-  mounted () {
-    var start = new Date()
-    var end = new Date()
-    start.setTime(start.getTime() - 3600 * 1000 * 24 * 1)
-    end.setTime(end.getTime() - 3600 * 1000 * 24 * 1)
-    this.vdate = [start, end]
-    this.getGoodsDataList()
-  },
   methods: {
-    exportData () {
+    exportData() {
       this.exportloading = true
       this.params.export = 1
       getGoodsData(this.params)
@@ -161,7 +115,7 @@ export default {
               type: 'success',
               message: '已加入执行队列，请在设置-导出列表中下载'
             })
-            this.$export_open('goods_data')
+            this.$export_open('goods_data');
             return
           } else if (res.data.data.url) {
             this.downloadUrl = res.data.data.url
@@ -204,7 +158,7 @@ export default {
           this.exportloading = false
         })
     },
-    createDownLoadClick (content, fileName) {
+    createDownLoadClick(content, fileName) {
       const link = document.createElement('a')
       link.href = encodeURI(content)
       link.download = fileName
@@ -212,7 +166,7 @@ export default {
       link.click()
       document.body.removeChild(link)
     },
-    MyBrowserIsIE () {
+    MyBrowserIsIE() {
       let isIE = false
       if (
         navigator.userAgent.indexOf('compatible') > -1 &&
@@ -227,8 +181,8 @@ export default {
       }
       return isIE
     },
-    handleClick (tab, event) {},
-    dateChange (val) {
+    handleClick(tab, event) {},
+    dateChange(val) {
       if (!val) {
         return false
       }
@@ -236,7 +190,7 @@ export default {
       this.params.end = val[1]
       this.getGoodsDataList()
     },
-    getGoodsDataList () {
+    getGoodsDataList() {
       this.loading = true
       getGoodsData(this.params)
         .then((res) => {
@@ -250,6 +204,14 @@ export default {
           })
         })
     }
+  },
+  mounted() {
+    var start = new Date()
+    var end = new Date()
+    start.setTime(start.getTime() - 3600 * 1000 * 24 * 1)
+    end.setTime(end.getTime() - 3600 * 1000 * 24 * 1)
+    this.vdate = [start, end]
+    this.getGoodsDataList()
   }
 }
 </script>

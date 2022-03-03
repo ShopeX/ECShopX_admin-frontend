@@ -2,6 +2,7 @@
 const name = '经销商'
 import Layout from '@/view/layout' // 主框架
 
+
 export default {
   path: '/shop_dealer',
   component: Layout,

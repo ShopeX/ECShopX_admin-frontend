@@ -1,23 +1,20 @@
 <template>
   <transition>
     <div
-      v-show="visible"
       class="side-bar"
       :class="{ 'show': show }"
       :style="'width:' + width + 'vw'"
+      v-show="visible"
     >
-      <div
-        class="side-bar-close iconfont icon-times"
-        @click="hideSideBar"
-      />
+      <div class="side-bar-close iconfont icon-times" @click="hideSideBar"></div>
       <div class="side-bar-title">
         {{ title }}
       </div>
       <div class="side-bar-body">
-        <slot />
+        <slot></slot>
       </div>
       <div class="side-bar-footer">
-        <slot name="footer" />
+        <slot name="footer"></slot>
       </div>
     </div>
   </transition>
@@ -40,13 +37,13 @@ export default {
       default: ''
     }
   },
-  data () {
+  data() {
     return {
       show: false
     }
   },
   watch: {
-    visible (val) {
+    visible(val) {
       if (val) {
         this.$nextTick(() => {
           setTimeout(() => {
@@ -57,7 +54,7 @@ export default {
     }
   },
   methods: {
-    hideSideBar () {
+    hideSideBar() {
       this.$emit('update:visible', false)
       this.show = false
     }

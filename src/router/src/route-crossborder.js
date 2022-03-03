@@ -30,7 +30,7 @@ export default {
     {
       path: 'taxstrategy',
       name: `税费策略`,
-      component: () => import('@/view/crossborder/taxstrategy/list'),
+      component: () => import( '@/view/crossborder/taxstrategy/list'),
       children: [
         {
           path: 'editor/:id?',

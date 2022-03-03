@@ -6,15 +6,8 @@
 
 <template>
   <div class="page-body">
-    <SpFilterForm
-      :model="params"
-      @onSearch="onSearch"
-      @onReset="onReset"
-    >
-      <SpFilterFormItem
-        prop="create_time"
-        label="日期范围:"
-      >
+    <SpFilterForm :model="params" @onSearch="onSearch" @onReset="onReset">
+      <SpFilterFormItem prop="create_time" label="日期范围:">
         <el-date-picker
           v-model="params.create_time"
           type="daterange"
@@ -22,55 +15,27 @@
           placeholder="选择日期范围"
         />
       </SpFilterFormItem>
-      <SpFilterFormItem
-        prop="mobile"
-        label="单号:"
-      >
-        <el-input
-          v-model="params.mobile"
-          placeholder="手机号/交易单号"
-        />
+      <SpFilterFormItem prop="mobile" label="单号:">
+        <el-input placeholder="手机号/交易单号" v-model="params.mobile"></el-input>
       </SpFilterFormItem>
-      <SpFilterFormItem
-        prop="orderId"
-        label="订单号:"
-      >
-        <el-input
-          v-model="params.orderId"
-          placeholder="订单号"
-        />
+      <SpFilterFormItem prop="orderId" label="订单号:">
+        <el-input placeholder="订单号" v-model="params.orderId"></el-input>
       </SpFilterFormItem>
     </SpFilterForm>
 
     <div class="action-container">
       <export-tip @exportHandle="exportData">
-        <el-button
-          type="primary"
-          plain
-        >
-          导出
-        </el-button>
+        <el-button type="primary" plain>导出</el-button>
       </export-tip>
     </div>
 
-    <el-dialog
-      title="交易单下载"
-      :visible.sync="downloadView"
-      :close-on-click-modal="false"
-    >
+    <el-dialog title="交易单下载" :visible.sync="downloadView" :close-on-click-modal="false">
       <template v-if="downloadUrl">
-        <a
-          :href="downloadUrl"
-          download
-        >{{ downloadName }}</a>
+        <a :href="downloadUrl" download>{{ downloadName }}</a>
       </template>
     </el-dialog>
 
-    <el-tabs
-      v-model="activeName"
-      type="card"
-      @tab-click="handleTabClick"
-    >
+    <el-tabs v-model="activeName" type="card" @tab-click="handleTabClick">
       <el-tab-pane
         v-for="(item, index) in tabList"
         :key="index"
@@ -78,33 +43,28 @@
         :name="item.activeName"
       >
         <el-table
-          v-loading="loading"
           :data="tableList"
           border
           style="width: 100%"
           :height="wheight - 140"
+          v-loading="loading"
         >
           <el-table-column type="expand">
             <template slot-scope="scope">
-              <el-form
-                label-position="left"
-                inline
-                class="demo-table-expand"
-              >
+              <el-form label-position="left" inline class="demo-table-expand">
                 <el-form-item label="订单号：">
                   <router-link
                     :to="{
                       path: fnPath(),
                       query: { orderId: scope.row.orderId, resource: '/mall/trade/payment' }
                     }"
+                    >{{ scope.row.orderId }}</router-link
                   >
-                    {{ scope.row.orderId }}
-                  </router-link>
                 </el-form-item>
                 <el-form-item label="支付方式：">
-                  <span
-                    v-if="scope.row.payType == 'wxpay' || scope.row.payType == 'wxpayjs'"
-                  >微信支付</span>
+                  <span v-if="scope.row.payType == 'wxpay' || scope.row.payType == 'wxpayjs'"
+                    >微信支付</span
+                  >
                   <span v-if="scope.row.payType == 'wxpayapp'">微信APP支付</span>
                   <span v-if="scope.row.payType == 'wxpayh5'">微信H5支付</span>
                   <span v-if="scope.row.payType == 'wxpaypc'">微信POS支付</span>
@@ -123,34 +83,20 @@
                   <span>{{ scope.row.curFeeSymbol }}{{ scope.row.totalFee / 100 }}</span>
                 </el-form-item>
                 <el-form-item label="优惠金额：">
-                  <el-popover
-                    v-if="scope.row.discountInfo"
-                    trigger="hover"
-                    placement="top"
-                  >
-                    <div
-                      v-for="item in scope.row.discountInfo"
-                      :key="item.orderId"
-                    >
+                  <el-popover trigger="hover" placement="top" v-if="scope.row.discountInfo">
+                    <div v-for="item in scope.row.discountInfo" :key="item.orderId">
                       <div v-if="item.discount_fee">
-                        <p v-if="item.coupon_code">
-                          优惠券码：{{ item.coupon_code }}
-                        </p>
-                        <p v-if="item.member_card_code">
-                          会员卡号：{{ item.member_card_code }}
-                        </p>
+                        <p v-if="item.coupon_code">优惠券码：{{ item.coupon_code }}</p>
+                        <p v-if="item.member_card_code">会员卡号：{{ item.member_card_code }}</p>
                         <p>优惠原因：{{ item.info }}</p>
                         <p>优惠方案：{{ item.rule }}</p>
                         <p>
                           优惠金额：{{ scope.row.curFeeSymbol }}{{ item.discount_fee / 100 }} 元
                         </p>
-                        <hr>
+                        <hr />
                       </div>
                     </div>
-                    <div
-                      slot="reference"
-                      class="name-wrapper"
-                    >
+                    <div slot="reference" class="name-wrapper">
                       {{ scope.row.discountFee / 100 }}元
                     </div>
                   </el-popover>
@@ -158,49 +104,31 @@
               </el-form>
             </template>
           </el-table-column>
-          <el-table-column
-            label="交易单"
-            width="270"
-          >
+          <el-table-column label="交易单" width="270">
             <template slot-scope="scope">
               <div class="order-num">
                 {{ scope.row.tradeId }}
-                <el-tooltip
-                  effect="dark"
-                  content="复制"
-                  placement="top-start"
-                >
+                <el-tooltip effect="dark" content="复制" placement="top-start">
                   <i
                     v-clipboard:copy="scope.row.tradeId"
                     v-clipboard:success="onCopySuccess"
                     class="el-icon-document-copy"
-                  />
+                  ></i>
                 </el-tooltip>
               </div>
               <div class="order-time">
-                <el-tooltip
-                  effect="dark"
-                  content="创建时间"
-                  placement="top-start"
-                >
-                  <i class="el-icon-time" />
+                <el-tooltip effect="dark" content="创建时间" placement="top-start">
+                  <i class="el-icon-time"></i>
                 </el-tooltip>
                 {{ scope.row.timeStart | datetime('YYYY-MM-DD HH:mm:ss') }}
               </div>
             </template>
           </el-table-column>
-          <el-table-column
-            label="订单信息"
-            min-width="300"
-          >
+          <el-table-column label="订单信息" min-width="300">
             <template slot-scope="scope">
               <div class="order-num">
-                <el-tooltip
-                  effect="dark"
-                  content="联系方式"
-                  placement="top-start"
-                >
-                  <i class="el-icon-mobile" />
+                <el-tooltip effect="dark" content="联系方式" placement="top-start">
+                  <i class="el-icon-mobile"></i>
                 </el-tooltip>
                 {{ scope.row.mobile }}
                 <el-tooltip
@@ -213,36 +141,31 @@
                     v-clipboard:copy="scope.row.mobile"
                     v-clipboard:success="onCopySuccess"
                     class="el-icon-document-copy"
-                  />
+                  ></i>
                 </el-tooltip>
               </div>
-              <div class="order-time">
-                商品：{{ scope.row.body }}
-              </div>
+              <div class="order-time">商品：{{ scope.row.body }}</div>
               <div>
-                实付：<span
-                  v-if="scope.row.payType == 'point'"
-                  class="mark"
-                >{{ scope.row.payFee }} 积分</span>
-                <span
-                  v-else
-                  class="mark"
-                ><span class="cur">{{ scope.row.curFeeSymbol }}</span>{{ scope.row.payFee / 100 }}</span>
+                实付：<span class="mark" v-if="scope.row.payType == 'point'"
+                  >{{ scope.row.payFee }} 积分</span
+                >
+                <span class="mark" v-else
+                  ><span class="cur">{{ scope.row.curFeeSymbol }}</span
+                  >{{ scope.row.payFee / 100 }}</span
+                >
               </div>
             </template>
           </el-table-column>
-          <el-table-column
-            min-width="200"
-            label="支付方式"
-          >
+          <el-table-column min-width="200" label="支付方式">
             <template slot-scope="scope">
               <span
                 v-if="
                   scope.row.payType == 'wxpay' ||
-                    scope.row.payType == 'adapay' ||
-                    scope.row.payType == 'wxpayjs'
+                  scope.row.payType == 'adapay' ||
+                  scope.row.payType == 'wxpayjs'
                 "
-              >微信支付</span>
+                >微信支付</span
+              >
               <span v-if="scope.row.payType == 'wxpayapp'">微信APP支付</span>
               <span v-if="scope.row.payType == 'wxpayh5'">微信H5支付</span>
               <span v-if="scope.row.payType == 'wxpaypc'">微信POS支付</span>
@@ -259,93 +182,51 @@
             </template>
           </el-table-column>
 
-          <el-table-column
-            width="100"
-            label="订单金额"
-          >
+          <el-table-column width="100" label="订单金额">
             <template slot-scope="scope">
               <template v-if="scope.row.payType == 'point'">
                 <span>{{ scope.row.payFee }} 积分</span>
               </template>
               <template v-else>
-                <span
-                  v-if="scope.row.curPayFee"
-                ><span class="cur">￥</span>{{ scope.row.curPayFee / 100 }}</span>
-                <span
-                  v-else
-                ><span class="cur">{{ scope.row.curFeeSymbol }}</span>{{ scope.row.totalFee / 100 }}</span>
+                <span v-if="scope.row.curPayFee"
+                  ><span class="cur">￥</span>{{ scope.row.curPayFee / 100 }}</span
+                >
+                <span v-else
+                  ><span class="cur">{{ scope.row.curFeeSymbol }}</span
+                  >{{ scope.row.totalFee / 100 }}</span
+                >
               </template>
             </template>
           </el-table-column>
-          <el-table-column
-            v-if="$store.getters.login_type != 'merchant'"
-            width="60"
-            label="汇率"
-          >
+          <el-table-column width="60" label="汇率" v-if="$store.getters.login_type != 'merchant'">
             <template slot-scope="scope">
               <span>{{ scope.row.curFeeRate }}</span>
             </template>
           </el-table-column>
-          <el-table-column
-            width="100"
-            label="支付状态"
-          >
+          <el-table-column width="100" label="支付状态">
             <template slot-scope="scope">
-              <el-tag
-                v-if="scope.row.tradeState == 'SUCCESS'"
-                type="success"
-                size="mini"
+              <el-tag v-if="scope.row.tradeState == 'SUCCESS'" type="success" size="mini"
+                >支付成功</el-tag
               >
-                支付成功
-              </el-tag>
-              <el-tag
-                v-if="scope.row.tradeState == 'NOTPAY'"
-                size="mini"
+              <el-tag v-if="scope.row.tradeState == 'NOTPAY'" size="mini">未支付</el-tag>
+              <el-tag v-if="scope.row.tradeState == 'CLOSED'" type="primary" size="mini"
+                >已关闭</el-tag
               >
-                未支付
-              </el-tag>
-              <el-tag
-                v-if="scope.row.tradeState == 'CLOSED'"
-                type="primary"
-                size="mini"
+              <el-tag v-if="scope.row.tradeState == 'REVOKED'" type="primary" size="mini"
+                >已撤销</el-tag
               >
-                已关闭
-              </el-tag>
-              <el-tag
-                v-if="scope.row.tradeState == 'REVOKED'"
-                type="primary"
-                size="mini"
+              <el-tag v-if="scope.row.tradeState == 'PAYERROR'" type="primary" size="mini"
+                >支付失败</el-tag
               >
-                已撤销
-              </el-tag>
-              <el-tag
-                v-if="scope.row.tradeState == 'PAYERROR'"
-                type="primary"
-                size="mini"
+              <el-tag v-if="scope.row.tradeState == 'REFUND_PROCESS'" type="warning" size="mini"
+                >退款处理中</el-tag
               >
-                支付失败
-              </el-tag>
-              <el-tag
-                v-if="scope.row.tradeState == 'REFUND_PROCESS'"
-                type="warning"
-                size="mini"
+              <el-tag v-if="scope.row.tradeState == 'REFUND_SUCCESS'" type="info" size="mini"
+                >退款成功</el-tag
               >
-                退款处理中
-              </el-tag>
-              <el-tag
-                v-if="scope.row.tradeState == 'REFUND_SUCCESS'"
-                type="info"
-                size="mini"
+              <el-tag v-if="scope.row.tradeState == 'REFUND_FAIL'" type="danger" size="mini"
+                >退款失败</el-tag
               >
-                退款成功
-              </el-tag>
-              <el-tag
-                v-if="scope.row.tradeState == 'REFUND_FAIL'"
-                type="danger"
-                size="mini"
-              >
-                退款失败
-              </el-tag>
             </template>
           </el-table-column>
         </el-table>
@@ -359,7 +240,8 @@
             :page-size="params.pageSize"
             @current-change="onCurrentChange"
             @size-change="onSizeChange"
-          />
+          >
+          </el-pagination>
         </div>
       </el-tab-pane>
     </el-tabs>
@@ -375,7 +257,7 @@ export default {
     shopSelect
   },
   mixins: [mixin, pageMixin],
-  data () {
+  data() {
     const initialParams = {
       create_time: '',
       mobile: undefined,
@@ -402,11 +284,8 @@ export default {
   computed: {
     ...mapGetters(['wheight'])
   },
-  mounted () {
-    this.fetchList()
-  },
   methods: {
-    fnPath () {
+    fnPath() {
       if (this.$store.getters.login_type == 'merchant') {
         return `/merchant/order/tradenormalorders/detail`
       }
@@ -415,10 +294,10 @@ export default {
         ? '/order/entitytrade/tradenormalorders/detail'
         : '/order/servicetrade/tradeservice/detail'
     },
-    dateStrToTimeStamp (str) {
+    dateStrToTimeStamp(str) {
       return Date.parse(new Date(str)) / 1000
     },
-    dateTransfer (val, isExport) {
+    dateTransfer(val, isExport) {
       let time_start_begin = undefined
       let time_start_end = undefined
       if (val.length > 0) {
@@ -436,17 +315,17 @@ export default {
         time_start_end
       }
     },
-    onReset () {
+    onReset() {
       this.params = { ...this.initialParams }
       this.onSearch()
     },
-    onSearch () {
+    onSearch() {
       this.page.pageIndex = 1
       this.$nextTick(() => {
         this.fetchList()
       })
     },
-    getParams (isExport) {
+    getParams(isExport) {
       let params = {
         ...this.dateTransfer(this.params.create_time, isExport),
         mobile: this.params.mobile || undefined,
@@ -456,13 +335,13 @@ export default {
       return params
     },
     // 切换tab
-    handleTabClick (tab, event) {
+    handleTabClick(tab, event) {
       this.activeName = tab.name
       this.params.status = tab.name == 'all' ? '' : tab.name
       this.onSearch()
     },
 
-    async fetchList () {
+    async fetchList() {
       this.loading = true
       const { pageIndex: page, pageSize } = this.page
       let params = {
@@ -476,7 +355,7 @@ export default {
       this.datapass_block = datapass_block
       this.loading = false
     },
-    async exportData () {
+    async exportData() {
       const { status, url, filename } = await this.$api.trade.tradeExport({
         ...this.getParams(true)
       })
@@ -499,6 +378,9 @@ export default {
         return
       }
     }
+  },
+  mounted() {
+    this.fetchList()
   }
 }
 </script>

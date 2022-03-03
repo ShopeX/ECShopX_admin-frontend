@@ -3,33 +3,23 @@
     <el-card shadow="never">
       <div class="account-number">
         <div class="item">
-          <h4 class="account-hd">
-            总计收入
-          </h4>
+          <h4 class="account-hd">总计收入</h4>
           <h5>￥ {{ totle.income }}</h5>
         </div>
         <div class="item">
-          <h4 class="account-hd">
-            总退款金额
-          </h4>
+          <h4 class="account-hd">总退款金额</h4>
           <h5>￥ {{ totle.refund }}</h5>
         </div>
         <div class="item">
-          <h4 class="account-hd">
-            总提现金额
-          </h4>
+          <h4 class="account-hd">总提现金额</h4>
           <h5>￥ {{ totle.withdrawal }}</h5>
         </div>
         <div class="item">
-          <h4 class="account-hd">
-            当前可提现余额
-          </h4>
+          <h4 class="account-hd">当前可提现余额</h4>
           <h5>￥ {{ totle.withdrawal_balance }}</h5>
         </div>
         <div class="item">
-          <h4 class="account-hd">
-            未结算余额
-          </h4>
+          <h4 class="account-hd">未结算余额</h4>
           <h5>￥ {{ totle.unsettled_funds }}</h5>
         </div>
       </div>
@@ -51,11 +41,11 @@
                 end-placeholder="结束日期"
                 style="width: 100%"
                 value-format="yyyy-MM-dd"
-              />
+              ></el-date-picker>
             </el-col>
             <el-col
-              v-if="$store.getters.login_type !== 'distributor'"
               :span="5"
+              v-if="$store.getters.login_type !== 'distributor'"
             >
               <el-select
                 v-model="params.distributor_id"
@@ -68,80 +58,45 @@
                   :label="item.name"
                   size="mini"
                   :value="item.distributor_id"
-                />
+                ></el-option>
               </el-select>
             </el-col>
             <el-col :span="5">
-              <el-input
-                v-model="params.order_id"
-                placeholder="订单号"
-              />
+              <el-input placeholder="订单号" v-model="params.order_id" />
             </el-col>
             <el-col :span="4">
-              <el-button
-                type="primary"
-                @click="getList(true)"
-              >
-                搜索
-              </el-button>
+              <el-button type="primary" @click="getList(true)">搜索</el-button>
 
-              <el-button
-                type="primary"
-                @click="exportData()"
-              >
-                导出
-              </el-button>
+              <el-button type="primary" @click="exportData()">导出</el-button>
               <el-popover
                 placement="top-start"
                 width="200"
                 trigger="hover"
                 content="导出任务会以队列执行，点击导出后，请至‘设置-导出列表’页面中查看及下载数据"
               >
-                <i
-                  slot="reference"
-                  class="el-icon-question"
-                />
+                <i class="el-icon-question" slot="reference"></i>
               </el-popover>
             </el-col>
           </el-row>
         </el-form-item>
       </el-form>
       <el-table
-        v-loading="loading"
         :data="allListData"
         stripe
         border
         style="width: 100%"
+        v-loading="loading"
       >
-        <el-table-column
-          prop="trade_time"
-          label="日期"
-          fixed
-        />
-        <el-table-column
-          prop="order_id"
-          label="订单号"
-        />
-        <el-table-column
-          prop="fin_type"
-          label="类型"
-        />
+        <el-table-column prop="trade_time" label="日期" fixed></el-table-column>
+        <el-table-column prop="order_id" label="订单号"></el-table-column>
+        <el-table-column prop="fin_type" label="类型"></el-table-column>
 
-        <el-table-column
-          prop="income"
-          label="金额"
-        >
+        <el-table-column prop="income" label="金额">
           <template slot-scope="scope">
-            <span
-              v-if="scope.row.income != 0"
-              style="color: #70b603"
-            >
+            <span v-if="scope.row.income != 0" style="color: #70b603">
               +￥{{ scope.row.income }}
             </span>
-            <span
-              v-else
-              style="color: red"
-            > -￥{{ scope.row.outcome }} </span>
+            <span v-else style="color: red"> -￥{{ scope.row.outcome }} </span>
           </template>
         </el-table-column>
       </el-table>
@@ -152,29 +107,30 @@
         <el-pagination
           background
           layout="total, sizes, prev, pager, next"
+          @current-change="handleCurrentChange"
+          @size-change="handleSizeChange"
           :current-page.sync="params.page"
           :page-sizes="[10, 20, 50]"
           :total="total_count"
           :page-size="params.page_size"
-          @current-change="handleCurrentChange"
-          @size-change="handleSizeChange"
-        />
+        >
+        </el-pagination>
       </div>
     </div>
   </div>
 </template>
 <script>
-import store from '@/store'
-import { mapGetters } from 'vuex'
+import store from "@/store";
+import { mapGetters } from "vuex";
 
-import { getDistributorData } from '../../../api/datacube'
-import { getDistributorList } from '../../../api/marketing'
-import { getStoreAccount, exportAccount } from '@/api/fenzhang'
-import { Message } from 'element-ui'
+import { getDistributorData } from "../../../api/datacube";
+import { getDistributorList } from "../../../api/marketing";
+import { getStoreAccount, exportAccount } from "@/api/fenzhang";
+import { Message } from "element-ui";
 export default {
-  data () {
+  data() {
     return {
-      vdate: '',
+      vdate: "",
       loading: true,
       is_distributor: false,
       distributorOption: [],
@@ -182,10 +138,10 @@ export default {
       params: {
         page: 1,
         page_size: 20,
-        order_id: '',
-        start_date: '',
-        end_date: '',
-        distributor_id: ''
+        order_id: "",
+        start_date: "",
+        end_date: "",
+        distributor_id: "",
       },
       total_count: 0,
       loading: false,
@@ -197,82 +153,82 @@ export default {
         refund: 0,
         balance: 0,
         withdrawal_balance: 0,
-        unsettled_funds: 0
-      }
-    }
-  },
-  mounted () {
-    // console.log(this.$store.getters,'this.$store.getter');
-    var start = new Date()
-    var end = new Date()
-    start.setTime(start.getTime() - 3600 * 1000 * 24 * 7)
-    end.setTime(end.getTime() - 3600 * 1000 * 24 * 1)
-    this.vdate = [start, end]
-    if (store.getters.login_type === 'distributor') {
-      this.is_distributor = true
-      this.params.distributor_id = this.$store.getters.shopId
-      this.getList()
-    }
-    if (this.is_distributor === false) {
-      this.getDistributorData()
-    }
+        unsettled_funds: 0,
+      },
+    };
   },
   methods: {
-    getDistributorData () {
+    getDistributorData() {
       getDistributorList().then((res) => {
-        this.distributorOption = res.data.data.list
-        this.params.distributor_id = this.distributorOption[0].distributor_id
-        this.getList()
-      })
+        this.distributorOption = res.data.data.list;
+        this.params.distributor_id = this.distributorOption[0].distributor_id;
+        this.getList();
+      });
     },
-    getList (isfirst) {
-      if (this.is_distributor === false && this.params.distributor === '') {
+    getList(isfirst) {
+      if (this.is_distributor === false && this.params.distributor === "") {
         this.$message({
-          type: 'error',
-          message: '必须选择门店'
-        })
-        return false
+          type: "error",
+          message: "必须选择门店",
+        });
+        return false;
       }
       if (!this.vdate) {
-        Message.error('请输入日期')
+        Message.error("请输入日期");
       } else {
-        this.loading = true
-        this.params.start_date = this.vdate[0]
-        this.params.end_date = this.vdate[1]
+        this.loading = true;
+        this.params.start_date = this.vdate[0];
+        this.params.end_date = this.vdate[1];
 
         getStoreAccount(this.params).then((res) => {
-          this.allListData = res.data.data.list.data
-          this.total_count = res.data.data.list.total_count
-          this.totle = res.data.data.totle
-          this.loading = false
-        })
+          this.allListData = res.data.data.list.data;
+          this.total_count = res.data.data.list.total_count;
+          this.totle = res.data.data.totle;
+          this.loading = false;
+        });
       }
     },
-    handleSizeChange (page_size) {
-      this.params.page = 1
-      this.params.page_size = page_size
-      this.getList()
+    handleSizeChange(page_size) {
+      this.params.page = 1;
+      this.params.page_size = page_size;
+      this.getList();
     },
-    handleCurrentChange (page) {
-      this.params.page = page
-      this.getList()
+    handleCurrentChange(page) {
+      this.params.page = page;
+      this.getList();
     },
-    exportData () {
+    exportData() {
       let obj = {
         start_date: this.params.start_date,
         end_date: this.params.end_date,
         order_id: this.params.order_id,
-        distributor_id: this.params.distributor_id
-      }
+        distributor_id: this.params.distributor_id,
+      };
       exportAccount(obj).then((res) => {
         this.$message({
-          type: 'success',
-          message: '已加入执行队列，请在设置-导出列表中下载'
-        })
-      })
+          type: "success",
+          message: "已加入执行队列，请在设置-导出列表中下载",
+        });
+      });
+    },
+  },
+  mounted() {
+    // console.log(this.$store.getters,'this.$store.getter');
+    var start = new Date();
+    var end = new Date();
+    start.setTime(start.getTime() - 3600 * 1000 * 24 * 7);
+    end.setTime(end.getTime() - 3600 * 1000 * 24 * 1);
+    this.vdate = [start, end];
+    if (store.getters.login_type === "distributor") {
+      this.is_distributor = true;
+      this.params.distributor_id = this.$store.getters.shopId;
+      this.getList();
     }
-  }
-}
+    if (this.is_distributor === false) {
+      this.getDistributorData();
+    }
+  },
+};
 </script>
 <style lang="scss" scoped>
 .account-number {

@@ -30,27 +30,12 @@
 
 <template>
   <div>
-    <el-row
-      class="filter-header"
-      :gutter="20"
-    >
+    <el-row class="filter-header" :gutter="20">
       <el-col>
         <!--distributors wxshops 需要哪个api传哪个-->
-        <shop-select
-          wxshops
-          @update="shopHandle"
-        />
-        <el-input
-          v-model="searchMobile"
-          class="input-m"
-          placeholder="手机号"
-          clearable
-        >
-          <el-button
-            slot="append"
-            icon="el-icon-search"
-            @click="numberSearch"
-          />
+        <shop-select wxshops @update="shopHandle"></shop-select>
+        <el-input class="input-m" placeholder="手机号" clearable v-model="searchMobile">
+          <el-button slot="append" icon="el-icon-search" @click="numberSearch"></el-button>
         </el-input>
         <el-date-picker
           v-model="create_time"
@@ -58,18 +43,15 @@
           value-format="yyyy/MM/dd"
           placeholder="选择日期范围"
           @change="dateChange"
-        />
-        <el-select
-          v-model="rights_from"
-          placeholder="请选择来源"
-          @change="rightsFromHandle"
-        >
+        ></el-date-picker>
+        <el-select v-model="rights_from" @change="rightsFromHandle" placeholder="请选择来源">
           <el-option
             v-for="(item, index) in rightsFrom"
             :key="index"
             :label="item.name"
             :value="item.type"
-          />
+          >
+          </el-option>
         </el-select>
         <el-switch
           v-model="valid"
@@ -77,11 +59,9 @@
           inactive-text="是否有效"
           inactive-color="#efefef"
           @change="changeOpen()"
-        />
-        <export-tip @exportHandle="exportData">
-          <el-button type="primary">
-            导出
-          </el-button>
+        ></el-switch>
+        <export-tip @exportHandle='exportData'>
+          <el-button type="primary">导出</el-button>
         </export-tip>
         <el-popover
           placement="top-start"
@@ -89,23 +69,13 @@
           trigger="hover"
           content="导出任务会以队列执行，点击导出后，请至‘设置-导出列表’页面中查看及下载数据"
         >
-          <i
-            slot="reference"
-            class="el-icon-question"
-          />
+          <i class="el-icon-question" slot="reference"></i>
         </el-popover>
       </el-col>
     </el-row>
-    <el-dialog
-      title="权益下载"
-      :visible.sync="downloadView"
-      :close-on-click-modal="false"
-    >
+    <el-dialog title="权益下载" :visible.sync="downloadView" :close-on-click-modal="false">
       <template v-if="downloadUrl">
-        <a
-          :href="downloadUrl"
-          download
-        >{{ downloadName }}</a>
+        <a :href="downloadUrl" download>{{ downloadName }}</a>
       </template>
 
       <!-- <template v-if="dataList.length > 0">
@@ -117,113 +87,58 @@
       </template> -->
     </el-dialog>
     <el-card>
-      <el-table
-        v-loading="loading"
-        :data="rightsList"
-        :height="wheight - 150"
-      >
+      <el-table :data="rightsList" :height="wheight - 150" v-loading="loading">
         <el-table-column type="expand">
           <template slot-scope="scope">
             <div v-for="info in scope.row.label_infos">
-              <span>包含物料：</span><el-tag type="success">
-                {{ info.label_name }}
-              </el-tag>
+              <span>包含物料：</span><el-tag type="success">{{ info.label_name }}</el-tag>
             </div>
           </template>
         </el-table-column>
-        <el-table-column
-          prop="rights_name"
-          label="名称"
-          min-width="140"
-        />
-        <el-table-column
-          prop="rights_from"
-          label="来源"
-          min-width="100"
-        />
-        <el-table-column
-          prop="mobile"
-          label="手机号"
-          min-width="90"
-        />
-        <el-table-column
-          prop="total_num"
-          label="总数量"
-        >
+        <el-table-column prop="rights_name" label="名称" min-width="140"></el-table-column>
+        <el-table-column prop="rights_from" label="来源" min-width="100"></el-table-column>
+        <el-table-column prop="mobile" label="手机号" min-width="90"></el-table-column>
+        <el-table-column prop="total_num" label="总数量">
           <template slot-scope="scope">
             <span v-if="scope.row.is_not_limit_num == 2">{{ scope.row.total_num }}</span>
             <span v-if="scope.row.is_not_limit_num == 1">无限次</span>
           </template>
         </el-table-column>
-        <el-table-column
-          prop="total_consum_num"
-          label="已核销数量"
-        />
+        <el-table-column prop="total_consum_num" label="已核销数量"></el-table-column>
         <el-table-column label="过期时间">
           <template slot-scope="scope">
             <span>{{ scope.row.end_time | datetime }}</span>
           </template>
         </el-table-column>
-        <el-table-column
-          label="状态"
-          min-width="100"
-        >
+        <el-table-column label="状态" min-width="100">
           <template slot-scope="scope">
             <template v-if="scope.row.is_not_limit_num == 2">
-              <el-tag
-                v-if="scope.row.total_num == scope.row.total_consum_num"
-                size="mini"
+              <el-tag size="mini" v-if="scope.row.total_num == scope.row.total_consum_num"
+                >已用完</el-tag
               >
-                已用完
-              </el-tag>
             </template>
             <template v-if="scope.row.is_not_limit_num == 1">
-              <el-tag size="mini">
-                无限次
-              </el-tag>
+              <el-tag size="mini">无限次</el-tag>
             </template>
-            <el-tag
-              v-else-if="scope.row.is_valid == '1'"
-              size="mini"
-              type="success"
-            >
-              有效
-            </el-tag>
-            <el-tag
-              v-else
-              size="mini"
-            >
-              已过期
-            </el-tag>
+            <el-tag size="mini" type="success" v-else-if="scope.row.is_valid == '1'">有效</el-tag>
+            <el-tag size="mini" v-else>已过期</el-tag>
           </template>
         </el-table-column>
-        <el-table-column
-          label="操作"
-          min-width="200"
-        >
+        <el-table-column label="操作" min-width="200">
           <template slot-scope="scope">
-            <el-button
-              size="mini"
-              @click="delayAction(scope.row)"
-            >
-              延期
-            </el-button>
-            <el-button
-              size="mini"
-              @click="transferAction(scope.row)"
-            >
-              转让
-            </el-button>
+            <el-button size="mini" @click="delayAction(scope.row)">延期</el-button>
+            <el-button size="mini" @click="transferAction(scope.row)">转让</el-button>
           </template>
         </el-table-column>
       </el-table>
       <el-pagination
         class="content-padded content-center"
+        @current-change="handleCurrentChange"
         :current-page.sync="params.page"
         :total="total_count"
         :page-size="params.pageSize"
-        @current-change="handleCurrentChange"
-      />
+      >
+      </el-pagination>
     </el-card>
     <!-- 添加、编辑标识-开始 -->
     <el-dialog
@@ -234,65 +149,40 @@
     >
       <template>
         <el-form>
-          <el-form-item
-            label-width="100px"
-            label="手机号"
-          >
+          <el-form-item label-width="100px" label="手机号">
             <el-col :span="9">
-              <el-input
-                v-model="mobile"
-                placeholder="请输入添加权益用户的手机号"
-              />
+              <el-input v-model="mobile" placeholder="请输入添加权益用户的手机号"></el-input>
             </el-col>
           </el-form-item>
-          <el-form-item
-            label-width="100px"
-            label="选择权益商品"
-          >
+          <el-form-item label-width="100px" label="选择权益商品">
             <el-transfer
               v-model="addRightsItems"
               :titles="['商品列表', '已选中']"
               :data="goodsList"
             >
-              <div
-                slot="left-footer"
-                class="transfer-footer"
-              >
+              <div class="transfer-footer" slot="left-footer">
                 <el-pagination
                   v-if="goods_total_count > goodsParams.pageSize"
                   small
                   layout="prev, pager, next"
+                  @current-change="handleGoodsChange"
                   :total="goods_total_count"
                   :page-size="goodsParams.pageSize"
-                  @current-change="handleGoodsChange"
-                />
+                >
+                </el-pagination>
               </div>
             </el-transfer>
           </el-form-item>
           <el-form-item class="content-center">
-            <el-button
-              type="primary"
-              @click="onSubmit"
-            >
-              确定添加
-            </el-button>
+            <el-button type="primary" @click="onSubmit">确定添加</el-button>
           </el-form-item>
         </el-form>
       </template>
     </el-dialog>
     <!-- 延期 -->
-    <el-dialog
-      title="延期设置"
-      class="delay-dialog"
-      :visible.sync="delayDialog"
-    >
+    <el-dialog title="延期设置" class="delay-dialog" :visible.sync="delayDialog">
       <div class="alert-txt">
-        <el-alert
-          title=""
-          type="warning"
-          description="消息提示的文案"
-          :closable="false"
-        >
+        <el-alert title="" type="warning" description="消息提示的文案" :closable="false">
           权益：{{ rightsInfo.rights_name }} ,有效期至：{{ rightsInfo.end_time | datetime }}
         </el-alert>
       </div>
@@ -302,30 +192,21 @@
             v-model="form.delay_date"
             type="date"
             :picker-options="pickerOptions"
-          />
+          ></el-date-picker>
         </el-col>
         <el-col :span="12">
           备注：<el-input
-            v-model="form.remark"
             type="textarea"
+            v-model="form.remark"
             placeholder="请输入备注"
             :rows="2"
-          />
+          ></el-input>
         </el-col>
         <el-col :span="4">
-          <el-button
-            type="primary"
-            @click="delaySave"
-          >
-            提交
-          </el-button>
+          <el-button type="primary" @click="delaySave">提交</el-button>
         </el-col>
       </el-row>
-      <el-table
-        :data="delayData"
-        height="380"
-        style="width: 100%"
-      >
+      <el-table :data="delayData" height="380" style="width: 100%">
         <el-table-column label="原有效期">
           <template slot-scope="scope">
             <span>{{ scope.row.original_date | datetime }}</span>
@@ -336,64 +217,39 @@
             <span>{{ scope.row.delay_date | datetime }}</span>
           </template>
         </el-table-column>
-        <el-table-column
-          prop="remark"
-          label="备注"
-        />
+        <el-table-column prop="remark" label="备注"> </el-table-column>
       </el-table>
     </el-dialog>
     <!-- 延期 -->
-    <el-dialog
-      title="转让权益设置"
-      class="delay-dialog"
-      :visible.sync="transferDialog"
-    >
+    <el-dialog title="转让权益设置" class="delay-dialog" :visible.sync="transferDialog">
       <el-row class="option-box">
         <el-col :span="8">
           转让手机号：<el-input
+            style="width:200px"
             v-model="transferForm.transfer_mobile"
-            style="width: 200px"
-          />
+          ></el-input>
         </el-col>
         <el-col :span="12">
           备注：<el-input
-            v-model="transferForm.remark"
             type="textarea"
+            v-model="transferForm.remark"
             placeholder="请输入备注"
             :rows="2"
-          />
+          ></el-input>
         </el-col>
         <el-col :span="4">
-          <el-button
-            type="primary"
-            @click="transferSave"
-          >
-            提交
-          </el-button>
+          <el-button type="primary" @click="transferSave">提交</el-button>
         </el-col>
       </el-row>
-      <el-table
-        :data="transferData"
-        height="380"
-        style="width: 100%"
-      >
+      <el-table :data="transferData" height="380" style="width: 100%">
         <el-table-column label="转让时间">
           <template slot-scope="scope">
             <span>{{ scope.row.created | datetime }}</span>
           </template>
         </el-table-column>
-        <el-table-column
-          prop="mobile"
-          label="原持有者"
-        />
-        <el-table-column
-          prop="transfer_mobile"
-          label="现持有者"
-        />
-        <el-table-column
-          prop="remark"
-          label="备注"
-        />
+        <el-table-column prop="mobile" label="原持有者"></el-table-column>
+        <el-table-column prop="transfer_mobile" label="现持有者"></el-table-column>
+        <el-table-column prop="remark" label="备注"></el-table-column>
       </el-table>
     </el-dialog>
   </div>
@@ -416,7 +272,7 @@ export default {
   components: {
     shopSelect
   },
-  data () {
+  data() {
     var delayDisabledDate = Date.now()
     return {
       loading: false,
@@ -456,7 +312,7 @@ export default {
       delayData: [],
       transferData: [],
       pickerOptions: {
-        disabledDate (time) {
+        disabledDate(time) {
           return time.getTime() < delayDisabledDate
         }
       },
@@ -502,11 +358,8 @@ export default {
   computed: {
     ...mapGetters(['wheight'])
   },
-  mounted () {
-    this.getRightsList()
-  },
   methods: {
-    onSubmit () {
+    onSubmit() {
       let query = { mobile: this.mobile, itemids: this.addRightsItems }
       createRights(query).then((res) => {
         this.mobile = ''
@@ -519,20 +372,20 @@ export default {
         this.addRightsDialog = false
       })
     },
-    addResource () {
+    addResource() {
       this.getGoodsList()
       this.mobile = ''
       this.addRightsDialog = true
     },
-    handleCancelLabelsDialog () {
+    handleCancelLabelsDialog() {
       this.addRightsDialog = false
     },
-    handleCurrentChange (val) {
+    handleCurrentChange(val) {
       this.loading = false
       this.params.page = val
       this.getRightsList()
     },
-    numberSearch () {
+    numberSearch() {
       if (!this.searchMobile) {
         this.params.mobile = ''
       } else {
@@ -541,7 +394,7 @@ export default {
       this.params.page = 1
       this.getRightsList()
     },
-    dateChange (val) {
+    dateChange(val) {
       if (val && val.length > 0) {
         this.params.date_begin = this.dateStrToTimeStamp(val[0] + ' 00:00:00')
         this.params.date_end = this.dateStrToTimeStamp(val[1] + ' 23:59:59')
@@ -552,15 +405,15 @@ export default {
       this.params.page = 1
       this.getRightsList()
     },
-    dateStrToTimeStamp (str) {
+    dateStrToTimeStamp(str) {
       return Date.parse(new Date(str)) / 1000
     },
-    rightsFromHandle (val) {
+    rightsFromHandle(val) {
       this.params.rights_from = val
       this.params.page = 1
       this.getRightsList()
     },
-    handleGoodsChange (val) {
+    handleGoodsChange(val) {
       this.goodsParams.page = val
       this.goodsListSelect = []
       this.goodsList.forEach((row) => {
@@ -572,7 +425,7 @@ export default {
       })
       this.getGoodsList()
     },
-    getGoodsList () {
+    getGoodsList() {
       getItemsList(this.goodsParams).then((response) => {
         let list = []
         response.data.data.list.forEach((row) => {
@@ -589,7 +442,7 @@ export default {
         this.goods_total_count = response.data.data.total_count
       })
     },
-    getRightsList () {
+    getRightsList() {
       this.loading = true
       findRightsList(this.params).then((response) => {
         this.rightsList = response.data.data.list
@@ -597,7 +450,7 @@ export default {
         this.loading = false
       })
     },
-    delayAction (item) {
+    delayAction(item) {
       this.form.delay_date = ''
       this.form.remark = ''
       this.rightsInfo = item
@@ -610,7 +463,7 @@ export default {
       })
       this.delayDialog = true
     },
-    delaySave () {
+    delaySave() {
       delayRights(this.form).then((res) => {
         if (res.data.data) {
           this.delayDialog = false
@@ -618,7 +471,7 @@ export default {
         }
       })
     },
-    transferAction (item) {
+    transferAction(item) {
       this.transferForm.rights_id = item.rights_id
       this.transferForm.mobile = item.mobile
       this.transferForm.transfer_mobile = ''
@@ -631,7 +484,7 @@ export default {
       })
       this.transferDialog = true
     },
-    transferSave () {
+    transferSave() {
       if (!this.transferForm.transfer_mobile) {
         this.$message({
           type: 'error',
@@ -661,12 +514,12 @@ export default {
         })
       this.transferDialog = false
     },
-    changeOpen (key) {
+    changeOpen(key) {
       this.params.valid = this.valid ? 1 : 0
       this.params.page = 1
       this.getRightsList()
     },
-    exportData () {
+    exportData() {
       this.params.page = 1
       rightsExport(this.params).then((response) => {
         if (response.data.data.status) {
@@ -688,13 +541,16 @@ export default {
         }
       })
     },
-    shopHandle (param) {
+    shopHandle(param) {
       param && param.shop_id
       this.currentShop = param.shop_id
       this.params.page = 1
       this.params.shop_id = param.shop_id
       this.getRightsList()
     }
+  },
+  mounted() {
+    this.getRightsList()
   }
 }
 </script>

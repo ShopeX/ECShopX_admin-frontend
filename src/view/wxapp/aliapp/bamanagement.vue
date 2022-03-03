@@ -1,17 +1,14 @@
 <template>
-  <transition
-    name="fade"
-    mode="out-in"
-  >
-    <storeDefault v-if="template_name === 'yykmembership'" />
-    <storeSport v-if="template_name === 'yykmendian'" />
-    <storeUniversal v-if="template_name === 'yykuniversal'" />
-    <mallBaDefault v-if="template_name === 'yykweishop'" />
-    <appleBaDefault v-if="template_name === 'appleweishop'" />
-    <marketingCard v-if="template_name === 'marketingCard'" />
-    <marketingGroup v-if="template_name === 'yykcutdown'" />
-    <mallCommunity v-if="template_name === 'yykcommunity'" />
-    <communityManagement v-if="template_name === 'yykcommunitypms'" />
+  <transition name="fade" mode="out-in">
+    <storeDefault v-if="template_name === 'yykmembership'"></storeDefault>
+    <storeSport v-if="template_name === 'yykmendian'"></storeSport>
+    <storeUniversal v-if="template_name === 'yykuniversal'"></storeUniversal>
+    <mallBaDefault v-if="template_name === 'yykweishop'"></mallBaDefault>
+    <appleBaDefault v-if="template_name === 'appleweishop'"></appleBaDefault>
+    <marketingCard v-if="template_name === 'marketingCard'"></marketingCard>
+    <marketingGroup v-if="template_name === 'yykcutdown'"></marketingGroup>
+    <mallCommunity v-if="template_name === 'yykcommunity'"></mallCommunity>
+    <communityManagement v-if="template_name === 'yykcommunitypms'"></communityManagement>
   </transition>
 </template>
 
@@ -37,6 +34,13 @@ import marketingCard from '@/view/wxapp/template/marketing/card'
 import marketingGroup from '@/view/wxapp/template/marketing/group'
 
 export default {
+  data() {
+    return {
+      activeIndex: '',
+      currentCode: '',
+      wxapps: []
+    }
+  },
   components: {
     storeDefault: storeDefault,
     storeSport: storeSport,
@@ -48,17 +52,15 @@ export default {
     marketingCard: marketingCard,
     marketingGroup: marketingGroup
   },
-  data () {
-    return {
-      activeIndex: '',
-      currentCode: '',
-      wxapps: []
-    }
-  },
   computed: {
     ...mapGetters(['wxapp_id', 'template_name'])
   },
-  mounted () {
+  methods: {
+    chooseTemp() {
+      this.$router.push({ path: this.matchInternalRoute('wxapp_templ') })
+    }
+  },
+  mounted() {
     if (this.active) {
       this.activeIndex = this.active
     }
@@ -67,11 +69,6 @@ export default {
     }
     if (this.$route.query.templatename) {
       this.$store.dispatch('setTemplateName', this.$route.query.templatename)
-    }
-  },
-  methods: {
-    chooseTemp () {
-      this.$router.push({ path: this.matchInternalRoute('wxapp_templ') })
     }
   }
 }

@@ -1,24 +1,13 @@
 <template>
-  <el-tabs
-    v-model="activeName"
-    type="border-card"
-    @tab-click="handleClick"
-  >
-    <el-tab-pane
-      label="普通员工管理"
-      name="staff"
-    >
-      <normalstaffManager :is-load="normalStaff" />
+  <el-tabs v-model="activeName" type="border-card" @tab-click="handleClick">
+    <el-tab-pane label="普通员工管理" name="staff">
+      <normalstaffManager :is-load="normalStaff"></normalstaffManager>
     </el-tab-pane>
-    <el-tab-pane
-      label="店铺员工管理"
-      name="store"
-    >
-      <storestaffManager :is-load="storeStaff" />
+    <el-tab-pane label="店铺员工管理" name="store">
+      <storestaffManager :is-load="storeStaff"></storestaffManager>
     </el-tab-pane>
-  </el-tabs>
-</template>
-<template>
+  </el-tabs> </template
+><template>
   <div>
     <el-row :gutter="20">
       <el-col :span="12">
@@ -165,7 +154,7 @@ import StoreSelect from '@/components/storeselect'
 export default {
   components: {},
   props: ['getStatus'],
-  data () {
+  data() {
     return {
       dynamicShopName: [],
       dynamicStoreName: [],
@@ -205,19 +194,8 @@ export default {
   computed: {
     ...mapGetters(['wheight'])
   },
-  watch: {
-    getStatus (val) {
-      if (val) {
-        this.getAccountListData()
-      }
-    }
-  },
-  mounted () {
-    this.getAccountListData()
-    this.getRolesListData()
-  },
   methods: {
-    shopNameSearch (item) {
+    shopNameSearch(item) {
       if (this.dynamicShopName.indexOf(item.name) != -1) {
         this.$message({
           type: 'error',
@@ -230,7 +208,7 @@ export default {
         this.inputVisible = false
       }
     },
-    queryShopNameSearch (queryString, cb) {
+    queryShopNameSearch(queryString, cb) {
       var restaurants = []
       getDistributorList({ name: queryString, page: 1, pageSize: 500 }).then((res) => {
         restaurants = res.data.data.list
@@ -238,14 +216,14 @@ export default {
         cb(restaurants)
       })
     },
-    handleClose (item) {
+    handleClose(item) {
       this.dynamicShopName.splice(this.dynamicShopName.indexOf(item), 1)
       this.form.distributor_ids.splice(this.dynamicShopName.indexOf(item), 1)
     },
-    showInput () {
+    showInput() {
       this.inputVisible = true
     },
-    handleCancel () {
+    handleCancel() {
       this.editVisible = false
       this.operator_id = ''
       this.form.login_name = ''
@@ -257,18 +235,18 @@ export default {
       this.dynamicStoreName = []
       this.dynamicShopName = []
     },
-    handleCurrentChange (page_num) {
+    handleCurrentChange(page_num) {
       this.params.page = page_num
       this.getAccountListData()
     },
-    addLabels () {
+    addLabels() {
       // 添加物料弹框
       this.handleCancel()
       this.editTitle = '添加账号信息'
       this.editVisible = true
       this.isEdit = false
     },
-    editAction (index, row) {
+    editAction(index, row) {
       // 编辑物料弹框
       this.handleCancel()
       this.editTitle = '编辑账号信息'
@@ -292,7 +270,7 @@ export default {
         this.form.role_id.push(item.role_id)
       })
     },
-    submitAction () {
+    submitAction() {
       // 提交物料
       if (this.operator_id) {
         updateAccountInfo(this.operator_id, this.form).then((response) => {
@@ -309,12 +287,12 @@ export default {
         })
       }
     },
-    dataSearch () {
+    dataSearch() {
       this.params.mobile = this.mobile
       this.params.page = 1
       this.getAccountListData()
     },
-    getAccountListData () {
+    getAccountListData() {
       this.loading = true
       getAccountList(this.params).then((response) => {
         this.accountsList = response.data.data.list
@@ -322,7 +300,7 @@ export default {
         this.loading = false
       })
     },
-    deleteAccountAction (index, row) {
+    deleteAccountAction(index, row) {
       this.$confirm('此操作将删除该账号, 是否继续?', '提示', {
         confirmButtonText: '确定',
         cancelButtonText: '取消',
@@ -345,11 +323,22 @@ export default {
           })
         })
     },
-    getRolesListData () {
+    getRolesListData() {
       var params = { page: 1, pageSize: 100 }
       getRolesList(params).then((res) => {
         this.rolesListData = res.data.data.list
       })
+    }
+  },
+  mounted() {
+    this.getAccountListData()
+    this.getRolesListData()
+  },
+  watch: {
+    getStatus(val) {
+      if (val) {
+        this.getAccountListData()
+      }
     }
   }
 }

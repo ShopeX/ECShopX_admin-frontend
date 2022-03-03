@@ -3,56 +3,28 @@
     <div v-if="$route.path.indexOf('editor') === -1">
       <el-row :gutter="20">
         <el-col :span="12">
-          <el-button
-            type="primary"
-            icon="plus"
-            @click="addTemplates"
-          >
-            新增运费模板
-          </el-button>
+          <el-button type="primary" icon="plus" @click="addTemplates">新增运费模板</el-button>
         </el-col>
       </el-row>
-      <el-tabs
-        v-model="activeName"
-        type="border-card"
-        @tab-click="handleClick"
-      >
-        <el-tab-pane
-          label="卖家承担运费"
-          name="first"
-        >
-          <buyerTemplates
-            ref="buyerTemplates"
-            :get-status="buyerTemplates"
-          />
+      <el-tabs v-model="activeName" type="border-card" @tab-click="handleClick">
+        <el-tab-pane label="卖家承担运费" name="first">
+          <buyerTemplates :get-status="buyerTemplates" ref="buyerTemplates"></buyerTemplates>
         </el-tab-pane>
-        <el-tab-pane
-          label="按重量运费模板"
-          name="second"
-        >
-          <weightTemplates :get-status="weightTemplates" />
+        <el-tab-pane label="按重量运费模板" name="second">
+          <weightTemplates :get-status="weightTemplates"></weightTemplates>
         </el-tab-pane>
-        <el-tab-pane
-          label="按件数运费模板"
-          name="third"
-        >
-          <numberTemplates :get-status="numberTemplates" />
+        <el-tab-pane label="按件数运费模板" name="third">
+          <numberTemplates :get-status="numberTemplates"></numberTemplates>
         </el-tab-pane>
-        <el-tab-pane
-          label="按金额运费模板"
-          name="fourth"
-        >
-          <priceTemplates :get-status="priceTemplates" />
+        <el-tab-pane label="按金额运费模板" name="fourth">
+          <priceTemplates :get-status="priceTemplates"></priceTemplates>
         </el-tab-pane>
-        <el-tab-pane
-          label="按体积运费模板"
-          name="fifth"
-        >
-          <volumeTemplates :get-status="volumeTemplates" />
+        <el-tab-pane label="按体积运费模板" name="fifth">
+          <volumeTemplates :get-status="volumeTemplates"></volumeTemplates>
         </el-tab-pane>
       </el-tabs>
     </div>
-    <router-view />
+    <router-view></router-view>
   </div>
 </template>
 
@@ -64,7 +36,7 @@ import priceTemplates from './templates/priceTemplates'
 import volumeTemplates from './templates/volumeTemplates'
 
 export default {
-  provide () {
+  provide() {
     return {
       refresh: this.getList
     }
@@ -76,7 +48,7 @@ export default {
     priceTemplates,
     volumeTemplates
   },
-  data () {
+  data() {
     return {
       loading: false,
       buyerTemplates: false,
@@ -88,17 +60,12 @@ export default {
       list: []
     }
   },
-  mounted () {
-    if ('undefined' != typeof this.$route.query.activeName) {
-      this.activeName = this.$route.query.activeName
-    }
-  },
   methods: {
-    addTemplates () {
+    addTemplates() {
       // 添加运费模板
       this.$router.push({ path: this.matchHidePage('editor') })
     },
-    handleClick (tab, event) {
+    handleClick(tab, event) {
       if (this.activeName === 'first') {
         this.buyerTemplates = true
       } else if (this.activeName === 'second') {
@@ -111,8 +78,13 @@ export default {
         this.volumeTemplates = true
       }
     },
-    getList () {
+    getList() {
       this.$refs.getShippingTemplatesList
+    }
+  },
+  mounted() {
+    if ('undefined' != typeof this.$route.query.activeName) {
+      this.activeName = this.$route.query.activeName
     }
   }
 }

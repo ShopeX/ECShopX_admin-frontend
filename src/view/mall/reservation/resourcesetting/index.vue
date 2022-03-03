@@ -6,29 +6,25 @@
       type="border-card"
       @tab-click="handleClick"
     >
-      <el-tab-pane
-        label="排班管理"
-        name="settingMange"
-      >
+      <el-tab-pane label="排班管理" name="settingMange">
         <work-shift
           :is-load="settingMangeLoad"
           :shop-list-data="shopListData"
           :resource-name="resourceName"
-        />
+        >
+        </work-shift>
       </el-tab-pane>
-      <el-tab-pane
-        :label="resourceName + '列表'"
-        name="reservationModel"
-      >
+      <el-tab-pane :label="resourceName + '列表'" name="reservationModel">
         <resource-list
-          ref="resource"
           :is-load="resouceLoad"
           :shop-list-data="shopListData"
           :resource-name="resourceName"
-        />
+          ref="resource"
+        >
+        </resource-list>
       </el-tab-pane>
     </el-tabs>
-    <router-view />
+    <router-view></router-view>
   </div>
 </template>
 <script>
@@ -37,7 +33,7 @@ import workShift from './workshift.vue'
 import { getSetting } from '../../../../api/reservation'
 //import { getWxShopsList } from '../../../api/shop'
 export default {
-  provide () {
+  provide() {
     return {
       refresh: this.getList
     }
@@ -46,7 +42,7 @@ export default {
     resourceList,
     workShift
   },
-  data () {
+  data() {
     return {
       activeName: 'settingMange',
       resourceName: '',
@@ -56,7 +52,22 @@ export default {
       settingMangeLoad: true
     }
   },
-  mounted () {
+  methods: {
+    handleClick() {
+      if (this.activeName == 'reservationModel') {
+        this.resouceLoad = true
+        this.settingMangeLoad = false
+      } else if (this.activeName == 'settingMange') {
+        this.resouceLoad = false
+        this.settingMangeLoad = true
+      }
+    },
+    getList() {
+      this.$refs.getLevelList
+      this.$refs.getStoreList
+    }
+  },
+  mounted() {
     getSetting().then((res) => {
       if (res.data.data.resourceName) {
         this.resourceName = res.data.data.resourceName
@@ -72,21 +83,6 @@ export default {
     //     this.shopIdData = this.shopListData[0].wxShopId
     //   }
     // })
-  },
-  methods: {
-    handleClick () {
-      if (this.activeName == 'reservationModel') {
-        this.resouceLoad = true
-        this.settingMangeLoad = false
-      } else if (this.activeName == 'settingMange') {
-        this.resouceLoad = false
-        this.settingMangeLoad = true
-      }
-    },
-    getList () {
-      this.$refs.getLevelList
-      this.$refs.getStoreList
-    }
   }
 }
 </script>

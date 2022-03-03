@@ -7,15 +7,8 @@
 <template>
   <div class="page-body">
     <template v-if="$route.path.indexOf('detail') === -1">
-      <SpFilterForm
-        :model="params"
-        @onSearch="onSearch"
-        @onReset="onReset"
-      >
-        <SpFilterFormItem
-          prop="distributor"
-          label="店铺名称:"
-        >
+      <SpFilterForm :model="params" @onSearch="onSearch" @onReset="onReset">
+        <SpFilterFormItem prop="distributor" label="店铺名称:">
           <el-autocomplete
             v-model="params.distributor.name"
             :fetch-suggestions="queryStoreSearch"
@@ -23,10 +16,7 @@
             @select="handleSelectStore"
           />
         </SpFilterFormItem>
-        <SpFilterFormItem
-          prop="create_time"
-          label="日期范围:"
-        >
+        <SpFilterFormItem prop="create_time" label="日期范围:">
           <el-date-picker
             v-model="params.create_time"
             type="daterange"
@@ -34,57 +24,28 @@
             placeholder="选择日期范围"
           />
         </SpFilterFormItem>
-        <SpFilterFormItem
-          prop="order_id"
-          label="订单号:"
-        >
-          <el-input
-            v-model="params.order_id"
-            placeholder="订单号"
-          />
+        <SpFilterFormItem prop="order_id" label="订单号:">
+          <el-input placeholder="订单号" v-model="params.order_id"> </el-input>
         </SpFilterFormItem>
-        <SpFilterFormItem
-          prop="aftersales_bn"
-          label="售后单号:"
-        >
-          <el-input
-            v-model="params.aftersales_bn"
-            placeholder="请填写售后单号"
-          />
+        <SpFilterFormItem prop="aftersales_bn" label="售后单号:">
+          <el-input placeholder="请填写售后单号" v-model="params.aftersales_bn"> </el-input>
         </SpFilterFormItem>
-        <SpFilterFormItem
-          prop="mobile"
-          label="手机号:"
-        >
-          <el-input
-            v-model="params.mobile"
-            placeholder="手机号"
-          />
+        <SpFilterFormItem prop="mobile" label="手机号:">
+          <el-input placeholder="手机号" v-model="params.mobile"> </el-input>
         </SpFilterFormItem>
-        <SpFilterFormItem
-          prop="aftersales_status"
-          label="售后状态:"
-        >
-          <el-select
-            v-model="params.aftersales_status"
-            placeholder="售后状态"
-          >
+        <SpFilterFormItem prop="aftersales_status" label="售后状态:">
+          <el-select v-model="params.aftersales_status" placeholder="售后状态">
             <el-option
               v-for="(item, index) in aftersalesStatusList"
               :key="index"
               :label="item.name"
               :value="item.value"
-            />
+            >
+            </el-option>
           </el-select>
         </SpFilterFormItem>
-        <SpFilterFormItem
-          prop="aftersales_type"
-          label="售后类型:"
-        >
-          <el-select
-            v-model="params.aftersales_type"
-            placeholder="请选择售后类型"
-          >
+        <SpFilterFormItem prop="aftersales_type" label="售后类型:">
+          <el-select v-model="params.aftersales_type" placeholder="请选择售后类型">
             <el-option
               v-for="(item, index) in $store.getters.login_type == 'merchant'
                 ? aftersalesTypeListOther
@@ -92,41 +53,23 @@
               :key="index"
               :label="item.name"
               :value="item.value"
-            />
+            >
+            </el-option>
           </el-select>
         </SpFilterFormItem>
       </SpFilterForm>
 
       <div class="action-container">
         <export-tip @exportHandle="exportData">
-          <el-button
-            type="primary"
-            plain
-          >
-            导出
-          </el-button>
+          <el-button type="primary" plain>导出</el-button> 
         </export-tip>
-        <el-button
-          v-if="showAftersale"
-          type="primary"
-          plain
-          @click="aftersalesRemindAction"
+        <el-button v-if="showAftersale" type="primary" plain @click="aftersalesRemindAction"
+          >售后提醒内容</el-button
         >
-          售后提醒内容
-        </el-button>
       </div>
 
-      <el-table
-        v-loading="loading"
-        border
-        :data="tableList"
-        element-loading-text="数据加载中"
-      >
-        <el-table-column
-          prop="create_time"
-          width="200"
-          label="售后单"
-        >
+      <el-table border :data="tableList" v-loading="loading" element-loading-text="数据加载中">
+        <el-table-column prop="create_time" width="200" label="售后单">
           <template slot-scope="scope">
             <div class="order-num">
               <router-link
@@ -140,37 +83,25 @@
                     '/order/entitytrade/aftersaleslist/detail',
                   query: { aftersales_bn: scope.row.aftersales_bn }
                 }"
+                >{{ scope.row.aftersales_bn }}</router-link
               >
-                {{ scope.row.aftersales_bn }}
-              </router-link>
-              <el-tooltip
-                effect="dark"
-                content="复制"
-                placement="top-start"
-              >
+              <el-tooltip effect="dark" content="复制" placement="top-start">
                 <i
                   v-clipboard:copy="scope.row.aftersales_bn"
                   v-clipboard:success="onCopySuccess"
                   class="el-icon-document-copy"
-                />
+                ></i>
               </el-tooltip>
             </div>
             <div class="order-time">
-              <el-tooltip
-                effect="dark"
-                content="申请时间"
-                placement="top-start"
-              >
-                <i class="el-icon-time" />
+              <el-tooltip effect="dark" content="申请时间" placement="top-start">
+                <i class="el-icon-time"></i>
               </el-tooltip>
               {{ scope.row.create_time | datetime('YYYY-MM-DD HH:mm:ss') }}
             </div>
           </template>
         </el-table-column>
-        <el-table-column
-          min-width="150"
-          label="订单"
-        >
+        <el-table-column min-width="150" label="订单">
           <template slot-scope="scope">
             <div class="order-num">
               <router-link
@@ -184,31 +115,23 @@
                     '/order/entitytrade/tradenormalorders/detail',
                   query: { orderId: scope.row.order_id }
                 }"
+                >{{ scope.row.order_id }}</router-link
               >
-                {{ scope.row.order_id }}
-              </router-link>
-              <el-tooltip
-                effect="dark"
-                content="复制"
-                placement="top-start"
-              >
+              <el-tooltip effect="dark" content="复制" placement="top-start">
                 <i
                   v-clipboard:copy="scope.row.order_id"
                   v-clipboard:success="onCopySuccess"
                   class="el-icon-document-copy"
-                />
+                ></i>
               </el-tooltip>
             </div>
           </template>
         </el-table-column>
-        <el-table-column
-          min-width="150"
-          label="手机号"
-        >
+        <el-table-column min-width="150" label="手机号">
           <template slot-scope="scope">
             <div
-              v-if="!scope.row.user_delete && $store.getters.login_type !== 'merchant'"
               class="order-num"
+              v-if="!scope.row.user_delete && $store.getters.login_type !== 'merchant'"
             >
               <router-link
                 target="_blank"
@@ -218,104 +141,56 @@
                     '/member/member/detail',
                   query: { user_id: scope.row.user_id }
                 }"
+                >{{ scope.row.mobile }}</router-link
               >
-                {{ scope.row.mobile }}
-              </router-link>
             </div>
             <template v-else>
               {{ scope.row.mobile }}
             </template>
           </template>
         </el-table-column>
-        <el-table-column
-          width="100"
-          label="售后类型"
-        >
+        <el-table-column width="100" label="售后类型">
           <template slot-scope="scope">
-            <el-tag
-              v-if="scope.row.aftersales_type == 'ONLY_REFUND'"
-              type="info"
-              size="mini"
+            <el-tag v-if="scope.row.aftersales_type == 'ONLY_REFUND'" type="info" size="mini"
+              >仅退款</el-tag
             >
-              仅退款
-            </el-tag>
-            <el-tag
-              v-if="scope.row.aftersales_type == 'REFUND_GOODS'"
-              type="warning"
-              size="mini"
+            <el-tag v-if="scope.row.aftersales_type == 'REFUND_GOODS'" type="warning" size="mini"
+              >退货退款</el-tag
             >
-              退货退款
-            </el-tag>
-            <el-tag
-              v-if="scope.row.aftersales_type == 'EXCHANGING_GOODS'"
-              type="danger"
-              size="mini"
+            <el-tag v-if="scope.row.aftersales_type == 'EXCHANGING_GOODS'" type="danger" size="mini"
+              >换货</el-tag
             >
-              换货
-            </el-tag>
           </template>
         </el-table-column>
-        <el-table-column
-          width="100"
-          label="售后状态"
-        >
+        <el-table-column width="100" label="售后状态">
           <template slot-scope="scope">
-            <el-tag
-              v-if="scope.row.aftersales_status == '0'"
-              size="mini"
+            <el-tag v-if="scope.row.aftersales_status == '0'" size="mini">待处理</el-tag>
+            <el-tag v-if="scope.row.aftersales_status == '1'" size="mini">处理中</el-tag>
+            <el-tag v-if="scope.row.aftersales_status == '2'" type="success" size="mini"
+              >已处理</el-tag
             >
-              待处理
-            </el-tag>
-            <el-tag
-              v-if="scope.row.aftersales_status == '1'"
-              size="mini"
+            <el-tag v-if="scope.row.aftersales_status == '3'" type="success" size="mini"
+              >已驳回</el-tag
             >
-              处理中
-            </el-tag>
-            <el-tag
-              v-if="scope.row.aftersales_status == '2'"
-              type="success"
-              size="mini"
+            <el-tag v-if="scope.row.aftersales_status == '4'" type="success" size="mini"
+              >已关闭</el-tag
             >
-              已处理
-            </el-tag>
-            <el-tag
-              v-if="scope.row.aftersales_status == '3'"
-              type="success"
-              size="mini"
-            >
-              已驳回
-            </el-tag>
-            <el-tag
-              v-if="scope.row.aftersales_status == '4'"
-              type="success"
-              size="mini"
-            >
-              已关闭
-            </el-tag>
           </template>
         </el-table-column>
-        <el-table-column
-          width="100"
-          label="操作"
-        >
+        <el-table-column width="100" label="操作">
           <template slot-scope="scope">
             <router-link
               :to="{
                 path: matchHidePage('detail'),
                 query: { aftersales_bn: scope.row.aftersales_bn, resource: $route.path }
               }"
+              >详情</router-link
             >
-              详情
-            </router-link>
             <template
               v-if="scope.row.distributor_id == '0' || $store.getters.login_type == 'distributor'"
             >
-              <el-button
-                type="text"
-                @click="clickShowRemark(scope.row, 'afterList')"
-              >
-                备注
+              <el-button type="text" @click="clickShowRemark(scope.row, 'afterList')"
+                >备注
               </el-button>
             </template>
           </template>
@@ -331,7 +206,8 @@
           :page-size="page.pageSize"
           @current-change="onCurrentChange"
           @size-change="onSizeChange"
-        />
+        >
+        </el-pagination>
       </div>
 
       <!-- 售后提醒内容 -开始 -->
@@ -351,50 +227,37 @@
             <el-form-item label="提醒内容">
               <template>
                 <vue-html5-editor
-                  ref="editor"
                   :content="aftersalesRemindForm.intro.toString()"
-                  :height="360"
+                  ref="editor"
                   @change="updateContent"
-                />
+                  :height="360"
+                ></vue-html5-editor>
               </template>
-              <span
-                class="frm-tips"
-              >例如：由于商品的特殊性，如涉及机油类产品需寄回，建议使用京东快递，快递公司联系电话955XX。</span>
+              <span class="frm-tips"
+                >例如：由于商品的特殊性，如涉及机油类产品需寄回，建议使用京东快递，快递公司联系电话955XX。</span
+              >
             </el-form-item>
             <el-form-item label="是否启用">
               <el-switch
                 v-model="aftersalesRemindForm.is_open"
                 active-color="#13ce66"
                 inactive-color="#ff4949"
-              />
-              <br>
-              <span
-                class="frm-tips"
-              >如开启展示，则后台所输入内容将会展示在前端消费者提交售后申请的页面上，内容不超过200字</span>
+              ></el-switch>
+              <br />
+              <span class="frm-tips"
+                >如开启展示，则后台所输入内容将会展示在前端消费者提交售后申请的页面上，内容不超过200字</span
+              >
             </el-form-item>
           </el-form>
         </template>
-        <div
-          slot="footer"
-          class="dialog-footer"
-        >
-          <el-button @click.native="handleCancel">
-            取消
-          </el-button>
-          <el-button
-            type="primary"
-            @click="submitAftersalesRemind"
-          >
-            确定
-          </el-button>
+        <div slot="footer" class="dialog-footer">
+          <el-button @click.native="handleCancel">取消</el-button>
+          <el-button type="primary" @click="submitAftersalesRemind">确定</el-button>
         </div>
       </el-dialog>
-      <RemarkModal
-        ref="modalRef"
-        @onDone="handleRemarksDone"
-      />
+      <RemarkModal ref="modalRef" @onDone="handleRemarksDone" />
     </template>
-    <router-view />
+    <router-view></router-view>
   </div>
 </template>
 <script>
@@ -406,7 +269,7 @@ export default {
     RemarkModal
   },
   mixins: [mixin, remarkMixin, pageMixin],
-  data () {
+  data() {
     const initialParams = {
       distributor: {
         id: undefined,
@@ -451,40 +314,21 @@ export default {
   },
   computed: {
     ...mapGetters(['wheight']),
-    showAftersale () {
+    showAftersale() {
       return (
         this.$store.getters.login_type != 'merchant' &&
         this.$store.getters.login_type != 'distributor'
       )
     }
   },
-  watch: {
-    $route (to, from) {},
-    'params.distributor': {
-      handler: function (val) {
-        if (!val.name && val.id) {
-          this.params.distributor = {
-            id: undefined,
-            name: undefined
-          }
-        }
-      },
-      deep: true
-    }
-  },
-  mounted () {
-    //获取所有店铺
-    this.getStoreList()
-    this.fetchList()
-  },
   methods: {
-    handleSelectStore (storeItem) {
+    handleSelectStore(storeItem) {
       this.params.distributor.id = storeItem.distributor_id
     },
-    dateStrToTimeStamp (str) {
+    dateStrToTimeStamp(str) {
       return Date.parse(new Date(str)) / 1000
     },
-    dateTransfer (val) {
+    dateTransfer(val) {
       let time_start_begin = undefined
       let time_start_end = undefined
       if (val.length > 0) {
@@ -496,7 +340,7 @@ export default {
         time_start_end
       }
     },
-    getParams () {
+    getParams() {
       let params = {
         distributor_id: this.params.distributor.id || undefined,
         ...this.dateTransfer(this.params.create_time),
@@ -508,24 +352,24 @@ export default {
       }
       return params
     },
-    onReset () {
-      this.params = { ...this.initialParams }
-      this.params = {
+    onReset() {
+      this.params = { ...this.initialParams } 
+      this.params={
         ...this.params,
-        distributor: {
-          id: undefined,
-          name: undefined
+        distributor:{
+          id:undefined,
+          name:undefined
         }
       }
       this.onSearch()
     },
-    onSearch () {
+    onSearch() {
       this.page.pageIndex = 1
       this.$nextTick(() => {
         this.fetchList()
       })
     },
-    async fetchList () {
+    async fetchList() {
       this.loading = true
       const { pageIndex: page, pageSize } = this.page
       let params = {
@@ -538,18 +382,18 @@ export default {
       this.page.total = total_count
       this.loading = false
     },
-    querySearch (queryString, cb) {
+    querySearch(queryString, cb) {
       var restaurants = this.source_list
       var results = queryString ? restaurants.filter(this.createFilter(queryString)) : restaurants
       // 调用 callback 返回建议列表的数据
       cb(results)
     },
-    createFilter (queryString) {
+    createFilter(queryString) {
       return (restaurant) => {
         return restaurant.value.toLowerCase().indexOf(queryString.toLowerCase()) === 0
       }
     },
-    async getStoreList () {
+    async getStoreList() {
       let params = { page: 1, pageSize: 500 }
       const { list } = await this.$api.marketing.getDistributorList(params)
       if (list) {
@@ -558,14 +402,14 @@ export default {
         })
       }
     },
-    queryStoreSearch (queryString, cb) {
+    queryStoreSearch(queryString, cb) {
       var restaurants = this.shopList
       var results = queryString ? restaurants.filter(this.createFilter(queryString)) : restaurants
       // 调用 callback 返回建议列表的数据
       cb(results)
     },
-    async exportData () {
-      const { status, url, filename } = await this.$api.aftersales.exportList(this.getParams())
+    async exportData() {
+      const { status, url, filename } = await this.$api.aftersales.exportList(this.getParams());
       if (status) {
         this.$message({
           type: 'success',
@@ -584,7 +428,7 @@ export default {
         })
       }
     },
-    async aftersalesRemindAction () {
+    async aftersalesRemindAction() {
       // 请求提醒数据
       const data = await this.$api.aftersales.getAftersalesRemind()
 
@@ -597,12 +441,12 @@ export default {
     updateContent: function (data) {
       this.aftersalesRemindForm.intro = data
     },
-    handleCancel () {
+    handleCancel() {
       this.aftersalesRemindVisible = false
       this.aftersalesRemindForm.intro = ''
       this.aftersalesRemindForm.is_open = false
     },
-    async submitAftersalesRemind () {
+    async submitAftersalesRemind() {
       let params = {
         intro: this.aftersalesRemindForm.intro,
         is_open: this.aftersalesRemindForm.is_open
@@ -613,6 +457,25 @@ export default {
         message: '保存成功'
       })
       this.aftersalesRemindVisible = false
+    }
+  },
+  mounted() {
+    //获取所有店铺
+    this.getStoreList()
+    this.fetchList()
+  },
+  watch: {
+    $route(to, from) {},
+    'params.distributor': {
+      handler: function (val) {
+        if (!val.name && val.id) {
+          this.params.distributor = {
+            id: undefined,
+            name: undefined
+          }
+        }
+      },
+      deep: true
     }
   }
 }

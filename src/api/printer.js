@@ -1,7 +1,7 @@
 import fetch from '../utils/fetch'
 
 // 美洽配置
-export function getPrinterInfo (query) {
+export function getPrinterInfo(query) {
   return fetch({
     url: '/espier/printer',
     method: 'get',
@@ -9,7 +9,7 @@ export function getPrinterInfo (query) {
   })
 }
 
-export function savePrinter (params) {
+export function savePrinter(params) {
   return fetch({
     url: '/espier/printer',
     method: 'post',
@@ -17,7 +17,7 @@ export function savePrinter (params) {
   })
 }
 
-export function getPrinterShopList (query) {
+export function getPrinterShopList(query) {
   return fetch({
     url: '/espier/printer/shop',
     method: 'get',
@@ -25,7 +25,7 @@ export function getPrinterShopList (query) {
   })
 }
 
-export function createPrinter (params) {
+export function createPrinter(params) {
   return fetch({
     url: '/espier/printer/shop',
     method: 'post',
@@ -33,7 +33,7 @@ export function createPrinter (params) {
   })
 }
 
-export function updatePrinter (id, params) {
+export function updatePrinter(id, params) {
   return fetch({
     url: '/espier/printer/shop/' + id,
     method: 'put',
@@ -41,7 +41,7 @@ export function updatePrinter (id, params) {
   })
 }
 
-export function deletePrinter (id) {
+export function deletePrinter(id) {
   return fetch({
     url: '/espier/printer/shop/' + id,
     method: 'delete'

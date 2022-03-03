@@ -3,5 +3,5 @@ const name = '店铺端'
 
 export default {
   path: '/shopadmin/shoplist',
-  component: () => import('@/view/shoplist')
+  component: () => import( '@/view/shoplist' )
 }

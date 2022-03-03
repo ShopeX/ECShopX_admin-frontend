@@ -1,58 +1,48 @@
 <template>
   <div class="section-white content-padded">
     <div>
-      页面路径：<a
-        href="#"
-        class="page-name"
-      >{{ detail.monitor_path
-      }}<span
-        v-show="detail.monitor_path_params != ''"
-      >?{{ detail.monitor_path_params }}</span></a><span>小程序：{{ detail.nick_name }}</span>
+      页面路径：<a href="#" class="page-name"
+        >{{ detail.monitor_path
+        }}<span v-show="detail.monitor_path_params != ''"
+          >?{{ detail.monitor_path_params }}</span
+        ></a
+      ><span>小程序：{{ detail.nick_name }}</span>
     </div>
     <div class="time-box">
       <div>
         <span>日期筛选：</span>
-        <el-select
-          v-model="timeType"
-          @change="timeTypeChange"
-        >
+        <el-select v-model="timeType" @change="timeTypeChange">
           <el-option
             v-for="item in timeTypeOptions"
             :key="item.value"
             :label="item.label"
             :value="item.value"
-          />
+          >
+          </el-option>
         </el-select>
-        <span
-          v-if="isNeardate"
-        >{{ typeText
-        }}<span
-          v-if="isRealTime"
-          class="refresh"
-          @click="getRealTime"
-        >&nbsp;刷新</span></span>
+        <span v-if="isNeardate"
+          >{{ typeText
+          }}<span v-if="isRealTime" class="refresh" @click="getRealTime">&nbsp;刷新</span></span
+        >
         <el-date-picker
-          v-if="ischooseDay"
           v-model="chooseDate"
           type="date"
           placeholder="选择日期"
           :picker-options="pickerOptions"
-        />
+          v-if="ischooseDay"
+        >
+        </el-date-picker>
         <el-date-picker
-          v-if="iscustom"
           v-model="customDate"
           type="daterange"
           placeholder="选择日期范围"
           :picker-options="pickerOptions2"
-        />
-        <el-button
-          type="primary"
-          size="small"
-          style="margin: 0 10px"
-          @click="searchStats"
+          v-if="iscustom"
         >
-          查询
-        </el-button>
+        </el-date-picker>
+        <el-button type="primary" size="small" @click="searchStats" style="margin: 0 10px;"
+          >查询</el-button
+        >
       </div>
     </div>
     <div class="time-box basic">
@@ -61,77 +51,34 @@
         <!-- <el-col :span="6"
           >新客访问量:&nbsp;<span>{{ statstotal.total_fans_num }}</span></el-col
         > -->
-        <el-col
-          :span="6"
+        <el-col :span="6"
+          >注册量:&nbsp;<span>{{ statstotal.total_register_num }}</span></el-col
         >
-          注册量:&nbsp;<span>{{ statstotal.total_register_num }}</span>
-        </el-col>
-        <el-col
-          :span="6"
+        <el-col :span="6"
+          >购买量:&nbsp;<span>{{ statstotal.total_entries_num }}</span></el-col
         >
-          购买量:&nbsp;<span>{{ statstotal.total_entries_num }}</span>
-        </el-col>
-        <el-col
-          :span="6"
+        <el-col :span="6"
+          >注册购买转化率:&nbsp;<span>{{ statstotal.total_register_entries_rate }}</span></el-col
         >
-          注册购买转化率:&nbsp;<span>{{ statstotal.total_register_entries_rate }}</span>
-        </el-col>
       </el-row>
     </div>
     <div>
       <div class="content-bottom-padded">
-        <el-button
-          type="primary"
-          @click="codePack"
-        >
-          二维码打包
-        </el-button>
+        <el-button type="primary" @click="codePack">二维码打包</el-button>
       </div>
-      <el-table
-        v-loading="loading"
-        :data="dataList"
-        style="width: 100%"
-        :row-key="handleRowKey"
-      >
-        <el-table-column
-          prop="source_id"
-          label="来源ID"
-        />
-        <el-table-column
-          prop="monitor_id"
-          label="跟踪ID"
-        />
-        <el-table-column
-          prop="source_name"
-          label="来源名称"
-        />
+      <el-table :data="dataList" style="width: 100%" v-loading="loading" :row-key="handleRowKey">
+        <el-table-column prop="source_id" label="来源ID"></el-table-column>
+        <el-table-column prop="monitor_id" label="跟踪ID"></el-table-column>
+        <el-table-column prop="source_name" label="来源名称"></el-table-column>
         <!-- <el-table-column prop="view_num" label="浏览人数"></el-table-column> -->
-        <el-table-column
-          prop="fans_num"
-          label="新客访问量"
-        />
-        <el-table-column
-          prop="register_num"
-          label="注册量"
-        />
-        <el-table-column
-          prop="entries_num"
-          label="购买量"
-        />
-        <el-table-column
-          prop="register_entries_rate"
-          label="转化率"
-        />
+        <el-table-column prop="fans_num" label="新客访问量"></el-table-column>
+        <el-table-column prop="register_num" label="注册量"></el-table-column>
+        <el-table-column prop="entries_num" label="购买量"></el-table-column>
+        <el-table-column prop="register_entries_rate" label="转化率"></el-table-column>
         <el-table-column label="操作">
           <template slot-scope="scope">
-            <a
-              href="#"
-              @click="showlink(scope.row)"
-            >链接</a> &nbsp;
-            <a
-              href="#"
-              @click="remove(scope.row)"
-            >删除</a>
+            <a href="#" @click="showlink(scope.row)">链接</a> &nbsp;
+            <a href="#" @click="remove(scope.row)">删除</a>
           </template>
         </el-table-column>
       </el-table>
@@ -148,41 +95,25 @@
           title="将此链接或二维码进行投放，获取对应跟踪数据"
           type="warning"
           :closeable="false"
-        />
+        ></el-alert>
         <el-row class="row-bg">
-          <el-col :span="4">
-            <div class="grid-content">
-              来源名称
-            </div>
-          </el-col>
-          <el-col :span="15">
-            {{ wxaCodeInfo.source_name }}
-          </el-col>
+          <el-col :span="4"><div class="grid-content">来源名称</div></el-col>
+          <el-col :span="15">{{ wxaCodeInfo.source_name }}</el-col>
         </el-row>
         <el-row class="row-bg">
-          <el-col :span="4">
-            <div class="grid-content">
-              跟踪二维码
-            </div>
-          </el-col>
-          <el-col
-            :span="15"
-          >
-            <img
-              :src="wxaCodeInfo.code_src"
-              style="width: 100%; height: 100%"
-            >
-          </el-col>
+          <el-col :span="4"><div class="grid-content">跟踪二维码</div></el-col>
+          <el-col :span="15"
+            ><img :src="wxaCodeInfo.code_src" style="width: 100%;height: 100%;"
+          /></el-col>
         </el-row>
         <el-row class="row-bg">
-          <el-col
-            :span="15"
-          >
-            <a
+          <el-col :span="15"
+            ><a
               href="javascript:void(0)"
               @click="downloadCode(wxaCodeInfo.source_name, wxaCodeInfo.code_src)"
-            ><i class="iconfont icon-download" />下载二维码</a>
-          </el-col>
+              ><i class="iconfont icon-download"></i>下载二维码</a
+            ></el-col
+          >
         </el-row>
       </template>
     </el-dialog>
@@ -193,20 +124,18 @@
     >
       <template v-if="dataList.length > 0">
         <div
-          v-for="(item, index) in dataSpan"
           class="code-span"
+          v-for="(item, index) in dataSpan"
           :class="{ 'cur': index === codespanIndex }"
           @click="codeSpanChoose(index)"
         >
           <span>{{ item }}</span>
-          <span
-            v-if="index === codespanIndex && !isdownloadOk"
-            class="bg-waiting"
-          ><i class="el-icon-loading" /></span>
-          <span
-            v-if="index === codespanIndex && isdownloadOk"
-            class="download-ok"
-          ><i class="el-icon-circle-check" /></span>
+          <span class="bg-waiting" v-if="index === codespanIndex && !isdownloadOk"
+            ><i class="el-icon-loading"></i
+          ></span>
+          <span class="download-ok" v-if="index === codespanIndex && isdownloadOk"
+            ><i class="el-icon-circle-check"></i
+          ></span>
         </div>
       </template>
     </el-dialog>
@@ -254,7 +183,7 @@ export default {
   components: {
     timeChoose
   },
-  data () {
+  data() {
     return {
       monitor_id: '',
       detail: {
@@ -277,12 +206,12 @@ export default {
         code_src: ''
       },
       pickerOptions: {
-        disabledDate (time) {
+        disabledDate(time) {
           return time.getTime() > Date.now() - 8.64e7
         }
       },
       pickerOptions2: {
-        disabledDate (time) {
+        disabledDate(time) {
           return time.getTime() > Date.now() - 8.64e7
         }
       },
@@ -327,14 +256,8 @@ export default {
       isdownloadOk: false
     }
   },
-  mounted () {
-    this.timeTypeChange(this.timeType)
-    this.monitor_id = this.$route.query.monitorId
-    this.getPageInfo()
-    this.getStats()
-  },
   methods: {
-    remove (row) {
+    remove(row) {
       this.$confirm('确定是否删除该监控来源?', '提示', {
         confirmButtonText: '确定',
         cancelButtonText: '取消',
@@ -365,7 +288,7 @@ export default {
           })
         })
     },
-    showlink (row) {
+    showlink(row) {
       var that = this
       that.wxaCodeInfo.source_name = row.source_name
       let params = { monitor_id: row.monitor_id, source_id: row.source_id }
@@ -374,21 +297,21 @@ export default {
       })
       that.dialogVisible = true
     },
-    cancelDialog () {
+    cancelDialog() {
       this.dialogVisible = false
     },
-    downloadCode (source_name, code_src) {
+    downloadCode(source_name, code_src) {
       var a = document.createElement('a')
       a.href = code_src
       a.download = source_name + '.png'
       a.click()
     },
-    getPageInfo () {
+    getPageInfo() {
       getMonitorsDetail(this.monitor_id).then((response) => {
         this.detail = response.data.data
       })
     },
-    getStats () {
+    getStats() {
       let params = {}
       params.monitor_id = this.monitor_id
       switch (this.timeType) {
@@ -449,10 +372,10 @@ export default {
         }
       })
     },
-    searchStats () {
+    searchStats() {
       this.getStats()
     },
-    timeTypeChange (val) {
+    timeTypeChange(val) {
       var day = 86400000
       var yesterday = new Date(new Date().getTime() - day)
       yesterday = this.getTaskTime(yesterday, true)
@@ -481,7 +404,7 @@ export default {
           break
       }
     },
-    getTaskTime (s, isShortTime) {
+    getTaskTime(s, isShortTime) {
       let date = s ? s : new Date()
       let y = date.getFullYear()
       let m = date.getMonth() + 1
@@ -499,13 +422,13 @@ export default {
         : y + '-' + m + '-' + d + ' ' + h + ':' + mm + ':' + ms
       return str
     },
-    getRealTime () {
+    getRealTime() {
       this.typeText = this.getTaskTime('', false)
     },
-    handleRowKey: function (row) {
+    handleRowKey: function(row) {
       return row.source_id
     },
-    handleBatchDownload: function () {
+    handleBatchDownload: function() {
       if (this.checkedSource.length <= 0) {
         this.$message({
           type: 'error',
@@ -548,14 +471,14 @@ export default {
         })
       })
     },
-    codePack () {
+    codePack() {
       this.codeDialogVisible = true
       this.codespanIndex = -1
       this.codeSpanMin = -1
       this.codeSpanMax = -1
       this.isdownloadOk = false
     },
-    codeSpanChoose (index) {
+    codeSpanChoose(index) {
       this.isdownloadOk = false
       this.codespanIndex = index
       var arry = this.dataSpan[index].split('~')
@@ -575,6 +498,12 @@ export default {
       }
       this.handleBatchDownload()
     }
+  },
+  mounted() {
+    this.timeTypeChange(this.timeType)
+    this.monitor_id = this.$route.query.monitorId
+    this.getPageInfo()
+    this.getStats()
   }
 }
 </script>

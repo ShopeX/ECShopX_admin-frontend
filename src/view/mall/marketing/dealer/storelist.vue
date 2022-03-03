@@ -5,7 +5,7 @@
   }
   .cus-btn {
     display: flex;
-    justify-content: space-between;
+    justify-content:space-between;
     margin-bottom: 20px !important;
   }
   .cus-title {
@@ -30,47 +30,32 @@
       <el-card>
         <SpFinder
           ref="finder"
-          :no-selection="true"
+          :noSelection='true'
           :setting="setting"
-          :search-row-count="3"
-          :splict-count="3"
+          :searchRowCount="3"
+          :splictCount="3"
+          @reset="onFinderReset"
           :hooks="{
             beforeSearch: beforeSearch
           }"
           url="/adapay/dealer/distributors"
-          @reset="onFinderReset"
         >
           <template v-slot:tableTop>
             <el-row class="cus-btn">
-              <el-col
-                :span="12"
-                :offset="12"
-                style="text-align: right"
-              >
-                <router-link
-                  :to="{
-                    path: matchHidePage('relation'),
-                    query: { dealer_id: dealer_id, username: username }
-                  }"
-                >
-                  <el-button
-                    type="primary"
-                    size="small"
-                    plain
-                  >
-                    新增关联店铺
-                  </el-button>
+              <el-col :span='12' :offset="12" style="text-align:right">
+                <router-link :to="{ path: matchHidePage('relation'), query: { dealer_id: dealer_id, username: username}}">
+                  <el-button type="primary" size="small" plain>新增关联店铺</el-button>
                 </router-link>
               </el-col>
             </el-row>
           </template>
           <template v-slot:create_time>
             <el-date-picker
-              v-model="create_time"
               class="input-m"
+              v-model="create_time"
               type="daterange"
-              format="yyyy-MM-dd"
-              value-format="yyyy-MM-dd"
+              format='yyyy-MM-dd'
+              value-format='yyyy-MM-dd'
               start-placeholder="开始日期"
               end-placeholder="结束日期"
               @change="(val) => dateChange(val)"
@@ -78,14 +63,9 @@
           </template>
         </SpFinder>
       </el-card>
-      <RemoveShipModal
-        :visible="visibleModal"
-        :info="detailData"
-        :content="modalContent"
-        @handleClick="handleClick"
-      />
+      <RemoveShipModal :visible='visibleModal' :info='detailData' :content='modalContent' @handleClick='handleClick' />
     </div>
-    <router-view />
+    <router-view></router-view>
   </div>
 </template>
 <script>
@@ -96,7 +76,7 @@ import RemoveShipModal from '@/view/mall/marketing/component/RemoveShipModal'
 
 export default {
   components: { RemoveShipModal },
-  data () {
+  data() {
     return {
       dealer_id: 0,
       username: '',
@@ -113,7 +93,7 @@ export default {
       typeList: [
         { label: '内扣', value: 'I' },
         { label: '外扣', value: 'O' }
-      ]
+      ],
     }
   },
   computed: {
@@ -121,71 +101,34 @@ export default {
     setting () {
       return createSetting({
         columns: [
-          { name: '店铺ID', key: 'distributor_id' },
+          { name: '店铺ID', key: 'distributor_id'  },
           { name: '店铺名称', key: 'name' },
           { name: '联系人', key: 'contact' },
           { name: '联系方式', key: 'mobile' },
-          {
-            name: '状态',
-            key: '',
-            formatter: (h, { audit_state }) =>
-              (audit_state == '2' && '待审核') ||
-              (audit_state == '3' && '入网成功') ||
-              (audit_state == '1' && '未入网')
-          },
-          {
-            name: '手续费扣费方式',
-            key: '',
-            width: 130,
-            formatter: (h, { split_ledger_info }) => {
-              if (split_ledger_info && split_ledger_info.adapay_fee_mode) {
-                return (
-                  (split_ledger_info.adapay_fee_mode === 'O' && '外扣') ||
-                  (split_ledger_info.adapay_fee_mode === 'I' && '内扣')
-                )
-              } else {
-                return '-'
-              }
+          { name: '状态', key: '', formatter: (h, { audit_state }) => (audit_state == '2' && '待审核') || (audit_state == '3' && '入网成功') || (audit_state == '1' && '未入网') },
+          { name: '手续费扣费方式', key: '', width: 130, formatter: (h, { split_ledger_info }) => {
+            if (split_ledger_info && split_ledger_info.adapay_fee_mode) {
+              return (split_ledger_info.adapay_fee_mode === 'O' && '外扣') || (split_ledger_info.adapay_fee_mode === 'I' && '内扣')
+            } else {
+              return '-'
             }
-          },
-          {
-            name: '总帐分账占比',
-            key: '',
-            width: 130,
-            formatter: (h, { split_ledger_info }) => {
-              if (split_ledger_info && split_ledger_info.headquarters_proportion) {
-                return split_ledger_info.headquarters_proportion + '%'
-              } else {
-                return '-'
-              }
+          }},
+          { name: '总帐分账占比', key: '', width: 130, formatter: (h, { split_ledger_info }) => {
+            if (split_ledger_info && split_ledger_info.headquarters_proportion) {
+              return split_ledger_info.headquarters_proportion + '%'
+            } else {
+              return '-'
             }
-          },
-          {
-            name: '创建日期',
-            key: 'created',
-            formatter: (h, { created }) =>
-              created ? moment(created * 1000).format('YYYY-MM-DD HH:mm:ss') : '-'
-          }
+          }},
+          { name: '创建日期', key: 'created', formatter: (h, { created }) => created ? moment(created * 1000).format('YYYY-MM-DD HH:mm:ss') : '-' }
         ],
         search: [
           { type: 'input', key: 'name', name: '店铺名称', placeholder: '请输入店铺名称' },
           { type: 'input', key: 'contact', name: '联系人', placeholder: '请输入联系人' },
           { type: 'input', key: 'mobile', name: '联系方式', placeholder: '请输入联系方式' },
-          {
-            type: 'select',
-            key: 'audit_state',
-            options: this.statusList,
-            name: '状态',
-            placeholder: '请选择'
-          },
+          { type: 'select', key: 'audit_state', options: this.statusList, name: '状态', placeholder: '请选择' },
           { key: 'create_time', name: '创建时间', slot: 'create_time' },
-          {
-            type: 'select',
-            key: 'adapay_fee_mode',
-            options: this.typeList,
-            name: '手续费扣费方式',
-            placeholder: '请选择'
-          }
+          { type: 'select', key: 'adapay_fee_mode', options: this.typeList, name: '手续费扣费方式', placeholder: '请选择' }
         ],
         actions: [
           {
@@ -204,12 +147,6 @@ export default {
       })
     }
   },
-  mounted () {
-    if (this.$route.query.dealer_id) {
-      this.dealer_id = this.$route.query.dealer_id
-      this.username = this.$route.query.username
-    }
-  },
   methods: {
     beforeSearch (params) {
       params = {
@@ -225,11 +162,8 @@ export default {
     },
     handleModalClick (type, row) {
       if (row) {
-        this.detailData = { ...row, store_name: row.name }
-        this.modalContent =
-          row.audit_state == '3'
-            ? '如解除关联，已入网成功的店铺需重新设置店铺所占分帐比例。'
-            : `请确认是否解除该店铺与【${row.username}】的关联`
+        this.detailData = {...row, store_name: row.name}
+        this.modalContent = row.audit_state == '3' ? '如解除关联，已入网成功的店铺需重新设置店铺所占分帐比例。' : `请确认是否解除该店铺与【${row.username}】的关联`
       }
       this.visibleModal = true
     },
@@ -237,10 +171,10 @@ export default {
       this.visibleModal = false
       this.$refs.finder.refresh()
     },
-    dateStrToTimeStamp (str) {
+    dateStrToTimeStamp(str) {
       return Date.parse(new Date(str)) / 1000
     },
-    dateChange (val) {
+    dateChange(val) {
       if (val) {
         this.form.time_start = this.dateStrToTimeStamp(val[0] + ' 00:00:00')
         this.form.time_end = this.dateStrToTimeStamp(val[1] + ' 23:59:59')
@@ -248,6 +182,12 @@ export default {
         this.form.time_start = undefined
         this.form.time_end = undefined
       }
+    }
+  },
+  mounted() {
+    if (this.$route.query.dealer_id) {
+      this.dealer_id = this.$route.query.dealer_id
+      this.username = this.$route.query.username
     }
   }
 }

@@ -9,7 +9,7 @@ export default {
     {
       path: 'goodsphysical',
       name: `商品管理`,
-      component: () => import('@/view/mall/goods/physical/list'),
+      component: () => import( '@/view/mall/goods/physical/list' ),
       children: [
         {
           path: 'editor/:itemId?',
@@ -49,7 +49,8 @@ export default {
       children: [
         {
           path: 'editor/:id?',
-          component: () => import('@/view/brand/wechat/artical/new_artical')
+          component: () =>
+            import( '@/view/brand/wechat/artical/new_artical')
         }
       ]
     },

@@ -49,7 +49,7 @@ export default {
       name: `模板编辑`,
       meta: {
         hidemenu: true
-      }
+      },
     },
     {
       path: 'pcmall/seo',
@@ -61,6 +61,7 @@ export default {
       name: `页面SEO`,
       component: () => import('@/view/pc/tdk/givenset')
     },
+
 
     {
       path: 'manage/wxapp',
@@ -76,11 +77,11 @@ export default {
         }
       ]
     },
-
+    
     {
       path: 'manage/editauthorize',
       name: `授权设置`,
-      component: () => import('@/view/wxapp/authorize/index'),
+      component: () => import( '@/view/wxapp/authorize/index' ),
       children: [
         {
           path: 'policy',
@@ -91,7 +92,7 @@ export default {
     {
       path: 'manage/editdashboard',
       name: `数据分析`,
-      component: () => import('@/view/wxapp/statistics/dataanalysis/index')
+      component: () => import('@/view/wxapp/statistics/dataanalysis/index' )
     },
     {
       path: 'manage/editsourcemanagement',
@@ -104,13 +105,13 @@ export default {
         }
       ]
     },
-
+    
     {
       path: 'manage/noticemessage',
       name: `消息通知`,
       component: () => import('@/view/wxapp/messages')
     },
-
+    
     {
       path: 'manage/cartremind',
       name: `购物车提醒`,
@@ -159,6 +160,6 @@ export default {
       path: 'aliapp/membercentersetting',
       name: `会员中心设置`,
       component: () => import('@/view/wxapp/aliapp/member_center_setting')
-    }
+    },
   ]
 }

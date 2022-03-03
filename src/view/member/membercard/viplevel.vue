@@ -1,43 +1,23 @@
 <template>
   <div>
     <template v-for="(item, index) in levelData">
-      <div
-        :key="index"
-        class="level-item"
-      >
+      <div class="level-item" :key="index">
         <div class="section-header with-border clearfix">
-          <h3 class="f_l">
-            <span v-if="item.lv_type == 'vip'">VIP</span><span v-else>SVIP</span>
-          </h3>
+          <h3 class="f_l"><span v-if="item.lv_type == 'vip'">VIP</span><span v-else>SVIP</span></h3>
           <span
-            v-if="index != 0 && levelData.length - 1 == index"
             class="el-icon-close f_r"
+            v-if="index != 0 && levelData.length - 1 == index"
             @click="remove(index)"
-          />
+          ></span>
         </div>
         <div class="item-box clearfix">
-          <div
-            class="preview-box f_l"
-            @click="getIndex(index)"
-          >
+          <div class="preview-box f_l" @click="getIndex(index)">
             <div>
-              <div
-                class="upload-box"
-                @click="handleImgChange(item, index)"
-              >
-                <HoverDelete
-                  v-if="item.background_pic_url"
-                  @delete="handleImgDelete(index)"
-                >
-                  <img
-                    :src="wximageurl + item.background_pic_url"
-                    class="avatar"
-                  >
+              <div @click="handleImgChange(item, index)" class="upload-box">
+                <HoverDelete v-if="item.background_pic_url" @delete="handleImgDelete(index)">
+                  <img :src="wximageurl + item.background_pic_url" class="avatar" />
                 </HoverDelete>
-                <i
-                  v-else
-                  class="el-icon-plus avatar-uploader-icon"
-                />
+                <i v-else class="el-icon-plus avatar-uploader-icon"></i>
               </div>
             </div>
             <imgPicker
@@ -45,43 +25,35 @@
               :sc-status="isGetImage"
               @chooseImg="pickImg"
               @closeImgDialog="closeImgDialog"
-            />
-            <p class="content-center">
-              卡封面（建议尺寸：400px * 250px）
-            </p>
+            ></imgPicker>
+            <p class="content-center">卡封面（建议尺寸：400px * 250px）</p>
           </div>
           <div class="item-content f_l">
             <div>
               <span class="txt">等级名称</span>
               <el-input
-                v-model="item.grade_name"
                 style="width: 380px"
                 :maxlength="9"
                 placeholder="最多填写9个汉字"
+                v-model="item.grade_name"
                 :name="index + ''"
                 @blur="nameblur"
-              />&nbsp;<span class="frm-tips">{{ item.grade_name.length }}/9</span>
-              <el-input
-                v-model="item.lv_type"
-                type="hidden"
-                :name="index + ''"
-              />
+              ></el-input
+              >&nbsp;<span class="frm-tips">{{ item.grade_name.length }}/9</span>
+              <el-input type="hidden" v-model="item.lv_type" :name="index + ''"></el-input>
             </div>
             <div class="clearfix">
               <span class="txt f_l">购买金额</span>
               <template>
                 <div class="f_l">
                   <template>
-                    <div
-                      v-for="(list, i) in item.price_list"
-                      :key="i"
-                      style="margin-bottom: 5px"
-                    >
+                    <div style="margin-bottom: 5px" v-for="(list, i) in item.price_list" :key="i">
                       {{ list.desc }}&nbsp;<el-input
-                        v-model="list.price"
                         style="width: 80px"
                         :name="index + ''"
-                      />&nbsp;元
+                        v-model="list.price"
+                      ></el-input
+                      >&nbsp;元
                     </div>
                   </template>
                 </div>
@@ -96,7 +68,8 @@
                       v-model="item.privileges.discount"
                       :name="index + ''"
                       @blur="discountBlur"
-                    />&nbsp;折
+                    ></el-input
+                    >&nbsp;折
                   </div>
                 </template>
               </div>
@@ -133,36 +106,37 @@
               <span class="txt f_l">购买引导文本</span>
               <div class="f_l">
                 <el-input
-                  v-model="item.guide_title"
                   style="width: 380px"
                   type="textarea"
                   :rows="3"
                   placeholder="请输入内容"
+                  v-model="item.guide_title"
                   :name="index + ''"
-                />&nbsp;<span class="frm-tips">30</span>
+                ></el-input
+                >&nbsp;<span class="frm-tips">30</span>
               </div>
             </div>
             <div class="clearfix">
               <span class="txt f_l">详细说明</span>
               <div class="f_l">
                 <el-input
-                  v-model="item.description"
                   style="width: 380px"
                   type="textarea"
                   :rows="5"
                   placeholder="请输入内容"
+                  v-model="item.description"
                   :name="index + ''"
-                />
+                ></el-input>
               </div>
             </div>
             <div class="clearfix">
               <span class="txt f_l">默认展示</span>
               <div class="f_l">
                 <el-radio
-                  v-model="IsDefault"
                   style="width: 380px"
-                  :label="item.lv_type"
                   @change="radioChange"
+                  v-model="IsDefault"
+                  :label="item.lv_type"
                 >
                   {{ item.grade_name }}
                 </el-radio>
@@ -171,7 +145,7 @@
             <div class="clearfix">
               <span class="txt f_l">是否禁用</span>
               <div class="f_l">
-                <el-switch v-model="item.is_disabled" />
+                <el-switch v-model="item.is_disabled"></el-switch>
               </div>
             </div>
           </div>
@@ -179,28 +153,21 @@
       </div>
     </template>
     <div class="section-footer content-center">
-      <el-button @click="addGrade">
-        添加等级卡
-      </el-button>
-      <el-button
-        type="primary"
-        @click="saveGrade"
-      >
-        保存
-      </el-button>
+      <el-button @click="addGrade">添加等级卡</el-button>
+      <el-button type="primary" @click="saveGrade">保存</el-button>
     </div>
     <template v-if="visible">
       <coupon-select
-        :package-id="packageId"
-        :seleted-coupon-package="levelData"
-        :visible="visible"
-        :is-model="true"
-        :type="'vip_grade'"
+        :packageId="packageId"
+        :seletedCouponPackage="levelData"
         @oldDataHandle="getListVipGrade"
+        :visible="visible"
         @openHandle="pickHanle"
         @closeHandle="closeHandle"
         @seletedDataHandle="seletedDataHandle"
-      />
+        :isModel="true"
+        :type="'vip_grade'"
+      ></coupon-select>
     </template>
   </div>
 </template>
@@ -215,27 +182,7 @@ export default {
     imgPicker,
     couponSelect
   },
-  filters: {
-    numberToCharacter (val) {
-      switch (val) {
-        case 1:
-          return '二'
-        case 2:
-          return '三'
-        // case 3:
-        //   return '四'
-        // case 4:
-        //   return '五'
-        // case 5:
-        //   return '六'
-        // case 6:
-        //   return '七'
-        // case 7:
-        //   return '八'
-      }
-    }
-  },
-  data () {
+  data() {
     return {
       visible: false,
       packageId: '',
@@ -267,25 +214,22 @@ export default {
       isGetImage: false
     }
   },
-  mounted () {
-    this.getListVipGrade()
-  },
   methods: {
-    pickHanle (packageId) {
+    pickHanle(packageId) {
       this.packageId = packageId
       this.visible = true
     },
-    closeHandle () {
+    closeHandle() {
       this.visible = false
     },
-    seletedDataHandle (seletedCoupon, packageId) {
+    seletedDataHandle(seletedCoupon, packageId) {
       // debugger
       this.levelData[packageId].voucher_package = seletedCoupon
       // console.log(this.levelData[packageId].voucher_package);
       console.log('seletedCoupon', seletedCoupon)
     },
 
-    isInArray (arr, value) {
+    isInArray(arr, value) {
       for (var i = 0; i < arr.length; i++) {
         if (value === arr[i].is_disabled) {
           return true
@@ -293,15 +237,15 @@ export default {
       }
       return false
     },
-    closeModel () {
+    closeModel() {
       this.modelVisible = false
     },
-    radioChange (val) {
+    radioChange(val) {
       if (val) {
         this.IsDefault = val
       }
     },
-    saveGrade () {
+    saveGrade() {
       console.log(this.levelData)
       var result = this.isEmptyChecked()
       if (result) {
@@ -326,8 +270,8 @@ export default {
         } else {
           item.is_default = false
         }
-        if (item.background_pic_url === '') {
-          item.background_pic_url = false
+        if(item.background_pic_url===''){
+          item.background_pic_url=false
         }
         // } else {
         //   item.is_default = false
@@ -348,13 +292,13 @@ export default {
         }
       )
     },
-    nameblur (e) {
+    nameblur(e) {
       if (e.target.value == '') {
         this.$message({ message: '请输入等级名称', type: 'error' })
         return
       }
     },
-    discountBlur (e) {
+    discountBlur(e) {
       let value = e.target.value
       let index = Number(e.target.name)
       var reg = /(^[1-9]((\.)[0-9])?$)|(^[0]((\.)[0-9])$)|(^10$)/
@@ -379,7 +323,7 @@ export default {
     // getIndex (index) {
     //   this.curIndex = index
     // },
-    addGrade () {
+    addGrade() {
       if (this.levelData.length >= 2) {
         this.$message({ message: '最多添加2个等级', type: 'error' })
         return
@@ -402,17 +346,17 @@ export default {
       }
       this.levelData.push(arr)
     },
-    remove (index) {
+    remove(index) {
       this.levelData.splice(index, 1)
     },
-    numberVerification (val) {
+    numberVerification(val) {
       var reg = /^[0-9]+$/
       if (!reg.test(val)) {
         return false
       }
       return true
     },
-    isEmptyChecked () {
+    isEmptyChecked() {
       var isflag = false
       var conditionReg = /(^[1-9]\d*$)/
       var discountReg = /(^[1-9]((\.)[0-9])?$)|(^[0]((\.)[0-9])$)|(^10$)/
@@ -465,22 +409,22 @@ export default {
       return isflag
     },
     //上传卡封面
-    handleImgChange (item, index) {
+    handleImgChange(item, index) {
       this.imgDialog = true
       this.isGetImage = true
       this.curIndex = index
     },
-    handleImgDelete (index) {
+    handleImgDelete(index) {
       this.levelData[index].background_pic_url = ''
     },
-    pickImg (data) {
+    pickImg(data) {
       this.levelData[this.curIndex].background_pic_url = data.url
       this.imgDialog = false
     },
-    closeImgDialog () {
+    closeImgDialog() {
       this.imgDialog = false
     },
-    getListVipGrade () {
+    getListVipGrade() {
       listVipGrade().then((response) => {
         // this.IsDefault = 'svip'
         if (response != undefined && response.data.data && response.data.data.length > 0) {
@@ -516,6 +460,29 @@ export default {
           }
         }
       })
+    }
+  },
+  mounted() {
+    this.getListVipGrade()
+  },
+  filters: {
+    numberToCharacter(val) {
+      switch (val) {
+        case 1:
+          return '二'
+        case 2:
+          return '三'
+        // case 3:
+        //   return '四'
+        // case 4:
+        //   return '五'
+        // case 5:
+        //   return '六'
+        // case 6:
+        //   return '七'
+        // case 7:
+        //   return '八'
+      }
     }
   }
 }

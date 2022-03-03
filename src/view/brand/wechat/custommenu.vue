@@ -1,64 +1,42 @@
 <template>
-  <div
-    v-loading="loading"
-    class="menu-box"
-  >
+  <div class="menu-box" v-loading="loading">
     <div class="menu-wrap content-padded section-white content-box clearfix">
       <div class="menu_preview_area">
         <div class="mobile_menu_preview">
-          <div class="mobile_hd tc">
-            ONex平台
-          </div>
+          <div class="mobile_hd tc">ONex平台</div>
           <div class="mobile_bd">
             <ul
               class="pre_menu_list grid_line ui-sortable ui-sortable-disabled"
               :class="{ 'no_menu': menuData.length === 0 }"
             >
               <li
-                v-for="(item, index) in menuData"
                 class="pre_menu_item grid_item grid_item selected size1of2"
+                v-for="(item, index) in menuData"
                 :class="
                   item.id === id && !cid ? 'current' : item.id === id && cid ? '' : 'no_extra'
                 "
                 @click="chooseMenu(item.id, index)"
               >
-                <input
-                  type="hidden"
-                  name="parentmenu"
-                  :value="index"
+                <input type="hidden" name="parentmenu" :value="index" />
+                <a href="javascript:;" class="pre_menu_link"
+                  ><i class="el-icon-plus" v-if="menuData.length <= 0"></i
+                  ><span>{{ item.name }}</span></a
                 >
-                <a
-                  href="javascript:;"
-                  class="pre_menu_link"
-                ><i
-                  v-if="menuData.length <= 0"
-                  class="el-icon-plus"
-                /><span>{{ item.name }}</span></a>
-                <div
-                  v-if="item.second_menu !== undefined"
-                  class="sub_pre_menu_box"
-                >
+                <div class="sub_pre_menu_box" v-if="item.second_menu !== undefined">
                   <ul class="sub_pre_menu_list">
                     <li
                       v-for="(subItem, subIndex) in item.second_menu"
                       :class="subItem.id === cid ? 'current' : ''"
                       @click.stop="chooseSubMenu(subItem.id, index, subIndex)"
                     >
-                      <input
-                        type="hidden"
-                        name="submenu"
-                        :value="index + '-' + subIndex"
-                      >
+                      <input type="hidden" name="submenu" :value="index + '-' + subIndex" />
                       <a href="javascript:;">
                         <span class="sub_pre_menu_inner">{{ subItem.name }}</span>
                       </a>
                     </li>
                     <li v-if="item.second_menu.length < 5">
-                      <a
-                        href="javascript:;"
-                        @click.stop="addSubMenu"
-                      >
-                        <span class="sub_pre_menu_inner"><i class="el-icon-plus" /></span>
+                      <a href="javascript:;" @click.stop="addSubMenu">
+                        <span class="sub_pre_menu_inner"><i class="el-icon-plus"></i></span>
                       </a>
                     </li>
                   </ul>
@@ -74,7 +52,7 @@
                   title="最多添加4个一级菜单"
                   @click="addMenu"
                 >
-                  <i class="el-icon-plus" /> <span v-if="menuData.length === 0">添加菜单</span>
+                  <i class="el-icon-plus"></i> <span v-if="menuData.length === 0">添加菜单</span>
                 </a>
               </li>
             </ul>
@@ -86,29 +64,24 @@
           <div class="section-header with-border">
             <h3>菜单名称</h3>
             <a
+              @click.prevent="removemenu"
               v-if="id !== null"
               class="fr link"
               style="margin-top: -30px"
-              @click.prevent="removemenu"
-            >删除菜单</a>
+              >删除菜单</a
+            >
           </div>
           <div class="section-body">
             <template v-if="!isChild">
               <el-form
                 v-for="(item, index) in menuData"
-                v-if="item.id === id"
                 :key="item.id"
+                v-if="item.id === id"
                 label-width="90px"
               >
                 <el-form-item label="菜单名称">
-                  <el-input
-                    v-model="item.name"
-                    :maxlength="4"
-                    style="width: 240px"
-                  />
-                  <p class="form-text-tip">
-                    字数不超过4个字
-                  </p>
+                  <el-input v-model="item.name" :maxlength="4" style="width: 240px;"></el-input>
+                  <p class="form-text-tip">字数不超过4个字</p>
                 </el-form-item>
                 <template v-if="item.second_menu === undefined || item.second_menu.length === 0">
                   <!-- <el-form-item label="排序" prop="sort">
@@ -116,12 +89,8 @@
                   </el-form-item> -->
                   <el-form-item label="菜单内容">
                     <el-radio-group v-model="item.menu_type">
-                      <el-radio :label="1">
-                        发送消息
-                      </el-radio>
-                      <el-radio :label="2">
-                        跳转网页
-                      </el-radio>
+                      <el-radio :label="1">发送消息</el-radio>
+                      <el-radio :label="2">跳转网页</el-radio>
                     </el-radio-group>
                   </el-form-item>
                   <el-form-item>
@@ -130,24 +99,15 @@
                       v-model="item.content"
                       :type="item.news_type"
                       @change="updateMsg"
-                    />
-                    <div
-                      v-if="item.menu_type == 2"
-                      class="menu_content"
-                    >
-                      <p class="frm-tips">
-                        订阅者点击该子菜单会跳到以下链接
-                      </p>
+                    ></MsgSender>
+                    <div class="menu_content" v-if="item.menu_type == 2">
+                      <p class="frm-tips">订阅者点击该子菜单会跳到以下链接</p>
                       <div class="clearfix">
-                        <span
-                          class="label f_l"
-                          style="display: block; padding-right: 10px"
-                        >页面地址</span>
+                        <span class="label f_l" style="display: block; padding-right: 10px"
+                          >页面地址</span
+                        >
                         <div class="f_l content_mar_l">
-                          <el-input
-                            v-model="item.url"
-                            style="width: 300px"
-                          />
+                          <el-input v-model="item.url" style="width: 300px;"></el-input>
                         </div>
                       </div>
                     </div>
@@ -158,31 +118,21 @@
             <template v-else>
               <el-form
                 v-for="(item, index) in menuData[id].second_menu"
-                v-if="menuData[id].second_menu && item.id === cid"
                 :key="item.id"
+                v-if="menuData[id].second_menu && item.id === cid"
                 label-width="90px"
               >
                 <el-form-item label="菜单名称">
-                  <el-input
-                    v-model="item.name"
-                    :maxlength="4"
-                    style="width: 240px"
-                  />
-                  <p class="form-text-tip">
-                    字数不超过4个字
-                  </p>
+                  <el-input v-model="item.name" :maxlength="4" style="width: 240px;"></el-input>
+                  <p class="form-text-tip">字数不超过4个字</p>
                 </el-form-item>
                 <!-- <el-form-item label="排序" prop="sort">
                   <el-input v-model="item.sort"></el-input>
                 </el-form-item> -->
                 <el-form-item label="菜单内容">
                   <el-radio-group v-model="item.menu_type">
-                    <el-radio :label="1">
-                      发送消息
-                    </el-radio>
-                    <el-radio :label="2">
-                      跳转网页
-                    </el-radio>
+                    <el-radio :label="1">发送消息</el-radio>
+                    <el-radio :label="2">跳转网页</el-radio>
                   </el-radio-group>
                 </el-form-item>
                 <el-form-item>
@@ -191,24 +141,15 @@
                     v-model="item.content"
                     :type="item.news_type"
                     @change="updateMsg"
-                  />
-                  <div
-                    v-if="item.menu_type == 2"
-                    class="menu_content"
-                  >
-                    <p class="frm-tips">
-                      订阅者点击该子菜单会跳到以下链接
-                    </p>
+                  ></MsgSender>
+                  <div class="menu_content" v-if="item.menu_type == 2">
+                    <p class="frm-tips">订阅者点击该子菜单会跳到以下链接</p>
                     <div class="clearfix">
-                      <span
-                        class="label f_l"
-                        style="display: block; padding-right: 10px"
-                      >页面地址</span>
+                      <span class="label f_l" style="display: block; padding-right: 10px"
+                        >页面地址</span
+                      >
                       <div class="f_l content_mar_l">
-                        <el-input
-                          v-model="item.url"
-                          style="width: 300px"
-                        />
+                        <el-input v-model="item.url" style="width: 300px;"></el-input>
                       </div>
                     </div>
                   </div>
@@ -217,13 +158,9 @@
             </template>
           </div>
           <div class="section-footer with-border tc">
-            <el-button
-              v-if="id !== null"
-              type="primary"
-              @click="submitForm"
+            <el-button type="primary" @click="submitForm" v-if="id !== null"
+              >保存并发布至微信</el-button
             >
-              保存并发布至微信
-            </el-button>
           </div>
         </div>
       </div>
@@ -234,12 +171,12 @@
       :show-history="true"
       @chooseTW="chooseTWAction"
       @closeTWDialog="closeTWDialogAction"
-    />
+    ></TWXXSelect>
     <WbApp
       :app-visible="appVisisble"
       @chooseApp="chooseAppAction"
       @closeTWDialog="closeAppDialogAction"
-    />
+    ></WbApp>
   </div>
 </template>
 
@@ -255,7 +192,7 @@ export default {
     TWXXSelect,
     MsgSender
   },
-  data () {
+  data() {
     return {
       loading: false,
       appVisisble: false,
@@ -267,29 +204,17 @@ export default {
       twxxItem: {}
     }
   },
-  mounted () {
-    this.loading = true
-    getMenuTree().then((res) => {
-      if (res.data.data) {
-        this.menuData = res.data.data
-        this.loading = false
-        if (this.menuData.length > 0) {
-          this.id = this.menuData[0].id
-        }
-      }
-    })
-  },
   methods: {
-    chooseMenu (id, index) {
+    chooseMenu(id, index) {
       this.id = id
       this.cid = null
       this.isChild = false
     },
-    chooseSubMenu (id, parentIndex, subIndex) {
+    chooseSubMenu(id, parentIndex, subIndex) {
       this.cid = id
       this.isChild = true
     },
-    addMenu () {
+    addMenu() {
       var defaultMenuData = {
         id: '',
         name: '菜单',
@@ -309,7 +234,7 @@ export default {
       this.isChild = false
       this.menuData.push(defaultMenuData)
     },
-    addSubMenu () {
+    addSubMenu() {
       var defaultSubmenuData = {
         id: '',
         name: '菜单',
@@ -327,7 +252,7 @@ export default {
       this.isChild = true
       this.menuData[this.id].second_menu.push(defaultSubmenuData)
     },
-    removemenu () {
+    removemenu() {
       this.$confirm('删除后菜单下设置的内容将被删除', '删除确认', {
         confirmButtonText: '确定',
         cancelButtonText: '取消',
@@ -352,7 +277,7 @@ export default {
         this.updateIds()
       })
     },
-    updateIds () {
+    updateIds() {
       for (var i = 0; i < this.menuData.length; i++) {
         this.menuData[i].id = i
         if (this.menuData[i].second_menu.length > 0) {
@@ -362,31 +287,31 @@ export default {
         }
       }
     },
-    publicNewsSelectAction () {
+    publicNewsSelectAction() {
       this.twxxVisible = true
     },
-    chooseAppAction (data) {
+    chooseAppAction(data) {
       this.appVisisble = false
       if (data && data.id > 0) {
         this.form.appItem = data
       }
     },
-    closeAppDialogAction () {
+    closeAppDialogAction() {
       this.appVisisble = false
     },
-    wbAppAction () {
+    wbAppAction() {
       this.appVisisble = true
     },
-    chooseTWAction (data) {
+    chooseTWAction(data) {
       this.twxxVisible = false
       if (data && data.url !== undefined) {
         this.twxxItem = data
       }
     },
-    closeTWDialogAction () {
+    closeTWDialogAction() {
       this.twxxVisible = false
     },
-    updateMsg (val, type) {
+    updateMsg(val, type) {
       if (!this.cid) {
         for (var i = 0; i < this.menuData.length; i++) {
           if (this.id === this.menuData[i].id) {
@@ -407,7 +332,7 @@ export default {
         }
       }
     },
-    submitForm () {
+    submitForm() {
       let params = this.menuData
       addMenu(params).then((res) => {
         this.$message({
@@ -417,6 +342,18 @@ export default {
         })
       })
     }
+  },
+  mounted() {
+    this.loading = true
+    getMenuTree().then((res) => {
+      if (res.data.data) {
+        this.menuData = res.data.data
+        this.loading = false
+        if (this.menuData.length > 0) {
+          this.id = this.menuData[0].id
+        }
+      }
+    })
   }
 }
 </script>

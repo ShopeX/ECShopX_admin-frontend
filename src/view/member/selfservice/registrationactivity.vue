@@ -3,37 +3,13 @@
     <div v-if="$route.path.indexOf('detail') === -1 && $route.path.indexOf('editor') === -1">
       <el-row :gutter="20">
         <el-col>
-          <el-input
-            v-model="params.field_title"
-            class="input-m"
-            placeholder="标题"
-          >
-            <el-button
-              slot="append"
-              icon="el-icon-search"
-              @click="searchData"
-            />
+          <el-input class="input-m" placeholder="标题" v-model="params.field_title">
+            <el-button slot="append" icon="el-icon-search" @click="searchData"></el-button>
           </el-input>
-          <el-select
-            v-model="params.status"
-            placeholder="状态"
-            @change="searchData"
-          >
-            <el-option
-              key="waiting"
-              label="未开始"
-              value="waiting"
-            />
-            <el-option
-              key="ongoing"
-              label="进行中"
-              value="ongoing"
-            />
-            <el-option
-              key="end"
-              label="已结束"
-              value="end"
-            />
+          <el-select placeholder="状态" v-model="params.status" @change="searchData">
+            <el-option key="waiting" label="未开始" value="waiting"></el-option>
+            <el-option key="ongoing" label="进行中" value="ongoing"></el-option>
+            <el-option key="end" label="已结束" value="end"></el-option>
           </el-select>
           <el-date-picker
             v-model="create_time"
@@ -41,45 +17,22 @@
             value-format="yyyy/MM/dd"
             placeholder="根据添加时间筛选"
             @change="dateChange"
-          />
-          <el-button
-            type="primary"
-            icon="el-icon-circle-plus"
-            @click="addElement"
+          ></el-date-picker>
+          <el-button type="primary" icon="el-icon-circle-plus" @click="addElement"
+            >活动添加</el-button
           >
-            活动添加
-          </el-button>
         </el-col>
       </el-row>
       <el-card>
-        <el-table
-          v-loading="loading"
-          :data="ItemsList"
-        >
-          <el-table-column
-            prop="activity_id"
-            label="编号"
-            width="50"
-          />
-          <el-table-column
-            prop="activity_name"
-            label="活动名称"
-            width="300"
-          />
-          <el-table-column
-            prop="start_time"
-            label="活动有效期"
-            width="300"
-          >
+        <el-table :data="ItemsList" v-loading="loading">
+          <el-table-column prop="activity_id" label="编号" width="50"></el-table-column>
+          <el-table-column prop="activity_name" label="活动名称" width="300"></el-table-column>
+          <el-table-column prop="start_time" label="活动有效期" width="300">
             <template slot-scope="scope">
               {{ scope.row.start_date }} ~ {{ scope.row.end_date }}
             </template>
           </el-table-column>
-          <el-table-column
-            prop="total_join_num"
-            label="报名人数"
-            width="100"
-          >
+          <el-table-column prop="total_join_num" label="报名人数" width="100">
             <template slot-scope="scope">
               {{ scope.row.total_join_num || 0 }}
             </template>
@@ -89,16 +42,13 @@
               <router-link
                 class="iconfont icon-edit1"
                 :to="{ path: matchHidePage('editor'), query: { id: scope.row.activity_id } }"
-              />
-              <i
-                class="iconfont icon-search-plus"
-                @click="preview(scope.$index, scope.row)"
-              />
+              ></router-link>
+              <i class="iconfont icon-search-plus" @click="preview(scope.$index, scope.row)"></i>
               <i
                 v-if="scope.row.status == 1"
                 class="mark iconfont icon-trash-alt1"
                 @click="deleteAction(scope.$index, scope.row)"
-              />
+              ></i>
             </template>
           </el-table-column>
         </el-table>
@@ -106,149 +56,89 @@
           <el-pagination
             background
             layout="total, sizes, prev, pager, next, jumper"
+            @current-change="handleCurrentChange"
+            @size-change="handleSizeChange"
             :current-page.sync="params.page"
             :page-sizes="[10, 20, 50]"
             :total="total_count"
             :page-size="params.pageSize"
-            @current-change="handleCurrentChange"
-            @size-change="handleSizeChange"
-          />
+          >
+          </el-pagination>
         </div>
       </el-card>
       <el-dialog :visible.sync="dialogVisible">
-        <el-form
-          ref="dataInfo"
-          label-width="200px"
-          label-position="left"
-          class="demo-ruleForm"
-        >
+        <el-form ref="dataInfo" label-width="200px" label-position="left" class="demo-ruleForm">
           <el-form-item :label="dataInfo.field_title">
-            <el-col
-              v-if="dataInfo.form_element == 'text'"
-              :span="12"
-            >
-              <el-input placeholder="text预览" />
+            <el-col :span="12" v-if="dataInfo.form_element == 'text'">
+              <el-input placeholder="text预览"></el-input>
             </el-col>
-            <el-col
-              v-if="dataInfo.form_element == 'textarea'"
-              :span="12"
-            >
-              <el-input
-                type="textarea"
-                placeholder="textarea预览"
-              />
+            <el-col :span="12" v-if="dataInfo.form_element == 'textarea'">
+              <el-input type="textarea" placeholder="textarea预览"></el-input>
             </el-col>
-            <el-col
-              v-if="dataInfo.form_element == 'number'"
-              :span="12"
-            >
-              <el-input-number
-                type="textarea"
-                placeholder="55.55"
-              />
+            <el-col :span="12" v-if="dataInfo.form_element == 'number'">
+              <el-input-number type="textarea" placeholder="55.55"></el-input-number>
             </el-col>
-            <el-col
-              v-if="dataInfo.form_element == 'image'"
-              :span="12"
-            >
-              <el-upload
-                class="avatar-uploader"
-                action=""
-                :show-file-list="false"
-              >
-                <img
-                  v-if="imageUrl"
-                  :src="imageUrl"
-                  class="avatar"
-                >
-                <i
-                  v-else
-                  class="el-icon-plus avatar-uploader-icon"
-                />
+            <el-col :span="12" v-if="dataInfo.form_element == 'image'">
+              <el-upload class="avatar-uploader" action="" :show-file-list="false">
+                <img v-if="imageUrl" :src="imageUrl" class="avatar" />
+                <i v-else class="el-icon-plus avatar-uploader-icon"></i>
               </el-upload>
             </el-col>
-            <el-col
-              v-if="dataInfo.form_element == 'radio'"
-              :span="12"
-            >
+            <el-col :span="12" v-if="dataInfo.form_element == 'radio'">
               <el-radio-group>
-                <el-radio
-                  v-for="(item, index) in dataInfo.options"
-                  :key="index"
-                  :label="3"
-                >
-                  {{
-                    item.value
-                  }}
-                </el-radio>
+                <el-radio :label="3" v-for="(item, index) in dataInfo.options" :key="index">{{
+                  item.value
+                }}</el-radio>
               </el-radio-group>
             </el-col>
-            <el-col
-              v-if="dataInfo.form_element == 'checkbox'"
-              :span="12"
-            >
+            <el-col :span="12" v-if="dataInfo.form_element == 'checkbox'">
               <el-checkbox-group>
                 <el-checkbox
+                  label="item.value"
                   v-for="(item, index) in dataInfo.options"
                   :key="index"
-                  label="item.value"
+                  >{{ item.value }}</el-checkbox
                 >
-                  {{ item.value }}
-                </el-checkbox>
               </el-checkbox-group>
             </el-col>
-            <el-col
-              v-if="dataInfo.form_element == 'select'"
-              :span="12"
-            >
+            <el-col :span="12" v-if="dataInfo.form_element == 'select'">
               <el-select placeholder="请选择">
                 <el-option
                   v-for="(item, key) in dataInfo.options"
                   :key="item.value"
                   :label="item.value"
                   :value="item.value"
-                />
+                >
+                </el-option>
               </el-select>
             </el-col>
-            <el-col
-              v-if="dataInfo.form_element == 'date'"
-              :span="12"
-            >
-              <el-date-picker
-                v-model="value1"
-                type="date"
-                placeholder="选择日期"
-              />
+            <el-col :span="12" v-if="dataInfo.form_element == 'date'">
+              <el-date-picker v-model="value1" type="date" placeholder="选择日期"></el-date-picker>
             </el-col>
-            <el-col
-              v-if="dataInfo.form_element == 'time'"
-              :span="12"
-            >
+            <el-col :span="12" v-if="dataInfo.form_element == 'time'">
               <el-time-picker
-                v-model="value2"
                 arrow-control
+                v-model="value2"
                 :picker-options="{
                   selectableRange: '18:30:00 - 20:30:00'
                 }"
                 placeholder="任意时间点"
-              />
+              >
+              </el-time-picker>
             </el-col>
-            <el-col
-              v-if="dataInfo.form_element == 'area'"
-              :span="12"
-            >
+            <el-col :span="12" v-if="dataInfo.form_element == 'area'">
               <el-cascader
                 v-model="value"
                 :options="options"
                 :props="{ expandTrigger: 'hover' }"
                 @change="handleChange"
-              />
+              ></el-cascader>
             </el-col>
           </el-form-item>
         </el-form>
       </el-dialog>
     </div>
-    <router-view />
+    <router-view></router-view>
   </div>
 </template>
 <script>
@@ -256,12 +146,12 @@ import { mapGetters } from 'vuex'
 import { Message } from 'element-ui'
 import { regActivityList, regActivityDel, regActivityInvalid } from '../../../api/selfhelpform'
 export default {
-  provide () {
+  provide() {
     return {
       refresh: this.getDataList
     }
   },
-  data () {
+  data() {
     return {
       fieldTitle: '',
       isEdit: false,
@@ -309,31 +199,21 @@ export default {
   computed: {
     ...mapGetters(['wheight'])
   },
-  watch: {
-    getStatus (val) {
-      if (val) {
-        this.getDataList()
-      }
-    }
-  },
-  mounted () {
-    this.getDataList()
-  },
   methods: {
-    handleCurrentChange (page_num) {
+    handleCurrentChange(page_num) {
       this.params.page = page_num
       this.getDataList()
     },
-    handleSizeChange (pageSize) {
+    handleSizeChange(pageSize) {
       this.params.page = 1
       this.params.pageSize = pageSize
       this.getDataList()
     },
-    addElement () {
+    addElement() {
       // 添加商品
       this.$router.push({ path: this.matchHidePage('editor') })
     },
-    delData (index, row) {
+    delData(index, row) {
       var msg = '此操作将删除该活动, 是否继续?'
       this.$confirm(msg, '提示', {
         cancelButtonText: '取消',
@@ -354,7 +234,7 @@ export default {
         }
       })
     },
-    invalidData (index, row) {
+    invalidData(index, row) {
       var msg = '此操作将永久终止该活动, 是否继续?'
       this.$confirm(msg, '提示', {
         cancelButtonText: '取消',
@@ -375,16 +255,16 @@ export default {
         }
       })
     },
-    preview (index, row) {
+    preview(index, row) {
       // 预览弹框
       this.dialogVisible = true
       this.dataInfo = row
     },
-    searchData () {
+    searchData() {
       this.params.page = 1
       this.getDataList()
     },
-    getDataList () {
+    getDataList() {
       this.loading = true
       regActivityList(this.params)
         .then((response) => {
@@ -400,7 +280,7 @@ export default {
           })
         })
     },
-    deleteAction (index, row) {
+    deleteAction(index, row) {
       this.$confirm('此操废弃该元素, 是否继续?', '提示', {
         confirmButtonText: '确定',
         cancelButtonText: '取消',
@@ -430,7 +310,7 @@ export default {
           })
         })
     },
-    getTaskTime (strDate) {
+    getTaskTime(strDate) {
       let date = new Date(strDate)
       let y = date.getFullYear()
       let m = date.getMonth() + 1
@@ -440,10 +320,10 @@ export default {
       let str = y + '-' + m + '-' + d
       return str
     },
-    getTimeStr (date) {
+    getTimeStr(date) {
       return this.getTaskTime(new Date(parseInt(date) * 1000))
     },
-    handleClick (tab, event) {
+    handleClick(tab, event) {
       this.params.page = 1
       if (this.activeName == 'second') {
         this.params.is_valid = 2
@@ -452,16 +332,26 @@ export default {
       }
       this.getDataList()
     },
-    dateStrToTimeStamp (str) {
+    dateStrToTimeStamp(str) {
       return Date.parse(new Date(str)) / 1000
     },
-    dateChange (val) {
+    dateChange(val) {
       if (val.length > 0) {
         this.params.start_time = this.dateStrToTimeStamp(val[0] + ' 00:00:00')
         this.params.end_time = this.dateStrToTimeStamp(val[1] + ' 23:59:59')
       }
       this.params.page = 1
       this.getDataList()
+    }
+  },
+  mounted() {
+    this.getDataList()
+  },
+  watch: {
+    getStatus(val) {
+      if (val) {
+        this.getDataList()
+      }
     }
   }
 }

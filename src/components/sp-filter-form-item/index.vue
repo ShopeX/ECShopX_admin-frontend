@@ -45,12 +45,8 @@
 </style>
 <template>
   <div class="sp-filter-form-item">
-    <div class="form-item__label">
-      {{ label }}
-    </div>
-    <div class="form-item__content">
-      <slot />
-    </div>
+    <div class="form-item__label">{{ label }}</div>
+    <div class="form-item__content"><slot></slot></div>
   </div>
 </template>
 
@@ -62,14 +58,14 @@ export default {
   mixins: [emitter],
   props: {
     label: String,
-    prop: String
+    prop: String,
   },
   inject: ['filterForm'],
-  data () {
+  data() {
     return {}
   },
   computed: {
-    fieldValue () {
+    fieldValue() {
       const model = this.filterForm.model
       if (!model || !this.prop) {
         return
@@ -82,8 +78,8 @@ export default {
       return getPropByPath(model, path, true).v
     }
   },
-  created () {},
-  mounted () {
+  created() {},
+  mounted() {
     this.dispatch('SpFilterForm', 'sp.filterForm.addField', [this])
     let initialValue = this.fieldValue
     if (Array.isArray(initialValue)) {
@@ -94,7 +90,7 @@ export default {
     })
   },
   methods: {
-    resetField () {
+    resetField() {
       let model = this.filterForm.model
       let value = this.fieldValue
       let path = this.prop

@@ -1,13 +1,13 @@
 import fetch from '../utils/fetch'
 
-export function getMemberCardDetail () {
+export function getMemberCardDetail() {
   return fetch({
     url: '/membercard',
     method: 'get'
   })
 }
 
-export function setMemberCard (query) {
+export function setMemberCard(query) {
   return fetch({
     url: '/membercard',
     method: 'put',
@@ -15,14 +15,14 @@ export function setMemberCard (query) {
   })
 }
 
-export function getGradeList () {
+export function getGradeList() {
   return fetch({
     url: '/membercard/grades',
     method: 'get'
   })
 }
 
-export function updateGrade (query) {
+export function updateGrade(query) {
   return fetch({
     url: '/membercard/grade',
     method: 'put',
@@ -30,7 +30,7 @@ export function updateGrade (query) {
   })
 }
 
-export function getDefaultGrade () {
+export function getDefaultGrade() {
   return fetch({
     url: '/membercard/defaultGrade',
     method: 'get'

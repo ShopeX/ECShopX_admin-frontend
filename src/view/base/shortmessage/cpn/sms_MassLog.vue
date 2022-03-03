@@ -1,14 +1,8 @@
 <template>
   <div>
     <div class="sms_signatures">
-      <el-card
-        class="box-card"
-        shadow="never"
-      >
-        <div
-          slot="header"
-          class="clearfix"
-        >
+      <el-card class="box-card" shadow="never">
+        <div slot="header" class="clearfix">
           <span>短信群发记录</span>
         </div>
         <SpFinder
@@ -17,13 +11,14 @@
           :search-row-count="4"
           :fixed-row-action="true"
           :setting="setting"
-          no-selection
+          noSelection
           :hooks="{
             beforeSearch: beforeSearch,
             afterSearch: afterSearch
           }"
           url="/aliyunsms/task/list"
-        />
+        >
+        </SpFinder>
       </el-card>
     </div>
     <template v-if="visible">
@@ -31,7 +26,7 @@
         :visible="visible"
         :info="info"
         @smsMassLogEditHandler="smsMassLogEditHandler"
-        @updateFinder="updateFinder"
+        @updateFinder='updateFinder'
       />
     </template>
   </div>
@@ -48,7 +43,12 @@ export default {
     smsMassLogEdit,
     Template
   },
-  data () {
+  computed: {
+    setting() {
+      return setting_(this)
+    }
+  },
+  data() {
     return {
       visible: false,
       info: {},
@@ -61,20 +61,15 @@ export default {
       ]
     }
   },
-  computed: {
-    setting () {
-      return setting_(this)
-    }
-  },
   methods: {
-    addTemplate () {
+    addTemplate() {
       this.$router.push({ path: this.matchHidePage('edit') })
     },
-    beforeSearch (params) {
+    beforeSearch(params) {
       return { ...params }
     },
-    afterSearch () {},
-    async deleteSMS (id) {
+    afterSearch() {},
+    async deleteSMS(id) {
       const message = '选择确定后，群发定时任务将会撤销。'
       this.$confirm(message, '', {
         confirmButtonText: '确定',
@@ -86,10 +81,10 @@ export default {
         this.$refs.finder.refresh()
       })
     },
-    smsMassLogEditHandler () {
+    smsMassLogEditHandler() {
       this.visible = false
     },
-    updateFinder () {
+    updateFinder(){
       this.$refs.finder.refresh()
     }
   }

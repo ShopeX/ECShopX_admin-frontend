@@ -7,74 +7,52 @@
     :close-on-press-escape="false"
     :append-to-body="true"
     width="60%"
-    :show-close="false"
+    :show-close='false'
     :before-close="handleClose"
   >
     <div class="query">
-      <div />
+      <div></div>
       <el-input
-        v-model="query.tag_name"
         placeholder="请输入查找的标签名"
         style="width: 300px"
+        v-model="query.tag_name"
         class="input-with-select"
       >
-        <el-button
-          slot="append"
-          @click="queryHandle"
-        >
-          查询
-        </el-button>
+        <el-button slot="append" @click="queryHandle">查询</el-button>
       </el-input>
     </div>
     <div class="list">
       <el-table
-        ref="multipleTable"
-        v-loading="loading"
         border
         :row-key="getRowKeys"
+        v-loading="loading"
+        ref="multipleTable"
         :data="tableData"
         tooltip-effect="dark"
         style="width: 100%"
         @selection-change="handleSelectionChange"
       >
-        <el-table-column
-          :reserve-selection="true"
-          type="selection"
-          width="55"
-        />
-        <el-table-column
-          prop="tag_name"
-          label="标签名称"
-          width="220"
-        />
-        <el-table-column
-          prop="description"
-          label="标签描述"
-          show-overflow-tooltip
-        />
+        <el-table-column :reserve-selection="true" type="selection" width="55"></el-table-column>
+        <el-table-column prop="tag_name" label="标签名称" width="220"> </el-table-column>
+        <el-table-column prop="description" label="标签描述" show-overflow-tooltip>
+        </el-table-column>
       </el-table>
     </div>
     <el-pagination
       style="text-align: center"
       background
+      @size-change="handleSizeChange"
+      @current-change="handleCurrentChange"
       :current-page="params.page"
       :page-sizes="[10, 20, 30]"
       :page-size="100"
       layout="total, sizes, prev, pager, next, jumper"
       :total="total"
-      @size-change="handleSizeChange"
-      @current-change="handleCurrentChange"
-    />
-    <p>已选择：{{ multipleSelection.length }}</p>
-    <span
-      slot="footer"
-      class="dialog-footer"
     >
-      <el-button
-        size="small"
-        type="primary"
-        @click="confirm"
-      >确 定</el-button>
+    </el-pagination>
+    <p>已选择：{{ multipleSelection.length }}</p>
+    <span slot="footer" class="dialog-footer">
+      <el-button size="small" type="primary" @click="confirm">确 定</el-button>
     </span>
   </el-dialog>
 </template>
@@ -96,11 +74,16 @@ export default {
       type: Array
     },
     //当type = ‘store’ 需要
-    storeID: {
-      default: null
+    storeID:{
+      default:null
     }
   },
-  data () {
+  watch: {
+    multipleSelection() {
+      this.$emit('seletedTagsHandle', this.multipleSelection)
+    }
+  },
+  data() {
     return {
       tableData: [],
       multipleSelection: [],
@@ -113,21 +96,16 @@ export default {
       params: {
         page: 1,
         pageSize: 10,
-        front_show: 1
+        front_show:1
       }
     }
   },
-  watch: {
-    multipleSelection () {
-      this.$emit('seletedTagsHandle', this.multipleSelection)
-    }
-  },
-
-  mounted () {
+  
+  mounted() {
     this.getConfig()
   },
   methods: {
-    async getConfig () {
+    async getConfig() {
       this.loading = true
       let type = this.type
 
@@ -135,28 +113,24 @@ export default {
         const result = await getTagList({ ...this.query, ...this.params })
         this.handle(result)
       } else if ((type = 'store')) {
-        console.log(this.storeID)
-        const result = await getGoodsTag({
-          ...this.query,
-          ...this.params,
-          distributor_id: this.storeID
-        })
+        console.log(this.storeID);
+        const result = await getGoodsTag({ ...this.query, ...this.params,distributor_id:this.storeID })
         this.handle(result)
       }
     },
 
-    handle (result) {
+    handle(result) {
       this.loading = false
       const { list, total_count } = result.data.data
       this.tableData = list
       this.total = total_count
-
+       
       if (this.seletedTags !== undefined && this.seletedTags.length > 0) {
-        this.$refs.multipleTable.clearSelection()
+         this.$refs.multipleTable.clearSelection()
         this.toggleSelection(this.seletedTags)
       }
     },
-    checkTags (fn) {
+    checkTags(fn) {
       if (this.type == 'store') {
         if (this.multipleSelection.length > 3) {
           return this.$message.error('所选标签数量不得大于3')
@@ -171,38 +145,39 @@ export default {
       fn()
     },
 
-    confirm () {
+    confirm() {
       this.checkTags(() => {
         this.$emit('seletedTagsHandle', this.multipleSelection)
         this.$emit('visibleHandle')
       })
     },
-    queryHandle () {
+    queryHandle() {
       this.getConfig()
     },
 
-    handleClose () {
-      this.checkTags(() => {
+    handleClose() {
+      this.checkTags(()=>{
         this.$emit('visibleHandle')
       })
     },
-    handleSelectionChange (val) {
+    handleSelectionChange(val) {
       console.log('handleSelectionChange', val)
 
       if (val.length > 0) {
         this.multipleSelection = val
       }
     },
-    handleSizeChange (val) {
+    handleSizeChange(val) {
       this.params.pageSize = val
       this.params.page = 1
       this.getConfig()
     },
-    handleCurrentChange (val) {
+    handleCurrentChange(val) {
       this.params.page = val
       this.getConfig()
     },
-    toggleSelection (rows) {
+    toggleSelection(rows) {
+      
       if (rows) {
         rows.forEach((row) => {
           this.$refs.multipleTable.toggleRowSelection(row)
@@ -211,7 +186,7 @@ export default {
         this.$refs.multipleTable.clearSelection()
       }
     },
-    getRowKeys (val) {
+    getRowKeys(val) {
       return val.tag_id
     }
   }

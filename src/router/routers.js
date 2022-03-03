@@ -170,6 +170,7 @@ import GoodsShareSetting from '@/view/base/setting/goodsShareSetting' // 商品�
 
 import Wxappmanage from '@/view/wxapp/wxappmanage/list' // 小程序列表
 
+
 // import Basic_setting from '@/view/mall/marketing/basicSetting' // 基础配置
 // import Onecode from '@/view/brand/codegoods/thingslist' // 商品码管理
 // import Things from '@/view/brand/codegoods/thingsedit' // 新增编辑物品
@@ -204,6 +205,8 @@ import Specificcrowddiscount from '@/view/member/promotions/specificcrowd/specif
 import Specificcrowddiscount_detail from '@/view/member/promotions/specificcrowd/userdiscoutlog' //定向促销促销详情
 
 import Weburlsetting from '@/view/base/setting/weburlsetting' //外部链接配置
+
+
 
 // 隐藏路由
 import Home from '@/view/home' // 主框架
@@ -370,13 +373,17 @@ import Extrapoint from '@/view/member/promotions/extrapoint/list' //额外积分
 import Extrapoint_templ from '@/view/member/promotions/extrapoint/templ' // 额外积分活动选择模版
 import Extrapoint_editor from '@/view/member/promotions/extrapoint/editor' //额外积分编辑页面
 
+
+
 // 同城配
 import Dada from '@/view/mall/distribution/account' // 达达账户余额
 
 // 万宁-店铺-店铺商品更新
-import Exportstoreitems from '@/view/mall/marketing/productUpdate'
+import Exportstoreitems from '@/view/mall/marketing/productUpdate';
 // 万宁-店铺-店铺交易统计
-import TransactionStatistics from '@/view/mall/marketing/transactionStatistics'
+import TransactionStatistics from '@/view/mall/marketing/transactionStatistics';
+
+
 
 export default {
   Home,
@@ -706,7 +713,7 @@ export default {
   GoodsShareSetting,
   // 达达账户余额
   Dada,
-  // 万宁-店铺-店铺商品更新
+ // 万宁-店铺-店铺商品更新
   Exportstoreitems,
 
   // 万宁-店铺-店铺交易统计

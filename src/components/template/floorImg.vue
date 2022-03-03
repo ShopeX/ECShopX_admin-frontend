@@ -1,58 +1,22 @@
 <template>
-  <div
-    class="component-wrap"
-    :class="{ 'component-padded': base.padded, 'active': active }"
-  >
-    <div class="current-active" />
+  <div class="component-wrap" :class="{ 'component-padded': base.padded, 'active': active }">
+    <div class="current-active"></div>
 
     <!-- <div class="floorImg-title">{{base.title}}</div> -->
 
     <div class="floorImg">
-      <div
-        v-if="base.openBackImg"
-        class="floorImg_img_list"
-      >
-        <img
-          :src="wximageurl + base.backgroundImg"
-          class="floorImg-imgs"
-        >
-        <div
-          v-for="(item, index) in data"
-          :key="index"
-          class="floorImg_img_li1"
-        >
-          <img
-            class="floorImg_img"
-            :src="wximageurl + item.imgUrl"
-          >
-          <div
-            class="imgs_title"
-            :style="'color:' + base.WordColor"
-          >
-            {{ item.ImgTitle }}
-          </div>
+      <div class="floorImg_img_list" v-if="base.openBackImg">
+        <img :src="wximageurl + base.backgroundImg" class="floorImg-imgs" />
+        <div class="floorImg_img_li1" v-for="(item, index) in data" :key="index">
+          <img class="floorImg_img" :src="wximageurl + item.imgUrl" />
+          <div class="imgs_title" :style="'color:' + base.WordColor">{{ item.ImgTitle }}</div>
         </div>
       </div>
 
-      <div
-        v-else
-        class="floorImg_img_list"
-      >
-        <div
-          v-for="(item, index) in data"
-          :key="index"
-          class="floorImg_img_li2"
-        >
-          <img
-            class="floorImg_img"
-            :src="wximageurl + item.imgUrl"
-          >
-          <div
-            class="imgs_title"
-            :style="'color:' + base.WordColor"
-          >
-            {{ item.ImgTitle }}
-          </div>
+      <div class="floorImg_img_list" v-else>
+        <div class="floorImg_img_li2" v-for="(item, index) in data" :key="index">
+          <img class="floorImg_img" :src="wximageurl + item.imgUrl" />
+          <div class="imgs_title" :style="'color:' + base.WordColor">{{ item.ImgTitle }}</div>
         </div>
       </div>
     </div>
@@ -71,29 +35,29 @@ export default {
       default: false
     }
   },
-  data () {
+  watch: {
+    res(value) {
+      if (value) {
+        this.setData(value)
+      }
+    }
+  },
+  data() {
     return {
       name: '',
       base: {},
       data: []
     }
   },
-  watch: {
-    res (value) {
-      if (value) {
-        this.setData(value)
-      }
-    }
-  },
-  mounted () {
-    this.setData(this.res)
-  },
   methods: {
-    setData (val) {
+    setData(val) {
       this.name = val.name
       this.base = val.base
       this.data = val.data
     }
+  },
+  mounted() {
+    this.setData(this.res)
   }
 }
 </script>

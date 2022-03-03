@@ -10,88 +10,63 @@
       :append-to-body="true"
     >
       <div class="query">
-        <div />
+        <div></div>
         <el-input
-          v-model="query.title"
           placeholder="请输入优惠券包名称"
           style="width: 300px"
+          v-model="query.title"
           class="input-with-select"
         >
-          <el-button
-            slot="append"
-            @click="queryHandle"
-          >
-            查询
-          </el-button>
+          <el-button slot="append" @click="queryHandle">查询</el-button>
         </el-input>
       </div>
       <div class="list">
         <el-table
-          ref="multipleTable"
-          v-loading="loading"
           border
           :row-key="getRowKeys"
+          v-loading="loading"
+          ref="multipleTable"
           :data="tableData"
           tooltip-effect="dark"
           style="width: 100%"
           @selection-change="handleSelectionChange"
         >
-          <el-table-column
-            :reserve-selection="true"
-            type="selection"
-            width="55"
-          />
-          <el-table-column
-            prop="title"
-            label="劵包标题"
-            width="220"
-          />
-          <el-table-column
-            prop="package_describe"
-            label="描述"
-            show-overflow-tooltip
-          />
+          <el-table-column :reserve-selection="true" type="selection" width="55"></el-table-column>
+          <el-table-column prop="title" label="劵包标题" width="220"> </el-table-column>
+          <el-table-column prop="package_describe" label="描述" show-overflow-tooltip>
+          </el-table-column>
         </el-table>
       </div>
       <el-pagination
         style="text-align: center"
         background
+        @size-change="handleSizeChange"
+        @current-change="handleCurrentChange"
         :current-page="paging.page"
-        :page-sizes="[10, 20, 30]"
+        :page-sizes="[ 10, 20, 30]"
         :page-size="100"
         layout="total, sizes, prev, pager, next, jumper"
         :total="total"
-        @size-change="handleSizeChange"
-        @current-change="handleCurrentChange"
-      />
-      <div
-        class="tips"
-        style="margin-top: 30px"
       >
+      </el-pagination>
+      <div class="tips" style="margin-top: 30px">
         <p>已选择：{{ multipleSelection.length }} 包</p>
         <p style="padding: 3px 0">
-          <i class="el-icon-warning icon" /> 若有优惠券限领 1 张，券包组合含 2 张，按优惠券规则领取
-          1 张
+          <i class="el-icon-warning icon"></i> 若有优惠券限领 1 张，券包组合含 2
+          张，按优惠券规则领取 1 张
         </p>
       </div>
       <div class="btn">
-        <el-button @click="cancelHandle(true)">
-          取消
-        </el-button>
-        <el-button
-          type="primary"
-          @click="confirm"
-        >
-          确定
-        </el-button>
+        <el-button @click="cancelHandle(true)">取消</el-button>
+        <el-button type="primary" @click="confirm">确定</el-button>
       </div>
     </el-dialog>
     <model
-      :model-info="modelInfo"
-      :model-visible="modelVisible"
+      :modelInfo="modelInfo"
+      :modelVisible="modelVisible"
       @closeModel="closeModel"
       @closeCouponHandle="cancelHandle"
-    />
+    ></model>
   </div>
 </template>
 
@@ -120,7 +95,7 @@ export default {
       default: ''
     }
   },
-  data () {
+  data() {
     return {
       tableData: [],
       multipleSelection: [],
@@ -137,28 +112,12 @@ export default {
       }
     }
   },
-  watch: {
-    multipleSelection () {
-      console.log('==this.multipleSelection==', this.multipleSelection)
-      // if (this.packageId!=undefined) {
-
-      this.$emit('seletedDataHandle', this.multipleSelection, this.packageId)
-      // }
-
-      // if (voucher_package !== undefined && voucher_package.length > 0) {
-      // debugger
-      // this.$refs.multipleTable.clearSelection()
-
-      // this.toggleSelection(arr)
-      // } else {
-      // }
-    }
-  },
-  mounted () {
+  mounted() {
     this.getConfig()
   },
   methods: {
-    async getConfig () {
+    async getConfig() {
+
       this.loading = true
       const { list, count } = await this.$api.coupons_package.packageList({
         params: {
@@ -187,7 +146,7 @@ export default {
       } else {
       }
     },
-    confirm () {
+    confirm() {
       if (this.isModel) {
         this.checkConpon(this.multipleSelection, this.packageId)
         this.$emit('seletedDataHandle', this.multipleSelection, this.packageId)
@@ -196,7 +155,7 @@ export default {
         this.$emit('closeHandle')
       }
     },
-    async checkConpon (seletedCoupon = [], packageId) {
+    async checkConpon(seletedCoupon = [], packageId) {
       if (seletedCoupon.length == 0) {
         this.$emit('closeHandle')
         return
@@ -220,47 +179,47 @@ export default {
         this.$emit('closeHandle')
       }
     },
-    closeModel () {
+    closeModel() {
       this.modelVisible = false
     },
     // 获取原先数据加关闭操作
-    cancelHandle (isOld) {
+    cancelHandle(isOld) {
       if (isOld) {
         this.$emit('oldDataHandle') // 获取原先数据
       }
       this.$emit('closeHandle')
     },
 
-    selectHandle (val) {
+    selectHandle(val) {
       this.query.card_type = val
       this.getConfig()
     },
-    handleSizeChange (val) {
+    handleSizeChange(val) {
       this.paging.page_size = val
       this.paging.page = 1
       this.getConfig()
     },
-    handleCurrentChange (val) {
+    handleCurrentChange(val) {
       this.paging.page = val
 
       this.getConfig()
     },
-    queryHandle () {
+    queryHandle() {
       this.paging.page = 1
       this.getConfig()
     },
 
-    handleSelectionChange (val) {
+    handleSelectionChange(val) {
       // debugger
       console.log('handleSelectionChange', val)
       if (val.length > 0) {
         this.multipleSelection = val
       }
     },
-    getRowKeys (val) {
+    getRowKeys(val) {
       return val.package_id
     },
-    toggleSelection (rows) {
+    toggleSelection(rows) {
       if (rows) {
         rows.forEach((row) => {
           this.$refs.multipleTable.toggleRowSelection(row)
@@ -268,6 +227,23 @@ export default {
       } else {
         this.$refs.multipleTable.clearSelection()
       }
+    }
+  },
+  watch: {
+    multipleSelection() {
+      console.log('==this.multipleSelection==', this.multipleSelection)
+      // if (this.packageId!=undefined) {
+      
+      this.$emit('seletedDataHandle', this.multipleSelection, this.packageId)
+      // }
+
+      // if (voucher_package !== undefined && voucher_package.length > 0) {
+      // debugger
+      // this.$refs.multipleTable.clearSelection()
+
+      // this.toggleSelection(arr)
+      // } else {
+      // }
     }
   }
 }

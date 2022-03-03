@@ -2,10 +2,10 @@
   <div>
     <alllist
       v-if="$route.path.indexOf('editor') === -1"
-      ref="alllist"
       :get-status="alllist"
-    />
-    <router-view />
+      ref="alllist"
+    ></alllist>
+    <router-view></router-view>
   </div>
 </template>
 
@@ -13,7 +13,7 @@
 import alllist from './list.vue'
 
 export default {
-  provide () {
+  provide() {
     return {
       refresh: this.refresh
     }
@@ -21,30 +21,30 @@ export default {
   components: {
     alllist
   },
-  data () {
+  data() {
     return {
       activeName: 'first',
       alllist: true
     }
   },
-  mounted () {
+  methods: {
+    //充值送钱
+    handleClick(tab, event) {
+      if (this.activeName === 'first') {
+        this.alllist = true
+      }
+    },
+    refresh() {
+      this.$refs.getActivityLists
+      this.$refs.getCurrencyInfo
+    }
+  },
+  mounted() {
     if (this.$route.query.name) {
       this.activeName = this.$route.query.name
     }
     if (this.activeName === 'first') {
       this.alllist = true
-    }
-  },
-  methods: {
-    //充值送钱
-    handleClick (tab, event) {
-      if (this.activeName === 'first') {
-        this.alllist = true
-      }
-    },
-    refresh () {
-      this.$refs.getActivityLists
-      this.$refs.getCurrencyInfo
     }
   }
 }

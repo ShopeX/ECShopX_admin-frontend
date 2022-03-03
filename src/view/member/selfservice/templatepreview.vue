@@ -1,74 +1,41 @@
 <template>
   <div>
     <div v-if="$route.path.indexOf('detail') === -1 && $route.path.indexOf('editor') === -1">
-      <el-row
-        class="content-bottom-padded"
-        :gutter="20"
-      >
+      <el-row class="content-bottom-padded" :gutter="20">
         <el-col :span="4">
           开启体测：
           <el-switch
             v-model="setting.status"
             active-color="#13ce66"
             inactive-color="#ff4949"
-          />
+          ></el-switch>
         </el-col>
       </el-row>
-      <el-row
-        v-if="setting.status == 1"
-        class="content-bottom-padded"
-        :gutter="20"
-      >
-        <el-col
-          v-if="setting.status == 1 && setting.temp_id != 0"
-          :span="4"
-        >
+      <el-row class="content-bottom-padded" :gutter="20" v-if="setting.status == 1">
+        <el-col :span="4" v-if="setting.status == 1 && setting.temp_id != 0">
           <div>当前体测模板：{{ setting.temp_name }}</div>
         </el-col>
         <el-col :span="4">
-          <el-button
-            round
-            @click="batchChooseFormwork"
-          >
-            选择体测模板
-          </el-button>
+          <el-button round @click="batchChooseFormwork">选择体测模板</el-button>
         </el-col>
       </el-row>
-      <el-card
-        v-if="setting.status == 1 && setting.temp_id != 0"
-        shadow="never"
-      >
-        <el-table
-          v-loading="loading"
-          :data="ItemsList"
-          :height="wheight - 280"
-        >
-          <el-table-column
-            prop="mobile"
-            label="会员手机号"
-            width="140"
-          />
-          <el-table-column
-            prop="username"
-            label="姓名"
-            width="120"
-          />
+      <el-card shadow="never" v-if="setting.status == 1 && setting.temp_id != 0">
+        <el-table :data="ItemsList" :height="wheight - 280" v-loading="loading">
+          <el-table-column prop="mobile" label="会员手机号" width="140"></el-table-column>
+          <el-table-column prop="username" label="姓名" width="120"></el-table-column>
           <el-table-column
             v-for="(col, index) in colsTitle"
             :key="index"
             :prop="col.prop"
             :label="col.label"
             width="100"
-          />
-          <el-table-column
-            label="操作"
-            width="100"
           >
+          </el-table-column>
+          <el-table-column label="操作" width="100">
             <template slot-scope="scope">
-              <i
-                class="iconfont icon-search-plus"
-                @click="goToDetail(scope.$index, scope.row)"
-              >详情</i>
+              <i class="iconfont icon-search-plus" @click="goToDetail(scope.$index, scope.row)"
+                >详情</i
+              >
             </template>
           </el-table-column>
         </el-table>
@@ -76,51 +43,34 @@
           <el-pagination
             background
             layout="total, sizes, prev, pager, next"
+            @current-change="handleCurrentChange"
+            @size-change="handleSizeChange"
             :current-page.sync="params.page"
             :page-sizes="[10, 20, 50]"
             :total="total_count"
             :page-size="params.pageSize"
-            @current-change="handleCurrentChange"
-            @size-change="handleSizeChange"
-          />
+          >
+          </el-pagination>
         </div>
       </el-card>
-      <el-dialog
-        title="选择体侧模板"
-        class="right-dialog"
-        :visible.sync="FormworkVisible"
-      >
+      <el-dialog title="选择体侧模板" class="right-dialog" :visible.sync="FormworkVisible">
         <template>
-          <el-form
-            ref="formwork"
-            :model="formwork"
-          >
+          <el-form ref="formwork" :model="formwork">
             <el-form-item>
               <el-radio-group v-model="formwork.resource">
-                <el-radio
-                  v-for="(item, index) in FormworkList"
-                  :key="index"
-                  :label="item.id"
-                >
-                  {{
-                    item.tem_name
-                  }}
-                </el-radio>
+                <el-radio :label="item.id" v-for="(item, index) in FormworkList" :key="index">{{
+                  item.tem_name
+                }}</el-radio>
               </el-radio-group>
             </el-form-item>
             <el-form-item class="content-center">
-              <el-button
-                type="primary"
-                @click="onSubmitFormwork"
-              >
-                确定添加
-              </el-button>
+              <el-button type="primary" @click="onSubmitFormwork">确定添加</el-button>
             </el-form-item>
           </el-form>
         </template>
       </el-dialog>
     </div>
-    <router-view />
+    <router-view></router-view>
   </div>
 </template>
 <script>
@@ -139,12 +89,12 @@ import {
   allUserList
 } from '../../../api/selfhelpform'
 export default {
-  provide () {
+  provide() {
     return {
       refresh: this.getDataList
     }
   },
-  data () {
+  data() {
     return {
       loading: false,
       formwork: {
@@ -187,12 +137,8 @@ export default {
   computed: {
     ...mapGetters(['wheight'])
   },
-  watch: {},
-  mounted () {
-    this.physicalFirst()
-  },
   methods: {
-    physicalFirst () {
+    physicalFirst() {
       this.$nextTick(() => {
         physicalFirst().then((response) => {
           if (response.data.data.status == 1) {
@@ -208,17 +154,17 @@ export default {
         })
       })
     },
-    handleCurrentChange (page_num) {
+    handleCurrentChange(page_num) {
       this.params.page = page_num
       this.getDataList()
     },
-    handleSizeChange (pageSize) {
+    handleSizeChange(pageSize) {
       this.params.page = 1
       this.params.pageSize = pageSize
       this.getDataList()
     },
     // 模板列表
-    getFormworkList () {
+    getFormworkList() {
       this.loading = true
       getTemplateList(this.params).then((response) => {
         this.FormworkList = response.data.data.list
@@ -227,11 +173,11 @@ export default {
       })
     },
     // 拉取列表数据
-    batchChooseFormwork () {
+    batchChooseFormwork() {
       this.getFormworkList()
       this.FormworkVisible = true
     },
-    onSubmitFormwork () {
+    onSubmitFormwork() {
       this.physicalNormal({
         status: Number(this.setting.status),
         temp_id: this.formwork.resource,
@@ -239,19 +185,19 @@ export default {
       })
       this.FormworkVisible = false
     },
-    physicalNormal (query) {
+    physicalNormal(query) {
       physicalNormal(query).then((response) => {
         this.getDataList()
       })
     },
     // 加载列表数据
-    getDataList (list_parmas) {
+    getDataList(list_parmas) {
       allUserList(list_parmas).then((response) => {
         this.colsTitle = response.data.data.colstitle
         this.ItemsList = response.data.data.list
       })
     },
-    goToDetail (index, row) {
+    goToDetail(index, row) {
       // this.$router.push({ path: this.matchHidePage('detail/') + row.user_id })
       this.$router.push({
         path: this.matchHidePage('detail'),
@@ -260,6 +206,10 @@ export default {
         }
       })
     }
-  }
+  },
+  mounted() {
+    this.physicalFirst()
+  },
+  watch: {}
 }
 </script>

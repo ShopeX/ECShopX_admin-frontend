@@ -1,16 +1,9 @@
 <template>
   <div class="finder view-flex view-flex-middle">
-    <slot />
+    <slot></slot>
     <div class="view-flex-item">
-      <el-input
-        v-model="keywords"
-        placeholder="请输入内容"
-      >
-        <el-button
-          slot="append"
-          icon="el-icon-search"
-          @click="handleSearch"
-        />
+      <el-input placeholder="请输入内容" v-model="keywords">
+        <el-button slot="append" icon="el-icon-search" @click="handleSearch"></el-button>
       </el-input>
     </div>
   </div>
@@ -26,17 +19,17 @@ export default {
       default: ''
     }
   },
-  data () {
+  data() {
     return {
       keywords: '',
       store: ''
     }
   },
   methods: {
-    handleSearch () {
+    handleSearch() {
       this.$emit('onSearch', this.keywords)
     },
-    handleChange () {
+    handleChange() {
       this.$emit('onChange', this.distributor)
     }
   }

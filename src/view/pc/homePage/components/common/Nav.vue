@@ -2,23 +2,17 @@
   <div :class="['nav-sub', store && 'nav-sub-store']">
     <div :class="['nav-sub-wrapper', 'w']">
       <div class="nav-list1">
-        <div
-          v-if="store"
-          class="title"
-        >
+        <div class="title" v-if="store">
           店铺首页
         </div>
         <div
-          v-else
           class="title"
           :class="{ 'expand': setting && setting.config.category == 'expand' }"
+          v-else
         >
           所有商品分类
           <ul class="cate-pop">
-            <template
-              v-for="(item, index) in cateList"
-              v-if="index < 12"
-            >
+            <template v-for="(item, index) in cateList" v-if="index < 12">
               <li>
                 <a @click="selCate(1, item)">{{ item.category_name }}</a>
               </li>
@@ -28,9 +22,7 @@
       </div>
       <ul class="nav-list2">
         <!-- <li v-if="!store"> 全部商品 </li> -->
-        <li v-for="v in data.data">
-          {{ v.tab }}
-        </li>
+        <li v-for="v in data.data">{{ v.tab }}</li>
       </ul>
     </div>
   </div>
@@ -38,23 +30,23 @@
 <script>
 export default {
   props: ['cateList', 'usage', 'data', 'setting'],
-  data () {
+  data() {
     return {
       searchVal: ''
     }
   },
   computed: {
-    store () {
+    store() {
       return this.usage === 'store'
     }
   },
-  mounted () {},
+  mounted() {},
   methods: {
-    selCate (position, item, parentItem) {
+    selCate(position, item, parentItem) {
       this.$emit('selCate', position, item, parentItem)
     },
     // 搜索框 获取值
-    onEnterSearch (e) {
+    onEnterSearch(e) {
       console.log('search: ' + this.searchVal)
     }
   }

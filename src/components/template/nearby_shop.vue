@@ -1,53 +1,30 @@
 <template>
-  <div
-    class="component-wrap"
-    :class="{ 'component-padded': base.padded, 'active': active }"
-  >
-    <div class="current-active" />
-    <div
-      v-if="base.title"
-      class="component-header"
-    >
+  <div class="component-wrap" :class="{ 'component-padded': base.padded, 'active': active }">
+    <div class="current-active"></div>
+    <div v-if="base.title" class="component-header">
       <div class="component-title">
         <div>{{ base.title }}</div>
       </div>
-      <div
-        class="component-more"
-        style="flex: 1; text-align: right; justify-content: end"
-      >
-        <div class="more">
-          查看更多
-        </div>
+      <div class="component-more" style="flex: 1; text-align: right; justify-content: end">
+        <div class="more">查看更多</div>
       </div>
     </div>
     <div class="nearbyBox">
-      <div class="tags">
-        <span
-          v-for="(item, index) in seletedTags"
-          :key="item.tag_id"
-          :class="checkde == index ? 'checked' : ''"
-        >{{ item.tag_name }}</span>
+          <div class="tags">
+      <span
+        v-for="(item, index) in seletedTags"
+        :key="item.tag_id"
+        :class="checkde == index ? 'checked' : ''"
+        >{{ item.tag_name }}</span
+      >
+    </div>
+    <div class="shopList">
+      <div class="noShop" v-if="shoplist.length <= 0">
+        <img :src="img.noShopImg" alt="" />
+        <p>更多商家接入中，敬请期待</p>
       </div>
-      <div class="shopList">
-        <div
-          v-if="shoplist.length <= 0"
-          class="noShop"
-        >
-          <img
-            :src="img.noShopImg"
-            alt=""
-          >
-          <p>更多商家接入中，敬请期待</p>
-        </div>
-        <div
-          v-else
-          class="content"
-        >
-          <div
-            v-for="item in shoplist"
-            :key="item.distributor_id"
-            class="shop"
-          >
+      <div class="content" v-else>
+          <div class="shop" v-for="item in shoplist" :key="item.distributor_id">
             <div
               class="bg"
               :style="{
@@ -57,27 +34,20 @@
                 backgroundRepeat: 'no-repeat'
               }"
             >
-              <img
-                class="logo"
-                :src="item.logo || img.logoImg"
-                alt=""
-              >
+              <img class="logo" :src="item.logo || img.logoImg" alt="" />
             </div>
             <!-- <img class="bg" :src="img.bgImg" alt="" /> -->
 
-            <div class="title">
-              {{ item.name }}
-            </div>
-            <div
-              v-if="base.show_coupon && item.discountCardList.length > 0"
-              class="coupon"
-            >
+            <div class="title">{{ item.name }}</div>
+            <div class="coupon" v-if="base.show_coupon && item.discountCardList.length > 0">
               {{ item.discountCardList[0].title }}
             </div>
           </div>
-        </div>
+        </draggable>
       </div>
     </div>
+    </div>
+
   </div>
 </template>
 
@@ -98,7 +68,20 @@ export default {
       default: false
     }
   },
-  data () {
+  watch: {
+    res: {
+      deep: true,
+      handler(value) {
+        if (value) {
+          this.setData(value)
+        }
+      }
+    },
+    seletedTags(val) {
+      this.getShop(val)
+    }
+  },
+  data() {
     return {
       img: {
         noShopImg,
@@ -112,28 +95,15 @@ export default {
       checkde: 0
     }
   },
-  watch: {
-    res: {
-      deep: true,
-      handler (value) {
-        if (value) {
-          this.setData(value)
-        }
-      }
-    },
-    seletedTags (val) {
-      this.getShop(val)
-    }
-  },
-  mounted () {
+  mounted() {
     this.setData(this.res)
   },
   methods: {
-    setData (val) {
+    setData(val) {
       this.base = val.base
       this.seletedTags = val.seletedTags
     },
-    async getShop (val) {
+    async getShop(val) {
       if (val.length <= 0) {
         this.shoplist = []
         return

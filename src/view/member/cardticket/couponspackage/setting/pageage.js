@@ -16,12 +16,13 @@ export default (vm) => {
           type: 'link',
           handler: (val) => {
             vm.$router.push({
-              path: `${vm.$route.path}/detail`,
-              query: {
-                type: 'detail',
-                package_id: val[0].package_id
+              path:`${vm.$route.path}/detail`,
+              query:{
+                type:'detail',
+                package_id:val[0].package_id
               }
             })
+
           }
         }
       },
@@ -34,10 +35,10 @@ export default (vm) => {
           type: 'link',
           handler: (val) => {
             vm.$router.push({
-              path: `${vm.$route.path}/editor`,
-              query: {
-                type: 'edit',
-                package_id: val[0].package_id
+              path:`${vm.$route.path}/editor`,
+              query:{
+                type:'edit',
+                package_id:val[0].package_id
               }
             })
           }
@@ -52,12 +53,12 @@ export default (vm) => {
           type: 'link',
           handler: async (val) => {
             const result = await vm.$api.coupons_package.deleteCoupon({
-              package_id: val[0].package_id
-            })
+              package_id:val[0].package_id
+            });
             if (result.data.data.status) {
-              vm.$message.success('删除成功')
+              vm.$message.success('删除成功');
               vm.$refs.finder.refresh()
-            } else {
+            }else{
               vm.$message.success('失败')
             }
           }

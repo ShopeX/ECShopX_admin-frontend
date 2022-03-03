@@ -7,11 +7,7 @@
   >
     <div>
       <div class="tab-content selected">
-        <div
-          v-for="item in tagsList"
-          :key="item.tag_id"
-          class="tag-list"
-        >
+        <div class="tag-list" v-for="item in tagsList" :key="item.tag_id">
           <el-tag
             :type="item.type"
             :effect="item.selected ? 'dark' : 'light'"
@@ -22,25 +18,9 @@
         </div>
       </div>
     </div>
-    <div
-      slot="footer"
-      class="tag-footer"
-    >
-      <el-button
-        type="primary"
-        plain
-        size="medium"
-        @click="selectAll"
-      >
-        选择全部
-      </el-button>
-      <el-button
-        type="primary"
-        size="medium"
-        @click="submitTags"
-      >
-        确 定
-      </el-button>
+    <div slot="footer" class="tag-footer">
+      <el-button type="primary" plain size="medium" @click="selectAll">选择全部</el-button>
+      <el-button type="primary" size="medium" @click="submitTags">确 定</el-button>
     </div>
   </el-dialog>
 </template>
@@ -48,17 +28,17 @@
 <script>
 import { getTagList } from '@/api/member'
 export default {
-  model: {
-    prop: 'dialogVisible',
-    event: 'changeDialogVisible'
-  },
   props: {
     dialogVisible: {
       type: Boolean,
       defalut: false
     }
   },
-  data () {
+  model: {
+    prop: 'dialogVisible',
+    event: 'changeDialogVisible'
+  },
+  data() {
     const tagTypes = {
       1: 'warning',
       2: 'success',
@@ -70,40 +50,40 @@ export default {
       tagTypes
     }
   },
-  mounted () {
-    this.initTags()
-  },
   methods: {
-    initTags () {
+    initTags() {
       getTagList({
         page: 1,
         page_size: 500
       }).then((response) => {
         let tagsList = response.data.data.list
-        tagsList.map((v, i) => {
+        tagsList.map((v,i) => {
           v.type = this.tagTypes[(i + 1) % 4]
           v.selected = false
         })
         this.tagsList = tagsList
       })
     },
-    dialogBeforeClose () {
+    dialogBeforeClose() {
       this.$emit('changeDialogVisible', false)
     },
-    selectTag (item) {
+    selectTag(item) {
       item.selected = !item.selected
     },
     // 选择全部
-    selectAll () {
+    selectAll() {
       this.tagsList.map((v) => {
         v.selected = true
       })
     },
     // 确定选择
-    submitTags () {
+    submitTags() {
       let selectTagsList = this.tagsList.filter((v) => v.selected)
       this.$emit('selectTags', selectTagsList)
     }
+  },
+  mounted () {
+    this.initTags()
   }
 }
 </script>

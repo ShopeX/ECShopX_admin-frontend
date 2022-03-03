@@ -1,16 +1,18 @@
 <template>
   <div>
-    <Verify />
+      <Verify/>
   </div>
 </template>
 
 <script>
 import Verify from '../merchantList/editor.vue'
 export default {
-  components: {
-    Verify
-  }
+    components:{
+        Verify
+    }
 }
 </script>
 
-<style></style>
+<style>
+
+</style>

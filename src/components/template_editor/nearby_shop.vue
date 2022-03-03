@@ -1,32 +1,24 @@
 <template>
-  <section
-    v-if="name === 'nearbyShop'"
-    class="section"
-  >
-    <div class="section-header with-border">
-      设置
-    </div>
+  <section v-if="name === 'nearbyShop'" class="section">
+    <div class="section-header with-border">设置</div>
     <div class="section-body">
       <el-form label-width="100px">
         <el-form-item label="标题">
-          <el-input v-model="base.title" />
+          <el-input v-model="base.title"></el-input>
         </el-form-item>
         <el-form-item label="组件间距">
-          <el-switch
-            v-model="base.padded"
-            active-color="#27cc6a"
-            inactive-color="#efefef"
-          />
+          <el-switch v-model="base.padded" active-color="#27cc6a" inactive-color="#efefef">
+          </el-switch>
         </el-form-item>
         <el-form-item label="商家分类">
           <el-button
             type="default"
             class="iconfont icon-plus-circle banner-button-uploader"
-            size="mini"
             @click="addTab"
+            size="mini"
           >
-            添加标签
-          </el-button>
+            添加标签</el-button
+          >
           <p>
             <draggable
               v-if="data.length > 0"
@@ -34,23 +26,15 @@
               :options="dragItemsOptions"
               @end="onEnd"
             >
-              <span
-                v-for="(item, index) in data"
-                :key="item.tag_id"
-                class="tag"
-              >{{ item.tag_name }} <span
-                class="el-icon-close"
-                @click="deleteTag(index)"
-              /></span>
+              <span class="tag" v-for="(item, index) in data" :key="item.tag_id"
+                >{{ item.tag_name }} <span class="el-icon-close" @click="deleteTag(index)"></span
+              ></span>
             </draggable>
           </p>
         </el-form-item>
         <el-form-item label="显示优惠券">
-          <el-switch
-            v-model="base.show_coupon"
-            active-color="#27cc6a"
-            inactive-color="#efefef"
-          />
+          <el-switch v-model="base.show_coupon" active-color="#27cc6a" inactive-color="#efefef">
+          </el-switch>
         </el-form-item>
         <el-form-item label="商家排序">
           <span>LBS定位</span>
@@ -72,55 +56,55 @@ export default {
       default: {}
     }
   },
-  data () {
+  watch: {
+    res: {
+      deep: true,
+      handler(value) {
+        if (value) {
+          this.setData(value)
+        }
+      }
+    },
+  },
+  data() {
     return {
       name: '',
       base: {},
       config: {},
       seletedTags: [], // tab
-      data: [],
+      data:[],
       activeName: '',
       tabIndex: 0,
       dragItemsOptions: {
         animation: 300,
         forceFallback: false,
         scroll: true
-      }
+      },
     }
-  },
-  watch: {
-    res: {
-      deep: true,
-      handler (value) {
-        if (value) {
-          this.setData(value)
-        }
-      }
-    }
-  },
-  mounted () {
-    this.setData(this.res)
   },
   methods: {
-    setData (val) {
-      console.log('================', val)
+    setData(val) {
+      console.log('================',val);
       this.name = val.name
       this.base = val.base
       this.seletedTags = val.seletedTags
       this.data = val.seletedTags
     },
-    addTab () {
+    addTab() {
       this.$emit('tagSelectVisibleHandle', 'nearby_shop')
     },
-    deleteTag (index) {
+    deleteTag(index) {
       this.seletedTags.splice(index, 1)
       console.log(index)
     },
-    onEnd (evt) {
+    onEnd(evt) {
       const temp = this.seletedTags[evt.oldIndex]
       this.seletedTags.splice(evt.oldIndex, 1)
       this.seletedTags.splice(evt.newIndex, 0, temp)
     }
+  },
+  mounted() {
+    this.setData(this.res)
   }
 }
 </script>

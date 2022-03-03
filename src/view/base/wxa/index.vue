@@ -2,28 +2,18 @@
   <div class="section section-white">
     <el-row :gutter="20">
       <el-col :span="12">
-        <el-button
-          type="primary"
-          icon="plus"
-          @click="handleEditWeapp"
-        >
-          添加直连小程序
-        </el-button>
+        <el-button type="primary" icon="plus" @click="handleEditWeapp">添加直连小程序</el-button>
       </el-col>
     </el-row>
     <el-table
-      v-loading="loading"
       :data="list"
       style="width: 100%"
+      v-loading="loading"
       element-loading-text="数据加载中"
     >
       <el-table-column type="expand">
         <template slot-scope="props">
-          <el-form
-            label-position="left"
-            inline
-            class="demo-table-expand"
-          >
+          <el-form label-position="left" inline class="demo-table-expand">
             <el-form-item label="主体名称：">
               <span>{{ props.row.principal_name }}</span>
             </el-form-item>
@@ -37,7 +27,8 @@
                   props.row.weappTemplate.version &&
                     props.row.weappTemplate.version == props.row.weapp.release_ver
                 "
-              >最新版本</span>
+                >最新版本</span
+              >
               <span v-else-if="props.row.weapp.release_ver">{{ props.row.weapp.release_ver }}</span>
               <span v-else>无</span>
             </el-form-item>
@@ -50,33 +41,18 @@
           </el-form>
         </template>
       </el-table-column>
-      <el-table-column
-        label="小程序头像"
-        width="120"
-      >
+      <el-table-column label="小程序头像" width="120">
         <template slot-scope="img">
           <div v-if="img.row.head_img">
-            <img
-              :src="img.row.head_img"
-              height="60"
-            >
+            <img :src="img.row.head_img" height="60" />
           </div>
           <div v-else>
-            <i
-              class="iconfont icon-image fa-3x"
-              aria-hidden="true"
-            />
+            <i class="iconfont icon-image fa-3x" aria-hidden="true"></i>
           </div>
         </template>
       </el-table-column>
-      <el-table-column
-        prop="authorizer_appid"
-        label="小程序APPID"
-      />
-      <el-table-column
-        prop="nick_name"
-        label="小程序名称"
-      >
+      <el-table-column prop="authorizer_appid" label="小程序APPID"> </el-table-column>
+      <el-table-column prop="nick_name" label="小程序名称">
         <template slot-scope="scope_name">
           <div v-if="scope_name.row.nick_name">
             {{ scope_name.row.nick_name }}
@@ -86,25 +62,16 @@
           </div>
         </template>
       </el-table-column>
-      <el-table-column
-        prop="weappTemplate.name"
-        label="小程序模版"
-      />
+      <el-table-column prop="weappTemplate.name" label="小程序模版"> </el-table-column>
       <el-table-column label="小程序上架状态">
         <template slot-scope="verify_type_info">
-          <el-tag
-            v-if="verify_type_info.row.weapp.release_status == '1'"
-            type="success"
+          <el-tag v-if="verify_type_info.row.weapp.release_status == '1'" type="success"
+            >已上架</el-tag
           >
-            已上架
-          </el-tag>
 
-          <el-tag
-            v-if="verify_type_info.row.weapp.audit_status == '1'"
-            type="gray"
+          <el-tag v-if="verify_type_info.row.weapp.audit_status == '1'" type="gray"
+            >审核失败</el-tag
           >
-            审核失败
-          </el-tag>
           <!--审核成功并且已经上架则不需要显示-->
           <el-tag
             v-else-if="
@@ -112,28 +79,21 @@
                 verify_type_info.row.weapp.release_status != '1'
             "
             type="success"
+            >审核成功</el-tag
           >
-            审核成功
-          </el-tag>
-          <el-tag
-            v-else-if="verify_type_info.row.weapp.audit_status == '2'"
-            type="primary"
+          <el-tag v-else-if="verify_type_info.row.weapp.audit_status == '2'" type="primary"
+            >审核中</el-tag
           >
-            审核中
-          </el-tag>
         </template>
       </el-table-column>
-      <el-table-column
-        label="操作"
-        width="200px"
-      >
+      <el-table-column label="操作" width="200px">
         <template slot-scope="scope">
           <el-button
             circle
             type="primary"
             icon="el-icon-edit"
             @click="handleUpdate(scope.row)"
-          />
+          ></el-button>
         </template>
       </el-table-column>
     </el-table>
@@ -143,67 +103,49 @@
       :visible.sync="editWxaVisible"
       :before-close="handleEditWeappCancel"
     >
-      <el-form
-        ref="weappForm"
-        :model="weappForm"
-        label-position="left"
-        label-width="180px"
-      >
+      <el-form ref="weappForm" :model="weappForm" label-position="left" label-width="180px">
         <div class="section-body">
           <el-form-item label="小程序模板：">
-            <el-select
-              v-model="weappForm.template_name"
-              placeholder="请选择小程序模板"
-            >
+            <el-select v-model="weappForm.template_name" placeholder="请选择小程序模板">
               <el-option
                 v-for="(item, index) in templateList"
                 :key="index"
                 :label="item.tag"
                 :value="item.key_name"
-              />
+              >
+              </el-option>
             </el-select>
           </el-form-item>
           <el-form-item label="小程序名称：">
             <el-col :span="18">
-              <el-input
-                v-model="weappForm.nick_name"
-                placeholder="请输入小程序名称"
-              />
+              <el-input placeholder="请输入小程序名称" v-model="weappForm.nick_name"></el-input>
             </el-col>
           </el-form-item>
           <el-form-item label="appid：">
             <el-col :span="18">
               <el-input
-                v-model="weappForm.authorizer_appid"
                 placeholder="请输入小程序appid"
-              />
+                v-model="weappForm.authorizer_appid"
+              ></el-input>
             </el-col>
           </el-form-item>
           <el-form-item label="appsecret：">
             <el-col :span="18">
               <el-input
-                v-model="weappForm.authorizer_appsecret"
                 placeholder="请输入小程序appsecret"
+                v-model="weappForm.authorizer_appsecret"
                 show-password
-              />
+              ></el-input>
             </el-col>
           </el-form-item>
           <el-form-item label="小程序描述：">
             <el-col :span="18">
-              <el-input
-                v-model="weappForm.signature"
-                placeholder="请输入小程序描述"
-              />
+              <el-input placeholder="请输入小程序描述" v-model="weappForm.signature"></el-input>
             </el-col>
           </el-form-item>
         </div>
         <div class="section-footer with-border content-center">
-          <el-button
-            type="primary"
-            @click="handleSubmitWxapp"
-          >
-            保 存
-          </el-button>
+          <el-button type="primary" @click="handleSubmitWxapp">保 存</el-button>
         </div>
       </el-form>
     </el-dialog>
@@ -229,22 +171,16 @@
         <el-form-item label="appsecret：">
           <el-col :span="13">
             <el-input
-              v-model="updateRow.authorizer_appsecret"
               placeholder="请输入小程序appsecret"
+              v-model="updateRow.authorizer_appsecret"
               show-password
-            />
+            ></el-input>
           </el-col>
         </el-form-item>
       </el-form>
-      <span
-        slot="footer"
-        class="dialog-footer"
-      >
+      <span slot="footer" class="dialog-footer">
         <el-button @click="handleClose">取 消</el-button>
-        <el-button
-          type="primary"
-          @click="handleUpdateSubmit"
-        >确 定</el-button>
+        <el-button type="primary" @click="handleUpdateSubmit">确 定</el-button>
       </span>
     </el-dialog>
   </div>
@@ -253,7 +189,7 @@
 import { getTemplateList, templateList } from '@/api/template'
 import { getWxaAuthList, submitWxa, configSubmitHandle, addWxapp } from '../../../api/wxa'
 export default {
-  data () {
+  data() {
     return {
       loading: false,
       templateName: '',
@@ -278,34 +214,22 @@ export default {
       updateRow: {}
     }
   },
-  mounted () {
-    this.getWxaList()
-    templateList().then((response) => {
-      var res = response.data.data.list
-      res.forEach((item) => {
-        console.log(item)
-        if (item.key_name == 'yykweishop') {
-          this.templateList.push(item)
-        }
-      })
-    })
-  },
   methods: {
-    getWxaList () {
+    getWxaList() {
       this.loading = true
       getWxaAuthList().then((response) => {
         this.list = response.data.data.list
         this.loading = false
       })
     },
-    handleEditWeapp () {
+    handleEditWeapp() {
       this.editWxaVisible = true
     },
-    handleEditWeappCancel () {
+    handleEditWeappCancel() {
       this.editWxaVisible = false
       this.weappForm = {}
     },
-    handleSubmitWxapp () {
+    handleSubmitWxapp() {
       addWxapp(this.weappForm).then((response) => {
         this.$message({
           message: '修改成功',
@@ -317,16 +241,16 @@ export default {
         this.getWxaList()
       })
     },
-    handleUpdate (row) {
+    handleUpdate(row) {
       this.dialogVisible = true
       this.updateRow = Object.assign({}, row)
       this.dialogTitle = '修改小程序'
     },
-    handleClose () {
+    handleClose() {
       this.updateRow = {}
       this.dialogVisible = false
     },
-    handleUpdateSubmit () {
+    handleUpdateSubmit() {
       let params = { authorizer_appsecret: this.updateRow.authorizer_appsecret }
       configSubmitHandle(this.updateRow.authorizer_appid, params).then((response) => {
         this.$message({
@@ -337,6 +261,18 @@ export default {
         this.handleClose()
       })
     }
+  },
+  mounted() {
+    this.getWxaList()
+    templateList().then((response) => {
+      var res = response.data.data.list
+      res.forEach((item) => {
+        console.log(item)
+        if (item.key_name == 'yykweishop') {
+          this.templateList.push(item)
+        }
+      })
+    })
   }
 }
 </script>

@@ -1,46 +1,18 @@
 <template>
   <div class="section section-white">
-    <el-tabs
-      v-model="activeName"
-      type="border-card"
-    >
-      <el-tab-pane
-        label="基本信息"
-        name="first"
-      >
+    <el-tabs v-model="activeName" type="border-card">
+      <el-tab-pane label="基本信息" name="first">
         <el-row>
           <el-col :span="8">
             <span>批次号：</span> <span>{{ detail.delivery_bn }}</span>
           </el-col>
-          <el-col :span="8">
-            社区店名称：{{ detail.community_name }}
-          </el-col>
+          <el-col :span="8"> 社区店名称：{{ detail.community_name }} </el-col>
           <el-col :span="8">
             状态:
-            <el-tag
-              v-if="detail.status === 'PENDING'"
-              type="info"
-            >
-              待发货
-            </el-tag>
-            <el-tag
-              v-if="detail.status === 'SHIPPED'"
-              type="primary"
-            >
-              待收货
-            </el-tag>
-            <el-tag
-              v-if="detail.status === 'DONE'"
-              type="success"
-            >
-              已送达
-            </el-tag>
-            <el-tag
-              v-if="detail.status === 'BADDONE'"
-              type="warning"
-            >
-              已送达，有报损
-            </el-tag>
+            <el-tag type="info" v-if="detail.status === 'PENDING'">待发货</el-tag>
+            <el-tag type="primary" v-if="detail.status === 'SHIPPED'">待收货</el-tag>
+            <el-tag type="success" v-if="detail.status === 'DONE'">已送达</el-tag>
+            <el-tag type="warning" v-if="detail.status === 'BADDONE'">已送达，有报损</el-tag>
           </el-col>
         </el-row>
         <el-row>
@@ -74,61 +46,27 @@
           <el-col :span="8">
             备注：
             <el-input
-              v-model="detail.memo"
               type="textarea"
+              v-model="detail.memo"
               :rows="2"
               placeholder="请输入备注"
               @blur="handleSetMemo()"
-            />
+            >
+            </el-input>
           </el-col>
         </el-row>
-        <el-table
-          v-loading="loading"
-          :data="detail.items"
-          border
-          :height="wheight - 270"
-        >
-          <el-table-column
-            type="index"
-            width="50"
-            label="序号"
-          />
-          <el-table-column
-            label="商品图片"
-            min-width="50"
-          >
+        <el-table :data="detail.items" border :height="wheight - 270" v-loading="loading">
+          <el-table-column type="index" width="50" label="序号"> </el-table-column>
+          <el-table-column label="商品图片" min-width="50">
             <template slot-scope="scope">
-              <img
-                :src="wximageurl + scope.row.item_pic"
-                width="50"
-              >
+              <img :src="wximageurl + scope.row.item_pic" width="50" />
             </template>
           </el-table-column>
-          <el-table-column
-            prop="item_name"
-            label="商品名称"
-            min-width="100"
-          />
-          <el-table-column
-            prop="num"
-            label="商品数量"
-            min-width="100"
-          />
-          <el-table-column
-            prop="item_bn"
-            label="商品编号"
-            min-width="100"
-          />
-          <el-table-column
-            prop="item_unit"
-            label="单位"
-            min-width="100"
-          />
-          <el-table-column
-            prop="bad_item_num"
-            label="报损数量"
-            min-width="100"
-          />
+          <el-table-column prop="item_name" label="商品名称" min-width="100"></el-table-column>
+          <el-table-column prop="num" label="商品数量" min-width="100"></el-table-column>
+          <el-table-column prop="item_bn" label="商品编号" min-width="100"></el-table-column>
+          <el-table-column prop="item_unit" label="单位" min-width="100"></el-table-column>
+          <el-table-column prop="bad_item_num" label="报损数量" min-width="100"></el-table-column>
         </el-table>
       </el-tab-pane>
     </el-tabs>
@@ -143,7 +81,7 @@ import {
   setDeliveryorderMemo
 } from '../../../../api/community'
 export default {
-  data () {
+  data() {
     return {
       activeName: 'first',
       detail: [],
@@ -153,15 +91,8 @@ export default {
   computed: {
     ...mapGetters(['wheight'])
   },
-  mounted () {
-    if (this.$route.params.delivery_id) {
-      this.getDetail()
-    } else {
-      this.$router.go(-1)
-    }
-  },
   methods: {
-    handleSetMemo () {
+    handleSetMemo() {
       setDeliveryorderMemo({ memo: this.detail.memo, delivery_id: this.detail.delivery_id }).then(
         (res) => {
           this.$message({
@@ -172,7 +103,7 @@ export default {
       )
     },
     // 发货确认
-    shippedHandle (row) {
+    shippedHandle(row) {
       this.$confirm('是否确认已发货?', '提示', {
         confirmButtonText: '确定',
         cancelButtonText: '取消',
@@ -194,12 +125,19 @@ export default {
           })
         })
     },
-    getDetail () {
+    getDetail() {
       this.loading = true
       getDeliveryOrderDetail(this.$route.params.delivery_id).then((response) => {
         this.detail = response.data.data
         this.loading = false
       })
+    }
+  },
+  mounted() {
+    if (this.$route.params.delivery_id) {
+      this.getDetail()
+    } else {
+      this.$router.go(-1)
     }
   }
 }

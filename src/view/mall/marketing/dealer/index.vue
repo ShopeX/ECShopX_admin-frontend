@@ -20,41 +20,32 @@
 </style>
 <template>
   <div class="cus-dealer-page">
-    <div
-      v-if="$route.path.indexOf('detail') === -1 && $route.path.indexOf('detail/storelist') === -1"
-    >
+    <div v-if="$route.path.indexOf('detail') === -1 && $route.path.indexOf('detail/storelist') === -1">
       <el-card>
         <SpFinder
           ref="finder"
-          :no-selection="true"
+          :noSelection='true'
           :setting="setting"
-          :search-row-count="3"
-          :splict-count="3"
+          :searchRowCount="3"
+          :splictCount="3"
+          @reset="onFinderReset"
           :hooks="{
             beforeSearch: beforeSearch
           }"
           url="/adapay/dealer/list"
-          @reset="onFinderReset"
         >
           <template v-slot:tableTop>
             <el-row class="cus-btn">
-              <el-button
-                type="primary"
-                plain
-                size="mini"
-                @click="handleClose(true)"
-              >
-                新增经销商
-              </el-button>
+              <el-button @click='handleClose(true)' type="primary" plain size='mini'>新增经销商</el-button>
             </el-row>
           </template>
           <template v-slot:create_time>
             <el-date-picker
-              v-model="create_time"
               class="input-m"
+              v-model="create_time"
               type="daterange"
-              format="yyyy-MM-dd"
-              value-format="yyyy-MM-dd"
+              format='yyyy-MM-dd'
+              value-format='yyyy-MM-dd'
               start-placeholder="开始日期"
               end-placeholder="结束日期"
               @change="(val) => dateChange('create', val)"
@@ -62,11 +53,11 @@
           </template>
           <template v-slot:open_time>
             <el-date-picker
-              v-model="open_time"
               class="input-m"
+              v-model="open_time"
               type="daterange"
-              format="yyyy-MM-dd"
-              value-format="yyyy-MM-dd"
+              format='yyyy-MM-dd'
+              value-format='yyyy-MM-dd'
               start-placeholder="开始日期"
               end-placeholder="结束日期"
               @change="(val) => dateChange('open', val)"
@@ -77,37 +68,21 @@
       <el-dialog
         title="通知消息"
         :visible.sync="visibleModal"
-        width="25%"
-        :close-on-click-modal="false"
+        width='25%'
+        :close-on-click-modal='false'
         @before-close="handleOpenOpeartion(false, '')"
       >
         <el-row>
           {{ modalContent }}
         </el-row>
         <el-row style="text-align: right">
-          <el-button
-            type="primary"
-            size="small"
-            plain
-            @click="handleModalConfirm(false)"
-          >
-            取消
-          </el-button>
-          <el-button
-            type="primary"
-            size="small"
-            @click="handleModalConfirm(true)"
-          >
-            确认
-          </el-button>
+          <el-button @click="handleModalConfirm(false)" type="primary" size='small' plain>取消</el-button>
+          <el-button @click="handleModalConfirm(true)" type="primary" size='small'>确认</el-button>
         </el-row>
       </el-dialog>
-      <AddModal
-        :visible="addVisible"
-        @handleClose="handleClose"
-      />
+      <AddModal :visible='addVisible' @handleClose='handleClose' />
     </div>
-    <router-view />
+    <router-view></router-view>
   </div>
 </template>
 <script>
@@ -123,23 +98,11 @@ export default {
     setting () {
       return createSetting({
         columns: [
-          { name: '经销商', key: 'username' },
+          { name: '经销商', key: 'username'  },
           { name: '联系人', key: 'contact' },
           { name: '联系电话', key: 'mobile' },
-          {
-            name: '创建时间',
-            key: 'created',
-            formatter: (h, { created }) =>
-              created ? moment(created * 1000).format('YYYY-MM-DD HH:mm:ss') : '-'
-          },
-          {
-            name: '开户时间',
-            key: 'adapay_open_account_time',
-            formatter: (h, { adapay_open_account_time }) =>
-              adapay_open_account_time
-                ? moment(adapay_open_account_time * 1000).format('YYYY-MM-DD HH:mm:ss')
-                : '-'
-          }
+          { name: '创建时间', key: 'created', formatter: (h, { created }) => created ? moment(created * 1000).format('YYYY-MM-DD HH:mm:ss') : '-' },
+          { name: '开户时间', key: 'adapay_open_account_time', formatter: (h, { adapay_open_account_time }) => adapay_open_account_time ? moment(adapay_open_account_time * 1000).format('YYYY-MM-DD HH:mm:ss') : '-' }
         ],
         search: [
           { type: 'input', key: 'username', name: '经销商', placeholder: '请输入经销商' },
@@ -159,10 +122,7 @@ export default {
             action: {
               type: 'link',
               handler: (row) => {
-                this.$router.push({
-                  path: '/shop_dealer/dealer_list/detail',
-                  query: { operator_id: row[0].operator_id }
-                })
+                this.$router.push({path: '/shop_dealer/dealer_list/detail', query: { operator_id: row[0].operator_id }})
               }
             }
           },
@@ -176,10 +136,7 @@ export default {
             },
             action: {
               handler: (row) => {
-                this.$router.push({
-                  path: '/shop_dealer/dealer_list/detail/storelist',
-                  query: { dealer_id: row[0].operator_id, username: row[0].username }
-                })
+                this.$router.push({path: '/shop_dealer/dealer_list/detail/storelist', query: { dealer_id: row[0].operator_id, username: row[0].username }})
               }
             }
           },
@@ -211,7 +168,7 @@ export default {
       })
     }
   },
-  data () {
+  data() {
     return {
       dataUrl: `${process.env.VUE_APP_BASE_API}/adapay/dealer/list`,
       rowDate: {},
@@ -240,27 +197,22 @@ export default {
     },
     handleOpenOpeartion (visivle, type, rowDate) {
       this.rowDate = rowDate
-      this.modalContent =
-        type === '开启'
-          ? '如开启该经销商，与之关联的已入网成功的店铺也将被开启，总部将参与分账，请确认是否开启该经销商。'
-          : '如禁用该经销商，与之关联的已入网成功的店铺也将被禁用，总部不在参与分账，请确认是否禁用该经销商。'
+      this.modalContent = type === '开启' ? '如开启该经销商，与之关联的已入网成功的店铺也将被开启，总部将参与分账，请确认是否开启该经销商。' : '如禁用该经销商，与之关联的已入网成功的店铺也将被禁用，总部不在参与分账，请确认是否禁用该经销商。'
       this.visibleModal = visivle
       this.modalType = type
     },
     handleModalConfirm (visible) {
       const { is_disable, operator_id } = this.rowDate
       if (visible) {
-        setDealerStatus({ is_disable: is_disable === 0 ? 1 : 0, operator_id: operator_id }).then(
-          (res) => {
-            this.visibleModal = false
-            this.modalType = ''
-            this.modalContent = ''
-            this.$message({
-              message: '操作成功',
-              type: 'success'
-            })
-          }
-        )
+        setDealerStatus({ is_disable: is_disable === 0 ? 1 : 0, operator_id: operator_id }).then((res) => {
+          this.visibleModal = false
+          this.modalType = ''
+          this.modalContent = ''
+          this.$message({
+            message: '操作成功',
+            type: 'success'
+          })
+        })
         this.$refs.finder.refresh()
       } else {
         this.visibleModal = false
@@ -271,10 +223,10 @@ export default {
     handleClose (visible) {
       this.addVisible = visible
     },
-    dateStrToTimeStamp (str) {
+    dateStrToTimeStamp(str) {
       return Date.parse(new Date(str)) / 1000
     },
-    dateChange (type, val) {
+    dateChange(type, val) {
       if (val) {
         if (type == 'create') {
           this.form.time_start = this.dateStrToTimeStamp(val[0] + ' 00:00:00')

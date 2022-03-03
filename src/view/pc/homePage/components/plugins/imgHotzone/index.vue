@@ -1,6 +1,6 @@
 <template>
   <div>
-    <slot />
+    <slot></slot>
     <div class="gray-box">
       <div class="floor">
         <img
@@ -9,20 +9,20 @@
               'https://fakeimg.pl/1000x240/F8F8F8/CCC/?text=Image&font=helvetica'
           "
           alt=""
-        >
+        />
       </div>
     </div>
   </div>
 </template>
 <script>
 export default {
-  name: 'ImgHotzone',
+  name: 'imgHotzone',
   props: {
     data: {
       type: Object
     }
   },
-  data () {
+  data() {
     return {
       t_data: this.data
     }

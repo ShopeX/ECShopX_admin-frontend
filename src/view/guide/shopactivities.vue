@@ -1,22 +1,10 @@
 <template>
   <div>
     <div v-if="$route.path.indexOf('editor') === -1">
-      <el-button
-        type="primary"
-        @click="handleClickAddActivity"
-      >
-        新增活动
-      </el-button>
+      <el-button type="primary" @click="handleClickAddActivity">新增活动</el-button>
       <div class="articles">
         <el-row :gutter="10">
-          <el-col
-            v-for="(item, index) in list"
-            :key="index"
-            :xs="12"
-            :sm="8"
-            :md="6"
-            :lg="4"
-          >
+          <el-col v-for="(item, index) in list" :key="index" :xs="12" :sm="8" :md="6" :lg="4">
             <div class="article-item">
               <router-link :to="{ path: matchHidePage('editor'), query: { id: item.id } }">
                 <div
@@ -27,15 +15,11 @@
                         'https://fakeimg.pl/200x180/EFEFEF/CCC/?text=image&font=lobster') +
                       ') 0% 0% / cover no-repeat;'
                   "
-                />
+                ></div>
                 <div class="caption">
-                  <div class="title">
-                    {{ item.article_title }}
-                  </div>
+                  <div class="title">{{ item.article_title }}</div>
                   <!-- <div class="update-time">{{ item.updated  }}</div> -->
-                  <div class="update-time">
-                    {{ timestampToTime(item.updated) }}
-                  </div>
+                  <div class="update-time">{{ timestampToTime(item.updated)}}</div>
 
                   <div class="view-flex">
                     <!-- <div class="attention-count"><i class="iconfont icon-eye"></i>{{item.articleFocusNum.count || 0}}</div>
@@ -44,55 +28,28 @@
                 </div>
               </router-link>
               <div class="footer">
-                <div
-                  class="footer-item"
-                  @click="handleClikPublish(item)"
-                >
+                <div class="footer-item" @click="handleClikPublish(item)">
                   <template v-if="item.is_show === '1'">
-                    <i class="iconfont icon-undo-alt" />撤回
+                    <i class="iconfont icon-undo-alt"></i>撤回
                   </template>
-                  <template v-else>
-                    <i class="iconfont icon-broadcast-tower" />发布
-                  </template>
+                  <template v-else> <i class="iconfont icon-broadcast-tower"></i>发布 </template>
                 </div>
-                <el-popover
-                  v-model="item.visible"
-                  class="footer-item"
-                  placement="top"
-                  width="160"
-                >
+                <el-popover class="footer-item" placement="top" width="160" v-model="item.visible">
                   <div class="content-bottom-padded">
-                    <el-input
-                      v-model="item.sort"
-                      size="mini"
-                      placeholder="请输入排序"
-                    />
+                    <el-input size="mini" v-model="item.sort" placeholder="请输入排序" />
                   </div>
                   <div style="text-align: right; margin: 0">
-                    <el-button
-                      size="mini"
-                      type="text"
-                      @click="item.visible = false"
+                    <el-button size="mini" type="text" @click="item.visible = false"
+                      >取消</el-button
                     >
-                      取消
-                    </el-button>
-                    <el-button
-                      type="primary"
-                      size="mini"
-                      @click="handleClickSort(item)"
+                    <el-button type="primary" size="mini" @click="handleClickSort(item)"
+                      >确定</el-button
                     >
-                      确定
-                    </el-button>
                   </div>
-                  <div slot="reference">
-                    <i class="iconfont icon-sort-amount-up" />排序
-                  </div>
+                  <div slot="reference"><i class="iconfont icon-sort-amount-up"></i>排序</div>
                 </el-popover>
-                <div
-                  class="footer-item"
-                  @click="handleClickDel(item)"
-                >
-                  <i class="iconfont icon-trash-alt" />删除
+                <div class="footer-item" @click="handleClickDel(item)">
+                  <i class="iconfont icon-trash-alt"></i>删除
                 </div>
               </div>
             </div>
@@ -100,16 +57,16 @@
         </el-row>
         <el-pagination
           class="center"
+          @size-change="handleChangeSize"
+          @current-change="handleChangeCurrent"
           :current-page.sync="paging.page"
           :page-size="paging.pageSize"
           layout="prev, pager, next"
           :total="paging.total"
-          @size-change="handleChangeSize"
-          @current-change="handleChangeCurrent"
-        />
+        ></el-pagination>
       </div>
     </div>
-    <router-view />
+    <router-view></router-view>
   </div>
 </template>
 <script>
@@ -120,7 +77,7 @@ import {
   putActivearticle
 } from '@/api/promotions'
 export default {
-  data () {
+  data() {
     return {
       paging: {
         page: 1,
@@ -130,22 +87,22 @@ export default {
       list: []
     }
   },
-  mounted () {
+  mounted() {
     this._getActivearticleList()
   },
   methods: {
-    handleClickAddActivity () {
+    handleClickAddActivity() {
       this.$router.push({ path: this.matchHidePage('editor') })
     },
-    handleChangeSize (e) {},
-    handleChangeCurrent (e) {
+    handleChangeSize(e) {},
+    handleChangeCurrent(e) {
       this.paging.page = e
       this._getActivearticleList()
     },
     /**
      * 获取列表
      * */
-    async _getActivearticleList () {
+    async _getActivearticleList() {
       let params = {
         page: this.paging.page,
         page_size: this.paging.pageSize
@@ -162,12 +119,12 @@ export default {
     /**
      * 撤回
      * */
-    handlePublish () {},
+    handlePublish() {},
 
     /**
      * 排序
      * */
-    async handleClickSort (row) {
+    async handleClickSort(row) {
       let params = JSON.parse(JSON.stringify(row))
 
       delete params.created
@@ -181,7 +138,7 @@ export default {
     /**
      * 删除
      * */
-    handleClickDel (row) {
+    handleClickDel(row) {
       this.$confirm('确认是否删除?', '提示', {
         confirmButtonText: '确定',
         cancelButtonText: '取消',
@@ -203,7 +160,7 @@ export default {
     /**
      * 回测 || 发布
      * */
-    async handleClikPublish (row) {
+    async handleClikPublish(row) {
       let params = JSON.parse(JSON.stringify(row))
       params.is_show = params.is_show === '1' ? 0 : 1
 
@@ -214,8 +171,8 @@ export default {
       let { data } = await putActivearticle(params)
       this._getActivearticleList()
     },
-    // 时间戳转日期格式
-    timestampToTime (timestamp) {
+      // 时间戳转日期格式
+    timestampToTime(timestamp) {
       var date = new Date(timestamp * 1000) //时间戳为10位需*1000，时间戳为13位的话不需乘1000
       var YY = date.getFullYear() + '-'
       var MM = (date.getMonth() + 1 < 10 ? '0' + (date.getMonth() + 1) : date.getMonth() + 1) + '-'

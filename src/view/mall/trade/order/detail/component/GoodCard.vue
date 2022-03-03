@@ -1,33 +1,19 @@
 <template>
   <CustomCard title="商品清单">
-    <div v-if="orderInfo.order_type == 'service' || orderInfo.order_type == 'bargain'">
+    <div
+      v-if="orderInfo.order_type == 'service' || orderInfo.order_type == 'bargain'"
+    >
       <el-row>
-        <el-col :span="3">
-          商品名称：
-        </el-col>
-        <el-col :span="5">
-          {{ orderInfo.title }}
-        </el-col>
-        <el-col :span="3">
-          商品数量：
-        </el-col>
-        <el-col :span="5">
-          {{ orderInfo.item_num }}
-        </el-col>
+        <el-col :span="3">商品名称：</el-col>
+        <el-col :span="5">{{ orderInfo.title }}</el-col>
+        <el-col :span="3">商品数量：</el-col>
+        <el-col :span="5">{{ orderInfo.item_num }}</el-col>
       </el-row>
     </div>
 
     <div v-else-if="orderInfo.order_type == 'normal'">
-      <el-table
-        :data="orderInfo.items"
-        style="width: 100%"
-        size="small"
-      >
-        <el-table-column
-          prop="item_id"
-          label="商品ID"
-          width="80"
-        />
+      <el-table :data="orderInfo.items" style="width: 100%" size="small">
+        <el-table-column prop="item_id" label="商品ID" width="80" />
         <el-table-column
           class="goods-img"
           prop="pic"
@@ -40,52 +26,33 @@
                 class="item-image"
                 :src="wximageurl + scope.row.pic"
                 :alt="scope.row.item_name"
-              >
+              />
             </span>
           </template>
         </el-table-column>
 
-        <el-table-column
-          prop="item_name"
-          label="商品名称"
-          width="180"
-        >
+        <el-table-column prop="item_name" label="商品名称" width="180">
           <template slot-scope="scope">
-            <div class="ell3">
-              {{ scope.row.item_name }}
-            </div>
+            <div class="ell3">{{ scope.row.item_name }}</div>
             <el-tag
-              v-if="scope.row.order_item_type == 'gift'"
               size="mini"
               type="success"
+              v-if="scope.row.order_item_type == 'gift'"
+              >赠品</el-tag
             >
-              赠品
-            </el-tag>
           </template>
         </el-table-column>
-        <el-table-column
-          prop="price"
-          label="单价"
-          width="80"
-        >
+        <el-table-column prop="price" label="单价" width="80">
           <template slot-scope="scope">
             <span>{{ scope.row.fee_symbol }}{{ (scope.row.price / 100).toFixed(2) }}</span>
           </template>
         </el-table-column>
-        <el-table-column
-          prop="item_spec_desc"
-          label="规格"
-          width="180"
-        >
+        <el-table-column prop="item_spec_desc" label="规格" width="180">
           <template slot-scope="scope">
-            {{ scope.row.item_spec_desc ? scope.row.item_spec_desc : '单规格' }}
+            {{ scope.row.item_spec_desc ? scope.row.item_spec_desc : "单规格" }}
           </template>
         </el-table-column>
-        <el-table-column
-          prop="num"
-          label="数量"
-          width="80"
-        />
+        <el-table-column prop="num" label="数量" width="80"> </el-table-column>
 
         <el-table-column
           v-if="orderInfo.type == '1'"
@@ -94,37 +61,31 @@
           width="180"
         >
           <template slot-scope="scope">
-            <span>{{ scope.row.fee_symbol }}{{ (scope.row.taxable_fee / 100).toFixed(2) }}</span>
+            <span>{{ scope.row.fee_symbol }}{{(scope.row.taxable_fee / 100).toFixed(2)}}</span>
           </template>
         </el-table-column>
 
         <el-table-column label="小计">
           <template slot-scope="scope">
-            <span>{{ scope.row.fee_symbol }}{{ (scope.row.item_fee / 100).toFixed(2) }}</span>
+            <span>{{ scope.row.fee_symbol }}{{(scope.row.item_fee / 100).toFixed(2)}}</span
+            >
           </template>
         </el-table-column>
-        <el-table-column
-          label="会员优惠(元)"
-          width="100"
-        >
+        <el-table-column label="会员优惠(元)" width="100">
           <template slot-scope="scope">
-            <span>{{ scope.row.fee_symbol }}{{ (scope.row.member_discount / 100).toFixed(2) }}</span>
+            <span>{{ scope.row.fee_symbol}}{{(scope.row.member_discount / 100).toFixed(2)}}</span>
           </template>
         </el-table-column>
-        <el-table-column
-          label="总支付价(元)"
-          width="100"
-        >
+        <el-table-column label="总支付价(元)" width="100">
           <template slot-scope="scope">
-            <span>{{ scope.row.fee_symbol }}{{ (scope.row.total_fee / 100).toFixed(2) }}</span>
+            <span>{{ scope.row.fee_symbol }}{{(scope.row.total_fee / 100).toFixed(2)}}</span
+            >
           </template>
         </el-table-column>
-        <el-table-column
-          label="总优惠(元)"
-          width="100"
-        >
+        <el-table-column label="总优惠(元)" width="100">
           <template slot-scope="scope">
-            <span>{{ scope.row.fee_symbol }}{{ (scope.row.discount_fee / 100).toFixed(2) }}</span>
+            <span>{{ scope.row.fee_symbol}}{{(scope.row.discount_fee / 100).toFixed(2)}}</span
+            >
           </template>
         </el-table-column>
         <el-table-column label="货币汇率">
@@ -132,20 +93,20 @@
             <span>{{ scope.row.fee_rate }}</span>
           </template>
         </el-table-column>
-        <template v-if="orderInfo.delivery_status == 'DONE' && orderInfo.delivery_corp">
+        <template
+          v-if="orderInfo.delivery_status == 'DONE' && orderInfo.delivery_corp"
+        >
           <el-table-column label="发货状态">
             <template slot-scope="scope">
               <span>已发货</span>
             </template>
           </el-table-column>
-          <el-table-column
-            label="快递公司"
-            width="150px"
-          >
+          <el-table-column label="快递公司" width='150px'>
             <template slot-scope="scope">
               <span v-if="orderInfo.order_status == 'WAIT_BUYER_CONFIRM'">
                 <el-select
                   v-model="scope.row.delivery_corp"
+             
                   placeholder="请选择快递公司"
                 >
                   <el-option
@@ -153,41 +114,33 @@
                     :key="item.name"
                     :label="item.name"
                     :value="item.value"
-                  />
+                  >
+                  </el-option>
                 </el-select>
               </span>
               <span v-else>{{ scope.row.delivery_corp_name }}</span>
             </template>
           </el-table-column>
-          <el-table-column
-            label="快递单号"
-            width="200px"
-          >
+          <el-table-column label="快递单号" width='200px'>
             <template slot-scope="scope">
               <span v-if="orderInfo.order_status == 'WAIT_BUYER_CONFIRM'">
                 <el-input
                   v-model="scope.row.delivery_code"
                   :maxlength="20"
                   placeholder="物流公司单号"
-                />
+                ></el-input>
               </span>
               <span v-else>{{ scope.row.delivery_code }}</span>
             </template>
           </el-table-column>
-          <el-table-column
-            v-if="orderInfo.order_status == 'WAIT_BUYER_CONFIRM'"
-            label="操作"
-          >
+          <el-table-column label="操作" v-if="orderInfo.order_status == 'WAIT_BUYER_CONFIRM'">
             <template slot-scope="scope">
-              <el-button
-                type="text"
-                size="small"
-                @click.native.prevent="
-                  update(scope.row.delivery_corp, scope.row.delivery_code, scope.row)
-                "
-              >
-                确认修改
-              </el-button>
+                 <el-button
+                    @click.native.prevent="update(scope.row.delivery_corp,scope.row.delivery_code,scope.row)"
+                    type="text"
+                    size="small">
+                    确认修改
+                  </el-button>
             </template>
           </el-table-column>
         </template>
@@ -197,22 +150,22 @@
 </template>
 
 <script>
-import CustomCard from './CustomCard'
+import CustomCard from './CustomCard';
 export default {
-  components: {
+  props: ["orderInfo", "memberInfo","dlycorps"],
+  components:{
     CustomCard
   },
-  props: ['orderInfo', 'memberInfo', 'dlycorps'],
-  data () {
-    const self = this
-    return {}
+  data() {
+    const self = this;
+    return {};
   },
   methods: {
-    update (corp, code, row) {
-      this.$emit('updatedelivery_', { corp, code, row })
+    update(corp,code,row){
+      this.$emit('updatedelivery_',{corp,code,row})
     }
-  }
-}
+  },
+};
 </script>
 
 <style scoped>

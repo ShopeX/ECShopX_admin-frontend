@@ -2,78 +2,33 @@
   <div v-loading="loading">
     <div class="log-header">
       <div class="log-container">
-        <div class="brand">
-          <img
-            :src="brand"
-            alt=""
-          >
-        </div>
-        <div class="log-welcome">
-          选择店铺
-        </div>
+        <div class="brand"><img :src="brand" alt="" /></div>
+        <div class="log-welcome">选择店铺</div>
       </div>
     </div>
     <div class="log-container">
-      <el-table
-        :data="list"
-        border
-        style="width: 100%"
-      >
-        <el-table-column
-          prop="name"
-          label="店铺名称"
-          width="180"
-        />
+      <el-table :data="list" border style="width: 100%">
+        <el-table-column prop="name" label="店铺名称" width="180"> </el-table-column>
         <el-table-column label="是否启用">
           <template slot-scope="scope">
-            <el-tag
-              v-if="scope.row.is_valid == 'true'"
-              type="success"
-            >
-              启用
-            </el-tag>
-            <el-tag
-              v-else-if="scope.row.is_valid == 'delete'"
-              type="danger"
-            >
-              废弃
-            </el-tag>
-            <el-tag
-              v-else
-              type="info"
-            >
-              禁用
-            </el-tag>
+            <el-tag type="success" v-if="scope.row.is_valid == 'true'">启用</el-tag>
+            <el-tag type="danger" v-else-if="scope.row.is_valid == 'delete'">废弃</el-tag>
+            <el-tag type="info" v-else>禁用</el-tag>
           </template>
         </el-table-column>
-        <el-table-column
-          prop="name"
-          label="店铺地址"
-        >
+        <el-table-column prop="name" label="店铺地址">
           <template slot-scope="scope">
             {{ scope.row.store_address }}
           </template>
         </el-table-column>
-        <el-table-column
-          prop="name"
-          label="创建时间"
-        >
+        <el-table-column prop="name" label="创建时间">
           <template slot-scope="scope">
             <span>{{ scope.row.created | datetime('YYYY-MM-DD') }}</span>
           </template>
         </el-table-column>
-        <el-table-column
-          label="操作"
-          min-width="100"
-        >
+        <el-table-column label="操作" min-width="100">
           <template slot-scope="scope">
-            <el-button
-              type="text"
-              :disabled="scope.row.is_valid == 'delete'"
-              @click="selectDistributor(scope.row)"
-            >
-              进入店铺
-            </el-button>
+            <el-button type="text" @click="selectDistributor(scope.row)" :disabled="scope.row.is_valid=='delete'">进入店铺</el-button>
           </template>
         </el-table-column>
       </el-table>
@@ -87,7 +42,7 @@ import fetch from '../utils/fetch'
 import { getDistributorList } from '@/api/marketing'
 import { shopLoginSelectShopId } from '@/api/company'
 export default {
-  data () {
+  data() {
     const system = process.env.VUE_APP_PRODUCT_MODEL == 'standard' ? 'onex' : 'ecshopx'
     const brand = require(`@/assets/img/${system}/logo.jpg`)
     return {
@@ -97,7 +52,19 @@ export default {
       list: []
     }
   },
-  mounted () {
+  methods: {
+    selectDistributor(data) {
+      shopLoginSelectShopId({ set_distributor_id: data.distributor_id }).then((res) => {
+        if (res.data.data.status) {
+          this.$store.dispatch('setShopId', data.distributor_id)
+          window.location.href = '/'
+          // console.log(this.$store.getters.menus)
+          // this.$router.push({ path: this.$store.getters.menus[0].children[0].url })
+        }
+      })
+    }
+  },
+  mounted() {
     console.log('-----2')
     getDistributorList({ page: 1, pageSize: 100, is_all: true }).then((response) => {
       if (response.data.data.total_count === 1) {
@@ -109,18 +76,6 @@ export default {
     })
 
     // this.brand = require('@/assets/img/' + this.companyBrandImg + '/logo.svg')
-  },
-  methods: {
-    selectDistributor (data) {
-      shopLoginSelectShopId({ set_distributor_id: data.distributor_id }).then((res) => {
-        if (res.data.data.status) {
-          this.$store.dispatch('setShopId', data.distributor_id)
-          window.location.href = '/'
-          // console.log(this.$store.getters.menus)
-          // this.$router.push({ path: this.$store.getters.menus[0].children[0].url })
-        }
-      })
-    }
   }
 }
 </script>

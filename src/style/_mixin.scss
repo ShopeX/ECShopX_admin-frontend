@@ -1,21 +1,14 @@
 $color-border-gray: #d9d9d9 !default;
-$z-index-modal: 500 !default;
+$z-index-modal    : 500 !default;
 
-@mixin text-overflow() {
+@mixin text-overflow(){
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
 }
 
-@mixin clearfix() {
-  &:after {
-    content: '\0020';
-    display: block;
-    height: 0;
-    clear: both;
-    visibility: hidden;
-    overflow: hidden;
-  }
+@mixin clearfix(){
+  &:after { content: "\0020"; display: block; height: 0; clear: both; visibility: hidden; overflow:hidden;}
   overflow: hidden;
 }
 
@@ -28,7 +21,7 @@ $z-index-modal: 500 !default;
   -webkit-box-orient: vertical;
 }
 
-@mixin arrow($size: 4px, $color: $color-border-gray) {
+@mixin arrow ($size:4px, $color: $color-border-gray) {
   content: '';
   border: $size solid $color;
   display: block;
@@ -85,7 +78,7 @@ $z-index-modal: 500 !default;
   }
 }
 
-@mixin overlay($zIndex: $z-index-modal) {
+@mixin overlay ($zIndex: $z-index-modal) {
   position: absolute;
   top: 0;
   left: 0;
@@ -97,7 +90,7 @@ $z-index-modal: 500 !default;
   transition: all 0.15s ease-in;
 }
 
-@mixin page-view($animation: sp-anim-popup) {
+@mixin page-view ($animation: sp-anim-popup) {
   $self: &;
   background: $color-bg-gray;
   position: absolute;
@@ -111,7 +104,7 @@ $z-index-modal: 500 !default;
     @include overlay();
   }
   &__active {
-    animation: $animation 0.2s ease-in-out;
+    animation: $animation .2s ease-in-out;
     visibility: visible;
     #{$self}__overlay {
       opacity: 1;
@@ -119,7 +112,7 @@ $z-index-modal: 500 !default;
   }
 }
 
-@mixin page-scroll($padding-top: 0, $padding-bottom: 0, $z-index: 1) {
+@mixin page-scroll ($padding-top: 0, $padding-bottom: 0, $z-index: 1) {
   position: absolute;
   left: 0;
   width: 100%;
@@ -127,15 +120,14 @@ $z-index-modal: 500 !default;
   bottom: $padding-bottom;
   overflow-y: auto;
   overflow-x: hidden;
-  transform: translate3d(0, 0, 0);
+  transform: translate3d(0,0,0);
   z-index: 1;
-  > div,
-  > view {
-    transform: translate3d(0, 0, 0);
+  > div, > view {
+    transform: translate3d(0,0,0);
   }
 }
 
-@mixin iconfont-gradient($background) {
+@mixin iconfont-gradient ($background) {
   &:before {
     background: $background;
     -webkit-background-clip: text;

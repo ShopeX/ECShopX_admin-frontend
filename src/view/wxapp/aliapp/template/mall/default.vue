@@ -1,9 +1,6 @@
 <template>
   <div>
-    <MallList
-      v-if="store"
-      :rel-store="store"
-    />
+    <MallList v-if="store" :rel-store="store" />
   </div>
 </template>
 
@@ -13,12 +10,12 @@ export default {
   components: {
     MallList
   },
-  data () {
+  data() {
     return {
       store: null
     }
   },
-  mounted () {
+  mounted() {
     this.store = { id: '0' }
   }
 }

@@ -28,7 +28,7 @@ import fetch from '@/utils/fetch'
 import { initFinder } from '@shopex/finder'
 import '@shopex/finder/lib/finder.css'
 import exportTip from '@/utils/components'
-import { export_open } from '@/utils'
+import { export_open } from '@/utils';
 Vue.use(exportTip)
 initFinder(Vue, {
   fetchLibrary: fetch,
@@ -46,18 +46,19 @@ initFinder(Vue, {
         delete params.pageNum
         return params
       },
-      afterQuery: (response) => {
+      afterQuery:(response)=>{
         const { status_code, message } = response.data.data
         if (status_code == 500) {
           return Vue.prototype.$message.error(message)
         } else {
           return {
             ...response.data.data,
-            count: response.data.data.total_count
+            count: response.data.data.total_count,
           }
         }
       }
-    }
+    },
+    
   }
 })
 
@@ -81,7 +82,7 @@ const installComponent = (Vue) => {
   const baseContext = require.context('./components', true, /index(\.vue|\.js)$/)
   const components = {}
 
-  function resloveModule (mod) {
+  function resloveModule(mod) {
     Object.keys(mod).forEach((key) => {
       mod[key].name && (components[mod[key].name] = mod[key])
     })
@@ -105,9 +106,9 @@ installComponent(Vue)
 // import fetch from './utils/fetch'
 
 // import { Base64 } from 'js-base64';
-// Vue.use( Base64 )
+// Vue.use( Base64 ) 
 Vue.config.productionTip = false
-Vue.prototype.$export_open = export_open
+Vue.prototype.$export_open=export_open;
 new Vue({
   router,
   store,

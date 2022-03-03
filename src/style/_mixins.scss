@@ -1,17 +1,18 @@
-@import 'variables';
+@import "variables";
 
-@mixin text-overflow() {
+@mixin text-overflow(){
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
 }
 
-@mixin pdt-img($width, $height: '', $type: contain, $offset: 0) {
-  $height: $width;
-  @if $height != '' {
-    $height: $width;
-  }
 
+@mixin pdt-img($width, $height: "", $type: contain, $offset: 0) {
+  $height: $width;
+  @if $height != "" {
+    $height: $width
+  }
+  
   $offset: strip-unit($offset);
   width: $width;
   height: $height;
@@ -43,20 +44,13 @@
   }
 }
 
-@mixin clearfix() {
-  &:after {
-    content: '\0020';
-    display: block;
-    height: 0;
-    clear: both;
-    visibility: hidden;
-    overflow: hidden;
-  }
+@mixin clearfix(){
+  &:after { content: "\0020"; display: block; height: 0; clear: both; visibility: hidden; overflow:hidden;}
   overflow: hidden;
 }
 
-@mixin avatar($size, $radius: $border-radius) {
-  background: rgba(#fff, 0.5);
+@mixin avatar ($size, $radius:$border-radius) {
+  background: rgba(#fff, .5);
   width: $size;
   height: $size;
   overflow: hidden;
@@ -77,8 +71,8 @@
   -webkit-line-clamp: $line;
 }
 
-@mixin arrow($size: 4px) {
-  content: '';
+@mixin arrow ($size:4px) {
+  content: "";
   border: $size / 2 solid $color-border-gray;
   display: block;
   width: $size;

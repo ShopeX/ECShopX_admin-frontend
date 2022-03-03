@@ -1,102 +1,52 @@
 <template>
   <div>
     <div v-if="$route.path.indexOf('detail') === -1 && $route.path.indexOf('editor') === -1">
-      <el-row
-        class="content-bottom-padded"
-        :gutter="20"
-      >
+      <el-row class="content-bottom-padded" :gutter="20">
         <el-col :span="4">
-          <el-button
-            type="primary"
-            icon="plus"
-            @click="addTemplate"
-          >
-            添加模板
-          </el-button>
+          <el-button type="primary" icon="plus" @click="addTemplate">添加模板</el-button>
         </el-col>
         <el-col :span="6">
-          <el-input
-            v-model="params.tem_name"
-            placeholder="模板名称"
-          >
-            <el-button
-              slot="append"
-              icon="el-icon-search"
-              @click="searchData"
-            />
-          </el-input>
+          <el-input placeholder="模板名称" v-model="params.tem_name"
+            ><el-button slot="append" icon="el-icon-search" @click="searchData"></el-button
+          ></el-input>
         </el-col>
         <el-col :span="6">
           <el-select
-            v-model="params.tem_type"
             placeholder="模板类型"
+            v-model="params.tem_type"
             style="width: 100%"
             @change="searchData"
           >
-            <el-option
-              key="basic_entry"
-              label="基础录入"
-              value="basic_entry"
-            />
-            <el-option
-              key="ask_answer_paper"
-              label="问卷调查"
-              value="ask_answer_paper"
-            />
+            <el-option key="basic_entry" label="基础录入" value="basic_entry"> </el-option>
+            <el-option key="ask_answer_paper" label="问卷调查" value="ask_answer_paper">
+            </el-option>
           </el-select>
         </el-col>
       </el-row>
-      <el-tabs
-        v-model="activeName"
-        type="border-card"
-        @tab-click="handleClick"
-      >
+      <el-tabs v-model="activeName" type="border-card" @tab-click="handleClick">
         <el-tab-pane
           v-for="(item, index) in tabList"
           :key="index"
           :label="item.name"
           :name="item.activeName"
         >
-          <el-table
-            v-loading="loading"
-            :data="ItemsList"
-            :height="wheight - 280"
-          >
-            <el-table-column
-              prop="id"
-              label="ID"
-              width="100"
-            />
-            <el-table-column
-              prop="tem_name"
-              label="模板名称"
-              width="300"
-            />
-            <el-table-column
-              prop="tem_type"
-              label="模板类型"
-              width="300"
-            />
-            <el-table-column
-              prop="status"
-              label="状态"
-              width="100"
-            />
+          <el-table :data="ItemsList" :height="wheight - 280" v-loading="loading">
+            <el-table-column prop="id" label="ID" width="100"></el-table-column>
+            <el-table-column prop="tem_name" label="模板名称" width="300"></el-table-column>
+            <el-table-column prop="tem_type" label="模板类型" width="300"></el-table-column>
+            <el-table-column prop="status" label="状态" width="100"></el-table-column>
             <el-table-column label="操作">
               <template slot-scope="scope">
                 <router-link
                   class="iconfont icon-edit1"
                   :to="{ path: matchHidePage('editor'), query: { id: scope.row.id } }"
-                />
-                <i
-                  class="iconfont icon-search-plus"
-                  @click="preview(scope.$index, scope.row)"
-                />
+                ></router-link>
+                <i class="iconfont icon-search-plus" @click="preview(scope.$index, scope.row)"></i>
                 <i
                   v-if="scope.row.status == 1"
                   class="mark iconfont icon-trash-alt1"
                   @click="deleteAction(scope.$index, scope.row)"
-                />
+                ></i>
               </template>
             </el-table-column>
           </el-table>
@@ -104,34 +54,22 @@
             <el-pagination
               background
               layout="total, sizes, prev, pager, next"
+              @current-change="handleCurrentChange"
+              @size-change="handleSizeChange"
               :current-page.sync="params.page"
               :page-sizes="[10, 20, 50]"
               :total="total_count"
               :page-size="params.pageSize"
-              @current-change="handleCurrentChange"
-              @size-change="handleSizeChange"
-            />
+            >
+            </el-pagination>
           </div>
         </el-tab-pane>
       </el-tabs>
-      <el-dialog
-        :visible.sync="dialogVisible"
-        :title="dialogTitle"
-        width="50"
-      >
-        <el-alert
-          v-if="headerTitle"
-          :title="headerTitle"
-          type="info"
-          :closable="false"
-        /><br>
-        <el-card
-          v-for="(carditem, index) in dialogContent"
-          :key="index"
-        >
-          <div slot="header">
-            {{ carditem.title }}
-          </div>
+      <el-dialog :visible.sync="dialogVisible" :title="dialogTitle" width="50">
+        <el-alert v-if="headerTitle" :title="headerTitle" type="info" :closable="false"></el-alert
+        ><br />
+        <el-card v-for="(carditem, index) in dialogContent" :key="index">
+          <div slot="header">{{ carditem.title }}</div>
           <el-form
             ref="carditem.formdata"
             label-width="100px"
@@ -140,75 +78,37 @@
           >
             <el-form-item
               v-for="(item, index) in carditem.formdata"
-              :key="index"
               :label="item.field_title"
+              :key="index"
             >
-              <el-col
-                v-if="item.form_element == 'text'"
-                :span="12"
-              >
-                <el-input
-                  placeholder="text预览"
-                  disabled
-                />
+              <el-col :span="12" v-if="item.form_element == 'text'">
+                <el-input placeholder="text预览" disabled></el-input>
               </el-col>
-              <el-col
-                v-if="item.form_element == 'number'"
-                :span="12"
-              >
-                <el-input
-                  placeholder="1"
-                  size="mini"
-                  disabled
-                  style="width: 120px"
-                />
+              <el-col :span="12" v-if="item.form_element == 'number'">
+                <el-input placeholder="1" size="mini" disabled style="width: 120px"></el-input>
                 <span class="frm-tips"> (只能是数字)</span>
               </el-col>
-              <el-col
-                v-if="item.form_element == 'textarea'"
-                :span="12"
-              >
-                <el-input
-                  type="textarea"
-                  placeholder="textarea预览"
-                  disabled
-                  :rows="5"
-                />
+              <el-col :span="12" v-if="item.form_element == 'textarea'">
+                <el-input type="textarea" placeholder="textarea预览" disabled :rows="5"></el-input>
               </el-col>
-              <el-col
-                v-if="item.form_element == 'radio'"
-                :span="12"
-              >
+              <el-col :span="12" v-if="item.form_element == 'radio'">
                 <el-radio-group disabled>
-                  <el-radio
-                    v-for="(item, index) in item.options"
-                    :key="index"
-                    :label="3"
-                  >
-                    {{
-                      item.value
-                    }}
-                  </el-radio>
+                  <el-radio :label="3" v-for="(item, index) in item.options" :key="index">{{
+                    item.value
+                  }}</el-radio>
                 </el-radio-group>
               </el-col>
-              <el-col
-                v-if="item.form_element == 'checkbox'"
-                :span="12"
-              >
+              <el-col :span="12" v-if="item.form_element == 'checkbox'">
                 <el-checkbox-group disabled>
                   <el-checkbox
+                    label="item.value"
                     v-for="(item, index) in item.options"
                     :key="index"
-                    label="item.value"
+                    >{{ item.value }}</el-checkbox
                   >
-                    {{ item.value }}
-                  </el-checkbox>
                 </el-checkbox-group>
               </el-col>
-              <el-col
-                v-if="item.form_element == 'select'"
-                :span="12"
-              >
+              <el-col :span="12" v-if="item.form_element == 'select'">
                 <el-select placeholder="请选择">
                   <el-option
                     v-for="(item, index) in item.options"
@@ -216,27 +116,18 @@
                     :label="item.value"
                     :value="item.value"
                     disabled
-                  />
+                  >
+                  </el-option>
                 </el-select>
               </el-col>
             </el-form-item>
           </el-form>
         </el-card>
-        <el-alert
-          v-if="bottomTitle"
-          :title="bottomTitle"
-          type="info"
-          :closable="false"
-        />
-        <el-button
-          type="primary"
-          disabled
-        >
-          确认提交
-        </el-button>
+        <el-alert v-if="bottomTitle" :title="bottomTitle" type="info" :closable="false"></el-alert>
+        <el-button type="primary" disabled>确认提交</el-button>
       </el-dialog>
     </div>
-    <router-view />
+    <router-view></router-view>
   </div>
 </template>
 <script>
@@ -249,12 +140,12 @@ import {
   restoreTemplate
 } from '../../../api/selfhelpform'
 export default {
-  provide () {
+  provide() {
     return {
       refresh: this.getDataList
     }
   },
-  data () {
+  data() {
     return {
       templateName: '',
       isEdit: false,
@@ -285,35 +176,25 @@ export default {
   computed: {
     ...mapGetters(['wheight'])
   },
-  watch: {
-    getStatus (val) {
-      if (val) {
-        this.getDataList()
-      }
-    }
-  },
-  mounted () {
-    this.getDataList()
-  },
   methods: {
-    handleCurrentChange (page_num) {
+    handleCurrentChange(page_num) {
       this.params.page = page_num
       this.getDataList()
     },
-    handleSizeChange (pageSize) {
+    handleSizeChange(pageSize) {
       this.params.page = 1
       this.params.pageSize = pageSize
       this.getDataList()
     },
-    addTemplate () {
+    addTemplate() {
       // 添加商品
       this.$router.push({ path: this.matchHidePage('editor') })
     },
-    editTemplateAction (index, row) {
+    editTemplateAction(index, row) {
       // 编辑商品弹框
       this.$router.push({ path: '/member/selfservice/formtemplateadd/' + row.id })
     },
-    preview (index, row) {
+    preview(index, row) {
       // 编辑商品弹框
       this.dialogVisible = true
       this.dialogTitle = row.tem_name + '( 预览模式 )'
@@ -321,11 +202,11 @@ export default {
       this.headerTitle = row.header_title
       this.bottomTitle = row.bottom_title
     },
-    searchData () {
+    searchData() {
       this.params.page = 1
       this.getDataList()
     },
-    getDataList () {
+    getDataList() {
       this.loading = true
       getTemplateList(this.params).then((response) => {
         this.ItemsList = response.data.data.list
@@ -333,7 +214,7 @@ export default {
         this.loading = false
       })
     },
-    deleteAction (index, row) {
+    deleteAction(index, row) {
       this.$confirm('此操作将废弃该模板, 是否继续?', '提示', {
         confirmButtonText: '确定',
         cancelButtonText: '取消',
@@ -363,7 +244,7 @@ export default {
           })
         })
     },
-    getTaskTime (strDate) {
+    getTaskTime(strDate) {
       let date = new Date(strDate)
       let y = date.getFullYear()
       let m = date.getMonth() + 1
@@ -373,10 +254,10 @@ export default {
       let str = y + '-' + m + '-' + d
       return str
     },
-    getTimeStr (date) {
+    getTimeStr(date) {
       return this.getTaskTime(new Date(parseInt(date) * 1000))
     },
-    handleClick (tab, event) {
+    handleClick(tab, event) {
       this.params.page = 1
       if (this.activeName == 'second') {
         this.params.is_valid = 2
@@ -384,6 +265,16 @@ export default {
         this.params.is_valid = 1
       }
       this.getDataList()
+    }
+  },
+  mounted() {
+    this.getDataList()
+  },
+  watch: {
+    getStatus(val) {
+      if (val) {
+        this.getDataList()
+      }
     }
   }
 }

@@ -1,32 +1,16 @@
 <template>
-  <div
-    v-loading="loading"
-    class="section-white content-padded"
-  >
-    <el-form
-      ref="form"
-      :model="form"
-      :rules="rules"
-      label-width="80px"
-    >
-      <el-form-item
-        label="充值协议"
-        prop="content"
-      >
+  <div class="section-white content-padded" v-loading="loading">
+    <el-form ref="form" :model="form" :rules="rules" label-width="80px">
+      <el-form-item label="充值协议" prop="content">
         <!-- <el-input type="textarea" v-model="form.content" :rows='18'></el-input> -->
         <vue-html5-editor
           :content="form.content"
-          :height="560"
           @change="updateContent"
-        />
+          :height="560"
+        ></vue-html5-editor>
       </el-form-item>
       <div class="section-footer with-border content-center">
-        <el-button
-          type="primary"
-          @click="save"
-        >
-          保存
-        </el-button>
+        <el-button type="primary" @click="save">保存</el-button>
       </div>
     </el-form>
   </div>
@@ -36,7 +20,7 @@
 import { setRechargeAgreement, getRechargeAgreementByCompanyId } from '../../../api/deposit'
 export default {
   props: ['getStatus'],
-  data () {
+  data() {
     return {
       loading: false,
       form: {
@@ -47,15 +31,8 @@ export default {
       }
     }
   },
-  watch: {
-    getStatus (newVal, oldVal) {
-      if (newVal) {
-        this.getAgreement()
-      }
-    }
-  },
   methods: {
-    save () {
+    save() {
       this.$refs['form'].validate((valid) => {
         if (valid) {
           setRechargeAgreement(this.form).then((res) => {
@@ -68,15 +45,22 @@ export default {
         }
       })
     },
-    getAgreement () {
+    getAgreement() {
       this.loading = true
       getRechargeAgreementByCompanyId().then((res) => {
         this.form.content = res.data.data.content
         this.loading = false
       })
     },
-    updateContent (data) {
+    updateContent(data) {
       this.form.content = data
+    }
+  },
+  watch: {
+    getStatus(newVal, oldVal) {
+      if (newVal) {
+        this.getAgreement()
+      }
     }
   }
 }

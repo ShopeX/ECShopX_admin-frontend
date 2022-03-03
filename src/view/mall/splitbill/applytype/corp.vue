@@ -1,54 +1,27 @@
 <template>
   <div>
     <el-alert
-      v-if="form.status == 4"
       title="审核失败"
       type="error"
+      v-if="form.status == 4"
       show-icon
       center
       :description="form.resp_desc"
       :closable="false"
-    />
-    <el-divider v-if="form.status == 4" />
+    ></el-alert>
+    <el-divider v-if="form.status == 4"></el-divider>
     <div class="formClass">
-      <el-form
-        ref="form"
-        :model="form"
-        label-width="150px"
-        :rules="rules"
-      >
+      <el-form ref="form" :model="form" label-width="150px" :rules="rules">
         <el-form-item label="账号认证类型">
-          <el-button
-            type="success"
-            round
-            size="mini"
-          >
-            企业
-          </el-button>
+          <el-button type="success" round size="mini">企业</el-button>
         </el-form-item>
-        <el-form-item
-          label="企业名称"
-          prop="corp_name"
-        >
-          <el-input
-            v-model="form.corp_name"
-            :disabled="disabled"
-          />
+        <el-form-item label="企业名称" prop="corp_name">
+          <el-input v-model="form.corp_name" :disabled="disabled"></el-input>
         </el-form-item>
-        <el-form-item
-          label="证照类型"
-          prop="corp_license_type"
-        >
-          <el-radio-group
-            v-model="form.corp_license_type"
-            :disabled="disabled"
-          >
-            <el-radio label="2">
-              三证合一
-            </el-radio>
-            <el-radio label="1">
-              普通证照
-            </el-radio>
+        <el-form-item label="证照类型" prop="corp_license_type">
+          <el-radio-group v-model="form.corp_license_type" :disabled="disabled">
+            <el-radio label="2">三证合一</el-radio>
+            <el-radio label="1">普通证照</el-radio>
           </el-radio-group>
         </el-form-item>
         <el-row v-show="form.corp_license_type == 1">
@@ -61,10 +34,7 @@
                 : []
             "
           >
-            <el-input
-              v-model="form.business_code"
-              :disabled="disabled"
-            />
+            <el-input v-model="form.business_code" :disabled="disabled"></el-input>
           </el-form-item>
           <el-form-item
             label="营业执照注册"
@@ -91,11 +61,8 @@
                 v-if="fileList.business_code_img"
                 :src="fileList.business_code_img"
                 class="avatar"
-              >
-              <i
-                v-else
-                class="el-icon-plus avatar-uploader-icon"
               />
+              <i v-else class="el-icon-plus avatar-uploader-icon"></i>
             </el-upload>
           </el-form-item>
           <el-form-item
@@ -107,10 +74,7 @@
                 : []
             "
           >
-            <el-input
-              v-model="form.institution_code"
-              :disabled="disabled"
-            />
+            <el-input v-model="form.institution_code" :disabled="disabled"></el-input>
           </el-form-item>
           <el-form-item
             label="组织机构代码"
@@ -137,11 +101,8 @@
                 v-if="fileList.institution_code_img"
                 :src="fileList.institution_code_img"
                 class="avatar"
-              >
-              <i
-                v-else
-                class="el-icon-plus avatar-uploader-icon"
               />
+              <i v-else class="el-icon-plus avatar-uploader-icon"></i>
             </el-upload>
           </el-form-item>
           <el-form-item
@@ -153,10 +114,7 @@
                 : []
             "
           >
-            <el-input
-              v-model="form.tax_code"
-              :disabled="disabled"
-            />
+            <el-input v-model="form.tax_code" :disabled="disabled"></el-input>
           </el-form-item>
           <el-form-item
             label="税务登记证号"
@@ -179,15 +137,8 @@
                 }
               "
             >
-              <img
-                v-if="fileList.tax_code_img"
-                :src="fileList.tax_code_img"
-                class="avatar"
-              >
-              <i
-                v-else
-                class="el-icon-plus avatar-uploader-icon"
-              />
+              <img v-if="fileList.tax_code_img" :src="fileList.tax_code_img" class="avatar" />
+              <i v-else class="el-icon-plus avatar-uploader-icon"></i>
             </el-upload>
           </el-form-item>
         </el-row>
@@ -201,10 +152,7 @@
                 : []
             "
           >
-            <el-input
-              v-model="form.social_credit_code"
-              :disabled="disabled"
-            />
+            <el-input v-model="form.social_credit_code" :disabled="disabled"></el-input>
           </el-form-item>
           <el-form-item
             label="统一社会信用代码"
@@ -231,54 +179,39 @@
                 v-if="fileList.social_credit_code_img"
                 :src="fileList.social_credit_code_img"
                 class="avatar"
-              >
-              <i
-                v-else
-                class="el-icon-plus avatar-uploader-icon"
               />
+              <i v-else class="el-icon-plus avatar-uploader-icon"></i>
             </el-upload>
           </el-form-item>
         </el-row>
-        <el-form-item
-          label="营业执照起始日期"
-          prop="license_start_date"
-        >
+        <el-form-item label="营业执照起始日期" prop="license_start_date">
           <el-date-picker
-            v-model="form.license_start_date"
             type="date"
             value-format="yyyyMMdd"
             placeholder="选择日期"
+            v-model="form.license_start_date"
             style="width: 100%"
             :disabled="disabled"
-          />
+          ></el-date-picker>
         </el-form-item>
-        <el-form-item
-          label="营业执照到期日期"
-          prop="license_end_date"
-        >
+        <el-form-item label="营业执照到期日期" prop="license_end_date">
           <el-date-picker
-            v-model="form.license_end_date"
             type="date"
             value-format="yyyyMMdd"
             placeholder="选择日期"
+            v-model="form.license_end_date"
             style="width: 100%"
             :disabled="disabled"
             @change="$forceUpdate()"
-          />
+          ></el-date-picker>
         </el-form-item>
-        <el-form-item
-          label="股东名称"
-          prop="controlling_shareholder_cust_name"
-        >
+        <el-form-item label="股东名称" prop="controlling_shareholder_cust_name">
           <el-input
             v-model="form.controlling_shareholder_cust_name"
             :disabled="disabled"
-          />
+          ></el-input>
         </el-form-item>
-        <el-form-item
-          label="股东证件类型"
-          prop="controlling_shareholder_id_card_type"
-        >
+        <el-form-item label="股东证件类型" prop="controlling_shareholder_id_card_type">
           <el-select
             v-model="form.controlling_shareholder_id_card_type"
             placeholder="选择股东证件类型"
@@ -290,31 +223,16 @@
               :key="item.card_type"
               :label="item.label"
               :value="item.card_type"
-            />
+            ></el-option>
           </el-select>
         </el-form-item>
-        <el-form-item
-          label="股东证件号码"
-          prop="controlling_shareholder_id_card"
-        >
-          <el-input
-            v-model="form.controlling_shareholder_id_card"
-            :disabled="disabled"
-          />
+        <el-form-item label="股东证件号码" prop="controlling_shareholder_id_card">
+          <el-input v-model="form.controlling_shareholder_id_card" :disabled="disabled"></el-input>
         </el-form-item>
-        <el-form-item
-          label="法人代表姓名"
-          prop="legal_name"
-        >
-          <el-input
-            v-model="form.legal_name"
-            :disabled="disabled"
-          />
+        <el-form-item label="法人代表姓名" prop="legal_name">
+          <el-input v-model="form.legal_name" :disabled="disabled"></el-input>
         </el-form-item>
-        <el-form-item
-          label="法人代表证件类型"
-          prop="legal_id_card_type"
-        >
+        <el-form-item label="法人代表证件类型" prop="legal_id_card_type">
           <el-select
             v-model="form.legal_id_card_type"
             placeholder="选择法人代表证件类"
@@ -326,57 +244,36 @@
               :key="item.card_type"
               :label="item.label"
               :value="item.card_type"
-            />
+            ></el-option>
           </el-select>
         </el-form-item>
-        <el-form-item
-          label="法人代表证件号码"
-          prop="legal_id_card"
-        >
-          <el-input
-            v-model="form.legal_id_card"
-            :disabled="disabled"
-          />
+        <el-form-item label="法人代表证件号码" prop="legal_id_card">
+          <el-input v-model="form.legal_id_card" :disabled="disabled"></el-input>
         </el-form-item>
-        <el-form-item
-          label="法人证件起始日期"
-          prop="legal_cert_start_date"
-        >
+        <el-form-item label="法人证件起始日期" prop="legal_cert_start_date">
           <el-date-picker
+            type="date"
+            value-format="yyyyMMdd"
+            placeholder="选择日期"
             v-model="form.legal_cert_start_date"
-            type="date"
-            value-format="yyyyMMdd"
-            placeholder="选择日期"
             style="width: 100%"
             :disabled="disabled"
-          />
+          ></el-date-picker>
         </el-form-item>
-        <el-form-item
-          label="法人证件结束日期"
-          prop="legal_cert_end_date"
-        >
+        <el-form-item label="法人证件结束日期" prop="legal_cert_end_date">
           <el-date-picker
-            v-model="form.legal_cert_end_date"
             type="date"
             value-format="yyyyMMdd"
             :disabled="disabled"
             placeholder="选择日期"
+            v-model="form.legal_cert_end_date"
             style="width: 100%"
-          />
+          ></el-date-picker>
         </el-form-item>
-        <el-form-item
-          label="法人代表手机号码"
-          prop="legal_mobile"
-        >
-          <el-input
-            v-model="form.legal_mobile"
-            :disabled="disabled"
-          />
+        <el-form-item label="法人代表手机号码" prop="legal_mobile">
+          <el-input v-model="form.legal_mobile" :disabled="disabled"></el-input>
         </el-form-item>
-        <el-form-item
-          label="法人证件正面"
-          prop="legal_card_imgz"
-        >
+        <el-form-item label="法人证件正面" prop="legal_card_imgz">
           <el-upload
             class="avatar-uploader"
             action="#"
@@ -389,21 +286,11 @@
               }
             "
           >
-            <img
-              v-if="fileList.legal_card_imgz"
-              :src="fileList.legal_card_imgz"
-              class="avatar"
-            >
-            <i
-              v-else
-              class="el-icon-plus avatar-uploader-icon"
-            />
+            <img v-if="fileList.legal_card_imgz" :src="fileList.legal_card_imgz" class="avatar" />
+            <i v-else class="el-icon-plus avatar-uploader-icon"></i>
           </el-upload>
         </el-form-item>
-        <el-form-item
-          label="法人证件反面"
-          prop="legal_card_imgf"
-        >
+        <el-form-item label="法人证件反面" prop="legal_card_imgf">
           <el-upload
             class="avatar-uploader"
             action="#"
@@ -416,49 +303,21 @@
               }
             "
           >
-            <img
-              v-if="fileList.legal_card_imgf"
-              :src="fileList.legal_card_imgf"
-              class="avatar"
-            >
-            <i
-              v-else
-              class="el-icon-plus avatar-uploader-icon"
-            />
+            <img v-if="fileList.legal_card_imgf" :src="fileList.legal_card_imgf" class="avatar" />
+            <i v-else class="el-icon-plus avatar-uploader-icon"></i>
           </el-upload>
         </el-form-item>
-        <el-form-item
-          label="企业联系人姓名"
-          prop="contact_name"
-        >
-          <el-input
-            v-model="form.contact_name"
-            :disabled="disabled"
-          />
+        <el-form-item label="企业联系人姓名" prop="contact_name">
+          <el-input v-model="form.contact_name" :disabled="disabled"></el-input>
         </el-form-item>
-        <el-form-item
-          label="企业联系人手机"
-          prop="contact_mobile"
-        >
-          <el-input
-            v-model="form.contact_mobile"
-            :disabled="disabled"
-          />
+        <el-form-item label="企业联系人手机" prop="contact_mobile">
+          <el-input v-model="form.contact_mobile" :disabled="disabled"></el-input>
         </el-form-item>
-        <el-form-item
-          label="企业联系人邮箱"
-          prop="contact_email"
-        >
-          <el-input
-            v-model="form.contact_email"
-            :disabled="disabled"
-          />
+        <el-form-item label="企业联系人邮箱" prop="contact_email">
+          <el-input v-model="form.contact_email" :disabled="disabled"></el-input>
         </el-form-item>
 
-        <el-form-item
-          label="开户银行"
-          prop="bank_id"
-        >
+        <el-form-item label="开户银行" prop="bank_id">
           <el-select
             v-model="form.bank_id"
             placeholder="请选择开户银行"
@@ -468,31 +327,22 @@
           >
             <el-option
               v-for="i in bankData"
-              :key="i.bank_code"
               :label="i.bank_name"
               :value="i.bank_code"
-            />
+              :key="i.bank_code"
+            ></el-option>
           </el-select>
         </el-form-item>
-        <el-form-item
-          label="开户银行支行名称"
-          prop="bank_branch"
-        >
-          <el-input
-            v-model="form.bank_branch"
-            :disabled="disabled"
-          />
+        <el-form-item label="开户银行支行名称" prop="bank_branch">
+          <el-input v-model="form.bank_branch" :disabled="disabled"></el-input>
         </el-form-item>
         <el-row>
           <el-col :span="24">
-            <el-form-item
-              label="开户行省市信息"
-              prop="area"
-            >
+            <el-form-item label="开户行省市信息" prop="area">
               <el-cascader
-                v-model="form.area"
                 :disabled="disabled"
                 style="width: 100%"
+                v-model="form.area"
                 :options="areaData"
                 clearable
                 :props="{
@@ -501,7 +351,8 @@
                   children: 'child'
                 }"
                 @change="areaChange"
-              />
+              >
+              </el-cascader>
             </el-form-item>
             <!-- <el-form-item label="开户行省市信息" prop="bank_prov">
               <el-select
@@ -539,29 +390,14 @@
           </el-col> -->
         </el-row>
 
-        <el-form-item
-          label="开户银行账号名称"
-          prop="bank_acct_name"
-        >
-          <el-input
-            v-model="form.bank_acct_name"
-            :disabled="disabled"
-          />
+        <el-form-item label="开户银行账号名称" prop="bank_acct_name">
+          <el-input v-model="form.bank_acct_name" :disabled="disabled"></el-input>
         </el-form-item>
 
-        <el-form-item
-          label="开户银行账号"
-          prop="bank_acct_num"
-        >
-          <el-input
-            v-model="form.bank_acct_num"
-            :disabled="disabled"
-          />
+        <el-form-item label="开户银行账号" prop="bank_acct_num">
+          <el-input v-model="form.bank_acct_num" :disabled="disabled"></el-input>
         </el-form-item>
-        <el-form-item
-          label="开户银行许可证"
-          prop="bank_acct_img"
-        >
+        <el-form-item label="开户银行许可证" prop="bank_acct_img">
           <el-upload
             class="avatar-uploader"
             action="#"
@@ -574,25 +410,12 @@
               }
             "
           >
-            <img
-              v-if="fileList.bank_acct_img"
-              :src="fileList.bank_acct_img"
-              class="avatar"
-            >
-            <i
-              v-else
-              class="el-icon-plus avatar-uploader-icon"
-            />
+            <img v-if="fileList.bank_acct_img" :src="fileList.bank_acct_img" class="avatar" />
+            <i v-else class="el-icon-plus avatar-uploader-icon"></i>
           </el-upload>
         </el-form-item>
         <el-form-item>
-          <el-button
-            v-if="!disabled"
-            type="primary"
-            @click="onSubmit"
-          >
-            保存
-          </el-button>
+          <el-button type="primary" @click="onSubmit" v-if="!disabled">保存</el-button>
         </el-form-item>
       </el-form>
     </div>
@@ -605,7 +428,7 @@ import bankData from '@/common/hfpayBankData.json'
 import UploadUtil from '@/utils/uploadUtil'
 import { vaildateIdCard, isMobile, validEmail } from '@/utils/validate'
 export default {
-  data () {
+  data() {
     let vaildIdCard = (rule, value, callback) => {
       if (!vaildateIdCard(value)) {
         callback(new Error('请填写正确的身份证号码'))
@@ -761,7 +584,7 @@ export default {
       }
     }
   },
-  mounted () {
+  mounted() {
     let { id, type } = this.$route.query
     this.form.distributor_id = id
     let disabled = type == 0 ? true : false
@@ -770,7 +593,7 @@ export default {
     this.getData()
   },
   methods: {
-    async getData () {
+    async getData() {
       let distributor_id = this.form.distributor_id
       let apply_type = this.form.apply_type
       let res = await getHffile({ distributor_id, apply_type })
@@ -795,7 +618,7 @@ export default {
       this.form.bank_area = data.bank_area
       this.form.area = [this.form.bank_prov, this.form.bank_area]
     },
-    onSubmit () {
+    onSubmit() {
       this.$refs.form.validate((valid) => {
         if (valid) {
           let obj = JSON.parse(JSON.stringify(this.form))
@@ -814,7 +637,7 @@ export default {
       })
     },
 
-    handleChange (ctx, type) {
+    handleChange(ctx, type) {
       let { file } = ctx
       if (file) {
         if (file.type != 'image/jpeg' && file.type != 'image/png') {
@@ -843,7 +666,7 @@ export default {
         ctx.onSuccess()
       })
     },
-    areaChange (value) {
+    areaChange(value) {
       // console.log(value);
       // this.form.area = value
       this.form.bank_prov = value[0]

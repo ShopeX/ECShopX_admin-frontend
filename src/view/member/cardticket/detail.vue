@@ -1,20 +1,10 @@
 <template lang="html">
-  <el-tabs
-    v-model="activeName"
-    type="border-card"
-    @tab-click="handleClick"
-  >
-    <el-tab-pane
-      :label="title + '-卡券领取记录'"
-      name="first"
-    >
-      <receive :get-status="receive" />
+  <el-tabs v-model="activeName" type="border-card" @tab-click="handleClick">
+    <el-tab-pane :label="title + '-卡券领取记录'" name="first">
+      <receive :get-status="receive"></receive>
     </el-tab-pane>
-    <el-tab-pane
-      :label="title + '-卡券使用记录'"
-      name="second"
-    >
-      <used :get-status="used" />
+    <el-tab-pane :label="title + '-卡券使用记录'" name="second">
+      <used :get-status="used"></used>
     </el-tab-pane>
   </el-tabs>
 </template>
@@ -28,7 +18,7 @@ export default {
     receive,
     used
   },
-  data () {
+  data() {
     return {
       title: '',
       activeName: 'first',
@@ -36,7 +26,17 @@ export default {
       used: false
     }
   },
-  mounted () {
+  methods: {
+    //充值送钱
+    handleClick(tab, event) {
+      if (this.activeName === 'first') {
+        this.receive = true
+      } else if (this.activeName === 'second') {
+        this.used = true
+      }
+    }
+  },
+  mounted() {
     if (this.$route.query.name) {
       this.activeName = this.$route.query.name
     }
@@ -47,16 +47,6 @@ export default {
       this.receive = true
     } else if (this.activeName === 'second') {
       this.used = true
-    }
-  },
-  methods: {
-    //充值送钱
-    handleClick (tab, event) {
-      if (this.activeName === 'first') {
-        this.receive = true
-      } else if (this.activeName === 'second') {
-        this.used = true
-      }
     }
   }
 }

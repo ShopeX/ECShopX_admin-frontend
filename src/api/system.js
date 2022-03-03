@@ -1,6 +1,6 @@
 import fetch from '@/utils/fetch'
 
-export function getBrandLogo () {
+export function getBrandLogo() {
   return fetch({
     url: '/companys/setting',
     method: 'get'
@@ -8,7 +8,7 @@ export function getBrandLogo () {
 }
 
 //获取分享设置
-export function getShareParams () {
+export function getShareParams() {
   return fetch({
     url: '/shareParameters/setting',
     method: 'get'
@@ -16,7 +16,7 @@ export function getShareParams () {
 }
 
 //设置分享设置
-export function saveShareParams (data) {
+export function saveShareParams(data) {
   return fetch({
     url: '/shareParameters/setting',
     method: 'post',

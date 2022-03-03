@@ -1,11 +1,6 @@
 <template>
   <section class="section section-white">
-    <el-form
-      ref="form"
-      :model="form"
-      label-width="100px"
-      label-position="left"
-    >
+    <el-form ref="form" :model="form" label-width="100px" label-position="left">
       <div class="section-header with-border">
         创建商品
       </div>
@@ -13,46 +8,23 @@
         <el-form-item label="物品名称">
           <el-row :gutter="20">
             <el-col :span="6">
-              <el-input
-                v-model="form.thing_name"
-                type="text"
-                placeholder=""
-              />
+              <el-input type="text" placeholder="" v-model="form.thing_name"></el-input>
             </el-col>
           </el-row>
         </el-form-item>
         <el-form-item label="官方售价">
           <el-row :gutter="20">
             <el-col :span="6">
-              <el-input
-                v-model="form.price"
-                type="number"
-                placeholder=""
-              />
+              <el-input type="number" placeholder="" v-model="form.price"></el-input>
             </el-col>
           </el-row>
         </el-form-item>
-        <el-form-item
-          label="物品图片"
-          prop="ad_pic"
-        >
-          <p class="frm-tips">
-            点击图片可更换，图片大小不能超过 2MB
-          </p>
+        <el-form-item label="物品图片" prop="ad_pic">
+          <p class="frm-tips">点击图片可更换，图片大小不能超过 2MB</p>
           <div>
-            <div
-              class="upload-box"
-              @click="handleImgChange"
-            >
-              <img
-                v-if="form.pic"
-                :src="wximageurl + form.pic"
-                class="avatar"
-              >
-              <i
-                v-else
-                class="el-icon-plus avatar-uploader-icon"
-              />
+            <div @click="handleImgChange" class="upload-box">
+              <img v-if="form.pic" :src="wximageurl + form.pic" class="avatar" />
+              <i v-else class="el-icon-plus avatar-uploader-icon"></i>
             </div>
           </div>
           <imgPicker
@@ -60,47 +32,33 @@
             :sc-status="isGetImage"
             @chooseImg="pickImg"
             @closeImgDialog="closeImgDialog"
-          />
+          ></imgPicker>
         </el-form-item>
         <el-form-item label="物品详情">
           <el-row :gutter="20">
             <el-col :span="20">
               <vue-html5-editor
-                ref="editor"
                 :content="form.intro"
-                :height="360"
+                ref="editor"
                 @change="updateContent"
-              />
-              <span
-                class="tpl_item img"
-                style=""
-                @click="addImgPreview"
-              >
-                <i class="iconfont icon-image" />图片
+                :height="360"
+              ></vue-html5-editor>
+              <span class="tpl_item img" @click="addImgPreview" style="">
+                <i class="iconfont icon-image"></i>图片
               </span>
               <imgPicker
                 :dialog-visible="thumbDialog"
                 :sc-status="isGetThumb"
                 @chooseImg="pickThumb"
                 @closeImgDialog="closeThumbDialog"
-              />
+              ></imgPicker>
             </el-col>
           </el-row>
         </el-form-item>
       </div>
       <div class="section-footer with-border content-center">
-        <el-button
-          type="default"
-          @click.native="handleCancel"
-        >
-          取消
-        </el-button>
-        <el-button
-          type="primary"
-          @click="submitThingsAction"
-        >
-          保存
-        </el-button>
+        <el-button type="default" @click.native="handleCancel">取消</el-button>
+        <el-button type="primary" @click="submitThingsAction">保存</el-button>
       </div>
     </el-form>
   </section>
@@ -115,7 +73,7 @@ export default {
   components: {
     imgPicker
   },
-  data () {
+  data() {
     return {
       imgDialog: false,
       isGetImage: false,
@@ -132,45 +90,25 @@ export default {
       }
     }
   },
-  mounted () {
-    if (this.$route.query.thing_id) {
-      // 初始化门店数据
-      getThingsDetail(this.$route.query.thing_id)
-        .then((response) => {
-          console.log(response)
-          let thingsDetailData = response.data.data
-
-          this.form.thing_id = thingsDetailData.thing_id
-          this.form.thing_name = thingsDetailData.thing_name
-          this.form.price = thingsDetailData.price / 100
-          this.form.pic = thingsDetailData.pic
-          this.form.intro = thingsDetailData.intro
-          console.log(this.form)
-        })
-        .catch((error) => {
-          this.$router.push({ path: '/brand/onecode' })
-        })
-    }
-  },
   methods: {
     // 物品图片
-    handleImgChange: function () {
+    handleImgChange: function() {
       this.imgDialog = true
       this.isGetImage = true
     },
-    pickImg: function (data) {
+    pickImg: function(data) {
       this.form.pic = data.url
       this.imgDialog = false
     },
-    closeImgDialog: function () {
+    closeImgDialog: function() {
       this.imgDialog = false
     },
     // 图文详情中的图片
-    addImgPreview: function () {
+    addImgPreview: function() {
       this.thumbDialog = true
       this.isGetThumb = true
     },
-    pickThumb: function (data) {
+    pickThumb: function(data) {
       if (data && data.url !== '') {
         this.thumbDialog = false
         var index = this.$refs.editor.$el.id
@@ -187,13 +125,13 @@ export default {
         this.form.intro = loc.$refs.content.innerHTML
       }
     },
-    closeThumbDialog: function () {
+    closeThumbDialog: function() {
       this.thumbDialog = false
     },
-    updateContent: function (data) {
+    updateContent: function(data) {
       this.form.intro = data
     },
-    handlePicChange: function (file, fileList) {
+    handlePicChange: function(file, fileList) {
       let that = this
       if (file && file.raw) {
         if (file.raw.type !== 'image/jpeg' && file.raw.type !== 'image/png') {
@@ -210,7 +148,7 @@ export default {
         that.form.pic = res.data.data.url
       })
     },
-    submitThingsAction: function () {
+    submitThingsAction: function() {
       // 提交商品
       if (this.form.thing_id) {
         updateThings(this.form.thing_id, this.form)
@@ -238,8 +176,28 @@ export default {
           })
       }
     },
-    handleCancel: function () {
+    handleCancel: function() {
       this.$router.go(-1)
+    }
+  },
+  mounted() {
+    if (this.$route.query.thing_id) {
+      // 初始化门店数据
+      getThingsDetail(this.$route.query.thing_id)
+        .then((response) => {
+          console.log(response)
+          let thingsDetailData = response.data.data
+
+          this.form.thing_id = thingsDetailData.thing_id
+          this.form.thing_name = thingsDetailData.thing_name
+          this.form.price = thingsDetailData.price / 100
+          this.form.pic = thingsDetailData.pic
+          this.form.intro = thingsDetailData.intro
+          console.log(this.form)
+        })
+        .catch((error) => {
+          this.$router.push({ path: '/brand/onecode' })
+        })
     }
   }
 }

@@ -3,142 +3,89 @@
     <el-row :span="20">
       <el-col :span="12">
         门店：
-        <el-select
-          v-model="shopId"
-          @change="storeChange"
-        >
+        <el-select v-model="shopId" @change="storeChange">
           <el-option
             v-for="item in shopListData"
             :key="item.wxShopId"
             :label="item.storeName"
             :value="item.wxShopId"
-          />
+          ></el-option>
         </el-select>
       </el-col>
-      <el-col
-        :span="12"
-        class="content-right"
-      >
-        <el-button
-          type="primary"
-          icon="plus"
-          @click="addResource"
+      <el-col :span="12" class="content-right">
+        <el-button type="primary" icon="plus" @click="addResource"
+          >添加{{ resourceName }}</el-button
         >
-          添加{{ resourceName }}
-        </el-button>
       </el-col>
     </el-row>
-    <el-table
-      v-loading="loading"
-      :data="resourceLevelList"
-      :height="wheight - 170"
-      border
-    >
-      <el-table-column
-        prop="shopName"
-        label="所属门店"
-      />
-      <el-table-column
-        prop="name"
-        :label="resourceName + '名称'"
-      />
-      <el-table-column
-        prop="materialIds.length"
-        label="服务项目数"
-      />
-      <el-table-column
-        prop="materialIds.status"
-        label="服务项目数"
-      >
+    <el-table :data="resourceLevelList" :height="wheight - 170" border v-loading="loading">
+      <el-table-column prop="shopName" label="所属门店"></el-table-column>
+      <el-table-column prop="name" :label="resourceName + '名称'"></el-table-column>
+      <el-table-column prop="materialIds.length" label="服务项目数"></el-table-column>
+      <el-table-column prop="materialIds.status" label="服务项目数">
         <template slot-scope="scope">
-          <el-tag v-if="scope.row.status == 'active'">
-            已开启
-          </el-tag>
-          <el-tag
-            v-if="scope.row.status == 'invalid'"
-            type="success"
-          >
-            已关闭
-          </el-tag>
+          <el-tag v-if="scope.row.status == 'active'">已开启</el-tag>
+          <el-tag v-if="scope.row.status == 'invalid'" type="success">已关闭</el-tag>
         </template>
       </el-table-column>
       <el-table-column label="操作">
         <template slot-scope="scope">
-          <a
-            href="javascript:void(0)"
-            @click="getDetail(scope.row.resourceLevelId)"
-          >查看</a>
+          <a href="javascript:void(0)" @click="getDetail(scope.row.resourceLevelId)">查看</a>
           &nbsp;
           <a
             href="javascript:void(0)"
             @click="updateResource(scope.row.resourceLevelId, scope.row.shopId)"
-          >编辑</a>
+            >编辑</a
+          >
           &nbsp;
           <a
             href="javascript:void(0)"
             @click="deleteResource(scope.row.resourceLevelId, scope.row.shopId)"
-          >删除</a>
+            >删除</a
+          >
           &nbsp;
           <a
+            href="javascript:void(0)"
             v-if="scope.row.status == 'active'"
-            href="javascript:void(0)"
             @click="updateStatus(scope.row.resourceLevelId, scope.row.status)"
-          >关闭</a>
+            >关闭</a
+          >
           <a
-            v-if="scope.row.status == 'invalid'"
             href="javascript:void(0)"
+            v-if="scope.row.status == 'invalid'"
             @click="updateStatus(scope.row.resourceLevelId, scope.row.status)"
-          >开启</a>
+            >开启</a
+          >
         </template>
       </el-table-column>
     </el-table>
-    <div
-      v-if="total_count > params.pageSize"
-      class="content-padded content-center"
-    >
+    <div v-if="total_count > params.pageSize" class="content-padded content-center">
       <el-pagination
         layout="prev, pager, next"
+        @current-change="handleCurrentChange"
         :current-page.sync="params.page"
         :total="total_count"
         :page-size="params.pageSize"
-        @current-change="handleCurrentChange"
-      />
-    </div>
-    <el-dialog
-      title="详情"
-      :visible.sync="detailDialog"
-      :close-on-click-modal="false"
-    >
-      <el-form
-        v-model="detailForm"
-        label-width="160px"
       >
+      </el-pagination>
+    </div>
+    <el-dialog title="详情" :visible.sync="detailDialog" :close-on-click-modal="false">
+      <el-form v-model="detailForm" label-width="160px">
         <el-form-item label="名称：">
-          <span
-            class="text-ellipsis"
-            :title="detailForm.name"
-          >{{ detailForm.name }}</span>
+          <span class="text-ellipsis" :title="detailForm.name">{{ detailForm.name }}</span>
         </el-form-item>
         <el-form-item label="所属门店：">
           {{ detailForm.shopName }}
         </el-form-item>
         <el-form-item label="服务项目：">
           <el-row>
-            <el-col
-              v-for="item in serverproject"
-              :key="index"
-              :span="6"
-              :title="item.label"
-            >
+            <el-col :span="6" v-for="item in serverproject" :title="item.label" :key="index">
               <span>{{ item }}</span>
             </el-col>
           </el-row>
         </el-form-item>
         <el-form-item label="简介：">
-          <span
-            class="text-ellipsis"
-            :title="detailForm.description"
-          >{{
+          <span class="text-ellipsis" :title="detailForm.description">{{
             detailForm.description
           }}</span>
         </el-form-item>
@@ -147,20 +94,12 @@
             v-if="detailForm.imageUrl"
             :src="detailForm.imageUrl ? wximageurl + detailForm.imageUrl : ''"
             class="avatar"
-          >
+          />
           <span v-else>无图片</span>
         </el-form-item>
       </el-form>
-      <div
-        slot="footer"
-        class="dialog-footer content-center"
-      >
-        <el-button
-          type="primary"
-          @click="detailDialog = false"
-        >
-          确定
-        </el-button>
+      <div slot="footer" class="dialog-footer content-center">
+        <el-button type="primary" @click="detailDialog = false">确定</el-button>
       </div>
     </el-dialog>
   </div>
@@ -177,7 +116,7 @@ import { getWxShopsList } from '../../../../api/shop'
 import { getServiceLabelsList } from '../../../../api/goods'
 export default {
   props: ['isLoad', 'resourceName'],
-  data () {
+  data() {
     return {
       shopListData: [],
       shopId: '',
@@ -201,32 +140,16 @@ export default {
   computed: {
     ...mapGetters(['wheight'])
   },
-  watch: {
-    isLoad (newValue, oldValue) {
-      if (newValue) {
-        this.resourceLevelList = []
-        this.getStoreList()
-        if (this.shopId) {
-          this.params.shopId = this.shopId
-          this.getLevelList()
-        }
-      }
-    }
-  },
-  mounted () {
-    this.getStoreList()
-    this.getLevelList()
-  },
   methods: {
-    handleCurrentChange (page_num) {
+    handleCurrentChange(page_num) {
       this.params.page = page_num
       this.params.shopId = this.shopId
       this.getLevelList()
     },
-    addResource () {
+    addResource() {
       this.$router.push({ path: this.matchHidePage('editor'), query: { id: '' } })
     },
-    updateResource (resourceLevelId, shopId) {
+    updateResource(resourceLevelId, shopId) {
       var index
       for (index in this.shopListData) {
         if (shopId == this.shopListData[index].wxShopId) {
@@ -242,7 +165,7 @@ export default {
       }
       this.$router.push({ path: this.matchHidePage('editor'), query: { id: resourceLevelId } })
     },
-    deleteResource (resourceLevelId, shopId) {
+    deleteResource(resourceLevelId, shopId) {
       this.$confirm('确定删除该条数据么？', '提示', {
         cancelButtonText: '取消',
         confirmButtonText: '确定',
@@ -267,7 +190,7 @@ export default {
         }
       })
     },
-    getDetail (resourceLevelId) {
+    getDetail(resourceLevelId) {
       if (resourceLevelId) {
         this.detailDialog = true
         getResourceLevel(resourceLevelId).then((res) => {
@@ -277,12 +200,12 @@ export default {
         })
       }
     },
-    storeChange (shopId) {
+    storeChange(shopId) {
       this.params.shopId = shopId
       this.params.page = 1
       this.getLevelList()
     },
-    getLevelList () {
+    getLevelList() {
       this.loading = true
       getListResourceLevel(this.params).then((res) => {
         if (res.data.data.list) {
@@ -294,7 +217,7 @@ export default {
         this.loading = false
       })
     },
-    getStoreList () {
+    getStoreList() {
       this.storeList = []
       this.loading = true
       var shopFilter = { page: 1, pageSize: 500 }
@@ -307,7 +230,7 @@ export default {
         this.loading = false
       })
     },
-    getLabelsList (materialIds) {
+    getLabelsList(materialIds) {
       this.serverproject = []
       var params = { page: 1, pageSize: 100 }
       params.service_type = 'timescard'
@@ -323,7 +246,7 @@ export default {
         }
       })
     },
-    updateStatus (id, status) {
+    updateStatus(id, status) {
       let params = {
         resourceLevelId: id,
         status: status == 'invalid' ? 'true' : 'false'
@@ -346,6 +269,22 @@ export default {
           done()
         }
       })
+    }
+  },
+  mounted() {
+    this.getStoreList()
+    this.getLevelList()
+  },
+  watch: {
+    isLoad(newValue, oldValue) {
+      if (newValue) {
+        this.resourceLevelList = []
+        this.getStoreList()
+        if (this.shopId) {
+          this.params.shopId = this.shopId
+          this.getLevelList()
+        }
+      }
     }
   }
 }

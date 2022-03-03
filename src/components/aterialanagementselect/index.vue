@@ -8,8 +8,8 @@
     >
       <div class="appmsg_list media_dialog">
         <div
-          v-for="(item, index) in newsList"
           class="appmsg_col"
+          v-for="(item, index) in newsList"
           :class="{ 'checked': i === index }"
           @click="selcteItem(item, index)"
         >
@@ -21,10 +21,7 @@
               <div class="msg-info">
                 <span>更新于 {{ item.update_time | datetime }}</span>
               </div>
-              <div
-                class="sub-msg-item"
-                :class="{ coverMsgItem: item.content.news_item[1] }"
-              >
+              <div class="sub-msg-item" :class="{ coverMsgItem: item.content.news_item[1] }">
                 <h4 class="msg-title">
                   <a>{{ item.content.news_item[0].title }}</a>
                 </h4>
@@ -33,66 +30,45 @@
                   :style="{
                     backgroundImage: 'url(' + wximageurl + item.content.news_item[0].thumb_url + ')'
                   }"
-                />
-                <a
-                  :href="item.content.news_item[0].url"
-                  class="edit-mask preview-mask"
-                >
-                  <div class="edit-mask-content">预览文章</div>
+                ></div>
+                <a :href="item.content.news_item[0].url" class="edit-mask preview-mask">
+                  <div class="edit-mask-content">
+                    预览文章
+                  </div>
                 </a>
               </div>
-              <p
-                v-if="!item.content.news_item[1]"
-                class="msg-desc"
-              >
+              <p class="msg-desc" v-if="!item.content.news_item[1]">
                 {{ item.content.news_item[0].digest }}
               </p>
-              <div
-                v-for="n in item.content.news_item.length - 1"
-                :key=""
-              >
-                <div
-                  v-if="item.content.news_item[1]"
-                  class="article-msg-item has-cover clearfix"
-                >
+              <div v-for="n in item.content.news_item.length - 1" :key="">
+                <div class="article-msg-item has-cover clearfix" v-if="item.content.news_item[1]">
                   <div
                     class="msg-thumb-wrap"
                     :style="{
                       backgroundImage:
                         'url(' + wximageurl + item.content.news_item[n].thumb_url + ')'
                     }"
-                  />
+                  ></div>
                   <h4 class="msg-title">
                     <a>{{ item.content.news_item[n].title }}</a>
                   </h4>
-                  <a
-                    :href="item.content.news_item[n].url"
-                    class="edit-mask preview-mask"
-                  >
-                    <div class="edit-mask-content">预览文章</div>
+                  <a :href="item.content.news_item[n].url" class="edit-mask preview-mask">
+                    <div class="edit-mask-content">
+                      预览文章
+                    </div>
                   </a>
                 </div>
               </div>
             </div>
             <div class="preview-mask-wrap appmsg_mask">
-              <i class="el-icon-check" />
+              <i class="el-icon-check"></i>
             </div>
           </div>
         </div>
       </div>
-      <div
-        slot="footer"
-        class="dialog-footer"
-      >
-        <el-button @click="cancelAction">
-          取 消
-        </el-button>
-        <el-button
-          type="primary"
-          @click="saveAction"
-        >
-          确 定
-        </el-button>
+      <div slot="footer" class="dialog-footer">
+        <el-button @click="cancelAction">取 消</el-button>
+        <el-button type="primary" @click="saveAction">确 定</el-button>
       </div>
     </el-dialog>
   </div>
@@ -102,7 +78,7 @@
 import { getWechatMaterial } from '../../api/wechat'
 export default {
   props: ['scVisible', 'scStatus'],
-  data () {
+  data() {
     return {
       i: -1,
       selectedItem: {},
@@ -110,43 +86,43 @@ export default {
       newsList: []
     }
   },
-  computed: {
-    showDialog: {
-      get: function () {
-        return this.scVisible
-      },
-      set: function (v) {
-        this.scVisible = v
-      }
-    }
-  },
-  watch: {
-    scStatus (newV) {
-      if (newV) {
-        let data = { type: 'news' }
-        this.getNewsList(data)
-      }
-    }
-  },
   methods: {
-    selcteItem (item, index) {
+    selcteItem(item, index) {
       this.i = index
       this.selectedItem = item
     },
-    saveAction () {
+    saveAction() {
       if (document.getElementsByClassName('checked').length > 0) {
         this.selectedHtml = document.getElementsByClassName('checked')[0].innerHTML
       }
       this.$emit('chooseSC', { selectedItem: this.selectedItem, html: this.selectedHtml })
     },
-    cancelAction () {
+    cancelAction() {
       this.$emit('closeSCDialog')
     },
-    getNewsList (data) {
+    getNewsList(data) {
       if (this.scStatus) {
         getWechatMaterial(data).then((response) => {
           this.newsList = response.data.data.item
         })
+      }
+    }
+  },
+  computed: {
+    showDialog: {
+      get: function() {
+        return this.scVisible
+      },
+      set: function(v) {
+        this.scVisible = v
+      }
+    }
+  },
+  watch: {
+    scStatus(newV) {
+      if (newV) {
+        let data = { type: 'news' }
+        this.getNewsList(data)
       }
     }
   }

@@ -1,20 +1,20 @@
 import fetch from '../utils/fetch'
 
-export function getWxaAuthList () {
+export function getWxaAuthList() {
   return fetch({
     url: '/wxa/authorizer',
     method: 'get'
   })
 }
 
-export function getWxa (wid) {
+export function getWxa(wid) {
   return fetch({
     url: '/wxa/' + wid,
     method: 'get'
   })
 }
 
-export function submitWxa (query) {
+export function submitWxa(query) {
   return fetch({
     url: '/wxa',
     method: 'post',
@@ -22,7 +22,7 @@ export function submitWxa (query) {
   })
 }
 
-export function getCodeUnlimit (query) {
+export function getCodeUnlimit(query) {
   return fetch({
     url: '/wxa/codeunlimit',
     method: 'get',
@@ -30,7 +30,7 @@ export function getCodeUnlimit (query) {
   })
 }
 
-export function getTestQrcode (query) {
+export function getTestQrcode(query) {
   return fetch({
     url: '/wxa/testqrcode',
     method: 'get',
@@ -38,7 +38,7 @@ export function getTestQrcode (query) {
   })
 }
 
-export function tryRelease (query) {
+export function tryRelease(query) {
   return fetch({
     url: '/wxa/tryrelease',
     method: 'post',
@@ -46,7 +46,7 @@ export function tryRelease (query) {
   })
 }
 
-export function setPageParams (query) {
+export function setPageParams(query) {
   return fetch({
     url: '/wxa/pageparams/setting',
     method: 'post',
@@ -54,7 +54,7 @@ export function setPageParams (query) {
   })
 }
 
-export function getParamByTempName (query) {
+export function getParamByTempName(query) {
   return fetch({
     url: '/wxa/pageparams/setting',
     method: 'get',
@@ -62,7 +62,7 @@ export function getParamByTempName (query) {
   })
 }
 
-export function undocodeaudit (query) {
+export function undocodeaudit(query) {
   return fetch({
     url: '/wxa/undocodeaudit',
     method: 'get',
@@ -70,7 +70,7 @@ export function undocodeaudit (query) {
   })
 }
 
-export function revertcoderelease (query) {
+export function revertcoderelease(query) {
   return fetch({
     url: '/wxa/revertcoderelease',
     method: 'get',
@@ -78,7 +78,7 @@ export function revertcoderelease (query) {
   })
 }
 
-export function updateParamsById (query) {
+export function updateParamsById(query) {
   return fetch({
     url: '/wxa/pageparams/setting',
     method: 'put',
@@ -86,7 +86,7 @@ export function updateParamsById (query) {
   })
 }
 
-export function savePageParams (query) {
+export function savePageParams(query) {
   return fetch({
     url: '/wxa/pageparams/setting_all',
     method: 'post',
@@ -94,7 +94,7 @@ export function savePageParams (query) {
   })
 }
 
-export function getWxaMessageTemplateList (query) {
+export function getWxaMessageTemplateList(query) {
   return fetch({
     url: '/wxa/notice/templates',
     method: 'get',
@@ -117,7 +117,7 @@ export function getCustomPageList (query) {
   })
 }
 
-export function openWxaMessageTemplate (query) {
+export function openWxaMessageTemplate(query) {
   return fetch({
     url: '/wxa/notice/templates',
     method: 'put',
@@ -125,7 +125,7 @@ export function openWxaMessageTemplate (query) {
   })
 }
 
-export function createCustomPage (query) {
+export function createCustomPage(query) {
   return fetch({
     url: '/wxa/customizepage',
     method: 'post',
@@ -133,7 +133,7 @@ export function createCustomPage (query) {
   })
 }
 
-export function editCustomPage (id, query) {
+export function editCustomPage(id, query) {
   return fetch({
     url: `/wxa/customizepage/${id}`,
     method: 'put',
@@ -141,7 +141,7 @@ export function editCustomPage (id, query) {
   })
 }
 
-export function delCustomPage (id, query) {
+export function delCustomPage(id, query) {
   return fetch({
     url: `/wxa/customizepage/${id}`,
     method: 'delete',
@@ -149,7 +149,7 @@ export function delCustomPage (id, query) {
   })
 }
 // 修改小程序配置信息
-export function configSubmitHandle (wid, query) {
+export function configSubmitHandle(wid, query) {
   return fetch({
     url: '/wxa/config/' + wid,
     method: 'put',
@@ -157,7 +157,7 @@ export function configSubmitHandle (wid, query) {
   })
 }
 // 获取小程序配置
-export function getWxaConfig (wid) {
+export function getWxaConfig(wid) {
   return fetch({
     url: '/wxa/config/' + wid,
     method: 'get'
@@ -165,7 +165,7 @@ export function getWxaConfig (wid) {
 }
 
 // 添加直连小程序
-export function addWxapp (query) {
+export function addWxapp(query) {
   return fetch({
     url: '/wechat/directbind',
     method: 'post',
@@ -173,7 +173,7 @@ export function addWxapp (query) {
   })
 }
 
-export function submitOnlyCode (query) {
+export function submitOnlyCode(query) {
   return fetch({
     url: '/wxa/onlycode',
     method: 'post',
@@ -181,7 +181,7 @@ export function submitOnlyCode (query) {
   })
 }
 
-export function submitReview (query) {
+export function submitReview(query) {
   return fetch({
     url: '/wxa/submitreview',
     method: 'post',
@@ -189,14 +189,14 @@ export function submitReview (query) {
   })
 }
 
-export function getDomainList (query) {
+export function getDomainList(query) {
   return fetch({
     url: '/wxa/getdomainlist',
     method: 'post',
     params: query
   })
 }
-export function saveDomain (query) {
+export function saveDomain(query) {
   return fetch({
     url: '/wxa/savedomain',
     method: 'post',
@@ -205,7 +205,7 @@ export function saveDomain (query) {
 }
 
 // 保存小程序模板
-export function saveTemplate (query) {
+export function saveTemplate(query) {
   return fetch({
     url: '/wxappTemplate/wxapp',
     method: 'put',
@@ -214,7 +214,7 @@ export function saveTemplate (query) {
 }
 
 // 获取相关域名
-export function getdomain () {
+export function getdomain() {
   return fetch({
     url: '/wxappTemplate/domain',
     method: 'get'
@@ -222,7 +222,7 @@ export function getdomain () {
 }
 
 // 设置相关域名
-export function setdomain (query) {
+export function setdomain(query) {
   return fetch({
     url: '/wxappTemplate/domain',
     method: 'put',
@@ -231,7 +231,7 @@ export function setdomain (query) {
 }
 
 // 设置相关域名
-export function getShareInfo (query) {
+export function getShareInfo(query) {
   return fetch({
     url: '/memberCenterShare/getInfo',
     method: 'get',
@@ -239,7 +239,7 @@ export function getShareInfo (query) {
   })
 }
 
-export function setShareInfo (query) {
+export function setShareInfo(query) {
   return fetch({
     url: '/memberCenterShare/set',
     method: 'post',
@@ -248,7 +248,7 @@ export function setShareInfo (query) {
 }
 
 // 获取小程序外链配置
-export function getWxLinkListSetting (query) {
+export function getWxLinkListSetting(query) {
   return fetch({
     url: '/wxexternalconfig/list',
     method: 'get',
@@ -257,7 +257,7 @@ export function getWxLinkListSetting (query) {
 }
 
 // 添加小程序外链配置
-export function createWxLinkSetting (query) {
+export function createWxLinkSetting(query) {
   return fetch({
     url: '/wxexternalconfig/create',
     method: 'post',
@@ -266,7 +266,7 @@ export function createWxLinkSetting (query) {
 }
 
 // 更新小程序外链配置
-export function updateWxLinkSetting (query) {
+export function updateWxLinkSetting(query) {
   const { wx_external_config_id: id } = query
   return fetch({
     url: `/wxexternalconfig/update/${id}`,
@@ -280,12 +280,12 @@ export function removeWxLinkSetting (query) {
   const { id: id } = query
   return fetch({
     url: `/wxexternalconfig/${id}`,
-    method: 'delete'
+    method: 'delete',
   })
 }
 
 // 获取小程序外链
-export function getWxLinkList (query) {
+export function getWxLinkList(query) {
   return fetch({
     url: '/wxexternalroutes/list',
     method: 'get',
@@ -294,7 +294,7 @@ export function getWxLinkList (query) {
 }
 
 // 添加小程序外链配置
-export function createWxLink (query) {
+export function createWxLink(query) {
   return fetch({
     url: '/wxexternalroutes/create',
     method: 'post',
@@ -303,7 +303,7 @@ export function createWxLink (query) {
 }
 
 // 更新小程序外链配置
-export function updateWxLink (query) {
+export function updateWxLink(query) {
   const { wx_external_routes_id: id } = query
   return fetch({
     url: `/wxexternalroutes/update/${id}`,
@@ -317,12 +317,12 @@ export function removeWxLink (query) {
   const { id: id } = query
   return fetch({
     url: `/wxexternalroutes/${id}`,
-    method: 'delete'
+    method: 'delete',
   })
 }
 
 // 获取外部小程序配置路径列表
-export function getWxConfigLink (query) {
+export function getWxConfigLink(query) {
   return fetch({
     url: '/wxexternalconfigroutes/list',
     method: 'get',
@@ -331,7 +331,7 @@ export function getWxConfigLink (query) {
 }
 
 // 获取购物车提醒配置信息
-export function getCartremindSetting () {
+export function getCartremindSetting() {
   return fetch({
     url: '/wxa/cartremind/setting',
     method: 'get'
@@ -339,7 +339,7 @@ export function getCartremindSetting () {
 }
 
 // 保存购物车提醒配置信息
-export function setCartremindSetting (query) {
+export function setCartremindSetting(query) {
   return fetch({
     url: '/wxa/cartremind/setting',
     method: 'post',

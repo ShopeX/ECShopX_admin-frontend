@@ -1,69 +1,48 @@
 <template>
   <div>
     <span>时间筛选：</span>
-    <el-select
-      v-model="timeType"
-      type="timeType"
-      @change="typeChange"
+    <el-select type="timeType" v-model="timeType" @change="typeChange">
+      <el-option label="最近7天" :value="1"></el-option>
+      <el-option label="最近30天" :value="2"></el-option>
+      <el-option label="自然天" :value="3"></el-option>
+      <el-option label="今日实时" :value="4"></el-option>
+      <el-option label="自定义" :value="5"></el-option> </el-select
+    >&nbsp;
+    <span v-if="isNeardate"
+      >{{ typeText
+      }}<span v-if="isRealTime" class="refresh" @click="getRealTime">&nbsp;刷新</span></span
     >
-      <el-option
-        label="最近7天"
-        :value="1"
-      />
-      <el-option
-        label="最近30天"
-        :value="2"
-      />
-      <el-option
-        label="自然天"
-        :value="3"
-      />
-      <el-option
-        label="今日实时"
-        :value="4"
-      />
-      <el-option
-        label="自定义"
-        :value="5"
-      />
-    </el-select>&nbsp;
-    <span
-      v-if="isNeardate"
-    >{{ typeText
-    }}<span
-      v-if="isRealTime"
-      class="refresh"
-      @click="getRealTime"
-    >&nbsp;刷新</span></span>
     <el-date-picker
-      v-if="ischooseDay"
       v-model="chooseDate"
       type="date"
       placeholder="选择日期"
       :picker-options="pickerOptions"
-    />
+      v-if="ischooseDay"
+    >
+    </el-date-picker>
     <el-date-picker
-      v-if="iscustom"
       v-model="customDate"
       type="daterange"
       placeholder="选择日期范围"
       :picker-options="pickerOptions2"
-    />
+      v-if="iscustom"
+    >
+    </el-date-picker>
   </div>
 </template>
 
 <script>
 export default {
   props: ['defaultText', 'defaultValue'],
-  data () {
+  data() {
     return {
       pickerOptions: {
-        disabledDate (time) {
+        disabledDate(time) {
           return time.getTime() > Date.now() - 8.64e7
         }
       },
       pickerOptions2: {
-        disabledDate (time) {
+        disabledDate(time) {
           return time.getTime() > Date.now() - 8.64e7
         }
       },
@@ -77,15 +56,11 @@ export default {
       iscustom: false
     }
   },
-  mounted () {
-    this.timeType = this.defaultText
-    this.timeTypeChange(this.defaultValue)
-  },
   methods: {
-    typeChange (val) {
+    typeChange(val) {
       this.timeTypeChange(val)
     },
-    timeTypeChange (val) {
+    timeTypeChange(val) {
       var day = 86400000
       var yesterday = new Date(new Date().getTime() - day)
       yesterday = this.getTaskTime(yesterday, true)
@@ -114,7 +89,7 @@ export default {
           break
       }
     },
-    getTaskTime (s, isShortTime) {
+    getTaskTime(s, isShortTime) {
       let date = s ? s : new Date()
       let y = date.getFullYear()
       let m = date.getMonth() + 1
@@ -132,9 +107,13 @@ export default {
         : y + '-' + m + '-' + d + ' ' + h + ':' + mm + ':' + ms
       return str
     },
-    getRealTime () {
+    getRealTime() {
       this.typeText = this.getTaskTime('', false)
     }
+  },
+  mounted() {
+    this.timeType = this.defaultText
+    this.timeTypeChange(this.defaultValue)
   }
 }
 </script>

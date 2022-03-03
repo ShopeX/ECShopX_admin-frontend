@@ -16,14 +16,14 @@ export default {
         {
           path: 'editor/:itemId?',
           component: () => import('@/view/mall/goods/physical/add'),
-          meta: {
-            footerFixed: true
-          }
+          meta:{
+            footerFixed: true,
+          },
         },
         {
           path: 'physicalstoreupload',
           name: `库存导入`,
-          component: () => import('@/view/mall/goods/physical/normalGoodsStoreUpload')
+          component: () => import('@/view/mall/goods/physical/normalGoodsStoreUpload'),
         },
         {
           path: 'physicalprofitupload',
@@ -34,7 +34,7 @@ export default {
           path: 'physicalupload',
           name: `商品导入`,
           component: () => import('@/view/mall/goods/physical/normalGoodsUpload')
-        }
+        },
       ]
     },
     {
@@ -57,7 +57,7 @@ export default {
     {
       path: 'goodsbase/goodsmaincategory',
       name: `销售分类`,
-      component: () => import('@/view/mall/goods/maincategory')
+      component: () => import( '@/view/mall/goods/maincategory' )
     },
     {
       path: 'goodsbase/goodsattributes',
@@ -67,12 +67,12 @@ export default {
     {
       path: 'goodsbase/goodsbrand',
       name: `商品品牌`,
-      component: () => import('@/view/mall/goods/attributes/brand')
+      component: () => import( '@/view/mall/goods/attributes/brand' )
     },
     {
       path: 'goodsbase/goodsparams',
       name: `商品参数`,
-      component: () => import('@/view/mall/goods/attributes/params')
+      component: () => import( '@/view/mall/goods/attributes/params' )
     },
     {
       path: 'goodsbase/itemtags',
@@ -86,7 +86,7 @@ export default {
       children: [
         {
           path: 'editor/:itemId?',
-          component: () => import('@/view/mall/trade/shipping/add')
+          component: () => import( '@/view/mall/trade/shipping/add')
         }
       ]
     },
@@ -103,7 +103,8 @@ export default {
       children: [
         {
           path: 'editor/:id?',
-          component: () => import('@/view/brand/wechat/artical/new_artical')
+          component: () =>
+            import( '@/view/brand/wechat/artical/new_artical')
         }
       ]
     },
@@ -113,6 +114,8 @@ export default {
       component: () => import('@/view/member/subscribe/goods/list')
     },
 
+    
+
     {
       path: 'goods/itemstagupload',
       name: `批量打标签`,
@@ -121,19 +124,23 @@ export default {
     {
       path: 'goods/physicalupload',
       name: `实体商品导入`,
-      component: () => import('@/view/mall/goods/physical/normalGoodsUpload')
+      component: () => import( '@/view/mall/goods/physical/normalGoodsUpload')
     },
+
 
     {
       path: 'service_goods/servicegoods',
       name: `商品管理`,
-      component: () => import('@/view/mall/goods/service/index'),
+      component: () => import( '@/view/mall/goods/service/index' ),
       children: [
         {
           path: 'editor/:itemId?',
-          component: () => import('@/view/mall/goods/service/items/add')
+          component: () =>
+            import( '@/view/mall/goods/service/items/add')
         }
       ]
-    }
+    },
+    
+    
   ]
 }

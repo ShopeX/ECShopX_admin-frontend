@@ -1,7 +1,7 @@
 import fetch from '../utils/fetch'
 
 // 物品
-export function getThingsList (query) {
+export function getThingsList(query) {
   return fetch({
     url: '/onecode/things',
     method: 'get',
@@ -9,14 +9,14 @@ export function getThingsList (query) {
   })
 }
 
-export function getThingsDetail (thingId) {
+export function getThingsDetail(thingId) {
   return fetch({
     url: '/onecode/things/' + thingId,
     method: 'get'
   })
 }
 
-export function createThings (query) {
+export function createThings(query) {
   return fetch({
     url: '/onecode/things',
     method: 'post',
@@ -24,7 +24,7 @@ export function createThings (query) {
   })
 }
 
-export function updateThings (thingId, query) {
+export function updateThings(thingId, query) {
   return fetch({
     url: '/onecode/things/' + thingId,
     method: 'put',
@@ -32,7 +32,7 @@ export function updateThings (thingId, query) {
   })
 }
 
-export function deleteThings (thingId) {
+export function deleteThings(thingId) {
   return fetch({
     url: '/onecode/things/' + thingId,
     method: 'delete'
@@ -40,7 +40,7 @@ export function deleteThings (thingId) {
 }
 
 // 批次
-export function getBatchsList (query) {
+export function getBatchsList(query) {
   return fetch({
     url: '/onecode/batchs',
     method: 'get',
@@ -48,14 +48,14 @@ export function getBatchsList (query) {
   })
 }
 
-export function getBatchsDetail (batchId) {
+export function getBatchsDetail(batchId) {
   return fetch({
     url: '/onecode/batchs/' + batchId,
     method: 'get'
   })
 }
 
-export function createBatchs (query) {
+export function createBatchs(query) {
   return fetch({
     url: '/onecode/batchs',
     method: 'post',
@@ -63,7 +63,7 @@ export function createBatchs (query) {
   })
 }
 
-export function updateBatchs (batchId, query) {
+export function updateBatchs(batchId, query) {
   return fetch({
     url: '/onecode/batchs/' + batchId,
     method: 'put',
@@ -71,14 +71,14 @@ export function updateBatchs (batchId, query) {
   })
 }
 
-export function deleteBatchs (batchId) {
+export function deleteBatchs(batchId) {
   return fetch({
     url: '/onecode/batchs/' + batchId,
     method: 'delete'
   })
 }
 
-export function getWxaOneCodeStream (query) {
+export function getWxaOneCodeStream(query) {
   return fetch({
     url: '/onecode/wxaOneCodeStream',
     method: 'get',

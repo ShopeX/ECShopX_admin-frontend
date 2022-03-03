@@ -1,13 +1,14 @@
 <template>
   <el-row>
     <el-cascader
-      v-model="selected_values"
       placeholder="根据地区筛选"
       :options="regions"
+      v-model="selected_values"
       filterable
       :props="{ checkStrictly: true }"
       @change="RegionChangeSearch"
-    />
+    >
+    </el-cascader>
   </el-row>
 </template>
 <script>
@@ -16,12 +17,12 @@ export default {
   props: {
     defaultAddress: {
       type: Array,
-      default: function () {
+      default: function() {
         return []
       }
     }
   },
-  data () {
+  data() {
     return {
       regions: [],
       params: {
@@ -35,17 +36,17 @@ export default {
       selected_values: JSON.parse(JSON.stringify(this.defaultAddress))
     }
   },
-  mounted () {
+  mounted() {
     this.getDistrict()
   },
   methods: {
-    getDistrict () {
+    getDistrict() {
       getAddress().then(({ data }) => {
         this.regions = data.data
         this.RegionChangeSearch(this.selected_values)
       })
     },
-    RegionChangeSearch (value) {
+    RegionChangeSearch(value) {
       if (this.regions.length == 0) return
       this.params.regions = []
       var vals = this.getCascaderObj(value, this.regions)
@@ -69,8 +70,8 @@ export default {
       this.params.regions_id = value
       this.$emit('change', this.params)
     },
-    getCascaderObj (val, opt) {
-      return val.map(function (value, index, array) {
+    getCascaderObj(val, opt) {
+      return val.map(function(value, index, array) {
         for (var itm of opt) {
           if (itm.value === value) {
             opt = itm.children
@@ -80,7 +81,7 @@ export default {
         return null
       })
     },
-    init () {
+    init() {
       this.selected_values = []
     }
   }

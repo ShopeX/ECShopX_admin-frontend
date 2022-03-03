@@ -6,117 +6,65 @@
     width="726px"
     :before-close="cancelAction"
   >
-    <el-tabs
-      v-model="activeName"
-      @tab-click="handleClick"
-    >
-      <el-tab-pane
-        label="已发送"
-        name="first"
-      >
+    <el-tabs v-model="activeName" @tab-click="handleClick">
+      <el-tab-pane label="已发送" name="first">
         <ul class="select_list">
           <li v-for="(item, index) in dataList">
             <el-row>
-              <el-col
-                :span="18"
-                class="frm-tips"
+              <el-col :span="18" class="frm-tips"
+                ><input type="radio" name="sendItem" :value="index" />&nbsp;{{ item.title }}</el-col
               >
-                <input
-                  type="radio"
-                  name="sendItem"
-                  :value="index"
-                >&nbsp;{{ item.title }}
-              </el-col>
-              <el-col
-                :span="6"
-                class="tr"
+              <el-col :span="6" class="tr"
+                ><span class="frm-tips">{{ item.date }}</span></el-col
               >
-                <span class="frm-tips">{{ item.date }}</span>
-              </el-col>
             </el-row>
           </li>
         </ul>
       </el-tab-pane>
-      <el-tab-pane
-        label="素材库"
-        name="second"
-      >
-        <el-input
-          icon="el-icon-search"
-          placeholder="搜索相关文章"
-          style="width: 50%"
-        />
+      <el-tab-pane label="素材库" name="second">
+        <el-input icon="el-icon-search" placeholder="搜索相关文章" style="width: 50%;"></el-input>
         <ul class="select_list">
           <li v-for="(item, index) in scDataList">
             <el-row>
-              <el-col
-                :span="18"
-                class="frm-tips"
+              <el-col :span="18" class="frm-tips"
+                ><input type="radio" name="scItem" :value="index" />&nbsp;{{ item.title }}</el-col
               >
-                <input
-                  type="radio"
-                  name="scItem"
-                  :value="index"
-                >&nbsp;{{ item.title }}
-              </el-col>
-              <el-col
-                :span="6"
-                class="tr"
+              <el-col :span="6" class="tr"
+                ><span class="frm-tips">{{ item.date }}</span></el-col
               >
-                <span class="frm-tips">{{ item.date }}</span>
-              </el-col>
             </el-row>
           </li>
         </ul>
       </el-tab-pane>
-      <el-tab-pane
-        label="历史消息"
-        name="thrie"
-        vi-if="showHistory"
-      >
+      <el-tab-pane label="历史消息" name="thrie" vi-if="showHistory">
         <div class="history_msg clearfix">
           <div class="preview_area f_l">
             <div class="preview_box">
-              <img :src="demoimg">
+              <img :src="demoimg" />
             </div>
             <p>公众帐号历史消息列表示例</p>
           </div>
           <div class="form_area f_l">
-            <el-checkbox v-model="historyItem.url">
-              跳转到历史消息列表
-            </el-checkbox>
+            <el-checkbox v-model="historyItem.url">跳转到历史消息列表 </el-checkbox>
           </div>
         </div>
       </el-tab-pane>
     </el-tabs>
-    <div
-      v-if="!showHistory || activeName !== 'thrie'"
-      class="tr"
-      style="margin-top: 20px"
-    >
+    <div class="tr" style="margin-top: 20px;" v-if="!showHistory || activeName !== 'thrie'">
       <el-pagination
+        @size-change="handleSizeChange"
+        @current-change="handleCurrentChange"
         :current-page="currentPage"
         :page-sizes="[10, 20, 30, 40]"
         :page-size="10"
         layout="total, sizes, prev, pager, next, jumper"
         :total="100"
-        @size-change="handleSizeChange"
-        @current-change="handleCurrentChange"
-      />
-    </div>
-    <div
-      slot="footer"
-      class="dialog-footer"
-    >
-      <el-button @click="cancelAction">
-        取 消
-      </el-button>
-      <el-button
-        type="primary"
-        @click="saveAction"
       >
-        确 定
-      </el-button>
+      </el-pagination>
+    </div>
+    <div slot="footer" class="dialog-footer">
+      <el-button @click="cancelAction">取 消</el-button>
+      <el-button type="primary" @click="saveAction">确 定</el-button>
     </div>
   </el-dialog>
 </template>
@@ -125,7 +73,7 @@
 var dimg = require('@/assets/img/history_msg.png')
 export default {
   props: ['twxxVisible', 'showHistory'],
-  data () {
+  data() {
     return {
       demoimg: dimg,
       currentPage: 1,
@@ -235,17 +183,11 @@ export default {
       historyItem: { url: 'http://www.badiu.com', type: '' }
     }
   },
-  computed: {
-    showDialog () {
-      return this.twxxVisible
-    }
-  },
-  mounted () {},
   methods: {
-    handleClick (tab, event) {
+    handleClick(tab, event) {
       console.log(tab)
     },
-    saveAction () {
+    saveAction() {
       var radio = []
       if (this.activeName === 'first') {
         radio = document.getElementsByName('sendItem')
@@ -270,14 +212,20 @@ export default {
       }
       this.$emit('chooseTW', this.selectedItem)
     },
-    cancelAction () {
+    cancelAction() {
       this.$emit('closeTWDialog')
     },
-    handleSizeChange (size) {
+    handleSizeChange(size) {
       console.log(size)
     },
-    handleCurrentChange (curPage) {
+    handleCurrentChange(curPage) {
       console.log(curPage)
+    }
+  },
+  mounted() {},
+  computed: {
+    showDialog() {
+      return this.twxxVisible
     }
   }
 }

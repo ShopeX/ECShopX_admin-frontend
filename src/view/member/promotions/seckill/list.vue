@@ -3,45 +3,23 @@
     <div v-if="$route.path.indexOf('editor') === -1">
       <el-row :gutter="20">
         <el-col :span="4">
-          <el-input
-            v-model="params.name"
-            placeholder="活动名称"
-          >
-            <el-button
-              slot="append"
-              icon="el-icon-search"
-              @click="dataSearch"
-            />
-          </el-input>
+          <el-input placeholder="活动名称" v-model="params.name"
+            ><el-button slot="append" icon="el-icon-search" @click="dataSearch"></el-button
+          ></el-input>
         </el-col>
         <el-col :span="4">
           <el-select
             v-model="params.status"
+            @change="dataSearch"
             placeholder="活动状态"
             clearable
-            style="width: 100%"
-            @change="dataSearch"
+            style="width: 100%;"
           >
-            <el-option
-              label="全部"
-              value="0"
-            />
-            <el-option
-              label="未开始"
-              value="waiting"
-            />
-            <el-option
-              label="预告中"
-              value="in_the_notice"
-            />
-            <el-option
-              label="售卖中"
-              value="in_sale"
-            />
-            <el-option
-              label="已结束"
-              value="it_has_ended"
-            />
+            <el-option label="全部" value="0"></el-option>
+            <el-option label="未开始" value="waiting"></el-option>
+            <el-option label="预告中" value="in_the_notice"></el-option>
+            <el-option label="售卖中" value="in_sale"></el-option>
+            <el-option label="已结束" value="it_has_ended"></el-option>
           </el-select>
         </el-col>
         <el-col :span="6">
@@ -50,33 +28,19 @@
             type="daterange"
             value-format="yyyy/MM/dd"
             placeholder="添加时间筛选"
-            style="width: 100%; min-width: 250px"
+            style="width: 100%;min-width: 250px;"
             @change="dateChange"
-          />
+          ></el-date-picker>
         </el-col>
         <el-col :span="4">
-          <el-button
-            type="primary"
-            icon="plus"
-            @click="addActivityData"
-          >
-            添加活动
-          </el-button>
+          <el-button type="primary" icon="plus" @click="addActivityData">添加活动</el-button>
         </el-col>
       </el-row>
-      <el-table
-        v-loading="loading"
-        :data="activityLists"
-        :height="wheight - 150"
-      >
-        <el-table-column
-          prop="seckill_id"
-          label="ID"
-          width="50"
-        />
+      <el-table :data="activityLists" :height="wheight - 150" v-loading="loading">
+        <el-table-column prop="seckill_id" label="ID" width="50"></el-table-column>
         <el-table-column label="活动">
           <template slot-scope="scope">
-            {{ scope.row.activity_name }}<br>
+            {{ scope.row.activity_name }}<br />
             <span class="text-muted">{{ scope.row.description }}</span>
           </template>
         </el-table-column>
@@ -84,26 +48,15 @@
           prop="activity_release_date"
           label="预告时间"
           width="160"
-        />
-        <el-table-column
-          label="活动时间"
-          width="190"
-        >
+        ></el-table-column>
+        <el-table-column label="活动时间" width="190">
           <template slot-scope="scope">
             {{ scope.row.activity_start_date }} <span class="text-muted">开始</span>
             {{ scope.row.activity_end_date }} <span class="text-muted">结束</span>
           </template>
         </el-table-column>
-        <el-table-column
-          prop="created_date"
-          label="创建时间"
-          width="160"
-        />
-        <el-table-column
-          prop="status"
-          label="状态"
-          width="70"
-        >
+        <el-table-column prop="created_date" label="创建时间" width="160"></el-table-column>
+        <el-table-column prop="status" label="状态" width="70">
           <template slot-scope="scope">
             <span v-if="scope.row.status == 'waiting'">待开始</span>
             <span v-else-if="scope.row.status == 'in_the_notice'">预告中</span>
@@ -112,52 +65,39 @@
             <span v-else-if="scope.row.status == 'close'">已终止</span>
           </template>
         </el-table-column>
-        <el-table-column
-          prop="items"
-          label="商品"
-          width="50"
-        >
+        <el-table-column prop="items" label="商品" width="50">
           <template slot-scope="scope">
-            <i
-              class="iconfont icon-search-plus"
-              @click="viewGoodsList(scope.row.seckill_id)"
-            />
+            <i class="iconfont icon-search-plus" @click="viewGoodsList(scope.row.seckill_id)"></i>
           </template>
         </el-table-column>
-        <el-table-column
-          label="操作"
-          width="60"
-        >
+        <el-table-column label="操作" width="60">
           <template slot-scope="scope">
             <el-button
-              v-if="scope.row.status !== 'it_has_ended'"
               type="text"
+              v-if="scope.row.status !== 'it_has_ended'"
               @click="updateStatusCommunityAction(scope.row)"
+              >终止</el-button
             >
-              终止
-            </el-button>
             <div class="operating-icons">
               <!-- <i class="iconfont icon-search-plus" @click="communityDetail(scope.$index, scope.row)"></i> -->
               <i
                 v-if="scope.row.status == 'waiting'"
                 class="iconfont icon-edit1"
                 @click="editCommunityAction(scope.$index, scope.row)"
-              />
+              ></i>
             </div>
           </template>
         </el-table-column>
       </el-table>
-      <div
-        v-if="total_count > params.pageSize"
-        class="content-center content-top-padded"
-      >
+      <div v-if="total_count > params.pageSize" class="content-center content-top-padded">
         <el-pagination
           layout="prev, pager, next"
+          @current-change="handleCurrentChange"
           :current-page.sync="params.page"
           :total="total_count"
           :page-size="params.pageSize"
-          @current-change="handleCurrentChange"
-        />
+        >
+        </el-pagination>
       </div>
 
       <el-dialog
@@ -167,61 +107,33 @@
         width="70%"
       >
         <template>
-          <el-table
-            v-loading="loading"
-            :data="goodsList"
-          >
-            <el-table-column
-              prop="item_id"
-              label="id"
-              width="60"
-            />
-            <el-table-column
-              prop="item_name"
-              label="商品名称"
-            />
-            <el-table-column
-              prop="activity_price"
-              label="活动价"
-              width="100"
-            >
+          <el-table :data="goodsList" v-loading="loading">
+            <el-table-column prop="item_id" label="id" width="60"></el-table-column>
+            <el-table-column prop="item_name" label="商品名称"></el-table-column>
+            <el-table-column prop="activity_price" label="活动价" width="100">
               <template slot-scope="scope">
                 {{ cursymbol }}{{ scope.row.activity_price / 100 }}
                 <!-- <el-input v-model="scope.row.activity_price"  @change="editItemPrice(scope.$index, scope.row)"><i slot="prefix" class="el-input__icon el-icon-edit"></i><i slot="suffix" class="el-input__icon">元</i></el-input> -->
               </template>
             </el-table-column>
-            <el-table-column
-              prop="activity_store"
-              label="库存"
-              width="70"
-            />
-            <el-table-column
-              prop="limit_num"
-              label="限购"
-              width="50"
-            />
-            <el-table-column
-              prop="sort"
-              label="排序"
-              width="60"
-            />
+            <el-table-column prop="activity_store" label="库存" width="70"></el-table-column>
+            <el-table-column prop="limit_num" label="限购" width="50"></el-table-column>
+            <el-table-column prop="sort" label="排序" width="60"></el-table-column>
           </el-table>
-          <div
-            v-if="goodsCount > goodsPageSize"
-            class="content-center content-top-padded"
-          >
+          <div v-if="goodsCount > goodsPageSize" class="content-center content-top-padded">
             <el-pagination
               layout="prev, pager, next"
+              @current-change="handleGoodsCurrentChange"
               :current-page.sync="goodsPage"
               :total="goodsCount"
               :page-size="goodsPageSize"
-              @current-change="handleGoodsCurrentChange"
-            />
+            >
+            </el-pagination>
           </div>
         </template>
       </el-dialog>
     </div>
-    <router-view />
+    <router-view></router-view>
   </div>
 </template>
 <script>
@@ -235,12 +147,12 @@ import {
 } from '../../../../api/promotions'
 export default {
   props: ['getStatus'],
-  provide () {
+  provide() {
     return {
       refresh: this.refresh
     }
   },
-  data () {
+  data() {
     return {
       create_time: '',
       activeName: 'first',
@@ -268,45 +180,31 @@ export default {
   computed: {
     ...mapGetters(['wheight'])
   },
-  watch: {
-    getStatus (val) {
-      if (val) {
-        this.getActivityLists(this.params)
-      }
-    }
-  },
-  mounted () {
-    if (this.$route.query.status) {
-      this.params.status = this.$route.query.status
-    }
-    this.getActivityLists(this.params)
-    this.getCurrencyInfo()
-  },
   methods: {
-    handleCurrentChange (page_num) {
+    handleCurrentChange(page_num) {
       this.params.page = page_num
       this.getActivityLists(this.params)
     },
-    handleGoodsCurrentChange (page_num) {
+    handleGoodsCurrentChange(page_num) {
       this.goodsPage = page_num
       this.viewGoodsList(this.nowActivity)
     },
-    addActivityData () {
+    addActivityData() {
       // 添加物料弹框
       this.$router.push({ path: this.matchHidePage('editor') })
     },
-    editCommunityAction (index, row) {
+    editCommunityAction(index, row) {
       // 编辑物料弹框
       this.$router.push({ path: this.matchHidePage('editor/') + row.seckill_id })
     },
-    dataSearch () {
+    dataSearch() {
       // this.params.start_time = ''
       // this.params.end_time = ''
       // this.create_time = ''
       this.params.page = 1
       this.getActivityLists(this.params)
     },
-    getActivityLists (params) {
+    getActivityLists(params) {
       this.loading = true
       seckillActivityGetList(params).then((response) => {
         this.activityLists = response.data.data.list
@@ -314,7 +212,7 @@ export default {
         this.loading = false
       })
     },
-    updateStatusCommunityAction (row) {
+    updateStatusCommunityAction(row) {
       var msg = '此操作将永久终止该活动, 是否继续?'
       this.$confirm(msg, '提示', {
         cancelButtonText: '取消',
@@ -335,7 +233,7 @@ export default {
         }
       })
     },
-    dateChange (val) {
+    dateChange(val) {
       // this.params.status = ''
       if (val && val.length > 0) {
         this.params.start_time = this.dateStrToTimeStamp(val[0] + ' 00:00:00')
@@ -347,10 +245,10 @@ export default {
       this.params.page = 1
       this.getActivityLists(this.params)
     },
-    dateStrToTimeStamp (str) {
+    dateStrToTimeStamp(str) {
       return Date.parse(new Date(str)) / 1000
     },
-    viewGoodsList (activityId) {
+    viewGoodsList(activityId) {
       this.nowActivity = activityId
       this.goodsVisible = true
       getSeckillItemList({
@@ -362,24 +260,24 @@ export default {
         this.goodsCount = res.data.data.total_count
       })
     },
-    viewCouponList (ids) {
+    viewCouponList(ids) {
       this.couponVisible = true
     },
-    handleCancel () {
+    handleCancel() {
       this.communityVisible = false
       this.couponVisible = false
       this.goodsVisible = false
     },
-    getCurrencyInfo () {
+    getCurrencyInfo() {
       getDefaultCurrency().then((res) => {
         this.currency = res.data.data
         this.cursymbol = this.currency.symbol
       })
     },
-    updateActivityData (params) {
+    updateActivityData(params) {
       updateActivityItemData(params).then((res) => {})
     },
-    editItemPrice (row) {
+    editItemPrice(row) {
       let form = {
         'id': row.id,
         'item_id': row.item_id,
@@ -391,9 +289,23 @@ export default {
       }
       this.updateActivityData(form)
     },
-    refresh () {
+    refresh() {
       this.getActivityLists(this.params)
       this.getCurrencyInfo()
+    }
+  },
+  mounted() {
+    if (this.$route.query.status) {
+      this.params.status = this.$route.query.status
+    }
+    this.getActivityLists(this.params)
+    this.getCurrencyInfo()
+  },
+  watch: {
+    getStatus(val) {
+      if (val) {
+        this.getActivityLists(this.params)
+      }
     }
   }
 }

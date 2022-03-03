@@ -55,7 +55,7 @@ export default {
     {
       path: 'pointsmallgoods/pointsmallrate',
       name: `商品评价`,
-      component: () => import('@/view/mall/pointsmalltrade/rate/list')
+      component: () => import( '@/view/mall/pointsmalltrade/rate/list')
     },
     {
       path: 'order/pointsmallenormalorders',
@@ -64,7 +64,8 @@ export default {
       children: [
         {
           path: 'detail/:itemId?',
-          component: () => import('@/view/mall/pointsmalltrade/order/detail')
+          component: () =>
+            import('@/view/mall/pointsmalltrade/order/detail')
         }
       ]
     },

@@ -1,6 +1,6 @@
 import fetch from '../utils/fetch'
 
-export function getUploadQiniuPicToken (query) {
+export function getUploadQiniuPicToken(query) {
   return fetch({
     url: '/espier/image_upload_token',
     method: 'post',
@@ -8,7 +8,7 @@ export function getUploadQiniuPicToken (query) {
   })
 }
 
-export function uploadQiniuPic (query) {
+export function uploadQiniuPic(query) {
   return fetch({
     url: 'espier/image',
     method: 'post',
@@ -16,7 +16,7 @@ export function uploadQiniuPic (query) {
   })
 }
 
-export function getQiniuPicList (query) {
+export function getQiniuPicList(query) {
   return fetch({
     url: '/espier/images',
     method: 'get',
@@ -24,7 +24,7 @@ export function getQiniuPicList (query) {
   })
 }
 
-export function deleteImage (query) {
+export function deleteImage(query) {
   return fetch({
     url: '/espier/images',
     method: 'delete',
@@ -32,7 +32,7 @@ export function deleteImage (query) {
   })
 }
 
-export function getUploadQiniuVideoToken (query) {
+export function getUploadQiniuVideoToken(query) {
   return fetch({
     url: '/espier/video_upload_token',
     method: 'post',
@@ -40,7 +40,7 @@ export function getUploadQiniuVideoToken (query) {
   })
 }
 
-export function uploadQiniuVideo (query) {
+export function uploadQiniuVideo(query) {
   return fetch({
     url: 'espier/image',
     method: 'post',
@@ -48,7 +48,7 @@ export function uploadQiniuVideo (query) {
   })
 }
 
-export function getQiniuVideoList (query) {
+export function getQiniuVideoList(query) {
   return fetch({
     url: '/espier/images',
     method: 'get',
@@ -56,7 +56,7 @@ export function getQiniuVideoList (query) {
   })
 }
 
-export function deleteVideo (query) {
+export function deleteVideo(query) {
   return fetch({
     url: '/espier/images',
     method: 'delete',

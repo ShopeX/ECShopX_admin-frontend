@@ -21,7 +21,7 @@ export default {
       name: `模版编辑`,
       meta: {
         hidemenu: true
-      }
+      },
     },
     {
       path: 'tdkglobalset',

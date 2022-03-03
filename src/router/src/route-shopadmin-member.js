@@ -9,7 +9,7 @@ export default {
     {
       path: 'member',
       name: `会员列表`,
-      component: () => import('@/view/member/members/list'),
+      component: () => import( '@/view/member/members/list' ),
       children: [
         {
           path: 'detail/:user_id?',
@@ -20,7 +20,7 @@ export default {
     {
       path: 'Managetag',
       name: `会员标签`,
-      component: () => import('@/view/member/members/tags')
+      component: () => import( '@/view/member/members/tags')
     }
   ]
 }

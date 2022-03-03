@@ -1,31 +1,17 @@
 <template>
-  <div
-    class="component-wrap"
-    :class="{ 'component-padded': base.padded, 'active': active }"
-  >
-    <div class="current-active" />
-    <div
-      v-if="base.title"
-      class="component-header"
-    >
+  <div class="component-wrap" :class="{ 'component-padded': base.padded, 'active': active }">
+    <div class="current-active"></div>
+    <div v-if="base.title" class="component-header">
       <div class="component-title">
         <div>{{ base.title }}</div>
-        <div class="subtitle">
-          {{ base.subtitle }}
-        </div>
+        <div class="subtitle">{{ base.subtitle }}</div>
       </div>
       <div class="component-more">
-        <div class="goods-more">
-          全部商品
-        </div>
+        <div class="goods-more">全部商品</div>
       </div>
     </div>
     <div class="component-body with-padding">
-      <div
-        v-for="(item, index) in data"
-        :key="index"
-        class="coupon-component"
-      >
+      <div v-for="(item, index) in data" :key="index" class="coupon-component">
         <!--<template v-if="item.imgUrl">-->
         <!--<img class="coupon-img" :src="item.imgUrl"/>-->
         <!--</template>-->
@@ -46,44 +32,23 @@
           >
             <div class="coupon-amount">
               {{ item.amount }}
-              <div
-                v-if="item.type === 'cash'"
-                class="amount-cur"
-              >
-                ¥
-              </div>
-              <div
-                v-if="item.type === 'discount'"
-                class="amount-cur"
-              >
-                折
-              </div>
+              <div v-if="item.type === 'cash'" class="amount-cur">¥</div>
+              <div v-if="item.type === 'discount'" class="amount-cur">折</div>
             </div>
             <!--<div class="coupon-brand">
               <img class="brand-img" :src="wximageurl + item.imgUrl"/>
             </div>-->
             <div class="coupon-caption">
               <div class="coupon-content">
-                <div class="brand-name">
-                  {{ item.title }}
-                </div>
-                <div class="brand-name">
-                  {{ item.startTime }}
-                </div>
-                <div class="brand-name">
-                  {{ item.endTime }}
-                </div>
+                <div class="brand-name">{{ item.title }}</div>
+                <div class="brand-name">{{ item.startTime }}</div>
+                <div class="brand-name">{{ item.endTime }}</div>
                 <!--<div class="coupon-desc">{{item.desc}}</div>-->
               </div>
             </div>
           </div>
         </template>
-        <el-button
-          size="mini"
-          class="coupon-getted-btn"
-        >
-          领取
-        </el-button>
+        <el-button size="mini" class="coupon-getted-btn">领取</el-button>
       </div>
     </div>
   </div>
@@ -101,27 +66,24 @@ export default {
       default: false
     }
   },
-  data () {
-    return {
-      base: {},
-      data: []
-    }
-  },
   watch: {
     res: {
       deep: true,
-      handler (value) {
+      handler(value) {
         if (value) {
           this.setData(value)
         }
       }
     }
   },
-  mounted () {
-    this.setData(this.res)
+  data() {
+    return {
+      base: {},
+      data: []
+    }
   },
   methods: {
-    setData (val) {
+    setData(val) {
       this.base = val.base
       val.data.map((item) => {
         item.background =
@@ -129,6 +91,9 @@ export default {
       })
       this.data = val.data
     }
+  },
+  mounted() {
+    this.setData(this.res)
   }
 }
 </script>

@@ -1,17 +1,7 @@
 <template>
-  <el-tabs
-    v-model="activeName"
-    type="border-card"
-    @tab-click="handleClick"
-  >
-    <el-tab-pane
-      label="发布总部商品"
-      name="relmall"
-    >
-      <relMallList
-        :is-load="relmall_status"
-        :distributor-id="distributor_id"
-      />
+  <el-tabs v-model="activeName" type="border-card" @tab-click="handleClick">
+    <el-tab-pane label="发布总部商品" name="relmall">
+      <relMallList :is-load="relmall_status" :distributor-id="distributor_id"></relMallList>
     </el-tab-pane>
     <!--el-tab-pane label="店铺商品" name="shopself">
       <shopSelftList :is-load="shopself_status" :distributor-id="distributor_id"></shopSelftList>
@@ -28,7 +18,7 @@ export default {
     shopSelftList,
     relMallList
   },
-  data () {
+  data() {
     return {
       activeName: 'relmall',
       shopself_status: true,
@@ -36,7 +26,18 @@ export default {
       distributor_id: ''
     }
   },
-  mounted () {
+  methods: {
+    handleClick() {
+      if (this.activeName === 'shopself') {
+        this.shopself_status = true
+        this.relmall_status = false
+      } else if (this.activeName === 'relmall') {
+        this.shopself_status = false
+        this.relmall_status = true
+      }
+    }
+  },
+  mounted() {
     if (this.$route.query.distributor_id) {
       this.distributor_id = this.$route.query.distributor_id
     }
@@ -49,17 +50,6 @@ export default {
     } else if (this.activeName === 'relmall') {
       this.shopself_status = false
       this.relmall_status = true
-    }
-  },
-  methods: {
-    handleClick () {
-      if (this.activeName === 'shopself') {
-        this.shopself_status = true
-        this.relmall_status = false
-      } else if (this.activeName === 'relmall') {
-        this.shopself_status = false
-        this.relmall_status = true
-      }
     }
   }
 }

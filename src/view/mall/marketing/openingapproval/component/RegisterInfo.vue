@@ -1,58 +1,37 @@
 <template>
   <el-card class="mycard">
     <div slot="header">
-      {{ title }}
+      {{title}}
       <el-popover
         v-if="subTitle"
         placement="top-start"
         width="400"
         trigger="hover"
       >
-        <i
-          slot="reference"
-          class="el-icon-question"
-        />
-        <pre
-          slot=""
-          style="white-space: pre-line"
-        >
-          {{ subTitle }}
+        <i class="el-icon-question" slot="reference"></i>
+        <pre style="white-space:pre-line;" slot="">
+          {{subTitle}}
         </pre>
       </el-popover>
     </div>
     <div>
       <el-row>
-        <el-col
-          v-for="item in list"
-          :key="item.name"
-          :span="12"
-        >
+        <el-col v-for="item in list" :key="item.name" :span='12'>
           <el-row>
-            <el-col
-              :span="11"
-              style="text-align: right; padding-right: 6px"
-            >
+            <el-col :span='11' style="text-align:right;padding-right:6px">{{ addSymbol(item.name) }}</el-col>
+            <el-col :span='13'>
               {{
-                addSymbol(item.name)
+                item.filter
+                  ? (item.filter(info[item.field]) || '-')
+                  : (info[item.field] || '-')
               }}
-            </el-col>
-            <el-col :span="13">
-              {{ item.filter ? item.filter(info[item.field]) || '-' : info[item.field] || '-' }}
             </el-col>
           </el-row>
         </el-col>
       </el-row>
     </div>
-    <div
-      v-if="title === '分账信息'"
-      class="btn"
-    >
-      <el-button
-        type="info"
-        disabled
-      >
-        已审批
-      </el-button>
+    <div v-if="title === '分账信息'" class="btn">
+      <el-button type="info" disabled>已审批</el-button>
     </div>
   </el-card>
 </template>
@@ -84,8 +63,8 @@ export default {
   // props: ['info', 'title', 'subTitle', 'list'],
   methods: {
     addSymbol: function (symbol) {
-      if (symbol.indexOf('：') > -1) {
-        return symbol
+      if (symbol.indexOf("：") > -1) {
+        return symbol;
       }
       return `${symbol}：`
     }

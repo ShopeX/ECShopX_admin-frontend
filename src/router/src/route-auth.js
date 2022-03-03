@@ -8,26 +8,26 @@ export default [
     component: () => import('@/view/auth/login'),
     meta: {
       auth: false,
-      type: 'admin'
+      type:'admin'
     },
     name: '授权-登录'
   },
   {
     path: '/shopadmin/login',
-    component: () => import('@/view/auth/login'),
+    component: () => import( '@/view/auth/login' ),
     meta: {
       auth: false,
-      type: 'distributor'
+      type:'distributor'
     },
     name: '授权-店铺登录'
   },
   {
     path: '/merchant/login',
     // component: () => import( '@/view/merchantlogin' ),
-    component: () => import('@/view/auth/login'),
+    component: () => import( '@/view/auth/login' ),
     meta: {
       auth: false,
-      type: 'merchant'
+      type:'merchant'
     },
     name: '授权-商户登陆'
   },
@@ -42,16 +42,16 @@ export default [
   {
     path: '/shopadmin',
     redirect: '/shopadmin/login'
-  },
+  }, 
   {
-    path: '/dealer/login',
+    path:'/dealer/login',
     // component:()=> import('@/view/auth/dealer_login'),
-    component: () => import('@/view/auth/login'),
-    meta: {
-      auth: false,
-      type: 'dealer'
+    component:()=> import('@/view/auth/login'),
+    meta:{
+      auth:false,
+      type:'dealer'
     },
-    name: '授权-经销商登录'
+    name:'授权-经销商登录'
   },
   // {
   //   path: '/shopadmin/shoplist',
@@ -60,12 +60,12 @@ export default [
   // 激活
   {
     path: '/activelicense',
-    component: () => import('@/view/base/asset/accountactivation/index')
+    component: () => import( '@/view/base/asset/accountactivation/index' ),
   },
   // 营销中线跳转销售中心无权限
   {
     path: '/notExistAuth',
-    component: () => import('@/view/notExistAuth')
+    component: () => import( '@/view/notExistAuth' )
   },
   // oauth登录回调
   {
@@ -73,7 +73,7 @@ export default [
     meta: {
       auth: false
     },
-    component: () => import('@/view/base/iframeLogin')
+    component: () => import( '@/view/base/iframeLogin' )
   },
   {
     path: '/auth/:auth_type',

@@ -2,15 +2,10 @@
   <div>
     <section class="section section-white app_detail_overview">
       <div class="section-header">
-        <div class="section-title">
-          昨日概况
-        </div>
+        <div class="section-title">昨日概况</div>
       </div>
       <div class="section-body">
-        <div
-          v-loading="surveyLoading"
-          class="data_overview_list_wrp"
-        >
+        <div class="data_overview_list_wrp" v-loading="surveyLoading">
           <div class="data_overview_list js_YO_dataBox">
             <div class="data_overview_item">
               <p class="data_overview_title">
@@ -206,60 +201,31 @@
       <div class="section-header">
         <div class="section-title">
           {{ chart.currentTabName }}
-          <el-popover
-            v-model="chart.tabPop"
-            placement="bottom"
-            trigger="click"
-          >
+          <el-popover placement="bottom" trigger="click" v-model="chart.tabPop">
             <ul class="tab-list">
-              <li
-                v-for="(item, index) in chart.tabCon"
-                :key="index"
-                @click="tabChartHandle(index)"
-              >
+              <li v-for="(item, index) in chart.tabCon" :key="index" @click="tabChartHandle(index)">
                 {{ item.label }}
               </li>
             </ul>
-            <i
-              slot="reference"
-              class="iconfont icon-chevron-down tab-handle"
-            />
+            <i class="iconfont icon-chevron-down tab-handle" slot="reference"></i>
           </el-popover>
         </div>
       </div>
       <div class="section-header">
-        <el-select
-          v-model="chart.date"
-          placeholder="请选择"
-          @change="chartHandle"
-        >
-          <el-option
-            v-for="item in date"
-            :key="item.value"
-            :label="item.label"
-            :value="item.value"
-          />
+        <el-select v-model="chart.date" placeholder="请选择" @change="chartHandle">
+          <el-option v-for="item in date" :key="item.value" :label="item.label" :value="item.value">
+          </el-option>
         </el-select>
       </div>
-      <div
-        v-loading="chart.chartLoading"
-        class="section-body"
-      >
-        <canvas
-          id="canvas"
-          height="100"
-        />
+      <div class="section-body" v-loading="chart.chartLoading">
+        <canvas id="canvas" height="100"></canvas>
       </div>
     </section>
     <section class="section section-white">
       <div class="section-header">
         <div class="section-title">
           {{ visitPage.currentTabName }}
-          <el-popover
-            v-model="visitPage.tabPop"
-            placement="bottom"
-            trigger="click"
-          >
+          <el-popover placement="bottom" trigger="click" v-model="visitPage.tabPop">
             <ul class="tab-list">
               <li
                 v-for="(item, index) in visitPage.tabCon"
@@ -269,46 +235,21 @@
                 {{ item.label }}
               </li>
             </ul>
-            <i
-              slot="reference"
-              class="iconfont icon-chevron-down tab-handle"
-            />
+            <i class="iconfont icon-chevron-down tab-handle" slot="reference"></i>
           </el-popover>
         </div>
       </div>
       <div class="section-header">
-        <el-select
-          v-model="visitPage.date"
-          placeholder="请选择"
-          @change="visitPageHandle"
-        >
-          <el-option
-            v-for="item in date"
-            :key="item.value"
-            :label="item.label"
-            :value="item.value"
-          />
+        <el-select v-model="visitPage.date" placeholder="请选择" @change="visitPageHandle">
+          <el-option v-for="item in date" :key="item.value" :label="item.label" :value="item.value">
+          </el-option>
         </el-select>
       </div>
       <div class="section-body">
-        <el-table
-          v-loading="visitPage.visitLoading"
-          :data="visitPage.list"
-        >
-          <el-table-column
-            prop="page_path"
-            label="页面路径"
-          />
-          <el-table-column
-            prop="pv_num"
-            label="访问次数"
-            width="180"
-          />
-          <el-table-column
-            prop="percent"
-            label="占比"
-            width="180"
-          />
+        <el-table :data="visitPage.list" v-loading="visitPage.visitLoading">
+          <el-table-column prop="page_path" label="页面路径"> </el-table-column>
+          <el-table-column prop="pv_num" label="访问次数" width="180"> </el-table-column>
+          <el-table-column prop="percent" label="占比" width="180"> </el-table-column>
         </el-table>
       </div>
     </section>
@@ -333,7 +274,19 @@ export default {
       default: ''
     }
   },
-  data () {
+  watch: {
+    wxapp(value) {
+      if (value) {
+        this.setAppId(value)
+        if (this.wxAppId) {
+          this.updateSurvey()
+          this.fetchChartData()
+          this.updateVisitPage()
+        }
+      }
+    }
+  },
+  data() {
     return {
       wxAppId: '',
       value: '',
@@ -356,13 +309,13 @@ export default {
         shortcuts: [
           {
             text: '今天',
-            onClick (picker) {
+            onClick(picker) {
               picker.$emit('pick', new Date())
             }
           },
           {
             text: '昨天',
-            onClick (picker) {
+            onClick(picker) {
               const date = new Date()
               date.setTime(date.getTime() - 3600 * 1000 * 24)
               picker.$emit('pick', date)
@@ -370,7 +323,7 @@ export default {
           },
           {
             text: '一周前',
-            onClick (picker) {
+            onClick(picker) {
               const date = new Date()
               date.setTime(date.getTime() - 3600 * 1000 * 24 * 7)
               picker.$emit('pick', date)
@@ -462,30 +415,8 @@ export default {
       }
     }
   },
-  watch: {
-    wxapp (value) {
-      if (value) {
-        this.setAppId(value)
-        if (this.wxAppId) {
-          this.updateSurvey()
-          this.fetchChartData()
-          this.updateVisitPage()
-        }
-      }
-    }
-  },
-  mounted () {
-    NProgress.start()
-    this.setAppId(this.wxapp)
-    if (this.wxAppId) {
-      this.updateSurvey()
-      this.fetchChartData()
-      this.updateVisitPage()
-      NProgress.done()
-    }
-  },
   methods: {
-    chartInit () {
+    chartInit() {
       var config = {
         type: 'line',
         data: {
@@ -515,7 +446,7 @@ export default {
       var ctx = document.getElementById('canvas').getContext('2d')
       this.chartObj = new Chart(ctx, config)
     },
-    updateSurvey () {
+    updateSurvey() {
       this.surveyLoading = true
       summarybydate({
         wxaAppId: this.wxAppId,
@@ -526,29 +457,29 @@ export default {
         this.surveyLoading = false
       })
     },
-    chartHandle (val) {
+    chartHandle(val) {
       this.chart.date = val
       this.fetchChartData()
     },
-    tabChartHandle (index) {
+    tabChartHandle(index) {
       this.chart.currentTabName = this.chart.tabCon[index].label
       this.chart.currentTab = this.chart.tabCon[index].value
       this.chart.tabPop = false
       this.updateChart()
     },
-    tabVisitHandle (index) {
+    tabVisitHandle(index) {
       this.visitPage.currentTabName = this.chart.tabCon[index].label
       this.visitPage.currentTab = this.chart.tabCon[index].value
       this.visitPage.tabPop = false
       this.updateChart()
     },
-    updateChart () {
+    updateChart() {
       this.chartObj.chart.data.labels = this.chart.ref_date
       this.chartObj.chart.data.datasets[0].data = this.chart.data[this.chart.currentTab]
       this.chartObj.chart.data.datasets[0].label = this.chart.currentTabName
       this.chartObj.update()
     },
-    fetchChartData () {
+    fetchChartData() {
       this.chart.chartLoading = true
       getSummaryTrend({
         wxaAppId: this.wxAppId,
@@ -607,17 +538,17 @@ export default {
         this.chart.chartLoading = false
       })
     },
-    tabVisitHandle (index) {
+    tabVisitHandle(index) {
       this.visitPage.currentTabName = this.visitPage.tabCon[index].label
       this.visitPage.currentTab = this.visitPage.tabCon[index].value
       this.visitPage.tabPop = false
       this.visitPage.list = this.visitPage.data[this.visitPage.currentTab]
     },
-    visitPageHandle (val) {
+    visitPageHandle(val) {
       this.visitPage.date = val
       this.updateVisitPage()
     },
-    updateVisitPage () {
+    updateVisitPage() {
       this.visitPage.visitLoading = true
       getVisitPage({
         wxaAppId: this.wxAppId,
@@ -649,8 +580,8 @@ export default {
         this.visitPage.list = this.visitPage.data[this.visitPage.currentTab]
         this.visitPage.visitLoading = false
       })
-      var compare = function (prop) {
-        return function (obj1, obj2) {
+      var compare = function(prop) {
+        return function(obj1, obj2) {
           var val1 = obj1[prop]
           var val2 = obj2[prop]
           if (!isNaN(Number(val1)) && !isNaN(Number(val2))) {
@@ -667,8 +598,18 @@ export default {
         }
       }
     },
-    setAppId (val) {
+    setAppId(val) {
       this.wxAppId = val
+    }
+  },
+  mounted() {
+    NProgress.start()
+    this.setAppId(this.wxapp)
+    if (this.wxAppId) {
+      this.updateSurvey()
+      this.fetchChartData()
+      this.updateVisitPage()
+      NProgress.done()
     }
   }
 }

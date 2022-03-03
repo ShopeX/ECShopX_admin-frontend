@@ -1,12 +1,9 @@
 <template>
-  <transition
-    name="fade"
-    mode="out-in"
-  >
+  <transition name="fade" mode="out-in">
     <!-- <storeDefault v-if="template_name === 'yykmembership'"></storeDefault>
     <storeSport v-if="template_name === 'yykmendian'"></storeSport>
     <storeUniversal v-if="template_name === 'yykuniversal'"></storeUniversal> -->
-    <mallDefault />
+    <mallDefault></mallDefault>
     <!-- <appleBaDefault v-if="template_name === 'appleweishop'"></appleBaDefault>
     <marketingCard v-if="template_name === 'marketingCard'"></marketingCard>
     <marketingGroup v-if="template_name === 'yykcutdown'"></marketingGroup>
@@ -36,6 +33,13 @@ import marketingCard from '@/view/wxapp/template/marketing/card'
 import marketingGroup from '@/view/wxapp/template/marketing/group'
 
 export default {
+  data() {
+    return {
+      activeIndex: '',
+      currentCode: '',
+      wxapps: []
+    }
+  },
   components: {
     storeDefault: storeDefault,
     storeSport: storeSport,
@@ -47,22 +51,15 @@ export default {
     marketingGroup: marketingGroup,
     appleBaDefault: appleBaDefault
   },
-  data () {
-    return {
-      activeIndex: '',
-      currentCode: '',
-      wxapps: []
-    }
-  },
   computed: {
     ...mapGetters(['wxapp_id', 'template_name'])
   },
   methods: {
-    chooseTemp () {
+    chooseTemp() {
       this.$router.push({ path: this.matchInternalRoute('wxapp_templ') })
     },
-    mounted () {
-      if (this.active) {
+    mounted () { 
+      if(this.active){
         this.activeIndex = this.active
       }
       if (this.$route.query.wxappid !== undefined) {
@@ -71,6 +68,7 @@ export default {
       if (this.$route.query.templatename) {
         this.$store.dispatch('setTemplateName', this.$route.query.templatename)
       }
+    
     }
   }
 }

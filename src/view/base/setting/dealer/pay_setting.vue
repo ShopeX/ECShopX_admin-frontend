@@ -2,148 +2,93 @@
   <div class="zyk_pay_steeing">
     <el-form
       v-if="processed == '未填'"
-      ref="ruleForm"
       :model="form"
+      ref="ruleForm"
       class="demo-ruleForm"
       label-width="130px"
       :rules="rules"
     >
-      <el-card
-        class="box-card"
-        shadow="never"
-      >
-        <div
-          slot="header"
-          class="clearfix"
-        >
+      <el-card class="box-card" shadow="never">
+        <div slot="header" class="clearfix">
           <span>支付渠道信息</span>
         </div>
         <el-row :gutter="20">
           <el-col :span="12">
-            <el-form-item
-              label="费率类型"
-              prop="fee_type"
-            >
-              <el-select
-                v-model="form.fee_type"
-                style="width: 100%"
-              >
+            <el-form-item label="费率类型" prop="fee_type">
+              <el-select v-model="form.fee_type" style="width: 100%">
                 <el-option
                   v-for="value in fee_type_options"
                   :key="value.code"
                   :label="value.name"
                   :value="value.code"
-                />
+                >
+                </el-option>
               </el-select>
             </el-form-item>
           </el-col>
-          <el-col
-            v-if="form.fee_type"
-            :span="12"
-          >
-            <el-form-item
-              label="经营类目"
-              prop="wx_category"
-            >
-              <el-select
-                v-model="form.wx_category"
-                placeholder="请选择"
-                style="width: 100%"
-              >
+          <el-col :span="12" v-if="form.fee_type">
+            <el-form-item label="经营类目" prop="wx_category">
+              <el-select v-model="form.wx_category" placeholder="请选择" style="width: 100%">
                 <el-option
                   v-for="value in category_options"
                   :key="value.id"
                   :label="value.merchant_type_name"
                   :value="value.merchant_type_name"
-                />
+                >
+                </el-option>
               </el-select>
             </el-form-item>
           </el-col>
-          <el-col
-            v-if="form.wx_category"
-            :span="12"
-          >
-            <el-form-item
-              label="商户种类"
-              prop="mer_type"
-            >
-              <el-select
-                v-model="form.mer_type"
-                placeholder="请选择活动区域"
-                style="width: 100%"
-              >
+          <el-col :span="12" v-if="form.wx_category">
+            <el-form-item label="商户种类" prop="mer_type">
+              <el-select v-model="form.mer_type" placeholder="请选择活动区域" style="width: 100%">
                 <el-option
                   v-for="value in mer_type_options"
                   :key="value.code"
                   :label="value.name"
                   :value="value.code"
-                />
+                >
+                </el-option>
               </el-select>
             </el-form-item>
           </el-col>
           <el-col :span="12">
-            <el-form-item
-              label="入驻模式"
-              prop="model_type"
-            >
-              <el-select
-                v-model="form.model_type"
-                placeholder="请选择"
-                style="width: 100%"
-              >
+            <el-form-item label="入驻模式" prop="model_type">
+              <el-select v-model="form.model_type" placeholder="请选择" style="width: 100%">
                 <el-option
                   v-for="value in model_type_options"
                   :key="value.code"
                   :label="value.name"
                   :value="value.code"
-                />
+                >
+                </el-option>
               </el-select>
             </el-form-item>
           </el-col>
           <el-col :span="12">
-            <el-form-item
-              label="地区"
-              prop="select_regions_value"
-            >
+            <el-form-item label="地区" prop="select_regions_value">
               <el-cascader
-                v-model="form.select_regions_value"
                 style="width: 100%"
                 placeholder="请选择省市区"
                 :options="area"
+                v-model="form.select_regions_value"
                 @change="regionChange"
-              />
+              >
+              </el-cascader>
             </el-form-item>
           </el-col>
 
           <el-col :span="12">
-            <el-form-item
-              label="微信小程序appid"
-              prop="authorizer_appid"
-            >
-              <el-input
-                v-model="form.authorizer_appid"
-                placeholder=""
-                style="width: 100%"
-              />
+            <el-form-item label="微信小程序appid" prop="authorizer_appid">
+              <el-input v-model="form.authorizer_appid" placeholder="" style="width: 100%">
+              </el-input>
             </el-form-item>
           </el-col>
           <el-col :span="12">
-            <el-form-item
-              label="手续费扣费方式"
-              prop="adapay_fee_mode"
-            >
-              <el-select
-                v-model="form.adapay_fee_mode"
-                style="width: 100%"
-              >
-                <el-option
-                  label="内扣"
-                  value="I"
-                />
-                <el-option
-                  label="外扣"
-                  value="O"
-                />
+            <el-form-item label="手续费扣费方式" prop="adapay_fee_mode">
+              <el-select v-model="form.adapay_fee_mode" style="width: 100%">
+                <el-option label="内扣" value="I"> </el-option>
+                <el-option label="外扣" value="O"> </el-option>
               </el-select>
             </el-form-item>
           </el-col>
@@ -182,12 +127,7 @@
         </el-row>
       </el-card> -->
       <el-form-item style="text-align: center; margin: 50px 0; margin-right: 130px">
-        <el-button
-          type="primary"
-          @click="submitForm"
-        >
-          提交审核
-        </el-button>
+        <el-button type="primary" @click="submitForm">提交审核</el-button>
         <!-- <loading-btn
           ref="loadingBtn"
           size="medium"
@@ -198,9 +138,9 @@
       </el-form-item>
     </el-form>
     <Result-cpn
-      v-if="processed == '已填'"
-      :current-status="currentStatus"
       @nextPage="nextPage"
+      :currentStatus="currentStatus"
+      v-if="processed == '已填'"
       @processedHandle="processedHandle"
     />
     <check-box
@@ -208,7 +148,7 @@
       :message="checkBoxConfig.message"
       @checkBoxConfirmHandle="checkBoxConfirmHandle"
       @checkBoxVisibleHandle="checkBoxVisibleHandle"
-    />
+    ></check-box>
   </div>
 </template>
 
@@ -224,7 +164,7 @@ export default {
     loadingBtn,
     checkBox
   },
-  data () {
+  data() {
     return {
       allPro: '',
       allCity: [],
@@ -271,35 +211,13 @@ export default {
       isEcho: false // 是否回显
     }
   },
-  watch: {
-    'form.fee_type' (val) {
-      this.getCategoryOptions({
-        fee_type: val
-      })
-      if (this.isEcho && this.form.wx_category) {
-        return
-      }
-      this.form.wx_category = ''
-      this.form.mer_type = ''
-    },
-    'form.wx_category' (val) {
-      this.getMerTypeOptions({
-        merchant_type_name: val
-      })
-      if (this.isEcho && this.form.mer_type) {
-        this.isEcho = false
-        return
-      }
-      this.form.mer_type = ''
-    }
-  },
-  mounted () {
+  mounted() {
     this.getOptions()
     this.getStepHandle()
   },
   methods: {
     // 查询开户步骤
-    async getStepHandle () {
+    async getStepHandle() {
       const { info } = await this.$api.adapay.getStep()
       console.log(result)
       const { MerchantResident } = info
@@ -316,27 +234,27 @@ export default {
         }
       }
     },
-    nextPage () {
+    nextPage() {
       this.$router.push('/setting/adapay_merchant/picture')
     },
     // 获取options
-    async getOptions () {
+    async getOptions() {
       const { fee_type, mer_type, model_type } = await this.$api.adapay.pay_options()
       this.fee_type_options = fee_type
       this.mer_type_options = mer_type
       this.model_type_options = model_type
     },
     // 获取经营类目options
-    async getCategoryOptions (obj) {
+    async getCategoryOptions(obj) {
       const { list } = await this.$api.adapay.getCategoryList(obj)
       this.category_options = list
     },
     // 获取商户种类options
-    async getMerTypeOptions (obj) {
+    async getMerTypeOptions(obj) {
       const { mer_type } = await this.$api.adapay.getMerTypeOption(obj)
       this.mer_type_options = mer_type
     },
-    submitForm () {
+    submitForm() {
       this.$refs['ruleForm'].validate(async (valid) => {
         if (valid) {
           this.checkBoxVisibleHandle()
@@ -346,14 +264,14 @@ export default {
         }
       })
     },
-    regionChange (val) {
+    regionChange(val) {
       console.log(val)
       this.form.province_code = val[0]
       this.form.city_code = val[1]
       this.form.district_code = val[2]
     },
     // 重新填写
-    async processedHandle () {
+    async processedHandle() {
       const { info } = await this.$api.adapay.getStep()
       const { MerchantResident } = info
       this.isEcho = true
@@ -369,7 +287,7 @@ export default {
       this.processed = '未填'
     },
     /* ----------------------------------checkBox start----------------------------------- */
-    async checkBoxConfirmHandle () {
+    async checkBoxConfirmHandle() {
       try {
         const { status } = await this.$api.adapay.submitPay(this.form)
         if (status) {
@@ -387,13 +305,35 @@ export default {
         this.checkBoxVisibleHandle()
       }
     },
-    checkBoxVisibleHandle () {
+    checkBoxVisibleHandle() {
       this.checkBoxConfig.visible = !this.checkBoxConfig.visible
       // if (this.checkBoxConfig.visible) {
       //   this.$refs['loadingBtn'].closeLoading()
       // }
     }
     /* ----------------------------------checkBox  end ----------------------------------- */
+  },
+  watch: {
+    'form.fee_type'(val) {
+      this.getCategoryOptions({
+        fee_type: val
+      })
+      if (this.isEcho && this.form.wx_category) {
+        return
+      }
+      this.form.wx_category = ''
+      this.form.mer_type = ''
+    },
+    'form.wx_category'(val) {
+      this.getMerTypeOptions({
+        merchant_type_name: val
+      })
+      if (this.isEcho && this.form.mer_type) {
+        this.isEcho = false
+        return
+      }
+      this.form.mer_type = ''
+    }
   }
 }
 </script>

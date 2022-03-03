@@ -4,29 +4,20 @@
       <div class="section-title">我的模版</div>
       <div class="section-more">更多</div>
     </div> -->
-    <template v-if="$route.path.indexOf('aliapp_templ') === -1">
+    <template
+      v-if="$route.path.indexOf('aliapp_templ') === -1"
+    >
       <div
+        class="page"
         v-for="(dataList, idx) in list"
         :key="idx"
-        class="page"
       >
-        <div class="title">
-          {{ idx ? '支付宝' : '微信' }}
-        </div>
+        <div class="title">{{idx ? "支付宝" : "微信"}}</div>
         <el-row :gutter="20">
-          <el-col
-            :xs="12"
-            :sm="8"
-            :md="6"
-            :lg="4"
-            :xl="3"
-          >
-            <div
-              class="template-item add-btn"
-              @click="chooseTemp(idx)"
-            >
+          <el-col :xs="12" :sm="8" :md="6" :lg="4" :xl="3">
+            <div class="template-item add-btn" @click="chooseTemp(idx)">
               <div class="template-wrap add-btn">
-                <i :class="`iconfont ${idx ? 'icon-zhifubaologo' : 'icon-weixin'}`" />
+                <i :class="`iconfont ${idx ? 'icon-zhifubaologo' : 'icon-weixin'}`"></i>
                 <div>添加小程序模板</div>
               </div>
             </div>
@@ -41,22 +32,10 @@
             :xl="3"
           >
             <div class="template-item">
-              <div
-                v-if="item.is_weapp_grade"
-                class="has-upgrade"
-              />
-              <div
-                v-if="item.wxaCodeVisible"
-                class="wxcode"
-              >
-                <div
-                  class="iconfont icon-times"
-                  @click="closeWxcode(idx, index)"
-                />
-                <img
-                  :src="item.wxaCodeImage"
-                  alt=""
-                >
+              <div v-if="item.is_weapp_grade" class="has-upgrade"></div>
+              <div v-if="item.wxaCodeVisible" class="wxcode">
+                <div class="iconfont icon-times" @click="closeWxcode(idx, index)"></div>
+                <img :src="item.wxaCodeImage" alt="" />
               </div>
               <div class="template-wrap">
                 <div class="template-img">
@@ -64,54 +43,49 @@
                     v-if="item.template_name === 'yykmembership'"
                     src="@/assets/img/template_img.jpg"
                     alt=""
-                  >
+                  />
                   <img
                     v-if="item.template_name === 'yykmendian'"
                     src="@/assets/img/template_img_01.jpg"
                     alt=""
-                  >
+                  />
                   <img
                     v-if="item.template_name === 'yykcutdown'"
                     src="@/assets/img/template_img_02.jpg"
                     alt=""
-                  >
+                  />
                   <img
                     v-if="item.template_name === 'yykweishop'"
                     src="@/assets/img/template_img_04.jpg"
                     alt=""
-                  >
+                  />
                   <img
                     v-if="item.template_name === 'appleweishop'"
                     src="@/assets/img/template_img_09.jpg"
                     alt=""
-                  >
+                  />
                   <img
                     v-if="item.template_name === 'yykcommunity'"
                     src="@/assets/img/template_img_07.jpg"
                     alt=""
-                  >
+                  />
                   <img
                     v-if="item.template_name === 'yykcommunitypms'"
                     src="@/assets/img/template_img_06.jpg"
                     alt=""
-                  >
+                  />
                   <img
                     v-if="item.template_name === 'onexshop'"
                     src="@/assets/img/onexshop.png"
                     alt=""
-                  >
+                  />
                   <div
                     v-if="idx === 0 && item.is_bind"
                     v-loading="item.loading"
                     class="demo-qrcode"
                     @click="downloadWxaCode(idx, index, item.bindInfo, 'wechat')"
                   >
-                    <img
-                      src="@/assets/img/code.png"
-                      height="34"
-                      width="35"
-                      alt=""
-                    >
+                    <img src="@/assets/img/code.png" height="34" width="35" alt="" />
                   </div>
                   <div
                     v-if="item.bindInfo && idx === 1 && item.bindInfo.status === 5"
@@ -119,29 +93,16 @@
                     class="demo-qrcode"
                     @click="downloadWxaCode(idx, index, item.bindInfo, 'alipay')"
                   >
-                    <img
-                      src="@/assets/img/code.png"
-                      height="34"
-                      width="35"
-                      alt=""
-                    >
+                    <img src="@/assets/img/code.png" height="34" width="35" alt="" />
                   </div>
                 </div>
                 <div class="template-caption">
                   {{ item.templateInfo.name }}
                 </div>
-                <div
-                  v-if="!idx"
-                  class="template-opend-btn"
-                  @click="linkTo(item, idx)"
-                >
+                <div v-if="!idx" class="template-opend-btn" @click="linkTo(item, idx)">
                   <span v-if="item.is_bind">编辑模板</span><span v-else>未绑定</span>
                 </div>
-                <div
-                  v-else
-                  class="template-opend-btn"
-                  @click="linkTo(item, idx)"
-                >
+                <div v-else class="template-opend-btn" @click="linkTo(item, idx)">
                   <span v-if="item.is_bind">编辑模板</span><span v-else>授权支付宝小程序</span>
                 </div>
               </div>
@@ -150,7 +111,7 @@
         </el-row>
       </div>
     </template>
-    <el-dialog
+    <el-dialog 
       center
       top="30vh"
       width="20%"
@@ -158,38 +119,20 @@
       :show-close="!isClick"
       :visible.sync="isShow"
       :close-on-press-escape="false"
-      :close-on-click-modal="false"
-    >
+      :close-on-click-modal="false">
       <div class="content-center">
-        {{
-          !isClick
-            ? '点击【继续】后将为你打开新网页进行授权务必在完成授权后手动回到本页面进行后续操作。'
-            : '点击【我已完成授权】继续编辑小程序模板。'
-        }}
+        {{!isClick ? '点击【继续】后将为你打开新网页进行授权务必在完成授权后手动回到本页面进行后续操作。' :
+          '点击【我已完成授权】继续编辑小程序模板。'}}
       </div>
-      <span
-        v-if="!isClick"
-        slot="footer"
-        class="dialog-footer"
-      >
-        <el-button
-          type="primary"
-          @click="accredit"
-        >继续</el-button>
+      <span v-if="!isClick" slot="footer" class="dialog-footer">
+        <el-button type="primary" @click="accredit">继续</el-button>
       </span>
-      <span
-        v-else
-        slot="footer"
-        class="dialog-footer"
-      >
+      <span v-else slot="footer" class="dialog-footer">
         <el-button @click="accredit">重新授权</el-button>
-        <el-button
-          type="primary"
-          @click="doneAccredit"
-        >我已完成授权</el-button>
+        <el-button type="primary" @click="doneAccredit">我已完成授权</el-button>
       </span>
     </el-dialog>
-    <router-view />
+    <router-view></router-view>
   </section>
 </template>
 
@@ -199,7 +142,7 @@ import { getALiCodeUnlimit, getALiPreAuthUrl } from '@/api/ali'
 import { getTemplateList, getALiTemplateList } from '@/api/template'
 
 export default {
-  data () {
+  data() {
     return {
       list: [],
       isShow: false,
@@ -207,30 +150,8 @@ export default {
       authorizerUrl: ''
     }
   },
-  mounted () {
-    getTemplateList().then((response) => {
-      var res = response.data.data.list
-      for (var i = 0; i < res.length; i++) {
-        res[i].loading = false
-        res[i].wxaCodeImage = ''
-        res[i].wxaCodeVisible = false
-        res[i].type = 'wx'
-      }
-      this.list.unshift(res)
-    })
-    getALiTemplateList().then((response) => {
-      var res = response.data.data.list
-      for (var i = 0; i < res.length; i++) {
-        res[i].loading = false
-        res[i].wxaCodeImage = ''
-        res[i].wxaCodeVisible = false
-        res[i].type = 'zfb'
-      }
-      this.list.push(res)
-    })
-  },
   methods: {
-    linkTo (data) {
+    linkTo(data) {
       console.log('🚀data', data)
       let link = ''
       let wid = ''
@@ -266,27 +187,26 @@ export default {
       }
       console.log('跳转页面')
       console.log(link)
-      let _query =
-        data.type == 'wx'
-          ? { templatename: data.template_name, wxappid: wid }
-          : { templatename: data.template_name, aliappid: wid }
+      let _query = data.type == 'wx' ?
+        { templatename: data.template_name, wxappid: wid } :
+        { templatename: data.template_name, aliappid: wid }
       this.$router.push({
         path: link,
         query: _query
       })
     },
-    accredit () {
+    accredit() {
       this.isClick = true
       window.open(this.authorizerUrl)
     },
-    doneAccredit () {
+    doneAccredit() {
       this.isShow = false
       window.location.reload()
     },
-    closeWxcode (idx, index) {
+    closeWxcode(idx, index) {
       this.list[idx][index].wxaCodeVisible = false
     },
-    downloadWxaCode (idx, index, info, type) {
+    downloadWxaCode(idx, index, info, type) {
       if (!this.list[idx][index].wxaCodeImage) {
         if (type === 'wechat') {
           let params = { wxaAppId: info.authorizer_appid }
@@ -312,12 +232,34 @@ export default {
         this.list[idx][index].wxaCodeVisible = true
       }
     },
-    chooseTemp (idx) {
+    chooseTemp(idx) {
       // this.$router.push({ path: this.matchInternalRoute('wxapp_templ') })
-      idx
-        ? this.$router.push({ path: '/wxapp/aliapp/template/aliapp_templ' })
-        : this.$router.push({ path: '/wxapp/manage/wxapp/wxapp_templ' })
+      idx ? 
+        this.$router.push({ path: '/wxapp/aliapp/template/aliapp_templ'}) :
+        this.$router.push({ path: '/wxapp/manage/wxapp/wxapp_templ'})
     }
+  },
+  mounted() {
+    getTemplateList().then((response) => {
+      var res = response.data.data.list
+      for (var i = 0; i < res.length; i++) {
+        res[i].loading = false
+        res[i].wxaCodeImage = ''
+        res[i].wxaCodeVisible = false
+        res[i].type = 'wx'
+      }
+      this.list.unshift(res)
+    })
+    getALiTemplateList().then((response) => {
+      var res = response.data.data.list
+      for (var i = 0; i < res.length; i++) {
+        res[i].loading = false
+        res[i].wxaCodeImage = ''
+        res[i].wxaCodeVisible = false
+        res[i].type = 'zfb'
+      }
+      this.list.push(res)
+    })
   }
 }
 </script>
@@ -327,7 +269,7 @@ export default {
   width: 100%;
   height: auto;
   padding: 10px 30px;
-  border: 1px solid #f4f4f4;
+  border: 1px solid #F4F4F4;
   border-radius: 10px;
   box-shadow: 0px 0px 10px #999999;
   margin-bottom: 30px;

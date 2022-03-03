@@ -1,93 +1,65 @@
 <template>
-  <el-card
-    shadow="never"
-    header="账号信息"
-  >
-    <el-form
-      ref="form"
-      :model="form"
-      label-position="left"
-      label-width="100px"
-    >
+  <el-card shadow="never" header="账号信息">
+    <el-form ref="form" :model="form" label-position="left" label-width="100px">
       <div class="section-body">
         <el-form-item label="账户">
           {{ id }}
         </el-form-item>
         <el-form-item label="昵称">
-          <el-input
-            v-model="form.username"
-            type="text"
-            style="width: 300px"
-          />
+          <el-input type="text" v-model="form.username" style="width:300px"></el-input>
         </el-form-item>
         <el-form-item label="头像">
-          <imgBox
-            :img-url="form.head_portrait"
-            inline
-            @click="handleImgChange"
-          />
+          <imgBox :imgUrl="form.head_portrait" inline @click="handleImgChange"></imgBox>
           <imgPicker
             :dialog-visible="imgDialog"
             :sc-status="isGetImage"
             @chooseImg="pickImg"
             @closeImgDialog="closeImgDialog"
-          />
+          ></imgPicker>
         </el-form-item>
 
         <template v-if="change_pwd">
           <el-form-item label="修改密码">
             <el-input
-              v-model="form.pwd"
               :type="new_input_type"
-              style="width: 300px"
+              v-model="form.pwd"
+              style="width:300px"
               placeholder="请输入新密码"
             >
               <i
                 slot="suffix"
                 title="隐藏密码"
-                style="cursor: pointer"
-                class="el-icon-view"
                 @click="changeNewPass"
-              />
+                style="cursor:pointer;"
+                class="el-icon-view"
+              ></i>
             </el-input>
           </el-form-item>
           <el-form-item label="确认密码">
             <el-input
-              v-model="form.repwd"
               :type="input_type"
-              style="width: 300px"
+              v-model="form.repwd"
+              style="width:300px"
               placeholder="请输入确认密码"
             >
               <i
                 slot="suffix"
                 title="隐藏密码"
-                style="cursor: pointer"
-                class="el-icon-view"
                 @click="changePass"
-              />
+                style="cursor:pointer;"
+                class="el-icon-view"
+              ></i>
             </el-input>
           </el-form-item>
         </template>
         <template v-else>
           <el-form-item label="修改密码">
-            <span
-              class="frm-tips"
-            >超级管理员需通过商派账号中心进行
-              <a
-                href="https://account.shopex.cn/account/security"
-                target="_blank"
-              >修改密码</a></span>
+          <span class="frm-tips">超级管理员需通过商派账号中心进行 <a href="https://account.shopex.cn/account/security" target="_blank">修改密码</a></span>
           </el-form-item>
         </template>
       </div>
       <div class="section-footer content-center">
-        <el-button
-          type="primary"
-          :loading="loading"
-          @click="onSubmit"
-        >
-          保存
-        </el-button>
+        <el-button type="primary" :loading="loading" @click="onSubmit">保存</el-button>
       </div>
     </el-form>
   </el-card>
@@ -103,7 +75,7 @@ export default {
     imgPicker,
     imgBox
   },
-  data () {
+  data() {
     return {
       change_pwd: false,
       loading: false,
@@ -123,22 +95,8 @@ export default {
       new_input_type: 'password'
     }
   },
-  mounted () {
-    getAdminInfo().then((res) => {
-      console.log(res.data.data.logintype)
-      if (res.data.data.logintype == 'admin') {
-        this.change_pwd = false
-      } else {
-        this.change_pwd = true
-      }
-      this.form.head_portrait = res.data.data.head_portrait
-      this.form.username = res.data.data.username
-      this.form.logintype = res.data.data.logintype
-      this.id = res.data.data.mobile
-    })
-  },
   methods: {
-    onSubmit () {
+    onSubmit() {
       const that = this
       this.loading = true
       updateAdminInfo(this.form).then((response) => {
@@ -146,7 +104,7 @@ export default {
           this.$message({
             message: '更新成功',
             type: 'success',
-            onClose () {
+            onClose() {
               that.loading = false
               that.$router.go(-1)
             }
@@ -154,11 +112,11 @@ export default {
         }
       })
     },
-    changeNewPass () {
+    changeNewPass() {
       var new_type = this.new_input_type == 'text' ? 'password' : 'text'
       this.new_input_type = new_type
     },
-    changePass () {
+    changePass() {
       var type = this.input_type == 'text' ? 'password' : 'text'
       this.input_type = type
     },
@@ -178,17 +136,31 @@ export default {
     //     this.form.logo = res.data.data.url
     //   })
     // },
-    handleImgChange () {
+    handleImgChange() {
       this.imgDialog = true
       this.isGetImage = true
     },
-    pickImg (data) {
+    pickImg(data) {
       this.form.head_portrait = data.url
       this.imgDialog = false
     },
-    closeImgDialog () {
+    closeImgDialog() {
       this.imgDialog = false
     }
+  },
+  mounted() {
+    getAdminInfo().then((res) => {
+      console.log(res.data.data.logintype)
+      if (res.data.data.logintype == 'admin') {
+        this.change_pwd = false
+      } else {
+        this.change_pwd = true
+      }
+      this.form.head_portrait = res.data.data.head_portrait
+      this.form.username = res.data.data.username
+      this.form.logintype = res.data.data.logintype
+      this.id = res.data.data.mobile
+    })
   }
 }
 </script>

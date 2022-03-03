@@ -28,47 +28,19 @@
 }
 </style>
 <template>
-  <div
-    class="sp-filter-form"
-    :class="{ 'shouqi': !extend }"
-  >
-    <div
-      ref="fiterFormBd"
-      class="filter-form__bd"
-    >
-      <slot />
+  <div class="sp-filter-form" :class="{ 'shouqi' : !extend }">
+    <div class="filter-form__bd" ref="fiterFormBd">
+      <slot></slot>
     </div>
     <div class="filter-form__ft">
       <div class="btns-wrap">
-        <el-button
-          type="primary"
-          icon="iconfont icon-sousuo"
-          @click="onSearch"
-        >
-          查询
-        </el-button>
-        <el-button
-          type="primary"
-          plain
-          icon="iconfont icon-chexiao"
-          @click="onReset"
-        >
-          重置
-        </el-button>
+        <el-button type="primary" icon="iconfont icon-sousuo" @click="onSearch">查询</el-button>
+        <el-button type="primary" plain icon="iconfont icon-chexiao" @click="onReset">重置</el-button>
       </div>
-      <div
-        v-if="showExtend"
-        class="extend-wrap"
-      >
-        <el-button
-          type="text"
-          @click="toggleExtend"
+      <div class="extend-wrap" v-if="showExtend">
+        <el-button type="text" @click="toggleExtend"
+          ><i class="iconfont" :class="extend ? 'icon-z045' : 'icon-zhankai'"></i>{{`${extend ? '收起' : '展开'}`}}</el-button
         >
-          <i
-            class="iconfont"
-            :class="extend ? 'icon-z045' : 'icon-zhankai'"
-          />{{ `${extend ? '收起' : '展开'}` }}
-        </el-button>
       </div>
     </div>
   </div>
@@ -80,14 +52,14 @@ export default {
   name: 'SpFilterForm',
   mixins: [emitter],
   props: {
-    model: Object
+    model: Object,
   },
-  provide () {
+  provide() {
     return {
       filterForm: this
-    }
+    };
   },
-  data () {
+  data() {
     return {
       fields: [],
       showExtend: false,
@@ -95,7 +67,7 @@ export default {
       extend: false
     }
   },
-  created () {
+  created() {
     this.$on('sp.filterForm.addField', (field) => {
       if (field) {
         this.fields.push(field)
@@ -107,40 +79,40 @@ export default {
       _this.calcRows()
     }
   },
-  mounted () {
+  mounted() {
     this.calcRows()
   },
-  destroyed () {
-    window.onresize = null
-  },
   methods: {
-    toggleExtend () {
+    toggleExtend() {
       this.extend = !this.extend
     },
-    calcRows () {
+    calcRows() {
       // console.log('xxx:', this.$refs.fiterFormBd.clientWidth)
       const cols = Math.floor(this.$refs.fiterFormBd.clientWidth / 305)
       const rows = Math.ceil(this.fields.length / cols)
       if (rows > 2) {
         this.showExtend = true
       } else {
-        this.showExtend = false
+         this.showExtend = false
       }
       this.rows = rows
     },
-    onSearch () {
+    onSearch() {
       this.$emit('onSearch')
     },
-    onReset () {
+    onReset() {
       if (!this.model) {
-        console.warn('[Sp Warn][sp-filter-form]model is required for resetFields to work.')
-        return
+        console.warn('[Sp Warn][sp-filter-form]model is required for resetFields to work.');
+        return;
       }
-      this.fields.forEach((field) => {
-        field.resetField()
-      })
+      this.fields.forEach(field => {
+        field.resetField();
+      });
       this.$emit('onReset')
     }
+  },
+  destroyed() {
+    window.onresize = null
   }
 }
 </script>

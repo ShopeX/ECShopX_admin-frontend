@@ -1,39 +1,42 @@
 import log from './log'
-import CommonUtil from '@/common/js/util'
+import CommonUtil from "@/common/js/util";
 
 const isPrimitiveType = (val, type) => Object.prototype.toString.call(val) === type
 
-export function isFunction (val) {
+export function isFunction(val) {
   return isPrimitiveType(val, '[object Function]')
 }
 
-export function isNumber (val) {
+export function isNumber(val) {
   return isPrimitiveType(val, '[object Number]')
 }
 
-export function isObject (val) {
+export function isObject(val) {
   return isPrimitiveType(val, '[object Object]')
 }
 
-export function isArray (val) {
+export function isArray(val) {
   return Array.isArray(val)
 }
 
-export function isBoolean (val) {
-  return isPrimitiveType(val, '[object Boolean]')
+export function isBoolean(val) {
+  return isPrimitiveType( val, '[object Boolean]' )
 }
 
 export const VERSION_STANDARD = process.env.VUE_APP_PRODUCT_MODEL == 'standard'
-
+ 
 export function isInSalesCenter () {
-  if (window.self != window.top && window.self.location.href.indexOf('iframeLogin') < 0) {
-    return true
+  if (
+    window.self != window.top &&
+    window.self.location.href.indexOf("iframeLogin") < 0
+  ) {
+    return true;
   } else {
-    false
+    false;
   }
 }
 
-export function isInMerchant () {
+export function isInMerchant(){
   return /\/merchant/.test(window.location.pathname)
 }
 
@@ -68,18 +71,21 @@ export function getRandwords (ls = 8) {
   return passwords.join('\n')
 }
 
-export function dateFilter (time, pattern = 'yyyy-MM-dd hh:mm:ss') {
-  console.log('dateFilter', time)
+export function  dateFilter(time, pattern = "yyyy-MM-dd hh:mm:ss") {
+  console.log("dateFilter",time)
   if (time !== -1) {
-    return CommonUtil.formatDate.format(new Date(time * 1000), pattern)
+    return CommonUtil.formatDate.format(new Date(time * 1000), pattern);
   } else {
-    let timestamp = Date.parse(new Date()) / 1000
-    return CommonUtil.formatDate.format(new Date(timestamp * 1000), pattern)
+    let timestamp = Date.parse(new Date()) / 1000;
+    return CommonUtil.formatDate.format(
+      new Date(timestamp * 1000),
+      pattern
+    );
   }
 }
 
 // 时间戳转日期格式
-export function timestampToTime (timestamp) {
+export function timestampToTime(timestamp) {
   var date = new Date(timestamp * 1000) //时间戳为10位需*1000，时间戳为13位的话不需乘1000
   var YY = date.getFullYear() + '-'
   var MM = (date.getMonth() + 1 < 10 ? '0' + (date.getMonth() + 1) : date.getMonth() + 1) + '-'
@@ -90,47 +96,51 @@ export function timestampToTime (timestamp) {
   return YY + MM + DD + ' ' + hh + mm + ss
 }
 
-export function goLink () {
+export function goLink() {
   window.parent.postMessage(
     {
-      cmd: 'notExistAuth'
+      cmd: "notExistAuth",
     },
-    '*'
-  )
+    "*"
+  );
 }
 
-export function getPropByPath (obj, path, strict) {
-  let tempObj = obj
-  path = path.replace(/\[(\w+)\]/g, '.$1')
-  path = path.replace(/^\./, '')
+export function getPropByPath(obj, path, strict) {
+  let tempObj = obj;
+  path = path.replace(/\[(\w+)\]/g, '.$1');
+  path = path.replace(/^\./, '');
 
-  let keyArr = path.split('.')
-  let i = 0
+  let keyArr = path.split('.');
+  let i = 0;
   for (let len = keyArr.length; i < len - 1; ++i) {
-    if (!tempObj && !strict) break
-    let key = keyArr[i]
+    if (!tempObj && !strict) break;
+    let key = keyArr[i];
     if (key in tempObj) {
-      tempObj = tempObj[key]
+      tempObj = tempObj[key];
     } else {
       if (strict) {
-        throw new Error('please transfer a valid prop path to form item!')
+        throw new Error('please transfer a valid prop path to form item!');
       }
-      break
+      break;
     }
   }
   return {
     o: tempObj,
     k: keyArr[i],
     v: tempObj ? tempObj[keyArr[i]] : null
-  }
-}
+  };
+};
 
-function export_open (tab) {
-  setTimeout(() => {
+function export_open(tab){
+  setTimeout(()=>{
     window.open(`/setting/baseexport?tab=${tab}`)
-  }, 1000)
+  },1000); 
 }
 
-export { log, export_open }
+export {
+  log,
+  export_open
+}
+
 
 export default {}

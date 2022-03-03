@@ -2,15 +2,8 @@
   <div>
     <div class="log-header">
       <div class="log-container">
-        <div class="brand">
-          <img
-            :src="brand"
-            alt=""
-          >
-        </div>
-        <div class="log-welcome">
-          欢迎登录
-        </div>
+        <div class="brand"><img :src="brand" alt="" /></div>
+        <div class="log-welcome">欢迎登录</div>
       </div>
     </div>
     <div
@@ -25,24 +18,21 @@
       <div class="log-container">
         <el-tabs
           type="border-card"
+          @tab-click="tabChange"
           value="admin"
           style="width: 400px"
           class="login-type-tab"
-          @tab-click="tabChange"
         >
-          <el-tab-pane
-            v-if="system_is_saas == 'true'"
-            name="admin"
-            label="管理员登录(shopexid)"
-          >
+          <el-tab-pane v-if="system_is_saas == 'true'" name="admin" label="管理员登录(shopexid)">
             <div v-loading="isAuto">
               <iframe
-                id="iframe"
-                ref="iframe"
                 :src="autoSrc"
                 frameborder="0"
                 class="login-type-tab-iframe"
-              />
+                ref="iframe"
+                id="iframe"
+              >
+              </iframe>
             </div>
           </el-tab-pane>
           <el-tab-pane
@@ -50,11 +40,11 @@
             name="admin"
             label="管理员登录(shopexid)"
           >
-            <div class="log-img" />
+            <div class="log-img"></div>
             <el-form
-              ref="ruleForm1"
               :model="ruleForm1"
               :rules="rules1"
+              ref="ruleForm1"
               label-position="left"
               label-width="0px"
               class="login-log-container"
@@ -64,46 +54,37 @@
               </h3> -->
               <el-form-item prop="account">
                 <el-input
-                  v-model="ruleForm1.account"
                   type="text"
+                  v-model="ruleForm1.account"
                   name="account"
                   auto-complete="off"
                   placeholder="请输入手机号"
-                />
+                ></el-input>
               </el-form-item>
               <el-form-item prop="checkPass">
                 <el-input
-                  v-model="ruleForm1.checkPass"
                   type="password"
+                  v-model="ruleForm1.checkPass"
                   name="password"
                   auto-complete="off"
                   placeholder="密码"
-                />
+                ></el-input>
               </el-form-item>
               <el-form-item class="log-opr clearfix">
-                <el-checkbox
-                  v-model="checked"
-                  checked
-                  class="remember f_l"
+                <el-checkbox v-model="checked" checked class="remember f_l">记住密码</el-checkbox>
+                <a href="https://account.shopex.cn/forget?" target="_blank" class="forget-pwd"
+                  >忘记密码</a
                 >
-                  记住密码
-                </el-checkbox>
-                <a
-                  href="https://account.shopex.cn/forget?"
-                  target="_blank"
-                  class="forget-pwd"
-                >忘记密码</a>
               </el-form-item>
               <el-form-item style="width: 100%">
                 <el-button
                   type="primary"
                   style="width: 100%"
+                  @click.native.prevent="handleSubmit1"
                   :loading="logining"
                   :disabled="submitDisabled"
-                  @click.native.prevent="handleSubmit1"
+                  >登录</el-button
                 >
-                  登录
-                </el-button>
               </el-form-item>
             </el-form>
           </el-tab-pane>
@@ -112,11 +93,11 @@
             name="localadmin"
             label="管理员登录(独立账号)"
           >
-            <div class="log-img" />
+            <div class="log-img"></div>
             <el-form
-              ref="ruleForm1"
               :model="ruleForm1"
               :rules="rules1"
+              ref="ruleForm1"
               label-position="left"
               label-width="0px"
               class="login-log-container"
@@ -126,108 +107,84 @@
               </h3> -->
               <el-form-item prop="account">
                 <el-input
-                  v-model="ruleForm1.account"
                   type="text"
+                  v-model="ruleForm1.account"
                   name="account"
                   auto-complete="off"
                   placeholder="请输入手机号"
-                />
+                ></el-input>
               </el-form-item>
               <el-form-item prop="checkPass">
                 <el-input
-                  v-model="ruleForm1.checkPass"
                   type="password"
+                  v-model="ruleForm1.checkPass"
                   name="password"
                   auto-complete="off"
                   placeholder="密码"
-                />
+                ></el-input>
               </el-form-item>
               <el-form-item class="log-opr clearfix">
-                <el-checkbox
-                  v-model="checked"
-                  checked
-                  class="remember f_l"
+                <el-checkbox v-model="checked" checked class="remember f_l">记住密码</el-checkbox>
+                <a href="https://account.shopex.cn/forget?" target="_blank" class="forget-pwd"
+                  >忘记密码</a
                 >
-                  记住密码
-                </el-checkbox>
-                <a
-                  href="https://account.shopex.cn/forget?"
-                  target="_blank"
-                  class="forget-pwd"
-                >忘记密码</a>
               </el-form-item>
               <el-form-item style="width: 100%">
                 <el-button
                   type="primary"
                   style="width: 100%"
+                  @click.native.prevent="handleSubmit1"
                   :loading="logining"
                   :disabled="submitDisabled"
-                  @click.native.prevent="handleSubmit1"
+                  >登录</el-button
                 >
-                  登录
-                </el-button>
               </el-form-item>
             </el-form>
           </el-tab-pane>
-          <el-tab-pane
-            name="staff"
-            label="员工账号登录"
-          >
-            <div class="log-img" />
+          <el-tab-pane name="staff" label="员工账号登录">
+            <div class="log-img"></div>
             <el-form
-              ref="ruleForm1"
               :model="ruleForm1"
               :rules="rules1"
+              ref="ruleForm1"
               label-position="left"
               label-width="0px"
               class="login-log-container"
             >
-              <h3 class="title" />
+              <h3 class="title"></h3>
               <el-form-item prop="account">
                 <el-input
-                  v-model="ruleForm1.account"
                   type="text"
+                  v-model="ruleForm1.account"
                   name="account"
                   auto-complete="off"
                   placeholder="手机号码"
-                />
+                ></el-input>
               </el-form-item>
               <el-form-item prop="checkPass">
                 <el-input
-                  v-model="ruleForm1.checkPass"
                   type="password"
+                  v-model="ruleForm1.checkPass"
                   name="password"
                   auto-complete="off"
                   placeholder="密码"
-                />
+                ></el-input>
               </el-form-item>
-              <el-form-item
-                v-if="system_is_saas == 'false'"
-                class="log-opr clearfix title"
-              >
+              <el-form-item v-if="system_is_saas == 'false'" class="log-opr clearfix title">
                 忘记密码，请联系管理员后台重置
               </el-form-item>
-              <el-form-item
-                v-if="system_is_saas == 'true'"
-                class="log-opr clearfix"
-              >
-                <router-link
-                  to="/forget"
-                  class="forget-pwd"
-                >
-                  忘记密码
-                </router-link>
+              <el-form-item v-if="system_is_saas == 'true'" class="log-opr clearfix">
+                <router-link to="/forget" class="forget-pwd">忘记密码</router-link>
               </el-form-item>
               <el-form-item style="width: 100%">
                 <el-button
                   type="primary"
                   style="width: 100%"
+                  @click.native.prevent="handleSubmit1"
                   :loading="logining"
                   :disabled="submitDisabled"
-                  @click.native.prevent="handleSubmit1"
+                  >登录</el-button
                 >
-                  登录
-                </el-button>
               </el-form-item>
             </el-form>
           </el-tab-pane>
@@ -236,20 +193,11 @@
     </div>
     <div class="log-footer">
       <span>友情链接：</span>
-      <a
-        href="https://www.shopex.cn"
-        target="_blank"
-      >商派</a>
+      <a href="https://www.shopex.cn" target="_blank">商派</a>
       <span>|</span>
-      <a
-        href="https://mp.weixin.qq.com"
-        target="_blank"
-      >微信公众平台</a>
+      <a href="https://mp.weixin.qq.com" target="_blank">微信公众平台</a>
       <span>|</span>
-      <a
-        href="https://open.weixin.qq.com"
-        target="_blank"
-      >微信开放平台</a>
+      <a href="https://open.weixin.qq.com" target="_blank">微信开放平台</a>
     </div>
 
     <div class="beian">
@@ -266,7 +214,7 @@ import fetch from '../utils/fetch'
 import { login, getAdminInfo, getAuthorizeUrl, getAuthorizeLogin } from '../api/login'
 import loadRouters from '../router/loadRouters'
 export default {
-  data () {
+  data() {
     const validateEmail = (rule, value, callback) => {
       if (!isMobile(value)) {
         callback(new Error('请输入正确的合法手机号'))
@@ -303,47 +251,13 @@ export default {
       bool: false
     }
   },
-  watch: {},
-  mounted () {
-    console.log(this.system_is_saas, '$this.system_is_saas')
-    // this.ifWindow= this.$refs.iframe.contentWindow
-
-    if (this.system_is_saas == 'true') {
-      let { code } = this.$route.query
-      if (code) {
-        let obj = {
-          code: code,
-          logintype: 'oauthadmin'
-        }
-        this.isAuto = true
-        getAuthorizeLogin(obj)
-          .then((res) => {
-            this.setTokenAndGetRoute(res.data.data.token)
-          })
-          .catch((err) => {
-            setTimeout(() => {
-              window.location.href = `${window.location.origin}/login`
-            }, 1500)
-          })
-      } else {
-        getAuthorizeUrl().then((res) => {
-          this.autoSrc = res.data.data.url
-          this.bool = true
-        })
-      }
-    }
-    this.$store.dispatch('setLoginType', 'default')
-
-    this.brand = require('@/assets/img/' + this.companyBrandImg + '/logo2.jpg')
-    this.login_bg = require('@/assets/img/' + this.companyBrandImg + '/login_bg.jpg')
-  },
   methods: {
-    tabChange (e) {
+    tabChange(e) {
       this.ruleForm1.loginType = e.name
       this.ruleForm1.account = ''
       this.ruleForm1.checkPass = ''
     },
-    handleSubmit1 () {
+    handleSubmit1() {
       this.$refs.ruleForm1.validate((valid) => {
         if (valid) {
           this.loading = true
@@ -367,16 +281,16 @@ export default {
         }
       })
     },
-    setTokenAndGetRoute (token) {
+    setTokenAndGetRoute(token) {
       this.$store.dispatch('setToken', token)
       this.loading = false
       fetch({ url: '/permission', method: 'get' }).then((res) => {
         if (res.data.data) {
           // const url = this.path_prefixes ? (res.data.data[0]['url'] == '/' ? `/${this.path_prefixes}` : `${this.path_prefixes}${res.data.data[0]['url']}`) : res.data.data[0]['url']
-          let url = ''
+          let url = '' 
           const _menu = res.data.data
-          if (_menu[0].children) {
-            if (_menu[0].children[0].children) {
+          if(_menu[0].children) {
+            if(_menu[0].children[0].children) {
               url = _menu[0].children[0].children[0].url
             } else {
               url = _menu[0].children[0].url
@@ -393,7 +307,7 @@ export default {
               message: '登录成功',
               type: 'success',
               duration: 2 * 1000,
-              onClose () {
+              onClose() {
                 _self.$store.dispatch('setUser', info.data.data)
                 _self.$store.dispatch('setLoginType', info.data.data.logintype)
                 _self.$router.push({ path: url })
@@ -401,7 +315,7 @@ export default {
               }
             })
           })
-          console.log('----setmenu----', res.data.data)
+          console.log("----setmenu----",res.data.data)  
           this.$store.dispatch('setMenu', res.data.data)
         } else {
           this.$message({
@@ -431,7 +345,41 @@ export default {
     //   // }
 
     // }
-  }
+  },
+  mounted() {
+    console.log(this.system_is_saas, '$this.system_is_saas')
+    // this.ifWindow= this.$refs.iframe.contentWindow
+
+    if (this.system_is_saas == 'true') {
+      let { code } = this.$route.query
+      if (code) {
+        let obj = {
+          code: code,
+          logintype: 'oauthadmin'
+        }
+        this.isAuto = true
+        getAuthorizeLogin(obj)
+          .then((res) => {
+            this.setTokenAndGetRoute(res.data.data.token)
+          })
+          .catch((err) => {
+            setTimeout(() => {
+              window.location.href = `${window.location.origin}/login`
+            }, 1500)
+          })
+      } else {
+        getAuthorizeUrl().then((res) => {
+          this.autoSrc = res.data.data.url
+          this.bool = true
+        })
+      }
+    }
+    this.$store.dispatch('setLoginType', 'default')
+    
+    this.brand = require('@/assets/img/' + this.companyBrandImg + '/logo2.jpg')
+    this.login_bg = require('@/assets/img/' + this.companyBrandImg + '/login_bg.jpg')
+  },
+  watch: {}
 }
 </script>
 

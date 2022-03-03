@@ -1,81 +1,44 @@
 <template>
-  <div
-    v-loading="loading"
-    class="cus-dealer"
-  >
+  <div class="cus-dealer" v-loading="loading">
     <el-card>
       <el-row>
-        <el-col :span="3">
-          <img
-            v-if="loginType === 'dealer'"
-            class="cus-dealer-img"
-            src="@/assets/img/adapay/dealer.png"
-            alt=""
-          >
-          <img
-            v-if="loginType === 'distributor'"
-            class="cus-dealer-img"
-            src="@/assets/img/adapay/store.png"
-            alt=""
-          >
+        <el-col :span='3'>
+          <img v-if="loginType === 'dealer'" class="cus-dealer-img" src="@/assets/img/adapay/dealer.png" alt="">
+          <img v-if="loginType === 'distributor'" class="cus-dealer-img" src="@/assets/img/adapay/store.png" alt="">
         </el-col>
-        <el-col :span="20">
+        <el-col :span='20'>
           <div class="cus-dealer-flex">
-            <p class="cus-dealer-row">
-              {{ infoList.basicInfo ? infoList.basicInfo.name : '-' }}
-            </p>
+            <p class="cus-dealer-row">{{infoList.basicInfo ? infoList.basicInfo.name : '-'}}</p>
             <div class="cus-dealer-pfonts cus-margin-40">
-              <i class="el-icon-location-outline cus-icon" />
-              <span>{{ infoList.basicInfo ? infoList.basicInfo.area : '-' }}</span>
+              <i class="el-icon-location-outline cus-icon"></i>
+              <span>{{infoList.basicInfo ? infoList.basicInfo.area : '-'}}</span>
             </div>
           </div>
           <p class="cus-dealer-pfonts">
-            <i class="el-icon-s-custom cus-icon" />
-            <span>{{ infoList.basicInfo ? infoList.basicInfo.contact : '-' }}</span>
+            <i class="el-icon-s-custom cus-icon"></i>
+            <span>{{infoList.basicInfo ? infoList.basicInfo.contact : '-'}}</span>
           </p>
-          <p
-            v-if="loginType === 'distributor'"
-            class="cus-dealer-pfonts"
-          >
-            <i class="el-icon-time cus-icon" />
-            <span>{{ infoList.basicInfo ? infoList.basicInfo.hour : '-' }}</span>
+          <p v-if="loginType === 'distributor'" class="cus-dealer-pfonts">
+            <i class="el-icon-time cus-icon"></i>
+            <span>{{infoList.basicInfo ? infoList.basicInfo.hour : '-'}}</span>
           </p>
           <div class="cus-dealer-flex">
             <div class="cus-dealer-pfonts">
-              <i class="el-icon-phone cus-icon" />
-              <span>{{
-                infoList.basicInfo ? infoList.basicInfo.tel_no + '（企业电话）' : '-'
-              }}</span>
+              <i class="el-icon-phone cus-icon"></i>
+              <span>{{infoList.basicInfo ? infoList.basicInfo.tel_no + '（企业电话）' : '-'}}</span>
             </div>
-            <div
-              v-if="loginType === 'distributor'"
-              class="cus-dealer-pfonts cus-margin-50"
-            >
-              <i class="el-icon-message cus-icon" />
-              <span>{{
-                infoList.basicInfo && infoList.basicInfo.email
-                  ? infoList.basicInfo.email + '（企业邮箱）'
-                  : '-'
-              }}</span>
+            <div v-if="loginType === 'distributor'" class="cus-dealer-pfonts cus-margin-50">
+              <i class="el-icon-message cus-icon"></i>
+              <span>{{(infoList.basicInfo && infoList.basicInfo.email) ? infoList.basicInfo.email + '（企业邮箱）' : '-'}}</span>
             </div>
           </div>
-          <div
-            v-if="loginType === 'dealer'"
-            class="cus-dealer-pfonts"
-          >
-            <i class="el-icon-message cus-icon" />
-            <span>{{
-              infoList.basicInfo && infoList.basicInfo.email
-                ? infoList.basicInfo.email + '（企业邮箱）'
-                : '-'
-            }}</span>
+          <div v-if="loginType === 'dealer'" class="cus-dealer-pfonts">
+            <i class="el-icon-message cus-icon"></i>
+            <span>{{(infoList.basicInfo && infoList.basicInfo.email) ? infoList.basicInfo.email + '（企业邮箱）' : '-'}}</span>
           </div>
         </el-col>
       </el-row>
-      <el-row
-        v-if="loginType === 'distributor'"
-        style="margin-top: 10px"
-      >
+      <el-row v-if="loginType === 'distributor'" style="margin-top: 10px">
         <el-tag
           v-for="item in tagsList"
           :key="item.name"
@@ -88,25 +51,19 @@
       </el-row>
     </el-card>
     <el-card>
-      <el-tabs
-        v-model="activeName"
-        class="cus-dealer-tabs"
-      >
-        <el-tab-pane
-          label="开户信息"
-          name="first"
-        >
+      <el-tabs v-model="activeName" class="cus-dealer-tabs">
+        <el-tab-pane label="开户信息" name="first">
           <BaseModal
             :title="member_type === 'corp' ? '企业信息' : '个人信息'"
-            :label-list="member_type === 'corp' ? enterPriseInfo : personalInfo"
-            :info="infoList"
-            :span="7"
+            :labelList="member_type === 'corp' ? enterPriseInfo : personalInfo"
+            :info='infoList'
+            :span='7'
           />
           <BaseModal
             title="结算账户信息"
-            :label-list="member_type === 'corp' ? enterAccountInfo : personalAccountInfo"
-            :info="infoList"
-            :span="7"
+            :labelList="member_type === 'corp' ? enterAccountInfo : personalAccountInfo"
+            :info='infoList'
+            :span='7'
           />
           <!-- <BaseModal
             title="分账信息"
@@ -115,28 +72,12 @@
             :span='7'
           /> -->
           <el-card>
-            <div slot="header">
-              其他信息
-            </div>
+            <div slot="header">其他信息</div>
             <div class="body">
               <el-row class="load-btn">
-                <el-col
-                  :span="4"
-                  style="text-align: right; padding-right: 10px"
-                >
-                  附件信息：
-                </el-col>
-                <el-col
-                  :span="20"
-                  class="cus-btn"
-                >
-                  <el-button
-                    v-if="member_type === 'corp'"
-                    type="text"
-                    @click="dowloadFile(infoList.attach_file)"
-                  >
-                    附件
-                  </el-button>
+                <el-col :span='4' style="text-align:right;padding-right:10px">附件信息：</el-col>
+                <el-col :span='20' class="cus-btn">
+                  <el-button @click="dowloadFile(infoList.attach_file)" v-if="member_type === 'corp'" type='text'>附件</el-button>
                   <span v-else>-</span>
                 </el-col>
               </el-row>
@@ -153,12 +94,12 @@
 </template>
 <script>
 import { getDealderInfo } from '@/api/adapay/dealer'
-import BaseModal from '@/view/mall/marketing/component/BaseModal'
+import BaseModal from "@/view/mall/marketing/component/BaseModal"
 import RemoveShipModal from '@/view/mall/marketing/component/RemoveShipModal'
 
 export default {
   components: { BaseModal, RemoveShipModal },
-  data () {
+  data() {
     return {
       activeName: 'first',
       infoList: {},
@@ -169,52 +110,42 @@ export default {
       member_type: '',
       loading: true,
       tagsList: [],
-      enterPriseInfo: [
-        // 企业信息
-        { name: '法人姓名', field: 'legal_person' },
-        { name: '法人身份证号码', field: 'legal_cert_id' },
-        { name: '法人证件有效期', field: 'legal_cert_id_expires' },
-        { name: '营业执照号', field: 'social_credit_code' },
-        { name: '商户有效日期', field: 'social_credit_code_expires' },
-        { name: '经营范围', field: 'business_scope' },
-        { name: '法人电话号码', field: 'tel_no' },
-        { name: '企业地址', field: 'address' },
-        { name: '邮编', field: 'zip_code' }
+      enterPriseInfo: [ // 企业信息
+        { name: "法人姓名", field: "legal_person" },
+        { name: "法人身份证号码", field: "legal_cert_id" },
+        { name: "法人证件有效期", field: "legal_cert_id_expires" },
+        { name: "营业执照号", field: "social_credit_code" },
+        { name: "商户有效日期", field: "social_credit_code_expires" },
+        { name: "经营范围", field: "business_scope" },
+        { name: "法人电话号码", field: "tel_no" },
+        { name: "企业地址", field: "address" },
+        { name: "邮编", field: "zip_code" }
       ],
-      enterAccountInfo: [
-        // 企业结算账户信息
-        { name: '结算银行卡号', field: 'card_no' },
-        { name: '结算银行卡开户姓名', field: 'bank_card_name' },
-        { name: '结算银行卡所属银行', field: 'bank_name' },
-        { name: '结算银行卡开户省市', field: 'area' },
-        { name: '结算银行账户类型', field: 'bank_acct_type', filter: this.bankAcctType }
+      enterAccountInfo: [ // 企业结算账户信息
+        { name: "结算银行卡号", field: "card_no" },
+        { name: "结算银行卡开户姓名", field: "bank_card_name" },
+        { name: "结算银行卡所属银行", field: "bank_name" },
+        { name: "结算银行卡开户省市", field: "area" },
+        { name: "结算银行账户类型", field: "bank_acct_type", filter: this.bankAcctType }
       ],
-      enterSplitAcount: [
-        // 企业分帐信息
-        { name: '手续费扣费方式', field: 'div_fee_mode', filter: this.adapayFilter }
+      enterSplitAcount: [ // 企业分帐信息
+        { name: "手续费扣费方式", field: "div_fee_mode", filter: this.adapayFilter }
       ],
-      personalInfo: [
-        // 个人信息
-        { name: '用户姓名', field: 'user_name' },
-        { name: '用户手机号码', field: 'tel_no' },
-        { name: '法人身份证号码', field: 'cert_id' }
+      personalInfo : [ // 个人信息
+        { name: "用户姓名", field: "user_name" },
+        { name: "用户手机号码", field: "tel_no" },
+        { name: "法人身份证号码", field: "cert_id" }
       ],
-      personalAccountInfo: [
-        // 个人结算账户信息
-        { name: '开户人姓名', field: 'bank_card_name' },
-        { name: '银行预留手机号', field: 'bank_tel_no' },
-        { name: '银行账号', field: 'bank_card_id' },
-        { name: '开户人证件号码', field: 'bank_cert_id' }
+      personalAccountInfo: [ // 个人结算账户信息
+        { name: "开户人姓名", field: "bank_card_name" },
+        { name: "银行预留手机号", field: "bank_tel_no" },
+        { name: "银行账号", field: "bank_card_id" },
+        { name: "开户人证件号码", field: "bank_cert_id" }
       ],
-      personalSplitAcount: [
-        // 个人分账信息
-        { name: '手续费扣费方式', field: 'div_fee_mode', filter: this.adapayFilter }
+      personalSplitAcount: [ // 个人分账信息
+        { name: "手续费扣费方式", field: "div_fee_mode", filter: this.adapayFilter }
       ]
-    }
-  },
-  mounted () {
-    this.loginType = this.$store.getters.login_type
-    this.getDetail()
+    };
   },
   methods: {
     addressFilter () {
@@ -226,12 +157,11 @@ export default {
       }
     },
     getDetail () {
-      getDealderInfo()
-        .then((response) => {
-          this.loading = false
-          this.infoList = response.data.data
-          this.member_type = response.data.data.member_type
-          const { auto_sync_goods, is_ziti, is_delivery, is_dada } = response.data.data.basicInfo
+      getDealderInfo().then((response) => {
+        this.loading = false
+        this.infoList = response.data.data
+        this.member_type = response.data.data.member_type
+        const { auto_sync_goods, is_ziti, is_delivery, is_dada } = response.data.data.basicInfo
           if (auto_sync_goods) {
             this.tagsList.push({ name: '自动上架商品', type: 'danger' })
           }
@@ -244,14 +174,13 @@ export default {
           if (is_dada) {
             this.tagsList.push({ name: '同城配', type: 'warning' })
           }
+      }).catch((error) => {
+        this.loading = false
+        this.$message({
+          type: 'error',
+          message: '获取详情出错'
         })
-        .catch((error) => {
-          this.loading = false
-          this.$message({
-            type: 'error',
-            message: '获取详情出错'
-          })
-        })
+      })
     },
     // handleModalClick (visible, type) {
     //   this.visible = visible
@@ -279,17 +208,21 @@ export default {
     },
     adapayFilter () {
       let { div_fee_mode } = this.infoList
-      let returnValue = ''
+      let returnValue = "";
       switch (div_fee_mode) {
         case 'I':
-          returnValue = '内扣'
-          break
+          returnValue = "内扣"
+          break;
         case 'O':
-          returnValue = '外扣'
-          break
+          returnValue = "外扣"
+          break;
       }
       return returnValue
     }
+  },
+  mounted () {
+    this.loginType = this.$store.getters.login_type
+    this.getDetail()
   }
 }
 </script>
@@ -315,7 +248,7 @@ export default {
     }
     :nth-child(3) {
       color: #ccc;
-      margin-left: 50px;
+      margin-left: 50px
     }
   }
   &-flex {

@@ -49,6 +49,6 @@ export default {
         import(
           /* webpackChunkName: "companydata-memberstatistics" */ '@/view/mall/datacube/companydata/member'
         )
-    }
+    },
   ]
 }

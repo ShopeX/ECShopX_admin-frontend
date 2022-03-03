@@ -2,54 +2,33 @@
   <div>
     <div v-if="$route.path.indexOf('editor') === -1">
       <el-row :gutter="20">
-        <el-col
-          :md="10"
-          :lg="7"
-        >
-          <el-input
-            v-model="params.keywords"
-            placeholder="商品名称"
-            size="small"
-          >
-            <el-button
-              slot="append"
-              icon="el-icon-search"
-              @click="goodsSearch"
-            />
-          </el-input>
+        <el-col :md="10" :lg="7">
+          <el-input placeholder="商品名称" size="small" v-model="params.keywords"
+            ><el-button slot="append" icon="el-icon-search" @click="goodsSearch"></el-button
+          ></el-input>
         </el-col>
-        <el-col
-          :md="10"
-          :lg="7"
-        >
-          <el-input
-            v-model="params.item_bn"
-            placeholder="商品编号"
-            size="small"
-          >
-            <el-button
-              slot="append"
-              icon="el-icon-search"
-              @click="goodsSearch"
-            />
-          </el-input>
+        <el-col :md="10" :lg="7">
+          <el-input placeholder="商品编号" size="small" v-model="params.item_bn"
+            ><el-button slot="append" icon="el-icon-search" @click="goodsSearch"></el-button
+          ></el-input>
         </el-col>
         <el-col :span="3">
           <el-cascader
-            v-model="select_regions_value"
             size="small"
             placeholder="商品产地"
             :options="regions"
+            v-model="select_regions_value"
             clearable
             @change="searchAction"
-          />
+          >
+          </el-cascader>
         </el-col>
       </el-row>
       <el-row :gutter="20">
         <el-col :span="4">
           <el-select
-            v-model="params.approve_status"
             size="small"
+            v-model="params.approve_status"
             clearable
             placeholder="请选择状态"
             @change="goodsSearch"
@@ -60,55 +39,48 @@
               :label="item.title"
               size="mini"
               :value="item.value"
-            />
+            >
+            </el-option>
           </el-select>
         </el-col>
         <el-col :span="4">
           <el-select
-            v-model="params.special_type"
             size="small"
+            v-model="params.special_type"
             clearable
             placeholder="商品类型"
             @change="searchAction"
           >
             <el-option
+              placeholder="商品类型"
               v-for="item in special_type_list"
               :key="item.value"
-              placeholder="商品类型"
               :label="item.name"
               :value="item.value"
-            />
+            >
+            </el-option>
           </el-select>
         </el-col>
         <el-col :span="16">
           <shop-select
-            style="width: 60%"
+            style="width:60%"
             distributors
-            :shop-id-default="params.distributor_id"
             @update="goodsSearch"
-          />
+            :shopIdDefault="params.distributor_id"
+          ></shop-select>
           <!--distributors wxshops 需要哪个api传哪个-->
         </el-col>
       </el-row>
       <el-row :gutter="20">
         <el-col :span="24">
           <el-button-group>
-            <el-button
-              type="primary"
-              size="small"
-              icon="el-icon-edit"
-              @click="batchItemsAudit()"
+            <el-button type="primary" size="small" icon="el-icon-edit" @click="batchItemsAudit()"
+              >批量审核</el-button
             >
-              批量审核
-            </el-button>
           </el-button-group>
         </el-col>
       </el-row>
-      <el-tabs
-        v-model="activeName"
-        type="border-card"
-        @tab-click="handleClick"
-      >
+      <el-tabs v-model="activeName" type="border-card" @tab-click="handleClick">
         <el-tab-pane
           v-for="(item, index) in tabList"
           :key="index"
@@ -116,158 +88,78 @@
           :name="item.activeName"
         >
           <el-table
-            v-loading="loading"
             :data="ItemsList"
             style="width: 100%"
-            :height="wheight - 330"
             @selection-change="handleSelectionChange"
+            :height="wheight - 330"
+            v-loading="loading"
           >
-            <el-table-column
-              type="selection"
-              align="center"
-              label="全选"
-            />
-            <el-table-column
-              prop="goods_id"
-              label="商品ID"
-              width="90"
-            />
-            <el-table-column
-              label="审核状态"
-              width="100"
-              fixed
-            >
+            <el-table-column type="selection" align="center" label="全选"></el-table-column>
+            <el-table-column prop="goods_id" label="商品ID" width="90"></el-table-column>
+            <el-table-column label="审核状态" width="100" fixed>
               <template slot-scope="scope">
-                <el-tag
-                  v-if="scope.row.rebate === 2"
-                  size="mini"
-                >
-                  等待审核
-                </el-tag>
-                <el-tag
-                  v-if="scope.row.rebate === 1"
-                  size="mini"
-                  type="success"
-                >
-                  通过审核
-                </el-tag>
-                <el-tag
-                  v-if="scope.row.rebate === 3"
-                  size="mini"
-                  type="warning"
-                >
-                  审核拒绝
-                </el-tag>
+                <el-tag size="mini" v-if="scope.row.rebate === 2">等待审核</el-tag>
+                <el-tag size="mini" type="success" v-if="scope.row.rebate === 1">通过审核</el-tag>
+                <el-tag size="mini" type="warning" v-if="scope.row.rebate === 3">审核拒绝</el-tag>
               </template>
             </el-table-column>
-            <el-table-column
-              label="商品图片"
-              width="80"
-            >
+            <el-table-column label="商品图片" width="80">
               <template slot-scope="scope">
-                <el-avatar
-                  shape="square"
-                  :size="60"
-                  fit="fit"
-                  :src="scope.row.pics[0]"
-                />
+                <el-avatar shape="square" :size="60" fit="fit" :src="scope.row.pics[0]"></el-avatar>
               </template>
             </el-table-column>
-            <el-table-column
-              label="规格"
-              width="70"
-            >
+            <el-table-column label="规格" width="70">
               <template slot-scope="scope">
-                <el-tag
-                  v-if="!scope.row.nospec"
-                  effect="plain"
-                  type="success"
-                >
-                  多规格
-                </el-tag>
-                <el-tag
-                  v-else
-                  effect="plain"
-                >
-                  单规格
-                </el-tag>
+                <el-tag effect="plain" type="success" v-if="!scope.row.nospec">多规格</el-tag>
+                <el-tag effect="plain" v-else>单规格</el-tag>
               </template>
             </el-table-column>
-            <el-table-column
-              prop="itemName"
-              label="商品名称"
-            >
+            <el-table-column prop="itemName" label="商品名称">
               <template slot-scope="scope">
                 {{ scope.row.item_name }}
-                <el-tag
-                  v-if="scope.row.special_type == 'drug'"
-                  type="danger"
-                  size="mini"
+                <el-tag type="danger" size="mini" v-if="scope.row.special_type == 'drug'"
+                  >处方药</el-tag
                 >
-                  处方药
-                </el-tag>
               </template>
             </el-table-column>
             <el-table-column label="销售价">
-              <template slot-scope="scope">
-                {{ scope.row.price / 100 }}元
-              </template>
+              <template slot-scope="scope"> {{ scope.row.price / 100 }}元 </template>
             </el-table-column>
             <el-table-column label="成本价">
-              <template slot-scope="scope">
-                {{ scope.row.cost_price / 100 }}元
-              </template>
+              <template slot-scope="scope"> {{ scope.row.cost_price / 100 }}元 </template>
             </el-table-column>
           </el-table>
           <div class="content-center content-top-padded">
             <el-pagination
               background
               layout="total, sizes, prev, pager, next"
+              @current-change="handleCurrentChange"
+              @size-change="handleSizeChange"
               :current-page.sync="params.page"
               :page-sizes="[10, 20, 50]"
               :total="total_count"
               :page-size="params.pageSize"
-              @current-change="handleCurrentChange"
-              @size-change="handleSizeChange"
-            />
+            >
+            </el-pagination>
           </div>
         </el-tab-pane>
       </el-tabs>
-      <el-dialog
-        title="批量审核"
-        :visible.sync="dialogVisible"
-        width="30%"
-      >
-        <el-form
-          ref="form"
-          :model="form"
-          label-width="80px"
-        >
+      <el-dialog title="批量审核" :visible.sync="dialogVisible" width="30%">
+        <el-form ref="form" :model="form" label-width="80px">
           <el-form-item label="审核状态">
             <el-radio-group v-model="form.audit_status">
-              <el-radio label="approved">
-                通过
-              </el-radio>
-              <el-radio label="rejected">
-                拒绝
-              </el-radio>
+              <el-radio label="approved">通过</el-radio>
+              <el-radio label="rejected">拒绝</el-radio>
             </el-radio-group>
           </el-form-item>
           <el-form-item>
-            <el-button
-              type="primary"
-              @click="onSubmit"
-            >
-              确定
-            </el-button>
-            <el-button @click="dialogVisible = false">
-              取消
-            </el-button>
+            <el-button type="primary" @click="onSubmit">确定</el-button>
+            <el-button @click="dialogVisible = false">取消</el-button>
           </el-form-item>
         </el-form>
       </el-dialog>
     </div>
-    <router-view />
+    <router-view></router-view>
   </div>
 </template>
 <script>
@@ -283,12 +175,12 @@ export default {
     shopSelect
   },
   props: ['getStatus'],
-  provide () {
+  provide() {
     return {
       refresh: this.getGoodsList
     }
   },
-  data () {
+  data() {
     return {
       dialogVisible: false,
       select_regions_value: [],
@@ -332,16 +224,8 @@ export default {
   computed: {
     ...mapGetters(['wheight'])
   },
-  watch: {
-    '$route' () {
-      this.getGoodsList()
-    }
-  },
-  mounted () {
-    this.getGoodsList()
-  },
   methods: {
-    onSubmit () {
+    onSubmit() {
       var rebate = this.form.audit_status == 'approved' ? 1 : 3
       updateGoodsInfo({ goods_id: this.goods_id, rebate: rebate }).then((res) => {
         this.$message({ type: 'success', message: '操作成功' })
@@ -349,7 +233,7 @@ export default {
         this.getGoodsList()
       })
     },
-    handleClick () {
+    handleClick() {
       if (this.activeName == 'first') {
         this.params.rebate = 2
       } else if (this.activeName == 'approved') {
@@ -360,49 +244,57 @@ export default {
       this.params.page = 1
       this.getGoodsList()
     },
-    batchItemsAudit () {
+    batchItemsAudit() {
       if (this.goods_id.length === 0) {
         this.$message({ type: 'error', message: '请选择至少一个商品' })
         return false
       }
       this.dialogVisible = true
     },
-    searchAction () {
+    searchAction() {
       this.params.page = 1
       if (this.select_regions_value) {
         this.params.regions_id = this.select_regions_value
       }
       this.getGoodsList()
     },
-    handleCurrentChange (page_num) {
+    handleCurrentChange(page_num) {
       this.params.page = page_num
       this.getGoodsList()
     },
-    handleSizeChange (pageSize) {
+    handleSizeChange(pageSize) {
       this.params.page = 1
       this.params.pageSize = pageSize
       this.getGoodsList()
     },
-    handleSelectionChange (val) {
+    handleSelectionChange(val) {
       let goods_id = []
       for (let i in val) {
         goods_id.push(val[i].goods_id)
       }
       this.goods_id = goods_id
     },
-    goodsSearch (val) {
+    goodsSearch(val) {
       this.params.page = 1
       val && val.shop_id
       this.params.distributor_id = val.shop_id
       this.getGoodsList()
     },
-    getGoodsList () {
+    getGoodsList() {
       this.loading = true
       getItemsList(this.params).then((response) => {
         this.ItemsList = response.data.data.list
         this.total_count = response.data.data.total_count
         this.loading = false
       })
+    }
+  },
+  mounted() {
+    this.getGoodsList()
+  },
+  watch: {
+    '$route'() {
+      this.getGoodsList()
     }
   }
 }

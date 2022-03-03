@@ -1,6 +1,6 @@
 import fetch from '../utils/fetch'
 
-export function saveDistributor (query) {
+export function saveDistributor(query) {
   if (query.distributor_id) {
     return fetch({
       url: '/distributor/' + query.distributor_id,
@@ -16,14 +16,14 @@ export function saveDistributor (query) {
   }
 }
 
-export function saveOpen (data) {
+export function saveOpen(data) {
   return fetch({
     url: '/hfpay/enterapply/opensplit',
     method: 'post',
     params: data
   })
 }
-export function getDistributorList (query) {
+export function getDistributorList(query) { 
   return fetch({
     url: '/distributors',
     method: 'get',
@@ -31,14 +31,14 @@ export function getDistributorList (query) {
   })
 }
 
-export function getBasicConfig () {
+export function getBasicConfig() {
   return fetch({
     url: '/distribution/basic_config',
     method: 'get'
   })
 }
 
-export function saveBasicConfig (query) {
+export function saveBasicConfig(query) {
   return fetch({
     url: '/distribution/basic_config',
     method: 'post',
@@ -46,7 +46,7 @@ export function saveBasicConfig (query) {
   })
 }
 
-export function getDistributeLogs (query) {
+export function getDistributeLogs(query) {
   return fetch({
     url: '/distribution/logs',
     method: 'get',
@@ -54,14 +54,14 @@ export function getDistributeLogs (query) {
   })
 }
 
-export function getCashWithdrawalPayInfo (cash_withdrawal_id) {
+export function getCashWithdrawalPayInfo(cash_withdrawal_id) {
   return fetch({
     url: '/distributor/cash_withdrawal/payinfo/' + cash_withdrawal_id,
     method: 'get'
   })
 }
 
-export function getCashWithdrawals (query) {
+export function getCashWithdrawals(query) {
   return fetch({
     url: '/distribution/cash_withdrawals',
     method: 'get',
@@ -69,7 +69,7 @@ export function getCashWithdrawals (query) {
   })
 }
 
-export function processCashWithdrawal (id, query) {
+export function processCashWithdrawal(id, query) {
   return fetch({
     url: '/distribution/cash_withdrawal/' + id,
     method: 'put',
@@ -77,21 +77,21 @@ export function processCashWithdrawal (id, query) {
   })
 }
 
-export function getDistributorCount (distributorId) {
+export function getDistributorCount(distributorId) {
   return fetch({
     url: '/distributor/count/' + distributorId,
     method: 'get'
   })
 }
 
-export function getDistributionCount () {
+export function getDistributionCount() {
   return fetch({
     url: '/distribution/count',
     method: 'get'
   })
 }
 
-export function saveDistributorItems (query) {
+export function saveDistributorItems(query) {
   return fetch({
     url: '/distributor/items',
     method: 'post',
@@ -99,7 +99,7 @@ export function saveDistributorItems (query) {
   })
 }
 
-export function getDistributorItems (query) {
+export function getDistributorItems(query) { 
   return fetch({
     url: '/distributor/items',
     method: 'get',
@@ -107,7 +107,7 @@ export function getDistributorItems (query) {
   })
 }
 
-export function exportDistributorItems (query) {
+export function exportDistributorItems(query) {
   return fetch({
     url: '/distributor/items/export',
     method: 'get',
@@ -115,7 +115,7 @@ export function exportDistributorItems (query) {
   })
 }
 
-export function getWxaDristributorCodeStream (query) {
+export function getWxaDristributorCodeStream(query) {
   return fetch({
     url: '/distributor/wxacode',
     method: 'get',
@@ -123,7 +123,7 @@ export function getWxaDristributorCodeStream (query) {
   })
 }
 
-export function delDistributorItems (query) {
+export function delDistributorItems(query) {
   return fetch({
     url: '/distributor/item',
     method: 'delete',
@@ -131,7 +131,7 @@ export function delDistributorItems (query) {
   })
 }
 
-export function updateDistributorItem (query) {
+export function updateDistributorItem(query) {
   return fetch({
     url: '/distributors/item',
     method: 'put',
@@ -139,7 +139,7 @@ export function updateDistributorItem (query) {
   })
 }
 
-export function setDefaultDistributor (query) {
+export function setDefaultDistributor(query) {
   return fetch({
     url: '/distributor/default',
     method: 'post',
@@ -147,7 +147,7 @@ export function setDefaultDistributor (query) {
   })
 }
 
-export function getSalesmanList (query) {
+export function getSalesmanList(query) {
   return fetch({
     url: '/distributor/salesmans',
     method: 'get',
@@ -155,7 +155,7 @@ export function getSalesmanList (query) {
   })
 }
 
-export function updateSalesman (salesmanId, query) {
+export function updateSalesman(salesmanId, query) {
   return fetch({
     url: '/distributor/salesman/' + salesmanId,
     method: 'put',
@@ -163,7 +163,7 @@ export function updateSalesman (salesmanId, query) {
   })
 }
 
-export function getSalesmanRole (query) {
+export function getSalesmanRole(query) {
   return fetch({
     url: '/distributor/salesman/role',
     method: 'get',
@@ -171,7 +171,7 @@ export function getSalesmanRole (query) {
   })
 }
 
-export function updateSalesmanRole (salesmanId, query) {
+export function updateSalesmanRole(salesmanId, query) {
   return fetch({
     url: '/distributor/salesman/role/' + salesmanId,
     method: 'put',
@@ -179,7 +179,7 @@ export function updateSalesmanRole (salesmanId, query) {
   })
 }
 
-export function addSalesman (query) {
+export function addSalesman(query) {
   return fetch({
     url: '/distributor/salesman',
     method: 'post',
@@ -187,7 +187,7 @@ export function addSalesman (query) {
   })
 }
 
-export function getDistributorInfo (query) {
+export function getDistributorInfo(query) {
   return fetch({
     url: '/distributors/info',
     method: 'get',
@@ -195,7 +195,7 @@ export function getDistributorInfo (query) {
   })
 }
 
-export function saveTag (params) {
+export function saveTag(params) {
   return fetch({
     url: '/distributor/tag',
     method: 'post',
@@ -203,7 +203,7 @@ export function saveTag (params) {
   })
 }
 
-export function getTagList (query) {
+export function getTagList(query) {
   return fetch({
     url: '/distributor/tag',
     method: 'get',
@@ -211,14 +211,14 @@ export function getTagList (query) {
   })
 }
 
-export function getTagInfo (tagId) {
+export function getTagInfo(tagId) {
   return fetch({
     url: '/distributor/tag/' + tagId,
     method: 'get'
   })
 }
 
-export function updateTag (tagId, params) {
+export function updateTag(tagId, params) {
   return fetch({
     url: '/distributor/tag/' + tagId,
     method: 'put',
@@ -226,14 +226,14 @@ export function updateTag (tagId, params) {
   })
 }
 
-export function deleteTag (tagId) {
+export function deleteTag(tagId) {
   return fetch({
     url: '/distributor/tag/' + tagId,
     method: 'delete'
   })
 }
 
-export function distributorRelTags (query) {
+export function distributorRelTags(query) {
   return fetch({
     url: '/distributor/reltag/',
     method: 'post',
@@ -241,7 +241,7 @@ export function distributorRelTags (query) {
   })
 }
 
-export function getDistributorEasyList (query) {
+export function getDistributorEasyList(query) {
   return fetch({
     url: '/distributor/easylist',
     method: 'get',
@@ -249,7 +249,7 @@ export function getDistributorEasyList (query) {
   })
 }
 
-export function addDistributorShop (query) {
+export function addDistributorShop(query) {
   if (query.distributor_id) {
     return fetch({
       url: '/shops/' + query.distributor_id,
@@ -264,48 +264,48 @@ export function addDistributorShop (query) {
     })
   }
 }
-export function setDefaultDistributorShop (query) {
+export function setDefaultDistributorShop(query) {
   return fetch({
     url: '/dshops/setDefaultShop',
     method: 'post',
     params: query
   })
 }
-export function setDistributorShopStatus (query) {
+export function setDistributorShopStatus(query) {
   return fetch({
     url: '/dshops/setShopStatus',
     method: 'post',
     params: query
   })
 }
-export function getDistributorShopList (query) {
+export function getDistributorShopList(query) {
   return fetch({
     url: '/shops',
     method: 'get',
     params: query
   })
 }
-export function getDistributorShopDetail (id, query) {
+export function getDistributorShopDetail(id, query) {
   return fetch({
     url: '/shops/' + id,
     method: 'get',
     params: query
   })
 }
-export function deleteDistributorShop (id) {
+export function deleteDistributorShop(id) {
   return fetch({
     url: '/shops/' + id,
     method: 'delete'
   })
 }
-export function getSalemanCustomerComplaints (params) {
+export function getSalemanCustomerComplaints(params) {
   return fetch({
     url: '/distributor/salemanCustomerComplaints',
     method: 'get',
     params
   })
 }
-export function replySalemanCustomerComplaints (data) {
+export function replySalemanCustomerComplaints(data) {
   return fetch({
     url: '/distributor/salemanCustomerComplaints',
     method: 'post',
@@ -314,7 +314,7 @@ export function replySalemanCustomerComplaints (data) {
 }
 
 // 获取导购通知列表
-export function getSalespersonoticeList (params) {
+export function getSalespersonoticeList(params) {
   return fetch({
     url: '/salespersonotice/list',
     method: 'get',
@@ -323,7 +323,7 @@ export function getSalespersonoticeList (params) {
 }
 
 // 新增导购通知
-export function setSalespersonoticeNotice (data) {
+export function setSalespersonoticeNotice(data) {
   return fetch({
     url: '/salespersonotice/notice',
     method: 'post',
@@ -332,7 +332,7 @@ export function setSalespersonoticeNotice (data) {
 }
 
 // 撤回通知导购通知
-export function delSalespersonoticeWithdrawnotice (data) {
+export function delSalespersonoticeWithdrawnotice(data) {
   return fetch({
     url: '/salespersonotice/withdrawnotice',
     method: 'post',
@@ -341,7 +341,7 @@ export function delSalespersonoticeWithdrawnotice (data) {
 }
 
 // 获取导购通知详情
-export function getSalespersonoticeDetail (params) {
+export function getSalespersonoticeDetail(params) {
   return fetch({
     url: '/salespersonotice/detail',
     method: 'get',
@@ -350,7 +350,7 @@ export function getSalespersonoticeDetail (params) {
 }
 
 // 修改导购通知
-export function editSalespersonoticeNotice (data) {
+export function editSalespersonoticeNotice(data) {
   return fetch({
     url: '/salespersonotice/notice',
     method: 'put',
@@ -359,7 +359,7 @@ export function editSalespersonoticeNotice (data) {
 }
 
 // 发送导购通知
-export function setSalespersonoticeSendnotice (data) {
+export function setSalespersonoticeSendnotice(data) {
   return fetch({
     url: 'salespersonotice/sendnotice',
     method: 'post',
@@ -368,7 +368,7 @@ export function setSalespersonoticeSendnotice (data) {
 }
 
 // 获取门店角色列表
-export function getRoleList (query) {
+export function getRoleList(query) {
   return fetch({
     url: 'distributor/salesperson/role',
     method: 'get',
@@ -377,7 +377,7 @@ export function getRoleList (query) {
 }
 
 // 获取门店角色信息
-export function getRoleInfo (id, query) {
+export function getRoleInfo(id, query) {
   return fetch({
     url: 'distributor/salesperson/role/' + id,
     method: 'get',
@@ -386,7 +386,7 @@ export function getRoleInfo (id, query) {
 }
 
 // 创建门店角色信息
-export function createRole (params) {
+export function createRole(params) {
   return fetch({
     url: 'distributor/salesperson/role/',
     method: 'post',
@@ -395,7 +395,7 @@ export function createRole (params) {
 }
 
 // 修改门店角色信息
-export function updateRole (id, params) {
+export function updateRole(id, params) {
   return fetch({
     url: 'distributor/salesperson/role/' + id,
     method: 'put',
@@ -404,7 +404,7 @@ export function updateRole (id, params) {
 }
 
 // 删除门店角色信息
-export function deleteRole (id, query) {
+export function deleteRole(id, query) {
   return fetch({
     url: 'distributor/salesperson/role/' + id,
     method: 'delete'
@@ -412,7 +412,7 @@ export function deleteRole (id, query) {
 }
 
 // 获取距离信息
-export function getDistance () {
+export function getDistance() {
   return fetch({
     url: 'distribution/getdistance',
     method: 'get'
@@ -420,7 +420,7 @@ export function getDistance () {
 }
 
 // 设置距离信息
-export function setDistance (params) {
+export function setDistance(params) {
   return fetch({
     url: 'distribution/setdistance',
     method: 'post',
@@ -429,7 +429,7 @@ export function setDistance (params) {
 }
 
 // 查询经销商详情
-export function getDealerDetail (id) {
+export function getDealerDetail(id) {
   return fetch({
     url: '/adapay/dealer/' + id,
     method: 'get'
@@ -437,7 +437,7 @@ export function getDealerDetail (id) {
 }
 
 // 经销商开启或禁用
-export function setDealerStatus (query) {
+export function setDealerStatus(query) {
   return fetch({
     url: '/adapay/dealer/disable',
     method: 'put',
@@ -446,7 +446,7 @@ export function setDealerStatus (query) {
 }
 
 // 经销商关联店铺
-export function dealerRelStore (query) {
+export function dealerRelStore(query) {
   return fetch({
     url: '/adapay/dealer/rel',
     method: 'put',
@@ -455,7 +455,7 @@ export function dealerRelStore (query) {
 }
 
 // 新增经销商
-export function addDealer (params) {
+export function addDealer(params) {
   return fetch({
     url: '/account/management',
     method: 'post',
@@ -464,19 +464,21 @@ export function addDealer (params) {
 }
 
 // 根据商家tag查找对应商家
-export function queryTagShop (params) {
+export function queryTagShop(params) {
   return fetch({
-    url: '/distributors',
-    method: 'get',
+    url:'/distributors',
+    method:'get',
     params
   })
 }
 
+
+
 // 删除tag
-export function NewdeleteTag (params) {
+export function NewdeleteTag(params) {
   return fetch({
-    url: '/distributor/deltag',
-    method: 'post',
+    url:'/distributor/deltag',
+    method:'post',
     params
   })
 }

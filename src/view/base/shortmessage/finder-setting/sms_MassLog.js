@@ -90,24 +90,26 @@ export default (vm) => {
             'span',
             {
               type: 'text',
-              class: 'e-button--text',
-              style: { color: '#409EFF', cursor: 'pointer' },
-              on: {
-                click: () => {
+              class:'e-button--text',
+              style:{color: '#409EFF',cursor:'pointer'},  
+              on:{
+                click:()=>{
                   vm.$router.push({
-                    path: '/setting/datamessage/ali_sms/sms_sendLog',
-                    query: {
-                      task_name: row.task_name
+                    path:'/setting/datamessage/ali_sms/sms_sendLog',
+                    query:{
+                      task_name:row.task_name
                     }
                   })
+
                 }
               }
             },
             row.total_num
           ),
-        align: 'center'
+        align:'center'
+        
       },
-      { name: '失败号码数量', key: 'failed_num', align: 'center' }
+      { name: '失败号码数量', key: 'failed_num', align:'center' }
     ],
     actions: [
       {
@@ -118,14 +120,14 @@ export default (vm) => {
         action: {
           type: 'link',
           handler: async (val) => {
-            vm.visible = true
+            vm.visible = true;
             vm.info = {
-              type: 'detail',
-              id: val[0].id
+              type:'detail',
+              id:val[0].id
             }
           }
         },
-        visible: (val) => {
+        visible:(val)=>{
           return val.status != '4'
         }
       },
@@ -140,7 +142,7 @@ export default (vm) => {
             vm.deleteSMS(val[0].id)
           }
         },
-        visible: (val) => {
+        visible:(val)=>{
           return val.status == '1'
         }
       },
@@ -152,17 +154,17 @@ export default (vm) => {
         action: {
           type: 'link',
           handler: async (val) => {
-            vm.visible = true
+            vm.visible = true;
             vm.info = {
-              type: 'edit',
-              id: val[0].id
+              type:'edit',
+              id:val[0].id
             }
           }
         },
-        visible: (val) => {
+        visible:(val)=>{
           return val.status == '4'
         }
-      }
+      },
     ]
   })
 }

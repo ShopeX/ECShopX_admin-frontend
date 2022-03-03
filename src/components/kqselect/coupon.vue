@@ -9,65 +9,46 @@
       :before-close="cancelAction"
     >
       <el-table
-        v-loading.body="listLoading"
-        :data="tableData"
         @selection-change="handleSelectionChange"
+        :data="tableData"
+        v-loading.body="listLoading"
       >
-        <el-table-column
-          type="selection"
-          width="55"
-        />
+        <el-table-column type="selection" width="55"> </el-table-column>
         <el-table-column label="卡券类型">
           <template slot-scope="card_type">
             {{ card_type.row.card_type | formatCardStr }}
           </template>
         </el-table-column>
-        <el-table-column
-          prop="title"
-          label="全部卡券"
-        />
+        <el-table-column prop="title" label="全部卡券"></el-table-column>
         <el-table-column label="卡券有效期">
           <template slot-scope="card_type">
-            <i class="el-icon-time" />
+            <i class="el-icon-time"></i>
             <template v-if="card_type.row.takeEffect">
               {{ card_type.row.takeEffect }}
             </template>
             <template v-else>
               {{ card_type.row.begin_time | datetime }}
-              <template v-if="card_type.row.end_time">
-                ~
-              </template>
+              <template v-if="card_type.row.end_time">~</template>
               {{ card_type.row.end_time | datetime }}
               {{ Date.parse(new Date()) > card_type.row.end_time * 1000 ? '已过期' : '' }}
             </template>
           </template>
         </el-table-column>
       </el-table>
-      <div
-        class="clearfix"
-        style="margin-top: 20px"
-      >
-        <div
-          v-if="total_count > pageSize"
-          class="tc"
-        >
+      <div class="clearfix" style="margin-top: 20px">
+        <div v-if="total_count > pageSize" class="tc">
           <el-pagination
             layout="prev, pager, next"
+            @current-change="handleCurrentChange"
             :total="total_count"
             :page-size="pageSize"
-            @current-change="handleCurrentChange"
-          />
+          >
+          </el-pagination>
         </div>
       </div>
-      <span
-        slot="footer"
-        class="dialog-footer"
-      >
+      <span slot="footer" class="dialog-footer">
         <el-button @click="cancelAction">取 消</el-button>
-        <el-button
-          type="primary"
-          @click="saveAction"
-        >确 定</el-button>
+        <el-button type="primary" @click="saveAction">确 定</el-button>
       </span>
     </el-dialog>
   </div>
@@ -87,7 +68,19 @@ export default {
       default: false
     }
   },
-  data () {
+  watch: {
+    scStatus(newV) {
+      console.log('newV', newV)
+      if (newV) {
+        let data = { page_no: 1, page_size: this.pageSize }
+        this.getCardList(data)
+      }
+    },
+    dialogVisible(newV, oldV) {
+      this.showDialog = newV
+    }
+  },
+  data() {
     return {
       listLoading: true,
       editNumberVisible: true,
@@ -100,33 +93,21 @@ export default {
       showDialog: false
     }
   },
-  watch: {
-    scStatus (newV) {
-      console.log('newV', newV)
-      if (newV) {
-        let data = { page_no: 1, page_size: this.pageSize }
-        this.getCardList(data)
-      }
-    },
-    dialogVisible (newV, oldV) {
-      this.showDialog = newV
-    }
-  },
   methods: {
-    handleCurrentChange (curPage) {
+    handleCurrentChange(curPage) {
       var data = { page_no: curPage, page_size: this.pageSize }
       this.getCardList(data)
     },
-    handleSelectionChange (item) {
+    handleSelectionChange(item) {
       this.selectItem = item
     },
-    cancelAction () {
+    cancelAction() {
       this.$emit('closeKQDialog')
     },
-    saveAction () {
+    saveAction() {
       this.$emit('chooseKQ', this.selectItem)
     },
-    getCardList (data) {
+    getCardList(data) {
       this.listLoading = true
       if (this.scStatus) {
         getEffectiveCardList(data).then((response) => {

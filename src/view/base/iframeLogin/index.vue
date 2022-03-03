@@ -1,26 +1,26 @@
 <template>
   <div class="main">
-    <div v-loading="true" />
+    <div v-loading="true"></div>
   </div>
 </template>
 
 <script>
 export default {
-  data () {
+  data() {
     return {
       key: ''
     }
   },
-  mounted () {
+  methods: {
+    name() {}
+  },
+  mounted() {
     let { code } = this.$route.query
     if (code) {
       window.top.location.href = `${window.location.origin}/login?code=${code}`
     } else {
       window.top.location.href = `${window.location.origin}/login`
     }
-  },
-  methods: {
-    name () {}
   }
 }
 </script>

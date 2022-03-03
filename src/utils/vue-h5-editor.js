@@ -48,7 +48,7 @@ const options = {
     },
     // 响应数据处理,最终返回图片链接
     // handle response data，return image url
-    uploadHandler (responseText) {
+    uploadHandler(responseText) {
       // default accept json data like  {ok:false,msg:'unexpected'} or {ok:true,data:'image url'}
       var json = JSON.parse(responseText)
       if (!json.ok) {
@@ -132,16 +132,17 @@ const options = {
   ],
   // 扩展模块，具体可以参考examples或查看源码
   // extended modules
-  modules: [
-    {
-      icon: 'iconfont icon-image',
-      name: 'uploader'
-    }
-  ]
+  modules:[{
+    icon:'iconfont icon-image',
+    name:'uploader'
+  }],
 }
 
-function install (Vue) {
-  Vue.use(VueHtml5Editor, options)
+
+function install( Vue ) {
+  Vue.use( VueHtml5Editor, options )
 }
 
-export { install }
+export {
+  install
+}

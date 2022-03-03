@@ -1,263 +1,133 @@
 <template>
   <div>
     <div v-if="$route.path.indexOf('detail') === -1">
-      <div class="content-bottom-padded" />
+      <div class="content-bottom-padded"></div>
       <el-row :gutter="20">
-        <el-col
-          :md="8"
-          :lg="6"
-        >
+        <el-col :md="8" :lg="6">
           <el-date-picker
             v-model="created_time"
             type="daterange"
             value-format="yyyy/MM/dd"
             placeholder="选择日期范围"
-            style="width: 100%"
+            style="width: 100%;"
             @change="dateChange"
-          />
+          ></el-date-picker>
         </el-col>
-        <el-col
-          :md="4"
-          :lg="4"
-        >
+        <el-col :md="4" :lg="4">
           <el-input
             v-model="params.activity_name"
             clearable
             placeholder="活动名称"
-            style="width: 100%"
+            style="width: 100%;"
             @change="getList"
-          />
+          ></el-input>
         </el-col>
-        <el-col
-          :md="4"
-          :lg="4"
-        >
+        <el-col :md="4" :lg="4">
           <el-input
             v-model="params.shop_number"
             clearable
             placeholder="店号"
-            style="width: 100%"
+            style="width: 100%;"
             @change="getList"
-          />
+          ></el-input>
         </el-col>
-        <el-col
-          :md="4"
-          :lg="4"
-        >
+        <el-col :md="4" :lg="4">
           <el-input
             v-model="params.site_number"
             clearable
             placeholder="站点号"
-            style="width: 100%"
+            style="width: 100%;"
             @change="getList"
-          />
+          ></el-input>
         </el-col>
-        <el-col
-          :md="4"
-          :lg="4"
-        >
-          <el-button
-            type="primary"
-            @click="batchDeliveryordeStatus('SHIPPED')"
-          >
-            批量发货
-          </el-button>
+        <el-col :md="4" :lg="4">
+          <el-button type="primary" @click="batchDeliveryordeStatus('SHIPPED')">批量发货</el-button>
         </el-col>
-        <el-col
-          :md="12"
-          :lg="10"
-        >
-          <el-button
-            type="primary"
-            @click="exportData"
-          >
-            导出配送单
-          </el-button>
-          <el-button
-            type="primary"
-            @click="exportDeliveryorderInfo"
-          >
-            导出收货单
-          </el-button>
+        <el-col :md="12" :lg="10">
+          <el-button type="primary" @click="exportData">导出配送单</el-button>
+          <el-button type="primary" @click="exportDeliveryorderInfo">导出收货单</el-button>
         </el-col>
       </el-row>
-      <el-tabs
-        v-model="activeName"
-        type="border-card"
-        @tab-click="handleClick"
-      >
-        <el-tab-pane
-          label="全部"
-          name="all"
-        />
-        <el-tab-pane
-          label="待发货"
-          name="PENDING"
-        />
-        <el-tab-pane
-          label="待收货"
-          name="SHIPPED"
-        />
-        <el-tab-pane
-          label="已送达"
-          name="DONE"
-        />
-        <el-tab-pane
-          label="有报损"
-          name="BADDONE"
-        />
+      <el-tabs type="border-card" v-model="activeName" @tab-click="handleClick">
+        <el-tab-pane label="全部" name="all"></el-tab-pane>
+        <el-tab-pane label="待发货" name="PENDING"></el-tab-pane>
+        <el-tab-pane label="待收货" name="SHIPPED"></el-tab-pane>
+        <el-tab-pane label="已送达" name="DONE"></el-tab-pane>
+        <el-tab-pane label="有报损" name="BADDONE"></el-tab-pane>
 
         <el-table
-          v-loading="loading"
           :data="list"
           border
           :height="wheight - 220"
+          v-loading="loading"
           @selection-change="handleSelectionChange"
         >
-          <el-table-column
-            type="selection"
-            align="center"
-            label="全选"
-          />
-          <el-table-column
-            prop="delivery_bn"
-            label="批次号"
-            min-width="120"
-          />
-          <el-table-column
-            prop="status"
-            label="状态"
-            min-width="140"
-          >
+          <el-table-column type="selection" align="center" label="全选"></el-table-column>
+          <el-table-column prop="delivery_bn" label="批次号" min-width="120"></el-table-column>
+          <el-table-column prop="status" label="状态" min-width="140">
             <template slot-scope="scope">
-              <el-tag
-                v-if="scope.row.status === 'PENDING'"
-                type="info"
-              >
-                待发货
-              </el-tag>
-              <el-tag
-                v-if="scope.row.status === 'SHIPPED'"
-                type="primary"
-              >
-                待收货
-              </el-tag>
-              <el-tag
-                v-if="scope.row.status === 'DONE'"
-                type="success"
-              >
-                已送达
-              </el-tag>
-              <el-tag
-                v-if="scope.row.status === 'BADDONE'"
-                type="danger"
-              >
-                已送达，有报损
-              </el-tag>
+              <el-tag type="info" v-if="scope.row.status === 'PENDING'">待发货</el-tag>
+              <el-tag type="primary" v-if="scope.row.status === 'SHIPPED'">待收货</el-tag>
+              <el-tag type="success" v-if="scope.row.status === 'DONE'">已送达</el-tag>
+              <el-tag type="danger" v-if="scope.row.status === 'BADDONE'">已送达，有报损</el-tag>
             </template>
           </el-table-column>
-          <el-table-column
-            prop="activity_name"
-            label="活动名称"
-            min-width="160"
-          />
-          <el-table-column
-            prop="community_name"
-            label="社区名称"
-            min-width="140"
-          >
+          <el-table-column prop="activity_name" label="活动名称" min-width="160"></el-table-column>
+          <el-table-column prop="community_name" label="社区名称" min-width="140">
             <template slot-scope="scope">
               <span v-if="scope.row.community_name">{{ scope.row.community_name }}</span>
               <span v-else>未知社区</span>
             </template>
           </el-table-column>
-          <el-table-column
-            prop="leader_name"
-            label="团长姓名"
-          />
-          <el-table-column
-            prop="shop_number"
-            label="店号"
-          />
-          <el-table-column
-            prop="site_number"
-            label="站点号"
-          />
+          <el-table-column prop="leader_name" label="团长姓名"></el-table-column>
+          <el-table-column prop="shop_number" label="店号"></el-table-column>
+          <el-table-column prop="site_number" label="站点号"></el-table-column>
           <el-table-column label="金额">
             <template slot-scope="scope">
               <span>¥{{ scope.row.total_fee / 100 }}</span>
             </template>
           </el-table-column>
-          <el-table-column
-            prop="item_order_num"
-            label="订单数"
-          />
-          <el-table-column
-            prop="item_total_num"
-            label="商品数量"
-          />
-          <el-table-column
-            prop="created_time"
-            label="创建时间"
-            min-width="160"
-          >
+          <el-table-column prop="item_order_num" label="订单数"></el-table-column>
+          <el-table-column prop="item_total_num" label="商品数量"></el-table-column>
+          <el-table-column prop="created_time" label="创建时间" min-width="160">
             <template slot-scope="scope">
               <span>{{ scope.row.created_time | datetime('YYYY-MM-DD HH:mm:ss') }}</span>
             </template>
           </el-table-column>
-          <el-table-column
-            prop="status"
-            label="操作"
-            min-width="120"
-            fixed="right"
-          >
+          <el-table-column prop="status" label="操作" min-width="120" fixed="right">
             <template slot-scope="scope">
               <el-button
-                v-if="scope.row.status == 'PENDING'"
                 size="mini"
+                v-if="scope.row.status == 'PENDING'"
                 type="text"
                 @click="shippedHandle(scope.row)"
+                >发货</el-button
               >
-                发货
-              </el-button>
-              <el-button
-                size="mini"
-                type="text"
-                @click="deliveryorderDetail(scope.row)"
+              <el-button size="mini" type="text" @click="deliveryorderDetail(scope.row)"
+                >详情</el-button
               >
-                详情
-              </el-button>
             </template>
           </el-table-column>
         </el-table>
-        <div
-          v-if="total_count > params.pageSize"
-          class="content-center content-top-padded"
-        >
+        <div v-if="total_count > params.pageSize" class="content-center content-top-padded">
           <el-pagination
             layout="prev, pager, next"
             background
+            @current-change="handleCurrentChange"
             :current-page.sync="params.page"
             :total="total_count"
             :page-size="params.pageSize"
-            @current-change="handleCurrentChange"
-          />
+          >
+          </el-pagination>
         </div>
       </el-tabs>
-      <el-dialog
-        title="配送单下载"
-        :visible.sync="downloadView"
-        :close-on-click-modal="false"
-      >
+      <el-dialog title="配送单下载" :visible.sync="downloadView" :close-on-click-modal="false">
         <template v-if="downloadUrl">
-          <a
-            :href="downloadUrl"
-            download
-          >{{ downloadName }}</a>
+          <a :href="downloadUrl" download>{{ downloadName }}</a>
         </template>
       </el-dialog>
     </div>
-    <router-view />
+    <router-view></router-view>
   </div>
 </template>
 <script>
@@ -271,7 +141,7 @@ import {
   exportDeliveryorderInfo
 } from '../../../../api/community'
 export default {
-  data () {
+  data() {
     return {
       created_time: '',
       activeName: 'all',
@@ -292,11 +162,8 @@ export default {
   computed: {
     ...mapGetters(['wheight'])
   },
-  mounted () {
-    this.getList()
-  },
   methods: {
-    handleClick (tab, event) {
+    handleClick(tab, event) {
       this.activeName = tab.name
       this.params.page = 1
       if (this.activeName == 'all') {
@@ -306,10 +173,10 @@ export default {
       }
       this.getList()
     },
-    deliveryorderDetail (row) {
+    deliveryorderDetail(row) {
       this.$router.push({ path: this.matchHidePage('detail/') + row.delivery_id })
     },
-    dateChange (val) {
+    dateChange(val) {
       if (val && val.length > 0) {
         this.params.start_time = this.dateStrToTimeStamp(val[0] + ' 00:00:00')
         this.params.end_time = this.dateStrToTimeStamp(val[1] + ' 23:59:59')
@@ -320,10 +187,10 @@ export default {
       this.params.page = 1
       this.getList()
     },
-    dateStrToTimeStamp (str) {
+    dateStrToTimeStamp(str) {
       return Date.parse(new Date(str)) / 1000
     },
-    handleSelectionChange (rows) {
+    handleSelectionChange(rows) {
       this.delivery_id = []
       if (rows) {
         rows.forEach((row) => {
@@ -333,7 +200,7 @@ export default {
         })
       }
     },
-    exportDeliveryorderInfo () {
+    exportDeliveryorderInfo() {
       if (this.delivery_id) {
         this.params.delivery_id = this.delivery_id
       }
@@ -343,7 +210,7 @@ export default {
         this.downloadView = true
       })
     },
-    exportData () {
+    exportData() {
       if (this.delivery_id) {
         this.params.delivery_id = this.delivery_id
       }
@@ -354,7 +221,7 @@ export default {
       })
     },
     // 批量确认
-    batchDeliveryordeStatus (status) {
+    batchDeliveryordeStatus(status) {
       if (this.delivery_id.length === 0) {
         this.$message({
           type: 'error',
@@ -386,7 +253,7 @@ export default {
       })
     },
     // 发货确认
-    shippedHandle (row) {
+    shippedHandle(row) {
       this.$confirm('是否确认已发货?', '提示', {
         confirmButtonText: '确定',
         cancelButtonText: '取消',
@@ -408,15 +275,15 @@ export default {
           })
         })
     },
-    handleCurrentChange (page_num) {
+    handleCurrentChange(page_num) {
       this.params.page = page_num
       this.getList()
     },
-    dataSearch () {
+    dataSearch() {
       this.params.page = 1
       this.getList()
     },
-    getList () {
+    getList() {
       this.loading = true
       getDeliveryOrderList(this.params).then((response) => {
         this.list = response.data.data.list
@@ -424,6 +291,9 @@ export default {
         this.loading = false
       })
     }
+  },
+  mounted() {
+    this.getList()
   }
 }
 </script>

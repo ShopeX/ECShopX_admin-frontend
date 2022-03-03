@@ -8,65 +8,65 @@ export default {
   children: [
     {
       path: 'financialManage/servicepayment',
-      name: `交易单`,
-      component: () => import('@/view/mall/trade/list')
+      name: `交易单`, 
+      component: () => import( '@/view/mall/trade/list' )
     },
     {
       path: 'financialManage/aftersalesrefundlist',
-      name: `退款单`,
-      component: () => import('@/view/mall/aftersales/refundList'),
+      name: `退款单`, 
+      component: () => import( '@/view/mall/aftersales/refundList' ),
       children: [
         {
-          path: 'detail',
-          component: () => import('@/view/mall/aftersales/refundDetail')
+          path: 'detail', 
+          component: () => import( '@/view/mall/aftersales/refundDetail' )
         }
       ]
     },
     {
       path: 'financialManage/Refunderrorlogs',
-      name: `退款失败日志`,
-      component: () => import('@/view/mall/trade/refunderrorlogs')
+      name: `退款失败日志`, 
+      component: () => import( '@/view/mall/trade/refunderrorlogs' )
     },
     {
       path: 'financialManage/financialaftersaleslist',
-      name: `售后单`,
-      component: () => import('@/view/mall/aftersales/financial/list')
+      name: `售后单`, 
+      component: () => import( '@/view/mall/aftersales/financial/list' )
     },
     {
       path: 'financialManage/salesreportlist',
-      name: `销售报表`,
-      component: () => import('@/view/mall/trade/financial/list')
+      name: `销售报表`, 
+      component: () => import( '@/view/mall/trade/financial/list' )
     },
     {
       path: 'splitBill/setting',
-      name: `基础配置`,
-      component: () => import('@/view/mall/splitbill/setting')
+      name: `基础配置`, 
+      component: () => import( '@/view/mall/splitbill/setting' )
     },
     {
       path: 'splitBill/StoreInformation',
-      name: `店铺进件信息`,
-      component: () => import('@/view/mall/splitbill/list'),
+      name: `店铺进件信息`, 
+      component: () => import( '@/view/mall/splitbill/list' ),
       children: [
         {
-          path: 'editor',
-          component: () => import('@/view/mall/splitbill/edit')
+          path: 'editor', 
+          component: () => import( '@/view/mall/splitbill/edit' )
         }
       ]
     },
     {
       path: 'splitBill/StoreFenSetting',
-      name: `商户提现设置`,
-      component: () => import('@/view/mall/splitbill/storesetting')
+      name: `商户提现设置`, 
+      component: () => import( '@/view/mall/splitbill/storesetting' )
     },
     {
       path: 'distribution/dada',
-      name: `达达账户`,
-      component: () => import('@/view/mall/distribution/account')
+      name: `达达账户`, 
+      component: () => import( '@/view/mall/distribution/account' )
     },
     {
       path: 'adapay_merchant_info',
-      name: `开户信息`,
-      component: () => import('@/view/mall/accountopeninfo')
+      name: `开户信息`, 
+      component: () => import( '@/view/mall/accountopeninfo' )
     },
     {
       path: 'adapay_member_audit',

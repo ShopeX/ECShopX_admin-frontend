@@ -1,44 +1,31 @@
 <template>
-  <section
-    v-if="name === 'imgHotzone'"
-    class="section"
-  >
+  <section v-if="name === 'imgHotzone'" class="section">
     <div class="section-header with-border">
       设置
     </div>
     <div class="section-body">
       <el-form label-width="100px">
         <el-form-item label="标题">
-          <el-input v-model="base.title" />
+          <el-input v-model="base.title"></el-input>
         </el-form-item>
         <el-form-item label="副标题">
-          <el-input v-model="base.subtitle" />
+          <el-input v-model="base.subtitle"></el-input>
         </el-form-item>
         <el-form-item label="组件间距">
-          <el-switch
-            v-model="base.padded"
-            active-color="#27cc6a"
-            inactive-color="#efefef"
-          />
+          <el-switch v-model="base.padded" active-color="#27cc6a" inactive-color="#efefef">
+          </el-switch>
         </el-form-item>
         <el-form-item label="展示图">
           <div class="setting-item slider">
-            <div
-              v-if="config.imgUrl"
-              class="upload-box"
-            >
+            <div class="upload-box" v-if="config.imgUrl">
               <img
                 :src="wximageurl + config.imgUrl"
                 class="banner-uploader"
                 @click="handleImgChange"
-              >
+              />
             </div>
-            <div
-              v-else
-              class="banner-uploader"
-              @click="handleImgChange"
-            >
-              <i class="iconfont icon-camera" />上传图片
+            <div class="banner-uploader" v-else @click="handleImgChange">
+              <i class="iconfont icon-camera"></i>上传图片
             </div>
           </div>
         </el-form-item>
@@ -48,55 +35,26 @@
           <hotzone
             class="hotzone"
             :image="config.imgUrl"
-            :zones-init="data"
+            :zonesInit="data"
             @add="handleAdd"
             @change="handleChange"
             @remove="handleRemove"
-          />
-          <div
-            v-for="(item, index) in data"
-            class="setting-item slider"
-          >
+          ></hotzone>
+          <div class="setting-item slider" v-for="(item, index) in data">
             <div class="uploader-setting">
-              <div
-                class="goods-select"
-                @click="handleGoodsChange(index)"
-              >
-                <div
-                  v-if="item.id"
-                  class="link-content"
-                >
-                  <template v-if="item.linkPage === 'goods'">
-                    商品：
-                  </template>
-                  <template v-if="item.linkPage === 'category'">
-                    分类：
-                  </template>
-                  <template v-if="item.linkPage === 'article'">
-                    文章：
-                  </template>
-                  <template v-if="item.linkPage === 'planting'">
-                    软文：
-                  </template>
-                  <template v-if="item.linkPage === 'link'">
-                    页面：
-                  </template>
-                  <template v-if="item.linkPage === 'marketing'">
-                    营销：
-                  </template>
-                  <template v-if="item.linkPage === 'custom_page'">
-                    自定义页面：
-                  </template>
+              <div class="goods-select" @click="handleGoodsChange(index)">
+                <div class="link-content" v-if="item.id">
+                  <template v-if="item.linkPage === 'goods'">商品：</template>
+                  <template v-if="item.linkPage === 'category'">分类：</template>
+                  <template v-if="item.linkPage === 'article'">文章：</template>
+                  <template v-if="item.linkPage === 'planting'">软文：</template>
+                  <template v-if="item.linkPage === 'link'">页面：</template>
+                  <template v-if="item.linkPage === 'marketing'">营销：</template>
+                  <template v-if="item.linkPage === 'custom_page'">自定义页面：</template>
                   {{ item.title }}
                 </div>
-                <div
-                  v-else
-                  class="content-center"
-                >
-                  <i
-                    class="iconfont icon-link"
-                    @click="handleGoodsChange(index)"
-                  />设置路径
+                <div v-else class="content-center">
+                  <i class="iconfont icon-link" @click="handleGoodsChange(index)"></i>设置路径
                 </div>
               </div>
             </div>
@@ -111,16 +69,27 @@
 import hotzone from 'vue-hotzone'
 
 export default {
-  components: {
-    hotzone: hotzone
-  },
   props: {
     res: {
       type: Object,
       default: {}
     }
   },
-  data () {
+  watch: {
+    res: {
+      deep: true,
+      handler(value) {
+        console.log('img hotzone watch...')
+        if (value) {
+          this.setData(value)
+        }
+      }
+    }
+  },
+  components: {
+    hotzone: hotzone
+  },
+  data() {
     return {
       name: '',
       base: {},
@@ -129,35 +98,21 @@ export default {
       zones: []
     }
   },
-  watch: {
-    res: {
-      deep: true,
-      handler (value) {
-        console.log('img hotzone watch...')
-        if (value) {
-          this.setData(value)
-        }
-      }
-    }
-  },
-  mounted () {
-    this.setData(this.res)
-  },
   methods: {
-    setData (val) {
+    setData(val) {
       this.name = val.name
       this.base = val.base
       this.config = val.config
       this.data = val.data
     },
-    handleImgChange (index) {
+    handleImgChange(index) {
       this.$emit('bindImgs', index)
     },
-    handleGoodsChange (index) {
+    handleGoodsChange(index) {
       this.$emit('bindLinks', index)
     },
-    handleAdd (item) {
-      console.log('handle add:', item)
+    handleAdd(item) {
+      console.log('handle add:',item)
       this.data.push({
         ...item,
         linkPage: '',
@@ -165,33 +120,36 @@ export default {
         id: ''
       })
     },
-    handleChange (zone) {
+    handleChange(zone) {
       console.log('handle change, ', zone)
       // setTimeout(() => {
-      zone.forEach((item, index) => {
-        if (item.leftPer && this.data[index] && typeof this.data[index].id != 'undefined') {
-          // let obj = {
-          //   heightPer: item.heightPer,
-          //   leftPer: item.leftPer,
-          //   topPer: item.topPer,
-          //   widthPer: item.widthPer
-          // }
-          // Object.assign(this.data[index], obj)
-          this.data[index] = {
-            ...this.data[index],
-            heightPer: item.heightPer,
-            leftPer: item.leftPer,
-            topPer: item.topPer,
-            widthPer: item.widthPer
+        zone.forEach((item, index) => {
+          if (item.leftPer && this.data[index] && typeof this.data[index].id != 'undefined') {
+            // let obj = {
+            //   heightPer: item.heightPer,
+            //   leftPer: item.leftPer,
+            //   topPer: item.topPer,
+            //   widthPer: item.widthPer
+            // }
+            // Object.assign(this.data[index], obj)
+            this.data[index] = {
+              ...this.data[index],
+              heightPer: item.heightPer,
+              leftPer: item.leftPer,
+              topPer: item.topPer,
+              widthPer: item.widthPer
+            }
+            console.log('new:', this.data[index])
           }
-          console.log('new:', this.data[index])
-        }
-      })
+        })
       // }, 500)
     },
-    handleRemove (index) {
+    handleRemove(index) {
       this.data.splice(index, 1)
     }
+  },
+  mounted() { 
+    this.setData(this.res);
   }
 }
 </script>

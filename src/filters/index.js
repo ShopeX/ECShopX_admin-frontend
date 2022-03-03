@@ -1,6 +1,6 @@
 import moment from 'moment'
 
-const install = function (Vue) {
+const install = function(Vue) {
   Vue.filter('datetime', (time, pattern) => {
     if (time !== -1) {
       return moment(time * 1000).format(pattern)
@@ -10,7 +10,7 @@ const install = function (Vue) {
   })
 
   //格式化时间
-  Vue.filter('formatDataTime', function (time, pattern = 'yyyy-MM-dd hh:mm:ss') {
+  Vue.filter('formatDataTime', function(time, pattern = 'yyyy-MM-dd hh:mm:ss') {
     if (time !== -1) {
       return moment(time * 1000).format(pattern)
     } else {
@@ -19,7 +19,7 @@ const install = function (Vue) {
   })
 
   //
-  Vue.filter('subStr', function (str, n) {
+  Vue.filter('subStr', function(str, n) {
     const r = /[^\x00-\xff]/g
     if (str.replace(r, 'mm').length <= n) {
       return str
@@ -33,7 +33,7 @@ const install = function (Vue) {
     return str
   })
   //匹配省市区
-  Vue.filter('formatCityData', function (areaValue, district, defaultValue = true) {
+  Vue.filter('formatCityData', function(areaValue, district, defaultValue = true) {
     if (areaValue == 0 || typeof areaValue === 'undefined') {
       if (!defaultValue) return ''
       return '全国（默认）'
@@ -72,7 +72,7 @@ const install = function (Vue) {
     return area_str.substring(0, area_str.lastIndexOf(','))
   })
   //格式化价格保留小数点后两位
-  Vue.filter('keepTwoDecimalFull', function (num) {
+  Vue.filter('keepTwoDecimalFull', function(num) {
     var result = parseFloat(num)
     if (isNaN(result)) {
       console.log('传递参数错误，请检查！')
@@ -91,7 +91,7 @@ const install = function (Vue) {
     return s_x
   })
   //匹配券类别字符串
-  Vue.filter('formatCardStr', function (str) {
+  Vue.filter('formatCardStr', function(str) {
     switch (str) {
       case 'groupon':
         str = '团购券'

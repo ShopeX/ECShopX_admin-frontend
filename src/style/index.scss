@@ -2,7 +2,7 @@ html,
 body {
   margin: 0;
   height: 100%;
-  background: #f0f2f5;
+  background: #F0F2F5;
   #app {
     height: 100%;
   }
@@ -54,7 +54,7 @@ a {
   &-group {
     margin-right: 5px;
   }
-  & + .el-button {
+  &+.el-button {
     margin-left: 5px;
   }
 }
@@ -88,7 +88,7 @@ a {
 
 /***** filter-container *****/
 .filter-container {
-  background: #f6f7f9;
+  background: #F6F7F9;
   border-radius: 2px;
 }
 

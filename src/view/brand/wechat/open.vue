@@ -11,27 +11,24 @@
     请手动开通微信开放平台并且绑定。"
         show-icon
         :closable="false"
-      />
+      ></el-alert>
       <div>
-        <span
-          class="frm-tips"
-        >如果手动绑定绑定后一定要执行【微信-> 粉丝管理->
-          同步微信粉丝】操作，不然会导致小程序用户和微信公众号用不能打通</span>
+        <span class="frm-tips"
+          >如果手动绑定绑定后一定要执行【微信-> 粉丝管理->
+          同步微信粉丝】操作，不然会导致小程序用户和微信公众号用不能打通</span
+        >
         <el-form ref="form">
           <el-form-item label="小程序卡券打通微信文档">
             <a
               href="https://mp.weixin.qq.com/cgi-bin/announce?action=getannouncement&key=1490190158&version=1&lang=zh_CN&platform=2"
               target="_blank"
-            >点击查看</a>
+              >点击查看</a
+            >
           </el-form-item>
           <el-form-item>
-            <el-button
-              v-loading="loading"
-              type="primary"
-              @click="onSubmit"
+            <el-button type="primary" v-loading="loading" @click="onSubmit"
+              >开通微信开放平台绑定小程序</el-button
             >
-              开通微信开放平台绑定小程序
-            </el-button>
           </el-form-item>
         </el-form>
       </div>
@@ -41,14 +38,14 @@
 <script>
 import { openUserPlatform } from '../../../api/wechat'
 export default {
-  data () {
+  data() {
     return {
       activeName: 'first',
       loading: false
     }
   },
   methods: {
-    onSubmit () {
+    onSubmit() {
       this.loading = true
       openUserPlatform()
         .then((response) => {

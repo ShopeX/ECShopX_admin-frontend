@@ -4,23 +4,11 @@
       <div class="section-title">我的模版</div>
       <div class="section-more">更多</div>
     </div> -->
-    <el-row
-      v-if="$route.path.indexOf('templ') === -1"
-      :gutter="20"
-    >
-      <el-col
-        :xs="12"
-        :sm="8"
-        :md="6"
-        :lg="4"
-        :xl="3"
-      >
-        <div
-          class="template-item add-btn"
-          @click="chooseTemp"
-        >
+    <el-row v-if="$route.path.indexOf('templ') === -1" :gutter="20">
+      <el-col :xs="12" :sm="8" :md="6" :lg="4" :xl="3">
+        <div class="template-item add-btn" @click="chooseTemp">
           <div class="template-wrap add-btn">
-            <i class="iconfont icon-weixin" />
+            <i class="iconfont icon-weixin"></i>
             <div>添加小程序模板</div>
           </div>
         </div>
@@ -35,22 +23,10 @@
         :xl="3"
       >
         <div class="template-item">
-          <div
-            v-if="item.is_weapp_grade"
-            class="has-upgrade"
-          />
-          <div
-            v-if="item.wxaCodeVisible"
-            class="wxcode"
-          >
-            <div
-              class="iconfont icon-times"
-              @click="closeWxcode(index)"
-            />
-            <img
-              :src="item.wxaCodeImage"
-              alt=""
-            >
+          <div v-if="item.is_weapp_grade" class="has-upgrade"></div>
+          <div v-if="item.wxaCodeVisible" class="wxcode">
+            <div class="iconfont icon-times" @click="closeWxcode(index)"></div>
+            <img :src="item.wxaCodeImage" alt="" />
           </div>
           <div class="template-wrap">
             <div class="template-img">
@@ -58,65 +34,57 @@
                 v-if="item.template_name === 'yykmembership'"
                 src="@/assets/img/template_img.jpg"
                 alt=""
-              >
+              />
               <img
                 v-if="item.template_name === 'yykmendian'"
                 src="@/assets/img/template_img_01.jpg"
                 alt=""
-              >
+              />
               <img
                 v-if="item.template_name === 'yykcutdown'"
                 src="@/assets/img/template_img_02.jpg"
                 alt=""
-              >
+              />
               <img
                 v-if="item.template_name === 'yykweishop'"
                 src="@/assets/img/template_img_04.jpg"
                 alt=""
-              >
+              />
               <img
                 v-if="item.template_name === 'appleweishop'"
                 src="@/assets/img/template_img_09.jpg"
                 alt=""
-              >
+              />
               <img
                 v-if="item.template_name === 'yykcommunity'"
                 src="@/assets/img/template_img_07.jpg"
                 alt=""
-              >
+              />
               <img
                 v-if="item.template_name === 'yykcommunitypms'"
                 src="@/assets/img/template_img_06.jpg"
                 alt=""
-              >
+              />
               <div
                 v-if="item.is_bind"
                 v-loading="item.loading"
                 class="demo-qrcode"
                 @click="downloadWxaCode(index, item.bindInfo.authorizer_appid)"
               >
-                <img
-                  src="@/assets/img/code.png"
-                  height="34"
-                  width="35"
-                  alt=""
-                >
+                <img src="@/assets/img/code.png" height="34" width="35" alt="" />
               </div>
             </div>
             <div class="template-caption">
               {{ item.templateInfo.name }}
             </div>
-            <div
-              class="template-opend-btn"
-              @click="linkTo(item)"
-            >
+            <div class="template-opend-btn" @click="linkTo(item)">
               <span v-if="item.is_bind">编辑模板</span><span v-else>未绑定</span>
             </div>
           </div>
         </div>
       </el-col>
     </el-row>
-    <router-view />
+    <router-view></router-view>
   </section>
 </template>
 
@@ -125,24 +93,13 @@ import { getCodeUnlimit } from '../../api/wxa'
 import { getTemplateList } from '../../api/template'
 
 export default {
-  data () {
+  data() {
     return {
       list: []
     }
   },
-  mounted () {
-    getTemplateList().then((response) => {
-      var res = response.data.data.list
-      for (var i = 0; i < res.length; i++) {
-        res[i].loading = false
-        res[i].wxaCodeImage = ''
-        res[i].wxaCodeVisible = false
-      }
-      this.list = res
-    })
-  },
   methods: {
-    linkTo (data) {
+    linkTo(data) {
       let link = ''
       let wid = ''
       if (data.bindInfo) {
@@ -167,10 +124,10 @@ export default {
         }
       })
     },
-    closeWxcode (index) {
+    closeWxcode(index) {
       this.list[index].wxaCodeVisible = false
     },
-    downloadWxaCode (index, appid) {
+    downloadWxaCode(index, appid) {
       if (!this.list[index].wxaCodeImage) {
         let params = { wxaAppId: appid }
         this.list[index].loading = true
@@ -183,10 +140,21 @@ export default {
         this.list[index].wxaCodeVisible = true
       }
     },
-    chooseTemp () {
+    chooseTemp() {
       // this.$router.push({ path: this.matchInternalRoute('wxapp_templ') })
-      this.$router.push({ path: '/wxapp/manage/wxapp/wxapp_templ' })
+      this.$router.push({ path: '/wxapp/manage/wxapp/wxapp_templ'})
     }
+  },
+  mounted() {
+    getTemplateList().then((response) => {
+      var res = response.data.data.list
+      for (var i = 0; i < res.length; i++) {
+        res[i].loading = false
+        res[i].wxaCodeImage = ''
+        res[i].wxaCodeVisible = false
+      }
+      this.list = res
+    })
   }
 }
 </script>

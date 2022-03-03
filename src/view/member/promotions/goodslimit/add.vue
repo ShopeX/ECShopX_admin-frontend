@@ -1,25 +1,13 @@
 <template>
-  <el-form
-    ref="form"
-    :model="form"
-    class="box-set"
-    label-width="120px"
-  >
-    <el-card
-      header="设置规则名称"
-      shadow="naver"
-    >
+  <el-form ref="form" :model="form" class="box-set" label-width="120px">
+    <el-card header="设置规则名称" shadow="naver">
       <el-form-item
         label="名称"
         prop="limit_name"
         :rules="{ required: true, message: '请填写规则名称', trigger: 'blur' }"
       >
         <el-col :span="20">
-          <el-input
-            v-model="form.limit_name"
-            :maxlength="30"
-            placeholder="最多30个字"
-          />
+          <el-input v-model="form.limit_name" :maxlength="30" placeholder="最多30个字"></el-input>
         </el-col>
       </el-form-item>
       <el-form-item label="购买规则">
@@ -28,14 +16,14 @@
           :maxlength="30"
           class="inline-input"
           style="width: 100px"
-        />
+        ></el-input>
         天，购买
         <el-input
           v-model="rule.limit"
           :maxlength="30"
           class="inline-input"
           style="width: 100px"
-        />
+        ></el-input>
         件
         <p class="frm-tips">
           天数设置0视为此次活动有效期内，例如：0天，购买1件是指活动有效期内只能购买一件商品
@@ -43,18 +31,10 @@
       </el-form-item>
       <el-form-item label="适用会员">
         <el-checkbox-group v-model="validGrade">
-          <el-checkbox
-            v-for="grade in memberGrade"
-            :key="grade.grade_id"
-            :label="grade.grade_id"
-          >
+          <el-checkbox v-for="grade in memberGrade" :label="grade.grade_id" :key="grade.grade_id">
             {{ grade.grade_name }}
           </el-checkbox>
-          <el-checkbox
-            v-for="vipdata in vipGrade"
-            :key="vipdata.lv_type"
-            :label="vipdata.lv_type"
-          >
+          <el-checkbox v-for="vipdata in vipGrade" :label="vipdata.lv_type" :key="vipdata.lv_type">
             付费{{ vipdata.grade_name }}
           </el-checkbox>
         </el-checkbox-group>
@@ -69,41 +49,22 @@
             end-placeholder="过期时间"
             value-format="yyyy-MM-dd HH:mm:ss"
             :default-time="['00:00:00', '23:59:59']"
-          />
+          >
+          </el-date-picker>
         </el-col>
       </el-form-item>
     </el-card>
-    <el-card
-      header="选择限购商品"
-      shadow="naver"
-    >
+    <el-card header="选择限购商品" shadow="naver">
       <el-form-item label="适用商品">
-        <el-radio-group
-          v-model="form.use_bound"
-          @change="itemTypeChange"
-        >
-          <el-radio label="goods">
-            指定商品适用
-          </el-radio>
-          <el-radio label="category">
-            指定分类适用
-          </el-radio>
-          <el-radio label="tag">
-            指定商品标签适用
-          </el-radio>
-          <el-radio label="brand">
-            指定品牌适用
-          </el-radio>
+        <el-radio-group v-model="form.use_bound" @change="itemTypeChange">
+          <el-radio label="goods">指定商品适用</el-radio>
+          <el-radio label="category">指定分类适用</el-radio>
+          <el-radio label="tag">指定商品标签适用</el-radio>
+          <el-radio label="brand">指定品牌适用</el-radio>
         </el-radio-group>
       </el-form-item>
-      <div
-        v-if="!zdItemHidden"
-        style="position: relative"
-      >
-        <SkuSelector
-          :data="relItems"
-          @change="getItems"
-        />
+      <div v-if="!zdItemHidden" style="position: relative">
+        <SkuSelector @change="getItems" :data="relItems"></SkuSelector>
         <div style="position: absolute; bottom: 0px; left: 112px">
           <el-upload
             style="display: inline-block; height: 0"
@@ -112,50 +73,36 @@
             :auto-upload="false"
             :show-file-list="false"
           >
-            <el-button type="primary">
-              批量上传
-            </el-button>
+            <el-button type="primary">批量上传</el-button>
           </el-upload>
-          <el-button
-            style="margin-left: 10px"
-            type="primary"
-            @click="uploadHandleTemplate()"
+          <el-button style="margin-left: 10px" type="primary" @click="uploadHandleTemplate()"
+            >下载模板</el-button
           >
-            下载模板
-          </el-button>
         </div>
       </div>
-      <el-col
-        :xs="12"
-        :sm="12"
-        :md="12"
-      >
-        <div
-          v-if="!categoryHidden"
-          style="height: 350px"
-        >
+      <el-col :xs="12" :sm="12" :md="12">
+        <div style="height: 350px" v-if="!categoryHidden">
           <treeselect
-            v-model="form.item_category"
-            no-results-text="暂无结果"
+            noResultsText="暂无结果"
             :options="categoryList"
             :show-count="true"
             :multiple="true"
             :disable-branch-nodes="true"
             :clearable="false"
+            v-model="form.item_category"
             @select="categorySelect"
             @deselect="categoryDeselect"
-          />
+          >
+          </treeselect>
         </div>
       </el-col>
       <template v-if="!tagHidden">
         <div class="selected-tags view-flex">
-          <div class="label">
-            已选中标签：
-          </div>
+          <div class="label">已选中标签：</div>
           <div class="view-flex-item">
             <el-tag
-              v-for="(tag, index) in tag.currentTags"
               :key="index"
+              v-for="(tag, index) in tag.currentTags"
               closable
               size="small"
               :disable-transitions="false"
@@ -167,9 +114,9 @@
         </div>
         <div>
           <el-tag
-            v-for="(tag, index) in tag.tags"
-            :key="index"
             class="tag-item"
+            :key="index"
+            v-for="(tag, index) in tag.tags"
             size="medium"
             color="#ffffff"
             :disable-transitions="false"
@@ -181,13 +128,11 @@
       </template>
       <template v-if="!brandHidden">
         <div class="selected-tags view-flex">
-          <div class="label">
-            已选中品牌：
-          </div>
+          <div class="label">已选中品牌：</div>
           <div class="view-flex-item">
             <el-tag
-              v-for="(brand, index) in brand.currentBrands"
               :key="index"
+              v-for="(brand, index) in brand.currentBrands"
               closable
               size="small"
               :disable-transitions="false"
@@ -199,9 +144,9 @@
         </div>
         <div>
           <el-tag
-            v-for="(brand, index) in brand.brands"
-            :key="index"
             class="tag-item"
+            :key="index"
+            v-for="(brand, index) in brand.brands"
             size="medium"
             color="#ffffff"
             :disable-transitions="false"
@@ -212,28 +157,15 @@
         </div>
       </template>
     </el-card>
-    <el-card
-      header="无效商品（已参加其他活动）"
-      shadow="naver"
-    >
+    <el-card header="无效商品（已参加其他活动）" shadow="naver">
       <el-table
         v-if="invalidItemsList.length > 0"
         :data="invalidItemsList"
         style="line-height: normal"
       >
-        <el-table-column
-          label="ID"
-          prop="item_id"
-          width="60"
-        />
-        <el-table-column
-          label="名称"
-          prop="itemName"
-        />
-        <el-table-column
-          label="规格"
-          prop="item_spec_desc"
-        />
+        <el-table-column label="ID" prop="item_id" width="60"></el-table-column>
+        <el-table-column label="名称" prop="itemName"></el-table-column>
+        <el-table-column label="规格" prop="item_spec_desc"></el-table-column>
         <!-- <el-table-column label="操作" width="50">
                   <template slot-scope="scope">
                     <i class="iconfont icon-trash-alt" @click="deleteItemRow(scope.$index, form.items)"></i>
@@ -242,16 +174,10 @@
       </el-table>
     </el-card>
     <div class="content-center">
-      <el-button
-        v-if="hasSaveButton"
-        type="primary"
-        @click="submitActivityAction()"
+      <el-button type="primary" v-if="hasSaveButton" @click="submitActivityAction()"
+        >保存</el-button
       >
-        保存
-      </el-button>
-      <el-button @click.native="handleCancel">
-        返回
-      </el-button>
+      <el-button @click.native="handleCancel">返回</el-button>
     </div>
   </el-form>
 </template>
@@ -276,7 +202,7 @@ export default {
     SkuSelector,
     Treeselect
   },
-  data () {
+  data() {
     return {
       relItems: [],
       activity_date: '',
@@ -341,21 +267,8 @@ export default {
       }
     }
   },
-  mounted () {
-    this.getListVipGrade()
-    this.getGradeList()
-    if (this.$route.query.isshow) {
-      this.hasSaveButton = false
-    }
-    if (this.$route.params.limit_id) {
-      this.getLimitPromotionsInfo(this.$route.params.limit_id)
-    }
-    this.fetchMainCate()
-    this.getAllTagLists()
-    this.getBrandList('', true)
-  },
   methods: {
-    submitActivityAction () {
+    submitActivityAction() {
       const that = this
       if (this.activity_date.length > 0) {
         this.form.start_time = this.activity_date[0]
@@ -375,7 +288,7 @@ export default {
               message: '修改成功',
               type: 'success',
               duration: 2 * 1000,
-              onClose () {
+              onClose() {
                 that.$router.go(-1)
               }
             })
@@ -389,7 +302,7 @@ export default {
               message: '添加成功',
               type: 'success',
               duration: 2 * 1000,
-              onClose () {
+              onClose() {
                 that.$router.go(-1)
               }
             })
@@ -397,7 +310,7 @@ export default {
           .catch()
       }
     },
-    getItems (data) {
+    getItems(data) {
       let items = []
       data.forEach((item) => {
         items.push(item.itemId)
@@ -405,7 +318,7 @@ export default {
       this.form.items = items
       console.log(this.form.items)
     },
-    getLimitPromotionsInfo (id) {
+    getLimitPromotionsInfo(id) {
       getLimitPromotionsInfo(id).then((response) => {
         let res = response.data.data
         let data = {
@@ -456,17 +369,17 @@ export default {
         }
       })
     },
-    handleCancel () {
+    handleCancel() {
       this.$router.back(-1)
     },
-    getListVipGrade () {
+    getListVipGrade() {
       listVipGrade().then((response) => {
         if (response != undefined && response.data.data && response.data.data.length > 0) {
           this.vipGrade = response.data.data
         }
       })
     },
-    getGradeList () {
+    getGradeList() {
       getGradeList().then((response) => {
         if (response != undefined && response.data.data && response.data.data.length > 0) {
           var result = response.data.data
@@ -716,7 +629,7 @@ export default {
       this.ItemsList = items
       this.getItems(this.ItemsList)
     },
-    generateSku () {
+    generateSku() {
       let noSkuItem
       noSkuItem = []
       let response = []
@@ -764,7 +677,7 @@ export default {
     /**
      * 下载模板
      * */
-    uploadHandleTemplate () {
+    uploadHandleTemplate() {
       let params = { file_type: 'marketing_goods', file_name: '商品模板' }
       exportUploadTemplate(params).then((response) => {
         let { data } = response.data
@@ -786,7 +699,7 @@ export default {
     /**
      * 上传模板
      * */
-    uploadHandleChange (file, fileList) {
+    uploadHandleChange(file, fileList) {
       let params = { isUploadFile: true, file_type: 'marketing_goods', file: file.raw }
       handleUploadFile(params).then((response) => {
         this.$message({
@@ -822,6 +735,19 @@ export default {
         })
       })
     }
+  },
+  mounted() {
+    this.getListVipGrade()
+    this.getGradeList()
+    if (this.$route.query.isshow) {
+      this.hasSaveButton = false
+    }
+    if (this.$route.params.limit_id) {
+      this.getLimitPromotionsInfo(this.$route.params.limit_id)
+    }
+    this.fetchMainCate()
+    this.getAllTagLists()
+    this.getBrandList('', true)
   }
 }
 </script>

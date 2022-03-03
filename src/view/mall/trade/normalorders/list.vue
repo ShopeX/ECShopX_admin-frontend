@@ -1,121 +1,60 @@
 <template>
   <div class="page-body">
     <div v-if="$route.path.indexOf('detail') === -1 && $route.path.indexOf('process') === -1">
-      <SpFilterForm
-        :model="params"
-        @onSearch="onSearch"
-        @onReset="onSearch"
-      >
-        <SpFilterFormItem
-          prop="mobile"
-          label="手机号:"
-        >
-          <el-input
-            v-model="params.mobile"
-            placeholder="请输入客户手机号码"
-          />
-        </SpFilterFormItem>
-        <SpFilterFormItem
-          prop="item_bn"
-          label="订单号:"
-        >
-          <el-input
-            v-model="params.item_bn"
-            placeholder="请输入订单号"
-          />
-        </SpFilterFormItem>
-        <SpFilterFormItem
-          v-if="login_type != 'merchant'"
-          prop="salesman_mobile"
-          label="导购手机号:"
-        >
-          <el-input
-            v-model="params.salesman_mobile"
-            placeholder="请输入导购手机号码"
-          />
-        </SpFilterFormItem>
-        <SpFilterFormItem
-          v-if="!isMicorMall"
-          prop="receipt_type"
-          label="配送类型:"
-        >
-          <el-select
-            v-model="params.receipt_type"
-            clearable
-            placeholder="请选择"
-          >
+      <SpFilterForm :model="params" @onSearch="onSearch" @onReset="onSearch">
+        <SpFilterFormItem prop="mobile" label="手机号:"
+          ><el-input placeholder="请输入客户手机号码" v-model="params.mobile"
+        /></SpFilterFormItem>
+        <SpFilterFormItem prop="item_bn" label="订单号:"
+          ><el-input placeholder="请输入订单号" v-model="params.item_bn"
+        /></SpFilterFormItem>
+        <SpFilterFormItem prop="salesman_mobile" label="导购手机号:" v-if="login_type != 'merchant'"
+          ><el-input placeholder="请输入导购手机号码" v-model="params.salesman_mobile"
+        /></SpFilterFormItem>
+        <SpFilterFormItem prop="receipt_type" label="配送类型:" v-if="!isMicorMall"
+          ><el-select v-model="params.receipt_type" clearable placeholder="请选择">
             <el-option
+              size="mini"
               v-for="item in distributionType"
               :key="item.value"
-              size="mini"
               :label="item.title"
               :value="item.value"
-            />
-          </el-select>
-        </SpFilterFormItem>
-        <SpFilterFormItem
-          prop="source"
-          label="订单来源:"
-        >
-          <el-select
-            v-model="params.source"
-            clearable
-            placeholder="请选择"
-          >
+            ></el-option> </el-select
+        ></SpFilterFormItem>
+        <SpFilterFormItem prop="source" label="订单来源:"
+          ><el-select v-model="params.source" clearable placeholder="请选择">
             <el-option
+              size="mini"
               v-for="item in orderSourceList"
               :key="item.value"
-              size="mini"
               :label="item.title"
               :value="item.value"
-            />
-          </el-select>
-        </SpFilterFormItem>
-        <SpFilterFormItem
-          prop="order_class"
-          label="订单类型:"
-        >
-          <el-select
-            v-model="params.order_class"
-            clearable
-            placeholder="请选择"
-          >
+            ></el-option> </el-select
+        ></SpFilterFormItem>
+        <SpFilterFormItem prop="order_class" label="订单类型:"
+          ><el-select v-model="params.order_class" clearable placeholder="请选择">
             <el-option
+              size="mini"
               v-for="item in orderType"
               :key="item.value"
-              size="mini"
               :label="item.title"
               :value="item.value"
-            />
-          </el-select>
-        </SpFilterFormItem>
-        <SpFilterFormItem
-          v-if="!isMicorMall"
-          prop="is_invoiced"
-          label="开票状态:"
-        >
-          <el-select
-            v-model="params.is_invoiced"
-            clearable
-            placeholder="请选择"
-          >
+            ></el-option> </el-select
+        ></SpFilterFormItem>
+        <SpFilterFormItem prop="is_invoiced" label="开票状态:" v-if="!isMicorMall"
+          ><el-select v-model="params.is_invoiced" clearable placeholder="请选择">
             <el-option
+              size="mini"
               v-for="item in invoiceStatus"
               :key="item.value"
-              size="mini"
               :label="item.title"
               :value="item.value"
-            />
-          </el-select>
-        </SpFilterFormItem>
-        <SpFilterFormItem
-          prop="create_time"
-          label="下单时间:"
-        >
-          <el-date-picker
+            ></el-option> </el-select
+        ></SpFilterFormItem>
+        <SpFilterFormItem prop="create_time" label="下单时间:"
+          ><el-date-picker
             clearable
             unlink-panels
-            v-model="params.create_time"
             type="daterange"
             align="right"
             format="yyyy-MM-dd"
@@ -124,155 +63,99 @@
             start-placeholder="开始日期"
             end-placeholder="结束日期"
             prefix-icon="null"
+            v-model="params.create_time"
             :picker-options="pickerOptions"
-          />
-        </SpFilterFormItem>
-        <SpFilterFormItem
-          prop="distributor_type"
-          label="订单分类:"
-        >
-          <el-select
-            v-model="params.distributor_type"
-            clearable
-            placeholder="请选择"
           >
+          </el-date-picker
+        ></SpFilterFormItem>
+        <SpFilterFormItem prop="distributor_type" label="订单分类:"
+          ><el-select v-model="params.distributor_type" clearable placeholder="请选择">
             <el-option
+              size="mini"
               v-for="item in orderCategory"
               :key="item.value"
-              size="mini"
               :label="item.title"
               :value="item.value"
-            />
-          </el-select>
-        </SpFilterFormItem>
+            ></el-option> </el-select
+        ></SpFilterFormItem>
         <SpFilterFormItem
-          v-if="!isMicorMall || login_type != 'distributor'"
           prop="distributor_id"
           label="店铺:"
+          v-if="!isMicorMall || login_type != 'distributor'"
         >
-          <SpSelectShop
-            v-model="params.distributor_id"
-            clearable
-            placeholder="请选择"
-          />
+          <SpSelectShop clearable placeholder="请选择" v-model="params.distributor_id" />
         </SpFilterFormItem>
       </SpFilterForm>
 
       <div class="action-container">
         <el-dropdown>
-          <el-button
-            type="primary"
-            plain
-          >
-            导出<i class="el-icon-arrow-down el-icon--right" />
+          <el-button type="primary" plain
+            >导出<i class="el-icon-arrow-down el-icon--right"></i>
           </el-button>
           <el-dropdown-menu slot="dropdown">
             <el-dropdown-item>
-              <export-tip @exportHandle="exportInvoice">
-                未开票订单
-              </export-tip>
-            </el-dropdown-item>
-            <el-dropdown-item>
-              <export-tip
-                @exportHandle="exportData('normal_order')"
-              >
-                主订单
-              </export-tip>
-            </el-dropdown-item>
-            <el-dropdown-item>
-              <export-tip
-                @exportHandle="exportData('normal_master_order')"
-              >
-                子订单
-              </export-tip>
-            </el-dropdown-item>
+              <export-tip @exportHandle="exportInvoice">未开票订单</export-tip></el-dropdown-item
+            >
+            <el-dropdown-item
+              ><export-tip @exportHandle="exportDataMaster"
+                >主订单</export-tip
+              ></el-dropdown-item
+            >
+            <el-dropdown-item
+              ><export-tip @exportHandle="exportDataNormal"
+                >子订单</export-tip
+              ></el-dropdown-item
+            >
           </el-dropdown-menu>
         </el-dropdown>
       </div>
 
-      <el-tabs
-        v-model="params.order_status"
-        type="card"
-        @tab-click="onSearch"
-      >
+      <el-tabs type="card" v-model="params.order_status" @tab-click="onSearch">
         <el-tab-pane
           v-for="item in orderStatus"
-          :key="item.value"
           :label="item.title"
           :name="item.value"
+          :key="item.value"
         />
-        <el-table
-          v-loading="loading"
-          border
-          :data="tableList"
-        >
-          <el-table-column
-            width="220"
-            prop="order_id"
-            label="订单信息"
-          >
+        <el-table border v-loading="loading" :data="tableList">
+          <el-table-column width="220" prop="order_id" label="订单信息">
             <template slot-scope="scope">
               <div class="order-num">
                 {{ scope.row.order_id }}
-                <el-tooltip
-                  effect="dark"
-                  content="复制"
-                  placement="top-start"
-                >
+                <el-tooltip effect="dark" content="复制" placement="top-start">
                   <i
                     v-clipboard:copy="scope.row.order_id"
                     v-clipboard:success="onCopySuccess"
                     class="el-icon-document-copy"
-                  />
+                  ></i>
                 </el-tooltip>
               </div>
-              <div
-                v-if="scope.row.distributor_id !== '0'"
-                class="order-store"
-              >
-                <el-tooltip
-                  effect="dark"
-                  content="店铺名"
-                  placement="top-start"
-                >
-                  <i class="el-icon-office-building" />
+              <div v-if="scope.row.distributor_id !== '0'" class="order-store">
+                <el-tooltip effect="dark" content="店铺名" placement="top-start">
+                  <i class="el-icon-office-building"></i>
                 </el-tooltip>
                 {{ scope.row.distributor_name }}
               </div>
               <div class="order-time">
-                <el-tooltip
-                  effect="dark"
-                  content="下单时间"
-                  placement="top-start"
-                >
-                  <i class="el-icon-time" />
+                <el-tooltip effect="dark" content="下单时间" placement="top-start">
+                  <i class="el-icon-time"></i>
                 </el-tooltip>
                 {{ scope.row.create_time | datetime('YYYY-MM-DD HH:mm:ss') }}
               </div>
             </template>
           </el-table-column>
 
-          <el-table-column
-            prop="total_fee"
-            width="120"
-            label="订单金额（¥）"
-          >
+          <el-table-column prop="total_fee" width="120" label="订单金额（¥）">
             <template slot-scope="scope">
               {{ (scope.row.total_fee / 100).toFixed(2) }}
             </template>
           </el-table-column>
-          <el-table-column
-            width="100"
-            label="运费（¥）"
-          >
+          <el-table-column width="100" label="运费（¥）">
             <template slot-scope="scope">
               {{ (scope.row.freight_fee || 0) / 100 }}
             </template>
           </el-table-column>
-          <el-table-column
-            prop="mobile"
-            label="客户手机号"
-          >
+          <el-table-column prop="mobile" label="客户手机号">
             <template slot-scope="scope">
               <template v-if="!scope.row.user_delete && login_type !== 'merchant'">
                 <router-link
@@ -285,9 +168,8 @@
                     }`,
                     query: { user_id: scope.row.user_id }
                   }"
+                  >{{ scope.row.mobile }}</router-link
                 >
-                  {{ scope.row.mobile }}
-                </router-link>
                 <el-tooltip
                   v-if="datapass_block == 0"
                   effect="dark"
@@ -298,13 +180,10 @@
                     v-clipboard:copy="scope.row.mobile"
                     v-clipboard:success="onCopySuccess"
                     class="el-icon-document-copy"
-                  />
+                  ></i>
                 </el-tooltip>
               </template>
-              <template
-                v-else
-                slot-scope="scope"
-              >
+              <template slot-scope="scope" v-else>
                 <span>{{ scope.row.mobile }}</span>
                 <el-tooltip
                   v-if="datapass_block == 0"
@@ -316,25 +195,19 @@
                     v-clipboard:copy="scope.row.mobile"
                     v-clipboard:success="onCopySuccess"
                     class="el-icon-document-copy"
-                  />
+                  ></i>
                 </el-tooltip>
               </template>
             </template>
           </el-table-column>
           <template v-if="login_type != 'merchant'">
-            <el-table-column
-              v-if="!isMicorMall"
-              label="订单类型"
-            >
+            <el-table-column label="订单类型" v-if="!isMicorMall">
               <template slot-scope="scope">
                 {{ getOrderType(scope.row) }}
               </template>
             </el-table-column>
           </template>
-          <el-table-column
-            prop="order_status"
-            label="订单状态"
-          >
+          <el-table-column prop="order_status" label="订单状态">
             <template slot-scope="scope">
               {{ scope.row.order_status_msg }}
             </template>
@@ -347,49 +220,34 @@
           </el-table-column>
 
           <!-- <el-table-column prop="source_name" label="来源"></el-table-column> -->
-          <el-table-column
-            label="操作"
-            fixed="left"
-          >
+          <el-table-column label="操作" fixed="left">
             <template slot-scope="scope">
-              <el-button
-                type="text"
-                style="margin-right: 8px"
-              >
+              <el-button type="text" style="margin-right: 8px">
                 <router-link
                   :to="`${$route.path}/detail?orderId=${scope.row.order_id}&resource=${$route.path}`"
+                  >详情</router-link
                 >
-                  详情
-                </router-link>
               </el-button>
-              <el-popover
-                placement="right"
-                trigger="hover"
-              >
+              <el-popover placement="right" trigger="hover">
                 <div class="operating-icons">
                   <el-button type="text">
                     <router-link
                       :to="`${$route.path}/process?orderId=${scope.row.order_id}&resource=${$route.path}`"
+                      >日志</router-link
                     >
-                      日志
-                    </router-link>
                   </el-button>
                   <template v-for="(btn, index) in scope.row.actionBtns">
                     <el-button
-                      :key="`btn-item__${index}`"
                       type="text"
+                      :key="`btn-item__${index}`"
                       @click="handleAction(scope.row, btn)"
+                      >{{ btn.name }}</el-button
                     >
-                      {{ btn.name }}
-                    </el-button>
                   </template>
                 </div>
-                <el-button
-                  slot="reference"
-                  type="text"
-                >
-                  更多<i class="iconfont icon-angle-double-right" />
-                </el-button>
+                <el-button type="text" slot="reference"
+                  >更多<i class="iconfont icon-angle-double-right"></i
+                ></el-button>
               </el-popover>
             </template>
           </el-table-column>
@@ -414,9 +272,10 @@
         v-model="remarkDialog"
         :title="`修改备注【订单:${remarkForm.orderId}】`"
         :form="remarkForm"
-        :form-list="remarkFormList"
+        :formList="remarkFormList"
         @onSubmit="onRemarkSubmit"
-      />
+      >
+      </SpDialog>
 
       <!-- 取消订单 -->
       <SpDialog
@@ -424,9 +283,10 @@
         v-model="cancelOrderDialog"
         :title="`取消订单【订单:${cancelOrderForm.order_id}】`"
         :form="cancelOrderForm"
-        :form-list="cancelOrderFormList"
+        :formList="cancelOrderFormList"
         @onSubmit="onCancelOrderSubmit"
-      />
+      >
+      </SpDialog>
 
       <!-- 发货 -->
       <SpDialog
@@ -434,9 +294,10 @@
         v-model="deliverGoodsDialog"
         :title="`发货【订单:${deliverGoodsForm.order_id}】`"
         :form="deliverGoodsForm"
-        :form-list="deliverGoodsFormList"
+        :formList="deliverGoodsFormList"
         @onSubmit="deliverGoodsSubmit"
-      />
+      >
+      </SpDialog>
 
       <!-- 核销 -->
       <SpDialog
@@ -444,9 +305,10 @@
         v-model="writeOffDialog"
         :title="`核销【订单:${writeOffForm.order_id}】`"
         :form="writeOffForm"
-        :form-list="writeOffFormList"
+        :formList="writeOffFormList"
         @onSubmit="writeOffSubmit"
-      />
+      >
+      </SpDialog>
 
       <!-- 退款审核 -->
       <SpDialog
@@ -454,11 +316,12 @@
         v-model="refundDialog"
         :title="`退款【订单:${refundForm.order_id}】`"
         :form="refundForm"
-        :form-list="refundFormList"
+        :formList="refundFormList"
         @onSubmit="refundSubmit"
-      />
+      >
+      </SpDialog>
     </div>
-    <router-view />
+    <router-view></router-view>
   </div>
 </template>
 <script>
@@ -466,6 +329,7 @@ import { mapGetters } from 'vuex'
 import mixin from '@/mixins'
 import { pageMixin } from '@/mixins'
 import { VERSION_STANDARD, isArray } from '@/utils'
+import { exportInvoice, orderExport } from '@/api/trade'
 import moment from 'moment'
 import {
   DISTRIBUTION_TYPE,
@@ -481,7 +345,7 @@ import {
 
 export default {
   mixins: [mixin, pageMixin],
-  data () {
+  data() {
     return {
       loading: false,
       params: {
@@ -735,7 +599,7 @@ export default {
   computed: {
     ...mapGetters(['login_type', 'isMicorMall'])
   },
-  mounted () {
+  mounted() {
     const { tab } = this.$route.query
     if (tab) {
       this.params.order_status = tab
@@ -745,7 +609,7 @@ export default {
     this.getLogisticsList()
   },
   methods: {
-    async fetchList () {
+    async fetchList() {
       this.loading = true
       const { pageIndex: page, pageSize } = this.page
       let params = {
@@ -840,7 +704,7 @@ export default {
       this.datapass_block = datapass_block
       this.loading = false
     },
-    getOrderType ({ order_class, type }) {
+    getOrderType({ order_class, type }) {
       if (order_class == 'normal') {
         return type == '1' ? '跨境订单' : '普通订单'
       }
@@ -849,13 +713,13 @@ export default {
         return fd.title
       }
     },
-    getDistributionType ({ receipt_type }) {
+    getDistributionType({ receipt_type }) {
       const fd = DISTRIBUTION_TYPE.find((item) => item.value == receipt_type)
       if (fd) {
         return fd.title
       }
     },
-    async getOrderSourceList () {
+    async getOrderSourceList() {
       const { list } = await this.$api.datacube.getSourcesList({
         page: 1,
         pageSize: 1000
@@ -868,7 +732,7 @@ export default {
         }
       })
     },
-    async getLogisticsList () {
+    async getLogisticsList() {
       const { list } = await this.$api.trade.getLogisticsList()
       this.deliverGoodsFormList[2].options = list.map((item) => {
         return {
@@ -877,7 +741,7 @@ export default {
         }
       })
     },
-    async handleAction ({ order_id, distributor_remark, items, delivery_type }, { key }) {
+    async handleAction({ order_id, distributor_remark, items, delivery_type }, { key }) {
       if (key == 'remark') {
         this.$refs['remarkDialogRef'].resetForm()
         this.remarkForm.orderId = order_id
@@ -969,13 +833,13 @@ export default {
         })
       }
     },
-    async onRemarkSubmit () {
+    async onRemarkSubmit() {
       await this.$api.order.remarks(this.remarkForm)
       this.$message.success('订单备注修改成功!')
       this.remarkDialog = false
       this.fetchList()
     },
-    async onCancelOrderSubmit () {
+    async onCancelOrderSubmit() {
       const { order_id } = this.cancelOrderForm
       console.log(this.cancelOrderForm)
       await this.$api.trade.cancelOrderConfirm(order_id, this.cancelOrderForm)
@@ -983,7 +847,7 @@ export default {
       this.cancelOrderDialog = false
       this.fetchList()
     },
-    async deliverGoodsSubmit () {
+    async deliverGoodsSubmit() {
       const { order_id, delivery_type, delivery_corp, delivery_code, type } = this.deliverGoodsForm
       const params = {
         order_id,
@@ -1001,7 +865,7 @@ export default {
         this.$message.error('发货失败!')
       }
     },
-    async writeOffSubmit () {
+    async writeOffSubmit() {
       const { order_id } = this.writeOffForm
       const { ziti_status } = await this.$api.trade.doWriteoff(order_id, this.writeOffForm)
       if (ziti_status == 'DONE') {
@@ -1010,7 +874,7 @@ export default {
         this.$message.error('自提订单核销失败!')
       }
     },
-    async refundSubmit () {
+    async refundSubmit() {
       const { order_id, check_cancel, shop_reject_reason } = this.refundForm
       const { refund_status } = await this.$api.trade.cancelConfirm(order_id, {
         order_id,
@@ -1025,41 +889,48 @@ export default {
         this.$message.error('审核失败!')
       }
     },
-    exportInvoice () {
+    exportInvoice() {
       let type = 'normal'
       this.$emit('onChangeData', 'params', { type })
       exportInvoice({
         ...this.params,
-        type
+        type,
+        order_type: 'normal'
       }).then((response) => {
         const { status, url, filename } = response.data.data
         if (status) {
           this.$message.success('已加入执行队列，请在设置-导出列表中下载')
+          this.$export_open('invoice')
           return
         } else if (url) {
-          this.downloadUrl = url
-          this.downloadName = filename
-          this.downloadView = true
+          window.open(url)
         } else {
           this.$message.error('无内容可导出或执行失败，请检查重试')
           return
         }
       })
     },
-    exportData (type) {
+    exportDataNormal(){
+      this.exportData('normal_order')
+    },
+    exportDataMaster(){
+      this.exportData('normal_master_order')
+    },
+    exportData(type) { 
+      console.log('====exportData', type)
       orderExport({
         ...this.params,
+        order_type: 'normal',
         type,
-        page: 1
+        page: this.page.pageIndex
       }).then((response) => {
         const { status, url, filename } = response.data.data
         if (status) {
           this.$message.success('已加入执行队列，请在设置-导出列表中下载')
+          this.$export_open(type)
           return
         } else if (url) {
-          this.downloadUrl = url
-          this.downloadName = filename
-          this.downloadView = true
+          window.open(url)
         } else {
           this.$message.error('无内容可导出或执行失败，请检查重试')
           return

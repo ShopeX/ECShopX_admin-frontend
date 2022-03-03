@@ -7,52 +7,27 @@
       :show-file-list="false"
       :on-change="uploadImage"
     >
-      <el-button type="primary">
-        上传图片
-      </el-button>
-      <div
-        slot="tip"
-        class="el-upload__tip"
-      >
-        只能上传jpg/png文件，且不超过2M
-      </div>
+      <el-button type="primary">上传图片</el-button>
+      <div slot="tip" class="el-upload__tip">只能上传jpg/png文件，且不超过2M</div>
     </el-upload>
-    <div
-      v-loading="loading"
-      class="img_pick"
-    >
+    <div class="img_pick" v-loading="loading">
       <ul class="clearfix">
-        <li
-          v-for="(imageitem, index) in imageList.item"
-          :key="index"
-          class="img_item"
-        >
+        <li class="img_item" v-for="(imageitem, index) in imageList.item" :key="index">
           <div class="img_item_bd">
             <div
               class="pic"
               :style="{ backgroundImage: 'url(' + (wximageurl + imageitem.url) + ')' }"
-            />
+            ></div>
             <div class="check_content">
-              <span
-                class="img_name"
-                :title="imageitem.name"
-              >{{ imageitem.name }}</span>
+              <span class="img_name" :title="imageitem.name">{{ imageitem.name }}</span>
             </div>
           </div>
           <div class="msg_card">
             <el-row>
               <el-col :span="24">
-                <div
-                  class="opr_item"
-                  @click="removeItem(imageitem, index)"
-                >
-                  <el-tooltip
-                    class="item"
-                    effect="dark"
-                    content="删除"
-                    placement="top"
-                  >
-                    <i class="el-icon-delete" />
+                <div class="opr_item" @click="removeItem(imageitem, index)">
+                  <el-tooltip class="item" effect="dark" content="删除" placement="top">
+                    <i class="el-icon-delete"></i>
                   </el-tooltip>
                 </div>
               </el-col>
@@ -65,13 +40,14 @@
       <el-pagination
         background
         layout="total, sizes, prev, pager, next"
+        @current-change="handleCurrentChange"
+        @size-change="handleSizeChange"
         :current-page.sync="params.page"
         :page-sizes="[10, 20, 50]"
         :total="total_count"
         :page-size="params.pageSize"
-        @current-change="handleCurrentChange"
-        @size-change="handleSizeChange"
-      />
+      >
+      </el-pagination>
     </div>
   </div>
 </template>
@@ -81,7 +57,7 @@ import { validatUploadImage } from '../../../../utils/validate'
 import { getWechatMaterial, deleteWechatMaterial, uploadMaterial } from '../../../../api/wechat'
 export default {
   props: ['activeName', 'getStatus'],
-  data () {
+  data() {
     return {
       loading: false,
       isLoadData: false,
@@ -94,26 +70,19 @@ export default {
       }
     }
   },
-  watch: {
-    getStatus (newVal, oldVal) {
-      if (newVal) {
-        this.getList()
-      }
-    }
-  },
   methods: {
-    handleCurrentChange (page_num) {
+    handleCurrentChange(page_num) {
       this.isLoadData = false
       this.params.page = page_num
       this.getList()
     },
-    handleSizeChange (pageSize) {
+    handleSizeChange(pageSize) {
       this.isLoadData = false
       this.params.page = 1
       this.params.pageSize = pageSize
       this.getList()
     },
-    uploadImage (file, filelist) {
+    uploadImage(file, filelist) {
       let check = validatUploadImage(file)
       if (check !== true) {
         this.$message({
@@ -129,7 +98,7 @@ export default {
         this.getList()
       })
     },
-    getList () {
+    getList() {
       if (!this.isLoadData) {
         this.loading = true
         getWechatMaterial(this.params)
@@ -144,7 +113,7 @@ export default {
           })
       }
     },
-    removeItem (item, index) {
+    removeItem(item, index) {
       this.$confirm('确定删除此图片吗？', '提示', {
         confirmButtonText: '确定',
         cancelButtonText: '取消',
@@ -167,6 +136,13 @@ export default {
             message: '已取消'
           })
         })
+    }
+  },
+  watch: {
+    getStatus(newVal, oldVal) {
+      if (newVal) {
+        this.getList()
+      }
     }
   }
 }

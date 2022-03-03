@@ -4,39 +4,27 @@
       <h2>效果预览</h2>
       <div>
         <!-- <el-button type="primary" @click="handlerView">浏览站点</el-button> -->
-        <el-button
-          type="primary"
-          @click="handlerLayout"
-        >
-          编辑模版
-        </el-button>
+        <el-button type="primary" @click="handlerLayout">编辑模版</el-button>
       </div>
     </div>
     <div class="template-show">
-      <Navbar
-        :cate-list="cateList"
-        :data="navConfig"
-        :setting="settings"
-      />
+      <Navbar :cateList="cateList" :data="navConfig" :setting="settings"></Navbar>
       <div class="components-wrap">
         <div
-          v-for="(widget, k) in components"
           v-if="renderable"
+          v-for="(widget, k) in components"
+          @click="setCurrent(k)"
           :class="[k == editorIndex ? 'active' : '', 'component-item']"
           :style="{ padding: widget.base.padded + 'px 0' }"
-          @click="setCurrent(k)"
         >
           <component
             :is="widget.name"
-            :key="`${widget.uuid}${k}`"
             :data-uuid="widget.uuid"
             :data="widget"
+            :key="`${widget.uuid}${k}`"
             :usage="usage"
           >
-            <div
-              v-if="widget.base.title"
-              class="component-title"
-            >
+            <div v-if="widget.base.title" class="component-title">
               <h2>{{ widget.base.title }}</h2>
               <h5>{{ widget.base.subtitle }}</h5>
             </div>
@@ -44,134 +32,97 @@
         </div>
       </div>
     </div>
-    <el-dialog
-      :visible.sync="template_dialog"
-      width="80%"
-      title="编辑首页"
-      fullscreen
-      lock-scroll
-    >
+    <el-dialog :visible.sync="template_dialog" width="80%" title="编辑首页" fullscreen lock-scroll>
       <section class="section section-white view-warp">
         <div class="components-widget">
           <draggable
-            v-model="initData"
             class="components-view"
+            v-model="initData"
             v-bind="dragIssuesOptions"
-            tag="div"
             @start="onStart"
             @end="onEnd"
+            tag="div"
           >
-            <div
-              v-for="(item, index) in initData"
-              class="component-control"
-            >
+            <div v-for="(item, index) in initData" class="component-control">
               <template v-if="item.name === 'banner'">
-                <svg
-                  class="svg-icon"
-                  aria-hidden="true"
-                >
-                  <use xlink:href="#icon-slider" />
+                <svg class="svg-icon" aria-hidden="true">
+                  <use xlink:href="#icon-slider"></use>
                 </svg>
                 轮播
               </template>
               <template v-if="item.name === 'goodsGrid'">
-                <svg
-                  class="svg-icon"
-                  aria-hidden="true"
-                >
-                  <use xlink:href="#icon-grid" />
+                <svg class="svg-icon" aria-hidden="true">
+                  <use xlink:href="#icon-grid"></use>
                 </svg>
                 商品栅格
               </template>
               <template v-if="item.name === 'imgHotzone'">
-                <svg
-                  class="svg-icon"
-                  aria-hidden="true"
-                >
-                  <use xlink:href="#icon-hotzone" />
+                <svg class="svg-icon" aria-hidden="true">
+                  <use xlink:href="#icon-hotzone"></use>
                 </svg>
                 热区图
               </template>
               <template v-if="item.name === 'panel'">
-                <svg
-                  class="svg-icon"
-                  aria-hidden="true"
-                >
-                  <use xlink:href="#icon-navigation" />
+                <svg class="svg-icon" aria-hidden="true">
+                  <use xlink:href="#icon-navigation"></use>
                 </svg>
                 图片导航
               </template>
               <template v-if="item.name === 'floor'">
-                <svg
-                  class="svg-icon"
-                  aria-hidden="true"
-                >
-                  <use xlink:href="#icon-floor" />
+                <svg class="svg-icon" aria-hidden="true">
+                  <use xlink:href="#icon-floor"></use>
                 </svg>
                 楼层挂件
               </template>
             </div>
           </draggable>
-          <div
-            v-if="usage !== 'store'"
-            class="setting"
-            @click="setCurrent('settings')"
-          >
-            <svg
-              class="svg-icon"
-              aria-hidden="true"
-            >
-              <use xlink:href="#icon-settings" />
+          <div v-if="usage !== 'store'" class="setting" @click="setCurrent('settings')">
+            <svg class="svg-icon" aria-hidden="true">
+              <use xlink:href="#icon-settings"></use>
             </svg>
             设置
           </div>
         </div>
         <div class="template-view">
-          <div
-            class="template"
-            :style="'height: ' + (wheight - 160) + 'px;'"
-          >
+          <div class="template" :style="'height: ' + (wheight - 160) + 'px;'">
             <div @click="setCurrent('navbar')">
               <Navbar
                 :usage="usage"
-                :cate-list="cateList"
+                :cateList="cateList"
                 :data="navConfig"
                 :setting="settings"
-              />
+              ></Navbar>
             </div>
             <draggable
-              v-model="components"
               class="components-wrap"
+              v-model="components"
               v-bind="dragViewOptions"
-              tag="div"
               @start="onStart"
               @end="onEnd"
+              tag="div"
             >
               <div
-                v-for="(widget, k) in components"
                 v-if="renderable"
+                v-for="(widget, k) in components"
+                @click="setCurrent(k)"
                 :class="[k == editorIndex ? 'active' : '', 'component-item']"
                 :style="{ padding: widget.base.padded + 'px 0' }"
-                @click="setCurrent(k)"
               >
                 <transition name="el-fade-in-linear">
                   <div
                     v-if="k == editorIndex"
                     class="iconfont icon-trash-alt"
                     @click="removeCurrent"
-                  />
+                  ></div>
                 </transition>
                 <component
                   :is="widget.name"
-                  :key="`${widget.uuid}${k}`"
                   :data-uuid="widget.uuid"
                   :data="widget"
+                  :key="`${widget.uuid}${k}`"
                   :usage="usage"
                 >
-                  <div
-                    v-if="widget.base.title"
-                    class="component-title"
-                  >
+                  <div v-if="widget.base.title" class="component-title">
                     <h2>{{ widget.base.title }}</h2>
                     <h5>{{ widget.base.subtitle }}</h5>
                   </div>
@@ -183,14 +134,14 @@
         <div class="setting-view">
           <template v-if="editorIndex !== null">
             <component
+              v-if="renderable"
               :is="
                 editorData.name == 'navbar' || editorData.name == 'nav'
                   ? 'navStyle'
                   : editorData.name == 'settings'
-                    ? 'settingsStyle'
-                    : components[editorIndex].name + 'Style'
+                  ? 'settingsStyle'
+                  : components[editorIndex].name + 'Style'
               "
-              v-if="renderable"
               :res="editorData"
               :data-uuid="
                 editorData.name == 'navbar' || editorData.name == 'nav'
@@ -198,26 +149,16 @@
                   : components[editorIndex].uuid
               "
               :usage="usage"
-            />
+            ></component>
           </template>
-          <div
-            v-else
-            class="view-placeholder"
-          >
-            <i class="iconfont icon-shapes" />
+          <div v-else class="view-placeholder">
+            <i class="iconfont icon-shapes"></i>
             请选择左侧挂件
           </div>
         </div>
       </section>
       <section class="section-white content-center">
-        <el-button
-          class="btn-save"
-          round
-          type="primary"
-          @click="saveConfig"
-        >
-          保存设置
-        </el-button>
+        <el-button class="btn-save" round type="primary" @click="saveConfig">保存设置</el-button>
       </section>
     </el-dialog>
   </div>
@@ -244,7 +185,7 @@ export default {
     Navbar
   },
   props: ['usage', 'id'], // usage为store，则为具体每个店铺的首页装修;id为店铺id
-  data () {
+  data() {
     return {
       template_dialog: false,
       renderable: true,
@@ -428,6 +369,15 @@ export default {
   computed: {
     ...mapGetters(['wheight'])
   },
+  created() {
+    Object.keys(plugins).forEach((key) => {
+      let widget = plugins[key].widget
+      // console.log('widget', widget)
+      Vue.component(key, widget)
+    })
+
+    this.$store.dispatch('setTemplateName', 'pc')
+  },
   watch: {
     // editorData: {
     //   handler (newVal, oldVal) {
@@ -441,31 +391,18 @@ export default {
     //   deep: true
     // }
   },
-  created () {
-    Object.keys(plugins).forEach((key) => {
-      let widget = plugins[key].widget
-      // console.log('widget', widget)
-      Vue.component(key, widget)
-    })
-
-    this.$store.dispatch('setTemplateName', 'pc')
-  },
-  mounted () {
-    this._getCateList()
-    this._getParamByTempName()
-  },
   methods: {
-    handlerLayout () {
+    handlerLayout() {
       this.template_dialog = true
     },
-    handlerView () {},
-    _getCateList () {
+    handlerView() {},
+    _getCateList() {
       getCategory().then(({ data }) => {
         this.cateList = data.data
       })
     },
     // 拖拽绑定事件
-    onStart (evt) {
+    onStart(evt) {
       if (evt.target.className === 'components-view') {
         let item = this.initData[evt.oldIndex]
         item.uuid = generate(str, 10)
@@ -476,16 +413,20 @@ export default {
       }
       evt.preventDefault()
     },
-    onEnd (evt) {
-      console.log('onend')
-      this.setCurrent(evt.newIndex)
-      if (evt.target.className === 'components-view' && evt.to.className === 'components-wrap') {
-        this.initData.splice(evt.oldIndex, 0, JSON.parse(this.saveInit))
+    onEnd(evt) { 
+   
+      console.log("onend");
+      this.setCurrent(evt.newIndex);
+      if (
+        evt.target.className === "components-view" &&
+        evt.to.className === "components-wrap"
+      ) {
+        this.initData.splice(evt.oldIndex, 0, JSON.parse(this.saveInit));
       }
       evt.preventDefault()
       // console.log('initData', this.initData)
     },
-    setCurrent (val) {
+    setCurrent(val) {
       this.editorIndex = val
       this.show_sideBar = true
       if (val === 'navbar') {
@@ -499,7 +440,7 @@ export default {
       this.editorData = this.components[val]
       // console.log('editorData', this.editorData)
     },
-    removeCurrent () {
+    removeCurrent() {
       this.$confirm('确认删除当前组件？')
         .then((_) => {
           this.editorData = {}
@@ -509,7 +450,7 @@ export default {
         })
         .catch((_) => {})
     },
-    saveConfig () {
+    saveConfig() {
       const tmp = this.components.find((v) => v.name === 'navbar')
       this.components = tmp ? this.components : [...this.components, ...[this.navConfig]]
       // this.components.forEach((v, i) => {
@@ -555,7 +496,7 @@ export default {
         })
       }
     },
-    _getParamByTempName () {
+    _getParamByTempName() {
       let filter = {
         template_name: 'pc',
         version: 'v1.0.1',
@@ -596,6 +537,10 @@ export default {
         })
       }
     }
+  },
+  mounted() {
+    this._getCateList()
+    this._getParamByTempName()
   }
 }
 </script>

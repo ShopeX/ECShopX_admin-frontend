@@ -36,27 +36,19 @@
   <div class="sp-select-shop-panel">
     <div class="filter-tools">
       <el-cascader
-        ref="region"
-        v-model="region"
         filterable
         clearable
         placeholder="选择地区筛选店铺"
+        ref="region"
+        v-model="region"
         :options="district"
         :props="{ checkStrictly: true }"
         @change="onChangeCascader"
         @visible-change="visibleChange"
-      />
-      <el-input
-        v-model="keywords"
-        placeholder="请输入店铺名称搜索"
-        @change="fetch"
-      />
-      <el-button
-        type="text"
-        @click="reset"
       >
-        重置
-      </el-button>
+      </el-cascader>
+      <el-input placeholder="请输入店铺名称搜索" v-model="keywords" @change="fetch"></el-input>
+      <el-button type="text" @click="reset">重置</el-button>
     </div>
     <div>
       <el-table
@@ -67,27 +59,15 @@
       >
         <el-table-column width="30">
           <template slot-scope="scope">
-            <el-radio
-              :value="getRadioValue(scope.row)"
-              :label="true"
-              @click.native.stop
-            />
+            <el-radio :value="getRadioValue(scope.row)" :label="true" @click.native.stop />
           </template>
         </el-table-column>
-
-        <el-table-column
-          prop="name"
-          label="店铺名称"
-        />
+        
+        <el-table-column prop="name" label="店铺名称"></el-table-column>
       </el-table>
     </div>
     <div>
-      <el-pagination
-        background
-        layout="total, prev, pager, next"
-        :total="total"
-        @current-change="onCurrentChange"
-      />
+      <el-pagination background layout="total, prev, pager, next" :total="total" @current-change="onCurrentChange"> </el-pagination>
     </div>
 
     <!-- <SpFinder
@@ -114,7 +94,7 @@ export default {
   name: 'SpSelectShopPanel',
   props: {},
   inject: ['selectShop'],
-  data () {
+  data() {
     return {
       district,
       region: [],
@@ -128,11 +108,11 @@ export default {
       radio: 0
     }
   },
-  created () {
+  created() {
     this.fetch()
   },
   methods: {
-    async fetch () {
+    async fetch() {
       this.loading = true
       const params = {
         page: this.pageIndex,
@@ -157,45 +137,45 @@ export default {
       params['province'] = province
       params['city'] = city
       params['area'] = area
-
+      
       const { total_count, list } = await this.$api.marketing.getDistributorList(params)
       this.list = list
       this.total = total_count
       this.loading = false
     },
-    reset () {
+    reset() {
       this.keywords = ''
       this.region = []
       this.fetch()
     },
-    onCurrentChange (pageIndex) {
+    onCurrentChange(pageIndex) {
       this.pageIndex = pageIndex
       this.fetch()
     },
-    onRowClick ({ distributor_id, name }) {
+    onRowClick({ distributor_id, name }) {
       let resValue = {
         name,
         value: distributor_id
       }
-      if (this.selectShop.selectValue && this.selectShop.selectValue.value == distributor_id) {
+      if( this.selectShop.selectValue && this.selectShop.selectValue.value == distributor_id) {
         resValue = null
-      }
+      } 
       this.$emit('change', resValue)
     },
-    getRadioValue ({ distributor_id }) {
-      if (!this.selectShop.selectValue) {
+    getRadioValue({ distributor_id }) {
+      if(!this.selectShop.selectValue) {
         return false
-      } else if (this.selectShop.selectValue.value == distributor_id) {
+      } else if(this.selectShop.selectValue.value == distributor_id) {
         return true
       } else {
         return false
       }
       // debugger
     },
-    async onChangeCascader () {
+    async onChangeCascader() {
       this.fetch()
     },
-    visibleChange (visible) {
+    visibleChange(visible) {
       this.$emit('visible-change', visible)
     }
   }

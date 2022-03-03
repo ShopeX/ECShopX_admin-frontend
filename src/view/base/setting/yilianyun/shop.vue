@@ -2,139 +2,77 @@
   <div>
     <el-row :gutter="20">
       <el-col :span="12">
-        <el-button
-          type="primary"
-          icon="plus"
-          @click="addLabels"
-        >
-          添加关联打印机
-        </el-button>
+        <el-button type="primary" icon="plus" @click="addLabels">添加关联打印机</el-button>
       </el-col>
     </el-row>
-    <el-table
-      v-loading="loading"
-      :data="printerShopList"
-    >
-      <el-table-column
-        prop="name"
-        label="打印机名称"
-      />
+    <el-table :data="printerShopList" v-loading="loading">
+      <el-table-column prop="name" label="打印机名称"></el-table-column>
       <el-table-column label="操作">
         <template slot-scope="scope">
-          <el-button
-            size="mini"
-            @click="editAction(scope.$index, scope.row)"
-          >
-            编辑
-          </el-button>
-          <el-button
-            size="mini"
-            @click="deleteAction(scope.$index, scope.row)"
-          >
-            删除
-          </el-button>
+          <el-button size="mini" @click="editAction(scope.$index, scope.row)">编辑</el-button>
+          <el-button size="mini" @click="deleteAction(scope.$index, scope.row)">删除</el-button>
         </template>
       </el-table-column>
     </el-table>
-    <div
-      v-if="total_count > params.pageSize"
-      class="content-center content-top-padded"
-    >
+    <div v-if="total_count > params.pageSize" class="content-center content-top-padded">
       <el-pagination
         layout="prev, pager, next"
+        @current-change="handleCurrentChange"
         :current-page.sync="params.page"
         :total="total_count"
         :page-size="params.pageSize"
-        @current-change="handleCurrentChange"
-      />
+      >
+      </el-pagination>
     </div>
     <!-- 添加、编辑标识-开始 -->
-    <el-dialog
-      :title="editTitle"
-      :visible.sync="editVisible"
-      :before-close="handleCancel"
-    >
+    <el-dialog :title="editTitle" :visible.sync="editVisible" :before-close="handleCancel">
       <template>
-        <el-form
-          ref="form"
-          :model="form"
-          class="demo-ruleForm"
-          label-width="120px"
-        >
+        <el-form ref="form" :model="form" class="demo-ruleForm" label-width="120px">
           <el-form-item label="打印机名称">
-            <el-input
-              v-model="form.name"
-              style="width: 300px"
-              placeholder="打印机名称"
-            />
+            <el-input v-model="form.name" style="width:300px" placeholder="打印机名称"></el-input>
           </el-form-item>
           <el-form-item label="店铺">
             <el-radio-group v-model="distributor">
-              <el-radio :label="1">
-                总部
-              </el-radio>
-              <el-radio :label="2">
-                店铺
-              </el-radio>
+              <el-radio :label="1">总部</el-radio>
+              <el-radio :label="2">店铺</el-radio>
             </el-radio-group>
           </el-form-item>
-          <el-form-item
-            v-if="distributor == 2"
-            label="所属店铺"
-          >
+          <el-form-item label="所属店铺" v-if="distributor == 2">
             <el-tag
-              v-for="(item, index) in relDistributors"
               :key="index"
               class="new-tag"
+              v-for="(item, index) in relDistributors"
               closable
               :disable-transitions="false"
               @close="handleClose(index)"
             >
               {{ item.name }}
             </el-tag>
-            <el-button
-              size="medium"
-              class="button-new-tag"
-              @click="addDistributoreAction"
-            >
-              + 点击搜索店铺
+            <el-button size="medium" class="button-new-tag" @click="addDistributoreAction"
+              >+ 点击搜索店铺
             </el-button>
           </el-form-item>
           <el-form-item label="打印机终端号">
             <el-input
               v-model="form.app_terminal"
-              style="width: 300px"
+              style="width:300px"
               placeholder="打印机名称"
-            />
-            <div class="frm-tips">
-              见打印机底部
-            </div>
+            ></el-input>
+            <div class="frm-tips">见打印机底部</div>
           </el-form-item>
           <el-form-item label="打印机秘钥">
             <el-input
               v-model="form.app_key"
-              style="width: 300px"
+              style="width:300px"
               placeholder="打印机名称"
-            />
-            <div class="frm-tips">
-              见打印机底部
-            </div>
+            ></el-input>
+            <div class="frm-tips">见打印机底部</div>
           </el-form-item>
         </el-form>
       </template>
-      <div
-        slot="footer"
-        class="dialog-footer"
-      >
-        <el-button @click.native="handleCancel">
-          取消
-        </el-button>
-        <el-button
-          type="primary"
-          @click="submitAction"
-        >
-          保存
-        </el-button>
+      <div slot="footer" class="dialog-footer">
+        <el-button @click.native="handleCancel">取消</el-button>
+        <el-button type="primary" @click="submitAction">保存</el-button>
       </div>
     </el-dialog>
     <DistributorSelect
@@ -144,7 +82,7 @@
       :get-status="DistributorStatus"
       @chooseStore="DistributorChooseAction"
       @closeStoreDialog="closeDialogAction"
-    />
+    ></DistributorSelect>
   </div>
 </template>
 <script>
@@ -168,7 +106,7 @@ export default {
       default: false
     }
   },
-  data () {
+  data() {
     return {
       loading: false,
       distributor: 1,
@@ -195,34 +133,31 @@ export default {
       }
     }
   },
-  mounted () {
-    this.getPrinterShopList()
-  },
   methods: {
-    handleCurrentChange (page_num) {
+    handleCurrentChange(page_num) {
       this.params.page = page_num
       this.getPrinterShopList()
     },
-    getPrinterShopList () {
+    getPrinterShopList() {
       getPrinterShopList(this.params).then((res) => {
         this.printerShopList = res.data.data.list
       })
     },
-    handleClose (index) {
+    handleClose(index) {
       this.relDistributors.splice(index, 1)
       this.form.distributor_id = 0
     },
-    addDistributoreAction () {
+    addDistributoreAction() {
       this.DistributorVisible = true
       this.DistributorStatus = true
     },
-    getDistributor (ids) {
+    getDistributor(ids) {
       let param = { distributor_id: ids }
       getDistributorList(param).then((res) => {
         this.relDistributors = res.data.data.list
       })
     },
-    handleCancel () {
+    handleCancel() {
       this.editVisible = false
       this.id = ''
       this.form.name = ''
@@ -232,7 +167,7 @@ export default {
       this.form.app_key = ''
       this.relDistributors = []
     },
-    addLabels () {
+    addLabels() {
       //
       this.handleCancel()
       this.editTitle = '添加账号信息'
@@ -241,7 +176,7 @@ export default {
       this.distributor = 1
       this.id = ''
     },
-    editAction (index, row) {
+    editAction(index, row) {
       //
       this.handleCancel()
       this.editTitle = '编辑账号信息'
@@ -264,7 +199,7 @@ export default {
         this.getDistributor(ids)
       }
     },
-    deleteAction (index, row) {
+    deleteAction(index, row) {
       //
       this.$confirm('此操作将删除该小票打印机, 是否继续?', '提示', {
         confirmButtonText: '确定',
@@ -280,7 +215,7 @@ export default {
           .catch((error) => {})
       })
     },
-    submitAction () {
+    submitAction() {
       //
       this.form.distributor_id = 0
       if (this.distributor == 2 && this.relDistributors.length > 0) {
@@ -306,24 +241,27 @@ export default {
           .catch((error) => {})
       }
     },
-    DistributorChooseAction (data) {
+    DistributorChooseAction(data) {
       this.DistributorVisible = false
       this.DistributorStatus = false
       if (data === null || data.length <= 0) return
       this.relDistributors = data
     },
-    ShopChooseAction (data) {
+    ShopChooseAction(data) {
       this.ShopVisible = false
       this.ShopStatus = false
       if (data === null || data.length <= 0) return
       this.relShops = data
     },
-    closeDialogAction () {
+    closeDialogAction() {
       this.ShopVisible = false
       this.ShopStatus = false
       this.DistributorStatus = false
       this.DistributorVisible = false
     }
+  },
+  mounted() {
+    this.getPrinterShopList()
   }
 }
 </script>

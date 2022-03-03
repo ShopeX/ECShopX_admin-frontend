@@ -2,8 +2,8 @@ import { createSetting } from '@shopex/finder'
 
 export default (vm) => {
   const formatDate = (timestamp) => {
-    if (timestamp == '0') {
-      return '-'
+    if (timestamp=='0') {
+      return '-';
     }
     var date = new Date(timestamp * 1000) //时间戳为10位需*1000，时间戳为13位的话不需乘1000
     var YY = date.getFullYear() + '-'

@@ -15,8 +15,8 @@
 <template>
   <div
     ref="reference"
-    v-clickoutside="clickOutSide"
     class="sp-select-shop"
+    v-clickoutside="clickOutSide"
     @mouseenter="inputHover = true"
     @mouseleave="inputHover = false"
     @click="toggleDropDownVisible(true)"
@@ -31,29 +31,24 @@
           v-if="clearBtnVisible"
           key="clear"
           class="el-input__icon el-icon-circle-close"
-          @click.stop="handleClear"
-        />
+          @click.stop="handleClear"></i>
         <i
           v-else
           key="arrow-down"
-          :class="['el-input__icon', 'el-icon-arrow-down', dropDownVisible && 'is-reverse']"
-        />
+          :class="[
+            'el-input__icon',
+            'el-icon-arrow-down',
+            dropDownVisible && 'is-reverse'
+          ]"></i>
       </template>
     </el-input>
-    <transition
-      name="el-zoom-in-top"
-      @after-leave="handleDropdownLeave"
-    >
-      <div
-        v-show="dropDownVisible"
-        ref="popper"
-        :class="['el-popper', 'el-cascader__dropdown']"
-      >
+    <transition name="el-zoom-in-top" @after-leave="handleDropdownLeave">
+      <div v-show="dropDownVisible" ref="popper" :class="['el-popper', 'el-cascader__dropdown']">
         <SpSelectShopPanel
           ref="panel"
           @visible-change="visibleChange"
           @change="onChange"
-        />
+        ></SpSelectShopPanel>
       </div>
     </transition>
   </div>
@@ -91,14 +86,14 @@ export default {
   props: {
     value: [Number, String],
     placeholder: String,
-    clearable: Boolean
+    clearable: Boolean,
   },
-  provide () {
+  provide() {
     return {
       selectShop: this
     }
   },
-  data () {
+  data() {
     return {
       dropDownVisible: false,
       cascaderPanelVisible: false,
@@ -108,25 +103,25 @@ export default {
       initialValue: this.value
     }
   },
+  created() {},
+  watch: {
+    value(newVal, oldVal) {
+      if (newVal == this.initialValue) {
+        this.selectValue = null;
+        this.$emit('input', this.initialValue )
+      }
+    }
+  },
   computed: {
-    clearBtnVisible () {
+    clearBtnVisible() {
       if (!this.clearable || !this.inputHover || !this.selectValue) {
-        return false
+        return false;
       }
       return true
-    }
+    },
   },
-  watch: {
-    value (newVal, oldVal) {
-      if (newVal == this.initialValue) {
-        this.selectValue = null
-        this.$emit('input', this.initialValue)
-      }
-    }
-  },
-  created () {},
   methods: {
-    toggleDropDownVisible (visible) {
+    toggleDropDownVisible(visible) {
       const { dropDownVisible } = this
       // const { input } = this.$refs;
       // visible = isDef(visible) ? visible : !dropDownVisible;
@@ -142,16 +137,16 @@ export default {
         // this.$emit('visible-change', visible);
       }
     },
-    handleDropdownLeave () {
+    handleDropdownLeave() {
       console.log('handleDropdownLeave...')
     },
-    clickOutSide () {
+    clickOutSide() {
       // console.log('clickOutSide：', this.cascaderPanelVisible)
       if (!this.cascaderPanelVisible && this.cascaderPanelVisibleDelay) {
         this.toggleDropDownVisible(false)
       }
     },
-    visibleChange (visible) {
+    visibleChange(visible) {
       console.log('visibleChange', visible)
       this.cascaderPanelVisible = visible
       if (!visible) {
@@ -162,13 +157,13 @@ export default {
         this.cascaderPanelVisibleDelay = false
       }
     },
-    onChange (obj) {
+    onChange(obj) {
       this.selectValue = obj
-      this.$emit('input', obj ? obj.value : '')
+      this.$emit('input', obj ? obj.value : '' )
     },
-    handleClear () {
+    handleClear() {
       this.onChange(null)
-    }
+    },
   }
 }
 </script>

@@ -30,37 +30,27 @@
 
 <template>
   <div>
-    <el-table
-      v-loading="loading"
-      :data="list"
-      :height="wheight - 150"
-    >
+    <el-table :data="list" :height="wheight - 150" v-loading="loading">
       <el-table-column label="类型">
         <template slot-scope="scope">
           {{ scope.row.log_type }}
         </template>
       </el-table-column>
-      <el-table-column
-        prop="remarks"
-        label="信息"
-        min-width="90"
-      />
+      <el-table-column prop="remarks" label="信息" min-width="90"></el-table-column>
       <el-table-column label="日志时间">
         <template slot-scope="scope">
           {{ scope.row.created | datetime('YYYY-MM-DD HH:mm:ss') }}
         </template>
       </el-table-column>
     </el-table>
-    <div
-      v-if="total_count > params.pageSize"
-      class="content-padded content-center"
-    >
+    <div v-if="total_count > params.pageSize" class="content-padded content-center">
       <el-pagination
+        @current-change="handleCurrentChange"
         :current-page.sync="params.page"
         :total="total_count"
         :page-size="params.pageSize"
-        @current-change="handleCurrentChange"
-      />
+      >
+      </el-pagination>
     </div>
   </div>
 </template>
@@ -69,7 +59,7 @@
 import { getWorkWechatRelLogsList } from '@/api/wechat'
 import { mapGetters } from 'vuex'
 export default {
-  data () {
+  data() {
     return {
       loading: false,
       activeName: 'salespersonlogs',
@@ -85,15 +75,11 @@ export default {
   computed: {
     ...mapGetters(['wheight'])
   },
-  mounted () {
-    this.user_id = this.$route.query.user_id
-    this.getWorkWechatRelLogsList()
-  },
   methods: {
-    handleCurrentChange () {
+    handleCurrentChange() {
       this.getWorkWechatRelLogsList()
     },
-    getWorkWechatRelLogsList () {
+    getWorkWechatRelLogsList() {
       this.loading = true
       getWorkWechatRelLogsList(this.user_id, this.params).then((res) => {
         this.list = res.data.data.list
@@ -101,6 +87,10 @@ export default {
         this.loading = false
       })
     }
+  },
+  mounted() {
+    this.user_id = this.$route.query.user_id
+    this.getWorkWechatRelLogsList()
   }
 }
 </script>

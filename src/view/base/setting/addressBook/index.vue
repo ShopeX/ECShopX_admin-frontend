@@ -11,47 +11,31 @@
 <template>
   <div class="addressBook">
     <div class="actButton">
-      <el-button
-        type="primary"
-        :loading="isLoading"
-        @click.stop="getAdressBook"
+      <el-button type="primary" :loading="isLoading" @click.stop="getAdressBook"
+        >获取企业微信通讯录</el-button
       >
-        获取企业微信通讯录
-      </el-button>
-      <el-button
-        :loading="loading.syncDepart"
-        @click.stop="syncDepartToShop"
+      <el-button :loading="loading.syncDepart" @click.stop="syncDepartToShop"
+        >同步选中部门到店铺</el-button
       >
-        同步选中部门到店铺
-      </el-button>
-      <el-button
-        :loading="loading.syncMember"
-        @click.stop="syncMemberToGuide"
+      <el-button :loading="loading.syncMember" @click.stop="syncMemberToGuide"
+        >同步选中成员到导购</el-button
       >
-        同步选中成员到导购
-      </el-button>
     </div>
-    <div
-      v-loading="isLoading"
-      class="main"
-    >
+    <div class="main" v-loading="isLoading">
       <el-tree
-        ref="elTree"
         class="elTree"
         :data="list"
         :props="treeProps"
+        @check="changeChecked"
+        @node-click="nodeClick"
         :expand-on-click-node="false"
+        ref="elTree"
         node-key="id"
         default-expand-all
         check-strictly
         show-checkbox
-        @check="changeChecked"
-        @node-click="nodeClick"
       >
-        <span
-          slot-scope="{ node, data }"
-          class="custom-node"
-        >
+        <span class="custom-node" slot-scope="{ node, data }">
           <span>{{ node.label }}</span>
           <span>
             <el-tooltip
@@ -60,21 +44,10 @@
               content="切换直属下级全选状态"
               placement="top-start"
             >
-              <i
-                class="el-icon-sort"
-                @click.stop="() => checkAllChild(data)"
-              />
+              <i class="el-icon-sort" @click.stop="() => checkAllChild(data)"></i>
             </el-tooltip>
-            <el-tooltip
-              class="item"
-              effect="dark"
-              content="切换子级全选状态"
-              placement="top-start"
-            >
-              <i
-                class="iconfont icon-qiehuan"
-                @click.stop="() => checkAllChild(data, true)"
-              />
+            <el-tooltip class="item" effect="dark" content="切换子级全选状态" placement="top-start">
+              <i class="iconfont icon-qiehuan" @click.stop="() => checkAllChild(data, true)"></i>
             </el-tooltip>
             <el-tooltip
               class="item"
@@ -82,80 +55,48 @@
               content="同步当前部门到已有门店"
               placement="top-start"
             >
-              <i
-                class="iconfont icon-tongbu"
-                @click.stop="() => syncAllCheck(node)"
-              />
+              <i class="iconfont icon-tongbu" @click.stop="() => syncAllCheck(node)"></i>
             </el-tooltip>
           </span>
         </span>
       </el-tree>
-      <div
-        v-loading="tableLoading"
-        class="table"
-      >
-        <h3 class="title">
-          {{ title }}
-        </h3>
+      <div class="table" v-loading="tableLoading">
+        <h3 class="title">{{ title }}</h3>
         <el-table
-          ref="multipleTable"
           height="800"
           :data="tableData"
+          ref="multipleTable"
           @select="selectMember"
           @select-all="selectAllMember"
         >
-          <el-table-column
-            type="selection"
-            width="55"
-            :selectable="isSelectable"
-          />
-          <el-table-column
-            prop="name"
-            label="姓名"
-          />
-          <el-table-column
-            prop="mobile"
-            label="手机号"
-          />
+          <el-table-column type="selection" width="55" :selectable="isSelectable">
+          </el-table-column>
+          <el-table-column prop="name" label="姓名"> </el-table-column>
+          <el-table-column prop="mobile" label="手机号"> </el-table-column>
         </el-table>
       </div>
     </div>
-    <el-dialog
-      title="选择门店"
-      custom-class="dialog"
-      :visible.sync="dialogFormVisible"
-    >
+    <el-dialog title="选择门店" custom-class="dialog" :visible.sync="dialogFormVisible">
       <el-input
-        v-model="param.name"
         placeholder="请输入店铺名称"
+        v-model="param.name"
         clearable
-        class="input-with-select"
         @clear="pageChange(1)"
+        class="input-with-select"
       >
-        <el-button
-          slot="append"
-          icon="el-icon-search"
-          @click.stop="pageChange(1)"
-        />
+        <el-button slot="append" icon="el-icon-search" @click.stop="pageChange(1)"></el-button>
       </el-input>
       <div v-loading="loading.storeList">
-        <el-table
-          :data="storeList"
-          size="small"
-        >
-          <el-table-column
-            prop="name"
-            label="门店名称"
-          />
+        <el-table :data="storeList" size="small">
+          <el-table-column prop="name" label="门店名称"> </el-table-column>
           <el-table-column label="操作">
             <template slot-scope="scope">
               <el-button
                 :loading="loading.syncClub"
                 type="text"
                 @click.stop="syncToShop(scope.row.distributor_id)"
+                >同步至此店铺</el-button
               >
-                同步至此店铺
-              </el-button>
             </template>
           </el-table-column>
         </el-table>
@@ -166,7 +107,8 @@
             :total="total"
             :current-page="param.page"
             @current-change="pageChange"
-          />
+          >
+          </el-pagination>
         </div>
       </div>
     </el-dialog>
@@ -183,8 +125,8 @@ import {
 import { getDistributorList } from '../../../../api/marketing'
 
 export default {
-  name: 'AddressBook',
-  data () {
+  name: 'addressBook',
+  data() {
     return {
       list: [],
       treeProps: {
@@ -215,12 +157,12 @@ export default {
       dialogFormVisible: false
     }
   },
-  mounted () {
+  mounted() {
     this.getAdressBook()
   },
   methods: {
     // 获取通讯录
-    getAdressBook: function () {
+    getAdressBook: function() {
       this.isLoading = true
       this.selectNodeKey = []
       this.$refs.elTree.setCheckedKeys([])
@@ -231,7 +173,7 @@ export default {
         this.getWorkMember(id, name)
       })
     },
-    getWorkMember: function (id, name) {
+    getWorkMember: function(id, name) {
       this.tableLoading = true
       this.selectMemberList = []
       getMemberByClub(id)
@@ -246,7 +188,7 @@ export default {
         .catch(() => (this.tableLoading = false))
     },
     // 处理选中状态
-    dealCheckable: function () {
+    dealCheckable: function() {
       if (!this.$refs.multipleTable) return
       const data = this.tableData
       for (let i = 0; i < data.length; i++) {
@@ -255,7 +197,7 @@ export default {
       }
     },
     // 同步选中部门到店铺
-    syncDepartToShop: function () {
+    syncDepartToShop: function() {
       // console.log(this.selectNodeKey)
       if (this.selectNodeKey.length <= 0) {
         this.$message({
@@ -275,7 +217,7 @@ export default {
       })
     },
     // 同步
-    syncToShop: function (id) {
+    syncToShop: function(id) {
       const arr = JSON.stringify([this.departmentId])
       const param = {
         department_id: arr,
@@ -291,7 +233,7 @@ export default {
       })
     },
     // 获取门店列表
-    getStoreList: function () {
+    getStoreList: function() {
       this.loading.storeList = true
       getDistributorList(this.param).then((res) => {
         this.storeList = res.data.data.list
@@ -300,12 +242,12 @@ export default {
       })
     },
     // pagechange
-    pageChange: function (val) {
+    pageChange: function(val) {
       this.param.page = val
       this.getStoreList()
     },
     // 同步选中成员到导购
-    syncMemberToGuide: function () {
+    syncMemberToGuide: function() {
       const list = this.selectMemberList
       if (list.length <= 0) {
         this.$message({
@@ -334,19 +276,19 @@ export default {
       }
     },
     // 点击节点
-    nodeClick: function (data) {
+    nodeClick: function(data) {
       if (this.tableLoading) return
       const { id, name } = data
       this.getWorkMember(id, name)
     },
     // 全选子级
-    checkAllChild: function (data, isChild = false) {
+    checkAllChild: function(data, isChild = false) {
       const nodeKeys = this.mapChildren(data.children, isChild)
       // 处理nodekeys
       this.dealNodeKey(nodeKeys)
     },
     // 递归子集
-    mapChildren: function (data, isChild) {
+    mapChildren: function(data, isChild) {
       console.log(data)
       const arr = []
       for (let i = 0; i < data.length; i++) {
@@ -363,7 +305,7 @@ export default {
       }
       return arr
     },
-    dealNodeKey: function (nodeKeys) {
+    dealNodeKey: function(nodeKeys) {
       let isAllHave = true
       const list = [...this.selectNodeKey]
       if (list.length > 0) {
@@ -384,7 +326,7 @@ export default {
       this.$refs.elTree.setCheckedKeys(ids)
     },
     // 处理单个变化
-    changeChecked: function (data, isChecked) {
+    changeChecked: function(data, isChecked) {
       const list = [...this.selectNodeKey]
       const haveIndex = list.findIndex((item) => item && item.id === data.id)
       if (haveIndex !== -1) {
@@ -398,7 +340,7 @@ export default {
       this.selectNodeKey = list
     },
     // 递归所有选择节点
-    mapChecked: function (data) {
+    mapChecked: function(data) {
       const arr = []
       const childNodes = data.childNodes
       if (data.checked) {
@@ -416,7 +358,7 @@ export default {
       return arr
     },
     // 同步当前部门
-    syncAllCheck: function (node) {
+    syncAllCheck: function(node) {
       const { data } = node
       this.departmentId = {
         id: data.id,
@@ -428,11 +370,11 @@ export default {
       this.getStoreList()
     },
     // 是否可以选择
-    isSelectable: function (row) {
+    isSelectable: function(row) {
       return row.mobile
     },
     // 全选会员
-    selectAllMember: function (data) {
+    selectAllMember: function(data) {
       let list = this.selectMemberList
       if (data.length > 0) {
         const arr = data.filter((item) => {
@@ -451,7 +393,7 @@ export default {
       this.selectMemberList = list
     },
     // 选择会员
-    selectMember: function (data) {
+    selectMember: function(data) {
       let list = this.selectMemberList
       if (data.length > 0) {
         list = list.filter((item) => {

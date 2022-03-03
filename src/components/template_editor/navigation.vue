@@ -1,104 +1,57 @@
 <template>
-  <section
-    v-if="name === 'navigation'"
-    class="section"
-  >
-    <div class="section-header with-border">
-      设置
-    </div>
+  <section v-if="name === 'navigation'" class="section">
+    <div class="section-header with-border">设置</div>
     <div class="section-body">
       <el-form label-width="100px">
         <el-form-item label="组件间距">
-          <el-switch
-            v-model="base.padded"
-            active-color="#27cc6a"
-            inactive-color="#efefef"
-          />
+          <el-switch v-model="base.padded" active-color="#27cc6a" inactive-color="#efefef">
+          </el-switch>
         </el-form-item>
         <el-form-item label="导航项">
-          <div
-            v-for="(item, index) in data"
-            class="setting-item"
-          >
-            <div
-              class="setting-remove"
-              @click="removeItem(index)"
-            >
-              <i class="iconfont icon-trash-alt" />
+          <div class="setting-item" v-for="(item, index) in data">
+            <div class="setting-remove" @click="removeItem(index)">
+              <i class="iconfont icon-trash-alt"></i>
             </div>
 
             <img
-              v-if="item.imgUrl"
               :src="wximageurl + item.imgUrl"
               class="banner-uploader square"
               @click="handleImgChange(index)"
-            >
-            <div
-              v-else
-              class="banner-uploader square"
-              @click="handleImgChange(index)"
-            >
+              v-if="item.imgUrl"
+            />
+            <div class="banner-uploader square" v-else @click="handleImgChange(index)">
               <div class="content-center">
-                <i class="iconfont icon-camera" /><br>
+                <i class="iconfont icon-camera"></i><br />
                 上传图片
               </div>
             </div>
             <div class="uploader-setting">
-              <el-input
-                v-model="item.content"
-                placeholder="导航名称"
-              />
-              <div
-                class="goods-select"
-                @click="handleGoodsChange(index)"
-              >
-                <div
-                  v-if="item.id"
-                  class="link-content"
-                >
-                  <template v-if="item.linkPage === 'goods'">
-                    商品：
-                  </template>
-                  <template v-if="item.linkPage === 'category'">
-                    分类：
-                  </template>
-                  <template v-if="item.linkPage === 'article'">
-                    文章：
-                  </template>
-                  <template v-if="item.linkPage === 'planting'">
-                    软文：
-                  </template>
-                  <template v-if="item.linkPage === 'link'">
-                    页面：
-                  </template>
-                  <template v-if="item.linkPage === 'marketing'">
-                    营销：
-                  </template>
+              <el-input placeholder="导航名称" v-model="item.content"></el-input>
+              <div class="goods-select" @click="handleGoodsChange(index)">
+                <div class="link-content" v-if="item.id">
+                  <template v-if="item.linkPage === 'goods'">商品：</template>
+                  <template v-if="item.linkPage === 'category'">分类：</template>
+                  <template v-if="item.linkPage === 'article'">文章：</template>
+                  <template v-if="item.linkPage === 'planting'">软文：</template>
+                  <template v-if="item.linkPage === 'link'">页面：</template>
+                  <template v-if="item.linkPage === 'marketing'">营销：</template>
                   {{ item.title }}
                 </div>
-                <div
-                  v-else
-                  class="content-center"
-                >
-                  <i
-                    class="iconfont icon-link"
-                    @click="handleGoodsChange(index)"
-                  />设置路径
+                <div v-else class="content-center">
+                  <i class="iconfont icon-link" @click="handleGoodsChange(index)"></i>设置路径
                 </div>
               </div>
             </div>
           </div>
-          <div class="frm-tips">
-            只能上传jpg/png文件，且不超过2M （建议尺寸：375px * 200px）
-          </div>
+          <div class="frm-tips">只能上传jpg/png文件，且不超过2M （建议尺寸：375px * 200px）</div>
           <el-button
             :disabled="data.length >= 5"
             type="default"
             class="iconfont icon-plus-circle banner-button-uploader"
             @click="addItem"
           >
-            添加项目
-          </el-button>
+            添加项目</el-button
+          >
         </el-form-item>
       </el-form>
     </div>
@@ -115,7 +68,17 @@ export default {
       }
     }
   },
-  data () {
+  watch: {
+    res: {
+      deep: true,
+      handler(value) {
+        if (value) {
+          this.setData(value)
+        }
+      }
+    }
+  },
+  data() {
     return {
       name: '',
       base: {},
@@ -123,30 +86,17 @@ export default {
       data: []
     }
   },
-  watch: {
-    res: {
-      deep: true,
-      handler (value) {
-        if (value) {
-          this.setData(value)
-        }
-      }
-    }
-  },
-  mounted () {
-    this.setData(this.res)
-  },
   methods: {
-    setData (val) {
+    setData(val) {
       this.name = val.name
       this.base = val.base
       this.config = val.config
       this.data = val.data
     },
-    removeItem (index) {
+    removeItem(index) {
       this.data.splice(index, 1)
     },
-    addItem () {
+    addItem() {
       if (!this.data) {
         this.data = []
       }
@@ -166,12 +116,15 @@ export default {
         this.data.push(item)
       }
     },
-    handleImgChange (index) {
+    handleImgChange(index) {
       this.$emit('bindImgs', index)
     },
-    handleGoodsChange (index) {
+    handleGoodsChange(index) {
       this.$emit('bindLinks', index)
     }
+  },
+  mounted() {
+    this.setData(this.res)
   }
 }
 </script>

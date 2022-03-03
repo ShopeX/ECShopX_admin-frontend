@@ -3,81 +3,38 @@
     <div v-if="$route.path.indexOf('detail') === -1">
       <el-row :gutter="20">
         <el-col :span="4">
-          <el-button
-            type="primary"
-            icon="plus"
-            @click="openDialog()"
-          >
-            添加页面
-          </el-button>
+          <el-button type="primary" icon="plus" @click="openDialog()">添加页面</el-button>
         </el-col>
       </el-row>
-      <el-table
-        v-loading="loading"
-        :data="list"
-        :height="wheight - 140"
-      >
-        <el-table-column
-          prop="id"
-          label="页面id"
-        />
-        <el-table-column
-          prop="page_name"
-          label="页面名称"
-        />
+      <el-table :data="list" :height="wheight - 140" v-loading="loading">
+        <el-table-column prop="id" label="页面id"></el-table-column>
+        <el-table-column prop="page_name" label="页面名称"></el-table-column>
         <el-table-column label="是否启用">
           <template slot-scope="scope">
-            <el-tag
-              v-if="scope.row.is_open == '0'"
-              type="info"
-            >
-              禁用
-            </el-tag>
-            <el-tag
-              v-else
-              type="warning"
-            >
-              启用
-            </el-tag>
+            <el-tag type="info" v-if="scope.row.is_open == '0'">禁用</el-tag>
+            <el-tag type="warning" v-else>启用</el-tag>
           </template>
         </el-table-column>
-        <el-table-column
-          label="操作"
-          min-width="100"
-        >
+        <el-table-column label="操作" min-width="100">
           <template slot-scope="scope">
-            <a
-              href="javascript:void(0)"
-              @click="delPage(scope.row.id)"
-            >删除</a>
-            <a
-              href="javascript:void(0)"
-              @click="openDialog(scope.row)"
-            >编辑</a>
-            <el-button
-              type="primary"
-              plain
-              round
-              size="mini"
-              @click="temDialog(scope.row.id)"
+            <a href="javascript:void(0)" @click="delPage(scope.row.id)">删除</a>
+            <a href="javascript:void(0)" @click="openDialog(scope.row)">编辑</a>
+            <el-button type="primary" plain round size="mini" @click="temDialog(scope.row.id)"
+              >页面装修</el-button
             >
-              页面装修
-            </el-button>
           </template>
         </el-table-column>
       </el-table>
-      <div
-        v-if="total_count > params.pageSize"
-        class="content-padded content-center"
-      >
+      <div v-if="total_count > params.pageSize" class="content-padded content-center">
         <el-pagination
           background
           layout="prev, pager, next"
+          @current-change="handleCurrentChange"
           :current-page.sync="params.page"
           :total="total_count"
           :page-size="params.pageSize"
-          @current-change="handleCurrentChange"
-        />
+        >
+        </el-pagination>
       </div>
       <el-dialog
         :title="dialogTitle"
@@ -85,38 +42,27 @@
         :close-on-click-modal="false"
         :before-close="handleCancel"
       >
-        <el-form
-          v-model="pageForm"
-          label-width="200px"
-        >
+        <el-form v-model="pageForm" label-width="200px">
           <el-form-item label="页面名称">
             <el-input
               v-model="pageForm.page_name"
               placeholder="页面名称"
-              style="width: 55%"
-            />
+              style="width: 55%;"
+            ></el-input>
           </el-form-item>
           <el-form-item label="页面描述">
             <el-input
               v-model="pageForm.page_description"
               placeholder="页面描述"
-              style="width: 55%"
-            />
+              style="width: 55%;"
+            ></el-input>
           </el-form-item>
           <el-form-item label="是否启用">
-            <el-switch v-model="pageForm.is_open" />
+            <el-switch v-model="pageForm.is_open"> </el-switch>
           </el-form-item>
         </el-form>
-        <div
-          slot="footer"
-          class="dialog-footer content-center"
-        >
-          <el-button
-            type="primary"
-            @click="savePage"
-          >
-            确认保存
-          </el-button>
+        <div slot="footer" class="dialog-footer content-center">
+          <el-button type="primary" @click="savePage">确认保存</el-button>
         </div>
       </el-dialog>
       <el-dialog
@@ -128,13 +74,13 @@
       >
         <shopDecoration
           :id="pageForm.id"
+          @saved="closeDialog"
           usage="page"
           :template_name="template_name"
-          @saved="closeDialog"
         />
       </el-dialog>
     </div>
-    <router-view />
+    <router-view></router-view>
   </div>
 </template>
 <script>
@@ -144,7 +90,7 @@ import shopDecoration from './custompage/default'
 
 export default {
   components: { shopDecoration },
-  data () {
+  data() {
     return {
       template_name: 'pc',
       template_dialog: false,
@@ -171,22 +117,19 @@ export default {
       // 'template_name'
     ])
   },
-  mounted () {
-    this.fetchPageList()
-  },
   methods: {
-    temDialog (id, type) {
+    temDialog(id, type) {
       this.pageForm.id = id
       this.template_dialog = true
     },
-    closeDialog () {
+    closeDialog() {
       this.template_dialog = false
     },
-    handleCurrentChange (page_num) {
+    handleCurrentChange(page_num) {
       this.params.page = page_num
       this.fetchPageList()
     },
-    delPage (id) {
+    delPage(id) {
       this.$confirm('确认删除当前页面吗？').then((_) => {
         delCustomPage(id).then((res) => {
           this.$message({ type: 'success', message: '操作成功！' })
@@ -194,7 +137,7 @@ export default {
         })
       })
     },
-    openDialog (detail = null) {
+    openDialog(detail = null) {
       this.page_dialog = true
       if (detail) {
         this.pageForm = detail
@@ -207,7 +150,7 @@ export default {
         this.pageForm = { id: '', page_name: '', page_description: '', is_open: true }
       }
     },
-    savePage () {
+    savePage() {
       let { page_name, page_description, is_open, id } = this.pageForm
       const params = { page_name, page_description, is_open, template_name: this.template_name }
       if (this.dialogTitle == '编辑页面') {
@@ -231,7 +174,7 @@ export default {
         })
       }
     },
-    fetchPageList () {
+    fetchPageList() {
       this.loading = true
       Object.assign(this.params, { template_name: this.template_name })
       getCustomPageList(this.params).then((response) => {
@@ -242,9 +185,12 @@ export default {
         this.loading = false
       })
     },
-    handleCancel () {
+    handleCancel() {
       this.page_dialog = false
     }
+  },
+  mounted() {
+    this.fetchPageList()
   }
 }
 </script>

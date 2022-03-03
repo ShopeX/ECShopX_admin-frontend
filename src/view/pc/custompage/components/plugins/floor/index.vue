@@ -1,25 +1,17 @@
 <template>
   <div>
-    <slot />
+    <slot></slot>
     <div class="floor">
-      <div
-        v-if="dataForm.title || dataForm.tabList.length > 0"
-        class="floor-header"
-      >
-        <div class="floor-title">
-          {{ dataForm.title }}
-        </div>
+      <div v-if="dataForm.title || dataForm.tabList.length > 0" class="floor-header">
+        <div class="floor-title">{{ dataForm.title }}</div>
         <div class="floor-tabs">
-          <el-tabs
-            v-model="dataForm.activeName"
-            type="card"
-          >
+          <el-tabs v-model="dataForm.activeName" type="card">
             <el-tab-pane
               v-for="(item, index) in dataForm.tabList"
-              :key="item.id"
               :label="item.title"
               :name="index + ''"
-            />
+              :key="item.id"
+            ></el-tab-pane>
           </el-tabs>
         </div>
       </div>
@@ -27,20 +19,10 @@
         <!-- 左侧 -->
         <div class="floor-left">
           <!-- 左侧商品类型导航列表 -->
-          <div
-            class="floor-left__top"
-            :style="{ background: dataForm.LeftBackgroundColor }"
-          >
+          <div class="floor-left__top" :style="{ background: dataForm.LeftBackgroundColor }">
             <el-row :gutter="3">
-              <el-col
-                v-for="item in dataForm.leftNavList"
-                :key="item.uuid"
-                :span="8"
-              >
-                <div
-                  class="goods—type__link"
-                  :style="{ color: dataForm.LeftFontColor }"
-                >
+              <el-col :span="8" v-for="item in dataForm.leftNavList" :key="item.uuid">
+                <div class="goods—type__link" :style="{ color: dataForm.LeftFontColor }">
                   {{ item.titleName }}
                 </div>
               </el-col>
@@ -48,27 +30,24 @@
           </div>
           <!-- 左侧热图区 -->
           <div class="floor-left__footer">
-            <img :src="dataForm.leftImg.url">
+            <img :src="dataForm.leftImg.url" />
           </div>
         </div>
         <!-- 商品列表 -->
         <div class="floor-content">
-          <el-row
-            v-for="(items, index) in dataForm.tabList"
-            :key="items.uuid"
-          >
+          <el-row v-for="(items, index) in dataForm.tabList" :key="items.uuid">
             <el-col
-              v-for="item in items.children"
               v-if="index + '' === dataForm.activeName"
-              :key="item.id"
               :span="6"
+              v-for="item in items.children"
+              :key="item.id"
             >
               <div class="floor-content__goods">
                 <el-image
                   style="width: 100%; height: 170px"
                   :src="item.pics[0]"
                   fit="cover"
-                />
+                ></el-image>
                 <p>{{ item.itemName | titlefilter }}</p>
                 <div class="content-goods__footer">
                   <div class="goods-footer__price">
@@ -76,12 +55,7 @@
                     <p>{{ item.price | price }}</p>
                   </div>
                   <div class="goods-footer__submit">
-                    <el-button
-                      size="mini"
-                      type="danger"
-                    >
-                      加入购物车
-                    </el-button>
+                    <el-button size="mini" type="danger">加入购物车</el-button>
                   </div>
                 </div>
               </div>
@@ -91,10 +65,10 @@
         <!-- 右侧热图区 -->
         <div class="floor-right">
           <div class="floor-right__top">
-            <img :src="dataForm.rightImg1.url">
+            <img :src="dataForm.rightImg1.url" />
           </div>
           <div class="floor-right__footer">
-            <img :src="dataForm.rightImg2.url">
+            <img :src="dataForm.rightImg2.url" />
           </div>
         </div>
       </div>
@@ -103,15 +77,27 @@
 </template>
 <script>
 export default {
-  name: 'Floor',
+  name: 'floor',
+  props: {
+    data: {
+      type: Object
+    }
+  },
+  data() {
+    return {
+      dataForm: this.data.data,
+
+      activeName: 0
+    }
+  },
   filters: {
-    titlefilter (val) {
+    titlefilter(val) {
       if (val.length > 15) {
         val = val.substring(0, 15) + '...'
       }
       return val
     },
-    price (value, currency = '¥', decimals = 2) {
+    price(value, currency = '¥', decimals = 2) {
       // console.log('filter', value)
       let digitsRE = /(\d{3})(?=\d)/g
       value = parseFloat(value) / 100
@@ -125,30 +111,18 @@ export default {
       return sign + currency + head + _int.slice(i).replace(digitsRE, '$1,') + _float
     }
   },
-  props: {
-    data: {
-      type: Object
-    }
-  },
-  data () {
-    return {
-      dataForm: this.data.data,
-
-      activeName: 0
-    }
-  },
   watch: {
-    dataForm (val) {
+    dataForm(val) {
       console.log('index-watch---')
       console.log(val)
     }
   },
-  created () {},
-  mounted () {
+  created() {},
+  mounted() {
     // console.log(this.data)
   },
   methods: {
-    handleClick () {}
+    handleClick() {}
   }
 }
 </script>

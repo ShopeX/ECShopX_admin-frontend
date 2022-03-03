@@ -1,26 +1,19 @@
 <template>
   <div>
     <div>
-      <el-tabs
-        v-model="activeName"
-        type="border-card"
-        @tab-click="handleClick"
-      >
-        <el-tab-pane
-          label="客服配置"
-          name="first"
-        >
+      <el-tabs v-model="activeName" type="border-card" @tab-click="handleClick">
+        <el-tab-pane label="客服配置" name="first">
           <frontendTemplates
-            ref="frontendTemplates"
             :get-status="frontendTemplates"
-          />
+            ref="frontendTemplates"
+          ></frontendTemplates>
         </el-tab-pane>
         <!--                <el-tab-pane label="售后配置" name="second">-->
         <!--                    <backendTemplates :get-status="backendTemplates" ref="backendTemplates"></backendTemplates>-->
         <!--                </el-tab-pane>-->
       </el-tabs>
     </div>
-    <router-view />
+    <router-view></router-view>
   </div>
 </template>
 
@@ -33,7 +26,7 @@ export default {
     frontendTemplates,
     backendTemplates
   },
-  data () {
+  data() {
     return {
       loading: false,
       frontendTemplates: false,
@@ -42,18 +35,18 @@ export default {
       list: []
     }
   },
-  mounted () {
-    if ('undefined' != typeof this.$route.query.activeName) {
-      this.activeName = this.$route.query.activeName
-    }
-  },
   methods: {
-    handleClick (tab, event) {
+    handleClick(tab, event) {
       if (this.activeName === 'first') {
         this.frontendTemplates = true
       } else if (this.activeName === 'second') {
         this.backendTemplates = true
       }
+    }
+  },
+  mounted() {
+    if ('undefined' != typeof this.$route.query.activeName) {
+      this.activeName = this.$route.query.activeName
     }
   }
 }

@@ -1,13 +1,13 @@
 import fetch from '../utils/fetch'
 
-export function getALi (aliid) {
+export function getALi(aliid) {
   return fetch({
     url: '/miniapp/' + aliid,
     method: 'get'
   })
 }
 
-export function submitALi (query) {
+export function submitALi(query) {
   return fetch({
     url: '/miniapp/upload',
     method: 'post',
@@ -15,7 +15,7 @@ export function submitALi (query) {
   })
 }
 
-export function submitCheck (query) {
+export function submitCheck(query) {
   return fetch({
     url: '/miniapp/commitaudit',
     method: 'post',
@@ -23,7 +23,7 @@ export function submitCheck (query) {
   })
 }
 
-export function cancelAudit (query) {
+export function cancelAudit(query) {
   return fetch({
     url: '/miniapp/cancelaudit',
     method: 'post',
@@ -31,7 +31,7 @@ export function cancelAudit (query) {
   })
 }
 
-export function onLine (query) {
+export function onLine(query) {
   return fetch({
     url: '/miniapp/online',
     method: 'post',
@@ -39,7 +39,7 @@ export function onLine (query) {
   })
 }
 
-export function offLine (query) {
+export function offLine(query) {
   return fetch({
     url: '/miniapp/offline',
     method: 'post',
@@ -47,7 +47,7 @@ export function offLine (query) {
   })
 }
 
-export function backDev (query) {
+export function backDev(query) {
   return fetch({
     url: '/miniapp/cancelaudited',
     method: 'post',
@@ -55,7 +55,7 @@ export function backDev (query) {
   })
 }
 
-export function rollBack (query) {
+export function rollBack(query) {
   return fetch({
     url: '/miniapp/rollback',
     method: 'post',
@@ -63,7 +63,7 @@ export function rollBack (query) {
   })
 }
 
-export function getALiCreatQrcode (query) {
+export function getALiCreatQrcode(query) {
   return fetch({
     url: '/miniapp/experience/create',
     method: 'post',
@@ -71,7 +71,7 @@ export function getALiCreatQrcode (query) {
   })
 }
 
-export function getALiTestQrcode (query) {
+export function getALiTestQrcode(query) {
   return fetch({
     url: '/miniapp/queryexperience',
     method: 'post',
@@ -79,7 +79,7 @@ export function getALiTestQrcode (query) {
   })
 }
 
-export function getALiPreAuthUrl (query) {
+export function getALiPreAuthUrl(query) {
   return fetch({
     url: '/alipay/pre_auth_url',
     method: 'get',
@@ -87,7 +87,7 @@ export function getALiPreAuthUrl (query) {
   })
 }
 
-export function setALiPageParams (query) {
+export function setALiPageParams(query) {
   return fetch({
     url: '/alipay/pageparams/setting',
     method: 'post',
@@ -95,7 +95,7 @@ export function setALiPageParams (query) {
   })
 }
 
-export function getALiParamByTempName (query) {
+export function getALiParamByTempName(query) {
   return fetch({
     url: '/alipay/pageparams/setting',
     method: 'get',
@@ -103,7 +103,7 @@ export function getALiParamByTempName (query) {
   })
 }
 
-export function updateALiParamsById (query) {
+export function updateALiParamsById(query) {
   return fetch({
     url: '/alipay/pageparams/setting',
     method: 'put',
@@ -111,7 +111,7 @@ export function updateALiParamsById (query) {
   })
 }
 
-export function saveALiPageParams (query) {
+export function saveALiPageParams(query) {
   return fetch({
     url: '/alipay/pageparams/setting_all',
     method: 'post',
@@ -119,7 +119,7 @@ export function saveALiPageParams (query) {
   })
 }
 
-export function getALiCodeUnlimit (query) {
+export function getALiCodeUnlimit(query) {
   return fetch({
     url: '/miniapp/qrcode/create',
     method: 'post',

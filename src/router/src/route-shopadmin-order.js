@@ -29,11 +29,11 @@ export default {
     {
       path: 'aftersaleslist',
       name: `售后列表`,
-      component: () => import('@/view/mall/aftersales/list'),
+      component: () => import( '@/view/mall/aftersales/list'),
       children: [
         {
           path: 'detail/:itemId?',
-          component: () => import('@/view/mall/aftersales/detail')
+          component: () => import( '@/view/mall/aftersales/detail')
         }
       ]
     },
@@ -44,7 +44,7 @@ export default {
       children: [
         {
           path: 'editor/:templatesId?',
-          component: () => import('@/view/mall/trade/shipping/add')
+          component: () => import( '@/view/mall/trade/shipping/add')
         }
       ]
     },
@@ -54,20 +54,20 @@ export default {
       component: () => import('@/view/mall/trade/logistics/normal')
     },
     {
-      path: 'adapay_trades',
-      name: '分账',
-      component: () => import('@/view/mall/sub_account/sub_account'),
-      children: [
+      path:'adapay_trades',
+      name:'分账',
+      component:() => import('@/view/mall/sub_account/sub_account'),
+      children:[
         {
-          path: 'detail/:order_id',
-          component: () => import('@/view/mall/sub_account/detail')
+          path:'detail/:order_id',
+          component:() => import('@/view/mall/sub_account/detail'),
         }
       ]
     },
     {
-      path: 'adapay_cash',
-      name: '提现',
-      component: () => import('@/view/mall/withdraw/withdraw')
+      path:'adapay_cash',
+      name:'提现',
+      component:() =>import('@/view/mall/withdraw/withdraw')
     }
   ]
 }

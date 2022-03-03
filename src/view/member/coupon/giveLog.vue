@@ -1,61 +1,39 @@
 <template>
   <div>
     <el-card v-if="$route.path.indexOf('detail') === -1">
-      <el-table
-        v-loading="loading"
-        :data="giveLogList"
-        :height="wheight - 90"
-      >
-        <el-table-column
-          width="180"
-          label="发放时间"
-        >
+      <el-table :data="giveLogList" :height="wheight - 90" v-loading="loading">
+        <el-table-column width="180" label="发放时间">
           <template slot-scope="scope">
-            <i class="el-icon-time" /> {{ scope.row.created | datetime('YYYY-MM-DD HH:mm:ss') }}
+            <i class="el-icon-time"></i> {{ scope.row.created | datetime('YYYY-MM-DD HH:mm:ss') }}
           </template>
         </el-table-column>
-        <el-table-column
-          prop="sender"
-          label="操作员"
-        >
+        <el-table-column prop="sender" label="操作员">
           <template slot-scope="scope">
-            <i class="el-icon-user" /> {{ scope.row.sender }}
+            <i class="el-icon-user"></i> {{ scope.row.sender }}
           </template>
         </el-table-column>
-        <el-table-column
-          prop="number"
-          width="80"
-          label="赠送数量"
-        />
-        <el-table-column
-          prop="error"
-          width="80"
-          label="失败数量"
-        />
-        <el-table-column
-          width="140"
-          label="操作"
-        >
+        <el-table-column prop="number" width="80" label="赠送数量"> </el-table-column>
+        <el-table-column prop="error" width="80" label="失败数量"> </el-table-column>
+        <el-table-column width="140" label="操作">
           <template slot-scope="scope">
-            <router-link
-              :to="{ path: matchHidePage('detail/') + scope.row.give_id }"
+            <router-link :to="{ path: matchHidePage('detail/') + scope.row.give_id }"
+              >发送失败详情</router-link
             >
-              发送失败详情
-            </router-link>
           </template>
         </el-table-column>
       </el-table>
       <div class="content-padded content-center">
         <el-pagination
           layout="prev, pager, next"
+          @current-change="handleCurrentChange"
           :current-page.sync="params.page"
           :total="totalCount"
           :page-size="params.pageSize"
-          @current-change="handleCurrentChange"
-        />
+        >
+        </el-pagination>
       </div>
     </el-card>
-    <router-view />
+    <router-view></router-view>
   </div>
 </template>
 
@@ -63,7 +41,7 @@
 import { mapGetters } from 'vuex'
 import { getGiveLogList } from '../../../api/promotions'
 export default {
-  data () {
+  data() {
     return {
       loading: false,
       giveLogList: [],
@@ -77,15 +55,12 @@ export default {
   computed: {
     ...mapGetters(['wheight'])
   },
-  mounted () {
-    this.getGiveLogList()
-  },
   methods: {
-    handleCurrentChange (pageNum) {
+    handleCurrentChange(pageNum) {
       this.params.page = pageNum
       this.getGiveLogList()
     },
-    getGiveLogList () {
+    getGiveLogList() {
       this.loading = true
       getGiveLogList(this.params)
         .then((response) => {
@@ -101,6 +76,9 @@ export default {
           })
         })
     }
+  },
+  mounted() {
+    this.getGiveLogList()
   }
 }
 </script>

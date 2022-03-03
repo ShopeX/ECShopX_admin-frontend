@@ -2,14 +2,9 @@
   <div>
     <el-row :gutter="20">
       <el-col>
-        <el-button
-          type="primary"
-          plain
-          icon="el-icon-circle-plus"
-          @click="appendTop(categoryList)"
+        <el-button type="primary" plain icon="el-icon-circle-plus" @click="appendTop(categoryList)"
+          >新增商品分类</el-button
         >
-          新增商品分类
-        </el-button>
         <!-- <el-button type="primary" @click="updateCategory" :disabled="isDisable"
           >保存分类</el-button
         > -->
@@ -27,77 +22,51 @@
           </el-form-item>
 
           <el-form-item label="分类排序">
-            <el-input-number
-              v-model="dialog.sort"
-              label="分类排序"
-              :min="0"
-            />
+            <el-input-number v-model="dialog.sort" label="分类排序" :min="0"></el-input-number>
           </el-form-item>
 
-          <el-form-item
-            v-if="dialog.is_hassuperior"
-            label="父级分类"
-          >
+          <el-form-item label="父级分类" v-if="dialog.is_hassuperior">
             <el-input
               v-model="dialog.superior_cat_name"
               label="分类排序"
               :disabled="true"
-            />
+            ></el-input>
           </el-form-item>
 
           <el-form-item label="分类图片">
-            <imgBox
-              :img-url="dialog.cat_img"
-              @click="handleImgChangeCat"
-            />
+            <imgBox :imgUrl="dialog.cat_img" @click="handleImgChangeCat"></imgBox>
           </el-form-item>
         </el-form>
-        <span
-          slot="footer"
-          class="dialog-footer"
-        >
+        <span slot="footer" class="dialog-footer">
           <el-button @click="dialog.visible = false">取 消</el-button>
-          <el-button
-            :loading="dialog.loading"
-            type="primary"
-            @click="handleSubmit"
-          >确 定</el-button>
+          <el-button :loading="dialog.loading" type="primary" @click="handleSubmit"
+            >确 定</el-button
+          >
         </span>
       </el-dialog>
 
       <el-table
-        ref="tableTree"
-        v-loading="loading"
         :data="categoryList"
         row-key="id"
+        ref="tableTree"
         default-expand-all
+        v-loading="loading"
         :height="wheight - 180"
         :tree-props="{ children: 'children' }"
         style="width: 100%"
         size="small"
       >
-        <el-table-column
-          label="分类名称"
-          width="380"
-        >
+        <el-table-column label="分类名称" width="380">
           <template slot-scope="scope">
             <span>{{ scope.row.category_name }}</span>
           </template>
         </el-table-column>
-        <el-table-column
-          prop="sort"
-          label="分类排序"
-          sortable
-          width="80"
-        >
+        <el-table-column prop="sort" label="分类排序" sortable width="80">
           <template slot-scope="scope">
             <div>{{ scope.row.sort }}</div>
           </template>
         </el-table-column>
-        <el-table-column
-          label="分类图片"
-          width="200"
-        >
+        <el-table-column label="分类图片" width="200">
           <template slot-scope="scope">
             <el-image
               v-if="scope.row.image_url"
@@ -105,7 +74,8 @@
               :src="scope.row.image_url"
               :preview-src-list="[scope.row.image_url]"
               fit="cover"
-            />
+            >
+            </el-image>
             <!-- <el-button
               type="text"
               class="el-icon-upload2"
@@ -114,11 +84,7 @@
             > -->
           </template>
         </el-table-column>
-        <el-table-column
-          prop="created"
-          label="创建时间"
-          width="120"
-        >
+        <el-table-column prop="created" label="创建时间" width="120">
           <template slot-scope="scope">
             {{ scope.row.created | datetime('YYYY-MM-DD') }}
           </template>
@@ -128,35 +94,19 @@
             <el-button type="text">
               <router-link
                 :to="{
-                  path:
-                    login_type == 'distributor'
-                      ? '/shopadmin/entity/goodsphysical'
-                      : '/entity/goods/goodsphysical',
+                  path: login_type == 'distributor' ? '/shopadmin/entity/goodsphysical' : '/entity/goods/goodsphysical',
                   query: { category: scope.row.path }
                 }"
+                >查看商品</router-link
               >
-                查看商品
-              </router-link>
             </el-button>
-            <el-button
-              v-if="scope.row.level < 2"
-              type="text"
-              @click="append(scope.row)"
+            <el-button type="text" v-if="scope.row.level < 2" @click="append(scope.row)"
+              >新增子类</el-button
             >
-              新增子类
-            </el-button>
-            <el-button
-              type="text"
-              @click="editCategory(scope.row)"
+            <el-button type="text" @click="editCategory(scope.row)">编辑</el-button>
+            <el-button type="text" @click.native.prevent="deleteCategory(scope.row)"
+              >删除</el-button
             >
-              编辑
-            </el-button>
-            <el-button
-              type="text"
-              @click.native.prevent="deleteCategory(scope.row)"
-            >
-              删除
-            </el-button>
           </template>
         </el-table-column>
       </el-table>
@@ -166,7 +116,7 @@
       :sc-status="isGetImage"
       @chooseImg="pickImg"
       @closeImgDialog="closeImgDialog"
-    />
+    ></imgPicker>
   </div>
 </template>
 <script>
@@ -180,7 +130,7 @@ export default {
     imgPicker,
     imgBox
   },
-  data () {
+  data() {
     return {
       isDisable: false,
       loading: false,
@@ -208,12 +158,8 @@ export default {
   computed: {
     ...mapGetters(['wheight', 'login_type'])
   },
-
-  mounted () {
-    this.getCategory()
-  },
   methods: {
-    append (row) {
+    append(row) {
       // let { children: data, level = 0, id, parent_id = "" } = row;
       // let newParentId = level === 0 ? id : parent_id;
       // const newChild = {
@@ -238,7 +184,7 @@ export default {
         cat_name: ''
       }
     },
-    editCategory (row) {
+    editCategory(row) {
       this.dialog = {
         ...this.dialog,
         visible: true,
@@ -250,10 +196,17 @@ export default {
         sort: row.sort
       }
     },
-    handleSubmit () {
+    handleSubmit() {
       const _this = this
-      const { sort, cat_name, cat_img, is_hassuperior, superior_cat_id, type, current_id } =
-        this.dialog
+      const {
+        sort,
+        cat_name,
+        cat_img,
+        is_hassuperior,
+        superior_cat_id,
+        type,
+        current_id
+      } = this.dialog
       if ((!sort && sort !== 0) || !cat_name) {
         this.$message.error('排序或分类名称必填！')
         return
@@ -315,7 +268,7 @@ export default {
         }
       }
     },
-    getCategory () {
+    getCategory() {
       this.loading = true
       getCategory(this.params).then((response) => {
         this.categoryList = response.data.data
@@ -323,7 +276,7 @@ export default {
         this.spaceInput = false
       })
     },
-    updateCategory () {
+    updateCategory() {
       for (var i = 0; i < this.categoryList.length; i++) {
         for (var a = 0; a < this.categoryList.length - 1 - i; a++) {
           if (this.categoryList[a].category_name == this.categoryList[a + 1].category_name) {
@@ -375,7 +328,7 @@ export default {
         this.getCategory()
       })
     },
-    deleteCategory (data) {
+    deleteCategory(data) {
       this.$confirm('此操作将删除该分类, 是否继续?', '提示', {
         confirmButtonText: '确定',
         cancelButtonText: '取消',
@@ -399,7 +352,7 @@ export default {
             let key = level === 0 ? id : parent_id
             const categoryList = this.categoryList
             const parentIndex = categoryList.findIndex((item) => item.id === key)
-            const deleteList = function (children, delId) {
+            const deleteList = function(children, delId) {
               if (!children) return
               for (let i = 0; i < children.length; i++) {
                 if (children[i].id === delId) {
@@ -427,7 +380,7 @@ export default {
         })
     },
 
-    appendTop (data) {
+    appendTop(data) {
       this.dialog = {
         ...this.dialog,
         visible: true,
@@ -443,7 +396,7 @@ export default {
       //   container.scrollTop = container.scrollHeight;
       // })
     },
-    catNameCheck (catName) {
+    catNameCheck(catName) {
       let catNameLength = 0
       if (catName) {
         for (var i = 0; i < catName.length; i++) {
@@ -469,16 +422,16 @@ export default {
         return false
       }
     },
-    handleImgChange (data) {
+    handleImgChange(data) {
       this.imgDialog = true
       this.isGetImage = true
       this.current = data
     },
-    handleImgChangeCat (data) {
+    handleImgChangeCat(data) {
       this.imgDialog = true
       this.isGetImage = true
     },
-    pickImg (data) {
+    pickImg(data) {
       if (this.dialog.visible) {
         this.dialog.cat_img = data.url
 
@@ -510,9 +463,13 @@ export default {
       }
       this.imgDialog = false
     },
-    closeImgDialog () {
+    closeImgDialog() {
       this.imgDialog = false
     }
+  },
+
+  mounted() {
+    this.getCategory()
   }
 }
 </script>

@@ -1,59 +1,53 @@
 <style scoped lang="scss">
-.no-shop {
-  display: inline-block;
-  height: 37px;
-  line-height: 37px;
-  box-shadow: 0 0 0 1px #dcdfe6;
-  border-radius: 3px;
-  cursor: no-drop;
-}
+	.no-shop {
+		display: inline-block;
+		height: 37px;
+		line-height: 37px;
+		box-shadow: 0 0 0 1px #dcdfe6;
+		border-radius: 3px;
+		cursor: no-drop;
+	}
 </style>
 <template>
-  <div style="display: inline-block; margin-right: 10px">
-    <el-cascader
-      v-model="selected_params.regions_value"
+	<div style="display: inline-block; margin-right: 10px;">
+	  <el-cascader
       :size="size"
-      class="input-m"
-      placeholder="根据地区筛选"
-      :options="regions"
-      filterable
-      :props="{ checkStrictly: true }"
-      @change="RegionChangeSearch"
-    />
-    <el-select
-      v-if="exist_shop"
-      v-model="selected_params.shop_id"
-      v-scroll="handleScroll"
-      :size="size"
-      class="input-m"
-      :placeholder="desc"
-      filterable
-      remote
-      :remote-method="remoteMethod"
-      clearable
+			class="input-m"
+			placeholder="根据地区筛选"
+			:options="regions"
+			v-model='selected_params.regions_value'
+			filterable
+			:props="{ checkStrictly: true }"
+			@change="RegionChangeSearch">
+		</el-cascader>
+	  <el-select
       @change="() => this.$emit('performInitChange')"
-    >
-      <el-option
-        v-for="item in list"
-        v-if="wxshops"
-        :key="item.wxShopId"
-        :label="item.storeName"
-        :value="item.wxShopId"
-      />
-      <el-option
-        v-for="item in list"
-        v-if="distributors"
-        :key="item.distributor_id"
-        :label="item.name"
-        :value="item.distributor_id"
-      />
-    </el-select>
-    <span
-      v-else
-      class="input-m content-center muted no-shop"
-    >暂无符合要求的店铺</span>
-    <!-- <el-button @click="init">重置</el-button> -->
-  </div>
+      :size="size"
+			class="input-m"
+	    v-if="exist_shop"
+	    v-model="selected_params.shop_id"
+	    :placeholder="desc"
+	    v-scroll="handleScroll"
+	    filterable
+	    remote
+	    :remote-method="remoteMethod"
+	    clearable>
+	    <el-option v-if="wxshops"
+	      v-for="item in list"
+	      :key="item.wxShopId"
+	      :label="item.storeName"
+	      :value="item.wxShopId">
+	    </el-option>
+	    <el-option v-if="distributors"
+	      v-for="item in list"
+	      :key="item.distributor_id"
+	      :label="item.name"
+	      :value="item.distributor_id">
+	    </el-option>
+	  </el-select>
+	  <span v-else class="input-m content-center muted no-shop">暂无符合要求的店铺</span>
+		<!-- <el-button @click="init">重置</el-button> -->
+	</div>
 </template>
 <script>
 import district from '@/common/district.json'
@@ -69,8 +63,8 @@ export default {
       type: Boolean,
       default: false
     },
-    size: {
-      type: String,
+    size:{
+      type:String,
       default: 'medium'
     }
   },
@@ -120,8 +114,9 @@ export default {
   },
 
   methods: {
+
     handleScroll (param) {
-      let { pageSize, page } = this.params
+      let {pageSize, page} = this.params
       if (param && Math.ceil(this.total / pageSize) > page) {
         this.params.page++
         this.getList()
@@ -129,7 +124,7 @@ export default {
     },
 
     RegionChangeSearch (value) {
-      var vals = this.getCascaderObj(value, this.regions)
+	    var vals = this.getCascaderObj(value, this.regions)
       if (vals.length == 1) {
         this.params.province = vals[0].label
         this.params.city = ''

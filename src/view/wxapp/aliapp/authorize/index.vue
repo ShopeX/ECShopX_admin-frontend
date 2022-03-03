@@ -1,171 +1,113 @@
 <template>
   <div>
-    <section
-      v-loading="loading"
-      class="section section-white content-padded-b"
-    >
+    <section class="section section-white content-padded-b" v-loading="loading">
       <div v-if="ali_appid && detail">
         <div class="content-center">
           <div class="page-top">
-            <img
-              class="app-img"
-              src="@/assets/img/onexshop_logo.png"
-              height="60"
-            >
+            <img class="app-img" src='@/assets/img/onexshop_logo.png' height="60" />
             <div class="page-right">
               <div class="app-name">
-                <span v-if="!detail.app_id"> 小程序名称：{{ detail.app_id }} </span>
+                <span v-if="!detail.app_id">
+                  小程序名称：{{ detail.app_id }}
+                </span>
               </div>
               <div class="app-name">
-                <span v-if="detail.app_id"> 小程序APPID：{{ detail.app_id }} </span>
+                <span v-if="detail.app_id">
+                  小程序APPID：{{ detail.app_id }}
+                </span>
               </div>
               <div class="app-name">
-                <span v-if="!detail.app_id"> 商家名称：{{ detail.app_id }} </span>
+                <span v-if="!detail.app_id">
+                  商家名称：{{ detail.app_id }}
+                </span>
               </div>
             </div>
           </div>
         </div>
         <div class="page-middle">
           <div class="page-middle-left">
-            <div class="middle-title">
-              模板
-            </div>
-            <div>模板名称：{{ detail.template_name }}</div>
-            <div>模板版本号：{{ detail.template_version }}</div>
-            <div>
-              发布时间：{{ detail.template_updated | formatDataTime('YYYY-MM-DD hh:mm:ss') }}
-            </div>
+            <div class="middle-title">模板</div>
+            <div>模板名称：{{detail.template_name}}</div>
+            <div>模板版本号：{{detail.template_version}}</div>
+            <div>发布时间：{{detail.template_updated | formatDataTime("YYYY-MM-DD hh:mm:ss")}}</div>
           </div>
           <div class="page-middle-right">
-            <div class="middle-title">
-              支付宝小程序
+            <div class="middle-title">支付宝小程序</div>
+            <div class="label-f">
+              <span class="s-width">已上架版本：{{detail.release_ver != 0 ? detail.release_ver : '/'}}</span>
+              <span v-if="detail.release_time != null">上架时间：{{detail.release_time | formatDataTime("YYYY-MM-DD hh:mm:ss")}}</span>
+              <span v-else>上架时间：{{'/'}}</span>
             </div>
             <div class="label-f">
-              <span
-                class="s-width"
-              >已上架版本：{{ detail.release_ver != 0 ? detail.release_ver : '/' }}</span>
-              <span
-                v-if="detail.release_time != null"
-              >上架时间：{{ detail.release_time | formatDataTime('YYYY-MM-DD hh:mm:ss') }}</span>
-              <span v-else>上架时间：{{ '/' }}</span>
+              <span class="s-width">当前操作版本：{{detail.cur_ver}}</span>
+              <span>状态：{{curStatus[detail.status]}}</span>
             </div>
-            <div class="label-f">
-              <span class="s-width">当前操作版本：{{ detail.cur_ver }}</span>
-              <span>状态：{{ curStatus[detail.status] }}</span>
-            </div>
-            <div>
-              当前版本操作时间：{{ detail.updated_at | formatDataTime('YYYY-MM-DD hh:mm:ss') }}
-            </div>
+            <div>当前版本操作时间：{{detail.updated_at | formatDataTime("YYYY-MM-DD hh:mm:ss")}}</div>
           </div>
         </div>
         <div class="content-center">
           <el-button
-            v-if="
-              detail.status === 0 ||
-                ((detail.status === 1 || detail.status === 5 || detail.status === 6) &&
-                  detail.template_version > detail.cur_ver)
-            "
             type="success"
             @click="handleAddALiAction"
-          >
-            上传代码
-          </el-button>
+            v-if="detail.status === 0 || 
+              ((detail.status === 1 || detail.status === 5 || detail.status === 6) && detail.template_version > detail.cur_ver)"
+            >上传代码</el-button>
           <el-button
-            v-if="detail.status === 1"
             type="primary"
             @click="downloadTextALiCode"
-          >
-            体验版二维码
-          </el-button>
-          <el-button
             v-if="detail.status === 1"
+            >体验版二维码</el-button>
+          <el-button
             type="primary"
             @click="handleAddWxaActionSubmitReview"
-          >
-            提交审核
-          </el-button>
+            v-if="detail.status === 1"
+            >提交审核</el-button>
           <el-button
-            v-if="detail.status === 2"
             type="primary"
             @click="handleUndocodeaudit"
-          >
-            撤销审核
-          </el-button>
+            v-if="detail.status === 2"
+            >撤销审核</el-button>
           <el-button
-            v-if="detail.status === 3"
             type="primary"
             @click="handleOnLine"
-          >
-            上架
-          </el-button>
-          <el-button
-            v-if="detail.status === 5"
+            v-if="detail.status === 3"
+            >上架</el-button>
+            <el-button
             type="primary"
             @click="handleOffLine"
-          >
-            下架
-          </el-button>
+            v-if="detail.status === 5"
+            >下架</el-button>
           <el-button
-            v-if="detail.status === 3 || detail.status === 4"
             type="primary"
             @click="handleBackDev"
-          >
-            退回开发
-          </el-button>
+            v-if="detail.status === 3 || detail.status === 4"
+            >退回开发</el-button>
           <el-button
-            v-if="detail.can_rollback && detail.status === 5"
             type="warning"
             @click="handleRollBack"
-          >
-            回退版本
-          </el-button>
+            v-if="detail.can_rollback && detail.status === 5"
+            >回退版本</el-button>
           <el-button
-            v-if="detail.status !== 6"
             type="primary"
             @click="handleBind(true)"
-          >
-            更新授权
-          </el-button>
+            v-if="detail.status !== 6"
+            >更新授权</el-button>
         </div>
       </div>
-      <div
-        v-else
-        class="content-center no-bind"
-      >
-        <div>
-          <i
-            class="iconfont icon-info-circle"
-            style="font-size: 70px"
-          />
-        </div>
-        <div class="content-padded">
-          未绑定小程序
-        </div>
-        <el-button
-          type="primary"
-          @click="handleBind()"
-        >
-          授权小程序
-        </el-button>
+      <div class="content-center no-bind" v-else>
+        <div><i class="iconfont icon-info-circle" style="font-size: 70px;"></i></div>
+        <div class="content-padded">未绑定小程序</div>
+        <el-button type="primary" @click="handleBind()">授权小程序</el-button>
       </div>
-      <div
-        v-if="detail.status === 4"
-        class="page-bottom"
-      >
+      <div class="page-bottom" v-if="detail.status === 4">
         <div>审核驳回原因：</div>
-        <div
-          class="content"
-          v-html="detail.reason"
-        />
+        <div class="content" v-html="detail.reason"></div>
       </div>
     </section>
-    <el-dialog
-      title="小程序码"
-      :visible.sync="aLiCodeVisible"
-    >
+    <el-dialog title="小程序码" :visible.sync="aLiCodeVisible">
       <div class="content-center">
         <!-- <img src="http://wx.qlogo.cn/mmopen/FXXXHOj2xs8temGVQEFLnFNBwY6ticka7ed0qF8ZNemAXOAFbap0AjgovibyJhQiaXCj71V3ic51BKuBPlxSL3RcdJiaorbFUpPFn/0" /> -->
-        <img :src="aLiCodeImage">
+        <img :src="aLiCodeImage" />
       </div>
     </el-dialog>
   </div>
@@ -182,12 +124,12 @@ import {
   backDev,
   rollBack,
   submitCheck,
-  getALiTestQrcode,
+  getALiTestQrcode, 
   getALiPreAuthUrl,
-  getALiCreatQrcode
+  getALiCreatQrcode,
 } from '@/api/ali'
 export default {
-  data () {
+  data() {
     return {
       aLiCodeVisible: false,
       loading: false,
@@ -199,31 +141,22 @@ export default {
       },
       detail: {},
       curStatus: {
-        0: '未开始',
-        1: '开发中',
-        2: '审核中',
-        3: '审核通过',
-        4: '审核驳回',
-        5: '上架',
-        6: '下架'
+         0: "未开始",
+         1: "开发中",
+         2: "审核中",
+         3: "审核通过",
+         4: "审核驳回",
+         5: "上架",
+         6: "下架"
       }
     }
   },
   computed: {
     ...mapGetters(['ali_appid', 'ali_template_name'])
   },
-  mounted () {
-    if (this.ali_appid) {
-      this.loading = true
-      getALi(this.ali_appid).then((response) => {
-        this.detail = response.data.data
-        this.loading = false
-      })
-    }
-  },
   methods: {
     // 获取数据
-    getALi () {
+    getALi() {
       this.loading = true
       getALi(this.ali_appid).then((response) => {
         this.detail = response.data.data
@@ -231,7 +164,7 @@ export default {
       })
     },
     // 创建二维码
-    async createQRcode (isRequst) {
+    async createQRcode(isRequst) {
       let { is_create_exp, app_id, template_name } = this.detail
       if (isRequst || !is_create_exp) {
         let params = { authorizer_appid: app_id, template_name }
@@ -245,9 +178,10 @@ export default {
       }
     },
     // 授权
-    handleBind (bound) {
+    handleBind(bound) {
       let params = {
-        template_name: !bound ? this.$route.query.templatename : this.detail.template_name
+        template_name: !bound ? this.$route.query.templatename :
+          this.detail.template_name
       }
       getALiPreAuthUrl(params).then((response) => {
         this.authorizerUrl = response.data.data.url
@@ -261,7 +195,7 @@ export default {
       })
     },
     // 撤销审核
-    handleUndocodeaudit () {
+    handleUndocodeaudit() {
       this.submitALiForm.authorizer_appid = this.detail.app_id
       this.submitALiForm.template_name = this.detail.template_name
       cancelAudit(this.submitALiForm).then((response) => {
@@ -274,7 +208,7 @@ export default {
       })
     },
     // 上架
-    handleOnLine () {
+    handleOnLine() {
       this.submitALiForm.authorizer_appid = this.detail.app_id
       this.submitALiForm.template_name = this.detail.template_name
       onLine(this.submitALiForm).then((response) => {
@@ -287,7 +221,7 @@ export default {
       })
     },
     // 下架
-    handleOffLine () {
+    handleOffLine() {
       this.submitALiForm.authorizer_appid = this.detail.app_id
       this.submitALiForm.template_name = this.detail.template_name
       offLine(this.submitALiForm).then((response) => {
@@ -300,7 +234,7 @@ export default {
       })
     },
     // 退回开发
-    handleBackDev () {
+    handleBackDev() {
       this.submitALiForm.authorizer_appid = this.detail.app_id
       this.submitALiForm.template_name = this.detail.template_name
       backDev(this.submitALiForm).then((response) => {
@@ -313,7 +247,7 @@ export default {
       })
     },
     // 回退版本
-    handleRollBack () {
+    handleRollBack() {
       this.submitALiForm.authorizer_appid = this.detail.app_id
       this.submitALiForm.template_name = this.detail.template_name
       rollBack(this.submitALiForm).then((response) => {
@@ -326,7 +260,7 @@ export default {
       })
     },
     // 提交代码
-    handleAddWxaActionSubmitReview () {
+    handleAddWxaActionSubmitReview() {
       this.submitALiForm.authorizer_appid = this.detail.app_id
       this.submitALiForm.template_name = this.detail.template_name
       submitCheck(this.submitALiForm).then((response) => {
@@ -339,7 +273,7 @@ export default {
       })
     },
     // 上传代码
-    handleAddALiAction () {
+    handleAddALiAction() {
       this.submitALiForm.authorizer_appid = this.detail.app_id
       this.submitALiForm.template_name = this.detail.template_name
       submitALi(this.submitALiForm).then((response) => {
@@ -352,7 +286,7 @@ export default {
       })
     },
     // 查看二维码
-    downloadTextALiCode () {
+    downloadTextALiCode() {
       if (!this.detail.is_create_exp) {
         this.createQRcode()
         return
@@ -370,6 +304,15 @@ export default {
           this.aLiCodeImage = response.data.data.exp_qr_code_url
           this.aLiCodeVisible = true
         }
+      })
+    }
+  },
+  mounted() {
+    if (this.ali_appid) {
+      this.loading = true
+      getALi(this.ali_appid).then((response) => {
+        this.detail = response.data.data
+        this.loading = false
       })
     }
   }
@@ -447,6 +390,8 @@ export default {
     font-size: 16px;
   }
 }
+
+
 
 .info-list {
   padding: 30px 0;

@@ -5,47 +5,24 @@
         title="添加基础物料，方便您个性化的添加各类服务商品(不仅仅是商品)！"
         type="warning"
         show-icon
-      />
+      >
+      </el-alert>
     </div>
     <el-row :gutter="20">
       <el-col :span="12">
-        <el-button
-          type="primary"
-          icon="plus"
-          size="mini"
-          @click="addServiceLabels"
+        <el-button type="primary" icon="plus" @click="addServiceLabels" size="mini"
+          >添加基础物料</el-button
         >
-          添加基础物料
-        </el-button>
       </el-col>
       <el-col :span="12">
-        <el-input
-          v-model="labelsName"
-          placeholder="基础物料名称"
-          size="mini"
-        >
-          <el-button
-            slot="append"
-            icon="el-icon-search"
-            @click="labelsSearch"
-          />
-        </el-input>
+        <el-input placeholder="基础物料名称" v-model="labelsName" size="mini"
+          ><el-button slot="append" icon="el-icon-search" @click="labelsSearch"></el-button
+        ></el-input>
       </el-col>
     </el-row>
-    <el-table
-      v-loading="loading"
-      :data="serviceLabelsList"
-      :height="wheight - 270"
-    >
-      <el-table-column
-        prop="labelName"
-        label="物料名称"
-      />
-      <el-table-column
-        width="120"
-        prop="serviceType"
-        label="系统类型"
-      >
+    <el-table :data="serviceLabelsList" :height="wheight - 270" v-loading="loading">
+      <el-table-column prop="labelName" label="物料名称"></el-table-column>
+      <el-table-column width="120" prop="serviceType" label="系统类型">
         <template slot-scope="scope">
           <span v-if="scope.row.serviceType === 'point'">积分</span>
           <span v-if="scope.row.serviceType === 'deposit'">储值</span>
@@ -57,25 +34,22 @@
         prop="labelPrice"
         label="物料价格(元)"
         :formatter="priceformatter"
-      />
-      <el-table-column
-        width="120"
-        label="操作"
-      >
+      ></el-table-column>
+      <el-table-column width="120" label="操作">
         <template slot-scope="scope">
           <div class="operating-icons">
             <i
               class="iconfont icon-search-plus"
               @click="serviceLabelsDetail(scope.$index, scope.row)"
-            />
+            ></i>
             <i
               class="iconfont icon-edit1"
               @click="editServiceLabelsAction(scope.$index, scope.row)"
-            />
+            ></i>
             <i
               class="mark iconfont icon-trash-alt1"
               @click="deleteServiceLabelsAction(scope.$index, scope.row)"
-            />
+            ></i>
           </div>
         </template>
       </el-table-column>
@@ -84,13 +58,14 @@
       <el-pagination
         background
         layout="total, sizes, prev, pager, next"
+        @current-change="handleCurrentChange"
+        @size-change="handleSizeChange"
         :current-page.sync="params.page"
         :page-sizes="[10, 20, 50]"
         :total="total_count"
         :page-size="params.pageSize"
-        @current-change="handleCurrentChange"
-        @size-change="handleSizeChange"
-      />
+      >
+      </el-pagination>
     </div>
     <!-- 添加、编辑标识-开始 -->
     <el-dialog
@@ -99,12 +74,7 @@
       :before-close="handleCancel"
     >
       <template>
-        <el-form
-          ref="form"
-          :model="form"
-          class="demo-ruleForm"
-          label-width="90px"
-        >
+        <el-form ref="form" :model="form" class="demo-ruleForm" label-width="90px">
           <el-form-item label="系统类型">
             <el-col :span="14">
               <el-select v-model="form.service_type">
@@ -113,78 +83,51 @@
                   :key="item.value"
                   :label="item.label"
                   :value="item.value"
-                />
+                ></el-option>
               </el-select>
             </el-col>
           </el-form-item>
           <el-form-item label="物料名称">
-            <el-col
-              :span="14"
-            >
-              <el-input
+            <el-col :span="14"
+              ><el-input
                 v-model="form.label_name"
                 :maxlength="20"
                 placeholder="基础物料名称，如 积分、预存款、经验值、佣金等等"
-              />
-            </el-col>
+              ></el-input
+            ></el-col>
           </el-form-item>
           <el-form-item label="物料价格">
-            <el-col
-              :span="6"
-            >
-              <el-input
-                v-model="form.label_price"
+            <el-col :span="6"
+              ><el-input
                 type="number"
                 required
                 min="0"
+                v-model="form.label_price"
                 placeholder="基础物料的价格"
-              />
-            </el-col>
+              ></el-input
+            ></el-col>
             <el-col :span="1">
               &nbsp;元
             </el-col>
           </el-form-item>
           <el-form-item label="物料描述">
-            <el-col
-              :span="14"
-            >
-              <el-input
-                v-model="form.label_desc"
-                type="textarea"
-                :maxlength="255"
-              />
-            </el-col>
+            <el-col :span="14"
+              ><el-input type="textarea" :maxlength="255" v-model="form.label_desc"></el-input
+            ></el-col>
           </el-form-item>
         </el-form>
       </template>
-      <div
-        slot="footer"
-        class="dialog-footer"
-      >
-        <el-button @click.native="handleCancel">
-          取消
-        </el-button>
-        <el-button
-          type="primary"
-          @click="submitServiceLabelsAction"
-        >
-          保存
-        </el-button>
+      <div slot="footer" class="dialog-footer">
+        <el-button @click.native="handleCancel">取消</el-button>
+        <el-button type="primary" @click="submitServiceLabelsAction">保存</el-button>
       </div>
     </el-dialog>
     <!-- 添加、编辑基础物料-结束 -->
     <!-- 基础物料详情-开始 -->
-    <el-dialog
-      title="基础物料详情"
-      :visible.sync="serviceLabelsDetailVisible"
-    >
+    <el-dialog title="基础物料详情" :visible.sync="serviceLabelsDetailVisible">
       <template>
         <el-row class="row-bg">
-          <el-col :span="6">
-            <div class="grid-content">
-              基础类型
-            </div>
-          </el-col>
+          <el-col :span="6"><div class="grid-content">基础类型</div></el-col>
           <el-col :span="12">
             <div v-if="serviceLabelsDetailData.service_type === 'point'">
               积分类型
@@ -198,60 +141,32 @@
           </el-col>
         </el-row>
         <el-row class="row-bg">
-          <el-col :span="6">
-            <div class="grid-content">
-              物料名称
-            </div>
-          </el-col>
-          <el-col
-            :span="12"
+          <el-col :span="6"><div class="grid-content">物料名称</div></el-col>
+          <el-col :span="12"
+            ><div class="grid-content">{{ serviceLabelsDetailData.label_name }}</div></el-col
           >
-            <div class="grid-content">
-              {{ serviceLabelsDetailData.label_name }}
-            </div>
-          </el-col>
         </el-row>
         <el-row class="row-bg">
-          <el-col :span="6">
-            <div class="grid-content">
-              物料价格
-            </div>
-          </el-col>
-          <el-col
-            :span="12"
+          <el-col :span="6"><div class="grid-content">物料价格</div></el-col>
+          <el-col :span="12"
+            ><div class="grid-content">{{ serviceLabelsDetailData.label_price }}</div></el-col
           >
-            <div class="grid-content">
-              {{ serviceLabelsDetailData.label_price }}
-            </div>
-          </el-col>
         </el-row>
         <el-row class="row-bg">
-          <el-col :span="6">
-            <div class="grid-content">
-              物料描述
-            </div>
-          </el-col>
-          <el-col
-            :span="12"
+          <el-col :span="6"><div class="grid-content">物料描述</div></el-col>
+          <el-col :span="12"
+            ><div class="grid-content">{{ serviceLabelsDetailData.label_desc }}</div></el-col
           >
-            <div class="grid-content">
-              {{ serviceLabelsDetailData.label_desc }}
-            </div>
-          </el-col>
         </el-row>
       </template>
-      <div
-        slot="footer"
-        class="dialog-footer"
-      >
+      <div slot="footer" class="dialog-footer">
         <el-button
           @click.native="
             serviceLabelsDetailVisible = false
             serviceLabelsDetailData = {}
           "
+          >取消</el-button
         >
-          取消
-        </el-button>
       </div>
     </el-dialog>
     <!-- 基础物料详情-结束 -->
@@ -270,7 +185,7 @@ import {
 } from '../../../../../api/goods'
 export default {
   props: ['getStatus'],
-  data () {
+  data() {
     return {
       isEdit: false,
       editServiceLabelsVisible: false,
@@ -315,19 +230,8 @@ export default {
   computed: {
     ...mapGetters(['wheight'])
   },
-  watch: {
-    getStatus (val) {
-      if (val) {
-        this.getLabelsList()
-      }
-    }
-  },
-  mounted () {
-    //this.getCurrencyInfo()
-    this.getLabelsList()
-  },
   methods: {
-    handleCancel () {
+    handleCancel() {
       this.editServiceLabelsVisible = false
       this.form.label_name = ''
       this.form.label_price = ''
@@ -335,22 +239,22 @@ export default {
       this.form.service_type = ''
       this.form.label_id = ''
     },
-    handleCurrentChange (page_num) {
+    handleCurrentChange(page_num) {
       this.params.page = page_num
       this.getLabelsList()
     },
-    handleSizeChange (pageSize) {
+    handleSizeChange(pageSize) {
       this.params.page = 1
       this.params.pageSize = pageSize
       this.getLabelsList()
     },
-    addServiceLabels () {
+    addServiceLabels() {
       // 添加物料弹框
       this.editServiceLabelsTitle = '添加基础物料'
       this.editServiceLabelsVisible = true
       this.isEdit = false
     },
-    editServiceLabelsAction (index, row) {
+    editServiceLabelsAction(index, row) {
       // 编辑物料弹框
       this.editServiceLabelsTitle = '编辑基础物料'
       this.editServiceLabelsVisible = true
@@ -361,7 +265,7 @@ export default {
       this.form.label_desc = row.labelDesc
       this.form.label_id = row.labelId
     },
-    submitServiceLabelsAction () {
+    submitServiceLabelsAction() {
       // 提交物料
       if (this.form.label_id) {
         let params = {
@@ -385,18 +289,18 @@ export default {
         })
       }
     },
-    serviceLabelsDetail (index, row) {
+    serviceLabelsDetail(index, row) {
       this.serviceLabelsDetailVisible = true
       getServiceLabelsDetail(row.labelId).then((response) => {
         this.serviceLabelsDetailData = response.data.data
       })
     },
-    labelsSearch () {
+    labelsSearch() {
       this.params.keywords = this.labelsName
       this.params.page = 1
       this.getLabelsList()
     },
-    getLabelsList () {
+    getLabelsList() {
       this.loading = true
       this.params.service_type = 'timescard'
       getServiceLabelsList(this.params).then((response) => {
@@ -405,7 +309,7 @@ export default {
         this.loading = false
       })
     },
-    deleteServiceLabelsAction (index, row) {
+    deleteServiceLabelsAction(index, row) {
       this.$confirm('此操作将删除该基础物料, 是否继续?', '提示', {
         confirmButtonText: '确定',
         cancelButtonText: '取消',
@@ -428,14 +332,25 @@ export default {
           })
         })
     },
-    priceformatter (row, column) {
+    priceformatter(row, column) {
       return this.cursymbol + row.labelPrice / 100
     },
-    getCurrencyInfo () {
+    getCurrencyInfo() {
       getDefaultCurrency().then((res) => {
         this.currency = res.data.data
         this.cursymbol = this.currency.symbol
       })
+    }
+  },
+  mounted() {
+    //this.getCurrencyInfo()
+    this.getLabelsList()
+  },
+  watch: {
+    getStatus(val) {
+      if (val) {
+        this.getLabelsList()
+      }
     }
   }
 }

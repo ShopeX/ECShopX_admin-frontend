@@ -1,18 +1,13 @@
 <template>
-  <div
-    class="component-wrap"
-    :class="{ 'component-padded': base.padded, 'active': active }"
-  >
-    <div class="current-active" />
-    <div class="hotTopic-title">
-      {{ base.title }}
-    </div>
+  <div class="component-wrap" :class="{ 'component-padded': base.padded, 'active': active }">
+    <div class="current-active"></div>
+    <div class="hotTopic-title">{{ base.title }}</div>
     <div class="hotTopic-list">
       <div
-        v-for="(item, index) in data"
-        :key="index"
         class="hotTopic_li"
         :class="base.index == index ? 'checked' : ''"
+        v-for="(item, index) in data"
+        :key="index"
       >
         {{ item.topic }}
       </div>
@@ -32,29 +27,29 @@ export default {
       default: false
     }
   },
-  data () {
+  watch: {
+    res(value) {
+      if (value) {
+        this.setData(value)
+      }
+    }
+  },
+  data() {
     return {
       name: '',
       base: {},
       data: []
     }
   },
-  watch: {
-    res (value) {
-      if (value) {
-        this.setData(value)
-      }
-    }
-  },
-  mounted () {
-    this.setData(this.res)
-  },
   methods: {
-    setData (val) {
+    setData(val) {
       this.name = val.name
       this.base = val.base
       this.data = val.data
     }
+  },
+  mounted() {
+    this.setData(this.res)
   }
 }
 </script>

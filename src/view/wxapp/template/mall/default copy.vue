@@ -4,120 +4,81 @@
       <draggable
         v-model="initData"
         :options="dragIssuesOptions"
-        class="components-view"
         @start="onStart"
         @end="onEnd"
+        class="components-view"
       >
-        <div
-          v-for="(item, index) in initData"
-          class="component-control"
-        >
+        <div v-for="(item, index) in initData" class="component-control">
           <template v-if="item.name === 'coupon'">
-            <svg
-              class="svg-icon"
-              aria-hidden="true"
-            >
-              <use xlink:href="#icon-tag" />
+            <svg class="svg-icon" aria-hidden="true">
+              <use xlink:href="#icon-tag"></use>
             </svg>
             优惠券
           </template>
           <template v-if="item.name === 'film'">
-            <svg
-              class="svg-icon"
-              aria-hidden="true"
-            >
-              <use xlink:href="#icon-video" />
+            <svg class="svg-icon" aria-hidden="true">
+              <use xlink:href="#icon-video"></use>
             </svg>
             视频
           </template>
           <template v-if="item.name === 'goodsGrid'">
-            <svg
-              class="svg-icon"
-              aria-hidden="true"
-            >
-              <use xlink:href="#icon-grid" />
+            <svg class="svg-icon" aria-hidden="true">
+              <use xlink:href="#icon-grid"></use>
             </svg>
             商品栅格
           </template>
           <template v-if="item.name === 'goodsScroll'">
-            <svg
-              class="svg-icon"
-              aria-hidden="true"
-            >
-              <use xlink:href="#icon-scroll" />
+            <svg class="svg-icon" aria-hidden="true">
+              <use xlink:href="#icon-scroll"></use>
             </svg>
             商品滚动
           </template>
           <template v-if="item.name === 'imgHotzone'">
-            <svg
-              class="svg-icon"
-              aria-hidden="true"
-            >
-              <use xlink:href="#icon-hotzone" />
+            <svg class="svg-icon" aria-hidden="true">
+              <use xlink:href="#icon-hotzone"></use>
             </svg>
             热区图
           </template>
           <template v-if="item.name === 'marquees'">
-            <svg
-              class="svg-icon"
-              aria-hidden="true"
-            >
-              <use xlink:href="#icon-marquees" />
+            <svg class="svg-icon" aria-hidden="true">
+              <use xlink:href="#icon-marquees"></use>
             </svg>
             文字轮播
           </template>
           <template v-if="item.name === 'navigation'">
-            <svg
-              class="svg-icon"
-              aria-hidden="true"
-            >
-              <use xlink:href="#icon-navigation" />
+            <svg class="svg-icon" aria-hidden="true">
+              <use xlink:href="#icon-navigation"></use>
             </svg>
             图片导航
           </template>
           <template v-if="item.name === 'search'">
-            <svg
-              class="svg-icon"
-              aria-hidden="true"
-            >
-              <use xlink:href="#icon-search" />
+            <svg class="svg-icon" aria-hidden="true">
+              <use xlink:href="#icon-search"></use>
             </svg>
             搜索
           </template>
           <template v-if="item.name === 'showcase'">
-            <svg
-              class="svg-icon"
-              aria-hidden="true"
-            >
-              <use xlink:href="#icon-showcase" />
+            <svg class="svg-icon" aria-hidden="true">
+              <use xlink:href="#icon-showcase"></use>
             </svg>
             橱窗
           </template>
           <template v-if="item.name === 'slider'">
-            <svg
-              class="svg-icon"
-              aria-hidden="true"
-            >
-              <use xlink:href="#icon-slider" />
+            <svg class="svg-icon" aria-hidden="true">
+              <use xlink:href="#icon-slider"></use>
             </svg>
             轮播
           </template>
           <template v-if="item.name === 'store' && system_mode === 'platform'">
-            <svg
-              class="svg-icon"
-              aria-hidden="true"
-            >
-              <use xlink:href="#icon-store" />
+            <svg class="svg-icon" aria-hidden="true">
+              <use xlink:href="#icon-store"></use>
             </svg>
             推荐店铺
           </template>
         </div>
       </draggable>
-      <el-button
-        type="text"
-        @click="handleShowConfig"
-      >
-        <i class="iconfont icon-cog" /> 小程序设置
+      <el-button type="text" @click="handleShowConfig">
+        <i class="iconfont icon-cog"></i> 小程序设置
       </el-button>
     </section>
     <section class="section section-white view-warp">
@@ -138,15 +99,15 @@
           <draggable
             v-model="components"
             :options="dragViewOptions"
-            class="components-wrap"
-            :style="'height: ' + (wheight - 240) + 'px;'"
             @start="onStart"
             @end="onEnd"
+            class="components-wrap"
+            :style="'height: ' + (wheight - 240) + 'px;'"
           >
             <div
-              v-for="(item, index) in components"
-              :key="index"
               class="component-item"
+              :key="index"
+              v-for="(item, index) in components"
               @click="setCurrent(index)"
             >
               <transition name="el-fade-in-linear">
@@ -154,68 +115,61 @@
                   v-if="editorIndex === index"
                   class="iconfont icon-trash-alt"
                   @click="removeCurrent"
-                />
+                ></div>
               </transition>
               <coupon
                 v-if="item.name === 'coupon'"
                 :res="item"
                 :active="index == editorIndex"
-              />
-              <film
-                v-if="item.name === 'film'"
-                :res="item"
-                :active="index == editorIndex"
-              />
+              ></coupon>
+              <film v-if="item.name === 'film'" :res="item" :active="index == editorIndex"></film>
               <goodsGrid
                 v-if="item.name === 'goodsGrid'"
                 :res="item"
                 :active="index == editorIndex"
-              />
+              ></goodsGrid>
               <goodsScroll
                 v-if="item.name === 'goodsScroll'"
                 :res="item"
                 :active="index == editorIndex"
-              />
+              ></goodsScroll>
               <imgHotzone
                 v-if="item.name === 'imgHotzone'"
                 :res="item"
                 :active="index == editorIndex"
-              />
+              ></imgHotzone>
               <marquees
                 v-if="item.name === 'marquees'"
                 :res="item"
                 :active="index == editorIndex"
-              />
+              ></marquees>
               <navigation
                 v-if="item.name === 'navigation'"
                 :res="item"
                 :active="index == editorIndex"
-              />
+              ></navigation>
               <search
                 v-if="item.name === 'search'"
                 :res="item"
                 :active="index == editorIndex"
-              />
+              ></search>
               <showcase
                 v-if="item.name === 'showcase'"
                 :res="item"
                 :active="index == editorIndex"
-              />
+              ></showcase>
               <slider
                 v-if="item.name === 'slider'"
                 :res="item"
                 :active="index == editorIndex"
-              />
+              ></slider>
               <store
                 v-if="item.name === 'store' && system_mode === 'platform'"
                 :res="item"
                 :active="index == editorIndex"
-              />
+              ></store>
             </div>
-            <goodsGrid
-              v-if="isOpenFaverite && faverite.length"
-              :res="faverite"
-            />
+            <goodsGrid v-if="isOpenFaverite && faverite.length" :res="faverite"></goodsGrid>
           </draggable>
           <div class="template-footer">
             <div
@@ -224,11 +178,11 @@
               :style="{ background: tabs.config.backgroundColor, color: tabs.config.color }"
               @click="setCurrent('tabs')"
             >
-              <div class="current-active" />
+              <div class="current-active"></div>
               <div
+                class="tab"
                 v-for="(item, index) in tabs.data"
                 :key="index"
-                class="tab"
                 :style="index === currentTab ? `color:${tabs.config.selectedColor}` : ''"
               >
                 <svg
@@ -237,7 +191,7 @@
                   aria-hidden="true"
                   :style="index === currentTab ? `color:${tabs.config.selectedColor}` : ''"
                 >
-                  <use :xlink:href="`#icon-${item.name}`" />
+                  <use :xlink:href="`#icon-${item.name}`"></use>
                 </svg>
                 <template v-else>
                   <img
@@ -247,29 +201,24 @@
                       item.selectedIconPath ||
                         'https://fakeimg.pl/60x60/EFEFEF/CCC/?text=icofont=lobster'
                     "
-                  >
+                  />
                   <img
                     v-else
                     class="svg-icon"
                     :src="
                       item.iconPath || 'https://fakeimg.pl/60x60/EFEFEF/CCC/?text=icon&font=lobster'
                     "
-                  >
+                  />
                 </template>
-                <div class="tab-text">
-                  {{ item.text }}
-                </div>
+                <div class="tab-text">{{ item.text }}</div>
               </div>
             </div>
           </div>
         </div>
       </div>
       <div class="setting-view">
-        <div
-          v-if="editorIndex === null"
-          class="view-placeholder"
-        >
-          <i class="iconfont icon-shapes" />
+        <div class="view-placeholder" v-if="editorIndex === null">
+          <i class="iconfont icon-shapes"></i>
           请选择左侧挂件
         </div>
         <template v-else>
@@ -277,78 +226,60 @@
             :res="editorData"
             @bindCoupons="showCoupons"
             @bindImgs="showImgs"
-          />
-          <filmEditor
-            :res="editorData"
-            @change="getVideo"
-          />
+          ></couponEditor>
+          <filmEditor :res="editorData" @change="getVideo"></filmEditor>
           <goodsGridEditor
             :res="editorData"
             @bindGoods="showGoods"
             @bindLinks="showLinks"
-          />
+          ></goodsGridEditor>
           <goodsScrollEditor
             :res="editorData"
             @bindGoods="showGoods"
             @bindLinks="showLinks"
-          />
+          ></goodsScrollEditor>
           <imgHotzoneEditor
             :res="editorData"
             @bindImgs="showImgs"
             @bindLinks="showLinks"
-          />
-          <marqueesEditor
-            :res="editorData"
-            @change="updataArticle"
-          />
+          ></imgHotzoneEditor>
+          <marqueesEditor :res="editorData" @change="updataArticle"></marqueesEditor>
           <navigationEditor
             :res="editorData"
             @bindImgs="showImgs"
             @bindLinks="showLinks"
-          />
-          <searchEditor :res="editorData" />
+          ></navigationEditor>
+          <searchEditor :res="editorData"></searchEditor>
           <showcaseEditor
             :res="editorData"
             @bindImgs="showImgs"
             @bindLinks="showLinks"
-          />
+          ></showcaseEditor>
           <sliderEditor
             :res="editorData"
             @bindImgs="showImgs"
             @bindLinks="showLinks"
-          />
-          <storeEditor
-            :res="editorData"
-            @bindGoods="showGoods"
-          />
-          <tabsEditor
-            :res="editorData"
-            @bindImgs="showImgs"
-          />
+          ></sliderEditor>
+          <storeEditor :res="editorData" @bindGoods="showGoods"></storeEditor>
+          <tabsEditor :res="editorData" @bindImgs="showImgs"></tabsEditor>
         </template>
       </div>
     </section>
     <section class="content-padded-s section-white content-center">
-      <el-button
-        class="btn-save"
-        type="primary"
-        @click="saveConfig"
-      >
-        保存
-      </el-button>
+      <el-button class="btn-save" type="primary" @click="saveConfig">保存</el-button>
     </section>
     <imgPicker
       :dialog-visible="imgsVisible"
       :sc-status="isGetImage"
       @chooseImg="pickImg"
       @closeImgDialog="closeimgsVisible"
-    />
+    ></imgPicker>
     <linkSetter
       :visible="linksVisible"
-      :template_name="template_name"
       @setLink="setLink"
       @closeDialog="closeDialog"
-    />
+      :template_name="template_name"
+    ></linkSetter>
     <goodsSelect
       :items-visible="goodsVisible"
       :get-status="setItemStatus"
@@ -356,17 +287,13 @@
       :rel-items-ids="relItemsIds"
       @chooseStore="pickGoods"
       @closeStoreDialog="closeDialog"
-    />
+    ></goodsSelect>
     <couponPicker
       :visible="couponsVisible"
       @pickCoupon="pickCoupon"
       @closeDialog="closeDialog"
-    />
-    <sideBar
-      :visible.sync="show_sideBar"
-      :title="'小程序设置'"
-      width="20"
-    >
+    ></couponPicker>
+    <sideBar :visible.sync="show_sideBar" :title="'小程序设置'" width="20">
       <el-form label-width="120px">
         <el-form-item label="开启猜你喜欢">
           <el-switch
@@ -375,7 +302,8 @@
             :inactive-value="false"
             active-color="#27cc6a"
             inactive-color="#efefef"
-          />
+          >
+          </el-switch>
         </el-form-item>
         <el-form-item label="开启小程序定位">
           <el-switch
@@ -384,7 +312,8 @@
             :inactive-value="false"
             active-color="#27cc6a"
             inactive-color="#efefef"
-          />
+          >
+          </el-switch>
         </el-form-item>
         <el-form-item label="开启扫码功能">
           <el-switch
@@ -393,7 +322,8 @@
             :inactive-value="false"
             active-color="#27cc6a"
             inactive-color="#efefef"
-          />
+          >
+          </el-switch>
         </el-form-item>
       </el-form>
     </sideBar>
@@ -480,7 +410,7 @@ export default {
     // 第三方组件
     draggable
   },
-  data () {
+  data() {
     return {
       show_sideBar: false,
       componentHeight: '',
@@ -837,7 +767,262 @@ export default {
   computed: {
     ...mapGetters(['wheight', 'template_name'])
   },
-  async mounted () {
+  methods: {
+    handleShowConfig() {
+      this.show_sideBar = true
+    },
+    // 拖拽绑定事件
+    onStart(evt) {
+      if (evt.target.className === 'components-view') {
+        this.saveInit = JSON.stringify(this.initData[evt.oldIndex])
+      } else {
+        this.setCurrent(evt.oldIndex)
+      }
+    },
+    onEnd(evt) {
+      this.setCurrent(evt.newIndex)
+      if (evt.target.className === 'components-view' && evt.to.className === 'components-wrap') {
+        this.initData.splice(evt.oldIndex, 0, JSON.parse(this.saveInit))
+      }
+    },
+    // 设置当前编辑的组件
+    setCurrent(val) {
+      this.editorIndex = val
+      if (val === 'tabs') {
+        this.editorData = { ...this.tabs }
+      } else {
+        this.editorData = { ...this.components[val] }
+      }
+    },
+    // 删除当前组件
+    removeCurrent() {
+      this.$confirm('确认删除当前组件？')
+        .then((_) => {
+          this.editorData = {}
+          this.components.splice(this.editorIndex, 1)
+          this.editorIndex = null
+          this.editorDataIndex = null
+        })
+        .catch((_) => {})
+    },
+    // 视频选择器绑定事件
+    getVideo(data) {
+      Object.assign(this.editorData.data[0], data)
+      Object.assign(this.components[this.editorIndex].data[0], data)
+    },
+    // 图片选择器绑定事件
+    showImgs(index, tabIcon) {
+      this.imgsVisible = true
+      this.isGetImage = true
+      if (typeof index !== undefined) {
+        this.editorDataIndex = index
+      }
+      if (tabIcon) {
+        this.tabIcon = tabIcon
+      }
+    },
+    pickImg(data) {
+      if (this.editorIndex === 'tabs') {
+        if (this.tabIcon === 'default') {
+          this.editorData.data[this.editorDataIndex].iconPath = data.url
+          this.tabs.data[this.editorDataIndex].iconPath = data.url
+        } else {
+          this.editorData.data[this.editorDataIndex].selectedIconPath = data.url
+          this.tabs.data[this.editorDataIndex].selectedIconPath = data.url
+        }
+      } else {
+        if (this.components[this.editorIndex].name === 'imgHotzone') {
+          this.components[this.editorIndex].config.imgUrl = data.url
+        } else {
+          this.components[this.editorIndex].data[this.editorDataIndex].imgUrl = data.url
+        }
+      }
+      this.imgsVisible = false
+    },
+    closeimgsVisible() {
+      this.imgsVisible = false
+    },
+    // 商品选择器绑定事件
+    showGoods(index) {
+      let ids = []
+      let items = []
+      if (index !== undefined) {
+        this.editorDataIndex = index
+        items = this.editorData.data[index].items
+      } else {
+        items = this.editorData.data
+      }
+      if (items.length > 0 && items[0].goodsId) {
+        items.forEach((item) => {
+          ids.push(item.key || item.goodsId)
+        })
+        let itemParams = {
+          item_id: ids,
+          page: 1,
+          pageSize: 100,
+          item_type: 'normal'
+        }
+        if (index !== undefined) {
+          Object(itemParams, { distributor_id: this.relStore.id })
+        }
+        getItemsList(itemParams).then((res) => {
+          this.relItemsIds = res.data.data.list
+          setTimeout(() => {
+            this.setItemStatus = true
+            this.goodsVisible = true
+          }, 500)
+        })
+      } else {
+        this.relItemsIds = [{ goodsId: 0 }]
+        setTimeout(() => {
+          this.setItemStatus = true
+          this.goodsVisible = true
+        }, 500)
+      }
+    },
+    pickGoods(data, store) {
+      console.log(this.editorDataIndex)
+      if (this.editorDataIndex !== null) {
+        if (!store.id) {
+          this.relItemsIds.splice(0)
+          this.$message({
+            message: '请选择店铺',
+            type: 'error'
+          })
+          return
+        }
+      }
+      this.relItemsIds = data
+      this.relStore = store
+      let values = []
+      if (data.length > 0) {
+        data.forEach((item) => {
+          let obj = {
+            imgUrl: item.pics[0],
+            title: item.itemName,
+            goodsId: item.itemId,
+            brand: item.brand_logo,
+            price: item.price
+          }
+          values.push(obj)
+        })
+      }
+      if (!this.editorDataIndex && this.editorDataIndex !== 0) {
+        this.editorData.data = values
+        this.components[this.editorIndex].data = values
+      } else {
+        this.editorData.data[this.editorDataIndex].id = store.id
+        this.editorData.data[this.editorDataIndex].name = store.name
+        this.editorData.data[this.editorDataIndex].logo = store.logo
+        this.editorData.data[this.editorDataIndex].items = values
+        this.components[this.editorIndex].data[this.editorDataIndex].id = store.id
+        this.components[this.editorIndex].data[this.editorDataIndex].name = store.name
+        this.components[this.editorIndex].data[this.editorDataIndex].logo = store.logo
+        this.components[this.editorIndex].data[this.editorDataIndex].items = values
+      }
+      this.goodsVisible = false
+    },
+    // 更新跑马灯数据
+    updataArticle(data) {},
+    // 优惠券选择器绑定事件
+    showCoupons() {
+      this.couponsVisible = true
+    },
+    pickCoupon(data) {
+      this.editorData.data = data
+      this.components[this.editorIndex].data = data
+      this.couponsVisible = false
+    },
+    showLinks(index) {
+      this.linksVisible = true
+      if (index !== undefined) {
+        this.editorDataIndex = index
+      }
+    },
+    // 链接选择器绑定事件
+    setLink(data, type) {
+      if (this.editorDataIndex !== null) {
+        this.editorData.data[this.editorDataIndex].id = data.id
+        this.editorData.data[this.editorDataIndex].title = data.title
+        this.editorData.data[this.editorDataIndex].linkPage = type
+        this.components[this.editorIndex].data[this.editorDataIndex].id = data.id
+        this.components[this.editorIndex].data[this.editorDataIndex].title = data.title
+        this.components[this.editorIndex].data[this.editorDataIndex].linkPage = type
+        this.linksVisible = false
+      } else {
+        this.editorData.config.moreLink.id = data.id
+        this.editorData.config.moreLink.title = data.title
+        this.editorData.config.moreLink.linkPage = type
+        this.components[this.editorIndex].config.moreLink.id = data.id
+        this.components[this.editorIndex].config.moreLink.title = data.title
+        this.components[this.editorIndex].config.moreLink.linkPage = type
+      }
+      // 处理完 恢复
+      this.editorDataIndex = null
+    },
+    // 选择器公用关闭事件
+    closeDialog(key) {
+      switch (key) {
+        case 'coupon':
+          this.couponsVisible = false
+          break
+        case 'link':
+          this.linksVisible = false
+          break
+        case 'icon':
+          this.iconsVisible = false
+          break
+        default:
+          this.goodsVisible = false
+      }
+    },
+    // 保存配置
+    async saveConfig() {
+      let hasLocation = this.components.findIndex((item) => item.name === 'setting')
+
+      if (hasLocation == -1) {
+        this.components.push({
+          name: 'setting',
+          base: {},
+          config: {
+            location: this.isOpenLocation,
+            faverite: this.isOpenFaverite,
+            scancode: this.isOpenScancode
+          }
+        })
+      } else {
+        this.components.forEach((item) => {
+          if (item.name === 'setting') {
+            item.config = {
+              location: this.isOpenLocation,
+              faverite: this.isOpenFaverite,
+              scancode: this.isOpenScancode
+            }
+          }
+        })
+      }
+
+      let filter = {
+        template_name: this.template_name,
+        config: JSON.stringify(this.components),
+        page_name: 'index'
+      }
+      let param = {
+        template_name: this.template_name,
+        config: JSON.stringify([this.tabs]),
+        page_name: 'tabs'
+      }
+      const template = await savePageParams(filter)
+      const tabBar = await savePageParams(param)
+      if (template && tabBar) {
+        this.$message({
+          message: '保存成功',
+          type: 'success'
+        })
+      }
+    }
+  },
+  async mounted() {
     if (this.system_mode === 'platform') {
       this.initData = [
         ...this.initData,
@@ -895,261 +1080,6 @@ export default {
     }
     const tabBar = await getParamByTempName(tabBarParam)
     Object.assign(this.tabs, tabBar.data.data.list[0].params)
-  },
-  methods: {
-    handleShowConfig () {
-      this.show_sideBar = true
-    },
-    // 拖拽绑定事件
-    onStart (evt) {
-      if (evt.target.className === 'components-view') {
-        this.saveInit = JSON.stringify(this.initData[evt.oldIndex])
-      } else {
-        this.setCurrent(evt.oldIndex)
-      }
-    },
-    onEnd (evt) {
-      this.setCurrent(evt.newIndex)
-      if (evt.target.className === 'components-view' && evt.to.className === 'components-wrap') {
-        this.initData.splice(evt.oldIndex, 0, JSON.parse(this.saveInit))
-      }
-    },
-    // 设置当前编辑的组件
-    setCurrent (val) {
-      this.editorIndex = val
-      if (val === 'tabs') {
-        this.editorData = { ...this.tabs }
-      } else {
-        this.editorData = { ...this.components[val] }
-      }
-    },
-    // 删除当前组件
-    removeCurrent () {
-      this.$confirm('确认删除当前组件？')
-        .then((_) => {
-          this.editorData = {}
-          this.components.splice(this.editorIndex, 1)
-          this.editorIndex = null
-          this.editorDataIndex = null
-        })
-        .catch((_) => {})
-    },
-    // 视频选择器绑定事件
-    getVideo (data) {
-      Object.assign(this.editorData.data[0], data)
-      Object.assign(this.components[this.editorIndex].data[0], data)
-    },
-    // 图片选择器绑定事件
-    showImgs (index, tabIcon) {
-      this.imgsVisible = true
-      this.isGetImage = true
-      if (typeof index !== undefined) {
-        this.editorDataIndex = index
-      }
-      if (tabIcon) {
-        this.tabIcon = tabIcon
-      }
-    },
-    pickImg (data) {
-      if (this.editorIndex === 'tabs') {
-        if (this.tabIcon === 'default') {
-          this.editorData.data[this.editorDataIndex].iconPath = data.url
-          this.tabs.data[this.editorDataIndex].iconPath = data.url
-        } else {
-          this.editorData.data[this.editorDataIndex].selectedIconPath = data.url
-          this.tabs.data[this.editorDataIndex].selectedIconPath = data.url
-        }
-      } else {
-        if (this.components[this.editorIndex].name === 'imgHotzone') {
-          this.components[this.editorIndex].config.imgUrl = data.url
-        } else {
-          this.components[this.editorIndex].data[this.editorDataIndex].imgUrl = data.url
-        }
-      }
-      this.imgsVisible = false
-    },
-    closeimgsVisible () {
-      this.imgsVisible = false
-    },
-    // 商品选择器绑定事件
-    showGoods (index) {
-      let ids = []
-      let items = []
-      if (index !== undefined) {
-        this.editorDataIndex = index
-        items = this.editorData.data[index].items
-      } else {
-        items = this.editorData.data
-      }
-      if (items.length > 0 && items[0].goodsId) {
-        items.forEach((item) => {
-          ids.push(item.key || item.goodsId)
-        })
-        let itemParams = {
-          item_id: ids,
-          page: 1,
-          pageSize: 100,
-          item_type: 'normal'
-        }
-        if (index !== undefined) {
-          Object(itemParams, { distributor_id: this.relStore.id })
-        }
-        getItemsList(itemParams).then((res) => {
-          this.relItemsIds = res.data.data.list
-          setTimeout(() => {
-            this.setItemStatus = true
-            this.goodsVisible = true
-          }, 500)
-        })
-      } else {
-        this.relItemsIds = [{ goodsId: 0 }]
-        setTimeout(() => {
-          this.setItemStatus = true
-          this.goodsVisible = true
-        }, 500)
-      }
-    },
-    pickGoods (data, store) {
-      console.log(this.editorDataIndex)
-      if (this.editorDataIndex !== null) {
-        if (!store.id) {
-          this.relItemsIds.splice(0)
-          this.$message({
-            message: '请选择店铺',
-            type: 'error'
-          })
-          return
-        }
-      }
-      this.relItemsIds = data
-      this.relStore = store
-      let values = []
-      if (data.length > 0) {
-        data.forEach((item) => {
-          let obj = {
-            imgUrl: item.pics[0],
-            title: item.itemName,
-            goodsId: item.itemId,
-            brand: item.brand_logo,
-            price: item.price
-          }
-          values.push(obj)
-        })
-      }
-      if (!this.editorDataIndex && this.editorDataIndex !== 0) {
-        this.editorData.data = values
-        this.components[this.editorIndex].data = values
-      } else {
-        this.editorData.data[this.editorDataIndex].id = store.id
-        this.editorData.data[this.editorDataIndex].name = store.name
-        this.editorData.data[this.editorDataIndex].logo = store.logo
-        this.editorData.data[this.editorDataIndex].items = values
-        this.components[this.editorIndex].data[this.editorDataIndex].id = store.id
-        this.components[this.editorIndex].data[this.editorDataIndex].name = store.name
-        this.components[this.editorIndex].data[this.editorDataIndex].logo = store.logo
-        this.components[this.editorIndex].data[this.editorDataIndex].items = values
-      }
-      this.goodsVisible = false
-    },
-    // 更新跑马灯数据
-    updataArticle (data) {},
-    // 优惠券选择器绑定事件
-    showCoupons () {
-      this.couponsVisible = true
-    },
-    pickCoupon (data) {
-      this.editorData.data = data
-      this.components[this.editorIndex].data = data
-      this.couponsVisible = false
-    },
-    showLinks (index) {
-      this.linksVisible = true
-      if (index !== undefined) {
-        this.editorDataIndex = index
-      }
-    },
-    // 链接选择器绑定事件
-    setLink (data, type) {
-      if (this.editorDataIndex !== null) {
-        this.editorData.data[this.editorDataIndex].id = data.id
-        this.editorData.data[this.editorDataIndex].title = data.title
-        this.editorData.data[this.editorDataIndex].linkPage = type
-        this.components[this.editorIndex].data[this.editorDataIndex].id = data.id
-        this.components[this.editorIndex].data[this.editorDataIndex].title = data.title
-        this.components[this.editorIndex].data[this.editorDataIndex].linkPage = type
-        this.linksVisible = false
-      } else {
-        this.editorData.config.moreLink.id = data.id
-        this.editorData.config.moreLink.title = data.title
-        this.editorData.config.moreLink.linkPage = type
-        this.components[this.editorIndex].config.moreLink.id = data.id
-        this.components[this.editorIndex].config.moreLink.title = data.title
-        this.components[this.editorIndex].config.moreLink.linkPage = type
-      }
-      // 处理完 恢复
-      this.editorDataIndex = null
-    },
-    // 选择器公用关闭事件
-    closeDialog (key) {
-      switch (key) {
-        case 'coupon':
-          this.couponsVisible = false
-          break
-        case 'link':
-          this.linksVisible = false
-          break
-        case 'icon':
-          this.iconsVisible = false
-          break
-        default:
-          this.goodsVisible = false
-      }
-    },
-    // 保存配置
-    async saveConfig () {
-      let hasLocation = this.components.findIndex((item) => item.name === 'setting')
-
-      if (hasLocation == -1) {
-        this.components.push({
-          name: 'setting',
-          base: {},
-          config: {
-            location: this.isOpenLocation,
-            faverite: this.isOpenFaverite,
-            scancode: this.isOpenScancode
-          }
-        })
-      } else {
-        this.components.forEach((item) => {
-          if (item.name === 'setting') {
-            item.config = {
-              location: this.isOpenLocation,
-              faverite: this.isOpenFaverite,
-              scancode: this.isOpenScancode
-            }
-          }
-        })
-      }
-
-      let filter = {
-        template_name: this.template_name,
-        config: JSON.stringify(this.components),
-        page_name: 'index'
-      }
-      let param = {
-        template_name: this.template_name,
-        config: JSON.stringify([this.tabs]),
-        page_name: 'tabs'
-      }
-      const template = await savePageParams(filter)
-      const tabBar = await savePageParams(param)
-      if (template && tabBar) {
-        this.$message({
-          message: '保存成功',
-          type: 'success'
-        })
-      }
-    }
   }
 }
 </script>

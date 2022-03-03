@@ -1,40 +1,20 @@
 <template>
   <div>
-    <el-tabs
-      v-model="activeName"
-      type="border-card"
-      @tab-click="handleClick"
-    >
-      <el-tab-pane
-        v-if="!isHfpay"
-        label="微信支付配置"
-        name="wxpay"
-      >
-        <wxpayTemplates />
+    <el-tabs v-model="activeName" type="card" @tab-click="handleClick">
+      <el-tab-pane label="微信支付配置" name="wxpay" v-if="!isHfpay">
+        <wxpayTemplates></wxpayTemplates>
       </el-tab-pane>
-      <el-tab-pane
-        v-if="!isHfpay"
-        label="支付宝支付配置"
-        name="alipay"
-      >
-        <alipayTemplates />
+      <el-tab-pane label="支付宝支付配置" name="alipay" v-if="!isHfpay">
+        <alipayTemplates></alipayTemplates>
       </el-tab-pane>
       <!-- <el-tab-pane label="ebuy支付配置" name="ebuypay" v-if="!isHfpay">
         <ebuypayTemplates></ebuypayTemplates>
       </el-tab-pane> -->
-      <el-tab-pane
-        v-if="isHfpay"
-        label="汇付天下支付配置"
-        name="hfpay"
-      >
-        <hfpayTemplates />
+      <el-tab-pane label="汇付天下支付配置" name="hfpay" v-if="isHfpay">
+        <hfpayTemplates></hfpayTemplates>
       </el-tab-pane>
-      <el-tab-pane
-        v-if="!isHfpay"
-        label="Adapay支付配置"
-        name="adapay"
-      >
-        <adapayTemplates />
+      <el-tab-pane label="Adapay支付配置" name="adapay" v-if="!isHfpay">
+        <adapayTemplates></adapayTemplates>
       </el-tab-pane>
     </el-tabs>
   </div>
@@ -56,7 +36,7 @@ export default {
     hfpayTemplates,
     adapayTemplates
   },
-  data () {
+  data() {
     return {
       showDialog: false,
       activeName: 'wxpay',
@@ -69,7 +49,23 @@ export default {
       }
     }
   },
-  mounted () {
+  methods: {
+    handleClick(tab, event) {
+      if (this.activeName === 'wxpay') {
+      } else if (this.activeName === 'alipay') {
+      }
+    },
+    handleChange() {
+      this.showDialog = true
+    },
+    cancelAction() {
+      this.showDialog = false
+    },
+    handleSubmit() {
+      this.showDialog = false
+    }
+  },
+  mounted() {
     if ('undefined' != typeof this.$route.query.activeName) {
       this.activeName = this.$route.query.activeName
     }
@@ -83,22 +79,6 @@ export default {
         this.isHfpay = false
       }
     })
-  },
-  methods: {
-    handleClick (tab, event) {
-      if (this.activeName === 'wxpay') {
-      } else if (this.activeName === 'alipay') {
-      }
-    },
-    handleChange () {
-      this.showDialog = true
-    },
-    cancelAction () {
-      this.showDialog = false
-    },
-    handleSubmit () {
-      this.showDialog = false
-    }
   }
 }
 </script>

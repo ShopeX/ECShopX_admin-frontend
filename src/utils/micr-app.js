@@ -1,4 +1,9 @@
-import { registerMicroApps, initGlobalState, start, MicroAppStateActions } from 'qiankun'
+import {
+  registerMicroApps,
+  initGlobalState,
+  start,
+  MicroAppStateActions,
+} from "qiankun";
 
 const initialState = {}
 const actions = initGlobalState(initialState)

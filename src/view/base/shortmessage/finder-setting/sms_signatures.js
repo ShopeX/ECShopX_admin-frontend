@@ -70,20 +70,19 @@ export default (vm) => {
                   (row.status == '1' && '审核通过') ||
                   (row.status == '2' && '审核失败 ')
               ),
-              row.status == 2 &&
-                row.reason &&
-                h(
-                  'el-tooltip',
-                  {
-                    class: 'tips',
-                    props: {
-                      effect: 'dark',
-                      content: row.reason,
-                      placement: 'top'
-                    }
-                  },
-                  [h('i', { class: 'el-icon-warning-outline' }, '')]
-                )
+              row.status == 2 && row.reason  &&
+              h(
+                'el-tooltip',
+                {
+                  class:'tips',
+                  props: {
+                    effect: 'dark',
+                    content: row.reason,
+                    placement:'top'
+                  }
+                },
+                [h('i',{class:'el-icon-warning-outline'},'')]
+              )
             ]
           )
       }

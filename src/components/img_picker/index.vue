@@ -24,7 +24,7 @@
             @mouseenter="picsEnter(index)"
             @mouseleave="picsLeave"
           >
-            <img :src="wximageurl + item">
+            <img :src="wximageurl + item" />
             <div
               class="goodspic-mask"
               :class="picsCurrent == index ? 'on' : ''"
@@ -33,21 +33,9 @@
                 class="iconfont icon-trash-alt"
                 @click="removePicsImg(index)"
               ></div> -->
-              <div class="text">
-                拖动进行排序
-              </div>
-              <div
-                class="button1"
-                @click="replacePicsImg(index)"
-              >
-                替换
-              </div>
-              <div
-                class="button2"
-                @click="removePicsImg(index)"
-              >
-                删除
-              </div>
+              <div class="text">拖动进行排序</div>
+              <div class="button1" @click="replacePicsImg(index)">替换</div>
+              <div class="button2" @click="removePicsImg(index)">删除</div>
             </div>
           </li>
           <div
@@ -57,7 +45,7 @@
           >
             <div class="support">
               <div>
-                <i class="iconfont iconadd" />
+                <i class="iconfont iconadd"></i>
                 <span>添加图片</span>
               </div>
             </div>
@@ -72,23 +60,25 @@
       :is-most="multiple"
       @chooseImg="pickPics"
       @closeImgDialog="closePicsDialog"
-    />
+    ></imgSelect>
   </div>
 </template>
 
 <script>
-import imgSelect from '@/components/imageselect'
-import draggable from 'vuedraggable'
+import imgSelect from "@/components/imageselect";
+import draggable from "vuedraggable";
 
 export default {
-
-  components: {
-    imgSelect,
-    draggable
+  props: ["max", "value"],
+  watch: {
+    value(val) {
+      if (val && Array.isArray(val)) {
+        this.pics = val;
+      }
+    },
   },
-  props: ['max', 'value'],
-  data () {
-    const _this = this
+  data() {
+    const _this = this;
     return {
       //图片弹框是否显示
       picsDialog: false,
@@ -99,89 +89,87 @@ export default {
         animation: 300,
         forceFallback: false,
         scroll: true,
-        handle: '.goodspic-mask',
-        draggable: '.goodspic'
+        handle: ".goodspic-mask",
+        draggable: ".goodspic",
       },
       //选择的图片列表
       pics: [],
       //已经选择的图片数量
       picsOldLen: 0,
       picsCurrent: -1,
-      replaceIndex: -1
-    }
+      replaceIndex: -1,
+    };
   },
-  watch: {
-    value (val) {
-      if (val && Array.isArray(val)) {
-        this.pics = val
-      }
-    }
+
+  components: {
+    imgSelect,
+    draggable,
   },
   methods: {
     handleChangeImg: function (moved) {
-      this.changePics(this.pics)
+      this.changePics(this.pics);
     },
     //上传商品图
     handlePicsChange: function () {
-      this.picsDialog = true
-      this.isGetPics = true
-      this.multiple = true
+      this.picsDialog = true;
+      this.isGetPics = true;
+      this.multiple = true;
     },
     //替换图片
     replacePicsImg: function (currentIndex) {
-      this.replaceIndex = currentIndex
-      this.multiple = false
-      this.picsDialog = true
-      this.isGetPics = true
+      this.replaceIndex = currentIndex;
+      this.multiple = false;
+      this.picsDialog = true;
+      this.isGetPics = true;
     },
     //关闭dialog
-    closePicsDialog () {
-      this.picsDialog = false
-      this.multiple = false
-      this.replaceIndex = -1
+    closePicsDialog() {
+      this.picsDialog = false;
+      this.multiple = false;
+      this.replaceIndex = -1;
     },
-    pickPics (data) {
+    pickPics(data) {
       if (Array.isArray(data)) {
         if (this.picsOldLen + data.length > this.max) {
-          this.$message.error(`最多上传${this.max}张图片!`)
-          return false
+          this.$message.error(`最多上传${this.max}张图片!`);
+          return false;
         } else {
           if (data.length != 0) {
             data.forEach((data) => {
-              if (data && data.url !== '') {
-                this.pics.push(data.url)
-                this.picsOldLen = this.pics.length
+              if (data && data.url !== "") {
+                this.pics.push(data.url);
+                this.picsOldLen = this.pics.length;
               }
-            })
+            });
           }
         }
       } else {
         //替换操作
         if (data && data.url && this.replaceIndex !== -1) {
-          this.pics.splice(this.replaceIndex, 1, data.url)
+          this.pics.splice(this.replaceIndex, 1, data.url);
         }
       }
-      this.changePics(this.pics)
-      this.picsDialog = false
-      this.replaceIndex = -1
+      this.changePics(this.pics);
+      this.picsDialog = false;
+      this.replaceIndex = -1;
     },
-    picsEnter (index) {
-      this.picsCurrent = index
+    picsEnter(index) {
+      this.picsCurrent = index;
     },
-    picsLeave () {
-      this.picsCurrent = -1
+    picsLeave() {
+      this.picsCurrent = -1;
     },
     removePicsImg: function (index) {
-      this.pics.splice(index, 1)
-      this.changePics(this.pics)
-      this.picsOldLen = this.pics.length
+      this.pics.splice(index, 1);
+      this.changePics(this.pics);
+      this.picsOldLen = this.pics.length;
     },
     //pics change回调
     changePics: function (imgList) {
-      this.$emit('update:value', imgList)
-    }
-  }
-}
+      this.$emit("update:value", imgList);
+    },
+  },
+};
 </script>
 
 <style scoped lang="scss">
@@ -211,7 +199,7 @@ export default {
     .goodspic {
       position: relative;
       width: 21%;
-      height: 0;
+      height: 0; 
       border-radius: 6px;
       overflow: hidden;
       margin-right: 2%;
@@ -250,7 +238,8 @@ export default {
           background-color: #fff;
           min-width: 2vw;
           padding: 0.3vh 1vw;
-          box-shadow: 0px 3px 1px -2px rgba(0, 0, 0, 0.2), 0px 2px 2px 0px rgba(0, 0, 0, 0.14),
+          box-shadow: 0px 3px 1px -2px rgba(0, 0, 0, 0.2),
+            0px 2px 2px 0px rgba(0, 0, 0, 0.14),
             0px 1px 5px 0px rgba(0, 0, 0, 0.12);
           border-radius: 3px;
           cursor: pointer;
@@ -278,8 +267,8 @@ export default {
   }
 
   .upload-box {
-    display: inline-block;
-    height: 0;
+    display: inline-block; 
+    height: 0; 
     text-align: center;
     position: relative;
     width: 300px;

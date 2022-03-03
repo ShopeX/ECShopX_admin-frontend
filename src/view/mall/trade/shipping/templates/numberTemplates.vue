@@ -1,92 +1,58 @@
 <template>
   <div>
     <el-table
-      v-loading="loading"
       :data="numberTemplatesList"
       :span-method="objectSpanMethod"
       border
       :height="wheight - 170"
+      v-loading="loading"
     >
-      <el-table-column
-        width="50"
-        prop="template_id"
-        label="ID"
-      />
-      <el-table-column
-        prop="name"
-        width="150"
-        label="运费模板名称"
-      />
-      <el-table-column
-        width="200"
-        label="配送地区"
-      >
+      <el-table-column width="50" prop="template_id" label="ID"></el-table-column>
+      <el-table-column prop="name" width="150" label="运费模板名称"></el-table-column>
+      <el-table-column width="200" label="配送地区">
         <template slot-scope="scope">
           {{ scope.row.area | formatCityData(district) }}
         </template>
       </el-table-column>
-      <el-table-column
-        prop="start_standard"
-        label="首件(件)"
-      />
-      <el-table-column
-        prop="start_fee"
-        label="首费(元)"
-      />
-      <el-table-column
-        prop="add_standard"
-        label="续件(件)"
-      />
-      <el-table-column
-        prop="add_fee"
-        label="续费(元)"
-      />
-      <el-table-column
-        width="70"
-        label="状态"
-      >
+      <el-table-column prop="start_standard" label="首件(件)"></el-table-column>
+      <el-table-column prop="start_fee" label="首费(元)"></el-table-column>
+      <el-table-column prop="add_standard" label="续件(件)"></el-table-column>
+      <el-table-column prop="add_fee" label="续费(元)"></el-table-column>
+      <el-table-column width="70" label="状态">
         <template slot-scope="scope">
           <span v-if="scope.row.status == true">启用</span>
           <span v-else>关闭</span>
         </template>
       </el-table-column>
-      <el-table-column
-        width="120"
-        label="最后修改时间"
-      >
+      <el-table-column width="120" label="最后修改时间">
         <template slot-scope="scope">
-          <span>{{ scope.row.updated_at | datetime('YYYY-MM-DD') }}</span>
+          <span>{{ scope.row.updated_at | datetime("YYYY-MM-DD") }}</span>
         </template>
       </el-table-column>
-      <el-table-column
-        label="操作"
-        width="100"
-      >
+      <el-table-column label="操作" width="100">
         <template slot-scope="scope">
           <div class="operating-icons">
             <i
-              class="iconfont icon-edit1"
               @click="editTemplatesAction(scope.$index, scope.row)"
-            />
+              class="iconfont icon-edit1"
+            ></i>
             <i
-              class="mark iconfont icon-trash-alt1"
               @click="deleteTemplatesAction(scope.$index, scope.row)"
-            />
+              class="mark iconfont icon-trash-alt1"
+            ></i>
           </div>
         </template>
       </el-table-column>
     </el-table>
-    <div
-      v-if="total_count > params.pageSize"
-      class="content-center content-top-padded"
-    >
+    <div v-if="total_count > params.pageSize" class="content-center content-top-padded">
       <el-pagination
         layout="prev, pager, next"
+        @current-change="handleCurrentChange"
         :current-page.sync="params.page"
         :total="total_count"
         :page-size="params.pageSize"
-        @current-change="handleCurrentChange"
-      />
+      >
+      </el-pagination>
     </div>
   </div>
 </template>
@@ -97,7 +63,7 @@ import { getShippingTemplatesList, deleteShippingTemplates } from '../../../../.
 import { getAddress } from '../../../../../api/common'
 export default {
   props: ['getStatus'],
-  data () {
+  data() {
     return {
       district: {},
       loading: false,
@@ -114,22 +80,11 @@ export default {
   computed: {
     ...mapGetters(['wheight'])
   },
-  watch: {
-    getStatus (val) {
-      if (val) {
-        this.getShippingTemplatesList()
-      }
-    }
-  },
-  mounted () {
-    this.getShippingTemplatesList()
-    this.getAddress()
-  },
   methods: {
-    handleCurrentChange (pageNum) {
+    handleCurrentChange(pageNum) {
       this.params.page = pageNum
     },
-    getShippingTemplatesList () {
+    getShippingTemplatesList() {
       this.loading = true
       getShippingTemplatesList(this.params).then((response) => {
         this.numberTemplatesList = []
@@ -160,10 +115,10 @@ export default {
         this.loading = false
       })
     },
-    editTemplatesAction (index, row) {
+    editTemplatesAction(index, row) {
       this.$router.push({ path: this.matchHidePage('editor/') + row.template_id })
     },
-    deleteTemplatesAction (index, row) {
+    deleteTemplatesAction(index, row) {
       this.$confirm('此操作将删除该运费模板, 是否继续?', '提示', {
         confirmButtonText: '确定',
         cancelButtonText: '取消',
@@ -186,7 +141,7 @@ export default {
           })
         })
     },
-    objectSpanMethod ({ row, column, rowIndex, columnIndex }) {
+    objectSpanMethod({ row, column, rowIndex, columnIndex }) {
       var arrCol = [0, 1, 7, 8, 9]
       if (arrCol.indexOf(columnIndex) > -1) {
         if (row.count > 0) {
@@ -202,10 +157,21 @@ export default {
         }
       }
     },
-    getAddress () {
+    getAddress() {
       getAddress().then((res) => {
         this.district = res.data.data
       })
+    }
+  },
+  mounted() {
+    this.getShippingTemplatesList()
+    this.getAddress()
+  },
+  watch: {
+    getStatus(val) {
+      if (val) {
+        this.getShippingTemplatesList()
+      }
     }
   }
 }

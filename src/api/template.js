@@ -1,20 +1,20 @@
 import fetch from '../utils/fetch'
 
-export function getTemplateList () {
+export function getTemplateList() {
   return fetch({
     url: '/wxa/templates/openlist',
     method: 'get'
   })
 }
 
-export function templateList () {
+export function templateList() {
   return fetch({
     url: '/wxa/templates/list',
     method: 'get'
   })
 }
 
-export function templateOpen (query) {
+export function templateOpen(query) {
   return fetch({
     url: '/wxa/templates/open',
     method: 'post',
@@ -22,7 +22,7 @@ export function templateOpen (query) {
   })
 }
 
-export function getWeappId () {
+export function getWeappId() {
   return fetch({
     url: '/wxa/templates/weappid',
     method: 'get'
@@ -30,7 +30,7 @@ export function getWeappId () {
 }
 
 // 新模板管理
-export function setPagesTemplate (query) {
+export function setPagesTemplate(query) {
   return fetch({
     url: '/pagestemplate/set',
     method: 'post',
@@ -38,7 +38,7 @@ export function setPagesTemplate (query) {
   })
 }
 
-export function getPagesTemplateSetInfo (query) {
+export function getPagesTemplateSetInfo(query) {
   return fetch({
     url: '/pagestemplate/setInfo',
     method: 'get',
@@ -46,7 +46,7 @@ export function getPagesTemplateSetInfo (query) {
   })
 }
 
-export function getPagesTemplateList (query) {
+export function getPagesTemplateList(query) {
   return fetch({
     url: '/pagestemplate/lists',
     method: 'get',
@@ -54,7 +54,7 @@ export function getPagesTemplateList (query) {
   })
 }
 
-export function addPagesTemplate (query) {
+export function addPagesTemplate(query) {
   return fetch({
     url: '/pagestemplate/add',
     method: 'post',
@@ -62,7 +62,7 @@ export function addPagesTemplate (query) {
   })
 }
 
-export function savePagesTemplate (query) {
+export function savePagesTemplate(query) {
   return fetch({
     url: '/pagestemplate/edit',
     method: 'put',
@@ -70,7 +70,7 @@ export function savePagesTemplate (query) {
   })
 }
 
-export function copyPagesTemplate (query) {
+export function copyPagesTemplate(query) {
   return fetch({
     url: '/pagestemplate/copy',
     method: 'post',
@@ -78,14 +78,14 @@ export function copyPagesTemplate (query) {
   })
 }
 
-export function deletePagesTemplate (id) {
+export function deletePagesTemplate(id) {
   return fetch({
     url: '/pagestemplate/del/' + id,
     method: 'delete'
   })
 }
 
-export function getPagesTemplateDetail (query) {
+export function getPagesTemplateDetail(query) {
   return fetch({
     url: '/pagestemplate/detail',
     method: 'get',
@@ -93,7 +93,7 @@ export function getPagesTemplateDetail (query) {
   })
 }
 
-export function syncPagesTemplate (query) {
+export function syncPagesTemplate(query) {
   return fetch({
     url: '/pagestemplate/sync',
     method: 'put',
@@ -101,7 +101,7 @@ export function syncPagesTemplate (query) {
   })
 }
 
-export function modifyPagesTemplateStatus (query) {
+export function modifyPagesTemplateStatus(query) {
   return fetch({
     url: '/pagestemplate/modifyStatus',
     method: 'put',
@@ -109,21 +109,21 @@ export function modifyPagesTemplateStatus (query) {
   })
 }
 
-export function getALiTemplateList () {
+export function getALiTemplateList() {
   return fetch({
     url: '/alipayapp/templates/openlist',
     method: 'get'
   })
 }
 
-export function templateALiList () {
+export function templateALiList() {
   return fetch({
     url: '/alipayapp/templates/list',
     method: 'get'
   })
 }
 
-export function templateALiOpen (query) {
+export function templateALiOpen(query) {
   return fetch({
     url: '/alipayapp/templates/open',
     method: 'post',

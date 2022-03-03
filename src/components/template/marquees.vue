@@ -1,9 +1,6 @@
 <template>
-  <div
-    class="component-wrap"
-    :class="{ 'component-padded': base.padded, 'active': active }"
-  >
-    <div class="current-active" />
+  <div class="component-wrap" :class="{ 'component-padded': base.padded, 'active': active }">
+    <div class="current-active"></div>
     <el-carousel
       class="article"
       height="30px"
@@ -12,14 +9,8 @@
       indicator-position="none"
       arrow="never"
     >
-      <el-carousel-item
-        v-for="(item, index) in data"
-        :key="index"
-      >
-        <div
-          class="article-item"
-          :style="'color:' + config.fontcolor"
-        >
+      <el-carousel-item v-for="(item, index) in data" :key="index">
+        <div class="article-item" :style="'color:' + config.fontcolor">
           {{ item.title }}
         </div>
       </el-carousel-item>
@@ -39,29 +30,29 @@ export default {
       default: false
     }
   },
-  data () {
+  watch: {
+    res(value) {
+      if (value) {
+        this.setData(value)
+      }
+    }
+  },
+  data() {
     return {
       base: {},
       config: {},
       data: []
     }
   },
-  watch: {
-    res (value) {
-      if (value) {
-        this.setData(value)
-      }
-    }
-  },
-  created () {
-    this.setData(this.res)
-  },
   methods: {
-    setData (val) {
+    setData(val) {
       this.base = val.base
       this.config = val.config
       this.data = val.data
     }
+  },
+  created() {
+    this.setData(this.res)
   }
 }
 </script>

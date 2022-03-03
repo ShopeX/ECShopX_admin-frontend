@@ -8,50 +8,28 @@
       border-collapse="collapse"
     >
       <tr>
-        <th
-          v-for="(header, index) in columns"
-          :key="index"
-        >
-          <div class="customHeader">
-            {{ header.name }}
-          </div>
+        <th v-for="(header, index) in columns" :key="index">
+          <div class="customHeader">{{ header.name }}</div>
         </th>
       </tr>
       <template v-if="dataSource && dataSource.length">
-        <tr
-          v-for="(data, index) in dataSource.filter((el) => Number(el.discount_fee) !== 0)"
-          :key="index"
-        >
-          <td
-            v-for="(row, index) in columns"
-            :key="index"
-          >
-            <div class="customDataSource">
-              {{
-                row.field === 'discount_fee'
-                  ? Number(data[row.field] / 100).toFixed(2)
-                  : data[row.field]
-              }}
-            </div>
+        <tr v-for="(data, index) in dataSource.filter((el) => Number(el.discount_fee) !== 0)" :key="index">
+          <td v-for="(row, index) in columns" :key="index">
+            <div class="customDataSource">{{ row.field === 'discount_fee' ? Number(data[row.field] / 100).toFixed(2) : data[row.field] }}</div>
           </td>
         </tr>
         <tr>
-          <td />
-          <td />
+          <td></td>
+          <td></td>
           <td>
-            <div class="customDataSource tr-font-wight">
-              总计优惠：{{ this.orderInfo.fee_symbol
-              }}{{ (this.orderInfo.discount_fee / 100).toFixed(2) }}
-            </div>
+            <div class="customDataSource tr-font-wight">总计优惠：{{this.orderInfo.fee_symbol}}{{(this.orderInfo.discount_fee / 100).toFixed(2)}}</div>
           </td>
         </tr>
       </template>
       <template v-if="!dataSource || !dataSource.length">
         <tr>
           <td :colspan="columns.length">
-            <div class="customEmpty">
-              暂无内容
-            </div>
+            <div class="customEmpty">暂无内容</div>
           </td>
         </tr>
       </template>
@@ -60,32 +38,35 @@
 </template>
 
 <script>
-import CustomCard from './CustomCard'
+import CustomCard from './CustomCard';
 export default {
-  components: {
-    CustomCard
-  },
-  props: ['tradeInfo', 'orderInfo', 'deliveryData'],
-  data () {
+  props: [
+    "tradeInfo",
+    "orderInfo",
+    'deliveryData'
+  ],
+  data() {
     return {
       columns: [
-        { name: '优惠名称', field: 'info' },
-        { name: '优惠金额', field: 'discount_fee' },
-        { name: '优惠说明', field: 'rule' }
+        { name: "优惠名称", field: "info" },
+        { name: "优惠金额", field: "discount_fee" },
+        { name: "优惠说明", field: "rule" }
       ],
-      dataSource: this.orderInfo.discount_info
-    }
+      dataSource: this.orderInfo.discount_info,
+    };
   },
   watch: {
     orderInfo: {
-      handler (val) {
-        this.dataSource =
-          val && val.discount_info.filter((el) => el.discount_fee !== 0 && el.discount_fee !== '0')
+      handler(val) {
+        this.dataSource = val && val.discount_info.filter((el) => (el.discount_fee !== 0 && el.discount_fee !== '0') );
       },
-      deep: true
-    }
+      deep: true,
+    },
+  },
+  components: {
+    CustomCard
   }
-}
+};
 </script>
 
 <style lang="scss" scoped>
@@ -110,7 +91,7 @@ export default {
   }
 
   .tr-font-wight {
-    font-weight: bold;
+    font-weight:bold;
     text-align: center;
   }
 
@@ -119,7 +100,7 @@ export default {
     align-items: center;
     justify-content: center;
     color: #666;
-    padding: 20px 0;
+    padding:20px 0;
   }
   tr {
     &:not(:nth-last-child(1)) {

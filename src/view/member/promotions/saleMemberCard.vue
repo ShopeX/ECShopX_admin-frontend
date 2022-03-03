@@ -1,16 +1,8 @@
 <template>
   <div class="section section-white">
-    <el-form
-      ref="form"
-      :model="form"
-      label-position="left"
-      label-width="180px"
-    >
+    <el-form ref="form" :model="form" label-position="left" label-width="180px">
       <div class="section-body">
-        <el-form-item
-          label="是否开启："
-          prop="ad_title"
-        >
+        <el-form-item label="是否开启：" prop="ad_title">
           <el-switch
             v-model="form.is_open"
             :width="60"
@@ -20,40 +12,22 @@
             active-text="开启"
             inactive-text="关闭"
             active-color="#13ce66"
-          />
+          ></el-switch>
         </el-form-item>
-        <el-form-item
-          label="注册引导广告标题："
-          prop="ad_title"
-        >
+        <el-form-item label="注册引导广告标题：" prop="ad_title">
           <el-input
             v-model="form.ad_title"
             placeholder="用于门店小程序注册引导入口标题"
-            style="width: 340px"
+            style="width: 340px;"
           />
         </el-form-item>
         <el-form-item label="注册引导图片：">
-          <div class="frm-tips">
-            只能上传jpg/png文件，且不超过2M （建议尺寸：400px * 450px）
-          </div>
-          <div class="frm-tips">
-            引导用户授权手机号注册，类似新用户专享广告图片
-          </div>
+          <div class="frm-tips">只能上传jpg/png文件，且不超过2M （建议尺寸：400px * 450px）</div>
+          <div class="frm-tips">引导用户授权手机号注册，类似新用户专享广告图片</div>
           <div>
-            <div
-              class="upload-box"
-              @click="handleImgChange"
-            >
-              <img
-                v-if="form.ad_pic"
-                :src="wximageurl + form.ad_pic"
-                class="avatar"
-                width="200"
-              >
-              <i
-                v-else
-                class="el-icon-plus avatar-uploader-icon"
-              />
+            <div @click="handleImgChange" class="upload-box">
+              <img v-if="form.ad_pic" :src="wximageurl + form.ad_pic" class="avatar" width="200" />
+              <i v-else class="el-icon-plus avatar-uploader-icon"></i>
             </div>
           </div>
           <imgPicker
@@ -61,45 +35,29 @@
             :sc-status="isGetImage"
             @chooseImg="pickImg"
             @closeImgDialog="closeImgDialog"
-          />
+          ></imgPicker>
         </el-form-item>
         <el-form-item label="请选择赠送会员卡类型：">
-          <el-radio-group
-            v-model="membercards.index_value"
-            @change="vipGradeChange"
-          >
+          <el-radio-group v-model="membercards.index_value" @change="vipGradeChange">
             <el-radio
+              :label="index"
               v-for="(item, index) in vipGrade"
               :key="index"
-              :label="index"
               @click="vipGradeClick(index, item)"
+              >{{ item.grade_name }}</el-radio
             >
-              {{ item.grade_name }}
-            </el-radio>
           </el-radio-group>
         </el-form-item>
-        <el-form-item
-          v-if="priceList.length > 0"
-          label="请选择赠送会员卡："
-        >
+        <el-form-item label="请选择赠送会员卡：" v-if="priceList.length > 0">
           <el-radio-group v-model="membercards.card_type">
-            <el-radio
-              v-for="(item, index) in priceList"
-              :key="index"
-              :label="item.name"
+            <el-radio :label="item.name" v-for="(item, index) in priceList" :key="index"
+              >{{ item.desc }}({{ item.price }}元)</el-radio
             >
-              {{ item.desc }}({{ item.price }}元)
-            </el-radio>
           </el-radio-group>
         </el-form-item>
       </div>
       <div class="section-footer with-border content-center">
-        <el-button
-          type="primary"
-          @click="save"
-        >
-          保 存
-        </el-button>
+        <el-button type="primary" @click="save">保 存</el-button>
       </div>
     </el-form>
   </div>
@@ -113,7 +71,7 @@ export default {
     imgPicker
   },
   props: ['getStatus'],
-  data () {
+  data() {
     return {
       isGetImage: false,
       imgDialog: false,
@@ -142,31 +100,19 @@ export default {
       }
     }
   },
-  watch: {
-    getStatus (newVal, oldVal) {
-      if (newVal) {
-        this.getRegisterData()
-        this.getMemberVipGrade()
-      }
-    }
-  },
-  mounted () {
-    this.getRegisterData()
-    this.getMemberVipGrade()
-  },
   methods: {
-    handleImgChange () {
+    handleImgChange() {
       this.imgDialog = true
       this.isGetImage = true
     },
-    pickImg (data) {
+    pickImg(data) {
       this.form.ad_pic = data.url
       this.imgDialog = false
     },
-    closeImgDialog () {
+    closeImgDialog() {
       this.imgDialog = false
     },
-    save () {
+    save() {
       this.form.promotions_value.membercard = this.membercards
       saveRegisterPromotions(this.form).then((res) => {
         this.$message({
@@ -176,7 +122,7 @@ export default {
         })
       })
     },
-    getMemberVipGrade () {
+    getMemberVipGrade() {
       var params = { is_disabled: 'false' }
       listVipGrade(params).then((res) => {
         this.vipGrade = res.data.data
@@ -188,13 +134,13 @@ export default {
         }
       })
     },
-    vipGradeChange (index) {
+    vipGradeChange(index) {
       var item = this.vipGrade[index]
       this.membercards.vip_grade_id = item.vip_grade_id
       this.priceList = item.price_list
       this.membercards.card_type = this.priceList[0].name
     },
-    getRegisterData () {
+    getRegisterData() {
       var params = { register_type: 'membercard' }
       getRegisterPromotions(params).then((response) => {
         this.form.ad_pic = response.data.data.ad_pic
@@ -206,6 +152,18 @@ export default {
           this.membercards.index_value = parseInt(this.membercards.index_value)
         }
       })
+    }
+  },
+  mounted() {
+    this.getRegisterData()
+    this.getMemberVipGrade()
+  },
+  watch: {
+    getStatus(newVal, oldVal) {
+      if (newVal) {
+        this.getRegisterData()
+        this.getMemberVipGrade()
+      }
     }
   }
 }

@@ -21,95 +21,37 @@
               <span>标题</span>
             </div>
           </div>
-          <div
-            class="components-wrap"
-            :style="'height: ' + (wheight - 290) + 'px;'"
-          >
-            <div
-              v-for="(item, index) in components"
-              :key="index"
-              class="component-item"
-            >
-              <coupon
-                v-if="item.name === 'coupon'"
-                :res="item"
-              />
-              <film
-                v-if="item.name === 'film'"
-                :res="item"
-              />
-              <goodsGrid
-                v-if="item.name === 'goodsGrid'"
-                :res="item"
-              />
-              <goodsGridTab
-                v-if="item.name === 'goodsGridTab'"
-                :res="item"
-              />
-              <goodsScroll
-                v-if="item.name === 'goodsScroll'"
-                :res="item"
-              />
-              <imgHotzone
-                v-if="item.name === 'imgHotzone'"
-                :res="item"
-              />
-              <marquees
-                v-if="item.name === 'marquees'"
-                :res="item"
-              />
-              <navigation
-                v-if="item.name === 'navigation'"
-                :res="item"
-              />
-              <search
-                v-if="item.name === 'search'"
-                :res="item"
-              />
-              <showcase
-                v-if="item.name === 'showcase'"
-                :res="item"
-              />
-              <slider
-                v-if="item.name === 'slider'"
-                :res="item"
-              />
-              <floorImg
-                v-if="item.name === 'floorImg'"
-                :res="item"
-              />
-              <headline
-                v-if="item.name === 'headline'"
-                :res="item"
-              />
-              <hotTopic
-                v-if="item.name === 'hotTopic'"
-                :res="item"
-              />
-              <imgGif
-                v-if="item.name === 'img-gif'"
-                :res="item"
-              />
-              <store
-                v-if="item.name === 'store' && system_mode === 'platform'"
-                :res="item"
-              />
+          <div class="components-wrap" :style="'height: ' + (wheight - 290) + 'px;'">
+            <div class="component-item" v-for="(item, index) in components" :key="index">
+              <coupon v-if="item.name === 'coupon'" :res="item"></coupon>
+              <film v-if="item.name === 'film'" :res="item"></film>
+              <goodsGrid v-if="item.name === 'goodsGrid'" :res="item"></goodsGrid>
+              <goodsGridTab v-if="item.name === 'goodsGridTab'" :res="item"></goodsGridTab>
+              <goodsScroll v-if="item.name === 'goodsScroll'" :res="item"></goodsScroll>
+              <imgHotzone v-if="item.name === 'imgHotzone'" :res="item"></imgHotzone>
+              <marquees v-if="item.name === 'marquees'" :res="item"></marquees>
+              <navigation v-if="item.name === 'navigation'" :res="item"></navigation>
+              <search v-if="item.name === 'search'" :res="item"></search>
+              <showcase v-if="item.name === 'showcase'" :res="item"></showcase>
+              <slider v-if="item.name === 'slider'" :res="item"></slider>
+              <floorImg v-if="item.name === 'floorImg'" :res="item"> </floorImg>
+              <headline v-if="item.name === 'headline'" :res="item"> </headline>
+              <hotTopic v-if="item.name === 'hotTopic'" :res="item"> </hotTopic>
+              <imgGif v-if="item.name === 'img-gif'" :res="item"></imgGif>
+              <store v-if="item.name === 'store' && system_mode === 'platform'" :res="item"></store>
             </div>
-            <goodsGrid
-              v-if="showLike == 1 && faverite.data.length"
-              :res="faverite"
-            />
+            <goodsGrid v-if="showLike == 1 && faverite.data.length" :res="faverite"></goodsGrid>
           </div>
           <div class="template-footer">
             <div
               class="template-tabs"
               :style="{ background: tabs.config.backgroundColor, color: tabs.config.color }"
             >
-              <div class="current-active" />
+              <div class="current-active"></div>
               <div
+                class="tab"
                 v-for="(item, index) in tabs.data"
                 :key="index"
-                class="tab"
                 :style="index === currentTab ? `color:${tabs.config.selectedColor}` : ''"
               >
                 <svg
@@ -118,7 +60,7 @@
                   aria-hidden="true"
                   :style="index === currentTab ? `color:${tabs.config.selectedColor}` : ''"
                 >
-                  <use :xlink:href="`#icon-${item.name}`" />
+                  <use :xlink:href="`#icon-${item.name}`"></use>
                 </svg>
                 <template v-else>
                   <img
@@ -128,18 +70,16 @@
                       item.selectedIconPath ||
                         'https://fakeimg.pl/60x60/EFEFEF/CCC/?text=icofont=lobster'
                     "
-                  >
+                  />
                   <img
                     v-else
                     class="svg-icon"
                     :src="
                       item.iconPath || 'https://fakeimg.pl/60x60/EFEFEF/CCC/?text=icon&font=lobster'
                     "
-                  >
+                  />
                 </template>
-                <div class="tab-text">
-                  {{ item.text }}
-                </div>
+                <div class="tab-text">{{ item.text }}</div>
               </div>
             </div>
           </div>
@@ -177,24 +117,6 @@ import { getPagesTemplateDetail } from '@/api/template'
 import { getRecommendLikeItemList } from '@/api/promotions'
 
 export default {
-  components: {
-    coupon,
-    film,
-    goodsGrid,
-    goodsGridTab,
-    goodsScroll,
-    imgHotzone,
-    marquees,
-    navigation,
-    search,
-    showcase,
-    slider,
-    floorImg,
-    headline,
-    hotTopic,
-    imgGif,
-    store
-  },
   props: {
     dialogVisible: {
       type: Boolean,
@@ -219,7 +141,25 @@ export default {
       type: Number
     }
   },
-  data () {
+  components: {
+    coupon,
+    film,
+    goodsGrid,
+    goodsGridTab,
+    goodsScroll,
+    imgHotzone,
+    marquees,
+    navigation,
+    search,
+    showcase,
+    slider,
+    floorImg,
+    headline,
+    hotTopic,
+    imgGif,
+    store
+  },
+  data() {
     return {
       initData: [
         {
@@ -486,28 +426,15 @@ export default {
   },
   computed: {
     ...mapGetters(['wheight']),
-    showDialog () {
+    showDialog() {
       return this.dialogVisible
     }
   },
-  watch: {
-    // templateId: {
-    //   handler (newVal, oldVal) {
-    //     this.getData(newVal)
-    //   },
-    //   immediate: true
-    // },
-    dialogVisible (newVal, oldVal) {
-      if (newVal) {
-        this.getData()
-      }
-    }
-  },
   methods: {
-    cancelAction () {
+    cancelAction() {
       this.$emit('closeDialog')
     },
-    async getData () {
+    async getData() {
       if (this.system_mode === 'platform') {
         this.initData = [
           ...this.initData,
@@ -552,6 +479,19 @@ export default {
         this.components = [...this.initData]
       }
     }
+  },
+  watch: {
+    // templateId: {
+    //   handler (newVal, oldVal) {
+    //     this.getData(newVal)
+    //   },
+    //   immediate: true
+    // },
+    dialogVisible(newVal, oldVal) {
+      if (newVal) {
+        this.getData()
+      }
+    }
   }
 }
 </script>
@@ -566,8 +506,8 @@ export default {
   overflow-y: auto;
   background: #efefef;
 
-  &.preview {
-    margin-left: 0;
+  &.preview{
+    margin-left:0;
   }
 
   .template {

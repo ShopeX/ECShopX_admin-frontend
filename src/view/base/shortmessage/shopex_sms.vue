@@ -1,42 +1,26 @@
 <template>
   <div class="shopex-sms-page">
     <div class="btn">
-      <router-link
-        class="link"
-        to="/setting/datamessage"
-      >
-        切换短信商
-      </router-link>
+      <router-link class="link" to="/setting/datamessage">切换短信商</router-link>
     </div>
-    <el-tabs
-      v-model="activeName"
-      type="border-card"
-    >
-      <el-tab-pane
-        label="短信账户"
-        name="first"
-      >
+    <el-tabs v-model="activeName" type="border-card">
+      <el-tab-pane label="短信账户" name="first">
         <el-alert
           type="warning"
           title="短信推送"
           show-icon
           description="短信推送即通过发送短信，给买家推送交易等提醒信息，包括付款、预约、核销等，以提升买家的到店体验，获得会员到店转化率和复购率。"
-        />
+        >
+        </el-alert>
         <div class="content-padded message-content">
-          短信余额：<span class="message-count">{{ messageCount }}</span>条
-          <a
-            :href="sms_buy_url"
-            target="_blank"
-          ><el-button
-            type="primary"
-            size="mini"
-          >去充值</el-button></a>
+          短信余额：<span class="message-count">{{ messageCount }}</span
+          >条
+          <a :href="sms_buy_url" target="_blank"
+            ><el-button type="primary" size="mini">去充值</el-button></a
+          >
         </div>
       </el-tab-pane>
-      <el-tab-pane
-        label="短信模板"
-        name="second"
-      >
+      <el-tab-pane label="短信模板" name="second">
         <el-dialog
           title="短信模版详情"
           size="tiny"
@@ -53,32 +37,22 @@
                   inactive-text=" "
                   active-color="#13ce66"
                   @change="openChange"
-                />
+                ></el-switch>
               </el-form-item>
-              <el-form-item label="发送时间点">
-                {{
-                  currentTemplate.send_time_desc.title
-                }}
-              </el-form-item>
+              <el-form-item label="发送时间点">{{
+                currentTemplate.send_time_desc.title
+              }}</el-form-item>
               <el-form-item label="短信内容">
                 <el-input
-                  v-model="currentTemplate.content"
                   type="textarea"
                   :rows="5"
+                  v-model="currentTemplate.content"
                   :readonly="true"
                   style="width: 60%"
-                />
+                ></el-input>
               </el-form-item>
-              <div
-                class="section-footer with-border content-center"
-                style="width: 100%"
-              >
-                <el-button
-                  type="primary"
-                  @click="closeDialog"
-                >
-                  确定
-                </el-button>
+              <div class="section-footer with-border content-center" style="width: 100%">
+                <el-button type="primary" @click="closeDialog">确定</el-button>
               </div>
             </el-form>
           </div>
@@ -96,62 +70,35 @@
               <div
                 v-for="row in items"
                 class="item"
-                :class="row.is_open == 'true' ? 'succ-open-sms' : 'not-open-sms'"
                 @click="toDetail(row)"
+                :class="row.is_open == 'true' ? 'succ-open-sms' : 'not-open-sms'"
               >
                 <div class="item-title clearfix">
-                  {{ row.send_time_desc.tmpl_title }} <i class="el-icon-arrow-right" />
+                  {{ row.send_time_desc.tmpl_title }} <i class="el-icon-arrow-right"></i>
                 </div>
-                <div class="item-content">
-                  {{ row.content }}
-                </div>
+                <div class="item-content">{{ row.content }}</div>
                 <div class="item-footer">
-                  <el-button
-                    v-if="row.is_open == 'true'"
-                    type="default"
-                    size="small"
+                  <el-button type="default" size="small" v-if="row.is_open == 'true'"
+                    >启用中</el-button
                   >
-                    启用中
-                  </el-button>
-                  <el-button
-                    v-else
-                    type="default"
-                    size="small"
-                  >
-                    未启用
-                  </el-button>
+                  <el-button type="default" size="small" v-else>未启用</el-button>
                 </div>
               </div>
             </div>
           </div>
         </div>
       </el-tab-pane>
-      <el-tab-pane
-        label="短信签名"
-        name="third"
-      >
+      <el-tab-pane label="短信签名" name="third">
         <div class="content-padded message-autograph">
           短信签名：
-          <el-input
-            v-model="messageAutograph"
-            placeholder="请输入短信签名"
-          />
-          <el-button
-            type="primary"
-            @click="saveSmsSignAction"
-          >
-            确定
-          </el-button>
+          <el-input v-model="messageAutograph" placeholder="请输入短信签名"></el-input>
+          <el-button type="primary" @click="saveSmsSignAction">确定</el-button>
         </div>
         <div class="message-prompt">
-          <div class="prompt-title">
-            <span>常见问题：</span>
-          </div>
+          <div class="prompt-title"><span>常见问题：</span></div>
           <div class="prompt-content">
             <div class="prompt-item">
-              <div class="item-title">
-                1. 签名设置规则
-              </div>
+              <div class="item-title">1. 签名设置规则</div>
               <div class="item-content">
                 <div>自定义签名字数限制为3-8个字，可以包含数字、英文；</div>
                 <div>建议使用你的『店铺名』或『品牌名』，使用其他签名可能短信审核不会通过！</div>
@@ -162,14 +109,13 @@
                   <a
                     href="http://bbs.shopex.cn/forum.php?mod=viewthread&tid=4397&extra="
                     target="_blank"
-                  >http://bbs.shopex.cn/forum.php?mod=viewthread&tid=4397&extra=</a>
+                    >http://bbs.shopex.cn/forum.php?mod=viewthread&tid=4397&extra=</a
+                  >
                 </div>
               </div>
             </div>
             <div class="prompt-item">
-              <div class="item-title">
-                2. 签名会出现在哪些短信中？
-              </div>
+              <div class="item-title">2. 签名会出现在哪些短信中？</div>
               <div class="item-content">
                 <div>设置签名后，"消息推送"中列出的短信都会带上你的自定义签名，即：</div>
                 <div>交易物流提醒：订单成功、预约成功、核销；</div>
@@ -177,9 +123,7 @@
               </div>
             </div>
             <div class="prompt-item">
-              <div class="item-title">
-                3. 短信计价规则
-              </div>
+              <div class="item-title">3. 短信计价规则</div>
               <div class="item-content">
                 <div>单条70字，若超出70字需要分成多条时，将按照67字每条计算；</div>
                 <div>一个汉字、数字、字母、空格都算一字；</div>
@@ -201,7 +145,7 @@ import {
   saveSmsSign
 } from '../../../api/promotions'
 export default {
-  data () {
+  data() {
     return {
       detailDialog: false,
       activeName: 'first',
@@ -218,7 +162,31 @@ export default {
       }
     }
   },
-  mounted () {
+  methods: {
+    closeDialog() {
+      this.detailDialog = false
+    },
+    toDetail(params) {
+      this.detailDialog = true
+      this.currentTemplate = params
+    },
+    openChange(is_open) {
+      let query = { template_name: this.currentTemplate.tmpl_name, is_open: is_open }
+      updateSmsTemplate(query).then((res) => {
+        console.log(res)
+      })
+    },
+    saveSmsSignAction() {
+      let query = { sign: this.messageAutograph }
+      saveSmsSign(query).then((res) => {
+        this.$message({
+          type: 'success',
+          message: '设置短信签名成功'
+        })
+      })
+    }
+  },
+  mounted() {
     getSmsBasic().then((response) => {
       if (response.data.data.sms_remainder) {
         let sms_remainder = response.data.data.sms_remainder.info
@@ -232,30 +200,6 @@ export default {
     getSmsSign().then((res) => {
       this.messageAutograph = res.data.data.sign
     })
-  },
-  methods: {
-    closeDialog () {
-      this.detailDialog = false
-    },
-    toDetail (params) {
-      this.detailDialog = true
-      this.currentTemplate = params
-    },
-    openChange (is_open) {
-      let query = { template_name: this.currentTemplate.tmpl_name, is_open: is_open }
-      updateSmsTemplate(query).then((res) => {
-        console.log(res)
-      })
-    },
-    saveSmsSignAction () {
-      let query = { sign: this.messageAutograph }
-      saveSmsSign(query).then((res) => {
-        this.$message({
-          type: 'success',
-          message: '设置短信签名成功'
-        })
-      })
-    }
   }
 }
 </script>

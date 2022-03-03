@@ -1,8 +1,6 @@
 <template>
   <section class="section nav-wrap">
-    <div class="section-header with-border">
-      设置
-    </div>
+    <div class="section-header with-border">设置</div>
     <div class="section-body">
       <el-form>
         <el-form-item label="导航设置">
@@ -13,42 +11,28 @@
             @end="onEnd"
           >
             <div
+              class="setting-item item-selected"
               v-for="(item, index) in t_data.data"
               :key="index"
-              class="setting-item item-selected"
             >
               <el-input
                 v-model="item.tab"
                 placeholder="请输入导航名"
                 size="small"
-                style="width: 200px"
-              />
-              <div
-                class="goods-title"
-                @click="editLink(index)"
-              >
-                <template v-if="item.linkPage === 'goods'">
-                  【商品】{{ item.title }}
-                </template>
-                <template v-if="item.linkPage === 'store'">
-                  【店铺】{{ item.name }}
-                </template>
+                style="width:200px;"
+              ></el-input>
+              <div class="goods-title" @click="editLink(index)">
+                <template v-if="item.linkPage === 'goods'">【商品】{{ item.title }}</template>
+                <template v-if="item.linkPage === 'store'">【店铺】{{ item.name }}</template>
               </div>
-              <div
-                class="setting-remove"
-                @click="removeItem(index)"
-              >
-                <i class="iconfont icon-trash-alt" />
+              <div class="setting-remove" @click="removeItem(index)">
+                <i class="iconfont icon-trash-alt"></i>
               </div>
             </div>
           </draggable>
-          <el-button
-            type="default"
-            class="iconfont icon-cog banner-button-uploader"
-            @click="setNav"
+          <el-button type="default" class="iconfont icon-cog banner-button-uploader" @click="setNav"
+            >设置导航</el-button
           >
-            设置导航
-          </el-button>
           <p class="desc">
             (
             导航说明：导航菜单数量限制为8，不过建议根据实际菜单名称的长度，选择性显示导航菜单数量。)
@@ -59,15 +43,15 @@
         :links="linksArr"
         usage="pc"
         :visible="linksVisible"
+        @setLink="setLink"
+        @closeDialog="closeDialog"
         :show_article="false"
         :show_planting="false"
         :show_page="false"
         :show_marketing="false"
         :show_category="false"
         :show_store="show_store"
-        @setLink="setLink"
-        @closeDialog="closeDialog"
-      />
+      ></linkSetter>
     </div>
   </section>
 </template>
@@ -78,16 +62,11 @@ import linkSetter from '@/components/template_links'
 import draggable from 'vuedraggable'
 
 export default {
-  name: 'NavStyle',
-  components: {
-    goodsPicker,
-    draggable,
-    linkSetter
-  },
+  name: 'navStyle',
   props: {
     data: {
       type: Object,
-      default: function () {
+      default: function() {
         return {}
       }
     },
@@ -95,7 +74,7 @@ export default {
       type: String
     }
   },
-  data () {
+  data() {
     return {
       linksArr: ['goods', 'store'],
       t_data: this.data,
@@ -110,13 +89,13 @@ export default {
     }
   },
   computed: {
-    show_store () {
+    show_store() {
       return this.usage !== 'store'
     }
   },
   watch: {
     t_data: {
-      handler (newVal, oldVal) {
+      handler(newVal, oldVal) {
         this.$emit('data', newVal)
       },
       deep: true
@@ -126,14 +105,14 @@ export default {
     /**
      * 设置导航
      */
-    setNav () {
+    setNav() {
       this.checkAction = true
       this.linksVisible = true
     },
     /**
      * 设置导航和编辑导航
      */
-    setLink (data, type) {
+    setLink(data, type) {
       // 添加导航
       if (this.checkAction) {
         data = Object.assign(data, { linkPage: type })
@@ -149,13 +128,13 @@ export default {
     /**
      * 导航关闭
      */
-    closeDialog () {
+    closeDialog() {
       this.linksVisible = false
     },
     /**
      * 推拽结束
      */
-    onEnd (evt) {
+    onEnd(evt) {
       this.temp = this.t_data.data[evt.oldIndex]
       this.t_data.data.splice(evt.oldIndex, 1)
       this.t_data.data.splice(evt.newIndex, 0, this.temp)
@@ -163,7 +142,7 @@ export default {
     /**
      * 修改定位要修改的导航
      */
-    editLink (index) {
+    editLink(index) {
       this.checkAction = false
       this.linksVisible = true
       this.cur_index = index
@@ -171,9 +150,14 @@ export default {
     /**
      * 删除指定位置导航
      */
-    removeItem (index) {
+    removeItem(index) {
       this.t_data.data.splice(index, 1)
     }
+  },
+  components: {
+    goodsPicker,
+    draggable,
+    linkSetter
   }
 }
 </script>

@@ -1,7 +1,7 @@
 import fetch from '../utils/fetch'
 
 // tdk全局配置获取
-export function getTdkglobalset (query) {
+export function getTdkglobalset(query) {
   return fetch({
     url: '/pcdecoration/tdkglobalset',
     method: 'get',
@@ -10,7 +10,7 @@ export function getTdkglobalset (query) {
 }
 
 // tdk全局配置保存
-export function saveTdkglobalset (query) {
+export function saveTdkglobalset(query) {
   return fetch({
     url: '/pcdecoration/tdkglobalset',
     method: 'post',
@@ -18,7 +18,7 @@ export function saveTdkglobalset (query) {
   })
 }
 
-export function getTdkgivensetDetail (params) {
+export function getTdkgivensetDetail(params) {
   return fetch({
     url: '/pcdecoration/tdkgivenset/details',
     method: 'get',
@@ -26,7 +26,7 @@ export function getTdkgivensetDetail (params) {
   })
 }
 
-export function saveTdkgivensetDetail (data) {
+export function saveTdkgivensetDetail(data) {
   return fetch({
     url: '/pcdecoration/tdkgivenset/details',
     method: 'post',
@@ -34,7 +34,7 @@ export function saveTdkgivensetDetail (data) {
   })
 }
 
-export function getTdkgivensetList (params) {
+export function getTdkgivensetList(params) {
   return fetch({
     url: '/pcdecoration/tdkgivenset/list',
     method: 'get',
@@ -42,7 +42,7 @@ export function getTdkgivensetList (params) {
   })
 }
 
-export function saveTdkgivensetList (data) {
+export function saveTdkgivensetList(data) {
   return fetch({
     url: '/pcdecoration/tdkgivenset/list',
     method: 'post',

@@ -1,12 +1,12 @@
 <template>
   <el-container class="container">
-    <router-view />
+    <router-view> </router-view>
   </el-container>
 </template>
 
 <script>
 export default {
-  mounted () {
+  mounted() {
     const wheight = window.innerHeight
     const wwidth = window.innerWidth
     this.$store.dispatch('setHeight', wheight)

@@ -1,117 +1,66 @@
 <template>
   <div class="content-wrap">
     <div class="content-view">
-      <div
-        class="content"
-        :class="{ 'is-edit': components.length > 0 }"
-      >
-        <div
-          v-for="(item, index) in components"
-          :key="index"
-          class="component-item"
-        >
-          <film
-            v-if="item.name === 'film'"
-            :res="item"
-            :active="index == editorIndex"
-          />
-          <goods
-            v-if="item.name === 'goods'"
-            :res="item"
-            :active="index == editorIndex"
-          />
+      <div class="content" :class="{ 'is-edit': components.length > 0 }">
+        <div class="component-item" v-for="(item, index) in components" :key="index">
+          <film v-if="item.name === 'film'" :res="item" :active="index == editorIndex"></film>
+          <goods v-if="item.name === 'goods'" :res="item" :active="index == editorIndex"></goods>
           <heading
             v-if="item.name === 'heading'"
             :res="item"
             :active="index == editorIndex"
-          />
-          <slider
-            v-if="item.name === 'slider'"
-            :res="item"
-            :active="index == editorIndex"
-          />
+          ></heading>
+          <slider v-if="item.name === 'slider'" :res="item" :active="index == editorIndex"></slider>
           <writing
             v-if="item.name === 'writing'"
             :res="item"
             :active="index == editorIndex"
-          />
+          ></writing>
         </div>
         <transition name="el-fade-in-linear">
           <div class="edit-btn content-center">
-            <el-button
-              type="primary"
-              plain
-              round
-              @click="plantingShow"
-            >
-              编辑内容
-            </el-button>
+            <el-button type="primary" plain round @click="plantingShow">编辑内容</el-button>
           </div>
         </transition>
       </div>
     </div>
-    <el-dialog
-      :visible.sync="dialogVisible"
-      width="80%"
-      title="编辑文章"
-      fullscreen
-      lock-scroll
-    >
+    <el-dialog :visible.sync="dialogVisible" width="80%" title="编辑文章" fullscreen lock-scroll>
       <section class="section section-white view-warp">
         <draggable
           v-model="initData"
           :options="dragIssuesOptions"
-          class="components-view"
           @start="onStart"
           @end="onEnd"
+          class="components-view"
         >
-          <div
-            v-for="(item, index) in initData"
-            :key="index"
-            class="component-control"
-          >
+          <div v-for="(item, index) in initData" class="component-control" :key="index">
             <template v-if="item.name === 'film'">
-              <svg
-                class="svg-icon"
-                aria-hidden="true"
-              >
-                <use xlink:href="#icon-video" />
+              <svg class="svg-icon" aria-hidden="true">
+                <use xlink:href="#icon-video"></use>
               </svg>
               视频
             </template>
             <template v-if="item.name === 'goods'">
-              <svg
-                class="svg-icon"
-                aria-hidden="true"
-              >
-                <use xlink:href="#icon-goods" />
+              <svg class="svg-icon" aria-hidden="true">
+                <use xlink:href="#icon-goods"></use>
               </svg>
               商品
             </template>
             <template v-if="item.name === 'heading'">
-              <svg
-                class="svg-icon"
-                aria-hidden="true"
-              >
-                <use xlink:href="#icon-title" />
+              <svg class="svg-icon" aria-hidden="true">
+                <use xlink:href="#icon-title"></use>
               </svg>
               标题
             </template>
             <template v-if="item.name === 'slider'">
-              <svg
-                class="svg-icon"
-                aria-hidden="true"
-              >
-                <use xlink:href="#icon-slider" />
+              <svg class="svg-icon" aria-hidden="true">
+                <use xlink:href="#icon-slider"></use>
               </svg>
               轮播
             </template>
             <template v-if="item.name === 'writing'">
-              <svg
-                class="svg-icon"
-                aria-hidden="true"
-              >
-                <use xlink:href="#icon-text" />
+              <svg class="svg-icon" aria-hidden="true">
+                <use xlink:href="#icon-text"></use>
               </svg>
               文本
             </template>
@@ -134,102 +83,83 @@
             <draggable
               v-model="components"
               :options="dragViewOptions"
-              class="components-wrap"
               @start="onStart"
               @end="onEnd"
+              class="components-wrap"
             >
               <div
-                v-for="(item, index) in components"
-                :key="index"
                 class="component-item"
+                v-for="(item, index) in components"
                 @click="setCurrent(index)"
+                :key="index"
               >
                 <transition name="el-fade-in-linear">
                   <div
                     v-if="editorIndex === index"
                     class="iconfont icon-trash-alt"
                     @click="removeCurrent"
-                  />
+                  ></div>
                 </transition>
-                <film
-                  v-if="item.name === 'film'"
-                  :res="item"
-                  :active="index == editorIndex"
-                />
+                <film v-if="item.name === 'film'" :res="item" :active="index == editorIndex"></film>
                 <goods
                   v-if="item.name === 'goods'"
                   :res="item"
                   :active="index == editorIndex"
-                />
+                ></goods>
                 <heading
                   v-if="item.name === 'heading'"
                   :res="item"
                   :active="index == editorIndex"
-                />
+                ></heading>
                 <slider
                   v-if="item.name === 'slider'"
                   :res="item"
                   :active="index == editorIndex"
-                />
+                ></slider>
                 <writing
                   v-if="item.name === 'writing'"
                   :res="item"
                   :active="index == editorIndex"
-                />
+                ></writing>
               </div>
             </draggable>
           </div>
         </div>
         <div class="setting-view">
-          <div
-            v-if="editorIndex === null"
-            class="view-placeholder"
-          >
-            <i class="iconfont icon-shapes" />
+          <div class="view-placeholder" v-if="editorIndex === null">
+            <i class="iconfont icon-shapes"></i>
             请拖选左侧挂件
           </div>
-          <filmEditor
-            :res="editorData"
-            @change="getVideo"
-          />
-          <goodsEditor :res="editorData" />
-          <headingEditor :res="editorData" />
+          <filmEditor :res="editorData" @change="getVideo"></filmEditor>
+          <goodsEditor :res="editorData"></goodsEditor>
+          <headingEditor :res="editorData"></headingEditor>
           <sliderEditor
             :res="editorData"
             @bindImgs="showImgs"
             @bindLinks="showLinks"
-          />
-          <writingEditor :res="editorData" />
+          ></sliderEditor>
+          <writingEditor :res="editorData"></writingEditor>
         </div>
       </section>
-      <section
-        slot="footer"
-        class="content-center"
-      >
-        <el-button
-          class="btn-save"
-          type="primary"
-          @click="saveConfig"
-        >
-          保存
-        </el-button>
+      <section slot="footer" class="content-center">
+        <el-button class="btn-save" type="primary" @click="saveConfig">保存</el-button>
       </section>
       <imgPicker
         :dialog-visible="imgsVisible"
         :sc-status="isGetImage"
         @chooseImg="pickImg"
         @closeImgDialog="closeimgsVisible"
-      />
+      ></imgPicker>
       <linkSetter
         :visible="linksVisible"
         @setLink="setLink"
         @closeDialog="closeDialog"
-      />
+      ></linkSetter>
       <goodsPicker
         :visible="goodsVisible"
         @pickGoods="pickGoods"
         @closeDialog="closeDialog"
-      />
+      ></goodsPicker>
     </el-dialog>
   </div>
 </template>
@@ -263,6 +193,20 @@ import draggable from 'vuedraggable'
 import { savePageParams, getParamByTempName } from '@/api/wxa'
 
 export default {
+  props: {
+    data: {
+      type: Array,
+      default: () => {
+        return []
+      }
+    },
+    control: {
+      type: Array,
+      default: () => {
+        return []
+      }
+    }
+  },
   components: {
     film,
     goods,
@@ -281,21 +225,7 @@ export default {
     // 第三方组件
     draggable
   },
-  props: {
-    data: {
-      type: Array,
-      default: () => {
-        return []
-      }
-    },
-    control: {
-      type: Array,
-      default: () => {
-        return []
-      }
-    }
-  },
-  data () {
+  data() {
     return {
       dialogVisible: false,
       componentHeight: '',
@@ -335,24 +265,142 @@ export default {
     }
   },
   watch: {
-    data (val) {
+    data(val) {
       this.components = val
-    },
-    dialogVisible: {
-      handler (newVal) {
-        if (!newVal) {
-          console.log('===this.data', this.data, this.components)
-          let oldData = [...this.data]
-          if (this.data.length !== this.components.length) {
+    }, 
+    dialogVisible:{
+      handler(newVal){
+        if(!newVal){
+          console.log("===this.data",this.data,this.components)
+          let oldData=[...this.data];
+          if(this.data.length!==this.components.length){
             // debugger;
-            //说明没有保存
+            //说明没有保存 
             this.$emit('change', oldData)
           }
+          
         }
-      }
+      }, 
     }
   },
-  mounted () {
+  methods: {
+    plantingShow() {
+      this.dialogVisible = true
+    },
+    // 拖拽绑定事件
+    onStart(evt) {
+      if (evt.target.className === 'components-view') {
+        this.saveInit = JSON.stringify(this.initData[evt.oldIndex])
+      } else {
+        this.setCurrent(evt.oldIndex)
+      }
+    },
+    onEnd(evt) {
+      this.setCurrent(evt.newIndex)
+      if (evt.target.className === 'components-view' && evt.to.className === 'components-wrap') {
+        this.initData.splice(evt.oldIndex, 0, JSON.parse(this.saveInit))
+      }
+    },
+    // 设置当前编辑的组件
+    setCurrent(val) {
+      this.editorIndex = val
+      if (val === 'tabBar') {
+        this.editorData = { ...this.tabBar }
+      } else {
+        this.editorData = { ...this.components[val] }
+      }
+    },
+    // 删除当前组件
+    removeCurrent() {
+      this.$confirm('确认删除当前组件？')
+        .then((_) => {
+          this.editorData = {}
+          this.components.splice(this.editorIndex, 1)
+          this.editorIndex = null
+          this.editorDataIndex = null
+        })
+        .catch((_) => {})
+    },
+    // 图片选择器绑定事件
+    showImgs(index) {
+      this.imgsVisible = true
+      this.isGetImage = true
+      if (typeof index !== undefined) {
+        this.editorDataIndex = index
+      }
+    },
+    pickImg(data) {
+      if (this.components[this.editorIndex].name === 'imgHotzone') {
+        this.components[this.editorIndex].config.imgUrl = data.url
+      } else {
+        this.components[this.editorIndex].data[this.editorDataIndex].imgUrl = data.url
+      }
+      this.imgsVisible = false
+    },
+    closeimgsVisible() {
+      this.imgsVisible = false
+    },
+    // 商品选择器绑定事件
+    showGoods(index) {
+      if (index) {
+        this.editorDataIndex = index
+      }
+      this.goodsVisible = true
+    },
+    pickGoods(data) {
+      this.editorData.data = data
+      this.components[this.editorIndex].data = data
+      this.goodsVisible = false
+    },
+    getVideo(data) {
+      Object.assign(this.editorData.data[0], data)
+      Object.assign(this.components[this.editorIndex].data[0], data)
+    },
+    showLinks(index) {
+      this.linksVisible = true
+      this.editorDataIndex = index
+    },
+    // 链接选择器绑定事件
+    setLink(data, type) {
+      this.editorData.data[this.editorDataIndex].id = data.id
+      this.editorData.data[this.editorDataIndex].title = data.title
+      this.editorData.data[this.editorDataIndex].linkPage = type
+      this.components[this.editorIndex].data[this.editorDataIndex].id = data.id
+      this.components[this.editorIndex].data[this.editorDataIndex].title = data.title
+      this.components[this.editorIndex].data[this.editorDataIndex].linkPage = type
+      this.linksVisible = false
+    },
+    showIcons(index) {
+      this.iconsVisible = true
+      this.editorDataIndex = index
+    },
+    pickIcon(data) {
+      this.editorData.data[this.editorDataIndex].pathName = data
+      this.tabBar.data[this.editorDataIndex].pathName = data
+      this.iconsVisible = false
+    },
+    // 选择器公用关闭事件
+    closeDialog(key) {
+      switch (key) {
+        case 'goods':
+          this.goodsVisible = false
+          break
+        case 'link':
+          this.linksVisible = false
+          break
+        case 'icon':
+          this.iconsVisible = false
+          break
+        default:
+      }
+    },
+    // 保存配置
+    saveConfig() {
+      this.dialogVisible = false
+      this.$emit('change', this.components)
+    }
+  },
+  mounted() {
     let init = [
       {
         name: 'film',
@@ -469,123 +517,6 @@ export default {
     })
     this.initData = controlList
     this.components = this.data
-  },
-  methods: {
-    plantingShow () {
-      this.dialogVisible = true
-    },
-    // 拖拽绑定事件
-    onStart (evt) {
-      if (evt.target.className === 'components-view') {
-        this.saveInit = JSON.stringify(this.initData[evt.oldIndex])
-      } else {
-        this.setCurrent(evt.oldIndex)
-      }
-    },
-    onEnd (evt) {
-      this.setCurrent(evt.newIndex)
-      if (evt.target.className === 'components-view' && evt.to.className === 'components-wrap') {
-        this.initData.splice(evt.oldIndex, 0, JSON.parse(this.saveInit))
-      }
-    },
-    // 设置当前编辑的组件
-    setCurrent (val) {
-      this.editorIndex = val
-      if (val === 'tabBar') {
-        this.editorData = { ...this.tabBar }
-      } else {
-        this.editorData = { ...this.components[val] }
-      }
-    },
-    // 删除当前组件
-    removeCurrent () {
-      this.$confirm('确认删除当前组件？')
-        .then((_) => {
-          this.editorData = {}
-          this.components.splice(this.editorIndex, 1)
-          this.editorIndex = null
-          this.editorDataIndex = null
-        })
-        .catch((_) => {})
-    },
-    // 图片选择器绑定事件
-    showImgs (index) {
-      this.imgsVisible = true
-      this.isGetImage = true
-      if (typeof index !== undefined) {
-        this.editorDataIndex = index
-      }
-    },
-    pickImg (data) {
-      if (this.components[this.editorIndex].name === 'imgHotzone') {
-        this.components[this.editorIndex].config.imgUrl = data.url
-      } else {
-        this.components[this.editorIndex].data[this.editorDataIndex].imgUrl = data.url
-      }
-      this.imgsVisible = false
-    },
-    closeimgsVisible () {
-      this.imgsVisible = false
-    },
-    // 商品选择器绑定事件
-    showGoods (index) {
-      if (index) {
-        this.editorDataIndex = index
-      }
-      this.goodsVisible = true
-    },
-    pickGoods (data) {
-      this.editorData.data = data
-      this.components[this.editorIndex].data = data
-      this.goodsVisible = false
-    },
-    getVideo (data) {
-      Object.assign(this.editorData.data[0], data)
-      Object.assign(this.components[this.editorIndex].data[0], data)
-    },
-    showLinks (index) {
-      this.linksVisible = true
-      this.editorDataIndex = index
-    },
-    // 链接选择器绑定事件
-    setLink (data, type) {
-      this.editorData.data[this.editorDataIndex].id = data.id
-      this.editorData.data[this.editorDataIndex].title = data.title
-      this.editorData.data[this.editorDataIndex].linkPage = type
-      this.components[this.editorIndex].data[this.editorDataIndex].id = data.id
-      this.components[this.editorIndex].data[this.editorDataIndex].title = data.title
-      this.components[this.editorIndex].data[this.editorDataIndex].linkPage = type
-      this.linksVisible = false
-    },
-    showIcons (index) {
-      this.iconsVisible = true
-      this.editorDataIndex = index
-    },
-    pickIcon (data) {
-      this.editorData.data[this.editorDataIndex].pathName = data
-      this.tabBar.data[this.editorDataIndex].pathName = data
-      this.iconsVisible = false
-    },
-    // 选择器公用关闭事件
-    closeDialog (key) {
-      switch (key) {
-        case 'goods':
-          this.goodsVisible = false
-          break
-        case 'link':
-          this.linksVisible = false
-          break
-        case 'icon':
-          this.iconsVisible = false
-          break
-        default:
-      }
-    },
-    // 保存配置
-    saveConfig () {
-      this.dialogVisible = false
-      this.$emit('change', this.components)
-    }
   }
 }
 </script>
@@ -763,7 +694,7 @@ export default {
   }
   .component-item {
     position: relative;
-    top: 80px;
+    top:80px;
     .icon-trash-alt {
       position: absolute;
       right: 20px;

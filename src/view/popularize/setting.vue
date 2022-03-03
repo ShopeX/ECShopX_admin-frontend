@@ -1,11 +1,6 @@
 <template>
   <div class="section section-white">
-    <el-form
-      ref="form"
-      :model="form"
-      label-position="left"
-      label-width="120px"
-    >
+    <el-form ref="form" :model="form" label-position="left" label-width="120px">
       <div class="section-body">
         <el-form-item label="推广员计划">
           <el-switch
@@ -16,22 +11,19 @@
             active-text="开启"
             inactive-text="关闭"
             active-color="#13ce66"
-          />
+          ></el-switch>
           <el-alert
             title="商家可邀请员工、合作伙伴、朋友等作为推广员一起推广您的店铺或商品, 成功推广后给予推广员奖励，以此给店铺带来更多的曝光和销售提升"
             type="info"
             close-text=" "
             class="alert-text"
-          />
+          >
+          </el-alert>
         </el-form-item>
         <el-form-item label="分销商品">
           <el-radio-group v-model="form.goods">
-            <el-radio label="all">
-              全部商品
-            </el-radio>
-            <el-radio label="select">
-              指定分销商品
-            </el-radio>
+            <el-radio label="all">全部商品</el-radio>
+            <el-radio label="select">指定分销商品</el-radio>
           </el-radio-group>
           <div class="frm-tips">
             <p>
@@ -46,10 +38,10 @@
           <el-form-item label="提现限制">
             单笔金额不低于
             <el-input
-              v-model="form.limit_rebate"
               type="number"
               required
               min="1"
+              v-model="form.limit_rebate"
               placeholder=""
               style="width: 100px"
             />元
@@ -57,10 +49,10 @@
           <el-form-item label="结算限制">
             订单完成
             <el-input
-              v-model="form.limit_time"
               type="number"
               required
               min="0"
+              v-model="form.limit_time"
               placeholder=""
               style="width: 100px"
             />
@@ -74,51 +66,41 @@
                   :key="item.value"
                   :label="item.label"
                   :value="item.value"
-                />
-              </el-select>
-              <div
-                v-show="form.change_promoter.type == 'vip_grade'"
-                class="gap-text"
-              >
-                选择付费等级
-                <el-select
-                  v-model="form.change_promoter.filter.vip_grade"
-                  placeholder="请选择"
                 >
+                </el-option>
+              </el-select>
+              <div v-show="form.change_promoter.type == 'vip_grade'" class="gap-text">
+                选择付费等级
+                <el-select v-model="form.change_promoter.filter.vip_grade" placeholder="请选择">
                   <el-option
                     v-for="item in vipGradeList"
                     :key="item.lv_type"
                     :label="item.grade_name"
                     :value="item.lv_type"
-                  />
+                  >
+                  </el-option>
                 </el-select>
               </div>
-              <div
-                v-show="form.change_promoter.type == 'consume_money'"
-                class="gap-text"
-              >
+              <div v-show="form.change_promoter.type == 'consume_money'" class="gap-text">
                 达到
                 <el-input
-                  v-model="form.change_promoter.filter.consume_money"
                   type="number"
                   required
                   min="0"
+                  v-model="form.change_promoter.filter.consume_money"
                   placeholder=""
                   style="width: 100px"
                   onkeyup="this.value=this.value.replace(/\D/g,'')"
                 />
                 元
               </div>
-              <div
-                v-show="form.change_promoter.type == 'order_num'"
-                class="gap-text"
-              >
+              <div v-show="form.change_promoter.type == 'order_num'" class="gap-text">
                 完成
                 <el-input
-                  v-model="form.change_promoter.filter.order_num"
                   type="number"
                   required
                   min="0"
+                  v-model="form.change_promoter.filter.order_num"
                   placeholder=""
                   style="width: 100px"
                 />
@@ -137,12 +119,8 @@
               v-model="form.popularize_ratio.type"
               @change="changePopularizeRatioType"
             >
-              <el-radio label="profit">
-                按利润分佣
-              </el-radio>
-              <el-radio label="order_money">
-                按订单金额分佣
-              </el-radio>
+              <el-radio label="profit">按利润分佣</el-radio>
+              <el-radio label="order_money">按订单金额分佣</el-radio>
             </el-radio-group>
             <div class="frm-tips">
               如果商品未指定，返佣计算类型，那么则使用当前设置的通用方式，如果在商品中指定了返佣模式，那么指定商品则使用自己的返佣方式
@@ -150,26 +128,18 @@
           </el-form-item>
           <el-form-item label="推广员奖金设置">
             <div v-show="form.popularize_ratio.type == 'profit'">
-              <el-row
-                v-for="(item, key) in form.popularize_ratio.profit"
-                :key="key"
-              >
-                <el-col :span="2">
-                  {{ item.name }}：
-                </el-col>
+              <el-row v-for="(item, key) in form.popularize_ratio.profit" :key="key">
+                <el-col :span="2"> {{ item.name }}： </el-col>
                 <el-col :span="4">
                   <el-input
-                    v-model="form.popularize_ratio.profit[key].ratio"
                     type="number"
                     required
                     min="0"
+                    v-model="form.popularize_ratio.profit[key].ratio"
                     maxlength="3"
                     placeholder=""
+                    ><template slot="append">%</template></el-input
                   >
-                    <template slot="append">
-                      %
-                    </template>
-                  </el-input>
                 </el-col>
               </el-row>
               <el-alert
@@ -177,28 +147,22 @@
                 type="info"
                 close-text=" "
                 class="alert-text"
-              />
+              >
+              </el-alert>
             </div>
             <div v-show="form.popularize_ratio.type == 'order_money'">
-              <el-row
-                v-for="(item, key) in form.popularize_ratio.order_money"
-                :key="key"
-              >
-                <el-col :span="2">
-                  {{ item.name }}：
-                </el-col>
+              <el-row v-for="(item, key) in form.popularize_ratio.order_money" :key="key">
+                <el-col :span="2"> {{ item.name }}： </el-col>
                 <el-col :span="4">
                   <el-input
-                    v-model="form.popularize_ratio.order_money[key].ratio"
                     type="number"
                     required
                     min="0"
+                    v-model="form.popularize_ratio.order_money[key].ratio"
                     maxlength="3"
                     placeholder=""
                   >
-                    <template slot="append">
-                      %
-                    </template>
+                    <template slot="append">%</template>
                   </el-input>
                 </el-col>
               </el-row>
@@ -207,17 +171,13 @@
                 type="info"
                 close-text=" "
                 class="alert-text"
-              />
+              >
+              </el-alert>
             </div>
           </el-form-item>
           <el-form-item label="奖励方式">
-            <el-radio-group
-              v-model="form.commission_type"
-              @change="changeCommission_type"
-            >
-              <el-radio label="money">
-                奖励现金
-              </el-radio>
+            <el-radio-group v-model="form.commission_type" @change="changeCommission_type">
+              <el-radio label="money">奖励现金</el-radio>
               <!-- <el-radio label="point">奖励积分</el-radio> -->
             </el-radio-group>
             <!-- <div class="frm-tips">
@@ -234,29 +194,17 @@
               active-text="开启"
               inactive-text="关闭"
               active-color="#13ce66"
-            />
+            ></el-switch>
           </el-form-item>
           <template v-if="form.isOpenShop == 'true'">
             <el-form-item label="小店图片">
               <div>
-                <div
-                  class="upload-box"
-                  @click="handleImgChange"
-                >
-                  <img
-                    v-if="form.banner_img"
-                    :src="wximageurl + form.banner_img"
-                    class="avatar"
-                  >
-                  <i
-                    v-else
-                    class="el-icon-plus avatar-uploader-icon"
-                  />
+                <div @click="handleImgChange" class="upload-box">
+                  <img v-if="form.banner_img" :src="wximageurl + form.banner_img" class="avatar" />
+                  <i v-else class="el-icon-plus avatar-uploader-icon"></i>
                 </div>
               </div>
-              <div class="frm-tips">
-                建议尺寸750px*400px；配置后显示在小店首页顶部
-              </div>
+              <div class="frm-tips">建议尺寸750px*400px；配置后显示在小店首页顶部</div>
             </el-form-item>
             <el-form-item label="推广员信息">
               <el-switch
@@ -267,13 +215,14 @@
                 active-text="开启"
                 inactive-text="关闭"
                 active-color="#13ce66"
-              />
+              ></el-switch>
               <el-alert
                 title="若开启，小店图片将不会生效；由每个推广员在移动端配置。"
                 type="info"
                 close-text=" "
                 class="alert-text"
-              />
+              >
+              </el-alert>
             </el-form-item>
             <el-form-item label="分享标题">
               <el-input
@@ -295,50 +244,31 @@
               />
             </el-form-item>
             <el-form-item label="分享图片">
-              <el-row
-                type="flex"
-                style="width: 500px"
-              >
+              <el-row type="flex" style="width: 500px">
                 <el-col>
                   <div class="center">
-                    <div
-                      class="upload-box wxapp"
-                      @click="handleImgChange('wxapp')"
-                    >
+                    <div @click="handleImgChange('wxapp')" class="upload-box wxapp">
                       <img
                         v-if="form.applets_share_img"
                         :src="wximageurl + form.applets_share_img"
                         class="avatar"
-                      >
-                      <i
-                        v-else
-                        class="el-icon-plus avatar-uploader-icon"
                       />
+                      <i v-else class="el-icon-plus avatar-uploader-icon"></i>
                     </div>
-                    <div class="frm-tips upload-box inline">
-                      建议尺寸5:4
-                    </div>
+                    <div class="frm-tips upload-box inline">建议尺寸5:4</div>
                   </div>
                 </el-col>
                 <el-col>
                   <div class="center">
-                    <div
-                      class="upload-box h5"
-                      @click="handleImgChange('web')"
-                    >
+                    <div @click="handleImgChange('web')" class="upload-box h5">
                       <img
                         v-if="form.h5_share_img"
                         :src="wximageurl + form.h5_share_img"
                         class="avatar"
-                      >
-                      <i
-                        v-else
-                        class="el-icon-plus avatar-uploader-icon"
                       />
+                      <i v-else class="el-icon-plus avatar-uploader-icon"></i>
                     </div>
-                    <div class="frm-tips upload-box inline">
-                      建议尺寸1:1
-                    </div>
+                    <div class="frm-tips upload-box inline">建议尺寸1:1</div>
                   </div>
                 </el-col>
               </el-row>
@@ -393,14 +323,9 @@
         :sc-status="isGetImage"
         @chooseImg="pickImg"
         @closeImgDialog="closeImgDialog"
-      />
+      ></imgPicker>
       <div class="section-footer with-border content-center">
-        <el-button
-          type="primary"
-          @click="save"
-        >
-          保 存
-        </el-button>
+        <el-button type="primary" @click="save">保 存</el-button>
       </div>
     </el-form>
   </div>
@@ -415,7 +340,7 @@ export default {
   components: {
     imgPicker
   },
-  data () {
+  data() {
     return {
       params: {
         page: 1,
@@ -509,43 +434,8 @@ export default {
       FormworkList: []
     }
   },
-  mounted () {
-    // this.getFormworkList()
-    getPopularizeSetting().then((res) => {
-      this.form = { ...this.form, ...res.data.data }
-      this.form.goods = this.form.goods ? this.form.goods : 'all'
-      this.form.share_title = this.form.share_title ? this.form.share_title : '这家小店不一般！'
-      this.form.share_des = this.form.share_des ? this.form.share_des : '这家店有好货，一起瞧瞧吧！'
-      console.log(this.form)
-      if (typeof this.form.recharge == 'undefined') {
-        this.form.recharge = {
-          profit: {
-            first_level: {
-              name: '上级',
-              ratio: 0
-            },
-            second_level: {
-              name: '上上级',
-              ratio: 0
-            }
-          }
-        }
-      }
-    }),
-      listVipGrade().then((response) => {
-        if (response != undefined && response.data.data && response.data.data.length > 0) {
-          this.vipGradeList = response.data.data
-        }
-      })
-
-    // console.log(this.vipGradeList.is_open_point);
-    // getWeappId().then(response => {
-    //     var res = response.data.weappid
-    //     this.weappid = res
-    // })
-  },
   methods: {
-    changeCommission_type (val) {
+    changeCommission_type(val) {
       const popularize_ratioType = this.form.popularize_ratio.type
       if (!this.form.is_open_point) {
         this.$confirm('未开启积分设置，请进入 「会员」-「 积分规则 」开启积分。', '提示', {
@@ -652,7 +542,7 @@ export default {
           })
       }
     },
-    linkTo () {
+    linkTo() {
       let link = ''
       getWeappId().then((res) => {
         var data = res.data.data.weappid
@@ -667,7 +557,7 @@ export default {
         })
       })
     },
-    changePopularizeRatioType (type) {
+    changePopularizeRatioType(type) {
       console.log(type)
       this.$confirm(
         '切换返佣计算类型，将清空单品比例返佣设置（固定金额不影响），之前配置过的单品返佣比例需要重新配置',
@@ -691,12 +581,12 @@ export default {
           })
         })
     },
-    handleImgChange (data = 'banner') {
+    handleImgChange(data = 'banner') {
       this.imgDialog = true
       this.isGetImage = true
       this.setImg = data
     },
-    pickImg (data) {
+    pickImg(data) {
       // this.form.guideImg = data.url
       switch (this.setImg) {
         case 'web':
@@ -710,10 +600,10 @@ export default {
       }
       this.imgDialog = false
     },
-    closeImgDialog () {
+    closeImgDialog() {
       this.imgDialog = false
     },
-    save () {
+    save() {
       let plusReg = /^[1-9](\d+)?$/
       let countReg = /^\d+$/
 
@@ -739,7 +629,7 @@ export default {
       })
     },
     // 自定义页面模板列表
-    getFormworkList () {
+    getFormworkList() {
       this.loading = true
       getCustomPageList(this.params).then((response) => {
         this.FormworkList = response.data.data.list
@@ -752,14 +642,49 @@ export default {
       this.getFormworkList()
     },
     // 拉取自定义列表数据
-    batchChooseFormwork () {
+    batchChooseFormwork() {
       this.FormworkVisible = true
       this.params.page = 1
       this.getFormworkList()
     },
-    onSubmitFormwork (item) {
+    onSubmitFormwork(item) {
       this.FormworkVisible = false
     }
+  },
+  mounted() {
+    // this.getFormworkList()
+    getPopularizeSetting().then((res) => {
+      this.form = { ...this.form, ...res.data.data }
+      this.form.goods = this.form.goods ? this.form.goods : 'all'
+      this.form.share_title = this.form.share_title ? this.form.share_title : '这家小店不一般！'
+      this.form.share_des = this.form.share_des ? this.form.share_des : '这家店有好货，一起瞧瞧吧！'
+      console.log(this.form)
+      if (typeof this.form.recharge == 'undefined') {
+        this.form.recharge = {
+          profit: {
+            first_level: {
+              name: '上级',
+              ratio: 0
+            },
+            second_level: {
+              name: '上上级',
+              ratio: 0
+            }
+          }
+        }
+      }
+    }),
+      listVipGrade().then((response) => {
+        if (response != undefined && response.data.data && response.data.data.length > 0) {
+          this.vipGradeList = response.data.data
+        }
+      })
+
+    // console.log(this.vipGradeList.is_open_point);
+    // getWeappId().then(response => {
+    //     var res = response.data.weappid
+    //     this.weappid = res
+    // })
   }
 }
 </script>

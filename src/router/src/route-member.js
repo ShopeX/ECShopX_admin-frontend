@@ -9,7 +9,7 @@ export default {
     {
       path: 'member',
       name: `会员列表`,
-      component: () => import('@/view/member/members/list'),
+      component: () => import( '@/view/member/members/list' ),
       children: [
         {
           path: 'detail/:user_id?',
@@ -20,32 +20,32 @@ export default {
     {
       path: 'card/managecard',
       name: `基础设置`,
-      component: () => import('@/view/member/membercard/index')
+      component: () =>import('@/view/member/membercard/index')
     },
     {
       path: 'card/managecardorder',
       name: `等级购买记录`,
-      component: () => import('@/view/member/membercard/list')
+      component: () => import( '@/view/member/membercard/list' )
     },
     {
       path: 'Membertagcategory',
       name: `会员标签分组`,
-      component: () => import('@/view/member/members/tagcategory.vue')
+      component: () => import( '@/view/member/members/tagcategory.vue' )
     },
     {
       path: 'whitelistlist',
       name: `白名单列表`,
-      component: () => import('@/view/member/whitelist/list')
+      component: () => import( '@/view/member/whitelist/list')
     },
     {
       path: 'whitelistuploade',
       name: `白名单导入`,
-      component: () => import('@/view/member/whitelist/uploadeindex')
+      component: () => import( '@/view/member/whitelist/uploadeindex' )
     },
     {
       path: 'pointrule',
       name: `积分规则`,
-      component: () => import('@/view/member/point/index.vue')
+      component: () => import( '@/view/member/point/index.vue')
     },
     {
       path: 'pointoverview',
@@ -55,12 +55,12 @@ export default {
     {
       path: 'analysisrights',
       name: `会员权益`,
-      component: () => import('@/view/member/members/rightsList')
+      component: () => import( '@/view/member/members/rightsList')
     },
     {
       path: 'Managetag',
       name: `会员标签`,
-      component: () => import('@/view/member/members/tags')
+      component: () => import( '@/view/member/members/tags')
     },
     {
       path: 'smssend',
@@ -70,7 +70,8 @@ export default {
     {
       path: 'Manageinfomation',
       name: `会员注册信息`,
-      component: () => import('@/view/member/registersetting/index')
+      component: () =>
+        import( '@/view/member/registersetting/index' )
     },
     {
       path: 'mallrecharge',
@@ -88,9 +89,9 @@ export default {
       component: () => import('@/view/member/trustlogin/list')
     },
     {
-      path: 'closeAccount',
-      name: '会员注销',
-      component: () => import('@/view/member/closeAccount')
+      path:'closeAccount',
+      name:'会员注销',
+      component:()=>import('@/view/member/closeAccount')
     }
   ]
 }

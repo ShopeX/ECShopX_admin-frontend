@@ -2,79 +2,32 @@
   <div>
     <el-row :gutter="20">
       <el-col :span="12">
-        <shop-select
-          wxshops
-          @update="storeChange"
-          @init="initChange"
-        />
+        <shop-select wxshops @update="storeChange" @init="initChange"></shop-select>
         <!--distributors wxshops 需要哪个api传哪个-->
       </el-col>
-      <el-col
-        :md="8"
-        :lg="5"
-      >
-        <el-input
-          v-model="mobile"
-          placeholder="手机号"
-          clearable
-          size="mini"
-        >
-          <el-button
-            slot="append"
-            icon="el-icon-search"
-            @click="numberSearch"
-          />
-        </el-input>
+      <el-col :md="8" :lg="5">
+        <el-input placeholder="手机号" v-model="mobile" clearable size="mini"
+          ><el-button slot="append" icon="el-icon-search" @click="numberSearch"></el-button
+        ></el-input>
       </el-col>
-      <el-col
-        :span="3"
-        class="content-right"
-      >
-        <el-button
-          size="mini"
-          type="primary"
-          icon="plus"
-          @click="addSalesperson"
+      <el-col :span="3" class="content-right">
+        <el-button size="mini" type="primary" icon="plus" @click="addSalesperson"
+          >添加管理员</el-button
         >
-          添加管理员
-        </el-button>
       </el-col>
     </el-row>
-    <el-row />
-    <el-tabs
-      v-model="activeName"
-      type="border-card"
-      @tab-click="handleClick"
-    >
-      <el-tab-pane
-        label="管理员"
-        name="admin"
-      />
-      <el-tab-pane
-        label="核销员"
-        name="verification_clerk"
-      />
-      <el-table
-        v-loading="loading"
-        :data="salespersonList"
-        :height="wheight - 160"
-      >
-        <el-table-column
-          prop="name"
-          label="姓名"
-        />
-        <el-table-column
-          prop="mobile"
-          label="手机号"
-        />
+    <el-row> </el-row>
+    <el-tabs type="border-card" v-model="activeName" @tab-click="handleClick">
+      <el-tab-pane label="管理员" name="admin"></el-tab-pane>
+      <el-tab-pane label="核销员" name="verification_clerk"></el-tab-pane>
+      <el-table :data="salespersonList" :height="wheight - 160" v-loading="loading">
+        <el-table-column prop="name" label="姓名"></el-table-column>
+        <el-table-column prop="mobile" label="手机号"></el-table-column>
         <el-table-column label="所属门店">
           <template slot-scope="scope">
-            <el-button
-              type="text"
-              @click="getSalepersonShopList(scope.row.salespersonId, 'shop')"
+            <el-button type="text" @click="getSalepersonShopList(scope.row.salespersonId, 'shop')"
+              >查看门店</el-button
             >
-              查看门店
-            </el-button>
           </template>
         </el-table-column>
         <el-table-column label="所属店铺">
@@ -82,159 +35,100 @@
             <el-button
               type="text"
               @click="getSalepersonShopList(scope.row.salespersonId, 'distributor')"
+              >查看店铺</el-button
             >
-              查看店铺
-            </el-button>
           </template>
         </el-table-column>
         <el-table-column label="操作">
           <template slot-scope="scope">
             <div class="operating-icons">
-              <i
-                class="iconfont icon-edit1"
-                @click="updateSalesperson(scope.row)"
-              />
+              <i class="iconfont icon-edit1" @click="updateSalesperson(scope.row)"></i>
               <i
                 class="mark iconfont icon-trash-alt1"
                 @click="deleteSalesperson(scope.$index, scope.row)"
-              />
+              ></i>
             </div>
           </template>
         </el-table-column>
       </el-table>
-      <div
-        v-if="total_count > params.pageSize"
-        class="content-padded content-center"
-      >
+      <div v-if="total_count > params.pageSize" class="content-padded content-center">
         <el-pagination
           background
           layout="prev, pager, next"
+          @current-change="handleCurrentChange"
           :current-page.sync="params.page"
           :total="total_count"
           :page-size="params.pageSize"
-          @current-change="handleCurrentChange"
-        />
+        >
+        </el-pagination>
       </div>
     </el-tabs>
 
-    <el-dialog
-      :title="DialogTitle"
-      :visible.sync="detailDialog"
-      :close-on-click-modal="false"
-    >
-      <el-form
-        v-model="form"
-        label-width="160px"
-      >
+    <el-dialog :title="DialogTitle" :visible.sync="detailDialog" :close-on-click-modal="false">
+      <el-form v-model="form" label-width="160px">
         <el-form-item label="管理门店">
-          <div style="margin-left: 1.5%">
+          <div style="margin-left: 1.5%;">
             <template v-if="rel_shops_ids">
-              <el-table
-                :data="rel_shops_ids"
-                tooltip-effect="dark"
-                style="width: 90%"
-              >
-                <el-table-column
-                  prop="storeName"
-                  label="门店名称"
-                />
+              <el-table :data="rel_shops_ids" tooltip-effect="dark" style="width: 90%">
+                <el-table-column prop="storeName" label="门店名称"></el-table-column>
                 <el-table-column
                   prop="address"
                   label="地址"
                   show-overflow-tooltip
-                />
-                <el-table-column
-                  label="操作"
-                  width="120"
-                >
+                ></el-table-column>
+                <el-table-column label="操作" width="120">
                   <template slot-scope="scope">
                     <el-button
                       type="text"
                       icon="el-icon-delete"
-                      style="font-size: 18px"
                       @click.native.prevent="deleteRow(scope.$index, rel_shops_ids)"
-                    />
+                      style="font-size:18px;"
+                    ></el-button>
                   </template>
                 </el-table-column>
               </el-table>
             </template>
-            <el-button
-              type="text"
-              @click="addShopAction"
-            >
-              添加适用门店
-            </el-button>
+            <el-button type="text" @click="addShopAction">添加适用门店</el-button>
           </div>
         </el-form-item>
         <el-form-item label="管理店铺">
-          <div style="margin-left: 1.5%">
+          <div style="margin-left: 1.5%;">
             <template v-if="rel_distributor_ids">
-              <el-table
-                :data="rel_distributor_ids"
-                style="line-height: normal"
-              >
-                <el-table-column
-                  label="ID"
-                  prop="distributor_id"
-                  width="60"
-                />
-                <el-table-column
-                  label="店铺名称"
-                  prop="name"
-                />
+              <el-table :data="rel_distributor_ids" style="line-height: normal">
+                <el-table-column label="ID" prop="distributor_id" width="60"></el-table-column>
+                <el-table-column label="店铺名称" prop="name"></el-table-column>
                 <el-table-column
                   prop="address"
                   label="地址"
                   show-overflow-tooltip
-                />
-                <el-table-column
-                  label="操作"
-                  width="50"
-                >
+                ></el-table-column>
+                <el-table-column label="操作" width="50">
                   <template slot-scope="scope">
                     <i
                       class="iconfont icon-trash-alt"
                       @click="deleteStoreRow(scope.$index, rel_distributor_ids)"
-                    />
+                    ></i>
                   </template>
                 </el-table-column>
               </el-table>
             </template>
-            <el-button
-              type="text"
-              @click="addStoreAction"
-            >
-              添加适用店铺
-            </el-button>
+            <el-button type="text" @click="addStoreAction">添加适用店铺</el-button>
           </div>
         </el-form-item>
         <el-form-item label="手机号">
-          <el-input
-            v-model="form.mobile"
-            placeholder="请输入手机号"
-            style="width: 193px"
-            :disabled="datapass_block == 1"
-          />
+          <el-input v-model="form.mobile" placeholder="请输入手机号" style="width:193px" :disabled="datapass_block == 1"></el-input>
         </el-form-item>
         <el-form-item label="管理员姓名">
           <el-input
             v-model="form.name"
             placeholder="请输入管理员姓名"
             :disabled="datapass_block == 1"
-            style="width: 193px"
-          />
+            style="width:193px"
+          ></el-input>
         </el-form-item>
       </el-form>
-      <div
-        slot="footer"
-        class="dialog-footer content-center"
-      >
-        <el-button
-          type="primary"
-          @click="addSalespersonAction"
-        >
-          确定
-        </el-button>
+      <div slot="footer" class="dialog-footer content-center">
+        <el-button type="primary" @click="addSalespersonAction">确定</el-button>
       </div>
     </el-dialog>
     <el-dialog
@@ -244,24 +138,10 @@
       width="70%"
     >
       <template>
-        <el-table
-          v-loading="loading"
-          :data="relShop.list"
-        >
-          <el-table-column
-            prop="shop_id"
-            label="id"
-            width="60"
-          />
-          <el-table-column
-            prop="store_name"
-            label="门店名称"
-            width="300"
-          />
-          <el-table-column
-            prop="address"
-            label="门店地址"
-          />
+        <el-table :data="relShop.list" v-loading="loading">
+          <el-table-column prop="shop_id" label="id" width="60"></el-table-column>
+          <el-table-column prop="store_name" label="门店名称" width="300"></el-table-column>
+          <el-table-column prop="address" label="门店地址"></el-table-column>
         </el-table>
         <div
           v-if="relShop.total_count > relShop.params.pageSize"
@@ -269,11 +149,12 @@
         >
           <el-pagination
             layout="prev, pager, next"
+            @current-change="handleRelShopCurrentChange"
             :current-page.sync="relShop.params.page"
             :total="relShop.total_count"
             :page-size="relShop.params.pageSize"
-            @current-change="handleRelShopCurrentChange"
-          />
+          >
+          </el-pagination>
         </div>
       </template>
     </el-dialog>
@@ -284,7 +165,7 @@
       :get-status="setStatus"
       @chooseStore="chooseShopAction"
       @closeStoreDialog="closeShopDialogAction"
-    />
+    ></shopSelect>
     <StoreSelect
       :store-visible="storeVisible"
       :is-valid="true"
@@ -292,7 +173,7 @@
       :get-status="setStoreStatus"
       @chooseStore="chooseStoreAction"
       @closeStoreDialog="closeStoreDialogAction"
-    />
+    ></StoreSelect>
   </div>
 </template>
 <script>
@@ -312,7 +193,7 @@ export default {
     shopSelect,
     StoreSelect
   },
-  data () {
+  data() {
     return {
       activeName: 'admin',
       storeList: [],
@@ -359,12 +240,9 @@ export default {
   computed: {
     ...mapGetters(['wheight'])
   },
-  mounted () {
-    this.getList()
-  },
   methods: {
     // 切换tab
-    handleClick (tab, event) {
+    handleClick(tab, event) {
       if (tab.name == 'admin') {
         this.DialogTitle = '编辑管理员信息'
       } else if (tab.name == 'verification_clerk') {
@@ -375,11 +253,11 @@ export default {
       this.params.salesperson_type = tab.name
       this.getList()
     },
-    handleCurrentChange (page_num) {
+    handleCurrentChange(page_num) {
       this.params.page = page_num
       this.getList()
     },
-    addSalesperson () {
+    addSalesperson() {
       this.detailDialog = true
       this.form = {
         name: '',
@@ -391,7 +269,7 @@ export default {
       this.rel_distributor_ids = null
       this.salespersonId = null
     },
-    addSalespersonAction () {
+    addSalespersonAction() {
       if (this.salespersonId) {
         updateSalesperson(this.salespersonId, this.form).then((response) => {
           this.detailDialog = false
@@ -412,7 +290,7 @@ export default {
         })
       }
     },
-    updateSalesperson (row) {
+    updateSalesperson(row) {
       this.salespersonId = row.salespersonId
       this.detailDialog = true
       var params = { salesperson_id: row.salespersonId }
@@ -428,7 +306,7 @@ export default {
         this.rel_distributor_ids = res.data.data.distributorList
       })
     },
-    deleteSalesperson (index, row) {
+    deleteSalesperson(index, row) {
       this.$confirm('此操作将删除该管理员, 是否继续?', '提示', {
         confirmButtonText: '确定',
         cancelButtonText: '取消',
@@ -450,21 +328,21 @@ export default {
           })
         })
     },
-    storeChange (params) {
+    storeChange(params) {
       params && params.shop_id
       this.params.shop_id = params.shop_id
       this.params.page = 1
       this.getList()
     },
-    initChange () {
+    initChange() {
       this.shopId = ''
     },
-    numberSearch () {
+    numberSearch() {
       this.params.mobile = this.mobile
       this.params.page = 1
       this.getList()
     },
-    getList () {
+    getList() {
       this.loading = true
       getSalespersonList(this.params)
         .then((response) => {
@@ -483,7 +361,7 @@ export default {
           })
         })
     },
-    getSalepersonShopList (salespersonId, storetype) {
+    getSalepersonShopList(salespersonId, storetype) {
       this.relShop.relShopVisible = true
       this.relShop.params.salesperson_id = salespersonId
       if (storetype) {
@@ -494,20 +372,20 @@ export default {
         this.relShop.total_count = res.data.data.total_count
       })
     },
-    closeShopDialogAction () {
+    closeShopDialogAction() {
       this.shopVisible = false
     },
-    closeStoreDialogAction () {
+    closeStoreDialogAction() {
       this.storeVisible = false
     },
-    handleCancel () {
+    handleCancel() {
       this.relShop.relShopVisible = false
     },
-    handleRelShopCurrentChange (page_num) {
+    handleRelShopCurrentChange(page_num) {
       this.relShop.params.page = page_num
       this.getSalepersonShopList(this.relShop.params.salesperson_id)
     },
-    chooseShopAction (data) {
+    chooseShopAction(data) {
       this.shopVisible = false
       this.form.shop_id = []
       if (data === null || data.length <= 0) return
@@ -518,7 +396,7 @@ export default {
         }
       }
     },
-    chooseStoreAction (data) {
+    chooseStoreAction(data) {
       this.storeVisible = false
       this.form.distributor_id = []
       if (data === null || data.length <= 0) return
@@ -529,7 +407,7 @@ export default {
         }
       }
     },
-    deleteRow (index, rows) {
+    deleteRow(index, rows) {
       rows.splice(index, 1)
       this.form.shop_id = []
       for (var i = 0; i < rows.length; i++) {
@@ -539,7 +417,7 @@ export default {
       }
       this.rel_shops_ids.splice(index, 1)
     },
-    deleteStoreRow (index, rows) {
+    deleteStoreRow(index, rows) {
       rows.splice(index, 1)
       this.form.distributor_id = []
       for (var i = 0; i < rows.length; i++) {
@@ -549,16 +427,19 @@ export default {
       }
       this.rel_distributor_ids.splice(index, 1)
     },
-    addShopAction () {
+    addShopAction() {
       this.shopVisible = true
       this.setStatus = true
       this.relShopIds = this.rel_shops_ids
     },
-    addStoreAction () {
+    addStoreAction() {
       this.storeVisible = true
       this.setStoreStatus = true
       this.relStores = this.rel_distributor_ids
     }
+  },
+  mounted() {
+    this.getList()
   }
 }
 </script>

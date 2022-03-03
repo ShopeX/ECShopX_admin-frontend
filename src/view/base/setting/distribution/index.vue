@@ -1,8 +1,5 @@
 <template>
-  <el-form
-    ref="form"
-    label-width="200px"
-  >
+  <el-form ref="form" label-width="200px">
     <el-tabs type="border-card">
       <el-tab-pane label="导购分润设置">
         <el-form-item label="是否开启分润">
@@ -12,69 +9,54 @@
             inactive-color="#ff4949"
             active-value="1"
             inactive-value="0"
-          />
+          ></el-switch>
         </el-form-item>
         <el-form-item label="拉新店铺">
-          <el-input
-            v-model="form.distributor.distributor"
-            class="input-m"
-          >
+          <el-input class="input-m" v-model="form.distributor.distributor">
             <i slot="suffix">%</i>
           </el-input>
           <span class="frm-tips">
-            <i class="el-icon-warning-outline" /> 注：无拉新门店信息，则不作分润计算。
+            <i class="el-icon-warning-outline"></i> 注：无拉新门店信息，则不作分润计算。
           </span>
         </el-form-item>
         <el-form-item label="拉新导购">
-          <el-input
-            v-model="form.distributor.seller"
-            class="input-m"
-          >
+          <el-input class="input-m" v-model="form.distributor.seller">
             <i slot="suffix">%</i>
           </el-input>
           <span class="frm-tips">
-            <i class="el-icon-warning-outline" /> 注：无拉新导购信息，则不作分润计算。
+            <i class="el-icon-warning-outline"></i> 注：无拉新导购信息，则不作分润计算。
           </span>
         </el-form-item>
         <el-form-item label="推广导购">
-          <el-input
-            v-model="form.distributor.popularize_seller"
-            class="input-m"
-          >
+          <el-input class="input-m" v-model="form.distributor.popularize_seller">
             <i slot="suffix">%</i>
           </el-input>
           <span class="frm-tips">
-            <i class="el-icon-warning-outline" /> 注：无推广导购信息，则不作分润计算。
+            <i class="el-icon-warning-outline"></i> 注：无推广导购信息，则不作分润计算。
           </span>
         </el-form-item>
         <el-form-item label="门店开单">
-          <el-input
-            v-model="form.distributor.distributor_seller"
-            class="input-m"
-          >
+          <el-input class="input-m" v-model="form.distributor.distributor_seller">
             <i slot="suffix">%</i>
           </el-input>
           <span class="frm-tips">
-            <i class="el-icon-warning-outline" /> 注：无门店开单导购信息，则不作分润计算。
+            <i class="el-icon-warning-outline"></i> 注：无门店开单导购信息，则不作分润计算。
           </span>
         </el-form-item>
         <el-form-item label="结算时间">
           订单售后完成<el-input
-            v-model="form.distributor.plan_limit_time"
             class="input-m"
-            style="width: 100px"
-          />天后结算
-          <span
-            class="frm-tips"
-          ><i class="el-icon-warning-outline" /> 注：分润时间从售后完成n天计算。</span>
+            v-model="form.distributor.plan_limit_time"
+            style="width: 100px;"
+          >
+          </el-input
+          >天后结算
+          <span class="frm-tips"
+            ><i class="el-icon-warning-outline"></i> 注：分润时间从售后完成n天计算。</span
+          >
         </el-form-item>
         <div class="section-footer with-border content-center">
-          <el-button
-            type="primary"
-            @click="onSubmit"
-          >
-            保存
-          </el-button>
+          <el-button type="primary" @click="onSubmit">保存</el-button>
         </div>
       </el-tab-pane>
     </el-tabs>
@@ -84,7 +66,7 @@
 import { getDistributionConfig, setDistributionConfig } from '@/api/shop'
 
 export default {
-  data () {
+  data() {
     return {
       form: {
         distributor: {
@@ -97,16 +79,13 @@ export default {
       }
     }
   },
-  mounted () {
-    this.getConfig()
-  },
   methods: {
-    getConfig () {
+    getConfig() {
       getDistributionConfig().then((response) => {
         this.form = response.data.data
       })
     },
-    onSubmit () {
+    onSubmit() {
       setDistributionConfig(this.form).then((response) => {
         this.form = response.data.data
         this.$message({
@@ -115,6 +94,9 @@ export default {
         })
       })
     }
+  },
+  mounted() {
+    this.getConfig()
   }
 }
 </script>

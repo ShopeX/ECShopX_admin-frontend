@@ -42,15 +42,15 @@ export default {
     formList: Array,
     form: Object
   },
-  data () {
+  data() {
     return {}
   },
-  created () {},
+  created() {},
   methods: {
-    handleCancel () {
+    handleCancel() {
       this.$emit('input', false)
     },
-    handleSubmit () {
+    handleSubmit() {
       this.$refs['form'].validate((valid) => {
         if (valid) {
           this.$emit('onSubmit')
@@ -59,11 +59,11 @@ export default {
         }
       })
     },
-    resetForm () {
+    resetForm() {
       this.$refs['form'] && this.$refs['form'].resetFields()
     }
   },
-  render () {
+  render() {
     const { title, value, form, formList } = this
     const Fn = () => {}
     const getComponentByType = (item) => {
@@ -92,18 +92,13 @@ export default {
         return <div class='el-text'>{form[item.key]}</div>
       } else if (item.type == 'select') {
         return (
-          <el-select
-            clearable
-            v-model={form[item.key]}
-            placeholder={item.placeholder || '请选择'}
-            onChange={item.onChange || Fn}
-          >
+          <el-select clearable v-model={form[item.key]} placeholder={item.placeholder || '请选择'} onChange={item.onChange || Fn}>
             {item.options.map((op) => (
               <el-option key={op.value} label={op.title} value={op.value}></el-option>
             ))}
           </el-select>
         )
-      } else if (item.type == 'radio') {
+      } else if(item.type == "radio") {
         return (
           <el-radio-group v-model={form[item.key]} onChange={item.onChange || Fn}>
             {item.options.map((op) => (
@@ -111,7 +106,7 @@ export default {
             ))}
           </el-radio-group>
         )
-      } else if (item.type == 'table') {
+      } else if(item.type == 'table') {
         return (
           <el-table border data={form[item.key]}>
             {item.options.map((op) => (
@@ -126,7 +121,7 @@ export default {
     formList.forEach((item) => {
       if (item.required) {
         rules[item.key] = [{ required: true, message: item.message }]
-      } else if (item.validator) {
+      } else if( item.validator) {
         rules[item.key] = [{ validator: item.validator }]
       }
     })

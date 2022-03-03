@@ -1,16 +1,13 @@
 <template>
   <div>
     <el-table
-      v-loading="loading"
       :data="groupsTeamMemberList"
       style="width: 100%"
       border
       height="580"
+      v-loading="loading"
     >
-      <el-table-column
-        prop="member_info"
-        label="会员"
-      >
+      <el-table-column prop="member_info" label="会员">
         <template slot-scope="scope">
           {{ scope.row.member_info.nickname }}
         </template>
@@ -43,24 +40,21 @@
               path: '/mall/trade/order/detail',
               query: { orderId: scope.row.order_id, resource: '/mall/trade/service' }
             }"
+            >详情</router-link
           >
-            详情
-          </router-link>
           <span v-else>我是拼团机器人</span>
         </template>
       </el-table-column>
     </el-table>
-    <div
-      v-if="total_count > params.pageSize"
-      class="content-center content-top-padded"
-    >
+    <div v-if="total_count > params.pageSize" class="content-center content-top-padded">
       <el-pagination
         layout="prev, pager, next"
+        @current-change="handleCurrentChange"
         :current-page.sync="params.page"
         :total="total_count"
         :page-size="params.pageSize"
-        @current-change="handleCurrentChange"
-      />
+      >
+      </el-pagination>
     </div>
   </div>
 </template>
@@ -69,7 +63,7 @@
 import { getGroupsTeamInfo } from '../../../../api/promotions'
 
 export default {
-  data () {
+  data() {
     return {
       loading: false,
       team_id: null,
@@ -84,15 +78,11 @@ export default {
       }
     }
   },
-  mounted () {
-    this.team_id = this.$route.params.team_id
-    this.getGroupsTeamInfo()
-  },
   methods: {
-    handleCurrentChange (pageNum) {
+    handleCurrentChange(pageNum) {
       this.params.page = pageNum
     },
-    getGroupsTeamInfo () {
+    getGroupsTeamInfo() {
       this.loading = true
       getGroupsTeamInfo(this.team_id, this.params)
         .then((response) => {
@@ -109,6 +99,10 @@ export default {
           })
         })
     }
+  },
+  mounted() {
+    this.team_id = this.$route.params.team_id
+    this.getGroupsTeamInfo()
   }
 }
 </script>

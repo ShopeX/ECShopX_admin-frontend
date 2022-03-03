@@ -1,62 +1,43 @@
 <template>
-  <el-form
-    ref="form"
-    label-width="100px"
-  >
+  <el-form ref="form" label-width="100px">
     <el-form-item label="合作者PID">
-      <el-input
-        v-model="form.app_id"
-        style="width: 300px"
-      />
-      <br>
+      <el-input v-model="form.app_id" style="width:300px"></el-input>
+      <br />
       <span class="frm-tips">APPID</span>
     </el-form-item>
     <el-form-item label="支付宝公钥">
-      <el-input
-        v-model="form.ali_public_key"
-        type="textarea"
-        :rows="5"
-        placeholder="请输入内容"
-      />
-      <br>
+      <el-input type="textarea" :rows="5" placeholder="请输入内容" v-model="form.ali_public_key">
+      </el-input>
+      <br />
       <span class="frm-tips">RSA2(SHA256)密钥 支付宝公钥</span>
     </el-form-item>
     <el-form-item label="应用私钥">
-      <el-input
-        v-model="form.private_key"
-        type="textarea"
-        :rows="5"
-        placeholder="请输入内容"
-      />
-      <br>
+      <el-input type="textarea" :rows="5" placeholder="请输入内容" v-model="form.private_key">
+      </el-input>
+      <br />
       <span class="frm-tips">RSA2(SHA256)密钥 自己私钥</span>
     </el-form-item>
     <el-form-item label="是否启用">
-      <el-switch v-model="form.is_open" />
+      <el-switch v-model="form.is_open"></el-switch>
     </el-form-item>
     <el-form-item label="温馨提示">
-      <span
-        class="frm-tips"
-      >您绑定的企业支付宝账号必须开通<a
-        href="https://b.alipay.com/signing/productDetail.htm?productId=I1011000290000001001"
-        target="_blank"
-      >手机网站支付</a></span>
+      <span class="frm-tips"
+        >您绑定的企业支付宝账号必须开通<a
+          href="https://b.alipay.com/signing/productDetail.htm?productId=I1011000290000001001"
+          target="_blank"
+          >手机网站支付</a
+        ></span
+      >
     </el-form-item>
     <div class="section-footer with-border content-center">
-      <el-button
-        v-loading="loading"
-        type="primary"
-        @click="onSubmit"
-      >
-        保存
-      </el-button>
+      <el-button type="primary" v-loading="loading" @click="onSubmit">保存</el-button>
     </div>
   </el-form>
 </template>
 <script>
 import { setPaymentSetting, getPaymentSetting } from '../../../../api/trade'
 export default {
-  data () {
+  data() {
     return {
       activeName: 'alipay',
       loading: false,
@@ -69,20 +50,17 @@ export default {
       }
     }
   },
-  mounted () {
-    this.getConfig()
-  },
   methods: {
-    handleClick () {
+    handleClick() {
       this.getConfig()
     },
-    getConfig () {
+    getConfig() {
       let query = { pay_type: 'alipay' }
       getPaymentSetting(query).then((response) => {
         this.form = response.data.data
       })
     },
-    onSubmit () {
+    onSubmit() {
       this.loading = true
       let query = {
         isUploadFile: true,
@@ -104,6 +82,9 @@ export default {
           this.loading = false
         })
     }
+  },
+  mounted() {
+    this.getConfig()
   }
 }
 </script>

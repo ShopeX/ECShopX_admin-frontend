@@ -1,13 +1,13 @@
 import fetch from '../utils/fetch'
 
-export function getFapiaoset (query) {
+export function getFapiaoset(query) {
   return fetch({
     url: '/fapiao/getFapiaoset',
     method: 'get',
     params: query
   })
 }
-export function saveFapiaoset (query) {
+export function saveFapiaoset(query) {
   return fetch({
     url: '/fapiao/saveFapiaoset',
     method: 'post',
@@ -15,7 +15,7 @@ export function saveFapiaoset (query) {
   })
 }
 
-export function getFapiaoList (query) {
+export function getFapiaoList(query) {
   return fetch({
     url: '/fapiaolist',
     method: 'get',
@@ -23,7 +23,7 @@ export function getFapiaoList (query) {
   })
 }
 
-export function fapiaoSet (query) {
+export function fapiaoSet(query) {
   return fetch({
     url: '/fapiaoset',
     method: 'get',

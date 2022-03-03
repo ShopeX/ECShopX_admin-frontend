@@ -1,8 +1,6 @@
 <template>
   <section class="section section-white">
-    <h3 class="title">
-      物品及批次详情
-    </h3>
+    <h3 class="title">物品及批次详情</h3>
     <div class="section-header with-border">
       <h4>物品信息</h4>
     </div>
@@ -10,7 +8,7 @@
       <div class="list-item view-flex">
         <div class="view-flex view-flex-item">
           <div class="thumbnail">
-            <img :src="wximageurl + thingInfo.pic">
+            <img :src="wximageurl + thingInfo.pic" />
           </div>
           <div>
             <div class="item-title">
@@ -28,14 +26,8 @@
         <div class="">
           <router-link
             :to="{ path: '/brand/onecode/things', query: { thing_id: thingInfo.thing_id } }"
+            ><el-button class="iconfont icon-edit1" type="text">编辑</el-button></router-link
           >
-            <el-button
-              class="iconfont icon-edit1"
-              type="text"
-            >
-              编辑
-            </el-button>
-          </router-link>
         </div>
       </div>
     </div>
@@ -44,43 +36,25 @@
     </div>
     <div class="section-body">
       <el-table
-        v-loading="loading"
         :data="batchsList"
         style="width: 100%"
         border
+        v-loading="loading"
         element-loading-text="数据加载中"
       >
-        <el-table-column
-          prop="batch_number"
-          width="150"
-          label="批次编号"
-        />
-        <el-table-column
-          prop="batch_name"
-          width="150"
-          label="批次名称"
-        />
-        <el-table-column
-          prop="batch_quantity"
-          width="150"
-          label="批次数量"
-        />
+        <el-table-column prop="batch_number" width="150" label="批次编号"></el-table-column>
+        <el-table-column prop="batch_name" width="150" label="批次名称"></el-table-column>
+        <el-table-column prop="batch_quantity" width="150" label="批次数量"></el-table-column>
         <el-table-column label="操作">
           <template slot-scope="scope">
-            <el-button
-              type="text"
-              @click="handleCodeDownload(scope.row)"
-            >
-              下载
-            </el-button>
+            <el-button type="text" @click="handleCodeDownload(scope.row)">下载</el-button>
             <router-link
               :to="{
                 path: '/brand/onecode/batchs',
                 query: { batch_id: scope.row.batch_id, thing_id: scope.row.thing_id }
               }"
+              >编辑</router-link
             >
-              编辑
-            </router-link>
           </template>
         </el-table-column>
       </el-table>
@@ -94,20 +68,18 @@
     >
       <template>
         <div
-          v-for="(item, index) in dataSpan"
           class="code-span"
+          v-for="(item, index) in dataSpan"
           :class="{ 'cur': index === codespanIndex }"
           @click="codeSpanChoose(index)"
         >
           <span>{{ item.start }} ~ {{ item.end }}</span>
-          <span
-            v-if="index === codespanIndex && !isdownloadOk"
-            class="bg-waiting"
-          ><i class="el-icon-loading" /></span>
-          <span
-            v-if="index === codespanIndex && isdownloadOk"
-            class="download-ok"
-          ><i class="el-icon-circle-check" /></span>
+          <span class="bg-waiting" v-if="index === codespanIndex && !isdownloadOk"
+            ><i class="el-icon-loading"></i
+          ></span>
+          <span class="download-ok" v-if="index === codespanIndex && isdownloadOk"
+            ><i class="el-icon-circle-check"></i
+          ></span>
         </div>
       </template>
     </el-dialog>
@@ -144,7 +116,7 @@ export default {
   components: {
     imgPicker
   },
-  data () {
+  data() {
     return {
       loading: false,
 
@@ -180,55 +152,29 @@ export default {
       }
     }
   },
-  mounted () {
-    if (this.$route.query.thing_id) {
-      // 初始化物品数据
-      getThingsDetail(this.$route.query.thing_id)
-        .then((response) => {
-          this.thingInfo = response.data.data
-        })
-        .catch((error) => {
-          this.$router.push({ path: '/brand/onecode' })
-        })
-
-      // 初始化批次列表信息
-      let params = {
-        'thing_id': this.$route.query.thing_id,
-        'page': 1,
-        'pageSize': 100
-      }
-      getBatchsList(params)
-        .then((response) => {
-          this.batchsList = response.data.data.list
-        })
-        .catch((error) => {
-          this.$router.push({ path: '/brand/onecode' })
-        })
-    }
-  },
   methods: {
     // 物品图片
-    handleImgChange: function () {
+    handleImgChange: function() {
       this.imgDialog = true
       this.isGetImage = true
     },
-    pickImg: function (data) {
+    pickImg: function(data) {
       this.form.pic = data.url
       this.imgDialog = false
     },
-    closeImgDialog: function () {
+    closeImgDialog: function() {
       this.imgDialog = false
     },
     // 图文详情中的图片
-    addImgPreview: function () {
+    addImgPreview: function() {
       this.thumbDialog = true
       this.isGetThumb = true
     },
-    addImgPreview: function () {
+    addImgPreview: function() {
       this.thumbDialog = true
       this.isGetThumb = true
     },
-    pickThumb: function (data) {
+    pickThumb: function(data) {
       if (data && data.url !== '') {
         this.thumbDialog = false
         var index = this.$refs.editor.$el.id
@@ -245,13 +191,13 @@ export default {
         this.form.intro = loc.$refs.content.innerHTML
       }
     },
-    closeThumbDialog: function () {
+    closeThumbDialog: function() {
       this.thumbDialog = false
     },
-    updateContent: function (data) {
+    updateContent: function(data) {
       this.form.intro = data
     },
-    handlePicChange: function (file, fileList) {
+    handlePicChange: function(file, fileList) {
       let that = this
       if (file && file.raw) {
         if (file.raw.type !== 'image/jpeg' && file.raw.type !== 'image/png') {
@@ -268,7 +214,7 @@ export default {
         that.form.pic = res.data.data.url
       })
     },
-    submitThingsAction: function () {
+    submitThingsAction: function() {
       // 提交商品
       if (this.form.thing_id) {
         updateThings(this.form.thing_id, this.form)
@@ -294,11 +240,11 @@ export default {
           })
       }
     },
-    handleCancelDownloadDialog: function () {
+    handleCancelDownloadDialog: function() {
       this.codeDialogVisible = false
       this.downParams = {}
     },
-    handleCodeDownload: function (row) {
+    handleCodeDownload: function(row) {
       this.codeDialogVisible = true
       this.codespanIndex = -1
       this.isdownloadOk = false
@@ -332,7 +278,7 @@ export default {
         this.dataSpan.push({ 'start': totalSpan * this.codeInterval + 1, 'end': batch_number })
       }
     },
-    codeSpanChoose: function (index) {
+    codeSpanChoose: function(index) {
       this.isdownloadOk = false
       this.codespanIndex = index
       var arry = this.dataSpan[index]
@@ -341,7 +287,7 @@ export default {
 
       this.handleBatchDownload()
     },
-    handleBatchDownload: function () {
+    handleBatchDownload: function() {
       const zip = new JSZip()
       const cache = {}
       const promises = []
@@ -371,6 +317,32 @@ export default {
           that.downParams.end = ''
         })
       })
+    }
+  },
+  mounted() {
+    if (this.$route.query.thing_id) {
+      // 初始化物品数据
+      getThingsDetail(this.$route.query.thing_id)
+        .then((response) => {
+          this.thingInfo = response.data.data
+        })
+        .catch((error) => {
+          this.$router.push({ path: '/brand/onecode' })
+        })
+
+      // 初始化批次列表信息
+      let params = {
+        'thing_id': this.$route.query.thing_id,
+        'page': 1,
+        'pageSize': 100
+      }
+      getBatchsList(params)
+        .then((response) => {
+          this.batchsList = response.data.data.list
+        })
+        .catch((error) => {
+          this.$router.push({ path: '/brand/onecode' })
+        })
     }
   }
 }

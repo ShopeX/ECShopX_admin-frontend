@@ -3,26 +3,11 @@
     <template v-if="$route.path.indexOf('detail') === -1 && $route.path.indexOf('editor') === -1">
       <div class="top">
         <div class="btn">
-          <el-button
-            type="primary"
-            size="small"
-            icon="el-icon-circle-plus"
-            @click="createCoupon"
-          >
-            创建劵包
-          </el-button>
+          <el-button type="primary" size="small" icon="el-icon-circle-plus" @click="createCoupon">创建劵包</el-button>
         </div>
         <div class="search">
-          <el-input
-            v-model="title"
-            placeholder="请入劵包标题"
-            class="input-with-select"
-          >
-            <el-button
-              slot="append"
-              icon="el-icon-search"
-              @click="queryCoupon"
-            />
+          <el-input placeholder="请入劵包标题" v-model="title" class="input-with-select">
+            <el-button slot="append" icon="el-icon-search" @click="queryCoupon"></el-button>
           </el-input>
         </div>
       </div>
@@ -31,44 +16,49 @@
         :split-count="4"
         :fixed-row-action="true"
         :setting="setting"
-        no-selection
-        :hooks="{ beforeSearch: beforeSearch }"
+        noSelection
+        :hooks="{beforeSearch:beforeSearch}"
         url="/voucher/package/list"
-      />
+      >
+      </SpFinder>
     </template>
-    <router-view />
+    <router-view></router-view>
   </div>
 </template>
 
 <script>
 import setting_ from './setting/pageage'
 export default {
-  data () {
+  data() {
     return {
-      title: ''
+      title: '',
+      
     }
   },
-  computed: {
-    setting () {
-      return setting_(this)
-    }
+  mounted(){
+
   },
-  mounted () {},
   methods: {
-    createCoupon () {
+    createCoupon(){
       this.$router.push({
-        path: `${this.$route.path}/editor`,
-        query: {
-          type: 'create'
+        path:`${this.$route.path}/editor`,
+        query:{
+          type:'create'
         }
       })
     },
-    beforeSearch (params) {
+    beforeSearch(params){
       params.title = this.title
-      return { ...params }
+      return {...params} 
     },
-    queryCoupon () {
-      this.$refs.finder.refresh()
+    queryCoupon(){
+       this.$refs.finder.refresh()
+    }
+
+  },
+  computed: {
+    setting() {
+      return setting_(this)
     }
   }
 }

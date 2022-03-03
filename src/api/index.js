@@ -22,7 +22,7 @@ importAll(require.context('./', false, /\.js$/), (key, r) => {
   }
 })
 
-function install (Vue) {
+function install(Vue) {
   Vue.prototype.$api = api
   Vue.prototype.$http = req
 }

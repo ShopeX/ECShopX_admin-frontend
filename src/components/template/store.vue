@@ -1,18 +1,10 @@
 <template>
-  <div
-    class="component-wrap"
-    :class="{ 'component-padded': base.padded, 'active': active }"
-  >
-    <div class="current-active" />
-    <div
-      v-if="base.title"
-      class="component-header"
-    >
+  <div class="component-wrap" :class="{ 'component-padded': base.padded, 'active': active }">
+    <div class="current-active"></div>
+    <div v-if="base.title" class="component-header">
       <div class="component-title">
         <div>{{ base.title }}</div>
-        <div class="subtitle">
-          {{ base.subtitle }}
-        </div>
+        <div class="subtitle">{{ base.subtitle }}</div>
       </div>
       <!-- <div class="component-more">
         <div class="three-dot"></div>
@@ -21,8 +13,8 @@
     <div class="">
       <div
         v-for="store in data"
-        :key="store.id"
         class="store-card"
+        :key="store.id"
         :style="{ background: base.backgroundColor }"
       >
         <template v-if="store.id">
@@ -31,37 +23,25 @@
               class="store-logo"
               :src="store.logo || 'https://fakeimg.pl/120x120/EFEFEF/CCC/?text=logo&font=lobster'"
               alt=""
-            >
+            />
             <div class="store-name">
-              <p class="name">
-                {{ store.name }}
-              </p>
+              <p class="name">{{ store.name }}</p>
               <p class="tags">
-                <span
-                  v-for="item in seletedTags"
-                  :key="item.tag_id"
-                >{{ item.tag_name }}</span>
+                <span v-for="item in seletedTags" :key="item.tag_id">{{ item.tag_name }}</span>
               </p>
             </div>
           </div>
           <div class="picture">
-            <img
-              :src="base.imgUrl"
-              alt=""
-            >
+            <img :src="base.imgUrl" alt="" />
           </div>
           <div class="store-items">
-            <div
-              v-for="item in store.items.slice(0, 4)"
-              :key="item.goodsId"
-              class="store-item"
-            >
+            <div v-for="item in store.items.slice(0, 4)" :key="item.goodsId" class="store-item">
               <img
                 class="store-item-thumb"
                 :src="item.imgUrl"
                 alt=""
                 :style="{ 'border-color': base.borderColor || '#000' }"
-              >
+              />
               <div class="store-item-amount">
                 <span class="price">¥{{ item.price / 100 }}</span>
               </div>
@@ -71,28 +51,28 @@
         <template v-else>
           <div class="store-placeholder">
             <div class="view-flex view-flex-middle">
-              <div class="logo" />
+              <div class="logo"></div>
               <div>
-                <div class="name" />
-                <div class="desc" />
+                <div class="name"></div>
+                <div class="desc"></div>
               </div>
             </div>
             <div class="view-flex">
               <div class="item">
-                <div class="thumb" />
-                <div class="price" />
+                <div class="thumb"></div>
+                <div class="price"></div>
               </div>
               <div class="item">
-                <div class="thumb" />
-                <div class="price" />
+                <div class="thumb"></div>
+                <div class="price"></div>
               </div>
               <div class="item">
-                <div class="thumb" />
-                <div class="price" />
+                <div class="thumb"></div>
+                <div class="price"></div>
               </div>
               <div class="item">
-                <div class="thumb" />
-                <div class="price" />
+                <div class="thumb"></div>
+                <div class="price"></div>
               </div>
             </div>
           </div>
@@ -114,7 +94,17 @@ export default {
       default: false
     }
   },
-  data () {
+  watch: {
+    res: {
+      deep: true,
+      handler(value) {
+        if (value) {
+          this.setData(value)
+        }
+      }
+    },
+  },
+  data() {
     return {
       base: {},
       config: {},
@@ -122,26 +112,16 @@ export default {
       seletedTags: []
     }
   },
-  watch: {
-    res: {
-      deep: true,
-      handler (value) {
-        if (value) {
-          this.setData(value)
-        }
-      }
-    }
-  },
-  mounted () {
-    this.setData(this.res)
-  },
   methods: {
-    setData (val) {
+    setData(val) {
       this.base = val.base
       this.config = val.config
       this.data = val.data
       this.seletedTags = val.seletedTags
     }
+  },
+  mounted() {
+    this.setData(this.res)
   }
 }
 </script>
@@ -211,15 +191,15 @@ export default {
       font-weight: 600;
       color: #333;
     }
-    .tags {
+    .tags{
       font-size: 12px;
-      margin-top: 3px;
-      span {
-        border: 1px solid #c3c3c3;
+      margin-top:3px;
+      span{
+        border:1px solid #c3c3c3;
         padding: 2px 6px;
         border-radius: 5px;
-        margin-right: 8px;
-        color: #c3c3c3;
+        margin-right:8px;
+        color:#c3c3c3;
       }
     }
   }

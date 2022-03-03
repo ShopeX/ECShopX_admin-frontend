@@ -1,23 +1,10 @@
 <template>
   <div>
-    <el-row
-      v-if="goods.length > 0"
-      :gutter="20"
-    >
-      <el-col
-        v-for="(item, index) in goods"
-        :key="index"
-        :xs="24"
-        :sm="12"
-        :md="8"
-        :lg="6"
-      >
+    <el-row v-if="goods.length > 0" :gutter="20">
+      <el-col v-for="(item, index) in goods" :key="index" :xs="24" :sm="12" :md="8" :lg="6">
         <div class="goods">
           <div class="goods-thumbnail">
-            <img
-              :src="item.pics[0]"
-              alt=""
-            >
+            <img :src="item.pics[0]" alt="" />
           </div>
           <div class="goods-caption">
             <div class="goods-title">
@@ -26,79 +13,43 @@
             <div class="goods-sku">
               <template v-if="!item.nospec">
                 {{ item.spec_items.length > 0 ? '已选' + item.spec_items.length : '全规格' }}
-                <div
-                  class="goods-sku-check"
-                  @click="handleSkuDialogShow(index)"
-                >
-                  选择规格
-                </div>
+                <div class="goods-sku-check" @click="handleSkuDialogShow(index)">选择规格</div>
               </template>
             </div>
           </div>
-          <div
-            class="goods-remove iconfont icon-trash-alt"
-            @click="handleSkuRemove(index)"
-          />
+          <div class="goods-remove iconfont icon-trash-alt" @click="handleSkuRemove(index)"></div>
         </div>
-        <div
-          v-if="isInputShow"
-          class="grid-content bg-purple"
-        >
+        <div v-if="isInputShow" class="grid-content bg-purple">
           <el-input
-            v-model="item.new_price"
             type="input"
-            placeholder="组合商品价格"
             @change="generateSku()"
-          >
-            价格:
+            v-model="item.new_price"
+            placeholder="组合商品价格"
+            >价格:
           </el-input>
         </div>
       </el-col>
     </el-row>
     <div>
-      <el-button
-        :disabled="needStore && !relStore.id"
-        type="primary"
-        @click="handleGoodsDialogShow"
+      <el-button :disabled="needStore && !relStore.id" type="primary" @click="handleGoodsDialogShow"
+        >选择商品</el-button
       >
-        选择商品
-      </el-button>
     </div>
-    <el-dialog
-      title="选择sku"
-      :visible.sync="dialogVisible"
-      width="50%"
-    >
-      <el-table
-        ref="skuTable"
-        v-loading="loading"
-        :data="skus"
-        @selection-change="handleSkuChange"
-      >
-        <el-table-column
-          type="selection"
-          width="55"
-        />
+    <el-dialog title="选择sku" :visible.sync="dialogVisible" width="50%">
+      <el-table :data="skus" v-loading="loading" @selection-change="handleSkuChange" ref="skuTable">
+        <el-table-column type="selection" width="55"> </el-table-column>
         <el-table-column label="规格名称">
           <template slot-scope="scope">
             {{ scope.row.item_spec_desc }}
           </template>
         </el-table-column>
         <el-table-column label="价格">
-          <template slot-scope="scope">
-            ¥{{ scope.row.price / 100 }}
-          </template>
+          <template slot-scope="scope"> ¥{{ scope.row.price / 100 }} </template>
         </el-table-column>
       </el-table>
-      <span
-        slot="footer"
-        class="dialog-footer"
-      >
+      <span slot="footer" class="dialog-footer">
         <el-button @click="dialogVisible = false">取 消</el-button>
-        <el-button
-          type="primary"
-          @click="handleSkuSubmit"
-        >确 定</el-button>
+        <el-button type="primary" @click="handleSkuSubmit">确 定</el-button>
       </span>
     </el-dialog>
     <GoodsSelector
@@ -107,11 +58,11 @@
       :rel-store="relStore"
       :lock-store="lockStore"
       :rel-items-ids="relItems"
-      :hidden-data="hiddenItem"
+      :hiddenData="hiddenItem"
       :item-type="item_type"
       @chooseStore="handleGoodsSubmit"
       @closeStoreDialog="handleGoodsDialogHide"
-    />
+    ></GoodsSelector>
   </div>
 </template>
 
@@ -120,9 +71,6 @@ import GoodsSelector from '../goodsSelect/index'
 import { getItemsList } from '../../api/goods'
 
 export default {
-  components: {
-    GoodsSelector
-  },
   props: {
     data: {
       type: Array,
@@ -155,7 +103,7 @@ export default {
       default: true
     }
   },
-  data () {
+  data() {
     return {
       loading: false,
       goods: [],
@@ -181,19 +129,22 @@ export default {
       hiddenItem: []
     }
   },
+  components: {
+    GoodsSelector
+  },
   watch: {
-    data (val) {
+    data(val) {
       this.goods = val
       this.relItems = JSON.parse(JSON.stringify(val))
       this.generateSku()
     },
-    hiddenData (val) {
+    hiddenData(val) {
       this.hiddenItem = []
       for (var i in val) this.hiddenItem.push(val[i].itemId)
     }
   },
   methods: {
-    handleSkuDialogShow (index) {
+    handleSkuDialogShow(index) {
       const that = this
       this.loading = true
       this.current = index
@@ -213,19 +164,19 @@ export default {
         this.loading = false
       })
     },
-    handleGoodsDialogShow () {
+    handleGoodsDialogShow() {
       this.itemVisible = true
       this.setItemStatus = true
     },
-    handleSkuChange (val) {
+    handleSkuChange(val) {
       this.checkedSkus = val
     },
-    handleSkuSubmit () {
+    handleSkuSubmit() {
       this.dialogVisible = false
       this.goods[this.current].spec_items = this.checkedSkus
       this.generateSku()
     },
-    handleGoodsSubmit (data) {
+    handleGoodsSubmit(data) {
       if (data.length > 10) {
         this.$message({
           message: '最大选择10个商品',
@@ -261,7 +212,7 @@ export default {
       this.goods = JSON.parse(JSON.stringify(list))
       this.generateSku()
     },
-    generateSku () {
+    generateSku() {
       let noSkuItem = []
       let response = []
       let newPrice = 0
@@ -317,10 +268,10 @@ export default {
         this.$emit('newPrice', newPrice)
       }
     },
-    handleGoodsDialogHide () {
+    handleGoodsDialogHide() {
       this.itemVisible = false
     },
-    handleSkuRemove (index) {
+    handleSkuRemove(index) {
       this.goods.splice(index, 1)
       this.relItems.splice(index, 1)
       this.generateSku()

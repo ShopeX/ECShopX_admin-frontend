@@ -1,7 +1,7 @@
 import fetch from '../utils/fetch'
 
 // 基础物料
-export function getServiceLabelsList (query) {
+export function getServiceLabelsList(query) {
   return fetch({
     url: '/pointsmall/goods/servicelabels',
     method: 'get',
@@ -9,14 +9,14 @@ export function getServiceLabelsList (query) {
   })
 }
 
-export function getServiceLabelsDetail (labelId) {
+export function getServiceLabelsDetail(labelId) {
   return fetch({
     url: '/pointsmall/goods/servicelabels/' + labelId,
     method: 'get'
   })
 }
 
-export function createServiceLabels (query) {
+export function createServiceLabels(query) {
   return fetch({
     url: '/pointsmall/goods/servicelabels',
     method: 'post',
@@ -24,7 +24,7 @@ export function createServiceLabels (query) {
   })
 }
 
-export function updateServiceLabels (labelId, query) {
+export function updateServiceLabels(labelId, query) {
   return fetch({
     url: '/pointsmall/goods/servicelabels/' + labelId,
     method: 'put',
@@ -32,7 +32,7 @@ export function updateServiceLabels (labelId, query) {
   })
 }
 
-export function deleteServiceLabels (labelId) {
+export function deleteServiceLabels(labelId) {
   return fetch({
     url: '/pointsmall/goods/servicelabels/' + labelId,
     method: 'delete'
@@ -40,7 +40,7 @@ export function deleteServiceLabels (labelId) {
 }
 
 // 商品类型
-export function getItemsTypeList (query) {
+export function getItemsTypeList(query) {
   return fetch({
     url: '/pointsmall/goods/itemstype',
     method: 'get',
@@ -48,21 +48,21 @@ export function getItemsTypeList (query) {
   })
 }
 
-export function getItemsTypeDetail (typeId) {
+export function getItemsTypeDetail(typeId) {
   return fetch({
     url: '/pointsmall/goods/itemstype/' + typeId,
     method: 'get'
   })
 }
 
-export function getItemsTypeLabelsDetail (typeId) {
+export function getItemsTypeLabelsDetail(typeId) {
   return fetch({
     url: '/pointsmall/goods/itemstypelabels/' + typeId,
     method: 'get'
   })
 }
 
-export function createItemsType (query) {
+export function createItemsType(query) {
   return fetch({
     url: '/pointsmall/goods/itemstype',
     method: 'post',
@@ -70,7 +70,7 @@ export function createItemsType (query) {
   })
 }
 
-export function updateItemsType (typeId, query) {
+export function updateItemsType(typeId, query) {
   return fetch({
     url: '/pointsmall/goods/itemstype/' + typeId,
     method: 'put',
@@ -78,7 +78,7 @@ export function updateItemsType (typeId, query) {
   })
 }
 
-export function deleteItemsType (typeId) {
+export function deleteItemsType(typeId) {
   return fetch({
     url: '/pointsmall/goods/itemstype/' + typeId,
     method: 'delete'
@@ -86,7 +86,7 @@ export function deleteItemsType (typeId) {
 }
 
 // 商品
-export function getItemsList (query) {
+export function getItemsList(query) {
   return fetch({
     url: '/pointsmall/goods/items',
     method: 'get',
@@ -94,7 +94,7 @@ export function getItemsList (query) {
   })
 }
 
-export function getSkuList (query) {
+export function getSkuList(query) {
   return fetch({
     url: '/pointsmall/goods/sku',
     method: 'get',
@@ -102,14 +102,14 @@ export function getSkuList (query) {
   })
 }
 
-export function getItemsDetail (itemId) {
+export function getItemsDetail(itemId) {
   return fetch({
     url: '/pointsmall/goods/items/' + itemId,
     method: 'get'
   })
 }
 
-export function createItems (query) {
+export function createItems(query) {
   return fetch({
     url: '/pointsmall/goods/items',
     method: 'post',
@@ -118,7 +118,7 @@ export function createItems (query) {
   })
 }
 
-export function updateItems (itemId, query) {
+export function updateItems(itemId, query) {
   return fetch({
     url: '/pointsmall/goods/items/' + itemId,
     method: 'put',
@@ -127,7 +127,7 @@ export function updateItems (itemId, query) {
   })
 }
 
-export function setItemsTemplate (params) {
+export function setItemsTemplate(params) {
   return fetch({
     url: '/pointsmall/goods/setItemsTemplate',
     method: 'post',
@@ -135,7 +135,7 @@ export function setItemsTemplate (params) {
   })
 }
 
-export function setItemsSort (params) {
+export function setItemsSort(params) {
   return fetch({
     url: '/pointsmall/goods/setItemsSort',
     method: 'post',
@@ -143,7 +143,7 @@ export function setItemsSort (params) {
   })
 }
 
-export function setItemsCategory (params) {
+export function setItemsCategory(params) {
   return fetch({
     url: '/pointsmall/goods/setItemsCategory',
     method: 'post',
@@ -151,14 +151,14 @@ export function setItemsCategory (params) {
   })
 }
 
-export function deleteItems (itemId) {
+export function deleteItems(itemId) {
   return fetch({
     url: '/pointsmall/goods/items/' + itemId,
     method: 'delete'
   })
 }
 
-export function getDistributionGoodsWxaCode (query) {
+export function getDistributionGoodsWxaCode(query) {
   return fetch({
     url: '/pointsmall/goods/distributionGoodsWxaCodeStream',
     method: 'get',
@@ -166,7 +166,7 @@ export function getDistributionGoodsWxaCode (query) {
   })
 }
 
-export function getItemWarningStore (query) {
+export function getItemWarningStore(query) {
   return fetch({
     url: '/pointsmall/goods/warning_store',
     method: 'post',
@@ -174,7 +174,7 @@ export function getItemWarningStore (query) {
   })
 }
 
-export function getCategory (query) {
+export function getCategory(query) {
   return fetch({
     url: '/pointsmall/goods/category',
     method: 'get',
@@ -182,7 +182,7 @@ export function getCategory (query) {
   })
 }
 
-export function saveCategory (params) {
+export function saveCategory(params) {
   return fetch({
     url: '/pointsmall/goods/category',
     method: 'post',
@@ -190,14 +190,14 @@ export function saveCategory (params) {
   })
 }
 
-export function deleteCategory (category_id) {
+export function deleteCategory(category_id) {
   return fetch({
     url: '/pointsmall/goods/category/' + category_id,
     method: 'delete'
   })
 }
 
-export function updateCategory (category_id, query) {
+export function updateCategory(category_id, query) {
   return fetch({
     url: '/pointsmall/goods/category/' + category_id,
     method: 'put',
@@ -205,14 +205,14 @@ export function updateCategory (category_id, query) {
   })
 }
 
-export function getCategoryInfo (category_id) {
+export function getCategoryInfo(category_id) {
   return fetch({
     url: '/pointsmall/goods/category/' + category_id,
     method: 'get'
   })
 }
 
-export function getGoodsAttr (query) {
+export function getGoodsAttr(query) {
   return fetch({
     url: '/pointsmall/goods/attributes',
     method: 'get',
@@ -220,7 +220,7 @@ export function getGoodsAttr (query) {
   })
 }
 
-export function addGoodsAttr (query) {
+export function addGoodsAttr(query) {
   return fetch({
     url: '/pointsmall/goods/attributes',
     method: 'post',
@@ -228,7 +228,7 @@ export function addGoodsAttr (query) {
   })
 }
 
-export function updateGoodsAttr (attributes_id, query) {
+export function updateGoodsAttr(attributes_id, query) {
   return fetch({
     url: '/pointsmall/goods/attributes/' + attributes_id,
     method: 'put',
@@ -236,14 +236,14 @@ export function updateGoodsAttr (attributes_id, query) {
   })
 }
 
-export function deleteGoodsAttr (attributes_id) {
+export function deleteGoodsAttr(attributes_id) {
   return fetch({
     url: '/pointsmall/goods/attributes/' + attributes_id,
     method: 'delete'
   })
 }
 
-export function updateGoodsInfo (query) {
+export function updateGoodsInfo(query) {
   return fetch({
     url: '/pointsmall/goods/itemsupdate',
     method: 'put',
@@ -251,7 +251,7 @@ export function updateGoodsInfo (query) {
   })
 }
 
-export function getGoodsPrice (id) {
+export function getGoodsPrice(id) {
   return fetch({
     url: '/pointsmall/goods/memberprice/' + id,
     method: 'get'
@@ -281,7 +281,7 @@ export function getGoodsPrice (id) {
 //   })
 // }
 
-export function updateGoodsPrice (query) {
+export function updateGoodsPrice(query) {
   return fetch({
     url: '/pointsmall/goods/memberprice/save',
     method: 'post',
@@ -320,7 +320,7 @@ export function updateGoodsPrice (query) {
 //   })
 // }
 
-export function updateTag (query) {
+export function updateTag(query) {
   return fetch({
     url: '/pointsmall/goods/tag',
     method: 'put',
@@ -328,14 +328,14 @@ export function updateTag (query) {
   })
 }
 
-export function deleteTag (tagId) {
+export function deleteTag(tagId) {
   return fetch({
     url: '/pointsmall/goods/tag/' + tagId,
     method: 'delete'
   })
 }
 
-export function itemsRelTags (query) {
+export function itemsRelTags(query) {
   return fetch({
     url: '/pointsmall/goods/reltag/',
     method: 'post',
@@ -343,7 +343,7 @@ export function itemsRelTags (query) {
   })
 }
 
-export function tagSearchItem (query) {
+export function tagSearchItem(query) {
   return fetch({
     url: '/pointsmall/goods/tagsearch',
     method: 'GET',
@@ -351,7 +351,7 @@ export function tagSearchItem (query) {
   })
 }
 
-export function setHotKeywords (query) {
+export function setHotKeywords(query) {
   return fetch({
     url: '/pointsmall/goods/hotkeywords',
     method: 'post',
@@ -359,14 +359,14 @@ export function setHotKeywords (query) {
   })
 }
 
-export function getHotKeywords () {
+export function getHotKeywords() {
   return fetch({
     url: '/pointsmall/goods/hotkeywords',
     method: 'get'
   })
 }
 
-export function updateItemsStore (query) {
+export function updateItemsStore(query) {
   return fetch({
     url: '/pointsmall/goods/itemstoreupdate',
     method: 'put',
@@ -374,7 +374,7 @@ export function updateItemsStore (query) {
   })
 }
 
-export function updateItemsStatus (query) {
+export function updateItemsStatus(query) {
   return fetch({
     url: '/pointsmall/goods/itemstatusupdate',
     method: 'put',
@@ -382,7 +382,7 @@ export function updateItemsStatus (query) {
   })
 }
 
-export function auditItems (query) {
+export function auditItems(query) {
   return fetch({
     url: '/pointsmall/goods/audit/items',
     method: 'put',
@@ -390,7 +390,7 @@ export function auditItems (query) {
   })
 }
 
-export function getGoodsExport (query) {
+export function getGoodsExport(query) {
   return fetch({
     url: '/pointsmall/goods/export',
     method: 'get',
@@ -398,7 +398,7 @@ export function getGoodsExport (query) {
   })
 }
 
-export function exportItemsData (data) {
+export function exportItemsData(data) {
   return fetch({
     url: '/pointsmall/goods/export',
     method: 'post',
@@ -406,14 +406,14 @@ export function exportItemsData (data) {
   })
 }
 
-export function getSetting () {
+export function getSetting() {
   return fetch({
     url: '/pointsmall/setting',
     method: 'get'
   })
 }
 
-export function saveSetting (data) {
+export function saveSetting(data) {
   return fetch({
     url: '/pointsmall/setting',
     method: 'post',
@@ -424,7 +424,7 @@ export function saveSetting (data) {
 export function getTemplateSetting () {
   return fetch({
     url: '/pointsmall/template/setting',
-    method: 'get'
+    method: 'get',
   })
 }
 
@@ -435,3 +435,4 @@ export function saveTemplateSetting (data) {
     params: data
   })
 }
+

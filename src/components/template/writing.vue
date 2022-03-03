@@ -1,31 +1,17 @@
 <template>
-  <div
-    class="component-wrap"
-    :class="{ 'component-padded': base.padded, 'active': active }"
-  >
-    <div class="current-active" />
-    <div
-      v-if="base.title"
-      class="component-header"
-    >
+  <div class="component-wrap" :class="{ 'component-padded': base.padded, 'active': active }">
+    <div class="current-active"></div>
+    <div v-if="base.title" class="component-header">
       <div class="component-title">
         <div>{{ base.title }}</div>
-        <div class="subtitle">
-          {{ base.subtitle }}
-        </div>
+        <div class="subtitle">{{ base.subtitle }}</div>
       </div>
       <div class="component-more">
-        <div class="three-dot" />
+        <div class="three-dot"></div>
       </div>
     </div>
-    <div
-      class="content"
-      :style="{ textAlign: config.align }"
-    >
-      <p
-        v-for="item in content"
-        class="paragraph"
-      >
+    <div class="content" :style="{ textAlign: config.align }">
+      <p class="paragraph" v-for="item in content">
         {{ item }}
       </p>
     </div>
@@ -44,7 +30,14 @@ export default {
       default: false
     }
   },
-  data () {
+  watch: {
+    res(value) {
+      if (value) {
+        this.setData(value)
+      }
+    }
+  },
+  data() {
     return {
       base: {},
       config: {},
@@ -52,7 +45,7 @@ export default {
     }
   },
   computed: {
-    content () {
+    content() {
       {
         if (this.data[0].content) {
           return this.data[0].content.split('\n')
@@ -60,22 +53,15 @@ export default {
       }
     }
   },
-  watch: {
-    res (value) {
-      if (value) {
-        this.setData(value)
-      }
-    }
-  },
-  created () {
-    this.setData(this.res)
-  },
   methods: {
-    setData (val) {
+    setData(val) {
       this.base = val.base
       this.config = val.config
       this.data = val.data
     }
+  },
+  created() {
+    this.setData(this.res)
   }
 }
 </script>

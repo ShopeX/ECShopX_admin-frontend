@@ -1,7 +1,7 @@
 // 隐私政策相关接口
 import fetch from '../utils/fetch'
 
-export function getPolicyConfig (query) {
+export function getPolicyConfig(query) {
   return fetch({
     url: '/wxa/privacy/setting',
     method: 'get',
@@ -9,7 +9,8 @@ export function getPolicyConfig (query) {
   })
 }
 
-export function uploadPolicyFile (params) {
+
+export function uploadPolicyFile(params) {
   return fetch({
     url: '/wxa/uploadprivacy/extfile',
     method: 'post',
@@ -17,7 +18,8 @@ export function uploadPolicyFile (params) {
   })
 }
 
-export function savePolicyConfig (params) {
+
+export function savePolicyConfig(params) {
   return fetch({
     url: '/wxa/privacy/setting',
     method: 'post',

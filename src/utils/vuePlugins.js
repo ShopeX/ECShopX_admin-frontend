@@ -67,7 +67,7 @@ const options = {
     },
     // 响应数据处理,最终返回图片链接
     // handle response data，return image url
-    uploadHandler (responseText) {
+    uploadHandler(responseText) {
       // default accept json data like  {ok:false,msg:'unexpected'} or {ok:true,data:'image url'}
       var json = JSON.parse(responseText)
       if (!json.ok) {

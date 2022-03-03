@@ -1,18 +1,13 @@
 <template>
   <div class="section section-white pluspricebuyAdd">
-    <el-form
-      ref="form"
-      :model="form"
-      class="box-set"
-      label-width="120px"
-    >
+    <el-form ref="form" :model="form" class="box-set" label-width="120px">
       <div class="section-header with-border">
         <div>添加/编辑加价购促销</div>
       </div>
       <div class="form-wrapper clearfix">
         <el-form-item
           label="名称"
-          style="margin-top: 20px"
+          style="margin-top:20px;"
           prop="marketing_name"
           :rules="{ required: true, message: '活动名称必填', trigger: 'blur' }"
         >
@@ -21,7 +16,7 @@
               v-model="form.marketing_name"
               :maxlength="30"
               placeholder="最多30个字"
-            />
+            ></el-input>
           </el-col>
         </el-form-item>
         <el-form-item label="有效期">
@@ -34,37 +29,21 @@
               end-placeholder="过期时间"
               value-format="yyyy-MM-dd HH:mm:ss"
               :default-time="['00:00:00', '23:59:59']"
-            />
+            >
+            </el-date-picker>
           </el-col>
         </el-form-item>
         <el-form-item label="绑定商品">
-          <el-radio-group
-            v-model="form.use_bound"
-            @change="itemTypeChange"
-          >
+          <el-radio-group v-model="form.use_bound" @change="itemTypeChange">
             <!-- el-radio label="0">全场可用</el-radio> -->
-            <el-radio label="1">
-              指定商品可用
-            </el-radio>
-            <el-radio label="2">
-              指定分类适用
-            </el-radio>
-            <el-radio label="3">
-              指定商品标签适用
-            </el-radio>
-            <el-radio label="4">
-              指定品牌适用
-            </el-radio>
+            <el-radio label="1">指定商品可用</el-radio>
+            <el-radio label="2">指定分类适用</el-radio>
+            <el-radio label="3">指定商品标签适用</el-radio>
+            <el-radio label="4">指定品牌适用</el-radio>
           </el-radio-group>
-          <el-col
-            v-if="!zdItemHidden"
-            :span="23"
-          >
+          <el-col :span="23" v-if="!zdItemHidden">
             <!--<el-button type="primary" class="el-icon-plus" @click="relItemsClick" size="mini" round>选商品</el-button>-->
-            <SkuSelector
-              :data="relItems"
-              @change="getItems"
-            />
+            <SkuSelector @change="getItems" :data="relItems"></SkuSelector>
             <div style="position: absolute; bottom: 0px; left: 112px">
               <el-upload
                 style="display: inline-block; height: 0"
@@ -73,48 +52,37 @@
                 :auto-upload="false"
                 :show-file-list="false"
               >
-                <el-button type="primary">
-                  批量上传
-                </el-button>
+                <el-button type="primary">批量上传</el-button>
               </el-upload>
-              <el-button
-                style="margin-left: 10px"
-                type="primary"
-                @click="uploadHandleTemplate()"
+              <el-button style="margin-left: 10px" type="primary" @click="uploadHandleTemplate()"
+                >下载模板</el-button
               >
-                下载模板
-              </el-button>
             </div>
           </el-col>
-          <el-col
-            :xs="12"
-            :sm="12"
-            :md="24"
-          >
+          <el-col :xs="12" :sm="12" :md="24">
             <div v-if="!categoryHidden">
               <treeselect
-                v-model="form.item_category"
-                style="width: 500px"
+                style="width:500px"
                 :options="categoryList"
                 :show-count="true"
                 :multiple="true"
                 :disable-branch-nodes="true"
                 :clearable="false"
+                v-model="form.item_category"
                 @open="categoryOpen"
                 @select="categorySelect"
                 @deselect="categoryDeselect"
-              />
+              >
+              </treeselect>
             </div>
           </el-col>
           <template v-if="!tagHidden">
             <div class="selected-tags view-flex">
-              <div class="label">
-                已选中标签：
-              </div>
+              <div class="label">已选中标签：</div>
               <div class="view-flex-item">
                 <el-tag
-                  v-for="(tag, index) in tag.currentTags"
                   :key="index"
+                  v-for="(tag, index) in tag.currentTags"
                   closable
                   size="small"
                   :disable-transitions="false"
@@ -126,9 +94,9 @@
             </div>
             <div>
               <el-tag
-                v-for="(tag, index) in tag.tags"
-                :key="index"
                 class="tag-item"
+                :key="index"
+                v-for="(tag, index) in tag.tags"
                 size="medium"
                 color="#ffffff"
                 :disable-transitions="false"
@@ -140,13 +108,11 @@
           </template>
           <template v-if="!brandHidden">
             <div class="selected-tags view-flex">
-              <div class="label">
-                已选中品牌：
-              </div>
+              <div class="label">已选中品牌：</div>
               <div class="view-flex-item">
                 <el-tag
-                  v-for="(brand, index) in brand.currentBrands"
                   :key="index"
+                  v-for="(brand, index) in brand.currentBrands"
                   closable
                   size="small"
                   :disable-transitions="false"
@@ -158,9 +124,9 @@
             </div>
             <div>
               <el-tag
-                v-for="(brand, index) in brand.brands"
-                :key="index"
                 class="tag-item"
+                :key="index"
+                v-for="(brand, index) in brand.brands"
                 size="medium"
                 color="#ffffff"
                 :disable-transitions="false"
@@ -189,59 +155,22 @@
           <!--</el-col>-->
         </el-form-item>
         <el-form-item label="指定店铺">
-          <el-radio
-            v-model="form.use_shop"
-            :label="0"
-          >
-            全场可用
-          </el-radio>
-          <el-radio
-            v-model="form.use_shop"
-            :label="1"
-          >
-            指定店铺可用
-          </el-radio>
-          <el-col
-            v-if="form.use_shop == 1"
-            :span="23"
-          >
-            <el-button
-              type="primary"
-              class="el-icon-plus"
-              size="mini"
-              round
-              @click="relStoresClick"
+          <el-radio v-model="form.use_shop" :label="0">全场可用</el-radio>
+          <el-radio v-model="form.use_shop" :label="1">指定店铺可用</el-radio>
+          <el-col :span="23" v-if="form.use_shop == 1">
+            <el-button type="primary" class="el-icon-plus" @click="relStoresClick" size="mini" round
+              >选店铺</el-button
             >
-              选店铺
-            </el-button>
-            <el-table
-              v-if="relStores.length > 0"
-              :data="relStores"
-              style="line-height: normal"
-            >
-              <el-table-column
-                label="ID"
-                prop="distributor_id"
-                width="60"
-              />
-              <el-table-column
-                label="名称"
-                prop="name"
-              />
-              <el-table-column
-                prop="address"
-                label="地址"
-                show-overflow-tooltip
-              />
-              <el-table-column
-                label="操作"
-                width="50"
-              >
+            <el-table v-if="relStores.length > 0" :data="relStores" style="line-height: normal">
+              <el-table-column label="ID" prop="distributor_id" width="60"></el-table-column>
+              <el-table-column label="名称" prop="name"></el-table-column>
+              <el-table-column prop="address" label="地址" show-overflow-tooltip></el-table-column>
+              <el-table-column label="操作" width="50">
                 <template slot-scope="scope">
                   <i
                     class="iconfont icon-trash-alt"
                     @click="deleteStoreRow(scope.$index, form.items)"
-                  />
+                  ></i>
                 </template>
               </el-table-column>
             </el-table>
@@ -250,100 +179,74 @@
         <el-form-item label="促销规则">
           <el-row :gutter="1">
             <el-col :span="7">
-              <el-radio
-                v-model="form.condition_type"
-                label="quantity"
-              >
-                按订单总件数
-              </el-radio>
-              <el-radio
-                v-model="form.condition_type"
-                label="totalfee"
-              >
-                按订单总金额
-              </el-radio>
+              <el-radio v-model="form.condition_type" label="quantity">按订单总件数</el-radio>
+              <el-radio v-model="form.condition_type" label="totalfee">按订单总金额</el-radio>
             </el-col>
             <el-col :span="6">
               <span
-                v-for="(item, key) in conditionValue"
                 v-if="form.condition_type == 'totalfee'"
-                :key="key"
-              >消费满
-                <el-input
-                  v-model="item.full"
-                  type="input"
-                  placeholder="0.00"
-                  style="width: 100px"
-                  size="mini"
-                />
-                元，加价购</span>
-              <span
                 v-for="(item, key) in conditionValue"
-                v-if="form.condition_type == 'quantity'"
                 :key="key"
-              >消费满
+                >消费满
                 <el-input
-                  v-model="item.full"
                   type="input"
-                  placeholder="0"
-                  style="width: 100px"
+                  v-model="item.full"
+                  placeholder="0.00"
+                  style="width:100px"
                   size="mini"
-                />
-                件，加价购</span>
+                ></el-input>
+                元，加价购</span
+              >
+              <span
+                v-if="form.condition_type == 'quantity'"
+                v-for="(item, key) in conditionValue"
+                :key="key"
+                >消费满
+                <el-input
+                  type="input"
+                  v-model="item.full"
+                  placeholder="0"
+                  style="width:100px"
+                  size="mini"
+                ></el-input>
+                件，加价购</span
+              >
             </el-col>
           </el-row>
           <div>
             <!-- <el-button type="primary" @click="addRules()" size="mini">新增加价区间</el-button> -->
-            <div
-              v-for="(item, key) in purchaseRules"
-              :key="key"
-            >
+            <div v-for="(item, key) in purchaseRules" :key="key">
               <el-row>
                 <el-col :span="5">
                   加价购金额：<el-input
                     v-model="item.price"
-                    style="width: 100px"
+                    style="width:100px"
                     size="mini"
-                  />
+                  ></el-input>
                 </el-col>
                 <el-col :span="15">
                   <el-button
                     type="primary"
                     class="el-icon-plus"
+                    @click="relGiftsClick(key, item.gift_item)"
                     size="mini"
                     round
-                    @click="relGiftsClick(key, item.gift_item)"
+                    >选商品</el-button
                   >
-                    选商品
-                  </el-button>
-                  <el-table
-                    :data="item.gift_item"
-                    style="line-height: normal"
-                    width="20%"
-                  >
-                    <el-table-column
-                      label="ID"
-                      prop="item_id"
-                      width="60"
-                    />
-                    <el-table-column
-                      label="名称"
-                      prop="item_name"
-                    />
+                  <el-table :data="item.gift_item" style="line-height: normal" width="20%">
+                    <el-table-column label="ID" prop="item_id" width="60"></el-table-column>
+                    <el-table-column label="名称" prop="item_name"></el-table-column>
                     <!-- <el-table-column label="赠品数量" width="100">
                         <template slot-scope="scope">
                           <el-input v-model="scope.row.gift_num" width="90" size="mini"></el-input>
                         </template>
                       </el-table-column> -->
-                    <el-table-column
-                      label="操作"
-                      width="100"
-                    >
+                    <el-table-column label="操作" width="100">
                       <template slot-scope="scope">
                         <i
                           class="iconfont icon-trash-alt"
                           @click="deleteGiftRow(key, scope.$index)"
-                        />
+                        ></i>
                       </template>
                     </el-table-column>
                   </el-table>
@@ -355,49 +258,32 @@
                     icon="el-icon-delete"
                     circle
                     @click="delRules(key)"
-                  />
+                  ></el-button>
                 </el-col>
               </el-row>
-              <div />
+              <div></div>
             </div>
           </div>
         </el-form-item>
 
-        <el-form-item
-          label="导航栏颜色"
-          style="flex: 2"
-        >
-          <el-color-picker v-model="form.navbar_color" />
+        <el-form-item label="导航栏颜色" style="flex: 2">
+          <el-color-picker v-model="form.navbar_color"></el-color-picker>
         </el-form-item>
 
-        <el-form-item
-          label="倒计时背景色"
-          style="flex: 2"
-        >
-          <el-color-picker v-model="form.timeBackgroundColor" />
+        <el-form-item label="倒计时背景色" style="flex: 2">
+          <el-color-picker v-model="form.timeBackgroundColor"></el-color-picker>
         </el-form-item>
 
-        <el-form-item
-          label="活动背景图"
-          prop="activity_background"
-        >
-          <p class="frm-tips">
-            点击图片可更换，图片大小不能超过 2MB
-          </p>
+        <el-form-item label="活动背景图" prop="activity_background">
+          <p class="frm-tips">点击图片可更换，图片大小不能超过 2MB</p>
           <div>
-            <div
-              class="upload-box"
-              @click="handleImgChange"
-            >
+            <div @click="handleImgChange" class="upload-box">
               <img
                 v-if="form.activity_background"
                 :src="wximageurl + form.activity_background"
                 class="avatar"
-              >
-              <i
-                v-else
-                class="el-icon-plus avatar-uploader-icon"
               />
+              <i v-else class="el-icon-plus avatar-uploader-icon"></i>
             </div>
           </div>
           <imgPicker
@@ -405,44 +291,38 @@
             :sc-status="isGetImage"
             @chooseImg="pickImg"
             @closeImgDialog="closeImgDialog"
-          />
+          ></imgPicker>
         </el-form-item>
 
         <el-form-item label="规则描述">
           <el-col :span="20">
             <el-input
-              v-model="form.marketing_desc"
               type="textarea"
               :rows="3"
+              v-model="form.marketing_desc"
               placeholder="规则描述"
-            />
+            ></el-input>
           </el-col>
         </el-form-item>
         <el-form-item label="可参与次数">
           <el-col :span="20">
-            <el-input
-              v-model="form.join_limit"
-              type="input"
-              placeholder="整数数字"
-            />
+            <el-input type="input" v-model="form.join_limit" placeholder="整数数字"></el-input>
           </el-col>
         </el-form-item>
         <el-form-item label="适用会员">
           <el-checkbox-group v-model="validGrade">
             <el-checkbox
               v-for="grade in memberGrade"
-              :key="grade.grade_id"
               :label="grade.grade_id"
+              :key="grade.grade_id"
+              >{{ grade.grade_name }}</el-checkbox
             >
-              {{ grade.grade_name }}
-            </el-checkbox>
             <el-checkbox
               v-for="vipdata in vipGrade"
-              :key="vipdata.vip_grade_id"
               :label="vipdata.lv_type"
+              :key="vipdata.vip_grade_id"
+              >付费{{ vipdata.grade_name }}</el-checkbox
             >
-              付费{{ vipdata.grade_name }}
-            </el-checkbox>
           </el-checkbox-group>
         </el-form-item>
         <!-- <el-form-item label="适用平台">
@@ -454,15 +334,8 @@
             </el-radio-group>
           </el-form-item> -->
         <el-form-item label=" ">
-          <el-button
-            type="primary"
-            @click="submitActivityAction()"
-          >
-            保存
-          </el-button>
-          <el-button @click.native="handleCancel">
-            返回
-          </el-button>
+          <el-button type="primary" @click="submitActivityAction()">保存</el-button>
+          <el-button @click.native="handleCancel">返回</el-button>
         </el-form-item>
       </div>
     </el-form>
@@ -476,7 +349,7 @@
       :item-type="form.item_type"
       @chooseStore="chooseGiftsAction"
       @closeStoreDialog="closeGiftsDialogAction"
-    />
+    ></GoodsSelect>
     <StoreSelect
       :store-visible="storeVisible"
       :is-valid="true"
@@ -484,14 +357,14 @@
       :get-status="setStatus"
       @chooseStore="chooseStoreAction"
       @closeStoreDialog="closeStoreDialogAction"
-    />
+    ></StoreSelect>
   </div>
 </template>
 
 <script>
 import Treeselect from '@riophae/vue-treeselect'
 import imgPicker from '../../../../components/imageselect'
-import '@riophae/vue-treeselect/dist/vue-treeselect.css'
+import "@riophae/vue-treeselect/dist/vue-treeselect.css";
 import {
   addMarketingActivity,
   updateMarketingActivity,
@@ -515,7 +388,7 @@ export default {
     imgPicker,
     Treeselect
   },
-  data () {
+  data() {
     return {
       cursymbol: '￥',
       storeVisible: false,
@@ -609,92 +482,68 @@ export default {
     }
   },
   watch: {
-    relItems (val) {
+    relItems(val) {
       //this.form.use_shop = val.length > 0 ? 1 : 0
     },
-    relStores (val) {
+    relStores(val) {
       //this.form.use_bound = val.length > 0 ? 1 : 0
     }
   },
-  mounted () {
-    this.fetchMainCate()
-    this.getAllTagLists()
-    this.getBrandList('', true)
-
-    if (this.$route.params.marketing_id) {
-      this.getActivityDetail(this.$route.params.marketing_id)
-    }
-
-    listVipGrade().then((response) => {
-      if (response != undefined && response.data.data && response.data.data.length > 0) {
-        this.vipGrade = response.data.data
-      }
-    })
-
-    getGradeList().then((response) => {
-      if (response != undefined && response.data.data && response.data.data.length > 0) {
-        var result = response.data.data
-        if (result) {
-          this.memberGrade = result
-        }
-      }
-    })
-  },
   methods: {
-    addRules () {
+    addRules() {
       var rule = { price: '', gift_item: [] }
       this.purchaseRules.push(rule)
     },
-    delRules (index) {
+    delRules(index) {
       this.purchaseRules.splice(index, 1)
     },
-    relItemsClick () {
+    relItemsClick() {
       this.itemVisible = true
       this.setItemStatus = true
     },
-    getItems (data) {
+    getItems(data) {
       let ids = []
       data.forEach((item) => {
         ids.push(item.itemId)
       })
       this.form.item_ids = ids
     },
-    closeItemDialogAction () {
+    closeItemDialogAction() {
       this.itemVisible = false
     },
-    deleteItemRow: function (index) {
+    deleteItemRow: function(index) {
       this.setItemStatus = false
       this.relItems.splice(index, 1)
     },
-    relStoresClick () {
+    relStoresClick() {
       this.storeVisible = true
       this.setStatus = true
     },
-    chooseStoreAction (data) {
+    chooseStoreAction(data) {
       this.storeVisible = false
       this.form.shop_ids = []
       if (data === null || data.length <= 0) return
       this.relStores = data
     },
-    closeStoreDialogAction () {
+    closeStoreDialogAction() {
       this.storeVisible = false
     },
-    deleteStoreRow (index) {
+    deleteStoreRow(index) {
       this.setStatus = false
       this.relStores.splice(index, 1)
     },
-    handleImgChange () {
+    handleImgChange() {
       this.imgDialog = true
       this.isGetImage = true
     },
-    pickImg (data) {
+    pickImg(data) {
       this.form.activity_background = data.url
       this.imgDialog = false
     },
-    closeImgDialog () {
+    closeImgDialog() {
       this.imgDialog = false
     },
-    submitActivityAction () {
+    submitActivityAction() {
       const that = this
       if (this.activity_date.length > 0) {
         this.form.start_time = this.activity_date[0]
@@ -760,7 +609,7 @@ export default {
               message: '更新成功',
               type: 'success',
               duration: 2 * 1000,
-              onClose () {
+              onClose() {
                 that.refresh()
                 that.$router.go(-1)
               }
@@ -778,7 +627,7 @@ export default {
               message: '添加成功',
               type: 'success',
               duration: 2 * 1000,
-              onClose () {
+              onClose() {
                 that.refresh()
                 that.$router.go(-1)
               }
@@ -790,7 +639,7 @@ export default {
         })
       }
     },
-    getActivityDetail (id) {
+    getActivityDetail(id) {
       getMarketingActivityInfo({ marketing_id: id }).then((res) => {
         let response = res.data.data
         let data = {
@@ -856,10 +705,10 @@ export default {
         }
       })
     },
-    handleCancel: function () {
+    handleCancel: function() {
       this.$router.back(-1)
     },
-    relGiftsClick (index, itemArr) {
+    relGiftsClick(index, itemArr) {
       if (!this.purchaseRules[index].price) {
         this.$message.error('加价金额必填!')
         return false
@@ -870,7 +719,7 @@ export default {
       this.giftVisible = true
       this.setGiftStatus = true
     },
-    chooseGiftsAction (data) {
+    chooseGiftsAction(data) {
       this.giftVisible = false
       if (data === null || data.length <= 0) return
 
@@ -881,14 +730,14 @@ export default {
       let key = this.ruleKey
       this.purchaseRules[key].gift_item = data
     },
-    closeGiftsDialogAction () {
+    closeGiftsDialogAction() {
       this.giftVisible = false
     },
-    deleteGiftRow: function (key, index) {
+    deleteGiftRow: function(key, index) {
       this.setGiftStatus = false
       this.purchaseRules[key].gift_item.splice(index, 1)
     },
-    itemTypeChange: function (val) {
+    itemTypeChange: function(val) {
       this.relItems = []
       this.params.main_cat_id = ''
       this.params.tag_id = ''
@@ -927,12 +776,12 @@ export default {
         this.showBrands()
       }
     },
-    fetchMainCate: function () {
-      getCategory({ is_main_category: true, ignore_none: true }).then((response) => {
+    fetchMainCate: function() {
+      getCategory({ is_main_category: true,ignore_none:true }).then((response) => {
         this.categoryList = response.data.data
       })
     },
-    addItemTag: function () {
+    addItemTag: function() {
       this.tag.currentTags = []
       if (this.item_id.length) {
         this.showTags()
@@ -944,14 +793,14 @@ export default {
         })
       }
     },
-    showTags: function () {
+    showTags: function() {
       this.tag.tags = [...this.tag.list]
       this.tag.tags.forEach((item, index) => {
         let isInArr = this.tag.currentTags.findIndex((n) => n.tag_id == item.tag_id)
         if (isInArr != -1) this.tag.tags.splice(index, 1)
       })
     },
-    tagRemove: function (index) {
+    tagRemove: function(index) {
       this.tag.tags.unshift(this.tag.currentTags[index])
       this.tag.currentTags.splice(index, 1)
       this.form.tag_ids = []
@@ -976,7 +825,7 @@ export default {
       this.invalidItemsList = tagInvalidItems
       this.getItems(this.ItemsList)
     },
-    tagAdd: function (item, index) {
+    tagAdd: function(item, index) {
       if (this.activity_date.length <= 0) {
         this.$message({
           type: 'error',
@@ -996,7 +845,7 @@ export default {
       this.params.tag_id = item.tag_id
       this.getGoodsList()
     },
-    getAllTagLists: function () {
+    getAllTagLists: function() {
       let params = {
         page: 1,
         pageSize: 500
@@ -1006,7 +855,7 @@ export default {
       })
     },
     // 获取品牌列表
-    getBrandList: function (searchVal = '', isInit = false) {
+    getBrandList: function(searchVal = '', isInit = false) {
       const list = []
       getGoodsAttr({
         page: 1,
@@ -1021,14 +870,14 @@ export default {
         this.brand.list = list
       })
     },
-    showBrands: function () {
+    showBrands: function() {
       this.brand.brands = [...this.brand.list]
       this.brand.brands.forEach((item, index) => {
         let isInArr = this.brand.currentBrands.findIndex((n) => n.attribute_id == item.attribute_id)
         if (isInArr != -1) this.brand.brands.splice(index, 1)
       })
     },
-    brandAdd: function (item, index) {
+    brandAdd: function(item, index) {
       if (this.activity_date.length <= 0) {
         this.$message({
           type: 'error',
@@ -1048,7 +897,7 @@ export default {
       this.params.brand_id = item.attribute_id
       this.getGoodsList()
     },
-    brandRemove: function (index) {
+    brandRemove: function(index) {
       let items = []
       this.ItemsList.forEach((item) => {
         if (this.brand.currentBrands[index].attribute_id != item.brand_id) items.push(item)
@@ -1069,7 +918,7 @@ export default {
         this.form.brand_ids.push(item.attribute_id)
       })
     },
-    getGoodsList: function () {
+    getGoodsList: function() {
       let params = JSON.parse(JSON.stringify(this.params))
       if (this.$route.params.marketing_id) {
         params.activity_id = this.$route.params.marketing_id
@@ -1115,7 +964,7 @@ export default {
         this.getItems(this.ItemsList)
       })
     },
-    categoryOpen () {
+    categoryOpen() {
       if (this.activity_date.length <= 0) {
         this.$message({
           type: 'error',
@@ -1124,11 +973,11 @@ export default {
         return
       }
     },
-    categorySelect: function (node, instanceId) {
+    categorySelect: function(node, instanceId) {
       this.params.main_cat_id = node.category_id
       this.getGoodsList()
     },
-    categoryDeselect: function (node, instanceId) {
+    categoryDeselect: function(node, instanceId) {
       let items
       items = []
       this.ItemsList.forEach((item, index) => {
@@ -1143,7 +992,7 @@ export default {
       this.ItemsList = items
       this.getItems(this.ItemsList)
     },
-    generateSku () {
+    generateSku() {
       let noSkuItem
       noSkuItem = []
       let response = []
@@ -1191,7 +1040,7 @@ export default {
     /**
      * 下载模板
      * */
-    uploadHandleTemplate () {
+    uploadHandleTemplate() {
       let params = { file_type: 'marketing_goods', file_name: '商品模板' }
       exportUploadTemplate(params).then((response) => {
         let { data } = response.data
@@ -1213,7 +1062,7 @@ export default {
     /**
      * 上传模板
      * */
-    uploadHandleChange (file, fileList) {
+    uploadHandleChange(file, fileList) {
       let params = { isUploadFile: true, file_type: 'marketing_goods', file: file.raw }
       handleUploadFile(params).then((response) => {
         this.$message({
@@ -1249,19 +1098,44 @@ export default {
         })
       })
     }
+  },
+  mounted() {
+    this.fetchMainCate()
+    this.getAllTagLists()
+    this.getBrandList('', true)
+
+    if (this.$route.params.marketing_id) {
+      this.getActivityDetail(this.$route.params.marketing_id)
+    }
+
+    listVipGrade().then((response) => {
+      if (response != undefined && response.data.data && response.data.data.length > 0) {
+        this.vipGrade = response.data.data
+      }
+    })
+
+    getGradeList().then((response) => {
+      if (response != undefined && response.data.data && response.data.data.length > 0) {
+        var result = response.data.data
+        if (result) {
+          this.memberGrade = result
+        }
+      }
+    })
   }
 }
 </script>
 
 <style lang="scss">
-.pluspricebuyAdd {
-  .upload-box {
-    width: 300px;
-    .avatar {
+.pluspricebuyAdd{
+.upload-box{
+  width: 300px;
+  .avatar{
       // width: 300px;
-      width: 100%;
-      height: 100%;
-    }
+    width: 100%;
+    height: 100%;
   }
 }
+}
+
 </style>

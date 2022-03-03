@@ -14,17 +14,17 @@ export default {
     {
       path: 'adapay_member',
       name: `开户管理`,
-      component: () => import('@/view/dealer/create_account.vue')
+      component: () => import( '@/view/dealer/create_account.vue' )
     },
     {
-      path: 'adapay_cash_set',
-      name: '提现设置',
-      component: () => import('@/view/mall/withdraw/withdraw_setting.vue')
+      path:'adapay_cash_set',
+      name:'提现设置',
+      component:()=> import('@/view/mall/withdraw/withdraw_setting.vue')
     },
     {
-      path: 'datapass/apply',
-      name: '权限申请',
-      component: () => import('@/view/base/encrypt/authAdmin.vue')
-    }
+      path:'datapass/apply',
+      name:'权限申请',
+      component:()=> import('@/view/base/encrypt/authAdmin.vue')
+    },
   ]
 }

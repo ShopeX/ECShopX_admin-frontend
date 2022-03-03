@@ -2,61 +2,22 @@
   <div>
     <el-row :gutter="20">
       <el-col>
-        <shop-select
-          distributors
-          @update="storeChange"
-          @init="initChange"
-        />
-        <el-input
-          v-model="params.mobile"
-          placeholder="手机号"
-          class="input-m"
-          clearable
-        >
-          <el-button
-            slot="append"
-            icon="el-icon-search"
-            @click="numberSearch"
-          />
+        <shop-select distributors @update="storeChange" @init="initChange"></shop-select>
+        <el-input placeholder="手机号" class="input-m" v-model="params.mobile" clearable>
+          <el-button slot="append" icon="el-icon-search" @click="numberSearch"></el-button>
         </el-input>
-        <el-button
-          type="primary"
-          icon="plus"
-          @click="handleAddSalesmanAction"
+        <el-button type="primary" icon="plus" @click="handleAddSalesmanAction"
+          >添加导购员</el-button
         >
-          添加导购员
-        </el-button>
       </el-col>
     </el-row>
-    <el-tabs
-      v-model="activeName"
-      type="border-card"
-      @tab-click="handleClick"
-    >
-      <el-tab-pane
-        label="导购员列表"
-        name="admin"
-      />
-      <el-tab-pane
-        label="禁用导购员"
-        name="invalid"
-      />
-      <el-table
-        v-loading="loading"
-        :data="list"
-      >
-        <el-table-column
-          prop="salesman_name"
-          label="姓名"
-        />
-        <el-table-column
-          prop="mobile"
-          label="手机号"
-        />
-        <el-table-column
-          prop="child_count"
-          label="会员数量"
-        >
+    <el-tabs type="border-card" v-model="activeName" @tab-click="handleClick">
+      <el-tab-pane label="导购员列表" name="admin"></el-tab-pane>
+      <el-tab-pane label="禁用导购员" name="invalid"></el-tab-pane>
+      <el-table :data="list" v-loading="loading">
+        <el-table-column prop="salesman_name" label="姓名"></el-table-column>
+        <el-table-column prop="mobile" label="手机号"></el-table-column>
+        <el-table-column prop="child_count" label="会员数量">
           <template slot-scope="scope">
             <span v-if="scope.row.child_count > 0">{{ scope.row.child_count }}</span>
             <span v-else>0</span>
@@ -71,54 +32,41 @@
               active-color="#13ce66"
               inactive-color="#ccc"
               @change="defaultSwitchChange(scope.row)"
-            />
+            ></el-switch>
           </template>
         </el-table-column>
-        <el-table-column
-          prop="distributor_name"
-          label="所属店铺"
-        >
+        <el-table-column prop="distributor_name" label="所属店铺">
           <template slot-scope="scope">
             <el-button
               type="text"
               @click="getSalepersonShopList(scope.row.salespersonId, 'distributor')"
+              >查看店铺</el-button
             >
-              查看店铺
-            </el-button>
           </template>
         </el-table-column>
         <el-table-column label="导购角色">
           <template slot-scope="scope">
             {{ scope.row.role_name }}
-            <i
-              class="iconfont icon-edit1"
-              @click="handleUpdateSalesmanRole(scope.row)"
-            />
+            <i class="iconfont icon-edit1" @click="handleUpdateSalesmanRole(scope.row)"></i>
           </template>
         </el-table-column>
         <el-table-column label="绑定关系">
           <template slot-scope="scope">
             <!-- <router-link :to="{ path: '/store/storemanager/salesmanRelationship', query: {salesperson_id: scope.row.salespersonId, is_bind: 1}}">绑定关系</router-link> -->
-            <el-button
-              type="text"
-              @click.stop="handleShowSideBar(scope.row.salespersonId)"
+            <el-button type="text" @click.stop="handleShowSideBar(scope.row.salespersonId)"
+              >绑定关系</el-button
             >
-              绑定关系
-            </el-button>
           </template>
         </el-table-column>
         <el-table-column label="操作">
           <template slot-scope="scope">
             <div class="operating-icons">
-              <i
-                class="iconfont icon-edit1"
-                @click="handleUpdateSalesman(scope.row)"
-              />
+              <i class="iconfont icon-edit1" @click="handleUpdateSalesman(scope.row)"></i>
               <i
                 v-if="activeName == 'admin'"
                 class="mark iconfont icon-trash-alt1"
                 @click="handleDeleteSalesman(scope.$index, scope.row)"
-              />
+              ></i>
             </div>
           </template>
         </el-table-column>
@@ -126,65 +74,43 @@
       <el-pagination
         class="content-padded content-center"
         background
+        @size-change="handleSizeChange"
+        @current-change="handleCurrentChange"
         :current-page="params.page"
         :page-sizes="[10, 20, 50, 100]"
         :page-size="params.pageSize"
         layout="total, sizes, prev, pager, next, jumper"
         :total="total_count"
-        @size-change="handleSizeChange"
-        @current-change="handleCurrentChange"
-      />
+      >
+      </el-pagination>
     </el-tabs>
 
-    <el-dialog
-      title="编辑导购员角色"
-      :visible.sync="dialog_role"
-      :close-on-click-modal="false"
-    >
-      <el-form
-        v-model="form"
-        label-width="160px"
-      >
+    <el-dialog title="编辑导购员角色" :visible.sync="dialog_role" :close-on-click-modal="false">
+      <el-form v-model="form" label-width="160px">
         <el-form-item label="角色">
           <el-radio-group v-model="roleForm.role">
             <el-radio
               v-for="(item, index) in roleList"
-              :key="index"
               :label="item.salesman_role_id"
+              :key="index"
+              >{{ item.role_name }}</el-radio
             >
-              {{ item.role_name }}
-            </el-radio>
           </el-radio-group>
         </el-form-item>
       </el-form>
-      <div
-        slot="footer"
-        class="dialog-footer content-center"
-      >
-        <el-button
-          type="primary"
-          @click="handleAddSalesmanRole"
-        >
-          确定
-        </el-button>
+      <div slot="footer" class="dialog-footer content-center">
+        <el-button type="primary" @click="handleAddSalesmanRole">确定</el-button>
       </div>
     </el-dialog>
-    <el-dialog
-      title="添加/编辑导购员"
-      :visible.sync="dialog"
-      :close-on-click-modal="false"
-    >
-      <el-form
-        v-model="form"
-        label-width="160px"
-      >
+    <el-dialog title="添加/编辑导购员" :visible.sync="dialog" :close-on-click-modal="false">
+      <el-form v-model="form" label-width="160px">
         <el-form-item label="管理店铺">
           <shop-select
             distributors
-            :shop-id-default="form.distributor_id"
             @update="addSelectStoreChange"
             @init="initChange"
-          />
+            :shop-id-default="form.distributor_id"
+          ></shop-select>
           <!--distributors wxshops 需要哪个api传哪个-->
           <!-- <div style="margin-left: 1.5%;">
             <template v-if="rel_distributor_ids">
@@ -194,58 +120,32 @@
           </div> -->
         </el-form-item>
         <el-form-item label="手机号">
-          <el-input
-            v-model="form.mobile"
-            placeholder="请输入手机号"
-            style="width: 193px"
-          />
+          <el-input v-model="form.mobile" placeholder="请输入手机号" style="width:193px"></el-input>
         </el-form-item>
         <el-form-item label="角色">
           <el-radio-group v-model="form.role">
             <el-radio
               v-for="(item, index) in roleList"
-              :key="index"
               :label="item.salesman_role_id"
+              :key="index"
+              >{{ item.role_name }}</el-radio
             >
-              {{ item.role_name }}
-            </el-radio>
           </el-radio-group>
         </el-form-item>
         <el-form-item label="导购员姓名">
           <el-input
             v-model="form.salesman_name"
             placeholder="请输入导购员姓名"
-            style="width: 193px"
-          />
+            style="width:193px"
+          ></el-input>
         </el-form-item>
-        <el-form-item
-          v-if="activeName == 'invalid'"
-          label="是否启用"
-        >
-          <el-radio
-            v-model="form.is_valid"
-            label="true"
-          >
-            启用
-          </el-radio>
-          <el-radio
-            v-model="form.is_valid"
-            label="delete"
-          >
-            禁用
-          </el-radio>
+        <el-form-item label="是否启用" v-if="activeName == 'invalid'">
+          <el-radio v-model="form.is_valid" label="true">启用</el-radio>
+          <el-radio v-model="form.is_valid" label="delete">禁用</el-radio>
         </el-form-item>
       </el-form>
-      <div
-        slot="footer"
-        class="dialog-footer content-center"
-      >
-        <el-button
-          type="primary"
-          @click="handleAddSalesman"
-        >
-          确定
-        </el-button>
+      <div slot="footer" class="dialog-footer content-center">
+        <el-button type="primary" @click="handleAddSalesman">确定</el-button>
       </div>
     </el-dialog>
     <el-dialog
@@ -255,24 +155,10 @@
       width="70%"
     >
       <template>
-        <el-table
-          v-loading="loading"
-          :data="relShop.list"
-        >
-          <el-table-column
-            prop="shop_id"
-            label="id"
-            width="60"
-          />
-          <el-table-column
-            prop="store_name"
-            label="店铺名称"
-            width="300"
-          />
-          <el-table-column
-            prop="address"
-            label="店铺地址"
-          />
+        <el-table :data="relShop.list" v-loading="loading">
+          <el-table-column prop="shop_id" label="id" width="60"></el-table-column>
+          <el-table-column prop="store_name" label="店铺名称" width="300"></el-table-column>
+          <el-table-column prop="address" label="店铺地址"></el-table-column>
         </el-table>
         <div
           v-if="relShop.total_count > relShop.params.pageSize"
@@ -280,11 +166,12 @@
         >
           <el-pagination
             layout="prev, pager, next"
+            @current-change="handleRelShopCurrentChange"
             :current-page.sync="relShop.params.page"
             :total="relShop.total_count"
             :page-size="relShop.params.pageSize"
-            @current-change="handleRelShopCurrentChange"
-          />
+          >
+          </el-pagination>
         </div>
       </template>
     </el-dialog>
@@ -295,14 +182,10 @@
       :get-status="setStoreStatus"
       @chooseStore="chooseStoreAction"
       @closeStoreDialog="closeStoreDialogAction"
-    />
+    ></StoreSelect>
 
     <!-- 绑定关系 -->
-    <SideBar
-      :visible.sync="showSideBar"
-      title="绑定关系"
-      width="50"
-    >
+    <SideBar :visible.sync="showSideBar" title="绑定关系" width="50">
       <div class="relationship">
         <el-card v-loading="relationship.loading">
           <el-table :data="relationship.list">
@@ -311,10 +194,7 @@
                 {{ scope.row.salesperson_info.salesman_name }}
               </template>
             </el-table-column>
-            <el-table-column
-              prop="work_userid"
-              label="导购员企业微信userid"
-            />
+            <el-table-column prop="work_userid" label="导购员企业微信userid"></el-table-column>
             <el-table-column label="手机号">
               <template slot-scope="scope">
                 {{ scope.row.user_info.mobile }}
@@ -327,9 +207,8 @@
                     path: '/member/member/detail',
                     query: { user_id: scope.row.user_id }
                   }"
+                  >{{ scope.row.user_info.username }}</router-link
                 >
-                  {{ scope.row.user_info.username }}
-                </router-link>
               </template>
             </el-table-column>
             <el-table-column label="是否是朋友">
@@ -348,14 +227,15 @@
           <el-pagination
             class="content-padded content-center"
             background
+            @size-change="handleRelaSizeChange"
+            @current-change="handleRelaCurrentChange"
             :current-page="relationship.params.page"
             :page-sizes="[10, 20, 50, 100]"
             :page-size="relationship.params.pageSize"
             layout="total, sizes, prev, pager, next, jumper"
             :total="relationship.total_count"
-            @size-change="handleRelaSizeChange"
-            @current-change="handleRelaCurrentChange"
-          />
+          >
+          </el-pagination>
         </el-card>
       </div>
     </SideBar>
@@ -382,7 +262,7 @@ export default {
     shopSelect,
     SideBar
   },
-  data () {
+  data() {
     return {
       dialog: false,
       dialog_role: false,
@@ -438,19 +318,15 @@ export default {
   computed: {
     ...mapGetters(['wheight'])
   },
-  mounted () {
-    this.getList()
-    this.getRoleList()
-  },
   methods: {
-    searchMembers (row) {
+    searchMembers(row) {
       let routeData = this.$router.resolve({
         path: '/member/member',
         query: { salesman_mobile: row.mobile }
       })
       window.open(routeData.href, '_blank')
     },
-    handleAddSalesmanAction () {
+    handleAddSalesmanAction() {
       this.dialog = true
       this.salesman_id = false
       this.form.distributor_id = ''
@@ -459,28 +335,28 @@ export default {
       this.form.salesman_name = ''
       this.rel_distributor_ids = ''
     },
-    addSelectStoreChange (data) {
+    addSelectStoreChange(data) {
       this.form.distributor_id = data.shop_id
     },
-    storeChange (params) {
+    storeChange(params) {
       params && params.shop_id
       this.params.distributor_id = params.shop_id
       this.params.page = 1
       this.getList()
     },
-    initChange () {
+    initChange() {
       this.shopId = ''
     },
-    numberSearch () {
+    numberSearch() {
       this.params.page = 1
       this.getList()
     },
-    handleUpdateSalesmanRole (row) {
+    handleUpdateSalesmanRole(row) {
       this.dialog_role = true
       this.salesman_id = row.salespersonId
       this.roleForm.role = row.role
     },
-    handleUpdateSalesman (row) {
+    handleUpdateSalesman(row) {
       this.dialog = true
       this.salesman_id = row.salespersonId
       var params = { salesperson_id: row.salespersonId }
@@ -499,7 +375,7 @@ export default {
         this.rel_distributor_ids = res.data.data.distributorList
       })
     },
-    handleDeleteSalesman (index, row) {
+    handleDeleteSalesman(index, row) {
       this.$confirm('此操作将禁用该导购员, 是否继续?', '提示', {
         confirmButtonText: '确定',
         cancelButtonText: '取消',
@@ -521,19 +397,19 @@ export default {
           })
         })
     },
-    defaultSwitchChange (row) {
+    defaultSwitchChange(row) {
       updateSalesman(row.salesperson_id, { is_valid: row.is_valid }).then((response) => {
         this.$message({ type: 'success', message: '操作成功' })
       })
     },
-    handleAddSalesman () {
+    handleAddSalesman() {
       if (this.salesman_id) {
         this.updateSalesmanAction()
       } else {
         this.addSalesmanAction()
       }
     },
-    updateSalesmanAction () {
+    updateSalesmanAction() {
       updateSalesman(this.salesman_id, this.form).then((res) => {
         this.form = {
           distributor_id: '',
@@ -546,14 +422,14 @@ export default {
         this.$message({ type: 'success', message: '操作成功' })
       })
     },
-    handleAddSalesmanRole () {
+    handleAddSalesmanRole() {
       updateSalesmanRole(this.salesman_id, this.roleForm).then((res) => {
         this.dialog_role = false
         this.getList()
         this.$message({ type: 'success', message: '操作成功' })
       })
     },
-    addSalesmanAction () {
+    addSalesmanAction() {
       addSalesman(this.form).then((res) => {
         this.form = {
           distributor_id: '',
@@ -566,7 +442,7 @@ export default {
         this.$message({ type: 'success', message: '操作成功' })
       })
     },
-    getList () {
+    getList() {
       this.loading = true
       getSalesmanList(this.params).then((response) => {
         if (response.data.data.list) {
@@ -576,14 +452,14 @@ export default {
         this.loading = false
       })
     },
-    getRoleList () {
+    getRoleList() {
       getRoleList().then((response) => {
         if (response.data.data.list) {
           this.roleList = response.data.data.list
         }
       })
     },
-    getSalepersonShopList (salespersonId, storetype) {
+    getSalepersonShopList(salespersonId, storetype) {
       this.relShop.relShopVisible = true
       this.relShop.params.salesperson_id = salespersonId
       if (storetype) {
@@ -594,14 +470,14 @@ export default {
         this.relShop.total_count = res.data.data.total_count
       })
     },
-    handleCancel () {
+    handleCancel() {
       this.relShop.relShopVisible = false
     },
-    handleRelShopCurrentChange (page_num) {
+    handleRelShopCurrentChange(page_num) {
       this.relShop.params.page = page_num
       this.getSalepersonShopList(this.relShop.params.salesperson_id)
     },
-    storeClose (list, index) {
+    storeClose(list, index) {
       this.setStoreStatus = false
       this.rel_distributor_ids.splice(index, 1)
       this.form.distributor_id = []
@@ -612,15 +488,15 @@ export default {
       }
       //this.rel_distributor_ids = list
     },
-    addStoreAction () {
+    addStoreAction() {
       this.storeVisible = true
       this.setStoreStatus = true
       this.relStores = JSON.parse(JSON.stringify(this.rel_distributor_ids))
     },
-    closeStoreDialogAction () {
+    closeStoreDialogAction() {
       this.storeVisible = false
     },
-    chooseStoreAction (data) {
+    chooseStoreAction(data) {
       this.storeVisible = false
       this.form.distributor_id = []
       if (data === null || data.length <= 0) return
@@ -631,7 +507,7 @@ export default {
         }
       }
     },
-    handleClick () {
+    handleClick() {
       if (this.activeName == 'invalid') {
         this.params.is_valid = 'delete'
         this.getList()
@@ -640,34 +516,34 @@ export default {
         this.getList()
       }
     },
-    handleSizeChange (val) {
+    handleSizeChange(val) {
       this.params.page = 1
       this.params.pageSize = val
       this.getList()
     },
-    handleCurrentChange (val) {
+    handleCurrentChange(val) {
       this.params.page = val
       this.getList()
     },
     // 显示sideBar
-    handleShowSideBar (saleId) {
+    handleShowSideBar(saleId) {
       this.showSideBar = true
       this.relationship.saleId = saleId
       this.getWorkWechatRelList()
     },
     // 页面数据条数切换
-    handleRelaSizeChange (val) {
+    handleRelaSizeChange(val) {
       this.relationship.params.page = 1
       this.relationship.params.pageSize = val
       this.getWorkWechatRelList()
     },
     // 分页切换
-    handleRelaCurrentChange (val) {
+    handleRelaCurrentChange(val) {
       this.relationship.params.page = val
       this.getWorkWechatRelList()
     },
     // 获取列表
-    getWorkWechatRelList () {
+    getWorkWechatRelList() {
       if (!this.relationship.saleId) return
       this.relationship.loading = true
       getWorkWechatRelList(this.relationship.saleId, this.relationship.params).then((res) => {
@@ -676,6 +552,10 @@ export default {
         this.relationship.loading = false
       })
     }
+  },
+  mounted() {
+    this.getList()
+    this.getRoleList()
   }
 }
 </script>

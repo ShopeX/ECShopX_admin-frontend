@@ -1,62 +1,34 @@
 <template>
-  <el-form
-    ref="form"
-    :model="form"
-    class="box-set"
-    label-width="100px"
-  >
-    <el-card
-      header="活动商品信息"
-      shadow="never"
-    >
+  <el-form ref="form" :model="form" class="box-set" label-width="100px">
+    <el-card header="活动商品信息" shadow="never">
       <el-form-item label="活动封面">
-        <div class="frm-tips">
-          文件格式为bmp、png、jpeg、jpg或gif，大小不超过2M（建议尺寸：500px * 500px）
-        </div>
+        <div class="frm-tips">文件格式为bmp、png、jpeg、jpg或gif，大小不超过2M（建议尺寸：500px * 500px）</div>
         <div>
-          <imgBox
-            :img-url="wximageurl + form.pics"
-            @click="handleImgChange"
-          />
+          <imgBox  @click="handleImgChange" :imgUrl="wximageurl + form.pics"></imgBox>
         </div>
         <imgPicker
           :dialog-visible="imgDialog"
           :sc-status="isGetImage"
           @chooseImg="pickImg"
           @closeImgDialog="closeImgDialog"
-        />
+        ></imgPicker>
       </el-form-item>
       <el-form-item label="拼团商品">
         <el-row :gutter="20">
           <el-col :span="20">
-            <p class="frm-tips" />
-            <div
-              class="logo-box"
-              @click="changeItem"
-            >
+            <p class="frm-tips"></p>
+            <div class="logo-box"  @click="changeItem">
               <div class="bran-img">
-                <div
-                  v-if="goods.pics"
-                  class="groups-addgoods"
-                >
-                  <img
-                    :src="wximageurl + goods.pics[0]"
-                    class="groups-goodspic"
-                  >
+                <div v-if="goods.pics" class="groups-addgoods">
+                  <img :src="wximageurl + goods.pics[0]" class="groups-goodspic" />
                   <div class="gooups-goodsmsg">
                     <div>{{ goods.itemName }}</div>
                     <div>原价：{{ goods.price }}</div>
-                    <div v-if="goods.item_type == 'normal'">
-                      库存：{{ goods.store }}
-                    </div>
+                    <div v-if="goods.item_type == 'normal'">库存：{{ goods.store }}</div>
                   </div>
                 </div>
-                <div
-                  v-else
-                  tabindex="0"
-                  class="el-upload el-upload--picture-card"
-                >
-                  <i class="el-icon-plus" />
+                <div v-else tabindex="0" class="el-upload el-upload--picture-card">
+                  <i class="el-icon-plus"></i>
                 </div>
               </div>
               <!-- <el-button size="small" type="primary" @click="changeItem">选择商品</el-button> -->
@@ -64,26 +36,14 @@
           </el-col>
         </el-row>
       </el-form-item>
-      <el-form-item
-        label="活动名称"
-        prop="act_name"
-        :rules="rules.act_name"
-      >
+      <el-form-item label="活动名称" prop="act_name" :rules="rules.act_name">
         <el-row :gutter="20">
           <el-col :span="12">
-            <el-input
-              v-model="form.act_name"
-              :maxlength="30"
-              placeholder="拼团活动名称"
-            />
+            <el-input v-model="form.act_name" :maxlength="30" placeholder="拼团活动名称"></el-input>
           </el-col>
         </el-row>
       </el-form-item>
-      <el-form-item
-        label="活动时间"
-        prop="date"
-        :rules="rules.date"
-      >
+      <el-form-item label="活动时间" prop="date" :rules="rules.date">
         <el-row :gutter="20">
           <el-col :span="12">
             <el-date-picker
@@ -94,104 +54,54 @@
               end-placeholder="过期时间"
               value-format="yyyy-MM-dd HH:mm:ss"
               :default-time="['00:00:00', '23:59:59']"
-            />
-          </el-col>
-        </el-row>
-      </el-form-item>
-      <el-form-item
-        label="拼团库存"
-        prop="store"
-        :rules="rules.store"
-      >
-        <el-row :gutter="20">
-          <el-col :span="12">
-            <el-input
-              v-model="form.store"
-              placeholder=""
-            />
-          </el-col>
-          <el-col :span="2">
-            件
-          </el-col>
-        </el-row>
-      </el-form-item>
-      <el-form-item
-        label="拼团价格"
-        prop="act_price"
-        :rules="rules.act_price"
-      >
-        <el-row :gutter="20">
-          <el-col :span="12">
-            <el-input
-              v-model="form.act_price"
-              placeholder=""
             >
-              元
-            </el-input>
-          </el-col>
-          <el-col :span="2">
-            元
+            </el-date-picker>
           </el-col>
         </el-row>
       </el-form-item>
-      <el-form-item
-        label="成团人数"
-        prop="person_num"
-        :rules="rules.person_num"
-      >
+      <el-form-item label="拼团库存" prop="store" :rules="rules.store">
         <el-row :gutter="20">
           <el-col :span="12">
-            <el-input
-              v-model="form.person_num"
-              placeholder=""
-            >
-              人
-            </el-input>
+            <el-input v-model="form.store" placeholder=""></el-input>
+          </el-col>
+          <el-col :span="2"> 件</el-col>
+        </el-row>
+      </el-form-item>
+      <el-form-item label="拼团价格" prop="act_price" :rules="rules.act_price">
+        <el-row :gutter="20">
+          <el-col :span="12">
+            <el-input v-model="form.act_price" placeholder="">元</el-input>
+          </el-col>
+          <el-col :span="2"> 元</el-col>
+        </el-row>
+      </el-form-item>
+      <el-form-item label="成团人数" prop="person_num" :rules="rules.person_num">
+        <el-row :gutter="20">
+          <el-col :span="12">
+            <el-input v-model="form.person_num" placeholder="">人</el-input>
           </el-col>
         </el-row>
       </el-form-item>
-      <el-form-item
-        label="成团时效"
-        prop="limit_time"
-        :rules="rules.limit_time"
-      >
+      <el-form-item label="成团时效" prop="limit_time" :rules="rules.limit_time">
         <el-row :gutter="20">
           <el-col :span="12">
-            <el-input
-              v-model="form.limit_time"
-              placeholder="小时"
-            />
+            <el-input v-model="form.limit_time" placeholder="小时"></el-input>
           </el-col>
-          <el-col :span="2">
-            小时
-          </el-col>
+          <el-col :span="2">小时</el-col>
         </el-row>
       </el-form-item>
-      <el-form-item
-        label="拼团限制"
-        prop="limit_buy_num"
-        :rules="rules.limit_buy_num"
-      >
+      <el-form-item label="拼团限制" prop="limit_buy_num" :rules="rules.limit_buy_num">
         <el-row :gutter="20">
           <el-col :span="12">
-            <el-input
-              v-model="form.limit_buy_num"
-              placeholder=""
-            />
-            <p class="frm-tips">
-              (限制一人只能参加X次活动，为0表示无限制)
-            </p>
+            <el-input v-model="form.limit_buy_num" placeholder=""></el-input>
+            <p class="frm-tips">(限制一人只能参加X次活动，为0表示无限制)</p>
           </el-col>
         </el-row>
       </el-form-item>
       <el-form-item label="成团机器人">
         <el-row :gutter="20">
           <el-col :span="12">
-            <el-switch
-              v-model="form.robot"
-              active-value="1"
-              inactive-value="0"
-            />
+            <el-switch v-model="form.robot" active-value="1" inactive-value="0"> </el-switch>
             <p class="frm-tips">
               (开启成团机器人后，成团时效内人数未满的团，系统将会使用机器人凑满人数，使该团成团。商家只需对真实订单进行发货处理。)
             </p>
@@ -201,69 +111,38 @@
       <el-form-item label="凑团">
         <el-row :gutter="20">
           <el-col :span="12">
-            <el-switch
-              v-model="form.rig_up"
-              active-value="1"
-              inactive-value="0"
-            />
+            <el-switch v-model="form.rig_up" active-value="1" inactive-value="0"> </el-switch>
             <p class="frm-tips">
               (开启凑团后，消费者可以在拼团商品详情页看到未成团的团列表，可选择其中一个参团。有效提高成团成功率)
             </p>
           </el-col>
         </el-row>
       </el-form-item>
-      <el-form-item
-        v-if="goods.item_type == 'normal'"
-        label="包邮"
-      >
+      <el-form-item v-if="goods.item_type == 'normal'" label="包邮">
         <el-row :gutter="20">
           <el-col :span="12">
-            <el-switch
-              v-model="form.free_post"
-              active-value="1"
-              inactive-value="0"
-            />
-            <p class="frm-tips">
-              (如果不开启包邮，那么运费按照商品的运费模版计算运费)
-            </p>
+            <el-switch v-model="form.free_post" active-value="1" inactive-value="0"> </el-switch>
+            <p class="frm-tips">(如果不开启包邮，那么运费按照商品的运费模版计算运费)</p>
           </el-col>
         </el-row>
       </el-form-item>
-      <el-form-item
-        label="分享描述"
-        prop="share_desc"
-        :rules="rules.share_desc"
-      >
+      <el-form-item label="分享描述" prop="share_desc" :rules="rules.share_desc">
         <el-row :gutter="20">
           <el-col :span="12">
-            <el-input
-              v-model="form.share_desc"
-              :maxlength="25"
-              placeholder="请输入拼团活动分享文字"
+            <el-input v-model="form.share_desc" :maxlength="25" placeholder="请输入拼团活动分享文字"
+              >（最多25个字）</el-input
             >
-              （最多25个字）
-            </el-input>
           </el-col>
         </el-row>
       </el-form-item>
     </el-card>
     <div class="content-center">
-      <el-button @click.native="handleCancel">
-        返回
-      </el-button>
-      <el-button
-        v-if="true == show"
-        type="primary"
-        @click.prevent="submitItemsAction('form')"
+      <el-button @click.native="handleCancel">返回</el-button>
+      <el-button v-if="true == show" type="primary" @click.prevent="submitItemsAction('form')"
+        >保存</el-button
       >
-        保存
-      </el-button>
     </div>
-    <el-dialog
-      title="选择商品"
-      :visible.sync="goodsDialogVisible"
-      center
-    >
+    <el-dialog title="选择商品" :visible.sync="goodsDialogVisible" center>
       <!-- <el-button-group class="tab-group">
         <el-button
           class="tab-btn"
@@ -278,84 +157,46 @@
           >实体类商品</el-button
         >
       </el-button-group> -->
-      <el-row
-        class="content-bottom-padded"
-        :gutter="20"
-      >
+      <el-row class="content-bottom-padded" :gutter="20">
         <el-col :span="12">
-          <el-input
-            v-model="itemsParams.keywords"
-            placeholder="商品名称"
-          >
-            <el-button
-              slot="append"
-              icon="el-icon-search"
-              @click="goodsSearch"
-            />
-          </el-input>
+          <el-input placeholder="商品名称" v-model="itemsParams.keywords"
+            ><el-button slot="append" icon="el-icon-search" @click="goodsSearch"></el-button
+          ></el-input>
         </el-col>
       </el-row>
-      <el-table
-        v-loading="itemsLoading"
-        :data="itemsList"
-        style="width: 100%"
-        border
-        height="500"
-      >
-        <el-table-column
-          prop="itemName"
-          label="商品名称"
-        />
+      <el-table :data="itemsList" style="width: 100%" border height="500" v-loading="itemsLoading">
+        <el-table-column prop="itemName" label="商品名称"></el-table-column>
         <el-table-column label="缩略图">
           <template slot-scope="scope">
-            <img
-              width="20"
-              :src="wximageurl + scope.row.pics[0]"
-            >
+            <img width="20" :src="wximageurl + scope.row.pics[0]" />
           </template>
         </el-table-column>
-        <el-table-column
-          prop="price"
-          label="销售价"
-          :formatter="priceformatter"
-        />
-        <el-table-column
-          prop="itemName"
-          label="状态"
-        >
+        <el-table-column prop="price" label="销售价" :formatter="priceformatter"></el-table-column>
+        <el-table-column prop="itemName" label="状态">
           <template slot-scope="scope">
             <el-button
-              v-if="form.goods_id != scope.row.itemId"
               type="text"
+              v-if="form.goods_id != scope.row.itemId"
               @click="chooseItem(scope.row)"
+              >选择</el-button
             >
-              选择
-            </el-button>
             <span v-else>已选择</span>
           </template>
         </el-table-column>
       </el-table>
-      <div
-        v-if="itemsTotalCount > itemsParams.pageSize"
-        class="content-center content-top-padded"
-      >
+      <div v-if="itemsTotalCount > itemsParams.pageSize" class="content-center content-top-padded">
         <el-pagination
           layout="prev, pager, next"
+          @current-change="goodsHandleCurrentChange"
           :current-page.sync="itemsParams.page"
           :total="itemsTotalCount"
           :page-size="itemsParams.pageSize"
-          @current-change="goodsHandleCurrentChange"
-        />
+        >
+        </el-pagination>
       </div>
-      <span
-        slot="footer"
-        class="dialog-footer"
-      >
+      <span slot="footer" class="dialog-footer">
         <el-button @click="goodsDialogVisible = false">关 闭</el-button>
-        <el-button
-          type="primary"
-          @click="goodsDialogVisible = false"
-        >确 定</el-button>
+        <el-button type="primary" @click="goodsDialogVisible = false">确 定</el-button>
       </span>
     </el-dialog>
   </el-form>
@@ -374,7 +215,7 @@ export default {
     imgPicker,
     imgBox
   },
-  data () {
+  data() {
     return {
       show: true,
       itemsLoading: false,
@@ -441,18 +282,8 @@ export default {
       goodsTypeTitle: '服务类商品'
     }
   },
-  mounted () {
-    if (this.$route.query.show) {
-      this.show = false
-    }
-    if (this.$route.params.groups_id) {
-      this.groups_activity_id = this.$route.params.groups_id
-      this.getGroupsInfo()
-    }
-    this.getCurrencyInfo()
-  },
   methods: {
-    submitItemsAction (formName) {
+    submitItemsAction(formName) {
       const that = this
       this.$refs[formName].validate((valid) => {
         if (valid) {
@@ -471,7 +302,7 @@ export default {
                   message: '更新成功',
                   type: 'success',
                   duration: 2 * 1000,
-                  onClose () {
+                  onClose() {
                     that.refresh()
                     that.$router.go(-1)
                   }
@@ -485,7 +316,7 @@ export default {
                   message: '添加成功',
                   type: 'success',
                   duration: 2 * 1000,
-                  onClose () {
+                  onClose() {
                     that.refresh()
                     that.$router.go(-1)
                   }
@@ -498,7 +329,7 @@ export default {
         }
       })
     },
-    handleCancel () {
+    handleCancel() {
       this.$router.go(-1)
     },
     //老的活动封面上传
@@ -520,24 +351,24 @@ export default {
     //     that.logo_url = file.url
     //   })
     // },
-    changeItem () {
+    changeItem() {
       this.goodsDialogVisible = true
       this.getGoodsList()
     },
-    chooseItem (row) {
+    chooseItem(row) {
       this.goodsDialogVisible = false
       this.goods = row
       this.goods.price = this.goods.price / 100
       this.form.goods_id = row.itemId
     },
-    goodsHandleCurrentChange (val) {
+    goodsHandleCurrentChange(val) {
       this.itemsParams.page = val
       this.getGoodsList()
     },
-    goodsSearch () {
+    goodsSearch() {
       this.getGoodsList()
     },
-    getGoodsList () {
+    getGoodsList() {
       this.itemsLoading = true
 
       let where = this.itemsParams
@@ -557,7 +388,7 @@ export default {
           })
         })
     },
-    getGroupsInfo () {
+    getGroupsInfo() {
       getGroupsInfo(this.groups_activity_id)
         .then((response) => {
           this.form = response.data.data
@@ -581,30 +412,30 @@ export default {
           })
         })
     },
-    priceformatter (row, column) {
+    priceformatter(row, column) {
       return this.cursymbol + row.price / 100
     },
-    getCurrencyInfo () {
+    getCurrencyInfo() {
       getDefaultCurrency().then((res) => {
         this.currency = res.data.data
         this.cursymbol = this.currency.symbol
       })
     },
     //活动封面
-    handleImgChange () {
+    handleImgChange() {
       this.imgDialog = true
       this.isGetImage = true
     },
-    pickImg (data) {
+    pickImg(data) {
       console.log(data.url)
       this.form.pics = data.url
       console.log(this.form.pics)
       this.imgDialog = false
     },
-    closeImgDialog () {
+    closeImgDialog() {
       this.imgDialog = false
     },
-    changeGoods (type) {
+    changeGoods(type) {
       switch (type) {
         case 'every':
           this.$set(this.itemsParams, 'consume_type', 'every')
@@ -619,6 +450,16 @@ export default {
       }
       this.getGoodsList()
     }
+  },
+  mounted() {
+    if (this.$route.query.show) {
+      this.show = false
+    }
+    if (this.$route.params.groups_id) {
+      this.groups_activity_id = this.$route.params.groups_id
+      this.getGroupsInfo()
+    }
+    this.getCurrencyInfo()
   }
 }
 </script>

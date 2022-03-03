@@ -1,45 +1,29 @@
+ 
 <template>
   <section
     class="section section-white content-padded content-padded-bottom-80 distributorIndex"
     onload="init()"
   >
-    <el-form
-      ref="form"
-      label-width="110px"
-      :model="form"
-      :rules="rules"
-    >
-      <el-card
-        v-if="is_normal"
-        header="店铺类型"
-      >
+    <el-form label-width="110px" ref="form" :model="form" :rules="rules">
+      <el-card header="店铺类型" v-if="is_normal">
         <el-row>
           <el-col :span="8">
-            <el-form-item
-              label="店铺类型"
-              prop="distribution_type"
-            >
-              <el-select
-                v-model="form.distribution_type"
-                placeholder="请选择"
-              >
+            <el-form-item label="店铺类型" prop="distribution_type">
+              <el-select v-model="form.distribution_type" placeholder="请选择">
                 <el-option
                   v-for="item in distributionTypeList"
                   :key="item.value"
                   :label="item.label"
                   :value="item.value"
-                />
+                >
+                </el-option>
               </el-select>
             </el-form-item>
           </el-col>
           <el-col :span="8">
-            <el-form-item
-              v-if="form.distribution_type === 1"
-              label="所属商户"
-              prop="merchant_id"
-            >
+            <el-form-item label="所属商户" prop="merchant_id" v-if="form.distribution_type === 1">
               <el-select
-                v-model="form.merchant_id"
+                v-model="form.merchant_id" 
                 filterable
                 remote
                 reserve-keyword
@@ -52,62 +36,41 @@
                   :key="item.value"
                   :label="item.label"
                   :value="item.value"
-                />
+                >
+                </el-option>
               </el-select>
             </el-form-item>
           </el-col>
         </el-row>
       </el-card>
       <BaseForm
-        ref="baseFormRef"
         :disabled="disabled"
         :distributor_type="distributor_type"
         :rules="rules"
-        :external-form="form"
+        :externalForm="form"
+        ref="baseFormRef"
       />
 
-      <ImageForm
-        ref="imageFormRef"
-        :external-form="form"
-      />
+      <ImageForm ref="imageFormRef" :externalForm="form" />
 
-      <ShopForm
-        ref="shopFormRef"
-        :external-form="form"
-        @initForm="initForm"
-        @onChangeData="handleChangeData"
-      />
+      <ShopForm :externalForm="form" @initForm="initForm" @onChangeData="handleChangeData" ref="shopFormRef" />
 
       <DadaForm
-        ref="dadaFormRef"
         :rules="rules"
-        :external-form="form"
+        ref="dadaFormRef"
+        :externalForm="form"
         @onChangeData="handleChangeData"
       />
-      <IntroduceForm
-        ref="introduceFormRef"
-        :external-form="form"
-      />
+      <IntroduceForm ref="introduceFormRef" :externalForm="form"></IntroduceForm>
 
       <!-- <FashionForm ref="fashionFormRef" :externalForm="form" /> -->
 
       <GlobalFooter>
         <div class="section-footer content-center">
-          <el-button
-            size="large"
-            @click="cancelSubmit"
-          >
-            取消
-          </el-button>
-          <el-button
-            type="primary"
-            :loading="submitLoading"
-            @click="submitItemsActionConfirm"
-          >
-            {{
-              submitLoading ? '提交中' : '保存'
-            }}
-          </el-button>
+          <el-button size="large" @click="cancelSubmit">取消</el-button>
+          <el-button type="primary" @click="submitItemsActionConfirm" :loading="submitLoading">{{
+            submitLoading ? '提交中' : '保存'
+          }}</el-button>
         </div>
       </GlobalFooter>
     </el-form>
@@ -134,20 +97,31 @@ export default {
     BaseForm,
     IntroduceForm
   },
-  data () {
+  watch:{
+    form:{
+      handler:function(val){  
+        if(val.merchant_id==0){
+          this.form.merchant_id=undefined
+        }
+      },
+      immediate: true,
+      deep:true
+    }
+  },
+  data() {
     return {
       submitLoading: false,
       disabled: false,
       dadaShow: false,
-      form2: {
-        merchant_id: undefined,
-        merchant_name: undefined
+      form2:{
+        merchant_id:undefined,
+        merchant_name:undefined
       },
       form: {
         lng: '',
         lat: '',
         distribution_type: 0,
-        merchant_id: undefined
+        merchant_id:undefined
       },
       distributor_id: 0,
       distributor_type: '',
@@ -163,44 +137,30 @@ export default {
         contact: [{ message: '联系人必填', required: true }],
         mobile: [{ message: '手机必填', required: true }],
         dada_type: [{ message: '达达业务类型必填', required: true }]
-      },
+      }, 
       distributionTypeList: [
         { value: 0, label: '自营' },
         { value: 1, label: '加盟' }
       ],
       merchantList: [],
-      merchantLoading: false
+      merchantLoading:false
     }
   },
   computed: {
     is_normal: function () {
-      return (
-        this.$store.getters.login_type === 'normal' || this.$store.getters.login_type === 'admin'
-      )
-    }
+      return this.$store.getters.login_type === 'normal'|| this.$store.getters.login_type==='admin'
+    }, 
   },
-  watch: {
-    form: {
-      handler: function (val) {
-        if (val.merchant_id == 0) {
-          this.form.merchant_id = undefined
-        }
-      },
-      immediate: true,
-      deep: true
-    }
-  },
-  mounted: async function () {},
   methods: {
-    initForm (form) {
-      console.log('===initForm===>', form)
-      this.form2 = {
-        merchant_id: form.merchant_id,
-        merchant_name: form.merchant_name
+    initForm(form){
+      console.log("===initForm===>",form)
+      this.form2={
+        merchant_id:form.merchant_id,
+        merchant_name:form.merchant_name
       }
-      this.form.merchant_id = form.merchant_name
+      this.form.merchant_id=form.merchant_name
     },
-    handleChangeData (changeField, changeValue) {
+    handleChangeData(changeField, changeValue) {
       if (
         typeof changeValue === 'boolean' ||
         typeof changeValue === 'string' ||
@@ -214,17 +174,17 @@ export default {
         }
       }
     },
-    cancelSubmit () {
+    cancelSubmit() {
       this.$router.go(-1)
     },
-    deleteParams (params, obj) {
+    deleteParams(params, obj) {
       let result = obj
       for (let i = 0; i < params.length; i++) {
         delete result[params[i]]
       }
       return result
     },
-    submitItemsActionConfirm () {
+    submitItemsActionConfirm() {
       console.log('=================1221=============')
       // debugger
 
@@ -266,14 +226,11 @@ export default {
             ...this.$refs.introduceFormRef.form,
             hour: this.$refs.baseFormRef.startTime + '-' + this.$refs.baseFormRef.endTime,
             distributor_id: this.distributor_id,
-            distribution_type: this.form.distribution_type,
-            merchant_id:
-              this.form.merchant_id == this.form2.merchant_name
-                ? this.form2.merchant_id
-                : this.form.merchant_id
+            distribution_type:this.form.distribution_type,
+            merchant_id:this.form.merchant_id==this.form2.merchant_name?this.form2.merchant_id:this.form.merchant_id
           }
-
-          if (filterParams.distribution_type == 1) {
+          
+          if(filterParams.distribution_type == 1) {
             delete filterParams.is_audit_goods
           }
 
@@ -291,7 +248,7 @@ export default {
             .then((res) => {
               this.submitLoading = false
               this.$message({ type: 'success', message: '保存店铺成功' })
-              console.log('====', this.$store.getters.login_type)
+              console.log("====",this.$store.getters.login_type)
               if (this.$store.getters.login_type != 'distributor') {
                 this.$router.go(-1)
               }
@@ -305,22 +262,20 @@ export default {
         }
       })
     },
-    getMerchantsList: async (merchant_name) => {
-      const list = await getMerchantsList({
-        params: JSON.stringify({ page_size: 10, page: 1, merchant_name })
-      })
-      return list
+    getMerchantsList:async (merchant_name)=>{
+      const list = await getMerchantsList({ params: JSON.stringify({ page_size: 10, page: 1,merchant_name }) });
+      return list;
     },
-    remoteMerchantList: async function (name) {
-      this.merchantLoading = true
-      const {
-        data: {
-          data: { list }
-        }
-      } = await this.getMerchantsList(name)
-      this.merchantList = list.map((item) => ({ value: item.id, label: item.merchant_name }))
-      this.merchantLoading = false
-    }
+    remoteMerchantList:async function(name){
+      this.merchantLoading=true;
+      const {data:{data:{list}}}=await this.getMerchantsList(name); 
+      this.merchantList=list.map(item=>({value:item.id,label:item.merchant_name}))
+      this.merchantLoading=false
+    },
+
+  },
+  mounted: async function () {
+     
   }
 }
 </script>

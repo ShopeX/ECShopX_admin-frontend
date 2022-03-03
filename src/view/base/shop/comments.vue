@@ -1,48 +1,28 @@
 <template>
   <div>
-    <el-tabs
-      v-model="activeName"
-      class="section-white content-padded"
-    >
-      <el-tab-pane
-        label="评论列表"
-        name="first"
-      >
+    <el-tabs v-model="activeName" class="section-white content-padded">
+      <el-tab-pane label="评论列表" name="first">
         <el-row :gutter="20">
           <el-col :span="12">
-            <shop-select
-              wxshops
-              @update="storeChange"
-              @init="initChange"
-            />
+            <shop-select wxshops @update="storeChange" @init="initChange"></shop-select>
             <!--distributors wxshops 需要哪个api传哪个-->
           </el-col>
         </el-row>
         <div>
           <el-table
-            v-loading="loading"
             :data="list"
             style="width: 100%"
+            v-loading="loading"
             element-loading-text="数据加载中"
             :row-class-name="tableRowClassName"
           >
-            <el-table-column
-              prop="nickname"
-              label="会员名称"
-            />
-            <el-table-column
-              prop="content"
-              label="评论内容"
-            />
+            <el-table-column prop="nickname" label="会员名称"></el-table-column>
+            <el-table-column prop="content" label="评论内容"></el-table-column>
             <el-table-column label="评论照片">
               <template slot-scope="scope">
                 <div class="comment-photo">
                   <template v-for="item in scope.row.pics">
-                    <img
-                      width="60"
-                      height="60"
-                      :src="item"
-                    >
+                    <img width="60" height="60" :src="item" />
                   </template>
                 </div>
               </template>
@@ -54,32 +34,24 @@
             </el-table-column>
             <el-table-column label="操作">
               <template slot-scope="scope">
-                <el-button
-                  size="small"
-                  @click.native.prevent="hid(scope.row)"
-                >
+                <el-button @click.native.prevent="hid(scope.row)" size="small">
                   <span v-if="scope.row.hid">取消隐藏</span><span v-else>隐藏</span>
                 </el-button>
-                <el-button
-                  size="small"
-                  @click.native.prevent="top(scope.row)"
-                >
+                <el-button @click.native.prevent="top(scope.row)" size="small">
                   <span v-if="scope.row.stuck">取消置顶</span><span v-else>置顶</span>
                 </el-button>
               </template>
             </el-table-column>
           </el-table>
         </div>
-        <div
-          v-if="total_count > pageSize"
-          class="tc"
-        >
+        <div v-if="total_count > pageSize" class="tc">
           <el-pagination
             layout="prev, pager, next"
+            @current-change="handleCurrentChange"
             :total="total_count"
             :page-size="pageSize"
-            @current-change="handleCurrentChange"
-          />
+          >
+          </el-pagination>
         </div>
       </el-tab-pane>
     </el-tabs>
@@ -92,7 +64,7 @@ export default {
   components: {
     shopSelect
   },
-  data () {
+  data() {
     return {
       activeName: 'first',
       loading: false,
@@ -104,38 +76,35 @@ export default {
       wxShopsList: []
     }
   },
-  mounted () {
-    this.getcomments(param)
-  },
   methods: {
-    shopHandle (val) {
+    shopHandle(val) {
       val && val.shop_id
       this.currentShop = val.shop_id
       this.getParams()
       this.getcomments(this.params)
     },
-    handleCurrentChange (val) {
+    handleCurrentChange(val) {
       this.params = { page: val, pageSize: this.pageSize }
       this.loading = false
       this.getcomments(this.params)
     },
-    hid (row) {
+    hid(row) {
       let commentId = row.comment_id
       let val = !row.hid
       this.updateComment(commentId, { is_hide: val })
     },
-    top (row) {
+    top(row) {
       let commentId = row.comment_id
       let val = !row.stuck
       this.updateComment(commentId, { is_stick: val })
     },
-    getParams () {
+    getParams() {
       this.params.shop_id = this.currentShop
     },
-    dateStrToTimeStamp (str) {
+    dateStrToTimeStamp(str) {
       return Date.parse(new Date(str)) / 1000
     },
-    getcomments (filter) {
+    getcomments(filter) {
       this.loading = true
       getCommentList(filter).then((response) => {
         this.list = response.data.data.list
@@ -143,17 +112,20 @@ export default {
         this.loading = false
       })
     },
-    updateComment ($commentId, params) {
+    updateComment($commentId, params) {
       upadteComment($commentId, params).then((res) => {
         this.getcomments()
       })
     },
-    tableRowClassName (row, rowIndex) {
+    tableRowClassName(row, rowIndex) {
       if (rowIndex <= 9 && row.stuck) {
         return 'warning-row'
       }
       return ''
     }
+  },
+  mounted() {
+    this.getcomments(param)
   }
 }
 </script>

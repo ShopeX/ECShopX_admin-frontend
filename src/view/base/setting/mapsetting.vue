@@ -1,19 +1,8 @@
 <template>
   <div class="map-setting">
-    <el-tabs
-      v-model="activeName"
-      type="border-card"
-    >
-      <el-tab-pane
-        label="高德地图配置"
-        name="first"
-      >
-        <el-form
-          ref="form"
-          :model="form"
-          :rules="rules"
-          label-width="150px"
-        >
+    <el-tabs v-model="activeName" type="border-card">
+      <el-tab-pane label="高德地图配置" name="first">
+        <el-form ref="form" :model="form" :rules="rules" label-width="150px">
           <div class="head-tips">
             高德地图Key获取路径：
             <el-link
@@ -26,32 +15,22 @@
             ，进入 「我的应用」-「 创建新应用 」-「 添加新Key 」。
           </div>
 
-          <el-form-item
-            label="Key"
-            prop="app_key"
-            style="margin-bottom: 10px"
-          >
+          <el-form-item label="Key" prop="app_key" style="margin-bottom: 10px">
             <el-input
-              v-model="form.app_key"
-              style="width: 60%"
+              style="width:60%"
               type="textarea"
+              v-model="form.app_key" 
               :rows="6"
             />
           </el-form-item>
           <el-form-item label="">
-            <div class="row-tip">
-              Key 不填写或填写错误将导致该功能无法使用，请确保填写正确。
-            </div>
+            <div class="row-tip">Key 不填写或填写错误将导致该功能无法使用，请确保填写正确。</div>
           </el-form-item>
 
-          <el-form-item
-            label="密钥"
-            prop="app_secret"
-            class="passwords"
-          >
+          <el-form-item label="密钥" prop="app_secret" class="passwords">
             <el-input
+              style="width:60%"
               v-model="form.app_secret"
-              style="width: 60%"
               :type="pass_type"
               :rows="6"
             />
@@ -70,13 +49,7 @@
           </el-form-item>
 
           <div class="section-footer with-border content-center">
-            <el-button
-              v-loading="loading"
-              type="primary"
-              @click="onSubmitChange"
-            >
-              保存
-            </el-button>
+            <el-button type="primary" v-loading="loading" @click="onSubmitChange">保存</el-button>
           </div>
         </el-form>
       </el-tab-pane>
@@ -86,7 +59,7 @@
 <script>
 import { setMapSetting, getMapSetting } from '@/api/third'
 export default {
-  data () {
+  data() {
     return {
       loading: false,
       activeName: 'first',
@@ -101,12 +74,9 @@ export default {
       }
     }
   },
-  mounted () {
-    this.onGetConfig()
-  },
   methods: {
     onGetConfig () {
-      getMapSetting().then((response) => {
+      getMapSetting().then(response => {
         this.form = response.data.data.list[0]
       })
     },
@@ -118,23 +88,24 @@ export default {
         map_type: 'amap',
         is_default: 1
       }
-      setMapSetting(query)
-        .then((response) => {
-          this.$message({
-            type: 'success',
-            message: '保存成功'
-          })
-          this.pass_type = 'password'
-          this.onGetConfig()
-          this.loading = false
+      setMapSetting(query).then(response => {
+        this.$message({
+          type: 'success',
+          message: '保存成功'
         })
-        .catch((error) => {
-          this.loading = false
-        })
+        this.pass_type = 'password'
+        this.onGetConfig()
+        this.loading = false
+      }).catch(error => {
+        this.loading = false
+      })
     },
     onChangePassIcon (type) {
       this.pass_type = type
     }
+  },
+  mounted() {
+    this.onGetConfig()
   }
 }
 </script>
@@ -142,7 +113,7 @@ export default {
 .map-setting {
   .icons-class {
     position: absolute;
-    top: 35%;
+    top:35%;
     left: 63%;
     font-size: 16px;
     cursor: pointer;
@@ -171,4 +142,5 @@ export default {
     color: #999;
   }
 }
+
 </style>

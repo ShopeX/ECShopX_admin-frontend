@@ -4,37 +4,24 @@
       <div class="clearfix">
         <div class="f_l member-info">
           <template v-for="(item, key) in setting">
-            <div
-              v-if="key == 'habbit'"
-              :key="key"
-              class="info-item"
-            >
+            <div v-if="key == 'habbit'" class="info-item" :key="key">
               <span class="txt">{{ item.name }}</span>
               <span v-if="member.requestFields && member.requestFields.habbit">
-                <span
-                  v-for="(row, index) in member.requestFields.habbit"
-                  :key="index"
-                >{{
-                  row.ischecked ? row.name + ',' : ''
-                }}</span>
+                <span v-for="(row,index) in member.requestFields.habbit" :key="index" >{{row.ischecked ? row.name + ',': ''}}</span>
               </span>
               <span v-else>--</span>
             </div>
 
-            <div
-              v-else-if="item.element_type === 'select'"
-              :key="key"
-              class="info-item"
-            >
+            <div v-else-if="item.element_type === 'select'" class="info-item" :key="key">
               <span class="txt">{{ item.name }}</span>
-              <span v-if="item.items[member[key]]">{{ item.items[member[key]] }}</span>
+              <span v-if="item.items[member[key]]">{{item.items[member[key]]}}</span>
               <span v-else>--</span>
             </div>
 
             <div
               v-else
-              :key="key"
               class="info-item"
+              :key="key"
             >
               <span class="txt">{{ item.name }}</span>
               <span v-if="member[key]">{{ member[key] }}</span>
@@ -50,7 +37,7 @@
 <script>
 export default {
   props: ['userInfo', 'isLoad', 'registerSetting'],
-  data () {
+  data() {
     return {
       setting: [],
       member: {
@@ -104,24 +91,24 @@ export default {
       }
     }
   },
+  methods: {},
+  mounted() {
+    this.member = this.userInfo
+    this.setting = this.registerSetting
+  },
   watch: {
-    registerSetting (newVal, oldVal) {
-      console.log(newVal)
+    registerSetting(newVal, oldVal) {
+      console.log(newVal);
       if (this.isLoad) {
         this.setting = newVal
       }
     },
-    userInfo (newVal, oldVal) {
+    userInfo(newVal, oldVal) {
       if (this.isLoad) {
         this.member = newVal
       }
     }
-  },
-  mounted () {
-    this.member = this.userInfo
-    this.setting = this.registerSetting
-  },
-  methods: {}
+  }
 }
 </script>
 <style scoped lang="scss">

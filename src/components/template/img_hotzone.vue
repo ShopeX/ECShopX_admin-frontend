@@ -1,39 +1,28 @@
 <template>
-  <div
-    class="component-wrap"
-    :class="{ 'component-padded': base.padded, 'active': active }"
-  >
-    <div class="current-active" />
-    <div
-      v-if="base.title"
-      class="component-header"
-    >
+  <div class="component-wrap" :class="{ 'component-padded': base.padded, 'active': active }">
+    <div class="current-active"></div>
+    <div v-if="base.title" class="component-header">
       <div class="component-title">
         <div>{{ base.title }}</div>
-        <div class="subtitle">
-          {{ base.subtitle }}
-        </div>
+        <div class="subtitle">{{ base.subtitle }}</div>
       </div>
       <!-- <div class="component-more">
         <div class="three-dot"></div>
       </div> -->
     </div>
     <div class="img-hotzone">
-      <img
-        :src="config.imgUrl"
-        alt=""
-      >
+      <img :src="config.imgUrl" alt="" />
       <div
+        class="zone"
         v-for="(item, index) in data"
         :key="index"
-        class="zone"
         :style="{
           width: getZoneStyle(item.widthPer),
           height: getZoneStyle(item.heightPer),
           top: getZoneStyle(item.topPer),
           left: getZoneStyle(item.leftPer)
         }"
-      />
+      ></div>
     </div>
   </div>
 </template>
@@ -50,32 +39,32 @@ export default {
       default: false
     }
   },
-  data () {
+  watch: {
+    res(value) {
+      if (value) {
+        this.setData(value)
+      }
+    }
+  },
+  data() {
     return {
       base: {},
       config: {},
       data: []
     }
   },
-  watch: {
-    res (value) {
-      if (value) {
-        this.setData(value)
-      }
-    }
-  },
-  mounted () {
-    this.setData(this.res)
-  },
   methods: {
-    setData (val) {
+    setData(val) {
       this.base = val.base
       this.config = val.config
       this.data = val.data
     },
-    getZoneStyle (val) {
+    getZoneStyle(val) {
       return `${(val || 0) * 100}%`
     }
+  },
+  mounted() {
+    this.setData(this.res)
   }
 }
 </script>

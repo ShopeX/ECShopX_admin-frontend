@@ -7,16 +7,22 @@
       :fixed-row-action="true"
       :setting="setting"
       :hooks="{ beforeSearch: beforeSearch }"
-      no-selection
+      noSelection
       url="/voucher/package/get_receives_log"
-    />
+    >
+    </SpFinder>
   </div>
 </template>
 
 <script>
 import setting_ from './setting/detail'
 export default {
-  data () {
+  computed: {
+    setting() {
+      return setting_(this)
+    }
+  },
+  data() {
     return {
       receive_type: [
         {
@@ -34,13 +40,8 @@ export default {
       ]
     }
   },
-  computed: {
-    setting () {
-      return setting_(this)
-    }
-  },
   methods: {
-    beforeSearch (params) {
+    beforeSearch(params) {
       return { ...params, package_id: this.$route.query.package_id }
     }
   }
@@ -49,7 +50,7 @@ export default {
 
 <style lang="scss" scoped>
 .zyk_couponDetail {
-  h3 {
+  h3{
     color: cornflowerblue;
   }
   .sp-finder-bd {

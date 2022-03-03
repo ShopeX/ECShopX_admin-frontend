@@ -15,19 +15,15 @@
 </style>
 <template>
   <div class="section section-white">
-    <el-form
-      ref="form"
-      :model="form"
-      label-position="right"
-      label-width="82px"
-    >
+    <el-form ref="form" :model="form" label-position="right" label-width="82px">
       <div class="section-body">
         <el-form-item label="推广员等级">
           <el-alert
             title="开启推广员等级后，推广员可以通过提升等级来建立自己的推广团队，并且获取团队奖金"
             type="info"
             close-text=" "
-          />
+          >
+          </el-alert>
           <el-switch
             v-model="form.isOpenPromoterGrade"
             :width="50"
@@ -37,7 +33,7 @@
             active-text="开启"
             inactive-text="关闭"
             active-color="#13ce66"
-          />
+          ></el-switch>
         </el-form-item>
         <template v-if="form.isOpenPromoterGrade == 'true'">
           <el-form-item label="统计周期">
@@ -45,29 +41,26 @@
               title="推广员升级的统计周期，累计或者月度统计（当月数据满足升级条件，不包含其他月份数据）"
               type="info"
               close-text=" "
-            />
+            >
+            </el-alert>
             <el-radio-group v-model="form.upgrade.stat_cycle">
-              <el-radio label="total">
-                累计
-              </el-radio>
-              <el-radio label="month_total">
-                月度统计
-              </el-radio>
+              <el-radio label="total"> 累计 </el-radio>
+              <el-radio label="month_total"> 月度统计 </el-radio>
             </el-radio-group>
           </el-form-item>
           <el-form-item label="升级条件">
             <el-checkbox
-              v-model="form.upgrade.filter.children_num"
               label="直属下线数量达到X人"
-            />
+              v-model="form.upgrade.filter.children_num"
+            ></el-checkbox>
             <el-checkbox
-              v-model="form.upgrade.filter.children_sales_amount"
               label="直属下线销售总额达到X元"
-            />
+              v-model="form.upgrade.filter.children_sales_amount"
+            ></el-checkbox>
             <el-checkbox
-              v-model="form.upgrade.filter.grade_member"
               label="成为指定付费等级会员"
-            />
+              v-model="form.upgrade.filter.grade_member"
+            ></el-checkbox>
           </el-form-item>
           <el-form-item label="等级配置">
             <el-alert
@@ -75,26 +68,25 @@
               type="info"
               close-text=" "
               description="直接获取一级团队分红比例：表示推广员的直属上级为三级推广员，中间无二级推广员"
-            />
-            <el-row
-              class="grade-setting-row"
-              :gutter="20"
             >
+            </el-alert>
+            <el-row class="grade-setting-row" :gutter="20">
               <el-col
                 v-for="(item, key) in form.grade"
-                :key="key"
                 :span="8"
+                :key="key"
                 class="grade-setting-col"
               >
-                <el-tag>{{ item.name }}</el-tag><br>
+                <el-tag>{{ item.name }}</el-tag
+                ><br />
                 <span class="title">等级名称</span>
                 <el-input
-                  v-model="form.grade[key].custom_name"
                   placeholder="自定义等级名称"
+                  v-model="form.grade[key].custom_name"
                   :maxlength="30"
                   :minlength="1"
                   class="grade-setting-item"
-                />
+                ></el-input>
                 <div v-if="item.grade_level > 1">
                   <span class="title">升级条件</span>
                   <el-input
@@ -105,9 +97,7 @@
                     min="0"
                     class="grade-setting-item"
                   >
-                    <template slot="append">
-                      直属下线数量
-                    </template>
+                    <template slot="append">直属下线数量</template>
                   </el-input>
                   <el-input
                     v-if="form.upgrade.filter.children_sales_amount"
@@ -117,9 +107,7 @@
                     min="0"
                     class="grade-setting-item"
                   >
-                    <template slot="append">
-                      直属下线销售总额
-                    </template>
+                    <template slot="append">直属下线销售总额</template>
                   </el-input>
                   <el-select
                     v-show="form.upgrade.filter.grade_member"
@@ -130,47 +118,42 @@
                       :key="item.lv_type"
                       :label="item.grade_name"
                       :value="item.lv_type"
-                    />
+                    >
+                    </el-option>
                   </el-select>
                 </div>
                 <div v-if="item.grade_level == 2">
                   <span class="title">团队分红比例</span>
                   <el-input
-                    v-model="form.grade[key].first_ratio"
                     class="grade-setting-item"
+                    v-model="form.grade[key].first_ratio"
                     type="number"
                     required
                     min="0"
                   >
-                    <template slot="append">
-                      %
-                    </template>
+                    <template slot="append">%</template>
                   </el-input>
                 </div>
                 <div v-if="item.grade_level == 3">
                   <span class="title">直接获取一级团队分红比例</span>
                   <el-input
-                    v-model="form.grade[key].first_ratio"
                     class="grade-setting-item"
+                    v-model="form.grade[key].first_ratio"
                     type="number"
                     required
                     min="0"
                   >
-                    <template slot="append">
-                      %
-                    </template>
+                    <template slot="append">%</template>
                   </el-input>
                   <span class="title">获取二级团队分红比例</span>
                   <el-input
-                    v-model="form.grade[key].second_ratio"
                     class="grade-setting-item"
+                    v-model="form.grade[key].second_ratio"
                     type="number"
                     required
                     min="0"
                   >
-                    <template slot="append">
-                      %
-                    </template>
+                    <template slot="append">%</template>
                   </el-input>
                 </div>
               </el-col>
@@ -179,12 +162,7 @@
         </template>
       </div>
       <div class="section-footer with-border content-center">
-        <el-button
-          type="primary"
-          @click="save"
-        >
-          保 存
-        </el-button>
+        <el-button type="primary" @click="save">保 存</el-button>
       </div>
     </el-form>
   </div>
@@ -193,7 +171,7 @@
 import { getPromoterGradeConfig, setPromoterGradeConfig } from '../../api/promotions'
 import { listVipGrade } from '../../api/cardticket'
 export default {
-  data () {
+  data() {
     return {
       form: {
         isOpenPromoterGrade: false,
@@ -215,7 +193,32 @@ export default {
       isChecked: 0
     }
   },
-  mounted () {
+  methods: {
+    save() {
+      this.isCheckedFun()
+      if (this.form.isOpenPromoterGrade && this.isChecked == 3) {
+        this.$message.error('至少选择一项升级条件')
+        return
+      }
+
+      setPromoterGradeConfig(this.form).then((res) => {
+        this.$message({ message: '保存成功', type: 'success' })
+      })
+    },
+    isCheckedFun() {
+      let obj = this.form.upgrade.filter
+      let arr = Array()
+      this.isChecked = 0
+      for (let i in obj) {
+        arr[i] = obj[i]
+        if (!arr[i]) {
+          this.isChecked++
+        }
+      }
+      console.log(789, this.isChecked)
+    }
+  },
+  mounted() {
     getPromoterGradeConfig().then((res) => {
       console.log(res.data.data)
       if (res.data.data.upgrade) {
@@ -228,31 +231,6 @@ export default {
         }
       }),
       this.isCheckedFun()
-  },
-  methods: {
-    save () {
-      this.isCheckedFun()
-      if (this.form.isOpenPromoterGrade && this.isChecked == 3) {
-        this.$message.error('至少选择一项升级条件')
-        return
-      }
-
-      setPromoterGradeConfig(this.form).then((res) => {
-        this.$message({ message: '保存成功', type: 'success' })
-      })
-    },
-    isCheckedFun () {
-      let obj = this.form.upgrade.filter
-      let arr = Array()
-      this.isChecked = 0
-      for (let i in obj) {
-        arr[i] = obj[i]
-        if (!arr[i]) {
-          this.isChecked++
-        }
-      }
-      console.log(789, this.isChecked)
-    }
   }
 }
 </script>

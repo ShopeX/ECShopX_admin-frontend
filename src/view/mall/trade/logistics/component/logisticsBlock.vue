@@ -1,7 +1,7 @@
 <template>
   <div class="block">
     <div class="image">
-      <img :src="info.logo">
+      <img :src="info.logo" />
     </div>
     <div class="info">
       <div class="name">
@@ -13,35 +13,39 @@
     </div>
     <div class="switch">
       <el-switch
-        v-model="info.is_enable"
         :disabled="disabled"
+        v-model="info.is_enable"
         @change="setEnable()"
-      />
+      >
+      </el-switch>
     </div>
   </div>
 </template>
 
 <script>
-import { createCompanyLogistics, deleteCompanyLogistics } from '@/api/logistics'
+import {
+  createCompanyLogistics,
+  deleteCompanyLogistics,
+} from "@/api/logistics";
 export default {
-  props: ['info', 'disabled'],
+  props: ["info", "disabled"],
   methods: {
-    setEnable () {
-      console.log('setEnable', this.info)
+    setEnable() {
+      console.log("setEnable", this.info);
       if (this.info.is_enable) {
         createCompanyLogistics(this.info).then((response) => {
-          this.$message.success(`${this.info.corp_name}已开启`)
+          this.$message.success(`${this.info.corp_name}已开启`);
           // this.$emit("refreshList");
-        })
+        });
       } else {
         deleteCompanyLogistics(this.info.corp_id).then((response) => {
           // this.getLogisticsListData();
           // this.$emit("refreshList");
-        })
+        });
       }
-    }
-  }
-}
+    },
+  },
+};
 </script>
 
 <style scoped lang="scss">

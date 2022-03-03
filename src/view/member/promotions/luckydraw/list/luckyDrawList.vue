@@ -1,63 +1,35 @@
 <template>
   <div>
-    <el-table
-      v-loading="loading"
-      :data="luckydrawList"
-      :height="wheight - 240"
-    >
-      <el-table-column
-        prop="luckydraw_name"
-        label="活动名称"
-      />
+    <el-table :data="luckydrawList" :height="wheight - 240" v-loading="loading">
+      <el-table-column prop="luckydraw_name" label="活动名称"></el-table-column>
       <!--  <el-table-column label="商品类型" width="120">
           <template slot-scope="scope">
               <el-tag  v-if="scope.row.goods_type=='services'" type="success">服务类商品</el-tag>
               <el-tag v-else>实体类商品</el-tag>
           </template>
       </el-table-column> -->
-      <el-table-column
-        prop="goods_info.itemName"
-        label="商品名称"
-      />
-      <el-table-column
-        label="活动有效期"
-        width="160"
-      >
+      <el-table-column prop="goods_info.itemName" label="商品名称"></el-table-column>
+      <el-table-column label="活动有效期" width="160">
         <template slot-scope="scope">
-          {{ scope.row.start_time | datetime }}<br>{{ scope.row.end_time | datetime }}
+          {{ scope.row.start_time | datetime }}<br />{{ scope.row.end_time | datetime }}
         </template>
       </el-table-column>
-      <el-table-column
-        label="单价(积分/现金)"
-        width="120"
-      >
-        <template
-          v-if="scope.row.luckydraw_payment == 'cash'"
-          slot-scope="scope"
-        >
+      <el-table-column label="单价(积分/现金)" width="120">
+        <template slot-scope="scope" v-if="scope.row.luckydraw_payment == 'cash'">
           <span>{{ cursymbol + scope.row.luckydraw_price / 100 }}元</span>
         </template>
-        <template
-          v-if="scope.row.luckydraw_payment == 'point'"
-          slot-scope="scope"
-        >
+        <template slot-scope="scope" v-if="scope.row.luckydraw_payment == 'point'">
           <span>{{ scope.row.luckydraw_point }} 积分</span>
         </template>
       </el-table-column>
-      <el-table-column
-        label="状态"
-        width="100"
-      >
+      <el-table-column label="状态" width="100">
         <template slot-scope="scope">
           <span v-if="scope.row.activity_status == 1">未开始</span>
           <span v-else-if="scope.row.activity_status == 2">进行中</span>
           <span v-else>已结束</span>
         </template>
       </el-table-column>
-      <el-table-column
-        label="中奖号码"
-        width="120"
-      >
+      <el-table-column label="中奖号码" width="120">
         <template slot-scope="scope">
           <el-popover
             v-if="scope.row.lucky_code"
@@ -66,74 +38,61 @@
             width="200"
             trigger="hover"
           >
-            <span v-if="scope.row.third_info.name">彩种:{{ scope.row.third_info.name }}</span><br>
-            <span v-if="scope.row.third_info.period">期数:{{ scope.row.third_info.period }}</span><br>
+            <span v-if="scope.row.third_info.name">彩种:{{ scope.row.third_info.name }}</span
+            ><br />
+            <span v-if="scope.row.third_info.period">期数:{{ scope.row.third_info.period }}</span
+            ><br />
             <span v-if="scope.row.third_info.number">号码:{{ scope.row.third_info.number }}</span>
-            <el-tag
-              slot="reference"
-              type="danger"
-            >
-              {{ scope.row.lucky_code }}
-            </el-tag>
+            <el-tag slot="reference" type="danger">{{ scope.row.lucky_code }}</el-tag>
           </el-popover>
         </template>
       </el-table-column>
-      <el-table-column
-        label="操作"
-        width="250"
-      >
+      <el-table-column label="操作" width="250">
         <template slot-scope="scope">
           <el-button
             size="mini"
             icon="edit"
             @click="showLuckyDrawDataAction(scope.$index, scope.row)"
-          >
-            活动数据
+            >活动数据
           </el-button>
           <el-button
-            v-if="scope.row.activity_status == 1"
             size="mini"
             icon="edit"
-            @click="editLuckyDrawAction(scope.$index, scope.row)"
-          >
-            编辑
-          </el-button>
-          <el-button
-            v-if="scope.row.activity_status == 2"
-            size="mini"
-            @click="showLuckyDrawAction(scope.$index, scope.row)"
-          >
-            查看
-          </el-button>
-          <el-button
-            v-if="scope.row.activity_status == 2"
-            size="mini"
-            @click="finishLuckyDrawAction(scope.$index, scope.row)"
-          >
-            终止
-          </el-button>
-          <el-button
             v-if="scope.row.activity_status == 1"
+            @click="editLuckyDrawAction(scope.$index, scope.row)"
+            >编辑
+          </el-button>
+          <el-button
             size="mini"
+            v-if="scope.row.activity_status == 2"
+            @click="showLuckyDrawAction(scope.$index, scope.row)"
+            >查看
+          </el-button>
+          <el-button
+            size="mini"
+            v-if="scope.row.activity_status == 2"
+            @click="finishLuckyDrawAction(scope.$index, scope.row)"
+            >终止
+          </el-button>
+          <el-button
+            size="mini"
+            v-if="scope.row.activity_status == 1"
             type="danger"
             @click="deleteLuckyDrawAction(scope.$index, scope.row)"
-          >
-            删 除
+            >删 除
           </el-button>
         </template>
       </el-table-column>
     </el-table>
-    <div
-      v-if="total_count > params.pageSize"
-      class="content-center content-top-padded"
-    >
+    <div v-if="total_count > params.pageSize" class="content-center content-top-padded">
       <el-pagination
         layout="prev, pager, next"
+        @current-change="handleCurrentChange"
         :current-page.sync="params.page"
         :total="total_count"
         :page-size="params.pageSize"
-        @current-change="handleCurrentChange"
-      />
+      >
+      </el-pagination>
     </div>
   </div>
 </template>
@@ -149,7 +108,7 @@ import {
 
 export default {
   props: ['view'],
-  data () {
+  data() {
     return {
       loading: false,
       luckydrawList: [],
@@ -167,17 +126,12 @@ export default {
   computed: {
     ...mapGetters(['wheight'])
   },
-  mounted () {
-    this.params.view = this.view
-    this.getLuckyDrawList()
-    //this.getCurrencyInfo()
-  },
   methods: {
-    handleCurrentChange (pageNum) {
+    handleCurrentChange(pageNum) {
       this.params.page = pageNum
       this.getLuckyDrawList()
     },
-    getLuckyDrawList () {
+    getLuckyDrawList() {
       this.loading = true
       getLuckyDrawList(this.params)
         .then((response) => {
@@ -193,19 +147,19 @@ export default {
           })
         })
     },
-    showLuckyDrawDataAction (index, row) {
+    showLuckyDrawDataAction(index, row) {
       this.$router.push({ path: '/member/marketing/luckydraw/team/' + row.luckydraw_id })
     },
-    showLuckyDrawAction (index, row) {
+    showLuckyDrawAction(index, row) {
       this.$router.push({
         path: '/member/marketing/luckydraw/add/' + row.luckydraw_id,
         query: { show: '1' }
       })
     },
-    editLuckyDrawAction (index, row) {
+    editLuckyDrawAction(index, row) {
       this.$router.push({ path: '/member/marketing/luckydraw/add/' + row.luckydraw_id })
     },
-    finishLuckyDrawAction (index, row) {
+    finishLuckyDrawAction(index, row) {
       this.$confirm('此操作将终止该活动, 是否继续?', '提示', {
         confirmButtonText: '确定',
         cancelButtonText: '取消',
@@ -223,7 +177,7 @@ export default {
           })
         })
     },
-    deleteLuckyDrawAction (index, row) {
+    deleteLuckyDrawAction(index, row) {
       this.$confirm('此操作将删除该活动, 是否继续?', '提示', {
         confirmButtonText: '确定',
         cancelButtonText: '取消',
@@ -241,12 +195,17 @@ export default {
           })
         })
     },
-    getCurrencyInfo () {
+    getCurrencyInfo() {
       getDefaultCurrency().then((res) => {
         this.currency = res.data.data
         this.cursymbol = this.currency.symbol
       })
     }
+  },
+  mounted() {
+    this.params.view = this.view
+    this.getLuckyDrawList()
+    //this.getCurrencyInfo()
   }
 }
 </script>

@@ -1,17 +1,8 @@
 <template>
   <div>
-    <div
-      v-if="$route.path.indexOf('editor') === -1"
-      class="merchantList"
-    >
-      <el-card
-        class="box-card"
-        shadow="never"
-      >
-        <div
-          slot="header"
-          class="clearfix"
-        >
+    <div class="merchantList" v-if="$route.path.indexOf('editor') === -1">
+      <el-card class="box-card" shadow="never">
+        <div slot="header" class="clearfix">
           <span>商家列表</span>
         </div>
         <SpFinder
@@ -20,7 +11,7 @@
           :search-row-count="2"
           :fixed-row-action="true"
           :setting="setting"
-          no-selection
+          noSelection
           :hooks="{
             beforeSearch: beforeSearch,
             afterSearch: afterSearch
@@ -29,20 +20,13 @@
         >
           <template v-slot:tableTop>
             <div style="text-align: right; margin-bottom: 20px">
-              <el-button
-                size="small"
-                type="primary"
-                plain
-                @click="addMerchant"
-              >
-                新增商户
-              </el-button>
+              <el-button size="small" type="primary" plain @click="addMerchant">新增商户</el-button>
             </div>
           </template>
         </SpFinder>
       </el-card>
     </div>
-    <router-view />
+    <router-view></router-view>
   </div>
 </template>
 
@@ -50,19 +34,19 @@
 import setting_ from './setting/setting'
 import { setCommodityAudit, setMerchantsState } from '@/api/mall/marketing.js'
 export default {
-  data () {
+  data() {
     return {
       datapass_block: 0
-    }
+    } 
   },
   computed: {
-    setting () {
+    setting() {
       return setting_(this)
     }
   },
   methods: {
     //  this.$refs.finder.refresh()
-    fnAffirm (row) {
+    fnAffirm(row) {
       const message = row.audit_goods
         ? '关闭后商户商品上架时无需审核，请确认是否关闭'
         : '开启后商户商品上架时需要审核，请确认是否开启'
@@ -83,7 +67,7 @@ export default {
       })
       console.log(row)
     },
-    fnMerchantsState (row, status) {
+    fnMerchantsState(row, status) {
       const id = row[0].id
       const message = status
         ? '开启后且该商户及其关联店铺的账号可登录商家端以及店铺端，该商户及其关联店铺在小程序显示，请确认是否开启。'
@@ -104,16 +88,16 @@ export default {
         }
       })
     },
-    addMerchant () {
+    addMerchant() {
       this.$router.push({ path: this.matchHidePage('editor'), query: { type: 'add' } })
     },
-    beforeSearch (params) {
+    beforeSearch(params) {
       return { ...params }
     },
-    afterSearch ({ datapass_block }) {
+    afterSearch({ datapass_block }) {
       this.datapass_block = datapass_block
     }
-  }
+  },
   // beforeRouteLeave(to, from, next) {
   //   const { type } = this.$route.query;
   //   console.log(to,type);

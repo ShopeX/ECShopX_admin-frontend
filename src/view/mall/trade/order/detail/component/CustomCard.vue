@@ -4,105 +4,71 @@
     class="mycard"
     :class="{ 'base-card': isBase }"
   >
-    <div
-      v-if="!isBase"
-      slot="header"
-    >
+    <div slot="header" v-if="!isBase">
       {{ title }}
     </div>
-    <div
-      v-if="isBase"
-      slot="header"
-      class="baseTitle"
-    >
-      <div class="title1">
-        {{ title }}
-      </div>
-      <el-button
-        type="text"
-        @click="clickShowRemark(dataSource, 'orderDetail')"
+    <div slot="header" v-if="isBase" class="baseTitle">
+      <div class="title1">{{ title }}</div>
+      <el-button type="text" @click="clickShowRemark(dataSource, 'orderDetail')"
+        >修改商家备注</el-button
       >
-        修改商家备注
-      </el-button>
     </div>
     <template v-if="isCommon">
       <div class="body">
-        <el-row
-          v-for="(row, index) in info"
-          :key="index"
-        >
-          <el-col
-            v-for="(col, colIndex) in row"
-            :key="colIndex"
-            :span="col.isHidden ? 0 : 6"
-          >
+        <el-row v-for="(row, index) in info" :key="index">
+          <el-col v-for="(col, colIndex) in row" :key="colIndex" :span="col.isHidden?0:6">
             <div class="flex">
-              <div class="left">
-                {{ addSymbol(col.name) }}
-              </div>
+              <div class="left">{{ addSymbol(col.name) }}</div>
               <div class="right">
-                {{ col.filter ? col.filter(dataSource[col.field]) : dataSource[col.field] }}
+                {{
+                  col.filter
+                    ? col.filter(dataSource[col.field])
+                    : dataSource[col.field]
+                }}
               </div>
             </div>
           </el-col>
         </el-row>
       </div>
     </template>
-    <slot />
-    <RemarkModal
-      ref="modalRef"
-      @onDone="handleRemarksDone"
-    />
-    <div
-      v-if="isBase"
-      class="footer"
-    >
-      <div class="footer_title">
-        客户留言：
-      </div>
-      <div class="footer_content">
-        {{ dataSource.remark }}
-      </div>
-    </div>
-    <div
-      v-if="isBase"
-      class="footer"
-    >
-      <div class="footer_title">
-        商家备注：
-      </div>
-      <div class="footer_content">
-        {{ dataSource.distributor_remark }}
-      </div>
+    <slot></slot>
+    <RemarkModal ref="modalRef" @onDone="handleRemarksDone" />
+     <div class="footer" v-if="isBase">
+      <div class="footer_title">客户留言：</div>
+      <div class="footer_content">{{ dataSource.remark }}</div>
+    </div> 
+    <div class="footer" v-if="isBase">
+      <div class="footer_title">商家备注：</div>
+      <div class="footer_content">{{ dataSource.distributor_remark }}</div>
     </div>
   </el-card>
 </template>
 
 <script>
-import RemarkModal from '@/components/remarkModal'
-import remarkMixin from '@/mixins/remarkMixin'
+import RemarkModal from "@/components/remarkModal";
+import remarkMixin from "@/mixins/remarkMixin";
 export default {
-  components: {
-    RemarkModal
-  },
-  mixins: [remarkMixin],
-  props: ['title', 'info', 'dataSource', 'isCommon', 'isBase'],
-  data () {
+  props: ["title", "info", "dataSource", "isCommon", "isBase"],
+  data() {
     return {
       cardConfig: {
-        shadow: 'never'
-      }
-    }
+        shadow: "never",
+      },
+    };
   },
+  components: {
+    RemarkModal,
+  },
+  mixins: [remarkMixin],
   methods: {
     addSymbol: function (symbol) {
-      if (symbol.indexOf('：') > -1) {
-        return symbol
+      if (symbol.indexOf("：") > -1) {
+        return symbol;
       }
-      return `${symbol}：`
-    }
-  }
-}
+      return `${symbol}：`;
+    },
+  },
+};
 </script>
 
 <style lang="scss">
@@ -133,7 +99,7 @@ export default {
     padding: 24px;
 
     &_title {
-      width: 120px;
+      width:120px;
       white-space: nowrap;
     }
     &_content {

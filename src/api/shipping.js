@@ -1,6 +1,6 @@
 import fetch from '../utils/fetch'
 
-export function getShippingTemplatesList (query) {
+export function getShippingTemplatesList(query) {
   return fetch({
     url: '/shipping/templates/list',
     method: 'get',
@@ -8,14 +8,14 @@ export function getShippingTemplatesList (query) {
   })
 }
 
-export function getShippingTemplatesInfo (id) {
+export function getShippingTemplatesInfo(id) {
   return fetch({
     url: '/shipping/templates/info/' + id,
     method: 'get'
   })
 }
 
-export function createShippingTemplates (params) {
+export function createShippingTemplates(params) {
   return fetch({
     url: '/shipping/templates/create',
     method: 'post',
@@ -26,7 +26,7 @@ export function createShippingTemplates (params) {
   })
 }
 
-export function updateShippingTemplates (id, params) {
+export function updateShippingTemplates(id, params) {
   return fetch({
     url: '/shipping/templates/update/' + id,
     method: 'put',
@@ -34,7 +34,7 @@ export function updateShippingTemplates (id, params) {
   })
 }
 
-export function deleteShippingTemplates (id) {
+export function deleteShippingTemplates(id) {
   return fetch({
     url: '/shipping/templates/delete/' + id,
     method: 'delete'

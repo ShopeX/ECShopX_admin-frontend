@@ -1,7 +1,7 @@
 import fetch from '../utils/fetch'
 
 // 产地国家列表
-export function getOrigincountry (query) {
+export function getOrigincountry(query) {
   return fetch({
     url: '/crossborder/origincountry',
     method: 'get',
@@ -10,7 +10,7 @@ export function getOrigincountry (query) {
 }
 
 // 产地国家添加
-export function addOrigincountry (query) {
+export function addOrigincountry(query) {
   return fetch({
     url: '/crossborder/origincountry',
     method: 'post',
@@ -19,7 +19,7 @@ export function addOrigincountry (query) {
 }
 
 // 产地国家修改
-export function updateOrigincountry (origincountry_id, query) {
+export function updateOrigincountry(origincountry_id, query) {
   return fetch({
     url: '/crossborder/origincountry/' + origincountry_id,
     method: 'put',
@@ -28,7 +28,7 @@ export function updateOrigincountry (origincountry_id, query) {
 }
 
 // 产地国家删除
-export function delOrigincountry (origincountry_id, query) {
+export function delOrigincountry(origincountry_id, query) {
   return fetch({
     url: '/crossborder/origincountry/' + origincountry_id,
     method: 'delete',
@@ -37,7 +37,7 @@ export function delOrigincountry (origincountry_id, query) {
 }
 
 // 获取跨境设置
-export function getCrossborderSet (query) {
+export function getCrossborderSet(query) {
   return fetch({
     url: '/crossborder/set',
     method: 'get',
@@ -46,7 +46,7 @@ export function getCrossborderSet (query) {
 }
 
 // 保存跨境设置
-export function saveCrossborderSet (query) {
+export function saveCrossborderSet(query) {
   return fetch({
     url: '/crossborder/set',
     method: 'post',
@@ -55,7 +55,7 @@ export function saveCrossborderSet (query) {
 }
 
 // 税费策略列表获取
-export function getTaxstrategyList (query) {
+export function getTaxstrategyList(query) {
   return fetch({
     url: '/crossborder/taxstrategy',
     method: 'get',
@@ -64,7 +64,7 @@ export function getTaxstrategyList (query) {
 }
 
 // 税费策略详情获取
-export function getTaxstrategyInfo (taxstrategy_id, query) {
+export function getTaxstrategyInfo(taxstrategy_id, query) {
   return fetch({
     url: '/crossborder/taxstrategy/' + taxstrategy_id,
     method: 'get',
@@ -73,7 +73,7 @@ export function getTaxstrategyInfo (taxstrategy_id, query) {
 }
 
 // 税费策略添加
-export function addTaxstrategy (query) {
+export function addTaxstrategy(query) {
   return fetch({
     url: '/crossborder/taxstrategy',
     method: 'post',
@@ -82,7 +82,7 @@ export function addTaxstrategy (query) {
 }
 
 // 税费策略修改
-export function updateTaxstrategy (taxstrategy_id, query) {
+export function updateTaxstrategy(taxstrategy_id, query) {
   return fetch({
     url: '/crossborder/taxstrategy/' + taxstrategy_id,
     method: 'put',
@@ -91,7 +91,7 @@ export function updateTaxstrategy (taxstrategy_id, query) {
 }
 
 // 税费策略删除
-export function delTaxstrategy (taxstrategy_id, query) {
+export function delTaxstrategy(taxstrategy_id, query) {
   return fetch({
     url: '/crossborder/taxstrategy/' + taxstrategy_id,
     method: 'delete',

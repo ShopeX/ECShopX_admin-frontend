@@ -3,91 +3,47 @@
     <div v-if="$route.path.indexOf('detail') === -1">
       <el-row :gutter="20">
         <el-col :span="12">
-          <el-button
-            type="primary"
-            icon="plus"
-            @click="handleNew"
-          >
-            添加配置
-          </el-button>
+          <el-button type="primary" icon="plus" @click="handleNew">添加配置</el-button>
         </el-col>
       </el-row>
-      <el-table
-        v-loading="loading"
-        :data="list"
-        style="width: 100%"
-        :height="wheight - 140"
-      >
-        <el-table-column
-          type="selection"
-          width="55"
-        />
+      <el-table :data="list" style="width: 100%" :height="wheight - 140" v-loading="loading">
+        <el-table-column type="selection" width="55"> </el-table-column>
         <el-table-column label="操作">
           <template slot-scope="scope">
-            <el-button
-              type="text"
-              @click="stopFapiao(scope.row, scope.$index)"
-            >
-              暂停
-            </el-button>
+            <el-button type="text" @click="stopFapiao(scope.row, scope.$index)">暂停</el-button>
             <router-link
               :to="{
                 path: matchHidePage('detail'),
                 query: { aftersales_bn: scope.row.aftersales_bn }
               }"
+              >编辑</router-link
             >
-              编辑
-            </router-link>
           </template>
         </el-table-column>
-        <el-table-column
-          prop="content"
-          label="开票方名称"
-          min-width="84"
-        />
-        <el-table-column
-          prop="registration_number"
-          label="开票方税号"
-        />
-        <el-table-column
-          prop="company_address"
-          label="开票方地址"
-        />
-        <el-table-column
-          prop="company_phone"
-          label="开票方电话"
-        />
-        <el-table-column
-          prop="tax_rate"
-          label="税率"
-        />
-        <el-table-column
-          prop="bankname"
-          label="开票银行"
-        />
-        <el-table-column
-          prop="bankaccount"
-          label="开票方银行账号"
-        />
-        <el-table-column
-          prop="user_name"
-          label="开票人"
-        />
+        <el-table-column prop="content" label="开票方名称" min-width="84"></el-table-column>
+        <el-table-column prop="registration_number" label="开票方税号"> </el-table-column>
+        <el-table-column prop="company_address" label="开票方地址"></el-table-column>
+        <el-table-column prop="company_phone" label="开票方电话"></el-table-column>
+        <el-table-column prop="tax_rate" label="税率"></el-table-column>
+        <el-table-column prop="bankname" label="开票银行"></el-table-column>
+        <el-table-column prop="bankaccount" label="开票方银行账号"></el-table-column>
+        <el-table-column prop="user_name" label="开票人"></el-table-column>
       </el-table>
       <div class="content-center content-padded">
         <el-pagination
           background
           layout="total, sizes, prev, pager, next"
+          @current-change="handleCurrentChange"
+          @size-change="handleSizeChange"
           :current-page.sync="params.page"
           :page-sizes="[10, 20, 50]"
           :total="total_count"
           :page-size="params.pageSize"
-          @current-change="handleCurrentChange"
-          @size-change="handleSizeChange"
-        />
+        >
+        </el-pagination>
       </div>
     </div>
-    <router-view />
+    <router-view></router-view>
   </div>
 </template>
 <script>
@@ -99,7 +55,7 @@ export default {
   components: {
     shopSelect
   },
-  data () {
+  data() {
     return {
       activeName: 'all',
       loading: false,
@@ -123,48 +79,45 @@ export default {
   computed: {
     ...mapGetters(['wheight'])
   },
-  mounted () {
-    this.getList(this.params)
-  },
   methods: {
     // 切换tab
-    handleClick (tab, event) {
+    handleClick(tab, event) {
       this.activeName = tab.name
       this.params.status = tab.name == 'all' ? '' : tab.name
       this.params.page = 1
       this.getParams()
       this.getList(this.params)
     },
-    shopHandle (val) {
+    shopHandle(val) {
       val && val.shop_id
       this.currentShop = val.shop_id
       this.params.page = 1
       this.getParams()
       this.getList(this.params)
     },
-    numberSearch (e) {
+    numberSearch(e) {
       this.params.page = 1
       this.getParams()
       this.getList(this.params)
     },
-    handleCurrentChange (val) {
+    handleCurrentChange(val) {
       this.params.page = val
       this.getParams()
       this.getList(this.params)
     },
-    handleSizeChange (pageSize) {
+    handleSizeChange(pageSize) {
       this.params.page = 1
       this.params.pageSize = pageSize
       this.getParams()
       this.getList(this.params)
     },
-    getParams () {
+    getParams() {
       this.params.time_start_begin = this.date_begin
       this.params.time_start_end = this.date_end
       this.params.mobile = this.mobile
       this.params.shop_id = this.currentShop
     },
-    getList (filter) {
+    getList(filter) {
       this.loading = true
       getFapiaoset(filter).then((response) => {
         console.warn(response)
@@ -173,7 +126,7 @@ export default {
         this.loading = false
       })
     },
-    stopFapiao (item, index) {
+    stopFapiao(item, index) {
       let params = { id: 0, delete: 1 }
       params.id = item.id
       this.$confirm('确定暂停吗？', '提示', {
@@ -199,10 +152,13 @@ export default {
           })
         })
     },
-    handleNew () {
+    handleNew() {
       // 添加发票配置
       this.$router.push({ path: this.matchHidePage('detail') })
     }
+  },
+  mounted() {
+    this.getList(this.params)
   }
 }
 </script>

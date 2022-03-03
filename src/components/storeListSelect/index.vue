@@ -6,71 +6,41 @@
     :close-on-click-modal="false"
     :before-close="cancelAction"
   >
-    <div style="margin-bottom: 15px">
-      <el-input
-        v-model="name"
-        placeholder="输入店铺名称"
-        clearable
-      >
-        <el-button
-          slot="append"
-          icon="el-icon-search"
-          @click="handleIconClick"
-        />
-      </el-input>
+    <div style="margin-bottom: 15px;">
+      <el-input placeholder="输入店铺名称" v-model="name" clearable
+        ><el-button slot="append" icon="el-icon-search" @click="handleIconClick"></el-button
+      ></el-input>
       <!-- <el-switch v-model="is_distributor" active-text="店铺" inactive-text="门店" @change="handleIconClick"></el-switch> -->
     </div>
-    <div style="margin-bottom: 15px" />
+    <div style="margin-bottom: 15px;"></div>
     <el-table
       ref="multipleTable"
-      v-loading="loading"
       :data="storeData"
       tooltip-effect="dark"
       style="width: 100%"
-      :row-key="getRowKeys"
       @select="handleSelectionChange"
       @select-all="selectAll"
+      v-loading="loading"
+      :row-key="getRowKeys"
     >
-      <el-table-column
-        type="selection"
-        :reserve-selection="true"
-        width="50"
-      />
-      <el-table-column
-        prop="name"
-        label="名称"
-      />
-      <el-table-column
-        prop="contact"
-        label="联系人"
-      />
+      <el-table-column type="selection" :reserve-selection="true" width="50"></el-table-column>
+      <el-table-column prop="name" label="名称"></el-table-column>
+      <el-table-column prop="contact" label="联系人"></el-table-column>
       <!-- <el-table-column prop="store_name" label="门店"></el-table-column> -->
-      <el-table-column
-        prop="address"
-        label="地址"
-        show-overflow-tooltip
-      />
+      <el-table-column prop="address" label="地址" show-overflow-tooltip></el-table-column>
     </el-table>
-    <div
-      v-if="total_count > params.pageSize"
-      class="tr"
-    >
+    <div v-if="total_count > params.pageSize" class="tr">
       <el-pagination
         layout="prev, pager, next"
+        @current-change="handleCurrentChange"
         :total="total_count"
         :page-size="pageLimit"
-        @current-change="handleCurrentChange"
-      />
+      >
+      </el-pagination>
     </div>
-    <span
-      slot="footer"
-      class="dialog-footer"
-    >
+    <span slot="footer" class="dialog-footer">
       <el-button @click="cancelAction">取 消</el-button>
-      <el-button
-        type="primary"
-        @click="saveStoreAction"
-      >确 定</el-button>
+      <el-button type="primary" @click="saveStoreAction">确 定</el-button>
     </span>
   </el-dialog>
 </template>
@@ -81,7 +51,7 @@ export default {
   props: {
     relDataIds: {
       type: Array,
-      default: function () {
+      default: function() {
         return []
       }
     },
@@ -106,7 +76,7 @@ export default {
       default: 'selectRow'
     }
   },
-  data () {
+  data() {
     return {
       loading: false,
       storeData: [],
@@ -123,51 +93,21 @@ export default {
       is_distributor: true
     }
   },
-  computed: {
-    showDialog () {
-      return this.storeVisible
-    }
-  },
-  watch: {
-    relDataIds: {
-      handler: function (newVal, oldVal) {
-        if (newVal) {
-          this.selectRows = newVal
-          this.getNewsList()
-        } else {
-          this.selectRows = []
-        }
-      },
-      immediate: true,
-      deep: true
-    },
-    getStatus (newVal, oldVal) {
-      if (newVal) {
-        this.params.is_valid = this.isValid ? this.isValid : 'true'
-        this.getNewsList()
-      }
-    },
-    sourceType (newVal, oldVal) {
-      console.log(newVal)
-      if (newVal) {
-      }
-    }
-  },
   methods: {
-    getRowKeys (row) {
+    getRowKeys(row) {
       return row.distributor_id
     },
-    handleCurrentChange (page_num) {
+    handleCurrentChange(page_num) {
       this.params.page = page_num
       this.getNewsList()
     },
-    handleIconClick () {
+    handleIconClick() {
       this.params.name = this.name
       this.params.is_distributor = this.is_distributor
       console.log(this.params)
       this.getNewsList()
     },
-    toggleSelection (rows) {
+    toggleSelection(rows) {
       if (rows) {
         rows.forEach((row) => {
           this.$refs.multipleTable.toggleRowSelection(row)
@@ -176,7 +116,7 @@ export default {
         this.$refs.multipleTable.clearSelection()
       }
     },
-    handleSelectionChange (val) {
+    handleSelectionChange(val) {
       if (val.length > 0) {
         this.multipleSelection = val
         const newVal = this.selectRows.filter((item) => {
@@ -205,7 +145,7 @@ export default {
       }
     },
     // 全选事件
-    selectAll (val) {
+    selectAll(val) {
       if (val.length > 0) {
         this.multipleSelection = val
         val.forEach((item) => {
@@ -231,17 +171,17 @@ export default {
         this.selectRows = list
       }
     },
-    cancelAction () {
+    cancelAction() {
       this.$emit('closeStoreDialog')
     },
-    saveStoreAction () {
+    saveStoreAction() {
       if (this.returnType === 'selectRow') {
         this.$emit('chooseStore', this.selectRows)
       } else {
         this.$emit('chooseStore', this.multipleSelection)
       }
     },
-    getNewsList () {
+    getNewsList() {
       if (this.getStatus) {
         this.loading = true
         getDistributorEasyList(this.params).then((response) => {
@@ -267,6 +207,36 @@ export default {
             })
           }
         })
+      }
+    }
+  },
+  computed: {
+    showDialog() {
+      return this.storeVisible
+    }
+  },
+  watch: {
+    relDataIds: {
+      handler: function(newVal, oldVal) {
+        if (newVal) {
+          this.selectRows = newVal
+          this.getNewsList()
+        } else {
+          this.selectRows = []
+        }
+      },
+      immediate: true,
+      deep: true
+    },
+    getStatus(newVal, oldVal) {
+      if (newVal) {
+        this.params.is_valid = this.isValid ? this.isValid : 'true'
+        this.getNewsList()
+      }
+    },
+    sourceType(newVal, oldVal) {
+      console.log(newVal)
+      if (newVal) {
       }
     }
   }

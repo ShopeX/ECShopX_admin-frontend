@@ -1,11 +1,6 @@
 <template>
   <div class="section section-white">
-    <el-form
-      ref="form"
-      :model="form"
-      label-position="left"
-      label-width="120px"
-    >
+    <el-form ref="form" :model="form" label-position="left" label-width="120px">
       <div class="section-body">
         <el-form-item label="社区拼团商城客服">
           <el-switch
@@ -16,7 +11,7 @@
             active-text="开启"
             inactive-text="关闭"
             active-color="#13ce66"
-          />
+          ></el-switch>
         </el-form-item>
         <el-form-item label="支持支付宝提现">
           <el-switch
@@ -27,7 +22,7 @@
             active-text="开启"
             inactive-text="关闭"
             active-color="#13ce66"
-          />
+          ></el-switch>
         </el-form-item>
         <el-form-item label="支持微信提现">
           <el-switch
@@ -38,7 +33,7 @@
             active-text="开启"
             inactive-text="关闭"
             active-color="#13ce66"
-          />
+          ></el-switch>
         </el-form-item>
         <el-form-item label="支持银行卡提现">
           <el-switch
@@ -49,53 +44,50 @@
             active-text="开启"
             inactive-text="关闭"
             active-color="#13ce66"
-          />
+          ></el-switch>
         </el-form-item>
         <el-form-item label="积分兑换比例">
           <el-input
-            v-model="form.community_config.point_ratio"
             type="number"
             required
             min="1"
+            v-model="form.community_config.point_ratio"
             placeholder=""
-            style="width: 100px"
+            style="width: 100px;"
           />
           积分兑换1元人民币
         </el-form-item>
         <el-form-item label="积分说明">
           <vue-html5-editor
-            ref="editor"
             :content="form.community_config.point_desc"
-            :height="260"
+            ref="editor"
             @change="updatePointDescContent"
-          />
+            :height="260"
+          >
+          </vue-html5-editor>
         </el-form-item>
         <el-form-item label="积分提现说明">
           <vue-html5-editor
-            ref="editor"
             :content="form.community_config.withdraw_desc"
-            :height="260"
+            ref="editor"
             @change="updateWithdrawDescContent"
-          />
+            :height="260"
+          >
+          </vue-html5-editor>
         </el-form-item>
         <el-form-item label="客服电话">
           <el-input
-            v-model="form.consumer_hotline"
             type="number"
             required
             min="1"
+            v-model="form.consumer_hotline"
             placeholder=""
-            style="width: 240px"
+            style="width: 240px;"
           />
         </el-form-item>
       </div>
       <div class="section-footer with-border content-center">
-        <el-button
-          type="primary"
-          @click="save"
-        >
-          保 存
-        </el-button>
+        <el-button type="primary" @click="save">保 存</el-button>
       </div>
     </el-form>
   </div>
@@ -104,7 +96,7 @@
 import { setCompanySetting, getCompanySetting } from '../../../../api/company'
 import imgPicker from '../../../../components/imageselect'
 export default {
-  data () {
+  data() {
     return {
       components: {
         imgPicker
@@ -125,17 +117,14 @@ export default {
       }
     }
   },
-  mounted () {
-    this.getConfig()
-  },
   methods: {
-    updatePointDescContent (data) {
+    updatePointDescContent(data) {
       this.form.community_config.point_desc = data
     },
-    updateWithdrawDescContent (data) {
+    updateWithdrawDescContent(data) {
       this.form.community_config.withdraw_desc = data
     },
-    save () {
+    save() {
       if (this.form.customer_switch == 'true') {
         this.form.customer_switch = 1
       } else {
@@ -146,7 +135,7 @@ export default {
         this.getConfig()
       })
     },
-    getConfig () {
+    getConfig() {
       getCompanySetting().then((res) => {
         if (res.data.data.company_id) {
           this.form = res.data.data
@@ -158,6 +147,9 @@ export default {
         }
       })
     }
+  },
+  mounted() {
+    this.getConfig()
   }
 }
 </script>

@@ -1,6 +1,6 @@
 import fetch from '../utils/fetch'
 
-export function setShopexErpSetting (query) {
+export function setShopexErpSetting(query) {
   return fetch({
     url: '/third/shopexerp/setting',
     method: 'post',
@@ -8,14 +8,14 @@ export function setShopexErpSetting (query) {
   })
 }
 
-export function getShopexErpSetting () {
+export function getShopexErpSetting() {
   return fetch({
     url: '/third/shopexerp/setting',
     method: 'get'
   })
 }
 
-export function itemPriceUpdate (query) {
+export function itemPriceUpdate(query) {
   return fetch({
     url: '/oms/goodsprice/update',
     method: 'put',
@@ -23,7 +23,7 @@ export function itemPriceUpdate (query) {
   })
 }
 
-export function getMapSetting () {
+export function getMapSetting() {
   return fetch({
     url: '/third/map/setting',
     method: 'get'

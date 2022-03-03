@@ -13,7 +13,8 @@ export default {
       children: [
         {
           path: 'editor/:itemId?',
-          component: () => import('@/view/mall/marketing/distributor_editor')
+          component: () =>
+            import('@/view/mall/marketing/distributor_editor')
         },
         {
           path: 'template/:distributor_id?',
@@ -30,6 +31,6 @@ export default {
       path: 'distributoraftersalesaddress',
       name: `售后地址`,
       component: () => import('@/view/mall/marketing/distributorAftersalesAddress')
-    }
+    },
   ]
 }

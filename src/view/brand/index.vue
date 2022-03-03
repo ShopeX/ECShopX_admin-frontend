@@ -1,11 +1,11 @@
-<template />
+<template> </template>
 
 <script>
 export default {
-  data () {
+  data() {
     return {}
   },
-  mounted () {},
-  methods: {}
+  methods: {},
+  mounted() {}
 }
 </script>

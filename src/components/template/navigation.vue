@@ -1,23 +1,11 @@
 <template>
-  <div
-    class="component-wrap"
-    :class="{ 'component-padded': base.padded, 'active': active }"
-  >
-    <div class="current-active" />
+  <div class="component-wrap" :class="{ 'component-padded': base.padded, 'active': active }">
+    <div class="current-active"></div>
     <div class="component-body with-padding">
       <div class="navigation">
-        <div
-          v-for="(item, index) in data"
-          :key="index"
-          class="nav-item"
-        >
-          <img
-            class="nav-img"
-            :src="wximageurl + item.imgUrl"
-          >
-          <div class="nav-name">
-            {{ item.content }}
-          </div>
+        <div v-for="(item, index) in data" :key="index" class="nav-item">
+          <img class="nav-img" :src="wximageurl + item.imgUrl" />
+          <div class="nav-name">{{ item.content }}</div>
         </div>
       </div>
     </div>
@@ -36,30 +24,30 @@ export default {
       default: false
     }
   },
-  data () {
-    return {
-      base: {},
-      data: []
-    }
-  },
   watch: {
     res: {
       deep: true,
-      handler (value) {
+      handler(value) {
         if (value) {
           this.setData(value)
         }
       }
     }
   },
-  mounted () {
-    this.setData(this.res)
+  data() {
+    return {
+      base: {},
+      data: []
+    }
   },
   methods: {
-    setData (val) {
+    setData(val) {
       this.base = val.base
       this.data = val.data
     }
+  },
+  mounted() {
+    this.setData(this.res)
   }
 }
 </script>

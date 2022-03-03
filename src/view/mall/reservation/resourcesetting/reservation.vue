@@ -3,59 +3,40 @@
     <el-row :gutter="20">
       <el-col :span="10">
         门店：
-        <el-select
-          v-model="shopId"
-          @change="storeChange"
-        >
+        <el-select v-model="shopId" @change="storeChange">
           <el-option
             v-for="item in shopListData"
             :key="item.wxShopId"
             :label="item.storeName"
             :value="item.wxShopId"
+            >{{ item.storeName }}</el-option
           >
-            {{ item.storeName }}
-          </el-option>
         </el-select>
       </el-col>
-      <el-col
-        :span="14"
-        class="content-right"
-      >
-        <el-radio-group
-          v-model="dateType"
-          size="mini"
-          @change="dateChange"
-        >
-          <el-radio-button label="1">
-            今天
-          </el-radio-button>
-          <el-radio-button label="2">
-            明天
-          </el-radio-button>
-          <el-radio-button label="3">
-            后天
-          </el-radio-button>
-          <el-radio-button label="4">
-            自定义
-          </el-radio-button>
+      <el-col :span="14" class="content-right">
+        <el-radio-group v-model="dateType" @change="dateChange" size="mini">
+          <el-radio-button label="1">今天</el-radio-button>
+          <el-radio-button label="2">明天</el-radio-button>
+          <el-radio-button label="3">后天</el-radio-button>
+          <el-radio-button label="4">自定义</el-radio-button>
         </el-radio-group>
         <el-date-picker
-          v-if="dateType == '4'"
           v-model="dateDay"
           type="date"
           placeholder="请选择日期"
           :picker-options="pickerOptions"
+          v-if="dateType == '4'"
           @change="customChange"
-        />
+        ></el-date-picker>
       </el-col>
     </el-row>
     <el-table
-      ref="table"
-      v-loading="loading"
       class="table"
+      ref="table"
       :max-height="wheight - 100"
       border
       :data="dataList"
+      v-loading="loading"
     >
       <template v-for="(item, index) in tableTitle">
         <template v-if="index == 0">
@@ -65,43 +46,27 @@
             :label="item.begin"
             width="150"
             prop="name"
-          />
+          ></el-table-column>
         </template>
         <template v-else>
-          <el-table-column
-            :key="index"
-            :label="item.begin"
-          >
+          <el-table-column :key="index" :label="item.begin">
             <template slot-scope="scope">
               <template v-if="!scope.row.record">
-                <span
-                  class="type-add"
-                  @click="reservationAdd(scope.row, item.begin, item.end)"
-                ><i class="el-icon-plus" /></span>
+                <span class="type-add" @click="reservationAdd(scope.row, item.begin, item.end)"
+                  ><i class="el-icon-plus"></i
+                ></span>
               </template>
-              <template
-                v-for="(subItem, subIndex) in scope.row.record"
-                v-else
-              >
+              <template v-else v-for="(subItem, subIndex) in scope.row.record">
                 <template v-if="item.begin == subItem.beginTime">
-                  <el-tooltip
-                    effect="light"
-                    placement="top"
-                  >
-                    <div
-                      v-if="subItem.status == 'system'"
-                      slot="content"
-                    >
-                      系统占位 <br><br>
+                  <el-tooltip effect="light" placement="top">
+                    <div v-if="subItem.status == 'system'" slot="content">
+                      系统占位 <br /><br />
                       占用时间：{{ subItem.beginTime }}~{{ subItem.endTime }}
                     </div>
-                    <div
-                      v-else
-                      slot="content"
-                    >
-                      预约人：{{ subItem.userName }} <br><br>
-                      预约手机：{{ subItem.mobile }} <br><br>
-                      预约项目：{{ subItem.labelName }} <br><br>
+                    <div v-else slot="content">
+                      预约人：{{ subItem.userName }} <br /><br />
+                      预约手机：{{ subItem.mobile }} <br /><br />
+                      预约项目：{{ subItem.labelName }} <br /><br />
                       到店时间：{{ subItem.beginTime }}
                     </div>
                     <span v-if="subItem.userName">{{ subItem.userName }}</span>
@@ -114,23 +79,22 @@
                 v-if="scope.row.timedata && scope.row.timedata.indexOf(item.begin) < 0"
                 class="type-add"
                 @click="reservationAdd(scope.row, item.begin, item.end)"
-              ><i class="el-icon-plus" /></span>
+                ><i class="el-icon-plus"></i
+              ></span>
             </template>
           </el-table-column>
         </template>
       </template>
     </el-table>
-    <div
-      v-if="total_count > params.pageSize"
-      class="content-padded content-center"
-    >
+    <div v-if="total_count > params.pageSize" class="content-padded content-center">
       <el-pagination
         layout="prev, pager, next"
+        @current-change="handleCurrentChange"
         :current-page.sync="params.page"
         :total="total_count"
         :page-size="params.pageSize"
-        @current-change="handleCurrentChange"
-      />
+      >
+      </el-pagination>
     </div>
     <el-dialog
       title="代客预约"
@@ -139,47 +103,27 @@
       :close-on-click-modal="false"
     >
       <div class="type-list type-choose-box">
-        <el-form
-          v-model="formData"
-          label-width="120px"
-        >
-          <el-form-item
-            label="预约方式"
-            prop=""
-          >
+        <el-form v-model="formData" label-width="120px">
+          <el-form-item label="预约方式" prop="">
             <el-radio-group v-model="formData.instead">
-              <el-radio label="system">
-                系统占位
-              </el-radio>
-              <el-radio label="user">
-                代客预约
-              </el-radio>
+              <el-radio label="system">系统占位</el-radio>
+              <el-radio label="user">代客预约</el-radio>
             </el-radio-group>
           </el-form-item>
           <template v-if="formData.instead == 'user'">
-            <el-form-item
-              label="客户手机号:"
-              prop=""
-            >
+            <el-form-item label="客户手机号:" prop="">
               <el-input
-                v-model="formData.mobile"
                 size="40"
+                v-model="formData.mobile"
                 placeholder="客户手机号"
                 :maxlength="11"
                 :minlength="11"
-                style="width: 120px"
+                style="width: 120px;"
                 @blur="getMemberData"
-              />
+              ></el-input>
             </el-form-item>
-            <el-form-item
-              v-if="labelList"
-              label="预约项目:"
-              prop=""
-            >
-              <el-select
-                v-model="formData.rightsId"
-                size="40"
-              >
+            <el-form-item v-if="labelList" label="预约项目:" prop="">
+              <el-select v-model="formData.rightsId" size="40">
                 <el-option
                   v-for="item in labelList"
                   :key="item.rights_id"
@@ -187,9 +131,8 @@
                   :value="item.rights_id"
                 >
                   <span style="float: left">{{ item.label_name }}</span>
-                  <span
-                    style="float: right; color: #8492a6; font-size: 13px"
-                  >{{ item.start_time | datetime }} ~ {{ item.end_time | datetime }}
+                  <span style="float: right; color: #8492a6; font-size: 13px"
+                    >{{ item.start_time | datetime }} ~ {{ item.end_time | datetime }}
                   </span>
                 </el-option>
               </el-select>
@@ -197,19 +140,9 @@
           </template>
         </el-form>
       </div>
-      <div
-        slot="footer"
-        class="footer-dialog content-center"
-      >
-        <el-button @click="chooseCancel">
-          取消
-        </el-button>
-        <el-button
-          type="primary"
-          @click="reservationSave"
-        >
-          确定
-        </el-button>
+      <div slot="footer" class="footer-dialog content-center">
+        <el-button @click="chooseCancel">取消</el-button>
+        <el-button type="primary" @click="reservationSave">确定</el-button>
       </div>
     </el-dialog>
   </div>
@@ -230,11 +163,11 @@ import moment from 'moment'
 import shopSelect from '@/components/shopSelect'
 
 export default {
+  props: ['isLoad', 'resourceName'],
   components: {
     shopSelect
   },
-  props: ['isLoad', 'resourceName'],
-  data () {
+  data() {
     return {
       loading: false,
       shopListData: '',
@@ -250,7 +183,7 @@ export default {
       tableTitle: [],
       total_count: '',
       pickerOptions: {
-        disabledDate (time) {
+        disabledDate(time) {
           return time.getTime() < Date.now() - 8.64e7
         }
       },
@@ -284,35 +217,19 @@ export default {
   },
   watch: {
     selectedParams: {
-      handler (newName, oldName) {
+      handler(newName, oldName) {
         console.log('obj.a changed', newName, oldName)
       },
       // immediate: true,
       deep: true
     }
   },
-  watch: {
-    isLoad (newValue, oldValue) {
-      if (newValue) {
-        this.dataList = []
-        this.getStoreList()
-        if (this.shopId) {
-          this.getLevelList()
-        }
-      }
-    }
-  },
-  mounted () {
-    this.dateDay = moment().format('YYYY-MM-DD')
-    this.dataList = []
-    this.getStoreList()
-  },
   methods: {
-    chooseCancel () {
+    chooseCancel() {
       this.i = -1
       this.chooseTypeDialogVisible = false
     },
-    handleCurrentChange (page_num) {
+    handleCurrentChange(page_num) {
       this.params.page = page_num
       // this.params.shopId = this.shopId
       this.getLevelList()
@@ -322,17 +239,17 @@ export default {
     //   this.getLevelList()
     //   this.getTimePeriod()
     // },
-    storeChange (params) {
+    storeChange(params) {
       console.log('recieve', params)
       params && params.shop_id && (this.shopId = params.shop_id)
       this.params.page = 1
       this.getLevelList()
       this.getTimePeriod()
     },
-    initChange () {
+    initChange() {
       this.shopId = ''
     },
-    getLevelList () {
+    getLevelList() {
       this.loading = true
       this.params.dateDay = this.dateDay
       this.params.shopId = this.shopId
@@ -347,7 +264,7 @@ export default {
         this.loading = false
       })
     },
-    getStoreList () {
+    getStoreList() {
       this.loading = true
       var shopFilter = { page: 1, pageSize: 500 }
       getWxShopsList(shopFilter).then((response) => {
@@ -359,7 +276,7 @@ export default {
         this.loading = false
       })
     },
-    getTimePeriod () {
+    getTimePeriod() {
       if (this.shopId) {
         this.loading = true
         var timeFile = { shopId: this.shopId, dateDay: this.dateDay }
@@ -369,7 +286,7 @@ export default {
         })
       }
     },
-    reservationAdd (row, beginTime, endTime) {
+    reservationAdd(row, beginTime, endTime) {
       this.formData = {
         dateDay: this.dateDay,
         beginTime: beginTime,
@@ -392,7 +309,7 @@ export default {
       this.chooseTypeDialogVisible = true
       // 获取预约项目
     },
-    reservationSave () {
+    reservationSave() {
       if (this.formData.instead == 'system') {
         this.formData.rightsId = ''
         this.formData.userName = ''
@@ -456,7 +373,7 @@ export default {
         this.storeChange()
       })
     },
-    dateChange (value) {
+    dateChange(value) {
       if (value == '4') {
         return
       }
@@ -465,13 +382,13 @@ export default {
         .format('YYYY-MM-DD')
       this.storeChange()
     },
-    customChange (value) {
+    customChange(value) {
       this.dateDay = moment(new Date(value)).format('YYYY-MM-DD')
       if (this.dateDay) {
         this.storeChange()
       }
     },
-    getMemberData () {
+    getMemberData() {
       this.labelList = []
       if (this.formData.mobile) {
         let memberFilter = { mobile: this.formData.mobile }
@@ -486,7 +403,7 @@ export default {
         })
       }
     },
-    getResource (userId) {
+    getResource(userId) {
       let params = {
         user_id: userId,
         end_time: this.dateDay,
@@ -505,6 +422,22 @@ export default {
           this.labelList = res.data.data.list
         }
       })
+    }
+  },
+  mounted() {
+    this.dateDay = moment().format('YYYY-MM-DD')
+    this.dataList = []
+    this.getStoreList()
+  },
+  watch: {
+    isLoad(newValue, oldValue) {
+      if (newValue) {
+        this.dataList = []
+        this.getStoreList()
+        if (this.shopId) {
+          this.getLevelList()
+        }
+      }
     }
   }
 }

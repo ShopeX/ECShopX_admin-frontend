@@ -18,13 +18,13 @@ import * as QiNiu from 'qiniu-js'
 import { getOssToken, AliUpload, LocalUpload } from '../api/ossStorage'
 
 class UploadUtil {
-  constructor (fileType = 'image') {
+  constructor(fileType = 'image') {
     this.client = {}
     this.fileType = fileType
   }
 
   // 初始化
-  init (tokenRes, uploadType = 'qiniu') {
+  init(tokenRes, uploadType = 'qiniu') {
     switch (uploadType) {
       case 'oss':
         this.aliInit(tokenRes)
@@ -41,17 +41,17 @@ class UploadUtil {
   }
 
   // 阿里云
-  aliInit (tokenRes) {
+  aliInit(tokenRes) {
     this.client.upload = (file) => AliUpload(tokenRes, file)
   }
 
   // 本地
-  local (tokenRes) {
+  local(tokenRes) {
     this.client.upload = (file) => LocalUpload(tokenRes, file, this.fileType)
   }
 
   // 亚马逊
-  aws (tokenRes) {
+  aws(tokenRes) {
     const { Region, AccessKeyId, Bucket, SecretAccessKey, SessionToken } = tokenRes
 
     const s3 = new AWS.S3({
@@ -86,7 +86,7 @@ class UploadUtil {
   }
 
   // 七牛
-  qiNiuInit (tokenRes) {
+  qiNiuInit(tokenRes) {
     this.client.upload = (flie, key) => {
       return new Promise((resolve, reject) => {
         const observable = QiNiu.upload(flie, key, tokenRes.token)
@@ -100,14 +100,14 @@ class UploadUtil {
   }
 
   // 生成文件名
-  setFileName () {
+  setFileName() {
     const rx = (((1 + Math.random()) * 0x10000) | 0).toString(16).substring(1)
     const fileName = `${+new Date()}_${rx}${rx}`
     return fileName
   }
 
   // 上传
-  async uploadImg (file) {
+  async uploadImg(file) { 
     // 初始化
     try {
       const tokenRes = await getOssToken({ filetype: this.fileType })
@@ -136,14 +136,14 @@ class UploadUtil {
   }
 
   // 删除图片
-  async deleteImg (fileId) {
+  async deleteImg(fileId) {
     console.log(fileId)
     const res = await this.client.deleteImg(fileId)
     return res
   }
 
   // 上传视频
-  uploadVideo (file) {
+  uploadVideo(file) {
     console.log('video')
   }
 }

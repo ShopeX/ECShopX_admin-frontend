@@ -1,20 +1,13 @@
 <template>
   <div>
-    <slot />
+    <slot></slot>
     <div class="activity-panel">
-      <ul
-        v-if="t_data.length > 0"
-        class="box"
-      >
-        <li
-          v-for="(item, i) in t_data"
-          :key="i"
-          class="content"
-        >
+      <ul v-if="t_data.length > 0" class="box">
+        <li class="content" v-for="(item, i) in t_data" :key="i">
           <img
             class="i"
             :src="item.imgUrl || 'https://fakeimg.pl/250x250/F8F8F8/CCC/?text=Image&font=helvetica'"
-          >
+          />
           <!-- <a class="cover-link"></a> -->
         </li>
       </ul>
@@ -23,13 +16,13 @@
 </template>
 <script>
 export default {
-  name: 'Panel',
+  name: 'panel',
   props: {
     data: {
       type: Object
     }
   },
-  data () {
+  data() {
     return {
       t_data: this.data.data
     }

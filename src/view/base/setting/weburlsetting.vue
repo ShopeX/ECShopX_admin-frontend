@@ -1,31 +1,15 @@
 <template>
-  <el-tabs
-    v-model="activeName"
-    type="border-card"
-    @tab-click="handleClick"
-  >
-    <el-tab-pane
-      label=""
-      name="weburl"
-    >
-      <el-form
-        ref="form"
-        label-width="100px"
-      >
+  <el-tabs v-model="activeName" type="border-card" @tab-click="handleClick">
+    <el-tab-pane label="" name="weburl">
+      <el-form ref="form" label-width="100px">
         <el-form-item label="在线私教">
-          <el-input v-model="form.mycoach" />
+          <el-input v-model="form.mycoach"></el-input>
         </el-form-item>
         <el-form-item label="售后申请">
-          <el-input v-model="form.aftersales" />
+          <el-input v-model="form.aftersales"></el-input>
         </el-form-item>
         <div class="section-footer with-border content-center">
-          <el-button
-            v-loading="loading"
-            type="primary"
-            @click="onSubmit"
-          >
-            保存
-          </el-button>
+          <el-button type="primary" v-loading="loading" @click="onSubmit">保存</el-button>
         </div>
       </el-form>
     </el-tab-pane>
@@ -34,7 +18,7 @@
 <script>
 import { getWebUrlSetting, saveWebUrlSetting } from '@/api/company'
 export default {
-  data () {
+  data() {
     return {
       activeName: 'weburl',
       loading: false,
@@ -44,19 +28,16 @@ export default {
       }
     }
   },
-  mounted () {
-    this.getConfig()
-  },
   methods: {
-    handleClick () {
+    handleClick() {
       this.getConfig()
     },
-    getConfig () {
+    getConfig() {
       getWebUrlSetting().then((response) => {
         this.form = response.data.data
       })
     },
-    onSubmit () {
+    onSubmit() {
       this.loading = true
       saveWebUrlSetting(this.form)
         .then((response) => {
@@ -70,6 +51,9 @@ export default {
           this.loading = false
         })
     }
+  },
+  mounted() {
+    this.getConfig()
   }
 }
 </script>

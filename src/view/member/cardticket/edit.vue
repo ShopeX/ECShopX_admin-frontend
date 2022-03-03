@@ -1,157 +1,107 @@
 <template>
   <div>
-    <el-form
-      ref="form"
-      :rules="rules"
-      :model="form"
-      label-width="110px"
-    >
-      <div
-        v-if="!form.card_id && showTab"
-        class="content-center content-bottom-padded"
-      >
-        <el-radio-group
-          v-model="form.card_type"
-          @change="handleTypeChange"
-        >
-          <el-radio-button label="discount">
-            折扣券
-          </el-radio-button>
-          <el-radio-button label="cash">
-            满减券
-          </el-radio-button>
+    <el-form ref="form" :rules="rules" :model="form" label-width="110px">
+      <div v-if="!form.card_id && showTab" class="content-center content-bottom-padded">
+        <el-radio-group v-model="form.card_type" @change="handleTypeChange">
+          <el-radio-button label="discount">折扣券</el-radio-button>
+          <el-radio-button label="cash">满减券</el-radio-button>
           <!-- <el-radio-button label="gift">兑换券</el-radio-button> -->
           <!-- <el-radio-button label="new_gift">兑换券</el-radio-button> -->
         </el-radio-group>
       </div>
-      <GiftCoupon
-        v-if="form.card_type === 'new_gift'"
-        @haddleShowTab="haddleShowTab"
-      />
+      <GiftCoupon v-if="form.card_type === 'new_gift'" @haddleShowTab="haddleShowTab" />
       <template v-else>
-        <el-card
-          shadow="never"
-          header="基础信息"
-        >
-          <el-form-item
-            v-if="form.card_type === 'gift'"
-            label="兑换商品名称"
-            prop="gift"
-          >
+        <el-card shadow="never" header="基础信息">
+          <el-form-item label="兑换商品名称" prop="gift" v-if="form.card_type === 'gift'">
             <el-input
-              v-model="form.gift"
               :maxlength="20"
               placeholder="兑换商品名称"
+              v-model="form.gift"
               style="width: 240px"
               @change="giftChange"
-            />&nbsp;<span
-              class="frm-tips"
-            >{{ inputValue.gift_length }}/{{ inputValue.gift_max }}</span>
+            ></el-input
+            >&nbsp;<span class="frm-tips"
+              >{{ inputValue.gift_length }}/{{ inputValue.gift_max }}</span
+            >
           </el-form-item>
-          <el-form-item
-            v-if="form.card_type === 'discount'"
-            label="折扣额度"
-            prop="discount"
-          >
+          <el-form-item label="折扣额度" prop="discount" v-if="form.card_type === 'discount'">
             <el-input
-              v-model="form.discount"
               :disabled="form.card_id ? true : false"
+              v-model="form.discount"
               placeholder="只能是大于等于1,小于10的数字"
               style="width: 240px"
               max="9.9"
               min="1"
-            />
+            ></el-input>
           </el-form-item>
-          <el-form-item
-            v-if="form.card_type === 'cash'"
-            label="减免金额"
-            prop="reduce_cost"
-          >
+          <el-form-item label="减免金额" prop="reduce_cost" v-if="form.card_type === 'cash'">
             <el-input
-              v-model="form.reduce_cost"
               type="number"
               :disabled="form.card_id ? true : false"
+              v-model="form.reduce_cost"
               placeholder="只能是大于0的数字"
               style="width: 240px"
-            />&nbsp;元
+            ></el-input
+            >&nbsp;元
           </el-form-item>
-          <el-form-item
-            label="发放数量"
-            prop="quantity"
-          >
+          <el-form-item label="发放数量" prop="quantity">
             <el-input
-              v-model.number="form.quantity"
               min="1"
               :disabled="form.card_id ? true : false"
               type="number"
               oninput="value=value.replace(/[^\d.]/g,'')"
+              v-model.number="form.quantity"
               placeholder="只能是大于0的数字"
               style="width: 20%"
-            />&nbsp;份
+            ></el-input
+            >&nbsp;份
           </el-form-item>
-          <el-form-item
-            label="卡券标题"
-            prop="title"
-          >
+          <el-form-item label="卡券标题" prop="title">
             <el-input
-              v-model="form.title"
               :disabled="form.card_id ? true : false"
+              v-model="form.title"
               placeholder="字数上限为9个汉字"
               style="width: 240px"
               @change="titleChange"
-            />&nbsp;<span
-              class="frm-tips"
-            >{{ inputValue.title_length }}/{{ inputValue.title_max }}</span>
-            <p class="frm-tips">
-              建议填写满减券“减免金额”及自定义内容，描述卡券提供的具体优惠
-            </p>
+            ></el-input
+            >&nbsp;<span class="frm-tips"
+              >{{ inputValue.title_length }}/{{ inputValue.title_max }}</span
+            >
+            <p class="frm-tips">建议填写满减券“减免金额”及自定义内容，描述卡券提供的具体优惠</p>
           </el-form-item>
-          <el-form-item
-            label="使用条件"
-            prop="useCondition"
-          >
+          <el-form-item label="使用条件" prop="useCondition">
             <el-radio-group
-              v-model="form.useCondition"
               :disabled="form.card_id ? true : false"
+              v-model="form.useCondition"
               @change="conditionChange"
             >
-              <template
-                v-if="form.card_type != 'cash'"
+              <template v-if="form.card_type != 'cash'"
+                ><el-radio :label="1">不限制</el-radio></template
               >
-                <el-radio :label="1">
-                  不限制
-                </el-radio>
-              </template>
               <template v-if="form.card_type !== 'gift'">
-                <el-radio
-                  :label="2"
-                >
-                  满 &nbsp;<el-input
-                    v-model="form.least_cost"
+                <el-radio :label="2"
+                  >满 &nbsp;<el-input
                     type="number"
                     min="0"
                     :disabled="form.card_id || form.useCondition == 1 ? true : false"
+                    v-model="form.least_cost"
                     style="width: 100px"
-                  />&nbsp; 元可用&nbsp;&nbsp;
+                  ></el-input
+                  >&nbsp; 元可用&nbsp;&nbsp;
                   <template v-if="form.card_type === 'discount'">
                     最高限额&nbsp;<el-input
-                      v-model="form.most_cost"
                       :disabled="form.card_id || form.useCondition == 1 ? true : false"
+                      v-model="form.most_cost"
                       style="width: 100px"
-                    />&nbsp; 元
-                  </template>
+                    ></el-input
+                    >&nbsp; 元</template
+                  >
                 </el-radio>
               </template>
             </el-radio-group>
           </el-form-item>
-          <el-form-item
-            label="有效期"
-            prop="date_type"
-          >
-            <el-radio-group
-              v-model="form.date_type"
-              @change="changeDatetime"
-            >
+          <el-form-item label="有效期" prop="date_type">
+            <el-radio-group v-model="form.date_type" @change="changeDatetime">
               <div
                 v-if="
                   !form.card_id || (form.card_id && form.date_type === 'DATE_TYPE_FIX_TIME_RANGE')
@@ -163,9 +113,8 @@
                     form.card_id != '' && form.date_type == 'DATE_TYPE_FIX_TERM' ? true : false
                   "
                   label="DATE_TYPE_FIX_TIME_RANGE"
+                  >固定日期</el-radio
                 >
-                  固定日期
-                </el-radio>
                 <el-date-picker
                   v-model="date_range"
                   type="datetimerange"
@@ -173,7 +122,7 @@
                   :picker-options="form.card_id ? '' : pickerOptions"
                   style="width: 380px"
                   :disabled="form.date_type == 'DATE_TYPE_FIX_TERM' ? true : false"
-                />
+                ></el-date-picker>
               </div>
               <div
                 v-if="!form.card_id || (form.card_id && form.date_type === 'DATE_TYPE_FIX_TERM')"
@@ -185,16 +134,15 @@
                       ? true
                       : false
                   "
-                >
-                  领取后,&nbsp;
+                  >领取后,&nbsp;
                   <el-select
                     v-model="form.begin_time"
                     :disabled="
                       form.card_id != '' && form.date_type == 'DATE_TYPE_FIX_TERM'
                         ? true
                         : datetimeStatus
-                          ? true
-                          : false
+                        ? true
+                        : false
                     "
                     size="5"
                   >
@@ -203,23 +151,21 @@
                       :key="item.value"
                       :label="item.text"
                       :value="item.value"
-                    />
-                  </el-select>&nbsp;生效，有效天数&nbsp;
+                    ></el-option> </el-select
+                  >&nbsp;生效，有效天数&nbsp;
 
                   <el-input
-                    v-model.number="form.days"
                     style="width: 120px"
+                    v-model.number="form.days"
                     :disabled="
                       form.card_id != '' && form.date_type == 'DATE_TYPE_FIX_TERM'
                         ? true
                         : datetimeStatus
-                          ? true
-                          : false
+                        ? true
+                        : false
                     "
                   >
-                    <template slot="append">
-                      天
-                    </template>
+                    <template slot="append">天</template>
                   </el-input>
                   <!-- <el-select
                   v-model="form.days"
@@ -248,30 +194,28 @@
                       form.card_id != '' && form.date_type == 'DATE_TYPE_FIX_TERM'
                         ? true
                         : datetimeStatus
-                          ? true
-                          : false
+                        ? true
+                        : false
                     "
-                  />
+                  ></el-date-picker>
                 </el-radio>
               </div>
             </el-radio-group>
           </el-form-item>
-          <el-form-item
-            label="卡券使用说明"
-            prop="description"
-          >
+          <el-form-item label="卡券使用说明" prop="description">
             <el-input
-              v-model="form.description"
               required
               type="textarea"
               :rows="6"
               resize="none"
+              v-model="form.description"
               style="width: 600px"
               placeholder="请填写使用本优惠券的注意事项"
               @change="descriptionChange"
-            />&nbsp;<span
-              class="frm-tips"
-            >{{ inputValue.description_length }}/{{ inputValue.description_max }}</span>
+            ></el-input
+            >&nbsp;<span class="frm-tips"
+              >{{ inputValue.description_length }}/{{ inputValue.description_max }}</span
+            >
           </el-form-item>
           <!-- <el-form-item label="优惠券模板ID" prop="card_code">
            <el-input :maxlength="255" placeholder="优惠券模板ID" v-model="form.card_code" style="width: 240px;"></el-input>&nbsp;<span class="frm-tips">{{inputValue.card_code}}</span>
@@ -280,79 +224,53 @@
            <el-input :maxlength="255" placeholder="优惠券规则ID" v-model="form.card_rule_code" style="width: 240px;"></el-input>&nbsp;<span class="frm-tips">{{inputValue.card_rule_code}}</span>
         </el-form-item> -->
         </el-card>
-        <el-card
-          shadow="never"
-          header="适用规则"
-        >
+        <el-card shadow="never" header="适用规则">
           <el-form-item label="前台直接领取">
             <el-switch
               v-model="form.receive"
               active-color="#13ce66"
               inactive-color="#d2d4db"
-            />
+            ></el-switch>
           </el-form-item>
           <el-form-item label="领券限制">
             <el-input
-              v-model="form.get_limit"
               type="number"
+              v-model="form.get_limit"
               style="width: 120px"
               min="1"
               oninput="value=value.replace(/[^\d.]/g,'')"
-            />
-            <p class="frm-tips">
-              每个用户领券上限，如不填，则默认为1。
-            </p>
+            ></el-input>
+            <p class="frm-tips">每个用户领券上限，如不填，则默认为1。</p>
           </el-form-item>
-          <el-form-item
-            v-if="is_distributor == false && form.card_type == 'gift'"
-            label="适用平台"
-          >
+          <el-form-item label="适用平台" v-if="is_distributor == false && form.card_type == 'gift'">
             <el-radio-group
               v-model="form.use_platform"
               :disabled="form.card_id != ''"
               @change="usePlatformChange"
             >
-              <el-radio
-                v-if="is_distributor == false"
-                label="store"
-              >
-                门店专用
-              </el-radio>
-              <el-radio
-                v-if="form.card_type != 'gift'"
-                label="mall"
-              >
-                线上商城专用
-              </el-radio>
+              <el-radio label="store" v-if="is_distributor == false">门店专用</el-radio>
+              <el-radio label="mall" v-if="form.card_type != 'gift'">线上商城专用</el-radio>
             </el-radio-group>
           </el-form-item>
           <el-form-item
-            v-if="is_distributor == false && form.card_type == 'gift'"
             label="核销场景"
             prop="use_scenes"
+            v-if="is_distributor == false && form.card_type == 'gift'"
           >
-            <el-radio-group
-              v-model="form.use_scenes"
-              :disabled="form.card_id != ''"
-            >
+            <el-radio-group v-model="form.use_scenes" :disabled="form.card_id != ''">
               <el-radio
                 v-if="form.card_type != 'gift' && form.use_platform == 'mall'"
                 label="ONLINE"
+                >线上商城使用</el-radio
               >
-                线上商城使用
-              </el-radio>
               <el-radio
                 v-if="form.card_type != 'gift' && form.use_platform == 'store'"
                 label="QUICK"
+                >快捷买单使用</el-radio
               >
-                快捷买单使用
-              </el-radio>
-              <el-radio
-                v-if="form.use_platform == 'store'"
-                label="SELF"
+              <el-radio label="SELF" v-if="form.use_platform == 'store'"
+                >自助核销（到店使用）</el-radio
               >
-                自助核销（到店使用）
-              </el-radio>
             </el-radio-group>
           </el-form-item>
           <!-- <el-form-item
@@ -366,22 +284,12 @@
             inactive-color="#d2d4db"
           ></el-switch>
         </el-form-item> -->
-          <el-form-item
-            v-if="form.use_scenes == 'SELF'"
-            label="验证码"
-          >
-            <el-radio-group
-              v-model="self_rcode"
-              :disabled="form.card_id != ''"
-            >
-              <el-radio label="1">
-                启用验证码
-              </el-radio>
-              <el-radio label="0">
-                不启用验证码
-              </el-radio>
+          <el-form-item v-if="form.use_scenes == 'SELF'" label="验证码">
+            <el-radio-group v-model="self_rcode" :disabled="form.card_id != ''">
+              <el-radio label="1">启用验证码</el-radio>
+              <el-radio label="0">不启用验证码</el-radio>
             </el-radio-group>
-            <br>
+            <br />
             <el-input
               v-if="self_rcode === '1'"
               v-model="form.self_consume_code"
@@ -389,7 +297,7 @@
               placeholder="请输入验证码"
               maxlength="4"
               minlength="4"
-            />
+            ></el-input>
           </el-form-item>
         </el-card>
         <el-card
@@ -398,36 +306,17 @@
           shadow="naver"
         >
           <el-form-item label="适用商品">
-            <el-radio-group
-              v-model="form.use_all_items"
-              @change="itemTypeChange"
-            >
-              <el-radio label="true">
-                全部商品适用
-              </el-radio>
-              <el-radio label="false">
-                指定商品适用
-              </el-radio>
-              <el-radio label="category">
-                指定分类适用
-              </el-radio>
-              <el-radio label="tag">
-                指定商品标签适用
-              </el-radio>
-              <el-radio label="brand">
-                指定品牌适用
-              </el-radio>
+            <el-radio-group v-model="form.use_all_items" @change="itemTypeChange">
+              <el-radio label="true">全部商品适用</el-radio>
+              <el-radio label="false">指定商品适用</el-radio>
+              <el-radio label="category">指定分类适用</el-radio>
+              <el-radio label="tag">指定商品标签适用</el-radio>
+              <el-radio label="brand">指定品牌适用</el-radio>
             </el-radio-group>
           </el-form-item>
 
-          <div
-            v-if="!zdItemHidden"
-            style="position: relative"
-          >
-            <SkuSelector
-              :data="relItems"
-              @change="getItems"
-            />
+          <div v-if="!zdItemHidden" style="position: relative">
+            <SkuSelector @change="getItems" :data="relItems"></SkuSelector>
             <div style="position: absolute; bottom: 0px; left: 112px">
               <el-upload
                 style="display: inline-block; height: 0"
@@ -436,48 +325,33 @@
                 :auto-upload="false"
                 :show-file-list="false"
               >
-                <el-button type="primary">
-                  批量上传
-                </el-button>
+                <el-button type="primary">批量上传</el-button>
               </el-upload>
-              <el-button
-                style="margin-left: 10px"
-                type="primary"
-                @click="uploadHandleTemplate()"
+              <el-button style="margin-left: 10px" type="primary" @click="uploadHandleTemplate()"
+                >下载模板</el-button
               >
-                下载模板
-              </el-button>
             </div>
           </div>
 
-          <el-col
-            :xs="12"
-            :sm="12"
-            :md="12"
-          >
-            <div
-              v-if="!categoryHidden"
-              style="height: 350px"
-              class="custom_tree"
-            >
+          <el-col :xs="12" :sm="12" :md="12">
+            <div style="height: 350px" v-if="!categoryHidden" class="custom_tree">
               <treeselect
-                v-model="form.item_category"
                 :options="categoryList"
                 :show-count="true"
                 :multiple="true"
                 :disable-branch-nodes="true"
-              />
+                v-model="form.item_category"
+              >
+              </treeselect>
             </div>
           </el-col>
           <template v-if="!tagHidden">
             <div class="selected-tags view-flex">
-              <div class="label">
-                已选中标签：
-              </div>
+              <div class="label">已选中标签：</div>
               <div class="view-flex-item">
                 <el-tag
-                  v-for="(tag, index) in tag.currentTags"
                   :key="index"
+                  v-for="(tag, index) in tag.currentTags"
                   closable
                   size="small"
                   :disable-transitions="false"
@@ -489,9 +363,9 @@
             </div>
             <div>
               <el-tag
-                v-for="(tag, index) in tag.tags"
-                :key="index"
                 class="tag-item"
+                :key="index"
+                v-for="(tag, index) in tag.tags"
                 size="medium"
                 color="#ffffff"
                 :disable-transitions="false"
@@ -503,13 +377,11 @@
           </template>
           <template v-if="!brandHidden">
             <div class="selected-tags view-flex">
-              <div class="label">
-                已选中品牌：
-              </div>
+              <div class="label">已选中品牌：</div>
               <div class="view-flex-item">
                 <el-tag
-                  v-for="(brand, index) in brand.currentBrands"
                   :key="index"
+                  v-for="(brand, index) in brand.currentBrands"
                   closable
                   size="small"
                   :disable-transitions="false"
@@ -521,9 +393,9 @@
             </div>
             <div>
               <el-tag
-                v-for="(brand, index) in brand.brands"
-                :key="index"
                 class="tag-item"
+                :key="index"
+                v-for="(brand, index) in brand.brands"
                 size="medium"
                 color="#ffffff"
                 :disable-transitions="false"
@@ -535,58 +407,28 @@
           </template>
         </el-card>
         <el-card
-          v-if="is_distributor == false && form.use_platform == 'store'"
           header="门店"
           shadow="naver"
+          v-if="is_distributor == false && form.use_platform == 'store'"
         >
           <el-form-item label="适用门店">
-            <el-radio-group
-              v-model="form.use_all_shops"
-              @change="shopTypeChange"
-            >
-              <el-radio label="true">
-                全部门店适用
-              </el-radio>
-              <el-radio label="false">
-                指定门店适用
-              </el-radio>
+            <el-radio-group v-model="form.use_all_shops" @change="shopTypeChange">
+              <el-radio label="true">全部门店适用</el-radio>
+              <el-radio label="false">指定门店适用</el-radio>
             </el-radio-group>
           </el-form-item>
           <div v-if="!zdShopHidden">
-            <el-button
-              type="primary"
-              @click="addStoreAction"
-            >
-              选择门店
-            </el-button>
-            <el-table
-              v-if="relStores.length > 0"
-              :data="relStores"
-              style="line-height: normal"
-            >
-              <el-table-column
-                label="ID"
-                prop="wxShopId"
-                width="60"
-              />
-              <el-table-column
-                label="名称"
-                prop="storeName"
-              />
-              <el-table-column
-                prop="address"
-                label="地址"
-                show-overflow-tooltip
-              />
-              <el-table-column
-                label="操作"
-                width="50"
-              >
+            <el-button type="primary" @click="addStoreAction">选择门店</el-button>
+            <el-table v-if="relStores.length > 0" :data="relStores" style="line-height: normal">
+              <el-table-column label="ID" prop="wxShopId" width="60"></el-table-column>
+              <el-table-column label="名称" prop="storeName"></el-table-column>
+              <el-table-column prop="address" label="地址" show-overflow-tooltip></el-table-column>
+              <el-table-column label="操作" width="50">
                 <template slot-scope="scope">
                   <i
                     class="iconfont icon-trash-alt"
                     @click="deleteRow(scope.$index, form.items)"
-                  />
+                  ></i>
                 </template>
               </el-table-column>
             </el-table>
@@ -594,97 +436,65 @@
         </el-card>
 
         <el-card
+          header="店铺"
+          shadow="naver"
           v-if="
             system_mode !== 'platform' && is_distributor == false && form.use_platform == 'mall'
           "
-          header="店铺"
-          shadow="naver"
         >
           <el-form-item label="适用店铺">
-            <el-radio-group
-              v-model="form.use_all_shops"
-              @change="shopTypeChange"
-            >
-              <el-radio label="true">
-                全部店铺适用
-              </el-radio>
-              <el-radio label="false">
-                指定店铺适用
-              </el-radio>
+            <el-radio-group v-model="form.use_all_shops" @change="shopTypeChange">
+              <el-radio label="true">全部店铺适用</el-radio>
+              <el-radio label="false">指定店铺适用</el-radio>
             </el-radio-group>
           </el-form-item>
           <div v-if="!zdShopHidden">
-            <el-button
-              type="primary"
-              @click="addDistributorAction"
-            >
-              选择店铺
-            </el-button>
+            <el-button type="primary" @click="addDistributorAction">选择店铺</el-button>
             <el-table
               v-if="distributor_info.length > 0"
               :data="distributor_info"
               style="line-height: normal"
             >
-              <el-table-column
-                label="ID"
-                prop="distributor_id"
-                width="60"
-              />
-              <el-table-column
-                label="名称"
-                prop="name"
-              />
-              <el-table-column
-                prop="address"
-                label="地址"
-                show-overflow-tooltip
-              />
-              <el-table-column
-                label="操作"
-                width="50"
-              >
+              <el-table-column label="ID" prop="distributor_id" width="60"></el-table-column>
+              <el-table-column label="名称" prop="name"></el-table-column>
+              <el-table-column prop="address" label="地址" show-overflow-tooltip></el-table-column>
+              <el-table-column label="操作" width="50">
                 <template slot-scope="scope">
                   <i
                     class="iconfont icon-trash-alt"
                     @click="deleteDistritutorRow(scope.$index, form.items)"
-                  />
+                  ></i>
                 </template>
               </el-table-column>
             </el-table>
           </div>
         </el-card>
         <div class="content-center">
-          <el-button @click="cancelSubmit">
-            取消
-          </el-button>
-          <el-button
-            type="primary"
-            :disabled="submitDisabled"
-            @click="submitForm('form')"
+          <el-button @click="cancelSubmit">取消</el-button>
+          <el-button type="primary" @click="submitForm('form')" :disabled="submitDisabled"
+            >提交</el-button
           >
-            提交
-          </el-button>
         </div>
       </template>
     </el-form>
     <StoreSelect
       :store-visible="storeVisible"
       :is-valid="true"
-      :rel-data-ids="relStores"
+      :relDataIds="relStores"
       :get-status="setStatus"
       @chooseStore="chooseStoreAction"
       @closeStoreDialog="closeStoreDialogAction"
-    />
+    ></StoreSelect>
 
     <DistributorSelect
       :store-visible="distributorVisible"
       :is-valid="true"
-      :rel-data-ids="distributor_info"
+      :relDataIds="distributor_info"
       :get-status="setDistributorStatus"
-      return-type="selectRow"
       @chooseStore="chooseDistributorAction"
       @closeStoreDialog="closeDistributorDialogAction"
-    />
+      returnType="selectRow"
+    ></DistributorSelect>
   </div>
 </template>
 
@@ -710,7 +520,7 @@ export default {
     Treeselect,
     GiftCoupon
   },
-  data () {
+  data() {
     let tempDays = [{ text: '当天', value: 0 }]
     let tempRemainDays = []
     for (let i = 1; i <= 90; i++) {
@@ -819,7 +629,7 @@ export default {
     }
     return {
       pickerOptions: {
-        disabledDate (time) {
+        disabledDate(time) {
           return time.getTime() < Date.now() - 8.64e7
         }
       },
@@ -950,7 +760,474 @@ export default {
       showTab: true
     }
   },
-  mounted () {
+  methods: {
+    getItems(data) {
+      let ids = []
+      data.forEach((item) => {
+        ids.push(item.itemId)
+      })
+      this.form.rel_item_ids = ids
+    },
+    usePlatformChange(val) {
+      if (val == 'mall') {
+        this.form.use_scenes = 'ONLINE'
+      } else {
+        this.form.use_scenes = 'QUICK'
+      }
+    },
+    checkColor(e) {
+      this.form.color = e.target.dataset.color
+    },
+    changeDatetime(val) {
+      if (val === 'DATE_TYPE_FIX_TIME_RANGE') {
+        this.datetimeStatus = true
+      } else {
+        this.datetimeStatus = false
+        this.date_range = ''
+        this.begin_time = 0
+      }
+    },
+    handleTypeChange(val) {
+      if (val === 'gift') {
+        this.form.use_scenes = 'SELF'
+        this.form.use_platform = 'store'
+      }
+      if (val === 'cash' || val === 'discount') {
+        this.form.useCondition = 2
+        this.form.use_scenes = 'ONLINE'
+        this.form.use_platform = 'mall'
+      }
+    },
+    shopTypeChange(val) {
+      this.zdShopHidden = true
+      if (val === 'false') {
+        this.zdShopHidden = false
+      } else {
+        this.form.rel_distributor_ids = []
+        this.form.distributor_id = []
+        this.form.distributor_info = []
+      }
+    },
+    itemTypeChange(val) {
+      this.zdItemHidden = true
+      this.categoryHidden = true
+      this.tagHidden = true
+      this.brandHidden = true
+      this.form.rel_item_ids = []
+      this.form.itemTreeLists = []
+      this.form.item_category = []
+      this.form.item_category = []
+      this.tag.currentTags = []
+      if (val === 'false') {
+        this.zdItemHidden = false
+      } else if (val === 'true') {
+        this.form.rel_item_ids = []
+        this.form.itemTreeLists = []
+        this.form.item_category = []
+      } else if (val === 'category') {
+        this.form.rel_item_ids = []
+        this.form.itemTreeLists = []
+        this.categoryHidden = false
+        this.form.item_category = []
+      } else if (val === 'tag') {
+        this.tagHidden = false
+        this.tag.currentTags = []
+        this.showTags()
+      } else if (val === 'brand') {
+        this.brandHidden = false
+        this.brand.currentBrands = []
+        this.showBrands()
+      }
+    },
+    cancelSubmit() {
+      this.$router.go(-1)
+    },
+    submitForm(formName) {
+      if (this.form.days <= 0) {
+        this.$message.error('有效天数必须大于0')
+        return
+      }
+      if (typeof this.form.days !== 'number') {
+        this.$message.error('请输入有效的数字')
+        return
+      }
+
+      const that = this
+      if (this.form.date_type == 'DATE_TYPE_FIX_TIME_RANGE' && this.date_range.length > 0) {
+        this.form.begin_time = this.date_range[0]
+        this.form.end_time = this.date_range[1]
+      }
+      if (this.form.use_scenes == 'SELF' && this.self_rcode == '1') {
+        if (!this.form.self_consume_code) {
+          this.$message.error('选择自助核销并开启验证码后，验证码必填')
+          return
+        }
+        if (this.form.self_consume_code && this.form.self_consume_code.length != 4) {
+          this.$message.error('验证码必须为4个数字')
+          return
+        }
+        let reg = /^\d*$/
+        if (this.form.self_consume_code && !reg.test(this.form.self_consume_code)) {
+          this.$message.error('验证码必须为纯数字')
+          return
+        }
+      }
+      if (this.form.use_all_shops === 'false' && !this.form.rel_shops_ids) {
+        this.$message.error('请添加适用门店')
+        return
+      }
+      if (this.form.use_scenes == 'SELF' && this.self_rcode == '0') {
+        this.form.self_consume_code = 0
+      }
+      let params = JSON.parse(JSON.stringify(this.form))
+      params.tag_list = null //不需要回传的参数
+      params.rel_tag_ids = null //不需要回传的参数
+      params.rel_brand_ids = null //不需要回传的参数
+      params.brand_list = null //不需要回传的参数
+      params.tag_ids = JSON.stringify(this.form.tag_ids)
+      params.rel_item_ids = JSON.stringify(this.form.rel_item_ids)
+      params.brand_ids = JSON.stringify(this.form.brand_ids)
+      params.item_category = JSON.stringify(this.form.item_category)
+      params.itemTreeLists = []
+      params.rel_distributor_ids = JSON.stringify(this.form.rel_distributor_ids)
+      params.rel_shops_ids = JSON.stringify(this.form.rel_shops_ids)
+      params.distributor_info = []
+
+      if (params.date_type == 'DATE_TYPE_FIX_TIME_RANGE') {
+        params.begin_time = params.begin_time / 1000
+        params.end_time = params.end_time / 1000
+      } else {
+        params.end_time = params.end_time / 1000
+      }
+      // 判断使用条件-是否不限额度
+      if (params.useCondition === 1) {
+        params.least_cost = 0
+        params.most_cost = 999999
+      }
+
+      this.$refs[formName].validate((valid) => {
+        if (valid) {
+          this.submitDisabled = true
+          if (this.form.card_id) {
+            params.if_push_wechat = false
+            updateCard(params)
+              .then((res) => {
+                if (res.data.data && res.data.data.status) {
+                  this.$message({
+                    message: '更新成功',
+                    type: 'success',
+                    duration: 2 * 1000,
+                    onClose() {
+                      that.refresh()
+                      that.$router.go(-1)
+                    }
+                  })
+                } else {
+                  this.$message.error('更新优惠券失败!')
+                  this.submitDisabled = false
+                  return false
+                }
+              })
+              .catch(() => {
+                this.submitDisabled = false
+              })
+          } else {
+            creatCard(params)
+              .then((res) => {
+                if (res.data.data.status) {
+                  this.$message({
+                    message: '添加成功',
+                    type: 'success',
+                    duration: 2 * 1000,
+                    onClose() {
+                      that.refresh()
+                      that.$router.go(-1)
+                    }
+                  })
+                } else {
+                  this.$message.error('添加优惠券失败!')
+                  this.submitDisabled = false
+                  return false
+                }
+              })
+              .catch(() => {
+                this.submitDisabled = false
+              })
+          }
+        } else {
+          return false
+        }
+      })
+    },
+    addStoreAction() {
+      this.storeVisible = true
+      this.setStatus = true
+      this.relShopIds = this.form.rel_shops_ids
+      console.log(this.form.rel_shops_ids)
+    },
+    addDistributorAction() {
+      this.distributorVisible = true
+      this.setDistributorStatus = true
+      this.relDistributorIds = this.form.distributor_id
+    },
+    chooseStoreAction(data) {
+      console.warn('data', data)
+      this.storeVisible = false
+      this.form.rel_shops_ids = []
+      if (data === null || data.length <= 0) return
+      this.relStores = data
+      for (var i = 0; i < data.length; i++) {
+        if (this.form.rel_shops_ids.indexOf(Number(data[i].wxShopId)) < 0) {
+          this.form.rel_shops_ids.push(Number(data[i].wxShopId))
+        }
+      }
+    },
+
+    chooseDistributorAction(data) {
+      this.distributorVisible = false
+      if (!data || data === null || data.length <= 0) {
+        this.distributor_info = []
+        return
+      }
+      this.distributor_info = data
+      this.form.distributor_id = []
+      for (let i = 0; i < data.length; i++) {
+        const id = data[i].distributor_id
+        this.form.distributor_id.push(Number(id))
+      }
+    },
+    closeStoreDialogAction() {
+      this.storeVisible = false
+    },
+    closeDistributorDialogAction() {
+      this.distributorVisible = false
+    },
+    deleteRow(index) {
+      this.setStatus = false
+      this.relStores.splice(index, 1)
+      //this.form.rel_shops_ids = []
+      let shopDatas = this.relStores
+      for (var i = 0; i < shopDatas.length; i++) {
+        if (this.form.rel_shops_ids.indexOf(Number(shopDatas[i].wxShopId)) < 0) {
+          this.form.rel_shops_ids.push(Number(shopDatas[i].wxShopId))
+        }
+      }
+    },
+    deleteDistritutorRow(index) {
+      this.distributor_info.splice(index, 1)
+      let shopDatas = this.distributor_info
+      this.form.distributor_id = []
+      for (let i = 0; i < shopDatas.length; i++) {
+        if (this.form.distributor_id.indexOf(Number(shopDatas[i].distributor_id)) < 0) {
+          this.form.distributor_id.push(Number(shopDatas[i].distributor_id))
+        }
+      }
+      this.relDistributorIds = this.form.distributor_id
+    },
+    giftChange(value) {
+      this.inputValue.gift_length = this.getValueLength(value)
+    },
+    titleChange(value) {
+      this.inputValue.title_length = this.getValueLength(value)
+    },
+    descriptionChange(value) {
+      this.inputValue.description_length = this.getValueLength(value)
+    },
+    getValueLength(value) {
+      let realLength = 0,
+        charCode = -1,
+        count = 0
+      for (var i = 0; i < value.length; i++) {
+        charCode = value.charCodeAt(i)
+        if (charCode >= 0 && charCode <= 128) {
+          count++
+        } else {
+          realLength++
+        }
+      }
+      if (count > 0) {
+        realLength = realLength + parseInt(count / 2)
+        if (count % 2 > 0) {
+          realLength += 1
+        }
+      }
+      return realLength
+    },
+    conditionChange(val) {
+      if (val == 1) {
+        this.form.least_cost = 0
+      }
+      if (val == 2 && this.form.card_type === 'discount') {
+        this.form.most_cost = 999999
+      }
+    },
+    fetchMainCate() {
+      getCategory({ is_main_category: true, ignore_none: true }).then((response) => {
+        this.categoryList = response.data.data
+      })
+    },
+    addItemTag() {
+      this.tag.currentTags = []
+      if (this.item_id.length) {
+        this.showTags()
+        this.tag.form.item_ids = this.item_id
+      } else {
+        this.$message({
+          type: 'error',
+          message: '请选择至少一个商品!'
+        })
+      }
+    },
+    showTags() {
+      this.tag.tags = [...this.tag.list]
+      let active_tags = [] //可选标签
+      this.tag.tags.forEach((item, index) => {
+        let isInArr = this.tag.currentTags.findIndex((n) => n.tag_id == item.tag_id)
+        if (isInArr == -1) active_tags.push(item)
+      })
+      this.tag.tags = active_tags
+    },
+    tagRemove(index) {
+      this.tag.tags.unshift(this.tag.currentTags[index])
+      this.tag.currentTags.splice(index, 1)
+      this.form.tag_ids = []
+      this.tag.currentTags.forEach((item) => {
+        this.form.tag_ids.push(item.tag_id)
+      })
+    },
+    tagAdd(item, index) {
+      let isInArr = this.tag.currentTags.findIndex((n) => n.tag_id == item.tag_id)
+      if (isInArr == -1) {
+        this.tag.currentTags.push(item)
+        this.tag.tags.splice(index, 1)
+      }
+      this.form.tag_ids = []
+      this.tag.currentTags.forEach((item) => {
+        this.form.tag_ids.push(item.tag_id)
+      })
+    },
+    getAllTagLists() {
+      let params = {
+        page: 1,
+        pageSize: 500
+      }
+      getTagList(params).then((response) => {
+        this.tag.list = response.data.data.list
+        this.showTags()
+      })
+    },
+    // 获取品牌列表
+    getBrandList(searchVal = '', isInit = false) {
+      const list = []
+      getGoodsAttr({
+        page: 1,
+        pageSize: 1000,
+        attribute_type: 'brand',
+        attribute_name: searchVal,
+        attribute_ids: isInit ? this.form.brand_id : ''
+      }).then((res) => {
+        for (let item of res.data.data.list) {
+          list.push({ attribute_name: item.attribute_name, attribute_id: item.attribute_id })
+        }
+        this.brand.list = list
+        this.showBrands()
+      })
+    },
+    showBrands() {
+      this.brand.brands = [...this.brand.list]
+      let active_brands = []
+      this.brand.brands.forEach((item, index) => {
+        let isInArr = this.brand.currentBrands.findIndex((n) => n.attribute_id == item.attribute_id)
+        //if (isInArr != -1) this.brand.brands.splice(index, 1)
+        if (isInArr == -1) active_brands.push(item)
+      })
+      this.brand.brands = active_brands
+    },
+    brandAdd(item, index) {
+      let isInArr = this.brand.currentBrands.findIndex((n) => n.attribute_id == item.attribute_id)
+      if (isInArr == -1) {
+        this.brand.currentBrands.push(item)
+        this.brand.brands.splice(index, 1)
+      }
+      this.form.brand_ids = []
+      this.brand.currentBrands.forEach((item) => {
+        this.form.brand_ids.push(item.attribute_id)
+      })
+    },
+    brandRemove(index) {
+      this.brand.brands.unshift(this.brand.currentBrands[index])
+      this.brand.currentBrands.splice(index, 1)
+      this.form.brand_ids = []
+      this.brand.currentBrands.forEach((item) => {
+        this.form.brand_ids.push(item.attribute_id)
+      })
+    },
+    /**
+     * 下载模板
+     * */
+    uploadHandleTemplate() {
+      let params = { file_type: 'marketing_goods', file_name: '商品模板' }
+      exportUploadTemplate(params).then((response) => {
+        let { data } = response.data
+        if (data.file) {
+          var a = document.createElement('a')
+          a.href = data.file
+          a.download = data.name
+          document.body.appendChild(a)
+          a.click()
+          a.remove()
+        } else {
+          this.$message({
+            type: 'error',
+            message: '没有相关数据可导出'
+          })
+        }
+      })
+    },
+    /**
+     * 上传模板
+     * */
+    uploadHandleChange(file, fileList) {
+      let params = { isUploadFile: true, file_type: 'marketing_goods', file: file.raw }
+      handleUploadFile(params).then((response) => {
+        this.$message({
+          type: 'success',
+          message: '上传成功'
+        })
+
+        let { data } = response.data
+
+        if (data.fail.length > 0) {
+          let str = data.fail.map((item) => {
+            return item.item_bn
+          })
+
+          setTimeout(() => {
+            this.$message({
+              showClose: true,
+              message: `以下商品编号不存在：${str}`,
+              type: 'error',
+              duration: 100000
+            })
+          }, 1500)
+        }
+        if (data.succ.length <= 0) return
+        this.relItems = data.succ
+        let list = []
+        data.succ.forEach((item) => {
+          if (!item.nospec) {
+            list.push(Object.assign(item, { spec_items: [] }))
+          } else {
+            list.push(item)
+          }
+        })
+      })
+    },
+    haddleShowTab(value) {
+      this.showTab = value
+    }
+  },
+  mounted() {
     if (store.getters.login_type === 'distributor') {
       this.is_distributor = true
       this.form.is_distributor = true
@@ -1068,473 +1345,6 @@ export default {
       this.fetchMainCate()
       this.getAllTagLists()
       this.getBrandList('', true)
-    }
-  },
-  methods: {
-    getItems (data) {
-      let ids = []
-      data.forEach((item) => {
-        ids.push(item.itemId)
-      })
-      this.form.rel_item_ids = ids
-    },
-    usePlatformChange (val) {
-      if (val == 'mall') {
-        this.form.use_scenes = 'ONLINE'
-      } else {
-        this.form.use_scenes = 'QUICK'
-      }
-    },
-    checkColor (e) {
-      this.form.color = e.target.dataset.color
-    },
-    changeDatetime (val) {
-      if (val === 'DATE_TYPE_FIX_TIME_RANGE') {
-        this.datetimeStatus = true
-      } else {
-        this.datetimeStatus = false
-        this.date_range = ''
-        this.begin_time = 0
-      }
-    },
-    handleTypeChange (val) {
-      if (val === 'gift') {
-        this.form.use_scenes = 'SELF'
-        this.form.use_platform = 'store'
-      }
-      if (val === 'cash' || val === 'discount') {
-        this.form.useCondition = 2
-        this.form.use_scenes = 'ONLINE'
-        this.form.use_platform = 'mall'
-      }
-    },
-    shopTypeChange (val) {
-      this.zdShopHidden = true
-      if (val === 'false') {
-        this.zdShopHidden = false
-      } else {
-        this.form.rel_distributor_ids = []
-        this.form.distributor_id = []
-        this.form.distributor_info = []
-      }
-    },
-    itemTypeChange (val) {
-      this.zdItemHidden = true
-      this.categoryHidden = true
-      this.tagHidden = true
-      this.brandHidden = true
-      this.form.rel_item_ids = []
-      this.form.itemTreeLists = []
-      this.form.item_category = []
-      this.form.item_category = []
-      this.tag.currentTags = []
-      if (val === 'false') {
-        this.zdItemHidden = false
-      } else if (val === 'true') {
-        this.form.rel_item_ids = []
-        this.form.itemTreeLists = []
-        this.form.item_category = []
-      } else if (val === 'category') {
-        this.form.rel_item_ids = []
-        this.form.itemTreeLists = []
-        this.categoryHidden = false
-        this.form.item_category = []
-      } else if (val === 'tag') {
-        this.tagHidden = false
-        this.tag.currentTags = []
-        this.showTags()
-      } else if (val === 'brand') {
-        this.brandHidden = false
-        this.brand.currentBrands = []
-        this.showBrands()
-      }
-    },
-    cancelSubmit () {
-      this.$router.go(-1)
-    },
-    submitForm (formName) {
-      if (this.form.days <= 0) {
-        this.$message.error('有效天数必须大于0')
-        return
-      }
-      if (typeof this.form.days !== 'number') {
-        this.$message.error('请输入有效的数字')
-        return
-      }
-
-      const that = this
-      if (this.form.date_type == 'DATE_TYPE_FIX_TIME_RANGE' && this.date_range.length > 0) {
-        this.form.begin_time = this.date_range[0]
-        this.form.end_time = this.date_range[1]
-      }
-      if (this.form.use_scenes == 'SELF' && this.self_rcode == '1') {
-        if (!this.form.self_consume_code) {
-          this.$message.error('选择自助核销并开启验证码后，验证码必填')
-          return
-        }
-        if (this.form.self_consume_code && this.form.self_consume_code.length != 4) {
-          this.$message.error('验证码必须为4个数字')
-          return
-        }
-        let reg = /^\d*$/
-        if (this.form.self_consume_code && !reg.test(this.form.self_consume_code)) {
-          this.$message.error('验证码必须为纯数字')
-          return
-        }
-      }
-      if (this.form.use_all_shops === 'false' && !this.form.rel_shops_ids) {
-        this.$message.error('请添加适用门店')
-        return
-      }
-      if (this.form.use_scenes == 'SELF' && this.self_rcode == '0') {
-        this.form.self_consume_code = 0
-      }
-      let params = JSON.parse(JSON.stringify(this.form))
-      params.tag_list = null //不需要回传的参数
-      params.rel_tag_ids = null //不需要回传的参数
-      params.rel_brand_ids = null //不需要回传的参数
-      params.brand_list = null //不需要回传的参数
-      params.tag_ids = JSON.stringify(this.form.tag_ids)
-      params.rel_item_ids = JSON.stringify(this.form.rel_item_ids)
-      params.brand_ids = JSON.stringify(this.form.brand_ids)
-      params.item_category = JSON.stringify(this.form.item_category)
-      params.itemTreeLists = []
-      params.rel_distributor_ids = JSON.stringify(this.form.rel_distributor_ids)
-      params.rel_shops_ids = JSON.stringify(this.form.rel_shops_ids)
-      params.distributor_info = []
-
-      if (params.date_type == 'DATE_TYPE_FIX_TIME_RANGE') {
-        params.begin_time = params.begin_time / 1000
-        params.end_time = params.end_time / 1000
-      } else {
-        params.end_time = params.end_time / 1000
-      }
-      // 判断使用条件-是否不限额度
-      if (params.useCondition === 1) {
-        params.least_cost = 0
-        params.most_cost = 999999
-      }
-
-      this.$refs[formName].validate((valid) => {
-        if (valid) {
-          this.submitDisabled = true
-          if (this.form.card_id) {
-            params.if_push_wechat = false
-            updateCard(params)
-              .then((res) => {
-                if (res.data.data && res.data.data.status) {
-                  this.$message({
-                    message: '更新成功',
-                    type: 'success',
-                    duration: 2 * 1000,
-                    onClose () {
-                      that.refresh()
-                      that.$router.go(-1)
-                    }
-                  })
-                } else {
-                  this.$message.error('更新优惠券失败!')
-                  this.submitDisabled = false
-                  return false
-                }
-              })
-              .catch(() => {
-                this.submitDisabled = false
-              })
-          } else {
-            creatCard(params)
-              .then((res) => {
-                if (res.data.data.status) {
-                  this.$message({
-                    message: '添加成功',
-                    type: 'success',
-                    duration: 2 * 1000,
-                    onClose () {
-                      that.refresh()
-                      that.$router.go(-1)
-                    }
-                  })
-                } else {
-                  this.$message.error('添加优惠券失败!')
-                  this.submitDisabled = false
-                  return false
-                }
-              })
-              .catch(() => {
-                this.submitDisabled = false
-              })
-          }
-        } else {
-          return false
-        }
-      })
-    },
-    addStoreAction () {
-      this.storeVisible = true
-      this.setStatus = true
-      this.relShopIds = this.form.rel_shops_ids
-      console.log(this.form.rel_shops_ids)
-    },
-    addDistributorAction () {
-      this.distributorVisible = true
-      this.setDistributorStatus = true
-      this.relDistributorIds = this.form.distributor_id
-    },
-    chooseStoreAction (data) {
-      console.warn('data', data)
-      this.storeVisible = false
-      this.form.rel_shops_ids = []
-      if (data === null || data.length <= 0) return
-      this.relStores = data
-      for (var i = 0; i < data.length; i++) {
-        if (this.form.rel_shops_ids.indexOf(Number(data[i].wxShopId)) < 0) {
-          this.form.rel_shops_ids.push(Number(data[i].wxShopId))
-        }
-      }
-    },
-
-    chooseDistributorAction (data) {
-      this.distributorVisible = false
-      if (!data || data === null || data.length <= 0) {
-        this.distributor_info = []
-        return
-      }
-      this.distributor_info = data
-      this.form.distributor_id = []
-      for (let i = 0; i < data.length; i++) {
-        const id = data[i].distributor_id
-        this.form.distributor_id.push(Number(id))
-      }
-    },
-    closeStoreDialogAction () {
-      this.storeVisible = false
-    },
-    closeDistributorDialogAction () {
-      this.distributorVisible = false
-    },
-    deleteRow (index) {
-      this.setStatus = false
-      this.relStores.splice(index, 1)
-      //this.form.rel_shops_ids = []
-      let shopDatas = this.relStores
-      for (var i = 0; i < shopDatas.length; i++) {
-        if (this.form.rel_shops_ids.indexOf(Number(shopDatas[i].wxShopId)) < 0) {
-          this.form.rel_shops_ids.push(Number(shopDatas[i].wxShopId))
-        }
-      }
-    },
-    deleteDistritutorRow (index) {
-      this.distributor_info.splice(index, 1)
-      let shopDatas = this.distributor_info
-      this.form.distributor_id = []
-      for (let i = 0; i < shopDatas.length; i++) {
-        if (this.form.distributor_id.indexOf(Number(shopDatas[i].distributor_id)) < 0) {
-          this.form.distributor_id.push(Number(shopDatas[i].distributor_id))
-        }
-      }
-      this.relDistributorIds = this.form.distributor_id
-    },
-    giftChange (value) {
-      this.inputValue.gift_length = this.getValueLength(value)
-    },
-    titleChange (value) {
-      this.inputValue.title_length = this.getValueLength(value)
-    },
-    descriptionChange (value) {
-      this.inputValue.description_length = this.getValueLength(value)
-    },
-    getValueLength (value) {
-      let realLength = 0,
-        charCode = -1,
-        count = 0
-      for (var i = 0; i < value.length; i++) {
-        charCode = value.charCodeAt(i)
-        if (charCode >= 0 && charCode <= 128) {
-          count++
-        } else {
-          realLength++
-        }
-      }
-      if (count > 0) {
-        realLength = realLength + parseInt(count / 2)
-        if (count % 2 > 0) {
-          realLength += 1
-        }
-      }
-      return realLength
-    },
-    conditionChange (val) {
-      if (val == 1) {
-        this.form.least_cost = 0
-      }
-      if (val == 2 && this.form.card_type === 'discount') {
-        this.form.most_cost = 999999
-      }
-    },
-    fetchMainCate () {
-      getCategory({ is_main_category: true, ignore_none: true }).then((response) => {
-        this.categoryList = response.data.data
-      })
-    },
-    addItemTag () {
-      this.tag.currentTags = []
-      if (this.item_id.length) {
-        this.showTags()
-        this.tag.form.item_ids = this.item_id
-      } else {
-        this.$message({
-          type: 'error',
-          message: '请选择至少一个商品!'
-        })
-      }
-    },
-    showTags () {
-      this.tag.tags = [...this.tag.list]
-      let active_tags = [] //可选标签
-      this.tag.tags.forEach((item, index) => {
-        let isInArr = this.tag.currentTags.findIndex((n) => n.tag_id == item.tag_id)
-        if (isInArr == -1) active_tags.push(item)
-      })
-      this.tag.tags = active_tags
-    },
-    tagRemove (index) {
-      this.tag.tags.unshift(this.tag.currentTags[index])
-      this.tag.currentTags.splice(index, 1)
-      this.form.tag_ids = []
-      this.tag.currentTags.forEach((item) => {
-        this.form.tag_ids.push(item.tag_id)
-      })
-    },
-    tagAdd (item, index) {
-      let isInArr = this.tag.currentTags.findIndex((n) => n.tag_id == item.tag_id)
-      if (isInArr == -1) {
-        this.tag.currentTags.push(item)
-        this.tag.tags.splice(index, 1)
-      }
-      this.form.tag_ids = []
-      this.tag.currentTags.forEach((item) => {
-        this.form.tag_ids.push(item.tag_id)
-      })
-    },
-    getAllTagLists () {
-      let params = {
-        page: 1,
-        pageSize: 500
-      }
-      getTagList(params).then((response) => {
-        this.tag.list = response.data.data.list
-        this.showTags()
-      })
-    },
-    // 获取品牌列表
-    getBrandList (searchVal = '', isInit = false) {
-      const list = []
-      getGoodsAttr({
-        page: 1,
-        pageSize: 1000,
-        attribute_type: 'brand',
-        attribute_name: searchVal,
-        attribute_ids: isInit ? this.form.brand_id : ''
-      }).then((res) => {
-        for (let item of res.data.data.list) {
-          list.push({ attribute_name: item.attribute_name, attribute_id: item.attribute_id })
-        }
-        this.brand.list = list
-        this.showBrands()
-      })
-    },
-    showBrands () {
-      this.brand.brands = [...this.brand.list]
-      let active_brands = []
-      this.brand.brands.forEach((item, index) => {
-        let isInArr = this.brand.currentBrands.findIndex((n) => n.attribute_id == item.attribute_id)
-        //if (isInArr != -1) this.brand.brands.splice(index, 1)
-        if (isInArr == -1) active_brands.push(item)
-      })
-      this.brand.brands = active_brands
-    },
-    brandAdd (item, index) {
-      let isInArr = this.brand.currentBrands.findIndex((n) => n.attribute_id == item.attribute_id)
-      if (isInArr == -1) {
-        this.brand.currentBrands.push(item)
-        this.brand.brands.splice(index, 1)
-      }
-      this.form.brand_ids = []
-      this.brand.currentBrands.forEach((item) => {
-        this.form.brand_ids.push(item.attribute_id)
-      })
-    },
-    brandRemove (index) {
-      this.brand.brands.unshift(this.brand.currentBrands[index])
-      this.brand.currentBrands.splice(index, 1)
-      this.form.brand_ids = []
-      this.brand.currentBrands.forEach((item) => {
-        this.form.brand_ids.push(item.attribute_id)
-      })
-    },
-    /**
-     * 下载模板
-     * */
-    uploadHandleTemplate () {
-      let params = { file_type: 'marketing_goods', file_name: '商品模板' }
-      exportUploadTemplate(params).then((response) => {
-        let { data } = response.data
-        if (data.file) {
-          var a = document.createElement('a')
-          a.href = data.file
-          a.download = data.name
-          document.body.appendChild(a)
-          a.click()
-          a.remove()
-        } else {
-          this.$message({
-            type: 'error',
-            message: '没有相关数据可导出'
-          })
-        }
-      })
-    },
-    /**
-     * 上传模板
-     * */
-    uploadHandleChange (file, fileList) {
-      let params = { isUploadFile: true, file_type: 'marketing_goods', file: file.raw }
-      handleUploadFile(params).then((response) => {
-        this.$message({
-          type: 'success',
-          message: '上传成功'
-        })
-
-        let { data } = response.data
-
-        if (data.fail.length > 0) {
-          let str = data.fail.map((item) => {
-            return item.item_bn
-          })
-
-          setTimeout(() => {
-            this.$message({
-              showClose: true,
-              message: `以下商品编号不存在：${str}`,
-              type: 'error',
-              duration: 100000
-            })
-          }, 1500)
-        }
-        if (data.succ.length <= 0) return
-        this.relItems = data.succ
-        let list = []
-        data.succ.forEach((item) => {
-          if (!item.nospec) {
-            list.push(Object.assign(item, { spec_items: [] }))
-          } else {
-            list.push(item)
-          }
-        })
-      })
-    },
-    haddleShowTab (value) {
-      this.showTab = value
     }
   }
 }

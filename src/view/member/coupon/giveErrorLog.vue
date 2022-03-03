@@ -1,41 +1,21 @@
 <template>
   <div>
-    <el-table
-      v-loading="loading"
-      :data="giveErrorLogList"
-      style="width: 100%"
-      height="580"
-      border
-    >
-      <el-table-column
-        prop="username"
-        label="用户姓名"
-      />
-      <el-table-column
-        prop="mobile"
-        label="手机号码"
-      />
-      <el-table-column
-        prop="card_id"
-        label="优惠券id"
-      />
-      <el-table-column
-        prop="title"
-        label="优惠券名称"
-      />
-      <el-table-column
-        prop="note"
-        label="失败原因"
-      />
+    <el-table :data="giveErrorLogList" style="width: 100%" height="580" border v-loading="loading">
+      <el-table-column prop="username" label="用户姓名"> </el-table-column>
+      <el-table-column prop="mobile" label="手机号码"> </el-table-column>
+      <el-table-column prop="card_id" label="优惠券id"> </el-table-column>
+      <el-table-column prop="title" label="优惠券名称"> </el-table-column>
+      <el-table-column prop="note" label="失败原因"> </el-table-column>
     </el-table>
     <div class="content-padded content-center">
       <el-pagination
         layout="prev, pager, next"
+        @current-change="handleCurrentChange"
         :current-page.sync="params.page"
         :total="totalCount"
         :page-size="params.pageSize"
-        @current-change="handleCurrentChange"
-      />
+      >
+      </el-pagination>
     </div>
   </div>
 </template>
@@ -43,7 +23,7 @@
 <script>
 import { getGiveErrorLogList } from '../../../api/promotions'
 export default {
-  data () {
+  data() {
     return {
       loading: false,
       giveErrorLogList: [],
@@ -54,15 +34,12 @@ export default {
       }
     }
   },
-  mounted () {
-    this.getGiveErrorLogList()
-  },
   methods: {
-    handleCurrentChange (pageNum) {
+    handleCurrentChange(pageNum) {
       this.params.page = pageNum
       this.getGiveErrorLogList()
     },
-    getGiveErrorLogList () {
+    getGiveErrorLogList() {
       this.loading = true
       getGiveErrorLogList(this.$route.params.id, this.params)
         .then((response) => {
@@ -78,6 +55,9 @@ export default {
           })
         })
     }
+  },
+  mounted() {
+    this.getGiveErrorLogList()
   }
 }
 </script>

@@ -10,24 +10,16 @@
             <li>
               <div class="app-item">
                 <router-link :to="{ path: '/application/masterofcoupon/index' }">
-                  <div class="app-icon">
-                    <i class="iconfont icon-calendar-alt" />
-                  </div>
-                  <div class="app-txt">
-                    预约
-                  </div>
+                  <div class="app-icon"><i class="iconfont icon-calendar-alt"></i></div>
+                  <div class="app-txt">预约</div>
                 </router-link>
               </div>
             </li>
             <li>
               <div class="app-item">
                 <router-link :to="{ path: '/application/masterofcoupon/index' }">
-                  <div class="app-icon">
-                    <i class="icon icon-ticket-alt" />
-                  </div>
-                  <div class="app-txt">
-                    派券大师
-                  </div>
+                  <div class="app-icon"><i class="icon icon-ticket-alt"></i></div>
+                  <div class="app-txt">派券大师</div>
                 </router-link>
               </div>
             </li>
@@ -45,7 +37,7 @@
 
 <script>
 export default {
-  data () {
+  data() {
     return {}
   }
 }

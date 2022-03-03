@@ -2,35 +2,28 @@
   <div class="zyk_upload_picture">
     <el-form
       v-if="processed == '未填'"
-      ref="ruleForm"
       :model="form"
+      ref="ruleForm"
       class="demo-ruleForm"
       :rules="rules"
     >
       <!-- 企业信息 -->
-      <el-card
-        class="box-card"
-        shadow="never"
-      >
-        <div
-          slot="header"
-          class="clearfix"
-        >
-          <span>企业信息（图片必须JPG/PNG/JPEG等类型的文件，大小在1M以内（文件名中不能使用字符/、、:、*、?、”、<、>
-            ）</span>
+      <el-card class="box-card" shadow="never">
+        <div slot="header" class="clearfix">
+          <span
+            >企业信息（图片必须JPG/PNG/JPEG等类型的文件，大小在1M以内（文件名中不能使用字符/、、:、*、?、”、<、>
+            ）</span
+          >
         </div>
         <div class="content">
           <div class="wrap">
             <el-form-item prop="social_credit_code_url">
-              <image-upload
-                type="01"
-                @successHandle="successHandle"
-              />
+              <image-upload @successHandle="successHandle" type="01"></image-upload>
               <img
                 v-if="form.social_credit_code_url"
                 :src="form.social_credit_code_url"
                 class="avatar"
-              >
+              />
               <div class="row">
                 <span>* 三证合一码</span>
                 <el-tooltip
@@ -39,45 +32,32 @@
                   placement="right-end"
                   effect="light"
                 >
-                  <i class="el-icon-warning-outline" />
+                  <i class="el-icon-warning-outline"></i>
                 </el-tooltip>
               </div>
             </el-form-item>
             <el-form-item prop="legal_certId_front_url">
-              <image-upload
-                type="02"
-                @successHandle="successHandle"
-              />
+              <image-upload @successHandle="successHandle" type="02"></image-upload>
               <img
                 v-if="form.legal_certId_front_url"
                 :src="form.legal_certId_front_url"
                 class="avatar"
-              >
+              />
               <span>* 法人/小微负责人身份证正面</span>
             </el-form-item>
             <el-form-item prop="legal_cert_id_back_url">
-              <image-upload
-                type="03"
-                @successHandle="successHandle"
-              />
+              <image-upload @successHandle="successHandle" type="03"></image-upload>
               <img
                 v-if="form.legal_cert_id_back_url"
                 :src="form.legal_cert_id_back_url"
                 class="avatar"
-              >
+              />
               <span>* 法人/小微负责人身份证反面</span>
             </el-form-item>
 
             <el-form-item prop="store_url">
-              <image-upload
-                type="04"
-                @successHandle="successHandle"
-              />
-              <img
-                v-if="form.store_url"
-                :src="form.store_url"
-                class="avatar"
-              >
+              <image-upload @successHandle="successHandle" type="04"></image-upload>
+              <img v-if="form.store_url" :src="form.store_url" class="avatar" />
               <div class="row">
                 <span>门店</span>
                 <el-tooltip
@@ -86,36 +66,26 @@
                   placement="right-end"
                   effect="light"
                 >
-                  <i class="el-icon-warning-outline" />
+                  <i class="el-icon-warning-outline"></i>
                 </el-tooltip>
               </div>
             </el-form-item>
 
             <el-form-item prop="cert_front_image_url">
-              <image-upload
-                type="06"
-                @successHandle="successHandle"
-              />
+              <image-upload @successHandle="successHandle" type="06"></image-upload>
               <img
                 v-if="form.cert_front_image_url"
                 :src="form.cert_front_image_url"
                 class="avatar"
-              >
+              />
               <div class="row">
                 <span>股东身份证正面</span>
               </div>
             </el-form-item>
 
             <el-form-item prop="cert_back_image_url">
-              <image-upload
-                type="07"
-                @successHandle="successHandle"
-              />
-              <img
-                v-if="form.cert_back_image_url"
-                :src="form.cert_back_image_url"
-                class="avatar"
-              >
+              <image-upload @successHandle="successHandle" type="07"></image-upload>
+              <img v-if="form.cert_back_image_url" :src="form.cert_back_image_url" class="avatar" />
               <div class="row">
                 <span>股东身份证反面</span>
               </div>
@@ -124,47 +94,34 @@
         </div>
       </el-card>
       <!-- 结算卡图片信息 -->
-      <el-card
-        class="box-card"
-        shadow="never"
-      >
-        <div
-          slot="header"
-          class="clearfix"
-        >
-          <span>结算卡图片信息（图片必须JPG/PNG/JPEG等类型的文件，大小在1M以内（文件名中不能使用字符/、、:、*、?、”、<、>
-            ）</span>
+      <el-card class="box-card" shadow="never">
+        <div slot="header" class="clearfix">
+          <span
+            >结算卡图片信息（图片必须JPG/PNG/JPEG等类型的文件，大小在1M以内（文件名中不能使用字符/、、:、*、?、”、<、>
+            ）</span
+          >
         </div>
         <div class="content">
           <div class="wrap">
             <el-form-item prop="account_opening_permit_url">
-              <image-upload
-                type="05"
-                @successHandle="successHandle"
-              />
+              <image-upload @successHandle="successHandle" type="05"></image-upload>
               <img
                 v-if="form.account_opening_permit_url"
                 :src="form.account_opening_permit_url"
                 class="avatar"
-              >
-              <div
-                class="row"
-                style="margin-top: 10px; line-height: 20px"
-              >
-                <span>* 开户许可证/小微负责人<br>银行卡正面照</span>
+              />
+              <div class="row" style="margin-top: 10px; line-height: 20px">
+                <span>* 开户许可证/小微负责人<br />银行卡正面照</span>
               </div>
             </el-form-item>
 
             <el-form-item prop="settle_account_certificate_url">
-              <image-upload
-                type="08"
-                @successHandle="successHandle"
-              />
+              <image-upload @successHandle="successHandle" type="08"></image-upload>
               <img
                 v-if="form.settle_account_certificate_url"
                 :src="form.settle_account_certificate_url"
                 class="avatar"
-              >
+              />
               <div class="row">
                 <span>结算账号开户证明</span>
               </div>
@@ -173,44 +130,30 @@
         </div>
       </el-card>
       <!-- 其他图片信息 -->
-      <el-card
-        class="box-card"
-        shadow="never"
-      >
-        <div
-          slot="header"
-          class="clearfix"
-        >
-          <span>其他图片信息（图片必须JPG/PNG/JPEG等类型的文件，大小在1M以内（文件名中不能使用字符/、、:、*、?、”、<、>
-            ））</span>
+      <el-card class="box-card" shadow="never">
+        <div slot="header" class="clearfix">
+          <span
+            >其他图片信息（图片必须JPG/PNG/JPEG等类型的文件，大小在1M以内（文件名中不能使用字符/、、:、*、?、”、<、>
+            ））</span
+          >
         </div>
         <div class="content">
           <div class="wrap">
             <el-form-item prop="web_pic_url">
-              <image-upload
-                type="09"
-                @successHandle="successHandle"
-              />
-              <img
-                v-if="form.web_pic_url"
-                :src="form.web_pic_url"
-                class="avatar"
-              >
+              <image-upload @successHandle="successHandle" type="09"></image-upload>
+              <img v-if="form.web_pic_url" :src="form.web_pic_url" class="avatar" />
               <div class="row">
                 <span>网站截图</span>
               </div>
             </el-form-item>
 
             <el-form-item prop="industry_qualify_doc_license_url">
-              <image-upload
-                type="10"
-                @successHandle="successHandle"
-              />
+              <image-upload @successHandle="successHandle" type="10"></image-upload>
               <img
                 v-if="form.industry_qualify_doc_license_url"
                 :src="form.industry_qualify_doc_license_url"
                 class="avatar"
-              >
+              />
               <div class="row">
                 <span>行业资质文件</span>
                 <el-tooltip
@@ -219,34 +162,24 @@
                   placement="right-end"
                   effect="light"
                 >
-                  <i class="el-icon-warning-outline" />
+                  <i class="el-icon-warning-outline"></i>
                 </el-tooltip>
               </div>
             </el-form-item>
 
             <el-form-item prop="icp_registration_license_url">
-              <image-upload
-                type="11"
-                @successHandle="successHandle"
-              />
+              <image-upload @successHandle="successHandle" type="11"></image-upload>
               <img
                 v-if="form.icp_registration_license_url"
                 :src="form.icp_registration_license_url"
                 class="avatar"
-              >
+              />
               <span>ICP备案许可证明/许可证编码</span>
             </el-form-item>
 
             <el-form-item prop="lease_contract_url">
-              <image-upload
-                type="12"
-                @successHandle="successHandle"
-              />
-              <img
-                v-if="form.lease_contract_url"
-                :src="form.lease_contract_url"
-                class="avatar"
-              >
+              <image-upload @successHandle="successHandle" type="12"></image-upload>
+              <img v-if="form.lease_contract_url" :src="form.lease_contract_url" class="avatar" />
               <div class="row">
                 <span>租赁合同</span>
                 <el-tooltip
@@ -255,21 +188,18 @@
                   placement="right-end"
                   effect="light"
                 >
-                  <i class="el-icon-warning-outline" />
+                  <i class="el-icon-warning-outline"></i>
                 </el-tooltip>
               </div>
             </el-form-item>
 
             <el-form-item prop="transaction_test_record_url">
-              <image-upload
-                type="13"
-                @successHandle="successHandle"
-              />
+              <image-upload @successHandle="successHandle" type="13"></image-upload>
               <img
                 v-if="form.transaction_test_record_url"
                 :src="form.transaction_test_record_url"
                 class="avatar"
-              >
+              />
               <div class="row">
                 <span>交易测试记录</span>
                 <el-tooltip
@@ -278,21 +208,18 @@
                   placement="right-end"
                   effect="light"
                 >
-                  <i class="el-icon-warning-outline" />
+                  <i class="el-icon-warning-outline"></i>
                 </el-tooltip>
               </div>
             </el-form-item>
 
             <el-form-item prop="buss_support_materials_url">
-              <image-upload
-                type="14"
-                @successHandle="successHandle"
-              />
+              <image-upload @successHandle="successHandle" type="14"></image-upload>
               <img
                 v-if="form.buss_support_materials_url"
                 :src="form.buss_support_materials_url"
                 class="avatar"
-              >
+              />
               <div class="row">
                 <span>业务场景证明材料</span>
                 <el-tooltip
@@ -301,7 +228,7 @@
                   placement="right-end"
                   effect="light"
                 >
-                  <i class="el-icon-warning-outline" />
+                  <i class="el-icon-warning-outline"></i>
                 </el-tooltip>
               </div>
             </el-form-item>
@@ -309,52 +236,27 @@
         </div>
       </el-card>
       <!-- 其他信息填写 -->
-      <el-card
-        class="box-card"
-        shadow="never"
-      >
-        <div
-          slot="header"
-          class="clearfix"
-        >
+      <el-card class="box-card" shadow="never">
+        <div slot="header" class="clearfix">
           <span>其他信息</span>
         </div>
         <el-row :gutter="20">
           <el-col :span="8">
-            <el-form-item
-              label="商城地址"
-              prop="business_add"
-              label-width="100px"
-            >
-              <el-input v-model="form.business_add" />
+            <el-form-item label="商城地址" prop="business_add" label-width="100px">
+              <el-input v-model="form.business_add"></el-input>
             </el-form-item>
           </el-col>
           <el-col :span="8">
-            <el-form-item
-              label="股东身份证姓名"
-              prop="cert_name"
-              label-width="100px"
-            >
-              <el-input v-model="form.cert_name" />
+            <el-form-item label="股东身份证姓名" prop="cert_name" label-width="100px">
+              <el-input v-model="form.cert_name"></el-input>
             </el-form-item>
           </el-col>
           <el-col :span="8">
-            <el-form-item
-              label="股东身份证号"
-              prop="cert_id"
-              label-width="100px"
-            >
+            <el-form-item label="股东身份证号" prop="cert_id" label-width="100px">
               <div class="flex">
-                <el-input
-                  v-model="form.cert_id"
-                  placeholder=""
-                />
-                <el-tooltip
-                  content="身份证信息字母X需大写"
-                  placement="top-end"
-                  effect="light"
-                >
-                  <i class="el-icon-warning-outline" />
+                <el-input placeholder="" v-model="form.cert_id"></el-input>
+                <el-tooltip content="身份证信息字母X需大写" placement="top-end" effect="light">
+                  <i class="el-icon-warning-outline"></i>
                 </el-tooltip>
               </div>
             </el-form-item>
@@ -365,42 +267,19 @@
               prop="industry_qualify_doc_type"
               label-width="140px"
             >
-              <el-select
-                v-model="form.industry_qualify_doc_type"
-                placeholder="请选择活动区域"
-              >
-                <el-option
-                  label="无"
-                  value=""
-                />
-                <el-option
-                  label="游戏类"
-                  value="1"
-                />
-                <el-option
-                  label="直播类"
-                  value="2"
-                />
-                <el-option
-                  label="小说图书类"
-                  value="3"
-                />
-                <el-option
-                  label="其他"
-                  value="4"
-                />
+              <el-select v-model="form.industry_qualify_doc_type" placeholder="请选择活动区域">
+                <el-option label="无" value=""></el-option>
+                <el-option label="游戏类" value="1"></el-option>
+                <el-option label="直播类" value="2"></el-option>
+                <el-option label="小说图书类" value="3"></el-option>
+                <el-option label="其他" value="4"></el-option>
               </el-select>
             </el-form-item>
           </el-col>
         </el-row>
       </el-card>
       <el-form-item style="text-align: center; margin: 50px 0; margin-right: 130px">
-        <el-button
-          type="primary"
-          @click="submitForm('ruleForm')"
-        >
-          提交审核
-        </el-button>
+        <el-button type="primary" @click="submitForm('ruleForm')">提交审核</el-button>
         <!-- <loading-btn
           ref="loadingBtn"
           size="medium"
@@ -412,9 +291,9 @@
     </el-form>
 
     <Result-cpn
-      v-if="processed == '已填'"
-      :current-status="currentStatus"
       @nextPage="nextPage"
+      :currentStatus="currentStatus"
+      v-if="processed == '已填'"
       @processedHandle="processedHandle"
     />
     <check-box
@@ -424,7 +303,7 @@
       :is_sms="checkBoxConfig.is_sms"
       @checkBoxConfirmHandle="checkBoxConfirmHandle"
       @checkBoxVisibleHandle="checkBoxVisibleHandle"
-    />
+    ></check-box>
   </div>
 </template>
 
@@ -440,7 +319,7 @@ export default {
     loadingBtn,
     checkBox
   },
-  data () {
+  data() {
     return {
       isGetImage: false,
       imgDialog: false,
@@ -491,12 +370,12 @@ export default {
       }
     }
   },
-  mounted () {
+  mounted() {
     this.getStepHandle()
   },
   methods: {
     // 查询开户步骤
-    async getStepHandle () {
+    async getStepHandle() {
       const { info } = await this.$api.adapay.getStep()
       const { SubmitLicense } = info
       if (SubmitLicense.length <= 0) {
@@ -520,16 +399,16 @@ export default {
         }
       }
     },
-    handleImgPicker (pickerImgType) {
+    handleImgPicker(pickerImgType) {
       this.pickerImgType = pickerImgType
       this.imgDialog = true
       this.isGetImage = true
     },
-    closeImgDialog () {
+    closeImgDialog() {
       this.imgDialog = false
       this.isGetImage = false
     },
-    successHandle (data) {
+    successHandle(data) {
       const { tem_url, file_url, file_type } = data
       switch (file_type) {
         case '01':
@@ -591,7 +470,7 @@ export default {
       }
       this.$message.success('上传成功')
     },
-    submitForm () {
+    submitForm() {
       this.$refs['ruleForm'].validate(async (valid) => {
         if (valid) {
           this.checkBoxVisibleHandle()
@@ -602,7 +481,7 @@ export default {
       })
     },
     /* ----------------------------------checkBox start----------------------------------- */
-    async checkBoxConfirmHandle (data) {
+    async checkBoxConfirmHandle(data) {
       try {
         const { status } = await this.$api.adapay.submitPhoto({
           ...this.apiData,
@@ -610,7 +489,7 @@ export default {
           cert_name: this.form.cert_name,
           cert_id: this.form.cert_id,
           industry_qualify_doc_type: this.form.industry_qualify_doc_type,
-          ...data
+           ...data
         })
 
         if (status) {
@@ -622,21 +501,21 @@ export default {
             title: '证照信息'
           }
         }
-        this.checkBoxVisibleHandle()
+        this.checkBoxVisibleHandle();
       } catch (error) {
         this.checkBoxVisibleHandle()
         return
       }
     },
-    checkBoxVisibleHandle () {
+    checkBoxVisibleHandle() {
       this.checkBoxConfig.visible = !this.checkBoxConfig.visible
     },
     /* ----------------------------------checkBox  end ----------------------------------- */
-    nextPage () {
+    nextPage() {
       this.$router.push('/setting/adapay_merchant/pay_setting')
     },
     // 重新填写
-    async processedHandle () {
+    async processedHandle() {
       const { info } = await this.$api.adapay.getStep()
       const { SubmitLicense } = info
 

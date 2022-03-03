@@ -1,15 +1,8 @@
 <template>
   <div class="section-white content-padded">
-    <el-form
-      :ref="form"
-      v-model="form"
-      class="add-form"
-    >
+    <el-form v-model="form" :ref="form" class="add-form">
       <el-form-item label="活动名称">
-        <el-input
-          v-model="form.active_name"
-          placeholder="请填写活动名称"
-        />
+        <el-input v-model="form.active_name" placeholder="请填写活动名称"></el-input>
       </el-form-item>
       <!-- <el-form-item label="活动主题">
         <el-radio-group v-model="form.active_theme">
@@ -22,71 +15,36 @@
           v-model="form.date_range"
           type="datetimerange"
           placeholder="请选择起止时间"
-        />
+        ></el-date-picker>
       </el-form-item>
       <el-form-item label="短信提醒">
         <el-switch
           v-model="form.message_remind"
           active-color="#13ce66"
           inactive-color="#ff4949"
-        />
+        ></el-switch>
       </el-form-item>
       <el-form-item label="设置礼品">
-        <el-button
-          type="primary"
-          @click="addGift"
-        >
-          添加礼品
-        </el-button>
-        <el-table
-          :data="form.activeData"
-          class="table"
-        >
-          <el-table-column
-            prop="name"
-            label="礼品名称"
-          />
-          <el-table-column
-            prop="type"
-            label="类型"
-          />
-          <el-table-column
-            prop="worth"
-            label="价值"
-          />
-          <el-table-column
-            prop="validity"
-            label="有效期"
-          />
-          <el-table-column
-            prop="num"
-            label="发放数量"
-          />
+        <el-button type="primary" @click="addGift">添加礼品</el-button>
+        <el-table :data="form.activeData" class="table">
+          <el-table-column prop="name" label="礼品名称"></el-table-column>
+          <el-table-column prop="type" label="类型"></el-table-column>
+          <el-table-column prop="worth" label="价值"></el-table-column>
+          <el-table-column prop="validity" label="有效期"></el-table-column>
+          <el-table-column prop="num" label="发放数量"></el-table-column>
           <el-table-column label="操作">
             <template slot-scope="scope">
-              <el-button type="text">
-                编辑
-              </el-button>
-              <el-button
-                type="text"
-                @click="remove(scope.row, scope.$index)"
-              >
-                删除
-              </el-button>
+              <el-button type="text">编辑</el-button>
+              <el-button type="text" @click="remove(scope.row, scope.$index)">删除</el-button>
             </template>
           </el-table-column>
         </el-table>
       </el-form-item>
     </el-form>
     <div class="section-footer content-center">
-      <el-button type="primary">
-        保存
-      </el-button>
+      <el-button type="primary">保存</el-button>
     </div>
-    <gift-dialog
-      :switch-on="isopen"
-      @closeDialog="closeDialog"
-    />
+    <gift-dialog :switch-on="isopen" @closeDialog="closeDialog"></gift-dialog>
   </div>
 </template>
 
@@ -96,7 +54,7 @@ export default {
   components: {
     giftDialog
   },
-  data () {
+  data() {
     return {
       isopen: false,
       form: {
@@ -109,13 +67,13 @@ export default {
     }
   },
   methods: {
-    addGift () {
+    addGift() {
       this.isopen = true
     },
-    remove (row, index) {
+    remove(row, index) {
       this.form.activeData.splice(index, 1)
     },
-    closeDialog () {
+    closeDialog() {
       this.isopen = false
     }
   }

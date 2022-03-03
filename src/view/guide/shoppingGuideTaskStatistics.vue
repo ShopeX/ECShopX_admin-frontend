@@ -1,34 +1,21 @@
 <template>
   <div>
-    <el-table
-      v-loading="loadingTable"
-      :data="list"
-      style="width: 100%"
-    >
-      <el-table-column
-        prop="salesperson_name"
-        label="导购员名称"
-      />
-      <el-table-column
-        prop="times"
-        label="完成次数"
-      />
-      <el-table-column
-        prop="percentage"
-        label="完成占比"
-      />
+    <el-table v-loading="loadingTable" :data="list" style="width: 100%">
+      <el-table-column prop="salesperson_name" label="导购员名称"></el-table-column>
+      <el-table-column prop="times" label="完成次数"></el-table-column>
+      <el-table-column prop="percentage" label="完成占比"></el-table-column>
     </el-table>
     <el-pagination
       class="content-padded content-center"
       background
+      @size-change="handleSizeChange"
+      @current-change="handleCurrentChange"
       :current-page="params.page"
       :page-sizes="[10, 20, 50, 100]"
       :page-size="params.page_size"
       layout="total, sizes, prev, pager, next, jumper"
       :total="total_count"
-      @size-change="handleSizeChange"
-      @current-change="handleCurrentChange"
-    />
+    ></el-pagination>
   </div>
 </template>
 <script>
@@ -37,7 +24,7 @@ import { mapGetters } from 'vuex'
 import { getSalesperosnTaskStatistics } from '@/api/shop'
 
 export default {
-  data () {
+  data() {
     return {
       loadingTable: false,
       list: [],
@@ -53,11 +40,8 @@ export default {
   computed: {
     ...mapGetters(['wheight'])
   },
-  mounted () {
-    this.getList()
-  },
   methods: {
-    getList () {
+    getList() {
       this.loadingTable = true
       getSalesperosnTaskStatistics(this.params).then((response) => {
         this.list = response.data.data.list
@@ -65,18 +49,21 @@ export default {
         this.loadingTable = false
       })
     },
-    handelClickSearch () {
+    handelClickSearch() {
       this.getList()
     },
-    handleSizeChange (val) {
+    handleSizeChange(val) {
       this.params.page = 1
       this.params.pageSize = val
       this.getList()
     },
-    handleCurrentChange (val) {
+    handleCurrentChange(val) {
       this.paging.page = val
       this.getList()
     }
+  },
+  mounted() {
+    this.getList()
   }
 }
 </script>

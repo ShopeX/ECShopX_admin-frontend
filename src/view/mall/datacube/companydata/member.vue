@@ -12,11 +12,12 @@
             range-separator="至"
             start-placeholder="开始日期"
             end-placeholder="结束日期"
-            style="width: 100%"
+            style="width: 100%;"
             :picker-options="pickerOptions"
             value-format="yyyy-MM-dd"
             @change="dateChange"
-          />
+          >
+          </el-date-picker>
         </el-col>
       </el-form-item>
     </el-form>
@@ -26,34 +27,16 @@
       type="border-card"
       @tab-click="handleClick"
     >
-      <el-tab-pane
-        label="会员数"
-        name="member_count"
-      >
+      <el-tab-pane label="会员数" name="member_count">
         <section>
-          <canvas
-            id="member_count"
-            height="120"
-          />
+          <canvas id="member_count" height="120"></canvas>
         </section>
       </el-tab-pane>
     </el-tabs>
     <template>
-      <el-table
-        :data="allListData"
-        stripe
-        border
-        style="width: 100%"
-      >
-        <el-table-column
-          prop="count_date"
-          label="日期"
-          fixed
-        />
-        <el-table-column
-          prop="member_count"
-          label="会员数"
-        />
+      <el-table :data="allListData" stripe border style="width: 100%">
+        <el-table-column prop="count_date" label="日期" fixed></el-table-column>
+        <el-table-column prop="member_count" label="会员数"></el-table-column>
       </el-table>
     </template>
   </div>
@@ -63,7 +46,7 @@ import { mapGetters } from 'vuex'
 import chart from 'chart.js'
 import { getCompanyData } from '../../../../api/datacube'
 export default {
-  data () {
+  data() {
     return {
       vdate: '',
       loading: true,
@@ -94,7 +77,7 @@ export default {
         shortcuts: [
           {
             text: '最近一周',
-            onClick (picker) {
+            onClick(picker) {
               const start = new Date()
               const end = new Date()
               start.setTime(start.getTime() - 3600 * 1000 * 24 * 7)
@@ -104,7 +87,7 @@ export default {
           },
           {
             text: '最近一个月',
-            onClick (picker) {
+            onClick(picker) {
               const start = new Date()
               const end = new Date()
               start.setTime(start.getTime() - 3600 * 1000 * 24 * 30)
@@ -114,7 +97,7 @@ export default {
           },
           {
             text: '最近三个月',
-            onClick (picker) {
+            onClick(picker) {
               const start = new Date()
               const end = new Date()
               start.setTime(start.getTime() - 3600 * 1000 * 24 * 90)
@@ -126,24 +109,16 @@ export default {
       }
     }
   },
-  mounted () {
-    var start = new Date()
-    var end = new Date()
-    start.setTime(start.getTime() - 3600 * 1000 * 24 * 7)
-    end.setTime(end.getTime() - 3600 * 1000 * 24 * 1)
-    this.vdate = [start, end]
-    this.getCompanyDataList(this.activeName)
-  },
   methods: {
-    handleClick (tab, event) {
+    handleClick(tab, event) {
       this.chartInit(tab.name)
     },
-    dateChange (val) {
+    dateChange(val) {
       this.params.start = val[0]
       this.params.end = val[1]
       this.getCompanyDataList(this.activeName)
     },
-    getCompanyDataList (pane_name) {
+    getCompanyDataList(pane_name) {
       this.dataTimeArr = []
       this.dataInfo.member_count.data_list = []
       this.dataInfo.member_count.total_num = 0
@@ -172,7 +147,7 @@ export default {
           })
         })
     },
-    chartInit (pane_name) {
+    chartInit(pane_name) {
       var config = {
         type: 'line',
         data: {
@@ -225,6 +200,14 @@ export default {
       var ctx = document.getElementById(pane_name).getContext('2d')
       window.myLine = new Chart(ctx, config)
     }
+  },
+  mounted() {
+    var start = new Date()
+    var end = new Date()
+    start.setTime(start.getTime() - 3600 * 1000 * 24 * 7)
+    end.setTime(end.getTime() - 3600 * 1000 * 24 * 1)
+    this.vdate = [start, end]
+    this.getCompanyDataList(this.activeName)
   }
 }
 </script>

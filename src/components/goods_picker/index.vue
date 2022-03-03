@@ -3,20 +3,12 @@
     title="选择商品"
     class="select-goods-box"
     :visible="goodsVisible"
+    @close="closeDialog"
     width="732px"
     append-to-body
-    @close="closeDialog"
   >
-    <StoreFilter
-      v-if="!filter"
-      class="store"
-      :data="store"
-      @change="handleStoreChange"
-    />
-    <el-form
-      label-position="left"
-      label-width="70px"
-    >
+    <StoreFilter v-if="!filter" class="store" :data="store" @change="handleStoreChange" />
+    <el-form label-position="left" label-width="70px">
       <el-form-item label="商品名： ">
         <el-row :gutter="10">
           <el-col :span="10">
@@ -25,51 +17,40 @@
               clearable
               placeholder="请输入商品名称"
               @clear="searchByKey"
-            />
+            >
+            </el-input>
           </el-col>
           <el-col :span="12">
-            <el-button
-              icon="el-icon-search"
-              type="danger"
-              @click="searchByKey"
-            />
+            <el-button icon="el-icon-search" type="danger" @click="searchByKey"></el-button>
           </el-col>
         </el-row>
       </el-form-item>
       <el-form-item label-width="0">
         <el-transfer
-          v-model="selectedGoods"
           v-loading="loading"
+          v-model="selectedGoods"
           :titles="['商品列表', '已选中']"
           :button-texts="['移除选择', '添加选择']"
-          :data="goodsList"
           @change="goodsSelector"
+          :data="goodsList"
         >
-          <div
-            slot="left-footer"
-            class="transfer-footer"
-          >
+          <div class="transfer-footer" slot="left-footer">
             <el-pagination
               v-if="total_count > params.pageSize"
               small
               layout="prev, pager, next"
+              @current-change="pageChange"
               :total="total_count"
               :page-size="params.pageSize"
-              @current-change="pageChange"
-            />
+            >
+            </el-pagination>
           </div>
         </el-transfer>
       </el-form-item>
     </el-form>
-    <span
-      slot="footer"
-      class="dialog-footer"
-    >
+    <span slot="footer" class="dialog-footer">
       <el-button @click="closeDialog">取 消</el-button>
-      <el-button
-        type="primary"
-        @click="goodsComfirm"
-      >确 定</el-button>
+      <el-button type="primary" @click="goodsComfirm">确 定</el-button>
     </span>
   </el-dialog>
 </template>
@@ -80,9 +61,6 @@ import { getItemsList } from '@/api/goods'
 import { getPcItemsList } from '@/api/pcgoods'
 
 export default {
-  components: {
-    StoreFilter
-  },
   props: {
     visible: {
       type: Boolean,
@@ -94,7 +72,15 @@ export default {
     },
     filter: [String, Object]
   },
-  data () {
+  watch: {
+    visible(val) {
+      if (val) {
+        this.goodsVisible = val
+        this.getGoodsList()
+      }
+    }
+  },
+  data() {
     return {
       goodsVisible: false,
       loading: false,
@@ -111,33 +97,27 @@ export default {
       store: {}
     }
   },
-  watch: {
-    visible (val) {
-      if (val) {
-        this.goodsVisible = val
-        this.getGoodsList()
-      }
-    }
+  components: {
+    StoreFilter
   },
-  mounted () {},
   methods: {
-    searchByKey () {
+    searchByKey() {
       this.params.page = 1
       this.getGoodsList()
     },
     // 选择商品分页
-    pageChange (val) {
+    pageChange(val) {
       this.params.page = val
       this.getGoodsList()
     },
-    handleStoreChange (val) {
+    handleStoreChange(val) {
       this.store = val
       this.goodsList = []
       this.params.distributor_id = val.id
       this.getGoodsList()
     },
     // 选择商品触发事件
-    goodsSelector (value, direction, movedKeys) {
+    goodsSelector(value, direction, movedKeys) {
       let list = []
       this.goodsList.forEach((item) => {
         this.selectedGoods.forEach((itemKey) => {
@@ -157,7 +137,7 @@ export default {
       }
     },
     // 选择商品确认
-    goodsComfirm () {
+    goodsComfirm() {
       let values = []
       if (this.selectedGoods.length > 0) {
         this.goodsList.forEach((item) => {
@@ -188,7 +168,7 @@ export default {
       this.goodsVisible = false
       this.$emit('pickGoods', values)
     },
-    getGoodsList () {
+    getGoodsList() {
       this.loading = true
       if (this.usage === 'wxapp') {
         this._getItemsList()
@@ -196,7 +176,7 @@ export default {
         this._getPcItemsList()
       }
     },
-    _getItemsList () {
+    _getItemsList() {
       getItemsList(this.params).then((response) => {
         let list = []
         response.data.data.list.forEach((item) => {
@@ -214,7 +194,7 @@ export default {
         this.loading = false
       })
     },
-    _getPcItemsList () {
+    _getPcItemsList() {
       getPcItemsList(Object.assign({}, this.params, { item_type: 'normal' })).then((response) => {
         let list = []
         response.data.data.list.forEach((item) => {
@@ -242,11 +222,12 @@ export default {
         this.loading = false
       })
     },
-    closeDialog () {
+    closeDialog() {
       this.goodsVisible = false
       this.$emit('closeDialog', 'goods')
     }
-  }
+  },
+  mounted() {}
 }
 </script>
 

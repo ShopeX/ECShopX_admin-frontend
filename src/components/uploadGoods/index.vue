@@ -1,30 +1,13 @@
 <template>
-  <el-dialog
-    :visible.sync="dialogVisible"
-    width="460px"
-    :before-close="dialogBeforeClose"
-  >
-    <div
-      slot="title"
-      class="clearfix"
-    >
+  <el-dialog :visible.sync="dialogVisible" width="460px" :before-close="dialogBeforeClose">
+    <div slot="title" class="clearfix">
       <span>数据导入</span>
       <span class="tips title-tips">请导入EXCEL数据表格</span>
     </div>
     <div>
-      <div class="tips">
-        商品数量不能超过两万，超过部分会被删除
-      </div>
-      <div
-        class="upload"
-        @dragover="fileDragover"
-        @drop="fileDrop"
-      >
-        <img
-          class="upload-img"
-          src="@/assets/img/upload.svg"
-          alt=""
-        >
+      <div class="tips">商品数量不能超过两万，超过部分会被删除</div>
+      <div class="upload" @dragover="fileDragover" @drop="fileDrop">
+        <img class="upload-img" src="@/assets/img/upload.svg" alt="" />
         <div class="upload-text">
           <span>将文件拖到此处，或</span>
           <el-upload
@@ -33,29 +16,19 @@
             :auto-upload="false"
             :show-file-list="false"
           >
-            <el-button type="text">
-              点击上传
-            </el-button>
+            <el-button type="text">点击上传</el-button>
           </el-upload>
         </div>
       </div>
       <div>
-        EXCEL格式模板请<span
-          class="download-temp"
-          @click="uploadHandleTemplate()"
-        >下载系统提供模板</span>
+        EXCEL格式模板请<span class="download-temp" @click="uploadHandleTemplate()"
+          >下载系统提供模板</span
+        >
       </div>
     </div>
     <div slot="footer">
-      <el-button @click="dialogBeforeClose">
-        取 消
-      </el-button>
-      <el-button
-        type="primary"
-        @click="submitUpload"
-      >
-        确认上传
-      </el-button>
+      <el-button @click="dialogBeforeClose">取 消</el-button>
+      <el-button type="primary" @click="submitUpload">确认上传</el-button>
     </div>
   </el-dialog>
 </template>
@@ -63,29 +36,29 @@
 <script>
 import { handleUploadFile, exportUploadTemplate } from '@/api/common'
 export default {
-  model: {
-    prop: 'dialogVisible',
-    event: 'changeDialogVisible'
-  },
   props: {
     dialogVisible: {
       type: Boolean,
       defalut: false
     }
   },
-  data () {
+  model: {
+    prop: 'dialogVisible',
+    event: 'changeDialogVisible'
+  },
+  data() {
     return {
       uploadList: []
     }
   },
   methods: {
-    dialogBeforeClose () {
+    dialogBeforeClose() {
       this.$emit('changeDialogVisible', false)
     },
     /**
      * 下载模板
      * */
-    uploadHandleTemplate () {
+    uploadHandleTemplate() {
       let params = { file_type: 'discount_goods', file_name: '商品模板' }
       exportUploadTemplate(params).then((response) => {
         let { data } = response.data
@@ -119,7 +92,7 @@ export default {
     },
 
     // 批量上传
-    uploadHandleChange (file, type) {
+    uploadHandleChange(file, type) {
       let fileUpload = null
       if (type === 'drag') {
         fileUpload = file
@@ -148,7 +121,7 @@ export default {
     },
 
     // 确认上传
-    submitUpload () {
+    submitUpload() {
       this.$emit('uploadFile', this.uploadList)
     }
   }
@@ -179,7 +152,7 @@ export default {
     width: 150px;
     height: 150px;
   }
-  .upload-text {
+  .upload-text{
     display: flex;
     align-items: center;
   }

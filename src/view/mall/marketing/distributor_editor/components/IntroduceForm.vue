@@ -1,20 +1,18 @@
 <template>
   <el-card>
-    <div slot="header">
-      <div>店铺介绍</div>
-    </div>
+    <div slot="header"><div>店铺介绍</div></div>
     <el-row>
       <el-col>
         <el-form-item label-width="0">
           <el-input
-            v-model="form.introduce"
             style="width: 100%"
             type="textarea"
             :rows="8"
             placeholder="请输入内容"
+            v-model="form.introduce"
             maxlength="1000"
             show-word-limit
-          />
+          ></el-input>
         </el-form-item>
       </el-col>
     </el-row>
@@ -24,21 +22,21 @@
 <script>
 export default {
   props: ['externalForm'],
-  data () {
-    return {
-      form: {
-        introduce: ''
-      }
-    }
-  },
   watch: {
     externalForm: {
-      handler (val) {
+      handler(val) {
         if (val.introduce) {
           this.form.introduce = val.introduce
         }
       },
       deep: true
+    }
+  },
+  data() {
+    return {
+      form: {
+        introduce: ''
+      }
     }
   }
 }

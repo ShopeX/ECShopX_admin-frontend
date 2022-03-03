@@ -2,18 +2,9 @@
   <div>
     <div class="notices">
       <el-row :gutter="10">
-        <el-col
-          v-for="(item, index) in list"
-          :key="index"
-          :xs="24"
-          :sm="12"
-          :md="8"
-          :lg="6"
-        >
+        <el-col v-for="(item, index) in list" :key="index" :xs="24" :sm="12" :md="8" :lg="6">
           <div class="notice-item">
-            <div class="notice-message">
-              {{ item.message }}
-            </div>
+            <div class="notice-message">{{ item.message }}</div>
             <div class="notice-body">
               <ul class="notice-content">
                 <li>
@@ -28,25 +19,17 @@
             </div>
             <div class="notice-footer">
               <div class="footer-item">
-                <div @click="handleEdit(index)">
-                  <i class="iconfont icon-edit" />编辑
-                </div>
+                <div @click="handleEdit(index)"><i class="iconfont icon-edit"></i>编辑</div>
               </div>
-              <div
-                v-if="dataList[item.id]"
-                class="footer-item"
-              >
+              <div class="footer-item" v-if="dataList[item.id]">
                 <div
                   v-if="1 == dataList[item.id].disabled"
                   @click="handleTemplOpen(dataList[item.id].template_id)"
                 >
-                  <i class="iconfont icon-trash-alt" />开启
+                  <i class="iconfont icon-trash-alt"></i>开启
                 </div>
-                <div
-                  v-else
-                  @click="handleTemplClose(dataList[item.id].template_id)"
-                >
-                  <i class="iconfont icon-trash-alt" />关闭
+                <div v-else @click="handleTemplClose(dataList[item.id].template_id)">
+                  <i class="iconfont icon-trash-alt"></i>关闭
                 </div>
               </div>
               <!-- <div class="footer-item" @click="handleTemplRemove(index)">
@@ -64,18 +47,9 @@
           </div>
         </el-col> -->
       </el-row>
-      <el-dialog
-        :title="message"
-        :visible.sync="editVisible"
-        :before-close="handleCancel"
-      >
+      <el-dialog :title="message" :visible.sync="editVisible" :before-close="handleCancel">
         <template>
-          <el-form
-            ref="form"
-            :model="form"
-            class="demo-ruleForm"
-            label-width="100px"
-          >
+          <el-form ref="form" :model="form" class="demo-ruleForm" label-width="100px">
             <el-form-item label="是否开启">
               <el-switch
                 v-model="form.disabled"
@@ -83,88 +57,59 @@
                 inactive-color="#ff4949"
                 :active-value="false"
                 :inactive-value="true"
-              />
+              >
+              </el-switch>
             </el-form-item>
             <el-form-item label="标题">
-              <el-input v-model="form.title" />
+              <el-input v-model="form.title"></el-input>
             </el-form-item>
             <el-form-item label="描述">
-              <el-input v-model="form.description" />
+              <el-input v-model="form.description"></el-input>
             </el-form-item>
             <el-form-item label="是否放大第一个内容">
               <el-switch
                 v-model="form.emphasis_first_item"
                 active-color="#13ce66"
                 inactive-color="#ff4949"
-              />
+              >
+              </el-switch>
             </el-form-item>
             <el-form-item label="内容">
-              <div
-                v-for="(item, index) in form.content"
-                :key="index"
-                class="form-content"
-              >
+              <div class="form-content" v-for="(item, index) in form.content" :key="index">
                 <div class="content-name">
                   <el-form-item label="名称">
-                    <el-input
-                      v-model="item.key"
-                      placeholder=""
-                    />
+                    <el-input v-model="item.key" placeholder="" />
                   </el-form-item>
                 </div>
                 <div class="content-desc">
                   <el-form-item label="描述">
                     <div class="view-flex">
-                      <el-input
-                        v-model="item.value"
-                        class="view-flex-item"
-                        placeholder=""
-                      />
+                      <el-input class="view-flex-item" v-model="item.value" placeholder="" />
                     </div>
                   </el-form-item>
                 </div>
-                <el-button
-                  type="text"
-                  @click="handleContentRemove(index)"
-                >
-                  删除
-                </el-button>
+                <el-button type="text" @click="handleContentRemove(index)">删除</el-button>
               </div>
-              <el-button
-                icon="el-icon-circle-plus"
-                type="primary"
-                plain
-                @click="handleContentAdd"
+              <el-button icon="el-icon-circle-plus" type="primary" plain @click="handleContentAdd"
+                >添加内容</el-button
               >
-                添加内容
-              </el-button>
             </el-form-item>
           </el-form>
         </template>
-        <div
-          slot="footer"
-          class="dialog-footer"
-        >
-          <el-button @click.native="handleCancel">
-            取消
-          </el-button>
-          <el-button
-            type="primary"
-            @click="handleTemplAdd"
-          >
-            保存
-          </el-button>
+        <div slot="footer" class="dialog-footer">
+          <el-button @click.native="handleCancel">取消</el-button>
+          <el-button type="primary" @click="handleTemplAdd">保存</el-button>
         </div>
       </el-dialog>
       <el-pagination
         class="center"
+        @size-change="handleChangeSize"
+        @current-change="handleChangeCurrent"
         :current-page.sync="paging.page"
         :page-size="paging.pageSize"
         layout="prev, pager, next"
         :total="paging.total"
-        @size-change="handleChangeSize"
-        @current-change="handleChangeCurrent"
-      />
+      ></el-pagination>
     </div>
   </div>
 </template>
@@ -178,7 +123,7 @@ import {
 } from '@/api/wechat'
 
 export default {
-  data () {
+  data() {
     return {
       id: '',
       message: '',
@@ -237,15 +182,12 @@ export default {
       ]
     }
   },
-  mounted () {
-    this.getTemplateList()
-  },
   methods: {
-    handleChangeSize (e) {},
-    handleChangeCurrent (e) {
+    handleChangeSize(e) {},
+    handleChangeCurrent(e) {
       this.paging.page = e
     },
-    handleCreate () {
+    handleCreate() {
       this.form = {
         title: '',
         description: '',
@@ -260,7 +202,7 @@ export default {
       }
       this.editVisible = true
     },
-    async handleEdit (idx) {
+    async handleEdit(idx) {
       let current = this.list[idx]
       this.id = current.id
       this.message = current.message
@@ -275,7 +217,7 @@ export default {
       console.log('########', data.data, this.form)
       this.editVisible = true
     },
-    async handleTemplAdd () {
+    async handleTemplAdd() {
       // 新增
       await saveWorkWechatTemplate(this.id, this.form)
       let message = '添加成功'
@@ -285,7 +227,7 @@ export default {
       })
       this.editVisible = false
     },
-    handleContentAdd () {
+    handleContentAdd() {
       if (this.form.content.length >= 10) {
         this.$message({
           message: '最多添加10条内容',
@@ -298,7 +240,7 @@ export default {
       }
       this.form.content.push(issues)
     },
-    handleTemplRemove (idx) {
+    handleTemplRemove(idx) {
       this.$confirm('确定废弃当前模版吗？', '提示', {
         confirmButtonText: '确定',
         cancelButtonText: '取消'
@@ -308,7 +250,7 @@ export default {
         })
         .catch(() => {})
     },
-    async handleTemplClose (id) {
+    async handleTemplClose(id) {
       let that = this
       this.$confirm('确定关闭当前模版吗？', '提示', {
         confirmButtonText: '确定',
@@ -326,7 +268,7 @@ export default {
         })
         .catch(() => {})
     },
-    async handleTemplOpen (id) {
+    async handleTemplOpen(id) {
       let that = this
       this.$confirm('确定开启当前模版吗？', '提示', {
         confirmButtonText: '确定',
@@ -344,19 +286,19 @@ export default {
         })
         .catch(() => {})
     },
-    handleContentRemove (idx) {
+    handleContentRemove(idx) {
       this.form.content.splice(idx, 1)
     },
-    submitAction () {
+    submitAction() {
       this.editVisible = false
     },
-    handleCancel () {
+    handleCancel() {
       this.editVisible = false
     },
     /**
      * 删除
      * */
-    handleClickDel (row) {
+    handleClickDel(row) {
       this.$confirm('确认是否删除?', '提示', {
         confirmButtonText: '确定',
         cancelButtonText: '取消',
@@ -365,10 +307,13 @@ export default {
         .then(() => {})
         .catch(() => {})
     },
-    async getTemplateList () {
+    async getTemplateList() {
       let { data } = await getWorkWechatTemplateList()
       this.dataList = data.data
     }
+  },
+  mounted() {
+    this.getTemplateList()
   }
 }
 </script>

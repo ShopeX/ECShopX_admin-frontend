@@ -7,45 +7,26 @@
 <template>
   <div class="distributorAftersalesAddress">
     <div class="action-container">
-      <el-button
-        icon="el-icon-circle-plus"
-        plain
-        type="primary"
-        @click="handleCreate"
+      <el-button icon="el-icon-circle-plus" plain type="primary" @click="handleCreate"
+        >添加售后地址</el-button
       >
-        添加售后地址
-      </el-button>
     </div>
 
-    <SpFilterForm
-      :model="params"
-      @onSearch="onSearch"
-      @onReset="onReset"
-    >
-      <SpFilterFormItem
-        prop="distributor_id"
-        label="店铺:"
-      >
-        <SpSelectShop
-          v-model="params.distributor_id"
-          clearable
-          placeholder="请选择"
-        />
+    <SpFilterForm :model="params" @onSearch="onSearch" @onReset="onReset">
+      <SpFilterFormItem prop="distributor_id" label="店铺:">
+        <SpSelectShop clearable placeholder="请选择" v-model="params.distributor_id" />
       </SpFilterFormItem>
-      <SpFilterFormItem
-        prop="regionList"
-        label="售后地区:"
-      >
+      <SpFilterFormItem prop="regionList" label="售后地区:">
         <el-cascader
-          v-model="params.regionList"
           placeholder="售后地区"
+          v-model="params.regionList"
           :options="regions"
           :props="{
             checkStrictly: true,
             value: 'label'
           }"
           clearable
-        />
+        ></el-cascader>
       </SpFilterFormItem>
     </SpFilterForm>
 
@@ -56,48 +37,29 @@
     </el-row>
 
     <!-- 数据表格 -->
-    <el-table
-      v-loading="tableLoading"
-      :data="tableList"
-      border
-      :span-method="objectSpanMethod"
-    >
-      <el-table-column
-        prop="name"
-        label="店铺"
-      />
+    <el-table :data="tableList" border :span-method="objectSpanMethod" v-loading="tableLoading">
+      <el-table-column prop="name" label="店铺"></el-table-column>
       <el-table-column label="售后地址">
         <template slot-scope="scope">
-          <i class="el-icon-place" />
+          <i class="el-icon-place"></i>
           {{
             scope.row.province +
-              ' ' +
-              scope.row.city +
-              ' ' +
-              scope.row.area +
-              ' ' +
-              scope.row.address
+            ' ' +
+            scope.row.city +
+            ' ' +
+            scope.row.area +
+            ' ' +
+            scope.row.address
           }}
         </template>
       </el-table-column>
-      <el-table-column
-        prop="contact"
-        label="联系人"
-        width="250"
-      >
+      <el-table-column prop="contact" label="联系人" width="250">
         <template slot-scope="scope">
-          <div class="">
-            <i class="el-icon-user" /> {{ scope.row.contact }}
-          </div>
-          <div class="">
-            <i class="el-icon-mobile-phone" /> {{ scope.row.mobile }}
-          </div>
+          <div class=""><i class="el-icon-user"></i> {{ scope.row.contact }}</div>
+          <div class=""><i class="el-icon-mobile-phone"></i> {{ scope.row.mobile }}</div>
         </template>
       </el-table-column>
-      <el-table-column
-        label="是否默认"
-        width="100"
-      >
+      <el-table-column label="是否默认" width="100">
         <template slot-scope="scope">
           <el-switch
             v-model="scope.row.is_default == 1 ? true : false"
@@ -105,27 +67,15 @@
             active-color="#13ce66"
             inactive-color="#cccccc"
             @change="defaultSwitchChange(scope.row)"
-          />
+          ></el-switch>
         </template>
       </el-table-column>
-      <el-table-column
-        label="操作"
-        width="100"
-      >
+      <el-table-column label="操作" width="100">
         <template slot-scope="scope">
-          <el-button
-            v-if="datapass_block == '0'"
-            type="text"
-            @click="handleUpdate(scope.row)"
+          <el-button v-if="datapass_block == '0'" type="text" @click="handleUpdate(scope.row)"
+            >编辑</el-button
           >
-            编辑
-          </el-button>
-          <el-button
-            type="text"
-            @click="handleDelete(scope.row)"
-          >
-            删除
-          </el-button>
+          <el-button type="text" @click="handleDelete(scope.row)">删除</el-button>
         </template>
       </el-table-column>
     </el-table>
@@ -136,79 +86,66 @@
       :before-close="handleClose"
       width="45%"
     >
-      <el-form
-        ref="dataForm"
-        :model="dataForm"
-        label-width="100px"
-      >
+      <el-form ref="dataForm" :model="dataForm" label-width="100px">
         <el-form-item label="店铺">
           <template v-if="rel_distributor_ids && operate == 'create'">
             <el-tag
               v-for="(item, index) in rel_distributor_ids"
-              :key="item.name"
               :disable-transitions="false"
+              :key="item.name"
               closable
               @close="storeClose(rel_distributor_ids, index)"
+              >{{ item.name }}</el-tag
             >
-              {{ item.name }}
-            </el-tag>
           </template>
           <el-button
             v-if="rel_distributor_ids && operate == 'create'"
             type="text"
             @click="addStoreAction"
+            >添加适用店铺</el-button
           >
-            添加适用店铺
-          </el-button>
           <template v-if="operate == 'update'">
             <span>{{ shopname }}</span>
           </template>
         </el-form-item>
         <el-form-item label="售后地址">
           <el-cascader
-            v-model="form.regions_id"
             class="w-100"
+            v-model="form.regions_id"
             :options="regions"
             @change="handleRegionChange"
-          />
+          ></el-cascader>
         </el-form-item>
         <el-form-item label="详细地址">
           <el-input
             v-model="address"
             placeholder=""
             :disabled="datapass_block == 1 && operate == 'update'"
-          />
+          ></el-input>
         </el-form-item>
         <el-form-item label="联系人">
           <el-input
             v-model="contact"
             placeholder=""
             :disabled="datapass_block == 1 && operate == 'update'"
-          />
+          ></el-input>
         </el-form-item>
         <el-form-item label="联系方式">
           <el-input
             v-model="mobile"
             placeholder=""
             :disabled="datapass_block == 1 && operate == 'update'"
-          />
+          ></el-input>
         </el-form-item>
       </el-form>
-      <span
-        slot="footer"
-        class="dialog-footer"
-      >
+      <span slot="footer" class="dialog-footer">
         <el-button @click="handleClose">取 消</el-button>
-        <el-button
-          v-if="operate == 'create'"
-          type="primary"
-          @click="createAddress"
-        >确 定</el-button>
-        <el-button
-          v-if="operate == 'update'"
-          type="primary"
-          @click="updateAddress"
-        >确 定</el-button>
+        <el-button v-if="operate == 'create'" type="primary" @click="createAddress"
+          >确 定</el-button
+        >
+        <el-button v-if="operate == 'update'" type="primary" @click="updateAddress"
+          >确 定</el-button
+        >
       </span>
     </el-dialog>
 
@@ -219,24 +156,10 @@
       width="70%"
     >
       <template>
-        <el-table
-          v-loading="loading"
-          :data="relShop.list"
-        >
-          <el-table-column
-            prop="shop_id"
-            label="id"
-            width="60"
-          />
-          <el-table-column
-            prop="store_name"
-            label="店铺名称"
-            width="300"
-          />
-          <el-table-column
-            prop="address"
-            label="店铺地址"
-          />
+        <el-table :data="relShop.list" v-loading="loading">
+          <el-table-column prop="shop_id" label="id" width="60"></el-table-column>
+          <el-table-column prop="store_name" label="店铺名称" width="300"></el-table-column>
+          <el-table-column prop="address" label="店铺地址"></el-table-column>
         </el-table>
         <div
           v-if="relShop.total_count > relShop.params.page_size"
@@ -244,11 +167,11 @@
         >
           <el-pagination
             layout="prev, pager, next"
+            @current-change="handleRelShopCurrentChange"
             :current-page.sync="relShop.params.page"
             :total="relShop.total_count"
             :page-size="relShop.params.page_size"
-            @current-change="handleRelShopCurrentChange"
-          />
+          ></el-pagination>
         </div>
       </template>
     </el-dialog>
@@ -262,7 +185,7 @@
         :page-size="page.pageSize"
         @current-change="onCurrentChange"
         @size-change="onSizeChange"
-      />
+      ></el-pagination>
     </div>
     <StoreSelect
       :store-visible="storeVisible"
@@ -271,7 +194,7 @@
       :get-status="setStoreStatus"
       @chooseStore="chooseStoreAction"
       @closeStoreDialog="closeStoreDialogAction"
-    />
+    ></StoreSelect>
   </div>
 </template>
 
@@ -287,7 +210,7 @@ import mixin, { pageMixin } from '@/mixins'
 import district from '../../../common/district.json'
 import shopSelect from '@/components/shopSelect'
 // 取选中地区的值
-function getCascaderObj (val, opt) {
+function getCascaderObj(val, opt) {
   return val.map(function (value, index, array) {
     for (var itm of opt) {
       if (itm.value === value) {
@@ -305,7 +228,7 @@ export default {
     shopSelect
   },
   mixins: [mixin, pageMixin],
-  data () {
+  data() {
     const initialParams = {
       distributor_id: undefined,
       regionList: []
@@ -314,9 +237,9 @@ export default {
       initialParams,
       params: {
         ...initialParams
-      },
+      }, 
       dataForm: {},
-      spanArr: [],
+      spanArr: [], 
       tableLoading: false,
       dialogVisible: false,
       loading: false,
@@ -333,7 +256,7 @@ export default {
       contact: '',
       mobile: '',
       operate: '',
-      updateRow: {},
+      updateRow: {}, 
       form: {
         regions_id: []
       },
@@ -349,11 +272,8 @@ export default {
       datapass_block: 1
     }
   },
-  mounted () {
-    this.fetchList()
-  },
   methods: {
-    objectSpanMethod ({ row, column, rowIndex, columnIndex }) {
+    objectSpanMethod({ row, column, rowIndex, columnIndex }) {
       if (columnIndex === 0) {
         if (this.spanArr[rowIndex]) {
           return {
@@ -368,20 +288,20 @@ export default {
         }
       }
     },
-    onSearch () {
+    onSearch() {
       this.page.pageIndex = 1
       this.$nextTick(() => {
         this.fetchList()
       })
     },
-    onReset () {
+    onReset() {
       this.params = { ...this.initialParams }
       this.params = {
         ...this.params
       }
       this.onSearch()
     },
-    setrowspans () {
+    setrowspans() {
       let contactDot = 0
       this.tableList.forEach((item, index) => {
         if (index === 0) {
@@ -397,7 +317,7 @@ export default {
         }
       })
     },
-    getParams () {
+    getParams() {
       const currentAre = {}
       if (this.params.regionList.length > 0) {
         currentAre.province = this.params.regionList[0]
@@ -415,7 +335,7 @@ export default {
       }
       return params
     },
-    async fetchList () {
+    async fetchList() {
       this.tableLoading = true
       const { pageIndex: page, pageSize: page_size } = this.page
       let params = {
@@ -431,16 +351,16 @@ export default {
       this.tableLoading = false
       this.setrowspans()
     },
-    handleFilter (val) {
+    handleFilter(val) {
       val && val.shop_id
       this.distributor_id = val.shop_id
       this.getList()
     },
-    handleClose () {
+    handleClose() {
       this.resetInfo()
       this.dialogVisible = false
     },
-    handleUpdate (row) {
+    handleUpdate(row) {
       this.dialogVisible = true
       this.operate = 'update'
       this.shopname = row.name
@@ -452,12 +372,12 @@ export default {
       this.updateRow = Object.assign({}, row)
       this.dialogTitle = '修改店铺售后地址'
     },
-    handleCreate () {
+    handleCreate() {
       this.resetInfo()
       this.operate = 'create'
       this.dialogVisible = true
     },
-    handleDelete (row) {
+    handleDelete(row) {
       this.$confirm('此操作将永久删除该店铺售后地址, 是否继续?', '提示', {
         confirmButtonText: '确定',
         cancelButtonText: '取消',
@@ -486,21 +406,21 @@ export default {
           })
         })
     },
-    handleCancel () {
+    handleCancel() {
       this.relShop.relShopVisible = false
     },
-    resetInfo () {
+    resetInfo() {
       this.rel_distributor_ids = []
       this.form.regions_id = []
       this.form.region = []
       this.address = ''
     },
-    addStoreAction () {
+    addStoreAction() {
       this.storeVisible = true
       this.setStoreStatus = true
       this.relStores = JSON.parse(JSON.stringify(this.rel_distributor_ids))
     },
-    chooseStoreAction (data) {
+    chooseStoreAction(data) {
       this.storeVisible = false
       this.form.distributor_id = []
       if (data === null || data.length <= 0) return
@@ -511,7 +431,7 @@ export default {
         }
       }
     },
-    closeStoreDialogAction () {
+    closeStoreDialogAction() {
       this.storeVisible = false
     },
     handleRegionChange: function (value) {
@@ -535,7 +455,7 @@ export default {
       }
     },
 
-    createAddress () {
+    createAddress() {
       const queryData = {}
       const ids = []
       this.rel_distributor_ids.forEach(function (value) {
@@ -566,7 +486,7 @@ export default {
         this.fetchList()
       })
     },
-    updateAddress () {
+    updateAddress() {
       const queryData = {}
       queryData['distributor_id'] = this.updateRow.distributor_id
       queryData['regions_id'] = JSON.stringify(this.form.regions_id)
@@ -595,7 +515,7 @@ export default {
       })
     },
 
-    defaultSwitchChange (row) {
+    defaultSwitchChange(row) {
       let params = {
         address_id: row.address_id,
         set_default: true
@@ -610,6 +530,9 @@ export default {
         }
       })
     }
+  },
+  mounted() {
+    this.fetchList()
   }
 }
 </script>

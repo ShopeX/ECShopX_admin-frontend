@@ -1,20 +1,14 @@
 <template>
   <div class="section-white">
-    <div
-      v-loading="loading"
-      class="video_pick"
-    >
+    <div class="video_pick" v-loading="loading">
       <ul class="clearfix">
         <li
+          class="video_item"
           v-for="(videoitem, index) in videoList"
           :key="index"
-          class="video_item"
           style="width:20%; !important; margin:0 50px 50px 0;"
         >
-          <div
-            class="video_item_bd"
-            width="150 !important"
-          >
+          <div class="video_item_bd" width="150 !important">
             <video
               class="video-html"
               :src="videoitem.media_url"
@@ -24,29 +18,26 @@
               您的浏览器不支持 video 标签。
             </video>
             <div class="check_content">
-              <span
-                class="video_name"
-                :title="videoitem.name"
-              >过期时间：{{ videoitem.expire_time }}</span>
+              <span class="video_name" :title="videoitem.name"
+                >过期时间：{{ videoitem.expire_time }}</span
+              >
             </div>
           </div>
         </li>
       </ul>
     </div>
-    <div
-      v-if="total_count > params.pageSize"
-      class="content-padded content-center"
-    >
+    <div class="content-padded content-center" v-if="total_count > params.pageSize">
       <el-pagination
         background
         layout="total, sizes, prev, pager, next"
+        @current-change="handleCurrentChange"
+        @size-change="handleSizeChange"
         :current-page.sync="params.page"
         :page-sizes="[10, 20, 50]"
         :total="total_count"
         :page-size="params.pageSize"
-        @current-change="handleCurrentChange"
-        @size-change="handleSizeChange"
-      />
+      >
+      </el-pagination>
     </div>
   </div>
 </template>
@@ -55,7 +46,7 @@
 import { getLiverooms } from '@/api/promotions'
 
 export default {
-  data () {
+  data() {
     return {
       loading: false,
       isLoadData: false,
@@ -70,26 +61,19 @@ export default {
       }
     }
   },
-  mounted () {
-    if (this.$route.query.roomid && this.$route.query.wxapp_id) {
-      this.params.roomid = this.$route.query.roomid
-      this.params.wxapp_id = this.$route.query.wxapp_id
-      this.getList()
-    }
-  },
   methods: {
-    handleCurrentChange (page_num) {
+    handleCurrentChange(page_num) {
       this.isLoadData = false
       this.params.page = page_num
       this.getList()
     },
-    handleSizeChange (pageSize) {
+    handleSizeChange(pageSize) {
       this.isLoadData = false
       this.params.page = 1
       this.params.pageSize = pageSize
       this.getList()
     },
-    getList () {
+    getList() {
       if (!this.isLoadData) {
         this.isLoadData = true
         getLiverooms(this.params).then((response) => {
@@ -99,6 +83,13 @@ export default {
           this.loading = false
         })
       }
+    }
+  },
+  mounted() {
+    if (this.$route.query.roomid && this.$route.query.wxapp_id) {
+      this.params.roomid = this.$route.query.roomid
+      this.params.wxapp_id = this.$route.query.wxapp_id
+      this.getList()
     }
   }
 }

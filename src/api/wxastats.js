@@ -1,7 +1,7 @@
 import fetch from '../utils/fetch'
 
 //概况
-export function getSummaryTrend (query) {
+export function getSummaryTrend(query) {
   return fetch({
     url: '/wxa/stats/summarytrend',
     method: 'post',
@@ -10,7 +10,7 @@ export function getSummaryTrend (query) {
 }
 
 //综合概况
-export function summarybydate (query) {
+export function summarybydate(query) {
   return fetch({
     url: '/wxa/stats/summarybydate',
     method: 'post',
@@ -19,7 +19,7 @@ export function summarybydate (query) {
 }
 
 //访问页面
-export function getVisitPage (query) {
+export function getVisitPage(query) {
   return fetch({
     url: '/wxa/stats/visitpage',
     method: 'post',
@@ -28,7 +28,7 @@ export function getVisitPage (query) {
 }
 
 //访问趋势
-export function getVisitTrend (query) {
+export function getVisitTrend(query) {
   return fetch({
     url: '/wxa/stats/visittrend',
     method: 'post',
@@ -37,7 +37,7 @@ export function getVisitTrend (query) {
 }
 
 //访问分布
-export function getVisitDistribution (query) {
+export function getVisitDistribution(query) {
   return fetch({
     url: '/wxa/stats/visitdistribution',
     method: 'post',
@@ -46,7 +46,7 @@ export function getVisitDistribution (query) {
 }
 
 //获取访问留存
-export function getRetaininfo (query) {
+export function getRetaininfo(query) {
   return fetch({
     url: '/wxa/stats/retaininfo',
     method: 'post',
@@ -55,7 +55,7 @@ export function getRetaininfo (query) {
 }
 
 //获取用户画像
-export function getUserPortrait (query) {
+export function getUserPortrait(query) {
   return fetch({
     url: '/wxa/stats/userportrait',
     method: 'post',

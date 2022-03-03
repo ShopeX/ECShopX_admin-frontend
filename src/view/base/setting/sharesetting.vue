@@ -5,7 +5,7 @@
         <span>分享设置：</span>
       </h2>
     </div>
-    <hr style="border: 1px solid #efefef">
+    <hr style="border:1px solid #efefef" />
     <div>
       <div class="level-item">
         <div class="clearfix">
@@ -16,19 +16,13 @@
         <div class="section-header with-border item-box clearfix">
           <div class="preview-box f_l">
             <div>
-              <div
-                class="upload-box"
-                @click="handleImgChange('index')"
-              >
+              <div @click="handleImgChange('index')" class="upload-box">
                 <img
                   v-if="shareForm.index.imageUrl"
                   :src="wximageurl + shareForm.index.imageUrl"
                   class="avatar"
-                >
-                <i
-                  v-else
-                  class="el-icon-plus avatar-uploader-icon"
                 />
+                <i v-else class="el-icon-plus avatar-uploader-icon"></i>
               </div>
             </div>
             <imgPicker
@@ -36,15 +30,13 @@
               :sc-status="isGetImage"
               @chooseImg="pickImg"
               @closeImgDialog="closeImgDialog"
-            />
-            <p class="content-center">
-              封面图片
-            </p>
+            ></imgPicker>
+            <p class="content-center">封面图片</p>
           </div>
           <div class="item-content f_l">
             <div>
               <span class="txt">标题</span>
-              <el-input v-model="shareForm.index.title" />
+              <el-input v-model="shareForm.index.title"></el-input>
             </div>
             <!-- <div>
               <span class="txt">副标题</span>
@@ -62,29 +54,21 @@
         <div class="section-header with-border item-box clearfix">
           <div class="preview-box f_l">
             <div>
-              <div
-                class="upload-box"
-                @click="handleImgChange('planting')"
-              >
+              <div @click="handleImgChange('planting')" class="upload-box">
                 <img
                   v-if="shareForm.planting.imageUrl"
                   :src="wximageurl + shareForm.planting.imageUrl"
                   class="avatar"
-                >
-                <i
-                  v-else
-                  class="el-icon-plus avatar-uploader-icon"
                 />
+                <i v-else class="el-icon-plus avatar-uploader-icon"></i>
               </div>
             </div>
-            <p class="content-center">
-              封面图片
-            </p>
+            <p class="content-center">封面图片</p>
           </div>
           <div class="item-content f_l">
             <div>
               <span class="txt">标题</span>
-              <el-input v-model="shareForm.planting.title" />
+              <el-input v-model="shareForm.planting.title"></el-input>
             </div>
             <!-- <div>
               <span class="txt">副标题</span>
@@ -102,29 +86,21 @@
         <div class="section-header with-border item-box clearfix">
           <div class="preview-box f_l">
             <div>
-              <div
-                class="upload-box"
-                @click="handleImgChange('itemlist')"
-              >
+              <div @click="handleImgChange('itemlist')" class="upload-box">
                 <img
                   v-if="shareForm.itemlist.imageUrl"
                   :src="wximageurl + shareForm.itemlist.imageUrl"
                   class="avatar"
-                >
-                <i
-                  v-else
-                  class="el-icon-plus avatar-uploader-icon"
                 />
+                <i v-else class="el-icon-plus avatar-uploader-icon"></i>
               </div>
             </div>
-            <p class="content-center">
-              封面图片
-            </p>
+            <p class="content-center">封面图片</p>
           </div>
           <div class="item-content f_l">
             <div>
               <span class="txt">标题</span>
-              <el-input v-model="shareForm.itemlist.title" />
+              <el-input v-model="shareForm.itemlist.title"></el-input>
             </div>
             <!-- <div>
               <span class="txt">副标题</span>
@@ -142,29 +118,21 @@
         <div class="section-header with-border item-box clearfix">
           <div class="preview-box f_l">
             <div>
-              <div
-                class="upload-box"
-                @click="handleImgChange('group')"
-              >
+              <div @click="handleImgChange('group')" class="upload-box">
                 <img
                   v-if="shareForm.group.imageUrl"
                   :src="wximageurl + shareForm.group.imageUrl"
                   class="avatar"
-                >
-                <i
-                  v-else
-                  class="el-icon-plus avatar-uploader-icon"
                 />
+                <i v-else class="el-icon-plus avatar-uploader-icon"></i>
               </div>
             </div>
-            <p class="content-center">
-              封面图片
-            </p>
+            <p class="content-center">封面图片</p>
           </div>
           <div class="item-content f_l">
             <div>
               <span class="txt">标题</span>
-              <el-input v-model="shareForm.group.title" />
+              <el-input v-model="shareForm.group.title"></el-input>
             </div>
             <!-- <div>
               <span class="txt">副标题</span>
@@ -182,29 +150,21 @@
         <div class="section-header with-border item-box clearfix">
           <div class="preview-box f_l">
             <div>
-              <div
-                class="upload-box"
-                @click="handleImgChange('seckill')"
-              >
+              <div @click="handleImgChange('seckill')" class="upload-box">
                 <img
                   v-if="shareForm.seckill.imageUrl"
                   :src="wximageurl + shareForm.seckill.imageUrl"
                   class="avatar"
-                >
-                <i
-                  v-else
-                  class="el-icon-plus avatar-uploader-icon"
                 />
+                <i v-else class="el-icon-plus avatar-uploader-icon"></i>
               </div>
             </div>
-            <p class="content-center">
-              封面图片
-            </p>
+            <p class="content-center">封面图片</p>
           </div>
           <div class="item-content f_l">
             <div>
               <span class="txt">标题</span>
-              <el-input v-model="shareForm.seckill.title" />
+              <el-input v-model="shareForm.seckill.title"></el-input>
             </div>
             <!-- <div>
               <span class="txt">副标题</span>
@@ -222,29 +182,21 @@
         <div class="item-box clearfix">
           <div class="preview-box f_l">
             <div>
-              <div
-                class="upload-box"
-                @click="handleImgChange('coupon')"
-              >
+              <div @click="handleImgChange('coupon')" class="upload-box">
                 <img
                   v-if="shareForm.coupon.imageUrl"
                   :src="wximageurl + shareForm.coupon.imageUrl"
                   class="avatar"
-                >
-                <i
-                  v-else
-                  class="el-icon-plus avatar-uploader-icon"
                 />
+                <i v-else class="el-icon-plus avatar-uploader-icon"></i>
               </div>
             </div>
-            <p class="content-center">
-              封面图片
-            </p>
+            <p class="content-center">封面图片</p>
           </div>
           <div class="item-content f_l">
             <div>
               <span class="txt">标题</span>
-              <el-input v-model="shareForm.coupon.title" />
+              <el-input v-model="shareForm.coupon.title"></el-input>
             </div>
             <!-- <div>
               <span class="txt">副标题</span>
@@ -253,12 +205,7 @@
           </div>
         </div>
         <div class="section-footer content-center">
-          <el-button
-            type="primary"
-            @click="saveShareSetting"
-          >
-            保存
-          </el-button>
+          <el-button type="primary" @click="saveShareSetting">保存</el-button>
         </div>
       </div>
     </div>
@@ -273,7 +220,7 @@ export default {
   components: {
     imgPicker
   },
-  data () {
+  data() {
     return {
       imgDialog: false,
       isGetImage: false,
@@ -314,13 +261,8 @@ export default {
   computed: {
     ...mapGetters(['wheight'])
   },
-  mounted () {
-    getShareSetting().then((res) => {
-      this.shareForm = res.data.data
-    })
-  },
   methods: {
-    saveShareSetting () {
+    saveShareSetting() {
       this.$confirm('是否保存分享设置', '提示', {
         confirmButtonText: '确定',
         cancelButtonText: '取消',
@@ -349,18 +291,23 @@ export default {
         })
     },
     //上传卡封面
-    handleImgChange (index) {
+    handleImgChange(index) {
       this.imgDialog = true
       this.isGetImage = true
       this.curIndex = index
     },
-    pickImg (data) {
+    pickImg(data) {
       this.shareForm[this.curIndex].imageUrl = data.url
       this.imgDialog = false
     },
-    closeImgDialog () {
+    closeImgDialog() {
       this.imgDialog = false
     }
+  },
+  mounted() {
+    getShareSetting().then((res) => {
+      this.shareForm = res.data.data
+    })
   }
 }
 </script>

@@ -1,40 +1,22 @@
 <template>
   <div>
     <el-card>
-      <div style="width: 70%">
-        <el-form
-          v-loading="loading"
-          label-width="180px"
-          :model="form"
-        >
+      <div style="width: 70%;">
+        <el-form v-loading="loading" label-width="180px" :model="form">
           <el-form-item label="TITLE(页面标题）">
-            <el-input
-              v-model="form.title"
-              type="text"
-            />
+            <el-input type="text" v-model="form.title"></el-input>
           </el-form-item>
           <el-form-item label="MATE_DESCRIPTION(页面描述）">
-            <el-input
-              v-model="form.mate_description"
-              type="textarea"
-            />
+            <el-input type="textarea" v-model="form.mate_description"></el-input>
           </el-form-item>
           <el-form-item label="MATE_KEYWORDS(关键词）">
-            <el-input
-              v-model="form.mate_keywords"
-              type="textarea"
-            />
+            <el-input type="textarea" v-model="form.mate_keywords"></el-input>
             <span class="tip">关键词之间请用半角”,”分隔</span>
           </el-form-item>
 
           <el-form-item size="large">
             <el-button>取消</el-button>
-            <el-button
-              type="primary"
-              @click="save"
-            >
-              保存
-            </el-button>
+            <el-button type="primary" @click="save">保存</el-button>
           </el-form-item>
         </el-form>
       </div>
@@ -48,7 +30,7 @@ import { getTdkglobalset, saveTdkglobalset } from '../../../api/tdkset'
 export default {
   components: {},
 
-  data () {
+  data() {
     return {
       loading: false,
       form: {
@@ -58,12 +40,12 @@ export default {
       }
     }
   },
-  mounted () {
+  mounted() {
     this.getInfo()
   },
   methods: {
     // 获取信息
-    getInfo () {
+    getInfo() {
       this.loading = true
       getTdkglobalset(this.params).then((res) => {
         this.form.title = res.data.data.title
@@ -73,7 +55,7 @@ export default {
       })
     },
     // 保存数据
-    save () {
+    save() {
       saveTdkglobalset(this.form).then((res) => {
         this.$message({ type: 'success', message: '操作成功' })
         this.getInfo()

@@ -1,23 +1,20 @@
 <template>
-  <product-map
-    :num="9"
-    :respons="res"
-  />
+  <product-map :num="9" :respons="res"></product-map>
 </template>
 <script>
 import ProductMap from '../../../pluginscomponents/ProductMap'
 export default {
-  name: 'BannerStyle',
-  components: {
-    ProductMap
-  },
+  name: 'bannerStyle',
   props: {
     res: {
       type: Object,
-      default: function () {
+      default: function() {
         return {}
       }
     }
+  },
+  components: {
+    ProductMap
   }
 }
 </script>

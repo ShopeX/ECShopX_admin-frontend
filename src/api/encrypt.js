@@ -1,4 +1,4 @@
-import fetch from '@/utils/fetch'
+import fetch from '@/utils/fetch';
 
 // 申请脱敏
 export function createEncrypt (params) {
@@ -28,7 +28,7 @@ export function datapassLog (params) {
 export function encryptDetail (id) {
   return fetch({
     url: '/datapass/' + id,
-    method: 'get'
+    method: 'get',
   })
 }
 

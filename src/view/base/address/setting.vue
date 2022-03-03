@@ -1,29 +1,18 @@
 <template>
   <div>
     <div v-if="$route.path.indexOf('detail') === -1">
-      <el-form
-        v-model="form"
-        label-width="200px"
-      >
+      <el-form v-model="form" label-width="200px">
         <el-row :gutter="20">
-          <el-col
-            v-for="(item, index) in form"
-            :key="index"
-            :span="10"
-          >
+          <el-col :span="10" v-for="(item, index) in form" :key="index">
             <el-form-item label="收货人">
-              <el-input
-                v-model="item.username"
-                placeholder="姓名"
-                style="width: 55%"
-              />
+              <el-input v-model="item.username" placeholder="姓名" style="width: 55%;"></el-input>
             </el-form-item>
             <el-form-item label="手机号码">
               <el-input
                 v-model="item.telephone"
                 placeholder="11位手机号"
-                style="width: 55%"
-              />
+                style="width: 55%;"
+              ></el-input>
             </el-form-item>
             <el-form-item label="地区信息">
               <el-cascader
@@ -31,50 +20,26 @@
                 :options="regions"
                 @visible-change="changeClick(index)"
                 @change="handleRegionChange"
-              />
+              ></el-cascader>
             </el-form-item>
             <el-form-item label="详细地址">
-              <el-input
-                v-model="item.adrdetail"
-                placeholder="详细地址"
-              />
+              <el-input v-model="item.adrdetail" placeholder="详细地址"></el-input>
             </el-form-item>
             <el-form-item label="邮政编码">
-              <el-input
-                v-model="item.postalCode"
-                placeholder="邮政编码"
-              />
+              <el-input v-model="item.postalCode" placeholder="邮政编码"></el-input>
             </el-form-item>
             <el-form-item v-if="index === 1">
-              <el-button
-                type="text"
-                @click="delAddress(index)"
-              >
-                删除
-              </el-button>
+              <el-button type="text" @click="delAddress(index)">删除</el-button>
             </el-form-item>
           </el-col>
-          <el-col
-            v-if="isShow"
-            :span="2"
-          >
-            <div>
-              <i
-                class="el-icon-plus avatar-uploader-icon"
-                @click="addAddress"
-              />
-            </div>
+          <el-col :span="2" v-if="isShow">
+            <div><i class="el-icon-plus avatar-uploader-icon" @click="addAddress"></i></div>
           </el-col>
         </el-row>
       </el-form>
-      <el-button
-        type="primary"
-        @click="saveAddress"
-      >
-        确认保存
-      </el-button>
+      <el-button type="primary" @click="saveAddress">确认保存</el-button>
     </div>
-    <router-view />
+    <router-view></router-view>
   </div>
 </template>
 <script>
@@ -83,8 +48,8 @@ import { getSelfDeliveryAddress, setSelfDeliveryAddress } from '@/api/company'
 import district from '../../../common/district.json'
 
 // 取选中地区的值
-function getCascaderObj (val, opt) {
-  return val.map(function (value, index, array) {
+function getCascaderObj(val, opt) {
+  return val.map(function(value, index, array) {
     for (var itm of opt) {
       if (itm.value === value) {
         opt = itm.children
@@ -96,7 +61,7 @@ function getCascaderObj (val, opt) {
 }
 
 export default {
-  data () {
+  data() {
     return {
       form: [
         {
@@ -120,15 +85,12 @@ export default {
   computed: {
     ...mapGetters(['wheight'])
   },
-  mounted () {
-    this.getList()
-  },
   methods: {
-    editAddress (item) {
+    editAddress(item) {
       this.params.page = 1
       this.getList()
     },
-    addAddress () {
+    addAddress() {
       let form = {
         username: '',
         telephone: '',
@@ -142,13 +104,13 @@ export default {
         this.isShow = false
       }
     },
-    delAddress (index) {
+    delAddress(index) {
       this.form.splice(index, 1)
       if (this.form.length < 2) {
         this.isShow = true
       }
     },
-    saveAddress () {
+    saveAddress() {
       let params = { addreeList: this.form }
       setSelfDeliveryAddress(params).then((res) => {
         this.$message({
@@ -157,7 +119,7 @@ export default {
         })
       })
     },
-    getList () {
+    getList() {
       getSelfDeliveryAddress().then((res) => {
         if (res.data.data) {
           this.form = res.data.data
@@ -167,7 +129,7 @@ export default {
         }
       })
     },
-    handleRegionChange: function (value) {
+    handleRegionChange: function(value) {
       let index = this.regionsIndex
       var vals = getCascaderObj(value, this.regions)
       this.form[index].regions_id = []
@@ -186,9 +148,12 @@ export default {
         this.form[index].regions[i] = vals[i].label
       }
     },
-    changeClick (index) {
+    changeClick(index) {
       this.regionsIndex = index
     }
+  },
+  mounted() {
+    this.getList()
   }
 }
 </script>

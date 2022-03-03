@@ -1,15 +1,8 @@
 <template>
   <div>
-    <el-tabs
-      v-model="activeName"
-      type="border-card"
-      @tab-click="handleClick"
-    >
-      <el-tab-pane
-        label="腾讯有数参数配置"
-        name="youshu"
-      >
-        <youshu />
+    <el-tabs v-model="activeName" type="border-card" @tab-click="handleClick">
+      <el-tab-pane label="腾讯有数参数配置" name="youshu">
+        <youshu></youshu>
       </el-tab-pane>
     </el-tabs>
   </div>
@@ -21,7 +14,7 @@ export default {
   components: {
     youshu
   },
-  data () {
+  data() {
     return {
       showDialog: false,
       activeName: 'youshu',
@@ -33,21 +26,21 @@ export default {
       }
     }
   },
-  mounted () {
-    if ('undefined' != typeof this.$route.query.activeName) {
-      this.activeName = this.$route.query.activeName
-    }
-  },
   methods: {
-    handleClick (tab, event) {},
-    handleChange () {
+    handleClick(tab, event) {},
+    handleChange() {
       this.showDialog = true
     },
-    cancelAction () {
+    cancelAction() {
       this.showDialog = false
     },
-    handleSubmit () {
+    handleSubmit() {
       this.showDialog = false
+    }
+  },
+  mounted() {
+    if ('undefined' != typeof this.$route.query.activeName) {
+      this.activeName = this.$route.query.activeName
     }
   }
 }

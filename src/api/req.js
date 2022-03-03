@@ -5,7 +5,7 @@ import Router from '@/router/index'
 // import S from '@/spx'
 import { refreshToken } from '@/api/auth'
 
-function reqErr (res, msg = '') {
+function reqErr(res, msg = '') {
   const { data } = res.data || {}
   msg = data.msg || data.err_msg || msg
   const err = new Error(msg)
@@ -14,10 +14,10 @@ function reqErr (res, msg = '') {
   return err
 }
 
-function resolveGetMethod (inst) {
+function resolveGetMethod(inst) {
   const origGetMethod = inst.get
 
-  inst.get = function (url, params, config = {}) {
+  inst.get = function(url, params, config = {}) {
     config = {
       params,
       ...config
@@ -26,8 +26,8 @@ function resolveGetMethod (inst) {
   }
 }
 
-function errorToast (data) {
-  const { status_code, errcode, errmsg, message } = data
+function errorToast(data) {
+  const { status_code,errcode, errmsg,message } = data
   const err = message || errmsg
   const code = status_code || errcode
   //Token has expired
@@ -50,7 +50,7 @@ function errorToast (data) {
   }
 }
 
-function createAxios (inst) {
+function createAxios(inst) {
   inst = inst || axios.create()
   inst.defaults.timeout = process.env.NODE_ENV === 'production' ? 10000 : 30 * 1000
   inst.defaults.baseURL = process.env.VUE_APP_BASE_API || '/'

@@ -34,6 +34,9 @@ import RouteMerchantSellers from '../merchant/route-sellers'
 import RouteMerchantCompanydata from '../merchant/route-companydata'
 import RouteMerchantSetting from '../merchant/route-setting'
 
+
+
+
 // dealer
 import RouteDealerInfomation from './route-dealer-infomation'
 import RouteDealerShop from './route-dealer-shop'

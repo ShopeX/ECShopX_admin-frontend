@@ -1,96 +1,39 @@
 <template>
   <div class="authory-box">
     <div v-if="$route.path.indexOf('approve') === -1">
-      <el-card class="cus-card">
-        <el-form
-          ref="myForm"
-          :model="params"
-          :inline="true"
-        >
-          <el-row>
-            <el-col :span="7">
-              <el-form-item label="审批状态">
-                <el-select
-                  v-model="params.status"
-                  placeholder="请选择审批状态"
-                  style="width: 230px"
-                >
-                  <el-option
-                    v-for="(item, index) in approveStatusList"
-                    :key="index"
-                    :label="item.name"
-                    :value="item.value"
-                  />
-                </el-select>
-              </el-form-item>
-            </el-col>
-            <el-col
-              :span="7"
-              :offset="1"
-            >
-              <el-form-item label="账户名称">
-                <el-input
-                  v-model="params.login_name"
-                  class="input-m"
-                  placeholder="请输入"
-                  clearable
-                />
-              </el-form-item>
-            </el-col>
-            <el-col
-              :span="8"
-              :offset="1"
-            >
-              <el-form-item label="申请日期">
-                <el-date-picker
-                  v-model="create_time"
-                  style="width: 270px"
-                  type="daterange"
-                  format="yyyy-MM-dd"
-                  value-format="yyyy-MM-dd"
-                  start-placeholder="开始日期"
-                  end-placeholder="结束日期"
-                  @change="dateChange"
-                />
-              </el-form-item>
-            </el-col>
-            <el-col
-              :span="6"
-              :offset="15"
-              style="text-align: right"
-            >
-              <el-form-item>
-                <el-button
-                  type="primary"
-                  size="medium"
-                  @click="searchData"
-                >
-                  搜索
-                </el-button>
-                <el-button
-                  size="medium"
-                  @click="resetForm('myForm')"
-                >
-                  重置
-                </el-button>
-              </el-form-item>
-            </el-col>
-          </el-row>
-        </el-form>
-      </el-card>
+      <SpFilterForm :model="params" @onSearch="onSearch" @onReset="onReset">
+        <SpFilterFormItem prop="status" label="审批状态:">
+          <el-select v-model="params.status" placeholder="请选择审批状态">
+            <el-option
+              v-for="(item, index) in approveStatusList"
+              :key="index"
+              :label="item.name"
+              :value="item.value"
+            />
+          </el-select>
+        </SpFilterFormItem>
+        <SpFilterFormItem prop="login_name" label="账户名称:">
+          <el-input placeholder="请输入账户名称" v-model="params.login_name" />
+        </SpFilterFormItem>
+        <SpFilterFormItem prop="create_time" label="申请日期:">
+          <el-date-picker
+            style="width: 270px"
+            v-model="params.create_time"
+            type="daterange"
+            format="yyyy-MM-dd"
+            value-format="yyyy-MM-dd"
+            start-placeholder="开始日期"
+            end-placeholder="结束日期"
+            @change="dateChange"
+          />
+        </SpFilterFormItem>
+      </SpFilterForm>
+
       <el-card>
-        <div
-          v-for="item in list"
-          :key="item.pass_id"
-          class="cus-list"
-        >
+        <div class="cus-list" v-for="item in list" :key="item.pass_id">
           <el-row class="cus-row">
             <el-col :span="3">
-              <img
-                class="cus-row-img"
-                src="@/assets/img/adapay/authory_avater.png"
-                alt=""
-              >
+              <img class="cus-row-img" src="@/assets/img/adapay/authory_avater.png" alt="" />
             </el-col>
             <el-col :span="13">
               <div class="row-title">
@@ -106,12 +49,13 @@
                   :type="item.operator_type === 'staff' ? 'success' : 'warning'"
                   size="medium"
                   style="margin-left: 25px"
+                  >{{ item.operator_type === 'staff' ? '平台管理员' : '店铺管理员' }}</el-tag
                 >
-                  {{ item.operator_type === 'staff' ? '平台管理员' : '店铺管理员' }}
-                </el-tag>
               </div>
               <div class="cus-row-time">
-                <span>申请时间：{{ item.create_time ? createTimeFilter(item.create_time) : '-' }}</span>
+                <span
+                  >申请时间：{{ item.create_time ? createTimeFilter(item.create_time) : '-' }}</span
+                >
               </div>
             </el-col>
             <el-col :span="5">
@@ -120,18 +64,15 @@
                 src="@/assets/img/adapay/pass.png"
                 alt=""
                 style="width: 80px; height: 64px"
-              >
+              />
               <img
                 v-if="item.status == '2'"
                 src="@/assets/img/adapay/reject.png"
                 alt=""
                 style="width: 70px; height: 69px"
-              >
+              />
             </el-col>
-            <el-col
-              class="cus-row-btn"
-              :span="3"
-            >
+            <el-col class="cus-row-btn" :span="3">
               <router-link
                 v-if="item.status === '0'"
                 :to="{
@@ -139,22 +80,9 @@
                   query: { pass_id: item.pass_id, operator_id: item.operator_id }
                 }"
               >
-                <el-button
-                  size="medium"
-                  type="primary"
-                >
-                  审批
-                </el-button>
+                <el-button size="medium" type="primary">审批</el-button>
               </router-link>
-              <el-button
-                v-else
-                size="medium"
-                type="info"
-                plain
-                disabled
-              >
-                已审批
-              </el-button>
+              <el-button size="medium" v-else type="info" plain disabled>已审批</el-button>
             </el-col>
           </el-row>
         </div>
@@ -162,23 +90,25 @@
           <el-pagination
             background
             layout="total, sizes, prev, pager, next, jumper"
-            :current-page.sync="params.page"
+            @current-change="onCurrentChange"
+            @size-change="onSizeChange"
+            :current-page.sync="page.pageIndex"
             :page-sizes="[10, 20, 50]"
             :total="total_count"
-            :page-size="params.pageSize"
-            @current-change="handleCurrentChange"
-            @size-change="handleSizeChange"
-          />
+            :page-size="page.pageSize"
+          >
+          </el-pagination>
         </div>
       </el-card>
     </div>
-    <router-view />
+    <router-view></router-view>
   </div>
 </template>
 <script>
 import moment from 'moment'
 import { mapGetters } from 'vuex'
 import { encryptList } from '@/api/encrypt'
+import { pageMixin } from '@/mixins'
 import {
   getAftersalesList,
   exportList,
@@ -186,17 +116,17 @@ import {
   setAftersalesRemind
 } from '@/api/aftersales'
 export default {
-  data () {
+  mixins: [pageMixin],
+  data() {
     return {
       loading: true,
-      create_time: '',
+
       params: {
-        page: 1,
-        pageSize: 10,
         login_name: undefined,
         status: undefined,
         start_time: undefined,
-        end_time: undefined
+        end_time: undefined,
+        create_time: ''
       },
       approveStatusList: [
         { name: '全部', value: undefined },
@@ -211,14 +141,11 @@ export default {
   computed: {
     ...mapGetters(['wheight'])
   },
-  mounted () {
-    this.getAftersalesList()
-  },
   methods: {
-    dateStrToTimeStamp (str) {
+    dateStrToTimeStamp(str) {
       return Date.parse(new Date(str)) / 1000
     },
-    dateChange (val) {
+    dateChange(val) {
       if (val) {
         this.params.start_time = this.dateStrToTimeStamp(val[0] + ' 00:00:00')
         this.params.end_time = this.dateStrToTimeStamp(val[1] + ' 23:59:59')
@@ -226,46 +153,47 @@ export default {
         this.params.start_time = ''
         this.params.end_time = ''
       }
-      this.params.page = 1
+      this.page.pageIndex = 1
     },
-    searchData (e) {
-      this.params.page = 1
-      this.getAftersalesList()
+    onReset() {
+      this.params.start_time = ''
+      this.params.end_time = ''
+      this.onSearch()
     },
-    handleCurrentChange (val) {
-      this.params.page = val
-      this.loading = false
-      this.getAftersalesList()
-    },
-    handleSizeChange (pageSize) {
-      this.loading = false
-      this.params.page = 1
-      this.params.pageSize = pageSize
-      this.getAftersalesList()
-    },
-    getAftersalesList () {
+
+    fetchList() {
       this.loading = true
-      encryptList(this.params).then((response) => {
+      const { pageIndex: page, pageSize } = this.page
+      let params = {
+        page,
+        pageSize,
+        ...this.params
+      }
+      encryptList(params).then((response) => {
         this.list = response.data.data.list
         this.total_count = Number(response.data.data.count)
         this.loading = false
       })
     },
-    resetForm (formName) {
-      this.create_time = ''
-      this.params = {
-        page: 1,
-        pageSize: 10,
-        login_name: undefined,
-        status: undefined,
-        start_time: undefined,
-        end_time: undefined
-      }
-      this.getAftersalesList()
-    },
-    createTimeFilter (time) {
+
+    // resetForm(formName) {
+    //   this.create_time = ''
+    //   this.params = {
+    //     page: 1,
+    //     pageSize: 10,
+    //     login_name: undefined,
+    //     status: undefined,
+    //     start_time: undefined,
+    //     end_time: undefined
+    //   }
+    //   this.getAftersalesList()
+    // },
+    createTimeFilter(time) {
       return moment(time * 1000).format('YYYY-MM-DD HH:mm:ss')
     }
+  },
+  mounted() {
+    this.fetchList()
   }
 }
 </script>
@@ -311,6 +239,9 @@ export default {
     .el-card__body {
       padding-bottom: 0px;
     }
+  }
+  .sp-filter-form {
+    margin-bottom: 16px;
   }
 }
 </style>

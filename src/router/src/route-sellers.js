@@ -13,7 +13,8 @@ export default {
       children: [
         {
           path: 'editor/:itemId?',
-          component: () => import('@/view/mall/marketing/distributor_editor')
+          component: () =>
+            import('@/view/mall/marketing/distributor_editor')
         },
         {
           path: 'template/:distributor_id?',
@@ -29,6 +30,7 @@ export default {
         {
           path: 'editor',
           component: () => import('@/view/mall/marketing/merchantList/editor.vue')
+
         }
       ]
     },

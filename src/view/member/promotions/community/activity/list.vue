@@ -2,25 +2,12 @@
   <div>
     <el-row :gutter="20">
       <el-col :span="3">
-        <el-button
-          type="primary"
-          icon="plus"
-          @click="addActivityData"
-        >
-          添加活动
-        </el-button>
+        <el-button type="primary" icon="plus" @click="addActivityData">添加活动</el-button>
       </el-col>
       <el-col :span="6">
-        <el-input
-          v-model="params.name"
-          placeholder="活动名称"
-        >
-          <el-button
-            slot="append"
-            icon="el-icon-search"
-            @click="dataSearch"
-          />
-        </el-input>
+        <el-input placeholder="活动名称" v-model="params.name"
+          ><el-button slot="append" icon="el-icon-search" @click="dataSearch"></el-button
+        ></el-input>
       </el-col>
       <el-col :span="8">
         <el-date-picker
@@ -28,48 +15,21 @@
           type="daterange"
           value-format="yyyy/MM/dd"
           placeholder="选择日期范围"
-          style="width: 100%"
+          style="width: 100%;"
           @change="dateChange"
-        />
+        ></el-date-picker>
       </el-col>
     </el-row>
-    <el-tabs
-      v-model="activeName"
-      type="border-card"
-      @tab-click="handleClick"
-    >
-      <el-tab-pane
-        label="全部"
-        name="all"
-      />
-      <el-tab-pane
-        label="进行中"
-        name="processing"
-      />
-      <el-tab-pane
-        label="待开始"
-        name="waiting"
-      />
-      <el-tab-pane
-        label="自动已结束"
-        name="over"
-      />
-      <el-tab-pane
-        label="手动已终止"
-        name="close"
-      />
-      <el-table
-        v-loading="loading"
-        :data="activityLists"
-        :height="wheight - 220"
-      >
+    <el-tabs type="border-card" v-model="activeName" @tab-click="handleClick">
+      <el-tab-pane label="全部" name="all"></el-tab-pane>
+      <el-tab-pane label="进行中" name="processing"></el-tab-pane>
+      <el-tab-pane label="待开始" name="waiting"></el-tab-pane>
+      <el-tab-pane label="自动已结束" name="over"></el-tab-pane>
+      <el-tab-pane label="手动已终止" name="close"></el-tab-pane>
+      <el-table :data="activityLists" :height="wheight - 220" v-loading="loading">
         <el-table-column type="expand">
           <template slot-scope="props">
-            <el-form
-              label-position="left"
-              inline
-              class="demo-table-expand"
-            >
+            <el-form label-position="left" inline class="demo-table-expand">
               <el-form-item label="活动描述">
                 <span>{{ props.row.description }}</span>
               </el-form-item>
@@ -83,38 +43,21 @@
             </el-form>
           </template>
         </el-table-column>
-        <el-table-column
-          prop="activity_id"
-          label="活动ID"
-          width="80"
-        />
+        <el-table-column prop="activity_id" label="活动ID" width="80"></el-table-column>
         <el-table-column label="活动名称">
-          <template slot-scope="scope">
-            {{ scope.row.activity_name }}<br>
-          </template>
+          <template slot-scope="scope"> {{ scope.row.activity_name }}<br /> </template>
         </el-table-column>
-        <el-table-column
-          prop="activity_start_date"
-          label="开始时间"
-          width="160"
-        />
-        <el-table-column
-          prop="activity_end_date"
-          label="结束时间"
-          width="160"
-        />
-        <el-table-column
-          prop="community"
-          label="社区限制"
-          width="80"
-        >
+        <el-table-column prop="activity_start_date" label="开始时间" width="160"> </el-table-column>
+        <el-table-column prop="activity_end_date" label="结束时间" width="160"> </el-table-column>
+        <el-table-column prop="community" label="社区限制" width="80">
           <template slot-scope="scope">
-            <span v-if="scope.row.community == 'all'"> 全部社区 </span>
+            <span v-if="scope.row.community == 'all'">
+              全部社区
+            </span>
             <span v-else>
-              <el-button
-                type="text"
-                @click="viewCommunityList(scope.row.community)"
-              >查看社区</el-button>
+              <el-button type="text" @click="viewCommunityList(scope.row.community)"
+                >查看社区</el-button
+              >
             </span>
           </template>
         </el-table-column>
@@ -128,67 +71,51 @@
           <el-button size="mini" type="text" v-if="scope.row.status == 'processing' || scope.row.status == 'waiting'" @click="updateStatusCommunityAction(scope.$index, scope.row)">终止活动</el-button>
         </template>
       </el-table-column> -->
-        <el-table-column
-          label="操作"
-          min-width="150"
-          fixed="right"
-        >
+        <el-table-column label="操作" min-width="150" fixed="right">
           <template slot-scope="scope">
-            <el-button
-              type="text"
-              @click="viewGoodsList(scope.row.activity_id)"
+            <el-button type="text" @click="viewGoodsList(scope.row.activity_id)"
+              >查看商品</el-button
             >
-              查看商品
-            </el-button>
             <el-button
-              v-if="scope.row.status == 'processing' || scope.row.status == 'waiting'"
               type="text"
+              v-if="scope.row.status == 'processing' || scope.row.status == 'waiting'"
               @click="updateStatusCommunityAction('close', scope.row)"
+              >终止</el-button
             >
-              终止
-            </el-button>
             <el-button
-              v-if="scope.row.status == 'waiting' && scope.row.is_maturity"
               type="text"
+              v-if="scope.row.status == 'waiting' && scope.row.is_maturity"
               @click="updateStatusCommunityAction('start', scope.row)"
+              >开启</el-button
             >
-              开启
-            </el-button>
             <el-button
-              v-if="scope.row.status == 'processing' || scope.row.status == 'waiting'"
               type="text"
               @click="editCommunityAction(scope.$index, scope.row)"
+              v-if="scope.row.status == 'processing' || scope.row.status == 'waiting'"
+              >编辑</el-button
             >
-              编辑
-            </el-button>
+            <el-button type="text" @click="addSimilarActvity(scope.row.activity_id)"
+              >添加相似</el-button
+            >
             <el-button
               type="text"
-              @click="addSimilarActvity(scope.row.activity_id)"
-            >
-              添加相似
-            </el-button>
-            <el-button
               v-if="scope.row.status == 'over' || scope.row.status == 'close'"
-              type="text"
               @click="exportActivityItemList(scope.row.activity_id)"
+              >下载备货单</el-button
             >
-              下载备货单
-            </el-button>
           </template>
         </el-table-column>
       </el-table>
-      <div
-        v-if="total_count > params.pageSize"
-        class="content-center content-top-padded"
-      >
+      <div v-if="total_count > params.pageSize" class="content-center content-top-padded">
         <el-pagination
           background
           layout="prev, pager, next, total"
+          @current-change="handleCurrentChange"
           :current-page.sync="params.page"
           :total="total_count"
           :page-size="params.pageSize"
-          @current-change="handleCurrentChange"
-        />
+        >
+        </el-pagination>
       </div>
     </el-tabs>
 
@@ -199,43 +126,14 @@
       width="70%"
     >
       <template>
-        <el-table
-          v-loading="loading"
-          :data="communityLists"
-        >
-          <el-table-column
-            prop="community_id"
-            label="ID"
-            width="50"
-          />
-          <el-table-column
-            prop="community_name"
-            label="名称"
-          />
-          <el-table-column
-            prop="leader_name"
-            label="团长姓名"
-            width="110"
-          />
-          <el-table-column
-            prop="leader_mobile"
-            label="团长手机"
-            width="120"
-          />
-          <el-table-column
-            prop="address"
-            label="提货地址"
-          />
-          <el-table-column
-            prop="created_date"
-            label="入驻时间"
-            width="100"
-          />
-          <el-table-column
-            prop="status"
-            label="状态"
-            width="80"
-          >
+        <el-table :data="communityLists" v-loading="loading">
+          <el-table-column prop="community_id" label="ID" width="50"></el-table-column>
+          <el-table-column prop="community_name" label="名称"></el-table-column>
+          <el-table-column prop="leader_name" label="团长姓名" width="110"></el-table-column>
+          <el-table-column prop="leader_mobile" label="团长手机" width="120"></el-table-column>
+          <el-table-column prop="address" label="提货地址"></el-table-column>
+          <el-table-column prop="created_date" label="入驻时间" width="100"></el-table-column>
+          <el-table-column prop="status" label="状态" width="80">
             <template slot-scope="scope">
               <span v-if="scope.row.status === 'open'">营业</span>
               <span v-if="scope.row.status === 'close'">暂停</span>
@@ -243,11 +141,7 @@
               <span v-if="scope.row.status === 'refuse'">拒绝申请</span>
             </template>
           </el-table-column>
-          <el-table-column
-            prop="pass_date"
-            label="通过时间"
-            width="100"
-          />
+          <el-table-column prop="pass_date" label="通过时间" width="100"></el-table-column>
         </el-table>
       </template>
     </el-dialog>
@@ -258,74 +152,34 @@
       width="70%"
     >
       <template>
-        <el-table
-          v-loading="loading"
-          :data="goodsList"
-        >
-          <el-table-column
-            prop="item_id"
-            label="id"
-            width="60"
-          />
-          <el-table-column
-            prop="item_name"
-            label="商品名称"
-          />
-          <el-table-column
-            prop="activity_price"
-            label="活动价"
-            width="70"
-          >
+        <el-table :data="goodsList" v-loading="loading">
+          <el-table-column prop="item_id" label="id" width="60"></el-table-column>
+          <el-table-column prop="item_name" label="商品名称"></el-table-column>
+          <el-table-column prop="activity_price" label="活动价" width="70">
             <template slot-scope="scope">
               {{ cursymbol }}{{ scope.row.activity_price }}
               <!-- <el-input v-model="scope.row.activity_price"  @change="editItemPrice(scope.$index, scope.row)"><i slot="prefix" class="el-input__icon el-icon-edit"></i><i slot="suffix" class="el-input__icon">元</i></el-input> -->
             </template>
           </el-table-column>
-          <el-table-column
-            prop="vip_price"
-            label="vip价"
-            width="70"
-          >
-            <template slot-scope="scope">
-              {{ cursymbol }}{{ scope.row.vip_price }}
-            </template>
+          <el-table-column prop="vip_price" label="vip价" width="70">
+            <template slot-scope="scope"> {{ cursymbol }}{{ scope.row.vip_price }} </template>
           </el-table-column>
-          <el-table-column
-            prop="svip_price"
-            label="svip价"
-            width="70"
-          >
-            <template slot-scope="scope">
-              {{ cursymbol }}{{ scope.row.svip_price }}
-            </template>
+          <el-table-column prop="svip_price" label="svip价" width="70">
+            <template slot-scope="scope"> {{ cursymbol }}{{ scope.row.svip_price }} </template>
           </el-table-column>
-          <el-table-column
-            prop="activity_store"
-            label="库存"
-            width="60"
-          />
-          <el-table-column
-            prop="points"
-            label="积分"
-            width="60"
-          />
-          <el-table-column
-            prop="sort"
-            label="排序"
-            width="60"
-          />
+          <el-table-column prop="activity_store" label="库存" width="60"></el-table-column>
+          <el-table-column prop="points" label="积分" width="60"></el-table-column>
+          <el-table-column prop="sort" label="排序" width="60"></el-table-column>
         </el-table>
-        <div
-          v-if="goodsCount > goodsPageSize"
-          class="content-center content-top-padded"
-        >
+        <div v-if="goodsCount > goodsPageSize" class="content-center content-top-padded">
           <el-pagination
             layout="prev, pager, next"
+            @current-change="handleGoodsCurrentChange"
             :current-page.sync="goodsPage"
             :total="goodsCount"
             :page-size="goodsPageSize"
-            @current-change="handleGoodsCurrentChange"
-          />
+          >
+          </el-pagination>
         </div>
       </template>
     </el-dialog>
@@ -345,7 +199,7 @@ import {
 } from '../../../../../api/community'
 export default {
   props: ['getStatus'],
-  data () {
+  data() {
     return {
       activeName: 'all',
       create_time: '',
@@ -385,20 +239,9 @@ export default {
   computed: {
     ...mapGetters(['wheight'])
   },
-  watch: {
-    getStatus (val) {
-      if (val) {
-        this.getActivityLists(this.params)
-      }
-    }
-  },
-  mounted () {
-    this.getActivityLists(this.params)
-    this.getCurrencyInfo()
-  },
   methods: {
     // 切换tab
-    handleClick (tab, event) {
+    handleClick(tab, event) {
       this.activeName = tab.name
       this.params.page = 1
       if (this.activeName != 'all') {
@@ -408,41 +251,41 @@ export default {
       }
       this.getActivityLists(this.params)
     },
-    handleCurrentChange (page_num) {
+    handleCurrentChange(page_num) {
       this.params.page = page_num
       this.getActivityLists(this.params)
     },
-    handleGoodsCurrentChange (page_num) {
+    handleGoodsCurrentChange(page_num) {
       this.goodsPage = page_num
       this.viewGoodsList(this.nowActivity)
     },
-    addActivityData () {
+    addActivityData() {
       // 添加物料弹框
       this.$router.push({ path: this.matchHidePage('editor') })
     },
-    editCommunityAction (index, row) {
+    editCommunityAction(index, row) {
       // 编辑物料弹框
       this.$router.push({ path: this.matchHidePage('editor/') + row.activity_id })
     },
-    addSimilarActvity (activity_id) {
+    addSimilarActvity(activity_id) {
       this.$router.push({ path: this.matchHidePage('editor/') + activity_id + '?is_new=true' })
     },
-    exportActivityItemList (activity_id) {
+    exportActivityItemList(activity_id) {
       exportActivityItemList({ activity_id: activity_id }).then((res) => {
         window.open(res.data.data.url, '_blank')
       })
     },
-    communityDetail (index, row) {
+    communityDetail(index, row) {
       this.communityDetailVisible = true
       CommunityActivityInfo(row.activity_id).then((response) => {
         this.communityDetailData = response.data.data
       })
     },
-    dataSearch () {
+    dataSearch() {
       this.params.page = 1
       this.getActivityLists(this.params)
     },
-    getActivityLists (params) {
+    getActivityLists(params) {
       this.loading = true
       if (this.activeName != 'all') {
         this.params.status = this.activeName
@@ -455,7 +298,7 @@ export default {
         this.loading = false
       })
     },
-    updateStatusCommunityAction (status, row) {
+    updateStatusCommunityAction(status, row) {
       if (status == 'close') {
         var msg = '此操作将永久终止该活动, 是否继续?'
       } else {
@@ -483,7 +326,7 @@ export default {
         }
       })
     },
-    dateChange (val) {
+    dateChange(val) {
       if (val && val.length > 0) {
         this.params.start_time = this.dateStrToTimeStamp(val[0] + ' 00:00:00')
         this.params.end_time = this.dateStrToTimeStamp(val[1] + ' 23:59:59')
@@ -494,10 +337,10 @@ export default {
       this.params.page = 1
       this.getActivityLists(this.params)
     },
-    dateStrToTimeStamp (str) {
+    dateStrToTimeStamp(str) {
       return Date.parse(new Date(str)) / 1000
     },
-    viewCommunityList (ids) {
+    viewCommunityList(ids) {
       this.communityVisible = true
       var params = { 'community_id': ids }
       getCommunityList(params).then((res) => {
@@ -506,7 +349,7 @@ export default {
         }
       })
     },
-    viewGoodsList (activityId) {
+    viewGoodsList(activityId) {
       this.nowActivity = activityId
       this.goodsVisible = true
       communityActivityItemList(activityId, {
@@ -517,24 +360,24 @@ export default {
         this.goodsCount = res.data.data.total_count
       })
     },
-    viewCouponList (ids) {
+    viewCouponList(ids) {
       this.couponVisible = true
     },
-    handleCancel () {
+    handleCancel() {
       this.communityVisible = false
       this.couponVisible = false
       this.goodsVisible = false
     },
-    getCurrencyInfo () {
+    getCurrencyInfo() {
       getDefaultCurrency().then((res) => {
         this.currency = res.data.data
         this.cursymbol = this.currency.symbol
       })
     },
-    updateActivityData (params) {
+    updateActivityData(params) {
       updateActivityItemData(params).then((res) => {})
     },
-    editItemPrice (row) {
+    editItemPrice(row) {
       let form = {
         'id': row.id,
         'item_id': row.item_id,
@@ -545,6 +388,17 @@ export default {
         'points': row.points
       }
       this.updateActivityData(form)
+    }
+  },
+  mounted() {
+    this.getActivityLists(this.params)
+    this.getCurrencyInfo()
+  },
+  watch: {
+    getStatus(val) {
+      if (val) {
+        this.getActivityLists(this.params)
+      }
     }
   }
 }

@@ -7,79 +7,61 @@
       label-position="left"
       class="demo-ruleForm"
     >
-      <el-card
-        v-loading="loader"
-        shadow="never"
-        header="税费策略"
-      >
-        <el-col
-          :xs="24"
-          :sm="12"
-          :md="8"
-        >
+      <el-card shadow="never" header="税费策略" v-loading="loader">
+        <el-col :xs="24" :sm="12" :md="8">
           <el-form-item label="规则名称">
             <el-input
               v-model="form.taxstrategy_name"
               :maxlength="30"
               placeholder="请输入内容"
-            />
+            ></el-input>
           </el-form-item>
         </el-col>
 
-        <el-col
-          :xs="24"
-          :sm="24"
-          :md="24"
-        >
-          <el-button
-            type="primary"
-            @click="addRule"
-          >
-            添加规则
-          </el-button>
-          <div style="height: 20px" />
+        <el-col :xs="24" :sm="24" :md="24">
+          <el-button type="primary" @click="addRule">添加规则</el-button>
+          <div style="height: 20px;"></div>
           <div v-for="(row, key) in form.taxstrategy_content">
             <el-form-item label="规则">
               <div style="display: flex">
                 {{ key + 1 }}
                 <el-input-number
-                  v-model="row.start"
-                  style="margin: 0 5px"
+                  style="margin: 0 5px;"
                   controls-position="right"
+                  v-model="row.start"
                   :controls="false"
                   :precision="2"
                   :step="0.1"
                   :min="0"
-                />
+                ></el-input-number>
                 —
                 <el-input-number
-                  v-model="row.end"
-                  style="margin: 0 5px"
+                  style="margin: 0 5px;"
                   controls-position="right"
+                  v-model="row.end"
                   :controls="false"
                   :precision="2"
                   :step="0.1"
                   :min="0"
-                />
+                ></el-input-number>
                 元，税率
                 <el-input-number
-                  v-model="row.tax_rate"
-                  style="margin: 0 5px"
+                  style="margin: 0 5px;"
                   controls-position="right"
+                  v-model="row.tax_rate"
                   :controls="false"
                   :precision="2"
                   :step="0.1"
                   :min="0"
                   :max="100"
-                />
+                ></el-input-number>
                 %
                 <el-button
                   v-if="key !== 0"
-                  style="margin-left: 50px"
-                  type="danger"
+                  style="margin-left: 50px;"
                   @click="delRule(key)"
-                >
-                  删除
+                  type="danger"
+                  >删除
                 </el-button>
               </div>
             </el-form-item>
@@ -89,15 +71,9 @@
 
       <div class="section-footer with-border content-center">
         <!--        <el-button @click.native="handleCancel">取消</el-button>-->
-        <el-button
-          type="primary"
-          :loading="submitLoading"
-          @click="save"
-        >
-          {{
-            submitLoading ? '提交中' : '保存'
-          }}
-        </el-button>
+        <el-button type="primary" @click="save" :loading="submitLoading">{{
+          submitLoading ? '提交中' : '保存'
+        }}</el-button>
       </div>
     </el-form>
   </div>
@@ -110,7 +86,7 @@ export default {
   inject: ['refresh'],
   components: {},
 
-  data () {
+  data() {
     return {
       taxstrategy_id: '',
       submitLoading: false,
@@ -124,7 +100,7 @@ export default {
       list: []
     }
   },
-  mounted () {
+  mounted() {
     // 判断添加还是修复
     if (this.$route.params.id === undefined) {
       console.log('添加')
@@ -137,14 +113,14 @@ export default {
   },
   methods: {
     // 初始化数据（添加）
-    initData () {
+    initData() {
       this.form = {
         taxstrategy_name: '',
         taxstrategy_content: [{ start: 0, end: 0, tax_rate: 0 }]
       }
     },
     // 获取数据
-    getInfo () {
+    getInfo() {
       this.submitLoading = true
       this.loader = true
       getTaxstrategyInfo(this.taxstrategy_id, {}).then((res) => {
@@ -157,7 +133,7 @@ export default {
       })
     },
     // 添加规则
-    addRule () {
+    addRule() {
       let sum = 10
       if (this.form.taxstrategy_content.length < sum) {
         this.form.taxstrategy_content.push({ start: 0, end: 0, tax_rate: 0 })
@@ -166,11 +142,11 @@ export default {
       }
     },
     // 删除规则
-    delRule (key) {
+    delRule(key) {
       this.form.taxstrategy_content.splice(key, 1)
     },
     // 保存
-    save () {
+    save() {
       this.submitLoading = true
       this.loader = true
       if (this.taxstrategy_id !== '') {
@@ -180,10 +156,10 @@ export default {
       }
     },
     // 添加
-    isAdd () {
+    isAdd() {
       const _this = this
       const _taxContent = []
-      this.form.taxstrategy_content.forEach((item) => {
+      this.form.taxstrategy_content.forEach(item => {
         _taxContent.push(JSON.stringify(item))
       })
       addTaxstrategy({
@@ -198,15 +174,15 @@ export default {
       })
     },
     // 修改
-    isUpdate () {
+    isUpdate() {
       const _this = this
       const _taxContent = []
-      this.form.taxstrategy_content.forEach((item) => {
+      this.form.taxstrategy_content.forEach(item => {
         _taxContent.push(JSON.stringify(item))
       })
       updateTaxstrategy(this.taxstrategy_id, {
         ...this.form,
-        taxstrategy_content: _taxContent
+        taxstrategy_content:_taxContent
       }).then((res) => {
         this.$message({ type: 'success', message: '操作成功' })
         this.submitLoading = false

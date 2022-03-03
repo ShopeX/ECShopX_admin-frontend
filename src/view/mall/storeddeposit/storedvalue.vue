@@ -1,22 +1,10 @@
 <template>
   <div class="section-white content-padded">
     <div class="content-bottom-padded">
-      <el-button
-        type="primary"
-        @click="showDialog"
-      >
-        添加面额({{ dataList.length }}/14)
-      </el-button>
+      <el-button type="primary" @click="showDialog">添加面额({{ dataList.length }}/14)</el-button>
     </div>
-    <el-table
-      v-loading="loading"
-      :data="dataList"
-      :height="wheight - 200"
-    >
-      <el-table-column
-        prop="money"
-        label="固定面额数(元)"
-      />
+    <el-table :data="dataList" :height="wheight - 200" v-loading="loading">
+      <el-table-column prop="money" label="固定面额数(元)"></el-table-column>
       <el-table-column label="赠送">
         <template slot-scope="scope">
           <span v-if="scope.row.ruleType == 'money'">充值送钱</span>
@@ -25,24 +13,18 @@
       </el-table-column>
       <el-table-column label="赠送说明">
         <template slot-scope="scope">
-          <span
-            v-if="scope.row.ruleType == 'money'"
-          >充值{{ scope.row.money }}元送{{ scope.row.ruleData }}元</span>
-          <span
-            v-if="scope.row.ruleType == 'point'"
-          >充值{{ scope.row.money }}元送{{ scope.row.ruleData }}积分</span>
+          <span v-if="scope.row.ruleType == 'money'"
+            >充值{{ scope.row.money }}元送{{ scope.row.ruleData }}元</span
+          >
+          <span v-if="scope.row.ruleType == 'point'"
+            >充值{{ scope.row.money }}元送{{ scope.row.ruleData }}积分</span
+          >
         </template>
       </el-table-column>
       <el-table-column label="操作">
         <template slot-scope="scope">
-          <a
-            href="#"
-            @click="edit(scope.row, scope.$index)"
-          >编辑</a>
-          <a
-            href="#"
-            @click="remove(scope.row, scope.$index)"
-          >删除</a>
+          <a href="#" @click="edit(scope.row, scope.$index)">编辑</a>
+          <a href="#" @click="remove(scope.row, scope.$index)">删除</a>
         </template>
       </el-table-column>
     </el-table>
@@ -53,64 +35,31 @@
       :before-close="cancelAction"
     >
       <div>
-        <el-form
-          ref="form"
-          :rules="rules"
-          :model="form"
-          label-width="120px"
-        >
-          <el-form-item
-            label="固定面额数(元)"
-            prop="fixed_money"
-          >
-            <el-input
-              v-model="form.fixed_money"
-              style="width: 240px"
-            />
+        <el-form ref="form" :rules="rules" :model="form" label-width="120px">
+          <el-form-item label="固定面额数(元)" prop="fixed_money">
+            <el-input v-model="form.fixed_money" style="width: 240px;"></el-input>
           </el-form-item>
           <el-form-item label="赠送">
             <el-select v-model="form.rule_type">
               <el-option
                 v-for="(item, index) in giftType"
-                :key="item.rule_type"
                 :label="item.text"
                 :value="item.rule_type"
-              />
+                :key="item.rule_type"
+              ></el-option>
             </el-select>
           </el-form-item>
-          <el-form-item
-            v-show="form.rule_type == 'money'"
-            label="赠送金额(元)"
-          >
-            <el-input
-              v-model="form.rule_data"
-              style="width: 200px"
-            />
+          <el-form-item v-show="form.rule_type == 'money'" label="赠送金额(元)">
+            <el-input v-model="form.rule_data" style="width: 200px;"></el-input>
           </el-form-item>
-          <el-form-item
-            v-show="form.rule_type == 'point'"
-            label="赠送积分(分)"
-          >
-            <el-input
-              v-model="form.rule_data"
-              style="width: 200px"
-            />
+          <el-form-item v-show="form.rule_type == 'point'" label="赠送积分(分)">
+            <el-input v-model="form.rule_data" style="width: 200px;"></el-input>
           </el-form-item>
         </el-form>
       </div>
-      <div
-        slot="footer"
-        class="dialog-footer"
-      >
-        <el-button @click="dialogVisible = false">
-          取消
-        </el-button>
-        <el-button
-          type="primary"
-          @click="add"
-        >
-          确定
-        </el-button>
+      <div slot="footer" class="dialog-footer">
+        <el-button @click="dialogVisible = false">取消</el-button>
+        <el-button type="primary" @click="add">确定</el-button>
       </div>
     </el-dialog>
   </div>
@@ -126,7 +75,7 @@ import {
 } from '../../../api/deposit'
 export default {
   props: ['getStatus'],
-  data () {
+  data() {
     return {
       loading: false,
       dialogVisible: false,
@@ -152,15 +101,8 @@ export default {
   computed: {
     ...mapGetters(['wheight'])
   },
-  watch: {
-    getStatus (newVal, oldVal) {
-      if (newVal) {
-        this.getlist()
-      }
-    }
-  },
   methods: {
-    showDialog () {
+    showDialog() {
       this.form.id = ''
       this.form.fixed_money = ''
       this.form.rule_data = ''
@@ -170,14 +112,14 @@ export default {
       }
       this.dialogVisible = true
     },
-    edit (row, index) {
+    edit(row, index) {
       this.form.fixed_money = row.money
       this.form.rule_type = row.ruleType
       this.form.rule_data = row.ruleData
       this.form.id = row.id
       this.dialogVisible = true
     },
-    remove (row, index) {
+    remove(row, index) {
       deleteRechargeRuleById(row.id).then((res) => {
         this.$message({
           message: '删除成功',
@@ -187,7 +129,7 @@ export default {
       })
       this.dataList.splice(index, 1)
     },
-    getlist () {
+    getlist() {
       this.loading = true
       getRechargeRuleList().then((res) => {
         this.dataList = []
@@ -202,7 +144,7 @@ export default {
         this.loading = false
       })
     },
-    add () {
+    add() {
       this.$refs['form'].validate((valid) => {
         if (valid) {
           if (this.form.id) {
@@ -228,8 +170,15 @@ export default {
         }
       })
     },
-    cancelAction () {
+    cancelAction() {
       this.dialogVisible = false
+    }
+  },
+  watch: {
+    getStatus(newVal, oldVal) {
+      if (newVal) {
+        this.getlist()
+      }
     }
   }
 }

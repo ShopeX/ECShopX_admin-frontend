@@ -11,39 +11,28 @@
               backgroundPosition: 'center center'
             }"
           >
-            <img
-              class="member-header"
-              :src="member.wechatUserInfo.headimgurl"
-              alt=""
-            >
+            <img class="member-header" :src="member.wechatUserInfo.headimgurl" alt="" />
             <div class="mobile-txt">
-              <span>{{ member.mobile }}</span><img
+              <span>{{ member.mobile }}</span
+              ><img
                 v-if="member.sex == '1' || member.sex == '2'"
                 :src="
                   member.sex == '1'
                     ? '@/assets/img/male_icon.png'
                     : member.sex == '2'
-                      ? '@/assets/img/female_icon.png'
-                      : ''
+                    ? '@/assets/img/female_icon.png'
+                    : ''
                 "
                 class="icon"
-              >
+              />
             </div>
-            <div
-              v-if="member.vipgrade && member.vipgrade.is_vip"
-              class="level-txt"
-            >
+            <div class="level-txt" v-if="member.vipgrade && member.vipgrade.is_vip">
               {{ member.vipgrade.grade_name }}
             </div>
             <div v-if="member.vipgrade && member.vipgrade.is_vip">
               截止{{ member.vipgrade.end_time }}到期
             </div>
-            <div
-              v-else
-              class="level-txt"
-            >
-              {{ member.gradeInfo.grade_name }}
-            </div>
+            <div class="level-txt" v-else>{{ member.gradeInfo.grade_name }}</div>
           </div>
         </div>
         <div class="f_l member-info">
@@ -63,9 +52,9 @@
           </div>
           <div class="info-item">
             <span class="txt">所在城市</span>
-            <span
-              v-if="member.wechatUserInfo.country || member.wechatUserInfo.province"
-            >{{ member.wechatUserInfo.country }}&nbsp;{{ member.wechatUserInfo.province }}</span>
+            <span v-if="member.wechatUserInfo.country || member.wechatUserInfo.province"
+              >{{ member.wechatUserInfo.country }}&nbsp;{{ member.wechatUserInfo.province }}</span
+            >
             <span v-else>--</span>
           </div>
           <div class="info-item">
@@ -93,34 +82,31 @@
         </div>
         <div class="f_r member-right">
           <div class="right-item point-box">
-            <div class="item-title">
-              积分
-            </div>
+            <div class="item-title">积分</div>
             <div>
-              <span v-if="member.point">{{ member.point }}</span><span v-else>0</span>
+              <span v-if="member.point">{{ member.point }}</span
+              ><span v-else>0</span>
             </div>
-            <span class="item-footer" />
+            <span class="item-footer"></span>
           </div>
           <div class="right-item point-box">
-            <div class="item-title">
-              储值
-            </div>
+            <div class="item-title">储值</div>
             <div>
-              ¥<span v-if="member.deposit">{{ member.deposit / 100 }}</span><span v-else>0</span>
+              ¥<span v-if="member.deposit">{{ member.deposit / 100 }}</span
+              ><span v-else>0</span>
             </div>
-            <span class="item-footer" />
+            <span class="item-footer"></span>
           </div>
           <div class="right-item discount-box">
-            <div class="item-title">
-              折扣
-            </div>
+            <div class="item-title">折扣</div>
             <div>
               <span v-if="member.vipgrade && member.vipgrade.is_vip == true">{{
                 (100 - member.vipgrade.discount) / 10
               }}</span>
               <span
                 v-else-if="member.gradeInfo && member.gradeInfo.privileges.discount_desc != 0"
-              >{{ member.gradeInfo.privileges.discount_desc }}</span>
+                >{{ member.gradeInfo.privileges.discount_desc }}</span
+              >
               <span v-else>10</span>
               折
             </div>
@@ -128,113 +114,66 @@
         </div>
       </div>
       <div class="content-center">
-        <el-button
-          type="primary"
-          @click="goBack"
-        >
-          返回
-        </el-button>
+        <el-button type="primary" @click="goBack">返回</el-button>
       </div>
     </div>
-    <el-tabs
-      v-model="activeName"
-      type="border-card"
-      @tab-click="handleClick"
-    >
-      <el-tab-pane
-        label="会员详情"
-        name="info"
-      >
+    <el-tabs v-model="activeName" type="border-card" @tab-click="handleClick">
+      <el-tab-pane label="会员详情" name="info">
         <member-info
           :user-info="member"
           :register-setting="registerSetting"
           :is-load="infoLoad"
-        />
+        ></member-info>
       </el-tab-pane>
-      <el-tab-pane
-        label="权益"
-        name="right"
-      >
+      <el-tab-pane label="权益" name="right">
         <quanyi-list
           :user-id="user_id"
           :user-mobile="member.mobile"
           :is-load="quanyiLoad"
-        />
+        ></quanyi-list>
       </el-tab-pane>
-      <el-tab-pane
-        label="交易订单"
-        name="order"
-      >
-        <order-list
-          :user-id="user_id"
-          :is-load="orderLoad"
-        />
+      <el-tab-pane label="交易订单" name="order">
+        <order-list :user-id="user_id" :is-load="orderLoad"></order-list>
       </el-tab-pane>
-      <el-tab-pane
-        label="预存款交易"
-        name="deposit"
-      >
-        <deposit-list
-          :user-id="user_id"
-          :is-load="depositLoad"
-        />
+      <el-tab-pane label="预存款交易" name="deposit">
+        <deposit-list :user-id="user_id" :is-load="depositLoad"></deposit-list>
       </el-tab-pane>
-      <el-tab-pane
-        label="权益转让"
-        name="transfer"
-      >
+      <el-tab-pane label="权益转让" name="transfer">
         <transfer-list
           :user-id="user_id"
           :user-mobile="member.mobile"
           :is-load="transferLoad"
-        />
+        ></transfer-list>
       </el-tab-pane>
-      <el-tab-pane
-        v-if="!isMicorMall"
-        label="核销记录"
-        name="rightslog"
-      >
-        <rightslog-list
-          :user-id="user_id"
-          :is-load="rightslogLoad"
-        />
+      <el-tab-pane label="核销记录" name="rightslog" v-if="!isMicorMall">
+        <rightslog-list :user-id="user_id" :is-load="rightslogLoad"></rightslog-list>
       </el-tab-pane>
-      <el-tab-pane
-        label="付费会员卡记录"
-        name="membercard"
-      >
+      <el-tab-pane label="付费会员卡记录" name="membercard">
         <membercard-list
           :user-id="user_id"
           :user-mobile="member.mobile"
           :is-load="membercardLoad"
-        />
+        ></membercard-list>
       </el-tab-pane>
-      <el-tab-pane
-        label="积分记录"
-        name="point"
-      >
+      <el-tab-pane label="积分记录" name="point">
         <point-list
           :user-id="user_id"
           :user-mobile="member.mobile"
           :is-load="pointLoad"
-        />
+        ></point-list>
       </el-tab-pane>
-      <el-tab-pane
-        v-if="!isMicorMall"
-        label="导购员关系变更"
-        name="salespersonlogs"
-      >
+      <el-tab-pane label="导购员关系变更" name="salespersonlogs" v-if="!isMicorMall">
         <salesperson-logs-list
           :user-id="user_id"
           :user-mobile="member.mobile"
           :is-load="salespersonLoad"
-        />
+        ></salesperson-logs-list>
       </el-tab-pane>
     </el-tabs>
   </div>
 </template>
 <script>
-import { mapGetters } from 'vuex'
+import { mapGetters } from "vuex";
 import { getMember } from '../../../api/member'
 import { getMemberRegisterSetting } from '../../../api/member'
 import quanyiList from './quanyilist.vue'
@@ -258,7 +197,7 @@ export default {
     salespersonLogsList,
     memberInfo
   },
-  data () {
+  data() {
     return {
       user_id: 0,
       preMobile: '',
@@ -329,9 +268,65 @@ export default {
     }
   },
   computed: {
-    ...mapGetters(['isMicorMall'])
+    ...mapGetters(['isMicorMall']),
   },
-  mounted () {
+  methods: {
+    getMember(filter) {
+      getMember(filter).then((response) => {
+        this.member = response.data.data
+      })
+    },
+    getRegisterSetting() {
+      getMemberRegisterSetting().then((response) => {
+        delete response.data.data.content_agreement;
+        this.registerSetting = response.data.data.setting
+      })
+    },
+    handleClick() {
+      switch (this.activeName) {
+        case 'info':
+          this.infoLoad = true
+          this.salespersonLoad = this.quanyiLoad = this.pointLoad = this.rightslogLoad = this.transferLoad = this.membercardLoad = this.orderLoad = this.depositLoad = false
+          break
+        case 'right':
+          this.quanyiLoad = true
+          this.salespersonLoad = this.infoLoad = this.pointLoad = this.rightslogLoad = this.transferLoad = this.membercardLoad = this.orderLoad = this.depositLoad = false
+          break
+        case 'order':
+          this.orderLoad = true
+          this.salespersonLoad = this.infoLoad = this.pointLoad = this.rightslogLoad = this.transferLoad = this.membercardLoad = this.quanyiLoad = this.depositLoad = false
+          break
+        case 'deposit':
+          this.depositLoad = true
+          this.salespersonLoad = this.infoLoad = this.pointLoad = this.rightslogLoad = this.transferLoad = this.membercardLoad = this.quanyiLoad = this.orderLoad = false
+          break
+        case 'transfer':
+          this.transferLoad = true
+          this.salespersonLoad = this.infoLoad = this.pointLoad = this.rightslogLoad = this.depositLoad = this.orderLoad = this.membercardLoad = this.quanyiLoad = false
+          break
+        case 'membercard':
+          this.membercardLoad = true
+          this.salespersonLoad = this.infoLoad = this.pointLoad = this.rightslogLoad = this.transferLoad = this.depositLoad = this.orderLoad = this.quanyiLoad = false
+          break
+        case 'rightslog':
+          this.rightslogLoad = true
+          this.salespersonLoad = this.infoLoad = this.pointLoad = this.transferLoad = this.depositLoad = this.orderLoad = this.membercardLoad = this.quanyiLoad = false
+          break
+        case 'point':
+          this.pointLoad = true
+          this.salespersonLoad = this.infoLoad = this.rightslogLoad = this.transferLoad = this.depositLoad = this.orderLoad = this.membercardLoad = this.quanyiLoad = false
+          break
+        case 'salespersonlogs':
+          this.salespersonLoad = true
+          this.pointLoad = this.infoLoad = this.rightslogLoad = this.transferLoad = this.depositLoad = this.orderLoad = this.membercardLoad = this.quanyiLoad = false
+          break
+      }
+    },
+    goBack() {
+      this.$router.go(-1)
+    }
+  },
+  mounted() {
     if (this.$route.query.resource && this.$route.query.resource == 'member') {
       this.activeName = 'order'
       this.orderLoad = true
@@ -358,134 +353,6 @@ export default {
     }
     this.getMember({ user_id: this.user_id })
     this.getRegisterSetting()
-  },
-  methods: {
-    getMember (filter) {
-      getMember(filter).then((response) => {
-        this.member = response.data.data
-      })
-    },
-    getRegisterSetting () {
-      getMemberRegisterSetting().then((response) => {
-        delete response.data.data.content_agreement
-        this.registerSetting = response.data.data.setting
-      })
-    },
-    handleClick () {
-      switch (this.activeName) {
-        case 'info':
-          this.infoLoad = true
-          this.salespersonLoad =
-            this.quanyiLoad =
-            this.pointLoad =
-            this.rightslogLoad =
-            this.transferLoad =
-            this.membercardLoad =
-            this.orderLoad =
-            this.depositLoad =
-              false
-          break
-        case 'right':
-          this.quanyiLoad = true
-          this.salespersonLoad =
-            this.infoLoad =
-            this.pointLoad =
-            this.rightslogLoad =
-            this.transferLoad =
-            this.membercardLoad =
-            this.orderLoad =
-            this.depositLoad =
-              false
-          break
-        case 'order':
-          this.orderLoad = true
-          this.salespersonLoad =
-            this.infoLoad =
-            this.pointLoad =
-            this.rightslogLoad =
-            this.transferLoad =
-            this.membercardLoad =
-            this.quanyiLoad =
-            this.depositLoad =
-              false
-          break
-        case 'deposit':
-          this.depositLoad = true
-          this.salespersonLoad =
-            this.infoLoad =
-            this.pointLoad =
-            this.rightslogLoad =
-            this.transferLoad =
-            this.membercardLoad =
-            this.quanyiLoad =
-            this.orderLoad =
-              false
-          break
-        case 'transfer':
-          this.transferLoad = true
-          this.salespersonLoad =
-            this.infoLoad =
-            this.pointLoad =
-            this.rightslogLoad =
-            this.depositLoad =
-            this.orderLoad =
-            this.membercardLoad =
-            this.quanyiLoad =
-              false
-          break
-        case 'membercard':
-          this.membercardLoad = true
-          this.salespersonLoad =
-            this.infoLoad =
-            this.pointLoad =
-            this.rightslogLoad =
-            this.transferLoad =
-            this.depositLoad =
-            this.orderLoad =
-            this.quanyiLoad =
-              false
-          break
-        case 'rightslog':
-          this.rightslogLoad = true
-          this.salespersonLoad =
-            this.infoLoad =
-            this.pointLoad =
-            this.transferLoad =
-            this.depositLoad =
-            this.orderLoad =
-            this.membercardLoad =
-            this.quanyiLoad =
-              false
-          break
-        case 'point':
-          this.pointLoad = true
-          this.salespersonLoad =
-            this.infoLoad =
-            this.rightslogLoad =
-            this.transferLoad =
-            this.depositLoad =
-            this.orderLoad =
-            this.membercardLoad =
-            this.quanyiLoad =
-              false
-          break
-        case 'salespersonlogs':
-          this.salespersonLoad = true
-          this.pointLoad =
-            this.infoLoad =
-            this.rightslogLoad =
-            this.transferLoad =
-            this.depositLoad =
-            this.orderLoad =
-            this.membercardLoad =
-            this.quanyiLoad =
-              false
-          break
-      }
-    },
-    goBack () {
-      this.$router.go(-1)
-    }
   }
 }
 </script>

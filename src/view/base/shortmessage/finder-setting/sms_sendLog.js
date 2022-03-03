@@ -38,14 +38,15 @@ export default (vm) => {
       { key: 'mobile', name: '手机号' },
       { key: 'sms_content', name: '短信内容' },
       { key: 'task_name', name: '任务名称', slot: 'task_name' }
+
     ],
     columns: [
-      { name: '接受短信的手机号', key: 'mobile', width: '140px' },
-      { name: '模板CODE', key: 'template_code', width: '120px' },
+      { name: '接受短信的手机号', key: 'mobile',width:'140px' },
+      { name: '模板CODE', key: 'template_code',width:'120px' },
       { name: '短信内容', key: 'sms_content' },
-      { name: '短信类型', key: 'template_type', formatter: formatTemplate_type, width: '100px' },
+      { name: '短信类型', key: 'template_type', formatter: formatTemplate_type,width:'100px' },
       { name: '短信场景', key: 'scene_name' },
-      { name: '发送时间', key: 'created', formatter: formatDate, width: '170px' },
+      { name: '发送时间', key: 'created', formatter: formatDate,width:'170px' },
       {
         name: '发送状态',
         key: 'status',

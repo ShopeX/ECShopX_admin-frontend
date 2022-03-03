@@ -1,69 +1,108 @@
 <template>
   <div>
     <div v-if="$route.path.indexOf('detail') === -1">
-
       <SpFilterForm :model="params" @onSearch="onSearch" @onReset="onReset">
         <SpFilterFormItem prop="create_time" label="日期范围:">
-          <el-date-picker v-model="params.create_time" type="daterange" value-format="yyyy/MM/dd" start-placeholder="开始日期" end-placeholder="结束日期" @change="dateChange"></el-date-picker>
+          <el-date-picker
+            v-model="params.create_time"
+            type="daterange"
+            value-format="yyyy/MM/dd"
+            start-placeholder="开始日期"
+            end-placeholder="结束日期"
+            @change="dateChange"
+          ></el-date-picker>
         </SpFilterFormItem>
         <SpFilterFormItem prop="rel_id" label="商品ID:">
           <el-input placeholder="请输入商品ID" v-model="params.rel_id" />
         </SpFilterFormItem>
         <SpFilterFormItem prop="sub_status" label="是否评价:">
           <el-select clearable v-model="params.sub_status" placeholder="请选择是否评价">
-            <el-option v-for="(item, index) in noticeStatusList" :key="index" :label="item.name" :value="item.value">
+            <el-option
+              v-for="(item, index) in noticeStatusList"
+              :key="index"
+              :label="item.name"
+              :value="item.value"
+            >
             </el-option>
           </el-select>
         </SpFilterFormItem>
       </SpFilterForm>
 
-        <el-table border :data="list" style="width: 100%" :height="wheight - 140" v-loading="loading" element-loading-text="数据加载中">
-          <el-table-column prop="star" min-width="150" label="用户">
-            <template slot-scope="scope">
-              <div class="order-time" style="padding: 8px 0 2px 0;">
-                <span class="content-right-margin">
-                  <router-link target="_blank" :to="{
-                      path: '/member/member/detail',
-                      query: { user_id: scope.row.user_id }
-                    }">{{ scope.row.username }}</router-link>
-                </span>
-              </div>
-            </template>
-          </el-table-column>
-          <el-table-column prop="order_id" width="200" label="订阅时间">
-            <template slot-scope="scope">
-              <div class="order-time">
-                {{ scope.row.created | datetime('YYYY-MM-DD HH:mm:ss') }}
-              </div>
-            </template>
-          </el-table-column>
-          <el-table-column prop="order_id" width="400" label="商品">
-            <template slot-scope="scope">
-              <div class="order-time">
-                {{ scope.row.item_name }}
-              </div>
-            </template>
-          </el-table-column>
-          <el-table-column prop="is_reply" width="160" label="通知状态">
-            <template slot-scope="scope">
-              <!-- 订单状态 -->
-              <span>
-                <el-tag v-if="scope.row.sub_status == 'SUCCESS'" type="success" size="mini">已通知</el-tag>
-                <el-tag v-else type="danger" size="mini">未通知</el-tag>
+      <el-table
+        border
+        :data="list"
+        style="width: 100%"
+        :height="wheight - 140"
+        v-loading="loading"
+        element-loading-text="数据加载中"
+      >
+        <el-table-column prop="star" min-width="150" label="用户">
+          <template slot-scope="scope">
+            <div class="order-time" style="padding: 8px 0 2px 0">
+              <span class="content-right-margin">
+                <router-link
+                  target="_blank"
+                  :to="{
+                    path: '/member/member/detail',
+                    query: { user_id: scope.row.user_id }
+                  }"
+                  >{{ scope.row.username }}</router-link
+                >
               </span>
-              <el-tag type="danger" v-if="scope.row.disabled" size="mini">已删除</el-tag>
-            </template>
-          </el-table-column>
-          <!--<el-table-column width="140" label="操作">-->
-          <!--<template slot-scope="scope">-->
-          <!--<el-button type="text" @click="detailsDialog(scope.row)">详情</el-button>-->
-          <!--<el-button type="text" v-if="scope.row.disabled=== false" @click="noticeDelete(scope.row.rate_id)">删除</el-button>-->
-          <!--</template>-->
-          <!--</el-table-column>-->
-        </el-table>
-        <el-pagination class="content-padded content-center" background layout="total, sizes, prev, pager, next, jumper" @current-change="handleCurrentChange" @size-change="handleSizeChange" :current-page.sync="params.page" :page-sizes="[10, 20, 50]" :total="total_count" :page-size="params.pageSize">
-        </el-pagination>
-      <el-dialog title="评价详情" width="45%" :visible.sync="detailsDialogVisible" :before-close="handleClose">
+            </div>
+          </template>
+        </el-table-column>
+        <el-table-column prop="order_id" width="200" label="订阅时间">
+          <template slot-scope="scope">
+            <div class="order-time">
+              {{ scope.row.created | datetime('YYYY-MM-DD HH:mm:ss') }}
+            </div>
+          </template>
+        </el-table-column>
+        <el-table-column prop="order_id" width="400" label="商品">
+          <template slot-scope="scope">
+            <div class="order-time">
+              {{ scope.row.item_name }}
+            </div>
+          </template>
+        </el-table-column>
+        <el-table-column prop="is_reply" width="160" label="通知状态">
+          <template slot-scope="scope">
+            <!-- 订单状态 -->
+            <span>
+              <el-tag v-if="scope.row.sub_status == 'SUCCESS'" type="success" size="mini"
+                >已通知</el-tag
+              >
+              <el-tag v-else type="danger" size="mini">未通知</el-tag>
+            </span>
+            <el-tag type="danger" v-if="scope.row.disabled" size="mini">已删除</el-tag>
+          </template>
+        </el-table-column>
+        <!--<el-table-column width="140" label="操作">-->
+        <!--<template slot-scope="scope">-->
+        <!--<el-button type="text" @click="detailsDialog(scope.row)">详情</el-button>-->
+        <!--<el-button type="text" v-if="scope.row.disabled=== false" @click="noticeDelete(scope.row.rate_id)">删除</el-button>-->
+        <!--</template>-->
+        <!--</el-table-column>-->
+      </el-table>
+      <el-pagination
+        class="content-padded content-center"
+        background
+        layout="total, sizes, prev, pager, next, jumper"
+        @current-change="onCurrentChange"
+        @size-change="onSizeChange"
+        :current-page.sync="page.pageIndex"
+        :page-sizes="[10, 20, 50]"
+        :total="total_count"
+        :page-size="page.pageSize"
+      >
+      </el-pagination>
+      <el-dialog
+        title="评价详情"
+        width="45%"
+        :visible.sync="detailsDialogVisible"
+        :before-close="handleClose"
+      >
         <el-dialog width="45%" :visible.sync="imgVisible" append-to-body>
           <img width="100%" :src="Dialogpic" />
         </el-dialog>
@@ -81,7 +120,9 @@
                 </el-table-column>
                 <el-table-column prop="item_name" label="商品名称" width="180"> </el-table-column>
                 <el-table-column label="成交价格(元)">
-                  <template slot-scope="scope"><span>￥{{ scope.row.total_fee / 100 }}</span></template>
+                  <template slot-scope="scope"
+                    ><span>￥{{ scope.row.total_fee / 100 }}</span></template
+                  >
                 </el-table-column>
               </el-table>
             </el-row>
@@ -103,16 +144,25 @@
             <el-row>
               <el-col :span="4" class="col-3 content-right">评价图：</el-col>
               <el-col :span="20" v-if="details.rateInfo.rate_pic">
-                <img v-for="pic in details.rateInfo.rate_pic" :src="pic" width="100" @click="showImg(pic)" />
+                <img
+                  v-for="pic in details.rateInfo.rate_pic"
+                  :src="pic"
+                  width="100"
+                  @click="showImg(pic)"
+                />
               </el-col>
             </el-row>
             <el-row>
               <el-col :span="4" class="col-3 content-right">评价人：</el-col>
               <el-col :span="20">
-                <router-link target="_blank" :to="{
+                <router-link
+                  target="_blank"
+                  :to="{
                     path: matchInternalRoute('member_detail'),
                     query: { user_id: details.rateInfo.user_id }
-                  }">{{ details.rateInfo.username }}</router-link>
+                  }"
+                  >{{ details.rateInfo.username }}</router-link
+                >
               </el-col>
             </el-row>
             <el-row>
@@ -160,17 +210,23 @@
               <el-table :data="details.userReply" style="width: 100%">
                 <el-table-column prop="username" label="评论人" width="120">
                   <template slot-scope="scope">
-                    <router-link target="_blank" :to="{
+                    <router-link
+                      target="_blank"
+                      :to="{
                         path: matchInternalRoute('member_detail'),
                         query: { user_id: scope.row.user_id }
-                      }">{{ scope.row.username }}</router-link>
+                      }"
+                      >{{ scope.row.username }}</router-link
+                    >
                   </template>
                 </el-table-column>
                 <el-table-column prop="content" label="评论内容"> </el-table-column>
                 <el-table-column prop="created" label="评论时间" width="160">
-                  <template slot-scope="scope"><span>{{
+                  <template slot-scope="scope"
+                    ><span>{{
                       scope.row.created | datetime('YYYY-MM-DD HH:mm:ss')
-                    }}</span></template>
+                    }}</span></template
+                  >
                 </el-table-column>
               </el-table>
             </el-row>
@@ -192,7 +248,9 @@ img {
 <script>
 import { mapGetters } from 'vuex'
 import { getSubscribeList } from '../../../../api/member'
+import { pageMixin } from '@/mixins'
 export default {
+  mixins: [pageMixin],
   data() {
     return {
       loading: false,
@@ -202,8 +260,6 @@ export default {
         content: ''
       },
       params: {
-        page: 1,
-        pageSize: 20,
         create_time: '',
         rel_id: '',
         sub_status: '',
@@ -253,7 +309,7 @@ export default {
               message: '删除成功',
               type: 'success'
             })
-            _self.getSubscribeList(this.params)
+            _self.fetchList()
           }
         })
       })
@@ -279,10 +335,6 @@ export default {
       this.dateChange()
       this.onSearch()
     },
-    onSearch(e) {
-      this.params.page = 1
-      this.getSubscribeList(this.params)
-    },
     dateChange(val) {
       if (val != null && val.length > 0) {
         this.params.time_start_begin = this.dateStrToTimeStamp(val[0] + ' 00:00:00')
@@ -292,29 +344,19 @@ export default {
         this.params.time_start_end = ''
       }
     },
-    handleCurrentChange(val) {
-      this.params.page = val
-      this.loading = false
-      this.getSubscribeList(this.params)
-    },
-    handleSizeChange(pageSize) {
-      this.loading = false
-      this.params.page = 1
-      this.params.pageSize = pageSize
-      this.getSubscribeList(this.params)
-    },
-    // getParams() {
-    //   this.params.time_start_begin = this.time_start_begin
-    //   this.params.time_start_end = this.time_start_end
-    //   this.params.rel_id = this.item_id
-    //   this.params.order_id = this.order_id
-    // },
+
     dateStrToTimeStamp(str) {
       return Date.parse(new Date(str)) / 1000
     },
-    getSubscribeList(filter) {
+    fetchList() {
       this.loading = true
-      getSubscribeList(filter).then((response) => {
+      const { pageIndex: page, pageSize } = this.page
+      let params = {
+        page,
+        pageSize,
+        ...this.params
+      }
+      getSubscribeList(params).then((response) => {
         this.list = response.data.data.list
         this.total_count = Number(response.data.data.total_count)
         this.loading = false
@@ -322,7 +364,7 @@ export default {
     }
   },
   mounted() {
-    this.getSubscribeList(this.params)
+    this.fetchList()
   }
 }
 </script>

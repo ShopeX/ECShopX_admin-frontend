@@ -1,18 +1,31 @@
 <template>
   <div class="authory-box">
     <div v-if="$route.path.indexOf('approve') === -1">
-
       <SpFilterForm :model="params" @onSearch="onSearch" @onReset="onReset">
         <SpFilterFormItem prop="status" label="审批状态:">
           <el-select v-model="params.status" placeholder="请选择审批状态">
-            <el-option v-for="(item, index) in approveStatusList" :key="index" :label="item.name" :value="item.value" />
+            <el-option
+              v-for="(item, index) in approveStatusList"
+              :key="index"
+              :label="item.name"
+              :value="item.value"
+            />
           </el-select>
         </SpFilterFormItem>
         <SpFilterFormItem prop="login_name" label="账户名称:">
           <el-input placeholder="请输入账户名称" v-model="params.login_name" />
         </SpFilterFormItem>
         <SpFilterFormItem prop="create_time" label="申请日期:">
-          <el-date-picker style="width:270px" v-model="params.create_time" type="daterange" format='yyyy-MM-dd' value-format='yyyy-MM-dd' start-placeholder="开始日期" end-placeholder="结束日期" @change="dateChange" />
+          <el-date-picker
+            style="width: 270px"
+            v-model="params.create_time"
+            type="daterange"
+            format="yyyy-MM-dd"
+            value-format="yyyy-MM-dd"
+            start-placeholder="开始日期"
+            end-placeholder="结束日期"
+            @change="dateChange"
+          />
         </SpFilterFormItem>
       </SpFilterForm>
 
@@ -20,33 +33,70 @@
         <div class="cus-list" v-for="item in list" :key="item.pass_id">
           <el-row class="cus-row">
             <el-col :span="3">
-              <img class="cus-row-img" src="@/assets/img/adapay/authory_avater.png" alt="">
+              <img class="cus-row-img" src="@/assets/img/adapay/authory_avater.png" alt="" />
             </el-col>
             <el-col :span="13">
               <div class="row-title">
-                <router-link :to="{ path: matchHidePage('approve'), query: { pass_id: item.pass_id, operator_id: item.operator_id}}">
-                  <span class="cus-row-name">{{item.login_name || '---'}}</span>
+                <router-link
+                  :to="{
+                    path: matchHidePage('approve'),
+                    query: { pass_id: item.pass_id, operator_id: item.operator_id }
+                  }"
+                >
+                  <span class="cus-row-name">{{ item.login_name || '---' }}</span>
                 </router-link>
-                <el-tag :type="item.operator_type === 'staff' ? 'success' : 'warning'" size='medium' style="margin-left:25px">{{item.operator_type === 'staff' ? '平台管理员' : '店铺管理员'}}</el-tag>
+                <el-tag
+                  :type="item.operator_type === 'staff' ? 'success' : 'warning'"
+                  size="medium"
+                  style="margin-left: 25px"
+                  >{{ item.operator_type === 'staff' ? '平台管理员' : '店铺管理员' }}</el-tag
+                >
               </div>
               <div class="cus-row-time">
-                <span>申请时间：{{item.create_time ? createTimeFilter(item.create_time) : '-'}}</span>
+                <span
+                  >申请时间：{{ item.create_time ? createTimeFilter(item.create_time) : '-' }}</span
+                >
               </div>
             </el-col>
             <el-col :span="5">
-              <img v-if="item.status == '1'" src="@/assets/img/adapay/pass.png" alt="" style="width:80px;height:64px">
-              <img v-if="item.status == '2'" src="@/assets/img/adapay/reject.png" alt="" style="width:70px;height:69px">
+              <img
+                v-if="item.status == '1'"
+                src="@/assets/img/adapay/pass.png"
+                alt=""
+                style="width: 80px; height: 64px"
+              />
+              <img
+                v-if="item.status == '2'"
+                src="@/assets/img/adapay/reject.png"
+                alt=""
+                style="width: 70px; height: 69px"
+              />
             </el-col>
             <el-col class="cus-row-btn" :span="3">
-              <router-link v-if="item.status === '0'" :to="{ path: matchHidePage('approve'), query: { pass_id: item.pass_id, operator_id: item.operator_id}}">
-                <el-button size='medium' type="primary">审批</el-button>
+              <router-link
+                v-if="item.status === '0'"
+                :to="{
+                  path: matchHidePage('approve'),
+                  query: { pass_id: item.pass_id, operator_id: item.operator_id }
+                }"
+              >
+                <el-button size="medium" type="primary">审批</el-button>
               </router-link>
-              <el-button size='medium' v-else type="info" plain disabled>已审批</el-button>
+              <el-button size="medium" v-else type="info" plain disabled>已审批</el-button>
             </el-col>
           </el-row>
         </div>
         <div class="content-padded content-center">
-          <el-pagination background layout="total, sizes, prev, pager, next, jumper" @current-change="handleCurrentChange" @size-change="handleSizeChange" :current-page.sync="params.page" :page-sizes="[10,20,50]" :total="total_count" :page-size="params.pageSize">
+          <el-pagination
+            background
+            layout="total, sizes, prev, pager, next, jumper"
+            @current-change="onCurrentChange"
+            @size-change="onSizeChange"
+            :current-page.sync="page.pageIndex"
+            :page-sizes="[10, 20, 50]"
+            :total="total_count"
+            :page-size="page.pageSize"
+          >
           </el-pagination>
         </div>
       </el-card>
@@ -58,6 +108,7 @@
 import moment from 'moment'
 import { mapGetters } from 'vuex'
 import { encryptList } from '@/api/encrypt'
+import { pageMixin } from '@/mixins'
 import {
   getAftersalesList,
   exportList,
@@ -65,13 +116,12 @@ import {
   setAftersalesRemind
 } from '@/api/aftersales'
 export default {
+  mixins: [pageMixin],
   data() {
     return {
       loading: true,
 
       params: {
-        page: 1,
-        pageSize: 10,
         login_name: undefined,
         status: undefined,
         start_time: undefined,
@@ -103,31 +153,23 @@ export default {
         this.params.start_time = ''
         this.params.end_time = ''
       }
-      this.params.page = 1
-    },
-    onSearch(e) {
-      this.params.page = 1
-      this.getAftersalesList()
+      this.page.pageIndex = 1
     },
     onReset() {
       this.params.start_time = ''
       this.params.end_time = ''
-      this.onSearch();
+      this.onSearch()
     },
-    handleCurrentChange(val) {
-      this.params.page = val
-      this.loading = false
-      this.getAftersalesList()
-    },
-    handleSizeChange(pageSize) {
-      this.loading = false
-      this.params.page = 1
-      this.params.pageSize = pageSize
-      this.getAftersalesList()
-    },
-    getAftersalesList() {
+
+    fetchList() {
       this.loading = true
-      encryptList(this.params).then((response) => {
+      const { pageIndex: page, pageSize } = this.page
+      let params = {
+        page,
+        pageSize,
+        ...this.params
+      }
+      encryptList(params).then((response) => {
         this.list = response.data.data.list
         this.total_count = Number(response.data.data.count)
         this.loading = false
@@ -151,7 +193,7 @@ export default {
     }
   },
   mounted() {
-    this.getAftersalesList()
+    this.fetchList()
   }
 }
 </script>
@@ -199,8 +241,7 @@ export default {
     }
   }
   .sp-filter-form {
-  margin-bottom: 16px;
-}
+    margin-bottom: 16px;
+  }
 }
 </style>
-

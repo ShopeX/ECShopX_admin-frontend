@@ -1,7 +1,7 @@
 <template>
   <div>
     <div class="action-container">
-       <el-button type="primary" icon="el-icon-circle-plus" @click="handleNew">新增参数</el-button>
+      <el-button type="primary" icon="el-icon-circle-plus" @click="handleNew">新增参数</el-button>
     </div>
     <SpFilterForm :model="params" @onSearch="onSearch" @onReset="onSearch">
       <SpFilterFormItem prop="attribute_name" label="参数名称:">
@@ -9,51 +9,51 @@
       </SpFilterFormItem>
     </SpFilterForm>
 
-      <el-table
+    <el-table
       border
-        :data="list"
-        :height="wheight - 170"
-        v-loading="loading"
-        element-loading-text="数据加载中"
-        :default-sort="{ prop: 'bind_date', order: 'descending' }"
+      :data="list"
+      :height="wheight - 170"
+      v-loading="loading"
+      element-loading-text="数据加载中"
+      :default-sort="{ prop: 'bind_date', order: 'descending' }"
+    >
+      <el-table-column type="expand">
+        <template slot-scope="props">
+          <span
+            class="sku-value"
+            v-for="(item, index) in props.row.attribute_values.list"
+            :key="index"
+            >{{ item.attribute_value }}</span
+          >
+        </template>
+      </el-table-column>
+      <el-table-column label="操作" width="150">
+        <template slot-scope="scope">
+          <el-button type="text" @click="handleEdit(scope.row)">编辑</el-button>
+          <el-button type="text" @click="handleDelete(scope)">删除</el-button>
+        </template>
+      </el-table-column>
+      <el-table-column label="参数类型">
+        <template slot-scope="props">
+          {{ props.row.is_show == 'true' ? '高级筛选' : '纯显示' }}
+        </template>
+      </el-table-column>
+      <el-table-column prop="attribute_name" label="参数名称" width="200"></el-table-column>
+      <el-table-column prop="attribute_memo" label="参数备注"></el-table-column>
+    </el-table>
+    <div class="content-padded content-center">
+      <el-pagination
+        background
+        layout="total, sizes, prev, pager, next"
+        @current-change="onCurrentChange"
+        @size-change="onSizeChange"
+        :current-page.sync="page.pageIndex"
+        :page-sizes="[10, 20, 50]"
+        :total="total_count"
+        :page-size="page.pageSize"
       >
-        <el-table-column type="expand">
-          <template slot-scope="props">
-            <span
-              class="sku-value"
-              v-for="(item, index) in props.row.attribute_values.list"
-              :key="index"
-              >{{ item.attribute_value }}</span
-            >
-          </template>
-        </el-table-column>
-        <el-table-column label="操作" width="150">
-          <template slot-scope="scope">
-            <el-button type="text" @click="handleEdit(scope.row)">编辑</el-button>
-            <el-button type="text" @click="handleDelete(scope)">删除</el-button>
-          </template>
-        </el-table-column>
-        <el-table-column label="参数类型">
-          <template slot-scope="props">
-            {{ props.row.is_show == 'true' ? '高级筛选' : '纯显示' }}
-          </template>
-        </el-table-column>
-        <el-table-column prop="attribute_name" label="参数名称" width="200"></el-table-column>
-        <el-table-column prop="attribute_memo" label="参数备注"></el-table-column>
-      </el-table>
-      <div v-if="total_count > params.pageSize" class="content-padded content-center">
-        <el-pagination
-          background
-          layout="total, sizes, prev, pager, next"
-          @current-change="handleCurrentChange"
-          @size-change="handleSizeChange"
-          :current-page.sync="params.page"
-          :page-sizes="[10, 20, 50]"
-          :total="total_count"
-          :page-size="params.pageSize"
-        >
-        </el-pagination>
-      </div>
+      </el-pagination>
+    </div>
     <sideBar :visible.sync="show_sideBar" :title="'新增参数'">
       <el-form>
         <el-form-item label="参数名称">
@@ -93,10 +93,12 @@
 import { mapGetters } from 'vuex'
 import { getGoodsAttr, addGoodsAttr, updateGoodsAttr, deleteGoodsAttr } from '../../../../api/goods'
 import sideBar from '@/components/element/sideBar'
+import { pageMixin } from '@/mixins'
 export default {
   components: {
     sideBar
   },
+  mixins: [pageMixin],
   data() {
     return {
       currentIndex: '',
@@ -109,8 +111,6 @@ export default {
         attribute_values: []
       },
       params: {
-        page: 1,
-        pageSize: 20,
         attribute_type: 'item_params',
         attribute_name: ''
       },
@@ -171,15 +171,7 @@ export default {
       }
       this.form.attribute_values.push(item)
     },
-    handleCurrentChange(page_num) {
-      this.params.page = page_num
-      this.getList()
-    },
-    handleSizeChange(pageSize) {
-      this.params.page = 1
-      this.params.pageSize = pageSize
-      this.getList()
-    },
+
     removeItem(index) {
       this.$confirm('确认删除当前值？')
         .then((_) => {
@@ -199,33 +191,35 @@ export default {
       if (!this.form.attribute_id) {
         addGoodsAttr(params).then((res) => {
           this.$message({ type: 'success', message: '操作成功' })
-          this.params.page = 1
+          this.page.pageIndex = 1
           this.resetData()
-          this.getList()
+          this.fetchList()
         })
       } else {
         updateGoodsAttr(params.attribute_id, params).then((res) => {
           this.$message({ type: 'success', message: '操作成功' })
-          this.getList()
+          this.fetchList()
         })
       }
     },
-    getList() {
+    fetchList() {
       this.loading = true
-      getGoodsAttr(this.params).then((res) => {
+      const { pageIndex: page, pageSize } = this.page
+      console.log(page,'page')
+      let params = {
+        page,
+        pageSize,
+        ...this.params
+      }
+      getGoodsAttr(params).then((res) => {
         this.list = res.data.data.list
         this.total_count = res.data.data.total_count
         this.loading = false
       })
-    },
-    // 品牌搜索
-    onSearch() {
-      this.params.page = 1
-      this.getList()
     }
   },
   mounted() {
-    this.getList()
+    this.fetchList()
   },
   computed: {
     ...mapGetters(['wheight'])

@@ -13,33 +13,54 @@
     <div class="action-container">
       <el-button type="primary" plain @click="syncBrand">同步品牌</el-button>
     </div>
-      <el-table border :data="list" :height="wheight - 170" v-loading="loading" element-loading-text="数据加载中" :default-sort="{ prop: 'bind_date', order: 'descending' }">
-        <el-table-column label="操作" width="150">
-          <template slot-scope="scope">
-            <el-button type="text" @click="handleEdit(scope.row)">编辑</el-button>
-            <el-button type="text" @click="handleDelete(scope)">删除</el-button>
-          </template>
-        </el-table-column>
-        <el-table-column label="品牌图片" width="150">
-          <template slot-scope="scope">
-            <el-image style="width: 70px; height: 70px" :src="scope.row.image_url" fit="cover">
-            </el-image>
-          </template>
-        </el-table-column>
-        <el-table-column prop="attribute_name" label="品牌名称">
-          <template slot-scope="scope">
-            <div v-if="!scope.row.attribute_id">
-              <el-input v-model="scope.row.attribute_name" placeholder="请输入品牌名称"></el-input>
-            </div>
-            <div v-else>{{ scope.row.attribute_name }}</div>
-          </template>
-        </el-table-column>
-      </el-table>
+    <el-table
+      border
+      :data="list"
+      :height="wheight - 170"
+      v-loading="loading"
+      element-loading-text="数据加载中"
+      :default-sort="{ prop: 'bind_date', order: 'descending' }"
+    >
+      <el-table-column label="操作" width="150">
+        <template slot-scope="scope">
+          <el-button type="text" @click="handleEdit(scope.row)">编辑</el-button>
+          <el-button type="text" @click="handleDelete(scope)">删除</el-button>
+        </template>
+      </el-table-column>
+      <el-table-column label="品牌图片" width="150">
+        <template slot-scope="scope">
+          <el-image style="width: 70px; height: 70px" :src="scope.row.image_url" fit="cover">
+          </el-image>
+        </template>
+      </el-table-column>
+      <el-table-column prop="attribute_name" label="品牌名称">
+        <template slot-scope="scope">
+          <div v-if="!scope.row.attribute_id">
+            <el-input v-model="scope.row.attribute_name" placeholder="请输入品牌名称"></el-input>
+          </div>
+          <div v-else>{{ scope.row.attribute_name }}</div>
+        </template>
+      </el-table-column>
+    </el-table>
     <div class="content-padded content-center">
-      <el-pagination background layout="total, sizes, prev, pager, next" @current-change="handleCurrentChange" @size-change="handleSizeChange" :current-page.sync="params.page" :page-sizes="[10, 20, 50]" :total="total_count" :page-size="params.pageSize">
+      <el-pagination
+        background
+        layout="total, sizes, prev, pager, next"
+        @current-change="onCurrentChange"
+        @size-change="onSizeChange"
+        :current-page.sync="page.pageIndex"
+        :page-sizes="[10, 20, 50]"
+        :total="total_count"
+        :page-size="page.pageSize"
+      >
       </el-pagination>
     </div>
-    <imgPicker :dialog-visible="imgDialog" :sc-status="isGetImage" @chooseImg="pickImg" @closeImgDialog="closeImgDialog"></imgPicker>
+    <imgPicker
+      :dialog-visible="imgDialog"
+      :sc-status="isGetImage"
+      @chooseImg="pickImg"
+      @closeImgDialog="closeImgDialog"
+    ></imgPicker>
     <sideBar :visible.sync="show_sideBar" :title="'新增品牌'">
       <el-form>
         <el-form-item label="品牌名">
@@ -69,12 +90,14 @@ import {
   deleteGoodsAttr,
   syncBrand
 } from '../../../../api/goods'
+import { pageMixin } from '@/mixins'
 import sideBar from '@/components/element/sideBar'
 export default {
   components: {
     sideBar,
     imgPicker
   },
+  mixins: [pageMixin],
   data() {
     return {
       form: {
@@ -84,8 +107,6 @@ export default {
         image_url: ''
       },
       params: {
-        page: 1,
-        pageSize: 10,
         attribute_type: 'brand',
         attribute_name: ''
       },
@@ -100,15 +121,15 @@ export default {
     }
   },
   methods: {
-    handleCurrentChange(page_num) {
-      this.params.page = page_num
-      this.getList()
-    },
-    handleSizeChange(pageSize) {
-      this.params.page = 1
-      this.params.pageSize = pageSize
-      this.getList()
-    },
+    // handleCurrentChange(page_num) {
+    //   this.page.pageIndex = page_num
+    //   this.fetchList()
+    // },
+    // handleSizeChange(pageSize) {
+    //   this.page.pageIndex = 1
+    //   this.page.pageSize = pageSize
+    //   this.fetchList()
+    // },
     handleDelete(data) {
       this.$confirm('确认删除该品牌？')
         .then((_) => {
@@ -145,29 +166,30 @@ export default {
       if (!this.form.attribute_id) {
         addGoodsAttr(this.form).then((res) => {
           this.$message({ type: 'success', message: '操作成功' })
-          this.params.page = 1
+          this.page.pageIndex = 1
           this.resetData()
-          this.getList()
+          this.fetchList()
         })
       } else {
         updateGoodsAttr(this.form.attribute_id, this.form).then((res) => {
           this.$message({ type: 'success', message: '操作成功' })
-          this.getList()
+          this.fetchList()
         })
       }
     },
-    getList() {
+    fetchList() {
       this.loading = true
-      getGoodsAttr(this.params).then((res) => {
+      const { pageIndex: page, pageSize } = this.page
+      let params = {
+        page,
+        pageSize,
+        ...this.params
+      }
+      getGoodsAttr(params).then((res) => {
         this.list = res.data.data.list
         this.total_count = res.data.data.total_count
         this.loading = false
       })
-    },
-    // 品牌搜索
-    onSearch() {
-      this.params.page = 1
-      this.getList()
     },
     handleImgChange(data) {
       this.imgDialog = true
@@ -203,7 +225,7 @@ export default {
     }
   },
   mounted() {
-    this.getList()
+    this.fetchList()
   },
   computed: {
     ...mapGetters(['wheight'])

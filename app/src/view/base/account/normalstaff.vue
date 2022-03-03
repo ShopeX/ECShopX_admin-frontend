@@ -10,24 +10,39 @@
       </SpFilterFormItem>
     </SpFilterForm>
 
-    <el-table border :data="accountsList" :height="wheight-160" v-loading="loading">
+    <el-table border :data="accountsList" :height="wheight - 160" v-loading="loading">
       <el-table-column prop="login_name" label="登陆账号"></el-table-column>
       <el-table-column prop="mobile" label="手机号"></el-table-column>
       <el-table-column prop="username" label="姓名"></el-table-column>
       <el-table-column prop="roles" label="角色">
         <template slot-scope="scope">
-          <el-tag v-for="item in scope.row.role_data" :key="item.role_id" size="mini" type="warning"> {{item.role_name}} </el-tag>
+          <el-tag
+            v-for="item in scope.row.role_data"
+            :key="item.role_id"
+            size="mini"
+            type="warning"
+          >
+            {{ item.role_name }}
+          </el-tag>
         </template>
       </el-table-column>
       <el-table-column label="操作">
         <template slot-scope="scope">
           <el-button size="mini" @click="editAction(scope.$index, scope.row)">编辑</el-button>
-          <el-button size="mini" @click="deleteAccountAction(scope.$index, scope.row)">删除</el-button>
+          <el-button size="mini" @click="deleteAccountAction(scope.$index, scope.row)"
+            >删除</el-button
+          >
         </template>
       </el-table-column>
     </el-table>
-    <div v-if="total_count > params.pageSize" class="content-center content-top-padded">
-      <el-pagination layout="prev, pager, next" @current-change="handleCurrentChange" :current-page.sync="params.page" :total="total_count" :page-size="params.pageSize">
+    <div class="content-center content-top-padded">
+      <el-pagination
+        layout="prev, pager, next"
+        @current-change="onCurrentChange"
+        :current-page.sync="page.pageIndex"
+        :total="total_count"
+        :page-size="page.pageSize"
+      >
       </el-pagination>
     </div>
     <!-- 添加、编辑标识-开始 -->
@@ -36,35 +51,67 @@
         <el-form ref="form" :model="form" class="demo-ruleForm" label-width="120px">
           <el-form-item label="登录账号">
             <el-col :span="10">
-              <el-input v-if="!editLoginName" v-model="form.login_name" :minlength=4 :maxlength=16 placeholder="请输入员工登录账号"></el-input>
+              <el-input
+                v-if="!editLoginName"
+                v-model="form.login_name"
+                :minlength="4"
+                :maxlength="16"
+                placeholder="请输入员工登录账号"
+              ></el-input>
               <el-input v-else v-model="form.login_name" :disabled="true"></el-input>
             </el-col>
             <p class="frm-tips">账号名称4-16位，名称使用字母开头，字符有有字母，数字，下划线</p>
           </el-form-item>
           <el-form-item label="手机号">
             <el-col :span="10">
-              <el-input v-if="!isEdit" v-model="form.mobile" :maxlength=11 placeholder="请输入11位手机号"></el-input>
+              <el-input
+                v-if="!isEdit"
+                v-model="form.mobile"
+                :maxlength="11"
+                placeholder="请输入11位手机号"
+              ></el-input>
               <el-input v-else v-model="editMobile" :disabled="true"></el-input>
             </el-col>
           </el-form-item>
           <el-form-item label="姓名">
             <el-col :span="10">
-              <el-input required v-model="form.username" placeholder="请填写昵称" :disabled="datapass_block == 1"></el-input>
+              <el-input
+                required
+                v-model="form.username"
+                placeholder="请填写昵称"
+                :disabled="datapass_block == 1"
+              ></el-input>
             </el-col>
           </el-form-item>
           <el-form-item label="登录密码">
             <el-col :span="10">
-              <el-input :maxlength=255 v-model="form.password"></el-input>
+              <el-input :maxlength="255" v-model="form.password"></el-input>
             </el-col>
           </el-form-item>
           <el-form-item label="所属店铺">
-            <el-tag :key="item.distributor_id" class="new-tag" v-for="(item,index) in relDistributors" closable :disable-transitions="false" @close="handleClose(index)"> {{item.name}}
+            <el-tag
+              :key="item.distributor_id"
+              class="new-tag"
+              v-for="(item, index) in relDistributors"
+              closable
+              :disable-transitions="false"
+              @close="handleClose(index)"
+            >
+              {{ item.name }}
             </el-tag>
-            <el-button size="medium" class="button-new-tag" @click="addDistributoreAction">+ 点击搜索店铺 </el-button>
+            <el-button size="medium" class="button-new-tag" @click="addDistributoreAction"
+              >+ 点击搜索店铺
+            </el-button>
           </el-form-item>
           <el-form-item label="角色">
             <el-checkbox-group v-model="form.role_id">
-              <el-checkbox v-for="role in rolesListData" :label="role.role_id" :key="role.role_id" :value="role.role_id">{{role.role_name}}</el-checkbox>
+              <el-checkbox
+                v-for="role in rolesListData"
+                :label="role.role_id"
+                :key="role.role_id"
+                :value="role.role_id"
+                >{{ role.role_name }}</el-checkbox
+              >
             </el-checkbox-group>
           </el-form-item>
         </el-form>
@@ -74,10 +121,24 @@
         <el-button type="primary" @click="submitAction">保存</el-button>
       </div>
     </el-dialog>
-    <DistributorSelect :store-visible="DistributorVisible" :is-valid="isValid" :rel-data-ids="relDistributors" :get-status="DistributorStatus" @chooseStore="DistributorChooseAction" @closeStoreDialog="closeDialogAction">
+    <DistributorSelect
+      :store-visible="DistributorVisible"
+      :is-valid="isValid"
+      :rel-data-ids="relDistributors"
+      :get-status="DistributorStatus"
+      @chooseStore="DistributorChooseAction"
+      @closeStoreDialog="closeDialogAction"
+    >
     </DistributorSelect>
-    <ShopSelect :store-visible="ShopVisible" :is-valid="isValid" :rel-data-ids="relShops" :oldData="oldData" :get-status="ShopStatus" @chooseStore="ShopChooseAction" @closeStoreDialog="closeDialogAction">
-
+    <ShopSelect
+      :store-visible="ShopVisible"
+      :is-valid="isValid"
+      :rel-data-ids="relShops"
+      :oldData="oldData"
+      :get-status="ShopStatus"
+      @chooseStore="ShopChooseAction"
+      @closeStoreDialog="closeDialogAction"
+    >
     </ShopSelect>
   </div>
 </template>
@@ -92,7 +153,7 @@ import {
   getRolesList
 } from '../../../api/company'
 import { getDistributorList } from '@/api/marketing'
-
+import { pageMixin } from '@/mixins'
 import DistributorSelect from '@/components/function/distributorSelect'
 import ShopSelect from '@/components/function/shopSelect'
 export default {
@@ -106,6 +167,7 @@ export default {
       default: false
     }
   },
+  mixins: [pageMixin],
   data() {
     return {
       oldData: [],
@@ -139,8 +201,6 @@ export default {
       total_count: 0,
       params: {
         mobile: '',
-        page: 1,
-        pageSize: 20,
         operator_type: 'staff'
       },
       operator_id: 0,
@@ -191,10 +251,6 @@ export default {
       this.form.shop_ids = []
       this.relDistributors = []
       this.relShops = []
-    },
-    handleCurrentChange(page_num) {
-      this.params.page = page_num
-      this.getAccountListData()
     },
     addLabels() {
       // 添加物料弹框
@@ -255,24 +311,27 @@ export default {
         updateAccountInfo(this.operator_id, this.form).then((response) => {
           this.detailData = response.data.data
           this.editVisible = false
-          this.getAccountListData()
+          this.fetchList()
         })
       } else {
         createAccount(this.form).then((response) => {
           this.detailData = response.data.data
           this.editVisible = false
-          this.getAccountListData()
+          this.fetchList()
           this.handleCancel()
         })
       }
     },
-    onSearch() {
-      this.params.page = 1
-      this.getAccountListData()
-    },
-    getAccountListData() {
+
+    fetchList() {
       this.loading = true
-      getAccountList(this.params).then((response) => {
+      const { pageIndex: page, pageSize } = this.page
+      let params = {
+        page,
+        pageSize,
+        ...this.params
+      }
+      getAccountList(params).then((response) => {
         this.accountsList = response.data.data.list
         this.total_count = response.data.data.total_count
         this.datapass_block = response.data.data.datapass_block
@@ -337,13 +396,13 @@ export default {
     }
   },
   mounted() {
-    this.getAccountListData()
+    this.fetchList()
     this.getRolesListData()
   },
   watch: {
     status(val) {
       if (val) {
-        this.getAccountListData()
+        this.fetchList()
       }
     }
   }

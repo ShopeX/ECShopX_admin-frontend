@@ -1,48 +1,80 @@
 <template>
   <div>
     <div class="action-container">
-      <el-button type="primary" icon="el-icon-circle-plus" @click="addTemplate">添加商品标签</el-button>
+      <el-button type="primary" icon="el-icon-circle-plus" @click="addTemplate"
+        >添加商品标签</el-button
+      >
     </div>
 
-   <SpFilterForm :model="params" @onSearch="onSearch" @onReset="onSearch">
+    <SpFilterForm :model="params" @onSearch="onSearch" @onReset="onSearch">
       <SpFilterFormItem prop="tag_name" label="标签名:">
         <el-input placeholder="请输入标签名" v-model="params.tag_name" />
       </SpFilterFormItem>
     </SpFilterForm>
-   
-      <el-table border :data="tagsList" v-loading="loading" element-loading-text="数据加载中">
-        <el-table-column prop="tag_id" label="操作" width="100">
-          <template slot-scope="scope">
-            <el-button type="text" @click="editAction(scope.$index, scope.row)">编辑</el-button>
-            <el-button type="text" @click="deleteAction(scope.$index, scope.row)">删除</el-button>
-          </template>
-        </el-table-column>
-        <el-table-column prop="tag_name" label="标签名称" width="250">
-          <template slot-scope="scope">
-            <span class="tag" :style="{ color: scope.row.font_color, background: scope.row.tag_color }">
-              {{ scope.row.tag_name }}
-            </span>
-          </template>
-        </el-table-column>
-        <el-table-column prop="description" label="标签描述"></el-table-column>
-      </el-table>
-      <div class="content-padded content-center">
-        <el-pagination background layout="total, sizes, prev, pager, next, jumper" @current-change="handleCurrentChange" @size-change="handleSizeChange" :current-page.sync="params.page" :page-sizes="[10, 20, 50]" :total="total_count" :page-size="params.pageSize">
-        </el-pagination>
-      </div>
+
+    <el-table border :data="tagsList" v-loading="loading" element-loading-text="数据加载中">
+      <el-table-column prop="tag_id" label="操作" width="100">
+        <template slot-scope="scope">
+          <el-button type="text" @click="editAction(scope.$index, scope.row)">编辑</el-button>
+          <el-button type="text" @click="deleteAction(scope.$index, scope.row)">删除</el-button>
+        </template>
+      </el-table-column>
+      <el-table-column prop="tag_name" label="标签名称" width="250">
+        <template slot-scope="scope">
+          <span
+            class="tag"
+            :style="{ color: scope.row.font_color, background: scope.row.tag_color }"
+          >
+            {{ scope.row.tag_name }}
+          </span>
+        </template>
+      </el-table-column>
+      <el-table-column prop="description" label="标签描述"></el-table-column>
+    </el-table>
+    <div class="content-padded content-center">
+      <el-pagination
+        background
+        layout="total, sizes, prev, pager, next, jumper"
+        @current-change="onCurrentChange"
+        @size-change="onSizeChange"
+        :current-page.sync="page.pageIndex"
+        :page-sizes="[10, 20, 50]"
+        :total="total_count"
+        :page-size="page.pageSize"
+      >
+      </el-pagination>
+    </div>
     <sideBar :visible.sync="show_sideBar" :title="'新增商品标签'">
       <el-form ref="form" :model="form" class="demo-ruleForm" label-width="100px">
-        <el-form-item class="content-left" label="标签名称" prop="tag_name" :rules="[{ required: true, message: '请输入标签名称', trigger: 'blur' }]">
+        <el-form-item
+          class="content-left"
+          label="标签名称"
+          prop="tag_name"
+          :rules="[{ required: true, message: '请输入标签名称', trigger: 'blur' }]"
+        >
           <el-input placeholder="请输入标签名称" v-model="form.tag_name"></el-input>
         </el-form-item>
         <el-form-item class="content-left" label="标签说明">
-          <el-input type="textarea" :rows="3" placeholder="请输入标签说明" v-model="form.description"></el-input>
+          <el-input
+            type="textarea"
+            :rows="3"
+            placeholder="请输入标签说明"
+            v-model="form.description"
+          ></el-input>
         </el-form-item>
         <el-form-item class="content-left" label="标签颜色">
-          <el-color-picker v-model="form.tag_color" show-alpha :predefine="predefineColors"></el-color-picker>
+          <el-color-picker
+            v-model="form.tag_color"
+            show-alpha
+            :predefine="predefineColors"
+          ></el-color-picker>
         </el-form-item>
         <el-form-item class="content-left" label="字体颜色">
-          <el-color-picker v-model="form.font_color" show-alpha :predefine="predefineColors"></el-color-picker>
+          <el-color-picker
+            v-model="form.font_color"
+            show-alpha
+            :predefine="predefineColors"
+          ></el-color-picker>
         </el-form-item>
         <el-form-item class="content-left" label="前台显示">
           <el-radio-group v-model="form.front_show">
@@ -62,7 +94,9 @@ import { mapGetters } from 'vuex'
 import { Message } from 'element-ui'
 import { saveTag, getTagList, getTagInfo, updateTag, deleteTag } from '../../../api/goods'
 import sideBar from '@/components/element/sideBar'
+import { pageMixin } from '@/mixins'
 export default {
+  mixins: [pageMixin],
   data() {
     return {
       show_sideBar: false,
@@ -71,8 +105,6 @@ export default {
       loading: false,
       total_count: 0,
       params: {
-        page: 1,
-        pageSize: 10,
         tag_name: ''
       },
       form: {
@@ -93,15 +125,6 @@ export default {
     ...mapGetters(['wheight'])
   },
   methods: {
-    handleCurrentChange(page_num) {
-      this.params.page = page_num
-      this.getDataList()
-    },
-    handleSizeChange(pageSize) {
-      this.params.page = 1
-      this.params.pageSize = pageSize
-      this.getDataList()
-    },
     addTemplate() {
       // 添加商品
       this.show_sideBar = true
@@ -124,13 +147,15 @@ export default {
       this.dialogVisible = true
       this.dataInfo = row
     },
-    onSearch() {
-      this.params.page = 1
-      this.getDataList()
-    },
-    async getDataList() {
+    async fetchList() {
       this.loading = true
-      const response = await getTagList(this.params)
+      const { pageIndex: page, pageSize } = this.page
+      let params = {
+        page,
+        pageSize,
+        ...this.params
+      }
+      const response = await getTagList(params)
       this.tagsList = response.data.data.list
       this.total_count = response.data.data.total_count
       this.loading = false
@@ -186,7 +211,7 @@ export default {
               type: 'success',
               message: '保存成功'
             })
-            this.getDataList()
+            this.fetchList()
           }
         })
       } else {
@@ -196,14 +221,14 @@ export default {
               type: 'success',
               message: '保存成功'
             })
-            this.getDataList()
+            this.fetchList()
           }
         })
       }
     }
   },
   mounted() {
-    this.getDataList()
+    this.fetchList()
   }
 }
 </script>

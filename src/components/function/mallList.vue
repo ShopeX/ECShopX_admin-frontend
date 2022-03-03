@@ -330,7 +330,7 @@
             @change="toggleOpenRecommend"
           />
         </el-form-item>
-        <!-- <el-form-item label="开启小程序定位">
+        <el-form-item label="开启小程序定位" v-if="VERSION_STANDARD">
           <el-switch
             v-model="is_open_wechatapp_location"
             :active-value="1"
@@ -338,7 +338,7 @@
             active-color="#13ce66"
             @change="toggleOpenWechatappLocation"
           ></el-switch>
-        </el-form-item> -->
+        </el-form-item>
         <el-form-item label="开启扫码功能">
           <el-switch
             v-model="is_open_scan_qrcode"

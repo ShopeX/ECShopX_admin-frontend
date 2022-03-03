@@ -223,6 +223,7 @@ Vue.prototype.orderType = [
 Vue.prototype.system_is_saas = process.env.VUE_APP_IS_SAAS || 'false'
 Vue.prototype.system_mode = process.env.VUE_APP_PRODUCT_MODEL
 Vue.prototype.VERSION_STANDARD = VERSION_STANDARD
+Vue.prototype.VUE_APP_SYSTEM_NAME = process.env.VUE_APP_SYSTEM_NAME
 Vue.prototype.path_prefixes = process.env.VUE_APP_PREFIXES
 Vue.prototype.BASE_API =
   process.env.VUE_APP_BASE_API.indexOf('http') !== -1

@@ -8,6 +8,7 @@
   "scripts": {
     "build": "vue-cli-service build",
     "dev": "vue-cli-service serve",
+    "sh": "node ./cli.js",
     "lint": "prettier-eslint --write --list-different 'src/**/*.{js,vue}'"
   },
   "dependencies": {

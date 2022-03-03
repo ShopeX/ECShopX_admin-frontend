@@ -894,7 +894,8 @@ export default {
       this.$emit('onChangeData', 'params', { type })
       exportInvoice({
         ...this.params,
-        type
+        type,
+        order_type:'normal'
       }).then((response) => {
         const { status, url, filename } = response.data.data
         if (status) {
@@ -908,11 +909,13 @@ export default {
         }
       })
     },
-    exportData(type) {
+    exportData(type) { 
+      console.log("====exportData",type)
       orderExport({
         ...this.params,
+        order_type:'normal',
         type,
-        page: 1
+        page: this.page.pageIndex
       }).then((response) => {
         const { status, url, filename } = response.data.data
         if (status) {

@@ -48,8 +48,9 @@
                 :key="`cmenu-${cindex}`"
               >
                 <template slot="title"><i class="iconfont icon-shouqijiantouxiao"></i>{{ child.name }}</template>
-                <template v-for="sub in child.children" v-if="sub.is_show && sub.is_menu">
+                <template v-for="sub in child.children" >
                   <el-menu-item
+                    v-if="sub.is_show && sub.is_menu"
                     :key="sub.url"
                     :index="sub.url"
                     :class="{ 'is-active': sub.url == activeSubIndex }"
@@ -113,14 +114,7 @@
       </el-header>
       <el-main style="position: relative; background: #F0F2F5;">
         <router-view class="content-container" :class="{'footer-fixed': $route.meta && $route.meta.footerFixed }"></router-view>
-        <div class="system-release">商品onex官方商城</div>
-        <!-- <section id="container" class="content-container">
-          <el-col :span="24" class="content-wrapper">
-            <transition name="fade" mode="out-in">
-              <router-view></router-view>
-            </transition>
-          </el-col>
-        </section> -->
+        <!-- <div class="system-release">商派onex官方商城</div> -->
         <div id="design-view"></div>
       </el-main>
     </el-container>

@@ -174,7 +174,7 @@
           class="content-container"
           :class="{ 'footer-fixed': $route.meta && $route.meta.footerFixed }"
         />
-        <!-- <div class="system-release">商派onex官方商城</div> -->
+        <div class="system-release">{{process.env.VUE_APP_SYSTEM_NAME}}</div>
         <div id="design-view" />
       </el-main>
     </el-container>

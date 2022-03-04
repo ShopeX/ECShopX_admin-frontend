@@ -146,7 +146,7 @@ export default {
     font-weight: 700;
   }
   .search-field {
-    width: 500px !important;
+    // width: 500px !important;
   }
   label {
     font-size: 12px;

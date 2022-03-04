@@ -126,3 +126,7 @@ export function getALiCodeUnlimit (query) {
     params: query
   })
 }
+
+export function getALiCustomPageList () {
+  return console.log('//避免报错')
+}

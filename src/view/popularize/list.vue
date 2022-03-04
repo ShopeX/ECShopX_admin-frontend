@@ -1,24 +1,37 @@
 <template>
   <div>
     <div v-if="$route.path.indexOf('child') === -1 && $route.path.indexOf('detail') === -1">
-      <el-row :gutter="20">
-        <el-col>
+      <div class="action-container">
+        <el-button
+          type="primary"
+          icon="el-icon-circle-plus"
+          @click.native="addVisible = true"
+        >
+          添加推广员
+        </el-button>
+      </div>
+      <SpFilterForm
+        :model="params"
+        @onSearch="onSearch"
+        @onReset="onSearch"
+      >
+        <SpFilterFormItem
+          prop="mobile"
+          label="手机号:"
+        >
           <el-input
-            v-model="identifier"
-            class="input-m"
-            placeholder="会员手机号"
-          >
-            <el-button
-              slot="append"
-              icon="el-icon-search"
-              @click="numberSearch"
-            />
-          </el-input>
+            v-model="params.mobile"
+            placeholder="请输入手机号"
+          />
+        </SpFilterFormItem>
+        <SpFilterFormItem
+          prop="store_status"
+          label="开店状态:"
+        >
           <el-select
             v-model="params.store_status"
-            placeholder="开店状态"
+            placeholder="请输入开店状态"
             clearable
-            @change="dataSearch"
           >
             <el-option
               label="未开店"
@@ -41,285 +54,273 @@
               value="4"
             />
           </el-select>
-          <el-button
-            type="primary"
-            icon="el-icon-circle-plus"
-            @click.native="addVisible = true"
-          >
-            添加推广员
-          </el-button>
-        </el-col>
-      </el-row>
-      <el-card>
-        <el-table
-          v-loading="loading"
-          :data="list"
-          :height="wheight - 170"
-          element-loading-text="数据加载中"
-          :default-sort="{ prop: 'bind_date', order: 'descending' }"
+        </SpFilterFormItem>
+      </SpFilterForm>
+
+      <el-table
+        v-loading="loading"
+        border
+        :data="list"
+        :height="wheight - 170"
+        element-loading-text="数据加载中"
+        :default-sort="{ prop: 'bind_date', order: 'descending' }"
+      >
+        <el-table-column
+          label="操作"
+          width="120"
         >
-          <el-table-column
-            label="操作"
-            width="120"
-          >
-            <template slot-scope="scope">
-              <el-button
-                type="text"
-                class="btn-gap"
-                @click="detail(scope.row)"
-              >
-                分佣详情
-              </el-button>
-              <el-popover
-                placement="right"
-                width="440"
-                trigger="hover"
-              >
-                <div class="operating-icons">
-                  <el-button
-                    icon="edit"
-                    type="text"
-                    class="btn-gap"
-                    @click="detail(scope.row)"
-                  >
-                    分佣详情
-                  </el-button>
-                  <el-button
-                    icon="edit"
-                    type="text"
-                    @click="editTop(scope.row)"
-                  >
-                    调整至顶级
-                  </el-button>
-                  <el-button
-                    icon="edit"
-                    type="text"
-                    @click="editSuperior(scope.row)"
-                  >
-                    调整上级
-                  </el-button>
-                  <el-button
-                    v-if="
-                      scope.row.shop_status === 0 ||
-                        scope.row.shop_status === 4 ||
-                        scope.row.shop_status === 3
-                    "
-                    type="text"
-                    @click="handleShopStatus(scope.$index, scope.row)"
-                  >
-                    开通虚拟店
-                  </el-button>
-                  <el-button
-                    v-if="scope.row.shop_status === 2"
-                    type="text"
-                    @click="handleShopStatus(scope.$index, scope.row)"
-                  >
-                    审核申请
-                  </el-button>
-                  <el-button
-                    v-if="scope.row.shop_status === 1"
-                    type="text"
-                    @click="handleShopStatus(scope.$index, scope.row)"
-                  >
-                    关闭虚拟店
-                  </el-button>
-                  <el-button
-                    v-show="gradeList.isOpenPromoterGrade == 'true'"
-                    icon="edit"
-                    type="text"
-                    @click="editGrade(scope.$index, scope.row)"
-                  >
-                    修改推广员等级
-                  </el-button>
-                </div>
-                <el-button
-                  slot="reference"
-                  type="text"
-                >
-                  <i class="iconfont icon-angle-double-right" />
-                </el-button>
-              </el-popover>
-            </template>
-          </el-table-column>
-          <el-table-column
-            prop="username"
-            label="姓名"
-          />
-          <el-table-column
-            prop="mobile"
-            label="手机号"
-            width="150"
-          >
-            <template slot-scope="scope">
-              <i
-                v-if="scope.row.mobile"
-                class="el-icon-mobile"
-              />
-              {{ scope.row.mobile }}
-              <el-tooltip
-                v-if="scope.row.mobile && datapass_block == 0"
-                effect="dark"
-                content="复制"
-                placement="top-start"
-              >
-                <i
-                  v-clipboard:copy="scope.row.mobile"
-                  v-clipboard:success="onCopy"
-                  class="el-icon-document-copy"
-                />
-              </el-tooltip>
-            </template>
-          </el-table-column>
-          <el-table-column
-            prop="promoter_grade_name"
-            label="推广员等级"
-          />
-          <el-table-column
-            prop="pmobile"
-            label="上级联系方式"
-            width="150"
-          >
-            <template slot-scope="scope">
-              <i
-                v-if="scope.row.pmobile && scope.row.pmobile != ''"
-                class="el-icon-mobile"
-              />
-              {{ scope.row.pmobile && scope.row.pmobile != '' ? scope.row.pmobile : '-' }}
-              <el-tooltip
-                v-if="scope.row.pmobile && scope.row.pmobile != ''"
-                effect="dark"
-                content="复制"
-                placement="top-start"
-              >
-                <i
-                  v-clipboard:copy="scope.row.pmobile"
-                  v-clipboard:success="onCopy"
-                  class="el-icon-document-copy"
-                />
-              </el-tooltip>
-            </template>
-          </el-table-column>
-          <el-table-column
-            prop="children_count"
-            width="100"
-            label="直属下级"
-            sortable
-          >
-            <template slot-scope="scope">
-              <el-button
-                size="mini"
-                icon="edit"
-                type="text"
-                @click="count(scope.$index, scope.row)"
-              >
-                {{ scope.row.children_count }}
-              </el-button>
-            </template>
-          </el-table-column>
-          <el-table-column
-            label="状态"
-            width="60"
-          >
-            <template slot-scope="scope">
-              <el-switch
-                v-model="scope.row.disabled == 0"
-                active-color="#13ce66"
-                inactive-color="#efefef"
-                @change="freeze(scope.row)"
-              />
-            </template>
-          </el-table-column>
-          <el-table-column
-            label="开店状态"
-            width="80"
-          >
-            <template slot-scope="scope">
-              <el-tag
-                v-if="scope.row.shop_status === 0"
-                size="mini"
-                effect="plain"
-              >
-                未开店
-              </el-tag>
-              <el-tag
-                v-if="scope.row.shop_status === 1"
-                size="mini"
-                effect="plain"
-                type="success"
-              >
-                已开店
-              </el-tag>
-              <el-tag
-                v-if="scope.row.shop_status === 2"
-                size="mini"
-                effect="plain"
-              >
-                等待审核
-              </el-tag>
-              <el-tag
-                v-if="scope.row.shop_status === 3"
-                size="mini"
-                effect="plain"
-                type="warning"
-              >
-                店铺关闭
-              </el-tag>
-              <el-popover
-                v-if="scope.row.shop_status === 4"
-                placement="top-start"
-                width="300"
-                trigger="hover"
-                :content="scope.row.reason"
-              >
-                <el-tag
-                  slot="reference"
-                  size="mini"
-                  effect="plain"
-                >
-                  审核拒绝
-                </el-tag>
-              </el-popover>
-            </template>
-          </el-table-column>
-          <el-table-column
-            prop="bind_date"
-            label="加入时间"
-            width="100"
-          />
-          <el-table-column
-            label="已结算"
-            width="80"
-          >
-            <template
-              slot-scope="scope"
+          <template slot-scope="scope">
+            <el-button
+              type="text"
+              class="btn-gap"
+              @click="detail(scope.row)"
             >
-              ￥{{ (scope.row.rebateTotal - scope.row.noCloseRebate) / 100 }}
-            </template>
-          </el-table-column>
-          <el-table-column
-            label="未结算"
-            width="80"
-          >
-            <template slot-scope="scope">
-              ￥{{ scope.row.noCloseRebate / 100 }}
-            </template>
-          </el-table-column>
-        </el-table>
-        <div
-          v-if="total_count > params.pageSize"
-          class="content-padded content-center"
+              分佣详情
+            </el-button>
+            <el-popover
+              placement="right"
+              width="440"
+              trigger="hover"
+            >
+              <div class="operating-icons">
+                <el-button
+                  icon="edit"
+                  type="text"
+                  class="btn-gap"
+                  @click="detail(scope.row)"
+                >
+                  分佣详情
+                </el-button>
+                <el-button
+                  icon="edit"
+                  type="text"
+                  @click="editTop(scope.row)"
+                >
+                  调整至顶级
+                </el-button>
+                <el-button
+                  icon="edit"
+                  type="text"
+                  @click="editSuperior(scope.row)"
+                >
+                  调整上级
+                </el-button>
+                <el-button
+                  v-if="
+                    scope.row.shop_status === 0 ||
+                      scope.row.shop_status === 4 ||
+                      scope.row.shop_status === 3
+                  "
+                  type="text"
+                  @click="handleShopStatus(scope.$index, scope.row)"
+                >
+                  开通虚拟店
+                </el-button>
+                <el-button
+                  v-if="scope.row.shop_status === 2"
+                  type="text"
+                  @click="handleShopStatus(scope.$index, scope.row)"
+                >
+                  审核申请
+                </el-button>
+                <el-button
+                  v-if="scope.row.shop_status === 1"
+                  type="text"
+                  @click="handleShopStatus(scope.$index, scope.row)"
+                >
+                  关闭虚拟店
+                </el-button>
+                <el-button
+                  v-show="gradeList.isOpenPromoterGrade == 'true'"
+                  icon="edit"
+                  type="text"
+                  @click="editGrade(scope.$index, scope.row)"
+                >
+                  修改推广员等级
+                </el-button>
+              </div>
+              <el-button
+                slot="reference"
+                type="text"
+              >
+                <i class="iconfont icon-angle-double-right" />
+              </el-button>
+            </el-popover>
+          </template>
+        </el-table-column>
+        <el-table-column
+          prop="username"
+          label="姓名"
+        />
+        <el-table-column
+          prop="mobile"
+          label="手机号"
+          width="150"
         >
-          <el-pagination
-            background
-            layout="total, sizes, prev, pager, next, jumper"
-            :current-page.sync="params.page"
-            :total="total_count"
-            :page-size="params.pageSize"
-            @size-change="handleSizeChange"
-            @current-change="handlePage"
-          />
-        </div>
-      </el-card>
+          <template slot-scope="scope">
+            <i
+              v-if="scope.row.mobile"
+              class="el-icon-mobile"
+            />
+            {{ scope.row.mobile }}
+            <el-tooltip
+              v-if="scope.row.mobile && datapass_block == 0"
+              effect="dark"
+              content="复制"
+              placement="top-start"
+            >
+              <i
+                v-clipboard:copy="scope.row.mobile"
+                v-clipboard:success="onCopy"
+                class="el-icon-document-copy"
+              />
+            </el-tooltip>
+          </template>
+        </el-table-column>
+        <el-table-column
+          prop="promoter_grade_name"
+          label="推广员等级"
+        />
+        <el-table-column
+          prop="pmobile"
+          label="上级联系方式"
+          width="150"
+        >
+          <template slot-scope="scope">
+            <i
+              v-if="scope.row.pmobile && scope.row.pmobile != ''"
+              class="el-icon-mobile"
+            />
+            {{ scope.row.pmobile && scope.row.pmobile != '' ? scope.row.pmobile : '-' }}
+            <el-tooltip
+              v-if="scope.row.pmobile && scope.row.pmobile != ''"
+              effect="dark"
+              content="复制"
+              placement="top-start"
+            >
+              <i
+                v-clipboard:copy="scope.row.pmobile"
+                v-clipboard:success="onCopy"
+                class="el-icon-document-copy"
+              />
+            </el-tooltip>
+          </template>
+        </el-table-column>
+        <el-table-column
+          prop="children_count"
+          width="100"
+          label="直属下级"
+          sortable
+        >
+          <template slot-scope="scope">
+            <el-button
+              size="mini"
+              icon="edit"
+              type="text"
+              @click="count(scope.$index, scope.row)"
+            >
+              {{ scope.row.children_count }}
+            </el-button>
+          </template>
+        </el-table-column>
+        <el-table-column
+          label="状态"
+          width="60"
+        >
+          <template slot-scope="scope">
+            <el-switch
+              v-model="scope.row.disabled == 0"
+              active-color="#13ce66"
+              inactive-color="#efefef"
+              @change="freeze(scope.row)"
+            />
+          </template>
+        </el-table-column>
+        <el-table-column
+          label="开店状态"
+          width="80"
+        >
+          <template slot-scope="scope">
+            <el-tag
+              v-if="scope.row.shop_status === 0"
+              size="mini"
+              effect="plain"
+            >
+              未开店
+            </el-tag>
+            <el-tag
+              v-if="scope.row.shop_status === 1"
+              size="mini"
+              effect="plain"
+              type="success"
+            >
+              已开店
+            </el-tag>
+            <el-tag
+              v-if="scope.row.shop_status === 2"
+              size="mini"
+              effect="plain"
+            >
+              等待审核
+            </el-tag>
+            <el-tag
+              v-if="scope.row.shop_status === 3"
+              size="mini"
+              effect="plain"
+              type="warning"
+            >
+              店铺关闭
+            </el-tag>
+            <el-popover
+              v-if="scope.row.shop_status === 4"
+              placement="top-start"
+              width="300"
+              trigger="hover"
+              :content="scope.row.reason"
+            >
+              <el-tag
+                slot="reference"
+                size="mini"
+                effect="plain"
+              >
+                审核拒绝
+              </el-tag>
+            </el-popover>
+          </template>
+        </el-table-column>
+        <el-table-column
+          prop="bind_date"
+          label="加入时间"
+          width="100"
+        />
+        <el-table-column
+          label="已结算"
+          width="80"
+        >
+          <template slot-scope="scope">
+            ￥{{ (scope.row.rebateTotal - scope.row.noCloseRebate) / 100 }}
+          </template>
+        </el-table-column>
+        <el-table-column
+          label="未结算"
+          width="80"
+        >
+          <template slot-scope="scope">
+            ￥{{ scope.row.noCloseRebate / 100 }}
+          </template>
+        </el-table-column>
+      </el-table>
+      <div class="content-padded content-center">
+        <el-pagination
+          background
+          layout="total, sizes, prev, pager, next, jumper"
+          :current-page.sync="page.pageIndex"
+          :total="total_count"
+          :page-size="page.pageSize"
+          @size-change="onSizeChange"
+          @current-change="onCurrentChange"
+        />
+      </div>
 
       <!-- 调整上下级弹框 -->
       <el-dialog
@@ -585,13 +586,14 @@ import {
   getPromoterGradeConfig,
   updatePromoterShop
 } from '../../api/promotions'
+import { pageMixin } from '@/mixins'
 export default {
+  mixins: [pageMixin],
   data () {
     return {
       params: {
-        page: 1,
-        pageSize: 10,
-        mobile: ''
+        mobile: '',
+        store_status: ''
       },
       paramsModal: {
         page: 1,
@@ -609,7 +611,6 @@ export default {
       row: {},
       newGradeName: '',
       gradeList: {},
-      identifier: '',
       identifierModal: '',
       promoter_mobile: '',
       shop_status: '',
@@ -621,7 +622,7 @@ export default {
     }
   },
   mounted () {
-    this.getPopularizeListFun(this.params),
+    this.fetchList(this.params),
       this.getPopularizeListModalFun(this.modalList),
       getPromoterGradeConfig().then((res) => {
         this.gradeList = res.data.data
@@ -641,10 +642,6 @@ export default {
       })
       window.open(routeData.href, '_blank')
     },
-    dataSearch (val) {
-      this.params.store_status = val
-      this.getPopularizeListFun(this.params)
-    },
     addPromoter () {
       addPromoter({ mobile: this.promoter_mobile }).then((res) => {
         this.promoter_mobile = ''
@@ -654,7 +651,7 @@ export default {
           type: 'success',
           duration: 2 * 1000
         })
-        this.getPopularizeListFun(this.params)
+        this.fetchList()
       })
     },
     count (index, row) {
@@ -676,7 +673,7 @@ export default {
             type: 'success',
             duration: 5 * 1000
           })
-          this.getPopularizeListFun(this.params)
+          this.fetchList()
         }
       )
     },
@@ -716,7 +713,7 @@ export default {
       }
       updatePromoterShop(data).then((res) => {
         this.$message({ type: 'success', message: '操作成功' })
-        this.getPopularizeListFun(this.params)
+        this.fetchList()
         this.updateShopVisible = false
       })
       return true
@@ -766,7 +763,7 @@ export default {
             type: 'success',
             duration: 5 * 1000
           })
-          this.getPopularizeListFun(this.params)
+          this.fetchList()
         }
       )
     },
@@ -784,11 +781,7 @@ export default {
     handleCancelSuperior () {
       this.editSuperiorVisible = false
     },
-    numberSearch (e) {
-      this.params.page = 1
-      this.params.mobile = this.identifier
-      this.getPopularizeListFun(this.params)
-    },
+
     numberSearchModal (e) {
       this.paramsModal.page = 1
       this.paramsModal.mobile = this.identifierModal
@@ -802,9 +795,15 @@ export default {
         this.modalLoading = false
       })
     },
-    getPopularizeListFun (filter) {
+    fetchList () {
       this.loading = true
-      getPopularizeList(filter).then((res) => {
+      const { pageIndex: page, pageSize } = this.page
+      let params = {
+        page,
+        pageSize,
+        ...this.params
+      }
+      getPopularizeList(params).then((res) => {
         this.list = res.data.data.list
         this.total_count = Number(res.data.data.total_count)
         this.datapass_block = res.data.data.datapass_block
@@ -821,17 +820,9 @@ export default {
       this.editPopularizeRemoveFun()
       this.editSuperiorVisible = false
     },
-    handlePage (page_num) {
-      this.params.page = page_num
-      this.getPopularizeListFun(this.params)
-    },
     handleModalPage (page_num) {
       this.paramsModal.page = page_num
       this.getPopularizeListModalFun(this.paramsModal)
-    },
-    handleSizeChange (val) {
-      this.params.pageSize = val
-      this.getPopularizeListFun(this.params)
     }
   },
   computed: {
@@ -845,5 +836,8 @@ export default {
 }
 .btn-gap {
   margin-left: 10px;
+}
+.sp-filter-form {
+  margin-bottom: 16px;
 }
 </style>

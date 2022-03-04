@@ -12,5 +12,5 @@ npm run build
 
 
 ## 代码prettier
-husky install
+npx husky install
 npx husky add .husky/pre-commit "npx lint-staged --allow-empty"

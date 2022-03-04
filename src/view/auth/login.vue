@@ -1,75 +1,31 @@
 <template>
   <div class="login_page">
-    <div class="wrap">
-      <section
-        class="bg"
-        :style="{
-          backgroundImage: 'url(' + login_bg + ')',
-          height: size + 'px',
-          width: size + 'px'
-        }"
-      />
+    <div
+      class="bg"
+      :style="{
+        backgroundImage: 'url(' + login_bg + ')'
+      }"
+    />
 
-      <section class="content">
-        <el-form
-          ref="form"
-          :model="form"
-          :rules="rules"
-          label-position="left"
-          label-width="100px"
-          class="form"
-        >
-          <div class="box">
-            <h3>{{ title }}</h3>
-            <el-tabs
-              v-if="$route.meta.type == 'admin'"
-              v-model="activeName"
-              class="tab"
-            >
-              <el-tab-pane
-                label="管理员账号登录"
-                name="first"
-              >
-                <el-form-item
-                  label="账户"
-                  prop="account"
-                >
-                  <el-input v-model="form.account" />
-                </el-form-item>
-                <el-form-item
-                  label="密码"
-                  prop="checkPass"
-                >
-                  <el-input
-                    v-model="form.checkPass"
-                    type="password"
-                  />
-                </el-form-item>
-              </el-tab-pane>
-              <el-tab-pane
-                label="员工账号登录"
-                name="second"
-              >
-                <el-form-item
-                  label="账户"
-                  prop="account"
-                >
-                  <el-input v-model="form.account" />
-                </el-form-item>
-                <el-form-item
-                  label="密码"
-                  prop="checkPass"
-                >
-                  <el-input
-                    v-model="form.checkPass"
-                    type="password"
-                  />
-                </el-form-item>
-              </el-tab-pane>
-            </el-tabs>
-            <div
-              v-else
-              class="tab"
+    <div class="content">
+      <el-form
+        ref="form"
+        :model="form"
+        :rules="rules"
+        label-position="left"
+        label-width="100px"
+        class="form"
+      >
+        <div class="box">
+          <h3>{{ title }}</h3>
+          <el-tabs
+            v-if="$route.meta.type == 'admin'"
+            v-model="activeName"
+            class="tab"
+          >
+            <el-tab-pane
+              label="管理员账号登录"
+              name="first"
             >
               <el-form-item
                 label="账户"
@@ -86,27 +42,69 @@
                   type="password"
                 />
               </el-form-item>
-            </div>
-            <el-form-item
-              style="margin-top: 40px; margin-bottom: 10px"
-              label-wdith="0px"
+            </el-tab-pane>
+            <el-tab-pane
+              label="员工账号登录"
+              name="second"
             >
-              <loadingBtn
-                ref="loadingBtn"
-                class="btn"
-                text="登录"
-                @clickHandle="fnLogin('form')"
+              <el-form-item
+                label="账户"
+                prop="account"
+              >
+                <el-input v-model="form.account" />
+              </el-form-item>
+              <el-form-item
+                label="密码"
+                prop="checkPass"
+              >
+                <el-input
+                  v-model="form.checkPass"
+                  type="password"
+                />
+              </el-form-item>
+            </el-tab-pane>
+          </el-tabs>
+
+          <div
+            v-else
+            class="tab"
+          >
+            <el-form-item
+              label="账户"
+              prop="account"
+            >
+              <el-input v-model="form.account" />
+            </el-form-item>
+            <el-form-item
+              label="密码"
+              prop="checkPass"
+            >
+              <el-input
+                v-model="form.checkPass"
+                type="password"
               />
             </el-form-item>
-            <p
-              v-if="loginType != 'admin'"
-              class="tip"
-            >
-              忘记密码，请联系管理员重置
-            </p>
           </div>
-        </el-form>
-      </section>
+
+          <el-form-item
+            style="margin-top: 40px; margin-bottom: 10px"
+            label-wdith="0px"
+          >
+            <loadingBtn
+              ref="loadingBtn"
+              class="btn"
+              text="登 录"
+              @clickHandle="fnLogin('form')"
+            />
+          </el-form-item>
+          <p
+            v-if="loginType != 'admin'"
+            class="tip"
+          >
+            忘记密码，请联系管理员重置
+          </p>
+        </div>
+      </el-form>
     </div>
   </div>
 </template>
@@ -241,62 +239,64 @@ export default {
 }
 </script>
 
-<style lang="scss" scoped>
+<style lang="scss">
 .login_page {
-  .wrap {
-    display: flex;
-    width: 100vw;
-    .bg {
-      background-size: cover;
-      background-position: left;
-      background-repeat: no-repeat;
+  height: 100%;
+  display: flex;
+  .bg {
+    width: 50%;
+    height: 100%;
+    background-size: cover;
+    background-repeat: no-repeat;
+  }
+
+  .content {
+    width: 50%;
+    height: 100%;
+    > form {
+      width: 300px;
+      margin: 20% auto;
     }
-    .content {
-      flex: 1;
-      min-width: 500px;
-      //   background: palegreen;
-      position: relative;
+    .box {
+      h3 {
+        margin-bottom: 40px;
+        font-size: 23px;
+        color: #888888;
+        text-align: center;
+      }
 
-      .box {
-        position: absolute;
-        left: 50%;
-        top: 50%;
-        transform: translate(-50%, -60%);
-        min-width: 300px;
-        max-width: 600px;
-        // padding: 50px;
-
-        h3 {
-          margin-bottom: 40px;
-          font-size: 23px;
-          color: #888888;
-          text-align: center;
-        }
-
-        .btn {
-          width: 100%;
-          padding: 12px;
-          height: 40px;
-          background: #cb060f;
-          border-radius: 40px;
-          text-align: center;
-          color: #fff;
-          cursor: pointer;
-          border: none;
-        }
-        .tip {
-          text-align: center;
-          font-size: 12px;
-          color: #999;
-        }
+      .btn {
+        width: 100%;
+        padding: 12px;
+        height: 40px;
+        background: #cb060f;
+        border-radius: 40px;
+        text-align: center;
+        color: #fff;
+        cursor: pointer;
+        border: none;
+      }
+      .tip {
+        text-align: center;
+        font-size: 12px;
+        color: #999;
       }
     }
   }
-}
-</style>
 
-<style lang="scss">
-.login_page {
+  .el-form {
+    .el-tabs__item {
+      width: 150px;
+    }
+    #tab-first {
+      padding-right: 43px;
+    }
+    #tab-second {
+      text-align: right;
+      padding-left: 53px;
+    }
+  }
+
   .el-tabs__header {
     margin: 0 0 40px;
   }
@@ -315,9 +315,6 @@ export default {
   .el-tabs__item {
     color: #999;
     font-size: 16px;
-    // &:hover {
-    //   color: #000;
-    // }
   }
   .el-tabs__item.is-active {
     color: #cb060f;
@@ -327,6 +324,13 @@ export default {
   }
   .el-form-item__content {
     margin-left: 0px !important;
+  }
+  .content {
+    background: #fff;
+  }
+
+  input:-webkit-autofill {
+    box-shadow: 0 0 0 1000px #fff inset;
   }
 }
 </style>

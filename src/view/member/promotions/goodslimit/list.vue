@@ -1,162 +1,160 @@
 <template>
   <div>
-    <div v-if="$route.path.indexOf('editor') === -1">
-      <el-row :gutter="20">
-        <el-col
-          :md="4"
-          :lg="8"
+    <template v-if="$route.path.indexOf('editor') === -1">
+      <div class="action-container">
+        <el-button
+          type="primary"
+          icon="iconfont icon-xinzengcaozuo-01"
+          @click="addLimitPromotion"
         >
-          <el-button
-            size="mini"
-            type="primary"
-            icon="plus"
-            @click="addLimitPromotion"
-          >
-            添加限购商品活动
-          </el-button>
-        </el-col>
-      </el-row>
+          添加限购商品活动
+        </el-button>
+      </div>
+
       <el-tabs
-        v-model="activeName"
-        type="border-card"
-        @tab-click="handleClick"
+        v-model="params.status"
+        type="card"
+        @tab-click="handleTabClick"
       >
         <el-tab-pane
-          label="全部"
-          name="all"
-        />
-        <el-tab-pane
-          label="待开始"
-          name="waiting"
-        />
-        <el-tab-pane
-          label="进行中"
-          name="ongoing"
-        />
-        <el-tab-pane
-          label="已结束"
-          name="end"
-        />
-        <el-table
-          v-loading="loading"
-          :data="list"
-          style="width: 100%"
-          element-loading-text="数据加载中"
+          v-for="(item, index) in tabList"
+          :key="index"
+          :label="item.name"
+          :name="item.activeName"
         >
-          <el-table-column
-            prop="limit_id"
-            width="60"
-            label="编号"
-          />
-          <el-table-column
-            prop="limit_name"
-            label="活动名称"
-          />
-          <el-table-column
-            label="开始时间"
-            width="200"
+          <el-table
+            v-loading="loading"
+            :data="tableList"
+            border
+            style="width: 100%"
+            element-loading-text="数据加载中"
           >
-            <template slot-scope="scope">
-              <span>{{ scope.row.start_time | datetime('YYYY-MM-DD HH:mm:ss') }}</span>
-            </template>
-          </el-table-column>
-          <el-table-column
-            label="结束时间"
-            width="200"
+            <el-table-column
+              prop="limit_id"
+              width="60"
+              label="编号"
+            />
+            <el-table-column
+              prop="limit_name"
+              label="活动名称"
+            />
+            <el-table-column
+              label="开始时间"
+              width="200"
+            >
+              <template slot-scope="scope">
+                <span>{{ scope.row.start_time | datetime('YYYY-MM-DD HH:mm:ss') }}</span>
+              </template>
+            </el-table-column>
+            <el-table-column
+              label="结束时间"
+              width="200"
+            >
+              <template slot-scope="scope">
+                <span>{{ scope.row.end_time | datetime('YYYY-MM-DD HH:mm:ss') }}</span>
+              </template>
+            </el-table-column>
+            <el-table-column
+              label="类型"
+              width="120"
+            >
+              <template slot-scope="scope">
+                <span v-if="scope.row.status == 'waiting'">待开始</span>
+                <span v-if="scope.row.status == 'ongoing'">进行中</span>
+                <span v-if="scope.row.status == 'end'">已结束</span>
+              </template>
+            </el-table-column>
+            <el-table-column
+              label="操作"
+              width="150"
+            >
+              <template slot-scope="scope">
+                <div class="operating-icons">
+                  <el-button
+                    v-if="scope.row.status == 'ongoing'"
+                    type="text"
+                    @click="closeLimitPromotion(scope.row)"
+                  >
+                    取消
+                  </el-button>
+                  <el-button
+                    type="text"
+                    @click="showLimitPromotion(scope.row)"
+                  >
+                    查看
+                  </el-button>
+                  <el-button
+                    v-if="scope.row.status == 'waiting'"
+                    type="text"
+                    @click="updateLimitPromotion(scope.row)"
+                  >
+                    编辑
+                  </el-button>
+                </div>
+              </template>
+            </el-table-column>
+          </el-table>
+          <div
+            v-if="page.total > page.pageSize"
+            class="content-padded content-center"
           >
-            <template slot-scope="scope">
-              <span>{{ scope.row.end_time | datetime('YYYY-MM-DD HH:mm:ss') }}</span>
-            </template>
-          </el-table-column>
-          <el-table-column
-            label="类型"
-            width="120"
-          >
-            <template slot-scope="scope">
-              <span v-if="scope.row.status == 'waiting'">待开始</span>
-              <span v-if="scope.row.status == 'ongoing'">进行中</span>
-              <span v-if="scope.row.status == 'end'">已结束</span>
-            </template>
-          </el-table-column>
-          <el-table-column
-            label="操作"
-            width="150"
-          >
-            <template slot-scope="scope">
-              <div class="operating-icons">
-                <el-button
-                  v-if="scope.row.status == 'ongoing'"
-                  type="text"
-                  @click="closeLimitPromotion(scope.row)"
-                >
-                  取消
-                </el-button>
-                <el-button
-                  type="text"
-                  @click="showLimitPromotion(scope.row)"
-                >
-                  查看
-                </el-button>
-                <el-button
-                  v-if="scope.row.status == 'waiting'"
-                  type="text"
-                  @click="updateLimitPromotion(scope.row)"
-                >
-                  编辑
-                </el-button>
-              </div>
-            </template>
-          </el-table-column>
-        </el-table>
-        <div
-          v-if="total_count > params.pageSize"
-          class="content-padded content-center"
-        >
-          <el-pagination
-            layout="prev, pager, next"
-            :current-page.sync="params.page"
-            :total="total_count"
-            :page-size="params.pageSize"
-            @current-change="handleCurrentChange"
-          />
-        </div>
+            <el-pagination
+              background
+              layout="total, sizes, prev, pager, next, jumper"
+              :current-page.sync="page.pageIndex"
+              :page-sizes="[10, 20, 50]"
+              :total="page.total"
+              :page-size="page.pageSize"
+              @current-change="onCurrentChange"
+              @size-change="onSizeChange"
+            />
+          </div>
+        </el-tab-pane>
       </el-tabs>
-    </div>
+    </template>
     <router-view />
   </div>
 </template>
 <script>
-import { cancelLimitPromotions, getLimitPromotions } from '../../../../api/promotions'
-
+import { cancelLimitPromotions, getLimitPromotions } from '@/api/promotions'
+import mixin, { pageMixin } from '@/mixins'
 export default {
+  mixins: [mixin, pageMixin],
   data () {
+    const initialParams = {
+      status: 'all'
+    }
     return {
-      loading: false,
-      activeName: 'all',
+      initialParams,
       params: {
-        page: 1,
-        pageSize: 20,
-        status: 'all'
+        ...initialParams
       },
-      total_count: 0,
-      list: []
+      loading: false,
+      tabList: [
+        { name: '全部', activeName: 'all' },
+        { name: '待开始', activeName: 'waiting' },
+        { name: '进行中', activeName: 'ongoing' },
+        { name: '已结束', activeName: 'end' }
+      ]
     }
   },
   mounted () {
-    this.getLimitPromotionsLists()
+    this.fetchList()
   },
   methods: {
     // 切换tab
-    handleClick (tab, event) {
-      this.activeName = tab.name
-      this.params.status = tab.name == 'all' ? '' : tab.name
-      this.params.page = 1
-      this.getLimitPromotionsLists()
+    handleTabClick (tab, event) {
+      this.onSearch()
     },
-    handleCurrentChange (val) {
-      this.params.page = val
-      this.loading = false
-      this.getLimitPromotionsLists()
+    onSearch () {
+      this.page.pageIndex = 1
+      this.$nextTick(() => {
+        this.fetchList()
+      })
+    },
+    onReset () {
+      this.params = { ...this.initialParams }
+      this.onSearch()
     },
     addLimitPromotion () {
       this.$router.push({ path: this.matchHidePage('editor') })
@@ -164,13 +162,18 @@ export default {
     updateLimitPromotion (row) {
       this.$router.push({ path: this.matchHidePage('editor/') + row.limit_id })
     },
-    getLimitPromotionsLists () {
+    async fetchList () {
       this.loading = true
-      getLimitPromotions(this.params).then((res) => {
-        this.loading = false
-        this.list = res.data.data.list
-        this.total_count = res.data.data.total_count
-      })
+      const { pageIndex: page, pageSize } = this.page
+      let params = {
+        page,
+        pageSize,
+        ...this.params
+      }
+      const { list, total_count } = await this.$api.promotions.getLimitPromotions(params)
+      this.tableList = list
+      this.page.total = total_count
+      this.loading = false
     },
     showLimitPromotion (row) {
       this.$router.push({
@@ -193,7 +196,7 @@ export default {
                 type: 'success',
                 duration: 2 * 1000,
                 onClose () {
-                  that.getLimitPromotionsLists()
+                  that.fetchList()
                 }
               })
             })

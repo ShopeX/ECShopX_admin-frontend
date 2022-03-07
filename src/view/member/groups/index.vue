@@ -1,56 +1,52 @@
 <template>
   <div>
-    <div
+    <template
       v-if="
         $route.path.indexOf('detail') === -1 &&
           $route.path.indexOf('editor') === -1 &&
           $route.path.indexOf('team') === -1
       "
     >
-      <el-row :gutter="20">
-        <el-col :span="12">
-          <el-button
-            type="primary"
-            icon="plus"
-            @click="addGroups"
-          >
-            新增拼团活动
-          </el-button>
-        </el-col>
-      </el-row>
+      <div class="action-container">
+        <el-button
+          type="primary"
+          icon="iconfont icon-xinzengcaozuo-01"
+          @click="addGroups"
+        >
+          新增拼团活动
+        </el-button>
+      </div>
+
       <el-tabs
         v-model="activeName"
-        type="border-card"
+        type="card"
       >
         <el-tab-pane
-          label="全部"
-          name="first"
+          v-for="(item, index) in tabList"
+          :key="index"
+          :label="item.name"
+          :name="item.activeName"
         >
           <groupsList
+            v-if="activeName === 'first'"
             ref="groupsList"
             :view="0"
           />
-        </el-tab-pane>
-        <el-tab-pane
-          label="未开始"
-          name="second"
-        >
-          <groupsList :view="1" />
-        </el-tab-pane>
-        <el-tab-pane
-          label="进行中"
-          name="third"
-        >
-          <groupsList :view="2" />
-        </el-tab-pane>
-        <el-tab-pane
-          label="已结束"
-          name="fourth"
-        >
-          <groupsList :view="3" />
+          <groupsList
+            v-if="activeName === 'second'"
+            :view="1"
+          />
+          <groupsList
+            v-if="activeName === 'third'"
+            :view="2"
+          />
+          <groupsList
+            v-if="activeName === 'fourth'"
+            :view="3"
+          />
         </el-tab-pane>
       </el-tabs>
-    </div>
+    </template>
     <router-view />
   </div>
 </template>
@@ -72,7 +68,12 @@ export default {
       loading: false,
       view: 0,
       activeName: 'first',
-      list: []
+      tabList: [
+        { name: '全部', activeName: 'first' },
+        { name: '未开始', activeName: 'second' },
+        { name: '进行中', activeName: 'third' },
+        { name: '已结束', activeName: 'fourth' }
+      ]
     }
   },
   mounted () {

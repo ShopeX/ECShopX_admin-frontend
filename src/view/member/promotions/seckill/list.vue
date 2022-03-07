@@ -1,26 +1,45 @@
+<style scoped lang="scss">
+.sp-filter-form {
+  margin-bottom: 16px;
+}
+</style>
+
 <template>
   <div>
-    <div v-if="$route.path.indexOf('editor') === -1">
-      <el-row :gutter="20">
-        <el-col :span="4">
+    <template v-if="$route.path.indexOf('editor') === -1">
+      <div class="action-container">
+        <el-button
+          type="primary"
+          icon="iconfont icon-xinzengcaozuo-01"
+          @click="addActivityData"
+        >
+          添加活动
+        </el-button>
+      </div>
+
+      <SpFilterForm
+        :model="params"
+        @onSearch="onSearch"
+        @onReset="onReset"
+      >
+        <SpFilterFormItem
+          prop="name"
+          label="活动名称:"
+        >
           <el-input
             v-model="params.name"
             placeholder="活动名称"
-          >
-            <el-button
-              slot="append"
-              icon="el-icon-search"
-              @click="dataSearch"
-            />
-          </el-input>
-        </el-col>
-        <el-col :span="4">
+          />
+        </SpFilterFormItem>
+        <SpFilterFormItem
+          prop="status"
+          label="活动状态:"
+        >
           <el-select
             v-model="params.status"
             placeholder="活动状态"
             clearable
             style="width: 100%"
-            @change="dataSearch"
           >
             <el-option
               label="全部"
@@ -43,30 +62,25 @@
               value="it_has_ended"
             />
           </el-select>
-        </el-col>
-        <el-col :span="6">
+        </SpFilterFormItem>
+        <SpFilterFormItem
+          prop="create_time"
+          label="时间:"
+        >
           <el-date-picker
-            v-model="create_time"
+            v-model="params.create_time"
             type="daterange"
             value-format="yyyy/MM/dd"
             placeholder="添加时间筛选"
             style="width: 100%; min-width: 250px"
-            @change="dateChange"
           />
-        </el-col>
-        <el-col :span="4">
-          <el-button
-            type="primary"
-            icon="plus"
-            @click="addActivityData"
-          >
-            添加活动
-          </el-button>
-        </el-col>
-      </el-row>
+        </SpFilterFormItem>
+      </SpFilterForm>
+
       <el-table
         v-loading="loading"
-        :data="activityLists"
+        border
+        :data="tableList"
         :height="wheight - 150"
       >
         <el-table-column
@@ -148,15 +162,18 @@
         </el-table-column>
       </el-table>
       <div
-        v-if="total_count > params.pageSize"
+        v-if="page.total > page.pageSize"
         class="content-center content-top-padded"
       >
         <el-pagination
-          layout="prev, pager, next"
-          :current-page.sync="params.page"
-          :total="total_count"
-          :page-size="params.pageSize"
-          @current-change="handleCurrentChange"
+          background
+          layout="total, sizes, prev, pager, next, jumper"
+          :current-page.sync="page.pageIndex"
+          :page-sizes="[10, 20, 50]"
+          :total="page.total"
+          :page-size="page.pageSize"
+          @current-change="onCurrentChange"
+          @size-change="onSizeChange"
         />
       </div>
 
@@ -220,20 +237,18 @@
           </div>
         </template>
       </el-dialog>
-    </div>
+    </template>
     <router-view />
   </div>
 </template>
 <script>
 import { mapGetters } from 'vuex'
-import { Message } from 'element-ui'
-import { getDefaultCurrency } from '../../../../api/company'
-import {
-  seckillActivityGetList,
-  seckillActivityUpdateStatus,
-  getSeckillItemList
-} from '../../../../api/promotions'
+import { getDefaultCurrency } from '@/api/company'
+import { seckillActivityUpdateStatus, getSeckillItemList } from '@/api/promotions'
+import mixin, { pageMixin } from '@/mixins'
+
 export default {
+  mixins: [mixin, pageMixin],
   props: ['getStatus'],
   provide () {
     return {
@@ -241,18 +256,17 @@ export default {
     }
   },
   data () {
+    const initialParams = {
+      name: undefined,
+      status: undefined,
+      create_time: []
+    }
     return {
-      create_time: '',
-      activeName: 'first',
-      activityLists: [],
-      loading: false,
-      total_count: 0,
+      initialParams,
       params: {
-        page: 1,
-        pageSize: 20,
-        status: '',
-        activity_name: ''
+        ...initialParams
       },
+      loading: false,
       communityVisible: false,
       couponVisible: false,
       goodsVisible: false,
@@ -279,13 +293,19 @@ export default {
     if (this.$route.query.status) {
       this.params.status = this.$route.query.status
     }
-    this.getActivityLists(this.params)
+    this.fetchList()
     this.getCurrencyInfo()
   },
   methods: {
-    handleCurrentChange (page_num) {
-      this.params.page = page_num
-      this.getActivityLists(this.params)
+    onSearch () {
+      this.page.pageIndex = 1
+      this.$nextTick(() => {
+        this.fetchList()
+      })
+    },
+    onReset () {
+      this.params = { ...this.initialParams }
+      this.onSearch()
     },
     handleGoodsCurrentChange (page_num) {
       this.goodsPage = page_num
@@ -299,20 +319,33 @@ export default {
       // 编辑物料弹框
       this.$router.push({ path: this.matchHidePage('editor/') + row.seckill_id })
     },
-    dataSearch () {
-      // this.params.start_time = ''
-      // this.params.end_time = ''
-      // this.create_time = ''
-      this.params.page = 1
-      this.getActivityLists(this.params)
+    getParams () {
+      const time = {}
+      const create_time = this.params.create_time
+      if (create_time && create_time.length > 0) {
+        time.start_time = this.dateStrToTimeStamp(create_time[0] + ' 00:00:00')
+        time.end_time = this.dateStrToTimeStamp(create_time[1] + ' 23:59:59')
+      }
+      let params = {
+        ...this.params,
+        status: this.params.status === 'all' ? undefined : this.params.status,
+        create_time: [],
+        ...time
+      }
+      return params
     },
-    getActivityLists (params) {
+    async fetchList () {
       this.loading = true
-      seckillActivityGetList(params).then((response) => {
-        this.activityLists = response.data.data.list
-        this.total_count = response.data.data.total_count
-        this.loading = false
-      })
+      const { pageIndex: page, pageSize } = this.page
+      let params = {
+        page,
+        pageSize,
+        ...this.getParams()
+      }
+      const { list, total_count } = await this.$api.promotions.seckillActivityGetList(params)
+      this.tableList = list
+      this.page.total = total_count
+      this.loading = false
     },
     updateStatusCommunityAction (row) {
       var msg = '此操作将永久终止该活动, 是否继续?'
@@ -323,7 +356,7 @@ export default {
         beforeClose: (action, instance, done) => {
           if (action === 'confirm') {
             seckillActivityUpdateStatus({ seckill_id: row.seckill_id }).then((response) => {
-              this.getActivityLists()
+              this.fetchList()
               this.$message({
                 message: '修改活动状态成功',
                 type: 'success',
@@ -334,18 +367,6 @@ export default {
           done()
         }
       })
-    },
-    dateChange (val) {
-      // this.params.status = ''
-      if (val && val.length > 0) {
-        this.params.start_time = this.dateStrToTimeStamp(val[0] + ' 00:00:00')
-        this.params.end_time = this.dateStrToTimeStamp(val[1] + ' 23:59:59')
-      } else {
-        this.params.start_time = ''
-        this.params.end_time = ''
-      }
-      this.params.page = 1
-      this.getActivityLists(this.params)
     },
     dateStrToTimeStamp (str) {
       return Date.parse(new Date(str)) / 1000
@@ -392,7 +413,7 @@ export default {
       this.updateActivityData(form)
     },
     refresh () {
-      this.getActivityLists(this.params)
+      this.fetchList(this.params)
       this.getCurrencyInfo()
     }
   }

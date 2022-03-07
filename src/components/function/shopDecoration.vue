@@ -1020,10 +1020,6 @@ export default {
     }
   },
   mounted () {
-    // if (this.system_mode === 'platform') {
-    //   let index = this.initData.findIndex((n) => n.name == 'search')
-    //   this.initData.splice(index, 1)
-    // }
     this.getData()
   },
   methods: {
@@ -1189,11 +1185,7 @@ export default {
       }
     },
     pickGoods (data, store) {
-      if (
-        this.editorData.name === 'store' &&
-        this.system_mode === 'platform' &&
-        Number(store.id) == 0
-      ) {
+      if (this.editorData.name === 'store' && this.VERSION_PLATFORM && Number(store.id) == 0) {
         this.$message({
           message: '推荐店铺不能为总店',
           type: 'error'

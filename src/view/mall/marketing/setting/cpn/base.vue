@@ -17,7 +17,7 @@
         </el-radio-group>
       </el-form-item>
       <el-form-item
-        v-if="form.status"
+        v-if="form.settled_type"
         label="允许加盟商入驻类型"
       >
         <el-checkbox-group v-model="form.settled_type">

@@ -148,9 +148,7 @@
             :key="grade.grade_id"
             :label="grade.grade_id"
           >
-            {{
-              grade.grade_name
-            }}
+            {{ grade.grade_name }}
           </el-checkbox>
           <el-checkbox
             v-for="vipdata in vipGrade"
@@ -336,7 +334,7 @@
       </template>
     </el-card>
     <el-card
-      v-if="system_mode !== 'platform' && !is_distributor"
+      v-if="VERSION_STANDARD && !is_distributor"
       header="绑定店铺"
       shadow="naver"
     >

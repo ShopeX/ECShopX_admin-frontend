@@ -22,7 +22,7 @@
           <template
             v-if="
               item.name === 'nearbyShop' &&
-                system_mode === 'platform' &&
+                VERSION_PLATFORM &&
                 $store.getters.login_type !== 'distributor'
             "
           >
@@ -136,7 +136,7 @@
           <template
             v-if="
               item.name === 'store' &&
-                system_mode === 'platform' &&
+                VERSION_PLATFORM &&
                 $store.getters.login_type !== 'distributor'
             "
           >
@@ -279,7 +279,7 @@
                   :res="item"
                 />
                 <store
-                  v-if="item.name === 'store' && system_mode === 'platform'"
+                  v-if="item.name === 'store' && VERSION_PLATFORM"
                   :res="item"
                 />
               </div>
@@ -386,7 +386,7 @@
                   :active="index == editorIndex"
                 />
                 <store
-                  v-if="item.name === 'store' && system_mode === 'platform'"
+                  v-if="item.name === 'store' && VERSION_PLATFORM"
                   :res="item"
                   :active="index == editorIndex"
                 />
@@ -1326,11 +1326,7 @@ export default {
       // debugger
 
       // 如果是平台版本推荐店铺组件且店铺为总店（店铺id 0）
-      if (
-        this.editorData.name === 'store' &&
-        this.system_mode === 'platform' &&
-        Number(store.id) === 0
-      ) {
+      if (this.editorData.name === 'store' && this.VERSION_PLATFORM && Number(store.id) === 0) {
         this.$message({
           message: '推荐店铺不能为总店',
           type: 'error'
@@ -1524,7 +1520,7 @@ export default {
       // 当店铺类型为0（自营）时或者为小程序编辑模板时，展示附近商家和推荐店铺，则店铺类型为加盟不展示
       const isHaveStore = this.initData.some((item) => item.name === 'store')
       // if ((this.relStore.id == '0' ||  this.$route.query.distribution_type == '0' && !isHaveStore)) {
-      if (this.system_mode === 'platform' && this.relStore.id == '0' && !isHaveStore) {
+      if (this.VERSION_PLATFORM && this.relStore.id == '0' && !isHaveStore) {
         this.initData.push({
           name: 'store',
           base: {

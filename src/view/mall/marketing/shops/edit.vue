@@ -70,9 +70,7 @@
       </el-form-item>
       <el-form-item label="门店名称">
         <div>
-          <el-col
-            :span="8"
-          >
+          <el-col :span="8">
             <el-input
               v-model="form.name"
               placeholder="请先完成下方地理位置的选择"
@@ -138,9 +136,7 @@
           >
             -
           </el-col>
-          <el-col
-            :span="10"
-          >
+          <el-col :span="10">
             <el-input
               v-model="form.address"
               placeholder="详细地址"
@@ -153,9 +149,7 @@
         class="demo-form-inline"
         label="门店经纬度"
       >
-        <el-col
-          :span="3"
-        >
+        <el-col :span="3">
           <el-input
             v-model="form.lng"
             readonly
@@ -168,9 +162,7 @@
         >
           -
         </el-col>
-        <el-col
-          :span="3"
-        >
+        <el-col :span="3">
           <el-input
             v-model="form.lat"
             readonly
@@ -237,7 +229,7 @@
         </div>
       </el-form-item>
       <el-form-item
-        v-if="system_mode === 'platform'"
+        v-if="VERSION_PLATFORM"
         label="门店横幅广告"
       >
         <div
@@ -279,9 +271,7 @@
           :loading="submitLoading"
           @click="submitItemsActionConfirm"
         >
-          {{
-            submitLoading ? '提交中' : '保存'
-          }}
+          {{ submitLoading ? '提交中' : '保存' }}
         </el-button>
       </div>
     </el-form>
@@ -463,7 +453,6 @@ export default {
             var poi = pois[i]
             //扩展边界范围，用来包含搜索到的Poi点
             latlngBounds.extend(poi.latLng)
-
             ;(function (n) {
               var marker = new qq.maps.Marker({
                 map: map

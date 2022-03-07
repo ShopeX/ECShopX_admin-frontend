@@ -183,7 +183,7 @@
 <script>
 import { mapGetters, mapMutations, mapState } from 'vuex'
 import { getAuthorizelogout } from '@/api/login'
-import { log, isInSalesCenter } from '@/utils'
+import { VERSION_STANDARD, isInSalesCenter } from '@/utils'
 import { micrApp } from '@/utils/micr-app'
 import store from '@/store'
 export default {
@@ -263,8 +263,7 @@ export default {
       if (logo) {
         this.brandIco = logo
       } else {
-        const companyBrandImg =
-          process.env.VUE_APP_PRODUCT_MODEL === 'standard' ? 'onex' : 'ecshopx'
+        const companyBrandImg = VERSION_STANDARD ? 'onex' : 'ecshopx'
         this.brandIco = require(`@/assets/img/${companyBrandImg}/logo_ico.svg`)
       }
     },

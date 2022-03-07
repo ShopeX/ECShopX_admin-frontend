@@ -126,12 +126,6 @@
               </div>
             </div>
           </el-form-item>
-          <!-- <el-form-item label="返佣类型">
-              <el-radio-group v-model="form.commission_type">
-                  <el-radio label="money">金额</el-radio>
-                  <el-radio v-if="system_mode === 'platform'" label="point">积分</el-radio>
-              </el-radio-group>
-          </el-form-item> -->
           <el-form-item label="返佣模式">
             <el-radio-group
               v-model="form.popularize_ratio.type"

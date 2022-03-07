@@ -25,6 +25,8 @@ export function isBoolean (val) {
 
 export const VERSION_STANDARD = process.env.VUE_APP_PRODUCT_MODEL == 'standard'
 
+export const VERSION_PLATFORM = process.env.VUE_APP_PRODUCT_MODEL == 'platform'
+
 export function isInSalesCenter () {
   if (window.self != window.top && window.self.location.href.indexOf('iframeLogin') < 0) {
     return true

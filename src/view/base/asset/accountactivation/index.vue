@@ -86,6 +86,7 @@
 </template>
 <script>
 import { activate, getActivateInfo } from '@/api/company'
+import { VERSION_STANDARD } from '@/utils'
 export default {
   data () {
     return {
@@ -101,7 +102,7 @@ export default {
   },
   mounted () {
     this.loginType = this.$store.getters.login_type
-    const system = process.env.VUE_APP_PRODUCT_MODEL == 'standard' ? 'onex' : 'ecshopx'
+    const system = VERSION_STANDARD ? 'onex' : 'ecshopx'
     this.logoIcon = require(`@/assets/img/${system}/logo.jpg`)
   },
   methods: {

@@ -27,7 +27,7 @@
       "
     >
       <div
-        v-if="system_mode === 'standard'"
+        v-if="VERSION_STANDARD"
         class="content-bottom-padded"
       >
         <el-alert
@@ -118,7 +118,7 @@
           label="标签:"
         >
           <el-cascader
-            v-if="system_mode === 'platform'"
+            v-if="VERSION_PLATFORM"
             v-model="params.tag_id"
             placeholder="选择标签"
             :options="tag.list"
@@ -173,7 +173,7 @@
 
       <div class="action-container">
         <el-button
-          v-if="system_mode === 'platform'"
+          v-if="VERSION_PLATFORM"
           plain
           type="primary"
           @click="addDistributorTag"
@@ -232,7 +232,7 @@
           </template>
         </el-table-column>
         <el-table-column
-          v-if="system_mode === 'standard'"
+          v-if="VERSION_STANDARD"
           width="80"
           label="商品自动上架且总部发货"
         >
@@ -365,7 +365,7 @@
           </template>
         </el-table-column>
         <el-table-column
-          v-if="system_mode === 'platform'"
+          v-if="VERSION_PLATFORM"
           prop="tagList"
           label="标签"
           class="tab"
@@ -410,7 +410,7 @@
             </router-link>
 
             <router-link
-              v-if="system_mode !== 'platform' && $store.getters.login_type == 'distributor'"
+              v-if="!VERSION_PLATFORM && $store.getters.login_type == 'distributor'"
               :to="{
                 path:
                   $store.getters.login_type == 'distributor'
@@ -429,13 +429,6 @@
             >
               店铺装修
             </el-button>
-            <!-- <el-button v-if="system_mode == 'platform'" type="text" @click="dialogShow(scope.row.distributor_id)">店铺装修</el-button> -->
-            <!-- <el-button
-                v-if="system_mode === 'platform'"
-                type="text"
-                @click="dialogShow(scope.row.distributor_id,'pc')"
-                style="margin-left:0px;margin-top:5px;"
-              >PC店铺装修</el-button> -->
             <el-button
               type="text"
               @click="showSettingMeiQia(scope.row.distributor_id)"
@@ -443,7 +436,7 @@
               客服
             </el-button>
             <el-button
-              v-if="system_mode === 'platform'"
+              v-if="VERSION_PLATFORM"
               type="text"
               @click="downDistributor(scope.row, 'store')"
             >

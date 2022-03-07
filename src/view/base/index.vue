@@ -461,7 +461,9 @@
                   v-if="activateInfo"
                   class="validity-period"
                 >
-                  <i class="iconfont icon-clock" />{{ activateInfo.expired_at | datetime('YYYY-MM-DD HH:mm:ss') }}
+                  <i class="iconfont icon-clock" />{{
+                    activateInfo.expired_at | datetime('YYYY-MM-DD HH:mm:ss')
+                  }}
                   到期
                 </div>
               </section>
@@ -649,33 +651,23 @@
                       class="notice-item"
                       :span="12"
                     >
-                      <router-link
-                        to="/order/entitytrade/tradenormalorders?tab=notship"
-                      >
-                        待发货订单：{{
-                          staticsData && staticsData.notice_data.wait_delivery_count
-                        }}
+                      <router-link to="/order/entitytrade/tradenormalorders?tab=notship">
+                        待发货订单：{{ staticsData && staticsData.notice_data.wait_delivery_count }}
                       </router-link>
                     </el-col>
                     <el-col
                       class="notice-item"
                       :span="12"
                     >
-                      <router-link
-                        to="order/entitytrade/aftersaleslist"
-                      >
-                        待处理退款：{{
-                          staticsData && staticsData.notice_data.aftersales_count
-                        }}
+                      <router-link to="order/entitytrade/aftersaleslist">
+                        待处理退款：{{ staticsData && staticsData.notice_data.aftersales_count }}
                       </router-link>
                     </el-col>
                     <el-col
                       class="notice-item"
                       :span="12"
                     >
-                      <router-link
-                        to="/order/Refunderrorlogs"
-                      >
+                      <router-link to="/order/Refunderrorlogs">
                         退款失败待处理：{{
                           staticsData && staticsData.notice_data.refund_errorlogs_count
                         }}
@@ -692,9 +684,7 @@
                       class="notice-item"
                       :span="12"
                     >
-                      <router-link
-                        to="/entity/goods/goodsphysical?tab=second"
-                      >
+                      <router-link to="/entity/goods/goodsphysical?tab=second">
                         库存预警商品：{{
                           staticsData && staticsData.notice_data.warning_goods_count
                         }}
@@ -711,9 +701,7 @@
                       class="notice-item"
                       :span="12"
                     >
-                      <router-link
-                        to="/marketing/marketingseckill?status=in_sale"
-                      >
+                      <router-link to="/marketing/marketingseckill?status=in_sale">
                         进行中的秒杀：{{
                           staticsData && staticsData.notice_data.started_seckill_count
                         }}
@@ -723,9 +711,7 @@
                       class="notice-item"
                       :span="12"
                     >
-                      <router-link
-                        to="/marketing/groupsindex?activeName=third"
-                      >
+                      <router-link to="/marketing/groupsindex?activeName=third">
                         进行中的拼团：{{
                           staticsData && staticsData.notice_data.started_gtoups_count
                         }}
@@ -870,9 +856,7 @@
               size="medium"
               disabled
             >
-              {{
-                activateInfo.source == 'demo' ? '使用中' : '已体验'
-              }}
+              {{ activateInfo.source == 'demo' ? '使用中' : '已体验' }}
             </el-button>
           </div>
         </div>
@@ -1076,7 +1060,7 @@
 </template>
 
 <script>
-import { isInSalesCenter } from '@/utils'
+import { isInSalesCenter, VERSION_STANDARD } from '@/utils'
 import Chart from 'chart.js'
 import { mapMutations } from 'vuex'
 import store from '../../store'

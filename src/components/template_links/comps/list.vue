@@ -122,11 +122,7 @@ export default {
             keywords: this.keywords,
             distributor_id: this.store.id || ''
           })
-          if (
-            this.system_mode == 'platform' ||
-            query.distributor_id == '0' ||
-            !query.distributor_id
-          ) {
+          if (this.VERSION_PLATFORM || query.distributor_id == '0' || !query.distributor_id) {
             api.goods.getItemsList(query).then(({ list, total_count }) => {
               let _list = []
               list.map((item) => {
@@ -294,7 +290,7 @@ export default {
               id: 'pointitems'
             }
           ]
-          if (this.system_mode !== 'standard') {
+          if (this.VERSION_PLATFORM) {
             list.push({
               title: '楼层引导',
               id: 'floorguide'

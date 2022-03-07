@@ -263,9 +263,7 @@
       </el-row>
       <el-form-item
         v-if="
-          system_mode !== 'platform' &&
-            this.$store.getters.login_type != 'distributor' &&
-            !distributor_type
+          VERSION_STANDARD && this.$store.getters.login_type != 'distributor' && !distributor_type
         "
         label="自动上架商品"
       >
@@ -280,9 +278,7 @@
       </el-form-item>
       <el-form-item
         v-if="
-          this.$store.getters.login_type != 'distributor' &&
-            system_mode === 'platform' &&
-            !distributor_type
+          this.$store.getters.login_type != 'distributor' && VERSION_PLATFORM && !distributor_type
         "
         label="审核商品"
       >
@@ -308,9 +304,7 @@
           :loading="submitLoading"
           @click="submitItemsActionConfirm"
         >
-          {{
-            submitLoading ? '提交中' : '保存'
-          }}
+          {{ submitLoading ? '提交中' : '保存' }}
         </el-button>
       </div>
     </el-form>

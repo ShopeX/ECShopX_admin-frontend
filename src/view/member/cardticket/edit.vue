@@ -115,17 +115,13 @@
               :disabled="form.card_id ? true : false"
               @change="conditionChange"
             >
-              <template
-                v-if="form.card_type != 'cash'"
-              >
+              <template v-if="form.card_type != 'cash'">
                 <el-radio :label="1">
                   不限制
                 </el-radio>
               </template>
               <template v-if="form.card_type !== 'gift'">
-                <el-radio
-                  :label="2"
-                >
+                <el-radio :label="2">
                   满 &nbsp;<el-input
                     v-model="form.least_cost"
                     type="number"
@@ -355,17 +351,6 @@
               </el-radio>
             </el-radio-group>
           </el-form-item>
-          <!-- <el-form-item
-          label="仅总店商品可用"
-          v-if="system_mode == 'platform' && is_distributor == false && form.use_platform == 'mall'"
-        >
-          <el-switch
-            v-model="form.store_self"
-            :disabled="form.card_id != ''"
-            active-color="#13ce66"
-            inactive-color="#d2d4db"
-          ></el-switch>
-        </el-form-item> -->
           <el-form-item
             v-if="form.use_scenes == 'SELF'"
             label="验证码"
@@ -594,9 +579,7 @@
         </el-card>
 
         <el-card
-          v-if="
-            system_mode !== 'platform' && is_distributor == false && form.use_platform == 'mall'
-          "
+          v-if="VERSION_STANDARD && is_distributor == false && form.use_platform == 'mall'"
           header="店铺"
           shadow="naver"
         >

@@ -328,7 +328,7 @@
               </el-button>
               <el-button
                 v-if="
-                  (system_mode == 'standard' || is_distributor || scope.row.distributor_id == 0) &&
+                  (VERSION_STANDARD || is_distributor || scope.row.distributor_id == 0) &&
                     scope.row.cancel_status == 'NO_APPLY_CANCEL' &&
                     (scope.row.order_status == 'NOTPAY' || scope.row.order_status == 'PAYED')
                 "
@@ -339,7 +339,7 @@
               </el-button>
               <el-button
                 v-if="
-                  (system_mode == 'standard' || is_distributor || scope.row.distributor_id == 0) &&
+                  (VERSION_STANDARD || is_distributor || scope.row.distributor_id == 0) &&
                     scope.row.order_status == 'PAYED' &&
                     scope.row.receipt_type == 'ziti' &&
                     scope.row.ziti_status == 'PENDING'
@@ -351,8 +351,7 @@
               </el-button>
               <template
                 v-if="
-                  !IsBind &&
-                    (system_mode == 'standard' || is_distributor || scope.row.distributor_id == 0)
+                  !IsBind && (VERSION_STANDARD || is_distributor || scope.row.distributor_id == 0)
                 "
               >
                 <el-button
@@ -508,9 +507,7 @@
                 </el-col>
               </el-form-item>
               <el-form-item label="物流单号">
-                <el-col
-                  :span="14"
-                >
+                <el-col :span="14">
                   <el-input
                     v-model="deliveryForm.delivery_code"
                     :maxlength="20"
@@ -632,9 +629,7 @@
               </el-col>
             </el-form-item>
             <el-form-item label="物流单号">
-              <el-col
-                :span="14"
-              >
+              <el-col :span="14">
                 <el-input
                   v-model="deliveryForm.delivery_code"
                   :maxlength="20"

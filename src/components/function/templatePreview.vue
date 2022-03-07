@@ -91,7 +91,7 @@
                 :res="item"
               />
               <store
-                v-if="item.name === 'store' && system_mode === 'platform'"
+                v-if="item.name === 'store' && VERSION_PLATFORM"
                 :res="item"
               />
             </div>
@@ -508,7 +508,7 @@ export default {
       this.$emit('closeDialog')
     },
     async getData () {
-      if (this.system_mode === 'platform') {
+      if (this.VERSION_PLATFORM) {
         this.initData = [
           ...this.initData,
           {

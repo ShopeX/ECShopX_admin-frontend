@@ -125,7 +125,7 @@
             :label="scope.row.itemId"
             @change.native="getTemplateRow(scope.$index, scope.row)"
           >
-&nbsp;
+            &nbsp;
           </el-radio>
         </template>
       </el-table-column>
@@ -521,7 +521,7 @@ export default {
         const category = [...this.select_category_value]
         param.category = category.pop()
         if (
-          this.system_mode == 'platform' ||
+          this.VERSION_PLATFORM ||
           !this.params.distributor_id ||
           this.params.distributor_id == '0'
         ) {
@@ -633,11 +633,7 @@ export default {
           param.pageSize = 999
           param.item_id = ids
           // this.selectRows = []
-          if (
-            this.system_mode == 'platform' ||
-            !param.distributor_id ||
-            param.distributor_id == '0'
-          ) {
+          if (this.VERSION_PLATFORM || !param.distributor_id || param.distributor_id == '0') {
             getSkuList(param).then((res) => {
               const selectRows = res.data.data.list
               // console.log();
@@ -724,11 +720,7 @@ export default {
           param.pageSize = 999
           param.item_id = ids
           // this.selectRows = []
-          if (
-            this.system_mode == 'platform' ||
-            !param.distributor_id ||
-            param.distributor_id == '0'
-          ) {
+          if (this.VERSION_PLATFORM || !param.distributor_id || param.distributor_id == '0') {
             getSkuList(param).then((res) => {
               const selectRows = res.data.data.list
               this.selectRows = selectRows

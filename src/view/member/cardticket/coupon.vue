@@ -126,9 +126,7 @@
                       </el-row>
                     </div>
                     <el-row :gutter="10">
-                      <el-col
-                        :span="12"
-                      >
+                      <el-col :span="12">
                         <el-button
                           :loading="loadingbtn"
                           type="primary"
@@ -138,9 +136,7 @@
                           确定
                         </el-button>
                       </el-col>
-                      <el-col
-                        :span="12"
-                      >
+                      <el-col :span="12">
                         <el-button
                           style="width: 100%"
                           @click="scope.row.storePop = false"
@@ -329,7 +325,7 @@ export default {
   },
   mounted () {
     this.params.store_self = false
-    if (this.system_mode === 'platform' && store.getters.login_type !== 'distributor') {
+    if (this.VERSION_PLATFORM && store.getters.login_type !== 'distributor') {
       this.params.store_self = true
     }
     this.fetchList()

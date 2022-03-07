@@ -83,12 +83,12 @@
 
 <script>
 import { Message } from 'element-ui'
-import fetch from '../utils/fetch'
 import { getDistributorList } from '@/api/marketing'
 import { shopLoginSelectShopId } from '@/api/company'
+import { VERSION_STANDARD } from '@/utils'
 export default {
   data () {
-    const system = process.env.VUE_APP_PRODUCT_MODEL == 'standard' ? 'onex' : 'ecshopx'
+    const system = VERSION_STANDARD ? 'onex' : 'ecshopx'
     const brand = require(`@/assets/img/${system}/logo.jpg`)
     return {
       loading: true,

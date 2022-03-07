@@ -140,7 +140,7 @@
         <el-col :span="8">
           <el-form-item
             v-if="
-              system_mode !== 'platform' &&
+              VERSION_STANDARD &&
                 this.$store.getters.login_type != 'distributor' &&
                 !distributor_type
             "

@@ -113,6 +113,7 @@
 import { Message } from 'element-ui'
 import { isMobile } from '../utils/validate'
 import fetch from '../utils/fetch'
+import { VERSION_STANDARD } from '@/utils'
 import { login, getAdminInfo } from '../api/login'
 import { mapMutations } from 'vuex'
 export default {
@@ -131,7 +132,7 @@ export default {
         callback()
       }
     }
-    const system = process.env.VUE_APP_PRODUCT_MODEL == 'standard' ? 'onex' : 'ecshopx'
+    const system = VERSION_STANDARD ? 'onex' : 'ecshopx'
     const brand = require(`@/assets/img/${system}/logo.jpg`)
     const login_bg = require(`@/assets/img/${system}/login_bg.jpg`)
     let self = this

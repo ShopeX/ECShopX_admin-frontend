@@ -102,7 +102,7 @@
             </svg>
             轮播
           </template>
-          <template v-if="item.name === 'store' && system_mode === 'platform'">
+          <template v-if="item.name === 'store' && VERSION_PLATFORM">
             <svg
               class="svg-icon"
               aria-hidden="true"
@@ -207,7 +207,7 @@
                 :active="index == editorIndex"
               />
               <store
-                v-if="item.name === 'store' && system_mode === 'platform'"
+                v-if="item.name === 'store' && VERSION_PLATFORM"
                 :res="item"
                 :active="index == editorIndex"
               />
@@ -838,7 +838,7 @@ export default {
     ...mapGetters(['wheight', 'template_name'])
   },
   async mounted () {
-    if (this.system_mode === 'platform') {
+    if (this.VERSION_PLATFORM) {
       this.initData = [
         ...this.initData,
         {

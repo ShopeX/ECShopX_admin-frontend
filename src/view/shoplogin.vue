@@ -103,18 +103,10 @@
 <script>
 import { Message } from 'element-ui'
 import { isMobile } from '../utils/validate'
-import fetch from '../utils/fetch'
-import { login, getAdminInfo } from '../api/login'
 import { mapMutations } from 'vuex'
+import { VERSION_STANDARD } from '@/utils'
 export default {
   data () {
-    const validateEmail = (rule, value, callback) => {
-      if (!isMobile(value)) {
-        callback(new Error('请输入正确的合法手机号'))
-      } else {
-        callback()
-      }
-    }
     const validatePass = (rule, value, callback) => {
       if (value.length < 6) {
         callback(new Error('密码不能小于6位'))
@@ -122,7 +114,7 @@ export default {
         callback()
       }
     }
-    const system = process.env.VUE_APP_PRODUCT_MODEL == 'standard' ? 'onex' : 'ecshopx'
+    const system = VERSION_STANDARD ? 'onex' : 'ecshopx'
     const brand = require(`@/assets/img/${system}/logo.jpg`)
     const login_bg = require(`@/assets/img/${system}/login_bg.jpg`)
     return {

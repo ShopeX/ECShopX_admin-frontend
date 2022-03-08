@@ -759,7 +759,7 @@
             </section>
           </el-col>
         </el-row>
-        <el-row :gutter="20">
+        <el-row :gutter="20" v-if="system_is_saas == false">
           <el-col :span="24">
             <section class="section-card">
               <div class="section-card-header">
@@ -835,7 +835,6 @@
                   </template>
                   {{ activateInfo.redis_version }}
                 </el-descriptions-item>
-
               </el-descriptions>
             </section>
           </el-col>

@@ -10,9 +10,6 @@
         >
           新增商品分类
         </el-button>
-        <!-- <el-button type="primary" @click="updateCategory" :disabled="isDisable"
-          >保存分类</el-button
-        > -->
       </el-col>
     </el-row>
     <el-card>
@@ -519,29 +516,5 @@ export default {
 <style lang="scss">
 .el-table__indent {
   padding-left: 30px !important;
-}
-.el-table__expand-icon {
-  .el-icon-arrow-right {
-    font-family: 'iconfont' !important;
-    font-size: 16px;
-    font-style: normal;
-    -webkit-font-smoothing: antialiased;
-    -moz-osx-font-smoothing: grayscale;
-
-    &::before {
-      content: '\e65f';
-    }
-  }
-}
-.el-table__expand-icon {
-  &.el-table__expand-icon--expanded {
-    transform: rotate(0deg);
-    transition: all 0.2s ease-in-out, -webkit-transform 0.2s ease-in-out;
-    .el-icon-arrow-right {
-      &::before {
-        content: '\e655';
-      }
-    }
-  }
 }
 </style>

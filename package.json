@@ -1,6 +1,7 @@
 {
   "name": "ecshopx-admin",
   "version": "2.4.3",
+  "elementui_version": "2.15.6",
   "description": "ecshopx admin",
   "author": "shopex",
   "private": true,

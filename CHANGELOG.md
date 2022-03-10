@@ -2,6 +2,15 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [2.4.4](https://git.ishopex.cn/ecshopx/ecshopx-admin/compare/v2.4.3...v2.4.4) (2022-03-10)
+
+
+### Bug Fixes
+
+* sp-picker ([b1ae6a0](https://git.ishopex.cn/ecshopx/ecshopx-admin/commit/b1ae6a003c0915b19ffd736efbff3738115175b3))
+* 修改登录样式 ([f49839b](https://git.ishopex.cn/ecshopx/ecshopx-admin/commit/f49839bef509e0cc49e42ead54aba4cafabd2ac4))
+* 无法添加店铺 ([7735ab5](https://git.ishopex.cn/ecshopx/ecshopx-admin/commit/7735ab504dea14d39cf1b43aba14a121488d1f1a))
+
 ### [2.3.4](https://git.ishopex.cn/onex/espier-shop/compare/v2.3.3...v2.3.4) (2022-02-11)
 
 ## [2.4.0](https://git.ishopex.cn/onex/espier-shop/compare/v2.4.1...v2.4.0) (2022-02-18)

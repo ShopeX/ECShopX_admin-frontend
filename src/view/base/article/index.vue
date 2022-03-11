@@ -1,0 +1,381 @@
+<template>
+  <div>
+    <div v-if="$route.path.indexOf('editor') === -1">
+      <el-row :gutter="20">
+        <el-col :span="12">
+          <el-button
+            type="primary"
+            icon="plus"
+            @click="articleAdd"
+          >
+            添加文章
+          </el-button>
+        </el-col>
+        <el-col :span="12">
+          <el-input
+            v-model="searchTitle"
+            placeholder="文章标题"
+          >
+            <el-button
+              slot="append"
+              icon="el-icon-search"
+              @click="titleSearch"
+            />
+          </el-input>
+        </el-col>
+      </el-row>
+      <section
+        v-loading="loading"
+        class="articles"
+      >
+        <el-row :gutter="10">
+          <el-col
+            v-for="(item, index) in list"
+            :key="index"
+            :xs="12"
+            :sm="8"
+            :md="6"
+            :lg="4"
+          >
+            <div class="article-item">
+              <router-link :to="{ path: matchHidePage('editor'), query: { id: item.article_id } }">
+                <div
+                  class="thumbnail"
+                  :style="
+                    'background: url(' +
+                      (item.image_url ||
+                        'https://fakeimg.pl/200x180/EFEFEF/CCC/?text=image&font=lobster') +
+                      ') 0% 0% / cover no-repeat;'
+                  "
+                />
+                <div class="caption">
+                  <div class="title">
+                    {{ item.title }}
+                  </div>
+                  <div class="update-time">
+                    {{ item.updated | datetime('YYYY-MM-DD HH:mm:ss') }}
+                  </div>
+                </div>
+              </router-link>
+              <div class="footer">
+                <div
+                  v-clipboard:copy="item.link"
+                  v-clipboard:success="onCopy"
+                  class="footer-item copy-btn"
+                >
+                  <input
+                    v-model="item.link"
+                    class="copy-link"
+                    type="text"
+                  >
+                  <i class="iconfont icon-copy" /> 复制文章链接
+                </div>
+              </div>
+              <div class="footer">
+                <div
+                  class="footer-item"
+                  @click="handlePublish(item.article_id, item.release_status)"
+                >
+                  <template v-if="item.release_status">
+                    <i class="iconfont icon-undo-alt" /> 撤回
+                  </template>
+                  <template v-else>
+                    <i class="iconfont icon-broadcast-tower" /> 发布
+                  </template>
+                </div>
+                <el-popover
+                  v-model="item.visible"
+                  class="footer-item"
+                  placement="top"
+                  width="160"
+                >
+                  <div class="content-bottom-padded">
+                    <el-input
+                      v-model="item.sort"
+                      size="mini"
+                      placeholder="请输入排序"
+                    />
+                  </div>
+                  <div style="text-align: right; margin: 0">
+                    <el-button
+                      size="mini"
+                      type="text"
+                      @click="item.visible = false"
+                    >
+                      取消
+                    </el-button>
+                    <el-button
+                      type="primary"
+                      size="mini"
+                      @click="handleSort(item.article_id)"
+                    >
+                      确定
+                    </el-button>
+                  </div>
+                  <div slot="reference">
+                    <i class="iconfont icon-sort-amount-up" /> 排序
+                  </div>
+                </el-popover>
+                <div
+                  class="footer-item"
+                  @click="articleDelete(item.article_id)"
+                >
+                  <i class="iconfont icon-trash-alt" /> 删除
+                </div>
+              </div>
+            </div>
+          </el-col>
+        </el-row>
+        <dataPlaceholder
+          :visible.sync="showPlaceholder"
+          height="100%"
+        />
+        <el-pagination
+          v-if="total_count > params.pageSize"
+          class="content-padded content-center"
+          background
+          layout="prev, pager, next"
+          :total="total_count"
+          :page-size="params.pageSize"
+          @current-change="pageChange"
+        />
+      </section>
+    </div>
+    <router-view />
+  </div>
+</template>
+
+<script>
+import util from '@/common/js/util'
+import { getArticleList, deleteArticle, updateArticleSortOrStatus } from '@/api/article'
+
+import DataPlaceholder from '@/components/element/dataPlaceholder'
+
+export default {
+  provide () {
+    return {
+      refresh: this.fetchList
+    }
+  },
+  components: {
+    dataPlaceholder: DataPlaceholder
+  },
+  data () {
+    return {
+      loading: false,
+      searchTitle: '',
+      list: [],
+      showPlaceholder: false,
+      params: {
+        title: '',
+        page: 1,
+        pageSize: 20
+      },
+      total_count: 0
+    }
+  },
+  mounted () {
+    this.fetchList()
+  },
+  methods: {
+    onCopy () {
+      this.$notify.success({
+        message: '复制成功',
+        showClose: true
+      })
+    },
+    articleAdd (id) {
+      this.$router.push({ path: this.matchHidePage('editor') })
+    },
+    articleDelete (id) {
+      const _self = this
+      this.$confirm('确认删除当前文章吗？').then((_) => {
+        deleteArticle(id).then((res) => {
+          if (res.data.data.status) {
+            this.$message({
+              message: '删除成功',
+              type: 'success',
+              onClose () {
+                _self.fetchList()
+              }
+            })
+          }
+        })
+      })
+    },
+    titleSearch () {
+      this.params.page = 1
+      this.list = []
+      this.params.title = this.searchTitle
+      this.fetchList()
+    },
+    handleSort (id) {
+      const _self = this
+      let index = this.list.findIndex((item) => item.article_id === id)
+      this.list[index].visible = false
+      let param = {
+        inputdata: [
+          {
+            article_id: id,
+            sort: this.list[index].sort
+          }
+        ]
+      }
+      updateArticleSortOrStatus(param).then((res) => {
+        _self.fetchList()
+      })
+    },
+    handlePublish (id, status) {
+      let msg = ''
+      if (status) {
+        msg = '确定撤回本篇文章吗？'
+      } else {
+        msg = '确定发布本篇文章吗？'
+      }
+      const _self = this
+      this.$confirm(msg)
+        .then((res) => {
+          let param = {
+            inputdata: [
+              {
+                article_id: id,
+                release_status: !status
+              }
+            ]
+          }
+          updateArticleSortOrStatus(param).then((res) => {
+            _self.fetchList()
+          })
+        })
+        .catch(() => {
+          return
+        })
+    },
+    pageChange (val) {
+      this.params.page = val
+      this.fetchList()
+    },
+    fetchList () {
+      this.loading = true
+      getArticleList(this.params).then((res) => {
+        if (res.data.data.total_count === 0) {
+          this.showPlaceholder = true
+        }
+        res.data.data.list.forEach((item) => {
+          item.link = `pages/article/index?id=${item.article_id}`
+        })
+        this.list = res.data.data.list
+        this.total_count = res.data.data.total_count
+        this.loading = false
+      })
+    }
+  }
+}
+</script>
+
+<style scoped lang="scss">
+.articles {
+  height: 500px;
+  .article-item {
+    position: relative;
+    margin-bottom: 10px;
+    border-radius: 5px;
+    background: #fff;
+    overflow: hidden;
+    border: 1px solid #efefef;
+    .copy-btn {
+      position: relative;
+      font-size: 12px;
+      cursor: pointer;
+      [class^='copy-link'] {
+        position: absolute;
+        left: 0;
+        top: 0;
+        right: 0;
+        bottom: 0;
+        visibility: hidden;
+      }
+      .iconfont {
+        font-size: 10px;
+        line-height: 1;
+      }
+    }
+    .thumbnail {
+      height: 160px;
+      background: #efefef;
+    }
+    .caption {
+      height: 90px;
+      padding: 10px;
+      overflow: hidden;
+      .title {
+        display: -webkit-box;
+        margin-bottom: 5px;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        line-clamp: 2;
+        box-orient: vertical;
+        line-height: 1.3;
+        height: 35px;
+        font-size: 14px;
+        color: #666;
+        font-weight: normal;
+      }
+      .update-time {
+        font-size: 11px;
+        color: #ccc;
+        text-align: right;
+      }
+      .attention-count {
+        padding-right: 15px;
+        font-size: 11px;
+        color: #999;
+        .iconfont {
+          margin-right: 5px;
+          font-size: 10px;
+          vertical-align: middle;
+          line-height: 1;
+          color: #ccc;
+        }
+      }
+    }
+    .footer {
+      display: flex;
+      height: 35px;
+      border-top: 1px solid #f8f8f8;
+      .footer-item {
+        position: relative;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        flex: 1;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        font-size: 12px;
+        color: #999;
+        &::after {
+          position: absolute;
+          top: 0;
+          right: 0;
+          bottom: 0;
+          width: 1px;
+          background: #f8f8f8;
+          content: '';
+        }
+        &:last-child::after {
+          content: none;
+        }
+        &:hover {
+          color: $dominant_hue;
+        }
+        i {
+          margin-right: 3px;
+          vertical-align: middle;
+          line-height: 1;
+          font-size: 10px;
+        }
+      }
+    }
+  }
+}
+</style>

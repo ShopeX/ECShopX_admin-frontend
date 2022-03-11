@@ -12,12 +12,12 @@
         </el-button>
         <!-- <el-button-group>
           <el-button type="primary" @click="updateCategory" :disabled="isDisable">保存主类目</el-button> -->
-        <el-button
+        <!-- <el-button
           type="primary"
           @click="syncMainCategory"
         >
           同步主类目
-        </el-button>
+        </el-button> -->
         <!-- </el-button-group> -->
       </el-col>
     </el-row>
@@ -120,12 +120,12 @@
             >
               编辑
             </el-button>
-            <el-button
+            <!-- <el-button
               type="text"
               @click="taxRateSet(scope.row)"
             >
               跨境税率设置
-            </el-button>
+            </el-button> -->
             <el-button
               type="text"
               @click="deleteCategory(scope.row)"

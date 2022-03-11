@@ -24,7 +24,7 @@
         />
       </SpFilterFormItem>
     </SpFilterForm>
-    <div class="action-container">
+    <!-- <div class="action-container">
       <el-button
         type="primary"
         plain
@@ -32,7 +32,7 @@
       >
         同步规格
       </el-button>
-    </div>
+    </div> -->
     <el-table
       v-loading="loading"
       border

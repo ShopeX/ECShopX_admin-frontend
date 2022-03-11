@@ -15,7 +15,8 @@
     margin-left: 90px;
     width: 214px;
     .el-select,
-    .el-cascader {
+    .el-cascader,
+    .el-autocomplete {
       width: 100%;
     }
     .el-radio-group {

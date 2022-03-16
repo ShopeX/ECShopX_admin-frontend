@@ -101,7 +101,7 @@
             </div>
             <span class="item-footer" />
           </div>
-          <div class="right-item point-box">
+          <div class="right-item point-box" v-if="!VERSION_PLATFORM">
             <div class="item-title">
               储值
             </div>
@@ -246,6 +246,7 @@ import membercardList from './membercardlist.vue'
 import salespersonLogsList from './salespersonLogsList.vue'
 import pointList from './pointlist.vue'
 import memberInfo from './memberinfo.vue'
+import { VERSION_PLATFORM } from '@/utils'
 export default {
   components: {
     quanyiList,

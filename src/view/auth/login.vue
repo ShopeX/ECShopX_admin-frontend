@@ -156,7 +156,13 @@ export default {
     window.removeEventListener('resize', this.fnSize)
   },
   methods: {
-    ...mapMutations(['SET_TOKEN', 'SET_TOKEN_EXP', 'SET_USERINFO', 'SET_LOGIN_TYPE']),
+    ...mapMutations([
+      'SET_TOKEN',
+      'SET_TOKEN_EXP',
+      'SET_USERINFO',
+      'SET_LOGIN_TYPE',
+      'SET_VERSION_MODE'
+    ]),
     init () {
       this.loginType = this.$route.meta.type
       console.log(this.loginType)
@@ -221,7 +227,10 @@ export default {
         type: 'success'
       })
       const userInfo = await this.$api.login.getAdminInfo()
+      const { menu_type } = await this.$api.wechat.getAuthorizerInfo()
+      console.log('menu_type', menu_type)
       this.SET_USERINFO(userInfo)
+      this.SET_VERSION_MODE(menu_type)
       if (this.loginType == 'distributor') {
         this.$router.push({ path: '/shopadmin/shoplist' })
       } else if (this.loginType == 'dealer') {

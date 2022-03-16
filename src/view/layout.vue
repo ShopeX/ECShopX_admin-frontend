@@ -239,6 +239,7 @@ export default {
   mounted () {
     this.getSystemSetting()
     micrApp.init()
+
     console.log(this.$route)
   },
   methods: {

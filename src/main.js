@@ -113,7 +113,7 @@ new Vue({
   router,
   store,
   mounted () {
-    const { theme } = SYSTEM_CONFIG[process.env.VUE_APP_SYSTEM_NAME]
+    const { theme } = SYSTEM_CONFIG[store.getters.versionMode]
     const red = parseInt(theme.replace('#', '').slice(0, 2), 16)
     const green = parseInt(theme.replace('#', '').slice(2, 4), 16)
     const blue = parseInt(theme.replace('#', '').slice(4, 6), 16)

@@ -112,7 +112,7 @@ export default {
     this.fetch(this.type)
   },
   methods: {
-    fetch (type) {
+    async fetch (type) {
       this.loading = true
       let query = JSON.parse(JSON.stringify(this.params))
       switch (type) {
@@ -319,7 +319,7 @@ export default {
             status: 'valid',
             name: this.keywords
           })
-          api.promotions.seckillActivityGetList(query).then((list, total_count) => {
+          api.promotions.seckillActivityGetList(query).then(({ list, total_count }) => {
             let _list = []
             list.map((item) => {
               _list.push({
@@ -327,6 +327,7 @@ export default {
                 title: item.activity_name
               })
             })
+
             this.list = _list
             this.total = total_count
             this.loading = false

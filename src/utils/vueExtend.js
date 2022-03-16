@@ -1,5 +1,5 @@
 import Vue from 'vue'
-import { VERSION_STANDARD, VERSION_PLATFORM } from '@/utils'
+import { VERSION_STANDARD, VERSION_PLATFORM, VERSION_B2C, VERSION_IN_PURCHASE } from '@/utils'
 import CommonUtil from '@/common/js/util'
 import { SYSTEM_CONFIG } from '@/consts'
 import store from '@/store'
@@ -226,6 +226,8 @@ Vue.prototype.system_is_saas = process.env.VUE_APP_IS_SAAS || 'false'
 Vue.prototype.system_mode = process.env.VUE_APP_PRODUCT_MODEL
 Vue.prototype.VERSION_STANDARD = VERSION_STANDARD
 Vue.prototype.VERSION_PLATFORM = VERSION_PLATFORM
+Vue.prototype.VERSION_B2C = VERSION_B2C
+Vue.prototype.VERSION_IN_PURCHASE = VERSION_IN_PURCHASE
 Vue.prototype.VUE_APP_SYSTEM = process.env.VUE_APP_SYSTEM_NAME
 Vue.prototype.VUE_APP_SYSTEM_NAME = SYSTEM_CONFIG[store.getters.versionMode].name
 Vue.prototype.path_prefixes = process.env.VUE_APP_PREFIXES

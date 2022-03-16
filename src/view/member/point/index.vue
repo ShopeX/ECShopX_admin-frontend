@@ -121,19 +121,41 @@
               :max="9999999"
             />天，获取积分
           </el-form-item>
-
-          <!-- <el-form-item label="是否开启积分抵扣：">
-                    <el-switch v-model="form.isOpenDeductPoint" :width="60" active-value="true" inactive-value="false"
-                                inactive-color="#ccc" active-text="开启" inactive-text="关闭"
-                                active-color="#13ce66"
-                                @change="isOpenMemberPointHandle"></el-switch>
-                  </el-form-item>
-                 <el-form-item label="每单积分抵扣金额上限：">
-                      <el-input  type="number"  v-model="form.deduct_proportion_limit" placeholder="" style="width: 120px;" :min="1" :max="100"/>% 1 <= x <= 100
-                  </el-form-item>
-                  <el-form-item label="积分抵扣比例：">
-                      <el-input  type="number"  v-model="form.deduct_point" placeholder="" style="width: 120px;" :min="1" :max="9999999"/>积分 抵扣1元人民币
-                  </el-form-item> -->
+          <template v-if="VERSION_STANDARD">
+            <el-form-item label="是否开启积分抵扣：">
+              <el-switch
+                v-model="form.isOpenDeductPoint"
+                :width="60"
+                active-value="true"
+                inactive-value="false"
+                inactive-color="#ccc"
+                active-text="开启"
+                inactive-text="关闭"
+                active-color="#13ce66"
+                @change="isOpenMemberPointHandle"
+              />
+            </el-form-item>
+            <el-form-item label="每单积分抵扣金额上限：">
+              <el-input
+                v-model="form.deduct_proportion_limit"
+                type="number"
+                placeholder=""
+                style="width: 120px"
+                :min="1"
+                :max="100"
+              />% 1 <= x <= 100
+            </el-form-item>
+            <el-form-item label="积分抵扣比例：">
+              <el-input
+                v-model="form.deduct_point"
+                type="number"
+                placeholder=""
+                style="width: 120px"
+                :min="1"
+                :max="9999999"
+              />积分 抵扣1元人民币
+            </el-form-item>
+          </template>
           <!-- <el-form-item label="积分抵扣使用限制：">
                      每月最多抵扣使用<el-input type="number"  v-model="form.deduct_limit" value="0" style="width: 150px;" :min="0" :max="9999999"/>积分
                      <div class="frm-tips">不限制请填写999999</div>

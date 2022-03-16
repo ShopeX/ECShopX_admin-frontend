@@ -151,7 +151,7 @@
           :is-load="infoLoad"
         />
       </el-tab-pane>
-      <el-tab-pane
+      <!-- <el-tab-pane
         label="权益"
         name="right"
       >
@@ -160,7 +160,7 @@
           :user-mobile="member.mobile"
           :is-load="quanyiLoad"
         />
-      </el-tab-pane>
+      </el-tab-pane> -->
       <el-tab-pane
         label="交易订单"
         name="order"
@@ -179,7 +179,7 @@
           :is-load="depositLoad"
         />
       </el-tab-pane>
-      <el-tab-pane
+      <!-- <el-tab-pane
         label="权益转让"
         name="transfer"
       >
@@ -188,8 +188,8 @@
           :user-mobile="member.mobile"
           :is-load="transferLoad"
         />
-      </el-tab-pane>
-      <el-tab-pane
+      </el-tab-pane> -->
+      <!-- <el-tab-pane
         v-if="!isMicorMall"
         label="核销记录"
         name="rightslog"
@@ -198,7 +198,7 @@
           :user-id="user_id"
           :is-load="rightslogLoad"
         />
-      </el-tab-pane>
+      </el-tab-pane> -->
       <el-tab-pane
         label="付费会员卡记录"
         name="membercard"
@@ -219,7 +219,7 @@
           :is-load="pointLoad"
         />
       </el-tab-pane>
-      <el-tab-pane
+      <!-- <el-tab-pane
         v-if="!isMicorMall"
         label="导购员关系变更"
         name="salespersonlogs"
@@ -229,7 +229,7 @@
           :user-mobile="member.mobile"
           :is-load="salespersonLoad"
         />
-      </el-tab-pane>
+      </el-tab-pane> -->
     </el-tabs>
   </div>
 </template>

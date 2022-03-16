@@ -110,7 +110,9 @@ export default {
     }
     getParamByTempName(filter).then((res) => {
       if (res.data.data.list.length !== 0) {
-        this.form = res.data.data.list[0].params
+        if (typeof res.data.data.list[0].params.data != 'undefined') {
+          this.form = res.data.data.list[0].params.data
+        }
       }
     })
   },

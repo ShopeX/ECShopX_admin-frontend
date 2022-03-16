@@ -94,6 +94,7 @@
           >
             <div
               v-for="(item, index) in pages"
+              :key="`page-view-item__${index}`"
               class="page-view-item"
               :style="
                 item.type === 'primary'
@@ -161,6 +162,7 @@ const page28 = require('@/assets/img/page_28.png')
 
 import api from '@/api'
 import { mapGetters } from 'vuex'
+import { isArray } from '@/utils'
 // api
 import { savePageParams, getParamByTempName } from '@/api/wxa'
 export default {
@@ -296,7 +298,9 @@ export default {
     let filter = { template_name: this.template_name, version: 'v1.0.1', page_name: 'color_style' }
     getParamByTempName(filter).then((res) => {
       if (res.data.data.list.length !== 0) {
-        this.form = res.data.data.list[0].params
+        if (typeof res.data.data.list[0].params.data != 'undefined') {
+          this.form.data = res.data.data.list[0].params.data
+        }
       }
     })
   },

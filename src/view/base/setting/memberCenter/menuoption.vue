@@ -109,38 +109,40 @@ export default {
     getParamByTempName(filter).then((res) => {
       console.log('getParamByTempName:', res)
       if (res.data.data.list.length !== 0) {
-        const {
-          ziti_order,
-          ext_info,
-          group,
-          boost_activity,
-          boost_order,
-          complaint,
-          activity,
-          recharge,
-          member_code,
-          community_activity,
-          community_order,
-          offline_order,
-          share_enable,
-          memberinfo_enable
-        } = res.data.data.list[0].params.data
-        this.form.data = {
-          ziti_order,
-          ext_info,
-          group,
-          boost_activity,
-          boost_order,
-          complaint,
-          activity,
-          recharge,
-          member_code,
-          community_activity,
-          community_order,
-          offline_order,
-          share_enable,
-          memberinfo_enable
-        }
+        try {
+          const {
+            ziti_order,
+            ext_info,
+            group,
+            boost_activity,
+            boost_order,
+            complaint,
+            activity,
+            recharge,
+            member_code,
+            community_activity,
+            community_order,
+            offline_order,
+            share_enable,
+            memberinfo_enable
+          } = res.data.data.list[0].params.data
+          this.form.data = {
+            ziti_order,
+            ext_info,
+            group,
+            boost_activity,
+            boost_order,
+            complaint,
+            activity,
+            recharge,
+            member_code,
+            community_activity,
+            community_order,
+            offline_order,
+            share_enable,
+            memberinfo_enable
+          }
+        } catch (e) {}
       }
     })
   },

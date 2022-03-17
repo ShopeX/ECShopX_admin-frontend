@@ -13,7 +13,7 @@
           :key="index"
           class="component-control"
         >
-          <template v-if="item.name === 'nearbyShop' && pagetype == 'cuspage'">
+          <template v-if="item.name === 'nearbyShop' && pagetype == 'cuspage' && !VERSION_B2C">
             <svg
               class="svg-icon"
               aria-hidden="true"
@@ -121,7 +121,7 @@
             </svg>
             轮播
           </template>
-          <template v-if="item.name === 'store' && pagetype == 'cuspage'">
+          <template v-if="item.name === 'store' && pagetype == 'cuspage' && !VERSION_B2C">
             <svg
               class="svg-icon"
               aria-hidden="true"
@@ -611,15 +611,6 @@ export default {
       saveInit: '',
       initData: [
         {
-          name: 'nearbyShop',
-          base: {
-            title: '附近商家',
-            padded: true,
-            show_coupon: true
-          },
-          seletedTags: []
-        },
-        {
           name: 'coupon',
           base: {
             title: '到店优惠',
@@ -886,26 +877,6 @@ export default {
               imgUrl: ''
             }
           ]
-        },
-        {
-          name: 'store',
-          base: {
-            title: '推荐商铺',
-            subtitle: '热门商铺，官方推荐',
-            padded: true,
-            backgroundColor: '#FFF',
-            borderColor: '#FF6700',
-            imgUrl: ''
-          },
-          data: [
-            {
-              id: '',
-              name: '',
-              logo: '',
-              items: []
-            }
-          ],
-          seletedTags: []
         }
       ],
       faverite: {
@@ -1024,6 +995,41 @@ export default {
   },
   methods: {
     async getData () {
+      const isHaveStore = this.initData.some((item) => item.name === 'store')
+      const isHaveNearbyShop = this.initData.some((item) => item.name === 'nearbyShop')
+      if (this.VERSION_PLATFORM && !isHaveStore) {
+        this.initData.push({
+          name: 'store',
+          base: {
+            title: '推荐商铺',
+            subtitle: '热门商铺，官方推荐',
+            padded: true,
+            backgroundColor: '#FFF',
+            borderColor: '#FF6700',
+            imgUrl: ''
+          },
+          data: [
+            {
+              id: '',
+              name: '',
+              logo: '',
+              items: []
+            }
+          ],
+          seletedTags: []
+        })
+      }
+      if (this.VERSION_PLATFORM && !isHaveNearbyShop) {
+        this.initData.unshift({
+          name: 'nearbyShop',
+          base: {
+            title: '附近商家',
+            padded: true,
+            show_coupon: true
+          },
+          seletedTags: []
+        })
+      }
       const res = await getRecommendLikeItemList()
       let data = []
       res.data.data.list.forEach((item) => {

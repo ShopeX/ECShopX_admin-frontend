@@ -22,6 +22,7 @@
           <template
             v-if="
               item.name === 'nearbyShop' &&
+                relStore.id == '0' &&
                 VERSION_PLATFORM &&
                 $store.getters.login_type !== 'distributor'
             "
@@ -136,6 +137,7 @@
           <template
             v-if="
               item.name === 'store' &&
+                relStore.id == '0' &&
                 VERSION_PLATFORM &&
                 $store.getters.login_type !== 'distributor'
             "
@@ -217,6 +219,10 @@
                 :key="index"
                 class="component-item"
               >
+                <nearbyShop
+                  v-if="item.name === 'nearbyShop' && VERSION_PLATFORM"
+                  :res="item"
+                />
                 <coupon
                   v-if="item.name === 'coupon'"
                   :res="item"
@@ -305,7 +311,7 @@
                   />
                 </transition>
                 <nearbyShop
-                  v-if="item.name === 'nearbyShop'"
+                  v-if="item.name === 'nearbyShop' && VERSION_PLATFORM"
                   :res="item"
                   :active="index == editorIndex"
                 />
@@ -1517,10 +1523,9 @@ export default {
       })
     },
     async getData () {
-      // 当店铺类型为0（自营）时或者为小程序编辑模板时，展示附近商家和推荐店铺，则店铺类型为加盟不展示
+      // 只有平台版时&为编辑小程序模板时展示附近商家和推荐店铺
       const isHaveStore = this.initData.some((item) => item.name === 'store')
-      // if ((this.relStore.id == '0' ||  this.$route.query.distribution_type == '0' && !isHaveStore)) {
-      if (this.VERSION_PLATFORM && this.relStore.id == '0' && !isHaveStore) {
+      if (this.VERSION_PLATFORM && this.relStore.id == '0' && !isHaveStore && this.$store.getters.login_type !== 'distributor') {
         this.initData.push({
           name: 'store',
           base: {
@@ -1543,8 +1548,7 @@ export default {
         })
       }
       const isHaveNearbyShop = this.initData.some((item) => item.name === 'nearbyShop')
-      // if ((this.relStore.id == '0' || this.$route.query.distribution_type == '0') && !isHaveNearbyShop) {
-      if (this.relStore.id == '0' && !isHaveNearbyShop) {
+      if (this.VERSION_PLATFORM && this.relStore.id == '0' && !isHaveNearbyShop && this.$store.getters.login_type !== 'distributor') {
         this.initData.unshift({
           name: 'nearbyShop',
           base: {

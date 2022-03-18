@@ -36,7 +36,7 @@
           </div>
           <div class="msg_card">
             <el-row>
-              <el-col :span="24">
+              <el-col :span="VERSION_IN_PURCHASE ? 12 : 24">
                 <div
                   class="opr_item"
                   @click="removeItem(videoitem, index)"
@@ -48,6 +48,24 @@
                     placement="top"
                   >
                     <i class="el-icon-delete" />
+                  </el-tooltip>
+                </div>
+              </el-col>
+              <el-col v-if="VERSION_IN_PURCHASE" :span="VERSION_IN_PURCHASE ? 12 : 24">
+                <div
+                  class="copy-url"
+                >
+                  <el-tooltip
+                    class="item"
+                    effect="dark"
+                    :content="videoitem.image_full_url"
+                    placement="top"
+                  >
+                    <i
+                      v-clipboard:copy="videoitem.image_full_url"
+                      v-clipboard:success="onCopySuccess"
+                      class="el-icon-document-copy"
+                    />
                   </el-tooltip>
                 </div>
               </el-col>
@@ -128,6 +146,7 @@
 </template>
 
 <script>
+import mixin from '@/mixins'
 import {
   deleteVideo,
   getQiniuVideoList,
@@ -137,6 +156,7 @@ import {
 import UploadUtil from '../../../../utils/uploadUtil'
 
 export default {
+  mixins: [mixin],
   props: ['activeName', 'getStatus'],
   data () {
     return {
@@ -350,7 +370,7 @@ export default {
   background-color: #f4f5f9;
   border-top: 1px solid #e7e7eb;
   width: 100%;
-  .opr_item {
+  >div {
     height: 34px;
     line-height: 34px;
     cursor: pointer;
@@ -359,6 +379,9 @@ export default {
     &:hover {
       color: #333;
     }
+  }
+  .copy-url {
+    border-left: 1px solid #e7e7eb;
   }
 }
 </style>

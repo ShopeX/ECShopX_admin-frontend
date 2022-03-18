@@ -35,7 +35,7 @@ export const VERSION_PLATFORM = store.getters.versionMode == 'platform'
 // 官方商城
 export const VERSION_B2C = store.getters.versionMode == 'b2c'
 // 内购
-export const VERSION_IN_PURCHASE = store.getters.versionMode == ' in_purchase'
+export const VERSION_IN_PURCHASE = store.getters.versionMode == 'in_purchase'
 
 export function isInSalesCenter () {
   if (window.self != window.top && window.self.location.href.indexOf('iframeLogin') < 0) {

@@ -24,9 +24,9 @@
       <template
         v-for="(item, index) in list_news.item"
         v-if="activeName === 'imagetext'"
-        :key=""
       >
         <div
+          :key="index"
           v-masonry-tile
           class="msg-item has-first-cover"
           :class="{ multi: item.content.news_item[1], single: !item.content.news_item[1] }"
@@ -63,7 +63,7 @@
             </div>
             <div
               v-for="n in item.content.news_item.length - 1"
-              :key=""
+              :key="n"
             >
               <div
                 v-if="item.content.news_item[1]"

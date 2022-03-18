@@ -50,7 +50,7 @@
           />
         </el-tab-pane>
 
-        <el-tab-pane
+        <!-- <el-tab-pane
           v-if="$store.getters.login_type != 'distributor'"
           label="微信图片"
           name="picture"
@@ -69,7 +69,7 @@
             :active-name="activeName"
             :get-status="picStatus"
           />
-        </el-tab-pane>
+        </el-tab-pane> -->
 
         <el-tab-pane
           label="本地视频"
@@ -81,7 +81,7 @@
           />
         </el-tab-pane>
 
-        <el-tab-pane
+        <!-- <el-tab-pane
           v-if="$store.getters.login_type != 'distributor'"
           label="微信视频"
           name="video"
@@ -100,7 +100,7 @@
             :active-name="activeName"
             :get-status="videoStatus"
           />
-        </el-tab-pane>
+        </el-tab-pane> -->
       </el-tabs>
     </div>
     <router-view />

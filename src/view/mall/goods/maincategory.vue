@@ -8,7 +8,7 @@
           icon="el-icon-circle-plus"
           @click="appendTop(categoryList)"
         >
-          新增主类目
+          添加管理分类
         </el-button>
         <!-- <el-button-group>
           <el-button type="primary" @click="updateCategory" :disabled="isDisable">保存主类目</el-button> -->

@@ -51,12 +51,12 @@ export default {
     // 基础配置
     {
       path: 'goodsbase/goodscategory',
-      name: `商品分类`,
+      name: `销售分类`,
       component: () => import('@/view/mall/goods/category')
     },
     {
       path: 'goodsbase/goodsmaincategory',
-      name: `销售分类`,
+      name: `管理分类`,
       component: () => import('@/view/mall/goods/maincategory')
     },
     {

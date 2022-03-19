@@ -163,8 +163,7 @@ export default {
         dada_type: [{ message: '达达业务类型必填', required: true }]
       },
       distributionTypeList: [
-        { value: 0, label: '自营' },
-        { value: 1, label: '加盟' }
+        { value: 0, label: '自营' }
       ],
       merchantList: [],
       merchantLoading: false
@@ -188,7 +187,11 @@ export default {
       deep: true
     }
   },
-  mounted: async function () {},
+  mounted () {
+    if (!this.VERSION_STANDARD) {
+      this.distributionTypeList.push({ value: 1, label: '加盟' })
+    }
+  },
   methods: {
     initForm (form) {
       console.log('===initForm===>', form)

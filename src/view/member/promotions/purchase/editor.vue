@@ -52,6 +52,7 @@
             end-placeholder="结束时间"
             value-format="yyyy-MM-dd HH:mm:ss"
             :default-time="['00:00:00', '23:59:59']"
+            :picker-options="pickerOptions"
           />
         </el-col>
       </el-form-item>
@@ -587,6 +588,11 @@ export default {
   },
   data () {
     return {
+      pickerOptions: {
+        disabledDate (time) {
+          return time.getTime() < new Date(new Date().toLocaleDateString()).getTime()
+        }
+      },
       form: {
         purchase_id: '',
         purchase_name: '',

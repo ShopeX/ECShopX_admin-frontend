@@ -6,16 +6,22 @@
       :model="form"
       label-width="110px"
     >
-      <el-form-item label="活动名称：">
+      <el-form-item
+        label="活动名称："
+        :rules="[{ required: true, message: '请输入活动名称', trigger: 'blur' }]"
+      >
         <el-input
           v-model="form.purchase_name"
           style="width: 400px"
-          maxlength="30"
+          :maxlength="30"
           type="textarea"
           show-word-limit
         />
       </el-form-item>
-      <el-form-item label="活动封面：">
+      <el-form-item
+        label="活动封面："
+        :rules="[{ required: true, message: '请输入活动封面', trigger: 'blur' }]"
+      >
         <div class="frm-tips">
           建议上传尺寸大小为300*300且格式为png、jpg图片；文件大小为2M内。
         </div>
@@ -33,7 +39,10 @@
           @closeImgDialog="closeImgDialog"
         />
       </el-form-item>
-      <el-form-item label="活动时间：">
+      <el-form-item
+        label="活动时间："
+        :rules="[{ required: true, message: '请输入活动时间', trigger: 'blur' }]"
+      >
         <el-col :span="20">
           <el-date-picker
             v-model="activity_date"
@@ -60,7 +69,10 @@
         </el-checkbox-group>
       </el-form-item>
       <div style="display: flex">
-        <el-form-item label="员工额度：">
+        <el-form-item
+          label="员工额度："
+          :rules="{ required: true, message: '请输入员工额度', trigger: 'blur' }"
+        >
           <el-input
             v-model="form.employee_limitfee"
             style="width: 240px"
@@ -79,6 +91,7 @@
       <el-form-item
         v-if="form.used_roles.includes('dependents') && !form.is_share_limitfee"
         label="家属额度："
+        :rules="{ required: form.used_roles.includes('dependents') && !form.is_share_limitfee, message: '请输入家属额度', trigger: 'blur' }"
       >
         <el-input
           v-model="form.dependents_limitfee"
@@ -92,6 +105,7 @@
       <el-form-item
         v-if="form.used_roles.includes('dependents')"
         label="员工邀请上限："
+        :rules="{ required: form.used_roles.includes('dependents'), message: '请输入员工邀请上限', trigger: 'blur' }"
       >
         <el-input
           v-model="form.dependents_limit"
@@ -131,6 +145,7 @@
         <el-form-item
           v-if="!allHiden"
           label="每人限购："
+          :rules="{ required: true, message: '请输入每人限购', trigger: 'blur' }"
         >
           <el-input
             v-model="allLimit"

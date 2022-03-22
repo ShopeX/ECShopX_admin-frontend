@@ -30,7 +30,7 @@
     label {
     }
   }
-}
+} 
 </style>
 <template>
   <div class="page-body">
@@ -1277,12 +1277,23 @@ export default {
   },
   mounted () {
     this.init()
+     this.addUploaderEventListener()
   },
 
   destroyed () {
     console.log(111)
   },
   methods: {
+    addUploaderEventListener () {
+      // const self = this
+      // setTimeout(() => {
+      //   const uploaderDom = document.getElementsByClassName('icon iconfont icon-image')[0]
+      //   uploaderDom &&
+      //     uploaderDom.addEventListener('click', () => {
+      //       self.addImgPreview()
+      //     })
+      // }, 0)
+    },
     async init () {
       if (this.$route.path.split('/')[2] === 'godsphysicalkj') {
         this.params.type = 1

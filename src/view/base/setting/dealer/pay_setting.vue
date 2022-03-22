@@ -149,52 +149,14 @@
           </el-col>
         </el-row>
       </el-card>
-      <!-- <el-card class="box-card" shadow="never">
-        <div slot="header" class="clearfix">
-          <span>经营类目</span>
-        </div>
-        <el-row :gutter="20">
-          <el-col :span="24">
-            <el-form-item label="支付宝" prop="bank_acct_type">
-               <el-checkbox-group v-model="form.type">
-                <el-checkbox label="支付宝扫码支付（主扫-线上）" name="zfb"></el-checkbox>
-                <el-checkbox label="支付宝扫码支付（主扫-线下）" name="wx"></el-checkbox>
-                <el-checkbox label="支付宝小程序支付（线上）" name="wx"></el-checkbox>
-                <el-checkbox label="支付宝扫码支付（被扫-线下）" name="wx"></el-checkbox>
-                <el-checkbox label="支付宝唤起支付（线上）" name="wx"></el-checkbox>
-                <el-checkbox label="支付宝小程序支付（线下）" name="wx"></el-checkbox>
-                <el-checkbox label="支付宝生活号（线上）" name="wx"></el-checkbox>
-                <el-checkbox label="支付宝生活号（线下）" name="wx"></el-checkbox>
-              </el-checkbox-group>
-            </el-form-item>
-          </el-col>
-          <el-col :span="24">
-            <el-form-item label="微信" prop="bank_acct_type">
-               <el-checkbox-group v-model="form.type">
-                <el-checkbox label="微信公众号支付（线上）" name="zfb"></el-checkbox>
-                <el-checkbox label="微信公众号支付（线下）" name="wx"></el-checkbox>
-                <el-checkbox label="微信小程序支付（线上）" name="wx"></el-checkbox>
-                <el-checkbox label="微信小程序支付（线下）" name="wx"></el-checkbox>
-                <el-checkbox label="微信扫码支付（被扫-线下）" name="wx"></el-checkbox>
-              </el-checkbox-group>
-            </el-form-item>
-          </el-col>
-        </el-row>
-      </el-card> -->
+      
       <el-form-item style="text-align: center; margin: 50px 0; margin-right: 130px">
         <el-button
           type="primary"
           @click="submitForm"
         >
           提交审核
-        </el-button>
-        <!-- <loading-btn
-          ref="loadingBtn"
-          size="medium"
-          type="primary"
-          text="审核提交"
-          @clickHandle="submitForm('ruleForm', 'loadingBtn')"
-        /> -->
+        </el-button> 
       </el-form-item>
     </el-form>
     <Result-cpn

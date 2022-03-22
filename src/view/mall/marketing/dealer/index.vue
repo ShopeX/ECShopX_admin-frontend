@@ -269,6 +269,9 @@ export default {
       }
     },
     handleClose (visible) {
+      if(!visible){
+        this.$refs.finder.refresh()
+      }
       this.addVisible = visible
     },
     dateStrToTimeStamp (str) {

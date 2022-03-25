@@ -25,7 +25,7 @@
           />
         </SpFilterFormItem>
         <SpFilterFormItem
-          v-if="login_type != 'merchant' && !VERSION_B2C"
+          v-if="login_type != 'merchant' && !VERSION_B2C && !VERSION_IN_PURCHASE"
           prop="salesman_mobile"
           label="导购手机号:"
         >
@@ -90,7 +90,7 @@
           </el-select>
         </SpFilterFormItem>
         <SpFilterFormItem
-          v-if="!isMicorMall"
+          v-if="!isMicorMall && !VERSION_IN_PURCHASE"
           prop="is_invoiced"
           label="开票状态:"
         >
@@ -462,13 +462,14 @@
 import { mapGetters } from 'vuex'
 import mixin from '@/mixins'
 import { pageMixin } from '@/mixins'
-import { VERSION_STANDARD, isArray, VERSION_B2C } from '@/utils'
+import { VERSION_STANDARD, isArray, VERSION_B2C, VERSION_IN_PURCHASE } from '@/utils'
 import { exportInvoice, orderExport } from '@/api/trade'
 import moment from 'moment'
 import {
   DISTRIBUTION_TYPE,
   ORDER_STATUS,
   ORDER_B2C_STATUS,
+  IN_PURCHASE_STATUS,
   ORDER_TYPE,
   INVOICE_STATUS,
   ORDER_CATEGORY,
@@ -500,7 +501,7 @@ export default {
       },
       datapass_block: 1, // 是否为数据脱敏
       distributionType: DISTRIBUTION_TYPE,
-      orderStatus: VERSION_B2C ? ORDER_B2C_STATUS : ORDER_STATUS,
+      orderStatus: VERSION_B2C ? ORDER_B2C_STATUS : VERSION_IN_PURCHASE ? IN_PURCHASE_STATUS : ORDER_STATUS,
       orderType: ORDER_TYPE,
       invoiceStatus: INVOICE_STATUS,
       orderCategory: ORDER_CATEGORY,

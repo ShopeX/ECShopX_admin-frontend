@@ -60,6 +60,7 @@
           </template>
         </el-table-column>
         <el-table-column
+          v-if="!VERSION_IN_PURCHASE"
           prop="created"
           label="跨境税率"
           width="120"

@@ -40,6 +40,17 @@ export const ORDER_B2C_STATUS = [
   { title: '已完成', value: 'finish' }
 ]
 
+export const IN_PURCHASE_STATUS = [
+  { title: '全部', value: '' },
+  { title: '待支付', value: 'notpay' },
+  { title: '待发货', value: 'notship' },
+  { title: '待收货', value: 'shipping' },
+  { title: '待退款', value: 'cancelapply' },
+  { title: '已取消', value: 'cancel' },
+  { title: '已完成', value: 'finish' },
+  { title: '配送中', value: 'dada_3' }
+]
+
 export const ORDER_TYPE = [
   { title: '全部', value: '' },
   { title: '团购订单', value: 'groups' },

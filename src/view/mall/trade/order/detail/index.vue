@@ -13,6 +13,7 @@
           :key="`item__${index}`"
           class="card-panel-item"
           :span="6"
+          v-if='item.is_show'
         >
           <span class="card-panel__label">{{ item.label }}</span>
           <span class="card-panel__value">{{ getFiledValue(item.field) }}</span>
@@ -128,6 +129,7 @@
           <el-table-column
             label="会员优惠（¥）"
             width="120"
+            v-if="!VERSION_IN_PURCHASE"
           >
             <template slot-scope="scope">
               {{ (scope.row.member_discount / 100).toFixed(2) }}
@@ -149,7 +151,7 @@
               {{ (scope.row.discount_fee / 100).toFixed(2) }}
             </template>
           </el-table-column>
-          <el-table-column label="货币汇率">
+          <el-table-column label="货币汇率" v-if="!VERSION_IN_PURCHASE">
             <template slot-scope="scope">
               <span>{{ scope.row.fee_rate }}</span>
             </template>
@@ -227,6 +229,7 @@
           :key="`item__${index}`"
           class="card-panel-item"
           :span="6"
+          v-if="item.is_show"
         >
           <span class="card-panel__label">{{ item.label }}</span>
           <span class="card-panel__value">{{ getFiledValue(item.field) }}</span>
@@ -234,7 +237,7 @@
       </el-row>
     </el-card>
 
-    <el-card class="el-card--normal">
+    <el-card class="el-card--normal" v-if="!VERSION_IN_PURCHASE">
       <div slot="header">
         优惠明细
       </div>
@@ -312,7 +315,7 @@
       </div>
     </el-card>
 
-    <el-card class="el-card--normal">
+    <el-card class="el-card--normal" v-if="!VERSION_IN_PURCHASE">
       <div slot="header">
         分润信息
       </div>
@@ -369,42 +372,42 @@
 <script>
 import { mapGetters } from 'vuex'
 import { ORDER_TYPE, DISTRIBUTION_TYPE, PROFIT_TYPE, PAY_TYPE, PAY_STATUS } from '@/consts'
-import { VERSION_STANDARD } from '@/utils'
+import { VERSION_STANDARD, VERSION_IN_PURCHASE } from '@/utils'
 import moment from 'moment'
 
 export default {
   data () {
     return {
       infoList: [
-        { label: '下单时间:', field: 'create_time' },
-        { label: '订单编号:', field: 'order_id' },
-        { label: '订单类型:', field: 'order_class' },
-        { label: '订单状态:', field: 'order_status_msg' },
-        { label: '开票状态:', field: 'is_invoiced' },
-        { label: '配送类型:', field: 'receiptTypeTxt' },
-        { label: '会员昵称:', field: 'username' },
-        { label: '会员手机号:', field: 'mobile' },
-        { label: '会员等级:', field: 'memberGrade' },
-        { label: '会员折扣:', field: 'memberDiscount' },
-        { label: '货币类型:', field: 'fee_type' },
-        { label: '购物赠送积分:', field: 'bonus_points' },
-        { label: '订单获取积分:', field: 'get_points' },
-        { label: '额外获取积分:', field: 'extra_points' }
+        { label: '下单时间:', field: 'create_time', is_show: true },
+        { label: '订单编号:', field: 'order_id', is_show: true },
+        { label: '订单类型:', field: 'order_class', is_show: true },
+        { label: '订单状态:', field: 'order_status_msg', is_show: true },
+        { label: '开票状态:', field: 'is_invoiced', is_show: !this.VERSION_IN_PURCHASE },
+        { label: '配送类型:', field: 'receiptTypeTxt', is_show: true },
+        { label: '会员昵称:', field: 'username', is_show: true },
+        { label: '会员手机号:', field: 'mobile', is_show: true },
+        { label: '会员等级:', field: 'memberGrade', is_show: true },
+        { label: '会员折扣:', field: 'memberDiscount', is_show: !this.VERSION_IN_PURCHASE },
+        { label: '货币类型:', field: 'fee_type', is_show: true },
+        { label: '购物赠送积分:', field: 'bonus_points', is_show: !this.VERSION_IN_PURCHASE },
+        { label: '订单获取积分:', field: 'get_points', is_show: !this.VERSION_IN_PURCHASE },
+        { label: '额外获取积分:', field: 'extra_points', is_show: !this.VERSION_IN_PURCHASE }
       ],
       payList: [
-        { label: '交易单号:', field: 'tradeId' },
-        { label: '交易流水号:', field: 'transactionId' },
-        { label: '商品总额:', field: 'goodsPrice' },
-        { label: '运费:', field: 'freightFee' },
-        { label: '会员优惠:', field: 'memberDiscountPrice' },
-        { label: '优惠券减免:', field: 'couponDiscount' },
-        { label: '优惠总金额:', field: 'totalDiscount' },
-        { label: '应付总金额:', field: 'totalPrice' },
-        { label: '实付总金额:', field: 'realPrice' },
-        { label: '支付方式:', field: 'payTypeTxt' },
-        { label: '支付状态:', field: 'tradeStateTxt' },
-        { label: '交易时间:', field: 'timeStart' },
-        { label: '交易结束时间:', field: 'timeExpire' }
+        { label: '交易单号:', field: 'tradeId', is_show: true },
+        { label: '交易流水号:', field: 'transactionId', is_show: true },
+        { label: '商品总额:', field: 'goodsPrice', is_show: true },
+        { label: '运费:', field: 'freightFee', is_show: true },
+        { label: '会员优惠:', field: 'memberDiscountPrice', is_show: !this.VERSION_IN_PURCHASE },
+        { label: '优惠券减免:', field: 'couponDiscount', is_show: !this.VERSION_IN_PURCHASE },
+        { label: '优惠总金额:', field: 'totalDiscount', is_show: !this.VERSION_IN_PURCHASE },
+        { label: '应付总金额:', field: 'totalPrice', is_show: true },
+        { label: '实付总金额:', field: 'realPrice', is_show: true },
+        { label: '支付方式:', field: 'payTypeTxt', is_show: true },
+        { label: '支付状态:', field: 'tradeStateTxt', is_show: true },
+        { label: '交易时间:', field: 'timeStart', is_show: true },
+        { label: '交易结束时间:', field: 'timeExpire', is_show: true }
       ],
       profitList: [
         { label: '分润门店类型:', field: 'profit_type' },
@@ -496,6 +499,7 @@ export default {
     ...mapGetters(['login_type'])
   },
   mounted () {
+    console.log(this.infoList)
     const { orderId, resource, user_id } = this.$route.query
     if (orderId) {
       this.order_id = orderId

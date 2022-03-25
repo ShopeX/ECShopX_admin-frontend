@@ -502,6 +502,7 @@
                     <!--el-button v-if="popularizeSetting.isOpenPopularize == 'true'" type="text" @click="handleRebateConf(scope.row)" >分销配置</el-button-->
                     <el-button
                       type="text"
+                      v-if="!VERSION_IN_PURCHASE"
                       @click="handleProfitPrice(scope.row)"
                     >
                       分润配置

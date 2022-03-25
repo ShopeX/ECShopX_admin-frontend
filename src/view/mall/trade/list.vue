@@ -122,7 +122,7 @@
                 <el-form-item label="总金额：">
                   <span>{{ scope.row.curFeeSymbol }}{{ scope.row.totalFee / 100 }}</span>
                 </el-form-item>
-                <el-form-item label="优惠金额：">
+                <el-form-item label="优惠金额：" v-if='!VERSION_IN_PURCHASE'>
                   <el-popover
                     v-if="scope.row.discountInfo"
                     trigger="hover"
@@ -278,7 +278,7 @@
             </template>
           </el-table-column>
           <el-table-column
-            v-if="$store.getters.login_type != 'merchant'"
+            v-if="$store.getters.login_type != 'merchant' && !VERSION_IN_PURCHASE"
             width="60"
             label="汇率"
           >

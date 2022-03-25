@@ -91,7 +91,7 @@
             <span v-else>--</span>
           </div>
         </div>
-        <div class="f_r member-right">
+        <div class="f_r member-right" v-if="!VERSION_IN_PURCHASE">
           <div class="right-item point-box">
             <div class="item-title">
               积分
@@ -173,6 +173,7 @@
       <el-tab-pane
         label="预存款交易"
         name="deposit"
+        v-if="!VERSION_IN_PURCHASE"
       >
         <deposit-list
           :user-id="user_id"
@@ -202,6 +203,7 @@
       <el-tab-pane
         label="付费会员卡记录"
         name="membercard"
+        v-if="!VERSION_IN_PURCHASE"
       >
         <membercard-list
           :user-id="user_id"
@@ -212,6 +214,7 @@
       <el-tab-pane
         label="积分记录"
         name="point"
+        v-if="!VERSION_IN_PURCHASE"
       >
         <point-list
           :user-id="user_id"

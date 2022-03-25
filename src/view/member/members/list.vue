@@ -89,6 +89,7 @@
         <SpFilterFormItem
           prop="vip_grade"
           label="会员类型:"
+          v-if="!VERSION_IN_PURCHASE"
         >
           <el-select
             v-model="params.vip_grade"
@@ -111,6 +112,7 @@
         <SpFilterFormItem
           prop="grade_id"
           label="会员等级:"
+          v-if="!VERSION_IN_PURCHASE"
         >
           <el-select
             v-model="params.grade_id"
@@ -128,6 +130,7 @@
         <SpFilterFormItem
           prop="inviter_mobile"
           label="推荐人:"
+          v-if="!VERSION_IN_PURCHASE"
         >
           <el-input
             v-model="params.inviter_mobile"
@@ -191,6 +194,7 @@
         <SpFilterFormItem
           prop="have_consume"
           label="购买记录:"
+          v-if="!VERSION_IN_PURCHASE"
         >
           <el-select
             v-model="params.have_consume"
@@ -229,6 +233,7 @@
           type="primary"
           plain
           @click="batchActionDialog('give_coupon')"
+          v-if="!VERSION_IN_PURCHASE"
         >
           赠送优惠券
         </el-button>
@@ -241,7 +246,7 @@
           群发短信
         </el-button>
         <el-button
-          v-if="$store.getters.login_type != 'distributor'"
+          v-if="$store.getters.login_type != 'distributor' && !VERSION_IN_PURCHASE"
           type="primary"
           plain
           @click="handleVipGradeDelay(false)"
@@ -249,7 +254,7 @@
           付费会员延期
         </el-button>
         <el-button
-          v-if="$store.getters.login_type != 'distributor'"
+          v-if="$store.getters.login_type != 'distributor' && !VERSION_IN_PURCHASE"
           type="primary"
           plain
           @click="batchActionDialog('set_grade')"
@@ -336,6 +341,7 @@
           prop="grade_id"
           label="会员等级"
           width="140"
+          v-if="!VERSION_IN_PURCHASE"
         >
           <template slot-scope="scope">
             <!-- <span v-if="scope.row.grade_id == '1'">女</span>
@@ -347,6 +353,7 @@
           prop="inviter"
           label="推荐人"
           width="130"
+          v-if="!VERSION_IN_PURCHASE"
         />
         <el-table-column
           prop="disabled"
@@ -449,7 +456,7 @@
               基础信息
             </el-button>
             <el-button
-              v-if="$store.getters.login_type != 'distributor'"
+              v-if="$store.getters.login_type != 'distributor' && !VERSION_IN_PURCHASE"
               type="text"
               @click="gradeUpdate(scope.row)"
             >
@@ -917,7 +924,7 @@
                     placeholder="请选择爱好"
                   >
                     <el-option
-                      v-for="(ha_item, op_key) in item.items"
+                      v-for="(ha_item) in item.items"
                       :key="ha_item.name"
                       :label="ha_item.name"
                       :value="ha_item.name"

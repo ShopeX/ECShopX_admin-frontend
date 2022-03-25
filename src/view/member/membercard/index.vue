@@ -13,12 +13,14 @@
       <el-tab-pane
         label="等级设置"
         name="second"
+        v-if="!VERSION_IN_PURCHASE"
       >
         <card-level />
       </el-tab-pane>
       <el-tab-pane
         label="付费等级设置"
         name="thrid"
+        v-if="!VERSION_IN_PURCHASE"
       >
         <card-viplevel />
       </el-tab-pane>

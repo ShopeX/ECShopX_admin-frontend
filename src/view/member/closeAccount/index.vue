@@ -34,6 +34,7 @@
           <el-form-item
             label="用户注销会员后重新注册是否享受新人权益："
             prop="new_rights"
+            v-if="!VERSION_IN_PURCHASE"
           >
             <div class="title" />
             <el-select

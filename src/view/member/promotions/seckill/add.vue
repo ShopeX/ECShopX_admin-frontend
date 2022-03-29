@@ -344,7 +344,7 @@
         </el-table-column> -->
       </el-table>
     </el-card>
-    <el-card
+    <!-- <el-card
       header="无效商品（已参加其他活动）"
       shadow="naver"
     >
@@ -366,13 +366,13 @@
           label="规格"
           prop="item_spec_desc"
         />
-        <!-- <el-table-column label="操作" width="50">
+        <el-table-column label="操作" width="50">
             <template slot-scope="scope">
               <i class="iconfont icon-trash-alt" @click="deleteItemRow(scope.$index, form.items)"></i>
             </template>
-          </el-table-column> -->
+          </el-table-column>
       </el-table>
-    </el-card>
+    </el-card> -->
     <div class="content-center">
       <el-button @click.native="handleCancel">
         返回

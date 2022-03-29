@@ -1,6 +1,7 @@
 <template lang="html">
   <div>
     <el-tabs
+      v-if="$route.path.indexOf('templ') === -1 && $route.path.indexOf('editor') === -1"
       v-model="activeName"
       type="card"
       @tab-click="handleClick"

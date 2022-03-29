@@ -118,12 +118,12 @@ export default {
       putSettingWxShops(params).then((response) => {
         if (response.data.data) {
           this.$message({
-            message: '保存门店配置信息成功！',
+            message: '保存配置信息成功！',
             type: 'success'
           })
           this.loading = false
         } else {
-          this.$message.error('配置门店信息失败，请确认是否正确填写内容！')
+          this.$message.error('配置信息失败，请确认是否正确填写内容！')
           this.loading = false
           return false
         }

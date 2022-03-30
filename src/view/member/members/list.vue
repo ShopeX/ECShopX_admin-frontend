@@ -1841,6 +1841,7 @@ export default {
         user_id: userId
       })
       this.$message({ type: 'success', message: '修改成功' })
+      this.getMembers()
     },
     changeStaffCouponsPage (currentPage) {
       this.staffCoupons.page.currentPage = currentPage

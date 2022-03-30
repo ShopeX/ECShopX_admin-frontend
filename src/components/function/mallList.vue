@@ -271,7 +271,7 @@
         label-width="100px"
       >
         <el-form-item
-          label="活动名称"
+          label="模板名称"
           prop="template_title"
         >
           <el-input

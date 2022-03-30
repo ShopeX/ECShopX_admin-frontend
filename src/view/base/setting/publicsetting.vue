@@ -1,6 +1,6 @@
 <template>
   <div>
-    <div v-if="!VERSION_IN_PURCHASE">
+    <div v-if="!VERSION_IN_PURCHASE && !VERSION_B2C">
       <div class="clearfix" >
         <h2 class="f_l">
           <span>分享带门店参数设置：</span>

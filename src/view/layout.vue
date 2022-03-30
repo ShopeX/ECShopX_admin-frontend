@@ -264,8 +264,15 @@ export default {
       if (logo) {
         this.brandIco = logo
       } else {
-        const companyBrandImg = VERSION_STANDARD ? 'onex' : 'ecshopx'
-        this.brandIco = require(`@/assets/img/${companyBrandImg}/logo_ico.svg`)
+        if (this.VERSION_STANDARD) {
+          this.brandIco = require(`@/assets/logo/logo_standard.png`)
+        } else if (this.VERSION_PLATFORM) {
+          this.brandIco = require(`@/assets/logo/logo_ecshopx.png`)
+        } else if (this.VERSION_B2C) {
+          this.brandIco = require(`@/assets/logo/logo_b2c.png`)
+        } else if (this.VERSION_IN_PURCHASE) {
+          // this.brandIco = require(`@/assets/logo/logo_inpurchase.png`)
+        }
       }
     },
     // 获取菜单url
@@ -339,6 +346,7 @@ export default {
     display: flex;
     align-items: center;
     justify-content: center;
+    background: #fff;
   }
   img {
     width: auto;

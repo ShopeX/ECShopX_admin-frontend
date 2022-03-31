@@ -110,9 +110,14 @@
 </template>
 
 <script>
-const login_bg_admin = require(`@/assets/imgs/login-ecshopx.jpg`)
 const login_bg_merchant = require(`@/assets/imgs/login-merchant.jpg`)
 const login_bg_shopadmin = require(`@/assets/imgs/login-shopadmin.jpg`)
+
+const login_bg_yundian = require(`@/assets/imgs/login-yundian.jpg`)
+const login_bg_b2c = require(`@/assets/imgs/login-b2c.jpg`)
+const login_bg_inpurchase = require(`@/assets/imgs/login-inpurchase.jpg`)
+const login_bg_ecshopx = require(`@/assets/imgs/login-ecshopx.jpg`)
+const login_bg_free_ecshopx = require(`@/assets/imgs/login-free-ecshopx.jpg`)
 
 import { mapMutations } from 'vuex'
 import { requiredRules, MinRules } from '@/utils/validate'
@@ -125,7 +130,7 @@ export default {
   data () {
     return {
       title: '平台管理中心',
-      login_bg: login_bg_admin,
+      login_bg: login_bg_ecshopx,
       size: 0,
       activeName: 'first',
       form: {
@@ -181,12 +186,32 @@ export default {
           this.login_bg = login_bg_merchant
           break
         default:
-          this.title = '平台管理中心'
-          this.login_bg = require(`@/assets/imgs/login-${this.VUE_APP_SYSTEM.toLowerCase()}.jpg`)
+          this.getBgImg()
           break
       }
 
       this.$store.dispatch('setLoginType', this.loginType)
+    },
+    getBgImg () {
+      this.SET_VERSION_MODE(this.VUE_APP_SYSTEM)
+      switch (this.VUE_APP_SYSTEM) {
+        case 'standard':
+          this.title = '云店管理中心'
+          this.login_bg = login_bg_yundian
+          break
+        case 'in_purchase':
+          this.title = '内购管理中心'
+          this.login_bg = login_bg_inpurchase
+          break
+        case 'b2c':
+          this.title = '官方商城管理中心'
+          this.login_bg = login_bg_b2c
+          break
+        default:
+          this.title = '平台管理中心'
+          this.login_bg = this.VUE_APP_FREE ? login_bg_free_ecshopx : login_bg_ecshopx
+          break
+      }
     },
     fnSize () {
       this.size = document.body.clientHeight

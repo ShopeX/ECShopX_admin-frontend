@@ -21,7 +21,7 @@
             满减券
           </el-radio-button>
           <!-- <el-radio-button label="gift">兑换券</el-radio-button> -->
-          <el-radio-button label="new_gift" v-if="VERSION_STANDARD">兑换券</el-radio-button>
+          <!-- <el-radio-button label="new_gift" v-if="VERSION_STANDARD">兑换券</el-radio-button> -->
         </el-radio-group>
       </div>
       <GiftCoupon

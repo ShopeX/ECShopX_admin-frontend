@@ -22,7 +22,7 @@
           <el-radio label="1">
             短信通知（0.045元 / 条）
           </el-radio>
-          <el-radio label="2">
+          <el-radio label="2" v-if="!VERSION_IN_PURCHASE">
             推广短信（0.055元 / 条）
           </el-radio>
         </el-radio-group>

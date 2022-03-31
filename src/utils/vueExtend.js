@@ -224,12 +224,12 @@ Vue.prototype.orderType = [
 // console.log("---process.env.IS_SAAS--",process.env)
 Vue.prototype.system_is_saas = process.env.VUE_APP_IS_SAAS || 'false'
 Vue.prototype.system_mode = process.env.VUE_APP_PRODUCT_MODEL
-Vue.prototype.VUE_APP_FREE = process.env.VUE_APP_FREE || 'true'
+Vue.prototype.VUE_APP_FREE = process.env.VUE_APP_FREE == 'true'
 Vue.prototype.VERSION_STANDARD = VERSION_STANDARD
 Vue.prototype.VERSION_PLATFORM = VERSION_PLATFORM
 Vue.prototype.VERSION_B2C = VERSION_B2C
 Vue.prototype.VERSION_IN_PURCHASE = VERSION_IN_PURCHASE
-Vue.prototype.VUE_APP_SYSTEM = process.env.VUE_APP_SYSTEM_NAME
+Vue.prototype.VUE_APP_SYSTEM = process.env.VUE_APP_PRODUCT_MODEL
 Vue.prototype.VUE_APP_SYSTEM_NAME = SYSTEM_CONFIG[store.getters.versionMode].name
 Vue.prototype.path_prefixes = process.env.VUE_APP_PREFIXES
 Vue.prototype.BASE_API =
@@ -264,3 +264,6 @@ Vue.prototype.companyBrand = '商派ECShopX'
 Vue.prototype.companyBrandImg = process.env.PRODUCT_MODEL === 'standard' ? 'onex' : 'ecshopx'
 // 动态改变页面的title
 document.title = Vue.prototype.VUE_APP_SYSTEM_NAME
+
+console.log(`VUE_APP_PRODUCT_MODEL: ${process.env.VUE_APP_PRODUCT_MODEL}`)
+console.log(`VUE_APP_FREE: ${process.env.VUE_APP_FREE}`)

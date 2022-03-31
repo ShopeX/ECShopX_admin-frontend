@@ -155,8 +155,8 @@ export default {
   },
   mounted () {
     window.addEventListener('resize', this.fnSize())
-    this.SET_VERSION_MODE(this.VUE_APP_SYSTEM)
-    console.log(this.VUE_APP_SYSTEM, '----version----')
+    this.SET_VERSION_MODE(this.VUE_APP_PRODUCT_MODEL)
+    console.log(this.VUE_APP_PRODUCT_MODEL, '----version----')
     this.init()
   },
   destroyed () {
@@ -195,7 +195,7 @@ export default {
       this.$store.dispatch('setLoginType', this.loginType)
     },
     getBgImg () {
-      switch (this.VUE_APP_SYSTEM) {
+      switch (this.VUE_APP_PRODUCT_MODEL) {
         case 'standard':
           this.title = '云店管理中心'
           this.login_bg = login_bg_yundian

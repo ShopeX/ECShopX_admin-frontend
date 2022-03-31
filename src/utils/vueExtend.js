@@ -224,6 +224,7 @@ Vue.prototype.orderType = [
 // console.log("---process.env.IS_SAAS--",process.env)
 Vue.prototype.system_is_saas = process.env.VUE_APP_IS_SAAS || 'false'
 Vue.prototype.system_mode = process.env.VUE_APP_PRODUCT_MODEL
+Vue.prototype.VUE_APP_FREE = process.env.VUE_APP_FREE || 'true'
 Vue.prototype.VERSION_STANDARD = VERSION_STANDARD
 Vue.prototype.VERSION_PLATFORM = VERSION_PLATFORM
 Vue.prototype.VERSION_B2C = VERSION_B2C

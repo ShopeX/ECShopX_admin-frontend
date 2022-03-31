@@ -266,12 +266,14 @@ export default {
       } else {
         if (this.VERSION_STANDARD) {
           this.brandIco = require(`@/assets/logo/logo_standard.png`)
-        } else if (this.VERSION_PLATFORM) {
-          this.brandIco = require(`@/assets/logo/logo_ecshopx.png`)
         } else if (this.VERSION_B2C) {
           this.brandIco = require(`@/assets/logo/logo_b2c.png`)
         } else if (this.VERSION_IN_PURCHASE) {
-          // this.brandIco = require(`@/assets/logo/logo_inpurchase.png`)
+          this.brandIco = require(`@/assets/logo/logo_inpurchase.png`)
+        } else if (this.VERSION_PLATFORM && this.VUE_APP_FREE) {
+          this.brandIco = require(`@/assets/logo/logo_free-ecshopx.png`)
+        } else if (this.VERSION_PLATFORM && !this.VUE_APP_FREE) {
+          this.brandIco = require(`@/assets/logo/logo_ecshopx.png`)
         }
       }
       this.$store.dispatch('setSysLogo', this.brandIco)

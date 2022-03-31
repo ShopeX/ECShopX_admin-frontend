@@ -40,6 +40,7 @@ VUE_APP_WXAUTHCALL_Url=http://ecshopx-shop.ex-sandbox.com/
 VUE_APP_PREFIXES=
 VUE_APP_QIANKUN_ENTRY=/newpc/
 VUE_APP_OSS_CDN=false
+VUE_APP_FREE=true
 `
   console.log(envTemplate)
 

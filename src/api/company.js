@@ -467,3 +467,24 @@ export function getDomainH5Setting (query) {
     params: query
   })
 }
+
+export function systemChangelog () {
+  return fetch({
+    url: '/espier/system/changelog',
+    method: 'post'
+  })
+}
+
+export function systemUpgrade () {
+  return fetch({
+    url: '/espier/system/upgrade',
+    method: 'post'
+  })
+}
+
+export function detectVersion () {
+  return fetch({
+    url: '/espier/system/detect_version',
+    method: 'post'
+  })
+}

@@ -5,9 +5,17 @@
 }
 .unbind-box {
   display: flex;
+  flex-direction: column;
   align-items: center;
   justify-content: center;
   height: 285px;
+  width: 100%;
+  background: #fff;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  padding-bottom: 15px;
+  .content-center {
+    padding: 30px 30px 15px 30px;
+  }
   .iconfont {
     display: block;
     margin-bottom: 20px;
@@ -17,6 +25,25 @@
   }
   p {
     margin-bottom: 20px;
+  }
+  .bot-tips {
+    font-size: 12px;
+    padding-top: 5px;
+    // display: flex;
+    // align-items: center;
+    padding: 0px 10px;
+    text-align: center;
+    a {
+      cursor: pointer;
+      font-size: 12px;
+      margin-left: 5px;
+      color: #5ea7ec;
+    }
+    :last-child {
+      font-size: 12px;
+      margin-left: 10px;
+      color: #459ae9;
+    }
   }
 }
 
@@ -79,6 +106,10 @@
   align-items: center;
   justify-content: center;
   height: 285px;
+  width: 100%;
+  background: #fff;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  padding: 30px 0px 20px;
   .logo {
     width: 70px;
     height: 70px;
@@ -97,11 +128,25 @@
     font-size: 12px;
     color: #999;
     width: 100%;
-    margin-left: 175px;
+    margin-left: 120px;
     text-align: left;
     .iconfont {
       margin-right: 10px;
       font-size: 12px;
+    }
+  }
+  .bot-tips {
+    font-size: 12px;
+    padding-top: 5px;
+    // display: flex;
+    // align-items: center;
+    padding: 0px 10px;
+    text-align: center;
+    a {
+      cursor: pointer;
+      font-size: 12px;
+      margin-left: 5px;
+      color: #5ea7ec;
     }
   }
 }
@@ -427,6 +472,10 @@
   .overflows {
     color: #999;
     @include text-overflow();
+    span {
+      font-size: 14px;
+      cursor: pointer;
+    }
   }
   .row-link {
     padding: 0px 15px 10px 15px;
@@ -468,11 +517,11 @@
       </div> -->
     </div>
     <el-row :gutter="20">
-      <el-col :span="VUE_APP_FREE ? 19 : 20">
+      <el-col :span="VERSION_PLATFORM && VUE_APP_FREE ? 19 : 20">
         <el-row :gutter="20">
           <el-col :span="7">
             <template v-if="!isBind">
-              <div class="section-card unbind-box">
+              <div class="unbind-box">
                 <div class="content-center">
                   <div
                     v-if="activateInfo"
@@ -490,10 +539,15 @@
                     去绑定
                   </el-button>
                 </div>
+                <div class="bot-tips" v-if="VERSION_PLATFORM && VUE_APP_FREE">
+                  <span>当前版本：{{versionObj.dep_product_name}}</span>
+                  <a v-if="versionObj.upgrade_status" @click="dialogChange">有新版本待更新</a>
+                  <span v-else>已是最新版本</span>
+                </div>
               </div>
             </template>
-            <template v-else>
-              <section class="section-card company">
+            <template v-if="isBind">
+              <section class="company">
                 <img
                   v-if="authorizerData"
                   class="logo"
@@ -554,6 +608,11 @@
                     activateInfo.expired_at | datetime('YYYY-MM-DD HH:mm:ss')
                   }}
                   到期
+                </div>
+                <div class="bot-tips" v-if="VERSION_PLATFORM && VUE_APP_FREE">
+                  <span>当前版本：{{versionObj.dep_product_name}}</span>
+                  <a v-if="versionObj.upgrade_status" @click="dialogChange">有新版本待更新</a>
+                  <span v-else>已是最新版本</span>
                 </div>
               </section>
             </template>
@@ -936,7 +995,7 @@
           </el-col>
         </el-row>
       </el-col>
-      <el-col :span="VUE_APP_FREE ? 5 : 4">
+      <el-col :span="VERSION_PLATFORM && VUE_APP_FREE ? 5 : 4">
         <section
           v-show="activateInfo.source != 'demo'"
           class="section-card fn-b-20 card-right"
@@ -993,13 +1052,13 @@
           <el-row type="flex" justify="space-around" class="produce-hd">
             <el-col class="title"><i class="iconfont icon-dongtai-01" />产品动态</el-col>
             <el-col class="more">
-              <span @click="openUrl('https://www.yuque.com/ecshopx/ecshopx_free/pr5ucx')">更多</span>
+              <span @click="openUrl(linkList.version_url)">更多</span>
             </el-col>
           </el-row>
-          <el-row type="flex" align="middle" class="row-link" v-for="(item, index) in produceDynamicList" :key="index">
+          <el-row type="flex" align="middle" class="row-link" v-for="(item, index) in linkList.versions" :key="index">
             <el-col :span="4" v-if="index == 0" class="news">NEW</el-col>
             <el-col :span="20" :class="index == 0 ? 'overflows' : 'margins overflows'">
-              <span>{{ item.text }}</span>
+              <span @click="openUrl(item.url)">{{ item.title }}</span>
             </el-col>
           </el-row>
         </section>
@@ -1010,7 +1069,7 @@
           <el-row type="flex" justify="space-around" class="produce-hd">
             <el-col class="title"><i class="iconfont icon-caozuoshouce" />产品手册</el-col>
             <el-col class="more">
-              <span @click="openUrl('https://www.yuque.com/ecshopx/ecshopx_free/gt7uug')">查看</span>
+              <span @click="openUrl(linkList.question_url)">查看</span>
             </el-col>
           </el-row>
         </section>
@@ -1030,6 +1089,30 @@
         </section>
       </el-col>
     </el-row>
+    <el-dialog
+      width="30%"
+      :visible.sync="dialogIsShow"
+      :showClose="false"
+    >
+    <div style="text-align:center">{{dialogContent}}</div>
+    <div slot="footer" class="dialog-footer">
+      <el-button
+        class="btn-ft"
+        type="danger"
+        :disabled="updateDisabled"
+        @click="dialogConfirmChange"
+      >
+        更 新
+      </el-button>
+      <el-button
+        class="btn-ft"
+        :disabled="cancelDisabled"
+        @click="dialogCancelChange"
+      >
+        取 消
+      </el-button>
+      </div>
+    </el-dialog>
     <!-- <el-dialog class="industry-dialog" title="提示" :visible="waitingDialog" :show-close="false" :close-on-press-escape="false" :close-on-click-modal="false">
       <span>请在微信端窗口进行微信公众号授权</span>
       <span slot="footer" class="dialog-footer">
@@ -1292,7 +1375,10 @@ import {
   updateCompanyInfo,
   getResourceList,
   getCompanyStatistics,
-  ydleadsInfo
+  ydleadsInfo,
+  systemChangelog,
+  systemUpgrade,
+  detectVersion
 } from '../../api/company'
 import config from '../../../package.json'
 
@@ -1446,23 +1532,12 @@ export default {
           text: '订单处理'
         }
       ],
-      produceDynamicList: [
-        {
-          link: 'https://axhub.it.shopex123.com/pro/3jxnQu8lYFe/#id=fpazrm&p=%E8%A1%A5%E4%B8%81%E5%8C%85%E6%9B%B4%E6%96%B0%E9%A1%B5%E9%9D%A2',
-          color: '#7cc0f4',
-          text: '版本1.2.0',
-        },
-        {
-          link: 'https://axhub.it.shopex123.com/pro/3jxnQu8lYFe/#id=fpazrm&p=%E8%A1%A5%E4%B8%81%E5%8C%85%E6%9B%B4%E6%96%B0%E9%A1%B5%E9%9D%A2',
-          color: '#7cc0f4',
-          text: '版本1.1.0',
-        },
-        {
-          link: 'https://axhub.it.shopex123.com/pro/3jxnQu8lYFe/#id=fpazrm&p=%E8%A1%A5%E4%B8%81%E5%8C%85%E6%9B%B4%E6%96%B0%E9%A1%B5%E9%9D%A2',
-          color: '#7cc0f4',
-          text: '版本1.0.0',
-        }
-      ]
+      linkList: {},
+      dialogIsShow: false,
+      dialogContent: '',
+      updateDisabled: false,
+      cancelDisabled: false,
+      versionObj: {}
     }
   },
   methods: {
@@ -1472,7 +1547,50 @@ export default {
       this.dingInfo.goods_name = type
     },
     openUrl (url) {
-      window.open(url, '_blank')
+      if (url) {
+        window.open(url, '_blank')
+      } else {
+        this.$message({
+          type: 'error',
+          message: '暂无可跳转路径'
+        })
+      }
+    },
+    dialogChange () {
+      this.dialogIsShow = true
+      this.dialogContent = '本次更新包含小程序端更新，如您已对小程序进行开发可能会覆盖已经开发内容，请确认后更新！'
+    },
+    dialogCancelChange () {
+      this.dialogIsShow = false
+      this.updateDisabled = false
+      this.cancelDisabled = false
+      this.detectVersion()
+    },
+    dialogConfirmChange () {
+      this.dialogContent = '更新中'
+      this.updateDisabled = true
+      this.cancelDisabled = true
+      systemUpgrade().then((res) => {
+        this.dialogContent = '更新成功'
+        this.cancelDisabled = false
+      }).catch((error) => {
+        // console.log(error)
+        // this.dialogContent = error
+        this.dialogContent = '更新失败'
+        this.cancelDisabled = false
+      })
+    },
+    systemChangelog () {
+      systemChangelog().then((res) => {
+        let data = res.data.data
+        this.linkList = data
+      })      
+    },
+    detectVersion () {
+      detectVersion().then((res) => {
+        let data = res.data.data
+        this.versionObj = data
+      })
     },
     submit () {
       let obj = JSON.parse(JSON.stringify(this.dingInfo))
@@ -1783,6 +1901,10 @@ export default {
       )
     }
     this.mountedFunc()
+    if (this.VERSION_PLATFORM && this.VUE_APP_FREE) {
+      this.systemChangelog()
+      this.detectVersion()
+    }
   }
 }
 </script>

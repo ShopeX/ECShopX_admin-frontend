@@ -330,6 +330,18 @@
     margin: 0 auto;
   }
 }
+.sound-img {
+  width: 100%;
+  padding: 0px;
+  box-shadow: 0px 0px 2px 0px #DFE7F3;
+  border-radius: 2px;
+  .img-demo {
+    width: 100%;
+    margin: 0 auto;
+    display: block;
+    cursor: pointer;
+  }
+}
 .sl-img {
   // padding: 0;
   // background: url('@/assets/img/saas/bcg_2.png');
@@ -366,8 +378,76 @@
     width: 140px;
   }
 }
+.produce-dynamic, .produce-manual {
+  padding: 0px;
+  .produce-hd {
+    height: 50px;
+    line-height: 50px;
+    border-radius: 2px;
+    background: rgba(203, 6, 15, 0.03);
+    padding: 0px 15px;
+  }
+  .title {
+    text-align: left;
+    font-size: 16px;
+    font-weight: bold;
+    color: #666;
+  }
+  .more {
+    text-align: right;
+    span {
+      font-size: 12px;
+      cursor: pointer;
+    }
+  }
+}
+.produce-dynamic {
+  .icon-dongtai-01 {
+    padding: 2px;
+    font-size: 14px;
+    color: #fff;
+    background: var(--themeColor);
+    border-radius: 2px;
+    font-weight: normal;
+    margin-right: 5px;
+  }
+  .news {
+    display: inline-block;
+    width: 30px;
+    text-align: center;
+    color: #F8841F;
+    font-size: 12px;
+    border-radius: 2px;
+    margin-right: 5px;
+    font-weight: bold;
+  }
+  .margins {
+    margin-left: 35px;
+  }
+  .overflows {
+    color: #999;
+    @include text-overflow();
+  }
+  .row-link {
+    padding: 0px 15px 10px 15px;
+    margin-bottom: 0px !important;
+  }
+}
+.produce-manual {
+  .icon-caozuoshouce {
+    padding: 2px;
+    font-size: 14px;
+    color: #fff;
+    background: var(--themeColor);
+    border-radius: 2px;
+    font-weight: normal;
+    margin-right: 5px;
+  }
+  .el-row {
+    margin-bottom: 0px !important;
+  }
+}
 </style>
-
 <template>
   <div
     v-if="bool"
@@ -388,7 +468,7 @@
       </div> -->
     </div>
     <el-row :gutter="20">
-      <el-col :span="20">
+      <el-col :span="VUE_APP_FREE ? 19 : 20">
         <el-row :gutter="20">
           <el-col :span="7">
             <template v-if="!isBind">
@@ -856,7 +936,7 @@
           </el-col>
         </el-row>
       </el-col>
-      <el-col :span="4">
+      <el-col :span="VUE_APP_FREE ? 5 : 4">
         <section
           v-show="activateInfo.source != 'demo'"
           class="section-card fn-b-20 card-right"
@@ -878,10 +958,12 @@
               :src="img.qq"
               alt="在线客服"
             >
-            <span><a
+            <span>
+              <a
               href="https://wpa.b.qq.com/cgi/wpa.php?ln=1&key=XzgwMDA1ODI4Ml80OTM4NjNfODAwMDU4MjgyXw"
               target="_blank"
-            >在线客服</a></span>
+              >在线客服</a>
+            </span>
           </div>
         </section>
         <!-- <section class="section-card fn-b-20"><a href="http://wpa.qq.com/msgrd?v=3&uin=714165655&site=qq&menu=yes" target="_blank">QQ客服</a></section> -->
@@ -894,7 +976,46 @@
           <img :src="img.demo" alt="" class="img-demo" />
         </section> -->
         <section
-          v-show="activateInfo.source == 'demo'"
+          class="section-card fn-b-20 sound-img"
+          v-if="VERSION_PLATFORM && VUE_APP_FREE"
+        >
+          <img
+            :src="img.sound"
+            alt=""
+            class="img-demo"
+            @click="openUrl('https://support.qq.com/product/386118')"
+          >
+        </section>
+        <section
+          class="section-card fn-b-20 produce-dynamic"
+          v-if="VERSION_PLATFORM && VUE_APP_FREE"
+        >
+          <el-row type="flex" justify="space-around" class="produce-hd">
+            <el-col class="title"><i class="iconfont icon-dongtai-01" />产品动态</el-col>
+            <el-col class="more">
+              <span @click="openUrl('https://www.yuque.com/ecshopx/ecshopx_free/pr5ucx')">更多</span>
+            </el-col>
+          </el-row>
+          <el-row type="flex" align="middle" class="row-link" v-for="(item, index) in produceDynamicList" :key="index">
+            <el-col :span="4" v-if="index == 0" class="news">NEW</el-col>
+            <el-col :span="20" :class="index == 0 ? 'overflows' : 'margins overflows'">
+              <span>{{ item.text }}</span>
+            </el-col>
+          </el-row>
+        </section>
+        <section
+          class="section-card fn-b-20 produce-manual"
+          v-if="VERSION_PLATFORM && VUE_APP_FREE"
+        >
+          <el-row type="flex" justify="space-around" class="produce-hd">
+            <el-col class="title"><i class="iconfont icon-caozuoshouce" />产品手册</el-col>
+            <el-col class="more">
+              <span @click="openUrl('https://www.yuque.com/ecshopx/ecshopx_free/gt7uug')">查看</span>
+            </el-col>
+          </el-row>
+        </section>
+        <section
+          v-if="activateInfo.source == 'demo' && !VUE_APP_FREE"
           class="section-card fn-b-20 sl-img"
           :style="'background:  url(' + img.bcg_2 + ')'"
         >
@@ -1186,6 +1307,7 @@ const liansuo = require('@/assets/img/saas/liansuo.png')
 const bcg_1 = require('@/assets/img/saas/bcg_1.png')
 const demo = require('@/assets/img/saas/demo.png')
 const biaozun = require('@/assets/img/saas/biaozun.png')
+const sound = require('@/assets/img/saas/sound.jpg')
 
 export default {
   data () {
@@ -1201,7 +1323,8 @@ export default {
         liansuo,
         bcg_1,
         demo,
-        biaozun
+        biaozun,
+        sound
       },
       bool: true,
       userloading: true,
@@ -1322,6 +1445,23 @@ export default {
           color: '#7cc0f4',
           text: '订单处理'
         }
+      ],
+      produceDynamicList: [
+        {
+          link: 'https://axhub.it.shopex123.com/pro/3jxnQu8lYFe/#id=fpazrm&p=%E8%A1%A5%E4%B8%81%E5%8C%85%E6%9B%B4%E6%96%B0%E9%A1%B5%E9%9D%A2',
+          color: '#7cc0f4',
+          text: '版本1.2.0',
+        },
+        {
+          link: 'https://axhub.it.shopex123.com/pro/3jxnQu8lYFe/#id=fpazrm&p=%E8%A1%A5%E4%B8%81%E5%8C%85%E6%9B%B4%E6%96%B0%E9%A1%B5%E9%9D%A2',
+          color: '#7cc0f4',
+          text: '版本1.1.0',
+        },
+        {
+          link: 'https://axhub.it.shopex123.com/pro/3jxnQu8lYFe/#id=fpazrm&p=%E8%A1%A5%E4%B8%81%E5%8C%85%E6%9B%B4%E6%96%B0%E9%A1%B5%E9%9D%A2',
+          color: '#7cc0f4',
+          text: '版本1.0.0',
+        }
       ]
     }
   },
@@ -1330,6 +1470,9 @@ export default {
     dingHandel (type) {
       this.dialogVisible = true
       this.dingInfo.goods_name = type
+    },
+    openUrl (url) {
+      window.open(url, '_blank')
     },
     submit () {
       let obj = JSON.parse(JSON.stringify(this.dingInfo))

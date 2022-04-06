@@ -1149,7 +1149,7 @@ export default {
               showClose: true,
               message: `以下商品编号不存在：${str}`,
               type: 'error',
-              duration: 100000
+              duration: 5000
             })
           }, 1500)
         }

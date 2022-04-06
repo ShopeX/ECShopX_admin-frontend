@@ -249,6 +249,17 @@
         <!-- tablelist -->
         <div class="tablelist">
           <el-row style="text-align: right">
+            <el-upload
+              style="margin-right: 10px; display: inline-block"
+              action=""
+              :on-change="uploadHandleChange"
+              :auto-upload="false"
+              :show-file-list="false"
+            >
+              <el-button type="primary">
+                导入<i class="el-icon-upload el-icon--right" />
+              </el-button>
+            </el-upload>
             <export-tip @exportHandle="exportFile">
               <el-button
                 type="primary"
@@ -292,7 +303,9 @@
                   <span v-if="scope.row.payType == 'deposit'">余额支付</span>
                   <span v-if="scope.row.payType == 'point'">积分支付</span>
                   <span v-if="scope.row.payType == 'pos'">POS银行卡支付</span>
-                  <span v-if="scope.row.payType == 'adapay' && scope.row.payChannel == 'wx_lite'">微信支付</span>
+                  <span
+                    v-if="scope.row.payType == 'adapay' && scope.row.payChannel == 'wx_lite'"
+                  >微信支付</span>
                 </template>
               </el-table-column>
             </template>
@@ -468,6 +481,25 @@ export default {
   },
 
   methods: {
+    getDistributorId () {
+      return {
+        distributor_id: this.$store.getters.shopId || 0
+      }
+    },
+    async uploadHandleChange (file, fileList) {
+      let params = {
+        isUploadFile: true,
+        file_type: 'adapay_tradedata',
+        file: file.raw,
+        ...this.getDistributorId()
+      }
+      await this.$api.common.handleUploadFile(params)
+      this.$message({
+        type: 'success',
+        message: '上传成功，等待处理'
+      })
+      this.getSub_account()
+    },
     goDetail (id) {
       const path = this.$route.matched[0].path.match(/\/\w+/g)
       if (path[0] == '/shopadmin') {

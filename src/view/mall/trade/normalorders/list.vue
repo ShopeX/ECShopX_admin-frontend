@@ -128,7 +128,7 @@
           />
         </SpFilterFormItem>
         <SpFilterFormItem
-          v-if='!VERSION_STANDARD'
+          v-if="!VERSION_STANDARD"
           prop="distributor_type"
           label="订单分类:"
         >
@@ -185,6 +185,19 @@
             </el-dropdown-item>
           </el-dropdown-menu>
         </el-dropdown>
+        <el-upload
+          class="btn-upload"
+          :on-change="uploadHandleChange"
+          :auto-upload="false"
+          :show-file-list="false"
+        >
+          <el-button
+            type="primary"
+            plain
+          >
+            批量发货
+          </el-button>
+        </el-upload>
       </div>
 
       <el-tabs
@@ -501,7 +514,11 @@ export default {
       },
       datapass_block: 1, // 是否为数据脱敏
       distributionType: DISTRIBUTION_TYPE,
-      orderStatus: VERSION_B2C ? ORDER_B2C_STATUS : VERSION_IN_PURCHASE ? IN_PURCHASE_STATUS : ORDER_STATUS,
+      orderStatus: VERSION_B2C
+        ? ORDER_B2C_STATUS
+        : VERSION_IN_PURCHASE
+        ? IN_PURCHASE_STATUS
+        : ORDER_STATUS,
       orderType: ORDER_TYPE,
       invoiceStatus: INVOICE_STATUS,
       orderCategory: ORDER_CATEGORY,
@@ -1072,6 +1089,16 @@ export default {
           return
         }
       })
+    },
+    async uploadHandleChange (file) {
+      const params = {
+        isUploadFile: true,
+        file_type: 'normal_orders',
+        file: file.raw
+      }
+      await this.$api.common.handleUploadFile(params)
+      this.$message.success('上传成功，等待处理')
+      this.fetchList()
     }
   }
 }

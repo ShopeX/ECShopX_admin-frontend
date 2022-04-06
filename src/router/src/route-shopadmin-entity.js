@@ -14,6 +14,16 @@ export default {
         {
           path: 'editor/:itemId?',
           component: () => import('@/view/mall/goods/physical/add')
+        },
+        {
+          path: 'physicalupload',
+          name: `商品导入`,
+          component: () => import('@/view/mall/goods/physical/normalGoodsUpload')
+        },
+        {
+          path: 'physicalstoreupload',
+          name: `库存导入`,
+          component: () => import('@/view/mall/goods/physical/normalGoodsStoreUpload')
         }
       ]
     },

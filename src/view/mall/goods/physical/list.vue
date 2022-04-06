@@ -59,10 +59,10 @@
             导入<i class="el-icon-arrow-down el-icon--right" />
           </el-button>
           <el-dropdown-menu slot="dropdown">
-            <router-link to="/entity/goods/goodsphysical/physicalupload">
+            <router-link :to="{ path: matchHidePage('physicalupload')}">
               <el-dropdown-item>商品导入</el-dropdown-item>
             </router-link>
-            <router-link to="/entity/goods/goodsphysical/physicalstoreupload">
+            <router-link :to="{ path: matchHidePage('physicalstoreupload')}">
               <el-dropdown-item>库存导入</el-dropdown-item>
             </router-link>
           </el-dropdown-menu>

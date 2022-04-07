@@ -16,6 +16,7 @@ import RouteSetting from './route-setting'
 import RouteTemplate from './route-template'
 import RoutePointsmal from './route-pointsmall'
 import RouteDealer from './route-dealer'
+import RouteApplications from './route-applications'
 
 /* shopadmin router */
 import RouteShopAdminShopList from './route-shopadmin-shoplist'
@@ -60,6 +61,7 @@ export default {
   RouteTemplate,
   RoutePointsmal,
   RouteDealer,
+  RouteApplications,
   RouteShopAdminShopList,
   RouteShopAdminEntity,
   RouteShopAdminOrder,

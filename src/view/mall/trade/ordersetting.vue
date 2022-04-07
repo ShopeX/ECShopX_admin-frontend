@@ -58,6 +58,16 @@
             />
             (天)后驳回售后
           </el-form-item>
+          <el-form-item
+            label="未发货订单申请退款是否自动审批同意:"
+            width="300px"
+          >
+            <el-switch
+              v-model="form.auto_aftersales"
+              active-text="开"
+              inactive-text="关"
+            />
+          </el-form-item>
         </template>
       </div>
       <div class="section-footer with-border content-center">
@@ -80,7 +90,8 @@ export default {
         order_cancel_time: 15,
         order_finish_time: 7,
         latest_aftersale_time: 0,
-        auto_refuse_time: 0
+        auto_refuse_time: 0,
+        auto_aftersales: false
       },
       order_cancel_time_status: false
     }
@@ -99,6 +110,9 @@ export default {
       }
       if (setting.auto_refuse_time) {
         this.form.auto_refuse_time = setting.auto_refuse_time
+      }
+      if (setting.auto_aftersales) {
+        this.form.auto_aftersales = setting.auto_aftersales
       }
     })
   },

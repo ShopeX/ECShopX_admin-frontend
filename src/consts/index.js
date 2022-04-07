@@ -160,7 +160,7 @@ export const PICKER_DATE_OPTIONS = {
 }
 
 export const SYSTEM_CONFIG = {
-  platform: { name: '商派Ecshopx', theme: '#CB060F' },
+  platform: { name: 'Powered by ShopEx', theme: '#CB060F' },
   standard: { name: '商派Onex云店', theme: '#FF9D00' },
   b2c: { name: '商派官方商城', theme: '#157FE3' },
   in_purchase: { name: '商派Onex内购', theme: '#EC442E' }

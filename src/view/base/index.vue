@@ -1179,7 +1179,7 @@
           {{ dialogContent }}<a @click="openUrl(linkList.version_url)">具体升级内容，请查看</a>
         </div>
         <div class="install-desc">
-          <p>更新成功后您还需要做如下操作(如果对应目录代码无更新可忽略操作)：</p>
+          <p>更新说明：更新成功后您还需要做如下操作(如果对应目录代码无更新可忽略操作)</p>
           <p>1、在ecshopx-api目录下执行php的数据库更新命令，具体命令参照安装文档</p>
           <p>2、在ecshopx-admin目录下执行npm run build，重新编译</p>
           <p>3、在ecshopx-vshop目录下执行npm run build，重新编译</p>

@@ -186,6 +186,7 @@
           </el-dropdown-menu>
         </el-dropdown>
         <el-upload
+          action=""
           class="btn-upload"
           :on-change="uploadHandleChange"
           :auto-upload="false"

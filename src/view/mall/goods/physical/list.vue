@@ -30,7 +30,7 @@
     label {
     }
   }
-} 
+}
 </style>
 <template>
   <div class="page-body">
@@ -50,6 +50,14 @@
         >
           添加商品
         </el-button>
+        <el-button
+          v-if="VERSION_PLATFORM && !VUE_APP_FREE && login_type == 'distributor'"
+          type="primary"
+          icon="iconfont icon-xinzengcaozuo-01"
+          @click="selectItems"
+        >
+          选品
+        </el-button>
         <el-dropdown>
           <el-button
             type="primary"
@@ -59,10 +67,10 @@
             导入<i class="el-icon-arrow-down el-icon--right" />
           </el-button>
           <el-dropdown-menu slot="dropdown">
-            <router-link :to="{ path: matchHidePage('physicalupload')}">
+            <router-link to="/entity/goods/goodsphysical/physicalupload">
               <el-dropdown-item>商品导入</el-dropdown-item>
             </router-link>
-            <router-link :to="{ path: matchHidePage('physicalstoreupload')}">
+            <router-link to="/entity/goods/goodsphysical/physicalstoreupload">
               <el-dropdown-item>库存导入</el-dropdown-item>
             </router-link>
           </el-dropdown-menu>
@@ -302,13 +310,13 @@
           </el-dropdown-menu>
         </el-dropdown>
 
-        <!-- <el-button
+        <el-button
           type="primary"
           plain
           @click="syncItems"
         >
           同步商品数据
-        </el-button> -->
+        </el-button>
       </div>
 
       <el-tabs
@@ -502,7 +510,6 @@
                     <!--el-button v-if="popularizeSetting.isOpenPopularize == 'true'" type="text" @click="handleRebateConf(scope.row)" >分销配置</el-button-->
                     <el-button
                       type="text"
-                      v-if="!VERSION_IN_PURCHASE"
                       @click="handleProfitPrice(scope.row)"
                     >
                       分润配置
@@ -1096,6 +1103,11 @@
           >确 定</el-button>
         </span>
       </el-dialog>
+      <GoodsSelect
+        :items-visible="xpGoodsVisible"
+        @chooseGoods="chooseGoodsAction"
+        @closeGoodsDialog="closeGoodsDialogAction"
+      />
     </template>
     <router-view />
   </div>
@@ -1128,14 +1140,18 @@ import {
   getGoodsProfitPrice,
   saveGoodsProfitPrice,
   syncItems,
-  saveIsGifts
+  saveIsGifts,
+  flowItems
 } from '@/api/goods'
 import mixins from '@/mixins'
+
+import GoodsSelect from './comps/goodsSelect'
 
 export default {
   components: {
     Treeselect,
-    SideBar
+    SideBar,
+    GoodsSelect
   },
   mixins: [mixins],
   props: ['getStatus'],
@@ -1260,7 +1276,9 @@ export default {
       distributorVisible: false,
       setDistributorStatus: false,
       relDistributorIds: '',
-      selections: []
+      selections: [],
+      // showSelectGoods: true,
+      xpGoodsVisible: false
     }
   },
   computed: {
@@ -1278,22 +1296,37 @@ export default {
   },
   mounted () {
     this.init()
-     this.addUploaderEventListener()
   },
 
   destroyed () {
     console.log(111)
   },
   methods: {
-    addUploaderEventListener () {
-      // const self = this
-      // setTimeout(() => {
-      //   const uploaderDom = document.getElementsByClassName('icon iconfont icon-image')[0]
-      //   uploaderDom &&
-      //     uploaderDom.addEventListener('click', () => {
-      //       self.addImgPreview()
-      //     })
-      // }, 0)
+    selectItems () {
+      this.xpGoodsVisible = true
+    },
+    async chooseGoodsAction (data) {
+      this.xpGoodsVisible = false
+      let list = JSON.parse(JSON.stringify(data))
+      if (list === null || list.length === 0) return
+      const items = list.map((item) => {
+        return {
+          goods_id: item.goods_id
+        }
+      })
+      const params = {
+        items: JSON.stringify(items)
+      }
+      await flowItems(params)
+      this.$message({
+        type: 'success',
+        message: '选品成功'
+      })
+      this.getGoodsList()
+      // console.log('this.items=======', items)
+    },
+    closeGoodsDialogAction () {
+      this.xpGoodsVisible = false
     },
     async init () {
       if (this.$route.path.split('/')[2] === 'godsphysicalkj') {
@@ -1887,7 +1920,6 @@ export default {
       if (params.category.length > 0) {
         params.category = params.category[params.category.length - 1]
       }
-
       const { list, total_count, warning_store } = await this.$api.goods.getItemsList(params)
       list.forEach((item) => {
         item.price = item.price / 100

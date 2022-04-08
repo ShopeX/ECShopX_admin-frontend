@@ -495,3 +495,20 @@ export function exportGoodsCode (params) {
     params
   })
 }
+
+// 选品商品
+export function getSelectItemsList (query) {
+  return fetch({
+    url: '/goods/selectItems',
+    method: 'get',
+    params: query
+  })
+}
+// 确定选品商品
+export function flowItems (query) {
+  return fetch({
+    url: '/goods/flowItems',
+    method: 'post',
+    params: query
+  })
+}

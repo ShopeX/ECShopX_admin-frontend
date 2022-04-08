@@ -1053,7 +1053,7 @@
         </el-row>
       </el-col>
       <el-col :span="VERSION_PLATFORM && VUE_APP_FREE ? 5 : 4">
-        <section
+        <!-- <section
           v-show="activateInfo.source != 'demo'"
           class="section-card fn-b-20 card-right"
         >
@@ -1081,7 +1081,7 @@
               >在线客服</a>
             </span>
           </div>
-        </section>
+        </section> -->
         <!-- <section class="section-card fn-b-20"><a href="http://wpa.qq.com/msgrd?v=3&uin=714165655&site=qq&menu=yes" target="_blank">QQ客服</a></section> -->
         <!-- <section
           class="section-card fn-b-20 demo-img"
@@ -1095,7 +1095,10 @@
           v-if="VERSION_PLATFORM && VUE_APP_FREE"
           class="section-card fn-b-20 sound-img"
         >
-          <div class="sound-btn" @click="openUrl('https://support.qq.com/product/386118')" />
+          <div
+            class="sound-btn"
+            @click="openUrl('https://support.qq.com/product/386118')"
+          />
           <img
             :src="img.sound"
             alt=""

@@ -139,6 +139,20 @@ function export_open (tab) {
   }, 1000)
 }
 
+export function unescape (html) {
+  /* eslint-disable */
+  return html
+    .replace(html ? /&(?!#?\w+;)/g : /&/g, '&amp;')
+    .replace(/&lt;/g, '<')
+    .replace(/&gt;/g, '>')
+    .replace(/&quot;/g, '"')
+    .replace(/&#39;/g, "'")
+    .replace(/&amp;/g, '&')
+    .replace(/&nbsp;/g, ' ')
+    .replace(/&#8230;/g, '…')
+  /* eslint-enable */
+}
+
 export { log, export_open }
 
 export default {}

@@ -29,3 +29,10 @@ export function refreshToken (params) {
     method: 'get'
   })
 }
+
+export function getAgreementContent () {
+  return fetch({
+    url: '/espier/system/agreement',
+    method: 'post'
+  })
+}

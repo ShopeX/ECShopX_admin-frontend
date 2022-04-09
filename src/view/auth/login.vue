@@ -106,6 +106,34 @@
         </div>
       </el-form>
     </div>
+
+    <el-dialog
+      title=""
+      width="800px"
+      :visible.sync="dialogVisible"
+    >
+      <div
+        class="agreement-content"
+        v-html="agreementContent"
+      />
+      <div
+        slot="footer"
+        class="dialog-footer"
+      >
+        <el-button
+          plain
+          @click="dialogVisible = false"
+        >
+          取 消
+        </el-button>
+        <el-button
+          type="primary"
+          @click="handleAgreement"
+        >
+          同 意
+        </el-button>
+      </div>
+    </el-dialog>
   </div>
 </template>
 
@@ -121,6 +149,7 @@ const login_bg_free_ecshopx = require(`@/assets/imgs/login-free-ecshopx.jpg`)
 
 import { mapMutations } from 'vuex'
 import { requiredRules, MinRules } from '@/utils/validate'
+import { unescape } from '@/utils'
 import loadingBtn from '@/components/loading-btn'
 
 export default {
@@ -141,7 +170,10 @@ export default {
       rules: {
         account: [requiredRules('账户')],
         checkPass: [requiredRules('密码'), MinRules(6)]
-      }
+      },
+      dialogVisible: false,
+      agreementId: null,
+      agreementContent: ''
     }
   },
   watch: {
@@ -172,25 +204,6 @@ export default {
     ]),
     init () {
       this.loginType = this.$route.meta.type
-      // console.log(this.loginType)
-
-      // switch (this.loginType) {
-      //   case 'distributor':
-      //     this.title = '店铺管理中心'
-      //     this.login_bg = login_bg_shopadmin
-      //     break
-      //   case 'dealer':
-      //     this.title = '经销商管理中心'
-      //     this.login_bg = login_bg_merchant
-      //     break
-      //   case 'merchant':
-      //     this.title = '商户管理中心'
-      //     this.login_bg = login_bg_merchant
-      //     break
-      //   default:
-      //     this.getBgImg()
-      //     break
-      // }
       this.getBgImg()
       this.$store.dispatch('setLoginType', this.loginType)
     },
@@ -235,17 +248,19 @@ export default {
     fnSize () {
       this.size = document.body.clientHeight
     },
-    fnLogin (formName) {
+    fnLogin (formName, agreement_id) {
       this.$refs[formName].validate(async (valid) => {
         if (valid) {
           const params = {
             username: this.form.account,
             password: this.form.checkPass,
             logintype: this.loginType,
-            product_model: this.VUE_APP_PRODUCT_MODEL
+            product_model: this.VUE_APP_PRODUCT_MODEL,
+            agreement_id
           }
           try {
             const { token } = await this.$api.auth.login(params)
+
             if (token) {
               this.loginSuccess(token)
             } else {
@@ -256,12 +271,26 @@ export default {
               })
             }
           } catch (e) {
+            console.error(e)
             this.$refs['loadingBtn'].closeLoading()
+            if (e.data.data.code == 400401) {
+              this.getAgreementContent()
+              this.dialogVisible = true
+            }
           }
         } else {
           this.$refs['loadingBtn'].closeLoading()
         }
       })
+    },
+    async getAgreementContent () {
+      const { agreement_id, content } = await this.$api.auth.getAgreementContent()
+      this.agreementId = agreement_id
+      this.agreementContent = unescape(content)
+    },
+    async handleAgreement () {
+      this.fnLogin('form', this.agreementId)
+      this.dialogVisible = false
     },
     async loginSuccess (token) {
       this.SET_TOKEN({ token })

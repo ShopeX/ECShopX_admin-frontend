@@ -17,6 +17,10 @@ $color-secondary: rgba(var(--themeColorRgb), 0.6);
   &--primary {
     background-color: $color-primary;
     border-color: $color-primary;
+    &:hover {
+      background-color: $color-primary;
+      border-color: $color-primary;
+    }
   }
   &.is-plain {
     background-color: #fff;

@@ -50,14 +50,14 @@
         >
           添加商品
         </el-button>
-        <el-button
+        <!-- <el-button
           v-if="VERSION_PLATFORM && !VUE_APP_FREE && login_type == 'distributor'"
           type="primary"
           icon="iconfont icon-xinzengcaozuo-01"
           @click="selectItems"
         >
           选品
-        </el-button>
+        </el-button> -->
         <el-dropdown>
           <el-button
             type="primary"

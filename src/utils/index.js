@@ -135,7 +135,12 @@ export function getPropByPath (obj, path, strict) {
 
 function export_open (tab) {
   setTimeout(() => {
-    window.open(`/setting/baseexport?tab=${tab}`)
+    const login_type = store.getters.login_type
+    if (login_type == 'distributor') {
+      window.open(`/shopadmin/shopsetting/baseexport?tab=${tab}`)
+    } else {
+      window.open(`/setting/baseexport?tab=${tab}`)
+    }
   }, 1000)
 }
 

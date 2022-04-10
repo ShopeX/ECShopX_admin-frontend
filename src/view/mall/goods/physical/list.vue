@@ -58,7 +58,7 @@
         >
           选品
         </el-button> -->
-        <el-dropdown>
+        <el-dropdown @command="handleImport">
           <el-button
             type="primary"
             plain
@@ -67,12 +67,12 @@
             导入<i class="el-icon-arrow-down el-icon--right" />
           </el-button>
           <el-dropdown-menu slot="dropdown">
-            <router-link to="/entity/goods/goodsphysical/physicalupload">
-              <el-dropdown-item>商品导入</el-dropdown-item>
-            </router-link>
-            <router-link to="/entity/goods/goodsphysical/physicalstoreupload">
-              <el-dropdown-item>库存导入</el-dropdown-item>
-            </router-link>
+            <el-dropdown-item command="physicalupload">
+              商品导入
+            </el-dropdown-item>
+            <el-dropdown-item command="physicalstoreupload">
+              库存导入
+            </el-dropdown-item>
           </el-dropdown-menu>
         </el-dropdown>
       </div>
@@ -310,13 +310,13 @@
           </el-dropdown-menu>
         </el-dropdown>
 
-        <el-button
+        <!-- <el-button
           type="primary"
           plain
           @click="syncItems"
         >
           同步商品数据
-        </el-button>
+        </el-button> -->
       </div>
 
       <el-tabs
@@ -1302,6 +1302,21 @@ export default {
     console.log(111)
   },
   methods: {
+    handleImport (command) {
+      if (command == 'physicalupload') {
+        if (this.login_type == 'distributor') {
+          this.$router.push({ path: `/shopadmin/entity/goodsphysical/physicalupload` })
+        } else {
+          this.$router.push({ path: `/entity/goods/goodsphysical/physicalupload` })
+        }
+      } else if (command == 'physicalstoreupload') {
+        if (this.login_type == 'distributor') {
+          this.$router.push({ path: `/shopadmin/entity/goodsphysical/physicalstoreupload` })
+        } else {
+          this.$router.push({ path: `/entity/goods/goodsphysical/physicalstoreupload` })
+        }
+      }
+    },
     selectItems () {
       this.xpGoodsVisible = true
     },

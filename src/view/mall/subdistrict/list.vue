@@ -115,6 +115,11 @@
             </span>
           </template>
         </el-table-column>
+        <el-table-column label="地区">
+          <template slot-scope="scope">
+            <span>{{ (scope.row.province || '') + ' ' + (scope.row.city || '') + ' ' + (scope.row.area || '') }}</span>
+          </template>
+        </el-table-column>
         <el-table-column label="操作">
           <template slot-scope="scope">
             <el-button

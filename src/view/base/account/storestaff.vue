@@ -51,6 +51,17 @@
         prop="username"
         label="姓名"
       />
+      <el-table-column label="店铺名称">
+        <template slot-scope="scope">
+          <el-tag
+            v-for="item in scope.row.distributor_ids"
+            :key="item.distributor_id"
+            size="mini"
+          >
+            {{ item.name }}
+          </el-tag>
+        </template>
+      </el-table-column>
       <el-table-column
         v-if="login_type == 'distributor'"
         prop="roles"

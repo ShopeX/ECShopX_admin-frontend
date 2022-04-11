@@ -213,6 +213,14 @@
             批量发货
           </el-button>
         </el-upload>
+        <el-tooltip
+          style="margin-left: 10px; margin-top: 10px;"
+          effect="light"
+          :content="'请在【' + origin + '/shopadmin/login】登录'"
+          placement="top-start"
+        >
+          <i class="el-icon-warning-outline" />
+        </el-tooltip>
       </div>
 
       <el-tabs
@@ -763,13 +771,15 @@ export default {
         reason: '',
         check_cancel: '1',
         shop_reject_reason: ''
-      }
+      },
+      origin: ''
     }
   },
   computed: {
     ...mapGetters(['login_type', 'isMicorMall'])
   },
   mounted () {
+    this.origin = window.location.origin
     const { tab } = this.$route.query
     if (tab) {
       this.params.order_status = tab

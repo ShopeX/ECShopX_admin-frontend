@@ -23,6 +23,16 @@
             <el-input v-model="dialog.label" />
           </el-form-item>
           <el-form-item
+            v-if="!dialog.is_hassuperior" 
+            label="选择地区"
+          >
+            <el-cascader
+              v-model="dialog.address"
+              :options="addList"
+              :props="{ expandTrigger: 'hover' }"
+            />
+          </el-form-item>
+          <el-form-item
             v-if="dialog.is_hassuperior"
             label="所属街道"
           >
@@ -148,6 +158,7 @@ import {
   addSubDistrictInfo,
   deleteSubDistrictInfo
 } from '@/api/subdistrict'
+import { getAddress } from '@/api/common' 
 import imgPicker from '@/components/imageselect'
 import imgBox from '@/components/element/imgBox'
 
@@ -178,9 +189,11 @@ export default {
         cat_img: '',
         loading: false,
         type: 'add',
-        distributor_id: []
+        distributor_id: [],
+        address: ''
       },
-      distributorList: []
+      distributorList: [],
+      addList: []
     }
   },
   computed: {
@@ -190,11 +203,54 @@ export default {
   mounted () {
     this.getCategory()
     this.getDistributor()
+    this.getAddress()
   },
   methods: {
     // getList(){
     //   getSubDistrictList
     // },
+    getAddress () {
+      this.loading = true
+      getAddress().then((response) => {
+        this.loading = false
+        // console.log('res===', response)
+        const data = response.data.data
+        
+        if(data && data.length > 0) {
+          const province = data.map((item) => {
+            return {
+              label: item.label,
+              value: item.value
+            }
+          })
+          let city = []
+          data.forEach((item) => {
+            city = city.concat(item.children.map((item2) => {
+              return {
+                label: item2.label,
+                value: item2.value
+              }
+            }))
+          })
+          let area = []
+          data.forEach((item) => {
+            item.children.forEach((item2) => {
+              area = area.concat(...item2.children.map((item3) => {
+                return {
+                  label: item3.label,
+                  value: item3.value
+                }
+              }))
+            })
+          })
+          this.addList = data
+          this.province = province
+          this.city = city
+          this.area = area
+        }
+       
+      })
+    },
     append (row) {
       console.log('append', row)
       this.dialog = {
@@ -220,28 +276,53 @@ export default {
         distributor_id: row.distributor_id,
         label: row.label,
         parent_id: row.parent_id,
-        title: row.parent_id == 0 ? '街道' : '居委'
+        title: row.parent_id == 0 ? '街道' : '居委',
+        address: row.regions_id
       }
     },
     handleDeleteImg () {
       this.dialog.cat_img = null
     },
     handleSubmit () {
+      // console.log('-----', this.dialog)
       const _this = this
-      const { label, type, current_id, parent_id, distributor_id } = this.dialog
+      const { label, type, current_id, parent_id, distributor_id, address, is_hassuperior } = this.dialog
+      if(!is_hassuperior && !address){
+        this.$message.error('地区必选！')
+        return
+      }
       // debugger
       if (!label) {
         this.$message.error('名称必填！')
         return
       } else {
         this.dialog.loading = true
+        let query = {}
+        if(!is_hassuperior){
+            const province = this.province.find((item) => item.value === address[0])
+            const city = this.city.find((item) => item.value === address[1])
+            const area = this.area.find((item) => item.value === address[2])
+            if(!province || !city || !area){
+               this.$message.error('选择的地区不存在！')
+            }
+            query.regions_id=address
+            query.province = province.label
+            query.city = city.label
+            query.area = area.label
+          }
         if (type === 'add') {
           //添加
-          addSubDistrictInfo({
-            label: label,
-            parent_id: current_id || 0,
-            distributor_id
-          })
+          query = {
+            ...query, 
+            ...{
+              label: label,
+              parent_id: current_id || 0,
+              distributor_id
+            }
+          }
+          // console.log('query===', query)
+          // return
+          addSubDistrictInfo(query)
             .then((res) => {
               _this.dialog = {
                 ..._this.dialog,
@@ -262,14 +343,17 @@ export default {
               }
             })
         } else {
-          updateSubDistrictInfo({
-            id: current_id,
-            label,
-            parent_id,
-            distributor_id
-            // parent_id: current_id,
-            // category_id: current_id
-          })
+          query = {
+            ...query, 
+            ...{
+              id: current_id,
+              label,
+              parent_id,
+              distributor_id
+            }
+          }
+          // console.log('query===', query)
+          updateSubDistrictInfo(query)
             .then((res) => {
               _this.dialog = {
                 ..._this.dialog,
@@ -454,28 +538,30 @@ export default {
 .el-table__indent {
   padding-left: 30px !important;
 }
-.el-table__expand-icon {
-  .el-icon-arrow-right {
-    font-family: 'iconfont' !important;
-    font-size: 16px;
-    font-style: normal;
-    -webkit-font-smoothing: antialiased;
-    -moz-osx-font-smoothing: grayscale;
+// .el-table__expand-icon {
+//   .el-icon-arrow-right {
+//     font-family: 'iconfont' !important;
+//     font-size: 16px;
+//     font-style: normal;
+//     -webkit-font-smoothing: antialiased;
+//     -moz-osx-font-smoothing: grayscale;
 
-    &::before {
-      content: '\e65f';
-    }
-  }
-}
-.el-table__expand-icon {
-  &.el-table__expand-icon--expanded {
-    transform: rotate(0deg);
-    transition: all 0.2s ease-in-out, -webkit-transform 0.2s ease-in-out;
-    .el-icon-arrow-right {
-      &::before {
-        content: '\e655';
-      }
-    }
-  }
-}
+//     &::before {
+//       content: '\e65f';
+//       color:#ff0;
+//     }
+//   }
+// }
+// .el-table__expand-icon {
+//   &.el-table__expand-icon--expanded {
+//     transform: rotate(0deg);
+//     transition: all 0.2s ease-in-out, -webkit-transform 0.2s ease-in-out;
+//     .el-icon-arrow-right {
+//       &::before {
+//         content: '\e655';
+//         color:#ff0;
+//       }
+//     }
+//   }
+// }
 </style>

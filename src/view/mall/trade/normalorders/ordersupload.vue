@@ -37,6 +37,14 @@
             批量发货
           </el-button>
         </el-upload>
+        <el-tooltip
+          style="margin-left: 10px; margin-top: 10px;"
+          effect="light"
+          :content="'请将从订单列表导出的主订单文件，删除不想批量发货的订单号，修改物流公司，物流单号后上传即可。'"
+          placement="top-start"
+        >
+          <i class="el-icon-warning-outline" />
+        </el-tooltip>
       </div>
       <div class="tip-info">
         <p>

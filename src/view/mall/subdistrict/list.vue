@@ -23,7 +23,7 @@
             <el-input v-model="dialog.label" />
           </el-form-item>
           <el-form-item
-            v-if="!dialog.is_hassuperior" 
+            v-if="!dialog.is_hassuperior && dialog.title == '街道'" 
             label="选择地区"
           >
             <el-cascader
@@ -385,7 +385,12 @@ export default {
       var params = { page: 1, pageSize: 500 }
       getDistributorList(params).then((response) => {
         if (response.data.data.list) {
-          this.distributorList = response.data.data.list
+          this.distributorList = response.data.data.list.map((item) => {
+            return {
+              ...item,
+              distributor_id: item.distributor_id + ''
+            }
+          })
         }
       })
     },
@@ -397,9 +402,12 @@ export default {
         this.categoryList.forEach((d) => {
           d.distributor_list = d.distributor_id.map((dd, index) => {
             return {
-              id: dd,
+              id: dd + '',
               name: d.distributor[index]
             }
+          })
+          d.distributor_id = d.distributor_id.map((item) => {
+            return item + ''
           })
         })
         this.loading = false

@@ -291,8 +291,8 @@ export default {
     handleSubmit () {
       // console.log('-----', this.dialog)
       const _this = this
-      const { label, type, current_id, parent_id, distributor_id, address, is_hassuperior } = this.dialog
-      if(!is_hassuperior && !address){
+      const { label, type, current_id, parent_id, distributor_id, address, is_hassuperior, title } = this.dialog
+      if(!is_hassuperior&& title == '街道' && !address){
         this.$message.error('地区必选！')
         return
       }
@@ -303,7 +303,7 @@ export default {
       } else {
         this.dialog.loading = true
         let query = {}
-        if(!is_hassuperior){
+        if(!is_hassuperior && title == '街道'){
             const province = this.province.find((item) => item.value === address[0])
             const city = this.city.find((item) => item.value === address[1])
             const area = this.area.find((item) => item.value === address[2])

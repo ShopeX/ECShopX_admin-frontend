@@ -13,7 +13,12 @@
   }
   &__content {
     margin-left: 90px;
-    width: 214px;
+    &.mini {
+      width: 214px;
+    }
+    &.max {
+      width: 526px;
+    }
     .el-select,
     .el-cascader,
     .el-autocomplete {
@@ -41,6 +46,11 @@
         width: 82px;
       }
     }
+    .el-date-editor--datetimerange {
+      .el-range-input {
+        width: 120px;
+      }
+    }
   }
 }
 </style>
@@ -49,7 +59,10 @@
     <div class="form-item__label">
       {{ label }}
     </div>
-    <div class="form-item__content">
+    <div
+      class="form-item__content"
+      :class="size"
+    >
       <slot />
     </div>
   </div>
@@ -63,7 +76,11 @@ export default {
   mixins: [emitter],
   props: {
     label: String,
-    prop: String
+    prop: String,
+    size: {
+      type: String,
+      default: 'mini'
+    }
   },
   inject: ['filterForm'],
   data () {

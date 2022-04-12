@@ -67,7 +67,9 @@
           <i
             class="iconfont"
             :class="extend ? 'icon-z045' : 'icon-zhankai'"
-          />{{ `${extend ? '收起' : '展开'}` }}
+          />{{
+            `${extend ? '收起' : '展开'}`
+          }}
         </el-button>
       </div>
     </div>
@@ -119,9 +121,13 @@ export default {
     },
     calcRows () {
       // console.log('xxx:', this.$refs.fiterFormBd.clientWidth)
-      const cols = Math.floor(this.$refs.fiterFormBd.clientWidth / 305)
-      const rows = Math.ceil(this.fields.length / cols)
-      if (rows > 2) {
+      // const cols = Math.floor(this.$refs.fiterFormBd.clientWidth / 305)
+      const fieldsWidth = this.fields.reduce((previous, current) => {
+        return previous + current.$el.clientWidth
+      }, 0)
+      // const rows = Math.ceil(this.fields.length / cols)
+      const rows = fieldsWidth > this.$refs.fiterFormBd.clientWidth * 2
+      if (rows) {
         this.showExtend = true
       } else {
         this.showExtend = false

@@ -111,15 +111,14 @@
         <SpFilterFormItem
           prop="create_time"
           label="下单时间:"
+          size="max"
         >
           <el-date-picker
             v-model="params.create_time"
             clearable
-            unlink-panels
-            type="daterange"
+            type="datetimerange"
             align="right"
-            format="yyyy-MM-dd"
-            value-format="yyyy-MM-dd"
+            format="yyyy-MM-dd HH:mm"
             range-separator="至"
             start-placeholder="开始日期"
             end-placeholder="结束日期"
@@ -199,27 +198,25 @@
             </el-dropdown-item>
           </el-dropdown-menu>
         </el-dropdown>
-        <el-upload
-          action=""
-          class="btn-upload"
-          :on-change="uploadHandleChange"
-          :auto-upload="false"
-          :show-file-list="false"
-        >
-          <el-button
-            type="primary"
-            plain
-          >
-            批量发货
-          </el-button>
-        </el-upload>
         <el-tooltip
-          style="margin-left: 10px; margin-top: 10px;"
           effect="light"
-          :content="'请在【' + origin + '/shopadmin/login】登录'"
+          content="请将从订单列表导出的主订单文件，删除不想批量发货的订单号，修改物流公司，物流单号后上传即可。"
           placement="top-start"
         >
-          <i class="el-icon-warning-outline" />
+          <el-upload
+            action=""
+            class="btn-upload"
+            :on-change="uploadHandleChange"
+            :auto-upload="false"
+            :show-file-list="false"
+          >
+            <el-button
+              type="primary"
+              plain
+            >
+              批量发货
+            </el-button>
+          </el-upload>
         </el-tooltip>
       </div>
 
@@ -1115,7 +1112,8 @@ export default {
       }
       if (isArray(this.params.create_time) && this.params.create_time.length >= 2) {
         params.time_start_begin = moment(this.params.create_time[0]).unix()
-        params.time_start_end = moment(this.params.create_time[1]).add(1, 'days').unix()
+        // params.time_start_end = moment(this.params.create_time[1]).add(1, 'days').unix()
+        params.time_start_end = moment(this.params.create_time[1]).unix()
       }
       delete params.create_time
       orderExport(params).then((response) => {

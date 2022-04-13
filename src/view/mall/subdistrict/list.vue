@@ -1,17 +1,29 @@
 <template>
   <div>
-    <el-row :gutter="20">
-      <el-col>
-        <el-button
-          type="primary"
-          plain
-          icon="el-icon-circle-plus"
-          @click="appendTop(categoryList)"
-        >
-          新增街道
-        </el-button>
-      </el-col>
-    </el-row>
+    <div class="action-container">
+      <el-button
+        type="primary"
+        plain
+        @click="appendTop(categoryList)"
+      >
+        新增街道
+      </el-button>
+    </div>
+    <SpFilterForm
+      :model="params"
+      @onSearch="onSearch"
+      @onReset="onSearch"
+    >
+      <SpFilterFormItem
+        prop="label"
+        label="街道居委:"
+      >
+        <el-input
+          v-model="params.label"
+          placeholder="请输入街道居委名称"
+        />
+      </SpFilterFormItem>
+    </SpFilterForm>
     <el-card>
       <el-dialog
         :title="dialog.type === 'add' ? `新增${dialog.title}` : `编辑${dialog.title}`"
@@ -23,7 +35,7 @@
             <el-input v-model="dialog.label" />
           </el-form-item>
           <el-form-item
-            v-if="!dialog.is_hassuperior && dialog.title == '街道'" 
+            v-if="!dialog.is_hassuperior && dialog.title == '街道'"
             label="选择地区"
           >
             <el-cascader
@@ -117,7 +129,13 @@
         </el-table-column>
         <el-table-column label="地区">
           <template slot-scope="scope">
-            <span>{{ (scope.row.province || '') + ' ' + (scope.row.city || '') + ' ' + (scope.row.area || '') }}</span>
+            <span>{{
+              (scope.row.province || '') +
+                ' ' +
+                (scope.row.city || '') +
+                ' ' +
+                (scope.row.area || '')
+            }}</span>
           </template>
         </el-table-column>
         <el-table-column label="操作">
@@ -163,7 +181,7 @@ import {
   addSubDistrictInfo,
   deleteSubDistrictInfo
 } from '@/api/subdistrict'
-import { getAddress } from '@/api/common' 
+import { getAddress } from '@/api/common'
 import imgPicker from '@/components/imageselect'
 import imgBox from '@/components/element/imgBox'
 
@@ -179,7 +197,7 @@ export default {
       spaceInput: false,
       categoryList: [],
       total_count: 0,
-      params: [],
+      // params: [],
       imgDialog: false,
       isGetImage: false,
       current: '',
@@ -198,7 +216,10 @@ export default {
         address: ''
       },
       distributorList: [],
-      addList: []
+      addList: [],
+      params: {
+        label: ''
+      }
     }
   },
   computed: {
@@ -214,14 +235,17 @@ export default {
     // getList(){
     //   getSubDistrictList
     // },
+    onSearch () {
+      this.getCategory()
+    },
     getAddress () {
       this.loading = true
       getAddress().then((response) => {
         this.loading = false
         // console.log('res===', response)
         const data = response.data.data
-        
-        if(data && data.length > 0) {
+
+        if (data && data.length > 0) {
           const province = data.map((item) => {
             return {
               label: item.label,
@@ -230,22 +254,26 @@ export default {
           })
           let city = []
           data.forEach((item) => {
-            city = city.concat(item.children.map((item2) => {
-              return {
-                label: item2.label,
-                value: item2.value
-              }
-            }))
+            city = city.concat(
+              item.children.map((item2) => {
+                return {
+                  label: item2.label,
+                  value: item2.value
+                }
+              })
+            )
           })
           let area = []
           data.forEach((item) => {
             item.children.forEach((item2) => {
-              area = area.concat(...item2.children.map((item3) => {
-                return {
-                  label: item3.label,
-                  value: item3.value
-                }
-              }))
+              area = area.concat(
+                ...item2.children.map((item3) => {
+                  return {
+                    label: item3.label,
+                    value: item3.value
+                  }
+                })
+              )
             })
           })
           this.addList = data
@@ -253,7 +281,6 @@ export default {
           this.city = city
           this.area = area
         }
-       
       })
     },
     append (row) {
@@ -291,8 +318,9 @@ export default {
     handleSubmit () {
       // console.log('-----', this.dialog)
       const _this = this
-      const { label, type, current_id, parent_id, distributor_id, address, is_hassuperior, title } = this.dialog
-      if(!is_hassuperior&& title == '街道' && !address){
+      const { label, type, current_id, parent_id, distributor_id, address, is_hassuperior, title } =
+        this.dialog
+      if (!is_hassuperior && title == '街道' && !address) {
         this.$message.error('地区必选！')
         return
       }
@@ -303,22 +331,22 @@ export default {
       } else {
         this.dialog.loading = true
         let query = {}
-        if(!is_hassuperior && title == '街道'){
-            const province = this.province.find((item) => item.value === address[0])
-            const city = this.city.find((item) => item.value === address[1])
-            const area = this.area.find((item) => item.value === address[2])
-            if(!province || !city || !area){
-               this.$message.error('选择的地区不存在！')
-            }
-            query.regions_id=address
-            query.province = province.label
-            query.city = city.label
-            query.area = area.label
+        if (!is_hassuperior && title == '街道') {
+          const province = this.province.find((item) => item.value === address[0])
+          const city = this.city.find((item) => item.value === address[1])
+          const area = this.area.find((item) => item.value === address[2])
+          if (!province || !city || !area) {
+            this.$message.error('选择的地区不存在！')
           }
+          query.regions_id = address
+          query.province = province.label
+          query.city = city.label
+          query.area = area.label
+        }
         if (type === 'add') {
           //添加
           query = {
-            ...query, 
+            ...query,
             ...{
               label: label,
               parent_id: current_id || 0,
@@ -349,7 +377,7 @@ export default {
             })
         } else {
           query = {
-            ...query, 
+            ...query,
             ...{
               id: current_id,
               label,

@@ -90,6 +90,24 @@
           </el-select>
         </SpFilterFormItem>
         <SpFilterFormItem
+          prop="create_time"
+          label="下单时间:"
+          size="max"
+        >
+          <el-date-picker
+            v-model="params.create_time"
+            clearable
+            type="datetimerange"
+            align="right"
+            format="yyyy-MM-dd HH:mm"
+            range-separator="至"
+            start-placeholder="开始日期"
+            end-placeholder="结束日期"
+            prefix-icon="null"
+            :picker-options="pickerOptions"
+          />
+        </SpFilterFormItem>
+        <SpFilterFormItem
           v-if="!isMicorMall && !VERSION_IN_PURCHASE"
           prop="is_invoiced"
           label="开票状态:"
@@ -109,12 +127,12 @@
           </el-select>
         </SpFilterFormItem>
         <SpFilterFormItem
-          prop="create_time"
-          label="下单时间:"
+          prop="delivery_time"
+          label="发货时间:"
           size="max"
         >
           <el-date-picker
-            v-model="params.create_time"
+            v-model="params.delivery_time"
             clearable
             type="datetimerange"
             align="right"
@@ -801,10 +819,17 @@ export default {
       delete params.subDistrict
 
       if (isArray(this.params.create_time) && this.params.create_time.length >= 2) {
-        params.time_start_begin = this.params.create_time[0]
-        params.time_start_end = this.params.create_time[1]
-        delete params.create_time
+        params.time_start_begin = moment(this.params.create_time[0]).unix()
+        params.time_start_end = moment(this.params.create_time[1]).unix()
       }
+
+      if (isArray(this.params.delivery_time) && this.params.delivery_time.length >= 2) {
+        params.delivery_time_begin = moment(this.params.delivery_time[0]).unix()
+        params.delivery_time_end = moment(this.params.delivery_time[1]).unix()
+      }
+
+      delete params.create_time
+      delete params.delivery_time
 
       const { list, pager, datapass_block } = await this.$api.trade.getOrderList(params)
 
@@ -1112,10 +1137,17 @@ export default {
       }
       if (isArray(this.params.create_time) && this.params.create_time.length >= 2) {
         params.time_start_begin = moment(this.params.create_time[0]).unix()
-        // params.time_start_end = moment(this.params.create_time[1]).add(1, 'days').unix()
         params.time_start_end = moment(this.params.create_time[1]).unix()
       }
+
+      if (isArray(this.params.delivery_time) && this.params.delivery_time.length >= 2) {
+        params.delivery_time_begin = moment(this.params.delivery_time[0]).unix()
+        params.delivery_time_end = moment(this.params.delivery_time[1]).unix()
+      }
+
       delete params.create_time
+      delete params.delivery_time
+
       orderExport(params).then((response) => {
         const { status, url, filename } = response.data.data
         if (status) {

@@ -48,7 +48,7 @@
     }
     .el-date-editor--datetimerange {
       .el-range-input {
-        width: 120px;
+        width: 140px;
       }
     }
   }

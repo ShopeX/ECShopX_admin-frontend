@@ -99,11 +99,12 @@
             clearable
             type="datetimerange"
             align="right"
-            format="yyyy-MM-dd HH:mm"
+            format="yyyy-MM-dd HH:mm:ss"
             range-separator="至"
             start-placeholder="开始日期"
             end-placeholder="结束日期"
             prefix-icon="null"
+            :default-time="defaultTime"
             :picker-options="pickerOptions"
           />
         </SpFilterFormItem>
@@ -136,11 +137,12 @@
             clearable
             type="datetimerange"
             align="right"
-            format="yyyy-MM-dd HH:mm"
+            format="yyyy-MM-dd HH:mm:ss"
             range-separator="至"
             start-placeholder="开始日期"
             end-placeholder="结束日期"
             prefix-icon="null"
+            :default-time="defaultTime"
             :picker-options="pickerOptions"
           />
         </SpFilterFormItem>
@@ -535,6 +537,7 @@ export default {
   data () {
     return {
       loading: false,
+      defaultTime: ['00:00:00', '23:59:59'],
       params: {
         mobile: '',
         order_id: '',

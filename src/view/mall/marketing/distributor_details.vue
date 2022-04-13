@@ -1,185 +1,179 @@
 <template>
   <div class="cus-details">
-    <el-card>
-      <el-row>
-        <el-col :span="3">
-          <img
-            class="cus-details-img"
-            src="@/assets/img/adapay/store.png"
-            alt=""
-          >
-        </el-col>
-        <el-col :span="20">
-          <div class="cus-details-flex">
-            <p class="cus-details-row">
-              {{ infoList.name }}
+    <template v-if="isEdit == false">
+      <el-card>
+        <el-row>
+          <el-col :span="3">
+            <img class="cus-details-img" src="@/assets/img/adapay/store.png" alt="" />
+          </el-col>
+          <el-col :span="20">
+            <div class="cus-details-flex">
+              <p class="cus-details-row">{{ infoList.name }}</p>
+              <div class="cus-details-pfonts cus-margin-40">
+                <i class="el-icon-location-outline cus-icon"></i>
+                <span>{{ infoList.province + infoList.city || '-' }}</span>
+              </div>
+            </div>
+            <p class="cus-details-pfonts">
+              <i class="el-icon-s-custom cus-icon"></i>
+              <span>{{ infoList.contact || '-' }}</span>
             </p>
-            <div class="cus-details-pfonts cus-margin-40">
-              <i class="el-icon-location-outline cus-icon" />
-              <span>{{ infoList.province + infoList.city || '-' }}</span>
+            <p class="cus-details-pfonts">
+              <i class="el-icon-time cus-icon"></i>
+              <span>{{ infoList.hour || '-' }}</span>
+            </p>
+            <div class="cus-details-flex">
+              <div class="cus-details-pfonts">
+                <i class="el-icon-phone cus-icon"></i>
+                <span>{{ infoList.mobile || '-' }}</span>
+                （企业电话）
+              </div>
+              <div class="cus-details-pfonts cus-margin-50">
+                <i class="el-icon-message cus-icon"></i>
+                <span>{{ infoList.email }}</span>
+                （企业邮箱）
+              </div>
             </div>
-          </div>
-          <p class="cus-details-pfonts">
-            <i class="el-icon-s-custom cus-icon" />
-            <span>{{ infoList.contact || '-' }}</span>
-          </p>
-          <p class="cus-details-pfonts">
-            <i class="el-icon-time cus-icon" />
-            <span>{{ infoList.hour || '-' }}</span>
-          </p>
-          <div class="cus-details-flex">
-            <div class="cus-details-pfonts">
-              <i class="el-icon-phone cus-icon" />
-              <span>{{ infoList.mobile || '-' }}</span>
-              （企业电话）
-            </div>
-            <div class="cus-details-pfonts cus-margin-50">
-              <i class="el-icon-message cus-icon" />
-              <span>{{ infoList.email }}</span>
-              （企业邮箱）
-            </div>
-          </div>
-        </el-col>
-      </el-row>
-      <el-row style="margin-top: 10px">
-        <el-tag
-          v-for="item in tagsList"
-          :key="item.name"
-          :type="item.type"
-          size="small"
-          class="cus-details-tags"
-        >
-          {{ item.name }}
-        </el-tag>
-      </el-row>
-    </el-card>
-    <el-card>
-      <el-tabs
-        v-model="activeName"
-        class="cus-details-tabs"
-      >
-        <el-tab-pane
-          v-if="loginType === 'normal'"
-          label="基本信息"
-          name="first"
-        >
-          <BaseModal
-            :span="20"
-            :label-list="baseInfo"
-            :info="infoList"
-            title="地理位置"
-          />
-          <BaseModal
-            v-if="is_rel_dealer"
-            :span="20"
-            :label-list="otherInfo"
-            :info="dealerList"
-            title="其他信息"
-          />
-        </el-tab-pane>
-        <el-tab-pane
-          v-if="is_openAccount"
-          label="开户信息"
-          name="second"
-        >
-          <BaseModal
-            :span="7"
-            :label-list="member_type === 'corp' ? enterPriseList : personInfo"
-            :info="accountInfo"
-            :title="member_type === 'corp' ? '企业信息' : '个人信息'"
-          />
-          <BaseModal
-            :span="7"
-            :label-list="member_type === 'corp' ? enterAccountInfo : accountList"
-            :info="accountInfo"
-            title="结算账户信息"
-          />
-          <BaseModal
-            v-if="loginType === 'normal'"
-            :span="7"
-            :label-list="
-              is_rel_dealer && is_openAccount && member_type === 'corp'
-                ? enterSplitAccountList
-                : splitAccountList
-            "
-            :info="split_ledger_info"
-            title="分账信息"
-          />
-          <el-card>
-            <div slot="header">
-              其他信息
-            </div>
-            <div class="body">
-              <el-row class="load-btn">
-                <el-col
-                  :span="4"
-                  style="text-align: right; padding-right: 10px"
-                >
-                  附件信息：
-                </el-col>
-                <el-col
-                  v-if="member_type === 'corp'"
-                  :span="20"
-                  class="cus-btn"
-                >
-                  <el-button
-                    type="text"
-                    @click="dowloadFile(infoList.attach_file)"
-                  >
-                    附件
-                  </el-button>
-                </el-col>
-                <span v-else>-</span>
-              </el-row>
-            </div>
-          </el-card>
-        </el-tab-pane>
-        <el-tab-pane
-          v-if="!is_openAccount && loginType === 'distributor'"
-          label="开户信息"
-          name="second"
-        >
-          <el-row
-            style="height: 350px"
-            type="flex"
-            justify="center"
-            align="middle"
+          </el-col>
+        </el-row>
+        <el-row style="margin-top: 10px">
+          <el-tag
+            v-for="item in tagsList"
+            :key="item.name"
+            :type="item.type"
+            size="small"
+            class="cus-details-tags"
           >
-            <span style="color: #ccc">--暂无开户信息--</span>
-          </el-row>
-        </el-tab-pane>
-      </el-tabs>
-    </el-card>
-    <el-row
-      v-if="is_rel_dealer && loginType === 'normal'"
-      class="cus-details-bot"
-    >
-      <el-button
-        type="primary"
-        size="small"
-        plain
-        @click="handleModalClick(true, is_openAccount)"
-      >
-        解除关联
-      </el-button>
-    </el-row>
-    <RemoveShipModal
-      :visible="visible"
-      :info="infoList"
-      :content="modalContent"
-      @handleClick="handleModalClick"
-    />
+            {{ item.name }}
+          </el-tag>
+        </el-row>
+      </el-card>
+      <el-card>
+        <el-tabs v-model="activeName" class="cus-details-tabs"  @tab-click="tabChange">
+          <el-tab-pane v-if="loginType === 'normal'" label="基本信息" name="first">
+            <BaseModal :span="20" :labelList="baseInfo" :info="infoList" title="地理位置" />
+            <BaseModal
+              :span="20"
+              :labelList="otherInfo"
+              :info="dealerList"
+              title="其他信息"
+              v-if="is_rel_dealer"
+            />
+          </el-tab-pane>
+          <el-tab-pane label="开户信息" name="second" v-if="is_openAccount">
+            <BaseModal
+              :span="7"
+              :labelList="member_type === 'corp' ? enterPriseList : personInfo"
+              :info="accountInfo"
+              :title="
+                member_type === 'corp'
+                  ? `企业信息 ${accountInfo.audit_desc_1 || ''}`
+                  : '个人信息 ' + `${accountInfo.audit_desc_1 || ''}`"
+            />
+            <BaseModal
+              :span="7"
+              :labelList="member_type === 'corp' ? enterAccountInfo : accountList"
+              :info="accountInfo"
+              :title="'结算账户信息' + `${accountInfo.audit_desc_2 || ''}`"
+            />
+            <BaseModal
+              :span="7"
+              v-if="loginType === 'normal'"
+              :labelList="
+                is_rel_dealer && is_openAccount && member_type === 'corp'
+                  ? enterSplitAccountList
+                  : splitAccountList
+              "
+              :info="split_ledger_info"
+              title="分账信息"
+            />
+            <el-card v-if="member_type === 'corp'">
+              <div slot="header">其他信息</div>
+              <div class="body">
+                <el-row class="load-btn">
+                  <el-col :span="4" style="text-align: right; padding-right: 10px"
+                    >附件信息：</el-col
+                  >
+                  <el-col :span="20" class="cus-btn" v-if="member_type === 'corp'">
+                    <el-button @click="dowloadFile(infoList.attach_file)" type="text"
+                      >附件</el-button
+                    >
+                  </el-col>
+                  <span v-else>-</span>
+                </el-row>
+              </div>
+            </el-card>
+            <div class="btn" v-if="datapass_block != 1 &&  loginType != 'normal'">
+              <el-button type="primary" @click="editHandle" v-if="accountInfo.audit_state != 'A'">编辑</el-button>
+              <el-button v-if="accountInfo.audit_state == 'A'">审核中</el-button>
+            </div>
+          </el-tab-pane>
+          <el-tab-pane
+            v-if="!is_openAccount && loginType === 'distributor'"
+            label="开户信息"
+            name="second"
+          >
+            <el-row style="height: 350px" type="flex" justify="center" align="middle">
+              <span style="color: #ccc">--暂无开户信息--</span>
+            </el-row>
+          </el-tab-pane>
+          <el-tab-pane v-if="loginType === 'normal'" label="操作记录" name="third">
+            <el-timeline :reverse="false" class="cus-timeline">
+              <el-timeline-item
+                v-for="(item, index) in logList"
+                :key="index"
+                :timestamp="item.create_date"
+              >
+                {{ item.content }}
+              </el-timeline-item>
+            </el-timeline>
+            <el-pagination
+              v-if="total_count > params.page_size"
+              layout="total, sizes, prev, pager, next"
+              @current-change="handleCurrentChange"
+              :current-page.sync="params.page"
+              :page-sizes="[params.page_size, 20, 30, 40, 50, 100]"
+              :page-size="params.page_size"
+              :total="total_count"
+            >
+            </el-pagination>
+          </el-tab-pane>
+        </el-tabs>
+      </el-card>
+      <el-row v-if="is_rel_dealer && loginType === 'normal'" class="cus-details-bot">
+        <el-button type="primary" @click="handleModalClick(true, is_openAccount)" size="small" plain
+          >解除关联</el-button
+        >
+      </el-row>
+      <RemoveShipModal
+        :visible="visible"
+        :info="infoList"
+        :content="modalContent"
+        @handleClick="handleModalClick"
+      />
+    </template>
+    <template v-else>
+      <editAccount
+        :activeName="accountInfo.member_type"
+        :info="accountInfo"
+        @back="back"
+      ></editAccount>
+    </template>
   </div>
 </template>
 <script>
 import { getDistributorInfo } from '@/api/marketing'
+import { getAdapayLogList } from '@/api/adapay/dealer'
 import BaseModal from '@/view/mall/marketing/component/BaseModal'
 import RemoveShipModal from '@/view/mall/marketing/component/RemoveShipModal'
+import editAccount from './component/editAccount.vue'
 
 export default {
-  components: { BaseModal, RemoveShipModal },
-  data () {
+  components: { BaseModal, RemoveShipModal, editAccount },
+  data() {
     return {
+      datapass_block: null, //数据是否脱敏
+      isEdit: false,
       activeName: 'first',
       distributor_id: 0,
       infoList: {},
@@ -193,6 +187,12 @@ export default {
       visible: false,
       modalContent: '',
       tagsList: [],
+      logList: [],
+      total_count: 0,
+      params: {
+        page: 1,
+        page_size: 10
+      },
       baseInfo: [
         // 地理位置
         { name: '地理位置', field: 'store_address' },
@@ -248,18 +248,23 @@ export default {
       ]
     }
   },
-  mounted () {
-    if (this.$route.query.distributor_id) {
-      this.distributor_id = this.$route.query.distributor_id
-      this.loginType = this.$store.getters.login_type
-      if (this.$store.getters.login_type === 'distributor') {
-        this.activeName = 'second'
-      }
-      this.getTabDetail()
-    }
-  },
   methods: {
-    addressFilter () {
+    handleCurrentChange(page_num) {
+      this.params.page = page_num
+      this.getLogList()
+    },
+    tabChange(e) {
+      this.activeName = e.name
+      if (e.name == 'third') {
+        this.params.page = 1
+        this.getLogList()
+      }
+    },
+
+    editHandle() {
+      this.isEdit = true
+    },
+    addressFilter() {
       const { lat, lng } = this.infoList
       if (lat && lng) {
         return lng + ' - ' + lat
@@ -267,15 +272,17 @@ export default {
         return '-'
       }
     },
-    getTabDetail () {
+    getTabDetail() {
       getDistributorInfo({ distributor_id: this.distributor_id })
         .then((response) => {
-          const { is_openAccount, is_rel_dealer, adapayMemberInfo, dealer } =
+          console.log(response)
+          const { is_openAccount, is_rel_dealer, adapayMemberInfo, dealer, datapass_block } =
             response.data.data || {}
           const {
             basicInfo: { auto_sync_goods, is_ziti, is_delivery, company_dada_open }
           } = adapayMemberInfo || {}
           this.infoList = response.data.data
+          this.datapass_block = datapass_block
           this.split_ledger_info = adapayMemberInfo.split_ledger_info || {}
           this.is_openAccount = is_openAccount
           this.is_rel_dealer = is_rel_dealer
@@ -300,6 +307,24 @@ export default {
           this.$message({
             type: 'error',
             message: '获取详情出错'
+          })
+        })
+    },
+    getLogList () {
+      getAdapayLogList({
+        log_type: 'distributor',
+        ...this.params,
+        distributor_id: this.distributor_id
+      })
+        .then((response) => {
+          this.logList = response.data.data.list || {}
+          this.total_count = response.data.data.total_count || 0
+        })
+        .catch((error) => {
+          this.loading = false
+          this.$message({
+            type: 'error',
+            message: '获取日志出错'
           })
         })
     },
@@ -361,11 +386,38 @@ export default {
         type: 'success',
         message: '下载成功'
       })
+    },
+    back () {
+      this.isEdit = false
+    }
+  },
+  mounted () {
+    if (this.$route.query.distributor_id) {
+      this.distributor_id = this.$route.query.distributor_id
+      this.loginType = this.$store.getters.login_type
+      if (this.$store.getters.login_type === 'distributor' || this.is_openAccount) {
+        this.activeName = 'second'
+      }
+      this.getTabDetail()
     }
   }
 }
 </script>
-
+<style lang="scss" scoped>
+.cus-details {
+  .btn {
+    background: #f5f5f5;
+    padding: 10px 0;
+    text-align: center;
+    position: relative;
+    bottom: 0;
+    width: 100%;
+  }
+  .tips {
+    margin: 10px 0;
+  }
+}
+</style>
 <style lang="scss">
 .cus-details {
   &-img {
@@ -439,6 +491,13 @@ export default {
   .load-btn {
     display: flex;
     align-items: baseline;
+  }
+  .cus-timeline {
+    margin-top: 20px;
+    padding-left: 10px;
+    .el-timeline-item {
+      padding-bottom: 40px;
+    }
   }
 }
 </style>

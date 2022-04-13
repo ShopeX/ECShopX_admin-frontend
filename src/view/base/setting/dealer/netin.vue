@@ -1,5 +1,5 @@
 <template>
-  <Result-cpn :current-status="currentStatus" />
+  <Result-cpn :currentStatus="currentStatus"/>
 </template>
 
 <script>

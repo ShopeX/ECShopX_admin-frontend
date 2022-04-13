@@ -3,7 +3,7 @@
     <el-card>
       <SpFinder
         ref="finder"
-        :no-selection="true"
+        :noSelection='true'
         :hooks="{
           beforeSearch: beforeSearch
         }"
@@ -28,23 +28,20 @@
 </template>
 
 <script>
-import district from '@/common/district.json'
+import district from "@/common/district.json"
 import { createSetting } from '@shopex/finder'
 
 // 取选中地区的值
 function getCascaderObj (val, opt) {
-  return (
-    val &&
-    val.map(function (value, index, array) {
-      for (var itm of opt) {
-        if (itm.value === value) {
-          opt = itm.children
-          return itm
-        }
+  return val && val.map(function (value, index, array) {
+    for (var itm of opt) {
+      if (itm.value === value) {
+        opt = itm.children
+        return itm
       }
-      return null
-    })
-  )
+    }
+    return null
+  })
 }
 export default {
   data () {
@@ -53,23 +50,30 @@ export default {
       city: '',
       area: '',
       regions: district,
-      checkedRegions: []
+      checkedRegions: [],
+      statusList: [
+        { label: '未入网', value: 1 },
+        { label: '待审核', value: 2 },
+        { label: '入网成功', value: 3 }
+      ],
     }
   },
   computed: {
     setting () {
       return createSetting({
         columns: [
-          { name: '店铺名称', key: 'name' },
+          { name: '店铺名称', key: 'name'  },
           { name: '负责人', key: 'contact' },
           { name: '联系方式', key: 'mobile' },
-          { name: '经营地址', key: 'address' }
+          { name: '经营地址', key: 'address' },
+          { name: '状态', key: '', formatter: (h, { audit_state }) => (audit_state == '1' && '未入网') || (audit_state == '2' && '待审核') || (audit_state == '3' && '入网成功') }
         ],
         search: [
           { type: 'input', key: 'name', name: '店铺名称', placeholder: '请输入店铺名称' },
           { type: 'input', key: 'contact', name: '负责人', placeholder: '请输入负责人' },
           { type: 'input', key: 'mobile', name: '联系方式', placeholder: '请输入联系方式' },
-          { key: 'address', name: '经营地址', slot: 'address' }
+          { key: 'address', name: '经营地址', slot: 'address' },
+          { type: 'select', key: 'audit_state', options: this.statusList, name: '状态', placeholder: '请选择' }
         ]
       })
     }

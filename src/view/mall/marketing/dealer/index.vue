@@ -2,6 +2,7 @@
 .cus-dealer-page {
   .el-dialog__body {
     padding-top: 10px;
+    padding-bottom: 15px;
   }
   .el-card:first-child {
     .el-card__body {
@@ -20,9 +21,7 @@
 </style>
 <template>
   <div class="cus-dealer-page">
-    <div
-      v-if="$route.path.indexOf('detail') === -1 && $route.path.indexOf('detail/storelist') === -1"
-    >
+    <div v-if="$route.path.indexOf('detail') === -1 && $route.path.indexOf('detail/storelist') === -1">
       <el-card>
         <SpFinder
           ref="finder"
@@ -38,23 +37,16 @@
         >
           <template v-slot:tableTop>
             <el-row class="cus-btn">
-              <el-button
-                type="primary"
-                plain
-                size="mini"
-                @click="handleClose(true)"
-              >
-                新增经销商
-              </el-button>
+              <el-button @click='handleClose(true)' type="primary" plain size='mini'>新增经销商</el-button>
             </el-row>
           </template>
           <template v-slot:create_time>
             <el-date-picker
-              v-model="create_time"
               class="input-m"
+              v-model="create_time"
               type="daterange"
-              format="yyyy-MM-dd"
-              value-format="yyyy-MM-dd"
+              format='yyyy-MM-dd'
+              value-format='yyyy-MM-dd'
               start-placeholder="开始日期"
               end-placeholder="结束日期"
               @change="(val) => dateChange('create', val)"
@@ -65,8 +57,8 @@
               v-model="open_time"
               class="input-m"
               type="daterange"
-              format="yyyy-MM-dd"
-              value-format="yyyy-MM-dd"
+              format='yyyy-MM-dd'
+              value-format='yyyy-MM-dd'
               start-placeholder="开始日期"
               end-placeholder="结束日期"
               @change="(val) => dateChange('open', val)"
@@ -75,37 +67,22 @@
         </SpFinder>
       </el-card>
       <el-dialog
-        title="通知消息"
+        title="提示"
         :visible.sync="visibleModal"
-        width="25%"
-        :close-on-click-modal="false"
+        width='25%'
+        :close-on-click-modal='false'
         @before-close="handleOpenOpeartion(false, '')"
       >
-        <el-row>
-          {{ modalContent }}
+        <el-row style="text-aligin:center">
+          <p>{{ modalContent }}</p>
+          <p>{{ subTitle }}</p>
         </el-row>
         <el-row style="text-align: right">
-          <el-button
-            type="primary"
-            size="small"
-            plain
-            @click="handleModalConfirm(false)"
-          >
-            取消
-          </el-button>
-          <el-button
-            type="primary"
-            size="small"
-            @click="handleModalConfirm(true)"
-          >
-            确认
-          </el-button>
+          <el-button @click="handleModalConfirm(false)" type="primary" size='small' plain>取消</el-button>
+          <el-button @click="handleModalConfirm(true)" type="primary" size='small'>确认</el-button>
         </el-row>
       </el-dialog>
-      <AddModal
-        :visible="addVisible"
-        @handleClose="handleClose"
-      />
+      <AddModal :visible='addVisible' @handleClose='handleClose' />
     </div>
     <router-view />
   </div>
@@ -113,7 +90,7 @@
 <script>
 import { mapGetters } from 'vuex'
 import { createSetting } from '@shopex/finder'
-import { setDealerStatus } from '@/api/marketing'
+import { setDealerStatus, resertPassword } from '@/api/marketing'
 import AddModal from './AddModal.vue'
 import moment from 'moment'
 export default {
@@ -123,23 +100,11 @@ export default {
     setting () {
       return createSetting({
         columns: [
-          { name: '经销商', key: 'username' },
+          { name: '经销商', key: 'username'  },
           { name: '联系人', key: 'contact' },
           { name: '联系电话', key: 'mobile' },
-          {
-            name: '创建时间',
-            key: 'created',
-            formatter: (h, { created }) =>
-              created ? moment(created * 1000).format('YYYY-MM-DD HH:mm:ss') : '-'
-          },
-          {
-            name: '开户时间',
-            key: 'adapay_open_account_time',
-            formatter: (h, { adapay_open_account_time }) =>
-              adapay_open_account_time
-                ? moment(adapay_open_account_time * 1000).format('YYYY-MM-DD HH:mm:ss')
-                : '-'
-          }
+          { name: '创建时间', key: 'created', formatter: (h, { created }) => created ? moment(created * 1000).format('YYYY-MM-DD HH:mm:ss') : '-' },
+          { name: '开户时间', key: 'adapay_open_account_time', formatter: (h, { adapay_open_account_time }) => adapay_open_account_time ? moment(adapay_open_account_time * 1000).format('YYYY-MM-DD HH:mm:ss') : '-' }
         ],
         search: [
           { type: 'input', key: 'username', name: '经销商', placeholder: '请输入经销商' },
@@ -159,10 +124,7 @@ export default {
             action: {
               type: 'link',
               handler: (row) => {
-                this.$router.push({
-                  path: '/shop_dealer/dealer_list/detail',
-                  query: { operator_id: row[0].operator_id }
-                })
+                this.$router.push({path: '/shop_dealer/dealer_list/detail', query: { operator_id: row[0].operator_id }})
               }
             }
           },
@@ -206,6 +168,15 @@ export default {
             action: {
               handler: (row) => this.handleOpenOpeartion(true, '禁用', row[0])
             }
+          },
+          {
+            name: '重置密码',
+            key: 'resert',
+            type: 'button',
+            buttonType: 'text',
+            action: {
+              handler: (row) => this.handleeResertPass(true, row[0])
+            }
           }
         ]
       })
@@ -221,6 +192,7 @@ export default {
       visibleModal: false,
       modalType: '',
       modalContent: '',
+      subTitle: '',
       addVisible: false,
       form: {}
     }
@@ -240,32 +212,37 @@ export default {
     },
     handleOpenOpeartion (visivle, type, rowDate) {
       this.rowDate = rowDate
-      this.modalContent =
-        type === '开启'
-          ? '如开启该经销商，与之关联的已入网成功的店铺也将被开启，总部将参与分账，请确认是否开启该经销商。'
-          : '如禁用该经销商，与之关联的已入网成功的店铺也将被禁用，总部不在参与分账，请确认是否禁用该经销商。'
+      this.modalContent = type === '开启' ? '如开启该经销商，与之关联的已入网成功的店铺也将被开启，总部将参与分账，请确认是否开启该经销商。' : '如禁用该经销商，与之关联的已入网成功的店铺也将被禁用，总部不在参与分账，请确认是否禁用该经销商。'
       this.visibleModal = visivle
       this.modalType = type
+      this.subTitle = ''
+    },
+    handleeResertPass (visivle, rowDate) {
+      this.rowDate = rowDate
+      this.modalContent = `请确认是否重置【${rowDate.username}】的密码`
+      this.subTitle = '（新密码将以短信形式发送至其联系人的手机号上，短信费用将从短信余额中扣除）'
+      this.visibleModal = visivle
     },
     handleModalConfirm (visible) {
       const { is_disable, operator_id } = this.rowDate
       if (visible) {
-        setDealerStatus({ is_disable: is_disable === 0 ? 1 : 0, operator_id: operator_id }).then(
-          (res) => {
-            this.visibleModal = false
-            this.modalType = ''
-            this.modalContent = ''
-            this.$message({
-              message: '操作成功',
-              type: 'success'
-            })
-          }
-        )
+        let url = this.subTitle ? resertPassword : setDealerStatus
+        let parmas = this.subTitle ? operator_id : { is_disable: is_disable === 0 ? 1 : 0, operator_id: operator_id }
+        url(parmas).then((res) => {
+          this.visibleModal = false
+          this.modalType = ''
+          this.modalContent = ''
+          this.$message({
+            message: '操作成功',
+            type: 'success'
+          })
+        })
         this.$refs.finder.refresh()
       } else {
         this.visibleModal = false
         this.modalType = ''
         this.modalContent = ''
+        this.subTitle = ''
       }
     },
     handleClose (visible) {

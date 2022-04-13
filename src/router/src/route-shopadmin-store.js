@@ -16,7 +16,7 @@ export default {
           component: () => import('@/view/mall/marketing/distributor_editor')
         },
         {
-          path: 'template',
+          path: 'template/:distributor_id?',
           component: () => import('@/view/mall/marketing/distributor_template')
         },
         {
@@ -55,7 +55,7 @@ export default {
     {
       path: 'adapay_member_entry',
       name: '开户管理',
-      component: () => import('@/view/dealer/create_account.vue')
+      component: () => import('@/view/dealer/create_account')
     }
   ]
 }

@@ -9,45 +9,27 @@
       :rules="rules"
     >
       <!-- 企业信息 -->
-      <el-card
-        class="box-card"
-        shadow="never"
-      >
-        <div
-          slot="header"
-          class="clearfix"
-        >
+      <el-card class="box-card" shadow="never">
+        <div slot="header" class="clearfix">
           <span>企业信息</span>
         </div>
 
         <div class="content">
           <el-row :gutter="20">
             <el-col :span="8">
-              <el-form-item
-                label="商户名称"
-                prop="mer_name"
-              >
+              <el-form-item label="商户名称" prop="mer_name">
                 <el-input v-model="form.mer_name" />
               </el-form-item>
             </el-col>
             <el-col :span="8">
-              <el-form-item
-                label="商户名简称"
-                prop="mer_short_name"
-              >
+              <el-form-item label="商户名简称" prop="mer_short_name">
                 <el-input v-model="form.mer_short_name" />
               </el-form-item>
             </el-col>
             <el-col :span="8">
-              <el-form-item
-                label="营业执照号"
-                prop="license_code"
-              >
+              <el-form-item label="营业执照号" prop="license_code">
                 <div class="flex">
-                  <el-input
-                    v-model="form.license_code"
-                    placeholder=""
-                  />
+                  <el-input v-model="form.license_code" />
                   <el-tooltip
                     :style="{ 'margin-left': 30 + 'px' }"
                     content="如三证合一传三证合一码"
@@ -60,10 +42,7 @@
               </el-form-item>
             </el-col>
             <el-col :span="8">
-              <el-form-item
-                label="商户有效日期"
-                prop="mer_start_valid_date_type"
-              >
+              <el-form-item label="商户有效日期" prop="mer_start_valid_date_type">
                 <div style="width: 100%">
                   <el-tooltip
                     :style="{ 'margin-right': 5 + 'px' }"
@@ -77,24 +56,14 @@
                     v-model="form.mer_start_valid_date_type"
                     @change="dateTypeHandle($event, 'mer')"
                   >
-                    <el-radio label="长期">
-                      长期有效
-                    </el-radio>
-                    <el-radio label="短期">
-                      时间节点
-                    </el-radio>
+                    <el-radio label="长期">长期有效</el-radio>
+                    <el-radio label="短期">时间节点</el-radio>
                   </el-radio-group>
                 </div>
               </el-form-item>
             </el-col>
-            <el-col
-              v-if="form.mer_start_valid_date_type == '短期'"
-              :span="8"
-            >
-              <el-form-item
-                prop="mer_valid_date_full"
-                label="商户有效日期"
-              >
+            <el-col :span="8" v-if="form.mer_start_valid_date_type == '短期'">
+              <el-form-item prop="mer_valid_date_full" label="商户有效日期">
                 <el-date-picker
                   v-model="form.mer_valid_date_full"
                   style="width: 100%"
@@ -108,14 +77,8 @@
                 />
               </el-form-item>
             </el-col>
-            <el-col
-              v-if="form.mer_start_valid_date_type == '长期'"
-              :span="8"
-            >
-              <el-form-item
-                prop="mer_valid_date_start"
-                label="商户有效期开始日期"
-              >
+            <el-col :span="8" v-if="form.mer_start_valid_date_type == '长期'">
+              <el-form-item prop="mer_valid_date_start" label="商户有效期开始日期">
                 <el-date-picker
                   v-model="form.mer_valid_date_start"
                   style="width: 100%"
@@ -135,26 +98,14 @@
               </el-form-item>
             </el-col> -->
             <el-col :span="8">
-              <el-form-item
-                label="法人/负责人姓名"
-                prop="legal_name"
-              >
-                <el-input
-                  v-model="form.legal_name"
-                  placeholder=""
-                />
+              <el-form-item label="法人/负责人姓名" prop="legal_name">
+                <el-input v-model="form.legal_name" />
               </el-form-item>
             </el-col>
             <el-col :span="8">
-              <el-form-item
-                label="法人/负责人身份证号"
-                prop="legal_idno"
-              >
+              <el-form-item label="法人/负责人身份证号" prop="legal_idno">
                 <div class="flex">
-                  <el-input
-                    v-model="form.legal_idno"
-                    placeholder=""
-                  />
+                  <el-input v-model="form.legal_idno" />
                   <el-tooltip
                     :style="{ 'margin-left': 30 + 'px' }"
                     content="身份证信息字母X需大写"
@@ -167,21 +118,12 @@
               </el-form-item>
             </el-col>
             <el-col :span="8">
-              <el-form-item
-                label="法人/负责人手机号码"
-                prop="legal_mp"
-              >
-                <el-input
-                  v-model="form.legal_mp"
-                  placeholder=""
-                />
+              <el-form-item label="法人/负责人手机号码" prop="legal_mp">
+                <el-input v-model="form.legal_mp" />
               </el-form-item>
             </el-col>
             <el-col :span="8">
-              <el-form-item
-                label="法人/负责人证件有效期"
-                prop="legal_id_expires_type"
-              >
+              <el-form-item label="法人/负责人证件有效期" prop="legal_id_expires_type">
                 <el-tooltip
                   :style="{ 'margin-right': 5 + 'px' }"
                   content="长期有效：设置默认截止时间为2099年"
@@ -194,23 +136,13 @@
                   v-model="form.legal_id_expires_type"
                   @change="dateTypeHandle($event, 'legal')"
                 >
-                  <el-radio label="长期">
-                    长期有效
-                  </el-radio>
-                  <el-radio label="短期">
-                    时间节点
-                  </el-radio>
+                  <el-radio label="长期">长期有效</el-radio>
+                  <el-radio label="短期">时间节点</el-radio>
                 </el-radio-group>
               </el-form-item>
             </el-col>
-            <el-col
-              v-if="form.legal_id_expires_type == '短期'"
-              :span="8"
-            >
-              <el-form-item
-                prop="legal_id_expires_full"
-                label="请选择法人/负责人证件有效期"
-              >
+            <el-col :span="8" v-if="form.legal_id_expires_type == '短期'">
+              <el-form-item prop="legal_id_expires_full" label="请选择法人/负责人证件有效期">
                 <el-date-picker
                   v-model="form.legal_id_expires_full"
                   style="width: 100%"
@@ -224,10 +156,7 @@
                 />
               </el-form-item>
             </el-col>
-            <el-col
-              v-if="form.legal_id_expires_type == '长期'"
-              :span="8"
-            >
+            <el-col :span="8" v-if="form.legal_id_expires_type == '长期'">
               <el-form-item
                 prop="legal_id_expires_start"
                 label="请选择法人/负责人证件有效期开始日期"
@@ -243,10 +172,7 @@
               </el-form-item>
             </el-col>
             <el-col :span="8">
-              <el-form-item
-                label="注册手机号"
-                prop="usr_phone"
-              >
+              <el-form-item label="注册手机号" prop="usr_phone">
                 <div class="flex">
                   <el-input v-model="form.usr_phone" />
                   <el-tooltip
@@ -261,26 +187,17 @@
               </el-form-item>
             </el-col>
             <el-col :span="8">
-              <el-form-item
-                label="注册地址"
-                prop="reg_addr"
-              >
+              <el-form-item label="注册地址" prop="reg_addr">
                 <el-input v-model="form.reg_addr" />
               </el-form-item>
             </el-col>
             <el-col :span="8">
-              <el-form-item
-                label="经营地址"
-                prop="cust_addr"
-              >
+              <el-form-item label="经营地址" prop="cust_addr">
                 <el-input v-model="form.cust_addr" />
               </el-form-item>
             </el-col>
             <el-col :span="8">
-              <el-form-item
-                label="商户座机电话"
-                prop="cust_tel"
-              >
+              <el-form-item label="商户座机电话" prop="cust_tel">
                 <div class="flex">
                   <el-input v-model="form.cust_tel" />
                   <el-tooltip
@@ -298,73 +215,43 @@
         </div>
       </el-card>
       <!-- 联系人信息 -->
-      <el-card
-        class="box-card"
-        shadow="never"
-      >
-        <div
-          slot="header"
-          class="clearfix"
-        >
+      <el-card class="box-card" shadow="never">
+        <div slot="header" class="clearfix">
           <span>联系人信息</span>
         </div>
         <el-row :gutter="20">
           <el-col :span="8">
-            <el-form-item
-              label="联系人姓名"
-              prop="cont_name"
-            >
-              <el-input
-                v-model="form.cont_name"
-                style="width: 100%"
-              />
+            <el-form-item label="联系人姓名" prop="cont_name">
+              <el-input style="width: 100%" v-model="form.cont_name" />
             </el-form-item>
           </el-col>
           <el-col :span="8">
-            <el-form-item
-              label="联系人手机号"
-              prop="cont_phone"
-            >
+            <el-form-item label="联系人手机号" prop="cont_phone">
               <div class="flex">
                 <el-input v-model="form.cont_phone" />
               </div>
             </el-form-item>
           </el-col>
           <el-col :span="8">
-            <el-form-item
-              label="电子邮箱"
-              prop="customer_email"
-            >
+            <el-form-item label="电子邮箱" prop="customer_email">
               <el-input v-model="form.customer_email" />
             </el-form-item>
           </el-col>
         </el-row>
       </el-card>
       <!-- 结算账户信息 -->
-      <el-card
-        class="box-card"
-        shadow="never"
-      >
-        <div
-          slot="header"
-          class="clearfix"
-        >
+      <el-card class="box-card" shadow="never">
+        <div slot="header" class="clearfix">
           <span>结算账户信息</span>
         </div>
         <el-row :gutter="20">
           <el-col :span="8">
-            <el-form-item
-              label="结算银行卡号"
-              prop="card_id_mask"
-            >
+            <el-form-item label="结算银行卡号" prop="card_id_mask">
               <el-input v-model="form.card_id_mask" />
             </el-form-item>
           </el-col>
           <el-col :span="8">
-            <el-form-item
-              label="结算银行卡所属银行"
-              prop="bank_code"
-            >
+            <el-form-item label="结算银行卡所属银行" prop="bank_code">
               <div class="flex">
                 <el-autocomplete
                   v-model="form.bank_name"
@@ -379,25 +266,15 @@
             </el-form-item>
           </el-col>
           <el-col :span="8">
-            <el-form-item
-              label="结算银行卡开户名"
-              prop="card_name"
-            >
+            <el-form-item label="结算银行卡开户名" prop="card_name">
               <el-input v-model="form.card_name" />
             </el-form-item>
           </el-col>
           <el-col :span="8">
-            <el-form-item
-              label="结算银行账户类型"
-              prop="bank_acct_type"
-            >
+            <el-form-item label="结算银行账户类型" prop="bank_acct_type">
               <el-radio-group v-model="form.bank_acct_type">
-                <el-radio label="1">
-                  对公
-                </el-radio>
-                <el-radio label="2">
-                  对私
-                </el-radio>
+                <el-radio label="1">对公</el-radio>
+                <el-radio label="2">对私</el-radio>
               </el-radio-group>
               <el-tooltip
                 :style="{ 'margin-left': 30 + 'px' }"
@@ -410,10 +287,7 @@
             </el-form-item>
           </el-col>
           <el-col :span="8">
-            <el-form-item
-              label="结算银行卡开户省市"
-              prop="area"
-            >
+            <el-form-item label="结算银行卡开户省市" prop="area">
               <el-cascader
                 v-model="form.area"
                 style="width: 100%"
@@ -459,12 +333,7 @@
         </div>
       </el-card> -->
       <el-form-item style="text-align: center; margin: 50px 0; margin-right: 280px">
-        <el-button
-          type="primary"
-          @click="submitForm"
-        >
-          提交审核
-        </el-button>
+        <el-button type="primary" @click="submitForm">提交审核</el-button>
         <!-- <loading-btn
           ref="loadingBtn"
           size="medium"
@@ -476,7 +345,7 @@
     </el-form>
     <Result-cpn
       v-if="processed == '已填'"
-      :current-status="currentStatus"
+      :currentStatus="currentStatus"
       @nextPage="nextPage"
       @processedHandle="processedHandle"
     />
@@ -544,83 +413,83 @@ export default {
           }
         }
       },
-      form: {
-        'mer_name': '张三',
-        'mer_short_name': '张三',
-        'license_code': '2121212121',
-        'mer_start_valid_date_type': '短期',
-        'mer_valid_date_full': ['20211130', '20220112'],
-        'mer_valid_date_start': '',
-        'mer_start_valid_date': '20211130',
-        'mer_valid_date': '20220112',
-        'entry_mer_type': '1',
-        'legal_name': '张三',
-        'legal_idno': '140481199602072376',
-        'legal_mp': '19921909090',
-        'legal_id_expires_type': '长期',
-        'legal_id_expires_full': '',
-        'legal_id_expires_start': '20211215',
-        'legal_start_cert_id_expires': '20211215',
-        'legal_id_expires': '20991231',
-        'usr_phone': '19921909090',
-        'reg_addr': '12321321',
-        'cust_addr': '21212121',
-        'cust_tel': '12321321',
-        'cont_name': '张三',
-        'cont_phone': '19921909090',
-        'customer_email': '19921909090@21.com',
-        'card_id_mask': '32178378217831287',
-        'bank_code': '建设银行',
-        'bank_name': '01050000',
-        'card_name': '张三',
-        'bank_acct_type': '2',
-        'area': ['0013', '1302'],
-        'prov_code': '0013',
-        'area_code': '1302'
-      },
-      // 选中地区
       // form: {
-      //   // 企业信息
-      //   mer_name: '', // 商户名称
-      //   mer_short_name: '', // 商户名简称
-      //   license_code: '', //营业执照号
-      //   mer_start_valid_date_type: '', //商户有效日期type
-      //   mer_valid_date_full: '', //商户有效日期(完整、自有)
-      //   mer_valid_date_start: '', //商户有效日期 （开始）(因为选了长期、自有)
-
-      //   mer_start_valid_date: '', //商户有效日期 （开始）
-      //   mer_valid_date: '', //商户有效日期 （结束）
-
-      //   entry_mer_type: '1', // 商户类型
-      //   legal_name: '', // 法人负责人姓名
-      //   legal_idno: '', // 法人负责人身份证
-      //   legal_mp: '', //法人负责人身份证手机
-
-      //   legal_id_expires_type: '', // 法人/负责人身份证有效期type
-      //   legal_id_expires_full: '', //  法人/负责人身份证有效期 (完整、自有)
-      //   legal_id_expires_start: '', // 开始）(因为选了长期、自有)
-      //   legal_start_cert_id_expires: '', //法人/负责人身份证有效期（始）格式 YYYYMMDD
-      //   legal_id_expires: '', // 法人/负责人身份证有效期（至）格式 YYYYMMDD
-
-      //   usr_phone: '', //注册手机号
-      //   reg_addr: '', //注册地址
-      //   cust_addr: '', //经营地址
-      //   cust_tel: '', //商户电话（座机）
-      //   // 联系人信息
-      //   cont_name: '', // 联系人姓名
-      //   cont_phone: '', // 联系人手机号
-      //   customer_email: '', // 电子邮箱
-      //   // 结算账户信息
-      //   card_id_mask: '', //结算银行卡号
-      //   bank_code: '', //结算银行卡所属银行
-      //   bank_name: '',
-      //   card_name: '', //结算银行卡开户姓名
-      //   bank_acct_type: '', //结算银行账户类型
-      //   area: '',
-      //   prov_code: '', //结算银行卡省份编码
-      //   area_code: '' // 结算银行卡地区
-      //   //  isUploadFile: true
+      //   'mer_name': '张三',
+      //   'mer_short_name': '张三',
+      //   'license_code': '2121212121',
+      //   'mer_start_valid_date_type': '短期',
+      //   'mer_valid_date_full': ['20211130', '20220112'],
+      //   'mer_valid_date_start': '',
+      //   'mer_start_valid_date': '20211130',
+      //   'mer_valid_date': '20220112',
+      //   'entry_mer_type': '1',
+      //   'legal_name': '张三',
+      //   'legal_idno': '140481199602072376',
+      //   'legal_mp': '19921909090',
+      //   'legal_id_expires_type': '长期',
+      //   'legal_id_expires_full': '',
+      //   'legal_id_expires_start': '20211215',
+      //   'legal_start_cert_id_expires': '20211215',
+      //   'legal_id_expires': '20991231',
+      //   'usr_phone': '19921909090',
+      //   'reg_addr': '12321321',
+      //   'cust_addr': '21212121',
+      //   'cust_tel': '12321321',
+      //   'cont_name': '张三',
+      //   'cont_phone': '19921909090',
+      //   'customer_email': '19921909090@21.com',
+      //   'card_id_mask': '32178378217831287',
+      //   'bank_code': '建设银行',
+      //   'bank_name': '01050000',
+      //   'card_name': '张三',
+      //   'bank_acct_type': '2',
+      //   'area': ['0013', '1302'],
+      //   'prov_code': '0013',
+      //   'area_code': '1302'
       // },
+      // 选中地区
+      form: {
+        // 企业信息
+        mer_name: '', // 商户名称
+        mer_short_name: '', // 商户名简称
+        license_code: '', //营业执照号
+        mer_start_valid_date_type: '', //商户有效日期type
+        mer_valid_date_full: '', //商户有效日期(完整、自有)
+        mer_valid_date_start: '', //商户有效日期 （开始）(因为选了长期、自有)
+
+        mer_start_valid_date: '', //商户有效日期 （开始）
+        mer_valid_date: '', //商户有效日期 （结束）
+
+        entry_mer_type: '1', // 商户类型
+        legal_name: '', // 法人负责人姓名
+        legal_idno: '', // 法人负责人身份证
+        legal_mp: '', //法人负责人身份证手机
+
+        legal_id_expires_type: '', // 法人/负责人身份证有效期type
+        legal_id_expires_full: '', //  法人/负责人身份证有效期 (完整、自有)
+        legal_id_expires_start: '', // 开始）(因为选了长期、自有)
+        legal_start_cert_id_expires: '', //法人/负责人身份证有效期（始）格式 YYYYMMDD
+        legal_id_expires: '', // 法人/负责人身份证有效期（至）格式 YYYYMMDD
+
+        usr_phone: '', //注册手机号
+        reg_addr: '', //注册地址
+        cust_addr: '', //经营地址
+        cust_tel: '', //商户电话（座机）
+        // 联系人信息
+        cont_name: '', // 联系人姓名
+        cont_phone: '', // 联系人手机号
+        customer_email: '', // 电子邮箱
+        // 结算账户信息
+        card_id_mask: '', //结算银行卡号
+        bank_code: '', //结算银行卡所属银行
+        bank_name: '',
+        card_name: '', //结算银行卡开户姓名
+        bank_acct_type: '', //结算银行账户类型
+        area: '',
+        prov_code: '', //结算银行卡省份编码
+        area_code: '' // 结算银行卡地区
+        //  isUploadFile: true
+      },
       rules: {
         mer_name: requiredRules('商户名称'),
         mer_short_name: requiredRules('商户名简称'),
@@ -680,7 +549,6 @@ export default {
       }
     }
   },
-  computed: {},
   created () {},
   mounted () {
     this.getStepHandle()
@@ -853,8 +721,7 @@ export default {
       return true
     },
     /* ----------------------------------checkBox start----------------------------------- */
-    async checkBoxConfirmHandle (data) {
-      console.log(data)
+    async checkBoxConfirmHandle(data) {
       try {
         const { status } = await this.$api.adapay.accountCreate({ ...this.form, ...data })
         if (status) {
@@ -867,7 +734,6 @@ export default {
           }
         }
         console.log(this.$refs)
-
         this.checkBoxVisibleHandle()
       } catch (error) {
         this.checkBoxVisibleHandle()

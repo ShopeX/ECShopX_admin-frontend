@@ -269,9 +269,9 @@ export default {
     ...mapGetters(['wxapp_id', 'template_name'])
   },
   mounted () {
-    // if (this.$route.query && this.$route.query.app_id) {
-    //   this.wxapp_id = this.$route.query.app_id
-    // }
+    if (this.$route.query && this.$route.query.app_id) {
+      this.wxapp_id = this.$route.query.app_id
+    }
     this.getMonitorsList()
   },
   methods: {

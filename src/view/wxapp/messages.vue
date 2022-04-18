@@ -1,19 +1,5 @@
 <template>
   <div>
-    <div
-      v-if="!wxapp_id"
-      class="content-center no-bind"
-    >
-      <div>
-        <i
-          class="iconfont icon-info-circle"
-          style="font-size: 70px"
-        />
-      </div>
-      <div class="content-padded">
-        未绑定小程序，请先绑定小程序
-      </div>
-    </div>
     <el-dialog
       title="小程序消息模版详情"
       size="tiny"
@@ -116,11 +102,12 @@
   </div>
 </template>
 <script>
-import { mapGetters } from 'vuex'
 import { getWxaMessageTemplateList, openWxaMessageTemplate } from '@/api/wxa'
 export default {
   data () {
     return {
+      wxapp_id: '',
+      template_name: '',
       detailDialog: false,
       temlateList: [],
       currentTemplate: {
@@ -132,18 +119,19 @@ export default {
       }
     }
   },
-  computed: {
-    ...mapGetters(['wxapp_id', 'template_name'])
-  },
   mounted () {
-    if (this.wxapp_id) {
-      getWxaMessageTemplateList({
-        wxapp_appid: this.wxapp_id,
-        template_name: this.template_name
-      }).then((res) => {
-        this.temlateList = res.data.data.list
-      })
+    if (this.$route.query && this.$route.query.app_id) {
+      this.wxapp_id = this.$route.query.app_id
     }
+    if (this.$route.query && this.$route.query.tmp_name) {
+      this.template_name = this.$route.query.tmp_name
+    }
+    getWxaMessageTemplateList({
+      wxapp_appid: this.wxapp_id,
+      template_name: this.template_name
+    }).then((res) => {
+      this.temlateList = res.data.data.list
+    })
   },
   methods: {
     closeDialog () {

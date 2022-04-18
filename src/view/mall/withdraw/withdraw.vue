@@ -183,7 +183,8 @@ export default {
 
       return params
     },
-    afterSearch ({ search_options = {}, cash_balance = 0, cash_limit = 0, auto_draw_cash }) {
+    afterSearch ({ data }) {
+      const { search_options = {}, cash_balance = 0, cash_limit = 0, auto_draw_cash } = data.data
       this.auto_draw_cash = auto_draw_cash
       this.search_options = search_options.status
       this.cash_balance = cash_balance

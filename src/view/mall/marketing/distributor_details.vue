@@ -128,10 +128,9 @@
               </el-timeline-item>
             </el-timeline>
             <el-pagination
-              v-if="total_count > params.page_size"
               layout="total, sizes, prev, pager, next"
               :current-page.sync="params.page"
-              :page-sizes="[params.page_size, 20, 30, 40, 50, 100]"
+              :page-sizes="[10, 20, 50]"
               :page-size="params.page_size"
               :total="total_count"
               @current-change="handleCurrentChange"

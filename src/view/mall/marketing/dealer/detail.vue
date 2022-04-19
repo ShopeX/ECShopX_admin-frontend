@@ -83,11 +83,12 @@
             <el-pagination
               v-if='total_count > params.page_size'
               layout='total, sizes, prev, pager, next'
-              @current-change='handleCurrentChange'
               :current-page.sync='params.page'
               :page-sizes='[params.page_size, 20, 30, 40, 50, 100]'
               :page-size='params.page_size'
               :total='total_count'
+              @current-change='handleCurrentChange'
+              @size-change="handleSizeChange"
             >
             </el-pagination>
           </el-tab-pane>
@@ -292,6 +293,11 @@ export default {
     },
     handleCurrentChange(page_num) {
       this.params.page = page_num
+      this.getLogList()
+    },
+    handleSizeChange (pageSize) {
+      this.params.page = 1
+      this.params.page_size = pageSize
       this.getLogList()
     },
     tabChange(e) {

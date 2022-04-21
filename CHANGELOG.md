@@ -2,6 +2,31 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [2.6.1](https://git.ishopex.cn/ecshopx/ecshopx-admin/compare/v2.7.0...v2.6.1) (2022-04-21)
+
+## [2.7.0](https://git.ishopex.cn/ecshopx/ecshopx-admin/compare/v2.6.0...v2.7.0) (2022-04-21)
+
+
+### Features
+
+* 店铺中心新增街道社区配置 路由配置 ([7380b8d](https://git.ishopex.cn/ecshopx/ecshopx-admin/commit/7380b8d975706f31e59ded624ba89b285acdd74c))
+* 街道增加省市区 ([9e9ea35](https://git.ishopex.cn/ecshopx/ecshopx-admin/commit/9e9ea35ebbebaa062f5e01075bb1b94885d0d4fc))
+* 街道社区配置列表增加省市区显示 ([6ae793b](https://git.ishopex.cn/ecshopx/ecshopx-admin/commit/6ae793b9e9a24621b0a592cbd8e7728c79b6277c))
+
+
+### Bug Fixes
+
+* 1、编辑街道不显示店铺名称 ([3901a46](https://git.ishopex.cn/ecshopx/ecshopx-admin/commit/3901a46e918663cd78a01eebeec9df6e550ae879))
+* 优化 ([3a207ba](https://git.ishopex.cn/ecshopx/ecshopx-admin/commit/3a207bae728b9cbee5da98516d08dae591dd93b0))
+* 修改订单搜索日期 ([880b80c](https://git.ishopex.cn/ecshopx/ecshopx-admin/commit/880b80c631c2a44004f8cf90c541574cd007fb3c))
+* 店铺列表 ([969dbc5](https://git.ishopex.cn/ecshopx/ecshopx-admin/commit/969dbc5d8f1871e00dc5392e519083aa30cd3130))
+* 批量发货 ([5d5f3f1](https://git.ishopex.cn/ecshopx/ecshopx-admin/commit/5d5f3f14c7b895c941c5833f76b3816901fd90b9))
+* 新增。编辑居委关于地区的bug修复 ([e8f7f02](https://git.ishopex.cn/ecshopx/ecshopx-admin/commit/e8f7f026887cdea597ce54865e31584d5aade0cc))
+* 时间查询组件样式修改 ([f4f8ec6](https://git.ishopex.cn/ecshopx/ecshopx-admin/commit/f4f8ec6ffbaa0de43df30505dfb4a75ba0e05781))
+* 社区、订单列表添加搜索条件 ([75cdea3](https://git.ishopex.cn/ecshopx/ecshopx-admin/commit/75cdea3aa6f1b6ccc0142b983af01e903710a959))
+* 社区街道 ([662ad43](https://git.ishopex.cn/ecshopx/ecshopx-admin/commit/662ad433a19cfe6837d9500c8a7e62d0556c91b1))
+* 订单批量发货 ([00e801c](https://git.ishopex.cn/ecshopx/ecshopx-admin/commit/00e801cd0e0f8b3e924bcb18b278f6b5bcb0d751))
+
 ## [2.6.0](https://git.ishopex.cn/ecshopx/ecshopx-admin/compare/v2.5.0...v2.6.0) (2022-04-09)
 
 

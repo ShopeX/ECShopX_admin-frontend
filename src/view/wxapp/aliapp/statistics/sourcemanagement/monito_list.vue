@@ -90,7 +90,7 @@
               v-model="monitorForm.monitor_path"
               filterable
               placeholder="选择页面"
-              style="width: 260px"
+              style="width: 233px"
               @change="pathParamsChange"
             >
               <el-option
@@ -124,7 +124,7 @@
                   @change="optionChange"
                 >
                   <el-radio
-                    v-for="(item, index) in item.option"
+                    v-for="item in item.option"
                     :key="item.value"
                     :label="item.value"
                     :value="item.value"
@@ -262,13 +262,17 @@ export default {
       wxaList: [],
       weappPagesList: [],
       sourceList: [],
-      selectSourceList: []
+      selectSourceList: [],
+      wxappid: ''
     }
   },
   computed: {
-    ...mapGetters(['wxapp_id', 'template_name'])
+    ...mapGetters(['template_name'])
   },
   mounted () {
+    if (this.$route.query && this.$route.query.app_id) {
+      this.wxappid = this.$route.query.app_id
+    }
     this.getMonitorsList()
   },
   methods: {
@@ -284,7 +288,7 @@ export default {
           })
           let params = {
             monitor_id: '',
-            wxappid: that.wxapp_id,
+            wxappid: that.wxappid,
             monitor_path: that.monitorForm.monitor_path,
             monitor_path_params: that.monitorForm.monitor_path_params,
             page_name: that.monitorForm.page_name
@@ -349,6 +353,7 @@ export default {
       if (this.$refs['monitorForm']) {
         this.$refs['monitorForm'].resetFields()
       }
+      this.monitorForm.page_name = ''
       this.monitorForm.monitor_path_params = []
       // this.weappPagesList = []
     },
@@ -407,8 +412,9 @@ export default {
     },
     wxappChange: function () {
       // 获取小程序对应的页面信息
-      if (this.wxapp_id) {
-        let params = { wxappid: this.wxapp_id }
+      let wxappid = this.wxappid
+      if (wxappid) {
+        let params = { wxappid }
         getWxappPages(params).then((response) => {
           this.weappPagesList = response.data.data
         })
@@ -486,7 +492,7 @@ export default {
       let params = {
         page: this.monitorsParams.page,
         pageSize: this.monitorsParams.pageSize,
-        wxappid: this.wxapp_id
+        wxappid: this.wxappid
       }
       listMonitors(params)
         .then((response) => {

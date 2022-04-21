@@ -103,7 +103,7 @@
                 </el-row>
               </div>
             </el-card>
-            <div class="btn" v-if="datapass_block != 1 &&  loginType != 'admin'">
+            <div class="btn" v-if="datapass_block != 1 && loginType != 'admin'">
               <el-button type="primary" @click="editHandle" v-if="accountInfo.audit_state != 'A'">编辑</el-button>
               <el-button v-if="accountInfo.audit_state == 'A'">审核中</el-button>
             </div>

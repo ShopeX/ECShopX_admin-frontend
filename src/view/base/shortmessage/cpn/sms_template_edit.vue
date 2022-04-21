@@ -235,6 +235,7 @@ export default {
     },
     async 'form.scene_id' (id) {
       console.log(id, `============`)
+      if (!id) return
       const result = await getTemplateContentLabel({ id })
       this.variables = result.data.data.variables
       if (this.$route.query.type == 'edit' || this.$route.query.type == 'detail') {

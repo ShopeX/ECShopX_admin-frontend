@@ -309,10 +309,10 @@ export default {
           text: '满减券',
           value: 'cash'
         },
-        {
-          text: '兑换券',
-          value: 'new_gift'
-        }
+        // {
+        //   text: '兑换券',
+        //   value: 'new_gift'
+        // }
       ],
       tabList: [
         { name: '已生效', activeName: '2' },

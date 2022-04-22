@@ -10,10 +10,10 @@
       <el-row class="card-panel">
         <el-col
           v-for="(item, index) in infoList"
+          v-if="item.is_show"
           :key="`item__${index}`"
           class="card-panel-item"
           :span="6"
-          v-if='item.is_show'
         >
           <span class="card-panel__label">{{ item.label }}</span>
           <span class="card-panel__value">{{ getFiledValue(item.field) }}</span>
@@ -127,9 +127,9 @@
             </template>
           </el-table-column>
           <el-table-column
+            v-if="!VERSION_IN_PURCHASE"
             label="会员优惠（¥）"
             width="120"
-            v-if="!VERSION_IN_PURCHASE"
           >
             <template slot-scope="scope">
               {{ (scope.row.member_discount / 100).toFixed(2) }}
@@ -151,7 +151,10 @@
               {{ (scope.row.discount_fee / 100).toFixed(2) }}
             </template>
           </el-table-column>
-          <el-table-column label="货币汇率" v-if="!VERSION_IN_PURCHASE">
+          <el-table-column
+            v-if="!VERSION_IN_PURCHASE"
+            label="货币汇率"
+          >
             <template slot-scope="scope">
               <span>{{ scope.row.fee_rate }}</span>
             </template>
@@ -226,10 +229,10 @@
       <el-row class="card-panel">
         <el-col
           v-for="(item, index) in payList"
+          v-if="item.is_show"
           :key="`item__${index}`"
           class="card-panel-item"
           :span="6"
-          v-if="item.is_show"
         >
           <span class="card-panel__label">{{ item.label }}</span>
           <span class="card-panel__value">{{ getFiledValue(item.field) }}</span>
@@ -237,7 +240,10 @@
       </el-row>
     </el-card>
 
-    <el-card class="el-card--normal" v-if="!VERSION_IN_PURCHASE">
+    <el-card
+      v-if="!VERSION_IN_PURCHASE"
+      class="el-card--normal"
+    >
       <div slot="header">
         优惠明细
       </div>
@@ -280,6 +286,23 @@
           }}</span>
           <span class="card-panel__value">{{ addressInfo }}</span>
         </div>
+
+        <div
+          v-if="orderInfo.subdistrict_parent"
+          class="card-panel-item"
+        >
+          <span class="card-panel__label">街道：</span>
+          <span class="card-panel__value">{{ orderInfo.subdistrict_parent }}</span>
+        </div>
+
+        <div
+          v-if="orderInfo.subdistrict"
+          class="card-panel-item"
+        >
+          <span class="card-panel__label">社区：</span>
+          <span class="card-panel__value">{{ orderInfo.subdistrict }}</span>
+        </div>
+
         <el-table
           border
           :data="deliveryData"
@@ -315,7 +338,10 @@
       </div>
     </el-card>
 
-    <el-card class="el-card--normal" v-if="!VERSION_IN_PURCHASE">
+    <el-card
+      v-if="!VERSION_IN_PURCHASE"
+      class="el-card--normal"
+    >
       <div slot="header">
         分润信息
       </div>
@@ -361,6 +387,7 @@
     <SpDialog
       ref="deliverGoodsDialogRef"
       v-model="deliverGoodsDialog"
+      width="1000px"
       :title="`发货【订单:${deliverGoodsForm.order_id}】`"
       :form="deliverGoodsForm"
       :form-list="deliverGoodsFormList"
@@ -450,10 +477,18 @@ export default {
           label: '发货类型:',
           key: 'delivery_type',
           type: 'radio',
+          disabled: false,
           options: [
             { label: 'batch', name: '整单发货' },
             { label: 'sep', name: '拆分发货' }
-          ]
+          ],
+          onChange: (e) => {
+            if (e == 'sep') {
+              this.deliverGoodsFormList[1].options[4].isShow = true
+            } else {
+              this.deliverGoodsFormList[1].options[4].isShow = false
+            }
+          }
         },
         {
           label: '',
@@ -463,7 +498,27 @@ export default {
             { title: '商品名', key: 'item_name' },
             { title: '数量', key: 'num', width: 60 },
             { title: '已发货数量', key: 'delivery_item_num', width: 100 },
-            { title: '总支付价（¥）', key: 'price', width: 120 }
+            { title: '总支付价（¥）', key: 'price', width: 120 },
+            {
+              title: '发货数量',
+              key: 'item_num',
+              width: 160,
+              render: (row, column, cell) => {
+                if (row.num - row.delivery_item_num == 0) {
+                  return '已完成'
+                } else {
+                  return (
+                    <el-input-number
+                      size='mini'
+                      v-model={row.delivery_num}
+                      min={1}
+                      max={row.num - row.delivery_item_num}
+                    ></el-input-number>
+                  )
+                }
+              },
+              isShow: false
+            }
           ]
         },
         {
@@ -661,7 +716,7 @@ export default {
       this.deliverGoodsFormList[2].options = options
     },
     handleAction ({ key }) {
-      const { order_id, items, delivery_type } = this.orderInfo
+      const { order_id, items, delivery_type, delivery_status } = this.orderInfo
       if (key == 'deliverGoods') {
         this.$refs['deliverGoodsDialogRef'].resetForm()
         this.deliverGoodsForm.order_id = order_id
@@ -672,17 +727,31 @@ export default {
           }
         })
         this.deliverGoodsForm.type = delivery_type
+        // 部分发货
+        if (delivery_status == 'PARTAIL') {
+          this.deliverGoodsForm.delivery_type = 'sep'
+          this.deliverGoodsFormList[0].disabled = true
+          this.deliverGoodsFormList[1].options[4].isShow = true
+        } else {
+          this.deliverGoodsFormList[0].disabled = false
+          this.deliverGoodsFormList[1].options[4].isShow = false
+        }
         this.deliverGoodsDialog = true
       }
     },
     async deliverGoodsSubmit () {
-      const { order_id, delivery_type, delivery_corp, delivery_code, type } = this.deliverGoodsForm
+      const { order_id, delivery_type, delivery_corp, delivery_code, type, items } =
+        this.deliverGoodsForm
       const params = {
         order_id,
         delivery_type,
         delivery_corp,
         delivery_code,
         type
+      }
+      // 拆单发货
+      if (delivery_type == 'sep') {
+        params['sepInfo'] = JSON.stringify(items.filter((item) => item.delivery_num))
       }
       const { delivery_status } = await this.$api.trade.delivery(params)
       this.deliverGoodsDialog = false

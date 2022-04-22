@@ -90,9 +90,7 @@
           申请时间:
         </el-col>
         <el-col :span="20">
-          {{
-            aftersalesInfo.create_time | datetime('YYYY-MM-DD HH:mm:ss')
-          }}
+          {{ aftersalesInfo.create_time | datetime('YYYY-MM-DD HH:mm:ss') }}
         </el-col>
       </el-row>
       <el-row>
@@ -424,9 +422,11 @@
       <template
         v-else-if="
           (aftersalesInfo.aftersales_type == 'REFUND_GOODS' &&
-            aftersalesInfo.distributor_id == '0' && VERSION_PLATFORM) ||
+            aftersalesInfo.distributor_id == '0' &&
+            VERSION_PLATFORM) ||
             (aftersalesInfo.aftersales_type == 'REFUND_GOODS' &&
-              $store.getters.login_type == 'distributor' && VERSION_PLATFORM) ||
+              $store.getters.login_type == 'distributor' &&
+              VERSION_PLATFORM) ||
             (aftersalesInfo.aftersales_type == 'REFUND_GOODS' && !VERSION_PLATFORM)
         "
       >
@@ -553,9 +553,13 @@
     </template>
     <!-- 退货 -->
     <template
-          v-if="
-        (aftersalesInfo.distributor_id == '0' && aftersalesInfo.progress == '0' && VERSION_PLATFORM) ||
-          ($store.getters.login_type == 'distributor' && aftersalesInfo.progress == '0' && VERSION_PLATFORM) ||
+      v-if="
+        (aftersalesInfo.distributor_id == '0' &&
+          aftersalesInfo.progress == '0' &&
+          VERSION_PLATFORM) ||
+          ($store.getters.login_type == 'distributor' &&
+            aftersalesInfo.progress == '0' &&
+            VERSION_PLATFORM) ||
           (aftersalesInfo.progress == '0' && !VERSION_PLATFORM)
       "
     >
@@ -739,9 +743,13 @@
 
     <div
       v-if="
-        (aftersalesInfo.distributor_id == '0' && aftersalesInfo.progress == '0' && VERSION_PLATFORM) ||
-          ($store.getters.login_type == 'distributor' && aftersalesInfo.progress == '0' && VERSION_PLATFORM) ||
-          aftersalesInfo.progress == '0' && !VERSION_PLATFORM
+        (aftersalesInfo.distributor_id == '0' &&
+          aftersalesInfo.progress == '0' &&
+          VERSION_PLATFORM) ||
+          ($store.getters.login_type == 'distributor' &&
+            aftersalesInfo.progress == '0' &&
+            VERSION_PLATFORM) ||
+          (aftersalesInfo.progress == '0' && !VERSION_PLATFORM)
       "
       class="section-footer with-border content-center"
     >
@@ -896,7 +904,7 @@
     </el-dialog>
     <RemarkModal
       ref="modalRef"
-      @onDone="handleRemarksDone"
+      @onDone="onRemarksDone"
     />
   </div>
 </template>
@@ -1064,6 +1072,9 @@ export default {
         this.distributor_id = data.distributor_id
         this.loading = false
       })
+    },
+    onRemarksDone (remark) {
+      this.aftersalesInfo.distributor_remark = remark
     },
     reviewSubmit () {
       this.reviewData.aftersales_bn = this.aftersales_bn

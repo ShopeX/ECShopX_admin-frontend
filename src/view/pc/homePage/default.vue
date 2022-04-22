@@ -70,7 +70,7 @@
                   class="svg-icon"
                   aria-hidden="true"
                 >
-                  <use xlink:href="#icon-slider" />
+                  <use xlink:href="icon-loucengtupian" />
                 </svg>
                 轮播
               </template>

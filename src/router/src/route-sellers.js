@@ -18,6 +18,10 @@ export default {
         {
           path: 'template/:distributor_id?',
           component: () => import('@/view/mall/marketing/distributor_template')
+        },
+        {
+          path: 'details/:id?',
+          component: () => import('@/view/mall/marketing/distributor_details')
         }
       ]
     },

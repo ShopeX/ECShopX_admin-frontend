@@ -162,9 +162,7 @@ export default {
         mobile: [{ message: '手机必填', required: true }],
         dada_type: [{ message: '达达业务类型必填', required: true }]
       },
-      distributionTypeList: [
-        { value: 0, label: '自营' }
-      ],
+      distributionTypeList: [{ value: 0, label: '自营' }],
       merchantList: [],
       merchantLoading: false
     }
@@ -247,7 +245,6 @@ export default {
           // console.log("this.$refs.fashionFormRef.form",this.$refs.fashionFormRef.form)
 
           const filterParams = {
-            ...this.$refs.baseFormRef.form,
             ...this.$refs.imageFormRef.form,
             ...this.deleteParams(
               [
@@ -271,7 +268,8 @@ export default {
             merchant_id:
               this.form.merchant_id == this.form2.merchant_name
                 ? this.form2.merchant_id
-                : this.form.merchant_id
+                : this.form.merchant_id,
+            ...this.$refs.baseFormRef.form
           }
 
           if (filterParams.distribution_type == 1) {

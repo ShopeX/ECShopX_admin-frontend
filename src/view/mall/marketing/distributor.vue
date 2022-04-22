@@ -829,7 +829,7 @@ export default {
     ...mapGetters(['wheight']),
     isLoginTypeNormal () {
       return (
-        this.$store.getters.login_type === 'normal' || this.$store.getters.login_type === 'admin'
+        this.$store.getters.login_type === 'admin' || this.$store.getters.login_type === 'admin'
       )
     }
   },

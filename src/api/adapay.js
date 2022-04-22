@@ -68,11 +68,27 @@ export const accountUpdate = (params) => {
     params
   })
 }
+export const accountUpdateCorp = (params) => {
+  return fetch({
+    url: 'adapay/corp_member/modify',
+    method: 'post',
+    params
+  })
+}
 // 更新开户个人
 export const accountUpdatePerson = (params) => {
   return fetch({
     url: '/adapay/member/update',
     method: 'post',
+    params
+  })
+}
+
+// 店铺、经销商开户更新
+export const accountPersonUpdate = (params)=>{
+  return fetch({
+    url:'adapay/member/modify',
+    method:'post',
     params
   })
 }
@@ -210,3 +226,32 @@ export const getChildWithdraw = () => {
     method: 'get'
   })
 }
+
+/* 汇付二期 */
+
+// 获取提现设置
+export const withDrawSetting = () => {
+  return fetch({
+    url: '/adapay/sub_approve/draw_cash_config',
+    method: 'get'
+  })
+}
+
+// 选择商户
+export const seleteBusiness = (params) => {
+  return fetch({
+    url: '/adapay/member/list',
+    method: 'get',
+    params
+  })
+}
+
+// 保存提现设置
+export const saveDrawSetting =(params)=>{
+  return fetch({
+    url:'/adapay/sub_approve/draw_cash_config',
+    method:'post',
+    params
+  })
+}
+

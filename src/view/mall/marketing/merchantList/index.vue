@@ -110,7 +110,8 @@ export default {
     beforeSearch (params) {
       return { ...params }
     },
-    afterSearch ({ datapass_block }) {
+    afterSearch ({ data }) {
+      const { datapass_block } = data.data
       this.datapass_block = datapass_block
     }
   }

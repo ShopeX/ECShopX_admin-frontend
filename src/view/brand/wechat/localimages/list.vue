@@ -34,10 +34,7 @@
           class="localimg_item"
         >
           <div class="localimg_item_bd">
-            <div
-              class="pic"
-              :style="{ backgroundImage: 'url(' + item.image_full_url + ')' }"
-            />
+            <img class="pic" :src="item.image_full_url">
             <div class="check_content">
               <span
                 class="localimg_name"

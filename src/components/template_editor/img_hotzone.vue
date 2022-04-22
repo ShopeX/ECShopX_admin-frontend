@@ -55,10 +55,21 @@
           />
           <div
             v-for="(item, index) in data"
+            :key="`setting-item__${index}`"
             class="setting-item slider"
           >
             <div class="uploader-setting">
+              {{ item }}
+              <el-radio-group v-model="item.linkType">
+                <el-radio :label="0">
+                  选择路径
+                </el-radio>
+                <el-radio :label="1">
+                  H5链接
+                </el-radio>
+              </el-radio-group>
               <div
+                v-if="item.linkType == 0"
                 class="goods-select"
                 @click="handleGoodsChange(index)"
               >
@@ -99,6 +110,12 @@
                   />设置路径
                 </div>
               </div>
+              <div v-else>
+                <el-input
+                  v-model="item.linkUrl"
+                  placeholder="请输入自定义链接"
+                />
+              </div>
             </div>
           </div>
         </el-form-item>
@@ -130,15 +147,15 @@ export default {
     }
   },
   watch: {
-    res: {
-      deep: true,
-      handler (value) {
-        console.log('img hotzone watch...')
-        if (value) {
-          this.setData(value)
-        }
-      }
-    }
+    // res: {
+    //   deep: true,
+    //   handler (value) {
+    //     console.log('img hotzone watch...')
+    //     if (value) {
+    //       this.setData(value)
+    //     }
+    //   }
+    // }
   },
   mounted () {
     this.setData(this.res)
@@ -148,7 +165,19 @@ export default {
       this.name = val.name
       this.base = val.base
       this.config = val.config
-      this.data = val.data
+      this.data = val.data.map((item) => {
+        if (typeof item.linkType == 'undefined') {
+          return {
+            ...item,
+            linkType: 0,
+            linkUrl: ''
+          }
+        } else {
+          return {
+            ...item
+          }
+        }
+      })
     },
     handleImgChange (index) {
       this.$emit('bindImgs', index)
@@ -162,21 +191,15 @@ export default {
         ...item,
         linkPage: '',
         title: '',
-        id: ''
+        id: '',
+        linkType: 0,
+        linkUrl: ''
       })
     },
     handleChange (zone) {
       console.log('handle change, ', zone)
-      // setTimeout(() => {
       zone.forEach((item, index) => {
         if (item.leftPer && this.data[index] && typeof this.data[index].id != 'undefined') {
-          // let obj = {
-          //   heightPer: item.heightPer,
-          //   leftPer: item.leftPer,
-          //   topPer: item.topPer,
-          //   widthPer: item.widthPer
-          // }
-          // Object.assign(this.data[index], obj)
           this.data[index] = {
             ...this.data[index],
             heightPer: item.heightPer,
@@ -187,7 +210,6 @@ export default {
           console.log('new:', this.data[index])
         }
       })
-      // }, 500)
     },
     handleRemove (index) {
       this.data.splice(index, 1)

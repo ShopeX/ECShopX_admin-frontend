@@ -54,7 +54,7 @@ export function errorToast (data) {
 
 function createAxios (inst, isJson = true) {
   inst = inst || axios.create()
-  inst.defaults.timeout = process.env.NODE_ENV === 'production' ? 10000 : 30 * 1000
+  inst.defaults.timeout = process.env.NODE_ENV === 'production' ? 30000 : 30 * 1000
   inst.defaults.baseURL = inst.defaults.baseURL || process.env.VUE_APP_BASE_API || '/'
   inst.defaults.headers.post['Content-Type'] = 'application/x-www-form-urlencoded'
   inst.interceptors.request.use((config) => {

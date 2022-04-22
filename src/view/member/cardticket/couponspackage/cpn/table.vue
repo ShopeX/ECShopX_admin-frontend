@@ -11,16 +11,16 @@
       width="120"
     >
       <template slot-scope="scope">
-        <template v-if="scope.row.card_type == 'new_gift'">
+        <!-- <template v-if="scope.row.card_type == 'new_gift'">
           兑换券（新）
         </template>
-        <template v-else-if="scope.row.card_type == 'gift'">
+        <template v-if="scope.row.card_type == 'gift'">
           兑换券
-        </template>
-        <template v-else-if="scope.row.card_type == 'discount'">
+        </template> -->
+        <template v-if="scope.row.card_type == 'discount'">
           折扣卷
         </template>
-        <template v-else-if="scope.row.card_type == 'cash'">
+        <template v-if="scope.row.card_type == 'cash'">
           满减券
         </template>
       </template>

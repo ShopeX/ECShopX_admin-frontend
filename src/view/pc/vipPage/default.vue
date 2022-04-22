@@ -17,7 +17,7 @@
               class="svg-icon"
               aria-hidden="true"
             >
-              <use xlink:href="#icon-slider" />
+              <use xlink:href="icon-loucengtupian" />
             </svg>
             图片
           </template>

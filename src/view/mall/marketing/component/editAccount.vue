@@ -1,11 +1,11 @@
 <template>
   <div>
-    <div class="zyk_page_register_Info_edit" v-if="processed == '未填'">
+    <div class="zyk_page_register_Info_edit">
       <el-tabs v-model="activeName" type="border-card">
-        <el-tab-pane name="corp" v-if="member_type == 'corp' || allShow" label="企业">
+        <el-tab-pane name="corp" v-if="info.member_type == 'corp'" label="企业">
           <el-form
-            ref="ruleForm"
             :model="form"
+            ref="ruleForm"
             label-width="130px"
             class="demo-ruleForm"
             :rules="rules"
@@ -20,12 +20,12 @@
                 <el-row :gutter="20">
                   <el-col :span="8">
                     <el-form-item label="企业名称" prop="name">
-                      <el-input v-model="form.name" />
+                      <el-input v-model="form.name"></el-input>
                     </el-form-item>
                   </el-col>
                   <el-col :span="8">
                     <el-form-item label="营业执照号" prop="social_credit_code">
-                      <el-input v-model="form.social_credit_code" />
+                      <el-input disabled v-model="form.social_credit_code"></el-input>
                     </el-form-item>
                   </el-col>
                   <el-col :span="8">
@@ -36,29 +36,29 @@
                         value-format="yyyyMMdd"
                         placeholder="选择日期"
                         style="width: 100%"
-                      />
+                      ></el-date-picker>
                     </el-form-item>
                   </el-col>
                   <el-col :span="8">
                     <el-form-item label="企业电话" prop="telphone">
-                      <el-input v-model="form.telphone" />
+                      <el-input v-model="form.telphone"></el-input>
                     </el-form-item>
                   </el-col>
                   <el-col :span="8">
                     <el-form-item label="企业邮箱" prop="email">
-                      <el-input v-model="form.email" />
+                      <el-input v-model="form.email"></el-input>
                     </el-form-item>
                   </el-col>
                   <el-col :span="8">
                     <el-form-item label="邮编" prop="zip_code">
-                      <el-input v-model="form.zip_code" />
+                      <el-input v-model="form.zip_code"></el-input>
                     </el-form-item>
                   </el-col>
                   <el-col :span="8">
                     <el-form-item label="所在省市" prop="area">
                       <el-cascader
-                        v-model="form.area"
                         style="width: 100%"
+                        v-model="form.area"
                         :options="AllArea"
                         clearable
                         :props="{
@@ -66,24 +66,25 @@
                           label: 'title',
                           children: 'cities'
                         }"
-                      />
+                      >
+                      </el-cascader>
                     </el-form-item>
                   </el-col>
                   <el-col :span="8">
                     <el-form-item label="企业地址" prop="address">
-                      <el-input v-model="form.address" />
+                      <el-input v-model="form.address"></el-input>
                     </el-form-item>
                   </el-col>
                   <el-col :span="16">
                     <el-form-item label="经营范围" prop="business_scope">
                       <el-input
-                        v-model="form.business_scope"
                         maxlength="500"
                         show-word-limit
+                        v-model="form.business_scope"
                         type="textarea"
                         placeholder="请输入内容"
                         rows="7"
-                      />
+                      ></el-input>
                     </el-form-item>
                   </el-col>
                 </el-row>
@@ -97,26 +98,26 @@
               <el-row :gutter="20">
                 <el-col :span="8">
                   <el-form-item label="法人姓名" prop="legal_person">
-                    <el-input v-model="form.legal_person" />
+                    <el-input v-model="form.legal_person"></el-input>
                   </el-form-item>
                 </el-col>
                 <el-col :span="8">
                   <el-form-item label="法人身份证号码" prop="legal_cert_id">
                     <div class="flex">
-                      <el-input v-model="form.legal_cert_id" />
+                      <el-input v-model="form.legal_cert_id"></el-input>
                       <el-tooltip
                         content="身份证信息字母X需大写"
                         placement="top-end"
                         effect="light"
                       >
-                        <i class="el-icon-warning-outline" />
+                        <i class="el-icon-warning-outline"></i>
                       </el-tooltip>
                     </div>
                   </el-form-item>
                 </el-col>
                 <el-col :span="8">
                   <el-form-item label="法人手机号码" prop="legal_mp">
-                    <el-input v-model="form.legal_mp" />
+                    <el-input v-model="form.legal_mp"></el-input>
                   </el-form-item>
                 </el-col>
                 <el-col :span="8">
@@ -127,7 +128,7 @@
                       value-format="yyyyMMdd"
                       placeholder="选择日期"
                       style="width: 100%"
-                    />
+                    ></el-date-picker>
                   </el-form-item>
                 </el-col>
               </el-row>
@@ -150,7 +151,7 @@
                       placement="top-end"
                       effect="light"
                     >
-                      <i class="el-icon-warning-outline" />
+                      <i class="el-icon-warning-outline"></i>
                     </el-tooltip>
                   </el-form-item>
                 </el-col>
@@ -171,12 +172,12 @@
                 </el-col>
                 <el-col :span="8">
                   <el-form-item label="结算银行卡开户名" prop="card_name">
-                    <el-input v-model="form.card_name" />
+                    <el-input disabled v-model="form.card_name"></el-input>
                   </el-form-item>
                 </el-col>
                 <el-col :span="8">
                   <el-form-item label="结算银行卡号" prop="card_no">
-                    <el-input v-model="form.card_no" />
+                    <el-input v-model="form.card_no"></el-input>
                   </el-form-item>
                 </el-col>
               </el-row>
@@ -197,7 +198,7 @@
                     :http-request="handleUpload"
                     :multiple="false"
                   >
-                    <i class="el-icon-upload" />
+                    <i class="el-icon-upload"></i>
                     <div v-if="form.attach_file_name">{{ form.attach_file_name }}</div>
                     <div v-else class="el-upload__text">将文件拖到此处，或<em>点击上传</em></div>
                   </el-upload>
@@ -215,19 +216,22 @@
               </div>
             </el-card>
 
-            <!-- <el-form-item style="text-align: center; margin: 50px 0; margin-right: 130px">
-              <loading-btn
+            <el-form-item style="text-align: center; margin: 50px 0; margin-right: 130px">
+              <!-- <loading-btn
                 ref="loadingBtn"
                 size="medium"
                 type="primary"
                 text="提交审核"
-                @clickHandle="submitForm('personForm', 'Y', 'loadingBtn')"
-              />
-            </el-form-item> -->
+                @clickHandle="submitForm('ruleForm', 'Y', 'loadingBtn')"
+              /> -->
+              <el-button type="primary" size="medium" @click="submitHandle('ruleForm', 'Y')"
+                >提交</el-button
+              >
+            </el-form-item>
           </el-form>
         </el-tab-pane>
         <!-- 个人 -->
-        <el-tab-pane name="person" v-if="member_type == 'person' || allShow" label="个人">
+        <el-tab-pane name="person" v-if="info.member_type == 'person'" label="个人">
           <el-form
             ref="personForm"
             :model="personForm"
@@ -243,19 +247,19 @@
               <el-row :gutter="20">
                 <el-col :span="8">
                   <el-form-item label="用户姓名" prop="user_name">
-                    <el-input v-model="personForm.user_name" />
+                    <el-input disabled v-model="personForm.user_name"></el-input>
                   </el-form-item>
                 </el-col>
                 <el-col :span="8">
                   <el-form-item label="用户手机号码" prop="tel_no">
                     <div class="flex">
-                      <el-input v-model="personForm.tel_no" />
+                      <el-input disabled v-model="personForm.tel_no"></el-input>
                     </div>
                   </el-form-item>
                 </el-col>
                 <el-col :span="8">
                   <el-form-item label="用户身份证号码" prop="cert_id">
-                    <el-input v-model="personForm.cert_id" />
+                    <el-input disabled v-model="personForm.cert_id"></el-input>
                   </el-form-item>
                 </el-col>
                 <!-- <el-col :span="8">
@@ -273,75 +277,62 @@
               <el-row :gutter="20">
                 <el-col :span="8">
                   <el-form-item label="开户人姓名" prop="bank_card_name">
-                    <el-input v-model="personForm.bank_card_name" />
+                    <el-input disabled v-model="personForm.bank_card_name"></el-input>
                   </el-form-item>
                 </el-col>
                 <el-col :span="8">
                   <el-form-item label="银行预留手机号" prop="bank_tel_no">
                     <div class="flex">
-                      <el-input v-model="personForm.bank_tel_no" />
+                      <el-input v-model="personForm.bank_tel_no"></el-input>
                     </div>
                   </el-form-item>
                 </el-col>
                 <el-col :span="8">
                   <el-form-item label="银行账号" prop="bank_card_id">
-                    <el-input v-model="personForm.bank_card_id" />
+                    <el-input v-model="personForm.bank_card_id"></el-input>
                   </el-form-item>
                 </el-col>
                 <el-col :span="8">
                   <el-form-item label="开户人证件号码" prop="bank_cert_id">
-                    <el-input v-model="personForm.bank_cert_id" />
+                    <el-input disabled v-model="personForm.bank_cert_id"></el-input>
                   </el-form-item>
                 </el-col>
               </el-row>
             </el-card>
             <el-form-item style="text-align: center; margin: 50px 0; margin-right: 130px">
               <!-- <el-button  type="primary" @click="submitFormPerson('personForm','Y')">审核提交</el-button> -->
+              <!-- <loading-btn
+                ref="loadingBtn"
+                size="medium"
+                type="primary"
+                text="提交"
+                @clickHandle="submitFormPerson('personForm', 'Y', 'loadingBtn')"
+              /> -->
+              <el-button type="primary" size="medium" @click="submitHandle('personForm', 'Y')"
+                >提交</el-button
+              >
             </el-form-item>
           </el-form>
         </el-tab-pane>
-        <div style="text-align: center; margin: 50px 0;">
-          <loading-btn
-            ref="loadingBtn"
-            size="medium"
-            type="primary"
-            text="提交审核"
-            @clickHandle="submit"
-          />
-        </div>
       </el-tabs>
     </div>
-    <Result-cpn
-      v-if="processed == '已填'"
-      :currentStatus="currentStatus"
-      @processedHandle="processedHandle"
-    />
   </div>
 </template>
 
 <script>
-import {
-  getBankList,
-  createCorp,
-  createPerson,
-  updateCorp,
-  updatePerson,
-  checkPerson,
-  checkCorp
-} from '@/api/dealerReInfo'
+import { getBankList, createCorp, checkPerson, checkCorp } from '@/api/dealerReInfo'
 import areaData from '@/common/area.json'
 import ResultCpn from '@/view/base/setting/dealer/cpn/result.vue'
 import { MaxRules, requiredRules } from '@/view/base/setting/dealer/tools'
 import loadingBtn from '@/components/loading-btn'
 export default {
   components: {
-    ResultCpn,
     loadingBtn
   },
-  data () {
+  props: ['activeName', 'info'],
+  data() {
     return {
       // 初始打开tab
-      activeName: 'corp',
       // 填写的类型
       member_type: '',
       allShow: true,
@@ -384,31 +375,6 @@ export default {
         confirm_letter_file: '',
         confirm_letter_file_name: ''
       },
-      // form:{
-      //   name:'阿里巴巴', //企业名称
-      //   area:['0011','1100'], // 省份编码地区编码
-      //   bank:'01040000', //银行
-      //   business_scope:'扫黑除恶专项斗争', //经营范围
-      //   social_credit_code:'110WZA', // 统一社会信用码
-      //   social_credit_code_expires:'20301230', //统一社会信用证有效期(1121),
-      //   telphone:'110', //企业电话
-      //   zip_code:'047500', //邮编
-      //   email:'110@110.com', // 企业邮箱
-      //   legal_person:'法外狂徒张三', //法人姓名
-      //   legal_cert_id:'123456789123456789',//法人身份证号码
-      //   legal_cert_id_expires:'20221231', // 法人身份证有效期(20220112)
-      //   legal_mp:'13935521111', // 法人手机号
-      //   address:'上海市公安局', //企业地址
-      //   attach_file:'', //上传附件
-      //   bank_name:'中国工商银行股份有限公司总行',
-      //   bank_code:'01020000', // 银行代码
-      //   bank_acct_type:'2', //银行账户类型：1-对公；2-对私
-      //   card_no:'8888888888', //银行卡号
-      //   card_name:'阿里巴巴',//银行卡对应的户名，若银行账户类型是对公，必须与企业名称一致,
-      //   submit_review:'' ,//是否提交审核(Y/N)
-      //   isUploadFile:true,// 加这个走formdata格式
-      //   attach_file_name:'',
-      // },
       rules: {
         name: requiredRules('企业名称'),
         social_credit_code: [requiredRules('营业执照号'), MaxRules(18)],
@@ -431,16 +397,6 @@ export default {
         attach_file: { required: true, message: '请上传', trigger: 'change' },
         confirm_letter_file: { required: true, message: '请上传', trigger: 'change' }
       },
-      // personForm:{
-      //   user_name:'王五', //用户姓名
-      //   tel_no:'10923459080', // 用户手机号码
-      //   cert_id:'123456789987654321', // 用户身份证号码
-      //   bank_card_name:'王五',//开户人姓名
-      //   bank_tel_no:'10923459080', //银行预留手机号
-      //   bank_card_id:'21321321321321', //银行账号
-      //   bank_cert_id:'123456789987654321', // 开户人证件号码
-      //   submit_review:''//是否提交审核(Y/N)
-      // },
       personForm: {
         user_name: '', //用户姓名
         tel_no: '', // 用户手机号码
@@ -465,159 +421,75 @@ export default {
       id: ''
     }
   },
-  mounted () {
-    this.queryUserStatus()
+  mounted() {
+    if (this.activeName == 'corp') {
+      this.form = this.info
+      this.form.area = [this.form.prov_code, this.form.area_code]
+    } else {
+      this.personForm = this.info
+    }
   },
   methods: {
-    async queryUserStatus () {
-      const { audit_state, update_time, audit_desc, member_type } = await this.$api.dealerReInfo.userStatus()
-      switch (audit_state) {
-        case 'D': //待提交
-          this.processed = '未填'
-          break
-        case 'A': // 待审核
-          this.processed = '已填'
-          break
-        case 'B': // 审核失败
-          this.processed = '已填'
-          this.currentStatus = {
-            resultStatus: 'failed',
-            time: update_time,
-            info: audit_desc,
-            title: '开户'
+    submitHandle(formName, isSubmit) {
+      this.$refs[formName].validate(async (valid) => {
+        if (valid) {
+          if (formName == 'ruleForm') {
+            this.$confirm(
+              '未避免影响提现，请确认结算卡持卡人姓名与法人一致，信息更改需审核，请确认是否提交。',
+              '提示消息',
+              {
+                confirmButtonText: '确定',
+                type: 'warning',
+                showCancelButton: false
+              }
+            ).then(() => {
+              this.submitForm(formName, isSubmit)
+            })
+          } else {
+            this.$confirm('结算账户信息更改需提交审核，请确认是否提交', '提示消息', {
+              confirmButtonText: '确定',
+              type: 'warning',
+              showCancelButton: false
+            }).then(() => {
+              this.submitFormPerson(formName, isSubmit)
+            })
           }
-          break
-        case 'C': // 开户成功
-          this.processed = '已填'
-          this.currentStatus = {
-            resultStatus: 'netin',
-            time: update_time,
-            info: audit_desc,
-            title: '开户'
-          }
-          break
-      }
-      if (audit_state != 'D') {
-        this.allShow = false
-      }
-      this.member_type = member_type
-
-      // console.log(result);
+        } else {
+          this.$message.error('请完善您的信息')
+        }
+      })
     },
-    submit () {
-      if (this.activeName=='corp') {
-        this.submitForm('Y','loadingBtn')
-      }else{
-        this.submitFormPerson('Y','loadingBtn')
-      }
-
-    },
-    submitForm(isSubmit, ref) {
+    async submitForm(formName, isSubmit) {
       this.form.submit_review = isSubmit
       this.form.isUploadFile = true
       console.log(this.form)
-      this.$refs['ruleForm'].validate(async (valid) => {
-        if (valid) {
-          if (this.form.member_id) {
-            // 更新
-            const { status } = await this.$api.adapay.accountUpdateCorp(this.form)
-            if (status) {
-              this.$message.success('提交成功')
-              this.currentStatus = {
-                resultStatus: 'pending',
-                time: '',
-                info: '',
-                title: '开户'
-              }
-              this.processed = '已填'
-            } else {
-              this.$message.error('失败')
-            }
-          } else {
-            // 创建
-            try {
-              const { status } = await createCorp(this.form)
-              if (status) {
-                this.$message.success('提交成功')
-                this.currentStatus = {
-                  resultStatus: 'pending',
-                  time: '',
-                  info: '',
-                  title: '开户'
-                }
-                this.processed = '已填'
-                this.$refs[ref].closeLoading()
-              }
-            } catch (error) {
-              this.$refs[ref].closeLoading()
-            }
-          }
-        } else {
-          this.$message.error('请完善您的信息~')
-          this.$refs.loadingBtn.loading = false
 
-          // return false
-        }
-      })
+      const result = await this.$api.adapay.accountUpdate(this.form)
+      if (result.data.data.status) {
+        this.$message.success('提交成功')
+        this.$emit('back')
+      } else {
+        this.$message.error('失败')
+      }
     },
-    submitFormPerson (isSubmit, ref) {
+    async submitFormPerson(formName, isSubmit) {
       this.personForm.submit_review = isSubmit
-      this.$refs['personForm'].validate(async (valid) => {
-        if (valid) {
-          console.log(this.personForm)
-          if (this.personForm.member_id) {
-            // 更新
-            try {
-              const { status } = await this.$api.adapay.accountPersonUpdate(this.personForm)
-              if (status) {
-                this.$message.success('提交成功')
-                this.currentStatus = {
-                  resultStatus: 'pending',
-                  time: '',
-                  info: '',
-                  title: '开户'
-                }
-                this.processed = '已填'
-              }
-              this.$refs[ref].closeLoading()
-            } catch (error) {
-              this.$refs[ref].closeLoading()
-              return
-            }
-          } else {
-            try {
-              const { status } = await this.$api.adapay.accountCreatePerson(this.personForm)
-              if (status) {
-                this.$message.success('提交成功')
-                this.currentStatus = {
-                  resultStatus: 'pending',
-                  time: '',
-                  info: '',
-                  title: '开户'
-                }
-                this.processed = '已填'
-                this.$refs[ref].closeLoading()
-              }
-            } catch (error) {
-              this.$refs[ref].closeLoading()
-            }
-          }
-        } else {
-          this.$message.error('请完善您的信息哦~')
-          this.$refs[ref].closeLoading()
-
-          return false
-        }
-      })
+      const result = await this.$api.adapay.accountUpdatePerson(this.personForm)
+      if (result.data.data.status) {
+        this.$message.success('提交成功')
+        this.$emit('back')
+      } else {
+        this.$message.error('失败')
+      }
     },
-    handleAvatarSuccess (file) {
+    handleAvatarSuccess(file) {
       console.log(file)
     },
     handleUpload: function (file) {
       this.form.attach_file_name = file.file.name
       this.form.attach_file = file.file
     },
-    beforeAvatarUpload (file) {
+    beforeAvatarUpload(file) {
       console.log(file)
       const isZip = file.type === 'application/zip' || file.type === 'application/x-zip-compressed'
       const isLt2M = file.size / 1024 / 1024 < 8
@@ -632,22 +504,24 @@ export default {
     goback() {
       this.$router.back(-1)
     },
-    async processedHandle () {
+    async processedHandle() {
       if (this.member_type == 'corp') {
-        his.form = await this.$api.adapay.accountQueryCorp()
+        const result = await this.$api.adapay.accountQueryCorp()
         this.processed = '未填'
+        this.form = result.data.data
         this.form.area = [this.form.prov_code, this.form.area_code]
         console.log(result)
       } else {
-        this.personForm = await this.$api.adapay.accountQueryCorp()
+        const result = await this.$api.adapay.accountQueryCorp()
         this.processed = '未填'
+        this.personForm = result.data.data
         this.activeName = 'person'
         console.log(result)
       }
     },
 
     // type 判断结果 （获取保存的结果）
-    async getResult (id, type, member_type) {
+    async getResult(id, type, member_type) {
       this.id = id
 
       if (id && member_type == 'corp') {
@@ -686,10 +560,11 @@ export default {
       }
     },
     // 结算所属银行
-    async querySearch (queryString, cb) {
-      this.AllBank = await this.$api.adapay.getBank({
+    async querySearch(queryString, cb) {
+      const result = await this.$api.adapay.getBank({
         bank_name: this.form.bank_name
       })
+      this.AllBank = result.data.data
 
       var restaurants = this.AllBank.map((item) => {
         return {
@@ -702,16 +577,16 @@ export default {
       //调用 callback 返回建议列表的数据
       cb(results)
     },
-    createFilter (queryString) {
+    createFilter(queryString) {
       return (restaurant) => {
         return restaurant.value.toLowerCase().indexOf(queryString.toLowerCase()) === 0
       }
     },
-    async get_bank () {
+    async get_bank() {
       const result = await getBankList()
       this.AllBank = result.data.data
     },
-    handleSelectBank (val) {
+    handleSelectBank(val) {
       console.log(val)
       this.form.bank_code = val.bank_code
       this.form.bank_name = val.value

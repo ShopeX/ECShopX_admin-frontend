@@ -156,7 +156,30 @@
             </div>
           </el-form-item>
         </el-col>
-
+        <el-col
+          v-if="!distributor_type"
+          :span="8"
+        >
+          <el-form-item label="下单是否需要选择街道居委">
+            <el-switch
+              v-model="form.is_require_subdistrict"
+              active-color="#13ce66"
+              inactive-color="#ff4949"
+            />
+          </el-form-item>
+        </el-col>
+        <el-col
+          v-if="!distributor_type"
+          :span="8"
+        >
+          <el-form-item label="下单是否需要填写楼号房号">
+            <el-switch
+              v-model="form.is_require_building"
+              active-color="#13ce66"
+              inactive-color="#ff4949"
+            />
+          </el-form-item>
+        </el-col>
         <!-- <el-col :span="8"> </el-col> -->
       </el-row>
     </el-form>
@@ -180,7 +203,9 @@ export default {
         is_delivery: true,
         auto_sync_goods: false,
         is_audit_goods: true,
-        datapass_block: 1
+        datapass_block: 1,
+        is_require_subdistrict: false,
+        is_require_building: false,
       },
       rules: {
         shop_code: [
@@ -231,6 +256,13 @@ export default {
           this.startTime = open_time[0]
           this.endTime = open_time[1]
         }
+        if (val.is_require_subdistrict) {
+          this.form.is_require_subdistrict = val.is_require_subdistrict
+        }
+        if (val.is_require_building) {
+          this.form.is_require_building = val.is_require_building
+        }
+
         if (val.is_ziti) {
           // 处理营业时间的格式
           this.form.is_ziti = val.is_ziti

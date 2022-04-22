@@ -255,12 +255,12 @@
         >
           折扣券
         </el-radio-button>
-        <el-radio-button
+        <!-- <el-radio-button
           label="gift"
           value="gift"
         >
           兑换券
-        </el-radio-button>
+        </el-radio-button> -->
       </el-radio-group>
       <ul
         v-loading="coupons.loading"
@@ -336,12 +336,12 @@
         >
           折扣券
         </el-radio-button>
-        <el-radio-button
+        <!-- <el-radio-button
           label="gift"
           value="gift"
         >
           兑换券
-        </el-radio-button>
+        </el-radio-button> -->
       </el-radio-group>
       <ul
         v-loading="staffCoupons.loading"

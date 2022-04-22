@@ -6,7 +6,7 @@
   .el-dialog__body {
     padding: 16px;
     .el-form {
-      margin-right: 200px;
+      margin-right: 100px;
     }
     .el-table {
       line-height: initial;
@@ -40,7 +40,11 @@ export default {
     title: String,
     value: false,
     formList: Array,
-    form: Object
+    form: Object,
+    width: {
+      type: String,
+      default: '800px'
+    }
   },
   data () {
     return {}
@@ -64,7 +68,7 @@ export default {
     }
   },
   render () {
-    const { title, value, form, formList } = this
+    const { title, value, form, formList, width } = this
     const Fn = () => {}
     const getComponentByType = (item) => {
       if (item.type == 'textarea') {
@@ -105,7 +109,11 @@ export default {
         )
       } else if (item.type == 'radio') {
         return (
-          <el-radio-group v-model={form[item.key]} onChange={item.onChange || Fn}>
+          <el-radio-group
+            v-model={form[item.key]}
+            onChange={item.onChange || Fn}
+            disabled={item.disabled || false}
+          >
             {item.options.map((op) => (
               <el-radio label={op.label}>{op.name}</el-radio>
             ))}
@@ -114,9 +122,16 @@ export default {
       } else if (item.type == 'table') {
         return (
           <el-table border data={form[item.key]}>
-            {item.options.map((op) => (
-              <el-table-column prop={op.key} label={op.title} width={op.width}></el-table-column>
-            ))}
+            {item.options
+              .filter((item) => item.isShow !== false)
+              .map((op) => (
+                <el-table-column
+                  prop={op.key}
+                  label={op.title}
+                  width={op.width}
+                  formatter={op.render}
+                ></el-table-column>
+              ))}
           </el-table>
         )
       }
@@ -136,7 +151,7 @@ export default {
         class='sp-dialog'
         title={title}
         visible={value}
-        width='800px'
+        width={width}
         onclose={this.handleCancel}
       >
         <el-form

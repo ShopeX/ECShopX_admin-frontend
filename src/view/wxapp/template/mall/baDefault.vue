@@ -11,6 +11,7 @@
         <div
           v-for="(item, index) in initData"
           class="component-control"
+          :key="index"
         >
           <template v-if="item.name === 'navigation'">
             <svg
@@ -26,7 +27,7 @@
               class="svg-icon"
               aria-hidden="true"
             >
-              <use xlink:href="#icon-slider" />
+              <use xlink:href="icon-loucengtupian" />
             </svg>
             轮播
           </template>
@@ -66,6 +67,7 @@
               v-for="(item, index) in components"
               class="component-item"
               @click="setCurrent(index)"
+              :key="index"
             >
               <transition name="el-fade-in-linear">
                 <div

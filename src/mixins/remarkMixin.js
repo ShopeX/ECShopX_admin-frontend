@@ -19,7 +19,7 @@ export default {
       } else if (this.remarksType === 'orderDetail') {
         this.$emit('onRefresh')
       } else if (this.remarksType === 'afterDetail') {
-        this.aftersaleInfo()
+        // this.aftersaleInfo()
       }
     }
   }

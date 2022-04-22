@@ -234,7 +234,7 @@
             </p>
           </el-col>
           <el-col
-            v-if="$store.getters.login_type == 'normal' || $store.getters.login_type == 'admin'"
+            v-if="$store.getters.login_type == 'admin'"
             :span="6"
             class="item"
           >

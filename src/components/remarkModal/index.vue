@@ -91,13 +91,13 @@ export default {
         this.currentType === 'orderDetail'
       ) {
         remarks(params).then((res) => {
-          this.$emit('onDone')
+          this.$emit('onDone', res)
           this.$message.success('订单备注修改成功!')
           this.show = false
         })
       } else if (this.currentType === 'afterList' || this.currentType === 'afterDetail') {
         afterRemarks(params).then((res) => {
-          this.$emit('onDone')
+          this.$emit('onDone', this.value)
           this.$message.success('订单备注修改成功!')
           this.show = false
         })

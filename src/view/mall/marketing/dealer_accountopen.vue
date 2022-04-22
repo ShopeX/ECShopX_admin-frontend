@@ -1,150 +1,119 @@
 <template>
-  <div
-    v-loading="loading"
-    class="cus-dealer"
-  >
-    <el-card>
-      <el-row>
-        <el-col :span="3">
-          <img
-            v-if="loginType === 'dealer'"
-            class="cus-dealer-img"
-            src="@/assets/img/adapay/dealer.png"
-            alt=""
-          >
-          <img
-            v-if="loginType === 'distributor'"
-            class="cus-dealer-img"
-            src="@/assets/img/adapay/store.png"
-            alt=""
-          >
-        </el-col>
-        <el-col :span="20">
-          <div class="cus-dealer-flex">
-            <p class="cus-dealer-row">
-              {{ infoList.basicInfo ? infoList.basicInfo.name : '-' }}
-            </p>
-            <div class="cus-dealer-pfonts cus-margin-40">
-              <i class="el-icon-location-outline cus-icon" />
-              <span>{{ infoList.basicInfo ? infoList.basicInfo.area : '-' }}</span>
-            </div>
-          </div>
-          <p class="cus-dealer-pfonts">
-            <i class="el-icon-s-custom cus-icon" />
-            <span>{{ infoList.basicInfo ? infoList.basicInfo.contact : '-' }}</span>
-          </p>
-          <p
-            v-if="loginType === 'distributor'"
-            class="cus-dealer-pfonts"
-          >
-            <i class="el-icon-time cus-icon" />
-            <span>{{ infoList.basicInfo ? infoList.basicInfo.hour : '-' }}</span>
-          </p>
-          <div class="cus-dealer-flex">
-            <div class="cus-dealer-pfonts">
-              <i class="el-icon-phone cus-icon" />
-              <span>{{
-                infoList.basicInfo ? infoList.basicInfo.tel_no + '（企业电话）' : '-'
-              }}</span>
-            </div>
-            <div
+  <div class="cus-dealer" v-loading="loading">
+    <template v-if="!isEdit">
+      <el-card>
+        <el-row>
+          <el-col :span="3">
+            <img
+              v-if="loginType === 'dealer'"
+              class="cus-dealer-img"
+              src="@/assets/img/adapay/dealer.png"
+              alt=""
+            />
+            <img
               v-if="loginType === 'distributor'"
-              class="cus-dealer-pfonts cus-margin-50"
-            >
-              <i class="el-icon-message cus-icon" />
-              <span>{{
-                infoList.basicInfo && infoList.basicInfo.email
-                  ? infoList.basicInfo.email + '（企业邮箱）'
-                  : '-'
-              }}</span>
+              class="cus-dealer-img"
+              src="@/assets/img/adapay/store.png"
+              alt=""
+            />
+          </el-col>
+          <el-col :span="20">
+            <div class="cus-dealer-flex">
+              <p class="cus-dealer-row">{{ infoList.basicInfo ? infoList.basicInfo.name : '-' }}</p>
+              <div class="cus-dealer-pfonts cus-margin-40">
+                <i class="el-icon-location-outline cus-icon" />
+                <span>{{ infoList.basicInfo ? infoList.basicInfo.area : '-' }}</span>
+              </div>
             </div>
-          </div>
-          <div
-            v-if="loginType === 'dealer'"
-            class="cus-dealer-pfonts"
+            <p class="cus-dealer-pfonts">
+              <i class="el-icon-s-custom cus-icon" />
+              <span>{{ infoList.basicInfo ? infoList.basicInfo.contact : '-' }}</span>
+            </p>
+            <p v-if="loginType === 'distributor'" class="cus-dealer-pfonts">
+              <i class="el-icon-time cus-icon" />
+              <span>{{ infoList.basicInfo ? infoList.basicInfo.hour : '-' }}</span>
+            </p>
+            <div class="cus-dealer-flex">
+              <div class="cus-dealer-pfonts">
+                <i class="el-icon-phone cus-icon" />
+                <span>{{infoList.basicInfo ? infoList.basicInfo.tel_no + '（企业电话）' : '-'}}</span>
+              </div>
+              <div v-if="loginType === 'distributor'" class="cus-dealer-pfonts cus-margin-50">
+                <i class="el-icon-message cus-icon" />
+                <span>{{infoList.basicInfo && infoList.basicInfo.email ? infoList.basicInfo.email + '（企业邮箱）' : '-' }}</span>
+              </div>
+            </div>
+            <div v-if="loginType === 'dealer'" class="cus-dealer-pfonts">
+              <i class="el-icon-message cus-icon" />
+              <span>{{infoList.basicInfo && infoList.basicInfo.email ? infoList.basicInfo.email + '（企业邮箱）' : '-' }}</span>
+            </div>
+          </el-col>
+        </el-row>
+        <el-row v-if="loginType === 'distributor'" style="margin-top: 10px">
+          <el-tag
+            v-for="item in tagsList"
+            :key="item.name"
+            :type="item.type"
+            size="small"
+            class="cus-dealer-tags"
           >
-            <i class="el-icon-message cus-icon" />
-            <span>{{
-              infoList.basicInfo && infoList.basicInfo.email
-                ? infoList.basicInfo.email + '（企业邮箱）'
-                : '-'
-            }}</span>
-          </div>
-        </el-col>
-      </el-row>
-      <el-row
-        v-if="loginType === 'distributor'"
-        style="margin-top: 10px"
-      >
-        <el-tag
-          v-for="item in tagsList"
-          :key="item.name"
-          :type="item.type"
-          size="small"
-          class="cus-dealer-tags"
-        >
-          {{ item.name }}
-        </el-tag>
-      </el-row>
-    </el-card>
-    <el-card>
-      <el-tabs
-        v-model="activeName"
-        class="cus-dealer-tabs"
-      >
-        <el-tab-pane
-          label="开户信息"
-          name="first"
-        >
-          <BaseModal
-            :title="member_type === 'corp' ? '企业信息' : '个人信息'"
-            :label-list="member_type === 'corp' ? enterPriseInfo : personalInfo"
-            :info="infoList"
-            :span="7"
-          />
-          <BaseModal
-            title="结算账户信息"
-            :label-list="member_type === 'corp' ? enterAccountInfo : personalAccountInfo"
-            :info="infoList"
-            :span="7"
-          />
-          <!-- <BaseModal
+            {{ item.name }}
+          </el-tag>
+        </el-row>
+      </el-card>
+      <el-card>
+        <el-tabs v-model="activeName" class="cus-dealer-tabs">
+          <el-tab-pane label="开户信息" name="first">
+            <BaseModal
+              :title="member_type === 'corp' ? `企业信息 ${infoList.audit_desc_1 || ''} ` : '个人信息 ' + `${infoList.audit_desc_1 || ''} `"
+              :labelList="member_type === 'corp' ? enterPriseInfo : personalInfo"
+              :info="infoList"
+              :span="7"
+            />
+            <BaseModal
+             :title="'结算账户信息' + `${infoList.audit_desc_2 ||  ''} `"
+              :labelList="member_type === 'corp' ? enterAccountInfo : personalAccountInfo"
+              :info="infoList"
+              :span="7"
+            />
+            <!-- <BaseModal
             title="分账信息"
             :labelList="member_type === 'corp' ? enterSplitAcount : personalSplitAcount"
             :info='infoList'
             :span='7'
           /> -->
-          <el-card>
-            <div slot="header">
-              其他信息
-            </div>
-            <div class="body">
-              <el-row class="load-btn">
-                <el-col
-                  :span="4"
-                  style="text-align: right; padding-right: 10px"
-                >
-                  附件信息：
-                </el-col>
-                <el-col
-                  :span="20"
-                  class="cus-btn"
-                >
-                  <el-button
-                    v-if="member_type === 'corp'"
-                    type="text"
-                    @click="dowloadFile(infoList.attach_file)"
+            <el-card v-if="member_type=='corp'">
+              <div slot="header">其他信息</div>
+              <div class="body">
+                <el-row class="load-btn">
+                  <el-col :span="4" style="text-align: right; padding-right: 10px"
+                    >附件信息：</el-col
                   >
-                    附件
-                  </el-button>
-                  <span v-else>-</span>
-                </el-col>
-              </el-row>
+                  <el-col :span="20" class="cus-btn">
+                    <el-button
+                      @click="dowloadFile(infoList.attach_file)"
+                      v-if="member_type === 'corp'"
+                      type="text"
+                      >附件</el-button
+                    >
+                    <span v-else>-</span>
+                  </el-col>
+                </el-row>
+              </div>
+            </el-card>
+            <div class="btn">
+              <el-button type="primary" @click="editHandle(true)" v-if="infoList.audit_state != 'A'"
+                >编辑</el-button
+              >
+              <el-button v-if="infoList.audit_state == 'A'">审核中</el-button>
             </div>
-          </el-card>
-        </el-tab-pane>
-      </el-tabs>
-    </el-card>
+          </el-tab-pane>
+        </el-tabs>
+      </el-card>
+    </template>
+    <template v-else>
+      <editAccount :activeName="infoList.member_type" :info="infoList" @back="editHandle(false)"></editAccount>
+    </template>
     <!-- <el-row class="cus-dealer-bot">
       <el-button type='primary' @click="handleModalClick(true, '未开户')" size='small' plain>解除关联</el-button>
     </el-row> -->
@@ -155,11 +124,13 @@
 import { getDealderInfo } from '@/api/adapay/dealer'
 import BaseModal from '@/view/mall/marketing/component/BaseModal'
 import RemoveShipModal from '@/view/mall/marketing/component/RemoveShipModal'
+import editAccount from '@/view/mall/marketing/component/editAccount.vue'
 
 export default {
-  components: { BaseModal, RemoveShipModal },
-  data () {
+  components: { BaseModal, RemoveShipModal, editAccount },
+  data() {
     return {
+      isEdit: false,
       activeName: 'first',
       infoList: {},
       visible: false,
@@ -277,6 +248,9 @@ export default {
         message: '下载成功'
       })
     },
+    editHandle (isEdit) {
+      this.isEdit = isEdit
+    },
     adapayFilter () {
       let { div_fee_mode } = this.infoList
       let returnValue = ''
@@ -293,6 +267,20 @@ export default {
   }
 }
 </script>
+<style lang="scss" scoped>
+  .tips{
+    margin: 10px 0;
+    
+  }
+.btn {
+  background: #f5f5f5;
+  padding: 10px 0;
+  text-align: center;
+  position: relative;
+  bottom: 0;
+  width: 100%;
+}
+</style>
 
 <style lang="scss">
 .cus-dealer {

@@ -11,13 +11,14 @@
         <div
           v-for="(item, index) in initData"
           class="component-control"
+          :key="index"
         >
           <template v-if="item.name === 'coupon'">
             <svg
               class="svg-icon"
               aria-hidden="true"
             >
-              <use xlink:href="#icon-tag" />
+              <use xlink:href="#icon-tag1" />
             </svg>
             优惠券
           </template>
@@ -26,7 +27,7 @@
               class="svg-icon"
               aria-hidden="true"
             >
-              <use xlink:href="#icon-video" />
+              <use xlink:href="#icon-video1" />
             </svg>
             视频
           </template>
@@ -44,7 +45,7 @@
               class="svg-icon"
               aria-hidden="true"
             >
-              <use xlink:href="#icon-scroll" />
+              <use xlink:href="#icon-scroll1" />
             </svg>
             商品滚动
           </template>
@@ -80,7 +81,7 @@
               class="svg-icon"
               aria-hidden="true"
             >
-              <use xlink:href="#icon-search" />
+              <use xlink:href="#icon-search1" />
             </svg>
             搜索
           </template>
@@ -98,7 +99,7 @@
               class="svg-icon"
               aria-hidden="true"
             >
-              <use xlink:href="#icon-slider" />
+              <use xlink:href="icon-loucengtupian" />
             </svg>
             轮播
           </template>
@@ -107,7 +108,7 @@
               class="svg-icon"
               aria-hidden="true"
             >
-              <use xlink:href="#icon-store" />
+              <use xlink:href="#icon-store1" />
             </svg>
             推荐店铺
           </template>
@@ -147,6 +148,7 @@
               v-for="(item, index) in components"
               class="component-item"
               @click="setCurrent(index)"
+              :key="index"
             >
               <transition name="el-fade-in-linear">
                 <div

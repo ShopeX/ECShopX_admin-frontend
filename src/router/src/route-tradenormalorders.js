@@ -160,6 +160,11 @@ export default {
       path: 'adapay_cash',
       name: '提现',
       component: () => import('@/view/mall/withdraw/withdraw')
+    },
+    {
+      path: 'subdistrict',
+      name: '街道社区配置',
+      component: () => import('@/view/mall/subdistrict/list')
     }
   ]
 }

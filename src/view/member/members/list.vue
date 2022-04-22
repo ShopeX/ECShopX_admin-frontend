@@ -520,12 +520,12 @@
             >
               折扣券
             </el-radio-button>
-            <el-radio-button
+            <!-- <el-radio-button
               label="new_gift"
               value="new_gift"
             >
               兑换券
-            </el-radio-button>
+            </el-radio-button> -->
           </el-radio-group>
           <ul
             v-loading="staffCoupons.loading"

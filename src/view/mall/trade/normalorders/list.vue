@@ -90,6 +90,25 @@
           </el-select>
         </SpFilterFormItem>
         <SpFilterFormItem
+          prop="create_time"
+          label="下单时间:"
+          size="max"
+        >
+          <el-date-picker
+            v-model="params.create_time"
+            clearable
+            type="datetimerange"
+            align="right"
+            format="yyyy-MM-dd HH:mm:ss"
+            range-separator="至"
+            start-placeholder="开始日期"
+            end-placeholder="结束日期"
+            prefix-icon="null"
+            :default-time="defaultTime"
+            :picker-options="pickerOptions"
+          />
+        </SpFilterFormItem>
+        <SpFilterFormItem
           v-if="!isMicorMall && !VERSION_IN_PURCHASE"
           prop="is_invoiced"
           label="开票状态:"
@@ -109,21 +128,21 @@
           </el-select>
         </SpFilterFormItem>
         <SpFilterFormItem
-          prop="create_time"
-          label="下单时间:"
+          prop="delivery_time"
+          label="发货时间:"
+          size="max"
         >
           <el-date-picker
-            v-model="params.create_time"
+            v-model="params.delivery_time"
             clearable
-            unlink-panels
-            type="daterange"
+            type="datetimerange"
             align="right"
-            format="yyyy-MM-dd"
-            value-format="yyyy-MM-dd"
+            format="yyyy-MM-dd HH:mm:ss"
             range-separator="至"
             start-placeholder="开始日期"
             end-placeholder="结束日期"
             prefix-icon="null"
+            :default-time="defaultTime"
             :picker-options="pickerOptions"
           />
         </SpFilterFormItem>
@@ -157,6 +176,20 @@
             placeholder="请选择"
           />
         </SpFilterFormItem>
+        <SpFilterFormItem
+          prop="subDistrict"
+          label="选择街道:"
+        >
+          <el-cascader
+            v-model="params.subDistrict"
+            clearable
+            :props="{
+              value: 'id',
+              checkStrictly: true
+            }"
+            :options="subDistrictList"
+          />
+        </SpFilterFormItem>
       </SpFilterForm>
 
       <div class="action-container">
@@ -185,20 +218,26 @@
             </el-dropdown-item>
           </el-dropdown-menu>
         </el-dropdown>
-        <el-upload
-          action=""
-          class="btn-upload"
-          :on-change="uploadHandleChange"
-          :auto-upload="false"
-          :show-file-list="false"
+        <el-tooltip
+          effect="light"
+          content="请将从订单列表导出的主订单文件，删除不想批量发货的订单号，修改物流公司，物流单号后上传即可。"
+          placement="top-start"
         >
-          <el-button
-            type="primary"
-            plain
+          <el-upload
+            action=""
+            class="btn-upload"
+            :on-change="uploadHandleChange"
+            :auto-upload="false"
+            :show-file-list="false"
           >
-            批量发货
-          </el-button>
-        </el-upload>
+            <el-button
+              type="primary"
+              plain
+            >
+              批量发货
+            </el-button>
+          </el-upload>
+        </el-tooltip>
       </div>
 
       <el-tabs
@@ -443,6 +482,7 @@
       <SpDialog
         ref="deliverGoodsDialogRef"
         v-model="deliverGoodsDialog"
+        width="1000px"
         :title="`发货【订单:${deliverGoodsForm.order_id}】`"
         :form="deliverGoodsForm"
         :form-list="deliverGoodsFormList"
@@ -498,6 +538,7 @@ export default {
   data () {
     return {
       loading: false,
+      defaultTime: ['00:00:00', '23:59:59'],
       params: {
         mobile: '',
         order_id: '',
@@ -511,9 +552,11 @@ export default {
         time_start_begin: '', //
         time_start_end: '',
         distributor_type: '', // 订单分类
-        distributor_id: '' // 店铺
+        distributor_id: '', // 店铺
+        subDistrict: []
       },
       datapass_block: 1, // 是否为数据脱敏
+      subDistrictList: [],
       distributionType: DISTRIBUTION_TYPE,
       orderStatus: VERSION_B2C
         ? ORDER_B2C_STATUS
@@ -599,10 +642,18 @@ export default {
           label: '发货类型:',
           key: 'delivery_type',
           type: 'radio',
+          disabled: false,
           options: [
             { label: 'batch', name: '整单发货' },
             { label: 'sep', name: '拆分发货' }
-          ]
+          ],
+          onChange: (e) => {
+            if (e == 'sep') {
+              this.deliverGoodsFormList[1].options[4].isShow = true
+            } else {
+              this.deliverGoodsFormList[1].options[4].isShow = false
+            }
+          }
         },
         {
           label: '',
@@ -612,7 +663,27 @@ export default {
             { title: '商品名', key: 'item_name' },
             { title: '数量', key: 'num', width: 60 },
             { title: '已发货数量', key: 'delivery_item_num', width: 100 },
-            { title: '总支付价（¥）', key: 'price', width: 120 }
+            { title: '总支付价（¥）', key: 'price', width: 120 },
+            {
+              title: '发货数量',
+              key: 'item_num',
+              width: 160,
+              render: (row, column, cell) => {
+                if (row.num - row.delivery_item_num == 0) {
+                  return '已完成'
+                } else {
+                  return (
+                    <el-input-number
+                      size='mini'
+                      v-model={row.delivery_num}
+                      min={1}
+                      max={row.num - row.delivery_item_num}
+                    ></el-input-number>
+                  )
+                }
+              },
+              isShow: false
+            }
           ]
         },
         {
@@ -747,13 +818,15 @@ export default {
         reason: '',
         check_cancel: '1',
         shop_reject_reason: ''
-      }
+      },
+      origin: ''
     }
   },
   computed: {
     ...mapGetters(['login_type', 'isMicorMall'])
   },
   mounted () {
+    this.origin = window.location.origin
     const { tab } = this.$route.query
     if (tab) {
       this.params.order_status = tab
@@ -761,6 +834,7 @@ export default {
     this.fetchList()
     this.getOrderSourceList()
     this.getLogisticsList()
+    this.getSubDistrictList()
   },
   methods: {
     async fetchList () {
@@ -770,13 +844,24 @@ export default {
         page,
         pageSize,
         order_type: 'normal',
-        ...this.params
+        ...this.params,
+        subdistrict_parent_id: this.params.subDistrict[0], // 街道id
+        subdistrict_id: this.params.subDistrict[1] // 居委id
       }
+      delete params.subDistrict
+
       if (isArray(this.params.create_time) && this.params.create_time.length >= 2) {
-        params.time_start_begin = this.params.create_time[0]
-        params.time_start_end = this.params.create_time[1]
-        delete params.create_time
+        params.time_start_begin = moment(this.params.create_time[0]).unix()
+        params.time_start_end = moment(this.params.create_time[1]).unix()
       }
+
+      if (isArray(this.params.delivery_time) && this.params.delivery_time.length >= 2) {
+        params.delivery_time_begin = moment(this.params.delivery_time[0]).unix()
+        params.delivery_time_end = moment(this.params.delivery_time[1]).unix()
+      }
+
+      delete params.create_time
+      delete params.delivery_time
 
       const { list, pager, datapass_block } = await this.$api.trade.getOrderList(params)
 
@@ -857,6 +942,11 @@ export default {
       this.datapass_block = datapass_block
       this.loading = false
     },
+    async getSubDistrictList () {
+      const res = await this.$api.subdistrict.getSubDistrictList()
+      console.log(`getSubDistrictList:`, res)
+      this.subDistrictList = res
+    },
     getOrderType ({ order_class, type }) {
       if (order_class == 'normal') {
         return type == '1' ? '跨境订单' : '普通订单'
@@ -894,7 +984,10 @@ export default {
         }
       })
     },
-    async handleAction ({ order_id, distributor_remark, items, delivery_type }, { key }) {
+    async handleAction (
+      { order_id, distributor_remark, items, delivery_type, delivery_status },
+      { key }
+    ) {
       if (key == 'remark') {
         this.$refs['remarkDialogRef'].resetForm()
         this.remarkForm.orderId = order_id
@@ -914,6 +1007,15 @@ export default {
           }
         })
         this.deliverGoodsForm.type = delivery_type
+        // 部分发货
+        if (delivery_status == 'PARTAIL') {
+          this.deliverGoodsForm.delivery_type = 'sep'
+          this.deliverGoodsFormList[0].disabled = true
+          this.deliverGoodsFormList[1].options[4].isShow = true
+        } else {
+          this.deliverGoodsFormList[0].disabled = false
+          this.deliverGoodsFormList[1].options[4].isShow = false
+        }
         this.deliverGoodsDialog = true
       } else if (key == 'writeOff') {
         this.$refs['writeOffDialogRef'].resetForm()
@@ -1001,13 +1103,18 @@ export default {
       this.fetchList()
     },
     async deliverGoodsSubmit () {
-      const { order_id, delivery_type, delivery_corp, delivery_code, type } = this.deliverGoodsForm
-      const params = {
+      const { order_id, delivery_type, delivery_corp, delivery_code, type, items } =
+        this.deliverGoodsForm
+      let params = {
         order_id,
         delivery_type,
         delivery_corp,
         delivery_code,
         type
+      }
+      // 拆单发货
+      if (delivery_type == 'sep') {
+        params['sepInfo'] = JSON.stringify(items.filter((item) => item.delivery_num))
       }
       const { delivery_status } = await this.$api.trade.delivery(params)
       this.deliverGoodsDialog = false
@@ -1026,6 +1133,7 @@ export default {
       } else {
         this.$message.error('自提订单核销失败!')
       }
+      this.writeOffDialog = false
     },
     async refundSubmit () {
       const { order_id, check_cancel, shop_reject_reason } = this.refundForm
@@ -1041,6 +1149,7 @@ export default {
       } else {
         this.$message.error('审核失败!')
       }
+      this.refundDialog = false
     },
     exportInvoice () {
       let type = 'normal'
@@ -1079,9 +1188,17 @@ export default {
       }
       if (isArray(this.params.create_time) && this.params.create_time.length >= 2) {
         params.time_start_begin = moment(this.params.create_time[0]).unix()
-        params.time_start_end = moment(this.params.create_time[1]).add(1, 'days').unix()
+        params.time_start_end = moment(this.params.create_time[1]).unix()
       }
+
+      if (isArray(this.params.delivery_time) && this.params.delivery_time.length >= 2) {
+        params.delivery_time_begin = moment(this.params.delivery_time[0]).unix()
+        params.delivery_time_end = moment(this.params.delivery_time[1]).unix()
+      }
+
       delete params.create_time
+      delete params.delivery_time
+
       orderExport(params).then((response) => {
         const { status, url, filename } = response.data.data
         if (status) {

@@ -109,7 +109,7 @@
                       <div
                         v-for="(item, index) in data.news.content.news_item"
                         v-if="index !== 0"
-                        :key=""
+                        :key="index"
                       >
                         <div
                           v-if="data.news.content.news_item.length > 1"

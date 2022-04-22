@@ -1,11 +1,7 @@
 <template>
   <div class="dealer_index">
     <div class="step">
-      <el-steps
-        :active="active"
-        align-center
-        finish-status="success"
-      >
+      <el-steps :active="active" align-center finish-status="success">
         <!-- <el-step title="提交开户资料" :description="active!=0?'完成':'已提交审核，请耐心等待～'"></el-step>
         <el-step title="支付渠道入驻" :description="active==2 || active==3 || active==1?'完成':'已提交审核，请耐心等待～'"></el-step>
         <el-step title="提交图片信息" :description="active== 4 || active==3 ?'完成':'已提交审核，请耐心等待～'">></el-step>
@@ -13,9 +9,7 @@
 
         <el-step title="提交开户资料" />
         <el-step title="支付渠道入驻" />
-        <el-step title="提交证照信息">
-          >
-        </el-step>
+        <el-step title="提交证照信息" />
         <el-step title="入网完成" />
       </el-steps>
     </div>

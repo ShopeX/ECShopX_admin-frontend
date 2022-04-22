@@ -51,6 +51,17 @@
         prop="username"
         label="姓名"
       />
+      <el-table-column label="店铺名称">
+        <template slot-scope="scope">
+          <el-tag
+            v-for="item in scope.row.distributor_ids"
+            :key="item.distributor_id"
+            size="mini"
+          >
+            {{ item.name }}
+          </el-tag>
+        </template>
+      </el-table-column>
       <el-table-column
         v-if="login_type == 'distributor'"
         prop="roles"
@@ -192,6 +203,21 @@
               </el-checkbox>
             </el-checkbox-group>
           </el-form-item>
+          <!-- <el-form-item label="团长">
+            <el-switch v-model="form.isHead" active-color="#13ce66" inactive-color="#ff4949">
+            </el-switch>
+          </el-form-item>
+          <el-form-item label="选择社区" v-if="form.isHead">
+            <el-cascader
+              v-model="form.subDistrict"
+              clearable
+              :props="{
+                value: 'id',
+                checkStrictly: true
+              }"
+              :options="subDistrictList"
+            />
+          </el-form-item> -->
         </el-form>
       </template>
       <div
@@ -269,10 +295,12 @@ export default {
         username: '',
         distributor_ids: [],
         password: '',
-        role_id: []
+        role_id: [],
+        isHead: false,
+        subDistrict: []
       },
       activeName: 'distributor',
-
+      subDistrictList: [],
       editLoginName: '',
       editMobile: '',
       accountsList: [],
@@ -285,7 +313,8 @@ export default {
       },
       operator_id: 0,
       rolesListData: [],
-      datapass_block: 1
+      datapass_block: 1,
+      isHead: false
     }
   },
   computed: {
@@ -303,8 +332,14 @@ export default {
     this.login_type = this.$store.getters.login_type
     this.fetchList()
     this.getRolesListData()
+    this.getSubDistrictList()
   },
   methods: {
+    async getSubDistrictList () {
+      const res = await this.$api.subdistrict.getSubDistrictList()
+      console.log(`getSubDistrictList:`, res)
+      this.subDistrictList = res
+    },
     DistributoreHandleClose (index) {
       this.DistributorVisible = false
       this.relDistributors.splice(index, 1)

@@ -10,6 +10,11 @@ export default {
       path: 'baseexport',
       name: `导出列表`,
       component: () => import('@/view/base/exportlog/index')
+    },
+    {
+      path: 'account_management',
+      name: `账号管理`,
+      component: () => import('@/view/dealer/account')
     }
   ]
 }

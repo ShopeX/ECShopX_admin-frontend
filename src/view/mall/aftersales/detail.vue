@@ -443,7 +443,7 @@
                 处理结果:
               </el-col>
               <el-col :span="20">
-                <template v-if="IsBind">
+                <template v-if="IsBind && login_type != 'distributor'">
                   <el-radio
                     v-model="check_refund"
                     label="0"
@@ -532,7 +532,7 @@
             </el-row>
             <div class="section-footer with-border content-center">
               <el-button
-                v-if="IsBind"
+                v-if="IsBind && login_type != 'distributor'"
                 type="primary"
                 disabled
                 @click="refundAction"
@@ -576,7 +576,7 @@
               处理结果:
             </el-col>
             <el-col :span="20">
-              <template v-if="IsBind">
+              <template v-if="IsBind && login_type != 'distributor'">
                 <el-radio
                   v-model="is_approved"
                   label="0"
@@ -968,6 +968,8 @@ import district from '../../../common/district.json'
 import RemarkModal from '@/components/remarkModal'
 import remarkMixin from '@/mixins/remarkMixin'
 
+import { mapGetters } from 'vuex'
+
 // 取选中地区的值
 function getCascaderObj (val, opt) {
   return val.map(function (value, index, array) {
@@ -1040,6 +1042,9 @@ export default {
       },
       regions: district
     }
+  },
+  computed: {
+    ...mapGetters(['login_type'])
   },
   mounted () {
     if (this.$route.query.aftersales_bn) {

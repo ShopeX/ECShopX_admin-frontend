@@ -542,7 +542,7 @@ export default {
       params: {
         mobile: '',
         order_id: '',
-        order_class_exclude: 'drug,pointsmall',
+        order_class_exclude: 'drug,pointsmall,community',
         salesman_mobile: '',
         receipt_type: '', // 配送类型
         source: '', // 订单来源

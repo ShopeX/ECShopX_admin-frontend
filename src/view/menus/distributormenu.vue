@@ -339,32 +339,24 @@
                           页面功能
                         </div>
                       </td>
-                      <td
-                        colspan="1"
-                        rowspan="1"
-                        class="el-table_5_column_36 is-leaf"
-                      >
-                        <div
-                          v-if="item.menu_type == 'standard'"
-                          style="width: 80px"
-                          class="cell"
-                        >
-                          标准版
-                        </div>
-                        <div
-                          v-else-if="item.menu_type == 'platform'"
-                          style="width: 80px"
-                          class="cell"
-                        >
-                          平台版
-                        </div>
-                        <div
-                          v-else
-                          style="width: 80px"
-                          class="cell"
-                        >
-                          通用
-                        </div>
+                      <td colspan="1" rowspan="1" class="el-table_5_column_36 is-leaf">
+                          <div v-for="(item_menu_type, menu_type_key) in item['menu_type']" style="width:80px" class="cell" :key="menu_type_key">
+                              <template v-if="item_menu_type === 'b2c'">
+                                品牌官网
+                              </template>
+                              <template v-if="item_menu_type === 'platform'">
+                                ECX
+                              </template>
+                              <template v-if="item_menu_type === 'standard'">
+                                云店
+                              </template>
+                              <template v-if="item_menu_type === 'in_purchase'">
+                                内购版
+                              </template>
+                              <template v-if="item_menu_type === 'all'">
+                                通用
+                              </template>
+                          </div>
                       </td>
                       <td
                         colspan="1"
@@ -464,17 +456,13 @@
             <el-input v-model="form.name" />
           </el-form-item>
           <el-form-item label="菜单类型">
-            <el-radio-group v-model="form.menu_type">
-              <el-radio label="all">
-                通用
-              </el-radio>
-              <el-radio label="standard">
-                标准版
-              </el-radio>
-              <el-radio label="platform">
-                平台版
-              </el-radio>
-            </el-radio-group>
+            <el-checkbox-group v-model="form.menu_type">
+              <el-checkbox label="all">通用</el-checkbox>
+              <el-checkbox label="b2c">品牌官网</el-checkbox>
+              <el-checkbox label="platform">ECX</el-checkbox>
+              <el-checkbox label="standard">云店</el-checkbox>
+              <el-checkbox label="in_purchase">内购版</el-checkbox>
+            </el-checkbox-group>
           </el-form-item>
           <el-form-item label="菜单唯一标识">
             <el-input v-model="form.alias_name" />
@@ -720,7 +708,7 @@ export default {
         pid: 0,
         name: '',
         alias_name: '',
-        menu_type: 'all',
+        menu_type: ['all'],
         url: '',
         sort: 1
       }

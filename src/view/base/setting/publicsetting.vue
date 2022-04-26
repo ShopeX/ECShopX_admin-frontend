@@ -261,6 +261,24 @@
         </el-form-item>
       </el-form>
     </div>
+
+    <div class="clearfix">
+      <h2 class="f_l">
+        <span>店务设置：</span>
+      </h2>
+    </div>
+    <hr style="border: 1px solid #efefef">
+    <el-form
+      v-model="form"
+      label-width="200px"
+    >
+      <el-form-item label="移动端是否展示店务端入口">
+        <el-switch
+          v-model="form.dianwu_show_status"
+          @change="dianwuShowStatusChange()"
+        />
+      </el-form-item>
+    </el-form>
   </div>
 </template>
 <style scoped lang="scss">
@@ -302,7 +320,9 @@ import {
   getItemSalesSetting,
   getItemStoreSetting,
   getInvoiceStatus,
-  setInvoiceStatus
+  setInvoiceStatus,
+  getDianwuShowStatus,
+  setDianwuShowStatus
 } from '@/api/company'
 import { getShareParams, saveShareParams } from '@/api/system'
 import imgPicker from '@/components/imageselect'
@@ -329,7 +349,8 @@ export default {
         item_store_status: true,
         item_sales_status: true,
         invoice_status: true,
-        distributor_param_status: false
+        distributor_param_status: false,
+        dianwu_show_status: false,
       }
     }
   },
@@ -385,6 +406,10 @@ export default {
 
     getInvoiceStatus().then((res) => {
       this.form.invoice_status = Boolean(res.data.data.invoice_status)
+    })
+
+    getDianwuShowStatus().then((res) => {
+      this.form.dianwu_show_status = Boolean(res.data.data.dianwu_show_status)
     })
   },
   methods: {
@@ -837,7 +862,7 @@ export default {
           }
           this.$message({
             type: 'info',
-            message: '已取消1'
+            message: '已取消'
           })
         })
     },
@@ -877,7 +902,47 @@ export default {
           }
           this.$message({
             type: 'info',
-            message: '已取消1'
+            message: '已取消'
+          })
+        })
+    },
+
+    dianwuShowStatusChange () {
+      let msg = ''
+      if (this.form.dianwu_show_status === true) {
+        msg = '确定开启显示店务端？'
+      } else {
+        msg = '确定关闭显示店务端？'
+      }
+      this.$confirm(msg, '提示', {
+        confirmButtonText: '确定',
+        cancelButtonText: '取消',
+        type: 'warning'
+      })
+        .then(() => {
+          setDianwuShowStatus(this.form)
+            .then((res) => {
+              this.$message({
+                type: 'success',
+                message: '保存成功'
+              })
+            })
+            .catch(() => {
+              this.$message({
+                type: 'error',
+                message: '保存失败'
+              })
+            })
+        })
+        .catch(() => {
+          if (this.form.dianwu_show_status === true) {
+            this.form.dianwu_show_status = false
+          } else {
+            this.form.dianwu_show_status = true
+          }
+          this.$message({
+            type: 'info',
+            message: '已取消'
           })
         })
     }

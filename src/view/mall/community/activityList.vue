@@ -114,6 +114,13 @@
               label="状态"
             >
             </el-table-column>
+            
+            <el-table-column
+              width="200"
+              prop="activity_delivery_status_msg"
+              label="发货状态"
+            >
+            </el-table-column>
 
             <el-table-column
               label="操作"

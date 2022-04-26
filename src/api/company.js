@@ -497,7 +497,7 @@ export function setDianwuShowStatus (query) {
   })
 }
 
-export function getDianwuStatus (query) {
+export function getDianwuShowStatus (query) {
   return fetch({
     url: '/dianwu/setting',
     method: 'get',

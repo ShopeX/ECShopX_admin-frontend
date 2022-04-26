@@ -272,7 +272,7 @@
       v-model="form"
       label-width="200px"
     >
-      <el-form-item label="移动端是否展示店务端">
+      <el-form-item label="移动端是否展示店务端入口">
         <el-switch
           v-model="form.dianwu_show_status"
           @change="dianwuShowStatusChange()"

@@ -21,7 +21,7 @@
       </el-row>
     </el-card>
 
-    <el-card class="el-card--normal" v-if="community_info">
+    <el-card class="el-card--normal" v-if="is_community">
       <div slot="header">
         跟团信息
       </div>
@@ -479,7 +479,7 @@ export default {
       loading: false,
       addressInfo: '',
       orderInfo: null,
-      community_info: [],
+      is_community: false,
       communityExtra: [],
       deliveryData: [],
       expressDialog: false,
@@ -646,7 +646,7 @@ export default {
         if (community_info.extra_data) {
           this.communityExtra = JSON.parse(community_info.extra_data)
         }
-        this.community_info = community_info
+        this.is_community = true
       }
 
       const fd = ORDER_TYPE.find((k) => k.value == order_class)

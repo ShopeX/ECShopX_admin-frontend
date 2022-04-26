@@ -315,7 +315,20 @@
               </div>
             </template>
           </el-table-column>
-
+          <el-table-column
+            width="220"
+            prop="order_id"
+            label="跟团信息"
+          >
+            <template slot-scope="scope">
+              <div>
+                名称：{{ scope.row.community_info.activity_name  }}
+              </div>
+              <div>
+                跟团号：{{ scope.row.community_info.activity_trade_no  }}
+              </div>
+            </template>
+          </el-table-column>
           <el-table-column
             prop="total_fee"
             width="120"

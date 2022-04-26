@@ -337,6 +337,35 @@
             <span v-else>{{ scope.row.sex }}</span>
           </template>
         </el-table-column>
+
+        <el-table-column
+          prop="is_chief"
+          label="是否团长"
+          width="80"
+        >
+          <template slot-scope="scope">
+            <el-switch
+              v-model="scope.row.is_chief"
+              active-value="1"
+              inactive-value="0"
+              active-color="#ff4949"
+              inactive-color="#ccc"
+              @change="switchChief(scope.$index, scope.row)"
+            />
+          </template>
+        </el-table-column>
+
+        <!-- <el-table-column
+          prop="is_chief"
+          label="是否团长"
+          width="100"
+        >
+          <template slot-scope="scope">
+            <span v-if="scope.row.is_chief == '1'">是</span>
+            <span v-else>否</span>
+          </template>
+        </el-table-column> -->
+
         <el-table-column
           prop="grade_id"
           label="会员等级"
@@ -1077,7 +1106,8 @@ import {
   batchupdateMemberGrade,
   batchOperating,
   getMemberRegisterSetting,
-  updateMemberBasicInfo
+  updateMemberBasicInfo,
+  setCheif,
 } from '../../../api/member'
 import { getaliSmsStatus } from '@/api/sms'
 
@@ -1835,6 +1865,36 @@ export default {
         })
       }
     },
+    switchChief (index, row) {
+      console.log(row.is_chief);
+      if (row.is_chief == 1) {
+        var msg = '此操作将设置为团长，是否继续?'
+        this.$confirm(msg, '提示', {
+          confirmButtonText: '确定',
+          cancelButtonText: '取消',
+          type: 'warning'
+        }).then(() => {
+          let params = {
+            'user_id': row.user_id,
+            'distributor_ids': [this.$store.getters.shopId]
+          }
+          setCheif(params).then((res) => {
+            this.getMembers()
+          })
+        })
+      } else {
+        this.$message({ type: 'error', message: '取消团长，请联系管理员' })
+        this.getMembers()
+        // let params = {
+        //   'user_id': row.user_id,
+        //   'distributor_ids': [this.$store.getters.shopId]
+        // }
+        // setCheif(params).then((res) => {
+        //   this.getMembers()
+        // })
+      }
+    },
+    
     async relTagDelEvent (tagId, userId) {
       await this.$api.member.usersRelTagsDel({
         tag_id: tagId,

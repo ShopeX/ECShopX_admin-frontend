@@ -24,13 +24,8 @@ export default {
     {
       path: 'community/activity',
       name: `活动管理`,
-      component: () => import('@/view/member/coupon/giveLog'),
-      children: [
-        {
-          path: 'detail/:id',
-          component: () => import('@/view/member/coupon/giveErrorLog')
-        }
-      ]
+      component: () => import('@/view/mall/community/activityList'),
+      
     },
     {
       path: 'community/order',

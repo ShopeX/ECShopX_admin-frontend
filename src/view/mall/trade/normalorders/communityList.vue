@@ -333,43 +333,15 @@
             </template>
           </el-table-column>
           <el-table-column
-            width="220"
-            prop="order_id"
+            prop="mobile"
+            width="150"
             label="收件人信息"
           >
-            <template slot-scope="scope">
+            <template slot-scope="scope" >
+              <template v-if="!scope.row.user_delete && login_type !== 'merchant'">
               <div>
                 收件人：{{ scope.row.community_info.ziti_contact_user  }}
               </div>
-              <div>
-                手机号：{{ scope.row.community_info.ziti_contact_mobile  }}
-              </div>
-            </template>
-          </el-table-column>
-
-          <el-table-column
-            prop="total_fee"
-            width="120"
-            label="订单金额（¥）"
-          >
-            <template slot-scope="scope">
-              {{ (scope.row.total_fee / 100).toFixed(2) }}
-            </template>
-          </el-table-column>
-          <el-table-column
-            width="100"
-            label="运费（¥）"
-          >
-            <template slot-scope="scope">
-              {{ (scope.row.freight_fee || 0) / 100 }}
-            </template>
-          </el-table-column>
-          <el-table-column
-            prop="mobile"
-            label="客户手机号"
-          >
-            <template slot-scope="scope">
-              <template v-if="!scope.row.user_delete && login_type !== 'merchant'">
                 <router-link
                   target="_blank"
                   :to="{
@@ -414,6 +386,23 @@
                   />
                 </el-tooltip>
               </template>
+            </template>
+          </el-table-column>
+          <el-table-column
+            prop="total_fee"
+            width="120"
+            label="订单金额（¥）"
+          >
+            <template slot-scope="scope">
+              {{ (scope.row.total_fee / 100).toFixed(2) }}
+            </template>
+          </el-table-column>
+          <el-table-column
+            width="100"
+            label="运费（¥）"
+          >
+            <template slot-scope="scope">
+              {{ (scope.row.freight_fee || 0) / 100 }}
             </template>
           </el-table-column>
           <template v-if="login_type != 'merchant'">

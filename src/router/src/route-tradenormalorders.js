@@ -43,6 +43,10 @@ export default {
         {
           path: 'detail/:itemId?',
           component: () => import('@/view/mall/trade/order/detail')
+        },
+        {
+          path: 'process/:itemId?',
+          component: () => import('@/view/mall/trade/order/process')
         }
       ]
     },

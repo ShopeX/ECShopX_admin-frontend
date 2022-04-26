@@ -35,7 +35,7 @@ export default {
     {
       path: 'community/order',
       name: `订单管理`,
-      component: () => import('@/view/mall/trade/normalorders/list'),
+      component: () => import('@/view/mall/trade/normalorders/communityList'),
       children: [
         {
           path: 'detail/:itemId?',

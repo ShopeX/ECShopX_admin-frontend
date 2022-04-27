@@ -212,3 +212,18 @@ export function batchProcessCashWithdrawal (query) {
     params: query
   })
 }
+
+export function getCommunityOrderList (query) {
+  return fetch({
+    url: '/community/orders',
+    method: 'get',
+    params: query
+  })
+}
+
+export function getCommunityOrderDetail (orderId) {
+  return fetch({
+    url: '/community/order/' + orderId,
+    method: 'get'
+  })
+}

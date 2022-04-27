@@ -55,7 +55,15 @@
       </SpFilterForm>
 
       <div class="action-container">
-        
+        <export-tip @exportHandle="exportCommunityOrder">
+          <el-button
+            type="primary"
+            plain
+            icon="el-plus-circle"
+          >
+            导出活动销售数据
+          </el-button>
+        </export-tip>
       </div>
 
       <el-tabs
@@ -73,7 +81,13 @@
           v-loading="loading"
           border
           :data="tableList"
+          @selection-change="handleSelectionChange"
         >
+          <el-table-column
+            type="selection"
+            align="center"
+            label="全选"
+          />
           <el-table-column
             width="100"
             prop="activity_id"
@@ -164,7 +178,7 @@ import { mapGetters } from 'vuex'
 import mixin from '@/mixins'
 import { pageMixin } from '@/mixins'
 import { VERSION_STANDARD, isArray, VERSION_B2C, VERSION_IN_PURCHASE } from '@/utils'
-import { getCommunityActivity, communityDeliver } from '@/api/promotions'
+import { getCommunityActivity, communityDeliver, communityOrderExport } from '@/api/promotions'
 import moment from 'moment'
 import {
   DISTRIBUTION_TYPE,
@@ -253,6 +267,38 @@ export default {
     },
     dateStrToTimeStamp (str) {
       return Date.parse(new Date(str)) / 1000
+    },
+    exportCommunityOrder () {
+      communityOrderExport(this.params).then((response) => {
+        if (response.data.data.status) {
+          this.$message({
+            type: 'success',
+            message: '已加入执行队列，请在设置-导出列表中下载'
+          })
+          this.$export_open('member')
+          return
+        } else if (response.data.data.url) {
+          this.downloadUrl = response.data.data.url
+          this.downloadName = response.data.filename
+          this.downloadView = true
+        } else {
+          this.$message({
+            type: 'error',
+            message: '无内容可导出 或 执行失败，请检查重试'
+          })
+          return
+        }
+      })
+    },
+    handleSelectionChange (rows) {
+      this.activity_id = []
+      if (rows) {
+        rows.forEach((row) => {
+          if (row) {
+            this.activity_id.push(row.activity_id)
+          }
+        })
+      }
     },
     async fetchList () {
       this.loading = true

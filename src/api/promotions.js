@@ -988,3 +988,11 @@ export function communityDeliver (query) {
     params: query
   })
 }
+
+export function communityOrderExport (query) {
+  return fetch({
+    url: '/community/orders/export',
+    method: 'GET',
+    params: query
+  })
+}

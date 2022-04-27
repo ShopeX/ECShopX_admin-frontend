@@ -911,7 +911,7 @@ export default {
       delete params.create_time
       delete params.delivery_time
 
-      const { list, pager, datapass_block } = await this.$api.trade.getOrderList(params)
+      const { list, pager, datapass_block } = await this.$api.community.getCommunityOrderList(params)
 
       this.tableList = list.map((item) => {
         const actionBtns = []

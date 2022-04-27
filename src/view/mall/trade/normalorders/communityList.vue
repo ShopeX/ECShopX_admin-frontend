@@ -190,6 +190,16 @@
             :options="subDistrictList"
           />
         </SpFilterFormItem>
+        <SpFilterFormItem
+          prop="params.activity_name"
+          label="社团名称:"
+        >
+          <el-input
+            v-model="params.activity_name"
+            placeholder="请输入社团名称"
+          />
+        </SpFilterFormItem>
+
       </SpFilterForm>
 
       <div class="action-container">

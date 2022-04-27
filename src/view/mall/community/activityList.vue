@@ -224,8 +224,8 @@ export default {
         },
       ],
       pickerOptions: PICKER_DATE_OPTIONS,
-
-
+      exportData: {},
+      activity_id: []
     }
   },
 

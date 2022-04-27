@@ -199,6 +199,7 @@ export default {
         time_start_begin: '', //
         time_start_end: '',
       },
+      activity_id: [],
       activity_status: [
         {
           title:'未开始',
@@ -270,8 +271,8 @@ export default {
     },
     exportCommunityOrder () {
       if (this.activity_id.length) {
-        this.exportData.activity_id = Object.assign({}, this.activity_id)
-        communityOrderExport(this.exportData).then((response) => {
+        let params = { activity_id: this.activity_id }
+        communityOrderExport(params).then((response) => {
           if (response.data.data.status) {
             this.$message({
               type: 'success',

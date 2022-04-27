@@ -269,7 +269,7 @@ export default {
       return Date.parse(new Date(str)) / 1000
     },
     exportCommunityOrder () {
-      if (this.item_id.length) {
+      if (this.activity_id.length) {
         this.exportData.activity_id = Object.assign({}, this.activity_id)
         communityOrderExport(this.exportData).then((response) => {
           if (response.data.data.status) {

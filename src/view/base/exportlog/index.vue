@@ -314,7 +314,7 @@ export default {
       return Date.parse(new Date(str)) / 1000
     },
     handleDown ({ log_id, file_url, file_name }) {
-      if (this.activeName == 'itemcode' || (this.activeName == 'normal_community_order' && fileName.split('.').pop().toLowerCase() == 'zip')) {
+      if (this.activeName == 'itemcode' || (this.activeName == 'normal_community_order' && file_name.split('.').pop().toLowerCase() == 'zip')) {
         window.open(file_url)
         return
       }

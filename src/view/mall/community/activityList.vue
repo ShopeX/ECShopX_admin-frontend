@@ -143,7 +143,7 @@
               <template slot-scope="scope">
                 <div class="operating-icons">
                   <el-button
-                    v-if="scope.row.activity_status == 'success' &&  scope.row.delivery_status != 'DONE'"
+                    v-if="scope.row.activity_status == 'success' &&  scope.row.delivery_status == 'PENDING'"
                     type="text"
                     @click="send(scope.row)"
                   >

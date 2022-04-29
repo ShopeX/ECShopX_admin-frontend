@@ -331,7 +331,7 @@
           />
         </el-form-item>
         <el-form-item
-          v-if="VERSION_STANDARD || VERSION_PLATFORM"
+          v-if="VERSION_PLATFORM || VERSION_STANDARD"
           label="开启小程序定位"
         >
           <el-switch

@@ -1,0 +1,97 @@
+.page-decorate-index {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  .decorate-hd {
+    height: 60px;
+    background: #fff;
+    border-bottom: 1px solid #d1d1d1;
+  }
+  .decorate-bd {
+    display: flex;
+    flex: 1;
+    justify-content: space-between;
+  }
+  .left-container {
+    background: #fff;
+    width: 160px;
+    .components-view {
+      display: flex;
+      flex-wrap: wrap;
+    }
+    .wgt-item {
+      width: 80px;
+      height: 100px;
+      text-align: center;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      flex-direction: column;
+      &:hover {
+        background: #409eff;
+        cursor: move;
+        .wgt-icon {
+          color: #fff;
+        }
+        .wgt-name {
+          color: #fff;
+        }
+      }
+    }
+    .wgt-icon {
+      font-size: 26px;
+      color: #666;
+    }
+    .wgt-name {
+      color: #666;
+      font-size: 13px;
+    }
+  }
+  .center-container {
+    background: #f7f8fa;
+    flex: 1;
+    overflow: auto;
+    position: absolute;
+    top: 60px;
+    left: 160px;
+    right: 380px;
+    bottom: 0;
+    .weapp-template {
+      width: 375px;
+      margin: 40px auto;
+      min-height: 803px;
+      box-shadow: 0 0 14px 0 rgb(0 0 0 / 10%);
+    }
+    .weapp-header {
+      background-image: url('../../assets/imgs/weapp-header.png');
+      height: 64px;
+      width: 375px;
+      background-repeat: no-repeat;
+      background-size: cover;
+      background-position: 50%;
+    }
+  }
+  .right-container {
+    background: #fff;
+    width: 380px;
+    overflow: auto;
+    position: absolute;
+    top: 60px;
+    right: 0;
+    bottom: 0;
+    .wgt-name {
+      height: 50px;
+      line-height: 50px;
+      padding: 0 20px;
+      font-size: 16px;
+      font-weight: 600;
+      border-bottom: 1px solid #d1d1d1;
+    }
+  }
+  .components-view-chosen {
+    display: none;
+  }
+  .wgt-render-item {
+    // height: 200px;
+  }
+}

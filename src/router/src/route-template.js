@@ -37,7 +37,12 @@ export default {
       name: `会员中心设置`,
       component: () => import('@/view/wxapp/member_center_setting')
     },
-
+    // 小程序模板装修
+    // {
+    //   path: 'manage/decorate',
+    //   name: `模板编辑`,
+    //   component: () => import('@/view/decorate/index')
+    // },
     // PC商城
     {
       path: 'pcmall/templatelist',

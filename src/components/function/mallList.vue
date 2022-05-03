@@ -4,7 +4,10 @@
       v-if="relStore.id == '0'"
       class="shop-header"
     >
-      <div class="shop-left" v-if="!VERSION_B2C">
+      <div
+        v-if="!VERSION_B2C"
+        class="shop-left"
+      >
         <span class="text">小程序模版呈现：</span>
         <div class="option-item">
           <span class="option-item_text">总部首页</span>
@@ -736,11 +739,13 @@ export default {
           confirmButtonText: '确定',
           cancelButtonText: '取消',
           type: 'warning'
-        }).then(() => {
-          this.updateLocation(val)
-        }).catch(() => {
-          this.is_open_wechatapp_location = 1
         })
+          .then(() => {
+            this.updateLocation(val)
+          })
+          .catch(() => {
+            this.is_open_wechatapp_location = 1
+          })
         return
       }
       this.updateLocation(val)
@@ -919,8 +924,9 @@ export default {
       })
     },
     editTemplate (pages_template_id) {
-      this.templateVisible = true
-      this.currTemplateId = pages_template_id
+      // this.templateVisible = true
+      // this.currTemplateId = pages_template_id
+      window.open('/wxapp/manage/decorate', '_blank')
     },
     copyTemplate (pages_template_id) {
       let params = {

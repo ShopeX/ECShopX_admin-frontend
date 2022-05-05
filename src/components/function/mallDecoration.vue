@@ -118,7 +118,7 @@
             </svg>
             轮播
           </template>
-          <template v-if="item.name === 'store' && system_mode === 'platform'">
+          <template v-if="item.name === 'store' && VERSION_PLATFORM">
             <svg
               class="svg-icon"
               aria-hidden="true"
@@ -258,7 +258,7 @@
                   :res="item"
                 />
                 <store
-                  v-if="item.name === 'store' && system_mode === 'platform'"
+                  v-if="item.name === 'store' && VERSION_PLATFORM"
                   :res="item"
                 />
               </div>
@@ -360,7 +360,7 @@
                   :active="index == editorIndex"
                 />
                 <store
-                  v-if="item.name === 'store' && system_mode === 'platform'"
+                  v-if="item.name === 'store' && VERSION_PLATFORM"
                   :res="item"
                   :active="index == editorIndex"
                 />
@@ -431,6 +431,7 @@
             @bindImgs="showImgs"
             @bindLinks="showLinks"
             @onHotZoneChange="onHotZoneChange"
+            @onChangeLinkType="onChangeLinkType"
           />
           <marqueesEditor
             :res="editorData"
@@ -1256,11 +1257,7 @@ export default {
         }
       }
       // 如果是平台版本推荐店铺组件且店铺为总店（店铺id 0）
-      if (
-        this.editorData.name === 'store' &&
-        this.system_mode === 'platform' &&
-        Number(store.id) === 0
-      ) {
+      if (this.editorData.name === 'store' && this.VERSION_PLATFORM && Number(store.id) === 0) {
         this.$message({
           message: '推荐店铺不能为总店',
           type: 'error'
@@ -1357,9 +1354,11 @@ export default {
         this.editorData.data[this.editorDataIndex].id = data.id
         this.editorData.data[this.editorDataIndex].title = data.title
         this.editorData.data[this.editorDataIndex].linkPage = type
+        this.editorData.data[this.editorDataIndex].linkType = 0
         this.components[this.editorIndex].data[this.editorDataIndex].id = data.id
         this.components[this.editorIndex].data[this.editorDataIndex].title = data.title
         this.components[this.editorIndex].data[this.editorDataIndex].linkPage = type
+        this.components[this.editorIndex].data[this.editorDataIndex].linkType = 0
         this.linksVisible = false
       } else {
         this.editorData.config.moreLink.id = data.id
@@ -1424,7 +1423,7 @@ export default {
       })
     },
     async getData () {
-      if (this.system_mode === 'platform') {
+      if (this.VERSION_PLATFORM) {
         const isHaveStore = this.initData.some((item) => item.name === 'store')
         if (!isHaveStore) {
           this.initData.push({
@@ -1485,6 +1484,10 @@ export default {
     onHotZoneChange (data) {
       this.editorData.data = data
       this.components[this.editorIndex].data = data
+    },
+    onChangeLinkType (val, index) {
+      this.editorData.data[index].linkType = val
+      this.components[this.editorIndex].data[index].linkType = val
     }
   }
 }

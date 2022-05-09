@@ -312,18 +312,13 @@ export default {
       tableList: [],
       params: {
         item_type: 'normal',
-        templates_id: '',
         keywords: '',
         item_bn: '',
-        category: 0,
-        is_warning: false,
-        tag_id: '',
-        is_gift: false,
-        type: 0,
         barcode: '',
-        distributor_id: 0,
-        regions_id: [],
+        approve_status: '',
         brand_id: '',
+        category: 0,
+        activity_name: '',
         activity_status: 'all'
       },
       statusOption: SALES_STATUS,
@@ -383,11 +378,17 @@ export default {
     },
     async fetchList ({ pageIndex, pageSize }) {
       this.loading = true
-      let params = {
+      let query = {
         page: pageIndex,
-        pageSize
+        pageSize,
+        ...this.params
       }
-      const { list, total_count } = await this.$api.community.getActivityGoods(params)
+      if (query.activity_status == 'activing') {
+        query['in_activity'] = true
+      }
+      delete query.activity_status
+
+      const { list, total_count } = await this.$api.community.getActivityGoods(query)
       this.tableList = list
       this.page.total = total_count
       this.loading = false

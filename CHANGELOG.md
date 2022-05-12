@@ -2,6 +2,20 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [2.6.4](https://git.ishopex.cn/ecshopx/ecshopx-admin/compare/v2.6.3...v2.6.4) (2022-05-12)
+
+
+### Bug Fixes
+
+* remove chief ([d5f8ea0](https://git.ishopex.cn/ecshopx/ecshopx-admin/commit/d5f8ea09589d451519e42a21748f98dd45991e0f))
+* 修复装修器附近商家挂件 ([11822b5](https://git.ishopex.cn/ecshopx/ecshopx-admin/commit/11822b543f05ba3e47114896570d79219be1b61e))
+* 修改热区H5链接 ([6aa439d](https://git.ishopex.cn/ecshopx/ecshopx-admin/commit/6aa439d9f8b37c728c3aabeb78ca502eff002405))
+* 团长disabled ([e63e4b6](https://git.ishopex.cn/ecshopx/ecshopx-admin/commit/e63e4b602c2f71e5fc4641d389f4e3d989ad0032))
+* 团长导入 ([42fc806](https://git.ishopex.cn/ecshopx/ecshopx-admin/commit/42fc806542ec758dcaef9f6e3f059f5e9dcf6741))
+* 添加社区活动管理 ([a4daa18](https://git.ishopex.cn/ecshopx/ecshopx-admin/commit/a4daa18889f256a892086d46366f7c2902a970d1))
+* 热区组件添加H5链接 ([709eb4b](https://git.ishopex.cn/ecshopx/ecshopx-admin/commit/709eb4bbfeb47ee044cbb9e0673fbfa7762dffb9))
+* 社区活动商品 ([07b8cfd](https://git.ishopex.cn/ecshopx/ecshopx-admin/commit/07b8cfd405ec3d432ccfb7c8d64677fe59e2b10a))
+
 ### [2.6.3](https://git.ishopex.cn/ecshopx/ecshopx-admin/compare/v2.6.2...v2.6.3) (2022-05-09)
 
 ### [2.6.2](https://git.ishopex.cn/ecshopx/ecshopx-admin/compare/v2.6.1...v2.6.2) (2022-05-09)

@@ -14,33 +14,46 @@ $color-secondary: rgba(var(--themeColorRgb), 0.6);
     transform: scale(0.8);
     display: inline-block;
   }
+
   &--primary {
     background-color: $color-primary;
     border-color: $color-primary;
     &:hover {
-      background-color: $color-primary;
-      border-color: $color-primary;
+      color: #fff !important;
+      border-color: $color-secondary !important;
+      background-color: $color-secondary !important;
+    }
+    &:focus {
+      color: #fff !important;
+      border-color: $color-primary !important;
+      background-color: $color-primary !important;
     }
   }
   &.is-plain {
-    background-color: #fff;
     color: $color-primary;
     border-color: $color-primary;
+    background-color: #fff;
     &:hover {
-      color: rgba($color-primary, 0.6);
-      border-color: rgba($color-primary, 0.6);
-      background-color: #fff;
+      color: $color-secondary !important;
+      border-color: $color-secondary !important;
+      background-color: #fff !important;
     }
     &:focus {
-      background-color: $color-primary;
-      border-color: $color-primary;
+      color: $color-primary !important;
+      border-color: $color-primary !important;
+      background-color: #fff !important;
     }
   }
   &--text {
     padding: 0;
     color: $color-primary;
     &:hover {
-      color: $color-primary;
+      color: $color-secondary !important;
+      border-color: transparent !important;
+    }
+    &:focus {
+      color: $color-primary !important;
+      border-color: transparent !important;
     }
     a {
       color: $color-primary;
@@ -48,6 +61,17 @@ $color-secondary: rgba(var(--themeColorRgb), 0.6);
   }
   & + .el-button {
     margin-left: 8px;
+  }
+
+  &:hover {
+    background-color: inherit;
+    border-color: inherit;
+    color: inherit;
+  }
+  &:focus {
+    background-color: inherit;
+    border-color: inherit;
+    color: inherit;
   }
 }
 
@@ -216,8 +240,14 @@ $color-secondary: rgba(var(--themeColorRgb), 0.6);
 .el-pagination {
   &.is-background {
     .el-pager {
-      li:not(.disabled).active {
-        background-color: $color-primary;
+      li:not(.disabled) {
+        &.active {
+          background-color: $color-primary;
+          color: #fff !important;
+        }
+        &:hover {
+          color: $color-primary;
+        }
       }
     }
   }

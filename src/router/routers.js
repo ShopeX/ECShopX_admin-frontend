@@ -31,6 +31,7 @@ import Arrivalnotice from '@/view/member/subscribe/goods/list' // 到货通知
 import Servicepayment from '@/view/mall/trade/list' // 交易单管理
 import Tradeservice from '@/view/mall/trade/order/list' // 服务订单管理
 import Tradenormalorders from '@/view/mall/trade/normalorders/list' // 实物订单管理
+import Tradecommunityorders from '@/view/mall/trade/normalorders/list' // 社区团购订单管理
 import Tradenormalshoporders from '@/view/mall/trade/normalorders/shopList' // 自营订单管理
 import Tradedrugorders from '@/view/mall/trade/normalorders/drugList' // 药品需求单
 import Tradepayment from '@/view/mall/trade/list' // 交易单管理
@@ -80,6 +81,7 @@ import Membermarketing from '@/view/member/cardticket/coupon' // 优惠券管理
 import Couponsend from '@/view/member/members/list' // 群发优惠券，与会员管理同一组件
 import Smssend from '@/view/member/members/list' // 群发短信，与会员管理同一组件
 import Coupongive from '@/view/member/coupon/giveLog' // 优惠券后台发放记录
+import Chief from '@/view/member/coupon/giveLog' // 优惠券后台发放记录
 import Coupongrantset from '@/view/member/cardticket/couponGrantSet' //优惠券发放管理设置
 import Marketingindex from '@/view/member/promotions/index' // 注册营销
 import Marketingbargain from '@/view/member/bargain/index' // 微信助力
@@ -216,6 +218,8 @@ import Servicegoods_editor from '@/view/mall/goods/service/items/add' // 服务�
 import Goodsphysical_editor from '@/view/mall/goods/physical/add' // 实体类商品添加编辑
 import Tradenormalorders_detail from '@/view/mall/trade/order/detail/index.vue' // 实体订单详情
 import Tradenormalorders_process from '@/view/mall/trade/order/process' // 实体订单详情
+import Tradecommunityorders_detail from '@/view/mall/trade/order/detail/index.vue' // 社区团购订单详情
+import Tradecommunityorders_process from '@/view/mall/trade/order/process' // 社区团购订单详情
 import Tradenormalshoporders_detail from '@/view/mall/trade/order/detail' // 自营订单详情
 import Tradedrugorders_detail from '@/view/mall/trade/order/detail' // 药品需求单订单详情
 import Marketingdistribution_orders_detail from '@/view/mall/trade/order/detail' // 店铺订单详情
@@ -223,6 +227,7 @@ import Tradeservice_detail from '@/view/mall/trade/order/detail' // 服务订单
 import Shippingtemplates_editor from '@/view/mall/trade/shipping/add' // 添加编辑运费模板
 import Mallreservation_editor from '@/view/mall/reservation/resourcesetting/add' // 资源位添加
 import Coupongive_detail from '@/view/member/coupon/giveErrorLog' // 优惠券后台发放记录详情
+import Chief_detail from '@/view/member/coupon/giveErrorLog' // 优惠券后台发放记录详情
 import Aftersaleslist_detail from '@/view/mall/aftersales/detail' // 售后单详情
 import Fapiaolist_detail from '@/view/mall/fapiao/detail' //发票编辑
 import Member_detail from '@/view/member/members/detail' // 会员详情页
@@ -424,12 +429,15 @@ export default {
   Tradeservice,
   Tradenormalorders,
   Tradenormalshoporders,
+  Tradecommunityorders,
   Tradedrugorders,
   Tradepayment,
   Tradeverification,
   Tradenormalorders_detail,
   Tradenormalorders_process,
   Tradenormalshoporders_detail,
+  Tradecommunityorders_process,
+  Tradecommunityorders_detail,
   Tradedrugorders_detail,
   Tradeservice_detail,
   Shippingtemplates,
@@ -482,6 +490,8 @@ export default {
   Smssend,
   Coupongive,
   Coupongive_detail,
+  Chief,
+  Chief_detail,
   Coupongrantset,
   Membermarketing_detail,
   Marketingindex,

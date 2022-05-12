@@ -190,6 +190,16 @@
             :options="subDistrictList"
           />
         </SpFilterFormItem>
+        <SpFilterFormItem
+          prop="params.activity_name"
+          label="社团名称:"
+        >
+          <el-input
+            v-model="params.activity_name"
+            placeholder="请输入社团名称"
+          />
+        </SpFilterFormItem>
+
       </SpFilterForm>
 
       <div class="action-container">
@@ -315,30 +325,33 @@
               </div>
             </template>
           </el-table-column>
-
           <el-table-column
-            prop="total_fee"
-            width="120"
-            label="订单金额（¥）"
+            width="220"
+            prop="order_id"
+            label="跟团信息"
           >
             <template slot-scope="scope">
-              {{ (scope.row.total_fee / 100).toFixed(2) }}
-            </template>
-          </el-table-column>
-          <el-table-column
-            width="100"
-            label="运费（¥）"
-          >
-            <template slot-scope="scope">
-              {{ (scope.row.freight_fee || 0) / 100 }}
+              <div>
+                所属团长：{{ scope.row.community_info.chief_name  }}
+              </div>
+              <div>
+                团名称：{{ scope.row.community_info.activity_name  }}
+              </div>
+              <div>
+                跟团号：{{ scope.row.community_info.activity_trade_no  }}
+              </div>
             </template>
           </el-table-column>
           <el-table-column
             prop="mobile"
-            label="客户手机号"
+            width="150"
+            label="收件人信息"
           >
-            <template slot-scope="scope">
+            <template slot-scope="scope" >
               <template v-if="!scope.row.user_delete && login_type !== 'merchant'">
+              <div>
+                收件人：{{ scope.row.community_info.ziti_contact_user  }}
+              </div>
                 <router-link
                   target="_blank"
                   :to="{
@@ -383,6 +396,23 @@
                   />
                 </el-tooltip>
               </template>
+            </template>
+          </el-table-column>
+          <el-table-column
+            prop="total_fee"
+            width="120"
+            label="订单金额（¥）"
+          >
+            <template slot-scope="scope">
+              {{ (scope.row.total_fee / 100).toFixed(2) }}
+            </template>
+          </el-table-column>
+          <el-table-column
+            width="100"
+            label="运费（¥）"
+          >
+            <template slot-scope="scope">
+              {{ (scope.row.freight_fee || 0) / 100 }}
             </template>
           </el-table-column>
           <template v-if="login_type != 'merchant'">
@@ -538,7 +568,7 @@ import {
   ORDER_STATUS,
   ORDER_B2C_STATUS,
   IN_PURCHASE_STATUS,
-  ORDER_TYPE,
+  
   INVOICE_STATUS,
   ORDER_CATEGORY,
   PICKER_DATE_OPTIONS,
@@ -546,6 +576,10 @@ import {
   REFUND_PROCESS,
   PAY_TYPE
 } from '@/consts'
+
+const ORDER_TYPE = [
+  { title: '社区团购订单', value: 'community' }
+]
 
 export default {
   mixins: [mixin, pageMixin],
@@ -556,12 +590,12 @@ export default {
       params: {
         mobile: '',
         order_id: '',
-        order_class_exclude: 'drug,pointsmall,community',
+        
         salesman_mobile: '',
         receipt_type: '', // 配送类型
         source: '', // 订单来源
         order_status: '', // 订单状态
-        order_class: '', // 订单类型
+        order_class: 'community', // 订单类型
         is_invoiced: '', // 开票状态
         time_start_begin: '', //
         time_start_end: '',
@@ -877,7 +911,7 @@ export default {
       delete params.create_time
       delete params.delivery_time
 
-      const { list, pager, datapass_block } = await this.$api.trade.getOrderList(params)
+      const { list, pager, datapass_block } = await this.$api.community.getCommunityOrderList(params)
 
       this.tableList = list.map((item) => {
         const actionBtns = []

@@ -62,7 +62,7 @@
 
 <template>
   <div>
-    <div v-if="$route.path.indexOf('detail') === -1">
+    <div v-if="$route.path.indexOf('detail') === -1 && $route.path.indexOf('chiefupload') === -1">
       <SpFilterForm
         :model="params"
         @onSearch="onSearch"
@@ -87,9 +87,9 @@
           />
         </SpFilterFormItem>
         <SpFilterFormItem
+          v-if="!VERSION_IN_PURCHASE"
           prop="vip_grade"
           label="会员类型:"
-          v-if="!VERSION_IN_PURCHASE"
         >
           <el-select
             v-model="params.vip_grade"
@@ -110,9 +110,9 @@
           </el-select>
         </SpFilterFormItem>
         <SpFilterFormItem
+          v-if="!VERSION_IN_PURCHASE"
           prop="grade_id"
           label="会员等级:"
-          v-if="!VERSION_IN_PURCHASE"
         >
           <el-select
             v-model="params.grade_id"
@@ -128,9 +128,9 @@
           </el-select>
         </SpFilterFormItem>
         <SpFilterFormItem
+          v-if="!VERSION_IN_PURCHASE"
           prop="inviter_mobile"
           label="推荐人:"
-          v-if="!VERSION_IN_PURCHASE"
         >
           <el-input
             v-model="params.inviter_mobile"
@@ -159,8 +159,8 @@
           label="注册日期:"
         >
           <el-date-picker
-            unlink-panels
             v-model="created"
+            unlink-panels
             type="daterange"
             align="right"
             format="yyyy-MM-dd"
@@ -192,9 +192,9 @@
           />
         </SpFilterFormItem>
         <SpFilterFormItem
+          v-if="!VERSION_IN_PURCHASE"
           prop="have_consume"
           label="购买记录:"
-          v-if="!VERSION_IN_PURCHASE"
         >
           <el-select
             v-model="params.have_consume"
@@ -230,10 +230,10 @@
           打标签
         </el-button>
         <el-button
+          v-if="!VERSION_IN_PURCHASE"
           type="primary"
           plain
           @click="batchActionDialog('give_coupon')"
-          v-if="!VERSION_IN_PURCHASE"
         >
           赠送优惠券
         </el-button>
@@ -270,6 +270,14 @@
             导出
           </el-button>
         </export-tip>
+
+        <el-button
+          type="primary"
+          plain
+          @click="chiefupload"
+        >
+          团长导入
+        </el-button>
       </div>
 
       <!-- <el-row>
@@ -337,11 +345,41 @@
             <span v-else>{{ scope.row.sex }}</span>
           </template>
         </el-table-column>
+
         <el-table-column
+          prop="is_chief"
+          label="是否团长"
+          width="80"
+        >
+          <template slot-scope="scope">
+            <el-switch
+              v-model="scope.row.is_chief"
+              disabled
+              active-value="1"
+              inactive-value="0"
+              active-color="#ff4949"
+              inactive-color="#ccc"
+              @change="switchChief(scope.$index, scope.row)"
+            />
+          </template>
+        </el-table-column>
+
+        <!-- <el-table-column
+          prop="is_chief"
+          label="是否团长"
+          width="100"
+        >
+          <template slot-scope="scope">
+            <span v-if="scope.row.is_chief == '1'">是</span>
+            <span v-else>否</span>
+          </template>
+        </el-table-column> -->
+
+        <el-table-column
+          v-if="!VERSION_IN_PURCHASE"
           prop="grade_id"
           label="会员等级"
           width="140"
-          v-if="!VERSION_IN_PURCHASE"
         >
           <template slot-scope="scope">
             <!-- <span v-if="scope.row.grade_id == '1'">女</span>
@@ -350,10 +388,10 @@
           </template>
         </el-table-column>
         <el-table-column
+          v-if="!VERSION_IN_PURCHASE"
           prop="inviter"
           label="推荐人"
           width="130"
-          v-if="!VERSION_IN_PURCHASE"
         />
         <el-table-column
           prop="disabled"
@@ -924,7 +962,7 @@
                     placeholder="请选择爱好"
                   >
                     <el-option
-                      v-for="(ha_item) in item.items"
+                      v-for="ha_item in item.items"
                       :key="ha_item.name"
                       :label="ha_item.name"
                       :value="ha_item.name"
@@ -1077,7 +1115,8 @@ import {
   batchupdateMemberGrade,
   batchOperating,
   getMemberRegisterSetting,
-  updateMemberBasicInfo
+  updateMemberBasicInfo,
+  setCheif
 } from '../../../api/member'
 import { getaliSmsStatus } from '@/api/sms'
 
@@ -1293,6 +1332,13 @@ export default {
     this.getAliSMS()
   },
   methods: {
+    chiefupload () {
+      if (this.login_type == 'distributor') {
+        this.$router.push({ path: `/shopadmin/member/member/chiefupload` })
+      } else {
+        this.$router.push({ path: `/member/member/chiefupload` })
+      }
+    },
     async getAliSMS () {
       const { aliyunsms_status } = await this.$api.sms.getaliSmsStatus()
       this.aliyunsms_status = aliyunsms_status
@@ -1835,6 +1881,36 @@ export default {
         })
       }
     },
+    switchChief (index, row) {
+      console.log(row.is_chief)
+      if (row.is_chief == 1) {
+        var msg = '此操作将设置为团长，是否继续?'
+        this.$confirm(msg, '提示', {
+          confirmButtonText: '确定',
+          cancelButtonText: '取消',
+          type: 'warning'
+        }).then(() => {
+          let params = {
+            'user_id': row.user_id,
+            'distributor_ids': [this.$store.getters.shopId]
+          }
+          setCheif(params).then((res) => {
+            this.getMembers()
+          })
+        })
+      } else {
+        this.$message({ type: 'error', message: '取消团长，请联系管理员' })
+        this.getMembers()
+        // let params = {
+        //   'user_id': row.user_id,
+        //   'distributor_ids': [this.$store.getters.shopId]
+        // }
+        // setCheif(params).then((res) => {
+        //   this.getMembers()
+        // })
+      }
+    },
+
     async relTagDelEvent (tagId, userId) {
       await this.$api.member.usersRelTagsDel({
         tag_id: tagId,

@@ -55,11 +55,11 @@ export const ORDER_TYPE = [
   { title: '全部', value: '' },
   { title: '团购订单', value: 'groups' },
   { title: '秒杀订单', value: 'seckill' },
-  { title: '普通订单', value: 'normal' }
+  { title: '普通订单', value: 'normal' },
+  { title: "社区团购订单", value: "community" }
   // { title: "导购订单", value: "shopguide" },
   // { title: "跨境订单", value: "crossborder" },
   // { title: "助力订单", value: "bargain" },
-  // { title: "社区订单", value: "community" },
   // { title: "服务类订单", value: "services" },
   // { title: "兑换订单", value: "excard"}
 ]

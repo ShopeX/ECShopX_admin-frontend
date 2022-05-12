@@ -94,6 +94,9 @@ export default {
         case 'excard':
           returnValue = '兑换订单'
           break
+        case 'community':
+          returnValue = '社区团购订单'
+          break
         default:
           returnValue = '实体订单'
           break

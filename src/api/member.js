@@ -340,3 +340,11 @@ export function saveMemberFieldSetting (params) {
     params: params
   })
 }
+
+export function setCheif (query) {
+  return fetch({
+    url: '/community/chief/setMemberCommunity',
+    method: 'post',
+    params: query
+  })
+}

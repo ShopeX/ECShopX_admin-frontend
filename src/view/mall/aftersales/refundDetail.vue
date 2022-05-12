@@ -281,7 +281,7 @@
           申请时间:
         </el-col>
         <el-col :span="20">
-          {{ refundDetail.create_time | datetime('YYYY-MM-DD hh:mm:ss') }}
+          {{ refundDetail.create_time | datetime('YYYY-MM-DD HH:mm:ss') }}
         </el-col>
       </el-row>
       <el-row>
@@ -295,7 +295,7 @@
           :span="20"
         >
           <span v-if="refundDetail.refund_success_time">{{
-            refundDetail.refund_success_time | datetime('YYYY-MM-DD hh:mm:ss')
+            refundDetail.refund_success_time | datetime('YYYY-MM-DD HH:mm:ss')
           }}</span>
         </el-col>
       </el-row>

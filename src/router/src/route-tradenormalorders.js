@@ -36,6 +36,21 @@ export default {
       ]
     },
     {
+      path: 'entitytrade/tradecommunityorders',
+      name: `社区团购订单`,
+      component: () => import('@/view/mall/trade/normalorders/communityList'),
+      children: [
+        {
+          path: 'detail/:itemId?',
+          component: () => import('@/view/mall/trade/order/detail')
+        },
+        {
+          path: 'process/:itemId?',
+          component: () => import('@/view/mall/trade/order/process')
+        }
+      ]
+    },
+    {
       path: 'entitytrade/aftersaleslist',
       name: `售后列表`,
       component: () => import('@/view/mall/aftersales/list'),

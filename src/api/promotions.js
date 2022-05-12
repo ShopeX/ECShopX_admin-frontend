@@ -972,3 +972,27 @@ export function extrapointUpdateStatus (params) {
     params: params
   })
 }
+
+export function getCommunityActivity (query) {
+  return fetch({
+    url: '/community/list',
+    method: 'get',
+    params: query
+  })
+}
+
+export function communityDeliver (query) {
+  return fetch({
+    url: '/community/chief/deliver',
+    method: 'post',
+    params: query
+  })
+}
+
+export function communityOrderExport (query) {
+  return fetch({
+    url: '/community/orders/export',
+    method: 'GET',
+    params: query
+  })
+}

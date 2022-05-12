@@ -1,6 +1,14 @@
 <style lang="scss" scope>
 .sp-filter-form-item {
   margin: 0 8px 16px 0;
+  &.label {
+    .form-item__label {
+      display: block;
+    }
+    .form-item__content {
+      margin-left: 90px;
+    }
+  }
 }
 .form-item {
   &__label {
@@ -10,9 +18,10 @@
     padding-right: 8px;
     text-align: right;
     color: #666;
+    display: none;
   }
   &__content {
-    margin-left: 90px;
+    margin-left: 0;
     &.mini {
       width: 214px;
     }
@@ -55,7 +64,10 @@
 }
 </style>
 <template>
-  <div class="sp-filter-form-item">
+  <div
+    class="sp-filter-form-item"
+    :class="{ 'label': label }"
+  >
     <div class="form-item__label">
       {{ label }}
     </div>

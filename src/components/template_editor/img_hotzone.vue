@@ -58,7 +58,14 @@
             class="setting-item slider"
           >
             <div class="uploader-setting">
-              <el-radio-group v-model="item.linkType">
+              <el-radio-group
+                v-model="item.linkType"
+                @change="
+                  (val) => {
+                    onChangeLinkType(val, index)
+                  }
+                "
+              >
                 <el-radio :label="0">
                   选择路径
                 </el-radio>
@@ -218,6 +225,9 @@ export default {
     },
     onInputChange () {
       this.$emit('onHotZoneChange', this.data)
+    },
+    onChangeLinkType (val, index) {
+      this.$emit('onChangeLinkType', val, index)
     }
   }
 }

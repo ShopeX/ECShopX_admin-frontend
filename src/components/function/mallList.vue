@@ -331,7 +331,7 @@
           />
         </el-form-item>
         <el-form-item
-          v-if="VERSION_STANDARD"
+          v-if="VERSION_PLATFORM || VERSION_STANDARD"
           label="开启小程序定位"
         >
           <el-switch
@@ -731,6 +731,21 @@ export default {
       })
     },
     toggleOpenWechatappLocation (val) {
+      if (this.VERSION_PLATFORM && val == 2) {
+        this.$confirm('关闭后附件商家组件将无法使用', '提示', {
+          confirmButtonText: '确定',
+          cancelButtonText: '取消',
+          type: 'warning'
+        }).then(() => {
+          this.updateLocation(val)
+        }).catch(() => {
+          this.is_open_wechatapp_location = 1
+        })
+        return
+      }
+      this.updateLocation(val)
+    },
+    updateLocation (val) {
       let params = {
         is_open_wechatapp_location: val
         // page_type: this.app_page_type[this.app_type]

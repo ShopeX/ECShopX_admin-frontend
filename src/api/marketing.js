@@ -463,6 +463,14 @@ export function addDealer (params) {
   })
 }
 
+// 经销商重置密码
+export function resertPassword (id) {
+  return fetch({
+    url: '/adapay/dealer/reset/' + id,
+    method: 'put'
+  })
+}
+
 // 根据商家tag查找对应商家
 export function queryTagShop (params) {
   return fetch({

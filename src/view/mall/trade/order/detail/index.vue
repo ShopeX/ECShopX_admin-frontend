@@ -21,6 +21,34 @@
       </el-row>
     </el-card>
 
+    <el-card class="el-card--normal" v-if="is_community">
+      <div slot="header">
+        跟团信息
+      </div>
+      <el-row class="card-panel">
+        <el-col
+          v-for="(item, index) in communityInfoList"
+          v-if="item.is_show"
+          :key="`item__${index}`"
+          class="card-panel-item"
+          :span="6"
+        >
+          <span class="card-panel__label">{{ item.label }}</span>
+          <span class="card-panel__value">{{ getFiledValue(item.field) }}</span>
+        </el-col>
+        <el-col
+          v-for="(item, index) in communityExtra"
+          :key="`item__${index}`"
+          class="card-panel-item"
+          :span="6"
+        >
+          <span class="card-panel__label">{{ index }}：</span>
+          <span class="card-panel__value">{{ item }}</span>
+        </el-col>
+
+      </el-row>
+    </el-card>
+
     <el-card class="el-card--normal">
       <div slot="header">
         客户留言
@@ -440,11 +468,19 @@ export default {
         { label: '分润门店类型:', field: 'profit_type' },
         { label: '分润总金额:', field: 'profit_totalPrice' }
       ],
+      communityInfoList: [
+        { label: '活动名称:', field: 'community_activity_name', is_show: true },
+        { label: '所属团长:', field: 'community_chief_name', is_show: true },
+        { label: '跟团号:', field: 'community_activity_trade_no', is_show: true },
+      ],
+
       memberRemark: '暂无留言',
       merchantRemark: '暂无备注',
       loading: false,
       addressInfo: '',
       orderInfo: null,
+      is_community: false,
+      communityExtra: [],
       deliveryData: [],
       expressDialog: false,
       expressFormList: [
@@ -598,8 +634,21 @@ export default {
         receipt_type,
         distributor_id,
         order_status,
-        delivery_status
+        delivery_status,
+        community_info
       } = orderInfo
+      
+      let community_activity_name,community_chief_name,community_activity_trade_no
+      if (community_info) {
+        community_activity_name = community_info.activity_name
+        community_chief_name = community_info.chief_name
+        community_activity_trade_no = community_info.activity_trade_no
+        if (community_info.extra_data) {
+          this.communityExtra = JSON.parse(community_info.extra_data)
+        }
+        this.is_community = true
+      }
+
       const fd = ORDER_TYPE.find((k) => k.value == order_class)
       let crossOrderTxt = ''
       if (order_class == 'normal' && orderInfo.type == '1') {
@@ -633,6 +682,9 @@ export default {
         receiptTypeTxt,
         username,
         mobile,
+        community_activity_name,
+        community_chief_name,
+        community_activity_trade_no,
         memberGrade,
         memberDiscount,
         discount_info: discount_info.filter((item) => item.discount_fee > 0),

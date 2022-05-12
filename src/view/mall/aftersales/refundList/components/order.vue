@@ -182,6 +182,19 @@
                 />
               </el-tooltip>
             </div>
+            <div
+              v-if="scope.row.distributor_id !== '0'"
+              class="order-store"
+            >
+              <el-tooltip
+                effect="dark"
+                content="店铺名"
+                placement="top-start"
+              >
+                <i class="el-icon-office-building" />
+              </el-tooltip>
+              {{ scope.row.distributor_info.name }}
+            </div>
             <div class="order-time">
               <el-tooltip
                 effect="dark"
@@ -422,15 +435,21 @@
           </template>
         </el-table-column>
       </el-table>
-      <el-pagination
+      <div
+        v-if="page.total > page.pageSize"
         class="content-padded content-center"
-        background
-        layout="total, sizes, prev, pager, next, jumper"
-        :current-page.sync="page.pageIndex"
-        :page-sizes="[10, 20, 50]"
-        :total="page.total"
-        :page-size="page.pageSize"
-      />
+      >
+        <el-pagination
+          background
+          layout="total, sizes, prev, pager, next, jumper"
+          :current-page.sync="page.pageIndex"
+          :page-sizes="[10, 20, 50]"
+          :total="page.total"
+          :page-size="page.pageSize"
+          @current-change="onCurrentChange"
+          @size-change="onSizeChange"
+        />
+      </div>
     </el-form>
   </div>
 </template>

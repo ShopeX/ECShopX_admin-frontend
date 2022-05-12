@@ -468,6 +468,17 @@ export default {
           component: () => import('@/view/mall/trade/order/detail')
         }
       ]
-    }
+    },
+    {
+      path: 'community/activity',
+      name: `社区订单`,
+      component: () => import('@/view/member/promotions/community/activityList'),
+      children: [
+        {
+          path: 'detail',
+          component: () => import('@/view/mall/trade/order/detail')//待定
+        }
+      ]
+    },
   ]
 }

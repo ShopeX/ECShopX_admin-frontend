@@ -142,6 +142,7 @@ export default {
         { name: 'member_info', label: '上传新会员' },
         { name: 'member_update', label: '更新会员' },
         { name: 'selform_registration_record', label: '上传报名审核结果' }
+        // { name: 'community_chief', label: '上传团长信息' },
       ],
       loading: false,
       total_count: 0,
@@ -176,6 +177,8 @@ export default {
         var fileName = '新增会员信息'
       } else if (this.activeName == 'member_update') {
         var fileName = '更新会员信息'
+      } else if (this.activeName == 'community_chief') {
+        var fileName = '上传团长信息'
       } else {
         var fileName = '新增消费金额'
       }

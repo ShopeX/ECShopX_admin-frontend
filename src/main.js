@@ -30,6 +30,8 @@ import '@shopex/finder/lib/finder.css'
 import exportTip from '@/utils/components'
 import { export_open } from '@/utils'
 import { SYSTEM_CONFIG } from '@/consts'
+import { SpPickerPlugin } from '@/components/sp-picker'
+
 Vue.use(exportTip)
 initFinder(Vue, {
   fetchLibrary: fetch,
@@ -78,10 +80,13 @@ Vue.use(VueVideoPlayer)
 
 Vue.use(Filter)
 
+const plugins = {
+  SpPickerPlugin
+}
+
 const installComponent = (Vue) => {
   const baseContext = require.context('./components', true, /index(\.vue|\.js)$/)
   const components = {}
-
   function resloveModule (mod) {
     Object.keys(mod).forEach((key) => {
       mod[key].name && (components[mod[key].name] = mod[key])
@@ -100,7 +105,15 @@ const installComponent = (Vue) => {
   })
 }
 
+const installPlugin = (Vue) => {
+  Object.keys(plugins).forEach((name) => {
+    const plugin = plugins[name]
+    Vue.use(plugin)
+  })
+}
+
 installComponent(Vue)
+installPlugin(Vue)
 // micrApp.init()
 
 // import fetch from './utils/fetch'

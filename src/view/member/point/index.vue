@@ -121,7 +121,7 @@
               :max="9999999"
             />天，获取积分
           </el-form-item>
-          <template v-if="VERSION_STANDARD">
+          <template v-if="!VERSION_IN_PURCHASE">
             <el-form-item label="是否开启积分抵扣：">
               <el-switch
                 v-model="form.isOpenDeductPoint"

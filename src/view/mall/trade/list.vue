@@ -177,6 +177,19 @@
                   />
                 </el-tooltip>
               </div>
+              <div
+                v-if="scope.row.distributorId !== '0'"
+                class="order-store"
+              >
+                <el-tooltip
+                  effect="dark"
+                  content="店铺名"
+                  placement="top-start"
+                >
+                  <i class="el-icon-office-building" />
+                </el-tooltip>
+                {{ scope.row.distributor_name }}
+              </div>
               <div class="order-time">
                 <el-tooltip
                   effect="dark"

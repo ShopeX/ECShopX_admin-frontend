@@ -1,11 +1,20 @@
 <style lang="scss" scope>
 .sp-filter-form {
   background-color: #f6f7f9;
-  padding: 16px 0 0 0;
+  padding: 16px 0 16px 0;
   display: flex;
+  box-sizing: content-box;
   &.shouqi {
-    max-height: 120px;
+    max-height: 88px;
     overflow: hidden;
+  }
+  &.small {
+    .sp-filter-form-item {
+      margin-bottom: 8px;
+    }
+    &.shouqi {
+      max-height: 80px;
+    }
   }
 }
 .filter-form {
@@ -13,6 +22,7 @@
     flex: 1;
     display: flex;
     flex-wrap: wrap;
+    overflow: hidden;
   }
   &__ft {
     width: 200px;
@@ -30,7 +40,7 @@
 <template>
   <div
     class="sp-filter-form"
-    :class="{ 'shouqi': !extend }"
+    :class="formClass"
   >
     <div
       ref="fiterFormBd"
@@ -82,7 +92,11 @@ export default {
   name: 'SpFilterForm',
   mixins: [emitter],
   props: {
-    model: Object
+    model: Object,
+    size: {
+      type: String,
+      default: 'normal'
+    }
   },
   provide () {
     return {
@@ -97,6 +111,16 @@ export default {
       extend: false
     }
   },
+  computed: {
+    formClass () {
+      const size = this.size
+      return {
+        'shouqi': !this.extend,
+        'normal': size == 'normal',
+        'small': size == 'small'
+      }
+    }
+  },
   created () {
     this.$on('sp.filterForm.addField', (field) => {
       if (field) {
@@ -106,11 +130,15 @@ export default {
     const _this = this
     window.onresize = () => {
       console.log('onresize')
-      _this.calcRows()
+      setTimeout(() => {
+        _this.calcRows()
+      }, 50)
     }
   },
   mounted () {
-    this.calcRows()
+    this.$nextTick(() => {
+      this.calcRows()
+    })
   },
   destroyed () {
     window.onresize = null
@@ -120,14 +148,22 @@ export default {
       this.extend = !this.extend
     },
     calcRows () {
-      // console.log('xxx:', this.$refs.fiterFormBd.clientWidth)
       // const cols = Math.floor(this.$refs.fiterFormBd.clientWidth / 305)
+      let rows = 1
       const fieldsWidth = this.fields.reduce((previous, current) => {
+        const curWidth = previous + current.$el.clientWidth
+
+        if (curWidth > this.$refs.fiterFormBd.clientWidth) {
+          rows = rows + 1
+          previous = 0
+        }
+        // console.log(`curWidth:`, curWidth, rows)
         return previous + current.$el.clientWidth
       }, 0)
       // const rows = Math.ceil(this.fields.length / cols)
-      const rows = fieldsWidth > this.$refs.fiterFormBd.clientWidth * 2
-      if (rows) {
+      // const rows = fieldsWidth > this.$refs.fiterFormBd.clientWidth * 2
+      // console.log('xxx:', fieldsWidth, this.$refs.fiterFormBd.clientWidth, rows)
+      if (rows > 2) {
         this.showExtend = true
       } else {
         this.showExtend = false

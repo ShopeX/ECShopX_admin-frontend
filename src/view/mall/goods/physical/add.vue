@@ -55,9 +55,7 @@
             v-for="(item, index) in categoryNames"
             :key="index"
           >
-            {{
-              item
-            }}
+            {{ item }}
           </el-breadcrumb-item>
         </el-breadcrumb>
       </div>
@@ -70,6 +68,7 @@
       />
 
       <!-- 商品参数 -->
+
       <CmGoodsParams
         v-if="paramsData.length > 0"
         v-model="paramsData"
@@ -81,7 +80,7 @@
         v-model="skuData"
         :is-editor="isEditor"
         :is-package-items="baseData.isPackageItems"
-        :point-access="baseData.point_acces"
+        :point-access="baseData.point_access"
         @specOnChange="specOnChange"
       />
 
@@ -201,9 +200,7 @@
           :loading="submitLoading"
           @click="handleSave"
         >
-          {{
-            submitLoading ? '提交中' : '保存'
-          }}
+          {{ submitLoading ? '提交中' : '保存' }}
         </el-button>
       </div>
     </template>
@@ -356,10 +353,9 @@ export default {
       immediate: true
     }
   },
-  created () {
+  async created () {
     const { itemId } = this.$route.params
     this.isEditor = !!itemId
-    this.fetch()
 
     if (this.$route.path.split('/')[2] === 'godsphysicalkj') {
       // 跨境
@@ -369,10 +365,11 @@ export default {
       this.isCross = false
     }
     if (itemId) {
-      this.fetchDetail()
+      await this.fetchDetail()
     } else {
-      this.getMainCategory()
+      await this.getMainCategory()
     }
+    this.fetch()
   },
   mounted: function () {
     this.addUploaderEventListener()
@@ -381,7 +378,9 @@ export default {
   methods: {
     async fetch () {
       const resPointRule = await getPointRule()
-      this.baseData.point_access = resPointRule.data.data.access
+      // this.baseData.point_access = resPointRule.data.data.access
+
+      this.$set(this.baseData, 'point_access', resPointRule.data.data.access)
     },
     addUploaderEventListener () {
       const self = this

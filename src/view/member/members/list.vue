@@ -87,9 +87,9 @@
           />
         </SpFilterFormItem>
         <SpFilterFormItem
+          v-if="!VERSION_IN_PURCHASE"
           prop="vip_grade"
           label="会员类型:"
-          v-if="!VERSION_IN_PURCHASE"
         >
           <el-select
             v-model="params.vip_grade"
@@ -110,9 +110,9 @@
           </el-select>
         </SpFilterFormItem>
         <SpFilterFormItem
+          v-if="!VERSION_IN_PURCHASE"
           prop="grade_id"
           label="会员等级:"
-          v-if="!VERSION_IN_PURCHASE"
         >
           <el-select
             v-model="params.grade_id"
@@ -128,9 +128,9 @@
           </el-select>
         </SpFilterFormItem>
         <SpFilterFormItem
+          v-if="!VERSION_IN_PURCHASE"
           prop="inviter_mobile"
           label="推荐人:"
-          v-if="!VERSION_IN_PURCHASE"
         >
           <el-input
             v-model="params.inviter_mobile"
@@ -159,8 +159,8 @@
           label="注册日期:"
         >
           <el-date-picker
-            unlink-panels
             v-model="created"
+            unlink-panels
             type="daterange"
             align="right"
             format="yyyy-MM-dd"
@@ -192,9 +192,9 @@
           />
         </SpFilterFormItem>
         <SpFilterFormItem
+          v-if="!VERSION_IN_PURCHASE"
           prop="have_consume"
           label="购买记录:"
-          v-if="!VERSION_IN_PURCHASE"
         >
           <el-select
             v-model="params.have_consume"
@@ -230,10 +230,10 @@
           打标签
         </el-button>
         <el-button
+          v-if="!VERSION_IN_PURCHASE"
           type="primary"
           plain
           @click="batchActionDialog('give_coupon')"
-          v-if="!VERSION_IN_PURCHASE"
         >
           赠送优惠券
         </el-button>
@@ -270,6 +270,21 @@
             导出
           </el-button>
         </export-tip>
+
+        <el-upload
+          style="margin-right: 10px; display: inline-block"
+          action=""
+          :on-change="uploadHandleChange"
+          :auto-upload="false"
+          :show-file-list="false"
+        >
+          <el-button
+            type="primary"
+            plain
+          >
+            团长导入
+          </el-button>
+        </el-upload>
       </div>
 
       <!-- <el-row>
@@ -367,10 +382,10 @@
         </el-table-column> -->
 
         <el-table-column
+          v-if="!VERSION_IN_PURCHASE"
           prop="grade_id"
           label="会员等级"
           width="140"
-          v-if="!VERSION_IN_PURCHASE"
         >
           <template slot-scope="scope">
             <!-- <span v-if="scope.row.grade_id == '1'">女</span>
@@ -379,10 +394,10 @@
           </template>
         </el-table-column>
         <el-table-column
+          v-if="!VERSION_IN_PURCHASE"
           prop="inviter"
           label="推荐人"
           width="130"
-          v-if="!VERSION_IN_PURCHASE"
         />
         <el-table-column
           prop="disabled"
@@ -953,7 +968,7 @@
                     placeholder="请选择爱好"
                   >
                     <el-option
-                      v-for="(ha_item) in item.items"
+                      v-for="ha_item in item.items"
                       :key="ha_item.name"
                       :label="ha_item.name"
                       :value="ha_item.name"
@@ -1107,7 +1122,7 @@ import {
   batchOperating,
   getMemberRegisterSetting,
   updateMemberBasicInfo,
-  setCheif,
+  setCheif
 } from '../../../api/member'
 import { getaliSmsStatus } from '@/api/sms'
 
@@ -1866,7 +1881,7 @@ export default {
       }
     },
     switchChief (index, row) {
-      console.log(row.is_chief);
+      console.log(row.is_chief)
       if (row.is_chief == 1) {
         var msg = '此操作将设置为团长，是否继续?'
         this.$confirm(msg, '提示', {
@@ -1894,7 +1909,7 @@ export default {
         // })
       }
     },
-    
+
     async relTagDelEvent (tagId, userId) {
       await this.$api.member.usersRelTagsDel({
         tag_id: tagId,
@@ -1971,6 +1986,21 @@ export default {
     /* ali短信 相关 */
     switchAliyunsmsDialog (val = false) {
       this.aliyunsmsDialogVisible = val
+    },
+
+    async uploadHandleChange (file, fileList) {
+      let params = {
+        isUploadFile: true,
+        file_type: 'community_chief',
+        file: file.raw,
+        distributor_id: this.$store.getters.shopId
+      }
+      await this.$api.common.handleUploadFile(params)
+      this.$message({
+        type: 'success',
+        message: '上传成功，等待处理'
+      })
+      this.onSearch()
     }
   }
 }

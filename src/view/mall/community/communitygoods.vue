@@ -10,7 +10,7 @@
         type="primary"
         @click="handleAddGoods"
       >
-        添加商品
+        选择活动商品
       </el-button>
     </div>
 
@@ -346,7 +346,7 @@ export default {
           label: '起送量:',
           key: 'num',
           type: 'input',
-          placeholder: '请输入商品起送量',
+          placeholder: '留空则不做起送量限制',
           required: true,
           message: '不能为空'
         }

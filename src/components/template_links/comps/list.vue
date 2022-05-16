@@ -341,7 +341,7 @@ export default {
           api.wxa.getCustomPageList(query).then(({ list, total_count }) => {
             let _list = []
             list.map((item) => {
-              list.push({
+              _list.push({
                 id: item.id,
                 title: item.page_name
               })

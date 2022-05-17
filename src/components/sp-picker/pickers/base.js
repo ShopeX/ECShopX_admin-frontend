@@ -51,6 +51,7 @@ export default {
       }
     },
     getVal () {
+      console.log(`sp-picker value:`, JSON.stringify(this.localVal))
       return this.localVal
     },
     updateVal (val) {

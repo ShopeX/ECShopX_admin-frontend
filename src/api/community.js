@@ -227,3 +227,47 @@ export function getCommunityOrderDetail (orderId) {
     method: 'get'
   })
 }
+
+// 添加活动商品
+export function addActivityGoods (params) {
+  return fetch({
+    url: `/community/items`,
+    method: 'post',
+    params
+  })
+}
+
+// 获取社区拼团商品列表
+export function getActivityGoods (params) {
+  return fetch({
+    url: `/community/items`,
+    method: 'get',
+    params
+  })
+}
+
+// 删除商品
+export function deleteActivityGoods (id) {
+  return fetch({
+    url: `/community/item/${id}`,
+    method: 'delete'
+  })
+}
+
+// 修改商品起送量
+export function modifyGoodsDeliverNum (params) {
+  return fetch({
+    url: `/community/itemMinDeliveryNum`,
+    method: 'post',
+    params
+  })
+}
+
+// 修改商品排序编号
+export function modifyGoodsSort (params) {
+  return fetch({
+    url: `/community/itemSort`,
+    method: 'post',
+    params
+  })
+}

@@ -965,7 +965,7 @@
           </el-col>
         </el-row>
         <el-row
-          v-if="system_is_saas == false"
+          v-if="system_is_saas == 'false'"
           :gutter="20"
         >
           <el-col :span="24">
@@ -1003,13 +1003,6 @@
                     API端
                   </template>
                   <el-tag>{{ activateInfo.version }}</el-tag>
-                </el-descriptions-item>
-
-                <el-descriptions-item>
-                  <template slot="label">
-                    Element-UI组件库
-                  </template>
-                  {{ activateInfo.elementui_version }}
                 </el-descriptions-item>
                 <el-descriptions-item>
                   <template slot="label">
@@ -1935,7 +1928,6 @@ export default {
         // this.activateInfo.source = 'demo'
         this.SET_PRODUCTION_CODE({ productionCode: res.data.data.product_code })
         this.activateInfo.vue_ecshopx_verion = `${process.env.VUE_APP_PRODUCT_MODEL}-${config.version}`
-        this.activateInfo.elementui_version = `${config.elementui_version}`
       })
       this.getUrl()
       getCompanyStatistics().then((res) => {

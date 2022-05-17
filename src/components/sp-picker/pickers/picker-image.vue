@@ -373,11 +373,11 @@ export default {
   },
   props: ['value'],
   data () {
-    const { multiple = false } = this.value
+    const { multiple = false, data } = this.value
     return {
       multiple,
       list: [],
-      selected: multiple ? [] : null,
+      selected: data,
       catgoryList: [],
       selectCatgory: -1,
       groupDialog: false,

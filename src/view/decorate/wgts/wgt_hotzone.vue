@@ -5,6 +5,9 @@
       <span class="title">{{ value.title }}</span>
       <span class="sub-title">{{ value.subtitle }}</span>
     </div>
+    <div class="wgt-bd">
+      <SpImage :width="375" />
+    </div>
   </div>
 </template>
 

@@ -21,6 +21,10 @@ export default {
         {value.config.map((item) => (
           <CompCell info={item} v-model={item.value} />
         ))}
+        <div>
+          <SpImagePicker />
+        </div>
+
         <div class=''>
           <div>轮播项</div>
         </div>

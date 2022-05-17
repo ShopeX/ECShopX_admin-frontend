@@ -21,6 +21,9 @@ export default {
     onSearch () {
       this.page.pageIndex = 1
       this.fetchList(this.page)
+    },
+    onRefresh () {
+      this.fetchList(this.page)
     }
   }
 }

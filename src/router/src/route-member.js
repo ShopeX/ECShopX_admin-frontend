@@ -14,6 +14,10 @@ export default {
         {
           path: 'detail/:user_id?',
           component: () => import('@/view/member/members/detail')
+        },
+        {
+          path: 'chiefupload',
+          component: () => import('@/view/member/members/upload_chief')
         }
       ]
     },

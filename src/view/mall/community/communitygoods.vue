@@ -10,7 +10,7 @@
         type="primary"
         @click="handleAddGoods"
       >
-        添加商品
+        选择活动商品
       </el-button>
     </div>
 
@@ -123,12 +123,134 @@
         v-loading="loading"
         border
         :data="tableList"
-        @selection-change="handleSelectionChange"
       >
         <!-- <el-table-column type="selection" align="center" label="全选" /> -->
         <el-table-column
-          label="操作"
+          prop="goods_id"
+          label="商品ID"
+        />
+        <el-table-column
+          prop="itemName"
+          label="商品"
+          width="300"
+        >
+          <template slot-scope="scope">
+            <div class="goods-title">
+              {{ scope.row.item_name }}
+              <el-tag
+                v-if="!scope.row.nospec"
+                size="mini"
+                effect="plain"
+                type="primary"
+              >
+                多规格
+              </el-tag>
+            </div>
+            <div class="goods-code">
+              货号：{{ scope.row.item_bn }}
+              <el-tooltip
+                effect="dark"
+                content="复制"
+                placement="top-start"
+              >
+                <i
+                  v-clipboard:copy="scope.row.item_bn"
+                  v-clipboard:success="onCopySuccess"
+                  class="el-icon-document-copy"
+                />
+              </el-tooltip>
+            </div>
+          </template>
+        </el-table-column>
+        <el-table-column
+          label="起送量"
+          prop="min_delivery_num"
+        />
+        <el-table-column label="标签">
+          <template slot-scope="scope">
+            <template>
+              <el-tag
+                v-for="taglist in scope.row.tagList"
+                :key="taglist.index"
+                :color="taglist.tag_color"
+                size="mini"
+                :style="'color:' + taglist.font_color"
+                style="display: inline-block; margin-right: 3px"
+              >
+                {{ taglist.tag_name }}
+              </el-tag>
+            </template>
+          </template>
+        </el-table-column>
+        <el-table-column
+          label="排序编号"
+          width="100"
+        >
+          <template slot-scope="scope">
+            <el-input
+              v-model="scope.row.sort"
+              size="mini"
+              style="width: 60px"
+              @change="editItemsSort(scope.row)"
+            />
+          </template>
+        </el-table-column>
+        <el-table-column
+          prop="store"
+          label="库存"
+          width="80"
+        />
+        <el-table-column
+          prop="market_price"
+          label="原价（¥）"
+          width="100"
+        >
+          <template slot-scope="scope">
+            {{ scope.row.market_price / 100 }}
+          </template>
+        </el-table-column>
+        <el-table-column
+          prop="price"
+          label="销售价（¥）"
+          width="100"
+        >
+          <template slot-scope="scope">
+            {{ scope.row.price / 100 }}
+          </template>
+        </el-table-column>
+        <el-table-column label="状态">
+          <template slot-scope="scope">
+            <span v-if="scope.row.audit_status == 'processing'">等待审核</span>
+            <el-popover
+              v-else-if="scope.row.audit_status == 'rejected'"
+              placement="top-start"
+              width="200"
+              trigger="hover"
+              :content="scope.row.audit_reason"
+            >
+              <el-button
+                slot="reference"
+                type="text"
+              >
+                审核驳回
+              </el-button>
+            </el-popover>
+            <span v-else-if="scope.row.approve_status == 'onsale'">前台可销</span>
+            <span v-else-if="scope.row.approve_status == 'offline_sale'">可线下销售</span>
+            <span v-else-if="scope.row.approve_status == 'only_show'">前台仅展示</span>
+            <span v-else>不可销售</span>
+          </template>
+        </el-table-column>
+        <el-table-column
+          prop="itemCatName"
+          label="商品分类"
           width="150"
+        />
+
+        <el-table-column
+          fixed="left"
+          label="操作"
+          width="160"
         >
           <template slot-scope="scope">
             <el-button
@@ -139,61 +261,13 @@
             </el-button>
             <el-button
               type="text"
+              class="btn-gap"
               @click="modifyItem(scope.row)"
             >
               设置起送量
             </el-button>
           </template>
         </el-table-column>
-        <el-table-column
-          width="80"
-          prop="activity_id"
-          label="商品ID"
-        />
-        <el-table-column
-          prop="activity_name"
-          label="商品名称"
-        />
-        <el-table-column
-          width="120"
-          prop="activity_name"
-          label="最低起送量"
-        />
-        <el-table-column
-          width="100"
-          prop="activity_name"
-          label="标签"
-        />
-        <el-table-column
-          width="100"
-          prop="activity_name"
-          label="排序编号"
-        />
-        <el-table-column
-          width="60"
-          prop="activity_name"
-          label="库存"
-        />
-        <el-table-column
-          width="100"
-          prop="activity_name"
-          label="原价（¥）"
-        />
-        <el-table-column
-          width="100"
-          prop="activity_name"
-          label="销售价（¥）"
-        />
-        <el-table-column
-          width="100"
-          prop="activity_name"
-          label="状态"
-        />
-        <el-table-column
-          width="100"
-          prop="activity_name"
-          label="商品分类"
-        />
       </el-table>
 
       <div class="content-padded content-center">
@@ -235,21 +309,17 @@ export default {
   data () {
     return {
       loading: false,
-      tableList: [{}],
+      tableList: [],
       params: {
         item_type: 'normal',
-        templates_id: '',
         keywords: '',
         item_bn: '',
-        category: 0,
-        is_warning: false,
-        tag_id: '',
-        is_gift: false,
-        type: 0,
         barcode: '',
-        distributor_id: 0,
-        regions_id: [],
-        brand_id: ''
+        approve_status: '',
+        brand_id: '',
+        category: 0,
+        activity_name: '',
+        activity_status: 'all'
       },
       statusOption: SALES_STATUS,
       goodsBranchList: [],
@@ -263,11 +333,11 @@ export default {
       activity_status: [
         {
           title: '全部商品',
-          value: 0
+          value: 'all'
         },
         {
           title: '活动中的商品',
-          value: 1
+          value: 'activing'
         }
       ],
       sendNumDialog: false,
@@ -276,13 +346,14 @@ export default {
           label: '起送量:',
           key: 'num',
           type: 'input',
-          placeholder: '请输入商品起送量',
+          placeholder: '留空则不做起送量限制',
           required: true,
           message: '不能为空'
         }
       ],
       sendNumForm: {
-        num: 1
+        item_id: '',
+        num: ''
       }
     }
   },
@@ -291,7 +362,7 @@ export default {
   },
   mounted () {
     this.getCategory()
-    // this.onSearch()
+    this.onSearch()
   },
   methods: {
     async handleAddGoods () {
@@ -299,15 +370,25 @@ export default {
         data: 100,
         shopid: this.shopId
       })
-      console.log(`handleAddGoods:`, data)
+      const goods_id = data.map((item) => item.item_id)
+      await this.$api.community.addActivityGoods({
+        goods_id
+      })
+      this.onSearch()
     },
     async fetchList ({ pageIndex, pageSize }) {
       this.loading = true
-      let params = {
+      let query = {
         page: pageIndex,
-        pageSize
+        pageSize,
+        ...this.params
       }
-      const { list, total_count } = await this.$api.promotions.getCommunityActivity(params)
+      if (query.activity_status == 'activing') {
+        query['in_activity'] = true
+      }
+      delete query.activity_status
+
+      const { list, total_count } = await this.$api.community.getActivityGoods(query)
       this.tableList = list
       this.page.total = total_count
       this.loading = false
@@ -321,25 +402,34 @@ export default {
       const res = await this.$api.goods.getCategory({ is_show: false })
       this.categoryList = res
     },
-    async deleteItem (row) {
+    async deleteItem ({ item_id }) {
       await this.$confirm('请确认是否删除商品', '提示', {
         confirmButtonText: '确定',
         cancelButtonText: '取消'
       })
+      await this.$api.community.deleteActivityGoods(item_id)
+      this.onSearch()
     },
-    modifyItem (row) {
+    modifyItem ({ item_id }) {
+      this.sendNumForm.item_id = item_id
       this.sendNumDialog = true
     },
-    async onSendNumSubmit () {},
-    handleSelectionChange (rows) {
-      this.activity_id = []
-      if (rows) {
-        rows.forEach((row) => {
-          if (row) {
-            this.activity_id.push(row.activity_id)
-          }
-        })
-      }
+    async onSendNumSubmit () {
+      const { item_id, num } = this.sendNumForm
+      await this.$api.community.modifyGoodsDeliverNum({
+        goods_id: item_id,
+        min_delivery_num: num
+      })
+      this.$refs.sendNumDialogRef.resetForm()
+      this.sendNumDialog = false
+      this.onRefresh()
+    },
+    async editItemsSort ({ item_id, sort }) {
+      await this.$api.community.modifyGoodsSort({
+        goods_id: item_id,
+        sort
+      })
+      this.onRefresh()
     }
   }
 }

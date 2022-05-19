@@ -271,3 +271,66 @@ export function modifyGoodsSort (params) {
     params
   })
 }
+
+// 保存社区团购设置
+export function modifyActivitySetting (params) {
+  return fetch({
+    url: `/community/activity/setting`,
+    method: 'post',
+    params
+  })
+}
+
+// 获取社区团购设置
+export function getActivitySetting (params) {
+  return fetch({
+    url: `/community/activity/setting`,
+    method: 'get',
+    params
+  })
+}
+
+// 配置字段列表
+export function getCommunityChiefApplyFields (params) {
+  return fetch({
+    url: `/community/chief/apply_fields`,
+    method: 'get',
+    params
+  })
+}
+
+// 创建字段
+export function createCommunityChiefApplyFields (params) {
+  return fetch({
+    url: `/community/chief/apply_field`,
+    method: 'post',
+    params
+  })
+}
+
+// 更新字段的开关
+export function modifyFieldSwitch (id, params) {
+  return fetch({
+    url: `/community/chief/apply_field/switch/${id}`,
+    method: 'post',
+    params
+  })
+}
+
+// 删除字段
+export function deleteCommunityField (id) {
+  return fetch({
+    url: `/community/chief/apply_field/${id}`,
+    method: 'delete'
+  })
+}
+
+// 更新字段的内容
+export function modifyCommunityField (params) {
+  const { id } = params
+  return fetch({
+    url: `/community/chief/apply_field/${id}`,
+    method: 'post',
+    params
+  })
+}

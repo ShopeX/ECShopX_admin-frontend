@@ -204,7 +204,15 @@ export default {
     }
   },
   computed: {
-    ...mapGetters(['name', 'nick_name', 'avatar', 'wxapp_id', 'template_name', 'login_type', 'sys_logo']),
+    ...mapGetters([
+      'name',
+      'nick_name',
+      'avatar',
+      'wxapp_id',
+      'template_name',
+      'login_type',
+      'sys_logo'
+    ]),
     ...mapState({
       menuList: (state) => {
         const { menus } = state.menu
@@ -495,6 +503,7 @@ export default {
     background-color: #fff;
     padding: 16px;
     border-radius: 0;
+    min-height: 600px;
     &.footer-fixed {
       margin-bottom: 57px;
     }

@@ -45,6 +45,11 @@ export default {
           component: () => import('@/view/mall/trade/order/process')
         }
       ]
+    },
+    {
+      path: 'community/setting',
+      name: `活动配置`,
+      component: () => import('@/view/mall/community/setting')
     }
   ]
 }

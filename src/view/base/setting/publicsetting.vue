@@ -147,18 +147,6 @@
           />
         </el-form-item>
       </el-form>
-
-      <el-form
-        v-model="form"
-        label-width="200px"
-      >
-        <el-form-item label="仅自营订单推oms">
-          <el-switch
-            v-model="form.distributor_not_send_oms"
-            @change="sendOmsChange('distributor_not_send_oms')"
-          />
-        </el-form-item>
-      </el-form>
     </div>
 
     <div v-if="VERSION_STANDARD">
@@ -343,7 +331,6 @@ export default {
         check_gift_store: false,
         ziti_send_oms: false,
         nostores_status: false,
-        distributor_not_send_oms: false,
         recharge_status: true,
         repeat_cancel: false,
         item_store_status: true,
@@ -381,7 +368,6 @@ export default {
 
     getSendOmsSetting().then((res) => {
       this.form.ziti_send_oms = Boolean(res.data.data.ziti_send_oms)
-      this.form.distributor_not_send_oms = Boolean(res.data.data.distributor_not_send_oms)
     })
 
     getNoStores().then((res) => {
@@ -630,9 +616,6 @@ export default {
       switch (type) {
         case 'ziti_send_oms':
           msg += '自提订单推oms'
-          break
-        case 'distributor_not_send_oms':
-          msg += '仅自营订单推oms'
           break
       }
 

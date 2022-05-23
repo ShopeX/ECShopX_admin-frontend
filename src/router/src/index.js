@@ -27,7 +27,6 @@ import RouteShopAdminStore from './route-shopadmin-store'
 import RouteShopAdminMarketing from './route-shopadmin-marketing'
 import RouteShopAdminStatistics from './route-shopadmin-statistics'
 import RouteShopAdminShopSetting from './route-shopadmin-shopsetting'
-import RouteShopAdminCommunity from './route-shopadmin-community'
 
 /* Merchant router */
 import RouteMerchantBase from './router-merchant-base'
@@ -71,7 +70,6 @@ export default {
   RouteShopAdminMarketing,
   RouteShopAdminStatistics,
   RouteShopAdminShopSetting,
-  RouteShopAdminCommunity,
   RouteDealerInfomation,
   RouteDealerShop,
   RouteDealerTransaction,
@@ -81,5 +79,5 @@ export default {
   RouteMerchantOrder,
   RouteMerchantSellers,
   RouteMerchantCompanydata,
-  RouteMerchantSetting,
+  RouteMerchantSetting
 }

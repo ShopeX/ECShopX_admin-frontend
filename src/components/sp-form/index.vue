@@ -56,8 +56,13 @@ export default {
     const { title, value, formList, width } = this
     const Fn = () => {}
     const getComponentByType = (item) => {
-      console.log(item.key)
-      if (item.type == 'textarea') {
+      if (typeof item.component != 'undefined') {
+        // debugger
+        console.log(item.component)
+        // Vue.component(item.component)
+        return item.component()
+        // return <component is={item.component} ref='com' />
+      } else if (item.type == 'textarea') {
         return (
           <el-input
             clearable
@@ -120,6 +125,20 @@ export default {
               ))}
           </el-table>
         )
+      } else if (item.type == 'richText') {
+        return (
+          <vue-html5-editor
+            ref='editor'
+            content={value[item.key]}
+            height={260}
+            style='width: 80%'
+            on-change={(e) => {
+              value[item.key] = e
+            }}
+          />
+        )
+      } else if (item.type == 'image') {
+        return <SpImage />
       }
     }
 

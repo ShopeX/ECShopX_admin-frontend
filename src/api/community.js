@@ -334,3 +334,29 @@ export function modifyCommunityField (params) {
     params
   })
 }
+
+// 团长申请列表
+export function getChiefList (params) {
+  return fetch({
+    url: `/community/chief/apply/list`,
+    method: 'get',
+    params
+  })
+}
+
+// 团长申请详情
+export function getChiefDetail (id) {
+  return fetch({
+    url: `/community/chief/apply/info/${id}`,
+    method: 'get'
+  })
+}
+
+// 团长申请审批
+export function approveChief (apply_id, params) {
+  return fetch({
+    url: `/community/chief/approve/${apply_id}`,
+    method: 'post',
+    params
+  })
+}

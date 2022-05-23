@@ -288,6 +288,10 @@ export default {
             {
               title: '积分商城',
               id: 'pointitems'
+            },
+            {
+              title: '社区团长申请',
+              id: 'applyChief'
             }
           ]
           // if (this.VERSION_PLATFORM) {

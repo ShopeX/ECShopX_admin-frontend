@@ -476,9 +476,54 @@ export default {
       children: [
         {
           path: 'detail',
-          component: () => import('@/view/mall/trade/order/detail')//待定
+          component: () => import('@/view/mall/trade/order/detail') //待定
         }
       ]
     },
+    {
+      path: 'community/chief',
+      name: `团长管理`,
+      component: () => import('@/view/mall/community/chief'),
+      children: [
+        {
+          path: 'editor',
+          component: () => import('@/view/member/cardticket/edit')
+        },
+        {
+          path: 'detail',
+          component: () => import('@/view/member/cardticket/detail')
+        }
+      ]
+    },
+    {
+      path: 'community/activity',
+      name: `活动管理`,
+      component: () => import('@/view/mall/community/activityList')
+    },
+    {
+      path: 'community/communitygoods',
+      name: `活动商品`,
+      component: () => import('@/view/mall/community/communitygoods')
+    },
+    {
+      path: 'community/order',
+      name: `订单管理`,
+      component: () => import('@/view/mall/trade/normalorders/communityList'),
+      children: [
+        {
+          path: 'detail/:itemId?',
+          component: () => import('@/view/mall/trade/order/detail')
+        },
+        {
+          path: 'process/:itemId?',
+          component: () => import('@/view/mall/trade/order/process')
+        }
+      ]
+    },
+    {
+      path: 'community/setting',
+      name: `活动配置`,
+      component: () => import('@/view/mall/community/setting')
+    }
   ]
 }

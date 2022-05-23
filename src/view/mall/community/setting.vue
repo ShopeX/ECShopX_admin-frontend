@@ -38,12 +38,19 @@
 
 <script>
 import { createSetting } from '@shopex/finder'
+import invitationCode from './comps/invitationCode'
 export default {
+  components: {
+    invitationCode
+  },
   data () {
     return {
       form: {
         condition_type: 'num',
-        condition_money: ''
+        condition_money: '',
+        chief_desc: '',
+        aggrement: '',
+        explanation: ''
       },
       formList: [
         {
@@ -73,6 +80,31 @@ export default {
           required: true,
           message: '不能为空',
           isShow: false
+        },
+        {
+          label: '团长邀请码',
+          key: 'invitation_code',
+          component: () => <invitationCode />
+          // component: () => import("./comps/invitationCode.vue")
+        },
+        {
+          label: '团长申请页',
+          key: 'chief_desc',
+          type: 'text'
+        },
+        {
+          label: '团长注册协议',
+          key: 'aggrement',
+          type: 'richText',
+          required: true,
+          message: '不能为空'
+        },
+        {
+          label: '申请页说明',
+          key: 'explanation',
+          type: 'richText',
+          required: true,
+          message: '不能为空'
         }
       ],
       tableData: [],
@@ -215,8 +247,8 @@ export default {
             { title: '文本', value: 1 },
             { title: '数字', value: 2 },
             { title: '日期', value: 3 },
-            { title: '单选项', value: 4 },
-            { title: '复选框', value: 5 },
+            // { title: '单选项', value: 4 },
+            // { title: '复选框', value: 5 },
             { title: '手机号', value: 6 },
             { title: '图片', value: 7 }
           ],
@@ -248,14 +280,25 @@ export default {
   },
   methods: {
     async onSaveConfig () {
-      await this.$api.community.modifyActivitySetting(this.form)
+      const { condition_type, condition_money, aggrement, explanation } = this.form
+      await this.$api.community.modifyActivitySetting({
+        condition_type,
+        condition_money,
+        aggrement,
+        explanation
+      })
       this.$message.success('修改成功')
     },
     async getActivitySetting () {
-      const { condition_money, condition_type } = await this.$api.community.getActivitySetting()
+      const { condition_money, condition_type, aggrement, explanation } =
+        await this.$api.community.getActivitySetting()
       this.form = {
         condition_type,
-        condition_money
+        condition_money,
+        chief_desc:
+          '您可在模板编辑-热区图组件-设置路径，选择团长申请页面路径供用户在店铺首页进入团长申请页面',
+        aggrement,
+        explanation
       }
       this.formList[1].isShow = condition_type == 'money'
     },

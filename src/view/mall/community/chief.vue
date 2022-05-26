@@ -79,7 +79,7 @@ export default {
       formQuery: {
         name: '',
         mobile: '',
-        approve_status: '0'
+        approve_status: '-1'
       },
       stateList: [
         { title: '全部', value: '-1' },
@@ -103,7 +103,7 @@ export default {
           },
           {
             name: '审批',
-            key: 'detail',
+            key: 'apply',
             type: 'button',
             buttonType: 'text',
             visible: (row) => {
@@ -179,7 +179,7 @@ export default {
       this.$refs.finder.refresh()
     },
     beforeSearch (params) {
-      const formQuery = this.formQuery
+      const formQuery = JSON.parse(JSON.stringify(this.formQuery))
       if (formQuery.approve_status == '-1') {
         delete formQuery.approve_status
       }

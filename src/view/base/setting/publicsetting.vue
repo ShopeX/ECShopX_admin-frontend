@@ -217,7 +217,7 @@ export default {
             { label: 0, name: '销售价', disabled: true },
             { label: 1, name: '原价' },
             { label: 2, name: '会员等级价' },
-            { label: 3, name: 'SVIP价' }
+            { label: 3, name: '付费会员价' }
           ],
           onChange: async (e) => {
             this.saveItemPriceSetting()
@@ -228,7 +228,7 @@ export default {
           key: 'cart_page',
           type: 'checkbox',
           options: [
-            { label: 0, name: '销售价/会员等级价/SVIP价', disabled: true },
+            { label: 0, name: '销售价/会员等级价/付费会员价', disabled: true },
             { label: 1, name: '原价' }
           ],
           onChange: async (e) => {
@@ -240,7 +240,7 @@ export default {
           key: 'order_page',
           type: 'checkbox',
           options: [
-            { label: 0, name: '销售价/会员等级价/SVIP价', disabled: true },
+            { label: 0, name: '销售价/会员等级价/付费会员价', disabled: true },
             { label: 1, name: '原价' }
           ],
           onChange: async (e) => {
@@ -278,7 +278,7 @@ export default {
       }
       const { cart_page, order_page, item_page } = res.item_price_setting
       if (cart_page.market_price) {
-        this.form.item_page = [0, 1]
+        this.form.cart_page = [0, 1]
       }
       if (order_page.market_price) {
         this.form.order_page = [0, 1]
@@ -297,15 +297,12 @@ export default {
       const { cart_page, order_page, item_page } = this.form
       const params = {
         cart_page: {
-          price: true,
           market_price: cart_page.indexOf(1) > -1
         },
         order_page: {
-          price: true,
           market_price: order_page.indexOf(1) > -1
         },
         item_page: {
-          price: true,
           market_price: item_page.indexOf(1) > -1,
           member_price: item_page.indexOf(2) > -1,
           svip_price: item_page.indexOf(3) > -1

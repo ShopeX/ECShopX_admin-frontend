@@ -470,28 +470,13 @@ export default {
       ]
     },
     {
-      path: 'community/activity',
-      name: `社区订单`,
-      component: () => import('@/view/member/promotions/community/activityList'),
-      children: [
-        {
-          path: 'detail',
-          component: () => import('@/view/mall/trade/order/detail') //待定
-        }
-      ]
-    },
-    {
       path: 'community/chief',
       name: `团长管理`,
       component: () => import('@/view/mall/community/chief'),
       children: [
         {
-          path: 'editor',
-          component: () => import('@/view/member/cardticket/edit')
-        },
-        {
-          path: 'detail',
-          component: () => import('@/view/member/cardticket/detail')
+          path: 'detail/:apply_id',
+          component: () => import('@/view/mall/community/chiefDetail')
         }
       ]
     },

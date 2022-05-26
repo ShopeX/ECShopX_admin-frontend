@@ -246,7 +246,7 @@ export default {
           type: 'select',
           options: [
             { title: '文本', value: 1 },
-            { title: '数字', value: 2 },
+            // { title: '数字', value: 2 },
             { title: '日期', value: 3 },
             // { title: '单选项', value: 4 },
             // { title: '复选框', value: 5 },
@@ -306,7 +306,10 @@ export default {
         aggrement,
         explanation
       }
-      this.formList[1].isShow = condition_type == 'money'
+      if (condition_type == 'money') {
+        this.formList[0].tip = '说明：整团成团最低金额，0为不限制'
+        this.formList[1].isShow = true
+      }
     },
     async getCommunityChiefApplyFields () {
       const res = await this.$api.community.getActivitySetting()

@@ -21,7 +21,10 @@
       </el-row>
     </el-card>
 
-    <el-card class="el-card--normal" v-if="is_community">
+    <el-card
+      v-if="is_community"
+      class="el-card--normal"
+    >
       <div slot="header">
         跟团信息
       </div>
@@ -45,7 +48,6 @@
           <span class="card-panel__label">{{ index }}：</span>
           <span class="card-panel__value">{{ item }}</span>
         </el-col>
-
       </el-row>
     </el-card>
 
@@ -471,7 +473,7 @@ export default {
       communityInfoList: [
         { label: '活动名称:', field: 'community_activity_name', is_show: true },
         { label: '所属团长:', field: 'community_chief_name', is_show: true },
-        { label: '跟团号:', field: 'community_activity_trade_no', is_show: true },
+        { label: '跟团号:', field: 'community_activity_trade_no', is_show: true }
       ],
 
       memberRemark: '暂无留言',
@@ -637,8 +639,8 @@ export default {
         delivery_status,
         community_info
       } = orderInfo
-      
-      let community_activity_name,community_chief_name,community_activity_trade_no
+
+      let community_activity_name, community_chief_name, community_activity_trade_no
       if (community_info) {
         community_activity_name = community_info.activity_name
         community_chief_name = community_info.chief_name
@@ -687,7 +689,14 @@ export default {
         community_activity_trade_no,
         memberGrade,
         memberDiscount,
-        discount_info: discount_info.filter((item) => item.discount_fee > 0),
+        discount_info: discount_info
+          .filter((item) => item.discount_fee > 0)
+          .map((item) => {
+            return {
+              ...item,
+              discount_fee: item.discount_fee / 100
+            }
+          }),
         profit_type: PROFIT_TYPE[profit.profit_type],
         profit_totalPrice: `¥${profit.total_fee / 100}`,
         ...tradeInfo,
@@ -718,10 +727,12 @@ export default {
       }
       this.memberRemark = orderInfo.remark || '暂无留言'
       this.merchantRemark = orderInfo.distributor_remark || '暂无备注'
-      this.addressInfo =
-        receipt_type == 'ziti'
-          ? `${distributor.store_name} ${distributor.store_address}`
-          : `${receiver_name} ${receiver_mobile} ${receiver_state}${receiver_city}${receiver_district}${receiver_address}`
+      // debugger
+      // this.addressInfo =
+      //   receipt_type == 'ziti'
+      //     ? `${distributor.store_name} ${distributor.store_address}`
+      //     :
+      this.addressInfo = `${receiver_name} ${receiver_mobile} ${receiver_state}${receiver_city}${receiver_district}${receiver_address}`
       this.deliveryData = deliveryData
 
       const isDada = receipt_type == 'dada'

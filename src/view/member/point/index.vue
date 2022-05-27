@@ -12,7 +12,7 @@
       label-width="180px"
     >
       <div class="section-body">
-        <el-form-item label="是否开启积分：">
+        <el-form-item label="积分：">
           <el-switch
             v-model="form.isOpenMemberPoint"
             :width="60"
@@ -25,7 +25,7 @@
             @change="isOpenMemberPointHandle"
           />
         </el-form-item>
-        <el-form-item label="变更展示名称：">
+        <el-form-item label="展示名称：">
           <el-input
             v-model="form.name"
             placeholder=""
@@ -42,7 +42,7 @@
           </el-tooltip>
         </el-form-item>
         <div v-if="form.isOpenMemberPoint == 'true'">
-          <el-form-item label="积分获取方式：">
+          <el-form-item label="获取方式：">
             <el-radio-group
               v-model="form.access"
               @change="changeAccess"
@@ -69,7 +69,7 @@
           </el-form-item>
           <el-form-item
             v-if="access == 'order'"
-            label="积分获取比例："
+            label="获取比例："
           >
             订单金额1元人民币 获得<el-input
               v-model="form.gain_point"
@@ -83,7 +83,7 @@
 
           <el-form-item
             v-if="access == 'order'"
-            label="获取积分是否包含运费："
+            label="运费配置："
           >
             <el-radio-group v-model="form.include_freight">
               <el-radio label="true">
@@ -111,7 +111,7 @@
                       <div class="frm-tips">不限制请填写999999</div>
                   </el-form-item> -->
 
-          <el-form-item label="积分获取时间：">
+          <el-form-item label="获取时间：">
             订单完成<el-input
               v-model="form.gain_time"
               type="number"
@@ -122,7 +122,7 @@
             />天，获取积分
           </el-form-item>
           <template v-if="!VERSION_IN_PURCHASE">
-            <el-form-item label="是否开启积分抵扣：">
+            <el-form-item label="积分抵扣：">
               <el-switch
                 v-model="form.isOpenDeductPoint"
                 :width="60"
@@ -135,7 +135,7 @@
                 @change="isOpenMemberPointHandle"
               />
             </el-form-item>
-            <el-form-item label="每单积分抵扣金额上限：">
+            <el-form-item label="每单抵扣上限：">
               <el-input
                 v-model="form.deduct_proportion_limit"
                 type="number"
@@ -145,7 +145,7 @@
                 :max="100"
               />% 1 <= x <= 100
             </el-form-item>
-            <el-form-item label="积分抵扣比例：">
+            <el-form-item label="抵扣比例：">
               <el-input
                 v-model="form.deduct_point"
                 type="number"
@@ -154,6 +154,19 @@
                 :min="1"
                 :max="9999999"
               />积分 抵扣1元人民币
+            </el-form-item>
+            <el-form-item label="积分规则：">
+              <vue-html5-editor
+                ref="editor"
+                :content="form.rule_desc"
+                :height="360"
+                style="width: 100%"
+                @change="
+                  (e) => {
+                    this.form.rule_desc = e
+                  }
+                "
+              />
             </el-form-item>
           </template>
           <!-- <el-form-item label="积分抵扣使用限制：">
@@ -193,7 +206,8 @@ export default {
         deduct_shopping: 0,
         deduct_proportion_limit: 1,
         access: 'order',
-        include_freight: 'true'
+        include_freight: 'true',
+        rule_desc: ''
       },
       access: 'order',
       include_freight: 'true'

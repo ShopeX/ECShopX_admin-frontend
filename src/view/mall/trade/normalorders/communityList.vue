@@ -199,7 +199,6 @@
             placeholder="请输入社团名称"
           />
         </SpFilterFormItem>
-
       </SpFilterForm>
 
       <div class="action-container">
@@ -331,15 +330,9 @@
             label="跟团信息"
           >
             <template slot-scope="scope">
-              <div>
-                所属团长：{{ scope.row.community_info.chief_name  }}
-              </div>
-              <div>
-                团名称：{{ scope.row.community_info.activity_name  }}
-              </div>
-              <div>
-                跟团号：{{ scope.row.community_info.activity_trade_no  }}
-              </div>
+              <div>所属团长：{{ scope.row.community_info.chief_name }}</div>
+              <div>团名称：{{ scope.row.community_info.activity_name }}</div>
+              <div>跟团号：{{ scope.row.community_info.activity_trade_no }}</div>
             </template>
           </el-table-column>
           <el-table-column
@@ -347,11 +340,9 @@
             width="150"
             label="收件人信息"
           >
-            <template slot-scope="scope" >
+            <template slot-scope="scope">
               <template v-if="!scope.row.user_delete && login_type !== 'merchant'">
-              <div>
-                收件人：{{ scope.row.community_info.ziti_contact_user  }}
-              </div>
+                <div>收件人：{{ scope.row.community_info.ziti_contact_user }}</div>
                 <router-link
                   target="_blank"
                   :to="{
@@ -568,7 +559,6 @@ import {
   ORDER_STATUS,
   ORDER_B2C_STATUS,
   IN_PURCHASE_STATUS,
-  
   INVOICE_STATUS,
   ORDER_CATEGORY,
   PICKER_DATE_OPTIONS,
@@ -577,9 +567,7 @@ import {
   PAY_TYPE
 } from '@/consts'
 
-const ORDER_TYPE = [
-  { title: '社区团购订单', value: 'community' }
-]
+const ORDER_TYPE = [{ title: '社区团购订单', value: 'community' }]
 
 export default {
   mixins: [mixin, pageMixin],
@@ -590,7 +578,7 @@ export default {
       params: {
         mobile: '',
         order_id: '',
-        
+
         salesman_mobile: '',
         receipt_type: '', // 配送类型
         source: '', // 订单来源
@@ -847,7 +835,7 @@ export default {
           placeholder: '请输入拒绝原因',
           isShow: false,
           validator: (rule, value, callback) => {
-            if (this.refundFormList.check_cancel == '0' && !value) {
+            if (this.refundForm.check_cancel == '0' && !value) {
               callback(new Error('不能为空'))
             } else {
               callback()
@@ -911,7 +899,9 @@ export default {
       delete params.create_time
       delete params.delivery_time
 
-      const { list, pager, datapass_block } = await this.$api.community.getCommunityOrderList(params)
+      const { list, pager, datapass_block } = await this.$api.community.getCommunityOrderList(
+        params
+      )
 
       this.tableList = list.map((item) => {
         const actionBtns = []

@@ -75,6 +75,47 @@ export default {
           component: () => import('@/view/member/promotions/limitedtimesale/add')
         }
       ]
+    },
+    {
+      path: 'community/chief',
+      name: `团长管理`,
+      component: () => import('@/view/mall/community/chief'),
+      children: [
+        {
+          path: 'detail/:apply_id',
+          component: () => import('@/view/mall/community/chiefDetail')
+        }
+      ]
+    },
+    {
+      path: 'community/activity',
+      name: `活动管理`,
+      component: () => import('@/view/mall/community/activityList')
+    },
+    {
+      path: 'community/communitygoods',
+      name: `活动商品`,
+      component: () => import('@/view/mall/community/communitygoods')
+    },
+    {
+      path: 'community/order',
+      name: `订单管理`,
+      component: () => import('@/view/mall/trade/normalorders/communityList'),
+      children: [
+        {
+          path: 'detail/:itemId?',
+          component: () => import('@/view/mall/trade/order/detail')
+        },
+        {
+          path: 'process/:itemId?',
+          component: () => import('@/view/mall/trade/order/process')
+        }
+      ]
+    },
+    {
+      path: 'community/setting',
+      name: `活动配置`,
+      component: () => import('@/view/mall/community/setting')
     }
   ]
 }

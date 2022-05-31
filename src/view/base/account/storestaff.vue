@@ -78,6 +78,22 @@
           </el-tag>
         </template>
       </el-table-column>
+      <el-table-column
+        prop="is_disable"
+        label="禁用"
+        width="80"
+      >
+        <template slot-scope="scope">
+          <el-switch
+            v-model="scope.row.is_disable"
+            active-value=1
+            inactive-value=0
+            active-color="#ff4949"
+            inactive-color="#ccc"
+            @change="acitonDisabled(scope.$index, scope.row)"
+          />
+        </template>
+      </el-table-column>
       <el-table-column label="操作">
         <template slot-scope="scope">
           <el-button
@@ -86,12 +102,12 @@
           >
             编辑
           </el-button>
-          <el-button
+          <!--<el-button
             size="mini"
             @click="deleteAccountAction(scope.$index, scope.row)"
           >
             删除
-          </el-button>
+          </el-button>-->
         </template>
       </el-table-column>
     </el-table>
@@ -262,6 +278,7 @@ import {
 import { pageMixin } from '@/mixins'
 // import StoresSelect from '@/components/storeListSelect'
 import { getDistributorList } from '@/api/marketing'
+import { changeOperatorStatus } from '@/api/login'
 
 import DistributorSelect from '@/components/function/distributorSelect'
 export default {
@@ -444,7 +461,16 @@ export default {
         ...this.params
       }
       getAccountList(params).then((response) => {
-        this.accountsList = response.data.data.list
+        let list = response.data.data.list
+        list.forEach((item) => {
+          if (item.is_disable == 1) {
+            item.is_disable = '1';
+          } else {
+            item.is_disable = '0';
+          }
+        })
+
+        this.accountsList = list
         this.total_count = response.data.data.total_count
         this.datapass_block = response.data.data.datapass_block
         this.loading = false
@@ -479,6 +505,32 @@ export default {
             message: '已取消'
           })
         })
+    },
+    acitonDisabled (index, row) {
+      if (row.is_disabled === true) {
+        var msg = '此操作将会禁用该账号，是否继续?'
+        this.$confirm(msg, '提示', {
+          confirmButtonText: '确定',
+          cancelButtonText: '取消',
+          type: 'warning'
+        }).then(() => {
+          let params = {
+            'operator_id': row.operator_id,
+            'is_disable': row.is_disable
+          }
+          changeOperatorStatus(params).then((res) => {
+            // this.fetchList()
+          })
+        })
+      } else {
+        let params = {
+          'operator_id': row.operator_id,
+          'is_disable': row.is_disable
+        }
+        changeOperatorStatus(params).then((res) => {
+          // this.fetchList()
+        })
+      }
     },
     getRolesListData () {
       var params = { page: 1, pageSize: 100, role_source: 'distributor' }

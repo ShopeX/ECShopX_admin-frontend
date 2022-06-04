@@ -119,10 +119,20 @@ a {
   padding: 10px;
   border-top: 1px solid #efefef;
   z-index: 2000;
+  .el-button {
+    margin: 0 20px;
+  }
 }
 
 /***** finder *****/
 .sp-finder {
+  .sp-finder-hd {
+    padding: 0px;
+    margin-bottom: 8px;
+  }
+  .sp-finder-actions-item {
+    margin-bottom: 8px;
+  }
   .sp-finder-search {
     background-color: #f6f7f9;
     padding: 16px 0 0 0;

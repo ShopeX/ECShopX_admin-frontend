@@ -40,11 +40,11 @@ initFinder(Vue, {
       beforeQuery: (p) => {
         let params = {
           ...p,
-          page_size: p.pageSize,
+          pageSize: p.pageSize,
           page: p.pageNum,
           finderId: 100
         }
-        delete params.pageSize
+        // delete params.pageSize
         delete params.pageNum
         return params
       },

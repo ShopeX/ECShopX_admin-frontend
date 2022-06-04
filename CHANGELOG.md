@@ -2,6 +2,27 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [2.8.0](https://git.ishopex.cn/ecshopx/ecshopx-admin/compare/v2.7.1...v2.8.0) (2022-05-26)
+
+
+### Features
+
+* 2.7.1 ([a87c860](https://git.ishopex.cn/ecshopx/ecshopx-admin/commit/a87c860e8711a850e05d2150c4f295d794907bac))
+
+### [2.7.1](https://git.ishopex.cn/ecshopx/ecshopx-admin/compare/v2.7.0...v2.7.1) (2022-05-26)
+
+
+### Bug Fixes
+
+* 价格设置优化 ([40ebcff](https://git.ishopex.cn/ecshopx/ecshopx-admin/commit/40ebcff8ad80fdaf9cf647ee7d43bc3a81946737))
+* 团长申请注册 ([4dd356d](https://git.ishopex.cn/ecshopx/ecshopx-admin/commit/4dd356d6e567fd7d021da7356ef6fb54c21d03b3))
+* 地址详情 ([37d4a13](https://git.ishopex.cn/ecshopx/ecshopx-admin/commit/37d4a1354f974d990653d9f32ca098dd367a45f1))
+* 添加社区活动配置 ([ad31a82](https://git.ishopex.cn/ecshopx/ecshopx-admin/commit/ad31a824aa6849bc36e9c61a68ca5e09170d9417))
+* 社区团优化 ([a3768e5](https://git.ishopex.cn/ecshopx/ecshopx-admin/commit/a3768e5d2c56833038508f565d8c0d07586096a0))
+* 社区团团长注册 ([ccacd25](https://git.ishopex.cn/ecshopx/ecshopx-admin/commit/ccacd25ef4cf3a0ed5656f455c1c92d8aded22e9))
+* 积分添加富文本 ([c9e0bbd](https://git.ishopex.cn/ecshopx/ecshopx-admin/commit/c9e0bbdc502604e4f55513538e3485830a2104b4))
+* 通用设置 ([b9cd6e3](https://git.ishopex.cn/ecshopx/ecshopx-admin/commit/b9cd6e3f1b702194cd4f03956d70569a853b2bf2))
+
 ## [2.7.0](https://git.ishopex.cn/ecshopx/ecshopx-admin/compare/v2.6.4...v2.7.0) (2022-05-12)
 
 

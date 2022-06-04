@@ -306,7 +306,7 @@ export default {
     },
     getMerchantsList: async (merchant_name) => {
       const list = await getMerchantsList({
-        page_size: 10,
+        pageSize: 10,
         page: 1,
         merchant_name
       })

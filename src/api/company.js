@@ -504,3 +504,32 @@ export function getDianwuShowStatus (query) {
     params: query
   })
 }
+
+export function getItemPriceSetting () {
+  return fetch({
+    url: '/itemPrice/setting',
+    method: 'get'
+  })
+}
+
+export function saveItemPriceSetting (params) {
+  return fetch({
+    url: '/itemPrice/setting',
+    method: 'post',
+    params
+  })
+}
+
+export function getGlobalSetting () {
+  return fetch({
+    url: '/settings',
+    method: 'get'
+  })
+}
+
+export function setGlobalSetting () {
+  return fetch({
+    url: '/settings',
+    method: 'post'
+  })
+}

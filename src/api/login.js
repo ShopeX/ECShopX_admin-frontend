@@ -46,6 +46,14 @@ export function updateAdminInfo (query) {
   })
 }
 
+export function changeOperatorStatus (query) {
+  return fetch({
+    url: '/operator/changestatus',
+    method: 'put',
+    params: query
+  })
+}
+
 export function getAuthorizeUrl (params) {
   return fetch({
     url: '/operator/authorizeurl',

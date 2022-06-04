@@ -56,7 +56,7 @@ export const ORDER_TYPE = [
   { title: '团购订单', value: 'groups' },
   { title: '秒杀订单', value: 'seckill' },
   { title: '普通订单', value: 'normal' },
-  { title: "社区团购订单", value: "community" }
+  { title: '社区团购订单', value: 'community' }
   // { title: "导购订单", value: "shopguide" },
   // { title: "跨境订单", value: "crossborder" },
   // { title: "助力订单", value: "bargain" },
@@ -157,6 +157,16 @@ export const PICKER_DATE_OPTIONS = {
       }
     }
   ]
+}
+
+export const FORM_COMP = {
+  INPUT: 1,
+  NUMBER: 2,
+  DATE: 3,
+  RADIO: 4,
+  CHECKBOX: 5,
+  MOBILE: 6,
+  IMAGE: 7
 }
 
 export const SYSTEM_CONFIG = {

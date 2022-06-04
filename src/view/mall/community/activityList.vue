@@ -70,7 +70,7 @@
         v-model="params.activity_status"
         type="card"
         @tab-click="onSearch"
-        >
+      >
         <el-tab-pane
           v-for="item in activity_status"
           :key="item.value"
@@ -92,15 +92,13 @@
             width="100"
             prop="activity_id"
             label="ID"
-          >
-          </el-table-column>
+          />
 
           <el-table-column
             width="220"
             prop="activity_name"
             label="活动名称"
-          >
-          </el-table-column>
+          />
           <el-table-column
             prop="total_fee"
             width="120"
@@ -111,48 +109,47 @@
             </template>
           </el-table-column>
           <el-table-column
-              prop="total_fee"
-              min-width="150"
-              label="有效期"
-            >
-              <template slot-scope="scope">
-                <div>{{ scope.row.start_time }}</div>
-                <div>~</div>
-                <div>{{ scope.row.end_time }}</div>
-              </template>
-            </el-table-column>
+            prop="total_fee"
+            min-width="150"
+            label="有效期"
+          >
+            <template slot-scope="scope">
+              <div>{{ scope.row.start_time }}</div>
+              <div>~</div>
+              <div>{{ scope.row.end_time }}</div>
+            </template>
+          </el-table-column>
 
-            <el-table-column
-              width="220"
-              prop="activity_process_msg"
-              label="状态"
-            >
-            </el-table-column>
-            
-            <el-table-column
-              width="200"
-              prop="activity_delivery_status_msg"
-              label="发货状态"
-            >
-            </el-table-column>
+          <el-table-column
+            width="220"
+            prop="activity_process_msg"
+            label="状态"
+          />
 
-            <el-table-column
-              label="操作"
-              min-width="150"
-            >
-              <template slot-scope="scope">
-                <div class="operating-icons">
-                  <el-button
-                    v-if="scope.row.activity_status == 'success' &&  scope.row.delivery_status == 'PENDING'"
-                    type="text"
-                    @click="send(scope.row)"
-                  >
-                    发货
-                  </el-button>
-                  
-                </div>
-              </template>
-            </el-table-column>
+          <el-table-column
+            width="200"
+            prop="activity_delivery_status_msg"
+            label="发货状态"
+          />
+
+          <el-table-column
+            label="操作"
+            min-width="150"
+          >
+            <template slot-scope="scope">
+              <div class="operating-icons">
+                <el-button
+                  v-if="
+                    scope.row.activity_status == 'success' && scope.row.delivery_status == 'PENDING'
+                  "
+                  type="text"
+                  @click="send(scope.row)"
+                >
+                  发货
+                </el-button>
+              </div>
+            </template>
+          </el-table-column>
         </el-table>
         <div class="content-padded content-center">
           <el-pagination
@@ -167,8 +164,6 @@
           />
         </div>
       </el-tabs>
-
-     
     </div>
     <router-view />
   </div>
@@ -180,12 +175,7 @@ import { pageMixin } from '@/mixins'
 import { VERSION_STANDARD, isArray, VERSION_B2C, VERSION_IN_PURCHASE } from '@/utils'
 import { getCommunityActivity, communityDeliver, communityOrderExport } from '@/api/promotions'
 import moment from 'moment'
-import {
-  DISTRIBUTION_TYPE,
-  ORDER_STATUS,
-  PICKER_DATE_OPTIONS
-} from '@/consts'
-
+import { DISTRIBUTION_TYPE, ORDER_STATUS, PICKER_DATE_OPTIONS } from '@/consts'
 
 export default {
   mixins: [mixin, pageMixin],
@@ -197,32 +187,36 @@ export default {
         activity_name: '',
         activity_status: '',
         time_start_begin: '', //
-        time_start_end: '',
+        time_start_end: ''
       },
       activity_id: [],
       activity_status: [
         {
-          title:'未开始',
-          value:'waiting'
+          title: '全部',
+          value: ''
         },
         {
-          title:'进行中',
-          value:'ongoing'
+          title: '未开始',
+          value: 'waiting'
         },
         {
-          title:'已结束',
-          value:'end'
+          title: '进行中',
+          value: 'ongoing'
         },
+        {
+          title: '已结束',
+          value: 'end'
+        }
       ],
-      processArr:[
+      processArr: [
         {
-          title:'是',
-          value:1
+          title: '是',
+          value: 1
         },
         {
-          title:'否',
-          value:0
-        },
+          title: '否',
+          value: 0
+        }
       ],
       pickerOptions: PICKER_DATE_OPTIONS,
       exportData: {},
@@ -347,23 +341,20 @@ export default {
         type: 'warning',
         beforeClose: (action, instance, done) => {
           if (action === 'confirm') {
-            communityDeliver({ activity_id: row.activity_id }).then(
-              (response) => {
-                this.fetchList()
-                this.$message({
-                  message: '发货成功',
-                  type: 'success',
-                  duration: 5 * 1000
-                })
-              }
-            )
+            communityDeliver({ activity_id: row.activity_id }).then((response) => {
+              this.fetchList()
+              this.$message({
+                message: '发货成功',
+                type: 'success',
+                duration: 5 * 1000
+              })
+            })
           }
           done()
         }
       })
     }
   }
-      
 }
 </script>
 <style lang="scss" scope>

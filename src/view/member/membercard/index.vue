@@ -2,7 +2,7 @@
   <div class="section-white">
     <el-tabs
       v-model="activeName"
-      type="border-card"
+      type="card"
     >
       <el-tab-pane
         label="基础设置"
@@ -11,16 +11,16 @@
         <card-setting />
       </el-tab-pane>
       <el-tab-pane
+        v-if="!VERSION_IN_PURCHASE"
         label="等级设置"
         name="second"
-        v-if="!VERSION_IN_PURCHASE"
       >
         <card-level />
       </el-tab-pane>
       <el-tab-pane
+        v-if="!VERSION_IN_PURCHASE"
         label="付费等级设置"
         name="thrid"
-        v-if="!VERSION_IN_PURCHASE"
       >
         <card-viplevel />
       </el-tab-pane>

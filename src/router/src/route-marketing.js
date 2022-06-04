@@ -509,6 +509,11 @@ export default {
       path: 'community/setting',
       name: `活动配置`,
       component: () => import('@/view/mall/community/setting')
+    },
+    {
+      path: 'community/achievement',
+      name: `团长业绩`,
+      component: () => import('@/view/mall/community/achievement')
     }
   ]
 }

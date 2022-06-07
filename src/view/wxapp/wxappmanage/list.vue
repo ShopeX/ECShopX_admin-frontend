@@ -712,6 +712,8 @@ export default {
       getWxa(data.authorizer.authorizer_appid).then((response) => {
         this.detail = response.data.data
         this.weappTemplate = this.detail.weappTemplate
+        this.configForm.auto_publish = response.data.data.auto_publish
+        this.configForm.authorizer_appsecret = response.data.data.authorizer_appsecret
         console.log(this.detail)
       })
     },
@@ -745,7 +747,7 @@ export default {
       this.wxaConfigVisible = true
     },
     configSave() {
-      let params = this.form
+      let params = this.configForm
       configSubmitHandle(this.detail.authorizer_appid, params).then((response) => {
         this.wxaConfigVisible = false
         this.$message({

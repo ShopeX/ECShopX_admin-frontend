@@ -122,6 +122,10 @@ export default {
     },
     getStatus: {
       type: Boolean
+    },
+    isSingle: {
+      type: Boolean,
+      default: false
     }
   },
   data () {
@@ -239,6 +243,14 @@ export default {
       this.$emit('closeStoreDialog')
     },
     saveStoreAction () {
+      if (this.isSingle && this.multipleSelection.length > 1) {
+        this.$message({
+          message: '最多选择一个店铺',
+          type: 'error',
+          duration: 5 * 1000
+        })
+        return
+      }
       this.initState()
       this.$emit('chooseStore', this.multipleSelection)
     },

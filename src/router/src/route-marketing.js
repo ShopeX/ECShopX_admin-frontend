@@ -408,6 +408,11 @@ export default {
       name: `分销池审核`,
       component: () => import('@/view/popularize/goodsAudit')
     },
+    // {
+    //   path: 'popularize/popularizegoodsAudit',
+    //   name: `商家分润`,
+    //   component: () => import('@/view/popularize/goodsAudit')
+    // },
     {
       path: 'community/communitysetting',
       name: `基础配置`,

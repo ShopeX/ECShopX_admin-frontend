@@ -320,7 +320,7 @@ export default {
   },
   data () {
     return {
-      isSingle: true,
+      isSingle: false,
       oldData: [],
       isValid: true,
       oldData: [],
@@ -464,14 +464,7 @@ export default {
           })
         })
       }
-      if (this.form.distributor_ids.length > 1) {
-        this.$message({
-          message: '最多选择一个店铺',
-          type: 'error',
-          duration: 5 * 1000
-        })
-        return
-      }
+
       if (this.operator_id) {
         updateAccountInfo(this.operator_id, this.form).then((response) => {
           this.$message.success('保存成功')
@@ -579,14 +572,6 @@ export default {
       console.log(data)
       this.DistributorVisible = false
       if (data === null || data.length <= 0) return
-      if (data.length > 1) {
-        this.$message({
-          message: '最多选择一个店铺',
-          type: 'error',
-          duration: 5 * 1000
-        })
-        return
-      }
 
       this.relDistributors = data
       this.oldData = data

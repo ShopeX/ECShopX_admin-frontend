@@ -519,6 +519,11 @@ export default {
       path: 'community/achievement',
       name: `团长业绩`,
       component: () => import('@/view/mall/community/achievement')
+    },
+    {
+      path: 'community/withdraw',
+      name: `提现申请`,
+      component: () => import('@/view/mall/community/withdraw')
     }
   ]
 }

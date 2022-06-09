@@ -109,7 +109,9 @@ export default {
             type='text'
             placeholder={item.placeholder || '请输入内容'}
             v-model={this.value[item.key]}
-          />
+          >
+            <template slot='append'>{item.append}</template>
+          </el-input>
         )
       } else if (item.type == 'text') {
         return <div class='el-text'>{value[item.key]}</div>

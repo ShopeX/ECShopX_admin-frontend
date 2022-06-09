@@ -12,171 +12,65 @@
 </style>
 <template>
   <div>
-    <div v-if="$route.path.indexOf('detail') === -1">
-      <SpFilterForm
-        :model="formQuery"
-        @onSearch="onSearch"
-        @onReset="onSearch"
+    <SpFilterForm
+      :model="formQuery"
+      @onSearch="onSearch"
+      @onReset="onSearch"
+    >
+      <SpFilterFormItem
+        prop="chief_mobile"
+        label="团长手机号:"
       >
-        <SpFilterFormItem
-          prop="name"
-          label="提现状态:"
-        >
-          <el-input
-            v-model="formQuery.name"
-            placeholder="请选择"
-          />
-        </SpFilterFormItem>
-        <SpFilterFormItem
-          prop="mobile"
-          label="手机号:"
-        >
-          <el-input
-            v-model="formQuery.mobile"
-            placeholder="请输入团长手机号"
-          />
-        </SpFilterFormItem>
-      </SpFilterForm>
+        <el-input
+          v-model="formQuery.chief_mobile"
+          placeholder="请输入团长手机号"
+        />
+      </SpFilterFormItem>
+      <SpFilterFormItem
+        prop="chief_name"
+        label="团长姓名:"
+      >
+        <el-input
+          v-model="formQuery.chief_name"
+          placeholder="请输入团长姓名"
+        />
+      </SpFilterFormItem>
+    </SpFilterForm>
 
-      <el-row class="total-info">
-        <el-col :span="6">
-          <div class="total-label">
-            佣金总额（¥）
-          </div>
-          <div class="total-value">
-            100
-          </div>
-        </el-col>
-        <el-col
-          :span="6"
-        >
-          <div class="total-label">
-            已提现总额（¥）
-          </div>
-          <div class="total-value">
-            100
-          </div>
-        </el-col>
-        <el-col
-          :span="6"
-        >
-          <div class="total-label">
-            待处理金额（¥）
-          </div>
-          <div class="total-value">
-            100
-          </div>
-        </el-col>
-        <el-col
-          :span="6"
-        >
-          <div class="total-label">
-            申请提现人数
-          </div>
-          <div class="total-value">
-            100
-          </div>
-        </el-col>
-      </el-row>
-
-      <SpFinder
-        ref="finder"
-        no-selection
-        :setting="setting"
-        :hooks="{
-          beforeSearch: beforeSearch,
-          afterSearch: afterSearch
-        }"
-        url="/community/chief/apply/list"
-      />
-
-      <SpDialog
-        ref="resloveDialogRef"
-        v-model="resloveDialog"
-        :title="`审批`"
-        :form="resloveForm"
-        :form-list="resloveFormList"
-        @onSubmit="onResloveSubmit"
-      />
-    </div>
-    <router-view />
+    <SpFinder
+      ref="finder"
+      no-selection
+      :setting="setting"
+      :hooks="{
+        beforeSearch: beforeSearch,
+        afterSearch: afterSearch
+      }"
+      url="/community/rebate/count"
+    />
   </div>
 </template>
 
 <script>
 import { createSetting } from '@shopex/finder'
-import moment from 'moment'
 export default {
   name: '',
   data () {
     return {
       formQuery: {
-        name: '',
-        mobile: '',
-        approve_status: '-1'
+        chief_name: '',
+        chief_mobile: ''
       },
       setting: createSetting({
-        actions: [
-          {
-            name: '打款',
-            key: 'detail',
-            type: 'button',
-            buttonType: 'text'
-          },
-          {
-            name: '拒绝',
-            key: 'apply',
-            type: 'button',
-            buttonType: 'text'
-          }
-        ],
         columns: [
-          { name: '申请时间', key: 'chief_name' },
-          { name: '打款方式', key: 'chief_mobile' },
-          { name: '团长手机号', key: 'chief_mobile' },
-          { name: '申请提现金额（¥）', key: 'chief_mobile' },
-          { name: '提现状态', key: 'chief_mobile' },
-          { name: '打款记录', key: 'chief_mobile' }
+          { name: '姓名', key: 'chief_name' },
+          { name: '手机号', key: 'chief_mobile' },
+          { name: '可提现（¥）', key: 'cash_withdrawal_rebate' },
+          { name: '已提现（¥）', key: 'payed_rebate' },
+          { name: '申请提现（¥）', key: 'freeze_cash_withdrawal_rebate' },
+          { name: '未结算（¥）', key: 'no_close_rebate' },
+          { name: '佣金总额（¥）', key: 'rebate_total' }
         ]
-      }),
-      resloveDialog: false,
-      resloveForm: {
-        apply_id: '',
-        approve_status: 1,
-        refuse_reason: ''
-      },
-      resloveFormList: [
-        {
-          label: '审批:',
-          key: 'approve_status',
-          type: 'radio',
-          options: [
-            { label: 1, name: '同意' },
-            { label: 2, name: '不同意' }
-          ],
-          onChange: (e) => {
-            if (e == 2) {
-              this.resloveFormList[1].isShow = true
-            } else {
-              this.resloveFormList[1].isShow = false
-            }
-          }
-        },
-        {
-          label: '拒绝原因:',
-          key: 'refuse_reason',
-          type: 'input',
-          placeholder: '请输入拒绝原因',
-          isShow: false,
-          validator: (rule, value, callback) => {
-            if (this.resloveForm.approve_status == 2 && !value) {
-              callback(new Error('不能为空'))
-            } else {
-              callback()
-            }
-          }
-        }
-      ]
+      })
     }
   },
   created () {},
@@ -191,25 +85,7 @@ export default {
       }
       return { ...params, ...formQuery }
     },
-    afterSearch () {},
-    async onResloveSubmit () {
-      const { apply_id, approve_status, refuse_reason } = this.resloveForm
-      await this.$api.community.approveChief(apply_id, {
-        approve_status,
-        refuse_reason
-      })
-      this.resloveDialog = false
-      this.$refs.finder.refresh()
-    },
-    getApproveStatus (status) {
-      if (status == '0') {
-        return '未审核'
-      } else if (status == '1') {
-        return '已审核'
-      } else if (status == '2') {
-        return '已拒绝'
-      }
-    }
+    afterSearch () {}
   }
 }
 </script>

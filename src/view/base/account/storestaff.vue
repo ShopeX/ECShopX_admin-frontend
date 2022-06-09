@@ -175,15 +175,9 @@
           <el-form-item label="手机号">
             <el-col :span="10">
               <el-input
-                v-if="!isEdit"
                 v-model="form.mobile"
                 :maxlength="11"
                 placeholder="请输入11位手机号"
-              />
-              <el-input
-                v-else
-                v-model="editMobile"
-                :disabled="true"
               />
             </el-col>
           </el-form-item>
@@ -282,6 +276,7 @@
         :rel-data-ids="relDistributors"
         :old-data="oldData"
         :is-single="isSingle"
+        :distribution_type="distributionType"
         @chooseStore="DistributorChooseAction"
         @closeStoreDialog="closeDialogAction"
       />
@@ -332,6 +327,7 @@ export default {
       editVisible: false,
       origin: '',
       editTitle: '',
+      distributionType: '0',
       form: {
         operator_type: 'distributor',
         mobile: '',
@@ -346,7 +342,6 @@ export default {
       activeName: 'distributor',
       subDistrictList: [],
       editLoginName: '',
-      editMobile: '',
       accountsList: [],
       detailData: {},
       loading: false,
@@ -422,7 +417,6 @@ export default {
       this.form.username = ''
       this.form.login_name = ''
       this.editLoginName = ''
-      this.editMobile = ''
       this.operator_id = ''
       this.form.password = ''
       this.form.role_id = []
@@ -435,8 +429,8 @@ export default {
       this.isEdit = true
       this.form.username = row.username
       this.form.login_name = row.login_name
+      this.form.mobile = row.mobile
       this.editLoginName = row.login_name
-      this.editMobile = row.mobile
       this.operator_id = row.operator_id
       this.is_distributor_main = row.is_distributor_main
       console.log(1111111,row)

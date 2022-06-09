@@ -126,6 +126,10 @@ export default {
     isSingle: {
       type: Boolean,
       default: false
+    },
+    distribution_type: {
+      type: String,
+      default: ''
     }
   },
   data () {
@@ -140,7 +144,8 @@ export default {
         page: 1,
         pageSize: 10,
         is_valid: 'true',
-        is_app: 1
+        is_app: 1,
+        distribution_type: ''
       },
       name: '',
       selectRows: [],
@@ -188,6 +193,7 @@ export default {
       // }
     },
     getDistributor () {
+      this.params.distribution_type = this.distribution_type
       getDistributorList(this.params).then((response) => {
         if (this.storeData.length > 0) this.isFristLoad = false
         this.storeData = response.data.data.list

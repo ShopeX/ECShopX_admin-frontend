@@ -11,9 +11,9 @@
     </div>
     <tips class="action-container">
       <ul>
-        <li>1. 平台管理后台仅可给平台自营店铺添加超级管理员，如需给入驻商户的店铺添加超级管理员，请使用商户超级管理员账号登录商户管理后台操作。商户管理后台地址：<el-link :href="origin + '/merchant/login'" target="_blank" type="primary">商户后台</el-link>。</li>
+        <li>1. 平台管理后台仅可给平台自营店铺添加超级管理员，如需给入驻商户的店铺添加超级管理员，请使用商户超级管理员账号登录商户管理后台操作。前往：<el-link :href="origin + '/merchant/login'" target="_blank" type="primary">商户后台</el-link>。</li>
         <li>2. 每个店铺仅可设置一个超级管理员账号，但一个账号可以同时是多个店铺的超级管理员。</li>
-        <li>3. 店铺超级管理员拥有店铺所有权限，可登录店铺管理后台为店铺添加子管理员，并通过角色控制子管理员权限范围。店铺管理后台地址：<el-link :href="origin + '/shopadmin/login'" target="_blank" type="primary">店铺后台</el-link>。</li>
+        <li>3. 店铺超级管理员拥有店铺所有权限，可登录店铺管理后台为店铺添加子管理员，并通过角色控制子管理员权限范围。前往：<el-link :href="origin + '/shopadmin/login'" target="_blank" type="primary">店铺后台</el-link>。</li>
       </ul>
     </tips>
     <SpFilterForm

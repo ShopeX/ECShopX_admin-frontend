@@ -114,9 +114,9 @@ import moment from 'moment'
 const withDrawStatusList = [
   { title: '待处理', value: 'apply' },
   { title: '拒绝', value: 'reject' },
-  { title: '提现成功', value: 'success' },
-  { title: '处理中', value: 'process' },
-  { title: '提现失败', value: 'failed' }
+  { title: '提现成功', value: 'success' }
+  // { title: '处理中', value: 'process' },
+  // { title: '提现失败', value: 'failed' }
 ]
 export default {
   name: '',
@@ -133,6 +133,9 @@ export default {
             key: 'detail',
             type: 'button',
             buttonType: 'text',
+            visible: (row) => {
+              return row.status == 'apply'
+            },
             action: {
               handler: async ([row]) => {
                 // const { path } = this.$route

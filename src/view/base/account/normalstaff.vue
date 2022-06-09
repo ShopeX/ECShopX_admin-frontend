@@ -171,7 +171,7 @@
               <el-input
                 v-model="form.username"
                 required
-                placeholder="请填写昵称"
+                placeholder="请填写姓名"
                 :disabled="datapass_block == 1"
               />
             </el-col>
@@ -315,7 +315,7 @@ export default {
       },
       operator_id: 0,
       rolesListData: [],
-      datapass_block: 1
+      datapass_block: 0
     }
   },
   computed: {

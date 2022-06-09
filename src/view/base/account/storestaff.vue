@@ -57,10 +57,14 @@
       border
       :data="accountsList"
     >
-      <el-table-column
-        prop="login_name"
-        label="登录账号"
-      />
+      <el-table-column label="登陆账号">
+        <template slot-scope="scope">
+          {{ scope.row.login_name }}
+          <el-tag size="mini" type="danger" v-if="scope.row.is_distributor_main">
+            管理员
+          </el-tag>
+        </template>
+      </el-table-column>
       <el-table-column
         prop="mobile"
         label="手机号"
@@ -101,7 +105,7 @@
         label="禁用"
         width="80"
       >
-        <template slot-scope="scope">
+        <template slot-scope="scope" v-if="login_type != 'distributor' || scope.row.is_distributor_main==false">
           <el-switch
             v-model="scope.row.is_disable"
             active-value=1
@@ -226,7 +230,7 @@
             </p>
           </el-form-item>
           <el-form-item
-            v-if="login_type == 'distributor'"
+            v-if="login_type == 'distributor' && is_distributor_main!=true"
             label="角色"
           >
             <el-checkbox-group v-model="form.role_id">
@@ -316,7 +320,7 @@ export default {
   },
   data () {
     return {
-      isSingle: true,
+      isSingle: false,
       oldData: [],
       isValid: true,
       oldData: [],
@@ -354,7 +358,8 @@ export default {
       operator_id: 0,
       rolesListData: [],
       datapass_block: 1,
-      isHead: false
+      isHead: false,
+      is_distributor_main: false,
     }
   },
   computed: {
@@ -433,6 +438,8 @@ export default {
       this.editLoginName = row.login_name
       this.editMobile = row.mobile
       this.operator_id = row.operator_id
+      this.is_distributor_main = row.is_distributor_main
+      console.log(1111111,row)
       this.form.password = ''
       row.role_data.forEach((item) => {
         this.form.role_id.push(item.role_id)
@@ -565,13 +572,6 @@ export default {
       console.log(data)
       this.DistributorVisible = false
       if (data === null || data.length <= 0) return
-      if (data.length > 1) {
-        this.$message({
-          message: '最多选择一个店铺',
-          type: 'error',
-          duration: 5 * 1000
-        })
-      }
 
       this.relDistributors = data
       this.oldData = data

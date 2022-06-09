@@ -2,6 +2,24 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [2.9.0](https://git.ishopex.cn/ecshopx/ecshopx-admin/compare/v2.8.0...v2.9.0) (2022-06-09)
+
+
+### Features
+
+* 2.9.0 ([2933bbc](https://git.ishopex.cn/ecshopx/ecshopx-admin/commit/2933bbc5b232260a8bdf5754131fcfeebab2fe0b))
+
+
+### Bug Fixes
+
+* 会员等级添加等级说明 ([761c28b](https://git.ishopex.cn/ecshopx/ecshopx-admin/commit/761c28b2e559fe17bdd63b9876dac8ed51e690cb))
+* 佣金 ([13b1a4d](https://git.ishopex.cn/ecshopx/ecshopx-admin/commit/13b1a4d8c02566d5e0decb75a8937d1a2d3d1269))
+* 佣金提现 ([9942564](https://git.ishopex.cn/ecshopx/ecshopx-admin/commit/994256462ef5249645ecbdee78bab7924b9f85f9))
+* 修改佣金提现状态 ([3a16f7c](https://git.ishopex.cn/ecshopx/ecshopx-admin/commit/3a16f7cbf78eafb8a0337f4018f9abb044d2e98f))
+* 分销比列 ([459f093](https://git.ishopex.cn/ecshopx/ecshopx-admin/commit/459f0933db4be4a4a5997de72ec4aae548928534))
+* 店铺端添加路由 ([43a8f4b](https://git.ishopex.cn/ecshopx/ecshopx-admin/commit/43a8f4bf70b519688f4978197fd511d505d9c4e0))
+* 配置 ([0a63eaa](https://git.ishopex.cn/ecshopx/ecshopx-admin/commit/0a63eaa67fd1ebada07858ace173f638caf42677))
+
 ## [2.8.0](https://git.ishopex.cn/ecshopx/ecshopx-admin/compare/v2.7.1...v2.8.0) (2022-05-26)
 
 

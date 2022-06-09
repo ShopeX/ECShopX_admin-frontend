@@ -20,8 +20,8 @@
       <el-table-column label="操作">
         <template slot-scope="scope">
           <el-button size="mini" @click="editAction(scope.$index, scope.row)">编辑</el-button>
-          <el-button size="mini" @click="deleteAccountAction(scope.$index, scope.row)" v-if="scope.row.is_dealer_main == 0">删除</el-button
-          >
+          <!--<el-button size="mini" @click="deleteAccountAction(scope.$index, scope.row)" v-if="scope.row.is_dealer_main == 0">删除</el-button
+          >-->
         </template>
       </el-table-column>
     </el-table>

@@ -7,6 +7,16 @@ export default {
   component: Layout,
   children: [
     {
+      path: 'staff/Merchantstaff',
+      name: `账号管理-店铺管理员`,
+      component: () => import('@/view/base/account/storestaff')
+    },
+    {
+      path: 'staff/Merchantstaffroles',
+      name: `账号管理-店铺员工角色`,
+      component: () => import('@/view/base/account/storeroles')
+    },
+    {
       path: 'baseexport',
       name: `导出列表`,
       component: () => import('@/view/base/exportlog/index')

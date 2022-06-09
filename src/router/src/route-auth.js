@@ -29,7 +29,7 @@ export default [
       auth: false,
       type: 'merchant'
     },
-    name: '授权-商户登陆'
+    name: '授权-商户登录'
   },
   // {
   //   path:'/dealer/login',

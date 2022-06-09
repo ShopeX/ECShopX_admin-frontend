@@ -369,3 +369,20 @@ export function getChiefWxCode (params) {
     params
   })
 }
+
+//
+export function withdrawApply (id, params) {
+  return fetch({
+    url: `/community/cash_withdrawal/${id}`,
+    method: 'post',
+    params
+  })
+}
+
+// 提现佣金支付信息
+export function getPayInfo (id) {
+  return fetch({
+    url: `/community/cash_withdrawal/payinfo/${id}`,
+    method: 'get'
+  })
+}

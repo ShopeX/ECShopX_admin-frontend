@@ -72,7 +72,7 @@
               商户手机号<span
                 class="frm-tips"
                 style="display: inne-block; margin-left: 20px"
-              >注册商户手机号,用于登陆商户后台</span>
+              >注册商户手机号,用于登录商户后台</span>
             </div>
             <el-input v-model="form.mobile" />
           </el-form-item>

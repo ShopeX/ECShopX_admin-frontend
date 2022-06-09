@@ -50,6 +50,7 @@ export default {
         condition_type: 'num',
         condition_money: '',
         chief_desc: '',
+        rebate_ratio: 0,
         aggrement: '',
         explanation: ''
       },
@@ -92,6 +93,14 @@ export default {
           label: '团长申请页',
           key: 'chief_desc',
           type: 'text'
+        },
+        {
+          label: '佣金设置',
+          key: 'rebate_ratio',
+          type: 'input',
+          append: '%',
+          placeholder: '佣金比列',
+          tip: '团长根据成团金额按百分比例获取佣金，设置为0时则不计算佣金'
         },
         {
           label: '团长注册协议',
@@ -286,23 +295,25 @@ export default {
   },
   methods: {
     async onSaveConfig () {
-      const { condition_type, condition_money, aggrement, explanation } = this.form
+      const { condition_type, condition_money, rebate_ratio, aggrement, explanation } = this.form
       await this.$api.community.modifyActivitySetting({
         condition_type,
         condition_money,
+        rebate_ratio,
         aggrement,
         explanation
       })
       this.$message.success('修改成功')
     },
     async getActivitySetting () {
-      const { condition_money, condition_type, aggrement, explanation } =
+      const { condition_money, condition_type, aggrement, explanation, rebate_ratio } =
         await this.$api.community.getActivitySetting()
       this.form = {
         condition_type,
         condition_money,
         chief_desc:
           '您可在模板编辑-热区图组件-设置路径，选择团长申请页面路径供用户在店铺首页进入团长申请页面',
+        rebate_ratio,
         aggrement,
         explanation
       }

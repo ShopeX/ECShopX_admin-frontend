@@ -433,7 +433,7 @@ export default {
         turntable_title: '', //大转盘标题
         long_date: '', //周期时间
         max_times_day: '', //每天最大抽奖次数
-        login_get_times: '', //登陆时获取的次数，-1为不设置
+        login_get_times: '', //登录时获取的次数，-1为不设置
         shopping_full: '', //购物满多少元获取一次抽奖次数，-1为不设置
         clear_times_after_end: false //活动结束时清空抽奖次数
       },

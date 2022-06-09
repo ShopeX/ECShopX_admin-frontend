@@ -8,14 +8,26 @@
       label-width="130px"
       :rules="rules"
     >
-      <el-card class="box-card" shadow="never">
-        <div slot="header" class="clearfix">
+      <el-card
+        class="box-card"
+        shadow="never"
+      >
+        <div
+          slot="header"
+          class="clearfix"
+        >
           <span>支付渠道信息</span>
         </div>
         <el-row :gutter="20">
           <el-col :span="12">
-            <el-form-item label="费率类型" prop="fee_type">
-              <el-select v-model="form.fee_type" style="width: 100%">
+            <el-form-item
+              label="费率类型"
+              prop="fee_type"
+            >
+              <el-select
+                v-model="form.fee_type"
+                style="width: 100%"
+              >
                 <el-option
                   v-for="value in fee_type_options"
                   :key="value.code"
@@ -25,9 +37,19 @@
               </el-select>
             </el-form-item>
           </el-col>
-          <el-col :span="12" v-if="form.fee_type">
-            <el-form-item label="经营类目" prop="wx_category">
-              <el-select v-model="form.wx_category" placeholder="请选择" style="width: 100%">
+          <el-col
+            v-if="form.fee_type"
+            :span="12"
+          >
+            <el-form-item
+              label="经营类目"
+              prop="wx_category"
+            >
+              <el-select
+                v-model="form.wx_category"
+                placeholder="请选择"
+                style="width: 100%"
+              >
                 <el-option
                   v-for="value in category_options"
                   :key="value.id"
@@ -37,9 +59,19 @@
               </el-select>
             </el-form-item>
           </el-col>
-          <el-col :span="12" v-if="form.wx_category">
-            <el-form-item label="商户种类" prop="mer_type">
-              <el-select v-model="form.mer_type" placeholder="请选择活动区域" style="width: 100%">
+          <el-col
+            v-if="form.wx_category"
+            :span="12"
+          >
+            <el-form-item
+              label="商户种类"
+              prop="mer_type"
+            >
+              <el-select
+                v-model="form.mer_type"
+                placeholder="请选择活动区域"
+                style="width: 100%"
+              >
                 <el-option
                   v-for="value in mer_type_options"
                   :key="value.code"
@@ -50,8 +82,15 @@
             </el-form-item>
           </el-col>
           <el-col :span="12">
-            <el-form-item label="入驻模式" prop="model_type">
-              <el-select v-model="form.model_type" placeholder="请选择" style="width: 100%">
+            <el-form-item
+              label="入驻模式"
+              prop="model_type"
+            >
+              <el-select
+                v-model="form.model_type"
+                placeholder="请选择"
+                style="width: 100%"
+              >
                 <el-option
                   v-for="value in model_type_options"
                   :key="value.code"
@@ -62,7 +101,10 @@
             </el-form-item>
           </el-col>
           <el-col :span="12">
-            <el-form-item label="地区" prop="select_regions_value">
+            <el-form-item
+              label="地区"
+              prop="select_regions_value"
+            >
               <el-cascader
                 v-model="form.select_regions_value"
                 style="width: 100%"
@@ -73,28 +115,94 @@
             </el-form-item>
           </el-col>
 
-          <el-col :span="12">
+          <!-- <el-col :span="12">
             <el-form-item label="微信小程序appid" prop="authorizer_appid">
               <el-input v-model="form.authorizer_appid" placeholder="" style="width: 100%" />
             </el-form-item>
-          </el-col>
+          </el-col> -->
           <el-col :span="12">
-            <el-form-item label="手续费扣费方式" prop="adapay_fee_mode">
-              <el-select v-model="form.adapay_fee_mode" style="width: 100%">
-                <el-option label="内扣" value="I" />
-                <el-option label="外扣" value="O" />
+            <el-form-item
+              label="手续费扣费方式"
+              prop="adapay_fee_mode"
+            >
+              <el-select
+                v-model="form.adapay_fee_mode"
+                style="width: 100%"
+              >
+                <el-option
+                  label="内扣"
+                  value="I"
+                />
+                <el-option
+                  label="外扣"
+                  value="O"
+                />
               </el-select>
+            </el-form-item>
+          </el-col>
+          <el-col :span="24">
+            <el-form-item label="支付渠道">
+              <el-checkbox-group v-model="channelList">
+                <el-checkbox
+                  v-for="channel in payChannel"
+                  :key="channel.value"
+                  :label="channel.value"
+                >
+                  {{ channel.name }}
+                </el-checkbox>
+              </el-checkbox-group>
+              <div class="tip-msg">
+                <p>微信小程序商城：勾选微信小程序支付。</p>
+                <p>APP商城：勾选微信小程序支付、支付宝APP支付。</p>
+                <p>H5商城：勾选微信小程序支付、微信公众号支付、支付宝H5支付。</p>
+                <p>PC端web商城：勾选微信公众号支付、支付宝扫码支付。</p>
+              </div>
+            </el-form-item>
+          </el-col>
+          <el-col :span="24">
+            <el-form-item label="微信小程序AppID">
+              <el-input
+                v-model="wx_lite.appid"
+                placeholder="请输入微信小程序AppID"
+                :disabled="channelList.indexOf('wx_lite') < 0"
+                style="width: 220px"
+              />
+            </el-form-item>
+          </el-col>
+          <el-col :span="6">
+            <el-form-item label="微信公众号AppID">
+              <el-input
+                v-model="wx_pub.appid"
+                placeholder="请输入微信公众号AppID"
+                :disabled="channelList.indexOf('wx_pub') < 0"
+                style="width: 220px"
+              />
+            </el-form-item>
+          </el-col>
+          <el-col :span="8">
+            <el-form-item label="授权目录">
+              <el-input
+                v-model="wx_pub.path"
+                placeholder="请输入授权目录"
+                :disabled="channelList.indexOf('wx_pub') < 0"
+                style="width: 520px"
+              />
             </el-form-item>
           </el-col>
         </el-row>
       </el-card>
       <el-form-item style="text-align: center; margin: 50px 0; margin-right: 130px">
-        <el-button type="primary" @click="submitForm">提交审核</el-button>
+        <el-button
+          type="primary"
+          @click="submitForm"
+        >
+          提交审核
+        </el-button>
       </el-form-item>
     </el-form>
     <Result-cpn
       v-if="processed == '已填'"
-      :currentStatus="currentStatus"
+      :current-status="currentStatus"
       @nextPage="nextPage"
       @processedHandle="processedHandle"
     />
@@ -148,10 +256,22 @@ export default {
         province_code: '', //省份编码
         city_code: '', //城市编码
         district_code: '', //区县编码
-        authorizer_appid: '', //微信小程序appid
+        // authorizer_appid: '', //微信小程序appid
         select_regions_value: '',
-        adapay_fee_mode: '' //小程序扣费方式
+        adapay_fee_mode: '', //小程序扣费方式
+        add_value_list: {}
       },
+      channelList: [],
+      wx_lite: {
+        appid: ''
+      },
+      wx_pub: {
+        appid: '',
+        path: ''
+      },
+      alipay: '',
+      alipay_wap: '',
+      alipay_qr: '',
       rules: {
         fee_type: requiredRules('费率类型', 'change'),
         model_type: requiredRules('入驻模式', 'change'),
@@ -160,9 +280,16 @@ export default {
         // city_code:{ required: true, message: '请选择', trigger: 'change' },
         // district_code:{ required: true, message: '请选择', trigger: 'change' },
         wx_category: requiredRules('经营类目', 'change'),
-        authorizer_appid: [requiredRules('微信小程序appid'), MaxRules(40)],
+        // authorizer_appid: [requiredRules('微信小程序appid'), MaxRules(40)],
         adapay_fee_mode: requiredRules('手续费扣费方式', 'change')
       },
+      payChannel: [
+        { name: '微信小程序', value: 'wx_lite' },
+        { name: '微信公众号', value: 'wx_pub' },
+        { name: '支付宝APP', value: 'alipay' },
+        { name: '支付宝H5', value: 'alipay_wap' },
+        { name: '支付宝扫码', value: 'alipay_qr' }
+      ],
       isEcho: false // 是否回显
     }
   },
@@ -233,6 +360,16 @@ export default {
     submitForm () {
       this.$refs['ruleForm'].validate(async (valid) => {
         if (valid) {
+          if (this.channelList.indexOf('wx_lite') > -1 && this.wx_lite.appid == '') {
+            return this.$message.error('微信小程序APPID不能为空')
+          }
+          if (this.channelList.indexOf('wx_pub') > -1) {
+            if (this.wx_pub.appid == '') {
+              return this.$message.error('微信公众号APPID不能为空')
+            } else if (this.wx_pub.path == '') {
+              return this.$message.error('微信公众号授权目录不能为空')
+            }
+          }
           this.checkBoxVisibleHandle()
         } else {
           console.log('error submit!!')
@@ -257,7 +394,31 @@ export default {
         this.form.city_code,
         this.form.district_code
       ]
+
       this.form.wx_category = MerchantResident.wx_category_name
+      const { wx_lite, wx_pub, alipay, alipay_wap, alipay_qr } = JSON.parse(
+        MerchantResident.add_value_list
+      )
+      if (wx_lite) {
+        this.wx_lite = wx_lite
+        this.channelList.push('wx_lite')
+      }
+      if (wx_pub) {
+        this.wx_pub = wx_pub
+        this.channelList.push('wx_pub')
+      }
+      if (alipay) {
+        this.alipay = alipay
+        this.channelList.push('alipay')
+      }
+      if (alipay_wap) {
+        this.alipay_wap = alipay_wap
+        this.channelList.push('alipay_wap')
+      }
+      if (alipay_qr) {
+        this.alipay_qr = alipay_qr
+        this.channelList.push('alipay_qr')
+      }
 
       console.log(this.form)
       this.processed = '未填'
@@ -265,7 +426,28 @@ export default {
     /* ----------------------------------checkBox start----------------------------------- */
     async checkBoxConfirmHandle () {
       try {
-        const { status } = await this.$api.adapay.submitPay(this.form)
+        let add_value_list = {}
+        if (this.channelList.indexOf('wx_lite') > -1) {
+          add_value_list['wx_lite'] = this.wx_lite
+        }
+        if (this.channelList.indexOf('wx_pub') > -1) {
+          add_value_list['wx_pub'] = this.wx_pub
+        }
+        if (this.channelList.indexOf('alipay') > -1) {
+          add_value_list['alipay'] = 'alipay'
+        }
+        if (this.channelList.indexOf('alipay_wap') > -1) {
+          add_value_list['alipay_wap'] = 'alipay_wap'
+        }
+        if (this.channelList.indexOf('alipay_qr') > -1) {
+          add_value_list['alipay_qr'] = 'alipay_qr'
+        }
+        let params = {
+          ...this.form,
+          add_value_list: JSON.stringify(add_value_list)
+        }
+        console.log(params)
+        const { status } = await this.$api.adapay.submitPay(params)
         if (status) {
           this.processed = '已填'
           this.currentStatus = {
@@ -277,6 +459,7 @@ export default {
         }
         this.checkBoxVisibleHandle()
       } catch (error) {
+        console.error(error)
         // this.$refs['loadingBtn'].closeLoading()
         this.checkBoxVisibleHandle()
       }
@@ -309,7 +492,7 @@ export default {
 }
 </style>
 
-<style lang="scss">
+<style lang="scss" scoped>
 .zyk_pay_steeing {
   .clearfix span {
     font-weight: 700;
@@ -325,5 +508,10 @@ export default {
   .el-row {
     margin-bottom: 0px;
   }
+}
+.tip-msg {
+  font-size: 12px;
+  color: #888;
+  line-height: 20px;
 }
 </style>

@@ -16,14 +16,8 @@
         <span
           class="frm-tips"
         >如果手动绑定绑定后一定要执行【微信-> 粉丝管理->
-          同步微信粉丝】操作，不然会导致小程序用户和微信公众号用不能打通</span>
+          同步微信粉丝】操作，不然会导致小程序用户和微信公众号用户不能打通</span>
         <el-form ref="form">
-          <el-form-item label="小程序卡券打通微信文档">
-            <a
-              href="https://mp.weixin.qq.com/cgi-bin/announce?action=getannouncement&key=1490190158&version=1&lang=zh_CN&platform=2"
-              target="_blank"
-            >点击查看</a>
-          </el-form-item>
           <el-form-item>
             <el-button
               v-loading="loading"

@@ -55,7 +55,7 @@
               @closeImgDialog="closeImgDialog"
             />
             <p class="content-center">
-              卡封面（建议尺寸：400px * 250px）
+              卡封面（建议尺寸：600px * 350px）
             </p>
           </div>
           <div class="item-content f_l">
@@ -100,6 +100,22 @@
                       :name="index + ''"
                       @blur="discountBlur"
                     />&nbsp;折
+                  </div>
+                </template>
+              </div>
+            </div>
+            <div class="clearfix">
+              <span class="txt f_l">等级说明</span>
+              <div class="f_l">
+                <template>
+                  <div style="margin-bottom: 5px">
+                    <el-input
+                      v-model="item.description"
+                      type="textarea"
+                      style="width: 400px"
+                      :rows="3"
+                      placeholder="请输入等级说明"
+                    />
                   </div>
                 </template>
               </div>
@@ -232,7 +248,8 @@ export default {
           discount_checked: true,
           member_count: 0,
           third_data: '',
-          voucher_package: [] // 劵包信息
+          voucher_package: [], // 劵包信息
+          description: 'test'
         }
       ],
       imgDialog: false,

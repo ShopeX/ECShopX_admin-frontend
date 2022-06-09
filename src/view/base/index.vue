@@ -1040,6 +1040,18 @@
                   </template>
                   {{ activateInfo.redis_version }}
                 </el-descriptions-item>
+                <el-descriptions-item>
+                  <template slot="label">
+                    API域名
+                  </template>
+                  {{ activateInfo.app_url }}
+                </el-descriptions-item>
+                <el-descriptions-item>
+                  <template slot="label">
+                    存储驱动
+                  </template>
+                  {{ activateInfo.disk_driver }}
+                </el-descriptions-item>
               </el-descriptions>
             </section>
           </el-col>

@@ -408,6 +408,11 @@ export default {
       name: `分销池审核`,
       component: () => import('@/view/popularize/goodsAudit')
     },
+    // {
+    //   path: 'popularize/popularizegoodsAudit',
+    //   name: `商家分润`,
+    //   component: () => import('@/view/popularize/goodsAudit')
+    // },
     {
       path: 'community/communitysetting',
       name: `基础配置`,
@@ -509,6 +514,16 @@ export default {
       path: 'community/setting',
       name: `活动配置`,
       component: () => import('@/view/mall/community/setting')
+    },
+    {
+      path: 'community/achievement',
+      name: `团长业绩`,
+      component: () => import('@/view/mall/community/achievement')
+    },
+    {
+      path: 'community/withdraw',
+      name: `提现申请`,
+      component: () => import('@/view/mall/community/withdraw')
     }
   ]
 }

@@ -106,11 +106,10 @@
               说明：可设置订单中运费部分金额是否可获取积分
             </p>
           </el-form-item>
-          <!-- <el-form-item label="积分获取限制：">
-                      每月最多获取<el-input  type="number"  v-model="form.gain_limit" placeholder="" style="width: 120px;" :min="1" :max="9999999"/>积分
-                      <div class="frm-tips">不限制请填写999999</div>
-                  </el-form-item> -->
-
+          <el-form-item label="积分获取限制：">
+              每月最多获取<el-input  type="number"  v-model="form.gain_limit" placeholder="" style="width: 120px;" :min="1" :max="9999999"/>积分
+              <div class="frm-tips">不限制请填写999999</div>
+          </el-form-item>
           <el-form-item label="获取时间：">
             订单完成<el-input
               v-model="form.gain_time"
@@ -143,7 +142,7 @@
                 style="width: 120px"
                 :min="1"
                 :max="100"
-              />% 1 <= x <= 100
+              />% 上限范围：1<=x<=100
             </el-form-item>
             <el-form-item label="抵扣比例：">
               <el-input
@@ -153,7 +152,7 @@
                 style="width: 120px"
                 :min="1"
                 :max="9999999"
-              />积分 抵扣1元人民币
+              /> 积分 抵扣1元人民币
             </el-form-item>
             <el-form-item label="积分规则：">
               <vue-html5-editor
@@ -169,10 +168,6 @@
               />
             </el-form-item>
           </template>
-          <!-- <el-form-item label="积分抵扣使用限制：">
-                     每月最多抵扣使用<el-input type="number"  v-model="form.deduct_limit" value="0" style="width: 150px;" :min="0" :max="9999999"/>积分
-                     <div class="frm-tips">不限制请填写999999</div>
-                  </el-form-item> -->
           <!-- <el-form-item label="购物赠送积分">
                        消费满<el-input  type="number"  v-model="form.deduct_shopping" placeholder="" style="width: 120px;" :min="1" :max="9999999"/>元 赠送1积分
                    </el-form-item> -->
@@ -202,8 +197,6 @@ export default {
         gain_time: 3,
         isOpenDeductPoint: false,
         deduct_point: 0,
-        deduct_limit: 0,
-        deduct_shopping: 0,
         deduct_proportion_limit: 1,
         access: 'order',
         include_freight: 'true',
@@ -263,13 +256,6 @@ export default {
         if (this.form.isOpenDeductPoint) {
           if (this.form.deduct_point == '') {
             this.$message({ message: '请配置积分抵扣参数', type: 'error' })
-            return
-          }
-          if (this.form.deduct_limit == '' || this.form.deduct_limit == 0) {
-            this.form.deduct_limit = 9999999
-          }
-          if (this.form.deduct_limit < this.form.deduct_point) {
-            this.$message({ message: '抵扣积分限制不能小于抵扣积分比例', type: 'error' })
             return
           }
           if (this.form.deduct_proportion_limit == '' || this.form.deduct_proportion_limit == 0) {

@@ -155,6 +155,9 @@ export default {
             key: 'apply',
             type: 'button',
             buttonType: 'text',
+            visible: (row) => {
+              return row.status == 'apply'
+            },
             action: {
               handler: async ([row]) => {
                 try {

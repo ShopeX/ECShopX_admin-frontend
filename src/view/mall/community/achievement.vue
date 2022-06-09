@@ -64,11 +64,31 @@ export default {
         columns: [
           { name: '姓名', key: 'chief_name' },
           { name: '手机号', key: 'chief_mobile' },
-          { name: '可提现（¥）', key: 'cash_withdrawal_rebate' },
-          { name: '已提现（¥）', key: 'payed_rebate' },
-          { name: '申请提现（¥）', key: 'freeze_cash_withdrawal_rebate' },
-          { name: '未结算（¥）', key: 'no_close_rebate' },
-          { name: '佣金总额（¥）', key: 'rebate_total' }
+          {
+            name: '可提现（¥）',
+            key: 'cash_withdrawal_rebate',
+            render: (h, { row }) => h('span', {}, row.cash_withdrawal_rebate / 100)
+          },
+          {
+            name: '已提现（¥）',
+            key: 'payed_rebate',
+            render: (h, { row }) => h('span', {}, row.payed_rebate / 100)
+          },
+          {
+            name: '申请提现（¥）',
+            key: 'freeze_cash_withdrawal_rebate',
+            render: (h, { row }) => h('span', {}, row.freeze_cash_withdrawal_rebate / 100)
+          },
+          {
+            name: '未结算（¥）',
+            key: 'no_close_rebate',
+            render: (h, { row }) => h('span', {}, row.no_close_rebate / 100)
+          },
+          {
+            name: '佣金总额（¥）',
+            key: 'rebate_total',
+            render: (h, { row }) => h('span', {}, row.rebate_total / 100)
+          }
         ]
       })
     }

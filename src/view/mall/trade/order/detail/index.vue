@@ -689,7 +689,14 @@ export default {
         community_activity_trade_no,
         memberGrade,
         memberDiscount,
-        discount_info: discount_info.filter((item) => item.discount_fee > 0),
+        discount_info: discount_info
+          .filter((item) => item.discount_fee > 0)
+          .map((item) => {
+            return {
+              ...item,
+              discount_fee: item.discount_fee / 100
+            }
+          }),
         profit_type: PROFIT_TYPE[profit.profit_type],
         profit_totalPrice: `¥${profit.total_fee / 100}`,
         ...tradeInfo,

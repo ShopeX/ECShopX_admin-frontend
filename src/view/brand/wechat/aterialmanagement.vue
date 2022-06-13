@@ -17,7 +17,7 @@
       >
         <el-tab-pane
           label="本地图片"
-          name="qiniu"
+          name="local"
         >
           <!-- <div class="tip-info">
               <p>当前本地图片已存储数量为<span style="font-size:20px;padding-left: 5px;">555张</span></p>
@@ -124,7 +124,7 @@ export default {
   },
   data () {
     return {
-      activeName: 'qiniu',
+      activeName: 'local',
       stats: [],
       picStatus: false,
       newsStatus: true,
@@ -136,10 +136,11 @@ export default {
   },
   mounted () {
     if (this.$store.getters.login_type == 'distributor') {
-      this.activeName = 'qiniu'
+      this.activeName = 'local'
       this.handleClick()
     } else {
-      this.activeName = 'qiniu'
+      this.activeName = 'local'
+      this.handleClick()
     }
   },
   methods: {

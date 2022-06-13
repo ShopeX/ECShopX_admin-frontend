@@ -677,7 +677,6 @@ export default {
           item.star = Number(item.star)
         })
         this.total_count = Number(response.data.data.total_count)
-        debugger
         this.loading = false
       })
     }

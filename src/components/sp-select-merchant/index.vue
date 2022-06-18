@@ -49,10 +49,9 @@
         ref="popper"
         :class="['el-popper', 'el-cascader__dropdown']"
       >
-        <SpSelectShopPanel
+        <SpSelectMerchantPanel
           ref="panel"
           @visible-change="visibleChange"
-          @expand-change="expandChange"
           @change="onChange"
         />
       </div>
@@ -86,7 +85,7 @@ const PopperMixin = {
 }
 
 export default {
-  name: 'SpSelectShop',
+  name: 'SpSelectMerchant',
   directives: { Clickoutside },
   mixins: [PopperMixin],
   props: {
@@ -96,7 +95,7 @@ export default {
   },
   provide () {
     return {
-      selectShop: this
+      selectMerchant: this
     }
   },
   data () {
@@ -135,19 +134,13 @@ export default {
         this.dropDownVisible = visible
         if (visible) {
           this.$nextTick(() => {
-            console.log('updatePopper...')
-            setTimeout(() => {
-              this.updatePopper()
-            }, 20)
+            this.updatePopper()
             // this.panel.scrollIntoView();
           })
         }
         // input.$refs.input.setAttribute('aria-expanded', visible);
         // this.$emit('visible-change', visible);
       }
-    },
-    expandChange () {
-      this.$nextTick(this.updatePopper.bind(this))
     },
     handleDropdownLeave () {
       console.log('handleDropdownLeave...')

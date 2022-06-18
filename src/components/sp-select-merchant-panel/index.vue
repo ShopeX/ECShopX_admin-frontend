@@ -35,20 +35,9 @@
 <template>
   <div class="sp-select-shop-panel">
     <div class="filter-tools">
-      <el-cascader
-        ref="region"
-        v-model="region"
-        filterable
-        clearable
-        placeholder="选择地区筛选店铺"
-        :options="district"
-        :props="{ checkStrictly: true }"
-        @change="onChangeCascader"
-        @visible-change="visibleChange"
-      />
       <el-input
         v-model="keywords"
-        placeholder="请输入店铺名称搜索"
+        placeholder="请输入商户名称搜索"
         @change="fetch"
       />
       <el-button
@@ -76,8 +65,9 @@
         </el-table-column>
 
         <el-table-column
-          prop="name"
-          label="店铺名称"
+          prop="merchant_name"
+          label="商户名称"
+          width="500"
         />
       </el-table>
     </div>
@@ -111,9 +101,9 @@
 <script>
 import district from '@/common/district.json'
 export default {
-  name: 'SpSelectShopPanel',
+  name: 'SpSelectMerchantPanel',
   props: {},
-  inject: ['selectShop'],
+  inject: ['selectMerchant'],
   data () {
     return {
       district,
@@ -128,10 +118,8 @@ export default {
       radio: 0
     }
   },
-  async created () {
-    await this.fetch()
-    console.log(222)
-    this.$emit('expand-change')
+  created () {
+    this.fetch()
   },
   methods: {
     async fetch () {
@@ -141,26 +129,10 @@ export default {
         pageSize: this.pageSize
       }
       if (this.keywords) {
-        params['name'] = this.keywords
+        params['merchant_name'] = this.keywords
       }
 
-      const regionLabels = []
-      const getRegionLabel = (district, i) => {
-        if (this.region[i]) {
-          const fd = district.find((item) => item.value == this.region[i])
-          regionLabels.push(fd.label)
-          if (fd.children) {
-            getRegionLabel(fd.children, ++i)
-          }
-        }
-      }
-      getRegionLabel(this.district, 0)
-      const [province = '', city = '', area = ''] = regionLabels
-      params['province'] = province
-      params['city'] = city
-      params['area'] = area
-
-      const { total_count, list } = await this.$api.marketing.getDistributorList(params)
+      const { total_count, list } = await this.$api.marketing.getMerchantsList(params)
       this.list = list
       this.total = total_count
       this.loading = false
@@ -174,20 +146,20 @@ export default {
       this.pageIndex = pageIndex
       this.fetch()
     },
-    onRowClick ({ distributor_id, name }) {
+    onRowClick ({ id, merchant_name }) {
       let resValue = {
-        name,
-        value: distributor_id
+        name: merchant_name,
+        value: id
       }
-      if (this.selectShop.selectValue && this.selectShop.selectValue.value == distributor_id) {
+      if (this.selectMerchant.selectValue && this.selectMerchant.selectValue.value == id) {
         resValue = null
       }
       this.$emit('change', resValue)
     },
-    getRadioValue ({ distributor_id }) {
-      if (!this.selectShop.selectValue) {
+    getRadioValue ({ id }) {
+      if (!this.selectMerchant.selectValue) {
         return false
-      } else if (this.selectShop.selectValue.value == distributor_id) {
+      } else if (this.selectMerchant.selectValue.value == id) {
         return true
       } else {
         return false
@@ -196,9 +168,6 @@ export default {
     },
     async onChangeCascader () {
       this.fetch()
-    },
-    visibleChange (visible) {
-      this.$emit('visible-change', visible)
     }
   }
 }

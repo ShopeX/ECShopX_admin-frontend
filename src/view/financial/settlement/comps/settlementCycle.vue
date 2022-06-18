@@ -5,7 +5,7 @@
   }
   .cycle-input {
     margin-right: 10px;
-    width: 140px;
+    width: 160px;
   }
 }
 </style>
@@ -16,12 +16,15 @@
       v-model="cycle"
       class="cycle-input"
       type="text"
+      clearable
       placeholder="请输入结算周期数"
+      @change="onChange"
     />
     <el-select
       v-model="unit"
       clearable
       placeholder="请选择"
+      @change="onChange"
     >
       <el-option
         v-for="item in units"
@@ -37,18 +40,34 @@
 <script>
 export default {
   name: '',
+  props: ['value'],
   data () {
+    const { cycle = '', unit = '' } = this.value
     return {
       units: [
         { label: '天', value: 'day' },
         { label: '周', value: 'week' },
         { label: '月', value: 'month' }
       ],
-      cycle: '',
-      unit: ''
+      cycle,
+      unit
+    }
+  },
+  watch: {
+    value (newVal, oldVal) {
+      const { cycle = '', unit = '' } = newVal
+      this.cycle = cycle
+      this.unit = unit
     }
   },
   created () {},
-  methods: {}
+  methods: {
+    onChange (e) {
+      this.$emit('input', {
+        cycle: this.cycle,
+        unit: this.unit
+      })
+    }
+  }
 }
 </script>

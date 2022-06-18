@@ -82,12 +82,13 @@ export default {
     {
       path: 'settlement/summary',
       name: `结算汇总`,
-      component: () => import('@/view/financial/settlement/summary')
-    },
-    {
-      path: 'settlement/detailed',
-      name: `结算明细`,
-      component: () => import('@/view/financial/settlement/detailed')
+      component: () => import('@/view/financial/settlement/summary'),
+      children: [
+        {
+          path: 'detail/:id?',
+          component: () => import('@/view/financial/settlement/detailed')
+        }
+      ]
     },
     {
       path: 'settlement/configure',

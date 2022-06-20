@@ -102,7 +102,10 @@
                       {{ item.item_name }}
                     </div>
                   </el-form-item>
-                  <el-form-item label="适用店铺">
+                  <el-form-item
+                    v-if="scope.row.source_id == '0'"
+                    label="适用店铺"
+                  >
                     <span v-if="scope.row.use_shop">
                       <div
                         v-for="(item, index) in scope.row.shops"
@@ -125,6 +128,10 @@
               prop="marketing_name"
               min-width="150"
               label="促销名称"
+            />
+            <el-table-column
+              prop="source_name"
+              label="店铺"
             />
             <el-table-column
               label="规则"
@@ -169,8 +176,7 @@
             >
               <template slot-scope="scope">
                 <div>{{ scope.row.start_date }}</div>
-                <div>~</div>
-                <div>{{ scope.row.end_date }}</div>
+                <div>~{{ scope.row.end_date }}</div>
               </template>
             </el-table-column>
             <el-table-column
@@ -196,7 +202,7 @@
                     查看商品
                   </el-button>
                   <el-button
-                    v-if="scope.row.status !== 'end'"
+                    v-if="endActionVisible(scope.row)"
                     type="text"
                     @click="updateStatusCommunityAction(scope.row)"
                   >
@@ -409,6 +415,16 @@ export default {
     },
     dateStrToTimeStamp (str) {
       return Date.parse(new Date(str)) / 1000
+    },
+    endActionVisible ({ status, source_id }) {
+      if (status == 'end') {
+        if (this.IS_ADMIN && source_id == '0') {
+          return true
+        } else {
+          return false
+        }
+      }
+      return false
     },
     getParams () {
       const time = {}

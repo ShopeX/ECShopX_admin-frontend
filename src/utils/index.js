@@ -33,6 +33,18 @@ export const VERSION_B2C = store.getters.versionMode == 'b2c'
 // 内购
 export const VERSION_IN_PURCHASE = store.getters.versionMode == 'in_purchase'
 
+// 平台端
+export const IS_ADMIN = (() => {
+  const login_type = store.getters.login_type
+  return login_type == 'admin' || login_type == 'staff'
+})()
+
+// 店铺端
+export const IS_DISTRIBUTOR = (() => {
+  const login_type = store.getters.login_type
+  return login_type == 'distributor'
+})()
+
 export function isInSalesCenter () {
   if (window.self != window.top && window.self.location.href.indexOf('iframeLogin') < 0) {
     return true

@@ -12,7 +12,7 @@
       <el-form-item
         label="名称"
         prop="package_name"
-        :rules="{ required: true, message: '促销促销', trigger: 'blur' }"
+        :rules="{ required: true, message: '促销名称不能为空', trigger: 'blur' }"
       >
         <el-col :span="20">
           <el-input

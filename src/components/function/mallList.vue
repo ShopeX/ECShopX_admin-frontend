@@ -197,7 +197,7 @@
             >废弃</span>
           </div>
           <div
-            v-if="relStore.id == '0' && !VERSION_B2C"
+            v-if="relStore.id == '0' && !VERSION_B2C && !VERSION_PLATFORM"
             class="synchronize-btn"
             @click="synchronizeTemplateToShop(index)"
           >
@@ -1049,7 +1049,7 @@ export default {
     margin-bottom: 20px;
     border: 1px solid #eee;
     color: #606266;
-    height: 442px;
+    // height: 442px;
     &.add-btn {
       display: flex;
       justify-content: center;

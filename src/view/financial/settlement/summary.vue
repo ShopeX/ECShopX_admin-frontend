@@ -158,7 +158,8 @@ export default {
       },
       statusOption: [
         { title: '已结算', value: 'done' },
-        { title: '待结算', value: 'ready' }
+        { title: '待平台结算', value: 'confirm' },
+        { title: '待商家确认', value: 'ready' }
       ],
       feeDone: 0,
       feeReady: 0,
@@ -186,6 +187,15 @@ export default {
             key: 'settlement',
             type: 'button',
             buttonType: 'text',
+            visible: (row) => {
+              if (this.IS_ADMIN && row.statement_status == 'confirm') {
+                return true
+              }
+              if (this.IS_DISTRIBUTOR && row.statement_status == 'ready') {
+                return true
+              }
+              return false
+            },
             action: {
               handler: async ([row]) => {
                 await this.$confirm(`结算单号【${row.statement_no}】，确认是否结算？`, '提示', {
@@ -268,6 +278,7 @@ export default {
           {
             name: '结算状态',
             key: 'statement_status',
+            width: 120,
             render: (h, { row }) => h('span', {}, this.getStateMentStatus(row.statement_status))
           }
         ]
@@ -296,7 +307,9 @@ export default {
     },
     getStateMentStatus (status) {
       if (status == 'ready') {
-        return '待结算'
+        return '待商家确认'
+      } else if (status == 'confirm') {
+        return '待平台结算'
       } else if (status == 'done') {
         return '已结算'
       }

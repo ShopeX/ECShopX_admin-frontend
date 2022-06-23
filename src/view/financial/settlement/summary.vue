@@ -226,6 +226,12 @@ export default {
             key: 'order_num'
           },
           {
+            name: '实付金额（¥）',
+            key: 'total_fee',
+            width: 120,
+            render: (h, { row }) => h('span', {}, row.total_fee / 100)
+          },
+          {
             name: '运费（¥）',
             key: 'freight_fee',
             width: 100,
@@ -236,12 +242,6 @@ export default {
             key: 'intra_city_freight_fee',
             width: 100,
             render: (h, { row }) => h('span', {}, row.intra_city_freight_fee / 100)
-          },
-          {
-            name: '实付金额（¥）',
-            key: 'total_fee',
-            width: 120,
-            render: (h, { row }) => h('span', {}, row.total_fee / 100)
           },
           // {
           //   name: '分销佣金（¥）',

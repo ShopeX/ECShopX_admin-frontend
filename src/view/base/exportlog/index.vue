@@ -53,6 +53,10 @@
           label="结算单"
           name="statements"
         />
+        <el-tab-pane
+          label="结算单明细"
+          name="statement_details"
+        />
       </template>
       <template v-else>
         <el-tab-pane
@@ -174,6 +178,10 @@
         <el-tab-pane
           label="结算单"
           name="statements"
+        />
+        <el-tab-pane
+          label="结算单明细"
+          name="statement_details"
         />
       </template>
 

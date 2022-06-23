@@ -190,7 +190,7 @@
         </el-form-item>
         <el-form-item
           v-if="useShopVisible()"
-          label="指定店铺1"
+          label="指定店铺"
         >
           <el-radio
             v-model="form.use_shop"
@@ -431,7 +431,10 @@
             />
           </el-col>
         </el-form-item>
-        <el-form-item label="适用会员">
+        <el-form-item
+          v-if="IS_ADMIN && (this.form.source_id == '' || this.form.source_id == '0')"
+          label="适用会员"
+        >
           <el-checkbox-group v-model="validGrade">
             <el-checkbox
               v-for="grade in memberGrade"
@@ -552,7 +555,8 @@ export default {
         brand_ids: [],
         activity_background: '',
         navbar_color: '',
-        timeBackgroundColor: ''
+        timeBackgroundColor: '',
+        source_id: ''
       },
       vipGrade: [],
       memberGrade: [],
@@ -651,19 +655,35 @@ export default {
   },
   methods: {
     useShopVisible () {
-      if (this.IS_ADMIN && this.form.source_id == '0') {
-        return true
+      const { marketing_id } = this.$route.params
+      if (!marketing_id) {
+        if (this.IS_ADMIN) {
+          return true
+        } else {
+          return false
+        }
+      } else {
+        if (this.IS_ADMIN && this.form.source_id == '0') {
+          return true
+        } else {
+          return false
+        }
       }
-      return false
     },
     btnSaveVisible () {
-      if (this.IS_ADMIN && this.form.source_id == '0') {
+      const { marketing_id } = this.$route.params
+      // 新增
+      if (!marketing_id) {
         return true
+      } else {
+        if (this.IS_ADMIN && this.form.source_id == '0') {
+          return true
+        } else if (this.IS_DISTRIBUTOR && this.form.source_id != '0') {
+          return true
+        } else {
+          return false
+        }
       }
-      if (this.IS_DISTRIBUTOR && this.form.source_id != '0') {
-        return true
-      }
-      return false
     },
     addRules () {
       var rule = { price: '', gift_item: [] }

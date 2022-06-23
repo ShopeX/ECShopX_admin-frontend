@@ -1055,6 +1055,7 @@ export default {
       justify-content: center;
       align-items: center;
       background: #f2f2f2;
+      height: calc(100% - 20px);
       cursor: pointer;
       .add-img {
         width: 60px;

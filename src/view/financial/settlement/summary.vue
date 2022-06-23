@@ -274,7 +274,18 @@ export default {
               )
             }
           },
-          { name: '结算时间', key: 'statement_time' },
+          {
+            name: '结算时间',
+            key: 'statement_time',
+            width: 160,
+            formatter: (row, column) => {
+              if (column.statement_time) {
+                return (
+                  <div>{moment(column.statement_time * 1000).format('YYYY-MM-DD HH:mm:ss')}</div>
+                )
+              }
+            }
+          },
           {
             name: '结算状态',
             key: 'statement_status',

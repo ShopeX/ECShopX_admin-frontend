@@ -322,7 +322,7 @@
               <template slot-scope="scope">
                 <div
                   v-if=" scope.row.authorizer_appid"
-                  @click="downloadWxaCode(scope.row)"
+                  @click="downloadOffiaccountCode(scope.row.authorizer_appid)"
                 >
                   <img src="@/assets/img/code.png" alt="" />
                 </div>
@@ -629,7 +629,7 @@ import {
   saveTemplate,
   addWxapp
 } from '@/api/wxa'
-import { getWechatPreAuthUrl, getAuthorizerInfo } from '@/api/wechat'
+import { getWechatPreAuthUrl, getAuthorizerInfo, getOffiaccountCodeForever } from '@/api/wechat'
 import mixin, { pageMixin } from '@/mixins'
 export default {
   components: {
@@ -786,8 +786,8 @@ export default {
       }
       this.setdirectLinkFormLabel(bind_type)
     },
-    handleSubmitWxapp() {
-      this.directLinkForm.bind_type = 'offiaccount'
+    handleSubmitWxapp(bind_type) {
+      this.directLinkForm.bind_type = bind_type
       addWxapp(this.directLinkForm).then((response) => {
         this.$message({
           message: '修改成功',
@@ -877,6 +877,20 @@ export default {
         this.wxaCodeImage = response.data.data.base64Image
         this.wxaCodeVisible = true
       })
+    },
+    downloadOffiaccountCode(authorizer_appid) {
+      this.getwxcodeloading = true
+      this.getwxcodeTitle = '服务号二维码'
+      let params = { authorizer_appid: authorizer_appid, is_base64: true }
+      getOffiaccountCodeForever(params)
+        .then((response) => {
+          this.wxaCodeImage = response.data.data.base64Image
+          this.wxaCodeVisible = true
+          this.getwxcodeloading = false
+        })
+        .catch((error) => {
+          this.getwxcodeloading = false
+        })
     },
     config() {
       this.wxaConfigVisible = true

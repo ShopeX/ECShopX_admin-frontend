@@ -208,10 +208,7 @@
       <!--<el-form-item label="组合价">-->
       <!--{{form.new_price}}元-->
       <!--</el-form-item>-->
-      <el-form-item
-        v-if="IS_ADMIN && (this.form.source_id == '' || this.form.source_id == '0')"
-        label="适用会员"
-      >
+      <el-form-item label="适用会员">
         <el-checkbox-group v-model="validGrade">
           <el-checkbox
             v-for="grade in memberGrade"

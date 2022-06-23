@@ -1728,6 +1728,12 @@ export default {
           }
         }
         window.open(this.url, '_blank')
+      } else {
+        this.$message({
+          message: '请确认已经配置好第三方开放平台',
+          type: 'error',
+          duration: 5 * 1000
+        })
       }
     },
     accountactivate () {

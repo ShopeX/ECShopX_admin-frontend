@@ -158,8 +158,8 @@ export default {
       },
       statusOption: [
         { title: '已结算', value: 'done' },
-        { title: '待平台结算', value: 'confirm' },
-        { title: '待商家确认', value: 'ready' }
+        { title: '待平台结算', value: 'confirmed' },
+        { title: '待店铺确认', value: 'ready' }
       ],
       feeDone: 0,
       feeReady: 0,
@@ -183,12 +183,12 @@ export default {
             }
           },
           {
-            name: '结算',
+            name: this.IS_ADMIN ? '结算' : '确认',
             key: 'settlement',
             type: 'button',
             buttonType: 'text',
             visible: (row) => {
-              if (this.IS_ADMIN && row.statement_status == 'confirm') {
+              if (this.IS_ADMIN && row.statement_status == 'confirmed') {
                 return true
               }
               if (this.IS_DISTRIBUTOR && row.statement_status == 'ready') {
@@ -318,8 +318,8 @@ export default {
     },
     getStateMentStatus (status) {
       if (status == 'ready') {
-        return '待商家确认'
-      } else if (status == 'confirm') {
+        return '待店铺确认'
+      } else if (status == 'confirmed') {
         return '待平台结算'
       } else if (status == 'done') {
         return '已结算'

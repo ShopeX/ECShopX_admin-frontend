@@ -77,7 +77,11 @@ export default {
                   formQuery['end_time'] = moment(formQuery.cycleTime[1]).unix()
                   delete formQuery.cycleTime
                 }
-                await this.$api.financial.exportData(formQuery)
+                await this.$api.financial.exportDetialData({
+                  statement_id: this.id,
+                  start_time: formQuery.start_time,
+                  end_time: formQuery.end_time
+                })
                 this.$message.success('导出成功')
               }
             }

@@ -52,3 +52,12 @@ export function exportData (params) {
     params
   })
 }
+
+// 导出明细
+export function exportDetialData (params) {
+  return fetch({
+    url: `/statement/detail/exoprt`,
+    method: 'post',
+    params
+  })
+}

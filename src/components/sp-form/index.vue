@@ -2,6 +2,11 @@
 .sp-form {
   .el-form-item {
     margin-bottom: 26px;
+    &__error {
+      position: absolute !important;
+      top: 100% !important;
+      left: 0 !important;
+    }
   }
   &.min {
     .el-form-item {

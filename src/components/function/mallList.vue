@@ -4,7 +4,10 @@
       v-if="relStore.id == '0'"
       class="shop-header"
     >
-      <div class="shop-left" v-if="!VERSION_B2C">
+      <div
+        v-if="!VERSION_B2C"
+        class="shop-left"
+      >
         <span class="text">小程序模版呈现：</span>
         <div class="option-item">
           <span class="option-item_text">总部首页</span>
@@ -29,8 +32,14 @@
             @change="changeShop('shop')"
           />
         </div>
-        <span class="text">模版同步设置：</span>
-        <div class="option-item">
+        <span
+          v-if="!VERSION_PLATFORM"
+          class="text"
+        >模版同步设置：</span>
+        <div
+          v-if="!VERSION_PLATFORM"
+          class="option-item"
+        >
           <span class="option-item_text">同步并启用</span>
           <el-switch
             v-model="is_enforce_sync"
@@ -188,7 +197,7 @@
             >废弃</span>
           </div>
           <div
-            v-if="relStore.id == '0' && !VERSION_B2C"
+            v-if="relStore.id == '0' && !VERSION_B2C && !VERSION_PLATFORM"
             class="synchronize-btn"
             @click="synchronizeTemplateToShop(index)"
           >
@@ -736,11 +745,13 @@ export default {
           confirmButtonText: '确定',
           cancelButtonText: '取消',
           type: 'warning'
-        }).then(() => {
-          this.updateLocation(val)
-        }).catch(() => {
-          this.is_open_wechatapp_location = 1
         })
+          .then(() => {
+            this.updateLocation(val)
+          })
+          .catch(() => {
+            this.is_open_wechatapp_location = 1
+          })
         return
       }
       this.updateLocation(val)
@@ -1038,12 +1049,13 @@ export default {
     margin-bottom: 20px;
     border: 1px solid #eee;
     color: #606266;
-    height: 442px;
+    // height: 442px;
     &.add-btn {
       display: flex;
       justify-content: center;
       align-items: center;
       background: #f2f2f2;
+      height: calc(100% - 20px);
       cursor: pointer;
       .add-img {
         width: 60px;

@@ -578,6 +578,7 @@ export default {
         })
         cacheItems[itemSpecs.join('_')] = sitem
       })
+      console.log('_specItmes:', _specItmes)
       console.log('cacheItems:', cacheItems)
       this.skuData.specItems = _specItmes.map((item) => {
         // console.log('item:', item)

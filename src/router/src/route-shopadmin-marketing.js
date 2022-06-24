@@ -66,6 +66,28 @@ export default {
       ]
     },
     {
+      path: 'Marketingspluspricebuy',
+      name: `加价购管理`,
+      component: () => import('@/view/member/promotions/pluspricebuy/list'),
+      children: [
+        {
+          path: 'editor/:marketing_id?',
+          component: () => import('@/view/member/promotions/pluspricebuy/add')
+        }
+      ]
+    },
+    {
+      path: 'marketingpackage',
+      name: `组合商品管理`,
+      component: () => import('@/view/member/promotions/package/list'),
+      children: [
+        {
+          path: 'editor/:package_id?',
+          component: () => import('@/view/member/promotions/package/add')
+        }
+      ]
+    },
+    {
       path: 'marketing/limitedtimesale',
       name: `限时特惠`,
       component: () => import('@/view/member/promotions/limitedtimesale/list'),
@@ -73,6 +95,28 @@ export default {
         {
           path: 'editor/:seckill_id?',
           component: () => import('@/view/member/promotions/limitedtimesale/add')
+        }
+      ]
+    },
+    {
+      path: 'goodslimit',
+      name: `商品限购`,
+      component: () => import('@/view/member/promotions/goodslimit/list'),
+      children: [
+        {
+          path: 'editor/:limit_id?',
+          component: () => import('@/view/member/promotions/goodslimit/add')
+        }
+      ]
+    },
+    {
+      path: 'marketingseckill',
+      name: `限时秒杀`,
+      component: () => import('@/view/member/promotions/seckill/list'),
+      children: [
+        {
+          path: 'editor/:seckill_id?',
+          component: () => import('@/view/member/promotions/seckill/add')
         }
       ]
     },

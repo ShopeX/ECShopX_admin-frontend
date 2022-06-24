@@ -52,6 +52,7 @@
         <SpSelectShopPanel
           ref="panel"
           @visible-change="visibleChange"
+          @expand-change="expandChange"
           @change="onChange"
         />
       </div>
@@ -134,13 +135,19 @@ export default {
         this.dropDownVisible = visible
         if (visible) {
           this.$nextTick(() => {
-            this.updatePopper()
+            console.log('updatePopper...')
+            setTimeout(() => {
+              this.updatePopper()
+            }, 20)
             // this.panel.scrollIntoView();
           })
         }
         // input.$refs.input.setAttribute('aria-expanded', visible);
         // this.$emit('visible-change', visible);
       }
+    },
+    expandChange () {
+      this.$nextTick(this.updatePopper.bind(this))
     },
     handleDropdownLeave () {
       console.log('handleDropdownLeave...')
@@ -164,6 +171,7 @@ export default {
     },
     onChange (obj) {
       this.selectValue = obj
+      this.toggleDropDownVisible(false)
       this.$emit('input', obj ? obj.value : '')
     },
     handleClear () {

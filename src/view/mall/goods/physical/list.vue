@@ -433,7 +433,7 @@
             />
             <el-table-column
               prop="market_price"
-              label="原价（¥）"
+              label="市场价（¥）"
               width="100"
             />
             <el-table-column

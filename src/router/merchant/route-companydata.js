@@ -187,6 +187,17 @@ export default {
         import(
           /* webpackChunkName: "companydata-guide-qywx-addressBook" */ '@/view/base/setting/addressBook/index'
         )
+    },
+    {
+      path: 'financial/settlement/summary',
+      name: `结算汇总`,
+      component: () => import('@/view/financial/settlement/summary'),
+      children: [
+        {
+          path: 'detail/:id?',
+          component: () => import('@/view/financial/settlement/detailed')
+        }
+      ]
     }
   ]
 }

@@ -55,7 +55,7 @@
               @closeImgDialog="closeImgDialog"
             />
             <p class="content-center">
-              卡封面（建议尺寸：600px * 350px）
+              卡封面（建议尺寸：600px * 375px）
             </p>
           </div>
           <div class="item-content f_l">

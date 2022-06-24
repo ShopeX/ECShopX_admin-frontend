@@ -3,10 +3,8 @@
     <div v-if="$route.path.indexOf('policy') === -1">
       <el-tabs v-model="activeName" type="card" @tab-click="handleClick">
         <el-tab-pane
-          v-for="(item, index) in tabList"
-          :key="index"
-          :label="item.name"
-          :name="item.activeName"
+          label="微信小程序"
+          name="miniprogram"
         >
           <el-table
             v-loading="loading"
@@ -202,7 +200,7 @@
               </template>
             </el-table-column>
             <el-table-column prop="key_name" label="模版英文名" width="140" />
-            <el-table-column label="绑定操作" width="120" fixed="right">
+            <el-table-column label="绑定操作" fixed="right">
               <template slot-scope="scope">
                 <div v-if="scope.row.authorizer && scope.row.authorizer.authorizer_appid">
                   <el-button-group>
@@ -211,7 +209,7 @@
                       size="mini"
                       type="text"
                       plain
-                      @click="bindUpdateWxapp(scope.row)"
+                      @click="bindUpdateWxapp('miniprogram', scope.row)"
                     >
                       更换绑定
                     </el-button>
@@ -239,7 +237,7 @@
                     <el-button size="mini" type="text" plain @click="handleBind(scope.row)">
                       授权第三方
                     </el-button>
-                    <el-button size="mini" type="text" plain @click="bindWxapp(scope.row)">
+                    <el-button size="mini" type="text" plain @click="bindWxapp('miniprogram', scope.row)">
                       添加直连小程序
                     </el-button>
                   </el-button-group>
@@ -308,38 +306,107 @@
             />
           </div>
         </el-tab-pane>
+        <el-tab-pane
+          label="微信服务号"
+          name="offiaccount"
+        >
+          <el-table
+            v-loading="loading"
+            :data="authorizerData"
+            style="width: 100%"
+            :height="wheight - 200"
+          >
+            <el-table-column prop="nick_name" label="公众号昵称" width="180" />
+            <el-table-column prop="authorizer_appid" label="公众号APPID" width="180" />
+            <el-table-column label="二维码" width="100">
+              <template slot-scope="scope">
+                <div
+                  v-if=" scope.row.authorizer_appid"
+                  @click="downloadOffiaccountCode(scope.row.authorizer_appid)"
+                >
+                  <img src="@/assets/img/code.png" alt="" />
+                </div>
+              </template>
+            </el-table-column>
+            <el-table-column label="绑定状态" width="80">
+              <template slot-scope="scope">
+                <span v-if="scope.row.authorizer_appid">
+                  <el-tag v-if="scope.row.is_direct == 1" type="success" size="mini">已绑定直连</el-tag>
+                  <el-tag v-if="scope.row.is_direct == 0" type="success" size="mini">已绑第三方</el-tag>
+                </span>
+                <el-tag v-else type="gray" size="mini"> 未绑定 </el-tag>
+              </template>
+            </el-table-column>
+            <el-table-column label="绑定操作" fixed="right">
+              <template slot-scope="scope">
+                <div v-if="scope.row.authorizer_appid">
+                  <el-button-group>
+                    <el-button
+                      v-if="scope.row.is_direct == 1"
+                      size="mini"
+                      type="text"
+                      plain
+                      @click="bindUpdateWxapp('offiaccount', scope.row)"
+                    >
+                      更换绑定
+                    </el-button>
+                    <el-button
+                      v-if="scope.row.is_direct == 0"
+                      size="mini"
+                      type="text"
+                      plain
+                      @click="handleBindOffiaccount"
+                    >
+                      更新授权
+                    </el-button>
+                  </el-button-group>
+                </div>
+                <div v-else>
+                  <el-button-group>
+                    <el-button size="mini" type="text" plain @click="handleBindOffiaccount">
+                      授权第三方
+                    </el-button>
+                    <el-button size="mini" type="text" plain @click="bindWxapp('offiaccount', scope.row)">
+                      添加直连公众号
+                    </el-button>
+                  </el-button-group>
+                </div>
+              </template>
+            </el-table-column>
+          </el-table>
+        </el-tab-pane>
       </el-tabs>
     </div>
     <router-view />
 
-    <el-drawer :visible.sync="direct_link_applet" :title="'添加直连小程序'" size="40%">
+    <el-drawer :visible.sync="direct_link_applet" :title="directLinkFormLabel.title" size="40%">
       <div class="drawer-content">
         <el-form>
-          <el-form-item label="appid：">
+          <el-form-item :label="directLinkFormLabel.appid[0]">
             <el-col :span="10">
-              <el-input v-model="directLinkForm.authorizer_appid" placeholder="请输入小程序appid" />
+              <el-input v-model="directLinkForm.authorizer_appid" :placeholder="directLinkFormLabel.appid[1]" />
             </el-col>
           </el-form-item>
-          <el-form-item label="appsecret：">
+          <el-form-item :label="directLinkFormLabel.appsecret[0]">
             <el-col :span="10">
               <el-input
                 v-model="directLinkForm.authorizer_appsecret"
-                placeholder="请输入小程序appsecret"
+                :placeholder="directLinkFormLabel.appsecret[1]"
               />
             </el-col>
           </el-form-item>
-          <el-form-item label="小程序名称：">
+          <el-form-item :label="directLinkFormLabel.nick_name[0]">
             <el-col :span="10">
-              <el-input v-model="directLinkForm.nick_name" placeholder="请输入小程序名称" />
+              <el-input v-model="directLinkForm.nick_name" :placeholder="directLinkFormLabel.nick_name[1]" />
             </el-col>
           </el-form-item>
-          <el-form-item label="小程序描述：">
+          <el-form-item :label="directLinkFormLabel.signature[0]">
             <el-col :span="10">
-              <el-input v-model="directLinkForm.signature" placeholder="请输入小程序描述" />
+              <el-input v-model="directLinkForm.signature" :placeholder="directLinkFormLabel.signature[1]" />
             </el-col>
           </el-form-item>
           <el-form-item>
-            <el-button type="primary" @click="handleSubmitWxapp"> 保 存 </el-button>
+            <el-button type="primary" @click="handleSubmitWxapp(directLinkForm.bind_type)"> 保 存 </el-button>
           </el-form-item>
         </el-form>
       </div>
@@ -562,7 +629,7 @@ import {
   saveTemplate,
   addWxapp
 } from '@/api/wxa'
-import { getWechatPreAuthUrl } from '@/api/wechat'
+import { getWechatPreAuthUrl, getAuthorizerInfo, getOffiaccountCodeForever } from '@/api/wechat'
 import mixin, { pageMixin } from '@/mixins'
 export default {
   components: {
@@ -576,7 +643,7 @@ export default {
   mixins: [mixin, pageMixin],
   data() {
     return {
-      activeName: 'wechat',
+      activeName: 'miniprogram',
       loading: false,
       pageLimit: 10, 
       direct_link_applet: false,
@@ -585,11 +652,19 @@ export default {
       authorizerUrl: '',
       detail: {},
       directLinkForm: {
+        bind_type: 'miniprogram',
         template_name: '',
         authorizer_appid: '',
         authorizer_appsecret: '',
         signature: '',
         nick_name: ''
+      },
+      directLinkFormLabel: {
+        title: '配置直连小程序',
+        appid: {0: '小程序APPID：', 1: '请输入小程序appid'},
+        appsecret: {0: '小程序APPSECRET：', 1: '请输入小程序appsecret'},
+        signature: {0: '小程序描述：', 1: '请输入小程序描述'},
+        nick_name: {0: '小程序名称：', 1: '请输入小程序名称'}
       },
       getwxcodeloading: false,
       getwxcodeTitle: '',
@@ -641,7 +716,23 @@ export default {
         webviewdomain: ''
       },
       submitWeappForm: {},
-      tabList: [{ name: '微信小程序', activeName: 'wechat' }]
+      tabList: [{ name: '微信小程序', activeName: 'miniprogram' },{ name: '微信服务号', activeName: 'offiaccount' }],
+      authorizerData: [{
+        name: "-",
+        alias: "-",
+        authorizer_appid: "",
+        business_info: [],
+        func_info: "-",
+        head_img: "-",
+        miniprograminfo: [],
+        nick_name: "服务号",
+        principal_name: "-",
+        qrcode_url: "-",
+        service_type_info: 2,
+        signature: "服务号",
+        user_name: "-",
+        verify_type_info: -1
+      }]
     }
   },
   computed: {
@@ -660,27 +751,43 @@ export default {
       this.page.total_count = total_count
       this.loading = false 
     },  
-    bindWxapp(data) {
+    bindWxapp(bind_type, data) {
       this.direct_link_applet = true
       this.directLinkForm = {
+        bind_type: bind_type,
         template_name: data.key_name,
         authorizer_appid: '',
         authorizer_appsecret: '',
         signature: '',
         nick_name: ''
       }
+      this.setdirectLinkFormLabel(bind_type)
     },
-    bindUpdateWxapp(data) {
+    bindUpdateWxapp(bind_type, data) {
       this.direct_link_applet = true
-      this.directLinkForm = {
-        template_name: data.key_name,
-        authorizer_appid: data.authorizer.authorizer_appid,
-        authorizer_appsecret: data.authorizer.authorizer_appsecret,
-        signature: data.authorizer.signature,
-        nick_name: data.authorizer.nick_name
+      if (bind_type == 'miniprogram') {
+        this.directLinkForm = {
+          bind_type: bind_type,
+          template_name: data.key_name,
+          authorizer_appid: data.authorizer.authorizer_appid,
+          authorizer_appsecret: data.authorizer.authorizer_appsecret,
+          signature: data.authorizer.signature,
+          nick_name: data.authorizer.nick_name
+        }
       }
+      if (bind_type == 'offiaccount') {
+        this.directLinkForm = {
+          bind_type: bind_type,
+          authorizer_appid: data.authorizer_appid,
+          authorizer_appsecret: data.authorizer_appsecret,
+          signature: data.signature,
+          nick_name: data.nick_name
+        }
+      }
+      this.setdirectLinkFormLabel(bind_type)
     },
-    handleSubmitWxapp() {
+    handleSubmitWxapp(bind_type) {
+      this.directLinkForm.bind_type = bind_type
       addWxapp(this.directLinkForm).then((response) => {
         this.$message({
           message: '修改成功',
@@ -691,6 +798,17 @@ export default {
         this.direct_link_applet = false
         this.getDataList()
       })
+    },
+    setdirectLinkFormLabel (bind_type) {
+      if (bind_type == 'offiaccount') {
+        this.directLinkFormLabel = {
+          title: '配置直连公众号',
+          appid: {0: '公众号APPID：', 1: '请输入公众号appid'},
+          appsecret: {0: '公众号APPSECRET：', 1: '请输入公众号appsecret'},
+          signature: {0: '公众号描述：', 1: '请输入公众号描述'},
+          nick_name: {0: '公众号名称：', 1: '请输入公众号名称'}
+        }
+      }
     },
     handleBind({ key_name }) {
       let params = {
@@ -706,6 +824,23 @@ export default {
         }
         window.open(this.authorizerUrl, '_self')
       })
+    },
+    handleBindOffiaccount () {
+      if (this.url) {
+        var metadata = document.getElementsByTagName('meta')
+        for (var i = 0; i < metadata.length; i++) {
+          if (metadata[i]['name'] == 'referrer') {
+            metadata[i]['content'] = 'default'
+          }
+        }
+        window.open(this.url, '_blank')
+      } else {
+        this.$message({
+          message: '请确认已经配置好第三方开放平台',
+          type: 'error',
+          duration: 5 * 1000
+        })
+      }
     },
     showBindDetail(data) {
       this.applet_detail = true
@@ -742,6 +877,20 @@ export default {
         this.wxaCodeImage = response.data.data.base64Image
         this.wxaCodeVisible = true
       })
+    },
+    downloadOffiaccountCode(authorizer_appid) {
+      this.getwxcodeloading = true
+      this.getwxcodeTitle = '服务号二维码'
+      let params = { authorizer_appid: authorizer_appid, is_base64: true }
+      getOffiaccountCodeForever(params)
+        .then((response) => {
+          this.wxaCodeImage = response.data.data.base64Image
+          this.wxaCodeVisible = true
+          this.getwxcodeloading = false
+        })
+        .catch((error) => {
+          this.getwxcodeloading = false
+        })
     },
     config() {
       this.wxaConfigVisible = true
@@ -946,6 +1095,27 @@ export default {
           this.getWxa()
         })
       }
+    },
+    handleClick() {
+      if (this.activeName === 'miniprogram') {
+      } else if (this.activeName === 'offiaccount') {
+        this.getUrl()
+        getAuthorizerInfo().then((response) => {
+          if (response.data.data.authorizer_appid) {
+            this.authorizerData = []
+            this.authorizerData.push(response.data.data)
+          }
+          console.log(this.authorizerData)
+        })
+      }
+    },
+    getUrl: function () { // 获取服务号授权url
+      let params = {
+        callback_url: this.wxAuthCallbackUrl + 'auth/woa'
+      }
+      getWechatPreAuthUrl(params).then((response) => {
+        this.url = response.data.data.url
+      })
     }
   }
 }

@@ -39,6 +39,10 @@
               label="组合促销名称"
             />
             <el-table-column
+              prop="source_name"
+              label="店铺"
+            />
+            <el-table-column
               label="开始时间"
               width="200"
             >
@@ -71,7 +75,7 @@
               <template slot-scope="scope">
                 <div class="operating-icons">
                   <el-button
-                    v-if="scope.row.status == 'ongoing'"
+                    v-if="cancelActionVisible(scope.row)"
                     type="text"
                     @click="closePackagePromotion(scope.row)"
                   >
@@ -84,7 +88,7 @@
                     查看
                   </el-button>
                   <el-button
-                    v-if="scope.row.status == 'waiting'"
+                    v-if="editlActionVisible(scope.row)"
                     type="text"
                     @click="updatePackagePromotion(scope.row)"
                   >
@@ -145,6 +149,28 @@ export default {
     this.fetchList()
   },
   methods: {
+    cancelActionVisible ({ status, source_id }) {
+      if (status == 'ongoing') {
+        if (this.IS_ADMIN && source_id == '0') {
+          return true
+        }
+        if (this.IS_DISTRIBUTOR) {
+          return true
+        }
+      }
+      return false
+    },
+    editlActionVisible ({ status, source_id }) {
+      if (status == 'waiting') {
+        if (this.IS_ADMIN && source_id == '0') {
+          return true
+        }
+        if (this.IS_DISTRIBUTOR) {
+          return true
+        }
+      }
+      return false
+    },
     onSearch () {
       this.page.pageIndex = 1
       this.$nextTick(() => {

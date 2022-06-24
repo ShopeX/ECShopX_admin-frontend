@@ -1,11 +1,11 @@
 <style lang="scss" scope>
 .sp-filter-form {
   background-color: #f6f7f9;
-  padding: 16px 0 16px 0;
+  padding: 16px 0 0;
   display: flex;
   box-sizing: content-box;
   &.shouqi {
-    max-height: 88px;
+    max-height: 104px;
     overflow: hidden;
   }
   &.small {

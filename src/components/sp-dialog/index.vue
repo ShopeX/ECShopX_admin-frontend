@@ -71,7 +71,12 @@ export default {
     const { title, value, form, formList, width } = this
     const Fn = () => {}
     const getComponentByType = (item) => {
-      if (item.type == 'textarea') {
+      if (typeof item.component != 'undefined') {
+        // console.log(item.component)
+        // Vue.component(item.component)
+        return item.component()
+        // return <component is={item.component} ref='com' />
+      } else if (item.type == 'textarea') {
         return (
           <el-input
             clearable

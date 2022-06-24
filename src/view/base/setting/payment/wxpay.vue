@@ -7,15 +7,15 @@
       <el-input
         v-model="form.app_id"
         style="width: 300px"
-      />
+      /><span class="frm-tips"> 适用于【微信浏览器、第三方APP、第三方手机浏览器、微信小程序、PC网站】</span>
       <br>
-      <span class="frm-tips">微信支付分配的公众账号ID（企业号corpid即为此appId）</span>
+      <span class="frm-tips">微信支付分配的公众账号ID（企业号corpid即为此appId）。请到 微信公众平台 → 开发 → 基本配置 → 获取</span>
     </el-form-item>
     <el-form-item label="APP应用ID">
       <el-input
         v-model="form.app_app_id"
         style="width: 300px"
-      />
+      /><span class="frm-tips"> 适用于【第三方APP】</span>
       <br>
       <span
         class="frm-tips"
@@ -25,13 +25,13 @@
       <el-input
         v-model="form.merchant_id"
         style="width: 300px"
-      />
+      /><span class="frm-tips"> 适用于【微信浏览器、第三方APP、第三方手机浏览器、微信小程序、PC网站】</span><br /><span class="frm-tips">请到 微信支付商户平台→账户中心→商户信息→获取</span>
     </el-form-item>
     <el-form-item label="API密钥">
       <el-input
         v-model="form.key"
         style="width: 300px"
-      />
+      /><span class="frm-tips"> 适用于【微信浏览器、第三方APP、第三方手机浏览器、微信小程序、PC网站】</span><br /><span class="frm-tips">请到 微信支付商户平台 → 账户中心 → API安全 → API密钥 中设置32位密钥，并将密钥复粘贴过来</span>
     </el-form-item>
     <el-form-item label="是否特约商户">
       <el-switch

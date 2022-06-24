@@ -78,6 +78,22 @@ export default {
           component: () => import('@/view/mall/marketing/openingapproval/approve')
         }
       ]
+    },
+    {
+      path: 'settlement/summary',
+      name: `结算汇总`,
+      component: () => import('@/view/financial/settlement/summary'),
+      children: [
+        {
+          path: 'detail/:id?',
+          component: () => import('@/view/financial/settlement/detailed')
+        }
+      ]
+    },
+    {
+      path: 'settlement/configure',
+      name: `结算配置`,
+      component: () => import('@/view/financial/settlement/configure')
     }
   ]
 }

@@ -12,7 +12,7 @@
       <el-form-item
         label="名称"
         prop="package_name"
-        :rules="{ required: true, message: '促销促销', trigger: 'blur' }"
+        :rules="{ required: true, message: '促销名称不能为空', trigger: 'blur' }"
       >
         <el-col :span="20">
           <el-input
@@ -226,7 +226,10 @@
           </el-checkbox>
         </el-checkbox-group>
       </el-form-item>
-      <el-form-item label="适用平台">
+      <el-form-item
+        v-if="usePlatformVisiable"
+        label="适用平台"
+      >
         <el-radio-group v-model="form.used_platform">
           <el-radio :label="0">
             全场可用
@@ -334,7 +337,8 @@ export default {
         items: [],
         main_item: {},
         main_items: [],
-        valid_grade: []
+        valid_grade: [],
+        source_id: '0'
       },
       relMain: [],
       setMainStatus: false,
@@ -353,6 +357,17 @@ export default {
       dialogVisible: false,
       skus: [],
       checkedSkus: []
+    }
+  },
+  computed: {
+    usePlatformVisiable () {
+      if (this.IS_ADMIN && this.form.source_id != '0') {
+        return false
+      }
+      if (this.IS_DISTRIBUTOR) {
+        return false
+      }
+      return true
     }
   },
   mounted () {
@@ -457,6 +472,7 @@ export default {
         this.form.used_platform = response.data.data.used_platform
         this.form.free_postage = response.data.data.free_postage
         this.form.package_name = response.data.data.package_name
+        this.form.source_id = response.data.data.source_id
         this.validGrade = response.data.data.valid_grade
         response.data.data.itemTreeLists.forEach((item) => {
           if (item.spec_items && item.spec_items.length > 0) {

@@ -43,11 +43,22 @@ export default {
       path: 'cashRecord',
       name: `提现记录`,
       component: () => import('@/view/mall/datacube/cashrecord')
-    }
+    },
     // {
     //   path: 'accountingStatistics',
     //   name: `accountingStatistics`,
     //   component: () =>import('@/view/mall/splitbill/storeAccount')
     // },
+    {
+      path: 'financial/settlement/summary',
+      name: `结算汇总`,
+      component: () => import('@/view/financial/settlement/summary'),
+      children: [
+        {
+          path: 'detail/:id?',
+          component: () => import('@/view/financial/settlement/detailed')
+        }
+      ]
+    }
   ]
 }

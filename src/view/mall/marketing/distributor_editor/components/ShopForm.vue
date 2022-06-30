@@ -9,7 +9,7 @@
       </div>
     </div>
     <el-row>
-      <el-col :span="10">
+      <!-- <el-col :span="10">
         <el-form-item label="所属区域">
           <div>
             <el-select
@@ -26,7 +26,7 @@
             </el-select>
           </div>
         </el-form-item>
-      </el-col>
+      </el-col> -->
       <el-col :span="12">
         <el-form-item
           inline="true"

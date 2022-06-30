@@ -109,9 +109,7 @@
               size="mini"
               :style="'color:' + form.font_color"
             >
-              {{
-                form.tag_name
-              }}
+              {{ form.tag_name }}
             </el-tag>
           </el-form-item>
           <el-form-item
@@ -273,12 +271,13 @@ export default {
         .then(() => {
           deleteTag(row.tag_id)
             .then((response) => {
-              this.tagsList.splice(index, 1)
+              // this.tagsList.splice(index, 1)
               this.$message({
                 message: '删除成功',
                 type: 'success',
                 duration: 5 * 1000
               })
+              this.onSearch()
             })
             .catch(() => {
               this.$message({
@@ -319,7 +318,7 @@ export default {
               message: '保存成功'
             })
             this.memberTagDialog = false
-            this.getDataList()
+            this.onSearch()
           }
         })
       } else {
@@ -330,7 +329,7 @@ export default {
               message: '保存成功'
             })
             this.memberTagDialog = false
-            this.getDataList()
+            this.onSearch()
           }
         })
       }

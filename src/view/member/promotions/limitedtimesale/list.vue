@@ -117,7 +117,7 @@
                 />
                 <template v-if="scope.row.edit_btn == 'Y'">
                   <el-button
-                    v-if="scope.row.status !== 'it_has_ended'"
+                    v-if="editActionVisible(scope.row)"
                     type="text"
                     @click="editAction(scope.$index, scope.row)"
                   >
@@ -125,7 +125,7 @@
                   </el-button>
                 </template>
                 <el-button
-                  v-if="scope.row.status !== 'it_has_ended'"
+                  v-if="editActionVisible(scope.row)"
                   type="text"
                   @click="updateStatusCommunityAction(scope.row)"
                 >
@@ -264,6 +264,17 @@ export default {
     this.getCurrencyInfo()
   },
   methods: {
+    editActionVisible ({ status, source_id }) {
+      if (status !== 'it_has_ended') {
+        if (this.IS_ADMIN && source_id == '0') {
+          return true
+        }
+        if (this.IS_DISTRIBUTOR) {
+          return true
+        }
+      }
+      return false
+    },
     getParams () {
       const time = {}
       const create_time = this.params.create_time

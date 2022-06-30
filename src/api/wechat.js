@@ -208,6 +208,14 @@ export function openUserPlatform () {
   })
 }
 
+export function getOffiaccountCodeForever (query) {
+  return fetch({
+    url: '/wechat/offiaccountcodeforever',
+    method: 'get',
+    params: query
+  })
+}
+
 export function getWorkWechatConfig () {
   return fetch({
     url: '/workwechat/config',

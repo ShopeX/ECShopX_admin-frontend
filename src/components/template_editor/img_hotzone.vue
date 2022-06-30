@@ -133,6 +133,7 @@
 <script>
 import Vue from 'vue'
 import hotzone from 'vue-hotzone'
+import { isArray } from '@/utils'
 
 export default {
   components: {
@@ -172,19 +173,21 @@ export default {
       this.name = val.name
       this.base = val.base
       this.config = val.config
-      this.data = val.data.map((item) => {
-        if (typeof item.linkType == 'undefined') {
-          return {
-            ...item,
-            linkType: 0,
-            linkUrl: ''
+      if (isArray(val.data)) {
+        this.data = val.data.map((item) => {
+          if (typeof item.linkType == 'undefined') {
+            return {
+              ...item,
+              linkType: 0,
+              linkUrl: ''
+            }
+          } else {
+            return {
+              ...item
+            }
           }
-        } else {
-          return {
-            ...item
-          }
-        }
-      })
+        })
+      }
     },
     handleImgChange (index) {
       this.$emit('bindImgs', index)

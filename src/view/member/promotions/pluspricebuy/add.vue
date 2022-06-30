@@ -188,7 +188,10 @@
           <!--</el-table>-->
           <!--</el-col>-->
         </el-form-item>
-        <el-form-item label="指定店铺">
+        <el-form-item
+          v-if="useShopVisible()"
+          label="指定店铺"
+        >
           <el-radio
             v-model="form.use_shop"
             :label="0"
@@ -196,9 +199,9 @@
             全场可用
           </el-radio>
           <el-radio
+            v-if="!VERSION_PLATFORM"
             v-model="form.use_shop"
             :label="1"
-            v-if="!VERSION_PLATFORM"
           >
             指定店铺可用
           </el-radio>
@@ -456,6 +459,7 @@
           </el-form-item> -->
         <el-form-item label=" ">
           <el-button
+            v-if="btnSaveVisible()"
             type="primary"
             @click="submitActivityAction()"
           >
@@ -507,6 +511,7 @@ import GoodsSelect from '@/components/goodsSelect'
 import SkuSelector from '@/components/function/skuSelector'
 import { getItemsList, getCategory, getTagList, getGoodsAttr } from '@/api/goods'
 import { handleUploadFile, exportUploadTemplate } from '../../../../api/common'
+import { mapGetters } from 'vuex'
 export default {
   inject: ['refresh'],
   components: {
@@ -547,7 +552,8 @@ export default {
         brand_ids: [],
         activity_background: '',
         navbar_color: '',
-        timeBackgroundColor: ''
+        timeBackgroundColor: '',
+        source_id: ''
       },
       vipGrade: [],
       memberGrade: [],
@@ -609,6 +615,9 @@ export default {
       }
     }
   },
+  computed: {
+    ...mapGetters(['login_type'])
+  },
   watch: {
     relItems (val) {
       //this.form.use_shop = val.length > 0 ? 1 : 0
@@ -642,6 +651,37 @@ export default {
     })
   },
   methods: {
+    useShopVisible () {
+      const { marketing_id } = this.$route.params
+      if (!marketing_id) {
+        if (this.IS_ADMIN) {
+          return true
+        } else {
+          return false
+        }
+      } else {
+        if (this.IS_ADMIN && this.form.source_id == '0') {
+          return true
+        } else {
+          return false
+        }
+      }
+    },
+    btnSaveVisible () {
+      const { marketing_id } = this.$route.params
+      // 新增
+      if (!marketing_id) {
+        return true
+      } else {
+        if (this.IS_ADMIN && this.form.source_id == '0') {
+          return true
+        } else if (this.IS_DISTRIBUTOR && this.form.source_id != '0') {
+          return true
+        } else {
+          return false
+        }
+      }
+    },
     addRules () {
       var rule = { price: '', gift_item: [] }
       this.purchaseRules.push(rule)
@@ -820,7 +860,8 @@ export default {
           brand_list: response.brand_list,
           rel_brand_ids: response.rel_brand_ids,
           rel_category_ids: response.rel_category_ids,
-          rel_tag_ids: response.rel_tag_ids
+          rel_tag_ids: response.rel_tag_ids,
+          source_id: response.source_id
         }
         Object.assign(this.form, data)
         this.conditionValue = response.condition_value

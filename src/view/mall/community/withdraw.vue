@@ -269,9 +269,9 @@ export default {
       const { apply_chief_num, freeze_cash_withdrawal_rebate, payed_rebate, rebate_total } =
         response.data.data.count
       this.apply_chief_num = apply_chief_num
-      ;(this.freeze_cash_withdrawal_rebate = freeze_cash_withdrawal_rebate),
-        (this.payed_rebate = payed_rebate),
-        (this.rebate_total = rebate_total)
+      this.freeze_cash_withdrawal_rebate = freeze_cash_withdrawal_rebate
+      this.payed_rebate = payed_rebate
+      this.rebate_total = rebate_total
     },
     getPayType (type) {
       const payType = {

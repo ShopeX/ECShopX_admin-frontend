@@ -123,7 +123,11 @@
           </el-form-item>
         </el-col>
         <el-col
-          v-if="$store.getters.login_type != 'merchant' && externalForm.distribution_type != '1'"
+          v-if="
+            $store.getters.login_type != 'merchant' &&
+              externalForm.distribution_type != '0' &&
+              !VERSION_STANDARD
+          "
           :span="8"
         >
           <el-form-item label="审核商品">
@@ -205,7 +209,7 @@ export default {
         is_audit_goods: true,
         datapass_block: 1,
         is_require_subdistrict: false,
-        is_require_building: false,
+        is_require_building: false
       },
       rules: {
         shop_code: [

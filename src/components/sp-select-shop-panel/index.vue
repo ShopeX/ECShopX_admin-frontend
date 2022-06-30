@@ -29,6 +29,13 @@
     margin: 8px;
     text-align: center;
   }
+  .el-table__row {
+    &.active {
+      td {
+        color: var(--themeColor);
+      }
+    }
+  }
 }
 </style>
 
@@ -63,17 +70,14 @@
         v-loading="loading"
         :data="list"
         :show-header="false"
+        :row-class-name="getRowActive"
         @row-click="onRowClick"
       >
-        <el-table-column width="30">
+        <!-- <el-table-column width="30">
           <template slot-scope="scope">
-            <el-radio
-              :value="getRadioValue(scope.row)"
-              :label="true"
-              @click.native.stop
-            />
+            <el-radio :value="getRadioValue(scope.row)" :label="true" @click.native.stop />
           </template>
-        </el-table-column>
+        </el-table-column> -->
 
         <el-table-column
           prop="name"
@@ -128,10 +132,21 @@ export default {
       radio: 0
     }
   },
-  created () {
-    this.fetch()
+  async created () {
+    await this.fetch()
+    console.log(222)
+    this.$emit('expand-change')
   },
   methods: {
+    getRowActive ({ row, rowIndex }) {
+      if (!this.selectShop.selectValue) {
+        return ''
+      } else if (this.selectShop.selectValue.value == row.distributor_id) {
+        return 'active'
+      } else {
+        return ''
+      }
+    },
     async fetch () {
       this.loading = true
       const params = {

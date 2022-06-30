@@ -56,9 +56,7 @@
                 />
               </el-form-item>
               <el-form-item label="发送时间点">
-                {{
-                  currentTemplate.send_time_desc.title
-                }}
+                {{ currentTemplate.send_time_desc.title }}
               </el-form-item>
               <el-form-item label="短信内容">
                 <el-input
@@ -84,7 +82,10 @@
           </div>
         </el-dialog>
         <div class="message-template">
-          <div v-for="(items, index) in smsTemlateList">
+          <div
+            v-for="(items, index) in smsTemlateList"
+            :key="`message-template__${index}`"
+          >
             <div class="section-header with-border">
               <span v-if="index == 'promotions'">营销权益</span>
               <span v-if="index == 'member'">会员关怀</span>
@@ -94,7 +95,8 @@
             </div>
             <div class="section-body">
               <div
-                v-for="row in items"
+                v-for="(row, index) in items"
+                :key="`item__${index}`"
                 class="item"
                 :class="row.is_open == 'true' ? 'succ-open-sms' : 'not-open-sms'"
                 @click="toDetail(row)"
@@ -200,13 +202,14 @@ import {
   getSmsSign,
   saveSmsSign
 } from '../../../api/promotions'
+import { VERSION_STANDARD, VERSION_PLATFORM } from '@/utils'
 export default {
   data () {
     return {
       detailDialog: false,
       activeName: 'first',
       messageCount: 0,
-      smsTemlateList: [],
+      smsTemlateList: {},
       messageAutograph: '',
       sms_buy_url: '',
       currentTemplate: {
@@ -227,7 +230,17 @@ export default {
       this.sms_buy_url = response.data.data.sms_buy_url
     })
     getSmsTemplateList().then((res) => {
-      this.smsTemlateList = res.data.data.list
+      const { list } = res.data.data
+      Object.keys(list).forEach((key) => {
+        if (VERSION_STANDARD) {
+          if (key != 'merchant') {
+            this.smsTemlateList[key] = list[key]
+          }
+        } else {
+          this.smsTemlateList[key] = list[key]
+        }
+      })
+      console.log(this.smsTemlateList)
     })
     getSmsSign().then((res) => {
       this.messageAutograph = res.data.data.sign
@@ -293,8 +306,8 @@ export default {
 .message-template {
   .item {
     display: inline-block;
-    width: 210px;
-    margin: 0 10px;
+    width: 220px;
+    margin: 0 10px 10px 0;
     border: 1px solid #dfdfdf;
     &-title {
       padding: 10px;

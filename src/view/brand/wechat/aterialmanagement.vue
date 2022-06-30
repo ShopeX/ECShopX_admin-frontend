@@ -16,29 +16,8 @@
         @tab-click="handleClick"
       >
         <el-tab-pane
-          v-if="$store.getters.login_type != 'distributor'"
-          label="图文消息"
-          name="imagetext"
-        >
-          <div class="tip-info">
-            <p>
-              当前图文已存储数量为{{ $store.getters.login_type }}
-              <span style="font-size: 20px; padding-left: 5px">{{ stats.news_count }}篇</span>
-            </p>
-            <p>
-              当前图文剩余储
-              <span style="font-size: 20px; padding-left: 5px">{{ stats.news_limit }}篇</span>
-            </p>
-          </div>
-          <news-list
-            :active-name="activeName"
-            :get-status="newsStatus"
-          />
-        </el-tab-pane>
-
-        <el-tab-pane
           label="本地图片"
-          name="qiniu"
+          name="local"
         >
           <!-- <div class="tip-info">
               <p>当前本地图片已存储数量为<span style="font-size:20px;padding-left: 5px;">555张</span></p>
@@ -78,6 +57,27 @@
           <localvideos-list
             :active-name="activeName"
             :get-status="localvideoStatus"
+          />
+        </el-tab-pane>
+
+        <el-tab-pane
+          v-if="$store.getters.login_type != 'distributor'"
+          label="图文消息"
+          name="imagetext"
+        >
+          <div class="tip-info">
+            <p>
+              当前图文已存储数量为{{ $store.getters.login_type }}
+              <span style="font-size: 20px; padding-left: 5px">{{ stats.news_count }}篇</span>
+            </p>
+            <p>
+              当前图文剩余储
+              <span style="font-size: 20px; padding-left: 5px">{{ stats.news_limit }}篇</span>
+            </p>
+          </div>
+          <news-list
+            :active-name="activeName"
+            :get-status="newsStatus"
           />
         </el-tab-pane>
 
@@ -124,7 +124,7 @@ export default {
   },
   data () {
     return {
-      activeName: 'imagetext',
+      activeName: 'local',
       stats: [],
       picStatus: false,
       newsStatus: true,
@@ -136,13 +136,11 @@ export default {
   },
   mounted () {
     if (this.$store.getters.login_type == 'distributor') {
-      this.activeName = 'qiniu'
+      this.activeName = 'local'
       this.handleClick()
     } else {
-      this.activeName = 'imagetext'
-      getMaterialStats().then((res) => {
-        this.stats = res.data.data
-      })
+      this.activeName = 'local'
+      this.handleClick()
     }
   },
   methods: {
@@ -159,6 +157,9 @@ export default {
         this.newsStatus = true
         this.localpicStatus = false
         this.localvideoStatus = false
+        getMaterialStats().then((res) => {
+          this.stats = res.data.data
+        })
       } else if (this.activeName == 'video') {
         this.picStatus = false
         this.videoStatus = true

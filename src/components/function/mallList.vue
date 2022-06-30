@@ -32,8 +32,14 @@
             @change="changeShop('shop')"
           />
         </div>
-        <span class="text">模版同步设置：</span>
-        <div class="option-item">
+        <span
+          v-if="!VERSION_PLATFORM"
+          class="text"
+        >模版同步设置：</span>
+        <div
+          v-if="!VERSION_PLATFORM"
+          class="option-item"
+        >
           <span class="option-item_text">同步并启用</span>
           <el-switch
             v-model="is_enforce_sync"
@@ -191,7 +197,7 @@
             >废弃</span>
           </div>
           <div
-            v-if="relStore.id == '0' && !VERSION_B2C"
+            v-if="relStore.id == '0' && !VERSION_B2C && !VERSION_PLATFORM"
             class="synchronize-btn"
             @click="synchronizeTemplateToShop(index)"
           >
@@ -207,7 +213,11 @@
         :xl="4"
       >
         <div
-          class="template-item add-btn"
+          :class="{
+            'template-item': true,
+            'add-btn': true,
+            'sync-template': relStore.id == '0' && !VERSION_B2C && !VERSION_PLATFORM
+          }"
           @click="AddOrEditDialog('add')"
         >
           <div class="template-wrap">
@@ -1044,13 +1054,18 @@ export default {
     margin-bottom: 20px;
     border: 1px solid #eee;
     color: #606266;
-    height: 442px;
+    // height: 442px;
     &.add-btn {
       display: flex;
       justify-content: center;
       align-items: center;
       background: #f2f2f2;
+      // height: calc(100% - 20px);
+      height: 404px;
       cursor: pointer;
+      &.sync-template {
+        height: 444px;
+      }
       .add-img {
         width: 60px;
       }

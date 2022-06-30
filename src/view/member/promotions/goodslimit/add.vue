@@ -276,6 +276,7 @@ export default {
     SkuSelector,
     Treeselect
   },
+  inject: ['refresh'],
   data () {
     return {
       relItems: [],
@@ -376,6 +377,7 @@ export default {
               type: 'success',
               duration: 2 * 1000,
               onClose () {
+                that.refresh()
                 that.$router.go(-1)
               }
             })
@@ -390,6 +392,7 @@ export default {
               type: 'success',
               duration: 2 * 1000,
               onClose () {
+                that.refresh()
                 that.$router.go(-1)
               }
             })

@@ -2,6 +2,34 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [2.10.0](https://git.ishopex.cn/ecshopx/ecshopx-admin/compare/v2.9.0...v2.10.0) (2022-06-23)
+
+
+### Features
+
+* 2.10.0 ([e2eff32](https://git.ishopex.cn/ecshopx/ecshopx-admin/commit/e2eff3298f695f67890f91c0a673c8e324fc8f83))
+
+
+### Bug Fixes
+
+* bug ([3062055](https://git.ishopex.cn/ecshopx/ecshopx-admin/commit/30620553412057a67585f521ebeaf5e9213a99fb))
+* bug修复 ([8cb138c](https://git.ishopex.cn/ecshopx/ecshopx-admin/commit/8cb138c56bacb40910abdd99d357c3e4d347227d))
+* bug修复 ([7506852](https://git.ishopex.cn/ecshopx/ecshopx-admin/commit/75068529a5f99d8bea04f56c3d0db50dd4116f2d))
+* bug修复 ([12d90e9](https://git.ishopex.cn/ecshopx/ecshopx-admin/commit/12d90e95fed734232bd228b6ad63097857aba3ea))
+* bug修复 ([31c874c](https://git.ishopex.cn/ecshopx/ecshopx-admin/commit/31c874c0665b8ea668e4bb3cfbee83de442c1061))
+* ECX-2119 ECX-1934 ECX-2243 ([190cd3d](https://git.ishopex.cn/ecshopx/ecshopx-admin/commit/190cd3dacd9c56c70cbfebd3f3bb064e0e3ca878))
+* ECX-2243 ([febf460](https://git.ishopex.cn/ecshopx/ecshopx-admin/commit/febf46021f3e3b5e42cd49d68ac6fd68419b5de5))
+* ECX-2302 ([e03e78a](https://git.ishopex.cn/ecshopx/ecshopx-admin/commit/e03e78ab5c720da1d6b8984515ff35e8bcd16187))
+* ECX-2325、ECX-2326 ([97eadde](https://git.ishopex.cn/ecshopx/ecshopx-admin/commit/97eadde318b43a95bc83f9f8975d2954e686c2a1))
+* ECX-2429 ([614464a](https://git.ishopex.cn/ecshopx/ecshopx-admin/commit/614464adfbe49d144d3f8c13b39289c834643ccd))
+* 字段顺序 ([1fcb062](https://git.ishopex.cn/ecshopx/ecshopx-admin/commit/1fcb062f331e5b96e3c916560595ce4ddd55f629))
+* 店铺营销活动 ([bae6f13](https://git.ishopex.cn/ecshopx/ecshopx-admin/commit/bae6f138eafaf12e5265e11fa4b50595d0819e1d))
+* 时间格式化 ([4db5b60](https://git.ishopex.cn/ecshopx/ecshopx-admin/commit/4db5b609918ece7fdeb50550f62f28dda9d73d7d))
+* 明细导出 ([fb3f829](https://git.ishopex.cn/ecshopx/ecshopx-admin/commit/fb3f829fbd415c893479836c27450e400b2c25fc))
+* 明细导出 ([975a1ef](https://git.ishopex.cn/ecshopx/ecshopx-admin/commit/975a1ef34d2641f09f68eae60975a31aa3660588))
+* 添加导出 ([44e1c46](https://git.ishopex.cn/ecshopx/ecshopx-admin/commit/44e1c465d194c66ef583cb38e8fd51b5c5d1c5bc))
+* 结算 ([af9a7dd](https://git.ishopex.cn/ecshopx/ecshopx-admin/commit/af9a7ddd022289319c4a50a8af4f9ec06513a922))
+
 ## [2.9.0](https://git.ishopex.cn/ecshopx/ecshopx-admin/compare/v2.8.0...v2.9.0) (2022-06-09)
 
 

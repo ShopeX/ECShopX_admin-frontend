@@ -4,7 +4,7 @@
       ref="form"
       :rules="rules"
       :model="form"
-      label-width="110px"
+      label-width="200px"
     >
       <el-form-item
         label="活动名称："
@@ -92,7 +92,11 @@
       <el-form-item
         v-if="form.used_roles.includes('dependents') && !form.is_share_limitfee"
         label="家属额度："
-        :rules="{ required: form.used_roles.includes('dependents') && !form.is_share_limitfee, message: '请输入家属额度', trigger: 'blur' }"
+        :rules="{
+          required: form.used_roles.includes('dependents') && !form.is_share_limitfee,
+          message: '请输入家属额度',
+          trigger: 'blur'
+        }"
       >
         <el-input
           v-model="form.dependents_limitfee"
@@ -106,7 +110,11 @@
       <el-form-item
         v-if="form.used_roles.includes('dependents')"
         label="员工邀请上限："
-        :rules="{ required: form.used_roles.includes('dependents'), message: '请输入员工邀请上限', trigger: 'blur' }"
+        :rules="{
+          required: form.used_roles.includes('dependents'),
+          message: '请输入员工邀请上限',
+          trigger: 'blur'
+        }"
       >
         <el-input
           v-model="form.dependents_limit"
@@ -114,6 +122,16 @@
         >
           <template slot="append">
             人
+          </template>
+        </el-input>
+      </el-form-item>
+      <el-form-item label="单笔订单最低金额：">
+        <el-input
+          v-model="form.minimum_amount"
+          style="width: 240px"
+        >
+          <template slot="append">
+            元
           </template>
         </el-input>
       </el-form-item>
@@ -606,7 +624,8 @@ export default {
         dependents_limitfee: '',
         is_share_limitfee: false,
         used_roles: ['employee'],
-        item_limit: ''
+        item_limit: '',
+        minimum_amount: ''
       },
       activity_date: [],
       rules: {},

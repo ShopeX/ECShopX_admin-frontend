@@ -32,9 +32,7 @@
           {{ detail.employee_limitfee }}
         </el-form-item>
         <el-form-item label="家属是否共有额度：">
-          {{
-            detail.is_share_limitfee ? '是' : '否'
-          }}
+          {{ detail.is_share_limitfee ? '是' : '否' }}
         </el-form-item>
         <el-form-item
           v-if="
@@ -82,6 +80,9 @@
               label="每人限额"
             />
           </el-table>
+        </el-form-item>
+        <el-form-item label="单笔订单最低金额：">
+          {{ detail.dependents_limit }}
         </el-form-item>
       </el-form>
     </div>

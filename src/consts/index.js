@@ -105,6 +105,7 @@ export const PROFIT_TYPE = {
 export const PAY_TYPE = {
   wxpay: '微信支付',
   amorepay: '微信支付',
+  wechat: '微信支付',
   wxpaypc: '微信PC支付',
   wxpayh5: '微信H5支付',
   alipay: '支付宝支付',

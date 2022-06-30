@@ -97,16 +97,12 @@
           </el-button>
           <el-dropdown-menu slot="dropdown">
             <el-dropdown-item>
-              <export-tip
-                @exportHandle="exportItemsWxappCode('wxa')"
-              >
+              <export-tip @exportHandle="exportItemsWxappCode('wxa')">
                 小程序码
               </export-tip>
             </el-dropdown-item>
             <el-dropdown-item>
-              <export-tip
-                @exportHandle="exportItemsWxappCode('h5')"
-              >
+              <export-tip @exportHandle="exportItemsWxappCode('h5')">
                 H5二维码
               </export-tip>
             </el-dropdown-item>
@@ -185,7 +181,7 @@
             </el-table-column>
             <el-table-column
               prop="market_price"
-              label="原价（¥）"
+              label="市场价（¥）"
             />
             <el-table-column
               prop="price"

@@ -318,13 +318,14 @@ export default {
       // })
     },
     async logout () {
+      const loginType = this.login_type
       await this.$api.login.getAuthorizelogout()
       await this.SYSTEM_EXIT()
-      if (this.login_type == 'distributor') {
+      if (loginType == 'distributor') {
         window.location.href = `/shopadmin/login`
-      } else if (this.login_type == 'dealer') {
+      } else if (loginType == 'dealer') {
         window.location.href = `/dealer/login`
-      } else if (this.login_type == 'merchant') {
+      } else if (loginType == 'merchant') {
         window.location.href = `/merchant/login`
       } else {
         window.location.href = `/login`

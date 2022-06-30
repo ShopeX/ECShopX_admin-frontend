@@ -741,16 +741,16 @@ export default {
       this.value.specImages[parent].item_image_url.splice(index, 1)
     },
     pickPics (data) {
-      if (this.value.specImages.length + data.length > 5) {
-        this.$message.error('最多添加5张图片!')
-        return false
-      } else {
-        if (data.length != 0) {
-          data.forEach((data) => {
-            this.value.specImages[this.rowIndex].item_image_url.push(data.url)
-          })
-        }
+      // if (this.value.specImages.length + data.length > 5) {
+      //   this.$message.error('最多添加5张图片!')
+      //   return false
+      // } else {
+      if (data.length != 0) {
+        data.forEach((data) => {
+          this.value.specImages[this.rowIndex].item_image_url.push(data.url)
+        })
       }
+      // }
       this.picsDialog = false
     },
     closePicsDialog () {

@@ -666,24 +666,39 @@ export default {
       picsDialog: false,
       isGetPics: false,
       multiple: false,
-      statusOption: [
-        {
-          title: '前台可销售',
-          value: 'onsale'
-        },
-        {
-          title: '可线下销售',
-          value: 'offline_sale'
-        },
-        {
-          title: '前台仅展示',
-          value: 'only_show'
-        },
-        {
-          title: '不可销售',
-          value: 'instock'
-        }
-      ],
+      statusOption: this.VERSION_IN_PURCHASE
+        ? [
+            {
+              title: '前台可销售',
+              value: 'onsale'
+            },
+            {
+              title: '前台仅展示',
+              value: 'only_show'
+            },
+            {
+              title: '不可销售',
+              value: 'instock'
+            }
+          ]
+        : [
+            {
+              title: '前台可销售',
+              value: 'onsale'
+            },
+            {
+              title: '可线下销售',
+              value: 'offline_sale'
+            },
+            {
+              title: '前台仅展示',
+              value: 'only_show'
+            },
+            {
+              title: '不可销售',
+              value: 'instock'
+            }
+          ],
       bulkFilling: [
         {
           // item_spec: '批量填充',

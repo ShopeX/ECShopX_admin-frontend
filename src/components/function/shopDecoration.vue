@@ -335,6 +335,8 @@
             :res="editorData"
             @bindImgs="showImgs"
             @bindLinks="showLinks"
+            @onHotZoneChange="onHotZoneChange"
+            @onChangeLinkType="onChangeLinkType"
           />
           <marqueesEditor
             :res="editorData"
@@ -494,7 +496,6 @@ import headlineEditor from '@/components/template_editor/headline'
 import hotTopicEditor from '@/components/template_editor/hotTopic'
 import imgGifEditor from '@/components/template_editor/img-gif'
 import nearbyShopEditor from '@/components/template_editor/nearby_shop'
-
 
 // 第三方组件
 import draggable from 'vuedraggable'
@@ -1315,9 +1316,11 @@ export default {
         this.editorData.data[this.editorDataIndex].id = data.id
         this.editorData.data[this.editorDataIndex].title = data.title
         this.editorData.data[this.editorDataIndex].linkPage = type
+        this.editorData.data[this.editorDataIndex].linkType = 0
         this.components[this.editorIndex].data[this.editorDataIndex].id = data.id
         this.components[this.editorIndex].data[this.editorDataIndex].title = data.title
         this.components[this.editorIndex].data[this.editorDataIndex].linkPage = type
+        this.components[this.editorIndex].data[this.editorDataIndex].linkType = 0
         this.linksVisible = false
       } else {
         this.editorData.config.moreLink.id = data.id
@@ -1377,6 +1380,14 @@ export default {
           })
         }
       })
+    },
+    onHotZoneChange (data) {
+      this.editorData.data = data
+      this.components[this.editorIndex].data = data
+    },
+    onChangeLinkType (val, index) {
+      this.editorData.data[index].linkType = val
+      this.components[this.editorIndex].data[index].linkType = val
     }
   }
 }

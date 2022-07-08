@@ -85,42 +85,35 @@
                   scope.row.quantity - scope.row.get_num
                 }}</span>
                 <span v-else>0</span>
-                <el-popover
+                <el-button
                   v-if="scope.row.edit_btn === 'Y'"
+                  type="text"
+                  @click="editCouponStore(scope.row.card_id)"
+                >
+                  <i class="el-icon-edit" />
+                </el-button>
+                <!-- <el-popover
+                  v-if="scope.row.edit_btn === 'Y'"
+                  :ref="`popover-${scope.row.card_id}`"
                   v-model="scope.row.storePop"
                   placement="bottom"
                   width="300"
                   trigger="hover"
                 >
-                  <div
-                    ref="store"
-                    class="store-pop"
-                    tabIndex="1"
-                  >
+                  <div ref="store" class="store-pop" tabIndex="1">
                     <div class="store-content">
                       <el-radio-group
                         v-model="scope.row.operationType"
                         class="content-bottom-padded"
                       >
-                        <el-radio label="increase">
-                          增加
-                        </el-radio>
-                        <el-radio label="reduce">
-                          减少
-                        </el-radio>
+                        <el-radio label="increase"> 增加 </el-radio>
+                        <el-radio label="reduce"> 减少 </el-radio>
                       </el-radio-group>
                       <el-row>
                         <el-col :span="22">
-                          <el-input
-                            v-model="scope.row.storeValue"
-                            placeholder="库存不能少于1"
-                          />
+                          <el-input v-model="scope.row.storeValue" placeholder="库存不能少于1" />
                         </el-col>
-                        <el-col
-                          :span="2"
-                          style="line-height: 36px"
-                          class="content-center"
-                        >
+                        <el-col :span="2" style="line-height: 36px" class="content-center">
                           份
                         </el-col>
                       </el-row>
@@ -137,22 +130,16 @@
                         </el-button>
                       </el-col>
                       <el-col :span="12">
-                        <el-button
-                          style="width: 100%"
-                          @click="scope.row.storePop = false"
-                        >
+                        <el-button style="width: 100%" @click="scope.row.storePop = false">
                           取消
                         </el-button>
                       </el-col>
                     </el-row>
                   </div>
-                  <el-button
-                    slot="reference"
-                    type="text"
-                  >
+                  <el-button slot="reference" type="text">
                     <i class="el-icon-edit" />
                   </el-button>
-                </el-popover>
+                </el-popover> -->
               </template>
             </el-table-column>
             <el-table-column
@@ -177,7 +164,7 @@
               label="店铺"
             />
             <el-table-column
-              width="120"
+              width="160"
               label="操作"
             >
               <template slot-scope="scope">
@@ -266,6 +253,16 @@
       </el-dialog>
     </template>
     <router-view />
+
+    <SpDialog
+      ref="editDialogRef"
+      v-model="editDialog"
+      width="500px"
+      :title="'修改库存数'"
+      :form="editForm"
+      :form-list="editFormList"
+      @onSubmit="onEditSubmit"
+    />
   </div>
 </template>
 
@@ -308,7 +305,7 @@ export default {
         {
           text: '满减券',
           value: 'cash'
-        },
+        }
         // {
         //   text: '兑换券',
         //   value: 'new_gift'
@@ -318,6 +315,41 @@ export default {
         { name: '已生效', activeName: '2' },
         { name: '待生效', activeName: '1' },
         { name: '已过期', activeName: '3' }
+      ],
+      editDialog: false,
+      editForm: {
+        card_id: '',
+        type: 'increase',
+        quantity: 1
+      },
+      editFormList: [
+        {
+          label: '',
+          key: 'type',
+          type: 'radio',
+          options: [
+            { label: 'increase', name: '增加' },
+            { label: 'reduce', name: '减少' }
+          ]
+        },
+        {
+          label: '数量:',
+          key: 'quantity',
+          type: 'input',
+          placeholder: '请输入数量',
+          validator: (rule, value, callback) => {
+            const fd = this.tableList.find((item) => item.card_id == this.editForm.card_id)
+            if (this.editForm.type == 'reduce') {
+              if (this.editForm.quantity > fd.quantity - fd.get_num) {
+                callback(new Error('减少数量不能大于可领取库存'))
+              } else {
+                callback()
+              }
+            } else {
+              callback()
+            }
+          }
+        }
       ]
     }
   },
@@ -329,6 +361,15 @@ export default {
     this.fetchList()
   },
   methods: {
+    editCouponStore (id) {
+      this.editForm.card_id = id
+      this.editDialog = true
+    },
+    async onEditSubmit () {
+      await this.$api.cardticket.updateStore(this.editForm)
+      this.editDialog = false
+      this.fetchList()
+    },
     getParams () {
       let params = {
         ...this.params
@@ -643,5 +684,10 @@ export default {
   .store-content {
     margin-bottom: 15px;
   }
+}
+</style>
+<style>
+.el-table__column-filter-trigger {
+  line-height: initial;
 }
 </style>

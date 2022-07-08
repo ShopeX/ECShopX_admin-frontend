@@ -13,7 +13,7 @@
         <wxpayTemplates />
       </el-tab-pane>
       <el-tab-pane
-        v-if="!isHfpay"
+        v-if="!isHfpay && !VERSION_IN_PURCHASE"
         label="支付宝支付配置"
         name="alipay"
       >
@@ -23,14 +23,14 @@
         <ebuypayTemplates></ebuypayTemplates>
       </el-tab-pane> -->
       <el-tab-pane
-        v-if="isHfpay"
+        v-if="isHfpay && !VERSION_IN_PURCHASE"
         label="汇付天下支付配置"
         name="hfpay"
       >
         <hfpayTemplates />
       </el-tab-pane>
       <el-tab-pane
-        v-if="!isHfpay"
+        v-if="!isHfpay && !VERSION_IN_PURCHASE"
         label="Adapay支付配置"
         name="adapay"
       >

@@ -22,6 +22,10 @@ export default {
         {
           path: 'details/:id?',
           component: () => import('@/view/mall/marketing/distributor_details')
+        },
+        {
+          path: 'wxpaysetting',
+          component: () => import('@/view/mall/marketing/distributor_wxpaysetting')
         }
       ]
     },

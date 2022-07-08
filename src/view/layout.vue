@@ -58,30 +58,36 @@
         >
           <el-menu :default-active="activeSubIndex">
             <template v-for="(child, cindex) in submenuList">
-              <el-menu-item-group
+              <el-submenu
                 v-if="child.children && child.children[0].is_menu"
                 :key="`cmenu-${cindex}`"
+                :index="`${cindex}`"
                 class="menu-group"
               >
                 <template slot="title">
-                  <i class="iconfont icon-shouqijiantouxiao" />{{ child.name }}
+                  <i class="iconfont icon-xiala" />{{ child.name }}
                 </template>
                 <template v-for="sub in child.children">
-                  <el-menu-item
-                    v-if="sub.is_show && sub.is_menu"
+                  <div
                     :key="sub.url"
-                    :index="sub.url"
-                    :class="{ 'is-active': sub.url == activeSubIndex }"
+                    class="menu-three"
                   >
-                    <router-link :to="sub.url">
-                      {{ sub.name }}
-                    </router-link>
-                  </el-menu-item>
+                    <el-menu-item
+                      v-if="sub.is_show && sub.is_menu"
+                      :index="sub.url"
+                      :class="{ 'is-active': sub.url == activeSubIndex }"
+                    >
+                      <router-link :to="sub.url">
+                        {{ sub.name }}
+                      </router-link>
+                    </el-menu-item>
+                  </div>
                 </template>
-              </el-menu-item-group>
+              </el-submenu>
               <div
                 v-else-if="child.is_show && child.is_menu"
                 :key="`cmenu-${cindex}`"
+                :index="cindex"
                 class="sub-menu-item"
               >
                 <el-menu-item
@@ -192,6 +198,21 @@ export default {
       vm.activeIndex = to.matched[0].path || '/'
     })
   },
+  beforeRouteUpdate (to, from, next) {
+    console.log('beforeRouteUpdate', to, from, this.submenuList)
+    this.submenuList.forEach((menu, index) => {
+      if (typeof menu.children == 'undefined') {
+        if (menu.url == to.path) {
+          this.menuOpeneds = [`${index}`]
+        }
+      } else {
+        if (menu.children.find((item) => item.url == to.path)) {
+          this.menuOpeneds = [`${index}`]
+        }
+      }
+    })
+    next()
+  },
   data () {
     return {
       isShowAside: 'false',
@@ -200,7 +221,8 @@ export default {
       homeIndex: '',
       brandIco: '',
       showUserPopover: false,
-      activeIndex: ''
+      activeIndex: '',
+      menuOpeneds: []
     }
   },
   computed: {
@@ -346,7 +368,7 @@ export default {
   height: 100%;
 }
 .brand-con {
-  margin-top: 6px;
+  margin-top: 10px;
   .brand-link {
     display: block;
   }
@@ -425,7 +447,7 @@ export default {
   }
 }
 .sub-menu {
-  width: 116px;
+  width: 130px;
   overflow-y: auto;
   background: #f6f7f9;
   box-shadow: 1px 0px 0px 0px rgba(0, 0, 0, 0.06);
@@ -510,8 +532,48 @@ export default {
     }
   }
 }
+.menu-three {
+  margin-left: 10px;
+  .el-menu-item {
+    min-width: inherit;
+  }
+}
 </style>
 <style lang="scss">
+.page-layout {
+  .el-menu {
+    background: #f6f7f9;
+  }
+  .el-submenu {
+    &.is-opened {
+      .icon-xiala {
+        transform: rotate(0deg);
+        transition: all 0.3s ease-in-out;
+      }
+    }
+    &__title {
+      height: 40px;
+      line-height: 40px;
+      padding-left: 25px !important;
+      display: flex;
+      align-items: center;
+      position: relative;
+
+      .icon-xiala {
+        color: #666;
+        font-size: 14px;
+        margin-right: 4px;
+        position: absolute;
+        left: 8px;
+        transform: rotate(-90deg);
+        transition: all 0.3s ease-in-out;
+      }
+      .el-submenu__icon-arrow {
+        display: none;
+      }
+    }
+  }
+}
 .popover-row.base {
   padding: 10px;
   cursor: pointer;

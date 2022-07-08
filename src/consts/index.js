@@ -47,8 +47,8 @@ export const IN_PURCHASE_STATUS = [
   { title: '待收货', value: 'shipping' },
   { title: '待退款', value: 'cancelapply' },
   { title: '已取消', value: 'cancel' },
-  { title: '已完成', value: 'finish' },
-  { title: '配送中', value: 'dada_3' }
+  { title: '已完成', value: 'finish' }
+  // { title: '配送中', value: 'dada_3' }
 ]
 
 export const ORDER_TYPE = [
@@ -106,6 +106,7 @@ export const PAY_TYPE = {
   wxpay: '微信支付',
   amorepay: '微信支付',
   wechat: '微信支付',
+  wepayjs: '微信支付',
   wxpaypc: '微信PC支付',
   wxpayh5: '微信H5支付',
   alipay: '支付宝支付',

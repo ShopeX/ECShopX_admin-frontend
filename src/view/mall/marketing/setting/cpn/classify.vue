@@ -197,11 +197,11 @@ export default {
         parent_id: row.cur_level,
         parent_name: row.parent_id != '0' ? this.queryParent(row.parent_id).name : null
       }
-      this.queryParent(row.parent_id)
+      // this.queryParent(row.parent_id)
     },
     // 查找id
     queryParent (id) {
-      return this.merchantsClassificationList.find((item) => {
+      return this.tableList.find((item) => {
         return item.id == id
       })
     },

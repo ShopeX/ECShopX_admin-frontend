@@ -7,13 +7,19 @@
       label-width="170px"
     >
       <div class="section-body">
-        <el-form-item label="是否展示自提订单：">
+        <el-form-item
+          v-if="!VERSION_IN_PURCHASE"
+          label="是否展示自提订单："
+        >
           <el-switch v-model="form.data.ziti_order" />
         </el-form-item>
         <!--                 <el-form-item label="是否展示推广信息：">
                     <el-switch v-model="form.data.ext_info"></el-switch>
                 </el-form-item> -->
-        <el-form-item label="是否展示我的拼团：">
+        <el-form-item
+          v-if="!VERSION_IN_PURCHASE"
+          label="是否展示我的拼团："
+        >
           <el-switch v-model="form.data.group" />
         </el-form-item>
         <!-- <el-form-item label="是否展示助力活动：">
@@ -25,13 +31,19 @@
         <!-- <el-form-item label="是否展示投诉记录：">
           <el-switch v-model="form.data.complaint"></el-switch>
         </el-form-item> -->
-        <el-form-item label="是否展示活动预约：">
+        <el-form-item
+          v-if="!VERSION_IN_PURCHASE"
+          label="是否展示活动预约："
+        >
           <el-switch v-model="form.data.activity" />
         </el-form-item>
         <!-- <el-form-item label="是否展示储值：">
                     <el-switch v-model="form.data.recharge"></el-switch>
                 </el-form-item> -->
-        <el-form-item label="是否展示会员二维码：">
+        <el-form-item
+          v-if="!VERSION_IN_PURCHASE"
+          label="是否展示会员二维码："
+        >
           <el-switch v-model="form.data.member_code" />
         </el-form-item>
         <!--  <el-form-item label="是否展示社区团购：">
@@ -43,7 +55,10 @@
         <el-form-item label="是否展示线下订单关联：">
           <el-switch v-model="form.data.offline_order"></el-switch>
         </el-form-item> -->
-        <el-form-item label="是否展示我要分享：">
+        <el-form-item
+          v-if="!VERSION_IN_PURCHASE"
+          label="是否展示我要分享："
+        >
           <el-switch v-model="form.data.share_enable" />
         </el-form-item>
         <el-form-item label="是否展示个人信息：">

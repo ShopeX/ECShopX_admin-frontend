@@ -219,6 +219,27 @@
               注意：奖励积分若积分与现金抵扣比例过于低，积分奖励向上取整（例：0.1积分取1积分）
             </div> -->
           </el-form-item>
+          <el-form-item label="推广二维码背景">
+            <div>
+              <div
+                class="upload-qr-box"
+                @click="handleImgChange('qrcode_bg_img')"
+              >
+                <img
+                  v-if="form.qrcode_bg_img"
+                  :src="wximageurl + form.qrcode_bg_img"
+                  class="avatar"
+                >
+                <i
+                  v-else
+                  class="el-icon-plus avatar-uploader-icon"
+                />
+              </div>
+            </div>
+            <div class="frm-tips">
+              建议尺寸 650px * 1157px；作用于推广员二维码背景图配置
+            </div>
+          </el-form-item>
           <el-form-item label="推广员小店">
             <el-switch
               v-model="form.isOpenShop"
@@ -699,6 +720,9 @@ export default {
         case 'wxapp':
           this.form.applets_share_img = data.url
           break
+        case 'qrcode_bg_img':
+          this.form.qrcode_bg_img = data.url
+          break
         default:
           this.form.banner_img = data.url
       }
@@ -761,6 +785,13 @@ export default {
 .upload-box {
   width: 150px;
   height: 150px;
+  img {
+    width: 100%;
+  }
+}
+.upload-qr-box {
+  max-width: 150px;
+  max-width: 150px;
   img {
     width: 100%;
   }

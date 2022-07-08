@@ -252,6 +252,13 @@
         <el-button
           type="primary"
           plain
+          @click="batchChangeStore"
+        >
+          更改状态
+        </el-button>
+        <!-- <el-button
+          type="primary"
+          plain
           @click="batchItemsStatus('onsale')"
         >
           上架
@@ -262,7 +269,7 @@
           @click="batchItemsStatus('instock')"
         >
           下架
-        </el-button>
+        </el-button> -->
         <el-button
           type="primary"
           plain
@@ -1108,6 +1115,16 @@
         @chooseGoods="chooseGoodsAction"
         @closeGoodsDialog="closeGoodsDialogAction"
       />
+
+      <SpDialog
+        ref="sendNumDialogRef"
+        v-model="batchChangeStateDialog"
+        title="更改商品状态"
+        :width="'500px'"
+        :form="batchChangeStateForm"
+        :form-list="batchChangeStateFormList"
+        @onSubmit="onBatchChangeStateSubmit"
+      />
     </template>
     <router-view />
   </div>
@@ -1143,6 +1160,7 @@ import {
   saveIsGifts,
   flowItems
 } from '@/api/goods'
+import { VERSION_IN_PURCHASE } from '@/utils'
 import mixins from '@/mixins'
 
 import GoodsSelect from './comps/goodsSelect'
@@ -1162,6 +1180,32 @@ export default {
   },
   data () {
     const loginType = this.$store.getters.login_type
+
+    let statusOption
+    if (loginType == 'distributor') {
+      statusOption = [
+        { title: '审核驳回', value: 'rejected' },
+        { title: '等待审核', value: 'processing' },
+        { title: '前台可销售', value: 'onsale' },
+        { title: '可线下销售', value: 'offline_sale' },
+        { title: '前台仅展示', value: 'only_show' },
+        { title: '不可销售', value: 'instock' }
+      ]
+    } else if (VERSION_IN_PURCHASE) {
+      statusOption = [
+        { title: '前台可销售', value: 'onsale' },
+        { title: '前台仅展示', value: 'only_show' },
+        { title: '不可销售', value: 'instock' }
+      ]
+    } else {
+      statusOption = [
+        { title: '前台可销售', value: 'onsale' },
+        { title: '可线下销售', value: 'offline_sale' },
+        { title: '前台仅展示', value: 'only_show' },
+        { title: '不可销售', value: 'instock' }
+      ]
+    }
+
     return {
       show_rebate_sideBar: false,
       show_profit_sideBar: false,
@@ -1253,22 +1297,7 @@ export default {
       profitSpecItems: [],
       grade: [],
       vipGrade: [],
-      statusOption:
-        loginType == 'distributor'
-          ? [
-              { title: '审核驳回', value: 'rejected' },
-              { title: '等待审核', value: 'processing' },
-              { title: '前台可销售', value: 'onsale' },
-              { title: '可线下销售', value: 'offline_sale' },
-              { title: '前台仅展示', value: 'only_show' },
-              { title: '不可销售', value: 'instock' }
-            ]
-          : [
-              { title: '前台可销售', value: 'onsale' },
-              { title: '可线下销售', value: 'offline_sale' },
-              { title: '前台仅展示', value: 'only_show' },
-              { title: '不可销售', value: 'instock' }
-            ],
+      statusOption: statusOption,
       storeUpdate: false,
       storeItemsList: [],
       show_itemStore: false,
@@ -1278,7 +1307,20 @@ export default {
       relDistributorIds: '',
       selections: [],
       // showSelectGoods: true,
-      xpGoodsVisible: false
+      xpGoodsVisible: false,
+      batchChangeStateDialog: false,
+      batchChangeStateFormList: [
+        {
+          label: '商品状态:',
+          key: 'status',
+          type: 'select',
+          message: '不能为空',
+          options: statusOption
+        }
+      ],
+      batchChangeStateForm: {
+        status: ''
+      }
     }
   },
   computed: {
@@ -2008,7 +2050,7 @@ export default {
         })
       }
     },
-    batchItemsStatus (status) {
+    batchChangeStore () {
       if (this.goods_id.length === 0) {
         this.$message({
           type: 'error',
@@ -2016,6 +2058,9 @@ export default {
         })
         return false
       }
+      this.batchChangeStateDialog = true
+    },
+    onBatchChangeStateSubmit () {
       this.skuLoading = true
       let params = {}
       if (this.goods_id.length > 0) {
@@ -2025,7 +2070,7 @@ export default {
         })
         params = {
           'items': JSON.stringify(data),
-          'status': status
+          'status': this.batchChangeStateForm.status
         }
       }
       this.submitLoading = true
@@ -2040,6 +2085,8 @@ export default {
         }
         this.submitLoading = false
         this.skuLoading = false
+        this.batchChangeStateDialog = false
+        this.batchChangeStateForm.status = ''
       })
     },
     updateItemStatus (items) {

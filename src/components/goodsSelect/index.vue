@@ -6,7 +6,9 @@
     :visible.sync="showDialog"
     :close-on-click-modal="false"
     :before-close="cancelAction"
+    :destroy-on-close="true"
     append-to-body
+    @open="onOpen"
   >
     <div
       v-if="params.item_type === 'normal'"
@@ -371,22 +373,25 @@ export default {
       templateRadio: ''
     }
   },
-  mounted () {
-    if (this.filter) {
-      let filters = this.filter
-      let params = this.params
-      if (typeof filters === 'string') {
-        filters = JSON.parse(filters)
-      }
-      Object.assign(params, filters)
-      this.params = params
-    }
-    this.getShippingTemplatesList()
-    this.getCurrencyInfo()
-    this.getGoodsBranchList()
-    this.getCategory()
-  },
+  mounted () {},
+
   methods: {
+    onOpen () {
+      if (this.filter) {
+        let filters = this.filter
+        let params = this.params
+        if (typeof filters === 'string') {
+          filters = JSON.parse(filters)
+        }
+        Object.assign(params, filters)
+        this.params = params
+      }
+      this.getShippingTemplatesList()
+      this.getCurrencyInfo()
+      this.getGoodsBranchList()
+      this.getCategory()
+      this.getNewsList()
+    },
     handleTabClick () {
       this.getNewsList()
     },
@@ -397,11 +402,11 @@ export default {
       }
       console.log('==handleStoreChange==', val)
       this.store = val
-      6
       // this.selectRows = []
       this.params.distributor_id = val.id
       this.params.templates_id = ''
       this.getShippingTemplatesList(val.id)
+
       this.getNewsList()
     },
     getTemplateRow (index, row) {
@@ -420,16 +425,19 @@ export default {
     handleCurrentChange (page_num) {
       this.$refs.multipleTable.clearSelection()
       this.params.page = page_num
+
       this.getNewsList()
     },
     handleSizeChange (pageSize) {
       this.$refs.multipleTable.clearSelection()
       this.params.page = 1
       this.params.pageSize = pageSize
+
       this.getNewsList()
     },
     searchByKey () {
       this.params.page = 1
+
       this.getNewsList()
     },
     storeChangeSelect () {
@@ -442,6 +450,7 @@ export default {
         delete this.params.store_gt
       }
       this.params.page = 1
+
       this.getNewsList()
     },
     handleSelectAll (val) {
@@ -530,11 +539,13 @@ export default {
             this.total_count = parseInt(response.data.data.total_count)
             this.loading = false
             // 回显
+
             this.toggleSelection(this.relItemsIds)
           })
         } else {
           getDistributorItems(param).then((response) => {
             this.itemsData = response.data.data.list
+
             this.total_count = parseInt(response.data.data.total_count)
             this.loading = false
           })
@@ -584,6 +595,7 @@ export default {
           this.itemType = 'normal'
           break
       }
+
       this.getNewsList()
     },
     getGoodsBranchList (searchVal = '') {
@@ -683,6 +695,7 @@ export default {
       if (newVal.id) {
         this.params.distributor_id = newVal.id
         this.store = newVal
+
         this.getNewsList()
       }
     },
@@ -760,6 +773,7 @@ export default {
       if (newVal.id) {
         this.params.distributor_id = newVal.id
         this.store = newVal
+
         this.getNewsList()
       }
     },

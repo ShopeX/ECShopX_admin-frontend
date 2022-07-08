@@ -34,7 +34,10 @@
             />
             (天)后自动完成
           </el-form-item>
-          <el-form-item label="订单售后时效:">
+          <el-form-item
+            v-if="!VERSION_IN_PURCHASE"
+            label="订单售后时效:"
+          >
             已确认收货订单，将在
             <el-input
               v-model="form.latest_aftersale_time"
@@ -46,7 +49,10 @@
             />
             (天)后不可申请售后
           </el-form-item>
-          <el-form-item label="售后自动驳回时效:">
+          <el-form-item
+            v-if="!VERSION_IN_PURCHASE"
+            label="售后自动驳回时效:"
+          >
             退货退款同意后未退回商品，将在
             <el-input
               v-model="form.auto_refuse_time"
@@ -59,6 +65,7 @@
             (天)后驳回售后
           </el-form-item>
           <el-form-item
+            v-if="!VERSION_IN_PURCHASE"
             label="未发货订单申请退款是否自动审批同意:"
             width="300px"
           >

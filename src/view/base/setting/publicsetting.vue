@@ -198,6 +198,7 @@ export default {
           key: 'dianwu_show_status',
           type: 'switch',
           tip: '移动端会员中心是否展示店务端入口',
+          isShow: !VERSION_IN_PURCHASE,
           onChange: async (e) => {
             const { dianwu_show_status } = this.form
             await this.$api.company.setDianwuShowStatus({
@@ -213,12 +214,17 @@ export default {
           label: '商品列表/商详页',
           key: 'item_page',
           type: 'checkbox',
-          options: [
-            { label: 0, name: '销售价', disabled: true },
-            { label: 1, name: '原价' },
-            { label: 2, name: '会员等级价' },
-            { label: 3, name: '付费会员价' }
-          ],
+          options: VERSION_IN_PURCHASE
+            ? [
+                { label: 0, name: '销售价', disabled: true },
+                { label: 1, name: '原价' }
+              ]
+            : [
+                { label: 0, name: '销售价', disabled: true },
+                { label: 1, name: '原价' },
+                { label: 2, name: '会员等级价' },
+                { label: 3, name: '付费会员价' }
+              ],
           onChange: async (e) => {
             this.saveItemPriceSetting()
           }
@@ -227,10 +233,12 @@ export default {
           label: '购物车',
           key: 'cart_page',
           type: 'checkbox',
-          options: [
-            { label: 0, name: '销售价/会员等级价/付费会员价', disabled: true },
-            { label: 1, name: '原价' }
-          ],
+          options: VERSION_IN_PURCHASE
+            ? [{ label: 1, name: '原价' }]
+            : [
+                { label: 0, name: '销售价/会员等级价/付费会员价', disabled: true },
+                { label: 1, name: '原价' }
+              ],
           onChange: async (e) => {
             this.saveItemPriceSetting()
           }
@@ -239,10 +247,12 @@ export default {
           label: '订单详情',
           key: 'order_page',
           type: 'checkbox',
-          options: [
-            { label: 0, name: '销售价/会员等级价/付费会员价', disabled: true },
-            { label: 1, name: '原价' }
-          ],
+          options: VERSION_IN_PURCHASE
+            ? [{ label: 1, name: '原价' }]
+            : [
+                { label: 0, name: '销售价/会员等级价/付费会员价', disabled: true },
+                { label: 1, name: '原价' }
+              ],
           onChange: async (e) => {
             this.saveItemPriceSetting()
           }

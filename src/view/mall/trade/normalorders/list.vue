@@ -54,6 +54,7 @@
           </el-select>
         </SpFilterFormItem>
         <SpFilterFormItem
+          v-if="!VERSION_IN_PURCHASE"
           prop="source"
           label="订单来源:"
         >
@@ -72,6 +73,7 @@
           </el-select>
         </SpFilterFormItem>
         <SpFilterFormItem
+          v-if="!VERSION_IN_PURCHASE"
           prop="order_class"
           label="订单类型:"
         >
@@ -147,7 +149,7 @@
           />
         </SpFilterFormItem>
         <SpFilterFormItem
-          v-if="!VERSION_STANDARD"
+          v-if="!VERSION_STANDARD && !VERSION_IN_PURCHASE"
           prop="distributor_type"
           label="订单分类:"
         >
@@ -166,7 +168,9 @@
           </el-select>
         </SpFilterFormItem>
         <SpFilterFormItem
-          v-if="(!isMicorMall || login_type != 'distributor') && !VERSION_B2C"
+          v-if="
+            (!isMicorMall || login_type != 'distributor') && !VERSION_B2C && !VERSION_IN_PURCHASE
+          "
           prop="distributor_id"
           label="店铺:"
         >
@@ -177,6 +181,7 @@
           />
         </SpFilterFormItem>
         <SpFilterFormItem
+          v-if="!VERSION_IN_PURCHASE"
           prop="subDistrict"
           label="选择街道:"
         >

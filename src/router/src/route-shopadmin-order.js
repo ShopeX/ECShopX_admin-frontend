@@ -38,6 +38,17 @@ export default {
       ]
     },
     {
+      path: 'aftersalesrefundlist',
+      name: `退款单`,
+      component: () => import('@/view/mall/aftersales/refundList'),
+      children: [
+        {
+          path: 'detail/:itemId?',
+          component: () => import('@/view/mall/aftersales/refundDetail')
+        }
+      ]
+    },
+    {
       path: 'shippingtemplates',
       name: `运费模板`,
       component: () => import('@/view/mall/trade/shipping/templates'),

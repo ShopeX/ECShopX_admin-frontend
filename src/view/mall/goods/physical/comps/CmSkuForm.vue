@@ -666,24 +666,39 @@ export default {
       picsDialog: false,
       isGetPics: false,
       multiple: false,
-      statusOption: [
-        {
-          title: '前台可销售',
-          value: 'onsale'
-        },
-        {
-          title: '可线下销售',
-          value: 'offline_sale'
-        },
-        {
-          title: '前台仅展示',
-          value: 'only_show'
-        },
-        {
-          title: '不可销售',
-          value: 'instock'
-        }
-      ],
+      statusOption: this.VERSION_IN_PURCHASE
+        ? [
+            {
+              title: '前台可销售',
+              value: 'onsale'
+            },
+            {
+              title: '前台仅展示',
+              value: 'only_show'
+            },
+            {
+              title: '不可销售',
+              value: 'instock'
+            }
+          ]
+        : [
+            {
+              title: '前台可销售',
+              value: 'onsale'
+            },
+            {
+              title: '可线下销售',
+              value: 'offline_sale'
+            },
+            {
+              title: '前台仅展示',
+              value: 'only_show'
+            },
+            {
+              title: '不可销售',
+              value: 'instock'
+            }
+          ],
       bulkFilling: [
         {
           // item_spec: '批量填充',
@@ -741,16 +756,16 @@ export default {
       this.value.specImages[parent].item_image_url.splice(index, 1)
     },
     pickPics (data) {
-      if (this.value.specImages.length + data.length > 5) {
-        this.$message.error('最多添加5张图片!')
-        return false
-      } else {
-        if (data.length != 0) {
-          data.forEach((data) => {
-            this.value.specImages[this.rowIndex].item_image_url.push(data.url)
-          })
-        }
+      // if (this.value.specImages.length + data.length > 5) {
+      //   this.$message.error('最多添加5张图片!')
+      //   return false
+      // } else {
+      if (data.length != 0) {
+        data.forEach((data) => {
+          this.value.specImages[this.rowIndex].item_image_url.push(data.url)
+        })
       }
+      // }
       this.picsDialog = false
     },
     closePicsDialog () {

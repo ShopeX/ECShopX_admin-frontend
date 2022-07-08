@@ -21,12 +21,14 @@
         <menuoptionTemplates />
       </el-tab-pane>
       <el-tab-pane
+        v-if="!VERSION_IN_PURCHASE"
         label="页面跳转设置"
         name="redirect"
       >
         <redirectTemplates />
       </el-tab-pane>
       <el-tab-pane
+        v-if="!VERSION_IN_PURCHASE"
         label="微信分享"
         name="wechatshare"
       >

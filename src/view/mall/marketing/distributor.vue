@@ -23,7 +23,8 @@
       v-if="
         $route.path.indexOf('editor') === -1 &&
           $route.path.indexOf('details') === -1 &&
-          $route.path.indexOf('template') === -1
+          $route.path.indexOf('template') === -1 &&
+          $route.path.indexOf('wxpay') === -1
       "
     >
       <div
@@ -469,6 +470,21 @@
                 type="text"
               >复制店铺链接
             </el-button>
+            <el-button
+              type="text"
+              @click="linkWxpaysettting(scope.row)"
+            >
+              微信支付配置
+            </el-button>
+            <!-- <router-link
+              v-if="scope.row.is_valid !== 'delete' && datapass_block == '0'"
+              :to="{
+                path: matchHidePage('wxpay'),
+                query: { distributor_id: scope.row.distributor_id }
+              }"
+            >
+              <span style="margin-right: 5px">微信支付配置2</span>
+            </router-link> -->
             <!--<el-button type="text" @click="downDistributor(scope.row, 'scancode')">扫码购页面码(微商城)</el-button>-->
             <!-- <router-link :to="{  path: matchInternalRoute('Storeshopitemanagement'), query: {distributor_id: scope.row.distributor_id}}">商品码</router-link> -->
             <!--router-link :to="{ path: matchHidePage('detail'), query: { distributor_id: scope.row.distributor_id, distributor_name: scope.row.name,parentPath: '/mall/marketing/distributor'}}">商品码</router-link-->
@@ -896,6 +912,13 @@ export default {
       this.$router.push({
         path: this.matchHidePage('template'),
         query: { distributor_id, address, name, distribution_type }
+      })
+    },
+    linkWxpaysettting (distributor) {
+      const { distributor_id, name } = distributor
+      this.$router.push({
+        path: this.matchHidePage('wxpaysetting'),
+        query: { distributor_id, name }
       })
     },
     dialogShow (id, type) {

@@ -283,11 +283,11 @@ export default {
             {
               title: '会员开通',
               id: 'vipgrades'
-            },
-            {
-              title: '积分商城',
-              id: 'pointitems'
             }
+            // {
+            //   title: '积分商城',
+            //   id: 'pointitems'
+            // }
           ]
           // if (this.VERSION_PLATFORM) {
           //   list.push({

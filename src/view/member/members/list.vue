@@ -272,6 +272,7 @@
         </export-tip>
 
         <el-button
+          v-if="!VERSION_IN_PURCHASE"
           type="primary"
           plain
           @click="chiefupload"
@@ -334,6 +335,7 @@
           width="140"
         />
         <el-table-column
+          v-if="!VERSION_IN_PURCHASE"
           prop="sex"
           label="性别"
           width="70"
@@ -347,6 +349,7 @@
         </el-table-column>
 
         <el-table-column
+          v-if="!VERSION_IN_PURCHASE"
           prop="is_chief"
           label="是否团长"
           width="80"

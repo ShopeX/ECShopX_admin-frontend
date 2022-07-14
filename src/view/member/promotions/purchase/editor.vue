@@ -676,9 +676,10 @@ export default {
       let filter = { purchase_id: this.$route.query.id }
       getPurchaseInfo(filter).then((res) => {
         this.form = res.data.data
-        const { used_roles, dependents_limitfee, employee_limitfee, item_limit } = this.form
+        const { used_roles, dependents_limitfee, employee_limitfee, item_limit, minimum_amount } = this.form
         this.form.used_roles = eval(used_roles)
         this.form.dependents_limitfee = (dependents_limitfee / 100).toFixed(2)
+        this.form.minimum_amount = (minimum_amount / 100).toFixed(2)
         this.form.employee_limitfee = (employee_limitfee / 100).toFixed(2)
         if (Array.isArray(item_limit) && item_limit.length > 0) {
           this.form.item_limit = item_limit.map((item) => {

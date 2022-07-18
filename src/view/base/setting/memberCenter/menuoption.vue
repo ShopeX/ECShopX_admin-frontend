@@ -7,10 +7,7 @@
       label-width="170px"
     >
       <div class="section-body">
-        <el-form-item
-          v-if="!VERSION_IN_PURCHASE"
-          label="是否展示自提订单："
-        >
+        <el-form-item label="是否展示自提订单：">
           <el-switch v-model="form.data.ziti_order" />
         </el-form-item>
         <!--                 <el-form-item label="是否展示推广信息：">

@@ -140,8 +140,8 @@
         />
         倍
       </el-form-item>
-      <el-form-item label="每日升值上限">
-        每日可使用升值积分上限
+      <el-form-item label="每日积分">
+        活动期内，每个客户每天最多可使用
         <el-input
           v-model="form.max_up_point"
           type="number"
@@ -150,7 +150,11 @@
           :min="1"
           :max="9999999"
         />
-        积分 （超出上限后，使用积分按原积分比率抵扣）
+        积分用于积分升值活动
+        <div style="font-size: 12px; color: #999">
+          活动期内，每个客户每天升值后积分 = 每日积分 ×
+          升值倍数，积分抵扣订单金额=（升值后积分+普通积分）× 抵扣比例
+        </div>
       </el-form-item>
       <el-form-item label="适用会员">
         <el-checkbox-group v-model="form.valid_grade">

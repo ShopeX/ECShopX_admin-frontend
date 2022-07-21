@@ -1211,7 +1211,7 @@ export default {
       currentShop: '',
       vipGrade: [
         { lv_type: 'notvip', grade_name: '普通会员' },
-        { lv_type: 'vip,sivp', grade_name: '付费会员' }
+        { lv_type: 'vip,svip', grade_name: '付费会员' }
       ],
       salesman: [],
       loadingSalesman: false,

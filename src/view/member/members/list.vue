@@ -97,11 +97,6 @@
             placeholder="请选择"
           >
             <el-option
-              key="notvip"
-              label="非付费会员"
-              value="notvip"
-            />
-            <el-option
               v-for="item in vipGrade"
               :key="item.lv_type"
               :label="item.grade_name"
@@ -386,7 +381,7 @@
           <template slot-scope="scope">
             <!-- <span v-if="scope.row.grade_id == '1'">女</span>
             <span v-else>{{ scope.row.grade_id }}</span> -->
-            <span>{{ showGrade(scope.row.grade_id) }}</span>
+            <span>{{ showGrade(scope.row.grade_id, scope.row.vip_grade) }}</span>
           </template>
         </el-table-column>
         <el-table-column
@@ -1214,7 +1209,10 @@ export default {
       },
       operateLog: [],
       currentShop: '',
-      vipGrade: [],
+      vipGrade: [
+        { lv_type: 'notvip', grade_name: '普通会员' },
+        { lv_type: 'vip,sivp', grade_name: '付费会员' }
+      ],
       salesman: [],
       loadingSalesman: false,
       salesmanPaging: {
@@ -1323,7 +1321,7 @@ export default {
     this.getMembers()
     this.getAllTagLists()
     this.getGradeList()
-    this.getVipList()
+    // this.getVipList()
     this.getShopsList()
     getMemberRegisterSetting().then((response) => {
       delete response.data.data.content_agreement
@@ -1510,8 +1508,23 @@ export default {
       this.loading = false
     },
     async getGradeList () {
-      const res = await this.$api.membercard.getGradeList()
-      this.levelData = res || []
+      const gradeList = await this.$api.membercard.getGradeList()
+      const vipGradeList = await this.$api.cardticket.listVipGrade()
+      const _levelData = []
+      gradeList.forEach(({ grade_id, grade_name }) => {
+        _levelData.push({
+          grade_id,
+          grade_name
+        })
+      })
+      vipGradeList.forEach(({ vip_grade_id, grade_name, lv_type }) => {
+        _levelData.push({
+          grade_id: vip_grade_id,
+          grade_name,
+          lv_type
+        })
+      })
+      this.levelData = _levelData
     },
     async getAllTagLists () {
       const params = {
@@ -1533,12 +1546,17 @@ export default {
       })
       this.wxShopsList = list
     },
-    showGrade (id) {
-      if (this.levelData.length > 0) {
-        return this.levelData.filter((element) => {
-          return id == element.grade_id
-        })[0].grade_name
+    showGrade (grade_id, vip_grade) {
+      if (vip_grade) {
+        return this.levelData.find((item) => item.lv_type == vip_grade).grade_name
+      } else {
+        return this.levelData.find((item) => item.grade_id == grade_id).grade_name
       }
+      // if (this.levelData.length > 0) {
+      //   return this.levelData.filter((element) => {
+      //     return id == element.grade_id
+      //   })[0].grade_name
+      // }
     },
     getDetail (userid) {
       let isShopadmin = false

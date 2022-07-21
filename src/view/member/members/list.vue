@@ -1519,9 +1519,9 @@ export default {
       })
       vipGradeList.forEach(({ vip_grade_id, grade_name, lv_type }) => {
         _levelData.push({
-          grade_id: vip_grade_id,
-          grade_name,
-          lv_type
+          grade_id: lv_type,
+          grade_name
+          // lv_type
         })
       })
       this.levelData = _levelData
@@ -1548,15 +1548,10 @@ export default {
     },
     showGrade (grade_id, vip_grade) {
       if (vip_grade) {
-        return this.levelData.find((item) => item.lv_type == vip_grade).grade_name
+        return this.levelData.find((item) => item.grade_id == vip_grade).grade_name
       } else {
         return this.levelData.find((item) => item.grade_id == grade_id).grade_name
       }
-      // if (this.levelData.length > 0) {
-      //   return this.levelData.filter((element) => {
-      //     return id == element.grade_id
-      //   })[0].grade_name
-      // }
     },
     getDetail (userid) {
       let isShopadmin = false

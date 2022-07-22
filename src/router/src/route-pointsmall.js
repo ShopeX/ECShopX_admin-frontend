@@ -69,7 +69,7 @@ export default {
       ]
     },
     {
-      path: 'pointsmallsetting',
+      path: 'setting/pointsmallsetting',
       name: `基础设置`,
       component: () => import('@/view/mall/pointsmallsetting/index')
     },

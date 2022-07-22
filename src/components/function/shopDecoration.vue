@@ -1087,12 +1087,21 @@ export default {
     },
     // 设置当前编辑的组件
     setCurrent (val) {
-      this.editorIndex = val
-      if (val === 'tabs') {
-        this.editorData = { ...this.tabs }
-      } else {
-        this.editorData = { ...this.components[val] }
-      }
+      // this.editorIndex = val
+      // if (val === 'tabs') {
+      //   this.editorData = { ...this.tabs }
+      // } else {
+      //   this.editorData = { ...this.components[val] }
+      // }
+      this.editorIndex = null
+      this.$nextTick(() => {
+        if (val === 'tabs') {
+          this.editorData = { ...this.tabs }
+        } else {
+          this.editorData = { ...this.components[val] }
+        }
+        this.editorIndex = val
+      })
     },
     // 删除当前组件
     removeCurrent () {

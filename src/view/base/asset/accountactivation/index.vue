@@ -87,6 +87,11 @@
 <script>
 import { activate, getActivateInfo } from '@/api/company'
 import { VERSION_STANDARD } from '@/utils'
+const login_bg_yundian = require(`@/assets/imgs/active_standard.png`)
+const login_bg_b2c = require(`@/assets/imgs/active_b2c.png`)
+const login_bg_inpurchase = require(`@/assets/imgs/active_inpurchase.png`)
+const login_bg_ecshopx = require(`@/assets/imgs/active_platform.png`)
+import { mapGetters } from 'vuex'
 export default {
   data () {
     return {
@@ -100,10 +105,25 @@ export default {
       loginType: 'default'
     }
   },
+  computed: {
+    ...mapGetters(['versionMode'])
+  },
   mounted () {
     this.loginType = this.$store.getters.login_type
-    const system = VERSION_STANDARD ? 'onex' : 'ecshopx'
-    this.logoIcon = require(`@/assets/img/${system}/logo.jpg`)
+    switch (this.versionMode) {
+      case 'standard':
+        this.logoIcon = login_bg_yundian
+        break
+      case 'in_purchase':
+        this.logoIcon = login_bg_inpurchase
+        break
+      case 'b2c':
+        this.logoIcon = login_bg_b2c
+        break
+      default:
+        this.logoIcon = login_bg_ecshopx
+        break
+    }
   },
   methods: {
     activetionAction () {

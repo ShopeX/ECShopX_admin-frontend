@@ -91,7 +91,10 @@
             <span v-else>--</span>
           </div>
         </div>
-        <div class="f_r member-right" v-if="!VERSION_IN_PURCHASE">
+        <div
+          v-if="!VERSION_IN_PURCHASE"
+          class="f_r member-right"
+        >
           <div class="right-item point-box">
             <div class="item-title">
               积分
@@ -101,7 +104,7 @@
             </div>
             <span class="item-footer" />
           </div>
-          <div class="right-item point-box" v-if="!VERSION_PLATFORM">
+          <!-- <div class="right-item point-box" v-if="!VERSION_PLATFORM">
             <div class="item-title">
               储值
             </div>
@@ -109,7 +112,7 @@
               ¥<span v-if="member.deposit">{{ member.deposit / 100 }}</span><span v-else>0</span>
             </div>
             <span class="item-footer" />
-          </div>
+          </div> -->
           <div class="right-item discount-box">
             <div class="item-title">
               折扣
@@ -170,7 +173,7 @@
           :is-load="orderLoad"
         />
       </el-tab-pane>
-      <el-tab-pane
+      <!-- <el-tab-pane
         label="预存款交易"
         name="deposit"
         v-if="!VERSION_IN_PURCHASE"
@@ -179,7 +182,7 @@
           :user-id="user_id"
           :is-load="depositLoad"
         />
-      </el-tab-pane>
+      </el-tab-pane> -->
       <!-- <el-tab-pane
         label="权益转让"
         name="transfer"
@@ -201,9 +204,9 @@
         />
       </el-tab-pane> -->
       <el-tab-pane
+        v-if="!VERSION_IN_PURCHASE"
         label="付费会员卡记录"
         name="membercard"
-        v-if="!VERSION_IN_PURCHASE"
       >
         <membercard-list
           :user-id="user_id"
@@ -212,9 +215,9 @@
         />
       </el-tab-pane>
       <el-tab-pane
+        v-if="!VERSION_IN_PURCHASE"
         label="积分记录"
         name="point"
-        v-if="!VERSION_IN_PURCHASE"
       >
         <point-list
           :user-id="user_id"

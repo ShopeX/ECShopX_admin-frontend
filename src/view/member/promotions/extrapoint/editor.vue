@@ -135,6 +135,7 @@
         prop="condition_value"
         :rules="{ required: true, message: '升值倍数必填', trigger: 'blur' }"
       >
+        活动期内，到账积分为获得基础积分的
         <el-input
           v-model="form.condition_value"
           type="number"
@@ -144,7 +145,8 @@
           :min="1"
           :disabled="hasSaveButton ? false : true"
         />
-        （基础积分+（N-1）倍基础积分）
+        倍
+        <!-- （基础积分+（N-1）倍基础积分） -->
       </el-form-item>
 
       <el-form-item label="类型">
@@ -194,9 +196,7 @@
             :key="grade.grade_id"
             :label="grade.grade_id"
           >
-            {{
-              grade.grade_name
-            }}
+            {{ grade.grade_name }}
           </el-checkbox>
           <el-checkbox
             v-for="vipdata in vipGrade"

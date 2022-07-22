@@ -79,30 +79,49 @@
         </el-form-item>
         <!----------------------------------- 卷包功能 ----------------------------------->
 
-        <!-- <el-form-item label="选择优惠券包">
-          <div class="setting-item item-selected" v-for="(item, index) in voucher_package" :key="index">
-            <div v-if="item.imgUrl" class="upload-box">
+        <el-form-item label="选择优惠券包">
+          <div
+            v-for="(item, index) in voucher_package"
+            :key="index"
+            class="setting-item item-selected"
+          >
+            <div
+              v-if="item.imgUrl"
+              class="upload-box"
+            >
               <img
                 :src="wximageurl + item.imgUrl"
                 class="banner-uploader square thumbnail"
                 @click="couponPackageImg(index)"
-              />
+              >
             </div>
-            <div class="banner-uploader square thumbnail" v-else @click="couponPackageImg(index)">
+            <div
+              v-else
+              class="banner-uploader square thumbnail"
+              @click="couponPackageImg(index)"
+            >
               <div class="content-center">
-                <i class="iconfont icon-camera"></i>
+                <i class="iconfont icon-camera" />
               </div>
             </div>
             {{ item.title }}
-            <div class="setting-remove" @click="removeCouponPackage(index)">
-              <i class="iconfont icon-trash-alt"></i>
+            <div
+              class="setting-remove"
+              @click="removeCouponPackage(index)"
+            >
+              <i class="iconfont icon-trash-alt" />
             </div>
           </div>
-          <div class="frm-tips">只能上传jpg/png文件，且不超过2M （建议尺寸：375px * 200px）</div>
-          <el-button class="iconfont icon-cog banner-button-uploader" @click="pickCouponHanle()">
-            选择优惠券包</el-button
+          <div class="frm-tips">
+            只能上传jpg/png文件，且不超过2M （建议尺寸：375px * 200px）
+          </div>
+          <el-button
+            class="iconfont icon-cog banner-button-uploader"
+            @click="pickCouponHanle()"
           >
-        </el-form-item> -->
+            选择优惠券包
+          </el-button>
+        </el-form-item>
         <!----------------------------------- 卷包功能 ----------------------------------->
       </el-form>
     </div>

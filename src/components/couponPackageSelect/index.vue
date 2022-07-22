@@ -70,8 +70,8 @@
       >
         <p>已选择：{{ multipleSelection.length }} 包</p>
         <p style="padding: 3px 0">
-          <i class="el-icon-warning icon" /> 若有优惠券限领 1 张，券包组合含 2
-          张，按优惠券规则领取 1 张
+          <i class="el-icon-warning icon" /> 若有优惠券限领 1 张，券包组合含 2 张，按优惠券规则领取
+          1 张
         </p>
       </div>
       <div class="btn">
@@ -133,7 +133,7 @@ export default {
       total: 0,
       paging: {
         page: 1,
-        page_size: 10
+        pageSize: 10
       }
     }
   },
@@ -161,10 +161,8 @@ export default {
     async getConfig () {
       this.loading = true
       const { list, count } = await this.$api.coupons_package.packageList({
-        params: {
-          ...this.query,
-          ...this.paging
-        }
+        ...this.query,
+        ...this.paging
       })
       this.loading = false
 
@@ -236,7 +234,7 @@ export default {
       this.getConfig()
     },
     handleSizeChange (val) {
-      this.paging.page_size = val
+      this.paging.pageSize = val
       this.paging.page = 1
       this.getConfig()
     },

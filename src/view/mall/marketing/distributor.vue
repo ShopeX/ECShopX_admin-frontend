@@ -115,9 +115,9 @@
           />
         </SpFilterFormItem>
         <SpFilterFormItem
+          v-if="VERSION_PLATFORM"
           prop="tag_id"
           label="标签:"
-          v-if="VERSION_PLATFORM"
         >
           <el-cascader
             v-model="params.tag_id"
@@ -137,9 +137,9 @@
           />
         </SpFilterFormItem>
         <SpFilterFormItem
+          v-if="!VERSION_STANDARD"
           prop="distribution_type"
           label="店铺类型:"
-          v-if="!VERSION_STANDARD"
         >
           <el-select
             v-model="params.distribution_type"
@@ -161,9 +161,9 @@
           </el-select>
         </SpFilterFormItem>
         <SpFilterFormItem
+          v-if="!VERSION_STANDARD && $store.getters.login_type == 'admin'"
           prop="merchant_name"
           label="所属商家:"
-          v-if="!VERSION_STANDARD && $store.getters.login_type == 'admin'"
         >
           <el-input
             v-model="params.merchant_name"
@@ -1008,6 +1008,7 @@ export default {
             }
           }
         }
+        this.onSearch()
       })
     },
     switchChangeAuditGoods (index, row) {

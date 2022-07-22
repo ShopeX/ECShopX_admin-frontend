@@ -76,20 +76,20 @@
           label="实体子订单导出"
           name="normal_order"
         />
-        <el-tab-pane
+        <!-- <el-tab-pane
           label="社区团购销售数据导出"
           name="normal_community_order"
-        />
+        /> -->
         <el-tab-pane
           v-if="!VERSION_IN_PURCHASE"
           label="发票信息导出"
           name="invoice"
         />
-        <el-tab-pane
+        <!-- <el-tab-pane
           v-if="!VERSION_IN_PURCHASE"
           label="药品需求单"
           name="drug_order"
-        />
+        /> -->
         <el-tab-pane
           label="商品统计导出"
           name="goods_data"
@@ -107,11 +107,11 @@
           label="店铺商品导出"
           name="distributor_items"
         />
-        <el-tab-pane
+        <!-- <el-tab-pane
           v-if="!VERSION_IN_PURCHASE"
           label="积分商品导出"
           name="pointsmallitems"
-        />
+        /> -->
         <!-- <el-tab-pane
           label="权益导出"
           name="right"

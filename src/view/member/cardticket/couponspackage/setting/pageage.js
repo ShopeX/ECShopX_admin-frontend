@@ -51,10 +51,14 @@ export default (vm) => {
         action: {
           type: 'link',
           handler: async (val) => {
-            const result = await vm.$api.coupons_package.deleteCoupon({
+            await vm.$confirm(`删除券包？`, '提示', {
+              confirmButtonText: '确定',
+              cancelButtonText: '取消'
+            })
+            const { status } = await vm.$api.coupons_package.deleteCoupon({
               package_id: val[0].package_id
             })
-            if (result.data.data.status) {
+            if (status) {
               vm.$message.success('删除成功')
               vm.$refs.finder.refresh()
             } else {

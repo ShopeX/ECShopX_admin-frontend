@@ -1,19 +1,40 @@
 <template>
   <div class="memberReg">
-    <el-tabs v-model="activeName" type="border-card" @tab-click="handleClick">
-      <el-tab-pane label="注册项配置" name="first">
+    <el-tabs
+      v-model="activeName"
+      type="border-card"
+      @tab-click="handleClick"
+    >
+      <el-tab-pane
+        label="注册项配置"
+        name="first"
+      >
         <el-card class="box-card">
-          <div slot="header" class="between">
+          <div
+            slot="header"
+            class="between"
+          >
             <span>会员中心个人信息录入项配置</span>
 
             <div>
-              <el-button type="primary" @click="showAddDialog()"> 新增配置 </el-button>
-              <label>初次授权时强制填写</label>
-              <el-switch v-model="isMustAuth" @change="onChangeMustAuth" />
+              <el-button
+                type="primary"
+                @click="showAddDialog()"
+              >
+                新增配置
+              </el-button>
+              <!-- <label>初次授权时强制填写</label>
+              <el-switch v-model="isMustAuth" @change="onChangeMustAuth" /> -->
             </div>
           </div>
-          <el-table v-loading="isLoading" :data="tableData">
-            <el-table-column label="信息" prop="label" />
+          <el-table
+            v-loading="isLoading"
+            :data="tableData"
+          >
+            <el-table-column
+              label="信息"
+              prop="label"
+            />
             <el-table-column label="是否启用">
               <template slot-scope="scope">
                 <el-switch
@@ -31,7 +52,7 @@
                 />
               </template>
             </el-table-column>
-            <el-table-column label="必填">
+            <!-- <el-table-column label="必填">
               <template slot-scope="scope">
                 <el-switch
                   :value="!!scope.row.is_required"
@@ -63,16 +84,24 @@
                   "
                 />
               </template>
-            </el-table-column>
+            </el-table-column> -->
             <el-table-column label="信息格式">
               <template slot-scope="scope">
                 {{ scope.row.field_type | filterType }}
               </template>
             </el-table-column>
-            <el-table-column label="提示文案" prop="alert_required_message" />
+            <el-table-column
+              label="提示文案"
+              prop="alert_required_message"
+            />
             <el-table-column label="操作">
               <template slot-scope="scope">
-                <el-button type="text" @click="showAddDialog(scope.row)"> 编辑 </el-button>
+                <el-button
+                  type="text"
+                  @click="showAddDialog(scope.row)"
+                >
+                  编辑
+                </el-button>
                 <el-button
                   v-if="!scope.row.is_default"
                   type="text"
@@ -96,13 +125,25 @@
           />
         </div>
       </el-tab-pane>
-      <el-tab-pane label="注册协议与隐私政策配置" class="paneSecond" name="second">
+      <el-tab-pane
+        label="注册协议与隐私政策配置"
+        class="paneSecond"
+        name="second"
+      >
         <div class="mainSecond">
-          <el-form ref="privacy" :model="privacyForm" :rles="rules" label-width="100px">
+          <el-form
+            ref="privacy"
+            :model="privacyForm"
+            :rles="rules"
+            label-width="100px"
+          >
             <div class="section-white content-padded">
               <el-card class="box-card">
                 <div class="text item">
-                  <el-form-item label="注册协议标题" prop="member_register.title">
+                  <el-form-item
+                    label="注册协议标题"
+                    prop="member_register.title"
+                  >
                     <el-input
                       v-model="privacyForm.member_register.title"
                       placeholder="注册协议标题"
@@ -111,7 +152,10 @@
                       maxlength="15"
                     />
                   </el-form-item>
-                  <el-form-item label="注册协议" prop="member_register.content">
+                  <el-form-item
+                    label="注册协议"
+                    prop="member_register.content"
+                  >
                     <vue-html5-editor
                       :content="privacyForm.member_register.content"
                       :height="360"
@@ -124,7 +168,10 @@
             <div class="section-white content-padded">
               <el-card class="box-card">
                 <div class="text item">
-                  <el-form-item label="隐私政策标题" prop="privacy.title">
+                  <el-form-item
+                    label="隐私政策标题"
+                    prop="privacy.title"
+                  >
                     <el-input
                       v-model="privacyForm.privacy.title"
                       placeholder="隐私政策标题"
@@ -133,7 +180,10 @@
                       maxlength="15"
                     />
                   </el-form-item>
-                  <el-form-item label="隐私政策" prop="privacy.content">
+                  <el-form-item
+                    label="隐私政策"
+                    prop="privacy.content"
+                  >
                     <vue-html5-editor
                       :content="privacyForm.privacy.content"
                       :height="360"
@@ -145,12 +195,21 @@
             </div>
           </el-form>
           <div class="section-footer with-border content-center">
-            <el-button type="primary" @click="saveContent"> 保存 </el-button>
+            <el-button
+              type="primary"
+              @click="saveContent"
+            >
+              保存
+            </el-button>
           </div>
         </div>
       </el-tab-pane>
     </el-tabs>
-    <el-dialog :visible.sync="showAdd" title="编辑配置" @close="cancelEdit">
+    <el-dialog
+      :visible.sync="showAdd"
+      title="编辑配置"
+      @close="cancelEdit"
+    >
       <el-form
         ref="editform"
         :model="editform"
@@ -158,11 +217,20 @@
         class="editform"
         label-width="120px"
       >
-        <el-form-item label="配置标题" prop="label">
-          <el-input v-model="editform.label" type="text" />
+        <el-form-item
+          label="配置标题"
+          prop="label"
+        >
+          <el-input
+            v-model="editform.label"
+            type="text"
+          />
         </el-form-item>
         <el-form-item label="信息格式">
-          <el-select v-model="editform.field_type" @change="fieldTypeChange">
+          <el-select
+            v-model="editform.field_type"
+            @change="fieldTypeChange"
+          >
             <el-option
               v-for="item in formTypeList"
               :key="item.type"
@@ -171,14 +239,29 @@
             />
           </el-select>
         </el-form-item>
-        <el-form-item v-if="editform.field_type === 2" label="数值范围" prop="range">
+        <el-form-item
+          v-if="editform.field_type === 2"
+          label="数值范围"
+          prop="range"
+        >
           <el-row class="rangRow">
             <el-col :span="11">
-              <el-input v-model="editform.range.start" type="number" />
+              <el-input
+                v-model="editform.range.start"
+                type="number"
+              />
             </el-col>
-            <el-col :span="2" style="text-align: center"> - </el-col>
+            <el-col
+              :span="2"
+              style="text-align: center"
+            >
+              -
+            </el-col>
             <el-col :span="11">
-              <el-input v-model="editform.range.end" type="number" />
+              <el-input
+                v-model="editform.range.end"
+                type="number"
+              />
             </el-col>
           </el-row>
         </el-form-item>
@@ -196,7 +279,11 @@
             show-word-limit
           >
             <template slot="append">
-              <el-button type="primary" :disabled="!isSelectValue" @click="saveSelect">
+              <el-button
+                type="primary"
+                :disabled="!isSelectValue"
+                @click="saveSelect"
+              >
                 确认
               </el-button>
             </template>
@@ -214,7 +301,10 @@
             </el-tag>
           </div>
         </el-form-item>
-        <el-form-item label="提示文案" prop="alert_required_message">
+        <el-form-item
+          label="提示文案"
+          prop="alert_required_message"
+        >
           <el-input
             v-model="editform.alert_required_message"
             type="text"
@@ -223,8 +313,15 @@
           />
         </el-form-item>
         <el-form-item>
-          <el-button type="primary" @click="saveForm"> 确认 </el-button>
-          <el-button @click="cancelEdit"> 取消 </el-button>
+          <el-button
+            type="primary"
+            @click="saveForm"
+          >
+            确认
+          </el-button>
+          <el-button @click="cancelEdit">
+            取消
+          </el-button>
         </el-form-item>
       </el-form>
     </el-dialog>
@@ -273,12 +370,12 @@ const typeList = [
 ]
 export default {
   filters: {
-    filterType(val) {
+    filterType (val) {
       const data = typeList.find((item) => item.type === val)
       return data.name
     }
   },
-  data() {
+  data () {
     const validRange = (rule, value, callback) => {
       if (!value.start || !value.end || value.start >= value.end) {
         callback(new Error('请输入正确的数字范围'))
@@ -347,23 +444,23 @@ export default {
     }
   },
   computed: {
-    isSelectValue({ selectValue }) {
+    isSelectValue ({ selectValue }) {
       return !!selectValue.label
     }
   },
-  mounted() {
+  mounted () {
     this.getFormItems()
     this.getShopRules()
     this.getMemberFieldSetting()
   },
   methods: {
     //选择商品分页
-    pageChange(val) {
+    pageChange (val) {
       this.pageParam.page = val
       this.getFormItems()
     },
     // 获取配置表单
-    async getFormItems(isInit = false) {
+    async getFormItems (isInit = false) {
       this.isLoading = true
       if (isInit) {
         this.pageParam.page = 1
@@ -380,7 +477,7 @@ export default {
       this.total_count = total_count
     },
     // 获取商城协议
-    async getShopRules() {
+    async getShopRules () {
       const data = await getRulesInfo()
       const rules = Array.isArray(data.data.data) ? {} : data.data.data
       this.privacyForm.member_register = rules.member_register || {
@@ -393,7 +490,7 @@ export default {
       }
     },
     // 保存编辑
-    saveForm() {
+    saveForm () {
       this.$refs.editform.validate(async (valid) => {
         if (valid) {
           if (!this.editform.id) {
@@ -407,7 +504,7 @@ export default {
       })
     },
     // 取消编辑
-    cancelEdit() {
+    cancelEdit () {
       this.showAdd = false
       this.selectValue = {
         label: '',
@@ -428,7 +525,7 @@ export default {
       }
     },
     // 切换
-    fieldTypeChange() {
+    fieldTypeChange () {
       this.editform.radio_list = []
       this.selectValue = {
         label: '',
@@ -436,7 +533,7 @@ export default {
       }
     },
     // 存储select单选数据
-    saveSelect() {
+    saveSelect () {
       const { selectValue, editform } = this
       if (!selectValue.label) {
         this.$message({
@@ -452,14 +549,14 @@ export default {
       }
     },
     // 移除tag
-    handleRmoveTag(tag) {
+    handleRmoveTag (tag) {
       const { editform } = this
       const { key } = tag
       const findIndex = editform.radio_list.findIndex((item) => item.key === key)
       editform.radio_list.splice(findIndex, 1)
     },
     // 显示添加
-    showAddDialog(editInfo = {}) {
+    showAddDialog (editInfo = {}) {
       if (editInfo.id) {
         const {
           id = '',
@@ -491,7 +588,7 @@ export default {
       this.showAdd = true
     },
     // 删除规则
-    deleteField(data) {
+    deleteField (data) {
       const { id } = data
       this.$confirm('此操作将删除此规则, 是否继续?', '提示', {
         confirmButtonText: '确定',
@@ -507,7 +604,7 @@ export default {
       })
     },
     // 切换状态
-    async toggleStatus(item, type) {
+    async toggleStatus (item, type) {
       const { id, status } = item
       await toggleRegForm({
         id,
@@ -516,7 +613,7 @@ export default {
       })
       this.getFormItems()
     },
-    handleClick(tab, event) {
+    handleClick (tab, event) {
       console.log(tab, event)
     },
     updateContent: function (data) {
@@ -525,7 +622,7 @@ export default {
     updatePrivacyAgreement: function (data) {
       this.privacyForm.privacy.content = data
     },
-    saveContent(type) {
+    saveContent (type) {
       this.$refs['privacy'].validate((valid) => {
         if (valid) {
           putRulesInfo({
@@ -550,12 +647,12 @@ export default {
       })
     },
     // 获取授权配置
-    async getMemberFieldSetting() {
+    async getMemberFieldSetting () {
       const res = await getMemberFieldSetting()
       const { switch_first_auth_force_validation } = res.data.data
       this.isMustAuth = !!switch_first_auth_force_validation
     },
-    async onChangeMustAuth() {
+    async onChangeMustAuth () {
       await saveMemberFieldSetting({
         switch_first_auth_force_validation: this.isMustAuth ? 1 : 0
       })

@@ -102,31 +102,40 @@
               </div>
             </div>
             <!------------------------------------- 卷包功能 -------------------------------------->
-            <!-- <div class="clearfix">
+            <div class="clearfix">
               <div class="f_l">
                 <template>
-                  <el-tooltip placement="top" width="350">
-                    <div class="tips" slot="content">
+                  <el-tooltip
+                    placement="top"
+                    width="350"
+                  >
+                    <div
+                      slot="content"
+                      class="tips"
+                    >
                       <p>客户开通会员后，系统将自动发送优惠券包</p>
                     </div>
                     <el-button
                       style="border: none; font-size: 14px; width: 100px"
                       class="btn"
                       icon="el-icon-warning-outline"
-                      >优惠劵包</el-button
                     >
+                      优惠劵包
+                    </el-button>
                   </el-tooltip>
-                  <el-button @click="pickHanle(index)">选择优惠券包</el-button>
+                  <el-button @click="pickHanle(index)">
+                    选择优惠券包
+                  </el-button>
                   <template
                     v-if="item.voucher_package !== undefined && item.voucher_package.length > 0"
                   >
-                    <span style="margin-left: 30px"
-                      >已选 {{ item.voucher_package.length }} 个劵包</span
-                    >
+                    <span
+                      style="margin-left: 30px"
+                    >已选 {{ item.voucher_package.length }} 个劵包</span>
                   </template>
                 </template>
               </div>
-            </div> -->
+            </div>
             <!------------------------------------- 卷包功能 -------------------------------------->
 
             <div class="clearfix">

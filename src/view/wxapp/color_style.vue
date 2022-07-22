@@ -75,9 +75,9 @@
             <el-form-item label="辅色调">
               <el-color-picker v-model="form.data[0].accent" />
             </el-form-item>
-            <el-form-item label="会员色">
+            <!-- <el-form-item label="会员色">
               <el-color-picker v-model="form.data[0].marketing" />
-            </el-form-item>
+            </el-form-item> -->
           </el-form>
           <el-button
             class="btn-save"
@@ -103,7 +103,7 @@
               "
             >
               <img :src="item.img">
-              <div
+              <!-- <div
                 v-if="index == 0"
                 class="ab-view"
                 style="bottom: 0; left: 82px; width: 84px; height: 33px"
@@ -121,7 +121,7 @@
                   height: 15px;
                 "
                 :style="'background:' + form.data[0].primary"
-              />
+              /> -->
             </div>
           </div>
         </div>
@@ -212,14 +212,14 @@ export default {
         //   type: 'primary',
         //   img: page09
         // },
-        {
-          type: 'marketing',
-          img: page10
-        },
+        // {
+        //   type: 'marketing',
+        //   img: page10
+        // },
         {
           type: 'primary',
           img: page11
-        }
+        },
         // {
         //   type: 'primary',
         //   img: page12
@@ -232,10 +232,10 @@ export default {
         //   type: 'primary',
         //   img: page14
         // },
-        // {
-        //   type: 'primary',
-        //   img: page15
-        // },
+        {
+          type: 'primary',
+          img: page15
+        }
         // {
         //   type: 'primary',
         //   img: page16

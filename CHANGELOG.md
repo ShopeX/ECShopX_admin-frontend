@@ -2,6 +2,27 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [3.1.0](https://git.ishopex.cn/ecshopx/ecshopx-admin/compare/v3.0.0...v3.1.0) (2022-07-21)
+
+
+### Features
+
+* 3.1.0 ([9debf7b](https://git.ishopex.cn/ecshopx/ecshopx-admin/commit/9debf7bd546f755343551f89ff9c67de2e50fa03))
+
+
+### Bug Fixes
+
+* bug ([846c358](https://git.ishopex.cn/ecshopx/ecshopx-admin/commit/846c3583b5161311799cb888aa3ed133508d0709))
+* bug修复 ([a356ec3](https://git.ishopex.cn/ecshopx/ecshopx-admin/commit/a356ec3222e8ed5c0c5160bf172007da78774117))
+* 会员列表查询 ([1ae0c68](https://git.ishopex.cn/ecshopx/ecshopx-admin/commit/1ae0c68dff03d46156a4b332803976c8e3596d9f))
+* 会员查询 ([2416efe](https://git.ishopex.cn/ecshopx/ecshopx-admin/commit/2416efed81ddd9b24ed78d9589e6b7ad28696de7))
+* 内购开启店务 ([6eb5cf3](https://git.ishopex.cn/ecshopx/ecshopx-admin/commit/6eb5cf397a42ab65ec3b96f46c621631089cd878))
+* 券包 ([e5b8d9d](https://git.ishopex.cn/ecshopx/ecshopx-admin/commit/e5b8d9d4254a390b0af7a63ab72540e65df77dca))
+* 开启自提订单 ([10ea981](https://git.ishopex.cn/ecshopx/ecshopx-admin/commit/10ea981efe45ace77df4081d44354b882302426e))
+* 激活 ([1d23ee5](https://git.ishopex.cn/ecshopx/ecshopx-admin/commit/1d23ee55e7ef89bf99981a1c4d5e25babb93e0a3))
+* 积分 ([166aa69](https://git.ishopex.cn/ecshopx/ecshopx-admin/commit/166aa69b2909b41ef9e1f36dabbb4c14478267fd))
+* 积分升值UI ([562adb4](https://git.ishopex.cn/ecshopx/ecshopx-admin/commit/562adb4f88cc7fcbf90a8160464f0795b0910b67))
+
 ## [2.10.0](https://git.ishopex.cn/ecshopx/ecshopx-admin/compare/v2.9.0...v2.10.0) (2022-06-23)
 
 

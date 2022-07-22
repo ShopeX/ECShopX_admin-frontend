@@ -1,5 +1,5 @@
 <template>
-  <el-tabs
+  <!-- <el-tabs
     v-model="activeName"
     type="border-card"
     @tab-click="handleClick"
@@ -8,15 +8,16 @@
       label="发布总部商品"
       name="relmall"
     >
-      <relMallList
-        :is-load="relmall_status"
-        :distributor-id="distributor_id"
-      />
+      
     </el-tab-pane>
-    <!--el-tab-pane label="店铺商品" name="shopself">
+    <el-tab-pane label="店铺商品" name="shopself">
       <shopSelftList :is-load="shopself_status" :distributor-id="distributor_id"></shopSelftList>
-    </el-tab-pane-->
-  </el-tabs>
+    </el-tab-pane>
+  </el-tabs> -->
+  <relMallList
+    :is-load="relmall_status"
+    :distributor-id="distributor_id"
+  />
 </template>
 
 <script>

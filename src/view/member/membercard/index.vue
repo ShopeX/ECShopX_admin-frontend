@@ -4,12 +4,12 @@
       v-model="activeName"
       type="card"
     >
-      <el-tab-pane
+      <!-- <el-tab-pane
         label="基础设置"
         name="first"
       >
         <card-setting />
-      </el-tab-pane>
+      </el-tab-pane> -->
       <el-tab-pane
         label="等级设置"
         name="second"
@@ -37,7 +37,7 @@ export default {
   },
   data () {
     return {
-      activeName: 'first'
+      activeName: 'second'
     }
   }
 }

@@ -523,6 +523,20 @@
     cursor: default;
   }
 }
+.license-txt {
+  background-color: #fef4f3;
+  border: 1px solid #f25d4c;
+  height: 40px;
+  line-height: 40px;
+  padding: 0 10px;
+  display: flex;
+  align-items: center;
+  .icon-wr {
+    font-size: 18px;
+    color: #f05e51;
+    margin-right: 2px;
+  }
+}
 </style>
 <template>
   <div
@@ -545,6 +559,18 @@
     </div>
     <el-row :gutter="20">
       <el-col :span="VERSION_PLATFORM && VUE_APP_FREE ? 19 : 20">
+        <el-row
+          v-if="activateInfo && activateInfo.license && activateInfo.license.show_expier_tip == 1"
+          :gutter="20"
+        >
+          <el-col>
+            <div class="license-txt">
+              <i class="el-icon-warning icon-wr" />{{
+                `您的授权文件将于${activateInfo.license.left_time}天后到期，到期后系统将不可使用，为避免影响业务正常开展，请尽快联系客服处理。`
+              }}
+            </div>
+          </el-col>
+        </el-row>
         <el-row :gutter="20">
           <el-col :span="7">
             <template v-if="!isBind">
@@ -797,7 +823,7 @@
                       </div>
                     </div>
                   </el-col>
-                  <el-col
+                  <!-- <el-col
                     v-if="!VERSION_IN_PURCHASE"
                     :span="12"
                   >
@@ -822,7 +848,7 @@
                         </div>
                       </div>
                     </div>
-                  </el-col>
+                  </el-col> -->
                 </el-row>
               </div>
             </section>
@@ -1468,7 +1494,7 @@
 <script>
 import { isInSalesCenter, VERSION_STANDARD } from '@/utils'
 import Chart from 'chart.js'
-import { mapMutations } from 'vuex'
+import { mapMutations, mapGetters } from 'vuex'
 import store from '../../store'
 import {
   getWechatPreAuthUrl,
@@ -1646,8 +1672,11 @@ export default {
       versionObj: {}
     }
   },
+  computed: {
+    ...mapGetters(['readLicense'])
+  },
   methods: {
-    ...mapMutations(['SET_PRODUCTION_CODE']),
+    ...mapMutations(['SET_PRODUCTION_CODE', 'SET_READ_LICENSE']),
     dingHandel (type) {
       this.dialogVisible = true
       this.dingInfo.goods_name = type
@@ -1946,6 +1975,19 @@ export default {
         // this.activateInfo.source = 'demo'
         this.SET_PRODUCTION_CODE({ productionCode: res.data.data.product_code })
         this.activateInfo.vue_ecshopx_verion = `${process.env.VUE_APP_PRODUCT_MODEL}-${config.version}`
+        if (this.readLicense == 0 && this.activateInfo.license.show_expier_tip == 1) {
+          this.$alert(
+            `您的授权文件将于${this.activateInfo.license.left_time}天后到期，到期后系统将不可使用，为避免影响业务正常开展，请尽快联系客服处理。`,
+            '授权文件即将到期',
+            {
+              confirmButtonText: '我知道了',
+              showClose: false,
+              callback: (action) => {
+                this.SET_READ_LICENSE(1)
+              }
+            }
+          )
+        }
       })
       this.getUrl()
       getCompanyStatistics().then((res) => {

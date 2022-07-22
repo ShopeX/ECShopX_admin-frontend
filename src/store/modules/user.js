@@ -21,7 +21,8 @@ const user = {
     app_type: '',
     color_theme: '',
     versionMode: 'platform',
-    sys_logo: ''
+    sys_logo: '',
+    readLicense: 0
   },
 
   mutations: {
@@ -79,6 +80,9 @@ const user = {
     },
     SET_VERSION_MODE: (state, payload) => {
       state.versionMode = payload
+    },
+    SET_READ_LICENSE: (state, payload) => {
+      state.readLicense = payload
     },
     setUserInfo (state, payload) {
       const { username, head_portrait } = payload

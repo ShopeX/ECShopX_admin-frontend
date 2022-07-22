@@ -145,7 +145,7 @@
       </div>
       <div class="btn">
         <el-button @click="cancelHandle">
-          清空
+          取消
         </el-button>
         <el-button
           type="primary"
@@ -189,10 +189,10 @@ export default {
           label: '全部类型',
           value: 'all'
         },
-        {
-          label: '兑换券',
-          value: 'new_gift'
-        },
+        // {
+        //   label: '兑换券',
+        //   value: 'new_gift'
+        // },
         // {
         //   label: '兑换券',
         //   value: 'gift'

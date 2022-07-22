@@ -13,9 +13,9 @@
         @onReset="onReset"
       >
         <SpFilterFormItem
+          v-if="!VERSION_B2C"
           prop="distributor"
           label="店铺名称:"
-          v-if="!VERSION_B2C"
         >
           <el-autocomplete
             v-model="params.distributor.name"
@@ -67,8 +67,8 @@
           label="售后状态:"
         >
           <el-select
-            clearable
             v-model="params.aftersales_status"
+            clearable
             placeholder="售后状态"
           >
             <el-option
@@ -450,8 +450,8 @@ export default {
       ],
       aftersalesTypeList: [
         { name: '仅退款', value: 'ONLY_REFUND' },
-        { name: '退货退款', value: 'REFUND_GOODS' },
-        { name: '换货', value: 'EXCHANGING_GOODS' }
+        { name: '退货退款', value: 'REFUND_GOODS' }
+        // { name: '换货', value: 'EXCHANGING_GOODS' }
       ],
       aftersalesTypeListOther: [
         { name: '仅退款', value: 'ONLY_REFUND' },

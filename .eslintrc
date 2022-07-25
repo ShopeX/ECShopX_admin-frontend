@@ -13,6 +13,9 @@
   },
   "rules": {
     "vue/require-default-prop": 0,
+    "vue/max-attributes-per-line": 0,
+    "vue/html-closing-bracket-newline": 0,
+    "vue/html-indent": 0,
     "no-unused-vars": 0,
     "space-before-function-paren": [1, "always"]
   }

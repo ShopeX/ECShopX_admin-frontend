@@ -10,11 +10,7 @@
       :close-on-press-escape="false"
     >
       <div class="query">
-        <el-select
-          v-model="query.card_type"
-          placeholder="请选择"
-          @change="selectHandle"
-        >
+        <el-select v-model="query.card_type" placeholder="请选择" @change="selectHandle">
           <el-option
             v-for="item in options"
             :key="item.value"
@@ -28,12 +24,9 @@
           style="width: 300px"
           class="input-with-select"
         >
-          <el-button
-            slot="append"
-            @click="queryHandle"
-          >
-            查询
-          </el-button>
+          <el-button slot="append" @click="queryHandle">
+查询
+</el-button>
         </el-input>
       </div>
       <div class="list">
@@ -46,50 +39,31 @@
           style="width: 100%"
           @selection-change="handleSelectionChange"
         >
-          <el-table-column
-            :reserve-selection="true"
-            type="selection"
-            width="55"
-          />
-          <el-table-column
-            label="卡劵类型"
-            width="120"
-          >
+          <el-table-column :reserve-selection="true" type="selection" width="55" />
+          <el-table-column label="卡劵类型" width="120">
             <template slot-scope="scope">
               <template v-if="scope.row.card_type == 'new_gift'">
-                兑换券
-              </template>
+兑换券
+</template>
               <template v-else-if="scope.row.card_type == 'gift'">
-                兑换券
-              </template>
+兑换券
+</template>
               <template v-else-if="scope.row.card_type == 'discount'">
-                折扣卷
-              </template>
+折扣卷
+</template>
               <template v-else-if="scope.row.card_type == 'cash'">
-                满减券
-              </template>
+满减券
+</template>
             </template>
           </el-table-column>
-          <el-table-column
-            prop="title"
-            label="卡劵名称"
-            width="120"
-          />
-          <el-table-column
-            prop="description"
-            label="卡劵说明"
-            show-overflow-tooltip
-          />
-          <el-table-column
-            prop="fixed_term"
-            label="卡劵有效期"
-            show-overflow-tooltip
-          >
+          <el-table-column prop="title" label="卡劵名称" width="120" />
+          <el-table-column prop="description" label="卡劵说明" show-overflow-tooltip />
+          <el-table-column prop="fixed_term" label="卡劵有效期" show-overflow-tooltip>
             <template slot-scope="scope">
               <template
                 v-if="
                   scope.row.date_type == 'DATE_TYPE_FIX_TIME_RANGE' ||
-                    scope.row.date_type == 'DATE_TYPE_SHORT'
+                  scope.row.date_type == 'DATE_TYPE_SHORT'
                 "
               >
                 {{ scope.row.begin_time | formatDataTime('YYYY-MM-DD hh:mm:ss') }} -
@@ -98,33 +72,21 @@
               <template
                 v-else-if="
                   scope.row.date_type == 'DATE_TYPE_FIX_TERM' ||
-                    scope.row.date_type == 'DATE_TYPE_LONG'
+                  scope.row.date_type == 'DATE_TYPE_LONG'
                 "
               >
                 {{ scope.row.takeEffect }}
               </template>
             </template>
           </el-table-column>
-          <el-table-column
-            prop="quantity"
-            label="可领取库存"
-            show-overflow-tooltip
-          >
+          <el-table-column prop="quantity" label="可领取库存" show-overflow-tooltip>
             <template slot-scope="scope">
               {{ scope.row.quantity - scope.row.get_num }}
             </template>
           </el-table-column>
-          <el-table-column
-            prop="quantity"
-            label="发送数量"
-            show-overflow-tooltip
-          >
+          <el-table-column prop="quantity" label="发送数量" show-overflow-tooltip>
             <template slot-scope="scope">
-              <el-input
-                v-model.number="scope.row.give_num"
-                placeholder="请输入"
-                type="number"
-              />
+              <el-input v-model.number="scope.row.give_num" placeholder="请输入" type="number" />
             </template>
           </el-table-column>
         </el-table>
@@ -145,14 +107,11 @@
       </div>
       <div class="btn">
         <el-button @click="cancelHandle">
-          取消
-        </el-button>
-        <el-button
-          type="primary"
-          @click="confirm"
-        >
-          确定
-        </el-button>
+取消
+</el-button>
+        <el-button type="primary" @click="confirm">
+确定
+</el-button>
       </div>
     </el-dialog>
   </div>
@@ -171,6 +130,28 @@ export default {
     }
   },
   data () {
+    const options = [
+      {
+        label: '全部类型',
+        value: 'all'
+      },
+
+      {
+        label: '折扣卷',
+        value: 'discount'
+      },
+      {
+        label: '满减券',
+        value: 'cash'
+      }
+    ]
+    if (this.VERSION_STANDARD) {
+      options.push({
+        label: '兑换券',
+        value: 'new_gift'
+      })
+    }
+
     return {
       tableData: [],
       multipleSelection: [],
@@ -184,28 +165,7 @@ export default {
         page_no: 1,
         page_size: 10
       },
-      options: [
-        {
-          label: '全部类型',
-          value: 'all'
-        },
-        // {
-        //   label: '兑换券',
-        //   value: 'new_gift'
-        // },
-        // {
-        //   label: '兑换券',
-        //   value: 'gift'
-        // },
-        {
-          label: '折扣卷',
-          value: 'discount'
-        },
-        {
-          label: '满减券',
-          value: 'cash'
-        }
-      ]
+      options: options
     }
   },
   watch: {

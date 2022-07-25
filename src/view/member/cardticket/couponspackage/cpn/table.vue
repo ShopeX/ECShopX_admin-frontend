@@ -1,49 +1,29 @@
 <template>
-  <el-table
-    ref="Table"
-    :data="seletedCoupon"
-    tooltip-effect="dark"
-    style="width: 100%"
-    border
-  >
-    <el-table-column
-      label="卡劵类型"
-      width="120"
-    >
+  <el-table ref="Table" :data="seletedCoupon" tooltip-effect="dark" style="width: 100%" border>
+    <el-table-column label="卡劵类型" width="120">
       <template slot-scope="scope">
-        <!-- <template v-if="scope.row.card_type == 'new_gift'">
-          兑换券（新）
-        </template>
-        <template v-if="scope.row.card_type == 'gift'">
+        <template v-if="scope.row.card_type == 'new_gift'">
+兑换券
+</template>
+        <!-- <template v-if="scope.row.card_type == 'gift'">
           兑换券
         </template> -->
         <template v-if="scope.row.card_type == 'discount'">
-          折扣卷
-        </template>
+折扣卷
+</template>
         <template v-if="scope.row.card_type == 'cash'">
-          满减券
-        </template>
+满减券
+</template>
       </template>
     </el-table-column>
-    <el-table-column
-      prop="title"
-      label="卡劵名称"
-      width="120"
-    />
-    <el-table-column
-      prop="description"
-      label="卡劵说明"
-      show-overflow-tooltip
-    />
-    <el-table-column
-      prop="fixed_term"
-      label="卡劵有效期"
-    >
+    <el-table-column prop="title" label="卡劵名称" width="120" />
+    <el-table-column prop="description" label="卡劵说明" show-overflow-tooltip />
+    <el-table-column prop="fixed_term" label="卡劵有效期">
       <template slot-scope="scope">
         <template
           v-if="
             scope.row.date_type == 'DATE_TYPE_FIX_TIME_RANGE' ||
-              scope.row.date_type == 'DATE_TYPE_SHORT'
+            scope.row.date_type == 'DATE_TYPE_SHORT'
           "
         >
           {{ scope.row.begin_time | formatTimestamp }} -
@@ -58,27 +38,13 @@
         </template>
       </template>
     </el-table-column>
-    <el-table-column
-      label="可领取库存"
-      show-overflow-tooltip
-      width="100"
-    >
+    <el-table-column label="可领取库存" show-overflow-tooltip width="100">
       <template slot-scope="scope">
         {{ scope.row.quantity - scope.row.get_num }}
       </template>
     </el-table-column>
-    <el-table-column
-      prop="give_num"
-      label="发送数量"
-      width="100"
-      show-overflow-tooltip
-    />
-    <el-table-column
-      v-if="type != 'edit'"
-      fixed="right"
-      label="操作"
-      width="100"
-    >
+    <el-table-column prop="give_num" label="发送数量" width="100" show-overflow-tooltip />
+    <el-table-column v-if="type != 'edit'" fixed="right" label="操作" width="100">
       <template slot-scope="scope">
         <el-button
           style="color: #409eff"

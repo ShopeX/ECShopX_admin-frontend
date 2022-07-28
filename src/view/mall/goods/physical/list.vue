@@ -1188,8 +1188,7 @@ export default {
         { title: '审核驳回', value: 'rejected' },
         { title: '等待审核', value: 'processing' },
         { title: '前台可销售', value: 'onsale' },
-        { title: '前端不展示
-', value: 'offline_sale' },
+        { title: '前端不展示', value: 'offline_sale' },
         { title: '前台仅展示', value: 'only_show' },
         { title: '不可销售', value: 'instock' }
       ]
@@ -1202,8 +1201,7 @@ export default {
     } else {
       statusOption = [
         { title: '前台可销售', value: 'onsale' },
-        { title: '前端不展示
-', value: 'offline_sale' },
+        { title: '前端不展示', value: 'offline_sale' },
         { title: '前台仅展示', value: 'only_show' },
         { title: '不可销售', value: 'instock' }
       ]

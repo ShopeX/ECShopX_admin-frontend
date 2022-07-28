@@ -356,8 +356,7 @@ export default {
           value: 'onsale'
         },
         {
-          title: '前端不展示
-',
+          title: '前端不展示',
           value: 'offline_sale'
         },
         {

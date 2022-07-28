@@ -169,7 +169,8 @@
             >
               <template slot-scope="scope">
                 <span v-if="scope.row.approve_status == 'onsale'">前台可销</span>
-                <span v-else-if="scope.row.approve_status == 'offline_sale'">可线下销售</span>
+                <span v-else-if="scope.row.approve_status == 'offline_sale'">前端不展示
+</span>
                 <span v-else-if="scope.row.approve_status == 'only_show'">前台仅展示</span>
                 <span v-else>不可销售</span>
               </template>
@@ -322,7 +323,8 @@
                 v-else-if="itemsDetailData.approve_status === 'offline_sale'"
                 class="grid-content"
               >
-                可线下销售
+                前端不展示
+
               </div>
               <div
                 v-else

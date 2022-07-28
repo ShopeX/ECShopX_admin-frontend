@@ -361,7 +361,8 @@
                   </el-button>
                 </el-popover>
                 <span v-else-if="scope.row.approve_status == 'onsale'">前台可销</span>
-                <span v-else-if="scope.row.approve_status == 'offline_sale'">可线下销售</span>
+                <span v-else-if="scope.row.approve_status == 'offline_sale'">前端不展示
+</span>
                 <span v-else-if="scope.row.approve_status == 'only_show'">前台仅展示</span>
                 <span v-else>不可销售</span>
               </template>
@@ -608,7 +609,8 @@ export default {
       specItems: [],
       statusOption: [
         { title: '前台可销售', value: 'onsale' },
-        { title: '可线下销售', value: 'offline_sale' },
+        { title: '前端不展示
+', value: 'offline_sale' },
         { title: '前台仅展示', value: 'only_show' },
         { title: '不可销售', value: 'instock' }
       ],
@@ -616,7 +618,8 @@ export default {
         { title: '审核驳回', value: 'rejected' },
         { title: '等待审核', value: 'processing' },
         { title: '前台可销售', value: 'onsale' },
-        { title: '可线下销售', value: 'offline_sale' },
+        { title: '前端不展示
+', value: 'offline_sale' },
         { title: '前台仅展示', value: 'only_show' },
         { title: '不可销售', value: 'instock' }
       ],

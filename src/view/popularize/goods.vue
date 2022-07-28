@@ -204,7 +204,8 @@
                 type="info"
                 class="grid-content"
               >
-                可线下销售
+                前端不展示
+
               </el-tag>
               <el-tag
                 v-else

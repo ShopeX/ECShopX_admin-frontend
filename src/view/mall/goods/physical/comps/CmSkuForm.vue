@@ -687,7 +687,8 @@ export default {
               value: 'onsale'
             },
             {
-              title: '可线下销售',
+              title: '前端不展示
+',
               value: 'offline_sale'
             },
             {

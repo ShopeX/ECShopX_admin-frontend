@@ -178,7 +178,8 @@
                 v-else-if="scope.row.approve_status === 'offline_sale'"
                 class="grid-content"
               >
-                可线下销售
+                前端不展示
+
               </div>
               <div
                 v-else
@@ -283,7 +284,8 @@
                 v-else-if="scope.row.approve_status === 'offline_sale'"
                 class="grid-content"
               >
-                可线下销售
+                前端不展示
+
               </div>
               <div
                 v-else

@@ -410,6 +410,7 @@ import {
   ORDER_B2C_STATUS,
   IN_PURCHASE_STATUS,
   ORDER_TYPE,
+  ORDER_TYPE_STANDARD,
   INVOICE_STATUS,
   ORDER_CATEGORY,
   PICKER_DATE_OPTIONS,
@@ -421,10 +422,6 @@ import {
 export default {
   mixins: [mixin, pageMixin],
   data () {
-    const orderType = ORDER_TYPE
-    if (this.VERSION_STANDARD) {
-      orderType.push({ title: '兑换订单', value: 'excard' })
-    }
     return {
       loading: false,
       defaultTime: ['00:00:00', '23:59:59'],
@@ -452,7 +449,7 @@ export default {
         : VERSION_IN_PURCHASE
         ? IN_PURCHASE_STATUS
         : ORDER_STATUS,
-      orderType: orderType,
+      orderType: this.VERSION_STANDARD ? ORDER_TYPE_STANDARD : ORDER_TYPE,
       invoiceStatus: INVOICE_STATUS,
       orderCategory: ORDER_CATEGORY,
       pickerOptions: PICKER_DATE_OPTIONS,

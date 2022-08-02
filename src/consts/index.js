@@ -64,6 +64,15 @@ export const ORDER_TYPE = [
   // { title: "兑换订单", value: "excard"}
 ]
 
+export const ORDER_TYPE_STANDARD = [
+  { title: '全部', value: '' },
+  { title: '团购订单', value: 'groups' },
+  { title: '秒杀订单', value: 'seckill' },
+  { title: '普通订单', value: 'normal' },
+  { title: '社区团购订单', value: 'community' },
+  { title: '兑换订单', value: 'excard' }
+]
+
 export const INVOICE_STATUS = [
   { title: '全部', value: '' },
   { title: '未开票', value: 0 },

@@ -73,7 +73,7 @@ export default {
       console.log(val)
     },
     handleAvatarSuccess (res, file) {
-      this.$emit('successHandle', res.data.data)
+      this.$emit('successHandle', res)
       this.loading = false
     },
     beforeAvatarUpload (file) {

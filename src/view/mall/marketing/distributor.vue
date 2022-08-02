@@ -802,6 +802,7 @@ import district from '../../../common/district.json'
 import shopDecoration from '@/components/function/shopDecoration'
 import pcDecoration from '@/view/pc/homePage/default'
 import { getSetting } from '@/api/fenzhang'
+import { setPaymentSetting, getPaymentSetting } from '@/api/trade'
 import shopSelect from '@/components/shopSelect'
 import mixin, { pageMixin } from '@/mixins'
 

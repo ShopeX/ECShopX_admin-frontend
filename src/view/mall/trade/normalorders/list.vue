@@ -837,7 +837,8 @@ export default {
       if (order_class == 'normal') {
         return type == '1' ? '跨境订单' : '普通订单'
       }
-      const fd = ORDER_TYPE.find((item) => item.value == order_class)
+      const _orderType = this.VERSION_STANDARD ? ORDER_TYPE_STANDARD : ORDER_TYPE
+      const fd = _orderType.find((item) => item.value == order_class)
       if (fd) {
         return fd.title
       }

@@ -1,15 +1,11 @@
 <template>
   <div>
     <div class="title">
-      积分商城基础设置
-    </div>
+积分商城基础设置
+</div>
     <el-card>
       <div style="width: 90%">
-        <el-form
-          v-loading="loading"
-          label-width="180px"
-          label-position="left"
-        >
+        <el-form v-loading="loading" label-width="180px" label-position="left">
           <el-form-item label="入口配置">
             <span class="desc">开启后，您的用户能在对应界面进入积分商城页面使用积分换购商品。</span>
           </el-form-item>
@@ -30,27 +26,20 @@
 
     <el-card>
       <div style="width: 70%">
-        <el-form
-          v-loading="loading"
-          label-width="180px"
-          :model="form"
-        >
+        <el-form v-loading="loading" label-width="180px" :model="form">
           <el-form-item label="物流费用">
             <el-radio-group v-model="form.freight_type">
               <el-radio :label="'cash'">
-                按现金
-              </el-radio>
+按现金
+</el-radio>
               <el-radio :label="'point'">
-                按积分
-              </el-radio>
+按积分
+</el-radio>
             </el-radio-group>
             <br>
             <span class="tip">说明：运费使用现金或积分支付</span>
           </el-form-item>
-          <el-form-item
-            v-if="form.freight_type == 'point'"
-            label="积分商城汇率设置"
-          >
+          <el-form-item v-if="form.freight_type == 'point'" label="积分商城汇率设置">
             <el-input
               v-model="form.proportion"
               type="number"
@@ -60,20 +49,17 @@
               :max="9999999"
             />积分 抵扣1元人民币
           </el-form-item>
-          <el-form-item
-            v-if="form.freight_type == 'point'"
-            label="积分取整设置"
-          >
+          <el-form-item v-if="form.freight_type == 'point'" label="积分取整设置">
             <el-radio-group v-model="form.rounding_mode">
               <el-radio :label="'down'">
-                向下取整
-              </el-radio>
+向下取整
+</el-radio>
               <el-radio :label="'up'">
-                向上取整
-              </el-radio>
+向上取整
+</el-radio>
             </el-radio-group>
             <br>
-            <span class="tip">说明：运费使用现金或积分支付</span>
+            <!-- <span class="tip">说明：运费使用现金或积分支付</span> -->
           </el-form-item>
           <!-- <el-form-item size="large">
             <el-button>取消</el-button>
@@ -84,12 +70,9 @@
     </el-card>
 
     <GlobalFooter>
-      <el-button
-        type="primary"
-        @click="save"
-      >
-        保存
-      </el-button>
+      <el-button type="primary" @click="save">
+保存
+</el-button>
     </GlobalFooter>
   </div>
 </template>

@@ -1,28 +1,25 @@
 <template>
   <div style="padding-bottom: 58px">
     <div class="title">
-      列表页设置
-    </div>
+列表页设置
+</div>
     <el-card v-if="!isMicorMall">
       <div class="card">
         <div class="card_title">
           <div class="card_title_tip title">
-            PC端Banner轮播图
-          </div>
+PC端Banner轮播图
+</div>
           <div class="card_title_desc">
             建议尺寸700px*450px；最多四张图，前后拖动排序；无图片则不展示该模块。
           </div>
         </div>
         <div class="card_content">
-          <img-picker
-            :max="4"
-            :value.sync="form.pc_banner"
-          />
+          <img-picker :max="4" :value.sync="form.pc_banner" />
         </div>
       </div>
     </el-card>
 
-    <el-card>
+    <!-- <el-card>
       <div class="card">
         <div class="card_title">
           <div class="card_title_tip title">
@@ -81,14 +78,11 @@
           />
         </div>
       </div>
-    </el-card>
+    </el-card> -->
     <GlobalFooter>
-      <el-button
-        type="primary"
-        @click="save"
-      >
-        保存
-      </el-button>
+      <el-button type="primary" @click="save">
+保存
+</el-button>
     </GlobalFooter>
   </div>
 </template>

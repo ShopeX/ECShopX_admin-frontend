@@ -316,7 +316,14 @@
 
 <script>
 import { mapGetters } from 'vuex'
-import { ORDER_TYPE, DISTRIBUTION_TYPE, PROFIT_TYPE, PAY_TYPE, PAY_STATUS } from '@/consts'
+import {
+  ORDER_TYPE,
+  ORDER_TYPE_STANDARD,
+  DISTRIBUTION_TYPE,
+  PROFIT_TYPE,
+  PAY_TYPE,
+  PAY_STATUS
+} from '@/consts'
 import { VERSION_STANDARD, VERSION_IN_PURCHASE } from '@/utils'
 import moment from 'moment'
 
@@ -538,8 +545,8 @@ export default {
         }
         this.is_community = true
       }
-
-      const fd = ORDER_TYPE.find((k) => k.value == order_class)
+      const _orderType = this.VERSION_STANDARD ? ORDER_TYPE_STANDARD : ORDER_TYPE
+      const fd = _orderType.find((k) => k.value == order_class)
       let crossOrderTxt = ''
       if (order_class == 'normal' && orderInfo.type == '1') {
         crossOrderTxt = `（跨境订单）`

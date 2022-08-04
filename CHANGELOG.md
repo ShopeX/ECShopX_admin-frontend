@@ -2,6 +2,22 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [3.2.0](https://git.ishopex.cn/ecshopx/ecshopx-admin/compare/v3.1.0...v3.2.0) (2022-08-04)
+
+
+### Bug Fixes
+
+* bug修复 ([64faa9c](https://git.ishopex.cn/ecshopx/ecshopx-admin/commit/64faa9cd345f6fbff318ec869982c9feb94b75ab))
+* ECX-2718 ([5881d21](https://git.ishopex.cn/ecshopx/ecshopx-admin/commit/5881d214a3f2b5e45c3a11087af541929ec8592a))
+* ECX-2733 ([cabd216](https://git.ishopex.cn/ecshopx/ecshopx-admin/commit/cabd216513d7b42b9de94613f545ca01b6b12b79))
+* ECX-2785 ([0605559](https://git.ishopex.cn/ecshopx/ecshopx-admin/commit/06055596d5f7120f0b2bb3ca830c92df62c32a75))
+* merchant端添加微信配置 ([e1c639b](https://git.ishopex.cn/ecshopx/ecshopx-admin/commit/e1c639bfad6e25dfe41ff5bd0124c099e85ae1da))
+* 优化 ([5ce433c](https://git.ishopex.cn/ecshopx/ecshopx-admin/commit/5ce433c360bc17108e61453be796864816024196))
+* 兑换券 ([db070f6](https://git.ishopex.cn/ecshopx/ecshopx-admin/commit/db070f65a31c98ab5934bf46744f3e2e0210fb5e))
+* 店铺审核售后订单 ([1f8b601](https://git.ishopex.cn/ecshopx/ecshopx-admin/commit/1f8b6012036783651e2b5a4ae995047e0a5bfe61))
+* 积分路由 ([ce2157d](https://git.ishopex.cn/ecshopx/ecshopx-admin/commit/ce2157d6395659d2b0e19205f460c858d748075f))
+* 路由更改 ([17a2a86](https://git.ishopex.cn/ecshopx/ecshopx-admin/commit/17a2a86369c8732c9bf5536846fbf9b4a074f55e))
+
 ## [3.1.0](https://git.ishopex.cn/ecshopx/ecshopx-admin/compare/v3.0.0...v3.1.0) (2022-07-21)
 
 

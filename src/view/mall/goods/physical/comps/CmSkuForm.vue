@@ -65,8 +65,8 @@
   <div class="comp-skuform">
     <div class="form-block-head clearfix">
       <div class="block-head-hd">
-        商品规格
-      </div>
+商品规格
+</div>
       <div class="block-head-ft">
         <el-switch
           v-if="!isEditor"
@@ -90,16 +90,10 @@
     </div>
     <div class="form-block-body">
       <template v-if="value.nospec">
-        <el-form
-          label-position="right"
-          label-width="100px"
-        >
+        <el-form label-position="right" label-width="100px">
           <el-row :gutter="20">
             <el-col :span="8">
-              <el-form-item
-                label="商品状态"
-                required
-              >
+              <el-form-item label="商品状态" required>
                 <el-select
                   v-model="value.specData.approve_status"
                   class="width-full"
@@ -114,10 +108,7 @@
                 </el-select>
               </el-form-item>
             </el-col>
-            <el-col
-              v-if="!isPackageItems"
-              :span="8"
-            >
+            <el-col v-if="!isPackageItems" :span="8">
               <el-form-item label="库存">
                 <el-input
                   v-model="value.specData.store"
@@ -130,11 +121,7 @@
             </el-col>
             <el-col :span="8">
               <el-form-item label="商品货号">
-                <el-input
-                  v-model="value.specData.item_bn"
-                  :maxlength="60"
-                  placeholder=""
-                />
+                <el-input v-model="value.specData.item_bn" :maxlength="60" placeholder="" />
               </el-form-item>
             </el-col>
           </el-row>
@@ -149,8 +136,8 @@
                   placeholder=""
                 >
                   <template slot="append">
-                    kg
-                  </template>
+kg
+</template>
                 </el-input>
               </el-form-item>
             </el-col>
@@ -164,8 +151,8 @@
                   placeholder=""
                 >
                   <template slot="append">
-                    m³
-                  </template>
+m³
+</template>
                 </el-input>
               </el-form-item>
             </el-col>
@@ -179,8 +166,8 @@
                   placeholder=""
                 >
                   <template slot="prepend">
-                    ¥
-                  </template>
+¥
+</template>
                 </el-input>
               </el-form-item>
             </el-col>
@@ -196,8 +183,8 @@
                   placeholder=""
                 >
                   <template slot="prepend">
-                    ¥
-                  </template>
+¥
+</template>
                 </el-input>
               </el-form-item>
             </el-col>
@@ -211,27 +198,19 @@
                   placeholder=""
                 >
                   <template slot="prepend">
-                    ¥
-                  </template>
+¥
+</template>
                 </el-input>
               </el-form-item>
             </el-col>
             <el-col :span="8">
               <el-form-item label="条形码">
-                <el-input
-                  v-model="value.specData.barcode"
-                  required
-                  min="0"
-                  placeholder=""
-                />
+                <el-input v-model="value.specData.barcode" required min="0" placeholder="" />
               </el-form-item>
             </el-col>
           </el-row>
           <el-row :gutter="20">
-            <el-col
-              v-if="pointAccess == 'items'"
-              :span="8"
-            >
+            <el-col v-if="pointAccess == 'items'" :span="8">
               <el-form-item label="获取积分">
                 <el-input
                   v-model="value.specData.point_num"
@@ -249,29 +228,18 @@
         <div class="sub-label" />
         <div class="sub-block">
           <!-- {{value.skus}} -->
-          <div
-            v-for="(item, index) in value.skus"
-            :key="index"
-            class="sku-row"
-          >
+          <div v-for="(item, index) in value.skus" :key="index" class="sku-row">
             <div class="sku-name">
-              {{ item.sku_name }}：
-            </div>
+{{ item.sku_name }}：
+</div>
             <div class="sku-list">
               <el-checkbox-group
                 v-model="item.checked_sku"
                 class="clearfix"
                 @change="handleSkuChange"
               >
-                <div
-                  v-for="(value, vn) in item.sku_value"
-                  :key="vn"
-                  class="sku-select__checkitem"
-                >
-                  <el-checkbox
-                    class="sku-checkbox"
-                    :label="value.attribute_value_id"
-                  >
+                <div v-for="(value, vn) in item.sku_value" :key="vn" class="sku-select__checkitem">
+                  <el-checkbox class="sku-checkbox" :label="value.attribute_value_id">
                     <el-input
                       v-if="item.checked_sku.indexOf(value.attribute_value_id) !== -1"
                       v-model="value.custom_attribute_value"
@@ -294,18 +262,12 @@
           </div>
         </div>
         <div class="sub-label">
-          设置规格图片
-        </div>
+设置规格图片
+</div>
         <!-- {{value.specImages}} -->
         <div class="sub-block">
-          <el-table
-            :data="value.specImages"
-            :header-cell-style="{ background: '#f5f7fa' }"
-          >
-            <el-table-column
-              label="规格"
-              width="240"
-            >
+          <el-table :data="value.specImages" :header-cell-style="{ background: '#f5f7fa' }">
+            <el-table-column label="规格" width="240">
               <template slot-scope="scope">
                 {{ scope.row.spec_custom_value_name || scope.row.spec_value_name }}
               </template>
@@ -336,14 +298,10 @@
           </el-table>
         </div>
         <div class="sub-label">
-          设置规格
-        </div>
+设置规格
+</div>
         <div class="sub-block">
-          <el-table
-            :data="bulkFilling"
-            :show-header="false"
-            :highlight-current-row="false"
-          >
+          <el-table :data="bulkFilling" :show-header="false" :highlight-current-row="false">
             <el-table-column>
               <template slot-scope="scope">
                 {{ scope.row.custom_attribute_value || scope.row.item_spec }}
@@ -351,11 +309,7 @@
             </el-table-column>
             <el-table-column label="*状态">
               <template slot-scope="scope">
-                <el-select
-                  v-model="scope.row.approve_status"
-                  size="mini"
-                  placeholder="请选择"
-                >
+                <el-select v-model="scope.row.approve_status" size="mini" placeholder="请选择">
                   <el-option
                     v-for="item in statusOption"
                     :key="item.value"
@@ -366,10 +320,7 @@
                 </el-select>
               </template>
             </el-table-column>
-            <el-table-column
-              v-if="!isPackageItems"
-              label="库存"
-            >
+            <el-table-column v-if="!isPackageItems" label="库存">
               <template slot-scope="scope">
                 <el-input
                   v-model="scope.row.store"
@@ -383,32 +334,17 @@
             </el-table-column>
             <el-table-column label="货号">
               <template slot-scope="scope">
-                <el-input
-                  v-model="scope.row.item_bn"
-                  :maxlength="60"
-                  size="mini"
-                  placeholder=""
-                />
+                <el-input v-model="scope.row.item_bn" :maxlength="60" size="mini" placeholder="" />
               </template>
             </el-table-column>
             <el-table-column label="重量">
               <template slot-scope="scope">
-                <el-input
-                  v-model="scope.row.weight"
-                  :maxlength="60"
-                  size="mini"
-                  placeholder=""
-                />
+                <el-input v-model="scope.row.weight" :maxlength="60" size="mini" placeholder="" />
               </template>
             </el-table-column>
             <el-table-column label="体积">
               <template slot-scope="scope">
-                <el-input
-                  v-model="scope.row.volume"
-                  :maxlength="60"
-                  size="mini"
-                  placeholder=""
-                />
+                <el-input v-model="scope.row.volume" :maxlength="60" size="mini" placeholder="" />
               </template>
             </el-table-column>
             <el-table-column label="销售价">
@@ -459,10 +395,7 @@
                 />
               </template>
             </el-table-column>
-            <el-table-column
-              v-if="pointAccess == 'items'"
-              label="获取积分"
-            >
+            <el-table-column v-if="pointAccess == 'items'" label="获取积分">
               <template slot-scope="scope">
                 <el-input
                   v-model="scope.row.point_num"
@@ -476,13 +409,9 @@
             </el-table-column>
             <el-table-column width="80">
               <template slot-scope="scope">
-                <el-button
-                  type="primary"
-                  size="mini"
-                  @click="fillSku"
-                >
-                  填充
-                </el-button>
+                <el-button type="primary" size="mini" @click="fillSku">
+填充
+</el-button>
               </template>
             </el-table-column>
           </el-table>
@@ -492,20 +421,10 @@
             :max-height="600"
             style="width: 100%"
           >
-            <el-table-column
-              label="规格值"
-              prop="spec_name"
-            />
-            <el-table-column
-              label="状态"
-              :render-header="renderRequire"
-            >
+            <el-table-column label="规格值" prop="spec_name" />
+            <el-table-column label="状态" :render-header="renderRequire">
               <template slot-scope="scope">
-                <el-select
-                  v-model="scope.row.approve_status"
-                  size="mini"
-                  placeholder="请选择"
-                >
+                <el-select v-model="scope.row.approve_status" size="mini" placeholder="请选择">
                   <el-option
                     v-for="item in statusOption"
                     :key="item.value"
@@ -516,11 +435,7 @@
                 </el-select>
               </template>
             </el-table-column>
-            <el-table-column
-              v-if="!isPackageItems"
-              label="库存"
-              :render-header="renderRequire"
-            >
+            <el-table-column v-if="!isPackageItems" label="库存" :render-header="renderRequire">
               <template slot-scope="scope">
                 <el-input
                   v-model="scope.row.store"
@@ -534,38 +449,20 @@
             </el-table-column>
             <el-table-column label="货号">
               <template slot-scope="scope">
-                <el-input
-                  v-model="scope.row.item_bn"
-                  :maxlength="60"
-                  size="mini"
-                  placeholder=""
-                />
+                <el-input v-model="scope.row.item_bn" :maxlength="60" size="mini" placeholder="" />
               </template>
             </el-table-column>
             <el-table-column label="重量(kg)">
               <template slot-scope="scope">
-                <el-input
-                  v-model="scope.row.weight"
-                  :maxlength="60"
-                  size="mini"
-                  placeholder=""
-                />
+                <el-input v-model="scope.row.weight" :maxlength="60" size="mini" placeholder="" />
               </template>
             </el-table-column>
             <el-table-column label="体积(m³)">
               <template slot-scope="scope">
-                <el-input
-                  v-model="scope.row.volume"
-                  :maxlength="60"
-                  size="mini"
-                  placeholder=""
-                />
+                <el-input v-model="scope.row.volume" :maxlength="60" size="mini" placeholder="" />
               </template>
             </el-table-column>
-            <el-table-column
-              label="销售价"
-              :render-header="renderRequire"
-            >
+            <el-table-column label="销售价" :render-header="renderRequire">
               <template slot-scope="scope">
                 <el-input
                   v-model="scope.row.price"
@@ -611,10 +508,7 @@
                 />
               </template>
             </el-table-column>
-            <el-table-column
-              v-if="pointAccess == 'items'"
-              label="获取积分"
-            >
+            <el-table-column v-if="pointAccess == 'items'" label="获取积分">
               <template slot-scope="scope">
                 <el-input
                   v-model="scope.row.point_num"
@@ -628,12 +522,9 @@
             </el-table-column>
             <el-table-column width="80">
               <template slot-scope="scope">
-                <el-button
-                  type="text"
-                  @click="clearSku(scope.$index)"
-                >
-                  清除
-                </el-button>
+                <el-button type="text" @click="clearSku(scope.$index)">
+清除
+</el-button>
               </template>
             </el-table-column>
           </el-table>
@@ -687,7 +578,7 @@ export default {
               value: 'onsale'
             },
             {
-              title: '前端不展示',
+              title: '前台不展示',
               value: 'offline_sale'
             },
             {

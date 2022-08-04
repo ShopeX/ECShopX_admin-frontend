@@ -1,106 +1,52 @@
 <template>
   <div>
     <div class="action-container">
-      <el-button
-        type="primary"
-        icon="iconfont icon-xinzengcaozuo-01"
-        @click="AddRecommendLikeItem"
-      >
+      <el-button type="primary" icon="iconfont icon-xinzengcaozuo-01" @click="AddRecommendLikeItem">
         添加商品
       </el-button>
-      <el-button
-        type="primary"
-        plain
-        @click="DelItemData('true')"
-      >
-        清除所有商品
-      </el-button>
+      <el-button type="primary" plain @click="DelItemData('true')">
+清除所有商品
+</el-button>
     </div>
 
-    <el-table
-      ref="multipleItemsTable"
-      v-loading="loading"
-      border
-      :data="tableList"
-    >
-      <el-table-column
-        type="selection"
-        width="55"
-      />
+    <el-table ref="multipleItemsTable" v-loading="loading" border :data="tableList">
+      <el-table-column type="selection" width="55" />
       <!-- <el-table-column prop="itemName" label="商品图片" width="300"></el-table-column> -->
-      <el-table-column
-        prop="itemName"
-        label="商品名称"
-        width="300"
-      />
-      <el-table-column
-        prop="price"
-        label="商品价格"
-        width="120"
-      >
+      <el-table-column prop="itemName" label="商品名称" width="300" />
+      <el-table-column prop="price" label="商品价格" width="120">
         <template slot-scope="scope">
-          {{ scope.row.price / 100 }}元
-        </template>
+{{ scope.row.price / 100 }}元
+</template>
       </el-table-column>
-      <el-table-column
-        prop="sort"
-        label="商品排序"
-        width="120"
-      >
+      <el-table-column prop="sort" label="商品排序" width="120">
         <template slot-scope="scope">
-          <el-input
-            v-model="scope.row.sort"
-            @change="editItemSort(scope.$index, scope.row)"
-          >
-            <i
-              slot="suffix"
-              class="el-input__icon el-icon-edit"
-            />
+          <el-input v-model="scope.row.sort" @change="editItemSort(scope.$index, scope.row)">
+            <i slot="suffix" class="el-input__icon el-icon-edit" />
           </el-input>
         </template>
       </el-table-column>
-      <el-table-column
-        prop="approve_status"
-        label="状态"
-        width="100"
-      >
+      <el-table-column prop="approve_status" label="状态" width="100">
         <template slot-scope="scope">
-          <div
-            v-if="scope.row.approve_status === 'onsale'"
-            class="grid-content"
-          >
-            前台可销售
+          <div v-if="scope.row.approve_status === 'onsale'" class="grid-content">
+前台可销售
+</div>
+          <div v-else-if="scope.row.approve_status === 'offline_sale'" class="grid-content">
+            前台不展示
           </div>
-          <div
-            v-else-if="scope.row.approve_status === 'offline_sale'"
-            class="grid-content"
-          >
-            前端不展示
-
-          </div>
-          <div
-            v-else
-            class="grid-content"
-          >
-            不可销售
-          </div>
+          <div v-else class="grid-content">
+不可销售
+</div>
         </template>
       </el-table-column>
       <el-table-column label="操作">
         <template slot-scope="scope">
-          <el-button
-            type="text"
-            @click="DelItemData('false', scope.row)"
-          >
-            删除关联
-          </el-button>
+          <el-button type="text" @click="DelItemData('false', scope.row)">
+删除关联
+</el-button>
         </template>
       </el-table-column>
     </el-table>
-    <div
-      v-if="page.page > page.pageSize"
-      class="content-padded content-center"
-    >
+    <div v-if="page.page > page.pageSize" class="content-padded content-center">
       <el-pagination
         background
         layout="total, sizes, prev, pager, next, jumper"
@@ -113,47 +59,21 @@
       />
     </div>
 
-    <sideBar
-      :visible.sync="show_sideBar"
-      title="选择商品"
-      width="60"
-    >
+    <sideBar :visible.sync="show_sideBar" title="选择商品" width="60">
       <slot v-if="editItemSortVisible">
         <el-row>
           <el-col :span="4">
-            <el-button
-              type="primary"
-              :loading="loading"
-              size="mini"
-              @click="submitActivityAction"
-            >
+            <el-button type="primary" :loading="loading" size="mini" @click="submitActivityAction">
               保存
             </el-button>
           </el-col>
         </el-row>
-        <el-table
-          v-if="form.items.length > 0"
-          :data="form.items"
-          style="line-height: normal"
-        >
-          <el-table-column
-            label="ID"
-            prop="item_id"
-            width="60"
-          />
-          <el-table-column
-            label="名称"
-            prop="item_name"
-          />
-          <el-table-column
-            label="排序"
-            width="80"
-          >
+        <el-table v-if="form.items.length > 0" :data="form.items" style="line-height: normal">
+          <el-table-column label="ID" prop="item_id" width="60" />
+          <el-table-column label="名称" prop="item_name" />
+          <el-table-column label="排序" width="80">
             <template slot-scope="scope">
-              <el-input
-                v-model="scope.row.sort"
-                size="mini"
-              />
+              <el-input v-model="scope.row.sort" size="mini" />
             </template>
           </el-table-column>
         </el-table>
@@ -161,68 +81,32 @@
       <slot v-else>
         <el-row>
           <el-col :span="8">
-            <el-button
-              type="primary"
-              class="el-icon-plus"
-              size="mini"
-              @click="relItems"
-            >
+            <el-button type="primary" class="el-icon-plus" size="mini" @click="relItems">
               选择商品
             </el-button>
           </el-col>
           <el-col :span="4">
-            <el-button
-              size="mini"
-              @click.native="handleCancel"
-            >
-              返回
-            </el-button>
+            <el-button size="mini" @click.native="handleCancel">
+返回
+</el-button>
           </el-col>
           <el-col :span="4">
-            <el-button
-              type="primary"
-              :loading="loading"
-              size="mini"
-              @click="submitActivityAction"
-            >
+            <el-button type="primary" :loading="loading" size="mini" @click="submitActivityAction">
               保存
             </el-button>
           </el-col>
         </el-row>
-        <el-table
-          v-if="form.items.length > 0"
-          :data="form.items"
-          style="line-height: normal"
-        >
-          <el-table-column
-            label="ID"
-            prop="item_id"
-            width="60"
-          />
-          <el-table-column
-            label="名称"
-            prop="item_name"
-          />
-          <el-table-column
-            label="排序"
-            width="80"
-          >
+        <el-table v-if="form.items.length > 0" :data="form.items" style="line-height: normal">
+          <el-table-column label="ID" prop="item_id" width="60" />
+          <el-table-column label="名称" prop="item_name" />
+          <el-table-column label="排序" width="80">
             <template slot-scope="scope">
-              <el-input
-                v-model="scope.row.sort"
-                size="mini"
-              />
+              <el-input v-model="scope.row.sort" size="mini" />
             </template>
           </el-table-column>
-          <el-table-column
-            label="操作"
-            width="50"
-          >
+          <el-table-column label="操作" width="50">
             <template slot-scope="scope">
-              <i
-                class="iconfont icon-trash-alt"
-                @click="deleteItemRow(scope.$index, form.items)"
-              />
+              <i class="iconfont icon-trash-alt" @click="deleteItemRow(scope.$index, form.items)" />
             </template>
           </el-table-column>
         </el-table>

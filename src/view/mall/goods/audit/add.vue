@@ -1,17 +1,8 @@
 <template>
   <div class="section section-white">
-    <el-form
-      :model="form"
-      label-width="auto"
-      label-position="left"
-      class="demo-ruleForm"
-    >
+    <el-form :model="form" label-width="auto" label-position="left" class="demo-ruleForm">
       <template v-if="!isEditor || (isEditor && !form.item_main_cat_id)">
-        <el-card
-          v-loading="mainCateLoader"
-          shadow="never"
-          header="选择主分类"
-        >
+        <el-card v-loading="mainCateLoader" shadow="never" header="选择主分类">
           <el-cascader
             v-model="selectedMainCategory"
             :options="mainCategory"
@@ -20,58 +11,30 @@
           />
         </el-card>
       </template>
-      <div
-        v-else
-        v-loading="loader"
-        class="content-padded view-flex view-flex-middle"
-      >
+      <div v-else v-loading="loader" class="content-padded view-flex view-flex-middle">
         <div>主分类：</div>
-        <el-breadcrumb
-          separator-class="el-icon-arrow-right"
-          class="inline"
-        >
-          <el-breadcrumb-item
-            v-for="(item, index) in categoryNames"
-            :key="index"
-          >
-            {{
-              item
-            }}
+        <el-breadcrumb separator-class="el-icon-arrow-right" class="inline">
+          <el-breadcrumb-item v-for="(item, index) in categoryNames" :key="index">
+            {{ item }}
           </el-breadcrumb-item>
         </el-breadcrumb>
       </div>
       <template v-if="(!isEditor && selectedMainCategory.length > 0) || isEditor">
-        <el-card
-          v-loading="loader"
-          shadow="never"
-        >
-          <div
-            slot="header"
-            class="clearfix"
-          >
+        <el-card v-loading="loader" shadow="never">
+          <div slot="header" class="clearfix">
             <span>基础信息</span>
             <el-button
               style="float: right; padding: 3px 0"
               type="text"
               @click="panelCollapse('base')"
             >
-              <i
-                class="iconfont"
-                :class="panel.base ? 'icon-window-minimize1' : 'icon-plus'"
-              />
+              <i class="iconfont" :class="panel.base ? 'icon-window-minimize1' : 'icon-plus'" />
             </el-button>
           </div>
           <transition name="el-zoom-in-top">
-            <div
-              v-show="panel.base"
-              class="form-collapse"
-            >
+            <div v-show="panel.base" class="form-collapse">
               <el-row :gutter="20">
-                <el-col
-                  :xs="24"
-                  :sm="12"
-                  :md="8"
-                >
+                <el-col :xs="24" :sm="12" :md="8">
                   <el-form-item label="*商品标题">
                     <el-input
                       v-model="form.item_name"
@@ -81,11 +44,7 @@
                     />
                   </el-form-item>
                 </el-col>
-                <el-col
-                  :xs="24"
-                  :sm="12"
-                  :md="8"
-                >
+                <el-col :xs="24" :sm="12" :md="8">
                   <el-form-item label="副标题">
                     <el-input
                       v-model="form.brief"
@@ -95,11 +54,7 @@
                     />
                   </el-form-item>
                 </el-col>
-                <el-col
-                  :xs="24"
-                  :sm="12"
-                  :md="8"
-                >
+                <el-col :xs="24" :sm="12" :md="8">
                   <el-form-item label="计量单位">
                     <el-input
                       v-model="form.item_unit"
@@ -109,24 +64,12 @@
                     />
                   </el-form-item>
                 </el-col>
-                <el-col
-                  :xs="24"
-                  :sm="12"
-                  :md="8"
-                >
+                <el-col :xs="24" :sm="12" :md="8">
                   <el-form-item label="排序编号">
-                    <el-input
-                      v-model="form.sort"
-                      placeholder=""
-                      :disabled="true"
-                    />
+                    <el-input v-model="form.sort" placeholder="" :disabled="true" />
                   </el-form-item>
                 </el-col>
-                <el-col
-                  :xs="24"
-                  :sm="12"
-                  :md="8"
-                >
+                <el-col :xs="24" :sm="12" :md="8">
                   <el-form-item label="产地">
                     <el-cascader
                       v-model="select_regions_value"
@@ -141,10 +84,7 @@
                   <el-form-item label="*商品图">
                     <div class="pics-box">
                       <ul class="goodspic-wrap">
-                        <draggable
-                          v-model="form.pics"
-                          :options="dragIssuesOptions"
-                        >
+                        <draggable v-model="form.pics" :options="dragIssuesOptions">
                           <li
                             v-for="(item, index) in form.pics"
                             :key="index"
@@ -161,24 +101,15 @@
                 </el-col>
                 <el-col :xs="24">
                   <el-form-item label="上传视频">
-                    <videoPicker
-                      :data="itemVideo"
-                      @change="pickVideo"
-                    />
+                    <videoPicker :data="itemVideo" @change="pickVideo" />
                   </el-form-item>
                 </el-col>
               </el-row>
             </div>
           </transition>
         </el-card>
-        <el-card
-          v-loading="loader"
-          shadow="never"
-        >
-          <div
-            slot="header"
-            class="clearfix"
-          >
+        <el-card v-loading="loader" shadow="never">
+          <div slot="header" class="clearfix">
             <span>是否特殊商品类型</span>
             <el-button
               style="float: right; padding: 3px 0"
@@ -192,45 +123,27 @@
             </el-button>
           </div>
           <el-radio-group v-model="form.special_type">
-            <el-radio
-              label="normal"
-              :disabled="true"
-            >
-              普通商品
-            </el-radio>
-            <el-radio
-              label="drug"
-              :disabled="true"
-            >
-              处方药
-            </el-radio>
+            <el-radio label="normal" :disabled="true">
+普通商品
+</el-radio>
+            <el-radio label="drug" :disabled="true">
+处方药
+</el-radio>
           </el-radio-group>
         </el-card>
-        <el-card
-          v-loading="loader"
-          shadow="never"
-        >
-          <div
-            slot="header"
-            class="clearfix"
-          >
+        <el-card v-loading="loader" shadow="never">
+          <div slot="header" class="clearfix">
             <span>商品参数</span>
             <el-button
               style="float: right; padding: 3px 0"
               type="text"
               @click="panelCollapse('param')"
             >
-              <i
-                class="iconfont"
-                :class="panel.param ? 'icon-window-minimize1' : 'icon-plus'"
-              />
+              <i class="iconfont" :class="panel.param ? 'icon-window-minimize1' : 'icon-plus'" />
             </el-button>
           </div>
           <transition name="el-zoom-in-top">
-            <div
-              v-show="panel.param"
-              class="form-collapse"
-            >
+            <div v-show="panel.param" class="form-collapse">
               <el-row :gutter="20">
                 <el-col
                   v-for="(item, index) in params"
@@ -267,22 +180,15 @@
             </div>
           </transition>
         </el-card>
-        <el-card
-          v-loading="loader"
-          shadow="never"
-        >
-          <div
-            slot="header"
-            class="view-flex"
-          >
+        <el-card v-loading="loader" shadow="never">
+          <div slot="header" class="view-flex">
             <div class="view-flex-item">
-              商品规格
-            </div>
+商品规格
+</div>
             <template v-if="!isEditor">
-              <span
-                v-if="skus.length === 0"
-                class="small mark"
-              >添加多规格商品请先为当前主类目绑定规格!</span>
+              <span v-if="skus.length === 0" class="small mark"
+                >添加多规格商品请先为当前主类目绑定规格!</span
+              >
               <template v-if="skus.length > 0">
                 <el-switch
                   v-model="form.nospec"
@@ -307,19 +213,9 @@
           </div>
           <template v-if="form.nospec">
             <el-row :gutter="20">
-              <el-col
-                :xs="24"
-                :sm="12"
-                :md="8"
-              >
-                <el-form-item
-                  label="商品状态"
-                  :render-header="renderRequire"
-                >
-                  <el-select
-                    v-model="form.approve_status"
-                    placeholder="请选择"
-                  >
+              <el-col :xs="24" :sm="12" :md="8">
+                <el-form-item label="商品状态" :render-header="renderRequire">
+                  <el-select v-model="form.approve_status" placeholder="请选择">
                     <el-option
                       v-for="item in statusOption"
                       :key="item.value"
@@ -329,115 +225,53 @@
                   </el-select>
                 </el-form-item>
               </el-col>
-              <el-col
-                :xs="24"
-                :sm="12"
-                :md="8"
-              >
+              <el-col :xs="24" :sm="12" :md="8">
                 <el-form-item label="库存">
-                  <el-input
-                    v-model="form.store"
-                    type="number"
-                    required
-                    min="0"
-                    placeholder=""
-                  />
+                  <el-input v-model="form.store" type="number" required min="0" placeholder="" />
                 </el-form-item>
               </el-col>
-              <el-col
-                :xs="24"
-                :sm="12"
-                :md="8"
-              >
+              <el-col :xs="24" :sm="12" :md="8">
                 <el-form-item label="商品货号">
-                  <el-input
-                    v-model="form.item_bn"
-                    :maxlength="60"
-                    placeholder=""
-                  />
+                  <el-input v-model="form.item_bn" :maxlength="60" placeholder="" />
                 </el-form-item>
               </el-col>
-              <el-col
-                :xs="24"
-                :sm="12"
-                :md="8"
-              >
+              <el-col :xs="24" :sm="12" :md="8">
                 <el-form-item label="重量">
-                  <el-input
-                    v-model="form.weight"
-                    type="number"
-                    required
-                    min="0"
-                    placeholder=""
-                  >
+                  <el-input v-model="form.weight" type="number" required min="0" placeholder="">
                     <template slot="append">
-                      kg
-                    </template>
+kg
+</template>
                   </el-input>
                 </el-form-item>
               </el-col>
-              <el-col
-                :xs="24"
-                :sm="12"
-                :md="8"
-              >
+              <el-col :xs="24" :sm="12" :md="8">
                 <el-form-item label="体积">
-                  <el-input
-                    v-model="form.volume"
-                    type="number"
-                    required
-                    min="0"
-                    placeholder=""
-                  >
+                  <el-input v-model="form.volume" type="number" required min="0" placeholder="">
                     <template slot="append">
-                      m³
-                    </template>
+m³
+</template>
                   </el-input>
                 </el-form-item>
               </el-col>
-              <el-col
-                :xs="24"
-                :sm="12"
-                :md="8"
-              >
+              <el-col :xs="24" :sm="12" :md="8">
                 <el-form-item label="销售价">
-                  <el-input
-                    v-model="form.price"
-                    type="number"
-                    required
-                    min="0"
-                    placeholder=""
-                  >
+                  <el-input v-model="form.price" type="number" required min="0" placeholder="">
                     <template slot="prepend">
-                      ¥
-                    </template>
+¥
+</template>
                   </el-input>
                 </el-form-item>
               </el-col>
-              <el-col
-                :xs="24"
-                :sm="12"
-                :md="8"
-              >
+              <el-col :xs="24" :sm="12" :md="8">
                 <el-form-item label="成本价">
-                  <el-input
-                    v-model="form.cost_price"
-                    type="number"
-                    required
-                    min="0"
-                    placeholder=""
-                  >
+                  <el-input v-model="form.cost_price" type="number" required min="0" placeholder="">
                     <template slot="prepend">
-                      ¥
-                    </template>
+¥
+</template>
                   </el-input>
                 </el-form-item>
               </el-col>
-              <el-col
-                :xs="24"
-                :sm="12"
-                :md="8"
-              >
+              <el-col :xs="24" :sm="12" :md="8">
                 <el-form-item label="原价">
                   <el-input
                     v-model="form.market_price"
@@ -447,45 +281,25 @@
                     placeholder=""
                   >
                     <template slot="prepend">
-                      ¥
-                    </template>
+¥
+</template>
                   </el-input>
                 </el-form-item>
               </el-col>
-              <el-col
-                :xs="24"
-                :sm="12"
-                :md="8"
-              >
+              <el-col :xs="24" :sm="12" :md="8">
                 <el-form-item label="条形码">
-                  <el-input
-                    v-model="form.barcode"
-                    type="number"
-                    required
-                    min="0"
-                    placeholder=""
-                  />
+                  <el-input v-model="form.barcode" type="number" required min="0" placeholder="" />
                 </el-form-item>
               </el-col>
             </el-row>
           </template>
           <template v-else>
-            <div
-              v-if="specImages.length > 0"
-              class="content-bottom-padded"
-            >
+            <div v-if="specImages.length > 0" class="content-bottom-padded">
               <div class="content-padded h3">
-                设置规格图片
-              </div>
-              <el-table
-                :data="specImages"
-                :header-cell-style="{ background: '#f5f7fa' }"
-              >
-                <el-table-column
-                  label="规格"
-                  prop="item_spec"
-                  width="240"
-                />
+设置规格图片
+</div>
+              <el-table :data="specImages" :header-cell-style="{ background: '#f5f7fa' }">
+                <el-table-column label="规格" prop="item_spec" width="240" />
                 <el-table-column label="规格图">
                   <template slot-scope="scope">
                     <imgBox
@@ -510,16 +324,12 @@
               </el-table>
             </div>
             <div class="content-padded h3">
-              设置规格
-            </div>
+设置规格
+</div>
             <el-table>
               <el-table-column label="*状态">
                 <template slot-scope="scope">
-                  <el-select
-                    v-model="scope.row.approve_status"
-                    size="mini"
-                    placeholder="请选择"
-                  >
+                  <el-select v-model="scope.row.approve_status" size="mini" placeholder="请选择">
                     <el-option
                       v-for="item in statusOption"
                       :key="item.value"
@@ -554,22 +364,12 @@
               </el-table-column>
               <el-table-column label="重量">
                 <template slot-scope="scope">
-                  <el-input
-                    v-model="scope.row.weight"
-                    :maxlength="60"
-                    size="mini"
-                    placeholder=""
-                  />
+                  <el-input v-model="scope.row.weight" :maxlength="60" size="mini" placeholder="" />
                 </template>
               </el-table-column>
               <el-table-column label="体积">
                 <template slot-scope="scope">
-                  <el-input
-                    v-model="scope.row.volume"
-                    :maxlength="60"
-                    size="mini"
-                    placeholder=""
-                  />
+                  <el-input v-model="scope.row.volume" :maxlength="60" size="mini" placeholder="" />
                 </template>
               </el-table-column>
               <el-table-column label="销售价">
@@ -622,13 +422,9 @@
               </el-table-column>
               <el-table-column width="80">
                 <template slot-scope="scope">
-                  <el-button
-                    type="primary"
-                    size="mini"
-                    @click="fillSku"
-                  >
-                    填充
-                  </el-button>
+                  <el-button type="primary" size="mini" @click="fillSku">
+填充
+</el-button>
                 </template>
               </el-table-column>
             </el-table>
@@ -644,10 +440,7 @@
                   </span>
                 </template>
               </el-table-column>
-              <el-table-column
-                label="状态"
-                :render-header="renderRequire"
-              >
+              <el-table-column label="状态" :render-header="renderRequire">
                 <template slot-scope="scope">
                   <el-select
                     v-model="scope.row.approve_status"
@@ -665,10 +458,7 @@
                   </el-select>
                 </template>
               </el-table-column>
-              <el-table-column
-                label="库存"
-                :render-header="renderRequire"
-              >
+              <el-table-column label="库存" :render-header="renderRequire">
                 <template slot-scope="scope">
                   <el-input
                     v-model="scope.row.store"
@@ -714,10 +504,7 @@
                   />
                 </template>
               </el-table-column>
-              <el-table-column
-                label="销售价"
-                :render-header="renderRequire"
-              >
+              <el-table-column label="销售价" :render-header="renderRequire">
                 <template slot-scope="scope">
                   <el-input
                     v-model="scope.row.price"
@@ -781,26 +568,19 @@
             </div>
           </template>
         </el-card>
-        <el-card
-          v-loading="loader"
-          header="图文详情"
-          shadow="never"
-        >
+        <el-card v-loading="loader" header="图文详情" shadow="never">
           <el-form-item label="模式">
             <el-radio-group v-model="mode">
               <el-radio :label="'richText'">
-                富文本
-              </el-radio>
+富文本
+</el-radio>
               <el-radio :label="'component'">
-                组件式
-              </el-radio>
+组件式
+</el-radio>
             </el-radio-group>
           </el-form-item>
           <template v-if="mode === 'richText'">
-            <vue-html5-editor
-              :content="form.intro"
-              :height="360"
-            />
+            <vue-html5-editor :content="form.intro" :height="360" />
           </template>
           <template v-else>
             <richTextEditor
@@ -812,8 +592,8 @@
         </el-card>
         <div class="section-footer with-border content-center">
           <el-button @click.native="handleCancel">
-            返回
-          </el-button>
+返回
+</el-button>
           <el-button
             v-if="form.audit_status == 'processing'"
             type="primary"
@@ -826,44 +606,28 @@
         </div>
       </template>
     </el-form>
-    <el-dialog
-      title="审核商品"
-      :visible.sync="dialogVisible"
-      width="30%"
-    >
-      <el-form
-        :model="authForm"
-        label-width="80px"
-      >
+    <el-dialog title="审核商品" :visible.sync="dialogVisible" width="30%">
+      <el-form :model="authForm" label-width="80px">
         <el-form-item label="审核状态">
           <el-radio-group v-model="authForm.audit_status">
             <el-radio label="approved">
-              通过
-            </el-radio>
+通过
+</el-radio>
             <el-radio label="rejected">
-              拒绝
-            </el-radio>
+拒绝
+</el-radio>
           </el-radio-group>
         </el-form-item>
-        <el-form-item
-          v-if="authForm.audit_status == 'rejected'"
-          label="拒绝原因"
-        >
-          <el-input
-            v-model="authForm.audit_reason"
-            type="textarea"
-          />
+        <el-form-item v-if="authForm.audit_status == 'rejected'" label="拒绝原因">
+          <el-input v-model="authForm.audit_reason" type="textarea" />
         </el-form-item>
         <el-form-item>
-          <el-button
-            type="primary"
-            @click="onSubmit"
-          >
-            确定
-          </el-button>
+          <el-button type="primary" @click="onSubmit">
+确定
+</el-button>
           <el-button @click="dialogVisible = false">
-            取消
-          </el-button>
+取消
+</el-button>
         </el-form-item>
       </el-form>
     </el-dialog>
@@ -935,7 +699,7 @@ export default {
           value: 'onsale'
         },
         {
-          title: '前端不展示',
+          title: '前台不展示',
           value: 'offline_sale'
         },
         {

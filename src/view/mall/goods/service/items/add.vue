@@ -1,8 +1,8 @@
 <template>
   <div class="section section-white">
     <div class="section-header with-border">
-      添加商品
-    </div>
+添加商品
+</div>
     <div class="section-body">
       <el-form
         ref="form"
@@ -26,65 +26,41 @@
                 label="all"
                 :disabled="form.item_id !== '' && form.consume_type === 'every' ? true : false"
               >
-                团购券类型&nbsp;<span
-                  class="frm-tips"
-                >(所有物料作为一个整体，只核销一次)</span>
+                团购券类型&nbsp;<span class="frm-tips">(所有物料作为一个整体，只核销一次)</span>
               </el-radio>
             </div>
           </el-radio-group>
         </el-form-item>
         <el-form-item label="商品名称">
           <el-col :span="12">
-            <el-input
-              v-model="form.item_name"
-              :maxlength="30"
-              placeholder=""
-            />
+            <el-input v-model="form.item_name" :maxlength="30" placeholder="" />
           </el-col>
         </el-form-item>
         <el-form-item label="简洁的描述">
           <el-col :span="12">
-            <el-input
-              v-model="form.brief"
-              type="textarea"
-            />
+            <el-input v-model="form.brief" type="textarea" />
           </el-col>
         </el-form-item>
         <el-form-item label="成本价">
           <el-col :span="5">
-            <el-input
-              v-model="form.cost_price"
-              type="number"
-              required
-              min="0"
-              placeholder=""
-            />
+            <el-input v-model="form.cost_price" type="number" required min="0" placeholder="" />
           </el-col>
           <el-col :span="1">
-            &nbsp;元
-          </el-col>
+&nbsp;元
+</el-col>
         </el-form-item>
         <el-form-item label="销售价">
           <el-col :span="5">
-            <el-input
-              v-model="form.price"
-              type="number"
-              required
-              min="0"
-              placeholder=""
-            />
+            <el-input v-model="form.price" type="number" required min="0" placeholder="" />
           </el-col>
           <el-col :span="1">
-            &nbsp;元
-          </el-col>
+&nbsp;元
+</el-col>
         </el-form-item>
         <el-form-item label="商品状态">
           <el-row :gutter="20">
             <el-col :span="12">
-              <el-select
-                v-model="form.approve_status"
-                placeholder="请选择"
-              >
+              <el-select v-model="form.approve_status" placeholder="请选择">
                 <el-option
                   v-for="item in statusOption"
                   :key="item.value"
@@ -98,68 +74,40 @@
         <el-form-item label="排序编号">
           <el-row :gutter="20">
             <el-col :span="4">
-              <el-input
-                v-model="form.sort"
-                placeholder=""
-              />
+              <el-input v-model="form.sort" placeholder="" />
             </el-col>
             <el-col :span="10">
-              数字越大越靠前
-            </el-col>
+数字越大越靠前
+</el-col>
           </el-row>
         </el-form-item>
         <el-form-item label="商品内容">
           <div class="content-bottom-padded">
-            <el-button
-              type="primary"
-              size="small"
-              icon="plus"
-              @click="addLabel"
-            >
+            <el-button type="primary" size="small" icon="plus" @click="addLabel">
               选择基础物料
             </el-button>
           </div>
-          <el-table
-            :data="form.type_labels"
-            border
-            style="line-height: normal"
-          >
-            <el-table-column
-              label="物料名称"
-              prop="labelName"
-              width="150"
-            />
-            <el-table-column
-              label="单价(元)"
-              width="90"
-            >
+          <el-table :data="form.type_labels" border style="line-height: normal">
+            <el-table-column label="物料名称" prop="labelName" width="150" />
+            <el-table-column label="单价(元)" width="90">
               <template slot-scope="scope">
                 <el-col :span="12">
-                  ￥{{ scope.row.labelPrice }}
-                </el-col>
+￥{{ scope.row.labelPrice }}
+</el-col>
               </template>
             </el-table-column>
             <el-table-column label="数量">
               <template slot-scope="scope">
                 <el-row>
                   <el-col :span="12">
-                    <el-radio
-                      v-model="scope.row.isNotLimitNum"
-                      :label="2"
-                    >
-                      限制数量
-                    </el-radio>
-                    <el-radio
-                      v-model="scope.row.isNotLimitNum"
-                      :label="1"
-                    >
-                      不限数量
-                    </el-radio>
+                    <el-radio v-model="scope.row.isNotLimitNum" :label="2">
+限制数量
+</el-radio>
+                    <el-radio v-model="scope.row.isNotLimitNum" :label="1">
+不限数量
+</el-radio>
                   </el-col>
-                  <el-col
-                    v-if="scope.row.isNotLimitNum == 2"
-                    :span="12"
-                  >
+                  <el-col v-if="scope.row.isNotLimitNum == 2" :span="12">
                     <el-input
                       v-model="scope.row.num"
                       type="number"
@@ -172,14 +120,9 @@
                 <el-row />
               </template>
             </el-table-column>
-            <el-table-column
-              label="有效期(天)"
-              width="150"
-            >
+            <el-table-column label="有效期(天)" width="150">
               <template slot-scope="scope">
-                <el-col
-                  :span="24"
-                >
+                <el-col :span="24">
                   <el-input
                     v-model="scope.row.limitTime"
                     :disabled="form.consume_type === 'all' ? true : false"
@@ -190,10 +133,7 @@
                 </el-col>
               </template>
             </el-table-column>
-            <el-table-column
-              label="操作"
-              width="100"
-            >
+            <el-table-column label="操作" width="100">
               <template slot-scope="scope">
                 <el-button
                   size="small"
@@ -209,27 +149,14 @@
         </el-form-item>
         <el-form-item label="原价">
           <el-col :span="5">
-            <el-input
-              v-model="form.market_price"
-              type="number"
-              required
-              min="0"
-              placeholder=""
-            />
+            <el-input v-model="form.market_price" type="number" required min="0" placeholder="" />
           </el-col>
           <el-col :span="1">
-            &nbsp;元
-          </el-col>
+&nbsp;元
+</el-col>
         </el-form-item>
-        <el-form-item
-          v-show="form.consume_type === 'all'"
-          label="有效期"
-          prop="date_type"
-        >
-          <el-radio-group
-            v-model="form.date_type"
-            @change="changeDatetime"
-          >
+        <el-form-item v-show="form.consume_type === 'all'" label="有效期" prop="date_type">
+          <el-radio-group v-model="form.date_type" @change="changeDatetime">
             <div style="margin-bottom: 20px">
               <el-radio
                 :disabled="
@@ -324,11 +251,7 @@
                     </div>
                   </li>
                 </ul>
-                <div
-                  v-if="form.pics.length < 9"
-                  class="upload-box"
-                  @click="handlePicsChange"
-                >
+                <div v-if="form.pics.length < 9" class="upload-box" @click="handlePicsChange">
                   <i class="el-icon-plus avatar-uploader-icon" />
                 </div>
               </div>
@@ -369,14 +292,11 @@
         </el-form-item>
         <el-form-item label=" ">
           <el-button @click.native="handleCancel">
-            取消
-          </el-button>
-          <el-button
-            type="primary"
-            @click="submitItemsAction"
-          >
-            保存
-          </el-button>
+取消
+</el-button>
+          <el-button type="primary" @click="submitItemsAction">
+保存
+</el-button>
         </el-form-item>
       </el-form>
     </div>
@@ -387,10 +307,7 @@
       :before-close="handleCancelLabelsDialog"
     >
       <template>
-        <div
-          v-if="total_count > params.pageSize"
-          class="f_r"
-        >
+        <div v-if="total_count > params.pageSize" class="f_r">
           <el-pagination
             layout="prev, pager, next"
             :total="total_count"
@@ -405,19 +322,9 @@
           style="width: 100%"
           @select="handleSelectionChange"
         >
-          <el-table-column
-            type="selection"
-            :reserve-selection="true"
-            width="55"
-          />
-          <el-table-column
-            prop="labelName"
-            label="物料名称"
-          />
-          <el-table-column
-            prop="serviceType"
-            label="系统类型"
-          >
+          <el-table-column type="selection" :reserve-selection="true" width="55" />
+          <el-table-column prop="labelName" label="物料名称" />
+          <el-table-column prop="serviceType" label="系统类型">
             <template slot-scope="scope">
               <span v-if="scope.row.serviceType === 'point'">积分</span>
               <span v-if="scope.row.serviceType === 'deposit'">储值</span>
@@ -463,7 +370,7 @@ export default {
           value: 'onsale'
         },
         {
-          title: '前端不展示',
+          title: '前台不展示',
           value: 'offline_sale'
         },
         {

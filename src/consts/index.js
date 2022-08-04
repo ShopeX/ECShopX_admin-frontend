@@ -1,6 +1,6 @@
 export const SALES_STATUS = [
   { title: '前台可销售', value: 'onsale' },
-  { title: '前端不展示', value: 'offline_sale' },
+  { title: '前台不展示', value: 'offline_sale' },
   { title: '前台仅展示', value: 'only_show' },
   { title: '不可销售', value: 'instock' }
 ]

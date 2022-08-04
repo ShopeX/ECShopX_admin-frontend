@@ -82,7 +82,6 @@ import { getSetting, saveSetting } from '../../../api/pointsmall'
 import GlobalFooter from '@/components/global_footer'
 
 export default {
-  components: {},
   components: {
     GlobalFooter
   },

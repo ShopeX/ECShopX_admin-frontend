@@ -14,11 +14,7 @@
         class="input-with-select"
         style="width: 50%"
       >
-        <el-button
-          slot="append"
-          icon="el-icon-search"
-          @click="searchByKey"
-        />
+        <el-button slot="append" icon="el-icon-search" @click="searchByKey" />
       </el-input>
     </div>
     <el-table
@@ -30,37 +26,17 @@
       :row-key="getRowKeys"
       @selection-change="handleSelectionChange"
     >
-      <el-table-column
-        type="selection"
-        :reserve-selection="true"
-        width="50"
-      />
-      <el-table-column
-        prop="itemId"
-        label="标签ID"
-        width="70"
-      />
-      <el-table-column
-        prop="itemName"
-        label="标签名称"
-      >
+      <el-table-column type="selection" :reserve-selection="true" width="50" />
+      <el-table-column prop="itemId" label="标签ID" width="70" />
+      <el-table-column prop="itemName" label="标签名称">
         <template slot-scope="scope">
-          <el-tag
-            :color="scope.row.tag_color"
-            size="mini"
-            style="color: #ffffff"
-          >
-            {{
-              scope.row.tag_name
-            }}
+          <el-tag :color="scope.row.tag_color" size="mini" style="color: #ffffff">
+            {{ scope.row.tag_name }}
           </el-tag>
         </template>
       </el-table-column>
     </el-table>
-    <div
-      v-if="total_count > params.pageSize"
-      class="tr"
-    >
+    <div v-if="total_count > params.pageSize" class="tr">
       <el-pagination
         layout="prev, pager, next"
         :total="total_count"
@@ -68,15 +44,9 @@
         @current-change="handleCurrentChange"
       />
     </div>
-    <span
-      slot="footer"
-      class="dialog-footer"
-    >
+    <span slot="footer" class="dialog-footer">
       <el-button @click="cancelAction">取 消</el-button>
-      <el-button
-        type="primary"
-        @click="saveStoreAction"
-      >确 定</el-button>
+      <el-button type="primary" @click="saveStoreAction">确 定</el-button>
     </span>
   </el-dialog>
 </template>
@@ -109,7 +79,7 @@ export default {
           value: 'onsale'
         },
         {
-          title: '前端不展示',
+          title: '前台不展示',
           value: 'offline_sale'
         },
         {

@@ -1,20 +1,14 @@
 <template>
   <div>
     <div class="content-bottom-padded">
-      <el-button
-        type="primary"
-        @click="handleBatchDownload"
-      >
-        二维码打包
-      </el-button>
+      <el-button type="primary" @click="handleBatchDownload">
+二维码打包
+</el-button>
     </div>
 
-    <el-tag
-      style="width: 100%"
-      type="warning"
-    >
-      选择商品
-    </el-tag>
+    <el-tag style="width: 100%" type="warning">
+选择商品
+</el-tag>
     <el-table
       ref="multipleItemsTable"
       v-loading="items.loading"
@@ -23,47 +17,20 @@
       border
       @selection-change="handleItemsSelectionChange"
     >
-      <el-table-column
-        type="selection"
-        width="55"
-      />
-      <el-table-column
-        prop="itemName"
-        label="商品名称"
-      />
-      <el-table-column
-        prop="price"
-        label="价格"
-        :formatter="priceformatter"
-        width="120"
-      />
-      <el-table-column
-        prop="store"
-        label="库存"
-        width="100"
-      />
-      <el-table-column
-        prop="rebate"
-        label="店铺佣金"
-        :formatter="rebateformatter"
-        width="100"
-      />
-      <el-table-column
-        label="状态"
-        width="120"
-      >
+      <el-table-column type="selection" width="55" />
+      <el-table-column prop="itemName" label="商品名称" />
+      <el-table-column prop="price" label="价格" :formatter="priceformatter" width="120" />
+      <el-table-column prop="store" label="库存" width="100" />
+      <el-table-column prop="rebate" label="店铺佣金" :formatter="rebateformatter" width="100" />
+      <el-table-column label="状态" width="120">
         <template slot-scope="scope">
           <span v-if="scope.row.approve_status == 'onsale'">前台可销售</span>
-          <span v-else-if="scope.row.approve_status == 'offline_sale'">前端不展示
-</span>
+          <span v-else-if="scope.row.approve_status == 'offline_sale'">前台不展示 </span>
           <span v-else>不可销售</span>
         </template>
       </el-table-column>
     </el-table>
-    <div
-      v-if="items.total_count > items.params.pageSize"
-      class="content-center content-top-padded"
-    >
+    <div v-if="items.total_count > items.params.pageSize" class="content-center content-top-padded">
       <el-pagination
         layout="prev, pager, next"
         :total="items.total_count"
@@ -72,12 +39,9 @@
       />
     </div>
 
-    <el-tag
-      style="width: 100%; margin-top: 20px"
-      type="warning"
-    >
-      选择分销商
-    </el-tag>
+    <el-tag style="width: 100%; margin-top: 20px" type="warning">
+选择分销商
+</el-tag>
     <el-table
       ref="multipleDistributorsTable"
       v-loading="distributors.loading"
@@ -85,22 +49,10 @@
       border
       @selection-change="handleDistributorsSelectionChange"
     >
-      <el-table-column
-        type="selection"
-        width="55"
-      />
-      <el-table-column
-        prop="name"
-        label="姓名"
-      />
-      <el-table-column
-        prop="mobile"
-        label="手机号"
-      />
-      <el-table-column
-        prop="address"
-        label="地址"
-      />
+      <el-table-column type="selection" width="55" />
+      <el-table-column prop="name" label="姓名" />
+      <el-table-column prop="mobile" label="手机号" />
+      <el-table-column prop="address" label="地址" />
     </el-table>
     <div
       v-if="distributors.total_count > distributors.params.pageSize"

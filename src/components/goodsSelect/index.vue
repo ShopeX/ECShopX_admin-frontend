@@ -10,10 +10,7 @@
     append-to-body
     @open="onOpen"
   >
-    <div
-      v-if="params.item_type === 'normal'"
-      style="margin-bottom: 15px"
-    >
+    <div v-if="params.item_type === 'normal'" style="margin-bottom: 15px">
       <StoreFilter
         v-if="!filter"
         class="store"
@@ -30,11 +27,7 @@
             clearable
             class="input-with-select"
           >
-            <el-button
-              slot="append"
-              icon="el-icon-search"
-              @click="searchByKey"
-            />
+            <el-button slot="append" icon="el-icon-search" @click="searchByKey" />
           </el-input>
         </el-col>
         <el-col :span="5">
@@ -53,10 +46,7 @@
             />
           </el-select>
         </el-col>
-        <el-col
-          v-if="!setSearch"
-          :span="5"
-        >
+        <el-col v-if="!setSearch" :span="5">
           <el-select
             v-model="params.templates_id"
             clearable
@@ -71,10 +61,7 @@
             />
           </el-select>
         </el-col>
-        <span
-          v-if="setSearch"
-          class="search-tips"
-        >选择商品数量不可超过200件</span>
+        <span v-if="setSearch" class="search-tips">选择商品数量不可超过200件</span>
         <el-col :span="6">
           <el-select
             v-model="select_branch_value"
@@ -93,10 +80,7 @@
             />
           </el-select>
         </el-col>
-        <el-col
-          :span="6"
-          class="last-col"
-        >
+        <el-col :span="6" class="last-col">
           <el-cascader
             v-model="select_category_value"
             placeholder="商品分类"
@@ -117,10 +101,7 @@
       tooltip-effect="dark"
       style="width: 100%"
     >
-      <el-table-column
-        label="选择"
-        width="70"
-      >
+      <el-table-column label="选择" width="70">
         <template slot-scope="scope">
           <el-radio
             v-model="templateRadio"
@@ -131,19 +112,9 @@
           </el-radio>
         </template>
       </el-table-column>
-      <el-table-column
-        prop="itemId"
-        label="商品ID"
-        width="70"
-      />
-      <el-table-column
-        prop="itemName"
-        label="商品名称"
-      />
-      <el-table-column
-        prop="item_spec_desc"
-        label="规格"
-      />
+      <el-table-column prop="itemId" label="商品ID" width="70" />
+      <el-table-column prop="itemName" label="商品名称" />
+      <el-table-column prop="item_spec_desc" label="规格" />
       <el-table-column
         prop="price"
         label="价格"
@@ -151,12 +122,7 @@
         :formatter="priceformatter"
         show-overflow-tooltip
       />
-      <el-table-column
-        prop="store"
-        label="库存"
-        width="80"
-        show-overflow-tooltip
-      />
+      <el-table-column prop="store" label="库存" width="80" show-overflow-tooltip />
     </el-table>
     <el-table
       v-else
@@ -175,19 +141,9 @@
         :reserve-selection="true"
         width="50"
       />
-      <el-table-column
-        prop="itemId"
-        label="商品ID"
-        width="70"
-      />
-      <el-table-column
-        prop="itemName"
-        label="商品名称"
-      />
-      <el-table-column
-        prop="item_spec_desc"
-        label="规格"
-      />
+      <el-table-column prop="itemId" label="商品ID" width="70" />
+      <el-table-column prop="itemName" label="商品名称" />
+      <el-table-column prop="item_spec_desc" label="规格" />
       <el-table-column
         prop="price"
         label="价格"
@@ -195,17 +151,9 @@
         :formatter="priceformatter"
         show-overflow-tooltip
       />
-      <el-table-column
-        prop="store"
-        label="库存"
-        width="80"
-        show-overflow-tooltip
-      />
+      <el-table-column prop="store" label="库存" width="80" show-overflow-tooltip />
     </el-table>
-    <div
-      v-if="total_count > params.pageSize"
-      class="pager"
-    >
+    <div v-if="total_count > params.pageSize" class="pager">
       <el-pagination
         background
         layout="total, sizes, prev, pager, next"
@@ -217,15 +165,9 @@
         @size-change="handleSizeChange"
       />
     </div>
-    <span
-      slot="footer"
-      class="dialog-footer"
-    >
+    <span slot="footer" class="dialog-footer">
       <el-button @click="cancelAction">取 消</el-button>
-      <el-button
-        type="primary"
-        @click="saveStoreAction"
-      >确 定</el-button>
+      <el-button type="primary" @click="saveStoreAction">确 定</el-button>
     </span>
   </el-dialog>
 </template>
@@ -356,7 +298,7 @@ export default {
           value: 'onsale'
         },
         {
-          title: '前端不展示',
+          title: '前台不展示',
           value: 'offline_sale'
         },
         {

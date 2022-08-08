@@ -59,7 +59,7 @@
           <el-switch v-model="form.data.offline_order"></el-switch>
         </el-form-item> -->
         <el-form-item
-          v-if="!VERSION_IN_PURCHASE"
+          v-if="!VERSION_IN_PURCHASE && !VERSION_PLATFORM"
           label="是否展示我要分享："
         >
           <el-switch v-model="form.data.share_enable" />

@@ -872,6 +872,11 @@ export default {
       } else {
         params['intro'] = this.intro
       }
+      if (Number(params.store) < 0) {
+        this.$message({ type: 'error', message: '库存需为正整数' })
+        this.submitLoading = false
+        return
+      }
       if (item_id && !is_new) {
         try {
           params = {

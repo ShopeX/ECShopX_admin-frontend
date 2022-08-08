@@ -1771,6 +1771,11 @@ export default {
     },
     saveItemsStore () {
       this.skuLoading = true
+      if (Number(this.storeItemsList.store) < 0 || Number(this.itemstore) < 0) {
+        this.$message({ type: 'error', message: '库存需为正整数' })
+        this.skuLoading = false
+        return
+      }
       let params = {}
       if (this.storeItemsList.length > 0) {
         params = {

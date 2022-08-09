@@ -201,9 +201,30 @@
     </el-card>
 
     <el-card v-if="!VERSION_IN_PURCHASE" class="el-card--normal">
+      <el-card v-if="invoice" class="el-card--normal">
+        <div slot="header"> 发票信息 </div>
+        <div v-if="invoice.title == 'individual'">
+          <el-row class="card-panel">
+            <el-col v-for="(item, index) in invoiceList" v-if="item.is_show" :key="`item__${index}`"
+              class="card-panel-item" :span="6">
+              <span class="card-panel__label">{{ item.label }}</span>
+              <span class="card-panel__value">{{ getFiledValue(item.field) }}</span>
+            </el-col>
+          </el-row>
+        </div>
+        <div v-if="invoice.title == 'unit'">
+          <el-row class="card-panel">
+            <el-col v-for="(item, index) in invoiceListUnit" v-if="item.is_show" :key="`item__${index}`"
+              class="card-panel-item" :span="6">
+              <span class="card-panel__label">{{ item.label }}</span>
+              <span class="card-panel__value">{{ getFiledValue(item.field) }}</span>
+            </el-col>
+          </el-row>
+        </div>
+      </el-card>
       <div slot="header">
-优惠明细
-</div>
+      优惠明细
+      </div>
       <div class="card-panel">
         <el-table
           v-if="orderInfo"
@@ -481,7 +502,25 @@ export default {
         type: '',
         items: []
       },
-      btnActions: []
+      btnActions: [],
+      invoice: null,
+      // 发票信息个人
+      invoiceList: [
+        { label: '类型:', field: 'invoiceType', is_show: true },
+        { label: '开票状态:', field: 'is_invoiced', is_show: true },
+        { label: '发票抬头:', field: 'invoiceContent', is_show: true },
+      ],
+      // 发票信息公司
+      invoiceListUnit: [
+        { label: '类型:', field: 'invoiceType', is_show: true },
+        { label: '开票状态:', field: 'is_invoiced', is_show: true },
+        { label: '公司名称:', field: 'invoicedCompanyName', is_show: true },
+        { label: '税号:', field: 'invoiceRegistrationNumber', is_show: true },
+        { label: '电话号码:', field: 'invoicedCompanyPhone', is_show: true },
+        { label: '开户银行:', field: 'invoicedBankName', is_show: true },
+        { label: '银行账号:', field: 'invoicedBankAccount', is_show: true },
+        { label: '公司地址:', field: 'invoiceCompanyAddress', is_show: true },
+      ],
     }
   },
   computed: {
@@ -533,9 +572,24 @@ export default {
         distributor_id,
         order_status,
         delivery_status,
-        community_info
+        community_info,
+        invoice,// 发票信息对象
+        is_invoiced,
       } = orderInfo
 
+      let invoiceType, invoiceContent, invoicedCompanyName, invoiceRegistrationNumber, invoiceCompanyAddress, invoicedCompanyPhone, invoicedBankName, invoicedBankAccount
+      if (orderInfo.invoice != null) {
+        this.invoice = orderInfo.invoice
+
+        invoiceType = this.invoice.title
+        invoiceContent = this.invoice.content
+        invoicedCompanyName = this.invoice.content
+        invoiceRegistrationNumber = this.invoice.registration_number
+        invoiceCompanyAddress = this.invoice.company_address
+        invoicedCompanyPhone = this.invoice.company_phone
+        invoicedBankName = this.invoice.bankname
+        invoicedBankAccount = this.invoice.bankaccount
+      }
       let community_activity_name, community_chief_name, community_activity_trade_no
       if (community_info) {
         community_activity_name = community_info.activity_name
@@ -622,7 +676,15 @@ export default {
         payTypeTxt: PAY_TYPE[tradeInfo.payType],
         tradeStateTxt: PAY_STATUS[tradeInfo.tradeState],
         timeStart: moment(tradeInfo.timeStart * 1000).format('YYYY-MM-DD HH:mm:ss'),
-        timeExpire: moment(tradeInfo.timeExpire * 1000).format('YYYY-MM-DD HH:mm:ss')
+        timeExpire: moment(tradeInfo.timeExpire * 1000).format('YYYY-MM-DD HH:mm:ss'),
+        invoiceType: invoiceType == 'individual' ? '个人' : '企业',
+        invoiceContent,
+        invoicedCompanyName,
+        invoiceRegistrationNumber,
+        invoiceCompanyAddress,
+        invoicedCompanyPhone,
+        invoicedBankName,
+        invoicedBankAccount,
       }
       this.memberRemark = orderInfo.remark || '暂无留言'
       this.merchantRemark = orderInfo.distributor_remark || '暂无备注'

@@ -848,8 +848,8 @@ export default {
     },
     saveItemsStore () {
       this.skuLoading = true
-      if (Number(this.itemstore) < 0 || Number(this.storeItemsList[0].store) < 0) {
-        this.$message({ type: 'error', message: '库存需为正整数' })
+      if (Number(this.itemstore) < 0 || (this.storeItemsList.length && Number(this.storeItemsList[0].store) < 0)) {
+        this.$message({ type: 'error', message: '库存需为正整数', duration: 2000 })
         this.skuLoading = false
         return
       }
@@ -881,6 +881,9 @@ export default {
         this.submitLoading = false
         this.skuLoading = false
         this.storeUpdate = false
+      }).catch(err => {
+        this.submitLoading = false
+        this.skuLoading = false
       })
     }
   }

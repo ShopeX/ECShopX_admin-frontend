@@ -1055,19 +1055,22 @@ export default {
           if (res.data.data.status == true) {
             this.$message({
               type: 'success',
-              message: '操作成功'
+              message: '操作成功',
+              duration: 2000
             })
           } else {
             this.$message({
               type: 'error',
-              message: '操作失败'
+              message: '操作失败',
+              duration: 2000
             })
           }
         })
       } else {
         this.$message({
           type: 'error',
-          message: '请选择至少一个商品!'
+          message: '请选择至少一个商品!',
+          duration: 2000
         })
       }
     },
@@ -1771,8 +1774,8 @@ export default {
     },
     saveItemsStore () {
       this.skuLoading = true
-      if (Number(this.itemstore) < 0 || Number(this.storeItemsList[0].store) < 0) {
-        this.$message({ type: 'error', message: '库存需为正整数' })
+      if (Number(this.itemstore) < 0 || (this.storeItemsList.length && Number(this.storeItemsList[0].store) < 0)) {
+        this.$message({ type: 'error', message: '库存需为正整数', duration: 2000 })
         this.skuLoading = false
         return
       }
@@ -1805,6 +1808,9 @@ export default {
         this.storeUpdate = false
 
         this.getGoodsList()
+      }).catch(err => {
+        this.submitLoading = false
+        this.skuLoading = false
       })
     }
   }

@@ -366,7 +366,7 @@ export default {
         { label: '购物赠送积分:', field: 'bonus_points', is_show: !this.VERSION_IN_PURCHASE },
         { label: '订单获取积分:', field: 'get_points', is_show: !this.VERSION_IN_PURCHASE },
         { label: '额外获取积分:', field: 'extra_points', is_show: !this.VERSION_IN_PURCHASE },
-        { label: "积分抵扣", field: "point_use", is_show: this.VERSION_PLATFORM }
+        { label: "积分抵扣:", field: "point_use", is_show: this.VERSION_PLATFORM }
       ],
       payList: [
         { label: '交易单号:', field: 'tradeId', is_show: true },

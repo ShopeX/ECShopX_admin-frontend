@@ -738,7 +738,7 @@ H5二维码
           </el-button>
         </div>
       </SideBar>
-      <el-dialog title="批量修改库存" :visible.sync="storeUpdate" width="30%">
+      <el-dialog title="批量修改库存" :visible.sync="storeUpdate" width="30%" :close-on-click-modal="false">
         统一库存：<el-input v-model="itemstore" size="mini" type="number" />
         <span slot="footer" class="dialog-footer">
           <el-button @click="storeUpdate = false">取 消</el-button>
@@ -1771,7 +1771,7 @@ export default {
     },
     saveItemsStore () {
       this.skuLoading = true
-      if (Number(this.storeItemsList.store) < 0 || Number(this.itemstore) < 0) {
+      if (Number(this.itemstore) < 0 || Number(this.storeItemsList[0].store) < 0) {
         this.$message({ type: 'error', message: '库存需为正整数' })
         this.skuLoading = false
         return

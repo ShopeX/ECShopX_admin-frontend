@@ -553,7 +553,7 @@
       </el-dialog>
 
       <el-dialog
-        title="为商品打标签"
+        title="为店铺打标签"
         class="right-dialog"
         :visible.sync="tag.dialog"
         :before-close="handleCancelLabelsDialog"

@@ -27,13 +27,13 @@
       >
         <redirectTemplates />
       </el-tab-pane>
-      <el-tab-pane
+      <!-- <el-tab-pane
         v-if="!VERSION_IN_PURCHASE"
         label="微信分享"
         name="wechatshare"
       >
         <wechatshareTemplates />
-      </el-tab-pane>
+      </el-tab-pane> -->
     </el-tabs>
   </el-card>
 </template>

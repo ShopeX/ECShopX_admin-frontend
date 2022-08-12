@@ -629,5 +629,8 @@ export default {
 }
 .system-image {
   height: 22px;
+  position: fixed;
+  bottom: 2%;
+  left: 50%;
 }
 </style>

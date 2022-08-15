@@ -223,7 +223,8 @@ export default {
   watch: {
     async 'form.template_type' (template_type) {
       const result = await getTemplateSeleteList({ template_type })
-      this.template_type_options = result.data.data.list
+      let new_arr = result.data.data.list.filter(el => el.scene_name != '订单提货码')
+      this.template_type_options = new_arr
       // 如是创建状态  把关联状态都清空
       const { type } = this.$route.query
       if (type == 'detail' || (type == 'edit' && this.isEditFirst)) {

@@ -565,7 +565,7 @@ export default {
       const { orderInfo, distributor, profit, tradeInfo } = await this.$api.trade.getOrderDetail(
         this.order_id
       )
-      const { username, mobile, vipgrade, gradeInfo } = await this.$api.member.getMember({
+      const { username, vipgrade, gradeInfo } = await this.$api.member.getMember({
         user_id: orderInfo.user_id
       })
       const deliveryData = await this.$api.trade.getDeliveryLists({ order_id: this.order_id })
@@ -653,7 +653,6 @@ export default {
         is_invoiced: orderInfo.is_invoiced ? '已开票' : '未开票',
         receiptTypeTxt,
         username,
-        mobile,
         community_activity_name,
         community_chief_name,
         community_activity_trade_no,
@@ -672,6 +671,7 @@ export default {
         profit_type: PROFIT_TYPE[profit.profit_type],
         profit_totalPrice: profit.total_fee ? `¥${profit.total_fee / 100}` : '￥0.00',
         ...tradeInfo,
+        mobile: orderInfo.mobile,
         goodsPrice:
           orderInfo.order_type != 'bargain'
             ? orderInfo.item_fee

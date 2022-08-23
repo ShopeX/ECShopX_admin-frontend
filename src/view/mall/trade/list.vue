@@ -71,11 +71,11 @@
                   <span v-if="scope.row.payType == 'wxpayapp'">微信APP支付</span>
                   <span v-if="scope.row.payType == 'wxpayh5'">微信H5支付</span>
                   <span v-if="scope.row.payType == 'wxpaypc'">微信POS支付</span>
-                  <span v-if="scope.row.payType == 'wxpaypos'">微信PC支付</span>
+                  <span v-if="scope.row.payType == 'wxpaypos'">微信扫码支付</span>
                   <span v-if="scope.row.payType == 'alipayapp'">支付宝APP支付</span>
                   <span v-if="scope.row.payType == 'alipay'">支付宝支付</span>
                   <span v-if="scope.row.payType == 'alipayh5'">支付宝H5支付</span>
-                  <span v-if="scope.row.payType == 'alipaypos'">支付宝POS支付</span>
+                  <span v-if="scope.row.payType == 'alipaypos'">支付宝扫码支付</span>
                   <span v-if="scope.row.payType == 'deposit'">余额支付</span>
                   <span v-if="scope.row.payType == 'ebuy'">EBUY支付</span>
                   <span v-if="scope.row.payType == 'point'">积分支付</span>
@@ -185,11 +185,11 @@
               <span v-if="scope.row.payType == 'wxpayapp'">微信APP支付</span>
               <span v-if="scope.row.payType == 'wxpayh5'">微信H5支付</span>
               <span v-if="scope.row.payType == 'wxpaypc'">微信POS支付</span>
-              <span v-if="scope.row.payType == 'wxpaypos'">微信PC支付</span>
+              <span v-if="scope.row.payType == 'wxpaypos'">微信扫码支付</span>
               <span v-if="scope.row.payType == 'alipayapp'">支付宝APP支付</span>
               <span v-if="scope.row.payType == 'alipay'">支付宝支付</span>
               <span v-if="scope.row.payType == 'alipayh5'">支付宝H5支付</span>
-              <span v-if="scope.row.payType == 'alipaypos'">支付宝POS支付</span>
+              <span v-if="scope.row.payType == 'alipaypos'">支付宝扫码支付</span>
               <span v-if="scope.row.payType == 'deposit'">余额支付</span>
               <span v-if="scope.row.payType == 'ebuy'">EBUY支付</span>
               <span v-if="scope.row.payType == 'point'">积分支付</span>

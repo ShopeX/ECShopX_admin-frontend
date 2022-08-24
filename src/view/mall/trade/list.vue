@@ -313,6 +313,8 @@ export default {
     fnPath () {
       if (this.$store.getters.login_type == 'merchant') {
         return `/merchant/order/tradenormalorders/detail`
+      } else if (this.$store.getters.login_type == 'distributor') {
+        return `/shopadmin/order/tradenormalorders/detail`
       }
 
       return this.$route.path.indexOf('servicetrade') === -1

@@ -174,13 +174,17 @@
           </el-table-column>
           <el-table-column min-width="200" label="支付方式">
             <template slot-scope="scope">
-              <span
-                v-if="
-                  scope.row.payType == 'wxpay' ||
-                  scope.row.payType == 'adapay' ||
-                  scope.row.payType == 'wxpayjs'
-                "
+              <span v-if="scope.row.payType == 'wxpay' || scope.row.payType == 'wxpayjs'"
                 >微信支付</span
+              >
+              <span v-if="scope.row.payType == 'adapay' && scope.row.payChannel == 'wx_lite'"
+                >微信支付</span
+              >
+              <span v-if="scope.row.payType == 'adapay' && scope.row.payChannel == 'wx_pub'"
+                >微信支付</span
+              >
+              <span v-if="scope.row.payType == 'adapay' && scope.row.payChannel == 'alipay_wap'"
+                >支付宝支付</span
               >
               <span v-if="scope.row.payType == 'wxpayapp'">微信APP支付</span>
               <span v-if="scope.row.payType == 'wxpayh5'">微信H5支付</span>

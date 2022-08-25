@@ -179,7 +179,11 @@
           :class="{ 'footer-fixed': $route.meta && $route.meta.footerFixed }"
         />
         <div class="system-release">
-          {{ VUE_APP_SYSTEM_NAME }}
+          <img :src='loginBottomB2c' v-if='VERSION_B2C' alt="" class='system-image'>
+          <img :src='loginBottomInpurchase' v-if='VERSION_IN_PURCHASE' alt="" class='system-image'>
+          <img :src='loginBottomPlatform' v-if='VERSION_PLATFORM' alt="" class='system-image'>
+          <img :src='loginBottomStandard' v-if='VERSION_STANDARD' alt="" class='system-image'>
+          <!-- {{ VUE_APP_SYSTEM_NAME }} -->
         </div>
         <div id="design-view" />
       </el-main>
@@ -187,6 +191,11 @@
   </el-container>
 </template>
 <script>
+const loginBottomB2c = require('@/assets/logo_bottom/b2c.png')
+const loginBottomInpurchase = require('@/assets/logo_bottom/in_purchase.png')
+const loginBottomPlatform = require('@/assets/logo_bottom/platform.png')
+const loginBottomStandard = require('@/assets/logo_bottom/standard.png')
+
 import { mapGetters, mapMutations, mapState } from 'vuex'
 import { getAuthorizelogout } from '@/api/login'
 import { VERSION_STANDARD, isInSalesCenter } from '@/utils'
@@ -222,7 +231,11 @@ export default {
       brandIco: '',
       showUserPopover: false,
       activeIndex: '',
-      menuOpeneds: []
+      menuOpeneds: [],
+      loginBottomB2c,
+      loginBottomInpurchase,
+      loginBottomPlatform,
+      loginBottomStandard
     }
   },
   computed: {
@@ -526,7 +539,7 @@ export default {
     background-color: #fff;
     padding: 16px;
     border-radius: 0;
-    min-height: 600px;
+    min-height: calc(100vh - 70px);
     &.footer-fixed {
       margin-bottom: 57px;
     }
@@ -613,5 +626,8 @@ export default {
   font-size: 16px;
   color: #cdcbcb;
   margin-top: 16px;
+}
+.system-image {
+  height: 22px;
 }
 </style>

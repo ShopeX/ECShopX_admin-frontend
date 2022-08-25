@@ -610,14 +610,6 @@ export default {
             { title: '已发货数量', key: 'delivery_item_num', width: 100 },
             { title: '总支付价（¥）', key: 'price', width: 120 }
           ]
-        },
-        {
-          label: '提货码:',
-          key: 'pickupcode',
-          type: 'input',
-          placeholder: '请输入提货码',
-          required: true,
-          message: '不能为空'
         }
       ],
       writeOffForm: {
@@ -721,6 +713,7 @@ export default {
     this.getOrderSourceList()
     this.getLogisticsList()
     this.getSubDistrictList()
+    this.getPickupcodeSetting()
   },
   methods: {
     async fetchList () {
@@ -1119,6 +1112,18 @@ export default {
       await this.$api.common.handleUploadFile(params)
       this.$message.success('上传成功，等待处理')
       this.fetchList()
+    },
+    async getPickupcodeSetting () {
+      const { pickupcode_status } = await this.$api.company.getPickupcodeSetting()
+      if (!pickupcode_status) return
+      this.writeOffFormList.push({
+        label: '提货码:',
+        key: 'pickupcode',
+        type: 'input',
+        placeholder: '请输入提货码',
+        required: true,
+        message: '不能为空'
+      })
     }
   }
 }

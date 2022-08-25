@@ -903,7 +903,7 @@ export default {
       this.refundData.refunds_memo = this.refuse_reason
       this.refundData.refund_fee = accMul(this.refund_fee, 100)
       this.refundData.refund_point = this.refund_point
-      if (this.refundData.check_refund == '0' && !this.refundData.refund_memo) {
+      if (this.refundData.check_refund == '0' && !this.refundData.refunds_memo) {
         this.$message.error('拒绝原因必填！')
         return false
       }

@@ -207,7 +207,7 @@
     </el-tabs>
     <el-dialog
       :visible.sync="showAdd"
-      title="编辑配置"
+      :title="modalTitle"
       @close="cancelEdit"
     >
       <el-form
@@ -224,6 +224,8 @@
           <el-input
             v-model="editform.label"
             type="text"
+            maxlength="9"
+            show-word-limit
           />
         </el-form-item>
         <el-form-item label="信息格式">
@@ -412,7 +414,7 @@ export default {
         field_type: 1,
         alert_required_message: '',
         is_required: 0,
-        is_edit: 0,
+        is_edit: 1,
         range: {
           start: '',
           end: ''
@@ -440,7 +442,8 @@ export default {
         'member_register.title': [{ required: true, message: '请输入协议标题', trigger: 'blur' }],
         'privacy.content': [{ required: true, message: '请输入充值协议', trigger: 'blur' }],
         'member_register.content': [{ required: true, message: '请输入注册协议', trigger: 'blur' }]
-      }
+      },
+      modalTitle: ''
     }
   },
   computed: {
@@ -516,13 +519,14 @@ export default {
         field_type: 1,
         alert_required_message: '',
         is_required: 0,
-        is_edit: 0,
+        is_edit: 1,
         range: {
           start: '',
           end: ''
         },
         radio_list: []
       }
+      this.modalTitle = ''
     },
     // 切换
     fieldTypeChange () {
@@ -565,7 +569,7 @@ export default {
           field_type = 1,
           alert_required_message = '',
           is_required = 0,
-          is_edit = 0,
+          is_edit = 1,
           range = {
             start: '',
             end: ''
@@ -579,11 +583,14 @@ export default {
           label,
           field_type,
           alert_required_message,
-          is_required,
-          is_edit,
+          is_required: 0,
+          is_edit: 1,
           range,
           radio_list: [...validate_condition]
         }
+        this.modalTitle = '编辑配置'
+      } else {
+        this.modalTitle = '新增配置'
       }
       this.showAdd = true
     },

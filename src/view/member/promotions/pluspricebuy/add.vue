@@ -334,6 +334,10 @@
                       label="名称"
                       prop="item_name"
                     />
+                    <el-table-column
+                      label="规格"
+                      prop="item_spec_desc"
+                    />
                     <!-- <el-table-column label="赠品数量" width="100">
                         <template slot-scope="scope">
                           <el-input v-model="scope.row.gift_num" width="90" size="mini"></el-input>

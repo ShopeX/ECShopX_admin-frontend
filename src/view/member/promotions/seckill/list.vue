@@ -203,6 +203,10 @@
               label="商品名称"
             />
             <el-table-column
+              prop="item_spec_desc"
+              label="规格"
+            />
+            <el-table-column
               prop="activity_price"
               label="活动价"
               width="100"

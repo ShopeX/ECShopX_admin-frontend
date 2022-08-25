@@ -58,12 +58,12 @@
         <el-form-item label="是否展示线下订单关联：">
           <el-switch v-model="form.data.offline_order"></el-switch>
         </el-form-item> -->
-        <el-form-item
+        <!-- <el-form-item
           v-if="!VERSION_IN_PURCHASE"
           label="是否展示我要分享："
         >
           <el-switch v-model="form.data.share_enable" />
-        </el-form-item>
+        </el-form-item> -->
         <el-form-item label="是否展示个人信息：">
           <el-switch v-model="form.data.memberinfo_enable" />
         </el-form-item>

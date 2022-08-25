@@ -201,6 +201,39 @@
     </el-card>
 
     <el-card v-if="!VERSION_IN_PURCHASE" class="el-card--normal">
+      <el-card v-if="invoice" class="el-card--normal">
+        <div slot="header">
+发票信息
+</div>
+        <div v-if="invoice.title == 'individual'">
+          <el-row class="card-panel">
+            <el-col
+              v-for="(item, index) in invoiceList"
+              v-if="item.is_show"
+              :key="`item__${index}`"
+              class="card-panel-item"
+              :span="6"
+            >
+              <span class="card-panel__label">{{ item.label }}</span>
+              <span class="card-panel__value">{{ getFiledValue(item.field) }}</span>
+            </el-col>
+          </el-row>
+        </div>
+        <div v-if="invoice.title == 'unit'">
+          <el-row class="card-panel">
+            <el-col
+              v-for="(item, index) in invoiceListUnit"
+              v-if="item.is_show"
+              :key="`item__${index}`"
+              class="card-panel-item"
+              :span="6"
+            >
+              <span class="card-panel__label">{{ item.label }}</span>
+              <span class="card-panel__value">{{ getFiledValue(item.field) }}</span>
+            </el-col>
+          </el-row>
+        </div>
+      </el-card>
       <div slot="header">
 优惠明细
 </div>
@@ -344,7 +377,8 @@ export default {
         { label: '货币类型:', field: 'fee_type', is_show: true },
         { label: '购物赠送积分:', field: 'bonus_points', is_show: !this.VERSION_IN_PURCHASE },
         { label: '订单获取积分:', field: 'get_points', is_show: !this.VERSION_IN_PURCHASE },
-        { label: '额外获取积分:', field: 'extra_points', is_show: !this.VERSION_IN_PURCHASE }
+        { label: '额外获取积分:', field: 'extra_points', is_show: !this.VERSION_IN_PURCHASE },
+        { label: '积分抵扣:', field: 'point_use', is_show: !this.VERSION_IN_PURCHASE }
       ],
       payList: [
         { label: '交易单号:', field: 'tradeId', is_show: true },
@@ -480,7 +514,25 @@ export default {
         type: '',
         items: []
       },
-      btnActions: []
+      btnActions: [],
+      invoice: null,
+      // 发票信息个人
+      invoiceList: [
+        { label: '类型:', field: 'invoiceType', is_show: true },
+        { label: '开票状态:', field: 'is_invoiced', is_show: true },
+        { label: '发票抬头:', field: 'invoiceContent', is_show: true }
+      ],
+      // 发票信息公司
+      invoiceListUnit: [
+        { label: '类型:', field: 'invoiceType', is_show: true },
+        { label: '开票状态:', field: 'is_invoiced', is_show: true },
+        { label: '公司名称:', field: 'invoicedCompanyName', is_show: true },
+        { label: '税号:', field: 'invoiceRegistrationNumber', is_show: true },
+        { label: '电话号码:', field: 'invoicedCompanyPhone', is_show: true },
+        { label: '开户银行:', field: 'invoicedBankName', is_show: true },
+        { label: '银行账号:', field: 'invoicedBankAccount', is_show: true },
+        { label: '公司地址:', field: 'invoiceCompanyAddress', is_show: true }
+      ]
     }
   },
   computed: {
@@ -513,7 +565,7 @@ export default {
       const { orderInfo, distributor, profit, tradeInfo } = await this.$api.trade.getOrderDetail(
         this.order_id
       )
-      const { username, mobile, vipgrade, gradeInfo } = await this.$api.member.getMember({
+      const { username, vipgrade, gradeInfo } = await this.$api.member.getMember({
         user_id: orderInfo.user_id
       })
       const deliveryData = await this.$api.trade.getDeliveryLists({ order_id: this.order_id })
@@ -532,9 +584,31 @@ export default {
         distributor_id,
         order_status,
         delivery_status,
-        community_info
+        community_info,
+        invoice, // 发票信息对象
+        is_invoiced
       } = orderInfo
 
+      let invoiceType,
+        invoiceContent,
+        invoicedCompanyName,
+        invoiceRegistrationNumber,
+        invoiceCompanyAddress,
+        invoicedCompanyPhone,
+        invoicedBankName,
+        invoicedBankAccount
+      if (orderInfo.invoice != null) {
+        this.invoice = orderInfo.invoice
+
+        invoiceType = this.invoice.title
+        invoiceContent = this.invoice.content
+        invoicedCompanyName = this.invoice.content
+        invoiceRegistrationNumber = this.invoice.registration_number
+        invoiceCompanyAddress = this.invoice.company_address
+        invoicedCompanyPhone = this.invoice.company_phone
+        invoicedBankName = this.invoice.bankname
+        invoicedBankAccount = this.invoice.bankaccount
+      }
       let community_activity_name, community_chief_name, community_activity_trade_no
       if (community_info) {
         community_activity_name = community_info.activity_name
@@ -579,7 +653,6 @@ export default {
         is_invoiced: orderInfo.is_invoiced ? '已开票' : '未开票',
         receiptTypeTxt,
         username,
-        mobile,
         community_activity_name,
         community_chief_name,
         community_activity_trade_no,
@@ -596,17 +669,30 @@ export default {
               })
           : [],
         profit_type: PROFIT_TYPE[profit.profit_type],
-        profit_totalPrice: `¥${profit.total_fee / 100}`,
+        profit_totalPrice: profit.total_fee ? `¥${profit.total_fee / 100}` : '￥0.00',
         ...tradeInfo,
+        mobile: orderInfo.mobile,
         goodsPrice:
           orderInfo.order_type != 'bargain'
-            ? `¥${(orderInfo.item_fee / 100).toFixed(2)}`
-            : `¥${(orderInfo.item_price / 100).toFixed(2)}`,
-        freightFee: `¥${(orderInfo.freight_fee / 100).toFixed(2)}`,
-        memberDiscountPrice: `-¥${(orderInfo.member_discount / 100).toFixed(2)}`,
-        couponDiscount: `-¥${(orderInfo.coupon_discount / 100).toFixed(2)}`,
-        totalDiscount: `-¥${(orderInfo.discount_fee / 100).toFixed(2)}`,
-        totalPrice: `¥${(orderInfo.total_fee / 100).toFixed(2)}`,
+            ? orderInfo.item_fee
+              ? `¥${(orderInfo.item_fee / 100).toFixed(2)}`
+              : '￥0.00'
+            : orderInfo.item_price
+            ? `¥${(orderInfo.item_price / 100).toFixed(2)}`
+            : '￥0.00',
+        freightFee: orderInfo.freight_fee
+          ? `¥${(orderInfo.freight_fee / 100).toFixed(2)}`
+          : '￥0.00',
+        memberDiscountPrice: orderInfo.member_discount
+          ? `-¥${(orderInfo.member_discount / 100).toFixed(2)}`
+          : '￥0.00',
+        couponDiscount: orderInfo.coupon_discount
+          ? `-¥${(orderInfo.coupon_discount / 100).toFixed(2)}`
+          : '￥0.00',
+        totalDiscount: orderInfo.discount_fee
+          ? `-¥${(orderInfo.discount_fee / 100).toFixed(2)}`
+          : '￥0.00',
+        totalPrice: orderInfo.total_fee ? `¥${(orderInfo.total_fee / 100).toFixed(2)}` : '￥0.00',
         realPrice: (() => {
           let returnValue = ''
           if (tradeInfo.payType === 'point') {
@@ -614,14 +700,24 @@ export default {
           } else if (tradeInfo.tradeState === 'NOTPAY') {
             returnValue = `￥0`
           } else {
-            returnValue = `¥${(orderInfo.total_fee / 100).toFixed(2)}`
+            returnValue = orderInfo.total_fee
+              ? `¥${(orderInfo.total_fee / 100).toFixed(2)}`
+              : '￥0.00'
           }
           return returnValue
         })(),
         payTypeTxt: PAY_TYPE[tradeInfo.payType],
         tradeStateTxt: PAY_STATUS[tradeInfo.tradeState],
         timeStart: moment(tradeInfo.timeStart * 1000).format('YYYY-MM-DD HH:mm:ss'),
-        timeExpire: moment(tradeInfo.timeExpire * 1000).format('YYYY-MM-DD HH:mm:ss')
+        timeExpire: moment(tradeInfo.timeExpire * 1000).format('YYYY-MM-DD HH:mm:ss'),
+        invoiceType: invoiceType == 'individual' ? '个人' : '企业',
+        invoiceContent,
+        invoicedCompanyName,
+        invoiceRegistrationNumber,
+        invoiceCompanyAddress,
+        invoicedCompanyPhone,
+        invoicedBankName,
+        invoicedBankAccount
       }
       this.memberRemark = orderInfo.remark || '暂无留言'
       this.merchantRemark = orderInfo.distributor_remark || '暂无备注'
@@ -634,6 +730,8 @@ export default {
       // 兑换券
       if (orderInfo.order_class == 'excard') {
         this.addressInfo = `${distributor.province}${distributor.city}${distributor.area}${distributor.address}`
+      } else if (orderInfo.order_class == 'shopadmin') {
+        this.addressInfo = `${distributor.store_address}（${distributor.store_name}）`
       } else {
         this.addressInfo = receipt_type
           ? `${receiver_name} ${receiver_mobile} ${receiver_state}${receiver_city}${receiver_district}${receiver_address}`

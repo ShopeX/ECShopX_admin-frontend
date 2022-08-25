@@ -59,7 +59,7 @@
               style="width: 20%"
             />&nbsp;份
           </el-form-item>
-          <el-form-item label="卡券标题" prop="title">
+          <el-form-item label="券名称" prop="title">
             <el-input
               v-model="form.title"
               :disabled="form.card_id ? true : false"
@@ -69,9 +69,11 @@
             />&nbsp;<span class="frm-tips"
               >{{ inputValue.title_length }}/{{ inputValue.title_max }}</span
             >
-            <p class="frm-tips">
-建议填写满减券“减免金额”及自定义内容，描述卡券提供的具体优惠
-</p>
+            <!-- <p class="frm-tips">
+              建议填写
+              {{form.card_type === 'discount' ? '折扣券' : form.card_type === 'cash' ? '满减券' : '兑换券'}}
+              “减免金额”及自定义内容，描述卡券提供的具体优惠
+            </p> -->
           </el-form-item>
           <el-form-item label="使用条件" prop="useCondition">
             <el-radio-group
@@ -599,11 +601,11 @@ export default {
     var titleChecked = (rule, value, callback) => {
       console.log(value)
       if (value == '') {
-        callback(new Error('卡券标题不能为空'))
+        callback(new Error('券名称不能为空'))
       } else if (this.inputValue.title_length > this.inputValue.title_max) {
         callback(
           new Error(
-            '卡券标题长度不超过' +
+            '券名称长度不超过' +
               this.inputValue.title_max +
               '个汉字或' +
               this.inputValue.title_max * 2 +

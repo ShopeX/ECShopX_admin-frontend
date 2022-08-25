@@ -164,7 +164,7 @@
             <!-- 订单状态 -->
             <span>
               <el-tag
-                v-if="scope.row.is_reply == '1'"
+                v-if="scope.row.is_reply"
                 type="success"
                 size="mini"
               >已回复</el-tag>
@@ -175,7 +175,7 @@
               >未回复</el-tag>
             </span>
             <el-tag
-              v-if="scope.row.disabled == '1'"
+              v-if="scope.row.disabled"
               type="danger"
               size="mini"
             >
@@ -195,14 +195,14 @@
               详情
             </el-button>
             <el-button
-              v-if="scope.row.is_reply === '0'"
+              v-if="!scope.row.is_reply"
               type="text"
               @click="replyDialog(scope.row)"
             >
               回复
             </el-button>
             <el-button
-              v-if="scope.row.disabled === '0'"
+              v-if="!scope.row.disabled"
               type="text"
               @click="rateDelete(scope.row.rate_id)"
             >

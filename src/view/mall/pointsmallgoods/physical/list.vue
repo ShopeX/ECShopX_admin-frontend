@@ -323,7 +323,7 @@
           </el-button>
         </div>
       </SideBar>
-      <el-dialog title="批量修改库存" :visible.sync="storeUpdate" width="30%">
+      <el-dialog title="批量修改库存" :visible.sync="storeUpdate" width="30%" :close-on-click-modal="false">
         统一库存：<el-input v-model="itemstore" size="mini" type="number" />
         <span slot="footer" class="dialog-footer">
           <el-button @click="storeUpdate = false">取 消</el-button>
@@ -848,6 +848,11 @@ export default {
     },
     saveItemsStore () {
       this.skuLoading = true
+      if (Number(this.itemstore) < 0 || (this.storeItemsList.length && Number(this.storeItemsList[0].store) < 0)) {
+        this.$message({ type: 'error', message: '库存需为正整数', duration: 2000 })
+        this.skuLoading = false
+        return
+      }
       let params = {}
       if (this.storeItemsList.length > 0) {
         params = {
@@ -876,6 +881,9 @@ export default {
         this.submitLoading = false
         this.skuLoading = false
         this.storeUpdate = false
+      }).catch(err => {
+        this.submitLoading = false
+        this.skuLoading = false
       })
     }
   }

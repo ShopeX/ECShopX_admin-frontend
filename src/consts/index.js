@@ -70,7 +70,8 @@ export const ORDER_TYPE_STANDARD = [
   { title: '秒杀订单', value: 'seckill' },
   { title: '普通订单', value: 'normal' },
   { title: '社区团购订单', value: 'community' },
-  { title: '兑换订单', value: 'excard' }
+  { title: '兑换订单', value: 'excard' },
+  { title: '门店订单', value: 'shopadmin' }
 ]
 
 export const INVOICE_STATUS = [
@@ -122,7 +123,8 @@ export const PAY_TYPE = {
   alipayh5: '支付宝H5支付',
   deposit: '余额支付',
   point: '积分支付',
-  pos: 'POS银行卡支付',
+  // pos: 'POS银行卡支付',
+  pos: '现金支付',
   wxpaypos: '微信扫码支付',
   alipaypos: '支付宝扫码支付',
   chinaums: '微信支付-银联'

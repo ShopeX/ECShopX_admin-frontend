@@ -250,9 +250,11 @@ export default {
       this.loading = true
       const result = await getScenarioList(this.query)
       if (type == 'serch') {
-        this.smsScenarioList = result.data.data.list
+        let new_arr = result.data.data.list.filter(el => el.scene_name !== '订单提货码')
+        this.smsScenarioList = new_arr
       } else {
-        this.smsScenarioList = [...this.smsScenarioList, ...result.data.data.list]
+        let new_arr = result.data.data.list.filter(el => el.scene_name !== '订单提货码')
+        this.smsScenarioList = [...this.smsScenarioList, ...new_arr]
       }
       this.count = result.data.data.count
       this.loading = false
@@ -360,7 +362,7 @@ export default {
       this.init()
     },
     querySearch (queryString = '', cb) {
-      var restaurants = this.serchNameList
+      var restaurants = this.serchNameList.filter(el => el.value != '订单提货码')
       var results = queryString ? restaurants.filter(this.createFilter(queryString)) : restaurants
       // 调用 callback 返回建议列表的数据
 

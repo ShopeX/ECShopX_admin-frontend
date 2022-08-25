@@ -90,7 +90,7 @@
     </div>
     <sideBar
       :visible.sync="show_sideBar"
-      :title="'新增参数'"
+      :title="form.attribute_id ? '编辑参数' : '新增参数'"
     >
       <el-form>
         <el-form-item label="参数名称">

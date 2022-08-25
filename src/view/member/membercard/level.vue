@@ -436,7 +436,7 @@ export default {
             break
           } else if (
             i > 0 &&
-            Number(this.levelData[i].privileges.discount) >
+            Number(this.levelData[i].privileges.discount) >=
               Number(this.levelData[i - 1].privileges.discount)
           ) {
             isflag = true

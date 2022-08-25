@@ -547,7 +547,7 @@
                 <el-col :span="8">
                   <el-select v-model="gradeForm.grade_id" style="width: 100%">
                     <el-option
-                      v-for="item in levelData"
+                      v-for="item in gradeList"
                       :key="item.grade_id"
                       :label="item.grade_name"
                       :value="item.grade_id"
@@ -897,10 +897,6 @@ export default {
       },
       operateLog: [],
       currentShop: '',
-      vipGrade: [
-        { lv_type: 'notvip', grade_name: '普通会员' },
-        { lv_type: 'vip,svip', grade_name: '付费会员' }
-      ],
       salesman: [],
       loadingSalesman: false,
       salesmanPaging: {
@@ -980,7 +976,9 @@ export default {
         edu_background: '',
         habbit: []
       },
-      datapass_block: 1
+      datapass_block: 1,
+      gradeList: [], // 普通会员等级列表
+      vipGrade: [], // 付费会员等级列表
     }
   },
   computed: {
@@ -1212,6 +1210,8 @@ export default {
           // lv_type
         })
       })
+      this.gradeList = gradeList
+      this.vipGrade = vipGradeList
       this.levelData = _levelData
     },
     async getAllTagLists () {
@@ -1222,10 +1222,10 @@ export default {
       const { list } = await this.$api.member.getTagList(params)
       this.tag.list = list
     },
-    async getVipList () {
-      const res = await this.$api.cardticket.listVipGrade()
-      this.vipGrade = res
-    },
+    // async getVipList () {
+    //   const res = await this.$api.cardticket.listVipGrade()
+    //   this.vipGrade = res
+    // },
     async getShopsList () {
       const { list } = await this.$api.shop.getWxShopsList({
         page: 1,
@@ -1236,9 +1236,11 @@ export default {
     },
     showGrade (grade_id, vip_grade) {
       if (vip_grade) {
-        return this.levelData.find((item) => item.grade_id == vip_grade).grade_name
+        const filterList = this.levelData.find((item) => item.grade_id == vip_grade)
+        return filterList && filterList.grade_name
       } else {
-        return this.levelData.find((item) => item.grade_id == grade_id).grade_name
+        const filterList = this.levelData.find((item) => item.grade_id == grade_id)
+        return filterList && filterList.grade_name
       }
     },
     getDetail (userid) {

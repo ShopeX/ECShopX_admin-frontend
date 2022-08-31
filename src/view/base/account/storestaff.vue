@@ -427,7 +427,6 @@ export default {
       this.operator_id = ''
       this.form.password = ''
       this.form.role_id = []
-      this.getDistributor()
     },
     editAction (index, row) {
       // 编辑物料弹框

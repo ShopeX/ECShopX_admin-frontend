@@ -46,20 +46,24 @@
               value="0"
             />
             <el-option
-              label="未开始"
+              label="待开始"
               value="waiting"
             />
             <el-option
-              label="预告中"
+              label="预热中"
               value="in_the_notice"
             />
             <el-option
-              label="售卖中"
+              label="进行中"
               value="in_sale"
             />
             <el-option
               label="已结束"
               value="it_has_ended"
+            />
+            <el-option
+              label="已终止"
+              value="close"
             />
           </el-select>
         </SpFilterFormItem>
@@ -125,7 +129,7 @@
         >
           <template slot-scope="scope">
             <span v-if="scope.row.status == 'waiting'">待开始</span>
-            <span v-else-if="scope.row.status == 'in_the_notice'">预告中</span>
+            <span v-else-if="scope.row.status == 'in_the_notice'">预热中</span>
             <span v-else-if="scope.row.status == 'in_sale'">进行中</span>
             <span v-else-if="scope.row.status == 'it_has_ended'">已结束</span>
             <span v-else-if="scope.row.status == 'close'">已终止</span>

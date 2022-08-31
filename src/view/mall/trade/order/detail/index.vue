@@ -732,7 +732,7 @@ export default {
       } else if (orderInfo.order_class == 'shopadmin') { // 门店订单
         this.addressInfo = `${distributor.store_address}（${distributor.store_name}）`
       } else { // 普通订单配送方式是自提时，展示门店地址，非自提展示收货地址
-        this.addressInfo = distributor.distributor_id && receipt_type == 'ziti' ? `${distributor.store_address}（${distributor.store_name}）`
+        this.addressInfo = distributor.store_address && receipt_type == 'ziti' ? `${distributor.store_address}（${distributor.store_name}）`
           : (receipt_type != 'ziti'
           ? `${receiver_name} ${receiver_mobile} ${receiver_state}${receiver_city}${receiver_district}${receiver_address}`
           : '-- --')

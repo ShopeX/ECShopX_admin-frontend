@@ -362,6 +362,7 @@ export default {
       datapass_block: 0,
       isHead: false,
       is_distributor_main: false,
+      loginType: this.$store.getters.login_type,
     }
   },
   computed: {
@@ -468,7 +469,8 @@ export default {
         this.$message({ type: 'error', message: '必须关联店铺' })
         return false
       }
-      if (this.form.role_id.length <= 0) {
+
+      if (this.loginType === 'distributor' && this.form.role_id.length <= 0) {
         this.$message({ type: 'error', message: '至少关联一个角色' })
         return false
       }

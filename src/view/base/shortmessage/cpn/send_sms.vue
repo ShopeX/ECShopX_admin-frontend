@@ -361,7 +361,7 @@ export default {
       this.init()
     },
     querySearch (queryString = '', cb) {
-      var restaurants = this.serchNameList.filter(el => el.value != '订单提货码')
+      var restaurants = this.serchNameList
       var results = queryString ? restaurants.filter(this.createFilter(queryString)) : restaurants
       // 调用 callback 返回建议列表的数据
 

@@ -1112,6 +1112,7 @@ export default {
       this.params.salesman_mobile = this.salesman_mobile
       if (this.identifier.length == 11) {
         this.params.mobile = this.identifier
+        this.params.order_id = ''
       } else {
         this.params.mobile = ''
         this.params.order_id = this.identifier

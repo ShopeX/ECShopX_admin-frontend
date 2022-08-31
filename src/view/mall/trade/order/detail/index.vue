@@ -127,7 +127,7 @@
               {{ (scope.row.discount_fee / 100).toFixed(2) }}
             </template>
           </el-table-column>
-          <el-table-column v-if="!VERSION_IN_PURCHASE" label="货币汇率">
+          <el-table-column v-if="!VERSION_IN_PURCHASE && !VERSION_STANDARD" label="货币汇率">
             <template slot-scope="scope">
               <span>{{ scope.row.fee_rate }}</span>
             </template>

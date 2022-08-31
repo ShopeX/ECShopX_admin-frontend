@@ -165,17 +165,17 @@ export default {
       name: `交易配置`,
       component: () => import('@/view/base/setting/tradesetting/index')
     },
-    {
-      path: 'adapay_trades',
-      name: '交易单',
-      component: () => import('@/view/mall/sub_account/sub_account'),
-      children: [
-        {
-          path: 'detail/:order_id',
-          component: () => import('@/view/mall/sub_account/detail')
-        }
-      ]
-    },
+    // {
+    //   path: 'adapay_trades',
+    //   name: '交易单',
+    //   component: () => import('@/view/mall/sub_account/sub_account'),
+    //   children: [
+    //     {
+    //       path: 'detail/:order_id',
+    //       component: () => import('@/view/mall/sub_account/detail')
+    //     }
+    //   ]
+    // },
     {
       path: 'adapay_cash',
       name: '提现',

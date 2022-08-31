@@ -512,7 +512,7 @@ export default {
         })
       } else {
         this.$router.push({
-          path: `/order/adapay_trades/detail/${id}`
+          path: `/applications/adapay/adapay_trades/detail/${id}`
         })
       }
     },

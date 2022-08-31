@@ -6,14 +6,14 @@
         icon="plus"
         @click="addLabels"
       >
-        添加店铺管理员
+        添加店铺员工
       </el-button>
     </div>
     <tips class="action-container">
       <ul>
         <li>1. 平台管理后台仅可给平台自营店铺添加超级管理员，如需给入驻商户的店铺添加超级管理员，请使用商户超级管理员账号登录商户管理后台操作。前往：<el-link :href="origin + '/merchant/login'" target="_blank" type="primary">商户后台</el-link>。</li>
         <li>2. 每个店铺仅可设置一个超级管理员账号，但一个账号可以同时是多个店铺的超级管理员。</li>
-        <li>3. 店铺超级管理员拥有店铺所有权限，可登录店铺管理后台为店铺添加子管理员，并通过角色控制子管理员权限范围。前往：<el-link :href="origin + '/shopadmin/login'" target="_blank" type="primary">店铺后台</el-link>。</li>
+        <li>3. 店铺超级管理员拥有店铺所有权限，可登录店铺管理后台为店铺添加子账号，并通过角色控制子账号权限范围。前往：<el-link :href="origin + '/shopadmin/login'" target="_blank" type="primary">店铺后台</el-link>。</li>
       </ul>
     </tips>
     <SpFilterForm
@@ -89,10 +89,18 @@
       >
         <template slot-scope="scope">
           <el-tag
+            size="mini"
+            type="danger"
+            v-if="scope.row.is_distributor_main==true"
+          >
+            管理员
+          </el-tag>
+          <el-tag
             v-for="item in scope.row.role_data"
             :key="item.role_id"
             size="mini"
             type="warning"
+            v-else
           >
             {{ item.role_name }}
           </el-tag>
@@ -410,7 +418,7 @@ export default {
     addLabels () {
       // 添加物料弹框
       this.handleCancel()
-      this.editTitle = '添加店铺管理员'
+      this.editTitle = '添加店铺员工'
       this.editVisible = true
       this.isEdit = false
       this.form.username = ''
@@ -419,11 +427,12 @@ export default {
       this.operator_id = ''
       this.form.password = ''
       this.form.role_id = []
+      this.getDistributor()
     },
     editAction (index, row) {
       // 编辑物料弹框
       this.handleCancel()
-      this.editTitle = '编辑店铺管理员'
+      this.editTitle = '编辑店铺员工'
       this.editVisible = true
       this.isEdit = true
       this.form.username = row.username
@@ -456,8 +465,14 @@ export default {
             distributor_id: distributor.distributor_id
           })
         })
+      } else {
+        this.$message({ type: 'error', message: '必须关联店铺' })
+        return false
       }
-
+      if (this.form.role_id.length <= 0) {
+        this.$message({ type: 'error', message: '至少关联一个角色' })
+        return false
+      }
       if (this.operator_id) {
         updateAccountInfo(this.operator_id, this.form).then((response) => {
           this.$message.success('保存成功')

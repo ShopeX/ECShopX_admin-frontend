@@ -647,7 +647,7 @@ export default {
 
       this.orderInfo = {
         ...orderInfo,
-        create_time: moment(create_time * 1000).format('YYYY-MM-DD HH:mm:ss'),
+        create_time: create_time ? moment(create_time * 1000).format('YYYY-MM-DD HH:mm:ss') : '',
         order_class: `${fd ? fd.title : '实体订单'}${crossOrderTxt}`,
         _order_class: orderInfo.order_class,
         is_invoiced: orderInfo.is_invoiced ? '已开票' : '未开票',
@@ -708,8 +708,8 @@ export default {
         })(),
         payTypeTxt: PAY_TYPE[tradeInfo.payType],
         tradeStateTxt: PAY_STATUS[tradeInfo.tradeState],
-        timeStart: moment(tradeInfo.timeStart * 1000).format('YYYY-MM-DD HH:mm:ss'),
-        timeExpire: moment(tradeInfo.timeExpire * 1000).format('YYYY-MM-DD HH:mm:ss'),
+        timeStart: tradeInfo.timeStart ? moment(tradeInfo.timeStart * 1000).format('YYYY-MM-DD HH:mm:ss') : '',
+        timeExpire: tradeInfo.timeExpire ? moment(tradeInfo.timeExpire * 1000).format('YYYY-MM-DD HH:mm:ss') : '',
         invoiceType: invoiceType == 'individual' ? '个人' : '企业',
         invoiceContent,
         invoicedCompanyName,

@@ -165,19 +165,17 @@ export default {
   },
   mounted () {
     this.fetchList()
-
-    const menu = this.$store.getters.menus
-    menu.forEach((item) => {
-      if (item.alias_name == 'setting') {
-        item.children.forEach((itemy, indexy) => {
-          if (itemy.is_super == 'Y') {
-            item.children.splice(indexy, 1)
-          }
-        })
-      }
-    })
-
-    this.menu = menu
+    // const menu = this.$store.getters.menus
+    // menu.forEach((item) => {
+    //   if (item.alias_name == 'setting') {
+    //     item.children.forEach((itemy, indexy) => {
+    //       if (itemy.is_super == 'Y') { // N
+    //         item.children.splice(indexy, 1)
+    //       }
+    //     })
+    //   }
+    // })
+    // this.menu = menu
   },
   methods: {
     handleCancel () {

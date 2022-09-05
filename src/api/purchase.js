@@ -40,3 +40,11 @@ export function getPurchaseInfo (query) {
     params: query
   })
 }
+
+export function getPurchaseDependentsLists (query) {
+  return fetch({
+    url: '/promotions/employeepurchase/dependents/lists',
+    method: 'get',
+    params: query
+  })
+}

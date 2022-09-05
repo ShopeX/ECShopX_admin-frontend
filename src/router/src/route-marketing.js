@@ -154,6 +154,10 @@ export default {
         {
           path: 'detail',
           component: () => import('@/view/member/promotions/purchase/detail')
+        },
+        {
+          path: 'dependents',
+          component: () => import('@/view/member/promotions/purchase/dependents')
         }
       ]
     },

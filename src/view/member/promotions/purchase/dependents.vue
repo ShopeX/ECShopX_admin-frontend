@@ -31,7 +31,15 @@
         prop="dependents_user_name"
         label="家属昵称"
       />
-      <el-table-column label="时间">
+      <el-table-column
+        prop="dependents_used_limitfee"
+        label="家属已使用额度"
+      >
+        <template slot-scope="scope">
+          ￥{{ scope.row.dependents_used_limitfee / 100 }}
+        </template>
+      </el-table-column>
+      <el-table-column label="绑定时间">
         <template slot-scope="scope">
           {{ scope.row.created | datetime('YYYY-MM-DD HH:mm:ss') }}
         </template>

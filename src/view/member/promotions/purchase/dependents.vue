@@ -4,7 +4,7 @@
       <SpFilterFormItem prop="employee_user_mobile" label="员工手机号:">
         <el-input v-model="params.employee_user_mobile" placeholder="手机号" />
       </SpFilterFormItem>
-      <SpFilterFormItem prop="dependents_user_mobile" label="家属手机号:">
+      <SpFilterFormItem prop="dependents_user_mobile" label="亲友手机号:">
         <el-input v-model="params.dependents_user_mobile" placeholder="手机号" />
       </SpFilterFormItem>
     </SpFilterForm>
@@ -25,15 +25,15 @@
       />
       <el-table-column
         prop="dependents_user_mobile"
-        label="家属手机号"
+        label="亲友手机号"
       />
       <el-table-column
         prop="dependents_user_name"
-        label="家属昵称"
+        label="亲友昵称"
       />
       <el-table-column
         prop="dependents_used_limitfee"
-        label="家属已使用额度"
+        label="亲友已使用额度"
       >
         <template slot-scope="scope">
           ￥{{ scope.row.dependents_used_limitfee / 100 }}

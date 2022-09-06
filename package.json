@@ -1,6 +1,6 @@
 {
   "name": "ecshopx-admin",
-  "version": "3.2.1",
+  "version": "3.3.0",
   "description": "ecshopx admin",
   "author": "shopex",
   "private": true,
@@ -18,6 +18,7 @@
     "aws-sdk": "^2.824.0",
     "axios": "^0.19.2",
     "axios-mock-adapter": "^1.8.1",
+    "big": "^0.5.2",
     "chart.js": "^2.6.0",
     "dayjs": "^1.10.6",
     "element-ui": "^2.13.0",

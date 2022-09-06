@@ -1,9 +1,7 @@
 <template>
   <div v-loading="loading" class="page-order-index">
     <el-card class="el-card--normal">
-      <div slot="header">
-订单基本信息
-</div>
+      <div slot="header">订单基本信息</div>
       <el-row class="card-panel">
         <el-col
           v-for="(item, index) in infoList"
@@ -19,9 +17,7 @@
     </el-card>
 
     <el-card v-if="is_community" class="el-card--normal">
-      <div slot="header">
-跟团信息
-</div>
+      <div slot="header">跟团信息</div>
       <el-row class="card-panel">
         <el-col
           v-for="(item, index) in communityInfoList"
@@ -46,27 +42,21 @@
     </el-card>
 
     <el-card class="el-card--normal">
-      <div slot="header">
-客户留言
-</div>
+      <div slot="header">客户留言</div>
       <div class="card-panel">
         <span class="card-panel__value">{{ memberRemark }}</span>
       </div>
     </el-card>
 
     <el-card class="el-card--normal">
-      <div slot="header">
-商家备注
-</div>
+      <div slot="header">商家备注</div>
       <div class="card-panel">
         <span class="card-panel__value">{{ merchantRemark }}</span>
       </div>
     </el-card>
 
     <el-card class="el-card--normal">
-      <div slot="header">
-商品清单
-</div>
+      <div slot="header">商品清单</div>
       <div class="card-panel">
         <el-table v-if="orderInfo" border :data="orderInfo.items">
           <el-table-column prop="item_id" label="商品ID" width="80" />
@@ -182,10 +172,8 @@
         </el-table>
       </div>
     </el-card>
-    <el-card v-if="orderInfo._order_class != 'excard'" class="el-card--normal">
-      <div slot="header">
-支付清单
-</div>
+    <el-card v-if="orderInfo && orderInfo._order_class != 'excard'" class="el-card--normal">
+      <div slot="header">支付清单</div>
       <el-row class="card-panel">
         <el-col
           v-for="(item, index) in payList"
@@ -202,9 +190,7 @@
 
     <el-card v-if="!VERSION_IN_PURCHASE" class="el-card--normal">
       <el-card v-if="invoice" class="el-card--normal">
-        <div slot="header">
-发票信息
-</div>
+        <div slot="header">发票信息</div>
         <div v-if="invoice.title == 'individual'">
           <el-row class="card-panel">
             <el-col
@@ -234,9 +220,7 @@
           </el-row>
         </div>
       </el-card>
-      <div slot="header">
-优惠明细
-</div>
+      <div slot="header">优惠明细</div>
       <div class="card-panel">
         <el-table
           v-if="orderInfo"
@@ -254,9 +238,7 @@
     </el-card>
 
     <el-card class="el-card--normal">
-      <div slot="header">
-物流信息
-</div>
+      <div slot="header">物流信息</div>
       <div v-if="orderInfo" class="card-panel">
         <div class="card-panel-item">
           <span class="card-panel__label">{{
@@ -296,9 +278,7 @@
     </el-card>
 
     <el-card v-if="!VERSION_IN_PURCHASE" class="el-card--normal">
-      <div slot="header">
-分润信息
-</div>
+      <div slot="header">分润信息</div>
       <el-row class="card-panel">
         <el-col
           v-for="(item, index) in profitList"
@@ -361,7 +341,7 @@ import { VERSION_STANDARD, VERSION_IN_PURCHASE } from '@/utils'
 import moment from 'moment'
 
 export default {
-  data () {
+  data() {
     return {
       infoList: [
         { label: '下单时间:', field: 'create_time', is_show: true },
@@ -538,7 +518,7 @@ export default {
   computed: {
     ...mapGetters(['login_type'])
   },
-  mounted () {
+  mounted() {
     console.log(this.infoList)
     const { orderId, resource, user_id } = this.$route.query
     if (orderId) {
@@ -554,13 +534,13 @@ export default {
     this.getLogisticsList()
   },
   methods: {
-    getFiledValue (key) {
+    getFiledValue(key) {
       const { orderInfo } = this
       if (orderInfo) {
         return orderInfo[key]
       }
     },
-    async getDetail () {
+    async getDetail() {
       this.loading = true
       const { orderInfo, distributor, profit, tradeInfo } = await this.$api.trade.getOrderDetail(
         this.order_id
@@ -727,15 +707,20 @@ export default {
       //     ? `${distributor.store_name} ${distributor.store_address}`
       //     :
 
-      if (orderInfo.order_class == 'excard') { // 兑换订单
+      if (orderInfo.order_class == 'excard') {
+        // 兑换订单
         this.addressInfo = `${distributor.province}${distributor.city}${distributor.area}${distributor.address}`
-      } else if (orderInfo.order_class == 'shopadmin') { // 门店订单
+      } else if (orderInfo.order_class == 'shopadmin') {
+        // 门店订单
         this.addressInfo = `${distributor.store_address}（${distributor.store_name}）`
-      } else { // 普通订单配送方式是自提时，展示门店地址，非自提展示收货地址
-        this.addressInfo = distributor.store_address && receipt_type == 'ziti' ? `${distributor.store_address}（${distributor.store_name}）`
-          : (receipt_type != 'ziti'
-          ? `${receiver_name} ${receiver_mobile} ${receiver_state}${receiver_city}${receiver_district}${receiver_address}`
-          : '-- --')
+      } else {
+        // 普通订单配送方式是自提时，展示门店地址，非自提展示收货地址
+        this.addressInfo =
+          distributor.store_address && receipt_type == 'ziti'
+            ? `${distributor.store_address}（${distributor.store_name}）`
+            : receipt_type != 'ziti'
+            ? `${receiver_name} ${receiver_mobile} ${receiver_state}${receiver_city}${receiver_district}${receiver_address}`
+            : '-- --'
       }
       this.deliveryData = deliveryData
 
@@ -756,11 +741,11 @@ export default {
       this.btnActions = btnActions
       this.loading = false
     },
-    modifyExpress ({ orders_delivery_id }) {
+    modifyExpress({ orders_delivery_id }) {
       this.expressForm.orders_delivery_id = orders_delivery_id
       this.expressDialog = true
     },
-    async expressSubmit () {
+    async expressSubmit() {
       const { orders_delivery_id, delivery_corp, delivery_code } = this.expressForm
       const params = {
         delivery_corp,
@@ -771,7 +756,7 @@ export default {
       this.getDetail()
       this.$message.success('修改成功')
     },
-    async getLogisticsList () {
+    async getLogisticsList() {
       const { list } = await this.$api.trade.getLogisticsList()
       const options = list.map((item) => {
         return {
@@ -782,7 +767,7 @@ export default {
       this.expressFormList[0].options = options
       this.deliverGoodsFormList[2].options = options
     },
-    handleAction ({ key }) {
+    handleAction({ key }) {
       const { order_id, items, delivery_type, delivery_status } = this.orderInfo
       if (key == 'deliverGoods') {
         this.$refs['deliverGoodsDialogRef'].resetForm()
@@ -806,7 +791,7 @@ export default {
         this.deliverGoodsDialog = true
       }
     },
-    async deliverGoodsSubmit () {
+    async deliverGoodsSubmit() {
       const { order_id, delivery_type, delivery_corp, delivery_code, type, items } =
         this.deliverGoodsForm
       const params = {

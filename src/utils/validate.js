@@ -1,5 +1,5 @@
 /* 是否是手机号 */
-export function isMobile (str) {
+export function isMobile(str) {
   // const reg = /^(((13[0-9]{1})|(15[0-9]{1})|(18[0-9]{1}))+\d{8})$/
   const reg = /^(1\d{10})$/
   return reg.test(str.trim())
@@ -12,7 +12,7 @@ export function isMobile (str) {
 // }
 
 /* 合法uri */
-export function validateURL (textval) {
+export function validateURL(textval) {
   const urlregex =
     /^(https?|ftp):\/\/([a-zA-Z0-9.-]+(:[a-zA-Z0-9.&%$-]+)*@)*((25[0-5]|2[0-4][0-9]|1[0-9]{2}|[1-9][0-9]?)(\.(25[0-5]|2[0-4][0-9]|1[0-9]{2}|[1-9]?[0-9])){3}|([a-zA-Z0-9-]+\.)*[a-zA-Z0-9-]+\.(com|edu|gov|int|mil|net|org|biz|arpa|info|name|pro|aero|coop|museum|[a-zA-Z]{2}))(:[0-9]+)*(\/($|[a-zA-Z0-9.,?'\\+&%$#=~_-]+))*$/
   return urlregex.test(textval)
@@ -22,42 +22,42 @@ export function validateURL (textval) {
 //   const reg = /^(\d{18,18}|\d{15,15}|\d{17,17}X)$/
 //   return reg.test(val)
 // }
-export function vaildateIdCard (value) {
+export function vaildateIdCard(value) {
   value = Number(value)
   const reg = /^(\d{18,18}|\d{15,15}|\d{17,17}X)$/
   return reg.test(value)
 }
-export function validEmail (email) {
+export function validEmail(email) {
   const reg =
     /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
   return reg.test(email)
 }
 /* 小写字母 */
-export function validateLowerCase (str) {
+export function validateLowerCase(str) {
   const reg = /^[a-z]+$/
   return reg.test(str)
 }
 
 /* 验证key */
-export function validateKey (str) {
+export function validateKey(str) {
   var reg = /^[a-z_\-:]+$/
   return reg.test(str)
 }
 
 /* 大写字母 */
-export function validateUpperCase (str) {
+export function validateUpperCase(str) {
   const reg = /^[A-Z]+$/
   return reg.test(str)
 }
 
 /* 大小写字母 */
-export function validatAlphabets (str) {
+export function validatAlphabets(str) {
   const reg = /^[A-Za-z]+$/
   return reg.test(str)
 }
 
 /* 上传图片 */
-export function validatUploadImage (file) {
+export function validatUploadImage(file) {
   const MAX_IMG_SIZE = 10
   let isJPG = file.raw.type === 'image/jpeg'
   let isPNG = file.raw.type === 'image/png'
@@ -73,7 +73,7 @@ export function validatUploadImage (file) {
 }
 
 /* 上传视频 */
-export function validatUploadVideo (file) {
+export function validatUploadVideo(file) {
   let isMP4 = file.raw.type === 'image/mp4'
   let isLt15M = file.raw.size / 1024 / 1024 <= 15
   if (!isMP4) {
@@ -98,4 +98,12 @@ export const MaxRules = (size) => {
 
 export const MinRules = (size) => {
   return { min: size, message: `长度最少在${size}个字符`, trigger: 'blur' }
+}
+
+export const isNumber = (val) => {
+  return /^-?\d+$/.test(val)
+}
+
+export const isFloat = (val) => {
+  return /^(-?\d+)(\.\d+)?$/.test(val)
 }

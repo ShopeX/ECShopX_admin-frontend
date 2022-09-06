@@ -137,19 +137,13 @@
           </el-button>
           <el-dropdown-menu slot="dropdown">
             <el-dropdown-item>
-              <export-tip @exportHandle="exportInvoice">
-未开票订单
-</export-tip>
+              <export-tip @exportHandle="exportInvoice"> 未开票订单 </export-tip>
             </el-dropdown-item>
             <el-dropdown-item>
-              <export-tip @exportHandle="exportDataMaster">
-主订单
-</export-tip>
+              <export-tip @exportHandle="exportDataMaster"> 主订单 </export-tip>
             </el-dropdown-item>
             <el-dropdown-item>
-              <export-tip @exportHandle="exportDataNormal">
-子订单
-</export-tip>
+              <export-tip @exportHandle="exportDataNormal"> 子订单 </export-tip>
             </el-dropdown-item>
           </el-dropdown-menu>
         </el-dropdown>
@@ -165,9 +159,7 @@
             :auto-upload="false"
             :show-file-list="false"
           >
-            <el-button type="primary" plain>
-批量发货
-</el-button>
+            <el-button type="primary" plain> 批量发货 </el-button>
           </el-upload>
         </el-tooltip>
         <el-upload
@@ -177,9 +169,7 @@
           :auto-upload="false"
           :show-file-list="false"
         >
-          <el-button type="primary" plain>
-批量取消
-</el-button>
+          <el-button type="primary" plain> 批量取消 </el-button>
         </el-upload>
       </div>
 
@@ -393,6 +383,20 @@
         :form-list="refundFormList"
         @onSubmit="refundSubmit"
       />
+
+      <!-- 订单改价 -->
+      <SpDialog
+        ref="changePriceRef"
+        v-model="changePriceDialog"
+        width="1000px"
+        class="dialog-changeprice"
+        :loading="changePriceForm.loading"
+        :destroy-on-close="true"
+        :title="`修改订单价格【订单:${changePriceForm.order_id}】`"
+        :form="changePriceForm"
+        :form-list="changePriceFormList"
+        @onSubmit="changePriceSubmit"
+      />
     </div>
     <router-view />
   </div>
@@ -403,6 +407,7 @@ import mixin from '@/mixins'
 import { pageMixin } from '@/mixins'
 import { VERSION_STANDARD, isArray, VERSION_B2C, VERSION_IN_PURCHASE } from '@/utils'
 import { exportInvoice, orderExport } from '@/api/trade'
+import CompTableView from './components/comp-tableview'
 import moment from 'moment'
 import {
   DISTRIBUTION_TYPE,
@@ -420,8 +425,9 @@ import {
 } from '@/consts'
 
 export default {
+  components: { CompTableView },
   mixins: [mixin, pageMixin],
-  data () {
+  data() {
     return {
       loading: false,
       defaultTime: ['00:00:00', '23:59:59'],
@@ -697,13 +703,67 @@ export default {
         check_cancel: '1',
         shop_reject_reason: ''
       },
+      changePriceDialog: false,
+      changePriceFormList: [
+        {
+          component: () => (
+            <div class='tip-bar'>
+              仅未支付订单可修改价格，改价后请联系买家刷新订单并核实订单金额后再支付。
+            </div>
+          )
+        },
+        {
+          component: () => (
+            <div class='receive-info'>
+              <div class='receive-item'>
+                <label class='item-label'>买家：</label>
+                {`${this.changePriceForm.buy_member} | ${this.changePriceForm.buy_mobile}`}
+              </div>
+              <div class='receive-item'>
+                <label class='item-label'>收货人：</label>
+                {`${this.changePriceForm.receive_name} | ${this.changePriceForm.receive_mobile}`}
+              </div>
+              <div class='receive-item'>
+                <label class='item-label'>收货地址：</label>
+                {this.changePriceForm.receive_address}
+              </div>
+            </div>
+          )
+        },
+        {
+          component: () => (
+            <CompTableView
+              value={this.changePriceForm.items}
+              itemFee={this.changePriceForm.itemFee}
+              freightFee={this.changePriceForm.freightFee}
+              orderFee={this.changePriceForm.orderFee}
+            />
+          )
+        }
+      ],
+      changePriceForm: {
+        order_id: '',
+        buy_member: '',
+        buy_mobile: '',
+        receive_name: '',
+        receive_mobile: '',
+        receive_address: '',
+        loading: false,
+        items: [],
+        // 商品应付金额
+        itemFee: 0,
+        // 邮费
+        freightFee: 0,
+        // 订单应付金额
+        orderFee: 0
+      },
       origin: ''
     }
   },
   computed: {
     ...mapGetters(['login_type', 'isMicorMall'])
   },
-  mounted () {
+  mounted() {
     this.origin = window.location.origin
     const { tab } = this.$route.query
     if (tab) {
@@ -716,7 +776,7 @@ export default {
     this.getPickupcodeSetting()
   },
   methods: {
-    async fetchList () {
+    async fetchList() {
       this.loading = true
       const { pageIndex: page, pageSize } = this.page
       let params = {
@@ -812,6 +872,7 @@ export default {
 
           actionBtns.push({ name: '备注', key: 'remark' })
         }
+        actionBtns.push({ name: '改价', key: 'changePrice' })
         return {
           ...item,
           actionBtns
@@ -821,12 +882,12 @@ export default {
       this.datapass_block = datapass_block
       this.loading = false
     },
-    async getSubDistrictList () {
+    async getSubDistrictList() {
       const res = await this.$api.subdistrict.getSubDistrictList()
       console.log(`getSubDistrictList:`, res)
       this.subDistrictList = res
     },
-    getOrderType ({ order_class, type }) {
+    getOrderType({ order_class, type }) {
       if (order_class == 'normal') {
         return type == '1' ? '跨境订单' : '普通订单'
       }
@@ -836,13 +897,13 @@ export default {
         return fd.title
       }
     },
-    getDistributionType ({ receipt_type }) {
+    getDistributionType({ receipt_type }) {
       const fd = DISTRIBUTION_TYPE.find((item) => item.value == receipt_type)
       if (fd) {
         return fd.title
       }
     },
-    async getOrderSourceList () {
+    async getOrderSourceList() {
       const { list } = await this.$api.datacube.getSourcesList({
         page: 1,
         pageSize: 1000
@@ -855,7 +916,7 @@ export default {
         }
       })
     },
-    async getLogisticsList () {
+    async getLogisticsList() {
       const { list } = await this.$api.trade.getLogisticsList()
       this.deliverGoodsFormList[2].options = list.map((item) => {
         return {
@@ -864,8 +925,8 @@ export default {
         }
       })
     },
-    async handleAction (
-      { order_id, distributor_remark, items, delivery_type, delivery_status },
+    async handleAction(
+      { order_id, distributor_remark, items, delivery_type, delivery_status, receipt_type },
       { key }
     ) {
       if (key == 'remark') {
@@ -966,15 +1027,69 @@ export default {
             this.$message.error('更新开票状态失败')
           }
         })
+      } else if (key == 'changePrice') {
+        this.changePriceDialog = true
+        this.changePriceForm.loading = true
+        const { orderInfo, distributor, profit, tradeInfo } = await this.$api.trade.getOrderDetail(
+          order_id
+        )
+        const { store_address, store_name } = distributor
+        const {
+          items = [],
+          user_id,
+          receiver_name,
+          receiver_mobile,
+          receiver_state,
+          receiver_city,
+          receiver_district,
+          receiver_address,
+          order_class,
+          total_fee,
+          freight_fee,
+          item_fee_new
+        } = orderInfo
+        const { username, mobile } = await this.$api.member.getMember({
+          user_id: user_id
+        })
+        this.changePriceForm.loading = false
+        this.changePriceForm.order_id = order_id
+        this.changePriceForm.buy_member = username
+        this.changePriceForm.buy_mobile = mobile
+        if (
+          order_class == 'excard' ||
+          order_class == 'shopadmin' ||
+          (order_class == 'normal' && receipt_type == 'ziti')
+        ) {
+          this.changePriceForm.receive_name = username
+          this.changePriceForm.receive_mobile = mobile
+          this.changePriceForm.receive_address = `${store_address}（${store_name}）`
+        } else {
+          this.changePriceForm.receive_name = receiver_name
+          this.changePriceForm.receive_mobile = receiver_mobile
+          this.changePriceForm.receive_address = `${receiver_state}${receiver_city}${receiver_district}${receiver_address}`
+        }
+        this.changePriceForm.itemFee = item_fee_new / 100
+        this.changePriceForm.freightFee = freight_fee / 100
+        this.changePriceForm.orderFee = total_fee / 100
+
+        this.changePriceForm.items = items.map((item) => {
+          return {
+            ...item,
+            change_discount: '',
+            change_price: '',
+            total: total_fee
+          }
+        })
+        console.log('this.changePriceForm.items:', this.changePriceForm.items)
       }
     },
-    async onRemarkSubmit () {
+    async onRemarkSubmit() {
       await this.$api.order.remarks(this.remarkForm)
       this.$message.success('订单备注修改成功!')
       this.remarkDialog = false
       this.fetchList()
     },
-    async onCancelOrderSubmit () {
+    async onCancelOrderSubmit() {
       const { order_id } = this.cancelOrderForm
       console.log(this.cancelOrderForm)
       await this.$api.trade.cancelOrderConfirm(order_id, this.cancelOrderForm)
@@ -982,7 +1097,7 @@ export default {
       this.cancelOrderDialog = false
       this.fetchList()
     },
-    async deliverGoodsSubmit () {
+    async deliverGoodsSubmit() {
       const { order_id, delivery_type, delivery_corp, delivery_code, type, items } =
         this.deliverGoodsForm
       let params = {
@@ -1005,7 +1120,7 @@ export default {
         this.$message.error('发货失败!')
       }
     },
-    async writeOffSubmit () {
+    async writeOffSubmit() {
       const { order_id } = this.writeOffForm
       const { ziti_status } = await this.$api.trade.doWriteoff(order_id, this.writeOffForm)
       if (ziti_status == 'DONE') {
@@ -1015,7 +1130,7 @@ export default {
       }
       this.writeOffDialog = false
     },
-    async refundSubmit () {
+    async refundSubmit() {
       const { order_id, check_cancel, shop_reject_reason } = this.refundForm
       const { refund_status } = await this.$api.trade.cancelConfirm(order_id, {
         order_id,
@@ -1031,7 +1146,8 @@ export default {
       }
       this.refundDialog = false
     },
-    exportInvoice () {
+    changePriceSubmit() {},
+    exportInvoice() {
       let type = 'normal'
       this.$emit('onChangeData', 'params', { type })
       exportInvoice({
@@ -1052,13 +1168,13 @@ export default {
         }
       })
     },
-    exportDataNormal () {
+    exportDataNormal() {
       this.exportData('normal_order')
     },
-    exportDataMaster () {
+    exportDataMaster() {
       this.exportData('normal_master_order')
     },
-    exportData (type) {
+    exportData(type) {
       console.log('====exportData', type)
       let params = {
         ...this.params,
@@ -1093,7 +1209,7 @@ export default {
         }
       })
     },
-    async uploadHandleChange (file) {
+    async uploadHandleChange(file) {
       const params = {
         isUploadFile: true,
         file_type: 'normal_orders',
@@ -1103,7 +1219,7 @@ export default {
       this.$message.success('上传成功，等待处理')
       this.fetchList()
     },
-    async uploadHandlePatchCancel (file) {
+    async uploadHandlePatchCancel(file) {
       const params = {
         isUploadFile: true,
         file_type: 'normal_orders_cancel',
@@ -1113,7 +1229,7 @@ export default {
       this.$message.success('上传成功，等待处理')
       this.fetchList()
     },
-    async getPickupcodeSetting () {
+    async getPickupcodeSetting() {
       const { pickupcode_status } = await this.$api.company.getPickupcodeSetting()
       if (!pickupcode_status) return
       this.writeOffFormList.push({
@@ -1131,5 +1247,38 @@ export default {
 <style lang="scss" scope>
 .sp-filter-form {
   margin-bottom: 16px;
+}
+.dialog-changeprice {
+  .el-form {
+    margin-right: 0 !important;
+  }
+  .el-form-item {
+    &:nth-child(1),
+    &:nth-child(2),
+    &:nth-child(3) {
+      .el-form-item__content {
+        margin-left: 0 !important;
+      }
+    }
+  }
+  .tip-bar {
+    border: 1px solid #7db3f2;
+    border-radius: 4px;
+    background: #e6f0ff;
+    padding: 0 10px;
+    color: #4f77a8;
+    height: 36px;
+    line-height: 36px;
+    font-size: 13px;
+  }
+  .receive-info {
+    line-height: 22px;
+  }
+  .receive-item {
+    color: #7d7d7d;
+  }
+  .receive-label {
+    color: #b8b8b8;
+  }
 }
 </style>

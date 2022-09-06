@@ -38,23 +38,34 @@ export default {
   name: 'SpDialog',
   props: {
     title: String,
-    value: false,
+    value: {
+      type: Boolean,
+      default: false
+    },
     formList: Array,
     form: Object,
+    loading: {
+      type: Boolean,
+      default: false
+    },
+    destroyOnClose: {
+      type: Boolean,
+      default: false
+    },
     width: {
       type: String,
       default: '800px'
     }
   },
-  data () {
+  data() {
     return {}
   },
-  created () {},
+  created() {},
   methods: {
-    handleCancel () {
+    handleCancel() {
       this.$emit('input', false)
     },
-    handleSubmit () {
+    handleSubmit() {
       this.$refs['form'].validate((valid) => {
         if (valid) {
           this.$emit('onSubmit')
@@ -63,11 +74,11 @@ export default {
         }
       })
     },
-    resetForm () {
+    resetForm() {
       this.$refs['form'] && this.$refs['form'].resetFields()
     }
   },
-  render () {
+  render() {
     const { title, value, form, formList, width } = this
     const Fn = () => {}
     const getComponentByType = (item) => {
@@ -167,6 +178,7 @@ export default {
           rules={rules}
           label-width='100px'
           validate-on-rule-change={false}
+          v-loading={this.loading}
         >
           {formList.map((item, index) => {
             return (

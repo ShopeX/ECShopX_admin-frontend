@@ -43,6 +43,22 @@
         prop="name"
         label="姓名"
       />
+      <el-table-column
+        prop="account"
+        label="账号"
+      />
+      <el-table-column
+        prop="password"
+        label="明文密码"
+      />
+      <!-- <el-table-column
+        prop="email"
+        label="邮箱"
+      /> -->
+      <el-table-column
+        prop="enterprise_sn"
+        label="企业编码"
+      />
       <el-table-column label="操作">
         <template slot-scope="scope">
           <el-button
@@ -85,7 +101,35 @@
           class="demo-ruleForm"
           label-width="120px"
         >
-          <el-form-item label="手机号">
+          <el-form-item el-form-item label="选择企业">
+            <el-col :span="10">
+              <el-select
+                v-model="enterprise_sn_data"
+                placeholder="请选择选择企业"
+                style="width:100%"
+                @change='selectChange'
+                :disabled="whitelist_id ? true : false"
+              >
+                <el-option
+                  v-for="(item, index) in enterpriseList"
+                  :key="`${item.enterprise_id}${index}`"
+                  :label="item.enterprise_name"
+                  :value="`${item.enterprise_sn}-${item.login_type}`"
+                />
+              </el-select>
+            </el-col>
+          </el-form-item>
+          <el-form-item label="姓名" v-if="login_type">
+            <el-col :span="10">
+              <el-input
+                v-model="form.name"
+                required
+                placeholder="请填写名称"
+                :disabled="datapass_block == 1 && isEdit"
+              />
+            </el-col>
+          </el-form-item>
+          <el-form-item label="手机号" v-if="login_type == 'mobile'">
             <el-col :span="10">
               <el-input
                 v-if="!isEdit"
@@ -100,15 +144,19 @@
               />
             </el-col>
           </el-form-item>
-          <el-form-item label="姓名">
-            <el-col
-              :span="10"
-            >
+          <el-form-item label="账号" v-if="login_type == 'account'">
+            <el-col :span="10">
+              <el-input :disabled="isEdit" v-model="form.account" placeholder="请输入帐号" />
+            </el-col>
+          </el-form-item>
+          <el-form-item label="密码" v-if="login_type == 'account'">
+            <el-col :span="10">
               <el-input
-                v-model="form.name"
-                required
-                placeholder="请填写名称"
-                :disabled="datapass_block == 1 && isEdit"
+                v-model="form.password"
+                type="password"
+                name="password"
+                auto-complete="off"
+                placeholder="请输入密码"
               />
             </el-col>
           </el-form-item>
@@ -179,7 +227,8 @@ import {
   getMembersWhitelistList,
   createMembersWhitelist,
   updateMembersWhitelist,
-  deleteMembersWhitelist
+  deleteMembersWhitelist,
+  getEnterpriseList
 } from '@/api/member'
 import { getWhitelistSetting, setWhitelistSetting } from '@/api/company'
 
@@ -200,7 +249,10 @@ export default {
       form: {
         mobile: '',
         name: '',
-        tips: ''
+        tips: '',
+        enterprise_sn: '',
+        account: '',
+        password: ''
       },
       mobile: '',
       editMobile: '',
@@ -213,8 +265,11 @@ export default {
         page: 1,
         pageSize: 20
       },
-      whitelist_id: 0,
-      datapass_block: 1
+      whitelist_id: '',
+      datapass_block: 1,
+      enterpriseList: [],
+      login_type: '',
+      enterprise_sn_data: ''
     }
   },
   computed: {
@@ -229,8 +284,14 @@ export default {
   },
   mounted () {
     this.getListData()
+    this.fetchList()
   },
   methods: {
+    selectChange (item) {
+      const [ enterprise_sn, login_type ] = item.split('-')
+      this.login_type = login_type
+      this.form.enterprise_sn = enterprise_sn
+    },
     handleClose (index) {
       this.relDistributors.splice(index, 1)
       this.form.distributor_ids.splice(index, 1)
@@ -241,6 +302,11 @@ export default {
       this.editMobile = ''
       this.form.mobile = ''
       this.form.name = ''
+      this.form.account = ''
+      this.form.password = ''
+      this.form.enterprise_sn = ''
+      this.enterprise_sn_data = ''
+      this.login_type = ''
     },
     handleCurrentChange (page_num) {
       this.params.page = page_num
@@ -251,13 +317,15 @@ export default {
       this.editTitle = '添加白名单'
       this.editVisible = true
       this.isEdit = false
-      this.form.mobile = ''
-      this.form.name = ''
-      this.whitelist_id = ''
-      this.editMobile = ''
+    },
+    fetchList () {
+      getEnterpriseList({ page: 1, pageSize: 200 }).then((response) => {
+        this.enterpriseList = response.data.data.list
+      })
     },
     editAction (index, row) {
       // 编辑物料弹框
+      const fliterArr = this.enterpriseList.filter(el => el.enterprise_sn == row.enterprise_sn)
       this.handleCancel()
       this.editTitle = '编辑白名单信息'
       this.editVisible = true
@@ -266,17 +334,29 @@ export default {
       this.form.mobile = row.mobile
       this.form.name = row.name
       this.whitelist_id = row.whitelist_id
+      this.form.enterprise_sn = row.enterprise_sn
+      this.form.password = row.password
+      this.form.account = row.account
+      this.enterprise_sn_data = row.enterprise_sn + '-' + fliterArr.length > 0 ? fliterArr[0].login_type : this.enterpriseList[0]
+      this.login_type = fliterArr.length > 0 ? fliterArr[0].login_type : this.enterpriseList[0].login_type
     },
     submitAction () {
       // 提交物料
+      let params = this.form
+      if (this.login_type == "account") {
+        delete params.mobile
+      } else if (this.login_type == "mobile") {
+        delete params.password
+        delete params.account
+      }
       if (this.whitelist_id) {
-        updateMembersWhitelist(this.whitelist_id, this.form).then((response) => {
+        updateMembersWhitelist(this.whitelist_id, params).then((response) => {
           this.detailData = response.data.data
           this.editVisible = false
           this.getListData()
         })
       } else {
-        createMembersWhitelist(this.form).then((response) => {
+        createMembersWhitelist(params).then((response) => {
           this.detailData = response.data.data
           this.editVisible = false
           this.getListData()
@@ -399,3 +479,4 @@ export default {
   background-color: #f9fafc;
 }
 </style>
+

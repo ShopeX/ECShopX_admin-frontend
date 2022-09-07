@@ -133,7 +133,7 @@ router.beforeEach((to, from, next) => {
             redirect: '/404'
           }
         )
-        log.debug(`newRouter: `, newRouter)
+        // log.debug(`newRouter: `, newRouter)
 
         router.addRoutes(newRouter)
         if (to.path == '/') {

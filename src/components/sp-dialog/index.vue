@@ -79,7 +79,7 @@ export default {
     }
   },
   render() {
-    const { title, value, form, formList, width } = this
+    const { title, value, form, formList, width, destroyOnClose } = this
     const Fn = () => {}
     const getComponentByType = (item) => {
       if (typeof item.component != 'undefined') {
@@ -168,6 +168,7 @@ export default {
         title={title}
         visible={value}
         width={width}
+        destroy-on-close={destroyOnClose}
         onclose={this.handleCancel}
       >
         <el-form

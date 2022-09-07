@@ -81,7 +81,7 @@
       <el-table-column prop="price" label="单价（¥）" width="100" />
       <el-table-column prop="num" label="数量" width="80" />
       <el-table-column prop="point" label="积分抵扣" width="100" />
-      <el-table-column prop="item_fee" label="小计（¥）" width="100" />
+      <el-table-column prop="item_fee" label="总计（¥）" width="100" />
       <el-table-column width="160">
         <template #header>
           <el-dropdown @command="toggleChangePriceType">
@@ -93,15 +93,15 @@
               <el-dropdown-item
                 command="change_discount"
                 :class="{ active: changeType == 'change_discount' }"
-                >
-按折扣改价
-</el-dropdown-item>
+              >
+                按折扣改价
+              </el-dropdown-item>
               <el-dropdown-item
                 command="change_price"
                 :class="{ active: changeType == 'change_price' }"
-                >
-直接改价
-</el-dropdown-item>
+              >
+                直接改价
+              </el-dropdown-item>
             </el-dropdown-menu>
           </el-dropdown>
         </template>
@@ -122,7 +122,7 @@
           />
         </template>
       </el-table-column>
-      <el-table-column prop="total" label="商品应付金额（¥）" width="160" />
+      <el-table-column prop="total_fee" label="商品应付金额（¥）" width="160" />
     </el-table>
     <div class="tableview-ft">
       <div class="ft-l">
@@ -144,14 +144,14 @@
                 this.onChangeFreightFee()
               }
             "
-            >
-免运费
-</el-button>
+          >
+            免运费
+          </el-button>
         </div>
       </div>
       <div class="ft-r">
         <div class="r-item">
-          <label>商品应付金额：</label><span>{{ `¥${dItemFee}` }}</span>
+          <label>商品应付金额：</label><span>{{ `¥${dOrderFee - dFreightFee}` }}</span>
         </div>
         <div class="r-item">
           <label>运费：</label><span>{{ `¥${dFreightFee}` }}</span>
@@ -180,7 +180,8 @@ export default {
     value: Array,
     itemFee: [String, Number],
     freightFee: [String, Number],
-    orderFee: [String, Number]
+    orderFee: [String, Number],
+    orderId: String
   },
   data() {
     return {
@@ -189,31 +190,33 @@ export default {
       globalChangePrice: '',
       globalFreightFee: '',
       changeType: 'change_price',
-      dItemFee: 0,
+      // dItemFee: 0,
       dFreightFee: 0,
-      dOrderFee: 0
+      dOrderFee: 0,
+      // 改价方式：total=一键改价；items=单件商品改价
+      downType: ''
     }
   },
   watch: {
     value(newVal, oldVal) {
       this.tableData = newVal.map((item) => {
         return {
+          item_id: item.item_id,
           item_name: item.item_name,
           item_spec_desc: item.item_spec_desc || '单规格',
           price: item.price / 100,
           item_fee: item.item_fee / 100,
           num: item.num,
           point: item.point,
-          total_fee: item.total_fee,
+          total_fee: item.total_fee / 100,
           change_discount: item.change_discount,
-          change_price: item.change_price,
-          total: item.total / 100
+          change_price: item.change_price
         }
       })
     },
-    itemFee(newVal, oldVal) {
-      this.dItemFee = newVal
-    },
+    // itemFee(newVal, oldVal) {
+    //   this.dItemFee = newVal
+    // },
     freightFee(newVal, oldVal) {
       this.dFreightFee = newVal
     },
@@ -242,46 +245,62 @@ export default {
     toggleChangePriceType(e) {
       this.changeType = e
     },
+    // 按直接改价
     onChangeItemPrice() {
-      let _itemFee = new Big(0)
-      this.tableData.forEach((item) => {
-        if (item.change_price) {
-          _itemFee = _itemFee.plus(item.change_price)
-        } else {
-          _itemFee = _itemFee.plus(item.item_fee)
+      const items = this.tableData.map((item) => {
+        return {
+          item_id: item.item_id,
+          total_fee: item.change_price * 100
         }
       })
-      this.tableData.forEach((item) => (item.total = _itemFee.toFixed(2)))
-      this.dItemFee = _itemFee.toFixed(2)
-      this.calc()
+      this.downType = 'items'
+      this.calcOrder(items)
     },
+    // 按折扣改价
     onChangeItemDiscount() {
-      let _itemFee = new Big(0)
-      this.tableData.forEach((item) => {
-        if (item.change_discount) {
-          _itemFee = _itemFee.plus((item.item_fee * item.change_discount) / 100)
-        } else {
-          _itemFee = _itemFee.plus(item.item_fee)
+      const items = this.tableData.map((item) => {
+        return {
+          item_id: item.item_id,
+          total_fee: item.item_fee * item.change_discount
         }
       })
-      this.tableData.forEach((item) => (item.total = _itemFee.toFixed(2)))
-      this.dItemFee = _itemFee.toFixed(2)
-      this.calc()
+      this.downType = 'items'
+      this.calcOrder(items)
     },
+    // 一键改价
     async handleChangePrice() {
       if (isNumber(this.globalChangePrice) || isFloat(this.globalChangePrice)) {
-        this.tableLoading = true
+        this.downType = 'total'
+        this.calcOrder([])
       } else {
         this.$message.error('输入正确的数字')
       }
     },
-    calc() {
-      const { dItemFee, dFreightFee, dOrderFee } = this
-      this.dOrderFee = new Big(0).plus(dItemFee).plus(dFreightFee)
-    },
+    // 运费改价
     onChangeFreightFee() {
       this.dFreightFee = this.globalFreightFee
-      this.calc()
+      this.calcOrder([])
+    },
+    async calcOrder(items) {
+      this.tableLoading = true
+      let params = {
+        order_id: this.orderId
+      }
+      if (this.downType) {
+        params['down_type'] = this.downType
+      }
+      if (this.globalChangePrice) {
+        params['total_fee'] = this.globalChangePrice * 100
+      }
+      if (this.dFreightFee) {
+        params['freight_fee'] = this.dFreightFee * 100
+      }
+      if (items.length > 0) {
+        params['items'] = items
+      }
+      const res = await this.$api.trade.changePrice(params)
+      this.tableLoading = false
+      this.$emit('onChange', res)
     }
   }
 }

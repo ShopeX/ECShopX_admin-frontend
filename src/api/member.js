@@ -348,3 +348,56 @@ export function setCheif (query) {
     params: query
   })
 }
+
+// 获取内购企业列表
+export function getEnterpriseList (params) {
+  return fetch({
+    url: '/members/enterprise',
+    method: 'get',
+    params
+  })
+}
+
+// 新增内购企业
+export function addEnterpriseInfo (params) {
+  return fetch({
+    url: '/members/enterprise',
+    method: 'post',
+    params
+  })
+}
+
+// 获取内购企业详情
+export function getEnterpriseDetail (id) {
+  return fetch({
+    url: '/members/enterprise/' + id,
+    method: 'get'
+  })
+}
+
+// 更新内购企业
+export function updateEnterpriseInfo (id, params) {
+  return fetch({
+    url: '/members/enterprise/' + id,
+    method: 'put',
+    params
+  })
+}
+
+// 删内购企业
+export function deteleEnterpriseInfo (id, params) {
+  return fetch({
+    url: '/members/enterprise' + id,
+    method: 'delete',
+    params
+  })
+}
+
+// 更新内购企业状态
+export function updateEnterpriseStaus (id, params) {
+  return fetch({
+    url: '/members/enterprise/updateStatus/' + id,
+    method: 'put',
+    params
+  })
+}

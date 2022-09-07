@@ -95,6 +95,11 @@ export default {
       path: 'closeAccount',
       name: '会员注销',
       component: () => import('@/view/member/closeAccount')
+    },
+    {
+      path: 'enterpriselist',
+      name: '内购企业列表',
+      component: () => import('@/view/member/members/enterprise')
     }
   ]
 }

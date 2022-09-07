@@ -31,7 +31,7 @@
         <el-form-item label="员工额度：">
           {{ detail.employee_limitfee }}
         </el-form-item>
-        <el-form-item label="家属是否共有额度：">
+        <el-form-item label="亲友是否共有额度：">
           {{ detail.is_share_limitfee ? '是' : '否' }}
         </el-form-item>
         <el-form-item
@@ -40,13 +40,13 @@
               detail.used_roles.indexOf('dependents') > -1 &&
               !detail.is_share_limitfee
           "
-          label="每位家属额度："
+          label="每位亲友额度："
         >
           {{ detail.dependents_limitfee }}
         </el-form-item>
         <el-form-item
           v-if="detail.used_roles && detail.used_roles.indexOf('dependents') > -1"
-          label="员工邀请家属上限："
+          label="员工邀请亲友上限："
         >
           {{ detail.dependents_limit }}
         </el-form-item>
@@ -122,7 +122,7 @@ export default {
         let transRole = eval(role)
         let textArr = []
         transRole.length > 0 && transRole.indexOf('employee') > -1 && textArr.push('员工')
-        transRole.length > 0 && transRole.indexOf('dependents') > -1 && textArr.push('家属')
+        transRole.length > 0 && transRole.indexOf('dependents') > -1 && textArr.push('亲友')
         return textArr.toString()
       }
     },

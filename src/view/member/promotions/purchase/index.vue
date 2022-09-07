@@ -6,7 +6,7 @@
 
 <template>
   <div>
-    <template v-if="$route.path.indexOf('detail') === -1 && $route.path.indexOf('editor') === -1">
+    <template v-if="$route.path.indexOf('detail') === -1 && $route.path.indexOf('editor') === -1 && $route.path.indexOf('dependents') === -1">
       <div class="action-container">
         <el-button
           type="primary"
@@ -81,7 +81,7 @@
         />
         <el-table-column
           prop="dependents_limitfee"
-          label="家属额度"
+          label="亲友额度"
         />
         <el-table-column
           prop="activity_status"
@@ -140,6 +140,18 @@
                 @click="deleteCard(scope.row.purchase_id, scope.$index)"
               >
                 <span style="color: #f56c6c">终止活动</span>
+              </el-button>
+              <el-button type="text">
+                <router-link
+                  :to="{
+                    path: matchHidePage('dependents'),
+                    query: {
+                      id: scope.row.purchase_id
+                    }
+                  }"
+                >
+                  亲友数据
+                </router-link>
               </el-button>
             </div>
           </template>

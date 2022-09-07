@@ -91,10 +91,10 @@
       </div>
       <el-form-item
         v-if="form.used_roles.includes('dependents') && !form.is_share_limitfee"
-        label="家属额度："
+        label="亲友额度："
         :rules="{
           required: form.used_roles.includes('dependents') && !form.is_share_limitfee,
-          message: '请输入家属额度',
+          message: '请输入亲友额度',
           trigger: 'blur'
         }"
       >
@@ -633,7 +633,7 @@ export default {
       isGetImage: false,
       roleArr: [
         { key: 'employee', name: '员工' },
-        { key: 'dependents', name: '家属' }
+        { key: 'dependents', name: '亲友' }
       ],
       allHiden: false,
       allLimit: '',

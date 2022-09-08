@@ -83,7 +83,7 @@
       <el-table-column prop="discount_fee" label="优惠（¥）" width="100" />
       <el-table-column prop="point" label="积分抵扣（¥）" width="120" />
       <el-table-column prop="total_fee" label="总计（¥）" width="100" />
-      <el-table-column width="150">
+      <el-table-column width="160">
         <template #header>
           <el-dropdown @command="toggleChangePriceType">
             <span class="el-dropdown-link">
@@ -112,14 +112,16 @@
             v-model="scope.row.change_price"
             placeholder="直接改价"
             size="small"
-            @change="onChangeItemPrice"
+            @keyup.native="() => priceFormat(scope.row, scope.$index)"
+            @change="() => onChangeItemPrice(scope.row)"
           />
           <el-input
             v-if="changeType == 'change_discount'"
             v-model="scope.row.change_discount"
             placeholder="按折扣改价"
             size="small"
-            @change="onChangeItemDiscount"
+            @keyup.native="() => discountFormat(scope.row, scope.$index)"
+            @change="() => onChangeItemDiscount(scope.row)"
           />
         </template>
       </el-table-column>
@@ -129,19 +131,31 @@
       <div class="ft-l">
         <div class="l-item">
           <label>一键改价：</label>
-          <el-input v-model="globalChangePrice" class="price" size="small" />
+          <el-input
+            v-model="globalChangePrice"
+            class="price"
+            size="small"
+            @keyup.native="() => globalPriceFormat(globalChangePrice)"
+            @change="handleChangePrice"
+          />
           <el-button type="text" @click="handleChangePrice"> 确定 </el-button>
         </div>
         <div class="l-item">
-          <label>运费：</label><el-input
+          <label>运费：</label
+          ><el-input
             v-model="globalFreightFee"
             size="small"
+            :disabled="receiptType == 'dada'"
+            @keyup.native="() => globalFreightFormat(globalFreightFee)"
             @change="onChangeFreightFee"
           /><el-button
+            v-if="receiptType != 'dada'"
             type="text"
             @click="
               () => {
+                // eslint-disable-next-line vue/this-in-template
                 this.globalFreightFee = 0
+                // eslint-disable-next-line vue/this-in-template
                 this.onChangeFreightFee()
               }
             "
@@ -152,13 +166,13 @@
       </div>
       <div class="ft-r">
         <div class="r-item">
-          <label>商品应付金额：</label><span>{{ `¥${dOrderFee - dFreightFee}` }}</span>
+          <label>商品应付金额：</label><span>{{ `¥${calcItemsFee()}` }}</span>
         </div>
         <div class="r-item">
-          <label>运费：</label><span>{{ `¥${dFreightFee}` }}</span>
+          <label>运费：</label><span>{{ `¥${dFreightFee.toFixed(2)}` }}</span>
         </div>
         <div class="r-item">
-          <label>订单应付金额：</label><span>{{ `¥${dOrderFee}` }}</span>
+          <label>订单应付金额：</label><span>{{ `¥${dOrderFee.toFixed(2)}` }}</span>
         </div>
       </div>
     </div>
@@ -182,7 +196,9 @@ export default {
     itemFee: [String, Number],
     freightFee: [String, Number],
     orderFee: [String, Number],
-    orderId: String
+    orderId: String,
+    // 配送类型
+    receiptType: String
   },
   data() {
     return {
@@ -216,19 +232,46 @@ export default {
           total: item.total
         }
       })
-    },
-    // itemFee(newVal, oldVal) {
-    //   this.dItemFee = newVal
-    // },
-    freightFee(newVal, oldVal) {
-      this.dFreightFee = newVal
-    },
-    orderFee(newVal, oldVal) {
-      this.dOrderFee = newVal
+      this.dFreightFee = this.freightFee
+      this.dOrderFee = this.orderFee
     }
   },
   created() {},
   methods: {
+    globalPriceFormat() {
+      const reg = new RegExp('((^[1-9]\\d*)|^0)(\\.\\d{0,2}){0,1}$')
+      if (!reg.test(this.globalChangePrice)) {
+        this.globalChangePrice = this.globalChangePrice.substring(
+          0,
+          this.globalChangePrice.length - 1
+        )
+      }
+    },
+    globalFreightFormat() {
+      const reg = new RegExp('((^[1-9]\\d*)|^0)(\\.\\d{0,2}){0,1}$')
+      if (!reg.test(this.globalFreightFee)) {
+        this.globalFreightFee = this.globalFreightFee.substring(0, this.globalFreightFee.length - 1)
+      }
+    },
+    priceFormat({ change_price }, index) {
+      const reg = new RegExp('((^[1-9]\\d*)|^0)(\\.\\d{0,2}){0,1}$')
+      if (!reg.test(change_price)) {
+        this.tableData[index].change_price = change_price.substring(0, change_price.length - 1)
+      }
+    },
+    discountFormat({ change_discount }, index) {
+      // 1-100 正整数
+      const reg = new RegExp('^([1-9]|[1-9]\\d|100)$')
+      if (!reg.test(change_discount)) {
+        this.tableData[index].change_discount = change_discount.substring(
+          0,
+          change_discount.length - 1
+        )
+      }
+    },
+    calcItemsFee() {
+      return new Big(this.dOrderFee).minus(this.dFreightFee).toFixed(2)
+    },
     objectSpanMethod({ row, column, rowIndex, columnIndex }) {
       const length = this.tableData.length
       if (columnIndex === 7) {
@@ -249,7 +292,11 @@ export default {
       this.changeType = e
     },
     // 按直接改价
-    onChangeItemPrice() {
+    onChangeItemPrice({ change_price, total_fee }) {
+      if (change_price >= total_fee) {
+        this.$message.error('不能高于原订单金额')
+        return
+      }
       const items = this.tableData.map((item) => {
         return {
           item_id: item.item_id,
@@ -260,7 +307,7 @@ export default {
       this.calcOrder(items)
     },
     // 按折扣改价
-    onChangeItemDiscount() {
+    onChangeItemDiscount({ change_discount }) {
       const items = this.tableData.map((item) => {
         return {
           item_id: item.item_id,
@@ -274,12 +321,8 @@ export default {
     },
     // 一键改价
     async handleChangePrice() {
-      if (isNumber(this.globalChangePrice) || isFloat(this.globalChangePrice)) {
-        this.downType = 'total'
-        this.calcOrder([])
-      } else {
-        this.$message.error('输入正确的数字')
-      }
+      this.downType = 'total'
+      this.calcOrder([])
     },
     // 运费改价
     onChangeFreightFee() {
@@ -297,15 +340,19 @@ export default {
       if (this.globalChangePrice) {
         params['total_fee'] = this.globalChangePrice * 100
       }
-      if (this.dFreightFee) {
-        params['freight_fee'] = this.dFreightFee * 100
-      }
+      // if (this.dFreightFee) {
+      params['freight_fee'] = this.dFreightFee * 100
+      // }
       if (items.length > 0) {
         params['items'] = items
       }
-      const res = await this.$api.trade.changePrice(params)
-      this.tableLoading = false
-      this.$emit('onChange', res)
+      try {
+        const res = await this.$api.trade.changePrice(params)
+        this.tableLoading = false
+        this.$emit('onChange', res)
+      } catch (e) {
+        this.tableLoading = false
+      }
     }
   }
 }

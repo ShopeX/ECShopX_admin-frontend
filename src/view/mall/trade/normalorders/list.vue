@@ -736,6 +736,7 @@ export default {
               value={this.changePriceForm.items}
               orderId={this.changePriceForm.order_id}
               // itemFee={this.changePriceForm.itemFee}
+              receiptType={this.changePriceForm.receipt_type}
               freightFee={this.changePriceForm.freightFee}
               orderFee={this.changePriceForm.orderFee}
               on-onChange={this.onChangeTableView}
@@ -752,6 +753,8 @@ export default {
         receive_address: '',
         loading: false,
         items: [],
+        // 配送类型
+        receipt_type: '',
         // // 商品应付金额
         // itemFee: 0,
         // 邮费
@@ -874,7 +877,7 @@ export default {
 
           actionBtns.push({ name: '备注', key: 'remark' })
         }
-        if (!VERSION_IN_PURCHASE && pay_status == 'NOTPAY') {
+        if (!VERSION_IN_PURCHASE && order_status == 'NOTPAY') {
           actionBtns.push({ name: '改价', key: 'changePrice' })
         }
         return {
@@ -1050,7 +1053,8 @@ export default {
           order_class,
           total_fee,
           freight_fee,
-          item_fee_new
+          item_fee_new,
+          receipt_type
         } = orderInfo
         const { username, mobile } = await this.$api.member.getMember({
           user_id: user_id
@@ -1072,6 +1076,7 @@ export default {
           this.changePriceForm.receive_mobile = receiver_mobile
           this.changePriceForm.receive_address = `${receiver_state}${receiver_city}${receiver_district}${receiver_address}`
         }
+        this.changePriceForm.receipt_type = receipt_type
         // this.changePriceForm.itemFee = item_fee_new / 100
         this.changePriceForm.freightFee = freight_fee / 100
         this.changePriceForm.orderFee = total_fee / 100
@@ -1084,7 +1089,7 @@ export default {
             total: total_fee / 100
           }
         })
-        console.log('this.changePriceForm.items:', this.changePriceForm.items)
+        console.log('this.changePriceForm:', this.changePriceForm)
       }
     },
     async onRemarkSubmit() {

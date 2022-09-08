@@ -49,7 +49,7 @@
       <el-table-column  prop="login_type" label="登录类型" >
           <template slot-scope="scope">
             <span v-if="scope.row.login_type == 'mobile'">手机号登录</span>
-            <span v-else-if="scope.row.login_type == 'email'">邮件登录</span>
+            <span v-else-if="scope.row.login_type == 'email'">邮箱登录</span>
             <span v-else-if="scope.row.login_type == 'account'">账号登录</span>
             <span v-else>{{ scope.row.login_type }}</span>
           </template>

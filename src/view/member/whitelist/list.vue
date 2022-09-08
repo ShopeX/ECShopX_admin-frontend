@@ -17,10 +17,19 @@
           白名单提示
         </el-button>
       </el-col>
-      <el-col :span="12">
+      <el-col :span="6">
+        <el-input
+          v-model="account"
+          placeholder="账号"
+          clearable
+        >
+        </el-input>
+      </el-col>
+      <el-col :span="6">
         <el-input
           v-model="mobile"
           placeholder="手机号"
+          clearable
         >
           <el-button
             slot="append"
@@ -255,6 +264,7 @@ export default {
         password: ''
       },
       mobile: '',
+      account: '',
       editMobile: '',
       editName: '',
       whitelistList: [],
@@ -365,6 +375,7 @@ export default {
       }
     },
     dataSearch () {
+      this.params.account = this.account
       this.params.mobile = this.mobile
       this.params.page = 1
       this.getListData()

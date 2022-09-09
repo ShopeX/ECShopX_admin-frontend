@@ -107,6 +107,11 @@
               {{ (scope.row.member_discount / 100).toFixed(2) }}
             </template>
           </el-table-column>
+          <el-table-column label="积分抵扣（¥）" width="120">
+            <template slot-scope="scope">
+              {{ (scope.row.point_fee / 100).toFixed(2) }}
+            </template>
+          </el-table-column>
           <el-table-column label="总支付价（¥）" width="120">
             <template slot-scope="scope">
               {{ (scope.row.total_fee / 100).toFixed(2) }}
@@ -368,6 +373,7 @@ export default {
         { label: '会员优惠:', field: 'memberDiscountPrice', is_show: !this.VERSION_IN_PURCHASE },
         { label: '优惠券减免:', field: 'couponDiscount', is_show: !this.VERSION_IN_PURCHASE },
         { label: '优惠总金额:', field: 'totalDiscount', is_show: !this.VERSION_IN_PURCHASE },
+        { label: '积分抵扣金额:', field: 'pointFee', is_show: !this.VERSION_IN_PURCHASE },
         { label: '应付总金额:', field: 'totalPrice', is_show: true },
         { label: '实付总金额:', field: 'realPrice', is_show: true },
         { label: '支付方式:', field: 'payTypeTxt', is_show: true },
@@ -673,6 +679,7 @@ export default {
           ? `-¥${(orderInfo.discount_fee / 100).toFixed(2)}`
           : '￥0.00',
         totalPrice: orderInfo.total_fee ? `¥${(orderInfo.total_fee / 100).toFixed(2)}` : '￥0.00',
+        pointFee: orderInfo.point_fee ? `¥${(orderInfo.point_fee / 100).toFixed(2)}` : '￥0.00',
         realPrice: (() => {
           let returnValue = ''
           if (tradeInfo.payType === 'point') {

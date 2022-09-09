@@ -735,7 +735,8 @@ export default {
             <CompTableView
               value={this.changePriceForm.items}
               orderId={this.changePriceForm.order_id}
-              // itemFee={this.changePriceForm.itemFee}
+              itemTotalFee={this.changePriceForm.itemTotalFee}
+              pointFreightFee={this.changePriceForm.pointFreightFee}
               receiptType={this.changePriceForm.receipt_type}
               freightFee={this.changePriceForm.freightFee}
               orderFee={this.changePriceForm.orderFee}
@@ -755,12 +756,14 @@ export default {
         items: [],
         // 配送类型
         receipt_type: '',
-        // // 商品应付金额
-        // itemFee: 0,
+        // 商品应付金额
+        itemTotalFee: 0,
         // 邮费
         freightFee: 0,
         // 订单应付金额
-        orderFee: 0
+        orderFee: 0,
+        // 运费积分抵扣
+        pointFreightFee: 0
       },
       origin: ''
     }
@@ -1054,7 +1057,9 @@ export default {
           total_fee,
           freight_fee,
           item_fee_new,
-          receipt_type
+          item_total_fee,
+          receipt_type,
+          point_freight_fee
         } = orderInfo
         const { username, mobile } = await this.$api.member.getMember({
           user_id: user_id
@@ -1080,13 +1085,16 @@ export default {
         // this.changePriceForm.itemFee = item_fee_new / 100
         this.changePriceForm.freightFee = freight_fee / 100
         this.changePriceForm.orderFee = total_fee / 100
+        this.changePriceForm.itemTotalFee = item_total_fee / 100
+        // 运费积分抵扣
+        this.changePriceForm.pointFreightFee = point_freight_fee / 100
 
         this.changePriceForm.items = items.map((item) => {
           return {
             ...item,
             change_discount: '',
             change_price: '',
-            total: total_fee / 100
+            total: item_total_fee / 100
           }
         })
         console.log('this.changePriceForm:', this.changePriceForm)
@@ -1270,17 +1278,17 @@ export default {
         message: '不能为空'
       })
     },
-    onChangeTableView({ items, item_fee_new, freight_fee, total_fee }) {
+    onChangeTableView({ items, item_fee_new, freight_fee, total_fee, item_total_fee }) {
       // this.changePriceForm.itemFee = item_fee_new / 100
       this.changePriceForm.freightFee = freight_fee / 100
       this.changePriceForm.orderFee = total_fee / 100
-
+      this.changePriceForm.itemTotalFee = item_total_fee / 100
       this.changePriceForm.items = items.map((item) => {
         return {
           ...item,
           change_discount: '',
           change_price: '',
-          total: total_fee / 100
+          total: item_total_fee / 100
         }
       })
     }

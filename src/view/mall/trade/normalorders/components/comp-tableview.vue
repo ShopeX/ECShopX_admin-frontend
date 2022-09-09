@@ -20,6 +20,13 @@
         width: 120px;
         margin-right: 10px;
       }
+      .freight-point-discount {
+        margin-left: 66px;
+        font-size: 13px;
+        color: #b0b0b0;
+        position: relative;
+        top: -10px;
+      }
     }
   }
   .ft-r {
@@ -163,21 +170,29 @@
             免运费
           </el-button>
         </div>
+        <div v-if="pointFreightFee" class="l-item">
+          <div class="freight-point-discount">
+            积分抵扣运费：{{ `${(0 - pointFreightFee).toFixed(2)}` }}
+          </div>
+        </div>
       </div>
       <div class="ft-r">
         <div class="r-item">
-          <label>商品应付金额：</label><span>{{ `¥${calcItemsFee()}` }}</span>
+          <label>商品应付金额：</label><span>{{ ` ¥${dItemTotalFee.toFixed(2)}` }}</span>
         </div>
         <div class="r-item">
-          <label>运费：</label><span>{{ `¥${dFreightFee.toFixed(2)}` }}</span>
+          <label>总运费：</label><span>{{ ` ¥${dFreightFee.toFixed(2)}` }}</span>
         </div>
         <div class="r-item">
-          <label>订单应付金额：</label><span>{{ `¥${dOrderFee.toFixed(2)}` }}</span>
+          <label>积分抵扣运费：</label><span>{{ `-¥${pointFreightFee.toFixed(2)}` }}</span>
+        </div>
+        <div class="r-item">
+          <label>订单应付金额：</label><span>{{ ` ¥${dOrderFee.toFixed(2)}` }}</span>
         </div>
       </div>
     </div>
     <div class="dialog-tip">
-      <p>订单应付金额 = 商品应付金额 + 运费。</p>
+      <p>订单应付金额 = 商品应付金额 + 运费；总运费 ＝ 运费 - 积分抵扣运费。</p>
       <p>
         一键改价后的金额为商品总价，该金额会按商品单价的金额比例分摊到每个商品，不会分摊到优惠和运费。
       </p>
@@ -188,17 +203,18 @@
 
 <script>
 import Big from 'big.js'
-import { isNumber, isFloat } from '@/utils/validate'
 export default {
   name: 'CompTableView',
   props: {
     value: Array,
-    itemFee: [String, Number],
+    itemTotalFee: [String, Number],
     freightFee: [String, Number],
     orderFee: [String, Number],
     orderId: String,
     // 配送类型
-    receiptType: String
+    receiptType: String,
+    // 运费积分抵扣
+    pointFreightFee: [String, Number]
   },
   data() {
     return {
@@ -207,7 +223,7 @@ export default {
       globalChangePrice: '',
       globalFreightFee: '',
       changeType: 'change_price',
-      // dItemFee: 0,
+      dItemTotalFee: 0,
       dFreightFee: 0,
       dOrderFee: 0,
       // 改价方式：total=一键改价；items=单件商品改价
@@ -225,13 +241,14 @@ export default {
           item_fee: item.item_fee / 100,
           num: item.num,
           discount_fee: 0 - item.discount_fee / 100,
-          point: item.point,
+          point: 0 - item.point,
           total_fee: item.total_fee / 100,
           change_discount: item.change_discount,
           change_price: item.change_price,
           total: item.total
         }
       })
+      this.dItemTotalFee = this.itemTotalFee
       this.dFreightFee = this.freightFee
       this.dOrderFee = this.orderFee
     }
@@ -326,7 +343,11 @@ export default {
     },
     // 运费改价
     onChangeFreightFee() {
-      this.dFreightFee = parseInt(this.globalFreightFee)
+      if (this.globalFreightFee < this.pointFreightFee) {
+        this.$message.error('运费不能小于积分抵扣')
+        return
+      }
+      // this.dFreightFee = parseInt(this.globalFreightFee)
       this.calcOrder([])
     },
     async calcOrder(items) {
@@ -340,9 +361,9 @@ export default {
       if (this.globalChangePrice) {
         params['total_fee'] = this.globalChangePrice * 100
       }
-      // if (this.dFreightFee) {
-      params['freight_fee'] = this.dFreightFee * 100
-      // }
+
+      params['freight_fee'] = this.globalFreightFee * 100
+
       if (items.length > 0) {
         params['items'] = items
       }

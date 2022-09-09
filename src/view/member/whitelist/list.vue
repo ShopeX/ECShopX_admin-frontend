@@ -142,22 +142,30 @@
           <el-form-item label="手机号" v-if="login_type == 'mobile'">
             <el-col :span="10">
               <el-input
+                v-if="!isEdit"
                 v-model="form.mobile"
                 :maxlength="11"
                 placeholder="请输入11位手机号"
+              />
+              <el-input
+                v-else
+                v-model="editMobile"
+                :disabled="true"
               />
             </el-col>
           </el-form-item>
           <el-form-item label="账号" v-if="login_type == 'account'">
             <el-col :span="10">
-              <el-input  v-model="form.account" placeholder="请输入帐号" />
+              <el-input :disabled="isEdit" v-model="form.account" placeholder="请输入帐号" />
             </el-col>
           </el-form-item>
           <el-form-item label="密码" v-if="login_type == 'account'">
             <el-col :span="10">
               <el-input
                 v-model="form.password"
+                type="password"
                 name="password"
+                auto-complete="off"
                 placeholder="请输入密码"
               />
             </el-col>

@@ -397,9 +397,12 @@ export default {
     },
     submitActivityAction () {
       const that = this
-      if (this.activity_date.length > 0) {
+      if (this.activity_date && this.activity_date.length > 0) {
         this.form.start_time = this.activity_date[0]
         this.form.end_time = this.activity_date[1]
+      } else {
+        this.$message.error('有效期必填!')
+        return
       }
 
       if (this.conditionValue.length > 0) {

@@ -338,17 +338,36 @@ export default {
     },
     // 一键改价
     async handleChangePrice() {
-      this.downType = 'total'
-      this.calcOrder([])
+      if (this.globalChangePrice.length > 0) {
+        this.downType = 'total'
+        this.calcOrder([])
+      }
     },
     // 运费改价
     onChangeFreightFee() {
+      if (this.globalFreightFee.length == 0) {
+        return
+      }
       if (this.globalFreightFee < this.pointFreightFee) {
         this.$message.error('运费不能小于积分抵扣')
         return
       }
-      // this.dFreightFee = parseInt(this.globalFreightFee)
-      this.calcOrder([])
+      const items = this.tableData.map((item) => {
+        let total_fee
+        if (this.changeType == 'change_price') {
+          total_fee = item.change_price ? item.change_price * 100 : item.total_fee * 100
+        } else {
+          total_fee = item.change_discount
+            ? item.total_fee * item.change_discount
+            : item.total_fee * 100
+        }
+        return {
+          item_id: item.item_id,
+          total_fee
+        }
+      })
+      this.downType = 'items'
+      this.calcOrder(items)
     },
     async calcOrder(items) {
       this.tableLoading = true

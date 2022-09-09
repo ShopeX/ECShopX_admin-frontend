@@ -13,6 +13,7 @@
           type="primary"
           icon="plus"
           @click="setTips"
+          v-if="!VERSION_IN_PURCHASE"
         >
           白名单提示
         </el-button>

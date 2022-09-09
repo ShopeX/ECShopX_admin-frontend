@@ -326,7 +326,7 @@ export default {
     },
     // 运费改价
     onChangeFreightFee() {
-      this.dFreightFee = this.globalFreightFee
+      this.dFreightFee = parseInt(this.globalFreightFee)
       this.calcOrder([])
     },
     async calcOrder(items) {
@@ -348,6 +348,7 @@ export default {
       }
       try {
         const res = await this.$api.trade.changePrice(params)
+        this.downType = ''
         this.tableLoading = false
         this.$emit('onChange', res)
       } catch (e) {

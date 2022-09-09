@@ -1170,7 +1170,7 @@ export default {
         down_type: 'items'
       }
       if (freightFee) {
-        params['freight_fee'] = freightFee
+        params['freight_fee'] = freightFee * 100
       }
       if (items.length > 0) {
         params['items'] = items.map((item) => {

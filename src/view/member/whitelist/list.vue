@@ -336,8 +336,10 @@ export default {
     },
     editAction (index, row) {
       // 编辑物料弹框
-      const fliterArr = this.enterpriseList.filter(el => el.enterprise_sn == row.enterprise_sn)
       this.handleCancel()
+      const fliterArr = this.enterpriseList.filter(el => el.enterprise_sn == row.enterprise_sn)
+      const login_type = fliterArr.length > 0 ? fliterArr[0].login_type : this.enterpriseList[0].login_type
+      const enterprise_sn = row.enterprise_sn || fliterArr.length > 0 ? fliterArr[0].enterprise_sn : this.enterpriseList[0].enterprise_sn
       this.editTitle = '编辑白名单信息'
       this.editVisible = true
       this.isEdit = true
@@ -348,8 +350,8 @@ export default {
       this.form.enterprise_sn = row.enterprise_sn
       this.form.password = row.password
       this.form.account = row.account
-      this.enterprise_sn_data = row.enterprise_sn + '-' + fliterArr.length > 0 ? fliterArr[0].login_type : this.enterpriseList[0]
-      this.login_type = fliterArr.length > 0 ? fliterArr[0].login_type : this.enterpriseList[0].login_type
+      this.enterprise_sn_data = enterprise_sn + '-' + login_type
+      this.login_type = login_type
     },
     submitAction () {
       // 提交物料

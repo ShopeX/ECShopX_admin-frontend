@@ -165,7 +165,7 @@
                 v-model="form.password"
                 type="password"
                 name="password"
-                auto-complete="off"
+                show-password
                 placeholder="请输入密码"
               />
             </el-col>

@@ -65,7 +65,7 @@
             @click="handleClick(scope.row)"
             icon="el-icon-s-tools"
           >
-            {{ scope.row.disabled == 0 ? '禁用' : '启用' }}
+            {{ scope.row.disabled == 0 ? '启用' : '禁用' }}
           </el-button>
         </template>
       </el-table-column>
@@ -200,8 +200,8 @@ export default {
     },
     handleClick (row) {
       const message = row.disabled == 0
-        ? '是否启用？'
-        : '是否禁用？'
+        ? '是否禁用？'
+        : '是否启用？'
       this.$confirm(message, '通知消息', {
         confirmButtonText: '确定',
         cancelButtonText: '取消',

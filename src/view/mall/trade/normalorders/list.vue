@@ -405,7 +405,13 @@
 import { mapGetters } from 'vuex'
 import mixin from '@/mixins'
 import { pageMixin } from '@/mixins'
-import { VERSION_STANDARD, isArray, VERSION_B2C, VERSION_IN_PURCHASE } from '@/utils'
+import {
+  VERSION_STANDARD,
+  VERSION_PLATFORM,
+  isArray,
+  VERSION_B2C,
+  VERSION_IN_PURCHASE
+} from '@/utils'
 import { exportInvoice, orderExport } from '@/api/trade'
 import CompTableView from './components/comp-tableview'
 import moment from 'moment'
@@ -727,7 +733,7 @@ export default {
               </div>
               <div class='receive-item'>
                 <label class='item-label'>
-                  `${this.changePriceForm.isZiti ? '自提地址：' : '收货地址：'}`
+                  {`${this.changePriceForm.isZiti ? '自提地址：' : '收货地址：'}`}
                 </label>
                 {this.changePriceForm.receive_address}
               </div>
@@ -885,9 +891,16 @@ export default {
 
           actionBtns.push({ name: '备注', key: 'remark' })
         }
-        if (!VERSION_IN_PURCHASE && order_status == 'NOTPAY') {
-          actionBtns.push({ name: '改价', key: 'changePrice' })
+        if (order_status == 'NOTPAY') {
+          if (VERSION_PLATFORM) {
+            if ((this.IS_ADMIN && distributor_id == 0) || this.IS_DISTRIBUTOR) {
+              actionBtns.push({ name: '改价', key: 'changePrice' })
+            }
+          } else if (!VERSION_IN_PURCHASE) {
+            actionBtns.push({ name: '改价', key: 'changePrice' })
+          }
         }
+
         return {
           ...item,
           actionBtns

@@ -154,17 +154,16 @@
               />
             </el-col>
           </el-form-item>
-          <el-form-item label="账号" v-if="login_type == 'account'">
+          <el-form-item label="账号" prop="account" v-if="login_type == 'account'">
             <el-col :span="10">
               <el-input :disabled="isEdit" v-model="form.account" placeholder="请输入帐号" />
             </el-col>
           </el-form-item>
-          <el-form-item label="密码" v-if="login_type == 'account'">
+          <el-form-item label="密码" prop="password" v-if="login_type == 'account'">
             <el-col :span="10">
               <el-input
                 v-model="form.password"
                 type="password"
-                name="password"
                 show-password
                 placeholder="请输入密码"
               />

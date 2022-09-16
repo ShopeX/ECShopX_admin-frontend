@@ -2,6 +2,20 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [3.4.0](https://git.ishopex.cn/ecshopx/ecshopx-admin/compare/v3.3.0...v3.4.0) (2022-09-16)
+
+
+### Bug Fixes
+
+* bug ([04f78ca](https://git.ishopex.cn/ecshopx/ecshopx-admin/commit/04f78ca64dcfeb8784428f3dad435b7935e5f504))
+* ECX-3221 ([25b3235](https://git.ishopex.cn/ecshopx/ecshopx-admin/commit/25b32353a28b9d3612bd119ce0940e20ef3ea208))
+* process ([91b6251](https://git.ishopex.cn/ecshopx/ecshopx-admin/commit/91b6251e70c228c289b67603896189a5de22c76a))
+* 取消平台端对店铺端订单改价功能 ([1bf88f0](https://git.ishopex.cn/ecshopx/ecshopx-admin/commit/1bf88f040cfefa9d5809578f4f241c68c3fe9df2))
+* 改价 ([5d355c0](https://git.ishopex.cn/ecshopx/ecshopx-admin/commit/5d355c033a0c48782ab5b0d30fb17f6f4172954d))
+* 改价bug ([2a7d7ce](https://git.ishopex.cn/ecshopx/ecshopx-admin/commit/2a7d7ce2e2bbe5fa743fa266d018039f9554bd08))
+* 订单改价 ([14ab3ab](https://git.ishopex.cn/ecshopx/ecshopx-admin/commit/14ab3ab194aa9a0d689fd730400834d0ae79da07))
+* 订单改价 ([b0c6216](https://git.ishopex.cn/ecshopx/ecshopx-admin/commit/b0c6216b38709c95b3b539caa5638f9a4802ddb0))
+
 ## [3.3.0](https://git.ishopex.cn/ecshopx/ecshopx-admin/compare/v3.2.1...v3.3.0) (2022-08-31)
 
 ### [3.2.1](https://git.ishopex.cn/ecshopx/ecshopx-admin/compare/v3.2.0...v3.2.1) (2022-08-25)

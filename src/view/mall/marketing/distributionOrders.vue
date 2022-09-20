@@ -36,13 +36,13 @@
               :value="item.value"
             />
           </el-select>
-          <el-autocomplete
+          <!-- <el-autocomplete
             v-model="source_name"
             class="inline-input"
             :fetch-suggestions="querySearch"
             placeholder="请输入来源"
             @select="sourceSearch"
-          />
+          /> -->
           <el-select
             v-model="distributor_id"
             placeholder="请选择店铺"
@@ -91,7 +91,6 @@
         >
           <el-table-column
             prop="order_id"
-            width="280"
             label="订单号"
           >
             <template slot-scope="scope">
@@ -135,7 +134,6 @@
             </template>
           </el-table-column>
           <el-table-column
-            width="80"
             label="运费"
           >
             <template slot-scope="scope">
@@ -151,7 +149,6 @@
           -->
           <el-table-column
             prop="total_fee"
-            width="100"
             label="订单金额"
           >
             <template slot-scope="scope">
@@ -160,7 +157,6 @@
           </el-table-column>
           <el-table-column
             prop="mobile"
-            width="160"
             label="联系手机"
           >
             <template slot-scope="scope">
@@ -181,8 +177,7 @@
             </template>
           </el-table-column>
           <el-table-column
-            width="90"
-            label="类型"
+            label="订单类型"
           >
             <template slot-scope="scope">
               {{ getOrderType(scope.row) }}
@@ -197,7 +192,6 @@
           </el-table-column>
           -->
           <el-table-column
-            width="140"
             label="状态"
           >
             <template slot-scope="scope">
@@ -268,12 +262,11 @@
               </template>
             </template>
           </el-table-column>
-          <el-table-column
+          <!-- <el-table-column
             prop="source_name"
             label="来源"
-          />
+          /> -->
           <el-table-column
-            width="90"
             label="操作"
           >
             <template slot-scope="scope">

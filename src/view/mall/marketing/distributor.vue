@@ -201,6 +201,7 @@
           type="selection"
           align="center"
           label="全选"
+          v-if="VERSION_PLATFORM && !is_distributor && $store.getters.login_type != 'merchant'"
         />
         <el-table-column
           width="50"

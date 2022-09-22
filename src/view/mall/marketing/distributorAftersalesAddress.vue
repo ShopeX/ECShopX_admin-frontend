@@ -429,12 +429,13 @@ export default {
       this.page.total = total_count
       this.datapass_block = datapass_block
       this.tableLoading = false
+      this.spanArr = []
       this.setrowspans()
     },
     handleFilter (val) {
       val && val.shop_id
       this.distributor_id = val.shop_id
-      this.getList()
+      this.fetchList()
     },
     handleClose () {
       this.resetInfo()
@@ -476,7 +477,7 @@ export default {
                 message: '删除失败!'
               })
             }
-            this.getList()
+            this.fetchList()
           })
         })
         .catch(() => {

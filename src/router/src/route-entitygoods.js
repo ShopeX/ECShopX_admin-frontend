@@ -43,8 +43,11 @@ export default {
       component: () => import('@/view/mall/goods/audit/list'),
       children: [
         {
-          path: 'editor/:id?',
-          component: () => import('@/view/mall/goods/audit/add')
+          path: 'editor/:itemId?',
+          component: () => import('@/view/mall/goods/audit/add'),
+          meta: {
+            footerFixed: true
+          }
         }
       ]
     },

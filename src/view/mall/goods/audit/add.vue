@@ -1,1458 +1,18 @@
-<template>
-  <div class="section section-white">
-    <el-form :model="form" label-width="auto" label-position="left" class="demo-ruleForm">
-      <template v-if="!isEditor || (isEditor && !form.item_main_cat_id)">
-        <el-card v-loading="mainCateLoader" shadow="never" header="选择主分类">
-          <el-cascader
-            v-model="selectedMainCategory"
-            :options="mainCategory"
-            style="width: 360px"
-            @change="handleCategoryChange"
-          />
-        </el-card>
-      </template>
-      <div v-else v-loading="loader" class="content-padded view-flex view-flex-middle">
-        <div>主分类：</div>
-        <el-breadcrumb separator-class="el-icon-arrow-right" class="inline">
-          <el-breadcrumb-item v-for="(item, index) in categoryNames" :key="index">
-            {{ item }}
-          </el-breadcrumb-item>
-        </el-breadcrumb>
-      </div>
-      <template v-if="(!isEditor && selectedMainCategory.length > 0) || isEditor">
-        <el-card v-loading="loader" shadow="never">
-          <div slot="header" class="clearfix">
-            <span>基础信息</span>
-            <el-button
-              style="float: right; padding: 3px 0"
-              type="text"
-              @click="panelCollapse('base')"
-            >
-              <i class="iconfont" :class="panel.base ? 'icon-window-minimize1' : 'icon-plus'" />
-            </el-button>
-          </div>
-          <transition name="el-zoom-in-top">
-            <div v-show="panel.base" class="form-collapse">
-              <el-row :gutter="20">
-                <el-col :xs="24" :sm="12" :md="8">
-                  <el-form-item label="*商品标题">
-                    <el-input
-                      v-model="form.item_name"
-                      :maxlength="30"
-                      placeholder=""
-                      :disabled="true"
-                    />
-                  </el-form-item>
-                </el-col>
-                <el-col :xs="24" :sm="12" :md="8">
-                  <el-form-item label="副标题">
-                    <el-input
-                      v-model="form.brief"
-                      :maxlength="30"
-                      placeholder=""
-                      :disabled="true"
-                    />
-                  </el-form-item>
-                </el-col>
-                <el-col :xs="24" :sm="12" :md="8">
-                  <el-form-item label="计量单位">
-                    <el-input
-                      v-model="form.item_unit"
-                      :maxlength="60"
-                      placeholder=""
-                      :disabled="true"
-                    />
-                  </el-form-item>
-                </el-col>
-                <el-col :xs="24" :sm="12" :md="8">
-                  <el-form-item label="排序编号">
-                    <el-input v-model="form.sort" placeholder="" :disabled="true" />
-                  </el-form-item>
-                </el-col>
-                <el-col :xs="24" :sm="12" :md="8">
-                  <el-form-item label="产地">
-                    <el-cascader
-                      v-model="select_regions_value"
-                      :disabled="true"
-                      placeholder="选择地区"
-                      :options="regions"
-                      @change="regionChange"
-                    />
-                  </el-form-item>
-                </el-col>
-                <el-col :xs="24">
-                  <el-form-item label="*商品图">
-                    <div class="pics-box">
-                      <ul class="goodspic-wrap">
-                        <draggable v-model="form.pics" :options="dragIssuesOptions">
-                          <li
-                            v-for="(item, index) in form.pics"
-                            :key="index"
-                            class="goodspic"
-                            @mouseenter="picsEnter(index)"
-                            @mouseleave="picsLeave"
-                          >
-                            <img :src="wximageurl + item">
-                          </li>
-                        </draggable>
-                      </ul>
-                    </div>
-                  </el-form-item>
-                </el-col>
-                <el-col :xs="24">
-                  <el-form-item label="上传视频">
-                    <videoPicker :data="itemVideo" @change="pickVideo" />
-                  </el-form-item>
-                </el-col>
-              </el-row>
-            </div>
-          </transition>
-        </el-card>
-        <el-card v-loading="loader" shadow="never">
-          <div slot="header" class="clearfix">
-            <span>是否特殊商品类型</span>
-            <el-button
-              style="float: right; padding: 3px 0"
-              type="text"
-              @click="panelCollapse('goods_type')"
-            >
-              <i
-                class="iconfont"
-                :class="panel.goods_type ? 'icon-window-minimize1' : 'icon-plus'"
-              />
-            </el-button>
-          </div>
-          <el-radio-group v-model="form.special_type">
-            <el-radio label="normal" :disabled="true">
-普通商品
-</el-radio>
-            <el-radio label="drug" :disabled="true">
-处方药
-</el-radio>
-          </el-radio-group>
-        </el-card>
-        <el-card v-loading="loader" shadow="never">
-          <div slot="header" class="clearfix">
-            <span>商品参数</span>
-            <el-button
-              style="float: right; padding: 3px 0"
-              type="text"
-              @click="panelCollapse('param')"
-            >
-              <i class="iconfont" :class="panel.param ? 'icon-window-minimize1' : 'icon-plus'" />
-            </el-button>
-          </div>
-          <transition name="el-zoom-in-top">
-            <div v-show="panel.param" class="form-collapse">
-              <el-row :gutter="20">
-                <el-col
-                  v-for="(item, index) in params"
-                  :key="index"
-                  :xs="24"
-                  :sm="12"
-                  :md="8"
-                  :lg="6"
-                >
-                  <el-form-item :label="item.label">
-                    <el-select
-                      v-if="item.children.length > 0"
-                      v-model="form.item_params[index].attribute_value_id"
-                      placeholder="请选择"
-                    >
-                      <el-option
-                        v-for="child in item.children"
-                        :key="child.value"
-                        :disabled="true"
-                        :label="child.label"
-                        :value="child.value"
-                      />
-                    </el-select>
-                    <el-input
-                      v-else
-                      v-model="form.item_params[index].attribute_value_name"
-                      :maxlength="60"
-                      placeholder=""
-                      :disabled="true"
-                    />
-                  </el-form-item>
-                </el-col>
-              </el-row>
-            </div>
-          </transition>
-        </el-card>
-        <el-card v-loading="loader" shadow="never">
-          <div slot="header" class="view-flex">
-            <div class="view-flex-item">
-商品规格
-</div>
-            <template v-if="!isEditor">
-              <span v-if="skus.length === 0" class="small mark"
-                >添加多规格商品请先为当前主类目绑定规格!</span
-              >
-              <template v-if="skus.length > 0">
-                <el-switch
-                  v-model="form.nospec"
-                  style="margin-left: 30px"
-                  active-color="#13ce66"
-                  inactive-color="#efefef"
-                  active-text="统一规格"
-                  inactive-text="多规格"
-                />
-              </template>
-            </template>
-            <template v-if="!form.nospec">
-              <span style="margin-left: 30px">
-                <span style="margin-right: 10px">是否在商详页成列图片规格</span>
-                <el-switch
-                  v-model="form.is_show_specimg"
-                  active-color="#13ce66"
-                  inactive-color="#efefef"
-                />
-              </span>
-            </template>
-          </div>
-          <template v-if="form.nospec">
-            <el-row :gutter="20">
-              <el-col :xs="24" :sm="12" :md="8">
-                <el-form-item label="商品状态" :render-header="renderRequire">
-                  <el-select v-model="form.approve_status" placeholder="请选择">
-                    <el-option
-                      v-for="item in statusOption"
-                      :key="item.value"
-                      :label="item.title"
-                      :value="item.value"
-                    />
-                  </el-select>
-                </el-form-item>
-              </el-col>
-              <el-col :xs="24" :sm="12" :md="8">
-                <el-form-item label="库存">
-                  <el-input v-model="form.store" type="number" required min="0" placeholder="" />
-                </el-form-item>
-              </el-col>
-              <el-col :xs="24" :sm="12" :md="8">
-                <el-form-item label="商品货号">
-                  <el-input v-model="form.item_bn" :maxlength="60" placeholder="" />
-                </el-form-item>
-              </el-col>
-              <el-col :xs="24" :sm="12" :md="8">
-                <el-form-item label="重量">
-                  <el-input v-model="form.weight" type="number" required min="0" placeholder="">
-                    <template slot="append">
-kg
-</template>
-                  </el-input>
-                </el-form-item>
-              </el-col>
-              <el-col :xs="24" :sm="12" :md="8">
-                <el-form-item label="体积">
-                  <el-input v-model="form.volume" type="number" required min="0" placeholder="">
-                    <template slot="append">
-m³
-</template>
-                  </el-input>
-                </el-form-item>
-              </el-col>
-              <el-col :xs="24" :sm="12" :md="8">
-                <el-form-item label="销售价">
-                  <el-input v-model="form.price" type="number" required min="0" placeholder="">
-                    <template slot="prepend">
-¥
-</template>
-                  </el-input>
-                </el-form-item>
-              </el-col>
-              <el-col :xs="24" :sm="12" :md="8">
-                <el-form-item label="成本价">
-                  <el-input v-model="form.cost_price" type="number" required min="0" placeholder="">
-                    <template slot="prepend">
-¥
-</template>
-                  </el-input>
-                </el-form-item>
-              </el-col>
-              <el-col :xs="24" :sm="12" :md="8">
-                <el-form-item label="原价">
-                  <el-input
-                    v-model="form.market_price"
-                    type="number"
-                    required
-                    min="0"
-                    placeholder=""
-                  >
-                    <template slot="prepend">
-¥
-</template>
-                  </el-input>
-                </el-form-item>
-              </el-col>
-              <el-col :xs="24" :sm="12" :md="8">
-                <el-form-item label="条形码">
-                  <el-input v-model="form.barcode" type="number" required min="0" placeholder="" />
-                </el-form-item>
-              </el-col>
-            </el-row>
-          </template>
-          <template v-else>
-            <div v-if="specImages.length > 0" class="content-bottom-padded">
-              <div class="content-padded h3">
-设置规格图片
-</div>
-              <el-table :data="specImages" :header-cell-style="{ background: '#f5f7fa' }">
-                <el-table-column label="规格" prop="item_spec" width="240" />
-                <el-table-column label="规格图">
-                  <template slot-scope="scope">
-                    <imgBox
-                      v-for="(item, index) in scope.row.item_image_url"
-                      :key="index"
-                      :img-url="item"
-                      inline
-                      remove-btn
-                      width="50"
-                      height="50"
-                      @remove="handleImgRemove(scope.$index, index)"
-                    />
-                    <imgBox
-                      v-if="scope.row.item_image_url.length < 5"
-                      width="50"
-                      height="50"
-                      inline
-                      @click="handleSkuImg(scope.$index)"
-                    />
-                  </template>
-                </el-table-column>
-              </el-table>
-            </div>
-            <div class="content-padded h3">
-设置规格
-</div>
-            <el-table>
-              <el-table-column label="*状态">
-                <template slot-scope="scope">
-                  <el-select v-model="scope.row.approve_status" size="mini" placeholder="请选择">
-                    <el-option
-                      v-for="item in statusOption"
-                      :key="item.value"
-                      :label="item.title"
-                      size="mini"
-                      :value="item.value"
-                    />
-                  </el-select>
-                </template>
-              </el-table-column>
-              <el-table-column label="库存">
-                <template slot-scope="scope">
-                  <el-input
-                    v-model="scope.row.store"
-                    type="number"
-                    required
-                    min="0"
-                    size="mini"
-                    placeholder=""
-                  />
-                </template>
-              </el-table-column>
-              <el-table-column label="货号">
-                <template slot-scope="scope">
-                  <el-input
-                    v-model="scope.row.item_bn"
-                    :maxlength="60"
-                    size="mini"
-                    placeholder=""
-                  />
-                </template>
-              </el-table-column>
-              <el-table-column label="重量">
-                <template slot-scope="scope">
-                  <el-input v-model="scope.row.weight" :maxlength="60" size="mini" placeholder="" />
-                </template>
-              </el-table-column>
-              <el-table-column label="体积">
-                <template slot-scope="scope">
-                  <el-input v-model="scope.row.volume" :maxlength="60" size="mini" placeholder="" />
-                </template>
-              </el-table-column>
-              <el-table-column label="销售价">
-                <template slot-scope="scope">
-                  <el-input
-                    v-model="scope.row.price"
-                    type="number"
-                    required
-                    min="0"
-                    size="mini"
-                    placeholder=""
-                  />
-                </template>
-              </el-table-column>
-              <el-table-column label="成本价">
-                <template slot-scope="scope">
-                  <el-input
-                    v-model="scope.row.cost_price"
-                    type="number"
-                    required
-                    min="0"
-                    size="mini"
-                    placeholder=""
-                  />
-                </template>
-              </el-table-column>
-              <el-table-column label="原价">
-                <template slot-scope="scope">
-                  <el-input
-                    v-model="scope.row.market_price"
-                    type="number"
-                    required
-                    min="0"
-                    size="mini"
-                    placeholder=""
-                  />
-                </template>
-              </el-table-column>
-              <el-table-column label="条形码">
-                <template slot-scope="scope">
-                  <el-input
-                    v-model="scope.row.barcode"
-                    type="number"
-                    required
-                    min="0"
-                    size="mini"
-                    placeholder=""
-                  />
-                </template>
-              </el-table-column>
-              <el-table-column width="80">
-                <template slot-scope="scope">
-                  <el-button type="primary" size="mini" @click="fillSku">
-填充
-</el-button>
-                </template>
-              </el-table-column>
-            </el-table>
-            <el-table
-              :data="specItems[currentPage - 1]"
-              :header-cell-style="{ background: '#f5f7fa' }"
-              style="width: 100%"
-            >
-              <el-table-column label="规格值">
-                <template slot-scope="scope">
-                  <span v-for="item in scope.row.item_spec">
-                    {{ item.spec_custom_value_name || item.spec_value_name }}
-                  </span>
-                </template>
-              </el-table-column>
-              <el-table-column label="状态" :render-header="renderRequire">
-                <template slot-scope="scope">
-                  <el-select
-                    v-model="scope.row.approve_status"
-                    size="mini"
-                    placeholder="请选择"
-                    @change="upadateState(scope.row)"
-                  >
-                    <el-option
-                      v-for="item in statusOption"
-                      :key="item.value"
-                      :label="item.title"
-                      size="mini"
-                      :value="item.value"
-                    />
-                  </el-select>
-                </template>
-              </el-table-column>
-              <el-table-column label="库存" :render-header="renderRequire">
-                <template slot-scope="scope">
-                  <el-input
-                    v-model="scope.row.store"
-                    type="number"
-                    required
-                    min="0"
-                    size="mini"
-                    placeholder=""
-                    @change="upadateState(scope.row)"
-                  />
-                </template>
-              </el-table-column>
-              <el-table-column label="货号">
-                <template slot-scope="scope">
-                  <el-input
-                    v-model="scope.row.item_bn"
-                    :maxlength="60"
-                    size="mini"
-                    placeholder=""
-                    @change="upadateState(scope.row)"
-                  />
-                </template>
-              </el-table-column>
-              <el-table-column label="重量(kg)">
-                <template slot-scope="scope">
-                  <el-input
-                    v-model="scope.row.weight"
-                    :maxlength="60"
-                    size="mini"
-                    placeholder=""
-                    @change="upadateState(scope.row)"
-                  />
-                </template>
-              </el-table-column>
-              <el-table-column label="体积(m³)">
-                <template slot-scope="scope">
-                  <el-input
-                    v-model="scope.row.volume"
-                    :maxlength="60"
-                    size="mini"
-                    placeholder=""
-                    @change="upadateState(scope.row)"
-                  />
-                </template>
-              </el-table-column>
-              <el-table-column label="销售价" :render-header="renderRequire">
-                <template slot-scope="scope">
-                  <el-input
-                    v-model="scope.row.price"
-                    type="number"
-                    required
-                    min="0"
-                    size="mini"
-                    placeholder=""
-                    @change="upadateState(scope.row)"
-                  />
-                </template>
-              </el-table-column>
-              <el-table-column label="成本价">
-                <template slot-scope="scope">
-                  <el-input
-                    v-model="scope.row.cost_price"
-                    type="number"
-                    required
-                    min="0"
-                    size="mini"
-                    placeholder=""
-                    @change="upadateState(scope.row)"
-                  />
-                </template>
-              </el-table-column>
-              <el-table-column label="原价">
-                <template slot-scope="scope">
-                  <el-input
-                    v-model="scope.row.market_price"
-                    type="number"
-                    required
-                    min="0"
-                    size="mini"
-                    placeholder=""
-                    @change="upadateState(scope.row)"
-                  />
-                </template>
-              </el-table-column>
-              <el-table-column label="条形码">
-                <template slot-scope="scope">
-                  <el-input
-                    v-model="scope.row.barcode"
-                    type="number"
-                    required
-                    min="0"
-                    size="mini"
-                    placeholder=""
-                    @change="upadateState(scope.row)"
-                  />
-                </template>
-              </el-table-column>
-            </el-table>
-            <div class="content-center content-top-padded">
-              <el-pagination
-                :current-page="currentPage"
-                :page-size="specPagesize"
-                layout="prev, pager, next"
-                :total="specTotal"
-                @current-change="pageChange"
-              />
-            </div>
-          </template>
-        </el-card>
-        <el-card v-loading="loader" header="图文详情" shadow="never">
-          <el-form-item label="模式">
-            <el-radio-group v-model="mode">
-              <el-radio :label="'richText'">
-富文本
-</el-radio>
-              <el-radio :label="'component'">
-组件式
-</el-radio>
-            </el-radio-group>
-          </el-form-item>
-          <template v-if="mode === 'richText'">
-            <vue-html5-editor :content="form.intro" :height="360" />
-          </template>
-          <template v-else>
-            <richTextEditor
-              :data="content"
-              :control="['film', 'slider', 'heading', 'writing']"
-              @change="handleContent"
-            />
-          </template>
-        </el-card>
-        <div class="section-footer with-border content-center">
-          <el-button @click.native="handleCancel">
-返回
-</el-button>
-          <el-button
-            v-if="form.audit_status == 'processing'"
-            type="primary"
-            size="small"
-            icon="el-icon-edit"
-            @click="dialogVisible = true"
-          >
-            审核商品
-          </el-button>
-        </div>
-      </template>
-    </el-form>
-    <el-dialog title="审核商品" :visible.sync="dialogVisible" width="30%">
-      <el-form :model="authForm" label-width="80px">
-        <el-form-item label="审核状态">
-          <el-radio-group v-model="authForm.audit_status">
-            <el-radio label="approved">
-通过
-</el-radio>
-            <el-radio label="rejected">
-拒绝
-</el-radio>
-          </el-radio-group>
-        </el-form-item>
-        <el-form-item v-if="authForm.audit_status == 'rejected'" label="拒绝原因">
-          <el-input v-model="authForm.audit_reason" type="textarea" />
-        </el-form-item>
-        <el-form-item>
-          <el-button type="primary" @click="onSubmit">
-确定
-</el-button>
-          <el-button @click="dialogVisible = false">
-取消
-</el-button>
-        </el-form-item>
-      </el-form>
-    </el-dialog>
-  </div>
-</template>
-
-<script>
-import store from '@/store'
-import { mapGetters } from 'vuex'
-// import the component
-import Treeselect from '@riophae/vue-treeselect'
-import draggable from 'vuedraggable'
-// import the styles
-import '@riophae/vue-treeselect/dist/vue-treeselect.css'
-import {
-  getItemsDetail,
-  createItems,
-  updateItems,
-  getCategory,
-  getGoodsAttr,
-  getCategoryInfo,
-  auditItems
-} from '@/api/goods'
-import { getShippingTemplatesList } from '@/api/shipping'
-import { uploadMaterial } from '@/api/wechat'
-import imgPicker from '@/components/imageselect'
-import videoPicker from '@/components/videoselect'
-import richTextEditor from '@/components/function/richTextEditor'
-import imgBox from '@/components/element/imgBox'
-import district from '@/common/district.json'
-export default {
-  inject: ['refresh'],
-  components: {
-    imgPicker,
-    videoPicker,
-    Treeselect,
-    draggable,
-    richTextEditor,
-    imgBox
-  },
-  data () {
-    return {
-      itemVideo: {},
-      select_regions_value: [],
-      regions: district,
-      authForm: {
-        audit_status: 'approved',
-        audit_reason: ''
-      },
-      mainCategory: [],
-      selectedMainCategory: [],
-      categoryNames: [],
-      mainCateLoader: false,
-      loader: true,
-      submitLoading: false,
-      isEditor: false,
-      isLeave: false,
-      panel: {
-        base: true,
-        param: true,
-        goods_type: true
-      },
-      isGetImage: false,
-      imgDialog: false,
-      isGetVideo: false,
-      statusOption: [
-        {
-          title: '前台可销售',
-          value: 'onsale'
-        },
-        {
-          title: '前台不展示',
-          value: 'offline_sale'
-        },
-        {
-          title: '前台仅展示',
-          value: 'only_show'
-        },
-        {
-          title: '不可销售',
-          value: 'instock'
-        }
-      ],
-      content: [],
-      dragIssuesOptions: {
-        animation: 300,
-        forceFallback: false,
-        scroll: true,
-        handle: '.icon-arrows-alt',
-        draggable: '.goodspic'
-      },
-      form: {
-        item_id: '',
-        goods_id: '',
-        item_type: 'normal',
-        special_type: 'normal',
-        item_source: 'mall',
-        item_category: [],
-        item_params: [],
-        item_name: '',
-        sort: 0,
-        item_bn: '',
-        brief: '',
-        weight: '',
-        volume: '',
-        price: '',
-        market_price: '',
-        cost_price: 0,
-        barcode: '',
-        item_unit: '',
-        rebate: '',
-        store: '',
-        templates_id: '',
-        approve_status: 'onsale',
-        intro: '',
-        pics: [],
-        videos: '',
-        videos_url: '',
-        nospec: true,
-        is_show_specimg: false,
-        spec_images: [],
-        spec_items: [],
-        item_main_cat_id: ''
-      },
-      bulkFilling: [
-        {
-          item_spec: '批量填充',
-          approve_status: '',
-          store: '',
-          item_bn: '',
-          item_unit: '',
-          price: '',
-          cost_price: '',
-          market_price: '',
-          barcode: ''
-        }
-      ],
-      specPagesize: 10,
-      specTotal: 0,
-      specImages: [],
-      specItems: [],
-      picsList: [],
-      params: [],
-      skus: [],
-      dialogVisible: false,
-      dialogImageUrl: '',
-      thumbDialog: false,
-      isGetThumb: false,
-      isGetPics: false,
-      picsDialog: false,
-      picsCurrent: -1,
-      picsOldLen: 0,
-      currentSku: -1,
-      currentPage: 1,
-      multiple: false,
-      mode: 'richText'
-    }
-  },
-  computed: {
-    ...mapGetters(['editingSkus'])
-  },
-  mounted () {
-    const _self = this
-    async function onload () {
-      if (_self.$route.params.id) {
-        _self.isEditor = true
-        _self.mainCateLoader = true
-        // 初始化门店数据
-        await getItemsDetail(_self.$route.params.id).then((response) => {
-          let itemsDetailData = response.data.data
-          if (itemsDetailData.regions_id) {
-            _self.select_regions_value = itemsDetailData.regions_id
-          }
-          _self.form.pics = itemsDetailData.pics
-          // 处理图片列表
-          var picList = []
-          for (var item in itemsDetailData.pics) {
-            var newpic = {}
-            newpic.url = _self.wximageurl + itemsDetailData.pics[item]
-            picList.push(newpic)
-          }
-          _self.picsList = picList
-          let obj = _self.form
-          _self.form = { obj } = {
-            item_id: itemsDetailData.item_id,
-            goods_id: itemsDetailData.goods_id,
-            item_source: itemsDetailData.item_source,
-            item_type: itemsDetailData.item_type,
-            special_type: itemsDetailData.special_type,
-            item_category:
-              itemsDetailData.item_category.length > 0 ? itemsDetailData.item_category : [],
-            item_name: itemsDetailData.item_name,
-            sort: itemsDetailData.sort,
-            item_bn: itemsDetailData.item_bn,
-            brief: itemsDetailData.brief,
-            weight: itemsDetailData.weight,
-            volume: itemsDetailData.volume,
-            price: itemsDetailData.price / 100,
-            market_price: itemsDetailData.market_price / 100,
-            cost_price: itemsDetailData.cost_price / 100,
-            barcode: itemsDetailData.barcode,
-            item_unit: itemsDetailData.item_unit,
-            rebate: itemsDetailData.rebate / 100,
-            store: itemsDetailData.store,
-            brand_id: itemsDetailData.brand_id,
-            templates_id: itemsDetailData.templates_id
-              ? itemsDetailData.templates_id.toString()
-              : '',
-            approve_status: itemsDetailData.approve_status,
-            pics: itemsDetailData.pics,
-            videos: itemsDetailData.videos,
-            videos_url: itemsDetailData.videos_url,
-            nospec: itemsDetailData.nospec,
-            is_show_specimg: itemsDetailData.is_show_specimg,
-            item_params: itemsDetailData.item_params,
-            item_main_cat_id: itemsDetailData.item_main_cat_id
-          }
-          _self.picsOldLen = _self.form.pics.length
-          if (!itemsDetailData.item_main_cat_id) {
-            _self.fetchMainCate()
-          } else {
-            let category = itemsDetailData.item_category_main
-            _self.categoryNames = [
-              category[0].category_name,
-              category[0].children[0].category_name,
-              category[0].children[0].children[0].category_name
-            ]
-            _self.generateParams(itemsDetailData.item_params_list)
-          }
-          if (!_self.form.nospec) {
-            _self.generateSpec(itemsDetailData.item_spec_list)
-            _self.specImages = itemsDetailData.spec_images
-            itemsDetailData.spec_items.forEach((item) => {
-              item.item_spec.forEach((child) => {
-                let checkedIndex = _self.skus.findIndex((n) => child.spec_id === n.sku_id)
-                let isin = _self.skus[checkedIndex].checked_sku.findIndex(
-                  (k) => child.spec_value_id === k
-                )
-                if (isin === -1) {
-                  _self.skus[checkedIndex].checked_sku.push(child.spec_value_id)
-                }
-              })
-            })
-
-            itemsDetailData.spec_items.forEach((item) => {
-              let sku = Object.assign({}, item)
-              sku.market_price = item.market_price / 100
-              sku.cost_price = item.cost_price / 100
-              sku.price = item.price / 100
-              sku.item_bn = item.item_bn
-              let itemId = []
-              let specs = []
-              item.item_spec.forEach((sub) => {
-                specs.push({
-                  spec_id: sub.spec_id,
-                  spec_value_id: sub.spec_value_id,
-                  spec_value_name: sub.spec_value_name,
-                  spec_custom_value_name: sub.spec_custom_value_name || ''
-                })
-                itemId.push(sub.spec_value_id)
-              })
-              sku.item_spec = specs
-              itemId = itemId.join('_')
-              Object.assign(sku, { sku_id: itemId })
-              store.dispatch('setSku', sku)
-            })
-            _self.updateSku()
-          }
-          if (typeof itemsDetailData.intro === 'object') {
-            _self.mode = 'component'
-            _self.content = itemsDetailData.intro
-          } else {
-            _self.form.intro = itemsDetailData.intro
-          }
-        })
-        // .catch(error => {
-        //   _self.$router.go(-1)
-        // })
-        _self.loader = false
-        _self.itemVideo = { media_id: _self.form.videos, url: _self.form.videos_url }
-      } else {
-        _self.fetchMainCate()
-        _self.loader = false
-      }
-    }
-    onload()
-  },
-  methods: {
-    regionChange () {
-      this.form.regions_id = this.select_regions_value
-      this.form.item_address_province = this.select_regions_value[0]
-      this.form.item_address_city = this.select_regions_value[1]
-    },
-    fetchMainCate () {
-      getCategory({ is_main_category: true }).then((res) => {
-        let list = []
-        res.data.data.forEach((item) => {
-          let obj = {
-            label: item.category_name,
-            value: item.category_id,
-            children: []
-          }
-          if (item.children.length > 0) {
-            item.children.forEach((child) => {
-              let childObj = {
-                label: child.category_name,
-                value: child.category_id,
-                children: []
-              }
-              obj.children.push(childObj)
-              if (child.children.length > 0) {
-                child.children.forEach((sub) => {
-                  let subObj = {
-                    label: sub.category_name,
-                    value: sub.category_id
-                  }
-                  childObj.children.push(subObj)
-                })
-              }
-            })
-          }
-          list.push(obj)
-        })
-        this.mainCategory = list
-        this.mainCateLoader = false
-      })
-    },
-    handleCategoryChange (val) {
-      getCategoryInfo(val[val.length - 1]).then((res) => {
-        let detail = res.data.data
-        this.generateParams(detail.goods_params)
-        this.generateSpec(detail.goods_spec)
-      })
-    },
-    generateParams (data) {
-      let params = []
-      let formParams = []
-      data.forEach((item) => {
-        let key = {
-          value: item.attribute_id,
-          label: item.attribute_name,
-          children: []
-        }
-        item.attribute_values.list.forEach((child) => {
-          let val = {
-            value: child.attribute_value_id,
-            label: child.attribute_value
-          }
-          key.children.push(val)
-        })
-        params.push(key)
-        let selected = this.form.item_params.find((n) => item.attribute_id === n.attribute_id)
-        formParams.push({
-          attribute_id: item.attribute_id,
-          attribute_value_id: selected ? selected.attribute_value_id : '',
-          attribute_value_name: selected ? selected.attribute_value_name : ''
-        })
-      })
-      this.params = params
-      this.form.item_params = formParams
-    },
-    handleSkuName (val, id) {
-      this.specItems.forEach((item) => {
-        item.forEach((child) => {
-          if (child.sku_id.indexOf(id) !== -1) {
-            child.item_spec[0].spec_custom_value_name = val
-            store.dispatch('setSku', child)
-            this.updateSku()
-          }
-        })
-      })
-    },
-    generateSpec (data) {
-      let skus = []
-      data.forEach((item) => {
-        let specs = []
-        item.attribute_values.list.forEach((spec) => {
-          if (!spec.custom_attribute_value) {
-            Object.assign(spec, { custom_attribute_value: spec.attribute_value })
-          }
-          specs.push(spec)
-        })
-        let sku = {
-          sku_id: item.attribute_id,
-          sku_name: item.attribute_name,
-          is_image: item.is_image,
-          sku_value: specs,
-          checked_sku: []
-        }
-        skus.push(sku)
-      })
-      this.skus = skus
-    },
-    upadateState (data) {
-      store.dispatch('setSku', data)
-    },
-    panelCollapse (name) {
-      this.panel[name] = !this.panel[name]
-    },
-    handleImgRemove (parent, index) {
-      this.specImages[parent].item_image_url.splice(index, 1)
-    },
-    onSubmit () {
-      this.authForm.goods_id = this.form.goods_id
-      auditItems(this.authForm).then((res) => {
-        this.$message({ type: 'success', message: '保存成功' })
-        this.dialogVisible = false
-        this.$router.go(-1)
-      })
-    },
-    updateContent: function (data) {
-      this.form.intro = data
-    },
-    handleCancel: function () {
-      this.$router.go(-1)
-    },
-    pageChange (val) {
-      this.currentPage = val
-    },
-    // 详情中的上传图片
-    addImgPreview: function () {
-      this.thumbDialog = true
-      this.isGetThumb = true
-    },
-    closeThumbDialog: function () {
-      this.thumbDialog = false
-    },
-    //品牌LOGO
-    handleImgChange () {
-      this.imgDialog = true
-      this.isGetImage = true
-    },
-    closeImgDialog () {
-      this.imgDialog = false
-    },
-    //视频
-    pickVideo (data) {
-      this.form.videos = data.media_id
-      this.form.videos_url = data.url
-    },
-    //上传商品图（9张）
-    handlePicsChange: function () {
-      this.picsDialog = true
-      this.isGetPics = true
-      this.multiple = true
-    },
-    handleSkuImg (index) {
-      this.currentSku = index
-      this.picsDialog = true
-      this.isGetPics = true
-      this.multiple = true
-    },
-    pickPics (data) {
-      if (this.currentSku === -1) {
-        if (this.picsOldLen + data.length >= 10) {
-          this.$message.error('最多上传9张图片!')
-          return false
-        } else {
-          if (data.length != 0) {
-            data.forEach((data) => {
-              if (data && data.url !== '') {
-                this.form.pics.push(data.url)
-                this.picsOldLen = this.form.pics.length
-              }
-            })
-          }
-        }
-      } else {
-        if (this.specImages[this.currentSku].item_image_url.length + data.length > 5) {
-          this.$message.error('最多添加5张图片!')
-          return false
-        }
-        if (data.length > 0) {
-          data.forEach((data) => {
-            if (data && data.url !== '') {
-              this.specImages[this.currentSku].item_image_url.push(data.url)
-            }
-          })
-        }
-        this.currentSku = -1
-      }
-      this.picsDialog = false
-    },
-    fillSku () {
-      let obj = { ...this.bulkFilling[0] }
-      let newObj = {}
-      for (let key in obj) {
-        if (obj[key] && key !== 'item_spec') {
-          newObj[key] = obj[key]
-        }
-      }
-      let list = [...this.specItems[this.currentPage - 1]]
-      list.forEach((item) => {
-        Object.assign(item, newObj)
-      })
-      store.dispatch('setPage', list)
-    },
-    clearSku (index) {
-      this.$confirm('确定清除当前规格的数据吗？', '提示', {
-        confirmButtonText: '确定',
-        cancelButtonText: '取消',
-        type: 'warning'
-      }).then(() => {
-        let skuItem = this.specItems[this.currentPage - 1][index]
-        store.dispatch('removeSku', skuItem)
-        for (let key in skuItem) {
-          if (key !== 'item_spec') {
-            if (key !== 'sku_id') {
-              skuItem[key] = ''
-            }
-          }
-        }
-      })
-    },
-    closePicsDialog () {
-      this.picsDialog = false
-    },
-    picsEnter (index) {
-      this.picsCurrent = index
-    },
-    picsLeave () {
-      this.picsCurrent = -1
-    },
-    removePicsImg: function (index) {
-      this.form.pics.splice(index, 1)
-      this.picsOldLen = this.form.pics.length
-    },
-    handleSkuChange () {
-      this.updateSku()
-    },
-    updateSku () {
-      let arr = []
-      let skus = []
-      this.skus.forEach((item) => {
-        if (item.checked_sku.length > 0) {
-          arr.push(item)
-        }
-      })
-      if (arr.length === 0) return
-      let n = arr.findIndex((item) => JSON.parse(item.is_image))
-      if (n != -1) {
-        let obj = { ...arr[n] }
-        let imgs = []
-        let addedImg = this.specImages
-        obj.checked_sku.forEach((item) => {
-          let added = addedImg.find((n) => n.spec_value_id === item)
-          let img = {
-            spec_value_id: item,
-            item_spec: this.getSkuName(item, obj.sku_value),
-            item_image_url: added ? added.item_image_url : []
-          }
-          imgs.push(img)
-        })
-        this.specImages = imgs
-        arr.splice(n, 1)
-        arr.unshift(obj)
-      }
-      arr.forEach((item) => {
-        let skuGroup = []
-        if (item.checked_sku.length > 0) {
-          item.checked_sku.forEach((checked) => {
-            let issue = item.sku_value.find((sku) => sku.attribute_value_id === checked)
-            let obj = {
-              spec_id: item.sku_id,
-              spec_value_id: issue.attribute_value_id,
-              spec_value_name: issue.attribute_value,
-              spec_custom_value_name: issue.custom_attribute_value || ''
-            }
-            skuGroup.push(obj)
-          })
-          skus.push(skuGroup)
-        }
-      })
-      let allSku = this.generateSkus(skus)
-      if (this.skus.length > 1 && !allSku[0].length) {
-        return false
-      }
-      let skuList = []
-      allSku.forEach((item) => {
-        let obj = {
-          is_default: false,
-          sku_id: this.generateSkuids(item),
-          item_spec: item.length ? item : [item],
-          approve_status: '',
-          store: '',
-          item_bn: '',
-          item_unit: '',
-          weight: '',
-          volume: '',
-          price: '',
-          cost_price: '',
-          market_price: '',
-          barcode: ''
-        }
-        skuList.push(obj)
-      })
-      if (this.editingSkus.length > 0) {
-        this.editingSkus.forEach((item) => {
-          let in_item = skuList.find((n) => item.sku_id === n.sku_id)
-          if (!in_item) {
-            store.dispatch('removeSku', item)
-          }
-        })
-      }
-
-      this.specTotal = skuList.length
-      let list = []
-      let len = Math.ceil(skuList.length / this.specPagesize)
-      for (let i = 0; i < len; i++) {
-        let childs = skuList.slice(i * this.specPagesize, i * this.specPagesize + this.specPagesize)
-        list.push(childs)
-      }
-      if (this.editingSkus.length > 0) {
-        list.forEach((item) => {
-          item.forEach((child) => {
-            let in_sku = this.editingSkus.find((editor) => editor.sku_id === child.sku_id)
-            if (in_sku) {
-              Object.assign(child, in_sku)
-            }
-          })
-        })
-      }
-      this.specItems = list
-    },
-    getSkuName (id, skus) {
-      let sku = skus.find((item) => id === item.attribute_value_id)
-      if (sku) {
-        return sku.attribute_value
-      }
-    },
-    generateSkuids (data) {
-      if (data.length) {
-        let skuIds = []
-        data.forEach((child) => {
-          skuIds.push(child.spec_value_id)
-        })
-        return skuIds.join('_')
-      } else {
-        return data.spec_value_id
-      }
-    },
-    generateSkus (data) {
-      let len = data.length
-      if (len >= 2) {
-        let len1 = data[0].length
-        let len2 = data[1].length
-        let newlen = len1 * len2
-        let temp = new Array(newlen)
-        let index = 0
-        for (let i = 0; i < len1; i++) {
-          for (let j = 0; j < len2; j++) {
-            if (Array.isArray(data[0][i])) {
-              temp[index] = [...data[0][i], data[1][j]]
-            } else {
-              temp[index] = [data[0][i], data[1][j]]
-            }
-            index++
-          }
-        }
-        let newArray = new Array(len - 1)
-        for (let i = 2; i < len; i++) {
-          newArray[i - 1] = data[i]
-        }
-        newArray[0] = temp
-        return this.generateSkus(newArray)
-      } else {
-        return data[0]
-      }
-    },
-    renderRequire (h, { column }) {
-      return h(
-        'span',
-        {
-          class: 'mark'
-        },
-        '*' + column.label
-      )
-    },
-    handleContent (data) {
-      this.content = data
-    },
-    deleteVideo () {
-      this.itemVideo = {}
-      this.form.videos = ''
-      this.form.videos_url = ''
-    }
-  }
+<style lang="scss" scoped>
+.section-page {
+  padding-bottom: 100px;
 }
-</script>
-<style scoped lang="scss">
-.vue-treeselect__placeholder {
-  line-height: 40px;
-}
-</style>
-<style scoped lang="scss">
-.fallback-class {
-  width: 118px;
-  height: 118px;
-}
-.chosen-class {
-  position: relative;
-  height: 118px;
-  text-align: center;
-  .svg-icon {
-    width: 26px;
-    height: 26px;
-  }
-  &::after {
-    position: absolute;
-    top: 0;
-    left: 118px;
-    right: 118px;
-    bottom: 0;
-    background: #ffb28b;
-    box-shadow: inset 0 0 0 2px #ff5000;
-    content: '';
-  }
-}
-.sku-value {
-  margin-right: 10px;
-}
-.sku-img {
-  display: inline-block;
-  width: 20px;
-  height: 20px;
-  margin-right: 5px;
-  vertical-align: middle;
-}
-.sku-img-pick {
-  color: #999;
-  cursor: pointer;
-}
-.avatar-uploader-icon {
-  font-size: 48px;
-}
-.sku-select__item {
-  display: flex;
-  position: relative;
-}
-.sku-select__checkgroup {
-  padding-left: 20px;
-  flex: 1;
-}
-.sku-select__checkitem {
-  display: inline-block;
-  margin-right: 20px;
+.mode-text {
   margin-bottom: 20px;
 }
-.sku-remove__icon {
-  position: absolute;
-  width: 30px;
-  height: 30px;
-  top: -20px;
-  right: -20px;
-  background: #ff5000;
-  line-height: 30px;
-  text-align: center;
-  color: #fff;
-  font-size: 15px;
-  cursor: pointer;
+.component-block {
+  margin-top: 20px;
 }
-.sku-tip {
-  padding-left: 10px;
-  font-size: 12px;
-  color: #999;
-}
-
-.pics-box {
-  overflow: hidden;
-  .goodspic-wrap {
-    float: left;
-    margin-right: 5px;
-    overflow: hidden;
-    .goodspic {
-      position: relative;
-      float: left;
-      width: 120px;
-      height: 120px;
-      margin: 0 5px 10px;
-      border: 1px solid #ddd;
-      border-radius: 8px;
-      overflow: hidden;
-      img {
-        width: 100%;
-        height: 100%;
-      }
-      .goodspic-mask {
-        display: none;
-        position: absolute;
-        top: 0;
-        left: 0;
-        z-index: 2;
-        width: 100%;
-        height: 100%;
-        background: rgba(0, 0, 0, 0.2);
-        cursor: pointer;
-        &.on {
-          display: flex;
-          align-items: center;
-          justify-content: center;
-        }
-        .iconfont {
-          margin: 0 8px;
-          font-size: 20px;
-          color: #fff;
-        }
-      }
-    }
-  }
-
-  .upload-box {
-    display: inline-block;
-    width: 120px;
-    height: 120px;
-    line-height: 120px;
-    text-align: center;
-    .iconfont {
-      font-size: 30px;
-      color: #ccc;
-    }
-  }
-}
-
-.tpl_item {
+.ricktext-con {
+  width: calc(100% - 100px);
   display: inline-block;
+}
+.tpl-btn {
   border: 1px solid #ddd;
   background-color: #fff;
   text-align: left;
@@ -1460,29 +20,859 @@ export default {
   line-height: 36px;
   cursor: pointer;
   border-radius: 3px;
-  .iconfont {
-    margin-right: 5px;
-  }
-}
-
-.tpl_item .fa {
-  width: 12px;
-  height: 22px;
-  vertical-align: middle;
-  display: inline-block;
-  margin-right: 1em;
-  font-size: 20px;
-  text-align: center;
-}
-
-.vue-html5-editor {
-  vertical-align: top;
-  display: inline-block;
-}
-
-.demo-ruleForm {
-  .vue-html5-editor {
-    width: 80%;
-  }
+  float: right;
 }
 </style>
+
+<template>
+  <div>
+    <template v-if="!isEditor">
+      <el-card v-loading="mainCateLoader" shadow="never" header="选择主类目">
+        <el-cascader
+          v-model="selectedMainCategory"
+          :options="mainCategory"
+          style="width: 360px"
+          @change="handleCategoryChange"
+        />
+      </el-card>
+    </template>
+    <template v-else>
+      <div class="form-block-head clearfix">
+        <div class="block-head-hd">商品主类目</div>
+      </div>
+      <div class="form-block-body">
+        <el-breadcrumb separator-class="el-icon-arrow-right" class="inline">
+          <el-breadcrumb-item v-for="(item, index) in categoryNames" :key="index">
+            {{ item }}
+          </el-breadcrumb-item>
+        </el-breadcrumb>
+      </div>
+    </template>
+    <template v-if="isEditor || selectedMainCategory.length > 0">
+      <!-- 基础信息 -->
+      <CmBaseForm v-model="baseData" :is-cross="isCross" />
+
+      <!-- 商品参数 -->
+
+      <CmGoodsParams
+        v-if="paramsData.length > 0"
+        v-model="paramsData"
+        :point-access="baseData.point_access"
+      />
+
+      <!-- 商品规格 -->
+      <CmSkuForm
+        v-model="skuData"
+        :is-editor="isEditor"
+        :is-package-items="baseData.isPackageItems"
+        :point-access="baseData.point_access"
+        @specOnChange="specOnChange"
+      />
+
+      <div class="comp-tdk">
+        <div class="form-block-head clearfix">
+          <div class="block-head-hd">PC关键词搜索引擎</div>
+        </div>
+        <div class="form-block-body">
+          <el-form label-position="right" label-width="80px">
+            <el-form-item label="页面标题" style="margin-bottom: 20px; width: 600px">
+              <el-input v-model="tdk_info.title" type="text" />
+            </el-form-item>
+            <el-form-item label="页面描述" style="margin-bottom: 20px; width: 600px">
+              <el-input v-model="tdk_info.mate_description" type="textarea" />
+            </el-form-item>
+            <el-form-item label="关键词" style="width: 600px">
+              <el-input v-model="tdk_info.mate_keywords" type="textarea" />
+              <span class="tip">关键词之间请用半角”,”分隔</span>
+            </el-form-item>
+          </el-form>
+        </div>
+      </div>
+
+      <div class="comp-desc">
+        <div class="form-block-head clearfix">
+          <div class="block-head-hd">图文详情</div>
+        </div>
+        <div class="form-block-body">
+          <el-radio-group v-model="mode" class="mode-text">
+            <el-radio :label="'richText'"> 富文本 </el-radio>
+            <el-radio :label="'component'"> 组件式 </el-radio>
+          </el-radio-group>
+          <div v-if="mode === 'richText'" class="richText-block">
+            <div class="ricktext-con">
+              <vue-html5-editor
+                ref="editor"
+                :modules="modules"
+                :content="intro.toString()"
+                :height="360"
+                style="width: 100%"
+                @change="
+                  (e) => {
+                    this.intro = e
+                  }
+                "
+              />
+            </div>
+            <!-- <span class="tpl-btn" @click="addImgPreview" style="">
+              <i class="iconfont icon-image"></i>图片
+            </span> -->
+          </div>
+          <div v-else class="component-block">
+            <richTextEditor
+              :data="content"
+              :control="['film', 'slider', 'heading', 'writing']"
+              @change="
+                (data) => {
+                  content = data
+                }
+              "
+            />
+          </div>
+          <imgPicker
+            :dialog-visible="thumbDialog"
+            :sc-status="isGetThumb"
+            :is-most="true"
+            @chooseImg="pickThumb"
+            @closeImgDialog="closeThumbDialog"
+          />
+        </div>
+      </div>
+
+      <div class="footer-container">
+        <el-button @click.native="handleCancel"> 取消 </el-button>
+      </div>
+    </template>
+  </div>
+</template>
+
+<script>
+import store from '@/store'
+import { getItemsDetail, createItems, updateItems, getCategory, getCategoryInfo } from '@/api/goods'
+import richTextEditor from '@/components/function/richTextEditor'
+import imgBox from '@/components/element/imgBox'
+import imgPicker from '@/components/imageselect'
+import CmBaseForm from './comps/CmBaseForm'
+import CmGoodsParams from './comps/CmGoodsParams'
+import CmSkuForm from './comps/CmSkuForm'
+import { getOrigincountry, getTaxstrategyList } from '../../../../api/crossborder'
+import { getPointRule } from '../../../../api/promotions'
+
+export default {
+  inject: ['refresh'],
+  components: {
+    richTextEditor,
+    imgBox,
+    imgPicker,
+    CmBaseForm,
+    CmGoodsParams,
+    CmSkuForm
+  },
+  data() {
+    return {
+      itemVideo: {},
+      select_regions_value: [],
+
+      categoryNames: [],
+      mainCateLoader: false,
+
+      submitLoading: false,
+      isEditor: false,
+      isLeave: false,
+      imgDialog: false,
+      isGetVideo: false,
+
+      thumbDialog: false,
+      isGetThumb: false,
+
+      cacheCreateDetail: {},
+      mainCategory: [],
+      selectedMainCategory: [],
+      loading: true,
+      isCross: false,
+      origincountry: [], // 产地国
+      taxstrategy: [], // 税费策略
+      baseData: {
+        item_type: 'normal',
+        special_type: 'normal',
+        item_source: 'mall',
+        item_id: '',
+        itemName: '',
+        brief: '',
+        templatesId: '',
+        brandId: '',
+        itemUnit: '',
+        sort: 1,
+        regionsId: [],
+        taxRate: 0,
+        isProfit: true,
+        isPackageItems: false,
+        isGift: false,
+        itemCategory: [],
+        pics: [],
+        pics_create_qrcode: [],
+        itemVideo: {
+          media_id: '',
+          url: ''
+        },
+        point_access: 'order'
+      },
+      modules: [
+        {
+          icon: 'iconfont icon-image',
+          name: 'uploader'
+        }
+      ],
+      paramsData: [],
+      skuData: {
+        // 单规格
+        nospec: true,
+        // 是否显示图片规格
+        isShowSpecimg: false,
+        // 单规格数据
+        specData: {
+          approve_status: 'onsale',
+          store: 1,
+          item_bn: '',
+          weight: '',
+          volume: '',
+          price: '',
+          cost_price: '',
+          market_price: '',
+          barcode: '',
+          point_num: 0
+        },
+        skus: [],
+        specImages: [],
+        specItems: [],
+        itemSpecList: []
+      },
+      tdk_info: {
+        title: '',
+        mate_description: '',
+        mate_keywords: ''
+      },
+      mode: 'richText',
+      content: [],
+      intro: ''
+    }
+  },
+  computed: {
+    // isAllCheck ({ form }) {
+    //   const { pics_create_qrcode } = form
+    //   const isNotAll = pics_create_qrcode.some(item => !item)
+    //   return !isNotAll
+    // }
+  },
+  watch: {
+    selectedMainCategory: {
+      handler: function (val) {
+        console.log('===selectedMainCategory===>', val)
+        if (val.length > 0) {
+          this.addUploaderEventListener()
+        }
+      },
+      immediate: true
+    }
+  },
+  async created() {
+    const { itemId } = this.$route.params
+    this.isEditor = !!itemId
+
+    if (this.$route.path.split('/')[2] === 'godsphysicalkj') {
+      // 跨境
+      this.isCross = true
+      this.fetchOriginData()
+    } else {
+      this.isCross = false
+    }
+    if (itemId) {
+      await this.fetchDetail()
+    } else {
+      await this.getMainCategory()
+    }
+    this.fetch()
+  },
+  mounted: function () {
+    this.addUploaderEventListener()
+    console.log(this.$route)
+  },
+  methods: {
+    async fetch() {
+      const resPointRule = await getPointRule()
+      // this.baseData.point_access = resPointRule.data.data.access
+
+      this.$set(this.baseData, 'point_access', resPointRule.data.data.access)
+    },
+    addUploaderEventListener() {
+      const self = this
+      setTimeout(() => {
+        const uploaderDom = document.getElementsByClassName('icon iconfont icon-image')[0]
+        uploaderDom &&
+          uploaderDom.addEventListener('click', () => {
+            self.addImgPreview()
+          })
+      }, 0)
+    },
+    async fetchOriginData() {
+      // 获取产地国
+      const resCountry = await getOrigincountry({
+        page: 1,
+        pageSize: 99999
+      })
+      this.origincountry = resCountry.data.data.list
+      // 获取税费策略
+      const resTax = await getTaxstrategyList({
+        page: 1,
+        pageSize: 99999
+      })
+      this.taxstrategy = [
+        ...resTax.data.data.list,
+        {
+          id: '0',
+          taxstrategy_name: '不使用策略',
+          created: '0',
+          updated: '0'
+        }
+      ]
+    },
+    async fetchDetail() {
+      const { itemId } = this.$route.params
+      const { is_new } = this.$route.query
+      const res = await getItemsDetail(itemId)
+      const goodsDetail = res.data.data
+      // this.select_regions_value = goodsDetail.regions_id
+      // this.form = {
+      //   ...this.form,
+      //   ...goodsDetail
+      // }
+      this.baseData = {
+        item_type: goodsDetail.item_type,
+        special_type: goodsDetail.special_type,
+        item_source: goodsDetail.item_source,
+        item_id: goodsDetail.item_id,
+        itemName: goodsDetail.item_name,
+        brief: goodsDetail.brief,
+        templatesId: goodsDetail.templates_id.toString(),
+        brandId: goodsDetail.brand_id,
+        itemUnit: goodsDetail.item_unit,
+        sort: goodsDetail.sort,
+        regionsId: goodsDetail.regions_id,
+        taxRate: goodsDetail.tax_rate,
+        isProfit: goodsDetail.is_profit,
+        isPackageItems: goodsDetail.is_package_items,
+        isGift: goodsDetail.is_gift,
+        itemCategory: goodsDetail.item_category,
+        pics: goodsDetail.pics,
+        pics_create_qrcode: goodsDetail.pics_create_qrcode,
+        item_main_cat_id: goodsDetail.item_main_cat_id,
+        itemVideo: {
+          media_id: goodsDetail.videos,
+          url: goodsDetail.videos_url || goodsDetail.videos
+        }
+      }
+
+      this.deepMainCategory(goodsDetail.item_category_main[0], this.categoryNames)
+
+      this.skuData = {
+        ...this.skuData,
+        nospec: goodsDetail.nospec,
+        specImages: goodsDetail.spec_images,
+        specItems: goodsDetail.spec_items,
+        itemSpecDesc: goodsDetail.item_spec_desc,
+        itemSpecList: goodsDetail.item_spec_list
+      }
+
+      this.getGoodsParams(goodsDetail.item_params_list, goodsDetail.item_params)
+
+      if (!goodsDetail.nospec) {
+        goodsDetail.spec_items.forEach((item) => {
+          item.price = item.price / 100
+          item.cost_price = item.cost_price / 100
+          item.market_price = item.market_price / 100
+        })
+        this.getGoodsSkus(goodsDetail.item_spec_list, goodsDetail.spec_items)
+        this.getSkuItems()
+      } else {
+        this.skuData.specData = {
+          approve_status: goodsDetail.approve_status,
+          store: goodsDetail.store,
+          item_bn: is_new ? '' : goodsDetail.item_bn,
+          weight: goodsDetail.weight,
+          volume: goodsDetail.volume,
+          price: goodsDetail.price / 100,
+          cost_price: goodsDetail.cost_price / 100,
+          market_price: goodsDetail.market_price / 100,
+          barcode: goodsDetail.barcode,
+          point_num: goodsDetail.point_num
+        }
+      }
+      if (goodsDetail.tdk_content) {
+        this.tdk_info = JSON.parse(goodsDetail.tdk_content)
+      }
+      if (typeof goodsDetail.intro === 'object') {
+        this.mode = 'component'
+        this.content = goodsDetail.intro
+      } else {
+        this.intro = goodsDetail.intro
+      }
+      this.loading = false
+    },
+    // 递归主类目
+    deepMainCategory(item, cateNames) {
+      cateNames.push(item.category_name)
+      if (item.children) {
+        this.deepMainCategory(item.children[0], cateNames)
+      }
+    },
+    // 商品参数
+    getGoodsParams(list, value) {
+      list.forEach((item) => {
+        const temp = {
+          value: item.attribute_id,
+          label: item.attribute_name,
+          attribute_value_id: '',
+          attribute_value_name: '',
+          children: []
+        }
+        item.attribute_values.list.forEach(({ attribute_value_id, attribute_value }) => {
+          temp.children.push({
+            value: attribute_value_id,
+            label: attribute_value
+          })
+        })
+        const fd = value.find((sitem) => sitem.attribute_id == item.attribute_id)
+        if (fd) {
+          temp.attribute_value_id = fd.attribute_value_id
+          temp.attribute_value_name = fd.attribute_value_name
+        }
+        this.paramsData.push(temp)
+      })
+    },
+    // 商品skus
+    getGoodsSkus(list, value) {
+      this.skuData.skus = []
+
+      if (list) {
+        list.forEach((item) => {
+          const specs = []
+          item.attribute_values.list.forEach((attr) => {
+            specs.push({
+              image_url: attr.image_url ? attr.image_url : '',
+              attribute_value_id: attr.attribute_value_id,
+              custom_attribute_value: attr.custom_attribute_value || attr.attribute_value,
+              attribute_value: attr.attribute_value
+            })
+          })
+          const checked_sku = []
+          value.forEach((spec) => {
+            spec.item_spec.forEach((sitem) => {
+              if (item.attribute_id == sitem.spec_id) {
+                if (checked_sku.indexOf(sitem.spec_value_id) < 0) {
+                  checked_sku.push(sitem.spec_value_id)
+                }
+              }
+            })
+          })
+          this.skuData.skus.push({
+            sku_id: item.attribute_id,
+            sku_name: item.attribute_name,
+            is_image: item.is_image,
+            sku_value: specs,
+            checked_sku
+          })
+        })
+      }
+    },
+    // 生成skuItems
+    getSkuItems() {
+      const { is_new } = this.$route.query
+      const skuMartix = []
+      this.skuData.skus.forEach((sku) => {
+        skuMartix.push(sku.checked_sku)
+      })
+      const _specItmes = this.cartesianProductOf(...skuMartix)
+      const cacheItems = {}
+      console.log('specItems:', this.skuData.specItems)
+      this.skuData.specItems.forEach((sitem) => {
+        const itemSpecs = sitem.item_spec.map((k) => {
+          return k.spec_value_id
+        })
+        cacheItems[itemSpecs.join('_')] = sitem
+      })
+      console.log('_specItmes:', _specItmes)
+      console.log('cacheItems:', cacheItems)
+      this.skuData.specItems = _specItmes.map((item) => {
+        // console.log('item:', item)
+        const key = item.join('_')
+        const temp = {
+          sku_id: key,
+          spec_name: this.getSpecName(item),
+          is_default: cacheItems[key] ? cacheItems[key].is_default : false,
+          approve_status: cacheItems[key] ? cacheItems[key].approve_status : '',
+          store: cacheItems[key] ? cacheItems[key].store : '',
+          item_bn: is_new ? '' : cacheItems[key] ? cacheItems[key].item_bn : '',
+          weight: cacheItems[key] ? cacheItems[key].weight : '',
+          volume: cacheItems[key] ? cacheItems[key].volume : '',
+          price: cacheItems[key] ? cacheItems[key].price : '',
+          cost_price: cacheItems[key] ? cacheItems[key].cost_price : '',
+          market_price: cacheItems[key] ? cacheItems[key].market_price : '',
+          barcode: cacheItems[key] ? cacheItems[key].barcode : '',
+          point_num: cacheItems[key] ? cacheItems[key].point_num : '',
+          item_spec: cacheItems[key]
+            ? cacheItems[key].item_spec
+            : item.map((m, n) => {
+                const { sku_id, sku_value } = this.skuData.skus[n]
+                const fd = sku_value.find((sv) => sv.attribute_value_id == m)
+                return {
+                  spec_id: sku_id,
+                  spec_value_id: m,
+                  spec_value_name: fd.attribute_value,
+                  spec_custom_value_name: fd.custom_attribute_value
+                }
+              })
+        }
+        if (this.isEditor) {
+          temp['item_id'] = cacheItems[key] ? cacheItems[key].item_id : ''
+        }
+        // console.log('temp:', temp)
+        return temp
+      })
+      console.log('specItems:', this.skuData.specItems)
+      // 查找规格图片, 取最后一行
+      const skus = JSON.parse(JSON.stringify(this.skuData.skus))
+      const imgSkus = skus.reverse().find((item) => item.is_image == 'true')
+      if (imgSkus) {
+        const checkedImgSkus = imgSkus.sku_value.filter(
+          (item) => imgSkus.checked_sku.indexOf(item.attribute_value_id) > -1
+        )
+        this.skuData.specImages = checkedImgSkus.map((skuItem) => {
+          const fd = this.skuData.specImages.find(
+            (item) => item.spec_value_id == skuItem.attribute_value_id
+          )
+          return {
+            spec_value_id: skuItem.attribute_value_id,
+            spec_custom_value_name: skuItem.custom_attribute_value,
+            spec_value_name: skuItem.attribute_value,
+            item_image_url: fd ? fd.item_image_url : skuItem.image_url ? [skuItem.image_url] : []
+          }
+        })
+      }
+      console.log(this.skuData.specImages)
+    },
+    cartesianProductOf() {
+      return Array.prototype.reduce.call(
+        arguments,
+        function (a, b) {
+          var ret = []
+          a.forEach(function (a) {
+            b.forEach(function (b) {
+              ret.push(a.concat([b]))
+            })
+          })
+          return ret
+        },
+        [[]]
+      )
+    },
+    //
+    getSpecName(keys) {
+      const specNames = []
+      keys.forEach((key, index) => {
+        const fd = this.skuData.itemSpecList[index].attribute_values.list.find(
+          (item) => item.attribute_value_id == key
+        )
+        if (fd) {
+          specNames.push(fd.custom_attribute_value || fd.attribute_value)
+        }
+      })
+      return specNames.join(' ')
+    },
+    // 获取主类目
+    async getMainCategory() {
+      const res = await getCategory({ is_main_category: true })
+      const category = res.data.data
+      function deepMainCategory(cate, temp) {
+        cate.forEach((item) => {
+          const _temp = {
+            label: item.category_name,
+            value: item.category_id
+          }
+          if (item.children) {
+            _temp['children'] = []
+            deepMainCategory(item.children, _temp.children)
+          }
+          temp.push(_temp)
+        })
+      }
+      deepMainCategory(category, this.mainCategory)
+      this.mainCateLoader = false
+    },
+    // 选择主类目
+    async handleCategoryChange(val) {
+      const res = await getCategoryInfo(val[val.length - 1])
+      const detail = res.data.data
+      this.cacheCreateDetail = detail
+      this.getGoodsParams(detail.goods_params, [])
+      this.skuData.itemSpecList = detail.goods_spec
+      if (!this.skuData.nospec) {
+        this.getGoodsSkus(detail.goods_spec, [])
+      }
+      // const goodsSpec = JSON.parse(JSON.stringify(detail.goods_spec))
+      // const imgSpec = goodsSpec.reverse().find(item => item.is_image == 'true')
+      // if(imgSpec) {
+      //   this.skuData.specImages = imgSpec.attribute_values.list.map(item => {
+      //     return {
+      //       spec_custom_value_name: item.attribute_value,
+      //       // spec_image_url: item.image_url,
+      //       spec_value_id: item.attribute_value_id,
+      //       spec_value_name: item.attribute_value,
+      //       item_image_url: [ item.image_url]
+      //     }
+      //   })
+      // }
+      this.skuData.specImages = []
+      this.loading = false
+    },
+    specOnChange() {
+      this.getGoodsSkus(this.cacheCreateDetail.goods_spec, [])
+    },
+    clearSku(index) {
+      this.$confirm('确定清除当前规格的数据吗？', '提示', {
+        confirmButtonText: '确定',
+        cancelButtonText: '取消',
+        type: 'warning'
+      }).then(() => {
+        console.log(this.specItems)
+        this.$set(this.specItems, index, {
+          ...this.specItems[index],
+          approve_status: '',
+          store: '',
+          item_bn: '',
+          weight: '',
+          volume: '',
+          price: '',
+          cost_price: '',
+          market_price: '',
+          barcode: '',
+          point_num: ''
+        })
+      })
+    },
+    handleCancel() {
+      this.$router.go(-1)
+    },
+    async handleSave() {
+      this.submitLoading = true
+      const {
+        item_id,
+        itemName,
+        itemCategory,
+        sort,
+        taxRate,
+        brief,
+        templatesId,
+        brandId,
+        itemUnit,
+        regionsId,
+        isProfit,
+        isPackageItems,
+        isGift,
+        pics,
+        pics_create_qrcode,
+        itemVideo,
+        item_type,
+        special_type,
+        item_source,
+        item_main_cat_id
+      } = this.baseData
+      const { nospec, isShowSpecimg } = this.skuData
+      const { is_new } = this.$route.query
+      let params = {
+        item_type: item_type,
+        special_type: special_type,
+        item_source: item_source,
+        item_category: itemCategory,
+        item_name: itemName,
+        sort,
+        tax_rate: taxRate,
+        brief,
+        templates_id: templatesId,
+        brand_id: brandId,
+        item_unit: itemUnit,
+        regions_id: regionsId,
+        is_profit: isProfit,
+        is_package_items: isPackageItems,
+        is_gift: isGift,
+        pics: pics,
+        pics_create_qrcode: pics_create_qrcode,
+        videos: itemVideo.media_id,
+        videos_url: itemVideo.url,
+        nospec,
+        is_show_specimg: isShowSpecimg,
+        item_params: this.paramsData.map((item) => {
+          return {
+            attribute_id: item.value,
+            attribute_value_id: item.attribute_value_id,
+            attribute_value_name: item.attribute_value_name
+          }
+        }),
+        tdk_content: JSON.stringify(this.tdk_info),
+        item_main_cat_id: item_id
+          ? item_main_cat_id
+          : this.selectedMainCategory[this.selectedMainCategory.length - 1]
+      }
+
+      // 多规格
+      if (!nospec) {
+        const specImages = this.skuData.specImages.map((item) => {
+          return {
+            spec_value_id: item.spec_value_id,
+            item_spec: item.spec_custom_value_name || item.spec_value_name,
+            item_image_url: item.item_image_url
+          }
+        })
+        // debugger
+        params = {
+          ...params,
+          spec_images: JSON.stringify(specImages)
+        }
+        // 编辑
+        if (item_id) {
+          params['spec_items'] = JSON.stringify(
+            this.skuData.specItems.filter((item) => !!item.approve_status)
+          )
+        } else {
+          const specItems = this.skuData.specItems.map((item, index) => {
+            const skuIds = item.sku_id.split('_')
+            const itemSpec = []
+            this.skuData.skus.forEach((m, n) => {
+              const t = m.sku_value.find((k) => k.attribute_value_id == skuIds[n])
+              itemSpec.push({
+                spec_id: m.sku_id,
+                spec_value_id: skuIds[n],
+                spec_value_name: t.attribute_value,
+                spec_custom_value_name: t.custom_attribute_value
+              })
+            })
+            return {
+              is_default: index == 0,
+              sku_id: item.sku_id,
+              item_spec: itemSpec,
+              approve_status: item.approve_status,
+              store: item.store,
+              item_bn: item.item_bn,
+              weight: item.weight,
+              volume: item.volume,
+              price: item.price,
+              cost_price: item.cost_price,
+              market_price: item.market_price,
+              barcode: item.barcode,
+              point_num: item.point_num
+            }
+          })
+          params['spec_items'] = JSON.stringify(specItems)
+        }
+      } else {
+        params = {
+          ...params,
+          approve_status: this.skuData.specData.approve_status,
+          store: this.skuData.specData.store,
+          item_bn: this.skuData.specData.item_bn,
+          weight: this.skuData.specData.weight,
+          volume: this.skuData.specData.volume,
+          price: this.skuData.specData.price,
+          cost_price: this.skuData.specData.cost_price,
+          market_price: this.skuData.specData.market_price,
+          barcode: this.skuData.specData.barcode,
+          point_num: this.skuData.specData.point_num
+        }
+      }
+
+      if (this.mode === 'component') {
+        params['intro'] = JSON.stringify(this.content)
+      } else {
+        params['intro'] = this.intro
+      }
+      if (Number(params.store) < 0) {
+        this.$message({ type: 'error', message: '库存需为正整数' })
+        this.submitLoading = false
+        return
+      }
+      if (item_id && !is_new) {
+        try {
+          params = {
+            ...params,
+            item_id: item_id
+          }
+          await updateItems(item_id, params)
+          this.$message({
+            message: '更新成功',
+            type: 'success',
+            duration: 2 * 1000,
+            onClose: () => {
+              this.submitLoading = false
+              this.refresh()
+              this.isLeave = true
+              this.$router.go(-1)
+            }
+          })
+        } catch (e) {
+          this.submitLoading = false
+        }
+      } else {
+        try {
+          await createItems(params)
+          this.$message({
+            message: '添加成功',
+            type: 'success',
+            duration: 2 * 1000,
+            onClose: () => {
+              this.submitLoading = false
+              this.refresh()
+              this.isLeave = true
+              this.$router.go(-1)
+            }
+          })
+        } catch (e) {
+          this.submitLoading = false
+        }
+      }
+    },
+    // 详情中的上传图片
+    addImgPreview: function () {
+      this.thumbDialog = true
+      this.isGetThumb = true
+    },
+    pickThumb: function (arr) {
+      if (arr.length != 0) {
+        arr.forEach((data) => {
+          if (data && data.url !== '') {
+            this.thumbDialog = false
+            var index = this.$refs.editor.$el.id
+            var loc = this.$refs.editor
+            var img = new Image()
+            img.src = this.wximageurl + data.url
+            if (loc.range) {
+              loc.range.insertNode(img)
+              var referenceNode = loc.range.endContainer
+              if (referenceNode.className !== 'content') {
+                loc.range.setStartAfter(referenceNode)
+              } else {
+                loc.range.setStart(loc.range.endContainer, loc.range.endOffset)
+              }
+            } else {
+              loc.$refs.content.appendChild(img)
+              loc.focus()
+              loc.restoreSelection()
+            }
+            this.intro = loc.$refs.content.innerHTML
+          }
+        })
+      }
+    },
+    closeThumbDialog: function () {
+      this.thumbDialog = false
+    }
+  }
+}
+</script>

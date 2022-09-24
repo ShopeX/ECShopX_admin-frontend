@@ -46,18 +46,6 @@
           min-width="100"
         >
           <template slot-scope="scope">
-            <el-button type="text">
-              <a
-                href="javascript:void(0)"
-                @click="delPage(scope.row.id)"
-              > 删除 </a>
-            </el-button>
-            <el-button type="text">
-              <a
-                href="javascript:void(0)"
-                @click="openDialog(scope.row)"
-              > 编辑 </a>
-            </el-button>
             <el-button
               type="primary"
               plain
@@ -66,6 +54,32 @@
               @click="temDialog(scope.row.id)"
             >
               页面装修
+            </el-button>
+            <el-button type="text">
+              <a
+                href="javascript:void(0)"
+                @click="openDialog(scope.row)"
+              > 编辑 </a>
+            </el-button>
+            <el-popover
+              v-if="appID"
+              placement="top"
+              width="200"
+              trigger="click">
+              <div>
+                <img class="page-code" :src="appCodeUrl" />
+                <div class="page-btns">
+                  <el-button type="primary" plain size="mini" @click="handleDownload(scope.row.page_name)">下载码</el-button>
+                  <el-button type="primary" plain size="mini" v-clipboard:copy="curPageUrl">复制链接</el-button>
+                </div>
+              </div>
+              <el-button style="width: 45px" type="text" slot="reference" @click="handleClick(scope.row.id)">投放</el-button>
+            </el-popover>
+            <el-button type="text">
+              <a
+                href="javascript:void(0)"
+                @click="delPage(scope.row.id)"
+              > 删除 </a>
             </el-button>
           </template>
         </el-table-column>
@@ -178,6 +192,7 @@
 <script>
 import { mapGetters } from 'vuex'
 import { getCustomPageList, createCustomPage, delCustomPage, editCustomPage } from '@/api/wxa'
+import { getPageCode } from '@/api/marketing'
 import shopDecoration from '@/components/function/shopDecoration'
 import imgPicker from '@/components/imageselect'
 export default {
@@ -194,6 +209,9 @@ export default {
       total_count: 0,
       dialogTitle: '新增页面',
       loading: false,
+      appID: '',
+      appCodeUrl: '',
+      curPageUrl: '',
       params: {
         page: 1,
         pageSize: 20
@@ -216,9 +234,39 @@ export default {
   },
   mounted () {
     this.fetchPageList()
+    this.fetchWechatList()
     this.store = { id: '0' }
   },
   methods: {
+    async fetchWechatList() {
+      const { list } = await this.$api.minimanage.gettemplateweapplist()
+      list.forEach((item, i) => {
+        if (item.name == 'yykweishop') {
+          this.appID = item.authorizer.authorizer_appid
+        }
+      })
+    },
+    handleClick (id) {
+      const page = 'pages/custom/custom-page'
+      this.curPageUrl = `${page}?id=${id}`
+      let params = {
+        wxaAppId: this.appID,
+        page,
+        id
+      }
+      getPageCode(params).then((response) => {
+        this.appCodeUrl = response.data.data.base64Image
+      })
+    },
+    handleDownload (name) {
+      var a = document.createElement('a')
+      var temp = name
+      if (this.appCodeUrl) {
+        a.href = this.appCodeUrl
+        a.download = temp + '.png'
+        a.click()
+      }
+    },
     temDialog (id, type) {
       this.pageForm.id = id
       this.template_dialog = true
@@ -335,5 +383,11 @@ export default {
     display: block;
     width: 100%;
   }
+}
+.page-code {
+  width: 100%;
+}
+.page-btns {
+  text-align: center;
 }
 </style>

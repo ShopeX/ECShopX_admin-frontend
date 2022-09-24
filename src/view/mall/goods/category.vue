@@ -148,6 +148,20 @@
             >
               编辑
             </el-button>
+            <el-popover
+              v-if="appID"
+              placement="top"
+              width="200"
+              trigger="click">
+              <div>
+                <img class="page-code" :src="appCodeUrl" />
+                <div class="page-btns">
+                  <el-button type="primary" plain size="mini" @click="handleDownload(scope.row.page_name)">下载码</el-button>
+                  <el-button type="primary" plain size="mini" v-clipboard:copy="curPageUrl">复制链接</el-button>
+                </div>
+              </div>
+              <el-button style="width: 45px" type="text" slot="reference" @click="handleClick(scope.row.id)">投放</el-button>
+            </el-popover>
             <el-button
               type="text"
               @click.native.prevent="deleteCategory(scope.row)"
@@ -169,6 +183,7 @@
 <script>
 import { mapGetters } from 'vuex'
 import { getCategory, saveCategory, deleteCategory, addCategory, editCategory } from '@/api/goods'
+import { getPageCode } from '@/api/marketing'
 import imgPicker from '@/components/imageselect'
 import imgBox from '@/components/element/imgBox'
 
@@ -188,6 +203,9 @@ export default {
       imgDialog: false,
       isGetImage: false,
       current: '',
+      appID: '',
+      appCodeUrl: '',
+      curPageUrl: '',
       dialog: {
         visible: false,
         cat_name: '',
@@ -208,8 +226,38 @@ export default {
 
   mounted () {
     this.getCategory()
+    this.fetchWechatList()
   },
   methods: {
+    async fetchWechatList() {
+      const { list } = await this.$api.minimanage.gettemplateweapplist()
+      list.forEach((item, i) => {
+        if (item.name == 'yykweishop') {
+          this.appID = item.authorizer.authorizer_appid
+        }
+      })
+    },
+    handleClick (cat_id) {
+      const page = 'pages/item/list'
+      this.curPageUrl = `${page}?cat_id=${cat_id}`
+      let params = {
+        wxaAppId: this.appID,
+        page,
+        cat_id
+      }
+      getPageCode(params).then((response) => {
+        this.appCodeUrl = response.data.data.base64Image
+      })
+    },
+    handleDownload (name) {
+      var a = document.createElement('a')
+      var temp = name
+      if (this.appCodeUrl) {
+        a.href = this.appCodeUrl
+        a.download = temp + '.png'
+        a.click()
+      }
+    },
     append (row) {
       // let { children: data, level = 0, id, parent_id = "" } = row;
       // let newParentId = level === 0 ? id : parent_id;
@@ -521,5 +569,11 @@ export default {
 <style lang="scss">
 .el-table__indent {
   padding-left: 30px !important;
+}
+.page-code {
+  width: 100%;
+}
+.page-btns {
+  text-align: center;
 }
 </style>

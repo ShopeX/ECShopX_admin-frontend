@@ -326,11 +326,25 @@ H5二维码
             </el-table-column>
             <el-table-column prop="itemCatName" label="商品分类" width="150" />
 
-            <el-table-column fixed="left" label="操作" width="160">
+            <el-table-column fixed="left" label="操作" width="200">
               <template slot-scope="scope">
                 <el-button type="text" @click="editItemsAction(scope.$index, scope.row, false)">
                   编辑
                 </el-button>
+                <el-popover
+                  v-if="appID"
+                  placement="top"
+                  width="200"
+                  trigger="click">
+                  <div>
+                    <img class="page-code" :src="appCodeUrl" />
+                    <div class="page-btns">
+                      <el-button type="primary" plain size="mini" @click="handleDownload(scope.row.page_name)">下载码</el-button>
+                      <el-button type="primary" plain size="mini" v-clipboard:copy="curPageUrl">复制链接</el-button>
+                    </div>
+                  </div>
+                  <el-button style="width: 45px" type="text" slot="reference" @click="handleShow(scope.row.goods_id)">投放</el-button>
+                </el-popover>
                 <el-button
                   type="text"
                   class="btn-gap"
@@ -795,6 +809,7 @@ import {
   saveIsGifts,
   flowItems
 } from '@/api/goods'
+import { getPageCode } from '@/api/marketing'
 import { VERSION_IN_PURCHASE } from '@/utils'
 import mixins from '@/mixins'
 
@@ -880,6 +895,9 @@ export default {
         pageSize: 1000
       },
       goodsBranchList: [],
+      appID: '',
+      appCodeUrl: '',
+      curPageUrl: '',
       goodsBranchParams: {
         page: 1,
         pageSize: 1000,
@@ -973,12 +991,42 @@ export default {
   },
   mounted () {
     this.init()
+    this.fetchWechatList()
   },
 
   destroyed () {
     console.log(111)
   },
   methods: {
+    async fetchWechatList() {
+      const { list } = await this.$api.minimanage.gettemplateweapplist()
+      list.forEach((item, i) => {
+        if (item.name == 'yykweishop') {
+          this.appID = item.authorizer.authorizer_appid
+        }
+      })
+    },
+    handleShow (id) {
+      const page = 'pages/item/espier-detail'
+      this.curPageUrl = `${page}?id=${id}`
+      let params = {
+        wxaAppId: this.appID,
+        page,
+        id
+      }
+      getPageCode(params).then((response) => {
+        this.appCodeUrl = response.data.data.base64Image
+      })
+    },
+    handleDownload (name) {
+      var a = document.createElement('a')
+      var temp = name
+      if (this.appCodeUrl) {
+        a.href = this.appCodeUrl
+        a.download = temp + '.png'
+        a.click()
+      }
+    },
     handleImport (command) {
       if (command == 'physicalupload') {
         if (this.login_type == 'distributor') {
@@ -1902,6 +1950,12 @@ export default {
     bottom: 0;
     visibility: hidden;
   }
+}
+.page-code {
+  width: 100%;
+}
+.page-btns {
+  text-align: center;
 }
 </style>
 <style lang="scss">

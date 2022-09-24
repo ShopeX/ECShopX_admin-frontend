@@ -128,8 +128,8 @@
               <!-- <template v-if="scope.row.use_num">{{scope.row.use_num}}</template> -->
               <!-- <template>0</template> -->
             </el-table-column>
-            <el-table-column width="80" prop="source_name" label="店铺" />
-            <el-table-column width="160" label="操作">
+            <el-table-column width="200" prop="source_name" label="店铺" />
+            <el-table-column width="200" label="操作">
               <template slot-scope="scope">
                 <div class="operating-icons">
                   <el-button type="text">
@@ -156,6 +156,20 @@
                       编辑
                     </router-link>
                   </el-button>
+                  <el-popover
+                    v-if="appID"
+                    placement="top"
+                    width="200"
+                    trigger="click">
+                    <div>
+                      <img class="page-code" :src="appCodeUrl" />
+                      <div class="page-btns">
+                        <el-button type="primary" plain size="mini" @click="handleDownload(scope.row.page_name)">下载码</el-button>
+                        <el-button type="primary" plain size="mini" v-clipboard:copy="curPageUrl">复制链接</el-button>
+                      </div>
+                    </div>
+                    <el-button style="width: 45px" type="text" slot="reference" @click="handleShow(scope.row.card_id)">投放</el-button>
+                  </el-popover>
                   <el-button
                     v-if="scope.row.status != 'CARD_STATUS_DISPATCH'"
                     type="text"
@@ -220,6 +234,7 @@
 <script>
 import store from '@/store'
 import { getQRcode, removeCard, updateStore } from '@/api/cardticket'
+import { getPageCode } from '@/api/marketing'
 import mixin, { pageMixin } from '@/mixins'
 
 export default {
@@ -267,6 +282,9 @@ export default {
         { name: '待生效', activeName: '1' },
         { name: '已过期', activeName: '3' }
       ],
+      appID: '',
+      appCodeUrl: '',
+      curPageUrl: '',
       editDialog: false,
       editForm: {
         card_id: '',
@@ -310,8 +328,38 @@ export default {
       this.params.store_self = true
     }
     this.fetchList()
+    this.fetchWechatList()
   },
   methods: {
+    async fetchWechatList() {
+      const { list } = await this.$api.minimanage.gettemplateweapplist()
+      list.forEach((item, i) => {
+        if (item.name == 'yykweishop') {
+          this.appID = item.authorizer.authorizer_appid
+        }
+      })
+    },
+    handleShow (card_id) {
+      const page = 'subpages/marketing/coupon-center'
+      this.curPageUrl = `${page}?card_id=${card_id}`
+      let params = {
+        wxaAppId: this.appID,
+        page,
+        card_id
+      }
+      getPageCode(params).then((response) => {
+        this.appCodeUrl = response.data.data.base64Image
+      })
+    },
+    handleDownload (name) {
+      var a = document.createElement('a')
+      var temp = name
+      if (this.appCodeUrl) {
+        a.href = this.appCodeUrl
+        a.download = temp + '.png'
+        a.click()
+      }
+    },
     editCouponStore (id) {
       this.editForm.card_id = id
       this.editDialog = true
@@ -635,6 +683,12 @@ export default {
   .store-content {
     margin-bottom: 15px;
   }
+}
+.page-code {
+  width: 100%;
+}
+.page-btns {
+  text-align: center;
 }
 </style>
 <style>

@@ -253,10 +253,21 @@ export default {
       return approveStatus[status] || '不可销售'
     },
     // 删除商品
-    removeItemFromShop() {
+    async removeItemFromShop() {
       if (this.selectItems.length == 0) {
         return this.$message.error('请至少选择一个商品')
       }
+      await this.$confirm('请确认是否删除商品', '提示', {
+        confirmButtonText: '确定',
+        cancelButtonText: '取消'
+      })
+      const { distributor_id } = this.formData
+      await this.$api.marketing.deleteDistributorItems({
+        distributor_id,
+        item_ids: this.selectItems.map((item) => item.goods_id)
+      })
+      this.$message.success('商品删除成功')
+      this.$refs.finder.refresh()
     },
     // 批量下载商品码
     handleBatchDownload(val) {

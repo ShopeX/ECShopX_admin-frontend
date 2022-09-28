@@ -198,7 +198,7 @@
           </el-button>
           <el-dropdown-menu slot="dropdown">
             <el-dropdown-item>
-              <span @click="syncToShop">同步至店铺</span>
+              <span @click="() => syncToShop()">同步至店铺</span>
             </el-dropdown-item>
             <el-dropdown-item>
               <span @click="syncToShop('all')"> 同步至所有店铺 </span>
@@ -320,15 +320,12 @@
                         plain
                         size="mini"
                         @click="handleDownload(scope.row.item_name)"
-                        >
-下载码
-</el-button
                       >
-                      <el-button v-clipboard:copy="curPageUrl" type="primary" plain size="mini"
-                        >
-复制链接
-</el-button
-                      >
+                        下载码
+                      </el-button>
+                      <el-button v-clipboard:copy="curPageUrl" type="primary" plain size="mini">
+                        复制链接
+                      </el-button>
                     </div>
                   </div>
                   <el-button
@@ -336,10 +333,9 @@
                     style="width: 45px"
                     type="text"
                     @click="handleShow(scope.row.goods_id)"
-                    >
-投放
-</el-button
                   >
+                    投放
+                  </el-button>
                 </el-popover>
                 <el-button
                   type="text"

@@ -21,11 +21,7 @@
     @mouseleave="inputHover = false"
     @click="toggleDropDownVisible(true)"
   >
-    <el-input
-      readonly
-      :value="selectValue ? selectValue.name : ''"
-      :placeholder="placeholder"
-    >
+    <el-input readonly :value="selectValue ? selectValue.name : ''" :placeholder="placeholder">
       <template slot="suffix">
         <i
           v-if="clearBtnVisible"
@@ -40,15 +36,8 @@
         />
       </template>
     </el-input>
-    <transition
-      name="el-zoom-in-top"
-      @after-leave="handleDropdownLeave"
-    >
-      <div
-        v-show="dropDownVisible"
-        ref="popper"
-        :class="['el-popper', 'el-cascader__dropdown']"
-      >
+    <transition name="el-zoom-in-top" @after-leave="handleDropdownLeave">
+      <div v-show="dropDownVisible" ref="popper" :class="['el-popper', 'el-cascader__dropdown']">
         <SpSelectShopPanel
           ref="panel"
           @visible-change="visibleChange"
@@ -94,12 +83,12 @@ export default {
     placeholder: String,
     clearable: Boolean
   },
-  provide () {
+  provide() {
     return {
       selectShop: this
     }
   },
-  data () {
+  data() {
     return {
       dropDownVisible: false,
       cascaderPanelVisible: false,
@@ -110,7 +99,7 @@ export default {
     }
   },
   computed: {
-    clearBtnVisible () {
+    clearBtnVisible() {
       if (!this.clearable || !this.inputHover || !this.selectValue) {
         return false
       }
@@ -118,16 +107,17 @@ export default {
     }
   },
   watch: {
-    value (newVal, oldVal) {
+    value(newVal, oldVal) {
+      // 重置
       if (newVal == this.initialValue) {
         this.selectValue = null
         this.$emit('input', this.initialValue)
       }
     }
   },
-  created () {},
+  created() {},
   methods: {
-    toggleDropDownVisible (visible) {
+    toggleDropDownVisible(visible) {
       const { dropDownVisible } = this
       // const { input } = this.$refs;
       // visible = isDef(visible) ? visible : !dropDownVisible;
@@ -146,19 +136,19 @@ export default {
         // this.$emit('visible-change', visible);
       }
     },
-    expandChange () {
+    expandChange() {
       this.$nextTick(this.updatePopper.bind(this))
     },
-    handleDropdownLeave () {
+    handleDropdownLeave() {
       console.log('handleDropdownLeave...')
     },
-    clickOutSide () {
+    clickOutSide() {
       // console.log('clickOutSide：', this.cascaderPanelVisible)
       if (!this.cascaderPanelVisible && this.cascaderPanelVisibleDelay) {
         this.toggleDropDownVisible(false)
       }
     },
-    visibleChange (visible) {
+    visibleChange(visible) {
       console.log('visibleChange', visible)
       this.cascaderPanelVisible = visible
       if (!visible) {
@@ -169,13 +159,16 @@ export default {
         this.cascaderPanelVisibleDelay = false
       }
     },
-    onChange (obj) {
+    onChange(obj) {
       this.selectValue = obj
       this.toggleDropDownVisible(false)
       this.$emit('input', obj ? obj.value : '')
     },
-    handleClear () {
+    handleClear() {
       this.onChange(null)
+    },
+    setVal(val) {
+      this.$refs.panel.setVal(val)
     }
   }
 }

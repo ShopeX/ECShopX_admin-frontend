@@ -59,12 +59,8 @@
             导入<i class="el-icon-arrow-down el-icon--right" />
           </el-button>
           <el-dropdown-menu slot="dropdown">
-            <el-dropdown-item command="physicalupload">
-商品导入
-</el-dropdown-item>
-            <el-dropdown-item command="physicalstoreupload">
-库存导入
-</el-dropdown-item>
+            <el-dropdown-item command="physicalupload"> 商品导入 </el-dropdown-item>
+            <el-dropdown-item command="physicalstoreupload"> 库存导入 </el-dropdown-item>
           </el-dropdown-menu>
         </el-dropdown>
       </div>
@@ -147,32 +143,18 @@
         </SpFilterFormItem>
         <SpFilterFormItem prop="is_gift" label="赠品:">
           <el-radio-group v-model="params.is_gift">
-            <el-radio :label="true">
-是
-</el-radio>
-            <el-radio :label="false">
-否
-</el-radio>
+            <el-radio :label="true"> 是 </el-radio>
+            <el-radio :label="false"> 否 </el-radio>
           </el-radio-group>
         </SpFilterFormItem>
       </SpFilterForm>
 
       <div class="action-container">
-        <el-button type="primary" plain @click="addCategory">
-更改商品分类
-</el-button>
-        <el-button type="primary" plain @click="addTemplates">
-更改运费模板
-</el-button>
-        <el-button type="primary" plain @click="addItemTag">
-打标签
-</el-button>
-        <el-button type="primary" plain @click="batchItemsStore">
-统一库存
-</el-button>
-        <el-button type="primary" plain @click="batchChangeStore">
-更改状态
-</el-button>
+        <el-button type="primary" plain @click="addCategory"> 更改商品分类 </el-button>
+        <el-button type="primary" plain @click="addTemplates"> 更改运费模板 </el-button>
+        <el-button type="primary" plain @click="addItemTag"> 打标签 </el-button>
+        <el-button type="primary" plain @click="batchItemsStore"> 统一库存 </el-button>
+        <el-button type="primary" plain @click="batchChangeStore"> 更改状态 </el-button>
         <!-- <el-button
           type="primary"
           plain
@@ -187,12 +169,8 @@
         >
           下架
         </el-button> -->
-        <el-button type="primary" plain @click="batchGifts('true')">
-设为赠品
-</el-button>
-        <el-button type="primary" plain @click="batchGifts('false')">
-设为非赠品
-</el-button>
+        <el-button type="primary" plain @click="batchGifts('true')"> 设为赠品 </el-button>
+        <el-button type="primary" plain @click="batchGifts('false')"> 设为非赠品 </el-button>
 
         <el-dropdown>
           <el-button type="primary" plain icon="iconfont icon-daorucaozuo-01">
@@ -200,24 +178,30 @@
           </el-button>
           <el-dropdown-menu slot="dropdown">
             <el-dropdown-item>
-              <export-tip @exportHandle="exportItemsData">
-商品信息
-</export-tip>
+              <export-tip @exportHandle="exportItemsData"> 商品信息 </export-tip>
             </el-dropdown-item>
             <el-dropdown-item>
-              <export-tip @exportHandle="exportItemsTagData">
-商品标签
-</export-tip>
+              <export-tip @exportHandle="exportItemsTagData"> 商品标签 </export-tip>
             </el-dropdown-item>
             <el-dropdown-item>
-              <export-tip @exportHandle="exportItemsWxappCode('wxa')">
-小程序码
-</export-tip>
+              <export-tip @exportHandle="exportItemsWxappCode('wxa')"> 小程序码 </export-tip>
             </el-dropdown-item>
             <el-dropdown-item>
-              <export-tip @exportHandle="exportItemsWxappCode('h5')">
-H5二维码
-</export-tip>
+              <export-tip @exportHandle="exportItemsWxappCode('h5')"> H5二维码 </export-tip>
+            </el-dropdown-item>
+          </el-dropdown-menu>
+        </el-dropdown>
+
+        <el-dropdown v-if="VERSION_STANDARD">
+          <el-button type="primary" plain icon="iconfont icon-daorucaozuo-01">
+            同步商品<i class="el-icon-arrow-down el-icon--right" />
+          </el-button>
+          <el-dropdown-menu slot="dropdown">
+            <el-dropdown-item>
+              <span @click="syncToShop">同步至店铺</span>
+            </el-dropdown-item>
+            <el-dropdown-item>
+              <span @click="syncToShop('all')"> 同步至所有店铺 </span>
             </el-dropdown-item>
           </el-dropdown-menu>
         </el-dropdown>
@@ -242,9 +226,7 @@ H5二维码
             <div class="warn-input">
               <label class="label">预警数量:</label>
               <el-input v-model="warning_store" size="small" value="warning_store" />
-              <el-button type="text" @click="setWarningStore">
-保存
-</el-button>
+              <el-button type="text" @click="setWarningStore"> 保存 </el-button>
             </div>
           </div>
           <el-table
@@ -314,9 +296,7 @@ H5二维码
                   trigger="hover"
                   :content="scope.row.audit_reason"
                 >
-                  <el-button slot="reference" type="text">
-审核驳回
-</el-button>
+                  <el-button slot="reference" type="text"> 审核驳回 </el-button>
                 </el-popover>
                 <span v-else-if="scope.row.approve_status == 'onsale'">前台可销</span>
                 <span v-else-if="scope.row.approve_status == 'offline_sale'">前台不展示 </span>
@@ -331,19 +311,35 @@ H5二维码
                 <el-button type="text" @click="editItemsAction(scope.$index, scope.row, false)">
                   编辑
                 </el-button>
-                <el-popover
-                  v-if="appID"
-                  placement="top"
-                  width="200"
-                  trigger="click">
+                <el-popover v-if="appID" placement="top" width="200" trigger="click">
                   <div>
-                    <img class="page-code" :src="appCodeUrl" />
+                    <img class="page-code" :src="appCodeUrl">
                     <div class="page-btns">
-                      <el-button type="primary" plain size="mini" @click="handleDownload(scope.row.item_name)">下载码</el-button>
-                      <el-button type="primary" plain size="mini" v-clipboard:copy="curPageUrl">复制链接</el-button>
+                      <el-button
+                        type="primary"
+                        plain
+                        size="mini"
+                        @click="handleDownload(scope.row.item_name)"
+                        >
+下载码
+</el-button
+                      >
+                      <el-button v-clipboard:copy="curPageUrl" type="primary" plain size="mini"
+                        >
+复制链接
+</el-button
+                      >
                     </div>
                   </div>
-                  <el-button style="width: 45px" type="text" slot="reference" @click="handleShow(scope.row.goods_id)">投放</el-button>
+                  <el-button
+                    slot="reference"
+                    style="width: 45px"
+                    type="text"
+                    @click="handleShow(scope.row.goods_id)"
+                    >
+投放
+</el-button
+                  >
                 </el-popover>
                 <el-button
                   type="text"
@@ -357,16 +353,12 @@ H5二维码
                     <el-button type="text" @click="editItemsAction(scope.$index, scope.row, true)">
                       添加相似
                     </el-button>
-                    <el-button type="text" @click="handlePrice(scope.row)">
-设置价格
-</el-button>
+                    <el-button type="text" @click="handlePrice(scope.row)"> 设置价格 </el-button>
                     <!--el-button v-if="popularizeSetting.isOpenPopularize == 'true'" type="text" @click="handleRebateConf(scope.row)" >分销配置</el-button-->
                     <el-button type="text" @click="handleProfitPrice(scope.row)">
                       分润配置
                     </el-button>
-                    <el-button type="text" @click="tagUpdate(scope.row)">
-标签
-</el-button>
+                    <el-button type="text" @click="tagUpdate(scope.row)"> 标签 </el-button>
                     <el-button type="text" @click="updateItemsStore(scope.row)">
                       更改库存
                     </el-button>
@@ -458,9 +450,7 @@ H5二维码
           </div>
         </div>
         <div class="selected-tags view-flex">
-          <div class="label">
-已选中标签：
-</div>
+          <div class="label">已选中标签：</div>
           <div class="view-flex-item">
             <el-tag
               v-for="(tag, index) in tag.currentTags"
@@ -526,14 +516,10 @@ H5二维码
                 </template>
               </el-table-column>
               <el-table-column label="销售价" min-width="80">
-                <template slot-scope="scope">
-¥{{ scope.row.price / 100 }}
-</template>
+                <template slot-scope="scope"> ¥{{ scope.row.price / 100 }} </template>
               </el-table-column>
               <el-table-column label="成本价" min-width="80">
-                <template slot-scope="scope">
-¥{{ scope.row.cost_price / 100 }}
-</template>
+                <template slot-scope="scope"> ¥{{ scope.row.cost_price / 100 }} </template>
               </el-table-column>
               <el-table-column label="类型" width="160">
                 <template slot-scope="scope">
@@ -622,14 +608,10 @@ H5二维码
             <el-table v-loading="skuLoading" :data="profitSpecItems">
               <el-table-column label="规格" prop="item_spec_desc" min-width="120" />
               <el-table-column label="原价" prop="market_price" width="100">
-                <template slot-scope="scope">
-¥{{ scope.row.market_price }}
-</template>
+                <template slot-scope="scope"> ¥{{ scope.row.market_price }} </template>
               </el-table-column>
               <el-table-column label="销售价" width="100">
-                <template slot-scope="scope">
-¥{{ scope.row.price }}
-</template>
+                <template slot-scope="scope"> ¥{{ scope.row.price }} </template>
               </el-table-column>
               <el-table-column label="分润类型">
                 <template slot-scope="scope">
@@ -647,9 +629,7 @@ H5二维码
                   </div>
                   <div v-else>
                     <el-input v-model="scope.row.profit_conf_profit" size="mini" type="number">
-                      <template v-if="1 == scope.row.profit_type" slot="append">
-%
-</template>
+                      <template v-if="1 == scope.row.profit_type" slot="append"> % </template>
                     </el-input>
                   </div>
                 </template>
@@ -665,9 +645,7 @@ H5二维码
                       size="mini"
                       type="number"
                     >
-                      <template v-if="1 == scope.row.profit_type" slot="append">
-%
-</template>
+                      <template v-if="1 == scope.row.profit_type" slot="append"> % </template>
                     </el-input>
                   </div>
                 </template>
@@ -686,9 +664,7 @@ H5二维码
           <el-table v-loading="skuLoading" :data="specItems" height="100%">
             <el-table-column label="规格" prop="item_spec_desc" min-width="120" />
             <el-table-column label="原价" prop="market_price" width="100">
-              <template slot-scope="scope">
-¥{{ scope.row.market_price }}
-</template>
+              <template slot-scope="scope"> ¥{{ scope.row.market_price }} </template>
             </el-table-column>
             <el-table-column label="销售价" width="100">
               <template slot-scope="scope">
@@ -729,9 +705,7 @@ H5二维码
           </el-table>
         </slot>
         <div slot="footer">
-          <el-button type="primary" :loading="submitLoading" @click="savePrice">
-保存
-</el-button>
+          <el-button type="primary" :loading="submitLoading" @click="savePrice"> 保存 </el-button>
         </div>
       </SideBar>
       <!-- 选择商品分类-结束 -->
@@ -752,7 +726,12 @@ H5二维码
           </el-button>
         </div>
       </SideBar>
-      <el-dialog title="批量修改库存" :visible.sync="storeUpdate" width="30%" :close-on-click-modal="false">
+      <el-dialog
+        title="批量修改库存"
+        :visible.sync="storeUpdate"
+        width="30%"
+        :close-on-click-modal="false"
+      >
         统一库存：<el-input v-model="itemstore" size="mini" type="number" />
         <span slot="footer" class="dialog-footer">
           <el-button @click="storeUpdate = false">取 消</el-button>
@@ -823,12 +802,12 @@ export default {
   },
   mixins: [mixins],
   props: ['getStatus'],
-  provide () {
+  provide() {
     return {
       refresh: this.getGoodsList
     }
   },
-  data () {
+  data() {
     const loginType = this.$store.getters.login_type
 
     let statusOption
@@ -980,24 +959,43 @@ export default {
     ...mapGetters(['wheight', 'login_type'])
   },
   watch: {
-    '$route' (to, from) {
+    '$route'(to, from) {
       this.init()
     },
-    getStatus (val) {
+    getStatus(val) {
       if (val) {
         this.getGoodsList()
       }
     }
   },
-  mounted () {
+  mounted() {
     this.init()
     this.fetchWechatList()
   },
 
-  destroyed () {
+  destroyed() {
     console.log(111)
   },
   methods: {
+    // 同步至店铺
+    async syncToShop(isAll) {
+      if (this.item_id.length == 0) {
+        this.$message.error('请选择至少一个商品')
+        return
+      }
+      let distributorIds = '_all'
+      if (!isAll) {
+        const { data } = await this.$picker.shop()
+        distributorIds = data.map((item) => item.distributor_id)
+      }
+      await this.$api.marketing.saveDistributorItems({
+        distributor_ids: distributorIds,
+        item_ids: this.item_id,
+        // 是否同步并上架
+        is_can_sale: true
+      })
+      this.$message.success('操作成功')
+    },
     async fetchWechatList() {
       const { list } = await this.$api.minimanage.gettemplateweapplist()
       list.forEach((item, i) => {
@@ -1006,7 +1004,7 @@ export default {
         }
       })
     },
-    handleShow (id) {
+    handleShow(id) {
       const page = 'pages/item/espier-detail'
       this.curPageUrl = `${page}?id=${id}`
       let params = {
@@ -1018,7 +1016,7 @@ export default {
         this.appCodeUrl = response.data.data.base64Image
       })
     },
-    handleDownload (name) {
+    handleDownload(name) {
       var a = document.createElement('a')
       var temp = name
       if (this.appCodeUrl) {
@@ -1027,7 +1025,7 @@ export default {
         a.click()
       }
     },
-    handleImport (command) {
+    handleImport(command) {
       if (command == 'physicalupload') {
         if (this.login_type == 'distributor') {
           this.$router.push({ path: `/shopadmin/entity/goodsphysical/physicalupload` })
@@ -1042,10 +1040,10 @@ export default {
         }
       }
     },
-    selectItems () {
+    selectItems() {
       this.xpGoodsVisible = true
     },
-    async chooseGoodsAction (data) {
+    async chooseGoodsAction(data) {
       this.xpGoodsVisible = false
       let list = JSON.parse(JSON.stringify(data))
       if (list === null || list.length === 0) return
@@ -1065,10 +1063,10 @@ export default {
       this.getGoodsList()
       // console.log('this.items=======', items)
     },
-    closeGoodsDialogAction () {
+    closeGoodsDialogAction() {
       this.xpGoodsVisible = false
     },
-    async init () {
+    async init() {
       if (this.$route.path.split('/')[2] === 'godsphysicalkj') {
         this.params.type = 1
       } else {
@@ -1095,7 +1093,7 @@ export default {
       this.getAllTagLists()
       this.getGoodsBranchList()
     },
-    batchGifts (status) {
+    batchGifts(status) {
       if (this.item_id.length) {
         this.isGiftsData.item_id = Object.assign({}, this.item_id)
         this.isGiftsData.status = status
@@ -1122,7 +1120,7 @@ export default {
         })
       }
     },
-    exportItemsData () {
+    exportItemsData() {
       if (this.item_id.length) {
         this.exportData.item_id = Object.assign({}, this.item_id)
         exportItemsData(this.exportData).then((res) => {
@@ -1157,7 +1155,7 @@ export default {
         })
       }
     },
-    exportItemsTagData () {
+    exportItemsTagData() {
       if (this.item_id.length) {
         this.exportTagData.item_id = Object.assign({}, this.item_id)
         exportItemsTagData(this.exportTagData).then((res) => {
@@ -1192,7 +1190,7 @@ export default {
         })
       }
     },
-    async exportItemsWxappCode (exportType) {
+    async exportItemsWxappCode(exportType) {
       let params
       if (this.item_id.length) {
         params = {
@@ -1215,7 +1213,7 @@ export default {
         this.$message.error('导出失败')
       }
     },
-    syncItems () {
+    syncItems() {
       syncItems().then((res) => {
         if (res.data.data.status == true) {
           this.$message({
@@ -1230,7 +1228,7 @@ export default {
         }
       })
     },
-    editPrice (id, price) {
+    editPrice(id, price) {
       this.currentId = id
       this.currentPrice = price
       let self = this
@@ -1238,7 +1236,7 @@ export default {
         self.$refs['input_' + id].focus()
       })
     },
-    handleBlur (index) {
+    handleBlur(index) {
       if (this.currentPrice === this.specItems[index].price) {
         this.currentId = -1
         this.currentPrice = ''
@@ -1254,7 +1252,7 @@ export default {
         this.currentPrice = ''
       })
     },
-    handleClick (tab, event) {
+    handleClick(tab, event) {
       this.page.pageIndex = 1
       if (this.activeName == 'second') {
         this.params.is_warning = true
@@ -1263,12 +1261,12 @@ export default {
       }
       this.getGoodsList()
     },
-    async setWarningStore () {
+    async setWarningStore() {
       await this.$api.goods.getItemWarningStore({ store: this.warning_store })
       this.page.pageIndex = 1
       this.getGoodsList()
     },
-    handleSelectionChange (val) {
+    handleSelectionChange(val) {
       this.selections = val
       let item_id = []
       for (let i in val) {
@@ -1281,16 +1279,16 @@ export default {
       }
       this.goods_id = goods_id
     },
-    handleCancelLabelsDialog () {
+    handleCancelLabelsDialog() {
       this.tag.dialog = false
     },
-    tagUpdate (row) {
+    tagUpdate(row) {
       this.tag.editItem = [row.itemName]
       this.tag.currentTags = row.tagList || []
       this.tag.form.item_ids = row.item_id
       this.showTags()
     },
-    addItemTag () {
+    addItemTag() {
       this.tag.currentTags = []
       if (this.item_id.length) {
         this.showTags()
@@ -1303,7 +1301,7 @@ export default {
         })
       }
     },
-    showTags () {
+    showTags() {
       let tags = []
       this.tag.list.forEach((item, index) => {
         let isInArr = this.tag.currentTags.findIndex((n) => n.tag_id == item.tag_id)
@@ -1314,18 +1312,18 @@ export default {
       this.tag.tags = tags
       this.tag.dialog = true
     },
-    tagRemove (index) {
+    tagRemove(index) {
       this.tag.tags.unshift(this.tag.currentTags[index])
       this.tag.currentTags.splice(index, 1)
     },
-    tagAdd (item, index) {
+    tagAdd(item, index) {
       let isInArr = this.tag.currentTags.findIndex((n) => n.tag_id == item.tag_id)
       if (isInArr == -1) {
         this.tag.currentTags.push(item)
         this.tag.tags.splice(index, 1)
       }
     },
-    submitItemTag () {
+    submitItemTag() {
       this.tag.form.tag_ids = []
       this.tag.currentTags.forEach((item) => {
         this.tag.form.tag_ids.push(item.tag_id)
@@ -1345,12 +1343,12 @@ export default {
           this.getGoodsList()
         })
     },
-    tagSearchUserChange () {
+    tagSearchUserChange() {
       this.getParams()
       this.getItemsList(this.params)
       this.loading = false
     },
-    getAllTagLists () {
+    getAllTagLists() {
       let params = {
         page: 1,
         pageSize: 500
@@ -1359,7 +1357,7 @@ export default {
         this.tag.list = response.data.data.list
       })
     },
-    changeTemplates () {
+    changeTemplates() {
       if (this.item_id.length) {
         if (!this.templates_new_id) {
           this.$message({
@@ -1381,12 +1379,12 @@ export default {
         })
       }
     },
-    editItemsSort (index, row) {
+    editItemsSort(index, row) {
       setItemsSort({ 'sort': row.sort, 'item_id': row.itemId }).then((response) => {
         this.getGoodsList()
       })
     },
-    changeCategory () {
+    changeCategory() {
       if (this.item_id.length) {
         if (!this.category_id) {
           this.$message({
@@ -1409,11 +1407,11 @@ export default {
         })
       }
     },
-    addItems () {
+    addItems() {
       // 添加商品
       this.$router.push({ path: this.matchHidePage('editor') })
     },
-    addTemplates () {
+    addTemplates() {
       if (this.item_id.length) {
         this.addTemplatesdialogVisible = true
       } else {
@@ -1423,7 +1421,7 @@ export default {
         })
       }
     },
-    addCategory () {
+    addCategory() {
       if (this.item_id.length) {
         this.addCategorydialogVisible = true
       } else {
@@ -1433,7 +1431,7 @@ export default {
         })
       }
     },
-    editItemsAction (index, row, isNew) {
+    editItemsAction(index, row, isNew) {
       // 编辑商品弹框
       this.show_rebate_sideBar = false
       this.show_sideBar = false
@@ -1447,7 +1445,7 @@ export default {
         var routeData = this.$router.push({ path: this.matchHidePage('editor/') + row.itemId })
       }
     },
-    saveRebateConf () {
+    saveRebateConf() {
       var rebateConf = []
       this.rebateSpecItems.forEach((item) => {
         var rebate_conf = item.rebate_conf
@@ -1458,7 +1456,7 @@ export default {
         this.$message({ message: '保存成功', type: 'success', duration: 2 * 1000 })
       })
     },
-    saveProfitConf () {
+    saveProfitConf() {
       var profitConf = []
       this.profitSpecItems.forEach((item) => {
         var profit_conf = {}
@@ -1483,7 +1481,7 @@ export default {
         })
       })
     },
-    handleRebateConf (data) {
+    handleRebateConf(data) {
       this.show_rebate_sideBar = true
       this.show_profit_sideBar = false
       this.show_sideBar = false
@@ -1522,21 +1520,21 @@ export default {
         this.skuLoading = false
       })
     },
-    handlePrice (data) {
+    handlePrice(data) {
       this.show_rebate_sideBar = false
       this.show_sideBar = true
       this.show_profit_sideBar = false
       this.current = data.item_id
       this.getGoodsPrice(data.item_id)
     },
-    handleProfitPrice (data) {
+    handleProfitPrice(data) {
       this.show_rebate_sideBar = false
       this.show_sideBar = false
       this.show_profit_sideBar = true
       this.current = data.item_id
       this.getGoodsProfitPrice(data.item_id)
     },
-    getGoodsPrice (item_id) {
+    getGoodsPrice(item_id) {
       this.skuLoading = true
       getGoodsPrice(item_id).then((res) => {
         let specItems = []
@@ -1557,7 +1555,7 @@ export default {
         this.skuLoading = false
       })
     },
-    getGoodsProfitPrice (item_id) {
+    getGoodsProfitPrice(item_id) {
       this.skuLoading = true
       getGoodsProfitPrice(item_id).then((res) => {
         let profitSpecItems = []
@@ -1582,7 +1580,7 @@ export default {
         this.skuLoading = false
       })
     },
-    generatePrice (data) {
+    generatePrice(data) {
       let list = []
       for (let key in data) {
         list.push({
@@ -1593,7 +1591,7 @@ export default {
       }
       return list
     },
-    savePrice () {
+    savePrice() {
       let param = {
         item_id: this.current,
         mprice: ''
@@ -1625,7 +1623,7 @@ export default {
             type: 'success',
             message: '更新成功',
             duration: 2000,
-            onClose () {
+            onClose() {
               _self.submitLoading = false
               _self.getGoodsPrice(param.item_id)
 
@@ -1637,22 +1635,22 @@ export default {
           _self.submitLoading = false
         })
     },
-    handleCurrentChange (pageIndex) {
+    handleCurrentChange(pageIndex) {
       this.page.pageIndex = pageIndex
       this.getGoodsList()
     },
-    handleSizeChange (pageSize) {
+    handleSizeChange(pageSize) {
       this.page.pageIndex = 1
       this.page.pageSize = pageSize
       this.getGoodsList()
     },
-    onSearch () {
+    onSearch() {
       this.page.pageIndex = 1
       this.$nextTick(() => {
         this.getGoodsList()
       })
     },
-    async getGoodsList () {
+    async getGoodsList() {
       this.loading = true
       const { pageIndex: page, pageSize } = this.page
       let params = {
@@ -1674,7 +1672,7 @@ export default {
       this.warning_store = warning_store
       this.loading = false
     },
-    deleteItemsAction (index, row) {
+    deleteItemsAction(index, row) {
       this.$confirm('此操作将删除该商品, 是否继续?', '提示', {
         confirmButtonText: '确定',
         cancelButtonText: '取消',
@@ -1697,14 +1695,14 @@ export default {
           })
         })
     },
-    async getShippingTemplatesList () {
+    async getShippingTemplatesList() {
       const { list } = await this.$api.shipping.getShippingTemplatesList({
         page: 1,
         pageSize: 1000
       })
       this.templatesList = list
     },
-    getGoodsBranchList (searchVal = '') {
+    getGoodsBranchList(searchVal = '') {
       // this.loading = true
       // console.log(searchVal)
       this.goodsBranchParams.attribute_name = searchVal
@@ -1713,19 +1711,19 @@ export default {
         // console.log(this.goodsBranchList)
       })
     },
-    getCategory () {
+    getCategory() {
       getCategory({ is_show: false }).then((response) => {
         this.categoryList = response.data.data
         // this.init()
       })
     },
-    getCurrencyInfo () {
+    getCurrencyInfo() {
       getDefaultCurrency().then((res) => {
         this.currency = res.data.data
         this.cursymbol = this.currency.symbol
       })
     },
-    batchItemsStore () {
+    batchItemsStore() {
       this.storeItemsList = []
       if (this.item_id.length) {
         this.storeUpdate = true
@@ -1736,7 +1734,7 @@ export default {
         })
       }
     },
-    batchChangeStore () {
+    batchChangeStore() {
       if (this.goods_id.length === 0) {
         this.$message({
           type: 'error',
@@ -1746,7 +1744,7 @@ export default {
       }
       this.batchChangeStateDialog = true
     },
-    onBatchChangeStateSubmit () {
+    onBatchChangeStateSubmit() {
       this.skuLoading = true
       let params = {}
       if (this.goods_id.length > 0) {
@@ -1775,7 +1773,7 @@ export default {
         this.batchChangeStateForm.status = ''
       })
     },
-    updateItemStatus (items) {
+    updateItemStatus(items) {
       this.loading = true
       let params = {}
       params = {
@@ -1794,7 +1792,7 @@ export default {
       })
       this.loading = false
     },
-    updateItemsStore (items) {
+    updateItemsStore(items) {
       this.skuLoading = true
       this.item_id = []
       let param = JSON.parse(JSON.stringify(this.params))
@@ -1820,9 +1818,12 @@ export default {
       })
       this.show_itemStore = true
     },
-    saveItemsStore () {
+    saveItemsStore() {
       this.skuLoading = true
-      if (Number(this.itemstore) < 0 || (this.storeItemsList.length && Number(this.storeItemsList[0].store) < 0)) {
+      if (
+        Number(this.itemstore) < 0 ||
+        (this.storeItemsList.length && Number(this.storeItemsList[0].store) < 0)
+      ) {
         this.$message({ type: 'error', message: '库存需为正整数', duration: 2000 })
         this.skuLoading = false
         return
@@ -1843,23 +1844,25 @@ export default {
       }
       this.submitLoading = true
       const _self = this
-      updateItemsStore(params).then((res) => {
-        if (res.data.data.status) {
-          this.$message({
-            message: '修改成功',
-            type: 'success',
-            duration: 2 * 1000
-          })
-        }
-        this.submitLoading = false
-        this.skuLoading = false
-        this.storeUpdate = false
+      updateItemsStore(params)
+        .then((res) => {
+          if (res.data.data.status) {
+            this.$message({
+              message: '修改成功',
+              type: 'success',
+              duration: 2 * 1000
+            })
+          }
+          this.submitLoading = false
+          this.skuLoading = false
+          this.storeUpdate = false
 
-        this.getGoodsList()
-      }).catch(err => {
-        this.submitLoading = false
-        this.skuLoading = false
-      })
+          this.getGoodsList()
+        })
+        .catch((err) => {
+          this.submitLoading = false
+          this.skuLoading = false
+        })
     }
   }
 }

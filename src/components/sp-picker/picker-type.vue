@@ -1,13 +1,14 @@
 <script>
-import { PickerImage } from './pickers'
-import { PickerGoods } from './pickers'
+import { PickerImage, PickerGoods, PickerShop } from './pickers'
 
-function resolvePicker (type) {
+function resolvePicker(type) {
   switch (type) {
     case 'pickerImage':
       return PickerImage
     case 'pickerGoods':
       return PickerGoods
+    case 'pickerShop':
+      return PickerShop
     default:
       throw new Error(`picker: ${type} not registered`)
     // break
@@ -17,7 +18,7 @@ function resolvePicker (type) {
 export default {
   functional: true,
 
-  render (h, ctx) {
+  render(h, ctx) {
     const type = ctx.props.type
     const data = {
       ...ctx.data,
@@ -27,7 +28,7 @@ export default {
     return h(resolvePicker(type), data, ctx.children)
   },
 
-  resolvePickerConfig (type) {
+  resolvePickerConfig(type) {
     const Picker = resolvePicker(type)
     return Picker.config || {}
   }

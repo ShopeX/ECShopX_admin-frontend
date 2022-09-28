@@ -43,7 +43,8 @@ export default {
     {
       path: 'storemanager/storeshopitemanagement',
       name: `店铺商品`,
-      component: () => import('@/view/mall/storeshop/itemlist')
+      // component: () => import('@/view/mall/storeshop/itemlist')
+      component: () => import('@/view/mall/storeshop/store-shop.standard')
     },
     {
       path: 'storemanager/marketingdistribution_orders',

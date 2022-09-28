@@ -31,6 +31,12 @@
     }
   }
 }
+.popover-edit {
+  display: flex;
+  .edit-input {
+    margin-right: 10px;
+  }
+}
 </style>
 <template>
   <div class="page-body">
@@ -42,29 +48,6 @@
         $route.path.indexOf('physicalupload') === -1
       "
     >
-      <div class="action-container">
-        <el-button type="primary" icon="iconfont icon-xinzengcaozuo-01" @click="addItems">
-          添加商品
-        </el-button>
-        <!-- <el-button
-          v-if="VERSION_PLATFORM && !VUE_APP_FREE && login_type == 'distributor'"
-          type="primary"
-          icon="iconfont icon-xinzengcaozuo-01"
-          @click="selectItems"
-        >
-          选品
-        </el-button> -->
-        <el-dropdown @command="handleImport">
-          <el-button type="primary" plain icon="iconfont icon-daorucaozuo-01">
-            导入<i class="el-icon-arrow-down el-icon--right" />
-          </el-button>
-          <el-dropdown-menu slot="dropdown">
-            <el-dropdown-item command="physicalupload"> 商品导入 </el-dropdown-item>
-            <el-dropdown-item command="physicalstoreupload"> 库存导入 </el-dropdown-item>
-          </el-dropdown-menu>
-        </el-dropdown>
-      </div>
-
       <SpFilterForm :model="params" @onSearch="onSearch" @onReset="onSearch">
         <SpFilterFormItem prop="keywords" label="商品名称:">
           <el-input v-model="params.keywords" placeholder="请输入商品名称" />
@@ -149,72 +132,6 @@
         </SpFilterFormItem>
       </SpFilterForm>
 
-      <div class="action-container">
-        <el-button type="primary" plain @click="addCategory"> 更改商品分类 </el-button>
-        <el-button type="primary" plain @click="addTemplates"> 更改运费模板 </el-button>
-        <el-button type="primary" plain @click="addItemTag"> 打标签 </el-button>
-        <el-button type="primary" plain @click="batchItemsStore"> 统一库存 </el-button>
-        <el-button type="primary" plain @click="batchChangeStore"> 更改状态 </el-button>
-        <!-- <el-button
-          type="primary"
-          plain
-          @click="batchItemsStatus('onsale')"
-        >
-          上架
-        </el-button>
-        <el-button
-          type="primary"
-          plain
-          @click="batchItemsStatus('instock')"
-        >
-          下架
-        </el-button> -->
-        <el-button type="primary" plain @click="batchGifts('true')"> 设为赠品 </el-button>
-        <el-button type="primary" plain @click="batchGifts('false')"> 设为非赠品 </el-button>
-
-        <el-dropdown>
-          <el-button type="primary" plain icon="iconfont icon-daorucaozuo-01">
-            导出<i class="el-icon-arrow-down el-icon--right" />
-          </el-button>
-          <el-dropdown-menu slot="dropdown">
-            <el-dropdown-item>
-              <export-tip @exportHandle="exportItemsData"> 商品信息 </export-tip>
-            </el-dropdown-item>
-            <el-dropdown-item>
-              <export-tip @exportHandle="exportItemsTagData"> 商品标签 </export-tip>
-            </el-dropdown-item>
-            <el-dropdown-item>
-              <export-tip @exportHandle="exportItemsWxappCode('wxa')"> 小程序码 </export-tip>
-            </el-dropdown-item>
-            <el-dropdown-item>
-              <export-tip @exportHandle="exportItemsWxappCode('h5')"> H5二维码 </export-tip>
-            </el-dropdown-item>
-          </el-dropdown-menu>
-        </el-dropdown>
-
-        <el-dropdown v-if="VERSION_STANDARD">
-          <el-button type="primary" plain icon="iconfont icon-daorucaozuo-01">
-            同步商品<i class="el-icon-arrow-down el-icon--right" />
-          </el-button>
-          <el-dropdown-menu slot="dropdown">
-            <el-dropdown-item>
-              <span @click="() => syncToShop()">同步至店铺</span>
-            </el-dropdown-item>
-            <el-dropdown-item>
-              <span @click="syncToShop('all')"> 同步至所有店铺 </span>
-            </el-dropdown-item>
-          </el-dropdown-menu>
-        </el-dropdown>
-
-        <!-- <el-button
-          type="primary"
-          plain
-          @click="syncItems"
-        >
-          同步商品数据
-        </el-button> -->
-      </div>
-
       <el-tabs v-model="activeName" type="card" @tab-click="handleClick">
         <el-tab-pane
           v-for="(item, index) in tabList"
@@ -283,7 +200,29 @@
                 />
               </template>
             </el-table-column>
-            <el-table-column prop="store" label="库存" width="80" />
+            <el-table-column prop="store" label="库存" width="80">
+              <template slot-scope="scope">
+                <span>{{ scope.row.store }}</span>
+                <!-- <el-button type="text" @click="editCouponStore(scope.row.card_id)">
+                  <i class="el-icon-edit" />
+                </el-button> -->
+
+                <el-popover placement="top" trigger="hover" @show="() => onShowPopover(scope.row)">
+                  <div class="popover-edit">
+                    <el-input v-model="skuEditInput" class="edit-input" placeholder="请输入库存" />
+                    <el-button type="primary" size="mini" @click="onModifyItemSku(scope.row)"
+                      >
+确定
+</el-button
+                    >
+                  </div>
+
+                  <el-button slot="reference" type="text">
+                    <i class="el-icon-edit" />
+                  </el-button>
+                </el-popover>
+              </template>
+            </el-table-column>
             <el-table-column prop="market_price" label="市场价（¥）" width="100" />
             <el-table-column prop="price" label="销售价（¥）" width="100" />
             <el-table-column label="状态">
@@ -906,7 +845,6 @@ export default {
         is_gift: false,
         type: 0,
         barcode: '',
-        distributor_id: 0,
         regions_id: [],
         brand_id: ''
       },
@@ -948,11 +886,12 @@ export default {
       ],
       batchChangeStateForm: {
         status: ''
-      }
+      },
+      skuEditInput: ''
     }
   },
   computed: {
-    ...mapGetters(['wheight', 'login_type'])
+    ...mapGetters(['wheight', 'login_type', 'shopId'])
   },
   watch: {
     '$route'(to, from) {
@@ -973,6 +912,18 @@ export default {
     console.log(111)
   },
   methods: {
+    onShowPopover({ store }) {
+      this.skuEditInput = store
+    },
+    // 修改库存
+    async onModifyItemSku({ item_id }) {
+      await this.$api.marketing.updateDistributorItem({
+        distributor_id: this.shopId,
+        item_id,
+        store: this.skuEditInput
+      })
+      this.getGoodsList()
+    },
     // 同步至店铺
     async syncToShop(isAll) {
       if (this.item_id.length == 0) {
@@ -1652,7 +1603,8 @@ export default {
       let params = {
         page,
         pageSize,
-        ...this.params
+        ...this.params,
+        distributor_id: this.shopId
       }
       if (params.category.length > 0) {
         params.category = params.category[params.category.length - 1]

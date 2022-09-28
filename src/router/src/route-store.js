@@ -47,11 +47,6 @@ export default {
       component: () => import('@/view/mall/storeshop/store-shop.standard')
     },
     {
-      path: 'storemanager/storeshopproductanagement',
-      name: `店铺商品`,
-      component: () => import('@/view/mall/storeshop/store-shop.standard')
-    },
-    {
       path: 'storemanager/marketingdistribution_orders',
       name: `店铺订单`,
       component: () => import('@/view/mall/marketing/distributionOrders'),

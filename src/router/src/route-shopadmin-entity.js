@@ -28,6 +28,17 @@ export default {
       ]
     },
     {
+      path: 'storeshopproductanagement',
+      name: `商品管理`,
+      component: () => import('@/view/mall/goods/physical/list.standard'),
+      children: [
+        {
+          path: 'editor/:itemId?',
+          component: () => import('@/view/mall/goods/physical/add')
+        }
+      ]
+    },
+    {
       path: 'rate',
       name: `商品评价`,
       component: () => import('@/view/mall/trade/rate/list')

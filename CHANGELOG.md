@@ -2,6 +2,34 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [3.5.0](https://git.ishopex.cn/ecshopx/ecshopx-admin/compare/v3.4.0...v3.5.0) (2022-09-29)
+
+
+### Features
+
+* 平台版放开兑换券 ([749991d](https://git.ishopex.cn/ecshopx/ecshopx-admin/commit/749991da6acf86e7bf2e90ddaf009d0e7bb83772))
+
+
+### Bug Fixes
+
+* bug ([09f2000](https://git.ishopex.cn/ecshopx/ecshopx-admin/commit/09f2000562851468b9365e3278820391aff72c5d))
+* finder ([f1423ca](https://git.ishopex.cn/ecshopx/ecshopx-admin/commit/f1423cabbb15c4b5563cf63feee52416b4d53364))
+* goods_id ([57ca959](https://git.ishopex.cn/ecshopx/ecshopx-admin/commit/57ca959943d6e0cb6ed2b48ceaf5675fad612b52))
+* router ([5c515b3](https://git.ishopex.cn/ecshopx/ecshopx-admin/commit/5c515b31e0da34a83d1d1d2a4a5450ae2b5c3152))
+* 上下架 ([27bf5d0](https://git.ishopex.cn/ecshopx/ecshopx-admin/commit/27bf5d054a53598f93e3d1f2721c07e79dff41fd))
+* 云店店铺商品 ([a0cecf6](https://git.ishopex.cn/ecshopx/ecshopx-admin/commit/a0cecf68964496b30622d8634580a74736fa0f93))
+* 修复商家商品 ([32126cb](https://git.ishopex.cn/ecshopx/ecshopx-admin/commit/32126cbcd443f810fd24c44de71f29396a3371be))
+* 可售状态 ([ed924d5](https://git.ishopex.cn/ecshopx/ecshopx-admin/commit/ed924d5c1b84ca5b590ba451d06e90394f9eeca4))
+* 商品详情 ([12204c1](https://git.ishopex.cn/ecshopx/ecshopx-admin/commit/12204c1ce64358f7c4cdec064cf3a613ad16a3dd))
+* 商家商品详情 ([0ac497f](https://git.ishopex.cn/ecshopx/ecshopx-admin/commit/0ac497fdb8a73c8a6f59cc1b65ee3d4a3cadbdcc))
+* 库存 ([44877c3](https://git.ishopex.cn/ecshopx/ecshopx-admin/commit/44877c38d930a378518b964483e2b832621cc3f7))
+* 店铺商品支持改库存 ([6cce2f7](https://git.ishopex.cn/ecshopx/ecshopx-admin/commit/6cce2f73596f11ab5ff30d599e47a330c4e3b961))
+* 店铺商品移除 ([ee9d4d9](https://git.ishopex.cn/ecshopx/ecshopx-admin/commit/ee9d4d9fcbc243906430fe93d9cf26db403ee568))
+* 店铺商品设置sku ([405cdb2](https://git.ishopex.cn/ecshopx/ecshopx-admin/commit/405cdb2dd6131e86eb6cba16b301d66ad2005880))
+* 店铺商品详情 ([905338f](https://git.ishopex.cn/ecshopx/ecshopx-admin/commit/905338f2c6dcb0ec5317c416d4e17f0c94a31bed))
+* 更改店铺商品接口 ([1e812f7](https://git.ishopex.cn/ecshopx/ecshopx-admin/commit/1e812f7a4442f2987e2edc9ef6e69a1c8d29aeb6))
+* 设置库存后自动刷新 ([80180a5](https://git.ishopex.cn/ecshopx/ecshopx-admin/commit/80180a572926d39176b0eccfb156f8ea0a7d9708))
+
 ## [3.4.0](https://git.ishopex.cn/ecshopx/ecshopx-admin/compare/v3.3.0...v3.4.0) (2022-09-16)
 
 

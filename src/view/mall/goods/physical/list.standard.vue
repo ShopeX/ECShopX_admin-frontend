@@ -132,6 +132,10 @@
         </SpFilterFormItem>
       </SpFilterForm>
 
+      <div class="action-container">
+        <el-button type="primary" plain @click="batchChangeStore"> 更改状态 </el-button>
+      </div>
+
       <el-tabs v-model="activeName" type="card" @tab-click="handleClick">
         <el-tab-pane
           v-for="(item, index) in tabList"
@@ -248,80 +252,6 @@
                 <el-button type="text" @click="editItemsAction(scope.$index, scope.row, false)">
                   编辑
                 </el-button>
-                <el-popover v-if="appID" placement="top" width="200" trigger="click">
-                  <div>
-                    <img class="page-code" :src="appCodeUrl">
-                    <div class="page-btns">
-                      <el-button
-                        type="primary"
-                        plain
-                        size="mini"
-                        @click="handleDownload(scope.row.item_name)"
-                      >
-                        下载码
-                      </el-button>
-                      <el-button v-clipboard:copy="curPageUrl" type="primary" plain size="mini">
-                        复制链接
-                      </el-button>
-                    </div>
-                  </div>
-                  <el-button
-                    slot="reference"
-                    style="width: 45px"
-                    type="text"
-                    @click="handleShow(scope.row.goods_id)"
-                  >
-                    投放
-                  </el-button>
-                </el-popover>
-                <el-button
-                  type="text"
-                  class="btn-gap"
-                  @click="deleteItemsAction(scope.$index, scope.row)"
-                >
-                  删除
-                </el-button>
-                <el-popover placement="right" width="450" trigger="hover">
-                  <div class="operating-icons">
-                    <el-button type="text" @click="editItemsAction(scope.$index, scope.row, true)">
-                      添加相似
-                    </el-button>
-                    <el-button type="text" @click="handlePrice(scope.row)"> 设置价格 </el-button>
-                    <!--el-button v-if="popularizeSetting.isOpenPopularize == 'true'" type="text" @click="handleRebateConf(scope.row)" >分销配置</el-button-->
-                    <el-button type="text" @click="handleProfitPrice(scope.row)">
-                      分润配置
-                    </el-button>
-                    <el-button type="text" @click="tagUpdate(scope.row)"> 标签 </el-button>
-                    <el-button type="text" @click="updateItemsStore(scope.row)">
-                      更改库存
-                    </el-button>
-                    <el-button
-                      v-clipboard:copy="scope.row.link"
-                      v-clipboard:success="onCopySuccess"
-                      class="copy-btn"
-                      type="text"
-                    >
-                      <input v-model="scope.row.link" class="copy-link" type="text">复制链接
-                    </el-button>
-                    <el-button
-                      v-if="scope.row.approve_status == 'onsale'"
-                      type="text"
-                      @click="updateItemStatus(scope.row)"
-                    >
-                      下架
-                    </el-button>
-                    <el-button
-                      v-if="scope.row.approve_status == 'instock'"
-                      type="text"
-                      @click="updateItemStatus(scope.row)"
-                    >
-                      上架
-                    </el-button>
-                  </div>
-                  <el-button slot="reference" type="text">
-                    更多<i class="iconfont icon-angle-double-right" />
-                  </el-button>
-                </el-popover>
               </template>
             </el-table-column>
           </el-table>

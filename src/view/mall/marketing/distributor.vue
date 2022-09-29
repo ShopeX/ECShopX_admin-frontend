@@ -292,7 +292,7 @@
               <span style="margin-right: 5px">编辑</span>
             </router-link>
 
-            <router-link
+            <!-- <router-link
               v-if="!VERSION_PLATFORM && $store.getters.login_type == 'distributor'"
               :to="{
                 path:
@@ -304,7 +304,7 @@
               style="margin: 0px 5px"
             >
               商品
-            </router-link>
+            </router-link> -->
 
             <el-button type="text" @click="linkTemplates(scope.row)"> 店铺装修 </el-button>
             <el-button type="text" @click="showSettingMeiQia(scope.row.distributor_id)">

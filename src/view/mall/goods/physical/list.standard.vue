@@ -229,20 +229,8 @@
             <el-table-column prop="price" label="销售价（¥）" width="100" />
             <el-table-column label="状态">
               <template slot-scope="scope">
-                <span v-if="scope.row.audit_status == 'processing'">等待审核</span>
-                <el-popover
-                  v-else-if="scope.row.audit_status == 'rejected'"
-                  placement="top-start"
-                  width="200"
-                  trigger="hover"
-                  :content="scope.row.audit_reason"
-                >
-                  <el-button slot="reference" type="text"> 审核驳回 </el-button>
-                </el-popover>
-                <span v-else-if="scope.row.approve_status == 'onsale'">前台可销</span>
-                <span v-else-if="scope.row.approve_status == 'offline_sale'">前台不展示 </span>
-                <span v-else-if="scope.row.approve_status == 'only_show'">前台仅展示</span>
-                <span v-else>不可销售</span>
+                <span v-if="scope.row.is_can_sale">前台可售</span>
+                <span v-else>前台不可售</span>
               </template>
             </el-table-column>
             <el-table-column prop="itemCatName" label="商品分类" width="150" />
@@ -250,7 +238,7 @@
             <el-table-column fixed="left" label="操作" width="200">
               <template slot-scope="scope">
                 <el-button type="text" @click="editItemsAction(scope.$index, scope.row, false)">
-                  编辑
+                  详情
                 </el-button>
               </template>
             </el-table-column>
@@ -674,20 +662,10 @@ export default {
     const loginType = this.$store.getters.login_type
 
     let statusOption
-    if (loginType == 'distributor') {
+    if (this.IS_DISTRIBUTOR) {
       statusOption = [
-        { title: '审核驳回', value: 'rejected' },
-        { title: '等待审核', value: 'processing' },
-        { title: '前台可销售', value: 'onsale' },
-        { title: '前台不展示', value: 'offline_sale' },
-        { title: '前台仅展示', value: 'only_show' },
-        { title: '不可销售', value: 'instock' }
-      ]
-    } else if (VERSION_IN_PURCHASE) {
-      statusOption = [
-        { title: '前台可销售', value: 'onsale' },
-        { title: '前台仅展示', value: 'only_show' },
-        { title: '不可销售', value: 'instock' }
+        { title: '前台可售', value: true },
+        { title: '前台不可售', value: false }
       ]
     } else {
       statusOption = [
@@ -1623,34 +1601,16 @@ export default {
       }
       this.batchChangeStateDialog = true
     },
-    onBatchChangeStateSubmit() {
-      this.skuLoading = true
-      let params = {}
-      if (this.goods_id.length > 0) {
-        let data = []
-        this.goods_id.forEach((goods_id) => {
-          data.push({ goods_id: goods_id })
-        })
-        params = {
-          'items': JSON.stringify(data),
-          'status': this.batchChangeStateForm.status
-        }
-      }
-      this.submitLoading = true
-      updateItemsStatus(params).then((res) => {
-        if (res.data.data.status) {
-          this.$message({
-            message: '修改成功',
-            type: 'success',
-            duration: 2 * 1000
-          })
-          this.getGoodsList()
-        }
-        this.submitLoading = false
-        this.skuLoading = false
-        this.batchChangeStateDialog = false
-        this.batchChangeStateForm.status = ''
+    async onBatchChangeStateSubmit() {
+      await this.$api.marketing.updateDistributorItem({
+        distributor_id: this.shopId,
+        item_id: this.goods_id,
+        is_can_sale: this.batchChangeStateForm.status
       })
+
+      this.$message.success('修改成功')
+      this.getGoodsList()
+      this.batchChangeStateDialog = false
     },
     updateItemStatus(items) {
       this.loading = true

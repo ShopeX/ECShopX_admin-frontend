@@ -27,11 +27,7 @@
 <template>
   <div>
     <template v-if="!isEditor">
-      <el-card
-        v-loading="mainCateLoader"
-        shadow="never"
-        header="选择主类目"
-      >
+      <el-card v-loading="mainCateLoader" shadow="never" header="选择主类目">
         <el-cascader
           v-model="selectedMainCategory"
           :options="mainCategory"
@@ -42,19 +38,11 @@
     </template>
     <template v-else>
       <div class="form-block-head clearfix">
-        <div class="block-head-hd">
-          商品主类目
-        </div>
+        <div class="block-head-hd">商品主类目</div>
       </div>
       <div class="form-block-body">
-        <el-breadcrumb
-          separator-class="el-icon-arrow-right"
-          class="inline"
-        >
-          <el-breadcrumb-item
-            v-for="(item, index) in categoryNames"
-            :key="index"
-          >
+        <el-breadcrumb separator-class="el-icon-arrow-right" class="inline">
+          <el-breadcrumb-item v-for="(item, index) in categoryNames" :key="index">
             {{ item }}
           </el-breadcrumb-item>
         </el-breadcrumb>
@@ -62,10 +50,7 @@
     </template>
     <template v-if="isEditor || selectedMainCategory.length > 0">
       <!-- 基础信息 -->
-      <CmBaseForm
-        v-model="baseData"
-        :is-cross="isCross"
-      />
+      <CmBaseForm v-model="baseData" :is-cross="isCross" />
 
       <!-- 商品参数 -->
 
@@ -86,41 +71,18 @@
 
       <div class="comp-tdk">
         <div class="form-block-head clearfix">
-          <div class="block-head-hd">
-            PC关键词搜索引擎
-          </div>
+          <div class="block-head-hd">PC关键词搜索引擎</div>
         </div>
         <div class="form-block-body">
-          <el-form
-            label-position="right"
-            label-width="80px"
-          >
-            <el-form-item
-              label="页面标题"
-              style="margin-bottom: 20px; width: 600px"
-            >
-              <el-input
-                v-model="tdk_info.title"
-                type="text"
-              />
+          <el-form label-position="right" label-width="80px">
+            <el-form-item label="页面标题" style="margin-bottom: 20px; width: 600px">
+              <el-input v-model="tdk_info.title" type="text" />
             </el-form-item>
-            <el-form-item
-              label="页面描述"
-              style="margin-bottom: 20px; width: 600px"
-            >
-              <el-input
-                v-model="tdk_info.mate_description"
-                type="textarea"
-              />
+            <el-form-item label="页面描述" style="margin-bottom: 20px; width: 600px">
+              <el-input v-model="tdk_info.mate_description" type="textarea" />
             </el-form-item>
-            <el-form-item
-              label="关键词"
-              style="width: 600px"
-            >
-              <el-input
-                v-model="tdk_info.mate_keywords"
-                type="textarea"
-              />
+            <el-form-item label="关键词" style="width: 600px">
+              <el-input v-model="tdk_info.mate_keywords" type="textarea" />
               <span class="tip">关键词之间请用半角”,”分隔</span>
             </el-form-item>
           </el-form>
@@ -129,26 +91,14 @@
 
       <div class="comp-desc">
         <div class="form-block-head clearfix">
-          <div class="block-head-hd">
-            图文详情
-          </div>
+          <div class="block-head-hd">图文详情</div>
         </div>
         <div class="form-block-body">
-          <el-radio-group
-            v-model="mode"
-            class="mode-text"
-          >
-            <el-radio :label="'richText'">
-              富文本
-            </el-radio>
-            <el-radio :label="'component'">
-              组件式
-            </el-radio>
+          <el-radio-group v-model="mode" class="mode-text">
+            <el-radio :label="'richText'"> 富文本 </el-radio>
+            <el-radio :label="'component'"> 组件式 </el-radio>
           </el-radio-group>
-          <div
-            v-if="mode === 'richText'"
-            class="richText-block"
-          >
+          <div v-if="mode === 'richText'" class="richText-block">
             <div class="ricktext-con">
               <vue-html5-editor
                 ref="editor"
@@ -167,10 +117,7 @@
               <i class="iconfont icon-image"></i>图片
             </span> -->
           </div>
-          <div
-            v-else
-            class="component-block"
-          >
+          <div v-else class="component-block">
             <richTextEditor
               :data="content"
               :control="['film', 'slider', 'heading', 'writing']"
@@ -192,10 +139,9 @@
       </div>
 
       <div class="footer-container">
-        <el-button @click.native="handleCancel">
-          取消
-        </el-button>
+        <el-button @click.native="handleCancel"> 取消 </el-button>
         <el-button
+          v-if="!IS_DISTRIBUTOR"
           type="primary"
           :loading="submitLoading"
           @click="handleSave"
@@ -220,7 +166,7 @@ import { getOrigincountry, getTaxstrategyList } from '../../../../api/crossborde
 import { getPointRule } from '../../../../api/promotions'
 
 export default {
-  beforeRouteLeave (to, from, next) {
+  beforeRouteLeave(to, from, next) {
     if (!this.isLeave) {
       this.$confirm('确定要离开当前页面，您将丢失已编辑的数据？！', '提示', {
         confirmButtonText: '确定',
@@ -246,7 +192,7 @@ export default {
     CmGoodsParams,
     CmSkuForm
   },
-  data () {
+  data() {
     return {
       itemVideo: {},
       select_regions_value: [],
@@ -353,7 +299,7 @@ export default {
       immediate: true
     }
   },
-  async created () {
+  async created() {
     const { itemId } = this.$route.params
     this.isEditor = !!itemId
 
@@ -376,13 +322,13 @@ export default {
     console.log(this.$route)
   },
   methods: {
-    async fetch () {
+    async fetch() {
       const resPointRule = await getPointRule()
       // this.baseData.point_access = resPointRule.data.data.access
 
       this.$set(this.baseData, 'point_access', resPointRule.data.data.access)
     },
-    addUploaderEventListener () {
+    addUploaderEventListener() {
       const self = this
       setTimeout(() => {
         const uploaderDom = document.getElementsByClassName('icon iconfont icon-image')[0]
@@ -392,7 +338,7 @@ export default {
           })
       }, 0)
     },
-    async fetchOriginData () {
+    async fetchOriginData() {
       // 获取产地国
       const resCountry = await getOrigincountry({
         page: 1,
@@ -414,7 +360,7 @@ export default {
         }
       ]
     },
-    async fetchDetail () {
+    async fetchDetail() {
       const { itemId } = this.$route.params
       const { is_new } = this.$route.query
       const res = await getItemsDetail(itemId)
@@ -497,14 +443,14 @@ export default {
       this.loading = false
     },
     // 递归主类目
-    deepMainCategory (item, cateNames) {
+    deepMainCategory(item, cateNames) {
       cateNames.push(item.category_name)
       if (item.children) {
         this.deepMainCategory(item.children[0], cateNames)
       }
     },
     // 商品参数
-    getGoodsParams (list, value) {
+    getGoodsParams(list, value) {
       list.forEach((item) => {
         const temp = {
           value: item.attribute_id,
@@ -528,7 +474,7 @@ export default {
       })
     },
     // 商品skus
-    getGoodsSkus (list, value) {
+    getGoodsSkus(list, value) {
       this.skuData.skus = []
 
       if (list) {
@@ -563,7 +509,7 @@ export default {
       }
     },
     // 生成skuItems
-    getSkuItems () {
+    getSkuItems() {
       const { is_new } = this.$route.query
       const skuMartix = []
       this.skuData.skus.forEach((sku) => {
@@ -638,7 +584,7 @@ export default {
       }
       console.log(this.skuData.specImages)
     },
-    cartesianProductOf () {
+    cartesianProductOf() {
       return Array.prototype.reduce.call(
         arguments,
         function (a, b) {
@@ -654,7 +600,7 @@ export default {
       )
     },
     //
-    getSpecName (keys) {
+    getSpecName(keys) {
       const specNames = []
       keys.forEach((key, index) => {
         const fd = this.skuData.itemSpecList[index].attribute_values.list.find(
@@ -667,10 +613,10 @@ export default {
       return specNames.join(' ')
     },
     // 获取主类目
-    async getMainCategory () {
+    async getMainCategory() {
       const res = await getCategory({ is_main_category: true })
       const category = res.data.data
-      function deepMainCategory (cate, temp) {
+      function deepMainCategory(cate, temp) {
         cate.forEach((item) => {
           const _temp = {
             label: item.category_name,
@@ -687,7 +633,7 @@ export default {
       this.mainCateLoader = false
     },
     // 选择主类目
-    async handleCategoryChange (val) {
+    async handleCategoryChange(val) {
       const res = await getCategoryInfo(val[val.length - 1])
       const detail = res.data.data
       this.cacheCreateDetail = detail
@@ -712,10 +658,10 @@ export default {
       this.skuData.specImages = []
       this.loading = false
     },
-    specOnChange () {
+    specOnChange() {
       this.getGoodsSkus(this.cacheCreateDetail.goods_spec, [])
     },
-    clearSku (index) {
+    clearSku(index) {
       this.$confirm('确定清除当前规格的数据吗？', '提示', {
         confirmButtonText: '确定',
         cancelButtonText: '取消',
@@ -737,10 +683,10 @@ export default {
         })
       })
     },
-    handleCancel () {
+    handleCancel() {
       this.$router.go(-1)
     },
-    async handleSave () {
+    async handleSave() {
       this.submitLoading = true
       const {
         item_id,

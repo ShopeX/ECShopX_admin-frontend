@@ -1,4 +1,4 @@
-<style lang="scss" scope>
+<style lang="scss" scoped>
 .sp-filter-form {
   margin-bottom: 16px;
 }
@@ -7,6 +7,8 @@
     margin-bottom: 0;
   }
 }
+</style>
+<style lang="scss">
 .sku-dialog {
   .el-dialog__body {
     padding: 0;

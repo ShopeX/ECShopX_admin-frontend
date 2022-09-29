@@ -38,6 +38,22 @@
   }
 }
 </style>
+<style lang="scss">
+.sku-dialog {
+  .el-dialog__body {
+    padding: 0;
+  }
+  .el-form {
+    margin-right: 0 !important;
+  }
+  .el-form-item {
+    margin-bottom: 0 !important;
+  }
+  .el-form-item__content {
+    margin-left: 0 !important;
+  }
+}
+</style>
 <template>
   <div class="page-body">
     <template
@@ -76,8 +92,8 @@
             :options="regions"
           />
         </SpFilterFormItem>
-        <SpFilterFormItem prop="approve_status" label="商品状态:">
-          <el-select v-model="params.approve_status" clearable placeholder="请选择">
+        <SpFilterFormItem prop="is_can_sale" label="商品状态:">
+          <el-select v-model="params.is_can_sale" clearable placeholder="请选择">
             <el-option
               v-for="item in statusOption"
               :key="item.value"
@@ -204,14 +220,16 @@
                 />
               </template>
             </el-table-column>
-            <el-table-column prop="store" label="库存" width="80">
+            <el-table-column prop="store" label="库存" width="120">
               <template slot-scope="scope">
                 <span>{{ scope.row.store }}</span>
-                <!-- <el-button type="text" @click="editCouponStore(scope.row.card_id)">
-                  <i class="el-icon-edit" />
-                </el-button> -->
 
-                <el-popover placement="top" trigger="hover" @show="() => onShowPopover(scope.row)">
+                <el-popover
+                  v-if="scope.row.nospec && !scope.row.is_total_store"
+                  placement="top"
+                  trigger="hover"
+                  @show="() => onShowPopover(scope.row)"
+                >
                   <div class="popover-edit">
                     <el-input v-model="skuEditInput" class="edit-input" placeholder="请输入库存" />
                     <el-button type="primary" size="mini" @click="onModifyItemSku(scope.row)">
@@ -223,11 +241,18 @@
                     <i class="el-icon-edit" />
                   </el-button>
                 </el-popover>
+                <el-button
+                  v-if="!scope.row.nospec && !scope.row.is_total_store"
+                  type="text"
+                  @click="onModifyItemSku(scope.row)"
+                >
+                  <i class="el-icon-edit" />
+                </el-button>
               </template>
             </el-table-column>
             <el-table-column prop="market_price" label="市场价（¥）" width="100" />
             <el-table-column prop="price" label="销售价（¥）" width="100" />
-            <el-table-column label="状态">
+            <el-table-column label="状态" width="160">
               <template slot-scope="scope">
                 <span v-if="scope.row.is_can_sale">前台可售</span>
                 <span v-else>前台不可售</span>
@@ -235,7 +260,7 @@
             </el-table-column>
             <el-table-column prop="itemCatName" label="商品分类" width="150" />
 
-            <el-table-column fixed="left" label="操作" width="200">
+            <el-table-column fixed="left" label="操作" width="80">
               <template slot-scope="scope">
                 <el-button type="text" @click="editItemsAction(scope.$index, scope.row, false)">
                   详情
@@ -604,6 +629,20 @@
         :form-list="batchChangeStateFormList"
         @onSubmit="onBatchChangeStateSubmit"
       />
+
+      <!-- 商品sku配置 -->
+      <SpDialog
+        v-if="itemSkuDialog"
+        ref="itemSkuRef"
+        v-model="itemSkuDialog"
+        class="sku-dialog"
+        width="1100px"
+        destroy-on-close
+        :title="`编辑商品【${itemSkuForm.itemName}】`"
+        :form="itemSkuForm"
+        :form-list="itemSkuFormList"
+        @onSubmit="onItemSkuFormSubmit"
+      />
     </template>
     <router-view />
   </div>
@@ -644,12 +683,14 @@ import { VERSION_IN_PURCHASE } from '@/utils'
 import mixins from '@/mixins'
 
 import GoodsSelect from './comps/goodsSelect'
+import skuFinder from './comps/skuFinder'
 
 export default {
   components: {
     Treeselect,
     SideBar,
-    GoodsSelect
+    GoodsSelect,
+    skuFinder
   },
   mixins: [mixins],
   props: ['getStatus'],
@@ -793,7 +834,20 @@ export default {
       batchChangeStateForm: {
         status: ''
       },
-      skuEditInput: ''
+      skuEditInput: '',
+      itemSkuDialog: false,
+      itemSkuForm: {
+        itemName: '',
+        itemId: ''
+      },
+      itemSkuFormList: [
+        {
+          key: 'invitation_code',
+          component: () => (
+            <skuFinder itemId={this.itemSkuForm.itemId} distributorId={this.shopId} />
+          )
+        }
+      ]
     }
   },
   computed: {
@@ -818,17 +872,27 @@ export default {
     console.log(111)
   },
   methods: {
+    onItemSkuFormSubmit() {
+      this.itemSkuDialog = false
+      this.getGoodsList()
+    },
     onShowPopover({ store }) {
       this.skuEditInput = store
     },
     // 修改库存
-    async onModifyItemSku({ item_id }) {
-      await this.$api.marketing.updateDistributorItem({
-        distributor_id: this.shopId,
-        item_id,
-        store: this.skuEditInput
-      })
-      this.getGoodsList()
+    async onModifyItemSku({ item_id, nospec, itemName }) {
+      if (nospec) {
+        await this.$api.marketing.updateDistributorItem({
+          distributor_id: this.shopId,
+          item_id,
+          store: this.skuEditInput
+        })
+        this.getGoodsList()
+      } else {
+        this.itemSkuForm.itemName = itemName
+        this.itemSkuForm.itemId = item_id
+        this.itemSkuDialog = true
+      }
     },
     // 同步至店铺
     async syncToShop(isAll) {
@@ -1604,7 +1668,7 @@ export default {
     async onBatchChangeStateSubmit() {
       await this.$api.marketing.updateDistributorItem({
         distributor_id: this.shopId,
-        item_id: this.goods_id,
+        goods_id: this.goods_id,
         is_can_sale: this.batchChangeStateForm.status
       })
 
@@ -1617,7 +1681,7 @@ export default {
       let params = {}
       params = {
         'items': [{ 'goods_id': items.goods_id }],
-        'status': items.approve_status === 'instock' ? 'onsale' : 'instock'
+        'status': items.is_can_sale === 'instock' ? 'onsale' : 'instock'
       }
       updateItemsStatus(params).then((res) => {
         if (res.data.data.status) {

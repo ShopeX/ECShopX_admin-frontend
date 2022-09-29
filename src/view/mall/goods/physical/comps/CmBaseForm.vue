@@ -156,7 +156,6 @@
                 class="width-full"
                 remote
                 filterable
-                :remote-method="getBrandList"
                 clearable
                 placeholder="请选择"
               >

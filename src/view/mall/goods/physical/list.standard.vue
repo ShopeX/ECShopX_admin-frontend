@@ -210,11 +210,9 @@
                 <el-popover placement="top" trigger="hover" @show="() => onShowPopover(scope.row)">
                   <div class="popover-edit">
                     <el-input v-model="skuEditInput" class="edit-input" placeholder="请输入库存" />
-                    <el-button type="primary" size="mini" @click="onModifyItemSku(scope.row)"
-                      >
-确定
-</el-button
-                    >
+                    <el-button type="primary" size="mini" @click="onModifyItemSku(scope.row)">
+                      确定
+                    </el-button>
                   </div>
 
                   <el-button slot="reference" type="text">
@@ -1609,14 +1607,17 @@ export default {
       if (params.category.length > 0) {
         params.category = params.category[params.category.length - 1]
       }
-      const { list, total_count, warning_store } = await this.$api.goods.getItemsList(params)
+      // const { list, total_count, warning_store } = await this.$api.goods.getItemsList(params)
+      const { list, total_count, warning_store } = await this.$api.marketing.getDistributorItems(
+        params
+      )
       list.forEach((item) => {
         item.price = item.price / 100
         item.market_price = item.market_price / 100
         item.link = `pages/item/espier-detail?gid=${item.goods_id}&id=${item.item_id}`
       })
       this.ItemsList = list
-      this.page.total = total_count
+      this.page.total = parseInt(total_count)
       this.warning_store = warning_store
       this.loading = false
     },

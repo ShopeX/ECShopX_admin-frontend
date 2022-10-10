@@ -124,7 +124,7 @@
                   v-if="scope.row.audit_status == 'processing'"
                   type="text"
                   class="btn-gap"
-                  @click="batchItemsAudit(scope.$index, scope.row)"
+                  @click="batchItemsAudit(scope.row, scope.$index)"
                 >
                   审核
                 </el-button>

@@ -94,9 +94,7 @@
         </el-col>
         <el-col
           v-if="
-            $store.getters.login_type != 'merchant' &&
-            externalForm.distribution_type != '0' &&
-            !VERSION_STANDARD
+              externalForm.distribution_type != '1'
           "
           :span="8"
         >

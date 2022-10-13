@@ -57,7 +57,7 @@ export default {
       default: true
     }
   },
-  data () {
+  data() {
     // const _form = {}
     // this.formList.forEach(({ value, key }) => {
     //   _form[key] = value || ''
@@ -65,14 +65,15 @@ export default {
     // const { value } = this
     return {
       // formData: value
+      localComps: []
     }
   },
-  created () {},
+  created() {},
   methods: {
-    handleCancel () {
+    handleCancel() {
       // this.$emit('input', false)
     },
-    handleSubmit () {
+    handleSubmit() {
       this.$refs['form'].validate((valid) => {
         if (valid) {
           this.$emit('input', this.value)
@@ -82,18 +83,26 @@ export default {
         }
       })
     },
-    resetForm () {
+    resetForm() {
       this.$refs['form'] && this.$refs['form'].resetFields()
+      this.localComps.forEach((comp) => {
+        comp.resetField && comp.resetField(comp.$parent.initialValue)
+      })
     }
   },
-  render () {
+  render() {
     const { title, value, formList, width } = this
     const Fn = () => {}
+    const localComps = []
     const getComponentByType = (item) => {
       if (typeof item.component != 'undefined') {
-        // console.log(item.component)
+        const comp = item.component()
+        const { context, data } = comp
         // Vue.component(item.component)
-        return item.component()
+        if (data.ref) {
+          localComps.push(context.$refs[data.ref])
+        }
+        return comp
         // return <component is={item.component} ref='com' />
       } else if (item.type == 'textarea') {
         return (
@@ -201,6 +210,8 @@ export default {
         rules[item.key] = [{ validator: item.validator }]
       }
     })
+
+    this.localComps = localComps
 
     return (
       <el-form

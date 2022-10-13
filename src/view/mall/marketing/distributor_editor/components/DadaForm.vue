@@ -1,123 +1,74 @@
+<style lang="scss">
+.data-form {
+  .el-form-item__content {
+    width: auto !important;
+  }
+  .form-item-tip {
+    font-size: 13px;
+    color: #999;
+    line-height: initial;
+  }
+  .business-select {
+    width: 220px !important;
+  }
+}
+</style>
+
 <template>
-  <el-card v-if="show">
+  <el-card v-if="show" class="el-card--normal">
     <div slot="header">
-      <div style="display: flex; align-items: center">
-        <div>同城配</div>
-        <div class="frm-tips">
-          (需先选择店铺地理位置，系统根据店铺位置判断该地区是否支持同城配)
-        </div>
+      <div>
+        同城配<span class="frm-tips"
+          >（需先选择店铺地理位置，系统根据店铺位置判断该地区是否支持同城配）</span
+        >
       </div>
     </div>
     <el-form
       ref="form"
-      :model="form"
-      label-width="110px"
+      class="data-form"
+      label-width="120px"
+      :model="content.baseForm"
+      :rules="rules"
     >
-      <el-row>
-        <el-col :span="16">
-          <div class="flexDada">
-            <el-form-item label="达达同城配">
-              <el-switch
-                v-model="form.is_dada"
-                active-color="#13ce66"
-                inactive-color="#ff4949"
-                active-value="1"
-                inactive-value="0"
-              />
-            </el-form-item>
-            <el-alert
-              type="info"
-              :closable="false"
-            >
-              <div slot="title">
-                开启后有店铺订单时需要改店铺人员手动接单，接单后系统会自动在达达平台下单
-              </div>
-            </el-alert>
-          </div>
-        </el-col>
-      </el-row>
-      <el-row v-if="isOpen">
-        <el-col :span="8">
-          <el-form-item
-            label="业务类型"
-            :rules="rules.dada_type"
-          >
-            <el-select
-              v-model="form.business"
-              placeholder="请选择"
-            >
-              <el-option
-                v-for="item in typeList"
-                :key="item.value"
-                :label="item.label"
-                :value="item.value"
-              />
-            </el-select>
-          </el-form-item>
-        </el-col>
-      </el-row>
+      <el-form-item label="达达同城配">
+        <el-switch v-model="content.baseForm.is_dada" />
+        <div class="form-item-tip">
+          开启后有店铺订单时需要改店铺人员手动接单，接单后系统会自动在达达平台下单
+        </div>
+      </el-form-item>
+
+      <el-form-item v-if="content.baseForm.is_dada" prop="business" label="业务类型">
+        <el-select v-model="content.baseForm.business" class="business-select" placeholder="请选择">
+          <el-option
+            v-for="item in typeList"
+            :key="item.value"
+            :label="item.label"
+            :value="item.value"
+          />
+        </el-select>
+      </el-form-item>
     </el-form>
   </el-card>
 </template>
 
 <script>
-import { getDadaInfo } from '@/api/mall/dada'
 export default {
-  props: ['rules', 'externalForm'],
-  data () {
+  inject: ['content'],
+  data() {
     return {
-      form: {
-        is_dada: '0',
-        business: ''
-      },
       typeList: [],
-      isOpen: false,
-      show: false
-    }
-  },
-  watch: {
-    form: {
-      handler (val) {
-        if (val.is_dada === '1') {
-          this.isOpen = true
-        } else {
-          this.isOpen = false
-          this.form.business = ''
-        }
-      },
-      deep: true
-    },
-    show: {
-      handler (val) {
-        if (val === false) {
-          this.form = {
-            is_dada: '0',
-            business: ''
-          }
-        }
+      show: false,
+      rules: {
+        business: [{ message: '达达业务类型必填', required: true }]
       }
-    },
-    externalForm: {
-      handler (val) {
-        if (val.is_dada) {
-          this.form.is_dada = val.is_dada === true ? '1' : '0'
-        }
-        if (val.business) {
-          this.form.business = val.business
-        }
-      },
-      deep: true
     }
   },
-
-  mounted () {
-    getDadaInfo().then((res) => {
-      const {
-        data: {
-          data: { business_list, is_open }
-        }
-      } = res
-
+  mounted() {
+    this.getDataInfo()
+  },
+  methods: {
+    async getDataInfo() {
+      const { business_list, is_open } = await this.$api.dada.getDadaInfo()
       this.typeList = Object.keys(business_list).reduce((total, current, index) => {
         return total.concat({
           value: Number(current),
@@ -126,20 +77,18 @@ export default {
       }, [])
       console.log('typeList', this.typeList)
       this.show = is_open === '1'
-      this.$emit('onChangeData', 'dadaShow', is_open === '1')
-    })
+    },
+    validate() {
+      return new Promise((resolve, reject) => {
+        return this.$refs.form.validate((valid) => {
+          if (valid) {
+            resolve()
+          } else {
+            reject()
+          }
+        })
+      })
+    }
   }
 }
 </script>
-
-<style lang="scss">
-.flexDada {
-  display: flex;
-  align-items: center;
-
-  .el-form-item {
-    margin-bottom: 0px;
-    margin-right: 10px;
-  }
-}
-</style>

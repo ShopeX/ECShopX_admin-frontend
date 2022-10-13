@@ -31,25 +31,12 @@
 </style>
 <template>
   <div class="picker-goods">
-    <SpFilterForm
-      :model="params"
-      size="small"
-      @onSearch="onSearch"
-      @onReset="onSearch"
-    >
+    <SpFilterForm :model="params" size="small" @onSearch="onSearch" @onReset="onSearch">
       <SpFilterFormItem prop="keywords">
-        <el-input
-          v-model="params.keywords"
-          clearable
-          placeholder="请输入商品名称"
-        />
+        <el-input v-model="params.keywords" clearable placeholder="请输入商品名称" />
       </SpFilterFormItem>
       <SpFilterFormItem prop="approve_status">
-        <el-select
-          v-model="params.approve_status"
-          clearable
-          placeholder="请选择"
-        >
+        <el-select v-model="params.approve_status" clearable placeholder="请选择">
           <el-option
             v-for="item in salesStatus"
             :key="item.value"
@@ -85,15 +72,8 @@
           :props="{ value: 'category_id', checkStrictly: true }"
         />
       </SpFilterFormItem>
-      <SpFilterFormItem
-        v-if="shopid == 0"
-        prop="distributor_id"
-      >
-        <SpSelectShop
-          v-model="params.distributor_id"
-          clearable
-          placeholder="请选择店铺"
-        />
+      <SpFilterFormItem v-if="shopid == 0" prop="distributor_id">
+        <SpSelectShop v-model="params.distributor_id" clearable placeholder="请选择店铺" />
       </SpFilterFormItem>
     </SpFilterForm>
     <div>
@@ -104,27 +84,12 @@
         height="400"
         @selection-change="handleSelectionChange"
       >
-        <el-table-column
-          type="selection"
-          align="center"
-          label="全选"
-        />
-        <el-table-column
-          label="商品ID"
-          prop="itemId"
-          width="100"
-        />
-        <el-table-column
-          label="商品名称"
-          min-width="200"
-        >
+        <el-table-column type="selection" align="center" label="全选" />
+        <el-table-column label="商品ID" prop="itemId" width="100" />
+        <el-table-column label="商品名称" min-width="200">
           <template slot-scope="scope">
             <div class="item-info">
-              <SpImage
-                :src="scope.row.pics[0]"
-                :width="60"
-                :height="60"
-              />
+              <SpImage :src="scope.row.pics[0]" :width="60" :height="60" />
               <div>
                 <div class="item-name">
                   {{ scope.row.itemName }}
@@ -133,22 +98,14 @@
             </div>
           </template>
         </el-table-column>
-        <el-table-column
-          label="价格（¥）"
-          prop="price"
-          width="150"
-        >
+        <el-table-column label="价格（¥）" prop="price" width="150">
           <template slot-scope="scope">
             <span>
               {{ scope.row.price / 100 }}
             </span>
           </template>
         </el-table-column>
-        <el-table-column
-          label="库存"
-          prop="store"
-          width="150"
-        />
+        <el-table-column label="库存" prop="store" width="150" />
       </el-table>
     </div>
     <el-pagination
@@ -174,7 +131,7 @@ export default {
     title: '选择商品'
   },
   props: ['value'],
-  data () {
+  data() {
     return {
       shopid: this.value.shopid || 0,
       pageSize: 10,
@@ -198,17 +155,17 @@ export default {
       categoryList: []
     }
   },
-  created () {},
-  mounted () {
+  created() {},
+  mounted() {
     this.refresh(true)
     this.getGoodsBranchList()
     this.getCategory()
   },
   methods: {
-    onSearch () {
+    onSearch() {
       this.refresh(true)
     },
-    async fetch ({ page_no, page_size }) {
+    async fetch({ page_no, page_size }) {
       const { category } = this.params
       const query = {
         page: page_no,
@@ -228,20 +185,20 @@ export default {
       this.list = list
       return { count: total_count }
     },
-    async getGoodsBranchList (searchVal = '') {
+    async getGoodsBranchList(searchVal = '') {
       this.goodsBranchParams.attribute_name = searchVal
       const { list } = await this.$api.goods.getGoodsAttr(this.goodsBranchParams)
       this.goodsBranchList = list
     },
-    async getCategory () {
+    async getCategory() {
       const res = await this.$api.goods.getCategory({ is_show: false })
       this.categoryList = res
     },
-    handleSelectionChange (val) {
+    handleSelectionChange(val) {
       this.multipleSelection = val
       this.updateVal(val)
     },
-    handleClickCatgory ({ image_cat_id }) {
+    handleClickCatgory({ image_cat_id }) {
       this.selectCatgory = image_cat_id
       this.refresh(true)
     }

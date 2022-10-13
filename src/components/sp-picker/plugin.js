@@ -33,6 +33,7 @@ export default {
       image: (args) => fn({ value: { ...args }, type: 'pickerImage' }),
       goods: (args) => fn({ value: { ...args }, type: 'pickerGoods', width: '1110px' }),
       shop: (args) => fn({ value: { ...args }, type: 'pickerShop' }),
+      zitilist: (args) => fn({ value: { ...args }, type: 'pickerZitiList' }),
       path: fn
     }
 

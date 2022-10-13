@@ -6,9 +6,7 @@
 <template>
   <div class="page-mall-communitygoods">
     <div class="action-container">
-      <el-button type="primary" @click="handleAddGoods">
-选择活动商品
-</el-button>
+      <el-button type="primary" @click="handleAddGoods"> 选择活动商品 </el-button>
     </div>
 
     <SpFilterForm :model="params" @onSearch="onSearch" @onReset="onSearch">
@@ -142,9 +140,7 @@
               trigger="hover"
               :content="scope.row.audit_reason"
             >
-              <el-button slot="reference" type="text">
-审核驳回
-</el-button>
+              <el-button slot="reference" type="text"> 审核驳回 </el-button>
             </el-popover>
             <span v-else-if="scope.row.approve_status == 'onsale'">前台可销</span>
             <span v-else-if="scope.row.approve_status == 'offline_sale'">前台不展示 </span>
@@ -156,9 +152,7 @@
 
         <el-table-column fixed="left" label="操作" width="160">
           <template slot-scope="scope">
-            <el-button type="text" @click="deleteItem(scope.row)">
-删除
-</el-button>
+            <el-button type="text" @click="deleteItem(scope.row)"> 删除 </el-button>
             <el-button type="text" class="btn-gap" @click="modifyItem(scope.row)">
               设置起送量
             </el-button>
@@ -202,7 +196,7 @@ import { SALES_STATUS, ORDER_STATUS, PICKER_DATE_OPTIONS } from '@/consts'
 
 export default {
   mixins: [mixin, pageMixin],
-  data () {
+  data() {
     return {
       loading: false,
       tableList: [],
@@ -256,12 +250,12 @@ export default {
   computed: {
     ...mapGetters(['shopId'])
   },
-  mounted () {
+  mounted() {
     this.getCategory()
     this.onSearch()
   },
   methods: {
-    async handleAddGoods () {
+    async handleAddGoods() {
       const { data } = await this.$picker.goods({
         data: 100,
         shopid: this.shopId
@@ -272,7 +266,7 @@ export default {
       })
       this.onSearch()
     },
-    async fetchList ({ pageIndex, pageSize }) {
+    async fetchList({ pageIndex, pageSize }) {
       this.loading = true
       let query = {
         page: pageIndex,
@@ -289,16 +283,16 @@ export default {
       this.page.total = total_count
       this.loading = false
     },
-    async getGoodsBranchList (searchVal = '') {
+    async getGoodsBranchList(searchVal = '') {
       this.goodsBranchParams.attribute_name = searchVal
       const { list } = await this.$api.goods.getGoodsAttr(this.goodsBranchParams)
       this.goodsBranchList = list
     },
-    async getCategory () {
+    async getCategory() {
       const res = await this.$api.goods.getCategory({ is_show: false })
       this.categoryList = res
     },
-    async deleteItem ({ item_id }) {
+    async deleteItem({ item_id }) {
       await this.$confirm('请确认是否删除商品', '提示', {
         confirmButtonText: '确定',
         cancelButtonText: '取消'
@@ -306,11 +300,11 @@ export default {
       await this.$api.community.deleteActivityGoods(item_id)
       this.onSearch()
     },
-    modifyItem ({ item_id }) {
+    modifyItem({ item_id }) {
       this.sendNumForm.item_id = item_id
       this.sendNumDialog = true
     },
-    async onSendNumSubmit () {
+    async onSendNumSubmit() {
       const { item_id, num } = this.sendNumForm
       await this.$api.community.modifyGoodsDeliverNum({
         goods_id: item_id,
@@ -320,7 +314,7 @@ export default {
       this.sendNumDialog = false
       this.onRefresh()
     },
-    async editItemsSort ({ item_id, sort }) {
+    async editItemsSort({ item_id, sort }) {
       await this.$api.community.modifyGoodsSort({
         goods_id: item_id,
         sort

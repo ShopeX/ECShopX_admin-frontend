@@ -30,7 +30,7 @@ export default {
     }
 
     const $picker = {
-      image: (args) => fn({ value: { ...args }, type: 'pickerImage' }),
+      image: (args) => fn({ value: { ...args }, type: 'pickerImage', width: '788px' }),
       goods: (args) => fn({ value: { ...args }, type: 'pickerGoods', width: '1110px' }),
       shop: (args) => fn({ value: { ...args }, type: 'pickerShop' }),
       zitilist: (args) => fn({ value: { ...args }, type: 'pickerZitiList' }),

@@ -37,6 +37,7 @@
     "qs": "^6.4.0",
     "vue": "^2.6.11",
     "vue-clipboard2": "^0.3.0",
+    "vue-cropper": "^0.5.8",
     "vue-hotzone": "^1.1.0",
     "vue-html5-editor": "^1.1.1",
     "vue-masonry": "^0.11.8",

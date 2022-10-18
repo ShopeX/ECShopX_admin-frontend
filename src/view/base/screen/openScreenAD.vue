@@ -2,40 +2,19 @@
   <div>
     <el-card>
       <div style="width: 70%">
-        <el-form
-          v-loading="loading"
-          label-width="180px"
-          :model="form"
-        >
-          <el-form-item
-            label="广告素材"
-            prop="ad_pic"
-          >
+        <el-form v-loading="loading" label-width="180px" :model="form">
+          <el-form-item label="广告素材" prop="ad_pic">
             <el-radio-group v-model="form.material_type">
-              <el-radio :label="1">
-                图片
-              </el-radio>
+              <el-radio :label="1"> 图片 </el-radio>
               <!--              <el-radio :label="2">视频</el-radio>-->
             </el-radio-group>
             <!--图片组件-->
             <div v-if="form.material_type === 1">
-              <p class="frm-tips">
-                点击图片可更换，图片大小不能超过 2MB（建议尺寸：750px*1334px）
-              </p>
+              <p class="frm-tips">点击图片可更换，图片大小不能超过 2MB（建议尺寸：750px*1334px）</p>
               <div>
-                <div
-                  class="upload-box"
-                  @click="handleImgChange"
-                >
-                  <img
-                    v-if="ad_pic"
-                    :src="wximageurl + ad_pic"
-                    class="avatar"
-                  >
-                  <i
-                    v-else
-                    class="el-icon-plus avatar-uploader-icon"
-                  />
+                <div class="upload-box" @click="handleImgChange">
+                  <img v-if="ad_pic" :src="wximageurl + ad_pic" class="avatar">
+                  <i v-else class="el-icon-plus avatar-uploader-icon" />
                 </div>
               </div>
               <imgPicker
@@ -47,15 +26,8 @@
             </div>
             <!--视频组件-->
             <div v-if="form.material_type === 2">
-              <videoPicker
-                :data="itemVideo"
-                @change="pickVideo"
-              />
-              <el-button
-                v-if="itemVideo.media_id"
-                type="text"
-                @click="deleteVideo"
-              >
+              <videoPicker :data="itemVideo" @change="pickVideo" />
+              <el-button v-if="itemVideo.media_id" type="text" @click="deleteVideo">
                 删除
               </el-button>
             </div>
@@ -63,25 +35,17 @@
 
           <el-form-item label="是否开启">
             <el-radio-group v-model="form.is_enable">
-              <el-radio :label="1">
-                开启
-              </el-radio>
-              <el-radio :label="0">
-                关闭
-              </el-radio>
+              <el-radio :label="1"> 开启 </el-radio>
+              <el-radio :label="0"> 关闭 </el-radio>
             </el-radio-group>
           </el-form-item>
           <el-form-item label="倒计时显示位置">
             <el-radio-group v-model="form.position">
-              <el-radio label="right_top">
-                右上
-              </el-radio>
-              <el-radio label="right_bottom">
-                右下
-              </el-radio>
+              <el-radio label="right_top"> 右上 </el-radio>
+              <el-radio label="right_bottom"> 右下 </el-radio>
             </el-radio-group>
           </el-form-item>
-          <el-form-item label="是否允许跳过">
+          <!-- <el-form-item label="是否允许跳过">
             <el-radio-group v-model="form.is_jump">
               <el-radio :label="1">
                 是
@@ -90,7 +54,7 @@
                 否
               </el-radio>
             </el-radio-group>
-          </el-form-item>
+          </el-form-item> -->
 
           <el-form-item label="等待时间">
             <el-input
@@ -101,19 +65,14 @@
               placeholder="请输入整数"
               @input="input_waiting_time"
             >
-              <template slot="append">
-                秒
-              </template>
+              <template slot="append"> 秒 </template>
             </el-input>
           </el-form-item>
           <el-form-item label="广告跳转路径">
             <!--            <el-input type="text" v-model="form.ad_url" placeholder="请输入URL" ></el-input>-->
             <div class="uploader-setting">
               <div class="goods-select">
-                <div
-                  v-if="JSON.stringify(form.ad_url) !== '{}'"
-                  class="link-content"
-                >
+                <div v-if="JSON.stringify(form.ad_url) !== '{}'" class="link-content">
                   <span @click="handleGoodsChange()">
                     <template v-if="form.ad_url.linkPage === 'goods'">商品：</template>
                     <template v-if="form.ad_url.linkPage === 'category'">分类：</template>
@@ -134,11 +93,7 @@
                     />
                   </span>
                 </div>
-                <div
-                  v-else
-                  class="content-center"
-                  @click="handleGoodsChange()"
-                >
+                <div v-else class="content-center" @click="handleGoodsChange()">
                   <i class="iconfont icon-link" />设置路径
                 </div>
               </div>
@@ -147,25 +102,14 @@
           <el-form-item label="应用端">
             <el-checkbox-group v-model="is_app">
               <!--              <el-checkbox label="all" :key="0" name="crossborder_show1">全部</el-checkbox>-->
-              <el-checkbox
-                :key="1"
-                label="wapp"
-                name="crossborder_show1"
-              >
-                小程序
-              </el-checkbox>
+              <el-checkbox :key="1" label="wapp" name="crossborder_show1"> 小程序 </el-checkbox>
               <!--              <el-checkbox label="app" :key="2" name="crossborder_show1">APP</el-checkbox>-->
             </el-checkbox-group>
           </el-form-item>
 
           <el-form-item size="large">
             <el-button>取消</el-button>
-            <el-button
-              type="primary"
-              @click="save"
-            >
-              保存
-            </el-button>
+            <el-button type="primary" @click="save"> 保存 </el-button>
           </el-form-item>
         </el-form>
       </div>
@@ -197,7 +141,7 @@ export default {
     imgPicker,
     videoPicker
   },
-  data () {
+  data() {
     return {
       // linksArr: ['goods', 'store', 'custom_page', 'category'],
       linksArr: [],
@@ -224,57 +168,57 @@ export default {
       }
     }
   },
-  mounted () {
+  mounted() {
     // 获取信息
     this.getInfo()
   },
   methods: {
-    clear_ad_url () {
+    clear_ad_url() {
       this.form.ad_url = {}
     },
-    input_waiting_time () {
+    input_waiting_time() {
       this.form.waiting_time = Number(this.form.waiting_time.replace(/\D+/, ''))
     },
-    handleGoodsChange () {
+    handleGoodsChange() {
       this.linksVisible = true
     },
-    setLink (data, type) {
+    setLink(data, type) {
       let obj = Object.assign(data, { 'linkPage': type })
       this.form.ad_url = obj
     },
-    closeDialog () {
+    closeDialog() {
       this.linksVisible = false
     },
-    handleImgChange () {
+    handleImgChange() {
       this.imgDialog = true
       this.isGetImage = true
     },
-    closeImgDialog () {
+    closeImgDialog() {
       this.imgDialog = false
     },
-    pickImg (data) {
+    pickImg(data) {
       this.ad_pic = data.url
       this.imgDialog = false
     },
     // 视频
-    pickVideo (data) {
+    pickVideo(data) {
       this.video.videos = data.media_id
       this.video.videos_url = data.url
     },
     // 删除视频
-    deleteVideo () {
+    deleteVideo() {
       this.itemVideo = {}
       this.form.ad_material = ''
     },
     // 获取信息
-    getInfo () {
+    getInfo() {
       this.loading = true
       getOpenScreenADSet(this.params).then((res) => {
         if (res.data.data.length !== 0) {
           this.form.ad_material = res.data.data.ad_material
           this.form.is_enable = res.data.data.is_enable
           this.form.position = res.data.data.position
-          this.form.is_jump = res.data.data.is_jump
+          this.form.is_jump = 1
           this.form.material_type = res.data.data.material_type
           this.form.waiting_time = res.data.data.waiting_time
           // this.form.ad_url = res.data.data.ad_url
@@ -299,7 +243,7 @@ export default {
       })
     },
     // 保存数据
-    save () {
+    save() {
       if (this.form.material_type === 1) {
         this.form.ad_material = this.ad_pic
       } else if (this.form.material_type === 2) {

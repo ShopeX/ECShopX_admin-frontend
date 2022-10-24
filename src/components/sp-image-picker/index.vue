@@ -16,12 +16,14 @@
     color: #d9d9d9;
   }
   .img-content {
-    position: relative;
-    left: 50%;
-    top: 50%;
-    transform: translate(-50%, -50%);
-    max-width: 100%;
-    max-height: 100%;
+    // position: relative;
+    // left: 50%;
+    // top: 50%;
+    // transform: translate(-50%, -50%);
+    // max-width: 100%;
+    // max-height: 100%;
+    width: 100%;
+    height: 100%;
     cursor: pointer;
   }
   &:hover {
@@ -46,7 +48,8 @@
 </style>
 <template>
   <div class="sp-image-picker">
-    <img v-if="value && value.url" class="img-content" :src="value.url">
+    <!-- <img v-if="value && value.url" class="img-content" :src="value.url"> -->
+    <el-image v-if="value && value.url" class="img-content" :src="value.url" fit="cover" />
     <div v-else class="placeholder" @click="handleSelectImage">
       <i class="iconfont icon-plus" />
       <p>添加图片</p>

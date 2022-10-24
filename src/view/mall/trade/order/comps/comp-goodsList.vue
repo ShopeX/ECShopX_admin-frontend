@@ -1,0 +1,88 @@
+<style lang="scss">
+.comp-goods-list {
+  margin-top: 10px;
+  .goods-item {
+    display: flex;
+    align-items: center;
+    &:not(:first-child) {
+      margin-top: 10px;
+    }
+  }
+  .item-checkbox {
+    margin-right: 10px;
+  }
+  .item-image {
+    width: 72px;
+    height: 72px;
+    margin-right: 10px;
+  }
+
+  .item-info {
+    line-height: 20px;
+  }
+  .spec-desc {
+    font-size: 13px;
+    color: #888;
+  }
+  .el-input__inner {
+    border-color: #d9d9d9 !important;
+  }
+}
+</style>
+<template>
+  <div v-if="value" class="comp-goods-list">
+    <div v-for="(item, index) in items" :key="`goods-item-${index}`" class="goods-item">
+      <el-checkbox v-model="item.checked" class="item-checkbox" @change="onChangeItem" />
+      <el-image class="item-image" :src="item.pic" fit="fit" />
+      <div class="item-info">
+        <div class="'item-name'">{{ item.item_name }}</div>
+        <div v-if="item.item_spec_desc" class="spec-desc">{{ `规格：${item.item_spec_desc}` }}</div>
+        <el-input-number
+          v-model="item.num"
+          size="mini"
+          :step="1"
+          :min="1"
+          :max="item.num"
+          @change="onChangeItem"
+        />
+      </div>
+    </div>
+  </div>
+</template>
+
+<script>
+export default {
+  name: 'CompGoodsList',
+  props: ['value'],
+  data() {
+    return {
+      items: []
+    }
+  },
+  watch: {
+    value: function (val) {
+      this.items = val.items.map((item) => {
+        return {
+          ...item,
+          checked: false,
+          num: 10
+        }
+      })
+    }
+  },
+  created() {},
+  methods: {
+    onChangeItem() {
+      const items = this.items
+        .filter((item) => item.checked)
+        .map((item) => {
+          return {
+            id: item.id,
+            num: item.num
+          }
+        })
+      this.$emit('onChange', items)
+    }
+  }
+}
+</script>

@@ -84,7 +84,10 @@
         <el-switch v-model="content.baseForm.is_delivery" />
       </el-form-item>
 
-      <el-form-item v-if="content.baseForm.distribution_type != '1'" label="审核商品">
+      <el-form-item
+        v-if="content.baseForm.distribution_type != '1' && !VERSION_STANDARD"
+        label="审核商品"
+      >
         <el-switch v-model="content.baseForm.is_audit_goods" />
         <div class="form-item-tip">开启后，店铺添加的自有商品，需要平台审核通过后才可以上架</div>
       </el-form-item>

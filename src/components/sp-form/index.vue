@@ -99,7 +99,7 @@ export default {
         const comp = item.component()
         const { context, data } = comp
         // Vue.component(item.component)
-        if (data.ref) {
+        if (data && data.ref) {
           localComps.push(context.$refs[data.ref])
         }
         return comp

@@ -195,6 +195,25 @@ export default {
         latestPickupTime: latest_pickup_time
       }
     },
+    timeSlotsSort(times) {
+      let temp
+      for (let i = 0; i < times.length - 1; i++) {
+        for (let j = 0; j < times.length - 1; j++) {
+          const [t1] = times[j]
+          const [t2] = times[j + 1]
+          const [h1, m1] = t1.split(':')
+          const [h2, m2] = t2.split(':')
+          if (h1 * 60 + parseInt(m1) > h2 * 60 + parseInt(m2)) {
+            temp = JSON.parse(JSON.stringify(times[j]))
+            times[j] = JSON.parse(JSON.stringify(times[j + 1]))
+            times[j + 1] = temp
+          } else {
+            times[j] = JSON.parse(JSON.stringify(times[j]))
+          }
+        }
+      }
+      return times
+    },
     async onSubmit() {
       console.log('form:', JSON.stringify(this.form))
       const {
@@ -218,7 +237,7 @@ export default {
         address,
         area_code: areaNo,
         contract_phone: phone,
-        hours: timeSlots,
+        hours: this.timeSlotsSort(timeSlots),
         workdays: workDays,
         wait_pickup_days: value == 'current' ? 0 : days,
         latest_pickup_time: latestPickupTime

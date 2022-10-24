@@ -74,10 +74,13 @@
         </el-form-item>
         <el-form-item v-if="baseForm.is_ziti">
           <el-button type="text" @click="onSelectZiti">选择自提点</el-button>
+          <!-- url="/pickuplocation/list" -->
+          <!-- {{finderData}}, finderUrl: {{finderUrl}} -->
           <SpFinder
             ref="finder"
             no-selection
-            url="/pickuplocation/list"
+            :data="finderData"
+            :url="finderUrl"
             :setting="setting"
             :hooks="{
               beforeSearch: beforeSearch,
@@ -130,6 +133,7 @@ export default {
       dadaShow: false,
       baseForm: {
         merchant_id: '',
+        // 店铺类型： 0=自营；1=加盟
         distribution_type: 0,
         shop_code: '',
         name: '',
@@ -165,11 +169,20 @@ export default {
             buttonType: 'text',
             action: {
               handler: async ([row]) => {
-                await this.$api.pickuplocation.unbindZitiLocation({
-                  id: row.id,
-                  rel_distributor_id: this.distributor_id
-                })
-                this.$refs['finder'].refresh()
+                if (this.distributor_id) {
+                  await this.$api.pickuplocation.unbindZitiLocation({
+                    id: row.id,
+                    rel_distributor_id: this.distributor_id
+                  })
+                  this.$refs['finder'].refresh()
+                } else {
+                  const index = this.finderData.findIndex((item) => item.id == row.id)
+                  this.finderData.splice(index, 1)
+                  this.zitiList = this.finderData
+                  this.$nextTick(() => {
+                    this.$refs['finder'].refresh()
+                  })
+                }
               }
             }
           }
@@ -191,7 +204,9 @@ export default {
       distributionTypeList: [{ value: 0, label: '自营' }],
       merchantList: [],
       merchantLoading: false,
-      zitiList: []
+      zitiList: [],
+      finderData: [],
+      finderUrl: ''
     }
   },
   computed: {
@@ -209,7 +224,13 @@ export default {
     if (!this.VERSION_STANDARD) {
       this.distributionTypeList.push({ value: 1, label: '加盟' })
     }
+
     this.getShopInfo()
+
+    if (this.distributor_id) {
+      this.finderUrl = '/pickuplocation/list'
+      this.finderData = undefined
+    }
   },
   methods: {
     beforeSearch(params) {
@@ -230,6 +251,8 @@ export default {
         const [startTime, endTime] = res.hour.split('-')
         this.baseForm = {
           ...this.baseForm,
+          distribution_type: res.distribution_type,
+          // merchant_id: res.merchant_id,
           shop_code: res.shop_code,
           name: res.name,
           contact: res.contact,
@@ -255,6 +278,8 @@ export default {
           is_ziti: res.is_ziti,
           introduce: res.introduce
         }
+        await this.remoteMerchantList(res.merchant_name)
+        this.baseForm.merchant_id = res.merchant_id
       }
 
       if (!this.baseForm.lng) {
@@ -267,12 +292,20 @@ export default {
       const { data } = await this.$picker.zitilist({
         data: this.zitiList.map((item) => item.id)
       })
-      const ids = data.map((item) => item.id)
-      await this.$api.pickuplocation.bindZitiLocation({
-        id: ids,
-        rel_distributor_id: this.distributor_id
-      })
-      this.$refs['finder'].refresh()
+      if (this.distributor_id) {
+        const ids = data.map((item) => item.id)
+        await this.$api.pickuplocation.bindZitiLocation({
+          id: ids,
+          rel_distributor_id: this.distributor_id
+        })
+        this.$refs['finder'].refresh()
+      } else {
+        this.finderData = data
+        this.zitiList = data
+        this.$nextTick(() => {
+          this.$refs['finder'].refresh()
+        })
+      }
     },
     cancelSubmit() {
       this.$router.go(-1)
@@ -289,13 +322,18 @@ export default {
       })
     },
     async submitItemsActionConfirm() {
-      if (this.is_normal) {
-        await this.formValidate()
+      try {
+        if (this.is_normal) {
+          await this.formValidate()
+        }
+        await this.$refs['baseFormRef'].validate()
+        await this.$refs['dadaFormRef'].validate()
+      } catch (e) {
+        this.$message.error('店铺信息未填写完整')
+        return
       }
-      await this.$refs['baseFormRef'].validate()
-      await this.$refs['dadaFormRef'].validate()
       this.submitLoading = true
-      const { distributor_id } = this.$route.query
+      const { distributor_id, distributor_type } = this.$route.query
       const params = {
         ...this.baseForm,
         regions: getRegionNameById(this.baseForm.regions_id, district),
@@ -306,13 +344,21 @@ export default {
       } else {
         delete params.is_audit_goods
       }
+      // 总部自营自提点
+      if (distributor_type == 'distributor_self') {
+        params['distributor_self'] = 1
+      }
       try {
         if (distributor_id) {
           await this.$api.marketing.updateDistributorInfo(distributor_id, params)
           this.submitLoading = false
           this.$message.success('修改店铺成功')
         } else {
-          await this.$api.marketing.saveDistributorInfo(params)
+          const ids = this.finderData.map((item) => item.id)
+          await this.$api.marketing.saveDistributorInfo({
+            ...params,
+            pickup_location: ids
+          })
           this.submitLoading = false
           this.$message.success('保存店铺成功')
         }

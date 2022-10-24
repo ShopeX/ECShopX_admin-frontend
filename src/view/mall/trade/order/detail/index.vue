@@ -282,7 +282,7 @@
       </div>
     </el-card>
 
-    <el-card v-if="!VERSION_IN_PURCHASE" class="el-card--normal">
+    <el-card v-if="!VERSION_IN_PURCHASE && !VERSION_PLATFORM" class="el-card--normal">
       <div slot="header">分润信息</div>
       <el-row class="card-panel">
         <el-col
@@ -572,7 +572,8 @@ export default {
         delivery_status,
         community_info,
         invoice, // 发票信息对象
-        is_invoiced
+        is_invoiced,
+        ziti_info
       } = orderInfo
 
       let invoiceType,
@@ -695,8 +696,12 @@ export default {
         })(),
         payTypeTxt: PAY_TYPE[tradeInfo.payType],
         tradeStateTxt: PAY_STATUS[tradeInfo.tradeState],
-        timeStart: tradeInfo.timeStart ? moment(tradeInfo.timeStart * 1000).format('YYYY-MM-DD HH:mm:ss') : '',
-        timeExpire: tradeInfo.timeExpire ? moment(tradeInfo.timeExpire * 1000).format('YYYY-MM-DD HH:mm:ss') : '',
+        timeStart: tradeInfo.timeStart
+          ? moment(tradeInfo.timeStart * 1000).format('YYYY-MM-DD HH:mm:ss')
+          : '',
+        timeExpire: tradeInfo.timeExpire
+          ? moment(tradeInfo.timeExpire * 1000).format('YYYY-MM-DD HH:mm:ss')
+          : '',
         invoiceType: invoiceType == 'individual' ? '个人' : '企业',
         invoiceContent,
         invoicedCompanyName,
@@ -721,10 +726,11 @@ export default {
         // 门店订单
         this.addressInfo = `${distributor.store_address}（${distributor.store_name}）`
       } else {
-        // 普通订单配送方式是自提时，展示门店地址，非自提展示收货地址
+        // 普通订单配送方式是自提时，展示自提点，非自提展示收货地址
+        const { province, city, area, name: zitiName } = ziti_info || {}
         this.addressInfo =
           distributor.store_address && receipt_type == 'ziti'
-            ? `${distributor.store_address}（${distributor.store_name}）`
+            ? `${province}${city}${area}（${zitiName}）`
             : receipt_type != 'ziti'
             ? `${receiver_name} ${receiver_mobile} ${receiver_state}${receiver_city}${receiver_district}${receiver_address}`
             : '-- --'

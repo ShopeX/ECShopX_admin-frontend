@@ -1080,7 +1080,7 @@ export default {
       let that = this
 
       // distributor_id
-      getDistance(that.distributor_id).then((response) => {
+      getDistance().then((response) => {
         that.distanceForm.distance = response.data.data.distance
       })
       // console.log('this.distributor_id', that.distributor_id)
@@ -1094,8 +1094,7 @@ export default {
     handleSubmitDistance() {
       // 提交距离配置
       let params = {
-        distance: this.distanceForm.distance,
-        distributor_id:this.distributor_id
+        distance: this.distanceForm.distance,        
       }
       setDistance(params).then((response) => {
         this.$message({

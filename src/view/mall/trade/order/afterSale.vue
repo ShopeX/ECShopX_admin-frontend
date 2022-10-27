@@ -146,10 +146,10 @@ export default {
             />
           ),
           validator: (rule, value, callback) => {
-            if (!this.form.refund_point) {
-              callback('积分不能为空')
-            } else {
+            if (this.form.refund_point >= 0) {
               callback()
+            } else {
+              callback('积分不能为空')
             }
           }
         },

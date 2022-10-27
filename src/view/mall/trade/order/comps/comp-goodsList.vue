@@ -38,11 +38,11 @@
         <div class="'item-name'">{{ item.item_name }}</div>
         <div v-if="item.item_spec_desc" class="spec-desc">{{ `规格：${item.item_spec_desc}` }}</div>
         <el-input-number
-          v-model="item.num"
+          v-model="item.left_aftersales_num"
           size="mini"
           :step="1"
           :min="1"
-          :max="item.num"
+          :max="item.left_aftersales_num"
           @change="onChangeItem"
         />
       </div>
@@ -77,7 +77,7 @@ export default {
         .map((item) => {
           return {
             id: item.id,
-            num: item.num
+            num: item.left_aftersales_num
           }
         })
       this.$emit('onChange', items)

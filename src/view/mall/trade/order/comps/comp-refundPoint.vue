@@ -24,8 +24,9 @@ export default {
   created() {},
   methods: {
     getTotalFee() {
-      const { point_fee = 0 } = this.value || {}
-      return point_fee
+      const { items } = this.value || {}
+      const leftPoint = items.reduce((total, current) => total + current.remain_point, 0)
+      return leftPoint
     },
     onChangeFee() {
       this.$emit('onChange', this.fee)

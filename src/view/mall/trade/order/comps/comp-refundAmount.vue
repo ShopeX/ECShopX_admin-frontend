@@ -27,8 +27,9 @@ export default {
   created() {},
   methods: {
     getTotalFee() {
-      const { total_fee = 0 } = this.value || {}
-      return (total_fee / 100).toFixed(2)
+      const { items } = this.value || {}
+      const leftFee = items.reduce((total, current) => total + current.remain_fee, 0)
+      return (leftFee / 100).toFixed(2)
     },
     onChangeFee() {
       this.$emit('onChange', this.fee)

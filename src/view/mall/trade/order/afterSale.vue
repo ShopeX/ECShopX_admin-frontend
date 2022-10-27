@@ -210,6 +210,10 @@ export default {
       this.orderInfo = orderInfo
     },
     async onSubmit() {
+      await this.$confirm('请确认申请售后', '提示', {
+        confirmButtonText: '确定',
+        cancelButtonText: '取消'
+      })
       const { id: order_id } = this.$route.params
       const reason = REASONS.find((item) => item.value == this.form.reason).title
       const params = {
@@ -224,35 +228,39 @@ export default {
         pic: this.form.pic ? this.form.pic.url : ''
       }
       await this.$api.trade.salesAfterApply(params)
-
-      const h = this.$createElement
-      let msgTxt = ''
-      if (params.aftersales_type == 'ONLY_REFUND') {
-        msgTxt = '请耐心等待系统退款'
-      } else if (params.aftersales_type == 'REFUND_GOODS' && !params.goods_returned) {
-        msgTxt = '请通知买家尽快寄回商品'
-      } else if (params.aftersales_type == 'REFUND_GOODS' && params.goods_returned) {
-        msgTxt = '请耐心等待系统退款'
-      }
-      this.$msgbox({
-        title: '申请售后',
-        message: h('p', null, [
-          h('i', {
-            class: 'iconfont icon-check-circle',
-            style: 'color: var(--themeColor); margin-right: 4px;'
-          }),
-          h('span', { style: 'color: #333' }, '售后申请提交成功'),
-          h('div', { style: 'color: #999; font-size: 13px; margin-left: 20px;' }, msgTxt)
-        ]),
-        showCancelButton: true,
-        confirmButtonText: '确定',
-        cancelButtonText: '取消'
-      }).then((action) => {
-        this.$EventBus.$emit('event.tradelist.refresh')
-        setTimeout(() => {
-          this.$router.go(-1)
-        }, 1000)
-      })
+      this.$message.success('售后申请提交成功')
+      this.$EventBus.$emit('event.tradelist.refresh')
+      setTimeout(() => {
+        this.$router.go(-1)
+      }, 1000)
+      // const h = this.$createElement
+      // let msgTxt = ''
+      // if (params.aftersales_type == 'ONLY_REFUND') {
+      //   msgTxt = '请耐心等待系统退款'
+      // } else if (params.aftersales_type == 'REFUND_GOODS' && !params.goods_returned) {
+      //   msgTxt = '请通知买家尽快寄回商品'
+      // } else if (params.aftersales_type == 'REFUND_GOODS' && params.goods_returned) {
+      //   msgTxt = '请耐心等待系统退款'
+      // }
+      // this.$msgbox({
+      //   title: '申请售后',
+      //   message: h('p', null, [
+      //     h('i', {
+      //       class: 'iconfont icon-check-circle',
+      //       style: 'color: var(--themeColor); margin-right: 4px;'
+      //     }),
+      //     h('span', { style: 'color: #333' }, '售后申请提交成功'),
+      //     h('div', { style: 'color: #999; font-size: 13px; margin-left: 20px;' }, msgTxt)
+      //   ]),
+      //   showCancelButton: true,
+      //   confirmButtonText: '确定',
+      //   cancelButtonText: '取消'
+      // }).then((action) => {
+      //   this.$EventBus.$emit('event.tradelist.refresh')
+      //   setTimeout(() => {
+      //     this.$router.go(-1)
+      //   }, 1000)
+      // })
     }
   }
 }

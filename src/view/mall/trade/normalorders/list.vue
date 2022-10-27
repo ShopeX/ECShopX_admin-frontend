@@ -1177,11 +1177,12 @@ export default {
       console.log(this.cancelOrderForm)
       await this.$api.trade.cancelOrderConfirm(order_id, this.cancelOrderForm)
       this.cancelOrderDialog = false
-      await this.$confirm('订单已取消', '确认信息', {
-        distinguishCancelAndClose: true,
-        confirmButtonText: '确定',
-        cancelButtonText: '取消'
-      })
+      this.$message.success('订单取消成功!')
+      // await this.$confirm('订单已取消', '确认信息', {
+      //   distinguishCancelAndClose: true,
+      //   confirmButtonText: '确定',
+      //   cancelButtonText: '取消'
+      // })
       this.fetchList()
     },
     async deliverGoodsSubmit() {

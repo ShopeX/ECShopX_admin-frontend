@@ -144,7 +144,14 @@ export default {
                 this.form.refund_point = e
               }}
             />
-          )
+          ),
+          validator: (rule, value, callback) => {
+            if (!this.form.refund_point) {
+              callback('积分不能为空')
+            } else {
+              callback()
+            }
+          }
         },
         {
           label: '退款金额',
@@ -180,9 +187,7 @@ export default {
         {
           label: '补充描述',
           key: 'description',
-          type: 'textarea',
-          required: true,
-          message: '描述信息不能为空'
+          type: 'textarea'
         },
         {
           label: '上传凭证',

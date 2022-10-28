@@ -32,16 +32,16 @@ export default {
 
       const leftFee = items
         .filter((item) => item.checked)
-        .reduce((total, current) => total + current.total_fee, 0)
+        .reduce((total, current) => total + current.total_fee * current.refundNum, 0)
       this.refundFee = (leftFee / 100).toFixed(2)
+      this.fee = this.refundFee
+      this.$emit('onChangeFee', this.refundFee)
     },
     onChangeFee() {
-      this.$emit('onChange', this.fee)
+      this.$emit('onChangeFee', this.fee)
     },
     refundAll() {
-      const refundFee = this.getTotalFee()
-      this.fee = refundFee
-      this.$emit('onChange', refundFee)
+      this.$emit('onChange')
     }
   }
 }

@@ -18,7 +18,7 @@ export default {
   props: ['value'],
   data() {
     return {
-      fee: ''
+      fee: 0
     }
   },
   created() {},

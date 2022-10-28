@@ -44,7 +44,7 @@
         <div class="'item-price'">{{ `¥${item.total_fee / 100}` }}</div>
         <div v-if="item.item_spec_desc" class="spec-desc">{{ `规格：${item.item_spec_desc}` }}</div>
         <el-input-number
-          v-model="item.left_aftersales_num"
+          v-model="item.refundNum"
           size="mini"
           :disabled="!item.left_aftersales_num"
           :step="1"
@@ -85,10 +85,19 @@ export default {
         .map((item) => {
           return {
             id: item.id,
-            num: item.left_aftersales_num
+            num: item.refundNum
           }
         })
       this.$emit('onChange', items)
+    },
+    setSelectAllGoods() {
+      this.items.forEach((item) => {
+        if (item.left_aftersales_num) {
+          item.checked = true
+          item.refundNum = item.left_aftersales_num
+        }
+      })
+      this.onChangeItem()
     }
   }
 }

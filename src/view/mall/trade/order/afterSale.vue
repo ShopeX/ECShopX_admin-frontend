@@ -22,7 +22,7 @@
 </style>
 <template>
   <div>
-    <!-- form: {{ form }} -->
+    form: {{ form }}
     <SpForm
       ref="form"
       v-model="form"
@@ -79,7 +79,7 @@ export default {
         reason: '1',
         goods_returned: false,
         items: [],
-        refund_point: '',
+        refund_point: '0',
         refund_fee: '',
         description: '',
         pic: null
@@ -120,6 +120,7 @@ export default {
           key: 'items',
           component: () => (
             <CompGoodsList
+              ref='compGoodsRef'
               value={this.orderInfo}
               on-onChange={(e) => {
                 this.form.items = e
@@ -161,15 +162,21 @@ export default {
             <CompRefundAmount
               ref='compRefundRef'
               value={this.orderInfo}
-              on-onChange={(e) => {
+              on-onChangeFee={(e) => {
                 this.form.refund_fee = e
+              }}
+              on-onChange={(e) => {
+                this.$refs['compGoodsRef'].setSelectAllGoods()
+                {
+                  /* this.form.refund_fee = e */
+                }
               }}
             />
           ),
           validator: (rule, value, callback) => {
             if (!this.form.refund_fee) {
               callback('退款金额不能为空')
-            } else if (this.form.refund_fee * 100 > parseInt(this.orderInfo.total_fee)) {
+            } else if (this.form.refund_fee > this.$refs['compRefundRef'].refundFee) {
               callback('退款金额超过可退金额')
             } else {
               callback()
@@ -212,6 +219,7 @@ export default {
       orderInfo.items = orderInfo.items.map((item) => {
         return {
           ...item,
+          refundNum: item.left_aftersales_num,
           checked: false
         }
       })

@@ -351,9 +351,13 @@
                     </el-button>
                     <el-button type="text" @click="handlePrice(scope.row)"> 设置价格 </el-button>
                     <!--el-button v-if="popularizeSetting.isOpenPopularize == 'true'" type="text" @click="handleRebateConf(scope.row)" >分销配置</el-button-->
-                    <el-button type="text" @click="handleProfitPrice(scope.row)">
+                    <!-- <el-button
+                      v-if="!VERSION_IN_PURCHASE && !VERSION_PLATFORM"
+                      type="text"
+                      @click="handleProfitPrice(scope.row)"
+                    >
                       分润配置
-                    </el-button>
+                    </el-button> -->
                     <el-button type="text" @click="tagUpdate(scope.row)"> 标签 </el-button>
                     <el-button type="text" @click="updateItemsStore(scope.row)">
                       更改库存

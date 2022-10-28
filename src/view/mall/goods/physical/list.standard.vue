@@ -254,8 +254,22 @@
             <el-table-column prop="price" label="销售价（¥）" width="100" />
             <el-table-column label="状态" width="160">
               <template slot-scope="scope">
-                <span v-if="scope.row.is_can_sale">前台可售</span>
-                <span v-else>前台不可售</span>
+                <!-- <span v-if="scope.row.is_can_sale">前台可售</span>
+                <span v-else>前台不可售</span> -->
+                <span v-if="scope.row.audit_status == 'processing'">等待审核</span>
+                <el-popover
+                  v-else-if="scope.row.audit_status == 'rejected'"
+                  placement="top-start"
+                  width="200"
+                  trigger="hover"
+                  :content="scope.row.audit_reason"
+                >
+                  <el-button slot="reference" type="text"> 审核驳回 </el-button>
+                </el-popover>
+                <span v-else-if="scope.row.approve_status == 'onsale'">前台可销</span>
+                <span v-else-if="scope.row.approve_status == 'offline_sale'">前台不展示 </span>
+                <span v-else-if="scope.row.approve_status == 'only_show'">前台仅展示</span>
+                <span v-else>不可销售</span>
               </template>
             </el-table-column>
             <el-table-column prop="itemCatName" label="商品分类" width="150" />

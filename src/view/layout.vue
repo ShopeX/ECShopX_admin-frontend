@@ -7,10 +7,7 @@
           <div class="brand-con">
             <div v-if="login_type === 'merchant'">
               <div class="img-wrap">
-                <img
-                  :src="brandIco"
-                  alt=""
-                >
+                <img :src="brandIco" alt="">
               </div>
             </div>
             <router-link
@@ -23,39 +20,26 @@
               }`"
             >
               <div class="img-wrap">
-                <img
-                  :src="sys_logo"
-                  alt=""
-                >
+                <img :src="sys_logo" alt="">
               </div>
             </router-link>
           </div>
           <div class="main-menu__con">
-            <el-menu
-              text-color="#fff"
-              :default-active="activeIndex"
-              @select="handleSelectMenu"
-            >
+            <el-menu text-color="#fff" :default-active="activeIndex" @select="handleSelectMenu">
               <el-menu-item
                 v-for="(item, index) in menuList"
                 :key="`menu-item__${index}`"
                 :index="item.url"
               >
                 <router-link :to="getMenuUrl(item)">
-                  <i
-                    class="iconfont"
-                    :class="`icon-${item.icon}`"
-                  />
+                  <i class="iconfont" :class="`icon-${item.icon}`" />
                   <span>{{ item.name }}</span>
                 </router-link>
               </el-menu-item>
             </el-menu>
           </div>
         </div>
-        <div
-          v-if="$route.meta && !$route.meta.hidemenu"
-          class="sub-menu"
-        >
+        <div v-if="$route.meta && !$route.meta.hidemenu" class="sub-menu">
           <el-menu :default-active="activeSubIndex">
             <template v-for="(child, cindex) in submenuList">
               <el-submenu
@@ -68,10 +52,7 @@
                   <i class="iconfont icon-xiala" />{{ child.name }}
                 </template>
                 <template v-for="sub in child.children">
-                  <div
-                    :key="sub.url"
-                    class="menu-three"
-                  >
+                  <div :key="sub.url" class="menu-three">
                     <el-menu-item
                       v-if="sub.is_show && sub.is_menu"
                       :index="sub.url"
@@ -106,11 +87,7 @@
     </el-aside>
 
     <el-container class="app-container">
-      <el-header
-        v-if="isShowHeader()"
-        class="header"
-        height="48px"
-      >
+      <el-header v-if="isShowHeader()" class="header" height="48px">
         <div class="header-left">
           <!-- activeIndex: {{activeIndex}}
           activeSubIndex: {{activeSubIndex}} -->
@@ -118,10 +95,7 @@
         <div class="header-right">
           <div class="icon-nav">
             <el-badge v-if="login_type == 'distributor'">
-              <i
-                class="iconfont icon-store-alt"
-                @click="handleClickSelectShop"
-              />
+              <i class="iconfont icon-store-alt" @click="handleClickSelectShop" />
             </el-badge>
           </div>
           <div class="user-setting">
@@ -131,44 +105,20 @@
               trigger="hover"
               popper-class="logout-popper"
             >
-              <div
-                class="popover-row base"
-                @click="handleUserInfo"
-              >
+              <div class="popover-row base" @click="handleUserInfo">
                 <div class="avatar">
-                  <img
-                    v-if="avatar"
-                    class="user-avatar"
-                    :src="avatar"
-                  >
-                  <i
-                    v-else
-                    class="user-avatar iconfont icon-user-circle1"
-                  />
+                  <img v-if="avatar" class="user-avatar" :src="avatar">
+                  <i v-else class="user-avatar iconfont icon-user-circle1" />
                 </div>
                 <div class="username">
                   <div>{{ nick_name || name }}</div>
                   <small class="muted">账号信息</small>
                 </div>
               </div>
-              <div
-                class="popover-row exit-system"
-                @click="logout"
-              >
-                退出登录
-              </div>
+              <div class="popover-row exit-system" @click="logout">退出登录</div>
 
-              <img
-                v-if="avatar"
-                slot="reference"
-                class="user-avatar"
-                :src="avatar"
-              >
-              <i
-                v-else
-                slot="reference"
-                class="iconfont icon-user-circle1"
-              />
+              <img v-if="avatar" slot="reference" class="user-avatar" :src="avatar">
+              <i v-else slot="reference" class="iconfont icon-user-circle1" />
             </el-popover>
           </div>
         </div>
@@ -179,10 +129,15 @@
           :class="{ 'footer-fixed': $route.meta && $route.meta.footerFixed }"
         />
         <div class="system-release">
-          <img :src='loginBottomB2c' v-if='VERSION_B2C' alt="" class='system-image'>
-          <img :src='loginBottomInpurchase' v-if='VERSION_IN_PURCHASE' alt="" class='system-image'>
-          <img :src='loginBottomPlatform' v-if='VERSION_PLATFORM' alt="" class='system-image'>
-          <img :src='loginBottomStandard' v-if='VERSION_STANDARD' alt="" class='system-image'>
+          <img v-if="VERSION_B2C" :src="loginBottomB2c" alt="" class="system-image">
+          <img
+            v-if="VERSION_IN_PURCHASE"
+            :src="loginBottomInpurchase"
+            alt=""
+            class="system-image"
+          >
+          <img v-if="VERSION_PLATFORM" :src="loginBottomPlatform" alt="" class="system-image">
+          <img v-if="VERSION_STANDARD" :src="loginBottomStandard" alt="" class="system-image">
           <!-- {{ VUE_APP_SYSTEM_NAME }} -->
         </div>
         <div id="design-view" />
@@ -202,13 +157,13 @@ import { VERSION_STANDARD, isInSalesCenter } from '@/utils'
 import { micrApp } from '@/utils/micr-app'
 import store from '@/store'
 export default {
-  beforeRouteEnter (to, from, next) {
+  beforeRouteEnter(to, from, next) {
     next((vm) => {
       vm.activeIndex = to.matched[0].path || '/'
     })
   },
-  beforeRouteUpdate (to, from, next) {
-    console.log('beforeRouteUpdate', to, from, this.submenuList)
+  beforeRouteUpdate(to, from, next) {
+    // console.log('beforeRouteUpdate', to, from, this.submenuList)
     this.submenuList.forEach((menu, index) => {
       if (typeof menu.children == 'undefined') {
         if (menu.url == to.path) {
@@ -222,7 +177,7 @@ export default {
     })
     next()
   },
-  data () {
+  data() {
     return {
       isShowAside: 'false',
       findMenu: false,
@@ -260,7 +215,7 @@ export default {
         return menus
       }
     }),
-    submenuList () {
+    submenuList() {
       let list = []
       const fd = this.menuList.find((item) => {
         // const paths = item.url.match(/\/[a-z]+/g)
@@ -275,11 +230,11 @@ export default {
       })
       return fd ? fd.children : []
     },
-    activeSubIndex () {
+    activeSubIndex() {
       return this.$route.matched.length > 1 ? this.$route.matched[1].path : ''
     }
   },
-  mounted () {
+  mounted() {
     this.getSystemSetting()
     micrApp.init()
 
@@ -288,10 +243,10 @@ export default {
   },
   methods: {
     ...mapMutations(['SYSTEM_EXIT']),
-    isShowHeader () {
+    isShowHeader() {
       return !isInSalesCenter()
     },
-    handleSelectMenu (key) {
+    handleSelectMenu(key) {
       const paths = key.match(/\/\w+/g)
       if ((paths && paths[0] == '/shopadmin') || (paths && paths[0] == '/dealer')) {
         this.activeIndex = `${paths[0]}${paths[1]}`
@@ -303,7 +258,7 @@ export default {
       // this.activeSubIndex = getUrl
     },
     // 获取系统配置信息
-    async getSystemSetting () {
+    async getSystemSetting() {
       const { logo } = await this.$api.system.getBrandLogo()
       if (logo) {
         this.brandIco = logo
@@ -323,7 +278,7 @@ export default {
       this.$store.dispatch('setSysLogo', this.brandIco)
     },
     // 获取菜单url
-    getMenuUrl (item) {
+    getMenuUrl(item) {
       let url = ''
       if (item.children) {
         if (item.children[0].children) {
@@ -336,12 +291,12 @@ export default {
       }
       return url
     },
-    handleClickSelectShop () {
+    handleClickSelectShop() {
       this.$router.push({
         path: '/shopadmin/shoplist'
       })
     },
-    handleUserInfo () {
+    handleUserInfo() {
       // debugger
       console.log(this.matchInternalRoute('admininfo'))
       // debugger
@@ -352,7 +307,7 @@ export default {
       //   path: this.matchInternalRoute('admininfo')
       // })
     },
-    async logout () {
+    async logout() {
       const loginType = this.login_type
       await this.$api.login.getAuthorizelogout()
       await this.SYSTEM_EXIT()
@@ -462,7 +417,7 @@ export default {
 .sub-menu {
   width: 130px;
   overflow-y: auto;
-  background: #f6f7f9;
+  background: #fff;
   box-shadow: 1px 0px 0px 0px rgba(0, 0, 0, 0.06);
   &::-webkit-scrollbar {
     display: none; /* Chrome Safari */
@@ -471,7 +426,7 @@ export default {
   //   margin-bottom: 20px;
   // }
   .el-menu {
-    background: #f6f7f9;
+    background: #fff;
     border-right-width: 0;
     margin-top: 8px;
   }
@@ -555,7 +510,7 @@ export default {
 <style lang="scss">
 .page-layout {
   .el-menu {
-    background: #f6f7f9;
+    background: #fff;
   }
   .el-submenu {
     &.is-opened {

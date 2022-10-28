@@ -109,7 +109,7 @@ export default {
           {
             name: '状态',
             key: 'is_can_sale',
-            render: (h, { row }) => h('span', {}, this.getApproveStatus(row.is_can_sale))
+            render: (h, { row }) => h('span', {}, this.getApproveStatus(row.approve_status))
           }
           // {
           //   name: '上下架操作',
@@ -149,12 +149,12 @@ export default {
       return params
     },
     getApproveStatus(status) {
-      return status ? '前台可售' : '前台不可售'
-      // const approveStatus = {
-      //   onsale: '前台可销售',
-      //   offline_sale: '前台不展示'
-      // }
-      // return approveStatus[status] || '不可销售'
+      // return status ? '前台可售' : '前台不可售'
+      const approveStatus = {
+        onsale: '前台可销售',
+        offline_sale: '前台不展示'
+      }
+      return approveStatus[status] || '不可销售'
     },
     onShowPopover({ store }) {
       this.skuEditInput = store

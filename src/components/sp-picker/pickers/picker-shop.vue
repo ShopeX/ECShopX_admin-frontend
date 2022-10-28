@@ -16,10 +16,30 @@
       margin-right: 8px;
     }
   }
+  .sp-finder {
+    &.no-multiple {
+      .sp-finder-bd {
+        .el-table__fixed-header-wrapper {
+          table thead {
+            tr {
+              th {
+                &:nth-child(1) {
+                  .el-checkbox {
+                    display: none;
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
 }
 </style>
 <template>
   <div class="picker-shop">
+    <!-- multiple：{{ multiple }}, {{ value }} -->
     <SpFilterForm :model="formData" @onSearch="onSearch" @onReset="onSearch">
       <SpFilterFormItem prop="region">
         <el-cascader
@@ -37,6 +57,7 @@
     </SpFilterForm>
     <SpFinder
       ref="finder"
+      :class="['shop-finder', { 'no-multiple': !multiple }]"
       url="/distributors"
       :fixed-row-action="true"
       :setting="{
@@ -46,7 +67,7 @@
         beforeSearch: beforeSearch
         // afterSearch: afterSearch
       }"
-      @selection-change="onSelectionChange"
+      @select="onSelect"
     />
   </div>
 </template>
@@ -71,7 +92,8 @@ export default {
       },
       district,
       regionArea: [],
-      loading: false
+      loading: false,
+      multiple: this.value.multiple ?? true
     }
   },
   created() {
@@ -105,8 +127,18 @@ export default {
     onSearch() {
       this.$refs.finder.refresh()
     },
-    onSelectionChange(val) {
-      this.updateVal(val)
+    onSelect(selection, row) {
+      if (this.multiple) {
+        this.updateVal(selection)
+      } else {
+        const { finderTable } = this.$refs.finder.$refs
+        console.log('finderTable:', finderTable)
+        finderTable.clearSelection()
+        setTimeout(() => {
+          finderTable.$refs.finderTable.setSelection([row])
+          this.updateVal([row])
+        })
+      }
     }
   }
 }

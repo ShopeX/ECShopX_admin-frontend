@@ -1,106 +1,75 @@
+<style lang="scss">
+.shop-location {
+  .el-form-item__content {
+    width: auto !important;
+  }
+  .el-input {
+    width: 180px;
+  }
+  .separator {
+    margin: 0 3px;
+  }
+  .regions {
+    margin-right: 10px;
+  }
+  .address {
+    width: 500px;
+    margin-right: 10px;
+  }
+}
+.bm-view {
+  width: 100%;
+  height: 300px;
+}
+#qqmap_rslist {
+  border-right: 1px solid #e7e7eb;
+}
+#qqmap_container {
+  float: left;
+  width: 800px;
+  height: 400px;
+}
+</style>
 <template>
-  <el-card>
+  <el-card class="shop-location el-card--normal">
     <div slot="header">
-      <div style="display: flex; align-items: center">
-        <div>店铺位置</div>
-        <div class="frm-tips">
+      <div>
+        店铺位置<span class="frm-tips">
           （店铺定位后保存店铺经纬度，才可以开启自提，否则店铺不支持自提功能）
+        </span>
+      </div>
+    </div>
+    <el-form label-width="120px">
+      <el-form-item class="form-item-region" label="店铺经纬度">
+        <el-input v-model="content.baseForm.lng" readonly placeholder="经度" />
+        <span class="separator">-</span>
+        <el-input v-model="content.baseForm.lat" readonly placeholder="纬度" />
+      </el-form-item>
+
+      <el-form-item class="form-item-region" label="地理位置">
+        <el-cascader v-model="content.baseForm.regions_id" class="regions" :options="regions" />
+        <el-input
+          v-model="content.baseForm.address"
+          class="address"
+          placeholder="请输入详细地址（去除省市县）"
+        />
+        <el-button type="primary" @click="searchKeyword()"> 搜索定位 </el-button>
+      </el-form-item>
+
+      <el-form-item>
+        <div id="qqmap_container" />
+      </el-form-item>
+
+      <div v-show="qqmap_infowin_flag" id="qqmap_infowin">
+        <el-col>
+          <el-button type="primary" @click="importPosition(poi_info)"> 导入该位置信息 </el-button>
+        </el-col>
+        <el-col>{{ poi_info.name }}</el-col>
+        <div class="frm-tips">
+          {{ poi_info.address }}
         </div>
       </div>
-    </div>
-    <el-row>
-      <!-- <el-col :span="10">
-        <el-form-item label="所属区域">
-          <div>
-            <el-select
-              v-model="form.regionauth_id"
-              placeholder="区域"
-              style="width: 100%"
-            >
-              <el-option
-                v-for="(item, index) in regionauthList"
-                :key="index"
-                :label="item.regionauth_name"
-                :value="item.regionauth_id"
-              />
-            </el-select>
-          </div>
-        </el-form-item>
-      </el-col> -->
-      <el-col :span="12">
-        <el-form-item
-          inline="true"
-          label="店铺经纬度"
-        >
-          <el-col :span="8">
-            <el-input
-              v-model="form.lng"
-              readonly
-              placeholder="经度"
-            />
-          </el-col>
-          <el-col
-            :span="4"
-            class="content-center"
-          >
-            -
-          </el-col>
-          <el-col :span="8">
-            <el-input
-              v-model="form.lat"
-              readonly
-              placeholder="纬度"
-            />
-          </el-col>
-        </el-form-item>
-      </el-col>
-    </el-row>
-    <el-row>
-      <el-form-item label="地理位置">
-        <el-cascader
-          v-model="form.regions_id"
-          :options="regions"
-          style="width: 200px"
-          @change="handleRegionChange"
-        />
-        <el-input
-          id="keyword"
-          v-model="form.address"
-          placeholder="请输入详细地址（去除省市县）"
-          style="width: 500px"
-        />
-        <el-button
-          type="primary"
-          @click="searchKeyword()"
-        >
-          搜索定位
-        </el-button>
-      </el-form-item>
-    </el-row>
-
-    <el-row>
-      <el-col :span="20">
-        <div id="qqmap_container" />
-      </el-col>
-    </el-row>
-
-    <div
-      v-show="qqmap_infowin_flag"
-      id="qqmap_infowin"
-    >
-      <el-col>
-        <el-button
-          type="primary"
-          @click="imp_poi(poi_info)"
-        >
-          导入该位置信息
-        </el-button>
-      </el-col>
-      <el-col>{{ poi_info.name }}</el-col>
-      <div class="frm-tips">
-        {{ poi_info.address }}
-      </div>
-    </div>
+    </el-form>
   </el-card>
 </template>
 
@@ -110,7 +79,7 @@ import { getRegionauth } from '@/api/regionauth'
 import { getDistributorInfo } from '@/api/marketing'
 
 // 取选中地区的值
-function getCascaderObj (val, opt) {
+function getCascaderObj(val, opt) {
   return val.map(function (value, index, array) {
     for (var itm of opt) {
       if (itm.value === value) {
@@ -123,17 +92,9 @@ function getCascaderObj (val, opt) {
 }
 
 export default {
-  props: ['externalForm'],
-  data () {
-    const { regionauth_id, lng, lat, regions_id, address } = this.externalForm
+  inject: ['content'],
+  data() {
     return {
-      form: {
-        regionauth_id: regionauth_id,
-        lng: lng,
-        lat: lat,
-        regions_id: regions_id,
-        address: address
-      },
       regions: district,
       typeList: [],
       regionauthList: [],
@@ -144,76 +105,46 @@ export default {
       qqmap_infowin_flag: false
     }
   },
-  mounted () {
+  mounted() {
     this.getRegionauthList()
-    this.distributor_id = this.$route.query.distributor_id
 
-    this.$emit('onChangeData', 'distributor_id', this.distributor_id)
+    // if (this.distributor_id || this.$store.getters.login_type == 'distributor') {
+    //   getDistributorInfo({ distributor_id: this.distributor_id }).then((res) => {
+    //     let formData = res.data.data
+    //     this.form = res.data.data
 
-    if (this.distributor_id || this.$store.getters.login_type == 'distributor') {
-      getDistributorInfo({ distributor_id: this.distributor_id }).then((res) => {
-        let formData = res.data.data
-        this.form = res.data.data
+    //     this.$emit('onChangeData', 'form', formData)
 
-        this.$emit('onChangeData', 'form', formData)
+    //     if (
+    //       this.form.regions[0] == '北京市' ||
+    //       this.form.regions[0] == '天津市' ||
+    //       this.form.regions[0] == '上海市' ||
+    //       this.form.regions[0] == '重庆市'
+    //     ) {
+    //       this.searchRegion = this.form.regions[0] + this.form.regions[2]
+    //     } else {
+    //       this.searchRegion = this.form.regions[0] + this.form.regions[1] + this.form.regions[2]
+    //     }
 
-        if (
-          this.form.regions[0] == '北京市' ||
-          this.form.regions[0] == '天津市' ||
-          this.form.regions[0] == '上海市' ||
-          this.form.regions[0] == '重庆市'
-        ) {
-          this.searchRegion = this.form.regions[0] + this.form.regions[2]
-        } else {
-          this.searchRegion = this.form.regions[0] + this.form.regions[1] + this.form.regions[2]
-        }
+    //     if (!this.form.lat) {
+    //       this.qqmapinit(39.916527, 116.397128)
+    //     } else {
+    //       this.qqmapinit(this.form.lat, this.form.lng)
+    //     }
+    //     this.$emit('onChangeData', 'disabled', formData.shop_code ? true : false)
+    //     this.$emit('initForm', formData)
+    //   })
+    // } else {
+    //   // 添加门店时初始化地图
+    //   this.qqmapinit(39.916527, 116.397128)
+    // }
+    // let distributor_type = this.$route.query.distributor_type
 
-        if (!this.form.lat) {
-          this.qqmapinit(39.916527, 116.397128)
-        } else {
-          this.qqmapinit(this.form.lat, this.form.lng)
-        }
-        this.$emit('onChangeData', 'disabled', formData.shop_code ? true : false)
-        this.$emit('initForm', formData)
-      })
-    } else {
-      // 添加门店时初始化地图
-      this.qqmapinit(39.916527, 116.397128)
-    }
-    let distributor_type = this.$route.query.distributor_type
-
-    this.$emit('onChangeData', 'distributor_type', distributor_type)
-    if (distributor_type) {
-      this.form.distributor_self = 1
-    }
+    // this.$emit('onChangeData', 'distributor_type', distributor_type)
+    // if (distributor_type) {
+    //   this.form.distributor_self = 1
+    // }
   },
-  // watch: {
-  //   externalForm: {
-  //     handler(val) {
-  //       console.log("hander", val);
-  //       if (val.regionauth_id) {
-  //         this.form.regionauth_id = val.regionauth_id;
-  //       }
-  //       if (val.lng) {
-  //         this.form.lng = val.lng;
-  //       }
-  //       if (val.lat) {
-  //         this.form.lat = val.lat;
-  //       }
-  //       if (val.regions_id) {
-  //         this.form.regions_id = val.regions_id;
-  //       }
-  //       if (val.regions) {
-  //         this.form.regions = val.regions;
-  //       }
-  //       if (val.address) {
-  //         debugger
-  //         this.form.address = val.address;
-  //       }
-  //     },
-  //     deep: true,
-  //   },
-  // },
   methods: {
     clearOverlays: function (overlays) {
       //清除地图上的marker
@@ -271,7 +202,7 @@ export default {
                 that.poi_info = pois[n] //将选点位置信息存入poi_info
                 infoWin.setContent(document.getElementById('qqmap_infowin'))
                 infoWin.setPosition(pois[n].latLng)
-                that.form.address = pois[n].name
+                that.content.baseForm.address = pois[n].name
                 console.log(pois[n])
               })
             })(i)
@@ -287,93 +218,56 @@ export default {
         }
       })
     },
-    handleRegionChange: function (value) {
-      var vals = getCascaderObj(value, this.regions)
-      this.form.regions_id = []
-      this.form.regions = []
-      for (var i = 0; i < vals.length; i++) {
-        this.form.regions_id[i] = vals[i].value
-        this.form.regions[i] = vals[i].label
-      }
-
-      if (
-        this.form.regions[0] == '北京市' ||
-        this.form.regions[0] == '天津市' ||
-        this.form.regions[0] == '上海市' ||
-        this.form.regions[0] == '重庆市'
-      ) {
-        this.searchRegion = this.form.regions[0] + this.form.regions[2]
-      } else {
-        this.searchRegion = this.form.regions[0] + this.form.regions[1] + this.form.regions[2]
-      }
-    },
-    getRegionauthList () {
-      getRegionauth().then((res) => {
-        this.regionauthList = res.data.data.list
-      })
+    async getRegionauthList() {
+      const { list } = await this.$api.regionauth.getRegionauth()
+      this.regionauthList = list
     },
     searchKeyword: function () {
       //设置搜索的范围和关键字等属性
-      if (!this.searchRegion) {
-        this.$message({
-          message: '请选择地区',
-          type: 'warning'
-        })
-        return ''
+      const { regions_id, address } = this.content.baseForm
+      if (regions_id.length == 0) {
+        this.$message.error('请选择地区')
+        return
       }
-      if (!this.form.address) {
-        this.$message({
-          message: '请输入具体位置',
-          type: 'warning'
-        })
-        return ''
+      if (!address) {
+        this.$message.error('请输入具体位置')
+        return
       }
-      var region = this.searchRegion
-      var keyword = this.form.address
-      var pageIndex = 0
-      var pageCapacity = 5
+
+      const provice = district.find((item) => item.value == regions_id[0])
+      const city = provice.children.find((item) => item.value == regions_id[1])
+      const country = city.children.find((item) => item.value == regions_id[2])
+
+      let region = ''
+      let newRegion = ''
+      // 直辖市
+      if (['110000', '120000', '310000', '500000'].indexOf(provice.value) > -1) {
+        region = `${provice.label}${country.label}`
+        newRegion = `${provice.label}`
+      } else {
+        region = `${provice.label}${city.label}${country.label}`
+        newRegion = `${provice.label}${city.label}`
+      }
+
       this.clearOverlays(this.markers)
       //根据输入的城市设置搜索范围
       console.log(region)
-      const newRegion = region.slice(0, region.indexOf('市') + 1)
       console.log(newRegion)
-      // let region2 = '广东省东莞市'
       this.searchService.setLocation(newRegion) //设置省市区
       //设置搜索页码
-      this.searchService.setPageIndex(pageIndex)
+      this.searchService.setPageIndex(0)
       //设置每页的结果数
-      this.searchService.setPageCapacity(pageCapacity)
+      this.searchService.setPageCapacity(5)
       //根据输入的关键字在搜索范围内检索
-      console.log(keyword)
-      this.searchService.search(keyword)
+      console.log(address)
+      this.searchService.search(address)
     },
-    imp_poi: function (poi_info) {
-      console.log(poi_info)
-      // this.form.name = poi_info.name
-      this.form.lng = poi_info.latLng.lng
-      this.form.lat = poi_info.latLng.lat
-      this.form.address = poi_info.name
-
-      this.$emit('onChangeData', 'form', {
-        lng: this.form.lng,
-        lat: this.form.lat
-      })
+    importPosition: function ({ latLng, name }) {
+      console.log(latLng, name)
+      this.content.baseForm.lng = latLng.lng
+      this.content.baseForm.lat = latLng.lat
+      this.content.baseForm.address = name
     }
   }
 }
 </script>
-
-<style scoped>
-.bm-view {
-  width: 100%;
-  height: 300px;
-}
-#qqmap_rslist {
-  border-right: 1px solid #e7e7eb;
-}
-#qqmap_container {
-  float: left;
-  width: 800px;
-  height: 400px;
-}
-</style>

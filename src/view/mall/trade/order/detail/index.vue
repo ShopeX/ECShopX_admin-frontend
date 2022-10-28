@@ -252,13 +252,28 @@
           <span class="card-panel__value">{{ addressInfo }}</span>
         </div>
 
+        <div v-if="orderInfo.receipt_type == 'ziti'" class="card-panel-item">
+          <span class="card-panel__label">提货人:</span>
+          <span class="card-panel__value">{{ orderInfo.receiver_name }}</span>
+        </div>
+        <div v-if="orderInfo.receipt_type == 'ziti'" class="card-panel-item">
+          <span class="card-panel__label">提货时间:</span>
+          <span class="card-panel__value">{{
+            `${orderInfo.ziti_info.pickup_date} ${orderInfo.ziti_info.pickup_time.join('~')}`
+          }}</span>
+        </div>
+        <div v-if="orderInfo.receipt_type == 'ziti'" class="card-panel-item">
+          <span class="card-panel__label">联系电话:</span>
+          <span class="card-panel__value">{{ orderInfo.receiver_mobile }}</span>
+        </div>
+
         <div v-if="orderInfo.subdistrict_parent" class="card-panel-item">
-          <span class="card-panel__label">街道：</span>
+          <span class="card-panel__label">街道:</span>
           <span class="card-panel__value">{{ orderInfo.subdistrict_parent }}</span>
         </div>
 
         <div v-if="orderInfo.subdistrict" class="card-panel-item">
-          <span class="card-panel__label">社区：</span>
+          <span class="card-panel__label">社区:</span>
           <span class="card-panel__value">{{ orderInfo.subdistrict }}</span>
         </div>
 
@@ -282,7 +297,7 @@
       </div>
     </el-card>
 
-    <el-card v-if="!VERSION_IN_PURCHASE" class="el-card--normal">
+    <!-- <el-card v-if="!VERSION_IN_PURCHASE && !VERSION_PLATFORM" class="el-card--normal">
       <div slot="header">分润信息</div>
       <el-row class="card-panel">
         <el-col
@@ -295,7 +310,7 @@
           <span class="card-panel__value">{{ getFiledValue(item.field) }}</span>
         </el-col>
       </el-row>
-    </el-card>
+    </el-card> -->
 
     <div v-if="btnActions.length > 0" class="footer-container">
       <el-button
@@ -572,7 +587,8 @@ export default {
         delivery_status,
         community_info,
         invoice, // 发票信息对象
-        is_invoiced
+        is_invoiced,
+        ziti_info
       } = orderInfo
 
       let invoiceType,
@@ -695,8 +711,12 @@ export default {
         })(),
         payTypeTxt: PAY_TYPE[tradeInfo.payType],
         tradeStateTxt: PAY_STATUS[tradeInfo.tradeState],
-        timeStart: tradeInfo.timeStart ? moment(tradeInfo.timeStart * 1000).format('YYYY-MM-DD HH:mm:ss') : '',
-        timeExpire: tradeInfo.timeExpire ? moment(tradeInfo.timeExpire * 1000).format('YYYY-MM-DD HH:mm:ss') : '',
+        timeStart: tradeInfo.timeStart
+          ? moment(tradeInfo.timeStart * 1000).format('YYYY-MM-DD HH:mm:ss')
+          : '',
+        timeExpire: tradeInfo.timeExpire
+          ? moment(tradeInfo.timeExpire * 1000).format('YYYY-MM-DD HH:mm:ss')
+          : '',
         invoiceType: invoiceType == 'individual' ? '个人' : '企业',
         invoiceContent,
         invoicedCompanyName,
@@ -721,10 +741,11 @@ export default {
         // 门店订单
         this.addressInfo = `${distributor.store_address}（${distributor.store_name}）`
       } else {
-        // 普通订单配送方式是自提时，展示门店地址，非自提展示收货地址
+        // 普通订单配送方式是自提时，展示自提点，非自提展示收货地址
+        const { province, city, area, address, name: zitiName } = ziti_info || {}
         this.addressInfo =
           distributor.store_address && receipt_type == 'ziti'
-            ? `${distributor.store_address}（${distributor.store_name}）`
+            ? `${province}${city}${area}${address}（${zitiName}）`
             : receipt_type != 'ziti'
             ? `${receiver_name} ${receiver_mobile} ${receiver_state}${receiver_city}${receiver_district}${receiver_address}`
             : '-- --'

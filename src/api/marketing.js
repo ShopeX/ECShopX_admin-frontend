@@ -16,6 +16,22 @@ export function saveDistributor(query) {
   }
 }
 
+export function saveDistributorInfo(params) {
+  return fetch({
+    url: '/distributor',
+    method: 'post',
+    params
+  })
+}
+
+export function updateDistributorInfo(id, params) {
+  return fetch({
+    url: `/distributor/${id}`,
+    method: 'put',
+    params
+  })
+}
+
 export function saveOpen(data) {
   return fetch({
     url: '/hfpay/enterapply/opensplit',

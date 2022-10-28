@@ -542,3 +542,12 @@ export function changePriceConfirm(params) {
     params
   })
 }
+
+// 售后申请
+export function salesAfterApply(params) {
+  return fetch({
+    url: '/aftersales/apply',
+    method: 'post',
+    params
+  })
+}

@@ -21,6 +21,10 @@ export default {
         {
           path: 'process/:itemId?',
           component: () => import('@/view/mall/trade/order/process')
+        },
+        {
+          path: 'after-sale/:id?',
+          component: () => import('@/view/mall/trade/order/afterSale')
         }
       ]
     },
@@ -70,7 +74,17 @@ export default {
     {
       path: 'entitytrade/logistics',
       name: `物流公司`,
-      component: () => import('@/view/mall/trade/logistics/index')
+      component: () => import('@/view/mall/trade/logistics/index'),
+      children: [
+        {
+          path: 'addziti/:id?',
+          component: () => import('@/view/mall/trade/logistics/add-ziti'),
+          beforeEnter: ({ params, meta }, from, next) => {
+            meta.title = params.id ? '编辑自提点' : '新增自提点'
+            next()
+          }
+        }
+      ]
     },
     {
       path: 'servicepayment',

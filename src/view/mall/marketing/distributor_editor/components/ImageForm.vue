@@ -1,53 +1,48 @@
+<style scoped lang="scss">
+.upload-box {
+  width: 120px;
+  height: 120px;
+  align-items: center;
+  justify-content: center;
+  display: flex;
+  border: 1px dashed #ccc;
+  border-radius: 5px;
+  img {
+    width: 100%;
+  }
+}
+.icon-camera {
+  font-size: 40px;
+  color: #d7d7d7;
+}
+.form-item-tip {
+  font-size: 13px;
+  color: #999;
+  line-height: initial;
+}
+</style>
+
 <template>
-  <el-card>
+  <el-card class="el-card--normal">
     <div slot="header">
-      <div style="display: flex; align-items: center">
-        <div>店铺图片</div>
-        <div class="frm-tips">
-          （只能上传jpg/png文件，且不超过2M）
-        </div>
-      </div>
+      <div>店铺图片<span class="frm-tips">（只能上传jpg/png文件，且不超过2M）</span></div>
     </div>
-    <el-row>
-      <el-col :span="8">
-        <el-form-item>
-          <div>店铺Logo <span class="tips">推荐尺寸：140px * 140px</span></div>
-          <div
-            class="upload-box"
-            @click="handleImgPicker('logo')"
-          >
-            <img
-              v-if="form.logo"
-              :src="form.logo"
-              class="avatar"
-            >
-            <i
-              v-else
-              class="iconfont icon-camera avatar-uploader-icon"
-            />
-          </div>
-        </el-form-item>
-      </el-col>
-      <el-col :span="12">
-        <el-form-item>
-          <div>商铺背景图片<span class="tips">推荐尺寸：400px * 260px</span></div>
-          <div
-            class="upload-box"
-            @click="handleImgPicker('banner')"
-          >
-            <img
-              v-if="form.banner"
-              :src="form.banner"
-              class="avatar"
-            >
-            <i
-              v-else
-              class="iconfont icon-camera avatar-uploader-icon"
-            />
-          </div>
-        </el-form-item>
-      </el-col>
-    </el-row>
+    <el-form label-width="120px" :inline="true">
+      <el-form-item label="店铺Logo">
+        <div class="upload-box" @click="handleImgPicker('logo')">
+          <img v-if="content.baseForm.logo" :src="content.baseForm.logo" class="avatar">
+          <i v-else class="iconfont icon-camera" />
+        </div>
+        <div class="form-item-tip">推荐尺寸：140px * 140px</div>
+      </el-form-item>
+      <el-form-item label="商铺背景">
+        <div class="upload-box" @click="handleImgPicker('banner')">
+          <img v-if="content.baseForm.banner" :src="content.baseForm.banner" class="avatar">
+          <i v-else class="iconfont icon-camera" />
+        </div>
+        <div class="form-item-tip">推荐尺寸：400px * 260px</div>
+      </el-form-item>
+    </el-form>
 
     <imgPicker
       :dialog-visible="imgDialog"
@@ -59,14 +54,13 @@
 </template>
 
 <script>
-import { getDadaInfo } from '@/api/mall/dada'
 import imgPicker from '@/components/imageselect'
 export default {
   components: {
     imgPicker
   },
-  props: ['externalForm'],
-  data () {
+  inject: ['content'],
+  data() {
     return {
       pickerImgType: 'logo',
       imgDialog: false,
@@ -77,22 +71,9 @@ export default {
       }
     }
   },
-  watch: {
-    externalForm: {
-      handler (val) {
-        if (val.logo) {
-          this.form.logo = val.logo
-        }
-        if (val.banner) {
-          this.form.banner = val.banner
-        }
-      },
-      deep: true
-    }
-  },
-  mounted () {},
+  mounted() {},
   methods: {
-    closeImgDialog () {
+    closeImgDialog() {
       this.imgDialog = false
       this.isGetImage = false
     },
@@ -101,34 +82,14 @@ export default {
       this.imgDialog = true
       this.isGetImage = true
     },
-    pickImg (data) {
+    pickImg(data) {
       if (this.pickerImgType == 'logo') {
-        this.form.logo = data.url
+        this.content.baseForm.logo = data.url
       } else {
-        this.form.banner = data.url
+        this.content.baseForm.banner = data.url
       }
       this.imgDialog = false
     }
   }
 }
 </script>
-
-<style scoped lang="scss">
-.upload-box {
-  width: 150px;
-  height: 150px;
-  align-items: center;
-  display: flex;
-  border: 1px dashed #ccc;
-  border-radius: 5px;
-  img {
-    width: 100%;
-  }
-}
-.tips {
-  color: #8d8d8d;
-  line-height: 1.5;
-  font-size: 12px;
-  padding: 10px 0;
-}
-</style>

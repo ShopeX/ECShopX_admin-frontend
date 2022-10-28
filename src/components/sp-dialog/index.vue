@@ -62,10 +62,18 @@ export default {
   },
   created() {
     console.log('sp-dialog. created')
+    // this.$once('input', () => {
+    //   this.$destroy()
+    //   // this.$el.remove()
+    // })
   },
+  // destroyed() {
+  //   debugger
+  // },
   methods: {
     handleCancel() {
       this.$emit('input', false)
+      // this.$destroy()
     },
     handleSubmit() {
       this.$refs['form'].validate((valid) => {
@@ -164,13 +172,17 @@ export default {
       }
     })
 
+    if (!value) {
+      return null
+    }
+
     return (
       <el-dialog
         class='sp-dialog'
         title={title}
         visible={value}
         width={width}
-        destroy-on-close={destroyOnClose}
+        append-to-body
         onclose={this.handleCancel}
       >
         <el-form

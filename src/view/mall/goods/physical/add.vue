@@ -141,7 +141,7 @@
       <div class="footer-container">
         <el-button @click.native="handleCancel"> 取消 </el-button>
         <el-button
-          v-if="!IS_DISTRIBUTOR"
+          v-if="!VERSION_STANDARD || (!IS_DISTRIBUTOR && VERSION_STANDARD)"
           type="primary"
           :loading="submitLoading"
           @click="handleSave"

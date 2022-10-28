@@ -107,12 +107,12 @@ Vue.filter('keepTwoDecimalFull', function (num) {
 })
 
 // 格式化金钱
-Vue.filter('formatNumMoney', function formatNum (number) {
+Vue.filter('formatNumMoney', function formatNum(number) {
   return number.toFixed(2).toLocaleString()
 })
 
 // 格式化时间
-Vue.filter('formatTimestamp', function formatTimestamp (timestamp) {
+Vue.filter('formatTimestamp', function formatTimestamp(timestamp) {
   if (timestamp) {
     var date = new Date(timestamp * 1000) //时间戳为10位需*1000，时间戳为13位的话不需乘1000
     var YY = date.getFullYear() + '-'
@@ -178,7 +178,7 @@ Vue.prototype.matchInternalRoute = function (name) {
   if (menus) {
     return findName(menus, name)
   }
-  function findName (menus, name) {
+  function findName(menus, name) {
     for (let item of menus) {
       let url = item.path
       let path = ''
@@ -272,6 +272,7 @@ Vue.prototype.theme = {
 
 Vue.prototype.companyBrand = '商派ECShopX'
 Vue.prototype.companyBrandImg = process.env.PRODUCT_MODEL === 'standard' ? 'onex' : 'ecshopx'
+Vue.prototype.$EventBus = new Vue()
 // 动态改变页面的title
 document.title = Vue.prototype.VUE_APP_SYSTEM_NAME
 

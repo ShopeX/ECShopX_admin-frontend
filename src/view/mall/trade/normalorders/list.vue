@@ -928,7 +928,13 @@ export default {
           }
         }
         if (can_apply_aftersales == 1) {
-          actionBtns.push({ name: '申请售后', key: 'salesAfter' })
+          if (VERSION_PLATFORM) {
+            if ((this.IS_ADMIN && distributor_id == 0) || this.IS_DISTRIBUTOR) {
+              actionBtns.push({ name: '申请售后', key: 'salesAfter' })
+            }
+          } else if (!VERSION_IN_PURCHASE) {
+            actionBtns.push({ name: '申请售后', key: 'salesAfter' })
+          }
         }
 
         return {

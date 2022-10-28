@@ -22,7 +22,7 @@
 </style>
 <template>
   <div>
-    form: {{ form }}
+    <!-- form: {{ form }} -->
     <SpForm
       ref="form"
       v-model="form"

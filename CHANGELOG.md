@@ -2,6 +2,35 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [3.6.0](https://git.ishopex.cn/ecshopx/ecshopx-admin/compare/v3.5.0...v3.6.0) (2022-10-28)
+
+
+### Features
+
+* 模板装修添加页面配置 ([737bb40](https://git.ishopex.cn/ecshopx/ecshopx-admin/commit/737bb40366dadfce54b3d103090941fe6a719e07))
+* 自提地址 ([23208c4](https://git.ishopex.cn/ecshopx/ecshopx-admin/commit/23208c4b8647029b2e9f5f4233b411fb1520ff56))
+
+
+### Bug Fixes
+
+* bug ([9bb9d90](https://git.ishopex.cn/ecshopx/ecshopx-admin/commit/9bb9d907ae93bf5c5999a396c353c609c559d033))
+* dialog 对齐 ([5036071](https://git.ishopex.cn/ecshopx/ecshopx-admin/commit/5036071045277dd23cbedbd870b775daf28d1f25))
+* ECX-3493【ecx后台】编辑店铺范围配置，接口报错提示"店铺ID必填" ([fb9da2e](https://git.ishopex.cn/ecshopx/ecshopx-admin/commit/fb9da2e18bad062ad8799e79e1fc77c0c13c2f93))
+* 云店店铺端不能编辑商品 ([012daf6](https://git.ishopex.cn/ecshopx/ecshopx-admin/commit/012daf648503be1415d2349651b1d92be32d8cd2))
+* 切换淘宝镜像 ([6decfb2](https://git.ishopex.cn/ecshopx/ecshopx-admin/commit/6decfb2faa61c824e4fb93ba6849b6cb492cacf5))
+* 售后 ([375bbf1](https://git.ishopex.cn/ecshopx/ecshopx-admin/commit/375bbf17fdb64fe63a8be9a468ad4e0e78e83e3f))
+* 商品状态 ([b7c07a8](https://git.ishopex.cn/ecshopx/ecshopx-admin/commit/b7c07a8315f57790edfeda56a28e27696f99b51d))
+* 回退ECX-3493 ([e5a121b](https://git.ishopex.cn/ecshopx/ecshopx-admin/commit/e5a121b60779dfc8534653cd52c1075b72bbdb45))
+* 审核 ([4233257](https://git.ishopex.cn/ecshopx/ecshopx-admin/commit/4233257a6d14d86881df5891b8965bd2873d7652))
+* 店铺编辑保存 ([5fa8efa](https://git.ishopex.cn/ecshopx/ecshopx-admin/commit/5fa8efac47fabcc4f1c9bd11e940e2d5aef42aaa))
+* 恢复店铺端商品编辑保存button ([85b4f52](https://git.ishopex.cn/ecshopx/ecshopx-admin/commit/85b4f52af926e89a56f329957f08803f56d5958f))
+* 模板装修 ([0ed89c9](https://git.ishopex.cn/ecshopx/ecshopx-admin/commit/0ed89c9e10cc557790b5df7f93e545bdbc3afffb))
+* 模板装修标题颜色重置 ([dcae7d5](https://git.ishopex.cn/ecshopx/ecshopx-admin/commit/dcae7d5047135aa21143e21a4a672a3b34ce6db2))
+* 自提时间段修改 ([760caa8](https://git.ishopex.cn/ecshopx/ecshopx-admin/commit/760caa820f136e01c5a07592a4cd88a4de55abbd))
+* 自提点关联店铺 ([b8d32b1](https://git.ishopex.cn/ecshopx/ecshopx-admin/commit/b8d32b1dd34e1488a72f178417fd444bab817df8))
+* 订单状态 ([d94facd](https://git.ishopex.cn/ecshopx/ecshopx-admin/commit/d94facdde93b077b7f59cd0e4c85491eb71de3fd))
+* 退款 ([6cc048e](https://git.ishopex.cn/ecshopx/ecshopx-admin/commit/6cc048eb51f592df06c0520bc6f1628736ca7b76))
+
 ## [3.5.0](https://git.ishopex.cn/ecshopx/ecshopx-admin/compare/v3.4.0...v3.5.0) (2022-09-29)
 
 

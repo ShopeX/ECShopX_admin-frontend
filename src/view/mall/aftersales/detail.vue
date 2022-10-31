@@ -417,7 +417,7 @@
       v-if="
         aftersalesInfo.aftersales_type == 'REFUND_GOODS' &&
         ((aftersalesInfo.progress == '0' && this.is_approved == '1') ||
-          aftersalesInfo.progress == '1')
+          !isArray(aftersales_address))
       "
     >
       <div class="section-header with-border">
@@ -631,6 +631,7 @@ import hqbdlycorp_kname from '../../../common/hqbdlycorp_kname.json'
 import district from '../../../common/district.json'
 import RemarkModal from '@/components/remarkModal'
 import remarkMixin from '@/mixins/remarkMixin'
+import { isArray } from '@/utils'
 
 import { mapGetters } from 'vuex'
 
@@ -719,6 +720,7 @@ export default {
     this.aftersaleInfo()
   },
   methods: {
+    isArray,
     aftersaleInfo() {
       getAftersalesDetail(this.aftersales_bn).then((response) => {
         let data = response.data.data

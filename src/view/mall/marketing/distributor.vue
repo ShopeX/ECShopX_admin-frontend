@@ -473,12 +473,12 @@
           <el-form ref="meiqia_form" :model="meiqia_form" class="demo-ruleForm" label-width="90px">
             <el-form-item label="企业ID">
               <el-col :span="14">
-                <el-input v-model="meiqia_form.meiqia_id" :maxlength="30" placeholder="企业ID" />
+                <el-input v-model="meiqia_form.meiqia_id" placeholder="企业ID" />
               </el-col>
             </el-form-item>
             <el-form-item label="客服token">
               <el-col :span="14">
-                <el-input v-model="meiqia_form.meiqia_token" :maxlength="50" placeholder="toekn" />
+                <el-input v-model="meiqia_form.meiqia_token" placeholder="toekn" />
               </el-col>
             </el-form-item>
           </el-form>
@@ -1073,8 +1073,6 @@ export default {
       })
     },
     showSettingDistance() {
-
-
       // 设置距离参数
       this.setDistanceVisible = true
       let that = this
@@ -1094,7 +1092,7 @@ export default {
     handleSubmitDistance() {
       // 提交距离配置
       let params = {
-        distance: this.distanceForm.distance,        
+        distance: this.distanceForm.distance
       }
       setDistance(params).then((response) => {
         this.$message({

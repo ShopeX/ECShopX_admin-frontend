@@ -62,7 +62,7 @@
 
     <ShopForm ref="shopFormRef" />
 
-    <DadaForm ref="dadaFormRef" />
+    <DadaForm ref="dadaFormRef" @onChange="onChangeData" />
 
     <el-card class="el-card--normal" header="到店自提">
       <el-form class="ziti-form" label-width="120px">
@@ -244,6 +244,9 @@ export default {
       const { list } = response.data.data
       this.zitiList = list
     },
+    onChangeData(e) {
+      this.dadaShow = e
+    },
     async getShopInfo() {
       const { distributor_id } = this.$route.query
       if (distributor_id || IS_DISTRIBUTOR) {
@@ -327,7 +330,9 @@ export default {
           await this.formValidate()
         }
         await this.$refs['baseFormRef'].validate()
-        await this.$refs['dadaFormRef'].validate()
+        if (this.dadaShow) {
+          await this.$refs['dadaFormRef'].validate()
+        }
       } catch (e) {
         this.$message.error('店铺信息未填写完整')
         return

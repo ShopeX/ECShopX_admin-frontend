@@ -408,7 +408,9 @@ import {
   VERSION_PLATFORM,
   isArray,
   VERSION_B2C,
-  VERSION_IN_PURCHASE
+  VERSION_IN_PURCHASE,
+  IS_ADMIN,
+  IS_DISTRIBUTOR
 } from '@/utils'
 import { exportInvoice, orderExport } from '@/api/trade'
 import CompTableView from './components/comp-tableview'
@@ -1169,7 +1171,11 @@ export default {
         })
         console.log('this.changePriceForm:', this.changePriceForm)
       } else if (key == 'salesAfter') {
-        this.$router.push({ path: `/order/entitytrade/tradenormalorders/after-sale/${order_id}` })
+        if (IS_DISTRIBUTOR) {
+          this.$router.push({ path: `/shopadmin/order/tradenormalorders/after-sale/${order_id}` })
+        } else {
+          this.$router.push({ path: `/order/entitytrade/tradenormalorders/after-sale/${order_id}` })
+        }
       }
     },
     onLoadCancelOrderRef() {

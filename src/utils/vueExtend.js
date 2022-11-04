@@ -5,7 +5,8 @@ import {
   VERSION_B2C,
   VERSION_IN_PURCHASE,
   IS_ADMIN,
-  IS_DISTRIBUTOR
+  IS_DISTRIBUTOR,
+  getUrlPathByLoginType
 } from '@/utils'
 import CommonUtil from '@/common/js/util'
 import { SYSTEM_CONFIG } from '@/consts'
@@ -213,6 +214,8 @@ Vue.prototype.matchHidePage = function (name) {
 
   return `${this.$route.path}/${name}`
 }
+
+Vue.prototype.getUrlPathByLoginType = getUrlPathByLoginType
 
 Vue.prototype.orderType = [
   {

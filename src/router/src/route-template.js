@@ -127,11 +127,6 @@ export default {
       component: () => import('@/view/wxapp/salespersonshelfindex')
     },
     {
-      path: 'aliminiapp/setting',
-      name: `小程序设置`,
-      component: () => import('@/view/wxapp/aliminiapp/setting')
-    },
-    {
       path: 'aliapp/template',
       name: `模板列表`,
       meta: {

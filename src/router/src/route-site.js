@@ -147,6 +147,11 @@ export default {
       component: () => import('@/view/brand/wechat/reply')
     },
     {
+      path: 'aliminiapp',
+      name: `支付宝小程序设置`,
+      component: () => import('@/view/wxapp/aliminiapp/setting')
+    },
+    {
       path: 'cs/wxappchat',
       name: `客服-小程序客服`,
       component: () => import('@/view/base/setting/im/wxappchat')

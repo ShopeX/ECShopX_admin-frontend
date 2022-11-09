@@ -8,13 +8,13 @@
       <SpFilterFormItem prop="order_id" label="订单号:">
         <el-input v-model="params.order_id" placeholder="请输入订单号" />
       </SpFilterFormItem>
-      <SpFilterFormItem
+      <!-- <SpFilterFormItem
         v-if="login_type != 'merchant' && !VERSION_B2C && !VERSION_IN_PURCHASE"
         prop="salesman_mobile"
         label="导购手机号:"
       >
         <el-input v-model="params.salesman_mobile" placeholder="请输入导购手机号码" />
-      </SpFilterFormItem>
+      </SpFilterFormItem> -->
       <SpFilterFormItem v-if="!isMicorMall" prop="receipt_type" label="配送类型:">
         <el-select v-model="params.receipt_type" clearable placeholder="请选择">
           <el-option

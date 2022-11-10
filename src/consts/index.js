@@ -113,7 +113,7 @@ export const PROFIT_TYPE = {
 }
 
 export const PAY_TYPE = {
-  wxpay: '微信支付',
+  wxpay: '微信支',
   amorepay: '微信支付',
   wechat: '微信支付',
   wepayjs: '微信支付',

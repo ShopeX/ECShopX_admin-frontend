@@ -28,12 +28,12 @@
               >
                 密钥
               </el-radio>
-              <el-radio
+              <!-- <el-radio
                 v-model="form.api_sign_method"
                 label="cert"
               >
                 证书
-              </el-radio>
+              </el-radio> -->
             </div>
           </el-form-item>
           <el-form-item v-if="form.api_sign_method === 'cert'" label="支付宝公钥证书文件">
@@ -64,12 +64,12 @@
               :rows="5"
             />
           </el-form-item>
-          <el-form-item label="支付类异步通知地址">
+          <!-- <el-form-item label="支付类异步通知地址">
             <el-input
               v-model="form.notify_url"
               type="text"
             />
-          </el-form-item>
+          </el-form-item> -->
           <el-form-item label="AES密钥">
             <el-input
               v-model="form.encrypt_key"

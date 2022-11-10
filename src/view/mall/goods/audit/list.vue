@@ -90,7 +90,11 @@
                 <el-tag v-else effect="plain" size="mini"> 单规格 </el-tag>
               </template>
             </el-table-column>
-            <el-table-column prop="market_price" label="市场价（¥）" />
+            <el-table-column prop="market_price" label="市场价（¥）">
+              <template slot-scope="scope">
+                <span>{{ scope.row.market_price/100 }}</span>
+              </template>
+            </el-table-column>
             <el-table-column prop="price" label="销售价（¥）" />
             <el-table-column prop="store" label="库存" />
             <el-table-column label="状态">

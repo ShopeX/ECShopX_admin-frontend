@@ -24,7 +24,7 @@
             placeholder="请输入订单号"
           />
         </SpFilterFormItem>
-        <SpFilterFormItem
+        <!-- <SpFilterFormItem
           v-if="login_type != 'merchant' && !VERSION_B2C && !VERSION_IN_PURCHASE"
           prop="salesman_mobile"
           label="导购手机号:"
@@ -33,7 +33,7 @@
             v-model="params.salesman_mobile"
             placeholder="请输入导购手机号码"
           />
-        </SpFilterFormItem>
+        </SpFilterFormItem> -->
         <SpFilterFormItem
           v-if="!isMicorMall"
           prop="receipt_type"

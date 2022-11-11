@@ -231,7 +231,7 @@
           <filmEditor :res="editorData" @change="getVideo" @radioChange="radioChange" />
           <goodsGridEditor :res="editorData" @bindGoods="showGoods" @bindLinks="showLinks" />
           <goodsGridTabEditor :res="editorData" @bindGoods="showGoods" @bindLinks="showLinks" />
-          <goodsScrollEditor :res="editorData" @bindGoods="showGoods" />
+          <goodsScrollEditor :res="editorData" @bindGoods="showGoods" @bindLinks="showLinks" @bindImgs="showImgs" />
           <imgHotzoneEditor
             :res="editorData"
             @bindImgs="showImgs"

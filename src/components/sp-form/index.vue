@@ -6,6 +6,7 @@
       position: absolute !important;
       top: 100% !important;
       left: 0 !important;
+      margin-left: 0;
     }
   }
   &.min {
@@ -24,25 +25,26 @@
   .sp-form-group {
     &:before {
       position: absolute;
-      top: 6px;
-      bottom: 6px;
+      top: 11px;
+      bottom: 11px;
       left: 0;
       width: 2px;
       background-color: #298dff;
       content: '';
     }
-    padding: 0 0 0 10px;
+    padding: 6px 0 6px 8px;
     color: #333;
     font-weight: 500;
     font-size: 16px;
     position: relative;
     border-bottom: 1px solid #f1f2f5;
+    margin-bottom: 10px;
   }
 }
 </style>
 
 <script>
-import Vue from 'vue'
+import { isFunction } from '@/utils'
 export default {
   name: 'SpForm',
   props: {
@@ -88,6 +90,13 @@ export default {
       this.localComps.forEach((comp) => {
         comp.resetField && comp.resetField(comp.$parent.initialValue)
       })
+    },
+    getItemShow({ isShow }) {
+      if (isFunction(isShow)) {
+        return isShow()
+      } else {
+        return isShow !== false
+      }
     }
   },
   render() {
@@ -234,7 +243,11 @@ export default {
             return <div class='sp-form-group'>{item.label}</div>
           } else {
             return (
-              <el-form-item label={`${item.label}:`} prop={item.key} v-show={item.isShow !== false}>
+              <el-form-item
+                label={`${item.label}:`}
+                prop={item.key}
+                v-show={this.getItemShow(item)}
+              >
                 {getComponentByType(item)}
                 <div class='form-item-tip' domPropsInnerHTML={item.tip}></div>
               </el-form-item>

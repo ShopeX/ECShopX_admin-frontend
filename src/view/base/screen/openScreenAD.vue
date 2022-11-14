@@ -6,7 +6,7 @@
           <el-form-item label="广告素材" prop="ad_pic">
             <el-radio-group v-model="form.material_type">
               <el-radio :label="1"> 图片 </el-radio>
-              <!--              <el-radio :label="2">视频</el-radio>-->
+              <!-- <el-radio :label="2">视频</el-radio>-->
             </el-radio-group>
             <!--图片组件-->
             <div v-if="form.material_type === 1">
@@ -17,12 +17,8 @@
                   <i v-else class="el-icon-plus avatar-uploader-icon" />
                 </div>
               </div>
-              <imgPicker
-                :dialog-visible="imgDialog"
-                :sc-status="isGetImage"
-                @chooseImg="pickImg"
-                @closeImgDialog="closeImgDialog"
-              />
+              <imgPicker :dialog-visible="imgDialog" :sc-status="isGetImage" @chooseImg="pickImg"
+                @closeImgDialog="closeImgDialog" />
             </div>
             <!--视频组件-->
             <div v-if="form.material_type === 2">
@@ -39,6 +35,12 @@
               <el-radio :label="0"> 关闭 </el-radio>
             </el-radio-group>
           </el-form-item>
+          <el-form-item label="曝光设置">
+            <el-radio-group v-model="form.show_time">
+              <el-radio label="first"> 第一次启动时 </el-radio>
+              <el-radio label="always"> 每次启动时 </el-radio>
+            </el-radio-group>
+          </el-form-item>
           <el-form-item label="倒计时显示位置">
             <el-radio-group v-model="form.position">
               <el-radio label="right_top"> 右上 </el-radio>
@@ -46,30 +48,24 @@
             </el-radio-group>
           </el-form-item>
           <!-- <el-form-item label="是否允许跳过">
-            <el-radio-group v-model="form.is_jump">
-              <el-radio :label="1">
-                是
-              </el-radio>
-              <el-radio :label="0">
-                否
-              </el-radio>
-            </el-radio-group>
-          </el-form-item> -->
+  <el-radio-group v-model="form.is_jump">
+  <el-radio :label="1">
+  是
+  </el-radio>
+  <el-radio :label="0">
+  否
+  </el-radio>
+  </el-radio-group>
+  </el-form-item> -->
 
           <el-form-item label="等待时间">
-            <el-input
-              v-model="form.waiting_time"
-              type="number"
-              :min="0"
-              :max="999999999"
-              placeholder="请输入整数"
-              @input="input_waiting_time"
-            >
+            <el-input v-model="form.waiting_time" type="number" :min="0" :max="999999999" placeholder="请输入整数"
+              @input="input_waiting_time">
               <template slot="append"> 秒 </template>
             </el-input>
           </el-form-item>
           <el-form-item label="广告跳转路径">
-            <!--            <el-input type="text" v-model="form.ad_url" placeholder="请输入URL" ></el-input>-->
+            <!-- <el-input type="text" v-model="form.ad_url" placeholder="请输入URL" ></el-input>-->
             <div class="uploader-setting">
               <div class="goods-select">
                 <div v-if="JSON.stringify(form.ad_url) !== '{}'" class="link-content">
@@ -85,12 +81,8 @@
                     {{ form.ad_url.title }}
                   </span>
                   <span style="margin-left: 10px">
-                    <i
-                      v-if="JSON.stringify(form.ad_url) !== '{}'"
-                      style="color: #f56c6c"
-                      class="el-icon-delete"
-                      @click="clear_ad_url"
-                    />
+                    <i v-if="JSON.stringify(form.ad_url) !== '{}'" style="color: #f56c6c" class="el-icon-delete"
+                      @click="clear_ad_url" />
                   </span>
                 </div>
                 <div v-else class="content-center" @click="handleGoodsChange()">
@@ -99,13 +91,13 @@
               </div>
             </div>
           </el-form-item>
-          <el-form-item label="应用端">
-            <el-checkbox-group v-model="is_app">
-              <!--              <el-checkbox label="all" :key="0" name="crossborder_show1">全部</el-checkbox>-->
-              <el-checkbox :key="1" label="wapp" name="crossborder_show1"> 小程序 </el-checkbox>
-              <!--              <el-checkbox label="app" :key="2" name="crossborder_show1">APP</el-checkbox>-->
-            </el-checkbox-group>
-          </el-form-item>
+          <!-- <el-form-item label="应用端">
+  <el-checkbox-group v-model="is_app">
+  <el-checkbox label="all" :key="0" name="crossborder_show1">全部</el-checkbox>
+  <el-checkbox :key="1" label="wapp" name="crossborder_show1"> 小程序 </el-checkbox>
+  <el-checkbox label="app" :key="2" name="crossborder_show1">APP</el-checkbox>
+  </el-checkbox-group>
+  </el-form-item> -->
 
           <el-form-item size="large">
             <el-button>取消</el-button>
@@ -114,17 +106,8 @@
         </el-form>
       </div>
 
-      <linkSetter
-        :links="linksArr"
-        :visible="linksVisible"
-        :show_article="false"
-        :show_planting="false"
-        :show_page="false"
-        :show_marketing="false"
-        :show_store="false"
-        @setLink="setLink"
-        @closeDialog="closeDialog"
-      />
+      <linkSetter :links="linksArr" :visible="linksVisible" :show_article="false" :show_planting="false"
+        :show_page="false" :show_marketing="false" :show_store="false" @setLink="setLink" @closeDialog="closeDialog" />
     </el-card>
   </div>
 </template>
@@ -160,6 +143,7 @@ export default {
         ad_material: '',
         material_type: 1,
         is_enable: 0,
+        show_time: 'first',
         position: 'right_top',
         is_jump: 0,
         waiting_time: 0,
@@ -217,6 +201,7 @@ export default {
         if (res.data.data.length !== 0) {
           this.form.ad_material = res.data.data.ad_material
           this.form.is_enable = res.data.data.is_enable
+          this.form.show_time = res.data.data.show_time
           this.form.position = res.data.data.position
           this.form.is_jump = 1
           this.form.material_type = res.data.data.material_type
@@ -258,8 +243,8 @@ export default {
 
       // 判断广告跳转路径
       // if (!this.form.ad_url || JSON.stringify(this.form.ad_url) === '{}') {
-      //   this.$message({type: 'warning', message: '请选择广告跳转路径'})
-      //   return
+      // this.$message({type: 'warning', message: '请选择广告跳转路径'})
+      // return
       // }
 
       // 判断素材
@@ -290,6 +275,7 @@ export default {
   font-size: 12px;
   color: #909399;
 }
+
 .upload-box {
   display: -ms-flexbox;
   display: flex;
@@ -313,3 +299,4 @@ export default {
   }
 }
 </style>
+

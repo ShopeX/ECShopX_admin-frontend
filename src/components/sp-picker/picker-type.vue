@@ -1,5 +1,5 @@
 <script>
-import { PickerImage, PickerGoods, PickerShop, PickerZitiList } from './pickers'
+import { PickerImage, PickerGoods, PickerShop, PickerZitiList, PickerAftersalesList } from './pickers'
 
 function resolvePicker(type) {
   switch (type) {
@@ -11,6 +11,8 @@ function resolvePicker(type) {
       return PickerShop
     case 'pickerZitiList':
       return PickerZitiList
+    case 'pickerAftersalesList':
+      return PickerAftersalesList
     default:
       throw new Error(`picker: ${type} not registered`)
     // break

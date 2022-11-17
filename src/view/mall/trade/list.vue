@@ -65,7 +65,8 @@
                   </router-link>
                 </el-form-item>
                 <el-form-item label="支付方式：">
-                  <span v-if="scope.row.payType == 'wxpay' || scope.row.payType == 'wxpayjs'"
+                  <span>{{fitlerPayType(scope.row.payChannel, scope.row.payType)}}</span>
+                  <!-- <span v-if="scope.row.payType == 'wxpay' || scope.row.payType == 'wxpayjs'"
                     >微信支付</span
                   >
                   <span v-if="scope.row.payType == 'wxpayapp'">微信APP支付</span>
@@ -81,7 +82,7 @@
                   <span v-if="scope.row.payType == 'point'">积分支付</span>
                   <span v-if="scope.row.payType == 'pos'">现金支付</span>
                   <span v-if="scope.row.payType == 'hfpay'">汇付支付</span>
-                  <span v-if="scope.row.payType == 'chinaums'">微信支付-银联</span>
+                  <span v-if="scope.row.payType == 'chinaums'">微信支付-银联</span> -->
                 </el-form-item>
                 <el-form-item label="总金额：">
                   <span>{{ scope.row.curFeeSymbol }}{{ scope.row.totalFee / 100 }}</span>
@@ -174,7 +175,8 @@
           </el-table-column>
           <el-table-column min-width="200" label="支付方式">
             <template slot-scope="scope">
-              <span v-if="scope.row.payType == 'wxpay' || scope.row.payType == 'wxpayjs'"
+              <span>{{fitlerPayType(scope.row.payChannel, scope.row.payType)}}</span>
+              <!-- <span v-if="scope.row.payType == 'wxpay' || scope.row.payType == 'wxpayjs'"
                 >微信支付</span
               >
               <span v-if="scope.row.payType == 'adapay' && scope.row.payChannel == 'wx_lite'"
@@ -199,7 +201,7 @@
               <span v-if="scope.row.payType == 'point'">积分支付</span>
               <span v-if="scope.row.payType == 'pos'">现金支付</span>
               <span v-if="scope.row.payType == 'hfpay'">汇付支付</span>
-              <span v-if="scope.row.payType == 'chinaums'">微信支付-银联</span>
+              <span v-if="scope.row.payType == 'chinaums'">微信支付-银联</span> -->
             </template>
           </el-table-column>
 
@@ -277,6 +279,7 @@
 import { mapGetters } from 'vuex'
 import shopSelect from '@/components/shopSelect'
 import mixin, { pageMixin } from '@/mixins'
+import { PAY_TYPE } from '@/consts'
 
 export default {
   components: {
@@ -314,6 +317,9 @@ export default {
     this.fetchList()
   },
   methods: {
+    fitlerPayType (payChannel , payType) {
+      return payChannel ? PAY_TYPE[payChannel] : PAY_TYPE[payType];
+    },
     fnPath () {
       if (this.$store.getters.login_type == 'merchant') {
         return `/merchant/order/tradenormalorders/detail`

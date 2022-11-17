@@ -75,12 +75,12 @@ export function validatUploadImage(file) {
 /* 上传视频 */
 export function validatUploadVideo(file) {
   let isMP4 = file.raw.type === 'image/mp4'
-  let isLt15M = file.raw.size / 1024 / 1024 <= 15
+  let isLt15M = file.raw.size / 1024 / 1024 <= 5
   if (!isMP4) {
     return '上传视频只能是 MP4 格式!'
   }
   if (!isLt15M) {
-    return '上传视频大小不能超过 15MB!'
+    return '上传视频大小不能超过 5MB!'
   }
   return true
 }

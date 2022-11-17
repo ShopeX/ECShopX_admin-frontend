@@ -170,7 +170,7 @@ export default {
     {
       path: 'cs/meiqia',
       name: `客服-美洽客服`,
-      component: () => import('@/view/base/setting/im/list')
+      component: () => import('@/view/site/meiqia')
     },
     {
       path: 'site/extminilink',

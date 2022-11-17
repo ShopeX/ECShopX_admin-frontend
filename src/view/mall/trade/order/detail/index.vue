@@ -709,7 +709,7 @@ export default {
           }
           return returnValue
         })(),
-        payTypeTxt: PAY_TYPE[tradeInfo.payType],
+        payTypeTxt: tradeInfo.payChannel ? PAY_TYPE[tradeInfo.payChannel] : PAY_TYPE[tradeInfo.payType],
         tradeStateTxt: PAY_STATUS[tradeInfo.tradeState],
         timeStart: tradeInfo.timeStart
           ? moment(tradeInfo.timeStart * 1000).format('YYYY-MM-DD HH:mm:ss')

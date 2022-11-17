@@ -152,7 +152,7 @@ export default {
     {
       path: 'Ordersetting',
       name: `订单时效配置`,
-      component: () => import('@/view/mall/trade/ordersetting')
+      component: () => import('@/view/order/orderSetting.vue')
     },
     {
       path: 'kdniao',

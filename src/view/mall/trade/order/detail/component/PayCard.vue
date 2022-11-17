@@ -10,6 +10,7 @@
 <script>
 import { dateFilter } from '@/utils'
 import CustomCard from './CustomCard'
+import {PAY_TYPE} from '@/utils'
 export default {
   components: {
     CustomCard

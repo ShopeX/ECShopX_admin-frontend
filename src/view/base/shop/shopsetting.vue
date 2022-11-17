@@ -1,22 +1,10 @@
 /* eslint-disable */
 <template>
-  <el-card
-    shadow="never"
-    header="基本信息"
-  >
-    <el-form
-      ref="form"
-      :model="form"
-      label-position="left"
-      label-width="100px"
-    >
+  <el-card shadow="never" header="基本信息">
+    <el-form ref="form" :model="form" label-position="left" label-width="100px">
       <div class="section-body">
         <el-form-item label="商城名称">
-          <el-input
-            v-model="form.brand_name"
-            type="text"
-            style="width: 300px"
-          />
+          <el-input v-model="form.brand_name" type="text" style="width: 300px" />
         </el-form-item>
         <el-form-item label="商城简介">
           <el-row>
@@ -29,18 +17,12 @@
                 placeholder="请输入商城简介"
                 @input="countInput"
               />
-              <div class="content-right muted">
-                {{ remnant }}/120
-              </div>
+              <div class="content-right muted">{{ remnant }}/120</div>
             </el-col>
           </el-row>
         </el-form-item>
         <el-form-item label="商城Logo">
-          <imgBox
-            :img-url="form.logo"
-            inline
-            @click="handleImgChange"
-          />
+          <imgBox :img-url="form.logo" inline @click="handleImgChange" />
           <imgPicker
             :dialog-visible="imgDialog"
             :sc-status="isGetImage"
@@ -50,13 +32,7 @@
         </el-form-item>
       </div>
       <div class="section-footer content-center">
-        <el-button
-          v-loading="loading"
-          type="primary"
-          @click="onSubmit"
-        >
-          保存
-        </el-button>
+        <el-button v-loading="loading" type="primary" @click="onSubmit"> 保存 </el-button>
       </div>
     </el-form>
   </el-card>
@@ -72,7 +48,7 @@ export default {
     imgPicker,
     imgBox
   },
-  data () {
+  data() {
     return {
       activeName: 'first',
       loading: false,
@@ -89,7 +65,7 @@ export default {
       isGetImage: false
     }
   },
-  mounted () {
+  mounted() {
     getSettingWxShops().then((res) => {
       this.form.logo = res.data.data.logo
       this.pic = this.wximageurl + res.data.data.logo
@@ -99,7 +75,7 @@ export default {
     })
   },
   methods: {
-    onSubmit () {
+    onSubmit() {
       let params = {}
       this.loading = true
 
@@ -136,8 +112,8 @@ export default {
     //     if (file.raw.type != 'image/jpeg' && file.raw.type != 'image/png') {
     //       this.$message.error('上传图片只能是 JPG 或者 PNG 格式!');
     //     }
-    //     if (file.raw.size/1024/1024 > 2) {
-    //       this.$message.error('上传图片大小不能超过 2MB!')
+    //     if (file.raw.size/1024/1024 > 5) {
+    //       this.$message.error('上传图片大小不能超过 5MB!')
     //     }
     //   }
 
@@ -146,19 +122,19 @@ export default {
     //     this.form.logo = res.data.data.url
     //   })
     // },
-    countInput () {
+    countInput() {
       this.remnant = this.form.intro.length
     },
     //门店LOGO
-    handleImgChange () {
+    handleImgChange() {
       this.imgDialog = true
       this.isGetImage = true
     },
-    pickImg (data) {
+    pickImg(data) {
       this.form.logo = data.url
       this.imgDialog = false
     },
-    closeImgDialog () {
+    closeImgDialog() {
       this.imgDialog = false
     }
   }

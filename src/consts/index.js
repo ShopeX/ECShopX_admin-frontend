@@ -127,7 +127,13 @@ export const PAY_TYPE = {
   pos: '现金支付',
   wxpaypos: '微信扫码支付',
   alipaypos: '支付宝扫码支付',
-  chinaums: '微信支付-银联'
+  chinaums: '微信支付-银联',
+  // pay_channel
+  wx_lite: '微信支付',
+  wx_pub: '微信H5支付',
+  wx_qr: '微信PC支付',
+  alipay_wap: '支付宝H5支付',
+  alipay_qr: '支付宝PC支付'
 }
 
 export const PAY_STATUS = {

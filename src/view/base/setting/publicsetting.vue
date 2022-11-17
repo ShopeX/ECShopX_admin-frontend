@@ -1,12 +1,7 @@
 <style lang="scss"></style>
 <template>
   <div>
-    <SpForm
-      v-model="form"
-      size="min"
-      :form-list="formList"
-      :submit="false"
-    />
+    <SpForm v-model="form" size="min" :form-list="formList" :submit="false" />
   </div>
 </template>
 
@@ -15,7 +10,7 @@ import { mapGetters } from 'vuex'
 import { VERSION_STANDARD, VERSION_IN_PURCHASE } from '@/utils'
 export default {
   name: '',
-  data () {
+  data() {
     return {
       form: {
         rate_status: false,
@@ -37,6 +32,10 @@ export default {
         order_page: [0]
       },
       formList: [
+        {
+          label: '通用设置',
+          type: 'group'
+        },
         {
           label: '分享带门店参数',
           key: 'distributor_param_status',
@@ -260,14 +259,14 @@ export default {
       ]
     }
   },
-  created () {
+  created() {
     this.fetch()
   },
   computed: {
     ...mapGetters(['isMicorMall'])
   },
   methods: {
-    async fetch () {
+    async fetch() {
       const res = await this.$api.company.getGlobalSetting()
       this.form = {
         ...this.form,
@@ -303,7 +302,7 @@ export default {
         this.form.item_page.push(3)
       }
     },
-    async saveItemPriceSetting () {
+    async saveItemPriceSetting() {
       const { cart_page, order_page, item_page } = this.form
       const params = {
         cart_page: {

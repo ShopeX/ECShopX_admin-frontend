@@ -1,13 +1,6 @@
 <template>
-  <section
-    class="section section-white content-padded"
-    onload="init()"
-  >
-    <el-form
-      ref="form"
-      :model="form"
-      label-width="110px"
-    >
+  <section class="section section-white content-padded" onload="init()">
+    <el-form ref="form" :model="form" label-width="110px">
       <el-form-item label="是否是国内门店">
         <el-col :span="10">
           <el-radio-group
@@ -15,98 +8,36 @@
             v-model="form.is_domestic"
             @change="isDomesticChange"
           >
-            <el-radio
-              :label="1"
-              value="1"
-              disabled
-            >
-              国内>
-            </el-radio>
-            <el-radio
-              :label="2"
-              value="2"
-              disabled
-            >
-              非国内>
-            </el-radio>
+            <el-radio :label="1" value="1" disabled> 国内> </el-radio>
+            <el-radio :label="2" value="2" disabled> 非国内> </el-radio>
           </el-radio-group>
-          <el-radio-group
-            v-else
-            v-model="form.is_domestic"
-            @change="isDomesticChange"
-          >
-            <el-radio
-              :label="1"
-              value="1"
-            >
-              国内>
-            </el-radio>
-            <el-radio
-              :label="2"
-              value="2"
-            >
-              非国内>
-            </el-radio>
+          <el-radio-group v-else v-model="form.is_domestic" @change="isDomesticChange">
+            <el-radio :label="1" value="1"> 国内> </el-radio>
+            <el-radio :label="2" value="2"> 非国内> </el-radio>
           </el-radio-group>
         </el-col>
       </el-form-item>
       <el-form-item label="是否是直营店">
         <el-col :span="10">
           <el-radio-group v-model="form.is_direct_store">
-            <el-radio
-              :label="1"
-              value="1"
-            >
-              直营店>
-            </el-radio>
-            <el-radio
-              :label="2"
-              value="2"
-            >
-              非直营店>
-            </el-radio>
+            <el-radio :label="1" value="1"> 直营店> </el-radio>
+            <el-radio :label="2" value="2"> 非直营店> </el-radio>
           </el-radio-group>
         </el-col>
       </el-form-item>
-      <el-form-item
-        v-if="form.is_domestic == 1"
-        label="地理位置"
-      >
+      <el-form-item v-if="form.is_domestic == 1" label="地理位置">
         <el-col :span="4">
-          <el-cascader
-            :options="regions"
-            change-on-select
-            @change="handleRegionChange"
-          />
+          <el-cascader :options="regions" change-on-select @change="handleRegionChange" />
         </el-col>
         <el-col :span="7">
-          <el-input
-            id="keyword"
-            v-model="form.address"
-            placeholder="请输入门店名称"
-          />
+          <el-input id="keyword" v-model="form.address" placeholder="请输入门店名称" />
         </el-col>
-        <el-col
-          :span="1"
-          class="content-center"
-        >
-&nbsp;
-        </el-col>
-        <el-col
-          :span="3"
-        >
-          <el-button
-            type="primary"
-            @click="searchKeyword()"
-          >
-            搜索定位
-          </el-button>
+        <el-col :span="1" class="content-center"> &nbsp; </el-col>
+        <el-col :span="3">
+          <el-button type="primary" @click="searchKeyword()"> 搜索定位 </el-button>
         </el-col>
       </el-form-item>
-      <el-form-item
-        v-if="form.is_domestic == 1"
-        label="地图定位"
-      >
+      <el-form-item v-if="form.is_domestic == 1" label="地图定位">
         <el-col :span="4">
           <div id="qqmap_rslist" />
         </el-col>
@@ -116,96 +47,41 @@
       </el-form-item>
       <el-form-item label="门店名称">
         <div>
-          <el-col
-            :span="8"
-          >
-            <el-input
-              v-model="form.shopname"
-              placeholder="请先完成上方地理位置的选择"
-            />
+          <el-col :span="8">
+            <el-input v-model="form.shopname" placeholder="请先完成上方地理位置的选择" />
           </el-col>
         </div>
       </el-form-item>
-      <el-form-item
-        v-if="form.is_domestic == '2'"
-        label="具体地址"
-      >
+      <el-form-item v-if="form.is_domestic == '2'" label="具体地址">
         <div>
           <el-col :span="1">
-            <el-input
-              v-model="form.country"
-              placeholder="国家"
-            />
+            <el-input v-model="form.country" placeholder="国家" />
           </el-col>
-          <el-col
-            :span="1"
-            class="content-center"
-          >
-            -
-          </el-col>
+          <el-col :span="1" class="content-center"> - </el-col>
           <el-col :span="2">
-            <el-input
-              v-model="form.city"
-              placeholder="城市"
-            />
+            <el-input v-model="form.city" placeholder="城市" />
           </el-col>
-          <el-col
-            :span="1"
-            class="content-center"
-          >
-            -
-          </el-col>
-          <el-col
-            :span="5"
-          >
-            <el-input
-              v-model="form.address"
-              placeholder="详细地址"
-            />
+          <el-col :span="1" class="content-center"> - </el-col>
+          <el-col :span="5">
+            <el-input v-model="form.address" placeholder="详细地址" />
           </el-col>
         </div>
       </el-form-item>
-      <el-form-item
-        v-if="form.is_domestic == 2"
-        label="经营资质名称"
-      >
+      <el-form-item v-if="form.is_domestic == 2" label="经营资质名称">
         <el-col :span="8">
           <el-input v-model="form.company_name" />
         </el-col>
         <el-col>
-          <p class="frm-tips">
-            请填写营业执照名称，或组织机构代码证名称。
-          </p>
+          <p class="frm-tips">请填写营业执照名称，或组织机构代码证名称。</p>
         </el-col>
       </el-form-item>
-      <el-form-item
-        inline="true"
-        class="demo-form-inline"
-        label="门店经纬度"
-      >
-        <el-col
-          :span="3"
-        >
-          <el-input
-            v-model="form.lng"
-            readonly
-            placeholder="经度"
-          />
+      <el-form-item inline="true" class="demo-form-inline" label="门店经纬度">
+        <el-col :span="3">
+          <el-input v-model="form.lng" readonly placeholder="经度" />
         </el-col>
-        <el-col
-          :span="1"
-          class="content-center"
-        >
-          -
-        </el-col>
-        <el-col
-          :span="3"
-        >
-          <el-input
-            v-model="form.lat"
-            readonly
-            placeholder="纬度"
-          />
+        <el-col :span="1" class="content-center"> - </el-col>
+        <el-col :span="3">
+          <el-input v-model="form.lat" readonly placeholder="纬度" />
         </el-col>
       </el-form-item>
       <!-- <el-form-item label="门店图片">
@@ -251,11 +127,7 @@
                   </div>
                 </li>
               </ul>
-              <div
-                v-if="form.pic_list.length < 9"
-                class="upload-box"
-                @click="handlePicsChange"
-              >
+              <div v-if="form.pic_list.length < 9" class="upload-box" @click="handlePicsChange">
                 <i class="el-icon-plus avatar-uploader-icon" />
               </div>
             </div>
@@ -275,15 +147,11 @@
           <el-input v-model="form.contract_phone" />
         </el-col>
         <el-col>
-          <p class="frm-tips">
-            固定电话需加区号；区号、分机号均用“-”连接
-          </p>
+          <p class="frm-tips">固定电话需加区号；区号、分机号均用“-”连接</p>
         </el-col>
       </el-form-item>
       <el-form-item label="营业时间">
-        <el-col
-          :span="5"
-        >
+        <el-col :span="5">
           <el-time-picker
             v-model="opentime"
             is-range
@@ -295,31 +163,21 @@
           />
         </el-col>
         <el-col>
-          <p class="frm-tips">
-            24小时制，如10：00-20：30
-          </p>
+          <p class="frm-tips">24小时制，如10：00-20：30</p>
         </el-col>
       </el-form-item>
-      <el-form-item
-        v-show="add_flag === 1"
-        v-if="form.is_domestic == '1'"
-        label="经营资质主体"
-      >
+      <el-form-item v-show="add_flag === 1" v-if="form.is_domestic == '1'" label="经营资质主体">
         <el-radio-group v-model="form.add_type">
           <div style="margin-bottom: 10px">
-            <el-radio
-              :label="1"
-            >
+            <el-radio :label="1">
               公众账号主体&nbsp;<span class="frm-tips">({{ principal_name }})</span>
             </el-radio>
           </div>
           <div>
-            <el-radio
-              :label="2"
-            >
-              相关主体&nbsp;<span
-                class="frm-tips"
-              >(若地点的经营资质名称与帐号主体名称不一致，请选择相关主体。)</span>
+            <el-radio :label="2">
+              相关主体&nbsp;<span class="frm-tips"
+                >(若地点的经营资质名称与帐号主体名称不一致，请选择相关主体。)</span
+              >
             </el-radio>
           </div>
         </el-radio-group>
@@ -333,16 +191,10 @@
           <el-input v-model="form.company_name" />
         </el-col>
         <el-col>
-          <p class="frm-tips">
-            请填写营业执照名称，或组织机构代码证名称。
-          </p>
+          <p class="frm-tips">请填写营业执照名称，或组织机构代码证名称。</p>
         </el-col>
       </el-form-item>
-      <el-form-item
-        v-show="add_flag === 1"
-        v-if="form.is_domestic == 1"
-        label="经营资质证件号"
-      >
+      <el-form-item v-show="add_flag === 1" v-if="form.is_domestic == 1" label="经营资质证件号">
         <el-col :span="8">
           <el-input v-model="form.credential" />
         </el-col>
@@ -370,45 +222,19 @@
             :show-file-list="false"
             :on-change="handleQualificationPicChange"
           >
-            <img
-              v-if="qpic_url"
-              :src="qpic_url"
-              class="avatar"
-            >
-            <i
-              v-else
-              class="el-icon-plus avatar-uploader-icon"
-            />
+            <img v-if="qpic_url" :src="qpic_url" class="avatar">
+            <i v-else class="el-icon-plus avatar-uploader-icon" />
           </el-upload>
         </el-col>
       </el-form-item>
       <el-form-item>
-        <el-button
-          type="primary"
-          size="large"
-          @click="onSubmit"
-        >
-          提交
-        </el-button>
-        <el-button
-          size="large"
-          @click.native.prevent
-        >
-          取消
-        </el-button>
+        <el-button type="primary" size="large" @click="onSubmit"> 提交 </el-button>
+        <el-button size="large" @click.native.prevent> 取消 </el-button>
       </el-form-item>
     </el-form>
-    <div
-      v-show="qqmap_infowin_flag"
-      id="qqmap_infowin"
-    >
+    <div v-show="qqmap_infowin_flag" id="qqmap_infowin">
       <el-col>
-        <el-button
-          type="primary"
-          @click="imp_poi(poi_info)"
-        >
-          导入该门店信息
-        </el-button>
+        <el-button type="primary" @click="imp_poi(poi_info)"> 导入该门店信息 </el-button>
       </el-col>
       <el-col>{{ poi_info.id }}</el-col>
       <el-col>{{ poi_info.name }},{{ poi_info.address }}</el-col>
@@ -421,7 +247,7 @@ import { createWxShops, updateWxShops, getWxShopsDetail } from '@/api/shop'
 import { uploadMaterial, getAuthorizerInfo } from '@/api/wechat'
 import imgPicker from '@/components/imageselect'
 // 取选中地区的值
-function getCascaderObj (val, opt) {
+function getCascaderObj(val, opt) {
   return val.map(function (value, index, array) {
     for (var itm of opt) {
       if (itm.value === value) {
@@ -438,7 +264,7 @@ export default {
   components: {
     imgPicker
   },
-  data () {
+  data() {
     return {
       principal_name: '',
       wxShopsDetailData: {
@@ -481,7 +307,7 @@ export default {
       picsOldLen: 0
     }
   },
-  mounted () {
+  mounted() {
     getAuthorizerInfo().then((response) => {
       this.principal_name = response.data.data.principal_name
     })
@@ -549,10 +375,10 @@ export default {
     }
   },
   methods: {
-    selectDateChange (date) {
+    selectDateChange(date) {
       this.form.hour = date
     },
-    onSubmit () {
+    onSubmit() {
       let params = {}
       this.loading = true
 
@@ -746,8 +572,8 @@ export default {
     //     if (file.raw.type != 'image/jpeg' && file.raw.type != 'image/png') {
     //       that.$message.error('上传图片只能是 JPG 或者 PNG 格式!')
     //     }
-    //     if (file.raw.size/1024/1024 > 2) {
-    //       that.$message.error('上传图片大小不能超过 2MB!')
+    //     if (file.raw.size/1024/1024 > 5) {
+    //       that.$message.error('上传图片大小不能超过 5MB!')
     //     }
     //   }
 
@@ -763,8 +589,8 @@ export default {
         if (file.raw.type != 'image/jpeg' && file.raw.type != 'image/png') {
           this.$message.error('上传图片只能是 JPG 或者 PNG 格式!')
         }
-        if (file.raw.size / 1024 / 1024 > 2) {
-          this.$message.error('上传图片大小不能超过 2MB!')
+        if (file.raw.size / 1024 / 1024 > 5) {
+          this.$message.error('上传图片大小不能超过 5MB!')
         }
       }
 
@@ -773,7 +599,7 @@ export default {
         this.form.qpic = res.data.data.media_id
       })
     },
-    isDomesticChange (val) {
+    isDomesticChange(val) {
       if (val == 1) {
         this.qqmapinit(39.916527, 116.397128)
       }
@@ -783,7 +609,7 @@ export default {
       this.picsDialog = true
       this.isGetPics = true
     },
-    pickPics (arr) {
+    pickPics(arr) {
       if (this.picsOldLen + arr.length >= 10) {
         this.$message.error('最多上传9张图片!')
         return false
@@ -799,13 +625,13 @@ export default {
         }
       }
     },
-    closePicsDialog () {
+    closePicsDialog() {
       this.picsDialog = false
     },
-    picsEnter (index) {
+    picsEnter(index) {
       this.picsCurrent = index
     },
-    picsLeave () {
+    picsLeave() {
       this.picsCurrent = -1
     },
     removePicsImg: function (index) {

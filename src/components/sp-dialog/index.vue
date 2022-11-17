@@ -33,7 +33,7 @@
 //     show-word-limit
 //   />
 // }
-
+import { isFunction } from '@/utils'
 export default {
   name: 'SpDialog',
   props: {
@@ -86,6 +86,13 @@ export default {
     },
     resetForm() {
       this.$refs['form'] && this.$refs['form'].resetFields()
+    },
+    getItemShow({ isShow }) {
+      if (isFunction(isShow)) {
+        return isShow()
+      } else {
+        return isShow !== false
+      }
     }
   },
   render() {
@@ -197,7 +204,7 @@ export default {
         >
           {formList.map((item, index) => {
             return (
-              <el-form-item label={item.label} prop={item.key} v-show={item.isShow !== false}>
+              <el-form-item label={item.label} prop={item.key} v-show={this.getItemShow(item)}>
                 {getComponentByType(item)}
               </el-form-item>
             )

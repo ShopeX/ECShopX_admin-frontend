@@ -141,7 +141,7 @@ export default {
           {
             name: '支付方式',
             key: 'statement_status',
-            render: (h, { row }) => h('span', {}, this.getPayment(row.pay_type))
+            render: (h, { row }) => h('span', {}, this.getPayment(row.pay_channel, row.pay_type))
           }
         ]
       })
@@ -169,8 +169,8 @@ export default {
       this.feeDone = total_statement_fee_done
       this.feeReady = total_statement_fee_ready
     },
-    getPayment (type) {
-      return PAY_TYPE[type]
+    getPayment (pay_channel, pay_type) {
+      return pay_channel ? PAY_TYPE[pay_channel] : PAY_TYPE[pay_type]
     },
     remoteMerchantList: async function (name) {
       this.merchantLoading = true

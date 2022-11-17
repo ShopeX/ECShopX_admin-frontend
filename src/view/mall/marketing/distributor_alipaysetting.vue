@@ -89,7 +89,13 @@ export default {
 
       let query = { pay_type: 'alipay', distributor_id: distributor_id }
       getPaymentSetting(query).then((response) => {
-        this.form = response.data.data
+        let form =
+          Array.isArray(response.data.data) && !response.data.data.length
+            ? {}
+            : response.data.data
+        for (let key of Object.keys(form)) {
+          this.$set(this.form, key, form[key])
+        }
       })
     },
     onSubmit () {

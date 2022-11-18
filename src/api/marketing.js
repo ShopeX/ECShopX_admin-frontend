@@ -529,3 +529,12 @@ export function getMerchantsList(params) {
     params
   })
 }
+
+// 获取可退货店铺列表
+export function getAftersales(params) {
+  return fetch({
+    url: '/distributors/aftersales',
+    method: 'get',
+    params
+  })
+}

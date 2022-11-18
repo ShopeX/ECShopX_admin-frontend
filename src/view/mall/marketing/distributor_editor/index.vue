@@ -11,6 +11,9 @@
     color: #999;
     line-height: initial;
   }
+  .line-height-40 {
+    line-height: 40px;
+  }
   .ziti-form {
     .el-form-item__content {
       width: auto !important;
@@ -91,6 +94,8 @@
       </el-form>
     </el-card>
 
+    <ReturnGoodsForm ref="returnGoodsForm" />
+
     <IntroduceForm ref="introduceFormRef" />
 
     <div class="footer-container">
@@ -111,6 +116,7 @@ import ImageForm from './components/ImageForm'
 import ShopForm from './components/ShopForm'
 import BaseForm from './components/BaseForm'
 import IntroduceForm from './components/IntroduceForm.vue'
+import ReturnGoodsForm from './components/ReturnGoodsForm.vue'
 
 export default {
   components: {
@@ -119,7 +125,8 @@ export default {
     ImageForm,
     ShopForm,
     BaseForm,
-    IntroduceForm
+    IntroduceForm,
+    ReturnGoodsForm
   },
   provide() {
     return {
@@ -158,7 +165,22 @@ export default {
         is_dada: false,
         business: '',
         is_ziti: false,
-        introduce: ''
+        introduce: '',
+        offline_aftersales: false,
+        offline_aftersales_distributor_id: [],
+        offline_aftersales_other: false,
+        offline_aftersales_address: {
+          name: '',
+          province: '',
+          city: '',
+          area: '',
+          address: '',
+          region: [],
+          region_id: [],
+          area_code: '',
+          mobile: '',
+          hours: ''
+        }
       },
       setting: createSetting({
         actions: [
@@ -252,6 +274,8 @@ export default {
       if (distributor_id || IS_DISTRIBUTOR) {
         const res = await this.$api.marketing.getDistributorInfo({ distributor_id })
         const [startTime, endTime] = res.hour.split('-')
+        const [offline_startTime, offline_endTime] = res.offline_aftersales_address.hours ? res.offline_aftersales_address.hours.split('-') : ['' , '']
+        const [area_code, mobile] = res.offline_aftersales_address.mobile ? res.offline_aftersales_address.mobile.split('-') : ['' , '']
         this.baseForm = {
           ...this.baseForm,
           distribution_type: res.distribution_type,
@@ -279,7 +303,24 @@ export default {
           is_dada: res.is_dada,
           business: res.business,
           is_ziti: res.is_ziti,
-          introduce: res.introduce
+          introduce: res.introduce,
+          offline_aftersales_distributor_id: res.offline_aftersales_distributor_id,
+          offline_aftersales: res.offline_aftersales === 1,
+          offline_aftersales_other: res.offline_aftersales_other === 1,
+          offline_aftersales_address: {
+            name: res.offline_aftersales_address.name,
+            province: res.offline_aftersales_address.province,
+            city: res.offline_aftersales_address.city,
+            area: res.offline_aftersales_address.area,
+            address: res.offline_aftersales_address.address,
+            regions: res.offline_aftersales_address.regions,
+            regions_id: res.offline_aftersales_address.regions_id,
+            area_code: area_code,
+            mobile: mobile,
+            hours: res.offline_aftersales_address.hours,
+            startTime: offline_startTime,
+            endTime: offline_endTime,
+          }
         }
         await this.remoteMerchantList(res.merchant_name)
         this.baseForm.merchant_id = res.merchant_id
@@ -295,6 +336,10 @@ export default {
       const { data } = await this.$picker.zitilist({
         data: this.zitiList.map((item) => item.id)
       })
+
+      console.log(this.zitiList.map((item) => item.id))
+      console.log(data)
+      
       if (this.distributor_id) {
         const ids = data.map((item) => item.id)
         await this.$api.pickuplocation.bindZitiLocation({
@@ -339,10 +384,20 @@ export default {
       }
       this.submitLoading = true
       const { distributor_id, distributor_type } = this.$route.query
+      const aftersales = this.baseForm.offline_aftersales_address
+      const aftersales_regions =  getRegionNameById(aftersales.regions_id, district)
       const params = {
         ...this.baseForm,
         regions: getRegionNameById(this.baseForm.regions_id, district),
-        hour: `${this.baseForm.startTime}-${this.baseForm.endTime}`
+        hour: `${this.baseForm.startTime}-${this.baseForm.endTime}`,
+        offline_aftersales_address: {
+          ...aftersales,
+          regions: aftersales_regions,
+          hours: `${aftersales.startTime}-${aftersales.endTime}`,
+          province: aftersales_regions[0],
+          city: aftersales_regions[1],
+          area: aftersales_regions[2]
+        }
       }
       if (this.baseForm.distribution_type == 0) {
         delete params.merchant_id

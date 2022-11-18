@@ -202,7 +202,7 @@ export function getRegionNameById(region, district) {
       }
     }
   }
-  if (region.length > 0) {
+  if (Array.isArray(region) && region.length > 0) {
     getRegionName(district, 0)
   }
   return result

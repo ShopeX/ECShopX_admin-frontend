@@ -64,7 +64,7 @@
                 </el-form-item>
               </div>
       
-              <el-form-item label="可退货店铺">
+              <el-form-item label="可退货店铺" v-if="content.baseForm.offline_aftersales_other">
                 <div class="form-item-tip line-height-40">
                   本店线上订单发起退货退款申请是可在下方列表中的店铺到店退货。
                 </div>

@@ -279,7 +279,10 @@ export default {
           : ['', '']
         let area_code = ''
         let mobile = ''
-        if (res.offline_aftersales_address.mobile.indexOf('-') > -1) {
+        if (
+          res.offline_aftersales_address.mobile &&
+          res.offline_aftersales_address.mobile.indexOf('-') > -1
+        ) {
           [area_code, mobile] = res.offline_aftersales_address.mobile
             ? res.offline_aftersales_address.mobile.split('-')
             : ['', '']

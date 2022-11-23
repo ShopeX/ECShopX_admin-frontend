@@ -417,7 +417,8 @@
       v-if="
         aftersalesInfo.aftersales_type == 'REFUND_GOODS' &&
         ((aftersalesInfo.progress == '0' && this.is_approved == '1') ||
-          !isArray(aftersales_address))
+          !isArray(aftersales_address)) &&
+        aftersalesInfo.return_type == 'logistics'
       "
     >
       <div class="section-header with-border">
@@ -458,6 +459,37 @@
         </div>
       </div>
     </template>
+
+    <div v-if="aftersalesInfo.return_type == 'offline'" class="section-header with-border">
+      <h3>到店退货</h3>
+      <div class="section-body">
+        <template>
+          <el-row>
+            <el-col :span="3" class="col-3 content-right"> 退货方式: </el-col>
+            <el-col :span="8">
+              {{ `${aftersalesInfo.return_type == 'offline' ? '到店退货' : '自行快递寄回'}` }}
+            </el-col>
+          </el-row>
+          <el-row>
+            <el-col :span="3" class="col-3 content-right"> 退货门店: </el-col>
+            <el-col :span="8">
+              <div>{{ aftersalesInfo.aftersales_address.aftersales_name }}</div>
+              <div>{{ aftersalesInfo.aftersales_address.aftersales_address }}</div>
+              <div>{{ aftersalesInfo.aftersales_address.aftersales_mobile }}</div>
+              <div>{{ `营业时间: ${aftersalesInfo.aftersales_address.aftersales_hours}` }}</div>
+            </el-col>
+          </el-row>
+          <el-row>
+            <el-col :span="3" class="col-3 content-right"> 联系人: </el-col>
+            <el-col :span="8"> {{ aftersalesInfo.contact }}</el-col>
+          </el-row>
+          <el-row>
+            <el-col :span="3" class="col-3 content-right"> 联系电话: </el-col>
+            <el-col :span="8">{{ aftersalesInfo.mobile }} </el-col>
+          </el-row>
+        </template>
+      </div>
+    </div>
 
     <div
       v-if="
@@ -767,9 +799,11 @@ export default {
         //parseInt(this.refund_fee * 100)
         this.reviewData.refund_point = this.refund_point
         //售后地址
+        console.log(this.aftersalesInfo.aftersales_type)
         if (
           this.aftersalesInfo.aftersales_type == 'REFUND_GOODS' &&
-          this.aftersales_address_id == ''
+          this.aftersales_address_id == '' &&
+          this.aftersalesInfo.return_type != 'offline'
         ) {
           this.$message.error('请选择售后地址！')
           return false

@@ -1,6 +1,6 @@
 <template>
   <div class="MerchantsEditor">
-    <h5>选择商家类型</h5>
+    <h5>选择商户类型</h5>
     <el-divider />
     <span v-if="$route.query.type == 'detail' || $route.query.type == 'verify'">{{
       form.settled_type == 'enterprise' ? '企业' : '个体户'
@@ -428,7 +428,7 @@
             </div>
             <p>
               <span style="color: red">*</span>
-              {{ form.settled_type == 'enterprise' ? '法人' : '负责人' }}手持身份证正面
+              {{ form.settled_type == 'enterprise' ? '法人' : '负责人' }}手持身份证人像面
             </p>
           </el-form-item>
           <el-form-item
@@ -452,7 +452,7 @@
             </div>
             <p>
               <span style="color: red">*</span>
-              {{ form.settled_type == 'enterprise' ? '法人' : '负责人' }}手持身份证反面
+              {{ form.settled_type == 'enterprise' ? '法人' : '负责人' }}手持身份证国徽面
             </p>
           </el-form-item>
           <el-form-item
@@ -474,7 +474,7 @@
                 class="el-icon-plus"
               />
             </div>
-            <p><span style="color: red">*</span> 结算银行卡正面照</p>
+            <p>结算银行卡正面照</p>
           </el-form-item>
           <el-form-item
             prop="contract_url"
@@ -657,6 +657,14 @@
       @checkBoxVisibleHandle="checkBoxVisibleHandle"
       @checkBoxConfirmHandle="checkBoxConfirmHandle"
     />
+    <InfoTipModal
+      :visible.sync="infoTipVisible"
+      title="商户入驻成功"
+      width="33%"
+      :username="tip.username"
+      :password="tip.password"
+      @getInfo="getInfo"
+    />
   </div>
 </template>
 
@@ -673,16 +681,23 @@ import {
   getMerchantsType
 } from '@/api/mall/marketing.js'
 import imgPicker from '@/components/imageselect'
+import InfoTipModal from '../component/InfoTipModal.vue'
 import checkBox from '@/view/base/setting/dealer/cpn/checkBox.vue'
 
 export default {
   components: {
     imgPicker,
-    checkBox
+    checkBox,
+    InfoTipModal
   },
   props: ['props_type'],
   data () {
     return {
+      tip: {
+        username: '',
+        password: ''
+      },
+      infoTipVisible: false,
       isEditCheckBox: false, //编辑状态是否弹窗 离开页面丢失数据
       checkBoxConfig: {
         visible: false,
@@ -752,7 +767,7 @@ export default {
         legal_mobile: '',
         email: '',
         // 结算信息
-        bank_acct_type: '1',
+        bank_acct_type: '',
         bank_name: '',
         bank_mobile: '',
         card_id_mask: '',
@@ -783,17 +798,14 @@ export default {
         legal_name: [requiredRules('法人姓名')],
         legal_cert_id: [requiredRules('法人身份证号'), MaxRules(18)],
         legal_mobile: [requiredRules('法人手机号'), MaxRules(11)],
-        bank_acct_type: requiredRules('结算银行账户类型', 'change'),
-        bank_name: requiredRules('结算银行卡所属银行', 'change'),
-        bank_mobile: [requiredRules('银行预留手机号'), MaxRules('11')],
-        card_id_mask: [requiredRules('结算银行卡号'), MaxRules('19')],
+        bank_mobile: [MaxRules('11')],
+        card_id_mask: [MaxRules('19')],
         merchant_type: [requiredRules('商户类型', 'change')],
         merchant_type_id: [requiredRules('经营类型', 'change')],
         audit_goods: requiredRules('是否审核商品', 'change'),
         license_url: requiredRules('营业执照', 'change'),
-        legal_certid_front_url: requiredRules('法人手持身份证正面', 'change'),
-        legal_cert_id_back_url: requiredRules('法人手持身份证反面', 'change'),
-        bank_card_front_url: requiredRules('结算银行卡正面照', 'change'),
+        legal_certid_front_url: requiredRules('法人手持身份证人像面', 'change'),
+        legal_cert_id_back_url: requiredRules('法人手持身份证国徽面', 'change'),
         createAccount: requiredRules('生成账号', 'change'),
         mobile: requiredRules('手机号'),
         settled_succ_sendsms: requiredRules('短信发送时间', 'change')
@@ -942,6 +954,15 @@ export default {
       this.audit_status = audit_status
       this.audit_memo = audit_memo
     },
+    async getInfo () {
+      const result = await addTheBusinessman(this.form, null)
+      if (result.data.data.mobile && result.data.data.password) {
+        this.tip = {
+          username: result.data.data.mobile,
+          password: result.data.data.password
+        }
+      }
+    },
     submitFn (formName) {
       this.$refs[formName].validate(async (valid) => {
         if (valid) {
@@ -952,6 +973,17 @@ export default {
             this.isEditCheckBox = true
             this.$router.go(-1)
           }
+
+          if (type === 'add' && result.data.data.mobile && result.data.data.password) {
+            this.$message.success('保存成功')
+            this.infoTipVisible = true
+            this.isEditCheckBox = true
+            this.tip = {
+              username: result.data.data.mobile,
+              password: result.data.data.password
+            } 
+          }
+
           console.log(result)
         } else {
           console.log('error submit!!')

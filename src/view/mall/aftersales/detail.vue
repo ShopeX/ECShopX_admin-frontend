@@ -460,7 +460,10 @@
       </div>
     </template>
 
-    <div v-if="aftersalesInfo.return_type == 'offline'" class="section-header with-border">
+    <div
+      v-if="aftersalesInfo.return_type == 'offline' && isObject(aftersalesInfo.aftersales_address)"
+      class="section-header with-border"
+    >
       <h3>到店退货</h3>
       <div class="section-body">
         <template>
@@ -663,7 +666,7 @@ import hqbdlycorp_kname from '../../../common/hqbdlycorp_kname.json'
 import district from '../../../common/district.json'
 import RemarkModal from '@/components/remarkModal'
 import remarkMixin from '@/mixins/remarkMixin'
-import { isArray } from '@/utils'
+import { isArray, isObject } from '@/utils'
 
 import { mapGetters } from 'vuex'
 
@@ -753,6 +756,7 @@ export default {
   },
   methods: {
     isArray,
+    isObject,
     aftersaleInfo() {
       getAftersalesDetail(this.aftersales_bn).then((response) => {
         let data = response.data.data

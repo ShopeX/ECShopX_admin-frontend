@@ -50,7 +50,8 @@ export default {
   },
   methods: {
     getAddress() {
-      this.address = `${process.env.APP_MERCHANT_URL}/merchant/login`
+      let host = location.host
+      this.address = `${host}/merchant/login`
     },
     copyInfo() {
       let textarea = document.createElement('textarea')

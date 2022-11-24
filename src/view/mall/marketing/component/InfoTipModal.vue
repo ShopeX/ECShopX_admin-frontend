@@ -51,7 +51,7 @@ export default {
   methods: {
     getAddress() {
       let host = location.host
-      this.address = `${host}/login`
+      this.address = `${host}/merchant/login`
     },
     copyInfo() {
       let textarea = document.createElement('textarea')

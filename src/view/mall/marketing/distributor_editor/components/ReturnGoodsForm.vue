@@ -4,12 +4,14 @@
       <el-form-item label="本店订单">
         <el-switch v-model="content.baseForm.offline_aftersales" />
         <div class="form-item-tip">
-          启用后本店订单消费者发起退货退款申请时可在线下门店退货，关闭时本店订单仅可使用快递退货；商家发起的退货订单不受此规则限制。
+          启用后本店订单买家发起退货退款申请时可选择到店退货，关闭时本店订单仅可使用快递退货；商家发起的售后订单不受此规则限制。
         </div>
       </el-form-item>
       <div>
         <el-form-item label="本店退货点" style="margin-bottom: 0">
-          <div class="form-item-tip line-height-40">消费者选择到店退货时可看到下方的退货点信息</div>
+          <div class="form-item-tip line-height-40">
+            退货点信息会在买家选择到店退货时展示，启用「本店订单到店退货」时本店退货点默认选中，可通过再次编辑店铺信息移除。
+          </div>
         </el-form-item>
 
         <div class="inner-base-form">
@@ -69,7 +71,7 @@
 
         <el-form-item label="可退货店铺">
           <div class="form-item-tip line-height-40">
-            本店线上订单发起退货退款申请是可在下方列表中的店铺到店退货。
+            本店线上订单买家发起退货退款申请时除了选择本店退货点，还可选择下方列表店铺的退货点完成到店退货。
           </div>
           <el-button type="text" @click="onSelectShop">选择店铺</el-button>
           <SpFinder ref="finder" no-selection :data="finderData" :setting="setting" />
@@ -78,7 +80,7 @@
         <el-form-item label="其他店铺订单">
           <el-switch v-model="content.baseForm.offline_aftersales_other" />
           <div class="form-item-tip">
-            启用后其他店铺订单可到本店线下退货点退货；商家发起的退货订单不受此规则限制。
+            启用后其他店铺在设置可退货店铺时可选择本店；商家发起的售后订单不受此规则限制。
           </div>
         </el-form-item>
       </div>

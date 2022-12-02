@@ -397,7 +397,7 @@ export default {
     }
   },
   mounted () {
-    if (this.$route.query.distributor_id) {
+    if (this.$route.query.distributor_id || this.$store.getters.login_type === 'distributor') {
       this.distributor_id = this.$route.query.distributor_id
       this.loginType = this.$store.getters.login_type
       if (this.$store.getters.login_type === 'distributor' || this.is_openAccount) {

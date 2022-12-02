@@ -15,7 +15,7 @@ export default {
           path: 'adapay_member_entry',
           name: '进件管理',
           component: () => import('@/view/dealer/create_account')
-        }
+        },
         {
           path: 'adapay_trades',
           name: '分账',

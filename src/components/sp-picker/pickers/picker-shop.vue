@@ -120,7 +120,8 @@ export default {
         name: this.formData.keywords,
         province: province,
         city: city,
-        area: area
+        area: area,
+        distribution_type: this.value.distribution_type
       }
       return params
     },

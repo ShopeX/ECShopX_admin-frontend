@@ -27,16 +27,10 @@
           @change="changeSelect"
         />
       </div>
-      <section
-        v-for="item in smsScenarioList"
-        :key="item.id"
-        class="card"
-      >
+      <section v-for="item in smsScenarioList" :key="item.id" class="card">
         <nav>
           <h4>短信场景：{{ item.scene_name }}</h4>
-          <div class="type">
-            短信类型：{{ item.template_type }}
-          </div>
+          <div class="type">短信类型：{{ item.template_type }}</div>
           <div class="btn">
             <el-button
               v-if="item.itemList.length < 3"
@@ -48,51 +42,18 @@
             </el-button>
           </div>
         </nav>
-        <el-table
-          :data="item.itemList"
-          style="width: 100%"
-          border
-        >
-          <el-table-column
-            prop="sign_name"
-            label="签名"
-            width="240"
-          />
-          <el-table-column
-            prop="template_content"
-            label="模板"
-          />
-          <el-table-column
-            prop="status"
-            label="状态"
-            width="180"
-          >
+        <el-table :data="item.itemList" style="width: 100%" border>
+          <el-table-column prop="sign_name" label="签名" width="240" />
+          <el-table-column prop="template_content" label="模板" />
+          <el-table-column prop="status" label="状态" width="180">
             <template slot-scope="scope">
-              <div
-                v-if="scope.row.status == '0'"
-                class="fail"
-              >
-                未启用
-              </div>
-              <div
-                v-if="scope.row.status == '1'"
-                class="success"
-              >
-                已启用
-              </div>
+              <div v-if="scope.row.status == '0'" class="fail">未启用</div>
+              <div v-if="scope.row.status == '1'" class="success">已启用</div>
             </template>
           </el-table-column>
-          <el-table-column
-            prop="sign_name"
-            label="操作"
-            width="140"
-          >
+          <el-table-column prop="sign_name" label="操作" width="140">
             <template slot-scope="scope">
-              <el-button
-                type="text"
-                size="small"
-                @click="deteleSms(scope.row.id, item.scene_name)"
-              >
+              <el-button type="text" size="small" @click="deteleSms(scope.row.id, item.scene_name)">
                 移除
               </el-button>
               <el-button
@@ -113,34 +74,21 @@
         </el-table>
       </section>
       <div class="footer">
-        <p v-if="loading">
-          加载中...
-        </p>
-        <p v-if="noMore">
-          没有更多了
-        </p>
+        <p v-if="loading">加载中...</p>
+        <p v-if="noMore">没有更多了</p>
       </div>
     </div>
     <!-- 添加短信 -->
-    <el-dialog
-      title="添加短信"
-      :visible="visible"
-      width="30%"
-      :before-close="handleClose"
-    >
-      <el-form
-        ref="form"
-        :model="form"
-        :rules="rules"
-        label-width="60px"
-      >
-        <el-form-item
-          label="签名"
-          prop="sign_id"
-        >
+    <el-dialog title="添加短信" :visible="visible" width="30%" :before-close="handleClose">
+      <el-form ref="form" :model="form" :rules="rules" label-width="60px">
+        <el-form-item label="签名" prop="sign_id">
           <el-select
             v-model="form.sign_id"
-            placeholder="请选择签名"
+            filterable
+            remote
+            reserve-keyword
+            placeholder="输入签名名称搜索"
+            :remote-method="getSMSSignatureList"
             style="width: 95%"
           >
             <el-option
@@ -151,13 +99,14 @@
             />
           </el-select>
         </el-form-item>
-        <el-form-item
-          label="模板"
-          prop="template_id"
-        >
+        <el-form-item label="模板" prop="template_id">
           <el-select
             v-model="form.template_id"
-            placeholder="请选择模板"
+            filterable
+            remote
+            reserve-keyword
+            placeholder="输入模板名称搜索"
+            :remote-method="getSMSTemplateList"
             style="width: 95%"
           >
             <el-option
@@ -169,15 +118,9 @@
           </el-select>
         </el-form-item>
       </el-form>
-      <span
-        slot="footer"
-        class="dialog-footer"
-      >
+      <span slot="footer" class="dialog-footer">
         <el-button @click="handleClose">取 消</el-button>
-        <el-button
-          type="primary"
-          @click="fnPass('form')"
-        >确 定</el-button>
+        <el-button type="primary" @click="fnPass('form')">确 定</el-button>
       </span>
     </el-dialog>
   </div>
@@ -200,7 +143,7 @@ export default {
   components: {
     tips
   },
-  data () {
+  data() {
     return {
       smsScenarioList: [],
       query: {
@@ -228,25 +171,25 @@ export default {
     }
   },
   computed: {
-    noMore () {
+    noMore() {
       return this.smsScenarioList.length >= this.count
     },
-    disabled () {
+    disabled() {
       return this.loading || this.noMore
     }
   },
-  mounted () {
+  mounted() {
     this.getSerchNameList()
     this.init()
   },
   methods: {
-    async getSerchNameList () {
+    async getSerchNameList() {
       const result = await getScenarioList({ page_size: 24 })
       this.serchNameList = result.data.data.list.map((item) => {
         return { value: item.scene_name }
       })
     },
-    async init (type) {
+    async init(type) {
       this.loading = true
       const result = await getScenarioList(this.query)
       if (type == 'serch') {
@@ -258,20 +201,32 @@ export default {
       this.loading = false
     },
     // 添加短信
-    async fnAddSms (id, scene_name) {
+    async fnAddSms(id, scene_name) {
       this.visible = true
       this.activeScene_name = scene_name
       // 获取选项
-      getSmsSignatureList({ params: { status: '1' } }).then((res) => {
-        this.SmsSignatureList = res.data.data.list
-      })
-      getSmsTemplateList({ params: { status: '1', scene_id: id } }).then((res) => {
-        this.SmsTemplateList = res.data.data.list
-      })
       this.form.scene_id = id
       console.log(id)
     },
-    fnPass (formName) {
+    async getSMSTemplateList(query) {
+      const { list } = await this.$api.sms.getSmsTemplateList({
+        params: { status: '1', scene_id: this.form.scene_id },
+        pageSize: 20,
+        pageIndex: 1,
+        template_name: query
+      })
+      this.SmsTemplateList = list
+    },
+    async getSMSSignatureList(query) {
+      const { list } = await this.$api.sms.getSmsSignatureList({
+        params: { status: '1' },
+        pageSize: 20,
+        pageIndex: 1,
+        sign_name: query
+      })
+      this.SmsSignatureList = list
+    },
+    fnPass(formName) {
       this.$refs[formName].validate(async (valid) => {
         if (valid) {
           const result = await addSceneItem(this.form)
@@ -283,12 +238,12 @@ export default {
         }
       })
     },
-    handleClose () {
+    handleClose() {
       this.visible = false
       this.$refs['form'].resetFields()
     },
     // 停用/启用/删除
-    fnDisablingSms (id, flag, scene_name) {
+    fnDisablingSms(id, flag, scene_name) {
       const message = flag
         ? '每个场景仅可启用一条短信。启用后，该短信将作为当前场景短信使用。'
         : '停用后当前场景将不会触发短信；您仍可启用其他短信作为当前场景短信使用。'
@@ -312,7 +267,7 @@ export default {
       })
     },
 
-    async deteleSms (id, scene_name) {
+    async deteleSms(id, scene_name) {
       console.log(scene_name)
       const message =
         '移除后，该短信将不在当前场景。如果移除的是已启用的短信，移除后当前场景可不会触发短信。'
@@ -328,7 +283,7 @@ export default {
       })
     },
     // 下拉加载
-    load () {
+    load() {
       this.query.page = this.query.page + 1
       console.log(this.noMore, 'this.noMore')
       if (!this.noMore) {
@@ -338,7 +293,7 @@ export default {
     },
 
     /* 搜索相关 */
-    handleSelect ({ value }) {
+    handleSelect({ value }) {
       this.query = {
         page_size: 3,
         page: 1,
@@ -346,7 +301,7 @@ export default {
       }
       this.init('serch')
     },
-    initQuery (scene_name = '') {
+    initQuery(scene_name = '') {
       // 初始化一下 （修改状态）
       this.query = {
         page_size: 3,
@@ -354,20 +309,20 @@ export default {
         scene_name: scene_name
       }
     },
-    changeSelect (val) {
+    changeSelect(val) {
       if (val !== '') return
       // 清空会执行 肯定是空值
       this.smsScenarioList = [] // 有可能会存在上一次搜索的值 所以先清空
       this.init()
     },
-    querySearch (queryString = '', cb) {
+    querySearch(queryString = '', cb) {
       var restaurants = this.serchNameList
       var results = queryString ? restaurants.filter(this.createFilter(queryString)) : restaurants
       // 调用 callback 返回建议列表的数据
 
       cb(results)
     },
-    createFilter (queryString) {
+    createFilter(queryString) {
       console.log(queryString)
       return (restaurant) => {
         return restaurant.value.indexOf(queryString) === 0

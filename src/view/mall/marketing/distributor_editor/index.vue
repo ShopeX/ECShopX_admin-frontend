@@ -24,7 +24,7 @@
 
 <template>
   <div class="distributor-form">
-    <!-- baseForm: {{ baseForm }} -->
+    <!-- baseForm: {{ baseForm.distribution_type }} -->
     <el-card v-if="is_normal" class="el-card--normal" header="店铺类型">
       <el-form ref="form" label-width="120px" :model="baseForm" :rules="rules">
         <el-form-item label="店铺类型" prop="distribution_type">

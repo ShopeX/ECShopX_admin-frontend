@@ -135,7 +135,6 @@ export default {
         distributor_id: this.distributor_id,
         is_selected: 1
       })
-      debugger
       this.finderData = list
       this.$nextTick(() => {
         this.$refs['finder'].refresh()

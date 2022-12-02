@@ -11,7 +11,7 @@
   align-items: center;
   .el-icon-info {
     margin-right: 2px;
-    color: #777;
+    color: #faad14;
   }
 }
 </style>

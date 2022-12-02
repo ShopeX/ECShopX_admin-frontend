@@ -94,24 +94,30 @@
         <el-col>
           <el-button-group>
             <el-button type="primary" @click="addCategory">
-更改商品分类
-</el-button>
+              更改商品分类
+            </el-button>
             <el-button type="primary" @click="addTemplates">
-更改运费模板
-</el-button>
+              更改运费模板
+            </el-button>
             <el-button type="primary" @click="batchItemsStore">
-统一库存
-</el-button>
+              统一库存
+            </el-button>
             <el-button type="primary" @click="batchItemsStatus('onsale')">
-批量上架
-</el-button>
+              批量上架
+            </el-button>
             <el-button type="primary" @click="batchItemsStatus('instock')">
-批量下架
-</el-button>
+              批量下架
+            </el-button>
+            <el-button type="primary" @click="productImport">
+              商品导入
+            </el-button>
+            <el-button type="primary" @click="inventoryImport">
+              库存导入
+            </el-button>
             <export-tip @exportHandle="exportItemsData()">
               <el-button type="primary">
-导出商品信息
-</el-button>
+                导出商品信息
+              </el-button>
             </export-tip>
           </el-button-group>
           <el-button type="primary" icon="el-icon-circle-plus" plain @click="addItems">
@@ -129,11 +135,11 @@
           <div v-if="activeName == 'second'" style="margin-bottom: 15px; width: 280px">
             <el-input v-model="warning_store" value="warning_store">
               <template slot="prepend">
-预警数量
-</template>
+                预警数量
+              </template>
               <el-button slot="append" @click="setWarningStore">
-保存
-</el-button>
+                保存
+              </el-button>
             </el-input>
           </div>
           <el-table v-loading="loading" :data="ItemsList" @selection-change="handleSelectionChange">
@@ -228,8 +234,8 @@
             <el-table-column prop="store" label="库存" width="80" />
             <el-table-column label="市场价" width="80">
               <template slot-scope="scope">
-¥{{ scope.row.market_price }}
-</template>
+                ¥{{ scope.row.market_price }}
+              </template>
             </el-table-column>
             <el-table-column label="积分价格" width="150">
               <template slot-scope="scope">
@@ -249,8 +255,8 @@
                   :content="scope.row.audit_reason"
                 >
                   <el-button slot="reference" type="text">
-审核驳回
-</el-button>
+                    审核驳回
+                  </el-button>
                 </el-popover>
                 <span v-else-if="scope.row.approve_status == 'onsale'">前台可销</span>
                 <span v-else-if="scope.row.approve_status == 'offline_sale'">前台不展示 </span>
@@ -770,6 +776,12 @@ export default {
           message: '请选择至少一个商品'
         })
       }
+    },
+    productImport () {
+      this.$router.push({ path: '/pointsmall/pointsmallgoods/pointsmallphysicalupload' })
+    },
+    inventoryImport () {
+      this.$router.push({ path: '/pointsmall/pointsmallgoods/pointsmallphysicalstoreupload' })
     },
     batchItemsStatus (status) {
       if (this.goods_id.length === 0) {

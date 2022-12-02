@@ -20,6 +20,7 @@ import RouteApplications from './route-applications'
 
 /* shopadmin router */
 import RouteShopAdminShopList from './route-shopadmin-shoplist'
+import RouteShopAdminBase from './route-shopadmin-base'
 import RouteShopAdminEntity from './route-shopadmin-entity'
 import RouteShopAdminOrder from './route-shopadmin-order'
 import RouteShopAdminMember from './route-shopadmin-member'
@@ -63,6 +64,7 @@ export default {
   RouteDealer,
   RouteApplications,
   RouteShopAdminShopList,
+  RouteShopAdminBase,
   RouteShopAdminEntity,
   RouteShopAdminOrder,
   RouteShopAdminMember,

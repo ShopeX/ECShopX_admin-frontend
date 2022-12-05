@@ -260,9 +260,7 @@
         </el-card>
         <el-card v-loading="loader" shadow="never">
           <div slot="header" class="view-flex">
-            <div class="view-flex-item">
-商品规格
-</div>
+            <div class="view-flex-item">商品规格</div>
             <template v-if="!isEditor">
               <span v-if="skus.length === 0" class="small mark"
                 >添加多规格商品请先为当前主类目绑定规格!</span
@@ -316,18 +314,14 @@
               <el-col :xs="24" :sm="12" :md="8">
                 <el-form-item label="重量">
                   <el-input v-model="form.weight" type="number" required min="0" placeholder="">
-                    <template slot="append">
-kg
-</template>
+                    <template slot="append"> kg </template>
                   </el-input>
                 </el-form-item>
               </el-col>
               <el-col :xs="24" :sm="12" :md="8">
                 <el-form-item label="体积">
                   <el-input v-model="form.volume" type="number" required min="0" placeholder="">
-                    <template slot="append">
-m³
-</template>
+                    <template slot="append"> m³ </template>
                   </el-input>
                 </el-form-item>
               </el-col>
@@ -339,9 +333,7 @@ m³
               <el-col :xs="24" :sm="12" :md="8">
                 <el-form-item label="成本价">
                   <el-input v-model="form.cost_price" type="number" required min="0" placeholder="">
-                    <template slot="prepend">
-¥
-</template>
+                    <template slot="prepend"> ¥ </template>
                   </el-input>
                 </el-form-item>
               </el-col>
@@ -354,18 +346,14 @@ m³
                     min="0"
                     placeholder=""
                   >
-                    <template slot="prepend">
-¥
-</template>
+                    <template slot="prepend"> ¥ </template>
                   </el-input>
                 </el-form-item>
               </el-col>
               <el-col :xs="24" :sm="12" :md="8">
                 <el-form-item label="积分价格">
                   <el-input v-model="form.point" type="number" required min="0" placeholder="">
-                    <template slot="append">
-积分
-</template>
+                    <template slot="append"> 积分 </template>
                   </el-input>
                 </el-form-item>
               </el-col>
@@ -379,9 +367,7 @@ m³
           <template v-else>
             <el-card v-for="(item, index) in skus" :key="item.index">
               <div class="sku-select__item">
-                <div class="goods">
-{{ item.sku_name }}：
-</div>
+                <div class="goods">{{ item.sku_name }}：</div>
                 <div class="sku-select__checkgroup">
                   <el-checkbox-group v-model="item.checked_sku" @change="handleSkuChange">
                     <template v-for="(value, vn) in item.sku_value">
@@ -411,9 +397,7 @@ m³
               </div>
             </el-card>
             <div v-if="specImages.length > 0" class="content-bottom-padded">
-              <div class="content-padded h3">
-设置规格图片
-</div>
+              <div class="content-padded h3">设置规格图片</div>
               <el-table :data="specImages" :header-cell-style="{ background: '#f5f7fa' }">
                 <el-table-column label="规格" prop="item_spec" width="240" />
                 <el-table-column label="规格图">
@@ -439,9 +423,7 @@ m³
                 </el-table-column>
               </el-table>
             </div>
-            <div class="content-padded h3">
-设置规格
-</div>
+            <div class="content-padded h3">设置规格</div>
             <el-table :data="bulkFilling" :show-header="false" :highlight-current-row="false">
               <el-table-column>
                 <template slot-scope="scope">
@@ -548,9 +530,7 @@ m³
               </el-table-column>
               <el-table-column width="80">
                 <template slot-scope="scope">
-                  <el-button type="primary" size="mini" @click="fillSku">
-填充
-</el-button>
+                  <el-button type="primary" size="mini" @click="fillSku"> 填充 </el-button>
                 </template>
               </el-table-column>
             </el-table>
@@ -689,9 +669,7 @@ m³
               </el-table-column>
               <el-table-column width="80">
                 <template slot-scope="scope">
-                  <el-button type="text" @click="clearSku(scope.$index)">
-清除
-</el-button>
+                  <el-button type="text" @click="clearSku(scope.$index)"> 清除 </el-button>
                 </template>
               </el-table-column>
             </el-table>
@@ -729,12 +707,8 @@ m³
         <el-card v-loading="loader" header="图文详情" shadow="never">
           <el-form-item label="模式">
             <el-radio-group v-model="mode">
-              <el-radio :label="'richText'">
-富文本
-</el-radio>
-              <el-radio :label="'component'">
-组件式
-</el-radio>
+              <el-radio :label="'richText'"> 富文本 </el-radio>
+              <el-radio :label="'component'"> 组件式 </el-radio>
             </el-radio-group>
           </el-form-item>
           <template v-if="mode === 'richText'">
@@ -764,9 +738,7 @@ m³
           />
         </el-card>
         <div class="section-footer with-border content-center">
-          <el-button @click.native="handleCancel">
-取消
-</el-button>
+          <el-button @click.native="handleCancel"> 取消 </el-button>
           <el-button type="primary" :loading="submitLoading" @click="submitItemsActionConfirm">
             {{ submitLoading ? '提交中' : '保存' }}
           </el-button>
@@ -784,14 +756,8 @@ import Treeselect from '@riophae/vue-treeselect'
 import draggable from 'vuedraggable'
 // import the styles
 import '@riophae/vue-treeselect/dist/vue-treeselect.css'
-import {
-  getItemsDetail,
-  createItems,
-  updateItems,
-  getCategory,
-  getGoodsAttr,
-  getCategoryInfo
-} from '@/api/pointsmall'
+import { getItemsDetail, createItems, updateItems } from '@/api/pointsmall'
+import { getGoodsAttr, getCategory, getCategoryInfo } from '@/api/goods'
 import { getShippingTemplatesList } from '@/api/shipping'
 import { uploadMaterial } from '@/api/wechat'
 import imgPicker from '@/components/imageselect'
@@ -810,7 +776,7 @@ export default {
     richTextEditor,
     imgBox
   },
-  data () {
+  data() {
     return {
       // 跨境设置
       origincountry: [], // 产地国
@@ -940,7 +906,7 @@ export default {
   computed: {
     ...mapGetters(['editingSkus'])
   },
-  mounted () {
+  mounted() {
     console.log(this.$route.path.split('/')[2])
     if (this.$route.path.split('/')[2] === 'godsphysicalkj') {
       console.log('跨境商品')
@@ -951,7 +917,7 @@ export default {
     }
 
     const _self = this
-    async function onload () {
+    async function onload() {
       if (_self.$route.query.is_new) {
         _self.is_new = _self.$route.query.is_new
       }
@@ -1088,7 +1054,7 @@ export default {
   },
   methods: {
     // 获取产地国
-    getOrigincountry () {
+    getOrigincountry() {
       let where = { page: 1, pageSize: 99999 }
       if (this.form.type === 1) {
         getOrigincountry(where).then((res) => {
@@ -1097,12 +1063,12 @@ export default {
       }
     },
 
-    regionChange () {
+    regionChange() {
       this.form.regions_id = this.select_regions_value
       this.form.item_address_province = this.select_regions_value[0]
       this.form.item_address_city = this.select_regions_value[1]
     },
-    fetchMainCate () {
+    fetchMainCate() {
       getCategory({ is_main_category: true }).then((res) => {
         let list = []
         res.data.data.forEach((item) => {
@@ -1136,14 +1102,14 @@ export default {
         this.mainCateLoader = false
       })
     },
-    handleCategoryChange (val) {
+    handleCategoryChange(val) {
       getCategoryInfo(val[val.length - 1]).then((res) => {
         let detail = res.data.data
         this.generateParams(detail.goods_params)
         this.generateSpec(detail.goods_spec)
       })
     },
-    generateParams (data) {
+    generateParams(data) {
       let params = []
       let formParams = []
       data.forEach((item) => {
@@ -1170,7 +1136,7 @@ export default {
       this.params = params
       this.form.item_params = formParams
     },
-    handleSkuName (val, id) {
+    handleSkuName(val, id) {
       this.specItems.forEach((item) => {
         item.forEach((child) => {
           if (child.sku_id.indexOf(id) !== -1) {
@@ -1181,7 +1147,7 @@ export default {
         })
       })
     },
-    generateSpec (data) {
+    generateSpec(data) {
       let skus = []
       data.forEach((item) => {
         let specs = []
@@ -1202,13 +1168,13 @@ export default {
       })
       this.skus = skus
     },
-    upadateState (data) {
+    upadateState(data) {
       store.dispatch('setSku', data)
     },
-    panelCollapse (name) {
+    panelCollapse(name) {
       this.panel[name] = !this.panel[name]
     },
-    handleImgRemove (parent, index) {
+    handleImgRemove(parent, index) {
       this.specImages[parent].item_image_url.splice(index, 1)
     },
     submitItemsAction: function () {
@@ -1227,7 +1193,7 @@ export default {
       this.submitItemsActionConfirm()
       // }
     },
-    submitItemsActionConfirm () {
+    submitItemsActionConfirm() {
       this.submitLoading = true
       const that = this
       let formSkuItem = this.editingSkus
@@ -1265,7 +1231,7 @@ export default {
               message: '更新成功',
               type: 'success',
               duration: 2 * 1000,
-              onClose () {
+              onClose() {
                 that.submitLoading = false
                 that.refresh()
                 that.isLeave = true
@@ -1283,7 +1249,7 @@ export default {
               message: '添加成功',
               type: 'success',
               duration: 2 * 1000,
-              onClose () {
+              onClose() {
                 that.submitLoading = false
                 that.refresh()
                 that.isLeave = true
@@ -1302,7 +1268,7 @@ export default {
     handleCancel: function () {
       this.$router.go(-1)
     },
-    pageChange (val) {
+    pageChange(val) {
       this.currentPage = val
     },
     // 详情中的上传图片
@@ -1341,15 +1307,15 @@ export default {
       this.thumbDialog = false
     },
     //品牌LOGO
-    handleImgChange () {
+    handleImgChange() {
       this.imgDialog = true
       this.isGetImage = true
     },
-    closeImgDialog () {
+    closeImgDialog() {
       this.imgDialog = false
     },
     //视频
-    pickVideo (data) {
+    pickVideo(data) {
       this.form.videos = data.media_id
       this.form.videos_url = data.url
     },
@@ -1359,13 +1325,13 @@ export default {
       this.isGetPics = true
       this.multiple = true
     },
-    handleSkuImg (index) {
+    handleSkuImg(index) {
       this.currentSku = index
       this.picsDialog = true
       this.isGetPics = true
       this.multiple = true
     },
-    pickPics (data) {
+    pickPics(data) {
       if (this.currentSku === -1) {
         if (this.picsOldLen + data.length >= 10) {
           this.$message.error('最多上传9张图片!')
@@ -1396,7 +1362,7 @@ export default {
       }
       this.picsDialog = false
     },
-    fillSku () {
+    fillSku() {
       let obj = { ...this.bulkFilling[0] }
       let newObj = {}
       for (let key in obj) {
@@ -1410,7 +1376,7 @@ export default {
       })
       store.dispatch('setPage', list)
     },
-    clearSku (index) {
+    clearSku(index) {
       this.$confirm('确定清除当前规格的数据吗？', '提示', {
         confirmButtonText: '确定',
         cancelButtonText: '取消',
@@ -1427,23 +1393,23 @@ export default {
         }
       })
     },
-    closePicsDialog () {
+    closePicsDialog() {
       this.picsDialog = false
     },
-    picsEnter (index) {
+    picsEnter(index) {
       this.picsCurrent = index
     },
-    picsLeave () {
+    picsLeave() {
       this.picsCurrent = -1
     },
     removePicsImg: function (index) {
       this.form.pics.splice(index, 1)
       this.picsOldLen = this.form.pics.length
     },
-    handleSkuChange (data) {
+    handleSkuChange(data) {
       this.updateSku()
     },
-    updateSku () {
+    updateSku() {
       let arr = []
       let skus = []
       this.skus.forEach((item) => {
@@ -1549,13 +1515,13 @@ export default {
         this.specItems = []
       }
     },
-    getSkuName (id, skus) {
+    getSkuName(id, skus) {
       let sku = skus.find((item) => id === item.attribute_value_id)
       if (sku) {
         return sku.attribute_value
       }
     },
-    generateSkuids (data) {
+    generateSkuids(data) {
       if (data.length) {
         let skuIds = []
         data.forEach((child) => {
@@ -1566,7 +1532,7 @@ export default {
         return data.spec_value_id
       }
     },
-    generateSkus (data) {
+    generateSkus(data) {
       let len = data.length
       if (len >= 2) {
         let len1 = data[0].length
@@ -1594,7 +1560,7 @@ export default {
         return data[0]
       }
     },
-    renderRequire (h, { column }) {
+    renderRequire(h, { column }) {
       return h(
         'span',
         {
@@ -1603,16 +1569,16 @@ export default {
         '*' + column.label
       )
     },
-    handleContent (data) {
+    handleContent(data) {
       this.content = data
     },
-    deleteVideo () {
+    deleteVideo() {
       this.itemVideo = {}
       this.form.videos = ''
       this.form.videos_url = ''
     },
     // 获取品牌列表
-    getBrandList (searchVal = '', isInit = false) {
+    getBrandList(searchVal = '', isInit = false) {
       const list = []
       getGoodsAttr({
         page: 1,
@@ -1627,7 +1593,7 @@ export default {
         this.brandList = list
       })
     },
-    init () {
+    init() {
       this.getBrandList('', true)
       getShippingTemplatesList(this.templatesListParams).then((response) => {
         if (response.data.data.list.length > 0) {
@@ -1658,7 +1624,7 @@ export default {
     //   }
     // },
     // select值变化
-    paramsChange (e) {
+    paramsChange(e) {
       const params = this.params
       for (let i = 0; i < params.length; i++) {
         if (params[i].children && params[i].children.length > 0) {
@@ -1672,7 +1638,7 @@ export default {
       }
     }
   },
-  beforeRouteLeave (to, from, next) {
+  beforeRouteLeave(to, from, next) {
     if (!this.isLeave) {
       this.$confirm('确定要离开当前页面，您将丢失已编辑的数据？！', '提示', {
         confirmButtonText: '确定',

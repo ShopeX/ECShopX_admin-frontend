@@ -2,6 +2,9 @@
 .goods-title {
   padding-bottom: 5px;
 }
+.sp-filter-form {
+  margin-bottom: 16px;
+}
 .goods-code {
   color: #888;
   font-size: 13px;
@@ -12,21 +15,32 @@
 </style>
 <template>
   <div class="page-body">
-    <template v-if="$route.path.indexOf('editor') === -1">
-      <el-row class="filter-header" :gutter="20">
-        <el-col>
-          <el-input v-model="params.keywords" class="input-m" placeholder="商品名称">
-            <el-button slot="append" icon="el-icon-search" @click="goodsSearch" />
-          </el-input>
-          <el-input v-model="params.item_bn" class="input-m" placeholder="商品编号">
-            <el-button slot="append" icon="el-icon-search" @click="goodsSearch" />
-          </el-input>
-          <el-select
-            v-model="templates_id"
-            placeholder="运费模板"
-            clearable
-            @change="handleChangeTemplates"
-          >
+    <SpRouterView>
+      <div class="action-container">
+        <el-button type="primary" icon="iconfont icon-xinzengcaozuo-01" @click="addItems">
+          添加商品
+        </el-button>
+
+        <el-dropdown @command="handleImport">
+          <el-button type="primary" plain icon="iconfont icon-daorucaozuo-01">
+            导入<i class="el-icon-arrow-down el-icon--right" />
+          </el-button>
+          <el-dropdown-menu slot="dropdown">
+            <el-dropdown-item command="physicalupload"> 商品导入 </el-dropdown-item>
+            <el-dropdown-item command="physicalstoreupload"> 库存导入 </el-dropdown-item>
+          </el-dropdown-menu>
+        </el-dropdown>
+      </div>
+
+      <SpFilterForm :model="params" @onSearch="onSearch" @onReset="onSearch">
+        <SpFilterFormItem prop="keywords" label="商品名称:">
+          <el-input v-model="params.keywords" placeholder="请输入商品名称" />
+        </SpFilterFormItem>
+        <SpFilterFormItem prop="item_bn" label="商品编号:">
+          <el-input v-model="params.item_bn" placeholder="请输入商品编号" />
+        </SpFilterFormItem>
+        <SpFilterFormItem prop="templates_id" label="运费模板:">
+          <el-select v-model="params.templates_id" placeholder="请选择" clearable>
             <el-option
               v-for="item in templatesList"
               :key="item.template_id"
@@ -34,44 +48,34 @@
               :value="item.template_id"
             />
           </el-select>
+        </SpFilterFormItem>
+        <SpFilterFormItem prop="regions_id" label="商品产地:">
           <el-cascader
-            v-model="select_regions_value"
-            placeholder="商品产地"
+            v-model="params.regions_id"
+            placeholder="请选择"
+            clearable
             :options="regions"
-            clearable
-            @change="searchAction"
           />
-          <el-select
-            v-model="params.approve_status"
-            clearable
-            placeholder="商品状态"
-            @change="goodsSearch"
-          >
+        </SpFilterFormItem>
+        <SpFilterFormItem prop="approve_status" label="商品状态:">
+          <el-select v-model="params.approve_status" clearable placeholder="请选择">
             <el-option
               v-for="item in statusOption"
-              v-if="login_type != 'distributor'"
-              :key="item.value"
-              :label="item.title"
-              size="mini"
-              :value="item.value"
-            />
-            <el-option
-              v-for="item in shopStatusOption"
-              v-if="login_type == 'distributor'"
               :key="item.value"
               :label="item.title"
               size="mini"
               :value="item.value"
             />
           </el-select>
+        </SpFilterFormItem>
+        <SpFilterFormItem prop="brand_id" label="品牌:">
           <el-select
-            v-model="select_branch_value"
-            placeholder="选择品牌"
+            v-model="params.brand_id"
+            placeholder="请选择"
             remote
             filterable
-            :remote-method="getGoodsBranchList"
             clearable
-            @change="searchAction"
+            :remote-method="getGoodsBranchList"
           >
             <el-option
               v-for="item in goodsBranchList"
@@ -80,52 +84,31 @@
               :value="item.attribute_id"
             />
           </el-select>
+        </SpFilterFormItem>
+        <SpFilterFormItem prop="category" label="商品分类:">
           <el-cascader
-            v-model="select_category_value"
-            placeholder="商品分类"
+            v-model="params.category"
+            placeholder="请选择"
+            clearable
             :options="categoryList"
             :props="{ value: 'category_id', checkStrictly: true }"
-            clearable
-            @change="searchAction"
           />
-        </el-col>
-      </el-row>
-      <el-row :gutter="20">
-        <el-col>
-          <el-button-group>
-            <el-button type="primary" @click="addCategory">
-              更改商品分类
-            </el-button>
-            <el-button type="primary" @click="addTemplates">
-              更改运费模板
-            </el-button>
-            <el-button type="primary" @click="batchItemsStore">
-              统一库存
-            </el-button>
-            <el-button type="primary" @click="batchItemsStatus('onsale')">
-              批量上架
-            </el-button>
-            <el-button type="primary" @click="batchItemsStatus('instock')">
-              批量下架
-            </el-button>
-            <el-button type="primary" @click="productImport">
-              商品导入
-            </el-button>
-            <el-button type="primary" @click="inventoryImport">
-              库存导入
-            </el-button>
-            <export-tip @exportHandle="exportItemsData()">
-              <el-button type="primary">
-                导出商品信息
-              </el-button>
-            </export-tip>
-          </el-button-group>
-          <el-button type="primary" icon="el-icon-circle-plus" plain @click="addItems">
-            添加商品
-          </el-button>
-        </el-col>
-      </el-row>
-      <el-tabs v-model="activeName" type="border-card" @tab-click="handleClick">
+        </SpFilterFormItem>
+      </SpFilterForm>
+
+      <div class="action-container">
+        <el-button type="primary" plain @click="addCategory"> 更改商品分类 </el-button>
+        <el-button type="primary" plain @click="addTemplates"> 更改运费模板 </el-button>
+        <el-button type="primary" plain @click="batchItemsStore"> 统一库存 </el-button>
+        <el-button type="primary" plain @click="batchItemsStatus('onsale')"> 批量上架 </el-button>
+        <el-button type="primary" plain @click="batchItemsStatus('instock')"> 批量下架 </el-button>
+
+        <export-tip @exportHandle="exportItemsData()">
+          <el-button type="primary" plain> 导出商品信息 </el-button>
+        </export-tip>
+      </div>
+
+      <el-tabs v-model="activeName" type="card" @tab-click="handleClick">
         <el-tab-pane
           v-for="(item, index) in tabList"
           :key="index"
@@ -134,15 +117,16 @@
         >
           <div v-if="activeName == 'second'" style="margin-bottom: 15px; width: 280px">
             <el-input v-model="warning_store" value="warning_store">
-              <template slot="prepend">
-                预警数量
-              </template>
-              <el-button slot="append" @click="setWarningStore">
-                保存
-              </el-button>
+              <template slot="prepend"> 预警数量 </template>
+              <el-button slot="append" @click="setWarningStore"> 保存 </el-button>
             </el-input>
           </div>
-          <el-table v-loading="loading" :data="ItemsList" @selection-change="handleSelectionChange">
+          <el-table
+            v-loading="loading"
+            border
+            :data="ItemsList"
+            @selection-change="handleSelectionChange"
+          >
             <el-table-column type="selection" align="center" label="全选" />
             <el-table-column label="操作" width="80">
               <template slot-scope="scope">
@@ -233,9 +217,7 @@
             </el-table-column>
             <el-table-column prop="store" label="库存" width="80" />
             <el-table-column label="市场价" width="80">
-              <template slot-scope="scope">
-                ¥{{ scope.row.market_price }}
-              </template>
+              <template slot-scope="scope"> ¥{{ scope.row.market_price }} </template>
             </el-table-column>
             <el-table-column label="积分价格" width="150">
               <template slot-scope="scope">
@@ -254,9 +236,7 @@
                   trigger="hover"
                   :content="scope.row.audit_reason"
                 >
-                  <el-button slot="reference" type="text">
-                    审核驳回
-                  </el-button>
+                  <el-button slot="reference" type="text"> 审核驳回 </el-button>
                 </el-popover>
                 <span v-else-if="scope.row.approve_status == 'onsale'">前台可销</span>
                 <span v-else-if="scope.row.approve_status == 'offline_sale'">前台不展示 </span>
@@ -329,15 +309,19 @@
           </el-button>
         </div>
       </SideBar>
-      <el-dialog title="批量修改库存" :visible.sync="storeUpdate" width="30%" :close-on-click-modal="false">
+      <el-dialog
+        title="批量修改库存"
+        :visible.sync="storeUpdate"
+        width="30%"
+        :close-on-click-modal="false"
+      >
         统一库存：<el-input v-model="itemstore" size="mini" type="number" />
         <span slot="footer" class="dialog-footer">
           <el-button @click="storeUpdate = false">取 消</el-button>
           <el-button type="primary" @click="saveItemsStore">确 定</el-button>
         </span>
       </el-dialog>
-    </template>
-    <router-view />
+    </SpRouterView>
   </div>
 </template>
 <script>
@@ -372,12 +356,12 @@ export default {
     SideBar
   },
   props: ['getStatus'],
-  provide () {
+  provide() {
     return {
       refresh: this.getGoodsList
     }
   },
-  data () {
+  data() {
     return {
       login_type: 'default',
       select_regions_value: [],
@@ -423,7 +407,7 @@ export default {
         attribute_name: ''
       },
       params: {
-        page: 1,
+        pageIndex: 1,
         pageSize: 20,
         item_type: 'normal',
         templates_id: '',
@@ -467,22 +451,28 @@ export default {
     ...mapGetters(['wheight'])
   },
   watch: {
-    '$route' (to, from) {
+    '$route'(to, from) {
       this.init()
     },
-    getStatus (val) {
+    getStatus(val) {
       if (val) {
         this.getGoodsList()
       }
     }
   },
-  mounted () {
+  mounted() {
     this.form.category = this.$route.query.category
     this.select_category_value = this.$route.query.category
     this.init()
   },
   methods: {
-    init () {
+    onSearch() {
+      this.params.pageIndex = 1
+      this.$nextTick(() => {
+        this.getGoodsList()
+      })
+    },
+    init() {
       if (this.$route.path.split('/')[2] === 'godsphysicalkj') {
         console.log('跨境商品列表')
         this.params.type = 1
@@ -505,7 +495,7 @@ export default {
       this.getCurrencyInfo()
       this.getGoodsBranchList()
     },
-    exportItemsData () {
+    exportItemsData() {
       if (this.item_id.length) {
         this.exportData.item_id = Object.assign({}, this.item_id)
         exportItemsData(this.exportData).then((res) => {
@@ -540,8 +530,8 @@ export default {
         })
       }
     },
-    searchAction () {
-      this.params.page = 1
+    searchAction() {
+      this.params.pageIndex = 1
       if (this.select_regions_value) {
         this.params.regions_id = this.select_regions_value
       }
@@ -549,14 +539,14 @@ export default {
       this.params.brand_id = this.select_branch_value
       this.getGoodsList()
     },
-    onCopy () {
+    onCopy() {
       this.$notify.success({
         message: '复制成功',
         showClose: true
       })
     },
-    handleClick (tab, event) {
-      this.params.page = 1
+    handleClick(tab, event) {
+      this.params.pageIndex = 1
       if (this.activeName == 'second') {
         this.params.is_warning = true
       } else {
@@ -564,27 +554,27 @@ export default {
       }
       this.getGoodsList()
     },
-    setWarningStore () {
+    setWarningStore() {
       getItemWarningStore({ store: this.warning_store }).then((res) => {
-        this.params.page = 1
+        this.params.pageIndex = 1
         this.getGoodsList()
       })
     },
-    handleCurrentChange (page_num) {
-      this.params.page = page_num
+    handleCurrentChange(page_num) {
+      this.params.pageIndex = page_num
       this.getGoodsList()
     },
-    handleSizeChange (pageSize) {
-      this.params.page = 1
+    handleSizeChange(pageSize) {
+      this.params.pageIndex = 1
       this.params.pageSize = pageSize
       this.getGoodsList()
     },
-    handleChangeTemplates (val) {
+    handleChangeTemplates(val) {
       this.currentPage = 1
       this.params.templates_id = val
       this.getGoodsList()
     },
-    handleSelectionChange (val) {
+    handleSelectionChange(val) {
       let item_id = []
       for (let i in val) {
         item_id.push(val[i].itemId)
@@ -596,7 +586,7 @@ export default {
       }
       this.goods_id = goods_id
     },
-    changeTemplates () {
+    changeTemplates() {
       if (this.item_id.length) {
         if (!this.templates_new_id) {
           this.$message({
@@ -618,12 +608,12 @@ export default {
         })
       }
     },
-    editItemsSort (index, row) {
+    editItemsSort(index, row) {
       setItemsSort({ 'sort': row.sort, 'item_id': row.itemId }).then((response) => {
         this.getGoodsList()
       })
     },
-    changeCategory () {
+    changeCategory() {
       if (this.item_id.length) {
         if (!this.category_id) {
           this.$message({
@@ -646,11 +636,11 @@ export default {
         })
       }
     },
-    addItems () {
+    addItems() {
       // 添加商品
       this.$router.push({ path: this.matchHidePage('editor') })
     },
-    addTemplates () {
+    addTemplates() {
       if (this.item_id.length) {
         this.addTemplatesdialogVisible = true
       } else {
@@ -660,7 +650,7 @@ export default {
         })
       }
     },
-    addCategory () {
+    addCategory() {
       if (this.item_id.length) {
         this.addCategorydialogVisible = true
       } else {
@@ -670,7 +660,7 @@ export default {
         })
       }
     },
-    editItemsAction (index, row, isNew) {
+    editItemsAction(index, row, isNew) {
       // 编辑商品弹框
       this.show_itemStore = false
       if (isNew) {
@@ -683,31 +673,30 @@ export default {
       }
     },
 
-    goodsSearch () {
-      this.params.page = 1
+    goodsSearch() {
+      this.params.pageIndex = 1
       this.getGoodsList()
     },
-    getGoodsList () {
+    async getGoodsList() {
       this.loading = true
       let params = JSON.parse(JSON.stringify(this.params))
       if (params.is_gift == 'all') {
         this.$delete(params, 'is_gift')
       }
-      getItemsList(params).then((response) => {
-        this.ItemsList = response.data.data.list
-        this.ItemsList.forEach((item) => {
-          item.price = item.price / 100
-          item.market_price = item.market_price / 100
-          item.link = `pages/item/espier-detail?gid=${item.goods_id}&id=${item.item_id}`
-        })
-        this.total_count = response.data.data.total_count
-        this.warning_store = response.data.data.warning_store
-        this.loading = false
-        this.templates_new_id = ''
-        this.itemstore = 0
+      const { list, total_count, warning_store } = await this.$api.pointsmall.getItemsList(params)
+      this.ItemsList = list
+      this.ItemsList.forEach((item) => {
+        item.price = item.price / 100
+        item.market_price = item.market_price / 100
+        item.link = `pages/item/espier-detail?gid=${item.goods_id}&id=${item.item_id}`
       })
+      this.total_count = total_count
+      this.warning_store = warning_store
+      this.loading = false
+      this.templates_new_id = ''
+      this.itemstore = 0
     },
-    deleteItemsAction (index, row) {
+    deleteItemsAction(index, row) {
       this.$confirm('此操作将删除该商品, 是否继续?', '提示', {
         confirmButtonText: '确定',
         cancelButtonText: '取消',
@@ -730,7 +719,7 @@ export default {
           })
         })
     },
-    getTaskTime (strDate) {
+    getTaskTime(strDate) {
       let date = new Date(strDate)
       let y = date.getFullYear()
       let m = date.getMonth() + 1
@@ -740,33 +729,31 @@ export default {
       let str = y + '-' + m + '-' + d
       return str
     },
-    getTimeStr (date) {
+    getTimeStr(date) {
       return this.getTaskTime(new Date(parseInt(date) * 1000))
     },
-    getShippingTemplatesList () {
+    getShippingTemplatesList() {
       this.loading = true
       getShippingTemplatesList(this.templatesParams).then((response) => {
         this.templatesList = response.data.data.list
       })
     },
-    getGoodsBranchList (searchVal = '') {
+    async getGoodsBranchList(searchVal = '') {
       this.goodsBranchParams.attribute_name = searchVal
-      getGoodsAttr(this.goodsBranchParams).then((response) => {
-        this.goodsBranchList = response.data.data.list
-      })
+      const { list } = await this.$api.goods.getGoodsAttr(this.goodsBranchParams)
+      this.goodsBranchList = list
     },
-    getCategory () {
-      getCategory({ is_show: false }).then((response) => {
-        this.categoryList = response.data.data
-      })
+    async getCategory() {
+      const data = await this.$api.goods.getCategory({ is_show: false })
+      this.categoryList = data
     },
-    getCurrencyInfo () {
+    getCurrencyInfo() {
       getDefaultCurrency().then((res) => {
         this.currency = res.data.data
         this.cursymbol = this.currency.symbol
       })
     },
-    batchItemsStore () {
+    batchItemsStore() {
       this.storeItemsList = []
       if (this.item_id.length) {
         this.storeUpdate = true
@@ -777,13 +764,14 @@ export default {
         })
       }
     },
-    productImport () {
-      this.$router.push({ path: '/pointsmall/pointsmallgoods/pointsmallphysicalupload' })
+    handleImport(command) {
+      if (command == 'physicalupload') {
+        this.$router.push({ path: '/pointsmall/pointsmallgoods/pointsmallphysicalupload' })
+      } else if (command == 'physicalstoreupload') {
+        this.$router.push({ path: '/pointsmall/pointsmallgoods/pointsmallphysicalstoreupload' })
+      }
     },
-    inventoryImport () {
-      this.$router.push({ path: '/pointsmall/pointsmallgoods/pointsmallphysicalstoreupload' })
-    },
-    batchItemsStatus (status) {
+    batchItemsStatus(status) {
       if (this.goods_id.length === 0) {
         this.$message({
           type: 'error',
@@ -817,7 +805,7 @@ export default {
         this.skuLoading = false
       })
     },
-    updateItemStatus (items) {
+    updateItemStatus(items) {
       this.loading = true
       let params = {}
       params = {
@@ -836,7 +824,7 @@ export default {
       })
       this.loading = false
     },
-    updateItemsStore (items) {
+    updateItemsStore(items) {
       this.skuLoading = true
       this.item_id = []
       let param = JSON.parse(JSON.stringify(this.params))
@@ -858,9 +846,12 @@ export default {
       })
       this.show_itemStore = true
     },
-    saveItemsStore () {
+    saveItemsStore() {
       this.skuLoading = true
-      if (Number(this.itemstore) < 0 || (this.storeItemsList.length && Number(this.storeItemsList[0].store) < 0)) {
+      if (
+        Number(this.itemstore) < 0 ||
+        (this.storeItemsList.length && Number(this.storeItemsList[0].store) < 0)
+      ) {
         this.$message({ type: 'error', message: '库存需为正整数', duration: 2000 })
         this.skuLoading = false
         return
@@ -881,22 +872,24 @@ export default {
       }
       this.submitLoading = true
       const _self = this
-      updateItemsStore(params).then((res) => {
-        if (res.data.data.status) {
-          this.$message({
-            message: '修改成功',
-            type: 'success',
-            duration: 2 * 1000
-          })
-          this.getGoodsList()
-        }
-        this.submitLoading = false
-        this.skuLoading = false
-        this.storeUpdate = false
-      }).catch(err => {
-        this.submitLoading = false
-        this.skuLoading = false
-      })
+      updateItemsStore(params)
+        .then((res) => {
+          if (res.data.data.status) {
+            this.$message({
+              message: '修改成功',
+              type: 'success',
+              duration: 2 * 1000
+            })
+            this.getGoodsList()
+          }
+          this.submitLoading = false
+          this.skuLoading = false
+          this.storeUpdate = false
+        })
+        .catch((err) => {
+          this.submitLoading = false
+          this.skuLoading = false
+        })
     }
   }
 }

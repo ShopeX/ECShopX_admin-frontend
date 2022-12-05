@@ -39,12 +39,7 @@
         >
           <template v-slot:tableTop>
             <el-row class="cus-btn">
-              <el-button
-                type="primary"
-                plain
-                size="mini"
-                @click="handleClose(true)"
-              >
+              <el-button type="primary" plain size="mini" @click="handleClose(true)">
                 新增经销商
               </el-button>
             </el-row>
@@ -87,27 +82,15 @@
           <p>{{ subTitle }}</p>
         </el-row>
         <el-row style="text-align: right">
-          <el-button
-            type="primary"
-            size="small"
-            plain
-            @click="handleModalConfirm(false)"
-          >
+          <el-button type="primary" size="small" plain @click="handleModalConfirm(false)">
             取消
           </el-button>
-          <el-button
-            type="primary"
-            size="small"
-            @click="handleModalConfirm(true)"
-          >
+          <el-button type="primary" size="small" @click="handleModalConfirm(true)">
             确认
           </el-button>
         </el-row>
       </el-dialog>
-      <AddModal
-        :visible="addVisible"
-        @handleClose="handleClose"
-      />
+      <AddModal :visible="addVisible" @handleClose="handleClose" />
     </div>
     <router-view />
   </div>
@@ -122,7 +105,7 @@ export default {
   components: { AddModal },
   computed: {
     ...mapGetters(['wheight']),
-    setting () {
+    setting() {
       return createSetting({
         columns: [
           { name: '经销商', key: 'username' },
@@ -158,7 +141,7 @@ export default {
             key: 'detail',
             type: 'button',
             buttonType: 'text',
-            slot: 'header',
+            // slot: 'header',
             action: {
               type: 'link',
               handler: (row) => {
@@ -223,7 +206,7 @@ export default {
       })
     }
   },
-  data () {
+  data() {
     return {
       dataUrl: `${process.env.VUE_APP_BASE_API}/adapay/dealer/list`,
       rowDate: {},
@@ -239,19 +222,19 @@ export default {
     }
   },
   methods: {
-    beforeSearch (params) {
+    beforeSearch(params) {
       params = {
         ...params,
         ...this.form
       }
       return params
     },
-    onFinderReset () {
+    onFinderReset() {
       this.create_time = ''
       this.open_time = ''
       this.form = {}
     },
-    handleOpenOpeartion (visivle, type, rowDate) {
+    handleOpenOpeartion(visivle, type, rowDate) {
       this.rowDate = rowDate
       this.modalContent =
         type === '开启'
@@ -261,13 +244,13 @@ export default {
       this.modalType = type
       this.subTitle = ''
     },
-    handleeResertPass (visivle, rowDate) {
+    handleeResertPass(visivle, rowDate) {
       this.rowDate = rowDate
       this.modalContent = `请确认是否重置【${rowDate.username}】的密码`
       this.subTitle = '（新密码将以短信形式发送至其联系人的手机号上，短信费用将从短信余额中扣除）'
       this.visibleModal = visivle
     },
-    handleModalConfirm (visible) {
+    handleModalConfirm(visible) {
       const { is_disable, operator_id } = this.rowDate
       if (visible) {
         let url = this.subTitle ? resertPassword : setDealerStatus
@@ -291,16 +274,16 @@ export default {
         this.subTitle = ''
       }
     },
-    handleClose (visible) {
+    handleClose(visible) {
       if (!visible) {
         this.$refs.finder.refresh()
       }
       this.addVisible = visible
     },
-    dateStrToTimeStamp (str) {
+    dateStrToTimeStamp(str) {
       return Date.parse(new Date(str)) / 1000
     },
-    dateChange (type, val) {
+    dateChange(type, val) {
       if (val) {
         if (type == 'create') {
           this.form.time_start = this.dateStrToTimeStamp(val[0] + ' 00:00:00')

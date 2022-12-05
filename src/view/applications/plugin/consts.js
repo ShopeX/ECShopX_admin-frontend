@@ -18,7 +18,7 @@ export const APPLICATION_LIST = [
     button: '订购咨询'
   },
   {
-    title: '营销中心',
+    title: '导购',
     key: 'yingxiao',
     desc: '基于企业微信的营销工具，帮助品牌建立1对1的服务关系，可视化客户画，标准化的生命周期沟通，精准的产品推荐，提升工作效率和销售转化率。',
     button: '订购咨询'

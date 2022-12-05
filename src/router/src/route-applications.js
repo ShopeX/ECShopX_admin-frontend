@@ -69,7 +69,13 @@ export default {
     {
       path: 'appsgroup/extapp',
       name: `扩展应用`,
-      component: () => import('@/view/applications/plugin')
+      component: () => import('@/view/applications/plugin'),
+      children: [
+        {
+          path: 'detail/:id?',
+          component: () => import('@/view/applications/plugin/appDetail.vue')
+        }
+      ]
     }
   ]
 }

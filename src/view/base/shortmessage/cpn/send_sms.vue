@@ -24,6 +24,7 @@
           :fetch-suggestions="querySearch"
           placeholder="请选择短信场景"
           @select="handleSelect"
+          @change="handleSelect"
         />
       </div>
       <section v-for="item in smsScenarioList" :key="item.id" class="card">
@@ -92,7 +93,7 @@
           >
             <el-option
               v-for="item in SmsSignatureList"
-              :key="item.id"
+              :key="`signa-item__${item.id}`"
               :label="item.sign_name"
               :value="item.id"
             />
@@ -110,7 +111,7 @@
           >
             <el-option
               v-for="item in SmsTemplateList"
-              :key="item.id"
+              :key="`template-item__${item.id}`"
               :label="item.template_name"
               :value="item.id"
             />

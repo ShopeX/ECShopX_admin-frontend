@@ -6,7 +6,8 @@
     fixed-row-action
     url="/distributor/items"
     :hooks="{
-      beforeSearch: beforeSearch
+      beforeSearch: beforeSearch,
+      afterSearch: afterSearch
     }"
     :setting="setting"
   />
@@ -36,13 +37,35 @@ export default {
           {
             name: '库存',
             key: 'store',
-            width: 100
+            width: 100,
+            showType: 'editable',
+            componentProps: {
+              change: async (v, row) => {
+                await this.$api.marketing.updateDistributorItem({
+                  distributor_id: this.distributorId,
+                  item_id: row.item_id,
+                  store: v
+                })
+                this.$refs.skuFinder.refresh()
+              }
+            }
           },
           {
             name: '商品价格（¥）',
             key: 'price',
             width: 160,
-            render: (h, { row }) => h('span', {}, row.price / 100)
+            // render: (h, { row }) => h('span', {}, row.price / 100),
+            showType: 'editable',
+            componentProps: {
+              change: async (v, row) => {
+                await this.$api.marketing.updateDistributorItem({
+                  distributor_id: this.distributorId,
+                  item_id: row.item_id,
+                  price: v * 100
+                })
+                this.$refs.skuFinder.refresh()
+              }
+            }
           },
           {
             name: '状态',
@@ -84,6 +107,14 @@ export default {
         distributor_id: this.distributorId
       }
       return params
+    },
+    afterSearch(response) {
+      const { list } = response.data.data
+
+      list.forEach((item) => {
+        item.price = item.price / 100
+      })
+      return list
     },
     getApproveStatus(status) {
       const approveStatus = {

@@ -14,7 +14,7 @@
     <SpImage :src="info" />
     <a
       class="download-link"
-      download
+      download="invitation_code.jpg"
       :href="info"
     >下载邀请码</a>
   </div>

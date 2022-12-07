@@ -796,31 +796,31 @@ export default {
           const specItems = this.skuData.specItems.map((item, index) => {
             const skuIds = item.sku_id.split('_')
             const itemSpec = []
-            this.skuData.skus.forEach((m, n) => {
-              const t = m.sku_value.find((k) => k.attribute_value_id == skuIds[n])
-              itemSpec.push({
-                spec_id: m.sku_id,
-                spec_value_id: skuIds[n],
-                spec_value_name: t.attribute_value,
-                spec_custom_value_name: t.custom_attribute_value
-              })
-            })
-            // skuIds.forEach(outer_m => {
-            //   let m, t;
-            //   this.skuData.skus.forEach(sub_m => {
-            //     let sub_t = sub_m.sku_value.find((k) => k.attribute_value_id == outer_m)
-            //     if (sub_t) {
-            //       t = sub_t
-            //       m = sub_m
-            //     }
-            //   })
+            // this.skuData.skus.forEach((m, n) => {
+            //   const t = m.sku_value.find((k) => k.attribute_value_id == skuIds[n])
             //   itemSpec.push({
             //     spec_id: m.sku_id,
-            //     spec_value_id: outer_m,
+            //     spec_value_id: skuIds[n],
             //     spec_value_name: t.attribute_value,
             //     spec_custom_value_name: t.custom_attribute_value
             //   })
             // })
+            skuIds.forEach(outer_m => {
+              let m, t;
+              this.skuData.skus.forEach(sub_m => {
+                let sub_t = sub_m.sku_value.find((k) => k.attribute_value_id == outer_m)
+                if (sub_t) {
+                  t = sub_t
+                  m = sub_m
+                }
+              })
+              itemSpec.push({
+                spec_id: m.sku_id,
+                spec_value_id: outer_m,
+                spec_value_name: t.attribute_value,
+                spec_custom_value_name: t.custom_attribute_value
+              })
+            })
             return {
               is_default: index == 0,
               sku_id: item.sku_id,

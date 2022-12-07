@@ -766,9 +766,9 @@ export default {
     },
     handleImport(command) {
       if (command == 'physicalupload') {
-        this.$router.push({ path: '/pointsmall/pointsmallgoods/pointsmallphysicalupload' })
+        this.$router.push({ path: this.matchHidePage('physicalupload') })
       } else if (command == 'physicalstoreupload') {
-        this.$router.push({ path: '/pointsmall/pointsmallgoods/pointsmallphysicalstoreupload' })
+        this.$router.push({ path: this.matchHidePage('physicalstoreupload') })
       }
     },
     batchItemsStatus(status) {

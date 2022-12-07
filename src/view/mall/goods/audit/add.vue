@@ -27,7 +27,7 @@
 <template>
   <div>
     <template v-if="!isEditor">
-      <el-card v-loading="mainCateLoader" shadow="never" header="选择主类目">
+      <el-card v-loading="mainCateLoader" shadow="never" header="选择管理分类">
         <el-cascader
           v-model="selectedMainCategory"
           :options="mainCategory"
@@ -38,7 +38,7 @@
     </template>
     <template v-else>
       <div class="form-block-head clearfix">
-        <div class="block-head-hd">商品主类目</div>
+        <div class="block-head-hd">商品管理分类</div>
       </div>
       <div class="form-block-body">
         <el-breadcrumb separator-class="el-icon-arrow-right" class="inline">
@@ -417,7 +417,7 @@ export default {
       }
       this.loading = false
     },
-    // 递归主类目
+    // 递归管理分类
     deepMainCategory(item, cateNames) {
       cateNames.push(item.category_name)
       if (item.children) {
@@ -587,7 +587,7 @@ export default {
       })
       return specNames.join(' ')
     },
-    // 获取主类目
+    // 获取管理分类
     async getMainCategory() {
       const res = await getCategory({ is_main_category: true })
       const category = res.data.data
@@ -607,7 +607,7 @@ export default {
       deepMainCategory(category, this.mainCategory)
       this.mainCateLoader = false
     },
-    // 选择主类目
+    // 选择管理分类
     async handleCategoryChange(val) {
       const res = await getCategoryInfo(val[val.length - 1])
       const detail = res.data.data

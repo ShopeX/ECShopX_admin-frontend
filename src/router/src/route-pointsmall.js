@@ -19,7 +19,7 @@ export default {
     },
     {
       path: 'pointsmallgoods/pointsmallmaincategory',
-      name: `商品主类目`,
+      name: `商品管理分类`,
       component: () => import('@/view/mall/pointsmallgoods/maincategory')
     },
     {

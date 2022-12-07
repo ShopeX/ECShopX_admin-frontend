@@ -8,7 +8,7 @@
       class="demo-ruleForm"
     >
       <template v-if="!isEditor || (isEditor && !form.item_main_cat_id)">
-        <el-card v-loading="mainCateLoader" shadow="never" header="选择主类目">
+        <el-card v-loading="mainCateLoader" shadow="never" header="选择管理分类">
           <el-cascader
             v-model="selectedMainCategory"
             :options="mainCategory"
@@ -18,7 +18,7 @@
         </el-card>
       </template>
       <div v-else v-loading="loader" class="content-padded view-flex view-flex-middle">
-        <div>主类目：</div>
+        <div>管理分类：</div>
         <el-breadcrumb separator-class="el-icon-arrow-right" class="inline">
           <el-breadcrumb-item v-for="(item, index) in categoryNames" :key="index">
             {{ item }}
@@ -265,7 +265,7 @@
 </div>
             <template v-if="!isEditor">
               <span v-if="skus.length === 0" class="small mark"
-                >添加多规格商品请先为当前主类目绑定规格!</span
+                >添加多规格商品请先为当前管理分类绑定规格!</span
               >
               <template v-if="skus.length > 0">
                 <el-switch

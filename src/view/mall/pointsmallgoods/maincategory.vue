@@ -7,7 +7,7 @@
           :disabled="isDisable"
           @click="updateCategory"
         >
-          保存主类目
+          保存管理分类
         </el-button>
         <el-button
           type="primary"
@@ -15,7 +15,7 @@
           icon="el-icon-circle-plus"
           @click="appendTop(categoryList)"
         >
-          新增主类目
+          新增管理分类
         </el-button>
       </el-col>
     </el-row>

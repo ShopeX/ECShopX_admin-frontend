@@ -159,20 +159,8 @@
                     <div>
                       <img class="page-code" :src="appCodeUrl">
                       <div class="page-btns">
-                        <el-button
-                          type="primary"
-                          plain
-                          size="mini"
-                          @click="handleDownload(scope.row.page_name)"
-                          >
-下载码
-</el-button
-                        >
-                        <el-button v-clipboard:copy="curPageUrl" type="primary" plain size="mini"
-                          >
-复制链接
-</el-button
-                        >
+                        <el-button type="primary" plain size="mini" @click="handleDownload(scope.row.title)">下载码</el-button>
+                        <el-button type="primary" plain size="mini" v-clipboard:copy="curPageUrl">复制链接</el-button>
                       </div>
                     </div>
                     <el-button

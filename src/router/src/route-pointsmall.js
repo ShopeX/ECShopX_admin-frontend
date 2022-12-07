@@ -14,7 +14,17 @@ export default {
         {
           path: 'editor/:itemId?',
           component: () => import('@/view/mall/pointsmallgoods/physical/add')
-        }
+        },
+        {
+          path: 'physicalupload',
+          name: `实体商品导入`,
+          component: () => import('@/view/mall/pointsmallgoods/physical/normalGoodsUpload')
+        },
+        {
+          path: 'physicalstoreupload',
+          name: `商品库存导入`,
+          component: () => import('@/view/mall/pointsmallgoods/physical/normalGoodsStoreUpload')
+        },
       ]
     },
     {
@@ -41,16 +51,6 @@ export default {
       path: 'pointsmallgoods/pointsmallbrand',
       name: `商品品牌`,
       component: () => import('@/view/mall/pointsmallgoods/attributes/brand')
-    },
-    {
-      path: 'pointsmallgoods/pointsmallphysicalupload',
-      name: `实体商品导入`,
-      component: () => import('@/view/mall/pointsmallgoods/physical/normalGoodsUpload')
-    },
-    {
-      path: 'pointsmallgoods/pointsmallphysicalstoreupload',
-      name: `商品库存导入`,
-      component: () => import('@/view/mall/pointsmallgoods/physical/normalGoodsStoreUpload')
     },
     {
       path: 'pointsmallgoods/pointsmallrate',

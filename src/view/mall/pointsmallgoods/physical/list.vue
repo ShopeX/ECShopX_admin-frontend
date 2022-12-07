@@ -97,7 +97,7 @@
       </SpFilterForm>
 
       <div class="action-container">
-        <el-button type="primary" plain @click="addCategory"> 更改商品分类 </el-button>
+        <el-button type="primary" plain @click="addCategory"> 更改销售分类 </el-button>
         <el-button type="primary" plain @click="addTemplates"> 更改运费模板 </el-button>
         <el-button type="primary" plain @click="batchItemsStore"> 统一库存 </el-button>
         <el-button type="primary" plain @click="batchItemsStatus('onsale')"> 批量上架 </el-button>
@@ -278,7 +278,7 @@
       </el-dialog>
       <!-- 选择运费模板-结束 -->
       <!-- 选择商品分类-开始 -->
-      <el-dialog title="更改商品分类" :visible.sync="addCategorydialogVisible" width="30%">
+      <el-dialog title="更改销售分类" :visible.sync="addCategorydialogVisible" width="30%">
         <treeselect
           v-model="category_id"
           :options="categoryList"

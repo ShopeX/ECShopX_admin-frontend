@@ -46,7 +46,7 @@
               style="display: inline-block"
               @click="addCategory"
             >
-              更改商品分类
+              更改销售分类
             </el-button>
             <el-button
               type="primary"
@@ -342,7 +342,7 @@
       </el-dialog>
       <!-- 选择运费模板-结束 -->
       <!-- 选择商品分类-开始 -->
-      <el-dialog title="更改商品分类" :visible.sync="addCategorydialogVisible" width="30%">
+      <el-dialog title="更改销售分类" :visible.sync="addCategorydialogVisible" width="30%">
         <treeselect
           v-model="category_id"
           :options="categoryList"

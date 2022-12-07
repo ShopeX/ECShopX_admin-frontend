@@ -181,7 +181,7 @@
             <div class="view-flex-item">商品规格</div>
             <template v-if="!isEditor">
               <span v-if="skus.length === 0" class="small mark"
-                >添加多规格商品请先为当前主类目绑定规格!</span
+                >添加多规格商品请先为当前管理分类绑定规格!</span
               >
               <template v-if="skus.length > 0">
                 <el-switch

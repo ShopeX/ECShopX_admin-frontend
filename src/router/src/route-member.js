@@ -23,8 +23,8 @@ export default {
     },
     {
       path: 'card/managecard',
-      name: `基础设置`,
-      component: () => import('@/view/member/membercard/index')
+      name: `等级管理`,
+      component: () => import('@/view/member/level')
     },
     {
       path: 'card/managecardorder',
@@ -74,7 +74,7 @@ export default {
     {
       path: 'Manageinfomation',
       name: `会员注册信息`,
-      component: () => import('@/view/member/registersetting/index')
+      component: () => import('@/view/member/register')
     },
     {
       path: 'mallrecharge',
@@ -94,7 +94,7 @@ export default {
     {
       path: 'closeAccount',
       name: '会员注销',
-      component: () => import('@/view/member/closeAccount')
+      component: () => import('@/view/member/logout')
     },
     {
       path: 'enterpriselist',

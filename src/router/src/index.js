@@ -20,6 +20,7 @@ import RouteApplications from './route-applications'
 
 /* shopadmin router */
 import RouteShopAdminShopList from './route-shopadmin-shoplist'
+import RouteShopAdminBase from './route-shopadmin-base'
 import RouteShopAdminEntity from './route-shopadmin-entity'
 import RouteShopAdminOrder from './route-shopadmin-order'
 import RouteShopAdminMember from './route-shopadmin-member'
@@ -27,6 +28,7 @@ import RouteShopAdminStore from './route-shopadmin-store'
 import RouteShopAdminMarketing from './route-shopadmin-marketing'
 import RouteShopAdminStatistics from './route-shopadmin-statistics'
 import RouteShopAdminShopSetting from './route-shopadmin-shopsetting'
+import RouteShopAdminApplications from './route-shopadmin-applications'
 
 /* Merchant router */
 import RouteMerchantBase from './router-merchant-base'
@@ -63,6 +65,7 @@ export default {
   RouteDealer,
   RouteApplications,
   RouteShopAdminShopList,
+  RouteShopAdminBase,
   RouteShopAdminEntity,
   RouteShopAdminOrder,
   RouteShopAdminMember,
@@ -70,6 +73,7 @@ export default {
   RouteShopAdminMarketing,
   RouteShopAdminStatistics,
   RouteShopAdminShopSetting,
+  RouteShopAdminApplications,
   RouteDealerInfomation,
   RouteDealerShop,
   RouteDealerTransaction,

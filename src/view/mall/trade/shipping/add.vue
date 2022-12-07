@@ -1,12 +1,6 @@
 <template>
   <div>
-    <el-form
-      ref="form"
-      v-loading="loading"
-      :model="form"
-      class="box-set"
-      label-width="90px"
-    >
+    <el-form ref="form" v-loading="loading" :model="form" class="box-set" label-width="90px">
       <el-row :gutter="20">
         <el-col :span="8">
           <section class="section section-white">
@@ -14,148 +8,48 @@
               <el-input v-model="form.name" />
             </el-form-item>
             <el-form-item label="是否包邮:">
-              <el-radio
-                v-if="templatesId"
-                v-model="form.is_free"
-                disabled
-                label="0"
-              >
+              <el-radio v-if="templatesId" v-model="form.is_free" disabled label="0">
                 自定义运费
               </el-radio>
-              <el-radio
-                v-else
-                v-model="form.is_free"
-                label="0"
-              >
-                自定义运费
-              </el-radio>
-              <el-radio
-                v-if="templatesId"
-                v-model="form.is_free"
-                disabled
-                label="1"
-              >
+              <el-radio v-else v-model="form.is_free" label="0"> 自定义运费 </el-radio>
+              <el-radio v-if="templatesId" v-model="form.is_free" disabled label="1">
                 卖家承担运费
               </el-radio>
-              <el-radio
-                v-else
-                v-model="form.is_free"
-                label="1"
-              >
-                卖家承担运费
-              </el-radio>
-              <p class="frm-tips">
-                选择了卖家承担运费，运费计算和包邮规则设置将会丢失！
-              </p>
+              <el-radio v-else v-model="form.is_free" label="1"> 卖家承担运费 </el-radio>
+              <p class="frm-tips">选择了卖家承担运费，运费计算和包邮规则设置将会丢失！</p>
             </el-form-item>
-            <el-form-item
-              v-show="form.is_free == 0"
-              label="计价方式:"
-            >
-              <el-radio
-                v-if="templatesId"
-                v-model="form.valuation"
-                disabled
-                label="1"
-              >
+            <el-form-item v-show="form.is_free == 0" label="计价方式:">
+              <el-radio v-if="templatesId" v-model="form.valuation" disabled label="1">
                 按重量
               </el-radio>
-              <el-radio
-                v-else
-                v-model="form.valuation"
-                label="1"
-              >
-                按重量
-              </el-radio>
-              <el-radio
-                v-if="templatesId"
-                v-model="form.valuation"
-                disabled
-                label="2"
-              >
+              <el-radio v-else v-model="form.valuation" label="1"> 按重量 </el-radio>
+              <el-radio v-if="templatesId" v-model="form.valuation" disabled label="2">
                 按件数
               </el-radio>
-              <el-radio
-                v-else
-                v-model="form.valuation"
-                label="2"
-              >
-                按件数
-              </el-radio>
-              <el-radio
-                v-if="templatesId"
-                v-model="form.valuation"
-                disabled
-                label="3"
-              >
+              <el-radio v-else v-model="form.valuation" label="2"> 按件数 </el-radio>
+              <el-radio v-if="templatesId" v-model="form.valuation" disabled label="3">
                 按金额
               </el-radio>
-              <el-radio
-                v-else
-                v-model="form.valuation"
-                label="3"
-              >
-                按金额
-              </el-radio>
-              <el-radio
-                v-if="templatesId"
-                v-model="form.valuation"
-                disabled
-                label="4"
-              >
+              <el-radio v-else v-model="form.valuation" label="3"> 按金额 </el-radio>
+              <el-radio v-if="templatesId" v-model="form.valuation" disabled label="4">
                 按体积
               </el-radio>
-              <el-radio
-                v-else
-                v-model="form.valuation"
-                label="4"
-              >
-                按体积
-              </el-radio>
-              <p class="frm-tips">
-                运费模版保存后，计费方式将无法切换！！
-              </p>
+              <el-radio v-else v-model="form.valuation" label="4"> 按体积 </el-radio>
+              <p class="frm-tips">运费模版保存后，计费方式将无法切换！！</p>
             </el-form-item>
             <el-form-item label="是否启用:">
-              <el-radio
-                v-model="form.status"
-                label="1"
-              >
-                启用
-              </el-radio>
-              <el-radio
-                v-model="form.status"
-                label="0"
-              >
-                禁用
-              </el-radio>
+              <el-radio v-model="form.status" label="1"> 启用 </el-radio>
+              <el-radio v-model="form.status" label="0"> 禁用 </el-radio>
             </el-form-item>
-            <el-form-item
-              v-show="form.is_free == 1"
-              label="不配送城市:"
-            >
+            <el-form-item v-show="form.is_free == 1" label="不配送城市:">
               <section class="section section-white shipping-calc">
-                <p class="font-bold">
-                  不配送城市（优先级最高）
-                </p>
-                <p
-                  v-if="nopost_self_conf && nopost_self_conf.length > 0"
-                  class="font-bold nopost"
-                >
+                <p class="font-bold">不配送城市（优先级最高）</p>
+                <p v-if="nopost_self_conf && nopost_self_conf.length > 0" class="font-bold nopost">
                   {{ nopost_self_conf | formatCityData(district) }}
                 </p>
-                <p
-                  v-else
-                  class="font-bold nopost"
-                >
-                  暂无数据
-                </p>
+                <p v-else class="font-bold nopost">暂无数据</p>
                 <div class="content-v-padded">
-                  <el-button
-                    type="primary"
-                    size="mini"
-                    @click="handleSelfNoPostEditArea()"
-                  >
+                  <el-button type="primary" size="mini" @click="handleSelfNoPostEditArea()">
                     编辑地区
                   </el-button>
                 </div>
@@ -163,38 +57,18 @@
             </el-form-item>
           </section>
         </el-col>
-        <el-col
-          v-show="form.is_free == 0"
-          :span="16"
-        >
-          <section
-            v-show="form.valuation == 1"
-            class="section section-white"
-          >
-            <p class="font-bold">
-              运费计算:
-            </p>
+        <el-col v-show="form.is_free == 0" :span="16">
+          <section v-show="form.valuation == 1" class="section section-white">
+            <p class="font-bold">运费计算:</p>
             <section class="section section-white shipping-calc">
-              <p class="font-bold">
-                默认运费:
-              </p>
+              <p class="font-bold">默认运费:</p>
               <el-form-item label-width="140">
                 重量（kg以内）：
-                <el-input
-                  v-model="fee_conf[0].start_standard"
-                  size="mini"
-                  style="width: 100px"
-                />
+                <el-input v-model="fee_conf[0].start_standard" size="mini" style="width: 100px" />
                 运费（元）：
-                <el-input
-                  v-model="fee_conf[0].start_fee"
-                  size="mini"
-                  style="width: 100px"
-                />
+                <el-input v-model="fee_conf[0].start_fee" size="mini" style="width: 100px" />
               </el-form-item>
-              <p class="font-bold">
-                增重运费:
-              </p>
+              <p class="font-bold">增重运费:</p>
               <el-form-item label-width="140">
                 每增加（kg内）：
                 <el-input
@@ -203,26 +77,13 @@
                   style="width: 100px"
                 />
                 增加（元）：
-                <el-input
-                  v-model="fee_conf[0].add_fee"
-                  class="inline-input"
-                  style="width: 100px"
-                />
+                <el-input v-model="fee_conf[0].add_fee" class="inline-input" style="width: 100px" />
               </el-form-item>
             </section>
             <section class="section section-white shipping-calc">
-              <p class="font-bold">
-                为指定地区城市设置运费
-              </p>
-              <el-table
-                :data="fee_conf.slice(1)"
-                style="width: 100%"
-                border
-              >
-                <el-table-column
-                  label="运送到"
-                  width="200"
-                >
+              <p class="font-bold">为指定地区城市设置运费</p>
+              <el-table :data="fee_conf.slice(1)" style="width: 100%" border>
+                <el-table-column label="运送到" width="200">
                   <template slot-scope="scope">
                     {{ scope.row.area | formatCityData(district) }}
                     <el-button
@@ -237,34 +98,22 @@
                 </el-table-column>
                 <el-table-column label="重量(kg)">
                   <template slot-scope="scope">
-                    <el-input
-                      v-model="scope.row.start_standard"
-                      size="mini"
-                    />
+                    <el-input v-model="scope.row.start_standard" size="mini" />
                   </template>
                 </el-table-column>
                 <el-table-column label="首费(元)">
                   <template slot-scope="scope">
-                    <el-input
-                      v-model="scope.row.start_fee"
-                      size="mini"
-                    />
+                    <el-input v-model="scope.row.start_fee" size="mini" />
                   </template>
                 </el-table-column>
                 <el-table-column label="续重(kg)">
                   <template slot-scope="scope">
-                    <el-input
-                      v-model="scope.row.add_standard"
-                      size="mini"
-                    />
+                    <el-input v-model="scope.row.add_standard" size="mini" />
                   </template>
                 </el-table-column>
                 <el-table-column label="续费(元)">
                   <template slot-scope="scope">
-                    <el-input
-                      v-model="scope.row.add_fee"
-                      size="mini"
-                    />
+                    <el-input v-model="scope.row.add_fee" size="mini" />
                   </template>
                 </el-table-column>
                 <el-table-column label="操作">
@@ -292,54 +141,25 @@
               </div>
             </section>
             <section class="section section-white shipping-calc">
-              <p class="font-bold">
-                不配送城市（优先级最高）
-              </p>
-              <p
-                v-if="nopost_conf && nopost_conf.length > 0"
-                class="font-bold nopost"
-              >
+              <p class="font-bold">不配送城市（优先级最高）</p>
+              <p v-if="nopost_conf && nopost_conf.length > 0" class="font-bold nopost">
                 {{ nopost_conf | formatCityData(district) }}
               </p>
-              <p
-                v-else
-                class="font-bold nopost"
-              >
-                暂无数据
-              </p>
+              <p v-else class="font-bold nopost">暂无数据</p>
               <div class="content-v-padded">
-                <el-button
-                  type="primary"
-                  size="mini"
-                  @click="handleWeightNoPostEditArea()"
-                >
+                <el-button type="primary" size="mini" @click="handleWeightNoPostEditArea()">
                   编辑地区
                 </el-button>
               </div>
             </section>
             <p class="font-bold">
-              <el-checkbox
-                v-model="priceFreeStatus"
-                :value="priceFreeStatus"
-              />
+              <el-checkbox v-model="priceFreeStatus" :value="priceFreeStatus" />
               指定条件包邮:
             </p>
-            <section
-              v-if="priceFreeStatus"
-              class="section section-white shipping-calc"
-            >
-              <p class="font-bold">
-                为指定地区设置包邮规则
-              </p>
-              <el-table
-                :data="free_conf"
-                style="width: 100%"
-                border
-              >
-                <el-table-column
-                  label="地区设置"
-                  width="150"
-                >
+            <section v-if="priceFreeStatus" class="section section-white shipping-calc">
+              <p class="font-bold">为指定地区设置包邮规则</p>
+              <el-table :data="free_conf" style="width: 100%" border>
+                <el-table-column label="地区设置" width="150">
                   <template slot-scope="scope">
                     {{ scope.row.area | formatCityData(district) }}
                     <el-button
@@ -367,26 +187,23 @@
                         :value="item.value"
                       />
                     </el-select>
-                    <span
-                      v-if="1 == scope.row.freetype || 3 == scope.row.freetype"
-                    >在&nbsp;<el-input
-                      v-model="scope.row.inweight"
-                      class="inline-input"
-                      style="width: 100px"
-                    />&nbsp;kg内包邮</span>
-                    <span
-                      v-if="2 == scope.row.freetype || 3 == scope.row.freetype"
-                    ><span v-if="3 == scope.row.freetype">,</span>&nbsp;<el-input
-                      v-model="scope.row.upmoney"
-                      class="inline-input"
-                      style="width: 100px"
-                    />&nbsp;元以上包邮</span>
+                    <span v-if="1 == scope.row.freetype || 3 == scope.row.freetype"
+                      >在&nbsp;<el-input
+                        v-model="scope.row.inweight"
+                        class="inline-input"
+                        style="width: 100px"
+                      />&nbsp;kg内包邮</span
+                    >
+                    <span v-if="2 == scope.row.freetype || 3 == scope.row.freetype"
+                      ><span v-if="3 == scope.row.freetype">,</span>&nbsp;<el-input
+                        v-model="scope.row.upmoney"
+                        class="inline-input"
+                        style="width: 100px"
+                      />&nbsp;元以上包邮</span
+                    >
                   </template>
                 </el-table-column>
-                <el-table-column
-                  label="操作"
-                  width="100"
-                >
+                <el-table-column label="操作" width="100">
                   <template slot-scope="scope">
                     <el-button
                       v-if="0 != scope.$index"
@@ -412,17 +229,10 @@
               </div>
             </section>
           </section>
-          <section
-            v-show="form.valuation == 2"
-            class="section section-white"
-          >
-            <p class="font-bold">
-              运费计算:
-            </p>
+          <section v-show="form.valuation == 2" class="section section-white">
+            <p class="font-bold">运费计算:</p>
             <section class="section section-white shipping-calc">
-              <p class="font-bold">
-                默认运费:
-              </p>
+              <p class="font-bold">默认运费:</p>
               <el-form-item label-width="140">
                 件数（件以内）：
                 <el-input
@@ -431,15 +241,9 @@
                   style="width: 100px"
                 />
                 运费（元）：
-                <el-input
-                  v-model="fee_number_conf[0].start_fee"
-                  size="mini"
-                  style="width: 100px"
-                />
+                <el-input v-model="fee_number_conf[0].start_fee" size="mini" style="width: 100px" />
               </el-form-item>
-              <p class="font-bold">
-                增件运费:
-              </p>
+              <p class="font-bold">增件运费:</p>
               <el-form-item label-width="140">
                 每增加（件内）：
                 <el-input
@@ -448,22 +252,12 @@
                   style="width: 100px"
                 />
                 增加（元）：
-                <el-input
-                  v-model="fee_number_conf[0].add_fee"
-                  size="mini"
-                  style="width: 100px"
-                />
+                <el-input v-model="fee_number_conf[0].add_fee" size="mini" style="width: 100px" />
               </el-form-item>
             </section>
             <section class="section section-white shipping-calc">
-              <p class="font-bold">
-                为指定地区城市设置运费
-              </p>
-              <el-table
-                :data="fee_number_conf.slice(1)"
-                style="width: 100%"
-                border
-              >
+              <p class="font-bold">为指定地区城市设置运费</p>
+              <el-table :data="fee_number_conf.slice(1)" style="width: 100%" border>
                 <el-table-column label="运送到">
                   <template slot-scope="scope">
                     {{ scope.row.area | formatCityData(district) }}
@@ -479,40 +273,25 @@
                 </el-table-column>
                 <el-table-column label="首件(件)">
                   <template slot-scope="scope">
-                    <el-input
-                      v-model="scope.row.start_standard"
-                      size="mini"
-                    />
+                    <el-input v-model="scope.row.start_standard" size="mini" />
                   </template>
                 </el-table-column>
                 <el-table-column label="首费(元)">
                   <template slot-scope="scope">
-                    <el-input
-                      v-model="scope.row.start_fee"
-                      size="mini"
-                    />
+                    <el-input v-model="scope.row.start_fee" size="mini" />
                   </template>
                 </el-table-column>
                 <el-table-column label="续件(件)">
                   <template slot-scope="scope">
-                    <el-input
-                      v-model="scope.row.add_standard"
-                      size="mini"
-                    />
+                    <el-input v-model="scope.row.add_standard" size="mini" />
                   </template>
                 </el-table-column>
                 <el-table-column label="续费(元)">
                   <template slot-scope="scope">
-                    <el-input
-                      v-model="scope.row.add_fee"
-                      size="mini"
-                    />
+                    <el-input v-model="scope.row.add_fee" size="mini" />
                   </template>
                 </el-table-column>
-                <el-table-column
-                  label="操作"
-                  width="80"
-                >
+                <el-table-column label="操作" width="80">
                   <template slot-scope="scope">
                     <el-button
                       size="mini"
@@ -537,54 +316,28 @@
               </div>
             </section>
             <section class="section section-white shipping-calc">
-              <p class="font-bold">
-                不配送城市（优先级最高）
-              </p>
+              <p class="font-bold">不配送城市（优先级最高）</p>
               <p
                 v-if="nopost_number_conf && nopost_number_conf.length > 0"
                 class="font-bold nopost"
               >
                 {{ nopost_number_conf | formatCityData(district) }}
               </p>
-              <p
-                v-else
-                class="font-bold nopost"
-              >
-                暂无数据
-              </p>
+              <p v-else class="font-bold nopost">暂无数据</p>
               <div class="content-v-padded">
-                <el-button
-                  type="primary"
-                  size="mini"
-                  @click="handleNumberNoPostEditArea()"
-                >
+                <el-button type="primary" size="mini" @click="handleNumberNoPostEditArea()">
                   编辑地区
                 </el-button>
               </div>
             </section>
             <p class="font-bold">
-              <el-checkbox
-                v-model="numberFreeStatus"
-                :value="numberFreeStatus"
-              />
+              <el-checkbox v-model="numberFreeStatus" :value="numberFreeStatus" />
               指定条件包邮:
             </p>
-            <section
-              v-if="numberFreeStatus"
-              class="section section-white shipping-calc"
-            >
-              <p class="font-bold">
-                为指定地区设置包邮规则
-              </p>
-              <el-table
-                :data="free_number_conf"
-                style="width: 100%"
-                border
-              >
-                <el-table-column
-                  label="地区设置"
-                  width="120"
-                >
+            <section v-if="numberFreeStatus" class="section section-white shipping-calc">
+              <p class="font-bold">为指定地区设置包邮规则</p>
+              <el-table :data="free_number_conf" style="width: 100%" border>
+                <el-table-column label="地区设置" width="120">
                   <template slot-scope="scope">
                     {{ scope.row.area | formatCityData(district) }}
                     <el-button
@@ -612,26 +365,23 @@
                         :value="item.value"
                       />
                     </el-select>
-                    <span
-                      v-if="1 == scope.row.freetype || 3 == scope.row.freetype"
-                    >满&nbsp;<el-input
-                      v-model="scope.row.upquantity"
-                      class="inline-input"
-                      style="width: 100px"
-                    />&nbsp;件包邮</span>
-                    <span
-                      v-if="2 == scope.row.freetype || 3 == scope.row.freetype"
-                    ><span v-if="3 == scope.row.freetype">,</span>&nbsp;<el-input
-                      v-model="scope.row.upmoney"
-                      class="inline-input"
-                      style="width: 100px"
-                    />&nbsp;元以上包邮</span>
+                    <span v-if="1 == scope.row.freetype || 3 == scope.row.freetype"
+                      >满&nbsp;<el-input
+                        v-model="scope.row.upquantity"
+                        class="inline-input"
+                        style="width: 100px"
+                      />&nbsp;件包邮</span
+                    >
+                    <span v-if="2 == scope.row.freetype || 3 == scope.row.freetype"
+                      ><span v-if="3 == scope.row.freetype">,</span>&nbsp;<el-input
+                        v-model="scope.row.upmoney"
+                        class="inline-input"
+                        style="width: 100px"
+                      />&nbsp;元以上包邮</span
+                    >
                   </template>
                 </el-table-column>
-                <el-table-column
-                  label="操作"
-                  width="80"
-                >
+                <el-table-column label="操作" width="80">
                   <template slot-scope="scope">
                     <el-button
                       v-if="0 != scope.$index"
@@ -657,19 +407,10 @@
               </div>
             </section>
           </section>
-          <section
-            v-show="form.valuation == 3"
-            class="section section-white"
-          >
+          <section v-show="form.valuation == 3" class="section section-white">
             <section class="section section-white shipping-calc">
-              <p class="font-bold">
-                为指定地区城市设置运费
-              </p>
-              <el-table
-                :data="fee_money_conf"
-                style="width: 100%"
-                border
-              >
+              <p class="font-bold">为指定地区城市设置运费</p>
+              <el-table :data="fee_money_conf" style="width: 100%" border>
                 <el-table-column label="运送到">
                   <template slot-scope="scope">
                     {{ scope.row.area | formatCityData(district) }}
@@ -684,10 +425,7 @@
                     </el-button>
                   </template>
                 </el-table-column>
-                <el-table-column
-                  label="金额上下限(元)"
-                  width="300"
-                >
+                <el-table-column label="金额上下限(元)" width="300">
                   <template slot-scope="scope">
                     <div
                       v-for="(money_key, money_index) in scope.row.rules"
@@ -718,15 +456,9 @@
                     </div>
                   </template>
                 </el-table-column>
-                <el-table-column
-                  label="运费(元)"
-                  width="200"
-                >
+                <el-table-column label="运费(元)" width="200">
                   <template slot-scope="scope">
-                    <div
-                      v-for="money_key in scope.row.rules"
-                      style="margin-top: 5px"
-                    >
+                    <div v-for="money_key in scope.row.rules" style="margin-top: 5px">
                       <el-input
                         v-model="money_key.basefee"
                         class="inline-input"
@@ -735,11 +467,7 @@
                     </div>
                   </template>
                 </el-table-column>
-                <el-table-column
-                  prop="add_standard"
-                  label="操作"
-                  width="100"
-                >
+                <el-table-column prop="add_standard" label="操作" width="100">
                   <template slot-scope="scope">
                     <div
                       v-for="(money_key, money_index) in scope.row.rules"
@@ -755,10 +483,7 @@
                         删除
                       </el-button>
                     </div>
-                    <div
-                      v-else
-                      style="height: 45px"
-                    />
+                    <div v-else style="height: 45px" />
                   </template>
                 </el-table-column>
               </el-table>
@@ -774,43 +499,22 @@
               </div>
             </section>
             <section class="section section-white shipping-calc">
-              <p class="font-bold">
-                不配送城市（优先级最高）
-              </p>
-              <p
-                v-if="nopost_money_conf && nopost_money_conf.length > 0"
-                class="font-bold nopost"
-              >
+              <p class="font-bold">不配送城市（优先级最高）</p>
+              <p v-if="nopost_money_conf && nopost_money_conf.length > 0" class="font-bold nopost">
                 {{ nopost_money_conf | formatCityData(district) }}
               </p>
-              <p
-                v-else
-                class="font-bold nopost"
-              >
-                暂无数据
-              </p>
+              <p v-else class="font-bold nopost">暂无数据</p>
               <div class="content-v-padded">
-                <el-button
-                  type="primary"
-                  size="mini"
-                  @click="handleMoneyNoPostEditArea()"
-                >
+                <el-button type="primary" size="mini" @click="handleMoneyNoPostEditArea()">
                   编辑地区
                 </el-button>
               </div>
             </section>
           </section>
-          <section
-            v-show="form.valuation == 4"
-            class="section section-white"
-          >
-            <p class="font-bold">
-              运费计算:
-            </p>
+          <section v-show="form.valuation == 4" class="section section-white">
+            <p class="font-bold">运费计算:</p>
             <section class="section section-white shipping-calc">
-              <p class="font-bold">
-                默认运费:
-              </p>
+              <p class="font-bold">默认运费:</p>
               <el-form-item label-width="140">
                 体积（m³以内）：
                 <el-input
@@ -819,15 +523,9 @@
                   style="width: 100px"
                 />
                 运费（元）：
-                <el-input
-                  v-model="fee_volume_conf[0].start_fee"
-                  size="mini"
-                  style="width: 100px"
-                />
+                <el-input v-model="fee_volume_conf[0].start_fee" size="mini" style="width: 100px" />
               </el-form-item>
-              <p class="font-bold">
-                增体积运费:
-              </p>
+              <p class="font-bold">增体积运费:</p>
               <el-form-item label-width="140">
                 每增加（m³内）：
                 <el-input
@@ -844,18 +542,9 @@
               </el-form-item>
             </section>
             <section class="section section-white shipping-calc">
-              <p class="font-bold">
-                为指定地区城市设置运费
-              </p>
-              <el-table
-                :data="fee_volume_conf.slice(1)"
-                style="width: 100%"
-                border
-              >
-                <el-table-column
-                  label="运送到"
-                  width="200"
-                >
+              <p class="font-bold">为指定地区城市设置运费</p>
+              <el-table :data="fee_volume_conf.slice(1)" style="width: 100%" border>
+                <el-table-column label="运送到" width="200">
                   <template slot-scope="scope">
                     {{ scope.row.area | formatCityData(district) }}
                     <el-button
@@ -870,34 +559,22 @@
                 </el-table-column>
                 <el-table-column label="首体积(m³)">
                   <template slot-scope="scope">
-                    <el-input
-                      v-model="scope.row.start_standard"
-                      size="mini"
-                    />
+                    <el-input v-model="scope.row.start_standard" size="mini" />
                   </template>
                 </el-table-column>
                 <el-table-column label="首费(元)">
                   <template slot-scope="scope">
-                    <el-input
-                      v-model="scope.row.start_fee"
-                      size="mini"
-                    />
+                    <el-input v-model="scope.row.start_fee" size="mini" />
                   </template>
                 </el-table-column>
                 <el-table-column label="续体积(m³)">
                   <template slot-scope="scope">
-                    <el-input
-                      v-model="scope.row.add_standard"
-                      size="mini"
-                    />
+                    <el-input v-model="scope.row.add_standard" size="mini" />
                   </template>
                 </el-table-column>
                 <el-table-column label="续费(元)">
                   <template slot-scope="scope">
-                    <el-input
-                      v-model="scope.row.add_fee"
-                      size="mini"
-                    />
+                    <el-input v-model="scope.row.add_fee" size="mini" />
                   </template>
                 </el-table-column>
                 <el-table-column label="操作">
@@ -925,54 +602,28 @@
               </div>
             </section>
             <section class="section section-white shipping-calc">
-              <p class="font-bold">
-                不配送城市（优先级最高）
-              </p>
+              <p class="font-bold">不配送城市（优先级最高）</p>
               <p
                 v-if="nopost_volume_conf && nopost_volume_conf.length > 0"
                 class="font-bold nopost"
               >
                 {{ nopost_volume_conf | formatCityData(district) }}
               </p>
-              <p
-                v-else
-                class="font-bold nopost"
-              >
-                暂无数据
-              </p>
+              <p v-else class="font-bold nopost">暂无数据</p>
               <div class="content-v-padded">
-                <el-button
-                  type="primary"
-                  size="mini"
-                  @click="handleVolumeNoPostEditArea()"
-                >
+                <el-button type="primary" size="mini" @click="handleVolumeNoPostEditArea()">
                   编辑地区
                 </el-button>
               </div>
             </section>
             <p class="font-bold">
-              <el-checkbox
-                v-model="volumeFreeStatus"
-                :value="volumeFreeStatus"
-              />
+              <el-checkbox v-model="volumeFreeStatus" :value="volumeFreeStatus" />
               指定条件包邮:
             </p>
-            <section
-              v-if="volumeFreeStatus"
-              class="section section-white shipping-calc"
-            >
-              <p class="font-bold">
-                为指定地区设置包邮规则
-              </p>
-              <el-table
-                :data="free_volume_conf"
-                style="width: 100%"
-                border
-              >
-                <el-table-column
-                  label="地区设置"
-                  width="150"
-                >
+            <section v-if="volumeFreeStatus" class="section section-white shipping-calc">
+              <p class="font-bold">为指定地区设置包邮规则</p>
+              <el-table :data="free_volume_conf" style="width: 100%" border>
+                <el-table-column label="地区设置" width="150">
                   <template slot-scope="scope">
                     {{ scope.row.area | formatCityData(district) }}
                     <el-button
@@ -1000,26 +651,23 @@
                         :value="item.value"
                       />
                     </el-select>
-                    <span
-                      v-if="1 == scope.row.freetype || 3 == scope.row.freetype"
-                    >在&nbsp;<el-input
-                      v-model="scope.row.upvolume"
-                      class="inline-input"
-                      style="width: 100px"
-                    />&nbsp;m³内包邮</span>
-                    <span
-                      v-if="2 == scope.row.freetype || 3 == scope.row.freetype"
-                    ><span v-if="3 == scope.row.freetype">,</span>&nbsp;<el-input
-                      v-model="scope.row.upmoney"
-                      class="inline-input"
-                      style="width: 100px"
-                    />&nbsp;元以上包邮</span>
+                    <span v-if="1 == scope.row.freetype || 3 == scope.row.freetype"
+                      >在&nbsp;<el-input
+                        v-model="scope.row.upvolume"
+                        class="inline-input"
+                        style="width: 100px"
+                      />&nbsp;m³内包邮</span
+                    >
+                    <span v-if="2 == scope.row.freetype || 3 == scope.row.freetype"
+                      ><span v-if="3 == scope.row.freetype">,</span>&nbsp;<el-input
+                        v-model="scope.row.upmoney"
+                        class="inline-input"
+                        style="width: 100px"
+                      />&nbsp;元以上包邮</span
+                    >
                   </template>
                 </el-table-column>
-                <el-table-column
-                  label="操作"
-                  width="100"
-                >
+                <el-table-column label="操作" width="100">
                   <template slot-scope="scope">
                     <el-button
                       v-if="0 != scope.$index"
@@ -1048,28 +696,9 @@
         </el-col>
       </el-row>
       <div class="section-footer with-border content-center clearfix">
-        <el-button
-          type="primary"
-          @click="submitSaveAction"
-        >
-          保存
-        </el-button>
+        <el-button type="primary" @click="submitSaveAction"> 保存 </el-button>
       </div>
-      <el-dialog
-        title="选择区域"
-        :visible.sync="dialogAreaFormVisible"
-        width="960px"
-      >
-        <el-row>
-          <el-col>
-            小程序版本在v2.3.2（不包含v2.3.2）以上地区选择才有效，请及时升级小程序 >>
-            <router-link
-              :to="{ path: '/wxapp/manage/editauthorize' }"
-            >
-              小程序版本
-            </router-link>
-          </el-col>
-        </el-row>
+      <el-dialog title="选择区域1" :visible.sync="dialogAreaFormVisible" width="960px">
         <el-row>
           <el-col :span="6">
             <el-row class="province-list">
@@ -1077,6 +706,7 @@
               <el-col
                 v-for="(item, index) in areaInfo"
                 :key="'province' + index"
+                class="province-item"
                 :style="provinceIndex == index ? 'background: #ddd' : ''"
               >
                 <el-checkbox
@@ -1087,17 +717,11 @@
                 >
                   {{ item.label }}
                 </el-checkbox>
-                <div
-                  class="el-icon-caret-right"
-                  @click="handlechildProvinceChoose(index)"
-                />
+                <div class="el-icon-caret-right" @click="handlechildProvinceChoose(index)" />
               </el-col>
             </el-row>
           </el-col>
-          <el-col
-            v-if="provinceIndex > -1"
-            :span="6"
-          >
+          <el-col v-if="provinceIndex > -1" :span="6">
             <el-row class="city-list">
               <el-col>城市</el-col>
               <el-col
@@ -1113,25 +737,16 @@
                 >
                   {{ item.label | subStr(12) }}
                 </el-checkbox>
-                <div
-                  class="el-icon-caret-right"
-                  @click="handlechildCityChoose(index)"
-                />
+                <div class="el-icon-caret-right" @click="handlechildCityChoose(index)" />
               </el-col>
             </el-row>
           </el-col>
-          <el-col
-            v-else
-            :span="6"
-          >
+          <el-col v-else :span="6">
             <el-row class="region-list">
               <el-col>城市</el-col>
             </el-row>
           </el-col>
-          <el-col
-            v-if="cityIndex > -1"
-            :span="6"
-          >
+          <el-col v-if="cityIndex > -1" :span="6">
             <el-row class="region-list">
               <el-col>地区</el-col>
               <el-col
@@ -1148,10 +763,7 @@
               </el-col>
             </el-row>
           </el-col>
-          <el-col
-            v-else
-            :span="6"
-          >
+          <el-col v-else :span="6">
             <el-row class="region-list">
               <el-col>地区</el-col>
             </el-row>
@@ -1165,19 +777,9 @@
             </el-row>
           </el-col>
         </el-row>
-        <div
-          slot="footer"
-          class="dialog-footer"
-        >
-          <el-button @click="dialogAreaFormVisible = false">
-            取 消
-          </el-button>
-          <el-button
-            type="primary"
-            @click="handleAreaChooseFinish"
-          >
-            确 定
-          </el-button>
+        <div slot="footer" class="dialog-footer">
+          <el-button @click="dialogAreaFormVisible = false"> 取 消 </el-button>
+          <el-button type="primary" @click="handleAreaChooseFinish"> 确 定 </el-button>
         </div>
       </el-dialog>
     </el-form>
@@ -1195,7 +797,7 @@ import { getAddress } from '../../../../api/common'
 //匹配省市区
 export default {
   inject: ['refresh'],
-  data () {
+  data() {
     return {
       loading: true,
       district: {},
@@ -1337,7 +939,7 @@ export default {
       }
     }
   },
-  mounted () {
+  mounted() {
     this.getAddress()
     const id = this.$route.params.itemId
       ? this.$route.params.itemId
@@ -1394,7 +996,7 @@ export default {
     }
   },
   methods: {
-    submitSaveAction () {
+    submitSaveAction() {
       const that = this
       if (!this.form.name) {
         this.$message.error('模板名称必填')
@@ -1453,7 +1055,7 @@ export default {
               message: '更新成功',
               type: 'success',
               duration: 2 * 1000,
-              onClose () {
+              onClose() {
                 that.refresh()
                 that.$router.go(-1)
               }
@@ -1467,7 +1069,7 @@ export default {
               message: '添加成功',
               type: 'success',
               duration: 2 * 1000,
-              onClose () {
+              onClose() {
                 that.refresh()
                 that.$router.go(-1)
               }
@@ -1477,7 +1079,7 @@ export default {
       }
     },
     // 选择地区
-    handleAddArea (type) {
+    handleAddArea(type) {
       var conf = []
       switch (type) {
         case 'fee_conf':
@@ -1510,28 +1112,28 @@ export default {
       this.cityIndex = -1
       this.dialogAreaFormVisible = true
     },
-    handleSelfNoPostEditArea () {
+    handleSelfNoPostEditArea() {
       this.formatCityDataEdit([], this.nopost_self_conf)
       this.conf_area = JSON.parse(JSON.stringify(this.nopost_self_conf))
       this.conf_name = 'nopost_self_conf'
       this.dialogAreaFormVisible = true
     },
     // 按重量运费修改
-    handleWeightFeeEditArea (index, row) {
+    handleWeightFeeEditArea(index, row) {
       this.formatCityDataEdit(this.fee_conf, row)
       this.conf_area = JSON.parse(JSON.stringify(row.area))
       this.conf_name = 'fee_conf'
       this.conf_id = index + 1
       this.dialogAreaFormVisible = true
     },
-    handleWeightNoPostEditArea () {
+    handleWeightNoPostEditArea() {
       this.formatCityDataEdit([], this.nopost_conf)
       this.conf_area = JSON.parse(JSON.stringify(this.nopost_conf))
       this.conf_name = 'nopost_conf'
       this.dialogAreaFormVisible = true
     },
     // 按重量包邮修改
-    handleWeightFreeEditArea (index, row) {
+    handleWeightFreeEditArea(index, row) {
       this.formatCityDataEdit(this.free_conf, row)
       this.conf_area = JSON.parse(JSON.stringify(row.area))
       this.conf_name = 'free_conf'
@@ -1539,21 +1141,21 @@ export default {
       this.dialogAreaFormVisible = true
     },
     // 按重量运费修改
-    handleVolumeFeeEditArea (index, row) {
+    handleVolumeFeeEditArea(index, row) {
       this.formatCityDataEdit(this.fee_volume_conf, row)
       this.conf_area = JSON.parse(JSON.stringify(row.area))
       this.conf_name = 'fee_volume_conf'
       this.conf_id = index + 1
       this.dialogAreaFormVisible = true
     },
-    handleVolumeNoPostEditArea () {
+    handleVolumeNoPostEditArea() {
       this.formatCityDataEdit([], this.nopost_volume_conf)
       this.conf_area = JSON.parse(JSON.stringify(this.nopost_volume_conf))
       this.conf_name = 'nopost_volume_conf'
       this.dialogAreaFormVisible = true
     },
     // 按重量包邮修改
-    handleVolumeFreeEditArea (index, row) {
+    handleVolumeFreeEditArea(index, row) {
       this.formatCityDataEdit(this.free_volume_conf, row)
       this.conf_area = JSON.parse(JSON.stringify(row.area))
       this.conf_name = 'free_volume_conf'
@@ -1561,21 +1163,21 @@ export default {
       this.dialogAreaFormVisible = true
     },
     // 按件数运费修改
-    handleNumberFeeEditArea (index, row) {
+    handleNumberFeeEditArea(index, row) {
       this.formatCityDataEdit(this.fee_number_conf, row)
       this.conf_area = JSON.parse(JSON.stringify(row.area))
       this.conf_name = 'fee_number_conf'
       this.conf_id = index + 1
       this.dialogAreaFormVisible = true
     },
-    handleNumberNoPostEditArea () {
+    handleNumberNoPostEditArea() {
       this.formatCityDataEdit([], this.nopost_number_conf)
       this.conf_area = JSON.parse(JSON.stringify(this.nopost_number_conf))
       this.conf_name = 'nopost_number_conf'
       this.dialogAreaFormVisible = true
     },
     // 按件数包邮修改
-    handleNumberFreeEditArea (index, row) {
+    handleNumberFreeEditArea(index, row) {
       this.formatCityDataEdit(this.free_number_conf, row)
       this.conf_area = JSON.parse(JSON.stringify(row.area))
       this.conf_name = 'free_number_conf'
@@ -1583,41 +1185,41 @@ export default {
       this.dialogAreaFormVisible = true
     },
     // 按金额运费修改
-    handleMoneyFeeEditArea (index, row) {
+    handleMoneyFeeEditArea(index, row) {
       this.formatCityDataEdit(this.fee_money_conf, row)
       this.conf_area = JSON.parse(JSON.stringify(row.area))
       this.conf_name = 'fee_money_conf'
       this.conf_id = index
       this.dialogAreaFormVisible = true
     },
-    handleMoneyNoPostEditArea () {
+    handleMoneyNoPostEditArea() {
       this.formatCityDataEdit([], this.nopost_money_conf)
       this.conf_area = JSON.parse(JSON.stringify(this.nopost_money_conf))
       this.conf_name = 'nopost_money_conf'
       this.dialogAreaFormVisible = true
     },
     // 按重量运费删除
-    handleWeightFeeDeleteArea (index) {
+    handleWeightFeeDeleteArea(index) {
       this.fee_conf.splice(index + 1, 1)
     },
     // 按重量包邮删除
-    handleWeightFreeDeleteArea (index) {
+    handleWeightFreeDeleteArea(index) {
       this.free_conf.splice(index, 1)
     },
     // 按体积运费删除
-    handleVolumeFeeDeleteArea (index) {
+    handleVolumeFeeDeleteArea(index) {
       this.fee_volume_conf.splice(index + 1, 1)
     },
     // 按体积包邮删除
-    handleVolumeFreeDeleteArea (index) {
+    handleVolumeFreeDeleteArea(index) {
       this.free_volume_conf.splice(index, 1)
     },
     // 按件数运费删除
-    handleNumberFeeDeleteArea (index) {
+    handleNumberFeeDeleteArea(index) {
       this.fee_number_conf.splice(index + 1, 1)
     },
     // 按金额运费删除
-    handleMoneyFeeDeleteArea (index, money_index) {
+    handleMoneyFeeDeleteArea(index, money_index) {
       for (var item in this.fee_money_conf) {
         if (
           money_index > 0 &&
@@ -1632,11 +1234,11 @@ export default {
       }
     },
     // 按件数包邮删除
-    handleNumberFreeDeleteArea (index) {
+    handleNumberFreeDeleteArea(index) {
       this.free_number_conf.splice(index, 1)
     },
     // 地区选择完成
-    handleAreaChooseFinish () {
+    handleAreaChooseFinish() {
       if (this.conf_area.length == 0) {
         this.$message({
           type: 'error',
@@ -1763,7 +1365,7 @@ export default {
       this.dialogAreaFormVisible = false
     },
     // 省份区域选择
-    handleCheckProvinceChange (index, checked) {
+    handleCheckProvinceChange(index, checked) {
       let that = this,
         searchIndex,
         regionAllNum = 0,
@@ -1820,12 +1422,12 @@ export default {
 
       // console.log('province', this.conf_area)
     },
-    handlechildProvinceChoose (index) {
+    handlechildProvinceChoose(index) {
       this.cityIndex = -1
       this.provinceIndex = index
     },
     // 城市选择
-    handleCheckCityChange (index, checked) {
+    handleCheckCityChange(index, checked) {
       let that = this,
         searchIndex,
         checkedCityAllNum = 0,
@@ -1890,11 +1492,11 @@ export default {
       }
       // console.log('city', this.conf_area)
     },
-    handlechildCityChoose (index) {
+    handlechildCityChoose(index) {
       this.cityIndex = index
     },
     // 选择区
-    handleCheckRegionChange (index, checked) {
+    handleCheckRegionChange(index, checked) {
       let that = this,
         searchIndex,
         checkedCityAllNum = 0,
@@ -1952,7 +1554,7 @@ export default {
       console.log(this.conf_area)
     },
     // 城市数据清理
-    formatCityDataClear (conf) {
+    formatCityDataClear(conf) {
       let searchIndex
       this.areaInfo = JSON.parse(JSON.stringify(this.district))
       var cityChooseList = []
@@ -2019,7 +1621,7 @@ export default {
       }
     },
     // 格式化城市编辑
-    formatCityDataEdit (conf, row) {
+    formatCityDataEdit(conf, row) {
       if (row == null) row = []
       // console.log(conf, row)
       let that = this,
@@ -2129,7 +1731,7 @@ export default {
         }
       }
     },
-    getAddress () {
+    getAddress() {
       getAddress().then((res) => {
         let that = this
         this.district = res.data.data
@@ -2142,7 +1744,7 @@ export default {
         this.loading = false
       })
     },
-    handleInputDownMoney (lastMoney, index, parentIndex) {
+    handleInputDownMoney(lastMoney, index, parentIndex) {
       if (lastMoney == 0) {
         return false
       }
@@ -2231,6 +1833,9 @@ export default {
   line-height: 30px;
   text-align: center;
   vertical-align: middle;
+  float: right;
+  position: relative;
+  top: -4px;
 }
 .nopost {
   text-align: center;

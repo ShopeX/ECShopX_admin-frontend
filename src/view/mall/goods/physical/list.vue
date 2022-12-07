@@ -121,7 +121,16 @@
             />
           </el-select>
         </SpFilterFormItem>
-        <SpFilterFormItem prop="category" label="商品分类:">
+        <SpFilterFormItem prop="item_category" label="管理分类:">
+          <el-cascader
+            v-model="params.item_category"
+            placeholder="请选择"
+            clearable
+            :options="itemCategoryList"
+            :props="{ value: 'category_id', checkStrictly: true }"
+          />
+        </SpFilterFormItem>
+        <SpFilterFormItem prop="category" label="销售分类:">
           <el-cascader
             v-model="params.category"
             placeholder="请选择"
@@ -424,7 +433,7 @@
       </el-dialog>
       <!-- 选择运费模板-结束 -->
       <!-- 选择商品分类-开始 -->
-      <el-dialog title="更改商品分类" :visible.sync="addCategorydialogVisible" width="30%">
+      <el-dialog title="更改销售分类" :visible.sync="addCategorydialogVisible" width="30%">
         <treeselect
           v-model="category_id"
           :options="categoryList"
@@ -576,7 +585,7 @@
               <span>
                 <el-alert
                   title="导购分润计算类型: 【默认】"
-                  description="计算方式：默认按照 主类目分润配置优先,导购分润配置计算其次"
+                  description="计算方式：默认按照 管理分类分润配置优先,导购分润配置计算其次"
                   type="info"
                   close-text=" "
                   class="alert-text"
@@ -786,7 +795,7 @@ import {
   saveGoodsProfitPrice,
   syncItems,
   saveIsGifts,
-  flowItems
+  flowItems,
 } from '@/api/goods'
 import { getPageCode } from '@/api/marketing'
 import { VERSION_IN_PURCHASE } from '@/utils'
@@ -863,6 +872,7 @@ export default {
       templatesList: [],
       category_id: [],
       categoryList: [],
+      itemCategoryList:[],
       show_sideBar: false,
       loading: false,
       skuLoading: false,
@@ -905,6 +915,7 @@ export default {
         keywords: '',
         item_bn: '',
         category: 0,
+        item_category: 0,
         is_warning: false,
         tag_id: '',
         is_gift: false,
@@ -912,7 +923,7 @@ export default {
         barcode: '',
         distributor_id: 0,
         regions_id: [],
-        brand_id: ''
+        brand_id: '',
       },
       start_date: '',
       end_date: '',
@@ -1072,10 +1083,13 @@ export default {
       } else {
         this.params.type = 0
       }
-      const { category, main_cat_id, tab } = this.$route.query
+      const { category,item_category, main_cat_id, tab } = this.$route.query
       if (category) {
         this.params.category = category.split(',')
         // this.select_category_value = category.split(',')
+      }
+      if(item_category) {
+        this.params.item_category = item_category.split(',')
       }
       this.params.main_cat_id = this.$route.query.main_cat_id
       if (tab) {
@@ -1661,6 +1675,9 @@ export default {
       if (params.category.length > 0) {
         params.category = params.category[params.category.length - 1]
       }
+      if (params.item_category.length > 0) {
+        params.item_category = params.item_category[params.item_category.length - 1]
+      }
       const { list, total_count, warning_store } = await this.$api.goods.getItemsList(params)
       list.forEach((item) => {
         item.price = item.price / 100
@@ -1712,10 +1729,16 @@ export default {
       })
     },
     getCategory() {
+      //销售分类
       getCategory({ is_show: false }).then((response) => {
         this.categoryList = response.data.data
-        // this.init()
       })
+
+      //管理分类
+      getCategory({ is_main_category: true }).then((response) => {
+        this.itemCategoryList  = response.data.data
+      })
+
     },
     getCurrencyInfo() {
       getDefaultCurrency().then((res) => {

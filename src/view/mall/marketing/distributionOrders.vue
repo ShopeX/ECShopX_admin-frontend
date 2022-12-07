@@ -1,10 +1,8 @@
 <template>
   <div>
     <div v-if="$route.path.indexOf('detail') === -1">
-      <el-row
-        class="filter-header"
-        :gutter="20"
-      >
+      <SpPlatformTip h5 app alipay />
+      <el-row class="filter-header" :gutter="20">
         <el-col>
           <el-date-picker
             v-model="create_time"
@@ -13,22 +11,10 @@
             placeholder="选择日期范围"
             @change="dateChange"
           />
-          <el-input
-            v-model="identifier"
-            class="input-m"
-            placeholder="手机号/订单号"
-          >
-            <el-button
-              slot="append"
-              icon="el-icon-search"
-              @click="numberSearch"
-            />
+          <el-input v-model="identifier" class="input-m" placeholder="手机号/订单号">
+            <el-button slot="append" icon="el-icon-search" @click="numberSearch" />
           </el-input>
-          <el-select
-            v-model="order_class"
-            placeholder="请选择订单类型"
-            @change="TypeHandle"
-          >
+          <el-select v-model="order_class" placeholder="请选择订单类型" @change="TypeHandle">
             <el-option
               v-for="(item, index) in order_class_array"
               :key="index"
@@ -57,31 +43,12 @@
           </el-select>
         </el-col>
       </el-row>
-      <el-tabs
-        v-model="activeName"
-        type="border-card"
-        @tab-click="handleClick"
-      >
-        <el-tab-pane
-          label="全部"
-          name="all"
-        />
-        <el-tab-pane
-          label="待发货"
-          name="notship"
-        />
-        <el-tab-pane
-          label="已完成"
-          name="done"
-        />
-        <el-tab-pane
-          label="未支付"
-          name="notpay"
-        />
-        <el-tab-pane
-          label="已取消"
-          name="cancel"
-        />
+      <el-tabs v-model="activeName" type="card" @tab-click="handleClick">
+        <el-tab-pane label="全部" name="all" />
+        <el-tab-pane label="待发货" name="notship" />
+        <el-tab-pane label="已完成" name="done" />
+        <el-tab-pane label="未支付" name="notpay" />
+        <el-tab-pane label="已取消" name="cancel" />
         <el-table
           v-loading="loading"
           :data="list"
@@ -89,18 +56,11 @@
           :height="wheight - 190"
           element-loading-text="数据加载中"
         >
-          <el-table-column
-            prop="order_id"
-            label="订单号"
-          >
+          <el-table-column prop="order_id" label="订单号">
             <template slot-scope="scope">
               <div class="order-num">
                 {{ scope.row.order_id }}
-                <el-tooltip
-                  effect="dark"
-                  content="复制"
-                  placement="top-start"
-                >
+                <el-tooltip effect="dark" content="复制" placement="top-start">
                   <i
                     v-clipboard:copy="scope.row.order_id"
                     v-clipboard:success="onCopy"
@@ -108,36 +68,24 @@
                   />
                 </el-tooltip>
               </div>
-              <div
-                v-if="scope.row.distributor_name"
-                class="order-store"
-              >
-                <el-tooltip
-                  effect="dark"
-                  content="店铺名"
-                  placement="top-start"
-                >
+              <div v-if="scope.row.distributor_name" class="order-store">
+                <el-tooltip effect="dark" content="店铺名" placement="top-start">
                   <i class="el-icon-office-building" />
                 </el-tooltip>
                 {{ scope.row.distributor_name }}
               </div>
               <div class="order-time">
-                <el-tooltip
-                  effect="dark"
-                  content="下单时间"
-                  placement="top-start"
-                >
+                <el-tooltip effect="dark" content="下单时间" placement="top-start">
                   <i class="el-icon-time" />
                 </el-tooltip>
                 {{ scope.row.create_time | datetime('YYYY-MM-DD HH:mm:ss') }}
               </div>
             </template>
           </el-table-column>
-          <el-table-column
-            label="运费"
-          >
+          <el-table-column label="运费">
             <template slot-scope="scope">
-              <span class="cur">{{ scope.row.fee_symbol }}</span>{{ scope.row.freight_fee / 100 }}
+              <span class="cur">{{ scope.row.fee_symbol }}</span
+              >{{ scope.row.freight_fee / 100 }}
             </template>
           </el-table-column>
           <!--
@@ -147,18 +95,13 @@
             </template>
           </el-table-column>
           -->
-          <el-table-column
-            prop="total_fee"
-            label="订单金额"
-          >
+          <el-table-column prop="total_fee" label="订单金额">
             <template slot-scope="scope">
-              <span class="cur">{{ scope.row.fee_symbol }}</span>{{ scope.row.total_fee / 100 }}
+              <span class="cur">{{ scope.row.fee_symbol }}</span
+              >{{ scope.row.total_fee / 100 }}
             </template>
           </el-table-column>
-          <el-table-column
-            prop="mobile"
-            label="联系手机"
-          >
+          <el-table-column prop="mobile" label="联系手机">
             <template slot-scope="scope">
               <i class="el-icon-mobile" />
               {{ scope.row.mobile }}
@@ -176,9 +119,7 @@
               </el-tooltip>
             </template>
           </el-table-column>
-          <el-table-column
-            label="订单类型"
-          >
+          <el-table-column label="订单类型">
             <template slot-scope="scope">
               {{ getOrderType(scope.row) }}
             </template>
@@ -191,29 +132,14 @@
             </template>
           </el-table-column>
           -->
-          <el-table-column
-            label="状态"
-          >
+          <el-table-column label="状态">
             <template slot-scope="scope">
               <!-- 订单状态 -->
-              <el-tag
-                v-if="scope.row.order_status == 'PAYED'"
-                type="success"
-                size="mini"
-              >
+              <el-tag v-if="scope.row.order_status == 'PAYED'" type="success" size="mini">
                 已支付
               </el-tag>
-              <el-tag
-                v-if="scope.row.order_status == 'NOTPAY'"
-                size="mini"
-              >
-                未支付
-              </el-tag>
-              <el-tag
-                v-if="scope.row.order_status == 'CANCEL'"
-                type="danger"
-                size="mini"
-              >
+              <el-tag v-if="scope.row.order_status == 'NOTPAY'" size="mini"> 未支付 </el-tag>
+              <el-tag v-if="scope.row.order_status == 'CANCEL'" type="danger" size="mini">
                 已取消
               </el-tag>
               <el-tag
@@ -225,11 +151,7 @@
               </el-tag>
               <template v-if="scope.row.order_status != 'CANCEL'">
                 <!-- 发货状态 -->
-                <el-tag
-                  v-if="scope.row.delivery_status == 'DONE'"
-                  type="success"
-                  size="mini"
-                >
+                <el-tag v-if="scope.row.delivery_status == 'DONE'" type="success" size="mini">
                   已发货
                 </el-tag>
                 <el-tag
@@ -239,26 +161,13 @@
                 >
                   部分发货
                 </el-tag>
-                <el-tag
-                  v-else-if="scope.row.ziti_status == 'PENDING'"
-                  type="danger"
-                  size="mini"
-                >
+                <el-tag v-else-if="scope.row.ziti_status == 'PENDING'" type="danger" size="mini">
                   待自提
                 </el-tag>
-                <el-tag
-                  v-else-if="scope.row.ziti_status == 'DONE'"
-                  type="danger"
-                  size="mini"
-                >
+                <el-tag v-else-if="scope.row.ziti_status == 'DONE'" type="danger" size="mini">
                   已自提
                 </el-tag>
-                <el-tag
-                  v-else
-                  size="mini"
-                >
-                  待发货
-                </el-tag>
+                <el-tag v-else size="mini"> 待发货 </el-tag>
               </template>
             </template>
           </el-table-column>
@@ -266,9 +175,7 @@
             prop="source_name"
             label="来源"
           /> -->
-          <el-table-column
-            label="操作"
-          >
+          <el-table-column label="操作">
             <template slot-scope="scope">
               <el-button type="text">
                 <router-link
@@ -283,8 +190,8 @@
               <el-button
                 v-if="
                   scope.row.receipt_type == 'logistics' &&
-                    scope.row.order_status == 'PAYED' &&
-                    scope.row.delivery_status != 'DONE'
+                  scope.row.order_status == 'PAYED' &&
+                  scope.row.delivery_status != 'DONE'
                 "
                 type="text"
                 @click="deliveryAction(scope.row.order_id)"
@@ -325,20 +232,9 @@
             </el-form-item>
             <el-form-item label="商品信息">
               <el-col :span="30">
-                <el-table
-                  :data="deliveryData.orderInfo.items"
-                  style="width: 100%"
-                >
-                  <el-table-column
-                    prop="item_name"
-                    label="商品名"
-                    width="180"
-                  />
-                  <el-table-column
-                    prop="num"
-                    label="数量"
-                    width="180"
-                  />
+                <el-table :data="deliveryData.orderInfo.items" style="width: 100%">
+                  <el-table-column prop="item_name" label="商品名" width="180" />
+                  <el-table-column prop="num" label="数量" width="180" />
                   <el-table-column label="总价(元)">
                     <template slot-scope="scope">
                       <span>￥{{ scope.row.total_fee / 100 }}</span>
@@ -364,9 +260,7 @@
               </el-col>
             </el-form-item>
             <el-form-item label="快递单号">
-              <el-col
-                :span="14"
-              >
+              <el-col :span="14">
                 <el-input
                   v-model="deliveryForm.delivery_code"
                   :maxlength="20"
@@ -376,19 +270,9 @@
             </el-form-item>
           </el-form>
         </template>
-        <div
-          slot="footer"
-          class="dialog-footer"
-        >
-          <el-button @click.native="handleCancel">
-            取消
-          </el-button>
-          <el-button
-            type="primary"
-            @click="submitDeliveryAction"
-          >
-            确定
-          </el-button>
+        <div slot="footer" class="dialog-footer">
+          <el-button @click.native="handleCancel"> 取消 </el-button>
+          <el-button type="primary" @click="submitDeliveryAction"> 确定 </el-button>
         </div>
       </el-dialog>
     </div>
@@ -401,13 +285,10 @@ import { getOrderList, getOrderDetail, delivery } from '../../../api/trade'
 import { getSourcesList } from '../../../api/datacube'
 import hqbdlycorp from '../../../common/hqbdlycorp.json'
 import { getDistributorList } from '../../../api/marketing'
-import {
-  ORDER_TYPE,
-  ORDER_TYPE_STANDARD
-} from '@/consts'
+import { ORDER_TYPE, ORDER_TYPE_STANDARD } from '@/consts'
 
 export default {
-  data () {
+  data() {
     return {
       activeName: 'all',
       loading: false,
@@ -449,45 +330,45 @@ export default {
   computed: {
     ...mapGetters(['wheight'])
   },
-  mounted () {
+  mounted() {
     this.getDistributor()
     this.getParams()
     this.getOrders(this.params)
     this.getAllSourcesList()
   },
   methods: {
-    onCopy () {
+    onCopy() {
       this.$notify({
         message: '复制成功',
         type: 'success'
       })
     },
     // 切换tab
-    handleClick (tab, event) {
+    handleClick(tab, event) {
       this.activeName = tab.name
       this.params.order_status = tab.name == 'all' ? '' : tab.name
       this.params.page = 1
       this.getParams()
       this.getOrders(this.params)
     },
-    orderStatusSelectHandle () {
+    orderStatusSelectHandle() {
       this.params.order_status = this.order_status
       this.getParams()
       this.params.page = 1
       this.getOrders(this.params)
     },
-    distributorSelectHandle () {
+    distributorSelectHandle() {
       this.params.distributor_id = this.distributor_id
       this.getParams()
       this.params.page = 1
       this.getOrders(this.params)
     },
-    numberSearch (e) {
+    numberSearch(e) {
       this.getParams()
       this.params.page = 1
       this.getOrders(this.params)
     },
-    dateChange (val) {
+    dateChange(val) {
       if (val.length > 0) {
         this.time_start_begin = this.dateStrToTimeStamp(val[0] + ' 00:00:00')
         this.time_start_end = this.dateStrToTimeStamp(val[1] + ' 23:59:59')
@@ -499,24 +380,24 @@ export default {
       this.params.page = 1
       this.getOrders(this.params)
     },
-    sourceSearch (item) {
+    sourceSearch(item) {
       this.params.source_id = item.source_id
       this.getParams()
       this.params.page = 1
       this.getOrders(this.params)
     },
-    handleCurrentChange (val) {
+    handleCurrentChange(val) {
       this.currentPage = val
       this.loading = false
       this.getParams()
       this.getOrders(this.params)
     },
-    TypeHandle (val) {
+    TypeHandle(val) {
       this.params.page = 1
       this.getParams()
       this.getOrders(this.params)
     },
-    getParams () {
+    getParams() {
       this.params.time_start_begin = this.time_start_begin
       this.params.time_start_end = this.time_start_end
       this.params.order_type = this.order_type
@@ -531,10 +412,10 @@ export default {
         this.params.order_id = this.identifier
       }
     },
-    dateStrToTimeStamp (str) {
+    dateStrToTimeStamp(str) {
       return Date.parse(new Date(str)) / 1000
     },
-    getOrders (filter) {
+    getOrders(filter) {
       this.loading = true
       getOrderList(filter).then((response) => {
         this.list = response.data.data.list
@@ -543,7 +424,7 @@ export default {
         this.loading = false
       })
     },
-    getAllSourcesList () {
+    getAllSourcesList() {
       let params = { page: 1, pageSize: 1000 }
       getSourcesList(params).then((response) => {
         if (response.data.data.list) {
@@ -553,18 +434,18 @@ export default {
         }
       })
     },
-    querySearch (queryString, cb) {
+    querySearch(queryString, cb) {
       var restaurants = this.source_list
       var results = queryString ? restaurants.filter(this.createFilter(queryString)) : restaurants
       // 调用 callback 返回建议列表的数据
       cb(results)
     },
-    createFilter (queryString) {
+    createFilter(queryString) {
       return (restaurant) => {
         return restaurant.value.toLowerCase().indexOf(queryString.toLowerCase()) === 0
       }
     },
-    deliveryAction (order_id) {
+    deliveryAction(order_id) {
       // 编辑物料弹框
       this.deliveryTitle = '发货'
       this.deliveryVisible = true
@@ -573,13 +454,13 @@ export default {
       })
       this.deliveryForm.order_id = order_id
     },
-    handleCancel () {
+    handleCancel() {
       this.deliveryVisible = false
       this.deliveryForm.order_id = ''
       this.deliveryForm.delivery_corp = ''
       this.deliveryForm.delivery_code = ''
     },
-    submitDeliveryAction () {
+    submitDeliveryAction() {
       // 提交物料
       delivery(this.deliveryForm).then((response) => {
         if (response.data.data.delivery_status == 'DONE') {
@@ -592,7 +473,7 @@ export default {
         }
       })
     },
-    getDistributor () {
+    getDistributor() {
       var params = { page: 1, pageSize: 500 }
       getDistributorList(params).then((response) => {
         if (response.data.data.list) {

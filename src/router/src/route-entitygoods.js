@@ -97,7 +97,7 @@ export default {
     {
       path: 'service/rate',
       name: `商品评价`,
-      component: () => import('@/view/mall/trade/rate/list')
+      component: () => import('@/view/goods/rate')
     },
     {
       path: 'service/brandmaterial',
@@ -113,7 +113,7 @@ export default {
     {
       path: 'service/arrivalnotice',
       name: `到货通知`,
-      component: () => import('@/view/member/subscribe/goods/list')
+      component: () => import('@/view/goods/arrivalNotice')
     },
 
     {

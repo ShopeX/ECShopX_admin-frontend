@@ -1,5 +1,6 @@
 <template>
   <div class="dealer_index">
+    <SpPlatformTip h5 app />
     <div class="step">
       <el-steps :active="active" align-center finish-status="success">
         <!-- <el-step title="提交开户资料" :description="active!=0?'完成':'已提交审核，请耐心等待～'"></el-step>
@@ -20,19 +21,19 @@
 
 <script>
 export default {
-  data () {
+  data() {
     return {
       active: 0
     }
   },
-  created () {
+  created() {
     this.getStepHandle()
     // this.$router.push('/setting/adapay_merchant/pay_setting')
     // this.$router.push('/setting/adapay_merchant/picture')
   },
   methods: {
     // 查询开户步骤
-    async getStepHandle () {
+    async getStepHandle() {
       const { step, info } = await this.$api.adapay.getStep()
       const { MerchantEntry, MerchantResident, SubmitLicense } = info
       this.active = step - 1

@@ -1,18 +1,21 @@
 <template>
-  <transition
+  <!-- <transition
     name="fade"
     mode="out-in"
-  >
+  > -->
+  <div>
+    <SpPlatformTip h5 app alipay />
     <!-- <storeDefault v-if="template_name === 'yykmembership'"></storeDefault>
     <storeSport v-if="template_name === 'yykmendian'"></storeSport>
     <storeUniversal v-if="template_name === 'yykuniversal'"></storeUniversal> -->
     <mallDefault />
-    <!-- <appleBaDefault v-if="template_name === 'appleweishop'"></appleBaDefault>
+  </div>
+  <!-- <appleBaDefault v-if="template_name === 'appleweishop'"></appleBaDefault>
     <marketingCard v-if="template_name === 'marketingCard'"></marketingCard>
     <marketingGroup v-if="template_name === 'yykcutdown'"></marketingGroup>
     <mallCommunity v-if="template_name === 'yykcommunity'"></mallCommunity>
     <communityManagement v-if="template_name === 'yykcommunitypms'"></communityManagement> -->
-  </transition>
+  <!-- </transition> -->
 </template>
 
 <script>
@@ -47,7 +50,7 @@ export default {
     marketingGroup: marketingGroup,
     appleBaDefault: appleBaDefault
   },
-  data () {
+  data() {
     return {
       activeIndex: '',
       currentCode: '',
@@ -58,10 +61,10 @@ export default {
     ...mapGetters(['wxapp_id', 'template_name'])
   },
   methods: {
-    chooseTemp () {
+    chooseTemp() {
       this.$router.push({ path: this.matchInternalRoute('wxapp_templ') })
     },
-    mounted () {
+    mounted() {
       if (this.active) {
         this.activeIndex = this.active
       }

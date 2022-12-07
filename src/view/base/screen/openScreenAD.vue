@@ -1,5 +1,6 @@
 <template>
   <div>
+    <SpPlatformTip h5 app alipay />
     <el-card>
       <div style="width: 70%">
         <el-form v-loading="loading" label-width="180px" :model="form">
@@ -17,8 +18,12 @@
                   <i v-else class="el-icon-plus avatar-uploader-icon" />
                 </div>
               </div>
-              <imgPicker :dialog-visible="imgDialog" :sc-status="isGetImage" @chooseImg="pickImg"
-                @closeImgDialog="closeImgDialog" />
+              <imgPicker
+                :dialog-visible="imgDialog"
+                :sc-status="isGetImage"
+                @chooseImg="pickImg"
+                @closeImgDialog="closeImgDialog"
+              />
             </div>
             <!--视频组件-->
             <div v-if="form.material_type === 2">
@@ -59,8 +64,14 @@
   </el-form-item> -->
 
           <el-form-item label="等待时间">
-            <el-input v-model="form.waiting_time" type="number" :min="0" :max="999999999" placeholder="请输入整数"
-              @input="input_waiting_time">
+            <el-input
+              v-model="form.waiting_time"
+              type="number"
+              :min="0"
+              :max="999999999"
+              placeholder="请输入整数"
+              @input="input_waiting_time"
+            >
               <template slot="append"> 秒 </template>
             </el-input>
           </el-form-item>
@@ -81,8 +92,12 @@
                     {{ form.ad_url.title }}
                   </span>
                   <span style="margin-left: 10px">
-                    <i v-if="JSON.stringify(form.ad_url) !== '{}'" style="color: #f56c6c" class="el-icon-delete"
-                      @click="clear_ad_url" />
+                    <i
+                      v-if="JSON.stringify(form.ad_url) !== '{}'"
+                      style="color: #f56c6c"
+                      class="el-icon-delete"
+                      @click="clear_ad_url"
+                    />
                   </span>
                 </div>
                 <div v-else class="content-center" @click="handleGoodsChange()">
@@ -106,8 +121,17 @@
         </el-form>
       </div>
 
-      <linkSetter :links="linksArr" :visible="linksVisible" :show_article="false" :show_planting="false"
-        :show_page="false" :show_marketing="false" :show_store="false" @setLink="setLink" @closeDialog="closeDialog" />
+      <linkSetter
+        :links="linksArr"
+        :visible="linksVisible"
+        :show_article="false"
+        :show_planting="false"
+        :show_page="false"
+        :show_marketing="false"
+        :show_store="false"
+        @setLink="setLink"
+        @closeDialog="closeDialog"
+      />
     </el-card>
   </div>
 </template>
@@ -299,4 +323,3 @@ export default {
   }
 }
 </style>
-

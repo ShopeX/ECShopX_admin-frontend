@@ -1,12 +1,11 @@
 <template>
   <div>
+    <SpPlatformTip h5 app pc alipay />
     <div class="action-container">
       <el-button type="primary" icon="iconfont icon-xinzengcaozuo-01" @click="AddRecommendLikeItem">
         添加商品
       </el-button>
-      <el-button type="primary" plain @click="DelItemData('true')">
-清除所有商品
-</el-button>
+      <el-button type="primary" plain @click="DelItemData('true')"> 清除所有商品 </el-button>
     </div>
 
     <el-table ref="multipleItemsTable" v-loading="loading" border :data="tableList">
@@ -14,9 +13,7 @@
       <!-- <el-table-column prop="itemName" label="商品图片" width="300"></el-table-column> -->
       <el-table-column prop="itemName" label="商品名称" width="300" />
       <el-table-column prop="price" label="商品价格" width="120">
-        <template slot-scope="scope">
-{{ scope.row.price / 100 }}元
-</template>
+        <template slot-scope="scope"> {{ scope.row.price / 100 }}元 </template>
       </el-table-column>
       <el-table-column prop="sort" label="商品排序" width="120">
         <template slot-scope="scope">
@@ -27,22 +24,16 @@
       </el-table-column>
       <el-table-column prop="approve_status" label="状态" width="100">
         <template slot-scope="scope">
-          <div v-if="scope.row.approve_status === 'onsale'" class="grid-content">
-前台可销售
-</div>
+          <div v-if="scope.row.approve_status === 'onsale'" class="grid-content">前台可销售</div>
           <div v-else-if="scope.row.approve_status === 'offline_sale'" class="grid-content">
             前台不展示
           </div>
-          <div v-else class="grid-content">
-不可销售
-</div>
+          <div v-else class="grid-content">不可销售</div>
         </template>
       </el-table-column>
       <el-table-column label="操作">
         <template slot-scope="scope">
-          <el-button type="text" @click="DelItemData('false', scope.row)">
-删除关联
-</el-button>
+          <el-button type="text" @click="DelItemData('false', scope.row)"> 删除关联 </el-button>
         </template>
       </el-table-column>
     </el-table>
@@ -86,9 +77,7 @@
             </el-button>
           </el-col>
           <el-col :span="4">
-            <el-button size="mini" @click.native="handleCancel">
-返回
-</el-button>
+            <el-button size="mini" @click.native="handleCancel"> 返回 </el-button>
           </el-col>
           <el-col :span="4">
             <el-button type="primary" :loading="loading" size="mini" @click="submitActivityAction">
@@ -141,13 +130,13 @@ export default {
     GoodsSelect
   },
   mixins: [pageMixin],
-  provide () {
+  provide() {
     return {
       refresh: this.fetchList
     }
   },
   props: ['isLoad'],
-  data () {
+  data() {
     return {
       editItemSortVisible: false,
       itemVisible: false,
@@ -171,25 +160,25 @@ export default {
     ...mapGetters(['wheight'])
   },
   watch: {
-    isLoad (val) {
+    isLoad(val) {
       if (val) {
         this.fetchList()
         //this.getDistributorItemList()
       }
     }
   },
-  mounted () {
+  mounted() {
     //this.getDistributorItemList()
     this.fetchList()
   },
   methods: {
-    getParams () {
+    getParams() {
       let params = {
         ...this.params
       }
       return params
     },
-    async fetchList () {
+    async fetchList() {
       this.loading = true
       const { pageIndex: page, pageSize } = this.page
       let params = {
@@ -202,7 +191,7 @@ export default {
       this.page.total = total_count
       this.loading = false
     },
-    AddRecommendLikeItem () {
+    AddRecommendLikeItem() {
       this.show_sideBar = true
       getRecommendLikeItems().then((res) => {
         if (res.data.data.list) {
@@ -210,7 +199,7 @@ export default {
         }
       })
     },
-    DelItemData (isAll, row) {
+    DelItemData(isAll, row) {
       let title = '将删除该商品推荐，是否继续?'
       let param = ''
       if (row) {
@@ -248,14 +237,14 @@ export default {
         })
       }
     },
-    relItems () {
+    relItems() {
       this.itemVisible = true
       this.setItemStatus = true
     },
-    handleCancel () {
+    handleCancel() {
       this.show_sideBar = false
     },
-    submitActivityAction () {
+    submitActivityAction() {
       saveRecommendLikeItem(this.form).then((res) => {
         this.fetchList()
         this.$message({
@@ -266,7 +255,7 @@ export default {
         this.itemVisible = false
       })
     },
-    chooseItemsAction (data) {
+    chooseItemsAction(data) {
       this.itemVisible = false
       this.relItemsIds = data
       if (data === null || data.length <= 0) return
@@ -288,16 +277,16 @@ export default {
       })
       this.form.items = arr
     },
-    closeItemDialogAction () {
+    closeItemDialogAction() {
       this.itemVisible = false
     },
-    deleteItemRow (index, rows) {
+    deleteItemRow(index, rows) {
       rows.splice(index, 1)
       this.form.items = rows
       this.setItemStatus = false
       this.relItemsIds.splice(index, 1)
     },
-    editItemSort (index, rows) {
+    editItemSort(index, rows) {
       let params = {
         id: rows.id,
         item_id: rows.item_id,
@@ -312,7 +301,7 @@ export default {
         }
       })
     },
-    editItemsStore (index, row) {
+    editItemsStore(index, row) {
       if (row.is_total_store === false && (row.store == '' || row.store <= 0)) {
         this.$message({
           type: 'error',
@@ -328,7 +317,7 @@ export default {
       }
       this.updateDistributorItem(form)
     },
-    async getDistributorItemList () {
+    async getDistributorItemList() {
       let distributor = await this.getDefaultDistributor()
       if (distributor) {
         this.params.distributor_id = distributor.distributor_id

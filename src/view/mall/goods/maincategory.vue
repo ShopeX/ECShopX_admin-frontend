@@ -11,12 +11,12 @@
           添加管理分类
         </el-button>
         <!-- <el-button-group>
-          <el-button type="primary" @click="updateCategory" :disabled="isDisable">保存主类目</el-button> -->
+          <el-button type="primary" @click="updateCategory" :disabled="isDisable">保存管理分类</el-button> -->
         <!-- <el-button
           type="primary"
           @click="syncMainCategory"
         >
-          同步主类目
+          同步管理分类
         </el-button> -->
         <!-- </el-button-group> -->
       </el-col>

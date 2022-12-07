@@ -16,85 +16,41 @@
 
 <template>
   <div>
-    <el-tabs
-      v-if="$route.path.indexOf('editor') === -1"
-      v-model="activeName"
-      type="border-card"
-    >
-      <el-tab-pane
-        label="助力活动管理"
-        name="list"
-      >
+    <SpPlatformTip />
+    <el-tabs v-if="$route.path.indexOf('editor') === -1" v-model="activeName" type="card">
+      <el-tab-pane label="助力活动管理" name="list">
         <div class="content-bottom-padded">
-          <el-button
-            type="primary"
-            icon="el-icon-plus"
-            @click="addBargains"
-          >
+          <el-button type="primary" icon="el-icon-plus" @click="addBargains">
             添加助力活动
           </el-button>
         </div>
-        <el-table
-          v-loading="loading"
-          :data="dataList"
-          :height="wheight - 230"
-        >
-          <el-table-column
-            prop="title"
-            label="活动名称"
-          />
-          <el-table-column
-            label="活动时间"
-            width="180"
-          >
+        <el-table v-loading="loading" :data="dataList" :height="wheight - 230">
+          <el-table-column prop="title" label="活动名称" />
+          <el-table-column label="活动时间" width="180">
             <template slot-scope="scope">
               {{ scope.row.begin_time | datetime('YYYY-MM-DD HH:mm:ss') }} <br>
               {{ scope.row.end_time | datetime('YYYY-MM-DD HH:mm:ss') }}
             </template>
           </el-table-column>
-          <el-table-column
-            prop="item_name"
-            label="产品名称"
-          />
-          <el-table-column
-            label="产品原价"
-            align="center"
-          >
-            <template slot-scope="scope">
-              ￥{{ scope.row.mkt_price / 100 }}
-            </template>
+          <el-table-column prop="item_name" label="产品名称" />
+          <el-table-column label="产品原价" align="center">
+            <template slot-scope="scope"> ￥{{ scope.row.mkt_price / 100 }} </template>
           </el-table-column>
-          <el-table-column
-            label="产品底价"
-            align="center"
-          >
-            <template slot-scope="scope">
-              ￥{{ scope.row.price / 100 }}
-            </template>
+          <el-table-column label="产品底价" align="center">
+            <template slot-scope="scope"> ￥{{ scope.row.price / 100 }} </template>
           </el-table-column>
           <!-- <el-table-column label="助力范围" align="center">
             <template slot-scope="scope">
               ￥[{{scope.row.bargain_range.min / 100}} ~ {{scope.row.bargain_range.max / 100}}]
             </template>
           </el-table-column> -->
-          <el-table-column
-            label="助力人数"
-            align="center"
-          >
+          <el-table-column label="助力人数" align="center">
             <template slot-scope="scope">
               {{ scope.row.people_range.min }} ~ {{ scope.row.people_range.max }}
             </template>
           </el-table-column>
-          <el-table-column
-            prop="limit_num"
-            label="产品数量"
-            align="center"
-          />
-          <el-table-column
-            prop="order_num"
-            label="已购数量"
-            align="center"
-          />
+          <el-table-column prop="limit_num" label="产品数量" align="center" />
+          <el-table-column prop="order_num" label="已购数量" align="center" />
           <el-table-column label="操作">
             <template slot-scope="scope">
               <i
@@ -106,7 +62,8 @@
                 v-if="!scope.row.is_expired"
                 class="iconfont icon-user-slash"
                 @click="terminateBargainsAction(scope.$index, scope.row)"
-              >废除</i>
+                >废除</i
+              >
               <i
                 class="mark iconfont icon-trash-alt1"
                 @click="deleteBargainsAction(scope.$index, scope.row)"
@@ -114,10 +71,7 @@
             </template>
           </el-table-column>
         </el-table>
-        <div
-          v-if="total_count > params.pageSize"
-          class="content-center content-padded"
-        >
+        <div v-if="total_count > params.pageSize" class="content-center content-padded">
           <el-pagination
             layout="prev, pager, next"
             :total="total_count"
@@ -126,32 +80,14 @@
           />
         </div>
       </el-tab-pane>
-      <el-tab-pane
-        label="助力广告图"
-        name="image"
-      >
-        <el-form
-          ref="form"
-          label-position="left"
-        >
+      <el-tab-pane label="助力广告图" name="image">
+        <el-form ref="form" label-position="left">
           <el-form-item>
-            <div class="frm-tips">
-              只能上传jpg/png文件，且不超过2M （建议尺寸：617px * 214px）
-            </div>
+            <div class="frm-tips">只能上传jpg/png文件，且不超过2M （建议尺寸：617px * 214px）</div>
             <div>
-              <div
-                class="upload-box"
-                @click="handleImgChange"
-              >
-                <img
-                  v-if="ad_pic"
-                  :src="wximageurl + ad_pic"
-                  class="setting_pic"
-                >
-                <i
-                  v-else
-                  class="el-icon-plus avatar-uploader-icon"
-                />
+              <div class="upload-box" @click="handleImgChange">
+                <img v-if="ad_pic" :src="wximageurl + ad_pic" class="setting_pic">
+                <i v-else class="el-icon-plus avatar-uploader-icon" />
               </div>
             </div>
             <imgPicker
@@ -162,16 +98,8 @@
             />
           </el-form-item>
         </el-form>
-        <div
-          class="section-footer with-border content-center"
-          style="width: 100%"
-        >
-          <el-button
-            type="primary"
-            @click="saveAdPic"
-          >
-            保 存
-          </el-button>
+        <div class="section-footer with-border content-center" style="width: 100%">
+          <el-button type="primary" @click="saveAdPic"> 保 存 </el-button>
         </div>
       </el-tab-pane>
     </el-tabs>
@@ -185,7 +113,7 @@ import { listBargins, deleteBargains, terminateBargains } from '../../../api/pro
 import util from '../../../common/js/util'
 import { setPageParams, getParamByTempName, updateParamsById } from '../../../api/wxa'
 export default {
-  provide () {
+  provide() {
     return {
       refresh: this.refresh
     }
@@ -193,7 +121,7 @@ export default {
   components: {
     imgPicker
   },
-  data () {
+  data() {
     return {
       isGetImage: false,
       imgDialog: false,
@@ -213,12 +141,12 @@ export default {
   computed: {
     ...mapGetters(['wheight'])
   },
-  mounted () {
+  mounted() {
     this.getBargainsList()
     // this.getAdPic()
   },
   methods: {
-    saveAdPic () {
+    saveAdPic() {
       if (this.tempatePageKanJiaParamId) {
         let params = { ad_pic: this.ad_pic }
         let query = {
@@ -258,24 +186,24 @@ export default {
         }
       }
     },
-    handleImgChange () {
+    handleImgChange() {
       this.imgDialog = true
       this.isGetImage = true
     },
-    pickImg (data) {
+    pickImg(data) {
       this.ad_pic = data.url
       this.imgDialog = false
     },
-    closeImgDialog () {
+    closeImgDialog() {
       this.imgDialog = false
     },
-    addBargains () {
+    addBargains() {
       this.$router.push({ path: this.matchHidePage('editor') })
     },
-    editBargains (index, row) {
+    editBargains(index, row) {
       this.$router.push({ path: this.matchHidePage('editor/') + row.bargain_id })
     },
-    getAdPic () {
+    getAdPic() {
       let filter = { template_name: 'yykcutdown', name: 'banner', page_name: 'pages/kanjia' }
       getParamByTempName(filter).then((res) => {
         if (res.data.data) {
@@ -284,7 +212,7 @@ export default {
         }
       })
     },
-    deleteBargainsAction (index, row) {
+    deleteBargainsAction(index, row) {
       this.$confirm('此操作将删除该助力活动, 是否继续?', '提示', {
         confirmButtonText: '确定',
         cancelButtonText: '取消',
@@ -307,7 +235,7 @@ export default {
           })
         })
     },
-    terminateBargainsAction (index, row) {
+    terminateBargainsAction(index, row) {
       this.$confirm('此操作将废除该助力活动, 是否继续?', '提示', {
         confirmButtonText: '确定',
         cancelButtonText: '取消',
@@ -330,7 +258,7 @@ export default {
           })
         })
     },
-    getBargainsList () {
+    getBargainsList() {
       this.loading = true
       let params = { page: this.params.page, pageSize: this.params.pageSize }
       listBargins(params)
@@ -346,11 +274,11 @@ export default {
           })
         })
     },
-    handleCurrentChange (page_num) {
+    handleCurrentChange(page_num) {
       this.params.page = page_num
       this.getBargainsList()
     },
-    refresh () {
+    refresh() {
       this.getBargainsList()
       // this.getAdPic()
     }

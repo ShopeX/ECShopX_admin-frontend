@@ -1,6 +1,7 @@
 <template>
   <div>
-    <template v-if="$route.path.indexOf('detail') === -1 && $route.path.indexOf('editor') === -1">
+    <SpRouterView>
+      <SpPlatformTip h5 app pc alipay />
       <div class="action-container">
         <el-button type="primary" icon="iconfont icon-xinzengcaozuo-01" @click="addCoupon">
           创建优惠券
@@ -49,9 +50,7 @@
                 </template>
                 <template v-else>
                   {{ scope.row.begin_time | datetime('YYYY-MM-DD HH:mm:ss') }}
-                  <template v-if="scope.row.end_time">
-~
-</template>
+                  <template v-if="scope.row.end_time"> ~ </template>
                   {{ scope.row.end_time | datetime('YYYY-MM-DD HH:mm:ss') }}
                   <!-- {{ Date.parse(new Date()) > scope.row.end_time * 1000 ? '已过期' : '' }} -->
                 </template>
@@ -156,19 +155,23 @@
                       编辑
                     </router-link>
                   </el-button>
-                  <el-popover
-                    v-if="appID"
-                    placement="top"
-                    width="200"
-                    trigger="click">
+                  <el-popover v-if="appID" placement="top" width="200" trigger="click">
                     <div>
-                      <img class="page-code" :src="appCodeUrl" />
+                      <img class="page-code" :src="appCodeUrl">
                       <div class="page-btns">
                         <el-button type="primary" plain size="mini" @click="handleDownload(scope.row.title)">下载码</el-button>
                         <el-button type="primary" plain size="mini" v-clipboard:copy="curPageUrl">复制链接</el-button>
                       </div>
                     </div>
-                    <el-button style="width: 45px" type="text" slot="reference" @click="handleShow(scope.row.card_id)">投放</el-button>
+                    <el-button
+                      slot="reference"
+                      style="width: 45px"
+                      type="text"
+                      @click="handleShow(scope.row.card_id)"
+                      >
+投放
+</el-button
+                    >
                   </el-popover>
                   <el-button
                     v-if="scope.row.status != 'CARD_STATUS_DISPATCH'"
@@ -208,16 +211,11 @@
           </div>
         </div>
         <div slot="footer" class="dialog-footer">
-          <el-button @click.native="sendoutVisible = false">
-取消
-</el-button>
-          <el-button type="primary" @click.native="sendoutAction">
-确定
-</el-button>
+          <el-button @click.native="sendoutVisible = false"> 取消 </el-button>
+          <el-button type="primary" @click.native="sendoutAction"> 确定 </el-button>
         </div>
       </el-dialog>
-    </template>
-    <router-view />
+    </SpRouterView>
 
     <SpDialog
       ref="editDialogRef"
@@ -239,12 +237,12 @@ import mixin, { pageMixin } from '@/mixins'
 
 export default {
   mixins: [mixin, pageMixin],
-  provide () {
+  provide() {
     return {
       refresh: this.fetchList
     }
   },
-  data () {
+  data() {
     const initialParams = {
       date_status: '2',
       card_type: undefined,
@@ -322,7 +320,7 @@ export default {
       ]
     }
   },
-  mounted () {
+  mounted() {
     this.params.store_self = false
     if (this.VERSION_PLATFORM && store.getters.login_type !== 'distributor') {
       this.params.store_self = true
@@ -339,7 +337,7 @@ export default {
         }
       })
     },
-    handleShow (card_id) {
+    handleShow(card_id) {
       const page = 'subpages/marketing/coupon-center'
       this.curPageUrl = `${page}?card_id=${card_id}`
       let params = {
@@ -351,7 +349,7 @@ export default {
         this.appCodeUrl = response.data.data.base64Image
       })
     },
-    handleDownload (name) {
+    handleDownload(name) {
       var a = document.createElement('a')
       var temp = name
       if (this.appCodeUrl) {
@@ -360,32 +358,32 @@ export default {
         a.click()
       }
     },
-    editCouponStore (id) {
+    editCouponStore(id) {
       this.editForm.card_id = id
       this.editDialog = true
     },
-    async onEditSubmit () {
+    async onEditSubmit() {
       await this.$api.cardticket.updateStore(this.editForm)
       this.editDialog = false
       this.fetchList()
     },
-    getParams () {
+    getParams() {
       let params = {
         ...this.params
       }
       return params
     },
-    onSearch () {
+    onSearch() {
       this.page.pageIndex = 1
       this.$nextTick(() => {
         this.fetchList()
       })
     },
-    onReset () {
+    onReset() {
       this.params = { ...this.initialParams }
       this.onSearch()
     },
-    async fetchList () {
+    async fetchList() {
       this.loading = true
       const { pageIndex: page_no, pageSize: page_size } = this.page
       let params = {
@@ -398,18 +396,18 @@ export default {
       this.page.total = total_count
       this.loading = false
     },
-    handleClick (tab, event) {
+    handleClick(tab, event) {
       this.onSearch()
     },
-    addCoupon () {
+    addCoupon() {
       this.$router.push({ path: this.matchHidePage('editor') })
     },
-    sendoutShowAction (id) {
+    sendoutShowAction(id) {
       this.sendoutVisible = true
       this.typeId = id
       this.currSendout = 0
     },
-    sendoutAction () {
+    sendoutAction() {
       if (this.currSendout == 0) {
         if (this.typeId) {
           getQRcode(this.typeId).then((res) => {
@@ -422,7 +420,7 @@ export default {
       }
       this.sendoutVisible = false
     },
-    deleteCard (id, index) {
+    deleteCard(id, index) {
       this.$confirm('确定要删除该卡券？', '提示', {
         cancelButtonText: '取消',
         confirmButtonText: '确定',
@@ -437,10 +435,10 @@ export default {
         }
       })
     },
-    chooseSendout (index) {
+    chooseSendout(index) {
       this.currSendout = index
     },
-    pullWechatCard () {
+    pullWechatCard() {
       this.$confirm('确定同步微信优惠券到本系统吗？', '提示', {
         confirmButtonText: '确定',
         cancelButtonText: '取消',
@@ -462,7 +460,7 @@ export default {
           })
         })
     },
-    filterTag (value) {
+    filterTag(value) {
       if (value.type) {
         this.params.card_type = value.type[0]
         this.fetchList()
@@ -472,7 +470,7 @@ export default {
         this.fetchList()
       }
     },
-    saveStore (index, operationType) {
+    saveStore(index, operationType) {
       this.loadingbtn = true
       let reg = /^[1-9]\d*$/
       if (!reg.test(this.tableList[index].storeValue)) {

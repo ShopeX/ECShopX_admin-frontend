@@ -30,9 +30,7 @@
       url="/distributors/aftersales"
       :fixed-row-action="true"
       :setting="{
-        columns: [
-          { name: '店铺名称', key: 'name' },
-        ]
+        columns: [{ name: '店铺名称', key: 'name' }]
       }"
       :hooks="{
         beforeSearch: beforeSearch,
@@ -47,7 +45,7 @@
 import BasePicker from './base'
 import PageMixin from '../mixins/page'
 export default {
-  name: 'pickerAftersalesList',
+  name: 'PickerAftersalesList',
   extends: BasePicker,
   mixins: [PageMixin],
   config: {
@@ -72,14 +70,14 @@ export default {
       params = {
         ...params,
         name: this.formData.keywords,
-        distributor_id: this.value.distributor_id
+        merchant_id: this.value.merchant_id
       }
       return params
     },
     afterSearch(response) {
       const { list } = response.data.data
       const { data = [] } = this.value
-      const selectRow = list.filter((item) => data.includes(item.id))
+      const selectRow = list.filter((item) => data.includes(item.distributor_id))
       const finderTable = this.$refs['finder'].$refs.finderTable.$refs.finderTable
 
       setTimeout(() => {

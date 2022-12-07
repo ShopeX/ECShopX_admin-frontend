@@ -133,7 +133,8 @@ export const PAY_TYPE = {
   wx_pub: '微信H5支付',
   wx_qr: '微信PC支付',
   alipay_wap: '支付宝H5支付',
-  alipay_qr: '支付宝PC支付'
+  alipay_qr: '支付宝PC支付',
+  alipaymini: '支付宝小程序'
 }
 
 export const PAY_STATUS = {
@@ -151,7 +152,7 @@ export const PICKER_DATE_OPTIONS = {
   shortcuts: [
     {
       text: '最近一周',
-      onClick (picker) {
+      onClick(picker) {
         const end = new Date()
         const start = new Date()
         start.setTime(start.getTime() - 3600 * 1000 * 24 * 7)
@@ -160,7 +161,7 @@ export const PICKER_DATE_OPTIONS = {
     },
     {
       text: '最近一个月',
-      onClick (picker) {
+      onClick(picker) {
         const end = new Date()
         const start = new Date()
         start.setTime(start.getTime() - 3600 * 1000 * 24 * 30)
@@ -169,7 +170,7 @@ export const PICKER_DATE_OPTIONS = {
     },
     {
       text: '最近三个月',
-      onClick (picker) {
+      onClick(picker) {
         const end = new Date()
         const start = new Date()
         start.setTime(start.getTime() - 3600 * 1000 * 24 * 90)

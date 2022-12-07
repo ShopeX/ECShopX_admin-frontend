@@ -69,7 +69,8 @@
       <el-row>
         <el-col :span="3" class="col-3 content-right"> 处理进度: </el-col>
         <el-col :span="20">
-          <span v-if="aftersalesInfo.progress == '0'"> 等待商家处理</span>
+          {{ aftersalesInfo.app_info.progress_msg }}
+          <!-- <span v-if="aftersalesInfo.progress == '0'"> 等待商家处理</span>
           <span v-else-if="aftersalesInfo.progress == '1'">商家接受申请，等待消费者回寄</span>
           <span v-else-if="aftersalesInfo.progress == '2'">消费者回寄，等待商家收货确认</span>
           <span v-else-if="aftersalesInfo.progress == '3'">售后已驳回</span>
@@ -78,7 +79,7 @@
           <span v-else-if="aftersalesInfo.progress == '6'">退款已处理</span>
           <span v-else-if="aftersalesInfo.progress == '7'">售后关闭</span>
           <span v-else-if="aftersalesInfo.progress == '8'">商家确认收货</span>
-          <span v-else-if="aftersalesInfo.progress == '9'">退款处理中</span>
+          <span v-else-if="aftersalesInfo.progress == '9'">退款处理中</span> -->
         </el-col>
       </el-row>
       <el-row v-if="aftersalesInfo.refuse_reason">
@@ -154,7 +155,8 @@
               class="artical-item"
             >
               <el-image
-                style="width: 200px"
+                style="width: 120px; height: 120px"
+                fit="cover"
                 :src="pic"
                 :preview-src-list="aftersalesInfo.evidence_pic"
               />
@@ -417,7 +419,8 @@
       v-if="
         aftersalesInfo.aftersales_type == 'REFUND_GOODS' &&
         ((aftersalesInfo.progress == '0' && this.is_approved == '1') ||
-          !isArray(aftersales_address))
+          !isArray(aftersales_address)) &&
+        aftersalesInfo.return_type == 'logistics'
       "
     >
       <div class="section-header with-border">
@@ -458,6 +461,40 @@
         </div>
       </div>
     </template>
+
+    <div
+      v-if="aftersalesInfo.return_type == 'offline' && isObject(aftersalesInfo.aftersales_address)"
+      class="section-header with-border"
+    >
+      <h3>到店退货</h3>
+      <div class="section-body">
+        <template>
+          <el-row>
+            <el-col :span="3" class="col-3 content-right"> 退货方式: </el-col>
+            <el-col :span="8">
+              {{ `${aftersalesInfo.return_type == 'offline' ? '到店退货' : '自行快递寄回'}` }}
+            </el-col>
+          </el-row>
+          <el-row>
+            <el-col :span="3" class="col-3 content-right"> 退货门店: </el-col>
+            <el-col :span="8">
+              <div>{{ aftersalesInfo.aftersales_address.aftersales_name }}</div>
+              <div>{{ aftersalesInfo.aftersales_address.aftersales_address }}</div>
+              <div>{{ aftersalesInfo.aftersales_address.aftersales_mobile }}</div>
+              <div>{{ `营业时间: ${aftersalesInfo.aftersales_address.aftersales_hours}` }}</div>
+            </el-col>
+          </el-row>
+          <el-row>
+            <el-col :span="3" class="col-3 content-right"> 联系人: </el-col>
+            <el-col :span="8"> {{ aftersalesInfo.contact }}</el-col>
+          </el-row>
+          <el-row>
+            <el-col :span="3" class="col-3 content-right"> 联系电话: </el-col>
+            <el-col :span="8">{{ aftersalesInfo.mobile }} </el-col>
+          </el-row>
+        </template>
+      </div>
+    </div>
 
     <div
       v-if="
@@ -615,6 +652,13 @@ img {
   &_content {
   }
 }
+.artical-item {
+  display: inline-block;
+  margin-right: 20px;
+  width: 120px;
+  height: 120px;
+  object-fit: container;
+}
 </style>
 
 <script>
@@ -631,7 +675,7 @@ import hqbdlycorp_kname from '../../../common/hqbdlycorp_kname.json'
 import district from '../../../common/district.json'
 import RemarkModal from '@/components/remarkModal'
 import remarkMixin from '@/mixins/remarkMixin'
-import { isArray } from '@/utils'
+import { isArray, isObject } from '@/utils'
 
 import { mapGetters } from 'vuex'
 
@@ -721,6 +765,7 @@ export default {
   },
   methods: {
     isArray,
+    isObject,
     aftersaleInfo() {
       getAftersalesDetail(this.aftersales_bn).then((response) => {
         let data = response.data.data
@@ -767,9 +812,11 @@ export default {
         //parseInt(this.refund_fee * 100)
         this.reviewData.refund_point = this.refund_point
         //售后地址
+        console.log(this.aftersalesInfo.aftersales_type)
         if (
           this.aftersalesInfo.aftersales_type == 'REFUND_GOODS' &&
-          this.aftersales_address_id == ''
+          this.aftersales_address_id == '' &&
+          this.aftersalesInfo.return_type != 'offline'
         ) {
           this.$message.error('请选择售后地址！')
           return false

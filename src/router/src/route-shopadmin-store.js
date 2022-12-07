@@ -59,11 +59,6 @@ export default {
           component: () => import('@/view/base/planting/editor')
         }
       ]
-    },
-    {
-      path: 'adapay_member_entry',
-      name: '开户管理',
-      component: () => import('@/view/dealer/create_account')
     }
   ]
 }

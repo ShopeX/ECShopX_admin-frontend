@@ -20,7 +20,7 @@ export default {
     {
       path: 'manage/custompage',
       name: `自定义页面`,
-      component: () => import('@/view/wxapp/custompage')
+      component: () => import('@/view/wxapp/customPage')
     },
     {
       path: 'manage/floorguide',
@@ -30,17 +30,17 @@ export default {
     {
       path: 'manage/colorstyle',
       name: `风格配色`,
-      component: () => import('@/view/wxapp/color_style')
+      component: () => import('@/view/wxapp/theme/colorStyle')
     },
     {
       path: 'manage/membercentersetting',
       name: `会员中心设置`,
-      component: () => import('@/view/wxapp/member_center_setting')
+      component: () => import('@/view/wxapp/memberCenter')
     },
     {
       path: 'manage/wxshopsetting',
-      name: `商城基本信息`,
-      component: () => import('@/view/base/shop/shopsetting')
+      name: `商城信息`,
+      component: () => import('@/view/wxapp/shopInfo')
     },
 
     // PC商城
@@ -159,11 +159,11 @@ export default {
       path: 'aliapp/colorstyle',
       name: `风格配色`,
       component: () => import('@/view/wxapp/aliapp/color_style')
-    },
-    {
-      path: 'aliapp/membercentersetting',
-      name: `会员中心设置`,
-      component: () => import('@/view/wxapp/aliapp/member_center_setting')
     }
+    // {
+    //   path: 'aliapp/membercentersetting',
+    //   name: `会员中心设置`,
+    //   component: () => import('@/view/wxapp/aliapp/member_center_setting')
+    // }
   ]
 }

@@ -51,7 +51,7 @@
 <script>
 import { createSetting } from '@shopex/finder'
 import district from '@/common/district.json'
-import { getRegionNameById } from '@/utils'
+import { getRegionNameById, VERSION_PLATFORM, IS_ADMIN } from '@/utils'
 export default {
   name: 'ZitiList',
   data() {
@@ -159,10 +159,17 @@ export default {
     onShowPopover() {},
     onBindStore() {},
     async onSelectStore({ id }) {
-      const { data } = await this.$picker.shop({
+      let params = {
         data: this.value,
         multiple: false
-      })
+      }
+      if (VERSION_PLATFORM && IS_ADMIN) {
+        params = {
+          ...params,
+          distribution_type: 0
+        }
+      }
+      const { data } = await this.$picker.shop(params)
       if (data.length > 0) {
         const [distributor] = data
         const { distributor_id } = distributor

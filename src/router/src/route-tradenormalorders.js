@@ -176,8 +176,8 @@ export default {
     },
     {
       path: 'tradesetting',
-      name: `交易配置`,
-      component: () => import('@/view/base/setting/tradesetting/index')
+      name: `订单包装`,
+      component: () => import('@/view/order/tradeSetting')
     },
     // {
     //   path: 'adapay_trades',

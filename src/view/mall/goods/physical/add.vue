@@ -27,7 +27,7 @@
 <template>
   <div>
     <template v-if="!isEditor">
-      <el-card v-loading="mainCateLoader" shadow="never" header="选择主类目">
+      <el-card v-loading="mainCateLoader" shadow="never" header="选择管理分类">
         <el-cascader
           v-model="selectedMainCategory"
           :options="mainCategory"
@@ -38,7 +38,7 @@
     </template>
     <template v-else>
       <div class="form-block-head clearfix">
-        <div class="block-head-hd">商品主类目</div>
+        <div class="block-head-hd">商品管理分类</div>
       </div>
       <div class="form-block-body">
         <el-breadcrumb separator-class="el-icon-arrow-right" class="inline">
@@ -442,7 +442,7 @@ export default {
       }
       this.loading = false
     },
-    // 递归主类目
+    // 递归管理分类
     deepMainCategory(item, cateNames) {
       cateNames.push(item.category_name)
       if (item.children) {
@@ -515,9 +515,11 @@ export default {
       this.skuData.skus.forEach((sku) => {
         skuMartix.push(sku.checked_sku)
       })
+      console.log('skuMartix:', skuMartix)
       const _specItmes = this.cartesianProductOf(...skuMartix)
       const cacheItems = {}
       console.log('specItems:', this.skuData.specItems)
+      console.log('this.skuData:', this.skuData)
       this.skuData.specItems.forEach((sitem) => {
         const itemSpecs = sitem.item_spec.map((k) => {
           return k.spec_value_id
@@ -527,7 +529,7 @@ export default {
       console.log('_specItmes:', _specItmes)
       console.log('cacheItems:', cacheItems)
       this.skuData.specItems = _specItmes.map((item) => {
-        // console.log('item:', item)
+        console.log('item:', item)
         const key = item.join('_')
         const temp = {
           sku_id: key,
@@ -546,13 +548,21 @@ export default {
           item_spec: cacheItems[key]
             ? cacheItems[key].item_spec
             : item.map((m, n) => {
-                const { sku_id, sku_value } = this.skuData.skus[n]
-                const fd = sku_value.find((sv) => sv.attribute_value_id == m)
+                let sub_sku_id, sub_fd;
+                this.skuData.skus.forEach(skuItem => {
+                  let fd = skuItem.sku_value.find((sv) => sv.attribute_value_id == m)
+                  if (fd) {
+                    sub_fd = fd
+                    sub_sku_id = skuItem.sku_id
+                  }
+                })
+                // const { sku_id, sku_value } = this.skuData.skus[n]
+                // const fd = sku_value.find((sv) => sv.attribute_value_id == m)
                 return {
-                  spec_id: sku_id,
+                  spec_id: sub_sku_id,
                   spec_value_id: m,
-                  spec_value_name: fd.attribute_value,
-                  spec_custom_value_name: fd.custom_attribute_value
+                  spec_value_name: sub_fd.attribute_value,
+                  spec_custom_value_name: sub_fd.custom_attribute_value
                 }
               })
         }
@@ -585,34 +595,50 @@ export default {
       console.log(this.skuData.specImages)
     },
     cartesianProductOf() {
-      return Array.prototype.reduce.call(
+      var result = Array.prototype.reduce.call(
         arguments,
         function (a, b) {
           var ret = []
-          a.forEach(function (a) {
-            b.forEach(function (b) {
-              ret.push(a.concat([b]))
+          if (b.length > 0) {
+            a.forEach(function (a) {
+              b.forEach(function (b) {
+                ret.push(a.concat([b]))
+              })
             })
-          })
+          } else {
+            a[0].length ? ret.push(...a) : ret = [[]];
+          }
           return ret
         },
-        [[]]
-      )
+        [[]])
+      if (result.length === 1 && result[0].length === 0) {
+        result = []
+      }
+      return result
     },
     //
     getSpecName(keys) {
       const specNames = []
+      var fd; 
       keys.forEach((key, index) => {
-        const fd = this.skuData.itemSpecList[index].attribute_values.list.find(
-          (item) => item.attribute_value_id == key
-        )
-        if (fd) {
-          specNames.push(fd.custom_attribute_value || fd.attribute_value)
-        }
+        this.skuData.itemSpecList.forEach(outerItem => {
+          var sub_fd = outerItem.attribute_values.list.find(
+            (item) => item.attribute_value_id == key
+          )
+          if (sub_fd) {
+            fd = sub_fd
+          }
+        })
+        // const fd = this.skuData.itemSpecList[index].attribute_values.list.find(
+        //   (item) => item.attribute_value_id == key
+        // )
+        // if (fd) {
+        specNames.push(fd.custom_attribute_value || fd.attribute_value)
+        // }
       })
       return specNames.join(' ')
     },
-    // 获取主类目
+    // 获取管理分类
     async getMainCategory() {
       const res = await getCategory({ is_main_category: true })
       const category = res.data.data
@@ -632,7 +658,7 @@ export default {
       deepMainCategory(category, this.mainCategory)
       this.mainCateLoader = false
     },
-    // 选择主类目
+    // 选择管理分类
     async handleCategoryChange(val) {
       const res = await getCategoryInfo(val[val.length - 1])
       const detail = res.data.data
@@ -770,11 +796,27 @@ export default {
           const specItems = this.skuData.specItems.map((item, index) => {
             const skuIds = item.sku_id.split('_')
             const itemSpec = []
-            this.skuData.skus.forEach((m, n) => {
-              const t = m.sku_value.find((k) => k.attribute_value_id == skuIds[n])
+            // this.skuData.skus.forEach((m, n) => {
+            //   const t = m.sku_value.find((k) => k.attribute_value_id == skuIds[n])
+            //   itemSpec.push({
+            //     spec_id: m.sku_id,
+            //     spec_value_id: skuIds[n],
+            //     spec_value_name: t.attribute_value,
+            //     spec_custom_value_name: t.custom_attribute_value
+            //   })
+            // })
+            skuIds.forEach(outer_m => {
+              let m, t;
+              this.skuData.skus.forEach(sub_m => {
+                let sub_t = sub_m.sku_value.find((k) => k.attribute_value_id == outer_m)
+                if (sub_t) {
+                  t = sub_t
+                  m = sub_m
+                }
+              })
               itemSpec.push({
                 spec_id: m.sku_id,
-                spec_value_id: skuIds[n],
+                spec_value_id: outer_m,
                 spec_value_name: t.attribute_value,
                 spec_custom_value_name: t.custom_attribute_value
               })

@@ -86,7 +86,7 @@ export default {
     },
     {
       path: 'marketing/apply/registrationactivity',
-      name: `报名活动`,
+      name: `全部活动`,
       component: () => import('@/view/member/selfservice/registrationactivity'),
       children: [
         {

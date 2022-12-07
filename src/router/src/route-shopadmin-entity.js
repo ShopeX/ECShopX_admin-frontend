@@ -49,7 +49,7 @@ export default {
     {
       path: 'rate',
       name: `商品评价`,
-      component: () => import('@/view/mall/trade/rate/list')
+      component: () => import('@/view/goods/rate')
     },
     {
       path: 'goodsbrand',

@@ -1,29 +1,19 @@
 <template>
-  <el-tabs
-    v-model="activeName"
-    type="card"
-    @tab-click="handleClick"
-  >
-    <el-tab-pane
-      v-for="(item, index) in tabList"
-      :key="index"
-      :label="item.name"
-      :name="item.activeName"
-    >
-      <general
-        v-if="activeName === 'first'"
-        :get-status="general_status"
-      />
-      <sale-member-card
-        v-if="activeName === 'third'"
-        :get-status="sale_member_card"
-      />
-      <point
-        v-if="activeName === 'fourth'"
-        :get-status="point"
-      />
-    </el-tab-pane>
-  </el-tabs>
+  <div>
+    <SpPlatformTip h5 app alipay />
+    <el-tabs v-model="activeName" type="card" @tab-click="handleClick">
+      <el-tab-pane
+        v-for="(item, index) in tabList"
+        :key="index"
+        :label="item.name"
+        :name="item.activeName"
+      >
+        <general v-if="activeName === 'first'" :get-status="general_status" />
+        <sale-member-card v-if="activeName === 'third'" :get-status="sale_member_card" />
+        <point v-if="activeName === 'fourth'" :get-status="point" />
+      </el-tab-pane>
+    </el-tabs>
+  </div>
 </template>
 
 <script>
@@ -37,7 +27,7 @@ export default {
     saleMemberCard,
     point
   },
-  data () {
+  data() {
     return {
       activeName: 'first',
       general_status: true,
@@ -51,7 +41,7 @@ export default {
       ]
     }
   },
-  mounted () {
+  mounted() {
     if (this.$route.query.name) {
       this.activeName = this.$route.query.name
     }
@@ -74,7 +64,7 @@ export default {
   },
   methods: {
     //充值送钱
-    handleClick () {
+    handleClick() {
       if (this.activeName === 'first') {
         this.general_status = true
         this.distributor = false

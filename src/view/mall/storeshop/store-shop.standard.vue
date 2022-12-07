@@ -26,6 +26,7 @@
 </style>
 <template>
   <div class="">
+    <SpPlatformTip h5 app alipay />
     <SpFilterForm :model="formData" @onSearch="onSearch" @onReset="onSearch">
       <SpFilterFormItem prop="distributor_id" label="店铺:">
         <SpSelectShop

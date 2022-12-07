@@ -1,11 +1,6 @@
 <template>
-  <section
-    v-if="name === 'imgHotzone'"
-    class="section"
-  >
-    <div class="section-header with-border">
-      设置
-    </div>
+  <section v-if="name === 'imgHotzone'" class="section">
+    <div class="section-header with-border">设置</div>
     <div class="section-body">
       <el-form label-width="100px">
         <el-form-item label="标题">
@@ -15,29 +10,18 @@
           <el-input v-model="base.subtitle" />
         </el-form-item>
         <el-form-item label="组件间距">
-          <el-switch
-            v-model="base.padded"
-            active-color="#27cc6a"
-            inactive-color="#efefef"
-          />
+          <el-switch v-model="base.padded" active-color="#27cc6a" inactive-color="#efefef" />
         </el-form-item>
         <el-form-item label="展示图">
           <div class="setting-item slider">
-            <div
-              v-if="config.imgUrl"
-              class="upload-box"
-            >
+            <div v-if="config.imgUrl" class="upload-box">
               <img
                 :src="wximageurl + config.imgUrl"
                 class="banner-uploader"
                 @click="handleImgChange"
               >
             </div>
-            <div
-              v-else
-              class="banner-uploader"
-              @click="handleImgChange"
-            >
+            <div v-else class="banner-uploader" @click="handleImgChange">
               <i class="iconfont icon-camera" />上传图片
             </div>
           </div>
@@ -66,53 +50,22 @@
                   }
                 "
               >
-                <el-radio :label="0">
-                  选择路径
-                </el-radio>
-                <el-radio :label="1">
-                  H5链接
-                </el-radio>
+                <el-radio :label="0"> 选择路径 </el-radio>
+                <el-radio :label="1"> H5链接 </el-radio>
               </el-radio-group>
-              <div
-                v-if="item.linkType == 0"
-                class="goods-select"
-                @click="handleGoodsChange(index)"
-              >
-                <div
-                  v-if="item.id"
-                  class="link-content"
-                >
-                  <template v-if="item.linkPage === 'goods'">
-                    商品：
-                  </template>
-                  <template v-if="item.linkPage === 'category'">
-                    分类：
-                  </template>
-                  <template v-if="item.linkPage === 'article'">
-                    文章：
-                  </template>
-                  <template v-if="item.linkPage === 'planting'">
-                    软文：
-                  </template>
-                  <template v-if="item.linkPage === 'link'">
-                    页面：
-                  </template>
-                  <template v-if="item.linkPage === 'marketing'">
-                    营销：
-                  </template>
-                  <template v-if="item.linkPage === 'custom_page'">
-                    自定义页面：
-                  </template>
+              <div v-if="item.linkType == 0" class="goods-select" @click="handleGoodsChange(index)">
+                <div v-if="item.id" class="link-content">
+                  <template v-if="item.linkPage === 'goods'"> 商品： </template>
+                  <template v-if="item.linkPage === 'category'"> 分类： </template>
+                  <template v-if="item.linkPage === 'article'"> 文章： </template>
+                  <template v-if="item.linkPage === 'planting'"> 软文： </template>
+                  <template v-if="item.linkPage === 'link'"> 页面： </template>
+                  <template v-if="item.linkPage === 'marketing'"> 营销： </template>
+                  <template v-if="item.linkPage === 'custom_page'"> 自定义页面： </template>
                   {{ item.title }}
                 </div>
-                <div
-                  v-else
-                  class="content-center"
-                >
-                  <i
-                    class="iconfont icon-link"
-                    @click="handleGoodsChange(index)"
-                  />设置路径
+                <div v-else class="content-center">
+                  <i class="iconfont icon-link" @click="handleGoodsChange(index)" />设置路径
                 </div>
               </div>
               <div v-else>
@@ -145,7 +98,7 @@ export default {
       default: {}
     }
   },
-  data () {
+  data() {
     return {
       name: '',
       base: {},
@@ -157,7 +110,7 @@ export default {
   watch: {
     res: {
       deep: true,
-      handler (value) {
+      handler(value) {
         console.log('img hotzone watch...')
         if (value) {
           this.setData(value)
@@ -165,11 +118,11 @@ export default {
       }
     }
   },
-  mounted () {
+  mounted() {
     this.setData(this.res)
   },
   methods: {
-    setData (val) {
+    setData(val) {
       this.name = val.name
       this.base = val.base
       this.config = val.config
@@ -189,13 +142,13 @@ export default {
         })
       }
     },
-    handleImgChange (index) {
+    handleImgChange(index) {
       this.$emit('bindImgs', index)
     },
-    handleGoodsChange (index) {
+    handleGoodsChange(index) {
       this.$emit('bindLinks', index)
     },
-    handleAdd (item) {
+    handleAdd(item) {
       // console.log('handle add:',item)
       // this.data.push({
       //   ...item,
@@ -206,7 +159,7 @@ export default {
       //   linkUrl: ''
       // })
     },
-    handleChange (zone) {
+    handleChange(zone) {
       console.log('handle change, ', zone)
       zone.forEach((item, index) => {
         const obj = {
@@ -223,13 +176,13 @@ export default {
       })
       this.$emit('onHotZoneChange', this.data)
     },
-    handleRemove (index) {
+    handleRemove(index) {
       this.data.splice(index, 1)
     },
-    onInputChange () {
+    onInputChange() {
       this.$emit('onHotZoneChange', this.data)
     },
-    onChangeLinkType (val, index) {
+    onChangeLinkType(val, index) {
       this.$emit('onChangeLinkType', val, index)
     }
   }

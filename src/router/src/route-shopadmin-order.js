@@ -71,23 +71,18 @@ export default {
     {
       path: 'logistics',
       name: `物流公司`,
-      component: () => import('@/view/mall/trade/logistics/normal')
-    },
-    {
-      path: 'adapay_trades',
-      name: '分账',
-      component: () => import('@/view/mall/sub_account/sub_account'),
+      // component: () => import('@/view/mall/trade/logistics/normal')
+      component: () => import('@/view/mall/trade/logistics/index'),
       children: [
         {
-          path: 'detail/:order_id',
-          component: () => import('@/view/mall/sub_account/detail')
+          path: 'addziti/:id?',
+          component: () => import('@/view/mall/trade/logistics/add-ziti'),
+          beforeEnter: ({ params, meta }, from, next) => {
+            meta.title = params.id ? '编辑自提点' : '新增自提点'
+            next()
+          }
         }
       ]
-    },
-    {
-      path: 'adapay_cash',
-      name: '提现',
-      component: () => import('@/view/mall/withdraw/withdraw')
     },
     {
       path: 'subdistrict',

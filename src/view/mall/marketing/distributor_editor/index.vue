@@ -24,7 +24,7 @@
 
 <template>
   <div class="distributor-form">
-    <!-- baseForm: {{ baseForm }} -->
+    <!-- baseForm: {{ baseForm.distribution_type }} -->
     <el-card v-if="is_normal" class="el-card--normal" header="店铺类型">
       <el-form ref="form" label-width="120px" :model="baseForm" :rules="rules">
         <el-form-item label="店铺类型" prop="distribution_type">
@@ -94,7 +94,7 @@
       </el-form>
     </el-card>
 
-    <ReturnGoodsForm ref="returnGoodsForm" />
+    <ReturnGoodsForm ref="returnGoodsFormRef" />
 
     <IntroduceForm ref="introduceFormRef" />
 
@@ -274,8 +274,22 @@ export default {
       if (distributor_id || IS_DISTRIBUTOR) {
         const res = await this.$api.marketing.getDistributorInfo({ distributor_id })
         const [startTime, endTime] = res.hour.split('-')
-        const [offline_startTime, offline_endTime] = res.offline_aftersales_address.hours ? res.offline_aftersales_address.hours.split('-') : ['' , '']
-        const [area_code, mobile] = res.offline_aftersales_address.mobile ? res.offline_aftersales_address.mobile.split('-') : ['' , '']
+        const [offline_startTime, offline_endTime] = res.offline_aftersales_address.hours
+          ? res.offline_aftersales_address.hours.split('-')
+          : ['', '']
+        let area_code = ''
+        let mobile = ''
+        if (
+          res.offline_aftersales_address.mobile &&
+          res.offline_aftersales_address.mobile.indexOf('-') > -1
+        ) {
+          [area_code, mobile] = res.offline_aftersales_address.mobile
+            ? res.offline_aftersales_address.mobile.split('-')
+            : ['', '']
+        } else {
+          mobile = res.offline_aftersales_address.mobile
+        }
+
         this.baseForm = {
           ...this.baseForm,
           distribution_type: res.distribution_type,
@@ -319,7 +333,7 @@ export default {
             mobile: mobile,
             hours: res.offline_aftersales_address.hours,
             startTime: offline_startTime,
-            endTime: offline_endTime,
+            endTime: offline_endTime
           }
         }
         await this.remoteMerchantList(res.merchant_name)
@@ -339,7 +353,7 @@ export default {
 
       console.log(this.zitiList.map((item) => item.id))
       console.log(data)
-      
+
       if (this.distributor_id) {
         const ids = data.map((item) => item.id)
         await this.$api.pickuplocation.bindZitiLocation({
@@ -385,7 +399,7 @@ export default {
       this.submitLoading = true
       const { distributor_id, distributor_type } = this.$route.query
       const aftersales = this.baseForm.offline_aftersales_address
-      const aftersales_regions =  getRegionNameById(aftersales.regions_id, district)
+      const aftersales_regions = getRegionNameById(aftersales.regions_id, district)
       const params = {
         ...this.baseForm,
         regions: getRegionNameById(this.baseForm.regions_id, district),
@@ -397,7 +411,10 @@ export default {
           province: aftersales_regions[0],
           city: aftersales_regions[1],
           area: aftersales_regions[2]
-        }
+        },
+        offline_aftersales_distributor_id: this.$refs['returnGoodsFormRef'].finderData.map(
+          (item) => item.distributor_id
+        )
       }
       if (this.baseForm.distribution_type == 0) {
         delete params.merchant_id

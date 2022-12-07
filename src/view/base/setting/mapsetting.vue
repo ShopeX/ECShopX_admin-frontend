@@ -1,5 +1,6 @@
 <template>
   <div class="map-setting">
+    <SpPlatformTip h5 app alipay />
     <el-tabs v-model="activeName" type="card">
       <el-tab-pane
         v-for="(item, index) in tabList"

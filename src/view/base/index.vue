@@ -539,17 +539,13 @@
 }
 </style>
 <template>
-  <div
-    v-if="bool"
-    class="main"
-  >
+  <div v-if="bool" class="main">
     <!-- v-if="activateInfo.due_reminder" -->
-    <div
-      v-if="activateInfo.due_reminder"
-      class="to-become"
-    >
+    <div v-if="activateInfo.due_reminder" class="to-become">
       <div class="text-icon">
-        <i class="el-icon-warning icon-wr" /><span>店铺使用期限即将到期，如需继续使用请点击购买订购产品</span>
+        <i class="el-icon-warning icon-wr" /><span
+          >店铺使用期限即将到期，如需继续使用请点击购买订购产品</span
+        >
       </div>
       <!-- <div class="btn">
         <el-button @click="handleBuy" size="mini" type="danger"
@@ -576,36 +572,18 @@
             <template v-if="!isBind">
               <div class="unbind-box">
                 <div class="content-center">
-                  <div
-                    v-if="activateInfo && !VUE_APP_FREE"
-                    class="validity-period"
-                  >
+                  <div v-if="activateInfo && !VUE_APP_FREE" class="validity-period">
                     {{ activateInfo.expired_at | datetime('YYYY-MM-DD HH:mm:ss') }}
                     到期
                   </div>
                   <i class="iconfont icon-exclamation-triangle" />
                   <p>您尚未绑定认证服务号，请先绑定!</p>
-                  <el-button
-                    type="primary"
-                    @click="handleBind"
-                  >
-                    去绑定
-                  </el-button>
+                  <el-button type="primary" @click="handleBind"> 去绑定 </el-button>
                 </div>
-                <div
-                  v-if="VERSION_PLATFORM && VUE_APP_FREE"
-                  class="bot-tips"
-                >
+                <div v-if="VERSION_PLATFORM && VUE_APP_FREE" class="bot-tips">
                   <div>当前版本：{{ versionObj.dep_product_name }}</div>
-                  <div
-                    v-if="versionObj.upgrade_status"
-                    @click="dialogChange"
-                  >
-                    有新版本待更新
-                  </div>
-                  <div v-else>
-                    已是最新版本
-                  </div>
+                  <div v-if="versionObj.upgrade_status" @click="dialogChange">有新版本待更新</div>
+                  <div v-else>已是最新版本</div>
                 </div>
               </div>
             </template>
@@ -616,34 +594,20 @@
                   class="logo"
                   :src="
                     authorizerData.head_img ||
-                      'https://fakeimg.pl/70x70/EFEFEF/CCC/?text=brand&font=lobster'
+                    'https://fakeimg.pl/70x70/EFEFEF/CCC/?text=brand&font=lobster'
                   "
                 >
                 <div class="name">
                   {{ authorizerData.principal_name }}
                 </div>
                 <div class="operate">
-                  <el-button
-                    v-if="isBind"
-                    type="default"
-                    size="mini"
-                    @click="handleBind"
-                  >
+                  <el-button v-if="isBind" type="default" size="mini" @click="handleBind">
                     更新授权
                   </el-button>
-                  <el-button
-                    v-else
-                    type="default"
-                    size="mini"
-                    @click="handleBind"
-                  >
+                  <el-button v-else type="default" size="mini" @click="handleBind">
                     去授权
                   </el-button>
-                  <el-button
-                    type="primary"
-                    size="mini"
-                    @click="accountactivate"
-                  >
+                  <el-button type="primary" size="mini" @click="accountactivate">
                     账号续费
                   </el-button>
                 </div>
@@ -663,42 +627,24 @@
                   <i class="iconfont icon-bell" />VUE版本:
                   {{ activateInfo.vue_ecshopx_verion }}
                 </div>
-                <div
-                  v-if="activateInfo && !VUE_APP_FREE"
-                  class="validity-period"
-                >
+                <div v-if="activateInfo && !VUE_APP_FREE" class="validity-period">
                   <i class="iconfont icon-clock" />{{
                     activateInfo.expired_at | datetime('YYYY-MM-DD HH:mm:ss')
                   }}
                   到期
                 </div>
-                <div
-                  v-if="VERSION_PLATFORM && VUE_APP_FREE"
-                  class="bot-tips"
-                >
+                <div v-if="VERSION_PLATFORM && VUE_APP_FREE" class="bot-tips">
                   <div>当前版本：{{ versionObj.dep_product_name }}</div>
-                  <div
-                    v-if="versionObj.upgrade_status"
-                    @click="dialogChange"
-                  >
-                    有新版本待更新
-                  </div>
-                  <div v-else>
-                    已是最新版本
-                  </div>
+                  <div v-if="versionObj.upgrade_status" @click="dialogChange">有新版本待更新</div>
+                  <div v-else>已是最新版本</div>
                 </div>
               </section>
             </template>
           </el-col>
           <el-col :span="17">
-            <section
-              v-loading="userloading"
-              class="section-card realtime-statics"
-            >
+            <section v-loading="userloading" class="section-card realtime-statics">
               <div class="section-card-header">
-                <div class="section-card-title">
-                  实时概况
-                </div>
+                <div class="section-card-title">实时概况</div>
                 <div class="header-small">
                   更新时间：{{ (Date.now() / 1000) | datetime('YYYY-MM-DD HH:mm:ss') }}
                 </div>
@@ -709,35 +655,22 @@
 									</ul> -->
               </div>
               <div>
-                <el-row
-                  class="analysis"
-                  :gutter="20"
-                >
+                <el-row class="analysis" :gutter="20">
                   <el-col :span="12">
                     <div class="view-flex">
                       <div class="view-flex-item">
-                        <div class="label">
-                          实付金额(元)
-                        </div>
-                        <div
-                          v-if="staticsData"
-                          class="real-data"
-                        >
+                        <div class="label">实付金额(元)</div>
+                        <div v-if="staticsData" class="real-data">
                           {{ (staticsData.today_data.real_payed_fee / 100) | keepTwoDecimalFull }}
                         </div>
-                        <div
-                          v-if="staticsData"
-                          class="history-data"
-                        >
+                        <div v-if="staticsData" class="history-data">
                           昨日：{{
                             (staticsData.yesterday_data.real_payed_fee / 100) | keepTwoDecimalFull
                           }}
                         </div>
                       </div>
                       <div class="view-flex-item">
-                        <div class="label">
-                          支付订单数
-                        </div>
+                        <div class="label">支付订单数</div>
                         <div class="real-data">
                           {{ staticsData && staticsData.today_data.real_payed_orders }}
                         </div>
@@ -750,9 +683,7 @@
                   <el-col :span="12">
                     <div class="view-flex">
                       <div class="view-flex-item">
-                        <div class="label">
-                          实付会员数
-                        </div>
+                        <div class="label">实付会员数</div>
                         <div class="real-data">
                           {{ staticsData && staticsData.today_data.real_payed_members }}
                         </div>
@@ -761,19 +692,11 @@
                         </div>
                       </div>
                       <div class="view-flex-item">
-                        <div class="label">
-                          客单价(元)
-                        </div>
-                        <div
-                          v-if="staticsData"
-                          class="real-data"
-                        >
+                        <div class="label">客单价(元)</div>
+                        <div v-if="staticsData" class="real-data">
                           {{ (staticsData.today_data.real_atv / 100) | keepTwoDecimalFull }}
                         </div>
-                        <div
-                          v-if="staticsData"
-                          class="history-data"
-                        >
+                        <div v-if="staticsData" class="history-data">
                           昨日：{{
                             (staticsData.yesterday_data.real_atv / 100) | keepTwoDecimalFull
                           }}
@@ -782,28 +705,17 @@
                     </div>
                   </el-col>
                 </el-row>
-                <el-row
-                  class="analysis"
-                  :gutter="20"
-                >
+                <el-row class="analysis" :gutter="20">
                   <el-col :span="12">
                     <div class="view-flex">
                       <div class="view-flex-item">
-                        <div class="label">
-                          退款金额(元)
-                        </div>
-                        <div
-                          v-if="staticsData"
-                          class="real-data"
-                        >
+                        <div class="label">退款金额(元)</div>
+                        <div v-if="staticsData" class="real-data">
                           {{
                             (staticsData.today_data.real_refunded_fee / 100) | keepTwoDecimalFull
                           }}
                         </div>
-                        <div
-                          v-if="staticsData"
-                          class="history-data"
-                        >
+                        <div v-if="staticsData" class="history-data">
                           昨日：{{
                             (staticsData.yesterday_data.real_refunded_fee / 100)
                               | keepTwoDecimalFull
@@ -811,9 +723,7 @@
                         </div>
                       </div>
                       <div class="view-flex-item">
-                        <div class="label">
-                          售后订单数
-                        </div>
+                        <div class="label">售后订单数</div>
                         <div class="real-data">
                           {{ staticsData && staticsData.today_data.real_aftersale_count }}
                         </div>
@@ -856,41 +766,25 @@
         </el-row>
         <el-row :gutter="20">
           <el-col :span="10">
-            <section
-              v-loading="userloading"
-              class="section-card"
-            >
+            <section v-loading="userloading" class="section-card">
               <div class="section-card-header">
-                <div class="section-card-title">
-                  重要提醒
-                </div>
+                <div class="section-card-title">重要提醒</div>
               </div>
               <div class="notices">
                 <div class="notices-group">
-                  <div class="subtitle">
-                    订单相关
-                  </div>
+                  <div class="subtitle">订单相关</div>
                   <el-row>
-                    <el-col
-                      class="notice-item"
-                      :span="12"
-                    >
+                    <el-col class="notice-item" :span="12">
                       <router-link to="/order/entitytrade/tradenormalorders?tab=notship">
                         待发货订单：{{ staticsData && staticsData.notice_data.wait_delivery_count }}
                       </router-link>
                     </el-col>
-                    <el-col
-                      class="notice-item"
-                      :span="12"
-                    >
+                    <el-col class="notice-item" :span="12">
                       <router-link to="order/entitytrade/aftersaleslist?aftersales_status=0">
                         待处理退款：{{ staticsData && staticsData.notice_data.aftersales_count }}
                       </router-link>
                     </el-col>
-                    <el-col
-                      class="notice-item"
-                      :span="12"
-                    >
+                    <el-col class="notice-item" :span="12">
                       <router-link to="/order/Refunderrorlogs">
                         退款失败待处理：{{
                           staticsData && staticsData.notice_data.refund_errorlogs_count
@@ -900,14 +794,9 @@
                   </el-row>
                 </div>
                 <div class="notices-group">
-                  <div class="subtitle">
-                    商品相关
-                  </div>
+                  <div class="subtitle">商品相关</div>
                   <el-row>
-                    <el-col
-                      class="notice-item"
-                      :span="12"
-                    >
+                    <el-col class="notice-item" :span="12">
                       <router-link to="/entity/goods/goodsphysical?tab=second">
                         库存预警商品：{{
                           staticsData && staticsData.notice_data.warning_goods_count
@@ -916,28 +805,17 @@
                     </el-col>
                   </el-row>
                 </div>
-                <div
-                  v-if="!VERSION_IN_PURCHASE"
-                  class="notices-group"
-                >
-                  <div class="subtitle">
-                    营销相关
-                  </div>
+                <div v-if="!VERSION_IN_PURCHASE" class="notices-group">
+                  <div class="subtitle">营销相关</div>
                   <el-row>
-                    <el-col
-                      class="notice-item"
-                      :span="12"
-                    >
+                    <el-col class="notice-item" :span="12">
                       <router-link to="/marketing/marketingseckill?status=in_sale">
                         进行中的秒杀：{{
                           staticsData && staticsData.notice_data.started_seckill_count
                         }}
                       </router-link>
                     </el-col>
-                    <el-col
-                      class="notice-item"
-                      :span="12"
-                    >
+                    <el-col class="notice-item" :span="12">
                       <router-link to="/marketing/groupsindex?activeName=third">
                         进行中的拼团：{{
                           staticsData && staticsData.notice_data.started_gtoups_count
@@ -958,10 +836,7 @@
                   : 'section-card chart-statics'
               "
             >
-              <canvas
-                id="canvas"
-                height="120"
-              />
+              <canvas id="canvas" height="120" />
             </section>
           </el-col>
         </el-row>
@@ -969,9 +844,7 @@
           <el-col :span="24">
             <section class="section-card">
               <div class="section-card-header">
-                <div class="section-card-title">
-                  常用功能
-                </div>
+                <div class="section-card-title">常用功能</div>
               </div>
               <div class="quick-link clearfix">
                 <router-link
@@ -990,7 +863,7 @@
             </section>
           </el-col>
         </el-row>
-        <el-row
+        <!-- <el-row
           v-if="system_is_saas == 'false'"
           :gutter="20"
         >
@@ -1081,7 +954,7 @@
               </el-descriptions>
             </section>
           </el-col>
-        </el-row>
+        </el-row> -->
       </el-col>
       <el-col :span="VERSION_PLATFORM && VUE_APP_FREE ? 5 : 4">
         <!-- <section
@@ -1122,32 +995,16 @@
           <div class="sl-img-hd">扫码体验DEMO</div>
           <img :src="img.demo" alt="" class="img-demo" />
         </section> -->
-        <section
-          v-if="VERSION_PLATFORM && VUE_APP_FREE"
-          class="section-card fn-b-20 sound-img"
-        >
-          <div
-            class="sound-btn"
-            @click="openUrl('https://support.qq.com/product/386118')"
-          />
-          <img
-            :src="img.sound"
-            alt=""
-            class="img-demo"
-          >
+        <section v-if="VERSION_PLATFORM && VUE_APP_FREE" class="section-card fn-b-20 sound-img">
+          <div class="sound-btn" @click="openUrl('https://support.qq.com/product/386118')" />
+          <img :src="img.sound" alt="" class="img-demo">
         </section>
         <section
           v-if="VERSION_PLATFORM && VUE_APP_FREE"
           class="section-card fn-b-20 produce-dynamic"
         >
-          <el-row
-            type="flex"
-            justify="space-around"
-            class="produce-hd"
-          >
-            <el-col class="title">
-              <i class="iconfont icon-dongtai-01" />产品动态
-            </el-col>
+          <el-row type="flex" justify="space-around" class="produce-hd">
+            <el-col class="title"> <i class="iconfont icon-dongtai-01" />产品动态 </el-col>
             <el-col class="more">
               <span @click="openUrl(linkList.version_url)">更多</span>
             </el-col>
@@ -1159,17 +1016,8 @@
             align="middle"
             class="row-link"
           >
-            <el-col
-              v-if="index == 0"
-              :span="4"
-              class="news"
-            >
-              NEW
-            </el-col>
-            <el-col
-              :span="20"
-              :class="index == 0 ? 'overflows' : 'margins overflows'"
-            >
+            <el-col v-if="index == 0" :span="4" class="news"> NEW </el-col>
+            <el-col :span="20" :class="index == 0 ? 'overflows' : 'margins overflows'">
               <span @click="openUrl(item.url)">{{ item.title }}</span>
             </el-col>
           </el-row>
@@ -1178,14 +1026,8 @@
           v-if="VERSION_PLATFORM && VUE_APP_FREE"
           class="section-card fn-b-20 produce-manual"
         >
-          <el-row
-            type="flex"
-            justify="space-around"
-            class="produce-hd"
-          >
-            <el-col class="title">
-              <i class="iconfont icon-caozuoshouce" />产品手册
-            </el-col>
+          <el-row type="flex" justify="space-around" class="produce-hd">
+            <el-col class="title"> <i class="iconfont icon-caozuoshouce" />产品手册 </el-col>
             <el-col class="more">
               <span @click="openUrl(linkList.question_url)">查看</span>
             </el-col>
@@ -1196,14 +1038,8 @@
           class="section-card fn-b-20 sl-img"
           :style="'background:  url(' + img.bcg_2 + ')'"
         >
-          <div class="sl-img-hd">
-            <i class="el-icon-user-solid" />售前客户经理
-          </div>
-          <img
-            :src="img.customerService"
-            alt=""
-            class="img-demo"
-          >
+          <div class="sl-img-hd"><i class="el-icon-user-solid" />售前客户经理</div>
+          <img :src="img.customerService" alt="" class="img-demo">
         </section>
       </el-col>
     </el-row>
@@ -1213,9 +1049,7 @@
       :visible.sync="dialogIsShow"
       :show-close="false"
     >
-      <div slot="title">
-        版本更新 {{ versionObj.version }}
-      </div>
+      <div slot="title">版本更新 {{ versionObj.version }}</div>
       <div class="version-content">
         <div class="update-tip">
           {{ dialogContent }}<a @click="openUrl(linkList.version_url)">具体升级内容，请查看</a>
@@ -1229,20 +1063,10 @@
         </div>
       </div>
       <div slot="footer">
-        <el-button
-          type="primary"
-          :disabled="updateDisabled"
-          @click="dialogConfirmChange"
-        >
+        <el-button type="primary" :disabled="updateDisabled" @click="dialogConfirmChange">
           更 新
         </el-button>
-        <el-button
-          plain
-          :disabled="cancelDisabled"
-          @click="dialogCancelChange"
-        >
-          取 消
-        </el-button>
+        <el-button plain :disabled="cancelDisabled" @click="dialogCancelChange"> 取 消 </el-button>
       </div>
     </el-dialog>
     <!-- <el-dialog class="industry-dialog" title="提示" :visible="waitingDialog" :show-close="false" :close-on-press-escape="false" :close-on-click-modal="false">
@@ -1253,10 +1077,7 @@
       </span>
     </el-dialog> -->
   </div>
-  <div
-    v-else
-    class="main"
-  >
+  <div v-else class="main">
     <!-- <div>
       <el-button size="medium" @click="bool = true">暂不订购</el-button>
     </div> -->
@@ -1266,95 +1087,45 @@
     </div>
     <div class="buy">
       <div class="buy-item section-card">
-        <div
-          class="buy-item-hd buy-item-hd_s"
-          :style="'background:  url(' + img.try_1 + ')'"
-        >
+        <div class="buy-item-hd buy-item-hd_s" :style="'background:  url(' + img.try_1 + ')'">
           <h3>试用版</h3>
           <span>免费试用15天</span>
         </div>
         <div class="buy-item-ft">
           <div class="buy-item-ft-text">
-            <img
-              :src="img.suo"
-              alt=""
-              class="suo"
-            >
+            <img :src="img.suo" alt="" class="suo">
             <p>当前版本为免费试用版本</p>
             <p>升级解锁享受更多服务</p>
           </div>
           <div class="buy-item-btn">
-            <el-button
-              size="medium"
-              disabled
-            >
+            <el-button size="medium" disabled>
               {{ activateInfo.source == 'demo' ? '使用中' : '已体验' }}
             </el-button>
           </div>
         </div>
       </div>
       <div class="buy-item section-card">
-        <div
-          class="buy-item-hd buy-item-hd_b"
-          :style="'background:  url(' + img.biaozun + ')'"
-        >
+        <div class="buy-item-hd buy-item-hd_b" :style="'background:  url(' + img.biaozun + ')'">
           <h3>商城</h3>
         </div>
         <div class="buy-item-ft">
           <div>
             <p>适用于搭建线上社交零售商城的商家,快速开店</p>
-            <p>
-              <img
-                :src="img.check"
-                alt=""
-                class="check-icon"
-              >小程序、公众号、PC一体化商城
-            </p>
-            <p>
-              <img
-                :src="img.check"
-                alt=""
-                class="check-icon"
-              >种草粉丝内容点赞、分享传播
-            </p>
-            <p>
-              <img
-                :src="img.check"
-                alt=""
-                class="check-icon"
-              >粉丝、员工、网红分销卖货
-            </p>
-            <p>
-              <img
-                :src="img.check"
-                alt=""
-                class="check-icon"
-              >拼团/砍价/秒杀丰富的营销玩法
-            </p>
-            <p>
-              <img
-                :src="img.check"
-                alt=""
-                class="check-icon"
-              >直播预约、点赞、分享、互动
-            </p>
+            <p><img :src="img.check" alt="" class="check-icon">小程序、公众号、PC一体化商城</p>
+            <p><img :src="img.check" alt="" class="check-icon">种草粉丝内容点赞、分享传播</p>
+            <p><img :src="img.check" alt="" class="check-icon">粉丝、员工、网红分销卖货</p>
+            <p><img :src="img.check" alt="" class="check-icon">拼团/砍价/秒杀丰富的营销玩法</p>
+            <p><img :src="img.check" alt="" class="check-icon">直播预约、点赞、分享、互动</p>
           </div>
           <div>
-            <el-button
-              size="medium"
-              type="danger"
-              @click="dingHandel('商城')"
-            >
+            <el-button size="medium" type="danger" @click="dingHandel('商城')">
               立即订购
             </el-button>
           </div>
         </div>
       </div>
       <div class="buy-item section-card">
-        <div
-          class="buy-item-hd buy-item-hd_l"
-          :style="'background:  url(' + img.liansuo + ')'"
-        >
+        <div class="buy-item-hd buy-item-hd_l" :style="'background:  url(' + img.liansuo + ')'">
           <div>
             <h3>连锁</h3>
           </div>
@@ -1363,48 +1134,16 @@
           <div>
             <p>适用于有门店的商家构建私域流量中心，打造门店&云店运营闭环，赋能实体门店业务</p>
             <p>
-              <img
-                :src="img.check"
-                alt=""
-                class="check-icon"
-              >
+              <img :src="img.check" alt="" class="check-icon">
               千店千面，门店运营线上化
             </p>
-            <p>
-              <img
-                :src="img.check"
-                alt=""
-                class="check-icon"
-              >实现门店差异化促销及服务
-            </p>
-            <p>
-              <img
-                :src="img.check"
-                alt=""
-                class="check-icon"
-              >门店导购拉新、服务、激励数字化
-            </p>
-            <p>
-              <img
-                :src="img.check"
-                alt=""
-                class="check-icon"
-              >建立门店触达私域用户渠道与方式
-            </p>
-            <p>
-              <img
-                :src="img.check"
-                alt=""
-                class="check-icon"
-              >多维度进行全链路经营数据跟踪
-            </p>
+            <p><img :src="img.check" alt="" class="check-icon">实现门店差异化促销及服务</p>
+            <p><img :src="img.check" alt="" class="check-icon">门店导购拉新、服务、激励数字化</p>
+            <p><img :src="img.check" alt="" class="check-icon">建立门店触达私域用户渠道与方式</p>
+            <p><img :src="img.check" alt="" class="check-icon">多维度进行全链路经营数据跟踪</p>
           </div>
           <div>
-            <el-button
-              size="medium"
-              type="danger"
-              @click="dingHandel('连锁')"
-            >
+            <el-button size="medium" type="danger" @click="dingHandel('连锁')">
               立即订购
             </el-button>
           </div>
@@ -1412,80 +1151,34 @@
       </div>
     </div>
 
-    <el-dialog
-      title=""
-      :visible.sync="dialogVisible"
-      width="580px"
-    >
-      <div
-        slot="title"
-        class="title"
-      >
-        申请订购版本
-      </div>
+    <el-dialog title="" :visible.sync="dialogVisible" width="580px">
+      <div slot="title" class="title">申请订购版本</div>
       <p class="title-span">
         您所提交的信息仅用于您的专属顾问与您沟通，不会透露给任何第三方机构或个人
       </p>
       <div>
-        <el-form
-          ref="dingInfo"
-          :model="dingInfo"
-          label-width="100px"
-          class="demo-dingInfo"
-        >
-          <el-form-item
-            label="订购版本"
-            prop="goods_name"
-          >
+        <el-form ref="dingInfo" :model="dingInfo" label-width="100px" class="demo-dingInfo">
+          <el-form-item label="订购版本" prop="goods_name">
             <span style="font-weight: bold">{{ dingInfo.goods_name }}</span>
           </el-form-item>
-          <el-form-item
-            label="姓名"
-            prop="call_name"
-          >
-            <el-input
-              v-model="dingInfo.call_name"
-              placeholder="请输入姓名"
-            />
+          <el-form-item label="姓名" prop="call_name">
+            <el-input v-model="dingInfo.call_name" placeholder="请输入姓名" />
           </el-form-item>
 
-          <el-form-item
-            label="性别"
-            prop="sex"
-          >
+          <el-form-item label="性别" prop="sex">
             <el-radio-group v-model="dingInfo.sex">
               <el-radio label="男" />
               <el-radio label="女" />
             </el-radio-group>
           </el-form-item>
-          <el-form-item
-            label="手机号码"
-            prop="mobile"
-          >
-            <el-input
-              v-model="dingInfo.mobile"
-              placeholder="请输入电话号码"
-            />
+          <el-form-item label="手机号码" prop="mobile">
+            <el-input v-model="dingInfo.mobile" placeholder="请输入电话号码" />
           </el-form-item>
         </el-form>
       </div>
-      <div
-        slot="footer"
-        class="dialog-footer"
-      >
-        <el-button
-          class="btn-ft"
-          @click="dialogVisible = false"
-        >
-          取 消
-        </el-button>
-        <el-button
-          class="btn-ft"
-          type="danger"
-          @click="submit"
-        >
-          确 定
-        </el-button>
+      <div slot="footer" class="dialog-footer">
+        <el-button class="btn-ft" @click="dialogVisible = false"> 取 消 </el-button>
+        <el-button class="btn-ft" type="danger" @click="submit"> 确 定 </el-button>
       </div>
     </el-dialog>
   </div>
@@ -1528,7 +1221,7 @@ const biaozun = require('@/assets/img/saas/biaozun.png')
 const sound = require('@/assets/img/saas/sound.jpg')
 
 export default {
-  data () {
+  data() {
     return {
       img: {
         phone,
@@ -1677,11 +1370,11 @@ export default {
   },
   methods: {
     ...mapMutations(['SET_PRODUCTION_CODE', 'SET_READ_LICENSE']),
-    dingHandel (type) {
+    dingHandel(type) {
       this.dialogVisible = true
       this.dingInfo.goods_name = type
     },
-    openUrl (url) {
+    openUrl(url) {
       if (url) {
         window.open(url, '_blank')
       } else {
@@ -1691,18 +1384,18 @@ export default {
         })
       }
     },
-    dialogChange () {
+    dialogChange() {
       this.dialogIsShow = true
       this.dialogContent =
         '本次更新包含小程序端更新，如您已对小程序进行开发可能会覆盖已经开发内容，请确认后更新！'
     },
-    dialogCancelChange () {
+    dialogCancelChange() {
       this.dialogIsShow = false
       this.updateDisabled = false
       this.cancelDisabled = false
       this.detectVersion()
     },
-    dialogConfirmChange () {
+    dialogConfirmChange() {
       this.dialogContent = '更新中'
       this.updateDisabled = true
       this.cancelDisabled = true
@@ -1718,19 +1411,19 @@ export default {
           this.cancelDisabled = false
         })
     },
-    systemChangelog () {
+    systemChangelog() {
       systemChangelog().then((res) => {
         let data = res.data.data
         this.linkList = data
       })
     },
-    detectVersion () {
+    detectVersion() {
       detectVersion().then((res) => {
         let data = res.data.data
         this.versionObj = data
       })
     },
-    submit () {
+    submit() {
       let obj = JSON.parse(JSON.stringify(this.dingInfo))
       ydleadsInfo(obj).then((res) => {
         this.$message({
@@ -1742,13 +1435,13 @@ export default {
         this.dingInfo = {}
       })
     },
-    toLink (link) {
+    toLink(link) {
       this.$router.push({ path: this.matchInternalRoute(link) })
     },
-    handleBuy () {
+    handleBuy() {
       this.bool = false
     },
-    handleBind () {
+    handleBind() {
       if (this.url) {
         var metadata = document.getElementsByTagName('meta')
         for (var i = 0; i < metadata.length; i++) {
@@ -1765,7 +1458,7 @@ export default {
         })
       }
     },
-    accountactivate () {
+    accountactivate() {
       this.$router.push({
         path: this.matchInternalRoute('assetaccountactivation')
       })
@@ -1828,11 +1521,11 @@ export default {
         window.open(this.url, '_blank')
       }
     },
-    unBind () {
+    unBind() {
       this.industryVisible = false
       this.waitingDialog = false
     },
-    chartInit () {
+    chartInit() {
       window.chartColors = {
         red: 'rgb(255, 99, 132)',
         orange: 'rgb(255, 159, 64)',
@@ -1959,12 +1652,12 @@ export default {
       var ctx = document.getElementById('canvas').getContext('2d')
       window.myLine = new Chart(ctx, config)
     },
-    isSassAndInCenter () {
+    isSassAndInCenter() {
       const isInSaleCenter = isInSalesCenter()
       const isSass = this.system_is_saas
       return isInSaleCenter && isSass
     },
-    mountedFunc () {
+    mountedFunc() {
       getActivateInfo().then((res) => {
         this.activateInfo = res.data.data
         if (!res.data.data.is_valid) {
@@ -2021,7 +1714,7 @@ export default {
       }
     }
   },
-  mounted () {
+  mounted() {
     if (!this.VERSION_IN_PURCHASE) {
       this.links.push(
         {

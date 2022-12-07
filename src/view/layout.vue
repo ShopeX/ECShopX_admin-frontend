@@ -298,11 +298,15 @@ export default {
     },
     handleUserInfo() {
       // debugger
-      console.log(this.matchInternalRoute('admininfo'))
-      // debugger
-      this.$router.push({
-        path: '/admininfo'
-      })
+      if (this.$store.getters.login_type === 'distributor') {
+        this.$router.push({
+          path: '/shopadmin/admininfo'
+        })
+      } else {
+        this.$router.push({
+          path: '/admininfo'
+        })
+      }
       // this.$router.push({
       //   path: this.matchInternalRoute('admininfo')
       // })

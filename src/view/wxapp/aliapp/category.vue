@@ -966,7 +966,7 @@ $txt-placeholder: #f5f5f7;
                           }"
                           @click="showCategory(fidx, sidx)"
                         >
-                          {{ sitem.main_category_id ? '主类目：' : ''
+                          {{ sitem.main_category_id ? '管理分类：' : ''
                           }}{{ sitem.category_id ? '商品分类：' : ''
                           }}{{ sitem.category_name ? sitem.category_name : '绑定分类' }}
                         </div>
@@ -1013,7 +1013,7 @@ $txt-placeholder: #f5f5f7;
                                 }"
                                 @click="showCategory(fidx, sidx, lidx)"
                               >
-                                {{ litem.main_category_id ? '主类目：' : ''
+                                {{ litem.main_category_id ? '管理分类：' : ''
                                 }}{{ litem.category_id ? '商品分类：' : ''
                                 }}{{ litem.category_name ? litem.category_name : '绑定分类' }}
                               </div>
@@ -1076,7 +1076,7 @@ $txt-placeholder: #f5f5f7;
                 商品分类
               </el-radio-button>
               <el-radio-button label="mainCate">
-                主类目
+                管理分类
               </el-radio-button>
             </el-radio-group>
           </el-form-item>
@@ -1091,7 +1091,7 @@ $txt-placeholder: #f5f5f7;
             />
             <el-cascader
               v-if="curCateType === 'mainCate'"
-              placeholder="选择主类目"
+              placeholder="选择管理分类"
               :options="mainCategory"
               :props="{ checkStrictly: true }"
               clearable

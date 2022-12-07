@@ -8,6 +8,7 @@
 
 <template>
   <div>
+    <SpPlatformTip h5 app aliapp />
     <SpForm
       ref="form"
       v-model="form"

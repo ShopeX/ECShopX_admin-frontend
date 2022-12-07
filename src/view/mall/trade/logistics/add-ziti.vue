@@ -135,7 +135,7 @@ export default {
             { label: '4', name: '周四' },
             { label: '5', name: '周五' },
             { label: '6', name: '周六' },
-            { label: '0', name: '周日' }
+            { label: '7', name: '周日' }
           ]
         },
         {

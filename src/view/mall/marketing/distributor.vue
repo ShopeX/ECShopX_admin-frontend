@@ -33,6 +33,7 @@
         $route.path.indexOf('alipay') === -1
       "
     >
+      <SpPlatformTip h5 app alipay />
       <div v-if="VERSION_STANDARD" class="content-bottom-padded">
         <el-alert type="info" title="操作说明" show-icon>
           <div>

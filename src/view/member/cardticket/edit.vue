@@ -296,7 +296,7 @@
             <el-radio-group v-model="form.use_all_items" @change="itemTypeChange">
               <el-radio label="true"> 全部商品适用 </el-radio>
               <el-radio label="false"> 指定商品适用 </el-radio>
-              <el-radio label="category"> 指定分类适用 </el-radio>
+              <el-radio label="category"> 指定管理分类适用 </el-radio>
               <el-radio label="tag"> 指定商品标签适用 </el-radio>
               <el-radio label="brand"> 指定品牌适用 </el-radio>
             </el-radio-group>

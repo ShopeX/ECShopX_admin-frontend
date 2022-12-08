@@ -115,8 +115,8 @@
                     </el-switch>
                   </el-form-item>
                 </el-col> -->
-                <el-col :xs="24" :sm="12" :md="8">
-                  <el-form-item label="*商品分类">
+                <el-col :xs="24" :sm="12" :md="12">
+                  <el-form-item label="*商品销售分类" label-width="110px">
                     <treeselect
                       v-model="form.item_category"
                       :options="categoryList"

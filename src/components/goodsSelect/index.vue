@@ -83,7 +83,7 @@
         <el-col :span="6" class="last-col">
           <el-cascader
             v-model="select_category_value"
-            placeholder="商品分类"
+            placeholder="商品销售分类"
             :options="categoryList"
             :props="{ value: 'category_id', checkStrictly: true }"
             clearable

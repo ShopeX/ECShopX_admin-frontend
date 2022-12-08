@@ -227,14 +227,14 @@
         </el-row>
         <el-row :gutter="20">
           <el-col :span="16">
-            <el-form-item label="商品分类" required>
+            <el-form-item label="商品销售分类" required label-width="120px">
               <treeselect
                 v-model="value.itemCategory"
                 :options="categoryList"
                 :show-count="true"
                 :multiple="true"
                 :disable-branch-nodes="true"
-                placeholder="选择商品分类"
+                placeholder="选择商品销售分类"
               />
             </el-form-item>
           </el-col>

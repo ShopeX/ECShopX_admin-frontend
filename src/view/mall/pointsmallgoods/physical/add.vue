@@ -998,9 +998,12 @@ export default {
             itemsDetailData.spec_items.forEach((item) => {
               item.item_spec.forEach((child) => {
                 let checkedIndex = _self.skus.findIndex((n) => child.spec_id === n.sku_id)
-                let isin = _self.skus[checkedIndex].checked_sku.findIndex(
-                  (k) => child.spec_value_id === k
-                )
+                let isin;
+                if (checkedIndex > -1) {
+                  isin = _self.skus[checkedIndex].checked_sku.findIndex(
+                    (k) => child.spec_value_id === k
+                  )
+                }
                 if (isin === -1) {
                   _self.skus[checkedIndex].checked_sku.push(child.spec_value_id)
                 }
@@ -1441,13 +1444,15 @@ export default {
           if (item.checked_sku.length > 0) {
             item.checked_sku.forEach((checked) => {
               let issue = item.sku_value.find((sku) => sku.attribute_value_id === checked)
-              let obj = {
+              if (issue) {
+                let obj = {
                 spec_id: item.sku_id,
                 spec_value_id: issue.attribute_value_id,
                 spec_value_name: issue.attribute_value,
                 spec_custom_value_name: issue.custom_attribute_value || ''
               }
               skuGroup.push(obj)
+              }
             })
             skus.push(skuGroup)
           }

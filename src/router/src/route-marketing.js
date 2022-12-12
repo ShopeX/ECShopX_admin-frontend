@@ -7,6 +7,11 @@ export default {
   component: Layout,
   children: [
     {
+      path: 'employee/purchase',
+      name: `优惠卷管理`,
+      component: () => import('@/view/marketing/employee/purchase')
+    },
+    {
       path: 'coupon/membermarketing',
       name: `优惠卷管理`,
       component: () => import('@/view/member/cardticket/coupon'),

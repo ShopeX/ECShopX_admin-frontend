@@ -298,7 +298,8 @@
             <template
               v-if="aftersalesInfo.aftersales_type != 'EXCHANGING_GOODS' && check_refund == '1'"
             >
-              <el-row v-if="'point' != orderInfo.pay_type">
+              <!-- <el-row v-if="'point' != orderInfo.pay_type"> -->
+              <el-row>
                 <el-col :span="3" class="col-3 content-right"> 退款金额: </el-col>
                 <el-col :span="8">
                   <el-input
@@ -312,7 +313,7 @@
                   >
                 </el-col>
               </el-row>
-              <el-row v-else>
+              <el-row>
                 <el-col :span="3" class="col-3 content-right"> 退款积分: </el-col>
                 <el-col :span="8">
                   <el-input v-model="refund_point" type="number" min="0" :max="orderInfo.point" />
@@ -875,7 +876,7 @@ export default {
         this.$message.error('拒绝原因必填！')
         return false
       }
-      if (this.refundData.check_refund == '1' && !this.refundData.refund_fee) {
+      if (this.refundData.check_refund == '1' && this.refundData.refund_fee != '') {
         this.$message.error('退款金额必填！')
         return false
       }

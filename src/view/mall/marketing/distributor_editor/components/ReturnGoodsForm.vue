@@ -156,7 +156,7 @@ export default {
       const ids = this.finderData.map((item) => item.distributor_id)
       const { data } = await this.$picker.aftersalesList({
         data: ids,
-        // distributor_id: this.distributor_id
+        distributor_id: this.distributor_id,
         merchant_id: this.content.baseForm.merchant_id
       })
       this.finderData = data

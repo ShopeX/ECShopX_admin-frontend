@@ -925,8 +925,10 @@ export default {
         _self.isEditor = true
         _self.mainCateLoader = true
         // 初始化门店数据
-        await getItemsDetail(_self.$route.params.itemId).then((response) => {
-          let itemsDetailData = response.data.data
+        const response = await getItemsDetail(_self.$route.params.itemId)
+        let itemsDetailData = response.data.data
+        const categoryInfoRes = await getCategoryInfo(itemsDetailData.item_main_cat_id)
+        const categoryInfoDetail = categoryInfoRes.data.data
           if (itemsDetailData.regions_id) {
             _self.select_regions_value = itemsDetailData.regions_id
           }
@@ -993,7 +995,7 @@ export default {
             _self.generateParams(itemsDetailData.item_params_list)
           }
           if (!_self.form.nospec) {
-            _self.generateSpec(itemsDetailData.item_spec_list)
+            _self.generateSpec(categoryInfoDetail.goods_spec)
             _self.specImages = itemsDetailData.spec_images
             itemsDetailData.spec_items.forEach((item) => {
               item.item_spec.forEach((child) => {
@@ -1040,7 +1042,6 @@ export default {
           } else {
             _self.form.intro = itemsDetailData.intro
           }
-        })
         // .catch(error => {
         //   _self.$router.go(-1)
         // })

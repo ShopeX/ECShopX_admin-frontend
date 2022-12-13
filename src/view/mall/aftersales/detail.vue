@@ -876,7 +876,7 @@ export default {
         this.$message.error('拒绝原因必填！')
         return false
       }
-      if (this.refundData.check_refund == '1' && this.refundData.refund_fee != '') {
+      if (this.refundData.check_refund == '1' && isNaN(this.refundData.refund_fee)) {
         this.$message.error('退款金额必填！')
         return false
       }

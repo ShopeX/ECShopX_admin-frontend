@@ -172,8 +172,6 @@ export default {
         var fileName = '更新会员信息'
       } else if (this.activeName == 'community_chief') {
         var fileName = '上传团长信息'
-      } else {
-        var fileName = '新增消费金额'
       }
       let params = { file_type: this.activeName, file_name: fileName }
       exportUploadTemplate(params).then((response) => {

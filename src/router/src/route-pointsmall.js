@@ -7,27 +7,6 @@ export default {
   component: Layout,
   children: [
     {
-      path: 'pointsmallgoods/pointsmallphysical',
-      name: `商品管理`,
-      component: () => import('@/view/mall/pointsmallgoods/physical/list'),
-      children: [
-        {
-          path: 'editor/:itemId?',
-          component: () => import('@/view/mall/pointsmallgoods/physical/add')
-        },
-        {
-          path: 'physicalupload',
-          name: `实体商品导入`,
-          component: () => import('@/view/mall/pointsmallgoods/physical/normalGoodsUpload')
-        },
-        {
-          path: 'physicalstoreupload',
-          name: `商品库存导入`,
-          component: () => import('@/view/mall/pointsmallgoods/physical/normalGoodsStoreUpload')
-        },
-      ]
-    },
-    {
       path: 'pointsmallgoods/pointsmallmaincategory',
       name: `商品管理分类`,
       component: () => import('@/view/mall/pointsmallgoods/maincategory')
@@ -56,22 +35,6 @@ export default {
       path: 'pointsmallgoods/pointsmallrate',
       name: `商品评价`,
       component: () => import('@/view/mall/pointsmalltrade/rate/list')
-    },
-    {
-      path: 'order/pointsmallenormalorders',
-      name: `实物订单`,
-      component: () => import('@/view/mall/pointsmalltrade/normalorders/list'),
-      children: [
-        {
-          path: 'detail/:itemId?',
-          component: () => import('@/view/mall/pointsmalltrade/order/detail')
-        }
-      ]
-    },
-    {
-      path: 'setting/pointsmallsetting',
-      name: `基础设置`,
-      component: () => import('@/view/mall/pointsmallsetting/index')
     },
     {
       path: 'setting/templatesetting',

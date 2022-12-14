@@ -61,11 +61,14 @@
       url="/distributors"
       :fixed-row-action="true"
       :setting="{
-        columns: [{ name: '店铺名称', key: 'name' }]
+        columns: [
+          { name: '店铺名称', key: 'name' },
+          { name: '店铺地址', key: 'store_address' }
+        ]
       }"
       :hooks="{
-        beforeSearch: beforeSearch
-        // afterSearch: afterSearch
+        beforeSearch: beforeSearch,
+        afterSearch: afterSearch
       }"
       @select="onSelect"
     />
@@ -125,6 +128,15 @@ export default {
       }
       return params
     },
+    afterSearch(response) {
+      const { list } = response.data.data
+      console.log(this.value.data)
+      const selectRows = list.filter((item) => this.value.data.includes(item.distributor_id))
+      const { finderTable } = this.$refs.finder.$refs
+      setTimeout(() => {
+        finderTable.$refs.finderTable.setSelection(selectRows)
+      })
+    },
     onSearch() {
       this.$refs.finder.refresh()
     },
@@ -136,6 +148,7 @@ export default {
         console.log('finderTable:', finderTable)
         finderTable.clearSelection()
         setTimeout(() => {
+          debugger
           finderTable.$refs.finderTable.setSelection([row])
           this.updateVal([row])
         })

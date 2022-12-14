@@ -242,7 +242,7 @@ export default {
         refund_fee: this.form.refund_fee * 100,
         refund_point: this.form.refund_point,
         description: this.form.description,
-        pic: this.form.pic ? this.form.pic.url : ''
+        evidence_pic: [this.form.pic ? this.form.pic.url : '']
       }
       await this.$api.trade.salesAfterApply(params)
       this.$message.success('售后申请提交成功')

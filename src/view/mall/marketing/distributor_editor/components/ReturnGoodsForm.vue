@@ -10,7 +10,7 @@
       <div>
         <el-form-item label="本店退货点" style="margin-bottom: 0">
           <div class="form-item-tip line-height-40">
-            退货点信息会在买家选择到店退货时展示，启用「本店订单到店退货」时本店退货点默认选中，可通过再次编辑店铺信息移除。
+            退货点信息会在买家选择到店退货时展示，初次使用此功能时本店退货点默认为选中状态（可退货店铺列表内未展示），可在保存店铺信息后再次进入此页面移除。
           </div>
         </el-form-item>
 
@@ -71,7 +71,7 @@
 
         <el-form-item label="可退货店铺">
           <div class="form-item-tip line-height-40">
-            本店线上订单买家发起退货退款申请时除了选择本店退货点，还可选择下方列表店铺的退货点完成到店退货。
+            本店订单买家发起退货退款申请时可选择此列表店铺的退货点完成到店退货。
           </div>
           <el-button type="text" @click="onSelectShop">选择店铺</el-button>
           <SpFinder ref="finder" no-selection :data="finderData" :setting="setting" />
@@ -80,7 +80,7 @@
         <el-form-item label="其他店铺订单">
           <el-switch v-model="content.baseForm.offline_aftersales_other" />
           <div class="form-item-tip">
-            启用后其他店铺在设置可退货店铺时可选择本店；商家发起的售后订单不受此规则限制。
+            启用后其他店铺在设置可退货店铺时可选择本店（即本店可接收其他店铺订单到店退货）；商家发起的售后订单不受此规则限制。
           </div>
         </el-form-item>
       </div>

@@ -2,6 +2,33 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [3.8.0](https://git.ishopex.cn/ecshopx/ecshopx-admin/compare/v3.7.1...v3.8.0) (2022-12-15)
+
+
+### Bug Fixes
+
+* oms发货 ([84abe3d](https://git.ishopex.cn/ecshopx/ecshopx-admin/commit/84abe3d57a5ca6caaf5a3fe1e267531c58c9783c))
+* PC管理后台功能支持的购买端提示 ([bb68228](https://git.ishopex.cn/ecshopx/ecshopx-admin/commit/bb682280f5df9d1f25aca47a2d92dcdebcd74ba1))
+* 修复支付宝上传头像后，后台不显示问题 ([c315290](https://git.ishopex.cn/ecshopx/ecshopx-admin/commit/c31529022bf5664338b8138856ba0b6b0eedd942))
+* 单选规格，提交报错 ([48da5b4](https://git.ishopex.cn/ecshopx/ecshopx-admin/commit/48da5b48f954f11a5486e840f7113d355d808c90))
+* 售后优化 ([55d4884](https://git.ishopex.cn/ecshopx/ecshopx-admin/commit/55d48847b7ae8ecce6eb07f0c71b0c3eb76fff49))
+* 售后平台审核 ([f6344be](https://git.ishopex.cn/ecshopx/ecshopx-admin/commit/f6344be6ed9df1a0187b462b048e13fb5b2c6e59))
+* 库存价格修改 ([9289b1e](https://git.ishopex.cn/ecshopx/ecshopx-admin/commit/9289b1e1af7fd2a57cdf4ea590be3642f4e01f21))
+* 应用中心 ([f215c35](https://git.ishopex.cn/ecshopx/ecshopx-admin/commit/f215c3548e757580d1998d5aa507e9784779cd84))
+* 应用中心优化 ([f3e7bb6](https://git.ishopex.cn/ecshopx/ecshopx-admin/commit/f3e7bb63cd52f1e43abcf77280c870c815477f8c))
+* 应用中心图片更改 ([b8855e9](https://git.ishopex.cn/ecshopx/ecshopx-admin/commit/b8855e9593cd828e0f09808ef02035ebf312a119))
+* 店铺端取消同城配入口 ([9cdd5d7](https://git.ishopex.cn/ecshopx/ecshopx-admin/commit/9cdd5d77f5828d16def26837b024c30e338a8cdf))
+* 目录优化 ([8392eb0](https://git.ishopex.cn/ecshopx/ecshopx-admin/commit/8392eb02489532751fbb6ae6256421337082c655))
+* 短信模板搜索清除 ([920a8c4](https://git.ishopex.cn/ecshopx/ecshopx-admin/commit/920a8c4e567895f79a9783cf18a1fa67ab427163))
+* 积分商品售后退款金额 ([fa05e29](https://git.ishopex.cn/ecshopx/ecshopx-admin/commit/fa05e29af31dce28aa411fb1d356d53839077b05))
+* 积分商品接口替换 ([f44aa98](https://git.ishopex.cn/ecshopx/ecshopx-admin/commit/f44aa98e90cb4adf822fcf4467dce936e6e0808c))
+* 经销商端详情报错 ([1fdefcd](https://git.ishopex.cn/ecshopx/ecshopx-admin/commit/1fdefcdab676784f6200151020ef2949cc944d4e))
+* 绑定OMS，订单不能发货 ([e88d680](https://git.ishopex.cn/ecshopx/ecshopx-admin/commit/e88d680f0072ff008c7c0d4f1ad765fec638e1d5))
+* 绑定OMS，订单发货提醒 ([8ab76a2](https://git.ishopex.cn/ecshopx/ecshopx-admin/commit/8ab76a2935c92cb27760b56cd4eefc855d821807))
+* 美洽配置支付宝提示 ([2ec3a0d](https://git.ishopex.cn/ecshopx/ecshopx-admin/commit/2ec3a0d04e0c72adbfbcc1fdcbb2f7aa411d3a72))
+* 自提点绑定店铺 ([eb25528](https://git.ishopex.cn/ecshopx/ecshopx-admin/commit/eb255282564f2e1a4195b06a280f19e7aec275bb))
+* 退款金额 ([5427e20](https://git.ishopex.cn/ecshopx/ecshopx-admin/commit/5427e202e471f50628c0a29bc29fb03a48732980))
+
 ## [3.7.0](https://git.ishopex.cn/ecshopx/ecshopx-admin/compare/v3.6.1...v3.7.0) (2022-11-24)
 
 

@@ -807,7 +807,7 @@ export default {
     ...mapGetters(['login_type', 'isMicorMall'])
   },
   async created() {
-    const { result } = await this.$api.trade.isBindOMS
+    const { result } = await this.$api.trade.isBindOMS()
     this.isBindOMS = result
   },
   mounted() {
@@ -1025,7 +1025,7 @@ export default {
         this.cancelOrderDialog = true
       } else if (key == 'deliverGoods') {
         if (this.isBindOMS) {
-          return this.$message.info('请至OMS处理订单发货')
+          return this.$message.warning('请至OMS处理订单发货')
         }
 
         this.$refs['deliverGoodsDialogRef'].resetForm()

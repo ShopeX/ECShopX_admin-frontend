@@ -285,14 +285,14 @@
             <el-row>
               <el-col :span="3" class="col-3 content-right"> 处理结果: </el-col>
               <el-col :span="20">
-                <template v-if="IsBind && login_type != 'distributor'">
+                <!-- <template v-if="IsBind && login_type != 'distributor'">
                   <el-radio v-model="check_refund" label="0" disabled> 不同意 </el-radio>
                   <el-radio v-model="check_refund" label="1" disabled> 同意 </el-radio>
                 </template>
-                <template v-else>
-                  <el-radio v-model="check_refund" label="0"> 不同意 </el-radio>
-                  <el-radio v-model="check_refund" label="1"> 同意 </el-radio>
-                </template>
+                <template v-else> -->
+                <el-radio v-model="check_refund" label="0"> 不同意 </el-radio>
+                <el-radio v-model="check_refund" label="1"> 同意 </el-radio>
+                <!-- </template> -->
               </el-col>
             </el-row>
             <template
@@ -333,7 +333,7 @@
             </el-row>
             <div class="section-footer with-border content-center">
               <el-button
-                v-if="IsBind && login_type != 'distributor'"
+                v-if="login_type != 'distributor'"
                 type="primary"
                 disabled
                 @click="refundAction"
@@ -366,14 +366,14 @@
           <el-row>
             <el-col :span="3" class="col-3 content-right"> 处理结果: </el-col>
             <el-col :span="20">
-              <template v-if="IsBind && login_type != 'distributor'">
+              <!-- <template v-if="IsBind && login_type != 'distributor'">
                 <el-radio v-model="is_approved" label="0" disabled> 不同意 </el-radio>
                 <el-radio v-model="is_approved" label="1" disabled> 同意 </el-radio>
-              </template>
-              <template v-else>
-                <el-radio v-model="is_approved" label="0"> 不同意 </el-radio>
-                <el-radio v-model="is_approved" label="1"> 同意 </el-radio>
-              </template>
+              </template> -->
+              <!-- <template v-else> -->
+              <el-radio v-model="is_approved" label="0"> 不同意 </el-radio>
+              <el-radio v-model="is_approved" label="1"> 同意 </el-radio>
+              <!-- </template> -->
             </el-col>
           </el-row>
           <template v-if="aftersalesInfo.aftersales_type == 'ONLY_REFUND' && is_approved == '1'">
@@ -511,7 +511,7 @@
     >
       <el-button
         type="primary"
-        :disabled="(IsBind && $store.getters.login_type != 'distributor') || submitDisabled"
+        :disabled="$store.getters.login_type != 'distributor' || submitDisabled"
         @click="reviewSubmit"
       >
         提交审核

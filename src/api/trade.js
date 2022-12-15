@@ -374,6 +374,13 @@ export function isBind() {
   })
 }
 
+export function isBindOMS() {
+  return fetch({
+    url: '/third/saascert/isbind',
+    method: 'get'
+  })
+}
+
 export function exportInvoice(query) {
   return fetch({
     url: '/invoice/exportdata',

@@ -799,11 +799,16 @@ export default {
         // 运费积分抵扣
         pointFreightFee: 0
       },
-      origin: ''
+      origin: '',
+      isBindOMS: false
     }
   },
   computed: {
     ...mapGetters(['login_type', 'isMicorMall'])
+  },
+  async created() {
+    const { result } = await this.$api.trade.isBindOMS
+    this.isBindOMS = result
   },
   mounted() {
     this.origin = window.location.origin
@@ -905,7 +910,8 @@ export default {
             !isDada &&
             order_status == 'PAYED' &&
             delivery_status != 'DONE' &&
-            receipt_type != 'ziti'
+            receipt_type != 'ziti' &&
+            !this.isBindOMS
           ) {
             actionBtns.push({ name: '发货', key: 'deliverGoods' })
           }

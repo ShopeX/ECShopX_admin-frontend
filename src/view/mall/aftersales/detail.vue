@@ -68,7 +68,7 @@
       </el-row>
       <el-row>
         <el-col :span="3" class="col-3 content-right"> 处理进度: </el-col>
-        <el-col :span="20">
+        <el-col v-if="aftersalesInfo && aftersalesInfo.app_info" :span="20">
           {{ aftersalesInfo.app_info.progress_msg }}
           <!-- <span v-if="aftersalesInfo.progress == '0'"> 等待商家处理</span>
           <span v-else-if="aftersalesInfo.progress == '1'">商家接受申请，等待消费者回寄</span>

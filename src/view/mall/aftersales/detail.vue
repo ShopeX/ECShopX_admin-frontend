@@ -332,15 +332,7 @@
               </el-col>
             </el-row>
             <div class="section-footer with-border content-center">
-              <el-button
-                v-if="login_type != 'distributor'"
-                type="primary"
-                disabled
-                @click="refundAction"
-              >
-                确认
-              </el-button>
-              <el-button v-else type="primary" @click="refundAction"> 确认 </el-button>
+              <el-button type="primary" @click="refundAction"> 确认 </el-button>
             </div>
           </template>
         </div>

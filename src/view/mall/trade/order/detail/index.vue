@@ -533,11 +533,16 @@ export default {
         { label: '开户银行:', field: 'invoicedBankName', is_show: true },
         { label: '银行账号:', field: 'invoicedBankAccount', is_show: true },
         { label: '公司地址:', field: 'invoiceCompanyAddress', is_show: true }
-      ]
+      ],
+      isBindOMS: false
     }
   },
   computed: {
     ...mapGetters(['login_type'])
+  },
+  async created() {
+    const { result } = await this.$api.trade.isBindOMS()
+    this.isBindOMS = result
   },
   mounted() {
     console.log(this.infoList)
@@ -709,7 +714,9 @@ export default {
           }
           return returnValue
         })(),
-        payTypeTxt: tradeInfo.payChannel ? PAY_TYPE[tradeInfo.payChannel] : PAY_TYPE[tradeInfo.payType],
+        payTypeTxt: tradeInfo.payChannel
+          ? PAY_TYPE[tradeInfo.payChannel]
+          : PAY_TYPE[tradeInfo.payType],
         tradeStateTxt: PAY_STATUS[tradeInfo.tradeState],
         timeStart: tradeInfo.timeStart
           ? moment(tradeInfo.timeStart * 1000).format('YYYY-MM-DD HH:mm:ss')
@@ -798,6 +805,9 @@ export default {
     handleAction({ key }) {
       const { order_id, items, delivery_type, delivery_status } = this.orderInfo
       if (key == 'deliverGoods') {
+        if (this.isBindOMS) {
+          return this.$message.warning('请至OMS处理订单发货')
+        }
         this.$refs['deliverGoodsDialogRef'].resetForm()
         this.deliverGoodsForm.order_id = order_id
         this.deliverGoodsForm.items = items.map((item) => {

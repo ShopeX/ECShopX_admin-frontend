@@ -70,7 +70,8 @@ export default {
       params = {
         ...params,
         name: this.formData.keywords,
-        merchant_id: this.value.merchant_id
+        merchant_id: this.value.merchant_id,
+        distributor_id: this.value.distributor_id
       }
       return params
     },

@@ -365,6 +365,8 @@ export default {
       const { is_new } = this.$route.query
       const res = await getItemsDetail(itemId)
       const goodsDetail = res.data.data
+      const categoryInfoRes = await getCategoryInfo(goodsDetail.item_main_cat_id)
+      const categoryInfoDetail = categoryInfoRes.data.data
       // this.select_regions_value = goodsDetail.regions_id
       // this.form = {
       //   ...this.form,
@@ -404,7 +406,7 @@ export default {
         specImages: goodsDetail.spec_images,
         specItems: goodsDetail.spec_items,
         itemSpecDesc: goodsDetail.item_spec_desc,
-        itemSpecList: goodsDetail.item_spec_list
+        itemSpecList: categoryInfoDetail.goods_spec
       }
 
       this.getGoodsParams(goodsDetail.item_params_list, goodsDetail.item_params)
@@ -415,7 +417,7 @@ export default {
           item.cost_price = item.cost_price / 100
           item.market_price = item.market_price / 100
         })
-        this.getGoodsSkus(goodsDetail.item_spec_list, goodsDetail.spec_items)
+        this.getGoodsSkus(categoryInfoDetail.goods_spec, goodsDetail.spec_items)
         this.getSkuItems()
       } else {
         this.skuData.specData = {

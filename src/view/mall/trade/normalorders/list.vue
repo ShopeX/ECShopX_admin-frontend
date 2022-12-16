@@ -799,11 +799,16 @@ export default {
         // 运费积分抵扣
         pointFreightFee: 0
       },
-      origin: ''
+      origin: '',
+      isBindOMS: false
     }
   },
   computed: {
     ...mapGetters(['login_type', 'isMicorMall'])
+  },
+  async created() {
+    const { result } = await this.$api.trade.isBindOMS()
+    this.isBindOMS = result
   },
   mounted() {
     this.origin = window.location.origin
@@ -1019,6 +1024,10 @@ export default {
         this.cancelOrderForm.loading = true
         this.cancelOrderDialog = true
       } else if (key == 'deliverGoods') {
+        if (this.isBindOMS) {
+          return this.$message.warning('请至OMS处理订单发货')
+        }
+
         this.$refs['deliverGoodsDialogRef'].resetForm()
         this.deliverGoodsForm.order_id = order_id
         this.deliverGoodsForm.items = items.map((item) => {

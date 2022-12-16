@@ -158,9 +158,9 @@ export default {
     },
     onShowPopover() {},
     onBindStore() {},
-    async onSelectStore({ id }) {
+    async onSelectStore({ id, rel_distributor_id }) {
       let params = {
-        data: this.value,
+        data: [rel_distributor_id],
         multiple: false
       }
       if (VERSION_PLATFORM && IS_ADMIN) {

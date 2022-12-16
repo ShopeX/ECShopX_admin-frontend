@@ -68,7 +68,7 @@
       </el-row>
       <el-row>
         <el-col :span="3" class="col-3 content-right"> 处理进度: </el-col>
-        <el-col :span="20">
+        <el-col v-if="aftersalesInfo && aftersalesInfo.app_info" :span="20">
           {{ aftersalesInfo.app_info.progress_msg }}
           <!-- <span v-if="aftersalesInfo.progress == '0'"> 等待商家处理</span>
           <span v-else-if="aftersalesInfo.progress == '1'">商家接受申请，等待消费者回寄</span>
@@ -285,20 +285,21 @@
             <el-row>
               <el-col :span="3" class="col-3 content-right"> 处理结果: </el-col>
               <el-col :span="20">
-                <template v-if="IsBind && login_type != 'distributor'">
+                <!-- <template v-if="IsBind && login_type != 'distributor'">
                   <el-radio v-model="check_refund" label="0" disabled> 不同意 </el-radio>
                   <el-radio v-model="check_refund" label="1" disabled> 同意 </el-radio>
                 </template>
-                <template v-else>
-                  <el-radio v-model="check_refund" label="0"> 不同意 </el-radio>
-                  <el-radio v-model="check_refund" label="1"> 同意 </el-radio>
-                </template>
+                <template v-else> -->
+                <el-radio v-model="check_refund" label="0"> 不同意 </el-radio>
+                <el-radio v-model="check_refund" label="1"> 同意 </el-radio>
+                <!-- </template> -->
               </el-col>
             </el-row>
             <template
               v-if="aftersalesInfo.aftersales_type != 'EXCHANGING_GOODS' && check_refund == '1'"
             >
-              <el-row v-if="'point' != orderInfo.pay_type">
+              <!-- <el-row v-if="'point' != orderInfo.pay_type"> -->
+              <el-row>
                 <el-col :span="3" class="col-3 content-right"> 退款金额: </el-col>
                 <el-col :span="8">
                   <el-input
@@ -312,7 +313,7 @@
                   >
                 </el-col>
               </el-row>
-              <el-row v-else>
+              <el-row>
                 <el-col :span="3" class="col-3 content-right"> 退款积分: </el-col>
                 <el-col :span="8">
                   <el-input v-model="refund_point" type="number" min="0" :max="orderInfo.point" />
@@ -331,15 +332,7 @@
               </el-col>
             </el-row>
             <div class="section-footer with-border content-center">
-              <el-button
-                v-if="IsBind && login_type != 'distributor'"
-                type="primary"
-                disabled
-                @click="refundAction"
-              >
-                确认
-              </el-button>
-              <el-button v-else type="primary" @click="refundAction"> 确认 </el-button>
+              <el-button type="primary" @click="refundAction"> 确认 </el-button>
             </div>
           </template>
         </div>
@@ -365,14 +358,14 @@
           <el-row>
             <el-col :span="3" class="col-3 content-right"> 处理结果: </el-col>
             <el-col :span="20">
-              <template v-if="IsBind && login_type != 'distributor'">
+              <!-- <template v-if="IsBind && login_type != 'distributor'">
                 <el-radio v-model="is_approved" label="0" disabled> 不同意 </el-radio>
                 <el-radio v-model="is_approved" label="1" disabled> 同意 </el-radio>
-              </template>
-              <template v-else>
-                <el-radio v-model="is_approved" label="0"> 不同意 </el-radio>
-                <el-radio v-model="is_approved" label="1"> 同意 </el-radio>
-              </template>
+              </template> -->
+              <!-- <template v-else> -->
+              <el-radio v-model="is_approved" label="0"> 不同意 </el-radio>
+              <el-radio v-model="is_approved" label="1"> 同意 </el-radio>
+              <!-- </template> -->
             </el-col>
           </el-row>
           <template v-if="aftersalesInfo.aftersales_type == 'ONLY_REFUND' && is_approved == '1'">
@@ -508,11 +501,7 @@
       "
       class="section-footer with-border content-center"
     >
-      <el-button
-        type="primary"
-        :disabled="(IsBind && $store.getters.login_type != 'distributor') || submitDisabled"
-        @click="reviewSubmit"
-      >
+      <el-button type="primary" :disabled="submitDisabled" @click="reviewSubmit">
         提交审核
       </el-button>
     </div>
@@ -875,7 +864,7 @@ export default {
         this.$message.error('拒绝原因必填！')
         return false
       }
-      if (this.refundData.check_refund == '1' && !this.refundData.refund_fee) {
+      if (this.refundData.check_refund == '1' && isNaN(this.refundData.refund_fee)) {
         this.$message.error('退款金额必填！')
         return false
       }

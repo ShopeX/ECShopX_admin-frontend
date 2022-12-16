@@ -4,7 +4,7 @@
       <el-tab-pane label="普通快递" name="normal">
         <Normal />
       </el-tab-pane>
-      <el-tab-pane v-if="!isMicorMall && !VERSION_B2C" label="同城配" name="city">
+      <el-tab-pane v-if="!IS_DISTRIBUTOR && !VERSION_B2C" label="同城配" name="city">
         <City />
       </el-tab-pane>
       <el-tab-pane label="到店自提" name="ziti">

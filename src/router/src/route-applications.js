@@ -67,6 +67,43 @@ export default {
       ]
     },
     {
+      path: 'jfmall/jfgoods',
+      name: `商品管理`,
+      component: () => import('@/view/applications/pointmall/list'),
+      children: [
+        {
+          path: 'editor/:itemId?',
+          component: () => import('@/view/applications/pointmall/add')
+        },
+        {
+          path: 'physicalupload',
+          name: `实体商品导入`,
+          component: () => import('@/view/applications/pointmall/goodsImport')
+        },
+        {
+          path: 'physicalstoreupload',
+          name: `商品库存导入`,
+          component: () => import('@/view/applications/pointmall/storeImport')
+        }
+      ]
+    },
+    {
+      path: 'jfmall/jforders',
+      name: `实物订单`,
+      component: () => import('@/view/applications/pointmall/orderList'),
+      children: [
+        {
+          path: 'detail/:itemId?',
+          component: () => import('@/view/applications/pointmall/orderDetail')
+        }
+      ]
+    },
+    {
+      path: 'jfmall/jfsetting',
+      name: `基础设置`,
+      component: () => import('@/view/applications/pointmall/setting')
+    },
+    {
       path: 'appsgroup/extapp',
       name: `扩展应用`,
       component: () => import('@/view/applications/plugin'),

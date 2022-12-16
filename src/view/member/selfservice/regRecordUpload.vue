@@ -152,10 +152,14 @@ export default {
       })
     },
     uploadHandleTemplate () {
-      if (this.activeName == 'member_info') {
-        var fileName = '新增会员信息'
-      } else {
+      if (this.activeName == 'member_consume') {
         var fileName = '新增消费金额'
+      } else if (this.activeName == 'member_info') {
+        var fileName = '新增会员信息'
+      } else if (this.activeName == 'member_update') {
+        var fileName = '更新会员信息'
+      } else if (this.activeName == 'selform_registration_record') {
+        var fileName = '上传报名审核结果'
       }
       let params = { file_type: this.activeName, file_name: fileName }
       exportUploadTemplate(params).then((response) => {

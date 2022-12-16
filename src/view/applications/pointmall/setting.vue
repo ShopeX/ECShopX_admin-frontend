@@ -1,8 +1,6 @@
 <template>
   <div>
-    <div class="title">
-积分商城基础设置
-</div>
+    <div class="title">积分商城基础设置</div>
     <el-card>
       <div style="width: 90%">
         <el-form v-loading="loading" label-width="180px" label-position="left">
@@ -29,12 +27,8 @@
         <el-form v-loading="loading" label-width="180px" :model="form">
           <el-form-item label="物流费用">
             <el-radio-group v-model="form.freight_type">
-              <el-radio :label="'cash'">
-按现金
-</el-radio>
-              <el-radio :label="'point'">
-按积分
-</el-radio>
+              <el-radio :label="'cash'"> 按现金 </el-radio>
+              <el-radio :label="'point'"> 按积分 </el-radio>
             </el-radio-group>
             <br>
             <span class="tip">说明：运费使用现金或积分支付</span>
@@ -51,12 +45,8 @@
           </el-form-item>
           <el-form-item v-if="form.freight_type == 'point'" label="积分取整设置">
             <el-radio-group v-model="form.rounding_mode">
-              <el-radio :label="'down'">
-向下取整
-</el-radio>
-              <el-radio :label="'up'">
-向上取整
-</el-radio>
+              <el-radio :label="'down'"> 向下取整 </el-radio>
+              <el-radio :label="'up'"> 向上取整 </el-radio>
             </el-radio-group>
             <br>
             <!-- <span class="tip">说明：运费使用现金或积分支付</span> -->
@@ -70,15 +60,13 @@
     </el-card>
 
     <GlobalFooter>
-      <el-button type="primary" @click="save">
-保存
-</el-button>
+      <el-button type="primary" @click="save"> 保存 </el-button>
     </GlobalFooter>
   </div>
 </template>
 <script>
 import { mapGetters } from 'vuex'
-import { getSetting, saveSetting } from '../../../api/pointsmall'
+import { getSetting, saveSetting } from '@/api/pointsmall'
 import GlobalFooter from '@/components/global_footer'
 
 export default {
@@ -86,7 +74,7 @@ export default {
     GlobalFooter
   },
 
-  data () {
+  data() {
     return {
       loading: false,
       form: {
@@ -101,17 +89,17 @@ export default {
       }
     }
   },
-  mounted () {
+  mounted() {
     this.getInfo()
   },
   methods: {
     // 输入限制小数点两位
-    handleInput2 (e) {
+    handleInput2(e) {
       // 通过正则过滤小数点后两位
       e.target.value = e.target.value.match(/^\d*(\.?\d{0,1})/g)[0] || null
     },
     // 获取列表
-    getInfo () {
+    getInfo() {
       this.loading = true
       getSetting().then((res) => {
         this.form.freight_type = res.data.data.freight_type
@@ -125,7 +113,7 @@ export default {
       })
     },
     // 保存数据
-    save () {
+    save() {
       saveSetting({
         ...this.form,
         entrance: {

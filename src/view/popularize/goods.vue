@@ -67,12 +67,6 @@
             label="返佣状态"
             width="160"
             column-key="rebate"
-            :filters="[
-              { text: '支持返佣', value: '1' },
-              { text: '不支持返佣', value: '0' },
-              { text: '等待审核', value: '2' },
-              { text: '拒绝加入', value: '3' }
-            ]"
             :filter-multiple="false"
           >
             <template slot-scope="scope">

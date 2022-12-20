@@ -71,7 +71,7 @@
           </el-form-item>
           <el-form-item label="等级配置">
             <el-alert
-              title="等级一，等级二，等级三......为有低到高，等级一为最低"
+              title="等级一，等级二，等级三......为由低到高，等级一为最低"
               type="info"
               close-text=" "
               description="直接获取一级团队分红比例：表示推广员的直属上级为三级推广员，中间无二级推广员"

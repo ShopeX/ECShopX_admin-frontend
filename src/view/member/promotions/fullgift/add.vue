@@ -140,7 +140,7 @@
             </el-table-column>
           </el-table>
           <GoodsSelect
-            unwanted-gift
+            :unwanted-gift="true"
             :items-visible="giftVisible"
             :get-status="setGiftStatus"
             :rel-items-ids="relGifts"

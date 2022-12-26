@@ -3,7 +3,7 @@ import Vue from 'vue'
 import qs from 'qs'
 import store from '../store'
 import Router from '../router'
-import { isInSalesCenter, goLink, isInMerchant, isObject } from '@/utils'
+import { isInSalesCenter, goLink, isInMerchant, isObject, IS_DISTRIBUTOR } from '@/utils'
 
 function resolveGetMethod(inst) {
   const origGetMethod = inst.get
@@ -44,6 +44,8 @@ export function errorToast(data) {
     // 如果是商家入驻
     if (isInMerchant()) {
       window.location.href = '/merchant'
+    }else if(IS_DISTRIBUTOR){
+      window.location.href = '/shopadmin'
     } else {
       window.location.href = '/'
     }

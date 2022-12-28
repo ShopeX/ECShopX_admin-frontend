@@ -9,19 +9,10 @@
 <template>
   <el-tabs type="card">
     <el-tab-pane label="社区团配置">
-      <SpForm
-        v-model="form"
-        :form-list="formList"
-        @onSubmit="onSaveConfig"
-      />
+      <SpForm v-model="form" :form-list="formList" @onSubmit="onSaveConfig" />
     </el-tab-pane>
     <el-tab-pane label="团长注册项配置">
-      <SpFinder
-        ref="finder"
-        no-selection
-        :setting="setting"
-        url="/community/chief/apply_fields"
-      />
+      <SpFinder ref="finder" no-selection :setting="setting" url="/community/chief/apply_fields" />
 
       <!-- 团长注册配置 -->
       <SpDialog
@@ -44,7 +35,7 @@ export default {
   components: {
     invitationCode
   },
-  data () {
+  data() {
     return {
       form: {
         condition_type: 'num',
@@ -241,7 +232,7 @@ export default {
       },
       registerFormList: [
         {
-          label: '配置标题:',
+          label: '配置标题',
           key: 'label',
           type: 'input',
           placeholder: '请输入标题',
@@ -249,7 +240,7 @@ export default {
           message: '不能为空'
         },
         {
-          label: '信息格式:',
+          label: '信息格式',
           key: 'field_type',
           placeholder: '请选择信息格式',
           type: 'select',
@@ -273,7 +264,7 @@ export default {
           }
         },
         {
-          label: '提示文案:',
+          label: '提示文案',
           key: 'alert_required_message',
           type: 'input',
           placeholder: '请输入提示文案',
@@ -287,14 +278,14 @@ export default {
   computed: {
     ...mapGetters(['shopId'])
   },
-  created () {},
-  mounted () {
+  created() {},
+  mounted() {
     this.getActivitySetting()
     this.getCommunityChiefApplyFields()
     this.getChiefWxCode()
   },
   methods: {
-    async onSaveConfig () {
+    async onSaveConfig() {
       const { condition_type, condition_money, rebate_ratio, aggrement, explanation } = this.form
       await this.$api.community.modifyActivitySetting({
         condition_type,
@@ -305,7 +296,7 @@ export default {
       })
       this.$message.success('修改成功')
     },
-    async getActivitySetting () {
+    async getActivitySetting() {
       const { condition_money, condition_type, aggrement, explanation, rebate_ratio } =
         await this.$api.community.getActivitySetting()
       this.form = {
@@ -322,10 +313,10 @@ export default {
         this.formList[1].isShow = true
       }
     },
-    async getCommunityChiefApplyFields () {
+    async getCommunityChiefApplyFields() {
       const res = await this.$api.community.getActivitySetting()
     },
-    async onResisterSubmit () {
+    async onResisterSubmit() {
       const params = {
         ...this.registerForm
       }
@@ -337,7 +328,7 @@ export default {
       this.registerDialog = false
       this.$refs.finder.refresh()
     },
-    async getChiefWxCode () {
+    async getChiefWxCode() {
       const params = {
         // wxaAppId: 'wx3e1c17c88abf3e45',
         distributor_id: this.shopId,

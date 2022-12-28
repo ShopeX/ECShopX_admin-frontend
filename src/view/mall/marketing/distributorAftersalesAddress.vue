@@ -142,7 +142,7 @@ export default {
       },
       addressFormList: [
         {
-          label: '店铺:',
+          label: '店铺',
           key: 'num',
           component: () => (
             <div class='distributor-tags'>
@@ -172,7 +172,7 @@ export default {
           }
         },
         {
-          label: '地区:',
+          label: '地区',
           key: 'regions_id',
           component: () => (
             <el-cascader v-model={this.addressForm.regions_id} options={this.regions} />
@@ -187,21 +187,21 @@ export default {
           }
         },
         {
-          label: '详细地址:',
+          label: '详细地址',
           key: 'address',
           type: 'input',
           required: true,
           message: '请输入详细地址'
         },
         {
-          label: '联系人:',
+          label: '联系人',
           key: 'contact',
           type: 'input',
           required: true,
           message: '请输入联系人'
         },
         {
-          label: '联系方式:',
+          label: '联系方式',
           key: 'mobile',
           type: 'input',
           required: true,

@@ -159,8 +159,20 @@
                     <div>
                       <img class="page-code" :src="appCodeUrl">
                       <div class="page-btns">
-                        <el-button type="primary" plain size="mini" @click="handleDownload(scope.row.title)">下载码</el-button>
-                        <el-button type="primary" plain size="mini" v-clipboard:copy="curPageUrl">复制链接</el-button>
+                        <el-button
+                          type="primary"
+                          plain
+                          size="mini"
+                          @click="handleDownload(scope.row.title)"
+                          >
+下载码
+</el-button
+                        >
+                        <el-button v-clipboard:copy="curPageUrl" type="primary" plain size="mini"
+                          >
+复制链接
+</el-button
+                        >
                       </div>
                     </div>
                     <el-button
@@ -168,10 +180,9 @@
                       style="width: 45px"
                       type="text"
                       @click="handleShow(scope.row.card_id)"
-                      >
-投放
-</el-button
                     >
+                      投放
+                    </el-button>
                   </el-popover>
                   <el-button
                     v-if="scope.row.status != 'CARD_STATUS_DISPATCH'"
@@ -300,7 +311,7 @@ export default {
           ]
         },
         {
-          label: '数量:',
+          label: '数量',
           key: 'quantity',
           type: 'input',
           placeholder: '请输入数量',

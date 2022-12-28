@@ -699,7 +699,7 @@ export default {
       },
       keFuFormList: [
         {
-          label: '店铺客服:',
+          label: '店铺客服',
           key: 'channel',
           type: 'radio',
           options: [

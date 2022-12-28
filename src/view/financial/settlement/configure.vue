@@ -10,40 +10,18 @@
   <div>
     <el-tabs type="card">
       <el-tab-pane label="结算周期配置">
-        <SpForm
-          v-model="form"
-          :form-list="formList"
-          @onSubmit="onSaveConfig"
-        />
+        <SpForm v-model="form" :form-list="formList" @onSubmit="onSaveConfig" />
       </el-tab-pane>
       <el-tab-pane label="店铺结算周期">
-        <SpFilterForm
-          :model="formQuery"
-          @onSearch="onSearch"
-          @onReset="onSearch"
-        >
-          <SpFilterFormItem
-            prop="distributor_id"
-            label="店铺:"
-          >
-            <SpSelectShop
-              v-model="formQuery.distributor_id"
-              clearable
-              placeholder="请选择"
-            />
+        <SpFilterForm :model="formQuery" @onSearch="onSearch" @onReset="onSearch">
+          <SpFilterFormItem prop="distributor_id" label="店铺:">
+            <SpSelectShop v-model="formQuery.distributor_id" clearable placeholder="请选择" />
           </SpFilterFormItem>
           <!-- <SpFilterFormItem prop="mobile" label="联系手机:">
             <el-input v-model="formQuery.mobile" placeholder="请输入联系人手机号" />
           </SpFilterFormItem> -->
-          <SpFilterFormItem
-            prop="merchant_id"
-            label="所属商家:"
-          >
-            <SpSelectMerchant
-              v-model="formQuery.merchant_id"
-              clearable
-              placeholder="请选择"
-            />
+          <SpFilterFormItem prop="merchant_id" label="所属商家:">
+            <SpSelectMerchant v-model="formQuery.merchant_id" clearable placeholder="请选择" />
           </SpFilterFormItem>
         </SpFilterForm>
         <SpFinder
@@ -74,7 +52,7 @@ import settlementCycle from './comps/settlementCycle'
 import { createSetting } from '@shopex/finder'
 export default {
   name: '',
-  data () {
+  data() {
     return {
       form: {
         cycleData: {
@@ -170,7 +148,7 @@ export default {
       },
       addFormList: [
         {
-          label: '店铺:',
+          label: '店铺',
           key: 'distributor_id',
           component: () => (
             <SpSelectShop v-model={this.addForm.distributor_id} clearable placeholder='请选择' />
@@ -187,13 +165,13 @@ export default {
           isShow: true
         },
         {
-          label: '店铺:',
+          label: '店铺',
           key: 'distributor_name',
           type: 'text',
           isShow: false
         },
         {
-          label: '结算周期:',
+          label: '结算周期',
           key: 'period',
           component: () => <settlementCycle v-model={this.addForm.cycleData} />,
           validator: (rule, value, callback) => {
@@ -208,11 +186,11 @@ export default {
       ]
     }
   },
-  created () {
+  created() {
     this.fetch()
   },
   methods: {
-    async fetch () {
+    async fetch() {
       const { period } = await this.$api.financial.getDefaultSetting()
       if (period.length == 2) {
         this.form.cycleData = {
@@ -221,20 +199,20 @@ export default {
         }
       }
     },
-    onSearch () {
+    onSearch() {
       this.$refs.finder.refresh()
     },
-    beforeSearch (params) {
+    beforeSearch(params) {
       return { ...params, ...this.formQuery }
     },
-    async onSaveConfig () {
+    async onSaveConfig() {
       const { cycle, unit } = this.form.cycleData
       await this.$api.financial.savePeriodSetting({
         period: [cycle, unit]
       })
       this.$message.success('保存成功')
     },
-    async onAddSubmit () {
+    async onAddSubmit() {
       const { id, distributor_id, cycleData } = this.addForm
       const { cycle, unit } = cycleData
       await this.$api.financial.savePeriodSetting({
@@ -246,7 +224,7 @@ export default {
       this.addDialog = false
       this.$refs.finder.refresh()
     },
-    getCycle (period) {
+    getCycle(period) {
       const [cycle, unit] = period
       const units = {
         day: '天',

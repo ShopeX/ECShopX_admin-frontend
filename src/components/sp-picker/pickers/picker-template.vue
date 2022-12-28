@@ -1,5 +1,5 @@
 <style lang="scss">
-.picker-aftersales {
+.picker-template {
   .sp-filter-form {
     margin-bottom: 0;
     .filter-form__bd {
@@ -16,26 +16,47 @@
       margin-right: 8px;
     }
   }
+  .sp-finder {
+    &.no-multiple {
+      .sp-finder-bd {
+        .el-table__fixed-header-wrapper {
+          table thead {
+            tr {
+              th {
+                &:nth-child(1) {
+                  .el-checkbox {
+                    display: none;
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
 }
 </style>
 <template>
-  <div class="picker-aftersales">
+  <div class="picker-template">
     <SpFilterForm :model="formData" @onSearch="onSearch" @onReset="onSearch">
       <SpFilterFormItem prop="keywords">
-        <el-input v-model="formData.keywords" placeholder="输入店铺名称或关键词搜索" />
+        <el-input v-model="formData.keywords" placeholder="页面名称关键词" />
       </SpFilterFormItem>
     </SpFilterForm>
     <SpFinder
       ref="finder"
-      url="/distributors/aftersales"
+      url="/pagestemplate/lists"
+      :class="['template-finder', { 'no-multiple': !multiple }]"
       :fixed-row-action="true"
       :setting="{
-        columns: [{ name: '店铺名称', key: 'name' }]
+        columns: [{ name: '页面名称', key: 'template_title' }]
       }"
       :hooks="{
         beforeSearch: beforeSearch,
         afterSearch: afterSearch
       }"
+      @select="onSelect"
       @selection-change="onSelectionChange"
     />
   </div>
@@ -49,7 +70,7 @@ export default {
   extends: BasePicker,
   mixins: [PageMixin],
   config: {
-    title: '选择店铺'
+    title: '选择首页'
   },
   props: ['value'],
   data() {
@@ -59,26 +80,26 @@ export default {
       },
       regionArea: [],
       loading: false,
-      localData: []
+      localData: [],
+      multiple: this.value.multiple ?? true
     }
   },
   created() {
     // this.fetch()
   },
   methods: {
-    beforeSearch(params) {
-      params = {
-        ...params,
-        name: this.formData.keywords,
-        merchant_id: this.value.merchant_id,
-        distributor_id: this.value.distributor_id
+    beforeSearch({ page, pageSize }) {
+      let params = {
+        page_no: page,
+        page_size: pageSize,
+        name: this.formData.keywords
       }
       return params
     },
     afterSearch(response) {
       const { list } = response.data.data
       const { data = [] } = this.value
-      const selectRow = list.filter((item) => data.includes(item.distributor_id))
+      const selectRow = list.filter((item) => data.includes(item.pages_template_id))
       const finderTable = this.$refs['finder'].$refs.finderTable.$refs.finderTable
 
       setTimeout(() => {
@@ -88,8 +109,18 @@ export default {
     onSearch() {
       this.$refs.finder.refresh()
     },
-    onSelectionChange(val) {
-      this.updateVal(val)
+    onSelect(selection, row) {
+      if (!this.multiple) {
+        const { finderTable } = this.$refs.finder.$refs
+        console.log('finderTable:', finderTable)
+        finderTable.clearSelection()
+        setTimeout(() => {
+          finderTable.$refs.finderTable.setSelection([row])
+        })
+      }
+    },
+    onSelectionChange(selection) {
+      this.updateVal(selection)
     }
   }
 }

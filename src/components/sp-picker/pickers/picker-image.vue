@@ -344,7 +344,7 @@ export default {
       },
       groupFormList: [
         {
-          label: '分组名称:',
+          label: '分组名称',
           key: 'groupName',
           type: 'input',
           maxlength: 150,
@@ -360,7 +360,7 @@ export default {
       },
       editFormList: [
         {
-          label: '图片分组:',
+          label: '图片分组',
           key: 'groupName',
           placeholder: '请选择图片分组',
           type: 'select',
@@ -369,7 +369,7 @@ export default {
           message: '不能为空'
         },
         {
-          label: '图片名称:',
+          label: '图片名称',
           key: 'name',
           type: 'input',
           placeholder: '请输入图片名称',

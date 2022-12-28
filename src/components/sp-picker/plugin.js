@@ -33,8 +33,10 @@ export default {
       image: (args) => fn({ value: { ...args }, type: 'pickerImage', width: '788px' }),
       goods: (args) => fn({ value: { ...args }, type: 'pickerGoods', width: '1110px' }),
       shop: (args) => fn({ value: { ...args }, type: 'pickerShop' }),
-      zitilist: (args) => fn({ value: { ...args }, type: 'pickerZitiList' }),
-      aftersalesList: (args) => fn({ value: { ...args }, type: 'pickerAftersalesList' }),
+      zitiList: (args) => fn({ value: { ...args }, type: 'pickerZitiList' }),
+      afterSalesList: (args) => fn({ value: { ...args }, type: 'pickerAfterSalesList' }),
+      template: (args) => fn({ value: { ...args }, type: 'pickerTemplate' }),
+      company: (args) => fn({ value: { ...args }, type: 'pickerCompany' }),
       path: fn
     }
 

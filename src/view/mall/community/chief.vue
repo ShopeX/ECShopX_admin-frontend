@@ -7,36 +7,16 @@
 <template>
   <div>
     <div v-if="$route.path.indexOf('detail') === -1">
-      <SpFilterForm
-        :model="formQuery"
-        @onSearch="onSearch"
-        @onReset="onSearch"
-      >
-        <SpFilterFormItem
-          prop="name"
-          label="团长姓名:"
-        >
-          <el-input
-            v-model="formQuery.name"
-            placeholder="请输入团长姓名"
-          />
+      <SpFilterForm :model="formQuery" @onSearch="onSearch" @onReset="onSearch">
+        <SpFilterFormItem prop="name" label="团长姓名:">
+          <el-input v-model="formQuery.name" placeholder="请输入团长姓名" />
         </SpFilterFormItem>
-        <SpFilterFormItem
-          prop="mobile"
-          label="手机号:"
-        >
-          <el-input
-            v-model="formQuery.mobile"
-            placeholder="请输入团长手机号"
-          />
+        <SpFilterFormItem prop="mobile" label="手机号:">
+          <el-input v-model="formQuery.mobile" placeholder="请输入团长手机号" />
         </SpFilterFormItem>
       </SpFilterForm>
 
-      <el-tabs
-        v-model="formQuery.approve_status"
-        type="card"
-        @tab-click="onSearch"
-      >
+      <el-tabs v-model="formQuery.approve_status" type="card" @tab-click="onSearch">
         <el-tab-pane
           v-for="item in stateList"
           :key="item.value"
@@ -74,7 +54,7 @@ import { createSetting } from '@shopex/finder'
 import moment from 'moment'
 export default {
   name: '',
-  data () {
+  data() {
     return {
       formQuery: {
         name: '',
@@ -141,7 +121,7 @@ export default {
       },
       resloveFormList: [
         {
-          label: '审批:',
+          label: '审批',
           key: 'approve_status',
           type: 'radio',
           options: [
@@ -157,7 +137,7 @@ export default {
           }
         },
         {
-          label: '拒绝原因:',
+          label: '拒绝原因',
           key: 'refuse_reason',
           type: 'input',
           placeholder: '请输入拒绝原因',
@@ -173,20 +153,20 @@ export default {
       ]
     }
   },
-  created () {},
+  created() {},
   methods: {
-    onSearch () {
+    onSearch() {
       this.$refs.finder.refresh()
     },
-    beforeSearch (params) {
+    beforeSearch(params) {
       const formQuery = JSON.parse(JSON.stringify(this.formQuery))
       if (formQuery.approve_status == '-1') {
         delete formQuery.approve_status
       }
       return { ...params, ...formQuery }
     },
-    afterSearch () {},
-    async onResloveSubmit () {
+    afterSearch() {},
+    async onResloveSubmit() {
       const { apply_id, approve_status, refuse_reason } = this.resloveForm
       await this.$api.community.approveChief(apply_id, {
         approve_status,
@@ -195,7 +175,7 @@ export default {
       this.resloveDialog = false
       this.$refs.finder.refresh()
     },
-    getApproveStatus (status) {
+    getApproveStatus(status) {
       if (status == '0') {
         return '未审核'
       } else if (status == '1') {

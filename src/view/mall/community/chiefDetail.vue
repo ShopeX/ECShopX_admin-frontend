@@ -13,7 +13,7 @@ import { FORM_COMP } from '@/consts'
 import { isArray } from '@/utils'
 
 export default {
-  data () {
+  data() {
     return {
       name: '',
       mobile: '',
@@ -27,7 +27,7 @@ export default {
       },
       resloveFormList: [
         {
-          label: '审批:',
+          label: '审批',
           key: 'approve_status',
           type: 'radio',
           options: [
@@ -43,7 +43,7 @@ export default {
           }
         },
         {
-          label: '拒绝原因:',
+          label: '拒绝原因',
           key: 'refuse_reason',
           type: 'input',
           placeholder: '请输入拒绝原因',
@@ -59,11 +59,11 @@ export default {
       ]
     }
   },
-  created () {
+  created() {
     this.fetchDetail()
   },
   methods: {
-    async fetchDetail () {
+    async fetchDetail() {
       const { apply_id } = this.$route.params
       const { chief_name, chief_mobile, approve_status, extra_data } =
         await this.$api.community.getChiefDetail(apply_id)
@@ -72,7 +72,7 @@ export default {
       this.extraData = extra_data
       this.approve_status = approve_status
     },
-    renderComp ({ type, value }) {
+    renderComp({ type, value }) {
       if (type == FORM_COMP.IMAGE) {
         if (isArray(value)) {
           return (
@@ -89,10 +89,10 @@ export default {
         return value
       }
     },
-    handleAction () {
+    handleAction() {
       this.resloveDialog = true
     },
-    async onResloveSubmit () {
+    async onResloveSubmit() {
       const { apply_id } = this.$route.params
       const { approve_status, refuse_reason } = this.resloveForm
       await this.$api.community.approveChief(apply_id, {
@@ -103,7 +103,7 @@ export default {
       this.fetchDetail()
     }
   },
-  render () {
+  render() {
     const { name, mobile, extraData, btnActions, approve_status } = this
     console.log('approve_status', approve_status)
     return (

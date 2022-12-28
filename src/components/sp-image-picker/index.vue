@@ -11,9 +11,14 @@
     align-items: center;
     justify-content: center;
   }
-  .icon-plus {
-    font-size: 18px;
+  .icon-camera {
+    font-size: 24px;
     color: #d9d9d9;
+    margin-top: 12px;
+  }
+  .add-text {
+    font-size: 13px;
+    color: #999;
   }
   .img-content {
     // position: relative;
@@ -51,8 +56,8 @@
     <!-- <img v-if="value && value.url" class="img-content" :src="value.url"> -->
     <el-image v-if="value && value.url" class="img-content" :src="value.url" fit="cover" />
     <div v-else class="placeholder" @click="handleSelectImage">
-      <i class="iconfont icon-plus" />
-      <p>添加图片</p>
+      <i class="iconfont icon-camera" />
+      <div class="add-text">添加图片</div>
     </div>
     <span v-if="value && value.url" class="image-meta" @click="handleSelectImage">更换图片</span>
   </div>

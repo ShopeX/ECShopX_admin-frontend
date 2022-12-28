@@ -1,5 +1,4 @@
 <template>
-  <!-- <div v-if="$route.path.indexOf('detail') === -1 && $route.path.indexOf('process') === -1"> -->
   <SpRouterView>
     <SpFilterForm :model="params" @onSearch="onSearch" @onReset="onSearch">
       <SpFilterFormItem prop="mobile" label="手机号:">
@@ -8,13 +7,6 @@
       <SpFilterFormItem prop="order_id" label="订单号:">
         <el-input v-model="params.order_id" placeholder="请输入订单号" />
       </SpFilterFormItem>
-      <!-- <SpFilterFormItem
-        v-if="login_type != 'merchant' && !VERSION_B2C && !VERSION_IN_PURCHASE"
-        prop="salesman_mobile"
-        label="导购手机号:"
-      >
-        <el-input v-model="params.salesman_mobile" placeholder="请输入导购手机号码" />
-      </SpFilterFormItem> -->
       <SpFilterFormItem v-if="!isMicorMall" prop="receipt_type" label="配送类型:">
         <el-select v-model="params.receipt_type" clearable placeholder="请选择">
           <el-option
@@ -413,8 +405,8 @@ import {
   IS_DISTRIBUTOR
 } from '@/utils'
 import { exportInvoice, orderExport } from '@/api/trade'
-import CompTableView from './components/comp-tableview'
-import CompReceiveInfo from './components/comp-receiveInfo'
+import CompTableView from './comps/comp-tableview'
+import CompReceiveInfo from './comps/comp-receiveInfo'
 import moment from 'moment'
 import {
   DISTRIBUTION_TYPE,

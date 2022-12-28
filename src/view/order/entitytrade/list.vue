@@ -413,8 +413,8 @@ import {
   IS_DISTRIBUTOR
 } from '@/utils'
 import { exportInvoice, orderExport } from '@/api/trade'
-import CompTableView from './components/comp-tableview'
-import CompReceiveInfo from './components/comp-receiveInfo'
+import CompTableView from './comps/comp-tableview'
+import CompReceiveInfo from './comps/comp-receiveInfo'
 import moment from 'moment'
 import {
   DISTRIBUTION_TYPE,
@@ -680,7 +680,7 @@ export default {
           type: 'text'
         },
         {
-          label: '支付方式',
+          label: '支付方式:',
           key: 'payType',
           type: 'text'
         },

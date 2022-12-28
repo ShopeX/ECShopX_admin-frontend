@@ -14,8 +14,12 @@
       margin-bottom: 10px;
     }
   }
-  .el-input {
+  .el-input,
+  .el-select {
     max-width: 260px;
+  }
+  .el-select {
+    display: block;
   }
   .form-item-tip {
     font-size: 13px;
@@ -57,6 +61,10 @@ export default {
     submit: {
       type: Boolean,
       default: true
+    },
+    labelWidth: {
+      type: String,
+      default: '160px'
     }
   },
   data() {
@@ -98,7 +106,6 @@ export default {
         return isShow !== false
       }
     },
-    _renderCustomComponent() {},
     _renderTextArea(item) {
       const { value } = this
       const { placeholder, maxlength, key } = item
@@ -221,8 +228,7 @@ export default {
     }
   },
   render() {
-    const { title, value, formList, width } = this
-    const Fn = () => {}
+    const { title, value, formList, width, labelWidth } = this
     const localComps = []
     const getComponentByType = (item) => {
       if (typeof item.component != 'undefined') {
@@ -272,7 +278,7 @@ export default {
           model: value
         }}
         rules={rules}
-        label-width='160px'
+        label-width={labelWidth}
         validate-on-rule-change={false}
         inline-message
       >
@@ -282,7 +288,7 @@ export default {
           } else {
             return (
               <el-form-item
-                label={`${item.label}:`}
+                label={item.label ? `${item.label}:` : ''}
                 prop={item.key}
                 v-show={this.getItemShow(item)}
               >

@@ -1,6 +1,7 @@
 // 会员路由
 const name = '营销'
 import Layout from '@/view/layout' // 主框架
+import SubLayout from '@/view/sublayout' //
 
 export default {
   path: '/marketing',
@@ -8,8 +9,18 @@ export default {
   children: [
     {
       path: 'employee/purchase',
-      name: `优惠卷管理`,
-      component: () => import('@/view/marketing/employee/purchase')
+      name: `内购`,
+      component: SubLayout,
+      children: [
+        {
+          path: '/',
+          component: () => import('@/view/marketing/employee/list')
+        },
+        {
+          path: 'create',
+          component: () => import('@/view/marketing/employee/purchase')
+        }
+      ]
     },
     {
       path: 'coupon/membermarketing',

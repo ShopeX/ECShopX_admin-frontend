@@ -1,6 +1,6 @@
 <template>
   <div>
-    <div v-if="relStore.id == '0'" class="shop-header">
+    <div class="shop-header">
       <div v-if="!VERSION_B2C && !VERSION_IN_PURCHASE" class="shop-left">
         <span class="text">小程序模版呈现：</span>
         <div class="option-item">
@@ -9,7 +9,6 @@
             v-model="index_type"
             :active-value="1"
             :inactive-value="2"
-            active-color="#13ce66"
             @change="changeShop('platform')"
           />
         </div>
@@ -19,7 +18,6 @@
             v-model="index_type"
             :active-value="2"
             :inactive-value="1"
-            active-color="#13ce66"
             @change="changeShop('shop')"
           />
         </div>
@@ -30,17 +28,16 @@
             v-model="is_enforce_sync"
             :active-value="1"
             :inactive-value="2"
-            active-color="#13ce66"
             @change="toggleSynchronizeShop"
           />
         </div>
       </div>
-      <div v-if="relStore.id == '0'" class="section-white mini-setting">
+      <div class="section-white mini-setting">
         <el-button type="text" style="margin-right: 10px" @click="handleShowConfig">
-          <i class="iconfont icon-cog" style="color: #8080ff" /> 小程序配置
+          <i class="iconfont icon-cog" /> 小程序配置
         </el-button>
         <el-button type="text" @click="handleShowTabConfig">
-          <i class="iconfont icon-cog" style="color: #8080ff" /> 小程序导航配置
+          <i class="iconfont icon-cog" /> 小程序导航配置
         </el-button>
       </div>
     </div>
@@ -76,7 +73,6 @@
             <span class="temp-label">店铺可编辑挂件</span>
             <el-switch
               v-model="item.element_edit_status"
-              active-color="#13ce66"
               :active-value="1"
               :inactive-value="2"
               @change="changeShopEdit(index)"
@@ -87,7 +83,6 @@
             <el-tooltip class="item" effect="dark" content="至少开启一套模版" placement="top-start">
               <el-switch
                 v-model="item.status"
-                active-color="#13ce66"
                 :active-value="1"
                 :inactive-value="2"
                 @change="useTemplate(index, item.status)"
@@ -116,7 +111,7 @@
           <div class="option-btns">
             <span class="btn" @click="editTemplate(item.pages_template_id)">编辑</span>
             <span class="btn" @click="copyTemplate(item.pages_template_id)">复制</span>
-            <span class="btn" @click="copyTemplate(item.pages_template_id)">导航</span>
+            <span class="btn" @click="handleClickNav(item.pages_template_id)">导航</span>
             <span class="btn" @click="abandonTemplate(item.pages_template_id)">废弃</span>
           </div>
           <div
@@ -156,12 +151,14 @@
       @chooseAllStore="allDistributorChooseAction"
       @closeStoreDialog="closeDialogAction"
     />
+
     <imgPicker
       :dialog-visible="imgsVisible"
       :sc-status="isGetImage"
       @chooseImg="pickImg"
       @closeImgDialog="closeimgsVisible"
     />
+
     <MallDecoration
       :dialog-visible="templateVisible"
       :template-name="template_name"
@@ -171,6 +168,7 @@
       @saved="closeDialog"
       @closeDialog="closeDialog"
     />
+
     <TemplatePreview
       :dialog-visible="previewVisible"
       :rel-store="relStore"
@@ -219,7 +217,6 @@
             v-model="is_open_recommend"
             :active-value="1"
             :inactive-value="2"
-            active-color="#13ce66"
             @change="toggleOpenRecommend"
           />
         </el-form-item>
@@ -228,7 +225,6 @@
             v-model="is_open_wechatapp_location"
             :active-value="1"
             :inactive-value="2"
-            active-color="#13ce66"
             @change="toggleOpenWechatappLocation"
           />
         </el-form-item>
@@ -237,7 +233,6 @@
             v-model="is_open_scan_qrcode"
             :active-value="1"
             :inactive-value="2"
-            active-color="#13ce66"
             @change="toggleOpenScanQrcode"
           />
         </el-form-item>
@@ -246,7 +241,6 @@
             v-model="is_open_official_account"
             :active-value="1"
             :inactive-value="2"
-            active-color="#13ce66"
             @change="toggleOpenOfficialAccount"
           />
         </el-form-item>
@@ -266,16 +260,6 @@
           :style="index === currentTab ? `color:${tabs.config.selectedColor}` : ''"
         >
           <i v-if="!item.iconPath" :class="`icon-${item.name} iconfont`" />
-          <!-- <svg
-            v-if="!item.iconPath"
-            class="svg-icon"
-            aria-hidden="true"
-            :style="index === currentTab ? `color:${tabs.config.selectedColor}` : ''"
-          >
-            <use :xlink:href="`#icon-${item.name}`"></use>
-
-          </svg> -->
-
           <template v-else>
             <img
               v-if="index === currentTab"
@@ -297,6 +281,18 @@
       </div>
       <tabsEditor :res="editorData" @bindImgs="showImgs" @saveTab="handelSaveTab" />
     </sideBar>
+
+    <el-drawer
+      ref="drawer"
+      title="导航设置"
+      :visible.sync="navDrawerShow"
+      direction="rtl"
+      custom-class="demo-drawer"
+    >
+      <div class="demo-drawer__content" style="width: 200px">
+        <SpForm />
+      </div>
+    </el-drawer>
   </div>
 </template>
 
@@ -426,7 +422,8 @@ export default {
       app_page_type: {
         wechat: 'wechat',
         alipay: 'alipay'
-      }
+      },
+      navDrawerShow: false
     }
   },
   mounted() {
@@ -437,6 +434,9 @@ export default {
     ...mapGetters(['app_type', 'template_name', 'ali_template_name'])
   },
   methods: {
+    handleClickNav() {
+      this.navDrawerShow = true
+    },
     getTemplateSetInfo() {
       // let params = {
       //   page_type: this.app_page_type[this.app_type]

@@ -233,7 +233,7 @@ export default {
       sendNumDialog: false,
       sendNumFormList: [
         {
-          label: '起送量:',
+          label: '起送量',
           key: 'num',
           type: 'input',
           placeholder: '留空则不做起送量限制',

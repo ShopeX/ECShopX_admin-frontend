@@ -9,7 +9,29 @@ export default {
     {
       path: 'entitytrade/tradenormalorders',
       name: `全部订单`,
-      component: () => import('@/view/mall/trade/normalorders/list'),
+      component: () => import('@/view/order/entitytrade/list'),
+      children: [
+        {
+          path: 'detail/:itemId?',
+          component: () => import('@/view/mall/trade/order/detail'),
+          meta: {
+            footerFixed: true
+          }
+        },
+        {
+          path: 'process/:itemId?',
+          component: () => import('@/view/mall/trade/order/process')
+        },
+        {
+          path: 'after-sale/:id?',
+          component: () => import('@/view/mall/trade/order/afterSale')
+        }
+      ]
+    },
+    {
+      path: 'entitytrade/purchase',
+      name: `内购订单`,
+      component: () => import('@/view/order/entitytrade/purchase'),
       children: [
         {
           path: 'detail/:itemId?',

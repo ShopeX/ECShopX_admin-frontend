@@ -24,52 +24,50 @@
     <div
       v-if="$route.path.indexOf('detail') === -1 && $route.path.indexOf('detail/storelist') === -1"
     >
-      <el-card>
-        <SpFinder
-          ref="finder"
-          :no-selection="true"
-          :setting="setting"
-          :search-row-count="3"
-          :splict-count="3"
-          :hooks="{
-            beforeSearch: beforeSearch
-          }"
-          url="/adapay/dealer/list"
-          @reset="onFinderReset"
-        >
-          <template v-slot:tableTop>
-            <el-row class="cus-btn">
-              <el-button type="primary" plain size="mini" @click="handleClose(true)">
-                新增经销商
-              </el-button>
-            </el-row>
-          </template>
-          <template v-slot:create_time>
-            <el-date-picker
-              v-model="create_time"
-              class="input-m"
-              type="daterange"
-              format="yyyy-MM-dd"
-              value-format="yyyy-MM-dd"
-              start-placeholder="开始日期"
-              end-placeholder="结束日期"
-              @change="(val) => dateChange('create', val)"
-            />
-          </template>
-          <template v-slot:open_time>
-            <el-date-picker
-              v-model="open_time"
-              class="input-m"
-              type="daterange"
-              format="yyyy-MM-dd"
-              value-format="yyyy-MM-dd"
-              start-placeholder="开始日期"
-              end-placeholder="结束日期"
-              @change="(val) => dateChange('open', val)"
-            />
-          </template>
-        </SpFinder>
-      </el-card>
+      <SpFinder
+        ref="finder"
+        :no-selection="true"
+        :setting="setting"
+        :search-row-count="3"
+        :splict-count="3"
+        :hooks="{
+          beforeSearch: beforeSearch
+        }"
+        url="/adapay/dealer/list"
+        @reset="onFinderReset"
+      >
+        <template v-slot:tableTop>
+          <el-row class="cus-btn">
+            <el-button type="primary" plain size="mini" @click="handleClose(true)">
+              新增经销商
+            </el-button>
+          </el-row>
+        </template>
+        <template v-slot:create_time>
+          <el-date-picker
+            v-model="create_time"
+            class="input-m"
+            type="daterange"
+            format="yyyy-MM-dd"
+            value-format="yyyy-MM-dd"
+            start-placeholder="开始日期"
+            end-placeholder="结束日期"
+            @change="(val) => dateChange('create', val)"
+          />
+        </template>
+        <template v-slot:open_time>
+          <el-date-picker
+            v-model="open_time"
+            class="input-m"
+            type="daterange"
+            format="yyyy-MM-dd"
+            value-format="yyyy-MM-dd"
+            start-placeholder="开始日期"
+            end-placeholder="结束日期"
+            @change="(val) => dateChange('open', val)"
+          />
+        </template>
+      </SpFinder>
       <el-dialog
         title="提示"
         :visible.sync="visibleModal"

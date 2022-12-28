@@ -36,16 +36,16 @@ export default {
       name: `会员标签分组`,
       component: () => import('@/view/member/members/tagcategory.vue')
     },
-    {
-      path: 'whitelistlist',
-      name: `白名单列表`,
-      component: () => import('@/view/member/whitelist/list')
-    },
-    {
-      path: 'whitelistuploade',
-      name: `白名单导入`,
-      component: () => import('@/view/member/whitelist/uploadeindex')
-    },
+    // {
+    //   path: 'whitelistlist',
+    //   name: `白名单列表`,
+    //   component: () => import('@/view/member/whitelist/list')
+    // },
+    // {
+    //   path: 'whitelistuploade',
+    //   name: `白名单导入`,
+    //   component: () => import('@/view/member/whitelist/uploadeindex')
+    // },
     {
       path: 'pointrule',
       name: `积分规则`,
@@ -96,10 +96,28 @@ export default {
       name: '会员注销',
       component: () => import('@/view/member/logout')
     },
+    // {
+    //   path: 'enterpriselist',
+    //   name: '内购企业列表',
+    //   component: () => import('@/view/member/members/enterprise')
+    // },
     {
-      path: 'enterpriselist',
-      name: '内购企业列表',
-      component: () => import('@/view/member/members/enterprise')
+      path: 'purchase/employee',
+      name: '员工管理',
+      component: () => import('@/view/member/purchase/employee'),
+      children: [
+        {
+          path: 'import',
+          name: `白名单导入`,
+          component: () => import('@/view/member/purchase/employeeImport')
+        }
+      ]
+    },
+
+    {
+      path: 'purchase/company',
+      name: '企业管理',
+      component: () => import('@/view/member/purchase/company')
     }
   ]
 }

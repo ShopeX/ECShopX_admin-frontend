@@ -224,6 +224,88 @@ export default {
             this.loading = false
           })
           break
+        case 'sale_category':
+          if(this.$route.query.distributor_id){
+            console.log('店铺：仅关联当前店铺商品')
+          }else{
+            console.log('平台：仅关联平台自营商品',this.$route.query)
+          }
+          // api.goods.getCategory(this.params).then((res) => {
+          //   let items = []
+          //   res.map((item) => {
+          //     let itemObj = {
+          //       id: item.category_id,
+          //       title: item.category_name
+          //     }
+          //     if (item.children.length) {
+          //       let childs = []
+          //       item.children.map((child) => {
+          //         let childObj = {
+          //           id: child.category_id,
+          //           title: child.category_name
+          //         }
+          //         if (child.children.length) {
+          //           let grands = []
+          //           child.children.map((grand) => {
+          //             const grandObj = {
+          //               id: grand.category_id,
+          //               title: grand.category_name
+          //             }
+          //             grands.push(grandObj)
+          //           })
+          //           Object.assign(childObj, { children: grands })
+          //         }
+          //         childs.push(childObj)
+          //       })
+          //       Object.assign(itemObj, { children: childs })
+          //     }
+          //     items.push(itemObj)
+          //   })
+          //   this.list = items
+          //   this.loading = false
+          // })
+          break
+        case 'management_category':
+        if(this.$route.query.distributor_id){
+            console.log('店铺：仅关联当前店铺商品')
+          }else{
+            console.log('平台：关联平台自营商品和店铺商品')
+          }
+          // api.goods.getCategory(this.params).then((res) => {
+          //   let items = []
+          //   res.map((item) => {
+          //     let itemObj = {
+          //       id: item.category_id,
+          //       title: item.category_name
+          //     }
+          //     if (item.children.length) {
+          //       let childs = []
+          //       item.children.map((child) => {
+          //         let childObj = {
+          //           id: child.category_id,
+          //           title: child.category_name
+          //         }
+          //         if (child.children.length) {
+          //           let grands = []
+          //           child.children.map((grand) => {
+          //             const grandObj = {
+          //               id: grand.category_id,
+          //               title: grand.category_name
+          //             }
+          //             grands.push(grandObj)
+          //           })
+          //           Object.assign(childObj, { children: grands })
+          //         }
+          //         childs.push(childObj)
+          //       })
+          //       Object.assign(itemObj, { children: childs })
+          //     }
+          //     items.push(itemObj)
+          //   })
+          //   this.list = items
+          //   this.loading = false
+          // })
+          break
         case 'tag':
           Object.assign(query, {
             tag_name: this.keywords

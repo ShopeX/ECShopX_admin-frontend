@@ -56,7 +56,15 @@ export default {
           value: 'category'
         },
         {
-          label: '标签',
+          label: '销售分类',
+          value: 'sale_category'
+        },
+        {
+          label: '管理分类',
+          value: 'management_category'
+        },
+        {
+          label: '商品标签',
           value: 'tag'
         },
         {

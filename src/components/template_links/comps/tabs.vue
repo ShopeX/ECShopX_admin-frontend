@@ -52,10 +52,6 @@ export default {
           value: 'store'
         },
         {
-          label: '分类',
-          value: 'category'
-        },
-        {
           label: '销售分类',
           value: 'sale_category'
         },

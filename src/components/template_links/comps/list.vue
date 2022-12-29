@@ -1,50 +1,17 @@
 <template>
   <div v-loading="loading">
-    <div v-if="type !== 'category'">
-      <el-table
-        :data="list"
-        width="100%"
-        height="420"
-        highlight-current-row
-        @current-change="handleCurrentChange"
-      >
-        <el-table-column
-          property="id"
-          :label="type === 'other_wxapp' ? 'APPID' : 'ID'"
-          width="120"
-        />
-        <el-table-column
-          property="title"
-          :label="type === 'other_wxapp' ? '页面路径' : '标题名称'"
-        />
+    <div v-if="type !== 'sale_category' && type !== 'management_category'">
+      <el-table :data="list" width="100%" height="420" highlight-current-row @current-change="handleCurrentChange">
+        <el-table-column property="id" :label="type === 'other_wxapp' ? 'APPID' : 'ID'" width="120" />
+        <el-table-column property="title" :label="type === 'other_wxapp' ? '页面路径' : '标题名称'" />
       </el-table>
-      <el-pagination
-        class="pager"
-        :page-size="params.pageSize"
-        layout="prev, pager, next"
-        :total="total"
-        @current-change="pageChange"
-      />
+      <el-pagination class="pager" :page-size="params.pageSize" layout="prev, pager, next" :total="total"
+        @current-change="pageChange" />
     </div>
-    <el-table
-      v-else
-      :data="list"
-      height="420"
-      row-key="id"
-      default-expand-all
-      highlight-current-row
-      :tree-props="{ children: 'children', hasChildren: 'hasChildren' }"
-      @current-change="handleCurrentChange"
-    >
-      <el-table-column
-        prop="id"
-        label="ID"
-        width="180"
-      />
-      <el-table-column
-        prop="title"
-        label="分类名"
-      />
+    <el-table v-else :data="list" height="420" row-key="id" default-expand-all highlight-current-row
+      :tree-props="{ children: 'children', hasChildren: 'hasChildren' }" @current-change="handleCurrentChange">
+      <el-table-column prop="id" label="ID" width="180" />
+      <el-table-column prop="title" label="分类名" />
     </el-table>
   </div>
 </template>
@@ -74,7 +41,7 @@ export default {
       default: ''
     }
   },
-  data () {
+  data() {
     return {
       list: [],
       params: {
@@ -89,30 +56,30 @@ export default {
     ...mapGetters(['template_name'])
   },
   watch: {
-    type (val) {
+    type(val) {
       if (val) {
         this.params.page = 1
         this.fetch(val)
       }
     },
-    keywords (val) {
+    keywords(val) {
       this.params.page = 1
       this.fetch(this.type)
     },
-    store (val) {
+    store(val) {
       this.params.page = 1
       this.fetch(this.type)
     },
-    appid (val) {
+    appid(val) {
       this.params.page = 1
       this.fetch(this.type)
     }
   },
-  mounted () {
+  mounted() {
     this.fetch(this.type)
   },
   methods: {
-    async fetch (type) {
+    async fetch(type) {
       this.loading = true
       let query = JSON.parse(JSON.stringify(this.params))
       switch (type) {
@@ -188,7 +155,7 @@ export default {
             this.loading = false
           })
           break
-        case 'category':
+        case 'sale_category':
           api.goods.getCategory(this.params).then((res) => {
             let items = []
             res.map((item) => {
@@ -224,87 +191,50 @@ export default {
             this.loading = false
           })
           break
-        case 'sale_category':
-          if(this.$route.query.distributor_id){
-            console.log('店铺：仅关联当前店铺商品')
-          }else{
-            console.log('平台：仅关联平台自营商品',this.$route.query)
-          }
-          // api.goods.getCategory(this.params).then((res) => {
-          //   let items = []
-          //   res.map((item) => {
-          //     let itemObj = {
-          //       id: item.category_id,
-          //       title: item.category_name
-          //     }
-          //     if (item.children.length) {
-          //       let childs = []
-          //       item.children.map((child) => {
-          //         let childObj = {
-          //           id: child.category_id,
-          //           title: child.category_name
-          //         }
-          //         if (child.children.length) {
-          //           let grands = []
-          //           child.children.map((grand) => {
-          //             const grandObj = {
-          //               id: grand.category_id,
-          //               title: grand.category_name
-          //             }
-          //             grands.push(grandObj)
-          //           })
-          //           Object.assign(childObj, { children: grands })
-          //         }
-          //         childs.push(childObj)
-          //       })
-          //       Object.assign(itemObj, { children: childs })
-          //     }
-          //     items.push(itemObj)
-          //   })
-          //   this.list = items
-          //   this.loading = false
-          // })
-          break
         case 'management_category':
-        if(this.$route.query.distributor_id){
-            console.log('店铺：仅关联当前店铺商品')
-          }else{
-            console.log('平台：关联平台自营商品和店铺商品')
+          let distributor_id = this.$route.query.distributor_id
+          Object.assign(query, {
+            is_main_category: true
+          })
+          if (distributor_id) {
+            Object.assign(query, {
+              distributor_id
+            })
           }
-          // api.goods.getCategory(this.params).then((res) => {
-          //   let items = []
-          //   res.map((item) => {
-          //     let itemObj = {
-          //       id: item.category_id,
-          //       title: item.category_name
-          //     }
-          //     if (item.children.length) {
-          //       let childs = []
-          //       item.children.map((child) => {
-          //         let childObj = {
-          //           id: child.category_id,
-          //           title: child.category_name
-          //         }
-          //         if (child.children.length) {
-          //           let grands = []
-          //           child.children.map((grand) => {
-          //             const grandObj = {
-          //               id: grand.category_id,
-          //               title: grand.category_name
-          //             }
-          //             grands.push(grandObj)
-          //           })
-          //           Object.assign(childObj, { children: grands })
-          //         }
-          //         childs.push(childObj)
-          //       })
-          //       Object.assign(itemObj, { children: childs })
-          //     }
-          //     items.push(itemObj)
-          //   })
-          //   this.list = items
-          //   this.loading = false
-          // })
+          api.goods.getCategory(query).then((res) => {
+            let items = []
+            res.map((item) => {
+              let itemObj = {
+                id: item.category_id,
+                title: item.category_name
+              }
+              if (item.children.length) {
+                let childs = []
+                item.children.map((child) => {
+                  let childObj = {
+                    id: child.category_id,
+                    title: child.category_name
+                  }
+                  if (child.children.length) {
+                    let grands = []
+                    child.children.map((grand) => {
+                      const grandObj = {
+                        id: grand.category_id,
+                        title: grand.category_name
+                      }
+                      grands.push(grandObj)
+                    })
+                    Object.assign(childObj, { children: grands })
+                  }
+                  childs.push(childObj)
+                })
+                Object.assign(itemObj, { children: childs })
+              }
+              items.push(itemObj)
+            })
+            this.list = items
+            this.loading = false
+          })
           break
         case 'tag':
           Object.assign(query, {
@@ -476,11 +406,11 @@ export default {
         default:
       }
     },
-    pageChange (val) {
+    pageChange(val) {
       this.params.page = val
       this.fetch(this.type)
     },
-    handleCurrentChange (val) {
+    handleCurrentChange(val) {
       this.$emit('onClick', val)
     }
   }

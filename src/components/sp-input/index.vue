@@ -11,7 +11,13 @@
 <template>
   <div class="sp-input">
     <span class="prefix">{{ prefix }}</span>
-    <el-input v-model="val" :style="styleName" type="text" @change="onChangeInput" />
+    <el-input
+      v-model="val"
+      :placeholder="placeHolder"
+      :style="styleName"
+      type="text"
+      @change="onChangeInput"
+    />
     <span class="suffix">{{ suffix }}</span>
   </div>
 </template>
@@ -35,6 +41,10 @@ export default {
     width: {
       type: String,
       default: ''
+    },
+    placeholder: {
+      type: String,
+      default: ''
     }
   },
   data() {
@@ -47,6 +57,9 @@ export default {
       return {
         width: this.width
       }
+    },
+    placeHolder() {
+      return this.placeholder
     }
   },
   watch: {

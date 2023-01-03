@@ -331,9 +331,10 @@ export default {
   },
   props: ['value'],
   data() {
-    const { multiple = false, data } = this.value
+    const { multiple = false, data, max = 1 } = this.value
     return {
       multiple,
+      max,
       list: [],
       selected: data,
       catgoryList: [],
@@ -500,7 +501,11 @@ export default {
         if (fdx > -1) {
           this.selected.splice(fdx, 1)
         } else {
-          this.selected.push(_item)
+          if (this.selected.length < this.max) {
+            this.selected.push(_item)
+          } else {
+            this.$message.error(`最多选择${this.max}张图片`)
+          }
         }
       }
       this.updateVal(this.selected)

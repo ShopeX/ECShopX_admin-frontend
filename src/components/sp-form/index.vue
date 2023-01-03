@@ -84,13 +84,16 @@ export default {
       // this.$emit('input', false)
     },
     handleSubmit() {
-      this.$refs['form'].validate((valid) => {
-        if (valid) {
-          this.$emit('input', this.value)
-          this.$emit('onSubmit')
-        } else {
-          return false
-        }
+      return new Promise((resolve) => {
+        this.$refs['form'].validate((valid) => {
+          if (valid) {
+            this.$emit('input', this.value)
+            this.$emit('onSubmit')
+            resolve()
+          } else {
+            return false
+          }
+        })
       })
     },
     resetForm() {

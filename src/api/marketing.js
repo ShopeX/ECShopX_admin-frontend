@@ -538,3 +538,65 @@ export function getAftersales(params) {
     params
   })
 }
+
+// 获取内购活动列表
+// export function getPurchaseActivity(params) {
+//   return fetch({
+//     url: '/employeepurchase/activity',
+//     method: 'get',
+//     params
+//   })
+// }
+
+// 创建内购活动
+export function createPurchaseActivity(params) {
+  return fetch({
+    url: '/employeepurchase/activity',
+    method: 'post',
+    params
+  })
+}
+
+// 内购活动添加商品
+export function addGoodsInActivity(params) {
+  return fetch({
+    url: '/employeepurchase/activity/items',
+    method: 'post',
+    params
+  })
+}
+
+// 内购活动列表
+export function getPurchaseActivity(params) {
+  return fetch({
+    url: '/employeepurchase/activities',
+    method: 'get',
+    params
+  })
+}
+
+// 获取活动商品列表
+export function getActivityItems(params) {
+  return fetch({
+    url: '/employeepurchase/activity/items',
+    method: 'get',
+    params
+  })
+}
+
+// 删除内购活动商品
+export function deleteActivityItem(activityId, itemId) {
+  return fetch({
+    url: `/employeepurchase/activity/${activityId}/item/${itemId}`,
+    method: 'delete'
+  })
+}
+
+// 修改活动商品价格、库存
+export function updateActivityItem(params) {
+  return fetch({
+    url: `/employeepurchase/activity/items`,
+    method: 'put',
+    params
+  })
+}

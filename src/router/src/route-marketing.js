@@ -19,6 +19,14 @@ export default {
         {
           path: 'create',
           component: () => import('@/view/marketing/employee/purchase')
+        },
+        {
+          path: 'result/:id',
+          component: () => import('@/view/marketing/employee/result')
+        },
+        {
+          path: 'goods/:id',
+          component: () => import('@/view/marketing/employee/addGoods')
         }
       ]
     },

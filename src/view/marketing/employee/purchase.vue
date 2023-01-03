@@ -16,20 +16,6 @@
       max-width: 100% !important;
     }
   }
-  // .activity-time-field {
-  //   margin-top: 10px;
-  //   .form-item-content {
-  //     margin-top: 10px;
-  //     label {
-  //       margin-right: 10px;
-  //     }
-  //   }
-  //   .el-range-input {
-  //   }
-  //   .el-range-separator {
-  //     width: 30px;
-  //   }
-  // }
   .el-range-separator {
     width: 30px;
   }
@@ -55,12 +41,46 @@
         margin-right: 10px;
         white-space: nowrap;
       }
+      &:not(:last-child) {
+        margin-bottom: 6px;
+      }
+    }
+    .form-item-tip {
+      margin-left: 68px;
     }
     .content-item {
       display: flex;
       align-items: center;
+    }
+  }
+  .activity-relatives-field {
+    margin-top: 10px;
+    .form-item-content {
+      label {
+        margin-right: 10px;
+        white-space: nowrap;
+      }
       &:not(:last-child) {
         margin-bottom: 6px;
+      }
+    }
+    .form-item-tip {
+      margin-left: 10px;
+    }
+    .content-item {
+      display: flex;
+    }
+    .item-wrap {
+      display: flex;
+      align-items: center;
+      &:not(:last-child) {
+        margin-bottom: 8px;
+      }
+      .el-radio {
+        margin-right: 0;
+      }
+      .el-radio__label {
+        color: #666;
       }
     }
   }
@@ -97,16 +117,15 @@
       />
     </el-card>
     <el-card class="el-card--normal" header="活动规则">
+      {{ activityRule }}
       <SpForm
-        ref="formBase"
+        ref="activityRule"
         v-model="activityRule"
         class="base-form"
         :form-list="activityRuleList"
         :submit="false"
       />
     </el-card>
-    <el-card class="el-card--normal" header="活动商品" />
-
     <div class="footer-container">
       <el-button
         @click="
@@ -117,21 +136,14 @@
       >
         取消
       </el-button>
-      <el-button
-        type="primary"
-        @click="
-          () => {
-            this.$refs['form'].handleSubmit()
-          }
-        "
-      >
-        保存
-      </el-button>
+      <el-button type="primary" @click="onSubmitForm"> 保存 </el-button>
     </div>
   </div>
 </template>
 
 <script>
+import { isEmpty } from '@/utils'
+import moment from 'moment'
 export default {
   name: '',
   data() {
@@ -140,7 +152,7 @@ export default {
         name: '',
         title: '',
         linkHome: null,
-        pic: []
+        pic: {}
       },
       formBaseList: [
         {
@@ -166,7 +178,7 @@ export default {
         },
         {
           label: '活动首页',
-          key: 'name',
+          key: 'linkHome',
           component: () => (
             <div>
               <span class='link-home'>
@@ -176,11 +188,18 @@ export default {
                 选择首页
               </el-button>
             </div>
-          )
+          ),
+          validator: (rule, value, callback) => {
+            if (!this.formBase.linkHome) {
+              callback(new Error('请选择活动首页'))
+            } else {
+              callback()
+            }
+          }
         },
         {
           label: '分享活动',
-          key: 'name',
+          key: 'pic',
           component: () => (
             <div class='activity-pic-field'>
               <div class='form-item-tip'>
@@ -189,24 +208,29 @@ export default {
               </div>
               <SpImagePicker v-model={this.formBase.pic} />
             </div>
-          )
+          ),
+          validator: (rule, value, callback) => {
+            if (isEmpty(this.formBase.pic)) {
+              callback(new Error('请选择活动图片'))
+            } else {
+              callback()
+            }
+          }
         }
       ],
       activityRule: {
         companyList: [],
         preheatTime: '',
-        // personnel: [],
         employee: {
           datetime: [],
           quota: ''
         },
-        limit: {
-          employee: '',
-          relatives: {
-            type: 1,
-            limit: 100,
-            shareLimit: 100
-          }
+        relatives: {
+          join: false,
+          num: '',
+          datetime: [],
+          type: '1',
+          shareLimit: ''
         },
         orderMiniAmount: '',
         modifyReceiveAddress: ''
@@ -216,7 +240,6 @@ export default {
           label: '参与企业',
           key: 'companyList',
           type: 'input',
-          required: true,
           component: () => (
             <div class='company-list'>
               {this.activityRule.companyList.map((item, index) => (
@@ -236,12 +259,17 @@ export default {
             </div>
           ),
           placeholder: '活动名称，管理活动用，不对消费者展示，最多30个字',
-          message: '活动名称不能为空'
+          validator: (rule, value, callback) => {
+            if (this.activityRule.companyList.length == 0) {
+              callback(new Error('请选择参与企业'))
+            } else {
+              callback()
+            }
+          }
         },
         {
           label: '开始预热',
           key: 'preheatTime',
-          required: true,
           component: () => (
             <div class='preheat-time'>
               从
@@ -254,7 +282,13 @@ export default {
               开始活动将展示在活动列表
             </div>
           ),
-          message: '请选择预热时间'
+          validator: (rule, value, callback) => {
+            if (this.activityRule.preheatTime.length == 0) {
+              callback(new Error('请选择活动预热时间'))
+            } else {
+              callback()
+            }
+          }
         },
         {
           label: '员工',
@@ -270,13 +304,16 @@ export default {
                     range-separator='至'
                     start-placeholder='开始时间'
                     end-placeholder='结束时间'
-                  ></el-date-picker>
+                  />
                 </div>
+                <div class='form-item-tip'>活动人员在该段内可购买商品</div>
+              </div>
+              <div class='form-item-content'>
                 <div class='content-item'>
                   <label>购买额度</label>
                   <SpInput
-                    value={this.activityRule.employee.quota}
-                    width='100px'
+                    v-model={this.activityRule.employee.quota}
+                    width='120px'
                     placeholder='大于0的整数'
                     prefix='每人最多可购买额度'
                     suffix='元'
@@ -284,73 +321,105 @@ export default {
                 </div>
               </div>
             </div>
-          )
+          ),
+          validator: (rule, value, callback) => {
+            if (this.activityRule.employee.datetime.length == 0) {
+              callback(new Error('请选择活动购买时间'))
+            } else if (!this.activityRule.employee.quota) {
+              callback(new Error('请输入活动购买额度'))
+            } else {
+              callback()
+            }
+          }
         },
-        // {
-        //   label: '参与人员',
-        //   key: 'personnel',
-        //   type: 'checkbox',
-        //   options: [
-        //     { name: '员工', label: '1' },
-        //     { name: '亲友', label: '2' }
-        //   ],
-        //   message: '活动名称不能为空'
-        // },
-        // {
-        //   label: '购买额度',
-        //   key: 'time',
-        //   component: () => (
-        //     <div class='activity-limit-field'>
-        //       <div class='form-item-tip'>活动人员在设置的时间段内可参与活动</div>
-        //       <div class='form-item-content'>
-        //         <div class='content-item'>
-        //           <label>员工</label>
-        //           <SpInput width='100px' prefix='每人最多可购买额度' suffix='元' />
-        //         </div>
-        //         <div class='content-item'>
-        //           <label>亲友</label>
-        //           <div class='content-item-field'>
-        //             <div class='item-wrap'>
-        //               <el-radio v-model={this.activityRule.limit.relatives.type} />
-        //               <SpInput width='100px' prefix='每人最多可购买额度' suffix='元' />
-        //             </div>
-        //             <div class='item-wrap'>
-        //               <el-radio v-model={this.activityRule.limit.relatives.type} />
-        //               <SpInput width='100px' prefix='所有亲友共享额度' suffix='元' />
-        //             </div>
-        //           </div>
-        //         </div>
-        //       </div>
-        //     </div>
-        //   ),
-        //   message: '活动名称不能为空'
-        // },
+        {
+          label: '亲友',
+          key: 'relatives',
+          component: () => (
+            <div class='activity-relatives-field'>
+              <div class='form-item-content'>
+                <div class='content-item'>
+                  <el-switch v-model={this.activityRule.relatives.join} />
+                  <span class='form-item-tip'>亲友参与活/亲友不参与活动</span>
+                </div>
+              </div>
+              <div class='form-item-content'>
+                <div class='content-item'>
+                  <label>邀请亲友</label>
+                  <SpInput
+                    v-model={this.activityRule.relatives.num}
+                    width='120px'
+                    placeholder='大于0的整数'
+                    prefix='每名员工最多可邀请'
+                    suffix='名亲友'
+                  />
+                </div>
+              </div>
+              <div class='form-item-content'>
+                <div class='content-item'>
+                  <label>购买时间</label>
+                  <el-date-picker
+                    v-model={this.activityRule.relatives.datetime}
+                    type='daterange'
+                    range-separator='至'
+                    start-placeholder='开始时间'
+                    end-placeholder='结束时间'
+                  />
+                </div>
+              </div>
+              <div class='form-item-content'>
+                <div class='content-item'>
+                  <label>购买额度</label>
+                  <div class='content-item-field'>
+                    <div class='item-wrap'>
+                      <el-radio v-model={this.activityRule.relatives.type} label='1'>
+                        <SpInput
+                          v-model={this.activityRule.relatives.shareLimit}
+                          width='120px'
+                          placeholder='大于0的整数'
+                          prefix='每人最多可购买额度'
+                          suffix='元'
+                        />
+                      </el-radio>
+                    </div>
+                    <div class='item-wrap'>
+                      <el-radio v-model={this.activityRule.relatives.type} label='2'>
+                        共享员工额度
+                      </el-radio>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          ),
+          message: '活动名称不能为空'
+        },
         {
           label: '订单最低金额',
           key: 'orderMiniAmount',
-          component: () => <SpInput width='100px' prefix='单笔订单不低于' suffix='元' />
+          component: () => (
+            <SpInput
+              v-model={this.activityRule.orderMiniAmount}
+              width='120px'
+              placeholder='大于0的整数'
+              prefix='单笔订单不低于'
+              suffix='元'
+            />
+          )
         },
         {
           label: '修改收货地址',
           key: 'modifyReceiveAddress',
           component: () => (
-            <SpInput width='100px' prefix='活动结束后' suffix='小时内买家可修改收货地址' />
+            <SpInput
+              v-model={this.activityRule.modifyReceiveAddress}
+              width='140px'
+              placeholder='大于等于0的整数'
+              prefix='活动进行中所有买家（员工和亲友）都可以修改收货地址，活动结束后'
+              suffix='小时内买家可修改收货地址，已发货订单不允许修改收货地址'
+            />
           ),
-          tip: '请输入≥0的整数，从活动结束时间开始开始计算，例如24代表活动结束后24个小时(1天)内买家都可以修改收货地'
-        }
-      ],
-      companyList: [
-        {
-          value: '1',
-          label: '企业1'
-        },
-        {
-          value: '2',
-          label: '企业2'
-        },
-        {
-          value: '3',
-          label: '企业3'
+          tip: '请输入大于等于0的整数，从活动结束时间开始开始计算，例如24代表活动结束后24个小时(1天)内买家都可以修改收货地址；活动进行过程中允许买家修改地址'
         }
       ]
     }
@@ -373,6 +442,45 @@ export default {
     },
     closeCompany(index) {
       this.activityRule.companyList.splice(index, 1)
+    },
+    async onSubmitForm() {
+      await this.$refs['formBase'].handleSubmit()
+      await this.$refs['activityRule'].handleSubmit()
+      const {
+        name,
+        title,
+        linkHome: { pages_template_id },
+        pic: { url }
+      } = this.formBase
+      const {
+        companyList,
+        preheatTime,
+        employee: { datetime: employeeDateTime, quota },
+        relatives: { join, num, datetime: relativesDateTime, type, shareLimit },
+        orderMiniAmount,
+        modifyReceiveAddress
+      } = this.activityRule
+      const params = {
+        name,
+        title,
+        pages_template_id,
+        share_pic: url,
+        enterprise_id: companyList.map((item) => item.id),
+        display_time: moment(preheatTime).unix(),
+        employee_begin_time: moment(employeeDateTime[0]).unix(),
+        employee_end_time: moment(employeeDateTime[1]).unix(),
+        employee_limitfee: quota,
+        if_relative_join: join,
+        invite_limit: num,
+        relative_begin_time: moment(relativesDateTime[0]).unix(),
+        relative_end_time: moment(relativesDateTime[1]).unix(),
+        if_share_limitfee: type == '2',
+        relative_limitfee: shareLimit,
+        minimum_amount: orderMiniAmount,
+        close_modify_hours_after_activity: modifyReceiveAddress
+      }
+      const { id } = await this.$api.marketing.createPurchaseActivity(params)
+      this.$router.replace({ path: `/marketing/employee/purchase/result/${id}` })
     }
   }
 }

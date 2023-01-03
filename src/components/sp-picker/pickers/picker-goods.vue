@@ -1,7 +1,7 @@
 <style lang="scss">
 .picker-goods {
   .sp-filter-form {
-    padding: 8px 8px 0 8px;
+    padding: 8px;
     margin-bottom: 0;
 
     &-item {

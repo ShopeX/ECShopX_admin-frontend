@@ -1,6 +1,7 @@
 import log from './log'
 import CommonUtil from '@/common/js/util'
 import store from '@/store'
+import { isEmpty } from 'lodash'
 
 const isPrimitiveType = (val, type) => Object.prototype.toString.call(val) === type
 
@@ -22,6 +23,10 @@ export function isArray(val) {
 
 export function isBoolean(val) {
   return isPrimitiveType(val, '[object Boolean]')
+}
+
+export function isString(val) {
+  return isPrimitiveType(val, '[object String]')
 }
 
 // 云店
@@ -225,6 +230,6 @@ export function getRegionIdByName(region, district) {
   return result
 }
 
-export { log, export_open }
+export { log, export_open, isEmpty }
 
 export default {}

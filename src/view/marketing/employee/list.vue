@@ -74,7 +74,7 @@
       :hooks="{
         beforeSearch: beforeSearch
       }"
-      url="/enterprise"
+      url="/employeepurchase/activities"
     />
   </div>
 </template>
@@ -83,6 +83,7 @@
 import { PICKER_DATE_OPTIONS } from '@/consts'
 import Pages from '@/utils/pages'
 import { createSetting } from '@shopex/finder'
+import moment from 'moment'
 export default {
   name: '',
   data() {
@@ -91,16 +92,16 @@ export default {
         name: '',
         datetime: [],
         enterprise_id: [],
-        activityState: ''
+        activityState: 'all'
       },
       defaultTime: ['00:00:00', '23:59:59'],
       pickerOptions: PICKER_DATE_OPTIONS,
       enterpriseList: [],
       activityStatus: [
-        { title: '全部', value: '0' },
-        { title: '未开始', value: '1' },
-        { title: '进行中', value: '2' },
-        { title: '已结束', value: '3' }
+        { title: '全部', value: 'all' },
+        { title: '未开始', value: 'not_started' },
+        { title: '进行中', value: 'ongoing' },
+        { title: '已结束', value: 'over' }
       ],
       setting: createSetting({
         actions: [
@@ -123,8 +124,7 @@ export default {
             buttonType: 'text',
             action: {
               handler: async ([row]) => {
-                Object.keys(this.companyForm).forEach((key) => (this.companyForm[key] = row[key]))
-                this.addDialog = true
+                this.$router.push({ path: `/marketing/employee/purchase/goods/${row.id}` })
               }
             }
           },
@@ -154,26 +154,38 @@ export default {
           }
         ],
         columns: [
-          { name: '活动名称', key: 'id' },
+          { name: '活动名称', key: 'name' },
           {
-            name: '员工额度',
-            key: 'name'
+            name: '员工额度（元）',
+            key: 'employee_limitfee',
+            width: '120'
           },
           {
-            name: '亲友额度',
-            key: 'enterprise_sn'
+            name: '亲友额度（元）',
+            key: 'relative_limitfee',
+            width: '120'
           },
           {
             name: '预热时间',
-            key: 'enterprise_sn'
+            key: 'display_time',
+            width: '220',
+            formatter: (value, row, col) => {
+              return moment(value * 1000).format('YYYY-MM-DD HH:mm:ss')
+            }
           },
           {
             name: '购买时间',
-            key: 'enterprise_sn'
+            key: 'employee_end_time',
+            width: '320',
+            formatter: (value, { employee_end_time, employee_begin_time }, col) => {
+              return `${moment(employee_end_time * 1000).format('YYYY-MM-DD HH:mm:ss')} ~ ${moment(
+                employee_begin_time * 1000
+              ).format('YYYY-MM-DD HH:mm:ss')}`
+            }
           },
           {
             name: '状态',
-            key: 'enterprise_sn'
+            key: 'status_desc'
           }
         ]
       })
@@ -185,12 +197,30 @@ export default {
   },
   methods: {
     beforeSearch(params) {
-      return {
+      const {
+        name,
+        datetime: [display_time_begin, display_time_end],
+        enterprise_id,
+        activityState
+      } = this.queryForm
+      params = {
         ...params,
-        ...this.queryForm
+        display_time_begin,
+        display_time_end,
+        enterprise_id,
+        name
       }
+      if (activityState != 'all') {
+        params = {
+          ...params,
+          status: activityState
+        }
+      }
+      return params
     },
-    onSearch() {},
+    onSearch() {
+      this.$refs['finder'].refresh()
+    },
     createActivity() {
       this.$router.push({ path: '/marketing/employee/purchase/create' })
     },

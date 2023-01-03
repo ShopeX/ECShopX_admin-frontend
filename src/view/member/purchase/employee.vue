@@ -26,7 +26,7 @@
       <SpFilterFormItem prop="enterprise_id" label="企业:" size="max">
         <el-select
           v-model="queryForm.enterprise_id"
-          v-scroll="getEnterpriseList"
+          v-scroll="() => pagesQuery.nextPage()"
           multiple
           placeholder="请选择"
         >
@@ -159,7 +159,7 @@ export default {
           component: () => (
             <el-select
               v-model={this.employeeForm.enterprise_id}
-              v-scroll={this.getCompanyList}
+              v-scroll={() => this.pages.nextPage()}
               filterable
             >
               {this.companyList.map((item, index) => (
@@ -269,11 +269,13 @@ export default {
     }
   },
   created() {
-    this.pages = new Pages()
-    this.getCompanyList()
+    this.pages = new Pages({
+      fetch: this.getCompanyList
+    }).nextPage()
 
-    this.pagesQuery = new Pages()
-    this.getEnterpriseList()
+    this.pagesQuery = new Pages({
+      fetch: this.getEnterpriseList
+    }).nextPage()
   },
   methods: {
     beforeSearch(params) {
@@ -303,27 +305,21 @@ export default {
       this.addDialog = false
       this.$refs['finder'].refresh()
     },
-    async getCompanyList() {
-      const { page, pageSize, nextPage } = this.pages.options
-      if (nextPage) {
-        const { list, total_count } = await this.$api.member.getPurchaseCompanyList({
-          page,
-          pageSize
-        })
-        this.pages.setTotal(total_count)
-        this.companyList = this.companyList.concat(list)
-      }
+    async getCompanyList({ page, pageSize }) {
+      const { list, total_count } = await this.$api.member.getPurchaseCompanyList({
+        page,
+        pageSize
+      })
+      this.pages.setTotal(total_count)
+      this.companyList = this.companyList.concat(list)
     },
-    async getEnterpriseList() {
-      const { page, pageSize, nextPage } = this.pagesQuery.options
-      if (nextPage) {
-        const { list, total_count } = await this.$api.member.getPurchaseCompanyList({
-          page,
-          pageSize
-        })
-        this.pagesQuery.setTotal(total_count)
-        this.enterpriseList = this.enterpriseList.concat(list)
-      }
+    async getEnterpriseList({ page, pageSize }) {
+      const { list, total_count } = await this.$api.member.getPurchaseCompanyList({
+        page,
+        pageSize
+      })
+      this.pagesQuery.setTotal(total_count)
+      this.enterpriseList = this.enterpriseList.concat(list)
     }
   }
 }

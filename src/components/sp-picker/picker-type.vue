@@ -2,6 +2,8 @@
 import {
   PickerImage,
   PickerGoods,
+  PickerGoodsList,
+  PickerGoodsSku,
   PickerShop,
   PickerZitiList,
   PickerAfterSalesList,
@@ -15,6 +17,10 @@ function resolvePicker(type) {
       return PickerImage
     case 'pickerGoods':
       return PickerGoods
+    case 'pickerGoodsList':
+      return PickerGoodsList
+    case 'pickerGoodsSku':
+      return PickerGoodsSku
     case 'pickerShop':
       return PickerShop
     case 'pickerZitiList':

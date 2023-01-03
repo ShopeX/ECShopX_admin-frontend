@@ -1,154 +1,102 @@
+<style lang="scss" scoped>
+.sp-filter-form {
+  margin-bottom: 16px;
+}
+.total-display {
+  margin: 10px 0 0;
+}
+</style>
 <template>
   <div>
-    <el-form label-width="100px">
-      <el-form-item label="选择日期范围">
-        <el-col :span="12">
-          <el-date-picker
-            v-model="vdate"
-            type="daterange"
-            alue-format="yyyy-MM-dd"
-            align="right"
-            unlink-panels
-            range-separator="至"
-            start-placeholder="开始日期"
-            end-placeholder="结束日期"
-            style="width: 100%"
-            :picker-options="pickerOptions"
-            value-format="yyyy-MM-dd"
-            @change="dateChange"
+    {{ queryForm }}
+    <SpFilterForm :model="queryForm" @onSearch="onSearch" @onReset="onSearch">
+      <SpFilterFormItem prop="datetime" label="查询日期:">
+        <el-date-picker
+          v-model="queryForm.datetime"
+          clearable
+          type="daterange"
+          align="right"
+          format="yyyy-MM-dd"
+          range-separator="至"
+          start-placeholder="开始日期"
+          end-placeholder="结束日期"
+          :picker-options="pickerOptions"
+        />
+      </SpFilterFormItem>
+      <SpFilterFormItem prop="enterprise_id" label="内购活动:" size="max">
+        <el-select
+          v-model="queryForm.enterprise_id"
+          v-scroll="getActivityList"
+          multiple
+          placeholder="请选择"
+        >
+          <el-option
+            v-for="(item, index) in activityList"
+            :key="`activity-item__${index}`"
+            :label="item.name"
+            :value="item.id"
           />
+        </el-select>
+      </SpFilterFormItem>
+    </SpFilterForm>
+
+    <el-tabs v-model="activeName" type="card" @tab-click="handleClick">
+      <el-row class="total-display" :gutter="20">
+        <el-col v-for="(item, index) in tabList" :key="`tab-col__${index}`" :span="4">
+          <div>
+            <el-statistic
+              :value="item.total"
+              :title="`${item.label}${item.unit ? '（' + item.unit + '）' : ''}`"
+            />
+          </div>
         </el-col>
-      </el-form-item>
-    </el-form>
-    <el-tabs
-      v-if="$route.path.indexOf('editor') === -1"
-      v-model="activeName"
-      type="border-card"
-      @tab-click="handleClick"
-    >
+      </el-row>
+
       <el-tab-pane
-        label="订单数"
-        name="order_count"
+        v-for="(item, index) in tabList"
+        :key="`tab-pane__${index}`"
+        :label="item.label"
+        :name="item.key"
       >
         <section>
-          <canvas
-            id="order_count"
-            height="120"
-          />
-        </section>
-      </el-tab-pane>
-      <el-tab-pane
-        label="付款订单数"
-        name="order_payed_count"
-      >
-        <section>
-          <canvas
-            id="order_payed_count"
-            height="120"
-          />
-        </section>
-      </el-tab-pane>
-      <el-tab-pane
-        label="交易额"
-        name="amount_payed_count"
-      >
-        <section>
-          <canvas
-            id="amount_payed_count"
-            height="120"
-          />
-        </section>
-      </el-tab-pane>
-      <el-tab-pane
-        label="GMV"
-        name="gmv_count"
-      >
-        <section>
-          <canvas
-            id="gmv_count"
-            height="120"
-          />
-        </section>
-      </el-tab-pane>
-      <el-tab-pane
-        label="售后单数"
-        name="aftersales_count"
-      >
-        <section>
-          <canvas
-            id="aftersales_count"
-            height="120"
-          />
-        </section>
-      </el-tab-pane>
-      <el-tab-pane
-        label="退款额"
-        name="refunded_count"
-      >
-        <section>
-          <canvas
-            id="refunded_count"
-            height="120"
-          />
+          <canvas :id="item.key" height="120" />
         </section>
       </el-tab-pane>
     </el-tabs>
-    <template>
-      <el-table
-        :data="allListData"
-        stripe
-        border
-        style="width: 100%"
-      >
-        <el-table-column
-          prop="count_date"
-          label="日期"
-          fixed
-        />
-        <el-table-column
-          prop="order_count"
-          label="订单数"
-        />
-        <el-table-column
-          prop="order_payed_count"
-          label="付款订单数"
-        />
-        <el-table-column
-          prop="amount_payed_count"
-          label="交易额"
-        >
-          <template slot-scope="scope">
-            ￥{{ scope.row.amount_payed_count / 100 }}
-          </template>
-        </el-table-column>
-        <el-table-column
-          prop="gmv_count"
-          label="GMV"
-        >
-          <template slot-scope="scope">
-            ￥{{ scope.row.gmv_count / 100 }}
-          </template>
-        </el-table-column>
-        <el-table-column
-          prop="aftersales_count"
-          label="售后单数"
-        />
-        <el-table-column label="退款额">
-          <template slot-scope="scope">
-            ￥{{ scope.row.refunded_count / 100 }}
-          </template>
-        </el-table-column>
-      </el-table>
-    </template>
+
+    <el-table :data="allListData" stripe border style="width: 100%">
+      <el-table-column prop="count_date" label="日期" fixed />
+      <el-table-column prop="order_count" label="订单数" />
+      <el-table-column prop="order_payed_count" label="付款订单数" />
+      <el-table-column prop="amount_payed_count" label="交易额">
+        <template slot-scope="scope"> ￥{{ scope.row.amount_payed_count / 100 }} </template>
+      </el-table-column>
+      <el-table-column prop="gmv_count" label="GMV">
+        <template slot-scope="scope"> ￥{{ scope.row.gmv_count / 100 }} </template>
+      </el-table-column>
+      <el-table-column prop="aftersales_count" label="售后单数" />
+      <el-table-column label="退款额">
+        <template slot-scope="scope"> ￥{{ scope.row.refunded_count / 100 }} </template>
+      </el-table-column>
+    </el-table>
   </div>
 </template>
 <script>
 import { mapGetters } from 'vuex'
 import chart from 'chart.js'
+import { PICKER_DATE_OPTIONS } from '@/consts'
+import Pages from '@/utils/pages'
+import moment from 'moment'
 import { getCompanyData } from '../../../../api/datacube'
 export default {
-  data () {
+  data() {
+    const start = moment().subtract('7', 'day')
+    const end = moment().subtract('1', 'day')
     return {
+      queryForm: {
+        datetime: [start, end]
+      },
+      activityList: [],
       vdate: '',
       loading: true,
       activeName: 'order_count',
@@ -158,6 +106,14 @@ export default {
       },
       allListData: [],
       dataTimeArr: [],
+      tabList: [
+        { key: 'order_count', label: '订单', total: 0, unit: '' },
+        { key: 'order_payed_count', label: '付款订单数', total: 0, unit: '' },
+        { key: 'amount_payed_count', label: '交易额', total: 0, unit: '元' },
+        { key: 'gmv_count', label: 'GMV', total: 0, unit: '元' },
+        { key: 'aftersales_count', label: '售后单数', total: 0, unit: '' },
+        { key: 'refunded_count', label: '退款额', total: 0, unit: '元' }
+      ],
       dataInfo: {
         order_count: {
           label: '订单',
@@ -205,43 +161,14 @@ export default {
         purple: 'rgb(153, 102, 255)',
         grey: 'rgb(201, 203, 207)'
       },
-      pickerOptions: {
-        shortcuts: [
-          {
-            text: '最近一周',
-            onClick (picker) {
-              const start = new Date()
-              const end = new Date()
-              start.setTime(start.getTime() - 3600 * 1000 * 24 * 7)
-              end.setTime(end.getTime() - 3600 * 1000 * 24 * 1)
-              picker.$emit('pick', [start, end])
-            }
-          },
-          {
-            text: '最近一个月',
-            onClick (picker) {
-              const start = new Date()
-              const end = new Date()
-              start.setTime(start.getTime() - 3600 * 1000 * 24 * 30)
-              end.setTime(end.getTime() - 3600 * 1000 * 24 * 1)
-              picker.$emit('pick', [start, end])
-            }
-          },
-          {
-            text: '最近三个月',
-            onClick (picker) {
-              const start = new Date()
-              const end = new Date()
-              start.setTime(start.getTime() - 3600 * 1000 * 24 * 90)
-              end.setTime(end.getTime() - 3600 * 1000 * 24 * 1)
-              picker.$emit('pick', [start, end])
-            }
-          }
-        ]
-      }
+      pickerOptions: PICKER_DATE_OPTIONS
     }
   },
-  mounted () {
+  created() {
+    this.pagesQuery = new Pages()
+    this.getActivityList()
+  },
+  mounted() {
     var start = new Date()
     var end = new Date()
     start.setTime(start.getTime() - 3600 * 1000 * 24 * 7)
@@ -250,15 +177,11 @@ export default {
     this.getCompanyDataList(this.activeName)
   },
   methods: {
-    handleClick (tab, event) {
+    onSearch() {},
+    handleClick(tab, event) {
       this.chartInit(tab.name)
     },
-    dateChange (val) {
-      this.params.start = val[0]
-      this.params.end = val[1]
-      this.getCompanyDataList(this.activeName)
-    },
-    getCompanyDataList (pane_name) {
+    getCompanyDataList(pane_name) {
       this.dataTimeArr = []
       this.dataInfo.order_count.data_list = []
       this.dataInfo.amount_payed_count.data_list = []
@@ -322,7 +245,8 @@ export default {
           })
         })
     },
-    chartInit (pane_name) {
+
+    chartInit(pane_name) {
       var config = {
         type: 'line',
         data: {
@@ -374,6 +298,18 @@ export default {
       }
       var ctx = document.getElementById(pane_name).getContext('2d')
       window.myLine = new Chart(ctx, config)
+    },
+
+    async getActivityList() {
+      const { page, pageSize, nextPage } = this.pagesQuery.options
+      if (nextPage) {
+        const { list, total_count } = await this.$api.marketing.getPurchaseActivity({
+          page,
+          pageSize
+        })
+        this.pagesQuery.setTotal(total_count)
+        this.activityList = this.activityList.concat(list)
+      }
     }
   }
 }

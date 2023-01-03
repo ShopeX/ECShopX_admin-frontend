@@ -32,6 +32,8 @@ export default {
     const $picker = {
       image: (args) => fn({ value: { ...args }, type: 'pickerImage', width: '788px' }),
       goods: (args) => fn({ value: { ...args }, type: 'pickerGoods', width: '1110px' }),
+      goodsList: (args) => fn({ value: { ...args }, type: 'pickerGoodsList', width: '1110px' }),
+      goodsSku: (args) => fn({ value: { ...args }, type: 'pickerGoodsSku' }),
       shop: (args) => fn({ value: { ...args }, type: 'pickerShop' }),
       zitiList: (args) => fn({ value: { ...args }, type: 'pickerZitiList' }),
       afterSalesList: (args) => fn({ value: { ...args }, type: 'pickerAfterSalesList' }),

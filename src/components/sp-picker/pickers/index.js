@@ -1,5 +1,7 @@
 export { default as PickerImage } from './picker-image'
 export { default as PickerGoods } from './picker-goods'
+export { default as PickerGoodsList } from './picker-goodslist'
+export { default as PickerGoodsSku } from './picker-goodssku'
 export { default as PickerShop } from './picker-shop'
 export { default as PickerZitiList } from './picker-zitilist'
 export { default as PickerAfterSalesList } from './picker-aftersales'

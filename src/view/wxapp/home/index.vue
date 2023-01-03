@@ -1,6 +1,7 @@
 <template>
-  <div>
-    <div class="shop-header">
+  <div class="wxapp-home">
+    <SpPlatformTip h5 app alipay />
+    <div v-if="!isDistributorTemplate" class="shop-header">
       <div v-if="!VERSION_B2C && !VERSION_IN_PURCHASE" class="shop-left">
         <span class="text">小程序模版呈现：</span>
         <div class="option-item">
@@ -9,7 +10,7 @@
             v-model="index_type"
             :active-value="1"
             :inactive-value="2"
-            @change="changeShop('platform')"
+            @change="changeHomeTemplate"
           />
         </div>
         <div v-if="VERSION_STANDARD" class="option-item">
@@ -18,7 +19,7 @@
             v-model="index_type"
             :active-value="2"
             :inactive-value="1"
-            @change="changeShop('shop')"
+            @change="changeHomeTemplate"
           />
         </div>
         <span v-if="!VERSION_PLATFORM" class="text">模版同步设置：</span>
@@ -33,7 +34,15 @@
         </div>
       </div>
       <div class="section-white mini-setting">
-        <el-button type="text" style="margin-right: 10px" @click="handleShowConfig">
+        <el-button
+          type="text"
+          style="margin-right: 10px"
+          @click="
+            () => {
+              configDrawerShow = true
+            }
+          "
+        >
           <i class="iconfont icon-cog" /> 小程序配置
         </el-button>
         <el-button type="text" @click="handleShowTabConfig">
@@ -42,34 +51,22 @@
       </div>
     </div>
 
-    <el-row
-      :gutter="20"
-      class="template-list"
-      :class="{ 'is-shop': relStore.id != '0' || VERSION_B2C }"
-    >
-      <el-col
-        v-for="(item, index) in templateList"
-        :key="index"
-        :xs="12"
-        :sm="12"
-        :md="8"
-        :lg="6"
-        :xl="4"
-      >
+    <el-row :gutter="20" class="template-list">
+      <el-col v-for="(item, index) in templateList" :key="index" class="template-col" :span="6">
         <div class="template-item">
           <div class="img-wrap">
             <div class="preview-cover" @click="previewTemplate(item.pages_template_id)">
               <img class="preview-cover_img" src="@/assets/img/preview.png" alt="预览">
               <span class="preview-cover_text">预览</span>
             </div>
-            <img class="template-pic" :src="item.template_pic">
+            <el-image class="template-pic" :src="item.template_pic" fit="cover" />
             <div v-if="item.template_type == 1" class="tag">同步模板</div>
           </div>
           <div class="template-name">
             <span>{{ item.template_title }}</span>
-            <span class="el-icon-edit edit-css" @click="AddOrEditDialog('edit', item)" />
+            <span class="el-icon-edit edit-css" @click="modifyTemplate(item)" />
           </div>
-          <div v-if="relStore.id == '0' && !VERSION_B2C" class="template-common">
+          <div v-if="!VERSION_B2C" class="template-common">
             <span class="temp-label">店铺可编辑挂件</span>
             <el-switch
               v-model="item.element_edit_status"
@@ -85,12 +82,12 @@
                 v-model="item.status"
                 :active-value="1"
                 :inactive-value="2"
-                @change="useTemplate(index, item.status)"
+                @change="useTemplate(item, index)"
               />
             </el-tooltip>
           </div>
           <div class="time-wrap">
-            <div v-if="!item.showTime" class="no-time">
+            <div v-if="item.timer_status == 2" class="no-time">
               <div>定时启用</div>
               <div class="picker-wrap">
                 <img class="time-img" src="@/assets/img/time-img.png">
@@ -99,23 +96,28 @@
                   v-model="item.timer_time"
                   value-format="yyyy-MM-dd HH:mm:ss"
                   type="datetime"
-                  @change="changeDate(index)"
+                  @change="changeDate(item)"
                 />
               </div>
             </div>
-            <div v-if="item.showTime" class="has-time">
+            <div v-if="item.timer_status == 1" class="has-time">
               <span class="time">{{ item.timer_time }}启用</span>
-              <span class="cancel-btn" @click="cancelTime(index)">取消</span>
+              <span class="cancel-btn" @click="cancelTime(item)">取消</span>
             </div>
           </div>
           <div class="option-btns">
             <span class="btn" @click="editTemplate(item.pages_template_id)">编辑</span>
             <span class="btn" @click="copyTemplate(item.pages_template_id)">复制</span>
-            <span class="btn" @click="handleClickNav(item.pages_template_id)">导航</span>
+            <span
+              v-if="!isDistributorTemplate"
+              class="btn"
+              @click="handleClickNav(item.pages_template_id)"
+              >导航</span
+            >
             <span class="btn" @click="abandonTemplate(item.pages_template_id)">废弃</span>
           </div>
           <div
-            v-if="relStore.id == '0' && !VERSION_B2C && !VERSION_PLATFORM && !VERSION_IN_PURCHASE"
+            v-if="!isDistributorTemplate && VERSION_STANDARD"
             class="synchronize-btn"
             @click="synchronizeTemplateToShop(index)"
           >
@@ -123,15 +125,13 @@
           </div>
         </div>
       </el-col>
-      <el-col :xs="12" :sm="12" :md="8" :lg="6" :xl="4">
+      <el-col :span="6">
         <div
           :class="{
             'template-item': true,
-            'add-btn': true,
-            'sync-template':
-              relStore.id == '0' && !VERSION_B2C && !VERSION_PLATFORM && !VERSION_IN_PURCHASE
+            'add-btn': true
           }"
-          @click="AddOrEditDialog('add')"
+          @click="addTemplate"
         >
           <div class="template-wrap">
             <img class="add-img" src="@/assets/img/add-template.png" alt="添加">
@@ -152,18 +152,11 @@
       @closeStoreDialog="closeDialogAction"
     />
 
-    <imgPicker
-      :dialog-visible="imgsVisible"
-      :sc-status="isGetImage"
-      @chooseImg="pickImg"
-      @closeImgDialog="closeimgsVisible"
-    />
-
     <MallDecoration
       :dialog-visible="templateVisible"
       :template-name="template_name"
       :rel-store="relStore"
-      :show-like="is_open_recommend"
+      :show-like="configForm.is_open_recommend ? 1 : 2"
       :template-id="currTemplateId"
       @saved="closeDialog"
       @closeDialog="closeDialog"
@@ -172,7 +165,7 @@
     <TemplatePreview
       :dialog-visible="previewVisible"
       :rel-store="relStore"
-      :show-like="is_open_recommend"
+      :show-like="configForm.is_open_recommend ? 1 : 2"
       :template-id="currTemplateId"
       :tabs="tabs"
       usage="page"
@@ -180,202 +173,100 @@
       @closeDialog="closePreviewDialog"
     />
 
-    <el-dialog
-      title="新增模板"
-      :visible.sync="dialogVisible"
-      :close-on-click-modal="false"
-      width="50%"
-      :before-close="closeAddDialog"
+    <SpDialog
+      ref="templateDialogRef"
+      v-model="templateDialog"
+      :title="templateForm.pages_template_id ? '编辑模板' : '添加模板'"
+      :form="templateForm"
+      :form-list="templateFormList"
+      @onSubmit="onTemplateFormSubmit"
+    />
+
+    <SpDrawer
+      v-model="configDrawerShow"
+      class="config-drawer"
+      :title="'小程序配置'"
+      :footer="false"
     >
-      <el-form ref="form" :model="form" :rules="rules" label-width="100px">
-        <el-form-item label="模板名称" prop="template_title">
-          <el-input v-model="form.template_title" type="text" :maxlength="10" style="width: 55%" />
-        </el-form-item>
-        <el-form-item label="模板封面">
-          <div class="setting-item slider" style="width: 55%">
-            <img
-              v-if="form.template_pic"
-              :src="form.template_pic"
-              class="banner-uploader"
-              @click="handleImgChange"
-            >
-            <div v-else class="banner-uploader" @click="handleImgChange">
-              <i class="iconfont icon-camera" />
-            </div>
-          </div>
-        </el-form-item>
-      </el-form>
-      <div slot="footer" class="dialog-footer content-center">
-        <el-button type="primary" @click="addTemplate('form')"> 确 定 </el-button>
-      </div>
-    </el-dialog>
+      <SpForm
+        ref="configForm"
+        v-model="configForm"
+        class="config-form"
+        :label-width="'100px'"
+        :form-list="configFormList"
+        :submit="false"
+      />
+    </SpDrawer>
 
-    <sideBar :visible.sync="show_sideBar" :title="'小程序配置'" width="20">
-      <el-form label-width="120px">
-        <el-form-item label="开启热门推荐">
-          <el-switch
-            v-model="is_open_recommend"
-            :active-value="1"
-            :inactive-value="2"
-            @change="toggleOpenRecommend"
-          />
-        </el-form-item>
-        <el-form-item v-if="VERSION_PLATFORM || VERSION_STANDARD" label="开启小程序定位">
-          <el-switch
-            v-model="is_open_wechatapp_location"
-            :active-value="1"
-            :inactive-value="2"
-            @change="toggleOpenWechatappLocation"
-          />
-        </el-form-item>
-        <el-form-item label="开启扫码功能">
-          <el-switch
-            v-model="is_open_scan_qrcode"
-            :active-value="1"
-            :inactive-value="2"
-            @change="toggleOpenScanQrcode"
-          />
-        </el-form-item>
-        <el-form-item label="开启公众号组件">
-          <el-switch
-            v-model="is_open_official_account"
-            :active-value="1"
-            :inactive-value="2"
-            @change="toggleOpenOfficialAccount"
-          />
-        </el-form-item>
-      </el-form>
-    </sideBar>
-
-    <sideBar :visible.sync="show_tab_sideBar" :title="'小程序导航配置'" width="35">
-      <div
-        class="template-tabs"
-        :style="{ background: tabs.config.backgroundColor, color: tabs.config.color }"
-      >
-        <div class="current-active" />
-        <div
-          v-for="(item, index) in tabs.data"
-          :key="index"
-          class="tab"
-          :style="index === currentTab ? `color:${tabs.config.selectedColor}` : ''"
-        >
-          <i v-if="!item.iconPath" :class="`icon-${item.name} iconfont`" />
-          <template v-else>
-            <img
-              v-if="index === currentTab"
-              class="svg-icon"
-              :src="
-                item.selectedIconPath || 'https://fakeimg.pl/60x60/EFEFEF/CCC/?text=icofont=lobster'
-              "
-            >
-            <img
-              v-else
-              class="svg-icon"
-              :src="item.iconPath || 'https://fakeimg.pl/60x60/EFEFEF/CCC/?text=icon&font=lobster'"
-            >
-          </template>
-          <div class="tab-text">
-            {{ item.text }}
-          </div>
-        </div>
-      </div>
-      <tabsEditor :res="editorData" @bindImgs="showImgs" @saveTab="handelSaveTab" />
-    </sideBar>
-
-    <el-drawer
-      ref="drawer"
-      title="导航设置"
-      :visible.sync="navDrawerShow"
-      direction="rtl"
-      custom-class="demo-drawer"
+    <SpDrawer
+      v-model="navDrawerShow"
+      class="nav-drawer"
+      :title="'导航设置'"
+      @confirm="
+        () => {
+          this.$refs['navForm'].handleSubmit()
+        }
+      "
     >
-      <div class="demo-drawer__content" style="width: 200px">
-        <SpForm />
-      </div>
-    </el-drawer>
+      <SpForm
+        ref="navForm"
+        v-model="navForm"
+        class="nav-form"
+        :label-width="'0'"
+        :form-list="navFormList"
+        :submit="false"
+        @onSubmit="onSubmitTabList"
+      />
+    </SpDrawer>
   </div>
 </template>
 
 <script>
-import { mapGetters } from 'vuex'
-import { VERSION_B2C } from '@/utils'
+import moment from 'moment'
+import { VERSION_PLATFORM, VERSION_STANDARD, VERSION_B2C } from '@/utils'
 
 import DistributorSelect from '@/components/function/distributorSelect'
-import ShopDecoration from '@/components/function/shopDecoration'
 import MallDecoration from '@/components/function/mallDecoration'
 import TemplatePreview from '@/components/function/templatePreview'
-import imgPicker from '@/components/imageselect'
-import sideBar from '@/components/element/sideBar'
-import tabsEditor from '@/components/template_editor/tab_bar_new'
+import { NAVS } from './consts'
 
-import {
-  setPagesTemplate,
-  getPagesTemplateSetInfo,
-  getPagesTemplateList,
-  addPagesTemplate,
-  copyPagesTemplate,
-  deletePagesTemplate,
-  getPagesTemplateDetail,
-  savePagesTemplate,
-  syncPagesTemplate,
-  modifyPagesTemplateStatus
-} from '@/api/template'
+import { setPagesTemplate, savePagesTemplate, syncPagesTemplate } from '@/api/template'
 
 export default {
   components: {
     DistributorSelect,
-    imgPicker,
-    ShopDecoration,
     MallDecoration,
-    TemplatePreview,
-    sideBar,
-    tabsEditor
-  },
-  props: {
-    relStore: {
-      type: Object,
-      default: () => {
-        return {}
-      }
-    }
+    TemplatePreview
   },
   data() {
+    const { distributor_id } = this.$route.query
     return {
+      relStore: {
+        id: distributor_id ?? 0
+      },
       index_type: 1,
-      orgin_index_type: 'platform',
       is_enforce_sync: 2,
-      is_open_recommend: 2,
-      is_open_wechatapp_location: 1,
-      is_open_scan_qrcode: 2,
-      is_open_official_account: 2,
       templateList: [],
       form: {
         template_title: '',
         template_pic: ''
       },
-      rules: {
-        template_title: [{ required: true, message: '请输入模板名称', trigger: 'blur' }]
-      },
       distributorVisible: false,
       isValid: true,
       relDistributors: [],
       distributorStatus: false,
-      dialogVisible: false,
-      dialogType: '',
-      dialogData: {},
-      imgsVisible: false,
-      isGetImage: false,
+
       isSynchronize: false,
       templateVisible: false,
       previewVisible: false,
       currTemplateId: null,
+
       params: {
         page_no: 1,
         page_size: 10
       },
       total_count: 0,
       show_sideBar: false,
-      show_tab_sideBar: false,
       tabIcon: '',
       currentTab: 0,
       selectedTab: false,
@@ -417,111 +308,313 @@ export default {
           }
         ]
       },
-      editorData: {},
-      editorDataIndex: null,
-      app_page_type: {
-        wechat: 'wechat',
-        alipay: 'alipay'
+      globalTabbar: null,
+      navDrawerShow: false,
+      configDrawerShow: false,
+      configForm: {
+        is_open_recommend: false,
+        is_open_wechatapp_location: true,
+        is_open_scan_qrcode: false,
+        is_open_official_account: false
       },
-      navDrawerShow: false
+      configFormList: [
+        {
+          label: '热门推荐',
+          key: 'is_open_recommend',
+          type: 'switch',
+          onChange: async () => {
+            await this.$api.template.setPagesTemplate({
+              is_open_recommend: this.configForm.is_open_recommend ? 1 : 2
+            })
+          }
+        },
+        {
+          label: '小程序定位',
+          key: 'is_open_wechatapp_location',
+          type: 'switch',
+          isShow: () => {
+            return VERSION_PLATFORM || VERSION_STANDARD
+          },
+          onChange: async () => {
+            const tempStatus = this.configForm.is_open_wechatapp_location
+            if (!VERSION_PLATFORM && !this.configForm.is_open_wechatapp_location) {
+              this.configForm.is_open_wechatapp_location = true
+              await this.$confirm('关闭后附件商家组件将无法使用', '提示', {
+                confirmButtonText: '确定',
+                cancelButtonText: '取消',
+                type: 'warning'
+              })
+            }
+            await this.$api.template.setPagesTemplate({
+              is_open_wechatapp_location: tempStatus ? 1 : 2
+            })
+            this.configForm.is_open_wechatapp_location = tempStatus
+          }
+        },
+        {
+          label: '扫码功能',
+          key: 'is_open_scan_qrcode',
+          type: 'switch',
+          onChange: async () => {
+            await this.$api.template.setPagesTemplate({
+              is_open_scan_qrcode: this.configForm.is_open_scan_qrcode ? 1 : 2
+            })
+          }
+        },
+        {
+          label: '公众号组件',
+          key: 'is_open_official_account',
+          type: 'switch',
+          onChange: async () => {
+            await this.$api.template.setPagesTemplate({
+              is_open_official_account: this.configForm.is_open_official_account ? 1 : 2
+            })
+          }
+        }
+      ],
+      template_name: 'yykweishop',
+      templateDialog: false,
+      templateForm: {
+        pages_template_id: '',
+        template_title: '',
+        template_pic: ''
+      },
+      templateFormList: [
+        {
+          label: '模板名称',
+          key: 'template_title',
+          type: 'input',
+          placeholder: '请输入模板名称',
+          required: true,
+          message: '不能为空'
+        },
+        {
+          label: '模板封面',
+          key: 'template_pic',
+          component: () => <SpImagePicker v-model={this.templateForm.template_pic} />,
+          validator: (rule, value, callback) => {
+            if (!value) {
+              callback(new Error('请上传封面图片'))
+            } else {
+              callback()
+            }
+          }
+        }
+      ],
+      navForm: {
+        theme: {
+          backgroundColor: '#ffffff',
+          color: '#333333',
+          selectedColor: '#1f82e0'
+        },
+        tabList: [
+          {
+            pagePath: '/pages/index',
+            text: '首页',
+            name: 'home',
+            iconPath: '',
+            selectedIconPath: ''
+          },
+          {
+            pagePath: '/pages/category/index',
+            text: '分类',
+            name: 'category',
+            iconPath: '',
+            selectedIconPath: ''
+          },
+          {
+            pagePath: '/pages/cart/espier-index',
+            text: '购物车',
+            name: 'cart',
+            iconPath: '',
+            selectedIconPath: ''
+          },
+          {
+            pagePath: '/pages/member/index',
+            text: '我的',
+            name: 'member',
+            iconPath: '',
+            selectedIconPath: ''
+          }
+        ]
+      },
+      navFormList: [
+        {
+          label: '',
+          key: 'name',
+          component: () => (
+            <div class='tablist'>
+              {this.navForm.tabList.map((item, index) => (
+                <div
+                  class='tab-item'
+                  style={{
+                    color: index == 0 ? this.navForm.theme.selectedColor : this.navForm.theme.color
+                  }}
+                  key={`tab-item__${index}`}
+                >
+                  {!item.iconPath && !item.selectedIconPath && (
+                    <i class={`icon-${item.name} iconfont`} />
+                  )}
+                  {(item.iconPath || item.selectedIconPath) && (
+                    <el-image
+                      class='tab-image'
+                      src={item.selectedIconPath || item.iconPath}
+                      fit='cover'
+                    />
+                  )}
+                  <div class='tab-text'>{item.text}</div>
+                </div>
+              ))}
+            </div>
+          )
+        },
+        {
+          label: '',
+          key: 'theme',
+          component: () => (
+            <el-row>
+              <el-col span={8}>
+                <div class='theme-item'>
+                  <el-color-picker v-model={this.navForm.theme.backgroundColor}></el-color-picker>
+                  背景色
+                </div>
+              </el-col>
+              <el-col span={8}>
+                <div class='theme-item'>
+                  <el-color-picker v-model={this.navForm.theme.color}></el-color-picker>
+                  默认颜色
+                </div>
+              </el-col>
+              <el-col span={8}>
+                <div class='theme-item'>
+                  <el-color-picker v-model={this.navForm.theme.selectedColor}></el-color-picker>
+                  选中颜色
+                </div>
+              </el-col>
+            </el-row>
+          )
+        },
+        {
+          label: '',
+          key: 'tabList',
+          component: () => (
+            <div class='nav-list'>
+              <div class='nav-list-body'>
+                {this.navForm.tabList.map((item, index) => (
+                  <div class='nav-item'>
+                    <div class='nav-item-hd'>
+                      <SpImagePicker v-model={item.iconPath} />
+                      <SpImagePicker v-model={item.selectedIconPath} />
+                      <SpInput v-model={item.text} width={'120px'} placeholder='导航名称' />
+                      <el-select
+                        v-model={item.pagePath}
+                        placeholder='请选择页面'
+                        on-change={this.onChangePagePath.bind(this, index)}
+                      >
+                        {NAVS.map((item, index) => (
+                          <el-option label={item.label} value={item.value} />
+                        ))}
+                      </el-select>
+                    </div>
+                    <div class='nav-item-bd'>
+                      {index > 1 && (
+                        <el-button type='text' on-click={this.removeTabItem.bind(this, index)}>
+                          删除
+                        </el-button>
+                      )}
+                    </div>
+                  </div>
+                ))}
+              </div>
+              <div></div>
+            </div>
+          ),
+          tip: '只能上传jpg/png文件，且不超过2M （建议尺寸：50px * 50px）',
+          validator: (rule, value, callback) => {
+            const fd = value.find((item) => !item.pagePath || !item.name)
+            if (fd) {
+              callback('请设置导航名称以及导航页面')
+            } else {
+              callback()
+            }
+          }
+        },
+        {
+          label: '',
+          component: () => (
+            <el-button
+              type='primary'
+              disabled={this.navForm.tabList.length >= 5}
+              plain
+              class='iconfont icon-plus-circle'
+              on-click={this.addTabItem}
+            >
+              添加菜单项
+            </el-button>
+          )
+        }
+      ]
+    }
+  },
+  computed: {
+    isDistributorTemplate() {
+      const { distributor_id } = this.$route.query
+      return distributor_id > 0
     }
   },
   mounted() {
     this.getTemplateSetInfo()
     this.getList()
   },
-  computed: {
-    ...mapGetters(['app_type', 'template_name', 'ali_template_name'])
-  },
   methods: {
     handleClickNav() {
       this.navDrawerShow = true
     },
-    getTemplateSetInfo() {
-      // let params = {
-      //   page_type: this.app_page_type[this.app_type]
-      // }
-      // getPagesTemplateSetInfo(params).then((res) => {
-      getPagesTemplateSetInfo().then((res) => {
-        let data = res.data.data
-        this.index_type = data.index_type
-        this.is_enforce_sync = data.is_enforce_sync
-        this.is_open_recommend = data.is_open_recommend
-        this.is_open_wechatapp_location = data.is_open_wechatapp_location
-        this.is_open_scan_qrcode = data.is_open_scan_qrcode
-        this.is_open_official_account = data.is_open_official_account
-        if (this.index_type == 1) {
-          this.orgin_index_type = 'platform'
-        } else {
-          this.orgin_index_type = 'shop'
-        }
-        if (data.tab_bar) {
-          this.tabs = JSON.parse(data.tab_bar)
-          console.log(this.tabs)
-        }
-      })
+    async getTemplateSetInfo() {
+      const {
+        index_type,
+        is_enforce_sync,
+        is_open_recommend,
+        is_open_wechatapp_location,
+        is_open_scan_qrcode,
+        is_open_official_account,
+        tab_bar
+      } = await this.$api.template.getPagesTemplateSetInfo()
+      this.index_type = index_type
+      this.is_enforce_sync = is_enforce_sync
+      this.configForm = {
+        is_open_recommend: is_open_recommend == 1,
+        is_open_wechatapp_location: is_open_wechatapp_location == 1,
+        is_open_scan_qrcode: is_open_scan_qrcode == 1,
+        is_open_official_account: is_open_official_account == 1
+      }
+
+      if (tab_bar) {
+        this.globalTabbar = JSON.parse(tab_bar)
+      }
     },
-    getList(status) {
+    async getList() {
+      const { distributor_id } = this.$route.query
       let params = {
         ...this.params,
-        distributor_id: this.relStore.id
-        // page_type: this.app_page_type[this.app_type]
+        distributor_id
       }
-      getPagesTemplateList(params).then((res) => {
-        // this.te·mplateList = res.data.data.list
-        let list = []
-        res.data.data.list.map((item) => {
-          list.push({
-            ...item,
-            element_edit_status: item.element_edit_status || 2,
-            status: item.status || 2,
-            timer_status: item.timer_status || 2,
-            showTime: false,
-            timer_time: !item.timer_time ? '' : this.formatTimeStampToStr(item.timer_time),
-            showTime: item.timer_status == 1
-          })
-        })
-        this.templateList = list
-        this.total_count = res.data.data.total_count
-      })
-    },
-    formatTimeStampToStr(timeStamp) {
-      //时间戳转时间字符串
-      var date = new Date()
-      date.setTime(timeStamp * 1000)
-      var y = date.getFullYear()
-      var m = date.getMonth() + 1
-      m = m < 10 ? '0' + m : m
-      var d = date.getDate()
-      d = d < 10 ? '0' + d : d
-      var h = date.getHours()
-      h = h < 10 ? '0' + h : h
-      var minute = date.getMinutes()
-      var second = date.getSeconds()
-      minute = minute < 10 ? '0' + minute : minute
-      second = second < 10 ? '0' + second : second
-      return y + '-' + m + '-' + d + ' ' + h + ':' + minute + ':' + second
-    },
-    handleImgChange(data) {
-      this.imgsVisible = true
-      this.isGetImage = true
-    },
-    pickImg(data) {
-      if (this.editorDataIndex != null) {
-        if (this.tabIcon === 'default') {
-          this.editorData.data[this.editorDataIndex].iconPath = data.url
-          this.tabs.data[this.editorDataIndex].iconPath = data.url
-        } else {
-          this.editorData.data[this.editorDataIndex].selectedIconPath = data.url
-          this.tabs.data[this.editorDataIndex].selectedIconPath = data.url
+      const { list, total_count } = await this.$api.template.getPagesTemplateList(params)
+      this.templateList = list.map((item) => {
+        return {
+          ...item,
+          // 店铺模板可编辑
+          element_edit_status: item.element_edit_status || 2,
+          // 是否启用
+          status: item.status || 2,
+          // 定时模板开启
+          timer_status: item.timer_status || 2,
+          // 定时时间
+          timer_time:
+            item.timer_time > 0 ? moment(item.timer_time * 1000).format('YYYY-MM-DD HH:mm:ss') : ''
         }
-      } else {
-        this.form.template_pic = data.url
-      }
-      this.imgsVisible = false
-    },
-    closeimgsVisible() {
-      this.imgsVisible = false
+      })
+      this.total_count = total_count
     },
     distributorChooseAction(data) {
       if (data === null || data.length <= 0) {
@@ -559,154 +652,48 @@ export default {
       this.distributorStatus = false
       this.distributorVisible = false
     },
-    changeShop(type) {
-      if (type == 'shop') {
-        this.index_type = 2
-      } else {
-        this.index_type = 1
-      }
-      if (this.orgin_index_type == type) {
-        return
-      } else {
-        this.orgin_index_type = type
-      }
-      let params = {
+    async changeHomeTemplate() {
+      await this.$api.template.setPagesTemplate({
         index_type: this.index_type
-        // page_type: this.app_page_type[this.app_type]
-      }
-      setPagesTemplate(params).then((res) => {
-        this.$message({
-          message: '操作成功',
-          type: 'success'
-        })
       })
     },
-    toggleSynchronizeShop(val) {
-      let params = {
-        is_enforce_sync: val
-        // page_type: this.app_page_type[this.app_type]
-      }
-      setPagesTemplate(params).then((res) => {
-        this.$message({
-          message: '操作成功',
-          type: 'success'
-        })
+    // 同步并启用
+    async toggleSynchronizeShop() {
+      await this.$api.template.setPagesTemplate({
+        is_enforce_sync: this.is_enforce_sync
       })
+      this.$message.success('操作成功')
     },
-    handleInputChange(e) {
-      console.log('===handleInputChange', e)
-      this.form.template_title = e
+    addTemplate() {
+      this.templateForm = this.$options.data().templateForm
+      this.templateDialog = true
     },
-    toggleOpenRecommend(val) {
-      let params = {
-        is_open_recommend: val
-        // page_type: this.app_page_type[this.app_type]
+    modifyTemplate({ pages_template_id, template_title, template_pic }) {
+      this.templateForm = {
+        pages_template_id,
+        template_title,
+        template_pic
       }
-      setPagesTemplate(params).then((res) => {
-        this.$message({
-          message: '操作成功',
-          type: 'success'
+      this.templateDialog = true
+    },
+    async onTemplateFormSubmit() {
+      const { pages_template_id, template_title, template_pic } = this.templateForm
+      if (pages_template_id) {
+        await this.$api.template.savePagesTemplate({
+          pages_template_id,
+          template_title,
+          template_name: this.template_name,
+          template_pic
         })
-      })
-    },
-    toggleOpenWechatappLocation(val) {
-      if (this.VERSION_PLATFORM && val == 2) {
-        this.$confirm('关闭后附件商家组件将无法使用', '提示', {
-          confirmButtonText: '确定',
-          cancelButtonText: '取消',
-          type: 'warning'
+      } else {
+        await this.$api.template.addPagesTemplate({
+          template_title,
+          template_name: this.template_name,
+          template_pic
         })
-          .then(() => {
-            this.updateLocation(val)
-          })
-          .catch(() => {
-            this.is_open_wechatapp_location = 1
-          })
-        return
       }
-      this.updateLocation(val)
-    },
-    updateLocation(val) {
-      let params = {
-        is_open_wechatapp_location: val
-        // page_type: this.app_page_type[this.app_type]
-      }
-      setPagesTemplate(params).then((res) => {
-        this.$message({
-          message: '操作成功',
-          type: 'success'
-        })
-      })
-    },
-    toggleOpenScanQrcode(val) {
-      let params = {
-        is_open_scan_qrcode: val
-        // page_type: this.app_page_type[this.app_type]
-      }
-      setPagesTemplate(params).then((res) => {
-        this.$message({
-          message: '操作成功',
-          type: 'success'
-        })
-      })
-    },
-    toggleOpenOfficialAccount(val) {
-      let params = {
-        is_open_official_account: val
-        // page_type: this.app_page_type[this.app_type]
-      }
-      setPagesTemplate(params).then((res) => {
-        this.$message({
-          message: '操作成功',
-          type: 'success'
-        })
-      })
-    },
-    AddOrEditDialog(type, item) {
-      this.dialogVisible = true
-      this.dialogType = type
-      this.dialogData = item
-      this.editorDataIndex = null
-      if (item) {
-        this.form.template_title = item.template_title
-        this.form.template_pic = item.template_pic
-      }
-    },
-    closeAddDialog() {
-      this.dialogVisible = false
-      this.dialogType = ''
-      this.dialogData = ''
-      this.resetForm('form')
-    },
-    addTemplate(formName) {
-      this.$refs[formName].validate((valid) => {
-        if (valid) {
-          let params = this.form
-          let requestApi
-          if (this.dialogType == 'add') {
-            requestApi = addPagesTemplate
-            params.template_name = this.template_name
-            params.distributor_id = this.relStore.id
-          } else {
-            requestApi = savePagesTemplate
-            params.pages_template_id = this.dialogData.pages_template_id
-          }
-          requestApi(params).then((res) => {
-            this.getList()
-            this.resetForm(formName)
-          })
-        }
-      })
-    },
-    resetForm(formName) {
-      this.dialogVisible = false
-      this.$refs[formName].resetFields()
-      this.form = {
-        template_title: '',
-        template_pic: ''
-      }
-      this.dialogType = ''
-      this.dialogData = {}
+      this.templateDialog = false
+      this.getList()
     },
     previewTemplate(pages_template_id) {
       this.previewVisible = true
@@ -727,120 +714,74 @@ export default {
         type: 'success'
       })
     },
-    useTemplate(index, val) {
-      this.currTemplateId = this.templateList[index].pages_template_id
-      if (val == 1) {
+    // 立即启用模板
+    async useTemplate(item, index) {
+      const status = JSON.parse(JSON.stringify(item.status))
+      if (item.status == 1) {
         this.templateList[index].status = 2
-        this.$confirm('确认立即启用当前模板？', '启用模板', {
+        await this.$confirm('确认立即启用当前模板？', '启用模板', {
           confirmButtonText: '确定',
           cancelButtonText: '取消'
         })
-          .then(() => {
-            this.modifyTemplateStatus(index, 'status', val)
-          })
-          .catch(() => {})
-      } else {
-        this.templateList[index].status = 1
-        this.modifyTemplateStatus(index, 'status', val)
       }
+      await this.$api.template.modifyPagesTemplateStatus({
+        pages_template_id: item.pages_template_id,
+        template_name: this.template_name,
+        status
+      })
+      this.getList()
     },
-    useTimeTemplate(index, val) {
-      this.currTemplateId = this.templateList[index].pages_template_id
-      if (val == 2) {
-        this.templateList[index].timer_status = 1
-        this.$confirm('确认取消启用定时模板？', '取消定时模板', {
-          confirmButtonText: '确定',
-          cancelButtonText: '取消'
-        })
-          .then(() => {
-            this.modifyTemplateStatus(index, val)
-            this.templateList[index].timer_time = ''
-            this.templateList[index].showTime = false
-            this.templateList[index].timer_status = val
-          })
-          .catch(() => {})
-      } else {
-        this.currTemplateId = this.templateList[index].pages_template_id
-        this.templateList[index].timer_status = val
-      }
+    // 设置定时模板
+    async changeDate(item) {
+      await this.$api.template.modifyPagesTemplateStatus({
+        pages_template_id: item.pages_template_id,
+        template_name: this.template_name,
+        timer_status: 1,
+        timer_time: item.timer_time
+      })
+      this.getList()
     },
-    cancelTime(index) {
-      this.$confirm('确认取消启用定时模板？', '取消定时模板', {
+    // 取消定时模板
+    async cancelTime(item) {
+      await this.$confirm('确认取消启用定时模板？', '取消定时模板', {
         confirmButtonText: '确定',
         cancelButtonText: '取消'
       })
-        .then(() => {
-          this.currTemplateId = this.templateList[index].pages_template_id
-          this.modifyTemplateStatus(index, 'timer_status', 2)
-        })
-        .catch(() => {})
-    },
-    changeDate(index) {
-      this.currTemplateId = this.templateList[index].pages_template_id
-      this.modifyTemplateStatus(index, 'timer_status', 1)
-    },
-    async modifyTemplateStatus(index, type, status) {
-      let params = {
-        pages_template_id: this.currTemplateId,
-        template_name: this.template_name
-        // template_name: this.app_type === 'wechat' ?  this.template_name : this.ali_template_name
-      }
-      if (type == 'status') {
-        params.status = status
-      } else {
-        params.timer_status = status
-        // params.timer_time = this.templateList[index].timer_time
-        params.timer_time = status == 1 ? this.templateList[index].timer_time : ''
-      }
-      await modifyPagesTemplateStatus(params)
-      this.getList()
-      this.$message({
-        message: '操作成功',
-        type: 'success'
+      await this.$api.template.modifyPagesTemplateStatus({
+        pages_template_id: item.pages_template_id,
+        template_name: this.template_name,
+        timer_status: 2,
+        timer_time: ''
       })
+      this.getList()
     },
     editTemplate(pages_template_id) {
       this.templateVisible = true
       this.currTemplateId = pages_template_id
     },
-    copyTemplate(pages_template_id) {
-      let params = {
-        pages_template_id: pages_template_id
-        // page_type: this.app_page_type[this.app_type]
-      }
-      this.$confirm('确认拷贝当前模板？', '拷贝模板', {
+    async copyTemplate(pages_template_id) {
+      await this.$confirm('确认拷贝当前模板？', '拷贝模板', {
         confirmButtonText: '确定',
         cancelButtonText: '取消'
       })
-        .then(() => {
-          copyPagesTemplate(params).then((res) => {
-            this.$message({
-              message: '操作成功',
-              type: 'success'
-            })
-            this.params.page_no = 1
-            this.getList()
-          })
-        })
-        .catch(() => {})
+      await this.$api.template.copyPagesTemplate({
+        pages_template_id
+      })
+      this.$message.success('操作成功')
+      this.params.page_no = 1
+      this.getList()
     },
-    abandonTemplate(pages_template_id) {
-      this.$confirm('确认废弃当前模板？', '废弃模板', {
+    async abandonTemplate(pages_template_id) {
+      await this.$confirm('确认废弃当前模板？', '废弃模板', {
         confirmButtonText: '确定',
         cancelButtonText: '取消'
       })
-        .then(() => {
-          deletePagesTemplate(pages_template_id).then((res) => {
-            this.$message({
-              message: '操作成功',
-              type: 'success'
-            })
-            this.params.page_no = 1
-            this.getList()
-          })
-        })
-        .catch(() => {})
+      await this.$api.template.deletePagesTemplate(pages_template_id)
+      this.$message.success('操作成功')
+      this.params.page_no = 1
+      this.getList()
     },
+    // 同步模板
     synchronizeTemplateToShop(index) {
       this.distributorVisible = true
       this.distributorStatus = true
@@ -858,38 +799,113 @@ export default {
       this.show_sideBar = true
     },
     handleShowTabConfig() {
-      this.show_tab_sideBar = true
-      this.editorData = { ...this.tabs }
-    },
-    handleCloseSidebar(status) {
-      this.show_tab_sideBar = status
-    },
-    showImgs(index, tabIcon) {
-      this.imgsVisible = true
-      this.isGetImage = true
-      this.editorDataIndex = index
-      if (tabIcon) {
-        this.tabIcon = tabIcon
+      const { config, name, data } = this.globalTabbar || {}
+      const { backgroundColor, color, selectedColor } = config || {}
+      this.navForm = {
+        theme: {
+          backgroundColor: backgroundColor ?? '#ffffff',
+          color: color ?? '#333333',
+          selectedColor: selectedColor ?? '#1f82e0'
+        },
+        tabList: data
       }
+      this.navDrawerShow = true
     },
-    handelSaveTab() {
-      let param = JSON.stringify(this.editorData)
-      let params = {
-        tab_bar: param
-        // page_type: this.app_page_type[this.app_type]
+    removeTabItem(index) {
+      this.navForm.tabList.splice(index, 1)
+    },
+    addTabItem() {
+      const item = {
+        pagePath: '',
+        text: '',
+        name: '',
+        iconPath: '',
+        selectedIconPath: ''
       }
-      setPagesTemplate(params).then((res) => {
-        this.$message({
-          message: '操作成功',
-          type: 'success'
+      this.navForm.tabList.push(item)
+    },
+    onChangePagePath(index, value) {
+      const { label, name } = NAVS.find((item) => item.value == value)
+      this.navForm.tabList[index].text = label
+      this.navForm.tabList[index].name = name
+    },
+    async onSubmitTabList() {
+      const { theme, tabList } = this.navForm
+      await this.$api.template.setPagesTemplate({
+        tab_bar: JSON.stringify({
+          name: 'tabs',
+          config: theme,
+          data: tabList
         })
       })
+      this.navDrawerShow = false
+      this.$message.success('操作成功')
     }
   }
 }
 </script>
-
-<style scoped lang="scss" scoped>
+<style lang="scss">
+.nav-drawer {
+  .tablist {
+    display: flex;
+    border: 1px solid #d8d8d8;
+    height: 52px;
+    padding: 6px 0;
+    .tab-item {
+      text-align: center;
+      flex: 1;
+      line-height: 20px;
+    }
+    .tab-image {
+      width: 16px;
+      height: 16px;
+    }
+    .tab-text {
+      font-size: 13px;
+    }
+  }
+  .theme-item {
+    display: flex;
+    font-size: 13px;
+    .el-color-picker {
+      margin-right: 4px;
+    }
+  }
+  .nav-list {
+    &-body {
+    }
+    .nav-item {
+      display: flex;
+      margin-bottom: 10px;
+      .sp-input {
+        margin-right: 10px;
+        width: 120px;
+        .el-input {
+          margin: 0;
+        }
+      }
+      &-hd {
+        display: flex;
+        align-items: center;
+        flex: 1;
+      }
+      &-bd {
+        width: 60px;
+        display: flex;
+        align-items: center;
+        padding-left: 10px;
+      }
+    }
+  }
+  .image-item {
+    width: 64px;
+    height: 64px;
+    line-height: 26px;
+    margin-bottom: 0;
+  }
+}
+</style>
+<style lang="scss" scoped>
 .shop-header {
   margin-bottom: 20px;
   display: flex;
@@ -913,10 +929,11 @@ export default {
 .template-list {
   display: flex;
   flex-wrap: wrap;
-
+  .template-col {
+    margin-bottom: 20px;
+  }
   .template-item {
     border-radius: 10px;
-    margin-bottom: 20px;
     border: 1px solid #eee;
     color: #606266;
     // height: 442px;
@@ -925,8 +942,7 @@ export default {
       justify-content: center;
       align-items: center;
       background: #f2f2f2;
-      // height: calc(100% - 20px);
-      height: 404px;
+      height: calc(100% - 20px);
       cursor: pointer;
       &.sync-template {
         height: 444px;
@@ -950,6 +966,7 @@ export default {
       overflow: hidden;
       .template-pic {
         width: 100%;
+        height: 100%;
       }
       .preview-cover {
         position: absolute;
@@ -1084,7 +1101,7 @@ export default {
   }
   &.is-shop {
     .template-item {
-      height: 367px;
+      // height: 367px;
     }
   }
 }

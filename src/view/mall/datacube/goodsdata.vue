@@ -1,5 +1,26 @@
 <template>
   <div>
+    <div class="action-container">
+      <el-button type="primary"> 导出 </el-button>
+    </div>
+
+    <SpFilterForm :model="queryForm" @onSearch="onSearch" @onReset="onSearch">
+      <SpFilterFormItem prop="datetime" label="查询日期:" size="max">
+        <el-date-picker
+          v-model="queryForm.datetime"
+          clearable
+          type="datetimerange"
+          align="right"
+          format="yyyy-MM-dd HH:mm:ss"
+          range-separator="至"
+          start-placeholder="开始日期"
+          end-placeholder="结束日期"
+          :default-time="defaultTime"
+          :picker-options="pickerOptions"
+        />
+      </SpFilterFormItem>
+    </SpFilterForm>
+
     <el-form label-width="100px">
       <el-form-item label="选择日期范围">
         <el-col :span="12">
@@ -20,12 +41,7 @@
         </el-col>
         <el-col :span="12">
           <export-tip @exportHandle="exportData">
-            <el-button
-              v-loading="exportloading"
-              type="primary"
-            >
-              导出
-            </el-button>
+            <el-button v-loading="exportloading" type="primary"> 导出 </el-button>
           </export-tip>
           <el-popover
             placement="top-start"
@@ -33,18 +49,27 @@
             trigger="hover"
             content="导出任务会以队列执行，点击导出后，请至‘设置-导出列表’页面中查看及下载数据"
           >
-            <i
-              slot="reference"
-              class="el-icon-question"
-            />
+            <i slot="reference" class="el-icon-question" />
           </el-popover>
         </el-col>
       </el-form-item>
     </el-form>
-    <el-tabs
+
+    <SpFinder
+      ref="finder"
+      no-selection
+      :setting="setting"
+      :row-actions-align="'left'"
+      :hooks="{
+        beforeSearch: beforeSearch
+      }"
+      url="/datacube/goodsdata"
+    />
+
+    <!-- <el-tabs
       v-if="$route.path.indexOf('editor') === -1"
       v-model="activeName"
-      type="border-card"
+      type="card"
       @tab-click="handleClick"
     >
       <el-tab-pane
@@ -91,15 +116,17 @@
           </el-table>
         </template>
       </el-tab-pane>
-    </el-tabs>
+    </el-tabs> -->
   </div>
 </template>
 <script>
 import { mapGetters } from 'vuex'
 import json2csv from 'json2csv'
+import { PICKER_DATE_OPTIONS } from '@/consts'
 import { getGoodsData } from '../../../api/datacube'
+import { createSetting } from '@shopex/finder'
 export default {
-  data () {
+  data() {
     return {
       vdate: '',
       loading: true,
@@ -109,39 +136,44 @@ export default {
         start: '',
         end: ''
       },
+      queryForm: {
+        datetime: []
+      },
+      defaultTime: ['00:00:00', '23:59:59'],
+      pickerOptions: PICKER_DATE_OPTIONS,
       allListData: [],
-      // fields: ['item_bn', 'category_name', 'item_name', 'sales_count', 'fixed_amount_count', 'settle_amount_count'],
-      fields: ['no', 'sap_code', 'top_level', 'product', 'quantity', 'fix_price', 'settle_price'],
-      pickerOptions: {
-        shortcuts: [
+      setting: createSetting({
+        columns: [
+          { name: 'No', key: 'no' },
           {
-            text: '最近一天',
-            onClick (picker) {
-              const start = new Date()
-              const end = new Date()
-              start.setTime(start.getTime() - 3600 * 1000 * 24 * 1)
-              end.setTime(end.getTime() - 3600 * 1000 * 24 * 1)
-              picker.$emit('pick', [start, end])
-            }
+            name: '商品编号',
+            key: 'sap_code'
           },
           {
-            text: '最近一周',
-            onClick (picker) {
-              const start = new Date()
-              const end = new Date()
-              start.setTime(start.getTime() - 3600 * 1000 * 24 * 7)
-              end.setTime(end.getTime() - 3600 * 1000 * 24 * 1)
-              picker.$emit('pick', [start, end])
-            }
+            name: '分类',
+            key: 'top_level'
+          },
+          {
+            name: '商品名称',
+            key: 'product'
+          },
+          {
+            name: '销量',
+            key: 'quantity'
+          },
+          {
+            name: '销售额',
+            key: 'fix_price'
+          },
+          {
+            name: '实付额',
+            key: 'settle_price'
           }
         ]
-      }
+      })
     }
   },
-  computed: {
-    ...mapGetters(['wheight'])
-  },
-  mounted () {
+  mounted() {
     var start = new Date()
     var end = new Date()
     start.setTime(start.getTime() - 3600 * 1000 * 24 * 1)
@@ -150,7 +182,29 @@ export default {
     this.getGoodsDataList()
   },
   methods: {
-    exportData () {
+    beforeSearch(params) {
+      const {
+        name,
+        datetime: [display_time_begin, display_time_end],
+        enterprise_id,
+        activityState
+      } = this.queryForm
+      params = {
+        ...params,
+        display_time_begin,
+        display_time_end,
+        enterprise_id,
+        name
+      }
+      if (activityState != 'all') {
+        params = {
+          ...params,
+          status: activityState
+        }
+      }
+      return params
+    },
+    exportData() {
       this.exportloading = true
       this.params.export = 1
       getGoodsData(this.params)
@@ -174,69 +228,13 @@ export default {
             })
             return
           }
-
-          // var exportdata = res.data.data.list
-          // exportdata.unshift()
-          // this.exportloading = false
-          // var fileName = '商品数据'
-          // try {
-          //   const result = json2csv.parse(exportdata, {
-          //     fields: this.fields
-          //     // excelStrings: true,
-          //   });
-          //   if (this.MyBrowserIsIE()) {
-          //     // IE10以及Edge浏览器
-          //     var BOM = "\uFEFF";
-          //     // 文件转Blob格式
-          //     var csvData = new Blob([BOM + result], { type: "text/csv" });
-          //     navigator.msSaveBlob(csvData, `${fileName}.csv`);
-          //   } else {
-          //     let csvContent = "data:text/csv;charset=utf-8,\uFEFF" + result;
-          //     // 非ie 浏览器
-          //     this.createDownLoadClick(csvContent, `${fileName}.csv`);
-          //   }
-          // } catch (err) {
-          //   this.exportloading = false
-          //   alert(err);
-          // }
         })
         .catch((error) => {
           this.exportloading = false
         })
     },
-    createDownLoadClick (content, fileName) {
-      const link = document.createElement('a')
-      link.href = encodeURI(content)
-      link.download = fileName
-      document.body.appendChild(link)
-      link.click()
-      document.body.removeChild(link)
-    },
-    MyBrowserIsIE () {
-      let isIE = false
-      if (
-        navigator.userAgent.indexOf('compatible') > -1 &&
-        navigator.userAgent.indexOf('MSIE') > -1
-      ) {
-        // ie浏览器
-        isIE = true
-      }
-      if (navigator.userAgent.indexOf('Trident') > -1) {
-        // edge 浏览器
-        isIE = true
-      }
-      return isIE
-    },
-    handleClick (tab, event) {},
-    dateChange (val) {
-      if (!val) {
-        return false
-      }
-      this.params.start = val[0]
-      this.params.end = val[1]
-      this.getGoodsDataList()
-    },
-    getGoodsDataList () {
+    handleClick(tab, event) {},
+    getGoodsDataList() {
       this.loading = true
       getGoodsData(this.params)
         .then((res) => {

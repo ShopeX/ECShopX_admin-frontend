@@ -404,7 +404,9 @@ export default {
         specImages: goodsDetail.spec_images,
         specItems: goodsDetail.spec_items,
         itemSpecDesc: goodsDetail.item_spec_desc,
-        itemSpecList: goodsDetail.item_spec_list
+        itemSpecList: goodsDetail.item_spec_list,
+        isShowSpecimg : goodsDetail.is_show_specimg
+
       }
 
       this.getGoodsParams(goodsDetail.item_params_list, goodsDetail.item_params)

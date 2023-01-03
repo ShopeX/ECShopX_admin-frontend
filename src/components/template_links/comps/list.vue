@@ -82,6 +82,7 @@ export default {
     async fetch(type) {
       this.loading = true
       let query = JSON.parse(JSON.stringify(this.params))
+      let distributor_id = this.$route.query.distributor_id
       switch (type) {
         case 'goods':
           Object.assign(query, {
@@ -156,7 +157,12 @@ export default {
           })
           break
         case 'sale_category':
-          api.goods.getCategory(this.params).then((res) => {
+        if (distributor_id) {
+            Object.assign(query, {
+              distributor_id
+            })
+          }
+          api.goods.getCategory(query).then((res) => {
             let items = []
             res.map((item) => {
               let itemObj = {
@@ -192,7 +198,7 @@ export default {
           })
           break
         case 'management_category':
-          let distributor_id = this.$route.query.distributor_id
+
           Object.assign(query, {
             is_main_category: true
           })

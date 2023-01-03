@@ -238,21 +238,21 @@ m³
                 class="clearfix"
                 @change="handleSkuChange"
               >
-                <div v-for="(value, vn) in item.sku_value" :key="vn" class="sku-select__checkitem">
-                  <el-checkbox class="sku-checkbox" :label="value.attribute_value_id">
+                <div v-for="(itemValue, vn) in item.sku_value" :key="vn" class="sku-select__checkitem">
+                  <el-checkbox class="sku-checkbox" :label="itemValue.attribute_value_id">
                     <el-input
-                      v-if="item.checked_sku.indexOf(value.attribute_value_id) !== -1"
-                      v-model="value.custom_attribute_value"
+                      v-if="item.checked_sku.indexOf(itemValue.attribute_value_id) !== -1"
+                      v-model="itemValue.custom_attribute_value"
                       size="mini"
                       style="width: 100px"
-                      @change="handleSkuName(value, index, vn)"
+                      @change="handleSkuName(itemValue, index, vn)"
                     />
-                    <span v-else>{{ value.attribute_value }}</span>
+                    <span v-else>{{ itemValue.attribute_value }}</span>
                   </el-checkbox>
                   <imgBox
-                    v-if="value.image_url"
+                    v-if="itemValue.image_url"
                     class="sku-image"
-                    :img-url="value.image_url"
+                    :img-url="itemValue.image_url"
                     width="50"
                     height="50"
                   />

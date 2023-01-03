@@ -406,7 +406,9 @@ export default {
         specImages: goodsDetail.spec_images,
         specItems: goodsDetail.spec_items,
         itemSpecDesc: goodsDetail.item_spec_desc,
-        itemSpecList: categoryInfoDetail.goods_spec
+        itemSpecList: categoryInfoDetail.goods_spec,
+        isShowSpecimg : goodsDetail.is_show_specimg
+
       }
 
       this.getGoodsParams(goodsDetail.item_params_list, goodsDetail.item_params)
@@ -621,7 +623,7 @@ export default {
     //
     getSpecName(keys) {
       const specNames = []
-      var fd; 
+      var fd;
       keys.forEach((key, index) => {
         this.skuData.itemSpecList.forEach(outerItem => {
           var sub_fd = outerItem.attribute_values.list.find(

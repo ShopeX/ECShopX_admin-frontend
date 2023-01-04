@@ -1,0 +1,45 @@
+class Pages {
+  constructor(options = {}) {
+    this.options = {
+      page: 0,
+      pageSize: 10,
+      hasNext: true,
+      total: 0,
+      fetch: () => {},
+      ...options
+    }
+    return this
+  }
+
+  setTotal(total) {
+    this.options.total = total
+    if (Math.ceil(total / this.options.pageSize) <= this.options.page) {
+      this.options.hasNext = false
+    }
+  }
+
+  setPage(page) {
+    this.options.page = page
+    this.options.fetch({ page: this.options.page, pageSize: this.options.pageSize })
+  }
+
+  reset() {
+    this.options.page = 1
+    this.options.fetch({ page: this.options.page, pageSize: this.options.pageSize })
+  }
+
+  refresh() {
+    this.options.fetch({ page: this.options.page, pageSize: this.options.pageSize })
+  }
+
+  nextPage() {
+    const { hasNext, fetch, pageSize } = this.options
+    this.options.page++
+    if (hasNext) {
+      fetch({ page: this.options.page, pageSize })
+    }
+    return this
+  }
+}
+
+export default Pages

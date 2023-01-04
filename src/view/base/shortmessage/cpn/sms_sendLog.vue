@@ -1,41 +1,23 @@
 <template>
   <div>
-    <div
-      v-if="$route.path.indexOf('edit') === -1"
-      class="sms_signatures"
-    >
-      <el-card
-        class="box-card"
-        shadow="never"
+    <div v-if="$route.path.indexOf('edit') === -1" class="sms_signatures">
+      <SpFinder
+        ref="finder"
+        :split-count="4"
+        :search-row-count="2"
+        :fixed-row-action="true"
+        :setting="setting"
+        no-selection
+        :hooks="{
+          beforeSearch: beforeSearch,
+          afterSearch: afterSearch
+        }"
+        url="/aliyunsms/record/list"
       >
-        <div
-          slot="header"
-          class="clearfix"
-        >
-          <span>短信发送记录</span>
-        </div>
-        <SpFinder
-          ref="finder"
-          :split-count="4"
-          :search-row-count="2"
-          :fixed-row-action="true"
-          :setting="setting"
-          no-selection
-          :hooks="{
-            beforeSearch: beforeSearch,
-            afterSearch: afterSearch
-          }"
-          url="/aliyunsms/record/list"
-        >
-          <template v-slot:task_name>
-            <el-input
-              v-model="task_name"
-              placeholder="请输入任务名称"
-              clearable
-            />
-          </template>
-        </SpFinder>
-      </el-card>
+        <template v-slot:task_name>
+          <el-input v-model="task_name" placeholder="请输入任务名称" clearable />
+        </template>
+      </SpFinder>
     </div>
     <router-view />
   </div>
@@ -45,7 +27,7 @@
 import setting_ from '../finder-setting/sms_sendLog'
 import { deleteSmsTemplate } from '@/api/sms'
 export default {
-  data () {
+  data() {
     return {
       task_name: '',
       failVisible: false,
@@ -62,24 +44,24 @@ export default {
     }
   },
   computed: {
-    setting () {
+    setting() {
       return setting_(this)
     }
   },
-  mounted () {
+  mounted() {
     const { task_name } = this.$route.query
     console.log(task_name)
     this.task_name = task_name
   },
   methods: {
-    addTemplate () {
+    addTemplate() {
       this.$router.push({ path: this.matchHidePage('edit') })
     },
-    beforeSearch (params) {
+    beforeSearch(params) {
       return { ...params, task_name: this.task_name }
     },
-    afterSearch () {},
-    async deleteTemplateHandle (id) {
+    afterSearch() {},
+    async deleteTemplateHandle(id) {
       const result = await deleteSmsTemplate(id)
       this.$message.success('删除成功')
       this.$refs.finder.refresh()

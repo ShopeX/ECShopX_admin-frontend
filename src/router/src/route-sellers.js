@@ -26,17 +26,21 @@ export default {
         {
           path: 'wxpaysetting',
           component: () => import('@/view/mall/marketing/distributor_wxpaysetting')
+        },
+        {
+          path: 'alipaysetting',
+          component: () => import('@/view/mall/marketing/distributor_alipaysetting')
         }
       ]
     },
     {
       path: 'storemanager/list',
       name: `商家列表`,
-      component: () => import('@/view/mall/marketing/merchantList/index.vue'),
+      component: () => import('@/view/mall/marketing/merchantList/index'),
       children: [
         {
           path: 'editor',
-          component: () => import('@/view/mall/marketing/merchantList/editor.vue')
+          component: () => import('@/view/mall/marketing/merchantList/editor')
         }
       ]
     },

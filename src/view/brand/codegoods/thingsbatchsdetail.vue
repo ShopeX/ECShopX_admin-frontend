@@ -1,8 +1,6 @@
 <template>
   <section class="section section-white">
-    <h3 class="title">
-      物品及批次详情
-    </h3>
+    <h3 class="title">物品及批次详情</h3>
     <div class="section-header with-border">
       <h4>物品信息</h4>
     </div>
@@ -29,12 +27,7 @@
           <router-link
             :to="{ path: '/brand/onecode/things', query: { thing_id: thingInfo.thing_id } }"
           >
-            <el-button
-              class="iconfont icon-edit1"
-              type="text"
-            >
-              编辑
-            </el-button>
+            <el-button class="iconfont icon-edit1" type="text"> 编辑 </el-button>
           </router-link>
         </div>
       </div>
@@ -50,29 +43,12 @@
         border
         element-loading-text="数据加载中"
       >
-        <el-table-column
-          prop="batch_number"
-          width="150"
-          label="批次编号"
-        />
-        <el-table-column
-          prop="batch_name"
-          width="150"
-          label="批次名称"
-        />
-        <el-table-column
-          prop="batch_quantity"
-          width="150"
-          label="批次数量"
-        />
+        <el-table-column prop="batch_number" width="150" label="批次编号" />
+        <el-table-column prop="batch_name" width="150" label="批次名称" />
+        <el-table-column prop="batch_quantity" width="150" label="批次数量" />
         <el-table-column label="操作">
           <template slot-scope="scope">
-            <el-button
-              type="text"
-              @click="handleCodeDownload(scope.row)"
-            >
-              下载
-            </el-button>
+            <el-button type="text" @click="handleCodeDownload(scope.row)"> 下载 </el-button>
             <router-link
               :to="{
                 path: '/brand/onecode/batchs',
@@ -100,14 +76,12 @@
           @click="codeSpanChoose(index)"
         >
           <span>{{ item.start }} ~ {{ item.end }}</span>
-          <span
-            v-if="index === codespanIndex && !isdownloadOk"
-            class="bg-waiting"
-          ><i class="el-icon-loading" /></span>
-          <span
-            v-if="index === codespanIndex && isdownloadOk"
-            class="download-ok"
-          ><i class="el-icon-circle-check" /></span>
+          <span v-if="index === codespanIndex && !isdownloadOk" class="bg-waiting"
+            ><i class="el-icon-loading"
+          /></span>
+          <span v-if="index === codespanIndex && isdownloadOk" class="download-ok"
+            ><i class="el-icon-circle-check"
+          /></span>
         </div>
       </template>
     </el-dialog>
@@ -144,7 +118,7 @@ export default {
   components: {
     imgPicker
   },
-  data () {
+  data() {
     return {
       loading: false,
 
@@ -180,7 +154,7 @@ export default {
       }
     }
   },
-  mounted () {
+  mounted() {
     if (this.$route.query.thing_id) {
       // 初始化物品数据
       getThingsDetail(this.$route.query.thing_id)
@@ -257,8 +231,8 @@ export default {
         if (file.raw.type !== 'image/jpeg' && file.raw.type !== 'image/png') {
           that.$message.error('上传图片只能是 JPG 或者 PNG 格式!')
         }
-        if (file.raw.size / 1024 / 1024 > 2) {
-          that.$message.error('上传图片大小不能超过 2MB!')
+        if (file.raw.size / 1024 / 1024 > 5) {
+          that.$message.error('上传图片大小不能超过 5MB!')
         }
       }
 

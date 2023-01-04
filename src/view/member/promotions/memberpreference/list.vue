@@ -1,87 +1,45 @@
 <template>
   <div>
     <div v-if="$route.path.indexOf('editor') === -1">
+      <SpPlatformTip h5 app alipay />
       <el-row :gutter="20">
-        <el-col
-          :md="4"
-          :lg="8"
-        >
-          <el-button
-            size="mini"
-            type="primary"
-            icon="plus"
-            @click="addActivityData"
-          >
+        <el-col :md="4" :lg="8">
+          <el-button size="mini" type="primary" icon="plus" @click="addActivityData">
             添加会员优先购活动
           </el-button>
         </el-col>
       </el-row>
-      <el-tabs
-        v-model="activeName"
-        type="border-card"
-        @tab-click="handleClick"
-      >
-        <el-tab-pane
-          label="全部"
-          name="all"
-        />
-        <el-tab-pane
-          label="待开始"
-          name="waiting"
-        />
-        <el-tab-pane
-          label="进行中"
-          name="ongoing"
-        />
-        <el-tab-pane
-          label="已结束"
-          name="end"
-        />
+      <el-tabs v-model="activeName" type="card" @tab-click="handleClick">
+        <el-tab-pane label="全部" name="all" />
+        <el-tab-pane label="待开始" name="waiting" />
+        <el-tab-pane label="进行中" name="ongoing" />
+        <el-tab-pane label="已结束" name="end" />
         <el-table
           v-loading="loading"
           :data="list"
           style="width: 100%"
           element-loading-text="数据加载中"
         >
-          <el-table-column
-            prop="marketing_id"
-            width="60"
-            label="编号"
-          />
-          <el-table-column
-            prop="marketing_name"
-            label="活动名称"
-          />
-          <el-table-column
-            label="开始时间"
-            width="200"
-          >
+          <el-table-column prop="marketing_id" width="60" label="编号" />
+          <el-table-column prop="marketing_name" label="活动名称" />
+          <el-table-column label="开始时间" width="200">
             <template slot-scope="scope">
               <span>{{ scope.row.start_time | datetime('YYYY-MM-DD HH:mm:ss') }}</span>
             </template>
           </el-table-column>
-          <el-table-column
-            label="结束时间"
-            width="200"
-          >
+          <el-table-column label="结束时间" width="200">
             <template slot-scope="scope">
               <span>{{ scope.row.end_time | datetime('YYYY-MM-DD HH:mm:ss') }}</span>
             </template>
           </el-table-column>
-          <el-table-column
-            label="类型"
-            width="120"
-          >
+          <el-table-column label="类型" width="120">
             <template slot-scope="scope">
               <span v-if="scope.row.status == 'waiting'">待开始</span>
               <span v-if="scope.row.status == 'ongoing'">进行中</span>
               <span v-if="scope.row.status == 'end'">已结束</span>
             </template>
           </el-table-column>
-          <el-table-column
-            label="操作"
-            width="150"
-          >
+          <el-table-column label="操作" width="150">
             <template slot-scope="scope">
               <div class="operating-icons">
                 <el-button
@@ -91,12 +49,7 @@
                 >
                   取消
                 </el-button>
-                <el-button
-                  type="text"
-                  @click="viewDetail(scope.row)"
-                >
-                  查看
-                </el-button>
+                <el-button type="text" @click="viewDetail(scope.row)"> 查看 </el-button>
                 <el-button
                   v-if="scope.row.status == 'waiting'"
                   type="text"
@@ -108,10 +61,7 @@
             </template>
           </el-table-column>
         </el-table>
-        <div
-          v-if="total_count > params.pageSize"
-          class="content-padded content-center"
-        >
+        <div v-if="total_count > params.pageSize" class="content-padded content-center">
           <el-pagination
             layout="prev, pager, next"
             :current-page.sync="params.page"
@@ -135,7 +85,7 @@ import {
 import shopSelect from '@/components/shopSelect'
 
 export default {
-  provide () {
+  provide() {
     return {
       refresh: this.getActivityLists
     }
@@ -143,7 +93,7 @@ export default {
   components: {
     shopSelect
   },
-  data () {
+  data() {
     return {
       activeName: 'all',
       cursymbol: '￥',
@@ -173,34 +123,34 @@ export default {
   computed: {
     ...mapGetters(['wheight'])
   },
-  mounted () {
+  mounted() {
     this.getActivityLists()
   },
   methods: {
     // 切换tab
-    handleClick (tab, event) {
+    handleClick(tab, event) {
       this.activeName = tab.name
       this.params.status = tab.name == 'all' ? '' : tab.name
       this.params.page = 1
       this.getActivityLists()
     },
-    storeSearch (val) {
+    storeSearch(val) {
       val && val.shop_id
       this.params.store_id = val.shop_id
       this.params.page = 1
       this.getActivityLists()
     },
-    itemTypeChange () {
+    itemTypeChange() {
       this.params.page = 1
       this.getActivityLists()
     },
-    addActivityData () {
+    addActivityData() {
       this.$router.push({ path: this.matchHidePage('editor') })
     },
-    editActivityAction (index, row) {
+    editActivityAction(index, row) {
       this.$router.push({ path: this.matchHidePage('editor/') + row.marketing_id })
     },
-    deleteActivityAction (row) {
+    deleteActivityAction(row) {
       var msg = '你确定要删除该活动吗?'
       this.$confirm(msg, '提示', {
         cancelButtonText: '取消',
@@ -221,16 +171,16 @@ export default {
         }
       })
     },
-    updateDetail (row) {
+    updateDetail(row) {
       this.$router.push({ path: this.matchHidePage('editor/') + row.marketing_id })
     },
-    viewDetail (row) {
+    viewDetail(row) {
       this.$router.push({
         path: this.matchHidePage('editor/') + row.marketing_id,
         query: { isnodata: true }
       })
     },
-    viewItemList (id, itemType) {
+    viewItemList(id, itemType) {
       if (id == 'all') {
         if (itemType == 'normal') {
           this.$router.push({ path: this.matchInternalRoute('goodsphysical') })
@@ -250,7 +200,7 @@ export default {
         })
       }
     },
-    handleGoodsCurrentChange (page_num) {
+    handleGoodsCurrentChange(page_num) {
       this.ItemLoading = true
       this.activityItemDialog = true
       this.activityItemParams.page = page_num
@@ -262,7 +212,7 @@ export default {
         this.ItemLoading = false
       })
     },
-    handleGoodsSizeChange (pageSize) {
+    handleGoodsSizeChange(pageSize) {
       this.ItemLoading = true
       this.activityItemDialog = true
       this.activityItemParams.page = 1
@@ -275,10 +225,10 @@ export default {
         this.ItemLoading = false
       })
     },
-    handleCancel () {
+    handleCancel() {
       this.activityItemDialog = false
     },
-    dateChange (val) {
+    dateChange(val) {
       if (val.length > 0) {
         this.params.start_time = this.dateStrToTimeStamp(val[0] + ' 00:00:00')
         this.params.end_time = this.dateStrToTimeStamp(val[1] + ' 23:59:59')
@@ -286,20 +236,20 @@ export default {
       this.params.page = 1
       this.getActivityLists()
     },
-    handleCurrentChange (val) {
+    handleCurrentChange(val) {
       this.params.page = val
       this.loading = false
       this.getActivityLists()
     },
-    handleSizeChange (pageSize) {
+    handleSizeChange(pageSize) {
       this.params.page = 1
       this.params.pageSize = pageSize
       this.getActivityLists()
     },
-    dateStrToTimeStamp (str) {
+    dateStrToTimeStamp(str) {
       return Date.parse(new Date(str)) / 1000
     },
-    getActivityLists () {
+    getActivityLists() {
       this.loading = true
       var filter = this.params
       getMarketingActivityList(filter).then((response) => {
@@ -308,7 +258,7 @@ export default {
         this.loading = false
       })
     },
-    updateStatusCommunityAction (row) {
+    updateStatusCommunityAction(row) {
       var msg = '此操作将永久终止该活动, 是否继续?'
       this.$confirm(msg, '提示', {
         cancelButtonText: '取消',

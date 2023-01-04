@@ -26,6 +26,10 @@ export default {
         {
           path: 'wxpaysetting',
           component: () => import('@/view/mall/marketing/distributor_wxpaysetting')
+        },
+        {
+          path: 'alipaysetting',
+          component: () => import('@/view/mall/marketing/distributor_alipaysetting')
         }
       ]
     },
@@ -55,11 +59,6 @@ export default {
           component: () => import('@/view/base/planting/editor')
         }
       ]
-    },
-    {
-      path: 'adapay_member_entry',
-      name: '开户管理',
-      component: () => import('@/view/dealer/create_account')
     }
   ]
 }

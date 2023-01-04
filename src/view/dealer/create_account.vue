@@ -1,8 +1,8 @@
 <template>
   <div>
-    <div class="zyk_page_register_Info_edit" v-if="processed == '未填'">
+    <div v-if="processed == '未填'" class="zyk_page_register_Info_edit">
       <el-tabs v-model="activeName" type="border-card">
-        <el-tab-pane name="corp" v-if="member_type == 'corp' || allShow" label="企业">
+        <el-tab-pane v-if="member_type == 'corp' || allShow" name="corp" label="企业">
           <el-form
             ref="ruleForm"
             :model="form"
@@ -158,14 +158,14 @@
                   <el-form-item label="结算银行卡所属银行" prop="bank_name">
                     <div class="flex">
                       <el-autocomplete
+                        v-model="form.bank_name"
                         style="width: 100%"
                         prefix-icon="el-icon-search"
                         class="inline-input"
-                        v-model="form.bank_name"
                         :fetch-suggestions="querySearch"
                         placeholder="请输入选择内容"
                         @select="handleSelectBank"
-                      ></el-autocomplete>
+                      />
                     </div>
                   </el-form-item>
                 </el-col>
@@ -227,7 +227,7 @@
           </el-form>
         </el-tab-pane>
         <!-- 个人 -->
-        <el-tab-pane name="person" v-if="member_type == 'person' || allShow" label="个人">
+        <el-tab-pane v-if="member_type == 'person' || allShow" name="person" label="个人">
           <el-form
             ref="personForm"
             :model="personForm"
@@ -300,7 +300,7 @@
             </el-form-item>
           </el-form>
         </el-tab-pane>
-        <div style="text-align: center; margin: 50px 0;">
+        <div style="text-align: center; margin: 50px 0">
           <loading-btn
             ref="loadingBtn"
             size="medium"
@@ -313,7 +313,7 @@
     </div>
     <Result-cpn
       v-if="processed == '已填'"
-      :currentStatus="currentStatus"
+      :current-status="currentStatus"
       @processedHandle="processedHandle"
     />
   </div>
@@ -338,7 +338,7 @@ export default {
     ResultCpn,
     loadingBtn
   },
-  data () {
+  data() {
     return {
       // 初始打开tab
       activeName: 'corp',
@@ -465,12 +465,13 @@ export default {
       id: ''
     }
   },
-  mounted () {
+  mounted() {
     this.queryUserStatus()
   },
   methods: {
-    async queryUserStatus () {
-      const { audit_state, update_time, audit_desc, member_type } = await this.$api.dealerReInfo.userStatus()
+    async queryUserStatus() {
+      const { audit_state, update_time, audit_desc, member_type } =
+        await this.$api.dealerReInfo.userStatus()
       switch (audit_state) {
         case 'D': //待提交
           this.processed = '未填'
@@ -504,13 +505,12 @@ export default {
 
       // console.log(result);
     },
-    submit () {
-      if (this.activeName=='corp') {
-        this.submitForm('Y','loadingBtn')
-      }else{
-        this.submitFormPerson('Y','loadingBtn')
+    submit() {
+      if (this.activeName == 'corp') {
+        this.submitForm('Y', 'loadingBtn')
+      } else {
+        this.submitFormPerson('Y', 'loadingBtn')
       }
-
     },
     submitForm(isSubmit, ref) {
       this.form.submit_review = isSubmit
@@ -560,7 +560,7 @@ export default {
         }
       })
     },
-    submitFormPerson (isSubmit, ref) {
+    submitFormPerson(isSubmit, ref) {
       this.personForm.submit_review = isSubmit
       this.$refs['personForm'].validate(async (valid) => {
         if (valid) {
@@ -610,14 +610,14 @@ export default {
         }
       })
     },
-    handleAvatarSuccess (file) {
+    handleAvatarSuccess(file) {
       console.log(file)
     },
     handleUpload: function (file) {
       this.form.attach_file_name = file.file.name
       this.form.attach_file = file.file
     },
-    beforeAvatarUpload (file) {
+    beforeAvatarUpload(file) {
       console.log(file)
       const isZip = file.type === 'application/zip' || file.type === 'application/x-zip-compressed'
       const isLt2M = file.size / 1024 / 1024 < 8
@@ -632,9 +632,9 @@ export default {
     goback() {
       this.$router.back(-1)
     },
-    async processedHandle () {
+    async processedHandle() {
       if (this.member_type == 'corp') {
-        his.form = await this.$api.adapay.accountQueryCorp()
+        this.form = await this.$api.adapay.accountQueryCorp()
         this.processed = '未填'
         this.form.area = [this.form.prov_code, this.form.area_code]
         console.log(result)
@@ -647,7 +647,7 @@ export default {
     },
 
     // type 判断结果 （获取保存的结果）
-    async getResult (id, type, member_type) {
+    async getResult(id, type, member_type) {
       this.id = id
 
       if (id && member_type == 'corp') {
@@ -686,7 +686,7 @@ export default {
       }
     },
     // 结算所属银行
-    async querySearch (queryString, cb) {
+    async querySearch(queryString, cb) {
       this.AllBank = await this.$api.adapay.getBank({
         bank_name: this.form.bank_name
       })
@@ -702,16 +702,16 @@ export default {
       //调用 callback 返回建议列表的数据
       cb(results)
     },
-    createFilter (queryString) {
+    createFilter(queryString) {
       return (restaurant) => {
         return restaurant.value.toLowerCase().indexOf(queryString.toLowerCase()) === 0
       }
     },
-    async get_bank () {
+    async get_bank() {
       const result = await getBankList()
       this.AllBank = result.data.data
     },
-    handleSelectBank (val) {
+    handleSelectBank(val) {
       console.log(val)
       this.form.bank_code = val.bank_code
       this.form.bank_name = val.value

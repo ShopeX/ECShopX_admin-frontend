@@ -1,12 +1,7 @@
 <style lang="scss"></style>
 <template>
   <div>
-    <SpForm
-      v-model="form"
-      size="min"
-      :form-list="formList"
-      :submit="false"
-    />
+    <SpForm v-model="form" size="min" :form-list="formList" :submit="false" />
   </div>
 </template>
 
@@ -15,7 +10,7 @@ import { mapGetters } from 'vuex'
 import { VERSION_STANDARD, VERSION_IN_PURCHASE } from '@/utils'
 export default {
   name: '',
-  data () {
+  data() {
     return {
       form: {
         rate_status: false,
@@ -37,6 +32,10 @@ export default {
         order_page: [0]
       },
       formList: [
+        {
+          label: '通用设置',
+          type: 'group'
+        },
         {
           label: '分享带门店参数',
           key: 'distributor_param_status',
@@ -75,7 +74,7 @@ export default {
           label: '评论设置',
           key: 'rate_status',
           type: 'switch',
-          isShow: !VERSION_IN_PURCHASE,
+          // isShow: !VERSION_IN_PURCHASE,
           onChange: async (e) => {
             const { rate_status } = this.form
             await this.$api.company.setRateSetting({
@@ -87,7 +86,7 @@ export default {
           label: '提货码设置',
           key: 'pickupcode_status',
           type: 'switch',
-          isShow: !this.isMicorMall && !VERSION_IN_PURCHASE,
+          isShow: !this.isMicorMall,
           onChange: async (e) => {
             const { pickupcode_status } = this.form
             await this.$api.company.setPickupcodeSetting({
@@ -198,7 +197,7 @@ export default {
           key: 'dianwu_show_status',
           type: 'switch',
           tip: '移动端会员中心是否展示店务端入口',
-          isShow: !VERSION_IN_PURCHASE,
+          // isShow: !VERSION_IN_PURCHASE,
           onChange: async (e) => {
             const { dianwu_show_status } = this.form
             await this.$api.company.setDianwuShowStatus({
@@ -260,14 +259,14 @@ export default {
       ]
     }
   },
-  created () {
+  created() {
     this.fetch()
   },
   computed: {
     ...mapGetters(['isMicorMall'])
   },
   methods: {
-    async fetch () {
+    async fetch() {
       const res = await this.$api.company.getGlobalSetting()
       this.form = {
         ...this.form,
@@ -303,7 +302,7 @@ export default {
         this.form.item_page.push(3)
       }
     },
-    async saveItemPriceSetting () {
+    async saveItemPriceSetting() {
       const { cart_page, order_page, item_page } = this.form
       const params = {
         cart_page: {

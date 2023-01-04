@@ -1,28 +1,15 @@
 <template>
   <div class="zyk_coupon">
-    <template v-if="$route.path.indexOf('detail') === -1 && $route.path.indexOf('editor') === -1">
+    <SpRouterView>
       <div class="top">
         <div class="btn">
-          <el-button
-            type="primary"
-            size="small"
-            icon="el-icon-circle-plus"
-            @click="createCoupon"
-          >
+          <el-button type="primary" size="small" icon="el-icon-circle-plus" @click="createCoupon">
             创建劵包
           </el-button>
         </div>
         <div class="search">
-          <el-input
-            v-model="title"
-            placeholder="请入劵包标题"
-            class="input-with-select"
-          >
-            <el-button
-              slot="append"
-              icon="el-icon-search"
-              @click="queryCoupon"
-            />
+          <el-input v-model="title" placeholder="请入劵包标题" class="input-with-select">
+            <el-button slot="append" icon="el-icon-search" @click="queryCoupon" />
           </el-input>
         </div>
       </div>
@@ -35,27 +22,26 @@
         :hooks="{ beforeSearch: beforeSearch }"
         url="/voucher/package/list"
       />
-    </template>
-    <router-view />
+    </SpRouterView>
   </div>
 </template>
 
 <script>
 import setting_ from './setting/pageage'
 export default {
-  data () {
+  data() {
     return {
       title: ''
     }
   },
   computed: {
-    setting () {
+    setting() {
       return setting_(this)
     }
   },
-  mounted () {},
+  mounted() {},
   methods: {
-    createCoupon () {
+    createCoupon() {
       this.$router.push({
         path: `${this.$route.path}/editor`,
         query: {
@@ -63,11 +49,11 @@ export default {
         }
       })
     },
-    beforeSearch (params) {
+    beforeSearch(params) {
       params.title = this.title
       return { ...params }
     },
-    queryCoupon () {
+    queryCoupon() {
       this.$refs.finder.refresh()
     }
   }

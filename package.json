@@ -1,6 +1,6 @@
 {
   "name": "ecshopx-admin",
-  "version": "3.0.0",
+  "version": "3.8.0",
   "description": "ecshopx admin",
   "author": "shopex",
   "private": true,
@@ -13,11 +13,12 @@
   },
   "dependencies": {
     "@riophae/vue-treeselect": "0.0.38",
-    "@shopex/finder": "^1.0.31",
+    "@shopex/finder": "^1.0.36",
     "ali-oss": "^6.5.1",
     "aws-sdk": "^2.824.0",
     "axios": "^0.19.2",
     "axios-mock-adapter": "^1.8.1",
+    "big": "^0.5.2",
     "chart.js": "^2.6.0",
     "dayjs": "^1.10.6",
     "element-ui": "^2.13.0",

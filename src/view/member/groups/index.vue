@@ -3,47 +3,28 @@
     <template
       v-if="
         $route.path.indexOf('detail') === -1 &&
-          $route.path.indexOf('editor') === -1 &&
-          $route.path.indexOf('team') === -1
+        $route.path.indexOf('editor') === -1 &&
+        $route.path.indexOf('team') === -1
       "
     >
+      <SpPlatformTip />
       <div class="action-container">
-        <el-button
-          type="primary"
-          icon="iconfont icon-xinzengcaozuo-01"
-          @click="addGroups"
-        >
+        <el-button type="primary" icon="iconfont icon-xinzengcaozuo-01" @click="addGroups">
           新增拼团活动
         </el-button>
       </div>
 
-      <el-tabs
-        v-model="activeName"
-        type="card"
-      >
+      <el-tabs v-model="activeName" type="card">
         <el-tab-pane
           v-for="(item, index) in tabList"
           :key="index"
           :label="item.name"
           :name="item.activeName"
         >
-          <groupsList
-            v-if="activeName === 'first'"
-            ref="groupsList"
-            :view="0"
-          />
-          <groupsList
-            v-if="activeName === 'second'"
-            :view="1"
-          />
-          <groupsList
-            v-if="activeName === 'third'"
-            :view="2"
-          />
-          <groupsList
-            v-if="activeName === 'fourth'"
-            :view="3"
-          />
+          <groupsList v-if="activeName === 'first'" ref="groupsList" :view="0" />
+          <groupsList v-if="activeName === 'second'" :view="1" />
+          <groupsList v-if="activeName === 'third'" :view="2" />
+          <groupsList v-if="activeName === 'fourth'" :view="3" />
         </el-tab-pane>
       </el-tabs>
     </template>
@@ -55,7 +36,7 @@
 import groupsList from './list/groupsList'
 
 export default {
-  provide () {
+  provide() {
     return {
       refresh: this.refresh
     }
@@ -63,7 +44,7 @@ export default {
   components: {
     groupsList
   },
-  data () {
+  data() {
     return {
       loading: false,
       view: 0,
@@ -76,17 +57,17 @@ export default {
       ]
     }
   },
-  mounted () {
+  mounted() {
     if ('undefined' != typeof this.$route.query.activeName) {
       this.activeName = this.$route.query.activeName
     }
   },
   methods: {
-    addGroups () {
+    addGroups() {
       // 添加运费模板
       this.$router.push({ path: this.matchHidePage('editor') })
     },
-    refresh () {
+    refresh() {
       this.$refs.getGroupsList
     }
   }

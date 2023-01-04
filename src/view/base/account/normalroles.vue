@@ -1,58 +1,25 @@
 <template>
   <div>
     <div class="action-container">
-      <el-button
-        type="primary"
-        icon="plus"
-        @click="addRoleLabels"
-      >
-        添加角色
-      </el-button>
+      <el-button type="primary" icon="plus" @click="addRoleLabels"> 添加角色 </el-button>
     </div>
-    <SpFilterForm
-      :model="params"
-      @onSearch="onSearch"
-      @onReset="onSearch"
-    >
-      <SpFilterFormItem
-        prop="role_name"
-        label="角色名称:"
-      >
-        <el-input
-          v-model="params.role_name"
-          placeholder="请输入角色名称"
-        />
+    <SpFilterForm :model="params" @onSearch="onSearch" @onReset="onSearch">
+      <SpFilterFormItem prop="role_name" label="角色名称:">
+        <el-input v-model="params.role_name" placeholder="请输入角色名称" />
       </SpFilterFormItem>
     </SpFilterForm>
 
-    <el-table
-      v-loading="loading"
-      border
-      :data="rolesList"
-      :height="wheight - 160"
-    >
-      <el-table-column
-        prop="role_name"
-        label="角色名称"
-      />
-      <el-table-column
-        prop="permission"
-        label="角色权限"
-      >
+    <el-table v-loading="loading" border :data="rolesList" :height="wheight - 160">
+      <el-table-column prop="role_name" label="角色名称" />
+      <el-table-column prop="permission" label="角色权限">
         <template slot-scope="scope">
-          <el-tree
-            :data="scope.row.permission_tree"
-            :props="defaultProps"
-          />
+          <el-tree :data="scope.row.permission_tree" :props="defaultProps" />
         </template>
       </el-table-column>
       <el-table-column label="操作">
         <template slot-scope="scope">
           <div class="operating-icons">
-            <i
-              class="iconfont icon-edit1"
-              @click="editRoleAction(scope.$index, scope.row)"
-            />
+            <i class="iconfont icon-edit1" @click="editRoleAction(scope.$index, scope.row)" />
             <i
               class="mark iconfont icon-trash-alt1"
               @click="deleteRoleAction(scope.$index, scope.row)"
@@ -71,18 +38,9 @@
       />
     </div>
     <!-- 添加、编辑标识-开始 -->
-    <el-dialog
-      :title="editRoleTitle"
-      :visible.sync="editRoleVisible"
-      :before-close="handleCancel"
-    >
+    <el-dialog :title="editRoleTitle" :visible.sync="editRoleVisible" :before-close="handleCancel">
       <template>
-        <el-form
-          ref="form"
-          :model="form"
-          class="demo-ruleForm"
-          label-width="90px"
-        >
+        <el-form ref="form" :model="form" class="demo-ruleForm" label-width="90px">
           <el-form-item label="角色名称">
             <el-col :span="14">
               <el-input
@@ -104,19 +62,9 @@
           </el-form-item>
         </el-form>
       </template>
-      <div
-        slot="footer"
-        class="dialog-footer"
-      >
-        <el-button @click.native="handleCancel">
-          取消
-        </el-button>
-        <el-button
-          type="primary"
-          @click="submitRoleAction"
-        >
-          保存
-        </el-button>
+      <div slot="footer" class="dialog-footer">
+        <el-button @click.native="handleCancel"> 取消 </el-button>
+        <el-button type="primary" @click="submitRoleAction"> 保存 </el-button>
       </div>
     </el-dialog>
     <!-- 添加、编辑基础物料-结束 -->
@@ -135,7 +83,7 @@ import {
 } from '../../../api/company'
 export default {
   mixins: [pageMixin],
-  data () {
+  data() {
     return {
       menu: [],
       defaultProps: {
@@ -163,28 +111,26 @@ export default {
   computed: {
     ...mapGetters(['wheight'])
   },
-  mounted () {
+  mounted() {
     this.fetchList()
-
     const menu = this.$store.getters.menus
-    menu.forEach((item) => {
-      if (item.alias_name == 'setting') {
-        item.children.forEach((itemy, indexy) => {
-          if (itemy.is_super == 'Y') {
-            item.children.splice(indexy, 1)
-          }
-        })
-      }
-    })
-
+    // menu.forEach((item) => {
+    //   if (item.alias_name == 'setting') {
+    //     item.children.forEach((itemy, indexy) => {
+    //       if (itemy.is_super == 'Y') { // N
+    //         item.children.splice(indexy, 1)
+    //       }
+    //     })
+    //   }
+    // })
     this.menu = menu
   },
   methods: {
-    handleCancel () {
+    handleCancel() {
       this.editRoleVisible = false
       this.$refs.tree.setCheckedKeys([])
     },
-    addRoleLabels () {
+    addRoleLabels() {
       // 添加物料弹框
       this.editRoleTitle = '角色添加'
       this.editRoleVisible = true
@@ -198,7 +144,7 @@ export default {
         this.defaultCheckedKeys = []
       }
     },
-    editRoleAction (index, row) {
+    editRoleAction(index, row) {
       // 编辑物料弹框
       this.editRoleTitle = '角色编辑'
       this.editRoleVisible = true
@@ -211,7 +157,7 @@ export default {
         this.defaultCheckedKeys = row.permission.shopmenu_alias_name
       }
     },
-    submitRoleAction () {
+    submitRoleAction() {
       // 提交物料
 
       var checkedNodes = this.$refs.tree.getCheckedNodes()
@@ -238,7 +184,7 @@ export default {
         })
       }
     },
-    fetchList () {
+    fetchList() {
       this.loading = true
       this.params.service_type = 'timescard'
       const { pageIndex: page, pageSize } = this.page
@@ -261,7 +207,7 @@ export default {
           })
         })
     },
-    deleteRoleAction (index, row) {
+    deleteRoleAction(index, row) {
       this.$confirm('此操作将删除该角色, 是否继续?', '提示', {
         confirmButtonText: '确定',
         cancelButtonText: '取消',

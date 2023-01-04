@@ -1,58 +1,29 @@
 <template>
   <div>
-    <el-form
-      ref="form"
-      :rules="rules"
-      :model="form"
-      label-width="110px"
-    >
-      <div
-        v-if="!form.card_id && showTab"
-        class="content-center content-bottom-padded"
-      >
-        <el-radio-group
-          v-model="form.card_type"
-          @change="handleTypeChange"
-        >
-          <el-radio-button label="discount">
-            折扣券
-          </el-radio-button>
-          <el-radio-button label="cash">
-            满减券
-          </el-radio-button>
+    <el-form ref="form" :rules="rules" :model="form" label-width="110px">
+      <div v-if="!form.card_id && showTab" class="content-center content-bottom-padded">
+        <el-radio-group v-model="form.card_type" @change="handleTypeChange">
+          <el-radio-button label="discount"> 折扣券 </el-radio-button>
+          <el-radio-button label="cash"> 满减券 </el-radio-button>
           <!-- <el-radio-button label="gift">兑换券</el-radio-button> -->
-          <!-- <el-radio-button label="new_gift" v-if="VERSION_STANDARD">兑换券</el-radio-button> -->
+          <el-radio-button label="new_gift"> 兑换券 </el-radio-button>
         </el-radio-group>
       </div>
-      <GiftCoupon
-        v-if="form.card_type === 'new_gift'"
-        @haddleShowTab="haddleShowTab"
-      />
+      <GiftCoupon v-if="form.card_type === 'new_gift'" @haddleShowTab="haddleShowTab" />
       <template v-else>
-        <el-card
-          shadow="never"
-          header="基础信息"
-        >
-          <el-form-item
-            v-if="form.card_type === 'gift'"
-            label="兑换商品名称"
-            prop="gift"
-          >
+        <el-card shadow="never" header="基础信息">
+          <el-form-item v-if="form.card_type === 'gift'" label="兑换商品名称" prop="gift">
             <el-input
               v-model="form.gift"
               :maxlength="20"
               placeholder="兑换商品名称"
               style="width: 240px"
               @change="giftChange"
-            />&nbsp;<span
-              class="frm-tips"
-            >{{ inputValue.gift_length }}/{{ inputValue.gift_max }}</span>
+            />&nbsp;<span class="frm-tips"
+              >{{ inputValue.gift_length }}/{{ inputValue.gift_max }}</span
+            >
           </el-form-item>
-          <el-form-item
-            v-if="form.card_type === 'discount'"
-            label="折扣额度"
-            prop="discount"
-          >
+          <el-form-item v-if="form.card_type === 'discount'" label="折扣额度" prop="discount">
             <el-input
               v-model="form.discount"
               :disabled="form.card_id ? true : false"
@@ -62,11 +33,7 @@
               min="1"
             />
           </el-form-item>
-          <el-form-item
-            v-if="form.card_type === 'cash'"
-            label="减免金额"
-            prop="reduce_cost"
-          >
+          <el-form-item v-if="form.card_type === 'cash'" label="减免金额" prop="reduce_cost">
             <el-input
               v-model="form.reduce_cost"
               type="number"
@@ -75,10 +42,7 @@
               style="width: 240px"
             />&nbsp;元
           </el-form-item>
-          <el-form-item
-            label="发放数量"
-            prop="quantity"
-          >
+          <el-form-item label="发放数量" prop="quantity">
             <el-input
               v-model.number="form.quantity"
               min="1"
@@ -89,36 +53,30 @@
               style="width: 20%"
             />&nbsp;份
           </el-form-item>
-          <el-form-item
-            label="卡券标题"
-            prop="title"
-          >
+          <el-form-item label="券名称" prop="title">
             <el-input
               v-model="form.title"
               :disabled="form.card_id ? true : false"
               placeholder="字数上限为9个汉字"
               style="width: 240px"
               @change="titleChange"
-            />&nbsp;<span
-              class="frm-tips"
-            >{{ inputValue.title_length }}/{{ inputValue.title_max }}</span>
-            <p class="frm-tips">
-              建议填写满减券“减免金额”及自定义内容，描述卡券提供的具体优惠
-            </p>
+            />&nbsp;<span class="frm-tips"
+              >{{ inputValue.title_length }}/{{ inputValue.title_max }}</span
+            >
+            <!-- <p class="frm-tips">
+              建议填写
+              {{form.card_type === 'discount' ? '折扣券' : form.card_type === 'cash' ? '满减券' : '兑换券'}}
+              “减免金额”及自定义内容，描述卡券提供的具体优惠
+            </p> -->
           </el-form-item>
-          <el-form-item
-            label="使用条件"
-            prop="useCondition"
-          >
+          <el-form-item label="使用条件" prop="useCondition">
             <el-radio-group
               v-model="form.useCondition"
               :disabled="form.card_id ? true : false"
               @change="conditionChange"
             >
               <template v-if="form.card_type != 'cash'">
-                <el-radio :label="1">
-                  不限制
-                </el-radio>
+                <el-radio :label="1"> 不限制 </el-radio>
               </template>
               <template v-if="form.card_type !== 'gift'">
                 <el-radio :label="2">
@@ -140,14 +98,8 @@
               </template>
             </el-radio-group>
           </el-form-item>
-          <el-form-item
-            label="有效期"
-            prop="date_type"
-          >
-            <el-radio-group
-              v-model="form.date_type"
-              @change="changeDatetime"
-            >
+          <el-form-item label="有效期" prop="date_type">
+            <el-radio-group v-model="form.date_type" @change="changeDatetime">
               <div
                 v-if="
                   !form.card_id || (form.card_id && form.date_type === 'DATE_TYPE_FIX_TIME_RANGE')
@@ -189,8 +141,8 @@
                       form.card_id != '' && form.date_type == 'DATE_TYPE_FIX_TERM'
                         ? true
                         : datetimeStatus
-                          ? true
-                          : false
+                        ? true
+                        : false
                     "
                     size="5"
                   >
@@ -200,7 +152,8 @@
                       :label="item.text"
                       :value="item.value"
                     />
-                  </el-select>&nbsp;生效，有效天数&nbsp;
+</el-select
+                  >&nbsp;生效，有效天数&nbsp;
 
                   <el-input
                     v-model.number="form.days"
@@ -209,13 +162,11 @@
                       form.card_id != '' && form.date_type == 'DATE_TYPE_FIX_TERM'
                         ? true
                         : datetimeStatus
-                          ? true
-                          : false
+                        ? true
+                        : false
                     "
                   >
-                    <template slot="append">
-                      天
-                    </template>
+                    <template slot="append"> 天 </template>
                   </el-input>
                   <!-- <el-select
                   v-model="form.days"
@@ -244,18 +195,15 @@
                       form.card_id != '' && form.date_type == 'DATE_TYPE_FIX_TERM'
                         ? true
                         : datetimeStatus
-                          ? true
-                          : false
+                        ? true
+                        : false
                     "
                   />
                 </el-radio>
               </div>
             </el-radio-group>
           </el-form-item>
-          <el-form-item
-            label="卡券使用说明"
-            prop="description"
-          >
+          <el-form-item label="卡券使用说明" prop="description">
             <el-input
               v-model="form.description"
               required
@@ -265,9 +213,9 @@
               style="width: 600px"
               placeholder="请填写使用本优惠券的注意事项"
               @change="descriptionChange"
-            />&nbsp;<span
-              class="frm-tips"
-            >{{ inputValue.description_length }}/{{ inputValue.description_max }}</span>
+            />&nbsp;<span class="frm-tips"
+              >{{ inputValue.description_length }}/{{ inputValue.description_max }}</span
+            >
           </el-form-item>
           <!-- <el-form-item label="优惠券模板ID" prop="card_code">
            <el-input :maxlength="255" placeholder="优惠券模板ID" v-model="form.card_code" style="width: 240px;"></el-input>&nbsp;<span class="frm-tips">{{inputValue.card_code}}</span>
@@ -276,16 +224,9 @@
            <el-input :maxlength="255" placeholder="优惠券规则ID" v-model="form.card_rule_code" style="width: 240px;"></el-input>&nbsp;<span class="frm-tips">{{inputValue.card_rule_code}}</span>
         </el-form-item> -->
         </el-card>
-        <el-card
-          shadow="never"
-          header="适用规则"
-        >
+        <el-card shadow="never" header="适用规则">
           <el-form-item label="前台直接领取">
-            <el-switch
-              v-model="form.receive"
-              active-color="#13ce66"
-              inactive-color="#d2d4db"
-            />
+            <el-switch v-model="form.receive" active-color="#13ce66" inactive-color="#d2d4db" />
           </el-form-item>
           <el-form-item label="领券限制">
             <el-input
@@ -295,31 +236,16 @@
               min="1"
               oninput="value=value.replace(/[^\d.]/g,'')"
             />
-            <p class="frm-tips">
-              每个用户领券上限，如不填，则默认为1。
-            </p>
+            <p class="frm-tips">每个用户领券上限，如不填，则默认为1。</p>
           </el-form-item>
-          <el-form-item
-            v-if="is_distributor == false && form.card_type == 'gift'"
-            label="适用平台"
-          >
+          <el-form-item v-if="is_distributor == false && form.card_type == 'gift'" label="适用平台">
             <el-radio-group
               v-model="form.use_platform"
               :disabled="form.card_id != ''"
               @change="usePlatformChange"
             >
-              <el-radio
-                v-if="is_distributor == false"
-                label="store"
-              >
-                门店专用
-              </el-radio>
-              <el-radio
-                v-if="form.card_type != 'gift'"
-                label="mall"
-              >
-                线上商城专用
-              </el-radio>
+              <el-radio v-if="is_distributor == false" label="store"> 门店专用 </el-radio>
+              <el-radio v-if="form.card_type != 'gift'" label="mall"> 线上商城专用 </el-radio>
             </el-radio-group>
           </el-form-item>
           <el-form-item
@@ -327,10 +253,7 @@
             label="核销场景"
             prop="use_scenes"
           >
-            <el-radio-group
-              v-model="form.use_scenes"
-              :disabled="form.card_id != ''"
-            >
+            <el-radio-group v-model="form.use_scenes" :disabled="form.card_id != ''">
               <el-radio
                 v-if="form.card_type != 'gift' && form.use_platform == 'mall'"
                 label="ONLINE"
@@ -343,28 +266,15 @@
               >
                 快捷买单使用
               </el-radio>
-              <el-radio
-                v-if="form.use_platform == 'store'"
-                label="SELF"
-              >
+              <el-radio v-if="form.use_platform == 'store'" label="SELF">
                 自助核销（到店使用）
               </el-radio>
             </el-radio-group>
           </el-form-item>
-          <el-form-item
-            v-if="form.use_scenes == 'SELF'"
-            label="验证码"
-          >
-            <el-radio-group
-              v-model="self_rcode"
-              :disabled="form.card_id != ''"
-            >
-              <el-radio label="1">
-                启用验证码
-              </el-radio>
-              <el-radio label="0">
-                不启用验证码
-              </el-radio>
+          <el-form-item v-if="form.use_scenes == 'SELF'" label="验证码">
+            <el-radio-group v-model="self_rcode" :disabled="form.card_id != ''">
+              <el-radio label="1"> 启用验证码 </el-radio>
+              <el-radio label="0"> 不启用验证码 </el-radio>
             </el-radio-group>
             <br>
             <el-input
@@ -383,36 +293,17 @@
           shadow="naver"
         >
           <el-form-item label="适用商品">
-            <el-radio-group
-              v-model="form.use_all_items"
-              @change="itemTypeChange"
-            >
-              <el-radio label="true">
-                全部商品适用
-              </el-radio>
-              <el-radio label="false">
-                指定商品适用
-              </el-radio>
-              <el-radio label="category">
-                指定分类适用
-              </el-radio>
-              <el-radio label="tag">
-                指定商品标签适用
-              </el-radio>
-              <el-radio label="brand">
-                指定品牌适用
-              </el-radio>
+            <el-radio-group v-model="form.use_all_items" @change="itemTypeChange">
+              <el-radio label="true"> 全部商品适用 </el-radio>
+              <el-radio label="false"> 指定商品适用 </el-radio>
+              <el-radio label="category"> 指定管理分类适用 </el-radio>
+              <el-radio label="tag"> 指定商品标签适用 </el-radio>
+              <el-radio label="brand"> 指定品牌适用 </el-radio>
             </el-radio-group>
           </el-form-item>
 
-          <div
-            v-if="!zdItemHidden"
-            style="position: relative"
-          >
-            <SkuSelector
-              :data="relItems"
-              @change="getItems"
-            />
+          <div v-if="!zdItemHidden" style="position: relative">
+            <SkuSelector :data="relItems" @change="getItems" />
             <div style="position: absolute; bottom: 0px; left: 112px">
               <el-upload
                 style="display: inline-block; height: 0"
@@ -421,30 +312,16 @@
                 :auto-upload="false"
                 :show-file-list="false"
               >
-                <el-button type="primary">
-                  批量上传
-                </el-button>
+                <el-button type="primary"> 批量上传 </el-button>
               </el-upload>
-              <el-button
-                style="margin-left: 10px"
-                type="primary"
-                @click="uploadHandleTemplate()"
-              >
+              <el-button style="margin-left: 10px" type="primary" @click="uploadHandleTemplate()">
                 下载模板
               </el-button>
             </div>
           </div>
 
-          <el-col
-            :xs="12"
-            :sm="12"
-            :md="12"
-          >
-            <div
-              v-if="!categoryHidden"
-              style="height: 350px"
-              class="custom_tree"
-            >
+          <el-col :xs="12" :sm="12" :md="12">
+            <div v-if="!categoryHidden" style="height: 350px" class="custom_tree">
               <treeselect
                 v-model="form.item_category"
                 :options="categoryList"
@@ -456,9 +333,7 @@
           </el-col>
           <template v-if="!tagHidden">
             <div class="selected-tags view-flex">
-              <div class="label">
-                已选中标签：
-              </div>
+              <div class="label">已选中标签：</div>
               <div class="view-flex-item">
                 <el-tag
                   v-for="(tag, index) in tag.currentTags"
@@ -488,9 +363,7 @@
           </template>
           <template v-if="!brandHidden">
             <div class="selected-tags view-flex">
-              <div class="label">
-                已选中品牌：
-              </div>
+              <div class="label">已选中品牌：</div>
               <div class="view-flex-item">
                 <el-tag
                   v-for="(brand, index) in brand.currentBrands"
@@ -525,53 +398,20 @@
           shadow="naver"
         >
           <el-form-item label="适用门店">
-            <el-radio-group
-              v-model="form.use_all_shops"
-              @change="shopTypeChange"
-            >
-              <el-radio label="true">
-                全部门店适用
-              </el-radio>
-              <el-radio label="false">
-                指定门店适用
-              </el-radio>
+            <el-radio-group v-model="form.use_all_shops" @change="shopTypeChange">
+              <el-radio label="true"> 全部门店适用 </el-radio>
+              <el-radio label="false"> 指定门店适用 </el-radio>
             </el-radio-group>
           </el-form-item>
           <div v-if="!zdShopHidden">
-            <el-button
-              type="primary"
-              @click="addStoreAction"
-            >
-              选择门店
-            </el-button>
-            <el-table
-              v-if="relStores.length > 0"
-              :data="relStores"
-              style="line-height: normal"
-            >
-              <el-table-column
-                label="ID"
-                prop="wxShopId"
-                width="60"
-              />
-              <el-table-column
-                label="名称"
-                prop="storeName"
-              />
-              <el-table-column
-                prop="address"
-                label="地址"
-                show-overflow-tooltip
-              />
-              <el-table-column
-                label="操作"
-                width="50"
-              >
+            <el-button type="primary" @click="addStoreAction"> 选择门店 </el-button>
+            <el-table v-if="relStores.length > 0" :data="relStores" style="line-height: normal">
+              <el-table-column label="ID" prop="wxShopId" width="60" />
+              <el-table-column label="名称" prop="storeName" />
+              <el-table-column prop="address" label="地址" show-overflow-tooltip />
+              <el-table-column label="操作" width="50">
                 <template slot-scope="scope">
-                  <i
-                    class="iconfont icon-trash-alt"
-                    @click="deleteRow(scope.$index, form.items)"
-                  />
+                  <i class="iconfont icon-trash-alt" @click="deleteRow(scope.$index, form.items)" />
                 </template>
               </el-table-column>
             </el-table>
@@ -584,48 +424,22 @@
           shadow="naver"
         >
           <el-form-item label="适用店铺">
-            <el-radio-group
-              v-model="form.use_all_shops"
-              @change="shopTypeChange"
-            >
-              <el-radio label="true">
-                全部店铺适用
-              </el-radio>
-              <el-radio label="false">
-                指定店铺适用
-              </el-radio>
+            <el-radio-group v-model="form.use_all_shops" @change="shopTypeChange">
+              <el-radio label="true"> 全部店铺适用 </el-radio>
+              <el-radio label="false"> 指定店铺适用 </el-radio>
             </el-radio-group>
           </el-form-item>
           <div v-if="!zdShopHidden">
-            <el-button
-              type="primary"
-              @click="addDistributorAction"
-            >
-              选择店铺
-            </el-button>
+            <el-button type="primary" @click="addDistributorAction"> 选择店铺 </el-button>
             <el-table
               v-if="distributor_info.length > 0"
               :data="distributor_info"
               style="line-height: normal"
             >
-              <el-table-column
-                label="ID"
-                prop="distributor_id"
-                width="60"
-              />
-              <el-table-column
-                label="名称"
-                prop="name"
-              />
-              <el-table-column
-                prop="address"
-                label="地址"
-                show-overflow-tooltip
-              />
-              <el-table-column
-                label="操作"
-                width="50"
-              >
+              <el-table-column label="ID" prop="distributor_id" width="60" />
+              <el-table-column label="名称" prop="name" />
+              <el-table-column prop="address" label="地址" show-overflow-tooltip />
+              <el-table-column label="操作" width="50">
                 <template slot-scope="scope">
                   <i
                     class="iconfont icon-trash-alt"
@@ -637,14 +451,8 @@
           </div>
         </el-card>
         <div class="content-center">
-          <el-button @click="cancelSubmit">
-            取消
-          </el-button>
-          <el-button
-            type="primary"
-            :disabled="submitDisabled"
-            @click="submitForm('form')"
-          >
+          <el-button @click="cancelSubmit"> 取消 </el-button>
+          <el-button type="primary" :disabled="submitDisabled" @click="submitForm('form')">
             提交
           </el-button>
         </div>
@@ -693,7 +501,7 @@ export default {
     Treeselect,
     GiftCoupon
   },
-  data () {
+  data() {
     let tempDays = [{ text: '当天', value: 0 }]
     let tempRemainDays = []
     for (let i = 1; i <= 90; i++) {
@@ -743,11 +551,11 @@ export default {
     var titleChecked = (rule, value, callback) => {
       console.log(value)
       if (value == '') {
-        callback(new Error('卡券标题不能为空'))
+        callback(new Error('券名称不能为空'))
       } else if (this.inputValue.title_length > this.inputValue.title_max) {
         callback(
           new Error(
-            '卡券标题长度不超过' +
+            '券名称长度不超过' +
               this.inputValue.title_max +
               '个汉字或' +
               this.inputValue.title_max * 2 +
@@ -802,7 +610,7 @@ export default {
     }
     return {
       pickerOptions: {
-        disabledDate (time) {
+        disabledDate(time) {
           return time.getTime() < Date.now() - 8.64e7
         }
       },
@@ -933,7 +741,7 @@ export default {
       showTab: true
     }
   },
-  mounted () {
+  mounted() {
     if (store.getters.login_type === 'distributor') {
       this.is_distributor = true
       this.form.is_distributor = true
@@ -1054,24 +862,24 @@ export default {
     }
   },
   methods: {
-    getItems (data) {
+    getItems(data) {
       let ids = []
       data.forEach((item) => {
         ids.push(item.itemId)
       })
       this.form.rel_item_ids = ids
     },
-    usePlatformChange (val) {
+    usePlatformChange(val) {
       if (val == 'mall') {
         this.form.use_scenes = 'ONLINE'
       } else {
         this.form.use_scenes = 'QUICK'
       }
     },
-    checkColor (e) {
+    checkColor(e) {
       this.form.color = e.target.dataset.color
     },
-    changeDatetime (val) {
+    changeDatetime(val) {
       if (val === 'DATE_TYPE_FIX_TIME_RANGE') {
         this.datetimeStatus = true
       } else {
@@ -1080,7 +888,7 @@ export default {
         this.begin_time = 0
       }
     },
-    handleTypeChange (val) {
+    handleTypeChange(val) {
       if (val === 'gift') {
         this.form.use_scenes = 'SELF'
         this.form.use_platform = 'store'
@@ -1091,7 +899,7 @@ export default {
         this.form.use_platform = 'mall'
       }
     },
-    shopTypeChange (val) {
+    shopTypeChange(val) {
       this.zdShopHidden = true
       if (val === 'false') {
         this.zdShopHidden = false
@@ -1101,7 +909,7 @@ export default {
         this.form.distributor_info = []
       }
     },
-    itemTypeChange (val) {
+    itemTypeChange(val) {
       this.zdItemHidden = true
       this.categoryHidden = true
       this.tagHidden = true
@@ -1132,10 +940,10 @@ export default {
         this.showBrands()
       }
     },
-    cancelSubmit () {
+    cancelSubmit() {
       this.$router.go(-1)
     },
-    submitForm (formName) {
+    submitForm(formName) {
       if (this.form.days <= 0) {
         this.$message.error('有效天数必须大于0')
         return
@@ -1210,7 +1018,7 @@ export default {
                     message: '更新成功',
                     type: 'success',
                     duration: 2 * 1000,
-                    onClose () {
+                    onClose() {
                       that.refresh()
                       that.$router.go(-1)
                     }
@@ -1232,7 +1040,7 @@ export default {
                     message: '添加成功',
                     type: 'success',
                     duration: 2 * 1000,
-                    onClose () {
+                    onClose() {
                       that.refresh()
                       that.$router.go(-1)
                     }
@@ -1252,18 +1060,18 @@ export default {
         }
       })
     },
-    addStoreAction () {
+    addStoreAction() {
       this.storeVisible = true
       this.setStatus = true
       this.relShopIds = this.form.rel_shops_ids
       console.log(this.form.rel_shops_ids)
     },
-    addDistributorAction () {
+    addDistributorAction() {
       this.distributorVisible = true
       this.setDistributorStatus = true
       this.relDistributorIds = this.form.distributor_id
     },
-    chooseStoreAction (data) {
+    chooseStoreAction(data) {
       console.warn('data', data)
       this.storeVisible = false
       this.form.rel_shops_ids = []
@@ -1276,7 +1084,7 @@ export default {
       }
     },
 
-    chooseDistributorAction (data) {
+    chooseDistributorAction(data) {
       this.distributorVisible = false
       if (!data || data === null || data.length <= 0) {
         this.distributor_info = []
@@ -1289,13 +1097,13 @@ export default {
         this.form.distributor_id.push(Number(id))
       }
     },
-    closeStoreDialogAction () {
+    closeStoreDialogAction() {
       this.storeVisible = false
     },
-    closeDistributorDialogAction () {
+    closeDistributorDialogAction() {
       this.distributorVisible = false
     },
-    deleteRow (index) {
+    deleteRow(index) {
       this.setStatus = false
       this.relStores.splice(index, 1)
       //this.form.rel_shops_ids = []
@@ -1306,7 +1114,7 @@ export default {
         }
       }
     },
-    deleteDistritutorRow (index) {
+    deleteDistritutorRow(index) {
       this.distributor_info.splice(index, 1)
       let shopDatas = this.distributor_info
       this.form.distributor_id = []
@@ -1317,16 +1125,16 @@ export default {
       }
       this.relDistributorIds = this.form.distributor_id
     },
-    giftChange (value) {
+    giftChange(value) {
       this.inputValue.gift_length = this.getValueLength(value)
     },
-    titleChange (value) {
+    titleChange(value) {
       this.inputValue.title_length = this.getValueLength(value)
     },
-    descriptionChange (value) {
+    descriptionChange(value) {
       this.inputValue.description_length = this.getValueLength(value)
     },
-    getValueLength (value) {
+    getValueLength(value) {
       let realLength = 0,
         charCode = -1,
         count = 0
@@ -1346,7 +1154,7 @@ export default {
       }
       return realLength
     },
-    conditionChange (val) {
+    conditionChange(val) {
       if (val == 1) {
         this.form.least_cost = 0
       }
@@ -1354,12 +1162,12 @@ export default {
         this.form.most_cost = 999999
       }
     },
-    fetchMainCate () {
+    fetchMainCate() {
       getCategory({ is_main_category: true, ignore_none: true }).then((response) => {
         this.categoryList = response.data.data
       })
     },
-    addItemTag () {
+    addItemTag() {
       this.tag.currentTags = []
       if (this.item_id.length) {
         this.showTags()
@@ -1371,7 +1179,7 @@ export default {
         })
       }
     },
-    showTags () {
+    showTags() {
       this.tag.tags = [...this.tag.list]
       let active_tags = [] //可选标签
       this.tag.tags.forEach((item, index) => {
@@ -1380,7 +1188,7 @@ export default {
       })
       this.tag.tags = active_tags
     },
-    tagRemove (index) {
+    tagRemove(index) {
       this.tag.tags.unshift(this.tag.currentTags[index])
       this.tag.currentTags.splice(index, 1)
       this.form.tag_ids = []
@@ -1388,7 +1196,7 @@ export default {
         this.form.tag_ids.push(item.tag_id)
       })
     },
-    tagAdd (item, index) {
+    tagAdd(item, index) {
       let isInArr = this.tag.currentTags.findIndex((n) => n.tag_id == item.tag_id)
       if (isInArr == -1) {
         this.tag.currentTags.push(item)
@@ -1399,7 +1207,7 @@ export default {
         this.form.tag_ids.push(item.tag_id)
       })
     },
-    getAllTagLists () {
+    getAllTagLists() {
       let params = {
         page: 1,
         pageSize: 500
@@ -1410,7 +1218,7 @@ export default {
       })
     },
     // 获取品牌列表
-    getBrandList (searchVal = '', isInit = false) {
+    getBrandList(searchVal = '', isInit = false) {
       const list = []
       getGoodsAttr({
         page: 1,
@@ -1426,7 +1234,7 @@ export default {
         this.showBrands()
       })
     },
-    showBrands () {
+    showBrands() {
       this.brand.brands = [...this.brand.list]
       let active_brands = []
       this.brand.brands.forEach((item, index) => {
@@ -1436,7 +1244,7 @@ export default {
       })
       this.brand.brands = active_brands
     },
-    brandAdd (item, index) {
+    brandAdd(item, index) {
       let isInArr = this.brand.currentBrands.findIndex((n) => n.attribute_id == item.attribute_id)
       if (isInArr == -1) {
         this.brand.currentBrands.push(item)
@@ -1447,7 +1255,7 @@ export default {
         this.form.brand_ids.push(item.attribute_id)
       })
     },
-    brandRemove (index) {
+    brandRemove(index) {
       this.brand.brands.unshift(this.brand.currentBrands[index])
       this.brand.currentBrands.splice(index, 1)
       this.form.brand_ids = []
@@ -1458,7 +1266,7 @@ export default {
     /**
      * 下载模板
      * */
-    uploadHandleTemplate () {
+    uploadHandleTemplate() {
       let params = { file_type: 'marketing_goods', file_name: '商品模板' }
       exportUploadTemplate(params).then((response) => {
         let { data } = response.data
@@ -1480,7 +1288,7 @@ export default {
     /**
      * 上传模板
      * */
-    uploadHandleChange (file, fileList) {
+    uploadHandleChange(file, fileList) {
       let params = { isUploadFile: true, file_type: 'marketing_goods', file: file.raw }
       handleUploadFile(params).then((response) => {
         this.$message({
@@ -1516,7 +1324,7 @@ export default {
         })
       })
     },
-    haddleShowTab (value) {
+    haddleShowTab(value) {
       this.showTab = value
     }
   }

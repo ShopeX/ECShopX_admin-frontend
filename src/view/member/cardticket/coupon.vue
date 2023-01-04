@@ -1,33 +1,21 @@
 <template>
   <div>
-    <template v-if="$route.path.indexOf('detail') === -1 && $route.path.indexOf('editor') === -1">
+    <SpRouterView>
+      <SpPlatformTip h5 app pc alipay />
       <div class="action-container">
-        <el-button
-          type="primary"
-          icon="iconfont icon-xinzengcaozuo-01"
-          @click="addCoupon"
-        >
+        <el-button type="primary" icon="iconfont icon-xinzengcaozuo-01" @click="addCoupon">
           创建优惠券
         </el-button>
       </div>
 
-      <el-tabs
-        v-model="params.date_status"
-        type="card"
-        @tab-click="handleClick"
-      >
+      <el-tabs v-model="params.date_status" type="card" @tab-click="handleClick">
         <el-tab-pane
           v-for="(item, index) in tabList"
           :key="index"
           :label="item.name"
           :name="item.activeName"
         >
-          <el-table
-            v-loading="loading"
-            :data="tableList"
-            border
-            @filter-change="filterTag"
-          >
+          <el-table v-loading="loading" :data="tableList" border @filter-change="filterTag">
             <!-- <el-table-column type="selection" width="55"></el-table-column> -->
             <el-table-column
               prop="card_type"
@@ -44,8 +32,8 @@
                     scope.row.card_type === 'discount'
                       ? 'primary'
                       : scope.row.card_type === 'cash'
-                        ? 'danger'
-                        : 'warning'
+                      ? 'danger'
+                      : 'warning'
                   "
                   size="mini"
                 >
@@ -53,14 +41,8 @@
                 </el-tag>
               </template>
             </el-table-column>
-            <el-table-column
-              prop="title"
-              label="卡券标题"
-            />
-            <el-table-column
-              width="280"
-              label="卡券有效期"
-            >
+            <el-table-column prop="title" label="卡券标题" />
+            <el-table-column width="280" label="卡券有效期">
               <template slot-scope="scope">
                 <i class="el-icon-time" />
                 <template v-if="scope.row.takeEffect">
@@ -68,18 +50,13 @@
                 </template>
                 <template v-else>
                   {{ scope.row.begin_time | datetime('YYYY-MM-DD HH:mm:ss') }}
-                  <template v-if="scope.row.end_time">
-                    ~
-                  </template>
+                  <template v-if="scope.row.end_time"> ~ </template>
                   {{ scope.row.end_time | datetime('YYYY-MM-DD HH:mm:ss') }}
                   <!-- {{ Date.parse(new Date()) > scope.row.end_time * 1000 ? '已过期' : '' }} -->
                 </template>
               </template>
             </el-table-column>
-            <el-table-column
-              width="120"
-              label="可领取库存"
-            >
+            <el-table-column width="120" label="可领取库存">
               <template slot-scope="scope">
                 <span v-if="scope.row.quantity > scope.row.get_num">{{
                   scope.row.quantity - scope.row.get_num
@@ -142,31 +119,16 @@
                 </el-popover> -->
               </template>
             </el-table-column>
-            <el-table-column
-              width="80"
-              prop="get_num"
-              label="领取量"
-            >
+            <el-table-column width="80" prop="get_num" label="领取量">
               <!-- <template v-if="scope.row.get_num">{{scope.row.get_num}}</template> -->
               <!-- <template>0</template> -->
             </el-table-column>
-            <el-table-column
-              width="80"
-              prop="use_num"
-              label="使用量"
-            >
+            <el-table-column width="80" prop="use_num" label="使用量">
               <!-- <template v-if="scope.row.use_num">{{scope.row.use_num}}</template> -->
               <!-- <template>0</template> -->
             </el-table-column>
-            <el-table-column
-              width="80"
-              prop="source_name"
-              label="店铺"
-            />
-            <el-table-column
-              width="160"
-              label="操作"
-            >
+            <el-table-column width="200" prop="source_name" label="店铺" />
+            <el-table-column width="200" label="操作">
               <template slot-scope="scope">
                 <div class="operating-icons">
                   <el-button type="text">
@@ -183,10 +145,7 @@
                       查看
                     </router-link>
                   </el-button>
-                  <el-button
-                    v-if="scope.row.edit_btn == 'Y'"
-                    type="text"
-                  >
+                  <el-button v-if="scope.row.edit_btn == 'Y'" type="text">
                     <router-link
                       :to="{
                         path: matchHidePage('editor'),
@@ -196,6 +155,35 @@
                       编辑
                     </router-link>
                   </el-button>
+                  <el-popover v-if="appID" placement="top" width="200" trigger="click">
+                    <div>
+                      <img class="page-code" :src="appCodeUrl">
+                      <div class="page-btns">
+                        <el-button
+                          type="primary"
+                          plain
+                          size="mini"
+                          @click="handleDownload(scope.row.title)"
+                          >
+下载码
+</el-button
+                        >
+                        <el-button v-clipboard:copy="curPageUrl" type="primary" plain size="mini"
+                          >
+复制链接
+</el-button
+                        >
+                      </div>
+                    </div>
+                    <el-button
+                      slot="reference"
+                      style="width: 45px"
+                      type="text"
+                      @click="handleShow(scope.row.card_id)"
+                    >
+                      投放
+                    </el-button>
+                  </el-popover>
                   <el-button
                     v-if="scope.row.status != 'CARD_STATUS_DISPATCH'"
                     type="text"
@@ -220,10 +208,7 @@
         </el-tab-pane>
       </el-tabs>
 
-      <el-dialog
-        title="您可以通过以下方式投放"
-        :visible.sync="sendoutVisible"
-      >
+      <el-dialog title="您可以通过以下方式投放" :visible.sync="sendoutVisible">
         <div
           v-for="(item, index) in sedoutList"
           :key="index"
@@ -236,23 +221,12 @@
             <i class="el-icon-circle-check" />
           </div>
         </div>
-        <div
-          slot="footer"
-          class="dialog-footer"
-        >
-          <el-button @click.native="sendoutVisible = false">
-            取消
-          </el-button>
-          <el-button
-            type="primary"
-            @click.native="sendoutAction"
-          >
-            确定
-          </el-button>
+        <div slot="footer" class="dialog-footer">
+          <el-button @click.native="sendoutVisible = false"> 取消 </el-button>
+          <el-button type="primary" @click.native="sendoutAction"> 确定 </el-button>
         </div>
       </el-dialog>
-    </template>
-    <router-view />
+    </SpRouterView>
 
     <SpDialog
       ref="editDialogRef"
@@ -269,21 +243,35 @@
 <script>
 import store from '@/store'
 import { getQRcode, removeCard, updateStore } from '@/api/cardticket'
+import { getPageCode } from '@/api/marketing'
 import mixin, { pageMixin } from '@/mixins'
 
 export default {
   mixins: [mixin, pageMixin],
-  provide () {
+  provide() {
     return {
       refresh: this.fetchList
     }
   },
-  data () {
+  data() {
     const initialParams = {
       date_status: '2',
       card_type: undefined,
       status: undefined,
       store_self: undefined
+    }
+    const typeFilters = [
+      {
+        text: '折扣券',
+        value: 'discount'
+      },
+      {
+        text: '满减券',
+        value: 'cash'
+      }
+    ]
+    if (this.VERSION_STANDARD) {
+      typeFilters.push({ text: '兑换券', value: 'new_gift' })
     }
     return {
       initialParams,
@@ -297,25 +285,15 @@ export default {
       checkedType: {},
       typeId: -1,
       sedoutList: [{ name: '下载二维码', id: 3 }],
-      typeFilters: [
-        {
-          text: '折扣券',
-          value: 'discount'
-        },
-        {
-          text: '满减券',
-          value: 'cash'
-        }
-        // {
-        //   text: '兑换券',
-        //   value: 'new_gift'
-        // }
-      ],
+      typeFilters,
       tabList: [
         { name: '已生效', activeName: '2' },
         { name: '待生效', activeName: '1' },
         { name: '已过期', activeName: '3' }
       ],
+      appID: '',
+      appCodeUrl: '',
+      curPageUrl: '',
       editDialog: false,
       editForm: {
         card_id: '',
@@ -353,40 +331,70 @@ export default {
       ]
     }
   },
-  mounted () {
+  mounted() {
     this.params.store_self = false
     if (this.VERSION_PLATFORM && store.getters.login_type !== 'distributor') {
       this.params.store_self = true
     }
     this.fetchList()
+    this.fetchWechatList()
   },
   methods: {
-    editCouponStore (id) {
+    async fetchWechatList() {
+      const { list } = await this.$api.minimanage.gettemplateweapplist()
+      list.forEach((item, i) => {
+        if (item.name == 'yykweishop') {
+          this.appID = item.authorizer.authorizer_appid
+        }
+      })
+    },
+    handleShow(card_id) {
+      const page = 'subpages/marketing/coupon-center'
+      this.curPageUrl = `${page}?card_id=${card_id}`
+      let params = {
+        wxaAppId: this.appID,
+        page,
+        card_id
+      }
+      getPageCode(params).then((response) => {
+        this.appCodeUrl = response.data.data.base64Image
+      })
+    },
+    handleDownload(name) {
+      var a = document.createElement('a')
+      var temp = name
+      if (this.appCodeUrl) {
+        a.href = this.appCodeUrl
+        a.download = temp + '.png'
+        a.click()
+      }
+    },
+    editCouponStore(id) {
       this.editForm.card_id = id
       this.editDialog = true
     },
-    async onEditSubmit () {
+    async onEditSubmit() {
       await this.$api.cardticket.updateStore(this.editForm)
       this.editDialog = false
       this.fetchList()
     },
-    getParams () {
+    getParams() {
       let params = {
         ...this.params
       }
       return params
     },
-    onSearch () {
+    onSearch() {
       this.page.pageIndex = 1
       this.$nextTick(() => {
         this.fetchList()
       })
     },
-    onReset () {
+    onReset() {
       this.params = { ...this.initialParams }
       this.onSearch()
     },
-    async fetchList () {
+    async fetchList() {
       this.loading = true
       const { pageIndex: page_no, pageSize: page_size } = this.page
       let params = {
@@ -399,18 +407,18 @@ export default {
       this.page.total = total_count
       this.loading = false
     },
-    handleClick (tab, event) {
+    handleClick(tab, event) {
       this.onSearch()
     },
-    addCoupon () {
+    addCoupon() {
       this.$router.push({ path: this.matchHidePage('editor') })
     },
-    sendoutShowAction (id) {
+    sendoutShowAction(id) {
       this.sendoutVisible = true
       this.typeId = id
       this.currSendout = 0
     },
-    sendoutAction () {
+    sendoutAction() {
       if (this.currSendout == 0) {
         if (this.typeId) {
           getQRcode(this.typeId).then((res) => {
@@ -423,7 +431,7 @@ export default {
       }
       this.sendoutVisible = false
     },
-    deleteCard (id, index) {
+    deleteCard(id, index) {
       this.$confirm('确定要删除该卡券？', '提示', {
         cancelButtonText: '取消',
         confirmButtonText: '确定',
@@ -438,10 +446,10 @@ export default {
         }
       })
     },
-    chooseSendout (index) {
+    chooseSendout(index) {
       this.currSendout = index
     },
-    pullWechatCard () {
+    pullWechatCard() {
       this.$confirm('确定同步微信优惠券到本系统吗？', '提示', {
         confirmButtonText: '确定',
         cancelButtonText: '取消',
@@ -463,17 +471,17 @@ export default {
           })
         })
     },
-    filterTag (value) {
+    filterTag(value) {
       if (value.type) {
-        this.fetchParams.card_type = value.type[0]
+        this.params.card_type = value.type[0]
         this.fetchList()
       }
       if (value.status) {
-        this.fetchParams.status = value.status
+        this.params.status = value.status
         this.fetchList()
       }
     },
-    saveStore (index, operationType) {
+    saveStore(index, operationType) {
       this.loadingbtn = true
       let reg = /^[1-9]\d*$/
       if (!reg.test(this.tableList[index].storeValue)) {
@@ -684,6 +692,12 @@ export default {
   .store-content {
     margin-bottom: 15px;
   }
+}
+.page-code {
+  width: 100%;
+}
+.page-btns {
+  text-align: center;
 }
 </style>
 <style>

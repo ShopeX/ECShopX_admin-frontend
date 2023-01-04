@@ -89,11 +89,11 @@ export default {
       name: `分享设置`,
       component: () => import('@/view/base/setting/sharesetting')
     },
-    {
-      path: 'wxshopsetting',
-      name: `商城基本信息`,
-      component: () => import('@/view/base/shop/shopsetting')
-    },
+    // {
+    //   path: 'wxshopsetting',
+    //   name: `商城基本信息`,
+    //   component: () => import('@/view/base/shop/shopsetting')
+    // },
     //{
     //  path: 'wechat/wxaindex',
     //  name: `服务号管理-授权管理`,
@@ -147,6 +147,11 @@ export default {
       component: () => import('@/view/brand/wechat/reply')
     },
     {
+      path: 'aliminiapp',
+      name: `支付宝小程序设置`,
+      component: () => import('@/view/wxapp/aliminiapp/setting')
+    },
+    {
       path: 'cs/wxappchat',
       name: `客服-小程序客服`,
       component: () => import('@/view/base/setting/im/wxappchat')
@@ -165,7 +170,7 @@ export default {
     {
       path: 'cs/meiqia',
       name: `客服-美洽客服`,
-      component: () => import('@/view/base/setting/im/list')
+      component: () => import('@/view/site/meiqia')
     },
     {
       path: 'site/extminilink',

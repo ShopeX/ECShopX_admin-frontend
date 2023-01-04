@@ -1,6 +1,6 @@
 import fetch from '@/utils/fetch'
 
-export function getImageList (params) {
+export function getImageList(params) {
   return fetch({
     url: '/espier/images',
     method: 'get',
@@ -9,7 +9,7 @@ export function getImageList (params) {
 }
 
 // 添加图片分组
-export function addImageCatgory (params) {
+export function addImageCatgory(params) {
   return fetch({
     url: '/espier/image/cat',
     method: 'post',
@@ -18,7 +18,7 @@ export function addImageCatgory (params) {
 }
 
 // 获取图片分组
-export function getImageAllCatgory (params) {
+export function getImageAllCatgory(params) {
   return fetch({
     url: `/espier/image/cat/children`,
     method: 'get',

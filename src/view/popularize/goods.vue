@@ -1,10 +1,7 @@
 <template>
   <div>
     <div class="content-bottom-padded">
-      <el-row
-        class="content-bottom-padded"
-        :gutter="20"
-      >
+      <el-row class="content-bottom-padded" :gutter="20">
         <el-col :span="6">
           <el-input
             v-model="params.keywords"
@@ -12,20 +9,11 @@
             size="mini"
             placeholder="请输入商品名称"
           >
-            <el-button
-              slot="append"
-              icon="el-icon-search"
-              @click="goodsSearch"
-            />
+            <el-button slot="append" icon="el-icon-search" @click="goodsSearch" />
           </el-input>
         </el-col>
         <el-col :span="6">
-          <el-select
-            v-model="status"
-            size="mini"
-            clearable
-            placeholder="请选择"
-          >
+          <el-select v-model="status" size="mini" clearable placeholder="请选择">
             <el-option
               v-for="item in statusOptions"
               :key="item.value"
@@ -38,28 +26,15 @@
       <el-row :gutter="20">
         <el-col :span="24">
           <el-button-group>
-            <el-button
-              type="primary"
-              size="mini"
-              @click="showChangeRebateType()"
-            >
+            <el-button type="primary" size="mini" @click="showChangeRebateType()">
               批量设置返佣任务制
             </el-button>
-            <el-button
-              size="mini"
-              @click="handleBatchChangeStatus()"
-            >
-              批量设置返佣状态
-            </el-button>
+            <el-button size="mini" @click="handleBatchChangeStatus()"> 批量设置返佣状态 </el-button>
           </el-button-group>
         </el-col>
       </el-row>
     </div>
-    <el-tabs
-      v-model="activeName"
-      type="border-card"
-      @tab-click="handleClick"
-    >
+    <el-tabs v-model="activeName" type="border-card" @tab-click="handleClick">
       <el-tab-pane
         v-for="(item, index) in tabList"
         :key="index"
@@ -75,27 +50,13 @@
           @selection-change="handleItemsSelectionChange"
           @filter-change="filterHandler"
         >
-          <el-table-column
-            type="selection"
-            width="55"
-          />
-          <el-table-column
-            label="操作"
-            width="160"
-          >
+          <el-table-column type="selection" width="55" />
+          <el-table-column label="操作" width="160">
             <template slot-scope="scope">
-              <el-button
-                type="text"
-                class="btn-gap"
-                @click="handleRebateConf(scope.row, 1)"
-              >
+              <el-button type="text" class="btn-gap" @click="handleRebateConf(scope.row, 1)">
                 分销参数
               </el-button>
-              <el-button
-                type="text"
-                class="btn-gap"
-                @click="handleRebateConf(scope.row, 2)"
-              >
+              <el-button type="text" class="btn-gap" @click="handleRebateConf(scope.row, 2)">
                 任务参数
               </el-button>
             </template>
@@ -114,30 +75,17 @@
           >
             <template slot-scope="scope">
               <div v-if="allSelect && $store.getters.login_type != 'distributor'">
-                <el-switch
-                  v-model="allSelect"
-                  active-color="#13ce66"
-                  disabled
-                />
+                <el-switch v-model="allSelect" active-color="#13ce66" disabled />
               </div>
               <div v-else>
-                <el-tag
-                  v-if="scope.row.rebate_audit === 2"
-                  size="mini"
-                >
-                  等待审核
-                </el-tag>
-                <el-tag
-                  v-if="scope.row.rebate_audit === 3"
-                  size="mini"
-                  type="warning"
-                >
+                <el-tag v-if="scope.row.rebate_audit === 2" size="mini"> 等待审核 </el-tag>
+                <el-tag v-if="scope.row.rebate_audit === 3" size="mini" type="warning">
                   审核拒绝
                 </el-tag>
                 <el-switch
                   v-if="
                     scope.row.rebate_audit === 2 ||
-                      (scope.row.rebate_audit === 1 && $store.getters.login_type == 'distributor')
+                    (scope.row.rebate_audit === 1 && $store.getters.login_type == 'distributor')
                   "
                   v-model="scope.row.rebate"
                   disabled
@@ -153,44 +101,20 @@
               </div>
             </template>
           </el-table-column>
-          <el-table-column
-            label="商品图片"
-            width="80"
-          >
+          <el-table-column label="商品图片" width="80">
             <template slot-scope="scope">
-              <el-avatar
-                shape="square"
-                :size="60"
-                fit="fit"
-                :src="scope.row.pics[0]"
-              />
+              <el-avatar shape="square" :size="60" fit="fit" :src="scope.row.pics[0]" />
             </template>
           </el-table-column>
-          <el-table-column
-            label="标题"
-            prop="item_name"
-            min-width="250"
-          />
+          <el-table-column label="标题" prop="item_name" min-width="250" />
           <el-table-column label="销售价">
-            <template slot-scope="scope">
-              {{ scope.row.price / 100 }}元
-            </template>
+            <template slot-scope="scope"> {{ scope.row.price / 100 }}元 </template>
           </el-table-column>
           <el-table-column label="成本价">
-            <template slot-scope="scope">
-              {{ scope.row.cost_price / 100 }}元
-            </template>
+            <template slot-scope="scope"> {{ scope.row.cost_price / 100 }}元 </template>
           </el-table-column>
-          <el-table-column
-            prop="store"
-            label="库存"
-            width="80"
-          />
-          <el-table-column
-            prop="approve_status"
-            label="状态"
-            min-width="100"
-          >
+          <el-table-column prop="store" label="库存" width="80" />
+          <el-table-column prop="approve_status" label="状态" min-width="100">
             <template slot-scope="scope">
               <el-tag
                 v-if="scope.row.approve_status === 'onsale'"
@@ -204,15 +128,9 @@
                 type="info"
                 class="grid-content"
               >
-                可线下销售
+                前台不展示
               </el-tag>
-              <el-tag
-                v-else
-                type="danger"
-                class="grid-content"
-              >
-                不可销售
-              </el-tag>
+              <el-tag v-else type="danger" class="grid-content"> 不可销售 </el-tag>
             </template>
           </el-table-column>
         </el-table>
@@ -230,17 +148,10 @@
         </div>
       </el-tab-pane>
     </el-tabs>
-    <SideBar
-      :visible.sync="show_task_sideBar"
-      title="任务制配置"
-      width="67"
-    >
+    <SideBar :visible.sync="show_task_sideBar" title="任务制配置" width="67">
       <slot>
         <el-card class="box-card">
-          <div
-            slot="header"
-            class="clearfix"
-          >
+          <div slot="header" class="clearfix">
             <span class="title">{{ current.item_name }}</span>
             <span>
               <!-- <el-alert title="比例计算"
@@ -258,48 +169,24 @@
             </span>
           </div>
           <el-radio-group v-model="current.rebate_type">
-            <el-radio label="default">
-              不支持任务制
-            </el-radio>
-            <el-radio label="total_money">
-              任务制-按总金额
-            </el-radio>
-            <el-radio label="total_num">
-              任务制-按总数量
-            </el-radio>
+            <el-radio label="default"> 不支持任务制 </el-radio>
+            <el-radio label="total_money"> 任务制-按总金额 </el-radio>
+            <el-radio label="total_num"> 任务制-按总数量 </el-radio>
           </el-radio-group>
         </el-card>
-        <el-card
-          v-if="current.rebate_type != 'default'"
-          class="box-card"
-        >
+        <el-card v-if="current.rebate_type != 'default'" class="box-card">
           <el-table :data="rebateSpecItems">
-            <el-table-column
-              label="规格"
-              prop="item_spec_desc"
-              min-width="120"
-            >
-              <template
-                slot-scope="scope"
-              >
-                <span v-if="scope.row.item_spec_desc">{{ scope.row.item_spec_desc }}</span><span v-else>单规格</span>
+            <el-table-column label="规格" prop="item_spec_desc" min-width="120">
+              <template slot-scope="scope">
+                <span v-if="scope.row.item_spec_desc">{{ scope.row.item_spec_desc }}</span
+                ><span v-else>单规格</span>
               </template>
             </el-table-column>
-            <el-table-column
-              label="销售价"
-              min-width="80"
-            >
-              <template slot-scope="scope">
-                ¥{{ scope.row.price / 100 }}
-              </template>
+            <el-table-column label="销售价" min-width="80">
+              <template slot-scope="scope"> ¥{{ scope.row.price / 100 }} </template>
             </el-table-column>
-            <el-table-column
-              label="成本价"
-              min-width="80"
-            >
-              <template slot-scope="scope">
-                ¥{{ scope.row.cost_price / 100 }}
-              </template>
+            <el-table-column label="成本价" min-width="80">
+              <template slot-scope="scope"> ¥{{ scope.row.cost_price / 100 }} </template>
             </el-table-column>
             <!--el-table-column label="类型" width="140">
               <template slot-scope="scope">
@@ -342,27 +229,16 @@
           </el-table>
         </el-card>
         <div slot="footer">
-          <el-button
-            type="primary"
-            :loading="submitLoading"
-            @click="saveRebateConf"
-          >
+          <el-button type="primary" :loading="submitLoading" @click="saveRebateConf">
             保存
           </el-button>
         </div>
       </slot>
     </SideBar>
-    <SideBar
-      :visible.sync="show_sideBar"
-      title="分销参数配置"
-      width="67"
-    >
+    <SideBar :visible.sync="show_sideBar" title="分销参数配置" width="67">
       <slot>
         <el-card class="box-card">
-          <div
-            slot="header"
-            class="clearfix"
-          >
+          <div slot="header" class="clearfix">
             <span class="title">{{ current.item_name }}</span>
             <div class="frm-tips">
               如果设置的返佣为固定金额，返佣金额就是设置的固定金额。否则按照
@@ -371,7 +247,7 @@
             <span
               v-if="
                 popularizeSetting.popularize_ratio.type == 'profit' &&
-                  popularizeSetting.commission_type == 'money'
+                popularizeSetting.commission_type == 'money'
               "
             >
               <el-alert
@@ -386,7 +262,7 @@
             <span
               v-else-if="
                 popularizeSetting.popularize_ratio.type == 'profit' &&
-                  popularizeSetting.commission_type == 'point'
+                popularizeSetting.commission_type == 'point'
               "
             >
               <el-alert
@@ -401,7 +277,7 @@
             <span
               v-else-if="
                 popularizeSetting.popularize_ratio.type == 'order_money' &&
-                  popularizeSetting.commission_type == 'money'
+                popularizeSetting.commission_type == 'money'
               "
             >
               <el-alert
@@ -416,7 +292,7 @@
             <span
               v-else-if="
                 popularizeSetting.popularize_ratio.type == 'order_money' &&
-                  popularizeSetting.commission_type == 'point'
+                popularizeSetting.commission_type == 'point'
               "
             >
               <el-alert
@@ -430,37 +306,19 @@
             </span>
           </div>
           <el-table :data="rebateSpecItems">
-            <el-table-column
-              label="规格"
-              prop="item_spec_desc"
-              min-width="120"
-            >
-              <template
-                slot-scope="scope"
-              >
-                <span v-if="scope.row.item_spec_desc">{{ scope.row.item_spec_desc }}</span><span v-else>单规格</span>
-              </template>
-            </el-table-column>
-            <el-table-column
-              label="销售价"
-              min-width="80"
-            >
+            <el-table-column label="规格" prop="item_spec_desc" min-width="120">
               <template slot-scope="scope">
-                ¥{{ scope.row.price / 100 }}
+                <span v-if="scope.row.item_spec_desc">{{ scope.row.item_spec_desc }}</span
+                ><span v-else>单规格</span>
               </template>
             </el-table-column>
-            <el-table-column
-              label="成本价"
-              min-width="80"
-            >
-              <template slot-scope="scope">
-                ¥{{ scope.row.cost_price / 100 }}
-              </template>
+            <el-table-column label="销售价" min-width="80">
+              <template slot-scope="scope"> ¥{{ scope.row.price / 100 }} </template>
             </el-table-column>
-            <el-table-column
-              label="类型"
-              width="160"
-            >
+            <el-table-column label="成本价" min-width="80">
+              <template slot-scope="scope"> ¥{{ scope.row.cost_price / 100 }} </template>
+            </el-table-column>
+            <el-table-column label="类型" width="160">
               <template slot-scope="scope">
                 <el-switch
                   v-model="scope.row.rebate_conf.type"
@@ -497,41 +355,21 @@
           </el-table>
         </el-card>
         <div slot="footer">
-          <el-button
-            type="primary"
-            :loading="submitLoading"
-            @click="saveRebateConf"
-          >
+          <el-button type="primary" :loading="submitLoading" @click="saveRebateConf">
             保存
           </el-button>
         </div>
       </slot>
     </SideBar>
-    <el-dialog
-      title="更改商品返佣任务制支持"
-      :visible.sync="changeRebateTypeVisible"
-      width="30%"
-    >
+    <el-dialog title="更改商品返佣任务制支持" :visible.sync="changeRebateTypeVisible" width="30%">
       <el-radio-group v-model="changeRebateType">
-        <el-radio label="default">
-          不支持任务制
-        </el-radio>
-        <el-radio label="total_money">
-          任务制-按总金额
-        </el-radio>
-        <el-radio label="total_num">
-          任务制-按总数量
-        </el-radio>
+        <el-radio label="default"> 不支持任务制 </el-radio>
+        <el-radio label="total_money"> 任务制-按总金额 </el-radio>
+        <el-radio label="total_num"> 任务制-按总数量 </el-radio>
       </el-radio-group>
-      <span
-        slot="footer"
-        class="dialog-footer"
-      >
+      <span slot="footer" class="dialog-footer">
         <el-button @click="changeRebateTypeVisible = false">取 消</el-button>
-        <el-button
-          type="primary"
-          @click="handleBatchChange"
-        >确 定</el-button>
+        <el-button type="primary" @click="handleBatchChange">确 定</el-button>
       </span>
     </el-dialog>
   </div>
@@ -565,7 +403,7 @@ export default {
   components: {
     SideBar
   },
-  data () {
+  data() {
     return {
       changeRebateType: 'default',
       changeRebateTypeVisible: false,
@@ -643,7 +481,7 @@ export default {
       immediate: true
     }
   },
-  mounted () {
+  mounted() {
     getPopularizeSetting().then((res) => {
       this.popularizeSetting = res.data.data
       if (res.data.data.goods == 'all') {
@@ -658,12 +496,12 @@ export default {
     handleChangeRebate: function (e) {
       console.log('===', e)
     },
-    filterHandler (filters) {
+    filterHandler(filters) {
       this.params.page = 1
       this.params.rebate = filters.rebate[0]
       this.getGoodsList()
     },
-    handleClick () {
+    handleClick() {
       if (this.activeName != 'first') {
         this.params.rebate_type = this.activeName
       } else {
@@ -672,23 +510,23 @@ export default {
       this.params.page = 1
       this.getGoodsList()
     },
-    handleSizeChange (pageSize) {
+    handleSizeChange(pageSize) {
       this.params.page = 1
       this.params.pageSize = pageSize
       this.getGoodsList()
     },
-    handleCurrentChange (page_num) {
+    handleCurrentChange(page_num) {
       this.params.page = page_num
       this.getGoodsList()
     },
-    handleItemsSelectionChange (val) {
+    handleItemsSelectionChange(val) {
       let goods_id = []
       for (let i in val) {
         goods_id.push(val[i].goods_id)
       }
       this.selectGoodsIds = goods_id
     },
-    showChangeRebateType () {
+    showChangeRebateType() {
       if (this.selectGoodsIds.lenght == 0) {
         this.$message({
           type: 'success',
@@ -699,11 +537,11 @@ export default {
         this.changeRebateType = this.activeName
       }
     },
-    goodsSearch () {
+    goodsSearch() {
       this.params.page = 1
       this.getGoodsList()
     },
-    switchStatusChange (data) {
+    switchStatusChange(data) {
       var rebate = data.rebate ? 1 : 0
       updateGoodsInfo({ goods_id: data.goods_id, rebate: rebate }).then((res) => {
         this.$message({
@@ -713,7 +551,7 @@ export default {
         this.getGoodsList()
       })
     },
-    handleBatchChangeStatus () {
+    handleBatchChangeStatus() {
       console.log('====handleBatchChangeStatus===>', this.selectGoodsIds)
       if (this.selectGoodsIds.length == 0) {
         this.$message({
@@ -730,7 +568,7 @@ export default {
         })
       }
     },
-    handleBatchChange () {
+    handleBatchChange() {
       // console.log(rebate_task)
       if (this.selectGoodsIds.length == 0) {
         this.$message({
@@ -751,7 +589,7 @@ export default {
         )
       }
     },
-    saveRebateConf () {
+    saveRebateConf() {
       console.log(this.current.rebate_type)
       var rebateConf = []
       var firstMoney, firstFilter
@@ -802,7 +640,7 @@ export default {
         this.$message({ message: '保存成功', type: 'success', duration: 2 * 1000 })
       })
     },
-    handleRebateConf (data, type) {
+    handleRebateConf(data, type) {
       if (type == 1) {
         this.show_sideBar = true
         this.show_task_sideBar = false
@@ -855,7 +693,7 @@ export default {
         this.rebateSpecItems = rebateSpecItems
       })
     },
-    getGoodsList (status) {
+    getGoodsList(status) {
       this.loading = true
       if (status === 1 || status === 2 || !status) {
         this.params.rebate = status ? (status === 1 ? 1 : 0) : undefined
@@ -873,7 +711,7 @@ export default {
       })
     },
 
-    nextChange (value, key, row) {
+    nextChange(value, key, row) {
       let index = this.rebateSpecItems.findIndex((v) => v.itemId === row.itemId)
       // 下一个的值
       let next = this.rebateSpecItems[index].rebate_conf.rebate_task[key + 1].filter
@@ -886,7 +724,7 @@ export default {
     },
 
     // 变更限制
-    changeLimit (value, key, row) {
+    changeLimit(value, key, row) {
       console.log(value, key, row, '当前数据')
       console.log(this.rebateSpecItems, '列表的数据')
       // 限制后级的最小值要大于上级

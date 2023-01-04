@@ -37,13 +37,18 @@ export default {
         {
           path: 'wxpaysetting',
           component: () => import('@/view/mall/marketing/distributor_wxpaysetting')
+        },
+        {
+          path: 'alipaysetting',
+          component: () => import('@/view/mall/marketing/distributor_alipaysetting')
         }
       ]
     },
     {
       path: 'storemanager/storeshopitemanagement',
       name: `店铺商品`,
-      component: () => import('@/view/mall/storeshop/itemlist')
+      // component: () => import('@/view/mall/storeshop/itemlist')
+      component: () => import('@/view/mall/storeshop/store-shop.standard')
     },
     {
       path: 'storemanager/marketingdistribution_orders',

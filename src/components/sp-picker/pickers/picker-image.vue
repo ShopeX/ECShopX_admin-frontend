@@ -82,6 +82,7 @@
   .image-title-wrap {
     width: 120px;
     &__title {
+      font-size: 12px;
       @include text-overflow();
     }
   }
@@ -162,7 +163,7 @@
         >
           <el-button>上传图片</el-button>
         </el-upload>
-        <el-button
+        <!-- <el-button
           @click="
             () => {
               this.groupDialog = true
@@ -203,18 +204,14 @@
           @click="handleCancelAll"
         >
           全部取消
-        </el-button>
+        </el-button> -->
       </div>
       <div>
-        <el-input
-          size="small"
-          placeholder="请输入图片名称"
-          suffix-icon="el-icon-search"
-        />
+        <el-input size="small" placeholder="请输入图片名称" suffix-icon="el-icon-search" />
       </div>
     </div>
     <div class="picker-image-bd">
-      <div class="lf-container">
+      <!-- <div class="lf-container">
         <div
           v-for="(item, index) in catgoryList"
           :key="`catgory-item__${index}`"
@@ -226,54 +223,33 @@
         >
           {{ item.image_cat_name }}
         </div>
-      </div>
+      </div> -->
       <div class="rg-container">
-        <div
-          v-loading="loading"
-          class="image-list"
-        >
+        <div v-loading="loading" class="image-list">
           <div
             v-for="(item, index) in list"
             :key="`image-item-wrap__${index}`"
             class="image-item-wrap"
             @click="handleClickItem(item)"
           >
-            <div
-              class="image-item"
-              :style="{ color: '#fff', backgroundImage: `url(${item.url})` }"
-            >
-              <i
-                class="iconfont icon-link"
-                @click.stop="handleCopy(item.url)"
-              />
-              <span class="image-meta">800*800</span>
+            <div class="image-item" :style="{ color: '#fff', backgroundImage: `url(${item.url})` }">
+              <i class="iconfont icon-link" @click.stop="handleCopy(item.url)" />
+              <!-- <span class="image-meta">800*800</span> -->
             </div>
-            <div
-              class="image-title-wrap"
-              :title="item.image_name"
-            >
+            <div class="image-title-wrap" :title="item.image_name">
               <p class="image-title-wrap__title">
                 {{ item.image_name }}
               </p>
             </div>
-            <div
-              v-if="multiple ? isActive(item) > -1 : isActive(item)"
-              class="image-box-selected"
-            >
+            <div v-if="multiple ? isActive(item) > -1 : isActive(item)" class="image-box-selected">
               <div class="image-box-selected__right-angle" />
               <div class="image-box-selected__text">
                 <span v-if="multiple">{{ isActive(item) + 1 }}</span>
-                <i
-                  v-if="!multiple"
-                  class="iconfont icon-check"
-                />
+                <i v-if="!multiple" class="iconfont icon-check" />
               </div>
             </div>
           </div>
-          <el-empty
-            v-if="list.length == 0"
-            description="暂无数据"
-          />
+          <el-empty v-if="list.length == 0" description="暂无数据" />
         </div>
         <el-pagination
           layout="total, prev, pager, next"
@@ -324,33 +300,15 @@
           :auto-crop="option.autoCrop"
         />
         <div class="cropper-actions">
-          <i
-            class="iconfont icon-search-minus"
-            @click="handleCropperAction('minus')"
-          />
-          <i
-            class="iconfont icon-search-plus"
-            @click="handleCropperAction('plus')"
-          />
-          <i
-            class="iconfont icon-undo-alt"
-            @click="handleCropperAction('rotateRight')"
-          />
-          <i
-            class="iconfont icon-redo-alt"
-            @click="handleCropperAction('rotateLeft')"
-          />
+          <i class="iconfont icon-search-minus" @click="handleCropperAction('minus')" />
+          <i class="iconfont icon-search-plus" @click="handleCropperAction('plus')" />
+          <i class="iconfont icon-undo-alt" @click="handleCropperAction('rotateRight')" />
+          <i class="iconfont icon-redo-alt" @click="handleCropperAction('rotateLeft')" />
         </div>
       </div>
-      <span
-        slot="footer"
-        class="dialog-footer"
-      >
+      <span slot="footer" class="dialog-footer">
         <el-button @click="cropperDialogShow = false">取 消</el-button>
-        <el-button
-          type="primary"
-          @click="cropperDialogShow = false"
-        >确 定</el-button>
+        <el-button type="primary" @click="cropperDialogShow = false">确 定</el-button>
       </span>
     </el-dialog>
   </div>
@@ -372,7 +330,7 @@ export default {
     title: '我的图片'
   },
   props: ['value'],
-  data () {
+  data() {
     const { multiple = false, data } = this.value
     return {
       multiple,
@@ -433,43 +391,43 @@ export default {
     }
   },
   computed: {
-    disabledDeleteGroup () {
+    disabledDeleteGroup() {
       return this.selectCatgory == -1
     },
-    disabledBtnCropper () {
+    disabledBtnCropper() {
       if (this.multiple) {
         return this.selected.length !== 1
       } else {
         return !this.selected
       }
     },
-    disabledBtnEdit () {
+    disabledBtnEdit() {
       return this.multiple ? this.selected.length == 0 : !this.selected
     },
-    disabledBtnDelete () {
+    disabledBtnDelete() {
       return this.multiple ? this.selected.length == 0 : !this.selected
     },
-    disabledBtnDownload () {
+    disabledBtnDownload() {
       return this.multiple ? this.selected.length == 0 : !this.selected
     },
-    disabledBtnCancel () {
+    disabledBtnCancel() {
       return this.multiple ? this.selected.length == 0 : !this.selected
     }
   },
-  created () {},
-  mounted () {
+  created() {},
+  mounted() {
     this.nextPage()
     this.getImageAllCatgory()
   },
   methods: {
-    isActive ({ image_id }) {
+    isActive({ image_id }) {
       if (this.multiple) {
         return this.selected.findIndex((item) => item.image_id == image_id)
       } else {
         return this.selected ? this.selected.image_id == image_id : false
       }
     },
-    handleEdit () {
+    handleEdit() {
       const { multiple, selected } = this
       this.editFormList[1].disabled = false
       if (multiple && selected.length == 1) {
@@ -481,15 +439,15 @@ export default {
       }
       this.editDialog = true
     },
-    onEditFormSubmit () {
+    onEditFormSubmit() {
       this.$refs['editDialogRef'].resetForm()
     },
-    handleCropper () {
+    handleCropper() {
       const { selected, multiple } = this
       this.option.img = multiple ? selected[0].url : selected.url
       this.cropperDialogShow = true
     },
-    async fetch ({ page_no, page_size }) {
+    async fetch({ page_no, page_size }) {
       let params = {
         type: 'image',
         page: page_no,
@@ -505,7 +463,7 @@ export default {
       this.list = list
       return { count: total_count }
     },
-    async getImageAllCatgory () {
+    async getImageAllCatgory() {
       const { list } = await this.$api.picker.getImageAllCatgory({ image_cat_id: 0 })
       this.catgoryList = [{ image_cat_id: -1, image_cat_name: '默认分组' }, ...list.reverse()]
       this.editFormList[0].options = this.catgoryList.map((item) => {
@@ -515,7 +473,7 @@ export default {
         }
       })
     },
-    async onGroupFormSubmit () {
+    async onGroupFormSubmit() {
       const { groupName } = this.groupForm
       await this.$api.picker.addImageCatgory({
         image_cat_name: groupName,
@@ -524,11 +482,11 @@ export default {
       this.groupDialog = false
       this.getImageAllCatgory()
     },
-    handleClickCatgory ({ image_cat_id }) {
+    handleClickCatgory({ image_cat_id }) {
       this.selectCatgory = image_cat_id
       this.refresh(true)
     },
-    handleClickItem (item) {
+    handleClickItem(item) {
       // console.log('picker-image:', item)
       const { image_id, url } = item
       const _item = {
@@ -547,22 +505,22 @@ export default {
       }
       this.updateVal(this.selected)
     },
-    beforeAvatarUpload (file) {
+    beforeAvatarUpload(file) {
       const isJPG = file.type === 'image/jpeg'
       const isPNG = file.type === 'image/png'
       const isGIF = file.type === 'image/gif'
-      const isLt2M = file.size / 1024 / 1024 < 2
+      const isLt2M = file.size / 1024 / 1024 < 5
       if (!isJPG && !isPNG && !isGIF) {
         this.$message.error('上传图片只能是 JPG 或者 PNG 格式!')
         return
       }
       if (!isLt2M) {
-        this.$message.error('上传图片大小不能超过 2MB!')
+        this.$message.error('上传图片大小不能超过 5MB!')
         return
       }
       this.localpostData.fname = file.name
     },
-    async handleAvatarSuccess (res, file) {
+    async handleAvatarSuccess(res, file) {
       const uploadParams = {
         image_cat_id: 2, //图片分类必填,必须为整数
         image_name: file.name, //图片名称必填,不能超过50个字符
@@ -590,18 +548,18 @@ export default {
     uploadError: function (e) {
       console.error(e)
     },
-    async handleCopy (url) {
+    async handleCopy(url) {
       await this.$copyText(url)
       this.$notify.success({
         message: '链接复制成功',
         showClose: true
       })
     },
-    handleCancelAll () {
+    handleCancelAll() {
       const { multiple } = this
       this.selected = multiple ? [] : null
     },
-    handleCropperAction (action) {
+    handleCropperAction(action) {
       switch (action) {
         case 'minus':
           this.$refs.cropper.changeScale(-2)

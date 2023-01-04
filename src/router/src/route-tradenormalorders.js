@@ -21,6 +21,10 @@ export default {
         {
           path: 'process/:itemId?',
           component: () => import('@/view/mall/trade/order/process')
+        },
+        {
+          path: 'after-sale/:id?',
+          component: () => import('@/view/mall/trade/order/afterSale')
         }
       ]
     },
@@ -70,7 +74,17 @@ export default {
     {
       path: 'entitytrade/logistics',
       name: `物流公司`,
-      component: () => import('@/view/mall/trade/logistics/index')
+      component: () => import('@/view/mall/trade/logistics/index'),
+      children: [
+        {
+          path: 'addziti/:id?',
+          component: () => import('@/view/mall/trade/logistics/add-ziti'),
+          beforeEnter: ({ params, meta }, from, next) => {
+            meta.title = params.id ? '编辑自提点' : '新增自提点'
+            next()
+          }
+        }
+      ]
     },
     {
       path: 'servicepayment',
@@ -92,6 +106,11 @@ export default {
       path: 'Refunderrorlogs',
       name: `退款失败日志`,
       component: () => import('@/view/mall/trade/refunderrorlogs')
+    },
+    {
+      path: 'chinaumsdivisionlist',
+      name: `分账单`,
+      component: () => import('@/view/mall/chinaums/divisionList')
     },
     {
       path: 'servicetrade/tradeservice',
@@ -133,7 +152,7 @@ export default {
     {
       path: 'Ordersetting',
       name: `订单时效配置`,
-      component: () => import('@/view/mall/trade/ordersetting')
+      component: () => import('@/view/order/orderSetting.vue')
     },
     {
       path: 'kdniao',
@@ -157,20 +176,20 @@ export default {
     },
     {
       path: 'tradesetting',
-      name: `交易配置`,
-      component: () => import('@/view/base/setting/tradesetting/index')
+      name: `订单包装`,
+      component: () => import('@/view/order/tradeSetting')
     },
-    {
-      path: 'adapay_trades',
-      name: '交易单',
-      component: () => import('@/view/mall/sub_account/sub_account'),
-      children: [
-        {
-          path: 'detail/:order_id',
-          component: () => import('@/view/mall/sub_account/detail')
-        }
-      ]
-    },
+    // {
+    //   path: 'adapay_trades',
+    //   name: '交易单',
+    //   component: () => import('@/view/mall/sub_account/sub_account'),
+    //   children: [
+    //     {
+    //       path: 'detail/:order_id',
+    //       component: () => import('@/view/mall/sub_account/detail')
+    //     }
+    //   ]
+    // },
     {
       path: 'adapay_cash',
       name: '提现',

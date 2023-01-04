@@ -5,104 +5,99 @@
 </style>
 
 <template>
-  <div>
-    <div v-if="$route.path.indexOf('editor') === -1">
-      <div class="action-container">
-        <el-button type="primary" icon="plus" @click="articleAdd"> 添加文章 </el-button>
-      </div>
+  <SpRouterView>
+    <SpPlatformTip h5 app alipay />
+    <div class="action-container">
+      <el-button type="primary" icon="plus" @click="articleAdd"> 添加文章 </el-button>
+    </div>
 
-      <SpFilterForm :model="params" @onSearch="onSearch" @onReset="onSearch">
-        <SpFilterFormItem prop="title" label="文章标题:">
-          <el-input v-model="params.title" placeholder="请输入文章标题" />
-        </SpFilterFormItem>
-      </SpFilterForm>
+    <SpFilterForm :model="params" @onSearch="onSearch" @onReset="onSearch">
+      <SpFilterFormItem prop="title" label="文章标题:">
+        <el-input v-model="params.title" placeholder="请输入文章标题" />
+      </SpFilterFormItem>
+    </SpFilterForm>
 
-      <section v-loading="loading" class="articles">
-        <el-row :gutter="10">
-          <el-col v-for="(item, index) in tableList" :key="index" :xs="12" :sm="8" :md="6" :lg="4">
-            <div class="article-item">
-              <router-link :to="{ path: matchHidePage('editor'), query: { id: item.article_id } }">
-                <div
-                  class="thumbnail"
-                  :style="
-                    'background: url(' +
-                    (item.image_url ||
-                      'https://fakeimg.pl/200x180/EFEFEF/CCC/?text=image&font=lobster') +
-                    ') 0% 0% / cover no-repeat;'
-                  "
-                />
-                <div class="caption">
-                  <div class="title">
-                    {{ item.title }}
-                  </div>
-                  <div class="update-time">
-                    {{ item.updated | datetime('YYYY-MM-DD HH:mm:ss') }}
-                  </div>
+    <section v-loading="loading" class="articles">
+      <el-row :gutter="10">
+        <el-col v-for="(item, index) in tableList" :key="index" :xs="12" :sm="8" :md="6" :lg="4">
+          <div class="article-item">
+            <router-link :to="{ path: matchHidePage('editor'), query: { id: item.article_id } }">
+              <div
+                class="thumbnail"
+                :style="
+                  'background: url(' +
+                  (item.image_url ||
+                    'https://fakeimg.pl/200x180/EFEFEF/CCC/?text=image&font=lobster') +
+                  ') 0% 0% / cover no-repeat;'
+                "
+              />
+              <div class="caption">
+                <div class="title">
+                  {{ item.title }}
                 </div>
-              </router-link>
-              <div class="footer">
-                <div
-                  v-clipboard:copy="item.link"
-                  v-clipboard:success="onCopySuccess"
-                  class="footer-item copy-btn"
-                >
-                  <input v-model="item.link" class="copy-link" type="text" />
-                  <i class="iconfont icon-copy" /> 复制文章链接
+                <div class="update-time">
+                  {{ item.updated | datetime('YYYY-MM-DD HH:mm:ss') }}
                 </div>
               </div>
-              <div class="footer">
-                <div
-                  class="footer-item"
-                  @click="handlePublish(item.article_id, item.release_status)"
-                >
-                  <template v-if="item.release_status">
-                    <i class="iconfont icon-undo-alt" /> 撤回
-                  </template>
-                  <template v-else> <i class="iconfont icon-broadcast-tower" /> 发布 </template>
-                </div>
-                <el-popover v-model="item.visible" class="footer-item" placement="top" width="160">
-                  <div class="content-bottom-padded">
-                    <el-input v-model="item.sort" size="mini" placeholder="请输入排序" />
-                  </div>
-                  <div style="text-align: right; margin: 0">
-                    <el-button size="mini" type="text" @click="item.visible = false">
-                      取消
-                    </el-button>
-                    <el-button type="primary" size="mini" @click="handleSort(item.article_id)">
-                      确定
-                    </el-button>
-                  </div>
-                  <div slot="reference"><i class="iconfont icon-sort-amount-up" /> 排序</div>
-                </el-popover>
-                <div class="footer-item" @click="articleDelete(item.article_id)">
-                  <i class="iconfont icon-trash-alt" /> 删除
-                </div>
+            </router-link>
+            <div class="footer">
+              <div
+                v-clipboard:copy="item.link"
+                v-clipboard:success="onCopySuccess"
+                class="footer-item copy-btn"
+              >
+                <input v-model="item.link" class="copy-link" type="text">
+                <i class="iconfont icon-copy" /> 复制文章链接
               </div>
             </div>
-          </el-col>
-        </el-row>
-        <dataPlaceholder :visible.sync="showPlaceholder" height="100%" />
-        <div v-if="page.total > page.pageSize" class="content-padded content-center">
-          <el-pagination
-            background
-            layout="total, sizes, prev, pager, next, jumper"
-            :current-page.sync="page.pageIndex"
-            :page-sizes="[10, 20, 50]"
-            :total="page.total"
-            :page-size="page.pageSize"
-            @current-change="onCurrentChange"
-            @size-change="onSizeChange"
-          />
-        </div>
-      </section>
-    </div>
-    <router-view />
-  </div>
+            <div class="footer">
+              <div class="footer-item" @click="handlePublish(item.article_id, item.release_status)">
+                <template v-if="item.release_status">
+                  <i class="iconfont icon-undo-alt" /> 撤回
+                </template>
+                <template v-else> <i class="iconfont icon-broadcast-tower" /> 发布 </template>
+              </div>
+              <el-popover v-model="item.visible" class="footer-item" placement="top" width="160">
+                <div class="content-bottom-padded">
+                  <el-input v-model="item.sort" size="mini" placeholder="请输入排序" />
+                </div>
+                <div style="text-align: right; margin: 0">
+                  <el-button size="mini" type="text" @click="item.visible = false">
+                    取消
+                  </el-button>
+                  <el-button type="primary" size="mini" @click="handleSort(item.article_id)">
+                    确定
+                  </el-button>
+                </div>
+                <div slot="reference"><i class="iconfont icon-sort-amount-up" /> 排序</div>
+              </el-popover>
+              <div class="footer-item" @click="articleDelete(item.article_id)">
+                <i class="iconfont icon-trash-alt" /> 删除
+              </div>
+            </div>
+          </div>
+        </el-col>
+      </el-row>
+      <dataPlaceholder :visible.sync="showPlaceholder" height="100%" />
+      <div v-if="page.total > page.pageSize" class="content-padded content-center">
+        <el-pagination
+          background
+          layout="total, sizes, prev, pager, next, jumper"
+          :current-page.sync="page.pageIndex"
+          :page-sizes="[10, 20, 50]"
+          :total="page.total"
+          :page-size="page.pageSize"
+          @current-change="onCurrentChange"
+          @size-change="onSizeChange"
+        />
+      </div>
+    </section>
+  </SpRouterView>
 </template>
 
 <script>
 import mixin, { pageMixin } from '@/mixins'
-import { deleteArticle, updateArticleSortOrStatus } from '@/api/article' 
+import { deleteArticle, updateArticleSortOrStatus } from '@/api/article'
 import DataPlaceholder from '@/components/element/dataPlaceholder'
 
 export default {
@@ -127,7 +122,7 @@ export default {
   mounted() {
     this.fetchList()
   },
-  methods: { 
+  methods: {
     articleAdd(id) {
       this.$router.push({ path: this.matchHidePage('editor') })
     },
@@ -188,7 +183,7 @@ export default {
         .catch(() => {
           return
         })
-    }, 
+    },
     async fetchList() {
       this.loading = true
       const { total_count, list } = await this.$api.article.getArticleList(this.params)

@@ -63,11 +63,11 @@ export default {
       name: `达达账户`,
       component: () => import('@/view/mall/distribution/account')
     },
-    {
-      path: 'adapay_merchant_info',
-      name: `开户信息`,
-      component: () => import('@/view/mall/accountopeninfo')
-    },
+    // {
+    //   path: 'adapay_merchant_info',
+    //   name: `开户信息`,
+    //   component: () => import('@/view/mall/accountopeninfo')
+    // },
     {
       path: 'adapay_member_audit',
       name: `开户审批`,

@@ -5,7 +5,7 @@ import store from '../store'
 import Router from '../router'
 import { isInSalesCenter, goLink, isInMerchant, isObject } from '@/utils'
 
-function resolveGetMethod (inst) {
+function resolveGetMethod(inst) {
   const origGetMethod = inst.get
   inst.get = function (url, _params, config = {}) {
     // 兼容finder params
@@ -27,7 +27,7 @@ function resolveGetMethod (inst) {
   }
 }
 
-export function errorToast (data) {
+export function errorToast(data) {
   console.log(data, 'toast数据')
 
   const { status_code, message } = data
@@ -52,7 +52,7 @@ export function errorToast (data) {
   }
 }
 
-function createAxios (inst, isJson = true) {
+function createAxios(inst, isJson = true) {
   inst = inst || axios.create()
   inst.defaults.timeout = process.env.NODE_ENV === 'production' ? 30000 : 30 * 1000
   inst.defaults.baseURL = inst.defaults.baseURL || process.env.VUE_APP_BASE_API || '/'
@@ -178,4 +178,4 @@ function createAxios (inst, isJson = true) {
 
 export default createAxios()
 
-export { createAxios }
+export { createAxios, axios }

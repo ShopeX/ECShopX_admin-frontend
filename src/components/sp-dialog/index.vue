@@ -33,32 +33,49 @@
 //     show-word-limit
 //   />
 // }
-
+import { isFunction } from '@/utils'
 export default {
   name: 'SpDialog',
   props: {
     title: String,
-    value: false,
+    value: {
+      type: Boolean,
+      default: false
+    },
     formList: Array,
     form: Object,
-    modal: {
+    loading: {
       type: Boolean,
-      default: true
+      default: false
+    },
+    destroyOnClose: {
+      type: Boolean,
+      default: false
     },
     width: {
       type: String,
       default: '800px'
     }
   },
-  data () {
+  data() {
     return {}
   },
-  created () {},
+  created() {
+    console.log('sp-dialog. created')
+    // this.$once('input', () => {
+    //   this.$destroy()
+    //   // this.$el.remove()
+    // })
+  },
+  // destroyed() {
+  //   debugger
+  // },
   methods: {
-    handleCancel () {
+    handleCancel() {
       this.$emit('input', false)
+      // this.$destroy()
     },
-    handleSubmit () {
+    handleSubmit() {
       this.$refs['form'].validate((valid) => {
         if (valid) {
           this.$emit('onSubmit')
@@ -67,12 +84,19 @@ export default {
         }
       })
     },
-    resetForm () {
+    resetForm() {
       this.$refs['form'] && this.$refs['form'].resetFields()
+    },
+    getItemShow({ isShow }) {
+      if (isFunction(isShow)) {
+        return isShow()
+      } else {
+        return isShow !== false
+      }
     }
   },
-  render () {
-    const { title, value, form, formList, width, modal } = this
+  render() {
+    const { title, value, form, formList, width, destroyOnClose } = this
     const Fn = () => {}
     const getComponentByType = (item) => {
       if (typeof item.component != 'undefined') {
@@ -156,13 +180,17 @@ export default {
       }
     })
 
+    if (!value) {
+      return null
+    }
+
     return (
       <el-dialog
         class='sp-dialog'
         title={title}
         visible={value}
         width={width}
-        modal={modal}
+        append-to-body
         onclose={this.handleCancel}
       >
         <el-form
@@ -173,10 +201,11 @@ export default {
           rules={rules}
           label-width='100px'
           validate-on-rule-change={false}
+          v-loading={this.loading}
         >
           {formList.map((item, index) => {
             return (
-              <el-form-item label={item.label} prop={item.key} v-show={item.isShow !== false}>
+              <el-form-item label={item.label} prop={item.key} v-show={this.getItemShow(item)}>
                 {getComponentByType(item)}
               </el-form-item>
             )

@@ -1,6 +1,7 @@
 // 商品路由
 const name = '商品'
 import Layout from '@/view/layout' // 主框架
+import { IS_DISTRIBUTOR } from '@/utils'
 
 export default {
   path: '/shopadmin/entity',
@@ -28,9 +29,27 @@ export default {
       ]
     },
     {
+      path: 'storeshopproductanagement',
+      name: `商品管理`,
+      component: () => import('@/view/mall/goods/physical/list.standard'),
+      children: [
+        {
+          path: 'editor/:itemId?',
+          component: () => import('@/view/mall/goods/physical/add')
+          // component: () => {
+          //   if(IS_DISTRIBUTOR) {
+          //     return import('@/view/mall/goods/physical/add.standard')
+          //   } else {
+          //     return import('@/view/mall/goods/physical/add')
+          //   }
+          // }
+        }
+      ]
+    },
+    {
       path: 'rate',
       name: `商品评价`,
-      component: () => import('@/view/mall/trade/rate/list')
+      component: () => import('@/view/goods/rate')
     },
     {
       path: 'goodsbrand',

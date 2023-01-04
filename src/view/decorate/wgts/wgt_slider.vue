@@ -75,95 +75,99 @@ export default {
   wgtIcon: 'wgt-slider',
   config: {
     name: 'slider',
-    base: [
-      { title: '标题', key: 'title', type: 'text', value: '标题' },
-      { title: '副标题', key: 'subtitle', type: 'text', value: '副标题' },
-      {
-        title: '组件间距',
-        key: 'padded',
-        type: 'radio-group',
-        value: true,
-        option: [
-          { label: '宽', value: true },
-          { label: '窄', value: false }
-        ]
-      }
-    ],
-    config: [
-      { title: '轮播时间', key: 'interval', type: 'text', value: '3000' },
-      {
-        title: '图片圆角',
-        key: 'rounded',
-        type: 'radio-group',
-        value: true,
-        option: [
-          { label: '是', value: true },
-          { label: '否', value: false }
-        ]
-      },
-      {
-        title: '图片间隔',
-        key: 'spaced',
-        type: 'radio-group',
-        value: true,
-        option: [
-          { label: '有', value: true },
-          { label: '无', value: false }
-        ]
-      },
-      {
-        title: '指示点样式',
-        key: 'dot',
-        type: 'radio-group',
-        value: true,
-        option: [
-          { label: '数字', value: true },
-          { label: '点', value: false }
-        ]
-      },
-      {
-        title: '指示点形状',
-        key: 'shape',
-        type: 'radio-group',
-        value: 'circle',
-        disabled: () => {},
-        option: [
-          { label: '圆形', value: 'circle' },
-          { label: '长方形', value: 'rectangle' }
-        ]
-      },
-      {
-        title: '指示点覆盖',
-        key: 'dotCover',
-        type: 'radio-group',
-        value: true,
-        option: [
-          { label: '是', value: true },
-          { label: '否', value: false }
-        ]
-      },
-      {
-        title: '指示点位置',
-        key: 'dotLocation',
-        type: 'radio-group',
-        value: 'right',
-        option: [
-          { label: '居左', value: 'left' },
-          { label: '居中', value: 'center' },
-          { label: '居右', value: 'right' }
-        ]
-      },
-      {
-        title: '指示点颜色',
-        key: 'dotColor',
-        type: 'radio-group',
-        value: 'dark',
-        option: [
-          { label: '深色', value: 'dark' },
-          { label: '亮色', value: 'light' }
-        ]
-      }
-    ],
+    setting: [
+      { label: '标题', key: 'title', component: 'text', value: '' },
+
+    ]
+    // base: [
+    //   { title: '标题', key: 'title', type: 'text', value: '标题' },
+    //   { title: '副标题', key: 'subtitle', type: 'text', value: '副标题' },
+    //   {
+    //     title: '组件间距',
+    //     key: 'padded',
+    //     type: 'radio-group',
+    //     value: true,
+    //     option: [
+    //       { label: '宽', value: true },
+    //       { label: '窄', value: false }
+    //     ]
+    //   }
+    // ],
+    // config: [
+    //   { title: '轮播时间', key: 'interval', type: 'text', value: '3000' },
+    //   {
+    //     title: '图片圆角',
+    //     key: 'rounded',
+    //     type: 'radio-group',
+    //     value: true,
+    //     option: [
+    //       { label: '是', value: true },
+    //       { label: '否', value: false }
+    //     ]
+    //   },
+    //   {
+    //     title: '图片间隔',
+    //     key: 'spaced',
+    //     type: 'radio-group',
+    //     value: true,
+    //     option: [
+    //       { label: '有', value: true },
+    //       { label: '无', value: false }
+    //     ]
+    //   },
+    //   {
+    //     title: '指示点样式',
+    //     key: 'dot',
+    //     type: 'radio-group',
+    //     value: true,
+    //     option: [
+    //       { label: '数字', value: true },
+    //       { label: '点', value: false }
+    //     ]
+    //   },
+    //   {
+    //     title: '指示点形状',
+    //     key: 'shape',
+    //     type: 'radio-group',
+    //     value: 'circle',
+    //     disabled: () => {},
+    //     option: [
+    //       { label: '圆形', value: 'circle' },
+    //       { label: '长方形', value: 'rectangle' }
+    //     ]
+    //   },
+    //   {
+    //     title: '指示点覆盖',
+    //     key: 'dotCover',
+    //     type: 'radio-group',
+    //     value: true,
+    //     option: [
+    //       { label: '是', value: true },
+    //       { label: '否', value: false }
+    //     ]
+    //   },
+    //   {
+    //     title: '指示点位置',
+    //     key: 'dotLocation',
+    //     type: 'radio-group',
+    //     value: 'right',
+    //     option: [
+    //       { label: '居左', value: 'left' },
+    //       { label: '居中', value: 'center' },
+    //       { label: '居右', value: 'right' }
+    //     ]
+    //   },
+    //   {
+    //     title: '指示点颜色',
+    //     key: 'dotColor',
+    //     type: 'radio-group',
+    //     value: 'dark',
+    //     option: [
+    //       { label: '深色', value: 'dark' },
+    //       { label: '亮色', value: 'light' }
+    //     ]
+    //   }
+    // ],
     // config: {
     //   current: 0,
     //   interval: 3000,

@@ -1,8 +1,6 @@
 <template>
   <div class="section section-white">
-    <div class="section-header with-border">
-      添加商品
-    </div>
+    <div class="section-header with-border">添加商品</div>
     <div class="section-body">
       <el-form
         ref="form"
@@ -26,65 +24,37 @@
                 label="all"
                 :disabled="form.item_id !== '' && form.consume_type === 'every' ? true : false"
               >
-                团购券类型&nbsp;<span
-                  class="frm-tips"
-                >(所有物料作为一个整体，只核销一次)</span>
+                团购券类型&nbsp;<span class="frm-tips">(所有物料作为一个整体，只核销一次)</span>
               </el-radio>
             </div>
           </el-radio-group>
         </el-form-item>
         <el-form-item label="商品名称">
           <el-col :span="12">
-            <el-input
-              v-model="form.item_name"
-              :maxlength="30"
-              placeholder=""
-            />
+            <el-input v-model="form.item_name" :maxlength="30" placeholder="" />
           </el-col>
         </el-form-item>
         <el-form-item label="简洁的描述">
           <el-col :span="12">
-            <el-input
-              v-model="form.brief"
-              type="textarea"
-            />
+            <el-input v-model="form.brief" type="textarea" />
           </el-col>
         </el-form-item>
         <el-form-item label="成本价">
           <el-col :span="5">
-            <el-input
-              v-model="form.cost_price"
-              type="number"
-              required
-              min="0"
-              placeholder=""
-            />
+            <el-input v-model="form.cost_price" type="number" required min="0" placeholder="" />
           </el-col>
-          <el-col :span="1">
-            &nbsp;元
-          </el-col>
+          <el-col :span="1"> &nbsp;元 </el-col>
         </el-form-item>
         <el-form-item label="销售价">
           <el-col :span="5">
-            <el-input
-              v-model="form.price"
-              type="number"
-              required
-              min="0"
-              placeholder=""
-            />
+            <el-input v-model="form.price" type="number" required min="0" placeholder="" />
           </el-col>
-          <el-col :span="1">
-            &nbsp;元
-          </el-col>
+          <el-col :span="1"> &nbsp;元 </el-col>
         </el-form-item>
         <el-form-item label="商品状态">
           <el-row :gutter="20">
             <el-col :span="12">
-              <el-select
-                v-model="form.approve_status"
-                placeholder="请选择"
-              >
+              <el-select v-model="form.approve_status" placeholder="请选择">
                 <el-option
                   v-for="item in statusOption"
                   :key="item.value"
@@ -98,68 +68,32 @@
         <el-form-item label="排序编号">
           <el-row :gutter="20">
             <el-col :span="4">
-              <el-input
-                v-model="form.sort"
-                placeholder=""
-              />
+              <el-input v-model="form.sort" placeholder="" />
             </el-col>
-            <el-col :span="10">
-              数字越大越靠前
-            </el-col>
+            <el-col :span="10"> 数字越大越靠前 </el-col>
           </el-row>
         </el-form-item>
         <el-form-item label="商品内容">
           <div class="content-bottom-padded">
-            <el-button
-              type="primary"
-              size="small"
-              icon="plus"
-              @click="addLabel"
-            >
+            <el-button type="primary" size="small" icon="plus" @click="addLabel">
               选择基础物料
             </el-button>
           </div>
-          <el-table
-            :data="form.type_labels"
-            border
-            style="line-height: normal"
-          >
-            <el-table-column
-              label="物料名称"
-              prop="labelName"
-              width="150"
-            />
-            <el-table-column
-              label="单价(元)"
-              width="90"
-            >
+          <el-table :data="form.type_labels" border style="line-height: normal">
+            <el-table-column label="物料名称" prop="labelName" width="150" />
+            <el-table-column label="单价(元)" width="90">
               <template slot-scope="scope">
-                <el-col :span="12">
-                  ￥{{ scope.row.labelPrice }}
-                </el-col>
+                <el-col :span="12"> ￥{{ scope.row.labelPrice }} </el-col>
               </template>
             </el-table-column>
             <el-table-column label="数量">
               <template slot-scope="scope">
                 <el-row>
                   <el-col :span="12">
-                    <el-radio
-                      v-model="scope.row.isNotLimitNum"
-                      :label="2"
-                    >
-                      限制数量
-                    </el-radio>
-                    <el-radio
-                      v-model="scope.row.isNotLimitNum"
-                      :label="1"
-                    >
-                      不限数量
-                    </el-radio>
+                    <el-radio v-model="scope.row.isNotLimitNum" :label="2"> 限制数量 </el-radio>
+                    <el-radio v-model="scope.row.isNotLimitNum" :label="1"> 不限数量 </el-radio>
                   </el-col>
-                  <el-col
-                    v-if="scope.row.isNotLimitNum == 2"
-                    :span="12"
-                  >
+                  <el-col v-if="scope.row.isNotLimitNum == 2" :span="12">
                     <el-input
                       v-model="scope.row.num"
                       type="number"
@@ -172,14 +106,9 @@
                 <el-row />
               </template>
             </el-table-column>
-            <el-table-column
-              label="有效期(天)"
-              width="150"
-            >
+            <el-table-column label="有效期(天)" width="150">
               <template slot-scope="scope">
-                <el-col
-                  :span="24"
-                >
+                <el-col :span="24">
                   <el-input
                     v-model="scope.row.limitTime"
                     :disabled="form.consume_type === 'all' ? true : false"
@@ -190,10 +119,7 @@
                 </el-col>
               </template>
             </el-table-column>
-            <el-table-column
-              label="操作"
-              width="100"
-            >
+            <el-table-column label="操作" width="100">
               <template slot-scope="scope">
                 <el-button
                   size="small"
@@ -209,27 +135,12 @@
         </el-form-item>
         <el-form-item label="原价">
           <el-col :span="5">
-            <el-input
-              v-model="form.market_price"
-              type="number"
-              required
-              min="0"
-              placeholder=""
-            />
+            <el-input v-model="form.market_price" type="number" required min="0" placeholder="" />
           </el-col>
-          <el-col :span="1">
-            &nbsp;元
-          </el-col>
+          <el-col :span="1"> &nbsp;元 </el-col>
         </el-form-item>
-        <el-form-item
-          v-show="form.consume_type === 'all'"
-          label="有效期"
-          prop="date_type"
-        >
-          <el-radio-group
-            v-model="form.date_type"
-            @change="changeDatetime"
-          >
+        <el-form-item v-show="form.consume_type === 'all'" label="有效期" prop="date_type">
+          <el-radio-group v-model="form.date_type" @change="changeDatetime">
             <div style="margin-bottom: 20px">
               <el-radio
                 :disabled="
@@ -324,11 +235,7 @@
                     </div>
                   </li>
                 </ul>
-                <div
-                  v-if="form.pics.length < 9"
-                  class="upload-box"
-                  @click="handlePicsChange"
-                >
+                <div v-if="form.pics.length < 9" class="upload-box" @click="handlePicsChange">
                   <i class="el-icon-plus avatar-uploader-icon" />
                 </div>
               </div>
@@ -368,15 +275,8 @@
           <!-- <vue-html5-editor :content="form.purchase_agreement" ref="editor" @change="updatePurchaseAgreement" :height="360"></vue-html5-editor> -->
         </el-form-item>
         <el-form-item label=" ">
-          <el-button @click.native="handleCancel">
-            取消
-          </el-button>
-          <el-button
-            type="primary"
-            @click="submitItemsAction"
-          >
-            保存
-          </el-button>
+          <el-button @click.native="handleCancel"> 取消 </el-button>
+          <el-button type="primary" @click="submitItemsAction"> 保存 </el-button>
         </el-form-item>
       </el-form>
     </div>
@@ -387,10 +287,7 @@
       :before-close="handleCancelLabelsDialog"
     >
       <template>
-        <div
-          v-if="total_count > params.pageSize"
-          class="f_r"
-        >
+        <div v-if="total_count > params.pageSize" class="f_r">
           <el-pagination
             layout="prev, pager, next"
             :total="total_count"
@@ -405,19 +302,9 @@
           style="width: 100%"
           @select="handleSelectionChange"
         >
-          <el-table-column
-            type="selection"
-            :reserve-selection="true"
-            width="55"
-          />
-          <el-table-column
-            prop="labelName"
-            label="物料名称"
-          />
-          <el-table-column
-            prop="serviceType"
-            label="系统类型"
-          >
+          <el-table-column type="selection" :reserve-selection="true" width="55" />
+          <el-table-column prop="labelName" label="物料名称" />
+          <el-table-column prop="serviceType" label="系统类型">
             <template slot-scope="scope">
               <span v-if="scope.row.serviceType === 'point'">积分</span>
               <span v-if="scope.row.serviceType === 'deposit'">储值</span>
@@ -446,14 +333,14 @@ export default {
   components: {
     imgPicker
   },
-  data () {
+  data() {
     return {
       serviceLabelsVisible: false,
       serviceLabelsList: [],
       type_labels: [],
       date_range: '',
       pickerOptions: {
-        disabledDate (time) {
+        disabledDate(time) {
           return time.getTime() < Date.now() - 8.64e7
         }
       },
@@ -463,7 +350,7 @@ export default {
           value: 'onsale'
         },
         {
-          title: '可线下销售',
+          title: '前台不展示',
           value: 'offline_sale'
         },
         {
@@ -507,7 +394,7 @@ export default {
       picsOldLen: 0
     }
   },
-  mounted () {
+  mounted() {
     if (this.$route.params.itemId) {
       // 初始化门店数据
       getItemsDetail(this.$route.params.itemId)
@@ -679,7 +566,7 @@ export default {
             message: '更新成功',
             type: 'success',
             duration: 2 * 1000,
-            onClose () {
+            onClose() {
               that.refresh()
               that.$router.go(-1)
             }
@@ -691,7 +578,7 @@ export default {
             message: '添加成功',
             type: 'success',
             duration: 2 * 1000,
-            onClose () {
+            onClose() {
               that.refresh()
               that.$router.go(-1)
             }
@@ -711,10 +598,10 @@ export default {
     handleCancel: function () {
       this.$router.go(-1)
     },
-    priceformatter (row, column) {
+    priceformatter(row, column) {
       return row.labelPrice / 100
     },
-    getTaskTime (strDate) {
+    getTaskTime(strDate) {
       let date = new Date(strDate)
       let y = date.getFullYear()
       let m = date.getMonth() + 1
@@ -724,10 +611,10 @@ export default {
       let str = y + '-' + m + '-' + d
       return str
     },
-    getTimeStr (date) {
+    getTimeStr(date) {
       return this.getTaskTime(new Date(parseInt(date) * 1000))
     },
-    getSplitDate (date) {
+    getSplitDate(date) {
       var date = this.getTimeStr(date).split('-')
       var dateStr = []
       for (var i = 0; i < date.length; i++) {
@@ -780,7 +667,7 @@ export default {
       this.picsDialog = true
       this.isGetPics = true
     },
-    pickPics (arr) {
+    pickPics(arr) {
       if (this.picsOldLen + arr.length >= 10) {
         this.$message.error('最多上传9张图片!')
         return false
@@ -796,13 +683,13 @@ export default {
         }
       }
     },
-    closePicsDialog () {
+    closePicsDialog() {
       this.picsDialog = false
     },
-    picsEnter (index) {
+    picsEnter(index) {
       this.picsCurrent = index
     },
-    picsLeave () {
+    picsLeave() {
       this.picsCurrent = -1
     },
     removePicsImg: function (index) {

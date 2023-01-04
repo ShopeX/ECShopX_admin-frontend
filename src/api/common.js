@@ -1,6 +1,7 @@
-import fetch from '../utils/fetch'
+import fetch, { axios } from '@/utils/fetch'
+import store from '@/store'
 
-export function handleUploadFile (query) {
+export function handleUploadFile(query) {
   return fetch({
     url: '/espier/upload_file',
     method: 'post',
@@ -8,7 +9,7 @@ export function handleUploadFile (query) {
   })
 }
 
-export function getUploadLists (query) {
+export function getUploadLists(query) {
   return fetch({
     url: '/espier/upload_files',
     method: 'get',
@@ -16,7 +17,7 @@ export function getUploadLists (query) {
   })
 }
 
-export function exportUploadErrorFile (id, query) {
+export function exportUploadErrorFile(id, query) {
   return fetch({
     url: '/espier/upload_error_file_export/' + id,
     method: 'get',
@@ -24,7 +25,7 @@ export function exportUploadErrorFile (id, query) {
   })
 }
 
-export function exportUploadTemplate (query) {
+export function exportUploadTemplate(query) {
   return fetch({
     url: '/espier/upload_template',
     method: 'get',
@@ -32,21 +33,21 @@ export function exportUploadTemplate (query) {
   })
 }
 
-export function getBrandLogo () {
+export function getBrandLogo() {
   return fetch({
     url: '/companys/setting',
     method: 'get'
   })
 }
 
-export function getAddress () {
+export function getAddress() {
   return fetch({
     url: '/espier/address',
     method: 'get'
   })
 }
 
-export function download () {
+export function download() {
   return fetch({
     url: '/espier/upload_template',
     method: 'get',
@@ -54,5 +55,23 @@ export function download () {
       file_type: 'normal_orders',
       file_name: '批量发货'
     }
+  })
+}
+
+// 获取文件
+export function getFileBlob(url) {
+  return new Promise(function (resolve, reject) {
+    axios({
+      method: 'get',
+      url,
+      responseType: 'arraybuffer',
+      headers: { 'Authorization': 'bearer ' + store.getters.token }
+    })
+      .then((data) => {
+        resolve(data.data)
+      })
+      .catch((error) => {
+        reject(error.toString())
+      })
   })
 }

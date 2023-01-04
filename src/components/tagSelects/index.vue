@@ -14,11 +14,7 @@
         class="input-with-select"
         style="width: 50%"
       >
-        <el-button
-          slot="append"
-          icon="el-icon-search"
-          @click="searchByKey"
-        />
+        <el-button slot="append" icon="el-icon-search" @click="searchByKey" />
       </el-input>
     </div>
     <el-table
@@ -30,37 +26,17 @@
       :row-key="getRowKeys"
       @selection-change="handleSelectionChange"
     >
-      <el-table-column
-        type="selection"
-        :reserve-selection="true"
-        width="50"
-      />
-      <el-table-column
-        prop="itemId"
-        label="标签ID"
-        width="70"
-      />
-      <el-table-column
-        prop="itemName"
-        label="标签名称"
-      >
+      <el-table-column type="selection" :reserve-selection="true" width="50" />
+      <el-table-column prop="itemId" label="标签ID" width="70" />
+      <el-table-column prop="itemName" label="标签名称">
         <template slot-scope="scope">
-          <el-tag
-            :color="scope.row.tag_color"
-            size="mini"
-            style="color: #ffffff"
-          >
-            {{
-              scope.row.tag_name
-            }}
+          <el-tag :color="scope.row.tag_color" size="mini" style="color: #ffffff">
+            {{ scope.row.tag_name }}
           </el-tag>
         </template>
       </el-table-column>
     </el-table>
-    <div
-      v-if="total_count > params.pageSize"
-      class="tr"
-    >
+    <div v-if="total_count > params.pageSize" class="tr">
       <el-pagination
         layout="prev, pager, next"
         :total="total_count"
@@ -68,15 +44,9 @@
         @current-change="handleCurrentChange"
       />
     </div>
-    <span
-      slot="footer"
-      class="dialog-footer"
-    >
+    <span slot="footer" class="dialog-footer">
       <el-button @click="cancelAction">取 消</el-button>
-      <el-button
-        type="primary"
-        @click="saveStoreAction"
-      >确 定</el-button>
+      <el-button type="primary" @click="saveStoreAction">确 定</el-button>
     </span>
   </el-dialog>
 </template>
@@ -88,7 +58,7 @@ import { getDefaultCurrency } from '../../api/company'
 
 export default {
   props: ['itemsVisible', 'getStatus', 'relItemsIds', 'itemType'],
-  data () {
+  data() {
     return {
       loading: false,
       itemsData: [],
@@ -109,7 +79,7 @@ export default {
           value: 'onsale'
         },
         {
-          title: '可线下销售',
+          title: '前台不展示',
           value: 'offline_sale'
         },
         {
@@ -126,45 +96,45 @@ export default {
     }
   },
   computed: {
-    showDialog () {
+    showDialog() {
       return this.itemsVisible
     }
   },
   watch: {
-    relItemsIds (newVal, oldVal) {
+    relItemsIds(newVal, oldVal) {
       if (newVal) {
         this.selectRows = newVal
       }
     },
-    getStatus (newVal, oldVal) {
+    getStatus(newVal, oldVal) {
       if (newVal) {
         this.getNewsList()
       }
     },
-    itemType (newVal, oldVal) {
+    itemType(newVal, oldVal) {
       if (newVal) {
         this.params.item_type = newVal
       }
     }
   },
-  mounted () {
+  mounted() {
     this.getShippingTemplatesList()
     //this.getCategory()
     this.getCurrencyInfo()
   },
   methods: {
-    getRowKeys (row) {
+    getRowKeys(row) {
       return row.itemId
     },
-    handleCurrentChange (page_num) {
+    handleCurrentChange(page_num) {
       this.params.page = page_num
       this.getNewsList()
     },
-    searchByKey () {
+    searchByKey() {
       this.params.page = 1
       this.getNewsList()
     },
-    handleSelectionChange (val) {
+    handleSelectionChange(val) {
       this.multipleSelection = val
       val.forEach((item) => {
         let isInArr = this.selectRows.findIndex((n) => n.itemId == item.itemId)
@@ -173,13 +143,13 @@ export default {
         }
       })
     },
-    cancelAction () {
+    cancelAction() {
       this.$emit('closeStoreDialog')
     },
-    saveStoreAction () {
+    saveStoreAction() {
       this.$emit('chooseStore', this.multipleSelection)
     },
-    getNewsList () {
+    getNewsList() {
       if (this.getStatus) {
         this.loading = true
         getItemsList(this.params).then((response) => {
@@ -194,27 +164,27 @@ export default {
         })
       }
     },
-    getShippingTemplatesList () {
+    getShippingTemplatesList() {
       this.loading = true
       getShippingTemplatesList(this.templatesParams).then((response) => {
         this.templatesList = response.data.data.list
       })
     },
-    getCurrencyInfo () {
+    getCurrencyInfo() {
       getDefaultCurrency().then((res) => {
         this.currency = res.data.data
         this.cursymbol = this.currency.symbol
       })
     },
-    getCategory () {
+    getCategory() {
       getCategory([]).then((response) => {
         this.categoryList = response.data.data
       })
     },
-    priceformatter (row, column) {
+    priceformatter(row, column) {
       return this.cursymbol + row.price / 100
     },
-    changeGoods (type) {
+    changeGoods(type) {
       switch (type) {
         case 'every':
           this.$set(this.params, 'consume_type', 'every')

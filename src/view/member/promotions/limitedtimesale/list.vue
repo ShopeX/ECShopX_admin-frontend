@@ -7,34 +7,18 @@
 <template>
   <div>
     <template v-if="$route.path.indexOf('editor') === -1">
+      <SpPlatformTip h5 app pc alipay />
       <div class="action-container">
-        <el-button
-          type="primary"
-          icon="iconfont icon-xinzengcaozuo-01"
-          @click="addActivityData"
-        >
+        <el-button type="primary" icon="iconfont icon-xinzengcaozuo-01" @click="addActivityData">
           添加活动
         </el-button>
       </div>
 
-      <SpFilterForm
-        :model="params"
-        @onSearch="onSearch"
-        @onReset="onReset"
-      >
-        <SpFilterFormItem
-          prop="name"
-          label="活动名称:"
-        >
-          <el-input
-            v-model="params.name"
-            placeholder="活动名称"
-          />
+      <SpFilterForm :model="params" @onSearch="onSearch" @onReset="onReset">
+        <SpFilterFormItem prop="name" label="活动名称:">
+          <el-input v-model="params.name" placeholder="活动名称" />
         </SpFilterFormItem>
-        <SpFilterFormItem
-          prop="create_time"
-          label="时间:"
-        >
+        <SpFilterFormItem prop="create_time" label="时间:">
           <el-date-picker
             v-model="params.create_time"
             type="daterange"
@@ -44,53 +28,25 @@
         </SpFilterFormItem>
       </SpFilterForm>
 
-      <el-tabs
-        v-model="params.status"
-        type="card"
-        @tab-click="handleTabClick"
-      >
+      <el-tabs v-model="params.status" type="card" @tab-click="handleTabClick">
         <el-tab-pane
           v-for="(item, index) in tabList"
           :key="index"
           :label="item.name"
           :name="item.activeName"
         >
-          <el-table
-            v-loading="loading"
-            border
-            :data="tableList"
-            :height="wheight - 200"
-          >
-            <el-table-column
-              prop="seckill_id"
-              label="ID"
-              width="80"
-            />
-            <el-table-column
-              prop="activity_name"
-              label="活动名称"
-              min-width="180"
-            />
-            <el-table-column
-              prop="created_date"
-              label="创建时间"
-              min-width="150"
-            />
-            <el-table-column
-              label="活动时间"
-              min-width="150"
-            >
+          <el-table v-loading="loading" border :data="tableList" :height="wheight - 200">
+            <el-table-column prop="seckill_id" label="ID" width="80" />
+            <el-table-column prop="activity_name" label="活动名称" min-width="180" />
+            <el-table-column prop="created_date" label="创建时间" min-width="150" />
+            <el-table-column label="活动时间" min-width="150">
               <template slot-scope="scope">
                 <div>{{ scope.row.activity_start_date }}</div>
                 <div>~</div>
                 <div>{{ scope.row.activity_end_date }}</div>
               </template>
             </el-table-column>
-            <el-table-column
-              prop="status"
-              label="状态"
-              min-width="100"
-            >
+            <el-table-column prop="status" label="状态" min-width="100">
               <template slot-scope="scope">
                 <span v-if="scope.row.status == 'waiting'">待开始</span>
                 <span v-else-if="scope.row.status == 'in_the_notice'">预告中</span>
@@ -99,22 +55,10 @@
                 <span v-else-if="scope.row.status == 'close'">已终止</span>
               </template>
             </el-table-column>
-            <el-table-column
-              min-width="70"
-              prop="source_name"
-              label="店铺"
-            />
-            <el-table-column
-              label="操作"
-              width="250"
-            >
+            <el-table-column min-width="70" prop="source_name" label="店铺" />
+            <el-table-column label="操作" width="250">
               <template slot-scope="scope">
-                <a
-                  v-show="false"
-                  ref="download"
-                  :href="downloadUrl"
-                  :download="downloadfilename"
-                />
+                <a v-show="false" ref="download" :href="downloadUrl" :download="downloadfilename" />
                 <template v-if="scope.row.edit_btn == 'Y'">
                   <el-button
                     v-if="editActionVisible(scope.row)"
@@ -141,10 +85,7 @@
               </template>
             </el-table-column>
           </el-table>
-          <div
-            v-if="page.total > page.pageSize"
-            class="content-center content-top-padded"
-          >
+          <div v-if="page.total > page.pageSize" class="content-center content-top-padded">
             <el-pagination
               background
               layout="total, sizes, prev, pager, next, jumper"
@@ -160,30 +101,11 @@
       </el-tabs>
     </template>
 
-    <el-dialog
-      title="活动支持店铺列表"
-      :visible.sync="dialogVisible"
-      width="50%"
-    >
-      <el-table
-        v-loading="loading"
-        :data="distributors.distributor_info"
-        :height="wheight - 500"
-      >
-        <el-table-column
-          prop="name"
-          label="店铺名称"
-          min-width="180"
-        />
-        <el-table-column
-          prop="address"
-          label="地址"
-          min-width="180"
-        />
-        <el-table-column
-          label="操作"
-          width="250"
-        >
+    <el-dialog title="活动支持店铺列表" :visible.sync="dialogVisible" width="50%">
+      <el-table v-loading="loading" :data="distributors.distributor_info" :height="wheight - 500">
+        <el-table-column prop="name" label="店铺名称" min-width="180" />
+        <el-table-column prop="address" label="地址" min-width="180" />
+        <el-table-column label="操作" width="250">
           <template slot-scope="scope">
             <el-button
               type="text"
@@ -207,12 +129,12 @@ import { pageMixin } from '@/mixins'
 export default {
   mixins: [pageMixin],
   props: ['getStatus'],
-  provide () {
+  provide() {
     return {
       refresh: this.refresh
     }
   },
-  data () {
+  data() {
     const initialParams = {
       create_time: [],
       status: 'all',
@@ -253,18 +175,18 @@ export default {
     ...mapGetters(['wheight'])
   },
   watch: {
-    getStatus (val) {
+    getStatus(val) {
       if (val) {
         this.fetchList()
       }
     }
   },
-  mounted () {
+  mounted() {
     this.fetchList()
     this.getCurrencyInfo()
   },
   methods: {
-    editActionVisible ({ status, source_id }) {
+    editActionVisible({ status, source_id }) {
       if (status !== 'it_has_ended') {
         if (this.IS_ADMIN && source_id == '0') {
           return true
@@ -275,7 +197,7 @@ export default {
       }
       return false
     },
-    getParams () {
+    getParams() {
       const time = {}
       const create_time = this.params.create_time
       if (create_time && create_time.length > 0) {
@@ -291,17 +213,17 @@ export default {
       return params
     },
 
-    onSearch () {
+    onSearch() {
       this.page.pageIndex = 1
       this.$nextTick(() => {
         this.fetchList()
       })
     },
-    onReset () {
+    onReset() {
       this.params = { ...this.initialParams }
       this.onSearch()
     },
-    async fetchList () {
+    async fetchList() {
       this.loading = true
       const { pageIndex: page, pageSize } = this.page
       let params = {
@@ -316,7 +238,7 @@ export default {
 
       this.loading = false
     },
-    uploadActionWxaCode (index, row, distributor_id = 0) {
+    uploadActionWxaCode(index, row, distributor_id = 0) {
       var params = { seckill_type: row.seckill_type, seckill_id: row.seckill_id }
       if (distributor_id) {
         params.distributor_id = distributor_id
@@ -338,18 +260,18 @@ export default {
         }, 200)
       })
     },
-    handleTabClick (tab, event) {
+    handleTabClick(tab, event) {
       this.onSearch()
     },
-    addActivityData () {
+    addActivityData() {
       // 添加物料弹框
       this.$router.push({ path: this.matchHidePage('editor') })
     },
-    editAction (index, row) {
+    editAction(index, row) {
       // 编辑物料弹框
       this.$router.push({ path: this.matchHidePage('editor/') + row.seckill_id })
     },
-    updateStatusCommunityAction (row) {
+    updateStatusCommunityAction(row) {
       var msg = '此操作将永久终止该活动, 是否继续?'
       this.$confirm(msg, '提示', {
         cancelButtonText: '取消',
@@ -370,7 +292,7 @@ export default {
         }
       })
     },
-    dateChange (val) {
+    dateChange(val) {
       this.params.status = ''
       if (val && val.length > 0) {
         this.params.start_time = this.dateStrToTimeStamp(val[0] + ' 00:00:00')
@@ -382,27 +304,27 @@ export default {
       this.params.page = 1
       this.fetchList()
     },
-    dateStrToTimeStamp (str) {
+    dateStrToTimeStamp(str) {
       return Date.parse(new Date(str)) / 1000
     },
-    viewCouponList (ids) {
+    viewCouponList(ids) {
       this.couponVisible = true
     },
-    handleCancel () {
+    handleCancel() {
       this.communityVisible = false
       this.couponVisible = false
       this.goodsVisible = false
     },
-    getCurrencyInfo () {
+    getCurrencyInfo() {
       getDefaultCurrency().then((res) => {
         this.currency = res.data.data
         this.cursymbol = this.currency.symbol
       })
     },
-    updateActivityData (params) {
+    updateActivityData(params) {
       updateActivityItemData(params).then((res) => {})
     },
-    editItemPrice (row) {
+    editItemPrice(row) {
       let form = {
         'id': row.id,
         'item_id': row.item_id,
@@ -414,7 +336,7 @@ export default {
       }
       this.updateActivityData(form)
     },
-    refresh () {
+    refresh() {
       this.fetchList()
       this.getCurrencyInfo()
     }

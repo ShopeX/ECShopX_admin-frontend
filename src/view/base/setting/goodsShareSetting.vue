@@ -1,25 +1,14 @@
 <template>
   <div class="goodsShareSetting">
-    <el-form
-      ref="form"
-      label-width="180px"
-      :rules="rules"
-      :model="form"
-    >
+    <SpPlatformTip />
+    <el-form ref="form" label-width="180px" :rules="rules" :model="form">
       <el-form-item label="商品分享是否限制">
         <el-switch v-model="form.is_open" />
       </el-form-item>
       <template v-if="form.is_open">
-        <el-form-item
-          label="可分享会员等级"
-          prop="valid_grade"
-        >
+        <el-form-item label="可分享会员等级" prop="valid_grade">
           <el-checkbox-group v-model="form.valid_grade">
-            <el-checkbox
-              v-for="grade in memberGrade"
-              :key="grade.grade_id"
-              :label="grade.grade_id"
-            >
+            <el-checkbox v-for="grade in memberGrade" :key="grade.grade_id" :label="grade.grade_id">
               {{ grade.grade_name }}
             </el-checkbox>
             <el-checkbox
@@ -31,10 +20,7 @@
             </el-checkbox>
           </el-checkbox-group>
         </el-form-item>
-        <el-form-item
-          label="分享限制提示语"
-          prop="msg"
-        >
+        <el-form-item label="分享限制提示语" prop="msg">
           <el-input
             v-model="form.msg"
             style="width: 260px"
@@ -42,37 +28,19 @@
             placeholder="请输入分享限制提示语"
           />
         </el-form-item>
-        <el-form-item
-          label="提示后跳转页面路径"
-          prop="page"
-        >
-          <div
-            class="path"
-            @click="showSetLink"
-          >
-            <span
-              v-show="form.page.linkPage"
-              class="pathTitle"
-            >{{ linkPage }}:</span>
+        <el-form-item label="提示后跳转页面路径" prop="page">
+          <div class="path" @click="showSetLink">
+            <span v-show="form.page.linkPage" class="pathTitle">{{ linkPage }}:</span>
             {{ form.page.title ? form.page.title : '设置路径' }}
           </div>
         </el-form-item>
       </template>
       <el-form-item>
-        <el-button
-          type="primary"
-          @click="save"
-        >
-          保存
-        </el-button>
+        <el-button type="primary" @click="save"> 保存 </el-button>
       </el-form-item>
     </el-form>
 
-    <linkSetter
-      :visible="linksVisible"
-      @setLink="setLink"
-      @closeDialog="closeDialog"
-    />
+    <linkSetter :visible="linksVisible" @setLink="setLink" @closeDialog="closeDialog" />
   </div>
 </template>
 
@@ -87,7 +55,7 @@ export default {
   components: {
     linkSetter
   },
-  data () {
+  data() {
     return {
       // 设置路径
       linksVisible: false,
@@ -107,7 +75,7 @@ export default {
     }
   },
   computed: {
-    linkPage ({ form }) {
+    linkPage({ form }) {
       const { page } = form
       const types = {
         goods: '商品',
@@ -122,11 +90,11 @@ export default {
       return types[page.linkPage]
     }
   },
-  mounted () {
+  mounted() {
     this.init()
   },
   methods: {
-    async init () {
+    async init() {
       // 获取会员列表
       const grade = await getGradeList()
       const vip_grade = await listVipGrade()
@@ -135,7 +103,7 @@ export default {
       this.getShareSettingInfo()
     },
     // 获取分享配置
-    async getShareSettingInfo () {
+    async getShareSettingInfo() {
       // 获取分享配置
       const data = await getShareSetting()
       this.form = { ...data.data.data }
@@ -149,17 +117,17 @@ export default {
         this.$set(this.form, 'msg', '')
       }
     },
-    showSetLink () {
+    showSetLink() {
       this.linksVisible = true
     },
-    setLink (links, type) {
+    setLink(links, type) {
       this.$set(this.form, 'page', { ...links, linkPage: type })
     },
-    closeDialog () {
+    closeDialog() {
       this.linksVisible = false
     },
     // 保存表单
-    save () {
+    save() {
       this.$refs['form'].validate(async (vaild) => {
         if (vaild) {
           const { form } = this

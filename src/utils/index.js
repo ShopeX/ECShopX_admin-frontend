@@ -5,27 +5,27 @@ import store from '@/store'
 
 const isPrimitiveType = (val, type) => Object.prototype.toString.call(val) === type
 
-export function isFunction (val) {
+export function isFunction(val) {
   return isPrimitiveType(val, '[object Function]')
 }
 
-export function isNumber (val) {
+export function isNumber(val) {
   return isPrimitiveType(val, '[object Number]')
 }
 
-export function isObject (val) {
+export function isObject(val) {
   return isPrimitiveType(val, '[object Object]')
 }
 
-export function isArray (val) {
+export function isArray(val) {
   return Array.isArray(val)
 }
 
-export function isBoolean (val) {
+export function isBoolean(val) {
   return isPrimitiveType(val, '[object Boolean]')
 }
 
-export function isString (val) {
+export function isString(val) {
   return isPrimitiveType(val, '[object String]')
 }
 
@@ -50,35 +50,16 @@ export const IS_DISTRIBUTOR = (() => {
   return login_type == 'distributor'
 })()
 
-export function pickBy (arr = [], keyMaps = {}) {
-  const picker = (item) => {
-    const ret = {}
-
-    Object.keys(keyMaps).forEach((key) => {
-      const val = keyMaps[key]
-
-      if (isString(val)) {
-        ret[key] = _get(item, val)
-      } else if (isFunction(val)) {
-        ret[key] = val(item)
-      } else if (isObject(val)) {
-        ret[key] = _get(item, val.key) || val.default
-      } else {
-        ret[key] = val
-      }
-    })
-
-    return ret
-  }
-
-  if (isArray(arr)) {
-    return arr.map(picker)
-  } else {
-    return picker(arr)
+// 平台端、店铺端、经销商端路由跳转封装
+export const getUrlPathByLoginType = (path) => {
+  if (IS_ADMIN) {
+    return path
+  } else if (IS_DISTRIBUTOR) {
+    return `/shopadmin${path}`
   }
 }
 
-export function isInSalesCenter () {
+export function isInSalesCenter() {
   if (window.self != window.top && window.self.location.href.indexOf('iframeLogin') < 0) {
     return true
   } else {
@@ -86,19 +67,19 @@ export function isInSalesCenter () {
   }
 }
 
-export function isInMerchant () {
+export function isInMerchant() {
   return /\/merchant/.test(window.location.pathname)
 }
 
-export function importAll (r, fn = (key, r) => r(key)) {
+export function importAll(r, fn = (key, r) => r(key)) {
   r.keys().forEach((key) => fn(key, r))
 }
 
-export function rand (max) {
+export function rand(max) {
   return Math.floor(Math.random() * max)
 }
 //getRandwords 获取随机字符串
-export function getRandwords (ls = 8) {
+export function getRandwords(ls = 8) {
   var chars = ''
   var passwords = []
   var passwordUnique = true
@@ -121,7 +102,7 @@ export function getRandwords (ls = 8) {
   return passwords.join('\n')
 }
 
-export function dateFilter (time, pattern = 'yyyy-MM-dd hh:mm:ss') {
+export function dateFilter(time, pattern = 'yyyy-MM-dd hh:mm:ss') {
   console.log('dateFilter', time)
   if (time !== -1) {
     return CommonUtil.formatDate.format(new Date(time * 1000), pattern)
@@ -132,7 +113,7 @@ export function dateFilter (time, pattern = 'yyyy-MM-dd hh:mm:ss') {
 }
 
 // 时间戳转日期格式
-export function timestampToTime (timestamp) {
+export function timestampToTime(timestamp) {
   var date = new Date(timestamp * 1000) //时间戳为10位需*1000，时间戳为13位的话不需乘1000
   var YY = date.getFullYear() + '-'
   var MM = (date.getMonth() + 1 < 10 ? '0' + (date.getMonth() + 1) : date.getMonth() + 1) + '-'
@@ -143,7 +124,7 @@ export function timestampToTime (timestamp) {
   return YY + MM + DD + ' ' + hh + mm + ss
 }
 
-export function goLink () {
+export function goLink() {
   window.parent.postMessage(
     {
       cmd: 'notExistAuth'
@@ -152,7 +133,7 @@ export function goLink () {
   )
 }
 
-export function getPropByPath (obj, path, strict) {
+export function getPropByPath(obj, path, strict) {
   let tempObj = obj
   path = path.replace(/\[(\w+)\]/g, '.$1')
   path = path.replace(/^\./, '')
@@ -178,7 +159,7 @@ export function getPropByPath (obj, path, strict) {
   }
 }
 
-function export_open (tab) {
+function export_open(tab) {
   setTimeout(() => {
     const login_type = store.getters.login_type
     if (login_type == 'distributor') {
@@ -189,7 +170,7 @@ function export_open (tab) {
   }, 1000)
 }
 
-export function unescape (html) {
+export function unescape(html) {
   /* eslint-disable */
   return html
     .replace(html ? /&(?!#?\w+;)/g : /&/g, '&amp;')
@@ -201,6 +182,52 @@ export function unescape (html) {
     .replace(/&nbsp;/g, ' ')
     .replace(/&#8230;/g, '…')
   /* eslint-enable */
+}
+
+/**
+ * 将驼峰转为短连接
+ */
+export function camelToShortline(camelStr) {
+  return camelStr
+    .replace(/[A-Z]/g, function (s) {
+      return ' ' + s.toLowerCase()
+    })
+    .trim()
+    .replaceAll(' ', '-')
+}
+
+export function getRegionNameById(region, district) {
+  let result = []
+  function getRegionName(_district, index) {
+    const res = _district.find((item) => item.value == region[index])
+    if (res) {
+      result.push(res.label)
+      if (res.children) {
+        getRegionName(res.children, ++index)
+      }
+    }
+  }
+  if (Array.isArray(region) && region.length > 0) {
+    getRegionName(district, 0)
+  }
+  return result
+}
+
+export function getRegionIdByName(region, district) {
+  let result = []
+  function getRegionValue(_district, index) {
+    const res = _district.find((item) => item.label == region[index])
+    if (res) {
+      result.push(res.value)
+      if (res.children) {
+        getRegionValue(res.children, ++index)
+      }
+    }
+  }
+  if (region.length > 0) {
+    getRegionValue(district, 0)
+  }
+  return result
 }
 
 export { log, export_open }

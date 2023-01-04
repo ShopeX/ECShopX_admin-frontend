@@ -198,6 +198,11 @@ export default {
       component: () => import('@/view/menus/shopmenu')
     },
     {
+      path: 'menumanage/merchantmenu',
+      name: `商户菜单管理`,
+      component: () => import('@/view/menus/merchantmenu')
+    },
+    {
       path: 'menumanage/distributormenu',
       name: `店铺菜单管理`,
       component: () => import('@/view/menus/distributormenu')

@@ -1,33 +1,14 @@
 <template>
   <div>
     <div v-if="$route.path.indexOf('editor') === -1">
-      <SpFilterForm
-        :model="params"
-        @onSearch="onSearch"
-        @onReset="onSearch"
-      >
-        <SpFilterFormItem
-          prop="keywords"
-          label="商品名称:"
-        >
-          <el-input
-            v-model="params.keywords"
-            placeholder="请输入商品名称"
-          />
+      <SpFilterForm :model="params" @onSearch="onSearch" @onReset="onSearch">
+        <SpFilterFormItem prop="keywords" label="商品名称:">
+          <el-input v-model="params.keywords" placeholder="请输入商品名称" />
         </SpFilterFormItem>
-        <SpFilterFormItem
-          prop="item_bn"
-          label="商品编号:"
-        >
-          <el-input
-            v-model="params.item_bn"
-            placeholder="请输入商品编号"
-          />
+        <SpFilterFormItem prop="item_bn" label="商品编号:">
+          <el-input v-model="params.item_bn" placeholder="请输入商品编号" />
         </SpFilterFormItem>
-        <SpFilterFormItem
-          prop="regions_id"
-          label="商品产地:"
-        >
+        <SpFilterFormItem prop="regions_id" label="商品产地:">
           <el-cascader
             v-model="params.regions_id"
             clearable
@@ -35,15 +16,8 @@
             :options="regions"
           />
         </SpFilterFormItem>
-        <SpFilterFormItem
-          prop="approve_status"
-          label="商品状态:"
-        >
-          <el-select
-            v-model="params.approve_status"
-            clearable
-            placeholder="请选择"
-          >
+        <SpFilterFormItem prop="approve_status" label="商品状态:">
+          <el-select v-model="params.approve_status" clearable placeholder="请选择">
             <el-option
               v-for="item in salesStatus"
               :key="item.value"
@@ -53,68 +27,31 @@
             />
           </el-select>
         </SpFilterFormItem>
-        <SpFilterFormItem
-          prop="distributor_id"
-          label="店铺:"
-        >
-          <SpSelectShop
-            v-model="params.distributor_id"
-            clearable
-            placeholder="请选择"
-          />
+        <SpFilterFormItem prop="distributor_id" label="店铺:">
+          <SpSelectShop v-model="params.distributor_id" clearable placeholder="请选择" />
         </SpFilterFormItem>
       </SpFilterForm>
 
       <div class="action-container">
-        <el-button
-          type="primary"
-          plain
-          @click="Examine"
-        >
-          批量审核
-        </el-button>
-        <el-button
-          type="primary"
-          plain
-          @click="batchItemsStatus('onsale')"
-        >
-          批量上架
-        </el-button>
-        <el-button
-          type="primary"
-          plain
-          @click="batchItemsStatus('instock')"
-        >
-          强制下架
-        </el-button>
+        <el-button type="primary" plain @click="Examine"> 批量审核 </el-button>
+        <el-button type="primary" plain @click="batchItemsStatus('onsale')"> 批量上架 </el-button>
+        <el-button type="primary" plain @click="batchItemsStatus('instock')"> 强制下架 </el-button>
         <el-dropdown>
-          <el-button
-            type="primary"
-            plain
-            icon="iconfont icon-daorucaozuo-01"
-          >
+          <el-button type="primary" plain icon="iconfont icon-daorucaozuo-01">
             导出<i class="el-icon-arrow-down el-icon--right" />
           </el-button>
           <el-dropdown-menu slot="dropdown">
             <el-dropdown-item>
-              <export-tip @exportHandle="exportItemsWxappCode('wxa')">
-                小程序码
-              </export-tip>
+              <export-tip @exportHandle="exportItemsWxappCode('wxa')"> 小程序码 </export-tip>
             </el-dropdown-item>
             <el-dropdown-item>
-              <export-tip @exportHandle="exportItemsWxappCode('h5')">
-                H5二维码
-              </export-tip>
+              <export-tip @exportHandle="exportItemsWxappCode('h5')"> H5二维码 </export-tip>
             </el-dropdown-item>
           </el-dropdown-menu>
         </el-dropdown>
       </div>
 
-      <el-tabs
-        v-model="params.audit_status"
-        type="card"
-        @tab-click="onSearch"
-      >
+      <el-tabs v-model="params.audit_status" type="card" @tab-click="onSearch">
         <el-tab-pane
           v-for="(item, index) in tabList"
           :key="index"
@@ -127,27 +64,12 @@
             :data="tableList"
             @selection-change="handleSelectionChange"
           >
-            <el-table-column
-              type="selection"
-              align="center"
-              label="全选"
-            />
-            <el-table-column
-              prop="goods_id"
-              label="商品ID"
-            />
-            <el-table-column
-              prop="itemName"
-              label="商品名称"
-            >
+            <el-table-column type="selection" align="center" label="全选" />
+            <el-table-column prop="goods_id" label="商品ID" />
+            <el-table-column prop="itemName" label="商品名称">
               <template slot-scope="scope">
                 {{ scope.row.item_name }}
-                <el-tag
-                  v-if="scope.row.special_type == 'drug'"
-                  type="danger"
-                >
-                  处方药
-                </el-tag>
+                <el-tag v-if="scope.row.special_type == 'drug'" type="danger"> 处方药 </el-tag>
               </template>
             </el-table-column>
             <el-table-column label="排序编号">
@@ -162,35 +84,19 @@
             </el-table-column>
             <el-table-column label="规格">
               <template slot-scope="scope">
-                <el-tag
-                  v-if="!scope.row.nospec"
-                  effect="plain"
-                  size="mini"
-                  type="success"
-                >
+                <el-tag v-if="!scope.row.nospec" effect="plain" size="mini" type="success">
                   多规格
                 </el-tag>
-                <el-tag
-                  v-else
-                  effect="plain"
-                  size="mini"
-                >
-                  单规格
-                </el-tag>
+                <el-tag v-else effect="plain" size="mini"> 单规格 </el-tag>
               </template>
             </el-table-column>
-            <el-table-column
-              prop="market_price"
-              label="市场价（¥）"
-            />
-            <el-table-column
-              prop="price"
-              label="销售价（¥）"
-            />
-            <el-table-column
-              prop="store"
-              label="库存"
-            />
+            <el-table-column prop="market_price" label="市场价（¥）">
+              <template slot-scope="scope">
+                <span>{{ scope.row.market_price / 100 }}</span>
+              </template>
+            </el-table-column>
+            <el-table-column prop="price" label="销售价（¥）" />
+            <el-table-column prop="store" label="库存" />
             <el-table-column label="状态">
               <template slot-scope="scope">
                 <span v-if="scope.row.audit_status == 'processing'">等待审核</span>
@@ -201,15 +107,10 @@
                   trigger="hover"
                   :content="scope.row.audit_reason"
                 >
-                  <el-button
-                    slot="reference"
-                    type="text"
-                  >
-                    审核驳回
-                  </el-button>
+                  <el-button slot="reference" type="text"> 审核驳回 </el-button>
                 </el-popover>
                 <span v-else-if="scope.row.approve_status == 'onsale'">前台可销</span>
-                <span v-else-if="scope.row.approve_status == 'offline_sale'">可线下销售</span>
+                <span v-else-if="scope.row.approve_status == 'offline_sale'">前台不展示 </span>
                 <span v-else-if="scope.row.approve_status == 'only_show'">前台仅展示</span>
                 <span v-else>不可销售</span>
               </template>
@@ -219,14 +120,17 @@
                 <el-button
                   type="text"
                   class="btn-gap"
+                  @click="editItemsAction(scope.$index, scope.row)"
                 >
-                  <span @click="editItemsAction(scope.$index, scope.row)"> 查看 </span>
-                  <span
-                    v-if="scope.row.audit_status == 'processing'"
-                    @click="batchItemsAudit(scope.row, $event)"
-                  >
-                    审核
-                  </span>
+                  查看
+                </el-button>
+                <el-button
+                  v-if="scope.row.audit_status == 'processing'"
+                  type="text"
+                  class="btn-gap"
+                  @click="batchItemsAudit(scope.row, scope.$index)"
+                >
+                  审核
                 </el-button>
               </template>
             </el-table-column>
@@ -246,45 +150,20 @@
         </el-tab-pane>
       </el-tabs>
 
-      <el-dialog
-        title="批量审核店铺商品"
-        :visible.sync="dialogVisible"
-        width="30%"
-      >
-        <el-form
-          ref="form"
-          :model="form"
-          label-width="80px"
-        >
+      <el-dialog title="批量审核店铺商品" :visible.sync="dialogVisible" width="30%">
+        <el-form ref="form" :model="form" label-width="80px">
           <el-form-item label="审核状态">
             <el-radio-group v-model="form.audit_status">
-              <el-radio label="approved">
-                通过
-              </el-radio>
-              <el-radio label="rejected">
-                拒绝
-              </el-radio>
+              <el-radio label="approved"> 通过 </el-radio>
+              <el-radio label="rejected"> 拒绝 </el-radio>
             </el-radio-group>
           </el-form-item>
-          <el-form-item
-            v-if="form.audit_status == 'rejected'"
-            label="拒绝原因"
-          >
-            <el-input
-              v-model="form.audit_reason"
-              type="textarea"
-            />
+          <el-form-item v-if="form.audit_status == 'rejected'" label="拒绝原因">
+            <el-input v-model="form.audit_reason" type="textarea" />
           </el-form-item>
           <el-form-item>
-            <el-button
-              type="primary"
-              @click="onSubmit"
-            >
-              确定
-            </el-button>
-            <el-button @click="dialogVisible = false">
-              取消
-            </el-button>
+            <el-button type="primary" @click="onSubmit"> 确定 </el-button>
+            <el-button @click="dialogVisible = false"> 取消 </el-button>
           </el-form-item>
         </el-form>
       </el-dialog>
@@ -303,12 +182,12 @@ import { SALES_STATUS } from '@/consts'
 export default {
   mixins: [pageMixin],
   props: ['getStatus'],
-  provide () {
+  provide() {
     return {
       refresh: this.fetchList
     }
   },
-  data () {
+  data() {
     return {
       dialogVisible: false,
       regions: district,
@@ -338,12 +217,12 @@ export default {
   computed: {
     ...mapGetters(['wheight'])
   },
-  mounted () {
+  mounted() {
     this.fetchList()
   },
   methods: {
     // 导出
-    async exportItemsWxappCode (exportType) {
+    async exportItemsWxappCode(exportType) {
       let params
       if (this.goods_id.length) {
         params = {
@@ -368,7 +247,7 @@ export default {
     },
 
     // 批量审批
-    Examine () {
+    Examine() {
       if (this.goods_id.length === 0) {
         this.$message.error('请选择至少一个商品')
         return false
@@ -377,7 +256,7 @@ export default {
       this.dialogVisible = true
     },
     // 审核确定
-    onSubmit () {
+    onSubmit() {
       this.form.goods_id = this.goods_id
       auditItems(this.form).then((res) => {
         this.$message.success('保存成功')
@@ -386,13 +265,13 @@ export default {
       })
     },
 
-    batchItemsAudit (row, e) {
+    batchItemsAudit(row, e) {
       console.log(row)
       this.goods_id = [row.goods_id]
       this.dialogVisible = true
     },
 
-    handleSelectionChange (val) {
+    handleSelectionChange(val) {
       let goods_id = []
       for (let i in val) {
         goods_id.push(val[i].goods_id)
@@ -400,14 +279,14 @@ export default {
       this.goods_id = goods_id
     },
 
-    editItemsAction (index, row) {
+    editItemsAction(index, row) {
       // 编辑商品弹框
       var routeData = this.$router.push({
         path: this.matchHidePage('editor/') + row.itemId
       })
     },
 
-    async fetchList () {
+    async fetchList() {
       this.loading = true
       const { pageIndex: page, pageSize } = this.page
       let params = {
@@ -426,7 +305,7 @@ export default {
       this.loading = false
     },
 
-    batchItemsStatus (status) {
+    batchItemsStatus(status) {
       if (this.goods_id.length === 0) {
         this.$message.error('请选择至少一个商品')
         return false

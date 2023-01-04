@@ -7,25 +7,15 @@
 <template>
   <div>
     <template v-if="$route.path.indexOf('editor') === -1">
+      <SpPlatformTip h5 app alipay />
       <div class="action-container">
-        <el-button
-          type="primary"
-          icon="iconfont icon-xinzengcaozuo-01"
-          @click="addActivityData"
-        >
+        <el-button type="primary" icon="iconfont icon-xinzengcaozuo-01" @click="addActivityData">
           添加加价购促销
         </el-button>
       </div>
 
-      <SpFilterForm
-        :model="params"
-        @onSearch="onSearch"
-        @onReset="onReset"
-      >
-        <SpFilterFormItem
-          prop="create_time"
-          label="时间:"
-        >
+      <SpFilterForm :model="params" @onSearch="onSearch" @onReset="onReset">
+        <SpFilterFormItem prop="create_time" label="时间:">
           <el-date-picker
             v-model="params.create_time"
             type="daterange"
@@ -33,35 +23,16 @@
             placeholder="根据添加时间筛选"
           />
         </SpFilterFormItem>
-        <SpFilterFormItem
-          prop="item_type"
-          label="商品类型:"
-        >
-          <el-select
-            v-model="params.item_type"
-            placeholder="商品类型"
-          >
-            <el-option
-              label="全部"
-              value="0"
-            />
-            <el-option
-              label="服务类商品"
-              value="service"
-            />
-            <el-option
-              label="实体类商品"
-              value="normal"
-            />
+        <SpFilterFormItem prop="item_type" label="商品类型:">
+          <el-select v-model="params.item_type" placeholder="商品类型">
+            <el-option label="全部" value="0" />
+            <el-option label="服务类商品" value="service" />
+            <el-option label="实体类商品" value="normal" />
           </el-select>
         </SpFilterFormItem>
       </SpFilterForm>
 
-      <el-tabs
-        v-model="params.status"
-        type="card"
-        @tab-click="handleTabClick"
-      >
+      <el-tabs v-model="params.status" type="card" @tab-click="handleTabClick">
         <el-tab-pane
           v-for="(item, index) in tabList"
           :key="index"
@@ -78,16 +49,9 @@
           >
             <el-table-column type="expand">
               <template slot-scope="scope">
-                <el-form
-                  label-position="left"
-                  inline
-                  class="demo-table-expand"
-                >
+                <el-form label-position="left" inline class="demo-table-expand">
                   <el-form-item label="适用会员">
-                    <el-tag
-                      v-for="(item, index) in scope.row.member_grade"
-                      :key="index"
-                    >
+                    <el-tag v-for="(item, index) in scope.row.member_grade" :key="index">
                       {{ item }}
                     </el-tag>
                   </el-form-item>
@@ -95,22 +59,13 @@
                     <span>{{ scope.row.created_date }}</span>
                   </el-form-item>
                   <el-form-item label="适用商品">
-                    <div
-                      v-for="(item, index) in scope.row.items"
-                      :key="index"
-                    >
+                    <div v-for="(item, index) in scope.row.items" :key="index">
                       {{ item.item_name }}
                     </div>
                   </el-form-item>
-                  <el-form-item
-                    v-if="scope.row.source_id == '0'"
-                    label="适用店铺"
-                  >
+                  <el-form-item v-if="scope.row.source_id == '0'" label="适用店铺">
                     <span v-if="scope.row.use_shop">
-                      <div
-                        v-for="(item, index) in scope.row.shops"
-                        :key="index"
-                      >
+                      <div v-for="(item, index) in scope.row.shops" :key="index">
                         {{ item.shop_name }}
                       </div>
                     </span>
@@ -119,49 +74,30 @@
                 </el-form>
               </template>
             </el-table-column>
-            <el-table-column
-              prop="marketing_id"
-              width="60"
-              label="编号"
-            />
-            <el-table-column
-              prop="marketing_name"
-              min-width="150"
-              label="促销名称"
-            />
-            <el-table-column
-              prop="source_name"
-              label="店铺"
-            />
-            <el-table-column
-              label="规则"
-              min-width="150"
-            >
+            <el-table-column prop="marketing_id" width="60" label="编号" />
+            <el-table-column prop="marketing_name" min-width="150" label="促销名称" />
+            <el-table-column prop="source_name" label="店铺" />
+            <el-table-column label="规则" min-width="150">
               <template slot-scope="scope">
-                <div
-                  v-for="(item, index) in scope.row.condition_value"
-                  :key="index"
-                >
+                <div v-for="(item, index) in scope.row.condition_value" :key="index">
                   <span v-if="scope.row.condition_type == 'quantity'">
                     消费满{{ item.full }}件,加价购(<el-button
                       type="text"
                       @click="viewGiftItemList(scope.row)"
-                    >加购商品</el-button>)
+                      >加购商品</el-button
+                    >)
                   </span>
                   <span v-if="scope.row.condition_type == 'totalfee'">
                     消费满{{ item.full }}元,加价购(<el-button
                       type="text"
                       @click="viewGiftItemList(scope.row)"
-                    >加购商品</el-button>)
+                      >加购商品</el-button
+                    >)
                   </span>
                 </div>
               </template>
             </el-table-column>
-            <el-table-column
-              prop="used_platform"
-              min-width="100"
-              label="适用平台"
-            >
+            <el-table-column prop="used_platform" min-width="100" label="适用平台">
               <template slot-scope="scope">
                 <span v-if="scope.row.used_platform == 0">全场可用</span>
                 <span v-if="scope.row.used_platform == 1">只用于pc端</span>
@@ -169,36 +105,23 @@
                 <span v-if="scope.row.used_platform == 3">h5端</span>
               </template>
             </el-table-column>
-            <el-table-column
-              prop="total_fee"
-              min-width="150"
-              label="有效期"
-            >
+            <el-table-column prop="total_fee" min-width="150" label="有效期">
               <template slot-scope="scope">
                 <div>{{ scope.row.start_date }}</div>
                 <div>~{{ scope.row.end_date }}</div>
               </template>
             </el-table-column>
-            <el-table-column
-              min-width="70"
-              label="状态"
-            >
+            <el-table-column min-width="70" label="状态">
               <template slot-scope="scope">
                 <span v-if="scope.row.status == 'ongoing'">进行中</span>
                 <span v-if="scope.row.status == 'waiting'">未开始</span>
                 <span v-if="scope.row.status == 'end'">已结束</span>
               </template>
             </el-table-column>
-            <el-table-column
-              label="操作"
-              min-width="150"
-            >
+            <el-table-column label="操作" min-width="150">
               <template slot-scope="scope">
                 <div class="operating-icons">
-                  <el-button
-                    type="text"
-                    @click="viewItemList(scope.row.marketing_id)"
-                  >
+                  <el-button type="text" @click="viewItemList(scope.row.marketing_id)">
                     查看商品
                   </el-button>
                   <el-button
@@ -229,10 +152,7 @@
               </template>
             </el-table-column>
           </el-table>
-          <div
-            v-if="page.total > page.pageSize"
-            class="content-padded content-center"
-          >
+          <div v-if="page.total > page.pageSize" class="content-padded content-center">
             <el-pagination
               background
               layout="total, sizes, prev, pager, next, jumper"
@@ -253,46 +173,18 @@
         width="70%"
       >
         <template>
-          <el-table
-            v-loading="ItemLoading"
-            :data="activityItemListsData"
-          >
-            <el-table-column
-              prop="item_id"
-              label="id"
-              width="60"
-            />
-            <el-table-column
-              prop="pics[0]"
-              label="图片"
-              width="80"
-            >
+          <el-table v-loading="ItemLoading" :data="activityItemListsData">
+            <el-table-column prop="item_id" label="id" width="60" />
+            <el-table-column prop="pics[0]" label="图片" width="80">
               <template slot-scope="scope">
-                <img
-                  :src="wximageurl + scope.row.pics[0]"
-                  width="50"
-                  height="50"
-                >
+                <img :src="wximageurl + scope.row.pics[0]" width="50" height="50">
               </template>
             </el-table-column>
-            <el-table-column
-              prop="item_name"
-              label="名称"
-            />
-            <el-table-column
-              prop="price"
-              label="价格"
-              width="100"
-            >
-              <template slot-scope="scope">
-                {{ cursymbol }}{{ scope.row.price / 100 }}
-              </template>
+            <el-table-column prop="item_name" label="名称" />
+            <el-table-column prop="price" label="价格" width="100">
+              <template slot-scope="scope"> {{ cursymbol }}{{ scope.row.price / 100 }} </template>
             </el-table-column>
-            <el-table-column
-              prop="store"
-              label="库存"
-              width="70"
-            />
+            <el-table-column prop="store" label="库存" width="70" />
           </el-table>
           <div
             v-if="activityItemTotalCount > activityItemParams.pageSize"
@@ -315,28 +207,13 @@
         width="70%"
       >
         <template>
-          <el-table
-            v-loading="ItemLoading"
-            :data="purchaseRules"
-          >
-            <el-table-column
-              prop="price"
-              label="加价金额"
-              width="100"
-            >
-              <template slot-scope="scope">
-                ￥{{ scope.row.price }}
-              </template>
+          <el-table v-loading="ItemLoading" :data="purchaseRules">
+            <el-table-column prop="price" label="加价金额" width="100">
+              <template slot-scope="scope"> ￥{{ scope.row.price }} </template>
             </el-table-column>
-            <el-table-column
-              prop="pics[0]"
-              label="可购买的商品"
-            >
+            <el-table-column prop="pics[0]" label="可购买的商品">
               <template slot-scope="scope">
-                <div
-                  v-for="(newitem, index) in scope.row.gift_item"
-                  :key="index"
-                >
+                <div v-for="(newitem, index) in scope.row.gift_item" :key="index">
                   {{ newitem.item_name }} x {{ newitem.gift_num }}
                 </div>
               </template>
@@ -355,7 +232,7 @@ import shopSelect from '@/components/shopSelect'
 import mixin, { pageMixin } from '@/mixins'
 
 export default {
-  provide () {
+  provide() {
     return {
       refresh: this.fetchList
     }
@@ -364,7 +241,7 @@ export default {
     shopSelect
   },
   mixins: [mixin, pageMixin],
-  data () {
+  data() {
     const initialParams = {
       create_time: [],
       status: 'all',
@@ -399,24 +276,24 @@ export default {
   computed: {
     ...mapGetters(['wheight'])
   },
-  mounted () {
+  mounted() {
     this.fetchList()
   },
   methods: {
-    onSearch () {
+    onSearch() {
       this.page.pageIndex = 1
       this.$nextTick(() => {
         this.fetchList()
       })
     },
-    onReset () {
+    onReset() {
       this.params = { ...this.initialParams }
       this.onSearch()
     },
-    dateStrToTimeStamp (str) {
+    dateStrToTimeStamp(str) {
       return Date.parse(new Date(str)) / 1000
     },
-    endActionVisible ({ status, source_id }) {
+    endActionVisible({ status, source_id }) {
       if (status != 'end') {
         if (this.IS_ADMIN && source_id == '0') {
           return true
@@ -427,7 +304,7 @@ export default {
       }
       return false
     },
-    getParams () {
+    getParams() {
       const time = {}
       const create_time = this.params.create_time
       if (create_time && create_time.length > 0) {
@@ -442,7 +319,7 @@ export default {
       }
       return params
     },
-    async fetchList () {
+    async fetchList() {
       this.loading = true
       const { pageIndex: page, pageSize } = this.page
       let params = {
@@ -456,23 +333,23 @@ export default {
       this.loading = false
     },
     // 切换tab
-    handleTabClick (tab, event) {
+    handleTabClick(tab, event) {
       this.fetchList()
     },
-    addActivityData () {
+    addActivityData() {
       this.$router.push({ path: this.matchHidePage('editor') })
     },
-    editActivityAction (index, row) {
+    editActivityAction(index, row) {
       this.$router.push({ path: this.matchHidePage('editor/') + row.marketing_id })
     },
-    deleteActivityAction (row) {
+    deleteActivityAction(row) {
       removeMarketingActivity({ marketing_id: row.marketing_id }).then((res) => {
         if (res != undefined && res.data.data.status) {
           this.fetchList()
         }
       })
     },
-    viewItemList (id, itemType) {
+    viewItemList(id, itemType) {
       if (id == 'all') {
         if (itemType == 'normal') {
           this.$router.push({ path: this.matchInternalRoute('goodsphysical') })
@@ -492,7 +369,7 @@ export default {
         })
       }
     },
-    handleGoodsCurrentChange (page_num) {
+    handleGoodsCurrentChange(page_num) {
       this.ItemLoading = true
       this.activityItemDialog = true
       this.activityItemParams.page = page_num
@@ -504,15 +381,15 @@ export default {
         this.ItemLoading = false
       })
     },
-    handleCancel () {
+    handleCancel() {
       this.activityItemDialog = false
       this.purchaseRulesDialog = false
     },
-    viewGiftItemList (row) {
+    viewGiftItemList(row) {
       this.purchaseRulesDialog = true
       this.purchaseRules = row.gifts
     },
-    updateStatusCommunityAction (row) {
+    updateStatusCommunityAction(row) {
       var msg = '此操作将永久终止该活动, 是否继续?'
       this.$confirm(msg, '提示', {
         cancelButtonText: '取消',
@@ -535,7 +412,7 @@ export default {
         }
       })
     },
-    viewDetail (row) {
+    viewDetail(row) {
       this.$router.push({
         path: this.matchHidePage('editor/') + row.marketing_id,
         query: { isnodata: true }

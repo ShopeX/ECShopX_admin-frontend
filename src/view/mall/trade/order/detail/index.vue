@@ -1,12 +1,7 @@
 <template>
-  <div
-    v-loading="loading"
-    class="page-order-index"
-  >
+  <div v-loading="loading" class="page-order-index">
     <el-card class="el-card--normal">
-      <div slot="header">
-        订单基本信息
-      </div>
+      <div slot="header">订单基本信息</div>
       <el-row class="card-panel">
         <el-col
           v-for="(item, index) in infoList"
@@ -21,13 +16,8 @@
       </el-row>
     </el-card>
 
-    <el-card
-      v-if="is_community"
-      class="el-card--normal"
-    >
-      <div slot="header">
-        跟团信息
-      </div>
+    <el-card v-if="is_community" class="el-card--normal">
+      <div slot="header">跟团信息</div>
       <el-row class="card-panel">
         <el-col
           v-for="(item, index) in communityInfoList"
@@ -52,91 +42,50 @@
     </el-card>
 
     <el-card class="el-card--normal">
-      <div slot="header">
-        客户留言
-      </div>
+      <div slot="header">客户留言</div>
       <div class="card-panel">
         <span class="card-panel__value">{{ memberRemark }}</span>
       </div>
     </el-card>
 
     <el-card class="el-card--normal">
-      <div slot="header">
-        商家备注
-      </div>
+      <div slot="header">商家备注</div>
       <div class="card-panel">
         <span class="card-panel__value">{{ merchantRemark }}</span>
       </div>
     </el-card>
 
     <el-card class="el-card--normal">
-      <div slot="header">
-        商品清单
-      </div>
+      <div slot="header">商品清单</div>
       <div class="card-panel">
-        <el-table
-          v-if="orderInfo"
-          border
-          :data="orderInfo.items"
-        >
-          <el-table-column
-            prop="item_id"
-            label="商品ID"
-            width="80"
-          />
-          <el-table-column
-            prop="pic"
-            label="商品图片"
-            width="120"
-          >
+        <el-table v-if="orderInfo" border :data="orderInfo.items">
+          <el-table-column prop="item_id" label="商品ID" width="80" />
+          <el-table-column prop="pic" label="商品图片" width="120">
             <template slot-scope="scope">
-              <el-image
-                class="item-image"
-                fit="fill"
-                :src="`${wximageurl}${scope.row.pic}`"
-              />
+              <el-image class="item-image" fit="fill" :src="`${wximageurl}${scope.row.pic}`" />
             </template>
           </el-table-column>
-          <el-table-column
-            prop="item_name"
-            label="商品名称"
-            width="180"
-          >
+          <el-table-column prop="item_name" label="商品名称" width="180">
             <template slot-scope="scope">
               <div class="ell3">
                 {{ scope.row.item_name }}
               </div>
-              <el-tag
-                v-if="scope.row.order_item_type == 'gift'"
-                size="mini"
-                type="success"
-              >
+              <el-tag v-if="scope.row.order_item_type == 'gift'" size="mini" type="success">
                 赠品
               </el-tag>
             </template>
           </el-table-column>
-          <el-table-column
-            prop="item_spec_desc"
-            label="规格"
-          >
+          <el-table-column prop="item_spec_desc" label="规格">
             <template slot-scope="scope">
               {{ scope.row.item_spec_desc ? scope.row.item_spec_desc : '单规格' }}
             </template>
           </el-table-column>
-          <el-table-column
-            prop="price"
-            label="单价（¥）"
-            width="100"
-          >
+          <el-table-column prop="price" label="单价（¥）" width="100">
             <template slot-scope="scope">
               {{ (scope.row.price / 100).toFixed(2) }}
             </template>
           </el-table-column>
-          <el-table-column
-            prop="num"
-            label="数量"
-            width="80"
-          />
+          <el-table-column prop="num" label="数量" width="80" />
           <el-table-column
             v-if="orderInfo.type == '1'"
             prop="price"
@@ -148,43 +97,32 @@
             </template>
           </el-table-column>
 
-          <el-table-column
-            label="小计（¥）"
-            width="120"
-          >
+          <el-table-column label="小计（¥）" width="120">
             <template slot-scope="scope">
               {{ (scope.row.item_fee / 100).toFixed(2) }}
             </template>
           </el-table-column>
-          <el-table-column
-            v-if="!VERSION_IN_PURCHASE"
-            label="会员优惠（¥）"
-            width="120"
-          >
+          <el-table-column v-if="!VERSION_IN_PURCHASE" label="会员优惠（¥）" width="120">
             <template slot-scope="scope">
               {{ (scope.row.member_discount / 100).toFixed(2) }}
             </template>
           </el-table-column>
-          <el-table-column
-            label="总支付价（¥）"
-            width="120"
-          >
+          <el-table-column label="积分抵扣（¥）" width="120">
+            <template slot-scope="scope">
+              {{ (scope.row.point_fee / 100).toFixed(2) }}
+            </template>
+          </el-table-column>
+          <el-table-column label="总支付价（¥）" width="120">
             <template slot-scope="scope">
               {{ (scope.row.total_fee / 100).toFixed(2) }}
             </template>
           </el-table-column>
-          <el-table-column
-            label="总优惠（¥）"
-            width="100"
-          >
+          <el-table-column label="总优惠（¥）" width="100">
             <template slot-scope="scope">
               {{ (scope.row.discount_fee / 100).toFixed(2) }}
             </template>
           </el-table-column>
-          <el-table-column
-            v-if="!VERSION_IN_PURCHASE"
-            label="货币汇率"
-          >
+          <el-table-column v-if="!VERSION_IN_PURCHASE && !VERSION_STANDARD" label="货币汇率">
             <template slot-scope="scope">
               <span>{{ scope.row.fee_rate }}</span>
             </template>
@@ -195,16 +133,10 @@
                 <span>已发货</span>
               </template>
             </el-table-column>
-            <el-table-column
-              label="快递公司"
-              width="150px"
-            >
+            <el-table-column label="快递公司" width="150px">
               <template slot-scope="scope">
                 <span v-if="orderInfo.order_status == 'WAIT_BUYER_CONFIRM'">
-                  <el-select
-                    v-model="scope.row.delivery_corp"
-                    placeholder="请选择快递公司"
-                  >
+                  <el-select v-model="scope.row.delivery_corp" placeholder="请选择快递公司">
                     <el-option
                       v-for="item in dlycorps"
                       :key="item.name"
@@ -216,10 +148,7 @@
                 <span v-else>{{ scope.row.delivery_corp_name }}</span>
               </template>
             </el-table-column>
-            <el-table-column
-              label="快递单号"
-              width="200px"
-            >
+            <el-table-column label="快递单号" width="200px">
               <template slot-scope="scope">
                 <span v-if="orderInfo.order_status == 'WAIT_BUYER_CONFIRM'">
                   <el-input
@@ -231,10 +160,7 @@
                 <span v-else>{{ scope.row.delivery_code }}</span>
               </template>
             </el-table-column>
-            <el-table-column
-              v-if="orderInfo.order_status == 'WAIT_BUYER_CONFIRM'"
-              label="操作"
-            >
+            <el-table-column v-if="orderInfo.order_status == 'WAIT_BUYER_CONFIRM'" label="操作">
               <template slot-scope="scope">
                 <el-button
                   type="text"
@@ -251,11 +177,8 @@
         </el-table>
       </div>
     </el-card>
-
-    <el-card class="el-card--normal">
-      <div slot="header">
-        支付清单
-      </div>
+    <el-card v-if="orderInfo && orderInfo._order_class != 'excard'" class="el-card--normal">
+      <div slot="header">支付清单</div>
       <el-row class="card-panel">
         <el-col
           v-for="(item, index) in payList"
@@ -270,13 +193,39 @@
       </el-row>
     </el-card>
 
-    <el-card
-      v-if="!VERSION_IN_PURCHASE"
-      class="el-card--normal"
-    >
-      <div slot="header">
-        优惠明细
-      </div>
+    <el-card v-if="!VERSION_IN_PURCHASE" class="el-card--normal">
+      <el-card v-if="invoice" class="el-card--normal">
+        <div slot="header">发票信息</div>
+        <div v-if="invoice.title == 'individual'">
+          <el-row class="card-panel">
+            <el-col
+              v-for="(item, index) in invoiceList"
+              v-if="item.is_show"
+              :key="`item__${index}`"
+              class="card-panel-item"
+              :span="6"
+            >
+              <span class="card-panel__label">{{ item.label }}</span>
+              <span class="card-panel__value">{{ getFiledValue(item.field) }}</span>
+            </el-col>
+          </el-row>
+        </div>
+        <div v-if="invoice.title == 'unit'">
+          <el-row class="card-panel">
+            <el-col
+              v-for="(item, index) in invoiceListUnit"
+              v-if="item.is_show"
+              :key="`item__${index}`"
+              class="card-panel-item"
+              :span="6"
+            >
+              <span class="card-panel__label">{{ item.label }}</span>
+              <span class="card-panel__value">{{ getFiledValue(item.field) }}</span>
+            </el-col>
+          </el-row>
+        </div>
+      </el-card>
+      <div slot="header">优惠明细</div>
       <div class="card-panel">
         <el-table
           v-if="orderInfo"
@@ -286,30 +235,16 @@
           :data="orderInfo.discount_info"
           style="max-width: 1000px"
         >
-          <el-table-column
-            prop="info"
-            label="优惠名称"
-          />
-          <el-table-column
-            prop="discount_fee"
-            label="优惠金额（¥）"
-          />
-          <el-table-column
-            prop="rule"
-            label="优惠说明"
-          />
+          <el-table-column prop="info" label="优惠名称" />
+          <el-table-column prop="discount_fee" label="优惠金额（¥）" />
+          <el-table-column prop="rule" label="优惠说明" />
         </el-table>
       </div>
     </el-card>
 
     <el-card class="el-card--normal">
-      <div slot="header">
-        物流信息
-      </div>
-      <div
-        v-if="orderInfo"
-        class="card-panel"
-      >
+      <div slot="header">物流信息</div>
+      <div v-if="orderInfo" class="card-panel">
         <div class="card-panel-item">
           <span class="card-panel__label">{{
             `${orderInfo.receipt_type == 'ziti' ? '自提地址' : '收货人信息'}:`
@@ -317,42 +252,36 @@
           <span class="card-panel__value">{{ addressInfo }}</span>
         </div>
 
-        <div
-          v-if="orderInfo.subdistrict_parent"
-          class="card-panel-item"
-        >
-          <span class="card-panel__label">街道：</span>
+        <div v-if="orderInfo.receipt_type == 'ziti' && orderInfo.ziti_info" class="card-panel-item">
+          <span class="card-panel__label">提货人:</span>
+          <span class="card-panel__value">{{ orderInfo.receiver_name }}</span>
+        </div>
+        <div v-if="orderInfo.receipt_type == 'ziti' && orderInfo.ziti_info" class="card-panel-item">
+          <span class="card-panel__label">提货时间:</span>
+          <span class="card-panel__value">{{
+            `${orderInfo.ziti_info.pickup_date} ${orderInfo.ziti_info.pickup_time.join('~')}`
+          }}</span>
+        </div>
+        <div v-if="orderInfo.receipt_type == 'ziti' && orderInfo.ziti_info" class="card-panel-item">
+          <span class="card-panel__label">联系电话:</span>
+          <span class="card-panel__value">{{ orderInfo.receiver_mobile }}</span>
+        </div>
+
+        <div v-if="orderInfo.subdistrict_parent" class="card-panel-item">
+          <span class="card-panel__label">街道:</span>
           <span class="card-panel__value">{{ orderInfo.subdistrict_parent }}</span>
         </div>
 
-        <div
-          v-if="orderInfo.subdistrict"
-          class="card-panel-item"
-        >
-          <span class="card-panel__label">社区：</span>
+        <div v-if="orderInfo.subdistrict" class="card-panel-item">
+          <span class="card-panel__label">社区:</span>
           <span class="card-panel__value">{{ orderInfo.subdistrict }}</span>
         </div>
 
-        <el-table
-          border
-          :data="deliveryData"
-        >
-          <el-table-column
-            prop="delivery_time"
-            label="发货时间"
-          />
-          <el-table-column
-            prop="delivery_code"
-            label="物流单号"
-          />
-          <el-table-column
-            prop="delivery_corp_name"
-            label="快递公司"
-          />
-          <el-table-column
-            prop="delivery_corp"
-            label="物流编码"
-          />
+        <el-table border :data="deliveryData">
+          <el-table-column prop="delivery_time" label="发货时间" />
+          <el-table-column prop="delivery_code" label="物流单号" />
+          <el-table-column prop="delivery_corp_name" label="快递公司" />
+          <el-table-column prop="delivery_corp" label="物流编码" />
           <el-table-column label="操作">
             <template slot-scope="scope">
               <el-button
@@ -368,13 +297,8 @@
       </div>
     </el-card>
 
-    <el-card
-      v-if="!VERSION_IN_PURCHASE"
-      class="el-card--normal"
-    >
-      <div slot="header">
-        分润信息
-      </div>
+    <!-- <el-card v-if="!VERSION_IN_PURCHASE && !VERSION_PLATFORM" class="el-card--normal">
+      <div slot="header">分润信息</div>
       <el-row class="card-panel">
         <el-col
           v-for="(item, index) in profitList"
@@ -386,12 +310,9 @@
           <span class="card-panel__value">{{ getFiledValue(item.field) }}</span>
         </el-col>
       </el-row>
-    </el-card>
+    </el-card> -->
 
-    <div
-      v-if="btnActions.length > 0"
-      class="footer-container"
-    >
+    <div v-if="btnActions.length > 0" class="footer-container">
       <el-button
         v-for="(btn, index) in btnActions"
         :key="`btn-item__${index}`"
@@ -428,12 +349,19 @@
 
 <script>
 import { mapGetters } from 'vuex'
-import { ORDER_TYPE, DISTRIBUTION_TYPE, PROFIT_TYPE, PAY_TYPE, PAY_STATUS } from '@/consts'
+import {
+  ORDER_TYPE,
+  ORDER_TYPE_STANDARD,
+  DISTRIBUTION_TYPE,
+  PROFIT_TYPE,
+  PAY_TYPE,
+  PAY_STATUS
+} from '@/consts'
 import { VERSION_STANDARD, VERSION_IN_PURCHASE } from '@/utils'
 import moment from 'moment'
 
 export default {
-  data () {
+  data() {
     return {
       infoList: [
         { label: '下单时间:', field: 'create_time', is_show: true },
@@ -449,7 +377,8 @@ export default {
         { label: '货币类型:', field: 'fee_type', is_show: true },
         { label: '购物赠送积分:', field: 'bonus_points', is_show: !this.VERSION_IN_PURCHASE },
         { label: '订单获取积分:', field: 'get_points', is_show: !this.VERSION_IN_PURCHASE },
-        { label: '额外获取积分:', field: 'extra_points', is_show: !this.VERSION_IN_PURCHASE }
+        { label: '额外获取积分:', field: 'extra_points', is_show: !this.VERSION_IN_PURCHASE },
+        { label: '积分抵扣:', field: 'point_use', is_show: !this.VERSION_IN_PURCHASE }
       ],
       payList: [
         { label: '交易单号:', field: 'tradeId', is_show: true },
@@ -459,6 +388,7 @@ export default {
         { label: '会员优惠:', field: 'memberDiscountPrice', is_show: !this.VERSION_IN_PURCHASE },
         { label: '优惠券减免:', field: 'couponDiscount', is_show: !this.VERSION_IN_PURCHASE },
         { label: '优惠总金额:', field: 'totalDiscount', is_show: !this.VERSION_IN_PURCHASE },
+        { label: '积分抵扣金额:', field: 'pointFee', is_show: !this.VERSION_IN_PURCHASE },
         { label: '应付总金额:', field: 'totalPrice', is_show: true },
         { label: '实付总金额:', field: 'realPrice', is_show: true },
         { label: '支付方式:', field: 'payTypeTxt', is_show: true },
@@ -585,13 +515,36 @@ export default {
         type: '',
         items: []
       },
-      btnActions: []
+      btnActions: [],
+      invoice: null,
+      // 发票信息个人
+      invoiceList: [
+        { label: '类型:', field: 'invoiceType', is_show: true },
+        { label: '开票状态:', field: 'is_invoiced', is_show: true },
+        { label: '发票抬头:', field: 'invoiceContent', is_show: true }
+      ],
+      // 发票信息公司
+      invoiceListUnit: [
+        { label: '类型:', field: 'invoiceType', is_show: true },
+        { label: '开票状态:', field: 'is_invoiced', is_show: true },
+        { label: '公司名称:', field: 'invoicedCompanyName', is_show: true },
+        { label: '税号:', field: 'invoiceRegistrationNumber', is_show: true },
+        { label: '电话号码:', field: 'invoicedCompanyPhone', is_show: true },
+        { label: '开户银行:', field: 'invoicedBankName', is_show: true },
+        { label: '银行账号:', field: 'invoicedBankAccount', is_show: true },
+        { label: '公司地址:', field: 'invoiceCompanyAddress', is_show: true }
+      ],
+      isBindOMS: false
     }
   },
   computed: {
     ...mapGetters(['login_type'])
   },
-  mounted () {
+  async created() {
+    const { result } = await this.$api.trade.isBindOMS()
+    this.isBindOMS = result
+  },
+  mounted() {
     console.log(this.infoList)
     const { orderId, resource, user_id } = this.$route.query
     if (orderId) {
@@ -607,18 +560,18 @@ export default {
     this.getLogisticsList()
   },
   methods: {
-    getFiledValue (key) {
+    getFiledValue(key) {
       const { orderInfo } = this
       if (orderInfo) {
         return orderInfo[key]
       }
     },
-    async getDetail () {
+    async getDetail() {
       this.loading = true
       const { orderInfo, distributor, profit, tradeInfo } = await this.$api.trade.getOrderDetail(
         this.order_id
       )
-      const { username, mobile, vipgrade, gradeInfo } = await this.$api.member.getMember({
+      const { username, vipgrade, gradeInfo } = await this.$api.member.getMember({
         user_id: orderInfo.user_id
       })
       const deliveryData = await this.$api.trade.getDeliveryLists({ order_id: this.order_id })
@@ -637,9 +590,32 @@ export default {
         distributor_id,
         order_status,
         delivery_status,
-        community_info
+        community_info,
+        invoice, // 发票信息对象
+        is_invoiced,
+        ziti_info
       } = orderInfo
 
+      let invoiceType,
+        invoiceContent,
+        invoicedCompanyName,
+        invoiceRegistrationNumber,
+        invoiceCompanyAddress,
+        invoicedCompanyPhone,
+        invoicedBankName,
+        invoicedBankAccount
+      if (orderInfo.invoice != null) {
+        this.invoice = orderInfo.invoice
+
+        invoiceType = this.invoice.title
+        invoiceContent = this.invoice.content
+        invoicedCompanyName = this.invoice.content
+        invoiceRegistrationNumber = this.invoice.registration_number
+        invoiceCompanyAddress = this.invoice.company_address
+        invoicedCompanyPhone = this.invoice.company_phone
+        invoicedBankName = this.invoice.bankname
+        invoicedBankAccount = this.invoice.bankaccount
+      }
       let community_activity_name, community_chief_name, community_activity_trade_no
       if (community_info) {
         community_activity_name = community_info.activity_name
@@ -650,8 +626,8 @@ export default {
         }
         this.is_community = true
       }
-
-      const fd = ORDER_TYPE.find((k) => k.value == order_class)
+      const _orderType = this.VERSION_STANDARD ? ORDER_TYPE_STANDARD : ORDER_TYPE
+      const fd = _orderType.find((k) => k.value == order_class)
       let crossOrderTxt = ''
       if (order_class == 'normal' && orderInfo.type == '1') {
         crossOrderTxt = `（跨境订单）`
@@ -678,37 +654,53 @@ export default {
 
       this.orderInfo = {
         ...orderInfo,
-        create_time: moment(create_time * 1000).format('YYYY-MM-DD HH:mm:ss'),
+        create_time: create_time ? moment(create_time * 1000).format('YYYY-MM-DD HH:mm:ss') : '',
         order_class: `${fd ? fd.title : '实体订单'}${crossOrderTxt}`,
+        _order_class: orderInfo.order_class,
         is_invoiced: orderInfo.is_invoiced ? '已开票' : '未开票',
         receiptTypeTxt,
         username,
-        mobile,
         community_activity_name,
         community_chief_name,
         community_activity_trade_no,
         memberGrade,
         memberDiscount,
         discount_info: discount_info
-          .filter((item) => item.discount_fee > 0)
-          .map((item) => {
-            return {
-              ...item,
-              discount_fee: item.discount_fee / 100
-            }
-          }),
+          ? discount_info
+              .filter((item) => item.discount_fee > 0)
+              .map((item) => {
+                return {
+                  ...item,
+                  discount_fee: item.discount_fee / 100
+                }
+              })
+          : [],
         profit_type: PROFIT_TYPE[profit.profit_type],
-        profit_totalPrice: `¥${profit.total_fee / 100}`,
+        profit_totalPrice: profit.total_fee ? `¥${profit.total_fee / 100}` : '￥0.00',
         ...tradeInfo,
+        mobile: orderInfo.mobile,
         goodsPrice:
           orderInfo.order_type != 'bargain'
-            ? `¥${(orderInfo.item_fee / 100).toFixed(2)}`
-            : `¥${(orderInfo.item_price / 100).toFixed(2)}`,
-        freightFee: `¥${(orderInfo.freight_fee / 100).toFixed(2)}`,
-        memberDiscountPrice: `-¥${(orderInfo.member_discount / 100).toFixed(2)}`,
-        couponDiscount: `-¥${(orderInfo.coupon_discount / 100).toFixed(2)}`,
-        totalDiscount: `-¥${(orderInfo.discount_fee / 100).toFixed(2)}`,
-        totalPrice: `¥${(orderInfo.total_fee / 100).toFixed(2)}`,
+            ? orderInfo.item_fee
+              ? `¥${(orderInfo.item_fee / 100).toFixed(2)}`
+              : '￥0.00'
+            : orderInfo.item_price
+            ? `¥${(orderInfo.item_price / 100).toFixed(2)}`
+            : '￥0.00',
+        freightFee: orderInfo.freight_fee
+          ? `¥${(orderInfo.freight_fee / 100).toFixed(2)}`
+          : '￥0.00',
+        memberDiscountPrice: orderInfo.member_discount
+          ? `-¥${(orderInfo.member_discount / 100).toFixed(2)}`
+          : '￥0.00',
+        couponDiscount: orderInfo.coupon_discount
+          ? `-¥${(orderInfo.coupon_discount / 100).toFixed(2)}`
+          : '￥0.00',
+        totalDiscount: orderInfo.discount_fee
+          ? `-¥${(orderInfo.discount_fee / 100).toFixed(2)}`
+          : '￥0.00',
+        totalPrice: orderInfo.total_fee ? `¥${(orderInfo.total_fee / 100).toFixed(2)}` : '￥0.00',
+        pointFee: orderInfo.point_fee ? `¥${(orderInfo.point_fee / 100).toFixed(2)}` : '￥0.00',
         realPrice: (() => {
           let returnValue = ''
           if (tradeInfo.payType === 'point') {
@@ -716,14 +708,30 @@ export default {
           } else if (tradeInfo.tradeState === 'NOTPAY') {
             returnValue = `￥0`
           } else {
-            returnValue = `¥${(orderInfo.total_fee / 100).toFixed(2)}`
+            returnValue = orderInfo.total_fee
+              ? `¥${(orderInfo.total_fee / 100).toFixed(2)}`
+              : '￥0.00'
           }
           return returnValue
         })(),
-        payTypeTxt: PAY_TYPE[tradeInfo.payType],
+        payTypeTxt: tradeInfo.payChannel
+          ? PAY_TYPE[tradeInfo.payChannel]
+          : PAY_TYPE[tradeInfo.payType],
         tradeStateTxt: PAY_STATUS[tradeInfo.tradeState],
-        timeStart: moment(tradeInfo.timeStart * 1000).format('YYYY-MM-DD HH:mm:ss'),
-        timeExpire: moment(tradeInfo.timeExpire * 1000).format('YYYY-MM-DD HH:mm:ss')
+        timeStart: tradeInfo.timeStart
+          ? moment(tradeInfo.timeStart * 1000).format('YYYY-MM-DD HH:mm:ss')
+          : '',
+        timeExpire: tradeInfo.timeExpire
+          ? moment(tradeInfo.timeExpire * 1000).format('YYYY-MM-DD HH:mm:ss')
+          : '',
+        invoiceType: invoiceType == 'individual' ? '个人' : '企业',
+        invoiceContent,
+        invoicedCompanyName,
+        invoiceRegistrationNumber,
+        invoiceCompanyAddress,
+        invoicedCompanyPhone,
+        invoicedBankName,
+        invoicedBankAccount
       }
       this.memberRemark = orderInfo.remark || '暂无留言'
       this.merchantRemark = orderInfo.distributor_remark || '暂无备注'
@@ -732,7 +740,23 @@ export default {
       //   receipt_type == 'ziti'
       //     ? `${distributor.store_name} ${distributor.store_address}`
       //     :
-      this.addressInfo = `${receiver_name} ${receiver_mobile} ${receiver_state}${receiver_city}${receiver_district}${receiver_address}`
+
+      if (orderInfo.order_class == 'excard') {
+        // 兑换订单
+        this.addressInfo = `${distributor.province}${distributor.city}${distributor.area}${distributor.address}`
+      } else if (orderInfo.order_class == 'shopadmin') {
+        // 门店订单
+        this.addressInfo = `${distributor.store_address}（${distributor.store_name}）`
+      } else {
+        // 普通订单配送方式是自提时，展示自提点，非自提展示收货地址
+        const { province, city, area, address, name: zitiName } = ziti_info || {}
+        this.addressInfo =
+          distributor.store_address && receipt_type == 'ziti'
+            ? `${province}${city}${area}${address}（${zitiName}）`
+            : receipt_type != 'ziti'
+            ? `${receiver_name} ${receiver_mobile} ${receiver_state}${receiver_city}${receiver_district}${receiver_address}`
+            : '-- --'
+      }
       this.deliveryData = deliveryData
 
       const isDada = receipt_type == 'dada'
@@ -752,11 +776,11 @@ export default {
       this.btnActions = btnActions
       this.loading = false
     },
-    modifyExpress ({ orders_delivery_id }) {
+    modifyExpress({ orders_delivery_id }) {
       this.expressForm.orders_delivery_id = orders_delivery_id
       this.expressDialog = true
     },
-    async expressSubmit () {
+    async expressSubmit() {
       const { orders_delivery_id, delivery_corp, delivery_code } = this.expressForm
       const params = {
         delivery_corp,
@@ -767,7 +791,7 @@ export default {
       this.getDetail()
       this.$message.success('修改成功')
     },
-    async getLogisticsList () {
+    async getLogisticsList() {
       const { list } = await this.$api.trade.getLogisticsList()
       const options = list.map((item) => {
         return {
@@ -778,9 +802,12 @@ export default {
       this.expressFormList[0].options = options
       this.deliverGoodsFormList[2].options = options
     },
-    handleAction ({ key }) {
+    handleAction({ key }) {
       const { order_id, items, delivery_type, delivery_status } = this.orderInfo
       if (key == 'deliverGoods') {
+        if (this.isBindOMS) {
+          return this.$message.warning('请至OMS处理订单发货')
+        }
         this.$refs['deliverGoodsDialogRef'].resetForm()
         this.deliverGoodsForm.order_id = order_id
         this.deliverGoodsForm.items = items.map((item) => {
@@ -802,7 +829,7 @@ export default {
         this.deliverGoodsDialog = true
       }
     },
-    async deliverGoodsSubmit () {
+    async deliverGoodsSubmit() {
       const { order_id, delivery_type, delivery_corp, delivery_code, type, items } =
         this.deliverGoodsForm
       const params = {

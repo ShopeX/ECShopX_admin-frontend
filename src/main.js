@@ -55,7 +55,7 @@ initFinder(Vue, {
         } else {
           return {
             ...response.data.data,
-            count: response.data.data.total_count
+            count: parseInt(response.data.data.total_count)
           }
         }
       }
@@ -86,7 +86,7 @@ const plugins = {
 const installComponent = (Vue) => {
   const baseContext = require.context('./components', true, /index(\.vue|\.js)$/)
   const components = {}
-  function resloveModule (mod) {
+  function resloveModule(mod) {
     Object.keys(mod).forEach((key) => {
       mod[key].name && (components[mod[key].name] = mod[key])
     })
@@ -129,7 +129,7 @@ Vue.prototype.$export_open = export_open
 new Vue({
   router,
   store,
-  mounted () {
+  mounted() {
     const { theme } = SYSTEM_CONFIG[store.getters.versionMode]
     const red = parseInt(theme.replace('#', '').slice(0, 2), 16)
     const green = parseInt(theme.replace('#', '').slice(2, 4), 16)

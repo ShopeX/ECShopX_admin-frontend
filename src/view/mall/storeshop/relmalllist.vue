@@ -9,89 +9,41 @@
             @update="storeSearch"
           />
           <!--distributors wxshops 需要哪个api传哪个-->
-          <el-input
-            v-model="params.keywords"
-            class="input-m"
-            placeholder="请输入商品名称"
-          >
-            <el-button
-              slot="append"
-              icon="el-icon-search"
-              @click="goodsNumberSearch"
-            />
+          <el-input v-model="params.keywords" class="input-m" placeholder="请输入商品名称">
+            <el-button slot="append" icon="el-icon-search" @click="goodsNumberSearch" />
           </el-input>
-          <el-input
-            v-model="params.item_bn"
-            class="input-m"
-            placeholder="请输入商品货号"
-          >
-            <el-button
-              slot="append"
-              icon="el-icon-search"
-              @click="goodsNumberSearch"
-            />
+          <el-input v-model="params.item_bn" class="input-m" placeholder="请输入商品货号">
+            <el-button slot="append" icon="el-icon-search" @click="goodsNumberSearch" />
           </el-input>
-          <el-input
-            v-model="params.barcode"
-            class="input-m"
-            placeholder="请输入商品条码"
-          >
-            <el-button
-              slot="append"
-              icon="el-icon-search"
-              @click="goodsNumberSearch"
-            />
+          <el-input v-model="params.barcode" class="input-m" placeholder="请输入商品条码">
+            <el-button slot="append" icon="el-icon-search" @click="goodsNumberSearch" />
           </el-input>
         </el-col>
       </el-row>
       <el-row :gutter="20">
         <el-col>
           <el-button-group>
-            <el-button
-              type="primary"
-              icon="el-icon-upload"
-              @click="handleBatchOnline(true)"
-            >
+            <el-button type="primary" icon="el-icon-upload" @click="handleBatchOnline(true)">
               批量上架
             </el-button>
-            <el-button
-              type="primary"
-              icon="el-icon-download"
-              @click="handleBatchOnline(false)"
-            >
+            <el-button type="primary" icon="el-icon-download" @click="handleBatchOnline(false)">
               批量下架
             </el-button>
-            <el-button
-              type="primary"
-              @click="handleBatchIsTotalStore(true)"
-            >
+            <el-button type="primary" @click="handleBatchIsTotalStore(true)">
               开启总部发货
             </el-button>
-            <el-button
-              type="primary"
-              @click="handleBatchIsTotalStore(false)"
-            >
+            <el-button type="primary" @click="handleBatchIsTotalStore(false)">
               关闭总部发货
             </el-button>
-            <el-button
-              type="primary"
-              @click="handleBatchDownload"
-            >
-              商品码下载
-            </el-button>
+            <el-button type="primary" @click="handleBatchDownload"> 商品码下载 </el-button>
             <export-tip @exportHandle="exportList">
-              <el-button type="primary">
-                导出
-              </el-button>
+              <el-button type="primary"> 导出 </el-button>
             </export-tip>
           </el-button-group>
         </el-col>
       </el-row>
     </div>
-    <el-tabs
-      v-model="activeName"
-      @tab-click="handleClick"
-    >
+    <el-tabs v-model="activeName" @tab-click="handleClick">
       <el-tab-pane
         v-for="(item, index) in tabList"
         :key="index"
@@ -106,18 +58,10 @@
           :height="wheight - 240"
           @selection-change="handleItemsSelectionChange"
         >
-          <el-table-column
-            type="selection"
-            width="55"
-          />
+          <el-table-column type="selection" width="55" />
           <el-table-column label="操作">
             <template slot-scope="scope">
-              <el-button
-                type="text"
-                @click="handleSkuEdit(scope.row)"
-              >
-                设置SKU
-              </el-button>
+              <el-button type="text" @click="handleSkuEdit(scope.row)"> 设置SKU </el-button>
             </template>
           </el-table-column>
           <el-table-column label="上下架操作">
@@ -128,30 +72,12 @@
               />
             </template>
           </el-table-column>
-          <el-table-column
-            prop="item_name"
-            label="商品名称"
-            min-width="300"
-          />
-          <el-table-column
-            prop="store"
-            label="商品库存"
-            min-width="120"
-          />
-          <el-table-column
-            prop="price"
-            label="商品价格"
-            min-width="120"
-          >
-            <template slot-scope="scope">
-              {{ scope.row.price }}元
-            </template>
+          <el-table-column prop="item_name" label="商品名称" min-width="300" />
+          <el-table-column prop="store" label="商品库存" min-width="120" />
+          <el-table-column prop="price" label="商品价格" min-width="120">
+            <template slot-scope="scope"> {{ scope.row.price }}元 </template>
           </el-table-column>
-          <el-table-column
-            prop="is_total_store"
-            label="总部发货"
-            width="80"
-          >
+          <el-table-column prop="is_total_store" label="总部发货" width="80">
             <template slot-scope="scope">
               <el-switch
                 v-model="scope.row.is_total_store"
@@ -162,30 +88,15 @@
               />
             </template>
           </el-table-column>
-          <el-table-column
-            prop="approve_status"
-            label="状态"
-            min-width="100"
-          >
+          <el-table-column prop="approve_status" label="状态" min-width="100">
             <template slot-scope="scope">
-              <div
-                v-if="scope.row.approve_status === 'onsale'"
-                class="grid-content"
-              >
+              <div v-if="scope.row.approve_status === 'onsale'" class="grid-content">
                 前台可销售
               </div>
-              <div
-                v-else-if="scope.row.approve_status === 'offline_sale'"
-                class="grid-content"
-              >
-                可线下销售
+              <div v-else-if="scope.row.approve_status === 'offline_sale'" class="grid-content">
+                前台不展示
               </div>
-              <div
-                v-else
-                class="grid-content"
-              >
-                不可销售
-              </div>
+              <div v-else class="grid-content">不可销售</div>
             </template>
           </el-table-column>
         </el-table>
@@ -203,100 +114,54 @@
         </div>
       </el-tab-pane>
     </el-tabs>
-    <sideBar
-      :visible.sync="show_sideBar"
-      title="编辑店铺sku配置"
-      width="60"
-    >
+    <sideBar :visible.sync="show_sideBar" title="编辑店铺sku配置" width="60">
       <slot>
         <h3 class="content-padded">
           {{ itemSkuParam.name }}
         </h3>
-        <el-table
-          v-loading="loading"
-          :data="itemSku.list"
-          :height="wheight - 240"
-        >
-          <el-table-column
-            prop="item_bn"
-            label="SKU"
-            width="140"
-          />
-          <el-table-column
-            prop="item_spec_desc"
-            label="规格"
-          />
-          <el-table-column
-            prop="store"
-            label="库存"
-            width="120"
-          >
+        <el-table v-loading="loading" :data="itemSku.list" :height="wheight - 240">
+          <el-table-column prop="item_bn" label="SKU" width="140" />
+          <el-table-column prop="item_spec_desc" label="规格" />
+          <el-table-column prop="store" label="库存" width="120">
             <template slot-scope="scope">
               <el-input
                 v-if="editStore"
                 v-model="scope.row.store"
                 @change="editItemsStore(scope.$index, scope.row)"
               >
-                <i
-                  slot="suffix"
-                  class="el-input__icon el-icon-edit"
-                />
+                <i slot="suffix" class="el-input__icon el-icon-edit" />
               </el-input>
               <span v-else>{{ scope.row.store }}</span>
             </template>
           </el-table-column>
-          <el-table-column
-            prop="price"
-            label="商品价格"
-            width="120"
-          >
+          <el-table-column prop="price" label="商品价格" width="120">
             <template slot-scope="scope">
               <el-input
                 v-if="editStore"
                 v-model="scope.row.price"
                 @change="editItemsPrice(scope.$index, scope.row)"
               >
-                <i
-                  slot="prefix"
-                  class="el-input__icon el-icon-edit"
-                /><i
+                <i slot="prefix" class="el-input__icon el-icon-edit" /><i
                   slot="suffix"
                   class="el-input__icon"
-                >元</i>
+                  >元</i
+                >
               </el-input>
               <span v-else>{{ scope.row.price }}</span>
             </template>
           </el-table-column>
-          <el-table-column
-            prop="approve_status"
-            label="状态"
-            width="100"
-          >
+          <el-table-column prop="approve_status" label="状态" width="100">
             <template slot-scope="scope">
-              <div
-                v-if="scope.row.approve_status === 'onsale'"
-                class="grid-content"
-              >
+              <div v-if="scope.row.approve_status === 'onsale'" class="grid-content">
                 前台可销售
               </div>
-              <div
-                v-else-if="scope.row.approve_status === 'offline_sale'"
-                class="grid-content"
-              >
-                可线下销售
+              <div v-else-if="scope.row.approve_status === 'offline_sale'" class="grid-content">
+                前台不展示
               </div>
-              <div
-                v-else
-                class="grid-content"
-              >
-                不可销售
-              </div>
+              <div v-else class="grid-content">不可销售</div>
             </template>
           </el-table-column>
-          <el-table-column
-            label="上下架操作"
-            width="180"
-          >
+          <el-table-column label="上下架操作" width="180">
             <template slot-scope="scope">
               <el-switch
                 v-model="scope.row.is_can_sale"
@@ -369,7 +234,7 @@ export default {
       default: false
     }
   },
-  data () {
+  data() {
     return {
       show_sideBar: false,
       activeName: 'first',
@@ -407,7 +272,7 @@ export default {
   computed: {
     ...mapGetters(['wheight'])
   },
-  mounted () {
+  mounted() {
     this.$nextTick(() => {
       if (this.isLoad) {
         if (!this.distributorId) {
@@ -421,7 +286,7 @@ export default {
   },
   methods: {
     //设置总部发货
-    switchChange (index, row, isDefault) {
+    switchChange(index, row, isDefault) {
       if (row.is_total_store === true) {
         let form = {
           'distributor_id': row.distributor_id,
@@ -449,7 +314,7 @@ export default {
       }
     },
     //变更店铺商品库存
-    editItemsStore (index, row) {
+    editItemsStore(index, row) {
       // if (row.is_total_store === false && (row.store=='' || row.store <= 0) ) {
       //   this.$message({
       //     type: 'error',
@@ -466,17 +331,17 @@ export default {
       this.updateDistributorItem(form)
     },
     //变更店铺商品价格
-    editItemsPrice (index, row) {
+    editItemsPrice(index, row) {
       let form = { 'distributor_id': row.distributor_id, 'item_id': row.itemId, 'price': row.price }
       this.updateDistributorItem(form)
     },
-    storeSearch (val) {
+    storeSearch(val) {
       val && val.shop_id
       this.params.distributor_id = val.shop_id
       this.params.page = 1
       this.getList()
     },
-    handleBatchOnline (goods_can_sale) {
+    handleBatchOnline(goods_can_sale) {
       if (this.itemsChecked.length <= 0) {
         this.$message({ type: 'error', message: '请至少选择一个商品' })
         return
@@ -494,7 +359,7 @@ export default {
       }
       this.updateDistributorItem(form)
     },
-    handleSkuEdit (row) {
+    handleSkuEdit(row) {
       if (row.is_total_store === false) {
         this.editStore = true
       } else {
@@ -506,7 +371,7 @@ export default {
       this.itemSkuParam.name = row.item_name
       this.getSkuList()
     },
-    getSkuList () {
+    getSkuList() {
       const { list, ...restParams } = this.itemSku
       getDistributorItems({ ...this.itemSkuParam, ...restParams }).then((res) => {
         this.itemSku.list = res.data.data.list
@@ -517,7 +382,7 @@ export default {
         }
       })
     },
-    handleClick (tab, event) {
+    handleClick(tab, event) {
       if (tab.name == 'second') {
         this.params.is_can_sale = true
       } else if (tab.name == 'third') {
@@ -528,26 +393,26 @@ export default {
       this.params.page = 1
       this.getList()
     },
-    handleSizeChange (pageSize) {
+    handleSizeChange(pageSize) {
       this.params.page = 1
       this.params.pageSize = pageSize
       this.getList()
     },
-    handleSkuSizeChange (pageSize) {
+    handleSkuSizeChange(pageSize) {
       this.itemSku.page = 1
       this.itemSku.pageSize = pageSize
       this.getSkuList()
     },
-    handleCurrentChange (page_num) {
+    handleCurrentChange(page_num) {
       this.params.page = page_num
       this.getList()
     },
-    handleSkuCurrentChange (page_num) {
+    handleSkuCurrentChange(page_num) {
       this.itemSku.page = page_num
       this.getSkuList()
     },
     // 导出数据
-    exportList () {
+    exportList() {
       let post_date = this.params
       let goods_ids = []
       this.itemsChecked.forEach((item) => {
@@ -565,7 +430,7 @@ export default {
         }
       })
     },
-    getList () {
+    getList() {
       getDistributorItems(this.params).then((response) => {
         if (response.data.data.list) {
           this.list = response.data.data.list
@@ -577,7 +442,7 @@ export default {
         this.loading = false
       })
     },
-    handleItemsSelectionChange (val) {
+    handleItemsSelectionChange(val) {
       // 商品选择
       this.itemsChecked = val
     },
@@ -615,7 +480,7 @@ export default {
         })
       })
     },
-    updateDistributorItem (params) {
+    updateDistributorItem(params) {
       console.log(params)
       updateDistributorItem(params).then((res) => {
         this.getList()
@@ -626,7 +491,7 @@ export default {
         })
       })
     },
-    switchStatusChange (index, row, isDefault) {
+    switchStatusChange(index, row, isDefault) {
       let form = {}
       if (isDefault) {
         form = {
@@ -643,11 +508,11 @@ export default {
       }
       this.updateDistributorItem(form)
     },
-    goodsNumberSearch () {
+    goodsNumberSearch() {
       this.params.page = 1
       this.getList()
     },
-    async getDefaultDistributor (id) {
+    async getDefaultDistributor(id) {
       let params = { distributor_id: id ? id : 0 }
       let { data } = await getDistributorInfo(params)
       let distributor = data.data
@@ -657,13 +522,13 @@ export default {
         this.$router.go(-1)
       }
     },
-    async getDistributorItemList () {
+    async getDistributorItemList() {
       let distributor = await this.getDefaultDistributor(this.params.distributor_id)
       if (!this.params.distributor_id && distributor) {
         this.params.distributor_id = distributor.distributor_id
       }
     },
-    handleBatchIsTotalStore (is_total_store) {
+    handleBatchIsTotalStore(is_total_store) {
       if (this.itemsChecked.length <= 0) {
         this.$message({ type: 'error', message: '请至少选择一个商品' })
         return

@@ -5,16 +5,8 @@
 </style>
 <template>
   <div>
-    <SpFilterForm
-      :model="formQuery"
-      @onSearch="onSearch"
-      @onReset="onSearch"
-    >
-      <SpFilterFormItem
-        prop="cycleTime"
-        label="创建时间:"
-        size="max"
-      >
+    <SpFilterForm :model="formQuery" @onSearch="onSearch" @onReset="onSearch">
+      <SpFilterFormItem prop="cycleTime" label="创建时间:" size="max">
         <el-date-picker
           v-model="formQuery.cycleTime"
           clearable
@@ -48,7 +40,7 @@ import { createSetting } from '@shopex/finder'
 import moment from 'moment'
 export default {
   name: '',
-  data () {
+  data() {
     return {
       formQuery: {
         distributor_id: '',
@@ -141,20 +133,20 @@ export default {
           {
             name: '支付方式',
             key: 'statement_status',
-            render: (h, { row }) => h('span', {}, this.getPayment(row.pay_type))
+            render: (h, { row }) => h('span', {}, this.getPayment(row.pay_channel, row.pay_type))
           }
         ]
       })
     }
   },
-  created () {
+  created() {
     this.id = this.$route.query.id
   },
   methods: {
-    onSearch () {
+    onSearch() {
       this.$refs.finder.refresh()
     },
-    beforeSearch (params) {
+    beforeSearch(params) {
       const formQuery = JSON.parse(JSON.stringify(this.formQuery))
       if (formQuery.cycleTime.length > 0) {
         formQuery['start_time'] = moment(formQuery.cycleTime[0]).unix()
@@ -164,13 +156,13 @@ export default {
 
       return { ...params, ...formQuery }
     },
-    afterSearch (response) {
+    afterSearch(response) {
       const { total_statement_fee_done, total_statement_fee_ready } = response.data.data.count
       this.feeDone = total_statement_fee_done
       this.feeReady = total_statement_fee_ready
     },
-    getPayment (type) {
-      return PAY_TYPE[type]
+    getPayment(pay_channel, pay_type) {
+      return pay_channel ? PAY_TYPE[pay_channel] : PAY_TYPE[pay_type]
     },
     remoteMerchantList: async function (name) {
       this.merchantLoading = true

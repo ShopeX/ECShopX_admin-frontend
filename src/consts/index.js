@@ -1,6 +1,6 @@
 export const SALES_STATUS = [
   { title: '前台可销售', value: 'onsale' },
-  { title: '可线下销售', value: 'offline_sale' },
+  { title: '前台不展示', value: 'offline_sale' },
   { title: '前台仅展示', value: 'only_show' },
   { title: '不可销售', value: 'instock' }
 ]
@@ -64,6 +64,16 @@ export const ORDER_TYPE = [
   // { title: "兑换订单", value: "excard"}
 ]
 
+export const ORDER_TYPE_STANDARD = [
+  { title: '全部', value: '' },
+  { title: '团购订单', value: 'groups' },
+  { title: '秒杀订单', value: 'seckill' },
+  { title: '普通订单', value: 'normal' },
+  { title: '社区团购订单', value: 'community' },
+  { title: '兑换订单', value: 'excard' },
+  { title: '门店订单', value: 'shopadmin' }
+]
+
 export const INVOICE_STATUS = [
   { title: '全部', value: '' },
   { title: '未开票', value: 0 },
@@ -113,9 +123,18 @@ export const PAY_TYPE = {
   alipayh5: '支付宝H5支付',
   deposit: '余额支付',
   point: '积分支付',
-  pos: 'POS银行卡支付',
+  // pos: 'POS银行卡支付',
+  pos: '现金支付',
   wxpaypos: '微信扫码支付',
-  alipaypos: '支付宝扫码支付'
+  alipaypos: '支付宝扫码支付',
+  chinaums: '微信支付-银联',
+  // pay_channel
+  wx_lite: '微信支付',
+  wx_pub: '微信H5支付',
+  wx_qr: '微信PC支付',
+  alipay_wap: '支付宝H5支付',
+  alipay_qr: '支付宝PC支付',
+  alipaymini: '支付宝小程序'
 }
 
 export const PAY_STATUS = {
@@ -133,7 +152,7 @@ export const PICKER_DATE_OPTIONS = {
   shortcuts: [
     {
       text: '最近一周',
-      onClick (picker) {
+      onClick(picker) {
         const end = new Date()
         const start = new Date()
         start.setTime(start.getTime() - 3600 * 1000 * 24 * 7)
@@ -142,7 +161,7 @@ export const PICKER_DATE_OPTIONS = {
     },
     {
       text: '最近一个月',
-      onClick (picker) {
+      onClick(picker) {
         const end = new Date()
         const start = new Date()
         start.setTime(start.getTime() - 3600 * 1000 * 24 * 30)
@@ -151,7 +170,7 @@ export const PICKER_DATE_OPTIONS = {
     },
     {
       text: '最近三个月',
-      onClick (picker) {
+      onClick(picker) {
         const end = new Date()
         const start = new Date()
         start.setTime(start.getTime() - 3600 * 1000 * 24 * 90)
@@ -172,7 +191,7 @@ export const FORM_COMP = {
 }
 
 export const SYSTEM_CONFIG = {
-  platform: { name: 'Powered by ShopEx', theme: '#CB060F' },
+  platform: { name: 'Powered By ShopeX', theme: '#CB060F' },
   standard: { name: '商派Onex云店', theme: '#FF9D00' },
   b2c: { name: '商派官方商城', theme: '#157FE3' },
   in_purchase: { name: '商派Onex内购', theme: '#EC442E' }

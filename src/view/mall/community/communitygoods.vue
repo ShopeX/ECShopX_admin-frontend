@@ -6,55 +6,21 @@
 <template>
   <div class="page-mall-communitygoods">
     <div class="action-container">
-      <el-button
-        type="primary"
-        @click="handleAddGoods"
-      >
-        选择活动商品
-      </el-button>
+      <el-button type="primary" @click="handleAddGoods"> 选择活动商品 </el-button>
     </div>
 
-    <SpFilterForm
-      :model="params"
-      @onSearch="onSearch"
-      @onReset="onSearch"
-    >
-      <SpFilterFormItem
-        prop="keywords"
-        label="商品名称:"
-      >
-        <el-input
-          v-model="params.keywords"
-          placeholder="请输入商品名称"
-        />
+    <SpFilterForm :model="params" @onSearch="onSearch" @onReset="onSearch">
+      <SpFilterFormItem prop="keywords" label="商品名称:">
+        <el-input v-model="params.keywords" placeholder="请输入商品名称" />
       </SpFilterFormItem>
-      <SpFilterFormItem
-        prop="item_bn"
-        label="商品编号:"
-      >
-        <el-input
-          v-model="params.item_bn"
-          placeholder="请输入商品编号"
-        />
+      <SpFilterFormItem prop="item_bn" label="商品编号:">
+        <el-input v-model="params.item_bn" placeholder="请输入商品编号" />
       </SpFilterFormItem>
-      <SpFilterFormItem
-        prop="barcode"
-        label="条形码:"
-      >
-        <el-input
-          v-model="params.barcode"
-          placeholder="请输入商品编号条形码"
-        />
+      <SpFilterFormItem prop="barcode" label="条形码:">
+        <el-input v-model="params.barcode" placeholder="请输入商品编号条形码" />
       </SpFilterFormItem>
-      <SpFilterFormItem
-        prop="approve_status"
-        label="商品状态:"
-      >
-        <el-select
-          v-model="params.approve_status"
-          clearable
-          placeholder="请选择"
-        >
+      <SpFilterFormItem prop="approve_status" label="商品状态:">
+        <el-select v-model="params.approve_status" clearable placeholder="请选择">
           <el-option
             v-for="item in statusOption"
             :key="item.value"
@@ -64,10 +30,7 @@
           />
         </el-select>
       </SpFilterFormItem>
-      <SpFilterFormItem
-        prop="brand_id"
-        label="品牌:"
-      >
+      <SpFilterFormItem prop="brand_id" label="品牌:">
         <el-select
           v-model="params.brand_id"
           placeholder="请选择"
@@ -84,10 +47,7 @@
           />
         </el-select>
       </SpFilterFormItem>
-      <SpFilterFormItem
-        prop="category"
-        label="商品分类:"
-      >
+      <SpFilterFormItem prop="category" label="商品分类:">
         <el-cascader
           v-model="params.category"
           placeholder="请选择"
@@ -96,22 +56,12 @@
           :props="{ value: 'category_id', checkStrictly: true }"
         />
       </SpFilterFormItem>
-      <SpFilterFormItem
-        prop="activity_name"
-        label="活动:"
-      >
-        <el-input
-          v-model="params.activity_name"
-          placeholder="请输入商品名称"
-        />
+      <SpFilterFormItem prop="activity_name" label="活动:">
+        <el-input v-model="params.activity_name" placeholder="请输入商品名称" />
       </SpFilterFormItem>
     </SpFilterForm>
 
-    <el-tabs
-      v-model="params.activity_status"
-      type="card"
-      @tab-click="onSearch"
-    >
+    <el-tabs v-model="params.activity_status" type="card" @tab-click="onSearch">
       <el-tab-pane
         v-for="item in activity_status"
         :key="item.value"
@@ -119,40 +69,20 @@
         :name="item.value"
       />
 
-      <el-table
-        v-loading="loading"
-        border
-        :data="tableList"
-      >
+      <el-table v-loading="loading" border :data="tableList">
         <!-- <el-table-column type="selection" align="center" label="全选" /> -->
-        <el-table-column
-          prop="goods_id"
-          label="商品ID"
-        />
-        <el-table-column
-          prop="itemName"
-          label="商品"
-          width="300"
-        >
+        <el-table-column prop="goods_id" label="商品ID" />
+        <el-table-column prop="itemName" label="商品" width="300">
           <template slot-scope="scope">
             <div class="goods-title">
               {{ scope.row.item_name }}
-              <el-tag
-                v-if="!scope.row.nospec"
-                size="mini"
-                effect="plain"
-                type="primary"
-              >
+              <el-tag v-if="!scope.row.nospec" size="mini" effect="plain" type="primary">
                 多规格
               </el-tag>
             </div>
             <div class="goods-code">
               货号：{{ scope.row.item_bn }}
-              <el-tooltip
-                effect="dark"
-                content="复制"
-                placement="top-start"
-              >
+              <el-tooltip effect="dark" content="复制" placement="top-start">
                 <i
                   v-clipboard:copy="scope.row.item_bn"
                   v-clipboard:success="onCopySuccess"
@@ -162,10 +92,7 @@
             </div>
           </template>
         </el-table-column>
-        <el-table-column
-          label="起送量"
-          prop="min_delivery_num"
-        />
+        <el-table-column label="起送量" prop="min_delivery_num" />
         <el-table-column label="标签">
           <template slot-scope="scope">
             <template>
@@ -182,10 +109,7 @@
             </template>
           </template>
         </el-table-column>
-        <el-table-column
-          label="排序编号"
-          width="100"
-        >
+        <el-table-column label="排序编号" width="100">
           <template slot-scope="scope">
             <el-input
               v-model="scope.row.sort"
@@ -195,25 +119,13 @@
             />
           </template>
         </el-table-column>
-        <el-table-column
-          prop="store"
-          label="库存"
-          width="80"
-        />
-        <el-table-column
-          prop="market_price"
-          label="原价（¥）"
-          width="100"
-        >
+        <el-table-column prop="store" label="库存" width="80" />
+        <el-table-column prop="market_price" label="原价（¥）" width="100">
           <template slot-scope="scope">
             {{ scope.row.market_price / 100 }}
           </template>
         </el-table-column>
-        <el-table-column
-          prop="price"
-          label="销售价（¥）"
-          width="100"
-        >
+        <el-table-column prop="price" label="销售价（¥）" width="100">
           <template slot-scope="scope">
             {{ scope.row.price / 100 }}
           </template>
@@ -228,42 +140,20 @@
               trigger="hover"
               :content="scope.row.audit_reason"
             >
-              <el-button
-                slot="reference"
-                type="text"
-              >
-                审核驳回
-              </el-button>
+              <el-button slot="reference" type="text"> 审核驳回 </el-button>
             </el-popover>
             <span v-else-if="scope.row.approve_status == 'onsale'">前台可销</span>
-            <span v-else-if="scope.row.approve_status == 'offline_sale'">可线下销售</span>
+            <span v-else-if="scope.row.approve_status == 'offline_sale'">前台不展示 </span>
             <span v-else-if="scope.row.approve_status == 'only_show'">前台仅展示</span>
             <span v-else>不可销售</span>
           </template>
         </el-table-column>
-        <el-table-column
-          prop="itemCatName"
-          label="商品分类"
-          width="150"
-        />
+        <el-table-column prop="itemCatName" label="商品分类" width="150" />
 
-        <el-table-column
-          fixed="left"
-          label="操作"
-          width="160"
-        >
+        <el-table-column fixed="left" label="操作" width="160">
           <template slot-scope="scope">
-            <el-button
-              type="text"
-              @click="deleteItem(scope.row)"
-            >
-              删除
-            </el-button>
-            <el-button
-              type="text"
-              class="btn-gap"
-              @click="modifyItem(scope.row)"
-            >
+            <el-button type="text" @click="deleteItem(scope.row)"> 删除 </el-button>
+            <el-button type="text" class="btn-gap" @click="modifyItem(scope.row)">
               设置起送量
             </el-button>
           </template>
@@ -306,7 +196,7 @@ import { SALES_STATUS, ORDER_STATUS, PICKER_DATE_OPTIONS } from '@/consts'
 
 export default {
   mixins: [mixin, pageMixin],
-  data () {
+  data() {
     return {
       loading: false,
       tableList: [],
@@ -360,12 +250,12 @@ export default {
   computed: {
     ...mapGetters(['shopId'])
   },
-  mounted () {
+  mounted() {
     this.getCategory()
     this.onSearch()
   },
   methods: {
-    async handleAddGoods () {
+    async handleAddGoods() {
       const { data } = await this.$picker.goods({
         data: 100,
         shopid: this.shopId
@@ -376,7 +266,7 @@ export default {
       })
       this.onSearch()
     },
-    async fetchList ({ pageIndex, pageSize }) {
+    async fetchList({ pageIndex, pageSize }) {
       this.loading = true
       let query = {
         page: pageIndex,
@@ -393,16 +283,16 @@ export default {
       this.page.total = total_count
       this.loading = false
     },
-    async getGoodsBranchList (searchVal = '') {
+    async getGoodsBranchList(searchVal = '') {
       this.goodsBranchParams.attribute_name = searchVal
       const { list } = await this.$api.goods.getGoodsAttr(this.goodsBranchParams)
       this.goodsBranchList = list
     },
-    async getCategory () {
+    async getCategory() {
       const res = await this.$api.goods.getCategory({ is_show: false })
       this.categoryList = res
     },
-    async deleteItem ({ item_id }) {
+    async deleteItem({ item_id }) {
       await this.$confirm('请确认是否删除商品', '提示', {
         confirmButtonText: '确定',
         cancelButtonText: '取消'
@@ -410,11 +300,11 @@ export default {
       await this.$api.community.deleteActivityGoods(item_id)
       this.onSearch()
     },
-    modifyItem ({ item_id }) {
+    modifyItem({ item_id }) {
       this.sendNumForm.item_id = item_id
       this.sendNumDialog = true
     },
-    async onSendNumSubmit () {
+    async onSendNumSubmit() {
       const { item_id, num } = this.sendNumForm
       await this.$api.community.modifyGoodsDeliverNum({
         goods_id: item_id,
@@ -424,7 +314,7 @@ export default {
       this.sendNumDialog = false
       this.onRefresh()
     },
-    async editItemsSort ({ item_id, sort }) {
+    async editItemsSort({ item_id, sort }) {
       await this.$api.community.modifyGoodsSort({
         goods_id: item_id,
         sort

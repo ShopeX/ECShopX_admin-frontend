@@ -56,13 +56,13 @@
                     v-model="form.mer_start_valid_date_type"
                     @change="dateTypeHandle($event, 'mer')"
                   >
-                    <el-radio label="长期">长期有效</el-radio>
-                    <el-radio label="短期">时间节点</el-radio>
+                    <el-radio label="长期"> 长期有效 </el-radio>
+                    <el-radio label="短期"> 时间节点 </el-radio>
                   </el-radio-group>
                 </div>
               </el-form-item>
             </el-col>
-            <el-col :span="8" v-if="form.mer_start_valid_date_type == '短期'">
+            <el-col v-if="form.mer_start_valid_date_type == '短期'" :span="8">
               <el-form-item prop="mer_valid_date_full" label="商户有效日期">
                 <el-date-picker
                   v-model="form.mer_valid_date_full"
@@ -77,7 +77,7 @@
                 />
               </el-form-item>
             </el-col>
-            <el-col :span="8" v-if="form.mer_start_valid_date_type == '长期'">
+            <el-col v-if="form.mer_start_valid_date_type == '长期'" :span="8">
               <el-form-item prop="mer_valid_date_start" label="商户有效期开始日期">
                 <el-date-picker
                   v-model="form.mer_valid_date_start"
@@ -136,12 +136,12 @@
                   v-model="form.legal_id_expires_type"
                   @change="dateTypeHandle($event, 'legal')"
                 >
-                  <el-radio label="长期">长期有效</el-radio>
-                  <el-radio label="短期">时间节点</el-radio>
+                  <el-radio label="长期"> 长期有效 </el-radio>
+                  <el-radio label="短期"> 时间节点 </el-radio>
                 </el-radio-group>
               </el-form-item>
             </el-col>
-            <el-col :span="8" v-if="form.legal_id_expires_type == '短期'">
+            <el-col v-if="form.legal_id_expires_type == '短期'" :span="8">
               <el-form-item prop="legal_id_expires_full" label="请选择法人/负责人证件有效期">
                 <el-date-picker
                   v-model="form.legal_id_expires_full"
@@ -156,7 +156,7 @@
                 />
               </el-form-item>
             </el-col>
-            <el-col :span="8" v-if="form.legal_id_expires_type == '长期'">
+            <el-col v-if="form.legal_id_expires_type == '长期'" :span="8">
               <el-form-item
                 prop="legal_id_expires_start"
                 label="请选择法人/负责人证件有效期开始日期"
@@ -222,7 +222,7 @@
         <el-row :gutter="20">
           <el-col :span="8">
             <el-form-item label="联系人姓名" prop="cont_name">
-              <el-input style="width: 100%" v-model="form.cont_name" />
+              <el-input v-model="form.cont_name" style="width: 100%" />
             </el-form-item>
           </el-col>
           <el-col :span="8">
@@ -273,8 +273,8 @@
           <el-col :span="8">
             <el-form-item label="结算银行账户类型" prop="bank_acct_type">
               <el-radio-group v-model="form.bank_acct_type">
-                <el-radio label="1">对公</el-radio>
-                <el-radio label="2">对私</el-radio>
+                <el-radio label="1"> 对公 </el-radio>
+                <el-radio label="2"> 对私 </el-radio>
               </el-radio-group>
               <el-tooltip
                 :style="{ 'margin-left': 30 + 'px' }"
@@ -333,7 +333,7 @@
         </div>
       </el-card> -->
       <el-form-item style="text-align: center; margin: 50px 0; margin-right: 280px">
-        <el-button type="primary" @click="submitForm">提交审核</el-button>
+        <el-button type="primary" @click="submitForm"> 提交审核 </el-button>
         <!-- <loading-btn
           ref="loadingBtn"
           size="medium"
@@ -345,7 +345,7 @@
     </el-form>
     <Result-cpn
       v-if="processed == '已填'"
-      :currentStatus="currentStatus"
+      :current-status="currentStatus"
       @nextPage="nextPage"
       @processedHandle="processedHandle"
     />
@@ -374,7 +374,7 @@ export default {
     loadingBtn,
     checkBox
   },
-  data () {
+  data() {
     return {
       // 全部地区
       AllArea: areaData,
@@ -549,8 +549,8 @@ export default {
       }
     }
   },
-  created () {},
-  mounted () {
+  created() {},
+  mounted() {
     this.getStepHandle()
     this.getProHandle()
 
@@ -559,7 +559,7 @@ export default {
   },
   methods: {
     // 查询开户步骤
-    async getStepHandle () {
+    async getStepHandle() {
       const { info } = await this.$api.adapay.getStep()
       const { MerchantEntry } = info
       if (MerchantEntry.length <= 0) {
@@ -576,7 +576,7 @@ export default {
     },
 
     // 获取省
-    async getProHandle (id) {
+    async getProHandle(id) {
       const result = await this.$api.adapay.getPro({ pid: id })
       if (!id) {
         this.All_pro = result
@@ -586,7 +586,7 @@ export default {
     },
 
     // 结算所属银行
-    async querySearch (queryString, cb) {
+    async querySearch(queryString, cb) {
       this.AllBank = await this.$api.adapay.getBank({
         bank_name: this.form.bank_name
       })
@@ -601,24 +601,24 @@ export default {
       //调用 callback 返回建议列表的数据
       cb(results)
     },
-    createFilter (queryString) {
+    createFilter(queryString) {
       return (restaurant) => {
         return restaurant.value.toLowerCase().indexOf(queryString.toLowerCase()) === 0
       }
     },
-    handleSelectBank (val) {
+    handleSelectBank(val) {
       console.log(val)
       this.form.bank_code = val.bank_code
       this.form.bank_name = val.value
     },
-    areaChange (value) {
+    areaChange(value) {
       console.log(value)
       this.form.area = value
       this.form.prov_code = value[0]
       this.form.area_code = value[1]
     },
 
-    submitForm () {
+    submitForm() {
       this.$refs['ruleForm'].validate((valid) => {
         if (valid) {
           if (this.form.bank_acct_type == '2') {
@@ -636,7 +636,7 @@ export default {
       })
     },
     // 重新填写
-    async processedHandle () {
+    async processedHandle() {
       const { info } = await this.$api.adapay.getStep()
       const { MerchantEntry } = info
       this.form = { ...this.form, ...MerchantEntry }
@@ -672,11 +672,11 @@ export default {
       console.log(this.form)
       this.processed = '未填'
     },
-    nextPage () {
-      this.$router.push('/setting/adapay_merchant/pay_setting')
+    nextPage() {
+      this.$router.push('/applications/adapay/adapay_merchant/pay_setting')
     },
     // 有效日期类型
-    dateTypeHandle (value, type) {
+    dateTypeHandle(value, type) {
       console.log(value, type)
       if (type == 'mer') {
         this.form.mer_valid_date_start = ''
@@ -689,7 +689,7 @@ export default {
       }
     },
     /* 商户有效短期日期 */
-    shortDateHandle (value, type) {
+    shortDateHandle(value, type) {
       console.log(value, type)
       if (type == 'mer') {
         this.form.mer_start_valid_date = value[0]
@@ -702,7 +702,7 @@ export default {
       }
     },
     /* 商户有效长期日期 */
-    longDateStartHandle (value, type) {
+    longDateStartHandle(value, type) {
       if (type == 'mer') {
         this.form.mer_start_valid_date = value
         this.form.mer_valid_date = '20991231'
@@ -712,7 +712,7 @@ export default {
       }
     },
     /* 上传文件验证 */
-    validatUpload (file) {
+    validatUpload(file) {
       const MAX_IMG_SIZE = 8
       let isLt2M = file.raw.size / 1024 / 1024 <= MAX_IMG_SIZE
       if (!isLt2M) {
@@ -739,7 +739,7 @@ export default {
         this.checkBoxVisibleHandle()
       }
     },
-    checkBoxVisibleHandle () {
+    checkBoxVisibleHandle() {
       this.checkBoxConfig.visible = !this.checkBoxConfig.visible
     }
     /* ----------------------------------checkBox  end ----------------------------------- */

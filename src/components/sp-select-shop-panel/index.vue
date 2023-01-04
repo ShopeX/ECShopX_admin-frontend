@@ -49,21 +49,11 @@
         clearable
         placeholder="选择地区筛选店铺"
         :options="district"
-        :props="{ checkStrictly: true }"
         @change="onChangeCascader"
         @visible-change="visibleChange"
       />
-      <el-input
-        v-model="keywords"
-        placeholder="请输入店铺名称搜索"
-        @change="fetch"
-      />
-      <el-button
-        type="text"
-        @click="reset"
-      >
-        重置
-      </el-button>
+      <el-input v-model="keywords" placeholder="请输入店铺名称搜索" @change="fetch" />
+      <el-button type="text" @click="reset"> 重置 </el-button>
     </div>
     <div>
       <el-table
@@ -79,10 +69,7 @@
           </template>
         </el-table-column> -->
 
-        <el-table-column
-          prop="name"
-          label="店铺名称"
-        />
+        <el-table-column prop="name" label="店铺名称" />
       </el-table>
     </div>
     <div>
@@ -118,7 +105,7 @@ export default {
   name: 'SpSelectShopPanel',
   props: {},
   inject: ['selectShop'],
-  data () {
+  data() {
     return {
       district,
       region: [],
@@ -132,13 +119,13 @@ export default {
       radio: 0
     }
   },
-  async created () {
+  async created() {
     await this.fetch()
     console.log(222)
     this.$emit('expand-change')
   },
   methods: {
-    getRowActive ({ row, rowIndex }) {
+    getRowActive({ row, rowIndex }) {
       if (!this.selectShop.selectValue) {
         return ''
       } else if (this.selectShop.selectValue.value == row.distributor_id) {
@@ -147,7 +134,7 @@ export default {
         return ''
       }
     },
-    async fetch () {
+    async fetch() {
       this.loading = true
       const params = {
         page: this.pageIndex,
@@ -178,16 +165,16 @@ export default {
       this.total = total_count
       this.loading = false
     },
-    reset () {
+    reset() {
       this.keywords = ''
       this.region = []
       this.fetch()
     },
-    onCurrentChange (pageIndex) {
+    onCurrentChange(pageIndex) {
       this.pageIndex = pageIndex
       this.fetch()
     },
-    onRowClick ({ distributor_id, name }) {
+    onRowClick({ distributor_id, name }) {
       let resValue = {
         name,
         value: distributor_id
@@ -197,7 +184,7 @@ export default {
       }
       this.$emit('change', resValue)
     },
-    getRadioValue ({ distributor_id }) {
+    getRadioValue({ distributor_id }) {
       if (!this.selectShop.selectValue) {
         return false
       } else if (this.selectShop.selectValue.value == distributor_id) {
@@ -207,11 +194,17 @@ export default {
       }
       // debugger
     },
-    async onChangeCascader () {
+    async onChangeCascader() {
       this.fetch()
     },
-    visibleChange (visible) {
+    visibleChange(visible) {
       this.$emit('visible-change', visible)
+    },
+    async setVal(val) {
+      const res = await this.$api.marketing.getDistributorInfo({ distributor_id: val })
+      this.list = [res]
+      this.total = 1
+      this.onRowClick(res)
     }
   }
 }

@@ -6,15 +6,8 @@
 
 <template>
   <div class="page-body">
-    <SpFilterForm
-      :model="params"
-      @onSearch="onSearch"
-      @onReset="onReset"
-    >
-      <SpFilterFormItem
-        prop="distributor"
-        label="店铺名称:"
-      >
+    <SpFilterForm :model="params" @onSearch="onSearch" @onReset="onReset">
+      <SpFilterFormItem prop="distributor" label="店铺名称:">
         <el-autocomplete
           v-model="params.distributor.name"
           :fetch-suggestions="queryStoreSearch"
@@ -22,41 +15,17 @@
           @select="handleSelectStore"
         />
       </SpFilterFormItem>
-      <SpFilterFormItem
-        prop="refund_bn"
-        label="退款单号:"
-      >
-        <el-input
-          v-model="params.refund_bn"
-          placeholder="退款单号"
-        />
+      <SpFilterFormItem prop="refund_bn" label="退款单号:">
+        <el-input v-model="params.refund_bn" placeholder="退款单号" />
       </SpFilterFormItem>
-      <SpFilterFormItem
-        prop="order_id"
-        label="订单号:"
-      >
-        <el-input
-          v-model="params.order_id"
-          placeholder="订单号"
-        />
+      <SpFilterFormItem prop="order_id" label="订单号:">
+        <el-input v-model="params.order_id" placeholder="订单号" />
       </SpFilterFormItem>
-      <SpFilterFormItem
-        prop="mobile"
-        label="手机号:"
-      >
-        <el-input
-          v-model="params.mobile"
-          placeholder="手机号"
-        />
+      <SpFilterFormItem prop="mobile" label="手机号:">
+        <el-input v-model="params.mobile" placeholder="手机号" />
       </SpFilterFormItem>
-      <SpFilterFormItem
-        prop="refund_type"
-        label="退款类型:"
-      >
-        <el-select
-          v-model="params.refund_type"
-          placeholder="退款类型"
-        >
+      <SpFilterFormItem prop="refund_type" label="退款类型:">
+        <el-select v-model="params.refund_type" placeholder="退款类型">
           <el-option
             v-for="(item, index) in refundTypeList"
             :key="index"
@@ -65,14 +34,8 @@
           />
         </el-select>
       </SpFilterFormItem>
-      <SpFilterFormItem
-        prop="refund_channel"
-        label="退款方式:"
-      >
-        <el-select
-          v-model="params.refund_channel"
-          placeholder="退款方式"
-        >
+      <SpFilterFormItem prop="refund_channel" label="退款方式:">
+        <el-select v-model="params.refund_channel" placeholder="退款方式">
           <el-option
             v-for="(item, index) in refundChannelList"
             :key="index"
@@ -81,14 +44,8 @@
           />
         </el-select>
       </SpFilterFormItem>
-      <SpFilterFormItem
-        prop="refund_status"
-        label="退款状态:"
-      >
-        <el-select
-          v-model="params.refund_status"
-          placeholder="退款状态"
-        >
+      <SpFilterFormItem prop="refund_status" label="退款状态:">
+        <el-select v-model="params.refund_status" placeholder="退款状态">
           <el-option
             v-for="(item, index) in refundsStatusList"
             :key="index"
@@ -97,10 +54,7 @@
           />
         </el-select>
       </SpFilterFormItem>
-      <SpFilterFormItem
-        prop="create_time"
-        label="日期范围:"
-      >
+      <SpFilterFormItem prop="create_time" label="日期范围:">
         <el-date-picker
           v-model="params.create_time"
           type="daterange"
@@ -112,44 +66,18 @@
 
     <div class="action-container">
       <export-tip @exportHandle="exportData">
-        <el-button
-          type="primary"
-          plain
-        >
-          导出
-        </el-button>
+        <el-button type="primary" plain> 导出 </el-button>
       </export-tip>
     </div>
 
-    <el-form
-      ref="form"
-      label-width="100px"
-    >
-      <el-table
-        v-loading="loading"
-        border
-        :data="tableList"
-        element-loading-text="数据加载中"
-      >
-        <el-table-column
-          prop="refund_bn"
-          min-width="220"
-          label="退款单号"
-        >
+    <el-form ref="form" label-width="100px">
+      <el-table v-loading="loading" border :data="tableList" element-loading-text="数据加载中">
+        <el-table-column prop="refund_bn" min-width="220" label="退款单号">
           <template slot-scope="scope">
-            <el-tag
-              v-if="scope.row.refund_type == '0'"
-              effect="plain"
-              type="warning"
-              size="mini"
-            >
+            <el-tag v-if="scope.row.refund_type == '0'" effect="plain" type="warning" size="mini">
               售后
             </el-tag>
-            <el-tag
-              v-else-if="scope.row.refund_type == '1'"
-              effect="plain"
-              size="mini"
-            >
+            <el-tag v-else-if="scope.row.refund_type == '1'" effect="plain" size="mini">
               售前
             </el-tag>
             <el-tag
@@ -170,11 +98,7 @@
               >
                 {{ scope.row.refund_bn }}
               </router-link>
-              <el-tooltip
-                effect="dark"
-                content="复制"
-                placement="top-start"
-              >
+              <el-tooltip effect="dark" content="复制" placement="top-start">
                 <i
                   v-clipboard:copy="scope.row.refund_bn"
                   v-clipboard:success="onCopySuccess"
@@ -182,42 +106,29 @@
                 />
               </el-tooltip>
             </div>
-            <div
-              v-if="scope.row.distributor_id !== '0'"
-              class="order-store"
-            >
-              <el-tooltip
-                effect="dark"
-                content="店铺名"
-                placement="top-start"
-              >
+            <div v-if="scope.row.distributor_id !== '0'" class="order-store">
+              <el-tooltip effect="dark" content="店铺名" placement="top-start">
                 <i class="el-icon-office-building" />
               </el-tooltip>
               {{ scope.row.distributor_info.name }}
             </div>
             <div class="order-time">
-              <el-tooltip
-                effect="dark"
-                content="退款申请时间"
-                placement="top-start"
-              >
+              <el-tooltip effect="dark" content="退款申请时间" placement="top-start">
                 <i class="el-icon-time" />
               </el-tooltip>
               {{ scope.row.create_time | datetime('YYYY-MM-DD HH:mm:ss') }}
             </div>
           </template>
         </el-table-column>
-        <el-table-column
-          prop="aftersales_bn"
-          width="180"
-          label="售后单号"
-        >
+        <el-table-column prop="aftersales_bn" width="180" label="售后单号">
           <template slot-scope="scope">
             <div>
               <router-link
                 target="_blank"
                 :to="{
                   path:
+                    (`${$store.getters.login_type}` == 'distributor' &&
+                      '/shopadmin/order/aftersaleslist/detail') ||
                     (`${$store.getters.login_type}` == 'merchant' &&
                       '/merchant/order/aftersaleslist/detail') ||
                     '/order/entitytrade/aftersaleslist/detail',
@@ -242,16 +153,15 @@
             </div>
           </template>
         </el-table-column>
-        <el-table-column
-          min-width="200"
-          label="订单号"
-        >
+        <el-table-column min-width="200" label="订单号">
           <template slot-scope="scope">
             <div>
               <router-link
                 target="_blank"
                 :to="{
                   path:
+                    (`${$store.getters.login_type}` == 'distributor' &&
+                      '/shopadmin/order/tradenormalorders/detail') ||
                     (`${$store.getters.login_type}` == 'merchant' &&
                       '/merchant/order/tradenormalorders/detail') ||
                     '/order/entitytrade/tradenormalorders/detail',
@@ -260,11 +170,7 @@
               >
                 {{ scope.row.order_id }}
               </router-link>
-              <el-tooltip
-                effect="dark"
-                content="复制"
-                placement="top-start"
-              >
+              <el-tooltip effect="dark" content="复制" placement="top-start">
                 <i
                   v-clipboard:copy="scope.row.order_id"
                   v-clipboard:success="onCopySuccess"
@@ -274,14 +180,11 @@
             </div>
           </template>
         </el-table-column>
-        <el-table-column
-          min-width="200"
-          label="支付方式"
-        >
+        <el-table-column min-width="200" label="支付方式">
           <template slot-scope="scope">
-            <span
-              v-if="scope.row.pay_type == 'wxpay' || scope.row.pay_type == 'adapay'"
-            >微信支付</span>
+            <span v-if="scope.row.pay_type == 'wxpay' || scope.row.pay_type == 'adapay'"
+              >微信支付</span
+            >
             <span v-if="scope.row.pay_type == 'wxpayapp'">微信APP支付</span>
             <span v-if="scope.row.pay_type == 'wxpayh5'">微信H5支付</span>
             <span v-if="scope.row.pay_type == 'wxpaypc'">微信POS支付</span>
@@ -295,31 +198,20 @@
             <span v-if="scope.row.pay_type == 'point'">积分支付</span>
             <span v-if="scope.row.pay_type == 'pos'">POS银行卡支付</span>
             <span v-if="scope.row.pay_type == 'hfpay'">汇付支付</span>
+            <span v-if="scope.row.pay_type == 'chinaums'">微信支付-银联</span>
           </template>
         </el-table-column>
-        <el-table-column
-          width="180"
-          label="退款金额"
-        >
+        <el-table-column width="180" label="退款金额">
           <template slot-scope="scope">
             <div class="order-num mark">
-              <span class="cur">{{ scope.row.cur_fee_symbol }}</span>{{ scope.row.refund_fee / 100 }}
+              <span class="cur">{{ scope.row.cur_fee_symbol }}</span
+              >{{ scope.row.refund_fee / 100 }}
             </div>
-            <div
-              v-if="scope.row.refund_point"
-              class="order-num mark"
-            >
+            <div v-if="scope.row.refund_point" class="order-num mark">
               {{ scope.row.refund_point }}积分
             </div>
-            <div
-              v-if="scope.row.refund_success_time"
-              class="order-time"
-            >
-              <el-tooltip
-                effect="dark"
-                content="退款完成时间"
-                placement="top-start"
-              >
+            <div v-if="scope.row.refund_success_time" class="order-time">
+              <el-tooltip effect="dark" content="退款完成时间" placement="top-start">
                 <i class="el-icon-time" />
               </el-tooltip>
               {{ scope.row.refund_success_time | datetime('YYYY-MM-DD HH:mm:ss') }}
@@ -328,33 +220,16 @@
         </el-table-column>
 
         <!-- 退款方式 -->
-        <el-table-column
-          prop="refund_channel"
-          width="80"
-          label="退款方式"
-        >
+        <el-table-column prop="refund_channel" width="80" label="退款方式">
           <template slot-scope="scope">
-            <el-tag
-              v-if="scope.row.refund_channel == 'offline'"
-              size="mini"
-            >
-              线下退款
-            </el-tag>
-            <el-tag
-              v-if="scope.row.refund_channel == 'original'"
-              type="success"
-              size="mini"
-            >
+            <el-tag v-if="scope.row.refund_channel == 'offline'" size="mini"> 线下退款 </el-tag>
+            <el-tag v-if="scope.row.refund_channel == 'original'" type="success" size="mini">
               原路返回
             </el-tag>
           </template>
         </el-table-column>
         <!-- 退款状态 -->
-        <el-table-column
-          prop="refund_status"
-          width="100"
-          label="退款状态"
-        >
+        <el-table-column prop="refund_status" width="100" label="退款状态">
           <template slot-scope="scope">
             <!-- 订单状态 -->
             <el-tag
@@ -413,11 +288,7 @@
             >
               退款异常
             </el-tag>
-            <el-tag
-              v-if="scope.row.refund_status == 'REFUNDCLOSE'"
-              type="info"
-              size="mini"
-            >
+            <el-tag v-if="scope.row.refund_status == 'REFUNDCLOSE'" type="info" size="mini">
               退款关闭
             </el-tag>
           </template>
@@ -435,10 +306,7 @@
           </template>
         </el-table-column>
       </el-table>
-      <div
-        v-if="page.total > page.pageSize"
-        class="content-padded content-center"
-      >
+      <div v-if="page.total > page.pageSize" class="content-padded content-center">
         <el-pagination
           background
           layout="total, sizes, prev, pager, next, jumper"
@@ -459,7 +327,7 @@ import { exportRefundList } from '@/api/aftersales'
 import mixin, { pageMixin } from '@/mixins'
 export default {
   mixins: [mixin, pageMixin],
-  data () {
+  data() {
     const initialParams = {
       distributor: {
         id: undefined,
@@ -507,7 +375,7 @@ export default {
     ...mapGetters(['wheight'])
   },
   watch: {
-    $route (to, from) {},
+    $route(to, from) {},
     'params.distributor': {
       handler: function (val) {
         if (!val.name && val.id) {
@@ -520,16 +388,16 @@ export default {
       deep: true
     }
   },
-  mounted () {
+  mounted() {
     //获取店铺
     this.getDistributorList()
     this.fetchList()
   },
   methods: {
-    handleSelectStore (storeItem) {
+    handleSelectStore(storeItem) {
       this.params.distributor.id = storeItem.distributor_id
     },
-    dateTransfer (val) {
+    dateTransfer(val) {
       let time_start_begin = undefined
       let time_start_end = undefined
       if (val.length > 0) {
@@ -541,7 +409,10 @@ export default {
         time_start_end
       }
     },
-    getParams () {
+    dateStrToTimeStamp(str) {
+      return Date.parse(new Date(str)) / 1000
+    },
+    getParams() {
       let params = {
         distributor_id: this.params.distributor.id || undefined,
         ...this.dateTransfer(this.params.create_time),
@@ -554,13 +425,13 @@ export default {
       }
       return params
     },
-    onSearch () {
+    onSearch() {
       this.page.pageIndex = 1
       this.$nextTick(() => {
         this.fetchList()
       })
     },
-    onReset () {
+    onReset() {
       this.params = { ...this.initialParams }
       this.params = {
         ...this.params,
@@ -571,7 +442,7 @@ export default {
       }
       this.onSearch()
     },
-    async fetchList () {
+    async fetchList() {
       this.loading = true
       const { pageIndex: page, pageSize } = this.page
       let params = {
@@ -584,18 +455,18 @@ export default {
       this.page.total = total_count
       this.loading = false
     },
-    createFilter (queryString) {
+    createFilter(queryString) {
       return (restaurant) => {
         return restaurant.value.toLowerCase().indexOf(queryString.toLowerCase()) === 0
       }
     },
-    queryStoreSearch (queryString, cb) {
+    queryStoreSearch(queryString, cb) {
       var restaurants = this.shopList
       var results = queryString ? restaurants.filter(this.createFilter(queryString)) : restaurants
       // 调用 callback 返回建议列表的数据
       cb(results)
     },
-    async exportData () {
+    async exportData() {
       const { status, url, filename } = await exportRefundList({
         ...this.getParams()
       })
@@ -617,7 +488,7 @@ export default {
         })
       }
     },
-    async getDistributorList () {
+    async getDistributorList() {
       var params = { page: 1, pageSize: 500 }
       const { list } = await this.$api.marketing.getDistributorList(params)
       if (list) {

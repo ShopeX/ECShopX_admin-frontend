@@ -1,5 +1,6 @@
 <template lang="html">
   <div>
+    <SpPlatformTip h5 app pc alipay />
     <el-tabs
       v-if="$route.path.indexOf('templ') === -1 && $route.path.indexOf('editor') === -1"
       v-model="activeName"
@@ -14,54 +15,41 @@
       >
         <template v-if="activeName === 'valid'">
           <div class="content-bottom-padded">
-            <el-button
-              size="medium"
-              @click="add"
-            >
-              添加活动
-            </el-button>
+            <el-button size="medium" @click="add"> 添加活动 </el-button>
           </div>
 
-          <el-table
-            :data="activity"
-            border
-            style="width: 100%"
-          >
+          <el-table :data="activity" border style="width: 100%">
             <el-table-column type="expand">
               <template slot-scope="props">
-                <el-form
-                  label-position="left"
-                  inline
-                  class="demo-table-expand"
-                >
+                <el-form label-position="left" inline class="demo-table-expand">
                   <el-form-item label="触发条件">
                     <span v-if="props.row.activity_type == 'member_birthday'">
-                      <span
-                        v-if="props.row.trigger_condition.trigger_time == 'birthday_month'"
-                      >生日当月1日统一发放</span>
-                      <span
-                        v-if="props.row.trigger_condition.trigger_time == 'birthday_week'"
-                      >生日当周周日统一发放</span>
-                      <span
-                        v-if="props.row.trigger_condition.trigger_time == 'birthday_day'"
-                      >生日当日统一发放</span>
+                      <span v-if="props.row.trigger_condition.trigger_time == 'birthday_month'"
+                        >生日当月1日统一发放</span
+                      >
+                      <span v-if="props.row.trigger_condition.trigger_time == 'birthday_week'"
+                        >生日当周周日统一发放</span
+                      >
+                      <span v-if="props.row.trigger_condition.trigger_time == 'birthday_day'"
+                        >生日当日统一发放</span
+                      >
                     </span>
-                    <span
-                      v-if="props.row.activity_type == 'member_upgrade'"
-                    >会员升级成功后发放</span>
-                    <span
-                      v-if="props.row.activity_type == 'member_vip_upgrade'"
-                    >付费会员升级成功后发放</span>
+                    <span v-if="props.row.activity_type == 'member_upgrade'"
+                      >会员升级成功后发放</span
+                    >
+                    <span v-if="props.row.activity_type == 'member_vip_upgrade'"
+                      >付费会员升级成功后发放</span
+                    >
                     <span v-if="props.row.activity_type == 'member_anniversary'">
-                      <span
-                        v-if="props.row.trigger_condition.trigger_time == 'anniversary_month'"
-                      >周年入会当月1日统一发放</span>
-                      <span
-                        v-if="props.row.trigger_condition.trigger_time == 'anniversary_week'"
-                      >周年入会当周周日统一发放</span>
-                      <span
-                        v-if="props.row.trigger_condition.trigger_time == 'anniversary_day'"
-                      >周年入会当日统一发放</span>
+                      <span v-if="props.row.trigger_condition.trigger_time == 'anniversary_month'"
+                        >周年入会当月1日统一发放</span
+                      >
+                      <span v-if="props.row.trigger_condition.trigger_time == 'anniversary_week'"
+                        >周年入会当周周日统一发放</span
+                      >
+                      <span v-if="props.row.trigger_condition.trigger_time == 'anniversary_day'"
+                        >周年入会当日统一发放</span
+                      >
                     </span>
                     <span v-if="props.row.activity_type == 'member_day'">
                       <span v-if="props.row.trigger_condition.trigger_time.type == 'every_year'">
@@ -79,9 +67,7 @@
                     <el-col v-if="props.row.discount_config.coupons">
                       <el-card class="box-card">
                         <div slot="header">
-                          <el-button type="text">
-                            赠送优惠券
-                          </el-button>
+                          <el-button type="text"> 赠送优惠券 </el-button>
                         </div>
                         <div
                           v-for="(item, index) in props.row.discount_config.coupons"
@@ -91,12 +77,7 @@
                           <div v-if="item.name">
                             赠送{{ item.count }}张【{{ item.name }} 】优惠券
                           </div>
-                          <div
-                            v-for="(row, i) in item"
-                            v-else
-                            :key="i"
-                            class="text item"
-                          >
+                          <div v-for="(row, i) in item" v-else :key="i" class="text item">
                             赠送【{{ gradeList[index] }}】{{ row.count }}张【{{ row.name }} 】
                             优惠券
                           </div>
@@ -105,13 +86,8 @@
                     </el-col>
                     <el-col v-if="props.row.discount_config.goods">
                       <el-card class="box-card">
-                        <div
-                          slot="header"
-                          class="clearfix"
-                        >
-                          <el-button type="text">
-                            赠送服务类商品
-                          </el-button>
+                        <div slot="header" class="clearfix">
+                          <el-button type="text"> 赠送服务类商品 </el-button>
                         </div>
                         <div
                           v-for="(item, index) in props.row.discount_config.goods"
@@ -121,12 +97,7 @@
                           <div v-if="item.name">
                             赠送{{ item.count }}件【{{ item.name }} 】服务类商品
                           </div>
-                          <div
-                            v-for="(row, i) in item"
-                            v-else
-                            :key="i"
-                            class="text item"
-                          >
+                          <div v-for="(row, i) in item" v-else :key="i" class="text item">
                             赠送【{{ gradeList[index] }}】{{ row.count }}件【{{ row.name }}
                             】服务类商品
                           </div>
@@ -137,40 +108,28 @@
                 </el-form>
               </template>
             </el-table-column>
-            <el-table-column
-              label="活动名称"
-              prop="title"
-            />
-            <el-table-column
-              label="开始时间"
-              prop="begin_time"
-            />
-            <el-table-column
-              label="结束时间"
-              prop="end_time"
-            />
+            <el-table-column label="活动名称" prop="title" />
+            <el-table-column label="开始时间" prop="begin_time" />
+            <el-table-column label="结束时间" prop="end_time" />
             <el-table-column label="营销类型">
               <template slot-scope="props">
-                <span
-                  v-if="props.row.activity_type === 'member_anniversary'"
-                  class="list-item-obj"
-                >会员周年</span>
+                <span v-if="props.row.activity_type === 'member_anniversary'" class="list-item-obj"
+                  >会员周年</span
+                >
                 <span
                   v-else-if="props.row.activity_type === 'member_birthday'"
                   class="list-item-obj"
-                >会员生日</span>
-                <span
-                  v-else-if="props.row.activity_type === 'member_upgrade'"
-                  class="list-item-obj"
-                >会员升级</span>
+                  >会员生日</span
+                >
+                <span v-else-if="props.row.activity_type === 'member_upgrade'" class="list-item-obj"
+                  >会员升级</span
+                >
                 <span
                   v-else-if="props.row.activity_type === 'member_vip_upgrade'"
                   class="list-item-obj"
-                >付费会员升级</span>
-                <span
-                  v-else
-                  class="list-item-obj"
-                >会员日</span>
+                  >付费会员升级</span
+                >
+                <span v-else class="list-item-obj">会员日</span>
               </template>
             </el-table-column>
             <el-table-column label="状态">
@@ -206,46 +165,38 @@
           />
         </template>
         <template v-if="activeName === 'invalid'">
-          <el-table
-            :data="history"
-            border
-            style="width: 100%"
-          >
+          <el-table :data="history" border style="width: 100%">
             <el-table-column type="expand">
               <template slot-scope="props">
-                <el-form
-                  label-position="left"
-                  inline
-                  class="demo-table-expand"
-                >
+                <el-form label-position="left" inline class="demo-table-expand">
                   <el-form-item label="触发条件">
                     <span v-if="props.row.activity_type == 'member_birthday'">
-                      <span
-                        v-if="props.row.trigger_condition.trigger_time == 'birthday_month'"
-                      >生日当月1日统一发放</span>
-                      <span
-                        v-if="props.row.trigger_condition.trigger_time == 'birthday_week'"
-                      >生日当周周日统一发放</span>
-                      <span
-                        v-if="props.row.trigger_condition.trigger_time == 'birthday_day'"
-                      >生日当日统一发放</span>
+                      <span v-if="props.row.trigger_condition.trigger_time == 'birthday_month'"
+                        >生日当月1日统一发放</span
+                      >
+                      <span v-if="props.row.trigger_condition.trigger_time == 'birthday_week'"
+                        >生日当周周日统一发放</span
+                      >
+                      <span v-if="props.row.trigger_condition.trigger_time == 'birthday_day'"
+                        >生日当日统一发放</span
+                      >
                     </span>
-                    <span
-                      v-if="props.row.activity_type == 'member_upgrade'"
-                    >会员升级成功后发放</span>
-                    <span
-                      v-if="props.row.activity_type == 'member_vip_upgrade'"
-                    >付费会员升级成功后发放</span>
+                    <span v-if="props.row.activity_type == 'member_upgrade'"
+                      >会员升级成功后发放</span
+                    >
+                    <span v-if="props.row.activity_type == 'member_vip_upgrade'"
+                      >付费会员升级成功后发放</span
+                    >
                     <span v-if="props.row.activity_type == 'member_anniversary'">
-                      <span
-                        v-if="props.row.trigger_condition.trigger_time == 'anniversary_month'"
-                      >周年入会当月1日统一发放</span>
-                      <span
-                        v-if="props.row.trigger_condition.trigger_time == 'anniversary_week'"
-                      >周年入会当周周日统一发放</span>
-                      <span
-                        v-if="props.row.trigger_condition.trigger_time == 'anniversary_day'"
-                      >周年入会当日统一发放</span>
+                      <span v-if="props.row.trigger_condition.trigger_time == 'anniversary_month'"
+                        >周年入会当月1日统一发放</span
+                      >
+                      <span v-if="props.row.trigger_condition.trigger_time == 'anniversary_week'"
+                        >周年入会当周周日统一发放</span
+                      >
+                      <span v-if="props.row.trigger_condition.trigger_time == 'anniversary_day'"
+                        >周年入会当日统一发放</span
+                      >
                     </span>
                     <span v-if="props.row.activity_type == 'member_day'">
                       <span v-if="props.row.trigger_condition.trigger_time.type == 'every_year'">
@@ -263,9 +214,7 @@
                     <el-col v-if="props.row.discount_config.coupons">
                       <el-card class="box-card">
                         <div slot="header">
-                          <el-button type="text">
-                            赠送优惠券
-                          </el-button>
+                          <el-button type="text"> 赠送优惠券 </el-button>
                         </div>
                         <div
                           v-for="(item, index) in props.row.discount_config.coupons"
@@ -275,12 +224,7 @@
                           <div v-if="item.name">
                             赠送{{ item.count }}张【{{ item.name }} 】优惠券
                           </div>
-                          <div
-                            v-for="(row, i) in item"
-                            v-else
-                            :key="i"
-                            class="text item"
-                          >
+                          <div v-for="(row, i) in item" v-else :key="i" class="text item">
                             赠送【{{ gradeList[index] }}】{{ row.count }}张【{{ row.name }} 】
                             优惠券
                           </div>
@@ -289,13 +233,8 @@
                     </el-col>
                     <el-col v-if="props.row.discount_config.goods">
                       <el-card class="box-card">
-                        <div
-                          slot="header"
-                          class="clearfix"
-                        >
-                          <el-button type="text">
-                            赠送服务类商品
-                          </el-button>
+                        <div slot="header" class="clearfix">
+                          <el-button type="text"> 赠送服务类商品 </el-button>
                         </div>
                         <div
                           v-for="(item, index) in props.row.discount_config.goods"
@@ -305,12 +244,7 @@
                           <div v-if="item.name">
                             赠送{{ item.count }}件【{{ item.name }} 】服务类商品
                           </div>
-                          <div
-                            v-for="(row, i) in item"
-                            v-else
-                            :key="i"
-                            class="text item"
-                          >
+                          <div v-for="(row, i) in item" v-else :key="i" class="text item">
                             赠送【{{ gradeList[index] }}】{{ row.count }}件【{{ row.name }}
                             】服务类商品
                           </div>
@@ -321,40 +255,28 @@
                 </el-form>
               </template>
             </el-table-column>
-            <el-table-column
-              label="活动名称"
-              prop="title"
-            />
-            <el-table-column
-              label="开始时间"
-              prop="begin_time"
-            />
-            <el-table-column
-              label="结束时间"
-              prop="end_time"
-            />
+            <el-table-column label="活动名称" prop="title" />
+            <el-table-column label="开始时间" prop="begin_time" />
+            <el-table-column label="结束时间" prop="end_time" />
             <el-table-column label="营销类型">
               <template slot-scope="props">
-                <span
-                  v-if="props.row.activity_type === 'member_anniversary'"
-                  class="list-item-obj"
-                >会员周年</span>
+                <span v-if="props.row.activity_type === 'member_anniversary'" class="list-item-obj"
+                  >会员周年</span
+                >
                 <span
                   v-else-if="props.row.activity_type === 'member_birthday'"
                   class="list-item-obj"
-                >会员生日</span>
-                <span
-                  v-else-if="props.row.activity_type === 'member_upgrade'"
-                  class="list-item-obj"
-                >会员升级</span>
+                  >会员生日</span
+                >
+                <span v-else-if="props.row.activity_type === 'member_upgrade'" class="list-item-obj"
+                  >会员升级</span
+                >
                 <span
                   v-else-if="props.row.activity_type === 'member_vip_upgrade'"
                   class="list-item-obj"
-                >付费会员升级</span>
-                <span
-                  v-else
-                  class="list-item-obj"
-                >会员日</span>
+                  >付费会员升级</span
+                >
+                <span v-else class="list-item-obj">会员日</span>
               </template>
             </el-table-column>
             <el-table-column label="发送短信">
@@ -384,12 +306,12 @@ import { getActivity, invalidActivity } from '@/api/promotions'
 import { getGradeList } from '@/api/membercard'
 import { listVipGrade } from '@/api/cardticket'
 export default {
-  provide () {
+  provide() {
     return {
       refresh: this.refresh
     }
   },
-  data () {
+  data() {
     return {
       activity: [],
       history: [],
@@ -413,19 +335,19 @@ export default {
       }
     }
   },
-  mounted () {
+  mounted() {
     this.refresh()
   },
   methods: {
-    handleClick (tab, event) {
+    handleClick(tab, event) {
       this.getList(tab.name)
     },
-    add () {
+    add() {
       this.$router.push({
         path: this.matchHidePage('templ')
       })
     },
-    getList (key) {
+    getList(key) {
       let currentPage, pageSize
       if (key === 'valid') {
         this.validLoading = true
@@ -453,15 +375,15 @@ export default {
         }
       })
     },
-    changeValidPage (currentPage) {
+    changeValidPage(currentPage) {
       this.validPage.currentPage = currentPage
       this.getList('valid')
     },
-    changeInvalidPage (currentPage) {
+    changeInvalidPage(currentPage) {
       this.invalidPage.currentPage = currentPage
       this.getList('invalid')
     },
-    invalidActivity (id) {
+    invalidActivity(id) {
       var param = {
         activity_id: id
       }
@@ -473,7 +395,7 @@ export default {
         })
         .catch((_) => {})
     },
-    refresh () {
+    refresh() {
       getGradeList().then((response) => {
         response.data.data.forEach((item) => {
           this.gradeList[item.grade_id] = item.grade_name

@@ -120,48 +120,24 @@
 <template>
   <div class="comp-baseform">
     <div class="form-block-head clearfix">
-      <div class="block-head-hd">
-        基础信息
-      </div>
+      <div class="block-head-hd">基础信息</div>
     </div>
     <div class="form-block-body">
-      <el-form
-        :model="value"
-        label-position="right"
-        label-width="80px"
-      >
+      <el-form :model="value" label-position="right" label-width="80px">
         <el-row :gutter="20">
           <el-col :span="8">
-            <el-form-item
-              label="商品标题"
-              required
-            >
-              <el-input
-                v-model="value.itemName"
-                :maxlength="100"
-                placeholder=""
-              />
+            <el-form-item label="商品标题" required>
+              <el-input v-model="value.itemName" :maxlength="100" placeholder="" />
             </el-form-item>
           </el-col>
           <el-col :span="8">
             <el-form-item label="副标题">
-              <el-input
-                v-model="value.brief"
-                :maxlength="30"
-                placeholder=""
-              />
+              <el-input v-model="value.brief" :maxlength="30" placeholder="" />
             </el-form-item>
           </el-col>
           <el-col :span="8">
-            <el-form-item
-              label="运费模板"
-              required
-            >
-              <el-select
-                v-model="value.templatesId"
-                class="width-full"
-                placeholder="请选择"
-              >
+            <el-form-item label="运费模板" required>
+              <el-select v-model="value.templatesId" class="width-full" placeholder="请选择">
                 <el-option
                   v-for="item in templatesList"
                   :key="item.template_id"
@@ -174,16 +150,12 @@
         </el-row>
         <el-row :gutter="20">
           <el-col :span="8">
-            <el-form-item
-              label="品牌"
-              required
-            >
+            <el-form-item label="品牌" required>
               <el-select
                 v-model="value.brandId"
                 class="width-full"
                 remote
                 filterable
-                :remote-method="getBrandList"
                 clearable
                 placeholder="请选择"
               >
@@ -198,19 +170,12 @@
           </el-col>
           <el-col :span="8">
             <el-form-item label="计量单位">
-              <el-input
-                v-model="value.itemUnit"
-                :maxlength="60"
-                placeholder=""
-              />
+              <el-input v-model="value.itemUnit" :maxlength="60" placeholder="" />
             </el-form-item>
           </el-col>
           <el-col :span="8">
             <el-form-item label="排序编号">
-              <el-input
-                v-model="value.sort"
-                placeholder=""
-              />
+              <el-input v-model="value.sort" placeholder="" />
             </el-form-item>
           </el-col>
         </el-row>
@@ -227,10 +192,7 @@
           </el-col>
           <el-col :span="8">
             <el-form-item label="商品税率">
-              <el-input
-                v-model="value.taxRate"
-                placeholder=""
-              />
+              <el-input v-model="value.taxRate" placeholder="" />
             </el-form-item>
           </el-col>
         </el-row>
@@ -253,16 +215,9 @@
               </el-switch>
             </el-form-item>
           </el-col> -->
-          <el-col
-            v-if="!isCross"
-            :span="8"
-          >
+          <el-col v-if="!isCross" :span="8">
             <el-form-item label="赠品">
-              <el-switch
-                v-model="value.isGift"
-                active-color="#13ce66"
-                inactive-color="#ff4949"
-              />
+              <el-switch v-model="value.isGift" active-color="#13ce66" inactive-color="#ff4949" />
               <span class="tip-info">
                 <i class="el-alert__icon el-icon-info" />
                 开启后前台不可购买
@@ -272,37 +227,26 @@
         </el-row>
         <el-row :gutter="20">
           <el-col :span="16">
-            <el-form-item
-              label="商品分类"
-              required
-            >
+            <el-form-item label="商品销售分类" required label-width="120px">
               <treeselect
                 v-model="value.itemCategory"
                 :options="categoryList"
                 :show-count="true"
                 :multiple="true"
                 :disable-branch-nodes="true"
-                placeholder="选择商品分类"
+                placeholder="选择商品销售分类"
               />
             </el-form-item>
           </el-col>
         </el-row>
         <el-row :gutter="20">
           <el-col :span="24">
-            <el-form-item
-              label="商品图"
-              required
-            >
+            <el-form-item label="商品图" required>
               <div class="goodsimages-hd">
                 <span class="tipinfo">
                   <i class="el-alert__icon el-icon-info" />选中以下图片生成分享码
                 </span>
-                <el-checkbox
-                  :value="isAllCheck"
-                  @change="handleAllSelect"
-                >
-                  全选
-                </el-checkbox>
+                <el-checkbox :value="isAllCheck" @change="handleAllSelect"> 全选 </el-checkbox>
               </div>
               <div class="goodsimages-bd pics-box">
                 <ul class="goodspic-wrap">
@@ -313,35 +257,17 @@
                     style="position: 'relative'"
                     @update="dragEnd"
                   >
-                    <li
-                      v-for="(item, index) in value.pics"
-                      :key="index"
-                      class="goodspic"
-                    >
+                    <li v-for="(item, index) in value.pics" :key="index" class="goodspic">
                       <div class="img-wrap">
-                        <el-image
-                          style="width: 100%; height: 100%"
-                          :src="item"
-                          fit="contain"
-                        />
+                        <el-image style="width: 100%; height: 100%" :src="item" fit="contain" />
                         <div class="goodspic-mask">
-                          <div
-                            class="iconfont icon-trash-alt"
-                            @click="removePicsImg(index)"
-                          />
+                          <div class="iconfont icon-trash-alt" @click="removePicsImg(index)" />
                           <div class="iconfont icon-arrows-alt" />
                         </div>
                       </div>
-                      <el-checkbox
-                        v-model="value.pics_create_qrcode[index]"
-                        class="checkBox"
-                      />
+                      <el-checkbox v-model="value.pics_create_qrcode[index]" class="checkBox" />
                     </li>
-                    <li
-                      v-if="value.pics.length < 9"
-                      class="upload-box"
-                      @click="handlePicsChange"
-                    >
+                    <li v-if="value.pics.length < 9" class="upload-box" @click="handlePicsChange">
                       <i class="iconfont icon-camera" />
                     </li>
                   </draggable>
@@ -362,16 +288,8 @@
         <el-row :gutter="20">
           <el-col :span="16">
             <el-form-item label="上传视频">
-              <videoPicker
-                class="video-picker"
-                :data="value.itemVideo"
-                @change="pickVideo"
-              />
-              <el-button
-                v-if="value.itemVideo.media_id"
-                type="text"
-                @click="deleteVideo"
-              >
+              <videoPicker class="video-picker" :data="value.itemVideo" @change="pickVideo" />
+              <el-button v-if="value.itemVideo.media_id" type="text" @click="deleteVideo">
                 删除
               </el-button>
             </el-form-item>
@@ -414,7 +332,7 @@ export default {
     draggable
   },
   props: ['value', 'isCross'],
-  data () {
+  data() {
     return {
       templatesList: [],
       brandList: [],
@@ -435,17 +353,17 @@ export default {
     }
   },
   computed: {
-    isAllCheck () {
+    isAllCheck() {
       const { pics_create_qrcode } = this.value
       const isNotAll = pics_create_qrcode.some((item) => !item)
       return !isNotAll
     }
   },
-  created () {
+  created() {
     this.fetch()
   },
   methods: {
-    async fetch () {
+    async fetch() {
       const resTempList = await getShippingTemplatesList({
         page: 1,
         pageSize: 99
@@ -467,7 +385,7 @@ export default {
       this.loading = false
     },
     // 获取品牌列表
-    async getBrandList (searchVal = '') {
+    async getBrandList(searchVal = '') {
       const resBrandList = await getGoodsAttr({
         page: 1,
         pageSize: 1000,
@@ -481,21 +399,21 @@ export default {
         }
       })
     },
-    removePicsImg (index) {
+    removePicsImg(index) {
       this.value.pics.splice(index, 1)
       this.value.pics_create_qrcode.splice(index, 1)
     },
-    pickVideo ({ media_id, url }) {
+    pickVideo({ media_id, url }) {
       this.value.itemVideo = {
         media_id,
         url
       }
     },
-    deleteVideo () {
+    deleteVideo() {
       this.value.itemVideo.media_id = ''
       this.value.itemVideo.url = ''
     },
-    pickPics (data) {
+    pickPics(data) {
       if (this.value.pics.length + data.length >= 10) {
         this.$message.error('最多上传9张图片!')
         return false
@@ -509,10 +427,10 @@ export default {
       }
       this.picsDialog = false
     },
-    closePicsDialog () {
+    closePicsDialog() {
       this.picsDialog = false
     },
-    handleAllSelect (e) {
+    handleAllSelect(e) {
       const { pics_create_qrcode } = this.value
       this.value.pics_create_qrcode = pics_create_qrcode.map((item) => {
         return e
@@ -530,7 +448,7 @@ export default {
       this.isGetPics = true
       this.multiple = true
     },
-    dragEnd (e) {
+    dragEnd(e) {
       const { oldIndex, newIndex } = e
       const { pics_create_qrcode } = this.form
       const temp = pics_create_qrcode[oldIndex]

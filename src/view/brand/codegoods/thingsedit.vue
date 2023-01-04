@@ -1,58 +1,28 @@
 <template>
   <section class="section section-white">
-    <el-form
-      ref="form"
-      :model="form"
-      label-width="100px"
-      label-position="left"
-    >
-      <div class="section-header with-border">
-        创建商品
-      </div>
+    <el-form ref="form" :model="form" label-width="100px" label-position="left">
+      <div class="section-header with-border">创建商品</div>
       <div class="section-body">
         <el-form-item label="物品名称">
           <el-row :gutter="20">
             <el-col :span="6">
-              <el-input
-                v-model="form.thing_name"
-                type="text"
-                placeholder=""
-              />
+              <el-input v-model="form.thing_name" type="text" placeholder="" />
             </el-col>
           </el-row>
         </el-form-item>
         <el-form-item label="官方售价">
           <el-row :gutter="20">
             <el-col :span="6">
-              <el-input
-                v-model="form.price"
-                type="number"
-                placeholder=""
-              />
+              <el-input v-model="form.price" type="number" placeholder="" />
             </el-col>
           </el-row>
         </el-form-item>
-        <el-form-item
-          label="物品图片"
-          prop="ad_pic"
-        >
-          <p class="frm-tips">
-            点击图片可更换，图片大小不能超过 2MB
-          </p>
+        <el-form-item label="物品图片" prop="ad_pic">
+          <p class="frm-tips">点击图片可更换，图片大小不能超过 2MB</p>
           <div>
-            <div
-              class="upload-box"
-              @click="handleImgChange"
-            >
-              <img
-                v-if="form.pic"
-                :src="wximageurl + form.pic"
-                class="avatar"
-              >
-              <i
-                v-else
-                class="el-icon-plus avatar-uploader-icon"
-              />
+            <div class="upload-box" @click="handleImgChange">
+              <img v-if="form.pic" :src="wximageurl + form.pic" class="avatar">
+              <i v-else class="el-icon-plus avatar-uploader-icon" />
             </div>
           </div>
           <imgPicker
@@ -71,11 +41,7 @@
                 :height="360"
                 @change="updateContent"
               />
-              <span
-                class="tpl_item img"
-                style=""
-                @click="addImgPreview"
-              >
+              <span class="tpl_item img" style="" @click="addImgPreview">
                 <i class="iconfont icon-image" />图片
               </span>
               <imgPicker
@@ -89,18 +55,8 @@
         </el-form-item>
       </div>
       <div class="section-footer with-border content-center">
-        <el-button
-          type="default"
-          @click.native="handleCancel"
-        >
-          取消
-        </el-button>
-        <el-button
-          type="primary"
-          @click="submitThingsAction"
-        >
-          保存
-        </el-button>
+        <el-button type="default" @click.native="handleCancel"> 取消 </el-button>
+        <el-button type="primary" @click="submitThingsAction"> 保存 </el-button>
       </div>
     </el-form>
   </section>
@@ -115,7 +71,7 @@ export default {
   components: {
     imgPicker
   },
-  data () {
+  data() {
     return {
       imgDialog: false,
       isGetImage: false,
@@ -132,7 +88,7 @@ export default {
       }
     }
   },
-  mounted () {
+  mounted() {
     if (this.$route.query.thing_id) {
       // 初始化门店数据
       getThingsDetail(this.$route.query.thing_id)
@@ -199,8 +155,8 @@ export default {
         if (file.raw.type !== 'image/jpeg' && file.raw.type !== 'image/png') {
           that.$message.error('上传图片只能是 JPG 或者 PNG 格式!')
         }
-        if (file.raw.size / 1024 / 1024 > 2) {
-          that.$message.error('上传图片大小不能超过 2MB!')
+        if (file.raw.size / 1024 / 1024 > 5) {
+          that.$message.error('上传图片大小不能超过 5MB!')
         }
       }
 

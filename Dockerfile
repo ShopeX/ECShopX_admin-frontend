@@ -33,7 +33,7 @@ ENV VUE_APP_QINIU_PATH ${VUE_APP_QINIU_PATH}
 
 WORKDIR /app
 COPY package*.json ./
-RUN npm config set registry https://registry.npm.taobao.org && npm config set @shopex:registry http://registry.npm.ishopex.cn && npm ci
+RUN npm config set registry https://registry.npmmirror.com && npm config set @shopex:registry http://registry.npm.ishopex.cn && npm ci
 
 COPY . .
 COPY .env ./

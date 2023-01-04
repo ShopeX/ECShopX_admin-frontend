@@ -7,25 +7,15 @@
 <template>
   <div>
     <template v-if="$route.path.indexOf('detail') === -1">
+      <SpPlatformTip h5 app pc alipay />
       <div class="action-container">
-        <el-button
-          type="primary"
-          icon="iconfont icon-xinzengcaozuo-01"
-          @click="addActivityData"
-        >
+        <el-button type="primary" icon="iconfont icon-xinzengcaozuo-01" @click="addActivityData">
           添加标签折扣
         </el-button>
       </div>
 
-      <SpFilterForm
-        :model="params"
-        @onSearch="onSearch"
-        @onReset="onReset"
-      >
-        <SpFilterFormItem
-          prop="specific"
-          label="针对人群:"
-        >
+      <SpFilterForm :model="params" @onSearch="onSearch" @onReset="onReset">
+        <SpFilterFormItem prop="specific" label="针对人群:">
           <el-autocomplete
             v-model="params.specific.name"
             :fetch-suggestions="querySearch"
@@ -35,11 +25,7 @@
         </SpFilterFormItem>
       </SpFilterForm>
 
-      <el-tabs
-        v-model="params.status"
-        type="card"
-        @tab-click="handleTabClick"
-      >
+      <el-tabs v-model="params.status" type="card" @tab-click="handleTabClick">
         <el-tab-pane
           v-for="(item, index) in tabList"
           :key="index"
@@ -53,20 +39,9 @@
             style="width: 100%"
             element-loading-text="数据加载中"
           >
-            <el-table-column
-              prop="id"
-              width="60"
-              label="编号"
-            />
-            <el-table-column
-              prop="specific_name"
-              min-width="150"
-              label="适用人群"
-            />
-            <el-table-column
-              label="周期"
-              min-width="200"
-            >
+            <el-table-column prop="id" width="60" label="编号" />
+            <el-table-column prop="specific_name" min-width="150" label="适用人群" />
+            <el-table-column label="周期" min-width="200">
               <template slot-scope="scope">
                 <span v-if="scope.row.cycle_type == '1'"> 自然月 </span>
                 <span v-if="scope.row.cycle_type == '2'">
@@ -74,28 +49,13 @@
                 </span>
               </template>
             </el-table-column>
-            <el-table-column
-              prop="discount"
-              min-width="100"
-              label="优惠折扣"
-            >
-              <template slot-scope="scope">
-                {{ scope.row.discount }}%
-              </template>
+            <el-table-column prop="discount" min-width="100" label="优惠折扣">
+              <template slot-scope="scope"> {{ scope.row.discount }}% </template>
             </el-table-column>
-            <el-table-column
-              prop="limit_total_money"
-              min-width="150"
-              label="周期内最高优惠限额"
-            >
-              <template slot-scope="scope">
-                {{ scope.row.limit_total_money }}元
-              </template>
+            <el-table-column prop="limit_total_money" min-width="150" label="周期内最高优惠限额">
+              <template slot-scope="scope"> {{ scope.row.limit_total_money }}元 </template>
             </el-table-column>
-            <el-table-column
-              label="状态"
-              min-width="200"
-            >
+            <el-table-column label="状态" min-width="200">
               <template slot-scope="scope">
                 <span v-if="scope.row.status == '1'">暂存</span>
                 <span v-if="scope.row.status == '2'">已发布</span>
@@ -103,10 +63,7 @@
                 <span v-if="scope.row.status == '4'">过期</span>
               </template>
             </el-table-column>
-            <el-table-column
-              label="操作"
-              min-width="150"
-            >
+            <el-table-column label="操作" min-width="150">
               <template slot-scope="scope">
                 <div class="operating-icons">
                   <el-button
@@ -165,18 +122,8 @@
               />
             </el-form-item>
             <el-form-item label="周期选择">
-              <el-radio
-                v-model="form.cycle_type"
-                label="1"
-                @change="cycleType"
-              >
-                自然月
-              </el-radio>
-              <el-radio
-                v-model="form.cycle_type"
-                label="2"
-                @change="cycleType"
-              >
+              <el-radio v-model="form.cycle_type" label="1" @change="cycleType"> 自然月 </el-radio>
+              <el-radio v-model="form.cycle_type" label="2" @change="cycleType">
                 特定时段
               </el-radio>
             </el-form-item>
@@ -193,9 +140,7 @@
                     placeholder="选择日期时间"
                   />
                 </el-col>
-                <el-col :span="1">
-                  ~
-                </el-col>
+                <el-col :span="1"> ~ </el-col>
                 <el-col :span="8">
                   <el-date-picker
                     v-model="form.end_time"
@@ -210,11 +155,7 @@
               </el-row>
             </el-form-item>
             <el-form-item label="周期内优惠折扣">
-              <el-input
-                v-model="form.discount"
-                placeholder="请输入内容"
-                style="width: 20%"
-              />%
+              <el-input v-model="form.discount" placeholder="请输入内容" style="width: 20%" />%
             </el-form-item>
             <el-form-item label="周期内优惠限额">
               <el-input
@@ -224,35 +165,13 @@
               />元
             </el-form-item>
             <el-form-item label="状态">
-              <el-radio
-                v-model="form.status"
-                label="1"
-              >
-                暂存
-              </el-radio>
-              <el-radio
-                v-model="form.status"
-                label="2"
-              >
-                直接发布
-              </el-radio>
-              <el-radio
-                v-model="form.status"
-                label="3"
-              >
-                停用
-              </el-radio>
+              <el-radio v-model="form.status" label="1"> 暂存 </el-radio>
+              <el-radio v-model="form.status" label="2"> 直接发布 </el-radio>
+              <el-radio v-model="form.status" label="3"> 停用 </el-radio>
             </el-form-item>
             <el-form-item>
-              <el-button @click.native="handleCancel">
-                取消
-              </el-button>
-              <el-button
-                type="primary"
-                @click="submitAction"
-              >
-                保存
-              </el-button>
+              <el-button @click.native="handleCancel"> 取消 </el-button>
+              <el-button type="primary" @click="submitAction"> 保存 </el-button>
             </el-form-item>
           </el-form>
         </template>
@@ -273,12 +192,12 @@ export default {
     shopSelect
   },
   mixins: [pageMixin],
-  provide () {
+  provide() {
     return {
       refresh: this.fetchList
     }
   },
-  data () {
+  data() {
     const initialParams = {
       specific: {
         name: undefined,
@@ -330,18 +249,18 @@ export default {
   computed: {
     ...mapGetters(['wheight'])
   },
-  mounted () {
+  mounted() {
     this.getAllMemberTagList()
     this.fetchList()
   },
   methods: {
-    onSearch () {
+    onSearch() {
       this.page.pageIndex = 1
       this.$nextTick(() => {
         this.fetchList()
       })
     },
-    onReset () {
+    onReset() {
       this.params = { ...this.initialParams }
       this.params = {
         ...this.params,
@@ -352,10 +271,10 @@ export default {
       }
       this.onSearch()
     },
-    handleSelectStore (storeItem) {
+    handleSelectStore(storeItem) {
       this.params.specific.id = storeItem.tag_id
     },
-    getParams () {
+    getParams() {
       let params = {
         ...this.params,
         specific_id: this.params.specific.id || undefined,
@@ -364,7 +283,7 @@ export default {
       }
       return params
     },
-    async fetchList () {
+    async fetchList() {
       this.loading = true
       const { pageIndex: page, pageSize } = this.page
       let params = {
@@ -378,16 +297,16 @@ export default {
       this.loading = false
     },
     // 切换tab
-    handleTabClick (tab, event) {
+    handleTabClick(tab, event) {
       this.onSearch()
     },
-    querySearch (queryString, cb) {
+    querySearch(queryString, cb) {
       var restaurants = this.memberTagList
       var results = queryString ? restaurants.filter(this.createFilter(queryString)) : restaurants
       // 调用 callback 返回建议列表的数据
       cb(results)
     },
-    getAllMemberTagList () {
+    getAllMemberTagList() {
       let params = { page: 1, page_size: 1000 }
       getTagList(params).then((response) => {
         if (response.data.data.list) {
@@ -397,15 +316,15 @@ export default {
         }
       })
     },
-    createFilter (queryString) {
+    createFilter(queryString) {
       return (restaurant) => {
         return restaurant.value.toLowerCase().indexOf(queryString.toLowerCase()) === 0
       }
     },
-    selectTag (tagdata) {
+    selectTag(tagdata) {
       this.form.specific_id = tagdata.tag_id
     },
-    submitAction () {
+    submitAction() {
       // this.form.start_time = this.dateStrToTimeStamp(this.form.start_time)
       // this.form.end_time = this.dateStrToTimeStamp(this.form.end_time)
       const obj = {
@@ -426,12 +345,12 @@ export default {
         })
       }
     },
-    cycleType (value) {
+    cycleType(value) {
       if (value == 1) {
         this.monthChange()
       }
     },
-    monthChange (select) {
+    monthChange(select) {
       var now = new Date() //当前日期
       var nowMonth = now.getMonth() //当前月
       if (select) {
@@ -445,7 +364,7 @@ export default {
       this.form.start_time = monthStartDate //Date.parse(monthStartDate)
       this.form.end_time = monthEndDate //Date.parse(monthEndDate)
     },
-    addActivityData () {
+    addActivityData() {
       this.form = {
         specific_type: 'member_tag',
         specific_id: '',
@@ -460,7 +379,7 @@ export default {
       this.activityItemDialog = true
       this.monthChange()
     },
-    editActivityAction (index, row) {
+    editActivityAction(index, row) {
       this.activityItemDialog = true
       this.form = row
       this.form.start_time = row.start_time * 1000
@@ -469,15 +388,15 @@ export default {
         this.monthChange()
       }
     },
-    handleCancel () {
+    handleCancel() {
       this.activityItemDialog = false
     },
 
-    dateStrToTimeStamp (str) {
+    dateStrToTimeStamp(str) {
       return Date.parse(new Date(str)) / 1000
     },
 
-    updateStatusCommunityAction (row) {
+    updateStatusCommunityAction(row) {
       var msg = '此操作将永久终止该活动, 是否继续?'
       this.$confirm(msg, '提示', {
         cancelButtonText: '取消',

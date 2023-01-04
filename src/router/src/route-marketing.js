@@ -86,7 +86,7 @@ export default {
     },
     {
       path: 'marketing/apply/registrationactivity',
-      name: `报名活动`,
+      name: `全部活动`,
       component: () => import('@/view/member/selfservice/registrationactivity'),
       children: [
         {
@@ -154,6 +154,10 @@ export default {
         {
           path: 'detail',
           component: () => import('@/view/member/promotions/purchase/detail')
+        },
+        {
+          path: 'dependents',
+          component: () => import('@/view/member/promotions/purchase/dependents')
         }
       ]
     },

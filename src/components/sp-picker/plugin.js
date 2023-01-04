@@ -1,7 +1,7 @@
 import Main from './main'
 
 export default {
-  install (Vue, options = {}) {
+  install(Vue, options = {}) {
     const Ctor = Vue.extend(Main)
 
     const fn = (value) => {
@@ -13,7 +13,7 @@ export default {
       return new Promise((resolve, reject) => {
         const vm = new Ctor({
           propsData: data,
-          created () {
+          created() {
             const teardown = () => {
               this.$destroy()
               this.$el.remove()
@@ -30,8 +30,11 @@ export default {
     }
 
     const $picker = {
-      image: (args) => fn({ value: { ...args }, type: 'pickerImage' }),
+      image: (args) => fn({ value: { ...args }, type: 'pickerImage', width: '788px' }),
       goods: (args) => fn({ value: { ...args }, type: 'pickerGoods', width: '1110px' }),
+      shop: (args) => fn({ value: { ...args }, type: 'pickerShop' }),
+      zitilist: (args) => fn({ value: { ...args }, type: 'pickerZitiList' }),
+      aftersalesList: (args) => fn({ value: { ...args }, type: 'pickerAftersalesList' }),
       path: fn
     }
 

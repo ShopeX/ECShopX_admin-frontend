@@ -389,7 +389,7 @@ export default {
     },
     async submitItemsActionConfirm() {
       try {
-        if (this.is_normal) {
+        if (this.is_normal && this.baseForm.distributor_self == 0) {
           await this.formValidate()
         }
         await this.$refs['baseFormRef'].validate()
@@ -397,6 +397,7 @@ export default {
           await this.$refs['dadaFormRef'].validate()
         }
       } catch (e) {
+        console.error(e)
         this.$message.error('店铺信息未填写完整')
         return
       }

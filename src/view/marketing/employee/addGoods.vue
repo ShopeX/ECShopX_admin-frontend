@@ -9,8 +9,12 @@
       margin: 0;
     }
   }
+  .el-table__expand-icon {
+    position: absolute;
+  }
   .item-info {
     display: flex;
+    margin-left: 30px;
   }
   .item-image {
     width: 64px;
@@ -26,7 +30,7 @@
     .el-table__body-wrapper,
     .el-table__fixed-right {
       .el-table__row {
-        .el-table__cell:first-child .cell {
+        .el-table__cell:nth-child(2) .cell {
           display: flex;
         }
       }
@@ -95,7 +99,12 @@
         default-expand-all
         :tree-props="{ children: 'spec_items' }"
       >
-        <el-table-column class="item" prop="item_name" label="商品标题" width="380">
+        <el-table-column type="selection" width="55">
+          <template slot-scope="scope">
+            <el-checkbox v-if="!scope.row.is_sku" />
+          </template>
+        </el-table-column>
+        <el-table-column prop="item_name" label="商品标题" width="380">
           <template slot-scope="scope">
             <div v-if="!scope.row.is_sku" class="item-info">
               <div>
@@ -110,10 +119,9 @@
                     style="margin-left: 4px"
                     type="text"
                     @click="onSelectSku(scope.row)"
-                    >
-选择规格
-</el-button
                   >
+                    选择规格
+                  </el-button>
                 </div>
               </div>
             </div>
@@ -126,19 +134,17 @@
           <template
             v-if="(scope.row.nospec == 'false' && scope.row.is_sku) || scope.row.nospec == 'true'"
             slot-scope="scope"
-            >
-{{ scope.row.store }}
-</template
           >
+            {{ scope.row.store }}
+          </template>
         </el-table-column>
         <el-table-column prop="price" label="商城价格（元）">
           <template
             v-if="(scope.row.nospec == 'false' && scope.row.is_sku) || scope.row.nospec == 'true'"
             slot-scope="scope"
-            >
-{{ scope.row.price / 100 }}
-</template
           >
+            {{ scope.row.price / 100 }}
+          </template>
         </el-table-column>
         <el-table-column prop="activity_price" label="活动价格（元）">
           <template
@@ -321,17 +327,25 @@ export default {
   data() {
     return {
       formBase: {
-        name: '1'
+        value: '1'
       },
       formBaseList: [
         {
           label: '商品库存',
-          key: 'name',
+          key: 'value',
           type: 'radio',
           options: [
             { name: '共享商城额度', label: '1' },
             { name: '活动独立库存', label: '2' }
-          ]
+          ],
+          onChange: async () => {
+            const { id } = this.$route.params
+            await this.$api.marketing.setActivityShareStore({
+              activity_id: id,
+              if_share_store: this.formBase.value == '1' ? 1 : 0
+            })
+            this.$message.success('操作成功')
+          }
         }
       ],
       queryForm: {
@@ -357,6 +371,7 @@ export default {
     }
   },
   async created() {
+    this.getActivityItemDetail()
     // 管理分类
     const category = await this.$api.goods.getCategory({ is_main_category: true })
     // 销售分类
@@ -369,7 +384,11 @@ export default {
     }).nextPage()
   },
   methods: {
-    onSearch() {},
+    async getActivityItemDetail() {
+      const { id } = this.$route.params
+      const { if_share_store } = await this.$api.marketing.getActivityItemDetail(id)
+      this.formBase.value = if_share_store ? '1' : '2'
+    },
     async onSelectGoods() {
       const { data } = await this.$picker.goodsList({
         // data: 100,

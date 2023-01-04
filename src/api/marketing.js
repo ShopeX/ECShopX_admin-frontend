@@ -584,6 +584,14 @@ export function getActivityItems(params) {
   })
 }
 
+// 获取内购活动详情
+export function getActivityItemDetail(activityId) {
+  return fetch({
+    url: `/employeepurchase/activity/${activityId}`,
+    method: 'get'
+  })
+}
+
 // 删除内购活动商品
 export function deleteActivityItem(activityId, itemId) {
   return fetch({
@@ -597,6 +605,15 @@ export function updateActivityItem(params) {
   return fetch({
     url: `/employeepurchase/activity/items`,
     method: 'put',
+    params
+  })
+}
+
+// 设置活动是否共享库存
+export function setActivityShareStore(params) {
+  return fetch({
+    url: `/employeepurchase/activity/if_share_store`,
+    method: 'post',
     params
   })
 }

@@ -16,6 +16,9 @@
     display: flex;
     margin-left: 30px;
   }
+  .item-spec {
+    margin-left: 64px;
+  }
   .item-image {
     width: 64px;
     margin-right: 4px;
@@ -60,34 +63,34 @@
       />
       <!-- {{ queryForm }} -->
       <SpFilterForm :model="queryForm" @onSearch="onSearch" @onReset="onSearch">
-        <SpFilterFormItem prop="category" label="管理分类:">
+        <SpFilterFormItem prop="main_cat_id" label="管理分类:">
           <el-cascader
-            v-model="queryForm.category"
+            v-model="queryForm.main_cat_id"
             :options="categoryList"
             :props="{ checkStrictly: true, label: 'category_name', value: 'category_id' }"
             clearable
           />
         </SpFilterFormItem>
-        <SpFilterFormItem prop="salesCategory" label="销售分类:">
+        <SpFilterFormItem prop="cat_id" label="销售分类:">
           <el-cascader
-            v-model="queryForm.salesCategory"
+            v-model="queryForm.cat_id"
             :options="salesCategoryList"
             :props="{ checkStrictly: true, label: 'category_name', value: 'category_id' }"
             clearable
           />
         </SpFilterFormItem>
-        <SpFilterFormItem prop="name" label="商品名称:">
-          <el-input v-model="queryForm.name" placeholder="请输入商品名称" />
+        <SpFilterFormItem prop="item_name" label="商品名称:">
+          <el-input v-model="queryForm.item_name" placeholder="请输入商品名称" />
         </SpFilterFormItem>
-        <SpFilterFormItem prop="sn" label="货号:">
-          <el-input v-model="queryForm.sn" placeholder="请输入货号" />
+        <SpFilterFormItem prop="item_bn" label="货号:">
+          <el-input v-model="queryForm.item_bn" placeholder="请输入货号" />
         </SpFilterFormItem>
       </SpFilterForm>
 
       <div class="action-container">
         <el-button type="primary" plain> 导入商品 </el-button>
         <el-button type="primary" plain @click="onSelectGoods"> 选择商品 </el-button>
-        <el-button type="primary" plain> 批量设置 </el-button>
+        <el-button type="primary" plain @click="handlePatchAction"> 批量设置 </el-button>
       </div>
 
       <el-table
@@ -98,10 +101,11 @@
         border
         default-expand-all
         :tree-props="{ children: 'spec_items' }"
+        @select-all="onSelectAll"
       >
         <el-table-column type="selection" width="55">
           <template slot-scope="scope">
-            <el-checkbox v-if="!scope.row.is_sku" />
+            <el-checkbox v-if="!scope.row.is_sku" v-model="scope.row.checked" />
           </template>
         </el-table-column>
         <el-table-column prop="item_name" label="商品标题" width="380">
@@ -317,6 +321,15 @@
         @current-change="handleCurrentChange"
       />
     </el-card>
+
+    <SpDialog
+      ref="patchDialogRef"
+      v-model="patchDialog"
+      :title="`批量设置`"
+      :form="patchForm"
+      :form-list="patchFormList"
+      @onSubmit="onPatchChangeSubmit"
+    />
   </div>
 </template>
 
@@ -348,11 +361,47 @@ export default {
           }
         }
       ],
+      patchDialog: false,
+      patchForm: {
+        item_id: [],
+        activity_price: 0,
+        activity_store: 0,
+        sort: 0,
+        limit_num: 0,
+        limit_fee: 0
+      },
+      patchFormList: [
+        {
+          label: '活动价格',
+          key: 'activity_price',
+          type: 'input'
+        },
+        {
+          label: '活动库存',
+          key: 'activity_store',
+          type: 'input'
+        },
+        {
+          label: '排序',
+          key: 'sort',
+          type: 'input'
+        },
+        {
+          label: '每人限购',
+          key: 'limit_num',
+          type: 'input'
+        },
+        {
+          label: '每人限额',
+          key: 'limit_fee',
+          type: 'input'
+        }
+      ],
       queryForm: {
-        category: [],
-        salesCategory: [],
-        name: '',
-        sn: ''
+        main_cat_id: [],
+        cat_id: [],
+        item_name: '',
+        item_bn: ''
       },
       categoryList: [],
       salesCategoryList: [],
@@ -384,6 +433,56 @@ export default {
     }).nextPage()
   },
   methods: {
+    handlePatchAction() {
+      const selectItems = this.tableData.filter((item) => !!item.checked)
+      if (selectItems.length > 0) {
+        let itemIds = []
+        selectItems.forEach((item) => {
+          // 单规格
+          if (item.nospec == 'true') {
+            itemIds.push(item.item_id)
+          } else if (typeof item.spec_items != 'undefined') {
+            item.spec_items.forEach((sitem) => {
+              itemIds.push(sitem.item_id)
+            })
+          }
+        })
+        this.patchForm.item_id = itemIds
+        this.patchDialog = true
+      } else {
+        this.$message.error('请选择商品')
+      }
+    },
+    async onPatchChangeSubmit() {
+      const { id } = this.$route.params
+      const { item_id, activity_price, activity_store, sort, limit_num, limit_fee } = this.patchForm
+      let params = {
+        activity_id: id,
+        item_id,
+        activity_price: activity_price * 100,
+        activity_store,
+        sort,
+        limit_num,
+        limit_fee: limit_fee * 100
+      }
+      await this.$api.marketing.updateActivityItem(params)
+      this.patchDialog = false
+      this.pagesQuery.refresh()
+    },
+    onSelectAll(selection) {
+      if (selection.length > 0) {
+        this.tableData.forEach((item) => {
+          item['checked'] = true
+        })
+      } else {
+        this.tableData.forEach((item) => {
+          item['checked'] = false
+        })
+      }
+    },
+    onSearch() {
+      this.pagesQuery.reset()
+    },
     async getActivityItemDetail() {
       const { id } = this.$route.params
       const { if_share_store } = await this.$api.marketing.getActivityItemDetail(id)
@@ -407,7 +506,8 @@ export default {
       const { list, total_count } = await this.$api.marketing.getActivityItems({
         activity_id: id,
         page,
-        pageSize
+        pageSize,
+        ...this.queryForm
       })
       this.loading = false
       let tindex = 0
@@ -416,6 +516,7 @@ export default {
         item['activity_price'] = item.activity_price / 100
         item['limit_fee'] = item.limit_fee / 100
         item['tid'] = ++tindex
+        item['checked'] = false
         if (typeof item.spec_items != 'undefined') {
           item.spec_items.forEach((sitem) => {
             sitem['is_sku'] = true

@@ -617,3 +617,43 @@ export function setActivityShareStore(params) {
     params
   })
 }
+
+// 取消内购活动
+export function cancelPurchaseActivity(activityId) {
+  return fetch({
+    url: `/employeepurchase/activity/cancel/${activityId}`,
+    method: 'post'
+  })
+}
+
+// 暂停内购活动
+export function pendingPurchaseActivity(activityId) {
+  return fetch({
+    url: `/employeepurchase/activity/suspend/${activityId}`,
+    method: 'post'
+  })
+}
+
+// 重新开始内购活动
+export function activePurchaseActivity(activityId) {
+  return fetch({
+    url: `/employeepurchase/activity/active/${activityId}`,
+    method: 'post'
+  })
+}
+
+// 结束内购活动
+export function endPurchaseActivity(activityId) {
+  return fetch({
+    url: `/employeepurchase/activity/end/${activityId}`,
+    method: 'post'
+  })
+}
+
+// 提前开始内购活动
+export function aheadPurchaseActivity(activityId) {
+  return fetch({
+    url: `/employeepurchase/activity/ahead/${activityId}`,
+    method: 'post'
+  })
+}

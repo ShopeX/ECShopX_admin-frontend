@@ -104,7 +104,7 @@ export default {
             key: 'sort',
             showType: 'pop-editable',
             componentProps: {
-              icon: 'iconfont icon-edit',
+              icon: 'el-icon-edit',
               popperClass: 'sp-finder__popover-edit',
               change: async (v, row) => {
                 await this.$api.member.updateCompanySort({

@@ -107,7 +107,6 @@
 <template>
   <div class="marketing-employee-purchase">
     <el-card class="el-card--normal" header="基础信息">
-      {{ formBase }}
       <SpForm
         ref="formBase"
         v-model="formBase"
@@ -117,7 +116,6 @@
       />
     </el-card>
     <el-card class="el-card--normal" header="活动规则">
-      {{ activityRule }}
       <SpForm
         ref="activityRule"
         v-model="activityRule"
@@ -152,7 +150,7 @@ export default {
         name: '',
         title: '',
         linkHome: null,
-        pic: {}
+        pic: ''
       },
       formBaseList: [
         {
@@ -424,8 +422,49 @@ export default {
       ]
     }
   },
-  created() {},
+  created() {
+    const { id } = this.$route.params
+    if (id) {
+      this.getActivityItemDetail(id)
+    }
+  },
   methods: {
+    async getActivityItemDetail(id) {
+      const res = await this.$api.marketing.getActivityItemDetail(id)
+      const linkHome = await this.$api.template.getPagesTemplateDetail({
+        pages_template_id: res.pages_template_id
+      })
+      this.formBase = {
+        name: res.name,
+        title: res.title,
+        linkHome,
+        pic: res.share_pic
+      }
+
+      const { list } = await this.$api.member.getPurchaseCompanyList({
+        page: 1,
+        pageSize: 100,
+        enterprise_id: res.enterprise_id
+      })
+
+      this.activityRule = {
+        companyList: list,
+        preheatTime: res.display_time * 1000,
+        employee: {
+          datetime: [res.employee_begin_time * 1000, res.employee_end_time * 1000],
+          quota: res.employee_limitfee
+        },
+        relatives: {
+          join: res.if_relative_join,
+          num: res.invite_limit,
+          datetime: [res.relative_begin_time * 1000, res.relative_end_time * 1000],
+          type: res.if_share_limitfee ? '2' : '1',
+          shareLimit: res.relative_limitfee
+        },
+        orderMiniAmount: res.minimum_amount,
+        modifyReceiveAddress: res.close_modify_hours_after_activity
+      }
+    },
     async onPickerTemp() {
       const { data } = await this.$picker.template({
         data: this.formBase.linkHome?.pages_template_id || [],

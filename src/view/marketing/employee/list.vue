@@ -100,7 +100,10 @@ export default {
       activityStatus: [
         { title: '全部', value: 'all' },
         { title: '未开始', value: 'not_started' },
+        { title: '预热中', value: 'warm_up' },
         { title: '进行中', value: 'ongoing' },
+        { title: '已暂停', value: 'pending' },
+        { title: '已取消', value: 'cancel' },
         { title: '已结束', value: 'over' }
       ],
       setting: createSetting({
@@ -110,10 +113,26 @@ export default {
             key: 'modify',
             type: 'button',
             buttonType: 'text',
+            visible: (row) => {
+              return row.status != 'cancel' && row.status != 'over'
+            },
             action: {
               handler: async ([row]) => {
-                Object.keys(this.companyForm).forEach((key) => (this.companyForm[key] = row[key]))
-                this.addDialog = true
+                this.$router.push({ path: `/marketing/employee/purchase/create/${row.id}` })
+              }
+            }
+          },
+          {
+            name: '查看',
+            key: 'modify',
+            type: 'button',
+            buttonType: 'text',
+            visible: (row) => {
+              return row.status == 'cancel' || row.status == 'over'
+            },
+            action: {
+              handler: async ([row]) => {
+                this.$router.push({ path: `/marketing/employee/purchase/create/${row.id}` })
               }
             }
           },
@@ -129,7 +148,7 @@ export default {
             }
           },
           {
-            name: '商品2',
+            name: '亲友数据',
             key: 'modify',
             type: 'button',
             buttonType: 'text',
@@ -141,7 +160,7 @@ export default {
             }
           },
           {
-            name: '商品3',
+            name: '活动订单',
             key: 'modify',
             type: 'button',
             buttonType: 'text',
@@ -149,6 +168,70 @@ export default {
               handler: async ([row]) => {
                 Object.keys(this.companyForm).forEach((key) => (this.companyForm[key] = row[key]))
                 this.addDialog = true
+              }
+            }
+          },
+          {
+            name: '取消',
+            key: 'modify',
+            type: 'button',
+            buttonType: 'text',
+            visible: (row) => {
+              return row.status == 'not_started'
+            },
+            action: {
+              handler: async ([row]) => {
+                await this.$confirm(`确认操作？`, '提示')
+                await this.$api.marketing.cancelPurchaseActivity(row.id)
+                this.$refs['finder'].refresh()
+              }
+            }
+          },
+          {
+            name: '提前开始',
+            key: 'modify',
+            type: 'button',
+            buttonType: 'text',
+            visible: (row) => {
+              return row.status == 'warm_up'
+            },
+            action: {
+              handler: async ([row]) => {
+                await this.$confirm(`确认操作？`, '提示')
+                await this.$api.marketing.aheadPurchaseActivity(row.id)
+                this.$refs['finder'].refresh()
+              }
+            }
+          },
+          {
+            name: '暂停',
+            key: 'modify',
+            type: 'button',
+            buttonType: 'text',
+            visible: (row) => {
+              return row.status == 'pending' || row.status == 'ongoing'
+            },
+            action: {
+              handler: async ([row]) => {
+                await this.$confirm(`确认操作？`, '提示')
+                await this.$api.marketing.pendingPurchaseActivity(row.id)
+                this.$refs['finder'].refresh()
+              }
+            }
+          },
+          {
+            name: '结束',
+            key: 'modify',
+            type: 'button',
+            buttonType: 'text',
+            visible: (row) => {
+              return row.status == 'warm_up' || row.status == 'pending' || row.status == 'ongoing'
+            },
+            action: {
+              handler: async ([row]) => {
+                await this.$confirm(`确认操作？`, '提示')
+                await this.$api.marketing.endPurchaseActivity(row.id)
+                this.$refs['finder'].refresh()
               }
             }
           }

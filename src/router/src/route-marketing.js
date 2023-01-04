@@ -17,7 +17,7 @@ export default {
           component: () => import('@/view/marketing/employee/list')
         },
         {
-          path: 'create',
+          path: 'create/:id?',
           component: () => import('@/view/marketing/employee/purchase')
         },
         {

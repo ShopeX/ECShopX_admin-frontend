@@ -19,7 +19,7 @@
 <script>
 import { mapGetters } from 'vuex'
 import api from '@/api'
-import { IS_ADMIN } from '@/utils'
+import { VERSION_PLATFORM } from '@/utils'
 
 export default {
   props: {
@@ -158,7 +158,7 @@ export default {
           })
           break
         case 'sale_category':
-          if(IS_ADMIN){
+          if(VERSION_PLATFORM){
             if (distributor_id) {
             Object.assign(query, {
               distributor_id

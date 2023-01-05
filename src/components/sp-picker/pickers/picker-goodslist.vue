@@ -102,7 +102,13 @@
       </div>
       <el-cascader-panel
         :options="categoryList"
-        :props="{ checkStrictly: true, label: 'category_name', value: 'category_id' }"
+        :props="{
+          checkStrictly: true,
+          label: 'category_name',
+          value: 'category_id',
+          multiple: true
+        }"
+        @change="onChangeCategory"
       />
     </div>
 
@@ -120,6 +126,7 @@
       <el-cascader-panel
         :options="salesCategoryList"
         :props="{ checkStrictly: true, label: 'category_name', value: 'category_id' }"
+        @change="onChangeSalesCategory"
       />
     </div>
   </div>
@@ -232,16 +239,23 @@ export default {
       this.list = list
       return { count: total_count }
     },
-    handleSelectionChange(val) {
-      this.multipleSelection = val
-      this.updateVal(val)
+    onChangeCategory(e) {
+      this.updateVal({
+        type: 'category',
+        value: e
+      })
     },
-    handleClickCatgory({ image_cat_id }) {
-      this.selectCatgory = image_cat_id
-      this.refresh(true)
+    onChangeSalesCategory(e) {
+      this.updateVal({
+        type: 'salesCategory',
+        value: e
+      })
     },
     onSelectionChange(selection) {
-      this.updateVal(selection)
+      this.updateVal({
+        type: 'goods',
+        value: selection
+      })
     }
   }
 }

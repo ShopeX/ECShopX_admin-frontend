@@ -21,7 +21,10 @@
       <SpFilterFormItem prop="name" label="活动名称:">
         <el-input v-model="queryForm.name" placeholder="活动名称关键词" />
       </SpFilterFormItem>
-      <SpFilterFormItem prop="datetime" label="活动时间:" size="max">
+      <SpFilterFormItem prop="display_time_begin" label="预热时间:">
+        <el-date-picker v-model="queryForm.display_time_begin" type="date" placeholder="选择日期" />
+      </SpFilterFormItem>
+      <SpFilterFormItem prop="datetime" label="购买时间:" size="max">
         <el-date-picker
           v-model="queryForm.datetime"
           clearable
@@ -38,7 +41,7 @@
       <SpFilterFormItem prop="enterprise_id" label="参与企业:" size="max">
         <el-select
           v-model="queryForm.enterprise_id"
-          v-scroll="getEnterpriseList"
+          v-scroll="() => pagesQuery.nextPage()"
           multiple
           placeholder="请选择"
         >
@@ -90,6 +93,7 @@ export default {
     return {
       queryForm: {
         name: '',
+        display_time_begin: '',
         datetime: [],
         enterprise_id: [],
         activityState: 'all'
@@ -275,23 +279,41 @@ export default {
     }
   },
   created() {
-    this.pagesQuery = new Pages()
-    this.getEnterpriseList()
+    this.pagesQuery = new Pages({
+      fetch: this.getEnterpriseList
+    }).nextPage()
   },
   methods: {
     beforeSearch(params) {
       const {
         name,
-        datetime: [display_time_begin, display_time_end],
+        display_time_begin,
+        datetime: [buy_time_begin, buy_time_end],
         enterprise_id,
         activityState
       } = this.queryForm
       params = {
         ...params,
-        display_time_begin,
-        display_time_end,
         enterprise_id,
         name
+      }
+      if (display_time_begin) {
+        params = {
+          ...params,
+          display_time_begin: moment(display_time_begin).unix()
+        }
+      }
+      if (buy_time_begin) {
+        params = {
+          ...params,
+          buy_time_begin: moment(buy_time_begin).unix()
+        }
+      }
+      if (buy_time_end) {
+        params = {
+          ...params,
+          buy_time_end: moment(buy_time_end).unix()
+        }
       }
       if (activityState != 'all') {
         params = {
@@ -307,16 +329,13 @@ export default {
     createActivity() {
       this.$router.push({ path: '/marketing/employee/purchase/create' })
     },
-    async getEnterpriseList() {
-      const { page, pageSize, nextPage } = this.pagesQuery.options
-      if (nextPage) {
-        const { list, total_count } = await this.$api.member.getPurchaseCompanyList({
-          page,
-          pageSize
-        })
-        this.pagesQuery.setTotal(total_count)
-        this.enterpriseList = this.enterpriseList.concat(list)
-      }
+    async getEnterpriseList({ page, pageSize }) {
+      const { list, total_count } = await this.$api.member.getPurchaseCompanyList({
+        page,
+        pageSize
+      })
+      this.pagesQuery.setTotal(total_count)
+      this.enterpriseList = this.enterpriseList.concat(list)
     }
   }
 }

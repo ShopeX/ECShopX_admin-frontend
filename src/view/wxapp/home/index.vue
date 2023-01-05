@@ -52,7 +52,16 @@
     </div>
 
     <el-row :gutter="20" class="template-list">
-      <el-col v-for="(item, index) in templateList" :key="index" class="template-col" :span="6">
+      <el-col
+        v-for="(item, index) in templateList"
+        :key="index"
+        class="template-col"
+        :xs="12"
+        :sm="12"
+        :md="8"
+        :lg="6"
+        :xl="4"
+      >
         <div class="template-item">
           <div class="img-wrap">
             <div class="preview-cover" @click="previewTemplate(item.pages_template_id)">
@@ -125,7 +134,7 @@
           </div>
         </div>
       </el-col>
-      <el-col :span="6">
+      <el-col class="template-col" :xs="12" :sm="12" :md="8" :lg="6" :xl="4">
         <div
           :class="{
             'template-item': true,
@@ -239,7 +248,7 @@ export default {
     TemplatePreview
   },
   data() {
-    const { distributor_id } = this.$route.query
+    const { distributor_id } = this.$route?.query || {}
     return {
       relStore: {
         id: distributor_id ?? 0
@@ -931,6 +940,7 @@ export default {
   flex-wrap: wrap;
   .template-col {
     margin-bottom: 20px;
+    // width: 300px;
   }
   .template-item {
     border-radius: 10px;
@@ -942,7 +952,8 @@ export default {
       justify-content: center;
       align-items: center;
       background: #f2f2f2;
-      height: calc(100% - 20px);
+      // height: calc(100% - 20px);
+      height: 100%;
       cursor: pointer;
       &.sync-template {
         height: 444px;

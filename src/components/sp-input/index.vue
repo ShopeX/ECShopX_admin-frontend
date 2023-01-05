@@ -15,6 +15,7 @@
       v-model="val"
       :placeholder="placeHolder"
       :style="styleName"
+      :disabled="disabled"
       type="text"
       @change="onChangeInput"
     />
@@ -45,6 +46,10 @@ export default {
     placeholder: {
       type: String,
       default: ''
+    },
+    disabled: {
+      type: Boolean,
+      default: false
     }
   },
   data() {

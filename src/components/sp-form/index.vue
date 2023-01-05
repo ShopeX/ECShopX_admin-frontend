@@ -102,7 +102,7 @@ export default {
         comp.resetField && comp.resetField(comp.$parent.initialValue)
       })
     },
-    getItemShow({ isShow }) {
+    getItemShow({ isShow }, item) {
       if (isFunction(isShow)) {
         return isShow()
       } else {
@@ -126,12 +126,13 @@ export default {
     },
     _renderInput(item) {
       const { value } = this
-      const { className, placeholder, append, key, maxlength } = item
+      const { className, placeholder, append, key, maxlength, disabled = false } = item
       return (
         <el-input
           clearable
           class={className}
           type='text'
+          disabled={disabled}
           maxlength={maxlength}
           showWordLimit={!!maxlength}
           placeholder={placeholder || '请输入内容'}
@@ -235,7 +236,7 @@ export default {
     const localComps = []
     const getComponentByType = (item) => {
       if (typeof item.component != 'undefined') {
-        const comp = item.component()
+        const comp = item.component(item)
         const { context, data } = comp
         if (data && data.ref) {
           localComps.push(context.$refs[data.ref])
@@ -293,7 +294,7 @@ export default {
               <el-form-item
                 label={item.label ? `${item.label}:` : ''}
                 prop={item.key}
-                v-show={this.getItemShow(item)}
+                v-show={this.getItemShow(item, item)}
               >
                 {getComponentByType(item)}
                 <div class='form-item-tip' domPropsInnerHTML={item.tip}></div>

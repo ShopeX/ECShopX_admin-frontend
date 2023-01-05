@@ -134,7 +134,13 @@
       >
         取消
       </el-button>
-      <el-button type="primary" @click="onSubmitForm"> 保存 </el-button>
+      <el-button
+        type="primary"
+        disabled="activityStatus == 'cancel' || activityStatus == 'over'"
+        @click="onSubmitForm"
+      >
+        保存
+      </el-button>
     </div>
   </div>
 </template>
@@ -160,6 +166,7 @@ export default {
           type: 'input',
           required: true,
           maxlength: 30,
+          disabled: false,
           placeholder: '活动名称，管理活动用，不对消费者展示，最多30个字',
           message: '活动名称不能为空'
         },
@@ -170,6 +177,7 @@ export default {
           type: 'input',
           required: true,
           maxlength: 16,
+          disabled: false,
           placeholder: '活动标题，再活动列表展示，最多16个字',
           message: '活动标题不能为空',
           tip: '活动标题在活动列表展示，也会作为分享小程序的卡片标题使用'
@@ -177,16 +185,17 @@ export default {
         {
           label: '活动首页',
           key: 'linkHome',
-          component: () => (
+          component: ({ disabled }) => (
             <div>
               <span class='link-home'>
                 {this.formBase?.linkHome && this.formBase.linkHome.template_title}
               </span>
-              <el-button type='text' on-click={this.onPickerTemp}>
+              <el-button type='text' disabled={disabled} on-click={this.onPickerTemp}>
                 选择首页
               </el-button>
             </div>
           ),
+          disabled: false,
           validator: (rule, value, callback) => {
             if (!this.formBase.linkHome) {
               callback(new Error('请选择活动首页'))
@@ -238,7 +247,7 @@ export default {
           label: '参与企业',
           key: 'companyList',
           type: 'input',
-          component: () => (
+          component: ({ disabled }) => (
             <div class='company-list'>
               {this.activityRule.companyList.map((item, index) => (
                 <el-tag
@@ -251,12 +260,12 @@ export default {
                   {item.name}
                 </el-tag>
               ))}
-              <el-button type='text' on-click={this.onPickerCompany}>
+              <el-button type='text' disabled={disabled} on-click={this.onPickerCompany}>
                 选择企业
               </el-button>
             </div>
           ),
-          placeholder: '活动名称，管理活动用，不对消费者展示，最多30个字',
+          disabled: false,
           validator: (rule, value, callback) => {
             if (this.activityRule.companyList.length == 0) {
               callback(new Error('请选择参与企业'))
@@ -268,18 +277,19 @@ export default {
         {
           label: '开始预热',
           key: 'preheatTime',
-          component: () => (
+          component: ({ disabled }) => (
             <div class='preheat-time'>
               从
               <el-date-picker
-                class=''
                 v-model={this.activityRule.preheatTime}
+                disabled={disabled}
                 type='datetime'
                 placeholder='选择日期时间'
               ></el-date-picker>
               开始活动将展示在活动列表
             </div>
           ),
+          disabled: false,
           validator: (rule, value, callback) => {
             if (this.activityRule.preheatTime.length == 0) {
               callback(new Error('请选择活动预热时间'))
@@ -291,13 +301,14 @@ export default {
         {
           label: '员工',
           key: 'employee',
-          component: () => (
+          component: ({ disabled: { datetime, quota } }) => (
             <div class='activity-employee-field'>
               <div class='form-item-content'>
                 <div class='content-item'>
                   <label>购买时间</label>
                   <el-date-picker
                     v-model={this.activityRule.employee.datetime}
+                    disabled={datetime}
                     type='daterange'
                     range-separator='至'
                     start-placeholder='开始时间'
@@ -312,6 +323,7 @@ export default {
                   <SpInput
                     v-model={this.activityRule.employee.quota}
                     width='120px'
+                    disabled={quota}
                     placeholder='大于0的整数'
                     prefix='每人最多可购买额度'
                     suffix='元'
@@ -320,6 +332,10 @@ export default {
               </div>
             </div>
           ),
+          disabled: {
+            datetime: false,
+            quota: false
+          },
           validator: (rule, value, callback) => {
             if (this.activityRule.employee.datetime.length == 0) {
               callback(new Error('请选择活动购买时间'))
@@ -333,11 +349,11 @@ export default {
         {
           label: '亲友',
           key: 'relatives',
-          component: () => (
+          component: ({ disabled: { join, num, datetime, type, shareLimit } }) => (
             <div class='activity-relatives-field'>
               <div class='form-item-content'>
                 <div class='content-item'>
-                  <el-switch v-model={this.activityRule.relatives.join} />
+                  <el-switch v-model={this.activityRule.relatives.join} disabled={join} />
                   <span class='form-item-tip'>亲友参与活/亲友不参与活动</span>
                 </div>
               </div>
@@ -347,6 +363,7 @@ export default {
                   <SpInput
                     v-model={this.activityRule.relatives.num}
                     width='120px'
+                    disabled={num}
                     placeholder='大于0的整数'
                     prefix='每名员工最多可邀请'
                     suffix='名亲友'
@@ -358,6 +375,7 @@ export default {
                   <label>购买时间</label>
                   <el-date-picker
                     v-model={this.activityRule.relatives.datetime}
+                    disabled={datetime}
                     type='daterange'
                     range-separator='至'
                     start-placeholder='开始时间'
@@ -370,10 +388,15 @@ export default {
                   <label>购买额度</label>
                   <div class='content-item-field'>
                     <div class='item-wrap'>
-                      <el-radio v-model={this.activityRule.relatives.type} label='1'>
+                      <el-radio
+                        v-model={this.activityRule.relatives.type}
+                        disabled={type}
+                        label='1'
+                      >
                         <SpInput
                           v-model={this.activityRule.relatives.shareLimit}
                           width='120px'
+                          disabled={shareLimit}
                           placeholder='大于0的整数'
                           prefix='每人最多可购买额度'
                           suffix='元'
@@ -381,7 +404,11 @@ export default {
                       </el-radio>
                     </div>
                     <div class='item-wrap'>
-                      <el-radio v-model={this.activityRule.relatives.type} label='2'>
+                      <el-radio
+                        v-model={this.activityRule.relatives.type}
+                        disabled={type}
+                        label='2'
+                      >
                         共享员工额度
                       </el-radio>
                     </div>
@@ -390,36 +417,48 @@ export default {
               </div>
             </div>
           ),
+          disabled: {
+            join: false,
+            num: false,
+            datetime: false,
+            type: false,
+            shareLimit: false
+          },
           message: '活动名称不能为空'
         },
         {
           label: '订单最低金额',
           key: 'orderMiniAmount',
-          component: () => (
+          component: ({ disabled }) => (
             <SpInput
               v-model={this.activityRule.orderMiniAmount}
+              disabled={disabled}
               width='120px'
               placeholder='大于0的整数'
               prefix='单笔订单不低于'
               suffix='元'
             />
-          )
+          ),
+          disabled: false
         },
         {
           label: '修改收货地址',
           key: 'modifyReceiveAddress',
-          component: () => (
+          component: ({ disabled }) => (
             <SpInput
               v-model={this.activityRule.modifyReceiveAddress}
+              disabled={disabled}
               width='140px'
               placeholder='大于等于0的整数'
               prefix='活动进行中所有买家（员工和亲友）都可以修改收货地址，活动结束后'
               suffix='小时内买家可修改收货地址，已发货订单不允许修改收货地址'
             />
           ),
+          disabled: false,
           tip: '请输入大于等于0的整数，从活动结束时间开始开始计算，例如24代表活动结束后24个小时(1天)内买家都可以修改收货地址；活动进行过程中允许买家修改地址'
         }
-      ]
+      ],
+      activityStatus: ''
     }
   },
   created() {
@@ -440,6 +479,43 @@ export default {
         linkHome,
         pic: res.share_pic
       }
+
+      // 进行中、已暂停
+      if (res.status == 'ongoing' || res.status == 'pending') {
+        this.activityRuleList[2].disabled = {
+          datetime: false,
+          quota: true
+        }
+        this.activityRuleList[3]['disabled'] = {
+          join: false,
+          num: true,
+          datetime: false,
+          type: false,
+          shareLimit: true
+        }
+      } else if (res.status == 'cancel' || res.status == 'over') {
+        // 已取消、已结束
+        this.formBaseList[0].disabled = true
+        this.formBaseList[1].disabled = true
+        this.formBaseList[2].disabled = true
+
+        this.activityRuleList[0].disabled = true
+        this.activityRuleList[1].disabled = true
+        this.activityRuleList[2].disabled = {
+          datetime: true,
+          quota: true
+        }
+        this.activityRuleList[3]['disabled'] = {
+          join: true,
+          num: true,
+          datetime: true,
+          type: true,
+          shareLimit: true
+        }
+        this.activityRuleList[4].disabled = true
+        this.activityRuleList[5].disabled = true
+      }
+      this.activityStatus = res.status
 
       const { list } = await this.$api.member.getPurchaseCompanyList({
         page: 1,

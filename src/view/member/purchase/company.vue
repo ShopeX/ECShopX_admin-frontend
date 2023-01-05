@@ -87,6 +87,24 @@ export default {
                 this.addDialog = true
               }
             }
+          },
+          {
+            name: '邮件发送测试',
+            key: 'modify',
+            type: 'button',
+            buttonType: 'text',
+            visible: (row) => {
+              return row.auth_type == 'email'
+            },
+            action: {
+              handler: async ([row]) => {
+                await this.$api.member.sendEmployeeEmail({
+                  enterprise_id: row.company_id,
+                  email: row.email_user
+                })
+                this.$message.success('邮件已发送')
+              }
+            }
           }
         ],
         columns: [

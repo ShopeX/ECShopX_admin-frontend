@@ -463,3 +463,12 @@ export function deleteEmployee(id) {
     method: 'delete'
   })
 }
+
+// 邮件发送测试
+export function sendEmployeeEmail(params) {
+  return fetch({
+    url: `/enterprise/sendtestemail`,
+    method: 'post',
+    params
+  })
+}

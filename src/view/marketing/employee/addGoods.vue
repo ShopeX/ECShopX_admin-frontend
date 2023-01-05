@@ -489,15 +489,36 @@ export default {
       this.formBase.value = if_share_store ? '1' : '2'
     },
     async onSelectGoods() {
-      const { data } = await this.$picker.goodsList({
+      const {
+        data: { type, value }
+      } = await this.$picker.goodsList({
         // data: 100,
         // shopid: this.shopId
       })
+
       const { id } = this.$route.params
-      await this.$api.marketing.addGoodsInActivity({
-        activity_id: id,
-        item_id: data.map((item) => item.itemId)
-      })
+      let params = {
+        activity_id: id
+      }
+      if (type == 'goods') {
+        params = {
+          ...params,
+          item_id: value.map((item) => item.itemId)
+        }
+      } else if (type == 'category') {
+        const main_cat_id = value.map((item) => item[item.length - 1])
+        params = {
+          ...params,
+          main_cat_id
+        }
+      } else if (type == 'salesCategory') {
+        const cat_id = value.map((item) => item[item.length - 1])
+        params = {
+          ...params,
+          cat_id
+        }
+      }
+      await this.$api.marketing.addGoodsInActivity(params)
       this.pagesQuery.reset()
     },
     async getActivityItems({ page, pageSize }) {

@@ -421,6 +421,18 @@ export default {
         })
         this.getGoodsSkus(categoryInfoDetail.goods_spec, goodsDetail.spec_items)
         this.getSkuItems()
+
+        goodsDetail.spec_items.forEach(item => {
+          item['sku_id'] = item.custom_spec_id
+          item['spec_name'] = item.custom_spec_name
+        })
+        
+        this.skuData.specItems = this.skuData.specItems.concat(goodsDetail.spec_items)
+
+        this.skuData.specItems = this.skuData.specItems.filter((item, index) => {
+          return this.skuData.specItems.indexOf(item) === index
+        })
+
       } else {
         this.skuData.specData = {
           approve_status: goodsDetail.approve_status,

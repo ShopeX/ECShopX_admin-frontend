@@ -2,6 +2,15 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [3.9.0](https://git.ishopex.cn/ecshopx/ecshopx-admin/compare/v3.8.0...v3.9.0) (2023-01-05)
+
+
+### Bug Fixes
+
+* 店铺保存 ([0587521](https://git.ishopex.cn/ecshopx/ecshopx-admin/commit/0587521a249de427e2fb0eb3d88e0e2ae77477eb))
+* 短信模板优化 ([bc7ee16](https://git.ishopex.cn/ecshopx/ecshopx-admin/commit/bc7ee161dc73095ea0269db15fa3546c67c4d20a))
+* 素材可复制 ([a61547e](https://git.ishopex.cn/ecshopx/ecshopx-admin/commit/a61547e4cbccef49e980d4b675c18f258f3f4684))
+
 ## [3.8.0](https://git.ishopex.cn/ecshopx/ecshopx-admin/compare/v3.7.1...v3.8.0) (2022-12-15)
 
 

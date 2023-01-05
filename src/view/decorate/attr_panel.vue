@@ -4,52 +4,62 @@
 export default {
   name: 'AttrPanel',
   props: {
-    info: Object,
+    info: [Object, Array],
     value: [Object, Number, String, Boolean]
   },
-  data () {
+  data() {
     return {
       compValue: null
     }
   },
-  created () {
+  created() {
     this.compValue = this.value
   },
   methods: {
-    onCompChange () {
+    onCompChange() {
       this.$emit('input', this.compValue)
+    },
+    _renderInput({ key }) {
+      return <el-input type='text' v-model={this.value[key]} size='small' />
+    },
+    _renderColor({ key }) {
+      return <el-color-picker v-model={this.value[key]} size='small' />
+    },
+    _renderNumber({ key, min, max, step }) {
+      return (
+        <el-input-number v-model={this.value[key]} size='small' min={min} max={max} step={step} />
+      )
     }
   },
-  render () {
-    const { title, key, type, option } = this.info
+  render() {
+    const { wgtName, setting } = this.info
 
-    const renderComp = (type) => {
-      switch (type) {
-        case 'text':
-          return (
-            <el-input
-              clearable
-              type='text'
-              v-model={this.compValue}
-              on-change={this.onCompChange}
-            />
-          )
-          break
-        case 'radio-group':
-          return (
-            <el-radio-group v-model={this.compValue} disabled size='mini'>
-              {option.map((item) => (
-                <el-radio-button label={item.label} />
-              ))}
-            </el-radio-group>
-          )
+    const renderComp = (item) => {
+      const renderItem = {
+        // 'textarea': this._renderTextArea,
+        'input': this._renderInput,
+        'color': this._renderColor,
+        'number': this._renderNumber
+        // 'text': this._renderText,
+        // 'select': this._renderSelect,
+        // 'radio': this._renderRadio,
+        // 'checkbox': this._renderCheckbox,
+        // 'table': this._renderTable,
+        // 'richText': this._renderRichText,
+        // 'image': this._renderImage,
+        // 'switch': this._renderSwitch
       }
+      return renderItem[item.component](item)
     }
 
     return (
-      <div class='attr-panel-cell'>
-        <div class='cell-label'>{title}</div>
-        <div class='cell-value'>{renderComp(type)}</div>
+      <div className='attr-panel'>
+        {setting.map((item, index) => (
+          <div class='attr-panel-cell'>
+            <div class='cell-label'>{item.label}</div>
+            <div class='cell-value'>{renderComp(item)}</div>
+          </div>
+        ))}
       </div>
     )
   }

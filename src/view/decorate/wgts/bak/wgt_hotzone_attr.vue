@@ -3,7 +3,7 @@ export default {
   name: 'WgtHotzoneAttr',
   props: ['value'],
   methods: {
-    async handleClickAdd () {
+    async handleClickAdd() {
       const { data } = await this.$picker.image({
         data: 100
         // multiple: true
@@ -11,7 +11,7 @@ export default {
       debugger
     }
   },
-  render () {
+  render() {
     const { value } = this
     return (
       <div class='wgt-hotzone-attr'>

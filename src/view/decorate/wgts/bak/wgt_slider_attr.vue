@@ -2,13 +2,13 @@
 export default {
   name: 'WgtSliderAttr',
   props: ['value'],
-  provide () {
+  provide() {
     return {
       scope: this
     }
   },
   methods: {
-    async handleClickAdd () {
+    async handleClickAdd() {
       const { data } = await this.$picker.image({
         data: [],
         multiple: true
@@ -16,11 +16,11 @@ export default {
       this.value.data = data
       console.log(this.value.data)
     },
-    onChangeSliderItem (index, val) {
+    onChangeSliderItem(index, val) {
       this.$set(this.value.data, index, val)
     }
   },
-  render () {
+  render() {
     const { value } = this
     return (
       <div class='wgt-slider-attr'>

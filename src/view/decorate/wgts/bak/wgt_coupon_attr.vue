@@ -5,13 +5,11 @@
 
 <script>
 export default {
-  name: 'WgtCoupon',
-  wgtName: '优惠券',
-  wgtIcon: 'icon-hotzone',
-  data () {
+  name: 'WgtCouponAttr',
+  data() {
     return {}
   },
-  created () {},
+  created() {},
   methods: {}
 }
 </script>

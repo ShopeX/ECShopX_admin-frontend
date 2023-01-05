@@ -1,7 +1,6 @@
 .attr-panel-cell {
   display: flex;
   align-items: center;
-  justify-content: space-between;
   margin: 10px;
   .cell-label {
     width: 80px;
@@ -9,7 +8,6 @@
   }
   .cell-value {
     width: 220px;
-    text-align: right;
   }
 
   .el-radio-button {

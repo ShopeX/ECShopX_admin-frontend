@@ -52,10 +52,10 @@ export default {
   props: {
     value: [Object, Array]
   },
-  data () {
+  data() {
     return {}
   },
-  created () {},
+  created() {},
   methods: {}
 }
 </script>

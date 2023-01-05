@@ -75,10 +75,7 @@ export default {
   wgtIcon: 'wgt-slider',
   config: {
     name: 'slider',
-    setting: [
-      { label: '标题', key: 'title', component: 'text', value: '' },
-
-    ]
+    setting: [{ label: '标题', key: 'title', component: 'text', value: '' }]
     // base: [
     //   { title: '标题', key: 'title', type: 'text', value: '标题' },
     //   { title: '副标题', key: 'subtitle', type: 'text', value: '副标题' },
@@ -182,45 +179,45 @@ export default {
     //   padded: false, // 轮播的内间距
     //   content: true
     // },
-    data: [
-      // {
-      //   content: '',
-      //   id: '',
-      //   imgUrl: '',
-      //   linkPage: '',
-      //   template: '',
-      //   title: ''
-      // },
-      // {
-      //   content: '',
-      //   id: '',
-      //   imgUrl: '',
-      //   linkPage: '',
-      //   template: '',
-      //   title: ''
-      // },
-      // {
-      //   content: '',
-      //   id: '',
-      //   imgUrl: '',
-      //   linkPage: '',
-      //   template: '',
-      //   title: ''
-      // }
-    ]
+    // data: [
+    // {
+    //   content: '',
+    //   id: '',
+    //   imgUrl: '',
+    //   linkPage: '',
+    //   template: '',
+    //   title: ''
+    // },
+    // {
+    //   content: '',
+    //   id: '',
+    //   imgUrl: '',
+    //   linkPage: '',
+    //   template: '',
+    //   title: ''
+    // },
+    // {
+    //   content: '',
+    //   id: '',
+    //   imgUrl: '',
+    //   linkPage: '',
+    //   template: '',
+    //   title: ''
+    // }
+    // ]
   },
   props: {
     value: [Object, Array]
   },
-  data () {
+  data() {
     return {
       currentIndex: 0
     }
   },
   computed: {
-    sliderHeight () {}
+    sliderHeight() {}
   },
-  created () {},
+  created() {},
   methods: {}
 }
 </script>

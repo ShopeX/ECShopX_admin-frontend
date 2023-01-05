@@ -42,6 +42,7 @@
         </draggable>
       </div>
       <div class="center-container">
+        {{ contentComps }}
         <div class="weapp-template">
           <div class="weapp-header" />
           <div class="weapp-body">
@@ -63,7 +64,8 @@
                   <i class="iconfont icon-copy1" />
                   <i class="iconfont icon-trash-alt1" />
                 </div>
-                <component :is="wgt.name" :value="transform(wgt)" />
+                <!-- <component :is="wgt.name" :value="transform(wgt)" /> -->
+                <component :is="wgt.name" :value="wgt" />
               </div>
             </draggable>
           </div>
@@ -72,9 +74,12 @@
       <div class="right-container">
         <div v-if="activeCompIndex !== null && hackReset">
           <div class="wgt-name">
-            {{ contentComps[activeCompIndex].wgtName }}
+            {{ getComponentAttr(contentComps[activeCompIndex]).wgtName }}
           </div>
-          <attrPanel v-model="item.value" :info="item" />
+          <attrPanel
+            v-model="contentComps[activeCompIndex]"
+            :info="getComponentAttr(contentComps[activeCompIndex])"
+          />
           <!-- <component
             :is="`${contentComps[activeCompIndex].name}Attr`"
             :value="contentComps[activeCompIndex].config"
@@ -126,15 +131,17 @@ export default {
   methods: {
     regsiterWgts() {
       console.log('wgts:', wgts, comps)
-      // Object.keys(wgts).forEach((index) => {
-      //   if (wgts[index].name.indexOf('Attr') == -1) {
-      //     this.widgets.push(wgts[index])
-      //   }
-      //   Vue.component(wgts[index].name, wgts[index])
-      // })
-      Object.keys(comps).forEach((index) => {
-        Vue.component(comps[index].name, comps[index])
+      Object.keys(wgts).forEach((index) => {
+        this.widgets.push(wgts[index])
+        Vue.component(wgts[index].name, wgts[index])
       })
+    },
+    getComponentAttr(item) {
+      const { wgtName, config } = this.widgets.find((wgt) => wgt.name == item.name)
+      return {
+        wgtName,
+        ...config
+      }
     },
     // 拖拽绑定事件
     onStart(evt) {
@@ -162,7 +169,18 @@ export default {
       window.console.log('log2:', evt)
     },
     cloneDefaultField(e) {
-      return JSON.parse(JSON.stringify(e))
+      const { wgtName, config } = e
+      const { setting, name } = config
+      const compData = {
+        name,
+        wgtName
+      }
+      setting.forEach((item) => {
+        compData[item.key] = item.value
+      })
+      console.log('compData', compData)
+      return compData
+      // return JSON.parse(JSON.stringify(e))
     },
     // handleClickWgtItem ({ name, config, wgtName }) {
     //   console.log(`handleClickWgtItem:`, config, wgtName)
@@ -180,19 +198,21 @@ export default {
       })
     },
     transform(wgt) {
-      let temp = {}
-      const { name, base, config, data } = wgt.config
-      temp = {
-        name,
-        data
-      }
-      base.forEach((item) => {
-        temp[item.key] = item.value
-      })
-      config.forEach((item) => {
-        temp[item.key] = item.value
-      })
-      return temp
+      const { setting } = wgt.config
+      return setting
+      // let temp = {}
+      // const { name, base, config, data } = wgt.config
+      // temp = {
+      //   name,
+      //   data
+      // }
+      // base.forEach((item) => {
+      //   temp[item.key] = item.value
+      // })
+      // config.forEach((item) => {
+      //   temp[item.key] = item.value
+      // })
+      // return temp
     },
     async getTemplateDetial() {
       const { id } = this.$route.query
@@ -216,7 +236,7 @@ export default {
       //     }
       //   })
       // })
-      console.log(this.contentComps)
+      // console.log(this.contentComps)
     },
     onSaveTemplate() {
       console.log('onSaveTemplate:', this.contentComps)

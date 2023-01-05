@@ -17,7 +17,7 @@
       }"
     >
       <!-- {{JSON.stringify(value.data)}} -->
-      <SpImage
+      <!-- <SpImage
         class="placeholder-item"
         :src="value.data.length > 1 ? value.data[0].url : null"
         :width="'100%'"
@@ -63,7 +63,7 @@
             class="pagination-item"
           />
         </template>
-      </div>
+      </div> -->
     </div>
   </div>
 </template>
@@ -71,7 +71,7 @@
 <script>
 import config from './config'
 export default {
-  name: 'WgtSlider',
+  name: 'Slider',
   wgtName: '轮播',
   wgtIcon: 'wgt-slider',
   config: config,

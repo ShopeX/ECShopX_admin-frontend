@@ -107,7 +107,6 @@
 <template>
   <div class="marketing-employee-purchase">
     <el-card class="el-card--normal" header="基础信息">
-      formBase: {{ formBase }}
       <SpForm
         ref="formBase"
         v-model="formBase"

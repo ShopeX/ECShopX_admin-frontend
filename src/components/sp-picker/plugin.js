@@ -33,9 +33,9 @@ export default {
       image: (args) => fn({ value: { ...args }, type: 'pickerImage', width: '788px' }),
       goods: (args) => fn({ value: { ...args }, type: 'pickerGoods', width: '1110px' }),
       shop: (args) => fn({ value: { ...args }, type: 'pickerShop' }),
+      path: (args) => fn({ value: { ...args }, type: 'pickerPath' }),
       zitilist: (args) => fn({ value: { ...args }, type: 'pickerZitiList' }),
-      aftersalesList: (args) => fn({ value: { ...args }, type: 'pickerAftersalesList' }),
-      path: fn
+      aftersalesList: (args) => fn({ value: { ...args }, type: 'pickerAftersalesList' })
     }
 
     Vue.prototype.$picker = $picker

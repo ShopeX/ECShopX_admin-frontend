@@ -1,4 +1,4 @@
-import AttrGoodsGridGoods from './attr-goodsgrid-goods'
+import AttrSelectGoods from './attr-selectGoods'
 
 export default {
   name: 'goodsGrid',
@@ -22,7 +22,7 @@ export default {
       label: '选择商品',
       key: 'data',
       component: function (h, { key }) {
-        return <AttrGoodsGridGoods />
+        return <AttrSelectGoods />
       },
       value: []
     }

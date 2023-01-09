@@ -133,7 +133,7 @@ export default {
   props: ['value'],
   data() {
     return {
-      shopid: this.value.shopid || 0,
+      shopid: this.value?.shopid || 0,
       pageSize: 10,
       params: {
         keywords: '',

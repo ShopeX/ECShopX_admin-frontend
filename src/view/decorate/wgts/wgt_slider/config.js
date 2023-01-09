@@ -1,4 +1,4 @@
-import AttrSliderItem from './attr-slider-item'
+import AttrItem from './attr-item'
 
 export default {
   name: 'slider',
@@ -64,7 +64,7 @@ export default {
       label: '轮播项',
       key: 'data',
       component: function (h, { key }) {
-        return <AttrSliderItem v-model={this.value[key]} />
+        return <AttrItem v-model={this.value[key]} />
       },
       value: []
     }

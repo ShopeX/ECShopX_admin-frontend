@@ -137,7 +137,9 @@ export default {
       })
     },
     getComponentAttr(item) {
-      const { wgtName, config } = this.widgets.find((wgt) => wgt.name == item.name)
+      const { wgtName, config } = this.widgets.find((wgt) => {
+        return wgt.name.toLowerCase() == item.name.toLowerCase()
+      })
       return {
         wgtName,
         ...config

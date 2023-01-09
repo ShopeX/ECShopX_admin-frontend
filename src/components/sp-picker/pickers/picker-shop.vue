@@ -16,6 +16,9 @@
       margin-right: 8px;
     }
   }
+  .sp-finder-hd {
+    display: none;
+  }
   .sp-finder {
     &.no-multiple {
       .sp-finder-bd {
@@ -97,7 +100,7 @@ export default {
       district,
       regionArea: [],
       loading: false,
-      multiple: this.value.multiple ?? true
+      multiple: this.value?.multiple ?? true
     }
   },
   created() {
@@ -125,14 +128,13 @@ export default {
         province: province,
         city: city,
         area: area,
-        distribution_type: this.value.distribution_type
+        distribution_type: this.value?.distribution_type
       }
       return params
     },
     afterSearch(response) {
       const { list } = response.data.data
-      console.log(this.value.data)
-      const selectRows = list.filter((item) => this.value.data.includes(item.distributor_id))
+      const selectRows = list.filter((item) => this.value?.data.includes(item.distributor_id))
       const { finderTable } = this.$refs.finder.$refs
       setTimeout(() => {
         finderTable.$refs.finderTable.setSelection(selectRows)

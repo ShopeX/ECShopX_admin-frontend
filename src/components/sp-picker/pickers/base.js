@@ -6,7 +6,7 @@ export default {
   props: {
     value: {
       type: Object,
-      validator (v) {
+      validator(v) {
         if (v === null) return true
         if (!v.type) {
           console.error('value.type is undefined')
@@ -21,7 +21,7 @@ export default {
     }
   },
 
-  data () {
+  data() {
     return {
       type: '',
       defaultVal: '',
@@ -32,30 +32,31 @@ export default {
   watch: {
     value: {
       immediate: true,
-      handler (val) {
+      handler(val) {
         if (!val || val.type !== this.type) {
           val = this.resolveDefaultVal()
         } else {
           val = cloneDeep(val)
         }
+        console.log('base watch value:', val)
         this.localVal = val
       }
     }
   },
 
   methods: {
-    resolveDefaultVal () {
+    resolveDefaultVal() {
       return {
         type: this.type,
         data: this.defaultVal
       }
     },
-    getVal () {
-      console.log(`sp-picker value:`, JSON.stringify(this.localVal))
+    getVal() {
+      console.log(`sp-picker getVal:`, this, JSON.stringify(this.localVal))
       return this.localVal
     },
-    updateVal (val) {
-      // debugger
+    updateVal(val) {
+      console.log(`sp-picker updateVal:`, this, val)
       // const type = this.$options.config.type || this.type
       // if (!type) throw new Error('type should not be undefined')
 

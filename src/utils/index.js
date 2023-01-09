@@ -1,6 +1,7 @@
 import log from './log'
 import CommonUtil from '@/common/js/util'
 import _pickBy from 'lodash/pickBy'
+import _get from 'lodash/get'
 import store from '@/store'
 import { isEmpty } from 'lodash'
 
@@ -229,6 +230,34 @@ export function getRegionIdByName(region, district) {
     getRegionValue(district, 0)
   }
   return result
+}
+
+export function pickBy(arr = [], keyMaps = {}) {
+  const picker = (item) => {
+    const ret = {}
+
+    Object.keys(keyMaps).forEach((key) => {
+      const val = keyMaps[key]
+
+      if (isString(val)) {
+        ret[key] = _get(item, val)
+      } else if (isFunction(val)) {
+        ret[key] = val(item)
+      } else if (isObject(val)) {
+        ret[key] = _get(item, val.key) || val.default
+      } else {
+        ret[key] = val
+      }
+    })
+
+    return ret
+  }
+
+  if (isArray(arr)) {
+    return arr.map(picker)
+  } else {
+    return picker(arr)
+  }
 }
 
 export { log, export_open, isEmpty }

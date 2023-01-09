@@ -196,3 +196,20 @@ export const SYSTEM_CONFIG = {
   b2c: { name: '商派官方商城', theme: '#157FE3' },
   in_purchase: { name: '商派Onex内购', theme: '#EC442E' }
 }
+
+export const LINK_PATH = {
+  'goods': '商品',
+  'store': '店铺',
+  'salesCategory': '销售分类',
+  'category': '管理分类',
+  'tag': '商品标签',
+  'article': '文章',
+  'planting': '软文',
+  'link': '页面',
+  'marketing': '营销',
+  'regactivity': '活动报名',
+  'seckill': '秒杀',
+  'custom_page': '自定义页面',
+  'liverooms': '直播',
+  'other_wxapp': '外部小程序'
+}

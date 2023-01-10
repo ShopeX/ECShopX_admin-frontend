@@ -13,10 +13,10 @@
 }
 </style>
 <template>
-  <div>
+  <div class="comp-picker-link">
     <el-radio-group v-model="localValue.linkType" class="linktype-radio" @change="onChangeLinkType">
-      <el-radio :label="0"> 选择路径 </el-radio>
-      <el-radio :label="1"> 自定义链接 </el-radio>
+      <el-radio :label="0"> 路径 </el-radio>
+      <el-radio :label="1"> 自定义 </el-radio>
     </el-radio-group>
     <div v-if="localValue.linkType == 0" class="btn-linkpath" @click="onPickerPath">
       {{ getLabelName() }}

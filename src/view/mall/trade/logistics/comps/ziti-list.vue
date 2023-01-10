@@ -153,7 +153,9 @@ export default {
     },
     createZitiAddress() {
       this.$router.push({
-        path: '/order/entitytrade/logistics/addziti'
+        path: this.IS_DISTRIBUTOR
+          ? '/shopadmin/order/logistics/addziti'
+          : '/order/entitytrade/logistics/addziti'
       })
     },
     onShowPopover() {},

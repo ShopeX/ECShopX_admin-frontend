@@ -1,3 +1,26 @@
+export const proportions = [
+  {
+    label: 0,
+    name: '16:9'
+  },
+  {
+    label: 1,
+    name: '9:16'
+  },
+  {
+    label: 2,
+    name: '4:3'
+  },
+  {
+    label: 3,
+    name: '3:4'
+  },
+  {
+    label: 4,
+    name: '1:1'
+  }
+]
+
 export default {
   name: 'film',
   setting: [
@@ -11,29 +34,13 @@ export default {
         return <SpFilmPicker v-model={this.value[key]} />
       },
       value: {}
+    },
+    {
+      label: '视频比例',
+      key: 'proportion',
+      component: 'radio',
+      options: proportions,
+      value: 1
     }
   ]
 }
-
-export const proportions = [
-  {
-    label: 0,
-    name: '16 : 9'
-  },
-  {
-    label: 1,
-    name: '9 : 16'
-  },
-  {
-    label: 2,
-    name: '4 : 3'
-  },
-  {
-    label: 3,
-    name: '3 : 4'
-  },
-  {
-    label: 4,
-    name: '1 : 1'
-  }
-]

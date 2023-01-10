@@ -33,7 +33,7 @@
       align-items: center;
       flex-direction: column;
       &:hover {
-        background: #409eff;
+        background: #537ffd;
         cursor: move;
         .wgt-icon {
           color: #fff;
@@ -56,6 +56,12 @@
       }
       &.wgt-hotzone {
         background-image: url('../../assets/imgs/decorate/wgt-hotzone.png');
+      }
+      &.wgt-goodsgrid {
+        background-image: url('../../assets/imgs/decorate/wgt-goodsgrid.png');
+      }
+      &.wgt-film {
+        background-image: url('../../assets/imgs/decorate/wgt-film.png');
       }
     }
     .wgt-name {

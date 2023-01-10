@@ -16,8 +16,7 @@
         'spaced': value.spaced
       }"
     >
-      film
-      <!-- <video-player
+      <video-player
         :options="{
           aspectRatio: aspectRatio,
           sources: [
@@ -29,7 +28,7 @@
           notSupportedMessage: '无可播放媒体资源',
           controlBar: false
         }"
-      /> -->
+      />
     </div>
   </div>
 </template>
@@ -39,7 +38,7 @@ import config, { proportions } from './config'
 export default {
   name: 'Film',
   wgtName: '视频',
-  wgtIcon: 'wgt-slider',
+  wgtIcon: 'wgt-film',
   config: config,
   props: {
     value: [Object, Array]

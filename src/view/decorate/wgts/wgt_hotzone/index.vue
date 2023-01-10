@@ -26,7 +26,7 @@ import config from './config'
 export default {
   name: 'HotZone',
   wgtName: '热区图',
-  wgtIcon: 'wgt-slider',
+  wgtIcon: 'wgt-hotzone',
   config: config,
   props: {
     value: [Object, Array]

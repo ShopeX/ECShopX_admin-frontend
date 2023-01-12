@@ -19,6 +19,8 @@
 </template>
 
 <script>
+import Vue from 'vue'
+import { cloneDeep } from 'lodash'
 import CompPickerLink from '../../comps/comp-pickerLink'
 export default {
   name: 'AttrItem',
@@ -36,12 +38,15 @@ export default {
       this.$emit('input', nVal)
     }
   },
-  created() {},
+  created() {
+    this.localValue = cloneDeep(this.value)
+  },
   methods: {
     async handleClickAdd() {
       const { data } = await this.$picker.image({
         data: [],
-        multiple: true
+        multiple: true,
+        max: 5
       })
 
       this.localValue = data.map((item) => {
@@ -56,6 +61,13 @@ export default {
           subtitleTow: '',
           template: ''
         }
+      })
+    },
+    onChangeLink(e, index) {
+      const v = cloneDeep(this.localValue[index])
+      Vue.set(this.localValue, index, {
+        ...v,
+        ...e
       })
     }
   }

@@ -40,7 +40,12 @@ export default {
       key: 'proportion',
       component: 'radio',
       options: proportions,
-      value: 1
+      value: 0
     }
-  ]
+  ],
+  transformIn: (v) => {
+    const { name, base, config, data } = v
+    return v
+  },
+  transformOut: (v) => {}
 }

@@ -8,6 +8,7 @@ import config from './config'
 export default {
   name: 'GoodsGrid',
   wgtName: '商品栅格',
+  wgtDesc: '',
   wgtIcon: 'wgt-goodsgrid',
   config: config,
   props: {

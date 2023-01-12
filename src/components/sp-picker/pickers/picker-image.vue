@@ -317,6 +317,7 @@
 <script>
 import { VueCropper } from 'vue-cropper'
 import UploadUtil from '@/utils/uploadUtil'
+import { isObject } from '@/utils'
 import BasePicker from './base'
 import PageMixin from '../mixins/page'
 export default {
@@ -425,7 +426,20 @@ export default {
         return this.selected.findIndex((item) => item.image_id == image_id)
       } else {
         // return this.selected ? this.selected.image_id == image_id : false
-        return this.selected ? this.selected.url == url : false
+        if (this.selected) {
+          const handleRegExp = (str) => {
+            const regExp = /^(http|https):\/\/(.*)/g
+            const [p1, p2, p3] = regExp.exec(str)
+            return p3
+          }
+          if (isObject(this.selected)) {
+            return handleRegExp(this.selected.url) == handleRegExp(url)
+          } else {
+            return handleRegExp(this.selected) == handleRegExp(url)
+          }
+        } else {
+          return false
+        }
       }
     },
     handleEdit() {

@@ -1,8 +1,26 @@
-<style lang="scss"></style>
+<style lang="scss">
+.wgt-film {
+  &.padded {
+    padding: 10px 0;
+  }
+  .wgt-hd {
+    padding: 10px;
+    .title {
+      font-size: 18px;
+      font-weight: 600;
+      color: #333;
+    }
+    .sub-title {
+      color: #666;
+      margin-left: 4px;
+    }
+  }
+}
+</style>
 <template>
   <div
     :class="{
-      'wgt-slider': true,
+      'wgt-film': true,
       'padded': value.padded
     }"
   >
@@ -22,7 +40,7 @@
           sources: [
             {
               type: 'video/mp4',
-              src: data[0].url
+              src: sourceUrl
             }
           ],
           notSupportedMessage: '无可播放媒体资源',
@@ -38,6 +56,7 @@ import config, { proportions } from './config'
 export default {
   name: 'Film',
   wgtName: '视频',
+  wgtDesc: '',
   wgtIcon: 'wgt-film',
   config: config,
   props: {
@@ -49,7 +68,14 @@ export default {
     }
   },
   computed: {
-    sliderHeight() {}
+    aspectRatio() {
+      const { proportion } = this.value
+      return proportions.find((item) => item.label == proportion).name
+    },
+    sourceUrl() {
+      const { data } = this.value
+      return data?.url || ''
+    }
   },
   created() {},
   methods: {}

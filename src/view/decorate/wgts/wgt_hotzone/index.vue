@@ -1,8 +1,40 @@
-<style lang="scss"></style>
+<style lang="scss">
+.wgt-hotzone {
+  &.padded {
+    padding: 10px 0;
+  }
+  .wgt-hd {
+    padding: 10px;
+    .title {
+      font-size: 18px;
+      font-weight: 600;
+      color: #333;
+    }
+    .sub-title {
+      color: #666;
+      margin-left: 4px;
+    }
+  }
+  .wgt-bd {
+    position: relative;
+    &.spaced {
+      padding: 0 10px;
+      .slider-container {
+        right: 10px;
+        left: 10px;
+      }
+      .slider-pagination {
+        right: 10px;
+        left: 10px;
+      }
+    }
+  }
+}
+</style>
 <template>
   <div
     :class="{
-      'wgt-slider': true,
+      'wgt-hotzone': true,
       'padded': value.padded
     }"
   >
@@ -26,6 +58,7 @@ import config from './config'
 export default {
   name: 'HotZone',
   wgtName: '热区图',
+  wgtDesc: '',
   wgtIcon: 'wgt-hotzone',
   config: config,
   props: {

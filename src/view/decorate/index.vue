@@ -17,9 +17,6 @@
           }"
           :sort="false"
           :clone="cloneDefaultField"
-          @start="onStart"
-          @end="onEnd"
-          @change="log1"
         >
           <div
             v-for="(wgt, index) in widgets"
@@ -42,11 +39,12 @@
         </draggable>
       </div>
       <div class="center-container">
-        {{ contentComps }}
+        <!-- {{ contentComps }} -->
+        {{ headerData }}
         <div class="weapp-template">
-          <div class="weapp-header" />
+          <Header :value="headerData" @change="handleClickHeader" />
           <div class="weapp-body">
-            <draggable :list="contentComps" group="easyview" class="components-wrap" @change="log2">
+            <draggable :list="contentComps" group="easyview" class="components-wrap">
               <div
                 v-for="(wgt, index) in contentComps"
                 :key="`wgt-render-item__${index}`"
@@ -54,7 +52,6 @@
                 :class="{ active: activeCompIndex == index }"
                 @click="handleClickWgtItem(index)"
               >
-                <!-- {{wgt}} -->
                 <div class="wgt-tip">
                   {{ wgt.wgtName }}
                 </div>
@@ -64,7 +61,6 @@
                   <i class="iconfont icon-copy1" @click="onCopyComp(wgt)" />
                   <i class="iconfont icon-trash-alt1" @click="onDeleteComp(index)" />
                 </div>
-                <!-- <component :is="wgt.name" :value="transform(wgt)" /> -->
                 <component :is="wgt.name" :value="wgt" />
               </div>
             </draggable>
@@ -80,19 +76,10 @@
             v-model="contentComps[activeCompIndex]"
             :info="getComponentAttr(contentComps[activeCompIndex])"
           />
-          <!-- <component
-            :is="`${contentComps[activeCompIndex].name}Attr`"
-            :value="contentComps[activeCompIndex].config"
-          /> -->
-          <!-- <div class="">
-            <div class="wgt-name">{{activeComp.wgtName}}</div>
-            <div v-for="(item, idx) in activeComp.base" :key="`ba-${idx}`">
-              <attrPanel :info="item" v-model="item.value" />
-            </div>
-            <div v-for="(item, idx) in activeComp.config" :key="`config-${idx}`">
-              <attrPanel :info="item" v-model="item.value" />
-            </div>
-          </div> -->
+        </div>
+        <div v-if="activeCompIndex == null && hackReset && headerAttr">
+          <div class="wgt-name">{{ headerAttr.wgtName }}</div>
+          <attrPanel v-model="headerData" :info="headerAttr" />
         </div>
       </div>
     </div>
@@ -105,11 +92,13 @@ import draggable from 'vuedraggable'
 import wgts from './wgts'
 import comps from './comps'
 import attrPanel from './attr_panel'
+import Header from './wgts/wgt-header'
 export default {
   name: '',
   components: {
     draggable,
-    attrPanel
+    attrPanel,
+    Header
   },
   data() {
     return {
@@ -117,7 +106,9 @@ export default {
       contentComps: [],
       activeComp: null,
       activeCompIndex: null,
-      hackReset: false
+      hackReset: false,
+      headerData: null,
+      headerAttr: null
     }
   },
   created() {
@@ -145,53 +136,27 @@ export default {
         ...config
       }
     },
-    // 拖拽绑定事件
-    onStart(evt) {
-      // console.log('onStart:', evt, evt.target.getAttribute('data-name'))
-      // const { name } = evt.item.dataset
-      // if (evt.target.className === 'components-view') {
-      //   this.saveInit = JSON.stringify(this.initData[evt.oldIndex])
-      // } else {
-      //   this.setCurrent(evt.oldIndex)
-      // }
-    },
-    onEnd(evt) {
-      // const { name } = evt.item.dataset
-      // console.log('---onEnd---: ', name)
-      // this.setCurrent(evt.newIndex)
-      // if (evt.target.className === 'components-view' && evt.to.className === 'components-wrap') {
-      //   this.initData.splice(evt.oldIndex, 0, JSON.parse(this.saveInit))
-      // }
-      // debugger
-    },
-    log1: function (evt) {
-      window.console.log('log1:', evt)
-    },
-    log2: function (evt) {
-      window.console.log('log2:', evt)
-    },
     cloneDefaultField(e) {
-      const { wgtName, config } = e
+      const { wgtName, wgtDesc, config } = e
       const { setting, name } = config
       const compData = {
         name,
-        wgtName
+        wgtName,
+        wgtDesc
       }
       setting.forEach((item) => {
         compData[item.key] = item.value
       })
       console.log('compData', compData)
       return compData
-      // return JSON.parse(JSON.stringify(e))
     },
-    // handleClickWgtItem ({ name, config, wgtName }) {
-    //   console.log(`handleClickWgtItem:`, config, wgtName)
-    //   this.activeComp = {
-    //     ...config,
-    //     wgtId: name,
-    //     wgtName
-    //   }
-    // },
+    handleClickHeader() {
+      this.activeCompIndex = null
+      this.hackReset = false
+      this.$nextTick(() => {
+        this.hackReset = true // 重建组件
+      })
+    },
     handleClickWgtItem(index) {
       this.activeCompIndex = index
       this.hackReset = false
@@ -202,43 +167,55 @@ export default {
     transform(wgt) {
       const { setting } = wgt.config
       return setting
-      // let temp = {}
-      // const { name, base, config, data } = wgt.config
-      // temp = {
-      //   name,
-      //   data
-      // }
-      // base.forEach((item) => {
-      //   temp[item.key] = item.value
-      // })
-      // config.forEach((item) => {
-      //   temp[item.key] = item.value
-      // })
-      // return temp
     },
     async getTemplateDetial() {
       const { id } = this.$route.query
       const { template_content } = await this.$api.template.getPagesTemplateDetail({
         pages_template_id: id
       })
+      const { list } = template_content
+      console.log('Header:', Header)
+      // 页面设置初始数据
+      const { setting, name } = Header.config
+      let headerData = {
+        name,
+        wgtName: Header.wgtName,
+        wgtDesc: Header.wgtDesc
+      }
+      setting.forEach((item) => {
+        headerData[item.key] = item.value
+      })
+      const wgtHeader = list.find((item) => item.name == 'page')
+      if (wgtHeader) {
+        const headParams = Header.config.transformIn(wgtHeader.params)
+        headerData = {
+          // 初始数据
+          ...headerData,
+          ...headParams
+        }
+      }
+      debugger
+      this.headerData = headerData
+      this.headerAttr = {
+        wgtName: Header.wgtName,
+        ...Header.config
+      }
 
-      // template_content.config.map((item) => {
-      //   Object.keys(wgts).forEach((key) => {
-      //     if (wgts[key].name.indexOf('Attr') == -1) {
-      //       if (wgts[key].config.name == item.name) {
-      //         const { base, config } = wgts[key].config
-      //         base.forEach((b) => {
-      //           b.value = item.base[b.key] || b.value
-      //         })
-      //         config.forEach((c) => {
-      //           c.value = item.config[c.key] || c.value
-      //         })
-      //         this.contentComps.push(JSON.parse(JSON.stringify(wgts[key])))
-      //       }
-      //     }
-      //   })
-      // })
-      // console.log(this.contentComps)
+      list.forEach((li) => {
+        // 是否存在挂件
+        const wgt = this.widgets.find((item) => item.name.toLowerCase() == li.name.toLowerCase())
+        if (wgt) {
+          console.log('getTemplateDetial wgt:', wgt)
+          const wgtInitParams = this.cloneDefaultField(wgt)
+          const params = wgt.config.transformIn(li.params)
+          this.contentComps.push({
+            wgtName: wgt.wgtName,
+            ...wgtInitParams,
+            ...params
+          })
+        }
+      })
+      console.log('getTemplateDetial:', this.contentComps)
     },
     onCopyComp(wgt) {
       // this.contentComps.
@@ -247,7 +224,13 @@ export default {
       this.contentComps.splice(index, 1)
     },
     onSaveTemplate() {
-      console.log('onSaveTemplate:', this.contentComps)
+      const data = this.contentComps.map((item) => {
+        const { transformOut } = this.widgets.find(
+          (wgt) => wgt.name.toLowerCase() == item.name.toLowerCase()
+        )?.config
+        return transformOut(item)
+      })
+      console.log('onSaveTemplate:', JSON.stringify(data))
     }
   }
 }

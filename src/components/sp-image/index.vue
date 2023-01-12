@@ -1,7 +1,7 @@
 <style lang="scss">
 .sp-image {
-  display: block;
-  object-fit: contain;
+  display: flex;
+  align-items: center;
 }
 </style>
 
@@ -15,19 +15,22 @@ export default {
     width: [Number, String],
     height: [Number, String]
   },
-  render () {
+  render() {
     const { src, width, height } = this
     const _width = isString(width) ? width : `${width}px`
     const _height = isString(height) ? height : `${height}px`
     return (
-      <img
-        class={'sp-image'}
-        src={src || dImage}
-        style={{
-          width: _width,
-          height: _height
-        }}
-      />
+      <el-image class={'sp-image'} src={src || dImage} fit='cover'>
+        <template slot='error'>xxx</template>
+      </el-image>
+      // <img
+      //   class={'sp-image'}
+      //   src={src || dImage}
+      //   style={{
+      //     width: _width,
+      //     height: _height
+      //   }}
+      // />
     )
   }
 }

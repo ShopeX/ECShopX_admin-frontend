@@ -1,22 +1,30 @@
-<style lang="scss" scoped>
-.linktype-radio {
-  margin-bottom: 6px;
-}
-.btn-linkpath {
-  padding: 8px 16px;
-  color: var(--themeColor);
-  border: 1px solid var(--themeColor);
-  background-color: #fff;
-  font-size: 12px;
-  border-radius: 3px;
-  line-height: initial;
+<style lang="scss">
+.comp-picker-link {
+  .linktype-radio {
+    margin-bottom: 6px;
+    .el-radio {
+      margin-right: 12px;
+    }
+    .el-radio__label {
+      padding-left: 2px;
+    }
+  }
+  .btn-linkpath {
+    padding: 8px 16px;
+    color: var(--themeColor);
+    border: 1px solid var(--themeColor);
+    background-color: #fff;
+    font-size: 12px;
+    border-radius: 3px;
+    line-height: initial;
+  }
 }
 </style>
 <template>
   <div class="comp-picker-link">
     <el-radio-group v-model="localValue.linkType" class="linktype-radio" @change="onChangeLinkType">
-      <el-radio :label="0"> 路径 </el-radio>
-      <el-radio :label="1"> 自定义 </el-radio>
+      <el-radio :label="0"> 选择路径 </el-radio>
+      <el-radio :label="1"> 自定义链接 </el-radio>
     </el-radio-group>
     <div v-if="localValue.linkType == 0" class="btn-linkpath" @click="onPickerPath">
       {{ getLabelName() }}

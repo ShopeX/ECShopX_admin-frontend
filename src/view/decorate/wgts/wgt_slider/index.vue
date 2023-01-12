@@ -6,7 +6,7 @@
       'padded': value.padded
     }"
   >
-    <div class="wgt-hd">
+    <div v-if="value.title || value.subtitle" class="wgt-hd">
       <span class="title">{{ value.title }}</span>
       <span class="sub-title">{{ value.subtitle }}</span>
     </div>
@@ -38,7 +38,8 @@
           :key="index"
           class="slider-item"
           :class="{
-            'rounded': value.rounded
+            'rounded': value.rounded,
+            'padded': value.itemPadded
           }"
         >
           <SpImage
@@ -50,18 +51,29 @@
           />
         </el-carousel-item>
       </el-carousel>
-      <div :class="['slider-pagination', value.dotLocation, value.shape, value.dotColor, {}]">
+      <div
+        :class="[
+          'slider-pagination',
+          value.dotLocation,
+          value.shape,
+          value.dotColor,
+          {
+            'cover': value.dotCover,
+            'cover-padded': value.itemPadded
+          }
+        ]"
+      >
         <template v-if="value.dot">
-          <div class="dot-item">
-            {{ `${currentIndex}/${value.data.length > 0 ? value.data.length : 1}` }}
-          </div>
-        </template>
-        <template v-else>
           <div
             v-for="(item, index) in value.data.length > 0 ? value.data : [1]"
-            :key="`pagination-item__${index}`"
-            class="pagination-item"
+            :key="`dot-item__${index}`"
+            :class="['dot-item', { 'active': currentIndex == index }]"
           />
+        </template>
+        <template v-else>
+          <div class="pagination-count">
+            {{ `${currentIndex + 1}/${value.data.length > 0 ? value.data.length : 1}` }}
+          </div>
         </template>
       </div>
     </div>
@@ -73,6 +85,7 @@ import config from './config'
 export default {
   name: 'Slider',
   wgtName: '轮播',
+  wgtDesc: '',
   wgtIcon: 'wgt-slider',
   config: config,
   props: {

@@ -5,6 +5,15 @@
   // border: 1px solid #d9d9d9;
   // position: relative;
   display: flex;
+  &.small {
+    .image-item {
+      width: 64px;
+      height: 64px;
+    }
+    .placeholder {
+      height: 64px;
+    }
+  }
   .image-item {
     width: 80px;
     height: 80px;
@@ -22,7 +31,7 @@
   .icon-camera {
     font-size: 24px;
     color: #d9d9d9;
-    margin-top: 12px;
+    // margin-top: 12px;
   }
   .add-text {
     font-size: 12px;
@@ -80,6 +89,10 @@ export default {
     max: {
       type: Number,
       default: 3
+    },
+    size: {
+      type: String,
+      default: 'normal'
     }
     // multiple: {
     //   type: Boolean,
@@ -89,7 +102,7 @@ export default {
   created() {},
   methods: {
     async handleSelectImage() {
-      console.log(this.max)
+      console.log('handleSelectImage:', this.max, this.value)
       const { data } = await this.$picker.image({
         data: this.value,
         multiple: isArray(this.value),
@@ -131,11 +144,11 @@ export default {
     }
   },
   render() {
-    const { value, max } = this
+    const { value, max, size } = this
     const multiple = isArray(value)
     console.log('value:', value)
     return (
-      <div class='sp-image-picker'>
+      <div class={['sp-image-picker', size]}>
         {multiple && value.map((item, index) => this._renderImage(item, index))}
 
         {multiple && value.length == 0 && (

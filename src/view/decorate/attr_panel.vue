@@ -24,8 +24,22 @@ export default {
       return <el-input type='text' v-model={this.value[key]} size='small' />
     },
 
-    _renderColor({ key }) {
-      return <el-color-picker v-model={this.value[key]} size='small' />
+    _renderColor({ key, value: initValue }) {
+      console.log('_renderColor:', this)
+      return (
+        <div class='el-color-picker-wrap'>
+          <el-color-picker v-model={this.value[key]} size='small' />
+          <el-button
+            class='button-reset'
+            type='text'
+            on-click={() => {
+              this.value[key] = initValue
+            }}
+          >
+            重置
+          </el-button>
+        </div>
+      )
     },
 
     _renderNumber({ key, min, max, step }) {
@@ -51,7 +65,6 @@ export default {
 
     const renderComp = (item) => {
       if (isFunction(item.component)) {
-        console.log('this1:', this)
         return item.component.call(this, h, item)
         // return <el-input v-model={this.value[item.key]} />
       }
@@ -76,9 +89,19 @@ export default {
     return (
       <div className='attr-panel'>
         {setting.map((item, index) => (
-          <div class='attr-panel-cell'>
+          <div
+            class={[
+              'attr-panel-cell',
+              {
+                'is-show': typeof item.isShow != 'undefined' ? item.isShow.call(this, item) : true
+              }
+            ]}
+          >
             <div class='cell-label'>{item.label}</div>
-            <div class='cell-value'>{renderComp(item)}</div>
+            <div class='cell-value'>
+              <div class='cell-value-content'>{renderComp(item)}</div>
+              {item.tip && <div class='cell-value-tip'>{item.tip}</div>}
+            </div>
           </div>
         ))}
       </div>

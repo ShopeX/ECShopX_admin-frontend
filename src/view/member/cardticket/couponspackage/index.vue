@@ -54,7 +54,7 @@ export default {
       return { ...params }
     },
     queryCoupon() {
-      this.$refs.finder.refresh()
+      this.$refs.finder.refresh(true)
     }
   }
 }

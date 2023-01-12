@@ -1,28 +1,14 @@
 <template>
   <div>
     <div class="action-container">
-      <el-button
-        type="primary"
-        icon="el-icon-circle-plus"
-        @click="handleNew"
-      >
+      <el-button type="primary" icon="el-icon-circle-plus" @click="handleNew">
         新增内购企业
       </el-button>
     </div>
 
-    <SpFilterForm
-      :model="params"
-      @onSearch="onSearch"
-      @onReset="onSearch"
-    >
-      <SpFilterFormItem
-        prop="enterprise_name"
-        label="企业名称:"
-      >
-        <el-input
-          v-model="params.enterprise_name"
-          placeholder="请输入企业名称"
-        />
+    <SpFilterForm :model="params" @onSearch="onSearch" @onReset="onSearch">
+      <SpFilterFormItem prop="enterprise_name" label="企业名称:">
+        <el-input v-model="params.enterprise_name" placeholder="请输入企业名称" />
       </SpFilterFormItem>
     </SpFilterForm>
 
@@ -35,50 +21,28 @@
       :default-sort="{ prop: 'bind_date', order: 'descending' }"
     >
       <el-table-column label="ID" prop="enterprise_id" />
-      <el-table-column
-        prop="enterprise_name"
-        label="企业名称"
-      />
-      </el-table-column>
-      <el-table-column
-        prop="enterprise_sn"
-        label="企业编码"
-      />
-      </el-table-column>
+      <el-table-column prop="enterprise_name" label="企业名称" />
+      <el-table-column prop="enterprise_sn" label="企业编码" />
 
-      <el-table-column  prop="login_type" label="登录类型" >
-          <template slot-scope="scope">
-            <span v-if="scope.row.login_type == 'mobile'">手机号登录</span>
-            <span v-else-if="scope.row.login_type == 'email'">邮箱登录</span>
-            <span v-else-if="scope.row.login_type == 'account'">账号登录</span>
-            <span v-else>{{ scope.row.login_type }}</span>
-          </template>
-      </el-table-column>
-
-      <el-table-column
-        prop="disabled"
-        label="状态"
-      >
+      <el-table-column prop="login_type" label="登录类型">
         <template slot-scope="scope">
-          <el-button
-            type="text"
-            @click="handleClick(scope.row)"
-            icon="el-icon-s-tools"
-          >
+          <span v-if="scope.row.login_type == 'mobile'">手机号登录</span>
+          <span v-else-if="scope.row.login_type == 'email'">邮箱登录</span>
+          <span v-else-if="scope.row.login_type == 'account'">账号登录</span>
+          <span v-else>{{ scope.row.login_type }}</span>
+        </template>
+      </el-table-column>
+
+      <el-table-column prop="disabled" label="状态">
+        <template slot-scope="scope">
+          <el-button type="text" icon="el-icon-s-tools" @click="handleClick(scope.row)">
             {{ scope.row.disabled == 0 ? '启用' : '禁用' }}
           </el-button>
         </template>
       </el-table-column>
-      <el-table-column
-        label="操作"
-      >
+      <el-table-column label="操作">
         <template slot-scope="scope">
-          <el-button
-            type="text"
-            @click="handleEdit(scope.row)"
-          >
-            编辑
-          </el-button>
+          <el-button type="text" @click="handleEdit(scope.row)"> 编辑 </el-button>
         </template>
       </el-table-column>
     </el-table>
@@ -94,10 +58,7 @@
         @size-change="onSizeChange"
       />
     </div>
-    <sideBar
-      :visible.sync="show_sideBar"
-      :title="'新增企业'"
-    >
+    <sideBar :visible.sync="show_sideBar" :title="'新增企业'">
       <el-form>
         <el-form-item label="企业名称">
           <el-input v-model="form.enterprise_name" />
@@ -107,31 +68,16 @@
         </el-form-item>
         <el-form-item label="登录类型">
           <el-select v-model="form.login_type" style="width: 100%">
-            <el-option
-              label="手机号"
-              value="mobile"
-            />
-            <el-option
-              label="账号"
-              value="account"
-            />
-            <el-option
-              label="邮箱"
-              value="email"
-            />
+            <el-option label="手机号" value="mobile" />
+            <el-option label="账号" value="account" />
+            <el-option label="邮箱" value="email" />
           </el-select>
         </el-form-item>
         <el-form-item>
-          <el-button
-            type="primary"
-            @click="save"
-          >
-            提交
-          </el-button>
+          <el-button type="primary" @click="save"> 提交 </el-button>
         </el-form-item>
       </el-form>
     </sideBar>
-    
   </div>
 </template>
 <script>
@@ -154,13 +100,13 @@ export default {
     imgPicker
   },
   mixins: [pageMixin],
-  data () {
+  data() {
     return {
       form: {
         enterprise_id: '',
         enterprise_name: '',
         enterprise_sn: '',
-        login_type: '',
+        login_type: ''
       },
       params: {
         enterprise_name: ''
@@ -170,58 +116,58 @@ export default {
       brand_name: '',
       total_count: 0,
       show_sideBar: false,
-      setChinaumspayVisible: false,
+      setChinaumspayVisible: false
     }
   },
-  mounted () {
+  mounted() {
     this.fetchList()
   },
   methods: {
-    handleNew () {
+    handleNew() {
       this.show_sideBar = true
       this.resetData()
     },
-    resetData () {
+    resetData() {
       this.form = {
         enterprise_id: '',
         enterprise_name: '',
         enterprise_sn: '',
-        login_type: '',
+        login_type: ''
       }
     },
-    handleEdit (data) {
+    handleEdit(data) {
       this.show_sideBar = true
       this.form = {
         enterprise_id: data.enterprise_id,
         enterprise_name: data.enterprise_name,
         enterprise_sn: data.enterprise_sn,
-        login_type: data.login_type,
+        login_type: data.login_type
       }
     },
-    handleClick (row) {
-      const message = row.disabled == 0
-        ? '是否禁用？'
-        : '是否启用？'
+    handleClick(row) {
+      const message = row.disabled == 0 ? '是否禁用？' : '是否启用？'
       this.$confirm(message, '通知消息', {
         confirmButtonText: '确定',
         cancelButtonText: '取消',
         type: 'warning',
         center: true
       }).then(async () => {
-        const result = await updateEnterpriseStaus(row.enterprise_id, { disabled: row.disabled == 1 ? 0 : 1, id: row.enterprise_id })
+        const result = await updateEnterpriseStaus(row.enterprise_id, {
+          disabled: row.disabled == 1 ? 0 : 1,
+          id: row.enterprise_id
+        })
         if (result.data.data.status) {
           this.$message({
             type: 'success',
             message: '更新成功!'
           })
-          // this.$refs.finder.refresh()
           this.fetchList()
           this.resetData()
         }
       })
       console.log(row)
     },
-    save () {
+    save() {
       // 如果没有id，则表示为新增
       if (!this.form.enterprise_id) {
         delete this.form.enterprise_id
@@ -239,7 +185,7 @@ export default {
         })
       }
     },
-    fetchList () {
+    fetchList() {
       this.loading = true
       const { pageIndex: page, pageSize } = this.page
       let params = {
@@ -252,7 +198,7 @@ export default {
         this.total_count = res.data.data.total_count
         this.loading = false
       })
-      console.log(this.list);
+      console.log(this.list)
     }
   },
   computed: {

@@ -9,7 +9,9 @@
           <div style="margin-right: 50px">
             <div style="margin-left: 30px; margin-bottom: 20px; color: #333">
               <span>可提现金额：￥{{ (cash_balance / 100) | formatNumMoney }}</span>
-              <span v-if="$store.getters.login_type != 'admin'" style="margin-left: 30px">暂冻金额：￥{{ (cash_limit / 100) | formatNumMoney }}</span>
+              <span v-if="$store.getters.login_type != 'admin'" style="margin-left: 30px"
+                >暂冻金额：￥{{ (cash_limit / 100) | formatNumMoney }}</span
+              >
             </div>
             <el-form
               v-if="auto_draw_cash == 'N'"
@@ -21,15 +23,17 @@
             >
               <el-form-item label="提现金额" prop="cash_amt">
                 <el-input
-                  placeholder="请输入"
                   v-model="form.cash_amt"
+                  placeholder="请输入"
                   style="width: 300px"
                   type="number"
                   min="0"
                 >
                   <template slot="append">元</template>
                 </el-input>
-                <span style="margin-left: 12px; color: #0079fe; cursor: pointer" @click="allHandle">全部提现</span>
+                <span style="margin-left: 12px; color: #0079fe; cursor: pointer" @click="allHandle"
+                  >全部提现</span
+                >
               </el-form-item>
               <el-form-item label="提现类型" prop="cash_type">
                 <el-select
@@ -37,9 +41,9 @@
                   placeholder="请选择提现类型"
                   style="width: 300px"
                 >
-                  <el-option value="D0"></el-option>
-                  <el-option value="D1"></el-option>
-                  <el-option value="T1"></el-option>
+                  <el-option value="D0" />
+                  <el-option value="D1" />
+                  <el-option value="T1" />
                 </el-select>
               </el-form-item>
               <el-form-item>
@@ -54,7 +58,7 @@
               </el-form-item>
             </el-form>
           </div>
-          <div class="tips" v-if="$store.getters.login_type == 'admin' && auto_draw_cash == 'N'">
+          <div v-if="$store.getters.login_type == 'admin' && auto_draw_cash == 'N'" class="tips">
             <p v-if="$store.getters.login_type == 'admin' && auto_draw_cash == 'N'">
               *
               分销员提现佣金选择类型为银行卡时，将从可提现金额进行转账，为避免分销员提现时资金不足导致提现失败，请提现时预留部分资金；
@@ -73,14 +77,14 @@
         <div class="list">
           <SpFinder
             ref="finder"
-            :noSelection="true"
+            :no-selection="true"
             :setting="setting"
-            @reset="reset"
             url="/adapay/drawcash/getList"
             :hooks="{
               beforeSearch: beforeSearch,
               afterSearch: afterSearch
             }"
+            @reset="reset"
           >
             <template v-slot:date>
               <el-date-picker
@@ -92,10 +96,9 @@
                 range-separator="-"
                 start-placeholder="开始日期"
                 end-placeholder="结束日期"
-                @change="timeHandle"
                 :clearable="false"
-              >
-              </el-date-picker>
+                @change="timeHandle"
+              />
             </template>
           </SpFinder>
         </div>
@@ -132,24 +135,24 @@ export default {
     }
   },
   computed: {
-    setting () {
+    setting() {
       return setting_(this)
     }
   },
-  mounted () {
+  mounted() {
     console.log(this.$store.getters.login_type)
   },
   methods: {
-    reset () {
+    reset() {
       this.time = []
       this.begin_time = ''
       this.end_time = ''
     },
-    timeHandle (val) {
+    timeHandle(val) {
       this.begin_time = val[0]
       this.end_time = val[1]
     },
-    btnClick (formName, ref) {
+    btnClick(formName, ref) {
       this.$refs[formName].validate(async (valid) => {
         if (valid) {
           try {
@@ -158,7 +161,7 @@ export default {
             if (status) {
               this.$message.success('提现成功')
               this.$refs[formName].resetFields()
-              this.$refs.finder.refresh()
+              this.$refs.finder.refresh(true)
             } else {
               this.$message.error('提现失败')
             }
@@ -174,16 +177,16 @@ export default {
         }
       })
     },
-    allHandle () {
+    allHandle() {
       this.form.cash_amt = this.cash_balance / 100
     },
-    beforeSearch (params) {
+    beforeSearch(params) {
       params.begin_time = this.begin_time
       params.end_time = this.end_time
 
       return params
     },
-    afterSearch ({ data }) {
+    afterSearch({ data }) {
       const { search_options = {}, cash_balance = 0, cash_limit = 0, auto_draw_cash } = data.data
       this.auto_draw_cash = auto_draw_cash
       this.search_options = search_options.status

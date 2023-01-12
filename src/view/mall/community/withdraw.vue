@@ -13,21 +13,10 @@
 <template>
   <div>
     <div v-if="$route.path.indexOf('detail') === -1">
-      <SpFilterForm
-        :model="formQuery"
-        @onSearch="onSearch"
-        @onReset="onSearch"
-      >
-        <SpFilterFormItem
-          prop="status"
-          label="提现状态:"
-        >
+      <SpFilterForm :model="formQuery" @onSearch="onSearch" @onReset="onSearch">
+        <SpFilterFormItem prop="status" label="提现状态:">
           <!-- <el-input v-model="formQuery.name" placeholder="请选择" /> -->
-          <el-select
-            v-model="formQuery.status"
-            clearable
-            placeholder="请选择"
-          >
+          <el-select v-model="formQuery.status" clearable placeholder="请选择">
             <el-option
               v-for="item in withDrawStatusList"
               :key="item.value"
@@ -37,46 +26,32 @@
             />
           </el-select>
         </SpFilterFormItem>
-        <SpFilterFormItem
-          prop="mobile"
-          label="手机号:"
-        >
-          <el-input
-            v-model="formQuery.mobile"
-            placeholder="请输入团长手机号"
-          />
+        <SpFilterFormItem prop="mobile" label="手机号:">
+          <el-input v-model="formQuery.mobile" placeholder="请输入团长手机号" />
         </SpFilterFormItem>
       </SpFilterForm>
 
       <el-row class="total-info">
         <el-col :span="6">
-          <div class="total-label">
-            佣金总额（¥）
-          </div>
+          <div class="total-label">佣金总额（¥）</div>
           <div class="total-value">
             {{ rebate_total / 100 }}
           </div>
         </el-col>
         <el-col :span="6">
-          <div class="total-label">
-            已提现总额（¥）
-          </div>
+          <div class="total-label">已提现总额（¥）</div>
           <div class="total-value">
             {{ payed_rebate / 100 }}
           </div>
         </el-col>
         <el-col :span="6">
-          <div class="total-label">
-            待处理金额（¥）
-          </div>
+          <div class="total-label">待处理金额（¥）</div>
           <div class="total-value">
             {{ freeze_cash_withdrawal_rebate / 100 }}
           </div>
         </el-col>
         <el-col :span="6">
-          <div class="total-label">
-            申请提现人数
-          </div>
+          <div class="total-label">申请提现人数</div>
           <div class="total-value">
             {{ apply_chief_num }}
           </div>
@@ -120,7 +95,7 @@ const withDrawStatusList = [
 ]
 export default {
   name: '',
-  data () {
+  data() {
     return {
       formQuery: {
         status: '',
@@ -253,19 +228,19 @@ export default {
       ]
     }
   },
-  created () {},
+  created() {},
   methods: {
-    onSearch () {
-      this.$refs.finder.refresh()
+    onSearch() {
+      this.$refs.finder.refresh(true)
     },
-    beforeSearch (params) {
+    beforeSearch(params) {
       const formQuery = JSON.parse(JSON.stringify(this.formQuery))
       if (formQuery.approve_status == '-1') {
         delete formQuery.approve_status
       }
       return { ...params, ...formQuery }
     },
-    afterSearch (response) {
+    afterSearch(response) {
       const { apply_chief_num, freeze_cash_withdrawal_rebate, payed_rebate, rebate_total } =
         response.data.data.count
       this.apply_chief_num = apply_chief_num
@@ -273,7 +248,7 @@ export default {
       this.payed_rebate = payed_rebate
       this.rebate_total = rebate_total
     },
-    getPayType (type) {
+    getPayType(type) {
       const payType = {
         bankcard: '银行卡',
         alipay: '支付宝',
@@ -281,10 +256,10 @@ export default {
       }
       return payType[type]
     },
-    renderWithdrawStatu (state) {
+    renderWithdrawStatu(state) {
       return withDrawStatusList.find((item) => item.value == state).title
     },
-    async onResloveSubmit () {
+    async onResloveSubmit() {
       const { id } = this.resloveForm
       await this.$api.community.withdrawApply(id, {
         process_type: 'argee'

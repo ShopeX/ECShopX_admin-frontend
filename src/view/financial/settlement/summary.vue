@@ -26,7 +26,7 @@
         <SpFilterFormItem prop="merchant_id" label="商家:">
           <SpSelectMerchant v-model="formQuery.merchant_id" clearable placeholder="请选择" />
         </SpFilterFormItem>
-        <SpFilterFormItem prop="status" label="结算状态:">
+        <SpFilterFormItem prop="statement_status" label="结算状态:">
           <el-select v-model="formQuery.statement_status" clearable placeholder="请选择">
             <el-option
               v-for="item in statusOption"

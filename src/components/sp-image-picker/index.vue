@@ -89,13 +89,13 @@ export default {
   created() {},
   methods: {
     async handleSelectImage() {
-      console.log(this.max)
+      console.log(this.max, this.value)
       const { data } = await this.$picker.image({
         data: this.value,
         multiple: isArray(this.value),
         max: this.max
       })
-      if (isString(this.value)) {
+      if (isString(this.value) || !this.value) {
         this.$emit('input', data.url)
         this.$emit('onChange', data.url)
       } else {

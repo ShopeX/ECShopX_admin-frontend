@@ -10,7 +10,7 @@
 </style>
 <template>
   <div class="sp-input">
-    <span class="prefix">{{ prefix }}</span>
+    <span v-if="prefix" class="prefix">{{ prefix }}</span>
     <el-input
       v-model="val"
       :placeholder="placeHolder"
@@ -19,7 +19,7 @@
       type="text"
       @change="onChangeInput"
     />
-    <span class="suffix">{{ suffix }}</span>
+    <span v-if="suffix" class="suffix">{{ suffix }}</span>
   </div>
 </template>
 

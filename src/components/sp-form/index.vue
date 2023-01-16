@@ -267,7 +267,6 @@ export default {
         rules[item.key] = [{ validator: item.validator }]
       }
     })
-
     this.localComps = localComps
 
     return (

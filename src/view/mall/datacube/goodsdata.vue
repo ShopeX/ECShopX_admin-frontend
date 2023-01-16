@@ -1,23 +1,49 @@
 <template>
   <div>
     <div class="action-container">
-      <el-button type="primary"> 导出 </el-button>
+      <!-- <el-button type="primary"> 导出 </el-button> -->
+      <export-tip @exportHandle="exportData">
+        <el-button v-loading="exportloading" type="primary"> 导出 </el-button>
+      </export-tip>
+      <el-popover
+        placement="top-start"
+        width="200"
+        trigger="hover"
+        content="导出任务会以队列执行，点击导出后，请至‘设置-导出列表’页面中查看及下载数据"
+      >
+        <i slot="reference" class="el-icon-question" />
+      </el-popover>
     </div>
 
     <SpFilterForm :model="queryForm" @onSearch="onSearch" @onReset="onSearch">
-      <SpFilterFormItem prop="datetime" label="查询日期:" size="max">
+      <SpFilterFormItem prop="datetime" label="查询日期:">
         <el-date-picker
           v-model="queryForm.datetime"
           clearable
-          type="datetimerange"
+          type="daterange"
           align="right"
-          format="yyyy-MM-dd HH:mm:ss"
+          format="yyyy-MM-dd"
           range-separator="至"
           start-placeholder="开始日期"
           end-placeholder="结束日期"
           :default-time="defaultTime"
           :picker-options="pickerOptions"
         />
+      </SpFilterFormItem>
+      <SpFilterFormItem prop="act_id" label="内购活动:" size="max">
+        <el-select
+          v-model="params.act_id"
+          v-scroll="() => pagesQuery.nextPage()"
+          multiple
+          placeholder="请选择"
+        >
+          <el-option
+            v-for="(item, index) in purchaseActivityList"
+            :key="`activity-item__${index}`"
+            :label="item.name"
+            :value="item.id"
+          />
+        </el-select>
       </SpFilterFormItem>
     </SpFilterForm>
 
@@ -125,6 +151,7 @@ import json2csv from 'json2csv'
 import { PICKER_DATE_OPTIONS } from '@/consts'
 import { getGoodsData } from '../../../api/datacube'
 import { createSetting } from '@shopex/finder'
+import Pages from '@/utils/pages'
 export default {
   data() {
     return {
@@ -170,8 +197,14 @@ export default {
             key: 'settle_price'
           }
         ]
-      })
+      }),
+      purchaseActivityList: []
     }
+  },
+  created() {
+    this.pagesQuery = new Pages({
+      fetch: this.getPurchaseActivity
+    }).nextPage()
   },
   mounted() {
     var start = new Date()
@@ -247,6 +280,14 @@ export default {
             message: '获取统计信息出错'
           })
         })
+    },
+    async getPurchaseActivity({ page, pageSize }) {
+      const { list, total_count } = await this.$api.marketing.getPurchaseActivity({
+        page,
+        pageSize
+      })
+      this.pagesQuery.setTotal(total_count)
+      this.purchaseActivityList = this.purchaseActivityList.concat(list)
     }
   }
 }

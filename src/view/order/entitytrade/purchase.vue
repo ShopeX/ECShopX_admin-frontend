@@ -18,28 +18,6 @@
           />
         </el-select>
       </SpFilterFormItem>
-      <SpFilterFormItem v-if="!VERSION_IN_PURCHASE" prop="source" label="订单来源:">
-        <el-select v-model="params.source" clearable placeholder="请选择">
-          <el-option
-            v-for="item in orderSourceList"
-            :key="item.value"
-            size="mini"
-            :label="item.title"
-            :value="item.value"
-          />
-        </el-select>
-      </SpFilterFormItem>
-      <SpFilterFormItem v-if="!VERSION_IN_PURCHASE" prop="order_class" label="订单类型:">
-        <el-select v-model="params.order_class" clearable placeholder="请选择">
-          <el-option
-            v-for="item in orderType"
-            :key="item.value"
-            size="mini"
-            :label="item.title"
-            :value="item.value"
-          />
-        </el-select>
-      </SpFilterFormItem>
       <SpFilterFormItem prop="create_time" label="下单时间:" size="max">
         <el-date-picker
           v-model="params.create_time"
@@ -55,18 +33,18 @@
           :picker-options="pickerOptions"
         />
       </SpFilterFormItem>
-      <SpFilterFormItem
-        v-if="!isMicorMall && !VERSION_IN_PURCHASE"
-        prop="is_invoiced"
-        label="开票状态:"
-      >
-        <el-select v-model="params.is_invoiced" clearable placeholder="请选择">
+      <SpFilterFormItem prop="act_id" label="内购活动:" size="max">
+        <el-select
+          v-model="params.act_id"
+          v-scroll="() => pagesQuery.nextPage()"
+          multiple
+          placeholder="请选择"
+        >
           <el-option
-            v-for="item in invoiceStatus"
-            :key="item.value"
-            size="mini"
-            :label="item.title"
-            :value="item.value"
+            v-for="(item, index) in purchaseActivityList"
+            :key="`activity-item__${index}`"
+            :label="item.name"
+            :value="item.id"
           />
         </el-select>
       </SpFilterFormItem>
@@ -85,38 +63,20 @@
           :picker-options="pickerOptions"
         />
       </SpFilterFormItem>
-      <SpFilterFormItem
-        v-if="!VERSION_STANDARD && !VERSION_IN_PURCHASE"
-        prop="distributor_type"
-        label="订单分类:"
-      >
-        <el-select v-model="params.distributor_type" clearable placeholder="请选择">
+      <SpFilterFormItem prop="enterprise_id" label="企业:" size="max">
+        <el-select
+          v-model="params.enterprise_id"
+          v-scroll="() => enterprisePagesQuery.nextPage()"
+          multiple
+          placeholder="请选择"
+        >
           <el-option
-            v-for="item in orderCategory"
-            :key="item.value"
-            size="mini"
-            :label="item.title"
-            :value="item.value"
+            v-for="(item, index) in enterpriseList"
+            :key="`enterprise-item__${index}`"
+            :label="item.name"
+            :value="item.id"
           />
         </el-select>
-      </SpFilterFormItem>
-      <SpFilterFormItem
-        v-if="(!isMicorMall || login_type != 'distributor') && !VERSION_B2C && !VERSION_IN_PURCHASE"
-        prop="distributor_id"
-        label="店铺:"
-      >
-        <SpSelectShop v-model="params.distributor_id" clearable placeholder="请选择" />
-      </SpFilterFormItem>
-      <SpFilterFormItem v-if="!VERSION_IN_PURCHASE" prop="subDistrict" label="选择街道:">
-        <el-cascader
-          v-model="params.subDistrict"
-          clearable
-          :props="{
-            value: 'id',
-            checkStrictly: true
-          }"
-          :options="subDistrictList"
-        />
       </SpFilterFormItem>
     </SpFilterForm>
 
@@ -405,6 +365,7 @@ import {
   IS_DISTRIBUTOR
 } from '@/utils'
 import { exportInvoice, orderExport } from '@/api/trade'
+import Pages from '@/utils/pages'
 import CompTableView from './comps/comp-tableview'
 import CompReceiveInfo from './comps/comp-receiveInfo'
 import moment from 'moment'
@@ -433,18 +394,19 @@ export default {
       params: {
         mobile: '',
         order_id: '',
-        order_class_exclude: 'drug,pointsmall,community',
         salesman_mobile: '',
         receipt_type: '', // 配送类型
         source: '', // 订单来源
         order_status: '', // 订单状态
-        order_class: '', // 订单类型
+        order_class: 'employee_purchase', // 订单类型
         is_invoiced: '', // 开票状态
         time_start_begin: '', //
         time_start_end: '',
         distributor_type: '', // 订单分类
         distributor_id: '', // 店铺
-        subDistrict: []
+        subDistrict: [],
+        act_id: '',
+        enterprise_id: ''
       },
       datapass_block: 1, // 是否为数据脱敏
       subDistrictList: [],
@@ -792,7 +754,9 @@ export default {
         pointFreightFee: 0
       },
       origin: '',
-      isBindOMS: false
+      isBindOMS: false,
+      purchaseActivityList: [],
+      enterpriseList: []
     }
   },
   computed: {
@@ -801,6 +765,14 @@ export default {
   async created() {
     const { result } = await this.$api.trade.isBindOMS()
     this.isBindOMS = result
+
+    this.pagesQuery = new Pages({
+      fetch: this.getPurchaseActivity
+    }).nextPage()
+
+    this.enterprisePagesQuery = new Pages({
+      fetch: this.getEnterpriseList
+    }).nextPage()
   },
   mounted() {
     this.origin = window.location.origin
@@ -845,7 +817,9 @@ export default {
       delete params.create_time
       delete params.delivery_time
 
-      const { list, pager, datapass_block } = await this.$api.trade.getOrderList(params)
+      const { list, pager, datapass_block, total_count } = await this.$api.trade.getOrderList(
+        params
+      )
 
       this.tableList = list.map((item) => {
         const actionBtns = []
@@ -941,7 +915,7 @@ export default {
           actionBtns
         }
       })
-      this.page.total = pager ? pager.count : 0
+      this.page.total = parseInt(total_count)
       this.datapass_block = datapass_block
       this.loading = false
     },
@@ -1380,6 +1354,22 @@ export default {
           total: item_total_fee / 100
         }
       })
+    },
+    async getPurchaseActivity({ page, pageSize }) {
+      const { list, total_count } = await this.$api.marketing.getPurchaseActivity({
+        page,
+        pageSize
+      })
+      this.pagesQuery.setTotal(total_count)
+      this.purchaseActivityList = this.purchaseActivityList.concat(list)
+    },
+    async getEnterpriseList({ page, pageSize }) {
+      const { list, total_count } = await this.$api.member.getPurchaseCompanyList({
+        page,
+        pageSize
+      })
+      this.pagesQuery.setTotal(total_count)
+      this.enterpriseList = this.enterpriseList.concat(list)
     }
   }
 }

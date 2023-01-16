@@ -1,4 +1,16 @@
-<style lang="scss"></style>
+<style lang="scss">
+.dg-create-company {
+  .sort-input {
+    .el-input {
+      margin-left: 0;
+    }
+    .suffix {
+      font-size: 13px;
+      color: #999;
+    }
+  }
+}
+</style>
 <template>
   <div>
     <div class="action-container">
@@ -39,7 +51,8 @@
     <SpDialog
       ref="addDialogRef"
       v-model="addDialog"
-      title="添加分组"
+      class="dg-create-company"
+      title="添加企业"
       :modal="false"
       :form="companyForm"
       :form-list="companyFormList"
@@ -110,6 +123,28 @@ export default {
         columns: [
           { name: 'ID', key: 'id' },
           {
+            name: '企业Logo',
+            key: 'logo',
+            render: (h, { row }) => {
+              if (row.logo) {
+                return h('el-image', {
+                  props: {
+                    'src': row.logo
+                  },
+                  class: {
+                    'company-logo': true
+                  },
+                  style: {
+                    'width': '64px',
+                    'display': 'block'
+                  }
+                })
+              } else {
+                return ''
+              }
+            }
+          },
+          {
             name: '企业名称',
             key: 'name'
           },
@@ -168,9 +203,11 @@ export default {
       addDialog: false,
       companyForm: {
         enterprise_id: '',
+        logo: '',
         name: '',
         enterprise_sn: '',
-        auth_type: '',
+        sort: '',
+        auth_type: 'mobile',
         relay_host: '',
         smtp_port: '',
         email_user: '',
@@ -194,13 +231,25 @@ export default {
           message: '不能为空'
         },
         {
+          label: '排序',
+          key: 'sort',
+          component: () => (
+            <SpInput
+              v-model={this.companyForm.sort}
+              class='sort-input'
+              width='100px'
+              suffix='选择器中的企业展示顺序，数字越小越靠前'
+            />
+          )
+        },
+        {
           label: '登录类型',
           key: 'auth_type',
-          type: 'select',
+          type: 'radio',
           options: [
-            { value: 'mobile', title: '手机号' },
-            { value: 'account', title: '账号' },
-            { value: 'email', title: '邮箱' }
+            { label: 'mobile', name: '手机号' },
+            { label: 'account', name: '账号' },
+            { label: 'email', name: '邮箱' }
           ],
           validator: (rule, value, callback) => {
             if (value) {
@@ -241,6 +290,19 @@ export default {
           placeholder: '请输入邮箱密码',
           isShow,
           validator
+        },
+        {
+          label: '企业Logo',
+          key: 'logo',
+          component: () => <SpImagePicker v-model={this.companyForm.logo} />,
+          validator: (rule, value, callback) => {
+            if (value) {
+              callback()
+            } else {
+              callback('请选择企业')
+            }
+          },
+          tip: '建议尺寸100*100，支持 png、jpg 格式，不超过2M'
         }
       ]
     }
@@ -261,9 +323,19 @@ export default {
       this.addDialog = true
     },
     async onCompanyFormSubmit() {
-      const { name, enterprise_sn, auth_type, email_user, relay_host, smtp_port, email_password } =
-        this.companyForm
+      const {
+        logo,
+        name,
+        enterprise_sn,
+        auth_type,
+        email_user,
+        relay_host,
+        smtp_port,
+        email_password,
+        sort
+      } = this.companyForm
       const params = {
+        logo,
         name,
         enterprise_sn,
         auth_type,
@@ -271,7 +343,7 @@ export default {
         smtp_port,
         email_user,
         email_password,
-        sort: 0
+        sort
       }
       await this.$api.member.postPurchaseCompany(params)
       this.addDialog = false

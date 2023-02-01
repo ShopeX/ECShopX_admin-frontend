@@ -533,7 +533,7 @@ export default {
             this.list.refundedData.push(companyDataList[key].refunded_count)
             this.list.amountPayedData.push(companyDataList[key].amount_payed_count / 100)
             this.list.amountPointPayedData.push(companyDataList[key].amount_point_payed_count)
-            this.list.orderData.push(companyDataList[key].order_count)
+            this.list.orderData.push(companyDataList[key].order_count / 100)
             this.list.orderPointData.push(companyDataList[key].order_point_count)
             this.list.orderPayedData.push(companyDataList[key].order_payed_count)
             this.list.orderPointPayedData.push(companyDataList[key].order_point_payed_count)

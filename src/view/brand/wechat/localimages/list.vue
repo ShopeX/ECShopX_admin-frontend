@@ -12,57 +12,30 @@
         :on-success="handleAvatarSuccess"
         :on-error="uploadError"
       >
-        <el-button type="primary">
-          本地上传
-        </el-button>
-        <div
-          slot="tip"
-          class="el-upload__tip"
-        >
-          只能上传jpg/png文件，且不超过2M
-        </div>
+        <el-button type="primary"> 本地上传 </el-button>
+        <div slot="tip" class="el-upload__tip">只能上传jpg/png文件，且不超过2M</div>
       </el-upload>
     </div>
-    <div
-      v-loading="loading"
-      class="localimg_pick"
-    >
+    <div v-loading="loading" class="localimg_pick">
       <ul class="clearfix">
-        <li
-          v-for="(item, index) in localimagesList.list"
-          :key="index"
-          class="localimg_item"
-        >
+        <li v-for="(item, index) in localimagesList.list" :key="index" class="localimg_item">
           <div class="localimg_item_bd">
             <img class="pic" :src="item.image_full_url">
             <div class="check_content">
-              <span
-                class="localimg_name"
-                :title="item.image_name"
-              >{{ item.image_name }}</span>
+              <span class="localimg_name" :title="item.image_name">{{ item.image_name }}</span>
             </div>
           </div>
           <div class="msg_card">
             <el-row>
-              <el-col :span="VERSION_IN_PURCHASE ? 12 : 24">
-                <div
-                  class="opr_item"
-                  @click="removeItem(item, index)"
-                >
-                  <el-tooltip
-                    class="item"
-                    effect="dark"
-                    content="删除"
-                    placement="top"
-                  >
+              <el-col :span="12">
+                <div class="opr_item" @click="removeItem(item, index)">
+                  <el-tooltip class="item" effect="dark" content="删除" placement="top">
                     <i class="el-icon-delete" />
                   </el-tooltip>
                 </div>
               </el-col>
-              <el-col v-if="VERSION_IN_PURCHASE" :span="VERSION_IN_PURCHASE ? 12 : 24">
-                <div
-                  class="copy-url"
-                >
+              <el-col :span="12">
+                <div class="copy-url">
                   <el-tooltip
                     class="item"
                     effect="dark"
@@ -111,7 +84,7 @@ import {
 export default {
   mixins: [mixin],
   props: ['activeName', 'getStatus'],
-  data () {
+  data() {
     return {
       actionPath: 'https://upload-z2.qiniup.com',
       image_prefix: '',
@@ -130,7 +103,7 @@ export default {
     }
   },
   watch: {
-    getStatus (newV, oldV) {
+    getStatus(newV, oldV) {
       if (newV) {
         this.params = { page: 1, pageSize: this.params.pageSize }
         this.getList()
@@ -138,7 +111,7 @@ export default {
     }
   },
   methods: {
-    beforeAvatarUpload (file) {
+    beforeAvatarUpload(file) {
       const isJPG = file.type === 'image/jpeg'
       const isPNG = file.type === 'image/png'
       const isGIF = file.type === 'image/gif'
@@ -163,7 +136,7 @@ export default {
       //   this.actionPath  = `https://upload-${!response.data.data.region ? 'z2' : response.data.data.region}.qiniup.com`
       // })
     },
-    handleAvatarSuccess (res, file) {
+    handleAvatarSuccess(res, file) {
       let uploadParams = {
         image_cat_id: 2, //图片分类必填,必须为整数
         image_name: file.name, //图片名称必填,不能超过50个字符
@@ -184,7 +157,7 @@ export default {
       })
       // }
     },
-    getList () {
+    getList() {
       if (!this.isLoadData) {
         this.loading = true
         getQiniuPicList({ ...this.params, storage: 'image' })
@@ -198,18 +171,18 @@ export default {
           })
       }
     },
-    handleCurrentChange (page_num) {
+    handleCurrentChange(page_num) {
       this.isLoadData = false
       this.params.page = page_num
       this.getList()
     },
-    handleSizeChange (pageSize) {
+    handleSizeChange(pageSize) {
       this.isLoadData = false
       this.params.page = 1
       this.params.pageSize = pageSize
       this.getList()
     },
-    removeItem (item, index) {
+    removeItem(item, index) {
       this.$confirm('确定删除此图片吗？', '提示', {
         confirmButtonText: '确定',
         cancelButtonText: '取消',
@@ -307,7 +280,8 @@ export default {
   background-color: #f4f5f9;
   border-top: 1px solid #e7e7eb;
   width: 100%;
-  .opr_item, .copy-url {
+  .opr_item,
+  .copy-url {
     height: 34px;
     line-height: 34px;
     cursor: pointer;

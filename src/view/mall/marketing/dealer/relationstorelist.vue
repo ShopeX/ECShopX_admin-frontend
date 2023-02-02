@@ -44,7 +44,7 @@ import { createSetting } from '@shopex/finder'
 import AddShipModal from '@/view/mall/marketing/component/AddShipModal'
 export default {
   components: { AddShipModal },
-  data () {
+  data() {
     return {
       dealer_id: 0,
       username: '',
@@ -62,7 +62,7 @@ export default {
   },
   computed: {
     ...mapGetters(['wheight']),
-    setting () {
+    setting() {
       return createSetting({
         columns: [
           { name: '店铺ID', key: 'distributor_id' },
@@ -111,14 +111,14 @@ export default {
       })
     }
   },
-  mounted () {
+  mounted() {
     if (this.$route.query.dealer_id) {
       this.dealer_id = this.$route.query.dealer_id
       this.username = this.$route.query.username
     }
   },
   methods: {
-    beforeSearch (params) {
+    beforeSearch(params) {
       params = {
         ...params,
         ...this.form,
@@ -126,11 +126,11 @@ export default {
       }
       return params
     },
-    onFinderReset () {
+    onFinderReset() {
       this.create_time = ''
       this.form = {}
     },
-    handleModalClick (visible, type, row) {
+    handleModalClick(visible, type, row) {
       if (row) {
         this.detailData = {
           ...row,
@@ -144,12 +144,12 @@ export default {
             : `请确认是否将【${row.name}】与【${this.username}】关联`
       }
       this.visibleModal = visible
-      if (!visible) this.$refs.finder.refresh()
+      if (!visible) this.$refs.finder.refresh(true)
     },
-    dateStrToTimeStamp (str) {
+    dateStrToTimeStamp(str) {
       return Date.parse(new Date(str)) / 1000
     },
-    dateChange (val) {
+    dateChange(val) {
       if (val) {
         this.form.time_start = this.dateStrToTimeStamp(val[0] + ' 00:00:00')
         this.form.time_end = this.dateStrToTimeStamp(val[1] + ' 23:59:59')

@@ -72,14 +72,14 @@ export default {
       }).then(async () => {
         const result = await deleteTaskSms({ id })
         this.$message.success('撤销成功')
-        this.$refs.finder.refresh()
+        this.$refs.finder.refresh(true)
       })
     },
     smsMassLogEditHandler() {
       this.visible = false
     },
     updateFinder() {
-      this.$refs.finder.refresh()
+      this.$refs.finder.refresh(true)
     }
   }
 }

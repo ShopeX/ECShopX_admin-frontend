@@ -19,6 +19,7 @@
 <script>
 import { mapGetters } from 'vuex'
 import api from '@/api'
+import { VERSION_PLATFORM } from '@/utils'
 
 export default {
   props: {
@@ -157,10 +158,12 @@ export default {
           })
           break
         case 'sale_category':
-        if (distributor_id) {
+          if(VERSION_PLATFORM){
+            if (distributor_id) {
             Object.assign(query, {
               distributor_id
             })
+           }
           }
           api.goods.getCategory(query).then((res) => {
             let items = []

@@ -25,9 +25,7 @@
 
     <div class="action-container">
       <export-tip @exportHandle="exportData">
-        <el-button type="primary" plain>
-导出
-</el-button>
+        <el-button type="primary" plain> 导出 </el-button>
       </export-tip>
     </div>
 
@@ -65,7 +63,7 @@
                   </router-link>
                 </el-form-item>
                 <el-form-item label="支付方式：">
-                  <span>{{fitlerPayType(scope.row.payChannel, scope.row.payType)}}</span>
+                  <span>{{ fitlerPayType(scope.row.payChannel, scope.row.payType) }}</span>
                   <!-- <span v-if="scope.row.payType == 'wxpay' || scope.row.payType == 'wxpayjs'"
                     >微信支付</span
                   >
@@ -91,12 +89,8 @@
                   <el-popover v-if="scope.row.discountInfo" trigger="hover" placement="top">
                     <div v-for="item in scope.row.discountInfo" :key="item.orderId">
                       <div v-if="item.discount_fee">
-                        <p v-if="item.coupon_code">
-优惠券码：{{ item.coupon_code }}
-</p>
-                        <p v-if="item.member_card_code">
-会员卡号：{{ item.member_card_code }}
-</p>
+                        <p v-if="item.coupon_code">优惠券码：{{ item.coupon_code }}</p>
+                        <p v-if="item.member_card_code">会员卡号：{{ item.member_card_code }}</p>
                         <p>优惠原因：{{ item.info }}</p>
                         <p>优惠方案：{{ item.rule }}</p>
                         <p>
@@ -113,7 +107,7 @@
               </el-form>
             </template>
           </el-table-column>
-          <el-table-column label="交易单" width="270">
+          <el-table-column label="交易单" width="180">
             <template slot-scope="scope">
               <div class="order-num">
                 {{ scope.row.tradeId }}
@@ -131,15 +125,24 @@
                 </el-tooltip>
                 {{ scope.row.distributor_name }}
               </div>
-              <div class="order-time">
+              <!-- <div class="order-time">
                 <el-tooltip effect="dark" content="创建时间" placement="top-start">
                   <i class="el-icon-time" />
                 </el-tooltip>
                 {{ scope.row.timeStart | datetime('YYYY-MM-DD HH:mm:ss') }}
-              </div>
+              </div> -->
             </template>
           </el-table-column>
-          <el-table-column label="订单信息" min-width="300">
+          <el-table-column label="交易时间" width="160"
+            >
+<template slot-scope="scope">
+{{
+              scope.row.timeStart | datetime('YYYY-MM-DD HH:mm:ss')
+            }}
+</template>
+</el-table-column
+          >
+          <el-table-column label="订单信息">
             <template slot-scope="scope">
               <div class="order-num">
                 <el-tooltip effect="dark" content="联系方式" placement="top-start">
@@ -159,9 +162,11 @@
                   />
                 </el-tooltip>
               </div>
-              <div class="order-time">
-商品：{{ scope.row.body }}
-</div>
+              <div class="order-time">商品：{{ scope.row.body }}</div>
+            </template>
+          </el-table-column>
+          <el-table-column label="实付" width="180">
+            <template slot-scope="scope">
               <div>
                 实付：<span v-if="scope.row.payType == 'point'" class="mark"
                   >{{ scope.row.payFee }} 积分</span
@@ -173,9 +178,9 @@
               </div>
             </template>
           </el-table-column>
-          <el-table-column min-width="200" label="支付方式">
+          <el-table-column label="支付方式">
             <template slot-scope="scope">
-              <span>{{fitlerPayType(scope.row.payChannel, scope.row.payType)}}</span>
+              <span>{{ fitlerPayType(scope.row.payChannel, scope.row.payType) }}</span>
               <!-- <span v-if="scope.row.payType == 'wxpay' || scope.row.payType == 'wxpayjs'"
                 >微信支付</span
               >
@@ -235,9 +240,7 @@
               <el-tag v-if="scope.row.tradeState == 'SUCCESS'" type="success" size="mini">
                 支付成功
               </el-tag>
-              <el-tag v-if="scope.row.tradeState == 'NOTPAY'" size="mini">
-未支付
-</el-tag>
+              <el-tag v-if="scope.row.tradeState == 'NOTPAY'" size="mini"> 未支付 </el-tag>
               <el-tag v-if="scope.row.tradeState == 'CLOSED'" type="primary" size="mini">
                 已关闭
               </el-tag>
@@ -264,7 +267,7 @@
             background
             layout="total, sizes, prev, pager, next"
             :current-page.sync="page.pageIndex"
-            :page-sizes="[10, 20, 50]"
+            :page-sizes="[20, 30, 50]"
             :total="page.total"
             :page-size="params.pageSize"
             @current-change="onCurrentChange"
@@ -277,16 +280,12 @@
 </template>
 <script>
 import { mapGetters } from 'vuex'
-import shopSelect from '@/components/shopSelect'
 import mixin, { pageMixin } from '@/mixins'
 import { PAY_TYPE } from '@/consts'
 
 export default {
-  components: {
-    shopSelect
-  },
   mixins: [mixin, pageMixin],
-  data () {
+  data() {
     const initialParams = {
       create_time: '',
       mobile: undefined,
@@ -313,14 +312,14 @@ export default {
   computed: {
     ...mapGetters(['wheight'])
   },
-  mounted () {
+  mounted() {
     this.fetchList()
   },
   methods: {
-    fitlerPayType (payChannel , payType) {
-      return payChannel ? PAY_TYPE[payChannel] : PAY_TYPE[payType];
+    fitlerPayType(payChannel, payType) {
+      return payChannel ? PAY_TYPE[payChannel] : PAY_TYPE[payType]
     },
-    fnPath () {
+    fnPath() {
       if (this.$store.getters.login_type == 'merchant') {
         return `/merchant/order/tradenormalorders/detail`
       } else if (this.$store.getters.login_type == 'distributor') {
@@ -331,10 +330,10 @@ export default {
         ? '/order/entitytrade/tradenormalorders/detail'
         : '/order/servicetrade/tradeservice/detail'
     },
-    dateStrToTimeStamp (str) {
+    dateStrToTimeStamp(str) {
       return Date.parse(new Date(str)) / 1000
     },
-    dateTransfer (val, isExport) {
+    dateTransfer(val, isExport) {
       let time_start_begin = undefined
       let time_start_end = undefined
       if (val.length > 0) {
@@ -352,17 +351,17 @@ export default {
         time_start_end
       }
     },
-    onReset () {
+    onReset() {
       this.params = { ...this.initialParams }
       this.onSearch()
     },
-    onSearch () {
+    onSearch() {
       this.page.pageIndex = 1
       this.$nextTick(() => {
         this.fetchList()
       })
     },
-    getParams (isExport) {
+    getParams(isExport) {
       let params = {
         ...this.dateTransfer(this.params.create_time, isExport),
         mobile: this.params.mobile || undefined,
@@ -372,13 +371,13 @@ export default {
       return params
     },
     // 切换tab
-    handleTabClick (tab, event) {
+    handleTabClick(tab, event) {
       this.activeName = tab.name
       this.params.status = tab.name == 'all' ? '' : tab.name
       this.onSearch()
     },
 
-    async fetchList () {
+    async fetchList() {
       this.loading = true
       const { pageIndex: page, pageSize } = this.page
       let params = {
@@ -392,7 +391,7 @@ export default {
       this.datapass_block = datapass_block
       this.loading = false
     },
-    async exportData () {
+    async exportData() {
       const { status, url, filename } = await this.$api.trade.tradeExport({
         ...this.getParams(true)
       })
@@ -422,6 +421,7 @@ export default {
 <style scoped lang="scss">
 .demo-table-expand {
   font-size: 0;
+  padding: 0 20px;
 }
 .demo-table-expand label {
   width: 90px;

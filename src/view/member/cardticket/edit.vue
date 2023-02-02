@@ -6,7 +6,7 @@
           <el-radio-button label="discount"> 折扣券 </el-radio-button>
           <el-radio-button label="cash"> 满减券 </el-radio-button>
           <!-- <el-radio-button label="gift">兑换券</el-radio-button> -->
-          <el-radio-button v-if="VERSION_STANDARD" label="new_gift"> 兑换券 </el-radio-button>
+          <el-radio-button label="new_gift"> 兑换券 </el-radio-button>
         </el-radio-group>
       </div>
       <GiftCoupon v-if="form.card_type === 'new_gift'" @haddleShowTab="haddleShowTab" />

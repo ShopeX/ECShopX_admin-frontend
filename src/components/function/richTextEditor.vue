@@ -1,62 +1,22 @@
 <template>
   <div class="content-wrap">
     <div class="content-view">
-      <div
-        class="content"
-        :class="{ 'is-edit': components.length > 0 }"
-      >
-        <div
-          v-for="(item, index) in components"
-          :key="index"
-          class="component-item"
-        >
-          <film
-            v-if="item.name === 'film'"
-            :res="item"
-            :active="index == editorIndex"
-          />
-          <goods
-            v-if="item.name === 'goods'"
-            :res="item"
-            :active="index == editorIndex"
-          />
-          <heading
-            v-if="item.name === 'heading'"
-            :res="item"
-            :active="index == editorIndex"
-          />
-          <slider
-            v-if="item.name === 'slider'"
-            :res="item"
-            :active="index == editorIndex"
-          />
-          <writing
-            v-if="item.name === 'writing'"
-            :res="item"
-            :active="index == editorIndex"
-          />
+      <div class="content" :class="{ 'is-edit': components.length > 0 }">
+        <div v-for="(item, index) in components" :key="index" class="component-item">
+          <film v-if="item.name === 'film'" :res="item" :active="index == editorIndex" />
+          <goods v-if="item.name === 'goods'" :res="item" :active="index == editorIndex" />
+          <heading v-if="item.name === 'heading'" :res="item" :active="index == editorIndex" />
+          <slider v-if="item.name === 'slider'" :res="item" :active="index == editorIndex" />
+          <writing v-if="item.name === 'writing'" :res="item" :active="index == editorIndex" />
         </div>
         <transition name="el-fade-in-linear">
           <div class="edit-btn content-center">
-            <el-button
-              type="primary"
-              plain
-              round
-              @click="plantingShow"
-            >
-              编辑内容
-            </el-button>
+            <el-button type="primary" plain round @click="plantingShow"> 编辑内容 </el-button>
           </div>
         </transition>
       </div>
     </div>
-    <el-dialog
-      :visible.sync="dialogVisible"
-      width="80%"
-      title="编辑文章"
-      fullscreen
-      lock-scroll
-    >
+    <el-dialog :visible.sync="dialogVisible" width="80%" title="编辑文章" fullscreen lock-scroll>
       <section class="section section-white view-warp">
         <draggable
           v-model="initData"
@@ -65,53 +25,34 @@
           @start="onStart"
           @end="onEnd"
         >
-          <div
-            v-for="(item, index) in initData"
-            :key="index"
-            class="component-control"
-          >
+          <div v-for="(item, index) in initData" :key="index" class="component-control">
             <template v-if="item.name === 'film'">
-              <svg
-                class="svg-icon"
-                aria-hidden="true"
-              >
+              <svg class="svg-icon" aria-hidden="true">
                 <use xlink:href="#icon-video1" />
               </svg>
               视频
             </template>
             <template v-if="item.name === 'goods'">
-              <svg
-                class="svg-icon"
-                aria-hidden="true"
-              >
+              <svg class="svg-icon" aria-hidden="true">
                 <use xlink:href="#icon-goods" />
               </svg>
               商品
             </template>
             <template v-if="item.name === 'heading'">
-              <svg
-                class="svg-icon"
-                aria-hidden="true"
-              >
-                <use xlink:href="#icon-title" />
+              <svg class="svg-icon" aria-hidden="true">
+                <use xlink:href="#icon-wenzibiaoti" />
               </svg>
               标题
             </template>
             <template v-if="item.name === 'slider'">
-              <svg
-                class="svg-icon"
-                aria-hidden="true"
-              >
-                <use xlink:href="icon-loucengtupian" />
+              <svg class="svg-icon" aria-hidden="true">
+                <use xlink:href="#icon-slider" />
               </svg>
               轮播
             </template>
             <template v-if="item.name === 'writing'">
-              <svg
-                class="svg-icon"
-                aria-hidden="true"
-              >
-                <use xlink:href="#icon-text" />
+              <svg class="svg-icon" aria-hidden="true">
+                <use xlink:href="#icon-wenzibiaoti" />
               </svg>
               文本
             </template>
@@ -124,8 +65,8 @@
                 class="template-title"
                 :style="
                   'background: #fff url(' +
-                    headerBg +
-                    ') no-repeat bottom; background-size: 100% auto;'
+                  headerBg +
+                  ') no-repeat bottom; background-size: 100% auto;'
                 "
               >
                 <span>标题</span>
@@ -151,26 +92,14 @@
                     @click="removeCurrent"
                   />
                 </transition>
-                <film
-                  v-if="item.name === 'film'"
-                  :res="item"
-                  :active="index == editorIndex"
-                />
-                <goods
-                  v-if="item.name === 'goods'"
-                  :res="item"
-                  :active="index == editorIndex"
-                />
+                <film v-if="item.name === 'film'" :res="item" :active="index == editorIndex" />
+                <goods v-if="item.name === 'goods'" :res="item" :active="index == editorIndex" />
                 <heading
                   v-if="item.name === 'heading'"
                   :res="item"
                   :active="index == editorIndex"
                 />
-                <slider
-                  v-if="item.name === 'slider'"
-                  :res="item"
-                  :active="index == editorIndex"
-                />
+                <slider v-if="item.name === 'slider'" :res="item" :active="index == editorIndex" />
                 <writing
                   v-if="item.name === 'writing'"
                   :res="item"
@@ -181,38 +110,19 @@
           </div>
         </div>
         <div class="setting-view">
-          <div
-            v-if="editorIndex === null"
-            class="view-placeholder"
-          >
+          <div v-if="editorIndex === null" class="view-placeholder">
             <i class="iconfont icon-shapes" />
             请拖选左侧挂件
           </div>
-          <filmEditor
-            :res="editorData"
-            @change="getVideo"
-          />
+          <filmEditor :res="editorData" @change="getVideo" />
           <goodsEditor :res="editorData" />
           <headingEditor :res="editorData" />
-          <sliderEditor
-            :res="editorData"
-            @bindImgs="showImgs"
-            @bindLinks="showLinks"
-          />
+          <sliderEditor :res="editorData" @bindImgs="showImgs" @bindLinks="showLinks" />
           <writingEditor :res="editorData" />
         </div>
       </section>
-      <section
-        slot="footer"
-        class="content-center"
-      >
-        <el-button
-          class="btn-save"
-          type="primary"
-          @click="saveConfig"
-        >
-          保存
-        </el-button>
+      <section slot="footer" class="content-center">
+        <el-button class="btn-save" type="primary" @click="saveConfig"> 保存 </el-button>
       </section>
       <imgPicker
         :dialog-visible="imgsVisible"
@@ -220,16 +130,8 @@
         @chooseImg="pickImg"
         @closeImgDialog="closeimgsVisible"
       />
-      <linkSetter
-        :visible="linksVisible"
-        @setLink="setLink"
-        @closeDialog="closeDialog"
-      />
-      <goodsPicker
-        :visible="goodsVisible"
-        @pickGoods="pickGoods"
-        @closeDialog="closeDialog"
-      />
+      <linkSetter :visible="linksVisible" @setLink="setLink" @closeDialog="closeDialog" />
+      <goodsPicker :visible="goodsVisible" @pickGoods="pickGoods" @closeDialog="closeDialog" />
     </el-dialog>
   </div>
 </template>
@@ -295,7 +197,7 @@ export default {
       }
     }
   },
-  data () {
+  data() {
     return {
       dialogVisible: false,
       componentHeight: '',
@@ -335,11 +237,11 @@ export default {
     }
   },
   watch: {
-    data (val) {
+    data(val) {
       this.components = val
     },
     dialogVisible: {
-      handler (newVal) {
+      handler(newVal) {
         if (!newVal) {
           console.log('===this.data', this.data, this.components)
           let oldData = [...this.data]
@@ -352,7 +254,7 @@ export default {
       }
     }
   },
-  mounted () {
+  mounted() {
     let init = [
       {
         name: 'film',
@@ -471,25 +373,25 @@ export default {
     this.components = this.data
   },
   methods: {
-    plantingShow () {
+    plantingShow() {
       this.dialogVisible = true
     },
     // 拖拽绑定事件
-    onStart (evt) {
+    onStart(evt) {
       if (evt.target.className === 'components-view') {
         this.saveInit = JSON.stringify(this.initData[evt.oldIndex])
       } else {
         this.setCurrent(evt.oldIndex)
       }
     },
-    onEnd (evt) {
+    onEnd(evt) {
       this.setCurrent(evt.newIndex)
       if (evt.target.className === 'components-view' && evt.to.className === 'components-wrap') {
         this.initData.splice(evt.oldIndex, 0, JSON.parse(this.saveInit))
       }
     },
     // 设置当前编辑的组件
-    setCurrent (val) {
+    setCurrent(val) {
       this.editorIndex = val
       if (val === 'tabBar') {
         this.editorData = { ...this.tabBar }
@@ -498,7 +400,7 @@ export default {
       }
     },
     // 删除当前组件
-    removeCurrent () {
+    removeCurrent() {
       this.$confirm('确认删除当前组件？')
         .then((_) => {
           this.editorData = {}
@@ -509,14 +411,14 @@ export default {
         .catch((_) => {})
     },
     // 图片选择器绑定事件
-    showImgs (index) {
+    showImgs(index) {
       this.imgsVisible = true
       this.isGetImage = true
       if (typeof index !== undefined) {
         this.editorDataIndex = index
       }
     },
-    pickImg (data) {
+    pickImg(data) {
       if (this.components[this.editorIndex].name === 'imgHotzone') {
         this.components[this.editorIndex].config.imgUrl = data.url
       } else {
@@ -524,31 +426,31 @@ export default {
       }
       this.imgsVisible = false
     },
-    closeimgsVisible () {
+    closeimgsVisible() {
       this.imgsVisible = false
     },
     // 商品选择器绑定事件
-    showGoods (index) {
+    showGoods(index) {
       if (index) {
         this.editorDataIndex = index
       }
       this.goodsVisible = true
     },
-    pickGoods (data) {
+    pickGoods(data) {
       this.editorData.data = data
       this.components[this.editorIndex].data = data
       this.goodsVisible = false
     },
-    getVideo (data) {
+    getVideo(data) {
       Object.assign(this.editorData.data[0], data)
       Object.assign(this.components[this.editorIndex].data[0], data)
     },
-    showLinks (index) {
+    showLinks(index) {
       this.linksVisible = true
       this.editorDataIndex = index
     },
     // 链接选择器绑定事件
-    setLink (data, type) {
+    setLink(data, type) {
       this.editorData.data[this.editorDataIndex].id = data.id
       this.editorData.data[this.editorDataIndex].title = data.title
       this.editorData.data[this.editorDataIndex].linkPage = type
@@ -557,17 +459,17 @@ export default {
       this.components[this.editorIndex].data[this.editorDataIndex].linkPage = type
       this.linksVisible = false
     },
-    showIcons (index) {
+    showIcons(index) {
       this.iconsVisible = true
       this.editorDataIndex = index
     },
-    pickIcon (data) {
+    pickIcon(data) {
       this.editorData.data[this.editorDataIndex].pathName = data
       this.tabBar.data[this.editorDataIndex].pathName = data
       this.iconsVisible = false
     },
     // 选择器公用关闭事件
-    closeDialog (key) {
+    closeDialog(key) {
       switch (key) {
         case 'goods':
           this.goodsVisible = false
@@ -582,7 +484,7 @@ export default {
       }
     },
     // 保存配置
-    saveConfig () {
+    saveConfig() {
       this.dialogVisible = false
       this.$emit('change', this.components)
     }

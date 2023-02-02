@@ -51,7 +51,7 @@
 <script>
 import { createSetting } from '@shopex/finder'
 import district from '@/common/district.json'
-import { getRegionNameById, VERSION_PLATFORM, IS_ADMIN } from '@/utils'
+import { getRegionNameById, VERSION_PLATFORM, IS_ADMIN, IS_DISTRIBUTOR } from '@/utils'
 export default {
   name: 'ZitiList',
   data() {
@@ -152,10 +152,9 @@ export default {
       this.$refs['finder'].refresh()
     },
     createZitiAddress() {
+      const url = IS_DISTRIBUTOR ? '/shopadmin/order/logistics/addziti' : '/order/entitytrade/logistics/addziti'
       this.$router.push({
-        path: this.IS_DISTRIBUTOR
-          ? '/shopadmin/order/logistics/addziti'
-          : '/order/entitytrade/logistics/addziti'
+        path: url
       })
     },
     onShowPopover() {},

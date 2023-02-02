@@ -92,6 +92,8 @@
               <span v-if="index == 'trade'">交易提醒</span>
               <span v-if="index == 'registration'">活动报名</span>
               <span v-if="index == 'merchant'">商户入驻</span>
+              <span v-if="index == 'vcode'">验证码</span>
+              <span v-if="index == 'adapay'">Adapay分账</span>
             </div>
             <div class="section-body">
               <div

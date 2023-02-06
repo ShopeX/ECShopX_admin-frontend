@@ -505,6 +505,7 @@ export default {
         item_category_info, // 销售分类
         item_category, // 销售分类值
         item_spec_list,
+        is_show_specimg,
         spec_images,
         spec_items,
         mode,
@@ -529,6 +530,7 @@ export default {
       this.form.taxRate = tax_rate
       this.form.isGift = is_gift
       this.form.videos = videos
+      this.form.isShowSpecimg = is_show_specimg
 
       this.form.salesCategory = this.deepSalesCategory(item_category)
       this.form.pics = pics

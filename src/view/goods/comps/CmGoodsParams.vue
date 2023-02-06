@@ -6,7 +6,7 @@
       :key="`params-item__${index}`"
       :label="`${item.label}:`"
     >
-      <el-select v-model="item.value" clearable placeholder="请选择">
+      <el-select v-model="item.attr_id" clearable placeholder="请选择">
         <el-option
           v-for="child in item.children"
           :key="child.value"

@@ -1,10 +1,8 @@
 <style lang="scss"></style>
 <template>
   <div>
-    value: {{ value }}
-    <br>
-    form: {{ form }}
-    <SpForm v-model="form" label-width="100px" :form-list="formList" :submit="false" />
+    <!-- form: {{ form }} -->
+    <SpForm ref="form" v-model="form" label-width="100px" :form-list="formList" :submit="false" />
   </div>
 </template>
 
@@ -87,6 +85,8 @@ export default {
           label: '销售价',
           key: 'price',
           type: 'input',
+          required: true,
+          message: '请输入商品销售价',
           display: 'inline'
         },
         {
@@ -106,21 +106,31 @@ export default {
           key: 'barcode',
           type: 'input',
           display: 'inline'
-        },
-        {
-          label: '获取积分',
-          key: 'point_num',
-          type: 'input',
-          display: 'inline'
         }
+        // {
+        //   label: '获取积分',
+        //   key: 'point_num',
+        //   type: 'input',
+        //   display: 'inline'
+        // }
       ]
     }
   },
   watch: {
     value(newVal) {
       this.form = newVal
+    },
+    form: {
+      deep: true,
+      handler(newVal) {
+        this.$emit('input', newVal)
+      }
     }
   },
-  methods: {}
+  methods: {
+    async handleSubmit() {
+      await this.$refs['form'].handleSubmit()
+    }
+  }
 }
 </script>

@@ -15,15 +15,31 @@
       }
     }
   }
+  .sku-image-table {
+    .el-table__cell {
+      padding: 2px 0;
+    }
+  }
   .sku-image {
     .image-item {
-      margin: 0 10px 0 0;
+      margin: 10px 10px 10px 0;
+    }
+    .icon-times-circle1 {
+      top: -10px;
+    }
+  }
+  .required-mark {
+    &::before {
+      content: '*';
+      color: #f56c6c;
+      margin-right: 4px;
     }
   }
 }
 </style>
 <template>
   <div class="cm-sku-params">
+    <!-- {{ value.skus }} -->
     <el-form label-width="100px">
       <el-form-item
         v-for="(item, index) in value.skus"
@@ -32,8 +48,27 @@
       >
         <el-checkbox-group v-model="item.checkedSku" @change="onSkuChange">
           <span v-for="sku in item.skuValue" :key="sku.attribute_value_id" class="sku-item">
-            <el-checkbox :label="sku.attribute_value_id">{{ sku.attribute_value }}</el-checkbox>
-            <i class="iconfont icon-edit1" />
+            <el-checkbox :label="sku.attribute_value_id">{{
+              sku.custom_attribute_value || sku.attribute_value
+            }}</el-checkbox>
+            <el-popover
+              placement="top"
+              trigger="hover"
+              @show="
+                () => {
+                  if (!sku.custom_attribute_value) {
+                    sku.custom_attribute_value = sku.attribute_value
+                  }
+                }
+              "
+            >
+              <div class="popover-edit">
+                <el-input v-model="sku.custom_attribute_value" @change="onSkuChange" />
+              </div>
+              <el-button slot="reference" type="text">
+                <i class="iconfont icon-edit1" />
+              </el-button>
+            </el-popover>
           </span>
         </el-checkbox-group>
         <!-- <el-select
@@ -50,16 +85,21 @@
       </el-select> -->
       </el-form-item>
     </el-form>
-    value.skuItemImages {{ value.skuItemImages }}
     <el-table
+      v-if="value.skuItemImages.length > 0"
       :data="value.skuItemImages"
+      class="sku-image-table"
       border
       style="line-height: initial; width: 100%; margin-bottom: 26px"
     >
-      <el-table-column prop="attribute_value" label="规格名称" width="150px" />
+      <el-table-column label="规格名称" width="150px">
+        <template slot-scope="scope">
+          {{ scope.row.custom_attribute_value || scope.row.attribute_value }}
+        </template>
+      </el-table-column>
       <el-table-column prop="spec_name" label="规格图片">
         <template slot-scope="scope">
-          <SpImagePicker class="sku-image" size="small" />
+          <SpImagePicker v-model="scope.row.sku_images" :max="5" class="sku-image" size="small" />
         </template>
       </el-table-column>
     </el-table>
@@ -70,7 +110,7 @@
           {{ scope.row.custom_attribute_value || scope.row.item_spec }}
         </template>
       </el-table-column>
-      <el-table-column label="*状态">
+      <el-table-column label="状态">
         <template slot-scope="scope">
           <el-select v-model="scope.row.approve_status" size="mini" placeholder="请选择">
             <el-option
@@ -172,14 +212,14 @@
       </el-table-column>
       <el-table-column width="80">
         <template slot-scope="scope">
-          <el-button type="primary" size="mini" @click="() => {}"> 填充 </el-button>
+          <el-button type="primary" size="mini" @click="onFillSpecItems"> 填充 </el-button>
         </template>
       </el-table-column>
     </el-table>
 
     <el-table :data="value.specItems" border style="line-height: initial; width: 100%">
       <el-table-column prop="spec_name" label="规格" />
-      <el-table-column prop="item_id" label="状态">
+      <el-table-column prop="item_id" label="状态" :render-header="renderRequire">
         <template slot-scope="scope">
           <el-select v-model="scope.row.approve_status" size="mini" placeholder="请选择">
             <el-option
@@ -192,7 +232,7 @@
           </el-select>
         </template>
       </el-table-column>
-      <el-table-column prop="store" label="库存">
+      <el-table-column prop="store" label="库存" :render-header="renderRequire">
         <template slot-scope="scope">
           <el-input v-model="scope.row.store" type="number" min="0" size="mini" />
         </template>
@@ -212,7 +252,7 @@
           <el-input v-model="scope.row.volume" size="mini" />
         </template>
       </el-table-column>
-      <el-table-column prop="price" label="销售价">
+      <el-table-column prop="price" label="销售价" :render-header="renderRequire">
         <template slot-scope="scope">
           <el-input v-model="scope.row.price" type="number" min="0" size="mini" />
         </template>
@@ -232,14 +272,14 @@
           <el-input v-model="scope.row.barcode" size="mini" />
         </template>
       </el-table-column>
-      <el-table-column prop="point_num" label="获取积分">
+      <!-- <el-table-column prop="point_num" label="获取积分">
         <template slot-scope="scope">
           <el-input v-model="scope.row.point_num" type="number" min="0" size="mini" />
         </template>
-      </el-table-column>
+      </el-table-column> -->
       <el-table-column width="80">
         <template slot-scope="scope">
-          <el-button type="text" @click="() => {}"> 清除 </el-button>
+          <el-button type="text" @click="onClearSpecItem(scope.$index)"> 清除 </el-button>
         </template>
       </el-table-column>
     </el-table>
@@ -291,11 +331,22 @@ export default {
           volume: ''
         }
       ],
-      statusOption
+      statusOption,
+      cacheSpecImages: [],
+      cacheSpecItems: []
     }
   },
   created() {},
   methods: {
+    renderRequire(h, { column }) {
+      return h(
+        'label',
+        {
+          class: 'required-mark'
+        },
+        column.label
+      )
+    },
     cartesianProductOf() {
       var result = Array.prototype.reduce.call(
         arguments,
@@ -319,43 +370,136 @@ export default {
       }
       return result
     },
-    onSkuChange() {
-      this.getSkuItemImages()
-      this.getSkuItems()
+    onSkuChange({ spec_images, spec_items }) {
+      this.getSkuItemImages(spec_images)
+      this.getSkuItems(spec_items)
     },
-    getSkuItemImages() {
+    getSkuItemImages(value) {
       const { skuValue, checkedSku } = JSON.parse(JSON.stringify(this.value.skus))
         .reverse()
         .find((item) => item.isImage)
-      this.value.skuItemImages = skuValue.filter(({ attribute_value_id }) =>
-        checkedSku.includes(attribute_value_id)
-      )
-      console.log('this.value.skuItemImages', this.value.skuItemImages)
+      this.value.skuItemImages = skuValue
+        .filter(({ attribute_value_id }) => checkedSku.includes(attribute_value_id))
+        .map((item) => {
+          if (!value) {
+            // 与前一次编辑的缓存数据合并
+            const fd = this.value.skuItemImages.find(
+              ({ attribute_value_id }) => attribute_value_id == item.attribute_value_id
+            )
+            if (fd) {
+              return {
+                ...fd,
+                custom_attribute_value: item.custom_attribute_value || fd.custom_attribute_value
+              }
+            } else {
+              return item
+            }
+          }
+          let sku_images = []
+          const result = value.find(({ spec_value_id }) => spec_value_id == item.attribute_value_id)
+          if (result) {
+            sku_images = result.item_image_url
+          }
+
+          return {
+            ...item,
+            sku_images
+          }
+        })
+      // console.log('this.value.skuItemImages', this.value.skuItemImages)
     },
-    getSkuItems() {
+    getSkuItems(value) {
       const skuMartix = this.value.skus.map(({ checkedSku }) => checkedSku)
       const specItems = this.cartesianProductOf(...skuMartix)
-
-      this.value.specItems = specItems.map((item) => {
+      // console.log('getSkuItems:', JSON.stringify(specItems))
+      let _specItems = []
+      if (value) {
+        _specItems = value.map(
+          ({
+            item_id,
+            approve_status,
+            store,
+            item_bn,
+            weight,
+            volume,
+            price,
+            cost_price,
+            market_price,
+            barcode,
+            point_num,
+            item_spec
+          }) => {
+            const vKey = item_spec.map(({ spec_value_id }) => spec_value_id).join('_')
+            const specName = item_spec.map(
+              ({ spec_custom_value_name, spec_value_name }) =>
+                spec_custom_value_name || spec_value_name
+            )
+            return {
+              item_id,
+              sku_id: vKey,
+              spec_name: specName.join(' '),
+              is_default: false,
+              approve_status,
+              store,
+              item_bn,
+              weight,
+              volume,
+              price: isNaN(price / 100) ? '' : price / 100,
+              cost_price: isNaN(cost_price / 100) ? '' : cost_price / 100,
+              market_price: isNaN(market_price / 100) ? '' : market_price / 100,
+              barcode,
+              point_num
+            }
+          }
+        )
+      }
+      // 新生成的sku
+      specItems.forEach((item) => {
         const key = item.join('_')
-        return {
-          sku_id: key,
-          spec_name: this.getSpecName(item),
-          is_default: false,
-          approve_status: '',
-          store: '',
-          item_bn: '',
-          weight: '',
-          volume: '',
-          price: '',
-          cost_price: '',
-          market_price: '',
-          barcode: '',
-          point_num: ''
+        if (!_specItems.find(({ sku_id }) => sku_id == key)) {
+          const {
+            approve_status,
+            store,
+            item_bn,
+            weight,
+            volume,
+            price,
+            cost_price,
+            market_price,
+            barcode,
+            point_num
+          } = item
+          _specItems.push({
+            sku_id: key,
+            spec_name: this.getSpecName(item),
+            is_default: false,
+            approve_status,
+            store,
+            item_bn,
+            weight,
+            volume,
+            price: isNaN(price / 100) ? '' : price / 100,
+            cost_price: isNaN(cost_price / 100) ? '' : cost_price / 100,
+            market_price: isNaN(market_price / 100) ? '' : market_price / 100,
+            barcode,
+            point_num
+          })
         }
       })
-      console.log('specItems:', this.value.specItems)
+      // 与前一次编辑的缓存数据合并
+      this.value.specItems = _specItems.map((item) => {
+        const fd = this.value.specItems.find(({ sku_id }) => sku_id == item.sku_id)
+        if (fd) {
+          return {
+            ...fd,
+            spec_name: item.spec_name
+          }
+        } else {
+          return item
+        }
+      })
     },
+    // 获取规格名称
     getSpecName(keys) {
       const { skus } = this.value
       const specNames = []
@@ -366,6 +510,53 @@ export default {
         specNames.push(custom_attribute_value || attribute_value)
       })
       return specNames.join(' ')
+    },
+    // 批量填充
+    onFillSpecItems() {
+      const {
+        approve_status,
+        store,
+        item_bn,
+        weight,
+        volume,
+        price,
+        cost_price,
+        market_price,
+        barcode,
+        point_num
+      } = this.bulkFilling[0]
+      this.value.specItems.forEach((item) => {
+        item.approve_status = approve_status
+        item.store = store
+        item.item_bn = item_bn
+        item.weight = weight
+        item.volume = volume
+        item.price = price
+        item.cost_price = cost_price
+        item.market_price = market_price
+        item.barcode = barcode
+        item.point_num = point_num
+      })
+    },
+    // 清除
+    async onClearSpecItem(index) {
+      await this.$confirm('确定清除当前规格的数据吗？', '提示', {
+        confirmButtonText: '确定',
+        cancelButtonText: '取消',
+        type: 'warning'
+      })
+      Object.assign(this.value.specItems[index], {
+        approve_status: '',
+        store: '',
+        item_bn: '',
+        weight: '',
+        volume: '',
+        price: '',
+        cost_price: '',
+        market_price: '',
+        barcode: '',
+        point_num: ''
+      })
     }
   }
 }

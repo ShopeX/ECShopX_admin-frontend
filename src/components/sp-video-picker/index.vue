@@ -1,5 +1,5 @@
 <style lang="scss">
-.sp-image-picker {
+.sp-video-picker {
   display: flex;
   &.small {
     .image-item {
@@ -11,11 +11,14 @@
     }
   }
   .image-item {
-    width: 80px;
+    width: 142px;
     height: 80px;
     border: 1px solid #d9d9d9;
     margin: 0 10px 10px 0;
     position: relative;
+  }
+  .add-video {
+    width: 80px;
   }
   .placeholder {
     height: 80px;
@@ -24,7 +27,7 @@
     align-items: center;
     justify-content: center;
   }
-  .icon-camera {
+  .icon-video {
     font-size: 24px;
     color: #d9d9d9;
     line-height: initial;
@@ -73,13 +76,19 @@
     font-size: 18px;
     color: #666;
   }
+
+  .picker-video-player {
+    .vjs-big-play-button {
+      display: none;
+    }
+  }
 }
 </style>
 <script>
 import Vue from 'vue'
 import { isArray, isEmpty, isString, isObject } from '@/utils'
 export default {
-  name: 'SpImagePicker',
+  name: 'SpVideoPicker',
   props: {
     value: {
       type: [Object, Array, String]
@@ -102,7 +111,7 @@ export default {
     // 图片添加
     async handleSelectImage() {
       console.log('handleSelectImage:', this.max, this.value)
-      const { data } = await this.$picker.image({
+      const { data } = await this.$picker.video({
         multiple: this.max > 1,
         num: this.max > 1 ? this.max - this.value.length : 1
       })
@@ -129,7 +138,7 @@ export default {
       } else {
         val = this.value
       }
-      const { data } = await this.$picker.image({
+      const { data } = await this.$picker.video({
         data: val
       })
       if (isArray(this.value)) {
@@ -152,12 +161,28 @@ export default {
     },
 
     handleDeleteItem(index) {
-      if (isArray(this.value)) {
-        this.value.splice(index, 1)
+      let tempValue = JSON.parse(JSON.stringify(this.value))
+      if (isArray(tempValue)) {
+        tempValue.splice(index, 1)
       } else {
-        this.value = isString(this.value) ? '' : {}
+        tempValue = isString(tempValue) ? '' : {}
       }
-      this.updateValue(this.value)
+      this.updateValue(tempValue)
+    },
+
+    getOptions(src) {
+      return {
+        aspectRatio: '16:9',
+        fluid: true,
+        sources: [
+          {
+            type: 'video/mp4',
+            src
+          }
+        ],
+        notSupportedMessage: '此视频暂无法播放，请稍后再试',
+        controlBar: false
+      }
     },
 
     _renderImage(item, index = 0) {
@@ -167,9 +192,9 @@ export default {
             class='iconfont icon-times-circle1'
             on-click={this.handleDeleteItem.bind(this, index)}
           />
-          <el-image class='img-content' src={item?.url || item} fit='cover' />
+          <video-player class='picker-video-player' options={this.getOptions(item?.url || item)} />
           <span class='image-meta' on-click={this.onUpdateImage.bind(this, index)}>
-            更换图片
+            更换视频
           </span>
         </div>
       )
@@ -178,21 +203,22 @@ export default {
   render() {
     const { value, max, size } = this
     const multiple = isArray(value)
+    console.log('value:', value)
     return (
-      <div class={['sp-image-picker', size]}>
+      <div class={['sp-video-picker', size]}>
         {max > 1 && value.map((item, index) => this._renderImage(item, index))}
         {max > 1 && value.length < max && (
-          <div class='image-item placeholder' on-click={this.handleSelectImage}>
-            <i class='iconfont icon-camera' />
-            <div class='add-text'>图片({`${value.length}/${max}`})</div>
+          <div class='image-item add-video placeholder' on-click={this.handleSelectImage}>
+            <i class='iconfont icon-video' />
+            <div class='add-text'>视频({`${value.length}/${max}`})</div>
           </div>
         )}
 
         {max == 1 && !isEmpty(value) && this._renderImage(value)}
         {max == 1 && isEmpty(value) && (
-          <div class='image-item placeholder' on-click={this.handleSelectImage}>
-            <i class='iconfont icon-camera' />
-            <div class='add-text'>添加图片</div>
+          <div class='image-item add-video placeholder' on-click={this.handleSelectImage}>
+            <i class='iconfont icon-video' />
+            <div class='add-text'>添加视频</div>
           </div>
         )}
       </div>

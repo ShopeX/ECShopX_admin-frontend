@@ -206,9 +206,9 @@
           全部取消
         </el-button> -->
       </div>
-      <div>
+      <!-- <div>
         <el-input size="small" placeholder="请输入图片名称" suffix-icon="el-icon-search" />
-      </div>
+      </div> -->
     </div>
     <div class="picker-image-bd">
       <!-- <div class="lf-container">
@@ -317,6 +317,7 @@
 <script>
 import { VueCropper } from 'vue-cropper'
 import UploadUtil from '@/utils/uploadUtil'
+import { isObject, isArray } from '@/utils'
 import BasePicker from './base'
 import PageMixin from '../mixins/page'
 export default {
@@ -331,7 +332,7 @@ export default {
   },
   props: ['value'],
   data() {
-    const { multiple = false, data } = this.value
+    const { multiple = false, data = [] } = this.value
     return {
       multiple,
       list: [],
@@ -420,11 +421,25 @@ export default {
     this.getImageAllCatgory()
   },
   methods: {
-    isActive({ image_id }) {
+    isActive({ image_id, url }) {
       if (this.multiple) {
-        return this.selected.findIndex((item) => item.image_id == image_id)
+        return isArray(this.selected) ? this.selected.findIndex((item) => item.url == url) : false
       } else {
-        return this.selected ? this.selected.image_id == image_id : false
+        // return this.selected ? this.selected.image_id == image_id : false
+        if (this.selected) {
+          const handleRegExp = (str) => {
+            const regExp = /^(http|https):\/\/(.*)/g
+            const [p1, p2, p3] = regExp.exec(str)
+            return p3
+          }
+          if (isObject(this.selected)) {
+            return handleRegExp(this.selected.url) == handleRegExp(url)
+          } else {
+            return handleRegExp(this.selected) == handleRegExp(url)
+          }
+        } else {
+          return false
+        }
       }
     },
     handleEdit() {
@@ -487,21 +502,27 @@ export default {
       this.refresh(true)
     },
     handleClickItem(item) {
-      // console.log('picker-image:', item)
       const { image_id, url } = item
       const _item = {
         image_id,
         url
       }
-      if (!this.multiple) {
-        this.selected = _item
-      } else {
+      if (this.multiple) {
         const fdx = this.selected.findIndex((s) => s.image_id == item.image_id)
         if (fdx > -1) {
           this.selected.splice(fdx, 1)
         } else {
-          this.selected.push(_item)
+          // 默认最多可选20
+          const { num = 20 } = this.value
+          if (this.selected.length < num) {
+            this.selected.push(_item)
+          } else {
+            this.$message.error(`最多选择${num}张图片`)
+            return
+          }
         }
+      } else {
+        this.selected = _item
       }
       this.updateVal(this.selected)
     },

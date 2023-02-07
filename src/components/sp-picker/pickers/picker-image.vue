@@ -163,7 +163,7 @@
         >
           <el-button>上传图片</el-button>
         </el-upload>
-        <!-- <el-button
+        <el-button
           @click="
             () => {
               this.groupDialog = true
@@ -172,10 +172,10 @@
         >
           添加分组
         </el-button>
-        <el-button :disabled="disabledDeleteGroup">
+        <el-button :disabled="disabledDeleteGroup" @click="onDeleteImageGroup">
           删除分组
         </el-button>
-        <el-button
+        <!-- <el-button
           :disabled="disabledBtnCropper"
           @click="handleCropper"
         >
@@ -211,7 +211,7 @@
       </div> -->
     </div>
     <div class="picker-image-bd">
-      <!-- <div class="lf-container">
+      <div class="lf-container">
         <div
           v-for="(item, index) in catgoryList"
           :key="`catgory-item__${index}`"
@@ -223,7 +223,7 @@
         >
           {{ item.image_cat_name }}
         </div>
-      </div> -->
+      </div>
       <div class="rg-container">
         <div v-loading="loading" class="image-list">
           <div
@@ -442,6 +442,7 @@ export default {
         }
       }
     },
+    onDeleteImageGroup() {},
     handleEdit() {
       const { multiple, selected } = this
       this.editFormList[1].disabled = false
@@ -543,7 +544,7 @@ export default {
     },
     async handleAvatarSuccess(res, file) {
       const uploadParams = {
-        image_cat_id: 2, //图片分类必填,必须为整数
+        image_cat_id: this.selectCatgory, //图片分类必填,必须为整数
         image_name: file.name, //图片名称必填,不能超过50个字符
         image_url: res.key, //图片链接必填
         image_type: file.raw.type, //图片分类长度不能超过20个字符

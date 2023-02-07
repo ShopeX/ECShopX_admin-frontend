@@ -20,6 +20,19 @@
       height: 500px;
       margin-right: 8px;
       padding: 8px;
+      overflow: auto;
+      .icon-edit {
+        font-size: 13px;
+        float: right;
+        display: none;
+      }
+      .icon-trash-alt1 {
+        font-size: 13px;
+        float: right;
+        margin-top: 1px;
+        margin-right: 6px;
+        display: none;
+      }
     }
     .rg-container {
       flex: 1;
@@ -32,6 +45,12 @@
     &:hover {
       color: rgb(255, 255, 255);
       background-color: rgba(0, 0, 0, 0.4);
+      .icon-edit {
+        display: block;
+      }
+      .icon-trash-alt1 {
+        display: block;
+      }
     }
     &.active {
       color: rgb(255, 255, 255);
@@ -163,30 +182,19 @@
         >
           <el-button>上传图片</el-button>
         </el-upload>
-        <el-button
-          @click="
-            () => {
-              this.groupDialog = true
-            }
-          "
-        >
-          添加分组
-        </el-button>
-        <el-button :disabled="disabledDeleteGroup" @click="onDeleteImageGroup">
+        <el-button @click="onAddGroup"> 添加分组 </el-button>
+        <el-button :disabled="disabledBtn" @click="onMoveGroup"> 移动 </el-button>
+        <!-- <el-button :disabled="disabledDeleteGroup" @click="onDeleteImageGroup">
           删除分组
-        </el-button>
+        </el-button> -->
+        <!-- <el-button :disabled="disabledBtnEdit" @click="handleEdit"> 编辑 </el-button> -->
         <!-- <el-button
           :disabled="disabledBtnCropper"
           @click="handleCropper"
         >
           裁剪
         </el-button>
-        <el-button
-          :disabled="disabledBtnEdit"
-          @click="handleEdit"
-        >
-          编辑
-        </el-button>
+
         <el-button
           :disabled="disabledBtnDelete"
           @click="handleEdit"
@@ -198,13 +206,8 @@
           @click="handleEdit"
         >
           下载
-        </el-button>
-        <el-button
-          :disabled="disabledBtnCancel"
-          @click="handleCancelAll"
-        >
-          全部取消
         </el-button> -->
+        <el-button :disabled="disabledBtn" @click="handleCancelAll"> 全部取消 </el-button>
       </div>
       <!-- <div>
         <el-input size="small" placeholder="请输入图片名称" suffix-icon="el-icon-search" />
@@ -221,7 +224,10 @@
           }"
           @click="handleClickCatgory(item)"
         >
+          <i class="iconfont icon-folder1" />
           {{ item.image_cat_name }}
+          <i v-if="index > 0" class="iconfont icon-edit" @click.stop="onEditGroup(item)" />
+          <i v-if="index > 0" class="iconfont icon-trash-alt1" @click.stop="onDeleteGroup(item)" />
         </div>
       </div>
       <div class="rg-container">
@@ -276,7 +282,7 @@
     <SpDialog
       ref="editDialogRef"
       v-model="editDialog"
-      title="编辑"
+      title="移动分组"
       :modal="false"
       :form="editForm"
       :form-list="editFormList"
@@ -332,7 +338,10 @@ export default {
   },
   props: ['value'],
   data() {
-    const { multiple = false, data = [] } = this.value
+    let { multiple = false, data } = this.value || {}
+    if (!data) {
+      data = multiple ? [] : ''
+    }
     return {
       multiple,
       list: [],
@@ -341,6 +350,7 @@ export default {
       selectCatgory: -1,
       groupDialog: false,
       groupForm: {
+        groupId: '',
         groupName: ''
       },
       groupFormList: [
@@ -356,24 +366,15 @@ export default {
       ],
       editDialog: false,
       editForm: {
-        groupName: '',
-        name: ''
+        groupId: ''
       },
       editFormList: [
         {
           label: '图片分组:',
-          key: 'groupName',
+          key: 'groupId',
           placeholder: '请选择图片分组',
           type: 'select',
           options: [],
-          required: true,
-          message: '不能为空'
-        },
-        {
-          label: '图片名称:',
-          key: 'name',
-          type: 'input',
-          placeholder: '请输入图片名称',
           required: true,
           message: '不能为空'
         }
@@ -413,6 +414,9 @@ export default {
     },
     disabledBtnCancel() {
       return this.multiple ? this.selected.length == 0 : !this.selected
+    },
+    disabledBtn() {
+      return this.multiple ? this.selected.length == 0 : !this.selected
     }
   },
   created() {},
@@ -442,7 +446,69 @@ export default {
         }
       }
     },
-    onDeleteImageGroup() {},
+    onAddGroup() {
+      const { groupForm } = this.$options.data()
+      this.groupForm = groupForm
+      this.groupDialog = true
+    },
+    onEditGroup({ image_cat_id, image_cat_name }) {
+      this.groupForm = {
+        groupId: image_cat_id,
+        groupName: image_cat_name
+      }
+      this.groupDialog = true
+    },
+    async onDeleteGroup({ image_cat_id, image_cat_name }) {
+      try {
+        await this.$confirm(`确认删除分组【${image_cat_name}】？`, '提示', {
+          confirmButtonText: '确定',
+          cancelButtonText: '取消'
+        })
+        await this.$api.picker.deleteImageGroup(image_cat_id)
+        this.getImageAllCatgory()
+        this.refresh(true)
+      } catch (e) {
+        console.log(e)
+      }
+    },
+    async onGroupFormSubmit() {
+      const { groupId, groupName } = this.groupForm
+      if (groupId) {
+        await this.$api.picker.addImageCatgory({
+          image_cat_id: groupId,
+          image_cat_name: groupName,
+          parent_id: 0
+        })
+      } else {
+        await this.$api.picker.addImageCatgory({
+          image_cat_name: groupName,
+          parent_id: 0
+        })
+      }
+      this.groupDialog = false
+      this.getImageAllCatgory()
+    },
+    onMoveGroup() {
+      this.editDialog = true
+    },
+    async onEditFormSubmit() {
+      const { groupId } = this.editForm
+      this.$refs['editDialogRef'].resetForm()
+      let image_id
+      if (isArray(this.selected)) {
+        image_id = this.selected.map(({ image_id }) => image_id)
+      } else {
+        image_id = this.selected.image_id
+      }
+      await this.$api.picker.moveImageGroup({
+        image_cat_id: groupId,
+        // company_id => '企业id必填,必须为整数',
+        image_id: image_id.toString()
+      })
+      this.editDialog = false
+      this.refresh(true)
+    },
+
     handleEdit() {
       const { multiple, selected } = this
       this.editFormList[1].disabled = false
@@ -454,9 +520,6 @@ export default {
         this.editFormList[1].disabled = true
       }
       this.editDialog = true
-    },
-    onEditFormSubmit() {
-      this.$refs['editDialogRef'].resetForm()
     },
     handleCropper() {
       const { selected, multiple } = this
@@ -481,7 +544,7 @@ export default {
     },
     async getImageAllCatgory() {
       const { list } = await this.$api.picker.getImageAllCatgory({ image_cat_id: 0 })
-      this.catgoryList = [{ image_cat_id: -1, image_cat_name: '默认分组' }, ...list.reverse()]
+      this.catgoryList = [{ image_cat_id: -1, image_cat_name: '全部图片' }, ...list.reverse()]
       this.editFormList[0].options = this.catgoryList.map((item) => {
         return {
           title: item.image_cat_name,
@@ -489,15 +552,7 @@ export default {
         }
       })
     },
-    async onGroupFormSubmit() {
-      const { groupName } = this.groupForm
-      await this.$api.picker.addImageCatgory({
-        image_cat_name: groupName,
-        parent_id: 0
-      })
-      this.groupDialog = false
-      this.getImageAllCatgory()
-    },
+
     handleClickCatgory({ image_cat_id }) {
       this.selectCatgory = image_cat_id
       this.refresh(true)

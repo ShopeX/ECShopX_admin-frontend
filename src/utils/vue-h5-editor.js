@@ -1,4 +1,5 @@
 import VueHtml5Editor from 'vue-html5-editor'
+import Vue from 'vue'
 
 const options = {
   // 全局组件名称，使用new VueHtml5Editor(options)时该选项无效
@@ -135,12 +136,26 @@ const options = {
   modules: [
     {
       icon: 'iconfont icon-image',
-      name: 'uploader'
-      // handler: function (editor) {
-      //   console.log(this)
-      //   debugger
-
-      // }
+      name: 'uploader',
+      dashboard: {
+        template: '<el-button @click="onUpload">图片上传</el-button>',
+        data: function () {
+          return {
+            imgUrl: ''
+          }
+        },
+        methods: {
+          async onUpload() {
+            console.log(this)
+            const {
+              data: { url }
+            } = await Vue.prototype.$picker.image({
+              multiple: true
+            })
+            this.$parent.execCommand('insertHTML', `<img src=${url} />`)
+          }
+        }
+      }
     }
   ]
 }

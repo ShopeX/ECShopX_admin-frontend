@@ -264,11 +264,12 @@ export default {
       )
     },
     _renderRichText(item) {
-      const { value } = this
+      const { value, editorModules } = this
       const { key, disabled = false, options } = item
       return (
         <vue-html5-editor
           ref='editor'
+          modules={editorModules}
           content={value[key]}
           height={260}
           style='width: 80%'

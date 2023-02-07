@@ -19,7 +19,7 @@
   }
   .left-container {
     background: #fff;
-    width: 160px;
+    width: 240px;
     .components-view {
       display: flex;
       flex-wrap: wrap;
@@ -66,6 +66,9 @@
       &.wgt-coupon {
         background-image: url('../../assets/imgs/decorate/wgt-coupon.png');
       }
+      &.wgt-showcase {
+        background-image: url('../../assets/imgs/decorate/wgt-showcase.png');
+      }
     }
     .wgt-name {
       color: #666;
@@ -78,7 +81,7 @@
     overflow: auto;
     position: absolute;
     top: 60px;
-    left: 160px;
+    left: 240px;
     right: 380px;
     bottom: 0;
     .weapp-template {

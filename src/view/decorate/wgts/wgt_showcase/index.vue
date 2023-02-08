@@ -10,13 +10,14 @@
       <span class="title">{{ value.title }}</span>
       <span class="sub-title">{{ value.subtitle }}</span>
     </div>
-    <div
-      class="wgt-bd"
-      :class="{
-        'spaced': value.spaced
-      }"
-    >
-      Showcase
+    <div class="wgt-bd">
+      <div class="lf">
+        <sp-image :src="value.data[0].imgUrl" :width="'100%'" />
+      </div>
+      <div class="rg">
+        <div class="tp"><sp-image :src="value.data[1].imgUrl" :width="'100%'" /></div>
+        <div class="bt"><sp-image :src="value.data[2].imgUrl" :width="'100%'" /></div>
+      </div>
     </div>
   </div>
 </template>

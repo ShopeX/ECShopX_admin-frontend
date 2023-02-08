@@ -24,14 +24,6 @@ export default {
       <el-image class={'sp-image'} src={src || dImage} fit='cover'>
         <template slot='error'>图片加载错误</template>
       </el-image>
-      // <img
-      //   class={'sp-image'}
-      //   src={src || dImage}
-      //   style={{
-      //     width: _width,
-      //     height: _height
-      //   }}
-      // />
     )
   }
 }

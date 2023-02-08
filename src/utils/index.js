@@ -232,6 +232,34 @@ export function getRegionIdByName(region, district) {
   return result
 }
 
+export function pickBy(arr = [], keyMaps = {}) {
+  const picker = (item) => {
+    const ret = {}
+
+    Object.keys(keyMaps).forEach((key) => {
+      const val = keyMaps[key]
+
+      if (isString(val)) {
+        ret[key] = _get(item, val)
+      } else if (isFunction(val)) {
+        ret[key] = val(item)
+      } else if (isObject(val)) {
+        ret[key] = _get(item, val.key) || val.default
+      } else {
+        ret[key] = val
+      }
+    })
+
+    return ret
+  }
+
+  if (isArray(arr)) {
+    return arr.map(picker)
+  } else {
+    return picker(arr)
+  }
+}
+
 export { log, export_open, isEmpty }
 
 export default {}

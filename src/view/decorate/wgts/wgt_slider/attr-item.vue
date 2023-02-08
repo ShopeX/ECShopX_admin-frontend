@@ -9,7 +9,7 @@
 <template>
   <div>
     <div v-for="(item, index) in value" :key="`slider-item__${index}`" class="slider-item">
-      <SpImagePicker v-model="item.imgUrl" />
+      <SpImagePicker v-model="item.imgUrl" size="small" />
       <CompPickerLink :value="item" @change="(e) => onChangeLink(e, index)" />
     </div>
     <el-button class="btn btn-add" size="small" plain @click="handleClickAdd">

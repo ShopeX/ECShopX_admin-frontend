@@ -37,22 +37,22 @@ export default {
     return {
       styles: [
         {
-          icon: require('./img/coupon_one.png'),
+          icon: require('./img/style_1.png'),
           label: '样式一',
           value: '1'
         },
         {
-          icon: require('./img/coupon_one.png'),
+          icon: require('./img/style_2.png'),
           label: '样式二',
           value: '2'
         },
         {
-          icon: require('./img/coupon_one.png'),
+          icon: require('./img/style_3.png'),
           label: '样式三',
           value: '3'
         },
         {
-          icon: require('./img/coupon_one.png'),
+          icon: require('./img/style_4.png'),
           label: '样式四',
           value: '4'
         }

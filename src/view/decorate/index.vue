@@ -2,6 +2,7 @@
 <template>
   <div class="page-decorate-index">
     <div class="decorate-hd">
+      <el-button @click="onSaveTemplate"> 后退 </el-button>
       <el-button @click="onSaveTemplate"> 保存 </el-button>
     </div>
     <div class="decorate-bd">

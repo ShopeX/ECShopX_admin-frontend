@@ -243,7 +243,7 @@
       </el-table-column>
       <el-table-column prop="weight" label="重量（kg）">
         <template slot-scope="scope">
-          <el-input v-model="scope.row.item_bn" size="mini" />
+          <el-input v-model="scope.row.weight" size="mini" />
         </template>
       </el-table-column>
       <el-table-column prop="volume" label="体积（m³）">

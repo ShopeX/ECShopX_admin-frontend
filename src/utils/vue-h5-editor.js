@@ -146,13 +146,14 @@ const options = {
         },
         methods: {
           async onUpload() {
-            console.log(this)
-            const {
-              data: { url }
-            } = await Vue.prototype.$picker.image({
+            const { data } = await Vue.prototype.$picker.image({
               multiple: true
             })
-            this.$parent.execCommand('insertHTML', `<img src=${url} />`)
+            let imgHtml = ''
+            data.forEach(({ url }) => {
+              imgHtml += `<img src=${url} style='display: block;'/>`
+            })
+            this.$parent.execCommand('insertHTML', imgHtml)
           }
         }
       }

@@ -35,6 +35,9 @@
             }
           }
         }
+        .el-table__fixed-body-wrapper {
+          top: 38px !important;
+        }
       }
     }
   }

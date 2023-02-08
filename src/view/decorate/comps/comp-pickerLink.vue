@@ -73,8 +73,10 @@ export default {
   // },
   methods: {
     async onPickerPath() {
+      const { linkPage, id } = this.localValue
       const res = await this.$picker.path({
-        data: [],
+        data: id,
+        tab: linkPage,
         multiple: false
       })
       this.$emit('change', res)

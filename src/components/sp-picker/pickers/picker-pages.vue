@@ -23,6 +23,9 @@
           }
         }
       }
+      .el-table__fixed-body-wrapper {
+        top: 38px !important;
+      }
     }
   }
   .el-pagination {
@@ -34,10 +37,8 @@
 <template>
   <div class="picker-pages">
     <SpFilterForm :model="formData" size="small" @onSearch="onSearch" @onReset="onSearch">
-      <SpFilterFormItem prop="region">
-        <SpFilterFormItem prop="keywords">
-          <el-input v-model="formData.keywords" placeholder="请输入页面名称" />
-        </SpFilterFormItem>
+      <SpFilterFormItem prop="keywords">
+        <el-input v-model="formData.keywords" placeholder="请输入页面名称" />
       </SpFilterFormItem>
     </SpFilterForm>
     <SpFinder
@@ -66,22 +67,50 @@
 </template>
 
 <script>
+import BasePicker from './base'
+import PageMixin from '../mixins/page'
 export default {
-  name: '',
+  name: 'PickerPages',
+  extends: BasePicker,
+  mixins: [PageMixin],
+  config: {
+    title: '选择自定义页面'
+  },
+  props: ['value'],
   data() {
     return {
-      formData: {},
-      wxappList: []
+      formData: {
+        keywords: ''
+      },
+      multiple: this.value?.multiple ?? true
     }
   },
-  created() {
-    this.getOtherWxapp()
-  },
+  created() {},
   methods: {
     beforeSearch(params) {
+      params = {
+        ...params,
+        template_name: 'yykweishop'
+      }
+      const { keywords } = this.formData
+      if (keywords) {
+        params = {
+          ...params,
+          page_name: keywords
+        }
+      }
       return params
     },
-    afterSearch() {},
+    afterSearch(response) {
+      const { list } = response.data.data
+      if (this.value.data) {
+        const selectRows = list.filter((item) => this.value.data.includes(item.id))
+        const { finderTable } = this.$refs.finder.$refs
+        setTimeout(() => {
+          finderTable.$refs.finderTable.setSelection(selectRows)
+        })
+      }
+    },
     onSearch() {
       this.$refs.finder.refresh(true)
     },
@@ -100,15 +129,6 @@ export default {
     },
     onSelectionChange(selection) {
       this.updateVal(selection)
-    },
-    async getOtherWxapp() {
-      const { list } = await this.$api.wxa.getWxLinkListSetting()
-      this.wxappList = list.map(({ app_id, app_name }) => {
-        return {
-          title: app_name,
-          value: app_id
-        }
-      })
     }
   }
 }

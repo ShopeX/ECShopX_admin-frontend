@@ -1,5 +1,5 @@
 <style lang="scss">
-.picker-wxapp {
+.picker-pages {
   .sp-filter-form {
     padding: 8px 8px 0px 8px;
   }
@@ -35,34 +35,25 @@
 }
 </style>
 <template>
-  <div class="picker-wxapp">
+  <div class="picker-pages">
     <SpFilterForm :model="formData" size="small" @onSearch="onSearch" @onReset="onSearch">
-      <SpFilterFormItem prop="region">
-        <el-select v-model="formData.approve_status" clearable placeholder="请选择小程序">
-          <el-option
-            v-for="item in wxappList"
-            :key="item.value"
-            :label="item.title"
-            size="mini"
-            :value="item.value"
-          />
-        </el-select>
+      <SpFilterFormItem prop="keywords">
+        <el-input v-model="formData.keywords" placeholder="请输入活动名称" />
       </SpFilterFormItem>
     </SpFilterForm>
     <SpFinder
       ref="finder"
-      :class="[{ 'no-multiple': !multiple }]"
+      :class="['shop-finder', { 'no-multiple': !multiple }]"
       :other-config="{
         height: 460
       }"
-      url="/wxexternalconfigroutes/list"
+      url="/selfhelp/registrationActivity/easylist"
       :fixed-row-action="true"
       :setting="{
         columns: [
-          { name: '小程序名称', key: 'app_name' },
-          { name: 'appid', key: 'app_id' },
-          { name: '页面名称', key: 'route_name' },
-          { name: '页面路径', key: 'route_info' }
+          { name: '页面ID', key: 'id' },
+          { name: '页面名称', key: 'page_name' },
+          { name: '页面描述', key: 'page_description' }
         ]
       }"
       :hooks="{
@@ -79,22 +70,47 @@
 import BasePicker from './base'
 import PageMixin from '../mixins/page'
 export default {
-  name: 'PickerWxapp',
+  name: 'PickerPages',
   extends: BasePicker,
   mixins: [PageMixin],
+  config: {
+    title: '选择自定义页面'
+  },
+  props: ['value'],
   data() {
     return {
-      formData: {},
-      wxappList: [],
+      formData: {
+        keywords: ''
+      },
       multiple: this.value?.multiple ?? true
     }
   },
-  created() {
-    this.getOtherWxapp()
-  },
+  created() {},
   methods: {
-    beforeSearch() {},
-    afterSearch() {},
+    beforeSearch(params) {
+      params = {
+        ...params,
+        template_name: 'yykweishop'
+      }
+      const { keywords } = this.formData
+      if (keywords) {
+        params = {
+          ...params,
+          page_name: keywords
+        }
+      }
+      return params
+    },
+    afterSearch(response) {
+      const { list } = response.data.data
+      if (this.value.data) {
+        const selectRows = list.filter((item) => this.value.data.includes(item.id))
+        const { finderTable } = this.$refs.finder.$refs
+        setTimeout(() => {
+          finderTable.$refs.finderTable.setSelection(selectRows)
+        })
+      }
+    },
     onSearch() {
       this.$refs.finder.refresh(true)
     },
@@ -113,15 +129,6 @@ export default {
     },
     onSelectionChange(selection) {
       this.updateVal(selection)
-    },
-    async getOtherWxapp() {
-      const { list } = await this.$api.wxa.getWxLinkListSetting()
-      this.wxappList = list.map(({ app_id, app_name }) => {
-        return {
-          title: app_name,
-          value: app_id
-        }
-      })
     }
   }
 }

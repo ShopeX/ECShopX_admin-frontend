@@ -68,7 +68,7 @@ export default {
           validator: (rule, value, callback) => {
             const { cycle, unit } = this.form.cycleData
             if (!cycle || !unit) {
-              callback(new Error('不能为空'))
+              callback(new Error('结算周期不能为空'))
             } else {
               callback()
             }

@@ -466,9 +466,9 @@ export default {
             this.userTimeArr.push(companyDataList[key].count_date)
             this.list.memberData.push(companyDataList[key].member_count)
             this.list.aftersalesData.push(companyDataList[key].aftersales_count)
-            this.list.refundedData.push(companyDataList[key].refunded_count)
+            this.list.refundedData.push(companyDataList[key].refunded_count / 100)
             this.list.amountPayedData.push(companyDataList[key].amount_payed_count / 100)
-            this.list.orderData.push(companyDataList[key].order_count / 100)
+            this.list.orderData.push(companyDataList[key].order_count)
             this.list.orderPayedData.push(companyDataList[key].order_payed_count)
             this.list.gmvData.push(companyDataList[key].gmv_count / 100)
           }

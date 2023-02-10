@@ -34,14 +34,7 @@
 </style>
 <template>
   <div class="page-body">
-    <template
-      v-if="
-        $route.path.indexOf('editor') === -1 &&
-        $route.path.indexOf('physicalstoreupload') === -1 &&
-        $route.path.indexOf('physicalprofitupload') === -1 &&
-        $route.path.indexOf('physicalupload') === -1
-      "
-    >
+    <SpRouterView>
       <div class="action-container">
         <el-button type="primary" icon="iconfont icon-xinzengcaozuo-01" @click="addItems">
           添加商品
@@ -762,8 +755,7 @@
         :form-list="batchChangeStateFormList"
         @onSubmit="onBatchChangeStateSubmit"
       />
-    </template>
-    <router-view />
+    </SpRouterView>
   </div>
 </template>
 <script>
@@ -795,7 +787,7 @@ import {
   saveGoodsProfitPrice,
   syncItems,
   saveIsGifts,
-  flowItems,
+  flowItems
 } from '@/api/goods'
 import { getPageCode } from '@/api/marketing'
 import { VERSION_IN_PURCHASE } from '@/utils'
@@ -872,7 +864,7 @@ export default {
       templatesList: [],
       category_id: [],
       categoryList: [],
-      itemCategoryList:[],
+      itemCategoryList: [],
       show_sideBar: false,
       loading: false,
       skuLoading: false,
@@ -923,7 +915,7 @@ export default {
         barcode: '',
         distributor_id: 0,
         regions_id: [],
-        brand_id: '',
+        brand_id: ''
       },
       start_date: '',
       end_date: '',
@@ -1083,12 +1075,12 @@ export default {
       } else {
         this.params.type = 0
       }
-      const { category,item_category, main_cat_id, tab } = this.$route.query
+      const { category, item_category, main_cat_id, tab } = this.$route.query
       if (category) {
         this.params.category = category.split(',')
         // this.select_category_value = category.split(',')
       }
-      if(item_category) {
+      if (item_category) {
         this.params.item_category = item_category.split(',')
       }
       this.params.main_cat_id = this.$route.query.main_cat_id
@@ -1736,9 +1728,8 @@ export default {
 
       //管理分类
       getCategory({ is_main_category: true }).then((response) => {
-        this.itemCategoryList  = response.data.data
+        this.itemCategoryList = response.data.data
       })
-
     },
     getCurrencyInfo() {
       getDefaultCurrency().then((res) => {

@@ -14,6 +14,10 @@ $color-secondary: rgba(var(--themeColorRgb), 0.6);
     transform: scale(0.8);
     display: inline-block;
   }
+  &--mini {
+    padding: 7px 15px;
+    font-size: 12px;
+  }
 
   &--primary {
     background-color: $color-primary;
@@ -181,6 +185,9 @@ $color-secondary: rgba(var(--themeColorRgb), 0.6);
     .el-table__cell {
       border-right-width: 0;
     }
+    td {
+      border-right-width: 0;
+    }
   }
 }
 
@@ -279,6 +286,25 @@ $color-secondary: rgba(var(--themeColorRgb), 0.6);
     }
     &.is-checked + .el-radio__label {
       color: $color-primary;
+    }
+  }
+  &__inner {
+    &:hover {
+      border-color: $color-secondary;
+    }
+  }
+}
+
+.el-checkbox {
+  &__input {
+    &.is-checked {
+      .el-checkbox__inner {
+        border-color: $color-primary;
+        background: $color-primary;
+      }
+    }
+    &.is-checked + .el-checkbox__label {
+      color: inherit;
     }
   }
   &__inner {

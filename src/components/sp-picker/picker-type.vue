@@ -1,10 +1,19 @@
 <script>
-import { PickerImage, PickerGoods, PickerShop, PickerZitiList, PickerAftersalesList } from './pickers'
+import {
+  PickerImage,
+  PickerVideo,
+  PickerGoods,
+  PickerShop,
+  PickerZitiList,
+  PickerAftersalesList
+} from './pickers'
 
 function resolvePicker(type) {
   switch (type) {
     case 'pickerImage':
       return PickerImage
+    case 'pickerVideo':
+      return PickerVideo
     case 'pickerGoods':
       return PickerGoods
     case 'pickerShop':

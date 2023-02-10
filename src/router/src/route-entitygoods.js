@@ -15,7 +15,8 @@ export default {
       children: [
         {
           path: 'editor/:itemId?',
-          component: () => import('@/view/mall/goods/physical/add'),
+          // component: () => import('@/view/mall/goods/physical/add'),
+          component: () => import('@/view/goods/index'),
           meta: {
             footerFixed: true
           }

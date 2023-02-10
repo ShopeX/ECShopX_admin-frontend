@@ -1,6 +1,25 @@
-<style lang="scss"></style>
+<style lang="scss" src="./index.scss"></style>
 <template>
-  <div>goodsGrid</div>
+  <div
+    :class="{
+      'wgt-slider': true,
+      'padded': value.padded
+    }"
+  >
+    <div v-if="value.title || value.subtitle" class="wgt-hd">
+      <span class="title">{{ value.title }}</span>
+      <span class="sub-title">{{ value.subtitle }}</span>
+    </div>
+    <div
+      class="wgt-bd"
+      :class="{
+        'spaced': value.spaced
+      }"
+    >
+      <!-- {{JSON.stringify(value.data)}} -->
+      <div>商品栅格</div>
+    </div>
+  </div>
 </template>
 
 <script>
@@ -20,9 +39,12 @@ export default {
     }
   },
   computed: {
-    sliderHeight() {}
+    sliderHeight() {
+      return ''
+    }
   },
   created() {},
   methods: {}
 }
 </script>
+

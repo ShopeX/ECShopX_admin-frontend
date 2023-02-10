@@ -1,0 +1,31 @@
+.wgt-slider {
+  &.padded {
+    padding: 10px 0;
+  }
+  .wgt-hd {
+    padding: 10px;
+    .title {
+      font-size: 18px;
+      font-weight: 600;
+      color: #333;
+    }
+    .sub-title {
+      color: #666;
+      margin-left: 4px;
+    }
+  }
+  .wgt-bd {
+    position: relative;
+    &.spaced {
+      padding: 0 10px;
+      .slider-container {
+        right: 10px;
+        left: 10px;
+      }
+      .slider-pagination {
+        right: 10px;
+        left: 10px;
+      }
+    }
+  }
+}

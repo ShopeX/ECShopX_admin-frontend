@@ -20,7 +20,6 @@
       <SpImage
         class="placeholder-item"
         :src="value.data.length > 1 ? value.data[0].url : null"
-        :width="'100%'"
       />
       <el-carousel
         class="slider-container"
@@ -45,7 +44,6 @@
             :class="{
               'rounded': value.rounded
             }"
-            :width="'100%'"
             :src="item.url"
           />
         </el-carousel-item>

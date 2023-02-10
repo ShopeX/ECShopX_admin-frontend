@@ -17,15 +17,11 @@
   }
   .wgt-bd {
     position: relative;
+    display: flex;
     &.spaced {
       padding: 0 10px;
-      .slider-container {
-        right: 10px;
-        left: 10px;
-      }
-      .slider-pagination {
-        right: 10px;
-        left: 10px;
+      .img-item{
+        flex: 1;
       }
     }
   }
@@ -37,6 +33,7 @@
       'wgt-floorImg': true,
       'padded': value.padded
     }"
+    :style="{backgroundImage: `url(${value.pageBackgroundImage})`}"
   >
     <div v-if="value.title || value.subtitle" class="wgt-hd">
       <span class="title">{{ value.title }}</span>
@@ -48,7 +45,11 @@
         'spaced': value.spaced
       }"
     >
-      <el-image v-if="value.data.imgUrl" :src="value.data.imgUrl" :width="'100%'" />
+    <div v-for="(item,index) in value.data" :key="index" class="img-item">
+      <div>
+        <el-image :src="item.url" :width="'100%'" />
+        {{ item.text }}
+      </div>
     </div>
   </div>
 </template>
@@ -57,7 +58,7 @@
 import config from './config'
 export default {
   name: 'FloorImg',
-  wgtName: '热区图',
+  wgtName: '楼层图片',
   wgtDesc: '',
   wgtIcon: 'wgt-floorImg',
   config: config,
@@ -66,7 +67,6 @@ export default {
   },
   data() {
     return {
-      currentIndex: 1
     }
   },
   computed: {

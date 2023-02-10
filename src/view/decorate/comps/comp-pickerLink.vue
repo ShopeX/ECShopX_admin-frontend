@@ -17,6 +17,8 @@
     font-size: 12px;
     border-radius: 3px;
     line-height: initial;
+    max-width: 200px;
+    @include text-overflow();
   }
 }
 </style>

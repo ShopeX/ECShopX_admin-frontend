@@ -5,7 +5,8 @@ import WgtFilm from './wgt_film'
 import WgtCoupon from './wgt_coupon'
 import WgtShowCase from './wgt_showcase'
 import WgtGoodsGridTab from './wgt_goodsGridTab'
-  
+import WgtStore from './wgt_store'
+
 export default {
   WgtSlider,
   // WgtGoodsGrid,
@@ -13,5 +14,6 @@ export default {
   WgtFilm,
   WgtCoupon,
   WgtShowCase,
-  WgtGoodsGridTab
+  WgtGoodsGridTab,
+  WgtStore
 }

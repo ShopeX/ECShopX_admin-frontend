@@ -37,6 +37,7 @@ export default {
       goods: (args) => fn({ value: { ...args }, type: 'pickerGoods', width: '1110px' }),
       shop: (args) => fn({ value: { ...args }, type: 'pickerShop' }),
       path: (args) => fn({ value: { ...args }, type: 'pickerPath' }),
+      tag: (args) => fn({ value: { ...args }, type: 'pickerTag' }),
       zitilist: (args) => fn({ value: { ...args }, type: 'pickerZitiList' }),
       aftersalesList: (args) => fn({ value: { ...args }, type: 'pickerAftersalesList' })
     }

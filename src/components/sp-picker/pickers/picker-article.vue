@@ -1,5 +1,5 @@
 <style lang="scss">
-.picker-regactivity {
+.picker-article {
   .sp-filter-form {
     padding: 8px 8px 0px 8px;
   }
@@ -35,10 +35,10 @@
 }
 </style>
 <template>
-  <div class="picker-regactivity">
+  <div class="picker-article">
     <!-- <SpFilterForm :model="formData" size="small" @onSearch="onSearch" @onReset="onSearch">
       <SpFilterFormItem prop="keywords">
-        <el-input v-model="formData.keywords" placeholder="请输入活动名称" />
+        <el-input v-model="formData.keywords" placeholder="请输入页面名称" />
       </SpFilterFormItem>
     </SpFilterForm> -->
     <SpFinder
@@ -47,12 +47,12 @@
       :other-config="{
         height: 460
       }"
-      url="/selfhelp/registrationActivity/easylist"
+      url="/article/management"
       :fixed-row-action="true"
       :setting="{
         columns: [
-          { name: 'ID', key: 'activity_id', width: 80 },
-          { name: '活动名称', key: 'activity_name' }
+          { name: 'ID', key: 'article_id', width: 80 },
+          { name: '文章标题', key: 'title' }
         ]
       }"
       :hooks="{
@@ -73,7 +73,7 @@ export default {
   extends: BasePicker,
   mixins: [PageMixin],
   config: {
-    title: '选择活动报名'
+    title: '选择文章'
   },
   props: ['value'],
   data() {
@@ -87,16 +87,19 @@ export default {
   created() {},
   methods: {
     beforeSearch(params) {
-      params = {
-        ...params,
-        is_valid: true
-      }
+      // const { keywords } = this.formData
+      // if (keywords) {
+      //   params = {
+      //     ...params,
+      //     page_name: keywords
+      //   }
+      // }
       return params
     },
     afterSearch(response) {
       const { list } = response.data.data
       if (this.value.data) {
-        const selectRows = list.filter((item) => this.value.data.includes(item.activity_id))
+        const selectRows = list.filter((item) => this.value.data.includes(item.article_id))
         const { finderTable } = this.$refs.finder.$refs
         setTimeout(() => {
           finderTable.$refs.finderTable.setSelection(selectRows)

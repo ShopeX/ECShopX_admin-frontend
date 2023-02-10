@@ -80,6 +80,7 @@
         <SpSelectShop v-model="params.distributor_id" clearable placeholder="请选择店铺" />
       </SpFilterFormItem>
     </SpFilterForm>
+
     <div>
       <el-table
         v-loading="loading"
@@ -114,6 +115,7 @@
         <el-table-column label="库存" prop="store" width="150" />
       </el-table>
     </div>
+
     <el-pagination
       background
       layout="total, prev, pager, next"

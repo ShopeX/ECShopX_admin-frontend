@@ -27,10 +27,18 @@
       <el-tab-pane label="商品标签" name="tag">
         <PickerTag v-if="tabValue == 'tag'" ref="tag" :value="value" />
       </el-tab-pane>
-      <el-tab-pane label="文章" name="article">定时任务补偿</el-tab-pane>
-      <el-tab-pane label="软文">定时任务补偿</el-tab-pane>
-      <el-tab-pane label="页面">定时任务补偿</el-tab-pane>
-      <el-tab-pane label="营销">定时任务补偿</el-tab-pane>
+      <el-tab-pane label="文章" name="article">
+        <PickerArticle v-if="tabValue == 'article'" ref="article" :value="value" />
+      </el-tab-pane>
+      <el-tab-pane label="软文" name="planting">
+        <PickerPlanting v-if="tabValue == 'planting'" ref="planting" :value="value" />
+      </el-tab-pane>
+      <el-tab-pane label="页面" name="link">
+        <PickerLink v-if="tabValue == 'link'" ref="link" :value="value" />
+      </el-tab-pane>
+      <el-tab-pane label="营销" name="marketing">
+        <PickerMarketing v-if="tabValue == 'marketing'" ref="marketing" :value="value" />
+      </el-tab-pane>
       <el-tab-pane label="活动报名" name="regactivity">
         <PickerRegactivity v-if="tabValue == 'regactivity'" ref="regactivity" :value="value" />
       </el-tab-pane>
@@ -40,7 +48,9 @@
       <el-tab-pane label="自定义页面" name="custom_page">
         <PickerPages v-if="tabValue == 'custom_page'" ref="custom_page" :value="value" />
       </el-tab-pane>
-      <el-tab-pane label="直播">定时任务补偿</el-tab-pane>
+      <el-tab-pane label="直播" name="live">
+        <PickerLive v-if="tabValue == 'live'" ref="live" :value="value" />
+      </el-tab-pane>
       <el-tab-pane label="外部小程序" name="other_wxapp">
         <PickerWxApp v-if="tabValue == 'other_wxapp'" ref="other_wxapp" :value="value" />
       </el-tab-pane>
@@ -56,10 +66,15 @@ import PickerGoods from './picker-goods'
 import PickerSaleCategory from './picker-saleCategory'
 import PickerCategory from './picker-category'
 import PickerTag from './picker-tag'
+import PickerArticle from './picker-article'
+import PickerPlanting from './picker-planting'
+import PickerLink from './picker-link'
+import PickerMarketing from './picker-marketing'
 import PickerShop from './picker-shop'
 import PickerSeckill from './picker-seckill'
 import PickerRegactivity from './picker-regactivity'
 import PickerPages from './picker-pages'
+import PickerLive from './picker-live'
 import PickerWxApp from './picker-wxapp'
 export default {
   name: 'PickerPath',
@@ -68,10 +83,15 @@ export default {
     PickerSaleCategory,
     PickerCategory,
     PickerTag,
+    PickerArticle,
+    PickerPlanting,
+    PickerLink,
+    PickerMarketing,
     PickerShop,
     PickerSeckill,
     PickerRegactivity,
     PickerPages,
+    PickerLive,
     PickerWxApp
   },
   // extends: BasePicker,
@@ -131,6 +151,36 @@ export default {
             title: 'tag_name'
           })
         },
+        article: () => {
+          return pickBy(data, {
+            id: 'article_id',
+            title: 'title'
+          })
+        },
+        planting: () => {
+          return pickBy(data, {
+            id: 'article_id',
+            title: 'title'
+          })
+        },
+        link: () => {
+          return pickBy(data, {
+            id: 'id',
+            title: 'title'
+          })
+        },
+        marketing: () => {
+          return pickBy(data, {
+            id: 'id',
+            title: 'title'
+          })
+        },
+        regactivity: () => {
+          return pickBy(data, {
+            id: 'activity_id',
+            title: 'activity_name'
+          })
+        },
         seckill: () => {
           return pickBy(data, {
             id: 'seckill_id',
@@ -141,6 +191,12 @@ export default {
           return pickBy(data, {
             id: 'id',
             title: 'page_name'
+          })
+        },
+        live: () => {
+          return pickBy(data, {
+            id: 'roomid',
+            title: 'name'
           })
         },
         other_wxapp: () => {

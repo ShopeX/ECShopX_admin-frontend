@@ -51,7 +51,7 @@
       :fixed-row-action="true"
       :setting="{
         columns: [
-          { name: '页面ID', key: 'id' },
+          { name: 'ID', key: 'id', width: 80 },
           { name: '页面名称', key: 'page_name' },
           { name: '页面描述', key: 'page_description' }
         ]

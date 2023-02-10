@@ -1,0 +1,41 @@
+.wgt-store {
+  &.padded {
+    padding: 10px 0;
+  }
+  .wgt-hd {
+    padding: 10px;
+    .title {
+      font-size: 18px;
+      font-weight: 600;
+      color: #333;
+    }
+    .sub-title {
+      color: #666;
+      margin-left: 4px;
+    }
+  }
+  .wgt-bd {
+    .wgt-block {
+      margin: 0 10px;
+    }
+    .store-info {
+      display: flex;
+      align-items: center;
+      .name {
+        margin-left: 6px;
+      }
+    }
+    .activity-goods {
+      margin-top: 6px;
+      .goods-list {
+        margin-top: 6px;
+        display: flex;
+        overflow-x: auto;
+      }
+      .goods-item {
+        display: inline-block;
+        margin-right: 6px;
+      }
+    }
+  }
+}

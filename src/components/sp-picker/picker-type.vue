@@ -6,6 +6,7 @@ import {
   PickerGoods,
   PickerShop,
   PickerPath,
+  PickerTag,
   PickerVideo,
   PickerZitiList,
   PickerAftersalesList
@@ -27,6 +28,8 @@ function resolvePicker(type) {
       return PickerShop
     case 'pickerPath':
       return PickerPath
+    case 'pickerTag':
+      return PickerTag
     case 'pickerZitiList':
       return PickerZitiList
     case 'pickerAftersalesList':

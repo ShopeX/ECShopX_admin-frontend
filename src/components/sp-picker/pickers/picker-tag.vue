@@ -6,28 +6,28 @@
   .sp-finder-hd {
     display: none;
   }
-  .sp-finder {
-    &.no-multiple {
-      .sp-finder-bd {
-        .el-table__fixed-header-wrapper {
-          table thead {
-            tr {
-              th {
-                &:nth-child(1) {
-                  .el-checkbox {
-                    display: none;
-                  }
-                }
-              }
-            }
-          }
-        }
-      }
-      .el-table__fixed-body-wrapper {
-        top: 38px !important;
-      }
-    }
-  }
+  // .sp-finder {
+  //   &.no-multiple {
+  //     .sp-finder-bd {
+  //       .el-table__fixed-header-wrapper {
+  //         table thead {
+  //           tr {
+  //             th {
+  //               &:nth-child(1) {
+  //                 .el-checkbox {
+  //                   display: none;
+  //                 }
+  //               }
+  //             }
+  //           }
+  //         }
+  //       }
+  //     }
+  //     .el-table__fixed-body-wrapper {
+  //       top: 38px !important;
+  //     }
+  //   }
+  // }
   .el-pagination {
     margin: 0;
     padding: 10px;
@@ -43,7 +43,6 @@
     </SpFilterForm>
     <SpFinder
       ref="finder"
-      :class="['shop-finder', { 'no-multiple': !multiple }]"
       :other-config="{
         height: 460
       }"
@@ -74,7 +73,7 @@ export default {
   extends: BasePicker,
   mixins: [PageMixin],
   config: {
-    title: '选择标签'
+    title: '选择商品标签'
   },
   props: ['value'],
   data() {

@@ -16,7 +16,7 @@ export default {
       value: '1'
     },
     {
-      label: '添加优惠券',
+      label: '优惠券',
       key: 'data',
       component: function (h, { key }) {
         return <CouponItem v-model={this.value[key]} />

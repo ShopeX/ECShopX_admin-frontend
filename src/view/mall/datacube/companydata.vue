@@ -71,34 +71,12 @@
         </section>
       </el-tab-pane>
       <el-tab-pane
-        label="交易额(积分)"
-        name="amountPointPayed"
-      >
-        <section>
-          <canvas
-            id="canvas_amountPointPayed"
-            height="120"
-          />
-        </section>
-      </el-tab-pane>
-      <el-tab-pane
         label="订单数"
         name="order"
       >
         <section>
           <canvas
             id="canvas_order"
-            height="120"
-          />
-        </section>
-      </el-tab-pane>
-      <el-tab-pane
-        label="订单数(积分)"
-        name="orderPoint"
-      >
-        <section>
-          <canvas
-            id="canvas_orderPoint"
             height="120"
           />
         </section>
@@ -115,34 +93,12 @@
         </section>
       </el-tab-pane>
       <el-tab-pane
-        label="付款订单数(积分)"
-        name="orderPointPayed"
-      >
-        <section>
-          <canvas
-            id="canvas_orderPointPayed"
-            height="120"
-          />
-        </section>
-      </el-tab-pane>
-      <el-tab-pane
         label="GMV"
         name="gmv"
       >
         <section>
           <canvas
             id="canvas_gmv"
-            height="120"
-          />
-        </section>
-      </el-tab-pane>
-      <el-tab-pane
-        label="GMV(积分)"
-        name="gmvPoint"
-      >
-        <section>
-          <canvas
-            id="canvas_gmvPoint"
             height="120"
           />
         </section>
@@ -182,24 +138,12 @@
           </template>
         </el-table-column>
         <el-table-column
-          prop="amount_point_payed_count"
-          label="交易额(积分)"
-        />
-        <el-table-column
           prop="order_count"
           label="订单数"
         />
         <el-table-column
-          prop="order_point_count"
-          label="订单数(积分)"
-        />
-        <el-table-column
           prop="order_payed_count"
           label="付款订单数"
-        />
-        <el-table-column
-          prop="order_point_payed_count"
-          label="付款订单数(积分)"
         />
         <el-table-column
           prop="gmv_count"
@@ -209,10 +153,6 @@
             ￥{{ scope.row.gmv_count / 100 }}
           </template>
         </el-table-column>
-        <el-table-column
-          prop="gmv_point_count"
-          label="GMV(积分)"
-        />
       </el-table>
     </template>
   </div>
@@ -238,13 +178,9 @@ export default {
         aftersalesData: [],
         refundedData: [],
         amountPayedData: [],
-        amountPointPayedData: [],
         orderData: [],
-        orderPointData: [],
         orderPayedData: [],
-        orderPointPayedData: [],
         gmvData: [],
-        gmvPointData: []
       },
       chartColors: {
         red: 'rgb(255, 99, 132)',
@@ -333,13 +269,9 @@ export default {
             this.list.aftersalesData.push(companyDataList[key].aftersales_count)
             this.list.refundedData.push(companyDataList[key].refunded_count)
             this.list.amountPayedData.push(companyDataList[key].amount_payed_count)
-            this.list.amountPointPayedData.push(companyDataList[key].amount_point_payed_count)
             this.list.orderData.push(companyDataList[key].order_count)
-            this.list.orderPointData.push(companyDataList[key].order_point_count)
             this.list.orderPayedData.push(companyDataList[key].order_payed_count)
-            this.list.orderPointPayedData.push(companyDataList[key].order_point_payed_count)
             this.list.gmvData.push(companyDataList[key].gmv_count / 100)
-            this.list.gmvPointData.push(companyDataList[key].gmv_point_count / 100)
           }
           this.loading = false
           if (isfirst) {

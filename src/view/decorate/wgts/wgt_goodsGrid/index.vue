@@ -16,8 +16,46 @@
         'spaced': value.spaced
       }"
     >
-      <!-- {{JSON.stringify(value.data)}} -->
-      <div>商品栅格</div>
+      <!-- 自定义部分 -->
+      <div class="wgt-goods-grid-goods">
+        <div
+          v-for="(item, index) in value.goodsList.slice(0, 50)"
+          :key="index"
+          class="wgt-goods-grid-goods-item"
+        >
+          <div class="wgt-goods-grid-goods-item-img">
+            <img class="goods-img" :src="wximageurl + item.imgUrl">
+          </div>
+          <div class="wgt-goods-grid-goods-item-info">
+            <img v-if="value.brand && value.style !== 'grids'" class="goods-brand" :src="
+              item.brand
+                ? wximageurl + item.brand
+                : 'https://fakeimg.pl/60x60/EFEFEF/CCC/?text=brand&font=lobster'
+            ">
+            <div class="goods-title">
+              {{ item.title }}
+            </div>
+            <div class="goods-title">
+              {{ item.itemEnName }}
+            </div>
+            <div v-if="value.showPrice" class="price">
+              <span class="cur">¥</span>{{ item.price / 100 }}
+            </div>
+            <div class="activity-label">
+              <p v-for="(s, i) in item.promotionActivity" :key="i"
+                :style="`color: ${colorPrimary};border: 1px solid ${colorPrimary}`">
+                {{ s.tag_type == 'single_group' ? '团购' : '' }}
+                {{ s.tag_type == 'full_minus' ? '满减' : '' }}
+                {{ s.tag_type == 'full_discount' ? '满折' : '' }}
+                {{ s.tag_type == 'full_gift' ? '满赠' : '' }}
+                {{ s.tag_type == 'normal' ? '秒杀' : '' }}
+                {{ s.tag_type == 'limited_time_sale' ? '限时特惠' : '' }}
+                {{ s.tag_type == 'plus_price_buy' ? '换购' : '' }}
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
   </div>
 </template>
@@ -35,16 +73,24 @@ export default {
   },
   data() {
     return {
-      currentIndex: 1
+      colorPrimary: ''
     }
   },
-  computed: {
-    sliderHeight() {
-      return ''
+  computed: {},
+  watch: {
+    value: {
+      deep: true,
+      handler: (val) => {
+        // console.log(1111111, val)
+      }
     }
   },
   created() {},
-  methods: {}
+  mounted() {
+    this.colorPrimary = this.$store.getters.color_theme.primary
+  },
+  methods: {
+  }
 }
 </script>
 

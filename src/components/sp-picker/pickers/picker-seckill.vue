@@ -1,21 +1,8 @@
 <style lang="scss">
-.picker-shop {
+.picker-seckill {
   .sp-filter-form {
     padding: 8px 8px 0px 8px;
-    // .filter-form__bd {
-    //   margin-left: 16px;
-    // }
   }
-  // .filter-tools {
-  //   display: flex;
-  //   align-items: center;
-  //   padding: 8px;
-  //   .el-cascader,
-  //   .el-input {
-  //     width: 196px;
-  //     margin-right: 8px;
-  //   }
-  // }
   .sp-finder-hd {
     display: none;
   }
@@ -35,9 +22,9 @@
             }
           }
         }
-        .el-table__fixed-body-wrapper {
-          top: 38px !important;
-        }
+      }
+      .el-table__fixed-body-wrapper {
+        top: 38px !important;
       }
     }
   }
@@ -48,21 +35,10 @@
 }
 </style>
 <template>
-  <div class="picker-shop">
-    <!-- multiple：{{ multiple }}, {{ value }} -->
+  <div class="picker-seckill">
     <SpFilterForm :model="formData" size="small" @onSearch="onSearch" @onReset="onSearch">
-      <SpFilterFormItem prop="region">
-        <el-cascader
-          ref="region"
-          v-model="formData.region"
-          filterable
-          clearable
-          placeholder="选择地区筛选店铺"
-          :options="district"
-        />
-      </SpFilterFormItem>
       <SpFilterFormItem prop="keywords">
-        <el-input v-model="formData.keywords" placeholder="请输入店铺名称" />
+        <el-input v-model="formData.keywords" placeholder="请输入活动名称" />
       </SpFilterFormItem>
     </SpFilterForm>
     <SpFinder
@@ -71,12 +47,12 @@
       :other-config="{
         height: 460
       }"
-      url="/distributors"
+      url="/promotions/seckillactivity/getlist"
       :fixed-row-action="true"
       :setting="{
         columns: [
-          { name: '店铺名称', key: 'name' },
-          { name: '店铺地址', key: 'store_address' }
+          { name: '活动ID', key: 'seckill_id', width: '80' },
+          { name: '活动名称', key: 'activity_name' }
         ]
       }"
       :hooks="{
@@ -90,62 +66,44 @@
 </template>
 
 <script>
-import district from '@/common/district.json'
 import BasePicker from './base'
 import PageMixin from '../mixins/page'
 export default {
-  name: 'PickerShop',
+  name: 'PickerPages',
   extends: BasePicker,
   mixins: [PageMixin],
   config: {
-    title: '选择店铺'
+    title: '选择秒杀'
   },
   props: ['value'],
   data() {
     return {
       formData: {
-        region: [],
         keywords: ''
       },
-      district,
-      regionArea: [],
-      loading: false,
       multiple: this.value?.multiple ?? true
     }
   },
-  created() {
-    // this.fetch()
-  },
+  created() {},
   methods: {
     beforeSearch(params) {
-      const regionLabels = []
-      const getRegionLabel = (district, i) => {
-        if (this.formData.region[i]) {
-          const fd = district.find((item) => item.value == this.formData.region[i])
-          regionLabels.push(fd.label)
-          if (fd.children) {
-            getRegionLabel(fd.children, ++i)
-          }
-        }
-      }
-      if (this.formData.region.length > 0) {
-        getRegionLabel(this.district, 0)
-      }
-      const [province = '', city = '', area = ''] = regionLabels
       params = {
-        ...params,
-        name: this.formData.keywords,
-        province: province,
-        city: city,
-        area: area,
-        distribution_type: this.value?.distribution_type
+        ...params
+        // status: 'valid'
+      }
+      const { keywords } = this.formData
+      if (keywords) {
+        params = {
+          ...params,
+          name: keywords
+        }
       }
       return params
     },
     afterSearch(response) {
       const { list } = response.data.data
       if (this.value.data) {
-        const selectRows = list.filter((item) => this.value.data.includes(item.distributor_id))
+        const selectRows = list.filter((item) => this.value.data.includes(item.seckill_id))
         const { finderTable } = this.$refs.finder.$refs
         setTimeout(() => {
           finderTable.$refs.finderTable.setSelection(selectRows)

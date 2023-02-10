@@ -14,7 +14,12 @@ export default {
       component: function (h, { key }) {
         return <AttrItem v-model={this.value[key]} />
       },
-      value: []
+      value: [
+        { imgUrl: '', linkPage: '', content: '', title: '', id: '' },
+        { imgUrl: '', linkPage: '', content: '', title: '', id: '' },
+        { imgUrl: '', linkPage: '', content: '', title: '', id: '' }
+      ],
+      tip: `建议尺寸:</br>大图（375px * 310px）小图（375px * 150px）`
     }
   ],
   transformIn: (v) => {

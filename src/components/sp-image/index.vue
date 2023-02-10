@@ -7,21 +7,35 @@
 
 <script>
 import dImage from '@/assets/imgs/default.jpg'
-import { isNumber, isString } from '@/utils'
+import { isNumber, isString, isBoolean } from '@/utils'
 export default {
   name: 'SpImage',
   props: {
     src: String,
-    width: [Number, String],
-    height: [Number, String]
+    width: Number,
+    height: Number,
+    circle: [Boolean, Number]
   },
   render() {
-    const { src, width, height } = this
-    const _width = isString(width) ? width : `${width}px`
-    const _height = isString(height) ? height : `${height}px`
+    const { src, width, height, circle } = this
     // console.log('sp-image render src:', src);
+    let styleNames = {}
+    if (width) {
+      styleNames['width'] = `${width}px`
+    }
+    if (height) {
+      styleNames['height'] = `${height}px`
+    }
+    if (circle) {
+      if (isBoolean(circle)) {
+        styleNames['border-radius'] = `${width / 2}px`
+      } else {
+        styleNames['border-radius'] = `${circle}px`
+      }
+    }
+
     return (
-      <el-image class={'sp-image'} src={src || dImage} fit='cover'>
+      <el-image class={'sp-image'} style={styleNames} src={src || dImage} fit='cover'>
         <template slot='error'>图片加载错误</template>
       </el-image>
     )

@@ -18,13 +18,24 @@
     position: relative;
     padding: 0 10px;
     display: flex;
+    .sp-image {
+      height: 100%;
+    }
     .lf {
       width: calc(50% - 5px);
+      height: 310px;
       margin-right: 5px;
     }
     .rg {
       width: calc(50% - 5px);
       margin-left: 5px;
+    }
+    .tp {
+      height: 150px;
+      margin-bottom: 10px;
+    }
+    .bt {
+      height: 150px;
     }
   }
 }

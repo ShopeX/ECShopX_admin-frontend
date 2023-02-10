@@ -1,8 +1,8 @@
 <style lang="scss">
 .picker-goods {
   .sp-filter-form {
-    padding: 8px 8px 0 8px;
-    margin-bottom: 0;
+    padding: 8px 8px 8px 8px;
+    // margin-bottom: 0;
 
     &-item {
       // margin-bottom: 8px;
@@ -10,6 +10,10 @@
   }
   .item-info {
     display: flex;
+    .item-image {
+      width: 60px;
+      margin-right: 8px;
+    }
     .sp-image {
       margin-right: 10px;
     }
@@ -81,7 +85,7 @@
         v-loading="loading"
         border
         :data="list"
-        height="400"
+        height="420"
         @selection-change="handleSelectionChange"
       >
         <el-table-column type="selection" align="center" label="全选" />
@@ -89,7 +93,9 @@
         <el-table-column label="商品名称" min-width="200">
           <template slot-scope="scope">
             <div class="item-info">
-              <SpImage :src="scope.row.pics[0]" :width="60" :height="60" />
+              <div class="item-image">
+                <SpImage :src="scope.row.pics[0]" :width="60" :height="60" />
+              </div>
               <div>
                 <div class="item-name">
                   {{ scope.row.itemName }}

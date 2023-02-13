@@ -64,9 +64,7 @@
 <template>
   <div class="comp-skuform">
     <div class="form-block-head clearfix">
-      <div class="block-head-hd">
-商品规格
-</div>
+      <div class="block-head-hd">商品规格</div>
       <div class="block-head-ft">
         <el-switch
           v-if="!isEditor"
@@ -135,9 +133,7 @@
                   min="0"
                   placeholder=""
                 >
-                  <template slot="append">
-kg
-</template>
+                  <template slot="append"> kg </template>
                 </el-input>
               </el-form-item>
             </el-col>
@@ -150,9 +146,7 @@ kg
                   min="0"
                   placeholder=""
                 >
-                  <template slot="append">
-m³
-</template>
+                  <template slot="append"> m³ </template>
                 </el-input>
               </el-form-item>
             </el-col>
@@ -165,9 +159,7 @@ m³
                   min="0"
                   placeholder=""
                 >
-                  <template slot="prepend">
-¥
-</template>
+                  <template slot="prepend"> ¥ </template>
                 </el-input>
               </el-form-item>
             </el-col>
@@ -182,9 +174,7 @@ m³
                   min="0"
                   placeholder=""
                 >
-                  <template slot="prepend">
-¥
-</template>
+                  <template slot="prepend"> ¥ </template>
                 </el-input>
               </el-form-item>
             </el-col>
@@ -197,9 +187,7 @@ m³
                   min="0"
                   placeholder=""
                 >
-                  <template slot="prepend">
-¥
-</template>
+                  <template slot="prepend"> ¥ </template>
                 </el-input>
               </el-form-item>
             </el-col>
@@ -229,30 +217,33 @@ m³
         <div class="sub-block">
           <!-- {{value.skus}} -->
           <div v-for="(item, index) in value.skus" :key="index" class="sku-row">
-            <div class="sku-name">
-{{ item.sku_name }}：
-</div>
+            <div class="sku-name">{{ item.sku_name }}：</div>
             <div class="sku-list">
               <el-checkbox-group
                 v-model="item.checked_sku"
                 class="clearfix"
                 @change="handleSkuChange"
               >
-                <div v-for="(value, vn) in item.sku_value" :key="vn" class="sku-select__checkitem">
-                  <el-checkbox class="sku-checkbox" :label="value.attribute_value_id">
+                <div
+                  v-for="(itemValue, vn) in item.sku_value"
+                  :key="vn"
+                  class="sku-select__checkitem"
+                >
+                  {{ itemValue.custom_attribute_value }}
+                  <el-checkbox class="sku-checkbox" :label="itemValue.attribute_value_id">
                     <el-input
-                      v-if="item.checked_sku.indexOf(value.attribute_value_id) !== -1"
-                      v-model="value.custom_attribute_value"
+                      v-if="item.checked_sku.indexOf(itemValue.attribute_value_id) !== -1"
+                      v-model="itemValue.custom_attribute_value"
                       size="mini"
                       style="width: 100px"
-                      @change="handleSkuName(value, index, vn)"
+                      @change="handleSkuName(itemValue, index, vn)"
                     />
-                    <span v-else>{{ value.attribute_value }}</span>
+                    <span v-else>{{ itemValue.attribute_value }}</span>
                   </el-checkbox>
                   <imgBox
-                    v-if="value.image_url"
+                    v-if="itemValue.image_url"
                     class="sku-image"
-                    :img-url="value.image_url"
+                    :img-url="itemValue.image_url"
                     width="50"
                     height="50"
                   />
@@ -261,9 +252,7 @@ m³
             </div>
           </div>
         </div>
-        <div class="sub-label">
-设置规格图片
-</div>
+        <div class="sub-label">设置规格图片</div>
         <!-- {{value.specImages}} -->
         <div class="sub-block">
           <el-table :data="value.specImages" :header-cell-style="{ background: '#f5f7fa' }">
@@ -297,9 +286,7 @@ m³
             </el-table-column>
           </el-table>
         </div>
-        <div class="sub-label">
-设置规格
-</div>
+        <div class="sub-label">设置规格</div>
         <div class="sub-block">
           <el-table :data="bulkFilling" :show-header="false" :highlight-current-row="false">
             <el-table-column>
@@ -409,9 +396,7 @@ m³
             </el-table-column>
             <el-table-column width="80">
               <template slot-scope="scope">
-                <el-button type="primary" size="mini" @click="fillSku">
-填充
-</el-button>
+                <el-button type="primary" size="mini" @click="fillSku"> 填充 </el-button>
               </template>
             </el-table-column>
           </el-table>
@@ -522,9 +507,7 @@ m³
             </el-table-column>
             <el-table-column width="80">
               <template slot-scope="scope">
-                <el-button type="text" @click="clearSku(scope.$index)">
-清除
-</el-button>
+                <el-button type="text" @click="clearSku(scope.$index)"> 清除 </el-button>
               </template>
             </el-table-column>
           </el-table>
@@ -552,7 +535,7 @@ export default {
     imgPicker
   },
   props: ['value', 'isEditor', 'isPackageItems', 'pointAccess'],
-  data () {
+  data() {
     return {
       picsDialog: false,
       isGetPics: false,
@@ -608,14 +591,14 @@ export default {
       rowIndex: 0
     }
   },
-  created () {
+  created() {
     console.log(this.value)
   },
   methods: {
-    specOnChange () {
+    specOnChange() {
       this.$emit('specOnChange')
     },
-    renderRequire (h, { column }) {
+    renderRequire(h, { column }) {
       return h(
         'span',
         {
@@ -624,10 +607,10 @@ export default {
         '*' + column.label
       )
     },
-    handleSkuChange (data, index) {
+    handleSkuChange(data, index) {
       this.$parent.getSkuItems()
     },
-    handleSkuName (val, m, n) {
+    handleSkuName(val, m, n) {
       const { itemSpecList, specImages, specItems } = this.value
       const fd = specImages.find((item) => item.spec_value_id == val.attribute_value_id)
       if (fd) {
@@ -643,10 +626,10 @@ export default {
       })
       this.$parent.getSkuItems()
     },
-    handleImgRemove (parent, index) {
+    handleImgRemove(parent, index) {
       this.value.specImages[parent].item_image_url.splice(index, 1)
     },
-    pickPics (data) {
+    pickPics(data) {
       // if (this.value.specImages.length + data.length > 5) {
       //   this.$message.error('最多添加5张图片!')
       //   return false
@@ -659,22 +642,22 @@ export default {
       // }
       this.picsDialog = false
     },
-    closePicsDialog () {
+    closePicsDialog() {
       this.picsDialog = false
     },
-    handleSkuImg (index) {
+    handleSkuImg(index) {
       this.picsDialog = true
       this.isGetPics = true
       this.multiple = true
       this.rowIndex = index
     },
-    fillSku () {
+    fillSku() {
       const obj = { ...this.bulkFilling[0] }
       this.value.specItems.forEach((item) => {
         Object.assign(item, obj)
       })
     },
-    clearSku (index) {
+    clearSku(index) {
       this.$confirm('确定清除当前规格的数据吗？', '提示', {
         confirmButtonText: '确定',
         cancelButtonText: '取消',

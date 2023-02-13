@@ -37,10 +37,9 @@
                 type="primary"
                 plain
                 @click="onClickItem(item)"
-                >
-{{ item.button }}
-</el-button
               >
+                {{ item.button }}
+              </el-button>
               <el-button v-else type="primary">已开通</el-button>
             </div>
           </div>
@@ -77,12 +76,12 @@ export default {
     },
     async fetch() {
       this.loading = true
-      const { adapay, in_purchase, marketing_center, mobile_cashier, pointsmall, seckill } =
+      const { adapay, employee_purchase, marketing_center, mobile_cashier, pointsmall, seckill } =
         await this.$api.application.list()
       this.appStatus = {
         adapay,
         point: pointsmall,
-        neigou: in_purchase,
+        neigou: employee_purchase,
         yingxiao: marketing_center,
         miaosha: seckill,
         yinlian: false,

@@ -1,6 +1,6 @@
 {
   "name": "ecshopx-admin",
-  "version": "3.8.0",
+  "version": "3.9.0",
   "description": "ecshopx admin",
   "author": "shopex",
   "private": true,
@@ -12,6 +12,7 @@
     "lint": "prettier-eslint --write --list-different 'src/**/*.{js,vue}'"
   },
   "dependencies": {
+    "@antv/g2plot": "^2.4.25",
     "@riophae/vue-treeselect": "0.0.38",
     "@shopex/finder": "^1.0.40",
     "ali-oss": "^6.5.1",

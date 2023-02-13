@@ -231,7 +231,7 @@ export default {
   created() {},
   methods: {
     onSearch() {
-      this.$refs.finder.refresh()
+      this.$refs.finder.refresh(true)
     },
     beforeSearch(params) {
       const formQuery = JSON.parse(JSON.stringify(this.formQuery))

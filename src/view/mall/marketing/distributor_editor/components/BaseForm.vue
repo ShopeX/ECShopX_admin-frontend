@@ -80,9 +80,6 @@
         />
       </el-form-item>
 
-      <!-- <el-form-item v-if="!content.baseForm.distributor_self" label="是否快递">
-        <el-switch v-model="content.baseForm.is_delivery" />
-      </el-form-item> -->
       <el-form-item label="是否快递">
         <el-switch v-model="content.baseForm.is_delivery" />
       </el-form-item>

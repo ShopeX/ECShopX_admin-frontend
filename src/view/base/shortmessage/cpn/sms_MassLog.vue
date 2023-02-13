@@ -1,30 +1,19 @@
 <template>
   <div>
     <div class="sms_signatures">
-      <el-card
-        class="box-card"
-        shadow="never"
-      >
-        <div
-          slot="header"
-          class="clearfix"
-        >
-          <span>短信群发记录</span>
-        </div>
-        <SpFinder
-          ref="finder"
-          :split-count="4"
-          :search-row-count="4"
-          :fixed-row-action="true"
-          :setting="setting"
-          no-selection
-          :hooks="{
-            beforeSearch: beforeSearch,
-            afterSearch: afterSearch
-          }"
-          url="/aliyunsms/task/list"
-        />
-      </el-card>
+      <SpFinder
+        ref="finder"
+        :split-count="4"
+        :search-row-count="4"
+        :fixed-row-action="true"
+        :setting="setting"
+        no-selection
+        :hooks="{
+          beforeSearch: beforeSearch,
+          afterSearch: afterSearch
+        }"
+        url="/aliyunsms/task/list"
+      />
     </div>
     <template v-if="visible">
       <smsMassLogEdit
@@ -48,7 +37,7 @@ export default {
     smsMassLogEdit,
     Template
   },
-  data () {
+  data() {
     return {
       visible: false,
       info: {},
@@ -62,19 +51,19 @@ export default {
     }
   },
   computed: {
-    setting () {
+    setting() {
       return setting_(this)
     }
   },
   methods: {
-    addTemplate () {
+    addTemplate() {
       this.$router.push({ path: this.matchHidePage('edit') })
     },
-    beforeSearch (params) {
+    beforeSearch(params) {
       return { ...params }
     },
-    afterSearch () {},
-    async deleteSMS (id) {
+    afterSearch() {},
+    async deleteSMS(id) {
       const message = '选择确定后，群发定时任务将会撤销。'
       this.$confirm(message, '', {
         confirmButtonText: '确定',
@@ -83,14 +72,14 @@ export default {
       }).then(async () => {
         const result = await deleteTaskSms({ id })
         this.$message.success('撤销成功')
-        this.$refs.finder.refresh()
+        this.$refs.finder.refresh(true)
       })
     },
-    smsMassLogEditHandler () {
+    smsMassLogEditHandler() {
       this.visible = false
     },
-    updateFinder () {
-      this.$refs.finder.refresh()
+    updateFinder() {
+      this.$refs.finder.refresh(true)
     }
   }
 }

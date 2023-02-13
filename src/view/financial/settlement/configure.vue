@@ -68,7 +68,7 @@ export default {
           validator: (rule, value, callback) => {
             const { cycle, unit } = this.form.cycleData
             if (!cycle || !unit) {
-              callback(new Error('不能为空'))
+              callback(new Error('结算周期不能为空'))
             } else {
               callback()
             }
@@ -200,7 +200,7 @@ export default {
       }
     },
     onSearch() {
-      this.$refs.finder.refresh()
+      this.$refs.finder.refresh(true)
     },
     beforeSearch(params) {
       return { ...params, ...this.formQuery }
@@ -222,7 +222,7 @@ export default {
       })
       this.$message.success(id ? '保存成功' : '添加成功')
       this.addDialog = false
-      this.$refs.finder.refresh()
+      this.$refs.finder.refresh(true)
     },
     getCycle(period) {
       const [cycle, unit] = period

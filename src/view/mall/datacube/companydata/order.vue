@@ -25,13 +25,13 @@
       </SpFilterFormItem>
       <SpFilterFormItem prop="enterprise_id" label="内购活动:" size="max">
         <el-select
-          v-model="queryForm.enterprise_id"
-          v-scroll="getActivityList"
+          v-model="queryForm.activity_id"
+          v-scroll="() => pagesQuery.nextPage()"
           multiple
           placeholder="请选择"
         >
           <el-option
-            v-for="(item, index) in activityList"
+            v-for="(item, index) in purchaseActivityList"
             :key="`activity-item__${index}`"
             :label="item.name"
             :value="item.id"
@@ -40,7 +40,26 @@
       </SpFilterFormItem>
     </SpFilterForm>
 
-    <el-tabs v-model="activeName" type="card" @tab-click="handleClick">
+    <el-row :gutter="20">
+      <el-col :span="4"><el-statistic :value="total.order_count" title="订单" /></el-col>
+      <el-col :span="4"
+        >
+<el-statistic :value="total.order_payed_count" title="付款订单数"
+      />
+</el-col>
+      <el-col :span="4"><el-statistic :value="total.aftersales_count" title="售后单数" /></el-col>
+      <el-col :span="4"><el-statistic :value="total.gmv_count" title="GMV(元)" /></el-col>
+      <el-col :span="4"
+        >
+<el-statistic :value="total.amount_payed_count" title="交易额(元)"
+      />
+</el-col>
+      <el-col :span="4"><el-statistic :value="total.refunded_count" title="退款额(元)" /></el-col>
+    </el-row>
+
+    <!-- <canvas :id="item.key" height="120" /> -->
+
+    <!-- <el-tabs v-model="activeName" type="card" @tab-click="handleClick">
       <el-row class="total-display" :gutter="20">
         <el-col v-for="(item, index) in tabList" :key="`tab-col__${index}`" :span="4">
           <div>
@@ -62,7 +81,7 @@
           <canvas :id="item.key" height="120" />
         </section>
       </el-tab-pane>
-    </el-tabs>
+    </el-tabs> -->
 
     <el-table :data="allListData" stripe border style="width: 100%">
       <el-table-column prop="count_date" label="日期" fixed />
@@ -96,7 +115,7 @@ export default {
       queryForm: {
         datetime: [start, end]
       },
-      activityList: [],
+      purchaseActivityList: [],
       vdate: '',
       loading: true,
       activeName: 'order_count',
@@ -106,12 +125,20 @@ export default {
       },
       allListData: [],
       dataTimeArr: [],
+      total: {
+        order_count: 0,
+        order_payed_count: 0,
+        aftersales_count: 0,
+        gmv_count: 0,
+        amount_payed_count: 0,
+        refunded_count: 0
+      },
       tabList: [
         { key: 'order_count', label: '订单', total: 0, unit: '' },
         { key: 'order_payed_count', label: '付款订单数', total: 0, unit: '' },
-        { key: 'amount_payed_count', label: '交易额', total: 0, unit: '元' },
-        { key: 'gmv_count', label: 'GMV', total: 0, unit: '元' },
         { key: 'aftersales_count', label: '售后单数', total: 0, unit: '' },
+        { key: 'gmv_count', label: 'GMV', total: 0, unit: '元' },
+        { key: 'amount_payed_count', label: '交易额', total: 0, unit: '元' },
         { key: 'refunded_count', label: '退款额', total: 0, unit: '元' }
       ],
       dataInfo: {
@@ -165,22 +192,35 @@ export default {
     }
   },
   created() {
-    this.pagesQuery = new Pages()
-    this.getActivityList()
+    this.pagesQuery = new Pages({
+      fetch: this.getPurchaseActivity
+    }).nextPage()
   },
   mounted() {
-    var start = new Date()
-    var end = new Date()
-    start.setTime(start.getTime() - 3600 * 1000 * 24 * 7)
-    end.setTime(end.getTime() - 3600 * 1000 * 24 * 1)
-    this.vdate = [start, end]
-    this.getCompanyDataList(this.activeName)
+    // var start = new Date()
+    // var end = new Date()
+    // start.setTime(start.getTime() - 3600 * 1000 * 24 * 7)
+    // end.setTime(end.getTime() - 3600 * 1000 * 24 * 1)
+    // this.vdate = [start, end]
+    // this.getCompanyDataList(this.activeName)
+    this.fetchStatisticData()
   },
   methods: {
-    onSearch() {},
-    handleClick(tab, event) {
-      this.chartInit(tab.name)
+    onSearch() {
+      this.fetchStatisticData()
     },
+    async fetchStatisticData() {
+      const {
+        datetime: [start, end]
+        // activity_id
+      } = this.queryForm
+      const params = {
+        start: moment(start).format('YYYY-MM-DD'),
+        end: moment(end).format('YYYY-MM-DD')
+      }
+      const { list } = await this.$api.datacube.getCompanyData(params)
+    },
+
     getCompanyDataList(pane_name) {
       this.dataTimeArr = []
       this.dataInfo.order_count.data_list = []
@@ -300,16 +340,13 @@ export default {
       window.myLine = new Chart(ctx, config)
     },
 
-    async getActivityList() {
-      const { page, pageSize, nextPage } = this.pagesQuery.options
-      if (nextPage) {
-        const { list, total_count } = await this.$api.marketing.getPurchaseActivity({
-          page,
-          pageSize
-        })
-        this.pagesQuery.setTotal(total_count)
-        this.activityList = this.activityList.concat(list)
-      }
+    async getPurchaseActivity({ page, pageSize }) {
+      const { list, total_count } = await this.$api.marketing.getPurchaseActivity({
+        page,
+        pageSize
+      })
+      this.pagesQuery.setTotal(total_count)
+      this.purchaseActivityList = this.purchaseActivityList.concat(list)
     }
   }
 }

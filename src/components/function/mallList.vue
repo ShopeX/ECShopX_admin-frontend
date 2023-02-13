@@ -120,7 +120,7 @@
             <span class="btn" @click="abandonTemplate(item.pages_template_id)">废弃</span>
           </div>
           <div
-            v-if="relStore.id == '0' && !VERSION_B2C && !VERSION_PLATFORM && !VERSION_IN_PURCHASE"
+            v-if="relStore.id == '0' && !VERSION_B2C && !VERSION_IN_PURCHASE"
             class="synchronize-btn"
             @click="synchronizeTemplateToShop(index)"
           >

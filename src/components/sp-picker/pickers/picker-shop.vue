@@ -131,15 +131,16 @@ export default {
     },
     afterSearch(response) {
       const { list } = response.data.data
-      console.log(this.value.data)
-      const selectRows = list.filter((item) => this.value.data.includes(item.distributor_id))
-      const { finderTable } = this.$refs.finder.$refs
-      setTimeout(() => {
-        finderTable.$refs.finderTable.setSelection(selectRows)
-      })
+      if (this.value.data) {
+        const selectRows = list.filter((item) => this.value.data.includes(item.distributor_id))
+        const { finderTable } = this.$refs.finder.$refs
+        setTimeout(() => {
+          finderTable.$refs.finderTable.setSelection(selectRows)
+        })
+      }
     },
     onSearch() {
-      this.$refs.finder.refresh()
+      this.$refs.finder.refresh(true)
     },
     onSelect(selection, row) {
       if (this.multiple) {

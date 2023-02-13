@@ -1,10 +1,7 @@
 <template>
   <div>
     <div class="view-flex">
-      <div
-        v-if="checked.media_id"
-        class="video-box"
-      >
+      <div v-for="item in checkedVideoList" :key="item.media_id" class="video-box">
         <video-player
           class="vjs-custom-skin"
           :options="{
@@ -15,7 +12,7 @@
               {
                 // mp4
                 type: 'video/mp4',
-                src: checked.url
+                src: item.url
               }
             ],
             notSupportedMessage: '此视频暂无法播放，请稍后再试',
@@ -23,28 +20,13 @@
           }"
         />
       </div>
-      <div
-        v-if="!checked.media_id || (checked.media_id && multiple)"
-        class="upload-box"
-        @click="showVideos"
-      >
+      <div class="upload-box" @click="showVideos">
         <i class="iconfont icon-video" />
       </div>
     </div>
-    <el-dialog
-      class="video_dialog"
-      title="选择视频"
-      :visible.sync="visible"
-      append-to-body
-    >
-      <el-tabs
-        v-model="activeName"
-        @tab-click="handleClick"
-      >
-        <el-tab-pane
-          label="本地上传"
-          name="localvideos"
-        >
+    <el-dialog class="video_dialog" title="选择视频" :visible.sync="visible" append-to-body>
+      <el-tabs v-model="activeName" @tab-click="handleClick">
+        <el-tab-pane label="本地上传" name="localvideos">
           <div>
             <div class="upload_box">
               <el-upload
@@ -58,27 +40,17 @@
                 :before-upload="beforeVideoUpload"
                 :on-success="handleVideoSuccess"
               >
-                <el-button type="primary">
-                  本地上传
-                </el-button>
-                <div
-                  slot="tip"
-                  class="el-upload__tip"
-                >
-                  只能上传mp4文件，且不超过50M
-                </div>
+                <el-button type="primary"> 本地上传 </el-button>
+                <div slot="tip" class="el-upload__tip">只能上传mp4文件，且不超过50M</div>
               </el-upload>
             </div>
-            <el-row
-              v-loading="localloading"
-              :gutter="10"
-            >
+            <el-row v-loading="localloading" :gutter="10">
               <el-col
                 v-for="(item, index) in localvideoList"
                 :key="index"
                 :span="6"
                 class="media-item"
-                :class="{ 'checked': temp.media_id === item.url }"
+                :class="{ 'checked': temp.includes(item.url) }"
               >
                 <video-player
                   class="vjs-custom-skin"
@@ -121,15 +93,9 @@
           </div>
         </el-tab-pane>
       </el-tabs>
-      <span
-        slot="footer"
-        class="dialog-footer"
-      >
+      <span slot="footer" class="dialog-footer">
         <el-button @click="handleCancel">取 消</el-button>
-        <el-button
-          type="primary"
-          @click="handleSubmit"
-        >确 定</el-button>
+        <el-button type="primary" @click="handleSubmit">确 定</el-button>
       </span>
     </el-dialog>
   </div>
@@ -142,16 +108,13 @@ export default {
   props: {
     multiple: {
       type: Boolean,
-      default: true
+      default: false
     },
     data: {
-      type: Object,
-      default: () => {
-        return {}
-      }
+      type: [Object, Array]
     }
   },
-  data () {
+  data() {
     return {
       checked: '',
       temp: '',
@@ -180,16 +143,28 @@ export default {
         pageSize: 20
       },
       total_count: 0,
-      visible: false
+      visible: false,
+      isArray: false //判断传入的视频是数组还是对象
+    }
+  },
+  computed: {
+    checkedVideoList() {
+      return this.checked.filter((item) => item.media_id)
     }
   },
   watch: {
-    data (val) {
-      this.checked = val
+    data: {
+      handler(val) {
+        this.isArray = Object.prototype.toString.call(val).slice(8, -1) === 'Array'
+        if (this.isArray) {
+          this.checked = JSON.parse(JSON.stringify(val))
+          return
+        } else {
+          this.checked = [val]
+        }
+      },
+      immediate: true
     }
-  },
-  created () {
-    this.checked = this.data
   },
   methods: {
     // 自定义上传
@@ -204,7 +179,7 @@ export default {
         )
         .catch((err) => e.onError(err))
     },
-    handleVideoSuccess (res, file) {
+    handleVideoSuccess(res, file) {
       let uploadParams = {
         image_cat_id: 2, //视频分类必填,必须为整数
         image_name: file?.name, //视频名称必填,不能超过50个字符
@@ -225,7 +200,7 @@ export default {
       })
       // }
     },
-    beforeVideoUpload (file) {
+    beforeVideoUpload(file) {
       const isMP4 = file.type === 'video/mp4'
       const isLt2M = file.size / 1024 / 1024 < 50
 
@@ -240,9 +215,9 @@ export default {
 
       this.postData.fname = file.name
     },
-    showVideos () {
+    showVideos() {
       this.visible = true
-      this.temp = this.checked
+      this.temp = this.checked.map((item) => item.media_id)
       if (this.$store.getters.login_type == 'distributor') {
         this.activeName = 'localvideos'
         this.fetchLocalVideos()
@@ -251,7 +226,7 @@ export default {
         this.fetchVideos()
       }
     },
-    fetchVideos () {
+    fetchVideos() {
       // this.loading = true
       // getWechatMaterial(this.params)
       //   .then((response) => {
@@ -279,7 +254,7 @@ export default {
       //     this.loading = false
       //   })
     },
-    fetchLocalVideos () {
+    fetchLocalVideos() {
       this.localloading = true
       getQiniuVideoList(this.localparams)
         .then((response) => {
@@ -294,50 +269,63 @@ export default {
     uploadError: function (e) {
       console.error(e)
     },
-    handleCurrentChange (page_num) {
+    handleCurrentChange(page_num) {
       this.params.page = page_num
       this.fetchVideos()
     },
-    handleSizeChange (pageSize) {
+    handleSizeChange(pageSize) {
       this.params.page = 1
       this.params.pageSize = pageSize
       this.fetchLocalVideos()
     },
-    handleLocalCurrentChange (page_num) {
+    handleLocalCurrentChange(page_num) {
       this.localparams.page = page_num
       this.fetchLocalVideos()
     },
-    handleLocalSizeChange (pageSize) {
+    handleLocalSizeChange(pageSize) {
       this.localparams.page = 1
       this.localparams.pageSize = pageSize
       this.fetchVideos()
     },
-    checkVideo (item) {
-      this.temp = item
-    },
-    checkLocalVideo (item) {
-      this.temp = {
-        desc: item.brief,
-        media_id: item.url,
-        name: item.image_name,
-        update_time: item.updated,
-        url: item.url
+    checkLocalVideo(item) {
+      if (this.multiple) {
+        const index = this.temp.indexOf(item.url)
+        if (index !== -1) {
+          this.temp.splice(index, 1)
+          // this.temp.push(item.url)
+        } else {
+          this.temp.push(item.url)
+        }
+      } else {
+        this.temp = [item.url]
       }
     },
-    handleCancel () {
+    handleCancel() {
       this.visible = false
-      this.temp = ''
+      this.temp = []
     },
-    handleSubmit () {
+    handleSubmit() {
       if (this.checked) {
         this.visible = false
-        this.checked = this.temp
-        this.$emit('change', this.checked)
+        let arr = []
+        this.localvideoList.forEach((item) => {
+          if (this.temp.indexOf(item.url) !== -1) {
+            arr.push({
+              desc: item.brief,
+              media_id: item.url,
+              name: item.image_name,
+              update_time: item.updated,
+              url: item.url
+            })
+          }
+        })
+        this.checked = arr
+        this.$emit('change', this.isArray ? this.checked : this.checked[0]) //判断传入进来的是数组还是对象再传递出去对应的数据
       } else {
         this.$message('请选择视频')
       }
     },
-    handleClick (tab, event) {}
+    handleClick(tab, event) {}
   }
 }
 </script>
@@ -391,6 +379,7 @@ export default {
     padding-bottom: 10px;
   }
 }
+
 .upload-box {
   border: 1px dashed #c0ccda;
   border-radius: 6px;

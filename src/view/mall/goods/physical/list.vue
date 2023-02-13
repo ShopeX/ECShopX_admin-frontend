@@ -34,14 +34,7 @@
 </style>
 <template>
   <div class="page-body">
-    <template
-      v-if="
-        $route.path.indexOf('editor') === -1 &&
-        $route.path.indexOf('physicalstoreupload') === -1 &&
-        $route.path.indexOf('physicalprofitupload') === -1 &&
-        $route.path.indexOf('physicalupload') === -1
-      "
-    >
+    <SpRouterView>
       <div class="action-container">
         <el-button type="primary" icon="iconfont icon-xinzengcaozuo-01" @click="addItems">
           添加商品
@@ -762,8 +755,7 @@
         :form-list="batchChangeStateFormList"
         @onSubmit="onBatchChangeStateSubmit"
       />
-    </template>
-    <router-view />
+    </SpRouterView>
   </div>
 </template>
 <script>

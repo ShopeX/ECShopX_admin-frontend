@@ -285,7 +285,7 @@
           <el-table-column label="操作">
             <template slot-scope="scope">
               <el-button
-                v-if="orderInfo.receipt_type === 'logistics'"
+                v-if="orderInfo.receipt_type === 'logistics' && orderInfo.order_status !== 'DONE'"
                 type="text"
                 @click="modifyExpress(scope.row)"
               >

@@ -18,120 +18,47 @@
       >
         <div class="box">
           <h3>{{ title }}</h3>
-          <el-tabs
-            v-if="$route.meta.type == 'admin'"
-            v-model="activeName"
-            class="tab"
-          >
-            <el-tab-pane
-              label="管理员账号登录"
-              name="first"
-            >
-              <el-form-item
-                label="账户"
-                prop="account"
-              >
+          <el-tabs v-if="$route.meta.type == 'admin'" v-model="activeName" class="tab">
+            <el-tab-pane label="管理员账号登录" name="first">
+              <el-form-item label="账户" prop="account">
                 <el-input v-model="form.account" />
               </el-form-item>
-              <el-form-item
-                label="密码"
-                prop="checkPass"
-              >
-                <el-input
-                  v-model="form.checkPass"
-                  type="password"
-                />
+              <el-form-item label="密码" prop="checkPass">
+                <el-input v-model="form.checkPass" type="password" />
               </el-form-item>
             </el-tab-pane>
-            <el-tab-pane
-              label="员工账号登录"
-              name="second"
-            >
-              <el-form-item
-                label="账户"
-                prop="account"
-              >
+            <el-tab-pane label="员工账号登录" name="second">
+              <el-form-item label="账户" prop="account">
                 <el-input v-model="form.account" />
               </el-form-item>
-              <el-form-item
-                label="密码"
-                prop="checkPass"
-              >
-                <el-input
-                  v-model="form.checkPass"
-                  type="password"
-                />
+              <el-form-item label="密码" prop="checkPass">
+                <el-input v-model="form.checkPass" type="password" />
               </el-form-item>
             </el-tab-pane>
           </el-tabs>
 
-          <div
-            v-else
-            class="tab"
-          >
-            <el-form-item
-              label="账户"
-              prop="account"
-            >
+          <div v-else class="tab">
+            <el-form-item label="账户" prop="account">
               <el-input v-model="form.account" />
             </el-form-item>
-            <el-form-item
-              label="密码"
-              prop="checkPass"
-            >
-              <el-input
-                v-model="form.checkPass"
-                type="password"
-              />
+            <el-form-item label="密码" prop="checkPass">
+              <el-input v-model="form.checkPass" type="password" />
             </el-form-item>
           </div>
 
-          <el-form-item
-            style="margin-top: 40px; margin-bottom: 10px"
-            label-wdith="0px"
-          >
-            <loadingBtn
-              ref="loadingBtn"
-              class="btn"
-              text="登 录"
-              @clickHandle="fnLogin('form')"
-            />
+          <el-form-item style="margin-top: 40px; margin-bottom: 10px" label-wdith="0px">
+            <loadingBtn ref="loadingBtn" class="btn" text="登 录" @clickHandle="fnLogin('form')" />
           </el-form-item>
-          <p
-            v-if="loginType != 'admin'"
-            class="tip"
-          >
-            忘记密码，请联系管理员重置
-          </p>
+          <p v-if="loginType != 'admin'" class="tip">忘记密码，请联系管理员重置</p>
         </div>
       </el-form>
     </div>
 
-    <el-dialog
-      title=""
-      width="800px"
-      :visible.sync="dialogVisible"
-    >
-      <div
-        class="agreement-content"
-        v-html="agreementContent"
-      />
-      <div
-        slot="footer"
-        class="dialog-footer"
-      >
-        <el-button
-          plain
-          @click="dialogVisible = false"
-        >
-          取 消
-        </el-button>
-        <el-button
-          type="primary"
-          @click="handleAgreement"
-        >
-          同 意
-        </el-button>
+    <el-dialog title="" width="800px" :visible.sync="dialogVisible">
+      <div class="agreement-content" v-html="agreementContent" />
+      <div slot="footer" class="dialog-footer">
+        <el-button plain @click="dialogVisible = false"> 取 消 </el-button>
+        <el-button type="primary" @click="handleAgreement"> 同 意 </el-button>
       </div>
     </el-dialog>
   </div>
@@ -156,7 +83,7 @@ export default {
   components: {
     loadingBtn
   },
-  data () {
+  data() {
     return {
       title: '平台管理中心',
       login_bg: login_bg_ecshopx,
@@ -177,7 +104,7 @@ export default {
     }
   },
   watch: {
-    activeName (val) {
+    activeName(val) {
       if (val == 'second') {
         this.loginType = 'staff'
       } else {
@@ -185,13 +112,13 @@ export default {
       }
     }
   },
-  mounted () {
+  mounted() {
     window.addEventListener('resize', this.fnSize())
     this.SET_VERSION_MODE(this.VUE_APP_PRODUCT_MODEL)
     console.log(this.VUE_APP_PRODUCT_MODEL, '----version----')
     this.init()
   },
-  destroyed () {
+  destroyed() {
     window.removeEventListener('resize', this.fnSize)
   },
   methods: {
@@ -202,12 +129,12 @@ export default {
       'SET_LOGIN_TYPE',
       'SET_VERSION_MODE'
     ]),
-    init () {
+    init() {
       this.loginType = this.$route.meta.type
       this.getBgImg()
       this.$store.dispatch('setLoginType', this.loginType)
     },
-    getBgImg () {
+    getBgImg() {
       switch (this.VUE_APP_PRODUCT_MODEL) {
         case 'standard':
           this.title = this.getLoginTitle('云店管理中心')
@@ -223,11 +150,11 @@ export default {
           break
         default:
           this.title = this.getLoginTitle('平台管理中心')
-          this.login_bg = this.VUE_APP_FREE ? login_bg_free_ecshopx : login_bg_ecshopx
+          this.login_bg = login_bg_ecshopx
           break
       }
     },
-    getLoginTitle (t) {
+    getLoginTitle(t) {
       let title
       switch (this.loginType) {
         case 'distributor':
@@ -245,10 +172,10 @@ export default {
       }
       return title
     },
-    fnSize () {
+    fnSize() {
       this.size = document.body.clientHeight
     },
-    fnLogin (formName, agreement_id) {
+    fnLogin(formName, agreement_id) {
       this.$refs[formName].validate(async (valid) => {
         if (valid) {
           const params = {
@@ -283,16 +210,16 @@ export default {
         }
       })
     },
-    async getAgreementContent () {
+    async getAgreementContent() {
       const { agreement_id, content } = await this.$api.auth.getAgreementContent()
       this.agreementId = agreement_id
       this.agreementContent = unescape(content)
     },
-    async handleAgreement () {
+    async handleAgreement() {
       this.fnLogin('form', this.agreementId)
       this.dialogVisible = false
     },
-    async loginSuccess (token) {
+    async loginSuccess(token) {
       this.SET_TOKEN({ token })
       this.SET_TOKEN_EXP({ exp: new Date().getTime() })
       this.SET_LOGIN_TYPE({ loginType: this.loginType })
@@ -318,7 +245,7 @@ export default {
           return
         }
         this.$router.push({ path: '/dealer/index' })
-      } else if (this.loginType == 'marchant') {
+      } else if (this.loginType == 'merchant') {
         this.$router.push({ path: '/merchant' })
       } else {
         window.location.href = '/'

@@ -1,21 +1,10 @@
 <template>
   <div class="shopex-sms-page">
     <div class="btn">
-      <router-link
-        class="link"
-        to="/setting/datamessage"
-      >
-        切换短信商
-      </router-link>
+      <router-link class="link" to="/setting/datamessage"> 切换短信商 </router-link>
     </div>
-    <el-tabs
-      v-model="activeName"
-      type="border-card"
-    >
-      <el-tab-pane
-        label="短信账户"
-        name="first"
-      >
+    <el-tabs v-model="activeName" type="border-card">
+      <el-tab-pane label="短信账户" name="first">
         <el-alert
           type="warning"
           title="短信推送"
@@ -23,20 +12,14 @@
           description="短信推送即通过发送短信，给买家推送交易等提醒信息，包括付款、预约、核销等，以提升买家的到店体验，获得会员到店转化率和复购率。"
         />
         <div class="content-padded message-content">
-          短信余额：<span class="message-count">{{ messageCount }}</span>条
-          <a
-            :href="sms_buy_url"
-            target="_blank"
-          ><el-button
-            type="primary"
-            size="mini"
-          >去充值</el-button></a>
+          短信余额：<span class="message-count">{{ messageCount }}</span
+          >条
+          <a :href="sms_buy_url" target="_blank"
+            ><el-button type="primary" size="mini">去充值</el-button></a
+          >
         </div>
       </el-tab-pane>
-      <el-tab-pane
-        label="短信模板"
-        name="second"
-      >
+      <el-tab-pane label="短信模板" name="second">
         <el-dialog
           title="短信模版详情"
           size="tiny"
@@ -67,31 +50,22 @@
                   style="width: 60%"
                 />
               </el-form-item>
-              <div
-                class="section-footer with-border content-center"
-                style="width: 100%"
-              >
-                <el-button
-                  type="primary"
-                  @click="closeDialog"
-                >
-                  确定
-                </el-button>
+              <div class="section-footer with-border content-center" style="width: 100%">
+                <el-button type="primary" @click="closeDialog"> 确定 </el-button>
               </div>
             </el-form>
           </div>
         </el-dialog>
         <div class="message-template">
-          <div
-            v-for="(items, index) in smsTemlateList"
-            :key="`message-template__${index}`"
-          >
+          <div v-for="(items, index) in smsTemlateList" :key="`message-template__${index}`">
             <div class="section-header with-border">
               <span v-if="index == 'promotions'">营销权益</span>
               <span v-if="index == 'member'">会员关怀</span>
               <span v-if="index == 'trade'">交易提醒</span>
               <span v-if="index == 'registration'">活动报名</span>
               <span v-if="index == 'merchant'">商户入驻</span>
+              <span v-if="index == 'vcode'">验证码</span>
+              <span v-if="index == 'adapay'">Adapay分账</span>
             </div>
             <div class="section-body">
               <div
@@ -108,42 +82,21 @@
                   {{ row.content }}
                 </div>
                 <div class="item-footer">
-                  <el-button
-                    v-if="row.is_open == 'true'"
-                    type="default"
-                    size="small"
-                  >
+                  <el-button v-if="row.is_open == 'true'" type="default" size="small">
                     启用中
                   </el-button>
-                  <el-button
-                    v-else
-                    type="default"
-                    size="small"
-                  >
-                    未启用
-                  </el-button>
+                  <el-button v-else type="default" size="small"> 未启用 </el-button>
                 </div>
               </div>
             </div>
           </div>
         </div>
       </el-tab-pane>
-      <el-tab-pane
-        label="短信签名"
-        name="third"
-      >
+      <el-tab-pane label="短信签名" name="third">
         <div class="content-padded message-autograph">
           短信签名：
-          <el-input
-            v-model="messageAutograph"
-            placeholder="请输入短信签名"
-          />
-          <el-button
-            type="primary"
-            @click="saveSmsSignAction"
-          >
-            确定
-          </el-button>
+          <el-input v-model="messageAutograph" placeholder="请输入短信签名" />
+          <el-button type="primary" @click="saveSmsSignAction"> 确定 </el-button>
         </div>
         <div class="message-prompt">
           <div class="prompt-title">
@@ -151,9 +104,7 @@
           </div>
           <div class="prompt-content">
             <div class="prompt-item">
-              <div class="item-title">
-                1. 签名设置规则
-              </div>
+              <div class="item-title">1. 签名设置规则</div>
               <div class="item-content">
                 <div>自定义签名字数限制为3-8个字，可以包含数字、英文；</div>
                 <div>建议使用你的『店铺名』或『品牌名』，使用其他签名可能短信审核不会通过！</div>
@@ -164,14 +115,13 @@
                   <a
                     href="http://bbs.shopex.cn/forum.php?mod=viewthread&tid=4397&extra="
                     target="_blank"
-                  >http://bbs.shopex.cn/forum.php?mod=viewthread&tid=4397&extra=</a>
+                    >http://bbs.shopex.cn/forum.php?mod=viewthread&tid=4397&extra=</a
+                  >
                 </div>
               </div>
             </div>
             <div class="prompt-item">
-              <div class="item-title">
-                2. 签名会出现在哪些短信中？
-              </div>
+              <div class="item-title">2. 签名会出现在哪些短信中？</div>
               <div class="item-content">
                 <div>设置签名后，"消息推送"中列出的短信都会带上你的自定义签名，即：</div>
                 <div>交易物流提醒：订单成功、预约成功、核销；</div>
@@ -179,9 +129,7 @@
               </div>
             </div>
             <div class="prompt-item">
-              <div class="item-title">
-                3. 短信计价规则
-              </div>
+              <div class="item-title">3. 短信计价规则</div>
               <div class="item-content">
                 <div>单条70字，若超出70字需要分成多条时，将按照67字每条计算；</div>
                 <div>一个汉字、数字、字母、空格都算一字；</div>
@@ -204,7 +152,7 @@ import {
 } from '../../../api/promotions'
 import { VERSION_STANDARD, VERSION_PLATFORM } from '@/utils'
 export default {
-  data () {
+  data() {
     return {
       detailDialog: false,
       activeName: 'first',
@@ -221,7 +169,7 @@ export default {
       }
     }
   },
-  mounted () {
+  mounted() {
     getSmsBasic().then((response) => {
       if (response.data.data.sms_remainder) {
         let sms_remainder = response.data.data.sms_remainder.info
@@ -247,20 +195,20 @@ export default {
     })
   },
   methods: {
-    closeDialog () {
+    closeDialog() {
       this.detailDialog = false
     },
-    toDetail (params) {
+    toDetail(params) {
       this.detailDialog = true
       this.currentTemplate = params
     },
-    openChange (is_open) {
+    openChange(is_open) {
       let query = { template_name: this.currentTemplate.tmpl_name, is_open: is_open }
       updateSmsTemplate(query).then((res) => {
         console.log(res)
       })
     },
-    saveSmsSignAction () {
+    saveSmsSignAction() {
       let query = { sign: this.messageAutograph }
       saveSmsSign(query).then((res) => {
         this.$message({

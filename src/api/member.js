@@ -420,6 +420,15 @@ export function postPurchaseCompany(params) {
   })
 }
 
+// 编辑内购企业
+export function updatePurchaseCompany(id, params) {
+  return fetch({
+    url: `/enterprise/${id}`,
+    method: 'put',
+    params
+  })
+}
+
 // 更新企业状态
 export function updateCompanyStatus(params) {
   return fetch({

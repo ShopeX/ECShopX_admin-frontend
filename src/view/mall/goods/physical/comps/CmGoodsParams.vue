@@ -27,21 +27,12 @@
 <template>
   <div class="comp-goodsparams">
     <div class="form-block-head clearfix">
-      <div class="block-head-hd">
-        商品参数
-      </div>
+      <div class="block-head-hd">商品参数</div>
     </div>
     <div class="form-block-body">
       <el-row :gutter="20">
-        <el-col
-          v-for="(item, index) in value"
-          :key="`params-data__${index}`"
-          :span="8"
-        >
-          <el-form
-            label-position="right"
-            label-width="80px"
-          >
+        <el-col v-for="(item, index) in value" :key="`params-data__${index}`" :span="8">
+          <el-form label-position="right" label-width="80px">
             <el-form-item :label="item.label">
               <el-select
                 v-if="item.children.length > 0"
@@ -62,12 +53,7 @@
                   :value="child.value"
                 />
               </el-select>
-              <el-input
-                v-else
-                v-model="item.value"
-                :maxlength="60"
-                placeholder=""
-              />
+              <el-input v-else v-model="item.value" :maxlength="60" placeholder="" />
             </el-form-item>
           </el-form>
         </el-col>
@@ -80,12 +66,12 @@
 export default {
   name: 'CmGoodsParams',
   props: ['value'],
-  data () {
+  data() {
     return {}
   },
-  created () {},
+  created() {},
   methods: {
-    paramsChange (e, item) {
+    paramsChange(e, item) {
       if (e) {
         const fd = item.children.find((k) => k.value == e)
         item.attribute_value_name = fd.label

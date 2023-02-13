@@ -156,7 +156,7 @@ export default {
   created() {},
   methods: {
     onSearch() {
-      this.$refs.finder.refresh()
+      this.$refs.finder.refresh(true)
     },
     beforeSearch(params) {
       const formQuery = JSON.parse(JSON.stringify(this.formQuery))
@@ -173,7 +173,7 @@ export default {
         refuse_reason
       })
       this.resloveDialog = false
-      this.$refs.finder.refresh()
+      this.$refs.finder.refresh(true)
     },
     getApproveStatus(status) {
       if (status == '0') {

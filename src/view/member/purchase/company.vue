@@ -52,7 +52,7 @@
       ref="addDialogRef"
       v-model="addDialog"
       class="dg-create-company"
-      title="添加企业"
+      :title="companyForm.id ? '编辑企业' : '添加企业'"
       :modal="false"
       :form="companyForm"
       :form-list="companyFormList"
@@ -112,7 +112,7 @@ export default {
             action: {
               handler: async ([row]) => {
                 await this.$api.member.sendEmployeeEmail({
-                  enterprise_id: row.company_id,
+                  id: row.company_id,
                   email: row.email_user
                 })
                 this.$message.success('邮件已发送')
@@ -161,7 +161,7 @@ export default {
               popperClass: 'sp-finder__popover-edit',
               change: async (v, row) => {
                 await this.$api.member.updateCompanySort({
-                  enterprise_id: row.id,
+                  id: row.id,
                   sort: v
                 })
                 this.$refs['finder'].refresh()
@@ -189,7 +189,7 @@ export default {
                 on: {
                   change: async (e) => {
                     await this.$api.member.updateCompanyStatus({
-                      enterprise_id: row.id,
+                      id: row.id,
                       disabled: e
                     })
                     row.disabled = e
@@ -202,7 +202,7 @@ export default {
       validateTypeList: VALIDATE_TYPES,
       addDialog: false,
       companyForm: {
-        enterprise_id: '',
+        id: '',
         logo: '',
         name: '',
         enterprise_sn: '',
@@ -324,6 +324,7 @@ export default {
     },
     async onCompanyFormSubmit() {
       const {
+        id,
         logo,
         name,
         enterprise_sn,
@@ -345,7 +346,12 @@ export default {
         email_password,
         sort
       }
-      await this.$api.member.postPurchaseCompany(params)
+      if (id) {
+        await this.$api.member.updatePurchaseCompany(id, params)
+      } else {
+        await this.$api.member.postPurchaseCompany(params)
+      }
+
       this.addDialog = false
       this.onSearch()
     }

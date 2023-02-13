@@ -86,7 +86,7 @@ export default {
       })
     },
     onSearch() {
-      this.$refs.finder.refresh()
+      this.$refs.finder.refresh(true)
     },
     onSelectionChange(val) {
       this.updateVal(val)

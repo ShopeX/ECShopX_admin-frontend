@@ -8,6 +8,24 @@
       left: 0 !important;
       margin-left: 0;
     }
+    &.custom-error {
+      .el-input__inner {
+        border-color: #d9d9d9;
+      }
+      .is-error {
+        .el-input__inner {
+          border-color: #f56c6c;
+        }
+      }
+    }
+    &.inline {
+      display: inline-block;
+    }
+    &.no-label {
+      > .el-form-item__content {
+        margin-left: 0 !important;
+      }
+    }
   }
   &.min {
     .el-form-item {
@@ -65,6 +83,10 @@ export default {
     labelWidth: {
       type: String,
       default: '160px'
+    },
+    showMessage: {
+      type: Boolean,
+      default: false
     }
   },
   data() {
@@ -78,20 +100,37 @@ export default {
       localComps: []
     }
   },
+  // watch: {
+  //   value: {
+  //     deep: true,
+  //     handler(val) {
+  //       this.$emit('input', val)
+  //     }
+  //   }
+  // },
   created() {},
   methods: {
     handleCancel() {
       // this.$emit('input', false)
     },
+    onSubmit() {
+      this.handleSubmit().catch(() => {})
+    },
     handleSubmit() {
-      return new Promise((resolve) => {
-        this.$refs['form'].validate((valid) => {
+      return new Promise((resolve, reject) => {
+        this.$refs['form'].validate((valid, errField) => {
           if (valid) {
             this.$emit('input', this.value)
             this.$emit('onSubmit')
             resolve()
           } else {
-            return false
+            if (this.showMessage) {
+              const keys = Object.keys(errField)
+              const { key, validator } = this.formList.find(({ key }) => keys.includes(key))
+              this.$message.error(errField[key][0].message)
+            }
+            reject(errField)
+            // return false
           }
         })
       })
@@ -102,9 +141,11 @@ export default {
         comp.resetField && comp.resetField(comp.$parent.initialValue)
       })
     },
-    getItemShow({ isShow }, item) {
+    getItemShow(item) {
+      const { value } = this
+      const { isShow } = item
       if (isFunction(isShow)) {
-        return isShow()
+        return isShow(item, value)
       } else {
         return isShow !== false
       }
@@ -135,6 +176,23 @@ export default {
           disabled={disabled}
           maxlength={maxlength}
           showWordLimit={!!maxlength}
+          placeholder={placeholder || '请输入内容'}
+          v-model={value[key]}
+        >
+          <template slot='append'>{append}</template>
+        </el-input>
+      )
+    },
+    _renderNumber(item) {
+      const { value } = this
+      const { className, placeholder, append, key, min, max, disabled = false } = item
+      return (
+        <el-input
+          class={className}
+          type='number'
+          min={min}
+          max={max}
+          disabled={disabled}
           placeholder={placeholder || '请输入内容'}
           v-model={value[key]}
         >
@@ -206,11 +264,12 @@ export default {
       )
     },
     _renderRichText(item) {
-      const { value } = this
+      const { value, editorModules } = this
       const { key, disabled = false, options } = item
       return (
         <vue-html5-editor
           ref='editor'
+          modules={editorModules}
           content={value[key]}
           height={260}
           style='width: 80%'
@@ -233,10 +292,11 @@ export default {
   },
   render() {
     const { title, value, formList, width, labelWidth } = this
+    // console.log('sp-form value:', value)
     const localComps = []
     const getComponentByType = (item) => {
       if (typeof item.component != 'undefined') {
-        const comp = item.component(item)
+        const comp = item.component(item, value)
         const { context, data } = comp
         if (data && data.ref) {
           localComps.push(context.$refs[data.ref])
@@ -247,6 +307,7 @@ export default {
       const renderItem = {
         'textarea': this._renderTextArea,
         'input': this._renderInput,
+        'number': this._renderNumber,
         'text': this._renderText,
         'select': this._renderSelect,
         'radio': this._renderRadio,
@@ -262,7 +323,7 @@ export default {
     let rules = {}
     formList.forEach((item) => {
       if (item.required) {
-        rules[item.key] = [{ required: true, message: item.message }]
+        rules[item.key] = [{ required: true, message: item.message || '不能为空' }]
       } else if (item.validator) {
         rules[item.key] = [{ validator: item.validator }]
       }
@@ -287,13 +348,29 @@ export default {
       >
         {formList.map((item, index) => {
           if (item.type == 'group') {
-            return <div class='sp-form-group'>{item.label}</div>
+            return (
+              <div class='sp-form-group' v-show={this.getItemShow(item)}>
+                {item.label}
+              </div>
+            )
           } else {
             return (
               <el-form-item
                 label={item.label ? `${item.label}:` : ''}
                 prop={item.key}
-                v-show={this.getItemShow(item, item)}
+                required={typeof item.required == 'undefined' ? false : item.required}
+                class={[
+                  item.display,
+                  {
+                    'no-label': typeof item.label == 'undefined',
+                    'custom-error': typeof item.validator != 'undefined'
+                  }
+                ]}
+                style={{
+                  width: item.width ? item.width : 'auto'
+                }}
+                showMessage={typeof item.showMessage == 'undefined' ? true : item.showMessage}
+                v-show={this.getItemShow(item)}
               >
                 {getComponentByType(item)}
                 <div class='form-item-tip' domPropsInnerHTML={item.tip}></div>
@@ -304,7 +381,7 @@ export default {
         {this.submit && (
           <el-form-item>
             <el-button onClick={this.resetForm}>重置</el-button>
-            <el-button type='primary' onClick={this.handleSubmit}>
+            <el-button type='primary' onClick={this.onSubmit}>
               确定
             </el-button>
           </el-form-item>

@@ -30,9 +30,9 @@
           :picker-options="pickerOptions"
         />
       </SpFilterFormItem>
-      <SpFilterFormItem prop="act_id" label="内购活动:" size="max">
+      <SpFilterFormItem prop="activity_id" label="内购活动:" size="max">
         <el-select
-          v-model="params.act_id"
+          v-model="queryForm.activity_id"
           v-scroll="() => pagesQuery.nextPage()"
           multiple
           placeholder="请选择"
@@ -46,127 +46,37 @@
         </el-select>
       </SpFilterFormItem>
     </SpFilterForm>
-
-    <el-form label-width="100px">
-      <el-form-item label="选择日期范围">
-        <el-col :span="12">
-          <el-date-picker
-            v-model="vdate"
-            type="daterange"
-            alue-format="yyyy-MM-dd"
-            align="right"
-            unlink-panels
-            range-separator="至"
-            start-placeholder="开始日期"
-            end-placeholder="结束日期"
-            style="width: 100%"
-            :picker-options="pickerOptions"
-            value-format="yyyy-MM-dd"
-            @change="dateChange"
-          />
-        </el-col>
-        <el-col :span="12">
-          <export-tip @exportHandle="exportData">
-            <el-button v-loading="exportloading" type="primary"> 导出 </el-button>
-          </export-tip>
-          <el-popover
-            placement="top-start"
-            width="200"
-            trigger="hover"
-            content="导出任务会以队列执行，点击导出后，请至‘设置-导出列表’页面中查看及下载数据"
-          >
-            <i slot="reference" class="el-icon-question" />
-          </el-popover>
-        </el-col>
-      </el-form-item>
-    </el-form>
-
     <SpFinder
       ref="finder"
       no-selection
+      :show-pager="false"
       :setting="setting"
       :row-actions-align="'left'"
-      :hooks="{
-        beforeSearch: beforeSearch
-      }"
-      url="/datacube/goodsdata"
+      :data="tableData"
     />
-
-    <!-- <el-tabs
-      v-if="$route.path.indexOf('editor') === -1"
-      v-model="activeName"
-      type="card"
-      @tab-click="handleClick"
-    >
-      <el-tab-pane
-        v-loading="loading"
-        label="商品统计"
-        name="goods_count"
-      >
-        <template>
-          <el-table
-            :data="allListData"
-            stripe
-            border
-            style="width: 100%"
-            :height="wheight - 230"
-          >
-            <el-table-column
-              prop="no"
-              label="No"
-            />
-            <el-table-column
-              prop="sap_code"
-              label="商品编号"
-            />
-            <el-table-column
-              prop="top_level"
-              label="分类"
-            />
-            <el-table-column
-              prop="product"
-              label="商品名称"
-            />
-            <el-table-column
-              prop="quantity"
-              label="销量"
-            />
-            <el-table-column
-              prop="fix_price"
-              label="销售额"
-            />
-            <el-table-column
-              prop="settle_price"
-              label="实付额"
-            />
-          </el-table>
-        </template>
-      </el-tab-pane>
-    </el-tabs> -->
   </div>
 </template>
 <script>
-import { mapGetters } from 'vuex'
 import json2csv from 'json2csv'
 import { PICKER_DATE_OPTIONS } from '@/consts'
-import { getGoodsData } from '../../../api/datacube'
+// import { getGoodsData } from '../../../api/datacube'
 import { createSetting } from '@shopex/finder'
+import moment from 'moment'
 import Pages from '@/utils/pages'
 export default {
   data() {
+    const defaultStartDate = moment().subtract(7, 'day')
+    const defaultEndDate = moment().subtract(1, 'day')
     return {
-      vdate: '',
       loading: true,
       exportloading: false,
       activeName: 'goods_count',
-      params: {
-        start: '',
-        end: ''
-      },
       queryForm: {
-        datetime: []
+        datetime: [defaultStartDate, defaultEndDate],
+        activity_id: ''
       },
       defaultTime: ['00:00:00', '23:59:59'],
+      tableData: [],
       pickerOptions: PICKER_DATE_OPTIONS,
       allListData: [],
       setting: createSetting({
@@ -207,35 +117,27 @@ export default {
     }).nextPage()
   },
   mounted() {
-    var start = new Date()
-    var end = new Date()
-    start.setTime(start.getTime() - 3600 * 1000 * 24 * 1)
-    end.setTime(end.getTime() - 3600 * 1000 * 24 * 1)
-    this.vdate = [start, end]
-    this.getGoodsDataList()
+    this.fetch()
   },
   methods: {
-    beforeSearch(params) {
+    async fetch() {
       const {
-        name,
         datetime: [display_time_begin, display_time_end],
-        enterprise_id,
-        activityState
+        activity_id
       } = this.queryForm
-      params = {
-        ...params,
-        display_time_begin,
-        display_time_end,
-        enterprise_id,
-        name
-      }
-      if (activityState != 'all') {
-        params = {
-          ...params,
-          status: activityState
-        }
-      }
-      return params
+      const { list } = await this.$api.datacube.getGoodsData({
+        start: moment(display_time_begin).format('YYYY-MM-DD'),
+        end: moment(display_time_end).format('YYYY-MM-DD'),
+        order_class: 'employee_purchase',
+        act_id: activity_id.toString()
+      })
+      this.tableData = list
+      this.$nextTick(() => {
+        this.$refs.finder.refresh()
+      })
+    },
+    onSearch() {
+      this.fetch()
     },
     exportData() {
       this.exportloading = true
@@ -264,21 +166,6 @@ export default {
         })
         .catch((error) => {
           this.exportloading = false
-        })
-    },
-    handleClick(tab, event) {},
-    getGoodsDataList() {
-      this.loading = true
-      getGoodsData(this.params)
-        .then((res) => {
-          this.allListData = res.data.data.list
-          this.loading = false
-        })
-        .catch((error) => {
-          this.$message({
-            type: 'error',
-            message: '获取统计信息出错'
-          })
         })
     },
     async getPurchaseActivity({ page, pageSize }) {

@@ -7,25 +7,22 @@
         <li>· 每一个场景只能启用一条模板。</li>
       </ul>
     </tips>
-    <div
-      v-infinite-scroll="load"
-      class="list"
-      infinite-scroll-distance="20"
-      infinite-scroll-delay="200"
-      :infinite-scroll-disabled="disabled"
-    >
+    <div class="list">
       <div class="serch">
-        <el-autocomplete
+        <el-select
           v-model="query.scene_name"
           clearable
-          prefix-icon="el-icon-search"
-          style="width: 400px"
-          class="inline-input"
-          :fetch-suggestions="querySearch"
-          placeholder="请选择短信场景"
-          @select="handleSelect"
-          @change="handleSelect"
-        />
+          filterable
+          placeholder="请选择"
+          @change="onChangeSceneList"
+        >
+          <el-option
+            v-for="(item, index) in templateList"
+            :key="`template-item__${index}`"
+            :label="item.scene_name"
+            :value="item.scene_name"
+          />
+        </el-select>
       </div>
       <section v-for="item in smsScenarioList" :key="item.id" class="card">
         <nav>
@@ -73,10 +70,6 @@
           </el-table-column>
         </el-table>
       </section>
-      <div class="footer">
-        <p v-if="loading">加载中...</p>
-        <p v-if="noMore">没有更多了</p>
-      </div>
     </div>
     <!-- 添加短信 -->
     <el-dialog title="添加短信" :visible="visible" width="30%" :before-close="handleClose">
@@ -84,11 +77,10 @@
         <el-form-item label="签名" prop="sign_id">
           <el-select
             v-model="form.sign_id"
+            v-scroll="() => pagesSmsSignatureQuery.nextPage()"
             filterable
-            remote
             reserve-keyword
             placeholder="输入签名名称搜索"
-            :remote-method="getSMSSignatureList"
             style="width: 95%"
           >
             <el-option
@@ -102,11 +94,11 @@
         <el-form-item label="模板" prop="template_id">
           <el-select
             v-model="form.template_id"
+            v-scroll="() => pagesSmsTemplateQuery.nextPage()"
             filterable
             remote
             reserve-keyword
             placeholder="输入模板名称搜索"
-            :remote-method="getSMSTemplateList"
             style="width: 95%"
           >
             <el-option
@@ -129,6 +121,7 @@
 <script>
 import tips from '@/components/tips'
 import { requiredRules } from '@/utils/validate'
+import Pages from '@/utils/pages'
 import {
   offDisablingSms,
   onDisablingSms,
@@ -146,8 +139,6 @@ export default {
     return {
       smsScenarioList: [],
       query: {
-        pageSize: 3,
-        pageIndex: 1,
         scene_name: ''
       },
       count: 24,
@@ -166,31 +157,39 @@ export default {
       rules: {
         sign_id: [requiredRules('签名', 'change')],
         template_id: [requiredRules('模板', 'change')]
-      }
+      },
+      templateList: []
     }
   },
-  computed: {
-    noMore() {
-      return this.smsScenarioList.length >= this.count
-    },
-    disabled() {
-      return this.loading || this.noMore
-    }
+  created() {
+    this.querySearch()
+
+    this.pagesSmsSignatureQuery = new Pages({
+      pageSize: 10,
+      fetch: this.getSMSSignatureList
+    }).nextPage()
+
+    this.pagesSmsTemplateQuery = new Pages({
+      pageSize: 10,
+      fetch: this.getSMSTemplateList
+    }).nextPage()
   },
   mounted() {
-    this.init()
+    this.getScenarioList()
   },
   methods: {
-    async init(type) {
+    async getScenarioList() {
       this.loading = true
-      const { list, total_count } = await this.$api.sms.getScenarioList(this.query)
-      if (type == 'search') {
-        this.smsScenarioList = list
-      } else {
-        this.smsScenarioList = [...this.smsScenarioList, ...list]
+      let params = {
+        pageSize: 100,
+        page: 1
       }
-      this.count = total_count
+      if (this.query.scene_name) {
+        params['scene_name'] = this.query.scene_name
+      }
+      const { list } = await this.$api.sms.getScenarioList(this.query)
       this.loading = false
+      this.smsScenarioList = list
     },
     // 添加短信
     async fnAddSms(id, scene_name) {
@@ -199,33 +198,32 @@ export default {
       // 获取选项
       this.form.scene_id = id
     },
-    async getSMSTemplateList(query) {
-      const { list } = await this.$api.sms.getSmsTemplateList({
+    async getSMSTemplateList({ page, pageSize }) {
+      const { list, total_count } = await this.$api.sms.getSmsTemplateList({
         params: { status: '1', scene_id: this.form.scene_id },
-        pageSize: 20,
-        pageIndex: 1,
-        template_name: query
+        page,
+        pageSize
       })
-      this.SmsTemplateList = list
+      this.pagesSmsSignatureQuery.setTotal(total_count)
+      this.SmsTemplateList = this.SmsTemplateList.concat(list)
     },
-    async getSMSSignatureList(query) {
-      const { list } = await this.$api.sms.getSmsSignatureList({
+    async getSMSSignatureList({ page, pageSize }) {
+      const { list, total_count } = await this.$api.sms.getSmsSignatureList({
         params: { status: '1' },
-        pageSize: 20,
-        pageIndex: 1,
-        sign_name: query
+        page,
+        pageSize
       })
-      this.SmsSignatureList = list
+      this.pagesSmsSignatureQuery.setTotal(total_count)
+      this.SmsSignatureList = this.SmsSignatureList.concat(list)
     },
     fnPass(formName) {
       this.$refs[formName].validate(async (valid) => {
         if (valid) {
-          const result = await addSceneItem(this.form)
+          await addSceneItem(this.form)
           this.$message.success('添加成功')
-          this.initQuery(this.activeScene_name)
           this.activeScene_name = ''
           this.handleClose()
-          this.init('search')
+          this.getScenarioList()
         }
       })
     },
@@ -245,15 +243,13 @@ export default {
       }).then(async () => {
         if (flag) {
           //启用
-          const result = await onDisablingSms({ id })
+          await onDisablingSms({ id })
           this.$message.success('已启用')
-          this.initQuery(scene_name)
-          this.init('search')
+          this.getScenarioList()
         } else {
-          const result = await offDisablingSms({ id })
+          await offDisablingSms({ id })
           this.$message.success('已停用')
-          this.initQuery(scene_name)
-          this.init('search')
+          this.getScenarioList()
         }
       })
     },
@@ -266,48 +262,20 @@ export default {
         cancelButtonText: '取消',
         type: 'warning'
       }).then(async () => {
-        const result = await deletedDisablingSms(id)
-        this.initQuery(scene_name)
-        this.init('search')
+        await deletedDisablingSms(id)
+        this.getScenarioList()
         this.$message.success('删除成功')
       })
     },
-    // 下拉加载
-    load() {
-      this.query.pageSize = this.query.pageSize + 1
-      if (!this.noMore) {
-        this.loading = true
-        this.init()
-      }
+    onChangeSceneList() {
+      this.getScenarioList()
     },
-
-    /* 搜索相关 */
-    handleSelect({ value }) {
-      this.query = {
-        pageSize: 3,
-        pageIndex: 1,
-        scene_name: value
-      }
-      this.init('search')
-    },
-    initQuery(scene_name = '') {
-      // 初始化一下 （修改状态）
-      this.query = {
-        page_size: 3,
-        page: 1,
-        scene_name: scene_name
-      }
-    },
-    async querySearch(queryString = '', cb) {
+    async querySearch() {
       const { list } = await this.$api.sms.getScenarioList({
-        pageSize: 10,
-        pageIndex: 1,
-        scene_name: queryString
+        pageSize: 100,
+        page: 1
       })
-      const _list = list.map((item) => {
-        return { value: item.scene_name }
-      })
-      cb(_list)
+      this.templateList = list
     }
   }
 }

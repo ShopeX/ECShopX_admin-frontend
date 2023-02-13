@@ -163,7 +163,7 @@ export default {
     checkedImg(item, index) {
       if (this.isMost) {
         item.selected = !item.selected
-        item.selected ? this.checkedItem.push(item) : this.checkedItem.pop(item)
+        item.selected ? this.checkedItem.push(item) : this.checkedItem.pop()
       } else {
         this.checkedItem = item
       }
@@ -295,7 +295,7 @@ export default {
       }
       if (this.isMost) {
         item.selected = !item.selected
-        item.selected ? this.localcheckedItem.push(item) : this.localcheckedItem.pop(item)
+        item.selected ? this.localcheckedItem.push(item) : this.localcheckedItem.pop()
       } else {
         this.localcheckedItem = item
       }

@@ -1,10 +1,15 @@
 <style lang="scss">
 .sp-image-picker {
-  // width: 80px;
-  // height: 80px;
-  // border: 1px solid #d9d9d9;
-  // position: relative;
   display: flex;
+  &.small {
+    .image-item {
+      width: 64px;
+      height: 64px;
+    }
+    .placeholder {
+      height: 64px;
+    }
+  }
   .image-item {
     width: 80px;
     height: 80px;
@@ -22,11 +27,13 @@
   .icon-camera {
     font-size: 24px;
     color: #d9d9d9;
-    margin-top: 12px;
+    line-height: initial;
+    // margin-top: 12px;
   }
   .add-text {
     font-size: 12px;
     color: #999;
+    line-height: initial;
   }
   .img-content {
     // position: relative;
@@ -69,52 +76,90 @@
 }
 </style>
 <script>
-import { isArray, isEmpty, isString } from '@/utils'
+import Vue from 'vue'
+import { isArray, isEmpty, isString, isObject } from '@/utils'
 export default {
   name: 'SpImagePicker',
-  // props: ['info', 'value'],
   props: {
     value: {
       type: [Object, Array, String]
     },
     max: {
       type: Number,
-      default: 3
+      default: 1
+    },
+    type: {
+      type: String,
+      default: 'string' // string | object 只针对value为数组时有效
+    },
+    size: {
+      type: String,
+      default: 'normal'
     }
-    // multiple: {
-    //   type: Boolean,
-    //   default: false
-    // }
   },
   created() {},
   methods: {
+    // 图片添加
     async handleSelectImage() {
-      console.log(this.max, this.value)
+      console.log('handleSelectImage:', this.max, this.value)
       const { data } = await this.$picker.image({
-        data: this.value,
-        multiple: isArray(this.value),
-        max: this.max
+        multiple: this.max > 1,
+        num: this.max > 1 ? this.max - this.value.length : 1
       })
-      if (isString(this.value) || !this.value) {
-        this.$emit('input', data.url)
-        this.$emit('onChange', data.url)
-      } else {
-        this.$emit('input', data)
-        this.$emit('onChange', data)
+      if (isString(this.value)) {
+        this.updateValue(data.url)
+      } else if (isObject(this.value)) {
+        this.updateValue(data)
+      } else if (isArray(this.value)) {
+        if (this.type == 'string') {
+          const res = data.map(({ url }) => url)
+          this.updateValue(this.value.concat(res))
+        } else {
+          this.updateValue(this.value.concat(data))
+        }
       }
     },
+
+    async onUpdateImage(index) {
+      let val
+      if (isArray(this.value)) {
+        val = this.value[index]
+      } else if (isObject(this.value)) {
+        val = this.value.url
+      } else {
+        val = this.value
+      }
+      const { data } = await this.$picker.image({
+        data: val
+      })
+      if (isArray(this.value)) {
+        if (this.type == 'string') {
+          Vue.set(this.value, index, data.url)
+        } else {
+          Vue.set(this.value, index, data)
+        }
+      } else if (isObject(this.value)) {
+        this.value = data
+      } else {
+        this.value = data.url
+      }
+      this.updateValue(this.value)
+    },
+
+    updateValue(val) {
+      this.$emit('input', val)
+      this.$emit('onChange', val)
+    },
+
     handleDeleteItem(index) {
-      const { value, max } = this
-      const multiple = isArray(value)
-      let data
-      if (multiple) {
-        data = value.splice(index, 1)
+      if (isArray(this.value)) {
+        this.value.splice(index, 1)
       } else {
-        data = isString(this.value) ? '' : {}
+        this.value = isString(this.value) ? '' : {}
       }
-      this.$emit('input', data)
-      this.$emit('onChange', data)
+      this.updateValue(this.value)
     },
+
     _renderImage(item, index = 0) {
       return (
         <div class='image-item' key={`image-item__${index}`}>
@@ -123,7 +168,7 @@ export default {
             on-click={this.handleDeleteItem.bind(this, index)}
           />
           <el-image class='img-content' src={item?.url || item} fit='cover' />
-          <span class='image-meta' on-click={this.handleSelectImage}>
+          <span class='image-meta' on-click={this.onUpdateImage.bind(this, index)}>
             更换图片
           </span>
         </div>
@@ -131,32 +176,25 @@ export default {
     }
   },
   render() {
-    const { value, max } = this
+    const { value, max, size } = this
     const multiple = isArray(value)
-    console.log('value:', value)
     return (
-      <div class='sp-image-picker'>
-        {multiple && value.map((item, index) => this._renderImage(item, index))}
-
-        {multiple && value.length == 0 && (
+      <div class={['sp-image-picker', size]}>
+        {max > 1 && value.map((item, index) => this._renderImage(item, index))}
+        {max > 1 && value.length < max && (
           <div class='image-item placeholder' on-click={this.handleSelectImage}>
             <i class='iconfont icon-camera' />
-            <div class='add-text'>添加图片({`${value.length}/${max}`})</div>
+            <div class='add-text'>图片({`${value.length}/${max}`})</div>
           </div>
         )}
 
-        {!multiple && !isEmpty(value) && this._renderImage(value)}
-        {!multiple && isEmpty(value) && (
+        {max == 1 && !isEmpty(value) && this._renderImage(value)}
+        {max == 1 && isEmpty(value) && (
           <div class='image-item placeholder' on-click={this.handleSelectImage}>
             <i class='iconfont icon-camera' />
             <div class='add-text'>添加图片</div>
           </div>
         )}
-
-        {/* <div class='placeholder' on-click={this.handleSelectImage}>
-          <i class='iconfont icon-camera' />
-          <div class='add-text'>添加图片</div>
-        </div> */}
       </div>
     )
   }

@@ -1,6 +1,6 @@
 <template>
   <div v-loading="loading">
-    <div v-if="type !== 'category'">
+    <div v-if="type !== 'sale_category' && type !== 'management_category'">
       <el-table
         :data="list"
         width="100%"
@@ -36,15 +36,8 @@
       :tree-props="{ children: 'children', hasChildren: 'hasChildren' }"
       @current-change="handleCurrentChange"
     >
-      <el-table-column
-        prop="id"
-        label="ID"
-        width="180"
-      />
-      <el-table-column
-        prop="title"
-        label="分类名"
-      />
+      <el-table-column prop="id" label="ID" width="180" />
+      <el-table-column prop="title" label="分类名" />
     </el-table>
   </div>
 </template>
@@ -52,6 +45,7 @@
 <script>
 import { mapGetters } from 'vuex'
 import api from '@/api'
+import { VERSION_PLATFORM } from '@/utils'
 
 export default {
   props: {
@@ -74,7 +68,7 @@ export default {
       default: ''
     }
   },
-  data () {
+  data() {
     return {
       list: [],
       params: {
@@ -89,32 +83,33 @@ export default {
     ...mapGetters(['template_name'])
   },
   watch: {
-    type (val) {
+    type(val) {
       if (val) {
         this.params.page = 1
         this.fetch(val)
       }
     },
-    keywords (val) {
+    keywords(val) {
       this.params.page = 1
       this.fetch(this.type)
     },
-    store (val) {
+    store(val) {
       this.params.page = 1
       this.fetch(this.type)
     },
-    appid (val) {
+    appid(val) {
       this.params.page = 1
       this.fetch(this.type)
     }
   },
-  mounted () {
+  mounted() {
     this.fetch(this.type)
   },
   methods: {
-    async fetch (type) {
+    async fetch(type) {
       this.loading = true
       let query = JSON.parse(JSON.stringify(this.params))
+      let distributor_id = this.$route.query.distributor_id
       switch (type) {
         case 'goods':
           Object.assign(query, {
@@ -188,8 +183,59 @@ export default {
             this.loading = false
           })
           break
-        case 'category':
-          api.goods.getCategory(this.params).then((res) => {
+        case 'sale_category':
+          if (VERSION_PLATFORM) {
+            if (distributor_id) {
+              Object.assign(query, {
+                distributor_id
+              })
+            }
+          }
+          api.goods.getCategory(query).then((res) => {
+            let items = []
+            res.map((item) => {
+              let itemObj = {
+                id: item.category_id,
+                title: item.category_name
+              }
+              if (item.children.length) {
+                let childs = []
+                item.children.map((child) => {
+                  let childObj = {
+                    id: child.category_id,
+                    title: child.category_name
+                  }
+                  if (child.children.length) {
+                    let grands = []
+                    child.children.map((grand) => {
+                      const grandObj = {
+                        id: grand.category_id,
+                        title: grand.category_name
+                      }
+                      grands.push(grandObj)
+                    })
+                    Object.assign(childObj, { children: grands })
+                  }
+                  childs.push(childObj)
+                })
+                Object.assign(itemObj, { children: childs })
+              }
+              items.push(itemObj)
+            })
+            this.list = items
+            this.loading = false
+          })
+          break
+        case 'management_category':
+          Object.assign(query, {
+            is_main_category: true
+          })
+          if (distributor_id) {
+            Object.assign(query, {
+              distributor_id
+            })
+          }
+          api.goods.getCategory(query).then((res) => {
             let items = []
             res.map((item) => {
               let itemObj = {
@@ -394,11 +440,11 @@ export default {
         default:
       }
     },
-    pageChange (val) {
+    pageChange(val) {
       this.params.page = val
       this.fetch(this.type)
     },
-    handleCurrentChange (val) {
+    handleCurrentChange(val) {
       this.$emit('onClick', val)
     }
   }

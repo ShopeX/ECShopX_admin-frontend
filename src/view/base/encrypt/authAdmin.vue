@@ -13,35 +13,15 @@
         />
       </el-col>
     </el-row>
-    <el-row
-      :gutter="20"
-      class="form"
-    >
+    <el-row :gutter="20" class="form">
       <el-col :span="24">
         <i class="el-icon-alarm-clock icon-time" /> 重复时间：
-        <el-select
-          v-model="form.date_type"
-          placeholder="请选择"
-        >
-          <el-option
-            label="每天"
-            value="0"
-          />
-          <el-option
-            label="周一到周五"
-            value="1"
-          />
+        <el-select v-model="form.date_type" placeholder="请选择">
+          <el-option label="每天" value="0" />
+          <el-option label="周一到周五" value="1" />
         </el-select>
-        <el-checkbox
-          v-model="form.isDay"
-          style="margin: 0 20px"
-        >
-          全天
-        </el-checkbox>
-        <el-col
-          :span="24"
-          style="margin-top: 20px; padding-left: 20px"
-        >
+        <el-checkbox v-model="form.isDay" style="margin: 0 20px"> 全天 </el-checkbox>
+        <el-col :span="24" style="margin-top: 20px; padding-left: 20px">
           <el-date-picker
             v-model="form.time"
             style="width: 384px"
@@ -55,11 +35,7 @@
           />
         </el-col>
       </el-col>
-      <el-col
-        v-if="!form.isDay"
-        :span="24"
-        style="margin-top: 20px; padding-left: 30px"
-      >
+      <el-col v-if="!form.isDay" :span="24" style="margin-top: 20px; padding-left: 30px">
         <el-time-picker
           v-model="form.range"
           is-range
@@ -75,34 +51,19 @@
       </el-col>
     </el-row>
     <el-row>
-      <el-col
-        v-if="!form.isDay"
-        :span="16"
-      >
+      <el-col v-if="!form.isDay" :span="16">
         每{{ form.date_type == 0 ? '天' : '周一到周五' }} {{ form.range[0] }} 至
         {{ form.range[1] }} 有权限，生效时间：{{ form.start_time }} 结束时间：{{ form.end_time }}
       </el-col>
 
-      <el-col
-        v-else
-        :span="16"
-        class="tips"
-      >
+      <el-col v-else :span="16" class="tips">
         每{{ form.date_type == 0 ? '天' : '周一到周五' }} 有权限，生效时间：{{
           form.start_time
         }}
         结束时间：{{ form.end_time }}
       </el-col>
-      <el-col
-        :span="24"
-        style="text-align: left"
-      >
-        <el-button
-          type="primary"
-          style="margin-top: 20px"
-          size="small"
-          @click="submit"
-        >
+      <el-col :span="24" style="text-align: left">
+        <el-button type="primary" style="margin-top: 20px" size="small" @click="submit">
           提 交
         </el-button>
       </el-col>
@@ -128,7 +89,7 @@
 <script>
 import setting_ from './setting/authAdmin'
 export default {
-  data () {
+  data() {
     return {
       form: {
         start_time: '',
@@ -140,19 +101,19 @@ export default {
         time: ''
       },
       pickerOptions: {
-        disabledDate (time) {
+        disabledDate(time) {
           return time.getTime() < Date.now() - 8.64e7
         }
       }
     }
   },
   computed: {
-    setting () {
+    setting() {
       return setting_(this)
     }
   },
   watch: {
-    'form.isDay' (val) {
+    'form.isDay'(val) {
       if (val == '0') {
         this.getRange()
         return
@@ -160,7 +121,7 @@ export default {
       this.form.range = ''
     }
   },
-  mounted () {
+  mounted() {
     this.getDate()
     this.getRange()
 
@@ -168,7 +129,7 @@ export default {
     console.log(time)
   },
   methods: {
-    async submit () {
+    async submit() {
       let obj
       if (!this.form.isDay) {
         obj = { ...this.form, range: `${this.form.range[0]}-${this.form.range[1]}` }
@@ -179,7 +140,7 @@ export default {
       const { status, message } = await this.$api.encrypt.createEncrypt(obj)
       if (status) {
         this.$message.success('提交成功')
-        this.$refs.finder.refresh()
+        this.$refs.finder.refresh(true)
         this.getDate()
         this.getRange()
         this.form.reason = ''
@@ -188,7 +149,7 @@ export default {
         this.open(message)
       }
     },
-    open (message) {
+    open(message) {
       this.$confirm(message, '提示', {
         confirmButtonText: '确定',
         showCancelButton: false,
@@ -197,7 +158,7 @@ export default {
         customClass: 'zyk_authAdmin_messageBox'
       })
     },
-    getDate () {
+    getDate() {
       const timer = new Date()
       let y = timer.getFullYear()
       let m = timer.getMonth() + 1
@@ -215,7 +176,7 @@ export default {
       this.form.end_time = `${y}-${m}-${d}`
       this.form.time = [`${y}-${m}-${d}`, `${y}-${m}-${d}`]
     },
-    getRange () {
+    getRange() {
       const timer = new Date()
 
       let h = timer.getHours()
@@ -233,7 +194,7 @@ export default {
         this.form.range = [`${h}:${min}`, `${Number(h + 1)}:${min}`]
       }
     },
-    timeChange (val) {
+    timeChange(val) {
       if (!val) {
         this.form.time = []
         this.form.start_time = ''

@@ -189,7 +189,7 @@ export default {
   },
   methods: {
     onSearch() {
-      this.$refs.finder.refresh()
+      this.$refs.finder.refresh(true)
     },
     beforeSearch(params) {
       return {
@@ -217,7 +217,7 @@ export default {
             type: 'success',
             message: '更新成功!'
           })
-          this.$refs.finder.refresh()
+          this.$refs.finder.refresh(true)
         }
       })
       console.log(row)
@@ -239,7 +239,7 @@ export default {
             type: 'success',
             message: '更新成功!'
           })
-          this.$refs.finder.refresh()
+          this.$refs.finder.refresh(true)
         }
       })
     },

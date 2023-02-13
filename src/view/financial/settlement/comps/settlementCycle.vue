@@ -1,5 +1,6 @@
 <style lang="scss" scoped>
 .comp-cycle {
+  display: flex;
   .label {
     margin-right: 10px;
   }
@@ -14,18 +15,13 @@
     <span class="label">每</span>
     <el-input
       v-model="cycle"
-      class="cycle-input"
+      :class="cycleClass"
       type="text"
       clearable
       placeholder="请输入结算周期数"
       @change="onChange"
     />
-    <el-select
-      v-model="unit"
-      clearable
-      placeholder="请选择"
-      @change="onChange"
-    >
+    <el-select v-model="unit" clearable placeholder="请选择" @change="onChange">
       <el-option
         v-for="item in units"
         :key="item.value"
@@ -41,7 +37,7 @@
 export default {
   name: '',
   props: ['value'],
-  data () {
+  data() {
     const { cycle = '', unit = '' } = this.value
     return {
       units: [
@@ -53,16 +49,28 @@ export default {
       unit
     }
   },
+  computed: {
+    // cycle-input
+    cycleClass() {
+      const { cycle } = this
+      return [
+        'cycle-input',
+        {
+          'is-error': !cycle
+        }
+      ]
+    }
+  },
   watch: {
-    value (newVal, oldVal) {
+    value(newVal, oldVal) {
       const { cycle = '', unit = '' } = newVal
       this.cycle = cycle
       this.unit = unit
     }
   },
-  created () {},
+  created() {},
   methods: {
-    onChange (e) {
+    onChange(e) {
       this.$emit('input', {
         cycle: this.cycle,
         unit: this.unit

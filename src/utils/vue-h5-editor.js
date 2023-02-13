@@ -1,4 +1,5 @@
 import VueHtml5Editor from 'vue-html5-editor'
+import Vue from 'vue'
 
 const options = {
   // 全局组件名称，使用new VueHtml5Editor(options)时该选项无效
@@ -48,7 +49,7 @@ const options = {
     },
     // 响应数据处理,最终返回图片链接
     // handle response data，return image url
-    uploadHandler (responseText) {
+    uploadHandler(responseText) {
       // default accept json data like  {ok:false,msg:'unexpected'} or {ok:true,data:'image url'}
       var json = JSON.parse(responseText)
       if (!json.ok) {
@@ -135,12 +136,32 @@ const options = {
   modules: [
     {
       icon: 'iconfont icon-image',
-      name: 'uploader'
+      name: 'uploader',
+      dashboard: {
+        template: '<el-button @click="onUpload">图片上传</el-button>',
+        data: function () {
+          return {
+            imgUrl: ''
+          }
+        },
+        methods: {
+          async onUpload() {
+            const { data } = await Vue.prototype.$picker.image({
+              multiple: true
+            })
+            let imgHtml = ''
+            data.forEach(({ url }) => {
+              imgHtml += `<img src=${url} style='display: block;width: 100%;'/>`
+            })
+            this.$parent.execCommand('insertHTML', imgHtml)
+          }
+        }
+      }
     }
   ]
 }
 
-function install (Vue) {
+function install(Vue) {
   Vue.use(VueHtml5Editor, options)
 }
 

@@ -42,24 +42,14 @@
         >
           <template v-slot:tableTop>
             <el-row class="cus-btn">
-              <el-col
-                :span="12"
-                :offset="12"
-                style="text-align: right"
-              >
+              <el-col :span="12" :offset="12" style="text-align: right">
                 <router-link
                   :to="{
                     path: matchHidePage('relation'),
                     query: { dealer_id: dealer_id, username: username }
                   }"
                 >
-                  <el-button
-                    type="primary"
-                    size="small"
-                    plain
-                  >
-                    新增关联店铺
-                  </el-button>
+                  <el-button type="primary" size="small" plain> 新增关联店铺 </el-button>
                 </router-link>
               </el-col>
             </el-row>
@@ -96,7 +86,7 @@ import RemoveShipModal from '@/view/mall/marketing/component/RemoveShipModal'
 
 export default {
   components: { RemoveShipModal },
-  data () {
+  data() {
     return {
       dealer_id: 0,
       username: '',
@@ -118,7 +108,7 @@ export default {
   },
   computed: {
     ...mapGetters(['wheight']),
-    setting () {
+    setting() {
       return createSetting({
         columns: [
           { name: '店铺ID', key: 'distributor_id' },
@@ -204,14 +194,14 @@ export default {
       })
     }
   },
-  mounted () {
+  mounted() {
     if (this.$route.query.dealer_id) {
       this.dealer_id = this.$route.query.dealer_id
       this.username = this.$route.query.username
     }
   },
   methods: {
-    beforeSearch (params) {
+    beforeSearch(params) {
       params = {
         ...params,
         ...this.form,
@@ -219,11 +209,11 @@ export default {
       }
       return params
     },
-    onFinderReset () {
+    onFinderReset() {
       this.create_time = ''
       this.form = {}
     },
-    handleModalClick (type, row) {
+    handleModalClick(type, row) {
       if (row) {
         this.detailData = { ...row, store_name: row.name }
         this.modalContent =
@@ -233,14 +223,14 @@ export default {
       }
       this.visibleModal = true
     },
-    handleClick () {
+    handleClick() {
       this.visibleModal = false
-      this.$refs.finder.refresh()
+      this.$refs.finder.refresh(true)
     },
-    dateStrToTimeStamp (str) {
+    dateStrToTimeStamp(str) {
       return Date.parse(new Date(str)) / 1000
     },
-    dateChange (val) {
+    dateChange(val) {
       if (val) {
         this.form.time_start = this.dateStrToTimeStamp(val[0] + ' 00:00:00')
         this.form.time_end = this.dateStrToTimeStamp(val[1] + ' 23:59:59')

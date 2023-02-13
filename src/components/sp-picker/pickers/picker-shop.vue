@@ -140,7 +140,7 @@ export default {
       }
     },
     onSearch() {
-      this.$refs.finder.refresh()
+      this.$refs.finder.refresh(true)
     },
     onSelect(selection, row) {
       if (this.multiple) {

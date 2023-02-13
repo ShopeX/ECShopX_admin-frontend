@@ -19,40 +19,15 @@
 <template>
   <div>
     <div v-if="$route.path.indexOf('detail') === -1">
-      <SpFilterForm
-        :model="formQuery"
-        @onSearch="onSearch"
-        @onReset="onSearch"
-      >
-        <SpFilterFormItem
-          prop="distributor_id"
-          label="店铺:"
-        >
-          <SpSelectShop
-            v-model="formQuery.distributor_id"
-            clearable
-            placeholder="请选择"
-          />
+      <SpFilterForm :model="formQuery" @onSearch="onSearch" @onReset="onSearch">
+        <SpFilterFormItem prop="distributor_id" label="店铺:">
+          <SpSelectShop v-model="formQuery.distributor_id" clearable placeholder="请选择" />
         </SpFilterFormItem>
-        <SpFilterFormItem
-          prop="merchant_id"
-          label="商家:"
-        >
-          <SpSelectMerchant
-            v-model="formQuery.merchant_id"
-            clearable
-            placeholder="请选择"
-          />
+        <SpFilterFormItem prop="merchant_id" label="商家:">
+          <SpSelectMerchant v-model="formQuery.merchant_id" clearable placeholder="请选择" />
         </SpFilterFormItem>
-        <SpFilterFormItem
-          prop="status"
-          label="结算状态:"
-        >
-          <el-select
-            v-model="formQuery.statement_status"
-            clearable
-            placeholder="请选择"
-          >
+        <SpFilterFormItem prop="statement_status" label="结算状态:">
+          <el-select v-model="formQuery.statement_status" clearable placeholder="请选择">
             <el-option
               v-for="item in statusOption"
               :key="item.value"
@@ -62,11 +37,7 @@
             />
           </el-select>
         </SpFilterFormItem>
-        <SpFilterFormItem
-          prop="cycleTime"
-          label="结算周期:"
-          size="max"
-        >
+        <SpFilterFormItem prop="cycleTime" label="结算周期:" size="max">
           <el-date-picker
             v-model="formQuery.cycleTime"
             clearable
@@ -84,22 +55,12 @@
       </SpFilterForm>
 
       <div class="action-container">
-        <el-button
-          type="primary"
-          plain
-          @click="exportData"
-        >
-          导出
-        </el-button>
+        <el-button type="primary" plain @click="exportData"> 导出 </el-button>
       </div>
 
       <div class="summary-info">
         <div class="summary-item">
-          <SpImage
-            :src="daijiesuan"
-            :width="40"
-            :height="40"
-          />
+          <SpImage :src="daijiesuan" :width="40" :height="40" />
           <div>
             <div>待结算金额（元）</div>
             <div class="daijiesuan">
@@ -108,11 +69,7 @@
           </div>
         </div>
         <div class="summary-item">
-          <SpImage
-            :src="yijiesuan"
-            :width="40"
-            :height="40"
-          />
+          <SpImage :src="yijiesuan" :width="40" :height="40" />
           <div>
             <div>已结算金额（元）</div>
             <div class="yijiesuan">
@@ -146,7 +103,7 @@ import daijiesuan from '@/assets/daijiesuan.png'
 import yijiesuan from '@/assets/yijiesuan.png'
 export default {
   name: '',
-  data () {
+  data() {
     return {
       daijiesuan,
       yijiesuan,
@@ -296,12 +253,12 @@ export default {
       })
     }
   },
-  created () {},
+  created() {},
   methods: {
-    onSearch () {
-      this.$refs.finder.refresh()
+    onSearch() {
+      this.$refs.finder.refresh(true)
     },
-    beforeSearch (params) {
+    beforeSearch(params) {
       const formQuery = JSON.parse(JSON.stringify(this.formQuery))
       if (formQuery.cycleTime.length > 0) {
         formQuery['start_time'] = moment(formQuery.cycleTime[0]).unix()
@@ -311,12 +268,12 @@ export default {
 
       return { ...params, ...formQuery }
     },
-    afterSearch (response) {
+    afterSearch(response) {
       const { total_statement_fee_done, total_statement_fee_ready } = response.data.data
       this.feeDone = (total_statement_fee_done / 100).toFixed(2)
       this.feeReady = (total_statement_fee_ready / 100).toFixed(2)
     },
-    getStateMentStatus (status) {
+    getStateMentStatus(status) {
       if (status == 'ready') {
         return '待店铺确认'
       } else if (status == 'confirmed') {
@@ -325,7 +282,7 @@ export default {
         return '已结算'
       }
     },
-    async exportData () {
+    async exportData() {
       const formQuery = JSON.parse(JSON.stringify(this.formQuery))
       if (formQuery.cycleTime.length > 0) {
         formQuery['start_time'] = moment(formQuery.cycleTime[0]).unix()

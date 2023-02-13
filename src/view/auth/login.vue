@@ -245,7 +245,7 @@ export default {
           return
         }
         this.$router.push({ path: '/dealer/index' })
-      } else if (this.loginType == 'marchant') {
+      } else if (this.loginType == 'merchant') {
         this.$router.push({ path: '/merchant' })
       } else {
         window.location.href = '/'

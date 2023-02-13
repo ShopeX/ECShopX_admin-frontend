@@ -10,40 +10,18 @@
   <div>
     <el-tabs type="card">
       <el-tab-pane label="结算周期配置">
-        <SpForm
-          v-model="form"
-          :form-list="formList"
-          @onSubmit="onSaveConfig"
-        />
+        <SpForm v-model="form" :form-list="formList" @onSubmit="onSaveConfig" />
       </el-tab-pane>
       <el-tab-pane label="店铺结算周期">
-        <SpFilterForm
-          :model="formQuery"
-          @onSearch="onSearch"
-          @onReset="onSearch"
-        >
-          <SpFilterFormItem
-            prop="distributor_id"
-            label="店铺:"
-          >
-            <SpSelectShop
-              v-model="formQuery.distributor_id"
-              clearable
-              placeholder="请选择"
-            />
+        <SpFilterForm :model="formQuery" @onSearch="onSearch" @onReset="onSearch">
+          <SpFilterFormItem prop="distributor_id" label="店铺:">
+            <SpSelectShop v-model="formQuery.distributor_id" clearable placeholder="请选择" />
           </SpFilterFormItem>
           <!-- <SpFilterFormItem prop="mobile" label="联系手机:">
             <el-input v-model="formQuery.mobile" placeholder="请输入联系人手机号" />
           </SpFilterFormItem> -->
-          <SpFilterFormItem
-            prop="merchant_id"
-            label="所属商家:"
-          >
-            <SpSelectMerchant
-              v-model="formQuery.merchant_id"
-              clearable
-              placeholder="请选择"
-            />
+          <SpFilterFormItem prop="merchant_id" label="所属商家:">
+            <SpSelectMerchant v-model="formQuery.merchant_id" clearable placeholder="请选择" />
           </SpFilterFormItem>
         </SpFilterForm>
         <SpFinder
@@ -74,7 +52,7 @@ import settlementCycle from './comps/settlementCycle'
 import { createSetting } from '@shopex/finder'
 export default {
   name: '',
-  data () {
+  data() {
     return {
       form: {
         cycleData: {
@@ -90,7 +68,7 @@ export default {
           validator: (rule, value, callback) => {
             const { cycle, unit } = this.form.cycleData
             if (!cycle || !unit) {
-              callback(new Error('不能为空'))
+              callback(new Error('结算周期不能为空'))
             } else {
               callback()
             }
@@ -208,11 +186,11 @@ export default {
       ]
     }
   },
-  created () {
+  created() {
     this.fetch()
   },
   methods: {
-    async fetch () {
+    async fetch() {
       const { period } = await this.$api.financial.getDefaultSetting()
       if (period.length == 2) {
         this.form.cycleData = {
@@ -221,20 +199,20 @@ export default {
         }
       }
     },
-    onSearch () {
-      this.$refs.finder.refresh()
+    onSearch() {
+      this.$refs.finder.refresh(true)
     },
-    beforeSearch (params) {
+    beforeSearch(params) {
       return { ...params, ...this.formQuery }
     },
-    async onSaveConfig () {
+    async onSaveConfig() {
       const { cycle, unit } = this.form.cycleData
       await this.$api.financial.savePeriodSetting({
         period: [cycle, unit]
       })
       this.$message.success('保存成功')
     },
-    async onAddSubmit () {
+    async onAddSubmit() {
       const { id, distributor_id, cycleData } = this.addForm
       const { cycle, unit } = cycleData
       await this.$api.financial.savePeriodSetting({
@@ -244,9 +222,9 @@ export default {
       })
       this.$message.success(id ? '保存成功' : '添加成功')
       this.addDialog = false
-      this.$refs.finder.refresh()
+      this.$refs.finder.refresh(true)
     },
-    getCycle (period) {
+    getCycle(period) {
       const [cycle, unit] = period
       const units = {
         day: '天',

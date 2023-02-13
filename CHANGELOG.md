@@ -2,6 +2,29 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [3.10.0](https://git.ishopex.cn/ecshopx/ecshopx-admin/compare/v3.9.0...v3.10.0) (2023-02-09)
+
+
+### Features
+
+* 多选、单选添加 ([ef7bea5](https://git.ishopex.cn/ecshopx/ecshopx-admin/commit/ef7bea5894e78d0a827a70197c76f486d94b1c65))
+
+
+### Bug Fixes
+
+* 交易单分页bug ([5307884](https://git.ishopex.cn/ecshopx/ecshopx-admin/commit/53078847bb2d6be83cad8465ed5bc6f4c9701a81))
+* 优化 ([0b3e7ee](https://git.ishopex.cn/ecshopx/ecshopx-admin/commit/0b3e7ee618e60c34f38231d73ef8f5310e5d2f76))
+* 商品管理bug ([725e23b](https://git.ishopex.cn/ecshopx/ecshopx-admin/commit/725e23b248e6e88b42d5c6abc6c1bef0326158ee))
+* 商品管理优化 ([cfc324a](https://git.ishopex.cn/ecshopx/ecshopx-admin/commit/cfc324a26f81c67aa4d028a76c4e190705c54164))
+* 商品管理图片问题 ([81e53a6](https://git.ishopex.cn/ecshopx/ecshopx-admin/commit/81e53a64e7764a0cba80d2dbc74d51c534e6cd08))
+* 商品管理改造 ([47c0e14](https://git.ishopex.cn/ecshopx/ecshopx-admin/commit/47c0e14fe262ab6b7fe1060ac62faa22e0a70d08))
+* 商品编辑优化 ([6f7f1f3](https://git.ishopex.cn/ecshopx/ecshopx-admin/commit/6f7f1f3b1a2b7efdf64a98bec0da341bfe6ae739))
+* 多选数据传递 ([eac54c2](https://git.ishopex.cn/ecshopx/ecshopx-admin/commit/eac54c281fa4a9ce7e9095b9c7944fb02dab6df0))
+* 店铺端添加自提 ([5dc8b90](https://git.ishopex.cn/ecshopx/ecshopx-admin/commit/5dc8b905748d6d3f65ce3a0c0a0d2e1a89e42ddf))
+* 改错参数 ([42b43d9](https://git.ishopex.cn/ecshopx/ecshopx-admin/commit/42b43d9812cca76b0bcbf533a614ac8cbd59bd17))
+* 添加图片分组 ([096f474](https://git.ishopex.cn/ecshopx/ecshopx-admin/commit/096f474349d19a0caa82aa88dc3d7e1eb23b9382))
+* 订单数显示错误 ([56b7575](https://git.ishopex.cn/ecshopx/ecshopx-admin/commit/56b7575ab8ea0f911f5dfebb826e78b3654fb3fb))
+
 ## [3.9.0](https://git.ishopex.cn/ecshopx/ecshopx-admin/compare/v3.8.0...v3.9.0) (2023-01-05)
 
 

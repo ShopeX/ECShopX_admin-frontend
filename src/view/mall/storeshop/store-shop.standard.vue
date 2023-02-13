@@ -186,7 +186,7 @@ export default {
                       goods_id: row.goods_id,
                       is_total_store: !e
                     })
-                    this.$refs.finder.refresh()
+                    this.$refs.finder.refresh(true)
                   }
                 }
               })
@@ -223,7 +223,7 @@ export default {
   methods: {
     onSearch() {
       console.log('this.$refs:', this.$refs)
-      this.$refs.finder.refresh()
+      this.$refs.finder.refresh(true)
     },
     async getDefaultDistributor() {
       if (!this.formData.distributor_id) {
@@ -270,7 +270,7 @@ export default {
         item_ids: this.selectItems.map((item) => item.goods_id)
       })
       this.$message.success('商品删除成功')
-      this.$refs.finder.refresh()
+      this.$refs.finder.refresh(true)
     },
     // 批量下载商品码
     handleBatchDownload(val) {
@@ -306,7 +306,7 @@ export default {
     },
     onItemSkuFormSubmit() {
       this.itemSkuDialog = false
-      this.$refs.finder.refresh()
+      this.$refs.finder.refresh(true)
     }
   }
 }

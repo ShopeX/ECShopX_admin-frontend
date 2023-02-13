@@ -64,7 +64,7 @@ export default {
     async deleteTemplateHandle(id) {
       const result = await deleteSmsTemplate(id)
       this.$message.success('删除成功')
-      this.$refs.finder.refresh()
+      this.$refs.finder.refresh(true)
     }
   }
 }

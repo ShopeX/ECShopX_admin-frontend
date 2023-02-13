@@ -1,6 +1,15 @@
 <style lang="scss" scoped>
 .img-item {
   display: flex;
+  margin-bottom: 20px;
+  .img-title{
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+    .title-input{
+      width: 80%;
+    }
+    }
   .comp-picker-link {
     flex: 1;
   }
@@ -10,7 +19,20 @@
   <div>
     <div v-for="(item, index) in value" :key="`img-item__${index}`" class="img-item">
       <SpImagePicker v-model="item.imgUrl" size="small" />
-      <CompImgList :value="item" @change="(e) => onChangeLink(e, index)" />
+      <div>
+        <div class="img-title">
+        <span class="title-text">标题:</span>
+        <el-input
+          v-model="localValue.ImgTitle"
+          type="text"
+          placeholder="请填写图片标题"
+          class="title-input"
+          @change="onChangeTitile"
+        />
+      </div>
+        <CompPickerLink :value="item" @change="(e) => onChangeLink(e, index)" />
+      </div>
+
     </div>
     <el-button class="btn btn-add" size="small" plain @click="handleClickAdd">
       {{ `添加图片(${value.length}/5)` }}
@@ -21,11 +43,11 @@
 <script>
 import Vue from 'vue'
 import { cloneDeep } from 'lodash'
-import CompImgList from '../../comps/comp-imgList.vue'
+import CompPickerLink from '../../comps/comp-pickerLink.vue'
 export default {
   name: 'AttrImgList',
   components: {
-    CompImgList
+    CompPickerLink
   },
   props: ['value'],
   data() {
@@ -62,6 +84,9 @@ export default {
           template: ''
         }
       })
+    },
+    onChangeTitile() {
+      console.log(123,this.localValue)
     },
     onChangeLink(e, index) {
       if(e.content === 'delete'){

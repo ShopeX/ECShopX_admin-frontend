@@ -21,7 +21,7 @@
 <script>
 import Vue from 'vue'
 import { cloneDeep } from 'lodash'
-import CompPickerLink from '../../comps/comp-pickerLink'
+import CompPickerLink from '../../comps/comp-pickerLink.vue'
 export default {
   name: 'AttrItem',
   components: {
@@ -64,6 +64,7 @@ export default {
       })
     },
     onChangeLink(e, index) {
+
       const v = cloneDeep(this.localValue[index])
       Vue.set(this.localValue, index, {
         ...v,

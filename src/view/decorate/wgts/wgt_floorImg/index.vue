@@ -1,5 +1,6 @@
 <style lang="scss">
 .wgt-floorImg {
+  min-height: 120px;
   &.padded {
     padding: 10px 0;
   }
@@ -18,10 +19,16 @@
   .wgt-bd {
     position: relative;
     display: flex;
+    padding: 10px 30px;
     &.spaced {
       padding: 0 10px;
-      .img-item{
+      .img-item {
         flex: 1;
+        .title-image {
+        height: 100%;
+        width: 120px;
+        display: inline-block;
+    }
       }
     }
   }
@@ -33,7 +40,7 @@
       'wgt-floorImg': true,
       'padded': value.padded
     }"
-    :style="{backgroundImage: `url(${value.pageBackgroundImage})`}"
+    :style="{ backgroundImage: `url(${value.openBackImg && value.pageBackgroundImage})` }"
   >
     <div v-if="value.title || value.subtitle" class="wgt-hd">
       <span class="title">{{ value.title }}</span>
@@ -45,10 +52,11 @@
         'spaced': value.spaced
       }"
     >
-    <div v-for="(item,index) in value.data" :key="index" class="img-item">
-      <div>
-        <el-image :src="item.url" :width="'100%'" />
-        {{ item.text }}
+      <div v-for="(item, index) in value.data" :key="index" class="img-item">
+        <div>
+          <sp-image :src="item.imgUrl" class="title-image"  />
+          {{ item.text }}
+        </div>
       </div>
     </div>
   </div>
@@ -66,13 +74,14 @@ export default {
     value: [Object, Array]
   },
   data() {
-    return {
-    }
+    return {}
   },
   computed: {
     sliderHeight() {}
   },
-  created() {},
+  created() {
+    console.log(123, this.value)
+  },
   methods: {}
 }
 </script>

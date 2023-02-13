@@ -111,6 +111,7 @@
         ref="formBase"
         v-model="formBase"
         class="base-form"
+        show-message
         :form-list="formBaseList"
         :submit="false"
       />
@@ -120,6 +121,7 @@
         ref="activityRule"
         v-model="activityRule"
         class="base-form"
+        show-message
         :form-list="activityRuleList"
         :submit="false"
       />
@@ -594,8 +596,14 @@ export default {
         minimum_amount: orderMiniAmount,
         close_modify_hours_after_activity: modifyReceiveAddress
       }
-      const { id } = await this.$api.marketing.createPurchaseActivity(params)
-      this.$router.replace({ path: `/marketing/employee/purchase/result/${id}` })
+      const { id } = this.$route.params
+      if (id) {
+        await this.$api.marketing.updatePurchaseActivity(id, params)
+        this.$router.replace({ path: `/marketing/employee/purchase/result/${id}` })
+      } else {
+        const { id: _id } = await this.$api.marketing.createPurchaseActivity(params)
+        this.$router.replace({ path: `/marketing/employee/purchase/result/${_id}` })
+      }
     }
   }
 }

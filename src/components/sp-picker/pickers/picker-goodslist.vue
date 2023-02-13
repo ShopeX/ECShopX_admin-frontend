@@ -7,6 +7,9 @@
     padding: 8px 8px 0 8px;
     // margin-bottom: 10px;
   }
+  .sp-finder-hd {
+    display: none;
+  }
   .item-info {
     display: flex;
     .item-image {

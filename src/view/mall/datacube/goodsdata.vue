@@ -1,7 +1,6 @@
 <template>
   <div>
     <div class="action-container">
-      <!-- <el-button type="primary"> 导出 </el-button> -->
       <export-tip @exportHandle="exportData">
         <el-button v-loading="exportloading" type="primary"> 导出 </el-button>
       </export-tip>
@@ -127,9 +126,9 @@ export default {
       } = this.queryForm
       const { list } = await this.$api.datacube.getGoodsData({
         start: moment(display_time_begin).format('YYYY-MM-DD'),
-        end: moment(display_time_end).format('YYYY-MM-DD'),
-        order_class: 'employee_purchase',
-        act_id: activity_id.toString()
+        end: moment(display_time_end).format('YYYY-MM-DD')
+        // order_class: 'employee_purchase',
+        // act_id: activity_id.toString()
       })
       this.tableData = list
       this.$nextTick(() => {
@@ -139,34 +138,26 @@ export default {
     onSearch() {
       this.fetch()
     },
-    exportData() {
+    async exportData() {
       this.exportloading = true
-      this.params.export = 1
-      getGoodsData(this.params)
-        .then((res) => {
-          this.exportloading = false
-          if (res.data.data.status) {
-            this.$message({
-              type: 'success',
-              message: '已加入执行队列，请在设置-导出列表中下载'
-            })
-            this.$export_open('goods_data')
-            return
-          } else if (res.data.data.url) {
-            this.downloadUrl = res.data.data.url
-            this.downloadName = res.data.data.filename
-            this.downloadView = true
-          } else {
-            this.$message({
-              type: 'error',
-              message: '无内容可导出 或 执行失败，请检查重试'
-            })
-            return
-          }
-        })
-        .catch((error) => {
-          this.exportloading = false
-        })
+      const {
+        datetime: [display_time_begin, display_time_end],
+        activity_id
+      } = this.queryForm
+      const { status, url } = await this.$api.datacube.getGoodsData({
+        start: moment(display_time_begin).format('YYYY-MM-DD'),
+        end: moment(display_time_end).format('YYYY-MM-DD'),
+        order_class: 'employee_purchase',
+        act_id: activity_id.toString(),
+        export: 1
+      })
+      this.exportloading = false
+      if (status) {
+        this.$message.success('已加入执行队列，请在设置-导出列表中下载')
+        this.$export_open('goods_data')
+      } else {
+        this.$message.error('无内容可导出 或 执行失败，请检查重试')
+      }
     },
     async getPurchaseActivity({ page, pageSize }) {
       const { list, total_count } = await this.$api.marketing.getPurchaseActivity({

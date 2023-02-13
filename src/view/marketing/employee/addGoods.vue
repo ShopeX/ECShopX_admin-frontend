@@ -134,7 +134,7 @@
             </div>
           </template>
         </el-table-column>
-        <el-table-column prop="store" label="总库存">
+        <el-table-column prop="store" label="商城库存">
           <template
             v-if="(scope.row.nospec == 'false' && scope.row.is_sku) || scope.row.nospec == 'true'"
             slot-scope="scope"
@@ -142,7 +142,7 @@
             {{ scope.row.store }}
           </template>
         </el-table-column>
-        <el-table-column prop="price" label="商城价格（元）">
+        <el-table-column prop="price" label="商城价格（元）" width="120">
           <template
             v-if="(scope.row.nospec == 'false' && scope.row.is_sku) || scope.row.nospec == 'true'"
             slot-scope="scope"
@@ -150,7 +150,7 @@
             {{ scope.row.price / 100 }}
           </template>
         </el-table-column>
-        <el-table-column prop="activity_price" label="活动价格（元）">
+        <el-table-column prop="activity_price" label="活动价格（元）" width="120">
           <template
             v-if="(scope.row.nospec == 'false' && scope.row.is_sku) || scope.row.nospec == 'true'"
             slot-scope="scope"
@@ -206,7 +206,7 @@
                   确定
                 </el-button>
               </div>
-              <el-button slot="reference" type="text">
+              <el-button slot="reference" :disabled="formBase.value == '1'" type="text">
                 <i class="el-icon-edit" />
               </el-button>
             </el-popover>
@@ -240,7 +240,7 @@
             </el-popover>
           </template>
         </el-table-column>
-        <el-table-column prop="limit_num" label="每人限购（件）">
+        <el-table-column prop="limit_num" label="每人限购（件）" width="120">
           <template
             v-if="(scope.row.nospec == 'false' && scope.row.is_sku) || scope.row.nospec == 'true'"
             slot-scope="scope"
@@ -271,7 +271,7 @@
             </el-popover>
           </template>
         </el-table-column>
-        <el-table-column prop="limit_fee" label="每人限额（元）">
+        <el-table-column prop="limit_fee" label="每人限额（元）" width="120">
           <template
             v-if="(scope.row.nospec == 'false' && scope.row.is_sku) || scope.row.nospec == 'true'"
             slot-scope="scope"
@@ -348,7 +348,7 @@ export default {
           key: 'value',
           type: 'radio',
           options: [
-            { name: '共享商城额度', label: '1' },
+            { name: '共享商城库存', label: '1' },
             { name: '活动独立库存', label: '2' }
           ],
           onChange: async () => {

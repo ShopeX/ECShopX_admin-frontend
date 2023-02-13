@@ -322,10 +322,10 @@ export default {
 
     let rules = {}
     formList.forEach((item) => {
-      if (item.required) {
-        rules[item.key] = [{ required: true, message: item.message || '不能为空' }]
-      } else if (item.validator) {
+      if (item.validator) {
         rules[item.key] = [{ validator: item.validator }]
+      } else if (item.required) {
+        rules[item.key] = [{ required: true, message: item.message || '不能为空' }]
       }
     })
     this.localComps = localComps
@@ -363,7 +363,8 @@ export default {
                   item.display,
                   {
                     'no-label': typeof item.label == 'undefined',
-                    'custom-error': typeof item.validator != 'undefined'
+                    'custom-error': typeof item.validator != 'undefined',
+                    'is-required': item.required || item.validator
                   }
                 ]}
                 style={{

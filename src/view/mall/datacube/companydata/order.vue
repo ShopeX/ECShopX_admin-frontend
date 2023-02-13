@@ -8,7 +8,6 @@
 </style>
 <template>
   <div>
-    {{ queryForm }}
     <SpFilterForm :model="queryForm" @onSearch="onSearch" @onReset="onSearch">
       <SpFilterFormItem prop="datetime" label="查询日期:">
         <el-date-picker
@@ -42,62 +41,27 @@
 
     <el-row :gutter="20">
       <el-col :span="4"><el-statistic :value="total.order_count" title="订单" /></el-col>
-      <el-col :span="4"
-        >
-<el-statistic :value="total.order_payed_count" title="付款订单数"
-      />
-</el-col>
+      <el-col :span="4">
+        <el-statistic :value="total.order_payed_count" title="付款订单数" />
+      </el-col>
       <el-col :span="4"><el-statistic :value="total.aftersales_count" title="售后单数" /></el-col>
       <el-col :span="4"><el-statistic :value="total.gmv_count" title="GMV(元)" /></el-col>
-      <el-col :span="4"
-        >
-<el-statistic :value="total.amount_payed_count" title="交易额(元)"
-      />
-</el-col>
+      <el-col :span="4">
+        <el-statistic :value="total.amount_payed_count" title="交易额(元)" />
+      </el-col>
       <el-col :span="4"><el-statistic :value="total.refunded_count" title="退款额(元)" /></el-col>
     </el-row>
 
     <!-- <canvas :id="item.key" height="120" /> -->
 
-    <!-- <el-tabs v-model="activeName" type="card" @tab-click="handleClick">
-      <el-row class="total-display" :gutter="20">
-        <el-col v-for="(item, index) in tabList" :key="`tab-col__${index}`" :span="4">
-          <div>
-            <el-statistic
-              :value="item.total"
-              :title="`${item.label}${item.unit ? '（' + item.unit + '）' : ''}`"
-            />
-          </div>
-        </el-col>
-      </el-row>
-
-      <el-tab-pane
-        v-for="(item, index) in tabList"
-        :key="`tab-pane__${index}`"
-        :label="item.label"
-        :name="item.key"
-      >
-        <section>
-          <canvas :id="item.key" height="120" />
-        </section>
-      </el-tab-pane>
-    </el-tabs> -->
-
-    <el-table :data="allListData" stripe border style="width: 100%">
-      <el-table-column prop="count_date" label="日期" fixed />
-      <el-table-column prop="order_count" label="订单数" />
-      <el-table-column prop="order_payed_count" label="付款订单数" />
-      <el-table-column prop="amount_payed_count" label="交易额">
-        <template slot-scope="scope"> ￥{{ scope.row.amount_payed_count / 100 }} </template>
-      </el-table-column>
-      <el-table-column prop="gmv_count" label="GMV">
-        <template slot-scope="scope"> ￥{{ scope.row.gmv_count / 100 }} </template>
-      </el-table-column>
-      <el-table-column prop="aftersales_count" label="售后单数" />
-      <el-table-column label="退款额">
-        <template slot-scope="scope"> ￥{{ scope.row.refunded_count / 100 }} </template>
-      </el-table-column>
-    </el-table>
+    <SpFinder
+      ref="finder"
+      no-selection
+      :show-pager="false"
+      :setting="setting"
+      :row-actions-align="'left'"
+      :data="tableData"
+    />
   </div>
 </template>
 <script>
@@ -106,6 +70,7 @@ import chart from 'chart.js'
 import { PICKER_DATE_OPTIONS } from '@/consts'
 import Pages from '@/utils/pages'
 import moment from 'moment'
+import { createSetting } from '@shopex/finder'
 import { getCompanyData } from '../../../../api/datacube'
 export default {
   data() {
@@ -113,17 +78,44 @@ export default {
     const end = moment().subtract('1', 'day')
     return {
       queryForm: {
-        datetime: [start, end]
+        datetime: [start, end],
+        activity_id: ''
       },
+      setting: createSetting({
+        columns: [
+          {
+            name: '日期',
+            key: 'count_date'
+          },
+          {
+            name: '订单数',
+            key: 'order_count'
+          },
+          {
+            name: '付款订单数',
+            key: 'order_payed_count'
+          },
+          {
+            name: '售后单数',
+            key: 'aftersales_count'
+          },
+          {
+            name: '交易额',
+            key: 'amount_payed_count'
+          },
+          {
+            name: 'GMV',
+            key: 'gmv_count'
+          },
+          {
+            name: '退款额',
+            key: 'refunded_count'
+          }
+        ]
+      }),
       purchaseActivityList: [],
-      vdate: '',
+      tableData: [],
       loading: true,
-      activeName: 'order_count',
-      params: {
-        start: '',
-        end: ''
-      },
-      allListData: [],
       dataTimeArr: [],
       total: {
         order_count: 0,
@@ -133,14 +125,6 @@ export default {
         amount_payed_count: 0,
         refunded_count: 0
       },
-      tabList: [
-        { key: 'order_count', label: '订单', total: 0, unit: '' },
-        { key: 'order_payed_count', label: '付款订单数', total: 0, unit: '' },
-        { key: 'aftersales_count', label: '售后单数', total: 0, unit: '' },
-        { key: 'gmv_count', label: 'GMV', total: 0, unit: '元' },
-        { key: 'amount_payed_count', label: '交易额', total: 0, unit: '元' },
-        { key: 'refunded_count', label: '退款额', total: 0, unit: '元' }
-      ],
       dataInfo: {
         order_count: {
           label: '订单',
@@ -197,12 +181,6 @@ export default {
     }).nextPage()
   },
   mounted() {
-    // var start = new Date()
-    // var end = new Date()
-    // start.setTime(start.getTime() - 3600 * 1000 * 24 * 7)
-    // end.setTime(end.getTime() - 3600 * 1000 * 24 * 1)
-    // this.vdate = [start, end]
-    // this.getCompanyDataList(this.activeName)
     this.fetchStatisticData()
   },
   methods: {
@@ -211,134 +189,148 @@ export default {
     },
     async fetchStatisticData() {
       const {
-        datetime: [start, end]
-        // activity_id
+        datetime: [start, end],
+        activity_id
       } = this.queryForm
       const params = {
         start: moment(start).format('YYYY-MM-DD'),
         end: moment(end).format('YYYY-MM-DD')
+        // order_class: 'employee_purchase',
+        // act_id: activity_id.toString()
       }
       const { list } = await this.$api.datacube.getCompanyData(params)
-    },
-
-    getCompanyDataList(pane_name) {
-      this.dataTimeArr = []
-      this.dataInfo.order_count.data_list = []
-      this.dataInfo.amount_payed_count.data_list = []
-      this.dataInfo.order_payed_count.data_list = []
-      this.dataInfo.gmv_count.data_list = []
-      this.dataInfo.aftersales_count.data_list = []
-      this.dataInfo.refunded_count.data_list = []
-
-      let params = { start: this.params.start, end: this.params.end }
-      getCompanyData(params)
-        .then((res) => {
-          this.allListData = res.data.data.list
-          let companyDataList = res.data.data.list
-          let order_count_total_num = 0
-          let amount_payed_count_total_num = 0
-          let order_payed_count_total_num = 0
-          let gmv_count_total_num = 0
-          let aftersales_count_total_num = 0
-          let refunded_count_total_num = 0
-          for (var key in companyDataList) {
-            this.dataTimeArr.push(companyDataList[key].count_date)
-
-            this.dataInfo.order_count.data_list.push(companyDataList[key].order_count)
-            order_count_total_num += Number(companyDataList[key].order_count)
-
-            this.dataInfo.amount_payed_count.data_list.push(
-              companyDataList[key].amount_payed_count / 100
-            )
-            amount_payed_count_total_num += Number(companyDataList[key].amount_payed_count)
-
-            this.dataInfo.order_payed_count.data_list.push(companyDataList[key].order_payed_count)
-            order_payed_count_total_num += Number(companyDataList[key].order_payed_count)
-
-            this.dataInfo.gmv_count.data_list.push(companyDataList[key].gmv_count / 100)
-            gmv_count_total_num += Number(companyDataList[key].gmv_count)
-
-            this.dataInfo.aftersales_count.data_list.push(companyDataList[key].aftersales_count)
-            aftersales_count_total_num += Number(companyDataList[key].aftersales_count)
-
-            this.dataInfo.refunded_count.data_list.push(companyDataList[key].refunded_count / 100)
-            refunded_count_total_num += Number(companyDataList[key].refunded_count)
-          }
-          this.dataInfo.order_count.total_num = order_count_total_num
-          this.dataInfo.amount_payed_count.total_num = amount_payed_count_total_num / 100
-          this.dataInfo.order_payed_count.total_num = order_payed_count_total_num
-          this.dataInfo.gmv_count.total_num = gmv_count_total_num / 100
-          this.dataInfo.aftersales_count.total_num = aftersales_count_total_num
-          this.dataInfo.refunded_count.total_num = refunded_count_total_num / 100
-          this.loading = false
-          if (pane_name) {
-            // 首次加载
-            this.$nextTick(() => {
-              this.chartInit(pane_name)
-            })
-          }
-        })
-        .catch((error) => {
-          this.$message({
-            type: 'error',
-            message: '获取统计信息出错'
-          })
+      this.tableData = list
+      ;(this.total = {
+        order_count: list.reduce((prev, next) => prev + next.order_count, 0),
+        order_payed_count: list.reduce((prev, next) => prev + next.order_payed_count, 0),
+        aftersales_count: list.reduce((prev, next) => prev + next.aftersales_count, 0),
+        gmv_count: list.reduce((prev, next) => prev + next.gmv_count, 0),
+        amount_payed_count: list.reduce((prev, next) => prev + next.amount_payed_count, 0),
+        refunded_count: list.reduce((prev, next) => prev + next.refunded_count, 0)
+      }),
+        this.$nextTick(() => {
+          this.$refs.finder.refresh()
         })
     },
 
-    chartInit(pane_name) {
-      var config = {
-        type: 'line',
-        data: {
-          labels: this.dataTimeArr,
-          datasets: [
-            {
-              label: this.dataInfo[pane_name].label,
-              backgroundColor: this.chartColors.grey,
-              borderColor: this.chartColors.red,
-              data: this.dataInfo[pane_name].data_list,
-              fill: false
-            }
-          ]
-        },
-        options: {
-          responsive: true,
-          title: {
-            display: true,
-            text: '合计(' + this.dataInfo[pane_name].total_num + this.dataInfo[pane_name].unit + ')'
-          },
-          tooltips: {
-            mode: 'index',
-            intersect: true
-          },
-          hover: {
-            mode: 'nearest',
-            intersect: true
-          },
-          scales: {
-            xAxes: [
-              {
-                display: true,
-                scaleLabel: {
-                  display: true,
-                  labelString: ''
-                }
-              }
-            ],
-            yAxes: [
-              {
-                display: true,
-                scaleLabel: {
-                  display: false
-                }
-              }
-            ]
-          }
-        }
-      }
-      var ctx = document.getElementById(pane_name).getContext('2d')
-      window.myLine = new Chart(ctx, config)
-    },
+    // getCompanyDataList(pane_name) {
+    //   this.dataTimeArr = []
+    //   this.dataInfo.order_count.data_list = []
+    //   this.dataInfo.amount_payed_count.data_list = []
+    //   this.dataInfo.order_payed_count.data_list = []
+    //   this.dataInfo.gmv_count.data_list = []
+    //   this.dataInfo.aftersales_count.data_list = []
+    //   this.dataInfo.refunded_count.data_list = []
+
+    //   let params = { start: this.params.start, end: this.params.end }
+    //   getCompanyData(params)
+    //     .then((res) => {
+    //       this.allListData = res.data.data.list
+    //       let companyDataList = res.data.data.list
+    //       let order_count_total_num = 0
+    //       let amount_payed_count_total_num = 0
+    //       let order_payed_count_total_num = 0
+    //       let gmv_count_total_num = 0
+    //       let aftersales_count_total_num = 0
+    //       let refunded_count_total_num = 0
+    //       for (var key in companyDataList) {
+    //         this.dataTimeArr.push(companyDataList[key].count_date)
+
+    //         this.dataInfo.order_count.data_list.push(companyDataList[key].order_count)
+    //         order_count_total_num += Number(companyDataList[key].order_count)
+
+    //         this.dataInfo.amount_payed_count.data_list.push(
+    //           companyDataList[key].amount_payed_count / 100
+    //         )
+    //         amount_payed_count_total_num += Number(companyDataList[key].amount_payed_count)
+
+    //         this.dataInfo.order_payed_count.data_list.push(companyDataList[key].order_payed_count)
+    //         order_payed_count_total_num += Number(companyDataList[key].order_payed_count)
+
+    //         this.dataInfo.gmv_count.data_list.push(companyDataList[key].gmv_count / 100)
+    //         gmv_count_total_num += Number(companyDataList[key].gmv_count)
+
+    //         this.dataInfo.aftersales_count.data_list.push(companyDataList[key].aftersales_count)
+    //         aftersales_count_total_num += Number(companyDataList[key].aftersales_count)
+
+    //         this.dataInfo.refunded_count.data_list.push(companyDataList[key].refunded_count / 100)
+    //         refunded_count_total_num += Number(companyDataList[key].refunded_count)
+    //       }
+    //       this.dataInfo.order_count.total_num = order_count_total_num
+    //       this.dataInfo.amount_payed_count.total_num = amount_payed_count_total_num / 100
+    //       this.dataInfo.order_payed_count.total_num = order_payed_count_total_num
+    //       this.dataInfo.gmv_count.total_num = gmv_count_total_num / 100
+    //       this.dataInfo.aftersales_count.total_num = aftersales_count_total_num
+    //       this.dataInfo.refunded_count.total_num = refunded_count_total_num / 100
+    //       this.loading = false
+    //       if (pane_name) {
+    //         // 首次加载
+    //         this.$nextTick(() => {
+    //           this.chartInit(pane_name)
+    //         })
+    //       }
+    //     })
+    //     .catch((error) => {
+    //       this.$message({
+    //         type: 'error',
+    //         message: '获取统计信息出错'
+    //       })
+    //     })
+    // },
+
+    // chartInit(pane_name) {
+    //   var config = {
+    //     type: 'line',
+    //     data: {
+    //       labels: this.dataTimeArr,
+    //       datasets: [
+    //         {
+    //           label: this.dataInfo[pane_name].label,
+    //           backgroundColor: this.chartColors.grey,
+    //           borderColor: this.chartColors.red,
+    //           data: this.dataInfo[pane_name].data_list,
+    //           fill: false
+    //         }
+    //       ]
+    //     },
+    //     options: {
+    //       responsive: true,
+    //       title: {
+    //         display: true,
+    //         text: '合计(' + this.dataInfo[pane_name].total_num + this.dataInfo[pane_name].unit + ')'
+    //       },
+    //       tooltips: {
+    //         mode: 'index',
+    //         intersect: true
+    //       },
+    //       hover: {
+    //         mode: 'nearest',
+    //         intersect: true
+    //       },
+    //       scales: {
+    //         xAxes: [
+    //           {
+    //             display: true,
+    //             scaleLabel: {
+    //               display: true,
+    //               labelString: ''
+    //             }
+    //           }
+    //         ],
+    //         yAxes: [
+    //           {
+    //             display: true,
+    //             scaleLabel: {
+    //               display: false
+    //             }
+    //           }
+    //         ]
+    //       }
+    //     }
+    //   }
+    //   var ctx = document.getElementById(pane_name).getContext('2d')
+    //   window.myLine = new Chart(ctx, config)
+    // },
 
     async getPurchaseActivity({ page, pageSize }) {
       const { list, total_count } = await this.$api.marketing.getPurchaseActivity({

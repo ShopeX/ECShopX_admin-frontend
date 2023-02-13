@@ -8,6 +8,9 @@
       // margin-bottom: 8px;
     }
   }
+  .sp-finder-hd {
+    display: none;
+  }
   .item-info {
     display: flex;
     .sp-image {

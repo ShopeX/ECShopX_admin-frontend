@@ -557,6 +557,15 @@ export function createPurchaseActivity(params) {
   })
 }
 
+// 更新内购活动
+export function updatePurchaseActivity(activityId, params) {
+  return fetch({
+    url: `/employeepurchase/activity/${activityId}`,
+    method: 'put',
+    params
+  })
+}
+
 // 内购活动添加商品
 export function addGoodsInActivity(params) {
   return fetch({

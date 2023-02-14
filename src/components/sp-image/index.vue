@@ -12,8 +12,8 @@ export default {
   name: 'SpImage',
   props: {
     src: String,
-    width: Number,
-    height: Number,
+    width: [Number, String],
+    height: [Number, String],
     circle: [Boolean, Number]
   },
   render() {

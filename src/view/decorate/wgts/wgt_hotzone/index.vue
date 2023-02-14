@@ -48,7 +48,7 @@
         'spaced': value.spaced
       }"
     >
-      <el-image v-if="value.data.imgUrl" :src="value.data.imgUrl" :width="'100%'" />
+      <SpImage :src="value.data.imgUrl" />
     </div>
   </div>
 </template>

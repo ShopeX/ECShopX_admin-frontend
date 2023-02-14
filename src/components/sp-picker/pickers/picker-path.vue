@@ -10,7 +10,7 @@
 </style>
 <template>
   <div class="picker-path">
-    {{ value }}
+    <!-- {{ value }} -->
     <el-tabs v-model="tabValue" :tab-position="'left'">
       <el-tab-pane label="商品" name="goods">
         <PickerGoods v-if="tabValue == 'goods'" ref="goods" :value="value" />

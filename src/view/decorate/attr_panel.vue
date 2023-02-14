@@ -25,7 +25,7 @@ export default {
     },
 
     _renderColor({ key, value: initValue }) {
-      console.log('_renderColor:', this)
+      // console.log('_renderColor:', this)
       return (
         <div class='el-color-picker-wrap'>
           <el-color-picker v-model={this.value[key]} size='small' />

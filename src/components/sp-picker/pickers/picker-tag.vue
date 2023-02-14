@@ -6,28 +6,11 @@
   .sp-finder-hd {
     display: none;
   }
-  // .sp-finder {
-  //   &.no-multiple {
-  //     .sp-finder-bd {
-  //       .el-table__fixed-header-wrapper {
-  //         table thead {
-  //           tr {
-  //             th {
-  //               &:nth-child(1) {
-  //                 .el-checkbox {
-  //                   display: none;
-  //                 }
-  //               }
-  //             }
-  //           }
-  //         }
-  //       }
-  //     }
-  //     .el-table__fixed-body-wrapper {
-  //       top: 38px !important;
-  //     }
-  //   }
-  // }
+  .disableheadselection {
+    > .cell .el-checkbox__inner {
+      display: none;
+    }
+  }
   .el-pagination {
     margin: 0;
     padding: 10px;
@@ -44,8 +27,11 @@
     <SpFinder
       ref="finder"
       :other-config="{
-        height: 460
+        'max-height': 460,
+        'header-cell-class-name': cellClass
       }"
+      row-key="tag_id"
+      reserve-selection
       url="/goods/tag"
       :fixed-row-action="true"
       :setting="{
@@ -92,6 +78,12 @@ export default {
         params = {
           ...params,
           tag_name: keywords
+        }
+      }
+      if (this.value.params) {
+        params = {
+          ...params,
+          ...this.value.params
         }
       }
       return params

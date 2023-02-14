@@ -1,5 +1,5 @@
 <style lang="scss">
-.picker-sale-category {
+.picker-category {
   .cascader-header {
     display: flex;
     background-color: #f0f2f5;
@@ -11,17 +11,17 @@
     }
   }
   .el-cascader-panel {
-    height: 560px;
+    height: 526px;
     border-radius: 0;
   }
 
   .el-cascader-menu__wrap {
-    height: 560px;
+    height: 526px;
   }
 }
 </style>
 <template>
-  <div class="picker-sale-category">
+  <div class="picker-category">
     <div class="cascader-header">
       <div class="hd">一级</div>
       <div class="hd">二级</div>

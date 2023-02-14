@@ -53,7 +53,7 @@
       ref="finder"
       :class="[{ 'no-multiple': !multiple }]"
       :other-config="{
-        height: 460
+        'max-height': 460
       }"
       url="/wxexternalconfigroutes/list"
       :fixed-row-action="true"

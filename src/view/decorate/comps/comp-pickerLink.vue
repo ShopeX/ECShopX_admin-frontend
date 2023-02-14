@@ -10,7 +10,7 @@
     }
   }
   .btn-linkpath {
-    padding: 8px 16px;
+    padding: 8px;
     color: var(--themeColor);
     border: 1px solid var(--themeColor);
     background-color: #fff;

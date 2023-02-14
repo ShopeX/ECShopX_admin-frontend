@@ -240,7 +240,7 @@ export default {
     onDeleteComp(index) {
       this.contentComps.splice(index, 1)
     },
-    onSaveTemplate() {
+    async onSaveTemplate() {
       const data = this.contentComps.map((item) => {
         const { transformOut } = this.widgets.find(
           (wgt) => wgt.name.toLowerCase() == item.name.toLowerCase()
@@ -248,6 +248,15 @@ export default {
         return transformOut(item)
       })
       console.log('onSaveTemplate:', JSON.stringify(data))
+      const { id } = this.$route.query
+      await this.$api.template.savePagesTemplate({
+        pages_template_id: id,
+        template_name: 'yykweishop',
+        template_content: JSON.stringify({
+          content: data
+        })
+      })
+      this.$message.success('保存成功')
     }
   }
 }

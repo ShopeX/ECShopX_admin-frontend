@@ -10,12 +10,7 @@
       <span class="title">{{ value.title }}</span>
       <span class="sub-title">{{ value.subtitle }}</span>
     </div>
-    <div
-      class="wgt-bd"
-      :class="{
-        'spaced': value.spaced
-      }"
-    >
+    <div class="wgt-bd">
       <!-- 自定义部分 -->
       <div class="wgt-goods-grid-goods">
         <div
@@ -27,11 +22,15 @@
             <img class="goods-img" :src="wximageurl + item.imgUrl">
           </div>
           <div class="wgt-goods-grid-goods-item-info">
-            <img v-if="value.brand && value.style !== 'grids'" class="goods-brand" :src="
-              item.brand
-                ? wximageurl + item.brand
-                : 'https://fakeimg.pl/60x60/EFEFEF/CCC/?text=brand&font=lobster'
-            ">
+            <img
+              v-if="value.brand && value.style !== 'grids'"
+              class="goods-brand"
+              :src="
+                item.brand
+                  ? wximageurl + item.brand
+                  : 'https://fakeimg.pl/60x60/EFEFEF/CCC/?text=brand&font=lobster'
+              "
+            >
             <div class="goods-title">
               {{ item.title }}
             </div>
@@ -42,8 +41,11 @@
               <span class="cur">¥</span>{{ item.price / 100 }}
             </div>
             <div class="activity-label">
-              <p v-for="(s, i) in item.promotionActivity" :key="i"
-                :style="`color: ${colorPrimary};border: 1px solid ${colorPrimary}`">
+              <p
+                v-for="(s, i) in item.promotionActivity"
+                :key="i"
+                :style="`color: ${colorPrimary};border: 1px solid ${colorPrimary}`"
+              >
                 {{ s.tag_type == 'single_group' ? '团购' : '' }}
                 {{ s.tag_type == 'full_minus' ? '满减' : '' }}
                 {{ s.tag_type == 'full_discount' ? '满折' : '' }}
@@ -89,8 +91,6 @@ export default {
   mounted() {
     this.colorPrimary = this.$store.getters.color_theme.primary
   },
-  methods: {
-  }
+  methods: {}
 }
 </script>
-

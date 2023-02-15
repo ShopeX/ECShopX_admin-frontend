@@ -1,11 +1,13 @@
 <style lang="scss">
 .wgt-floorImg {
-  overflow-x: auto ;
+  box-sizing: border-box;
   &.padded {
     padding: 10px 0;
   }
-  .wgt-hd {
-    padding: 10px;
+  .bgc-content{
+    padding: 0 10px 0 10px ;
+    .wgt-hd {
+    padding: 10px 10px 10px 0 ;
     .title {
       font-size: 18px;
       font-weight: 600;
@@ -19,7 +21,11 @@
   .wgt-bd {
     position: relative;
     display: flex;
-    padding: 10px;
+    width: auto;
+    z-index: 100;
+    overflow-x: auto ;
+    box-sizing: border-box;
+    padding-bottom: 10px;
     &.spaced {
       padding: 0 10px;
     }
@@ -35,6 +41,8 @@
       }
     }
   }
+  }
+
 }
 </style>
 <template>
@@ -44,7 +52,7 @@
       'padded': value.padded
     }"
   >
-    <div :style="{ backgroundImage: `url(${value.openBackImg && value.backgroundImg})` }">
+    <div :style="{ backgroundImage: `url(${value.openBackImg && value.backgroundImg})` }" class="bgc-content">
       <div v-if="value.title || value.subtitle" class="wgt-hd">
         <span class="title">{{ value.title }}</span>
         <span class="sub-title">{{ value.subtitle }}</span>

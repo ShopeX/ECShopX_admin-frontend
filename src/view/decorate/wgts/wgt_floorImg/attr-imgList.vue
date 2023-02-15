@@ -2,14 +2,14 @@
 .img-item {
   display: flex;
   margin-bottom: 20px;
-  .img-title{
+  .img-title {
     display: flex;
     align-items: center;
     justify-content: space-around;
-    .title-input{
+    .title-input {
       width: 80%;
     }
-    }
+  }
   .comp-picker-link {
     flex: 1;
   }
@@ -21,18 +21,16 @@
       <SpImagePicker v-model="item.imgUrl" size="small" />
       <div>
         <div class="img-title">
-        <span class="title-text">标题:</span>
-        <el-input
-          v-model="item.ImgTitle"
-          type="text"
-          placeholder="请填写图片标题"
-          class="title-input"
-          @change="onChangeTitile"
-        />
-      </div>
+          <span class="title-text">标题:</span>
+          <el-input
+            v-model="item.ImgTitle"
+            type="text"
+            placeholder="请填写图片标题"
+            class="title-input"
+          />
+        </div>
         <CompPickerLink :value="item" @change="(e) => onChangeLink(e, index)" />
       </div>
-
     </div>
     <el-button class="btn btn-add" size="small" plain @click="handleClickAdd">
       {{ `添加图片(${value.length}/5)` }}
@@ -70,24 +68,20 @@ export default {
         multiple: true,
         num: 5
       })
-      console.log(2,data)
+      console.log(2, data)
       this.localValue = data.map((item) => {
         return {
           ImgTitle: '',
           title: '',
           id: '',
           imgUrl: item.url,
-          linkPage: '',
-
+          linkPage: ''
         }
       })
-      console.log(2,data,this.localValue)
-    },
-    onChangeTitile() {
-      console.log(123,this.localValue)
+      // console.log(2, data, this.localValue)
     },
     onChangeLink(e, index) {
-      if(e.content === 'delete'){
+      if (e.content === 'delete') {
         Vue.delete(this.localValue, index)
         return
       }

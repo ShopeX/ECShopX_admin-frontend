@@ -6,6 +6,7 @@ import WgtCoupon from './wgt_coupon'
 import WgtShowCase from './wgt_showcase'
 import WgtGoodsGridTab from './wgt_goodsGridTab'
 import WgtStore from './wgt_store'
+import WgtSearch from './wgt_search'
 
 export default {
   WgtSlider,
@@ -15,5 +16,6 @@ export default {
   WgtCoupon,
   WgtShowCase,
   WgtGoodsGridTab,
-  WgtStore
+  WgtStore,
+  WgtSearch
 }

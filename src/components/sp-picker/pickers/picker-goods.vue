@@ -170,7 +170,8 @@ export default {
         attribute_type: 'brand',
         attribute_name: ''
       },
-      categoryList: []
+      categoryList: [],
+      multiple: this.value?.multiple ?? true
     }
   },
   created() {},

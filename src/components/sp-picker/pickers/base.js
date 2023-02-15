@@ -46,7 +46,7 @@ export default {
 
   methods: {
     cellClass({ columnIndex, rowIndex }) {
-      const { multiple } = this.value
+      const { multiple } = this
       if (columnIndex == 0 && rowIndex == 0 && !multiple) {
         return 'disableheadselection'
       }

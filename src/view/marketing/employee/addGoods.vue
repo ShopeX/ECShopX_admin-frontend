@@ -186,7 +186,7 @@
             v-if="(scope.row.nospec == 'false' && scope.row.is_sku) || scope.row.nospec == 'true'"
             slot-scope="scope"
           >
-            <span>{{ scope.row.activity_store }}</span>
+            <span>{{ formBase.value == '1' ? 0 : scope.row.activity_store }}</span>
             <el-popover
               placement="top"
               trigger="click"
@@ -553,7 +553,7 @@ export default {
       this.total = total_count
       this.pagesQuery.setTotal(total_count)
     },
-    async onSelectSku({ item_id, item_name, item_bn, spec_items }) {
+    async onSelectSku({ item_id, item_name, item_bn, spec_items = [] }) {
       const { data } = await this.$picker.goodsSku({
         data: spec_items.map((item) => item.item_id),
         itemId: item_id,

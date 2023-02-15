@@ -239,7 +239,7 @@ export default {
           }
         ],
         columns: [
-          { name: '活动名称', key: 'name' },
+          { name: '活动名称', key: 'name', width: 180 },
           {
             name: '员工额度（元）',
             key: 'employee_limitfee',
@@ -263,9 +263,9 @@ export default {
             key: 'employee_end_time',
             width: '320',
             formatter: (value, { employee_end_time, employee_begin_time }, col) => {
-              return `${moment(employee_end_time * 1000).format('YYYY-MM-DD HH:mm:ss')} ~ ${moment(
-                employee_begin_time * 1000
-              ).format('YYYY-MM-DD HH:mm:ss')}`
+              return `${moment(employee_begin_time * 1000).format(
+                'YYYY-MM-DD HH:mm:ss'
+              )} ~ ${moment(employee_end_time * 1000).format('YYYY-MM-DD HH:mm:ss')}`
             }
           },
           {

@@ -11,12 +11,12 @@
     }
   }
   .el-cascader-panel {
-    height: 560px;
+    height: 526px;
     border-radius: 0;
   }
 
   .el-cascader-menu__wrap {
-    height: 560px;
+    height: 526px;
   }
 }
 </style>

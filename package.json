@@ -13,7 +13,7 @@
   },
   "dependencies": {
     "@riophae/vue-treeselect": "0.0.38",
-    "@shopex/finder": "^1.0.36",
+    "@shopex/finder": "^1.0.43",
     "ali-oss": "^6.5.1",
     "aws-sdk": "^2.824.0",
     "axios": "^0.19.2",

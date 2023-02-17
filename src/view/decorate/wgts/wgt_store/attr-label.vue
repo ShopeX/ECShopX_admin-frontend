@@ -7,22 +7,33 @@
 }
 </style>
 <template>
-  <div>
-    <el-button class="btn btn-add" size="small" plain @click="handleClickAdd">
-      {{ `添加标签(${value.length}/5)` }}
-    </el-button>
-  </div>
+  <CompButton
+    :disabled="disabledBtn"
+    :clearable="value.length > 0"
+    @click="handleClickAdd"
+    @remove="onRemove"
+  >
+    {{ value.length > 0 ? `已选: ${value.length}` : `选择标签` }}
+  </CompButton>
 </template>
 
 <script>
 import Vue from 'vue'
 import { cloneDeep } from 'lodash'
+import CompButton from '../../comps/comp-button'
 export default {
   name: 'AttrLabel',
-  props: ['value'],
+  components: { CompButton },
+  props: ['value', 'distributor'],
   data() {
     return {
       localValue: []
+    }
+  },
+  computed: {
+    disabledBtn() {
+      const { id } = this.distributor
+      return id === ''
     }
   },
   watch: {
@@ -35,28 +46,17 @@ export default {
   },
   methods: {
     async handleClickAdd() {
-      const { data } = await this.$picker.tag()
-      debugger
-      this.localValue = data.map((item) => {
-        return {
-          button: '',
-          content: '',
-          id: '',
-          imgUrl: item.url,
-          linkPage: '',
-          mainTitle: '',
-          subtitle: '',
-          subtitleTow: '',
-          template: ''
+      const ids = this.value.map(({ tag_id }) => tag_id)
+      const { data } = await this.$picker.tag({
+        data: ids,
+        params: {
+          distributor_id: this.distributor.id
         }
       })
+      this.localValue = data
     },
-    onChangeLink(e, index) {
-      const v = cloneDeep(this.localValue[index])
-      Vue.set(this.localValue, index, {
-        ...v,
-        ...e
-      })
+    onRemove() {
+      this.localValue = []
     }
   }
 }

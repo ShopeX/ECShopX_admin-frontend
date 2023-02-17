@@ -9,6 +9,9 @@ import WgtStore from './wgt_store'
 import WgtSearch from './wgt_search'
 import wgtHeadline from './wgt_headline'
 import wgtHotTopic from './wgt_hotTopic'
+import wgtGoodsScroll from './wgt_goodsScroll'
+import WgtMarquees from './wgt_marquees'
+
 
 export default {
   WgtSlider,
@@ -21,5 +24,7 @@ export default {
   WgtStore,
   WgtSearch,
   wgtHeadline,
-  wgtHotTopic
+  wgtHotTopic,
+  wgtGoodsScroll,
+  WgtMarquees
 }

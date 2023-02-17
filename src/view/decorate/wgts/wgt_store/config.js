@@ -1,4 +1,6 @@
 import { pickBy } from '@/utils'
+import AttrStore from './attr-store'
+import AttrGoods from './attr-goods'
 import AttrLabel from './attr-label'
 
 export default {
@@ -13,38 +15,70 @@ export default {
       component: 'color',
       value: '#fff'
     },
-    // {
-    //   label: '推荐店铺',
-    //   key: 'data',
-    //   component: function (h, { key }) {
-    //     return <AttrHotSetting v-model={this.value[key]} />
-    //   },
-    //   value: { imgUrl: '', data: [] }
-    // },
     {
       label: '宣传图',
-      key: 'data',
+      key: 'imgUrl',
       component: function (h, { key }) {
         return <SpImagePicker v-model={this.value[key]} size='small' />
       },
-      value: { imgUrl: '', data: [] }
+      value: ''
+    },
+    {
+      label: '推荐店铺',
+      key: 'distributor',
+      component: function (h, { key }) {
+        return (
+          <AttrStore
+            v-model={this.value[key]}
+            on-change={() => {
+              if (this.value[key].id === '') {
+                this.value['items'] = []
+                this.value['tags'] = []
+              }
+            }}
+          />
+        )
+      },
+      value: {
+        id: '',
+        logo: '',
+        name: ''
+      }
+    },
+    {
+      label: '店铺商品',
+      key: 'items',
+      component: function (h, { key }) {
+        return <AttrGoods v-model={this.value[key]} distributor={this.value['distributor']} />
+      },
+      value: []
     },
     {
       label: '商品标签',
-      key: 'data',
+      key: 'tags',
       component: function (h, { key }) {
-        return <AttrLabel v-model={this.value[key]} />
+        return <AttrLabel v-model={this.value[key]} distributor={this.value['distributor']} />
       },
-      value: { imgUrl: '', data: [] }
+      value: []
     }
   ],
   transformIn: (v) => {
-    const { name, base, config, data } = v
+    const {
+      name,
+      base,
+      seletedTags,
+      data: [{ id, items, logo, name: distributor_name }]
+    } = v
     return {
       name,
       ...base,
-      ...config,
-      data
+      tags: seletedTags,
+      distributor: {
+        id,
+        logo,
+        name: distributor_name
+      },
+      items
     }
   },
   transformOut: (v) => {

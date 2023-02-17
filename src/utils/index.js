@@ -235,9 +235,9 @@ export function getRegionIdByName(region, district) {
 export function pickBy(arr = [], keyMaps = {}) {
   const picker = (item) => {
     const ret = {}
-
     Object.keys(keyMaps).forEach((key) => {
       const val = keyMaps[key]
+      console.log(item,keyMaps)
 
       if (isString(val)) {
         ret[key] = _get(item, val)

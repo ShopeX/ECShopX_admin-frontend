@@ -10,7 +10,7 @@
     }
   }
   .btn-linkpath {
-    padding: 8px 16px;
+    padding: 8px;
     color: var(--themeColor);
     border: 1px solid var(--themeColor);
     background-color: #fff;
@@ -26,7 +26,7 @@
   <div class="comp-picker-link">
     <el-radio-group v-model="localValue.linkType" class="linktype-radio" @change="onChangeLinkType">
       <el-radio :label="0"> 选择路径 </el-radio>
-      <el-radio :label="1"> 自定义链接 </el-radio>
+      <el-radio v-if="isShowH5Link" :label="1"> 自定义链接 </el-radio>
     </el-radio-group>
     <div v-if="localValue.linkType == 0" class="btn-linkpath" @click="onPickerPath">
       {{ getLabelName() }}
@@ -47,7 +47,16 @@ import { cloneDeep } from 'lodash'
 import { LINK_PATH } from '@/consts'
 export default {
   name: 'CompPickerLink',
-  props: ['value'],
+  props: {
+    value: {
+      type: Object,
+      default: {}
+    },
+    isShowH5Link: { // 不展示自定义链接label true：展示
+      type: Boolean,
+      default: true
+    }
+  },
   data() {
     return {
       localValue: {

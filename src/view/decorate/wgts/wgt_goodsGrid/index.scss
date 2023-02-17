@@ -1,31 +1,69 @@
-.wgt-slider {
-  &.padded {
-    padding: 10px 0;
-  }
-  .wgt-hd {
-    padding: 10px;
-    .title {
-      font-size: 18px;
-      font-weight: 600;
-      color: #333;
-    }
-    .sub-title {
-      color: #666;
-      margin-left: 4px;
-    }
-  }
-  .wgt-bd {
-    position: relative;
-    &.spaced {
-      padding: 0 10px;
-      .slider-container {
-        right: 10px;
-        left: 10px;
+.wgt-goods-grid-goods {
+  display: flex;
+  flex-wrap: wrap;
+  box-sizing: border-box;
+  padding: 10px;
+  &-item {
+    width: calc(50% - 5px);
+    min-width: calc(50% - 5px);
+    max-width: calc(50% - 5px);
+    margin-top: 10px;
+    margin-right: 3px;
+    border-radius: 5px;
+    overflow: hidden;
+    border: 1px solid #ddd;
+    background: #ffffff;
+    &-img {
+      position: relative;
+      &::after {
+        display: flex;
+        padding-top: 100%;
+        content: '';
       }
-      .slider-pagination {
-        right: 10px;
-        left: 10px;
+      .goods-img {
+        display: block;
+        position: absolute;
+        width: 100%;
+        height: 100%;
       }
     }
+    &-info {
+      position: relative;
+      padding: 0 10px 10px 10px;
+      .goods-brand {
+        display: block;
+        width: 60px;
+        height: 60px;
+        margin-left: auto;
+        margin-right: auto;
+        margin-top: -25px;
+        margin-bottom: 5px;
+        border-radius: 50%;
+      }
+      .goods-title {
+        display: -webkit-box;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        -webkit-line-clamp: 2;
+        -webkit-box-orient: vertical;
+        margin-top: 5px;
+        line-height: 1.4;
+        font-size: 12px;
+      }
+      .price {
+        color: #00081c;
+      }
+      .cur {
+        font-size: 10px;
+      }
+
+    }
+  }
+}
+.wgt-goods-grid-goods-three-inrow{
+  .wgt-goods-grid-goods-item {
+    width: calc(33% - 5px);
+    min-width: calc(33% - 5px);
+    max-width: calc(33% - 5px);
   }
 }

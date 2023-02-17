@@ -26,10 +26,6 @@ export default {
     endText: {
       type: String,
       default: ''
-    },
-    callback: {
-      type: Function,
-      default: ''
     }
   },
   data () {

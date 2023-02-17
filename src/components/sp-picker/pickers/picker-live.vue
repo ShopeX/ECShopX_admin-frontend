@@ -45,7 +45,7 @@
       ref="finder"
       :class="['shop-finder', { 'no-multiple': !multiple }]"
       :other-config="{
-        height: 460
+        'max-height': 460
       }"
       url="/promotions/liverooms"
       :fixed-row-action="true"

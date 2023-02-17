@@ -16,13 +16,26 @@
   }
   .wgt-bd {
     .wgt-block {
-      margin: 0 10px;
+      padding: 10px;
     }
     .store-info {
       display: flex;
       align-items: center;
       .name {
         margin-left: 6px;
+      }
+      .tags {
+        display: flex;
+        margin-left: 6px;
+        .tag {
+          font-size: 12px;
+          margin-right: 4px;
+          border-radius: 4px;
+          color: #c3c3c3;
+          border: 1px solid #c3c3c3;
+          line-height: 12px;
+          padding: 2px 4px;
+        }
       }
     }
     .activity-goods {

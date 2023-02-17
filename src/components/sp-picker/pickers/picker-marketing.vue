@@ -45,7 +45,7 @@
       ref="finder"
       :class="['shop-finder', { 'no-multiple': !multiple }]"
       :other-config="{
-        height: 460
+        'max-height': 460
       }"
       :data="list"
       :fixed-row-action="true"

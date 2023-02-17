@@ -2,43 +2,13 @@
 .picker-shop {
   .sp-filter-form {
     padding: 8px 8px 0px 8px;
-    // .filter-form__bd {
-    //   margin-left: 16px;
-    // }
   }
-  // .filter-tools {
-  //   display: flex;
-  //   align-items: center;
-  //   padding: 8px;
-  //   .el-cascader,
-  //   .el-input {
-  //     width: 196px;
-  //     margin-right: 8px;
-  //   }
-  // }
   .sp-finder-hd {
     display: none;
   }
-  .sp-finder {
-    &.no-multiple {
-      .sp-finder-bd {
-        .el-table__fixed-header-wrapper {
-          table thead {
-            tr {
-              th {
-                &:nth-child(1) {
-                  .el-checkbox {
-                    display: none;
-                  }
-                }
-              }
-            }
-          }
-        }
-        .el-table__fixed-body-wrapper {
-          top: 38px !important;
-        }
-      }
+  .disableheadselection {
+    > .cell .el-checkbox__inner {
+      display: none;
     }
   }
   .el-pagination {
@@ -49,7 +19,6 @@
 </style>
 <template>
   <div class="picker-shop">
-    <!-- multiple：{{ multiple }}, {{ value }} -->
     <SpFilterForm :model="formData" size="small" @onSearch="onSearch" @onReset="onSearch">
       <SpFilterFormItem prop="region">
         <el-cascader
@@ -69,7 +38,8 @@
       ref="finder"
       :class="['shop-finder', { 'no-multiple': !multiple }]"
       :other-config="{
-        height: 460
+        'max-height': 460,
+        'header-cell-class-name': cellClass
       }"
       url="/distributors"
       :fixed-row-action="true"
@@ -163,7 +133,7 @@ export default {
         console.log('finderTable:', finderTable)
         finderTable.clearSelection()
         setTimeout(() => {
-          finderTable.$refs.finderTable.setSelection([row])
+          finderTable.$refs.finderTable.setSelection(selection.length > 0 ? [row] : [])
           // this.updateVal([row])
         })
       }

@@ -1,4 +1,7 @@
-import AttrSelectGoods from './attr-selectGoods'
+
+import { pickBy } from '@/utils'
+import AttrGoods from './attr-goods'
+import AttrLink from './attr-link.vue'
 
 export default {
   name: 'goodsGrid',
@@ -22,14 +25,53 @@ export default {
       label: '选择商品',
       key: 'data',
       component: function (h, { key }) {
-        return <AttrSelectGoods />
+        return <AttrGoods v-model={this.value[key]} />
       },
-      value: []
+      value: [
+        { imgUrl: '', linkPage: '', content: '', title: '', id: '' },
+        { imgUrl: '', linkPage: '', content: '', title: '', id: '' },
+        { imgUrl: '', linkPage: '', content: '', title: '', id: '' },
+        { imgUrl: '', linkPage: '', content: '', title: '', id: '' }
+      ]
+    },
+    {
+      label: '查看更多',
+      key: 'moreLink',
+      component: function (h, { key }) {
+        return <AttrLink v-model={this.value[key]} />
+      }
     }
   ],
   transformIn: (v) => {
-    const { name, base, config, data } = v
-    return v
+    const { name, base, config, data, list, distributor_id } = v
+    return {
+      name,
+      ...base,
+      ...config,
+      data,
+      list,
+      distributor_id
+    }
   },
-  transformOut: (v) => {}
+  transformOut: (v) => {
+    return pickBy(v, {
+      name: 'name',
+      base: (v) => {
+        return pickBy(v, {
+          title: 'title',
+          subtitle: 'subtitle',
+          padded: 'padded'
+        })
+      },
+      config: (v) => {
+        return pickBy(v, {
+          brand: 'brand',
+          showPrice: 'showPrice',
+          style: 'style',
+          moreLink: 'moreLink'
+        })
+      },
+      data: 'data'
+    })
+  }
 }

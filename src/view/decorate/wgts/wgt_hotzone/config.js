@@ -1,3 +1,4 @@
+import { pickBy } from '@/utils'
 import AttrHotSetting from './attr-hotsetting'
 
 export default {
@@ -32,6 +33,21 @@ export default {
     }
   },
   transformOut: (v) => {
-    return v
+    return pickBy(v, {
+      name: 'name',
+      base: (v) => {
+        return pickBy(v, {
+          title: 'title',
+          subtitle: 'subtitle',
+          padded: 'padded'
+        })
+      },
+      config: ({ data }) => {
+        return pickBy(data, {
+          imgUrl: 'imgUrl'
+        })
+      },
+      data: 'data.data'
+    })
   }
 }

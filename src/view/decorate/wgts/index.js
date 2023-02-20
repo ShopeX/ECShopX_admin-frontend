@@ -8,7 +8,7 @@ import WgtGoodsGridTab from './wgt_goodsGridTab'
 import WgtStore from './wgt_store'
 import wgtGoodsScroll from './wgt_goodsScroll'
 import WgtMarquees from './wgt_marquees'
-
+import WgtNearbyShop from './wgt_nearbyShop'
 
 export default {
   WgtSlider,
@@ -20,5 +20,6 @@ export default {
   WgtGoodsGridTab,
   WgtStore,
   wgtGoodsScroll,
-  WgtMarquees
+  WgtMarquees,
+  WgtNearbyShop
 }

@@ -183,7 +183,7 @@ export default {
             },
             action: {
               handler: async ([row]) => {
-                await this.$confirm(`确认操作？`, '提示')
+                await this.$confirm(`确认取消？`, '提示')
                 await this.$api.marketing.cancelPurchaseActivity(row.id)
                 this.$refs['finder'].refresh()
               }
@@ -199,8 +199,24 @@ export default {
             },
             action: {
               handler: async ([row]) => {
-                await this.$confirm(`确认操作？`, '提示')
+                await this.$confirm(`确认开始？`, '提示')
                 await this.$api.marketing.aheadPurchaseActivity(row.id)
+                this.$refs['finder'].refresh()
+              }
+            }
+          },
+          {
+            name: '开始',
+            key: 'modify',
+            type: 'button',
+            buttonType: 'text',
+            visible: (row) => {
+              return row.status == 'pending'
+            },
+            action: {
+              handler: async ([row]) => {
+                await this.$confirm(`确认开始？`, '提示')
+                await this.$api.marketing.activePurchaseActivity(row.id)
                 this.$refs['finder'].refresh()
               }
             }
@@ -211,11 +227,11 @@ export default {
             type: 'button',
             buttonType: 'text',
             visible: (row) => {
-              return row.status == 'pending' || row.status == 'ongoing'
+              return row.status == 'ongoing'
             },
             action: {
               handler: async ([row]) => {
-                await this.$confirm(`确认操作？`, '提示')
+                await this.$confirm(`确认暂停？`, '提示')
                 await this.$api.marketing.pendingPurchaseActivity(row.id)
                 this.$refs['finder'].refresh()
               }
@@ -231,7 +247,7 @@ export default {
             },
             action: {
               handler: async ([row]) => {
-                await this.$confirm(`确认操作？`, '提示')
+                await this.$confirm(`确认结束？`, '提示')
                 await this.$api.marketing.endPurchaseActivity(row.id)
                 this.$refs['finder'].refresh()
               }

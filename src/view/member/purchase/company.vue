@@ -161,7 +161,7 @@ export default {
               popperClass: 'sp-finder__popover-edit',
               change: async (v, row) => {
                 await this.$api.member.updateCompanySort({
-                  id: row.id,
+                  enterprise_id: row.id,
                   sort: v
                 })
                 this.$refs['finder'].refresh()

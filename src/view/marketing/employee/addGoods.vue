@@ -553,7 +553,7 @@ export default {
       this.total = total_count
       this.pagesQuery.setTotal(total_count)
     },
-    async onSelectSku({ item_id, item_name, item_bn, spec_items = [] }) {
+    async onSelectSku({ goods_id, item_id, item_name, item_bn, spec_items = [] }) {
       const { data } = await this.$picker.goodsSku({
         data: spec_items.map((item) => item.item_id),
         itemId: item_id,
@@ -561,16 +561,21 @@ export default {
         itemBn: item_bn
       })
       const { id } = this.$route.params
-      await this.$api.marketing.addGoodsInActivity({
+      await this.$api.marketing.selectSkuOfItems({
         activity_id: id,
+        goods_id: goods_id,
         item_id: data.map((item) => item.itemId)
       })
       this.pagesQuery.reset()
     },
-    async removeActivityItem({ item_id }) {
+    async removeActivityItem({ item_id, nospec }) {
       const { id } = this.$route.params
       await this.$confirm(`确认删除？`, '提示')
-      await this.$api.marketing.deleteActivityItem(id, item_id)
+      let params = {}
+      if (nospec == 'false') {
+        params['all'] = 1
+      }
+      await this.$api.marketing.deleteActivityItem(id, item_id, params)
       this.pagesQuery.reset()
     },
     async onModifyActivityItem(item, key) {

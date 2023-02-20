@@ -535,7 +535,10 @@ export default {
         relatives: {
           join: res.if_relative_join,
           num: res.invite_limit,
-          datetime: [res.relative_begin_time * 1000, res.relative_end_time * 1000],
+          datetime: [
+            res.relative_begin_time ? res.relative_begin_time * 1000 : '',
+            res.relative_end_time ? res.relative_end_time * 1000 : ''
+          ],
           type: res.if_share_limitfee ? '2' : '1',
           shareLimit: res.relative_limitfee
         },
@@ -577,7 +580,7 @@ export default {
         orderMiniAmount,
         modifyReceiveAddress
       } = this.activityRule
-      const params = {
+      let params = {
         name,
         title,
         pages_template_id,
@@ -589,12 +592,22 @@ export default {
         employee_limitfee: quota,
         if_relative_join: join,
         invite_limit: num,
-        relative_begin_time: relativesDateTime[0] ? moment(relativesDateTime[0]).unix() : '',
-        relative_end_time: relativesDateTime[1] ? moment(relativesDateTime[1]).unix() : '',
         if_share_limitfee: type == '2',
         relative_limitfee: shareLimit,
         minimum_amount: orderMiniAmount,
         close_modify_hours_after_activity: modifyReceiveAddress
+      }
+      if (relativesDateTime[0]) {
+        params = {
+          ...params,
+          relative_begin_time: moment(relativesDateTime[0]).unix()
+        }
+      }
+      if (relativesDateTime[1]) {
+        params = {
+          ...params,
+          relative_end_time: moment(relativesDateTime[1]).unix()
+        }
       }
       const { id } = this.$route.params
       if (id) {

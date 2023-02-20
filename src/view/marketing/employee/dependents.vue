@@ -22,7 +22,7 @@
       :hooks="{
         beforeSearch: beforeSearch
       }"
-      url="/employeepurchase/activities/users"
+      url="/employeepurchase/activity/users"
     />
   </div>
 </template>

@@ -575,6 +575,15 @@ export function addGoodsInActivity(params) {
   })
 }
 
+// 内购活动商品选择规格
+export function selectSkuOfItems(params) {
+  return fetch({
+    url: '/employeepurchase/activity/specitems',
+    method: 'post',
+    params
+  })
+}
+
 // 内购活动列表
 export function getPurchaseActivity(params) {
   return fetch({
@@ -602,10 +611,11 @@ export function getActivityItemDetail(activityId) {
 }
 
 // 删除内购活动商品
-export function deleteActivityItem(activityId, itemId) {
+export function deleteActivityItem(activityId, itemId, params) {
   return fetch({
     url: `/employeepurchase/activity/${activityId}/item/${itemId}`,
-    method: 'delete'
+    method: 'delete',
+    params
   })
 }
 

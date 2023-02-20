@@ -63,10 +63,11 @@ export default {
     }
   ],
   transformIn: (v) => {
+    debugger
     const {
       name,
       base,
-      seletedTags,
+      seletedTags = [],
       data: [{ id, items, logo, name: distributor_name }]
     } = v
     return {

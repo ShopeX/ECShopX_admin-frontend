@@ -88,7 +88,7 @@ export default {
       label: '',
       key: 'pageBackgroundColor',
       component: 'color',
-      value: '#fff',
+      value: '#f5f5f5',
       isShow: function () {
         return this.value.pageBackgroundStyle == '1'
       }

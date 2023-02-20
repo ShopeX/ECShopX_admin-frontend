@@ -16,7 +16,7 @@
         'spaced': value.spaced
       }"
     >
-      <!-- {{JSON.stringify(value.data)}} -->
+      <!-- 挂件自定义部分 -->
       <SpImage
         class="placeholder-item"
         :src="value.data.length > 1 ? value.data[0].imgUrl : null"
@@ -34,7 +34,7 @@
         "
       >
         <el-carousel-item
-          v-for="(item, index) in value.data.length > 0 ? value.data : [1]"
+          v-for="(item, index) in value.data"
           :key="index"
           class="slider-item"
           :class="{
@@ -76,6 +76,7 @@
           </div>
         </template>
       </div>
+      <!-- 挂件自定义部分 -->
     </div>
   </div>
 </template>

@@ -1,4 +1,3 @@
-
 import { pickBy } from '@/utils'
 import AttrGoods from './attr-goods'
 import AttrLink from './attr-link.vue'
@@ -6,16 +5,16 @@ import AttrLink from './attr-link.vue'
 export default {
   name: 'goodsGrid',
   setting: [
-    { label: '标题', key: 'title', component: 'input', value: '标题' },
-    { label: '副标题', key: 'subtitle', component: 'input', value: '副标题' },
-    { label: '组件间距', key: 'padded', component: 'switch', value: false },
+    { label: '标题', key: 'title', component: 'input', value: '爆品直邮' },
+    { label: '副标题', key: 'subtitle', component: 'input', value: '宅家买遍全法' },
+    { label: '组件间距', key: 'padded', component: 'switch', value: true },
     {
       label: '样式',
       key: 'style',
       component: 'radio',
       options: [
-        { name: '一行2个', label: 'grid' },
-        { name: '一行3个', label: 'grids' }
+        { name: '一行两个', label: 'grid' },
+        { name: '一行三个', label: 'grids' }
       ],
       value: 'grid'
     },
@@ -28,10 +27,42 @@ export default {
         return <AttrGoods v-model={this.value[key]} />
       },
       value: [
-        { imgUrl: '', linkPage: '', content: '', title: '', id: '' },
-        { imgUrl: '', linkPage: '', content: '', title: '', id: '' },
-        { imgUrl: '', linkPage: '', content: '', title: '', id: '' },
-        { imgUrl: '', linkPage: '', content: '', title: '', id: '' }
+        {
+          imgUrl: '',
+          linkPage: '',
+          content: '',
+          title: '商品名称',
+          id: '',
+          price: 0,
+          market_price: 0
+        },
+        {
+          imgUrl: '',
+          linkPage: '',
+          content: '',
+          title: '商品名称',
+          id: '',
+          price: 0,
+          market_price: 0
+        },
+        {
+          imgUrl: '',
+          linkPage: '',
+          content: '',
+          title: '商品名称',
+          id: '',
+          price: 0,
+          market_price: 0
+        },
+        {
+          imgUrl: '',
+          linkPage: '',
+          content: '',
+          title: '商品名称',
+          id: '',
+          price: 0,
+          market_price: 0
+        }
       ]
     },
     {

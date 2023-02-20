@@ -20,7 +20,7 @@
   .left-container {
     background: #fff;
     width: 240px;
-    .components-view {
+    .wgts-view {
       display: flex;
       flex-wrap: wrap;
     }
@@ -94,7 +94,7 @@
     position: absolute;
     top: 60px;
     left: 240px;
-    right: 380px;
+    right: 390px;
     bottom: 0;
     .weapp-template {
       width: 375px;
@@ -146,7 +146,7 @@
       }
     }
   }
-  .components-wrap {
+  .components-design-wrap {
     min-height: 750px;
     .sortable-ghost {
       // display: none;
@@ -161,7 +161,7 @@
   }
   .right-container {
     background: #fff;
-    width: 380px;
+    width: 390px;
     overflow: auto;
     position: absolute;
     top: 60px;

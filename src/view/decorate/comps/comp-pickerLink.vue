@@ -3,22 +3,29 @@
   .linktype-radio {
     margin-bottom: 6px;
     .el-radio {
-      margin-right: 12px;
+      margin-right: 10px;
     }
     .el-radio__label {
       padding-left: 2px;
     }
   }
   .btn-linkpath {
-    padding: 8px;
+    padding: 0 8px;
     color: var(--themeColor);
     border: 1px solid var(--themeColor);
     background-color: #fff;
     font-size: 12px;
+    height: 32px;
+    line-height: 32px;
     border-radius: 3px;
-    line-height: initial;
     max-width: 200px;
     @include text-overflow();
+  }
+  input::-webkit-input-placeholder {
+    font-size: 12px;
+  }
+  .el-input__inner {
+    padding: 0 8px;
   }
 }
 </style>
@@ -26,19 +33,20 @@
   <div class="comp-picker-link">
     <el-radio-group v-model="localValue.linkType" class="linktype-radio" @change="onChangeLinkType">
       <el-radio :label="0"> 选择路径 </el-radio>
-      <el-radio v-if="isShowH5Link" :label="1"> 自定义链接 </el-radio>
+      <el-radio v-if="isShowH5Link" :label="1"> H5链接 </el-radio>
     </el-radio-group>
     <div v-if="localValue.linkType == 0" class="btn-linkpath" @click="onPickerPath">
       {{ getLabelName() }}
     </div>
-    <div v-else>
-      <el-input
-        v-model="localValue.linkUrl"
-        type="text"
-        placeholder="请填写自定义链接"
-        @change="onChangeLinkUrl"
-      />
-    </div>
+    <el-input
+      v-else
+      v-model="localValue.linkUrl"
+      class="h5-link"
+      size="small"
+      type="text"
+      placeholder="请填写自定义链接"
+      @change="onChangeLinkUrl"
+    />
   </div>
 </template>
 
@@ -52,7 +60,8 @@ export default {
       type: Object,
       default: {}
     },
-    isShowH5Link: { // 不展示自定义链接label true：展示
+    isShowH5Link: {
+      // 不展示自定义链接label true：展示
       type: Boolean,
       default: true
     }

@@ -87,7 +87,7 @@ export default {
     }
 
     return (
-      <div className='attr-panel'>
+      <div class='attr-panel'>
         {setting.map((item, index) => (
           <div
             class={[

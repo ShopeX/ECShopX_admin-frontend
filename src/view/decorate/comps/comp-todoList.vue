@@ -6,11 +6,13 @@
     margin-bottom: 10px;
   }
 
-  // .item-bd {
-  //   flex: 1;
-  // }
+  .item-bd {
+    flex: 1;
+  }
+
   .item-fd {
     margin-left: 10px;
+    width: 42px;
   }
 
   .icon-th-list {
@@ -20,10 +22,10 @@
 </style>
 <template>
   <div class="comp-todolist">
-    <draggable :list="localValue" :options="dragOptions" style="width:100%" handle=".mover">
+    <draggable :list="localValue" :options="dragOptions" style="width: 100%" handle=".mover">
       <div v-for="(item, index) in localValue" :key="`todo-item__${index}`" class="todo-list">
         <div class="item-bd">
-          <slot name="myslot" :data="item" :index="index" />
+          <slot name="body" :data="item" :index="index" />
         </div>
         <div class="item-fd">
           <i class="iconfont icon-th-list mover" />
@@ -59,16 +61,22 @@ export default {
         animation: 300,
         forceFallback: false,
         scroll: true
-      },
+      }
     }
   },
-  created() {
-    this.localValue = this.value
+  watch: {
+    value: {
+      handler(nVal) {
+        this.localValue = this.value
+      },
+      deep: true,
+      immediate: true
+    }
   },
   methods: {
     handleAddItem() {
-      if(this.localValue.length>=this.max){
-        this.$message.warning(`最多添加${this.max}条`)
+      if (this.localValue.length >= this.max) {
+        this.$message.error(`最多添加${this.max}条`)
         return
       }
       this.$emit('onAddItem')

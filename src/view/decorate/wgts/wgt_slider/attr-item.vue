@@ -8,13 +8,17 @@
 </style>
 <template>
   <div>
-    <div v-for="(item, index) in value" :key="`slider-item__${index}`" class="slider-item">
-      <SpImagePicker v-model="item.imgUrl" size="small" />
-      <CompPickerLink :value="item" @change="(e) => onChangeLink(e, index)" />
-    </div>
-    <el-button class="btn btn-add" size="small" plain @click="handleClickAdd">
+    <CompTodoList v-model="localValue" :max="5" @onAddItem="handleClickAdd">
+      <template slot="body" slot-scope="scope">
+        <div class="slider-item">
+          <SpImagePicker v-model="scope.data.imgUrl" size="small" />
+          <CompPickerLink :value="scope.data" @change="(e) => onChangeLink(e, scope.index)" />
+        </div>
+      </template>
+    </CompTodoList>
+    <!-- <el-button class="btn btn-add" size="small" plain @click="handleClickAdd">
       {{ `添加图片(${value.length}/5)` }}
-    </el-button>
+    </el-button> -->
   </div>
 </template>
 
@@ -22,10 +26,12 @@
 import Vue from 'vue'
 import { cloneDeep } from 'lodash'
 import CompPickerLink from '../../comps/comp-pickerLink'
+import CompTodoList from '../../comps/comp-todoList'
 export default {
   name: 'AttrItem',
   components: {
-    CompPickerLink
+    CompPickerLink,
+    CompTodoList
   },
   props: ['value'],
   data() {
@@ -46,22 +52,24 @@ export default {
       const { data } = await this.$picker.image({
         data: [],
         multiple: true,
-        num: 5
+        num: 5 - this.localValue.length
       })
 
-      this.localValue = data.map((item) => {
-        return {
-          button: '',
-          content: '',
-          id: '',
-          imgUrl: item.url,
-          linkPage: '',
-          mainTitle: '',
-          subtitle: '',
-          subtitleTow: '',
-          template: ''
-        }
-      })
+      this.localValue = this.localValue.concat(
+        data.map((item) => {
+          return {
+            button: '',
+            content: '',
+            id: '',
+            imgUrl: item.url,
+            linkPage: '',
+            mainTitle: '',
+            subtitle: '',
+            subtitleTow: '',
+            template: ''
+          }
+        })
+      )
     },
     onChangeLink(e, index) {
       const v = cloneDeep(this.localValue[index])

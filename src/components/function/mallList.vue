@@ -801,7 +801,8 @@ export default {
     editTemplate(pages_template_id) {
       // this.templateVisible = true
       // this.currTemplateId = pages_template_id
-      window.open(`/wxapp/manage/decorate?id=${pages_template_id}`, '_blank')
+      // window.open(`/wxapp/manage/decorate?id=${pages_template_id}`, '_blank')
+      this.$router.push(`/wxapp/manage/decorate?id=${pages_template_id}`)
     },
     copyTemplate(pages_template_id) {
       let params = {

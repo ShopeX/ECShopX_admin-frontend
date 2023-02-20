@@ -2,27 +2,92 @@
 <template>
   <div
     :class="{
-      'wgt-slider': true,
+      'wgt-goods-grid': true,
       'padded': value.padded
     }"
   >
     <div v-if="value.title || value.subtitle" class="wgt-hd">
-      <span class="title">{{ value.title }}</span>
-      <span class="sub-title">{{ value.subtitle }}</span>
+      <div>
+        <span class="title">{{ value.title }}</span>
+        <span class="sub-title">{{ value.subtitle }}</span>
+      </div>
+      <div class="wgt-more" />
     </div>
     <div class="wgt-bd">
-      <!-- 自定义部分 -->
-      <div
+      <!-- 挂件自定义部分 -->
+      <div v-if="value.style === 'grid'" class="list-grid">
+        <div class="lf-box">
+          <div v-for="(item, index) in leftGoodsList" :key="`left-item__${index}`" class="item-box">
+            <SpImage :src="item.imgUrl" />
+            <div class="item-info" :style="{ 'padding-top': value.brand ? '30px' : '4px' }">
+              <div v-if="value.brand" class="brand-logo">
+                <SpImage :src="item.imgUrl" :width="60" :height="60" circle />
+              </div>
+              <div class="name">{{ item.title }}</div>
+              <div v-if="value.showPrice" class="price">
+                <SpPrice class="item-price" :value="item.price / 100" :size="15" />
+                <SpPrice
+                  class="line-price"
+                  :value="item.market_price / 100"
+                  :size="13"
+                  line-through
+                />
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="rg-box">
+          <div
+            v-for="(item, index) in rightGoodsList"
+            :key="`right-item__${index}`"
+            class="item-box"
+          >
+            <SpImage :src="item.imgUrl" />
+            <div class="item-info" :style="{ 'padding-top': value.brand ? '30px' : '4px' }">
+              <div v-if="value.brand" class="brand-logo">
+                <SpImage :src="item.imgUrl" :width="60" :height="60" circle />
+              </div>
+              <div class="name">{{ item.title }}</div>
+              <div v-if="value.showPrice" class="price">
+                <SpPrice class="item-price" :value="item.price / 100" :size="15" />
+                <SpPrice
+                  class="line-price"
+                  :value="item.market_price / 100"
+                  :size="13"
+                  line-through
+                />
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div v-else class="list-grids">
+        <div v-for="(item, index) in value.data" :key="`grids-item__${index}`" class="item-box">
+          <SpImage :src="item.imgUrl" />
+          <div class="item-info" :style="{ 'padding-top': value.brand ? '30px' : '4px' }">
+            <div v-if="value.brand" class="brand-logo">
+              <SpImage :src="item.imgUrl" :width="60" :height="60" circle />
+            </div>
+            <div class="name">{{ item.title }}</div>
+            <div v-if="value.showPrice" class="price">
+              <SpPrice class="item-price" :value="item.price / 100" :size="15" />
+              <SpPrice
+                class="line-price"
+                :value="item.market_price / 100"
+                :size="13"
+                line-through
+              />
+            </div>
+          </div>
+        </div>
+      </div>
+      <!-- <div
         :class="{
           'wgt-goods-grid-goods': true,
           'wgt-goods-grid-goods-three-inrow': value.style === 'grids'
         }"
       >
-        <div
-          v-for="(item, index) in value.data.slice(0, 50)"
-          :key="index"
-          class="wgt-goods-grid-goods-item"
-        >
+        <div v-for="(item, index) in value.data" :key="index" class="wgt-goods-grid-goods-item">
           <div class="wgt-goods-grid-goods-item-img">
             <SpImage class="goods-img" :src="wximageurl + item.imgUrl" />
           </div>
@@ -62,7 +127,8 @@
             </div>
           </div>
         </div>
-      </div>
+      </div> -->
+      <!-- 挂件自定义部分 -->
     </div>
   </div>
 </template>
@@ -83,7 +149,26 @@ export default {
       colorPrimary: ''
     }
   },
-  computed: {},
+  computed: {
+    leftGoodsList() {
+      const { data } = this.value
+      const leftFilterGoods = data.filter((item, index) => {
+        if (index % 2 == 0) {
+          return item
+        }
+      })
+      return leftFilterGoods
+    },
+    rightGoodsList() {
+      const { data } = this.value
+      const rightFilterGoods = data.filter((item, index) => {
+        if (index % 2 == 1) {
+          return item
+        }
+      })
+      return rightFilterGoods
+    }
+  },
   created() {},
   mounted() {
     this.colorPrimary = this.$store.getters.color_theme.primary

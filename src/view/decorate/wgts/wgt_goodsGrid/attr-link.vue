@@ -1,8 +1,12 @@
 <style lang="scss">
-
+.attr-link {
+  .comp-picker-link {
+    margin-top: 8px;
+  }
+}
 </style>
 <template>
-  <div class="goods-select">
+  <div class="attr-link">
     <CompPickerLink :value="localValue" @change="(e) => onChangeLink(e)" />
   </div>
 </template>

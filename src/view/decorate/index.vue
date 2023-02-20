@@ -2,14 +2,14 @@
 <template>
   <div class="page-decorate-index">
     <div class="decorate-hd">
-      <el-button @click="onSaveTemplate"> 后退 </el-button>
+      <el-button @click="onExit"> 后退 </el-button>
       <el-button @click="onSaveTemplate"> 保存 </el-button>
     </div>
     <div class="decorate-bd">
       <div class="left-container">
         <draggable
-          class="components-view"
-          :chosen-class="'components-view-chosen'"
+          class="wgts-view"
+          :chosen-class="'wgts-chosen'"
           :list="widgets"
           :group="{
             name: 'easyview',
@@ -45,7 +45,7 @@
         <div class="weapp-template">
           <Header :value="headerData" @change="handleClickHeader" />
           <div class="weapp-body" :style="weappBodyStyle">
-            <draggable :list="contentComps" group="easyview" class="components-wrap">
+            <draggable :list="contentComps" group="easyview" class="components-design-wrap">
               <div
                 v-for="(wgt, index) in contentComps"
                 :key="`wgt-render-item__${index}`"
@@ -59,7 +59,7 @@
                 <div class="wgt-tools" :class="{ active: activeCompIndex == index }">
                   <i class="iconfont icon-arrow-alt-circle-up1" />
                   <i class="iconfont icon-arrow-alt-circle-dow1" />
-                  <i class="iconfont icon-copy1" @click="onCopyComp(wgt)" />
+                  <i class="iconfont icon-copy1" @click="onCopyComp(index, wgt)" />
                   <i class="iconfont icon-trash-alt1" @click="onDeleteComp(index)" />
                 </div>
                 <component :is="wgt.name" :value="wgt" />
@@ -75,6 +75,7 @@
           </div>
           <attrPanel
             v-model="contentComps[activeCompIndex]"
+            :class="`wgt-attr-${contentComps[activeCompIndex].name}`"
             :info="getComponentAttr(contentComps[activeCompIndex])"
           />
         </div>
@@ -90,7 +91,8 @@
 <script>
 import Vue from 'vue'
 import draggable from 'vuedraggable'
-import wgts from './wgts'
+import { cloneDeep } from 'lodash'
+import gWgts from './wgts'
 import comps from './comps'
 import attrPanel from './attr_panel'
 import Header from './wgts/wgt-header'
@@ -140,6 +142,8 @@ export default {
   methods: {
     regsiterWgts() {
       console.log('wgts:', wgts, comps)
+      const { scene = '1001' } = this.$route.query
+      const wgts = gWgts[scene]
       Object.keys(wgts).forEach((index) => {
         this.widgets.push(wgts[index])
         Vue.component(wgts[index].name, wgts[index])
@@ -234,8 +238,9 @@ export default {
       })
       console.log('getTemplateDetial:', this.contentComps)
     },
-    onCopyComp(wgt) {
+    onCopyComp(index, wgt) {
       // this.contentComps.
+      this.contentComps.splice(index + 1, 0, cloneDeep(wgt))
     },
     onDeleteComp(index) {
       this.contentComps.splice(index, 1)
@@ -257,6 +262,9 @@ export default {
         })
       })
       this.$message.success('保存成功')
+    },
+    onExit() {
+      this.$router.go(-1)
     }
   }
 }

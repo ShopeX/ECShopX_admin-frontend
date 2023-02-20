@@ -16,7 +16,7 @@ export default {
       max: 50000,
       step: 1000
     },
-    { label: '组件间距', key: 'padded', component: 'switch', value: false },
+    { label: '组件间距', key: 'padded', component: 'switch', value: true },
     { label: '圆角图片', key: 'rounded', component: 'switch', value: false },
     {
       label: '指示点样式',
@@ -68,7 +68,19 @@ export default {
       component: function (h, { key }) {
         return <AttrItem v-model={this.value[key]} />
       },
-      value: []
+      value: [
+        {
+          button: '',
+          content: '',
+          id: '',
+          imgUrl: '',
+          linkPage: '',
+          mainTitle: '',
+          subtitle: '',
+          subtitleTow: '',
+          template: ''
+        }
+      ]
     }
   ],
   transformIn: (v) => {

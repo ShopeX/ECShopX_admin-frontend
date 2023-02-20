@@ -21,11 +21,14 @@
 <template>
   <div class="attr-class">
     <CompTodoList v-model="localValue" :max="20" @onAddItem="handleAddTabs">
-      <template slot="myslot" slot-scope="scope">
+      <template slot="body" slot-scope="scope">
         <div class="cate-item">
           <el-input v-model="scope.data.tabTitle" class="cate-name" size="small" />
-          <CompButton :clearable="scope.data.goodsList.length > 0"
-            @click="handleSelectGoods(scope.data.goodsList, scope.index)" @remove="onRemoveItem(scope.index)">
+          <CompButton
+            :clearable="scope.data.goodsList.length > 0"
+            @click="handleSelectGoods(scope.data.goodsList, scope.index)"
+            @remove="onRemoveItem(scope.index)"
+          >
             {{
               scope.data.goodsList.length > 0 ? `已选: ${scope.data.goodsList.length}` : `选择商品`
             }}

@@ -40,24 +40,26 @@ export default {
     async handleClickAdd() {
       const ids = this.value.map(({ goodsId }) => goodsId)
       const { data } = await this.$picker.goods({
+        data: ids,
         multiple: true
       })
       const values = []
-      data?.length && data.forEach((item) => {
-        if (item.itemId) {
-          const obj = {
-            imgUrl: item.pics[0],
-            title: item.itemName,
-            goodsId: item.itemId,
-            brand: item.brand_logo,
-            price: item.price,
-            distributor_id: item.distributor_id,
-            itemEnName: item.item_en_name,
-            promotionActivity: item.promotion_activity
+      data?.length &&
+        data.forEach((item) => {
+          if (item.itemId) {
+            const obj = {
+              imgUrl: item.pics[0],
+              title: item.itemName,
+              goodsId: item.itemId,
+              brand: item.brand_logo,
+              price: item.price,
+              distributor_id: item.distributor_id,
+              itemEnName: item.item_en_name,
+              promotionActivity: item.promotion_activity
+            }
+            values.push(obj)
           }
-          values.push(obj)
-        }
-      })
+        })
       this.localValue = values
     },
     onRemove() {

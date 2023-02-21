@@ -19,23 +19,9 @@
   .sp-finder-hd {
     display: none;
   }
-  .sp-finder {
-    &.no-multiple {
-      .sp-finder-bd {
-        .el-table__fixed-header-wrapper {
-          table thead {
-            tr {
-              th {
-                &:nth-child(1) {
-                  .el-checkbox {
-                    display: none;
-                  }
-                }
-              }
-            }
-          }
-        }
-      }
+  .disableheadselection {
+    > .cell .el-checkbox__inner {
+      display: none;
     }
   }
 }
@@ -61,7 +47,10 @@
 
     <SpFinder
       ref="finder"
-      :class="['shop-finder', { 'no-multiple': !multiple }]"
+      :other-config="{
+        'max-height': 460,
+        'header-cell-class-name': cellClass
+      }"
       url="/discountcard/list"
       :fixed-row-action="true"
       :setting="{
@@ -148,21 +137,12 @@ export default {
   },
   methods: {
     beforeSearch(params) {
-      // params = {
-      //   page_no: params.page,
-      //   page_size: params.pageSize,
-      //   end_date: 1,
-      //   from: 'btn'
-      // }
       params = {
         page_no: params.page,
         page_size: params.pageSize,
         end_date: 1,
         from: 'btn'
       }
-      // params = {
-      //   ...params
-      // }
       return params
     },
     afterSearch(response) {
@@ -190,6 +170,15 @@ export default {
       }
     },
     onSelectionChange(selection) {
+      // if (this.multiple) {
+      //   const { num } = this.value
+      //   if (num) {
+      //     if (selection.length > num) {
+      //       this.$message.error(`最多选择${num}张优惠券`)
+      //       return
+      //     }
+      //   }
+      // }
       this.updateVal(selection)
     },
     cardTypeFormatter({ card_type }) {

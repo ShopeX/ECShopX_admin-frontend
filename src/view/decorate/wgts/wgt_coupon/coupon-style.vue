@@ -7,7 +7,7 @@
     text-align: center;
   }
   .el-radio__label {
-    font-size: 12px;
+    font-size: 13px;
   }
   .style-icon {
     width: 64px;

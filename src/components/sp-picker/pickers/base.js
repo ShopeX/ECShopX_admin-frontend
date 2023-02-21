@@ -59,6 +59,15 @@ export default {
     },
     getVal() {
       console.log(`sp-picker getVal:`, this, JSON.stringify(this.localVal))
+      if (this.multiple) {
+        console.log('this.value', this, this.value)
+        const { num } = this.value
+        if (num) {
+          if (this.localVal.data.length > num) {
+            throw new Error(`最多选择${num}条数据`)
+          }
+        }
+      }
       return this.localVal
     },
     updateVal(val) {

@@ -12,19 +12,7 @@ import wgtHotTopic from './wgt_hotTopic'
 import wgtGoodsScroll from './wgt_goodsScroll'
 import WgtMarquees from './wgt_marquees'
 import WgtFloorImg from './wgt_floorImg'
-
-// export default {
-//   WgtSlider,
-//   WgtGoodsGrid,
-//   WgtHotZone,
-//   WgtFilm,
-//   WgtCoupon,
-//   WgtShowCase,
-//   WgtGoodsGridTab,
-//   WgtStore,
-//   wgtGoodsScroll,
-//   WgtMarquees
-// }
+import WgtNearbyShop from './wgt_nearbyShop'
 
 // 首页装修
 const SCENE_1001 = {

@@ -4,9 +4,9 @@ import CouponItem from './coupon-item'
 export default {
   name: 'coupon',
   setting: [
-    { label: '标题', key: 'title', component: 'input', value: '标题' },
-    { label: '副标题', key: 'subtitle', component: 'input', value: '副标题' },
-    { label: '组件间距', key: 'padded', component: 'switch', value: false },
+    { label: '标题', key: 'title', component: 'input', value: '到店优惠' },
+    { label: '副标题', key: 'subtitle', component: 'input', value: '游客专享福利' },
+    { label: '组件间距', key: 'padded', component: 'switch', value: true },
     {
       label: '样式',
       key: 'style',
@@ -21,7 +21,7 @@ export default {
       component: function (h, { key }) {
         return <CouponItem v-model={this.value[key]} />
       },
-      value: {}
+      value: [{}]
     }
   ],
   transformIn: (v) => {

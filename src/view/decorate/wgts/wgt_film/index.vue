@@ -15,6 +15,21 @@
       margin-left: 4px;
     }
   }
+  .video-player {
+    .vjs-big-play-button {
+      display: none;
+    }
+    .vjs-error-display {
+      &::before {
+        display: none;
+      }
+    }
+    .vjs-modal-dialog-content {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+  }
 }
 </style>
 <template>
@@ -28,12 +43,8 @@
       <span class="title">{{ value.title }}</span>
       <span class="sub-title">{{ value.subtitle }}</span>
     </div>
-    <div
-      class="wgt-bd"
-      :class="{
-        'spaced': value.spaced
-      }"
-    >
+    <div class="wgt-bd">
+      <!-- 挂件自定义部分 -->
       <video-player
         :options="{
           aspectRatio: aspectRatio,
@@ -43,7 +54,8 @@
               src: sourceUrl
             }
           ],
-          notSupportedMessage: '无可播放媒体资源',
+          notSupportedMessage: '添加视频源',
+          suppressNotSupportedError: true,
           controlBar: false
         }"
       />

@@ -7,7 +7,7 @@
 }
 .coupon {
   flex: 1;
-  font-size: 13px;
+  font-size: 14px;
 }
 .icon-trash-alt1 {
   color: #888;
@@ -16,21 +16,31 @@
 </style>
 <template>
   <div class="coupon-wrap">
-    <div v-for="(item, index) in value" :key="`coupon-item__${index}`" class="coupon-item">
-      <SpImagePicker v-model="item.imgUrl" size="small" />
-      <div class="coupon">{{ item.title }}</div>
-      <div><i class="iconfont icon-trash-alt1" @click="deleteCouponItem(index)" /></div>
-    </div>
-    <el-button class="btn btn-add" size="small" plain @click="handleClickAdd">
+    <CompTodoList v-model="localValue" :max="20" @onAddItem="handleAddTabs">
+      <template slot="body" slot-scope="scope">
+        <div class="coupon-item">
+          <SpImagePicker v-model="scope.data.imgUrl" size="small" />
+          <div>
+            <div class="coupon">{{ scope.data.title || '优惠券名称' }}</div>
+            <el-button type="text">更换优惠券</el-button>
+          </div>
+          <!-- <div><i class="iconfont icon-trash-alt1" @click="deleteCouponItem(index)" /></div> -->
+        </div>
+      </template>
+    </CompTodoList>
+
+    <!-- <el-button class="btn btn-add" size="small" plain @click="handleClickAdd">
       {{ `添加优惠券(${value.length}/3)` }}
-    </el-button>
+    </el-button> -->
   </div>
 </template>
 
 <script>
 import { cloneDeep } from 'lodash'
+import CompTodoList from '../../comps/comp-todoList'
 export default {
   name: 'CouponItem',
+  components: { CompTodoList },
   props: {
     value: {
       type: Array
@@ -50,8 +60,10 @@ export default {
     this.localValue = cloneDeep(this.value)
   },
   methods: {
-    async handleClickAdd() {
-      const { data } = await this.$picker.coupon()
+    async handleAddTabs() {
+      const { data } = await this.$picker.coupon({
+        num: 3
+      })
       this.localValue = data.map((item) => {
         debugger
         return {

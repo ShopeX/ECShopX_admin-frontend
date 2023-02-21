@@ -1,3 +1,5 @@
+import { pickBy } from '@/utils'
+
 export const proportions = [
   {
     label: 0,
@@ -31,7 +33,7 @@ export default {
       label: '选择视频',
       key: 'data',
       component: function (h, { key }) {
-        return <SpFilmPicker v-model={this.value[key]} />
+        return <SpVideoPicker v-model={this.value[key]} size='small' />
       },
       value: {}
     },
@@ -44,8 +46,35 @@ export default {
     }
   ],
   transformIn: (v) => {
-    const { name, base, config, data } = v
-    return v
+    const {
+      name,
+      base,
+      data: [_data]
+    } = v
+    return {
+      name,
+      ...base,
+      data: _data
+    }
   },
-  transformOut: (v) => {}
+  transformOut: (v) => {
+    return pickBy(v, {
+      name: 'name',
+      base: (v) => {
+        return pickBy(v, {
+          title: 'title',
+          subtitle: 'subtitle',
+          padded: 'padded'
+        })
+      },
+      data: ({ data }) => {
+        return [
+          pickBy(data, {
+            media_id: 'image_id',
+            url: 'url'
+          })
+        ]
+      }
+    })
+  }
 }

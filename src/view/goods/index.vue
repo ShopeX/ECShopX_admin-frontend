@@ -56,9 +56,9 @@
 import _uniqBy from 'lodash/uniqBy'
 import richTextEditor from '@/components/function/richTextEditor'
 import { isObject, isArray } from '@/utils'
-import CmGoodsParams from './comps/CmGoodsParams'
-import CmSpecParams from './comps/CmSpecParams'
-import CmSkuParams from './comps/CmSkuParams'
+import GoodsParams from './components/GoodsParams'
+import SpecParams from './components/SpecParams'
+import SkuParams from './components/SkuParams'
 import sku from '../../store/modules/sku'
 export default {
   async beforeRouteLeave(to, from, next) {
@@ -227,6 +227,11 @@ export default {
           component: ({ key }, value) => (
             <el-cascader
               v-model={value[key]}
+              class={[
+                {
+                  'is-error': value[key]
+                }
+              ]}
               clearable
               {...{ props: cascaderProps }}
               options={this.saleCategoryList}
@@ -267,7 +272,7 @@ export default {
         {
           key: 'paramsData',
           component: ({ key }, value) => {
-            return <CmGoodsParams v-model={value[key]} />
+            return <GoodsParams v-model={value[key]} />
           },
           isShow: (item, { paramsData }) => {
             return paramsData.length > 0
@@ -301,7 +306,7 @@ export default {
           // 单规格组件
           key: 'specParams',
           component: ({ key }, value) => {
-            return <CmSpecParams v-model={value[key]} ref='specParams' />
+            return <SpecParams v-model={value[key]} ref='specParams' />
           },
           isShow: (item, { isSpecs }) => {
             return !isSpecs
@@ -323,7 +328,7 @@ export default {
         {
           key: 'skuParams',
           component: ({ key }, value) => {
-            return <CmSkuParams v-model={value[key]} ref='cmSkuParams' />
+            return <SkuParams v-model={value[key]} ref='skuParams' />
           },
           isShow: (item, { isSpecs }) => {
             return isSpecs
@@ -556,7 +561,7 @@ export default {
       this.resolveParamsData(item_params_list, item_params)
       if (!nospec) {
         this.resolveSkuParams(item_spec_list, spec_items)
-        this.$refs['cmSkuParams'].onSkuChange({ spec_images, spec_items })
+        this.$refs['skuParams'].onSkuChange({ spec_images, spec_items })
       }
 
       if (tdk_content) {

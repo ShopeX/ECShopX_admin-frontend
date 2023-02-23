@@ -1,10 +1,10 @@
 <style lang="scss">
 .picker-zitilist {
   .sp-filter-form {
-    margin-bottom: 0;
-    .filter-form__bd {
-      margin-left: 16px;
-    }
+    padding: 8px 8px 0 8px;
+  }
+  .sp-finder-hd {
+    display: none;
   }
   .filter-tools {
     display: flex;
@@ -20,7 +20,7 @@
 </style>
 <template>
   <div class="picker-zitilist">
-    <SpFilterForm :model="formData" @onSearch="onSearch" @onReset="onSearch">
+    <SpFilterForm :model="formData" size="small" @onSearch="onSearch" @onReset="onSearch">
       <SpFilterFormItem prop="keywords">
         <el-input v-model="formData.keywords" placeholder="输入自提点名称、地址关键词" />
       </SpFilterFormItem>

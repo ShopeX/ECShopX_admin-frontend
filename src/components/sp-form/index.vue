@@ -12,6 +12,8 @@
       .el-input__inner {
         border-color: #d9d9d9;
       }
+    }
+    &.is-error {
       .is-error {
         .el-input__inner {
           border-color: #f56c6c;
@@ -20,7 +22,6 @@
     }
     &.inline {
       display: inline-block;
-      margin-right: 20px;
       vertical-align: top;
     }
     &.no-label {
@@ -175,7 +176,7 @@ export default {
           clearable
           class={className}
           type='text'
-          disabled={disabled}
+          disabled={isFunction(disabled) ? disabled() : disabled}
           maxlength={maxlength}
           showWordLimit={!!maxlength}
           placeholder={placeholder || '请输入内容'}
@@ -209,10 +210,10 @@ export default {
     },
     _renderSelect(item) {
       const { value } = this
-      const { key, placeholder, options, onChange = () => {} } = item
+      const { key, placeholder, options, clearable, onChange = () => {} } = item
       return (
         <el-select
-          clearable
+          clearable={clearable ?? true}
           v-model={value[key]}
           placeholder={placeholder || '请选择'}
           onChange={onChange}
@@ -324,10 +325,10 @@ export default {
 
     let rules = {}
     formList.forEach((item) => {
-      if (item.required) {
-        rules[item.key] = [{ required: true, message: item.message || '不能为空' }]
-      } else if (item.validator) {
+      if (item.validator) {
         rules[item.key] = [{ validator: item.validator }]
+      } else if (item.required) {
+        rules[item.key] = [{ required: true, message: item.message || '不能为空' }]
       }
     })
     this.localComps = localComps
@@ -353,7 +354,6 @@ export default {
             return (
               <div class='sp-form-group' v-show={this.getItemShow(item)}>
                 {item.label}
-                <span class='form-item-tip' domPropsInnerHTML={item.tip}></span>
               </div>
             )
           } else {
@@ -366,11 +366,12 @@ export default {
                   item.display,
                   {
                     'no-label': typeof item.label == 'undefined',
-                    'custom-error': typeof item.validator != 'undefined'
+                    'custom-error': typeof item.component != 'undefined',
+                    'is-required': item.required || item.validator
                   }
                 ]}
                 style={{
-                  width: item.width ? item.width : ''
+                  width: item.width ? item.width : 'auto'
                 }}
                 showMessage={typeof item.showMessage == 'undefined' ? true : item.showMessage}
                 v-show={this.getItemShow(item)}

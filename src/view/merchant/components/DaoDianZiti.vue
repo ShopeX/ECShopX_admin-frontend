@@ -1,10 +1,16 @@
-<style lang="scss"></style>
+<style lang="scss">
+.daodianziti {
+  line-height: normal;
+  margin-top: 13px;
+}
+</style>
 <template>
-  <div>
+  <div class="daodianziti">
     <el-button type="text" @click="onSelectZiti">选择自提点</el-button>
     <SpFinder
       ref="finder"
       no-selection
+      :front-paging="frontPage"
       :data="finderData"
       :url="finderUrl"
       :setting="setting"
@@ -22,8 +28,11 @@ export default {
   name: 'DaoDianZiti',
   data() {
     return {
+      distributor_id: '',
+      zitiList: [],
       finderData: [],
       finderUrl: '',
+      frontPage: true,
       setting: createSetting({
         actions: [
           {
@@ -58,12 +67,20 @@ export default {
             render: (h, { row }) =>
               h('span', {}, `${row.province}${row.city}${row.area}${row.address}`)
           },
-          { name: '联系电话', key: 'contract_phone' }
+          { name: '联系电话', key: 'contract_phone', width: '150px' }
         ]
       })
     }
   },
-  created() {},
+  created() {
+    const { distributor_id } = this.$route.query
+    if (distributor_id) {
+      this.finderUrl = '/pickuplocation/list'
+      this.finderData = undefined
+      this.frontPage = false
+      this.distributor_id = distributor_id
+    }
+  },
   methods: {
     beforeSearch(params) {
       params = {
@@ -75,6 +92,26 @@ export default {
     afterSearch(response) {
       const { list } = response.data.data
       this.zitiList = list
+    },
+    async onSelectZiti() {
+      const { data } = await this.$picker.zitilist({
+        data: this.zitiList.map((item) => item.id)
+      })
+
+      if (this.distributor_id) {
+        const ids = data.map((item) => item.id)
+        await this.$api.pickuplocation.bindZitiLocation({
+          id: ids,
+          rel_distributor_id: this.distributor_id
+        })
+        this.$refs['finder'].refresh()
+      } else {
+        this.finderData = data
+        this.zitiList = data
+        this.$nextTick(() => {
+          this.$refs['finder'].refresh()
+        })
+      }
     }
   }
 }

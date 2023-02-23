@@ -145,7 +145,7 @@
                       查看
                     </router-link>
                   </el-button>
-                  <el-button v-if="scope.row.edit_btn == 'Y'" type="text">
+                  <el-button v-if="scope.row.edit_btn == 'Y' && parseInt(scope.row.source_id) <= 0" type="text">
                     <router-link
                       :to="{
                         path: matchHidePage('editor'),

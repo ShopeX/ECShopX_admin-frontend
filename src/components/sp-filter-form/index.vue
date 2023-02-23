@@ -44,14 +44,14 @@
     </div>
     <div class="filter-form__ft">
       <div class="btns-wrap">
-        <el-button type="primary" icon="iconfont icon-sousuo" @click="onSearch"> 查询 </el-button>
-        <el-button type="primary" plain icon="iconfont icon-chexiao" @click="onReset">
+        <el-button type="primary" icon="ecx-icon icon-sousuo" @click="onSearch"> 查询 </el-button>
+        <el-button type="primary" plain icon="ecx-icon icon-zhongzhi" @click="onReset">
           重置
         </el-button>
       </div>
       <div v-if="showExtend" class="extend-wrap">
         <el-button type="text" @click="toggleExtend">
-          <i class="iconfont" :class="extend ? 'icon-z045' : 'icon-zhankai'" />{{
+          <i class="ecx-icon" :class="extend ? 'icon-quanbushouqi' : 'icon-quanbuzhankai'" />{{
             `${extend ? '收起' : '展开'}`
           }}
         </el-button>

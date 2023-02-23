@@ -2,7 +2,7 @@
   <div>
     <SpRouterView class="merchantList">
       <div class="action-container">
-        <el-button type="primary" icon="iconfont icon-xinzengcaozuo-01" @click="addMerchant">
+        <el-button type="primary" icon="ecx-icon icon-xinzeng" @click="addMerchant">
           新增商户
         </el-button>
       </div>

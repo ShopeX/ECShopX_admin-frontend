@@ -1,6 +1,7 @@
 // 会员路由
 const name = '会员'
 import Layout from '@/view/layout' // 主框架
+import { VERSION_IN_PURCHASE } from '@/utils'
 
 export default {
   path: '/member',
@@ -39,7 +40,13 @@ export default {
     {
       path: 'whitelistlist',
       name: `白名单列表`,
-      component: () => import('@/view/member/whitelist/list')
+      component: () => {
+        if (VERSION_IN_PURCHASE) {
+          return import('@/view/member/whitelist/list.purchase')
+        } else {
+          return import('@/view/member/whitelist/list')
+        }
+      }
     },
     {
       path: 'whitelistuploade',

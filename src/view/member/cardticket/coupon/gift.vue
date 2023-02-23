@@ -476,7 +476,7 @@ export default {
       return dayjs(time * 1000).format('YYYY-MM-DD HH:mm:ss')
     },
     cancelSubmit () {
-      this.$router.push({ path: '/marketing/coupon/membermarketing' })
+      this.$router.go(-1)
     },
     submitForm (formName) {
       if (this.form.days <= 0) {

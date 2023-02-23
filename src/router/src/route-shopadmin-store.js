@@ -13,7 +13,7 @@ export default {
       children: [
         {
           path: 'editor/:itemId?',
-          component: () => import('@/view/mall/marketing/distributor_editor')
+          component: () => import('@/view/merchant/store')
         },
         {
           path: 'template/:distributor_id?',

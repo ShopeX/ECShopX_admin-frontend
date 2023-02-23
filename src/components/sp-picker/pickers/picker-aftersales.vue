@@ -1,26 +1,26 @@
 <style lang="scss">
 .picker-aftersales {
   .sp-filter-form {
-    margin-bottom: 0;
-    .filter-form__bd {
-      margin-left: 16px;
-    }
+    padding: 8px 8px 0 8px;
   }
-  .filter-tools {
-    display: flex;
-    align-items: center;
-    padding: 8px;
-    .el-cascader,
-    .el-input {
-      width: 196px;
-      margin-right: 8px;
-    }
+  .sp-finder-hd {
+    display: none;
   }
+  // .filter-tools {
+  //   display: flex;
+  //   align-items: center;
+  //   padding: 8px;
+  //   .el-cascader,
+  //   .el-input {
+  //     width: 196px;
+  //     margin-right: 8px;
+  //   }
+  // }
 }
 </style>
 <template>
   <div class="picker-aftersales">
-    <SpFilterForm :model="formData" @onSearch="onSearch" @onReset="onSearch">
+    <SpFilterForm :model="formData" size="small" @onSearch="onSearch" @onReset="onSearch">
       <SpFilterFormItem prop="keywords">
         <el-input v-model="formData.keywords" placeholder="输入店铺名称或关键词搜索" />
       </SpFilterFormItem>

@@ -20,12 +20,14 @@ class Pages {
 
   setPage(page) {
     this.options.page = page
-    this.options.fetch({ page: this.options.page, pageSize: this.options.pageSize })
+    // this.options.fetch({ page: this.options.page, pageSize: this.options.pageSize })
   }
 
   reset() {
     this.options.page = 1
-    this.options.fetch({ page: this.options.page, pageSize: this.options.pageSize })
+    this.options.total = 0
+    this.options.hasNext = true
+    this.options.fetch({ page: this.options.page, pageSize: this.options.pageSize }, ...arguments)
   }
 
   refresh() {
@@ -36,7 +38,7 @@ class Pages {
     const { hasNext, fetch, pageSize } = this.options
     this.options.page++
     if (hasNext) {
-      fetch({ page: this.options.page, pageSize })
+      fetch({ page: this.options.page, pageSize }, arguments)
     }
     return this
   }

@@ -8,7 +8,7 @@
 
 <script>
 export default {
-  name: 'CmSpecParams',
+  name: 'SpecParams',
   props: {
     value: {
       type: Object,

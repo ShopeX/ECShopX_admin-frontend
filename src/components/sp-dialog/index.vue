@@ -24,15 +24,7 @@
 </style>
 
 <script>
-// const renderTextarea = () => {
-//   return <el-input
-//     type="text"
-//     placeholder="请输入内容"
-//     v-model="text"
-//     maxlength="10"
-//     show-word-limit
-//   />
-// }
+import SpForm from '../sp-form'
 import { isFunction } from '@/utils'
 export default {
   name: 'SpDialog',
@@ -58,126 +50,26 @@ export default {
     }
   },
   data() {
-    return {}
+    return {
+      localForm: {}
+    }
   },
   created() {
     console.log('sp-dialog. created')
-    // this.$once('input', () => {
-    //   this.$destroy()
-    //   // this.$el.remove()
-    // })
   },
-  // destroyed() {
-  //   debugger
-  // },
   methods: {
     handleCancel() {
       this.$emit('input', false)
-      // this.$destroy()
     },
-    handleSubmit() {
-      this.$refs['form'].validate((valid) => {
-        if (valid) {
-          this.$emit('onSubmit')
-        } else {
-          return false
-        }
-      })
+    onFormSubmit() {
+      this.$emit('onSubmit')
     },
     resetForm() {
       this.$refs['form'] && this.$refs['form'].resetFields()
-    },
-    getItemShow({ isShow }) {
-      if (isFunction(isShow)) {
-        return isShow()
-      } else {
-        return isShow !== false
-      }
     }
   },
   render() {
-    const { title, value, form, formList, width, destroyOnClose } = this
-    const Fn = () => {}
-    const getComponentByType = (item) => {
-      if (typeof item.component != 'undefined') {
-        // console.log(item.component)
-        // Vue.component(item.component)
-        return item.component()
-        // return <component is={item.component} ref='com' />
-      } else if (item.type == 'textarea') {
-        return (
-          <el-input
-            clearable
-            type='textarea'
-            placeholder={item.placeholder || '请输入内容'}
-            rows={5}
-            maxlength={item.maxlength}
-            v-model={form[item.key]}
-            show-word-limit
-          />
-        )
-      } else if (item.type == 'input') {
-        return (
-          <el-input
-            clearable
-            type='text'
-            placeholder={item.placeholder || '请输入内容'}
-            v-model={form[item.key]}
-          />
-        )
-      } else if (item.type == 'text') {
-        return <div class='el-text'>{form[item.key]}</div>
-      } else if (item.type == 'select') {
-        return (
-          <el-select
-            clearable
-            v-model={form[item.key]}
-            placeholder={item.placeholder || '请选择'}
-            onChange={item.onChange || Fn}
-          >
-            {item.options.map((op) => (
-              <el-option key={op.value} label={op.title} value={op.value}></el-option>
-            ))}
-          </el-select>
-        )
-      } else if (item.type == 'radio') {
-        return (
-          <el-radio-group
-            v-model={form[item.key]}
-            onChange={item.onChange || Fn}
-            disabled={item.disabled || false}
-          >
-            {item.options.map((op) => (
-              <el-radio label={op.label}>{op.name}</el-radio>
-            ))}
-          </el-radio-group>
-        )
-      } else if (item.type == 'table') {
-        return (
-          <el-table border data={form[item.key]}>
-            {item.options
-              .filter((item) => item.isShow !== false)
-              .map((op) => (
-                <el-table-column
-                  prop={op.key}
-                  label={op.title}
-                  width={op.width}
-                  formatter={op.render}
-                ></el-table-column>
-              ))}
-          </el-table>
-        )
-      }
-    }
-
-    let rules = {}
-    formList.forEach((item) => {
-      if (item.required) {
-        rules[item.key] = [{ required: true, message: item.message }]
-      } else if (item.validator) {
-        rules[item.key] = [{ validator: item.validator }]
-      }
-    })
+    const { title, value, form, formList, width } = this
 
     if (!value) {
       return null
@@ -192,28 +84,22 @@ export default {
         append-to-body
         onclose={this.handleCancel}
       >
-        <el-form
+        <SpForm
           ref='form'
-          props={{
-            model: form
-          }}
-          rules={rules}
-          label-width='100px'
-          validate-on-rule-change={false}
-          v-loading={this.loading}
-        >
-          {formList.map((item, index) => {
-            return (
-              <el-form-item label={item.label} prop={item.key} v-show={this.getItemShow(item)}>
-                {getComponentByType(item)}
-              </el-form-item>
-            )
-            // return
-          })}
-        </el-form>
+          value={form}
+          formList={formList}
+          submit={false}
+          labelWidth={'120px'}
+          on-onSubmit={this.onFormSubmit}
+        />
         <div slot='footer' class='dialog-footer'>
           <el-button onClick={this.handleCancel}>取 消</el-button>
-          <el-button type='primary' onClick={this.handleSubmit}>
+          <el-button
+            type='primary'
+            onClick={() => {
+              this.$refs['form'].handleSubmit()
+            }}
+          >
             确 定
           </el-button>
         </div>

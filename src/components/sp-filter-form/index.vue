@@ -51,7 +51,7 @@
       </div>
       <div v-if="showExtend" class="extend-wrap">
         <el-button type="text" @click="toggleExtend">
-          <i class="iconfont" :class="extend ? 'icon-z045' : 'icon-zhankai'" />{{
+          <i class="ecx-icon" :class="extend ? 'icon-quanbushouqi' : 'icon-quanbuzhankai'" />{{
             `${extend ? '收起' : '展开'}`
           }}
         </el-button>

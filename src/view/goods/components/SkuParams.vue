@@ -287,7 +287,7 @@
 
 <script>
 export default {
-  name: 'CmSkuParams',
+  name: 'SkuParams',
   props: {
     value: {
       type: Object,

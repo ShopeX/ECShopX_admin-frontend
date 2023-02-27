@@ -6,6 +6,7 @@
 
   .cate-item {
     display: flex;
+    align-items: center;
   }
 
   .comp-button {
@@ -13,7 +14,7 @@
   }
 
   .cate-name {
-    width: 120px;
+    width: 100px;
     margin-right: 10px;
   }
 }
@@ -25,13 +26,16 @@
         <div class="cate-item">
           <el-input v-model="scope.data.tabTitle" class="cate-name" size="small" />
           <CompButton
-            :clearable="scope.data.goodsList.length > 0"
+            :value="scope.data.goodsList.length"
+            placeholder="选择商品"
+            format="{0}件商品"
             @click="handleSelectGoods(scope.data.goodsList, scope.index)"
             @remove="onRemoveItem(scope.index)"
+            @view="onViewItem(scope.index)"
           >
-            {{
+            <!-- {{
               scope.data.goodsList.length > 0 ? `已选: ${scope.data.goodsList.length}` : `选择商品`
-            }}
+            }} -->
           </CompButton>
         </div>
       </template>
@@ -66,15 +70,15 @@ export default {
   },
   methods: {
     async handleSelectGoods(items, index) {
+      const ids = items.map((item) => item.goodsId)
       const { data } = await this.$picker.goods({
-        data: items,
+        data: ids,
         multiple: true
       })
       let values = []
       data &&
         data.forEach((item) => {
           if (item.itemId) {
-            console.log(JSON.stringify(item))
             let obj = {
               imgUrl: item.pics[0],
               title: item.itemName,
@@ -95,6 +99,12 @@ export default {
     },
     onRemoveItem(index) {
       this.localValue[index].goodsList = []
+    },
+    async onViewItem(index) {
+      const { data } = await this.$picker.editBoard({
+        data: this.localValue[index].goodsList
+      })
+      debugger
     }
   }
 }

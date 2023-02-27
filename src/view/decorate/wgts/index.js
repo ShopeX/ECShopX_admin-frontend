@@ -7,12 +7,13 @@ import WgtShowCase from './wgt_showcase'
 import WgtGoodsGridTab from './wgt_goodsGridTab'
 import WgtStore from './wgt_store'
 import WgtSearch from './wgt_search'
-// import wgtHeadline from './wgt_headline'
+import wgtHeadline from './wgt_headline'
 import wgtHotTopic from './wgt_hotTopic'
 import wgtGoodsScroll from './wgt_goodsScroll'
 import WgtMarquees from './wgt_marquees'
 import WgtFloorImg from './wgt_floorImg'
 import WgtNearbyShop from './wgt_nearbyShop'
+import WgtImageNavigation from './wgt_imgNavigation'
 
 // 首页装修
 const SCENE_1001 = {
@@ -25,11 +26,13 @@ const SCENE_1001 = {
   WgtGoodsGridTab,
   WgtStore,
   WgtSearch,
-  // wgtHeadline,
+  wgtHeadline,
   wgtHotTopic,
   wgtGoodsScroll,
   WgtMarquees,
-  WgtFloorImg
+  WgtFloorImg,
+  WgtNearbyShop,
+  WgtImageNavigation
 }
 
 // 商品详情

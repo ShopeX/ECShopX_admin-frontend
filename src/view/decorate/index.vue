@@ -2,8 +2,8 @@
 <template>
   <div class="page-decorate-index">
     <div class="decorate-hd">
-      <el-button @click="onExit"> 后退 </el-button>
-      <el-button @click="onSaveTemplate"> 保存 </el-button>
+      <el-button plain @click="onExit"> 后退 </el-button>
+      <el-button plain @click="onSaveTemplate"> 保存 </el-button>
     </div>
     <div class="decorate-bd">
       <div class="left-container">
@@ -92,12 +92,22 @@
 import Vue from 'vue'
 import draggable from 'vuedraggable'
 import { cloneDeep } from 'lodash'
+import { SYSTEM_CONFIG } from '@/consts'
+import store from '@/store'
 import gWgts from './wgts'
 import comps from './comps'
 import attrPanel from './attr_panel'
 import Header from './wgts/wgt-header'
 export default {
-  name: '',
+  async beforeRouteLeave(to, from, next) {
+    const { theme } = SYSTEM_CONFIG[store.getters.versionMode]
+    const red = parseInt(theme.replace('#', '').slice(0, 2), 16)
+    const green = parseInt(theme.replace('#', '').slice(2, 4), 16)
+    const blue = parseInt(theme.replace('#', '').slice(4, 6), 16)
+    document.body.style.setProperty('--themeColor', theme)
+    document.body.style.setProperty('--themeColorRgb', [red, green, blue].join(','))
+    next()
+  },
   components: {
     draggable,
     attrPanel,
@@ -136,6 +146,8 @@ export default {
     this.getTemplateDetial()
   },
   mounted() {
+    // document.querySelector('.page-decorate-index').style.setProperty('--themeColor', '#155bd4')
+    // document.querySelector('.page-decorate-index').style.setProperty('--themeColorRgb', [21, 91, 212].join(','))
     document.body.style.setProperty('--themeColor', '#155bd4')
     document.body.style.setProperty('--themeColorRgb', [21, 91, 212].join(','))
   },

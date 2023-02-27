@@ -1,28 +1,75 @@
 <style lang="scss">
 .comp-button {
-  padding: 8px !important;
-  .icon-times-circle1 {
-    position: relative;
-    top: 1px;
-    left: 2px;
+  padding: 0px !important;
+  position: relative;
+  :hover {
+    .ecx-icon {
+      display: block;
+    }
+  }
+  .icon-qingchuFilled {
+    position: absolute;
+    top: -16px;
+    right: 2px;
     cursor: default;
+    background-color: #fff;
+    display: none;
+  }
+  .icon-sousuo {
+    position: absolute;
+    top: -16px;
+    right: 18px;
+    cursor: default;
+    background-color: #fff;
+    display: none;
+  }
+  .el-button-group {
+    .el-button {
+      &:focus,
+      &:hover {
+        border: 1px solid #dcdfe6;
+      }
+    }
   }
 }
 </style>
 <template>
-  <el-button class="comp-button" :disabled="disabled" size="small" plain @click="handleClick">
-    <slot />
-    <i v-if="clearable" class="iconfont icon-times-circle1" @click.stop="handleRemove" />
-  </el-button>
-</template>
+  <!-- <el-button class="comp-button" :disabled="disabled" size="small" plain @click="handleClick">
 
+    <i v-if="value > 0" class="ecx-icon icon-sousuo" @click.stop="handleRemove" />
+    <i v-if="value > 0" class="ecx-icon icon-qingchuFilled" @click.stop="handleRemove" />
+  </el-button> -->
+
+  <el-dropdown
+    class="comp-button"
+    size="small"
+    split-button
+    plain
+    @click="handleClick"
+    @command="handleCommand"
+  >
+    {{ value > 0 ? getFormatValue() : placeholder }}
+    <el-dropdown-menu slot="dropdown">
+      <el-dropdown-item command="clear" :disabled="value == 0">清除</el-dropdown-item>
+      <el-dropdown-item command="view" :disabled="value == 0">查看</el-dropdown-item>
+    </el-dropdown-menu>
+  </el-dropdown>
+</template>
 <script>
 export default {
   name: 'CompButton',
   props: {
-    clearable: {
-      type: Boolean,
-      value: false
+    value: {
+      type: Number,
+      value: 0
+    },
+    format: {
+      type: String,
+      value: ''
+    },
+    placeholder: {
+      type: String,
+      value: ''
     },
     disabled: {
       type: Boolean,
@@ -36,8 +83,15 @@ export default {
     handleClick() {
       this.$emit('click')
     },
-    handleRemove() {
-      this.$emit('remove')
+    handleCommand(command) {
+      if (command == 'clear') {
+        this.$emit('remove')
+      } else if (command == 'view') {
+        this.$emit('view')
+      }
+    },
+    getFormatValue() {
+      return this.format.replace(/\{0\}/, this.value)
     }
   }
 }

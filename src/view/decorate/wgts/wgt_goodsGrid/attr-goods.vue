@@ -7,9 +7,13 @@
 }
 </style>
 <template>
-  <CompButton :clearable="value.length > 0" @click="handleClickAdd" @remove="onRemove">
-    {{ value.length > 0 ? `已选: ${value.length}` : `选择商品` }}
-  </CompButton>
+  <CompButton
+    placeholder="选择商品"
+    format="{0}件商品"
+    :value="goodsCount"
+    @click="handleClickAdd"
+    @remove="onRemoveItem"
+  />
 </template>
 
 <script>
@@ -26,6 +30,12 @@ export default {
   data() {
     return {
       localValue: []
+    }
+  },
+  computed: {
+    goodsCount() {
+      console.log(this.value.filter((item) => !!item.goodsId))
+      return this.value.filter((item) => !!item.goodsId).length
     }
   },
   watch: {
@@ -49,6 +59,7 @@ export default {
           if (item.itemId) {
             const obj = {
               imgUrl: item.pics[0],
+              linkPage: '',
               title: item.itemName,
               goodsId: item.itemId,
               brand: item.brand_logo,
@@ -56,13 +67,20 @@ export default {
               distributor_id: item.distributor_id,
               itemEnName: item.item_en_name,
               promotionActivity: item.promotion_activity
+              // imgUrl: '',
+              // linkPage: '',
+              // content: '',
+              // title: '商品名称',
+              // id: '',
+              // price: 0,
+              // market_price: 0
             }
             values.push(obj)
           }
         })
       this.localValue = values
     },
-    onRemove() {
+    onRemoveItem() {
       this.localValue = []
     }
   }

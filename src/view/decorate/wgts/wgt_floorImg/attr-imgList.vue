@@ -1,23 +1,30 @@
 <style lang="scss" scoped>
-.img-item {
-  display: flex;
-  margin-bottom: 20px;
-  .img-title {
+.attr-img-list {
+  .img-item--picker {
     display: flex;
-    align-items: center;
-    justify-content: space-around;
-    .title-input {
-      width: 80%;
-    }
+    margin-top: 14px;
   }
-  .comp-picker-link {
-    flex: 1;
+  .cell-value-tip {
+    position: relative;
+    top: -12px;
   }
 }
 </style>
 <template>
-  <div>
-    <div v-for="(item, index) in value" :key="`img-item__${index}`" class="img-item">
+  <div class="attr-img-list">
+    <CompTodoList v-model="value" :max="5" @onAddItem="handleClickAdd">
+      <template slot="body" slot-scope="scope">
+        <div class="img-item--wrap">
+          <el-input v-model="scope.data.ImgTitle" placeholder="图片标题" />
+          <div class="img-item--picker">
+            <SpImagePicker v-model="scope.data.imgUrl" size="small" />
+            <CompPickerLink :value="scope.data" @change="(e) => onChangeLink(e, index)" />
+          </div>
+          <div class="cell-value-tip">建议尺寸: （128px * 128px）</div>
+        </div>
+      </template>
+    </CompTodoList>
+    <!-- <div v-for="(item, index) in value" :key="`img-item__${index}`" class="img-item">
       <SpImagePicker v-model="item.imgUrl" size="small" />
       <div>
         <div class="img-title">
@@ -34,18 +41,20 @@
     </div>
     <el-button class="btn btn-add" size="small" plain @click="handleClickAdd">
       {{ `添加图片(${value.length}/5)` }}
-    </el-button>
+    </el-button> -->
   </div>
 </template>
 
 <script>
 import Vue from 'vue'
 import { cloneDeep } from 'lodash'
-import CompPickerLink from '../../comps/comp-pickerLink.vue'
+import CompPickerLink from '../../comps/comp-pickerLink'
+import CompTodoList from '../../comps/comp-todoList'
 export default {
   name: 'AttrImgList',
   components: {
-    CompPickerLink
+    CompPickerLink,
+    CompTodoList
   },
   props: ['value'],
   data() {

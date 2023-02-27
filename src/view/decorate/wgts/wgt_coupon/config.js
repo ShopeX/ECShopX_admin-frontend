@@ -1,3 +1,4 @@
+import { pickBy } from '@/utils'
 import CouponStyle from './coupon-style'
 import CouponItem from './coupon-item'
 
@@ -21,7 +22,16 @@ export default {
       component: function (h, { key }) {
         return <CouponItem v-model={this.value[key]} />
       },
-      value: [{}]
+      value: [
+        {
+          amount: 8,
+          desc: '优惠券描述',
+          id: '',
+          imgUrl: '',
+          title: '优惠券名称',
+          type: 'cash'
+        }
+      ]
     }
   ],
   transformIn: (v) => {
@@ -32,5 +42,17 @@ export default {
       data
     }
   },
-  transformOut: (v) => {}
+  transformOut: (v) => {
+    return pickBy(v, {
+      name: 'name',
+      base: (v) => {
+        return pickBy(v, {
+          title: 'title',
+          subtitle: 'subtitle',
+          padded: 'padded'
+        })
+      },
+      data: 'data'
+    })
+  }
 }

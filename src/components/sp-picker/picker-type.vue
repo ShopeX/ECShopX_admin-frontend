@@ -9,7 +9,8 @@ import {
   PickerTag,
   PickerVideo,
   PickerZitiList,
-  PickerAftersalesList
+  PickerAftersalesList,
+  PickerEditBoard
 } from './pickers'
 
 function resolvePicker(type) {
@@ -34,6 +35,8 @@ function resolvePicker(type) {
       return PickerZitiList
     case 'pickerAftersalesList':
       return PickerAftersalesList
+    case 'pickerEditBoard':
+      return PickerEditBoard
     default:
       throw new Error(`picker: ${type} not registered`)
     // break

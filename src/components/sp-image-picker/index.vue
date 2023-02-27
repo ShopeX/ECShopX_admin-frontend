@@ -155,6 +155,7 @@ export default {
     },
 
     updateValue(val) {
+      console.log('updateValue========', val)
       this.$emit('input', val)
       this.$emit('onChange', val)
     },

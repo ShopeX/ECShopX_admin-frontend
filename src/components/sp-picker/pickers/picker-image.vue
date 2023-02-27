@@ -183,7 +183,7 @@
           <el-button>上传图片</el-button>
         </el-upload>
         <el-button @click="onAddGroup"> 添加分组 </el-button>
-        <el-button :disabled="disabledBtn" @click="onMoveGroup"> 移动 </el-button>
+        <el-button :disabled="disabledBtn" @click="onMoveGroup"> 移组 </el-button>
         <!-- <el-button :disabled="disabledDeleteGroup" @click="onDeleteImageGroup">
           删除分组
         </el-button> -->

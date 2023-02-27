@@ -68,49 +68,47 @@
         margin-right: 10px;
       }
     }
+    .coupon-hd {
+      text-align: center;
+      margin-top: 30px;
+      height: 40px;
+      .symbol {
+        color: #724120;
+        display: inline-block;
+        margin: 0 2px;
+        position: relative;
+        top: -1px;
+      }
+      .value {
+        color: #724120;
+        font-size: 26px;
+        font-weight: 500;
+      }
+    }
+    .coupon-ft {
+      text-align: center;
+      margin-top: 16px;
+      .name {
+        color: #fff;
+        font-size: 12px;
+      }
+      .btn {
+        margin-top: 6px;
+        background: #fff;
+        font-size: 11px;
+        height: 16px;
+        line-height: 16px;
+        border-radius: 4px;
+        width: 40px;
+        text-align: center;
+        margin: 0 auto;
+      }
+    }
   }
   .wgt-coupon-item {
     float: left;
     background-size: cover;
     background-position: center;
-    // &:not(:last-child) {
-    //   margin-bottom: 10px;
-    // }
-    // &.coupon-col0 {
-    //   width: 100%;
-    // }
-    // &.coupon-col1 {
-    //   background-image: url('./coupon_one.png'); /* 710x198 */
-    //   width: 100%;
-    //   height: 99px;
-    //   background-position: center;
-    //   background-size: cover;
-    // }
-    // &.coupon-col2 {
-    //   background-image: url('./coupon_two.png'); /* 344x181 */
-    //   width: 172px;
-    //   height: 90px;
-    //   background-position: center;
-    //   background-size: cover;
-    //   margin-right: 10px;
-    //   // &:not(:last-child) {
-    //   //   margin-right: 10px;
-    //   // }
-    //   + .coupon-col2 {
-    //     margin-right: 0;
-    //   }
-    // }
-    // &.coupon-col3 {
-    //   background-image: url('./coupon_three.png'); /* 224x264 */
-    //   width: 112px;
-    //   height: 132px;
-    //   background-position: center;
-    //   background-size: cover;
-    //   margin-bottom: 0;
-    //   &:not(:last-child) {
-    //     margin-right: 9px;
-    //   }
-    // }
   }
 }
 </style>
@@ -125,25 +123,33 @@
       <span class="title">{{ value.title }}</span>
       <span class="sub-title">{{ value.subtitle }}</span>
     </div>
-    <div
-      :class="[
-        'wgt-bd',
-        `coupon-style-${value.style}`,
-        {
-          'spaced': value.spaced
-        }
-      ]"
-    >
-      <!-- {{ couponDeep }} -->
+    <div :class="['wgt-bd', `coupon-style-${value.style}`]">
+      <!-- 挂件自定义部分 -->
       <div
         v-for="(item, index) in value.data"
         :key="`wgt-coupon-item__${index}`"
         :class="['wgt-coupon-item']"
         :style="getCouponStyle(item, index)"
       >
-        <!-- <SpImage v-if="item.imgUrl" :src="item.imgUrl" /> -->
-        <!-- <div v-else :class="['coupon-d']" /> -->
+        <!-- 样式4 -->
+        <template v-if="!item.imgUrl">
+          <div class="coupon-hd">
+            <div v-if="item.type == 'cash'" class="amount">
+              <span class="symbol">¥</span>
+              <span class="value">{{ item.amount }}</span>
+            </div>
+            <div v-if="item.type == 'discount'" class="amount">
+              <span class="value">{{ item.amount }}</span>
+              <span class="symbol">折</span>
+            </div>
+          </div>
+          <div class="coupon-ft">
+            <div class="name">{{ item.title }}</div>
+            <div class="btn">领取</div>
+          </div>
+        </template>
       </div>
+      <!-- 挂件自定义部分 -->
     </div>
   </div>
 </template>

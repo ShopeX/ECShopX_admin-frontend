@@ -1,25 +1,40 @@
 import { pickBy } from '@/utils'
-import AttrItem from './attr-item'
+import AttrNavItem from './attr-imagepanel'
 
 export default {
-  name: 'showcase',
+  name: 'navigation',
   setting: [
     { label: '标题', key: 'title', component: 'input', value: '标题' },
     { label: '副标题', key: 'subtitle', component: 'input', value: '副标题' },
     { label: '组件间距', key: 'padded', component: 'switch', value: true },
-    // { label: '图片描述', key: 'content', component: 'switch', value: true },
     {
-      label: '展示图',
+      label: '导航项',
       key: 'data',
       component: function (h, { key }) {
-        return <AttrItem v-model={this.value[key]} />
+        return <AttrNavItem v-model={this.value[key]} />
       },
       value: [
-        { imgUrl: '', linkPage: '', content: '', title: '', id: '' },
-        { imgUrl: '', linkPage: '', content: '', title: '', id: '' },
-        { imgUrl: '', linkPage: '', content: '', title: '', id: '' }
-      ],
-      tip: `建议尺寸:</br>大图（175px * 310px）小图（175px * 150px）`
+        {
+          content: '基础护肤',
+          imgUrl: ''
+        },
+        {
+          content: '彩妆香水',
+          imgUrl: ''
+        },
+        {
+          content: '营养保健',
+          imgUrl: ''
+        },
+        {
+          content: '满减优惠',
+          imgUrl: ''
+        },
+        {
+          content: '分享拼单',
+          imgUrl: ''
+        }
+      ]
     }
   ],
   transformIn: (v) => {
@@ -40,11 +55,6 @@ export default {
           subtitle: 'subtitle',
           padded: 'padded'
         })
-      },
-      config: () => {
-        return {
-          style: 1
-        }
       },
       data: 'data'
     })

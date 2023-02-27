@@ -71,7 +71,6 @@ export default {
       return this.localVal
     },
     updateVal(val) {
-      console.log(`sp-picker updateVal:`, this, val)
       // const type = this.$options.config.type || this.type
       // if (!type) throw new Error('type should not be undefined')
 

@@ -22,20 +22,20 @@
           <SpImagePicker v-model="scope.data.imgUrl" size="small" />
           <div>
             <div class="coupon">{{ scope.data.title || '优惠券名称' }}</div>
-            <el-button type="text">更换优惠券</el-button>
+            <el-button type="text" @click="onChangeCouponItem(scope.data, scope.index)"
+              >
+更换优惠券
+</el-button
+            >
           </div>
-          <!-- <div><i class="iconfont icon-trash-alt1" @click="deleteCouponItem(index)" /></div> -->
         </div>
       </template>
     </CompTodoList>
-
-    <!-- <el-button class="btn btn-add" size="small" plain @click="handleClickAdd">
-      {{ `添加优惠券(${value.length}/3)` }}
-    </el-button> -->
   </div>
 </template>
 
 <script>
+import Vue from 'vue'
 import { cloneDeep } from 'lodash'
 import CompTodoList from '../../comps/comp-todoList'
 export default {
@@ -62,23 +62,37 @@ export default {
   methods: {
     async handleAddTabs() {
       const { data } = await this.$picker.coupon({
-        num: 3
+        num: 3 - this.localValue.length
       })
-      this.localValue = data.map((item) => {
-        debugger
-        return {
-          amount: 30,
-          desc: '满100减30',
-          id: '252',
-          imgUrl:
-            'https://ecshopx1.yuanyuanke.cn/image/1/2022/06/27/1f14b168dc81139d9f6413d8ca15b1f41SVcD2LhcV2mUtc8uSCBRqvKVWE1QUb4',
-          title: '满100减30',
-          type: 'cash'
-        }
-      })
+      this.localValue = this.localValue.concat(
+        data.map((item, index) => {
+          return {
+            amount: item.reduce_cost,
+            desc: item.description,
+            id: item.card_id,
+            imgUrl: this.localValue[index] ? this.localValue[index].imgUrl : '',
+            title: item.title,
+            type: item.card_type
+          }
+        })
+      )
     },
-    deleteCouponItem(index) {
-      this.localValue.splice(index, 1)
+    async onChangeCouponItem({ id }, index) {
+      const { data } = await this.$picker.coupon({
+        data: [id],
+        num: 1
+      })
+      if (data) {
+        const [{ reduce_cost, description, card_id, title, card_type }] = data
+        Vue.set(this.localValue, index, {
+          ...this.localValue[index],
+          amount: reduce_cost,
+          desc: description,
+          id: card_id,
+          title: title,
+          type: card_type
+        })
+      }
     }
   }
 }

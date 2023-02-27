@@ -39,7 +39,8 @@ export default {
       path: (args) => fn({ value: { ...args }, type: 'pickerPath' }),
       tag: (args) => fn({ value: { ...args }, type: 'pickerTag' }),
       zitilist: (args) => fn({ value: { ...args }, type: 'pickerZitiList' }),
-      aftersalesList: (args) => fn({ value: { ...args }, type: 'pickerAftersalesList' })
+      aftersalesList: (args) => fn({ value: { ...args }, type: 'pickerAftersalesList' }),
+      editBoard: (args) => fn({ value: { ...args }, type: 'pickerEditBoard', width: '922px' })
     }
 
     Vue.prototype.$picker = $picker

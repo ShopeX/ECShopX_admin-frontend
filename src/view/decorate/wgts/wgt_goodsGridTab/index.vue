@@ -3,22 +3,18 @@
   &.padded {
     padding: 10px 0;
   }
-
   .wgt-hd {
     padding: 10px;
-
     .title {
       font-size: 18px;
       font-weight: 600;
       color: #333;
     }
-
     .sub-title {
       color: #666;
       margin-left: 4px;
     }
   }
-
   .wgt-bd {
     padding: 0 10px;
     @include clearfix();
@@ -115,7 +111,6 @@
         .cur {
           font-size: 10px;
         }
-
       }
 
       .activity-label {
@@ -160,34 +155,50 @@
 }
 </style>
 <template>
-  <div :class="{
-    'wgt-goods-grid-tab': true,
-    'padded': data.padded
-  }">
+  <div
+    :class="{
+      'wgt-goods-grid-tab': true,
+      'padded': data.padded
+    }"
+  >
     <div v-if="data.title || data.subtitle" class="wgt-hd">
       <span class="title">{{ data.title }}</span>
       <span class="sub-title">{{ data.subtitle }}</span>
     </div>
     <div class="wgt-goods-grid-tabs-header">
-      <div v-for="(item, index) in data.list" :key="index" class="wgt-goods-grid-tabs-header-item"
-        :style="checkde == index ? `color: ${colorPrimary}` : ''" :class="checkde == index ? 'checked' : ''"
-        @click="handleClick(index)">
+      <div
+        v-for="(item, index) in data.list"
+        :key="index"
+        class="wgt-goods-grid-tabs-header-item"
+        :style="checkde == index ? `color: ${colorPrimary}` : ''"
+        :class="checkde == index ? 'checked' : ''"
+        @click="handleClick(index)"
+      >
         {{ item.tabTitle }}
       </div>
     </div>
-    <div v-if="data.list && data.list[checkde] && data.list[checkde].goodsList.length > 0"
-      class="wgt-goods-grid-tabs-pane">
-      <div v-for="(item, index) in data.list[checkde].goodsList.slice(0, 50)" :key="index"
-        class="wgt-goods-grid-tabs-pane-item">
+    <div
+      v-if="data.list && data.list[checkde] && data.list[checkde].goodsList.length > 0"
+      class="wgt-goods-grid-tabs-pane"
+    >
+      <div
+        v-for="(item, index) in data.list[checkde].goodsList.slice(0, 50)"
+        :key="index"
+        class="wgt-goods-grid-tabs-pane-item"
+      >
         <div class="wgt-goods-grid-tabs-item-img">
           <SpImage class="goods-img" :src="item.imgUrl ? wximageurl + item.imgUrl : ''" />
         </div>
         <div class="wgt-goods-grid-tabs-item-info">
-          <SpImage v-if="data.brand && data.style !== 'grids'" class="goods-brand" :src="
-            item.brand
-              ? wximageurl + item.brand
-              : 'https://fakeimg.pl/60x60/EFEFEF/CCC/?text=brand&font=lobster'
-          " />
+          <SpImage
+            v-if="data.brand && data.style !== 'grids'"
+            class="goods-brand"
+            :src="
+              item.brand
+                ? wximageurl + item.brand
+                : 'https://fakeimg.pl/60x60/EFEFEF/CCC/?text=brand&font=lobster'
+            "
+          />
           <div class="goods-title">
             {{ item.title }}
           </div>
@@ -198,8 +209,11 @@
             <span class="cur">¥</span>{{ item.price / 100 }}
           </div>
           <div class="activity-label">
-            <p v-for="(s, i) in item.promotionActivity" :key="i"
-              :style="`color: ${colorPrimary};border: 1px solid ${colorPrimary}`">
+            <p
+              v-for="(s, i) in item.promotionActivity"
+              :key="i"
+              :style="`color: ${colorPrimary};border: 1px solid ${colorPrimary}`"
+            >
               {{ s.tag_type == 'single_group' ? '团购' : '' }}
               {{ s.tag_type == 'full_minus' ? '满减' : '' }}
               {{ s.tag_type == 'full_discount' ? '满折' : '' }}
@@ -213,29 +227,24 @@
       </div>
     </div>
     <div v-else class="wgt-goods-grid-tabs-pane">
-      <div v-for="(item) in 4" :key="item" class="wgt-goods-grid-tabs-pane-item">
+      <div v-for="item in 4" :key="item" class="wgt-goods-grid-tabs-pane-item">
         <div class="wgt-goods-grid-tabs-item-img">
           <SpImage class="goods-img" src="" />
         </div>
         <div class="wgt-goods-grid-tabs-item-info">
-          <SpImage v-if="data.brand && data.style !== 'grids'" class="goods-brand"
-            src="https://fakeimg.pl/60x60/EFEFEF/CCC/?text=brand&font=lobster" />
-          <div class="goods-title">
-            商品名称
-          </div>
-          <div class="goods-title">
-            商品副标题
-          </div>
-          <div v-if="data.showPrice" class="price">
-            <span class="cur">¥</span>0.00
-          </div>
+          <SpImage
+            v-if="data.brand && data.style !== 'grids'"
+            class="goods-brand"
+            src="https://fakeimg.pl/60x60/EFEFEF/CCC/?text=brand&font=lobster"
+          />
+          <div class="goods-title">商品名称</div>
+          <div class="goods-title">商品副标题</div>
+          <div v-if="data.showPrice" class="price"><span class="cur">¥</span>0.00</div>
         </div>
       </div>
     </div>
     <div class="goods-more">
-      <p class="more-btn">
-        查看更多
-      </p>
+      <p class="more-btn">查看更多</p>
     </div>
   </div>
 </template>
@@ -269,10 +278,10 @@ export default {
         if (!list || list.length === 0) {
           data.list = [{ tabTitle: 'newTable', goodsList: [] }]
         }
-        this.data = data;
+        this.data = data
       },
-      immediate:true,
-      deep:true
+      immediate: true,
+      deep: true
     }
   },
   mounted() {

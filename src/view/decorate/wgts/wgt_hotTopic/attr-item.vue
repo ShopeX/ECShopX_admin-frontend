@@ -6,14 +6,12 @@
           <span>话题&nbsp;{{ index + 1 }}</span>
         </el-col>
         <el-col :span="18">
-          <el-input v-model="item.topic" size="small" class="topic_input"/>
+          <el-input v-model="item.topic" size="small" class="topic_input" />
           <CompPickerLink :value="item" @change="(e) => onChangeLink(e, index)" />
         </el-col>
       </el-row>
     </div>
-    <el-button class="btn btn-add" size="small" plain @click="handleClickAdd">
-      添加话题
-    </el-button>
+    <el-button class="btn btn-add" size="small" plain @click="handleClickAdd"> 添加话题 </el-button>
   </div>
 </template>
 <script>
@@ -49,7 +47,6 @@ export default {
         linkType: 0,
         topic: '哈哈哈'
       })
-
     },
     onChangeLink(e, index) {
       const v = cloneDeep(this.localValue[index])
@@ -62,9 +59,9 @@ export default {
 }
 </script>
 <style lang="scss" scoped>
-.topic_item_edit{
+.topic_item_edit {
   margin-bottom: 20px;
-  .topic_input{
+  .topic_input {
     margin-block: 5px;
     display: inline-block;
   }

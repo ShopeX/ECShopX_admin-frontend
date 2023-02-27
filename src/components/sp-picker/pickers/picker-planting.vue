@@ -6,26 +6,9 @@
   .sp-finder-hd {
     display: none;
   }
-  .sp-finder {
-    &.no-multiple {
-      .sp-finder-bd {
-        .el-table__fixed-header-wrapper {
-          table thead {
-            tr {
-              th {
-                &:nth-child(1) {
-                  .el-checkbox {
-                    display: none;
-                  }
-                }
-              }
-            }
-          }
-        }
-      }
-      .el-table__fixed-body-wrapper {
-        top: 38px !important;
-      }
+  .disableheadselection {
+    > .cell .el-checkbox__inner {
+      display: none;
     }
   }
   .el-pagination {
@@ -43,9 +26,9 @@
     </SpFilterForm> -->
     <SpFinder
       ref="finder"
-      :class="['shop-finder', { 'no-multiple': !multiple }]"
       :other-config="{
-        'max-height': 460
+        'max-height': 416,
+        'header-cell-class-name': cellClass
       }"
       url="/article/management"
       :fixed-row-action="true"

@@ -12,15 +12,15 @@
 </style>
 <template>
   <div class="attr-img-list">
-    <CompTodoList v-model="value" :max="5" @onAddItem="handleClickAdd">
+    <CompTodoList v-model="value" :min="3" :max="20" @onAddItem="handleClickAdd">
       <template slot="body" slot-scope="scope">
         <div class="img-item--wrap">
           <el-input v-model="scope.data.ImgTitle" placeholder="图片标题" />
           <div class="img-item--picker">
             <SpImagePicker v-model="scope.data.imgUrl" size="small" />
-            <CompPickerLink :value="scope.data" @change="(e) => onChangeLink(e, index)" />
+            <CompPickerLink :value="scope.data" @change="(e) => onChangeLink(e, scope.index)" />
           </div>
-          <div class="cell-value-tip">建议尺寸: （128px * 128px）</div>
+          <div class="cell-value-tip">建议尺寸:（宽度128px，高度自适应）</div>
         </div>
       </template>
     </CompTodoList>
@@ -75,29 +75,20 @@ export default {
       const { data } = await this.$picker.image({
         data: [],
         multiple: true,
-        num: 5
+        num: 20 - this.localValue.length
       })
-      console.log(2, data)
-      this.localValue = data.map((item) => {
-        return {
-          ImgTitle: '',
-          title: '',
-          id: '',
-          imgUrl: item.url,
-          linkPage: '',
-          linkType: 0
-        }
-      })
-      // console.log(2, data, this.localValue)
+      this.localValue = this.localValue.concat(
+        data.map((item) => {
+          return {
+            ImgTitle: '',
+            imgUrl: item.url
+          }
+        })
+      )
     },
     onChangeLink(e, index) {
-      if (e.content === 'delete') {
-        Vue.delete(this.localValue, index)
-        return
-      }
-      const v = cloneDeep(this.localValue[index])
       Vue.set(this.localValue, index, {
-        ...v,
+        ...this.localValue[index],
         ...e
       })
     }

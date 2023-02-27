@@ -1,50 +1,35 @@
 <style lang="scss" scoped>
-.article-item {
-  display: flex;
-  margin-bottom: 10px;
-
-  .el-input {
-    margin: 0 10px;
+.attr-horizontal {
+  margin-top: 4px;
+  .cate-input {
+    width: 220px;
   }
 }
 </style>
 <template>
-  <div>
-      <CompTodoList v-model="localValue" :max="20" @onAddItem="handleAddhorizontal">
-        <template slot="myslot" slot-scope="scope">
-          <div class="cate-item">
-            <el-input v-model="scope.data.title" class="cate-name" size="small" />
-          </div>
-        </template>
-      </CompTodoList>
-</div>
+  <div class="attr-horizontal">
+    <CompTodoList v-model="localValue" :max="20" @onAddItem="handleAddhorizontal">
+      <template slot="body" slot-scope="scope">
+        <div class="cate-item">
+          <el-input
+            v-model="scope.data.title"
+            class="cate-input"
+            size="small"
+            placeholder="文本内容"
+          />
+        </div>
+      </template>
+    </CompTodoList>
+  </div>
 </template>
 
 <script>
 import CompTodoList from '../../comps/comp-todoList'
-import articleSelector from '@/components/function/articleSelector'
 
 export default {
-  name: 'AttrHotSetting',
-  data() {
-    return {
-      localValue: [],
-      directions: ''
-    }
-  },
-  watch: {
-    localValue: {
-      handler(nVal) {
-        this.$emit('input', nVal)
-      },
-      deep: true,
-    },
-    direction: function (nVal, oVal) {
-      if (this.directions != this.direction) {
-        this.eliminate()
-        this.directions = this.direction
-      }
-    }
+  name: 'AttrHorizontal',
+  components: {
+    CompTodoList
   },
   props: {
     value: {
@@ -54,20 +39,26 @@ export default {
       type: String
     }
   },
-  components: {
-    CompTodoList,
-    articleSelector
+  data() {
+    return {
+      localValue: []
+    }
   },
+  watch: {
+    localValue: {
+      handler(nVal) {
+        this.$emit('input', nVal)
+      },
+      deep: true
+    }
+  },
+
   created() {
     this.localValue = this.value
-    this.directions = this.direction
   },
   methods: {
     handleAddhorizontal() {
       this.localValue.push({ title: '' })
-    },
-    eliminate() {
-      this.localValue.splice(0)
     }
   }
 }

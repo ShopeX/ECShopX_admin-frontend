@@ -1,95 +1,68 @@
 <style lang="scss" scoped>
-.article-item {
-  display: flex;
-  margin-bottom: 10px;
-
-  .el-input {
-    margin: 0 10px;
+.attr-vertical {
+  margin-top: 2px;
+  .cate-item {
+    height: 32px;
+    line-height: 32px;
+    width: 220px;
+    @include text-overflow();
   }
 }
 </style>
 <template>
-  <div>
-    <CompTodoList v-model="localValue" :max="20" @onAddItem="handleAddTabs">
-      <template slot="myslot" slot-scope="scope">
+  <div class="attr-vertical">
+    <CompTodoList v-model="value" :max="20" is-edit @onAddItem="handleAddItem" @edit="onEdit">
+      <template slot="body" slot-scope="scope">
         <div class="cate-item">
-          <span>{{ scope.data.title }}</span>
+          {{ scope.data.title }}
         </div>
       </template>
     </CompTodoList>
-
-    <articleSelector :visible.sync="articleVisible" :get-status="setArticleStatus" :rel-items-ids="relArticles"
-      @change="pickArticle" />
-</div>
+  </div>
 </template>
 
 <script>
-import articleSelector from '@/components/function/articleSelector'
+import Vue from 'vue'
 import CompTodoList from '../../comps/comp-todoList'
-
 
 export default {
   name: 'AttrVertical',
-  data() {
-    return {
-      localValue: [],
-      relArticles: [],
-      setArticleStatus: false,
-      articleVisible: false,
-      directions: ''
-    }
-  },
-  watch: {
-    localValue: {
-      handler(nVal) {
-        this.$emit('input', nVal)
-      },
-      deep: true,
-    },
-    direction: function (nVal, oVal) {
-      if (this.directions != this.direction) {
-        this.eliminate()
-        this.directions = this.direction
-      }
-    }
+  components: {
+    CompTodoList
   },
   props: {
     value: {
       type: Array
-    },
-    direction: {
-      type: String
     }
   },
-  components: {
-    articleSelector,
-    CompTodoList
-  },
-  created() {
-    this.localValue = this.value
-    this.directions = this.direction
+  data() {
+    return {}
   },
   methods: {
-    pickArticle(data) {
-      this.relArticles = data
-      if (data.length > 0) {
-        this.localValue.splice(0)
-        data.forEach((item) => {
-          let obj = {
-            title: item.title,
-            id: item.article_id
-          }
-          this.localValue.push(obj)
+    async handleAddItem() {
+      const { data } = await this.$picker.planting()
+      if (data) {
+        data.forEach(({ article_id, title }) => {
+          this.value.push({
+            id: article_id,
+            title
+          })
         })
       }
     },
-    handleAddTabs() {
-      this.setArticleStatus = true
-      this.articleVisible = true
-    },
-    eliminate() {
-      this.localValue.splice(0)
-      this.relArticles = []
+    async onEdit(index) {
+      const { id } = this.value[index]
+      const { data } = await this.$picker.planting({
+        data: [id],
+        multiple: false
+      })
+      if (data) {
+        const [{ article_id, title }] = data
+        Vue.set(this.value, index, {
+          id: article_id,
+          title
+        })
+      }
     }
   }
 }

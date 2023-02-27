@@ -15,7 +15,7 @@
               "
             />
           </div>
-          <div class="cell-value-tip">建议尺寸: （128px * 128px）</div>
+          <div class="cell-value-tip">建议尺寸:（128px * 128px）</div>
         </div>
       </template>
     </CompTodoList>

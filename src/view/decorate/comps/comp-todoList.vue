@@ -15,8 +15,12 @@
     width: 42px;
   }
 
-  .icon-th-list {
+  .icon-shoudongpaixu,
+  .icon-paiban {
     margin-right: 8px;
+  }
+  .icon-guanbi {
+    font-size: 13px;
   }
 }
 </style>
@@ -28,11 +32,12 @@
           <slot name="body" :data="item" :index="index" />
         </div>
         <div class="item-fd">
-          <i class="iconfont icon-th-list mover" />
-          <i v-if="index > 0" class="iconfont el-icon-close" @click="onRemoveItem(index)" />
+          <i v-if="isEdit" class="ecx-icon icon-paiban" @click="onEdit(index)" />
+          <i class="ecx-icon icon-shoudongpaixu mover" />
+          <i v-if="index > min - 1" class="ecx-icon icon-guanbi" @click="onRemoveItem(index)" />
         </div>
       </div>
-      <el-button slot="footer" type="text" @click="handleAddItem">添加</el-button>
+      <el-button slot="footer" type="text" @click="handleAddItem">{{ btnText }}</el-button>
     </draggable>
   </div>
 </template>
@@ -49,9 +54,21 @@ export default {
       type: Array,
       default: () => []
     },
+    min: {
+      type: Number,
+      default: 1
+    },
     max: {
       type: Number,
       default: 5
+    },
+    btnText: {
+      type: String,
+      default: '添加'
+    },
+    isEdit: {
+      type: Boolean,
+      default: false
     }
   },
   data() {
@@ -80,6 +97,9 @@ export default {
         return
       }
       this.$emit('onAddItem')
+    },
+    onEdit(index) {
+      this.$emit('edit', index)
     },
     onRemoveItem(index) {
       this.localValue.splice(index, 1)

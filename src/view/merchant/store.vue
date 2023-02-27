@@ -178,6 +178,7 @@ export default {
                 ]}
                 clearable
                 on-clear={() => this.onRemoteGetMerchant()}
+                on-focus={() => this.onRemoteGetMerchant()}
                 filterable
                 loading={this.remoteLoading}
                 remote
@@ -565,8 +566,10 @@ export default {
       this.merchantList = this.merchantList.concat(list)
     },
     onRemoteGetMerchant(e) {
-      this.merchantList = []
-      this.pageQuery.reset(e)
+      if (!this.form.merchant_id) {
+        this.merchantList = []
+        this.pageQuery.reset(e)
+      }
     },
     searchKeyword() {
       //设置搜索的范围和关键字等属性
@@ -755,7 +758,9 @@ export default {
         }
       })
     },
-    handleCancel() {},
+    handleCancel() {
+      this.$router.go(-1)
+    },
     async onFormSubmit() {
       try {
         await this.$refs['form'].handleSubmit()

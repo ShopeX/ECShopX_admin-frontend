@@ -722,6 +722,7 @@ export default {
     },
     async onFormSave() {
       const { itemId } = this.$route.params
+      const { is_new } = this.$route.query
       const {
         itemType,
         specialType,
@@ -817,6 +818,7 @@ export default {
               const skuIds = sku_id.split('_')
               return {
                 ...item,
+                item_bn: is_new == 'true' ? '' : item.item_bn,
                 is_default: itemId ? index == 0 : is_default,
                 item_spec: skuIds.map((id) => {
                   let resItemSpec = {}
@@ -843,11 +845,17 @@ export default {
           ...params,
           ...specParams
         }
+        if (is_new) {
+          params = {
+            ...params,
+            item_bn: ''
+          }
+        }
       }
 
       this.submitLoading = true
       try {
-        if (itemId) {
+        if (itemId && !is_new) {
           await this.$api.goods.updateItems(itemId, {
             ...params,
             item_id: itemId

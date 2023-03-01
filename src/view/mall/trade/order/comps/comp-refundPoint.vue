@@ -25,7 +25,14 @@ export default {
   methods: {
     getTotalFee() {
       const { items = [] } = this.value || {}
-      const leftPoint = items.reduce((total, current) => total + current.remain_point, 0)
+      let leftPoint = 0
+      items.forEach(item => {
+        if (item.checked) {
+          item.refundNum === item.left_aftersales_num ? 
+          leftPoint = item.remain_point :
+          leftPoint = parseInt(item.remain_point / item.left_aftersales_num * item.refundNum)
+        }
+      })
       return leftPoint
     },
     onChangeFee() {

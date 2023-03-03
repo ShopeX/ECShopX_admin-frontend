@@ -330,7 +330,7 @@ export default {
     cancelSubmit () {
       this.refresh()
       this.$emit('changeShowEdit', false)
-      this.$router.push({ path: '/marketing/coupon/membermarketing' })
+      this.$router.go(-1)
     },
     submitDetail () {
       if (this.goodsList.length < 1) {

@@ -107,6 +107,11 @@
       transform: translateY(-50%);
       left: 0px;
     }
+    &.has-img {
+      &:before {
+        display: none;
+      }
+    }
     .coupon-bd {
       height: 80px;
       background-color: #fff;
@@ -121,6 +126,10 @@
         justify-content: center;
         .value {
           font-size: 30px;
+          color: #f4811f;
+        }
+        .package-value {
+          font-size: 24px;
           color: #f4811f;
         }
         .symbol {

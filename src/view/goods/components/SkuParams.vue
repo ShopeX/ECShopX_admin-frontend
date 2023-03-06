@@ -52,7 +52,7 @@
             }}</el-checkbox>
             <el-popover
               placement="top"
-              trigger="hover"
+              trigger="click"
               @show="
                 () => {
                   if (!sku.custom_attribute_value) {

@@ -113,7 +113,7 @@ import moment from 'moment'
 import BasePicker from './base'
 import PageMixin from '../mixins/page'
 export default {
-  name: 'PickerShop',
+  name: 'PickerCoupon',
   extends: BasePicker,
   mixins: [PageMixin],
   config: {

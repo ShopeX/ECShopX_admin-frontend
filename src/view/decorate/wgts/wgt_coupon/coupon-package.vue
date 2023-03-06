@@ -1,6 +1,7 @@
 <style lang="scss" scoped>
 .coupon-package {
   width: 100%;
+  margin-top: 6px;
 }
 .coupon-item {
   display: flex;
@@ -20,6 +21,7 @@
       v-model="localValue"
       is-edit
       :max="20"
+      :min="0"
       @onAddItem="handleAdd"
       @edit="onChangeCouponItem"
     >
@@ -62,37 +64,41 @@ export default {
   },
   methods: {
     async handleAdd() {
-      const { data } = await this.$picker.coupon({
+      const { data } = await this.$picker.couponPackage({
         // num: 3 - this.localValue.length
       })
       this.localValue = this.localValue.concat(
         data.map((item, index) => {
           return {
-            amount: item.reduce_cost,
-            desc: item.description,
-            id: item.card_id,
+            amount: '',
+            desc: item.package_describe,
+            package_id: item.package_id,
             imgUrl: this.localValue[index] ? this.localValue[index].imgUrl : '',
             title: item.title,
-            type: item.card_type
+            type: '',
+            get_num: '',
+            limit_count: ''
           }
         })
       )
     },
     async onChangeCouponItem({ item, index }) {
-      const { id } = item
-      const { data } = await this.$picker.coupon({
-        data: [id],
+      const { package_id } = item
+      const { data } = await this.$picker.couponPackage({
+        data: [package_id],
         multiple: false
       })
       if (data) {
-        const [{ reduce_cost, description, card_id, title, card_type }] = data
+        const [{ package_describe, package_id, title, get_num, limit_count }] = data
         Vue.set(this.localValue, index, {
           ...this.localValue[index],
-          amount: reduce_cost,
-          desc: description,
-          id: card_id,
+          amount: '',
+          desc: package_describe,
+          package_id: package_id,
           title: title,
-          type: card_type
+          type: '',
+          get_num,
+          limit_count
         })
       }
     }

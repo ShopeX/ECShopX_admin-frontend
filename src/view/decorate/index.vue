@@ -268,7 +268,7 @@ export default {
         return transformOut(item)
       })
       data.unshift(this.headerAttr.transformOut(this.headerData))
-      console.log('onSaveTemplate:', JSON.stringify(data))
+      // console.log('onSaveTemplate:', JSON.stringify(data))
       const { id } = this.$route.query
       await this.$api.template.savePagesTemplate({
         pages_template_id: id,

@@ -32,12 +32,7 @@ export default {
           title: '优惠券名称',
           type: 'cash'
         }
-      ],
-      tip: `提示: 优惠券颜色跟随商城主题色变化<br />
-      建议尺寸:<br />
-      一张图片（宽度355px，高度90px）<br />
-      二张图片（宽度172px，高度90px）<br />
-      三张图片或更多（宽度138px，高度90px）`
+      ]
     },
     {
       label: '券包',
@@ -46,7 +41,7 @@ export default {
         return <CouponPackage v-model={this.value[key]} />
       },
       value: [],
-      tip: `提示: 优惠券颜色跟随商城主题色变化<br />
+      tip: `提示: 优惠券、券包颜色跟随商城主题色变化<br />
       建议尺寸:<br />
       一张图片（宽度355px，高度90px）<br />
       二张图片（宽度172px，高度90px）<br />
@@ -54,11 +49,12 @@ export default {
     }
   ],
   transformIn: (v) => {
-    const { name, base, data } = v
+    const { name, base, data, voucher_package } = v
     return {
       name,
       ...base,
-      data
+      data,
+      voucher_package
     }
   },
   transformOut: (v) => {
@@ -71,7 +67,8 @@ export default {
           padded: 'padded'
         })
       },
-      data: 'data'
+      data: 'data',
+      voucher_package: 'voucher_package'
     })
   }
 }

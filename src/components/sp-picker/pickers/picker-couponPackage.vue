@@ -29,21 +29,11 @@
 <template>
   <div class="picker-coupon-package">
     <!-- multiple：{{ multiple }}, {{ value }} -->
-    <!-- <SpFilterForm :model="formData" @onSearch="onSearch" @onReset="onSearch">
-      <SpFilterFormItem prop="region">
-        <el-cascader
-          ref="region"
-          v-model="formData.region"
-          filterable
-          clearable
-          placeholder="选择地区筛选店铺"
-          :options="district"
-        />
-      </SpFilterFormItem>
+    <SpFilterForm :model="formData" @onSearch="onSearch" @onReset="onSearch">
       <SpFilterFormItem prop="keywords">
-        <el-input v-model="formData.keywords" placeholder="请输入店铺名称搜索" />
+        <el-input v-model="formData.keywords" placeholder="请输入券包名称搜索" />
       </SpFilterFormItem>
-    </SpFilterForm> -->
+    </SpFilterForm>
 
     <SpFinder
       ref="finder"
@@ -55,45 +45,11 @@
       :fixed-row-action="true"
       :setting="{
         columns: [
+          { name: '券包名称', key: 'title' },
           {
-            name: '卡券类型',
-            key: 'card_type',
-            width: '100px',
-            render: (h, { row }) =>
-              h(
-                'el-tag',
-                {
-                  props: {
-                    size: 'mini'
-                  }
-                },
-                cardTypeFormatter(row)
-              )
-          },
-          { name: '卡券名称', key: 'title' },
-          {
-            name: '卡券有效期',
-            formatter: (value, { takeEffect, begin_time, end_time }, col) => {
-              if (takeEffect) {
-                return takeEffect
-              } else {
-                return getCardValidate(begin_time, end_time)
-              }
-            }
-          },
-          {
-            name: '可领取库存',
-            formatter: (value, { quantity, get_num }, col) => {
-              if (quantity > get_num) {
-                return quantity - get_num
-              } else {
-                return 0
-              }
-            },
-            width: '100px'
-          },
-          { name: '领取量', key: 'get_num', width: '80px' },
-          { name: '使用量', key: 'use_num', width: '80px' }
+            name: '券包描述',
+            key: 'package_describe'
+          }
         ]
       }"
       :hooks="{
@@ -113,7 +69,7 @@ import moment from 'moment'
 import BasePicker from './base'
 import PageMixin from '../mixins/page'
 export default {
-  name: 'PickerShop',
+  name: 'PickerCouponPackage',
   extends: BasePicker,
   mixins: [PageMixin],
   config: {
@@ -123,7 +79,6 @@ export default {
   data() {
     return {
       formData: {
-        region: [],
         keywords: ''
       },
       district,
@@ -138,10 +93,15 @@ export default {
   methods: {
     beforeSearch(params) {
       params = {
-        page_no: params.page,
-        page_size: params.pageSize,
-        end_date: 1,
-        from: 'btn'
+        ...params,
+        page: params.page,
+        pageSize: params.pageSize
+      }
+      if (this.formData.keywords) {
+        params = {
+          ...params,
+          title: this.formData.keywords
+        }
       }
       return params
     },
@@ -156,7 +116,7 @@ export default {
       }
     },
     onSearch() {
-      this.$refs.finder.refresh()
+      this.$refs.finder.refresh(true)
     },
     onSelect(selection, row) {
       if (this.multiple) {

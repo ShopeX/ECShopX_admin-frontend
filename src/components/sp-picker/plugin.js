@@ -33,6 +33,7 @@ export default {
       image: (args) => fn({ value: { ...args }, type: 'pickerImage', width: '1008px' }),
       film: (args) => fn({ value: { ...args }, type: 'pickerFilm', width: '788px' }),
       coupon: (args) => fn({ value: { ...args }, type: 'pickerCoupon' }),
+      couponPackage: (args) => fn({ value: { ...args }, type: 'pickerCouponPackage' }),
       video: (args) => fn({ value: { ...args }, type: 'pickerVideo', width: '855px' }),
       goods: (args) => fn({ value: { ...args }, type: 'pickerGoods', width: '1110px' }),
       shop: (args) => fn({ value: { ...args }, type: 'pickerShop' }),

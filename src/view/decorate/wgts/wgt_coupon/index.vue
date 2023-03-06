@@ -10,12 +10,26 @@
       <span class="title">{{ value.title }}</span>
       <span class="sub-title">{{ value.subtitle }}</span>
     </div>
-    <div :class="['wgt-bd', `coupon-style-${value.data.length <= 2 ? value.data.length : 3}`]">
+    <div
+      :class="[
+        'wgt-bd',
+        `coupon-style-${
+          value.data.length + value.voucher_package.length <= 2
+            ? value.data.length + value.voucher_package.length
+            : 3
+        }`
+      ]"
+    >
       <!-- 挂件自定义部分 -->
       <div
         v-for="(item, index) in value.data"
         :key="`wgt-coupon-item__${index}`"
-        :class="['wgt-coupon-item']"
+        :class="[
+          'wgt-coupon-item',
+          {
+            'has-img': item.imgUrl
+          }
+        ]"
         :style="getCouponStyle(item)"
       >
         <template v-if="!item.imgUrl">
@@ -27,6 +41,28 @@
             <div v-if="item.type == 'discount'" class="coupon-amount">
               <span class="value">{{ item.amount }}</span>
               <span class="symbol">折</span>
+            </div>
+            <div class="coupon-desc">
+              <div class="name">{{ item.title }}</div>
+              <div class="desc">{{ item.desc }}</div>
+            </div>
+          </div>
+          <div class="coupon-ft">
+            <div class="btn">领取</div>
+          </div>
+        </template>
+      </div>
+
+      <div
+        v-for="(item, index) in value.voucher_package"
+        :key="`wgt-coupon-package-item__${index}`"
+        :class="['wgt-coupon-item']"
+        :style="getCouponStyle(item)"
+      >
+        <template v-if="!item.imgUrl">
+          <div class="coupon-bd">
+            <div class="coupon-amount">
+              <span class="package-value">券包</span>
             </div>
             <div class="coupon-desc">
               <div class="name">{{ item.title }}</div>

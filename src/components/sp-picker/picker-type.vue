@@ -3,6 +3,7 @@ import {
   PickerImage,
   PickerFilm,
   PickerCoupon,
+  PickerCouponPackage,
   PickerGoods,
   PickerShop,
   PickerPath,
@@ -22,6 +23,8 @@ function resolvePicker(type) {
       return PickerFilm
     case 'pickerCoupon':
       return PickerCoupon
+    case 'pickerCouponPackage':
+      return PickerCouponPackage
     case 'pickerVideo':
       return PickerVideo
     case 'pickerGoods':

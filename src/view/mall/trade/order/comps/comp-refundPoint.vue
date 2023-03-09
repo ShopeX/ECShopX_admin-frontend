@@ -29,8 +29,8 @@ export default {
       items.forEach(item => {
         if (item.checked) {
           item.refundNum === item.left_aftersales_num ? 
-          leftPoint = item.remain_point :
-          leftPoint = parseInt(item.remain_point / item.left_aftersales_num * item.refundNum)
+          leftPoint = item.remain_point / 100 :
+          leftPoint = parseInt(item.remain_point / 100 / item.left_aftersales_num * item.refundNum)
         }
       })
       return leftPoint

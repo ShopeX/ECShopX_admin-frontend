@@ -285,7 +285,7 @@
           <el-table-column label="操作">
             <template slot-scope="scope">
               <el-button
-                v-if="orderInfo.receipt_type === 'logistics' && (orderInfo.order_status !== 'DONE' )"
+                v-if="orderInfo.receipt_type === 'logistics' && orderInfo.order_status !== 'DONE'"
                 type="text"
                 @click="modifyExpress(scope.row)"
               >
@@ -805,7 +805,7 @@ export default {
     handleAction({ key }) {
       const { order_id, items, delivery_type, delivery_status } = this.orderInfo
       if (key == 'deliverGoods') {
-        if (this.isBindOMS) {
+        if (this.isBindOMS && this.IS_ADMIN) {
           return this.$message.warning('请至OMS处理订单发货')
         }
         this.$refs['deliverGoodsDialogRef'].resetForm()

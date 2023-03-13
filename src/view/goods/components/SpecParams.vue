@@ -106,13 +106,13 @@ export default {
           key: 'barcode',
           type: 'input',
           display: 'inline'
+        },
+        {
+          label: '获取积分',
+          key: 'point_num',
+          type: 'input',
+          display: 'inline'
         }
-        // {
-        //   label: '获取积分',
-        //   key: 'point_num',
-        //   type: 'input',
-        //   display: 'inline'
-        // }
       ]
     }
   },

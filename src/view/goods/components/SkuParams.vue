@@ -185,7 +185,7 @@
           />
         </template>
       </el-table-column>
-      <!-- <el-table-column label="获取积分">
+      <el-table-column label="获取积分">
         <template slot-scope="scope">
           <el-input
             v-model="scope.row.point_num"
@@ -196,7 +196,7 @@
             placeholder=""
           />
         </template>
-      </el-table-column> -->
+      </el-table-column>
       <el-table-column width="80">
         <template slot-scope="scope">
           <el-button type="primary" size="mini" @click="onFillSpecItems"> 填充 </el-button>
@@ -259,11 +259,11 @@
           <el-input v-model="scope.row.barcode" size="mini" />
         </template>
       </el-table-column>
-      <!-- <el-table-column prop="point_num" label="获取积分">
+      <el-table-column prop="point_num" label="获取积分">
         <template slot-scope="scope">
           <el-input v-model="scope.row.point_num" type="number" min="0" size="mini" />
         </template>
-      </el-table-column> -->
+      </el-table-column>
       <el-table-column width="80">
         <template slot-scope="scope">
           <el-button type="text" @click="onClearSpecItem(scope.$index)"> 清除 </el-button>

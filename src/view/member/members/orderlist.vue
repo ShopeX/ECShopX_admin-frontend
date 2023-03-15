@@ -1,38 +1,17 @@
 <template>
   <div>
-    <el-table
-      v-loading="loading"
-      :data="list"
-      border
-    >
-      <el-table-column
-        prop="create_time"
-        label="创建时间"
-      >
+    <el-table v-loading="loading" :data="list" border>
+      <el-table-column prop="create_time" label="创建时间">
         <template slot-scope="scope">
           <span>{{ scope.row.create_time | datetime('YYYY-MM-DD HH:mm:ss') }}</span>
         </template>
       </el-table-column>
-      <el-table-column
-        prop="order_id"
-        label="订单号"
-      />
-      <el-table-column
-        prop="title"
-        label="标题"
-      />
-      <el-table-column
-        prop="total_fee"
-        label="金额"
-      >
-        <template slot-scope="scope">
-          ￥{{ scope.row.total_fee / 100 }}
-        </template>
+      <el-table-column prop="order_id" label="订单号" />
+      <el-table-column prop="title" label="标题" />
+      <el-table-column prop="total_fee" label="金额">
+        <template slot-scope="scope"> ￥{{ scope.row.total_fee / 100 }} </template>
       </el-table-column>
-      <el-table-column
-        prop="order_type"
-        label="类型"
-      >
+      <el-table-column prop="order_type" label="类型">
         <template slot-scope="scope">
           <span
             v-for="(item, index) in orderType"
@@ -43,31 +22,17 @@
           </span>
         </template>
       </el-table-column>
-      <el-table-column
-        prop="order_status"
-        label="订单状态"
-      >
+      <el-table-column prop="order_status" label="订单状态">
         <template slot-scope="scope">
-          <el-tag
-            v-if="scope.row.order_status == 'DONE'"
-            type="success"
-          >
-            已完成
-          </el-tag>
-          <el-tag v-else-if="scope.row.order_status == 'NOTPAY'">
-            未支付
-          </el-tag>
-          <el-tag
-            v-else-if="scope.row.order_status == 'CLOSED'"
-            type="danger"
-          >
-            已取消
-          </el-tag>
+          <el-tag v-if="scope.row.order_status == 'DONE'" type="success"> 已完成 </el-tag>
+          <el-tag v-else-if="scope.row.order_status == 'NOTPAY'"> 未支付 </el-tag>
+          <el-tag v-else-if="scope.row.order_status == 'CLOSED'" type="danger"> 已取消 </el-tag>
         </template>
       </el-table-column>
       <el-table-column label="操作">
         <template slot-scope="scope">
           <el-button
+            v-if="scope.row.order_type != 'membercard'"
             size="small"
             icon="view"
             @click="getDetail(scope.row.order_id)"
@@ -77,10 +42,7 @@
         </template>
       </el-table-column>
     </el-table>
-    <div
-      v-if="total_count > pageSize"
-      class="content-padded tc"
-    >
+    <div v-if="total_count > pageSize" class="content-padded tc">
       <el-pagination
         layout="prev, pager, next"
         :total="total_count"
@@ -94,7 +56,7 @@
 import { getOrderList } from '../../../api/trade'
 export default {
   props: ['userId', 'isLoad'],
-  data () {
+  data() {
     return {
       loading: false,
       params: {},
@@ -113,31 +75,31 @@ export default {
     }
   },
   watch: {
-    userId (newVal, oldVal) {
+    userId(newVal, oldVal) {
       if (this.isLoad) {
         this.params = { page: this.currentPage, pageSize: this.pageSize, user_id: newVal }
         this.getOrders(this.params)
       }
     },
-    isLoad (newVal, oldVal) {
+    isLoad(newVal, oldVal) {
       if (newVal) {
         this.params = { page: this.currentPage, pageSize: this.pageSize, user_id: this.userId }
         this.getOrders(this.params)
       }
     }
   },
-  mounted () {
+  mounted() {
     // this.params = {page: this.currentPage, pageSize: this.pageSize, user_id: userId}
     // this.getOrders(this.params)
   },
   methods: {
-    handleCurrentChange (val) {
+    handleCurrentChange(val) {
       this.currentPage = val
       this.loading = false
       this.getParams()
       this.getOrders(this.params)
     },
-    getParams () {
+    getParams() {
       // this.params.time_start_begin = this.time_start_begin
       // this.params.time_start_end = this.time_start_end
       // this.params.order_type = this.order_type
@@ -155,10 +117,10 @@ export default {
       this.params.page = this.currentPage
       this.params.pageSize = this.pageSize
     },
-    dateStrToTimeStamp (str) {
+    dateStrToTimeStamp(str) {
       return Date.parse(new Date(str)) / 1000
     },
-    getOrders (filter) {
+    getOrders(filter) {
       this.loading = true
       getOrderList(filter).then((response) => {
         this.list = response.data.data.list
@@ -166,7 +128,7 @@ export default {
         this.loading = false
       })
     },
-    getDetail (orderId) {
+    getDetail(orderId) {
       this.$router.push({
         path: `${
           this.$store.getters.login_type != 'distributor'

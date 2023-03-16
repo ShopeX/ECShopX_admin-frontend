@@ -1668,7 +1668,9 @@ export default {
         params.category = params.category[params.category.length - 1]
       }
       if (params.item_category.length > 0) {
-        params.item_category = params.item_category[params.item_category.length - 1]
+        // params.item_category = params.item_category[params.item_category.length - 1]
+        params.main_cat_id = params.item_category[params.item_category.length - 1]
+        delete params.item_category
       }
       const { list, total_count, warning_store } = await this.$api.goods.getItemsList(params)
       list.forEach((item) => {

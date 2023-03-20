@@ -244,7 +244,10 @@
                 <div class="goods-title">
                   {{ scope.row.item_name }}
                   <el-tag v-if="!scope.row.nospec" size="mini" effect="plain" type="primary">
-                    多规格
+                    多
+                  </el-tag>
+                  <el-tag v-if="scope.row.is_gift === '1'" size="mini" effect="plain" type="primary">
+                    赠
                   </el-tag>
                 </div>
                 <div class="goods-code">
@@ -910,7 +913,7 @@ export default {
         item_category: 0,
         is_warning: false,
         tag_id: '',
-        is_gift: false,
+        is_gift: undefined,
         type: 0,
         barcode: '',
         distributor_id: 0,
@@ -1671,6 +1674,9 @@ export default {
         // params.item_category = params.item_category[params.item_category.length - 1]
         params.main_cat_id = params.item_category[params.item_category.length - 1]
         delete params.item_category
+      }
+      if (typeof params.is_gift === 'undefined') {
+        delete params.is_gift
       }
       const { list, total_count, warning_store } = await this.$api.goods.getItemsList(params)
       list.forEach((item) => {

@@ -33,6 +33,7 @@ export default {
       image: (args) => fn({ value: { ...args }, type: 'pickerImage', width: '1008px' }),
       video: (args) => fn({ value: { ...args }, type: 'pickerVideo', width: '855px' }),
       goods: (args) => fn({ value: { ...args }, type: 'pickerGoods', width: '1110px' }),
+      goodsParams: (args) => fn({ value: { ...args }, type: 'pickerGoodsParams' }),
       shop: (args) => fn({ value: { ...args }, type: 'pickerShop' }),
       zitilist: (args) => fn({ value: { ...args }, type: 'pickerZitiList' }),
       aftersalesList: (args) => fn({ value: { ...args }, type: 'pickerAftersalesList' }),

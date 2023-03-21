@@ -3,6 +3,7 @@ import {
   PickerImage,
   PickerVideo,
   PickerGoods,
+  PickerGoodsParams,
   PickerShop,
   PickerZitiList,
   PickerAftersalesList
@@ -16,6 +17,8 @@ function resolvePicker(type) {
       return PickerVideo
     case 'pickerGoods':
       return PickerGoods
+    case 'pickerGoodsParams':
+      return PickerGoodsParams
     case 'pickerShop':
       return PickerShop
     case 'pickerZitiList':

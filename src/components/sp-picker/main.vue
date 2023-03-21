@@ -7,12 +7,7 @@
 }
 </style>
 <template>
-  <el-dialog
-    class="sp-picker-dialog"
-    :title="title"
-    :visible.sync="isLocalShow"
-    :width="width"
-  >
+  <el-dialog class="sp-picker-dialog" :title="title" :visible.sync="isLocalShow" :width="width">
     <PickerType
       v-if="isLocalShow"
       ref="picker"
@@ -22,15 +17,9 @@
       @close="handleToggle(false)"
     />
 
-    <span
-      slot="footer"
-      class="dialog-footer"
-    >
+    <span slot="footer" class="dialog-footer">
       <el-button @click="isLocalShow = false">取 消</el-button>
-      <el-button
-        type="primary"
-        @click="handleConfirm"
-      >确 定</el-button>
+      <el-button type="primary" @click="handleConfirm">确 定</el-button>
     </span>
   </el-dialog>
 </template>
@@ -47,17 +36,18 @@ export default {
     value: Object,
     type: String,
     width: {
+      type: String,
       default: '1008px'
     },
     isShow: Boolean,
     extra: Object
   },
 
-  data () {
+  data() {
     const { title } = PickerType.resolvePickerConfig(this.type)
-
+    const { dialogTitle } = this.value
     return {
-      title,
+      title: dialogTitle || title,
       isLocalShow: false
     }
   },
@@ -65,14 +55,14 @@ export default {
   watch: {
     isShow: {
       immediate: true,
-      handler (val) {
+      handler(val) {
         this.isLocalShow = val
       }
     }
   },
 
   methods: {
-    handleToggle (isShow) {
+    handleToggle(isShow) {
       if (isShow === undefined) isShow = !this.isLocalShow
       this.isLocalShow = isShow
       this.$emit('toggle', isShow)
@@ -80,10 +70,14 @@ export default {
         this.$emit('close')
       }
     },
-    handleConfirm () {
-      const val = this.$refs.picker.getVal()
-      this.isLocalShow = false
-      this.$emit('input', val)
+    handleConfirm() {
+      try {
+        const val = this.$refs.picker.getVal()
+        this.isLocalShow = false
+        this.$emit('input', val)
+      } catch (e) {
+        this.$message.error(e.message)
+      }
     }
   }
 }

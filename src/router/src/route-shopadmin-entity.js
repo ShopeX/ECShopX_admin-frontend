@@ -60,7 +60,8 @@ export default {
     {
       path: 'goodscategory',
       name: `店铺分类`,
-      component: () => import('@/view/mall/goods/category')
+      // component: () => import('@/view/mall/goods/category')
+      component: () => import('@/view/goods/saleCategory')
     },
     {
       path: 'itemtags',

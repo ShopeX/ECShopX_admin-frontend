@@ -233,6 +233,7 @@ export default {
                 }
               ]}
               clearable
+              filterable
               {...{ props: cascaderProps }}
               options={this.saleCategoryList}
             />

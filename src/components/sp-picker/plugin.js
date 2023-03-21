@@ -36,6 +36,7 @@ export default {
       couponPackage: (args) => fn({ value: { ...args }, type: 'pickerCouponPackage' }),
       video: (args) => fn({ value: { ...args }, type: 'pickerVideo', width: '855px' }),
       goods: (args) => fn({ value: { ...args }, type: 'pickerGoods', width: '1110px' }),
+      goodsParams: (args) => fn({ value: { ...args }, type: 'pickerGoodsParams' }),
       shop: (args) => fn({ value: { ...args }, type: 'pickerShop' }),
       seckill: (args) => fn({ value: { ...args }, type: 'pickerSeckill' }),
       path: (args) => fn({ value: { ...args }, type: 'pickerPath' }),

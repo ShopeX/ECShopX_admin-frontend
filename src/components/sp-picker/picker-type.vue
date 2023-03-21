@@ -5,6 +5,7 @@ import {
   PickerCoupon,
   PickerCouponPackage,
   PickerGoods,
+  PickerGoodsParams,
   PickerShop,
   PickerSeckill,
   PickerPath,
@@ -31,6 +32,8 @@ function resolvePicker(type) {
       return PickerVideo
     case 'pickerGoods':
       return PickerGoods
+    case 'pickerGoodsParams':
+      return PickerGoodsParams
     case 'pickerShop':
       return PickerShop
     case 'pickerSeckill':

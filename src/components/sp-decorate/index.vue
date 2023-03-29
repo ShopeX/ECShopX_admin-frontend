@@ -4,17 +4,21 @@
   padding: 10px;
   background-color: #f5f5f5;
   line-height: initial;
+
   .weapp-body {
     box-shadow: 0 0 14px 0 rgb(0 0 0 / 10%);
+
     &::-webkit-scrollbar {
       display: none;
     }
+
     .wgt-render-item {
       &:last-child {
         margin-bottom: 16px;
       }
     }
   }
+
   .btn-edit {
     text-align: center;
     margin: 0 auto;
@@ -26,6 +30,7 @@
   .el-dialog__header {
     display: none;
   }
+
   .el-dialog__body {
     padding: 0;
   }
@@ -37,7 +42,7 @@
       <!-- {{ localValue }} -->
       <div class="weapp-body">
         <div
-          v-for="(wgt, index) in localValue"
+          v-for="(wgt, index) in getWgtsValue(value)"
           :key="`wgt-render-item__${index}`"
           class="wgt-render-item"
         >
@@ -59,11 +64,13 @@
     >
       <DecorateView
         v-if="dialogVisible"
+        ref="decorateViewRef"
         title="商品描述"
         mode="dialog"
         :value="localValue"
         :scene="scene"
         @change="onSave"
+        @close="onClose"
       />
     </el-dialog>
   </div>
@@ -75,6 +82,7 @@ import draggable from 'vuedraggable'
 import { SYSTEM_CONFIG } from '@/consts'
 import store from '@/store'
 import { hex2rgb } from '@/utils'
+import { cloneDeep } from 'lodash'
 import gWgts from '@/view/decorate/wgts'
 import DecorateView from '@/view/decorate'
 // import comps from './comps'
@@ -103,8 +111,24 @@ export default {
     }
   },
   watch: {
+    // value: {
+    //   handler(nVal, oVal) {
+    //     this.localValue = this.getWgtsValue(nVal)
+    //   },
+    //   // deep: true,
+    //   // immediate: true
+    // }
+
     value: function (nVal, oVal) {
-      this.localValue = nVal.map((k) => {
+      this.localValue = this.getWgtsValue(nVal)
+    }
+  },
+  created() {
+    this.registerWgts()
+  },
+  methods: {
+    getWgtsValue(val) {
+      return val.map((k) => {
         const wgt = this.widgets.find((item) => item.name.toLowerCase() == k.name.toLowerCase())
         if (wgt) {
           const wgtInitParams = this.cloneDefaultField(wgt)
@@ -116,12 +140,7 @@ export default {
           }
         }
       })
-    }
-  },
-  created() {
-    this.registerWgts()
-  },
-  methods: {
+    },
     registerWgts() {
       const { scene = '1001' } = this.$route.query
       const wgts = gWgts[scene]
@@ -155,6 +174,13 @@ export default {
       })
       this.$emit('input', result)
       this.dialogVisible = false
+    },
+    onClose() {
+      this.localValue = this.getWgtsValue(this.value)
+      this.dialogVisible = false
+    },
+    resetDecorateTheme() {
+      this.$refs['decorateViewRef'].resetDecorateTheme()
     }
   }
 }

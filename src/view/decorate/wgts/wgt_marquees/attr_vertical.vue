@@ -1,6 +1,7 @@
 <style lang="scss" scoped>
 .attr-vertical {
   margin-top: 2px;
+
   .cate-item {
     height: 32px;
     line-height: 32px;
@@ -50,7 +51,7 @@ export default {
         })
       }
     },
-    async onEdit(index) {
+    async onEdit({ item, index }) {
       const { id } = this.value[index]
       const { data } = await this.$picker.planting({
         data: [id],

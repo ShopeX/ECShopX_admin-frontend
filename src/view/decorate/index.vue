@@ -5,8 +5,8 @@
       <div class="hd-lf">{{ localTitle }}</div>
       <div class="hd-rg">
         <el-button v-if="mode == 'page'" plain @click="onExit"> 后退 </el-button>
-        <el-button v-if="mode == 'page'" plain @click="onSaveTemplate"> 保存 </el-button>
         <el-button v-if="mode == 'dialog'" plain @click="onClose"> 关闭 </el-button>
+        <el-button plain @click="onSaveTemplate"> 保存 </el-button>
       </div>
     </div>
     <div class="decorate-bd">
@@ -32,7 +32,7 @@
             <!-- <i
               class="wgt-icon iconfont"
               :class="wgt.wgtIcon"
-            /> -->
+              /> -->
             <div :class="['wgt-icon', wgt.wgtIcon]" />
             <div class="wgt-name">
               {{ wgt.wgtName }}
@@ -62,7 +62,7 @@
                 </div>
                 <div class="wgt-tools" :class="{ active: activeCompIndex == index }">
                   <!-- <i class="iconfont icon-arrow-alt-circle-up1" @click="onMoveUpComp(index)" />
-                  <i class="iconfont icon-arrow-alt-circle-dow1" @click="onMoveDownComp(index)" /> -->
+                    <i class="iconfont icon-arrow-alt-circle-dow1" @click="onMoveDownComp(index)" /> -->
                   <i class="iconfont icon-copy1" @click="onCopyComp(index, wgt)" />
                   <i class="iconfont icon-trash-alt1" @click="onDeleteComp(index)" />
                 </div>
@@ -228,7 +228,7 @@ export default {
     },
     cloneDefaultField(e) {
       const { wgtName, wgtDesc, config } = e
-      const { setting, name } = config
+      const { setting, name } = JSON.parse(JSON.stringify(config))
       const compData = {
         name,
         wgtName,
@@ -329,6 +329,11 @@ export default {
     },
     async onSaveTemplate() {
       // console.log('onSaveTemplate:', JSON.stringify(data))
+      if (this.mode == 'dialog') {
+        this.resetDecorateTheme()
+        this.$emit('change', this.contentComps)
+        return
+      }
       const data = this.contentComps.map((item) => {
         const { transformOut } = this.widgets.find(
           (wgt) => wgt.name.toLowerCase() == item.name.toLowerCase()
@@ -351,7 +356,7 @@ export default {
     },
     onClose() {
       this.resetDecorateTheme()
-      this.$emit('change', this.contentComps)
+      this.$emit('close')
     }
   }
 }

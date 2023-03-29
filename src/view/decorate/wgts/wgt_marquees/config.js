@@ -22,7 +22,7 @@ export default {
     { label: '字体颜色', key: 'fontcolor', component: 'color', value: '#000000' },
     {
       label: '文本',
-      key: 'data',
+      key: 'dataText',
       isShow: function () {
         return this.value.direction == 'horizontal'
       },
@@ -33,7 +33,7 @@ export default {
     },
     {
       label: '软文',
-      key: 'data',
+      key: 'dataContent',
       isShow: function () {
         return this.value.direction == 'vertical'
       },
@@ -45,12 +45,26 @@ export default {
   ],
   transformIn: (v) => {
     const { name, base, config, data } = v
-    return {
+    let res = {
       name,
       ...base,
-      ...config,
-      data
+      ...config
     }
+    if (config.direction == 'horizontal') {
+      res = {
+        ...res,
+        dataText: data
+      }
+    } else {
+      res = {
+        ...res,
+        dataContent: data
+      }
+    }
+    return res
+
+    // dataText: config.direction == 'horizontal' ? data : [{ title: '文本内容' }],
+    //   dataContent: config.direction == 'vertical' ? data : [{ title: '软文标题', id: '' }]
   },
   transformOut: (v) => {
     return pickBy(v, {
@@ -69,7 +83,7 @@ export default {
           fontcolor: 'fontcolor'
         })
       },
-      data: 'data'
+      data: v.direction == 'horizontal' ? v.dataText : v.dataContent
     })
   }
 }

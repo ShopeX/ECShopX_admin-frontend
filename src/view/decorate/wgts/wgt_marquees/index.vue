@@ -3,18 +3,22 @@
   &.padded {
     padding: 10px 0;
   }
+
   .wgt-hd {
     padding: 10px;
+
     .title {
       font-size: 18px;
       font-weight: 600;
       color: #333;
     }
+
     .sub-title {
       color: #666;
       margin-left: 4px;
     }
   }
+
   .wgt-bd {
   }
 
@@ -49,18 +53,34 @@
       }"
     >
       <!-- 挂件自定义部分 -->
-      <el-carousel height="30px" direction="vertical" :autoplay="true" indicator-position="none">
-        <el-carousel-item v-for="(item, index) in value.data" :key="index">
-          <div
+      <template v-if="value.direction == 'vertical'">
+        <el-carousel height="30px" direction="vertical" :autoplay="true" indicator-position="none">
+          <el-carousel-item v-for="(item, index) in value.dataContent" :key="index">
+            <div
+              :style="{
+                'color': value.fontcolor
+              }"
+              class="medium"
+            >
+              {{ item.title }}
+            </div>
+          </el-carousel-item>
+        </el-carousel>
+      </template>
+
+      <template v-else>
+        <marquee style="margin: 4px 0; display: block" scrolldelay="200">
+          <span
+            v-for="(item, index) in value.dataText"
+            :key="index"
             :style="{
               'color': value.fontcolor
             }"
-            class="medium"
+            >{{ item.title }}</span
           >
-            {{ item.title }}
-          </div>
-        </el-carousel-item>
-      </el-carousel>
+        </marquee>
+      </template>
+
       <!-- 挂件自定义部分 -->
     </div>
   </div>

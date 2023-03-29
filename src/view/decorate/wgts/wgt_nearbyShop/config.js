@@ -2,7 +2,7 @@ import { pickBy } from '@/utils'
 import AttrCategory from './attr-category'
 
 export default {
-  name: 'NearbyShop',
+  name: 'nearbyShop',
   setting: [
     { label: '标题', key: 'title', component: 'input', value: '附近商家' },
     { label: '副标题', key: 'subtitle', component: 'input', value: '副标题' },

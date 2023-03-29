@@ -138,6 +138,7 @@ export default {
   methods: {
     beforeSearch(params) {
       params = {
+        ...params,
         page_no: params.page,
         page_size: params.pageSize,
         end_date: 1,

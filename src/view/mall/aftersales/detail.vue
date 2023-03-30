@@ -205,7 +205,7 @@
         <el-row>
           <el-col :span="3" class="col-3 content-right"> 物流公司: </el-col>
           <el-col :span="20">
-            <el-select v-model="sendbackInfo.name" placeholder="请输入物流公司名称">
+            <el-select v-model="sendbackInfo.delivery_corp" placeholder="请输入物流公司名称">
               <el-option
                 v-for="(data, index) in logisticsList"
                 :key="index"
@@ -218,7 +218,7 @@
         <el-row>
           <el-col :span="3" class="col-3 content-right"> 物流单号: </el-col>
           <el-col :span="8">
-            <el-input v-model="sendbackInfo.code" placeholder="请输入物流单号" />
+            <el-input v-model="sendbackInfo.delivery_code" placeholder="请输入物流单号" />
           </el-col>
         </el-row>
         <el-row>
@@ -691,7 +691,7 @@ import {
   getAftersalesAddressList,
   createAftersalesAddress
 } from '../../../api/aftersales'
-import { isBind } from '../../../api/trade'
+import { isBind,updateDelivery } from '../../../api/trade'
 import hqbdlycorp_kname from '../../../common/hqbdlycorp_kname.json'
 import district from '../../../common/district.json'
 import RemarkModal from '@/components/remarkModal'
@@ -773,8 +773,8 @@ export default {
       },
       regions: district,
       sendbackInfo: {
-        name: '',
-        code: ''
+        delivery_corp: '',
+        delivery_code: ''
       },
       logisticsList: [],
     }
@@ -804,6 +804,7 @@ export default {
         let data = response.data.data
         this.aftersalesInfo = data
         this.orderInfo = data.order_info
+        this.order_id = data.order_id
         // this.distributorInfo = data.distributorInfo
         // this.tradeInfo = data.tradeInfo
         this.refund_fee = data.refund_fee / 100
@@ -831,7 +832,16 @@ export default {
       this.aftersalesInfo.distributor_remark = remark
     },
     submitAftersalesInfo () {
-
+      updateDelivery(this.order_id, this.sendbackInfo).then((response) => {
+        var deliveryStatus = response.data.data.delivery_status
+        if (deliveryStatus && deliveryStatus != 'PENDING') {
+          this.$message.success('修改物流信息成功!')
+          this.getDetail()
+        } else {
+          this.$message.error('修改物流信息失败!')
+          return false
+        }
+      })
     },
     reviewSubmit() {
       this.reviewData.aftersales_bn = this.aftersales_bn

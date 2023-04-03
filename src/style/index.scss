@@ -130,9 +130,6 @@ a {
     padding: 0px;
     margin-bottom: 8px;
   }
-  .sp-finder-actions-item {
-    // margin-bottom: 8px;
-  }
   .sp-finder-search {
     background-color: #f6f7f9;
     padding: 16px 0 0 0;
@@ -160,6 +157,13 @@ a {
   }
   .sp-finder-footer-text {
     margin-left: 10px;
+  }
+  .sp-finder-actions {
+    &-item {
+    }
+    &__wrap {
+      justify-content: flex-start !important;
+    }
   }
   .el-table--border .el-table__cell:last-of-type {
     border-right: 1px solid #ebeef5;

@@ -1,7 +1,7 @@
 import fetch from '@/utils/fetch'
 
 // 申请脱敏
-export function createEncrypt (params) {
+export function createEncrypt(params) {
   return fetch({
     url: '/datapass',
     method: 'post',
@@ -9,7 +9,7 @@ export function createEncrypt (params) {
   })
 }
 
-export function encryptList (params) {
+export function encryptList(params) {
   return fetch({
     url: '/datapass',
     method: 'get',
@@ -17,7 +17,7 @@ export function encryptList (params) {
   })
 }
 
-export function datapassLog (params) {
+export function datapassLog(params) {
   return fetch({
     url: '/datapasslog',
     method: 'get',
@@ -25,14 +25,14 @@ export function datapassLog (params) {
   })
 }
 
-export function encryptDetail (id) {
+export function encryptDetail(id) {
   return fetch({
     url: '/datapass/' + id,
     method: 'get'
   })
 }
 
-export function encryptApprove (id, params) {
+export function encryptApprove(id, params) {
   return fetch({
     url: '/datapass/apply/' + id,
     method: 'put',
@@ -40,7 +40,7 @@ export function encryptApprove (id, params) {
   })
 }
 
-export function encryptClose (id, params) {
+export function encryptClose(id, params) {
   return fetch({
     url: '/datapass/close/' + id,
     method: 'put',
@@ -48,7 +48,7 @@ export function encryptClose (id, params) {
   })
 }
 
-export function encryptOpen (id, params) {
+export function encryptOpen(id, params) {
   return fetch({
     url: '/datapass/open/' + id,
     method: 'put',

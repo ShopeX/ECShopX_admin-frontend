@@ -197,6 +197,38 @@
       </div>
     </template>
 
+    <template v-if="!aftersalesInfo.sendback_data && aftersalesInfo.aftersales_status == '1'">
+      <div class="section-header with-border">
+        <h3>用户回寄物流信息</h3>
+      </div>
+      <div class="section-body">
+        <el-row>
+          <el-col :span="3" class="col-3 content-right"> 物流公司: </el-col>
+          <el-col :span="20">
+            <el-select v-model="sendbackInfo.corp_code" placeholder="请输入物流公司名称">
+              <el-option
+                v-for="(data, index) in logisticsList"
+                :key="index"
+                :label="data.corp_name"
+                :value="data.corp_code"
+              />
+            </el-select>
+          </el-col>
+        </el-row>
+        <el-row>
+          <el-col :span="3" class="col-3 content-right"> 物流单号: </el-col>
+          <el-col :span="8">
+            <el-input v-model="sendbackInfo.logi_no" placeholder="请输入物流单号" />
+          </el-col>
+        </el-row>
+        <el-row>
+          <el-col :span="3" class="col-3 content-right">
+            <el-button type="primary" plain @click="submitAftersalesInfo"> 提交 </el-button>
+          </el-col>
+        </el-row>
+      </div>
+    </template>
+
     <!-- 用户回寄物流信息 -->
     <template v-if="aftersalesInfo.sendback_data">
       <div class="section-header with-border">
@@ -659,12 +691,13 @@ import {
   getAftersalesAddressList,
   createAftersalesAddress
 } from '../../../api/aftersales'
-import { isBind } from '../../../api/trade'
+import { isBind,updateAftersalesSendBack } from '../../../api/trade'
 import hqbdlycorp_kname from '../../../common/hqbdlycorp_kname.json'
 import district from '../../../common/district.json'
 import RemarkModal from '@/components/remarkModal'
 import remarkMixin from '@/mixins/remarkMixin'
 import { isArray, isObject } from '@/utils'
+import { getLogisticsLists } from '@/api/logistics'
 
 import { mapGetters } from 'vuex'
 
@@ -738,7 +771,12 @@ export default {
       form: {
         regions_id: []
       },
-      regions: district
+      regions: district,
+      sendbackInfo: {
+        corp_code: '',
+        logi_no: ''
+      },
+      logisticsList: [],
     }
   },
   computed: {
@@ -751,15 +789,22 @@ export default {
     this.loading = true
     this.getStatus()
     this.aftersaleInfo()
+    this.getLogisticsListData()
   },
   methods: {
     isArray,
     isObject,
+    getLogisticsListData () {
+      getLogisticsLists({ status: 1 }).then((response) => {
+        this.logisticsList = response.data.data.list
+      })
+    },
     aftersaleInfo() {
       getAftersalesDetail(this.aftersales_bn).then((response) => {
         let data = response.data.data
         this.aftersalesInfo = data
         this.orderInfo = data.order_info
+        this.order_id = data.order_id
         // this.distributorInfo = data.distributorInfo
         // this.tradeInfo = data.tradeInfo
         this.refund_fee = data.refund_fee / 100
@@ -785,6 +830,26 @@ export default {
     },
     onRemarksDone(remark) {
       this.aftersalesInfo.distributor_remark = remark
+    },
+    submitAftersalesInfo () {
+      this.sendbackInfo['aftersales_bn'] = this.aftersales_bn
+      updateAftersalesSendBack(this.sendbackInfo).then((response) => {
+          this.$message.success('修改用户回寄信息成功!')
+          let data = response.data.data
+          this.aftersalesInfo = data
+          this.orderInfo = data.order_info
+          if (data.aftersales_address) {
+            this.aftersales_address = data.aftersales_address.aftersales_address
+            this.aftersales_contact = data.aftersales_address.aftersales_contact
+            this.aftersales_mobile = data.aftersales_address.aftersales_mobile
+          }
+          if (data.sendback_data.length == 0) {
+            this.aftersalesInfo.sendback_data = null
+          }
+          if (data.sendconfirm_data.length == 0) {
+            this.aftersalesInfo.sendconfirm_data = null
+          }
+      })
     },
     reviewSubmit() {
       this.reviewData.aftersales_bn = this.aftersales_bn

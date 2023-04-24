@@ -2,6 +2,28 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [3.11.0](https://git.ishopex.cn/ecshopx/ecshopx-admin/compare/v3.10.4...v3.11.0) (2023-04-24)
+
+
+### Bug Fixes
+
+* ECX-4668 ([714be53](https://git.ishopex.cn/ecshopx/ecshopx-admin/commit/714be53d861c184438e8dafd296dc7375d0f8c43))
+* ECX-4690 ([5f41755](https://git.ishopex.cn/ecshopx/ecshopx-admin/commit/5f4175597b4211038b644518894e66746fd51162))
+* ECX-4799 ([3741c7f](https://git.ishopex.cn/ecshopx/ecshopx-admin/commit/3741c7f553b81f76048dc7c243a12239b4dd38f1))
+* 修复分类子节点删除问题 ([95c834a](https://git.ishopex.cn/ecshopx/ecshopx-admin/commit/95c834a1ac73202aa079f6ecf5247abb4c0fea8e))
+* 分类异步删除 ([7a14459](https://git.ishopex.cn/ecshopx/ecshopx-admin/commit/7a14459383ba2421556f2342eb6b882076899181))
+* 商品列表产地搜索 ([c63081b](https://git.ishopex.cn/ecshopx/ecshopx-admin/commit/c63081befc8d5e9c4c2a682c4c3b72bf3a237b73))
+* 商品编辑品牌可搜索、图片选择器可拖动排序 ([0757096](https://git.ishopex.cn/ecshopx/ecshopx-admin/commit/0757096d2f76319886c28d7bb83f8e2a7d72dfb8))
+* 商品详情组件不显示 ([e4aae75](https://git.ishopex.cn/ecshopx/ecshopx-admin/commit/e4aae7558a37da812a3b5f281b5f8282f1da8ef9))
+* 销售分类、管理分类优化 ([7634f0b](https://git.ishopex.cn/ecshopx/ecshopx-admin/commit/7634f0b4d592255ef9bf8ff385a6a4c63e086877))
+
+### [3.10.1](https://git.ishopex.cn/ecshopx/ecshopx-admin/compare/v3.10.0...v3.10.1) (2023-03-03)
+
+
+### Bug Fixes
+
+* 店铺编辑优化 ([0d7428c](https://git.ishopex.cn/ecshopx/ecshopx-admin/commit/0d7428c3f105c3002c369eeb6461e23cd0464773))
+
 ## [3.10.0](https://git.ishopex.cn/ecshopx/ecshopx-admin/compare/v3.9.0...v3.10.0) (2023-02-09)
 
 

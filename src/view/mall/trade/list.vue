@@ -54,6 +54,7 @@
               <el-form label-position="left" inline class="demo-table-expand">
                 <el-form-item label="订单号：">
                   <router-link
+                    v-if="scope.row.tradeSourceType != 'membercard'"
                     :to="{
                       path: fnPath(),
                       query: { orderId: scope.row.orderId, resource: '/mall/trade/payment' }
@@ -61,6 +62,7 @@
                   >
                     {{ scope.row.orderId }}
                   </router-link>
+                  <span v-else>{{ scope.row.orderId }}</span>
                 </el-form-item>
                 <el-form-item label="支付方式：">
                   <span>{{ fitlerPayType(scope.row.payChannel, scope.row.payType) }}</span>
@@ -77,10 +79,10 @@
                   <span v-if="scope.row.payType == 'alipaypos'">支付宝扫码支付</span>
                   <span v-if="scope.row.payType == 'deposit'">余额支付</span>
                   <span v-if="scope.row.payType == 'ebuy'">EBUY支付</span>
-                  <span v-if="scope.row.payType == 'point'">积分支付</span>
-                  <span v-if="scope.row.payType == 'pos'">现金支付</span>
-                  <span v-if="scope.row.payType == 'hfpay'">汇付支付</span>
-                  <span v-if="scope.row.payType == 'chinaums'">微信支付-银联</span> -->
+                    <span v-if="scope.row.payType == 'point'">积分支付</span>
+                    <span v-if="scope.row.payType == 'pos'">现金支付</span>
+                    <span v-if="scope.row.payType == 'hfpay'">汇付支付</span>
+                    <span v-if="scope.row.payType == 'chinaums'">微信支付-银联</span> -->
                 </el-form-item>
                 <el-form-item label="总金额：">
                   <span>{{ scope.row.curFeeSymbol }}{{ scope.row.totalFee / 100 }}</span>
@@ -127,21 +129,17 @@
               </div>
               <!-- <div class="order-time">
                 <el-tooltip effect="dark" content="创建时间" placement="top-start">
-                  <i class="el-icon-time" />
-                </el-tooltip>
-                {{ scope.row.timeStart | datetime('YYYY-MM-DD HH:mm:ss') }}
-              </div> -->
+                    <i class="el-icon-time" />
+                  </el-tooltip>
+                  {{ scope.row.timeStart | datetime('YYYY-MM-DD HH:mm:ss') }}
+                </div> -->
             </template>
           </el-table-column>
-          <el-table-column label="交易时间" width="160"
-            >
-<template slot-scope="scope">
-{{
-              scope.row.timeStart | datetime('YYYY-MM-DD HH:mm:ss')
-            }}
-</template>
-</el-table-column
-          >
+          <el-table-column label="交易时间" width="160">
+            <template slot-scope="scope">
+              {{ scope.row.timeStart | datetime('YYYY-MM-DD HH:mm:ss') }}
+            </template>
+          </el-table-column>
           <el-table-column label="订单信息">
             <template slot-scope="scope">
               <div class="order-num">
@@ -203,10 +201,10 @@
               <span v-if="scope.row.payType == 'alipaypos'">支付宝扫码支付</span>
               <span v-if="scope.row.payType == 'deposit'">余额支付</span>
               <span v-if="scope.row.payType == 'ebuy'">EBUY支付</span>
-              <span v-if="scope.row.payType == 'point'">积分支付</span>
-              <span v-if="scope.row.payType == 'pos'">现金支付</span>
-              <span v-if="scope.row.payType == 'hfpay'">汇付支付</span>
-              <span v-if="scope.row.payType == 'chinaums'">微信支付-银联</span> -->
+                <span v-if="scope.row.payType == 'point'">积分支付</span>
+                <span v-if="scope.row.payType == 'pos'">现金支付</span>
+                <span v-if="scope.row.payType == 'hfpay'">汇付支付</span>
+                <span v-if="scope.row.payType == 'chinaums'">微信支付-银联</span> -->
             </template>
           </el-table-column>
 
@@ -423,10 +421,12 @@ export default {
   font-size: 0;
   padding: 0 20px;
 }
+
 .demo-table-expand label {
   width: 90px;
   color: #99a9bf;
 }
+
 .demo-table-expand .el-form-item {
   margin-right: 0;
   margin-bottom: 0;

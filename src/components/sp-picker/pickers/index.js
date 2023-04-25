@@ -1,6 +1,7 @@
 export { default as PickerImage } from './picker-image'
 export { default as PickerVideo } from './picker-video'
 export { default as PickerGoods } from './picker-goods'
+export { default as PickerGoodsParams } from './picker-goodsParams'
 export { default as PickerShop } from './picker-shop'
 export { default as PickerZitiList } from './picker-zitilist'
 export { default as PickerAftersalesList } from './picker-aftersales'

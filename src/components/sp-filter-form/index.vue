@@ -38,46 +38,20 @@
 }
 </style>
 <template>
-  <div
-    class="sp-filter-form"
-    :class="formClass"
-  >
-    <div
-      ref="fiterFormBd"
-      class="filter-form__bd"
-    >
+  <div class="sp-filter-form" :class="formClass">
+    <div ref="fiterFormBd" class="filter-form__bd">
       <slot />
     </div>
     <div class="filter-form__ft">
       <div class="btns-wrap">
-        <el-button
-          type="primary"
-          icon="iconfont icon-sousuo"
-          @click="onSearch"
-        >
-          查询
-        </el-button>
-        <el-button
-          type="primary"
-          plain
-          icon="iconfont icon-chexiao"
-          @click="onReset"
-        >
+        <el-button type="primary" icon="ecx-icon icon-sousuo" @click="onSearch"> 查询 </el-button>
+        <el-button type="primary" plain icon="ecx-icon icon-zhongzhi" @click="onReset">
           重置
         </el-button>
       </div>
-      <div
-        v-if="showExtend"
-        class="extend-wrap"
-      >
-        <el-button
-          type="text"
-          @click="toggleExtend"
-        >
-          <i
-            class="iconfont"
-            :class="extend ? 'icon-z045' : 'icon-zhankai'"
-          />{{
+      <div v-if="showExtend" class="extend-wrap">
+        <el-button type="text" @click="toggleExtend">
+          <i class="ecx-icon" :class="extend ? 'icon-quanbushouqi' : 'icon-quanbuzhankai'" />{{
             `${extend ? '收起' : '展开'}`
           }}
         </el-button>
@@ -98,12 +72,12 @@ export default {
       default: 'normal'
     }
   },
-  provide () {
+  provide() {
     return {
       filterForm: this
     }
   },
-  data () {
+  data() {
     return {
       fields: [],
       showExtend: false,
@@ -112,7 +86,7 @@ export default {
     }
   },
   computed: {
-    formClass () {
+    formClass() {
       const size = this.size
       return {
         'shouqi': !this.extend,
@@ -121,7 +95,7 @@ export default {
       }
     }
   },
-  created () {
+  created() {
     this.$on('sp.filterForm.addField', (field) => {
       if (field) {
         this.fields.push(field)
@@ -135,19 +109,19 @@ export default {
       }, 50)
     }
   },
-  mounted () {
+  mounted() {
     this.$nextTick(() => {
       this.calcRows()
     })
   },
-  destroyed () {
+  destroyed() {
     window.onresize = null
   },
   methods: {
-    toggleExtend () {
+    toggleExtend() {
       this.extend = !this.extend
     },
-    calcRows () {
+    calcRows() {
       // const cols = Math.floor(this.$refs.fiterFormBd.clientWidth / 305)
       let rows = 1
       const fieldsWidth = this.fields.reduce((previous, current) => {
@@ -170,10 +144,10 @@ export default {
       }
       this.rows = rows
     },
-    onSearch () {
+    onSearch() {
       this.$emit('onSearch')
     },
-    onReset () {
+    onReset() {
       if (!this.model) {
         console.warn('[Sp Warn][sp-filter-form]model is required for resetFields to work.')
         return

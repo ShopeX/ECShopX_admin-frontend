@@ -48,7 +48,7 @@
 </template>
 
 <script>
-import settlementCycle from './comps/settlementCycle'
+import SettlementCycle from './components/SettlementCycle.vue'
 import { createSetting } from '@shopex/finder'
 export default {
   name: '',
@@ -64,7 +64,7 @@ export default {
         {
           label: '结算周期',
           key: 'cycleData',
-          component: () => <settlementCycle v-model={this.form.cycleData} />,
+          component: () => <SettlementCycle v-model={this.form.cycleData} />,
           validator: (rule, value, callback) => {
             const { cycle, unit } = this.form.cycleData
             if (!cycle || !unit) {
@@ -172,12 +172,12 @@ export default {
         },
         {
           label: '结算周期:',
-          key: 'period',
-          component: () => <settlementCycle v-model={this.addForm.cycleData} />,
+          key: 'cycleData',
+          component: () => <SettlementCycle v-model={this.addForm.cycleData} />,
           validator: (rule, value, callback) => {
             const { cycle, unit } = this.addForm.cycleData
             if (!cycle || !unit) {
-              callback(new Error('不能为空'))
+              callback(new Error('结算周期不能为空'))
             } else {
               callback()
             }

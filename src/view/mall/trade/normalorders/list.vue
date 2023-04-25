@@ -1024,7 +1024,7 @@ export default {
         this.cancelOrderForm.loading = true
         this.cancelOrderDialog = true
       } else if (key == 'deliverGoods') {
-        if (this.isBindOMS) {
+        if (this.isBindOMS && this.IS_ADMIN) {
           return this.$message.warning('请至OMS处理订单发货')
         }
 

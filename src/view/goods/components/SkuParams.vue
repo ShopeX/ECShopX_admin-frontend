@@ -52,7 +52,7 @@
             }}</el-checkbox>
             <el-popover
               placement="top"
-              trigger="hover"
+              trigger="click"
               @show="
                 () => {
                   if (!sku.custom_attribute_value) {
@@ -70,18 +70,6 @@
             </el-popover>
           </span>
         </el-checkbox-group>
-        <!-- <el-select
-        v-model="item.value"
-        clearable
-        placeholder="请选择"
-      >
-        <el-option
-          v-for="child in item.children"
-          :key="child.value"
-          :label="child.label"
-          :value="child.value"
-        />
-      </el-select> -->
       </el-form-item>
     </el-form>
     <el-table
@@ -197,18 +185,17 @@
           />
         </template>
       </el-table-column>
-      <!-- <el-table-column label="获取积分">
+      <el-table-column v-if="isShowPoint" label="获取积分">
         <template slot-scope="scope">
           <el-input
             v-model="scope.row.point_num"
             type="number"
-            required
             min="0"
             size="mini"
             placeholder=""
           />
         </template>
-      </el-table-column> -->
+      </el-table-column>
       <el-table-column width="80">
         <template slot-scope="scope">
           <el-button type="primary" size="mini" @click="onFillSpecItems"> 填充 </el-button>
@@ -271,11 +258,11 @@
           <el-input v-model="scope.row.barcode" size="mini" />
         </template>
       </el-table-column>
-      <!-- <el-table-column prop="point_num" label="获取积分">
+      <el-table-column v-if="isShowPoint" prop="point_num" label="获取积分">
         <template slot-scope="scope">
           <el-input v-model="scope.row.point_num" type="number" min="0" size="mini" />
         </template>
-      </el-table-column> -->
+      </el-table-column>
       <el-table-column width="80">
         <template slot-scope="scope">
           <el-button type="text" @click="onClearSpecItem(scope.$index)"> 清除 </el-button>
@@ -287,11 +274,15 @@
 
 <script>
 export default {
-  name: 'CmSkuParams',
+  name: 'SkuParams',
   props: {
     value: {
       type: Object,
       default: () => {}
+    },
+    isShowPoint: {
+      type: Boolean,
+      default: false
     }
   },
   data() {

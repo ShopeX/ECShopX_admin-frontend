@@ -56,12 +56,14 @@ export default {
     {
       path: 'goodsbase/goodscategory',
       name: `销售分类`,
-      component: () => import('@/view/mall/goods/category')
+      // component: () => import('@/view/mall/goods/category')
+      component: () => import('@/view/goods/saleCategory')
     },
     {
       path: 'goodsbase/goodsmaincategory',
       name: `管理分类`,
-      component: () => import('@/view/mall/goods/maincategory')
+      // component: () => import('@/view/mall/goods/maincategory')
+      component: () => import('@/view/goods/mainCategory')
     },
     {
       path: 'goodsbase/goodsattributes',

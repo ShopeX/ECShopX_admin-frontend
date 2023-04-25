@@ -6,7 +6,7 @@ export default {
   props: {
     value: {
       type: Object,
-      validator (v) {
+      validator(v) {
         if (v === null) return true
         if (!v.type) {
           console.error('value.type is undefined')
@@ -21,7 +21,7 @@ export default {
     }
   },
 
-  data () {
+  data() {
     return {
       type: '',
       defaultVal: '',
@@ -32,29 +32,45 @@ export default {
   watch: {
     value: {
       immediate: true,
-      handler (val) {
+      handler(val) {
         if (!val || val.type !== this.type) {
           val = this.resolveDefaultVal()
         } else {
           val = cloneDeep(val)
         }
+        console.log('base watch value:', val)
         this.localVal = val
       }
     }
   },
 
   methods: {
-    resolveDefaultVal () {
+    cellClass({ columnIndex, rowIndex }) {
+      const { multiple } = this
+      if (columnIndex == 0 && rowIndex == 0 && !multiple) {
+        return 'disableheadselection'
+      }
+    },
+    resolveDefaultVal() {
       return {
         type: this.type,
         data: this.defaultVal
       }
     },
-    getVal () {
+    getVal() {
+      console.log(`sp-picker getVal:`, this, JSON.stringify(this.localVal))
+      if (this.multiple) {
+        console.log('this.value', this, this.value)
+        const { num } = this.value
+        if (num) {
+          if (this.localVal.data.length > num) {
+            throw new Error(`最多选择${num}条数据`)
+          }
+        }
+      }
       return this.localVal
     },
-    updateVal (val) {
-      // debugger
+    updateVal(val) {
       // const type = this.$options.config.type || this.type
       // if (!type) throw new Error('type should not be undefined')
 

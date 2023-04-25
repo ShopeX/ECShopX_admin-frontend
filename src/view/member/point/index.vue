@@ -1,16 +1,9 @@
 <template>
-  <div class="section section-white">
+  <div class="section section-white point-rule">
     <div class="section-header with-border">
-      <div class="section-title">
-        积分配置
-      </div>
+      <div class="section-title">积分配置</div>
     </div>
-    <el-form
-      ref="form"
-      :model="form"
-      label-position="left"
-      label-width="180px"
-    >
+    <el-form ref="form" :model="form" label-position="left" label-width="180px">
       <div class="section-body">
         <el-form-item label="积分：">
           <el-switch
@@ -26,12 +19,7 @@
           />
         </el-form-item>
         <el-form-item label="展示名称：">
-          <el-input
-            v-model="form.name"
-            placeholder=""
-            style="width: 120px"
-            :max="8"
-          />
+          <el-input v-model="form.name" placeholder="" style="width: 120px" :max="8" />
           <el-tooltip
             class="item"
             effect="dark"
@@ -43,34 +31,14 @@
         </el-form-item>
         <div v-if="form.isOpenMemberPoint == 'true'">
           <el-form-item label="获取方式：">
-            <el-radio-group
-              v-model="form.access"
-              @change="changeAccess"
-            >
-              <el-radio label="order">
-                订单
-              </el-radio>
-              <el-radio label="items">
-                商品
-              </el-radio>
+            <el-radio-group v-model="form.access" @change="changeAccess">
+              <el-radio label="order"> 订单 </el-radio>
+              <el-radio label="items"> 商品 </el-radio>
             </el-radio-group>
-            <p
-              v-if="access == 'order'"
-              class="frm-tips"
-            >
-              说明：可按订单金额比例获取
-            </p>
-            <p
-              v-if="access == 'items'"
-              class="frm-tips"
-            >
-              说明：可按单商品设置的积分值获取
-            </p>
+            <p v-if="access == 'order'" class="frm-tips">说明：可按订单金额比例获取</p>
+            <p v-if="access == 'items'" class="frm-tips">说明：可按单商品设置的积分值获取</p>
           </el-form-item>
-          <el-form-item
-            v-if="access == 'order'"
-            label="获取比例："
-          >
+          <el-form-item v-if="access == 'order'" label="获取比例：">
             订单金额1元人民币 获得<el-input
               v-model="form.gain_point"
               type="number"
@@ -81,34 +49,28 @@
             />积分
           </el-form-item>
 
-          <el-form-item
-            v-if="access == 'order'"
-            label="运费配置："
-          >
+          <el-form-item v-if="access == 'order'" label="运费配置：">
             <el-radio-group v-model="form.include_freight">
-              <el-radio label="true">
-                包含
-              </el-radio>
-              <el-radio label="false">
-                不包含
-              </el-radio>
+              <el-radio label="true"> 包含 </el-radio>
+              <el-radio label="false"> 不包含 </el-radio>
             </el-radio-group>
-            <p
-              v-if="include_freight == 'true'"
-              class="frm-tips"
-            >
+            <p v-if="include_freight == 'true'" class="frm-tips">
               说明：可设置订单中运费部分金额是否可获取积分
             </p>
-            <p
-              v-if="include_freight == 'false'"
-              class="frm-tips"
-            >
+            <p v-if="include_freight == 'false'" class="frm-tips">
               说明：可设置订单中运费部分金额是否可获取积分
             </p>
           </el-form-item>
           <el-form-item label="积分获取限制：">
-              每月最多获取<el-input  type="number"  v-model="form.gain_limit" placeholder="" style="width: 120px;" :min="1" :max="9999999"/>积分
-              <div class="frm-tips">不限制请填写999999</div>
+            每月最多获取<el-input
+              v-model="form.gain_limit"
+              type="number"
+              placeholder=""
+              style="width: 120px"
+              :min="1"
+              :max="9999999"
+            />积分
+            <div class="frm-tips">不限制请填写999999</div>
           </el-form-item>
           <el-form-item label="获取时间：">
             订单完成<el-input
@@ -152,7 +114,8 @@
                 style="width: 120px"
                 :min="1"
                 :max="9999999"
-              /> 积分 抵扣1元人民币
+              />
+              积分 抵扣1元人民币
             </el-form-item>
             <el-form-item label="积分规则：">
               <vue-html5-editor
@@ -174,12 +137,7 @@
         </div>
       </div>
       <div class="section-footer with-border content-center">
-        <el-button
-          type="primary"
-          @click="save"
-        >
-          保 存
-        </el-button>
+        <el-button type="primary" @click="save"> 保 存 </el-button>
       </div>
     </el-form>
   </div>
@@ -188,7 +146,7 @@
 import { savePointRule, getPointRule } from '../../../api/promotions'
 
 export default {
-  data () {
+  data() {
     return {
       form: {
         isOpenMemberPoint: 'false',
@@ -206,11 +164,11 @@ export default {
       include_freight: 'true'
     }
   },
-  mounted () {
+  mounted() {
     this.getPointRule()
   },
   methods: {
-    isOpenMemberPointHandle (val) {
+    isOpenMemberPointHandle(val) {
       if (val == 'false') {
         this.$confirm(
           '若关闭该设置，营销 - 分销推广 - 佣金奖励, 自动变更为现金奖励方式。',
@@ -233,13 +191,13 @@ export default {
       }
       console.log(val)
     },
-    getPointRule () {
+    getPointRule() {
       getPointRule().then((response) => {
         this.form = response.data.data
         ;(this.access = this.form.access), (this.include_freight = this.form.include_freight)
       })
     },
-    save () {
+    save() {
       if (this.form.isOpenMemberPoint) {
         if (this.form.gain_point <= 0 || this.form.gain_time <= 0) {
           this.$message({ message: '请配置获取积分参数', type: 'error' })
@@ -271,7 +229,7 @@ export default {
         })
       })
     },
-    changeAccess (type) {
+    changeAccess(type) {
       this.access = type
       if (this.access == 'items') {
       }
@@ -280,4 +238,8 @@ export default {
 }
 </script>
 
-<style lang="scss"></style>
+<style lang="scss" scoped>
+.point-rule {
+  height: auto !important;
+}
+</style>

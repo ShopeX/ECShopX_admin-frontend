@@ -134,6 +134,14 @@ export function updateDelivery(order_id, query) {
   })
 }
 
+export function updateAftersalesSendBack(query) {
+  return fetch({
+    url: '/aftersales/sendback ',
+    method: 'post',
+    params: query
+  })
+}
+
 export function updateRemark(order_id, query) {
   return fetch({
     url: '/order/remark/' + order_id,

@@ -10,12 +10,23 @@
       height: 64px;
     }
   }
+  .image-list-wrap {
+    @include clearfix();
+  }
   .image-item {
     width: 80px;
     height: 80px;
     border: 1px solid #d9d9d9;
     margin: 0 10px 10px 0;
     position: relative;
+    float: left;
+    &.drag {
+      &:hover {
+        .icon-tuozhuai {
+          display: block;
+        }
+      }
+    }
   }
   .placeholder {
     height: 80px;
@@ -36,12 +47,6 @@
     line-height: initial;
   }
   .img-content {
-    // position: relative;
-    // left: 50%;
-    // top: 50%;
-    // transform: translate(-50%, -50%);
-    // max-width: 100%;
-    // max-height: 100%;
     width: 100%;
     height: 100%;
     cursor: pointer;
@@ -58,14 +63,28 @@
     text-align: center;
     color: white;
     background-color: rgba(0, 0, 0, 0.4);
-    // display: none;
     position: absolute;
     bottom: 0;
     left: 0;
     font-size: 12px;
     cursor: default;
   }
-  .icon-times-circle1 {
+  .icon-tuozhuai {
+    background: rgba(0, 0, 0, 0.7);
+    display: none;
+    width: 20px;
+    height: 20px;
+    line-height: 20px;
+    text-align: center;
+    border-radius: 50%;
+    color: #fff;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 99;
+  }
+  .icon-qingchuFilled {
     position: absolute;
     right: -7px;
     z-index: 99;
@@ -78,8 +97,10 @@
 <script>
 import Vue from 'vue'
 import { isArray, isEmpty, isString, isObject } from '@/utils'
+import draggable from 'vuedraggable'
 export default {
   name: 'SpImagePicker',
+  components: { draggable },
   props: {
     value: {
       type: [Object, Array, String]
@@ -95,6 +116,19 @@ export default {
     size: {
       type: String,
       default: 'normal'
+    },
+    drag: {
+      type: Boolean,
+      default: false
+    }
+  },
+  data() {
+    return {
+      dragOptions: {
+        animation: 300,
+        forceFallback: false,
+        scroll: true
+      }
     }
   },
   created() {},
@@ -162,9 +196,10 @@ export default {
 
     _renderImage(item, index = 0) {
       return (
-        <div class='image-item' key={`image-item__${index}`}>
+        <div class={['image-item', { 'drag': this.drag }]} key={`image-item__${index}`}>
+          <i class='ecx-icon icon-tuozhuai' />
           <i
-            class='iconfont icon-times-circle1'
+            class='ecx-icon icon-qingchuFilled'
             on-click={this.handleDeleteItem.bind(this, index)}
           />
           <el-image class='img-content' src={item?.url || item} fit='cover' />
@@ -180,7 +215,17 @@ export default {
     const multiple = isArray(value)
     return (
       <div class={['sp-image-picker', size]}>
-        {max > 1 && value.map((item, index) => this._renderImage(item, index))}
+        {max > 1 && (
+          <draggable
+            class='list-container'
+            list={value}
+            disabled={!this.drag}
+            options={this.dragOptions}
+            handle='.icon-tuozhuai'
+          >
+            {value.map((item, index) => this._renderImage(item, index))}
+          </draggable>
+        )}
         {max > 1 && value.length < max && (
           <div class='image-item placeholder' on-click={this.handleSelectImage}>
             <i class='iconfont icon-camera' />

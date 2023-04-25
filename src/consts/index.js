@@ -1,3 +1,18 @@
+export const ICON_MAP = {
+  'tachometer-alt': 'gaikuang',
+  'shopping-bag': 'shangpin',
+  'clipboard-list': 'jiaoyi',
+  'store-alt': 'jingxiaoshang',
+  'gem1': 'huiyuan',
+  'brush': 'moban',
+  'gift': 'yingxiao',
+  'file-invoice-dollar': 'caiwu',
+  'chart-bar': 'tongji',
+  'sitemap': 'zhandian',
+  'yingyong-01': 'yingyong',
+  'cog': 'shezhi'
+}
+
 export const SALES_STATUS = [
   { title: '前台可销售', value: 'onsale' },
   { title: '前台不展示', value: 'offline_sale' },

@@ -59,33 +59,15 @@
       </div>
 
       <SpFilterForm :model="params" @onSearch="onSearch" @onReset="onSearch">
-        <SpFilterFormItem prop="keywords" label="商品名称:">
-          <el-input v-model="params.keywords" placeholder="请输入商品名称" />
+        <SpFilterFormItem prop="keywords" label="商品标题:">
+          <el-input v-model="params.keywords" placeholder="商品标题或副标题关键词" />
         </SpFilterFormItem>
-        <SpFilterFormItem prop="item_bn" label="商品编号:">
-          <el-input v-model="params.item_bn" placeholder="请输入商品编号" />
+        <SpFilterFormItem prop="item_bn" label="商品编码:">
+          <el-input v-model="params.item_bn" placeholder="商品编号或条形码" />
         </SpFilterFormItem>
-        <SpFilterFormItem prop="barcode" label="条形码:">
+        <!-- <SpFilterFormItem prop="barcode" label="条形码:">
           <el-input v-model="params.barcode" placeholder="请输入商品编号条形码" />
-        </SpFilterFormItem>
-        <SpFilterFormItem prop="templates_id" label="运费模板:">
-          <el-select v-model="params.templates_id" placeholder="请选择" clearable>
-            <el-option
-              v-for="item in templatesList"
-              :key="item.template_id"
-              :label="item.name"
-              :value="item.template_id"
-            />
-          </el-select>
-        </SpFilterFormItem>
-        <SpFilterFormItem prop="regions_id" label="商品产地:">
-          <el-cascader
-            v-model="params.regions_id"
-            placeholder="请选择"
-            clearable
-            :options="regions"
-          />
-        </SpFilterFormItem>
+        </SpFilterFormItem> -->
         <SpFilterFormItem prop="approve_status" label="商品状态:">
           <el-select v-model="params.approve_status" clearable placeholder="请选择">
             <el-option
@@ -97,10 +79,51 @@
             />
           </el-select>
         </SpFilterFormItem>
+        <SpFilterFormItem prop="item_category" label="管理分类:">
+          <el-cascader
+            v-model="params.item_category"
+            placeholder="请选择"
+            clearable
+            :options="itemCategoryList"
+            :props="{ value: 'category_id', label: 'category_name', checkStrictly: true }"
+          />
+        </SpFilterFormItem>
+        <SpFilterFormItem prop="category" label="销售分类:">
+          <el-cascader
+            v-model="params.category"
+            placeholder="请选择"
+            clearable
+            :options="categoryList"
+            :props="{ value: 'category_id', label: 'category_name', checkStrictly: true }"
+          />
+        </SpFilterFormItem>
+        <SpFilterFormItem prop="templates_id" label="运费模板:">
+          <el-select v-model="params.templates_id" placeholder="请选择" clearable>
+            <el-option
+              v-for="item in templatesList"
+              :key="item.template_id"
+              :label="item.name"
+              :value="item.template_id"
+            />
+          </el-select>
+        </SpFilterFormItem>
+
+        <SpFilterFormItem prop="tag_id" label="标签:">
+          <el-select v-model="params.tag_id" clearable placeholder="商品标签关键词">
+            <el-option
+              v-for="item in tag.list"
+              :key="item.tag_id"
+              size="mini"
+              :label="item.tag_name"
+              :value="item.tag_id"
+            />
+          </el-select>
+        </SpFilterFormItem>
+
         <SpFilterFormItem prop="brand_id" label="品牌:">
           <el-select
             v-model="params.brand_id"
-            placeholder="请选择"
+            placeholder="商品/商标关键词"
             remote
             filterable
             clearable
@@ -114,40 +137,22 @@
             />
           </el-select>
         </SpFilterFormItem>
-        <SpFilterFormItem prop="item_category" label="管理分类:">
+
+        <SpFilterFormItem prop="regions_id" label="商品产地:">
           <el-cascader
-            v-model="params.item_category"
+            v-model="params.regions_id"
             placeholder="请选择"
             clearable
-            :options="itemCategoryList"
-            :props="{ value: 'category_id', checkStrictly: true }"
+            :options="regions"
           />
         </SpFilterFormItem>
-        <SpFilterFormItem prop="category" label="销售分类:">
-          <el-cascader
-            v-model="params.category"
-            placeholder="请选择"
-            clearable
-            :options="categoryList"
-            :props="{ value: 'category_id', checkStrictly: true }"
-          />
-        </SpFilterFormItem>
-        <SpFilterFormItem prop="tag_id" label="商品标签:">
-          <el-select v-model="params.tag_id" clearable placeholder="请选择">
-            <el-option
-              v-for="item in tag.list"
-              :key="item.tag_id"
-              size="mini"
-              :label="item.tag_name"
-              :value="item.tag_id"
-            />
-          </el-select>
-        </SpFilterFormItem>
+
         <SpFilterFormItem prop="is_gift" label="赠品:">
-          <el-radio-group v-model="params.is_gift">
-            <el-radio :label="true"> 是 </el-radio>
-            <el-radio :label="false"> 否 </el-radio>
-          </el-radio-group>
+          <el-select v-model="params.is_gift">
+            <el-option :value="undefined" label="全部" />
+            <el-option :value="true" label="是" />
+            <el-option :value="false" label="否" />
+          </el-select>
         </SpFilterFormItem>
       </SpFilterForm>
 
@@ -244,7 +249,15 @@
                 <div class="goods-title">
                   {{ scope.row.item_name }}
                   <el-tag v-if="!scope.row.nospec" size="mini" effect="plain" type="primary">
-                    多规格
+                    多
+                  </el-tag>
+                  <el-tag
+                    v-if="scope.row.is_gift === '1'"
+                    size="mini"
+                    effect="plain"
+                    type="primary"
+                  >
+                    赠
                   </el-tag>
                 </div>
                 <div class="goods-code">
@@ -764,7 +777,7 @@ import Treeselect from '@riophae/vue-treeselect'
 import SideBar from '@/components/element/sideBar'
 import '@riophae/vue-treeselect/dist/vue-treeselect.css'
 import { getDefaultCurrency } from '@/api/company'
-import district from '@/common/district.json'
+// import district from '@/common/district.json'
 import {
   getItemsList,
   setItemsTemplate,
@@ -814,6 +827,7 @@ export default {
     let statusOption
     if (loginType == 'distributor') {
       statusOption = [
+        { title: '全部', value: '' },
         { title: '审核驳回', value: 'rejected' },
         { title: '等待审核', value: 'processing' },
         { title: '前台可销售', value: 'onsale' },
@@ -823,12 +837,14 @@ export default {
       ]
     } else if (VERSION_IN_PURCHASE) {
       statusOption = [
+        { title: '全部', value: '' },
         { title: '前台可销售', value: 'onsale' },
         { title: '前台仅展示', value: 'only_show' },
         { title: '不可销售', value: 'instock' }
       ]
     } else {
       statusOption = [
+        { title: '全部', value: '' },
         { title: '前台可销售', value: 'onsale' },
         { title: '前台不展示', value: 'offline_sale' },
         { title: '前台仅展示', value: 'only_show' },
@@ -846,7 +862,7 @@ export default {
           type: 'profit'
         }
       },
-      regions: district,
+      regions: [],
       current: '',
       currentId: '',
       currentPrice: '',
@@ -910,7 +926,7 @@ export default {
         item_category: 0,
         is_warning: false,
         tag_id: '',
-        is_gift: false,
+        is_gift: undefined,
         type: 0,
         barcode: '',
         distributor_id: 0,
@@ -974,12 +990,18 @@ export default {
   mounted() {
     this.init()
     this.fetchWechatList()
+    this.getAddress()
   },
 
   destroyed() {
     console.log(111)
   },
   methods: {
+    // 获取地区列表
+    async getAddress() {
+      const res = await this.$api.common.getAddress()
+      this.regions = res
+    },
     // 同步至店铺
     async syncToShop(isAll) {
       if (this.item_id.length == 0) {
@@ -1668,7 +1690,12 @@ export default {
         params.category = params.category[params.category.length - 1]
       }
       if (params.item_category.length > 0) {
-        params.item_category = params.item_category[params.item_category.length - 1]
+        // params.item_category = params.item_category[params.item_category.length - 1]
+        params.main_cat_id = params.item_category[params.item_category.length - 1]
+        delete params.item_category
+      }
+      if (typeof params.is_gift === 'undefined') {
+        delete params.is_gift
       }
       const { list, total_count, warning_store } = await this.$api.goods.getItemsList(params)
       list.forEach((item) => {
@@ -1709,7 +1736,7 @@ export default {
         page: 1,
         pageSize: 1000
       })
-      this.templatesList = list
+      this.templatesList = [{ name: '全部', template_id: '' }, ...list]
     },
     getGoodsBranchList(searchVal = '') {
       // this.loading = true

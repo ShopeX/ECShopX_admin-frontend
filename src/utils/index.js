@@ -50,6 +50,12 @@ export const IS_DISTRIBUTOR = (() => {
   return login_type == 'distributor'
 })()
 
+// 商户端
+export const IS_MERCHANT = (() => {
+  const login_type = store.getters.login_type
+  return login_type == 'merchant'
+})()
+
 // 平台端、店铺端、经销商端路由跳转封装
 export const getUrlPathByLoginType = (path) => {
   if (IS_ADMIN) {

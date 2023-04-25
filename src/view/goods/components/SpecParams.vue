@@ -8,11 +8,15 @@
 
 <script>
 export default {
-  name: 'CmSpecParams',
+  name: 'SpecParams',
   props: {
     value: {
       type: Object,
       default: () => {}
+    },
+    isShowPoint: {
+      type: Boolean,
+      default: false
     }
   },
   data() {
@@ -107,12 +111,6 @@ export default {
           type: 'input',
           display: 'inline'
         }
-        // {
-        //   label: '获取积分',
-        //   key: 'point_num',
-        //   type: 'input',
-        //   display: 'inline'
-        // }
       ]
     }
   },
@@ -124,6 +122,18 @@ export default {
       deep: true,
       handler(newVal) {
         this.$emit('input', newVal)
+      }
+    },
+    isShowPoint: {
+      handler(newVal) {
+        if (newVal) {
+          this.formList.push({
+            label: '获取积分',
+            key: 'point_num',
+            type: 'input',
+            display: 'inline'
+          })
+        }
       }
     }
   },

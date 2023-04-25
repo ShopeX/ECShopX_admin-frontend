@@ -6,6 +6,7 @@ import {
   VERSION_IN_PURCHASE,
   IS_ADMIN,
   IS_DISTRIBUTOR,
+  IS_MERCHANT,
   getUrlPathByLoginType
 } from '@/utils'
 import CommonUtil from '@/common/js/util'
@@ -243,6 +244,7 @@ Vue.prototype.VUE_APP_SYSTEM_NAME = SYSTEM_CONFIG[store.getters.versionMode].nam
 
 Vue.prototype.IS_ADMIN = IS_ADMIN
 Vue.prototype.IS_DISTRIBUTOR = IS_DISTRIBUTOR
+Vue.prototype.IS_MERCHANT = IS_MERCHANT
 
 Vue.prototype.path_prefixes = process.env.VUE_APP_PREFIXES
 Vue.prototype.BASE_API =

@@ -24,15 +24,7 @@
 
 <template>
   <div class="page-body">
-    <template
-      v-if="
-        $route.path.indexOf('editor') === -1 &&
-        $route.path.indexOf('details') === -1 &&
-        $route.path.indexOf('template') === -1 &&
-        $route.path.indexOf('wxpay') === -1 &&
-        $route.path.indexOf('alipay') === -1
-      "
-    >
+    <SpRouterView>
       <SpPlatformTip h5 app alipay />
       <div v-if="VERSION_STANDARD" class="content-bottom-padded">
         <el-alert type="info" title="操作说明" show-icon>
@@ -41,35 +33,26 @@
           </div>
         </el-alert>
       </div>
-      <div v-if="$store.getters.login_type === 'merchant'" style="margin-bottom: 10px">
+
+      <div v-if="IS_MERCHANT" style="margin-bottom: 10px">
         <el-alert type="info" title="" show-icon>
           <div>可在设置-店铺管理员添加店铺端账号，登录地址 【 {{ origin }}/shopadmin/login 】</div>
         </el-alert>
       </div>
 
-      <div class="action-container">
-        <el-button-group v-if="!is_distributor">
-          <el-button
-            :disabled="$store.getters.login_type != 'merchant' && !isLoginTypeNormal"
-            type="primary"
-            icon="el-icon-circle-plus"
-            @click="dialogOpen()"
-          >
-            添加店铺
+      <div v-if="!IS_DISTRIBUTOR" class="action-container">
+        <el-button type="primary" icon="ecx-icon icon-xinzeng" @click="dialogOpen()">
+          添加店铺
+        </el-button>
+
+        <el-button v-if="!distributor_self" type="primary" @click="addDistributorSelf()">
+          新增总部自提点
+        </el-button>
+        <template v-else>
+          <el-button v-if="!IS_MERCHANT" type="primary" @click="editDistributorSelf()">
+            编辑总部自提点
           </el-button>
-          <el-button v-if="!distributor_self" type="primary" @click="addDistributorSelf()">
-            新增总部自提点
-          </el-button>
-          <template v-else>
-            <el-button
-              v-if="$store.getters.login_type != 'merchant'"
-              type="primary"
-              @click="editDistributorSelf()"
-            >
-              编辑总部自提点
-            </el-button>
-          </template>
-        </el-button-group>
+        </template>
       </div>
 
       <SpFilterForm :model="params" @onSearch="onSearch" @onReset="onReset">
@@ -115,14 +98,14 @@
 
       <div class="action-container">
         <el-button
-          v-if="VERSION_PLATFORM && !is_distributor && $store.getters.login_type != 'merchant'"
+          v-if="VERSION_PLATFORM && !is_distributor && !IS_MERCHANT"
           plain
           type="primary"
           @click="addDistributorTag"
         >
           打标签
         </el-button>
-        <el-button v-if="IS_ADMIN" type="primary" plain icon="el-icon-circle-plus" @click="showSettingDistance()">
+        <el-button v-if="IS_ADMIN" type="primary" plain @click="showSettingDistance()">
           店铺范围配置
         </el-button>
       </div>
@@ -281,7 +264,7 @@
         <el-table-column
           v-if="!VERSION_STANDARD && $store.getters.login_type != 'merchant'"
           label="所属商家"
-          width="80"
+          width="120"
         >
           <template slot-scope="scope">
             <span>{{ scope.row.merchant_name || '-' }}</span>
@@ -289,30 +272,17 @@
         </el-table-column>
         <el-table-column label="操作">
           <template slot-scope="scope">
-            <router-link
-              v-if="scope.row.is_valid !== 'delete' && datapass_block == '0'"
-              :to="{
-                path: matchHidePage('editor'),
-                query: { distributor_id: scope.row.distributor_id }
-              }"
-            >
-              <span style="margin-right: 5px">编辑</span>
-            </router-link>
-
-            <!-- <router-link
-              v-if="!VERSION_PLATFORM && $store.getters.login_type == 'distributor'"
-              :to="{
-                path:
-                  $store.getters.login_type == 'distributor'
-                    ? '/shopadmin/entity/goodsphysical'
-                    : '/store/storemanager/Storeshopitemanagement',
-                query: { distributor_id: scope.row.distributor_id }
-              }"
-              style="margin: 0px 5px"
-            >
-              商品
-            </router-link> -->
-
+            <el-button type="text">
+              <router-link
+                v-if="scope.row.is_valid !== 'delete' && datapass_block == '0'"
+                :to="{
+                  path: matchHidePage('editor'),
+                  query: { distributor_id: scope.row.distributor_id }
+                }"
+              >
+                编辑
+              </router-link>
+            </el-button>
             <el-button type="text" @click="linkTemplates(scope.row)"> 店铺装修 </el-button>
             <el-button type="text" @click="showSettingMeiQia(scope.row.distributor_id)">
               客服
@@ -364,6 +334,7 @@
           </template>
         </el-table-column>
       </el-table>
+
       <div class="content-padded content-center">
         <el-pagination
           background
@@ -376,6 +347,7 @@
           @size-change="onSizeChange"
         />
       </div>
+
       <el-dialog
         title="下载店铺码"
         :visible.sync="downDistributorVal"
@@ -389,6 +361,7 @@
           </el-col>
         </el-row>
       </el-dialog>
+
       <el-dialog
         :visible.sync="dialogVisible"
         width="80%"
@@ -398,6 +371,7 @@
       >
         <shopDecoration :id="current" @saved="closeDialog" />
       </el-dialog>
+
       <el-dialog
         :visible.sync="pcDialogVisible"
         width="80%"
@@ -456,6 +430,7 @@
           <el-button type="primary" @click="submitItemTag">确 定</el-button>
         </span>
       </el-dialog>
+
       <el-dialog
         title="修改状态"
         width="18%"
@@ -549,8 +524,7 @@
         :form-list="keFuFormList"
         @onSubmit="onKeFuFormSubmit"
       />
-    </template>
-    <router-view />
+    </SpRouterView>
   </div>
 </template>
 <script>

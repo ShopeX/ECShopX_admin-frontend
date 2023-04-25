@@ -4,6 +4,7 @@
     <el-aside class="aside">
       <div class="menu-warp view-flex">
         <div class="main-menu">
+          <!-- brand logo -->
           <div class="brand-con">
             <div v-if="login_type === 'merchant'">
               <div class="img-wrap">
@@ -24,6 +25,7 @@
               </div>
             </router-link>
           </div>
+          <!-- menu list -->
           <div class="main-menu__con">
             <el-menu text-color="#fff" :default-active="activeIndex" @select="handleSelectMenu">
               <el-menu-item
@@ -32,13 +34,15 @@
                 :index="item.url"
               >
                 <router-link :to="getMenuUrl(item)">
-                  <i class="iconfont" :class="`icon-${item.icon}`" />
+                  <!-- <i class="iconfont" :class="`icon-${item.icon}`" /> -->
+                  <i :class="['ecx-icon', `icon-${getIconName(item.icon)}`]" />
                   <span>{{ item.name }}</span>
                 </router-link>
               </el-menu-item>
             </el-menu>
           </div>
         </div>
+        <!-- 二级菜单 -->
         <div v-if="$route.meta && !$route.meta.hidemenu" class="sub-menu">
           <el-menu :default-active="activeSubIndex">
             <template v-for="(child, cindex) in submenuList">
@@ -153,6 +157,7 @@ const loginBottomStandard = require('@/assets/logo_bottom/standard.png')
 
 import { mapGetters, mapMutations, mapState } from 'vuex'
 import { getAuthorizelogout } from '@/api/login'
+import { ICON_MAP } from '@/consts'
 import { VERSION_STANDARD, isInSalesCenter } from '@/utils'
 import { micrApp } from '@/utils/micr-app'
 import store from '@/store'
@@ -243,6 +248,9 @@ export default {
   },
   methods: {
     ...mapMutations(['SYSTEM_EXIT']),
+    getIconName(icon) {
+      return ICON_MAP[icon] || ''
+    },
     isShowHeader() {
       return !isInSalesCenter()
     },
@@ -381,8 +389,8 @@ export default {
   .el-menu-item {
     height: 40px;
     line-height: 40px;
-    display: flex;
-    align-items: center;
+    // display: flex;
+    // align-items: center;
     padding: 0 8px !important;
     &.is-active {
       a {
@@ -390,7 +398,7 @@ export default {
         background: rgba(255, 255, 255, 0.1);
         border-radius: 2px;
       }
-      .iconfont {
+      .ecx-icon {
         color: $color-primary;
       }
     }
@@ -399,22 +407,24 @@ export default {
       a {
         color: $color-primary;
       }
-      .iconfont {
+      .ecx-icon {
         color: $color-primary;
       }
     }
     > a {
       display: block;
       color: #fff;
-      flex: 1;
-      display: flex;
-      align-items: center;
-      justify-content: center;
+      padding-left: 10px;
+
+      // flex: 1;
+      // display: flex;
+      // align-items: center;
+      // justify-content: center;
     }
-    .iconfont {
+    .ecx-icon {
       color: #fff;
       font-size: 15px;
-      margin-right: 6px;
+      margin-right: 4px;
     }
   }
 }

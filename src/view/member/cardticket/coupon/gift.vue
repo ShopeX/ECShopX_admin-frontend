@@ -1,20 +1,8 @@
 <template>
   <div class="gift-coupon">
-    <el-form
-      v-if="!showGiftEdit"
-      ref="form"
-      :rules="rules"
-      :model="form"
-      label-width="140px"
-    >
-      <el-card
-        shadow="never"
-        header="基础信息"
-      >
-        <el-form-item
-          label="优惠券名称"
-          prop="title"
-        >
+    <el-form v-if="!showGiftEdit" ref="form" :rules="rules" :model="form" label-width="140px">
+      <el-card shadow="never" header="基础信息">
+        <el-form-item label="优惠券名称" prop="title">
           <el-input
             v-model="form.title"
             :disabled="form.card_id ? true : false"
@@ -25,44 +13,24 @@
           />
         </el-form-item>
 
-        <el-form-item
-          label="发放总量"
-          prop="quantity"
-        >
+        <el-form-item label="发放总量" prop="quantity">
           <el-input
             v-model.number="form.quantity"
             :disabled="form.kq_status === 1 || form.kq_status === 2"
             placeholder="发放数量需大于0，且为整数"
             style="width: 400px"
           >
-            <template slot="append">
-              张
-            </template>
+            <template slot="append"> 张 </template>
           </el-input>
         </el-form-item>
 
-        <el-form-item
-          label="活动类型"
-          prop="date_type"
-        >
-          <el-radio-group
-            v-model="form.date_type"
-            :disabled="form.card_id ? true : false"
-          >
-            <el-radio label="DATE_TYPE_LONG">
-              长期活动
-            </el-radio>
-            <el-radio label="DATE_TYPE_SHORT">
-              短期活动
-            </el-radio>
+        <el-form-item label="活动类型" prop="date_type">
+          <el-radio-group v-model="form.date_type" :disabled="form.card_id ? true : false">
+            <el-radio label="DATE_TYPE_LONG"> 长期活动 </el-radio>
+            <el-radio label="DATE_TYPE_SHORT"> 短期活动 </el-radio>
           </el-radio-group>
           <template v-if="form.date_type === 'DATE_TYPE_LONG'">
-            <el-form-item
-              class="m-b-10"
-              label-width="80px"
-              label="开始时间"
-              prop="begintime"
-            >
+            <el-form-item class="m-b-10" label-width="80px" label="开始时间" prop="begintime">
               <el-date-picker
                 v-model="form.begintime"
                 :disabled="form.card_id ? true : false"
@@ -81,11 +49,7 @@
                 <i class="el-icon-question tooltip" />
               </el-tooltip>
             </el-form-item>
-            <el-form-item
-              label-width="80px"
-              label="领取"
-              prop="days"
-            >
+            <el-form-item label-width="80px" label="领取" prop="days">
               <template>
                 <el-select
                   v-model="form.limit"
@@ -107,9 +71,7 @@
                   :disabled="form.card_id ? true : false"
                   size="small"
                 >
-                  <template slot="append">
-                    天
-                  </template>
+                  <template slot="append"> 天 </template>
                 </el-input>
                 <!-- <el-select
                   :disabled="form.card_id ? true : false"
@@ -136,12 +98,7 @@
             </el-form-item>
           </template>
           <template v-else>
-            <el-form-item
-              class="m-b-10"
-              label-width="80px"
-              label="发放时间"
-              prop="issuetime"
-            >
+            <el-form-item class="m-b-10" label-width="80px" label="发放时间" prop="issuetime">
               <el-date-picker
                 v-model="form.issuetime"
                 :disabled="form.card_id ? true : false"
@@ -153,12 +110,7 @@
                 size="small"
               />
             </el-form-item>
-            <el-form-item
-              class="m-b-10"
-              label-width="80px"
-              label="使用时间"
-              prop="usetime"
-            >
+            <el-form-item class="m-b-10" label-width="80px" label="使用时间" prop="usetime">
               <el-date-picker
                 v-model="form.usetime"
                 :disabled="form.card_id ? true : false"
@@ -173,10 +125,7 @@
           </template>
         </el-form-item>
 
-        <el-form-item
-          label="卡券使用说明"
-          prop="description"
-        >
+        <el-form-item label="卡券使用说明" prop="description">
           <el-input
             v-model="form.description"
             :disabled="form.kq_status === 1 || form.kq_status === 2"
@@ -195,22 +144,14 @@
         </el-form-item> -->
       </el-card>
 
-      <el-card
-        shadow="never"
-        header="领取和适用规则"
-      >
-        <el-form-item
-          label="领取限制"
-          prop="get_limit"
-        >
+      <el-card shadow="never" header="领取和适用规则">
+        <el-form-item label="领取限制" prop="get_limit">
           <el-input
             v-model.number="form.get_limit"
             :disabled="form.card_id ? true : false"
             style="width: 150px"
           >
-            <template slot="append">
-              张
-            </template>
+            <template slot="append"> 张 </template>
           </el-input>
           <span class="tips after-tips">每个用户领券上限，如不填，则默认为1。</span>
         </el-form-item>
@@ -220,9 +161,9 @@
             v-model="form.receive"
             :disabled="form.kq_status === 1 || form.kq_status === 2"
           />
-          <span
-            class="tips after-tips"
-          >默认为开启。开启后用户可在卡券列表中领取，未开启需手动发放。</span>
+          <span class="tips after-tips"
+            >默认为开启。开启后用户可在卡券列表中领取，未开启需手动发放。</span
+          >
         </el-form-item>
 
         <el-form-item label="指定会员可领">
@@ -231,11 +172,7 @@
             class="checkbox"
             :disabled="form.kq_status === 1 || form.kq_status === 2"
           >
-            <el-checkbox
-              v-for="grade in memberGrade"
-              :key="grade.grade_id"
-              :label="grade.grade_id"
-            >
+            <el-checkbox v-for="grade in memberGrade" :key="grade.grade_id" :label="grade.grade_id">
               {{ grade.grade_name }}
             </el-checkbox>
           </el-checkbox-group>
@@ -252,9 +189,7 @@
               付费{{ vipdata.grade_name }}
             </el-checkbox>
           </el-checkbox-group>
-          <div class="tips after-tips">
-            未选默认所有会员适用
-          </div>
+          <div class="tips after-tips">未选默认所有会员适用</div>
         </el-form-item>
 
         <!-- <el-form-item label="指定会员标签可领">
@@ -278,14 +213,8 @@
         </el-form-item> -->
       </el-card>
 
-      <el-card
-        shadow="never"
-        header="兑换规则"
-      >
-        <el-form-item
-          label="选定商品锁定时间"
-          prop="lock_time"
-        >
+      <el-card shadow="never" header="兑换规则">
+        <el-form-item label="选定商品锁定时间" prop="lock_time">
           <el-input
             v-model.number="form.lock_time"
             :disabled="form.kq_status === 1 || form.kq_status === 2"
@@ -298,59 +227,26 @@
       </el-card>
 
       <div class="content-center">
-        <el-button
-          v-if="form.kq_status !== 2"
-          @click="cancelSubmit"
-        >
-          取消
-        </el-button>
+        <el-button v-if="form.kq_status !== 2" @click="cancelSubmit"> 取消 </el-button>
         <template v-if="form.card_id && form.kq_status === 0">
-          <el-button
-            type="danger"
-            @click="editGift(2)"
-          >
-            关闭
-          </el-button>
-          <el-button
-            type="danger"
-            @click="editGift(1)"
-          >
-            暂停
-          </el-button>
+          <el-button type="danger" @click="editGift(2)"> 关闭 </el-button>
+          <el-button type="danger" @click="editGift(1)"> 暂停 </el-button>
         </template>
         <template v-if="form.kq_status !== 2">
-          <el-button
-            v-if="form.kq_status === 1"
-            type="danger"
-            plain
-            @click="editGift(0)"
-          >
+          <el-button v-if="form.kq_status === 1" type="danger" plain @click="editGift(0)">
             启用
           </el-button>
-          <el-button
-            v-else
-            v-loading="loading"
-            type="primary"
-            @click="submitForm('form')"
-          >
+          <el-button v-else v-loading="loading" type="primary" @click="submitForm('form')">
             提交
           </el-button>
         </template>
       </div>
     </el-form>
 
-    <GiftEdit
-      v-else
-      :list-data="form"
-      @changeShowEdit="changeShowEdit"
-      @submitList="submitGift"
-    />
+    <GiftEdit v-else :list-data="form" @changeShowEdit="changeShowEdit" @submitList="submitGift" />
 
     <!-- 标签选择器 -->
-    <TagSelect
-      v-model="dialogVisible"
-      @selectTags="selectTags"
-    />
+    <TagSelect v-model="dialogVisible" @selectTags="selectTags" />
   </div>
 </template>
 
@@ -367,8 +263,8 @@ export default {
     GiftEdit,
     TagSelect
   },
-  data () {
-    function getTempDays (start = 0) {
+  data() {
+    function getTempDays(start = 0) {
       let tempDays = []
       for (let i = start; i <= 90; i++) {
         tempDays.push({ text: i + '天', value: i })
@@ -460,7 +356,7 @@ export default {
       vipGrade: []
     }
   },
-  mounted () {
+  mounted() {
     if (this.$route.query.cardId) {
       this.form.card_id = this.$route.query.cardId
     }
@@ -469,16 +365,16 @@ export default {
     this.init()
   },
   methods: {
-    toTimeStamp (time) {
+    toTimeStamp(time) {
       return new Date(time).getTime() / 1000
     },
-    toTimeDate (time) {
+    toTimeDate(time) {
       return dayjs(time * 1000).format('YYYY-MM-DD HH:mm:ss')
     },
-    cancelSubmit () {
-      this.$router.push({ path: '/marketing/coupon/membermarketing' })
+    cancelSubmit() {
+      this.$router.go(-1)
     },
-    submitForm (formName) {
+    submitForm(formName) {
       if (this.form.days <= 0) {
         this.$message.error('有效天数必须大于0')
         return
@@ -504,10 +400,10 @@ export default {
         }
       })
     },
-    changeShowEdit (status) {
+    changeShowEdit(status) {
       this.showGiftEdit = status
     },
-    async submitGift (listData, source) {
+    async submitGift(listData, source) {
       const params = this.params
       Object.keys(params).forEach((key) => {
         params[key] = listData[key]
@@ -543,20 +439,20 @@ export default {
         }
       }
     },
-    async getGradeList () {
+    async getGradeList() {
       const { data } = await getGradeList()
       if (data) {
         this.gradeList = data.data
         this.memberGrade = data.data
       }
     },
-    async listVipGrade () {
+    async listVipGrade() {
       const { data } = await listVipGrade()
       if (data) {
         this.vipGrade = data.data
       }
     },
-    async init () {
+    async init() {
       if (this.form.card_id) {
         const { data } = await getCardDetail({ card_id: this.form.card_id })
         let initData = data.data
@@ -583,7 +479,7 @@ export default {
       }
     },
     // 编辑卡券状态
-    editGift (status) {
+    editGift(status) {
       const params = this.params
       Object.keys(params).forEach((key) => {
         params[key] = this.form[key]
@@ -601,7 +497,7 @@ export default {
     },
 
     // 添加标签
-    selectTags (tagsList) {
+    selectTags(tagsList) {
       console.log(tagsList, 'tagsList提交的标签')
       this.tagsList = tagsList
       this.dialogVisible = false

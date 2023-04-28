@@ -50,17 +50,7 @@
             <el-checkbox :label="sku.attribute_value_id">{{
               sku.custom_attribute_value || sku.attribute_value
             }}</el-checkbox>
-            <el-popover
-              placement="top"
-              trigger="click"
-              @show="
-                () => {
-                  if (!sku.custom_attribute_value) {
-                    sku.custom_attribute_value = sku.attribute_value
-                  }
-                }
-              "
-            >
+            <el-popover placement="top" trigger="click">
               <div class="popover-edit">
                 <el-input v-model="sku.custom_attribute_value" @change="onSkuChange" />
               </div>

@@ -14,91 +14,33 @@
               class="template-title"
               :style="
                 'background: #fff url(' +
-                  headerBg +
-                  ') no-repeat bottom; background-size: 100% auto;'
+                headerBg +
+                ') no-repeat bottom; background-size: 100% auto;'
               "
             >
               <span>标题</span>
             </div>
           </div>
-          <div
-            class="components-wrap"
-            :style="'height: ' + (wheight - 290) + 'px;'"
-          >
-            <div
-              v-for="(item, index) in components"
-              :key="index"
-              class="component-item"
-            >
-              <coupon
-                v-if="item.name === 'coupon'"
-                :res="item"
-              />
-              <film
-                v-if="item.name === 'film'"
-                :res="item"
-              />
-              <goodsGrid
-                v-if="item.name === 'goodsGrid'"
-                :res="item"
-              />
-              <goodsGridTab
-                v-if="item.name === 'goodsGridTab'"
-                :res="item"
-              />
-              <goodsScroll
-                v-if="item.name === 'goodsScroll'"
-                :res="item"
-              />
-              <imgHotzone
-                v-if="item.name === 'imgHotzone'"
-                :res="item"
-              />
-              <marquees
-                v-if="item.name === 'marquees'"
-                :res="item"
-              />
-              <navigation
-                v-if="item.name === 'navigation'"
-                :res="item"
-              />
-              <search
-                v-if="item.name === 'search'"
-                :res="item"
-              />
-              <showcase
-                v-if="item.name === 'showcase'"
-                :res="item"
-              />
-              <slider
-                v-if="item.name === 'slider'"
-                :res="item"
-              />
-              <floorImg
-                v-if="item.name === 'floorImg'"
-                :res="item"
-              />
-              <headline
-                v-if="item.name === 'headline'"
-                :res="item"
-              />
-              <hotTopic
-                v-if="item.name === 'hotTopic'"
-                :res="item"
-              />
-              <imgGif
-                v-if="item.name === 'img-gif'"
-                :res="item"
-              />
-              <store
-                v-if="item.name === 'store' && VERSION_PLATFORM"
-                :res="item"
-              />
+          <div class="components-wrap" :style="'height: ' + (wheight - 290) + 'px;'">
+            <div v-for="(item, index) in components" :key="index" class="component-item">
+              <coupon v-if="item.name === 'coupon'" :res="item" />
+              <film v-if="item.name === 'film'" :res="item" />
+              <goodsGrid v-if="item.name === 'goodsGrid'" :res="item" />
+              <goodsGridTab v-if="item.name === 'goodsGridTab'" :res="item" />
+              <goodsScroll v-if="item.name === 'goodsScroll'" :res="item" />
+              <imgHotzone v-if="item.name === 'imgHotzone'" :res="item" />
+              <marquees v-if="item.name === 'marquees'" :res="item" />
+              <navigation v-if="item.name === 'navigation'" :res="item" />
+              <search v-if="item.name === 'search'" :res="item" />
+              <showcase v-if="item.name === 'showcase'" :res="item" />
+              <slider v-if="item.name === 'slider'" :res="item" />
+              <floorImg v-if="item.name === 'floorImg'" :res="item" />
+              <headline v-if="item.name === 'headline'" :res="item" />
+              <hotTopic v-if="item.name === 'hotTopic'" :res="item" />
+              <imgGif v-if="item.name === 'img-gif'" :res="item" />
+              <store v-if="item.name === 'store' && VERSION_PLATFORM" :res="item" />
             </div>
-            <goodsGrid
-              v-if="showLike == 1 && faverite.data.length"
-              :res="faverite"
-            />
+            <goodsGrid v-if="showLike == 1 && faverite.data.length" :res="faverite" />
           </div>
           <div class="template-footer">
             <div
@@ -126,7 +68,7 @@
                     class="svg-icon"
                     :src="
                       item.selectedIconPath ||
-                        'https://fakeimg.pl/60x60/EFEFEF/CCC/?text=icofont=lobster'
+                      'https://fakeimg.pl/60x60/EFEFEF/CCC/?text=icofont=lobster'
                     "
                   >
                   <img
@@ -219,7 +161,7 @@ export default {
       type: Number
     }
   },
-  data () {
+  data() {
     return {
       initData: [
         {
@@ -486,7 +428,7 @@ export default {
   },
   computed: {
     ...mapGetters(['wheight']),
-    showDialog () {
+    showDialog() {
       return this.dialogVisible
     }
   },
@@ -497,17 +439,17 @@ export default {
     //   },
     //   immediate: true
     // },
-    dialogVisible (newVal, oldVal) {
+    dialogVisible(newVal, oldVal) {
       if (newVal) {
         this.getData()
       }
     }
   },
   methods: {
-    cancelAction () {
+    cancelAction() {
       this.$emit('closeDialog')
     },
-    async getData () {
+    async getData() {
       if (this.VERSION_PLATFORM) {
         this.initData = [
           ...this.initData,
@@ -533,7 +475,7 @@ export default {
       let data = []
       faverite.data.data.list.forEach((item) => {
         data.push({
-          imgUrl: item.pics[0],
+          imgUrl: item.pics ? item.pics[0] : '',
           title: item.itemName,
           goodsId: item.itemId
         })

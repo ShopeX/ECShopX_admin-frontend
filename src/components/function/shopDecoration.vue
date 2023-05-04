@@ -231,7 +231,12 @@
           <filmEditor :res="editorData" @change="getVideo" @radioChange="radioChange" />
           <goodsGridEditor :res="editorData" @bindGoods="showGoods" @bindLinks="showLinks" />
           <goodsGridTabEditor :res="editorData" @bindGoods="showGoods" @bindLinks="showLinks" />
-          <goodsScrollEditor :res="editorData" @bindGoods="showGoods" @bindLinks="showLinks" @bindImgs="showImgs" />
+          <goodsScrollEditor
+            :res="editorData"
+            @bindGoods="showGoods"
+            @bindLinks="showLinks"
+            @bindImgs="showImgs"
+          />
           <imgHotzoneEditor
             :res="editorData"
             @bindImgs="showImgs"
@@ -896,7 +901,7 @@ export default {
       let data = []
       res.data.data.list.forEach((item) => {
         data.push({
-          imgUrl: item.pics[0],
+          imgUrl: item.pics ? item.pics[0] : '',
           title: item.itemName,
           goodsId: item.itemId
         })

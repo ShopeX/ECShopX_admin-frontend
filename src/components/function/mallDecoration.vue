@@ -931,7 +931,7 @@ export default {
   methods: {
     handleClickTempHeader() {
       // if(this.relStore.id == '0'){
-        this.editorIndex = -1
+      this.editorIndex = -1
       // }
     },
     /* ---------------------------------------------选择标签------------------------------------------ */
@@ -1372,11 +1372,11 @@ export default {
         })
       }
 
-      const faverite = await getRecommendLikeItemList()
+      const faverite = await this.$api.promotions.getRecommendLikeItemList()
       let data = []
-      faverite.data.data.list.forEach((item) => {
+      faverite.list.forEach((item) => {
         data.push({
-          imgUrl: item.pics[0],
+          imgUrl: item.pics ? item.pics[0] : '',
           title: item.itemName,
           goodsId: item.itemId
         })

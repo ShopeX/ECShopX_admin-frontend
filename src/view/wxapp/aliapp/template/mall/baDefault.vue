@@ -8,34 +8,22 @@
         @start="onStart"
         @end="onEnd"
       >
-        <div
-          v-for="(item, index) in initData"
-          class="component-control"
-        >
+        <div v-for="(item, index) in initData" class="component-control">
           <template v-if="item.name === 'navigation'">
-            <svg
-              class="svg-icon"
-              aria-hidden="true"
-            >
+            <svg class="svg-icon" aria-hidden="true">
               <use xlink:href="#icon-navigation" />
             </svg>
             图片导航
           </template>
           <template v-if="item.name === 'slider'">
-            <svg
-              class="svg-icon"
-              aria-hidden="true"
-            >
+            <svg class="svg-icon" aria-hidden="true">
               <use xlink:href="icon-loucengtupian" />
             </svg>
             轮播
           </template>
         </div>
       </draggable>
-      <el-button
-        type="text"
-        @click="handleShowConfig"
-      >
+      <el-button type="text" @click="handleShowConfig">
         <i class="iconfont icon-cog" /> 小程序设置
       </el-button>
     </section>
@@ -47,8 +35,8 @@
               class="template-title"
               :style="
                 'background: #fff url(' +
-                  headerBg +
-                  ') no-repeat bottom; background-size: 100% auto;'
+                headerBg +
+                ') no-repeat bottom; background-size: 100% auto;'
               "
             >
               <span>标题</span>
@@ -79,16 +67,9 @@
                 :res="item"
                 :active="index == editorIndex"
               />
-              <slider
-                v-if="item.name === 'slider'"
-                :res="item"
-                :active="index == editorIndex"
-              />
+              <slider v-if="item.name === 'slider'" :res="item" :active="index == editorIndex" />
             </div>
-            <goodsGrid
-              v-if="isOpenFaverite && faverite.length"
-              :res="faverite"
-            />
+            <goodsGrid v-if="isOpenFaverite && faverite.length" :res="faverite" />
           </draggable>
           <div class="template-footer">
             <div
@@ -118,7 +99,7 @@
                     class="svg-icon"
                     :src="
                       item.selectedIconPath ||
-                        'https://fakeimg.pl/60x60/EFEFEF/CCC/?text=icofont=lobster'
+                      'https://fakeimg.pl/60x60/EFEFEF/CCC/?text=icofont=lobster'
                     "
                   >
                   <img
@@ -138,37 +119,17 @@
         </div>
       </div>
       <div class="setting-view">
-        <div
-          v-if="editorIndex === null"
-          class="view-placeholder"
-        >
+        <div v-if="editorIndex === null" class="view-placeholder">
           <i class="iconfont icon-shapes" />
           请选择左侧挂件
         </div>
-        <navigationEditor
-          :res="editorData"
-          @bindImgs="showImgs"
-          @bindLinks="showLinks"
-        />
-        <sliderEditor
-          :res="editorData"
-          @bindImgs="showImgs"
-          @bindLinks="showLinks"
-        />
-        <tabsEditor
-          :res="editorData"
-          @bindImgs="showImgs"
-        />
+        <navigationEditor :res="editorData" @bindImgs="showImgs" @bindLinks="showLinks" />
+        <sliderEditor :res="editorData" @bindImgs="showImgs" @bindLinks="showLinks" />
+        <tabsEditor :res="editorData" @bindImgs="showImgs" />
       </div>
     </section>
     <section class="content-padded-s section-white content-center">
-      <el-button
-        class="btn-save"
-        type="primary"
-        @click="saveConfig"
-      >
-        保存
-      </el-button>
+      <el-button class="btn-save" type="primary" @click="saveConfig"> 保存 </el-button>
     </section>
     <imgPicker
       :dialog-visible="imgsVisible"
@@ -190,16 +151,8 @@
       @chooseStore="pickGoods"
       @closeStoreDialog="closeDialog"
     />
-    <couponPicker
-      :visible="couponsVisible"
-      @pickCoupon="pickCoupon"
-      @closeDialog="closeDialog"
-    />
-    <sideBar
-      :visible.sync="show_sideBar"
-      :title="'小程序设置'"
-      width="20"
-    >
+    <couponPicker :visible="couponsVisible" @pickCoupon="pickCoupon" @closeDialog="closeDialog" />
+    <sideBar :visible.sync="show_sideBar" :title="'小程序设置'" width="20">
       <el-form label-width="120px">
         <el-form-item label="开启热门推荐">
           <el-switch
@@ -313,7 +266,7 @@ export default {
     // 第三方组件
     draggable
   },
-  data () {
+  data() {
     return {
       show_sideBar: false,
       componentHeight: '',
@@ -495,7 +448,7 @@ export default {
   computed: {
     ...mapGetters(['wheight', 'template_name'])
   },
-  async mounted () {
+  async mounted() {
     if (this.VERSION_PLATFORM) {
       this.initData = [
         ...this.initData,
@@ -521,7 +474,7 @@ export default {
     let data = []
     faverite.data.data.list.forEach((item) => {
       data.push({
-        imgUrl: item.pics[0],
+        imgUrl: item.pics ? item.pics[0] : '',
         title: item.itemName,
         goodsId: item.itemId
       })
@@ -555,25 +508,25 @@ export default {
     Object.assign(this.tabs, tabBar.data.data.list[0].params)
   },
   methods: {
-    handleShowConfig () {
+    handleShowConfig() {
       this.show_sideBar = true
     },
     // 拖拽绑定事件
-    onStart (evt) {
+    onStart(evt) {
       if (evt.target.className === 'components-view') {
         this.saveInit = JSON.stringify(this.initData[evt.oldIndex])
       } else {
         this.setCurrent(evt.oldIndex)
       }
     },
-    onEnd (evt) {
+    onEnd(evt) {
       this.setCurrent(evt.newIndex)
       if (evt.target.className === 'components-view' && evt.to.className === 'components-wrap') {
         this.initData.splice(evt.oldIndex, 0, JSON.parse(this.saveInit))
       }
     },
     // 设置当前编辑的组件
-    setCurrent (val) {
+    setCurrent(val) {
       this.editorIndex = val
       if (val === 'tabs') {
         this.editorData = { ...this.tabs }
@@ -582,7 +535,7 @@ export default {
       }
     },
     // 删除当前组件
-    removeCurrent () {
+    removeCurrent() {
       this.$confirm('确认删除当前组件？')
         .then((_) => {
           this.editorData = {}
@@ -593,12 +546,12 @@ export default {
         .catch((_) => {})
     },
     // 视频选择器绑定事件
-    getVideo (data) {
+    getVideo(data) {
       Object.assign(this.editorData.data[0], data)
       Object.assign(this.components[this.editorIndex].data[0], data)
     },
     // 图片选择器绑定事件
-    showImgs (index, tabIcon) {
+    showImgs(index, tabIcon) {
       this.imgsVisible = true
       this.isGetImage = true
       if (typeof index !== undefined) {
@@ -608,7 +561,7 @@ export default {
         this.tabIcon = tabIcon
       }
     },
-    pickImg (data) {
+    pickImg(data) {
       if (this.editorIndex === 'tabs') {
         if (this.tabIcon === 'default') {
           this.editorData.data[this.editorDataIndex].iconPath = data.url
@@ -626,11 +579,11 @@ export default {
       }
       this.imgsVisible = false
     },
-    closeimgsVisible () {
+    closeimgsVisible() {
       this.imgsVisible = false
     },
     // 商品选择器绑定事件
-    showGoods (index) {
+    showGoods(index) {
       let ids = []
       let items = []
       if (index !== undefined) {
@@ -667,7 +620,7 @@ export default {
         }, 500)
       }
     },
-    pickGoods (data, store) {
+    pickGoods(data, store) {
       if (this.editorDataIndex !== null) {
         if (!store.id) {
           this.relItemsIds.splice(0)
@@ -709,22 +662,22 @@ export default {
       this.goodsVisible = false
     },
     // 更新跑马灯数据
-    updataArticle (data) {},
+    updataArticle(data) {},
     // 优惠券选择器绑定事件
-    showCoupons () {
+    showCoupons() {
       this.couponsVisible = true
     },
-    pickCoupon (data) {
+    pickCoupon(data) {
       this.editorData.data = data
       this.components[this.editorIndex].data = data
       this.couponsVisible = false
     },
-    showLinks (index) {
+    showLinks(index) {
       this.linksVisible = true
       this.editorDataIndex = index
     },
     // 链接选择器绑定事件
-    setLink (data, type) {
+    setLink(data, type) {
       this.editorData.data[this.editorDataIndex].id = data.id
       this.editorData.data[this.editorDataIndex].title = data.title
       this.editorData.data[this.editorDataIndex].linkPage = type
@@ -734,7 +687,7 @@ export default {
       this.linksVisible = false
     },
     // 选择器公用关闭事件
-    closeDialog (key) {
+    closeDialog(key) {
       switch (key) {
         case 'coupon':
           this.couponsVisible = false
@@ -750,7 +703,7 @@ export default {
       }
     },
     // 保存配置
-    async saveConfig () {
+    async saveConfig() {
       let hasLocation = this.components.findIndex((item) => item.name === 'setting')
 
       if (hasLocation == -1) {

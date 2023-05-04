@@ -8,116 +8,76 @@
         @start="onStart"
         @end="onEnd"
       >
-        <div
-          v-for="(item, index) in initData"
-          class="component-control"
-          :key="index"
-        >
+        <div v-for="(item, index) in initData" :key="index" class="component-control">
           <template v-if="item.name === 'coupon'">
-            <svg
-              class="svg-icon"
-              aria-hidden="true"
-            >
+            <svg class="svg-icon" aria-hidden="true">
               <use xlink:href="#icon-tag1" />
             </svg>
             优惠券
           </template>
           <template v-if="item.name === 'film'">
-            <svg
-              class="svg-icon"
-              aria-hidden="true"
-            >
+            <svg class="svg-icon" aria-hidden="true">
               <use xlink:href="#icon-video1" />
             </svg>
             视频
           </template>
           <template v-if="item.name === 'goodsGrid'">
-            <svg
-              class="svg-icon"
-              aria-hidden="true"
-            >
+            <svg class="svg-icon" aria-hidden="true">
               <use xlink:href="#icon-grid" />
             </svg>
             商品栅格
           </template>
           <template v-if="item.name === 'goodsScroll'">
-            <svg
-              class="svg-icon"
-              aria-hidden="true"
-            >
+            <svg class="svg-icon" aria-hidden="true">
               <use xlink:href="#icon-scroll1" />
             </svg>
             商品滚动
           </template>
           <template v-if="item.name === 'imgHotzone'">
-            <svg
-              class="svg-icon"
-              aria-hidden="true"
-            >
+            <svg class="svg-icon" aria-hidden="true">
               <use xlink:href="#icon-hotzone" />
             </svg>
             热区图
           </template>
           <template v-if="item.name === 'marquees'">
-            <svg
-              class="svg-icon"
-              aria-hidden="true"
-            >
+            <svg class="svg-icon" aria-hidden="true">
               <use xlink:href="#icon-marquees" />
             </svg>
             文字轮播
           </template>
           <template v-if="item.name === 'navigation'">
-            <svg
-              class="svg-icon"
-              aria-hidden="true"
-            >
+            <svg class="svg-icon" aria-hidden="true">
               <use xlink:href="#icon-navigation" />
             </svg>
             图片导航
           </template>
           <template v-if="item.name === 'search'">
-            <svg
-              class="svg-icon"
-              aria-hidden="true"
-            >
+            <svg class="svg-icon" aria-hidden="true">
               <use xlink:href="#icon-search1" />
             </svg>
             搜索
           </template>
           <template v-if="item.name === 'showcase'">
-            <svg
-              class="svg-icon"
-              aria-hidden="true"
-            >
+            <svg class="svg-icon" aria-hidden="true">
               <use xlink:href="#icon-showcase" />
             </svg>
             橱窗
           </template>
           <template v-if="item.name === 'slider'">
-            <svg
-              class="svg-icon"
-              aria-hidden="true"
-            >
+            <svg class="svg-icon" aria-hidden="true">
               <use xlink:href="icon-loucengtupian" />
             </svg>
             轮播
           </template>
           <template v-if="item.name === 'store' && VERSION_PLATFORM">
-            <svg
-              class="svg-icon"
-              aria-hidden="true"
-            >
+            <svg class="svg-icon" aria-hidden="true">
               <use xlink:href="#icon-store1" />
             </svg>
             推荐店铺
           </template>
         </div>
       </draggable>
-      <el-button
-        type="text"
-        @click="handleShowConfig"
-      >
+      <el-button type="text" @click="handleShowConfig">
         <i class="iconfont icon-cog" /> 小程序设置
       </el-button>
     </section>
@@ -129,8 +89,8 @@
               class="template-title"
               :style="
                 'background: #fff url(' +
-                  headerBg +
-                  ') no-repeat bottom; background-size: 100% auto;'
+                headerBg +
+                ') no-repeat bottom; background-size: 100% auto;'
               "
             >
               <span>标题</span>
@@ -157,16 +117,8 @@
                   @click="removeCurrent"
                 />
               </transition>
-              <coupon
-                v-if="item.name === 'coupon'"
-                :res="item"
-                :active="index == editorIndex"
-              />
-              <film
-                v-if="item.name === 'film'"
-                :res="item"
-                :active="index == editorIndex"
-              />
+              <coupon v-if="item.name === 'coupon'" :res="item" :active="index == editorIndex" />
+              <film v-if="item.name === 'film'" :res="item" :active="index == editorIndex" />
               <goodsGrid
                 v-if="item.name === 'goodsGrid'"
                 :res="item"
@@ -192,31 +144,20 @@
                 :res="item"
                 :active="index == editorIndex"
               />
-              <search
-                v-if="item.name === 'search'"
-                :res="item"
-                :active="index == editorIndex"
-              />
+              <search v-if="item.name === 'search'" :res="item" :active="index == editorIndex" />
               <showcase
                 v-if="item.name === 'showcase'"
                 :res="item"
                 :active="index == editorIndex"
               />
-              <slider
-                v-if="item.name === 'slider'"
-                :res="item"
-                :active="index == editorIndex"
-              />
+              <slider v-if="item.name === 'slider'" :res="item" :active="index == editorIndex" />
               <store
                 v-if="item.name === 'store' && VERSION_PLATFORM"
                 :res="item"
                 :active="index == editorIndex"
               />
             </div>
-            <goodsGrid
-              v-if="isOpenFaverite && faverite.length"
-              :res="faverite"
-            />
+            <goodsGrid v-if="isOpenFaverite && faverite.length" :res="faverite" />
           </draggable>
           <div class="template-footer">
             <div
@@ -246,7 +187,7 @@
                     class="svg-icon"
                     :src="
                       item.selectedIconPath ||
-                        'https://fakeimg.pl/60x60/EFEFEF/CCC/?text=icofont=lobster'
+                      'https://fakeimg.pl/60x60/EFEFEF/CCC/?text=icofont=lobster'
                     "
                   >
                   <img
@@ -266,77 +207,28 @@
         </div>
       </div>
       <div class="setting-view">
-        <div
-          v-if="editorIndex === null"
-          class="view-placeholder"
-        >
+        <div v-if="editorIndex === null" class="view-placeholder">
           <i class="iconfont icon-shapes" />
           请选择左侧挂件
         </div>
         <template v-else>
-          <couponEditor
-            :res="editorData"
-            @bindCoupons="showCoupons"
-            @bindImgs="showImgs"
-          />
-          <filmEditor
-            :res="editorData"
-            @change="getVideo"
-          />
-          <goodsGridEditor
-            :res="editorData"
-            @bindGoods="showGoods"
-            @bindLinks="showLinks"
-          />
-          <goodsScrollEditor
-            :res="editorData"
-            @bindGoods="showGoods"
-            @bindLinks="showLinks"
-          />
-          <imgHotzoneEditor
-            :res="editorData"
-            @bindImgs="showImgs"
-            @bindLinks="showLinks"
-          />
-          <marqueesEditor
-            :res="editorData"
-            @change="updataArticle"
-          />
-          <navigationEditor
-            :res="editorData"
-            @bindImgs="showImgs"
-            @bindLinks="showLinks"
-          />
+          <couponEditor :res="editorData" @bindCoupons="showCoupons" @bindImgs="showImgs" />
+          <filmEditor :res="editorData" @change="getVideo" />
+          <goodsGridEditor :res="editorData" @bindGoods="showGoods" @bindLinks="showLinks" />
+          <goodsScrollEditor :res="editorData" @bindGoods="showGoods" @bindLinks="showLinks" />
+          <imgHotzoneEditor :res="editorData" @bindImgs="showImgs" @bindLinks="showLinks" />
+          <marqueesEditor :res="editorData" @change="updataArticle" />
+          <navigationEditor :res="editorData" @bindImgs="showImgs" @bindLinks="showLinks" />
           <searchEditor :res="editorData" />
-          <showcaseEditor
-            :res="editorData"
-            @bindImgs="showImgs"
-            @bindLinks="showLinks"
-          />
-          <sliderEditor
-            :res="editorData"
-            @bindImgs="showImgs"
-            @bindLinks="showLinks"
-          />
-          <storeEditor
-            :res="editorData"
-            @bindGoods="showGoods"
-          />
-          <tabsEditor
-            :res="editorData"
-            @bindImgs="showImgs"
-          />
+          <showcaseEditor :res="editorData" @bindImgs="showImgs" @bindLinks="showLinks" />
+          <sliderEditor :res="editorData" @bindImgs="showImgs" @bindLinks="showLinks" />
+          <storeEditor :res="editorData" @bindGoods="showGoods" />
+          <tabsEditor :res="editorData" @bindImgs="showImgs" />
         </template>
       </div>
     </section>
     <section class="content-padded-s section-white content-center">
-      <el-button
-        class="btn-save"
-        type="primary"
-        @click="saveConfig"
-      >
-        保存
-      </el-button>
+      <el-button class="btn-save" type="primary" @click="saveConfig"> 保存 </el-button>
     </section>
     <imgPicker
       :dialog-visible="imgsVisible"
@@ -358,16 +250,8 @@
       @chooseStore="pickGoods"
       @closeStoreDialog="closeDialog"
     />
-    <couponPicker
-      :visible="couponsVisible"
-      @pickCoupon="pickCoupon"
-      @closeDialog="closeDialog"
-    />
-    <sideBar
-      :visible.sync="show_sideBar"
-      :title="'小程序设置'"
-      width="20"
-    >
+    <couponPicker :visible="couponsVisible" @pickCoupon="pickCoupon" @closeDialog="closeDialog" />
+    <sideBar :visible.sync="show_sideBar" :title="'小程序设置'" width="20">
       <el-form label-width="120px">
         <el-form-item label="开启热门推荐">
           <el-switch
@@ -481,7 +365,7 @@ export default {
     // 第三方组件
     draggable
   },
-  data () {
+  data() {
     return {
       show_sideBar: false,
       componentHeight: '',
@@ -838,7 +722,7 @@ export default {
   computed: {
     ...mapGetters(['wheight', 'template_name'])
   },
-  async mounted () {
+  async mounted() {
     if (this.VERSION_PLATFORM) {
       this.initData = [
         ...this.initData,
@@ -864,7 +748,7 @@ export default {
     let data = []
     faverite.data.data.list.forEach((item) => {
       data.push({
-        imgUrl: item.pics[0],
+        imgUrl: item.pics ? item.pics[0] : '',
         title: item.itemName,
         goodsId: item.itemId
       })
@@ -898,25 +782,25 @@ export default {
     Object.assign(this.tabs, tabBar.data.data.list[0].params)
   },
   methods: {
-    handleShowConfig () {
+    handleShowConfig() {
       this.show_sideBar = true
     },
     // 拖拽绑定事件
-    onStart (evt) {
+    onStart(evt) {
       if (evt.target.className === 'components-view') {
         this.saveInit = JSON.stringify(this.initData[evt.oldIndex])
       } else {
         this.setCurrent(evt.oldIndex)
       }
     },
-    onEnd (evt) {
+    onEnd(evt) {
       this.setCurrent(evt.newIndex)
       if (evt.target.className === 'components-view' && evt.to.className === 'components-wrap') {
         this.initData.splice(evt.oldIndex, 0, JSON.parse(this.saveInit))
       }
     },
     // 设置当前编辑的组件
-    setCurrent (val) {
+    setCurrent(val) {
       this.editorIndex = val
       if (val === 'tabs') {
         this.editorData = { ...this.tabs }
@@ -925,7 +809,7 @@ export default {
       }
     },
     // 删除当前组件
-    removeCurrent () {
+    removeCurrent() {
       this.$confirm('确认删除当前组件？')
         .then((_) => {
           this.editorData = {}
@@ -936,12 +820,12 @@ export default {
         .catch((_) => {})
     },
     // 视频选择器绑定事件
-    getVideo (data) {
+    getVideo(data) {
       Object.assign(this.editorData.data[0], data)
       Object.assign(this.components[this.editorIndex].data[0], data)
     },
     // 图片选择器绑定事件
-    showImgs (index, tabIcon) {
+    showImgs(index, tabIcon) {
       this.imgsVisible = true
       this.isGetImage = true
       if (typeof index !== undefined) {
@@ -951,7 +835,7 @@ export default {
         this.tabIcon = tabIcon
       }
     },
-    pickImg (data) {
+    pickImg(data) {
       if (this.editorIndex === 'tabs') {
         if (this.tabIcon === 'default') {
           this.editorData.data[this.editorDataIndex].iconPath = data.url
@@ -969,11 +853,11 @@ export default {
       }
       this.imgsVisible = false
     },
-    closeimgsVisible () {
+    closeimgsVisible() {
       this.imgsVisible = false
     },
     // 商品选择器绑定事件
-    showGoods (index) {
+    showGoods(index) {
       let ids = []
       let items = []
       if (index !== undefined) {
@@ -1010,7 +894,7 @@ export default {
         }, 500)
       }
     },
-    pickGoods (data, store) {
+    pickGoods(data, store) {
       console.log(this.editorDataIndex)
       if (this.editorDataIndex !== null) {
         if (!store.id) {
@@ -1053,24 +937,24 @@ export default {
       this.goodsVisible = false
     },
     // 更新跑马灯数据
-    updataArticle (data) {},
+    updataArticle(data) {},
     // 优惠券选择器绑定事件
-    showCoupons () {
+    showCoupons() {
       this.couponsVisible = true
     },
-    pickCoupon (data) {
+    pickCoupon(data) {
       this.editorData.data = data
       this.components[this.editorIndex].data = data
       this.couponsVisible = false
     },
-    showLinks (index) {
+    showLinks(index) {
       this.linksVisible = true
       if (index !== undefined) {
         this.editorDataIndex = index
       }
     },
     // 链接选择器绑定事件
-    setLink (data, type) {
+    setLink(data, type) {
       if (this.editorDataIndex !== null) {
         this.editorData.data[this.editorDataIndex].id = data.id
         this.editorData.data[this.editorDataIndex].title = data.title
@@ -1091,7 +975,7 @@ export default {
       this.editorDataIndex = null
     },
     // 选择器公用关闭事件
-    closeDialog (key) {
+    closeDialog(key) {
       switch (key) {
         case 'coupon':
           this.couponsVisible = false
@@ -1107,7 +991,7 @@ export default {
       }
     },
     // 保存配置
-    async saveConfig () {
+    async saveConfig() {
       let hasLocation = this.components.findIndex((item) => item.name === 'setting')
 
       if (hasLocation == -1) {

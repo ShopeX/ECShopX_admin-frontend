@@ -231,11 +231,11 @@ export default {
     },
     async getDefaultDistributor() {
       if (!this.formData.distributor_id) {
-        const { distributor_id } = await this.$api.marketing.getDistributorInfo({
+        const { distributor_id, name } = await this.$api.marketing.getDistributorInfo({
           distributor_id: 0
         })
         this.formData.distributor_id = distributor_id
-        this.$refs.selectShop.setVal(distributor_id)
+        this.$refs.selectShop.selectValue = name
       }
       this.finderUrl = '/distributor/items'
       this.finderData = undefined

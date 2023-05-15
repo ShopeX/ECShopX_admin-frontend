@@ -33,6 +33,8 @@
         beforeSearch: beforeSearch,
         afterSearch: afterSearch
       }"
+      reserve-selection
+      row-key="attribute_id"
       @select="onSelect"
       @selection-change="onSelectionChange"
     />

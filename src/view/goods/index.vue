@@ -58,7 +58,7 @@
 
 <script>
 import _uniqBy from 'lodash/uniqBy'
-import { isObject, isString, isArray } from '@/utils'
+import { isObject, isString, isArray, getRegionNameById } from '@/utils'
 import GoodsParams from './components/GoodsParams'
 import SpecParams from './components/SpecParams'
 import SkuParams from './components/SkuParams'
@@ -208,7 +208,7 @@ export default {
           label: '产地',
           key: 'regionsId',
           component: ({ key }, value) => (
-            <el-cascader v-model={value[key]} options={this.regionsList} />
+            <el-cascader v-model={value[key]} clearable options={this.regionsList} />
           ),
           display: 'inline'
         },
@@ -792,6 +792,7 @@ export default {
       pics.forEach((pic, index) => {
         _picsQrcode.push(picsQrcode.includes(index))
       })
+      debugger
       let params = {
         item_type: itemType,
         special_type: specialType,
@@ -804,7 +805,8 @@ export default {
         brand_id: brandId,
         item_unit: itemUnit,
         sort,
-        regions_id: regionsId,
+        regions_id: regionsId.length > 0 ? regionsId : '',
+        regions: regionsId.length > 0 ? getRegionNameById(regionsId, this.regionsList) : '',
         tax_rate: taxRate,
         is_gift: isGift,
         item_category: _salesCategory,

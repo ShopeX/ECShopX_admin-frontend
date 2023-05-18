@@ -76,7 +76,7 @@
           placeholder="请选择分类"
           clearable
           :options="categoryList"
-          :props="{ value: 'category_id', checkStrictly: true }"
+          :props="{ value: 'category_id', label: 'category_name', checkStrictly: true }"
         />
       </SpFilterFormItem>
       <SpFilterFormItem v-if="isShowFormItem('distributor_id')" prop="distributor_id">

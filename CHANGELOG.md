@@ -2,6 +2,48 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [3.12.0](https://git.ishopex.cn/ecshopx/ecshopx-admin/compare/v3.11.4...v3.12.0) (2023-05-18)
+
+
+### Features
+
+* **imgnav:** 图片导航内容 ([5913fed](https://git.ishopex.cn/ecshopx/ecshopx-admin/commit/5913fed0c70897a9512f98b381fedaa34df38290))
+* 修改 ([7433952](https://git.ishopex.cn/ecshopx/ecshopx-admin/commit/7433952aff2a05b24c2cde58777d69512069f644))
+* 同步 ([7d5412f](https://git.ishopex.cn/ecshopx/ecshopx-admin/commit/7d5412fa77dd65c8c83d19eaf585c3a0cc5c52d1))
+* 商品tab ([b258cf4](https://git.ishopex.cn/ecshopx/ecshopx-admin/commit/b258cf4c220c179e62ed10964256fa5f44ab7ffe))
+* 商品tab ([c37b9a2](https://git.ishopex.cn/ecshopx/ecshopx-admin/commit/c37b9a2b60793b59800252db99450c84318d374c))
+* 商品tab ([d75e07c](https://git.ishopex.cn/ecshopx/ecshopx-admin/commit/d75e07c7905c9e2808214948d5d65114a237b764))
+* 商品栅格 ([f6cf5d8](https://git.ishopex.cn/ecshopx/ecshopx-admin/commit/f6cf5d8cb7c70f61edde6750e9f11b3abb79ebae))
+* 商品栅格/选择商品、查看更多代码添加 ([cf922ca](https://git.ishopex.cn/ecshopx/ecshopx-admin/commit/cf922ca8711fe981588853821c5554d5f149e59d))
+* 商品栅格开发完毕 ([1dc0107](https://git.ishopex.cn/ecshopx/ecshopx-admin/commit/1dc0107689d7a7f06e58e0ddb70537f39c2325c8))
+* 更改图片名称 ([6af8ce3](https://git.ishopex.cn/ecshopx/ecshopx-admin/commit/6af8ce3ec121e867f6871052993a71f55810fbff))
+* 添加 文字轮博 ([b54293b](https://git.ishopex.cn/ecshopx/ecshopx-admin/commit/b54293b9ab4a27e6645aa10cd741ccf74d337603))
+* 添加搜索 ([cf26efc](https://git.ishopex.cn/ecshopx/ecshopx-admin/commit/cf26efc64c39488b41484f276bc5fca7d3a6130b))
+* 添加编辑 ([e11a7dd](https://git.ishopex.cn/ecshopx/ecshopx-admin/commit/e11a7dd7a9ff5f1c1ae9cfc003275701c258ba47))
+* 表单勾选 ([56e3510](https://git.ishopex.cn/ecshopx/ecshopx-admin/commit/56e35105a20a2bbbac14172efb49b02159f52131))
+
+
+### Bug Fixes
+
+* bug修复 ([e52d383](https://git.ishopex.cn/ecshopx/ecshopx-admin/commit/e52d3831e6040bdb9965297ba0d8ad917c180f44))
+* merge ([190506b](https://git.ishopex.cn/ecshopx/ecshopx-admin/commit/190506bf48a193d0c300a482c2d4ca2b4a252dc5))
+* 优化 ([5d8a45d](https://git.ishopex.cn/ecshopx/ecshopx-admin/commit/5d8a45dea3c6380482cdf555e1d2d2f9093269b8))
+* 优化 ([ce0d23a](https://git.ishopex.cn/ecshopx/ecshopx-admin/commit/ce0d23a4fe3fe61465b9b658b59760c224b9e009))
+* 优化path picker ([daf22d2](https://git.ishopex.cn/ecshopx/ecshopx-admin/commit/daf22d2c786b518a9fbcd8f6ffb3b13bbacae9cc))
+* 优化商品编辑装修 ([bf7233d](https://git.ishopex.cn/ecshopx/ecshopx-admin/commit/bf7233db84e7dbc8fa74daf094fc92523c4eb485))
+* 优化设计器 ([94f0e22](https://git.ishopex.cn/ecshopx/ecshopx-admin/commit/94f0e22b9a0a83d9442b01604d6fdc0f1374f7c3))
+* 优化设计器 ([93d4661](https://git.ishopex.cn/ecshopx/ecshopx-admin/commit/93d4661c4327993aca05b9e57ca7a75a0156539b))
+* 优惠券 ([7e084ea](https://git.ishopex.cn/ecshopx/ecshopx-admin/commit/7e084eaba7ee86d1bedb9cf58fd8cce299c66718))
+* 商品tabs 图片展位 ([8454481](https://git.ishopex.cn/ecshopx/ecshopx-admin/commit/8454481712b3903426143e13e14623927ef19430))
+* 商品tabs 显示修改 ([e53e990](https://git.ishopex.cn/ecshopx/ecshopx-admin/commit/e53e9902305f3bb95c9180ec80c717b19539bd1e))
+* 模板设计器优化 ([fef34da](https://git.ishopex.cn/ecshopx/ecshopx-admin/commit/fef34da0fc4b93c205a1d092f5841b4f31c5a65e))
+* 添加自定义页面可视化编辑 ([fd30555](https://git.ishopex.cn/ecshopx/ecshopx-admin/commit/fd30555941f4940e1e02ac0bbfa2ab6f18c1f8df))
+* 热区组件 ([2c1a51b](https://git.ishopex.cn/ecshopx/ecshopx-admin/commit/2c1a51b3549769610c76063b84a49ea4e9d720ba))
+* 装修修改 ([6ed3d1f](https://git.ishopex.cn/ecshopx/ecshopx-admin/commit/6ed3d1fe00a3d5b834a49538eca77ca63e022cfe))
+* 设计器优化 ([2e6dd2a](https://git.ishopex.cn/ecshopx/ecshopx-admin/commit/2e6dd2a54db78355fe369118ec2669e47f36efd5))
+* 轮播挂件 ([d30723f](https://git.ishopex.cn/ecshopx/ecshopx-admin/commit/d30723fec9cc804cf1d18ddcb8952ab0c0176b1e))
+* 选择器优化 ([7b1f42a](https://git.ishopex.cn/ecshopx/ecshopx-admin/commit/7b1f42a5da3139cf38be35c15ce6fdd24918673a))
+
 ## [3.11.0](https://git.ishopex.cn/ecshopx/ecshopx-admin/compare/v3.10.4...v3.11.0) (2023-04-24)
 
 

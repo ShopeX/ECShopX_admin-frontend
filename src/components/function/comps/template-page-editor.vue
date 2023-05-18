@@ -22,11 +22,11 @@
     color: #666;
     font-size: 14px;
   }
-  .wxtitle-content{
+  .wxtitle-content {
     display: flex;
     .btn-reset {
-    top: 0px;
-  }
+      top: 0px;
+    }
   }
 }
 .mr {
@@ -35,19 +35,19 @@
 .color {
   margin: 0 5px 5px 0;
 }
-.alipay-color{
+.alipay-color {
   display: flex;
-  .alipay-color_content{
-    width:30px;
-    height:30px;
+  .alipay-color_content {
+    width: 30px;
+    height: 30px;
     background-color: #fff;
     display: inline-block;
   }
-  .el-radio__input{
+  .el-radio__input {
     display: none;
   }
-  .el-radio.is-bordered{
-    padding: 5px 8px 5px 0
+  .el-radio.is-bordered {
+    padding: 5px 8px 5px 0;
   }
 }
 </style>
@@ -195,10 +195,9 @@ export default {
         titlePosition: 'left', // left\center\right
         pageBackgroundStyle: '1', // 1=颜色背景；2=图片背景
         pageBackgroundColor: '#f5f5f5',
-        pageBackgroundImage: '',
+        pageBackgroundImage: ''
         // alipayTitleColor:'#ffffff'
-      },
-
+      }
     }
   },
   watch: {

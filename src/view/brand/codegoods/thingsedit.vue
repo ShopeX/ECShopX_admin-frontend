@@ -35,12 +35,7 @@
         <el-form-item label="物品详情">
           <el-row :gutter="20">
             <el-col :span="20">
-              <vue-html5-editor
-                ref="editor"
-                :content="form.intro"
-                :height="360"
-                @change="updateContent"
-              />
+              <SpRichText v-model="form.intro" />
               <span class="tpl_item img" style="" @click="addImgPreview">
                 <i class="iconfont icon-image" />图片
               </span>

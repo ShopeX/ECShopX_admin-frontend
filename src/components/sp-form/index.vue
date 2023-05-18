@@ -270,18 +270,7 @@ export default {
     _renderRichText(item) {
       const { value, editorModules } = this
       const { key, disabled = false, options } = item
-      return (
-        <vue-html5-editor
-          ref='editor'
-          modules={editorModules}
-          content={value[key]}
-          height={260}
-          style='width: 80%'
-          on-change={(e) => {
-            value[key] = e
-          }}
-        />
-      )
+      return <SpRichText v-model={value[key]} />
     },
     _renderImage(item) {
       const { value } = this

@@ -100,18 +100,7 @@
           </el-radio-group>
           <div v-if="mode === 'richText'" class="richText-block">
             <div class="ricktext-con">
-              <vue-html5-editor
-                ref="editor"
-                :modules="modules"
-                :content="intro.toString()"
-                :height="360"
-                style="width: 100%"
-                @change="
-                  (e) => {
-                    this.intro = e
-                  }
-                "
-              />
+              <SpRichText v-model="intro" />
             </div>
             <!-- <span class="tpl-btn" @click="addImgPreview" style="">
               <i class="iconfont icon-image"></i>图片

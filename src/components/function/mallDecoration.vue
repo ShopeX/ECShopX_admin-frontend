@@ -808,6 +808,26 @@ export default {
           },
           data: []
         },
+        {
+          name: 'store',
+          base: {
+            title: '推荐商铺',
+            subtitle: '热门商铺，官方推荐',
+            padded: true,
+            backgroundColor: '#FFF',
+            borderColor: '#FF6700',
+            imgUrl: ''
+          },
+          data: [
+            {
+              id: '',
+              name: '',
+              logo: '',
+              items: []
+            }
+          ],
+          seletedTags: []
+        },
         // {
         //   name: "floorImg-two", //楼层图片默认数据2
         //   base: {

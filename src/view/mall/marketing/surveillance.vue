@@ -1,14 +1,10 @@
 <template>
   <div>
     <div class="content-bottom-padded">
-      <el-button type="primary" @click="handleBatchDownload">
-二维码打包
-</el-button>
+      <el-button type="primary" @click="handleBatchDownload"> 二维码打包 </el-button>
     </div>
 
-    <el-tag style="width: 100%" type="warning">
-选择商品
-</el-tag>
+    <el-tag style="width: 100%" type="warning"> 选择商品 </el-tag>
     <el-table
       ref="multipleItemsTable"
       v-loading="items.loading"
@@ -39,9 +35,7 @@
       />
     </div>
 
-    <el-tag style="width: 100%; margin-top: 20px" type="warning">
-选择分销商
-</el-tag>
+    <el-tag style="width: 100%; margin-top: 20px" type="warning"> 选择分销商 </el-tag>
     <el-table
       ref="multipleDistributorsTable"
       v-loading="distributors.loading"
@@ -99,7 +93,7 @@ const getWxaCodeImg = (url) => {
 
 export default {
   props: ['getStatus'],
-  data () {
+  data() {
     return {
       items: {
         list: [],
@@ -126,13 +120,13 @@ export default {
     }
   },
   watch: {
-    getStatus (val) {
+    getStatus(val) {
       if (val) {
         this.getItemsList()
       }
     }
   },
-  mounted () {
+  mounted() {
     this.getItemsList()
     this.getDistributorsList()
   },

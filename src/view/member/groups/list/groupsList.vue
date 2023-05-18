@@ -7,9 +7,7 @@
           <el-tag v-if="scope.row.group_goods_type == 'services'" type="success">
             服务类商品
           </el-tag>
-          <el-tag v-else>
-            实体类商品
-          </el-tag>
+          <el-tag v-else> 实体类商品 </el-tag>
         </template>
       </el-table-column>
       <el-table-column prop="goods_name" label="拼团商品" />
@@ -33,31 +31,54 @@
       </el-table-column>
       <el-table-column label="操作" width="250">
         <template slot-scope="scope">
-          <el-button size="mini" icon="edit" @click="showGroupsActivityDataAction(scope.$index, scope.row)">
+          <el-button
+            size="mini"
+            icon="edit"
+            @click="showGroupsActivityDataAction(scope.$index, scope.row)"
+          >
             活动数据
           </el-button>
-          <el-button v-if="scope.row.activity_status == 1" size="mini" icon="edit"
-            @click="editGroupsAction(scope.$index, scope.row)">
+          <el-button
+            v-if="scope.row.activity_status == 1"
+            size="mini"
+            icon="edit"
+            @click="editGroupsAction(scope.$index, scope.row)"
+          >
             编辑
           </el-button>
-          <el-button v-if="scope.row.activity_status == 2" size="mini"
-            @click="showGroupsAction(scope.$index, scope.row)">
+          <el-button
+            v-if="scope.row.activity_status == 2"
+            size="mini"
+            @click="showGroupsAction(scope.$index, scope.row)"
+          >
             查看
           </el-button>
-          <el-button v-if="scope.row.activity_status == 2" size="mini"
-            @click="finishGroupsAction(scope.$index, scope.row)">
+          <el-button
+            v-if="scope.row.activity_status == 2"
+            size="mini"
+            @click="finishGroupsAction(scope.$index, scope.row)"
+          >
             终止
           </el-button>
-          <el-button v-if="scope.row.activity_status == 1 || scope.row.activity_status == 3" size="mini" type="danger"
-            @click="deleteGroupsAction(scope.$index, scope.row)">
+          <el-button
+            v-if="scope.row.activity_status == 1 || scope.row.activity_status == 3"
+            size="mini"
+            type="danger"
+            @click="deleteGroupsAction(scope.$index, scope.row)"
+          >
             删 除
           </el-button>
         </template>
       </el-table-column>
     </el-table>
     <div v-if="total_count > params.pageSize" class="content-center content-top-padded">
-      <el-pagination layout="prev, pager, next" :current-page.sync="params.page" :total="total_count"
-        :page-size="params.pageSize" @current-change="handleCurrentChange" />
+      <el-pagination
+        layout="prev, pager, next"
+        :current-page.sync="params.page"
+        :total="total_count"
+        :page-size="params.pageSize"
+        @current-change="handleCurrentChange"
+      />
     </div>
   </div>
 </template>
@@ -87,16 +108,16 @@ export default {
   computed: {
     ...mapGetters(['wheight'])
   },
-  mounted() {
-    this.params.view = this.view
-    this.getGroupsList()
-    //this.getCurrencyInfo()
-  },
   watch: {
     view(newVal) {
       this.params.view = newVal
       this.getGroupsList()
     }
+  },
+  mounted() {
+    this.params.view = this.view
+    this.getGroupsList()
+    //this.getCurrencyInfo()
   },
   methods: {
     handleCurrentChange(pageNum) {
@@ -177,6 +198,4 @@ export default {
 }
 </script>
 
-<style scoped>
-
-</style>
+<style scoped></style>

@@ -113,11 +113,7 @@
                     />
                   </el-form-item>
                   <el-form-item label="注册协议" prop="member_register.content">
-                    <vue-html5-editor
-                      :content="privacyForm.member_register.content"
-                      :height="360"
-                      @change="updateContent"
-                    />
+                    <SpRichText v-model="privacyForm.member_register.content" />
                   </el-form-item>
                 </div>
               </el-card>
@@ -135,11 +131,7 @@
                     />
                   </el-form-item>
                   <el-form-item label="隐私政策" prop="privacy.content">
-                    <vue-html5-editor
-                      :content="privacyForm.privacy.content"
-                      :height="360"
-                      @change="updatePrivacyAgreement"
-                    />
+                    <SpRichText v-model="privacyForm.privacy.content" />
                   </el-form-item>
                 </div>
               </el-card>

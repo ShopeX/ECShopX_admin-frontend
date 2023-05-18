@@ -118,9 +118,7 @@
         </div>
       </el-card>
       <div class="content-bottom-padded" style="margin-top: 20px">
-        <el-button type="primary" @click="handleRelItem()">
-上架总部商品
-</el-button>
+        <el-button type="primary" @click="handleRelItem()"> 上架总部商品 </el-button>
       </div>
     </div>
     <router-view />
@@ -143,7 +141,7 @@ import {
 } from '../../../api/marketing'
 
 export default {
-  data () {
+  data() {
     return {
       distributor_ids: [],
       item_ids: [],
@@ -177,20 +175,20 @@ export default {
       cursymbol: '￥'
     }
   },
-  mounted () {
+  mounted() {
     this.getItemsList()
     this.getDistributorsList()
     this.getCurrencyInfo()
   },
   methods: {
-    numberSearch () {
+    numberSearch() {
       if (1 == this.distributors.params.page) {
         this.getDistributorsList()
       } else {
         this.distributors.params.page = 1
       }
     },
-    goodsNumberSearch () {
+    goodsNumberSearch() {
       if (1 == this.items.params.page) {
         this.getItemsList()
       } else {
@@ -319,7 +317,7 @@ export default {
         }
       )
     },
-    getCurrencyInfo () {
+    getCurrencyInfo() {
       getDefaultCurrency().then((res) => {
         this.currency = res.data.data
         this.cursymbol = this.currency.symbol

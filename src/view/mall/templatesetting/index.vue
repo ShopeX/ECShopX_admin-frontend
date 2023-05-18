@@ -1,14 +1,10 @@
 <template>
   <div style="padding-bottom: 58px">
-    <div class="title">
-列表页设置
-</div>
+    <div class="title">列表页设置</div>
     <el-card v-if="!isMicorMall">
       <div class="card">
         <div class="card_title">
-          <div class="card_title_tip title">
-PC端Banner轮播图
-</div>
+          <div class="card_title_tip title">PC端Banner轮播图</div>
           <div class="card_title_desc">
             建议尺寸700px*450px；最多四张图，前后拖动排序；无图片则不展示该模块。
           </div>
@@ -80,9 +76,7 @@ PC端Banner轮播图
       </div>
     </el-card> -->
     <GlobalFooter>
-      <el-button type="primary" @click="save">
-保存
-</el-button>
+      <el-button type="primary" @click="save"> 保存 </el-button>
     </GlobalFooter>
   </div>
 </template>
@@ -99,7 +93,7 @@ export default {
     Table,
     GlobalFooter
   },
-  data () {
+  data() {
     return {
       loading: false,
       form: {
@@ -111,11 +105,11 @@ export default {
       }
     }
   },
-  mounted () {
+  mounted() {
     this.getInfo()
   },
   methods: {
-    deteleObject (obj) {
+    deteleObject(obj) {
       var uniques = []
       var stringify = {}
       for (var i = 0; i < obj.length; i++) {
@@ -137,15 +131,15 @@ export default {
       return uniques
     },
     // 输入限制小数点两位
-    handleInput2 (e) {
+    handleInput2(e) {
       // 通过正则过滤小数点后两位
       e.target.value = e.target.value.match(/^\d*(\.?\d{0,1})/g)[0] || null
     },
-    changePics (imgList) {
+    changePics(imgList) {
       this.form.pc_banners = imgList
     },
     // 获取列表
-    getInfo () {
+    getInfo() {
       this.loading = true
       getTemplateSetting().then((res) => {
         const {
@@ -170,7 +164,7 @@ export default {
       })
     },
     // 保存数据
-    save () {
+    save() {
       const { pc_banner, brand_openstatus, cat_openstatus, point_openstatus, point_section } =
         this.form
 

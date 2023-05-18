@@ -31,54 +31,30 @@
 <template>
   <div>
     <el-row
+      v-if="this.$store.getters.login_type != 'staff'"
       class="content-bottom-padded"
       :gutter="20"
-      v-if="this.$store.getters.login_type != 'staff' "
     >
       <el-col :span="3">
-        <el-button
-          type="primary"
-          icon="plus"
-          @click="adjustment"
-        >
-          积分调整
-        </el-button>
+        <el-button type="primary" icon="plus" @click="adjustment"> 积分调整 </el-button>
       </el-col>
     </el-row>
-    <el-table
-      v-loading="loading"
-      :data="pointList"
-      :height="wheight - 150"
-    >
-      <el-table-column
-        prop="point_desc"
-        label="记录"
-        min-width="140"
-      />
+    <el-table v-loading="loading" :data="pointList" :height="wheight - 150">
+      <el-table-column prop="point_desc" label="记录" min-width="140" />
       <el-table-column label="积分变动">
         <template slot-scope="scope">
           <span v-if="scope.row.income">+{{ scope.row.income }}</span>
           <span v-if="scope.row.outcome">-{{ scope.row.outcome }}</span>
         </template>
       </el-table-column>
-      <el-table-column
-        prop="create_time"
-        label="时间"
-      >
+      <el-table-column prop="create_time" label="时间">
         <template slot-scope="scope">
           <span>{{ scope.row.created | datetime('YYYY-MM-DD HH:mm:ss') }}</span>
         </template>
       </el-table-column>
-      <el-table-column
-        prop="order_id"
-        label="订单号"
-        min-width="90"
-      />
+      <el-table-column prop="order_id" label="订单号" min-width="90" />
     </el-table>
-    <div
-      v-if="total_count > params.pageSize"
-      class="content-padded content-center"
-    >
+    <div v-if="total_count > params.pageSize" class="content-padded content-center">
       <el-pagination
         :current-page.sync="params.page"
         :total="total_count"
@@ -95,16 +71,9 @@
     >
       <template>
         <el-form>
-          <el-form-item
-            label-width="100px"
-            label="调整积分"
-          >
+          <el-form-item label-width="100px" label="调整积分">
             <el-col>
-              <el-select
-                v-model="adjustment_type"
-                placeholder="请选择"
-                style="width: 100px"
-              >
+              <el-select v-model="adjustment_type" placeholder="请选择" style="width: 100px">
                 <el-option
                   v-for="item in adjustmentType"
                   :key="item.value"
@@ -124,12 +93,7 @@
             </el-col>
           </el-form-item>
           <el-form-item class="content-center">
-            <el-button
-              type="primary"
-              @click="onSubmit"
-            >
-              确定添加
-            </el-button>
+            <el-button type="primary" @click="onSubmit"> 确定添加 </el-button>
           </el-form-item>
         </el-form>
       </template>
@@ -141,7 +105,7 @@
 import { getMemberPoint, adjustmentPoint } from '../../../../src/api/point'
 import { mapGetters } from 'vuex'
 export default {
-  data () {
+  data() {
     return {
       loading: false,
       activeName: 'point',
@@ -164,15 +128,15 @@ export default {
   computed: {
     ...mapGetters(['wheight'])
   },
-  mounted () {
+  mounted() {
     this.getPointList()
     this.params.user_id = this.$route.query.user_id
   },
   methods: {
-    handleCurrentChange () {
+    handleCurrentChange() {
       this.getPointList()
     },
-    getPointList () {
+    getPointList() {
       this.loading = true
       getMemberPoint(this.params).then((response) => {
         this.pointList = response.data.data.list
@@ -181,18 +145,18 @@ export default {
       })
     },
     // 积分调整
-    adjustment () {
+    adjustment() {
       this.adjustmentDialog = true
     },
-    handleCancelLabelsDialog () {
+    handleCancelLabelsDialog() {
       this.adjustmentDialog = false
     },
-    handleCurrentChange (val) {
+    handleCurrentChange(val) {
       this.loading = false
       this.params.page = val
       this.getPointList()
     },
-    onSubmit () {
+    onSubmit() {
       if (this.point > 9999999) {
         this.$message({ message: '可调整积分最大为9999999', type: 'error' })
         return

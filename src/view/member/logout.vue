@@ -70,12 +70,7 @@
                   </el-form-item>
 
                   <el-form-item label="内容" prop="content">
-                    <vue-html5-editor
-                      style="width: 90%"
-                      :content="privacyForm.content"
-                      :height="360"
-                      @change="updateContent"
-                    />
+                    <SpRichText v-model="privacyForm.content" />
                   </el-form-item>
                 </div>
               </el-card>

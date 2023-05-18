@@ -11,7 +11,8 @@ import { actions } from '@/utils/micr-app'
 import constantRouterMap from './src'
 Vue.use(VueRouter)
 
-const { RouteAuth, RouteShopAdminShopList, RouteDealerIndex, RouteShopAdminBase } = constantRouterMap
+const { RouteAuth, RouteShopAdminShopList, RouteDealerIndex, RouteShopAdminBase } =
+  constantRouterMap
 const router = new VueRouter({
   routes: [...RouteAuth, RouteShopAdminShopList, RouteDealerIndex, RouteShopAdminBase],
   mode: 'history'

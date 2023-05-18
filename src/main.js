@@ -11,7 +11,7 @@ import { VueMasonryPlugin } from 'vue-masonry'
 import VueVideoPlayer from 'vue-video-player'
 import 'video.js/dist/video-js.css'
 
-import { install as H5EditorInstall } from '@/utils/vue-h5-editor'
+// import { install as H5EditorInstall } from '@/utils/vue-h5-editor'
 
 import App from './App'
 import router from './router'
@@ -31,7 +31,6 @@ import exportTip from '@/utils/components'
 import { export_open } from '@/utils'
 import { SYSTEM_CONFIG } from '@/consts'
 import { SpPickerPlugin } from '@/components/sp-picker'
-
 Vue.use(exportTip)
 initFinder(Vue, {
   fetchLibrary: fetch,
@@ -65,7 +64,7 @@ initFinder(Vue, {
 })
 
 apiInstall(Vue)
-H5EditorInstall(Vue)
+// H5EditorInstall(Vue)
 
 VueClipboard.config.autoSetContainer = true // add this line
 Vue.use(ElementUI)
@@ -98,10 +97,15 @@ const installComponent = (Vue) => {
     resloveModule(mod)
   })
 
-  console.log('components:', components)
+  console.log('components:', components, plugins)
   Object.keys(components).forEach((key) => {
     const comp = components[key]
     Vue.component(comp.name, comp)
+  })
+
+  Object.keys(plugins).forEach((name) => {
+    const plugin = plugins[name]
+    Vue.use(plugin)
   })
 }
 
@@ -130,6 +134,7 @@ new Vue({
     const red = parseInt(theme.replace('#', '').slice(0, 2), 16)
     const green = parseInt(theme.replace('#', '').slice(2, 4), 16)
     const blue = parseInt(theme.replace('#', '').slice(4, 6), 16)
+    console.log(theme)
     document.body.style.setProperty('--themeColor', theme)
     document.body.style.setProperty('--themeColorRgb', [red, green, blue].join(','))
   },

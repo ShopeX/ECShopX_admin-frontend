@@ -1,13 +1,13 @@
 import fetch from '../utils/fetch'
 
-export function getAliMiniAppSetting () {
+export function getAliMiniAppSetting() {
   return fetch({
     url: '/aliminiapp/setting/info',
     method: 'get'
   })
 }
 
-export function saveAliMiniAppSetting (params) {
+export function saveAliMiniAppSetting(params) {
   return fetch({
     url: '/aliminiapp/setting/save',
     method: 'post',

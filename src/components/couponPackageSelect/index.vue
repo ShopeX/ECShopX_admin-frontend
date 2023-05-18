@@ -17,12 +17,7 @@
           style="width: 300px"
           class="input-with-select"
         >
-          <el-button
-            slot="append"
-            @click="queryHandle"
-          >
-            查询
-          </el-button>
+          <el-button slot="append" @click="queryHandle"> 查询 </el-button>
         </el-input>
       </div>
       <div class="list">
@@ -36,21 +31,9 @@
           style="width: 100%"
           @selection-change="handleSelectionChange"
         >
-          <el-table-column
-            :reserve-selection="true"
-            type="selection"
-            width="55"
-          />
-          <el-table-column
-            prop="title"
-            label="劵包标题"
-            width="220"
-          />
-          <el-table-column
-            prop="package_describe"
-            label="描述"
-            show-overflow-tooltip
-          />
+          <el-table-column :reserve-selection="true" type="selection" width="55" />
+          <el-table-column prop="title" label="劵包标题" width="220" />
+          <el-table-column prop="package_describe" label="描述" show-overflow-tooltip />
         </el-table>
       </div>
       <el-pagination
@@ -64,10 +47,7 @@
         @size-change="handleSizeChange"
         @current-change="handleCurrentChange"
       />
-      <div
-        class="tips"
-        style="margin-top: 30px"
-      >
+      <div class="tips" style="margin-top: 30px">
         <p>已选择：{{ multipleSelection.length }} 包</p>
         <p style="padding: 3px 0">
           <i class="el-icon-warning icon" /> 若有优惠券限领 1 张，券包组合含 2 张，按优惠券规则领取
@@ -75,15 +55,8 @@
         </p>
       </div>
       <div class="btn">
-        <el-button @click="cancelHandle(true)">
-          取消
-        </el-button>
-        <el-button
-          type="primary"
-          @click="confirm"
-        >
-          确定
-        </el-button>
+        <el-button @click="cancelHandle(true)"> 取消 </el-button>
+        <el-button type="primary" @click="confirm"> 确定 </el-button>
       </div>
     </el-dialog>
     <model
@@ -120,7 +93,7 @@ export default {
       default: ''
     }
   },
-  data () {
+  data() {
     return {
       tableData: [],
       multipleSelection: [],
@@ -138,7 +111,7 @@ export default {
     }
   },
   watch: {
-    multipleSelection () {
+    multipleSelection() {
       console.log('==this.multipleSelection==', this.multipleSelection)
       // if (this.packageId!=undefined) {
 
@@ -154,11 +127,11 @@ export default {
       // }
     }
   },
-  mounted () {
+  mounted() {
     this.getConfig()
   },
   methods: {
-    async getConfig () {
+    async getConfig() {
       this.loading = true
       const { list, count } = await this.$api.coupons_package.packageList({
         ...this.query,
@@ -185,7 +158,7 @@ export default {
       } else {
       }
     },
-    confirm () {
+    confirm() {
       if (this.isModel) {
         this.checkConpon(this.multipleSelection, this.packageId)
         this.$emit('seletedDataHandle', this.multipleSelection, this.packageId)
@@ -194,7 +167,7 @@ export default {
         this.$emit('closeHandle')
       }
     },
-    async checkConpon (seletedCoupon = [], packageId) {
+    async checkConpon(seletedCoupon = [], packageId) {
       if (seletedCoupon.length == 0) {
         this.$emit('closeHandle')
         return
@@ -218,47 +191,47 @@ export default {
         this.$emit('closeHandle')
       }
     },
-    closeModel () {
+    closeModel() {
       this.modelVisible = false
     },
     // 获取原先数据加关闭操作
-    cancelHandle (isOld) {
+    cancelHandle(isOld) {
       if (isOld) {
         this.$emit('oldDataHandle') // 获取原先数据
       }
       this.$emit('closeHandle')
     },
 
-    selectHandle (val) {
+    selectHandle(val) {
       this.query.card_type = val
       this.getConfig()
     },
-    handleSizeChange (val) {
+    handleSizeChange(val) {
       this.paging.pageSize = val
       this.paging.page = 1
       this.getConfig()
     },
-    handleCurrentChange (val) {
+    handleCurrentChange(val) {
       this.paging.page = val
 
       this.getConfig()
     },
-    queryHandle () {
+    queryHandle() {
       this.paging.page = 1
       this.getConfig()
     },
 
-    handleSelectionChange (val) {
+    handleSelectionChange(val) {
       // debugger
       console.log('handleSelectionChange', val)
       if (val.length > 0) {
         this.multipleSelection = val
       }
     },
-    getRowKeys (val) {
+    getRowKeys(val) {
       return val.package_id
     },
-    toggleSelection (rows) {
+    toggleSelection(rows) {
       if (rows) {
         rows.forEach((row) => {
           this.$refs.multipleTable.toggleRowSelection(row)

@@ -1,7 +1,7 @@
 import fetch from '../utils/fetch'
 
 // 员工内购
-export function getPurchaseList (query) {
+export function getPurchaseList(query) {
   return fetch({
     url: '/promotions/employeepurchase/lists',
     method: 'get',
@@ -9,7 +9,7 @@ export function getPurchaseList (query) {
   })
 }
 
-export function createPurchase (query) {
+export function createPurchase(query) {
   return fetch({
     url: '/promotions/employeepurchase/create',
     method: 'post',
@@ -17,7 +17,7 @@ export function createPurchase (query) {
   })
 }
 
-export function editPurchase (query) {
+export function editPurchase(query) {
   return fetch({
     url: '/promotions/employeepurchase/update',
     method: 'put',
@@ -25,7 +25,7 @@ export function editPurchase (query) {
   })
 }
 
-export function endPurchase (query) {
+export function endPurchase(query) {
   return fetch({
     url: '/promotions/employeepurchase/endactivity',
     method: 'post',
@@ -33,7 +33,7 @@ export function endPurchase (query) {
   })
 }
 
-export function getPurchaseInfo (query) {
+export function getPurchaseInfo(query) {
   return fetch({
     url: '/promotions/employeepurchase/getinfo',
     method: 'get',
@@ -41,7 +41,7 @@ export function getPurchaseInfo (query) {
   })
 }
 
-export function getPurchaseDependentsLists (query) {
+export function getPurchaseDependentsLists(query) {
   return fetch({
     url: '/promotions/employeepurchase/dependents/lists',
     method: 'get',

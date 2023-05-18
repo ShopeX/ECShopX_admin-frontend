@@ -6,15 +6,8 @@
 
 <template>
   <div class="page-body">
-    <SpFilterForm
-      :model="params"
-      @onSearch="onSearch"
-      @onReset="onReset"
-    >
-      <SpFilterFormItem
-        prop="create_time"
-        label="日期范围:"
-      >
+    <SpFilterForm :model="params" @onSearch="onSearch" @onReset="onReset">
+      <SpFilterFormItem prop="create_time" label="日期范围:">
         <el-date-picker
           v-model="params.create_time"
           type="daterange"
@@ -22,14 +15,8 @@
           placeholder="添加时间筛选"
         />
       </SpFilterFormItem>
-      <SpFilterFormItem
-        prop="back_status"
-        label="回盘状态:"
-      >
-        <el-select
-          v-model="params.back_status"
-          placeholder="请选择回盘状态"
-        >
+      <SpFilterFormItem prop="back_status" label="回盘状态:">
+        <el-select v-model="params.back_status" placeholder="请选择回盘状态">
           <el-option
             v-for="(item, index) in backStatusList"
             :key="index"
@@ -42,78 +29,30 @@
 
     <div class="action-container">
       <exportTip @exportHandle="exportData">
-        <el-button
-          type="primary"
-          plain
-        >
-          导出
-        </el-button>
+        <el-button type="primary" plain> 导出 </el-button>
       </exportTip>
     </div>
 
-    <el-table
-      v-loading="loading"
-      border
-      :data="tableList"
-      :height="wheight - 150"
-    >
-      <el-table-column
-        prop="id"
-        label="指令ID"
-        width="100"
-      />
-      <el-table-column
-        prop="total_fee"
-        label="订单金额"
-      >
-        <template slot-scope="scope">
-          ￥{{ scope.row.total_fee / 100 }}
-        </template>
+    <el-table v-loading="loading" border :data="tableList" :height="wheight - 150">
+      <el-table-column prop="id" label="指令ID" width="100" />
+      <el-table-column prop="total_fee" label="订单金额">
+        <template slot-scope="scope"> ￥{{ scope.row.total_fee / 100 }} </template>
       </el-table-column>
-      <el-table-column
-        prop="actual_fee"
-        label="实际金额"
-      >
-        <template slot-scope="scope">
-          ￥{{ scope.row.actual_fee / 100 }}
-        </template>
+      <el-table-column prop="actual_fee" label="实际金额">
+        <template slot-scope="scope"> ￥{{ scope.row.actual_fee / 100 }} </template>
       </el-table-column>
-      <el-table-column
-        prop="division_fee"
-        label="分账金额"
-      >
-        <template slot-scope="scope">
-          ￥{{ scope.row.division_fee / 100 }}
-        </template>
+      <el-table-column prop="division_fee" label="分账金额">
+        <template slot-scope="scope"> ￥{{ scope.row.division_fee / 100 }} </template>
       </el-table-column>
-      <el-table-column
-        prop="backsucc_fee"
-        label="回盘成功金额"
-      >
-        <template slot-scope="scope">
-          ￥{{ scope.row.backsucc_fee / 100 }}
-        </template>
+      <el-table-column prop="backsucc_fee" label="回盘成功金额">
+        <template slot-scope="scope"> ￥{{ scope.row.backsucc_fee / 100 }} </template>
       </el-table-column>
-      <el-table-column
-        prop="rate_fee"
-        label="业务处理费"
-      >
-        <template slot-scope="scope">
-          ￥{{ scope.row.rate_fee / 100 }}
-        </template>
+      <el-table-column prop="rate_fee" label="业务处理费">
+        <template slot-scope="scope"> ￥{{ scope.row.rate_fee / 100 }} </template>
       </el-table-column>
-      <el-table-column
-        prop="back_status"
-        width="100"
-        label="回盘状态"
-      >
+      <el-table-column prop="back_status" width="100" label="回盘状态">
         <template slot-scope="scope">
-          <el-tag
-            v-if="scope.row.back_status == '0'"
-            size="mini"
-            type="info"
-            effect="plain"
-          >
+          <el-tag v-if="scope.row.back_status == '0'" size="mini" type="info" effect="plain">
             未处理
           </el-tag>
           <el-tag
@@ -124,37 +63,18 @@
           >
             处理中
           </el-tag>
-          <el-tag
-            v-else-if="scope.row.back_status == '2'"
-            size="mini"
-            type="success"
-            effect="dark"
-          >
+          <el-tag v-else-if="scope.row.back_status == '2'" size="mini" type="success" effect="dark">
             成功
           </el-tag>
-          <el-tag
-            v-else-if="scope.row.back_status == '3'"
-            size="mini"
-            type="danger"
-            effect="dark"
-          >
+          <el-tag v-else-if="scope.row.back_status == '3'" size="mini" type="danger" effect="dark">
             部分成功
           </el-tag>
-          <el-tag
-            v-else-if="scope.row.back_status == '4'"
-            size="mini"
-            type="info"
-            effect="dark"
-          >
+          <el-tag v-else-if="scope.row.back_status == '4'" size="mini" type="info" effect="dark">
             失败
           </el-tag>
         </template>
       </el-table-column>
-      <el-table-column
-        prop="create_time"
-        label="创建时间"
-        width="200"
-      >
+      <el-table-column prop="create_time" label="创建时间" width="200">
         <template slot-scope="scope">
           <span>{{ scope.row.create_time | datetime('YYYY-MM-DD HH:mm:ss') }}</span>
         </template>
@@ -181,11 +101,11 @@ import exportTip from '@/components/export_tips'
 import mixin, { pageMixin } from '@/mixins'
 
 export default {
-  mixins: [mixin, pageMixin],
   components: {
     exportTip
   },
-  data () {
+  mixins: [mixin, pageMixin],
+  data() {
     const initialParams = {
       create_time: '',
       back_status: ''
@@ -208,14 +128,14 @@ export default {
   computed: {
     ...mapGetters(['wheight'])
   },
-  mounted () {
+  mounted() {
     this.fetchList()
   },
   methods: {
-    dateStrToTimeStamp (str) {
+    dateStrToTimeStamp(str) {
       return Date.parse(new Date(str)) / 1000
     },
-    dateTransfer (val) {
+    dateTransfer(val) {
       let time_start_begin = undefined
       let time_start_end = undefined
       if (val) {
@@ -227,14 +147,14 @@ export default {
         time_start_end
       }
     },
-    getParams () {
+    getParams() {
       let params = {
         ...this.dateTransfer(this.params.create_time),
         back_status: this.params.back_status || undefined
       }
       return params
     },
-    async fetchList () {
+    async fetchList() {
       this.loading = true
       const { pageIndex: page, pageSize } = this.page
       let params = {
@@ -247,18 +167,20 @@ export default {
       this.page.total = total_count
       this.loading = false
     },
-    onSearch () {
+    onSearch() {
       this.page.pageIndex = 1
       this.$nextTick(() => {
         this.fetchList()
       })
     },
-    onReset () {
+    onReset() {
       this.params = { ...this.initialParams }
       this.onSearch()
     },
-    async exportData () {
-      const { status, url, filename } = await this.$api.trade.chinaumsDivisionExportData(this.getParams())
+    async exportData() {
+      const { status, url, filename } = await this.$api.trade.chinaumsDivisionExportData(
+        this.getParams()
+      )
       if (status) {
         this.$message({
           type: 'success',
@@ -271,7 +193,7 @@ export default {
         this.downloadName = filename
         this.downloadView = true
       }
-    },
+    }
   }
 }
 </script>

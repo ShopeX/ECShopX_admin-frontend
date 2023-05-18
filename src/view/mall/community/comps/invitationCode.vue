@@ -11,12 +11,8 @@
 </style>
 <template>
   <div class="invitation-code">
-    <SpImage :src="info" />
-    <a
-      class="download-link"
-      download="invitation_code.jpg"
-      :href="info"
-    >下载邀请码</a>
+    <SpImage :src="info" :width="120" />
+    <a class="download-link" download="invitation_code.jpg" :href="info">下载邀请码</a>
   </div>
 </template>
 
@@ -26,12 +22,12 @@ export default {
   props: {
     info: String
   },
-  data () {
+  data() {
     return {}
   },
-  created () {},
+  created() {},
   methods: {
-    handleDownload () {
+    handleDownload() {
       console.log('handleDownload: ', this.info)
       window.open(this.info)
     }

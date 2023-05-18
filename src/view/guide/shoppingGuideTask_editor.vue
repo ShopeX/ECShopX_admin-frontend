@@ -1,14 +1,8 @@
 <template>
   <div>
-    <el-form
-      :model="dataForm"
-      label-width="120px"
-    >
+    <el-form :model="dataForm" label-width="120px">
       <el-form-item label="任务名称">
-        <el-input
-          v-model="dataForm.task_name"
-          class="input-m"
-        />
+        <el-input v-model="dataForm.task_name" class="input-m" />
       </el-form-item>
       <el-form-item label="任务时间">
         <el-date-picker
@@ -19,10 +13,7 @@
         />
       </el-form-item>
       <el-form-item label="任务类型">
-        <el-select
-          v-model="dataForm.task_type"
-          placeholder="请选择"
-        >
+        <el-select v-model="dataForm.task_type" placeholder="请选择">
           <el-option
             v-for="item in type"
             :key="item.value"
@@ -32,11 +23,7 @@
         </el-select>
       </el-form-item>
       <el-form-item label="任务完成指标">
-        <el-input
-          v-model="dataForm.task_quota"
-          class="input-m"
-          type="number"
-        />
+        <el-input v-model="dataForm.task_quota" class="input-m" type="number" />
       </el-form-item>
       <el-form-item label="素材">
         <div>
@@ -55,29 +42,19 @@
                   @mouseleave="picsLeave"
                 >
                   <img :src="wximageurl + item">
-                  <div
-                    class="goodspic-mask"
-                    :class="picsCurrent == index ? 'on' : ''"
-                  >
-                    <div
-                      class="iconfont icon-trash-alt"
-                      @click="removePicsImg(index)"
-                    />
+                  <div class="goodspic-mask" :class="picsCurrent == index ? 'on' : ''">
+                    <div class="iconfont icon-trash-alt" @click="removePicsImg(index)" />
                     <div class="iconfont icon-arrows-alt" />
                   </div>
                 </li>
               </draggable>
             </ul>
-            <div
-              v-if="dataForm.pics.length < 9"
-              class="upload-box"
-              @click="handlePicsChange"
-            >
+            <div v-if="dataForm.pics.length < 9" class="upload-box" @click="handlePicsChange">
               <i class="iconfont icon-camera" />
             </div>
           </div>
           <div class="frm-tips">
-            <p>1. 最多可上传9个图片，文件格式为bmp、png、jpeg、jpg或gif，大小不超过2M</p>
+            <p>1. 最多可上传9张图片，文件格式为bmp、png、jpeg、jpg或gif，大小不超过2M</p>
             <p>2. 拖动图片进行可排序</p>
           </div>
         </div>
@@ -90,65 +67,28 @@
         />
       </el-form-item>
       <el-form-item label="内容">
-        <vue-html5-editor
-          ref="editor"
-          :content="dataForm.task_content"
-          :height="360"
-          @change="handelChangeUpdateContent"
-        />
+        <SpRichText v-model="dataForm.task_content" />
       </el-form-item>
-      <el-card
-        header="店铺"
-        shadow="naver"
-      >
+      <el-card header="店铺" shadow="naver">
         <el-form-item label="适用店铺">
-          <el-radio-group
-            v-model="dataForm.use_all_distributor"
-            @change="shopTypeChange"
-          >
-            <el-radio :label="true">
-              全部店铺适用
-            </el-radio>
-            <el-radio :label="false">
-              指定店铺适用
-            </el-radio>
+          <el-radio-group v-model="dataForm.use_all_distributor" @change="shopTypeChange">
+            <el-radio :label="true"> 全部店铺适用 </el-radio>
+            <el-radio :label="false"> 指定店铺适用 </el-radio>
           </el-radio-group>
         </el-form-item>
         <div v-if="!zdShopHidden">
-          <el-button
-            type="primary"
-            @click="addDistributorAction"
-          >
-            选择店铺
-          </el-button>
+          <el-button type="primary" @click="addDistributorAction"> 选择店铺 </el-button>
           <el-table
             v-if="distributor_info.length > 0"
             :data="distributor_info"
             style="line-height: normal"
           >
-            <el-table-column
-              label="ID"
-              prop="distributor_id"
-              width="60"
-            />
-            <el-table-column
-              label="名称"
-              prop="name"
-            />
-            <el-table-column
-              prop="address"
-              label="地址"
-              show-overflow-tooltip
-            />
-            <el-table-column
-              label="操作"
-              width="50"
-            >
+            <el-table-column label="ID" prop="distributor_id" width="60" />
+            <el-table-column label="名称" prop="name" />
+            <el-table-column prop="address" label="地址" show-overflow-tooltip />
+            <el-table-column label="操作" width="50">
               <template slot-scope="scope">
-                <i
-                  class="iconfont icon-trash-alt"
-                  @click="deleteDistritutorRow(scope.$index)"
-                />
+                <i class="iconfont icon-trash-alt" @click="deleteDistritutorRow(scope.$index)" />
               </template>
             </el-table-column>
           </el-table>
@@ -156,12 +96,7 @@
       </el-card>
     </el-form>
     <div class="content-center content-padded-b">
-      <el-button
-        type="primary"
-        @click="handelClickSubmit"
-      >
-        保存
-      </el-button>
+      <el-button type="primary" @click="handelClickSubmit"> 保存 </el-button>
     </div>
     <DistributorSelect
       :store-visible="distributorVisible"
@@ -188,7 +123,7 @@ export default {
     draggable,
     imgPicker
   },
-  data () {
+  data() {
     return {
       task_id: '',
       type: [
@@ -245,7 +180,7 @@ export default {
   computed: {
     ...mapGetters(['wheight'])
   },
-  mounted () {
+  mounted() {
     this.task_id = this.$route.params.task_id
     if (this.task_id) {
       this.getTaskInfo()
@@ -255,7 +190,7 @@ export default {
     /**
      * 保存 || 修改
      * */
-    async handelClickSubmit () {
+    async handelClickSubmit() {
       if (this.date_range.length > 0) {
         this.dataForm.start_time = this.date_range[0] / 1000
         this.dataForm.end_time = this.date_range[1] / 1000
@@ -278,7 +213,7 @@ export default {
       this.$router.go(-1)
     },
 
-    chooseDistributorAction (data) {
+    chooseDistributorAction(data) {
       this.distributorVisible = false
       if (!data || data === null || data.length <= 0) {
         this.distributor_info = []
@@ -292,17 +227,17 @@ export default {
       }
     },
 
-    closeDistributorDialogAction () {
+    closeDistributorDialogAction() {
       this.distributorVisible = false
     },
 
-    addDistributorAction () {
+    addDistributorAction() {
       this.distributorVisible = true
       this.setDistributorStatus = true
       this.relDistributorIds = this.dataForm.distributor_id
     },
 
-    shopTypeChange (val) {
+    shopTypeChange(val) {
       this.dataForm.use_all_distributor = true
       this.zdShopHidden = true
       if (val === false) {
@@ -313,14 +248,14 @@ export default {
       }
     },
 
-    handelChangeUpdateContent (data) {
+    handelChangeUpdateContent(data) {
       this.dataForm.task_content = data
     },
 
     /**
      * 获取导购通知
      * */
-    async getTaskInfo () {
+    async getTaskInfo() {
       let { data } = await getSalesperosnTaskInfo(this.task_id)
       this.dataForm = data.data
       this.date_range = [data.data.start_time * 1000, data.data.end_time * 1000]
@@ -330,7 +265,7 @@ export default {
       this.distributor_info = data.data.distributor_info
       this.$delete(this.dataForm, 'distributor_info')
     },
-    deleteDistritutorRow (index) {
+    deleteDistritutorRow(index) {
       this.distributor_info.splice(index, 1)
       let shopDatas = this.distributor_info
       this.dataForm.distributor_id = []
@@ -340,7 +275,7 @@ export default {
         }
       }
     },
-    pickPics (data) {
+    pickPics(data) {
       if (this.currentSku === -1) {
         if (this.picsOldLen + data.length >= 10) {
           this.$message.error('最多上传9张图片!')
@@ -377,13 +312,13 @@ export default {
       this.isGetPics = true
       this.multiple = true
     },
-    closePicsDialog () {
+    closePicsDialog() {
       this.picsDialog = false
     },
-    picsEnter (index) {
+    picsEnter(index) {
       this.picsCurrent = index
     },
-    picsLeave () {
+    picsLeave() {
       this.picsCurrent = -1
     },
     removePicsImg: function (index) {

@@ -1,6 +1,6 @@
 import fetch from '@/utils/fetch'
 
-export function login (query) {
+export function login(query) {
   return fetch({
     url: '/operator/login',
     method: 'post',
@@ -8,7 +8,7 @@ export function login (query) {
   })
 }
 
-export function getPermission (query) {
+export function getPermission(query) {
   return fetch({
     url: '/permission',
     method: 'get',
@@ -16,24 +16,23 @@ export function getPermission (query) {
   })
 }
 
-export function getUserInfo () {
+export function getUserInfo() {
   return fetch({
     url: '/operator/getinfo',
     method: 'get'
   })
 }
 
-export function refreshToken (params) {
+export function refreshToken(params) {
   return fetch({
     url: '/token/refresh',
     method: 'get'
   })
 }
 
-export function getAgreementContent () {
+export function getAgreementContent() {
   return fetch({
     url: '/espier/system/agreement',
     method: 'post'
   })
 }
-

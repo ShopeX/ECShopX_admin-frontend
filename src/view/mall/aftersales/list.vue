@@ -59,9 +59,7 @@
 
       <div class="action-container">
         <export-tip @exportHandle="exportData">
-          <el-button type="primary" plain>
-导出
-</el-button>
+          <el-button type="primary" plain> 导出 </el-button>
         </export-tip>
         <el-button v-if="showAftersale" type="primary" plain @click="aftersalesRemindAction">
           售后提醒内容
@@ -177,12 +175,8 @@
         </el-table-column>
         <el-table-column width="100" label="售后状态">
           <template slot-scope="scope">
-            <el-tag v-if="scope.row.aftersales_status == '0'" size="mini">
-待处理
-</el-tag>
-            <el-tag v-if="scope.row.aftersales_status == '1'" size="mini">
-处理中
-</el-tag>
+            <el-tag v-if="scope.row.aftersales_status == '0'" size="mini"> 待处理 </el-tag>
+            <el-tag v-if="scope.row.aftersales_status == '1'" size="mini"> 处理中 </el-tag>
             <el-tag v-if="scope.row.aftersales_status == '2'" type="success" size="mini">
               已处理
             </el-tag>
@@ -243,12 +237,7 @@
           >
             <el-form-item label="提醒内容">
               <template>
-                <vue-html5-editor
-                  ref="editor"
-                  :content="aftersalesRemindForm.intro.toString()"
-                  :height="360"
-                  @change="updateContent"
-                />
+                <SpRichText v-model="aftersalesRemindForm.intro" />
               </template>
               <span class="frm-tips"
                 >例如：由于商品的特殊性，如涉及机油类产品需寄回，建议使用京东快递，快递公司联系电话955XX。</span
@@ -268,12 +257,8 @@
           </el-form>
         </template>
         <div slot="footer" class="dialog-footer">
-          <el-button @click.native="handleCancel">
-取消
-</el-button>
-          <el-button type="primary" @click="submitAftersalesRemind">
-确定
-</el-button>
+          <el-button @click.native="handleCancel"> 取消 </el-button>
+          <el-button type="primary" @click="submitAftersalesRemind"> 确定 </el-button>
         </div>
       </el-dialog>
       <RemarkModal ref="modalRef" @onDone="handleRemarksDone" />
@@ -291,7 +276,7 @@ export default {
     RemarkModal
   },
   mixins: [mixin, remarkMixin, pageMixin],
-  data () {
+  data() {
     const initialParams = {
       distributor: {
         id: undefined,
@@ -336,7 +321,7 @@ export default {
   },
   computed: {
     ...mapGetters(['wheight']),
-    showAftersale () {
+    showAftersale() {
       return (
         this.$store.getters.login_type != 'merchant' &&
         this.$store.getters.login_type != 'distributor'
@@ -344,7 +329,7 @@ export default {
     }
   },
   watch: {
-    $route (to, from) {},
+    $route(to, from) {},
     'params.distributor': {
       handler: function (val) {
         if (!val.name && val.id) {
@@ -357,7 +342,7 @@ export default {
       deep: true
     }
   },
-  mounted () {
+  mounted() {
     if (this.$route.query.aftersales_status) {
       this.params.aftersales_status = this.$route.query.aftersales_status
     }
@@ -366,13 +351,13 @@ export default {
     this.fetchList()
   },
   methods: {
-    handleSelectStore (storeItem) {
+    handleSelectStore(storeItem) {
       this.params.distributor.id = storeItem.distributor_id
     },
-    dateStrToTimeStamp (str) {
+    dateStrToTimeStamp(str) {
       return Date.parse(new Date(str)) / 1000
     },
-    dateTransfer (val) {
+    dateTransfer(val) {
       let time_start_begin = undefined
       let time_start_end = undefined
       if (val.length > 0) {
@@ -384,7 +369,7 @@ export default {
         time_start_end
       }
     },
-    getParams () {
+    getParams() {
       let params = {
         distributor_id: this.params.distributor.id || undefined,
         ...this.dateTransfer(this.params.create_time),
@@ -396,7 +381,7 @@ export default {
       }
       return params
     },
-    onReset () {
+    onReset() {
       this.params = { ...this.initialParams }
       this.params = {
         ...this.params,
@@ -407,13 +392,13 @@ export default {
       }
       this.onSearch()
     },
-    onSearch () {
+    onSearch() {
       this.page.pageIndex = 1
       this.$nextTick(() => {
         this.fetchList()
       })
     },
-    async fetchList () {
+    async fetchList() {
       this.loading = true
       const { pageIndex: page, pageSize } = this.page
       let params = {
@@ -426,18 +411,18 @@ export default {
       this.page.total = total_count
       this.loading = false
     },
-    querySearch (queryString, cb) {
+    querySearch(queryString, cb) {
       var restaurants = this.source_list
       var results = queryString ? restaurants.filter(this.createFilter(queryString)) : restaurants
       // 调用 callback 返回建议列表的数据
       cb(results)
     },
-    createFilter (queryString) {
+    createFilter(queryString) {
       return (restaurant) => {
         return restaurant.value.toLowerCase().indexOf(queryString.toLowerCase()) === 0
       }
     },
-    async getStoreList () {
+    async getStoreList() {
       let params = { page: 1, pageSize: 500 }
       const { list } = await this.$api.marketing.getDistributorList(params)
       if (list) {
@@ -446,13 +431,13 @@ export default {
         })
       }
     },
-    queryStoreSearch (queryString, cb) {
+    queryStoreSearch(queryString, cb) {
       var restaurants = this.shopList
       var results = queryString ? restaurants.filter(this.createFilter(queryString)) : restaurants
       // 调用 callback 返回建议列表的数据
       cb(results)
     },
-    async exportData () {
+    async exportData() {
       const { status, url, filename } = await this.$api.aftersales.exportList(this.getParams())
       if (status) {
         this.$message({
@@ -472,7 +457,7 @@ export default {
         })
       }
     },
-    async aftersalesRemindAction () {
+    async aftersalesRemindAction() {
       // 请求提醒数据
       const data = await this.$api.aftersales.getAftersalesRemind()
 
@@ -485,12 +470,12 @@ export default {
     updateContent: function (data) {
       this.aftersalesRemindForm.intro = data
     },
-    handleCancel () {
+    handleCancel() {
       this.aftersalesRemindVisible = false
       this.aftersalesRemindForm.intro = ''
       this.aftersalesRemindForm.is_open = false
     },
-    async submitAftersalesRemind () {
+    async submitAftersalesRemind() {
       let params = {
         intro: this.aftersalesRemindForm.intro,
         is_open: this.aftersalesRemindForm.is_open

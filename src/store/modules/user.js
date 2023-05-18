@@ -26,7 +26,7 @@ const user = {
   },
 
   mutations: {
-    SET_TOKEN (state, { token }) {
+    SET_TOKEN(state, { token }) {
       const tokenArray = token.split('.')
       const user = JSON.parse(atob(tokenArray[1]))
       console.log('userInfo: ', user)
@@ -36,19 +36,19 @@ const user = {
       state.is_authorizer = user.is_authorizer
       state.license_authorize = user.license_authorize
     },
-    SET_TOKEN_EXP (state, { exp }) {
+    SET_TOKEN_EXP(state, { exp }) {
       state.exp = exp
     },
-    CLEAR_TOKEN (state) {
+    CLEAR_TOKEN(state) {
       state.token = ''
       state.exp = ''
     },
-    SET_USERINFO (state, payload) {
+    SET_USERINFO(state, payload) {
       const { username, head_portrait } = payload
       state.nick_name = username
       state.avatar = head_portrait
     },
-    SYSTEM_EXIT (state, payload) {
+    SYSTEM_EXIT(state, payload) {
       state.token = ''
       state.exp = ''
       state.name = ''
@@ -84,7 +84,7 @@ const user = {
     SET_READ_LICENSE: (state, payload) => {
       state.readLicense = payload
     },
-    setUserInfo (state, payload) {
+    setUserInfo(state, payload) {
       const { username, head_portrait } = payload
       state.userInfo = {
         nick_name: username,
@@ -142,18 +142,18 @@ const user = {
   },
 
   actions: {
-    setIsFrame ({ commit }, isInFrame) {
+    setIsFrame({ commit }, isInFrame) {
       commit('setIsFrame', isInFrame)
     },
-    setAuthorizer ({ commit }, is_authorizer) {
+    setAuthorizer({ commit }, is_authorizer) {
       commit('setAuthorizer', is_authorizer)
     },
 
-    setLicenseAuthorize ({ commit }, license_authorize) {
+    setLicenseAuthorize({ commit }, license_authorize) {
       commit('setLicenseAuthorize', license_authorize)
     },
     // 保存token
-    setToken ({ commit }, token) {
+    setToken({ commit }, token) {
       commit('setToken', token)
       // 解析token中的user信息，并且保存
       let tokenArray = token.split('.')
@@ -165,41 +165,41 @@ const user = {
       commit('setLicenseAuthorize', user.license_authorize)
     },
     // 删除token
-    unsetToken ({ commit }, token) {
+    unsetToken({ commit }, token) {
       commit('setToken', '')
       commit('setTokenExp', '')
       commit('setUserName', '')
       commit('setAuthorizer', '')
       commit('setLicenseAuthorize', '')
     },
-    setUser ({ commit }, userInfo) {
+    setUser({ commit }, userInfo) {
       commit('setNickName', userInfo.username)
       commit('setAvatar', userInfo.head_portrait)
     },
-    setWxappId ({ commit }, wxapp_id) {
+    setWxappId({ commit }, wxapp_id) {
       commit('setWxappId', wxapp_id)
       commit('setALiAppid', '')
     },
 
-    setTemplateName ({ commit }, template_name) {
+    setTemplateName({ commit }, template_name) {
       commit('setTemplateName', template_name)
       commit('setALiTemplateName', '')
     },
-    setLoginType ({ commit }, login_type) {
+    setLoginType({ commit }, login_type) {
       commit('setLoginType', login_type)
     },
-    setShopId ({ commit }, id) {
+    setShopId({ commit }, id) {
       commit('setShopId', id)
     },
-    setALiTemplateName ({ commit }, template_name) {
+    setALiTemplateName({ commit }, template_name) {
       commit('setALiTemplateName', template_name)
       commit('setTemplateName', '')
     },
-    setALiAppid ({ commit }, ali_appid) {
+    setALiAppid({ commit }, ali_appid) {
       commit('setALiAppid', ali_appid)
       commit('setWxappId', '')
     },
-    setAppType ({ commit }, app_type) {
+    setAppType({ commit }, app_type) {
       commit('setAppType', app_type)
     },
     setThemeColor: ({ commit }, color_theme) => {

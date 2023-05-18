@@ -138,9 +138,7 @@
         </el-row>
       </el-card>
       <el-form-item style="text-align: center; margin: 50px 0; margin-right: 130px">
-        <el-button type="primary" @click="submitForm">
-提交审核
-</el-button>
+        <el-button type="primary" @click="submitForm"> 提交审核 </el-button>
       </el-form-item>
     </el-form>
     <Result-cpn
@@ -170,7 +168,7 @@ export default {
     loadingBtn,
     checkBox
   },
-  data () {
+  data() {
     return {
       allPro: '',
       allCity: [],
@@ -237,7 +235,7 @@ export default {
     }
   },
   watch: {
-    'form.fee_type' (val) {
+    'form.fee_type'(val) {
       this.getCategoryOptions({
         fee_type: val
       })
@@ -247,7 +245,7 @@ export default {
       this.form.wx_category = ''
       this.form.mer_type = ''
     },
-    'form.wx_category' (val) {
+    'form.wx_category'(val) {
       this.getMerTypeOptions({
         merchant_type_name: val
       })
@@ -258,13 +256,13 @@ export default {
       this.form.mer_type = ''
     }
   },
-  mounted () {
+  mounted() {
     this.getOptions()
     this.getStepHandle()
   },
   methods: {
     // 查询开户步骤
-    async getStepHandle () {
+    async getStepHandle() {
       const { info } = await this.$api.adapay.getStep()
       const { MerchantResident } = info
       if (MerchantResident.length <= 0) {
@@ -280,27 +278,27 @@ export default {
         }
       }
     },
-    nextPage () {
+    nextPage() {
       this.$router.push('/applications/adapay/adapay_merchant/picture')
     },
     // 获取options
-    async getOptions () {
+    async getOptions() {
       const { fee_type, mer_type, model_type } = await this.$api.adapay.pay_options()
       this.fee_type_options = fee_type
       this.mer_type_options = mer_type
       this.model_type_options = model_type
     },
     // 获取经营类目options
-    async getCategoryOptions (obj) {
+    async getCategoryOptions(obj) {
       const { list } = await this.$api.adapay.getCategoryList(obj)
       this.category_options = list
     },
     // 获取商户种类options
-    async getMerTypeOptions (obj) {
+    async getMerTypeOptions(obj) {
       const { mer_type } = await this.$api.adapay.getMerTypeOption(obj)
       this.mer_type_options = mer_type
     },
-    submitForm () {
+    submitForm() {
       this.$refs['ruleForm'].validate(async (valid) => {
         if (valid) {
           if (this.channelList.indexOf('wx_lite') > -1 && this.wx_lite.appid == '') {
@@ -320,14 +318,14 @@ export default {
         }
       })
     },
-    regionChange (val) {
+    regionChange(val) {
       console.log(val)
       this.form.province_code = val[0]
       this.form.city_code = val[1]
       this.form.district_code = val[2]
     },
     // 重新填写
-    async processedHandle () {
+    async processedHandle() {
       const { info } = await this.$api.adapay.getStep()
       const { MerchantResident } = info
       this.isEcho = true
@@ -367,7 +365,7 @@ export default {
       this.processed = '未填'
     },
     /* ----------------------------------checkBox start----------------------------------- */
-    async checkBoxConfirmHandle () {
+    async checkBoxConfirmHandle() {
       try {
         let add_value_list = {}
         if (this.channelList.indexOf('wx_lite') > -1) {
@@ -407,7 +405,7 @@ export default {
         this.checkBoxVisibleHandle()
       }
     },
-    checkBoxVisibleHandle () {
+    checkBoxVisibleHandle() {
       this.checkBoxConfig.visible = !this.checkBoxConfig.visible
       // if (this.checkBoxConfig.visible) {
       //   this.$refs['loadingBtn'].closeLoading()

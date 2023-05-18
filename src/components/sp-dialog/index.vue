@@ -47,6 +47,10 @@ export default {
     width: {
       type: String,
       default: '800px'
+    },
+    labelWidth: {
+      type: String,
+      default: '120px'
     }
   },
   data() {
@@ -69,7 +73,7 @@ export default {
     }
   },
   render() {
-    const { title, value, form, formList, width } = this
+    const { title, value, form, formList, width, labelWidth } = this
 
     if (!value) {
       return null
@@ -89,7 +93,7 @@ export default {
           value={form}
           formList={formList}
           submit={false}
-          labelWidth={'120px'}
+          labelWidth={labelWidth}
           on-onSubmit={this.onFormSubmit}
         />
         <div slot='footer' class='dialog-footer'>

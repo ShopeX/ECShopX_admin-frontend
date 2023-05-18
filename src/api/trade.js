@@ -400,7 +400,7 @@ export function exportInvoice(query) {
 export function isInvoiced(query) {
   return fetch({
     url: '/invoice/invoiced',
-    method: 'get',
+    method: 'post',
     params: query
   })
 }

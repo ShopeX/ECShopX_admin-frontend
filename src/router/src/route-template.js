@@ -42,7 +42,12 @@ export default {
       name: `商城信息`,
       component: () => import('@/view/wxapp/shopInfo')
     },
-
+    // 小程序模板装修
+    // {
+    //   path: 'manage/decorate',
+    //   name: `模板编辑`,
+    //   component: () => import('@/view/decorate/index')
+    // },
     // PC商城
     {
       path: 'pcmall/templatelist',

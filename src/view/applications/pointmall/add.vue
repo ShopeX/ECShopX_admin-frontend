@@ -173,7 +173,7 @@
                       <div class="frm-tips">
                         <p>
                           1.
-                          最多可上传9个图片，文件格式为bmp、png、jpeg、jpg或gif，大小不超过2M（建议尺寸：500px
+                          最多可上传9张图片，文件格式为bmp、png、jpeg、jpg或gif，大小不超过2M（建议尺寸：500px
                           * 500px）
                         </p>
                         <p>2. 拖动图片进行可排序</p>
@@ -712,12 +712,7 @@
             </el-radio-group>
           </el-form-item>
           <template v-if="mode === 'richText'">
-            <vue-html5-editor
-              ref="editor"
-              :content="form.intro"
-              :height="360"
-              @change="updateContent"
-            />
+            <SpRichText v-model="form.intro" />
             <span class="tpl_item img" style="" @click="addImgPreview">
               <i class="iconfont icon-image" />图片
             </span>

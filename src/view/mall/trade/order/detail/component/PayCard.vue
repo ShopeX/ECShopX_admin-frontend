@@ -1,22 +1,17 @@
 <template>
-  <CustomCard
-    title="支付清单"
-    :info="info"
-    :data-source="tradeInfo"
-    :is-common="true"
-  />
+  <CustomCard title="支付清单" :info="info" :data-source="tradeInfo" :is-common="true" />
 </template>
 
 <script>
 import { dateFilter } from '@/utils'
 import CustomCard from './CustomCard'
-import {PAY_TYPE} from '@/utils'
+import { PAY_TYPE } from '@/utils'
 export default {
   components: {
     CustomCard
   },
   props: ['cardConfig', 'orderInfo', 'memberInfo', 'tradeInfo'],
-  data () {
+  data() {
     const self = this
     return {
       info: [
@@ -62,28 +57,28 @@ export default {
     }
   },
   methods: {
-    orderFreightFilter () {
+    orderFreightFilter() {
       return `${this.orderInfo.fee_symbol}${(this.orderInfo.freight_fee / 100).toFixed(2)}`
     },
-    memberDiscountFilter () {
+    memberDiscountFilter() {
       return `- ${this.orderInfo.fee_symbol}${(this.orderInfo.member_discount / 100).toFixed(2)}`
     },
-    couponsReductionFilter () {
+    couponsReductionFilter() {
       return `-${this.orderInfo.fee_symbol}${(this.orderInfo.coupon_discount / 100).toFixed(2)}`
     },
-    disCountTotalMoney () {
+    disCountTotalMoney() {
       return `-${this.orderInfo.fee_symbol}${
         this.orderInfo.discount_fee ? (this.orderInfo.discount_fee / 100).toFixed(2) : 0
       }`
     },
-    pointFilter () {
+    pointFilter() {
       // 积分抵扣
       return `${this.orderInfo.point_use}`
     },
-    totalFilter () {
+    totalFilter() {
       return `${this.orderInfo.fee_symbol}${(this.orderInfo.total_fee / 100).toFixed(2)}`
     },
-    realTotalFilter () {
+    realTotalFilter() {
       let returnValue = ''
       if (this.tradeInfo.payType === 'point') {
         returnValue = `￥0`
@@ -94,14 +89,14 @@ export default {
       }
       return returnValue
     },
-    orderTotalFilter () {
+    orderTotalFilter() {
       return `${this.orderInfo.fee_symbol}${
         this.orderInfo.order_type != 'bargain'
           ? (this.orderInfo.item_fee / 100).toFixed(2)
           : (this.orderInfo.item_price / 100).toFixed(2)
       }`
     },
-    tradeStateFilter (item) {
+    tradeStateFilter(item) {
       let returnValue = ''
       switch (item) {
         case 'SUCCESS':
@@ -134,7 +129,7 @@ export default {
       }
       return returnValue
     },
-    payTypeFilter (item) {
+    payTypeFilter(item) {
       let returnValue = ''
       switch (item) {
         case 'amorepay':

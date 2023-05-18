@@ -17,7 +17,7 @@
     width: 80px;
     height: 80px;
     border: 1px solid #d9d9d9;
-    margin: 0 10px 10px 0;
+    margin-right: 10px;
     position: relative;
     float: left;
     &.drag {
@@ -26,6 +26,11 @@
           display: block;
         }
       }
+    }
+  }
+  &.multiple {
+    .image-item {
+      margin-bottom: 10px;
     }
   }
   .placeholder {
@@ -131,67 +136,76 @@ export default {
       }
     }
   },
+  watch: {
+    value: {
+      handler(nVal) {
+        this.localValue = nVal
+      },
+      deep: true,
+      immediate: true
+    }
+  },
   created() {},
   methods: {
     // 图片添加
     async handleSelectImage() {
-      console.log('handleSelectImage:', this.max, this.value)
       const { data } = await this.$picker.image({
         multiple: this.max > 1,
-        num: this.max > 1 ? this.max - this.value.length : 1
+        num: this.max > 1 ? this.max - this.localValue.length : 1
       })
-      if (isString(this.value)) {
+      if (isString(this.localValue)) {
         this.updateValue(data.url)
-      } else if (isObject(this.value)) {
+      } else if (isObject(this.localValue)) {
         this.updateValue(data)
-      } else if (isArray(this.value)) {
+      } else if (isArray(this.localValue)) {
         if (this.type == 'string') {
           const res = data.map(({ url }) => url)
-          this.updateValue(this.value.concat(res))
+          this.updateValue(this.localValue.concat(res))
         } else {
-          this.updateValue(this.value.concat(data))
+          this.updateValue(this.localValue.concat(data))
         }
       }
     },
 
     async onUpdateImage(index) {
       let val
-      if (isArray(this.value)) {
-        val = this.value[index]
-      } else if (isObject(this.value)) {
-        val = this.value.url
+      if (isArray(this.localValue)) {
+        val = this.localValue[index]
+      } else if (isObject(this.localValue)) {
+        val = this.localValue.url
       } else {
-        val = this.value
+        val = this.localValue
       }
       const { data } = await this.$picker.image({
         data: val
       })
-      if (isArray(this.value)) {
+      if (isArray(this.localValue)) {
         if (this.type == 'string') {
-          Vue.set(this.value, index, data.url)
+          Vue.set(this.localValue, index, data.url)
         } else {
-          Vue.set(this.value, index, data)
+          Vue.set(this.localValue, index, data)
         }
-      } else if (isObject(this.value)) {
-        this.value = data
+      } else if (isObject(this.localValue)) {
+        this.localValue = data
       } else {
-        this.value = data.url
+        this.localValue = data.url
       }
-      this.updateValue(this.value)
+      this.updateValue(this.localValue)
     },
 
     updateValue(val) {
+      console.log('updateValue========', val)
       this.$emit('input', val)
       this.$emit('onChange', val)
     },
 
     handleDeleteItem(index) {
-      if (isArray(this.value)) {
-        this.value.splice(index, 1)
+      if (isArray(this.localValue)) {
+        this.localValue.splice(index, 1)
       } else {
-        this.value = isString(this.value) ? '' : {}
+        this.localValue = isString(this.localValue) ? '' : {}
       }
-      this.updateValue(this.value)
+      this.updateValue(this.localValue)
     },
 
     _renderImage(item, index = 0) {
@@ -212,9 +226,16 @@ export default {
   },
   render() {
     const { value, max, size } = this
-    const multiple = isArray(value)
     return (
-      <div class={['sp-image-picker', size]}>
+      <div
+        class={[
+          'sp-image-picker',
+          size,
+          {
+            'multiple': max > 1
+          }
+        ]}
+      >
         {max > 1 && (
           <draggable
             class='list-container'

@@ -69,9 +69,10 @@
   }
 }
 
-@mixin mult-ellipsis($line) {
+@mixin multi-ellipsis($line) {
   overflow: hidden;
   text-overflow: ellipsis;
+  white-space: normal;
   display: -webkit-box;
   -webkit-box-orient: vertical;
   -webkit-line-clamp: $line;

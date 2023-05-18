@@ -2,12 +2,7 @@
   <div>
     <el-row :gutter="20">
       <el-col>
-        <el-button
-          type="primary"
-          plain
-          icon="el-icon-circle-plus"
-          @click="appendTop(categoryList)"
-        >
+        <el-button type="primary" plain icon="el-icon-circle-plus" @click="appendTop(categoryList)">
           添加销售分类
         </el-button>
       </el-col>
@@ -24,41 +19,22 @@
           </el-form-item>
 
           <el-form-item label="分类排序">
-            <el-input-number
-              v-model="dialog.sort"
-              label="分类排序"
-              :min="0"
-            />
+            <el-input-number v-model="dialog.sort" label="分类排序" :min="0" />
           </el-form-item>
 
-          <el-form-item
-            v-if="dialog.is_hassuperior"
-            label="父级分类"
-          >
-            <el-input
-              v-model="dialog.superior_cat_name"
-              label="分类排序"
-              :disabled="true"
-            />
+          <el-form-item v-if="dialog.is_hassuperior" label="父级分类">
+            <el-input v-model="dialog.superior_cat_name" label="分类排序" :disabled="true" />
           </el-form-item>
 
           <el-form-item label="分类图片">
-            <imgBox
-              :img-url="dialog.cat_img"
-              @click="handleImgChangeCat"
-            />
+            <imgBox :img-url="dialog.cat_img" @click="handleImgChangeCat" />
           </el-form-item>
         </el-form>
-        <span
-          slot="footer"
-          class="dialog-footer"
-        >
+        <span slot="footer" class="dialog-footer">
           <el-button @click="handleCancel">取 消</el-button>
-          <el-button
-            :loading="dialog.loading"
-            type="primary"
-            @click="handleSubmit"
-          >确 定</el-button>
+          <el-button :loading="dialog.loading" type="primary" @click="handleSubmit"
+            >确 定</el-button
+          >
         </span>
       </el-dialog>
 
@@ -73,28 +49,17 @@
         style="width: 100%"
         size="small"
       >
-        <el-table-column
-          label="分类名称"
-          width="380"
-        >
+        <el-table-column label="分类名称" width="380">
           <template slot-scope="scope">
             <span>{{ scope.row.category_name }}</span>
           </template>
         </el-table-column>
-        <el-table-column
-          prop="sort"
-          label="分类排序"
-          sortable
-          width="100"
-        >
+        <el-table-column prop="sort" label="分类排序" sortable width="100">
           <template slot-scope="scope">
             <div>{{ scope.row.sort }}</div>
           </template>
         </el-table-column>
-        <el-table-column
-          label="分类图片"
-          width="200"
-        >
+        <el-table-column label="分类图片" width="200">
           <template slot-scope="scope">
             <el-image
               v-if="scope.row.image_url"
@@ -111,11 +76,7 @@
             > -->
           </template>
         </el-table-column>
-        <el-table-column
-          prop="created"
-          label="创建时间"
-          width="120"
-        >
+        <el-table-column prop="created" label="创建时间" width="120">
           <template slot-scope="scope">
             {{ scope.row.created | datetime('YYYY-MM-DD') }}
           </template>
@@ -135,37 +96,41 @@
                 查看商品
               </router-link>
             </el-button>
-            <el-button
-              v-if="scope.row.level < 2"
-              type="text"
-              @click="append(scope.row)"
-            >
+            <el-button v-if="scope.row.level < 2" type="text" @click="append(scope.row)">
               新增子类
             </el-button>
-            <el-button
-              type="text"
-              @click="editCategory(scope.row)"
-            >
-              编辑
-            </el-button>
-            <el-popover
-              v-if="appID"
-              placement="top"
-              width="200"
-              trigger="click">
+            <el-button type="text" @click="editCategory(scope.row)"> 编辑 </el-button>
+            <el-popover v-if="appID" placement="top" width="200" trigger="click">
               <div>
-                <img class="page-code" :src="appCodeUrl" />
+                <img class="page-code" :src="appCodeUrl">
                 <div class="page-btns">
-                  <el-button type="primary" plain size="mini" @click="handleDownload(scope.row.category_name)">下载码</el-button>
-                  <el-button type="primary" plain size="mini" v-clipboard:copy="curPageUrl">复制链接</el-button>
+                  <el-button
+                    type="primary"
+                    plain
+                    size="mini"
+                    @click="handleDownload(scope.row.category_name)"
+                    >
+下载码
+</el-button
+                  >
+                  <el-button v-clipboard:copy="curPageUrl" type="primary" plain size="mini"
+                    >
+复制链接
+</el-button
+                  >
                 </div>
               </div>
-              <el-button style="width: 45px" type="text" slot="reference" @click="handleClick(scope.row.id)">投放</el-button>
+              <el-button
+                slot="reference"
+                style="width: 45px"
+                type="text"
+                @click="handleClick(scope.row.id)"
+                >
+投放
+</el-button
+              >
             </el-popover>
-            <el-button
-              type="text"
-              @click.native.prevent="deleteCategory(scope.row)"
-            >
+            <el-button type="text" @click.native.prevent="deleteCategory(scope.row)">
               删除
             </el-button>
           </template>
@@ -192,7 +157,7 @@ export default {
     imgPicker,
     imgBox
   },
-  data () {
+  data() {
     return {
       isDisable: false,
       loading: false,
@@ -224,7 +189,7 @@ export default {
     ...mapGetters(['wheight', 'login_type'])
   },
 
-  mounted () {
+  mounted() {
     this.getCategory()
     this.fetchWechatList()
   },
@@ -237,7 +202,7 @@ export default {
         }
       })
     },
-    handleClick (cat_id) {
+    handleClick(cat_id) {
       const page = 'pages/item/list'
       this.curPageUrl = `${page}?cat_id=${cat_id}`
       let params = {
@@ -249,7 +214,7 @@ export default {
         this.appCodeUrl = response.data.data.base64Image
       })
     },
-    handleDownload (name) {
+    handleDownload(name) {
       var a = document.createElement('a')
       var temp = name
       if (this.appCodeUrl) {
@@ -258,7 +223,7 @@ export default {
         a.click()
       }
     },
-    append (row) {
+    append(row) {
       // let { children: data, level = 0, id, parent_id = "" } = row;
       // let newParentId = level === 0 ? id : parent_id;
       // const newChild = {
@@ -283,7 +248,7 @@ export default {
         cat_name: ''
       }
     },
-    editCategory (row) {
+    editCategory(row) {
       this.dialog = {
         ...this.dialog,
         visible: true,
@@ -295,7 +260,7 @@ export default {
         sort: row.sort
       }
     },
-    handleSubmit () {
+    handleSubmit() {
       const _this = this
       const { sort, cat_name, cat_img, is_hassuperior, superior_cat_id, type, current_id } =
         this.dialog
@@ -360,12 +325,12 @@ export default {
         }
       }
     },
-    handleCancel () {
+    handleCancel() {
       this.dialog = {
         visible: false
       }
     },
-    getCategory () {
+    getCategory() {
       this.loading = true
       getCategory(this.params).then((response) => {
         this.categoryList = response.data.data
@@ -373,7 +338,7 @@ export default {
         this.spaceInput = false
       })
     },
-    updateCategory () {
+    updateCategory() {
       for (var i = 0; i < this.categoryList.length; i++) {
         for (var a = 0; a < this.categoryList.length - 1 - i; a++) {
           if (this.categoryList[a].category_name == this.categoryList[a + 1].category_name) {
@@ -425,7 +390,7 @@ export default {
         this.getCategory()
       })
     },
-    deleteCategory (data) {
+    deleteCategory(data) {
       this.$confirm('此操作将删除该分类, 是否继续?', '提示', {
         confirmButtonText: '确定',
         cancelButtonText: '取消',
@@ -477,7 +442,7 @@ export default {
         })
     },
 
-    appendTop (data) {
+    appendTop(data) {
       this.dialog = {
         ...this.dialog,
         visible: true,
@@ -493,7 +458,7 @@ export default {
       //   container.scrollTop = container.scrollHeight;
       // })
     },
-    catNameCheck (catName) {
+    catNameCheck(catName) {
       let catNameLength = 0
       if (catName) {
         for (var i = 0; i < catName.length; i++) {
@@ -519,16 +484,16 @@ export default {
         return false
       }
     },
-    handleImgChange (data) {
+    handleImgChange(data) {
       this.imgDialog = true
       this.isGetImage = true
       this.current = data
     },
-    handleImgChangeCat (data) {
+    handleImgChangeCat(data) {
       this.imgDialog = true
       this.isGetImage = true
     },
-    pickImg (data) {
+    pickImg(data) {
       if (this.dialog.visible) {
         this.dialog.cat_img = data.url
 
@@ -560,7 +525,7 @@ export default {
       }
       this.imgDialog = false
     },
-    closeImgDialog () {
+    closeImgDialog() {
       this.imgDialog = false
     }
   }

@@ -279,9 +279,7 @@
         </el-row>
       </el-card>
       <el-form-item style="text-align: center; margin: 50px 0; margin-right: 130px">
-        <el-button type="primary" @click="submitForm('ruleForm')">
-提交审核
-</el-button>
+        <el-button type="primary" @click="submitForm('ruleForm')"> 提交审核 </el-button>
         <!-- <loading-btn
           ref="loadingBtn"
           size="medium"
@@ -321,7 +319,7 @@ export default {
     loadingBtn,
     checkBox
   },
-  data () {
+  data() {
     return {
       isGetImage: false,
       imgDialog: false,
@@ -372,12 +370,12 @@ export default {
       }
     }
   },
-  mounted () {
+  mounted() {
     this.getStepHandle()
   },
   methods: {
     // 查询开户步骤
-    async getStepHandle () {
+    async getStepHandle() {
       const { info } = await this.$api.adapay.getStep()
       const { SubmitLicense } = info
       if (SubmitLicense.length <= 0) {
@@ -401,16 +399,16 @@ export default {
         }
       }
     },
-    handleImgPicker (pickerImgType) {
+    handleImgPicker(pickerImgType) {
       this.pickerImgType = pickerImgType
       this.imgDialog = true
       this.isGetImage = true
     },
-    closeImgDialog () {
+    closeImgDialog() {
       this.imgDialog = false
       this.isGetImage = false
     },
-    successHandle (data) {
+    successHandle(data) {
       const { tem_url, file_url, file_type } = data
       switch (file_type) {
         case '01':
@@ -472,7 +470,7 @@ export default {
       }
       this.$message.success('上传成功')
     },
-    submitForm () {
+    submitForm() {
       this.$refs['ruleForm'].validate(async (valid) => {
         if (valid) {
           this.checkBoxVisibleHandle()
@@ -483,7 +481,7 @@ export default {
       })
     },
     /* ----------------------------------checkBox start----------------------------------- */
-    async checkBoxConfirmHandle (data) {
+    async checkBoxConfirmHandle(data) {
       try {
         const { status } = await this.$api.adapay.submitPhoto({
           ...this.apiData,
@@ -509,15 +507,15 @@ export default {
         return
       }
     },
-    checkBoxVisibleHandle () {
+    checkBoxVisibleHandle() {
       this.checkBoxConfig.visible = !this.checkBoxConfig.visible
     },
     /* ----------------------------------checkBox  end ----------------------------------- */
-    nextPage () {
+    nextPage() {
       this.$router.push('/applications/adapay/adapay_merchant/pay_setting')
     },
     // 重新填写
-    async processedHandle () {
+    async processedHandle() {
       const { info } = await this.$api.adapay.getStep()
       const { SubmitLicense } = info
 

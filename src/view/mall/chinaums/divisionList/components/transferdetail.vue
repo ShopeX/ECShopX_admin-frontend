@@ -6,33 +6,14 @@
 
 <template>
   <div class="page-body">
-    <SpFilterForm
-      :model="params"
-      @onSearch="onSearch"
-      @onReset="onReset"
-    >
-      <SpFilterFormItem
-        prop="order_id"
-        label="指令ID:"
-      >
-        <el-input
-          v-model="params.division_id"
-          placeholder="请输入指令ID"
-        />
+    <SpFilterForm :model="params" @onSearch="onSearch" @onReset="onReset">
+      <SpFilterFormItem prop="order_id" label="指令ID:">
+        <el-input v-model="params.division_id" placeholder="请输入指令ID" />
       </SpFilterFormItem>
-      <SpFilterFormItem
-        prop="order_id"
-        label="订单号:"
-      >
-        <el-input
-          v-model="params.order_id"
-          placeholder="请输入订单号"
-        />
+      <SpFilterFormItem prop="order_id" label="订单号:">
+        <el-input v-model="params.order_id" placeholder="请输入订单号" />
       </SpFilterFormItem>
-      <SpFilterFormItem
-        prop="create_time"
-        label="日期范围:"
-      >
+      <SpFilterFormItem prop="create_time" label="日期范围:">
         <el-date-picker
           v-model="params.create_time"
           type="daterange"
@@ -43,67 +24,25 @@
     </SpFilterForm>
     <div class="action-container">
       <exportTip @exportHandle="exportData">
-        <el-button
-          type="primary"
-          plain
-        >
-          导出
-        </el-button>
+        <el-button type="primary" plain> 导出 </el-button>
       </exportTip>
     </div>
-    <el-table
-      v-loading="loading"
-      border
-      :data="tableList"
-      :height="wheight - 150"
-    >
-      <el-table-column
-        prop="division_id"
-        label="指令ID"
-        width="100"
-      />
-      <el-table-column
-        prop="order_id"
-        label="订单号"
-        width="180"
-      />
-      <el-table-column
-        prop="total_fee"
-        label="订单金额"
-      >
-        <template slot-scope="scope">
-          ￥{{ scope.row.total_fee / 100 }}
-        </template>
+    <el-table v-loading="loading" border :data="tableList" :height="wheight - 150">
+      <el-table-column prop="division_id" label="指令ID" width="100" />
+      <el-table-column prop="order_id" label="订单号" width="180" />
+      <el-table-column prop="total_fee" label="订单金额">
+        <template slot-scope="scope"> ￥{{ scope.row.total_fee / 100 }} </template>
       </el-table-column>
-      <el-table-column
-        prop="actual_fee"
-        label="实际金额"
-      >
-        <template slot-scope="scope">
-          ￥{{ scope.row.actual_fee / 100 }}
-        </template>
+      <el-table-column prop="actual_fee" label="实际金额">
+        <template slot-scope="scope"> ￥{{ scope.row.actual_fee / 100 }} </template>
       </el-table-column>
-      <el-table-column
-        prop="commission_rate_fee"
-        label="收单手续费"
-      >
-        <template slot-scope="scope">
-          ￥{{ scope.row.commission_rate_fee / 100 }}
-        </template>
+      <el-table-column prop="commission_rate_fee" label="收单手续费">
+        <template slot-scope="scope"> ￥{{ scope.row.commission_rate_fee / 100 }} </template>
       </el-table-column>
-      <el-table-column
-        prop="division_fee"
-        label="分账金额"
-      >
-        <template slot-scope="scope">
-          ￥{{ scope.row.division_fee / 100 }}
-        </template>
+      <el-table-column prop="division_fee" label="分账金额">
+        <template slot-scope="scope"> ￥{{ scope.row.division_fee / 100 }} </template>
       </el-table-column>
-      <el-table-column
-        prop="create_time"
-        label="创建时间"
-        width="200"
-      >
+      <el-table-column prop="create_time" label="创建时间" width="200">
         <template slot-scope="scope">
           <span>{{ scope.row.create_time | datetime('YYYY-MM-DD HH:mm:ss') }}</span>
         </template>
@@ -130,11 +69,11 @@ import exportTip from '@/components/export_tips'
 import mixin, { pageMixin } from '@/mixins'
 
 export default {
-  mixins: [mixin, pageMixin],
   components: {
     exportTip
   },
-  data () {
+  mixins: [mixin, pageMixin],
+  data() {
     const initialParams = {
       create_time: '',
       order_id: undefined,
@@ -151,14 +90,14 @@ export default {
   computed: {
     ...mapGetters(['wheight'])
   },
-  mounted () {
+  mounted() {
     this.fetchList()
   },
   methods: {
-    dateStrToTimeStamp (str) {
+    dateStrToTimeStamp(str) {
       return Date.parse(new Date(str)) / 1000
     },
-    dateTransfer (val) {
+    dateTransfer(val) {
       let time_start_begin = undefined
       let time_start_end = undefined
       if (val) {
@@ -170,7 +109,7 @@ export default {
         time_start_end
       }
     },
-    getParams () {
+    getParams() {
       let params = {
         ...this.dateTransfer(this.params.create_time),
         order_id: this.params.order_id || undefined,
@@ -178,7 +117,7 @@ export default {
       }
       return params
     },
-    async fetchList () {
+    async fetchList() {
       this.loading = true
       const { pageIndex: page, pageSize } = this.page
       let params = {
@@ -191,18 +130,20 @@ export default {
       this.page.total = total_count
       this.loading = false
     },
-    onSearch () {
+    onSearch() {
       this.page.pageIndex = 1
       this.$nextTick(() => {
         this.fetchList()
       })
     },
-    onReset () {
+    onReset() {
       this.params = { ...this.initialParams }
       this.onSearch()
     },
-    async exportData () {
-      const { status, url, filename } = await this.$api.trade.chinaumsDivisionDetailExportData(this.getParams())
+    async exportData() {
+      const { status, url, filename } = await this.$api.trade.chinaumsDivisionDetailExportData(
+        this.getParams()
+      )
       if (status) {
         this.$message({
           type: 'success',
@@ -215,7 +156,7 @@ export default {
         this.downloadName = filename
         this.downloadView = true
       }
-    },
+    }
   }
 }
 </script>

@@ -1,11 +1,6 @@
 <template>
   <div class="section section-white">
-    <el-form
-      ref="form"
-      :model="form"
-      label-position="left"
-      label-width="120px"
-    >
+    <el-form ref="form" :model="form" label-position="left" label-width="120px">
       <div class="section-body">
         <el-form-item label="社区拼团商城客服">
           <el-switch
@@ -63,20 +58,10 @@
           积分兑换1元人民币
         </el-form-item>
         <el-form-item label="积分说明">
-          <vue-html5-editor
-            ref="editor"
-            :content="form.community_config.point_desc"
-            :height="260"
-            @change="updatePointDescContent"
-          />
+          <SpRichText v-model="form.community_config.point_desc" />
         </el-form-item>
         <el-form-item label="积分提现说明">
-          <vue-html5-editor
-            ref="editor"
-            :content="form.community_config.withdraw_desc"
-            :height="260"
-            @change="updateWithdrawDescContent"
-          />
+          <SpRichText v-model="form.community_config.withdraw_desc" />
         </el-form-item>
         <el-form-item label="客服电话">
           <el-input
@@ -90,12 +75,7 @@
         </el-form-item>
       </div>
       <div class="section-footer with-border content-center">
-        <el-button
-          type="primary"
-          @click="save"
-        >
-          保 存
-        </el-button>
+        <el-button type="primary" @click="save"> 保 存 </el-button>
       </div>
     </el-form>
   </div>
@@ -104,7 +84,7 @@
 import { setCompanySetting, getCompanySetting } from '../../../../api/company'
 import imgPicker from '../../../../components/imageselect'
 export default {
-  data () {
+  data() {
     return {
       components: {
         imgPicker
@@ -125,17 +105,17 @@ export default {
       }
     }
   },
-  mounted () {
+  mounted() {
     this.getConfig()
   },
   methods: {
-    updatePointDescContent (data) {
+    updatePointDescContent(data) {
       this.form.community_config.point_desc = data
     },
-    updateWithdrawDescContent (data) {
+    updateWithdrawDescContent(data) {
       this.form.community_config.withdraw_desc = data
     },
-    save () {
+    save() {
       if (this.form.customer_switch == 'true') {
         this.form.customer_switch = 1
       } else {
@@ -146,7 +126,7 @@ export default {
         this.getConfig()
       })
     },
-    getConfig () {
+    getConfig() {
       getCompanySetting().then((res) => {
         if (res.data.data.company_id) {
           this.form = res.data.data

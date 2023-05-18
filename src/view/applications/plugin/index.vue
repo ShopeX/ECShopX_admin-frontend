@@ -37,10 +37,9 @@
                 type="primary"
                 plain
                 @click="onClickItem(item)"
-                >
-{{ item.button }}
-</el-button
               >
+                {{ item.button }}
+              </el-button>
               <el-button v-else type="primary">已开通</el-button>
             </div>
           </div>

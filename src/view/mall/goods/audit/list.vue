@@ -92,7 +92,7 @@
             </el-table-column>
             <el-table-column prop="market_price" label="市场价（¥）">
               <template slot-scope="scope">
-                <span>{{ scope.row.market_price/100 }}</span>
+                <span>{{ scope.row.market_price / 100 }}</span>
               </template>
             </el-table-column>
             <el-table-column prop="price" label="销售价（¥）" />

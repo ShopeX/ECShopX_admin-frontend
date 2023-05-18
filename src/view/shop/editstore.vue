@@ -85,7 +85,7 @@
         </el-col>
       </el-form-item>
       <!-- <el-form-item label="门店图片">
-        <el-col><p class="frm-tips">请上传门店图片如门店内、外景图、门店服务信息等，图片将展示在微信客户端的门店页。<br />最多可上传9个图片，文件格式为bmp、png、jpeg、jpg或gif，大小不超过2M</p></el-col>
+        <el-col><p class="frm-tips">请上传门店图片如门店内、外景图、门店服务信息等，图片将展示在微信客户端的门店页。<br />最多可上传9张图片，文件格式为bmp、png、jpeg、jpg或gif，大小不超过2M</p></el-col>
           <el-col>
             <el-upload
               action=""
@@ -106,7 +106,7 @@
         <el-row :gutter="20">
           <el-col :span="18">
             <div class="frm-tips">
-              请上传门店图片如门店内、外景图、门店服务信息等，图片将展示在微信客户端的门店页。<br>最多可上传9个图片，文件格式为bmp、png、jpeg、jpg或gif，大小不超过2M
+              请上传门店图片如门店内、外景图、门店服务信息等，图片将展示在微信客户端的门店页。<br>最多可上传9张图片，文件格式为bmp、png、jpeg、jpg或gif，大小不超过2M
             </div>
             <div class="pics-box">
               <ul class="goodspic-wrap">

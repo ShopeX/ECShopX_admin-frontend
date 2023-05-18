@@ -1,5 +1,7 @@
 import log from './log'
 import CommonUtil from '@/common/js/util'
+import _pickBy from 'lodash/pickBy'
+import _get from 'lodash/get'
 import store from '@/store'
 import { isEmpty } from 'lodash'
 
@@ -234,6 +236,81 @@ export function getRegionIdByName(region, district) {
     getRegionValue(district, 0)
   }
   return result
+}
+
+export function pickBy(arr = [], keyMaps = {}) {
+  const picker = (item) => {
+    const ret = {}
+    Object.keys(keyMaps).forEach((key) => {
+      const val = keyMaps[key]
+      if (isString(val)) {
+        ret[key] = _get(item, val)
+      } else if (isFunction(val)) {
+        ret[key] = val(item)
+      } else if (isObject(val)) {
+        ret[key] = _get(item, val.key) || val.default
+      } else {
+        ret[key] = val
+      }
+    })
+
+    return ret
+  }
+
+  if (isArray(arr)) {
+    return arr.map(picker)
+  } else {
+    return picker(arr)
+  }
+}
+
+export function hex2rgb(hex) {
+  if (![4, 7].includes(hex.length)) {
+    throw new Error('格式错误')
+  }
+  let result = hex.slice(1)
+  // 如果是颜色叠值, 统一转换成6位颜色值
+  if (result.length === 3) {
+    result = result
+      .split('')
+      .map((a) => `${a}${a}`)
+      .join('')
+  }
+  const rgb = []
+  // 计算hex值
+  for (let i = 0, len = result.length; i < len; i += 2) {
+    rgb[i / 2] = getHexVal(result[i]) * 16 + getHexVal(result[i + 1])
+  }
+  function getHexVal(letter) {
+    let num = -1
+    switch (letter.toUpperCase()) {
+      case 'A':
+        num = 10
+        break
+      case 'B':
+        num = 11
+        break
+      case 'C':
+        num = 12
+        break
+      case 'D':
+        num = 13
+        break
+      case 'E':
+        num = 14
+        break
+      case 'F':
+        num = 15
+        break
+    }
+
+    if (num < 0) {
+      num = Number(letter)
+    }
+
+    return num
+  }
+  return rgb
 }
 
 export { log, export_open, isEmpty }

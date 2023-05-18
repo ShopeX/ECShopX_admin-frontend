@@ -2,7 +2,7 @@
 // $--tooltip-arrow-size: 20;
 
 $color-primary: var(--themeColor);
-$color-secondary: rgba(var(--themeColorRgb), 0.6);
+$color-secondary: rgba(var(--themeColorRgb), 0.8);
 
 .el-button {
   padding: 10px 16px;
@@ -38,14 +38,31 @@ $color-secondary: rgba(var(--themeColorRgb), 0.6);
     border-color: $color-primary;
     background-color: #fff;
     &:hover {
-      color: $color-secondary !important;
-      border-color: $color-secondary !important;
-      background-color: #fff !important;
+      color: $color-secondary;
+      border-color: $color-secondary;
+      background-color: #fff;
     }
     &:focus {
-      color: $color-primary !important;
-      border-color: $color-primary !important;
-      background-color: #fff !important;
+      color: $color-primary;
+      border-color: $color-primary;
+      background-color: #fff;
+    }
+  }
+  &.is-disabled {
+    &.is-plain {
+      background-color: #fff;
+      border-color: #ebeef5;
+      color: #c0c4cc;
+      &:hover {
+        background-color: #fff;
+        border-color: #ebeef5;
+        color: #c0c4cc;
+      }
+      &:focus {
+        background-color: #fff;
+        border-color: #ebeef5;
+        color: #c0c4cc;
+      }
     }
   }
   &--text {
@@ -348,4 +365,8 @@ $color-secondary: rgba(var(--themeColorRgb), 0.6);
       }
     }
   }
+}
+
+.el-image {
+  display: block;
 }

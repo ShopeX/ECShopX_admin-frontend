@@ -44,7 +44,7 @@ export function errorToast(data) {
     // 如果是商家入驻
     if (isInMerchant()) {
       window.location.href = '/merchant'
-    }else if(IS_DISTRIBUTOR){
+    } else if (IS_DISTRIBUTOR) {
       window.location.href = '/shopadmin'
     } else {
       window.location.href = '/'

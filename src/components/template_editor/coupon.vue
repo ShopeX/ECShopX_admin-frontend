@@ -1,74 +1,40 @@
 <template>
-  <section
-    v-if="name === 'coupon'"
-    class="section"
-  >
-    <div class="section-header with-border">
-      设置
-    </div>
+  <section v-if="name === 'coupon'" class="section">
+    <div class="section-header with-border">设置</div>
     <div class="section-body">
       <el-form label-width="100px">
         <el-form-item label="标题">
-          <el-input
-            v-model="base.title"
-            type="text"
-          />
+          <el-input v-model="base.title" type="text" />
         </el-form-item>
         <el-form-item label="副标题">
           <el-input v-model="base.subtitle" />
         </el-form-item>
         <el-form-item label="组件间距">
-          <el-switch
-            v-model="base.padded"
-            active-color="#27cc6a"
-            inactive-color="#efefef"
-          />
+          <el-switch v-model="base.padded" active-color="#27cc6a" inactive-color="#efefef" />
         </el-form-item>
         <el-form-item label="选择优惠券">
-          <div
-            v-for="(item, index) in data"
-            :key="index"
-            class="setting-item item-selected"
-          >
-            <div
-              v-if="item.imgUrl"
-              class="upload-box"
-            >
+          <div v-for="(item, index) in data" :key="index" class="setting-item item-selected">
+            <div v-if="item.imgUrl" class="upload-box">
               <img
                 :src="wximageurl + item.imgUrl"
                 class="banner-uploader square thumbnail"
                 @click="handleImgChange(index)"
               >
             </div>
-            <div
-              v-else
-              class="banner-uploader square thumbnail"
-              @click="handleImgChange(index)"
-            >
+            <div v-else class="banner-uploader square thumbnail" @click="handleImgChange(index)">
               <div class="content-center">
                 <i class="iconfont icon-camera" />
               </div>
             </div>
             {{ item.title }}
-            <span
-              v-if="item.type === 'cash'"
-              class="amount-cur"
-            >{{ item.amount }}元满减券</span>
-            <span
-              v-if="item.type === 'discount'"
-              class="amount-cur"
-            >{{ item.amount }}折券</span>
+            <span v-if="item.type === 'cash'" class="amount-cur">{{ item.amount }}元满减券</span>
+            <span v-if="item.type === 'discount'" class="amount-cur">{{ item.amount }}折券</span>
 
-            <div
-              class="setting-remove"
-              @click="removeItem(index)"
-            >
+            <div class="setting-remove" @click="removeItem(index)">
               <i class="iconfont icon-trash-alt" />
             </div>
           </div>
-          <div class="frm-tips">
-            只能上传jpg/png文件，且不超过2M （建议尺寸：375px * 200px）
-          </div>
+          <div class="frm-tips">只能上传jpg/png文件，且不超过2M （建议尺寸：375px * 200px）</div>
           <el-button
             type="default"
             class="iconfont icon-cog banner-button-uploader"
@@ -85,40 +51,25 @@
             :key="index"
             class="setting-item item-selected"
           >
-            <div
-              v-if="item.imgUrl"
-              class="upload-box"
-            >
+            <div v-if="item.imgUrl" class="upload-box">
               <img
                 :src="wximageurl + item.imgUrl"
                 class="banner-uploader square thumbnail"
                 @click="couponPackageImg(index)"
               >
             </div>
-            <div
-              v-else
-              class="banner-uploader square thumbnail"
-              @click="couponPackageImg(index)"
-            >
+            <div v-else class="banner-uploader square thumbnail" @click="couponPackageImg(index)">
               <div class="content-center">
                 <i class="iconfont icon-camera" />
               </div>
             </div>
             {{ item.title }}
-            <div
-              class="setting-remove"
-              @click="removeCouponPackage(index)"
-            >
+            <div class="setting-remove" @click="removeCouponPackage(index)">
               <i class="iconfont icon-trash-alt" />
             </div>
           </div>
-          <div class="frm-tips">
-            只能上传jpg/png文件，且不超过2M （建议尺寸：375px * 200px）
-          </div>
-          <el-button
-            class="iconfont icon-cog banner-button-uploader"
-            @click="pickCouponHanle()"
-          >
+          <div class="frm-tips">只能上传jpg/png文件，且不超过2M （建议尺寸：375px * 200px）</div>
+          <el-button class="iconfont icon-cog banner-button-uploader" @click="pickCouponHanle()">
             选择优惠券包
           </el-button>
         </el-form-item>
@@ -136,7 +87,7 @@ export default {
       default: {}
     }
   },
-  data () {
+  data() {
     return {
       name: '',
       padded: false,
@@ -148,24 +99,24 @@ export default {
   watch: {
     res: {
       deep: true,
-      handler (value) {
+      handler(value) {
         if (value) {
           this.setData(value)
         }
       }
     }
   },
-  mounted () {
+  mounted() {
     this.setData(this.res)
   },
   methods: {
-    pickCouponHanle () {
+    pickCouponHanle() {
       this.$emit('couponPackageVisible')
     },
-    couponPackageImg (index) {
+    couponPackageImg(index) {
       this.$emit('bindImgs', index, true)
     },
-    removeCouponPackage (index) {
+    removeCouponPackage(index) {
       this.voucher_package.splice(index, 1)
     },
     // closeCouponHandle() {
@@ -179,20 +130,20 @@ export default {
     //   this.levelData[packageId].voucher_package = voucher_package
     //   console.log('seletedCoupon', seletedCoupon)
     // },
-    setData (val) {
+    setData(val) {
       this.name = val.name
       this.base = val.base
       this.config = val.config
       this.data = val.data
       this.voucher_package = val.voucher_package
     },
-    removeItem (index) {
+    removeItem(index) {
       this.data.splice(index, 1)
     },
-    setCoupons () {
+    setCoupons() {
       this.$emit('bindCoupons')
     },
-    handleImgChange (index) {
+    handleImgChange(index) {
       this.$emit('bindImgs', index)
     }
   }

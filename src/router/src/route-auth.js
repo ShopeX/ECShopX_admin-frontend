@@ -81,5 +81,11 @@ export default [
     meta: {
       auth: false
     }
+  },
+
+  {
+    path: '/wxapp/manage/decorate',
+    name: `模板编辑`,
+    component: () => import('@/view/decorate/index')
   }
 ]

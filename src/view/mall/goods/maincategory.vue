@@ -2,12 +2,7 @@
   <div>
     <el-row v-if="$store.getters.login_type != 'distributor'">
       <el-col>
-        <el-button
-          type="primary"
-          plain
-          icon="el-icon-circle-plus"
-          @click="appendTop(categoryList)"
-        >
+        <el-button type="primary" plain icon="el-icon-circle-plus" @click="appendTop(categoryList)">
           添加管理分类
         </el-button>
         <!-- <el-button-group>
@@ -31,50 +26,31 @@
         :tree-props="{ children: 'children' }"
         size="small"
       >
-        <el-table-column
-          label="分类名称"
-          width="220"
-        >
+        <el-table-column label="分类名称" width="220">
           <template slot-scope="scope">
             <span>{{ scope.row.category_name }}</span>
           </template>
         </el-table-column>
-        <el-table-column
-          prop="sort"
-          label="分类排序"
-          sortable
-          width="100"
-        >
+        <el-table-column prop="sort" label="分类排序" sortable width="100">
           <template slot-scope="scope">
             <div>{{ scope.row.sort }}</div>
           </template>
         </el-table-column>
 
-        <el-table-column
-          prop="created"
-          label="创建时间"
-          width="150"
-        >
+        <el-table-column prop="created" label="创建时间" width="150">
           <template slot-scope="scope">
             {{ scope.row.created | datetime('YYYY-MM-DD HH:mm:ss') }}
           </template>
         </el-table-column>
-        <el-table-column
-          v-if="!VERSION_IN_PURCHASE"
-          prop="created"
-          label="跨境税率"
-          width="120"
-        >
+        <el-table-column v-if="!VERSION_IN_PURCHASE" prop="created" label="跨境税率" width="120">
           <template slot-scope="scope">
             <span v-if="scope.row.crossborder_tax_rate">
-              {{ scope.row.crossborder_tax_rate }}%</span>
+              {{ scope.row.crossborder_tax_rate }}%</span
+            >
             <span v-else>无</span>
           </template>
         </el-table-column>
-        <el-table-column
-          v-if="$store.getters.login_type != 'distributor'"
-          label="操作"
-        >
+        <el-table-column v-if="$store.getters.login_type != 'distributor'" label="操作">
           <template slot-scope="scope">
             <router-link
               :to="{
@@ -83,9 +59,7 @@
               }"
               style="margin-right: 5px"
             >
-              <el-button type="text">
-                查看商品
-              </el-button>
+              <el-button type="text"> 查看商品 </el-button>
             </router-link>
             <el-button
               v-if="scope.row.category_level == 3"
@@ -108,31 +82,17 @@
             >
               分润配置
             </el-button>
-            <el-button
-              v-if="scope.row.category_level < 3"
-              type="text"
-              @click="append(scope.row)"
-            >
+            <el-button v-if="scope.row.category_level < 3" type="text" @click="append(scope.row)">
               新增子类
             </el-button>
-            <el-button
-              type="text"
-              @click="editCategory(scope.row)"
-            >
-              编辑
-            </el-button>
+            <el-button type="text" @click="editCategory(scope.row)"> 编辑 </el-button>
             <!-- <el-button
               type="text"
               @click="taxRateSet(scope.row)"
             >
               跨境税率设置
             </el-button> -->
-            <el-button
-              type="text"
-              @click="deleteCategory(scope.row)"
-            >
-              删除
-            </el-button>
+            <el-button type="text" @click="deleteCategory(scope.row)"> 删除 </el-button>
           </template>
         </el-table-column>
       </el-table>
@@ -149,42 +109,21 @@
         </el-form-item>
 
         <el-form-item label="分类排序">
-          <el-input-number
-            v-model="dialog.sort"
-            label="分类排序"
-            :min="0"
-          />
+          <el-input-number v-model="dialog.sort" label="分类排序" :min="0" />
         </el-form-item>
 
-        <el-form-item
-          v-if="dialog.is_hassuperior"
-          label="父级分类"
-        >
-          <el-input
-            v-model="dialog.superior_cat_name"
-            label="分类排序"
-            :disabled="true"
-          />
+        <el-form-item v-if="dialog.is_hassuperior" label="父级分类">
+          <el-input v-model="dialog.superior_cat_name" label="分类排序" :disabled="true" />
         </el-form-item>
       </el-form>
-      <span
-        slot="footer"
-        class="dialog-footer"
-      >
+      <span slot="footer" class="dialog-footer">
         <el-button @click="dialog.visible = false">取 消</el-button>
-        <el-button
-          :loading="dialog.loading"
-          type="primary"
-          @click="handleSubmit"
-        >确 定</el-button>
+        <el-button :loading="dialog.loading" type="primary" @click="handleSubmit">确 定</el-button>
       </span>
     </el-dialog>
 
     <!--修改跨境税率-->
-    <sideBar
-      :visible.sync="show_sideBar"
-      :title="'设置税率'"
-    >
+    <sideBar :visible.sync="show_sideBar" :title="'设置税率'">
       <el-form>
         <el-form-item label="跨境税率">
           <el-input-number
@@ -199,12 +138,7 @@
           <span style="margin-left: 5px">%</span>
         </el-form-item>
         <el-form-item>
-          <el-button
-            type="primary"
-            @click="saveTaxRate"
-          >
-            提交
-          </el-button>
+          <el-button type="primary" @click="saveTaxRate"> 提交 </el-button>
         </el-form-item>
       </el-form>
     </sideBar>
@@ -226,10 +160,7 @@
         description="类目最多关联20个商品参数和3个规格，并且只能关联一个图片属性规格"
         show-icon
       />
-      <el-row
-        v-loading="dialogLoading"
-        :gutter="10"
-      >
+      <el-row v-loading="dialogLoading" :gutter="10">
         <el-col :span="12">
           <el-table
             ref="multipleTable"
@@ -239,10 +170,7 @@
             @select="handleSelectionChange"
             @select-all="selectAll"
           >
-            <el-table-column
-              type="selection"
-              width="55"
-            />
+            <el-table-column type="selection" width="55" />
             <el-table-column type="expand">
               <template slot-scope="props">
                 <span
@@ -250,17 +178,15 @@
                   :key="index"
                   class="sku-value"
                 >
-                  <el-tag type="info"> {{ item.attribute_value }}</el-tag></span>
+                  <el-tag type="info"> {{ item.attribute_value }}</el-tag></span
+                >
               </template>
             </el-table-column>
-            <el-table-column
-              prop="attribute_name"
-              label="全部"
-            >
+            <el-table-column prop="attribute_name" label="全部">
               <template slot-scope="props">
-                <span
-                  v-if="props.row.attribute_memo"
-                >{{ props.row.attribute_name }}【{{ props.row.attribute_memo }}】</span>
+                <span v-if="props.row.attribute_memo"
+                  >{{ props.row.attribute_name }}【{{ props.row.attribute_memo }}】</span
+                >
                 <span v-else>{{ props.row.attribute_name }}</span>
                 <el-tag
                   v-if="currentAttrType == 'item_spec' && props.row.is_image == 'true'"
@@ -286,18 +212,15 @@
           </div>
         </el-col>
         <el-col :span="12">
-          <el-table
-            :data="checkGoodsAttr"
-            style="width: 100%"
-          >
+          <el-table :data="checkGoodsAttr" style="width: 100%">
             <el-table-column
               prop="attribute_name"
               :label="'已选择(' + this.checkGoodsAttr.length + ')'"
             >
               <template slot-scope="props">
-                <span
-                  v-if="props.row.attribute_memo"
-                >{{ props.row.attribute_name }}【{{ props.row.attribute_memo }}】</span>
+                <span v-if="props.row.attribute_memo"
+                  >{{ props.row.attribute_name }}【{{ props.row.attribute_memo }}】</span
+                >
                 <span v-else>{{ props.row.attribute_name }}</span>
                 <el-tag
                   v-if="currentAttrType == 'item_spec' && props.row.is_image == 'true'"
@@ -311,15 +234,9 @@
           </el-table>
         </el-col>
       </el-row>
-      <span
-        slot="footer"
-        class="dialog-footer"
-      >
+      <span slot="footer" class="dialog-footer">
         <el-button @click="handleCancel">取 消</el-button>
-        <el-button
-          type="primary"
-          @click="saveCategoryAttr"
-        >确 定</el-button>
+        <el-button type="primary" @click="saveCategoryAttr">确 定</el-button>
       </span>
     </el-dialog>
     <SideBar
@@ -330,10 +247,7 @@
     >
       <slot>
         <el-card class="box-card">
-          <div
-            slot="header"
-            class="clearfix"
-          >
+          <div slot="header" class="clearfix">
             <span>
               <el-alert
                 title="导购分润计算类型: 【按比例分佣】"
@@ -362,24 +276,12 @@
             height="100%"
             size="small"
           >
-            <el-table-column
-              label="分类名称"
-              prop="category_name"
-              min-width="120"
-            />
-            <el-table-column label="分润类型">
-              百分比
-            </el-table-column>
+            <el-table-column label="分类名称" prop="category_name" min-width="120" />
+            <el-table-column label="分润类型"> 百分比 </el-table-column>
             <el-table-column label="推广导购分润">
               <template slot-scope="scope">
-                <el-input
-                  v-model="scope.row.profit_conf_profit"
-                  size="mini"
-                  type="number"
-                >
-                  <template slot="append">
-                    %
-                  </template>
+                <el-input v-model="scope.row.profit_conf_profit" size="mini" type="number">
+                  <template slot="append"> % </template>
                 </el-input>
               </template>
             </el-table-column>
@@ -390,9 +292,7 @@
                   size="mini"
                   type="number"
                 >
-                  <template slot="append">
-                    %
-                  </template>
+                  <template slot="append"> % </template>
                 </el-input>
               </template>
             </el-table-column>
@@ -400,11 +300,7 @@
         </el-card>
       </slot>
       <div slot="footer">
-        <el-button
-          type="primary"
-          :loading="submitLoading"
-          @click="saveProfitConf"
-        >
+        <el-button type="primary" :loading="submitLoading" @click="saveProfitConf">
           保存
         </el-button>
       </div>
@@ -433,7 +329,7 @@ export default {
     imgPicker,
     SideBar
   },
-  data () {
+  data() {
     return {
       // 跨境税率设置
       category_id: 0,
@@ -485,11 +381,11 @@ export default {
     ...mapGetters(['wheight'])
   },
 
-  mounted () {
+  mounted() {
     this.getCategory()
   },
   methods: {
-    handleProfitPrice (data) {
+    handleProfitPrice(data) {
       this.show_profit_sideBar = true
       this.current.category_name = data.category_name
       this.profitSpecCategory = [
@@ -501,7 +397,7 @@ export default {
         }
       ]
     },
-    handleSubmit () {
+    handleSubmit() {
       const _this = this
       const { sort, cat_name, cat_img, is_hassuperior, superior_cat_id, type, current_id } =
         this.dialog
@@ -566,7 +462,7 @@ export default {
         }
       }
     },
-    saveProfitConf () {
+    saveProfitConf() {
       let profitConf
       let category_id
       this.profitSpecCategory.forEach((item) => {
@@ -588,7 +484,7 @@ export default {
         })
       })
     },
-    editCategory (row) {
+    editCategory(row) {
       this.dialog = {
         ...this.dialog,
         visible: true,
@@ -599,13 +495,13 @@ export default {
         sort: row.sort
       }
     },
-    taxRateSet (data) {
+    taxRateSet(data) {
       console.log(data)
       this.show_sideBar = true
       this.category_id = data.category_id
       this.crossborder_tax_rate = data.crossborder_tax_rate
     },
-    saveTaxRate () {
+    saveTaxRate() {
       console.log('保存税率')
       updateCategory(this.category_id, {
         crossborder_tax_rate: this.crossborder_tax_rate
@@ -617,16 +513,16 @@ export default {
         this.getCategory()
       })
     },
-    handleCurrentChange (page) {
+    handleCurrentChange(page) {
       this.attrParams.page = page
       this.getGoodsAttr()
     },
-    handleSizeChange (pageSize) {
+    handleSizeChange(pageSize) {
       this.attrParams.page = 1
       this.attrParams.pageSize = pageSize
       this.getGoodsAttr()
     },
-    handleDialogAttr (data, type, node) {
+    handleDialogAttr(data, type, node) {
       this.dialogLoading = true
       this.relAttrvisible = true
       this.currentAttrType = type
@@ -641,11 +537,11 @@ export default {
       }
       this.getGoodsAttr(checkIds)
     },
-    selectAll (data) {
+    selectAll(data) {
       this.$message({ type: 'error', message: '绑定不支持全选' })
       this.toggleRowSelection()
     },
-    toggleRowSelection () {
+    toggleRowSelection() {
       this.$refs.multipleTable.clearSelection()
 
       var checkids = []
@@ -659,7 +555,7 @@ export default {
         }
       })
     },
-    handleSelectionChange (val, row) {
+    handleSelectionChange(val, row) {
       var findIndex = -1
       var visible = 1
       this.checkGoodsAttr.forEach((item, index) => {
@@ -703,7 +599,7 @@ export default {
         this.checkGoodsAttr.push(row)
       }
     },
-    async getGoodsAttr (checkids = []) {
+    async getGoodsAttr(checkids = []) {
       if (checkids.length === 0) {
         this.checkGoodsAttr.forEach((item) => {
           checkids.push(item.attribute_id)
@@ -740,7 +636,7 @@ export default {
       })
       this.dialogLoading = false
     },
-    saveCategoryAttr () {
+    saveCategoryAttr() {
       var checkids = []
       this.checkGoodsAttr.forEach((item) => {
         checkids.push(item.attribute_id)
@@ -764,7 +660,7 @@ export default {
         this.handleCancel()
       }
     },
-    handleCancel () {
+    handleCancel() {
       this.relAttrvisible = false
       this.dialogLoading = false
       this.attrParams.page = 1
@@ -774,7 +670,7 @@ export default {
       this.currentAttrType = ''
       this.currentCategory = []
     },
-    getCategory () {
+    getCategory() {
       this.loading = true
       this.params.is_main_category = true
       getCategory(this.params).then((response) => {
@@ -783,7 +679,7 @@ export default {
         this.spaceInput = false
       })
     },
-    updateCategory () {
+    updateCategory() {
       for (var i = 0; i < this.categoryList.length; i++) {
         for (var a = 0; a < this.categoryList.length - 1 - i; a++) {
           if (this.categoryList[a].category_name == this.categoryList[a + 1].category_name) {
@@ -830,7 +726,7 @@ export default {
         this.getCategory()
       })
     },
-    deleteCategory (data) {
+    deleteCategory(data) {
       this.$confirm('此操作将删除该类目, 是否继续?', '提示', {
         confirmButtonText: '确定',
         cancelButtonText: '取消',
@@ -881,7 +777,7 @@ export default {
           })
         })
     },
-    append (row) {
+    append(row) {
       // let { children: data, category_level = 1, id, parent_id = "" } = row;
       // let newParentId = category_level === 1 ? id : parent_id;
       // var new_category_level = category_level + 1;
@@ -916,7 +812,7 @@ export default {
         cat_name: ''
       }
     },
-    appendTop (data) {
+    appendTop(data) {
       // const newChild = {
       //   id: Date.parse(new Date()) / 1000,
       //   category_name: "",
@@ -942,7 +838,7 @@ export default {
         sort: 0
       }
     },
-    catNameCheck (catName) {
+    catNameCheck(catName) {
       let catNameLength = 0
       if (catName) {
         for (var i = 0; i < catName.length; i++) {
@@ -968,12 +864,12 @@ export default {
         return false
       }
     },
-    handleImgChange (data) {
+    handleImgChange(data) {
       this.imgDialog = true
       this.isGetImage = true
       this.current = data
     },
-    pickImg (data) {
+    pickImg(data) {
       if (!this.current.parent_id || this.current.parent_id == 0) {
         const index = this.categoryList.findIndex((d) => d.id === this.current.id)
         this.categoryList[index].image_url = data.url
@@ -984,10 +880,10 @@ export default {
       }
       this.imgDialog = false
     },
-    closeImgDialog () {
+    closeImgDialog() {
       this.imgDialog = false
     },
-    syncMainCategory () {
+    syncMainCategory() {
       syncMainCategory().then((res) => {
         if (res.data.data.status == true) {
           this.$message({

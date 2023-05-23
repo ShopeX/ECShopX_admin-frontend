@@ -14,10 +14,7 @@
       <shopSelftList :is-load="shopself_status" :distributor-id="distributor_id"></shopSelftList>
     </el-tab-pane>
   </el-tabs> -->
-  <relMallList
-    :is-load="relmall_status"
-    :distributor-id="distributor_id"
-  />
+  <relMallList :is-load="relmall_status" :distributor-id="distributor_id" />
 </template>
 
 <script>
@@ -29,7 +26,7 @@ export default {
     shopSelftList,
     relMallList
   },
-  data () {
+  data() {
     return {
       activeName: 'relmall',
       shopself_status: true,
@@ -37,7 +34,7 @@ export default {
       distributor_id: ''
     }
   },
-  mounted () {
+  mounted() {
     if (this.$route.query.distributor_id) {
       this.distributor_id = this.$route.query.distributor_id
     }
@@ -53,7 +50,7 @@ export default {
     }
   },
   methods: {
-    handleClick () {
+    handleClick() {
       if (this.activeName === 'shopself') {
         this.shopself_status = true
         this.relmall_status = false

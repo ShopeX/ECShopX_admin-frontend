@@ -1,13 +1,13 @@
 import fetch from '../utils/fetch'
 
-export function getMembers (query) {
+export function getMembers(query) {
   return fetch({
     url: '/members',
     method: 'get',
     params: query
   })
 }
-export function getMember (query) {
+export function getMember(query) {
   return fetch({
     url: '/member',
     method: 'get',
@@ -15,7 +15,7 @@ export function getMember (query) {
   })
 }
 
-export function setMemberRegisterSetting (query) {
+export function setMemberRegisterSetting(query) {
   return fetch({
     url: '/members/register/setting',
     method: 'post',
@@ -23,7 +23,7 @@ export function setMemberRegisterSetting (query) {
   })
 }
 
-export function setMemberRegisterContentSetting (query) {
+export function setMemberRegisterContentSetting(query) {
   return fetch({
     url: '/members/register/setting',
     method: 'post',
@@ -31,7 +31,7 @@ export function setMemberRegisterContentSetting (query) {
   })
 }
 
-export function setMemberanalysisrightsContent (query) {
+export function setMemberanalysisrightsContent(query) {
   return fetch({
     url: '/members/analysisrights/content',
     method: 'post',
@@ -39,21 +39,21 @@ export function setMemberanalysisrightsContent (query) {
   })
 }
 
-export function getMemberanalysisrightsContent () {
+export function getMemberanalysisrightsContent() {
   return fetch({
     url: '/members/analysisrights/content',
     method: 'get'
   })
 }
 
-export function getMemberRegisterSetting () {
+export function getMemberRegisterSetting() {
   return fetch({
     url: '/members/register/setting',
     method: 'get'
   })
 }
 
-export function memberSmsSend (query) {
+export function memberSmsSend(query) {
   return fetch({
     url: '/member/smssend',
     method: 'post',
@@ -61,7 +61,7 @@ export function memberSmsSend (query) {
   })
 }
 
-export function saveTag (query) {
+export function saveTag(query) {
   return fetch({
     url: '/member/tag',
     method: 'post',
@@ -69,7 +69,7 @@ export function saveTag (query) {
   })
 }
 
-export function getTagList (query) {
+export function getTagList(query) {
   return fetch({
     url: '/member/tag',
     method: 'get',
@@ -77,7 +77,7 @@ export function getTagList (query) {
   })
 }
 
-export function updateMemberMobile (query) {
+export function updateMemberMobile(query) {
   return fetch({
     url: '/member',
     method: 'put',
@@ -85,7 +85,7 @@ export function updateMemberMobile (query) {
   })
 }
 
-export function setSindusersalespersonrel (query) {
+export function setSindusersalespersonrel(query) {
   return fetch({
     url: '/member/bindusersalespersonrel',
     method: 'post',
@@ -93,7 +93,7 @@ export function setSindusersalespersonrel (query) {
   })
 }
 
-export function updateMemberGrade (query) {
+export function updateMemberGrade(query) {
   return fetch({
     url: '/member/grade',
     method: 'put',
@@ -101,7 +101,7 @@ export function updateMemberGrade (query) {
   })
 }
 
-export function batchupdateMemberGrade (query) {
+export function batchupdateMemberGrade(query) {
   return fetch({
     url: '/member/grade',
     method: 'patch',
@@ -109,7 +109,7 @@ export function batchupdateMemberGrade (query) {
   })
 }
 
-export function updateMemberInfo (query) {
+export function updateMemberInfo(query) {
   return fetch({
     url: '/member',
     method: 'patch',
@@ -117,7 +117,7 @@ export function updateMemberInfo (query) {
   })
 }
 
-export function getMemberOperateLog (query) {
+export function getMemberOperateLog(query) {
   return fetch({
     url: '/operate/loglist',
     method: 'get',
@@ -125,14 +125,14 @@ export function getMemberOperateLog (query) {
   })
 }
 
-export function getTagInfo (tagId) {
+export function getTagInfo(tagId) {
   return fetch({
     url: '/member/tag/' + tagId,
     method: 'get'
   })
 }
 
-export function updateTag (query) {
+export function updateTag(query) {
   return fetch({
     url: '/member/tag',
     method: 'put',
@@ -140,14 +140,14 @@ export function updateTag (query) {
   })
 }
 
-export function deleteTag (tagId) {
+export function deleteTag(tagId) {
   return fetch({
     url: '/member/tag/' + tagId,
     method: 'delete'
   })
 }
 
-export function usersRelTagsDel (query) {
+export function usersRelTagsDel(query) {
   return fetch({
     url: '/member/reltagdel/',
     method: 'post',
@@ -155,7 +155,7 @@ export function usersRelTagsDel (query) {
   })
 }
 
-export function tagSearchUser (query) {
+export function tagSearchUser(query) {
   return fetch({
     url: '/member/tagsearch',
     method: 'GET',
@@ -163,7 +163,7 @@ export function tagSearchUser (query) {
   })
 }
 
-export function listVipGrade (query) {
+export function listVipGrade(query) {
   return fetch({
     url: '/vipgrade/order',
     method: 'GET',
@@ -171,7 +171,7 @@ export function listVipGrade (query) {
   })
 }
 
-export function memberExport (query) {
+export function memberExport(query) {
   return fetch({
     url: '/member/export',
     method: 'GET',
@@ -179,7 +179,7 @@ export function memberExport (query) {
   })
 }
 
-export function salespersonBindExport (query) {
+export function salespersonBindExport(query) {
   return fetch({
     url: '/salespersonbind/export',
     method: 'GET',
@@ -187,7 +187,7 @@ export function salespersonBindExport (query) {
   })
 }
 
-export function createTagCategory (query) {
+export function createTagCategory(query) {
   return fetch({
     url: '/member/tagcategory',
     method: 'post',
@@ -195,7 +195,7 @@ export function createTagCategory (query) {
   })
 }
 
-export function getTagCategoryList (query) {
+export function getTagCategoryList(query) {
   return fetch({
     url: '/member/tagcategory',
     method: 'get',
@@ -203,14 +203,14 @@ export function getTagCategoryList (query) {
   })
 }
 
-export function getTagCategoryInfo (categoryId) {
+export function getTagCategoryInfo(categoryId) {
   return fetch({
     url: '/member/tagcategory/' + categoryId,
     method: 'get'
   })
 }
 
-export function updateTagCategory (categoryId, query) {
+export function updateTagCategory(categoryId, query) {
   return fetch({
     url: '/member/tagcategory/' + categoryId,
     method: 'put',
@@ -218,14 +218,14 @@ export function updateTagCategory (categoryId, query) {
   })
 }
 
-export function deleteTagCategory (categoryId) {
+export function deleteTagCategory(categoryId) {
   return fetch({
     url: '/member/tagcategory/' + categoryId,
     method: 'delete'
   })
 }
 
-export function batchOperating (query) {
+export function batchOperating(query) {
   return fetch({
     url: '/member/batchOperating',
     method: 'POST',
@@ -233,7 +233,7 @@ export function batchOperating (query) {
   })
 }
 
-export function updateMemberBasicInfo (query) {
+export function updateMemberBasicInfo(query) {
   return fetch({
     url: '/member/update',
     method: 'put',
@@ -241,7 +241,7 @@ export function updateMemberBasicInfo (query) {
   })
 }
 
-export function getMembersWhitelistList (query) {
+export function getMembersWhitelistList(query) {
   return fetch({
     url: '/members/whitelist/list',
     method: 'get',
@@ -249,7 +249,7 @@ export function getMembersWhitelistList (query) {
   })
 }
 
-export function createMembersWhitelist (query) {
+export function createMembersWhitelist(query) {
   return fetch({
     url: '/members/whitelist',
     method: 'post',
@@ -257,7 +257,7 @@ export function createMembersWhitelist (query) {
   })
 }
 
-export function updateMembersWhitelist (id, query) {
+export function updateMembersWhitelist(id, query) {
   return fetch({
     url: '/members/whitelist/' + id,
     method: 'post',
@@ -265,14 +265,14 @@ export function updateMembersWhitelist (id, query) {
   })
 }
 
-export function deleteMembersWhitelist (id) {
+export function deleteMembersWhitelist(id) {
   return fetch({
     url: '/members/whitelist/' + id,
     method: 'delete'
   })
 }
 
-export function getSubscribeList (query) {
+export function getSubscribeList(query) {
   return fetch({
     url: '/members/subscribe/list',
     method: 'get',
@@ -281,7 +281,7 @@ export function getSubscribeList (query) {
 }
 
 // 会员信息表单字段获取
-export function getRegForm (query) {
+export function getRegForm(query) {
   return fetch({
     url: '/espier/config/request_fields',
     method: 'get',
@@ -290,7 +290,7 @@ export function getRegForm (query) {
 }
 
 // 会员信息表单字段更新
-export function updateRegForm (query) {
+export function updateRegForm(query) {
   return fetch({
     url: '/espier/config/request_fields/info',
     method: 'put',
@@ -299,7 +299,7 @@ export function updateRegForm (query) {
 }
 
 // 会员信息表单字段删除
-export function deleteRegForm (query) {
+export function deleteRegForm(query) {
   return fetch({
     url: '/espier/config/request_fields',
     method: 'delete',
@@ -308,7 +308,7 @@ export function deleteRegForm (query) {
 }
 
 // 会员信息表单字段新增
-export function createRegForm (query) {
+export function createRegForm(query) {
   return fetch({
     url: '/espier/config/request_fields',
     method: 'post',
@@ -317,7 +317,7 @@ export function createRegForm (query) {
 }
 
 // 会员信息表单状态切换
-export function toggleRegForm (query) {
+export function toggleRegForm(query) {
   return fetch({
     url: '/espier/config/request_fields/switch',
     method: 'put',
@@ -325,7 +325,7 @@ export function toggleRegForm (query) {
   })
 }
 
-export function getMemberFieldSetting (query) {
+export function getMemberFieldSetting(query) {
   return fetch({
     url: '/espier/config/request_field_setting',
     method: 'get',
@@ -333,7 +333,7 @@ export function getMemberFieldSetting (query) {
   })
 }
 
-export function saveMemberFieldSetting (params) {
+export function saveMemberFieldSetting(params) {
   return fetch({
     url: 'espier/config/request_field_setting',
     method: 'post',
@@ -341,7 +341,7 @@ export function saveMemberFieldSetting (params) {
   })
 }
 
-export function setCheif (query) {
+export function setCheif(query) {
   return fetch({
     url: '/community/chief/setMemberCommunity',
     method: 'post',
@@ -350,7 +350,7 @@ export function setCheif (query) {
 }
 
 // 获取内购企业列表
-export function getEnterpriseList (params) {
+export function getEnterpriseList(params) {
   return fetch({
     url: '/members/enterprise',
     method: 'get',
@@ -359,7 +359,7 @@ export function getEnterpriseList (params) {
 }
 
 // 新增内购企业
-export function addEnterpriseInfo (params) {
+export function addEnterpriseInfo(params) {
   return fetch({
     url: '/members/enterprise',
     method: 'post',
@@ -368,7 +368,7 @@ export function addEnterpriseInfo (params) {
 }
 
 // 获取内购企业详情
-export function getEnterpriseDetail (id) {
+export function getEnterpriseDetail(id) {
   return fetch({
     url: '/members/enterprise/' + id,
     method: 'get'
@@ -376,7 +376,7 @@ export function getEnterpriseDetail (id) {
 }
 
 // 更新内购企业
-export function updateEnterpriseInfo (id, params) {
+export function updateEnterpriseInfo(id, params) {
   return fetch({
     url: '/members/enterprise/' + id,
     method: 'put',
@@ -385,7 +385,7 @@ export function updateEnterpriseInfo (id, params) {
 }
 
 // 删内购企业
-export function deteleEnterpriseInfo (id, params) {
+export function deteleEnterpriseInfo(id, params) {
   return fetch({
     url: '/members/enterprise' + id,
     method: 'delete',
@@ -394,7 +394,7 @@ export function deteleEnterpriseInfo (id, params) {
 }
 
 // 更新内购企业状态
-export function updateEnterpriseStaus (id, params) {
+export function updateEnterpriseStaus(id, params) {
   return fetch({
     url: '/members/enterprise/updateStatus/' + id,
     method: 'put',

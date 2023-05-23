@@ -24,9 +24,7 @@
           style="width: 300px"
           class="input-with-select"
         >
-          <el-button slot="append" @click="queryHandle">
-查询
-</el-button>
+          <el-button slot="append" @click="queryHandle"> 查询 </el-button>
         </el-input>
       </div>
       <div class="list">
@@ -42,18 +40,10 @@
           <el-table-column :reserve-selection="true" type="selection" width="55" />
           <el-table-column label="卡劵类型" width="120">
             <template slot-scope="scope">
-              <template v-if="scope.row.card_type == 'new_gift'">
-兑换券
-</template>
-              <template v-else-if="scope.row.card_type == 'gift'">
-兑换券
-</template>
-              <template v-else-if="scope.row.card_type == 'discount'">
-折扣卷
-</template>
-              <template v-else-if="scope.row.card_type == 'cash'">
-满减券
-</template>
+              <template v-if="scope.row.card_type == 'new_gift'"> 兑换券 </template>
+              <template v-else-if="scope.row.card_type == 'gift'"> 兑换券 </template>
+              <template v-else-if="scope.row.card_type == 'discount'"> 折扣卷 </template>
+              <template v-else-if="scope.row.card_type == 'cash'"> 满减券 </template>
             </template>
           </el-table-column>
           <el-table-column prop="title" label="卡劵名称" width="120" />
@@ -106,12 +96,8 @@
         <p>已选择：{{ multipleSelection.length }} 张，最多选择 20 张优惠券</p>
       </div>
       <div class="btn">
-        <el-button @click="cancelHandle">
-取消
-</el-button>
-        <el-button type="primary" @click="confirm">
-确定
-</el-button>
+        <el-button @click="cancelHandle"> 取消 </el-button>
+        <el-button type="primary" @click="confirm"> 确定 </el-button>
       </div>
     </el-dialog>
   </div>
@@ -129,7 +115,7 @@ export default {
       type: Array
     }
   },
-  data () {
+  data() {
     const options = [
       {
         label: '全部类型',
@@ -169,15 +155,15 @@ export default {
     }
   },
   watch: {
-    multipleSelection () {
+    multipleSelection() {
       this.$emit('seletedDataHandle', this.multipleSelection)
     }
   },
-  mounted () {
+  mounted() {
     this.getConfig()
   },
   methods: {
-    async getConfig () {
+    async getConfig() {
       this.loading = true
       const { list, total_count } = await this.$api.coupons_package.couponList({
         ...this.query,
@@ -207,32 +193,32 @@ export default {
         })
       }
     },
-    closeHandle () {
+    closeHandle() {
       this.$emit('closeHandle')
     },
-    cancelHandle () {
+    cancelHandle() {
       this.multipleSelection = []
       this.$emit('seletedDataHandle', this.multipleSelection)
       this.$emit('closeHandle')
     },
-    selectHandle (val) {
+    selectHandle(val) {
       this.query.card_type = val
       this.getConfig()
     },
-    handleSizeChange (val) {
+    handleSizeChange(val) {
       this.paging.page_size = val
       this.paging.page_no = 1
       this.getConfig()
     },
-    handleCurrentChange (val) {
+    handleCurrentChange(val) {
       this.paging.page_no = val
       this.getConfig()
     },
-    queryHandle () {
+    queryHandle() {
       this.paging.page_no = 1
       this.getConfig()
     },
-    confirm () {
+    confirm() {
       if (this.multipleSelection.length <= 0) {
         return this.$message.error('请选择兑换券~')
       }
@@ -261,12 +247,12 @@ export default {
       this.$emit('seletedDataHandle', this.multipleSelection)
       this.$emit('closeHandle')
     },
-    handleSelectionChange (val) {
+    handleSelectionChange(val) {
       if (val) {
         this.multipleSelection = val
       }
     },
-    getRowKeys (val) {
+    getRowKeys(val) {
       return val.card_id
     }
   }

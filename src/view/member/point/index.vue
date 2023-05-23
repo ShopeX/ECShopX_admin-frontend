@@ -118,17 +118,7 @@
               积分 抵扣1元人民币
             </el-form-item>
             <el-form-item label="积分规则：">
-              <vue-html5-editor
-                ref="editor"
-                :content="form.rule_desc"
-                :height="360"
-                style="width: 100%"
-                @change="
-                  (e) => {
-                    this.form.rule_desc = e
-                  }
-                "
-              />
+              <SpRichText v-model="form.rule_desc" />
             </el-form-item>
           </template>
           <!-- <el-form-item label="购物赠送积分">

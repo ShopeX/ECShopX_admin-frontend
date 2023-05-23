@@ -1,28 +1,15 @@
 <template>
   <div>
-    <el-form
-      :model="dataForm"
-      label-width="80px"
-    >
+    <el-form :model="dataForm" label-width="80px">
       <el-form-item label="标题">
         <el-input v-model="dataForm.title" />
       </el-form-item>
       <el-form-item label="内容">
-        <vue-html5-editor
-          ref="editor"
-          :content="dataForm.content"
-          :height="360"
-          @change="handelChangeUpdateContent"
-        />
+        <SpRichText v-model="dataForm.content" />
       </el-form-item>
     </el-form>
     <div style="text-align: center">
-      <el-button
-        type="primary"
-        @click="handelClickSubmit"
-      >
-        保存
-      </el-button>
+      <el-button type="primary" @click="handelClickSubmit"> 保存 </el-button>
     </div>
   </div>
 </template>
@@ -37,7 +24,7 @@ import {
 export default {
   inject: ['refresh'],
 
-  data () {
+  data() {
     return {
       notice_id: '',
       dataForm: {
@@ -49,7 +36,7 @@ export default {
   computed: {
     ...mapGetters(['wheight'])
   },
-  mounted () {
+  mounted() {
     this.notice_id = this.$route.query.id
     if (this.notice_id) {
       this._getSalespersonoticeDetail()
@@ -59,7 +46,7 @@ export default {
     /**
      * 保存 || 修改
      * */
-    async handelClickSubmit () {
+    async handelClickSubmit() {
       let { title, content } = this.dataForm
       let params = {
         title,
@@ -85,14 +72,14 @@ export default {
       this.$router.go(-1)
     },
 
-    handelChangeUpdateContent (data) {
+    handelChangeUpdateContent(data) {
       this.dataForm.content = data
     },
 
     /**
      * 获取导购通知
      * */
-    async _getSalespersonoticeDetail () {
+    async _getSalespersonoticeDetail() {
       let { data } = await getSalespersonoticeDetail({ notice_id: this.notice_id, with_log: 0 })
       this.dataForm = data.data
       console.log('_getSalespersonoticeDetail', data)

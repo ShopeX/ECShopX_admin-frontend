@@ -1,46 +1,25 @@
 <style lang="scss">
 .picker-shop {
   .sp-filter-form {
-    margin-bottom: 0;
-    .filter-form__bd {
-      margin-left: 16px;
+    padding: 8px 8px 0px 8px;
+  }
+  .sp-finder-hd {
+    display: none;
+  }
+  .disableheadselection {
+    > .cell .el-checkbox__inner {
+      display: none;
     }
   }
-  .filter-tools {
-    display: flex;
-    align-items: center;
-    padding: 8px;
-    .el-cascader,
-    .el-input {
-      width: 196px;
-      margin-right: 8px;
-    }
-  }
-  .sp-finder {
-    &.no-multiple {
-      .sp-finder-bd {
-        .el-table__fixed-header-wrapper {
-          table thead {
-            tr {
-              th {
-                &:nth-child(1) {
-                  .el-checkbox {
-                    display: none;
-                  }
-                }
-              }
-            }
-          }
-        }
-      }
-    }
+  .el-pagination {
+    margin: 0;
+    padding: 10px;
   }
 }
 </style>
 <template>
   <div class="picker-shop">
-    <!-- multiple：{{ multiple }}, {{ value }} -->
-    <SpFilterForm :model="formData" @onSearch="onSearch" @onReset="onSearch">
+    <SpFilterForm :model="formData" size="small" @onSearch="onSearch" @onReset="onSearch">
       <SpFilterFormItem prop="region">
         <el-cascader
           ref="region"
@@ -52,20 +31,19 @@
         />
       </SpFilterFormItem>
       <SpFilterFormItem prop="keywords">
-        <el-input v-model="formData.keywords" placeholder="请输入店铺名称搜索" />
+        <el-input v-model="formData.keywords" placeholder="请输入店铺名称" />
       </SpFilterFormItem>
     </SpFilterForm>
     <SpFinder
       ref="finder"
       :class="['shop-finder', { 'no-multiple': !multiple }]"
+      :other-config="{
+        'max-height': 460,
+        'header-cell-class-name': cellClass
+      }"
       url="/distributors"
       :fixed-row-action="true"
-      :setting="{
-        columns: [
-          { name: '店铺名称', key: 'name' },
-          { name: '店铺地址', key: 'store_address' }
-        ]
-      }"
+      :setting="setting"
       :hooks="{
         beforeSearch: beforeSearch,
         afterSearch: afterSearch
@@ -77,6 +55,7 @@
 </template>
 
 <script>
+import { createSetting } from '@shopex/finder'
 import district from '@/common/district.json'
 import BasePicker from './base'
 import PageMixin from '../mixins/page'
@@ -97,7 +76,31 @@ export default {
       district,
       regionArea: [],
       loading: false,
-      multiple: this.value.multiple ?? true
+      multiple: this.value?.multiple ?? true
+    }
+  },
+  computed: {
+    setting() {
+      const columns = [
+        { name: '店铺名称', key: 'name' },
+        {
+          name: '店铺类型',
+          key: 'distribution_type',
+          width: 100,
+          formatter: (value, row, col) => {
+            if (value == '1') {
+              return '加盟'
+            } else if (value == '0') {
+              return '自营'
+            }
+          },
+          visible: this.VERSION_PLATFORM
+        },
+        { name: '店铺地址', key: 'store_address' }
+      ]
+      return createSetting({
+        columns: columns.filter(({ visible }) => visible !== false)
+      })
     }
   },
   created() {
@@ -125,7 +128,7 @@ export default {
         province: province,
         city: city,
         area: area,
-        distribution_type: this.value.distribution_type
+        distribution_type: this.value?.distribution_type
       }
       return params
     },
@@ -150,7 +153,7 @@ export default {
         console.log('finderTable:', finderTable)
         finderTable.clearSelection()
         setTimeout(() => {
-          finderTable.$refs.finderTable.setSelection([row])
+          finderTable.$refs.finderTable.setSelection(selection.length > 0 ? [row] : [])
           // this.updateVal([row])
         })
       }

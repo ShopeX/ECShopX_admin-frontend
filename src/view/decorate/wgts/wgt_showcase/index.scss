@@ -1,0 +1,41 @@
+.wgt-showcase {
+  &.padded {
+    padding: 10px 0;
+  }
+  .wgt-hd {
+    padding: 10px;
+    .title {
+      font-size: 18px;
+      font-weight: 600;
+      color: #333;
+    }
+    .sub-title {
+      color: #666;
+      margin-left: 4px;
+    }
+  }
+  .wgt-bd {
+    position: relative;
+    padding: 0 8px;
+    display: flex;
+    .sp-image {
+      height: 100%;
+    }
+    .lf {
+      width: calc(50% - 4px);
+      height: 310px;
+      margin-right: 4px;
+    }
+    .rg {
+      width: calc(50% - 4px);
+      margin-left: 4px;
+    }
+    .tp {
+      height: 150px;
+      margin-bottom: 8px;
+    }
+    .bt {
+      height: 150px;
+    }
+  }
+}

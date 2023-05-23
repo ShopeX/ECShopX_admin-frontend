@@ -184,7 +184,7 @@
           <el-button>上传图片</el-button>
         </el-upload>
         <el-button @click="onAddGroup"> 添加分组 </el-button>
-        <el-button :disabled="disabledBtn" @click="onMoveGroup"> 移动 </el-button>
+        <el-button :disabled="disabledBtn" @click="onMoveGroup"> 移组 </el-button>
         <!-- <el-button :disabled="disabledDeleteGroup" @click="onDeleteImageGroup">
           删除分组
         </el-button> -->
@@ -356,10 +356,10 @@ export default {
       },
       groupFormList: [
         {
-          label: '分组名称:',
+          label: '分组名称',
           key: 'groupName',
           type: 'input',
-          maxlength: 150,
+          maxlength: 20,
           placeholder: '请输入分组名称',
           required: true,
           message: '不能为空'
@@ -371,7 +371,7 @@ export default {
       },
       editFormList: [
         {
-          label: '图片分组:',
+          label: '图片分组',
           key: 'groupId',
           placeholder: '请选择图片分组',
           type: 'select',
@@ -438,7 +438,10 @@ export default {
             return p3
           }
           if (isObject(this.selected)) {
-            return handleRegExp(this.selected.url) == handleRegExp(url)
+            if (this.selected.url) {
+              return handleRegExp(this.selected.url) == handleRegExp(url)
+            }
+            return false
           } else {
             return handleRegExp(this.selected) == handleRegExp(url)
           }

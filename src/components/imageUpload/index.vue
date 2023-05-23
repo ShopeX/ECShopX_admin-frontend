@@ -35,12 +35,12 @@ export default {
       type: String
     }
   },
-  data () {
+  data() {
     return {
       loading: ''
     }
   },
-  mounted () {},
+  mounted() {},
   methods: {
     // 自定义上传
     handleUpload: function (e) {
@@ -70,14 +70,14 @@ export default {
       // .then(res => e.onSuccess(res), err => e.onError(err))
       // .catch(err => e.onError(err))
     },
-    uploadHandle (val) {
+    uploadHandle(val) {
       console.log(val)
     },
-    handleAvatarSuccess (res, file) {
+    handleAvatarSuccess(res, file) {
       this.$emit('successHandle', res)
       this.loading = false
     },
-    beforeAvatarUpload (file) {
+    beforeAvatarUpload(file) {
       this.loading = true
       const isJPG = file.type === 'image/jpeg'
       const isPNG = file.type === 'image/png'

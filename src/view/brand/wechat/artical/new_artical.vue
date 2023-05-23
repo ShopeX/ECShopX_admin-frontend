@@ -4,16 +4,11 @@
       <div class="appmsg_preview_container">
         <div id="submitContent" />
         <div class="appmsg_container_hd">
-          <h4 class="appmsg_container_title">
-            图文列表
-          </h4>
+          <h4 class="appmsg_container_title">图文列表</h4>
         </div>
         <div class="appmsg_container_bd">
           <div class="appmsg multi has_first_cover editing">
-            <div
-              id="js_appmsg_preview"
-              class="appmsg_content"
-            >
+            <div id="js_appmsg_preview" class="appmsg_content">
               <template v-for="(item, index) in articals">
                 <div
                   v-if="index === 0"
@@ -22,10 +17,7 @@
                   :class="id === index ? 'current' : ''"
                   @click="handleClick(index)"
                 >
-                  <div
-                    class="first_appmsg_item"
-                    title="第一篇图文"
-                  >
+                  <div class="first_appmsg_item" title="第一篇图文">
                     <div class="cover_appmsg_item">
                       <h4 class="appmsg_title">
                         <a
@@ -46,10 +38,7 @@
                             'url(' + (item.thumb_url ? wximageurl + item.thumb_url : '') + ')'
                         }"
                       >
-                        <div
-                          v-if="!item.thumb_url"
-                          class="appmsg_thumb default"
-                        >
+                        <div v-if="!item.thumb_url" class="appmsg_thumb default">
                           <i class="icon_appmsg_thumb el-icon-picture" />
                         </div>
                       </div>
@@ -79,10 +68,7 @@
                           'url(' + (item.thumb_url ? wximageurl + item.thumb_url : '') + ')'
                       }"
                     >
-                      <div
-                        v-if="!item.thumb_url"
-                        class="appmsg_thumb default"
-                      >
+                      <div v-if="!item.thumb_url" class="appmsg_thumb default">
                         <i class="icon_appmsg_thumb_small el-icon-picture" />
                       </div>
                     </div>
@@ -90,9 +76,7 @@
                       <template v-if="item.title != ''">
                         {{ item.title }}
                       </template>
-                      <template v-else>
-                        标题
-                      </template>
+                      <template v-else> 标题 </template>
                     </h4>
                     <div class="appmsg_edit_mask">
                       <a
@@ -112,22 +96,12 @@
                         width="220"
                         trigger="click"
                       >
-                        <p
-                          class="content-padded content-center"
-                          style="font-size: 14px"
-                        >
+                        <p class="content-padded content-center" style="font-size: 14px">
                           确定删除这篇图文？
                         </p>
                         <div class="content-center">
-                          <el-button @click="item.popVisible = false">
-                            取消
-                          </el-button>
-                          <el-button
-                            type="primary"
-                            @click="remove(index)"
-                          >
-                            确定
-                          </el-button>
+                          <el-button @click="item.popVisible = false"> 取消 </el-button>
+                          <el-button type="primary" @click="remove(index)"> 确定 </el-button>
                         </div>
                         <a
                           v-if="!isEditting"
@@ -154,63 +128,33 @@
       </div>
     </div>
     <div class="appmsg_input_area">
-      <template
-        v-for="(item, index) in articals"
-        v-if="id === index"
-      >
-        <el-form
-          ref="item"
-          :key="index"
-          :model="item"
-          label-position="top"
-          label-width="80px"
-        >
+      <template v-for="(item, index) in articals" v-if="id === index">
+        <el-form ref="item" :key="index" :model="item" label-position="top" label-width="80px">
           <div class="content-padded">
             <el-form-item label="标题">
-              <el-input
-                v-model="item.title"
-                placeholder="请输入标题"
-              />
+              <el-input v-model="item.title" placeholder="请输入标题" />
             </el-form-item>
             <el-form-item label="作者">
               <el-input v-model="item.author" />
             </el-form-item>
             <el-form-item>
-              <vue-html5-editor
-                :id="index"
-                ref="editor"
-                :content="item.viewcontent"
-                :height="360"
-                @change="updateContent"
-              />
+              <SpRichText v-model="item.viewcontent" />
             </el-form-item>
             <el-form-item>
-              <el-checkbox v-model="item.hasLink">
-                原文链接
-              </el-checkbox>
-              <el-input
-                v-if="item.hasLink"
-                v-model="item.content_source_url"
-                placeholder=""
-              >
-                <template slot="prepend">
-                  Http://
-                </template>
+              <el-checkbox v-model="item.hasLink"> 原文链接 </el-checkbox>
+              <el-input v-if="item.hasLink" v-model="item.content_source_url" placeholder="">
+                <template slot="prepend"> Http:// </template>
               </el-input>
             </el-form-item>
           </div>
           <div class="content-padded appmsg_edit_highlight_area">
-            <h3 class="header-title">
-              发布样式编辑
-            </h3>
+            <h3 class="header-title">发布样式编辑</h3>
             <div class="header_tips">
               封面小图片 <span class="form-text-tip">建议尺寸：200像素 * 200像素</span>
             </div>
             <el-form-item>
               <div>
-                <el-button @click="addThumbPreview">
-                  从图片库选择
-                </el-button>
+                <el-button @click="addThumbPreview"> 从图片库选择 </el-button>
               </div>
               <div
                 v-if="item.thumb_url"
@@ -232,9 +176,7 @@
                 resize="none"
                 :maxlength="120"
               />
-              <div class="content-num">
-                {{ item.digest.length }}/120
-              </div>
+              <div class="content-num">{{ item.digest.length }}/120</div>
             </el-form-item>
           </div>
         </el-form>
@@ -243,20 +185,11 @@
     <div class="appmsg_tpl_area">
       <div class="appmsg_tpl_container">
         <div class="appmsg_container_hd">
-          <h4 class="appmsg_container_title">
-            多媒体
-          </h4>
+          <h4 class="appmsg_container_title">多媒体</h4>
         </div>
         <div class="appmsg_container_bd">
-          <ul
-            id="js_media_list"
-            class="tpl_list"
-          >
-            <li
-              class="tpl_item img"
-              style=""
-              @click="addImgPreview"
-            >
+          <ul id="js_media_list" class="tpl_list">
+            <li class="tpl_item img" style="" @click="addImgPreview">
               <i class="iconfont icon-image" />图片
             </li>
             <!-- <li class="tpl_item video">
@@ -290,15 +223,8 @@
     <div class="tool_area_wrp">
       <div class="tool_area">
         <div class="tool_bar content-center">
-          <el-button
-            type="primary"
-            @click="onSubmit"
-          >
-            保存
-          </el-button>
-          <el-button @click="onSubmit">
-            预览
-          </el-button>
+          <el-button type="primary" @click="onSubmit"> 保存 </el-button>
+          <el-button @click="onSubmit"> 预览 </el-button>
         </div>
       </div>
     </div>
@@ -315,7 +241,7 @@ export default {
   components: {
     imgPicker
   },
-  data () {
+  data() {
     return {
       imgDialog: false,
       thumbDialog: false,
@@ -342,7 +268,7 @@ export default {
       ]
     }
   },
-  mounted () {
+  mounted() {
     if (this.$route.params.id) {
       this.isEditting = true
       getArtical(this.$route.params.id)
@@ -373,11 +299,11 @@ export default {
     }
   },
   methods: {
-    addImgPreview () {
+    addImgPreview() {
       this.imgDialog = true
       this.isGetImage = true
     },
-    pickImg (data) {
+    pickImg(data) {
       if (data && data.url !== '') {
         this.imgDialog = false
         var index = this.$refs.editor[0].$el.id
@@ -394,31 +320,31 @@ export default {
         this.articals[index].viewcontent = loc.$refs.content.innerHTML
       }
     },
-    closeImgDialog () {
+    closeImgDialog() {
       this.imgDialog = false
     },
-    addThumbPreview () {
+    addThumbPreview() {
       this.thumbDialog = true
       this.isGetThumb = true
     },
-    pickThumb (data) {
+    pickThumb(data) {
       if (data && data.url !== '') {
         this.thumbDialog = false
         this.articals[this.id].thumb_url = data.url
         this.articals[this.id].thumb_media_id = data.media_id
       }
     },
-    closeThumbDialog () {
+    closeThumbDialog() {
       this.thumbDialog = false
     },
-    addCouponPreview () {
+    addCouponPreview() {
       this.couponDialog = true
       this.isGetCard = true
     },
-    closeCouponDialog () {
+    closeCouponDialog() {
       this.couponDialog = false
     },
-    pickCoupon (data) {
+    pickCoupon(data) {
       this.couponDialog = false
       if (data) {
         var couponId = { 'card_id': data.card_id }
@@ -453,7 +379,7 @@ export default {
         })
       }
     },
-    handleClick (index) {
+    handleClick(index) {
       this.id = +index
       if (this.isEditting) {
         this.articals[this.id].viewcontent = this.articals[this.id].content.replace(
@@ -472,7 +398,7 @@ export default {
         }, 200)
       }
     },
-    addmsg () {
+    addmsg() {
       let baseMsgData = {
         title: '',
         author: '',
@@ -488,23 +414,23 @@ export default {
       }
       this.articals.push(baseMsgData)
     },
-    sortup (index) {
+    sortup(index) {
       this.articals[index - 1] = this.articals.splice(index, 1, this.articals[index - 1])[0]
     },
-    sortdown (index) {
+    sortdown(index) {
       this.articals[index + 1] = this.articals.splice(index, 1, this.articals[index + 1])[0]
     },
-    remove (index) {
+    remove(index) {
       this.id = +(index - 1)
       this.articals.splice(index, 1)
       this.popVisible = false
     },
-    updateContent (data) {
+    updateContent(data) {
       let index = this.$refs.editor[0].$el.id
       this.articals[index].viewcontent = data
       // console.log(this.$refs.editor[0].range)
     },
-    onSubmit () {
+    onSubmit() {
       var reg = new RegExp(this.wximageurl, 'g')
 
       for (var i = 0; i < this.articals.length; i++) {
@@ -529,7 +455,7 @@ export default {
             message: '修改图文成功',
             type: 'success',
             duration: 2 * 1000,
-            onClose () {
+            onClose() {
               that.refresh()
               that.$router.go(-1)
             }
@@ -542,7 +468,7 @@ export default {
             message: '添加图文成功',
             type: 'success',
             duration: 2 * 1000,
-            onClose () {
+            onClose() {
               that.refresh()
               that.$router.go(-1)
             }

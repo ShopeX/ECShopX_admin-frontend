@@ -2,20 +2,23 @@
   <div>
     <div class="view-flex">
       <div v-for="item in checkedVideoList" :key="item.media_id" class="video-box">
-        <video-player class="vjs-custom-skin" :options="{
-          preload: 'auto',
-          aspectRatio: '16:9',
-          fluid: true,
-          sources: [
-            {
-              // mp4
-              type: 'video/mp4',
-              src: item.url
-            }
-          ],
-          notSupportedMessage: '此视频暂无法播放，请稍后再试',
-          controlBar: false
-        }" />
+        <video-player
+          class="vjs-custom-skin"
+          :options="{
+            preload: 'auto',
+            aspectRatio: '16:9',
+            fluid: true,
+            sources: [
+              {
+                // mp4
+                type: 'video/mp4',
+                src: item.url
+              }
+            ],
+            notSupportedMessage: '此视频暂无法播放，请稍后再试',
+            controlBar: false
+          }"
+        />
       </div>
       <div class="upload-box" @click="showVideos">
         <i class="iconfont icon-video" />
@@ -26,35 +29,50 @@
         <el-tab-pane label="本地上传" name="localvideos">
           <div>
             <div class="upload_box">
-              <el-upload class="upload-demo" :multiple="true" action="" accept="video/mp4,.mov" :show-file-list="false"
-                :http-request="handleUpload" :on-error="uploadError" :before-upload="beforeVideoUpload"
-                :on-success="handleVideoSuccess">
-                <el-button type="primary">
-                  本地上传
-                </el-button>
-                <div slot="tip" class="el-upload__tip">
-                  只能上传mp4文件，且不超过50M
-                </div>
+              <el-upload
+                class="upload-demo"
+                :multiple="true"
+                action=""
+                accept="video/mp4,.mov"
+                :show-file-list="false"
+                :http-request="handleUpload"
+                :on-error="uploadError"
+                :before-upload="beforeVideoUpload"
+                :on-success="handleVideoSuccess"
+              >
+                <el-button type="primary"> 本地上传 </el-button>
+                <div slot="tip" class="el-upload__tip">只能上传mp4文件，且不超过50M</div>
               </el-upload>
             </div>
             <el-row v-loading="localloading" :gutter="10">
-              <el-col v-for="(item, index) in localvideoList" :key="index" :span="6" class="media-item"
-                :class="{ 'checked': temp.includes(item.url) }">
-                <video-player class="vjs-custom-skin" :options="{
-                  preload: 'auto',
-                  aspectRatio: '16:9',
-                  fluid: true,
-                  sources: [
-                    {
-                      // mp4
-                      type: 'video/mp4',
-                      src: item.url
-                    }
-                  ],
-                  notSupportedMessage: '此视频暂无法播放，请稍后再试',
-                  controlBar: false
-                }" />
-                <div class="video-caption view-flex view-flex-middle" @click="checkLocalVideo(item)">
+              <el-col
+                v-for="(item, index) in localvideoList"
+                :key="index"
+                :span="6"
+                class="media-item"
+                :class="{ 'checked': temp.includes(item.url) }"
+              >
+                <video-player
+                  class="vjs-custom-skin"
+                  :options="{
+                    preload: 'auto',
+                    aspectRatio: '16:9',
+                    fluid: true,
+                    sources: [
+                      {
+                        // mp4
+                        type: 'video/mp4',
+                        src: item.url
+                      }
+                    ],
+                    notSupportedMessage: '此视频暂无法播放，请稍后再试',
+                    controlBar: false
+                  }"
+                />
+                <div
+                  class="video-caption view-flex view-flex-middle"
+                  @click="checkLocalVideo(item)"
+                >
                   <div class="view-flex-item video-name">
                     {{ item.image_name }}
                   </div>
@@ -62,9 +80,16 @@
                 </div>
               </el-col>
             </el-row>
-            <el-pagination background layout="total, sizes, prev, pager, next" :current-page.sync="params.page"
-              :page-sizes="[10, 20, 50]" :total="total_count" :page-size="params.pageSize"
-              @current-change="handleLocalCurrentChange" @size-change="handleLocalSizeChange" />
+            <el-pagination
+              background
+              layout="total, sizes, prev, pager, next"
+              :current-page.sync="params.page"
+              :page-sizes="[10, 20, 50]"
+              :total="total_count"
+              :page-size="params.pageSize"
+              @current-change="handleLocalCurrentChange"
+              @size-change="handleLocalSizeChange"
+            />
           </div>
         </el-tab-pane>
       </el-tabs>
@@ -86,7 +111,7 @@ export default {
       default: false
     },
     data: {
-      type: [Object,Array]
+      type: [Object, Array]
     }
   },
   data() {
@@ -124,20 +149,19 @@ export default {
   },
   computed: {
     checkedVideoList() {
-      return this.checked.filter(item => item.media_id)
+      return this.checked.filter((item) => item.media_id)
     }
   },
   watch: {
     data: {
       handler(val) {
-        this.isArray = Object.prototype.toString.call(val).slice(8,-1) === 'Array';
-        if(this.isArray){
+        this.isArray = Object.prototype.toString.call(val).slice(8, -1) === 'Array'
+        if (this.isArray) {
           this.checked = JSON.parse(JSON.stringify(val))
           return
-        }else{
+        } else {
           this.checked = [val]
         }
-       
       },
       immediate: true
     }
@@ -193,7 +217,7 @@ export default {
     },
     showVideos() {
       this.visible = true
-      this.temp = this.checked.map(item => item.media_id)
+      this.temp = this.checked.map((item) => item.media_id)
       if (this.$store.getters.login_type == 'distributor') {
         this.activeName = 'localvideos'
         this.fetchLocalVideos()
@@ -284,7 +308,7 @@ export default {
       if (this.checked) {
         this.visible = false
         let arr = []
-        this.localvideoList.forEach(item => {
+        this.localvideoList.forEach((item) => {
           if (this.temp.indexOf(item.url) !== -1) {
             arr.push({
               desc: item.brief,
@@ -296,12 +320,12 @@ export default {
           }
         })
         this.checked = arr
-        this.$emit('change', this.isArray?this.checked:this.checked[0]) //判断传入进来的是数组还是对象再传递出去对应的数据
+        this.$emit('change', this.isArray ? this.checked : this.checked[0]) //判断传入进来的是数组还是对象再传递出去对应的数据
       } else {
         this.$message('请选择视频')
       }
     },
-    handleClick(tab, event) { }
+    handleClick(tab, event) {}
   }
 }
 </script>

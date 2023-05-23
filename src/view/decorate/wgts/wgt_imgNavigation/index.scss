@@ -1,0 +1,30 @@
+.wgt-img-navigation {
+  &.padded {
+    padding: 10px 0;
+  }
+  .wgt-hd {
+    padding: 10px;
+    .title {
+      font-size: 18px;
+      font-weight: 600;
+      color: #333;
+    }
+    .sub-title {
+      color: #666;
+      margin-left: 4px;
+    }
+  }
+  .wgt-bd {
+    display: flex;
+    justify-content: space-between;
+    padding: 0 4px;
+    .nav-item {
+      padding: 0 4px;
+    }
+    .nav-item--content {
+      text-align: center;
+      font-size: 13px;
+      margin-top: 4px;
+    }
+  }
+}

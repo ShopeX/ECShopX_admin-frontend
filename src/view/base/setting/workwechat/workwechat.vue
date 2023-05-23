@@ -1,123 +1,79 @@
 <template>
   <div class="page-workwechat">
-    <el-card
-      class="box-card"
-      shadow="never"
-    >
-      <el-form
-        :model="form"
-        label-width="90px"
-        class="demo-ruleForm"
-      >
+    <el-card class="box-card" shadow="never">
+      <el-form :model="form" label-width="90px" class="demo-ruleForm">
         <el-row>
           <el-col :span="14">
-            <el-form-item
-              class="first"
-              label="企业ID"
-            >
-              <el-input
-                v-model="form.corpid"
-                type="age"
-                autocomplete="off"
-              />
+            <el-form-item class="first" label="企业ID">
+              <el-input v-model="form.corpid" type="age" autocomplete="off" />
             </el-form-item>
           </el-col>
           <el-col :span="10">
             <p class="tips">
-              <a
-                href="https://work.weixin.qq.com/api/doc#90000/90135/90665/corpid"
-                target="_blank"
-              >您企业主体的认证ID、用于确认企业的唯一性</a>
+              <a href="https://work.weixin.qq.com/api/doc#90000/90135/90665/corpid" target="_blank"
+                >您企业主体的认证ID、用于确认企业的唯一性</a
+              >
             </p>
           </el-col>
         </el-row>
       </el-form>
     </el-card>
 
-    <el-tabs
-      v-model="activeName"
-      type="border-card"
-      @tab-click="handleClick"
-    >
-      <el-tab-pane
-        label="导购小程序"
-        name="first"
-      >
+    <el-tabs v-model="activeName" type="border-card" @tab-click="handleClick">
+      <el-tab-pane label="导购小程序" name="first">
         <div class="list">
-          <div class="title">
-            小程序配置
-          </div>
+          <div class="title">小程序配置</div>
           <div class="formBox">
-            <el-form
-              ref="form"
-              label-width="150px"
-            >
+            <el-form ref="form" label-width="150px">
               <el-card shadow="never">
                 <el-form-item label="AppID">
-                  <el-input
-                    v-model="form.agents.app.appid"
-                    style="width: 400px"
-                  />
+                  <el-input v-model="form.agents.app.appid" style="width: 400px" />
                   <span class="tips">
-                    <a
-                      href="http://"
-                      target="_blank"
-                      rel="noopener noreferrer"
-                    >
+                    <a href="http://" target="_blank" rel="noopener noreferrer">
                       企业微信的小程序AppID，点击跳转说明
-                    </a></span>
+                    </a></span
+                  >
                 </el-form-item>
 
                 <el-form-item label="AgentId">
-                  <el-input
-                    v-model="form.agents.app.agent_id"
-                    style="width: 400px"
-                  />
+                  <el-input v-model="form.agents.app.agent_id" style="width: 400px" />
                   <span class="tips">
                     <a
                       href="https://work.weixin.qq.com/api/doc#90000/90135/90665/agentid"
                       target="_blank"
-                    >企业微信的小程序agent_id</a></span>
+                      >企业微信的小程序agent_id</a
+                    ></span
+                  >
                 </el-form-item>
 
                 <el-form-item label="Secret">
-                  <el-input
-                    v-model="form.agents.app.secret"
-                    style="width: 400px"
-                  />
+                  <el-input v-model="form.agents.app.secret" style="width: 400px" />
                   <span class="tips">
                     <a
                       href="https://work.weixin.qq.com/api/doc#90000/90135/90665/secret"
                       target="_blank"
-                    >企业微信的小程序凭证密钥</a></span>
+                      >企业微信的小程序凭证密钥</a
+                    ></span
+                  >
                 </el-form-item>
 
                 <el-form-item label="Token">
-                  <el-input
-                    v-model="form.agents.app.token"
-                    style="width: 400px"
-                  />
+                  <el-input v-model="form.agents.app.token" style="width: 400px" />
                 </el-form-item>
                 <el-form-item label="EncodingAESKey">
-                  <el-input
-                    v-model="form.agents.app.aes_key"
-                    style="width: 400px"
-                  />
-                  <span
-                    class="tips"
-                  ><a
-                    href="https://work.weixin.qq.com/api/doc#90000/90135/90930"
-                    target="_blank"
-                  >企业微信小程序的加密秘钥</a></span>
+                  <el-input v-model="form.agents.app.aes_key" style="width: 400px" />
+                  <span class="tips"
+                    ><a href="https://work.weixin.qq.com/api/doc#90000/90135/90930" target="_blank"
+                      >企业微信小程序的加密秘钥</a
+                    ></span
+                  >
                 </el-form-item>
               </el-card>
             </el-form>
           </div>
         </div>
         <div class="list">
-          <div class="title">
-            客户联系配置
-          </div>
+          <div class="title">客户联系配置</div>
           <div class="formBox">
             <div class="introduce">
               <p>获取路径：</p>
@@ -127,23 +83,15 @@
                 点击进入应用详情页，点击「Secret」后的「查看」按钮。该Secret会发送到当前登录的管理员账号的企业微信内，管理员在企业微信内复制获取，将获取到的Secret粘贴至此处。
               </p>
             </div>
-            <el-form
-              ref="form"
-              label-width="150px"
-            >
+            <el-form ref="form" label-width="150px">
               <el-card shadow="never">
                 <div class="borderBottom">
                   <el-form-item label="Secret">
-                    <el-input
-                      v-model="form.agents.customer.secret"
-                      style="width: 600px"
-                    />
+                    <el-input v-model="form.agents.customer.secret" style="width: 600px" />
                   </el-form-item>
                 </div>
                 <div class="introduce-Flex">
-                  <div class="subtitle">
-                    接受事件服务器配置：
-                  </div>
+                  <div class="subtitle">接受事件服务器配置：</div>
                   <div class="content">
                     <p>设置路径：</p>
                     <p>
@@ -158,51 +106,40 @@
                 </div>
 
                 <el-form-item label="URL">
-                  <el-input
-                    v-model="form.agents.customer.URL"
-                    class="bg-gray"
-                    disabled
-                  />
+                  <el-input v-model="form.agents.customer.URL" class="bg-gray" disabled />
                   <span
                     v-clipboard:copy="form.agents.customer.URL"
                     v-clipboard:success="onCopy"
                     class="btn"
-                  >复制</span>
+                    >复制</span
+                  >
                 </el-form-item>
 
                 <el-form-item label="Token">
-                  <el-input
-                    v-model="form.agents.customer.token"
-                    disabled
-                    class="bg-gray"
-                  />
+                  <el-input v-model="form.agents.customer.token" disabled class="bg-gray" />
                   <span
                     v-clipboard:copy="form.agents.customer.token"
                     v-clipboard:success="onCopy"
                     class="btn"
-                  >复制</span>
+                    >复制</span
+                  >
                 </el-form-item>
 
                 <el-form-item label="EncodingAESKey">
-                  <el-input
-                    v-model="form.agents.customer.aes_key"
-                    disabled
-                    class="bg-gray"
-                  />
+                  <el-input v-model="form.agents.customer.aes_key" disabled class="bg-gray" />
                   <span
                     v-clipboard:copy="form.agents.customer.aes_key"
                     v-clipboard:success="onCopy"
                     class="btn"
-                  >复制</span>
+                    >复制</span
+                  >
                 </el-form-item>
               </el-card>
             </el-form>
           </div>
         </div>
         <div class="list">
-          <div class="title">
-            通讯录配置
-          </div>
+          <div class="title">通讯录配置</div>
           <div class="formBox">
             <div class="introduce">
               <p>获取路径：</p>
@@ -213,29 +150,17 @@
               </p>
               <p>3. 点击同步。</p>
             </div>
-            <el-form
-              ref="form"
-              label-width="150px"
-            >
+            <el-form ref="form" label-width="150px">
               <el-card shadow="never">
                 <el-form-item label="Secret">
-                  <el-input
-                    v-model="form.agents.report.secret"
-                    style="width: 400px"
-                  />
+                  <el-input v-model="form.agents.report.secret" style="width: 400px" />
                   <span class="tips">企业微信的小程序凭证秘钥</span>
                 </el-form-item>
                 <el-form-item label="Token">
-                  <el-input
-                    v-model="form.agents.report.token"
-                    style="width: 400px"
-                  />
+                  <el-input v-model="form.agents.report.token" style="width: 400px" />
                 </el-form-item>
                 <el-form-item label="EncodingAESKey">
-                  <el-input
-                    v-model="form.agents.report.aes_key"
-                    style="width: 400px"
-                  />
+                  <el-input v-model="form.agents.report.aes_key" style="width: 400px" />
 
                   <span class="tips"> 企业微信小程序的加密密钥 </span>
                 </el-form-item>
@@ -244,22 +169,12 @@
           </div>
         </div>
         <div class="page-btn">
-          <el-button
-            type="primary"
-            @click="onSubmit"
-          >
-            保存
-          </el-button>
+          <el-button type="primary" @click="onSubmit"> 保存 </el-button>
         </div>
       </el-tab-pane>
-      <el-tab-pane
-        label="店务自建应用"
-        name="second"
-      >
+      <el-tab-pane label="店务自建应用" name="second">
         <div class="list">
-          <div class="title">
-            通讯录配置
-          </div>
+          <div class="title">通讯录配置</div>
           <div class="formBox">
             <div class="introduce">
               <p>获取路径：</p>
@@ -270,27 +185,15 @@
                 点击进入应用详情页，点击「Secret」后的「查看」按钮。该Secret会发送到当前登录的管理员账号的企业微信内，管理员在企业微信内复制获取，将获取到的Secret粘贴至下方输入框。
               </p>
             </div>
-            <el-form
-              ref="form"
-              label-width="150px"
-            >
+            <el-form ref="form" label-width="150px">
               <el-card shadow="never">
                 <el-form-item label="AgentID">
-                  <el-input
-                    v-model="form.agents.dianwu.agent_id"
-                    style="width: 400px"
-                  />
+                  <el-input v-model="form.agents.dianwu.agent_id" style="width: 400px" />
                   <span class="tips"> 企业微信的自建应用凭证 </span>
                 </el-form-item>
 
-                <el-form-item
-                  label="Secret"
-                  class="first"
-                >
-                  <el-input
-                    v-model="form.agents.dianwu.secret"
-                    style="width: 400px"
-                  />
+                <el-form-item label="Secret" class="first">
+                  <el-input v-model="form.agents.dianwu.secret" style="width: 400px" />
                   <span class="tips"> 企业微信的自建应用密钥 </span>
                 </el-form-item>
               </el-card>
@@ -298,9 +201,7 @@
           </div>
         </div>
         <div class="list">
-          <div class="title">
-            企业微信自建H5地址
-          </div>
+          <div class="title">企业微信自建H5地址</div>
           <div class="formBox">
             <div class="introduce">
               <p>操作指南：</p>
@@ -313,34 +214,23 @@
               </p>
               <p>3. 点击确定</p>
             </div>
-            <el-form
-              ref="form"
-              label-width="150px"
-            >
+            <el-form ref="form" label-width="150px">
               <el-card shadow="never">
-                <el-form-item
-                  label="URL"
-                  class="first"
-                >
-                  <el-input
-                    v-model="form.agents.dianwu.h5_url"
-                    disabled
-                    class="bg-gray"
-                  />
+                <el-form-item label="URL" class="first">
+                  <el-input v-model="form.agents.dianwu.h5_url" disabled class="bg-gray" />
                   <span
                     v-clipboard:copy="form.agents.dianwu.h5_url"
                     v-clipboard:success="onCopy"
                     class="btn"
-                  >复制</span>
+                    >复制</span
+                  >
                 </el-form-item>
               </el-card>
             </el-form>
           </div>
         </div>
         <div class="list">
-          <div class="title">
-            设置可信域名地址
-          </div>
+          <div class="title">设置可信域名地址</div>
           <div class="formBox">
             <div class="introduce">
               <p>操作指南：</p>
@@ -351,34 +241,23 @@
               <p>3. 将下方「可信域名」复制至企业微信后台的「可信域名」，并点击申请校验域名。</p>
               <p>4. 点击确定。</p>
             </div>
-            <el-form
-              ref="form"
-              label-width="150px"
-            >
+            <el-form ref="form" label-width="150px">
               <el-card shadow="never">
-                <el-form-item
-                  label="可信域名"
-                  class="first"
-                >
-                  <el-input
-                    v-model="form.agents.dianwu.h5_host"
-                    disabled
-                    class="bg-gray"
-                  />
+                <el-form-item label="可信域名" class="first">
+                  <el-input v-model="form.agents.dianwu.h5_host" disabled class="bg-gray" />
                   <span
                     v-clipboard:copy="form.agents.dianwu.h5_host"
                     v-clipboard:success="onCopy"
                     class="btn"
-                  >复制</span>
+                    >复制</span
+                  >
                 </el-form-item>
               </el-card>
             </el-form>
           </div>
         </div>
         <div class="list">
-          <div class="title">
-            申请校验域名
-          </div>
+          <div class="title">申请校验域名</div>
           <div class="formBox">
             <div class="introduce">
               <p>操作指南：</p>
@@ -386,18 +265,13 @@
               <p>2. 回到云店后台，点击下方上传文件，选择刚刚下载的文件。</p>
               <p>3. 回到企业微信后台，点击确定。</p>
             </div>
-            <el-form
-              ref="form"
-              label-width="150px"
-            >
+            <el-form ref="form" label-width="150px">
               <el-card shadow="never">
-                <el-form-item
-                  label="域名文件"
-                  class="first yuming"
-                >
+                <el-form-item label="域名文件" class="first yuming">
                   <div class="line">
                     <div class="filename">
-                      <span v-if="form.agents.dianwu.verify_file_name">已上传：</span>{{ form.agents.dianwu.verify_file_name }}
+                      <span v-if="form.agents.dianwu.verify_file_name">已上传：</span
+                      >{{ form.agents.dianwu.verify_file_name }}
                     </div>
                     <el-upload
                       class="upload-demo"
@@ -407,13 +281,7 @@
                       :show-file-list="false"
                       :on-success="handleUploadSuccess"
                     >
-                      <el-button
-                        size="small"
-                        type="primary"
-                        plain
-                      >
-                        点击上传
-                      </el-button>
+                      <el-button size="small" type="primary" plain> 点击上传 </el-button>
                     </el-upload>
                   </div>
                 </el-form-item>
@@ -422,12 +290,7 @@
           </div>
         </div>
         <div class="page-btn">
-          <el-button
-            type="primary"
-            @click="onSubmit"
-          >
-            保存
-          </el-button>
+          <el-button type="primary" @click="onSubmit"> 保存 </el-button>
         </div>
       </el-tab-pane>
     </el-tabs>
@@ -443,7 +306,7 @@ import {
 import store from '@/store'
 import { Message } from 'element-ui'
 export default {
-  data () {
+  data() {
     return {
       activeName: 'first',
       form: {
@@ -488,37 +351,37 @@ export default {
       uploadHeader: { 'Authorization': 'bearer ' + store.getters.token }
     }
   },
-  mounted () {
+  mounted() {
     this.get_DW_Config()
   },
   methods: {
-    handleClick (tab, event) {
+    handleClick(tab, event) {
       // console.log(tab, event);
     },
-    onCopy () {
+    onCopy() {
       this.$notify.success({
         message: '复制成功',
         showClose: true
       })
     },
-    handleUploadSuccess (response, file, fileList) {
+    handleUploadSuccess(response, file, fileList) {
       this.get_DW_Config()
     },
-    async get_DW_Config () {
+    async get_DW_Config() {
       const result = await getWorkWechatConfig()
       // this.form.corpid = result.data.data.corpid
       // this.form.agents.app = result.data.data.agents.app
       // this.form.agents.customer = result.data.data.agents.customer
       this.form = result.data.data
     },
-    async onSubmit () {
+    async onSubmit() {
       console.log(this.form)
       const result = await setWorkWechatConfig(this.form)
       if (result.status === 200) {
         Message.success('保存成功')
       }
     },
-    copyHandle (value) {
+    copyHandle(value) {
       let el = document.getElementById(value)
       el.select()
       document.execCommand('copy')
@@ -563,7 +426,7 @@ export default {
           width: 300px;
           color: #999;
           flex-shrink: 0;
-          @include mult-ellipsis(1);
+          @include multi-ellipsis(1);
           white-space: nowrap;
           font-size: 14px;
         }

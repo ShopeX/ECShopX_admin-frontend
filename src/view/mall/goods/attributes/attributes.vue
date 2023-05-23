@@ -1,27 +1,11 @@
 <template>
   <div>
     <div class="action-container">
-      <el-button
-        type="primary"
-        icon="el-icon-circle-plus"
-        @click="handleNew"
-      >
-        新增规格
-      </el-button>
+      <el-button type="primary" icon="el-icon-circle-plus" @click="handleNew"> 新增规格 </el-button>
     </div>
-    <SpFilterForm
-      :model="params"
-      @onSearch="onSearch"
-      @onReset="onSearch"
-    >
-      <SpFilterFormItem
-        prop="attribute_name"
-        label="规格名称:"
-      >
-        <el-input
-          v-model="params.attribute_name"
-          placeholder="请输入规格名称"
-        />
+    <SpFilterForm :model="params" @onSearch="onSearch" @onReset="onSearch">
+      <SpFilterFormItem prop="attribute_name" label="规格名称:">
+        <el-input v-model="params.attribute_name" placeholder="请输入规格名称" />
       </SpFilterFormItem>
     </SpFilterForm>
     <!-- <div class="action-container">
@@ -47,52 +31,26 @@
             v-for="(item, index) in props.row.attribute_values.list"
             :key="index"
             class="sku-value"
-          ><img
-            v-if="item.image_url"
-            class="sku-img"
-            :src="item.image_url"
-          >{{
-            item.attribute_value
-          }}</span>
+            ><img v-if="item.image_url" class="sku-img" :src="item.image_url">{{
+              item.attribute_value
+            }}</span
+          >
         </template>
       </el-table-column>
-      <el-table-column
-        label="操作"
-        width="150"
-      >
+      <el-table-column label="操作" width="150">
         <template slot-scope="scope">
-          <el-button
-            type="text"
-            @click="handleEdit(scope.row)"
-          >
-            编辑
-          </el-button>
-          <el-button
-            type="text"
-            @click="handleDelete(scope)"
-          >
-            删除
-          </el-button>
+          <el-button type="text" @click="handleEdit(scope.row)"> 编辑 </el-button>
+          <el-button type="text" @click="handleDelete(scope)"> 删除 </el-button>
         </template>
       </el-table-column>
-      <el-table-column
-        label="类型"
-        width="150"
-      >
+      <el-table-column label="类型" width="150">
         <template slot-scope="props">
           <!-- {{ JSON.parse(props.row.is_image) ? '图片' : '文字' }} -->
           {{ props.row.is_image == 'true' ? '图片' : '文字' }}
         </template>
       </el-table-column>
-      <el-table-column
-        prop="attribute_name"
-        label="规格名称"
-        width="200"
-      />
-      <el-table-column
-        prop="attribute_memo"
-        label="规格备注"
-      />
+      <el-table-column prop="attribute_name" label="规格名称" width="200" />
+      <el-table-column prop="attribute_memo" label="规格备注" />
     </el-table>
     <div class="content-padded content-center">
       <el-pagination
@@ -112,10 +70,7 @@
       @chooseImg="pickImg"
       @closeImgDialog="closeImgDialog"
     />
-    <sideBar
-      :visible.sync="show_sideBar"
-      :title="'新增规格'"
-    >
+    <sideBar :visible.sync="show_sideBar" :title="'新增规格'">
       <el-form>
         <el-form-item label="规格名称">
           <el-input v-model="form.attribute_name" />
@@ -125,12 +80,8 @@
         </el-form-item>
         <el-form-item label="规格类型">
           <el-radio-group v-model="form.is_image">
-            <el-radio :label="false">
-              文字
-            </el-radio>
-            <el-radio :label="true">
-              图片
-            </el-radio>
+            <el-radio :label="false"> 文字 </el-radio>
+            <el-radio :label="true"> 图片 </el-radio>
           </el-radio-group>
         </el-form-item>
         <el-form-item label="规格值">
@@ -140,50 +91,22 @@
             :key="index"
             class="view-flex view-flex-middle key-item"
           >
-            <div
-              v-if="form.is_image"
-              class="upload-box"
-              @click="handleImgPicker(index)"
-            >
-              <img
-                v-if="item.image_url"
-                :src="item.image_url"
-                class="avatar"
-              >
-              <i
-                v-else
-                class="iconfont icon-camera avatar-uploader-icon"
-              />
+            <div v-if="form.is_image" class="upload-box" @click="handleImgPicker(index)">
+              <img v-if="item.image_url" :src="item.image_url" class="avatar">
+              <i v-else class="iconfont icon-camera avatar-uploader-icon" />
             </div>
             <div
               class="view-flex-item"
               :class="form.is_image ? 'content-h-padded' : 'content-padded-right'"
             >
-              <el-input
-                v-model="item.attribute_value"
-                placeholder="规格值名称"
-              />
+              <el-input v-model="item.attribute_value" placeholder="规格值名称" />
             </div>
-            <div
-              class="iconfont icon-trash-alt1"
-              @click="removeItem(index)"
-            />
+            <div class="iconfont icon-trash-alt1" @click="removeItem(index)" />
           </div>
-          <el-button
-            type="default"
-            size="small"
-            @click="addItem"
-          >
-            添加规格值
-          </el-button>
+          <el-button type="default" size="small" @click="addItem"> 添加规格值 </el-button>
         </el-form-item>
         <el-form-item>
-          <el-button
-            type="primary"
-            @click="save"
-          >
-            提交
-          </el-button>
+          <el-button type="primary" @click="save"> 提交 </el-button>
         </el-form-item>
       </el-form>
     </sideBar>
@@ -207,7 +130,7 @@ export default {
     imgPicker
   },
   mixins: [pageMixin],
-  data () {
+  data() {
     return {
       currentIndex: '',
       form: {
@@ -232,11 +155,11 @@ export default {
       show_sideBar: false
     }
   },
-  mounted () {
+  mounted() {
     this.fetchList()
   },
   methods: {
-    handleDelete (data) {
+    handleDelete(data) {
       this.$confirm('确认删除该参数？')
         .then((_) => {
           deleteGoodsAttr(data.row.attribute_id).then((res) => {
@@ -246,11 +169,11 @@ export default {
         })
         .catch((_) => {})
     },
-    handleNew () {
+    handleNew() {
       this.show_sideBar = true
       this.resetData()
     },
-    resetData () {
+    resetData() {
       this.form = {
         is_image: false,
         attribute_type: 'item_spec',
@@ -260,7 +183,7 @@ export default {
         attribute_values: []
       }
     },
-    handleEdit (data) {
+    handleEdit(data) {
       this.show_sideBar = true
       this.form = {
         is_image: JSON.parse(data.is_image),
@@ -271,7 +194,7 @@ export default {
         attribute_values: data.attribute_values.list
       }
     },
-    addItem () {
+    addItem() {
       if (this.form.attribute_values.length > 50) {
         this.$message({ type: 'warning', message: '最多添加50项' })
         return
@@ -282,14 +205,14 @@ export default {
       }
       this.form.attribute_values.push(item)
     },
-    removeItem (index) {
+    removeItem(index) {
       this.$confirm('确认删除当前值？')
         .then((_) => {
           this.form.attribute_values.splice(index, 1)
         })
         .catch((_) => {})
     },
-    save () {
+    save() {
       let params = JSON.parse(JSON.stringify(this.form))
       params.attribute_values = JSON.stringify(params.attribute_values)
       console.log(params)
@@ -308,7 +231,7 @@ export default {
         })
       }
     },
-    fetchList () {
+    fetchList() {
       this.loading = true
       const { pageIndex: page, pageSize } = this.page
       let params = {
@@ -327,25 +250,25 @@ export default {
     //   this.page.pageIndex = 1
     //   this.fetchList()
     // },
-    handleImgChange (data) {
+    handleImgChange(data) {
       this.imgDialog = true
       this.isGetImage = true
       this.imgIndex = data.$index
     },
-    handleImgPicker (index) {
+    handleImgPicker(index) {
       this.currentIndex = index
       this.imgDialog = true
       this.isGetImage = true
     },
-    pickImg (data) {
+    pickImg(data) {
       this.form.attribute_values[this.currentIndex].image_url = data.url
       this.imgDialog = false
     },
-    closeImgDialog () {
+    closeImgDialog() {
       this.imgDialog = false
       this.isGetImage = false
     },
-    syncItemSpec () {
+    syncItemSpec() {
       syncItemSpec().then((res) => {
         if (res.data.data.status == true) {
           this.$message({

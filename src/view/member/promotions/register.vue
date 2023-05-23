@@ -24,12 +24,8 @@
           />
         </el-form-item>
         <el-form-item label="注册引导图片：">
-          <div class="frm-tips">
-只能上传jpg/png文件，且不超过2M （建议尺寸：400px * 450px）
-</div>
-          <div class="frm-tips">
-引导用户授权手机号注册，类似新用户专享广告图片
-</div>
+          <div class="frm-tips">只能上传jpg/png文件，且不超过2M （建议尺寸：400px * 450px）</div>
+          <div class="frm-tips">引导用户授权手机号注册，类似新用户专享广告图片</div>
           <div>
             <div class="upload-box" @click="handleImgChange">
               <img v-if="form.ad_pic" :src="wximageurl + form.ad_pic" class="avatar" width="200">
@@ -174,9 +170,7 @@
         </el-form-item> -->
       </div>
       <div class="section-footer with-border content-center">
-        <el-button type="primary" @click="save">
-保 存
-</el-button>
+        <el-button type="primary" @click="save"> 保 存 </el-button>
       </div>
     </el-form>
     <el-dialog
@@ -187,15 +181,9 @@
       @close="oncloseModal"
     >
       <el-radio-group v-model="card_type" @change="cardTypeChange(false)">
-        <el-radio-button label="all" value="all">
-全部
-</el-radio-button>
-        <el-radio-button label="cash" value="cash">
-满减券
-</el-radio-button>
-        <el-radio-button label="discount" value="discount">
-折扣券
-</el-radio-button>
+        <el-radio-button label="all" value="all"> 全部 </el-radio-button>
+        <el-radio-button label="cash" value="cash"> 满减券 </el-radio-button>
+        <el-radio-button label="discount" value="discount"> 折扣券 </el-radio-button>
         <el-radio-button v-if="VERSION_STANDARD" label="new_gift" value="new_gift">
           兑换券
         </el-radio-button>
@@ -237,15 +225,9 @@
       @close="oncloseModal"
     >
       <el-radio-group v-model="card_type" @change="cardTypeChange(true)">
-        <el-radio-button label="all" value="all">
-全部
-</el-radio-button>
-        <el-radio-button label="cash" value="cash">
-满减券
-</el-radio-button>
-        <el-radio-button label="discount" value="discount">
-折扣券
-</el-radio-button>
+        <el-radio-button label="all" value="all"> 全部 </el-radio-button>
+        <el-radio-button label="cash" value="cash"> 满减券 </el-radio-button>
+        <el-radio-button label="discount" value="discount"> 折扣券 </el-radio-button>
         <!-- <el-radio-button
           label="gift"
           value="gift"
@@ -306,7 +288,7 @@ export default {
     imgPicker,
     linkSetter
   },
-  data () {
+  data() {
     return {
       isGetImage: false,
       imgDialog: false,
@@ -357,31 +339,31 @@ export default {
     }
   },
   watch: {
-    getStatus (newVal, oldVal) {
+    getStatus(newVal, oldVal) {
       if (newVal) {
         this.getRegisterData()
         this.getGoodsList()
       }
     }
   },
-  mounted () {
+  mounted() {
     this.getRegisterData()
     this.getGoodsList()
   },
   methods: {
-    handleImgChange () {
+    handleImgChange() {
       this.imgDialog = true
       this.isGetImage = true
     },
-    pickImg (data) {
+    pickImg(data) {
       this.form.ad_pic = data.url
       this.imgDialog = false
     },
-    closeImgDialog () {
+    closeImgDialog() {
       this.imgDialog = false
     },
     //选择商品分页
-    handlePagesChange (val) {
+    handlePagesChange(val) {
       this.params.page = val
       this.form.promotions_value.itemsList = []
       this.goodsList.forEach((row) => {
@@ -393,7 +375,7 @@ export default {
       })
       this.getGoodsList()
     },
-    getGoodsList () {
+    getGoodsList() {
       getItemsList(this.params).then((response) => {
         let list = []
         response.data.data.list.forEach((row) => {
@@ -417,39 +399,39 @@ export default {
         this.total_count = response.data.data.total_count
       })
     },
-    showModal () {
+    showModal() {
       this.coupons.dialog = true
     },
-    showStaffModal () {
+    showStaffModal() {
       this.staffCoupons.dialog = true
     },
-    onshowModal () {
+    onshowModal() {
       this.coupons.loading = true
       for (var i = 0; i < this.coupons.checked.length; i++) {
         this.coupons.temp.push(this.coupons.checked[i])
       }
       this.getCoupons(this.coupons.page.currentPage, false)
     },
-    changeCouponsPage (currentPage) {
+    changeCouponsPage(currentPage) {
       this.coupons.page.currentPage = currentPage
       this.getCoupons(currentPage, false)
     },
-    onshowStaffModal () {
+    onshowStaffModal() {
       this.staffCoupons.loading = true
       for (var i = 0; i < this.staffCoupons.checked.length; i++) {
         this.staffCoupons.temp.push(this.staffCoupons.checked[i])
       }
       this.getCoupons(this.staffCoupons.page.currentPage, true)
     },
-    changeStaffCouponsPage (currentPage) {
+    changeStaffCouponsPage(currentPage) {
       this.staffCoupons.page.currentPage = currentPage
       this.getCoupons(currentPage, true)
     },
-    oncloseModal () {
+    oncloseModal() {
       this.coupons.temp = []
       this.staffCoupons.temp = []
     },
-    selectItems (item) {
+    selectItems(item) {
       if (item.checked) {
         for (var i = 0; i < this.coupons.temp.length; i++) {
           if (this.coupons.temp[i].card_id === item.card_id) {
@@ -470,7 +452,7 @@ export default {
         this.coupons.temp.push(item)
       }
     },
-    selectStaffItems (item) {
+    selectStaffItems(item) {
       if (item.checked) {
         for (var i = 0; i < this.staffCoupons.temp.length; i++) {
           if (this.staffCoupons.temp[i].card_id === item.card_id) {
@@ -491,14 +473,14 @@ export default {
         this.staffCoupons.temp.push(item)
       }
     },
-    cardTypeChange (isStaff) {
+    cardTypeChange(isStaff) {
       if (isStaff) {
         this.getCoupons(1, true)
       } else {
         this.getCoupons(1, false)
       }
     },
-    submitSelected (isStaff) {
+    submitSelected(isStaff) {
       if (isStaff) {
         this.staffCoupons.dialog = false
         this.staffCoupons.checked = this.staffCoupons.temp
@@ -516,20 +498,20 @@ export default {
       }
       this.card_type = 'all'
     },
-    cancelSelected () {
+    cancelSelected() {
       this.coupons.dialog = false
       this.coupons.temp = []
       this.card_type = 'all'
       this.staffCoupons.dialog = false
       this.staffCoupons.temp = []
     },
-    removeChecked (index) {
+    removeChecked(index) {
       this.coupons.checked.splice(index, 1)
     },
-    removeStaffChecked (index) {
+    removeStaffChecked(index) {
       this.staffCoupons.checked.splice(index, 1)
     },
-    getCoupons (current, isStaff) {
+    getCoupons(current, isStaff) {
       getEffectiveCardList({
         page_no: current,
         page_size: this.coupons.page.pageSize,
@@ -561,7 +543,7 @@ export default {
         }
       })
     },
-    save () {
+    save() {
       this.form.promotions_value.itemsList = []
       //处理优惠券
       let couponArr = []
@@ -600,7 +582,7 @@ export default {
         })
       })
     },
-    getRegisterData () {
+    getRegisterData() {
       var params = { register_type: 'general' }
       getRegisterPromotions(params).then((response) => {
         this.form.ad_pic = response.data.data.ad_pic
@@ -624,16 +606,16 @@ export default {
         }
       })
     },
-    handleGoodsChange () {
+    handleGoodsChange() {
       this.linksVisible = true
     },
-    closeDialog () {
+    closeDialog() {
       this.linksVisible = false
     },
-    clear_pic_url () {
+    clear_pic_url() {
       this.form.register_jump_path = {}
     },
-    setLink (data, type) {
+    setLink(data, type) {
       let obj = Object.assign(data, { 'linkPage': type })
       this.form.register_jump_path = obj
     }

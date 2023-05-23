@@ -1,44 +1,18 @@
 <template>
   <div class="section-white content-padded bargain-box">
-    <el-form
-      ref="form"
-      :model="form"
-      :rules="rules"
-      label-width="110px"
-    >
-      <el-form-item
-        label="活动名称"
-        prop="title"
-      >
-        <el-input
-          v-model="form.title"
-          :maxlength="20"
-          style="width: 280px"
-        />&nbsp;<span
+    <el-form ref="form" :model="form" :rules="rules" label-width="110px">
+      <el-form-item label="活动名称" prop="title">
+        <el-input v-model="form.title" :maxlength="20" style="width: 280px" />&nbsp;<span
           class="frm-tips"
-        >{{ form.title.length }}/20</span>
+          >{{ form.title.length }}/20</span
+        >
       </el-form-item>
-      <el-form-item
-        label="活动海报"
-        prop="ad_pic"
-      >
-        <p class="frm-tips">
-          点击图片可更换，图片大小不能超过 2MB
-        </p>
+      <el-form-item label="活动海报" prop="ad_pic">
+        <p class="frm-tips">点击图片可更换，图片大小不能超过 2MB</p>
         <div class="activity-poster">
-          <div
-            class="upload-box"
-            @click="handleImgChange"
-          >
-            <img
-              v-if="form.ad_pic"
-              :src="wximageurl + form.ad_pic"
-              class="avatar"
-            >
-            <i
-              v-else
-              class="el-icon-plus avatar-uploader-icon"
-            />
+          <div class="upload-box" @click="handleImgChange">
+            <img v-if="form.ad_pic" :src="wximageurl + form.ad_pic" class="avatar">
+            <i v-else class="el-icon-plus avatar-uploader-icon" />
           </div>
         </div>
         <imgPicker
@@ -48,10 +22,7 @@
           @closeImgDialog="closeImgDialog"
         />
       </el-form-item>
-      <el-form-item
-        label="活动时间"
-        prop="bargains_datetime"
-      >
+      <el-form-item label="活动时间" prop="bargains_datetime">
         <el-date-picker
           v-model="form.bargains_datetime_begin"
           type="datetime"
@@ -64,45 +35,25 @@
           placeholder="选择结束日期时间"
         />
       </el-form-item>
-      <el-form-item
-        label="活动规则"
-        prop="bargain_rules"
-      >
+      <el-form-item label="活动规则" prop="bargain_rules">
         <el-col :span="12">
-          <el-input
-            v-model="form.bargain_rules"
-            type="textarea"
-          />
+          <el-input v-model="form.bargain_rules" type="textarea" />
         </el-col>
       </el-form-item>
-      <el-form-item
-        label="翻牌图片"
-        prop="bargain_pics"
-      >
-        <p class="frm-tips">
-          建议图片尺寸151px * 185px，图片大小不能超过 2MB
-        </p>
+      <el-form-item label="翻牌图片" prop="bargain_pics">
+        <p class="frm-tips">建议图片尺寸151px * 185px，图片大小不能超过 2MB</p>
         <div class="pics-box">
           <div class="pics-list">
             <template v-for="(item, index) in form.help_pics">
               <div class="pics-item">
                 <img :src="wximageurl + item">
                 <div class="bg-mask">
-                  <i
-                    class="icon el-icon-edit-outline"
-                    @click="picsEdit(index)"
-                  />
-                  <i
-                    class="icon el-icon-delete"
-                    @click="picsDelete(index)"
-                  />
+                  <i class="icon el-icon-edit-outline" @click="picsEdit(index)" />
+                  <i class="icon el-icon-delete" @click="picsDelete(index)" />
                 </div>
               </div>
             </template>
-            <div
-              class="upload-box"
-              @click="handlePicsChange"
-            >
+            <div class="upload-box" @click="handlePicsChange">
               <i class="el-icon-plus avatar-uploader-icon" />
             </div>
           </div>
@@ -117,21 +68,12 @@
 
       <el-form-item label="助力产品">
         <el-row :gutter="20">
-          <el-col
-            :span="20"
-            style="padding-left: 0px"
-          >
+          <el-col :span="20" style="padding-left: 0px">
             <p class="frm-tips" />
             <div class="logo-box">
               <div class="bran-img">
-                <div
-                  v-if="goods.pics"
-                  class="groups-addgoods"
-                >
-                  <img
-                    :src="wximageurl + goods.pics[0]"
-                    class="groups-goodspic"
-                  >
+                <div v-if="goods.pics" class="groups-addgoods">
+                  <img :src="wximageurl + goods.pics[0]" class="groups-goodspic">
                   <div class="gooups-goodsmsg">
                     <div>{{ goods.itemName }}</div>
                     <div>原价：￥{{ goods.price }}</div>
@@ -140,22 +82,11 @@
                     </div>
                   </div>
                 </div>
-                <div
-                  v-else
-                  tabindex="0"
-                  class="upload-box"
-                  @click="changeItem"
-                >
+                <div v-else tabindex="0" class="upload-box" @click="changeItem">
                   <i class="el-icon-plus avatar-uploader-icon" />
                 </div>
               </div>
-              <el-button
-                size="small"
-                type="primary"
-                @click="changeItem"
-              >
-                选择商品
-              </el-button>
+              <el-button size="small" type="primary" @click="changeItem"> 选择商品 </el-button>
             </div>
           </el-col>
         </el-row>
@@ -178,23 +109,14 @@
         <el-input v-model="form.mkt_price" style="width: 120px;"></el-input>&nbsp;元，最多保留两位小数,原价至少要比底价大￥1
       </el-form-item>-->
 
-      <el-form-item
-        label="产品底价"
-        prop="price"
-      >
-        <el-input
-          v-model="form.price"
-          style="width: 120px"
-        />&nbsp;元，最多保留两位小数
+      <el-form-item label="产品底价" prop="price">
+        <el-input v-model="form.price" style="width: 120px" />&nbsp;元，最多保留两位小数
       </el-form-item>
       <!--       <el-form-item label="助力区间" prop="price_range">
       <p class="frm-tips">助力金额最小为0，最大不能超过原价和底价之差，请合理设置</p>
         <el-input v-model="form.price_min" placeholder="最低可砍多少元" style="width: 80px;"></el-input> ~ <el-input v-model="form.price_max" placeholder="最高可砍多少元" style="width: 80px;"></el-input>&nbsp;元，最多保留两位小数
       </el-form-item> -->
-      <el-form-item
-        label="助力人数"
-        prop="people_range"
-      >
+      <el-form-item label="助力人数" prop="people_range">
         <el-input
           v-model="form.people_min"
           type="number"
@@ -218,88 +140,41 @@
         <el-input v-model.number="form.limit_num" type="number" min=1 style="width: 120px;"></el-input>
       </el-form-item>-->
       <!--<el-form-item label="产品详情" prop="item_intro">
-        <vue-html5-editor :content="form.item_intro" id="1" ref="editor" @change="updateProductDetail" :height="360" :width="600"></vue-html5-editor>
         <span class="tpl_item img" @click="addImgPreview" style="">
           <i class="iconfont icon-image"></i>图片
         </span>
         <imgPicker :dialog-visible="thumbDialog" :sc-status="isGetThumb" @chooseImg="pickThumb" @closeImgDialog="closeThumbDialog"></imgPicker>
       </el-form-item>-->
-      <el-form-item
-        label="分享内容"
-        prop="share_msg"
-      >
-        <el-input
-          v-model="form.share_msg"
-          style="width: 280px"
-        />
+      <el-form-item label="分享内容" prop="share_msg">
+        <el-input v-model="form.share_msg" style="width: 280px" />
       </el-form-item>
       <el-form-item class="content-center">
-        <el-button @click="cancel">
-          返回
-        </el-button>
-        <el-button
-          type="primary"
-          @click="save"
-        >
-          保存
-        </el-button>
+        <el-button @click="cancel"> 返回 </el-button>
+        <el-button type="primary" @click="save"> 保存 </el-button>
       </el-form-item>
     </el-form>
 
-    <el-dialog
-      title="选择商品"
-      :visible.sync="goodsDialogVisible"
-      center
-    >
+    <el-dialog title="选择商品" :visible.sync="goodsDialogVisible" center>
       <el-button-group class="tab-group">
         <!--        <el-button class="tab-btn" @click="changeGoods('every')" :class="goodsTypeTitle==='服务类商品' ? 'on' : ''">服务类商品</el-button>-->
         <!--        <el-button class="tab-btn" @click="changeGoods('normal')" :class="goodsTypeTitle==='实体类商品' ? 'on' : ''" >实体类商品</el-button>-->
       </el-button-group>
-      <el-row
-        class="content-bottom-padded"
-        :gutter="20"
-      >
+      <el-row class="content-bottom-padded" :gutter="20">
         <el-col :span="12">
-          <el-input
-            v-model="itemsParams.keywords"
-            placeholder="商品名称"
-          >
-            <el-button
-              slot="append"
-              icon="el-icon-search"
-              @click="goodsSearch"
-            />
+          <el-input v-model="itemsParams.keywords" placeholder="商品名称">
+            <el-button slot="append" icon="el-icon-search" @click="goodsSearch" />
           </el-input>
         </el-col>
       </el-row>
-      <el-table
-        v-loading="itemsLoading"
-        :data="itemsList"
-        style="width: 100%"
-        border
-        height="500"
-      >
-        <el-table-column
-          prop="itemName"
-          label="商品名称"
-        />
+      <el-table v-loading="itemsLoading" :data="itemsList" style="width: 100%" border height="500">
+        <el-table-column prop="itemName" label="商品名称" />
         <el-table-column label="缩略图">
           <template slot-scope="scope">
-            <img
-              width="20"
-              :src="wximageurl + scope.row.pics[0]"
-            >
+            <img width="20" :src="wximageurl + scope.row.pics[0]">
           </template>
         </el-table-column>
-        <el-table-column
-          prop="price"
-          label="销售价"
-          :formatter="priceformatter"
-        />
-        <el-table-column
-          prop="itemName"
-          label="状态"
-        >
+        <el-table-column prop="price" label="销售价" :formatter="priceformatter" />
+        <el-table-column prop="itemName" label="状态">
           <template slot-scope="scope">
             <el-button
               v-if="form.item_id != scope.row.itemId"
@@ -312,10 +187,7 @@
           </template>
         </el-table-column>
       </el-table>
-      <div
-        v-if="itemsTotalCount > itemsParams.pageSize"
-        class="content-center content-top-padded"
-      >
+      <div v-if="itemsTotalCount > itemsParams.pageSize" class="content-center content-top-padded">
         <el-pagination
           layout="prev, pager, next"
           :current-page.sync="itemsParams.page"
@@ -324,15 +196,9 @@
           @current-change="goodsHandleCurrentChange"
         />
       </div>
-      <span
-        slot="footer"
-        class="dialog-footer"
-      >
+      <span slot="footer" class="dialog-footer">
         <el-button @click="centerDialogVisible = false">关 闭</el-button>
-        <el-button
-          type="primary"
-          @click="centerDialogVisible = false"
-        >确 定</el-button>
+        <el-button type="primary" @click="centerDialogVisible = false">确 定</el-button>
       </span>
     </el-dialog>
   </div>
@@ -347,7 +213,7 @@ export default {
   components: {
     imgPicker
   },
-  data () {
+  data() {
     var datetimeChecked = (rule, value, callback) => {
       if (this.form.bargains_datetime_begin == '' && this.form.bargains_datetime_end == '') {
         return callback(new Error('请选择活动起止时间'))
@@ -476,7 +342,7 @@ export default {
       }
     }
   },
-  mounted () {
+  mounted() {
     // 编辑助力活动
     if (this.$route.params.bargain_id) {
       // 初始化助力活动详情数据
@@ -507,19 +373,19 @@ export default {
   },
   methods: {
     // 选择商品
-    changeItem () {
+    changeItem() {
       this.goodsDialogVisible = true
       this.getGoodsList()
     },
     // 获取商品列表
-    goodsHandleCurrentChange (val) {
+    goodsHandleCurrentChange(val) {
       this.itemsParams.page = val
       this.getGoodsList()
     },
-    goodsSearch () {
+    goodsSearch() {
       this.getGoodsList()
     },
-    getGoodsList () {
+    getGoodsList() {
       this.itemsLoading = true
 
       let where = this.itemsParams
@@ -540,7 +406,7 @@ export default {
           })
         })
     },
-    changeGoods (type) {
+    changeGoods(type) {
       switch (type) {
         case 'every':
           this.$set(this.itemsParams, 'consume_type', 'every')
@@ -556,11 +422,11 @@ export default {
       this.getGoodsList()
     },
     // 销售价格
-    priceformatter (row, column) {
+    priceformatter(row, column) {
       return this.cursymbol + row.price / 100
     },
     // 选择确定商品
-    chooseItem (row) {
+    chooseItem(row) {
       console.log('选择的商品', row)
       this.goodsDialogVisible = false
       this.goods = row
@@ -573,7 +439,7 @@ export default {
       this.form.limit_num = this.goods.store
     },
     // 详情显示选中的商品
-    goodsShow (data) {
+    goodsShow(data) {
       let goods = {
         pics: [data.item_pics],
         itemName: data.item_name,
@@ -583,23 +449,23 @@ export default {
       this.goodsDialogVisible = false
       this.goods = goods
     },
-    handleImgChange () {
+    handleImgChange() {
       this.imgDialog = true
       this.isGetImage = true
     },
-    pickImg (data) {
+    pickImg(data) {
       this.form.ad_pic = data.url
       this.imgDialog = false
     },
-    closeImgDialog () {
+    closeImgDialog() {
       this.imgDialog = false
     },
-    handlePicsChange () {
+    handlePicsChange() {
       this.picsDialog = true
       this.isGetPics = true
       this.isPicsAdd = true
     },
-    pickPics (data) {
+    pickPics(data) {
       if (this.isPicsAdd) {
         this.form.help_pics.push(data.url)
       } else {
@@ -608,30 +474,30 @@ export default {
 
       this.picsDialog = false
     },
-    closePicsDialog () {
+    closePicsDialog() {
       this.picsDialog = false
     },
-    handleProductPicChange () {
+    handleProductPicChange() {
       this.productPicDialog = true
       this.isGetProductPic = true
     },
-    productPic (data) {
+    productPic(data) {
       this.form.item_pics = data.url
       this.productPicDialog = false
     },
-    closeProductPicDialog () {
+    closeProductPicDialog() {
       this.productPicDialog = false
     },
-    cancel () {
+    cancel() {
       this.$router.go(-1)
     },
-    updateBargainsRule (data) {
+    updateBargainsRule(data) {
       this.form.bargain_rules = data
     },
-    updateProductDetail (data) {
+    updateProductDetail(data) {
       this.form.item_intro = data
     },
-    save () {
+    save() {
       const that = this
       this.$refs['form'].validate((valid) => {
         if (valid) {
@@ -678,7 +544,7 @@ export default {
                   message: '更新成功',
                   type: 'success',
                   duration: 2 * 1000,
-                  onClose () {
+                  onClose() {
                     that.refresh()
                     that.$router.go(-1)
                   }
@@ -695,7 +561,7 @@ export default {
                   message: '添加成功',
                   type: 'success',
                   duration: 2 * 1000,
-                  onClose () {
+                  onClose() {
                     that.refresh()
                     that.$router.go(-1)
                   }
@@ -709,20 +575,20 @@ export default {
         }
       })
     },
-    picsEdit (index) {
+    picsEdit(index) {
       this.isPicsAdd = false
       this.picsEditIndex = index
       this.picsDialog = true
       this.isGetPics = true
     },
-    picsDelete (index) {
+    picsDelete(index) {
       this.form.help_pics.splice(index, 1)
     },
-    addImgPreview () {
+    addImgPreview() {
       this.thumbDialog = true
       this.isGetThumb = true
     },
-    pickThumb (data) {
+    pickThumb(data) {
       if (data && data.url !== '') {
         this.thumbDialog = false
         var index = this.$refs.editor.$el.id
@@ -739,7 +605,7 @@ export default {
         this.form.item_intro = loc.$refs.content.innerHTML
       }
     },
-    closeThumbDialog () {
+    closeThumbDialog() {
       this.thumbDialog = false
     }
   }

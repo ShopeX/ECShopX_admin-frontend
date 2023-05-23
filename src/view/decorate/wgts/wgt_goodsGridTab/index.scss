@@ -1,0 +1,105 @@
+.wgt-goods-grid-tab {
+  &.padded {
+    padding: 10px 0;
+  }
+  .wgt-hd {
+    padding: 10px;
+    .title {
+      font-size: 18px;
+      font-weight: 600;
+      color: #333;
+    }
+    .sub-title {
+      color: #666;
+      margin-left: 4px;
+    }
+  }
+  .wgt-bd {
+  }
+
+  .tabs-header {
+    display: flex;
+    padding: 10px 0;
+    overflow-x: auto;
+
+    .tab-item {
+      position: relative;
+      z-index: 100;
+      padding: 0 10px;
+      white-space: nowrap;
+      font-size: 14px;
+      color: #222;
+      line-height: 12px;
+      letter-spacing: 1px;
+
+      cursor: pointer;
+      &:not(:first-child) {
+        border-left: 1px solid #ddd;
+      }
+      &.checked {
+        font-weight: 700;
+        font-size: 18px;
+        color: var(--appThemeColor);
+      }
+    }
+  }
+
+  .tab-content {
+    display: flex;
+    .lf-box {
+      width: 50%;
+      padding: 0 4px 0 8px;
+    }
+    .rg-box {
+      width: 50%;
+      padding: 0 8px 0 4px;
+    }
+    .item-box {
+      border-radius: 8px;
+      overflow: hidden;
+      margin-bottom: 8px;
+    }
+    .item-info {
+      background-color: #fff;
+      padding: 4px;
+      font-size: 13px;
+      position: relative;
+      .brand-logo {
+        position: absolute;
+        left: 50%;
+        top: -30px;
+        transform: translateX(-50%);
+        background: #fff;
+        width: 64px;
+        height: 64px;
+        border-radius: 32px;
+        padding: 2px;
+      }
+      .name {
+        @include text-overflow();
+      }
+      .item-price {
+        color: #222;
+        margin-right: 4px;
+      }
+    }
+  }
+
+  .goods-more {
+    display: flex;
+    justify-content: center;
+    margin: 20px auto;
+    .more-btn {
+      text-align: center;
+      font-size: 12px;
+      line-height: 30px;
+      font-weight: 500;
+      color: #00081c;
+      letter-spacing: 2px;
+      width: 90px;
+      height: 30px;
+      border-radius: 2px;
+      border: 1px solid #00081c;
+    }
+  }
+}

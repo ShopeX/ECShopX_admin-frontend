@@ -2,7 +2,7 @@ import fetch from '../utils/fetch'
 import { Message } from 'element-ui'
 import store from '@/store'
 
-export function getShopMenu (query) {
+export function getShopMenu(query) {
   console.log(query)
   var object = fetch({ url: '/shopmenu', method: 'get', params: query })
   return object.then((res) => {
@@ -10,7 +10,7 @@ export function getShopMenu (query) {
   })
 }
 
-export function saveMenu (isEdit, query) {
+export function saveMenu(isEdit, query) {
   if (isEdit) {
     var data = fetch({ url: '/shopmenu', method: 'put', params: query })
     var msg = '更新菜单成功'
@@ -25,7 +25,7 @@ export function saveMenu (isEdit, query) {
   })
 }
 
-export function deleteMenu (id) {
+export function deleteMenu(id) {
   var data = fetch({ url: '/shopmenu/' + id, method: 'delete' })
   return data.then((res) => {
     Message({ message: '删除成功', type: 'success', duration: 3 * 1000 })
@@ -33,7 +33,7 @@ export function deleteMenu (id) {
   })
 }
 
-export function downMenu (version) {
+export function downMenu(version) {
   var data = fetch({
     url: '/shopmenu/down',
     method: 'get',
@@ -49,7 +49,7 @@ export function downMenu (version) {
   })
 }
 
-export function uploadMenu (data) {
+export function uploadMenu(data) {
   var result = fetch({ url: '/shopmenu/upload', method: 'POST', params: data })
   return result.then((res) => {
     Message({ message: '导入成功', type: 'success', duration: 3 * 1000 })

@@ -6,58 +6,35 @@
 
 <template>
   <div>
-    <template v-if="$route.path.indexOf('detail') === -1 && $route.path.indexOf('editor') === -1 && $route.path.indexOf('dependents') === -1">
+    <template
+      v-if="
+        $route.path.indexOf('detail') === -1 &&
+        $route.path.indexOf('editor') === -1 &&
+        $route.path.indexOf('dependents') === -1
+      "
+    >
       <div class="action-container">
-        <el-button
-          type="primary"
-          icon="iconfont icon-xinzengcaozuo-01"
-          @click="addPurchase"
-        >
+        <el-button type="primary" icon="iconfont icon-xinzengcaozuo-01" @click="addPurchase">
           新增活动
         </el-button>
       </div>
 
-      <SpFilterForm
-        :model="params"
-        @onSearch="onSearch"
-        @onReset="onReset"
-      >
-        <SpFilterFormItem
-          prop="activity_status"
-          label="活动状态:"
-        >
+      <SpFilterForm :model="params" @onSearch="onSearch" @onReset="onReset">
+        <SpFilterFormItem prop="activity_status" label="活动状态:">
           <el-select
             v-model="params.activity_status"
             placeholder="请选择活动状态"
             clearable
             style="width: 100%"
           >
-            <el-option
-              label="全部"
-              value="0"
-            />
-            <el-option
-              label="未开始"
-              value="waiting"
-            />
-            <el-option
-              label="进行中"
-              value="ongoing"
-            />
-            <el-option
-              label="已结束"
-              value="it_has_ended"
-            />
+            <el-option label="全部" value="0" />
+            <el-option label="未开始" value="waiting" />
+            <el-option label="进行中" value="ongoing" />
+            <el-option label="已结束" value="it_has_ended" />
           </el-select>
         </SpFilterFormItem>
-        <SpFilterFormItem
-          prop="activity_status"
-          label="活动名称:"
-        >
-          <el-input
-            v-model="params.purchase_name"
-            placeholder="请输入活动名称"
-          />
+        <SpFilterFormItem prop="activity_status" label="活动名称:">
+          <el-input v-model="params.purchase_name" placeholder="请输入活动名称" />
         </SpFilterFormItem>
       </SpFilterForm>
 
@@ -67,46 +44,23 @@
         :data="tableList"
         @selection-change="handleSelectionChange"
       >
-        <el-table-column
-          prop="purchase_id"
-          label="活动ID"
-        />
-        <el-table-column
-          prop="purchase_name"
-          label="活动名称"
-        />
-        <el-table-column
-          prop="employee_limitfee"
-          label="员工额度"
-        />
-        <el-table-column
-          prop="dependents_limitfee"
-          label="亲友额度"
-        />
-        <el-table-column
-          prop="activity_status"
-          label="活动状态"
-        >
+        <el-table-column prop="purchase_id" label="活动ID" />
+        <el-table-column prop="purchase_name" label="活动名称" />
+        <el-table-column prop="employee_limitfee" label="员工额度" />
+        <el-table-column prop="dependents_limitfee" label="亲友额度" />
+        <el-table-column prop="activity_status" label="活动状态">
           <template slot-scope="scope">
             {{ scope.row.activity_status | formatStatus }}
           </template>
         </el-table-column>
-        <el-table-column
-          width="301"
-          label="活动有效期"
-        >
+        <el-table-column width="301" label="活动有效期">
           <template slot-scope="scope">
             {{ scope.row.begin_date }}
-            <template v-if="scope.row.end_date">
-              ~
-            </template>
+            <template v-if="scope.row.end_date"> ~ </template>
             {{ scope.row.end_date }}
           </template>
         </el-table-column>
-        <el-table-column
-          width="150"
-          label="操作"
-        >
+        <el-table-column width="150" label="操作">
           <template slot-scope="scope">
             <div class="operating-icons">
               <el-button type="text">
@@ -121,10 +75,7 @@
                   查看
                 </router-link>
               </el-button>
-              <el-button
-                v-if="scope.row.activity_status == 'waiting'"
-                type="text"
-              >
+              <el-button v-if="scope.row.activity_status == 'waiting'" type="text">
                 <router-link
                   :to="{
                     path: matchHidePage('editor'),
@@ -180,7 +131,7 @@ import { endPurchase } from '@/api/purchase'
 import { pageMixin } from '@/mixins'
 export default {
   filters: {
-    formatStatus (status) {
+    formatStatus(status) {
       var str = ''
       switch (status) {
         case 'waiting':
@@ -197,12 +148,12 @@ export default {
     }
   },
   mixins: [pageMixin],
-  provide () {
+  provide() {
     return {
       refresh: this.fetchList
     }
   },
-  data () {
+  data() {
     const initialParams = {
       activity_status: undefined,
       purchase_name: undefined
@@ -219,27 +170,27 @@ export default {
       multipleSelection: []
     }
   },
-  mounted () {
+  mounted() {
     this.fetchList()
   },
   methods: {
-    getParams () {
+    getParams() {
       let params = {
         ...this.params
       }
       return params
     },
-    onSearch () {
+    onSearch() {
       this.page.pageIndex = 1
       this.$nextTick(() => {
         this.fetchList()
       })
     },
-    onReset () {
+    onReset() {
       this.params = { ...this.initialParams }
       this.onSearch()
     },
-    async fetchList () {
+    async fetchList() {
       this.loading = true
       const { pageIndex: page, pageSize } = this.page
       let params = {
@@ -260,10 +211,10 @@ export default {
       }
       this.loading = false
     },
-    addPurchase () {
+    addPurchase() {
       this.$router.push({ path: this.matchHidePage('editor') })
     },
-    deleteCard (id, index) {
+    deleteCard(id, index) {
       const that = this
       this.$confirm('确定要终止该活动？', '提示', {
         cancelButtonText: '取消',
@@ -275,7 +226,7 @@ export default {
             this.$message({
               type: 'success',
               message: '终止成功',
-              onClose () {
+              onClose() {
                 that.fetchList()
               }
             })
@@ -284,7 +235,7 @@ export default {
         }
       })
     },
-    handleSelectionChange (val) {
+    handleSelectionChange(val) {
       this.multipleSelection = val
     }
   }

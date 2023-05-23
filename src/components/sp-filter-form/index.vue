@@ -13,7 +13,7 @@
       margin-bottom: 8px;
     }
     &.shouqi {
-      max-height: 80px;
+      // max-height: 80px;
     }
   }
 }

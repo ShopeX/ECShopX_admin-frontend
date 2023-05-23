@@ -10,8 +10,8 @@
             :href="origin + '/merchant/login'"
             target="_blank"
             type="primary"
-            >
-商户后台
+          >
+            商户后台
 </el-link
           >。
         </li>
@@ -21,8 +21,8 @@
             :href="origin + '/shopadmin/login'"
             target="_blank"
             type="primary"
-            >
-店铺后台
+          >
+            店铺后台
 </el-link
           >。
         </li>

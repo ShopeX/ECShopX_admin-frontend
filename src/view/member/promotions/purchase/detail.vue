@@ -1,28 +1,15 @@
 <template>
   <div class="section section-white">
-    <div class="section-header with-border">
-      员工内购详情
-    </div>
+    <div class="section-header with-border">员工内购详情</div>
     <div class="section-body">
-      <el-form
-        ref="detail"
-        :model="detail"
-        label-width="150px"
-        label-position="right"
-      >
+      <el-form ref="detail" :model="detail" label-width="150px" label-position="right">
         <el-form-item label="活动名称：">
           {{ detail.purchase_name }}
         </el-form-item>
         <el-form-item label="活动分享图片：">
-          <img
-            class="detail-img"
-            :src="detail.ad_pic"
-          >
+          <img class="detail-img" :src="detail.ad_pic">
         </el-form-item>
-        <el-form-item
-          label="活动有效时间："
-          prop="activity_time"
-        >
+        <el-form-item label="活动有效时间：" prop="activity_time">
           {{ detail.begin_date }} ~ {{ detail.end_date }}
         </el-form-item>
         <el-form-item label="适用角色：">
@@ -37,8 +24,8 @@
         <el-form-item
           v-if="
             detail.used_roles &&
-              detail.used_roles.indexOf('dependents') > -1 &&
-              !detail.is_share_limitfee
+            detail.used_roles.indexOf('dependents') > -1 &&
+            !detail.is_share_limitfee
           "
           label="每位亲友额度："
         >
@@ -51,34 +38,17 @@
           {{ detail.dependents_limit }}
         </el-form-item>
         <el-form-item :label="itemTypeTransform(detail.item_type) + '限购：'">
-          <p v-if="detail.item_type == 'all'">
-            每人限购{{ detail.item_limit }}件
-          </p>
-          <el-table
-            v-else
-            :data="detail.item_limit"
-          >
-            <el-table-column
-              prop="item_id"
-              label="ID"
-            />
-            <el-table-column
-              prop="name"
-              label="名称"
-            />
+          <p v-if="detail.item_type == 'all'">每人限购{{ detail.item_limit }}件</p>
+          <el-table v-else :data="detail.item_limit">
+            <el-table-column prop="item_id" label="ID" />
+            <el-table-column prop="name" label="名称" />
             <el-table-column
               v-if="detail.item_type === 'item'"
               prop="item_spec_desc"
               label="商品规格描述"
             />
-            <el-table-column
-              prop="limit_num"
-              label="每人限购"
-            />
-            <el-table-column
-              prop="limit_fee"
-              label="每人限额"
-            />
+            <el-table-column prop="limit_num" label="每人限购" />
+            <el-table-column prop="limit_fee" label="每人限额" />
           </el-table>
         </el-form-item>
         <el-form-item label="单笔订单最低金额：">
@@ -93,12 +63,12 @@
 import { getPurchaseInfo } from '@/api/purchase'
 
 export default {
-  data () {
+  data() {
     return {
       detail: {}
     }
   },
-  mounted () {
+  mounted() {
     if (this.$route.query.id) {
       let filter = { purchase_id: this.$route.query.id }
       getPurchaseInfo(filter).then((res) => {
@@ -117,7 +87,7 @@ export default {
     }
   },
   methods: {
-    roleTransform (role) {
+    roleTransform(role) {
       if (role) {
         let transRole = eval(role)
         let textArr = []
@@ -126,7 +96,7 @@ export default {
         return textArr.toString()
       }
     },
-    itemTypeTransform (type) {
+    itemTypeTransform(type) {
       switch (type) {
         case 'all':
           return '全部商品'

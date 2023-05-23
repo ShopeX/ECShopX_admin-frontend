@@ -1,0 +1,62 @@
+.wgt-store {
+  &.padded {
+    padding: 10px 0;
+  }
+  .wgt-hd {
+    padding: 10px;
+    .title {
+      font-size: 18px;
+      font-weight: 600;
+      color: #333;
+    }
+    .sub-title {
+      color: #666;
+      margin-left: 4px;
+    }
+  }
+  .wgt-bd {
+    .wgt-block {
+      padding: 10px;
+      margin: 0 8px;
+      border-radius: 8px;
+    }
+    .store-info {
+      display: flex;
+      align-items: center;
+      .name {
+        margin-left: 6px;
+      }
+      .tags {
+        display: flex;
+        margin-left: 6px;
+        .tag {
+          font-size: 12px;
+          margin-right: 4px;
+          border-radius: 4px;
+          border: 1px solid var(--appThemeColor);
+          color: var(--appThemeColor);
+          line-height: 12px;
+          padding: 2px 4px;
+        }
+      }
+    }
+    .activity-goods {
+      margin-top: 8px;
+      .goods-list {
+        margin-top: 8px;
+        display: flex;
+        overflow-x: auto;
+        &::-webkit-scrollbar {
+          display: none;
+        }
+      }
+      .goods-item {
+        display: inline-block;
+        margin-right: 8px;
+      }
+      .sp-price {
+        color: #222;
+      }
+    }
+  }
+}

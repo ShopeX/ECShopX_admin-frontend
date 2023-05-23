@@ -1,15 +1,41 @@
 <template>
   <div v-loading="loading">
     <div v-if="type !== 'sale_category' && type !== 'management_category'">
-      <el-table :data="list" width="100%" height="420" highlight-current-row @current-change="handleCurrentChange">
-        <el-table-column property="id" :label="type === 'other_wxapp' ? 'APPID' : 'ID'" width="120" />
-        <el-table-column property="title" :label="type === 'other_wxapp' ? '页面路径' : '标题名称'" />
+      <el-table
+        :data="list"
+        width="100%"
+        height="420"
+        highlight-current-row
+        @current-change="handleCurrentChange"
+      >
+        <el-table-column
+          property="id"
+          :label="type === 'other_wxapp' ? 'APPID' : 'ID'"
+          width="120"
+        />
+        <el-table-column
+          property="title"
+          :label="type === 'other_wxapp' ? '页面路径' : '标题名称'"
+        />
       </el-table>
-      <el-pagination class="pager" :page-size="params.pageSize" layout="prev, pager, next" :total="total"
-        @current-change="pageChange" />
+      <el-pagination
+        class="pager"
+        :page-size="params.pageSize"
+        layout="prev, pager, next"
+        :total="total"
+        @current-change="pageChange"
+      />
     </div>
-    <el-table v-else :data="list" height="420" row-key="id" default-expand-all highlight-current-row
-      :tree-props="{ children: 'children', hasChildren: 'hasChildren' }" @current-change="handleCurrentChange">
+    <el-table
+      v-else
+      :data="list"
+      height="420"
+      row-key="id"
+      default-expand-all
+      highlight-current-row
+      :tree-props="{ children: 'children', hasChildren: 'hasChildren' }"
+      @current-change="handleCurrentChange"
+    >
       <el-table-column prop="id" label="ID" width="180" />
       <el-table-column prop="title" label="分类名" />
     </el-table>
@@ -158,12 +184,12 @@ export default {
           })
           break
         case 'sale_category':
-          if(VERSION_PLATFORM){
+          if (VERSION_PLATFORM) {
             if (distributor_id) {
-            Object.assign(query, {
-              distributor_id
-            })
-           }
+              Object.assign(query, {
+                distributor_id
+              })
+            }
           }
           api.goods.getCategory(query).then((res) => {
             let items = []
@@ -201,7 +227,6 @@ export default {
           })
           break
         case 'management_category':
-
           Object.assign(query, {
             is_main_category: true
           })

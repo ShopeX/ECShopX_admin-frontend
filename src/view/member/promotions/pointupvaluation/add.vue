@@ -1,25 +1,13 @@
 <template>
-  <el-form
-    ref="form"
-    :model="form"
-    class="box-set"
-    label-width="120px"
-  >
-    <el-card
-      header="积分升值活动"
-      shadow="naver"
-    >
+  <el-form ref="form" :model="form" class="box-set" label-width="120px">
+    <el-card header="积分升值活动" shadow="naver">
       <el-form-item
         label="活动名称"
         prop="title"
         :rules="{ required: true, message: '活动名称必填', trigger: 'blur' }"
       >
         <el-col :span="8">
-          <el-input
-            v-model="form.title"
-            :maxlength="30"
-            placeholder="请输入活动名称"
-          />
+          <el-input v-model="form.title" :maxlength="30" placeholder="请输入活动名称" />
         </el-col>
       </el-form-item>
       <el-form-item label="活动时间">
@@ -37,31 +25,18 @@
           :picker-options="pickerOptions2"
         />
         &nbsp;&nbsp;&nbsp;
-        <el-checkbox v-model="form.is_forever">
-          长期有效
-        </el-checkbox>
+        <el-checkbox v-model="form.is_forever"> 长期有效 </el-checkbox>
       </el-form-item>
       <el-form-item label="日期">
         <el-radio-group v-model="condition">
-          <el-radio label="every_year">
-            每年
-          </el-radio>
-          <el-radio label="every_month">
-            每月
-          </el-radio>
-          <el-radio label="every_week">
-            每周
-          </el-radio>
-          <el-radio label="date">
-            指定日期
-          </el-radio>
+          <el-radio label="every_year"> 每年 </el-radio>
+          <el-radio label="every_month"> 每月 </el-radio>
+          <el-radio label="every_week"> 每周 </el-radio>
+          <el-radio label="date"> 指定日期 </el-radio>
         </el-radio-group>
         <transition name="el-fade-in-linear">
           <div v-if="condition === 'every_year'">
-            <el-select
-              v-model="memberDay.month"
-              placeholder="请选择月份"
-            >
+            <el-select v-model="memberDay.month" placeholder="请选择月份">
               <el-option
                 v-for="item in monthOptions"
                 :key="item.value"
@@ -69,10 +44,7 @@
                 :value="item.value"
               />
             </el-select>
-            <el-select
-              v-model="memberDay.day"
-              placeholder="请选择日期"
-            >
+            <el-select v-model="memberDay.day" placeholder="请选择日期">
               <el-option
                 v-for="item in dayOptions"
                 :key="item.value"
@@ -82,10 +54,7 @@
             </el-select>
           </div>
           <div v-if="condition === 'every_month'">
-            <el-select
-              v-model="memberDay.day"
-              placeholder="请选择日期"
-            >
+            <el-select v-model="memberDay.day" placeholder="请选择日期">
               <el-option
                 v-for="item in dayOptions"
                 :key="item.value"
@@ -95,10 +64,7 @@
             </el-select>
           </div>
           <div v-if="condition === 'every_week'">
-            <el-select
-              v-model="memberDay.week"
-              placeholder="请选择星期"
-            >
+            <el-select v-model="memberDay.week" placeholder="请选择星期">
               <el-option
                 v-for="item in weekOptions"
                 :key="item.value"
@@ -107,10 +73,7 @@
               />
             </el-select>
           </div>
-          <div
-            v-if="condition === 'date'"
-            style="width: 350px"
-          >
+          <div v-if="condition === 'date'" style="width: 350px">
             <el-date-picker
               v-model="memberDay.date"
               type="daterange"
@@ -158,44 +121,25 @@
       </el-form-item>
       <el-form-item label="适用会员">
         <el-checkbox-group v-model="form.valid_grade">
-          <el-checkbox
-            v-for="grade in memberGrade"
-            :key="grade.grade_id"
-            :label="grade.grade_id"
-          >
+          <el-checkbox v-for="grade in memberGrade" :key="grade.grade_id" :label="grade.grade_id">
             {{ grade.grade_name }}
           </el-checkbox>
-          <el-checkbox
-            v-for="vipdata in vipGrade"
-            :key="vipdata.lv_type"
-            :label="vipdata.lv_type"
-          >
+          <el-checkbox v-for="vipdata in vipGrade" :key="vipdata.lv_type" :label="vipdata.lv_type">
             付费{{ vipdata.grade_name }}
           </el-checkbox>
         </el-checkbox-group>
       </el-form-item>
       <el-form-item label="应用场景">
         <el-checkbox-group v-model="form.used_scene">
-          <el-checkbox
-            v-for="(value, key) in used_scene"
-            :key="key"
-            :label="key"
-          >
+          <el-checkbox v-for="(value, key) in used_scene" :key="key" :label="key">
             {{ value }}
           </el-checkbox>
         </el-checkbox-group>
       </el-form-item>
     </el-card>
     <div class="content-center">
-      <el-button @click.native="handleCancel">
-        返回
-      </el-button>
-      <el-button
-        type="primary"
-        @click="submitActivityAction()"
-      >
-        保存
-      </el-button>
+      <el-button @click.native="handleCancel"> 返回 </el-button>
+      <el-button type="primary" @click="submitActivityAction()"> 保存 </el-button>
     </div>
   </el-form>
 </template>
@@ -216,13 +160,13 @@ export default {
   components: {
     imgBox
   },
-  data () {
+  data() {
     return {
       pickerOptions2: {
         shortcuts: [
           {
             text: '最近一周',
-            onClick (picker) {
+            onClick(picker) {
               const end = new Date()
               end.setHours(23, 59, 59, 0)
               const start = new Date()
@@ -233,7 +177,7 @@ export default {
           },
           {
             text: '最近一个月',
-            onClick (picker) {
+            onClick(picker) {
               const end = new Date()
               end.setHours(23, 59, 59, 0)
               const start = new Date()
@@ -244,7 +188,7 @@ export default {
           },
           {
             text: '最近三个月',
-            onClick (picker) {
+            onClick(picker) {
               const end = new Date()
               end.setHours(23, 59, 59, 0)
               const start = new Date()
@@ -291,8 +235,8 @@ export default {
       imgDialog: false
     }
   },
-  mounted () {
-    function filter (val) {
+  mounted() {
+    function filter(val) {
       var x = ''
       switch (val) {
         case 1:
@@ -363,11 +307,11 @@ export default {
     }
   },
   methods: {
-    dateChange (val) {
+    dateChange(val) {
       console.log(val)
       this.memberDay.date = val
     },
-    submitActivityAction () {
+    submitActivityAction() {
       const that = this
       let date_start_time = ''
       let date_end_time = ''
@@ -401,7 +345,7 @@ export default {
               message: '更新成功',
               type: 'success',
               duration: 2 * 1000,
-              onClose () {
+              onClose() {
                 that.refresh()
                 that.$router.go(-1)
               }
@@ -419,7 +363,7 @@ export default {
               message: '添加成功',
               type: 'success',
               duration: 2 * 1000,
-              onClose () {
+              onClose() {
                 that.refresh()
                 that.$router.go(-1)
               }
@@ -431,7 +375,7 @@ export default {
         })
       }
     },
-    getTaskTime (strDate) {
+    getTaskTime(strDate) {
       let date = new Date(strDate)
       let y = date.getFullYear()
       let m = date.getMonth() + 1
@@ -441,7 +385,7 @@ export default {
       let str = y + '-' + m + '-' + d
       return str
     },
-    getActivityDetail (id) {
+    getActivityDetail(id) {
       getPointupvaluationInfo({ activity_id: id }).then((res) => {
         let response = res.data.data
         let data = {
@@ -468,7 +412,7 @@ export default {
         console.log(this.memberDay, 1)
       })
     },
-    formatDate (type, num) {
+    formatDate(type, num) {
       const newNum = Number(num) || 1
       const weeks = ['一', '二', '三', '四', '五', '六', '日']
       console.log(weeks[newNum])

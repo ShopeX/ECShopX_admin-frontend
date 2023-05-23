@@ -35,13 +35,9 @@
             <el-button type="primary" @click="handleBatchIsTotalStore(false)">
               关闭总部发货
             </el-button>
-            <el-button type="primary" @click="handleBatchDownload">
-商品码下载
-</el-button>
+            <el-button type="primary" @click="handleBatchDownload"> 商品码下载 </el-button>
             <export-tip @exportHandle="exportList">
-              <el-button type="primary">
-导出
-</el-button>
+              <el-button type="primary"> 导出 </el-button>
             </export-tip>
           </el-button-group>
         </el-col>
@@ -65,9 +61,7 @@
           <el-table-column type="selection" width="55" />
           <el-table-column label="操作">
             <template slot-scope="scope">
-              <el-button type="text" @click="handleSkuEdit(scope.row)">
-设置SKU
-</el-button>
+              <el-button type="text" @click="handleSkuEdit(scope.row)"> 设置SKU </el-button>
             </template>
           </el-table-column>
           <el-table-column label="上下架操作">
@@ -81,9 +75,7 @@
           <el-table-column prop="item_name" label="商品名称" min-width="300" />
           <el-table-column prop="store" label="商品库存" min-width="120" />
           <el-table-column prop="price" label="商品价格" min-width="120">
-            <template slot-scope="scope">
-{{ scope.row.price }}元
-</template>
+            <template slot-scope="scope"> {{ scope.row.price }}元 </template>
           </el-table-column>
           <el-table-column prop="is_total_store" label="总部发货" width="80">
             <template slot-scope="scope">
@@ -104,9 +96,7 @@
               <div v-else-if="scope.row.approve_status === 'offline_sale'" class="grid-content">
                 前台不展示
               </div>
-              <div v-else class="grid-content">
-不可销售
-</div>
+              <div v-else class="grid-content">不可销售</div>
             </template>
           </el-table-column>
         </el-table>
@@ -168,9 +158,7 @@
               <div v-else-if="scope.row.approve_status === 'offline_sale'" class="grid-content">
                 前台不展示
               </div>
-              <div v-else class="grid-content">
-不可销售
-</div>
+              <div v-else class="grid-content">不可销售</div>
             </template>
           </el-table-column>
           <el-table-column label="上下架操作" width="180">
@@ -246,7 +234,7 @@ export default {
       default: false
     }
   },
-  data () {
+  data() {
     return {
       show_sideBar: false,
       activeName: 'first',
@@ -284,7 +272,7 @@ export default {
   computed: {
     ...mapGetters(['wheight'])
   },
-  mounted () {
+  mounted() {
     this.$nextTick(() => {
       if (this.isLoad) {
         if (!this.distributorId) {
@@ -298,7 +286,7 @@ export default {
   },
   methods: {
     //设置总部发货
-    switchChange (index, row, isDefault) {
+    switchChange(index, row, isDefault) {
       if (row.is_total_store === true) {
         let form = {
           'distributor_id': row.distributor_id,
@@ -326,7 +314,7 @@ export default {
       }
     },
     //变更店铺商品库存
-    editItemsStore (index, row) {
+    editItemsStore(index, row) {
       // if (row.is_total_store === false && (row.store=='' || row.store <= 0) ) {
       //   this.$message({
       //     type: 'error',
@@ -343,17 +331,17 @@ export default {
       this.updateDistributorItem(form)
     },
     //变更店铺商品价格
-    editItemsPrice (index, row) {
+    editItemsPrice(index, row) {
       let form = { 'distributor_id': row.distributor_id, 'item_id': row.itemId, 'price': row.price }
       this.updateDistributorItem(form)
     },
-    storeSearch (val) {
+    storeSearch(val) {
       val && val.shop_id
       this.params.distributor_id = val.shop_id
       this.params.page = 1
       this.getList()
     },
-    handleBatchOnline (goods_can_sale) {
+    handleBatchOnline(goods_can_sale) {
       if (this.itemsChecked.length <= 0) {
         this.$message({ type: 'error', message: '请至少选择一个商品' })
         return
@@ -371,7 +359,7 @@ export default {
       }
       this.updateDistributorItem(form)
     },
-    handleSkuEdit (row) {
+    handleSkuEdit(row) {
       if (row.is_total_store === false) {
         this.editStore = true
       } else {
@@ -383,7 +371,7 @@ export default {
       this.itemSkuParam.name = row.item_name
       this.getSkuList()
     },
-    getSkuList () {
+    getSkuList() {
       const { list, ...restParams } = this.itemSku
       getDistributorItems({ ...this.itemSkuParam, ...restParams }).then((res) => {
         this.itemSku.list = res.data.data.list
@@ -394,7 +382,7 @@ export default {
         }
       })
     },
-    handleClick (tab, event) {
+    handleClick(tab, event) {
       if (tab.name == 'second') {
         this.params.is_can_sale = true
       } else if (tab.name == 'third') {
@@ -405,26 +393,26 @@ export default {
       this.params.page = 1
       this.getList()
     },
-    handleSizeChange (pageSize) {
+    handleSizeChange(pageSize) {
       this.params.page = 1
       this.params.pageSize = pageSize
       this.getList()
     },
-    handleSkuSizeChange (pageSize) {
+    handleSkuSizeChange(pageSize) {
       this.itemSku.page = 1
       this.itemSku.pageSize = pageSize
       this.getSkuList()
     },
-    handleCurrentChange (page_num) {
+    handleCurrentChange(page_num) {
       this.params.page = page_num
       this.getList()
     },
-    handleSkuCurrentChange (page_num) {
+    handleSkuCurrentChange(page_num) {
       this.itemSku.page = page_num
       this.getSkuList()
     },
     // 导出数据
-    exportList () {
+    exportList() {
       let post_date = this.params
       let goods_ids = []
       this.itemsChecked.forEach((item) => {
@@ -442,7 +430,7 @@ export default {
         }
       })
     },
-    getList () {
+    getList() {
       getDistributorItems(this.params).then((response) => {
         if (response.data.data.list) {
           this.list = response.data.data.list
@@ -454,7 +442,7 @@ export default {
         this.loading = false
       })
     },
-    handleItemsSelectionChange (val) {
+    handleItemsSelectionChange(val) {
       // 商品选择
       this.itemsChecked = val
     },
@@ -492,7 +480,7 @@ export default {
         })
       })
     },
-    updateDistributorItem (params) {
+    updateDistributorItem(params) {
       console.log(params)
       updateDistributorItem(params).then((res) => {
         this.getList()
@@ -503,7 +491,7 @@ export default {
         })
       })
     },
-    switchStatusChange (index, row, isDefault) {
+    switchStatusChange(index, row, isDefault) {
       let form = {}
       if (isDefault) {
         form = {
@@ -520,11 +508,11 @@ export default {
       }
       this.updateDistributorItem(form)
     },
-    goodsNumberSearch () {
+    goodsNumberSearch() {
       this.params.page = 1
       this.getList()
     },
-    async getDefaultDistributor (id) {
+    async getDefaultDistributor(id) {
       let params = { distributor_id: id ? id : 0 }
       let { data } = await getDistributorInfo(params)
       let distributor = data.data
@@ -534,13 +522,13 @@ export default {
         this.$router.go(-1)
       }
     },
-    async getDistributorItemList () {
+    async getDistributorItemList() {
       let distributor = await this.getDefaultDistributor(this.params.distributor_id)
       if (!this.params.distributor_id && distributor) {
         this.params.distributor_id = distributor.distributor_id
       }
     },
-    handleBatchIsTotalStore (is_total_store) {
+    handleBatchIsTotalStore(is_total_store) {
       if (this.itemsChecked.length <= 0) {
         this.$message({ type: 'error', message: '请至少选择一个商品' })
         return

@@ -1,18 +1,33 @@
 <script>
 import {
   PickerImage,
-  PickerVideo,
+  PickerFilm,
+  PickerCoupon,
+  PickerCouponPackage,
   PickerGoods,
   PickerGoodsParams,
   PickerShop,
+  PickerSeckill,
+  PickerPath,
+  PickerTag,
+  PickerShopTag,
+  PickerVideo,
   PickerZitiList,
-  PickerAftersalesList
+  PickerAftersalesList,
+  PickerEditBoard,
+  PickerPlanting
 } from './pickers'
 
 function resolvePicker(type) {
   switch (type) {
     case 'pickerImage':
       return PickerImage
+    case 'pickerFilm':
+      return PickerFilm
+    case 'pickerCoupon':
+      return PickerCoupon
+    case 'pickerCouponPackage':
+      return PickerCouponPackage
     case 'pickerVideo':
       return PickerVideo
     case 'pickerGoods':
@@ -21,10 +36,22 @@ function resolvePicker(type) {
       return PickerGoodsParams
     case 'pickerShop':
       return PickerShop
+    case 'pickerSeckill':
+      return PickerSeckill
+    case 'pickerPath':
+      return PickerPath
+    case 'pickerTag':
+      return PickerTag
+    case 'pickerShopTag':
+      return PickerShopTag
     case 'pickerZitiList':
       return PickerZitiList
     case 'pickerAftersalesList':
       return PickerAftersalesList
+    case 'pickerEditBoard':
+      return PickerEditBoard
+    case 'pickerPlanting':
+      return PickerPlanting
     default:
       throw new Error(`picker: ${type} not registered`)
     // break

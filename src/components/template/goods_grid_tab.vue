@@ -212,7 +212,6 @@ export default {
           text-overflow: ellipsis;
           -webkit-line-clamp: 2;
           -webkit-box-orient: vertical;
-          // height: 30px;
           margin-top: 5px;
           line-height: 1.4;
           font-size: 12px;

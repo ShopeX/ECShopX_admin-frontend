@@ -4,32 +4,32 @@
       <el-card>
         <el-row>
           <el-col :span="3">
-            <img class="cus-details-img" src="@/assets/img/adapay/store.png" alt="" />
+            <img class="cus-details-img" src="@/assets/img/adapay/store.png" alt="">
           </el-col>
           <el-col :span="20">
             <div class="cus-details-flex">
               <p class="cus-details-row">{{ infoList.name }}</p>
               <div class="cus-details-pfonts cus-margin-40">
-                <i class="el-icon-location-outline cus-icon"></i>
+                <i class="el-icon-location-outline cus-icon" />
                 <span>{{ infoList.province + infoList.city || '-' }}</span>
               </div>
             </div>
             <p class="cus-details-pfonts">
-              <i class="el-icon-s-custom cus-icon"></i>
+              <i class="el-icon-s-custom cus-icon" />
               <span>{{ infoList.contact || '-' }}</span>
             </p>
             <p class="cus-details-pfonts">
-              <i class="el-icon-time cus-icon"></i>
+              <i class="el-icon-time cus-icon" />
               <span>{{ infoList.hour || '-' }}</span>
             </p>
             <div class="cus-details-flex">
               <div class="cus-details-pfonts">
-                <i class="el-icon-phone cus-icon"></i>
+                <i class="el-icon-phone cus-icon" />
                 <span>{{ infoList.mobile || '-' }}</span>
                 （企业电话）
               </div>
               <div class="cus-details-pfonts cus-margin-50">
-                <i class="el-icon-message cus-icon"></i>
+                <i class="el-icon-message cus-icon" />
                 <span>{{ infoList.email }}</span>
                 （企业邮箱）
               </div>
@@ -49,37 +49,38 @@
         </el-row>
       </el-card>
       <el-card>
-        <el-tabs v-model="activeName" class="cus-details-tabs"  @tab-click="tabChange">
+        <el-tabs v-model="activeName" class="cus-details-tabs" @tab-click="tabChange">
           <el-tab-pane v-if="loginType === 'admin'" label="基本信息" name="first">
-            <BaseModal :span="20" :labelList="baseInfo" :info="infoList" title="地理位置" />
+            <BaseModal :span="20" :label-list="baseInfo" :info="infoList" title="地理位置" />
             <BaseModal
+              v-if="is_rel_dealer"
               :span="20"
-              :labelList="otherInfo"
+              :label-list="otherInfo"
               :info="dealerList"
               title="其他信息"
-              v-if="is_rel_dealer"
             />
           </el-tab-pane>
-          <el-tab-pane label="开户信息" name="second" v-if="is_openAccount">
+          <el-tab-pane v-if="is_openAccount" label="开户信息" name="second">
             <BaseModal
               :span="7"
-              :labelList="member_type === 'corp' ? enterPriseList : personInfo"
+              :label-list="member_type === 'corp' ? enterPriseList : personInfo"
               :info="accountInfo"
               :title="
                 member_type === 'corp'
                   ? `企业信息 ${accountInfo.audit_desc_1 || ''}`
-                  : '个人信息 ' + `${accountInfo.audit_desc_1 || ''}`"
+                  : '个人信息 ' + `${accountInfo.audit_desc_1 || ''}`
+              "
             />
             <BaseModal
               :span="7"
-              :labelList="member_type === 'corp' ? enterAccountInfo : accountList"
+              :label-list="member_type === 'corp' ? enterAccountInfo : accountList"
               :info="accountInfo"
               :title="'结算账户信息' + `${accountInfo.audit_desc_2 || ''}`"
             />
             <BaseModal
-              :span="7"
               v-if="loginType === 'admin'"
-              :labelList="
+              :span="7"
+              :label-list="
                 is_rel_dealer && is_openAccount && member_type === 'corp'
                   ? enterSplitAccountList
                   : splitAccountList
@@ -92,19 +93,27 @@
               <div class="body">
                 <el-row class="load-btn">
                   <el-col :span="4" style="text-align: right; padding-right: 10px"
-                    >附件信息：</el-col
+                    >
+附件信息：
+</el-col
                   >
-                  <el-col :span="20" class="cus-btn" v-if="member_type === 'corp'">
-                    <el-button @click="dowloadFile(infoList.attach_file)" type="text"
-                      >附件</el-button
+                  <el-col v-if="member_type === 'corp'" :span="20" class="cus-btn">
+                    <el-button type="text" @click="dowloadFile(infoList.attach_file)"
+                      >
+附件
+</el-button
                     >
                   </el-col>
                   <span v-else>-</span>
                 </el-row>
               </div>
             </el-card>
-            <div class="btn" v-if="datapass_block != 1 && loginType != 'admin'">
-              <el-button type="primary" @click="editHandle" v-if="accountInfo.audit_state != 'A'">编辑</el-button>
+            <div v-if="datapass_block != 1 && loginType != 'admin'" class="btn">
+              <el-button v-if="accountInfo.audit_state != 'A'" type="primary" @click="editHandle"
+                >
+编辑
+</el-button
+              >
               <el-button v-if="accountInfo.audit_state == 'A'">审核中</el-button>
             </div>
           </el-tab-pane>
@@ -135,14 +144,15 @@
               :total="total_count"
               @current-change="handleCurrentChange"
               @size-change="handleSizeChange"
-            >
-            </el-pagination>
+            />
           </el-tab-pane>
         </el-tabs>
       </el-card>
       <el-row v-if="is_rel_dealer && loginType === 'admin'" class="cus-details-bot">
-        <el-button type="primary" @click="handleModalClick(true, is_openAccount)" size="small" plain
-          >解除关联</el-button
+        <el-button type="primary" size="small" plain @click="handleModalClick(true, is_openAccount)"
+          >
+解除关联
+</el-button
         >
       </el-row>
       <RemoveShipModal
@@ -154,10 +164,10 @@
     </template>
     <template v-else>
       <editAccount
-        :activeName="accountInfo.member_type"
+        :active-name="accountInfo.member_type"
         :info="accountInfo"
         @back="back"
-      ></editAccount>
+      />
     </template>
   </div>
 </template>
@@ -248,12 +258,22 @@ export default {
       ]
     }
   },
+  mounted() {
+    if (this.$route.query.distributor_id || this.$store.getters.login_type === 'distributor') {
+      this.distributor_id = this.$route.query.distributor_id ? this.$route.query.distributor_id : 0
+      this.loginType = this.$store.getters.login_type
+      if (this.$store.getters.login_type === 'distributor' || this.is_openAccount) {
+        this.activeName = 'second'
+      }
+      this.getTabDetail()
+    }
+  },
   methods: {
     handleCurrentChange(page_num) {
       this.params.page = page_num
       this.getLogList()
     },
-    handleSizeChange (pageSize) {
+    handleSizeChange(pageSize) {
       this.params.page = 1
       this.params.page_size = pageSize
       this.getLogList()
@@ -315,7 +335,7 @@ export default {
           })
         })
     },
-    getLogList () {
+    getLogList() {
       getAdapayLogList({
         log_type: 'distributor',
         ...this.params,
@@ -333,7 +353,7 @@ export default {
           })
         })
     },
-    handleModalClick (visible, is_openAccount) {
+    handleModalClick(visible, is_openAccount) {
       const { username } = this.dealerList
       this.visible = visible
       if (visible && !is_openAccount) {
@@ -343,7 +363,7 @@ export default {
         this.modalContent = '如解除关联，需重新设置总部分账占比。'
       }
     },
-    bankFilter () {
+    bankFilter() {
       let { bank_acct_type } = this.infoList
       let returnValue = ''
       switch (bank_acct_type) {
@@ -356,7 +376,7 @@ export default {
       }
       return returnValue
     },
-    adapayFilter () {
+    adapayFilter() {
       let { adapay_fee_mode } = this.split_ledger_info
       let returnValue = ''
       switch (adapay_fee_mode) {
@@ -369,19 +389,19 @@ export default {
       }
       return returnValue
     },
-    headquartersFilter () {
+    headquartersFilter() {
       // 总部分账占比过滤
       let { headquarters_proportion } = this.split_ledger_info
       let value = this.split_ledger_info.headquarters_proportion
       return value ? value + '%' : '-'
     },
-    dealerFilter () {
+    dealerFilter() {
       // 经销商分账占比过滤
       let { dealer_proportion } = this.split_ledger_info
       let value = this.split_ledger_info.dealer_proportion
       return value ? value + '%' : '-'
     },
-    dowloadFile (url) {
+    dowloadFile(url) {
       let link = document.createElement('a')
       link.style.display = 'none'
       link.href = url
@@ -392,18 +412,8 @@ export default {
         message: '下载成功'
       })
     },
-    back () {
+    back() {
       this.isEdit = false
-    }
-  },
-  mounted () {
-    if (this.$route.query.distributor_id || this.$store.getters.login_type === 'distributor') {
-      this.distributor_id = this.$route.query.distributor_id ? this.$route.query.distributor_id : 0
-      this.loginType = this.$store.getters.login_type
-      if (this.$store.getters.login_type === 'distributor' || this.is_openAccount) {
-        this.activeName = 'second'
-      }
-      this.getTabDetail()
     }
   }
 }

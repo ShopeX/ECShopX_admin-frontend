@@ -1,10 +1,6 @@
 <template>
   <div class="wheel">
-    <el-form
-      ref="dataForm"
-      :model="dataForm"
-      label-width="125px"
-    >
+    <el-form ref="dataForm" :model="dataForm" label-width="125px">
       <el-row :gutter="20">
         <el-col :span="6">
           <el-form-item label="是否开启大转盘">
@@ -17,10 +13,7 @@
           </el-form-item>
         </el-col>
         <el-col :span="12">
-          <el-form-item
-            v-if="!dataForm.long_term"
-            label="活动周期"
-          >
+          <el-form-item v-if="!dataForm.long_term" label="活动周期">
             <el-date-picker
               v-model="dataForm.long_date"
               type="daterange"
@@ -30,33 +23,21 @@
               value-format="timestamp"
             />
           </el-form-item>
-          <div
-            v-else
-            style="height: 40px; margin-bottom: 22px"
-          />
+          <div v-else style="height: 40px; margin-bottom: 22px" />
         </el-col>
         <el-col :span="6">
           <el-form-item label="大转盘标题">
-            <el-input
-              v-model="dataForm.turntable_title"
-              maxlength="20"
-            />
+            <el-input v-model="dataForm.turntable_title" maxlength="20" />
           </el-form-item>
         </el-col>
         <el-col :span="6">
           <el-form-item label="每天最大抽奖次数">
-            <el-input
-              v-model="dataForm.max_times_day"
-              maxlength="20"
-            />
+            <el-input v-model="dataForm.max_times_day" maxlength="20" />
           </el-form-item>
         </el-col>
         <el-col :span="6">
           <el-form-item label="登录送抽奖次数">
-            <el-input
-              v-model="dataForm.login_get_times"
-              maxlength="20"
-            />
+            <el-input v-model="dataForm.login_get_times" maxlength="20" />
           </el-form-item>
         </el-col>
         <el-col :span="6">
@@ -66,23 +47,12 @@
         </el-col>
         <el-col :span="6">
           <el-form-item label="购物满">
-            <el-input
-              v-model="dataForm.shopping_full"
-              maxlength="20"
-            />
+            <el-input v-model="dataForm.shopping_full" maxlength="20" />
           </el-form-item>
         </el-col>
-        <el-col
-          :span="6"
-          class="line-height__40"
-        >
-          元获取一次抽奖次数
-        </el-col>
+        <el-col :span="6" class="line-height__40"> 元获取一次抽奖次数 </el-col>
         <el-col :span="12">
-          <el-form-item
-            label="活动结束时清空抽奖次数"
-            label-width="170px"
-          >
+          <el-form-item label="活动结束时清空抽奖次数" label-width="170px">
             <el-switch v-model="dataForm.clear_times_after_end" />
           </el-form-item>
         </el-col>
@@ -90,24 +60,12 @@
     </el-form>
     <div class="wheel-con">
       <el-tabs v-model="activeName">
-        <el-tab-pane
-          label="奖项配置"
-          name="1"
-        >
+        <el-tab-pane label="奖项配置" name="1">
           <div class="wheel-con__table">
-            <el-table
-              :data="tableData"
-              style="width: 100%"
-            >
-              <el-table-column
-                label="奖项类型"
-                width="140"
-              >
+            <el-table :data="tableData" style="width: 100%">
+              <el-table-column label="奖项类型" width="140">
                 <template slot-scope="scope">
-                  <el-select
-                    v-model="scope.row.prize_type"
-                    @change="handleChangeType(scope)"
-                  >
+                  <el-select v-model="scope.row.prize_type" @change="handleChangeType(scope)">
                     <el-option
                       v-for="item in prize_type_options"
                       :key="item.value"
@@ -117,22 +75,13 @@
                   </el-select>
                 </template>
               </el-table-column>
-              <el-table-column
-                label="奖项名称"
-                width="130"
-              >
+              <el-table-column label="奖项名称" width="130">
                 <template slot-scope="scope">
-                  <el-input
-                    v-model="scope.row.prize_name"
-                    maxlength="4"
-                  />
+                  <el-input v-model="scope.row.prize_name" maxlength="4" />
                 </template>
               </el-table-column>
 
-              <el-table-column
-                label="奖项描述"
-                width="130"
-              >
+              <el-table-column label="奖项描述" width="130">
                 <template slot-scope="scope">
                   <el-input v-model="scope.row.prize_describe" />
                 </template>
@@ -149,10 +98,7 @@
                 </template>
               </el-table-column>
               <el-table-column label="奖项值">
-                <template
-                  v-if="isCheck"
-                  slot-scope="scope"
-                >
+                <template v-if="isCheck" slot-scope="scope">
                   <el-input
                     v-if="scope.row.prize_type === 'points'"
                     v-model="scope.row.prize_value"
@@ -187,29 +133,19 @@
                   </el-select>
                 </template>
               </el-table-column>
-              <el-table-column
-                prop="address"
-                label="图片"
-              >
+              <el-table-column prop="address" label="图片">
                 <template slot-scope="scope">
                   <el-image
                     style="width: 30px; height: 30px"
                     :src="scope.row.prize_image"
                     fit="fill"
                   />
-                  <el-button
-                    type="primary"
-                    size="mini"
-                    @click="handleClickUpload(scope.$index)"
-                  >
+                  <el-button type="primary" size="mini" @click="handleClickUpload(scope.$index)">
                     图片上传
                   </el-button>
                 </template>
               </el-table-column>
-              <el-table-column
-                prop="address"
-                label="设置商品"
-              >
+              <el-table-column prop="address" label="设置商品">
                 <template slot-scope="scope">
                   <el-select
                     v-if="scope.row.prize_type === 'coupon' && scope.row.goods_options.length > 0"
@@ -225,10 +161,7 @@
                   </el-select>
                 </template>
               </el-table-column>
-              <el-table-column
-                label="操作"
-                width="100"
-              >
+              <el-table-column label="操作" width="100">
                 <template slot-scope="scope">
                   <el-button
                     type="text"
@@ -240,19 +173,10 @@
                 </template>
               </el-table-column>
             </el-table>
-            <el-button
-              class="add-prize"
-              type="primary"
-              @click="handleClickAdd"
-            >
-              添加
-            </el-button>
+            <el-button class="add-prize" type="primary" @click="handleClickAdd"> 添加 </el-button>
           </div>
         </el-tab-pane>
-        <el-tab-pane
-          label="大转盘配置"
-          name="2"
-        >
+        <el-tab-pane label="大转盘配置" name="2">
           <div class="wheel-con__turntable">
             <div class="turntable-box">
               <div class="turntable-box__background">
@@ -270,10 +194,7 @@
                     'box-shadow': `0px 0px 5px 5px ${turntableData.shadow_color}`
                   }"
                 >
-                  <ul
-                    class="turntable-bg"
-                    :style="{ transform: `rotate(${rotateBg}deg)` }"
-                  >
+                  <ul class="turntable-bg" :style="{ transform: `rotate(${rotateBg}deg)` }">
                     <li
                       v-for="(item, index) in tableData"
                       :key="index"
@@ -283,10 +204,7 @@
                       }"
                     />
                   </ul>
-                  <ul
-                    class="turntable-gift"
-                    :style="{ transform: `rotate(${rotateGift}deg)` }"
-                  >
+                  <ul class="turntable-gift" :style="{ transform: `rotate(${rotateGift}deg)` }">
                     <li
                       v-for="(item, index) in tableData"
                       :key="index"
@@ -310,25 +228,15 @@
                     />
                   </div>
                 </div>
-                <div
-                  class="turntable-box__con-describe"
-                  v-html="turntableData.describe"
-                />
+                <div class="turntable-box__con-describe" v-html="turntableData.describe" />
               </div>
             </div>
             <div class="turntable-setup">
-              <el-form
-                ref="turntableData"
-                :model="turntableData"
-                label-width="120px"
-              >
+              <el-form ref="turntableData" :model="turntableData" label-width="120px">
                 <el-row :gutter="20">
                   <el-col :span="24">
                     <el-form-item label="背景">
-                      <el-button
-                        size="mini"
-                        @click="handleClickAddBackground"
-                      >
+                      <el-button size="mini" @click="handleClickAddBackground">
                         添加背景图
                       </el-button>
                       <el-button
@@ -342,12 +250,7 @@
                   </el-col>
                   <el-col :span="24">
                     <el-form-item label="背景">
-                      <el-button
-                        size="mini"
-                        @click="handleClickAddPointer"
-                      >
-                        上传指针
-                      </el-button>
+                      <el-button size="mini" @click="handleClickAddPointer"> 上传指针 </el-button>
                       <el-button
                         v-if="turntableData.pointer_img"
                         size="mini"
@@ -359,36 +262,22 @@
                   </el-col>
                   <el-col :span="8">
                     <el-form-item label="边框颜色">
-                      <el-color-picker
-                        v-model="turntableData.border_color"
-                        show-alpha
-                      />
+                      <el-color-picker v-model="turntableData.border_color" show-alpha />
                     </el-form-item>
                   </el-col>
                   <el-col :span="8">
                     <el-form-item label="阴影颜色">
-                      <el-color-picker
-                        v-model="turntableData.shadow_color"
-                        show-alpha
-                      />
+                      <el-color-picker v-model="turntableData.shadow_color" show-alpha />
                     </el-form-item>
                   </el-col>
                   <el-col :span="8">
                     <el-form-item label="分割线颜色">
-                      <el-color-picker
-                        v-model="turntableData.line_color"
-                        show-alpha
-                      />
+                      <el-color-picker v-model="turntableData.line_color" show-alpha />
                     </el-form-item>
                   </el-col>
                   <el-col :span="24">
                     <el-form-item label="活动描述">
-                      <vue-html5-editor
-                        ref="editor"
-                        :content="turntableData.describe"
-                        :height="360"
-                        @change="handelChangeUpdateContent"
-                      />
+                      <SpRichText v-model="turntableData.describe" />
                     </el-form-item>
                   </el-col>
                 </el-row>
@@ -399,12 +288,7 @@
       </el-tabs>
     </div>
     <div class="wheel-save">
-      <el-button
-        type="danger"
-        @click="handleClickSave"
-      >
-        保存
-      </el-button>
+      <el-button type="danger" @click="handleClickSave"> 保存 </el-button>
     </div>
     <imgPicker
       :dialog-visible="picsDialog"
@@ -424,7 +308,7 @@ export default {
   components: {
     imgPicker
   },
-  data () {
+  data() {
     return {
       activeName: '1',
       dataForm: {
@@ -478,32 +362,32 @@ export default {
     }
   },
   watch: {
-    tableData (value) {
+    tableData(value) {
       this.rotateBg = 360 / value.length / 2
       this.rotateGift = -(360 / value.length - 45)
     }
   },
 
-  mounted () {
+  mounted() {
     this._getEffectiveCardList()
     this._getSurntableconfig()
   },
 
   methods: {
-    handelChangeUpdateContent (data) {
+    handelChangeUpdateContent(data) {
       this.turntableData.describe = data
     },
     /**
      * 获取奖项值 list
      * */
-    _getEffectiveCardList () {
+    _getEffectiveCardList() {
       const requestData = { page_size: 1000 }
       getEffectiveCardList(requestData).then((response) => {
         this.coupon_options = response.data.data.list
       })
     },
 
-    handleChangeType (item) {
+    handleChangeType(item) {
       this.isCheck = false
       item.row.prize_value = ''
       if (item.row.prize_type === 'coupons') {
@@ -514,11 +398,11 @@ export default {
       })
     },
 
-    handleClickDel (row, index) {
+    handleClickDel(row, index) {
       this.tableData.splice(index, 1)
     },
 
-    handleClickAdd () {
+    handleClickAdd() {
       if (this.tableData.length >= 8) return
       this.tableData.push({
         prize_type: '', //奖项类型
@@ -536,7 +420,7 @@ export default {
     /**
      * 获取大转盘详情
      * */
-    _getSurntableconfig () {
+    _getSurntableconfig() {
       getSurntableconfig({}).then((res) => {
         if (Array.isArray(res)) return
 
@@ -574,35 +458,35 @@ export default {
     /**
      * 上传背景图
      * */
-    handleClickAddBackground () {
+    handleClickAddBackground() {
       this.isB = true
       this.isP = false
       this.picsDialog = true
       this.isGetPics = true
     },
 
-    handleClickDelBackground () {
+    handleClickDelBackground() {
       this.turntableData.background_img = ''
     },
 
     /**
      * 上传指针
      * */
-    handleClickAddPointer () {
+    handleClickAddPointer() {
       this.isB = false
       this.isP = true
       this.picsDialog = true
       this.isGetPics = true
     },
 
-    handleClickDelPointer () {
+    handleClickDelPointer() {
       this.turntableData.pointer_img = ''
     },
 
     /**
      * 上传图片
      * */
-    handleClickUpload (index) {
+    handleClickUpload(index) {
       this.isB = false
       this.isP = false
       this.picsDialog = true
@@ -613,7 +497,7 @@ export default {
     /**
      * 上传图片回调
      * */
-    pickPics (item) {
+    pickPics(item) {
       console.log(1111, item.url, this.upload_index)
       if (this.isB) {
         this.turntableData.background_img = item.url
@@ -625,14 +509,14 @@ export default {
       this.picsDialog = false
     },
 
-    closePicsDialog () {
+    closePicsDialog() {
       this.picsDialog = false
     },
 
     /**
      * 选择奖项值
      * */
-    async handleChangePrizaValue (item, index) {
+    async handleChangePrizaValue(item, index) {
       console.log('handleChangePrizaValue', item)
       let { data } = await getGoodsbycoupon(item.prize_value)
       let { list } = data.data
@@ -653,7 +537,7 @@ export default {
     /**
      * 保存
      * */
-    handleClickSave () {
+    handleClickSave() {
       let nTableData = JSON.parse(JSON.stringify(this.tableData))
 
       let num = nTableData.reduce((accumulator, currentValue) => {

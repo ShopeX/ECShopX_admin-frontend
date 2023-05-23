@@ -2,18 +2,12 @@
   <el-table ref="Table" :data="seletedCoupon" tooltip-effect="dark" style="width: 100%" border>
     <el-table-column label="卡劵类型" width="120">
       <template slot-scope="scope">
-        <template v-if="scope.row.card_type == 'new_gift'">
-兑换券
-</template>
+        <template v-if="scope.row.card_type == 'new_gift'"> 兑换券 </template>
         <!-- <template v-if="scope.row.card_type == 'gift'">
           兑换券
         </template> -->
-        <template v-if="scope.row.card_type == 'discount'">
-折扣卷
-</template>
-        <template v-if="scope.row.card_type == 'cash'">
-满减券
-</template>
+        <template v-if="scope.row.card_type == 'discount'"> 折扣卷 </template>
+        <template v-if="scope.row.card_type == 'cash'"> 满减券 </template>
       </template>
     </el-table-column>
     <el-table-column prop="title" label="卡劵名称" width="120" />
@@ -63,7 +57,7 @@
 export default {
   props: ['seletedCoupon', 'type'],
   methods: {
-    deleteRow (index, rows) {
+    deleteRow(index, rows) {
       this.$emit('deleteRowHandle', index)
     }
   }

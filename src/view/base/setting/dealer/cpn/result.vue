@@ -1,14 +1,8 @@
 <template>
   <div class="cpn-result">
-    <div
-      v-if="currentStatus.resultStatus == 'failed'"
-      class="content"
-    >
+    <div v-if="currentStatus.resultStatus == 'failed'" class="content">
       <div class="img">
-        <img
-          :src="fail_IMG"
-          alt=""
-        >
+        <img :src="fail_IMG" alt="">
       </div>
       <div class="tips">
         <p>
@@ -17,19 +11,11 @@
         </p>
         <p>建议查看审批详情修改入驻信息再提交审核</p>
       </div>
-      <div class="errinfo">
-        审批意见：{{ currentStatus.info || '-' }}
-      </div>
+      <div class="errinfo">审批意见：{{ currentStatus.info || '-' }}</div>
     </div>
-    <div
-      v-else-if="currentStatus.resultStatus == 'succeeded'"
-      class="content"
-    >
+    <div v-else-if="currentStatus.resultStatus == 'succeeded'" class="content">
       <div class="img">
-        <img
-          :src="success_IMG"
-          alt=""
-        >
+        <img :src="success_IMG" alt="">
       </div>
       <div class="tips">
         <p>
@@ -43,29 +29,17 @@
         </p>
       </div>
     </div>
-    <div
-      v-else-if="currentStatus.resultStatus == 'netin'"
-      class="content"
-    >
+    <div v-else-if="currentStatus.resultStatus == 'netin'" class="content">
       <div class="img">
-        <img
-          :src="success_IMG"
-          alt=""
-        >
+        <img :src="success_IMG" alt="">
       </div>
       <div class="tips">
         <p>您的入网环节顺利完成</p>
       </div>
     </div>
-    <div
-      v-else
-      class="content"
-    >
+    <div v-else class="content">
       <div class="img">
-        <img
-          :src="wait_IMG"
-          alt=""
-        >
+        <img :src="wait_IMG" alt="">
       </div>
       <div class="tips">
         <p>已提交审核，请耐心等待～</p>
@@ -73,18 +47,10 @@
       </div>
     </div>
     <div class="btn">
-      <el-button
-        v-if="currentStatus.resultStatus == 'failed'"
-        type="primary"
-        @click="reset"
-      >
+      <el-button v-if="currentStatus.resultStatus == 'failed'" type="primary" @click="reset">
         重新填写
       </el-button>
-      <el-button
-        v-if="currentStatus.resultStatus == 'succeeded'"
-        type="primary"
-        @click="next"
-      >
+      <el-button v-if="currentStatus.resultStatus == 'succeeded'" type="primary" @click="next">
         下一步
       </el-button>
       <el-button
@@ -117,7 +83,7 @@ export default {
       })
     }
   },
-  data () {
+  data() {
     return {
       wait_IMG,
       success_IMG,
@@ -126,17 +92,17 @@ export default {
       day: '86400' // 一天的时间戳
     }
   },
-  mounted () {
+  mounted() {
     // this.configHandle();
   },
   methods: {
-    reset () {
+    reset() {
       this.$emit('processedHandle')
     },
-    next () {
+    next() {
       this.$emit('nextPage')
     },
-    configHandle () {
+    configHandle() {
       if (this.currentStatus.resultStatus == 'netin') {
         if (this.$store.getters.login_type == 'dealer') {
           const isShow = localStorage.getItem('dealer_isShow')
@@ -149,7 +115,7 @@ export default {
         }
       }
     },
-    nextCenter () {
+    nextCenter() {
       if (this.$store.getters.login_type == 'dealer') {
         window.localStorage.setItem('dealer_isShow', true)
         this.$router.push({

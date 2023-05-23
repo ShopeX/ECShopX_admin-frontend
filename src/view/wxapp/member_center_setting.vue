@@ -1,30 +1,13 @@
 <template>
-  <el-card
-    shadow="never"
-    header="会员中心设置"
-  >
-    <el-tabs
-      v-model="activeName"
-      type="border-card"
-      @tab-click="handleClick"
-    >
-      <el-tab-pane
-        label="会员中心BANNER"
-        name="banner"
-      >
+  <el-card shadow="never" header="会员中心设置">
+    <el-tabs v-model="activeName" type="border-card" @tab-click="handleClick">
+      <el-tab-pane label="会员中心BANNER" name="banner">
         <bannerTemplates />
       </el-tab-pane>
-      <el-tab-pane
-        label="菜单隐藏显示设置"
-        name="menuoption"
-      >
+      <el-tab-pane label="菜单隐藏显示设置" name="menuoption">
         <menuoptionTemplates />
       </el-tab-pane>
-      <el-tab-pane
-        v-if="!VERSION_IN_PURCHASE"
-        label="页面跳转设置"
-        name="redirect"
-      >
+      <el-tab-pane v-if="!VERSION_IN_PURCHASE" label="页面跳转设置" name="redirect">
         <redirectTemplates />
       </el-tab-pane>
       <!-- <el-tab-pane
@@ -50,18 +33,18 @@ export default {
     menuoptionTemplates,
     wechatshareTemplates
   },
-  data () {
+  data() {
     return {
       activeName: 'banner'
     }
   },
-  mounted () {
+  mounted() {
     if ('undefined' != typeof this.$route.query.activeName) {
       this.activeName = this.$route.query.activeName
     }
   },
   methods: {
-    handleClick (tab, event) {
+    handleClick(tab, event) {
       if (this.activeName === 'banner') {
       } else if (this.activeName === 'redirect') {
       }

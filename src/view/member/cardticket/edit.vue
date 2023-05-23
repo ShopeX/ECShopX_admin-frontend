@@ -322,12 +322,20 @@
 
           <el-col :xs="12" :sm="12" :md="12">
             <div v-if="!categoryHidden" style="height: 350px" class="custom_tree">
-              <treeselect
+              <!-- <treeselect
                 v-model="form.item_category"
                 :options="categoryList"
                 :show-count="true"
                 :multiple="true"
                 :disable-branch-nodes="true"
+              /> -->
+              <el-cascader
+                v-model="form.item_category"
+                style="width: 500px"
+                placeholder="请选择"
+                clearable
+                :options="categoryList"
+                :props="{ value: 'category_id', label: 'category_name', checkStrictly: true }"
               />
             </div>
           </el-col>
@@ -1162,10 +1170,9 @@ export default {
         this.form.most_cost = 999999
       }
     },
-    fetchMainCate() {
-      getCategory({ is_main_category: true, ignore_none: true }).then((response) => {
-        this.categoryList = response.data.data
-      })
+    async fetchMainCate() {
+      const res = await this.$api.goods.getCategory({ is_main_category: true, ignore_none: true })
+      this.categoryList = res
     },
     addItemTag() {
       this.tag.currentTags = []

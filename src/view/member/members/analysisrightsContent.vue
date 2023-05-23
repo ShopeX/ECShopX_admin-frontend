@@ -1,44 +1,19 @@
 <template>
   <div class="section-white content-padded">
     <el-card class="box-card">
-      <div
-        slot="header"
-        class="clearfix"
-      >
+      <div slot="header" class="clearfix">
         <span>会员权益</span>
       </div>
       <div class="text item">
-        <el-form
-          ref="form_content"
-          :model="form_content"
-          :rles="rules"
-          label-width="80px"
-        >
-          <el-form-item
-            label="会员权益"
-            prop="content"
-          >
-            <vue-html5-editor
-              ref="editor"
-              :content="form_content.content"
-              :height="360"
-              @change="updateContent"
-            />
-            <span
-              class="tpl_item img"
-              style=""
-              @click="addImgPreview"
-            >
+        <el-form ref="form_content" :model="form_content" :rles="rules" label-width="80px">
+          <el-form-item label="会员权益" prop="content">
+            <SpRichText v-model="form_content.content" />
+            <span class="tpl_item img" style="" @click="addImgPreview">
               <i class="iconfont icon-image" />图片
             </span>
           </el-form-item>
           <div class="section-footer with-border content-center">
-            <el-button
-              type="primary"
-              @click="saveContent"
-            >
-              保存
-            </el-button>
+            <el-button type="primary" @click="saveContent"> 保存 </el-button>
           </div>
         </el-form>
       </div>
@@ -60,7 +35,7 @@ export default {
   components: {
     imgPicker
   },
-  data () {
+  data() {
     return {
       form_content: {
         content: ''
@@ -72,7 +47,7 @@ export default {
       isGetThumb: false
     }
   },
-  mounted () {
+  mounted() {
     getMemberanalysisrightsContent().then((response) => {
       this.form_content.content = response.data.data.content
     })
@@ -81,7 +56,7 @@ export default {
     updateContent: function (data) {
       this.form_content.content = data
     },
-    saveContent () {
+    saveContent() {
       this.$refs['form_content'].validate((valid) => {
         if (valid) {
           setMemberanalysisrightsContent(this.form_content).then((response) => {

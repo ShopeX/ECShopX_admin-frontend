@@ -106,53 +106,61 @@ export default {
       default: 'normal'
     }
   },
+  watch: {
+    value: {
+      handler(nVal) {
+        this.localValue = nVal
+      },
+      deep: true,
+      immediate: true
+    }
+  },
   created() {},
   methods: {
     // 图片添加
     async handleSelectImage() {
-      console.log('handleSelectImage:', this.max, this.value)
       const { data } = await this.$picker.video({
         multiple: this.max > 1,
-        num: this.max > 1 ? this.max - this.value.length : 1
+        num: this.max > 1 ? this.max - this.localValue.length : 1
       })
-      if (isString(this.value)) {
+      if (isString(this.localValue)) {
         this.updateValue(data.url)
-      } else if (isObject(this.value)) {
+      } else if (isObject(this.localValue)) {
         this.updateValue(data)
-      } else if (isArray(this.value)) {
+      } else if (isArray(this.localValue)) {
         if (this.type == 'string') {
           const res = data.map(({ url }) => url)
-          this.updateValue(this.value.concat(res))
+          this.updateValue(this.localValue.concat(res))
         } else {
-          this.updateValue(this.value.concat(data))
+          this.updateValue(this.localValue.concat(data))
         }
       }
     },
 
     async onUpdateImage(index) {
       let val
-      if (isArray(this.value)) {
-        val = this.value[index]
-      } else if (isObject(this.value)) {
-        val = this.value.url
+      if (isArray(this.localValue)) {
+        val = this.localValue[index]
+      } else if (isObject(this.localValue)) {
+        val = this.localValue.url
       } else {
-        val = this.value
+        val = this.localValue
       }
       const { data } = await this.$picker.video({
         data: val
       })
-      if (isArray(this.value)) {
+      if (isArray(this.localValue)) {
         if (this.type == 'string') {
-          Vue.set(this.value, index, data.url)
+          Vue.set(this.localValue, index, data.url)
         } else {
-          Vue.set(this.value, index, data)
+          Vue.set(this.localValue, index, data)
         }
-      } else if (isObject(this.value)) {
-        this.value = data
+      } else if (isObject(this.localValue)) {
+        this.localValue = data
       } else {
-        this.value = data.url
+        this.localValue = data.url
       }
-      this.updateValue(this.value)
+      this.updateValue(this.localValue)
     },
 
     updateValue(val) {
@@ -161,7 +169,7 @@ export default {
     },
 
     handleDeleteItem(index) {
-      let tempValue = JSON.parse(JSON.stringify(this.value))
+      let tempValue = JSON.parse(JSON.stringify(this.localValue))
       if (isArray(tempValue)) {
         tempValue.splice(index, 1)
       } else {

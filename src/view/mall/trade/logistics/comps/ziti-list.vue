@@ -152,7 +152,9 @@ export default {
       this.$refs['finder'].refresh()
     },
     createZitiAddress() {
-      const url = IS_DISTRIBUTOR ? '/shopadmin/order/logistics/addziti' : '/order/entitytrade/logistics/addziti'
+      const url = IS_DISTRIBUTOR
+        ? '/shopadmin/order/logistics/addziti'
+        : '/order/entitytrade/logistics/addziti'
       this.$router.push({
         path: url
       })

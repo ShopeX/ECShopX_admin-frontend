@@ -2,32 +2,16 @@
   <div>
     <el-card>
       <div style="width: 70%">
-        <el-form
-          v-loading="loading"
-          label-width="180px"
-          :model="form"
-        >
+        <el-form v-loading="loading" label-width="180px" :model="form">
           <el-form-item label="小程序AppId">
-            <el-input
-              v-model="form.authorizer_appid"
-              type="text"
-            />
+            <el-input v-model="form.authorizer_appid" type="text" />
           </el-form-item>
           <el-form-item label="应用私钥">
-            <el-input
-              v-model="form.merchant_private_key"
-              type="textarea"
-              :rows="5"
-            />
+            <el-input v-model="form.merchant_private_key" type="textarea" :rows="5" />
           </el-form-item>
           <el-form-item label="api加密类型">
             <div>
-              <el-radio
-                v-model="form.api_sign_method"
-                label="key"
-              >
-                密钥
-              </el-radio>
+              <el-radio v-model="form.api_sign_method" label="key"> 密钥 </el-radio>
               <!-- <el-radio
                 v-model="form.api_sign_method"
                 label="cert"
@@ -37,32 +21,16 @@
             </div>
           </el-form-item>
           <el-form-item v-if="form.api_sign_method === 'cert'" label="支付宝公钥证书文件">
-            <el-input
-              v-model="form.alipay_cert_path"
-              type="textarea"
-              :rows="5"
-            />
+            <el-input v-model="form.alipay_cert_path" type="textarea" :rows="5" />
           </el-form-item>
           <el-form-item v-if="form.api_sign_method === 'cert'" label="支付宝根证书文件">
-            <el-input
-              v-model="form.alipay_root_cert_path"
-              type="textarea"
-              :rows="5"
-            />
+            <el-input v-model="form.alipay_root_cert_path" type="textarea" :rows="5" />
           </el-form-item>
           <el-form-item v-if="form.api_sign_method === 'cert'" label="应用公钥证书文件">
-            <el-input
-              v-model="form.merchant_cert_path"
-              type="textarea"
-              :rows="5"
-            />
+            <el-input v-model="form.merchant_cert_path" type="textarea" :rows="5" />
           </el-form-item>
           <el-form-item v-if="form.api_sign_method === 'key'" label="支付宝公钥字符串">
-            <el-input
-              v-model="form.alipay_public_key"
-              type="textarea"
-              :rows="5"
-            />
+            <el-input v-model="form.alipay_public_key" type="textarea" :rows="5" />
           </el-form-item>
           <!-- <el-form-item label="支付类异步通知地址">
             <el-input
@@ -71,20 +39,12 @@
             />
           </el-form-item> -->
           <el-form-item label="AES密钥">
-            <el-input
-              v-model="form.encrypt_key"
-              type="text"
-            />
+            <el-input v-model="form.encrypt_key" type="text" />
           </el-form-item>
 
           <el-form-item size="large">
             <el-button>取消</el-button>
-            <el-button
-              type="primary"
-              @click="save"
-            >
-              保存
-            </el-button>
+            <el-button type="primary" @click="save"> 保存 </el-button>
           </el-form-item>
         </el-form>
       </div>
@@ -98,7 +58,7 @@ import { getAliMiniAppSetting, saveAliMiniAppSetting } from '../../../api/alimin
 export default {
   components: {},
 
-  data () {
+  data() {
     return {
       loading: false,
       form: {
@@ -110,16 +70,16 @@ export default {
         merchant_cert_path: '',
         alipay_public_key: '',
         notify_url: '',
-        encrypt_key: '',
+        encrypt_key: ''
       }
     }
   },
-  mounted () {
+  mounted() {
     this.getInfo()
   },
   methods: {
     // 获取信息
-    getInfo () {
+    getInfo() {
       this.loading = true
       getAliMiniAppSetting(this.params).then((res) => {
         this.form = res.data.data
@@ -127,7 +87,7 @@ export default {
       })
     },
     // 保存数据
-    save () {
+    save() {
       saveAliMiniAppSetting(this.form).then((res) => {
         this.$message({ type: 'success', message: '操作成功' })
         this.getInfo()

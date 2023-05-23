@@ -1,0 +1,117 @@
+.wgt-goods-grid {
+  &.padded {
+    padding: 10px 0;
+  }
+  .wgt-hd {
+    padding: 10px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    .title {
+      font-size: 18px;
+      font-weight: 600;
+      color: #333;
+    }
+    .sub-title {
+      color: #666;
+      margin-left: 4px;
+    }
+    .wgt-more {
+      position: relative;
+      width: 4px;
+      height: 4px;
+      background: #333;
+      border-radius: 50%;
+      margin-right: 10px;
+      &:before {
+        content: '';
+        position: absolute;
+        width: 4px;
+        height: 4px;
+        background: #333;
+        border-radius: 50%;
+        left: -8px;
+      }
+      &:after {
+        content: '';
+        position: absolute;
+        width: 4px;
+        height: 4px;
+        background: #333;
+        border-radius: 50%;
+        right: -8px;
+      }
+    }
+  }
+  .list-grid {
+    display: flex;
+    .lf-box {
+      width: 50%;
+      padding: 0 4px 0 8px;
+    }
+    .rg-box {
+      width: 50%;
+      padding: 0 8px 0 4px;
+    }
+    .item-box {
+      border-radius: 8px;
+      overflow: hidden;
+      margin-bottom: 8px;
+    }
+    .item-info {
+      background-color: #fff;
+      padding: 4px;
+      font-size: 13px;
+      position: relative;
+      .brand-logo {
+        position: absolute;
+        left: 50%;
+        top: -30px;
+        transform: translateX(-50%);
+        background: #fff;
+        width: 64px;
+        height: 64px;
+        border-radius: 32px;
+        padding: 2px;
+      }
+      .name {
+        @include text-overflow();
+      }
+      .item-price {
+        color: #222;
+        margin-right: 4px;
+      }
+    }
+  }
+  .list-grids {
+    padding: 0 4px;
+    display: flex;
+    flex-wrap: wrap;
+    .item-box {
+      border-radius: 8px;
+      overflow: hidden;
+      width: calc(33.3% - 8px);
+      margin: 0 4px 8px 4px;
+      background: #fff;
+    }
+    .item-info {
+      background-color: #fff;
+      padding: 4px;
+      font-size: 13px;
+      position: relative;
+      .brand-logo {
+        position: absolute;
+        left: 50%;
+        top: -30px;
+        transform: translateX(-50%);
+      }
+      .name {
+        @include text-overflow();
+      }
+      .item-price {
+        color: #222;
+        margin-right: 4px;
+      }
+    }
+  }
+}

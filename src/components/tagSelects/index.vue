@@ -58,7 +58,7 @@ import { getDefaultCurrency } from '../../api/company'
 
 export default {
   props: ['itemsVisible', 'getStatus', 'relItemsIds', 'itemType'],
-  data () {
+  data() {
     return {
       loading: false,
       itemsData: [],
@@ -96,45 +96,45 @@ export default {
     }
   },
   computed: {
-    showDialog () {
+    showDialog() {
       return this.itemsVisible
     }
   },
   watch: {
-    relItemsIds (newVal, oldVal) {
+    relItemsIds(newVal, oldVal) {
       if (newVal) {
         this.selectRows = newVal
       }
     },
-    getStatus (newVal, oldVal) {
+    getStatus(newVal, oldVal) {
       if (newVal) {
         this.getNewsList()
       }
     },
-    itemType (newVal, oldVal) {
+    itemType(newVal, oldVal) {
       if (newVal) {
         this.params.item_type = newVal
       }
     }
   },
-  mounted () {
+  mounted() {
     this.getShippingTemplatesList()
     //this.getCategory()
     this.getCurrencyInfo()
   },
   methods: {
-    getRowKeys (row) {
+    getRowKeys(row) {
       return row.itemId
     },
-    handleCurrentChange (page_num) {
+    handleCurrentChange(page_num) {
       this.params.page = page_num
       this.getNewsList()
     },
-    searchByKey () {
+    searchByKey() {
       this.params.page = 1
       this.getNewsList()
     },
-    handleSelectionChange (val) {
+    handleSelectionChange(val) {
       this.multipleSelection = val
       val.forEach((item) => {
         let isInArr = this.selectRows.findIndex((n) => n.itemId == item.itemId)
@@ -143,13 +143,13 @@ export default {
         }
       })
     },
-    cancelAction () {
+    cancelAction() {
       this.$emit('closeStoreDialog')
     },
-    saveStoreAction () {
+    saveStoreAction() {
       this.$emit('chooseStore', this.multipleSelection)
     },
-    getNewsList () {
+    getNewsList() {
       if (this.getStatus) {
         this.loading = true
         getItemsList(this.params).then((response) => {
@@ -164,27 +164,27 @@ export default {
         })
       }
     },
-    getShippingTemplatesList () {
+    getShippingTemplatesList() {
       this.loading = true
       getShippingTemplatesList(this.templatesParams).then((response) => {
         this.templatesList = response.data.data.list
       })
     },
-    getCurrencyInfo () {
+    getCurrencyInfo() {
       getDefaultCurrency().then((res) => {
         this.currency = res.data.data
         this.cursymbol = this.currency.symbol
       })
     },
-    getCategory () {
+    getCategory() {
       getCategory([]).then((response) => {
         this.categoryList = response.data.data
       })
     },
-    priceformatter (row, column) {
+    priceformatter(row, column) {
       return this.cursymbol + row.price / 100
     },
-    changeGoods (type) {
+    changeGoods(type) {
       switch (type) {
         case 'every':
           this.$set(this.params, 'consume_type', 'every')

@@ -1,11 +1,7 @@
 <template>
   <div>
     <div v-if="$route.path.indexOf('detail') === -1">
-      <el-tabs
-        v-model="activeName"
-        type="card"
-        @tab-click="handleTabClick"
-      >
+      <el-tabs v-model="activeName" type="card" @tab-click="handleTabClick">
         <el-tab-pane
           v-for="(item, index) in tabList"
           :key="index"
@@ -31,7 +27,7 @@ export default {
     transferdetail,
     transferlog
   },
-  data () {
+  data() {
     return {
       activeName: 'transfer',
       tabList: [
@@ -41,7 +37,7 @@ export default {
       ]
     }
   },
-  mounted () {},
+  mounted() {},
   methods: {
     handleTabClick: function () {}
   }

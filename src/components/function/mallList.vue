@@ -1,13 +1,7 @@
 <template>
   <div>
-    <div
-      v-if="relStore.id == '0'"
-      class="shop-header"
-    >
-      <div
-        v-if="!VERSION_B2C && !VERSION_IN_PURCHASE"
-        class="shop-left"
-      >
+    <div v-if="relStore.id == '0'" class="shop-header">
+      <div v-if="!VERSION_B2C && !VERSION_IN_PURCHASE" class="shop-left">
         <span class="text">小程序模版呈现：</span>
         <div class="option-item">
           <span class="option-item_text">总部首页</span>
@@ -19,10 +13,7 @@
             @change="changeShop('platform')"
           />
         </div>
-        <div
-          v-if="VERSION_STANDARD"
-          class="option-item"
-        >
+        <div v-if="VERSION_STANDARD" class="option-item">
           <span class="option-item_text">店铺首页</span>
           <el-switch
             v-model="index_type"
@@ -32,14 +23,8 @@
             @change="changeShop('shop')"
           />
         </div>
-        <span
-          v-if="!VERSION_PLATFORM"
-          class="text"
-        >模版同步设置：</span>
-        <div
-          v-if="!VERSION_PLATFORM"
-          class="option-item"
-        >
+        <span v-if="!VERSION_PLATFORM" class="text">模版同步设置：</span>
+        <div v-if="!VERSION_PLATFORM" class="option-item">
           <span class="option-item_text">同步并启用</span>
           <el-switch
             v-model="is_enforce_sync"
@@ -50,28 +35,12 @@
           />
         </div>
       </div>
-      <div
-        v-if="relStore.id == '0'"
-        class="section-white mini-setting"
-      >
-        <el-button
-          type="text"
-          style="margin-right: 10px"
-          @click="handleShowConfig"
-        >
-          <i
-            class="iconfont icon-cog"
-            style="color: #8080ff"
-          /> 小程序配置
+      <div v-if="relStore.id == '0'" class="section-white mini-setting">
+        <el-button type="text" style="margin-right: 10px" @click="handleShowConfig">
+          <i class="iconfont icon-cog" style="color: #8080ff" /> 小程序配置
         </el-button>
-        <el-button
-          type="text"
-          @click="handleShowTabConfig"
-        >
-          <i
-            class="iconfont icon-cog"
-            style="color: #8080ff"
-          /> 小程序导航配置
+        <el-button type="text" @click="handleShowTabConfig">
+          <i class="iconfont icon-cog" style="color: #8080ff" /> 小程序导航配置
         </el-button>
       </div>
     </div>
@@ -92,39 +61,18 @@
       >
         <div class="template-item">
           <div class="img-wrap">
-            <div
-              class="preview-cover"
-              @click="previewTemplate(item.pages_template_id)"
-            >
-              <img
-                class="preview-cover_img"
-                src="@/assets/img/preview.png"
-                alt="预览"
-              >
+            <div class="preview-cover" @click="previewTemplate(item.pages_template_id)">
+              <img class="preview-cover_img" src="@/assets/img/preview.png" alt="预览">
               <span class="preview-cover_text">预览</span>
             </div>
-            <img
-              class="template-pic"
-              :src="item.template_pic"
-            >
-            <div
-              v-if="item.template_type == 1"
-              class="tag"
-            >
-              同步模板
-            </div>
+            <img class="template-pic" :src="item.template_pic">
+            <div v-if="item.template_type == 1" class="tag">同步模板</div>
           </div>
           <div class="template-name">
             <span>{{ item.template_title }}</span>
-            <span
-              class="el-icon-edit edit-css"
-              @click="AddOrEditDialog('edit', item)"
-            />
+            <span class="el-icon-edit edit-css" @click="AddOrEditDialog('edit', item)" />
           </div>
-          <div
-            v-if="relStore.id == '0' && !VERSION_B2C"
-            class="template-common"
-          >
+          <div v-if="relStore.id == '0' && !VERSION_B2C" class="template-common">
             <span class="temp-label">店铺可编辑挂件</span>
             <el-switch
               v-model="item.element_edit_status"
@@ -136,12 +84,7 @@
           </div>
           <div class="template-common">
             <span class="temp-label">立即启用</span>
-            <el-tooltip
-              class="item"
-              effect="dark"
-              content="至少开启一套模版"
-              placement="top-start"
-            >
+            <el-tooltip class="item" effect="dark" content="至少开启一套模版" placement="top-start">
               <el-switch
                 v-model="item.status"
                 active-color="#13ce66"
@@ -152,16 +95,10 @@
             </el-tooltip>
           </div>
           <div class="time-wrap">
-            <div
-              v-if="!item.showTime"
-              class="no-time"
-            >
+            <div v-if="!item.showTime" class="no-time">
               <div>定时启用</div>
               <div class="picker-wrap">
-                <img
-                  class="time-img"
-                  src="@/assets/img/time-img.png"
-                >
+                <img class="time-img" src="@/assets/img/time-img.png">
                 <span>设置模板切换时间</span>
                 <el-date-picker
                   v-model="item.timer_time"
@@ -171,30 +108,15 @@
                 />
               </div>
             </div>
-            <div
-              v-if="item.showTime"
-              class="has-time"
-            >
+            <div v-if="item.showTime" class="has-time">
               <span class="time">{{ item.timer_time }}启用</span>
-              <span
-                class="cancel-btn"
-                @click="cancelTime(index)"
-              >取消</span>
+              <span class="cancel-btn" @click="cancelTime(index)">取消</span>
             </div>
           </div>
           <div class="option-btns">
-            <span
-              class="btn"
-              @click="editTemplate(item.pages_template_id)"
-            >编辑</span>
-            <span
-              class="btn"
-              @click="copyTemplate(item.pages_template_id)"
-            >复制</span>
-            <span
-              class="btn"
-              @click="abandonTemplate(item.pages_template_id)"
-            >废弃</span>
+            <span class="btn" @click="editTemplate(item.pages_template_id)">编辑</span>
+            <span class="btn" @click="copyTemplate(item.pages_template_id)">复制</span>
+            <span class="btn" @click="abandonTemplate(item.pages_template_id)">废弃</span>
           </div>
           <div
             v-if="relStore.id == '0' && !VERSION_B2C && !VERSION_IN_PURCHASE"
@@ -205,13 +127,7 @@
           </div>
         </div>
       </el-col>
-      <el-col
-        :xs="12"
-        :sm="12"
-        :md="8"
-        :lg="6"
-        :xl="4"
-      >
+      <el-col :xs="12" :sm="12" :md="8" :lg="6" :xl="4">
         <div
           :class="{
             'template-item': true,
@@ -222,14 +138,8 @@
           @click="AddOrEditDialog('add')"
         >
           <div class="template-wrap">
-            <img
-              class="add-img"
-              src="@/assets/img/add-template.png"
-              alt="添加"
-            >
-            <div class="add-text">
-              添加模板
-            </div>
+            <img class="add-img" src="@/assets/img/add-template.png" alt="添加">
+            <div class="add-text">添加模板</div>
           </div>
         </div>
       </el-col>
@@ -278,62 +188,30 @@
       width="50%"
       :before-close="closeAddDialog"
     >
-      <el-form
-        ref="form"
-        :model="form"
-        :rules="rules"
-        label-width="100px"
-      >
-        <el-form-item
-          label="模板名称"
-          prop="template_title"
-        >
-          <el-input
-            v-model="form.template_title"
-            type="text"
-            :maxlength="10"
-            style="width: 55%"
-          />
+      <el-form ref="form" :model="form" :rules="rules" label-width="100px">
+        <el-form-item label="模板名称" prop="template_title">
+          <el-input v-model="form.template_title" type="text" :maxlength="10" style="width: 55%" />
         </el-form-item>
         <el-form-item label="模板封面">
-          <div
-            class="setting-item slider"
-            style="width: 55%"
-          >
+          <div class="setting-item slider" style="width: 55%">
             <img
               v-if="form.template_pic"
               :src="form.template_pic"
               class="banner-uploader"
               @click="handleImgChange"
             >
-            <div
-              v-else
-              class="banner-uploader"
-              @click="handleImgChange"
-            >
+            <div v-else class="banner-uploader" @click="handleImgChange">
               <i class="iconfont icon-camera" />
             </div>
           </div>
         </el-form-item>
       </el-form>
-      <div
-        slot="footer"
-        class="dialog-footer content-center"
-      >
-        <el-button
-          type="primary"
-          @click="addTemplate('form')"
-        >
-          确 定
-        </el-button>
+      <div slot="footer" class="dialog-footer content-center">
+        <el-button type="primary" @click="addTemplate('form')"> 确 定 </el-button>
       </div>
     </el-dialog>
 
-    <sideBar
-      :visible.sync="show_sideBar"
-      :title="'小程序配置'"
-      width="20"
-    >
+    <sideBar :visible.sync="show_sideBar" :title="'小程序配置'" width="20">
       <el-form label-width="120px">
         <el-form-item label="开启热门推荐">
           <el-switch
@@ -344,10 +222,7 @@
             @change="toggleOpenRecommend"
           />
         </el-form-item>
-        <el-form-item
-          v-if="VERSION_PLATFORM || VERSION_STANDARD"
-          label="开启小程序定位"
-        >
+        <el-form-item v-if="VERSION_PLATFORM || VERSION_STANDARD" label="开启小程序定位">
           <el-switch
             v-model="is_open_wechatapp_location"
             :active-value="1"
@@ -377,11 +252,7 @@
       </el-form>
     </sideBar>
 
-    <sideBar
-      :visible.sync="show_tab_sideBar"
-      :title="'小程序导航配置'"
-      width="35"
-    >
+    <sideBar :visible.sync="show_tab_sideBar" :title="'小程序导航配置'" width="35">
       <div
         class="template-tabs"
         :style="{ background: tabs.config.backgroundColor, color: tabs.config.color }"
@@ -393,10 +264,7 @@
           class="tab"
           :style="index === currentTab ? `color:${tabs.config.selectedColor}` : ''"
         >
-          <i
-            v-if="!item.iconPath"
-            :class="`icon-${item.name} iconfont`"
-          />
+          <i v-if="!item.iconPath" :class="`icon-${item.name} iconfont`" />
           <!-- <svg
             v-if="!item.iconPath"
             class="svg-icon"
@@ -426,11 +294,7 @@
           </div>
         </div>
       </div>
-      <tabsEditor
-        :res="editorData"
-        @bindImgs="showImgs"
-        @saveTab="handelSaveTab"
-      />
+      <tabsEditor :res="editorData" @bindImgs="showImgs" @saveTab="handelSaveTab" />
     </sideBar>
   </div>
 </template>
@@ -478,7 +342,7 @@ export default {
       }
     }
   },
-  data () {
+  data() {
     return {
       index_type: 1,
       orgin_index_type: 'platform',
@@ -564,7 +428,7 @@ export default {
       }
     }
   },
-  mounted () {
+  mounted() {
     this.getTemplateSetInfo()
     this.getList()
   },
@@ -572,7 +436,7 @@ export default {
     ...mapGetters(['app_type', 'template_name', 'ali_template_name'])
   },
   methods: {
-    getTemplateSetInfo () {
+    getTemplateSetInfo() {
       // let params = {
       //   page_type: this.app_page_type[this.app_type]
       // }
@@ -596,7 +460,7 @@ export default {
         }
       })
     },
-    getList (status) {
+    getList(status) {
       let params = {
         ...this.params,
         distributor_id: this.relStore.id
@@ -620,7 +484,7 @@ export default {
         this.total_count = res.data.data.total_count
       })
     },
-    formatTimeStampToStr (timeStamp) {
+    formatTimeStampToStr(timeStamp) {
       //时间戳转时间字符串
       var date = new Date()
       date.setTime(timeStamp * 1000)
@@ -637,11 +501,11 @@ export default {
       second = second < 10 ? '0' + second : second
       return y + '-' + m + '-' + d + ' ' + h + ':' + minute + ':' + second
     },
-    handleImgChange (data) {
+    handleImgChange(data) {
       this.imgsVisible = true
       this.isGetImage = true
     },
-    pickImg (data) {
+    pickImg(data) {
       if (this.editorDataIndex != null) {
         if (this.tabIcon === 'default') {
           this.editorData.data[this.editorDataIndex].iconPath = data.url
@@ -655,10 +519,10 @@ export default {
       }
       this.imgsVisible = false
     },
-    closeimgsVisible () {
+    closeimgsVisible() {
       this.imgsVisible = false
     },
-    distributorChooseAction (data) {
+    distributorChooseAction(data) {
       if (data === null || data.length <= 0) {
         this.distributorVisible = false
         this.distributorStatus = false
@@ -670,10 +534,10 @@ export default {
       })
       this.syncTemplate(2, shop_ids)
     },
-    allDistributorChooseAction () {
+    allDistributorChooseAction() {
       this.syncTemplate(1)
     },
-    syncTemplate (is_all_distributor, shop_ids) {
+    syncTemplate(is_all_distributor, shop_ids) {
       let params = {
         pages_template_id: this.currTemplateId,
         is_all_distributor
@@ -690,11 +554,11 @@ export default {
         })
       })
     },
-    closeDialogAction () {
+    closeDialogAction() {
       this.distributorStatus = false
       this.distributorVisible = false
     },
-    changeShop (type) {
+    changeShop(type) {
       if (type == 'shop') {
         this.index_type = 2
       } else {
@@ -716,7 +580,7 @@ export default {
         })
       })
     },
-    toggleSynchronizeShop (val) {
+    toggleSynchronizeShop(val) {
       let params = {
         is_enforce_sync: val
         // page_type: this.app_page_type[this.app_type]
@@ -728,11 +592,11 @@ export default {
         })
       })
     },
-    handleInputChange (e) {
+    handleInputChange(e) {
       console.log('===handleInputChange', e)
       this.form.template_title = e
     },
-    toggleOpenRecommend (val) {
+    toggleOpenRecommend(val) {
       let params = {
         is_open_recommend: val
         // page_type: this.app_page_type[this.app_type]
@@ -744,7 +608,7 @@ export default {
         })
       })
     },
-    toggleOpenWechatappLocation (val) {
+    toggleOpenWechatappLocation(val) {
       if (this.VERSION_PLATFORM && val == 2) {
         this.$confirm('关闭后附件商家组件将无法使用', '提示', {
           confirmButtonText: '确定',
@@ -761,7 +625,7 @@ export default {
       }
       this.updateLocation(val)
     },
-    updateLocation (val) {
+    updateLocation(val) {
       let params = {
         is_open_wechatapp_location: val
         // page_type: this.app_page_type[this.app_type]
@@ -773,7 +637,7 @@ export default {
         })
       })
     },
-    toggleOpenScanQrcode (val) {
+    toggleOpenScanQrcode(val) {
       let params = {
         is_open_scan_qrcode: val
         // page_type: this.app_page_type[this.app_type]
@@ -785,7 +649,7 @@ export default {
         })
       })
     },
-    toggleOpenOfficialAccount (val) {
+    toggleOpenOfficialAccount(val) {
       let params = {
         is_open_official_account: val
         // page_type: this.app_page_type[this.app_type]
@@ -797,7 +661,7 @@ export default {
         })
       })
     },
-    AddOrEditDialog (type, item) {
+    AddOrEditDialog(type, item) {
       this.dialogVisible = true
       this.dialogType = type
       this.dialogData = item
@@ -807,13 +671,13 @@ export default {
         this.form.template_pic = item.template_pic
       }
     },
-    closeAddDialog () {
+    closeAddDialog() {
       this.dialogVisible = false
       this.dialogType = ''
       this.dialogData = ''
       this.resetForm('form')
     },
-    addTemplate (formName) {
+    addTemplate(formName) {
       this.$refs[formName].validate((valid) => {
         if (valid) {
           let params = this.form
@@ -833,7 +697,7 @@ export default {
         }
       })
     },
-    resetForm (formName) {
+    resetForm(formName) {
       this.dialogVisible = false
       this.$refs[formName].resetFields()
       this.form = {
@@ -843,11 +707,11 @@ export default {
       this.dialogType = ''
       this.dialogData = {}
     },
-    previewTemplate (pages_template_id) {
+    previewTemplate(pages_template_id) {
       this.previewVisible = true
       this.currTemplateId = pages_template_id
     },
-    async changeShopEdit (index) {
+    async changeShopEdit(index) {
       let params = {
         distributor_id: this.relStore.id,
         pages_template_id: this.templateList[index].pages_template_id,
@@ -862,7 +726,7 @@ export default {
         type: 'success'
       })
     },
-    useTemplate (index, val) {
+    useTemplate(index, val) {
       this.currTemplateId = this.templateList[index].pages_template_id
       if (val == 1) {
         this.templateList[index].status = 2
@@ -879,7 +743,7 @@ export default {
         this.modifyTemplateStatus(index, 'status', val)
       }
     },
-    useTimeTemplate (index, val) {
+    useTimeTemplate(index, val) {
       this.currTemplateId = this.templateList[index].pages_template_id
       if (val == 2) {
         this.templateList[index].timer_status = 1
@@ -899,7 +763,7 @@ export default {
         this.templateList[index].timer_status = val
       }
     },
-    cancelTime (index) {
+    cancelTime(index) {
       this.$confirm('确认取消启用定时模板？', '取消定时模板', {
         confirmButtonText: '确定',
         cancelButtonText: '取消'
@@ -910,11 +774,11 @@ export default {
         })
         .catch(() => {})
     },
-    changeDate (index) {
+    changeDate(index) {
       this.currTemplateId = this.templateList[index].pages_template_id
       this.modifyTemplateStatus(index, 'timer_status', 1)
     },
-    async modifyTemplateStatus (index, type, status) {
+    async modifyTemplateStatus(index, type, status) {
       let params = {
         pages_template_id: this.currTemplateId,
         template_name: this.template_name
@@ -934,11 +798,18 @@ export default {
         type: 'success'
       })
     },
-    editTemplate (pages_template_id) {
-      this.templateVisible = true
-      this.currTemplateId = pages_template_id
+    editTemplate(pages_template_id) {
+      // this.templateVisible = true
+      // this.currTemplateId = pages_template_id
+      // window.open(`/wxapp/manage/decorate?id=${pages_template_id}`, '_blank')
+      const { distributor_id } = this.$route.query
+      if (distributor_id > 0) {
+        this.$router.push(`/wxapp/manage/decorate?id=${pages_template_id}&scene=1003`)
+      } else {
+        this.$router.push(`/wxapp/manage/decorate?id=${pages_template_id}`)
+      }
     },
-    copyTemplate (pages_template_id) {
+    copyTemplate(pages_template_id) {
       let params = {
         pages_template_id: pages_template_id
         // page_type: this.app_page_type[this.app_type]
@@ -959,7 +830,7 @@ export default {
         })
         .catch(() => {})
     },
-    abandonTemplate (pages_template_id) {
+    abandonTemplate(pages_template_id) {
       this.$confirm('确认废弃当前模板？', '废弃模板', {
         confirmButtonText: '确定',
         cancelButtonText: '取消'
@@ -976,30 +847,30 @@ export default {
         })
         .catch(() => {})
     },
-    synchronizeTemplateToShop (index) {
+    synchronizeTemplateToShop(index) {
       this.distributorVisible = true
       this.distributorStatus = true
       this.isSynchronize = true
       this.relDistributors = []
       this.currTemplateId = this.templateList[index].pages_template_id
     },
-    closeDialog () {
+    closeDialog() {
       this.templateVisible = false
     },
-    closePreviewDialog () {
+    closePreviewDialog() {
       this.previewVisible = false
     },
-    handleShowConfig () {
+    handleShowConfig() {
       this.show_sideBar = true
     },
-    handleShowTabConfig () {
+    handleShowTabConfig() {
       this.show_tab_sideBar = true
       this.editorData = { ...this.tabs }
     },
-    handleCloseSidebar (status) {
+    handleCloseSidebar(status) {
       this.show_tab_sideBar = status
     },
-    showImgs (index, tabIcon) {
+    showImgs(index, tabIcon) {
       this.imgsVisible = true
       this.isGetImage = true
       this.editorDataIndex = index
@@ -1007,7 +878,7 @@ export default {
         this.tabIcon = tabIcon
       }
     },
-    handelSaveTab () {
+    handelSaveTab() {
       let param = JSON.stringify(this.editorData)
       let params = {
         tab_bar: param

@@ -1,27 +1,11 @@
 <template>
   <div>
     <div class="action-container">
-      <el-button
-        type="primary"
-        icon="el-icon-circle-plus"
-        @click="handleNew"
-      >
-        新增参数
-      </el-button>
+      <el-button type="primary" icon="el-icon-circle-plus" @click="handleNew"> 新增参数 </el-button>
     </div>
-    <SpFilterForm
-      :model="params"
-      @onSearch="onSearch"
-      @onReset="onSearch"
-    >
-      <SpFilterFormItem
-        prop="attribute_name"
-        label="参数名称:"
-      >
-        <el-input
-          v-model="params.attribute_name"
-          placeholder="请输入参数名称"
-        />
+    <SpFilterForm :model="params" @onSearch="onSearch" @onReset="onSearch">
+      <SpFilterFormItem prop="attribute_name" label="参数名称:">
+        <el-input v-model="params.attribute_name" placeholder="请输入参数名称" />
       </SpFilterFormItem>
     </SpFilterForm>
 
@@ -39,26 +23,14 @@
             v-for="(item, index) in props.row.attribute_values.list"
             :key="index"
             class="sku-value"
-          >{{ item.attribute_value }}</span>
+            >{{ item.attribute_value }}</span
+          >
         </template>
       </el-table-column>
-      <el-table-column
-        label="操作"
-        width="150"
-      >
+      <el-table-column label="操作" width="150">
         <template slot-scope="scope">
-          <el-button
-            type="text"
-            @click="handleEdit(scope.row)"
-          >
-            编辑
-          </el-button>
-          <el-button
-            type="text"
-            @click="handleDelete(scope)"
-          >
-            删除
-          </el-button>
+          <el-button type="text" @click="handleEdit(scope.row)"> 编辑 </el-button>
+          <el-button type="text" @click="handleDelete(scope)"> 删除 </el-button>
         </template>
       </el-table-column>
       <el-table-column label="参数类型">
@@ -66,15 +38,8 @@
           {{ props.row.is_show == 'true' ? '高级筛选' : '纯显示' }}
         </template>
       </el-table-column>
-      <el-table-column
-        prop="attribute_name"
-        label="参数名称"
-        width="200"
-      />
-      <el-table-column
-        prop="attribute_memo"
-        label="参数备注"
-      />
+      <el-table-column prop="attribute_name" label="参数名称" width="200" />
+      <el-table-column prop="attribute_memo" label="参数备注" />
     </el-table>
     <div class="content-padded content-center">
       <el-pagination
@@ -88,10 +53,7 @@
         @size-change="onSizeChange"
       />
     </div>
-    <sideBar
-      :visible.sync="show_sideBar"
-      :title="form.attribute_id ? '编辑参数' : '新增参数'"
-    >
+    <sideBar :visible.sync="show_sideBar" :title="form.attribute_id ? '编辑参数' : '新增参数'">
       <el-form>
         <el-form-item label="参数名称">
           <el-input v-model="form.attribute_name" />
@@ -101,12 +63,8 @@
         </el-form-item>
         <el-form-item label="参数类型">
           <el-radio-group v-model="form.is_show">
-            <el-radio :label="true">
-              支持商品高级筛选
-            </el-radio>
-            <el-radio :label="false">
-              仅用于商品详情展示
-            </el-radio>
+            <el-radio :label="true"> 支持商品高级筛选 </el-radio>
+            <el-radio :label="false"> 仅用于商品详情展示 </el-radio>
           </el-radio-group>
         </el-form-item>
         <el-form-item label="参数值">
@@ -117,32 +75,15 @@
             class="view-flex view-flex-middle key-item"
           >
             <div class="view-flex-item content-padded-right">
-              <el-input
-                v-model="item.attribute_value"
-                placeholder="参数值名称"
-              />
+              <el-input v-model="item.attribute_value" placeholder="参数值名称" />
             </div>
-            <div
-              class="iconfont icon-trash-alt1"
-              @click="removeItem(index)"
-            />
+            <div class="iconfont icon-trash-alt1" @click="removeItem(index)" />
           </div>
-          <el-button
-            type="default"
-            size="small"
-            @click="addItem"
-          >
-            添加参数值
-          </el-button>
+          <el-button type="default" size="small" @click="addItem"> 添加参数值 </el-button>
         </el-form-item>
       </el-form>
       <div slot="footer">
-        <el-button
-          type="primary"
-          @click="save"
-        >
-          提交
-        </el-button>
+        <el-button type="primary" @click="save"> 提交 </el-button>
       </div>
     </sideBar>
   </div>
@@ -157,7 +98,7 @@ export default {
     sideBar
   },
   mixins: [pageMixin],
-  data () {
+  data() {
     return {
       currentIndex: '',
       form: {
@@ -182,11 +123,11 @@ export default {
       show_sideBar: false
     }
   },
-  mounted () {
+  mounted() {
     this.fetchList()
   },
   methods: {
-    handleDelete (data) {
+    handleDelete(data) {
       this.$confirm('确认删除该参数？')
         .then((_) => {
           deleteGoodsAttr(data.row.attribute_id).then((res) => {
@@ -196,11 +137,11 @@ export default {
         })
         .catch((_) => {})
     },
-    handleNew () {
+    handleNew() {
       this.show_sideBar = true
       this.resetData()
     },
-    resetData () {
+    resetData() {
       this.form = {
         is_image: false,
         attribute_type: 'item_params',
@@ -211,7 +152,7 @@ export default {
         attribute_values: []
       }
     },
-    handleEdit (data) {
+    handleEdit(data) {
       this.show_sideBar = true
       this.form = {
         attribute_id: data.attribute_id,
@@ -222,9 +163,9 @@ export default {
         attribute_values: data.attribute_values.list
       }
     },
-    addItem () {
-      if (this.form.attribute_values.length > 20) {
-        this.$message({ type: 'warning', message: '最多添加20项' })
+    addItem() {
+      if (this.form.attribute_values.length > 50) {
+        this.$message({ type: 'warning', message: '最多添加50项' })
         return
       }
       let item = {
@@ -233,14 +174,14 @@ export default {
       this.form.attribute_values.push(item)
     },
 
-    removeItem (index) {
+    removeItem(index) {
       this.$confirm('确认删除当前值？')
         .then((_) => {
           this.form.attribute_values.splice(index, 1)
         })
         .catch((_) => {})
     },
-    save () {
+    save() {
       let params = JSON.parse(JSON.stringify(this.form))
       if (params.attribute_values.length === 0 && params.is_show == true) {
         this.$message({ type: 'error', message: '参数类型为高级筛选类型，参数值不能为空' })
@@ -263,7 +204,7 @@ export default {
         })
       }
     },
-    fetchList () {
+    fetchList() {
       this.loading = true
       const { pageIndex: page, pageSize } = this.page
       console.log(page, 'page')

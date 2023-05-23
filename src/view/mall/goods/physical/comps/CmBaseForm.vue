@@ -276,7 +276,7 @@
               <div class="goodsimages-ft frm-tips">
                 <p>
                   1.
-                  最多可上传9个图片，文件格式为bmp、png、jpeg、jpg或gif，大小不超过2M（建议尺寸：500px
+                  最多可上传9张图片，文件格式为bmp、png、jpeg、jpg或gif，大小不超过2M（建议尺寸：500px
                   * 500px）
                 </p>
                 <p>2. 拖动图片进行可排序</p>

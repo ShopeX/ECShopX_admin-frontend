@@ -68,12 +68,8 @@
         >
           <div v-if="activeName == 'second'" style="margin-bottom: 15px; width: 280px">
             <el-input v-model="warning_store" value="warning_store">
-              <template slot="prepend">
-预警数量
-</template>
-              <el-button slot="append" @click="setWarningStore">
-保存
-</el-button>
+              <template slot="prepend"> 预警数量 </template>
+              <el-button slot="append" @click="setWarningStore"> 保存 </el-button>
             </el-input>
           </div>
           <el-table
@@ -183,9 +179,7 @@
         <template>
           <el-row :gutter="20">
             <el-col :span="3">
-              <div class="grid-content">
-商品名称
-</div>
+              <div class="grid-content">商品名称</div>
             </el-col>
             <el-col :span="21">
               <div class="grid-content">
@@ -195,9 +189,7 @@
           </el-row>
           <el-row :gutter="20">
             <el-col :span="3">
-              <div class="grid-content">
-简述
-</div>
+              <div class="grid-content">简述</div>
             </el-col>
             <el-col :span="21">
               <div class="grid-content">
@@ -207,33 +199,23 @@
           </el-row>
           <el-row :gutter="20">
             <el-col :span="3">
-              <div class="grid-content">
-价格
-</div>
+              <div class="grid-content">价格</div>
             </el-col>
             <el-col :span="21">
-              <div class="grid-content">
-￥{{ itemsDetailData.price }}
-</div>
+              <div class="grid-content">￥{{ itemsDetailData.price }}</div>
             </el-col>
           </el-row>
           <el-row :gutter="20">
             <el-col :span="3">
-              <div class="grid-content">
-原价
-</div>
+              <div class="grid-content">原价</div>
             </el-col>
             <el-col :span="21">
-              <div class="grid-content">
-￥{{ itemsDetailData.market_price / 100 }}
-</div>
+              <div class="grid-content">￥{{ itemsDetailData.market_price / 100 }}</div>
             </el-col>
           </el-row>
           <el-row :gutter="20">
             <el-col :span="3">
-              <div class="grid-content">
-库存
-</div>
+              <div class="grid-content">库存</div>
             </el-col>
             <el-col :span="21">
               <div class="grid-content">
@@ -243,9 +225,7 @@
           </el-row>
           <el-row :gutter="20">
             <el-col :span="3">
-              <div class="grid-content">
-状态
-</div>
+              <div class="grid-content">状态</div>
             </el-col>
             <el-col :span="21">
               <div v-if="itemsDetailData.approve_status === 'onsale'" class="grid-content">
@@ -257,16 +237,12 @@
               >
                 前台不展示
               </div>
-              <div v-else class="grid-content">
-不可销售
-</div>
+              <div v-else class="grid-content">不可销售</div>
             </el-col>
           </el-row>
           <el-row :gutter="20">
             <el-col :span="3">
-              <div class="grid-content">
-图片
-</div>
+              <div class="grid-content">图片</div>
             </el-col>
             <el-col :span="21">
               <div class="grid-content">
@@ -294,9 +270,7 @@
               </div>
             </el-col>
             <el-col :span="3">
-              <div class="grid-content">
-详情
-</div>
+              <div class="grid-content">详情</div>
             </el-col>
             <el-col :span="21">
               <div class="grid-content grid-detail" v-html="itemsDetailData.intro" />
@@ -304,9 +278,7 @@
           </el-row>
           <el-row v-if="itemsDetailData.enable_agreement">
             <el-col :span="3">
-              <div class="grid-content">
-购买协议
-</div>
+              <div class="grid-content">购买协议</div>
             </el-col>
             <el-col :span="21">
               <div class="grid-content grid-detail" v-html="itemsDetailData.purchase_agreement" />
@@ -397,12 +369,12 @@ export default {
       default: false
     }
   },
-  provide () {
+  provide() {
     return {
       refresh: this.getGoodsList
     }
   },
-  data () {
+  data() {
     return {
       currentId: '',
       currentPrice: '',
@@ -452,7 +424,7 @@ export default {
   computed: {
     ...mapGetters(['wheight'])
   },
-  mounted () {
+  mounted() {
     this.login_type = this.$store.getters.login_type
     this.$nextTick(() => {
       if (this.isLoad) {
@@ -470,13 +442,13 @@ export default {
     })
   },
   methods: {
-    storeSearch (val) {
+    storeSearch(val) {
       val && val.shop_id
       this.params.distributor_id = val.shop_id
       this.params.page = 1
       this.getGoodsList()
     },
-    editPrice (id, price) {
+    editPrice(id, price) {
       this.currentId = id
       this.currentPrice = price
       let self = this
@@ -484,7 +456,7 @@ export default {
         self.$refs['input_' + id][0].focus()
       })
     },
-    handleBlur (index) {
+    handleBlur(index) {
       if (this.currentPrice === this.ItemsList[index].price) {
         this.currentId = -1
         this.currentPrice = ''
@@ -500,7 +472,7 @@ export default {
         this.currentPrice = ''
       })
     },
-    handleClick (tab, event) {
+    handleClick(tab, event) {
       this.params.page = 1
       if (this.activeName == 'second') {
         this.params.is_warning = true
@@ -509,34 +481,34 @@ export default {
       }
       this.getGoodsList()
     },
-    setWarningStore () {
+    setWarningStore() {
       getItemWarningStore({ store: this.warning_store }).then((res) => {
         this.params.page = 1
         this.getGoodsList()
       })
     },
-    handleCurrentChange (page_num) {
+    handleCurrentChange(page_num) {
       this.params.page = page_num
       this.getGoodsList()
     },
-    handleSizeChange (pageSize) {
+    handleSizeChange(pageSize) {
       this.params.page = 1
       this.params.pageSize = pageSize
       this.getGoodsList()
     },
-    handleChangeTemplates (val) {
+    handleChangeTemplates(val) {
       this.currentPage = 1
       this.params.templates_id = val
       this.getGoodsList()
     },
-    handleSelectionChange (val) {
+    handleSelectionChange(val) {
       let item_id = []
       for (let i in val) {
         item_id.push(val[i].itemId)
       }
       this.item_id = item_id
     },
-    changeTemplates () {
+    changeTemplates() {
       if (this.item_id.length) {
         if (!this.templates_new_id) {
           this.$message({
@@ -558,12 +530,12 @@ export default {
         })
       }
     },
-    editItemsSort (index, row) {
+    editItemsSort(index, row) {
       setItemsSort({ 'sort': row.sort, 'item_id': row.itemId }).then((response) => {
         this.getGoodsList()
       })
     },
-    changeCategory () {
+    changeCategory() {
       if (this.item_id.length) {
         if (!this.category_id) {
           this.$message({
@@ -586,14 +558,14 @@ export default {
         })
       }
     },
-    addItems () {
+    addItems() {
       // 添加商品
       this.$router.push({
         path: this.matchInternalRoute('goodsphysical_editor'),
         query: { item_source: 'distributor' }
       })
     },
-    addTemplates () {
+    addTemplates() {
       if (this.item_id.length) {
         this.addTemplatesdialogVisible = true
       } else {
@@ -603,7 +575,7 @@ export default {
         })
       }
     },
-    addCategory () {
+    addCategory() {
       if (this.item_id.length) {
         this.addCategorydialogVisible = true
       } else {
@@ -613,7 +585,7 @@ export default {
         })
       }
     },
-    editItemsAction (index, row, isNew) {
+    editItemsAction(index, row, isNew) {
       // 编辑商品弹框
       if (isNew) {
         var routeData = this.$router.push({
@@ -627,7 +599,7 @@ export default {
         })
       }
     },
-    itemsDetail (index, row) {
+    itemsDetail(index, row) {
       this.ItemsDetailVisible = true
       getItemsDetail(row.itemId).then((response) => {
         this.itemsDetailData = response.data.data
@@ -635,12 +607,12 @@ export default {
         this.end_date = this.getTimeStr(this.itemsDetailData.end_date)
       })
     },
-    goodsSearch () {
+    goodsSearch() {
       this.params.keywords = this.goodsName
       this.params.page = 1
       this.getGoodsList()
     },
-    getGoodsList () {
+    getGoodsList() {
       this.loading = true
       getItemsList(this.params).then((response) => {
         this.ItemsList = response.data.data.list
@@ -652,7 +624,7 @@ export default {
         this.loading = false
       })
     },
-    deleteItemsAction (index, row) {
+    deleteItemsAction(index, row) {
       this.$confirm('此操作将删除该商品, 是否继续?', '提示', {
         confirmButtonText: '确定',
         cancelButtonText: '取消',
@@ -675,13 +647,13 @@ export default {
           })
         })
     },
-    priceformatter (row, column) {
+    priceformatter(row, column) {
       return this.cursymbol + row.price / 100
     },
-    rebateformatter (row, column) {
+    rebateformatter(row, column) {
       return this.cursymbol + row.rebate / 100
     },
-    getTaskTime (strDate) {
+    getTaskTime(strDate) {
       let date = new Date(strDate)
       let y = date.getFullYear()
       let m = date.getMonth() + 1
@@ -691,28 +663,28 @@ export default {
       let str = y + '-' + m + '-' + d
       return str
     },
-    getTimeStr (date) {
+    getTimeStr(date) {
       return this.getTaskTime(new Date(parseInt(date) * 1000))
     },
-    getShippingTemplatesList () {
+    getShippingTemplatesList() {
       this.loading = true
       getShippingTemplatesList(this.templatesParams).then((response) => {
         this.templatesList = response.data.data.list
       })
     },
-    getCategory () {
+    getCategory() {
       getCategory([]).then((response) => {
         this.categoryList = response.data.data
       })
     },
-    getCurrencyInfo () {
+    getCurrencyInfo() {
       getDefaultCurrency().then((res) => {
         this.currency = res.data.data
         this.cursymbol = this.currency.symbol
       })
     },
 
-    async getDefaultDistributor (id) {
+    async getDefaultDistributor(id) {
       let params = { distributor_id: id ? id : 0 }
       let { data } = await getDistributorInfo(params)
 
@@ -723,7 +695,7 @@ export default {
         this.$router.go(-1)
       }
     },
-    async getDistributorItemList () {
+    async getDistributorItemList() {
       let distributor = await this.getDefaultDistributor(this.params.distributor_id)
       if (!this.params.distributor_id && distributor) {
         this.params.distributor_id = distributor.distributor_id

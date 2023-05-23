@@ -1,36 +1,49 @@
 <style lang="scss">
 .sp-image {
-  display: block;
-  object-fit: contain;
+  display: flex;
+  align-items: center;
 }
 </style>
 
 <script>
 import dImage from '@/assets/imgs/default.jpg'
+import { isNumber, isString, isBoolean } from '@/utils'
 export default {
   name: 'SpImage',
   props: {
     src: String,
-    width: {
-      type: Number,
-      default: 120
-    },
-    height: {
-      type: Number,
-      default: 120
+    width: [Number, String],
+    height: [Number, String],
+    circle: [Boolean, Number],
+    fit: {
+      type: String,
+      default: 'cover'
     }
   },
-  render () {
-    const { src, width, height } = this
+  render() {
+    const { src, width, height, circle } = this
+    // console.log('sp-image render src:', src);
+    let styleNames = {}
+    if (width) {
+      styleNames['width'] = `${width}px`
+    }
+    if (height) {
+      styleNames['height'] = `${height}px`
+    }
+    if (circle) {
+      if (isBoolean(circle)) {
+        styleNames['border-radius'] = `${width / 2}px`
+      } else {
+        styleNames['border-radius'] = `${circle}px`
+      }
+    }
+
     return (
-      <img
-        class='sp-image'
-        src={src || dImage}
-        style={{
-          width: `${width}px`,
-          height: `${height}px`
-        }}
-      />
+      <el-image class={'sp-image'} style={styleNames} src={src || dImage} fit={this.fit}>
+        <template slot='error'>
+          <img src={dImage} width='100%' />
+        </template>
+      </el-image>
     )
   }
 }

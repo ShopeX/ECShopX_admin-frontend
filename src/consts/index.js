@@ -211,3 +211,33 @@ export const SYSTEM_CONFIG = {
   b2c: { name: '商派官方商城', theme: '#157FE3' },
   in_purchase: { name: '商派Onex内购', theme: '#EC442E' }
 }
+
+export const LINK_PATH = {
+  'goods': '商品',
+  'store': '店铺',
+  'sale_category': '销售分类',
+  'category': '管理分类',
+  'tag': '商品标签',
+  'article': '文章',
+  'planting': '软文',
+  'link': '页面',
+  'marketing': '营销',
+  'regactivity': '活动报名',
+  'seckill': '秒杀',
+  'custom_page': '自定义页面',
+  'liverooms': '直播',
+  'other_wxapp': '外部小程序'
+}
+
+export const CARD_TYPE = {
+  'discount': '折扣券',
+  'cash': '满减券',
+  'new_gift': '兑换券'
+}
+
+export const SECKILL_ACTIVITY_STATUS = {
+  'waiting': '待开始',
+  'in_the_notice': '预热中',
+  'in_sale': '进行中',
+  'it_has_ended': '已结束'
+}

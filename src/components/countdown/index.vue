@@ -1,14 +1,10 @@
 <template>
   <div>
-    <slot
-      :day="day"
-      :hour="hour"
-      :min="min"
-      :sec="sec"
-      :content="content"
-    >
+    endTime: {{ endTime }}
+    <slot :day="day" :hour="hour" :min="min" :sec="sec" :content="content">
       <div v-if="!content">
-        <span v-if="day > 0">{{ day }}天</span><span v-if="hour > 0">{{ hour }}时</span><span v-if="min > 0">{{ min }}分</span><span v-if="sec > 0">{{ sec }}秒</span>
+        <span v-if="day > 0">{{ day }}天</span><span v-if="hour > 0">{{ hour }}时</span
+        ><span v-if="min > 0">{{ min }}分</span><span v-if="sec > 0">{{ sec }}秒</span>
       </div>
       <div v-else>
         {{ content }}
@@ -26,13 +22,9 @@ export default {
     endText: {
       type: String,
       default: ''
-    },
-    callback: {
-      type: Function,
-      default: ''
     }
   },
-  data () {
+  data() {
     return {
       content: '',
       day: '',
@@ -44,19 +36,19 @@ export default {
     }
   },
   watch: {
-    endTime (val) {
+    endTime(val) {
       this.setData(val)
     }
   },
-  mounted () {
+  mounted() {
     this.setData(this.endTime)
   },
   methods: {
-    setData (val) {
+    setData(val) {
       this.time = val
       this.countdowm(this.time)
     },
-    countdowm (timestamp) {
+    countdowm(timestamp) {
       let self = this
       clearInterval(self.timer)
       self.content = ''
@@ -83,7 +75,7 @@ export default {
         }
       }, 1000)
     },
-    _callback () {
+    _callback() {
       if (this.callback && this.callback instanceof Function) {
         this.callback(...this)
       }

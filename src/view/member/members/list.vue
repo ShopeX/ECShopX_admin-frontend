@@ -142,9 +142,7 @@
       </SpFilterForm>
 
       <div class="action-container">
-        <el-button type="primary" plain @click="batchActionDialog('rel_tag')">
-打标签
-</el-button>
+        <el-button type="primary" plain @click="batchActionDialog('rel_tag')"> 打标签 </el-button>
         <el-button
           v-if="!VERSION_IN_PURCHASE"
           type="primary"
@@ -178,9 +176,7 @@
           会员等级设置
         </el-button>
         <export-tip @exportHandle="exportData">
-          <el-button type="primary" plain icon="el-plus-circle">
-导出
-</el-button>
+          <el-button type="primary" plain icon="el-plus-circle"> 导出 </el-button>
         </export-tip>
 
         <el-button v-if="!VERSION_IN_PURCHASE" type="primary" plain @click="chiefupload">
@@ -327,9 +323,7 @@
         </el-table-column>
         <el-table-column label="操作" width="250">
           <template slot-scope="scope">
-            <el-button type="text" @click="getDetail(scope.row.user_id)">
-详情
-</el-button>
+            <el-button type="text" @click="getDetail(scope.row.user_id)"> 详情 </el-button>
             <el-button
               v-if="$store.getters.login_type != 'distributor' && datapass_block == 0"
               type="text"
@@ -374,15 +368,9 @@
       >
         <template v-if="params.action_type == 'give_coupon'">
           <el-radio-group v-model="card_type" @change="changeStaffCouponsPage(1)">
-            <el-radio-button label="all" value="all">
-全部
-</el-radio-button>
-            <el-radio-button label="cash" value="cash">
-满减券
-</el-radio-button>
-            <el-radio-button label="discount" value="discount">
-折扣券
-</el-radio-button>
+            <el-radio-button label="all" value="all"> 全部 </el-radio-button>
+            <el-radio-button label="cash" value="cash"> 满减券 </el-radio-button>
+            <el-radio-button label="discount" value="discount"> 折扣券 </el-radio-button>
             <el-radio-button v-if="VERSION_STANDARD" label="new_gift" value="new_gift">
               兑换券
             </el-radio-button>
@@ -422,9 +410,7 @@
 
         <template v-if="params.action_type == 'rel_tag'">
           <div class="selected-tags view-flex">
-            <div class="label">
-              已选中标签：
-            </div>
+            <div class="label">已选中标签：</div>
             <div class="view-flex-item">
               <el-tag
                 v-for="(tag, index) in tag.currentTags"
@@ -471,9 +457,7 @@
               <span>{{ sms_content.length }}</span>
             </el-form-item>
             <el-form-item class="content-center">
-              <el-button type="primary" @click="onSmsSends">
-确定发送
-</el-button>
+              <el-button type="primary" @click="onSmsSends"> 确定发送 </el-button>
             </el-form-item>
           </el-form>
           <template>
@@ -533,9 +517,7 @@
               </el-row>
             </el-form-item>
             <el-form-item class="content-center">
-              <el-button type="primary" @click="handleVipGradeDelay(true)">
-确定延期
-</el-button>
+              <el-button type="primary" @click="handleVipGradeDelay(true)"> 确定延期 </el-button>
             </el-form-item>
           </el-form>
         </template>
@@ -564,9 +546,7 @@
               </el-row>
             </el-form-item>
             <el-form-item class="content-center">
-              <el-button type="primary" @click="gradeUpdateSubmit">
-确定修改
-</el-button>
+              <el-button type="primary" @click="gradeUpdateSubmit"> 确定修改 </el-button>
             </el-form-item>
           </el-form>
         </template>
@@ -612,12 +592,8 @@
             @current-change="handleCurrentChange"
           />
           <div class="content-padded content-center">
-            <el-button type="default" @click="dialogIsShow = false">
-取消
-</el-button>
-            <el-button type="primary" @click="setSalesman(true)">
-确定
-</el-button>
+            <el-button type="default" @click="dialogIsShow = false"> 取消 </el-button>
+            <el-button type="primary" @click="setSalesman(true)"> 确定 </el-button>
           </div>
         </template>
 
@@ -701,9 +677,7 @@
               </template>
             </el-form-item>
             <el-form-item class="content-center">
-              <el-button type="primary" @click="infoUpdateSubmit">
-确定修改
-</el-button>
+              <el-button type="primary" @click="infoUpdateSubmit"> 确定修改 </el-button>
             </el-form-item>
           </el-form>
         </template>
@@ -727,9 +701,7 @@
               <el-input v-model="form.newMobile" placeholder="手机号" />
             </el-form-item>
             <el-form-item class="content-center">
-              <el-button type="primary" @click="onEditMobileSubmit">
-确定添加
-</el-button>
+              <el-button type="primary" @click="onEditMobileSubmit"> 确定添加 </el-button>
             </el-form-item>
           </el-form>
         </template>
@@ -759,9 +731,7 @@
               <el-input v-model="remarksForm.remarks" placeholder="输入备注" />
             </el-form-item>
             <el-form-item class="content-center">
-              <el-button type="primary" @click="editRemarks()">
-确定
-</el-button>
+              <el-button type="primary" @click="editRemarks()"> 确定 </el-button>
             </el-form-item>
           </el-form>
         </template>
@@ -818,7 +788,7 @@ export default {
     exportTip,
     aliyunsmsDialog
   },
-  data () {
+  data() {
     return {
       aliyunsms_status: false, //ali 短信状态
       aliyunsmsDialogVisible: false,
@@ -922,7 +892,7 @@ export default {
         shortcuts: [
           {
             text: '最近一周',
-            onClick (picker) {
+            onClick(picker) {
               const end = new Date()
               const start = new Date()
               start.setTime(start.getTime() - 3600 * 1000 * 24 * 7)
@@ -931,7 +901,7 @@ export default {
           },
           {
             text: '最近一个月',
-            onClick (picker) {
+            onClick(picker) {
               const end = new Date()
               const start = new Date()
               start.setTime(start.getTime() - 3600 * 1000 * 24 * 30)
@@ -940,7 +910,7 @@ export default {
           },
           {
             text: '最近三个月',
-            onClick (picker) {
+            onClick(picker) {
               const end = new Date()
               const start = new Date()
               start.setTime(start.getTime() - 3600 * 1000 * 24 * 90)
@@ -978,13 +948,13 @@ export default {
       },
       datapass_block: 1,
       gradeList: [], // 普通会员等级列表
-      vipGrade: [], // 付费会员等级列表
+      vipGrade: [] // 付费会员等级列表
     }
   },
   computed: {
     ...mapGetters(['wheight', 'isMicorMall', 'login_type'])
   },
-  mounted () {
+  mounted() {
     const { salesman_mobile, wechat_nickname, mobile, orderRecords, grade_id, currentPage } =
       this.$route.query
 
@@ -1018,18 +988,18 @@ export default {
     this.getAliSMS()
   },
   methods: {
-    chiefupload () {
+    chiefupload() {
       if (this.login_type == 'distributor') {
         this.$router.push({ path: `/shopadmin/member/member/chiefupload` })
       } else {
         this.$router.push({ path: `/member/member/chiefupload` })
       }
     },
-    async getAliSMS () {
+    async getAliSMS() {
       const { aliyunsms_status } = await this.$api.sms.getaliSmsStatus()
       this.aliyunsms_status = aliyunsms_status
     },
-    gradeUpdate (row) {
+    gradeUpdate(row) {
       this.params.action_type = 'set_grade'
       this.dialogTitle = '修改指定会员等级'
       this.dialogIsShow = true
@@ -1039,7 +1009,7 @@ export default {
       this.gradeForm.remarks = row.remarks
       this.is_batch = false
     },
-    infoUpdate (value) {
+    infoUpdate(value) {
       this.params.action_type = 'basic_info'
       this.dialogTitle = '修改会员基础信息'
       this.dialogIsShow = true
@@ -1073,14 +1043,14 @@ export default {
         }
       }
     },
-    infoUpdateSubmit () {
+    infoUpdateSubmit() {
       updateMemberBasicInfo(this.basicInfo).then((res) => {
         this.$message({ type: 'success', message: '修改成功' })
         this.getMembers()
         this.dialogIsShow = false
       })
     },
-    gradeUpdateSubmit () {
+    gradeUpdateSubmit() {
       if (!this.gradeForm.grade_id) {
         this.$message({
           type: 'error',
@@ -1099,7 +1069,7 @@ export default {
         this.batchAction('是否给全部会员指定会员等级?')
       }
     },
-    editRemarks () {
+    editRemarks() {
       updateMemberInfo({
         user_id: this.remarksForm.user_id,
         remarks: this.remarksForm.remarks
@@ -1109,15 +1079,15 @@ export default {
         this.getMembers()
       })
     },
-    isEdit (row) {
+    isEdit(row) {
       this.isEditRemarks = true
       this.remarksForm.user_id = row.user_id
       this.remarksForm.remarks = row.remarks
     },
-    getRowKeys (row) {
+    getRowKeys(row) {
       return `${row.user_id}${row.shop_id}`
     },
-    submitSelected () {
+    submitSelected() {
       this.staffCoupons.dialog = false
       this.staffCoupons.checked = this.staffCoupons.temp
       console.log(this.staffCoupons.checked)
@@ -1131,16 +1101,16 @@ export default {
       this.params.action_type = 'give_coupon'
       this.batchAction('是否给全部会员赠送优惠券?')
     },
-    handleCancelLabelsDialog () {
+    handleCancelLabelsDialog() {
       this.tag.dialog = false
       this.editMobileDialog = false
       this.isEditRemarks = false
       this.dialogIsShow = false
     },
-    handleSalesmanChange (row) {
+    handleSalesmanChange(row) {
       this.salesperson_id = row.salesperson_id
     },
-    handleSelectionChange (rows) {
+    handleSelectionChange(rows) {
       this.user_id = []
       if (rows) {
         rows.forEach((row) => {
@@ -1150,17 +1120,17 @@ export default {
         })
       }
     },
-    handleCurrentChange (pageIndex) {
+    handleCurrentChange(pageIndex) {
       this.page.pageIndex = pageIndex
       this.getMembers()
     },
     // 调整每页显示条数
-    handleSizeChange (pageSize) {
+    handleSizeChange(pageSize) {
       this.page.pageSize = pageSize
       this.getMembers()
     },
 
-    getParams () {
+    getParams() {
       if (this.currentShop) {
         this.params.shop_id = this.currentShop
       } else {
@@ -1173,13 +1143,13 @@ export default {
         this.params.distributor_id = ''
       }
     },
-    onSearch () {
+    onSearch() {
       this.page.pageIndex = 1
       this.$nextTick(() => {
         this.getMembers()
       })
     },
-    async getMembers () {
+    async getMembers() {
       this.loading = true
       const { pageIndex: page, pageSize } = this.page
       let params = {
@@ -1193,7 +1163,7 @@ export default {
       this.page.total = total_count
       this.loading = false
     },
-    async getGradeList () {
+    async getGradeList() {
       const gradeList = await this.$api.membercard.getGradeList()
       const vipGradeList = await this.$api.cardticket.listVipGrade()
       const _levelData = []
@@ -1214,7 +1184,7 @@ export default {
       this.vipGrade = vipGradeList
       this.levelData = _levelData
     },
-    async getAllTagLists () {
+    async getAllTagLists() {
       const params = {
         page: 1,
         page_size: 500
@@ -1226,7 +1196,7 @@ export default {
     //   const res = await this.$api.cardticket.listVipGrade()
     //   this.vipGrade = res
     // },
-    async getShopsList () {
+    async getShopsList() {
       const { list } = await this.$api.shop.getWxShopsList({
         page: 1,
         pageSize: 500,
@@ -1234,7 +1204,7 @@ export default {
       })
       this.wxShopsList = list
     },
-    showGrade (grade_id, vip_grade) {
+    showGrade(grade_id, vip_grade) {
       if (vip_grade) {
         const filterList = this.levelData.find((item) => item.grade_id == vip_grade)
         return filterList && filterList.grade_name
@@ -1243,7 +1213,7 @@ export default {
         return filterList && filterList.grade_name
       }
     },
-    getDetail (userid) {
+    getDetail(userid) {
       let isShopadmin = false
       try {
         isShopadmin = /\/shopadmin/.test(document.location.pathname)
@@ -1259,7 +1229,7 @@ export default {
         }
       })
     },
-    getCoupons () {
+    getCoupons() {
       this.staffCoupons.loading = true
       getEffectiveCardList({
         page_no: this.staffCoupons.page.currentPage,
@@ -1279,7 +1249,7 @@ export default {
         this.staffCoupons.loading = false
       }) //addCouponsItems
     },
-    salesmanSearch () {
+    salesmanSearch() {
       this.loadingSalesman = true
       getSalesmanList({
         salesman_name: this.salesmanPaging.name,
@@ -1293,7 +1263,7 @@ export default {
         this.loadingSalesman = false
       })
     },
-    handleVipGradeDelay (isSubmit = false) {
+    handleVipGradeDelay(isSubmit = false) {
       if (isSubmit) {
         if (this.vipGradeDelay.add_day <= 0) {
           this.$message({
@@ -1321,14 +1291,14 @@ export default {
         this.vipGradeDelay.vip_grade_id = this.vipGrade[0].vip_grade_id
       }
     },
-    checkNum () {
+    checkNum() {
       if (this.sms_content.length > 67) {
         this.$alert('当前短信内容字数超出67，将会分成多条发送', '', {
           confirmButtonText: '确定'
         })
       }
     },
-    onSmsSends () {
+    onSmsSends() {
       if (!this.sms_content) {
         this.$message({
           type: 'error',
@@ -1359,23 +1329,23 @@ export default {
         this.batchAction('是否给全部会员发短信?')
       }
     },
-    addMemberTag () {
+    addMemberTag() {
       this.params.action_type = 'rel_tag'
 
       this.tag.dialog = true
     },
-    tagRemove (index) {
+    tagRemove(index) {
       this.tag.tags.unshift(this.tag.currentTags[index])
       this.tag.currentTags.splice(index, 1)
     },
-    tagAdd (item, index) {
+    tagAdd(item, index) {
       let isInArr = this.tag.currentTags.findIndex((n) => n.tag_id == item.tag_id)
       if (isInArr == -1) {
         this.tag.currentTags.push(item)
         this.tag.tags.splice(index, 1)
       }
     },
-    submitMemberTag () {
+    submitMemberTag() {
       this.params.tag_ids = []
       this.params.user_id = []
       this.tag.currentTags.forEach((item) => {
@@ -1391,12 +1361,12 @@ export default {
       this.dialogIsShow = false
       this.batchAction('是否给全部会员打标签?')
     },
-    clearParams () {
+    clearParams() {
       this.params.user_id = undefined
       this.params.grade_form = undefined
       this.params.action_type = undefined
     },
-    batchAction (message) {
+    batchAction(message) {
       console.log(this.params)
       if (this.user_id.length > 0) {
         this.params.user_id = this.user_id
@@ -1451,7 +1421,7 @@ export default {
       }
     },
 
-    editMobile (row) {
+    editMobile(row) {
       this.editMobileDialog = true
       this.form.oldMobile = row.mobile
       this.form.user_id = row.user_id
@@ -1459,7 +1429,7 @@ export default {
       this.form.newMobile = ''
       this.getOperateLog(row.user_id)
     },
-    onEditMobileSubmit () {
+    onEditMobileSubmit() {
       if (!this.form.newMobile) {
         this.$message({
           type: 'error',
@@ -1486,7 +1456,7 @@ export default {
         }
       })
     },
-    getOperateLog (userId) {
+    getOperateLog(userId) {
       var params = {
         user_id: userId
       }
@@ -1494,7 +1464,7 @@ export default {
         this.operateLog = res.data.data.list
       })
     },
-    storeHandle (param) {
+    storeHandle(param) {
       param && param.shop_id
       this.currentDistributor = param.shop_id
       this.currentShop = ''
@@ -1502,7 +1472,7 @@ export default {
       this.getMembers()
     },
 
-    init () {
+    init() {
       this.params.mobile = ''
       this.params.have_consume = ''
       this.params.vip_grade = ''
@@ -1516,7 +1486,7 @@ export default {
       this.currentShop = ''
       this.getMembers()
     },
-    shopHandle (val) {
+    shopHandle(val) {
       this.performInit = true
       this.currentStore = ''
       this.currentShop = val
@@ -1524,7 +1494,7 @@ export default {
       this.getMembers()
     },
 
-    exportData () {
+    exportData() {
       this.currentPage = 1
       memberExport(this.params).then((response) => {
         if (response.data.data.status) {
@@ -1547,7 +1517,7 @@ export default {
         }
       })
     },
-    dateChange (val) {
+    dateChange(val) {
       if (val && val.length > 0) {
         this.params.time_start_begin = this.dateStrToTimeStamp(val[0] + ' 00:00:00')
         this.params.time_start_end = this.dateStrToTimeStamp(val[1] + ' 23:59:59')
@@ -1556,13 +1526,13 @@ export default {
         this.params.time_start_end = ''
       }
     },
-    dateStrToTimeStamp (str) {
+    dateStrToTimeStamp(str) {
       return Date.parse(new Date(str)) / 1000
     },
-    panelCollapse (name) {
+    panelCollapse(name) {
       this.panel[name] = !this.panel[name]
     },
-    acitonDisabled (index, row) {
+    acitonDisabled(index, row) {
       if (row.is_disabled === true) {
         var msg = '此操作将会禁用该会员，是否继续?'
         this.$confirm(msg, '提示', {
@@ -1588,7 +1558,7 @@ export default {
         })
       }
     },
-    switchChief (index, row) {
+    switchChief(index, row) {
       console.log(row.is_chief)
       if (row.is_chief == 1) {
         var msg = '此操作将设置为团长，是否继续?'
@@ -1618,7 +1588,7 @@ export default {
       }
     },
 
-    async relTagDelEvent (tagId, userId) {
+    async relTagDelEvent(tagId, userId) {
       await this.$api.member.usersRelTagsDel({
         tag_id: tagId,
         user_id: userId
@@ -1626,11 +1596,11 @@ export default {
       this.$message({ type: 'success', message: '修改成功' })
       this.getMembers()
     },
-    changeStaffCouponsPage (currentPage) {
+    changeStaffCouponsPage(currentPage) {
       this.staffCoupons.page.currentPage = currentPage
       this.getCoupons()
     },
-    selectStaffItems (item) {
+    selectStaffItems(item) {
       if (item.checked) {
         for (var i = 0; i < this.staffCoupons.temp.length; i++) {
           if (this.staffCoupons.temp[i].card_id === item.card_id) {
@@ -1651,7 +1621,7 @@ export default {
         this.staffCoupons.temp.push(item)
       }
     },
-    batchActionDialog (actiontype) {
+    batchActionDialog(actiontype) {
       this.params.action_type = actiontype
 
       if (actiontype == 'send_sms' && this.aliyunsms_status) {
@@ -1692,7 +1662,7 @@ export default {
     },
 
     /* ali短信 相关 */
-    switchAliyunsmsDialog (val = false) {
+    switchAliyunsmsDialog(val = false) {
       this.aliyunsmsDialogVisible = val
     }
   }

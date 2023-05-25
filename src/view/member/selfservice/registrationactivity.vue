@@ -19,12 +19,7 @@
         </el-select>
       </SpFilterFormItem>
       <SpFilterFormItem prop="create_time" label="时间:">
-        <el-date-picker
-          v-model="params.create_time"
-          type="daterange"
-          value-format="yyyy/MM/dd"
-          placeholder="根据添加时间筛选"
-        />
+        <el-date-picker v-model="params.create_time" type="daterange" value-format="yyyy/MM/dd" placeholder="根据添加时间筛选" />
       </SpFilterFormItem>
     </SpFilterForm>
 
@@ -43,34 +38,34 @@
       </el-table-column>
       <el-table-column label="操作">
         <template slot-scope="scope">
-          <router-link
-            class="iconfont icon-edit1"
-            :to="{ path: matchHidePage('editor'), query: { id: scope.row.activity_id } }"
-          />
+          <router-link class="iconfont icon-edit1"
+            :to="{ path: matchHidePage('editor'), query: { id: scope.row.activity_id } }" />
           <i class="iconfont icon-search-plus" @click="preview(scope.$index, scope.row)" />
-          <i
-            v-if="scope.row.status == 1"
-            class="mark iconfont icon-trash-alt1"
-            @click="deleteAction(scope.$index, scope.row)"
-          />
+          <i v-if="scope.row.status == 1" class="mark iconfont icon-trash-alt1"
+            @click="deleteAction(scope.$index, scope.row)" />
         </template>
       </el-table-column>
     </el-table>
     <div class="content-center content-top-padded">
-      <el-pagination
-        background
-        layout="total, sizes, prev, pager, next, jumper"
-        :current-page.sync="page.pageIndex"
-        :page-sizes="[10, 20, 50]"
-        :total="page.total"
-        :page-size="page.pageSize"
-        @current-change="onCurrentChange"
-        @size-change="onSizeChange"
-      />
+      <el-pagination background layout="total, sizes, prev, pager, next, jumper" :current-page.sync="page.pageIndex"
+        :page-sizes="[10, 20, 50]" :total="page.total" :page-size="page.pageSize" @current-change="onCurrentChange"
+        @size-change="onSizeChange" />
     </div>
 
-    <el-dialog :visible.sync="dialogVisible">
-      <el-form ref="dataInfo" label-width="200px" label-position="left" class="demo-ruleForm">
+    <el-dialog :visible.sync="dialogVisible" title="活动详情">
+      <el-descriptions :column="1">
+        <el-descriptions-item label="活动名称">{{ dataInfo.activity_name }}</el-descriptions-item>
+        <el-descriptions-item label="活动有效时间">{{ dataInfo.start_date }}-{{ dataInfo.end_date }}</el-descriptions-item>
+        <el-descriptions-item label="报名问卷模板">
+          {{ dataInfo.temp_id | formatterLable(temp_options) }}
+        </el-descriptions-item>
+        <el-descriptions-item label="提交报名次数">
+          {{ dataInfo.join_limit }}
+        </el-descriptions-item>
+        <el-descriptions-item label="是否开启短信通知">{{ dataInfo.is_sms_notice==1?'是':'否' }}</el-descriptions-item>
+        <el-descriptions-item label="是否开启小程序通知">{{ dataInfo.is_wxapp_notice==1?'是':'否' }}</el-descriptions-item>
+      </el-descriptions>
+      <!-- <el-form ref="dataInfo" label-width="200px" label-position="left" class="demo-ruleForm">
         <el-form-item :label="dataInfo.field_title">
           <el-col v-if="dataInfo.form_element == 'text'" :span="12">
             <el-input placeholder="text预览" />
@@ -137,14 +132,19 @@
             />
           </el-col>
         </el-form-item>
-      </el-form>
+      </el-form> -->
     </el-dialog>
   </SpRouterView>
 </template>
 <script>
-import { regActivityDel, regActivityInvalid } from '@/api/selfhelpform'
+import { regActivityDel, regActivityInvalid, getTemplateList } from '@/api/selfhelpform'
 import mixin, { pageMixin } from '@/mixins'
 export default {
+  filters: {
+    formatterLable(value, options) {
+      return options.find(item => item.value == value)?.label
+    }
+  },
   mixins: [mixin, pageMixin],
   provide() {
     return {
@@ -162,6 +162,14 @@ export default {
       params: {
         ...initialParams
       },
+      templateParams: {
+        page: 1,
+        pageSize: 10,
+        tem_name: '',
+        // tem_type: 'ask_answer_paper',
+        is_valid: 1
+      },
+      temp_options: [],
       imageUrl: '',
       loading: false,
       dialogVisible: false,
@@ -196,9 +204,24 @@ export default {
     }
   },
   mounted() {
+    this.getTemplateList()
     this.fetchList()
   },
   methods: {
+    getTemplateList() {
+      this.loading = true
+      getTemplateList(this.templateParams).then((response) => {
+        response.data.data.list.map((item) => {
+          this.temp_options.push({
+            label: item.tem_name,
+            value: item.id
+          })
+        })
+        // this.temp_options = response.data.data.list
+        this.total_count = response.data.data.total_count
+        this.loading = false
+      })
+    },
     addElement() {
       // 添加商品
       this.$router.push({ path: this.matchHidePage('editor') })
@@ -339,65 +362,82 @@ export default {
 <style scoped lang="scss">
 .el-row {
   margin-bottom: 20px;
+
   &:last-child {
     margin-bottom: 0;
   }
+
   img {
     width: 90%;
   }
 }
+
 .sp-filter-form {
   margin-bottom: 16px;
 }
+
 .el-col {
   border-radius: 4px;
 }
+
 .bg-purple-dark {
   background: #99a9bf;
 }
+
 .bg-purple {
   background: #d3dce6;
 }
+
 .bg-purple-light {
   background: #e5e9f2;
 }
+
 .grid-content {
   border-radius: 4px;
   min-height: 10px;
+
   img {
     width: 90%;
   }
 }
+
 .row-bg {
   padding: 10px 20px;
   background-color: #f9fafc;
 }
+
 .service-label .el-checkbox:first-child {
   margin-left: 15px;
 }
+
 .service-label .el-input:first-child {
   margin-left: 15px;
 }
+
 .grid-detail {
   max-height: 300px;
   overflow-y: scroll;
   margin-bottom: 20px;
 }
+
 .el-carousel {
   width: 375px;
 }
 </style>
 <style lang="scss">
 .grid-detail {
+
   table,
   .detail-content-wrap,
   .detail-content-item {
     width: 100% !important;
   }
+
   img {
     width: 100%;
   }
 }
+
 .grid-attribute {
   table {
     width: 100% !important;

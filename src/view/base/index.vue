@@ -629,7 +629,9 @@
                 </div>
                 <div v-if="activateInfo && !VUE_APP_FREE" class="validity-period">
                   <i class="iconfont icon-clock" />{{
-                    activateInfo.expired_at | datetime('YYYY-MM-DD HH:mm:ss')
+                    activateInfo.expired_at == '9999999999'
+                      ? '已授权'
+                      : activateInfo.expired_at | datetime('YYYY-MM-DD HH:mm:ss')
                   }}
                   到期
                 </div>

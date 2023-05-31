@@ -17,52 +17,114 @@
       </SpFilterFormItem> -->
       <SpFilterFormItem v-if="!isMicorMall" prop="receipt_type" label="配送类型:">
         <el-select v-model="params.receipt_type" clearable placeholder="请选择">
-          <el-option v-for="item in distributionType" :key="item.value" size="mini" :label="item.title"
-            :value="item.value" />
+          <el-option
+            v-for="item in distributionType"
+            :key="item.value"
+            size="mini"
+            :label="item.title"
+            :value="item.value"
+          />
         </el-select>
       </SpFilterFormItem>
       <SpFilterFormItem v-if="!VERSION_IN_PURCHASE" prop="source" label="订单来源:">
         <el-select v-model="params.source" clearable placeholder="请选择">
-          <el-option v-for="item in orderSourceList" :key="item.value" size="mini" :label="item.title"
-            :value="item.value" />
+          <el-option
+            v-for="item in orderSourceList"
+            :key="item.value"
+            size="mini"
+            :label="item.title"
+            :value="item.value"
+          />
         </el-select>
       </SpFilterFormItem>
       <SpFilterFormItem v-if="!VERSION_IN_PURCHASE" prop="order_class" label="订单类型:">
         <el-select v-model="params.order_class" clearable placeholder="请选择">
-          <el-option v-for="item in orderType" :key="item.value" size="mini" :label="item.title" :value="item.value" />
+          <el-option
+            v-for="item in orderType"
+            :key="item.value"
+            size="mini"
+            :label="item.title"
+            :value="item.value"
+          />
         </el-select>
       </SpFilterFormItem>
       <SpFilterFormItem prop="create_time" label="下单时间:" size="max">
-        <el-date-picker v-model="params.create_time" clearable type="datetimerange" align="right"
-          format="yyyy-MM-dd HH:mm:ss" range-separator="至" start-placeholder="开始日期" end-placeholder="结束日期"
-          prefix-icon="null" :default-time="defaultTime" :picker-options="pickerOptions" />
+        <el-date-picker
+          v-model="params.create_time"
+          clearable
+          type="datetimerange"
+          align="right"
+          format="yyyy-MM-dd HH:mm:ss"
+          range-separator="至"
+          start-placeholder="开始日期"
+          end-placeholder="结束日期"
+          prefix-icon="null"
+          :default-time="defaultTime"
+          :picker-options="pickerOptions"
+        />
       </SpFilterFormItem>
-      <SpFilterFormItem v-if="!isMicorMall && !VERSION_IN_PURCHASE" prop="is_invoiced" label="开票状态:">
+      <SpFilterFormItem
+        v-if="!isMicorMall && !VERSION_IN_PURCHASE"
+        prop="is_invoiced"
+        label="开票状态:"
+      >
         <el-select v-model="params.is_invoiced" clearable placeholder="请选择">
-          <el-option v-for="item in invoiceStatus" :key="item.value" size="mini" :label="item.title"
-            :value="item.value" />
+          <el-option
+            v-for="item in invoiceStatus"
+            :key="item.value"
+            size="mini"
+            :label="item.title"
+            :value="item.value"
+          />
         </el-select>
       </SpFilterFormItem>
       <SpFilterFormItem prop="delivery_time" label="发货时间:" size="max">
-        <el-date-picker v-model="params.delivery_time" clearable type="datetimerange" align="right"
-          format="yyyy-MM-dd HH:mm:ss" range-separator="至" start-placeholder="开始日期" end-placeholder="结束日期"
-          prefix-icon="null" :default-time="defaultTime" :picker-options="pickerOptions" />
+        <el-date-picker
+          v-model="params.delivery_time"
+          clearable
+          type="datetimerange"
+          align="right"
+          format="yyyy-MM-dd HH:mm:ss"
+          range-separator="至"
+          start-placeholder="开始日期"
+          end-placeholder="结束日期"
+          prefix-icon="null"
+          :default-time="defaultTime"
+          :picker-options="pickerOptions"
+        />
       </SpFilterFormItem>
-      <SpFilterFormItem v-if="!VERSION_STANDARD && !VERSION_IN_PURCHASE" prop="distributor_type" label="订单分类:">
+      <SpFilterFormItem
+        v-if="!VERSION_STANDARD && !VERSION_IN_PURCHASE"
+        prop="distributor_type"
+        label="订单分类:"
+      >
         <el-select v-model="params.distributor_type" clearable placeholder="请选择">
-          <el-option v-for="item in orderCategory" :key="item.value" size="mini" :label="item.title"
-            :value="item.value" />
+          <el-option
+            v-for="item in orderCategory"
+            :key="item.value"
+            size="mini"
+            :label="item.title"
+            :value="item.value"
+          />
         </el-select>
       </SpFilterFormItem>
-      <SpFilterFormItem v-if="(!isMicorMall || login_type != 'distributor') && !VERSION_B2C && !VERSION_IN_PURCHASE"
-        prop="distributor_id" label="店铺:">
+      <SpFilterFormItem
+        v-if="(!isMicorMall || login_type != 'distributor') && !VERSION_B2C && !VERSION_IN_PURCHASE"
+        prop="distributor_id"
+        label="店铺:"
+      >
         <SpSelectShop v-model="params.distributor_id" clearable placeholder="请选择" />
       </SpFilterFormItem>
       <SpFilterFormItem v-if="!VERSION_IN_PURCHASE" prop="subDistrict" label="选择街道:">
-        <el-cascader v-model="params.subDistrict" clearable :props="{
-          value: 'id',
-          checkStrictly: true
-        }" :options="subDistrictList" />
+        <el-cascader
+          v-model="params.subDistrict"
+          clearable
+          :props="{
+            value: 'id',
+            checkStrictly: true
+          }"
+          :options="subDistrictList"
+        />
       </SpFilterFormItem>
     </SpFilterForm>
 
@@ -83,181 +145,258 @@
           </el-dropdown-item>
         </el-dropdown-menu>
       </el-dropdown>
-      <el-tooltip effect="light" content="请将从订单列表导出的主订单文件，删除不想批量发货的订单号，修改物流公司，物流单号后上传即可。" placement="top-start">
-        <el-upload action="" class="btn-upload" :on-change="uploadHandleChange" :auto-upload="false"
-          :show-file-list="false">
+      <el-tooltip
+        effect="light"
+        content="请将从订单列表导出的主订单文件，删除不想批量发货的订单号，修改物流公司，物流单号后上传即可。"
+        placement="top-start"
+      >
+        <el-upload
+          action=""
+          class="btn-upload"
+          :on-change="uploadHandleChange"
+          :auto-upload="false"
+          :show-file-list="false"
+        >
           <el-button type="primary" plain> 批量发货 </el-button>
         </el-upload>
       </el-tooltip>
-      <el-upload action="" class="btn-upload" :on-change="uploadHandlePatchCancel" :auto-upload="false"
-        :show-file-list="false">
+      <el-upload
+        action=""
+        class="btn-upload"
+        :on-change="uploadHandlePatchCancel"
+        :auto-upload="false"
+        :show-file-list="false"
+      >
         <el-button type="primary" plain> 批量取消 </el-button>
       </el-upload>
     </div>
 
     <el-tabs v-model="params.order_status" type="card" @tab-click="onSearch">
-      <el-tab-pane v-for="item in orderStatus" :key="item.value" :label="item.title" :name="item.value" />
+      <el-tab-pane
+        v-for="item in orderStatus"
+        :key="item.value"
+        :label="item.title"
+        :name="item.value"
+      />
+      <el-table v-loading="loading" border :data="tableList">
+        <el-table-column width="220" prop="order_id" label="订单信息">
+          <template slot-scope="scope">
+            <div class="order-num">
+              {{ scope.row.order_id }}
+              <el-tooltip effect="dark" content="复制" placement="top-start">
+                <i
+                  v-clipboard:copy="scope.row.order_id"
+                  v-clipboard:success="onCopySuccess"
+                  class="el-icon-document-copy"
+                />
+              </el-tooltip>
+            </div>
+            <div v-if="scope.row.distributor_id !== '0'" class="order-store">
+              <el-tooltip effect="dark" content="店铺名" placement="top-start">
+                <i class="el-icon-office-building" />
+              </el-tooltip>
+              {{ scope.row.distributor_name }}
+            </div>
+            <div class="order-time">
+              <el-tooltip effect="dark" content="下单时间" placement="top-start">
+                <i class="el-icon-time" />
+              </el-tooltip>
+              {{ scope.row.create_time | datetime('YYYY-MM-DD HH:mm:ss') }}
+            </div>
+          </template>
+        </el-table-column>
 
-      <div class="action-table">
-        <el-table v-loading="loading" :data="tableList"
-          :header-cell-style="{ background: '#fafafa' }">
-          <el-table-column label="商品" min-width="280px">
-            <!-- <template slot="header" slot-scope="scope">
-              <el-checkbox>商品</el-checkbox>
-            </template> -->
+        <el-table-column prop="total_fee" width="120" label="订单金额（¥）">
+          <template slot-scope="scope">
+            {{ (scope.row.total_fee / 100).toFixed(2) }}
+          </template>
+        </el-table-column>
+        <el-table-column width="100" label="运费（¥）">
+          <template slot-scope="scope">
+            {{ (scope.row.freight_fee || 0) / 100 }}
+          </template>
+        </el-table-column>
+        <el-table-column prop="mobile" label="客户手机号">
+          <template slot-scope="scope">
+            <template v-if="!scope.row.user_delete && login_type !== 'merchant'">
+              <router-link
+                target="_blank"
+                :to="{
+                  path: `${
+                    login_type != 'distributor'
+                      ? '/member/member/detail'
+                      : '/shopadmin/member/member/detail'
+                  }`,
+                  query: { user_id: scope.row.user_id }
+                }"
+              >
+                {{ scope.row.mobile }}
+              </router-link>
+              <el-tooltip
+                v-if="datapass_block == 0"
+                effect="dark"
+                content="复制"
+                placement="top-start"
+              >
+                <i
+                  v-clipboard:copy="scope.row.mobile"
+                  v-clipboard:success="onCopySuccess"
+                  class="el-icon-document-copy"
+                />
+              </el-tooltip>
+            </template>
+            <template v-else slot-scope="scope">
+              <span>{{ scope.row.mobile }}</span>
+              <el-tooltip
+                v-if="datapass_block == 0"
+                effect="dark"
+                content="复制"
+                placement="top-start"
+              >
+                <i
+                  v-clipboard:copy="scope.row.mobile"
+                  v-clipboard:success="onCopySuccess"
+                  class="el-icon-document-copy"
+                />
+              </el-tooltip>
+            </template>
+          </template>
+        </el-table-column>
+        <template v-if="login_type != 'merchant'">
+          <el-table-column v-if="!isMicorMall" label="订单类型">
             <template slot-scope="scope">
-              <div class="table-column-content">
-                <div v-for="(item, index) in scope.row.items" :key="index" class="table-column-goodsinfo">
-                  <SpImage :src="item.pic" width="80" height="80" class="goods_nd_hd" />
-                  <div class="goods_nd">
-                    <el-button type="text" class="goods_nd_name">{{ item.item_name }}</el-button>
-                    <p class="goods_nd_desc">{{ item.item_spec_desc }}</p>
-                  </div>
-                </div>
-              </div>
+              {{ getOrderType(scope.row) }}
             </template>
           </el-table-column>
+        </template>
+        <el-table-column prop="order_status" label="订单状态">
+          <template slot-scope="scope">
+            {{ scope.row.order_status_msg }}
+          </template>
+        </el-table-column>
 
-          <el-table-column label="单价/数量" min-width="120px" align="right">
-            <template slot-scope="scope">
-              <div class="table-column-content">
-                <div v-for="(item, index) in scope.row.items" :key="index" class="goods_pn">
-                  <p class="goods_pn_price">{{ (item.cny_fee / 100).toFixed(2) }}</p>
-                  <p class="goods_pn_num">x{{ item.num }}</p>
-                </div>
-              </div>
-            </template>
-          </el-table-column>
-          <el-table-column label="订单实收金额" min-width="180px" align="right">
-            <template slot-scope="scope">
-              <div class="table-column-content">
-                <div class="good_fee">
-                  <p>{{ (scope.row.total_fee / 100).toFixed(2) }}</p>
-                  <p class="good_fee_freight">含运费：{{ ((scope.row.freight_fee || 0) / 100).toFixed(2) }}</p>
-                </div>
-              </div>
-            </template>
-          </el-table-column>
-          <el-table-column label="支付方式" min-width="180px" align="center">
-            <template slot-scope="scope">
-              <div class="table-column-content">
-                  <p>{{ scope.row | filterPayType() }}</p>
-              </div>
-            </template>
-          </el-table-column>
-          <el-table-column label="买家" min-width="200px">
-            <template slot-scope="scope">
-              <div class="table-column-content">
-                <div class="content-item">
-                  <p>昵称：{{ scope.row.username }}</p>
-                  <p>手机号：{{ scope.row.mobile }}</p>
-                </div>
-              </div>
-            </template></el-table-column>
-          <el-table-column label="订单备注" min-width="160px" align="center">
-            <template slot-scope="scope">
-              <div class="table-column-content">
-                <el-tooltip class="item" effect="dark" :content="scope.row.distributor_remark" placement="top">
-                  <p class="remark_text">{{ scope.row.distributor_remark }}</p>
-                </el-tooltip>
-                <el-button v-if="VERSION_STANDARD || scope.row.distributor_id == 0 || login_type == 'distributor'"
-                  type="text" @click="handleAction(scope.row, { key: 'remark' })">
-                  {{ scope.row.distributor_remark ? '修改备注' : '添加备注' }}
+        <el-table-column label="配送方式">
+          <template slot-scope="scope">
+            {{ getDistributionType(scope.row) }}
+          </template>
+        </el-table-column>
+
+        <!-- <el-table-column prop="source_name" label="来源"></el-table-column> -->
+        <el-table-column label="操作" fixed="left">
+          <template slot-scope="scope">
+            <el-button type="text" style="margin-right: 8px">
+              <router-link
+                :to="`${$route.path}/detail?orderId=${scope.row.order_id}&resource=${$route.path}`"
+              >
+                详情
+              </router-link>
+            </el-button>
+            <el-popover placement="right" trigger="hover">
+              <div class="operating-icons">
+                <el-button type="text">
+                  <router-link
+                    :to="`${$route.path}/process?orderId=${scope.row.order_id}&resource=${$route.path}`"
+                  >
+                    日志
+                  </router-link>
                 </el-button>
-              </div>
-            </template>
-          </el-table-column>
-          <el-table-column label="订单状态" min-width="120px" align="center">
-            <template slot-scope="scope">
-              <div class="table-column-content">
-                {{ scope.row.order_status_msg }}
-              </div>
-            </template>
-          </el-table-column>
-          <el-table-column label="操作" min-width="120px" align="center">
-            <template slot-scope="scope">
-              <el-button type="text" style="margin-right: 8px">
-                <router-link :to="`${$route.path}/detail?orderId=${scope.row.order_id}&resource=${$route.path}`">
-                  详情
-                </router-link>
-              </el-button>
-
-              <el-popover placement="right" trigger="hover">
-                <div class="operating-icons">
-                  <el-button type="text">
-                    <router-link :to="`${$route.path}/process?orderId=${scope.row.order_id}&resource=${$route.path}`">
-                      日志
-                    </router-link>
+                <template v-for="(btn, index) in scope.row.actionBtns">
+                  <el-button
+                    :key="`btn-item__${index}`"
+                    type="text"
+                    @click="handleAction(scope.row, btn)"
+                  >
+                    {{ btn.name }}
                   </el-button>
-                  <template>
-                    <el-button v-for="(btn, index) in scope.row.actionBtns" :key="`btn-item__${index}`" type="text"
-                      @click="handleAction(scope.row, btn)">
-                      {{ btn.name }}
-                    </el-button>
-                  </template>
-                </div>
-                <el-button slot="reference" type="text">
-                  更多<i class="iconfont icon-angle-double-right" />
-                </el-button>
-              </el-popover>
-            </template>
-          </el-table-column>
-          <el-table-column width="1" class-name="action-table-column action-table-column-header">
-            <template slot-scope="scope">
-              <div class="action-table-header">
-                <!-- <el-checkbox>订单编号：{{ scope.row.order_id }} </el-checkbox> -->
-                <p>订单编号： {{ scope.row.order_id }}</p>
-                <p>下单时间：{{ scope.row.create_time | datetime('YYYY-MM-DD HH:mm:ss') }}</p>
-                <p>类型： {{ getOrderType(scope.row) }}</p>
-                <p>店铺：{{ scope.row.distributor_name }}</p>
-                <p>来源：{{ scope.row.source_name }}</p>
+                </template>
               </div>
-            </template>
-          </el-table-column>
-          <el-table-column width="1" class-name="action-table-column action-table-column-footer">
-            <template slot-scope="scope">
-              <div class="action-table-footer">
-                <p> 收货人：{{ scope.row.receiver_name }}</p>
-                <p style="padding-left:20px">收货地址：{{ scope.row.receiver_state }}{{ scope.row.receiver_district }}{{
-                  scope.row.receiver_address }}</p>
-              </div>
-            </template>
-          </el-table-column>
-        </el-table>
-      </div>
+              <el-button slot="reference" type="text">
+                更多<i class="iconfont icon-angle-double-right" />
+              </el-button>
+            </el-popover>
+          </template>
+        </el-table-column>
+      </el-table>
       <div class="content-padded content-center">
-        <el-pagination background layout="total, sizes, prev, pager, next, jumper" :current-page.sync="page.pageIndex"
-          :page-sizes="[10, 20, 50]" :total="page.total" :page-size="page.pageSize" @current-change="onCurrentChange"
-          @size-change="onSizeChange" />
+        <el-pagination
+          background
+          layout="total, sizes, prev, pager, next, jumper"
+          :current-page.sync="page.pageIndex"
+          :page-sizes="[10, 20, 50]"
+          :total="page.total"
+          :page-size="page.pageSize"
+          @current-change="onCurrentChange"
+          @size-change="onSizeChange"
+        />
       </div>
     </el-tabs>
 
     <!-- 备注 -->
-    <SpDialog ref="remarkDialogRef" v-model="remarkDialog" :title="`修改备注【订单:${remarkForm.orderId}】`" :form="remarkForm"
-      :form-list="remarkFormList" @onSubmit="onRemarkSubmit" />
+    <SpDialog
+      ref="remarkDialogRef"
+      v-model="remarkDialog"
+      :title="`修改备注【订单:${remarkForm.orderId}】`"
+      :form="remarkForm"
+      :form-list="remarkFormList"
+      @onSubmit="onRemarkSubmit"
+    />
 
     <!-- 取消订单 -->
-    <SpDialog ref="cancelOrderDialogRef" v-model="cancelOrderDialog" class="dialog-cancelorder"
-      :title="`取消订单【订单:${cancelOrderForm.order_id}】`" :loading="cancelOrderForm.loading" :form="cancelOrderForm"
-      :form-list="cancelOrderFormList" @onSubmit="onCancelOrderSubmit" />
+    <SpDialog
+      ref="cancelOrderDialogRef"
+      v-model="cancelOrderDialog"
+      class="dialog-cancelorder"
+      :title="`取消订单【订单:${cancelOrderForm.order_id}】`"
+      :loading="cancelOrderForm.loading"
+      :form="cancelOrderForm"
+      :form-list="cancelOrderFormList"
+      @onSubmit="onCancelOrderSubmit"
+    />
 
     <!-- 发货 -->
-    <SpDialog ref="deliverGoodsDialogRef" v-model="deliverGoodsDialog" width="1000px"
-      :title="`发货【订单:${deliverGoodsForm.order_id}】`" :form="deliverGoodsForm" :form-list="deliverGoodsFormList"
-      @onSubmit="deliverGoodsSubmit" />
+    <SpDialog
+      ref="deliverGoodsDialogRef"
+      v-model="deliverGoodsDialog"
+      width="1000px"
+      :title="`发货【订单:${deliverGoodsForm.order_id}】`"
+      :form="deliverGoodsForm"
+      :form-list="deliverGoodsFormList"
+      @onSubmit="deliverGoodsSubmit"
+    />
 
     <!-- 核销 -->
-    <SpDialog ref="writeOffDialogRef" v-model="writeOffDialog" :title="`核销【订单:${writeOffForm.order_id}】`"
-      :form="writeOffForm" :form-list="writeOffFormList" @onSubmit="writeOffSubmit" />
+    <SpDialog
+      ref="writeOffDialogRef"
+      v-model="writeOffDialog"
+      :title="`核销【订单:${writeOffForm.order_id}】`"
+      :form="writeOffForm"
+      :form-list="writeOffFormList"
+      @onSubmit="writeOffSubmit"
+    />
 
     <!-- 退款审核 -->
-    <SpDialog ref="refundRef" v-model="refundDialog" :title="`退款【订单:${refundForm.order_id}】`" :form="refundForm"
-      :form-list="refundFormList" @onSubmit="refundSubmit" />
+    <SpDialog
+      ref="refundRef"
+      v-model="refundDialog"
+      :title="`退款【订单:${refundForm.order_id}】`"
+      :form="refundForm"
+      :form-list="refundFormList"
+      @onSubmit="refundSubmit"
+    />
 
     <!-- 订单改价 -->
-    <SpDialog ref="changePriceRef" v-model="changePriceDialog" width="1000px" class="dialog-changeprice"
-      :loading="changePriceForm.loading" :destroy-on-close="true" :title="`申请售后【订单:${changePriceForm.order_id}】`"
-      :form="changePriceForm" :form-list="changePriceFormList" @onSubmit="changePriceSubmit" />
+    <SpDialog
+      ref="changePriceRef"
+      v-model="changePriceDialog"
+      width="1000px"
+      class="dialog-changeprice"
+      :loading="changePriceForm.loading"
+      :destroy-on-close="true"
+      :title="`申请售后【订单:${changePriceForm.order_id}】`"
+      :form="changePriceForm"
+      :form-list="changePriceFormList"
+      @onSubmit="changePriceSubmit"
+    />
   </SpRouterView>
 </template>
 <script>
@@ -293,11 +432,6 @@ import {
 } from '@/consts'
 
 export default {
-  filters: {
-    filterPayType(value) {
-      return value.pay_channel ? PAY_TYPE[value.pay_channel] : PAY_TYPE[value.pay_type]
-    }
-  },
   // components: { CompTableView },
   mixins: [mixin, pageMixin],
   data() {
@@ -326,8 +460,8 @@ export default {
       orderStatus: VERSION_B2C
         ? ORDER_B2C_STATUS
         : VERSION_IN_PURCHASE
-          ? IN_PURCHASE_STATUS
-          : ORDER_STATUS,
+        ? IN_PURCHASE_STATUS
+        : ORDER_STATUS,
       orderType: this.VERSION_STANDARD ? ORDER_TYPE_STANDARD : ORDER_TYPE,
       invoiceStatus: INVOICE_STATUS,
       orderCategory: ORDER_CATEGORY,
@@ -615,8 +749,9 @@ export default {
                 {`${this.changePriceForm.buy_member} | ${this.changePriceForm.buy_mobile}`}
               </div>
               <div class='receive-item'>
-                <label class='item-label'>{`${this.changePriceForm.isZiti ? '提货人：' : '收货人：'
-                  }`}</label>
+                <label class='item-label'>{`${
+                  this.changePriceForm.isZiti ? '提货人：' : '收货人：'
+                }`}</label>
                 {`${this.changePriceForm.receive_name} | ${this.changePriceForm.receive_mobile}`}
               </div>
               <div class='receive-item'>
@@ -787,6 +922,8 @@ export default {
           if (is_invoiced == '0' && invoice) {
             actionBtns.push({ name: '待开票', key: 'waitInvoice' })
           }
+
+          actionBtns.push({ name: '备注', key: 'remark' })
         }
         if (order_status == 'NOTPAY') {
           if (VERSION_PLATFORM) {
@@ -1143,7 +1280,7 @@ export default {
       this.changePriceDialog = false
       this.fetchList()
     },
-    async salesAfterSubmit() { },
+    async salesAfterSubmit() {},
     exportInvoice() {
       let type = 'normal'
       this.$emit('onChangeData', 'params', { type })
@@ -1266,7 +1403,6 @@ export default {
   .el-form {
     margin-right: 0 !important;
   }
-
   .tip-bar {
     border: 1px solid #7db3f2;
     border-radius: 4px;
@@ -1277,20 +1413,16 @@ export default {
     line-height: 36px;
     font-size: 13px;
   }
-
   .receive-info {
     line-height: 22px;
   }
-
   .receive-item {
     color: #7d7d7d;
   }
-
   .receive-label {
     color: #b8b8b8;
   }
 }
-
 .dialog-cancelorder {
   .el-form-item {
     &:nth-child(1) {
@@ -1298,7 +1430,6 @@ export default {
         margin-left: 0 !important;
       }
     }
-
     &:nth-child(2) {
       .el-form-item__content {
         margin-left: 26px !important;
@@ -1306,10 +1437,8 @@ export default {
     }
   }
 }
-
 .dialog-changeprice {
   .el-form-item {
-
     &:nth-child(1),
     &:nth-child(2),
     &:nth-child(3) {
@@ -1319,7 +1448,6 @@ export default {
     }
   }
 }
-
 .dialog-salesafter {
   .el-form-item {
     &:nth-child(1) {
@@ -1329,166 +1457,4 @@ export default {
     }
   }
 }
-
-.action-table {
-  width: 100%;
-
-  .el-table {
-    width: 100%;
-    margin-bottom: 20px;
-    thead{
-      .cell{
-        color: #000;
-        font-size: 12px;
-        font-weight: 600;
-      }
-    }
-
-    &::before {
-      display: none;
-    }
-
-    .el-table__body {
-      //-webkit-border-horizontal-spacing: 13px;  // 水平间距
-      -webkit-border-vertical-spacing: 10px; // 垂直间距 设置的是行间距
-    }
-
-    th.el-table__cell.is-leaf {
-      border: none !important;
-    }
-
-    .el-table__row td {
-      padding: 10px 0;
-      border-top: 1px solid rgba(0, 0, 0, 0.1) !important;
-      border-bottom: 1px solid rgba(0, 0, 0, 0.1) !important;
-
-      &:not(:first-child) {
-        border-right: 1px solid rgba(0, 0, 0, 0.1) !important;
-      }
-
-      &:first-child {
-        border-left: 1px solid rgba(0, 0, 0, 0.1) !important;
-      }
-    }
-
-    .el-table__row>td {
-      font-size: 12px;
-      color: #333333;
-
-      &:nth-last-child(3) {
-        // border-right: 1px solid rgba(0, 0, 0, 0.1) !important;
-        right: -1px;
-      }
-    }
-  }
-
-
-  .el-table__body-wrapper {
-    .el-table__row {
-      position: relative;
-      overflow: hidden;
-    }
-
-    .action-table-column {
-      position: absolute !important;
-      width: calc(100% - 2px);
-      background: #fafafa;
-      height: 30px;
-      line-height: 30px;
-      padding-left: 10px;
-      padding: 0px !important;
-      left: 1px;
-      border-right: 1px solid rgba(0, 0, 0, 0.1) !important;
-
-      &-header {
-        top: 0px;
-      }
-
-      &-footer {
-        bottom: 0px;
-      }
-
-      .cell {
-        line-height: inherit;
-        padding-left: 9px;
-      }
-
-      .action-table-header {
-        width: 100%;
-        display: flex;
-        justify-content: space-between;
-      }
-
-      .action-table-footer {
-        width: 100%;
-        display: flex;
-      }
-    }
-  }
-
-  .table-column {
-
-    &-content {
-      padding: 30px 10px 30px 0;
-
-      .goods_pn {
-        display: flex;
-        flex-direction: column;
-        justify-content: flex-start;
-        min-height: 80px;
-      }
-      .good_fee{
-        display: flex;
-        flex-direction: column;
-        justify-content: center;
-        &_freight{
-          color: #9c9c9c;
-        }
-      }
-      .remark_text {
-        /* 1.溢出隐藏 */
-        overflow: hidden;
-        /* 2.用省略号来代替超出文本 */
-        text-overflow: ellipsis;
-        /* 3.设置盒子属性为-webkit-box  必须的 */
-        display: -webkit-box;
-        /* 4.-webkit-line-clamp 设置为2，表示超出2行的部分显示省略号，如果设置为3，那么就是超出3行部分显示省略号 */
-        -webkit-line-clamp: 2;
-        /* 5.字面意思：单词破坏：破坏英文单词的整体性，在英文单词还没有在一行完全展示时就换行  即一个单词可能会被分成两行展示 */
-        word-break: break-all;
-        /* 6.盒子实现多行显示的必要条件，文字是垂直展示，即文字是多行展示的情况下使用 */
-        -webkit-box-orient: vertical;
-      }
-    }
-
-    &-goodsinfo {
-      display: flex;
-
-      &:not(:first-child) {
-        padding-top: 10px;
-      }
-
-      .goods_nd {
-        width: 100%;
-        margin-left: 10px;
-        box-sizing: border-box;
-        padding: 5px 0;
-        display: flex;
-        flex-direction: column;
-        justify-content: space-between;
-
-        &_hd {
-          flex-shrink: 0;
-        }
-
-        &_name {
-          font-size: 12px;
-          font-weight: 600;
-          text-align: left;
-        }
-      }
-    }
-  }
-}
 </style>
-<style lang="scss" scoped></style>

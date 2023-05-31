@@ -371,7 +371,7 @@ export default {
             params.images.map((item) => {
               return {
                 url: item,
-                tipics: []
+                topics: []
               }
             })
           )

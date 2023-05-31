@@ -185,6 +185,7 @@
               <span v-if="scope.row.order_status == 'WAIT_BUYER_CONFIRM'">待收货</span>
               <span v-if="scope.row.order_status == 'REFUND_SUCCESS'">已退款</span>
               <span v-if="scope.row.order_status == 'WAIT_GROUPS_SUCCESS'">等待成团</span>
+              <span v-if="scope.row.order_status == 'PART_PAYMENT'">部分付款</span>
               <span v-if="scope.row.order_status == 'DONE'">已完成</span>
               <template
                 v-if="
@@ -201,7 +202,7 @@
                 >
                 <span
                   v-if="
-                    scope.row.receipt_type == 'logistics' && scope.row.delivery_status == 'PENDING'
+                    scope.row.receipt_type == 'logistics' && scope.row.delivery_status == 'PENDING' && scope.row.order_status !== 'PART_PAYMENT'
                   "
                   >待发货</span
                 >

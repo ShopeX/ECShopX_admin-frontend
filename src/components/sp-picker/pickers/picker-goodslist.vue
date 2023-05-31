@@ -223,7 +223,7 @@ export default {
       this.refresh(true)
     },
     async fetch({ page_no, page_size }) {
-      const { category } = this.params
+      const { category } = this.queryForm
       const query = {
         page: page_no,
         pageSize: page_size,
@@ -231,7 +231,7 @@ export default {
         special_type: ['normal', 'drug'],
         audit_status: 'approved',
         is_sku: false,
-        ...this.params,
+        ...this.queryForm,
         category: category[category.length - 1]
       }
       if (!query.distributor_id) {

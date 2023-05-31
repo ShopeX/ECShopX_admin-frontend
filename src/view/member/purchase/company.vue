@@ -112,7 +112,7 @@ export default {
             action: {
               handler: async ([row]) => {
                 await this.$api.member.sendEmployeeEmail({
-                  id: row.company_id,
+                  enterprise_id: row.company_id,
                   email: row.email_user
                 })
                 this.$message.success('邮件已发送')
@@ -189,7 +189,7 @@ export default {
                 on: {
                   change: async (e) => {
                     await this.$api.member.updateCompanyStatus({
-                      id: row.id,
+                      enterprise_id: row.id,
                       disabled: e
                     })
                     row.disabled = e

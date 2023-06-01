@@ -140,7 +140,7 @@
                 form.bank_acct_type == '1' ? '对公' : '对私'
               }}</span>
               <template v-else>
-                <el-radio-group v-model="form.bank_acct_type" :disabled="disabled || editDisabled">
+                <el-radio-group v-model="form.bank_acct_type" :disabled="disabled">
                   <el-radio label="1"> 对公 </el-radio>
                   <el-radio label="2"> 对私 </el-radio>
                 </el-radio-group>
@@ -160,7 +160,7 @@
               <span v-if="$route.query.type == 'detail' || $route.query.type == 'verify'">{{
                 form.bank_mobile
               }}</span>
-              <el-input v-else v-model="form.bank_mobile" :disabled="disabled || editDisabled" />
+              <el-input v-else v-model="form.bank_mobile" :disabled="disabled" />
             </el-form-item>
           </el-col>
           <el-col v-else :span="8">
@@ -172,7 +172,7 @@
                 <el-autocomplete
                   v-else
                   v-model="form.bank_name"
-                  :disabled="disabled || editDisabled"
+                  :disabled="disabled"
                   style="width: 100%"
                   prefix-icon="el-icon-search"
                   class="inline-input"
@@ -188,7 +188,7 @@
               <span v-if="$route.query.type == 'detail' || $route.query.type == 'verify'">{{
                 form.card_id_mask
               }}</span>
-              <el-input v-else v-model="form.card_id_mask" :disabled="disabled || editDisabled" />
+              <el-input v-else v-model="form.card_id_mask" :disabled="disabled" />
             </el-form-item>
           </el-col>
         </el-row>
@@ -664,10 +664,9 @@ export default {
         if (type == 'detail') {
           this.disabled = true
           action = 'detail'
-        } 
-        // else {
-        //   this.editDisabled = true
-        // }
+        }else {
+          this.editDisabled = true
+        }
         const result = await getTheMerchant({ action }, merchantId)
         this.resultHandler(result)
       } else if (type == 'verify') {

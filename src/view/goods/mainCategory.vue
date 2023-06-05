@@ -306,7 +306,8 @@ export default {
         queryParams: {
           attribute_type: 'item_spec'
         },
-        num: 3
+        num: 3,
+        islimitImgType:true
       })
       await this.$api.goods.updateCategory(category_id, {
         goods_spec: JSON.stringify(data.map((item) => item.attribute_id))

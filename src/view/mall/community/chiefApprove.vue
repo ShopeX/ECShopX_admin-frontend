@@ -6,7 +6,7 @@
 </style>
 <template>
   <div>
-    <div v-if="$route.path.indexOf('detail') === -1 && $route.path.indexOf('approve') === -1">
+    <div v-if="$route.path.indexOf('detail') === -1">
       <SpFilterForm :model="formQuery" @onSearch="onSearch" @onReset="onSearch">
         <SpFilterFormItem prop="name" label="团长姓名:">
           <el-input v-model="formQuery.name" placeholder="请输入团长姓名" />
@@ -15,24 +15,36 @@
           <el-input v-model="formQuery.mobile" placeholder="请输入团长手机号" />
         </SpFilterFormItem>
       </SpFilterForm>
-      <div class="action-container">
-        <el-button type="primary" plain icon="el-plus-circle" @click="handleApprove">
-          团长审批
-        </el-button>
-      </div>
-      <el-tabs v-model="formQuery.approve_status" type="card" @tab-click="onSearch">
-        <el-tab-pane v-for="item in stateList" :key="item.value" :label="item.title" :name="item.value" />
 
-        <SpFinder ref="finder" no-selection :setting="setting" :hooks="{
-          beforeSearch: beforeSearch,
-          afterSearch: afterSearch
-        }" url="/community/chief/apply/list" />
+      <el-tabs v-model="formQuery.approve_status" type="card" @tab-click="onSearch">
+        <el-tab-pane
+          v-for="item in stateList"
+          :key="item.value"
+          :label="item.title"
+          :name="item.value"
+        />
+
+        <SpFinder
+          ref="finder"
+          no-selection
+          :setting="setting"
+          :hooks="{
+            beforeSearch: beforeSearch,
+            afterSearch: afterSearch
+          }"
+          url="/community/chief/apply/list"
+        />
       </el-tabs>
 
-      <SpDialog ref="resloveDialogRef" v-model="resloveDialog" :title="`审批`" :form="resloveForm"
-        :form-list="resloveFormList" @onSubmit="onResloveSubmit" />
+      <SpDialog
+        ref="resloveDialogRef"
+        v-model="resloveDialog"
+        :title="`审批`"
+        :form="resloveForm"
+        :form-list="resloveFormList"
+        @onSubmit="onResloveSubmit"
+      />
     </div>
-    <router-view />
   </div>
 </template>
 
@@ -63,7 +75,7 @@ export default {
               handler: ([row]) => {
                 const { path } = this.$route
                 this.$router.push({
-                  path: `${path}/detail/${row.apply_id}`
+                  path: `${path}/approve`
                 })
               }
             }
@@ -140,7 +152,7 @@ export default {
       ]
     }
   },
-  created() { },
+  created() {},
   methods: {
     onSearch() {
       this.$refs.finder.refresh(true)
@@ -152,7 +164,7 @@ export default {
       }
       return { ...params, ...formQuery }
     },
-    afterSearch() { },
+    afterSearch() {},
     async onResloveSubmit() {
       const { apply_id, approve_status, refuse_reason } = this.resloveForm
       await this.$api.community.approveChief(apply_id, {
@@ -170,12 +182,6 @@ export default {
       } else if (status == '2') {
         return '已拒绝'
       }
-    },
-    handleApprove() {
-      const { path } = this.$route
-      this.$router.push({
-        path: `${path}/approve`
-      })
     }
   }
 }

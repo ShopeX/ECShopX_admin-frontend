@@ -664,9 +664,10 @@ export default {
         if (type == 'detail') {
           this.disabled = true
           action = 'detail'
-        } else {
-          this.editDisabled = true
-        }
+        } 
+        // else {
+        //   this.editDisabled = true
+        // }
         const result = await getTheMerchant({ action }, merchantId)
         this.resultHandler(result)
       } else if (type == 'verify') {

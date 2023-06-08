@@ -2,6 +2,23 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [3.13.1](https://git.ishopex.cn/ecshopx/ecshopx-admin/compare/v3.13.0...v3.13.1) (2023-06-01)
+
+
+### Bug Fixes
+
+* 云店装修路径选择器取消关联店铺 ([e9b1a43](https://git.ishopex.cn/ecshopx/ecshopx-admin/commit/e9b1a431e084f9c163eb47eb11e346c718e67bef))
+
+## [3.13.0](https://git.ishopex.cn/ecshopx/ecshopx-admin/compare/v3.12.1...v3.13.0) (2023-06-01)
+
+
+### Features
+
+* 从feature/ECX-4011分支 迁移素材管理代码 ([c8b837f](https://git.ishopex.cn/ecshopx/ecshopx-admin/commit/c8b837ff603284616cfb0ed95c2f1287f1e0f3e0))
+* 修复点击全部活动列表里的预览按钮，弹出页面显示空白 ([a4a6e44](https://git.ishopex.cn/ecshopx/ecshopx-admin/commit/a4a6e447dd7e4f469dfcaa3c4b2f3f3e382e5dfc))
+* 批量更改销售分类分类展示为数字bug修复 ([d3adab4](https://git.ishopex.cn/ecshopx/ecshopx-admin/commit/d3adab44a05efbeea32605ad9f43eb6006b4a906))
+* 需要可以修改商家的结算账户信息 ([c9e65cc](https://git.ishopex.cn/ecshopx/ecshopx-admin/commit/c9e65cc8fe0ee0ef7b18588c06e09af43ccc72d7))
+
 ## [3.12.0](https://git.ishopex.cn/ecshopx/ecshopx-admin/compare/v3.11.4...v3.12.0) (2023-05-18)
 
 

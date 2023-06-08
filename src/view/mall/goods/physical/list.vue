@@ -442,6 +442,7 @@
       <el-dialog title="更改销售分类" :visible.sync="addCategorydialogVisible" width="30%">
         <treeselect
           v-model="category_id"
+          :normalizer="tenantIdnormalizer"
           :options="categoryList"
           :multiple="true"
           :show-count="true"
@@ -997,6 +998,17 @@ export default {
     console.log(111)
   },
   methods: {
+     // 字段默认 id label 用于规范化数据源
+     tenantIdnormalizer(node, instanceId) {
+      if (node.children && !node.children.length) {
+        delete node.children
+      }
+      return {
+        id: node.category_id,
+        label: node.category_name,
+        children: node.children
+      }
+    },
     // 获取地区列表
     async getAddress() {
       const res = await this.$api.common.getAddress()

@@ -82,7 +82,7 @@ export default {
         refund_point: '0',
         refund_fee: '',
         description: '',
-        pic: null
+        pic: ''
       },
       formList: [
         {
@@ -201,7 +201,10 @@ export default {
         {
           label: '上传凭证',
           key: 'pic',
-          component: () => <SpImagePicker v-model={this.form.pic} />
+          component: ({ key }, value) => {
+            return <SpImagePicker v-model={value[key]} />
+          }
+          // component: () => <SpImagePicker v-model={this.form.pic} />
           // validator: (rule, value, callback) => {
           //   if (this.form.pic) {
           //     callback()
@@ -242,7 +245,7 @@ export default {
         refund_fee: this.form.refund_fee * 100,
         refund_point: this.form.refund_point,
         description: this.form.description,
-        evidence_pic: [this.form.pic ? this.form.pic.url : '']
+        evidence_pic: [this.form.pic]
       }
       await this.$api.trade.salesAfterApply(params)
       this.$message.success('售后申请提交成功')

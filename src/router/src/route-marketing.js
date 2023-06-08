@@ -528,6 +528,47 @@ export default {
       path: 'community/withdraw',
       name: `提现申请`,
       component: () => import('@/view/mall/community/withdraw')
+    },
+    {
+      path: 'ugc/ugcindex',
+      name: `笔记管理`,
+      component: () => import('@/view/member/ugc/ugcIndex'),
+      children: [
+        {
+          path: 'editor',
+          component: () => import('@/view/member/ugc/ugcNotesEditor')
+        }
+      ]
+    },
+    {
+      path: 'ugc/ugcflags',
+      name: `角标管理`,
+      component: () => import('@/view/member/ugc/ugcFlags')
+    },
+    {
+      path: 'ugc/ugctags',
+      name: `TAG管理`,
+      component: () => import('@/view/member/ugc/ugcTags')
+    },
+    {
+      path: 'ugc/ugctopic',
+      name: `笔记话题设置`,
+      component: () => import('@/view/member/ugc/ugcTopic')
+    },
+    {
+      path: 'ugc/ugcreview',
+      name: `评论管理`,
+      component: () => import('@/view/member/ugc/ugcReview')
+    },
+    {
+      path: 'ugc/ugcpoint',
+      name: `积分管理`,
+      component: () => import('@/view/member/ugc/ugcPoint')
+    },
+    {
+      path: 'ugc/ugctpos',
+      name: `第三方审核`,
+      component: () => import('@/view/member/ugc/ugcTPOS')
     }
   ]
 }

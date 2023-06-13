@@ -112,6 +112,18 @@
           </el-table>
         </el-tabs>
       </el-row>
+      <div class="content-center content-top-padded">
+        <el-pagination
+          background
+          layout="total, sizes, prev, pager, next, jumper"
+          :current-page.sync="page.page_no"
+          :page-sizes="[10, 20, 50]"
+          :total="page.total"
+          :page-size="page.page_size"
+          @current-change="handleCurrentChange"
+          @size-change="handleSizeChange"
+        />
+      </div>
       <el-dialog
         title="添加/编辑页面"
         :visible.sync="dialogVisible"
@@ -211,9 +223,11 @@ export default {
       tabList,
       templateList: [],
       page_type: 'index',
-      page_no: 1,
-      page_size: 30,
-      total: 0,
+      page:{
+        page_no: 1,
+        page_size: 20,
+        total: 0
+      },
       loading: false,
       dialogVisible: false,
       formData: {
@@ -257,7 +271,7 @@ export default {
       this.resetForm('myForm')
     },
     handleTabClick () {
-      this.page_no = 1
+      this.page.page_no = 1
       this.loading = true
       this.getTemplateList()
     },
@@ -350,6 +364,27 @@ export default {
       this.loading = false
       this.templateList = res.data.data.list
       this.total = res.data.data.total_count
+    },
+    async getTemplateList () {
+      const {  page_no, page_size } = this.page
+      const { page_type } = this
+      this.loading = true
+      const res = await fetchTemplateList({
+        page_type,
+        page_no,
+        page_size
+      })
+      this.loading = false
+      this.templateList = res.data.data.list
+      this.page.total = res.data.data.total_count
+    },
+    handleCurrentChange(page_no) {
+      this.page.page_no = page_no
+      this.getTemplateList()
+    },
+    handleSizeChange(page_size) {
+      this.page.page_size = page_size
+      this.getTemplateList()
     }
   }
 }

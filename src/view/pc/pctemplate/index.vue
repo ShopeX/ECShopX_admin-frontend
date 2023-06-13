@@ -354,18 +354,6 @@ export default {
       this.$refs[formName].resetFields()
     },
     async getTemplateList () {
-      const { page_type, page_no, page_size } = this
-      this.loading = true
-      const res = await fetchTemplateList({
-        page_type,
-        page_no,
-        page_size
-      })
-      this.loading = false
-      this.templateList = res.data.data.list
-      this.total = res.data.data.total_count
-    },
-    async getTemplateList () {
       const {  page_no, page_size } = this.page
       const { page_type } = this
       this.loading = true

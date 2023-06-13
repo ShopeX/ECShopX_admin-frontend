@@ -59,7 +59,7 @@ export const saveHeaderOrFooter = (params) => {
 
 export const getLoginPageSetting = (params) => {
   return fetch({
-    url: '/pctemplate/getLoginPageSetting',
+    url: '/pctemplate/loginPage/setting',
     method: 'get',
     params
   })
@@ -67,7 +67,7 @@ export const getLoginPageSetting = (params) => {
 
 export const saveLoginPageSetting = (params) => {
   return fetch({
-    url: '/pctemplate/saveLoginPageSetting',
+    url: '/pctemplate/loginPage/setting',
     method: 'post',
     params
   })

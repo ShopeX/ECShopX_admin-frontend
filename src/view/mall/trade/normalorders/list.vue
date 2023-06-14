@@ -33,18 +33,9 @@
         </el-select>
       </SpFilterFormItem>
       <SpFilterFormItem prop="source_from" label="渠道:">
-        <el-select
-              v-model="params.source_from"
-              placeholder="请选择渠道"
-              clearable
-            >
-              <el-option
-                v-for="(item, index) in sourceFromList"
-                :key="index"
-                :label="item.name"
-                :value="item.value"
-              />
-            </el-select>
+        <el-select v-model="params.source_from" placeholder="请选择渠道" clearable>
+          <el-option v-for="(item, index) in sourceFromList" :key="index" :label="item.name" :value="item.value" />
+        </el-select>
       </SpFilterFormItem>
 
       <SpFilterFormItem prop="create_time" label="下单时间:" size="max">
@@ -114,8 +105,7 @@
       <el-tab-pane v-for="item in orderStatus" :key="item.value" :label="item.title" :name="item.value" />
 
       <div class="action-table">
-        <el-table v-loading="loading" :data="tableList"
-          :header-cell-style="{ background: '#fafafa' }">
+        <el-table v-loading="loading" :data="tableList" :header-cell-style="{ background: '#fafafa' }">
           <el-table-column label="商品" min-width="280px">
             <!-- <template slot="header" slot-scope="scope">
               <el-checkbox>商品</el-checkbox>
@@ -156,7 +146,7 @@
           <el-table-column label="支付方式" min-width="180px" align="center">
             <template slot-scope="scope">
               <div class="table-column-content">
-                  <p>{{ scope.row | filterPayType() }}</p>
+                <p>{{ scope.row | filterPayType() }}</p>
               </div>
             </template>
           </el-table-column>
@@ -168,7 +158,8 @@
                   <p>手机号：{{ scope.row.mobile }}</p>
                 </div>
               </div>
-            </template></el-table-column>
+            </template>
+          </el-table-column>
           <el-table-column label="订单备注" min-width="160px" align="center">
             <template slot-scope="scope">
               <div class="table-column-content">
@@ -194,8 +185,7 @@
               <span>{{ getSourceFrom(scope.row) }}</span>
             </template>
           </el-table-column>
-
-          <el-table-column label="操作" min-width="120px" align="center">
+          <el-table-column label="操作" min-width="120px" align="center" class-name="column-fixed">
             <template slot-scope="scope">
               <el-button type="text" style="margin-right: 8px">
                 <router-link :to="`${$route.path}/detail?orderId=${scope.row.order_id}&resource=${$route.path}`">
@@ -239,8 +229,10 @@
             <template slot-scope="scope">
               <div class="action-table-footer">
                 <p> 收货人：{{ scope.row.receiver_name }}</p>
-                <p style="padding-left:20px">收货地址：{{ scope.row.receiver_state }}{{ scope.row.receiver_district }}{{
-                  scope.row.receiver_address }}</p>
+                <p style="padding-left:20px">
+                  收货地址：{{ scope.row.receiver_state }}{{ scope.row.receiver_district }}{{
+                    scope.row.receiver_address }}
+                </p>
               </div>
             </template>
           </el-table-column>
@@ -341,15 +333,15 @@ export default {
         distributor_type: '', // 订单分类
         distributor_id: '', // 店铺
         subDistrict: [],
-        source_from:''
+        source_from: ''
       },
-      sourceFromList:[
-        {name:'pc',value:'pc'},
-        {name:'h5',value:'h5'},
-        {name:'微信小程序',value:'wxapp'},
-        {name:'支付宝小程序',value:'aliapp'},
-        {name:'未知',value:'unknow'},
-        {name:'店务端',value:'dianwu'},
+      sourceFromList: [
+        { name: 'pc', value: 'pc' },
+        { name: 'h5', value: 'h5' },
+        { name: '微信小程序', value: 'wxapp' },
+        { name: '支付宝小程序', value: 'aliapp' },
+        { name: '未知', value: 'unknow' },
+        { name: '店务端', value: 'dianwu' },
       ],
       datapass_block: 1, // 是否为数据脱敏
       subDistrictList: [],
@@ -1269,8 +1261,8 @@ export default {
         message: '不能为空'
       })
     },
-    getSourceFrom({source_from}){
-      return getSourceFromNameByValue(this.sourceFromList,source_from)
+    getSourceFrom({ source_from }) {
+      return getSourceFromNameByValue(this.sourceFromList, source_from)
     },
     onChangeTableView({ items, item_fee_new, freight_fee, total_fee, item_total_fee }) {
       // this.changePriceForm.itemFee = item_fee_new / 100
@@ -1364,14 +1356,16 @@ export default {
   }
 }
 
+
 .action-table {
   width: 100%;
 
   .el-table {
     width: 100%;
     margin-bottom: 20px;
-    thead{
-      .cell{
+
+    thead {
+      .cell {
         color: #000;
         font-size: 12px;
         font-weight: 600;
@@ -1396,7 +1390,7 @@ export default {
       border-top: 1px solid rgba(0, 0, 0, 0.1) !important;
       border-bottom: 1px solid rgba(0, 0, 0, 0.1) !important;
 
-      &:not(:first-child) {
+      &:not(:nth-last-child(4)) {
         border-right: 1px solid rgba(0, 0, 0, 0.1) !important;
       }
 
@@ -1408,11 +1402,6 @@ export default {
     .el-table__row>td {
       font-size: 12px;
       color: #333333;
-
-      &:nth-last-child(3) {
-        // border-right: 1px solid rgba(0, 0, 0, 0.1) !important;
-        right: -1px;
-      }
     }
   }
 
@@ -1425,7 +1414,7 @@ export default {
 
     .action-table-column {
       position: absolute !important;
-      width: calc(100% - 2px);
+      width: calc(100% - 3px);
       background: #fafafa;
       height: 30px;
       line-height: 30px;
@@ -1471,14 +1460,17 @@ export default {
         justify-content: flex-start;
         min-height: 80px;
       }
-      .good_fee{
+
+      .good_fee {
         display: flex;
         flex-direction: column;
         justify-content: center;
-        &_freight{
+
+        &_freight {
           color: #9c9c9c;
         }
       }
+
       .remark_text {
         overflow: hidden;
         text-overflow: ellipsis;
@@ -1516,6 +1508,14 @@ export default {
         }
       }
     }
+  }
+
+  .column-fixed {
+    position: sticky;
+    width: 100%;
+    right: 0px;
+    background-color: #fff;
+    border-left: 1px solid rgba(0, 0, 0, 0.1) !important;
   }
 }
 </style>

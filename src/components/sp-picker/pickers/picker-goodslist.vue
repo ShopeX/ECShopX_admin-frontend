@@ -54,29 +54,29 @@
 
     <div v-show="typeSelect == 1">
       <SpFilterForm :model="queryForm" size="small" @onSearch="onSearch" @onReset="onSearch">
-        <SpFilterFormItem prop="category">
+        <SpFilterFormItem prop="main_cat_id">
           <el-cascader
-            v-model="queryForm.category"
+            v-model="queryForm.main_cat_id"
             placeholder="管理分类"
             :options="categoryList"
             :props="{ checkStrictly: true, label: 'category_name', value: 'category_id' }"
             clearable
           />
         </SpFilterFormItem>
-        <SpFilterFormItem prop="salesCategory">
+        <SpFilterFormItem prop="category">
           <el-cascader
-            v-model="queryForm.salesCategory"
+            v-model="queryForm.category"
             placeholder="销售分类"
             :options="salesCategoryList"
             :props="{ checkStrictly: true, label: 'category_name', value: 'category_id' }"
             clearable
           />
         </SpFilterFormItem>
-        <SpFilterFormItem prop="name">
-          <el-input v-model="queryForm.name" placeholder="请输入商品名称" />
+        <SpFilterFormItem prop="item_name">
+          <el-input v-model="queryForm.item_name" placeholder="请输入商品名称" />
         </SpFilterFormItem>
-        <SpFilterFormItem prop="sn">
-          <el-input v-model="queryForm.sn" placeholder="请输入货号" />
+        <SpFilterFormItem prop="item_bn">
+          <el-input v-model="queryForm.item_bn" placeholder="请输入货号" />
         </SpFilterFormItem>
       </SpFilterForm>
 
@@ -94,8 +94,8 @@
 
     <div v-show="typeSelect == 2" class="">
       <SpFilterForm :model="queryForm" size="small" @onSearch="onSearch" @onReset="onSearch">
-        <SpFilterFormItem prop="sn">
-          <el-input v-model="queryForm.sn" placeholder="管理分类关键字" />
+        <SpFilterFormItem prop="item_bn">
+          <el-input v-model="queryForm.item_bn" placeholder="管理分类关键字" />
         </SpFilterFormItem>
       </SpFilterForm>
       <div class="cascader-header">
@@ -117,8 +117,8 @@
 
     <div v-show="typeSelect == 3">
       <SpFilterForm :model="queryForm" size="small" @onSearch="onSearch" @onReset="onSearch">
-        <SpFilterFormItem prop="sn">
-          <el-input v-model="queryForm.sn" placeholder="销售分类关键字" />
+        <SpFilterFormItem prop="item_bn">
+          <el-input v-model="queryForm.item_bn" placeholder="销售分类关键字" />
         </SpFilterFormItem>
       </SpFilterForm>
       <div class="cascader-header">
@@ -127,6 +127,7 @@
         <div class="hd">三级</div>
       </div>
       <el-cascader-panel
+        v-model="salevalue"
         :options="salesCategoryList"
         :props="{ checkStrictly: true, label: 'category_name', value: 'category_id' }"
         @change="onChangeSalesCategory"
@@ -153,10 +154,12 @@ export default {
       typeSelect: 1,
       queryForm: {
         category: [],
-        salesCategory: [],
-        name: '',
+        main_cat_id: [],
+        item_name: '',
+        item_bn: '',
         sn: ''
       },
+      salevalue:'唇膏',
       categoryList: [],
       salesCategoryList: [],
       setting: createSetting({
@@ -201,22 +204,26 @@ export default {
     }
   },
   async created() {
-    // 管理分类
-    const category = await this.$api.goods.getCategory({ is_main_category: true })
-    // 销售分类
-    const salesCategory = await this.$api.goods.getCategory()
-    this.categoryList = category
-    this.salesCategoryList = salesCategory
+   await this.getCategoryInfo()
   },
   mounted() {
     // this.refresh(true)
   },
   methods: {
+    async getCategoryInfo(){
+      // 管理分类
+          const category = await this.$api.goods.getCategory({ is_main_category: true })
+
+      // 销售分类
+      const salesCategory = await this.$api.goods.getCategory()
+      this.categoryList = category
+      this.salesCategoryList = salesCategory
+    },
     beforeSearch(params) {
       return {
         ...params,
-        item_type: 'normal'
-        // ...this.queryForm
+        item_type: 'normal',
+        ...this.queryForm
       }
     },
     onSearch() {
@@ -240,6 +247,7 @@ export default {
 
       const { list, total_count } = await this.$api.goods.getItemsList(query)
       this.list = list
+      this.$refs['finder'].refresh()
       return { count: total_count }
     },
     onChangeCategory(e) {

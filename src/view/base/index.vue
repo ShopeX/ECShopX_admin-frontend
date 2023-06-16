@@ -865,7 +865,7 @@
             </section>
           </el-col>
         </el-row>
-        <!-- <el-row
+        <el-row
           v-if="system_is_saas == 'false'"
           :gutter="20"
         >
@@ -956,7 +956,7 @@
               </el-descriptions>
             </section>
           </el-col>
-        </el-row> -->
+        </el-row>
       </el-col>
       <el-col :span="VERSION_PLATFORM && VUE_APP_FREE ? 5 : 4">
         <!-- <section

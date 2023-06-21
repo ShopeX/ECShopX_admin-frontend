@@ -230,7 +230,7 @@ export default {
       this.refresh(true)
     },
     async fetch({ page_no, page_size }) {
-      const { category } = this.queryForm
+      const { category,main_cat_id } = this.queryForm
       const query = {
         page: page_no,
         pageSize: page_size,
@@ -239,7 +239,8 @@ export default {
         audit_status: 'approved',
         is_sku: false,
         ...this.queryForm,
-        category: category[category.length - 1]
+        category: category[category.length - 1],
+        main_cat_id:main_cat_id[main_cat_id.length-1]
       }
       if (!query.distributor_id) {
         query.distributor_id = this.shopid

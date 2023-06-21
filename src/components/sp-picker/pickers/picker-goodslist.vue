@@ -93,11 +93,11 @@
     </div>
 
     <div v-show="typeSelect == 2" class="">
-      <SpFilterForm :model="queryForm" size="small" @onSearch="onSearch" @onReset="onSearch">
+      <!-- <SpFilterForm :model="queryForm" size="small" @onSearch="onSearch" @onReset="onSearch">
         <SpFilterFormItem prop="item_bn">
           <el-input v-model="queryForm.item_bn" placeholder="管理分类关键字" />
         </SpFilterFormItem>
-      </SpFilterForm>
+      </SpFilterForm> -->
       <div class="cascader-header">
         <div class="hd">一级</div>
         <div class="hd">二级</div>
@@ -116,11 +116,11 @@
     </div>
 
     <div v-show="typeSelect == 3">
-      <SpFilterForm :model="queryForm" size="small" @onSearch="onSearch" @onReset="onSearch">
+      <!-- <SpFilterForm :model="queryForm" size="small" @onSearch="onSearch" @onReset="onSearch">
         <SpFilterFormItem prop="item_bn">
           <el-input v-model="queryForm.item_bn" placeholder="销售分类关键字" />
         </SpFilterFormItem>
-      </SpFilterForm>
+      </SpFilterForm> -->
       <div class="cascader-header">
         <div class="hd">一级</div>
         <div class="hd">二级</div>

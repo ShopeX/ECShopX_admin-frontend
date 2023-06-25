@@ -93,6 +93,7 @@
       :get-status="setItemStatus"
       :rel-items-ids="relItems"
       :item-type="item_type"
+      :is-change-store="VERSION_PLATFORM"
       @chooseStore="handleGoodsSubmit"
       @closeStoreDialog="handleGoodsDialogHide"
     />

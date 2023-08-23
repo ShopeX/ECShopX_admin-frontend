@@ -61,7 +61,17 @@
                 query: { main_cat_id: scope.row.category_id }
               }"
             >
-              查看商品
+              {{ VERSION_PLATFORM ? '平台商品' : '查看商品' }}
+            </router-link>
+          </el-button>
+          <el-button v-if="VERSION_PLATFORM" type="text">
+            <router-link
+              :to="{
+                path: '/entity/goods/goodsaudit',
+                query: { main_cat_id: scope.row.category_id }
+              }"
+            >
+              店铺商品
             </router-link>
           </el-button>
           <el-button

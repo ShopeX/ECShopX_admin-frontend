@@ -85,7 +85,7 @@
             v-model="select_category_value"
             placeholder="商品销售分类"
             :options="categoryList"
-            :props="{ value: 'category_id', checkStrictly: true }"
+            :props="{ value: 'category_id', label: 'category_name', checkStrictly: true }"
             clearable
             @change="searchByKey"
           />

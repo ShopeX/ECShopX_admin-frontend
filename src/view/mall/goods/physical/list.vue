@@ -79,9 +79,9 @@
             />
           </el-select>
         </SpFilterFormItem>
-        <SpFilterFormItem prop="item_category" label="管理分类:">
+        <SpFilterFormItem prop="main_cat_id" label="管理分类:">
           <el-cascader
-            v-model="params.item_category"
+            v-model="params.main_cat_id"
             placeholder="请选择"
             clearable
             :options="itemCategoryList"
@@ -804,7 +804,7 @@ import {
   flowItems
 } from '@/api/goods'
 import { getPageCode } from '@/api/marketing'
-import { VERSION_IN_PURCHASE } from '@/utils'
+import { VERSION_IN_PURCHASE, isArray } from '@/utils'
 import mixins from '@/mixins'
 
 import GoodsSelect from './comps/goodsSelect'
@@ -998,8 +998,8 @@ export default {
     console.log(111)
   },
   methods: {
-     // 字段默认 id label 用于规范化数据源
-     tenantIdnormalizer(node, instanceId) {
+    // 字段默认 id label 用于规范化数据源
+    tenantIdnormalizer(node, instanceId) {
       if (node.children && !node.children.length) {
         delete node.children
       }
@@ -1112,7 +1112,6 @@ export default {
       const { category, item_category, main_cat_id, tab } = this.$route.query
       if (category) {
         this.params.category = category.split(',')
-        // this.select_category_value = category.split(',')
       }
       if (item_category) {
         this.params.item_category = item_category.split(',')
@@ -1701,11 +1700,19 @@ export default {
       if (params.category.length > 0) {
         params.category = params.category[params.category.length - 1]
       }
-      if (params.item_category.length > 0) {
-        // params.item_category = params.item_category[params.item_category.length - 1]
-        params.main_cat_id = params.item_category[params.item_category.length - 1]
-        delete params.item_category
+      // if (params.item_category.length > 0) {
+      //   // params.item_category = params.item_category[params.item_category.length - 1]
+      //   params.main_cat_id = params.item_category[params.item_category.length - 1]
+      //   delete params.item_category
+      // }
+      if (this.params.main_cat_id) {
+        if (isArray(this.params.main_cat_id)) {
+          params.main_cat_id = this.params.main_cat_id[this.params.main_cat_id.length - 1]
+        } else {
+          params.main_cat_id = this.params.main_cat_id
+        }
       }
+
       if (typeof params.is_gift === 'undefined') {
         delete params.is_gift
       }

@@ -351,7 +351,13 @@ export function getChiefDetail (id) {
     method: 'get'
   })
 }
-
+// 团长详情
+export function getChiefInfoDetail ({apply_id,distributor_id}) {
+  return fetch({
+    url: `/community/chief/${apply_id}?distributor_id=${distributor_id}`,
+    method: 'get'
+  })
+}
 // 团长申请审批
 export function approveChief (apply_id, params) {
   return fetch({

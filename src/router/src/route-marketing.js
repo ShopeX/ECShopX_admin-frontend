@@ -486,6 +486,14 @@ export default {
         {
           path: 'detail/:apply_id',
           component: () => import('@/view/mall/community/chiefDetail')
+        },
+        {
+          path: 'info/:apply_id/:distributor_id',
+          component: () => import('@/view/mall/community/chiefInfo')
+        },
+        {
+          path: 'approve',
+          component: () => import('@/view/mall/community/chiefApprove')
         }
       ]
     },

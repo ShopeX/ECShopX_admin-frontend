@@ -6,7 +6,7 @@
 </style>
 <template>
   <div>
-    <div v-if="$route.path.indexOf('detail') === -1 && $route.path.indexOf('approve') === -1 && $route.path.indexOf('info') === -1">
+    <div v-if="$route.path.indexOf('detail') === -1">
       <SpFilterForm :model="formQuery" @onSearch="onSearch" @onReset="onSearch">
         <SpFilterFormItem prop="name" label="团长姓名:">
           <el-input v-model="formQuery.name" placeholder="请输入团长姓名" />
@@ -15,34 +15,42 @@
           <el-input v-model="formQuery.mobile" placeholder="请输入团长手机号" />
         </SpFilterFormItem>
       </SpFilterForm>
-      <div class="action-container">
-        <el-button type="primary" plain icon="el-plus-circle" @click="chiefupload">
-          团长导入
-        </el-button>
-        <el-button type="primary" plain icon="el-plus-circle" @click="handleApprove">
-          团长审批
-        </el-button>
-      </div>
-      <!-- <el-tabs v-model="formQuery.approve_status" type="card" @tab-click="onSearch">
-        <el-tab-pane v-for="item in stateList" :key="item.value" :label="item.title" :name="item.value" /> -->
 
-        <SpFinder ref="finder" no-selection :setting="setting" :hooks="{
-          beforeSearch: beforeSearch,
-          afterSearch: afterSearch
-        }" url="/community/chief/list" />
-      <!-- </el-tabs> -->
+      <el-tabs v-model="formQuery.approve_status" type="card" @tab-click="onSearch">
+        <el-tab-pane
+          v-for="item in stateList"
+          :key="item.value"
+          :label="item.title"
+          :name="item.value"
+        />
 
-      <SpDialog ref="resloveDialogRef" v-model="resloveDialog" :title="`审批`" :form="resloveForm"
-        :form-list="resloveFormList" @onSubmit="onResloveSubmit" />
+        <SpFinder
+          ref="finder"
+          no-selection
+          :setting="setting"
+          :hooks="{
+            beforeSearch: beforeSearch,
+            afterSearch: afterSearch
+          }"
+          url="/community/chief/apply/list"
+        />
+      </el-tabs>
+
+      <SpDialog
+        ref="resloveDialogRef"
+        v-model="resloveDialog"
+        :title="`审批`"
+        :form="resloveForm"
+        :form-list="resloveFormList"
+        @onSubmit="onResloveSubmit"
+      />
     </div>
-    <router-view />
   </div>
 </template>
 
 <script>
 import { createSetting } from '@shopex/finder'
 import moment from 'moment'
-import { mapGetters } from 'vuex'
 export default {
   name: '',
   data() {
@@ -50,7 +58,12 @@ export default {
       formQuery: {
         name: '',
         mobile: '',
+        approve_status: '-1'
       },
+      stateList: [
+        { title: '全部', value: '-1' },
+        { title: '待审批', value: '0' }
+      ],
       setting: createSetting({
         actions: [
           {
@@ -61,9 +74,25 @@ export default {
             action: {
               handler: ([row]) => {
                 const { path } = this.$route
+                console.log()
                 this.$router.push({
-                  path: `${path}/info/${row.chief_id}/${row.distributor_id}`
+                  path: `${path.split('/approve')[0]}/detail/${row.apply_id}`
                 })
+              }
+            }
+          },
+          {
+            name: '审批',
+            key: 'apply',
+            type: 'button',
+            buttonType: 'text',
+            visible: (row) => {
+              return row.approve_status == '0'
+            },
+            action: {
+              handler: async ([row]) => {
+                this.resloveForm.apply_id = row.apply_id
+                this.resloveDialog = true
               }
             }
           }
@@ -71,8 +100,10 @@ export default {
         columns: [
           { name: '团长', key: 'chief_name' },
           { name: '手机号', key: 'chief_mobile' },
-          { name: '来源', key: 'chief_mobile',
-            render: (h, { row }) => h('span', {}, this.getSource(row.source)) 
+          {
+            name: '审批状态',
+            key: 'approve_status',
+            render: (h, { row }) => h('span', {}, this.getApproveStatus(row.approve_status))
           },
           {
             name: '申请时间',
@@ -122,7 +153,7 @@ export default {
       ]
     }
   },
-  created() { },
+  created() {},
   methods: {
     onSearch() {
       this.$refs.finder.refresh(true)
@@ -134,7 +165,7 @@ export default {
       }
       return { ...params, ...formQuery }
     },
-    afterSearch() { },
+    afterSearch() {},
     async onResloveSubmit() {
       const { apply_id, approve_status, refuse_reason } = this.resloveForm
       await this.$api.community.approveChief(apply_id, {
@@ -144,30 +175,15 @@ export default {
       this.resloveDialog = false
       this.$refs.finder.refresh(true)
     },
-    getSource(status) {
+    getApproveStatus(status) {
       if (status == '0') {
-        return '手动导入'
+        return '未审核'
       } else if (status == '1') {
-        return '主动申请'
+        return '已审核'
+      } else if (status == '2') {
+        return '已拒绝'
       }
-    },
-    handleApprove() {
-      const { path } = this.$route
-      this.$router.push({
-        path: `${path}/approve`
-      })
-    },
-    chiefupload() {
-      if (this.login_type == 'distributor') {
-        this.$router.push({ path: `/shopadmin/member/member/chiefupload` })
-      } else {
-        this.$router.push({ path: `/member/member/chiefupload` })
-      }
-    },
-  },
-
-  computed: {
-    ...mapGetters(['wheight', 'isMicorMall', 'login_type'])
-  },
+    }
+  }
 }
 </script>

@@ -11,6 +11,7 @@
 <script>
 import { FORM_COMP } from '@/consts'
 import { isArray } from '@/utils'
+import moment from 'moment'
 
 export default {
   data () {
@@ -18,36 +19,38 @@ export default {
       name: '',
       mobile: '',
       extraData: {},
-      approve_status: 0,
-      btnActions: [{ name: '通过', key: 'resolve' },{ name: '驳回', key: 'reject' }],
+      source:'',
+      applyTime:"",
+      approveTime:"",
+      btnActions: [{ name: '审批', key: 'resolve' }],
       resloveDialog: false,
       resloveForm: {
         approve_status: 1,
         refuse_reason: ''
       },
       resloveFormList: [
-        // {
-        //   label: '审批:',
-        //   key: 'approve_status',
-        //   type: 'radio',
-        //   options: [
-        //     { label: 1, name: '同意' },
-        //     { label: 2, name: '不同意' }
-        //   ],
-        //   onChange: (e) => {
-        //     if (e == 2) {
-        //       this.resloveFormList[1].isShow = true
-        //     } else {
-        //       this.resloveFormList[1].isShow = false
-        //     }
-        //   }
-        // },
+        {
+          label: '审批:',
+          key: 'approve_status',
+          type: 'radio',
+          options: [
+            { label: 1, name: '同意' },
+            { label: 2, name: '不同意' }
+          ],
+          onChange: (e) => {
+            if (e == 2) {
+              this.resloveFormList[1].isShow = true
+            } else {
+              this.resloveFormList[1].isShow = false
+            }
+          }
+        },
         {
           label: '拒绝原因:',
           key: 'refuse_reason',
           type: 'input',
           placeholder: '请输入拒绝原因',
-          // isShow: false,
+          isShow: false,
           validator: (rule, value, callback) => {
             if (this.resloveForm.approve_status == 2 && !value) {
               callback(new Error('不能为空'))
@@ -64,13 +67,21 @@ export default {
   },
   methods: {
     async fetchDetail () {
-      const { apply_id } = this.$route.params
-      const { chief_name, chief_mobile, approve_status, extra_data } =
-        await this.$api.community.getChiefDetail(apply_id)
+      const { apply_id,distributor_id } = this.$route.params
+      const { chief_name, chief_mobile, apply_time, extra_data,source,approve_time } = await this.$api.community.getChiefInfoDetail({apply_id,distributor_id})
       this.name = chief_name
       this.mobile = chief_mobile
-      this.extraData = extra_data
-      this.approve_status = approve_status
+      this.extraData = JSON.parse(extra_data)
+      this.applyTime = apply_time&&moment(apply_time * 1000).format('YYYY-MM-DD HH:mm:ss')
+      this.approveTime = approve_time&&moment(approve_time * 1000).format('YYYY-MM-DD HH:mm:ss')
+      this.source = this.getSource(source)
+    },
+    getSource(status) {
+      if (status == '0') {
+        return '手动导入'
+      } else if (status == '1') {
+        return '主动申请'
+      }
     },
     renderComp ({ type, value }) {
       if (type == FORM_COMP.IMAGE) {
@@ -89,29 +100,10 @@ export default {
         return value
       }
     },
-    handleAction (e) {
-      if(e.key==='reject'){
-        this.$set(this.resloveForm,'approve_status',2)
-        this.resloveDialog = true
-      }else{
-        this.$set(this.resloveForm,'approve_status',1)
-        this.onResloveSubmit()
-      }
-    },
-    async onResloveSubmit () {
-      const { apply_id } = this.$route.params
-      const { approve_status, refuse_reason } = this.resloveForm
-      await this.$api.community.approveChief(apply_id, {
-        approve_status,
-        refuse_reason
-      })
-      this.resloveDialog = false
-      this.fetchDetail()
-    }
   },
   render () {
-    const { name, mobile, extraData, btnActions, approve_status } = this
-    console.log('approve_status', approve_status)
+    const { name, mobile, extraData, applyTime, source ,approveTime} = this
+    console.log('approve_status', name)
     return (
       <div>
         <el-card class='el-card--normal'>
@@ -125,12 +117,24 @@ export default {
               <span class='card-panel__label'>手机:</span>
               <span class='card-panel__value'>{mobile}</span>
             </el-col>
+            <el-col class='card-panel-item' span={24}>
+              <span class='card-panel__label'>来源:</span>
+              <span class='card-panel__value'>{source}</span>
+            </el-col>
+            <el-col class='card-panel-item' span={24}>
+              <span class='card-panel__label'>申请时间:</span>
+              <span class='card-panel__value'>{applyTime}</span>
+            </el-col>
+            <el-col class='card-panel-item' span={24}>
+              <span class='card-panel__label'>审批时间:</span>
+              <span class='card-panel__value'>{approveTime}</span>
+            </el-col>
           </el-row>
         </el-card>
 
         <el-card class='el-card--normal'>
           <div slot='header'>团长其他信息</div>
-          {Object.keys(extraData).map((key) => (
+          {extraData&&Object.keys(extraData).map((key) => (
             <el-row class='card-panel' key={key}>
               <el-col class='card-panel-item' span={24}>
                 <span class='card-panel__label'>{`${extraData[key].label}:`}</span>
@@ -139,30 +143,6 @@ export default {
             </el-row>
           ))}
         </el-card>
-
-      {/*  {this.approve_status == 0 && (*/}
-          <div class='footer-container'>
-            {btnActions.map((btn, index) => (
-              <el-button
-                key={`btn-item__${index}`}
-                type='primary'
-                plain
-                on-click={this.handleAction.bind(this, btn)}
-              >
-                {btn.name}
-              </el-button>
-            ))}
-          </div>
-       {/* )}*/}
-
-        <SpDialog
-          ref='resloveDialogRef'
-          v-model={this.resloveDialog}
-          title='审批'
-          form={this.resloveForm}
-          form-list={this.resloveFormList}
-          on-onSubmit={this.onResloveSubmit}
-        />
       </div>
     )
   }

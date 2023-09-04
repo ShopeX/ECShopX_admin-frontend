@@ -2,6 +2,14 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [3.13.5](https://git.ishopex.cn/ecshopx/ecshopx-admin/compare/v3.13.4...v3.13.5) (2023-09-04)
+
+
+### Bug Fixes
+
+* 修复商户端导出 ([527d285](https://git.ishopex.cn/ecshopx/ecshopx-admin/commit/527d285c64d95e6896448d3656e820e5184e3e09))
+* 素材中心支持多图上传 ([e529e3a](https://git.ishopex.cn/ecshopx/ecshopx-admin/commit/e529e3af67e12ad3d40d695453699ae465d23b63))
+
 ### [3.13.4](https://git.ishopex.cn/ecshopx/ecshopx-admin/compare/v3.13.3...v3.13.4) (2023-08-23)
 
 

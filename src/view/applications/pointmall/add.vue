@@ -641,6 +641,19 @@
                   />
                 </template>
               </el-table-column>
+              <el-table-column label="销售价">
+                <template slot-scope="scope">
+                  <el-input
+                    v-model="scope.row.price"
+                    type="number"
+                    required
+                    min="0"
+                    size="mini"
+                    placeholder=""
+                    @change="upadateState(scope.row)"
+                  />
+                </template>
+              </el-table-column>
               <el-table-column label="积分价格(积分)">
                 <template slot-scope="scope">
                   <el-input

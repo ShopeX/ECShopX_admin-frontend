@@ -351,15 +351,45 @@
                 </el-form-item>
               </el-col>
               <el-col :xs="24" :sm="12" :md="8">
-                <el-form-item label="积分价格">
-                  <el-input v-model="form.point" type="number" required min="0" placeholder="">
-                    <template slot="append"> 积分 </template>
-                  </el-input>
+                <el-form-item label="条形码">
+                  <el-input v-model="form.barcode" required min="0" placeholder="" />
+                </el-form-item>
+              </el-col>
+            </el-row>
+            <el-row>
+              <el-col :xs="24" :sm="12" :md="8">
+                <el-form-item label="支付方式" :render-header="renderRequire">
+                  <el-select v-model="form.pay_class" placeholder="请选择">
+                    <el-option
+                      v-for="item in payClass"
+                      :key="item.value"
+                      :label="item.title"
+                      :value="item.value"
+                    />
+                  </el-select>
                 </el-form-item>
               </el-col>
               <el-col :xs="24" :sm="12" :md="8">
-                <el-form-item label="条形码">
-                  <el-input v-model="form.barcode" required min="0" placeholder="" />
+                <el-form-item label="销售价">
+                  <el-input
+                    v-model="form.price"
+                    v-if="form.pay_class === 'online' || form.pay_class === 'mix'"
+                    type="number"
+                    required
+                    min="0"
+                    placeholder=""
+                  >
+                    <template slot="prepend"> ¥ </template>
+                  </el-input>
+                  <span v-if="!form.pay_class || form.pay_class === 'point'">-</span>
+                </el-form-item>
+              </el-col>
+              <el-col :xs="24" :sm="12" :md="8">
+                <el-form-item label="积分价格">
+                  <el-input v-model="form.point" v-if="form.pay_class === 'point' || form.pay_class === 'mix'" type="number" required min="0" placeholder="">
+                    <template slot="append"> 积分 </template>
+                  </el-input>
+                  <span v-if="!form.pay_class || form.pay_class === 'online'">-</span>
                 </el-form-item>
               </el-col>
             </el-row>
@@ -504,16 +534,45 @@
                   />
                 </template>
               </el-table-column>
-              <el-table-column label="积分价格">
+              <el-table-column label="*支付方式">
+                <template slot-scope="scope">
+                  <el-select v-model="scope.row.pay_class" size="mini" placeholder="请选择">
+                    <el-option
+                      v-for="item in payClass"
+                      :key="item.value"
+                      :label="item.title"
+                      size="mini"
+                      :value="item.value"
+                    />
+                  </el-select>
+                </template>
+              </el-table-column>
+              <el-table-column label="销售价">
                 <template slot-scope="scope">
                   <el-input
-                    v-model="scope.row.point"
+                    v-model="scope.row.price"
+                    v-if="scope.row.pay_class === 'online' || scope.row.pay_class === 'mix'"
                     type="number"
                     required
                     min="0"
                     size="mini"
                     placeholder=""
                   />
+                  <span v-if="!scope.row.pay_class || scope.row.pay_class === 'point'">-</span>
+                </template>
+              </el-table-column>
+              <el-table-column label="积分价格">
+                <template slot-scope="scope">
+                  <el-input
+                    v-model="scope.row.point"
+                    v-if="scope.row.pay_class === 'point' || scope.row.pay_class === 'mix'"
+                    type="number"
+                    required
+                    min="0"
+                    size="mini"
+                    placeholder=""
+                  />
+                  <span v-if="!scope.row.pay_class || scope.row.pay_class === 'online'">-</span>
                 </template>
               </el-table-column>
               <el-table-column label="条形码">
@@ -641,10 +700,29 @@
                   />
                 </template>
               </el-table-column>
+              <el-table-column label="支付方式" :render-header="renderRequire">
+                <template slot-scope="scope">
+                  <el-select
+                    v-model="scope.row.pay_class"
+                    size="mini"
+                    placeholder="请选择"
+                    @change="upadateState(scope.row)"
+                  >
+                    <el-option
+                      v-for="item in payClass"
+                      :key="item.value"
+                      :label="item.title"
+                      size="mini"
+                      :value="item.value"
+                    />
+                  </el-select>
+                </template>
+              </el-table-column>
               <el-table-column label="销售价">
                 <template slot-scope="scope">
                   <el-input
                     v-model="scope.row.price"
+                    v-if="scope.row.pay_class === 'online' || scope.row.pay_class === 'mix'"
                     type="number"
                     required
                     min="0"
@@ -652,12 +730,14 @@
                     placeholder=""
                     @change="upadateState(scope.row)"
                   />
+                  <span v-if="!scope.row.pay_class || scope.row.pay_class === 'point'">-</span>
                 </template>
               </el-table-column>
               <el-table-column label="积分价格(积分)">
                 <template slot-scope="scope">
                   <el-input
                     v-model="scope.row.point"
+                    v-if="scope.row.pay_class === 'point' || scope.row.pay_class === 'mix'"
                     type="number"
                     required
                     min="0"
@@ -665,6 +745,7 @@
                     placeholder=""
                     @change="upadateState(scope.row)"
                   />
+                  <span v-if="!scope.row.pay_class || scope.row.pay_class === 'online'">-</span>
                 </template>
               </el-table-column>
               <el-table-column label="条形码">
@@ -826,6 +907,20 @@ export default {
           value: 'instock'
         }
       ],
+      payClass: [
+        {
+          title: '积分支付',
+          value: 'point'
+        },
+        {
+          title: '在线支付',
+          value: 'online'
+        },
+        {
+          title: '混合支付',
+          value: 'mix'
+        }
+      ],
       categoryList: [],
       brandList: [],
       content: [],
@@ -851,6 +946,7 @@ export default {
         volume: '',
         price: '',
         market_price: '',
+        pay_class: '',
         cost_price: 0,
         point: 0,
         barcode: '',
@@ -881,6 +977,7 @@ export default {
           price: '',
           cost_price: '',
           market_price: '',
+          pay_class: '',
           point: '',
           barcode: ''
         }
@@ -968,6 +1065,7 @@ export default {
           market_price: itemsDetailData.market_price / 100,
           cost_price: itemsDetailData.cost_price / 100,
           point: itemsDetailData.point,
+          pay_class: itemsDetailData.pay_class,
           barcode: itemsDetailData.barcode,
           item_unit: itemsDetailData.item_unit,
           // rebate: itemsDetailData.rebate/100,
@@ -1484,6 +1582,7 @@ export default {
             cost_price: '',
             market_price: '',
             point: '',
+            pay_class: '',
             barcode: ''
           }
           skuList.push(obj)

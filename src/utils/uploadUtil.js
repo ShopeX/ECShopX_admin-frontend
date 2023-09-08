@@ -115,10 +115,12 @@ class UploadUtil {
             },
             (err, data) => {
               if (data) {
-                console.log(data)
+                const {Location} =data;
+                const key= Location.split('/').slice(1).join("/")
+                console.log(key)
                 resolve({
-                  ...data,
-                  key: data.Location
+                ...data,
+                  key: key
                 })
               } else {
                 console.log(err)

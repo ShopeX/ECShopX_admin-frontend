@@ -1,13 +1,13 @@
 import fetch from '../utils/fetch'
 
-export function getCommunityDetail (id) {
+export function getCommunityDetail(id) {
   return fetch({
     url: '/community/' + id,
     method: 'get'
   })
 }
 
-export function communityCreate (query) {
+export function communityCreate(query) {
   return fetch({
     url: '/community',
     method: 'post',
@@ -15,7 +15,7 @@ export function communityCreate (query) {
   })
 }
 
-export function communityUpdate (id, query) {
+export function communityUpdate(id, query) {
   return fetch({
     url: '/community/' + id,
     method: 'put',
@@ -23,14 +23,14 @@ export function communityUpdate (id, query) {
   })
 }
 
-export function communityDelete (id) {
+export function communityDelete(id) {
   return fetch({
     url: '/community/' + id,
     method: 'delete'
   })
 }
 
-export function getCommunityList (query) {
+export function getCommunityList(query) {
   return fetch({
     url: '/community',
     method: 'get',
@@ -38,7 +38,7 @@ export function getCommunityList (query) {
   })
 }
 
-export function CommunityStatusUpdate (query) {
+export function CommunityStatusUpdate(query) {
   return fetch({
     url: '/communitys/updateStatus',
     method: 'put',
@@ -46,7 +46,7 @@ export function CommunityStatusUpdate (query) {
   })
 }
 
-export function CommunityActivityCreate (query) {
+export function CommunityActivityCreate(query) {
   return fetch({
     url: '/promotions/community/activity',
     method: 'post',
@@ -55,7 +55,7 @@ export function CommunityActivityCreate (query) {
   })
 }
 
-export function CommunityActivityList (query) {
+export function CommunityActivityList(query) {
   return fetch({
     url: '/promotions/community/activity',
     method: 'get',
@@ -63,7 +63,7 @@ export function CommunityActivityList (query) {
   })
 }
 
-export function CommunityActivityInfo (id, query) {
+export function CommunityActivityInfo(id, query) {
   return fetch({
     url: '/promotions/community/activity/' + id,
     method: 'get',
@@ -71,7 +71,7 @@ export function CommunityActivityInfo (id, query) {
   })
 }
 
-export function CommunityActivityStatusUpdate (query) {
+export function CommunityActivityStatusUpdate(query) {
   return fetch({
     url: '/promotions/community/activitys/updatestatus',
     method: 'put',
@@ -79,7 +79,7 @@ export function CommunityActivityStatusUpdate (query) {
   })
 }
 
-export function communityActivityItemList (id, query) {
+export function communityActivityItemList(id, query) {
   return fetch({
     url: '/promotions/community/activityItemList/' + id,
     method: 'get',
@@ -87,7 +87,7 @@ export function communityActivityItemList (id, query) {
   })
 }
 
-export function getDeliveryOrderList (query) {
+export function getDeliveryOrderList(query) {
   return fetch({
     url: '/promotions/community/deliveryorder',
     method: 'get',
@@ -95,14 +95,14 @@ export function getDeliveryOrderList (query) {
   })
 }
 
-export function getDeliveryOrderDetail (deliveryid) {
+export function getDeliveryOrderDetail(deliveryid) {
   return fetch({
     url: '/promotions/community/deliveryorder/' + deliveryid,
     method: 'get'
   })
 }
 
-export function shippingDeliveryorder (query) {
+export function shippingDeliveryorder(query) {
   return fetch({
     url: '/promotions/community/deliveryorder',
     method: 'put',
@@ -110,14 +110,14 @@ export function shippingDeliveryorder (query) {
   })
 }
 
-export function batchShippingDeliveryorder (query) {
+export function batchShippingDeliveryorder(query) {
   return fetch({
     url: '/promotions/community/batchdeliveryorder',
     method: 'put',
     params: query
   })
 }
-export function CommunityActivityUpdate (id, query) {
+export function CommunityActivityUpdate(id, query) {
   return fetch({
     url: '/promotions/community/activity/' + id,
     method: 'put',
@@ -125,7 +125,7 @@ export function CommunityActivityUpdate (id, query) {
     refreshToken: true
   })
 }
-export function setDeliveryorderMemo (query) {
+export function setDeliveryorderMemo(query) {
   return fetch({
     url: '/promotions/community/deliveryordermemo',
     method: 'put',
@@ -133,7 +133,7 @@ export function setDeliveryorderMemo (query) {
   })
 }
 
-export function exportDeliveryorder (query) {
+export function exportDeliveryorder(query) {
   return fetch({
     url: '/promotions/community/deliveryorderexport',
     method: 'get',
@@ -141,7 +141,7 @@ export function exportDeliveryorder (query) {
   })
 }
 
-export function exportDeliveryorderInfo (query) {
+export function exportDeliveryorderInfo(query) {
   return fetch({
     url: '/promotions/community/deliveryorderinfo/export',
     method: 'get',
@@ -149,7 +149,7 @@ export function exportDeliveryorderInfo (query) {
   })
 }
 
-export function exportActivityItemList (query) {
+export function exportActivityItemList(query) {
   return fetch({
     url: '/promotions/community/activityGoodsExport',
     method: 'get',
@@ -157,7 +157,7 @@ export function exportActivityItemList (query) {
   })
 }
 
-export function getCommunityPointList (query) {
+export function getCommunityPointList(query) {
   return fetch({
     url: '/promotions/community/point',
     method: 'get',
@@ -165,7 +165,7 @@ export function getCommunityPointList (query) {
   })
 }
 
-export function changeCommunityPoint (query) {
+export function changeCommunityPoint(query) {
   return fetch({
     url: '/promotions/community/point',
     method: 'post',
@@ -173,7 +173,7 @@ export function changeCommunityPoint (query) {
   })
 }
 
-export function processCashWithdrawal (cash_withdrawal_id, query) {
+export function processCashWithdrawal(cash_withdrawal_id, query) {
   return fetch({
     url: '/promotions/community/cash_withdrawals/' + cash_withdrawal_id,
     method: 'put',
@@ -181,7 +181,7 @@ export function processCashWithdrawal (cash_withdrawal_id, query) {
   })
 }
 
-export function getCashWithdrawalList (query) {
+export function getCashWithdrawalList(query) {
   return fetch({
     url: '/promotions/community/cashWithdrawals',
     method: 'get',
@@ -189,7 +189,7 @@ export function getCashWithdrawalList (query) {
   })
 }
 
-export function getMerchantTradeList (cash_withdrawal_id, query) {
+export function getMerchantTradeList(cash_withdrawal_id, query) {
   return fetch({
     url: '/promotions/community/cashWithdrawal/payinfo/' + cash_withdrawal_id,
     method: 'get',
@@ -197,7 +197,7 @@ export function getMerchantTradeList (cash_withdrawal_id, query) {
   })
 }
 
-export function withdrawExport (query) {
+export function withdrawExport(query) {
   return fetch({
     url: '/promotions/community/cashWithdrawals/export/',
     method: 'get',
@@ -205,7 +205,7 @@ export function withdrawExport (query) {
   })
 }
 
-export function batchProcessCashWithdrawal (query) {
+export function batchProcessCashWithdrawal(query) {
   return fetch({
     url: '/community/cashWithdrawal/batchpayinfo',
     method: 'put',
@@ -213,7 +213,7 @@ export function batchProcessCashWithdrawal (query) {
   })
 }
 
-export function getCommunityOrderList (query) {
+export function getCommunityOrderList(query) {
   return fetch({
     url: '/community/orders',
     method: 'get',
@@ -221,7 +221,7 @@ export function getCommunityOrderList (query) {
   })
 }
 
-export function getCommunityOrderDetail (orderId) {
+export function getCommunityOrderDetail(orderId) {
   return fetch({
     url: '/community/order/' + orderId,
     method: 'get'
@@ -229,7 +229,7 @@ export function getCommunityOrderDetail (orderId) {
 }
 
 // 添加活动商品
-export function addActivityGoods (params) {
+export function addActivityGoods(params) {
   return fetch({
     url: `/community/items`,
     method: 'post',
@@ -238,7 +238,7 @@ export function addActivityGoods (params) {
 }
 
 // 获取社区拼团商品列表
-export function getActivityGoods (params) {
+export function getActivityGoods(params) {
   return fetch({
     url: `/community/items`,
     method: 'get',
@@ -247,7 +247,7 @@ export function getActivityGoods (params) {
 }
 
 // 删除商品
-export function deleteActivityGoods (id) {
+export function deleteActivityGoods(id) {
   return fetch({
     url: `/community/item/${id}`,
     method: 'delete'
@@ -255,7 +255,7 @@ export function deleteActivityGoods (id) {
 }
 
 // 修改商品起送量
-export function modifyGoodsDeliverNum (params) {
+export function modifyGoodsDeliverNum(params) {
   return fetch({
     url: `/community/itemMinDeliveryNum`,
     method: 'post',
@@ -264,7 +264,7 @@ export function modifyGoodsDeliverNum (params) {
 }
 
 // 修改商品排序编号
-export function modifyGoodsSort (params) {
+export function modifyGoodsSort(params) {
   return fetch({
     url: `/community/itemSort`,
     method: 'post',
@@ -273,7 +273,7 @@ export function modifyGoodsSort (params) {
 }
 
 // 保存社区团购设置
-export function modifyActivitySetting (params) {
+export function modifyActivitySetting(params) {
   return fetch({
     url: `/community/activity/setting`,
     method: 'post',
@@ -282,7 +282,7 @@ export function modifyActivitySetting (params) {
 }
 
 // 获取社区团购设置
-export function getActivitySetting (params) {
+export function getActivitySetting(params) {
   return fetch({
     url: `/community/activity/setting`,
     method: 'get',
@@ -291,7 +291,7 @@ export function getActivitySetting (params) {
 }
 
 // 配置字段列表
-export function getCommunityChiefApplyFields (params) {
+export function getCommunityChiefApplyFields(params) {
   return fetch({
     url: `/community/chief/apply_fields`,
     method: 'get',
@@ -300,7 +300,7 @@ export function getCommunityChiefApplyFields (params) {
 }
 
 // 创建字段
-export function createCommunityChiefApplyFields (params) {
+export function createCommunityChiefApplyFields(params) {
   return fetch({
     url: `/community/chief/apply_field`,
     method: 'post',
@@ -309,7 +309,7 @@ export function createCommunityChiefApplyFields (params) {
 }
 
 // 更新字段的开关
-export function modifyFieldSwitch (id, params) {
+export function modifyFieldSwitch(id, params) {
   return fetch({
     url: `/community/chief/apply_field/switch/${id}`,
     method: 'post',
@@ -318,7 +318,7 @@ export function modifyFieldSwitch (id, params) {
 }
 
 // 删除字段
-export function deleteCommunityField (id) {
+export function deleteCommunityField(id) {
   return fetch({
     url: `/community/chief/apply_field/${id}`,
     method: 'delete'
@@ -326,7 +326,7 @@ export function deleteCommunityField (id) {
 }
 
 // 更新字段的内容
-export function modifyCommunityField (params) {
+export function modifyCommunityField(params) {
   const { id } = params
   return fetch({
     url: `/community/chief/apply_field/${id}`,
@@ -336,7 +336,7 @@ export function modifyCommunityField (params) {
 }
 
 // 团长申请列表
-export function getChiefList (params) {
+export function getChiefList(params) {
   return fetch({
     url: `/community/chief/apply/list`,
     method: 'get',
@@ -345,15 +345,21 @@ export function getChiefList (params) {
 }
 
 // 团长申请详情
-export function getChiefDetail (id) {
+export function getChiefDetail(id) {
   return fetch({
     url: `/community/chief/apply/info/${id}`,
     method: 'get'
   })
 }
-
+// 团长详情
+export function getChiefInfoDetail({ apply_id, distributor_id }) {
+  return fetch({
+    url: `/community/chief/${apply_id}?distributor_id=${distributor_id}`,
+    method: 'get'
+  })
+}
 // 团长申请审批
-export function approveChief (apply_id, params) {
+export function approveChief(apply_id, params) {
   return fetch({
     url: `/community/chief/approve/${apply_id}`,
     method: 'post',
@@ -362,7 +368,7 @@ export function approveChief (apply_id, params) {
 }
 
 // 获取小程序码
-export function getChiefWxCode (params) {
+export function getChiefWxCode(params) {
   return fetch({
     url: `/community/chief/apply/wxaCode`,
     method: 'get',
@@ -371,7 +377,7 @@ export function getChiefWxCode (params) {
 }
 
 //
-export function withdrawApply (id, params) {
+export function withdrawApply(id, params) {
   return fetch({
     url: `/community/cash_withdrawal/${id}`,
     method: 'post',
@@ -380,7 +386,7 @@ export function withdrawApply (id, params) {
 }
 
 // 提现佣金支付信息
-export function getPayInfo (id) {
+export function getPayInfo(id) {
   return fetch({
     url: `/community/cash_withdrawal/payinfo/${id}`,
     method: 'get'

@@ -6,7 +6,13 @@
 </style>
 <template>
   <div>
-    <div v-if="$route.path.indexOf('detail') === -1">
+    <div
+      v-if="
+        $route.path.indexOf('detail') === -1 &&
+        $route.path.indexOf('approve') === -1 &&
+        $route.path.indexOf('info') === -1
+      "
+    >
       <SpFilterForm :model="formQuery" @onSearch="onSearch" @onReset="onSearch">
         <SpFilterFormItem prop="name" label="团长姓名:">
           <el-input v-model="formQuery.name" placeholder="请输入团长姓名" />
@@ -15,26 +21,28 @@
           <el-input v-model="formQuery.mobile" placeholder="请输入团长手机号" />
         </SpFilterFormItem>
       </SpFilterForm>
+      <div class="action-container">
+        <el-button type="primary" plain icon="el-plus-circle" @click="chiefupload">
+          团长导入
+        </el-button>
+        <el-button type="primary" plain icon="el-plus-circle" @click="handleApprove">
+          团长审批
+        </el-button>
+      </div>
+      <!-- <el-tabs v-model="formQuery.approve_status" type="card" @tab-click="onSearch">
+        <el-tab-pane v-for="item in stateList" :key="item.value" :label="item.title" :name="item.value" /> -->
 
-      <el-tabs v-model="formQuery.approve_status" type="card" @tab-click="onSearch">
-        <el-tab-pane
-          v-for="item in stateList"
-          :key="item.value"
-          :label="item.title"
-          :name="item.value"
-        />
-
-        <SpFinder
-          ref="finder"
-          no-selection
-          :setting="setting"
-          :hooks="{
-            beforeSearch: beforeSearch,
-            afterSearch: afterSearch
-          }"
-          url="/community/chief/apply/list"
-        />
-      </el-tabs>
+      <SpFinder
+        ref="finder"
+        no-selection
+        :setting="setting"
+        :hooks="{
+          beforeSearch: beforeSearch,
+          afterSearch: afterSearch
+        }"
+        url="/community/chief/list"
+      />
+      <!-- </el-tabs> -->
 
       <SpDialog
         ref="resloveDialogRef"
@@ -52,19 +60,15 @@
 <script>
 import { createSetting } from '@shopex/finder'
 import moment from 'moment'
+import { mapGetters } from 'vuex'
 export default {
   name: '',
   data() {
     return {
       formQuery: {
         name: '',
-        mobile: '',
-        approve_status: '-1'
+        mobile: ''
       },
-      stateList: [
-        { title: '全部', value: '-1' },
-        { title: '待审批', value: '0' }
-      ],
       setting: createSetting({
         actions: [
           {
@@ -76,23 +80,8 @@ export default {
               handler: ([row]) => {
                 const { path } = this.$route
                 this.$router.push({
-                  path: `${path}/detail/${row.apply_id}`
+                  path: `${path}/info/${row.chief_id}/${row.distributor_id}`
                 })
-              }
-            }
-          },
-          {
-            name: '审批',
-            key: 'apply',
-            type: 'button',
-            buttonType: 'text',
-            visible: (row) => {
-              return row.approve_status == '0'
-            },
-            action: {
-              handler: async ([row]) => {
-                this.resloveForm.apply_id = row.apply_id
-                this.resloveDialog = true
               }
             }
           }
@@ -101,9 +90,9 @@ export default {
           { name: '团长', key: 'chief_name' },
           { name: '手机号', key: 'chief_mobile' },
           {
-            name: '审批状态',
-            key: 'approve_status',
-            render: (h, { row }) => h('span', {}, this.getApproveStatus(row.approve_status))
+            name: '来源',
+            key: 'chief_mobile',
+            render: (h, { row }) => h('span', {}, this.getSource(row.source))
           },
           {
             name: '申请时间',
@@ -175,15 +164,30 @@ export default {
       this.resloveDialog = false
       this.$refs.finder.refresh(true)
     },
-    getApproveStatus(status) {
+    getSource(status) {
       if (status == '0') {
-        return '未审核'
+        return '手动导入'
       } else if (status == '1') {
-        return '已审核'
-      } else if (status == '2') {
-        return '已拒绝'
+        return '主动申请'
+      }
+    },
+    handleApprove() {
+      const { path } = this.$route
+      this.$router.push({
+        path: `${path}/approve`
+      })
+    },
+    chiefupload() {
+      if (this.login_type == 'distributor') {
+        this.$router.push({ path: `/shopadmin/member/member/chiefupload` })
+      } else {
+        this.$router.push({ path: `/member/member/chiefupload` })
       }
     }
+  },
+
+  computed: {
+    ...mapGetters(['wheight', 'isMicorMall', 'login_type'])
   }
 }
 </script>

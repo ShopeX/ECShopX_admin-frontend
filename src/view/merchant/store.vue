@@ -325,16 +325,14 @@ export default {
           key: 'is_require_subdistrict',
           type: 'switch',
           display: 'inline',
-          tip: '下单是否需要选择街道居委',
-          isShow: ({ key }, value) => this.distributor_self == 0
+          tip: '下单是否需要选择街道居委'
         },
         {
           label: '楼号房号',
           key: 'is_require_building',
           type: 'switch',
           display: 'inline',
-          tip: '下单是否需要填写楼号房号',
-          isShow: ({ key }, value) => this.distributor_self == 0
+          tip: '下单是否需要填写楼号房号'
         },
         {
           label: '店铺图片',

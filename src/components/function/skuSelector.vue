@@ -1,23 +1,10 @@
 <template>
   <div>
-    <el-row
-      v-if="goods.length > 0"
-      :gutter="20"
-    >
-      <el-col
-        v-for="(item, index) in goods"
-        :key="index"
-        :xs="24"
-        :sm="12"
-        :md="8"
-        :lg="6"
-      >
+    <el-row v-if="goods.length > 0" :gutter="20">
+      <el-col v-for="(item, index) in goods" :key="index" :xs="24" :sm="12" :md="8" :lg="6">
         <div class="goods">
           <div class="goods-thumbnail">
-            <img
-              :src="item.pics[0]"
-              alt=""
-            >
+            <img :src="item.pics[0]" alt="">
           </div>
           <div class="goods-caption">
             <div class="goods-title">
@@ -26,65 +13,32 @@
             <div class="goods-sku">
               <template v-if="!item.nospec">
                 {{ item.spec_items.length > 0 ? '已选' + item.spec_items.length : '全规格' }}
-                <div
-                  class="goods-sku-check"
-                  @click="handleSkuDialogShow(index)"
-                >
-                  选择规格
-                </div>
+                <div class="goods-sku-check" @click="handleSkuDialogShow(index)">选择规格</div>
               </template>
             </div>
           </div>
-          <div
-            class="goods-remove iconfont icon-trash-alt"
-            @click="handleSkuRemove(index)"
-          />
+          <div class="goods-remove iconfont icon-trash-alt" @click="handleSkuRemove(index)" />
         </div>
       </el-col>
     </el-row>
     <div>
-      <el-button
-        type="primary"
-        @click="handleGoodsDialogShow"
-      >
-        选择商品
-      </el-button>
+      <el-button type="primary" @click="handleGoodsDialogShow"> 选择商品 </el-button>
     </div>
-    <el-dialog
-      title="选择sku"
-      :visible.sync="dialogVisible"
-      width="50%"
-    >
-      <el-table
-        ref="skuTable"
-        v-loading="loading"
-        :data="skus"
-        @selection-change="handleSkuChange"
-      >
-        <el-table-column
-          type="selection"
-          width="55"
-        />
+    <el-dialog title="选择sku" :visible.sync="dialogVisible" width="50%">
+      <el-table ref="skuTable" v-loading="loading" :data="skus" @selection-change="handleSkuChange">
+        <el-table-column type="selection" width="55" />
         <el-table-column label="规格名称">
           <template slot-scope="scope">
             {{ scope.row.item_spec_desc }}
           </template>
         </el-table-column>
         <el-table-column label="价格">
-          <template slot-scope="scope">
-            ¥{{ scope.row.price / 100 }}
-          </template>
+          <template slot-scope="scope"> ¥{{ scope.row.price / 100 }} </template>
         </el-table-column>
       </el-table>
-      <span
-        slot="footer"
-        class="dialog-footer"
-      >
+      <span slot="footer" class="dialog-footer">
         <el-button @click="dialogVisible = false">取 消</el-button>
-        <el-button
-          type="primary"
-          @click="handleSkuSubmit"
-        >确 定</el-button>
+        <el-button type="primary" @click="handleSkuSubmit">确 定</el-button>
       </span>
     </el-dialog>
     <GoodsSelector
@@ -93,6 +47,7 @@
       :get-status="setItemStatus"
       :rel-items-ids="relItems"
       :item-type="item_type"
+      :is-change-store="VERSION_PLATFORM"
       @chooseStore="handleGoodsSubmit"
       @closeStoreDialog="handleGoodsDialogHide"
     />
@@ -121,7 +76,7 @@ export default {
       default: false
     }
   },
-  data () {
+  data() {
     return {
       loading: false,
       goods: [],
@@ -146,19 +101,19 @@ export default {
     }
   },
   computed: {
-    singleData () {
+    singleData() {
       return this.single
     }
   },
   watch: {
-    data (val) {
+    data(val) {
       this.goods = val
       this.relItems = JSON.parse(JSON.stringify(val))
       this.generateSku()
     }
   },
   methods: {
-    handleSkuDialogShow (index) {
+    handleSkuDialogShow(index) {
       const that = this
       this.loading = true
       this.current = index
@@ -178,19 +133,19 @@ export default {
         this.loading = false
       })
     },
-    handleGoodsDialogShow () {
+    handleGoodsDialogShow() {
       this.itemVisible = true
       this.setItemStatus = true
     },
-    handleSkuChange (val) {
+    handleSkuChange(val) {
       this.checkedSkus = val
     },
-    handleSkuSubmit () {
+    handleSkuSubmit() {
       this.dialogVisible = false
       this.goods[this.current].spec_items = this.checkedSkus
       this.generateSku()
     },
-    handleGoodsSubmit (data) {
+    handleGoodsSubmit(data) {
       this.itemVisible = false
       if (data === null || data.length <= 0) return
       this.relItems = data
@@ -213,7 +168,7 @@ export default {
       this.goods = list
       this.generateSku()
     },
-    generateSku () {
+    generateSku() {
       let noSkuItem = []
       let response = []
       let goodsList = JSON.parse(JSON.stringify(this.goods))
@@ -255,10 +210,10 @@ export default {
         this.$emit('change', response)
       }
     },
-    handleGoodsDialogHide () {
+    handleGoodsDialogHide() {
       this.itemVisible = false
     },
-    handleSkuRemove (index) {
+    handleSkuRemove(index) {
       this.goods.splice(index, 1)
       this.relItems.splice(index, 1)
       this.generateSku()

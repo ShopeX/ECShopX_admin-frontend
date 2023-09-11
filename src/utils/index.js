@@ -172,6 +172,8 @@ function export_open(tab) {
     const login_type = store.getters.login_type
     if (login_type == 'distributor') {
       window.open(`/shopadmin/shopsetting/baseexport?tab=${tab}`)
+    } else if (login_type == 'merchant') {
+      window.open(`/merchant/setting/baseexport?tab=${tab}`)
     } else {
       window.open(`/setting/baseexport?tab=${tab}`)
     }
@@ -311,6 +313,16 @@ export function hex2rgb(hex) {
     return num
   }
   return rgb
+}
+
+export function getSourceFromNameByValue(list, value) {
+  let sourceFromName = '-'
+  list.forEach((item) => {
+    if (item.value === value) {
+      sourceFromName = item.name
+    }
+  })
+  return sourceFromName
 }
 
 export { log, export_open, isEmpty }

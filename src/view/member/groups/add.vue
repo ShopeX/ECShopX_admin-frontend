@@ -367,6 +367,7 @@ export default {
     //   })
     // },
     changeItem() {
+      if (!this.show) return
       this.goodsDialogVisible = true
       this.getGoodsList()
     },

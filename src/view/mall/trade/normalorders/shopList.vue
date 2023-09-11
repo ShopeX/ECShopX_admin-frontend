@@ -34,6 +34,14 @@
           <el-input v-model="identifier" class="input-m" placeholder="手机号/订单号">
             <el-button slot="append" icon="el-icon-search" @click="numberSearch" />
           </el-input>
+          <el-select v-model="source_from" placeholder="请选择渠道" clearable @change="TypeHandle">
+            <el-option
+              v-for="(item, index) in sourceFromList"
+              :key="index"
+              :label="item.name"
+              :value="item.value"
+            />
+          </el-select>
         </el-col>
       </el-row>
       <el-row :gutter="20">
@@ -183,6 +191,12 @@
             </template>
           </el-table-column>
           <el-table-column prop="source_name" label="来源" />
+          <el-table-column prop="source_from" label="渠道">
+            <template slot-scope="scope">
+              <span>{{ getSourceFrom(scope.row) }}</span>
+            </template>
+          </el-table-column>
+
           <el-table-column label="操作" fixed="right">
             <template slot-scope="scope">
               <router-link
@@ -643,6 +657,7 @@ import {
   getPickupcode
 } from '../../../../api/trade'
 import { getSourcesList } from '../../../../api/datacube'
+import { getSourceFromNameByValue } from '@/utils'
 import shopSelect from '@/components/shopSelect'
 import RemarkModal from '@/components/remarkModal'
 import remarkMixin from '@/mixins/remarkMixin'
@@ -664,7 +679,8 @@ export default {
         pageSize: 20,
         order_class_exclude: 'drug,pointsmall',
         distributor_id: 0,
-        distributorIds: []
+        distributorIds: [],
+        source_from: ''
       },
       order_class_array: [
         { name: '全部订单', value: '' },
@@ -698,6 +714,14 @@ export default {
       identifier: '',
       source_list: [],
       source_name: '',
+      sourceFromList: [
+        { name: 'pc', value: 'pc' },
+        { name: 'h5', value: 'h5' },
+        { name: '微信小程序', value: 'wxapp' },
+        { name: '支付宝小程序', value: 'aliapp' },
+        { name: '未知', value: 'unknow' },
+        { name: '店务端', value: 'dianwu' }
+      ],
       source_id: '',
       order_class: '',
       cancel_order: '',
@@ -828,6 +852,7 @@ export default {
       this.params.order_type = this.order_type
       this.params.order_class = this.order_class
       this.params.salesman_mobile = this.salesman_mobile
+      this.params.source_from = this.source_from
       if (this.identifier.length == 11) {
         this.params.mobile = this.identifier
         this.params.order_id = ''
@@ -1101,6 +1126,9 @@ export default {
           return
         }
       })
+    },
+    getSourceFrom({ source_from }) {
+      return getSourceFromNameByValue(this.sourceFromList, source_from)
     }
   }
 }

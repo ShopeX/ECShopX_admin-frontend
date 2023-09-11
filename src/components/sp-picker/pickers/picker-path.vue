@@ -15,7 +15,7 @@
       <el-tab-pane label="商品" name="goods">
         <PickerGoods v-if="tabValue == 'goods'" ref="goods" :value="value" />
       </el-tab-pane>
-      <el-tab-pane label="店铺" name="store">
+      <el-tab-pane v-if="VERSION_PLATFORM" label="店铺" name="store">
         <PickerShop v-if="tabValue == 'store'" ref="store" :value="value" />
       </el-tab-pane>
       <el-tab-pane label="销售分类" name="sale_category">

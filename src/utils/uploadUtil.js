@@ -14,17 +14,20 @@
 import AWS from 'aws-sdk'
 // 七牛
 import * as QiNiu from 'qiniu-js'
+
+//腾讯云
+import COS from 'cos-js-sdk-v5'
 // 获取Token
 import { getOssToken, AliUpload, LocalUpload } from '../api/ossStorage'
 
 class UploadUtil {
-  constructor (fileType = 'image') {
+  constructor(fileType = 'image') {
     this.client = {}
     this.fileType = fileType
   }
 
   // 初始化
-  init (tokenRes, uploadType = 'qiniu') {
+  init(tokenRes, uploadType = 'qiniu') {
     switch (uploadType) {
       case 'oss':
         this.aliInit(tokenRes)
@@ -35,23 +38,26 @@ class UploadUtil {
       case 'aws':
         this.aws(tokenRes)
         break
+      case 'cosv5':
+        this.cos(tokenRes)
+        break
       default:
         this.qiNiuInit(tokenRes)
     }
   }
 
   // 阿里云
-  aliInit (tokenRes) {
+  aliInit(tokenRes) {
     this.client.upload = (file) => AliUpload(tokenRes, file)
   }
 
   // 本地
-  local (tokenRes) {
+  local(tokenRes) {
     this.client.upload = (file) => LocalUpload(tokenRes, file, this.fileType)
   }
 
   // 亚马逊
-  aws (tokenRes) {
+  aws(tokenRes) {
     const { Region, AccessKeyId, Bucket, SecretAccessKey, SessionToken } = tokenRes
 
     const s3 = new AWS.S3({
@@ -84,9 +90,52 @@ class UploadUtil {
       })
     }
   }
-
+  //腾讯云
+  cos(tokenRes) {
+    console.log(tokenRes.token)
+    var cos = new COS({
+      getAuthorization: function (options, callback) {
+        callback({ Authorization: tokenRes.token })
+      }
+    })
+    try {
+      this.client.upload = (file) => {
+        return new Promise((resolve, reject) => {
+          console.log(file)
+          cos.uploadFile(
+            {
+              Bucket: tokenRes.bucket /* 填写自己的 bucket，必须字段 */,
+              Region: tokenRes.region /* 存储桶所在地域，必须字段 */,
+              Key: tokenRes.url /* 存储在桶里的对象键（例如1.jpg，a/b/test.txt），必须字段 */,
+              Body: file // 上传文件对象
+              // SliceSize:
+              //   1024 *
+              //   1024 *
+              //   5 /* 触发分块上传的阈值，超过5MB 使用分块上传，小于5MB使用简单上传。可自行设置，非必须 */
+            },
+            (err, data) => {
+              if (data) {
+                const { Location } = data
+                const key = Location.split('/').slice(1).join('/')
+                console.log(key)
+                resolve({
+                  ...data,
+                  key: key
+                })
+              } else {
+                console.log(err)
+                reject(err)
+              }
+            }
+          )
+        })
+      }
+    } catch (error) {
+      console.log(error)
+    }
+  }
   // 七牛
-  qiNiuInit (tokenRes) {
+  qiNiuInit(tokenRes) {
     this.client.upload = (flie, key) => {
       return new Promise((resolve, reject) => {
         const observable = QiNiu.upload(flie, key, tokenRes.token)
@@ -100,17 +149,21 @@ class UploadUtil {
   }
 
   // 生成文件名
-  setFileName () {
+  setFileName() {
     const rx = (((1 + Math.random()) * 0x10000) | 0).toString(16).substring(1)
     const fileName = `${+new Date()}_${rx}${rx}`
     return fileName
   }
 
   // 上传
-  async uploadImg (file) {
+  async uploadImg(file) {
+    console.log(file.uid, file.name)
     // 初始化
     try {
-      const tokenRes = await getOssToken({ filetype: this.fileType })
+      const tokenRes = await getOssToken({
+        filetype: this.fileType,
+        filename: `${file.uid}.${file.name}`
+      })
       const data = { ...tokenRes.data.data.token }
       // 初始化
       this.init(data, tokenRes.data.data.driver)
@@ -136,14 +189,14 @@ class UploadUtil {
   }
 
   // 删除图片
-  async deleteImg (fileId) {
+  async deleteImg(fileId) {
     console.log(fileId)
     const res = await this.client.deleteImg(fileId)
     return res
   }
 
   // 上传视频
-  uploadVideo (file) {
+  uploadVideo(file) {
     console.log('video')
   }
 }

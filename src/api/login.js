@@ -1,6 +1,6 @@
 import fetch from '../utils/fetch'
 
-export function login (query) {
+export function login(query) {
   return fetch({
     url: '/operator/login',
     method: 'post',
@@ -8,7 +8,7 @@ export function login (query) {
   })
 }
 
-export function getSmsCode (params) {
+export function getSmsCode(params) {
   return fetch({
     url: '/operator/sms/code',
     method: 'post',
@@ -16,14 +16,15 @@ export function getSmsCode (params) {
   })
 }
 
-export function getImageCode () {
+export function getImageCode(query) {
   return fetch({
     url: '/operator/images/code',
-    method: 'get'
+    method: 'get',
+    params: query
   })
 }
 
-export function resetPassword (params) {
+export function resetPassword(params) {
   return fetch({
     url: '/operator/resetpassword',
     method: 'post',
@@ -31,14 +32,14 @@ export function resetPassword (params) {
   })
 }
 
-export function getAdminInfo () {
+export function getAdminInfo() {
   return fetch({
     url: '/operator/getinfo',
     method: 'get'
   })
 }
 
-export function updateAdminInfo (query) {
+export function updateAdminInfo(query) {
   return fetch({
     url: '/operator/updatedata',
     method: 'put',
@@ -46,7 +47,7 @@ export function updateAdminInfo (query) {
   })
 }
 
-export function changeOperatorStatus (query) {
+export function changeOperatorStatus(query) {
   return fetch({
     url: '/operator/changestatus',
     method: 'put',
@@ -54,14 +55,14 @@ export function changeOperatorStatus (query) {
   })
 }
 
-export function getAuthorizeUrl (params) {
+export function getAuthorizeUrl(params) {
   return fetch({
     url: '/operator/authorizeurl',
     method: 'get',
     params
   })
 }
-export function getAuthorizeLogin (data) {
+export function getAuthorizeLogin(data) {
   return fetch({
     url: '/operator/oauth/login',
     method: 'post',
@@ -69,10 +70,17 @@ export function getAuthorizeLogin (data) {
   })
 }
 
-export function getAuthorizelogout (params) {
+export function getAuthorizelogout(params) {
   return fetch({
     url: '/operator/oauth/logout',
     method: 'get',
     params
+  })
+}
+
+export function getAuthorizeLeve() {
+  return fetch({
+    url: '/operator/getLevel',
+    method: 'post'
   })
 }

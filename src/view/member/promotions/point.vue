@@ -1,16 +1,8 @@
 <template>
   <div class="section section-white">
-    <el-form
-      ref="form"
-      :model="form"
-      label-position="left"
-      label-width="180px"
-    >
+    <el-form ref="form" :model="form" label-position="left" label-width="180px">
       <div class="section-body">
-        <el-form-item
-          label="是否开启："
-          prop="ad_title"
-        >
+        <el-form-item label="是否开启：" prop="ad_title">
           <el-switch
             v-model="form.is_open"
             :width="60"
@@ -22,10 +14,7 @@
             active-color="#13ce66"
           />
         </el-form-item>
-        <el-form-item
-          label="注册赠送积分："
-          prop="ad_title"
-        >
+        <el-form-item label="注册赠送积分：" prop="ad_title">
           <el-input-number
             v-model="form.point"
             controls-position="right"
@@ -35,10 +24,7 @@
             :max="9999999"
           />
         </el-form-item>
-        <el-form-item
-          label="注册返上级积分："
-          prop="ad_title"
-        >
+        <el-form-item label="注册返上级积分：" prop="ad_title">
           <el-input-number
             v-model="form.rebate"
             controls-position="right"
@@ -49,12 +35,7 @@
           />
         </el-form-item>
         <div class="section-footer with-border content-center">
-          <el-button
-            type="primary"
-            @click="save"
-          >
-            保 存
-          </el-button>
+          <el-button type="primary" @click="save"> 保 存 </el-button>
         </div>
       </div>
     </el-form>
@@ -63,9 +44,9 @@
 <script>
 import { saveRegisterPoint, getRegisterPoint } from '../../../api/promotions'
 export default {
-  data () {
+  props: ['activeName'],
+  data() {
     return {
-      activeName: 'fourth',
       form: {
         is_open: 'false',
         point: 0,
@@ -75,23 +56,23 @@ export default {
     }
   },
   watch: {
-    getStatus (newVal, oldVal) {
-      if (newVal) {
+    activeName(newVal, oldVal) {
+      if (newVal != oldVal) {
         this.getRegisterData()
       }
     }
   },
-  mounted () {
+  mounted() {
     this.getRegisterData()
   },
   methods: {
-    getRegisterData () {
+    getRegisterData() {
       var params = { type: 'point' }
       getRegisterPoint(params).then((response) => {
         this.form = response.data.data
       })
     },
-    save () {
+    save() {
       saveRegisterPoint(this.form).then((response) => {
         this.getRegisterData()
         this.$message({

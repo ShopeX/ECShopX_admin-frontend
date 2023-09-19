@@ -1,16 +1,8 @@
 <template>
   <div class="section section-white">
-    <el-form
-      ref="form"
-      :model="form"
-      label-position="left"
-      label-width="180px"
-    >
+    <el-form ref="form" :model="form" label-position="left" label-width="180px">
       <div class="section-body">
-        <el-form-item
-          label="是否开启："
-          prop="ad_title"
-        >
+        <el-form-item label="是否开启：" prop="ad_title">
           <el-switch
             v-model="form.is_open"
             :width="60"
@@ -22,38 +14,22 @@
             active-color="#13ce66"
           />
         </el-form-item>
-        <el-form-item
-          label="注册引导广告标题："
-          prop="ad_title"
-        >
+        <el-form-item label="注册引导广告标题：" prop="ad_title">
           <el-input
             v-model="form.ad_title"
-            :placeholder="!VERSION_B2C ? '用于门店小程序注册引导入口标题' : '用于小程序注册引导入口标题'"
+            :placeholder="
+              !VERSION_B2C ? '用于门店小程序注册引导入口标题' : '用于小程序注册引导入口标题'
+            "
             style="width: 340px"
           />
         </el-form-item>
         <el-form-item label="注册引导图片：">
-          <div class="frm-tips">
-            只能上传jpg/png文件，且不超过2M （建议尺寸：400px * 450px）
-          </div>
-          <div class="frm-tips">
-            引导用户授权手机号注册，类似新用户专享广告图片
-          </div>
+          <div class="frm-tips">只能上传jpg/png文件，且不超过2M （建议尺寸：400px * 450px）</div>
+          <div class="frm-tips">引导用户授权手机号注册，类似新用户专享广告图片</div>
           <div>
-            <div
-              class="upload-box"
-              @click="handleImgChange"
-            >
-              <img
-                v-if="form.ad_pic"
-                :src="wximageurl + form.ad_pic"
-                class="avatar"
-                width="200"
-              >
-              <i
-                v-else
-                class="el-icon-plus avatar-uploader-icon"
-              />
+            <div class="upload-box" @click="handleImgChange">
+              <img v-if="form.ad_pic" :src="wximageurl + form.ad_pic" class="avatar" width="200">
+              <i v-else class="el-icon-plus avatar-uploader-icon" />
             </div>
           </div>
           <imgPicker
@@ -64,10 +40,7 @@
           />
         </el-form-item>
         <el-form-item label="请选择赠送会员卡类型：">
-          <el-radio-group
-            v-model="membercards.index_value"
-            @change="vipGradeChange"
-          >
+          <el-radio-group v-model="membercards.index_value" @change="vipGradeChange">
             <el-radio
               v-for="(item, index) in vipGrade"
               :key="index"
@@ -78,46 +51,34 @@
             </el-radio>
           </el-radio-group>
         </el-form-item>
-        <el-form-item
-          v-if="priceList.length > 0"
-          label="请选择赠送会员卡："
-        >
+        <el-form-item v-if="priceList.length > 0" label="请选择赠送会员卡：">
+          <!-- {{ membercards }}
+          {{ priceList }} -->
           <el-radio-group v-model="membercards.card_type">
-            <el-radio
-              v-for="(item, index) in priceList"
-              :key="index"
-              :label="item.name"
-            >
+            <el-radio v-for="(item, index) in priceList" :key="index" :label="item.name">
               {{ item.desc }}({{ item.price }}元)
             </el-radio>
           </el-radio-group>
         </el-form-item>
       </div>
       <div class="section-footer with-border content-center">
-        <el-button
-          type="primary"
-          @click="save"
-        >
-          保 存
-        </el-button>
+        <el-button type="primary" @click="save"> 保 存 </el-button>
       </div>
     </el-form>
   </div>
 </template>
 <script>
 import imgPicker from '../../../components/imageselect'
-import { listVipGrade } from '../../../api/cardticket'
-import { saveRegisterPromotions, getRegisterPromotions } from '../../../api/promotions'
+import { saveRegisterPromotions } from '../../../api/promotions'
 export default {
   components: {
     imgPicker
   },
-  props: ['getStatus'],
-  data () {
+  props: ['getStatus', 'activeName'],
+  data() {
     return {
       isGetImage: false,
       imgDialog: false,
-      activeName: 'third',
       total_count: 0,
       vipGrade: [],
       priceList: [],
@@ -143,30 +104,32 @@ export default {
     }
   },
   watch: {
-    getStatus (newVal, oldVal) {
-      if (newVal) {
-        this.getRegisterData()
-        this.getMemberVipGrade()
+    activeName(newVal, oldVal) {
+      if (newVal != oldVal) {
+        this.init()
       }
     }
   },
-  mounted () {
-    this.getRegisterData()
-    this.getMemberVipGrade()
+  mounted() {
+    this.init()
   },
   methods: {
-    handleImgChange () {
+    async init() {
+      await this.getMemberVipGrade()
+      await this.getRegisterData()
+    },
+    handleImgChange() {
       this.imgDialog = true
       this.isGetImage = true
     },
-    pickImg (data) {
+    pickImg(data) {
       this.form.ad_pic = data.url
       this.imgDialog = false
     },
-    closeImgDialog () {
+    closeImgDialog() {
       this.imgDialog = false
     },
-    save () {
+    save() {
       this.form.promotions_value.membercard = this.membercards
       saveRegisterPromotions(this.form).then((res) => {
         this.$message({
@@ -176,36 +139,34 @@ export default {
         })
       })
     },
-    getMemberVipGrade () {
+    async getMemberVipGrade() {
       var params = { is_disabled: 'false' }
-      listVipGrade(params).then((res) => {
-        this.vipGrade = res.data.data
-        if (this.vipGrade.length > 0) {
-          var item = this.vipGrade[this.membercards.index_value]
-          this.membercards.vip_grade_id = item.vip_grade_id
-          this.priceList = item.price_list
-          this.membercards.card_type = this.priceList[0].name
-        }
-      })
+      this.vipGrade = await this.$api.cardticket.listVipGrade(params)
+      if (this.vipGrade.length > 0) {
+        var item = this.vipGrade[this.membercards.index_value]
+        this.membercards.vip_grade_id = item.vip_grade_id
+        this.priceList = item.price_list
+        this.membercards.card_type = this.priceList[0].name
+      }
     },
-    vipGradeChange (index) {
+    vipGradeChange(index) {
       var item = this.vipGrade[index]
       this.membercards.vip_grade_id = item.vip_grade_id
       this.priceList = item.price_list
       this.membercards.card_type = this.priceList[0].name
     },
-    getRegisterData () {
+    async getRegisterData() {
       var params = { register_type: 'membercard' }
-      getRegisterPromotions(params).then((response) => {
-        this.form.ad_pic = response.data.data.ad_pic
-        this.form.id = response.data.data.id
-        this.form.is_open = response.data.data.is_open
-        this.form.ad_title = response.data.data.ad_title
-        if (response.data.data.promotions_value && response.data.data.promotions_value.membercard) {
-          this.membercards = response.data.data.promotions_value.membercard
-          this.membercards.index_value = parseInt(this.membercards.index_value)
-        }
-      })
+      const { ad_pic, id, is_open, ad_title, promotions_value } =
+        await this.$api.promotions.getRegisterPromotions(params)
+      this.form.ad_pic = ad_pic
+      this.form.id = id
+      this.form.is_open = is_open
+      this.form.ad_title = ad_title
+      if (promotions_value && promotions_value.membercard) {
+        this.membercards = promotions_value.membercard
+        this.membercards.index_value = parseInt(this.membercards.index_value)
+      }
     }
   }
 }

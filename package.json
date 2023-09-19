@@ -1,6 +1,6 @@
 {
   "name": "ecshopx-admin",
-  "version": "3.13.6",
+  "version": "3.13.7",
   "description": "ecshopx admin",
   "author": "shopex",
   "private": true,
@@ -78,6 +78,7 @@
     "sass-loader": "^10.1.1",
     "standard-version": "^9.1.1",
     "vue-template-compiler": "^2.6.10",
+    "webpack-aliyun-oss": "^0.3.13",
     "webpack-bundle-analyzer": "^4.4.0"
   },
   "browserslist": [

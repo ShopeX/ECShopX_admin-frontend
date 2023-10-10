@@ -362,9 +362,10 @@
 </template>
 
 <script>
+import { mapGetters } from 'vuex'
 import Treeselect from '@riophae/vue-treeselect'
-import imgPicker from '../../../../components/imageselect'
 import '@riophae/vue-treeselect/dist/vue-treeselect.css'
+import imgPicker from '../../../../components/imageselect'
 import {
   addMarketingActivity,
   updateMarketingActivity,
@@ -378,8 +379,8 @@ import StoreSelect from '@/components/storeListSelect'
 import GoodsSelect from '@/components/goodsSelect'
 import SkuSelector from '@/components/function/skuSelector'
 import { getItemsList, getCategory, getTagList, getGoodsAttr } from '@/api/goods'
+import { transformTree } from '@/utils'
 import { handleUploadFile, exportUploadTemplate } from '../../../../api/common'
-import { mapGetters } from 'vuex'
 export default {
   inject: ['refresh'],
   components: {
@@ -839,7 +840,11 @@ export default {
     },
     fetchMainCate: function () {
       getCategory({ is_main_category: true, ignore_none: true }).then((response) => {
-        this.categoryList = response.data.data
+        this.categoryList = transformTree(response.data.data, {
+          id: 'category_id',
+          label: 'category_name',
+          children: 'children'
+        })
       })
     },
     addItemTag: function () {

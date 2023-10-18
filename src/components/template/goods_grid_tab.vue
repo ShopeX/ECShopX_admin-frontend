@@ -1,13 +1,7 @@
 <template>
-  <div
-    class="component-wrap"
-    :class="{ 'component-padded': base.padded, 'active': active }"
-  >
+  <div class="component-wrap" :class="{ 'component-padded': base.padded, 'active': active }">
     <div class="current-active" />
-    <div
-      v-if="base.title"
-      class="component-header"
-    >
+    <div v-if="base.title" class="component-header">
       <div class="component-title">
         <div>{{ base.title }}</div>
         <div class="subtitle">
@@ -44,10 +38,7 @@
         >
           <div class="goods-wrap">
             <div class="thumbnail">
-              <img
-                class="goods-img"
-                :src="wximageurl + item.imgUrl"
-              >
+              <img class="goods-img" :src="wximageurl + item.imgUrl">
             </div>
             <div class="caption">
               <img
@@ -65,10 +56,7 @@
               <div class="goods-title">
                 {{ item.itemEnName }}
               </div>
-              <div
-                v-if="config.showPrice"
-                class="price"
-              >
+              <div v-if="config.showPrice" class="price">
                 <span class="cur">¥</span>{{ item.price / 100 }}
               </div>
               <div class="activity-label">
@@ -92,9 +80,7 @@
       </div>
     </div>
     <div class="goods-more">
-      <p class="more-btn">
-        查看更多
-      </p>
+      <p class="more-btn">查看更多</p>
     </div>
   </div>
 </template>
@@ -111,7 +97,7 @@ export default {
       default: false
     }
   },
-  data () {
+  data() {
     return {
       base: {},
       config: {},
@@ -124,25 +110,25 @@ export default {
   watch: {
     res: {
       deep: true,
-      handler (value) {
+      handler(value) {
         if (value) {
           this.setData(value)
         }
       }
     }
   },
-  mounted () {
+  mounted() {
     this.setData(this.res)
     this.colorPrimary = this.$store.getters.color_theme.primary
   },
   methods: {
-    setData (val) {
+    setData(val) {
       this.base = val.base
       this.config = val.config
       this.data = val.data
       this.list = val.list ? val.list : []
     },
-    handleClick (i) {
+    handleClick(i) {
       this.checkde = i
     }
   }

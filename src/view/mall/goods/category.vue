@@ -109,15 +109,12 @@
                     plain
                     size="mini"
                     @click="handleDownload(scope.row.category_name)"
-                    >
-下载码
-</el-button
                   >
-                  <el-button v-clipboard:copy="curPageUrl" type="primary" plain size="mini"
-                    >
-复制链接
-</el-button
-                  >
+                    下载码
+                  </el-button>
+                  <el-button v-clipboard:copy="curPageUrl" type="primary" plain size="mini">
+                    复制链接
+                  </el-button>
                 </div>
               </div>
               <el-button
@@ -125,10 +122,9 @@
                 style="width: 45px"
                 type="text"
                 @click="handleClick(scope.row.id)"
-                >
-投放
-</el-button
               >
+                投放
+              </el-button>
             </el-popover>
             <el-button type="text" @click.native.prevent="deleteCategory(scope.row)">
               删除

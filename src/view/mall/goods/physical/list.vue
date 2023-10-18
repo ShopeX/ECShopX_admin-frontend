@@ -963,7 +963,7 @@ export default {
       batchChangeStateDialog: false,
       batchChangeStateFormList: [
         {
-          label: '商品状态:',
+          label: '商品状态',
           key: 'status',
           type: 'select',
           message: '不能为空',

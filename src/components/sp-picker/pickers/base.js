@@ -70,7 +70,7 @@ export default {
         if (islimitImgType) {
           let similarCount = 0
           this.localVal.data.forEach((element) => {
-            console.log("循环");
+            console.log('循环')
             if (element.attribute_type == 'item_spec' && element.is_image == 'true') {
               similarCount += 1
             }

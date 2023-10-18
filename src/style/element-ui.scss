@@ -302,7 +302,7 @@ $color-secondary: rgba(var(--themeColorRgb), 0.8);
       }
     }
     &.is-checked + .el-radio__label {
-      color: $color-primary;
+      color: inherit;
     }
   }
   &__inner {
@@ -367,6 +367,11 @@ $color-secondary: rgba(var(--themeColorRgb), 0.8);
   }
 }
 
+.el-statistic .head {
+  margin-bottom: 4px;
+  color: rgba(0, 0, 0, 0.45);
+  font-size: 14px;
+}
 .el-image {
   display: block;
 }

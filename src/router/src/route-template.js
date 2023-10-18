@@ -10,7 +10,8 @@ export default {
     {
       path: 'manage/templateedit',
       name: `模板编辑`,
-      component: () => import('@/view/wxapp/management')
+      // component: () => import('@/view/wxapp/management')
+      component: () => import('@/view/wxapp/home')
     },
     {
       path: 'manage/editcategory',

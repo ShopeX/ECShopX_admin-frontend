@@ -1,11 +1,39 @@
 // 会员路由
 const name = '营销'
 import Layout from '@/view/layout' // 主框架
+import SubLayout from '@/view/sublayout' //
 
 export default {
   path: '/marketing',
   component: Layout,
   children: [
+    {
+      path: 'employee/purchase',
+      name: `内购`,
+      component: SubLayout,
+      children: [
+        {
+          path: '/',
+          component: () => import('@/view/marketing/employee/list')
+        },
+        {
+          path: 'create/:id?',
+          component: () => import('@/view/marketing/employee/purchase')
+        },
+        {
+          path: 'result/:id',
+          component: () => import('@/view/marketing/employee/result')
+        },
+        {
+          path: 'goods/:id',
+          component: () => import('@/view/marketing/employee/addGoods')
+        },
+        {
+          path: 'dependents/:id',
+          component: () => import('@/view/marketing/employee/dependents')
+        }
+      ]
+    },
     {
       path: 'coupon/membermarketing',
       name: `优惠卷管理`,

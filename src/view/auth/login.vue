@@ -28,7 +28,12 @@
               </el-form-item>
               <el-form-item v-if="level === 'img_code'" prop="yzm" class="imageyzm">
                 <el-input v-model="form.yzm" type="text" placeholder="验证码">
-                  <img slot="append" :src="imageData" style="width: auto;height: 38px;cursor: pointer" @click="_getImagesCode" />
+                  <img
+                    slot="append"
+                    :src="imageData"
+                    style="width: auto; height: 38px; cursor: pointer"
+                    @click="_getImagesCode"
+                  >
                 </el-input>
               </el-form-item>
             </el-tab-pane>
@@ -41,7 +46,12 @@
               </el-form-item>
               <el-form-item v-if="level === 'img_code'" prop="yzm" class="imageyzm">
                 <el-input v-model="form.yzm" type="text" placeholder="验证码">
-                  <img slot="append" :src="imageData" style="width: auto;height: 38px;cursor: pointer" @click="_getImagesCode" />
+                  <img
+                    slot="append"
+                    :src="imageData"
+                    style="width: auto; height: 38px; cursor: pointer"
+                    @click="_getImagesCode"
+                  >
                 </el-input>
               </el-form-item>
             </el-tab-pane>
@@ -56,7 +66,12 @@
             </el-form-item>
             <el-form-item v-if="level === 'img_code'" prop="yzm" class="imageyzm">
               <el-input v-model="form.yzm" type="text" placeholder="验证码">
-                <img slot="append" :src="imageData" style="width: auto;height: 38px;cursor: pointer" @click="_getImagesCode" />
+                <img
+                  slot="append"
+                  :src="imageData"
+                  style="width: auto; height: 38px; cursor: pointer"
+                  @click="_getImagesCode"
+                >
               </el-input>
             </el-form-item>
           </div>
@@ -118,9 +133,9 @@ export default {
       dialogVisible: false,
       agreementId: null,
       agreementContent: '',
-      level: "",
-      imageData: "",
-      imageToken: ""
+      level: '',
+      imageData: '',
+      imageToken: ''
     }
   },
   watch: {
@@ -137,15 +152,13 @@ export default {
     this.SET_VERSION_MODE(this.VUE_APP_PRODUCT_MODEL)
     console.log(this.VUE_APP_PRODUCT_MODEL, '----version----')
     this.init()
-    this.$api.login.getAuthorizeLeve().then(res => {
+    this.$api.login.getAuthorizeLeve().then((res) => {
       this.level = res.level
-      if (this.level === "img_code") {
+      if (this.level === 'img_code') {
         this._getImagesCode()
-        this.rules.yzm = [
-          { required: true, message: "请输入验证码", trigger: "blur" }
-        ];
+        this.rules.yzm = [{ required: true, message: '请输入验证码', trigger: 'blur' }]
       }
-    });
+    })
   },
   destroyed() {
     window.removeEventListener('resize', this.fnSize)
@@ -164,14 +177,14 @@ export default {
       this.$store.dispatch('setLoginType', this.loginType)
     },
     _getImagesCode() {
-      if (this.checkCode) return;
-      this.checkCode = true;
-      this.$api.login.getImageCode({ type: "login" }).then(res => {
-        let { imageData, imageToken } = res;
-        this.imageData = imageData;
-        this.imageToken = imageToken;
-        this.checkCode = false;
-      });
+      if (this.checkCode) return
+      this.checkCode = true
+      this.$api.login.getImageCode({ type: 'login' }).then((res) => {
+        let { imageData, imageToken } = res
+        this.imageData = imageData
+        this.imageToken = imageToken
+        this.checkCode = false
+      })
     },
     getBgImg() {
       switch (this.VUE_APP_PRODUCT_MODEL) {
@@ -224,7 +237,7 @@ export default {
             product_model: this.VUE_APP_PRODUCT_MODEL,
             agreement_id
           }
-          if (this.level === "img_code") {
+          if (this.level === 'img_code') {
             params.token = this.imageToken
             params.yzm = this.form.yzm
           }

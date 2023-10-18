@@ -372,8 +372,8 @@
               <el-col :xs="24" :sm="12" :md="8">
                 <el-form-item label="销售价">
                   <el-input
-                    v-model="form.price"
                     v-if="form.pay_class === 'online' || form.pay_class === 'mix'"
+                    v-model="form.price"
                     type="number"
                     required
                     min="0"
@@ -386,7 +386,14 @@
               </el-col>
               <el-col :xs="24" :sm="12" :md="8">
                 <el-form-item label="积分价格">
-                  <el-input v-model="form.point" v-if="form.pay_class === 'point' || form.pay_class === 'mix'" type="number" required min="0" placeholder="">
+                  <el-input
+                    v-if="form.pay_class === 'point' || form.pay_class === 'mix'"
+                    v-model="form.point"
+                    type="number"
+                    required
+                    min="0"
+                    placeholder=""
+                  >
                     <template slot="append"> 积分 </template>
                   </el-input>
                   <span v-if="!form.pay_class || form.pay_class === 'online'">-</span>
@@ -550,8 +557,8 @@
               <el-table-column label="销售价">
                 <template slot-scope="scope">
                   <el-input
-                    v-model="scope.row.price"
                     v-if="scope.row.pay_class === 'online' || scope.row.pay_class === 'mix'"
+                    v-model="scope.row.price"
                     type="number"
                     required
                     min="0"
@@ -564,8 +571,8 @@
               <el-table-column label="积分价格">
                 <template slot-scope="scope">
                   <el-input
-                    v-model="scope.row.point"
                     v-if="scope.row.pay_class === 'point' || scope.row.pay_class === 'mix'"
+                    v-model="scope.row.point"
                     type="number"
                     required
                     min="0"
@@ -721,8 +728,8 @@
               <el-table-column label="销售价">
                 <template slot-scope="scope">
                   <el-input
-                    v-model="scope.row.price"
                     v-if="scope.row.pay_class === 'online' || scope.row.pay_class === 'mix'"
+                    v-model="scope.row.price"
                     type="number"
                     required
                     min="0"
@@ -736,8 +743,8 @@
               <el-table-column label="积分价格(积分)">
                 <template slot-scope="scope">
                   <el-input
-                    v-model="scope.row.point"
                     v-if="scope.row.pay_class === 'point' || scope.row.pay_class === 'mix'"
+                    v-model="scope.row.point"
                     type="number"
                     required
                     min="0"

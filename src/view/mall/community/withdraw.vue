@@ -196,32 +196,32 @@ export default {
       },
       resloveFormList: [
         {
-          label: '团长姓名:',
+          label: '团长姓名',
           key: 'account_name',
           type: 'text'
         },
         {
-          label: '提现方式:',
+          label: '提现方式',
           key: 'pay_type',
           type: 'text'
         },
         {
-          label: '银行名称:',
+          label: '银行名称',
           key: 'bank_name',
           type: 'text'
         },
         {
-          label: '银行卡号:',
+          label: '银行卡号',
           key: 'pay_account',
           type: 'text'
         },
         {
-          label: '可提现金额:',
+          label: '可提现金额',
           key: 'cash_withdrawal_rebate',
           type: 'text'
         },
         {
-          label: '申请提现:',
+          label: '申请提现',
           key: 'money',
           type: 'text'
         }

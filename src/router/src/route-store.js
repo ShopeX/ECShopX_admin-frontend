@@ -29,6 +29,7 @@ export default {
         {
           path: 'template',
           component: () => import('@/view/mall/marketing/distributor_template')
+          // component: () => import('@/view/wxapp/home')
         },
         {
           path: 'details/:id?',

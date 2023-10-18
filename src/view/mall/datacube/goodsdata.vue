@@ -1,254 +1,171 @@
 <template>
   <div>
-    <el-form label-width="100px">
-      <el-form-item label="选择日期范围">
-        <el-col :span="12">
-          <el-date-picker
-            v-model="vdate"
-            type="daterange"
-            alue-format="yyyy-MM-dd"
-            align="right"
-            unlink-panels
-            range-separator="至"
-            start-placeholder="开始日期"
-            end-placeholder="结束日期"
-            style="width: 100%"
-            :picker-options="pickerOptions"
-            value-format="yyyy-MM-dd"
-            @change="dateChange"
-          />
-        </el-col>
-        <el-col :span="12">
-          <export-tip @exportHandle="exportData">
-            <el-button
-              v-loading="exportloading"
-              type="primary"
-            >
-              导出
-            </el-button>
-          </export-tip>
-          <el-popover
-            placement="top-start"
-            width="200"
-            trigger="hover"
-            content="导出任务会以队列执行，点击导出后，请至‘设置-导出列表’页面中查看及下载数据"
-          >
-            <i
-              slot="reference"
-              class="el-icon-question"
-            />
-          </el-popover>
-        </el-col>
-      </el-form-item>
-    </el-form>
-    <el-tabs
-      v-if="$route.path.indexOf('editor') === -1"
-      v-model="activeName"
-      type="border-card"
-      @tab-click="handleClick"
-    >
-      <el-tab-pane
-        v-loading="loading"
-        label="商品统计"
-        name="goods_count"
+    <div class="action-container">
+      <export-tip @exportHandle="exportData">
+        <el-button v-loading="exportloading" type="primary"> 导出 </el-button>
+      </export-tip>
+      <el-popover
+        placement="top-start"
+        width="200"
+        trigger="hover"
+        content="导出任务会以队列执行，点击导出后，请至‘设置-导出列表’页面中查看及下载数据"
       >
-        <template>
-          <el-table
-            :data="allListData"
-            stripe
-            border
-            style="width: 100%"
-            :height="wheight - 230"
-          >
-            <el-table-column
-              prop="no"
-              label="No"
-            />
-            <el-table-column
-              prop="sap_code"
-              label="商品编号"
-            />
-            <el-table-column
-              prop="top_level"
-              label="分类"
-            />
-            <el-table-column
-              prop="product"
-              label="商品名称"
-            />
-            <el-table-column
-              prop="quantity"
-              label="销量"
-            />
-            <el-table-column
-              prop="fix_price"
-              label="销售额"
-            />
-            <el-table-column
-              prop="settle_price"
-              label="实付额"
-            />
-          </el-table>
-        </template>
-      </el-tab-pane>
-    </el-tabs>
+        <i slot="reference" class="el-icon-question" />
+      </el-popover>
+    </div>
+
+    <SpFilterForm :model="queryForm" @onSearch="onSearch" @onReset="onSearch">
+      <SpFilterFormItem prop="datetime" label="查询日期:">
+        <el-date-picker
+          v-model="queryForm.datetime"
+          clearable
+          type="daterange"
+          align="right"
+          format="yyyy-MM-dd"
+          range-separator="至"
+          start-placeholder="开始日期"
+          end-placeholder="结束日期"
+          :default-time="defaultTime"
+          :picker-options="pickerOptions"
+        />
+      </SpFilterFormItem>
+      <SpFilterFormItem prop="activity_id" label="内购活动:" size="max">
+        <el-select
+          v-model="queryForm.activity_id"
+          v-scroll="() => pagesQuery.nextPage()"
+          multiple
+          placeholder="请选择"
+        >
+          <el-option
+            v-for="(item, index) in purchaseActivityList"
+            :key="`activity-item__${index}`"
+            :label="item.name"
+            :value="item.id"
+          />
+        </el-select>
+      </SpFilterFormItem>
+    </SpFilterForm>
+    <SpFinder
+      ref="finder"
+      no-selection
+      :show-pager="false"
+      :setting="setting"
+      :row-actions-align="'left'"
+      :data="tableData"
+    />
   </div>
 </template>
 <script>
-import { mapGetters } from 'vuex'
 import json2csv from 'json2csv'
-import { getGoodsData } from '../../../api/datacube'
+import { PICKER_DATE_OPTIONS } from '@/consts'
+// import { getGoodsData } from '../../../api/datacube'
+import { createSetting } from '@shopex/finder'
+import moment from 'moment'
+import Pages from '@/utils/pages'
 export default {
-  data () {
+  data() {
+    const defaultStartDate = moment().subtract(7, 'day')
+    const defaultEndDate = moment().subtract(1, 'day')
     return {
-      vdate: '',
       loading: true,
       exportloading: false,
       activeName: 'goods_count',
-      params: {
-        start: '',
-        end: ''
+      queryForm: {
+        datetime: [defaultStartDate, defaultEndDate],
+        activity_id: ''
       },
+      defaultTime: ['00:00:00', '23:59:59'],
+      tableData: [],
+      pickerOptions: PICKER_DATE_OPTIONS,
       allListData: [],
-      // fields: ['item_bn', 'category_name', 'item_name', 'sales_count', 'fixed_amount_count', 'settle_amount_count'],
-      fields: ['no', 'sap_code', 'top_level', 'product', 'quantity', 'fix_price', 'settle_price'],
-      pickerOptions: {
-        shortcuts: [
+      setting: createSetting({
+        columns: [
+          { name: 'No', key: 'no' },
           {
-            text: '最近一天',
-            onClick (picker) {
-              const start = new Date()
-              const end = new Date()
-              start.setTime(start.getTime() - 3600 * 1000 * 24 * 1)
-              end.setTime(end.getTime() - 3600 * 1000 * 24 * 1)
-              picker.$emit('pick', [start, end])
-            }
+            name: '商品编号',
+            key: 'sap_code'
           },
           {
-            text: '最近一周',
-            onClick (picker) {
-              const start = new Date()
-              const end = new Date()
-              start.setTime(start.getTime() - 3600 * 1000 * 24 * 7)
-              end.setTime(end.getTime() - 3600 * 1000 * 24 * 1)
-              picker.$emit('pick', [start, end])
-            }
+            name: '分类',
+            key: 'top_level'
+          },
+          {
+            name: '商品名称',
+            key: 'product'
+          },
+          {
+            name: '销量',
+            key: 'quantity'
+          },
+          {
+            name: '销售额',
+            key: 'fix_price'
+          },
+          {
+            name: '实付额',
+            key: 'settle_price'
           }
         ]
-      }
+      }),
+      purchaseActivityList: []
     }
   },
-  computed: {
-    ...mapGetters(['wheight'])
+  created() {
+    this.pagesQuery = new Pages({
+      fetch: this.getPurchaseActivity
+    }).nextPage()
   },
-  mounted () {
-    var start = new Date()
-    var end = new Date()
-    start.setTime(start.getTime() - 3600 * 1000 * 24 * 1)
-    end.setTime(end.getTime() - 3600 * 1000 * 24 * 1)
-    this.vdate = [start, end]
-    this.getGoodsDataList()
+  mounted() {
+    this.fetch()
   },
   methods: {
-    exportData () {
+    async fetch() {
+      const {
+        datetime: [display_time_begin, display_time_end],
+        activity_id
+      } = this.queryForm
+      const { list } = await this.$api.datacube.getGoodsData({
+        start: moment(display_time_begin).format('YYYY-MM-DD'),
+        end: moment(display_time_end).format('YYYY-MM-DD')
+        // order_class: 'employee_purchase',
+        // act_id: activity_id.toString()
+      })
+      this.tableData = list
+      this.$nextTick(() => {
+        this.$refs.finder.refresh()
+      })
+    },
+    onSearch() {
+      this.fetch()
+    },
+    async exportData() {
       this.exportloading = true
-      this.params.export = 1
-      getGoodsData(this.params)
-        .then((res) => {
-          this.exportloading = false
-          if (res.data.data.status) {
-            this.$message({
-              type: 'success',
-              message: '已加入执行队列，请在设置-导出列表中下载'
-            })
-            this.$export_open('goods_data')
-            return
-          } else if (res.data.data.url) {
-            this.downloadUrl = res.data.data.url
-            this.downloadName = res.data.data.filename
-            this.downloadView = true
-          } else {
-            this.$message({
-              type: 'error',
-              message: '无内容可导出 或 执行失败，请检查重试'
-            })
-            return
-          }
-
-          // var exportdata = res.data.data.list
-          // exportdata.unshift()
-          // this.exportloading = false
-          // var fileName = '商品数据'
-          // try {
-          //   const result = json2csv.parse(exportdata, {
-          //     fields: this.fields
-          //     // excelStrings: true,
-          //   });
-          //   if (this.MyBrowserIsIE()) {
-          //     // IE10以及Edge浏览器
-          //     var BOM = "\uFEFF";
-          //     // 文件转Blob格式
-          //     var csvData = new Blob([BOM + result], { type: "text/csv" });
-          //     navigator.msSaveBlob(csvData, `${fileName}.csv`);
-          //   } else {
-          //     let csvContent = "data:text/csv;charset=utf-8,\uFEFF" + result;
-          //     // 非ie 浏览器
-          //     this.createDownLoadClick(csvContent, `${fileName}.csv`);
-          //   }
-          // } catch (err) {
-          //   this.exportloading = false
-          //   alert(err);
-          // }
-        })
-        .catch((error) => {
-          this.exportloading = false
-        })
-    },
-    createDownLoadClick (content, fileName) {
-      const link = document.createElement('a')
-      link.href = encodeURI(content)
-      link.download = fileName
-      document.body.appendChild(link)
-      link.click()
-      document.body.removeChild(link)
-    },
-    MyBrowserIsIE () {
-      let isIE = false
-      if (
-        navigator.userAgent.indexOf('compatible') > -1 &&
-        navigator.userAgent.indexOf('MSIE') > -1
-      ) {
-        // ie浏览器
-        isIE = true
+      const {
+        datetime: [display_time_begin, display_time_end],
+        activity_id
+      } = this.queryForm
+      const { status, url } = await this.$api.datacube.getGoodsData({
+        start: moment(display_time_begin).format('YYYY-MM-DD'),
+        end: moment(display_time_end).format('YYYY-MM-DD'),
+        order_class: 'employee_purchase',
+        act_id: activity_id.toString(),
+        export: 1
+      })
+      this.exportloading = false
+      if (status) {
+        this.$message.success('已加入执行队列，请在设置-导出列表中下载')
+        this.$export_open('goods_data')
+      } else {
+        this.$message.error('无内容可导出 或 执行失败，请检查重试')
       }
-      if (navigator.userAgent.indexOf('Trident') > -1) {
-        // edge 浏览器
-        isIE = true
-      }
-      return isIE
     },
-    handleClick (tab, event) {},
-    dateChange (val) {
-      if (!val) {
-        return false
-      }
-      this.params.start = val[0]
-      this.params.end = val[1]
-      this.getGoodsDataList()
-    },
-    getGoodsDataList () {
-      this.loading = true
-      getGoodsData(this.params)
-        .then((res) => {
-          this.allListData = res.data.data.list
-          this.loading = false
-        })
-        .catch((error) => {
-          this.$message({
-            type: 'error',
-            message: '获取统计信息出错'
-          })
-        })
+    async getPurchaseActivity({ page, pageSize }) {
+      const { list, total_count } = await this.$api.marketing.getPurchaseActivity({
+        page,
+        pageSize
+      })
+      this.pagesQuery.setTotal(total_count)
+      this.purchaseActivityList = this.purchaseActivityList.concat(list)
     }
   }
 }

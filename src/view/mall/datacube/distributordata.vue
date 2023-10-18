@@ -114,9 +114,19 @@
             <canvas id="canvas_amountPayed" height="120" />
           </section>
         </el-tab-pane>
+        <el-tab-pane label="交易额(积分)" name="amountPointPayed">
+          <section>
+            <canvas id="canvas_amountPointPayed" height="120" />
+          </section>
+        </el-tab-pane>
         <el-tab-pane label="订单数" name="order">
           <section>
             <canvas id="canvas_order" height="120" />
+          </section>
+        </el-tab-pane>
+        <el-tab-pane label="订单数(积分)" name="orderPoint">
+          <section>
+            <canvas id="canvas_orderPoint" height="120" />
           </section>
         </el-tab-pane>
         <el-tab-pane label="付款订单数" name="orderPayed">
@@ -124,9 +134,19 @@
             <canvas id="canvas_orderPayed" height="120" />
           </section>
         </el-tab-pane>
+        <el-tab-pane label="付款订单数(积分)" name="orderPointPayed">
+          <section>
+            <canvas id="canvas_orderPointPayed" height="120" />
+          </section>
+        </el-tab-pane>
         <el-tab-pane label="GMV" name="gmv">
           <section>
             <canvas id="canvas_gmv" height="120" />
+          </section>
+        </el-tab-pane>
+        <el-tab-pane label="GMV(积分)" name="gmvPoint">
+          <section>
+            <canvas id="canvas_gmvPoint" height="120" />
           </section>
         </el-tab-pane>
       </template>
@@ -158,11 +178,15 @@
           <el-table-column prop="amount_payed_count" label="交易额">
             <template slot-scope="scope"> ￥{{ scope.row.amount_payed_count / 100 }} </template>
           </el-table-column>
+          <el-table-column prop="amount_point_payed_count" label="交易额(积分)" />
           <el-table-column prop="order_count" label="订单数" />
+          <el-table-column prop="order_point_count" label="订单数(积分)" />
           <el-table-column prop="order_payed_count" label="付款订单数" />
+          <el-table-column prop="order_point_payed_count" label="付款订单数(积分)" />
           <el-table-column prop="gmv_count" label="GMV">
             <template slot-scope="scope"> ￥{{ scope.row.gmv_count / 100 }} </template>
           </el-table-column>
+          <el-table-column prop="gmv_point_count" label="GMV(积分)" />
         </template>
       </el-table>
     </template>

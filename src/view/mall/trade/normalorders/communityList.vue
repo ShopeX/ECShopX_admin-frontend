@@ -454,7 +454,7 @@ export default {
       remarkDialog: false,
       remarkFormList: [
         {
-          label: '备注信息:',
+          label: '备注信息',
           key: 'remark',
           type: 'textarea',
           maxlength: 150,
@@ -471,7 +471,7 @@ export default {
       cancelOrderDialog: false,
       cancelOrderFormList: [
         {
-          label: '取消原因:',
+          label: '取消原因',
           key: 'cancel_reason',
           placeholder: '请选择取消订单原因',
           type: 'select',
@@ -500,7 +500,7 @@ export default {
           }
         },
         {
-          label: '其他原因:',
+          label: '其他原因',
           key: 'other_reason',
           type: 'input',
           placeholder: '请填写取消订单原因',
@@ -522,7 +522,7 @@ export default {
       deliverGoodsDialog: false,
       deliverGoodsFormList: [
         {
-          label: '发货类型:',
+          label: '发货类型',
           key: 'delivery_type',
           type: 'radio',
           disabled: false,
@@ -570,7 +570,7 @@ export default {
           ]
         },
         {
-          label: '快递公司:',
+          label: '快递公司',
           key: 'delivery_corp',
           placeholder: '请选择快递公司',
           type: 'select',
@@ -579,7 +579,7 @@ export default {
           message: '不能为空'
         },
         {
-          label: '物流单号:',
+          label: '物流单号',
           key: 'delivery_code',
           type: 'input',
           placeholder: '物流公司单号',
@@ -625,42 +625,42 @@ export default {
       refundDialog: false,
       refundFormList: [
         {
-          label: '取消来源:',
+          label: '取消来源',
           key: 'source',
           type: 'text'
         },
         {
-          label: '申请时间:',
+          label: '申请时间',
           key: 'applyTime',
           type: 'text'
         },
         {
-          label: '退款状态:',
+          label: '退款状态',
           key: 'refundStatus',
           type: 'text'
         },
         {
-          label: '处理进度:',
+          label: '处理进度',
           key: 'process',
           type: 'text'
         },
         {
-          label: '退款金额:',
+          label: '退款金额',
           key: 'refundPrice',
           type: 'text'
         },
         {
-          label: '支付方式:',
+          label: '支付方式',
           key: 'payType',
           type: 'text'
         },
         {
-          label: '取消原因:',
+          label: '取消原因',
           key: 'reason',
           type: 'text'
         },
         {
-          label: '处理结果:',
+          label: '处理结果',
           key: 'check_cancel',
           type: 'radio',
           options: [
@@ -676,7 +676,7 @@ export default {
           }
         },
         {
-          label: '拒绝原因:',
+          label: '拒绝原因',
           key: 'shop_reject_reason',
           type: 'input',
           placeholder: '请输入拒绝原因',

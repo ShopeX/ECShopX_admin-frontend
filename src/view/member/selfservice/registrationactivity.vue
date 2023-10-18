@@ -19,7 +19,12 @@
         </el-select>
       </SpFilterFormItem>
       <SpFilterFormItem prop="create_time" label="时间:">
-        <el-date-picker v-model="params.create_time" type="daterange" value-format="yyyy/MM/dd" placeholder="根据添加时间筛选" />
+        <el-date-picker
+          v-model="params.create_time"
+          type="daterange"
+          value-format="yyyy/MM/dd"
+          placeholder="根据添加时间筛选"
+        />
       </SpFilterFormItem>
     </SpFilterForm>
 
@@ -38,32 +43,50 @@
       </el-table-column>
       <el-table-column label="操作">
         <template slot-scope="scope">
-          <router-link class="iconfont icon-edit1"
-            :to="{ path: matchHidePage('editor'), query: { id: scope.row.activity_id } }" />
+          <router-link
+            class="iconfont icon-edit1"
+            :to="{ path: matchHidePage('editor'), query: { id: scope.row.activity_id } }"
+          />
           <i class="iconfont icon-search-plus" @click="preview(scope.$index, scope.row)" />
-          <i v-if="scope.row.status == 1" class="mark iconfont icon-trash-alt1"
-            @click="deleteAction(scope.$index, scope.row)" />
+          <i
+            v-if="scope.row.status == 1"
+            class="mark iconfont icon-trash-alt1"
+            @click="deleteAction(scope.$index, scope.row)"
+          />
         </template>
       </el-table-column>
     </el-table>
     <div class="content-center content-top-padded">
-      <el-pagination background layout="total, sizes, prev, pager, next, jumper" :current-page.sync="page.pageIndex"
-        :page-sizes="[10, 20, 50]" :total="page.total" :page-size="page.pageSize" @current-change="onCurrentChange"
-        @size-change="onSizeChange" />
+      <el-pagination
+        background
+        layout="total, sizes, prev, pager, next, jumper"
+        :current-page.sync="page.pageIndex"
+        :page-sizes="[10, 20, 50]"
+        :total="page.total"
+        :page-size="page.pageSize"
+        @current-change="onCurrentChange"
+        @size-change="onSizeChange"
+      />
     </div>
 
     <el-dialog :visible.sync="dialogVisible" title="活动详情">
       <el-descriptions :column="1">
         <el-descriptions-item label="活动名称">{{ dataInfo.activity_name }}</el-descriptions-item>
-        <el-descriptions-item label="活动有效时间">{{ dataInfo.start_date }}-{{ dataInfo.end_date }}</el-descriptions-item>
+        <el-descriptions-item label="活动有效时间">
+          {{ dataInfo.start_date }}-{{ dataInfo.end_date }}
+        </el-descriptions-item>
         <el-descriptions-item label="报名问卷模板">
           {{ dataInfo.temp_id | formatterLable(temp_options) }}
         </el-descriptions-item>
         <el-descriptions-item label="提交报名次数">
           {{ dataInfo.join_limit }}
         </el-descriptions-item>
-        <el-descriptions-item label="是否开启短信通知">{{ dataInfo.is_sms_notice==1?'是':'否' }}</el-descriptions-item>
-        <el-descriptions-item label="是否开启小程序通知">{{ dataInfo.is_wxapp_notice==1?'是':'否' }}</el-descriptions-item>
+        <el-descriptions-item label="是否开启短信通知">
+          {{ dataInfo.is_sms_notice == 1 ? '是' : '否' }}
+        </el-descriptions-item>
+        <el-descriptions-item label="是否开启小程序通知">
+          {{ dataInfo.is_wxapp_notice == 1 ? '是' : '否' }}
+        </el-descriptions-item>
       </el-descriptions>
       <!-- <el-form ref="dataInfo" label-width="200px" label-position="left" class="demo-ruleForm">
         <el-form-item :label="dataInfo.field_title">
@@ -142,7 +165,7 @@ import mixin, { pageMixin } from '@/mixins'
 export default {
   filters: {
     formatterLable(value, options) {
-      return options.find(item => item.value == value)?.label
+      return options.find((item) => item.value == value)?.label
     }
   },
   mixins: [mixin, pageMixin],
@@ -426,7 +449,6 @@ export default {
 </style>
 <style lang="scss">
 .grid-detail {
-
   table,
   .detail-content-wrap,
   .detail-content-item {

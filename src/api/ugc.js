@@ -184,7 +184,6 @@ export function getUGCSetting(query) {
   })
 }
 
-
 export function setUGCSetting(query) {
   return fetch({
     url: '/ugc/setting/point/saveSetting',

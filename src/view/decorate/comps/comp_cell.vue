@@ -33,20 +33,20 @@ export default {
   name: 'CompCell',
   props: ['info', 'value', 'scope'],
   inject: ['scope'],
-  data () {
+  data() {
     return {
       compValue: null
     }
   },
-  created () {
+  created() {
     this.compValue = this.value
   },
   methods: {
-    onCompChange () {
+    onCompChange() {
       this.$emit('input', this.compValue)
     }
   },
-  render () {
+  render() {
     const { title, key, type, disabled = false, option } = this.info
     const renderComp = (type) => {
       switch (type) {

@@ -45,7 +45,7 @@
 import BasePicker from './base'
 import PageMixin from '../mixins/page'
 export default {
-  name: 'PickerAftersalesList',
+  name: 'PickerAfterSalesList',
   extends: BasePicker,
   mixins: [PageMixin],
   config: {

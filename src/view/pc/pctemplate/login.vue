@@ -41,7 +41,7 @@ export default {
 
       params = {
         logo: this.form.logo,
-        background: this.form.background,
+        background: this.form.background
       }
       console.log(params)
       saveLoginPageSetting(params).then((response) => {

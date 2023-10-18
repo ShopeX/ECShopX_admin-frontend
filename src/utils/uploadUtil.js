@@ -107,7 +107,7 @@ class UploadUtil {
               Bucket: tokenRes.bucket /* 填写自己的 bucket，必须字段 */,
               Region: tokenRes.region /* 存储桶所在地域，必须字段 */,
               Key: tokenRes.url /* 存储在桶里的对象键（例如1.jpg，a/b/test.txt），必须字段 */,
-              Body: file, // 上传文件对象
+              Body: file // 上传文件对象
               // SliceSize:
               //   1024 *
               //   1024 *
@@ -115,11 +115,11 @@ class UploadUtil {
             },
             (err, data) => {
               if (data) {
-                const {Location} =data;
-                const key= Location.split('/').slice(1).join("/")
+                const { Location } = data
+                const key = Location.split('/').slice(1).join('/')
                 console.log(key)
                 resolve({
-                ...data,
+                  ...data,
                   key: key
                 })
               } else {
@@ -162,7 +162,7 @@ class UploadUtil {
     try {
       const tokenRes = await getOssToken({
         filetype: this.fileType,
-        filename: `${file.uid}.${file.name}` 
+        filename: `${file.uid}.${file.name}`
       })
       const data = { ...tokenRes.data.data.token }
       // 初始化

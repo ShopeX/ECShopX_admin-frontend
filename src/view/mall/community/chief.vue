@@ -6,7 +6,13 @@
 </style>
 <template>
   <div>
-    <div v-if="$route.path.indexOf('detail') === -1 && $route.path.indexOf('approve') === -1 && $route.path.indexOf('info') === -1">
+    <div
+      v-if="
+        $route.path.indexOf('detail') === -1 &&
+        $route.path.indexOf('approve') === -1 &&
+        $route.path.indexOf('info') === -1
+      "
+    >
       <SpFilterForm :model="formQuery" @onSearch="onSearch" @onReset="onSearch">
         <SpFilterFormItem prop="name" label="团长姓名:">
           <el-input v-model="formQuery.name" placeholder="请输入团长姓名" />
@@ -26,14 +32,26 @@
       <!-- <el-tabs v-model="formQuery.approve_status" type="card" @tab-click="onSearch">
         <el-tab-pane v-for="item in stateList" :key="item.value" :label="item.title" :name="item.value" /> -->
 
-        <SpFinder ref="finder" no-selection :setting="setting" :hooks="{
+      <SpFinder
+        ref="finder"
+        no-selection
+        :setting="setting"
+        :hooks="{
           beforeSearch: beforeSearch,
           afterSearch: afterSearch
-        }" url="/community/chief/list" />
+        }"
+        url="/community/chief/list"
+      />
       <!-- </el-tabs> -->
 
-      <SpDialog ref="resloveDialogRef" v-model="resloveDialog" :title="`审批`" :form="resloveForm"
-        :form-list="resloveFormList" @onSubmit="onResloveSubmit" />
+      <SpDialog
+        ref="resloveDialogRef"
+        v-model="resloveDialog"
+        :title="`审批`"
+        :form="resloveForm"
+        :form-list="resloveFormList"
+        @onSubmit="onResloveSubmit"
+      />
     </div>
     <router-view />
   </div>
@@ -49,7 +67,7 @@ export default {
     return {
       formQuery: {
         name: '',
-        mobile: '',
+        mobile: ''
       },
       setting: createSetting({
         actions: [
@@ -71,8 +89,10 @@ export default {
         columns: [
           { name: '团长', key: 'chief_name' },
           { name: '手机号', key: 'chief_mobile' },
-          { name: '来源', key: 'chief_mobile',
-            render: (h, { row }) => h('span', {}, this.getSource(row.source)) 
+          {
+            name: '来源',
+            key: 'chief_mobile',
+            render: (h, { row }) => h('span', {}, this.getSource(row.source))
           },
           {
             name: '申请时间',
@@ -90,7 +110,7 @@ export default {
       },
       resloveFormList: [
         {
-          label: '审批:',
+          label: '审批',
           key: 'approve_status',
           type: 'radio',
           options: [
@@ -106,7 +126,7 @@ export default {
           }
         },
         {
-          label: '拒绝原因:',
+          label: '拒绝原因',
           key: 'refuse_reason',
           type: 'input',
           placeholder: '请输入拒绝原因',
@@ -122,7 +142,7 @@ export default {
       ]
     }
   },
-  created() { },
+  created() {},
   methods: {
     onSearch() {
       this.$refs.finder.refresh(true)
@@ -134,7 +154,7 @@ export default {
       }
       return { ...params, ...formQuery }
     },
-    afterSearch() { },
+    afterSearch() {},
     async onResloveSubmit() {
       const { apply_id, approve_status, refuse_reason } = this.resloveForm
       await this.$api.community.approveChief(apply_id, {
@@ -163,11 +183,11 @@ export default {
       } else {
         this.$router.push({ path: `/member/member/chiefupload` })
       }
-    },
+    }
   },
 
   computed: {
     ...mapGetters(['wheight', 'isMicorMall', 'login_type'])
-  },
+  }
 }
 </script>

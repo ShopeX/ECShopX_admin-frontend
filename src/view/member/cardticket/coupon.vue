@@ -311,7 +311,7 @@ export default {
           ]
         },
         {
-          label: '数量:',
+          label: '数量',
           key: 'quantity',
           type: 'input',
           placeholder: '请输入数量',

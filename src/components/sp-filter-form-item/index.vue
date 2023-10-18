@@ -41,7 +41,7 @@
     }
     .el-date-editor {
       width: 100%;
-      padding: 0 9px !important;
+      // padding: 0 9px !important;
       .el-range-separator {
         width: 30px;
         color: #999;
@@ -64,17 +64,11 @@
 }
 </style>
 <template>
-  <div
-    class="sp-filter-form-item"
-    :class="{ 'label': label }"
-  >
+  <div class="sp-filter-form-item" :class="{ 'label': label }">
     <div class="form-item__label">
       {{ label }}
     </div>
-    <div
-      class="form-item__content"
-      :class="size"
-    >
+    <div class="form-item__content" :class="size">
       <slot />
     </div>
   </div>
@@ -95,11 +89,11 @@ export default {
     }
   },
   inject: ['filterForm'],
-  data () {
+  data() {
     return {}
   },
   computed: {
-    fieldValue () {
+    fieldValue() {
       const model = this.filterForm.model
       if (!model || !this.prop) {
         return
@@ -112,8 +106,8 @@ export default {
       return getPropByPath(model, path, true).v
     }
   },
-  created () {},
-  mounted () {
+  created() {},
+  mounted() {
     this.dispatch('SpFilterForm', 'sp.filterForm.addField', [this])
     let initialValue = this.fieldValue
     if (Array.isArray(initialValue)) {
@@ -124,7 +118,7 @@ export default {
     })
   },
   methods: {
-    resetField () {
+    resetField() {
       let model = this.filterForm.model
       let value = this.fieldValue
       let path = this.prop

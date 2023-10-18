@@ -202,7 +202,9 @@
                 >
                 <span
                   v-if="
-                    scope.row.receipt_type == 'logistics' && scope.row.delivery_status == 'PENDING' && scope.row.order_status !== 'PART_PAYMENT'
+                    scope.row.receipt_type == 'logistics' &&
+                    scope.row.delivery_status == 'PENDING' &&
+                    scope.row.order_status !== 'PART_PAYMENT'
                   "
                   >待发货</span
                 >

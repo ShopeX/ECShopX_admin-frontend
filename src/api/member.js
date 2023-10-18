@@ -401,3 +401,83 @@ export function updateEnterpriseStaus(id, params) {
     params
   })
 }
+
+// 获取内购企业列表
+export function getPurchaseCompanyList(params) {
+  return fetch({
+    url: '/enterprise',
+    method: 'get',
+    params
+  })
+}
+
+// 新增内购企业
+export function postPurchaseCompany(params) {
+  return fetch({
+    url: '/enterprise',
+    method: 'post',
+    params
+  })
+}
+
+// 编辑内购企业
+export function updatePurchaseCompany(id, params) {
+  return fetch({
+    url: `/enterprise/${id}`,
+    method: 'put',
+    params
+  })
+}
+
+// 更新企业状态
+export function updateCompanyStatus(params) {
+  return fetch({
+    url: '/enterprise/status',
+    method: 'post',
+    params
+  })
+}
+
+// 更新企业排序
+export function updateCompanySort(params) {
+  return fetch({
+    url: '/enterprise/sort',
+    method: 'post',
+    params
+  })
+}
+
+// 添加企业员工
+export function addEmployee(params) {
+  return fetch({
+    url: '/employee',
+    method: 'post',
+    params
+  })
+}
+
+// 更新企业员工
+export function updateEmployee(id, params) {
+  return fetch({
+    url: `/employee/${id}`,
+    method: 'put',
+    params
+  })
+}
+
+// 删除企业员工
+export function deleteEmployee(id) {
+  return fetch({
+    url: `/employee/${id}`,
+    method: 'delete'
+  })
+}
+
+// 邮件发送测试
+export function sendEmployeeEmail(params) {
+  return fetch({
+    url: `/enterprise/sendtestemail`,
+    method: 'post',
+    params
+  })
+}

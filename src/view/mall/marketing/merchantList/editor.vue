@@ -664,7 +664,7 @@ export default {
         if (type == 'detail') {
           this.disabled = true
           action = 'detail'
-        }else {
+        } else {
           this.editDisabled = true
         }
         const result = await getTheMerchant({ action }, merchantId)

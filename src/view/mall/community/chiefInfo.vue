@@ -14,14 +14,14 @@ import { isArray } from '@/utils'
 import moment from 'moment'
 
 export default {
-  data () {
+  data() {
     return {
       name: '',
       mobile: '',
       extraData: {},
-      source:'',
-      applyTime:"",
-      approveTime:"",
+      source: '',
+      applyTime: '',
+      approveTime: '',
       btnActions: [{ name: '审批', key: 'resolve' }],
       resloveDialog: false,
       resloveForm: {
@@ -62,18 +62,19 @@ export default {
       ]
     }
   },
-  created () {
+  created() {
     this.fetchDetail()
   },
   methods: {
-    async fetchDetail () {
-      const { apply_id,distributor_id } = this.$route.params
-      const { chief_name, chief_mobile, apply_time, extra_data,source,approve_time } = await this.$api.community.getChiefInfoDetail({apply_id,distributor_id})
+    async fetchDetail() {
+      const { apply_id, distributor_id } = this.$route.params
+      const { chief_name, chief_mobile, apply_time, extra_data, source, approve_time } =
+        await this.$api.community.getChiefInfoDetail({ apply_id, distributor_id })
       this.name = chief_name
       this.mobile = chief_mobile
       this.extraData = JSON.parse(extra_data)
-      this.applyTime = apply_time&&moment(apply_time * 1000).format('YYYY-MM-DD HH:mm:ss')
-      this.approveTime = approve_time&&moment(approve_time * 1000).format('YYYY-MM-DD HH:mm:ss')
+      this.applyTime = apply_time && moment(apply_time * 1000).format('YYYY-MM-DD HH:mm:ss')
+      this.approveTime = approve_time && moment(approve_time * 1000).format('YYYY-MM-DD HH:mm:ss')
       this.source = this.getSource(source)
     },
     getSource(status) {
@@ -83,7 +84,7 @@ export default {
         return '主动申请'
       }
     },
-    renderComp ({ type, value }) {
+    renderComp({ type, value }) {
       if (type == FORM_COMP.IMAGE) {
         if (isArray(value)) {
           return (
@@ -99,10 +100,10 @@ export default {
       } else {
         return value
       }
-    },
+    }
   },
-  render () {
-    const { name, mobile, extraData, applyTime, source ,approveTime} = this
+  render() {
+    const { name, mobile, extraData, applyTime, source, approveTime } = this
     console.log('approve_status', name)
     return (
       <div>
@@ -134,14 +135,15 @@ export default {
 
         <el-card class='el-card--normal'>
           <div slot='header'>团长其他信息</div>
-          {extraData&&Object.keys(extraData).map((key) => (
-            <el-row class='card-panel' key={key}>
-              <el-col class='card-panel-item' span={24}>
-                <span class='card-panel__label'>{`${extraData[key].label}:`}</span>
-                <span class='card-panel__value'>{this.renderComp(extraData[key])}</span>
-              </el-col>
-            </el-row>
-          ))}
+          {extraData &&
+            Object.keys(extraData).map((key) => (
+              <el-row class='card-panel' key={key}>
+                <el-col class='card-panel-item' span={24}>
+                  <span class='card-panel__label'>{`${extraData[key].label}:`}</span>
+                  <span class='card-panel__value'>{this.renderComp(extraData[key])}</span>
+                </el-col>
+              </el-row>
+            ))}
         </el-card>
       </div>
     )

@@ -1,5 +1,5 @@
 export default {
-  data () {
+  data() {
     return {
       pageCur: 1,
       pageSize: 18,
@@ -8,7 +8,7 @@ export default {
     }
   },
   computed: {
-    pageTotal () {
+    pageTotal() {
       if (this.pageCount <= 0) return 1
 
       const total = Math.ceil(this.pageCount / this.pageSize)
@@ -16,20 +16,20 @@ export default {
     }
   },
   methods: {
-    async refresh (isReset) {
+    async refresh(isReset) {
       if (isReset) {
         this.resetPage()
       }
       await this.goPage(this.pageCur)
     },
-    resetPage () {
+    resetPage() {
       this.pageCur = 1
       this.pageCount = -1
     },
-    nextPage () {
+    nextPage() {
       return this.goPage(1)
     },
-    async goPage (page = 1) {
+    async goPage(page = 1) {
       if (page > this.pageTotal && this.pageCount !== -1) {
         this.pageCur = this.pageTotal
       } else if (page < 0) {

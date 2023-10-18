@@ -71,7 +71,9 @@ export default {
             action: {
               handler: ([row]) => {
                 this.$router.push({
-                  path: IS_DISTRIBUTOR ? `/shopadmin/order/logistics/addziti/${row.id}`:`/order/entitytrade/logistics/addziti/${row.id}`
+                  path: IS_DISTRIBUTOR
+                    ? `/shopadmin/order/logistics/addziti/${row.id}`
+                    : `/order/entitytrade/logistics/addziti/${row.id}`
                 })
               }
             }

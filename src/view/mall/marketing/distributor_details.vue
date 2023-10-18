@@ -92,28 +92,22 @@
               <div slot="header">其他信息</div>
               <div class="body">
                 <el-row class="load-btn">
-                  <el-col :span="4" style="text-align: right; padding-right: 10px"
-                    >
-附件信息：
-</el-col
-                  >
+                  <el-col :span="4" style="text-align: right; padding-right: 10px">
+                    附件信息：
+                  </el-col>
                   <el-col v-if="member_type === 'corp'" :span="20" class="cus-btn">
-                    <el-button type="text" @click="dowloadFile(infoList.attach_file)"
-                      >
-附件
-</el-button
-                    >
+                    <el-button type="text" @click="dowloadFile(infoList.attach_file)">
+                      附件
+                    </el-button>
                   </el-col>
                   <span v-else>-</span>
                 </el-row>
               </div>
             </el-card>
             <div v-if="datapass_block != 1 && loginType != 'admin'" class="btn">
-              <el-button v-if="accountInfo.audit_state != 'A'" type="primary" @click="editHandle"
-                >
-编辑
-</el-button
-              >
+              <el-button v-if="accountInfo.audit_state != 'A'" type="primary" @click="editHandle">
+                编辑
+              </el-button>
               <el-button v-if="accountInfo.audit_state == 'A'">审核中</el-button>
             </div>
           </el-tab-pane>
@@ -149,11 +143,14 @@
         </el-tabs>
       </el-card>
       <el-row v-if="is_rel_dealer && loginType === 'admin'" class="cus-details-bot">
-        <el-button type="primary" size="small" plain @click="handleModalClick(true, is_openAccount)"
-          >
-解除关联
-</el-button
+        <el-button
+          type="primary"
+          size="small"
+          plain
+          @click="handleModalClick(true, is_openAccount)"
         >
+          解除关联
+        </el-button>
       </el-row>
       <RemoveShipModal
         :visible="visible"
@@ -163,11 +160,7 @@
       />
     </template>
     <template v-else>
-      <editAccount
-        :active-name="accountInfo.member_type"
-        :info="accountInfo"
-        @back="back"
-      />
+      <editAccount :active-name="accountInfo.member_type" :info="accountInfo" @back="back" />
     </template>
   </div>
 </template>

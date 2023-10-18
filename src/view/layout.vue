@@ -508,7 +508,8 @@ export default {
     background-color: #fff;
     padding: 16px;
     border-radius: 0;
-    min-height: calc(100vh - 70px);
+    // min-height: calc(100vh - 70px);
+    min-height: 600px;
     &.footer-fixed {
       margin-bottom: 57px;
     }

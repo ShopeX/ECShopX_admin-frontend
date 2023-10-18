@@ -130,6 +130,28 @@ a {
     padding: 0px;
     margin-bottom: 8px;
   }
+  .pop-edit-box-icon {
+    .icon-edit {
+      font-size: 13px;
+      margin-left: 2px;
+    }
+  }
+  &__popover-edit {
+    // display: flex;
+    // align-items: center;
+    width: auto !important;
+    // .pop-edit-container {
+    //   display: flex;
+    //   align-items: center;
+    //   margin: 0 0 0 10px !important;
+    // }
+  }
+  .sp-finder-actions-item {
+    // margin-bottom: 8px;
+  }
+  .sp-finder-actions__wrap {
+    justify-content: flex-start !important;
+  }
   .sp-finder-search {
     background-color: #f6f7f9;
     padding: 16px 0 0 0;

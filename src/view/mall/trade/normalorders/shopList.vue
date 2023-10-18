@@ -680,7 +680,7 @@ export default {
         order_class_exclude: 'drug,pointsmall',
         distributor_id: 0,
         distributorIds: [],
-        source_from:''
+        source_from: ''
       },
       order_class_array: [
         { name: '全部订单', value: '' },
@@ -714,13 +714,13 @@ export default {
       identifier: '',
       source_list: [],
       source_name: '',
-      sourceFromList:[
-        {name:'pc',value:'pc'},
-        {name:'h5',value:'h5'},
-        {name:'微信小程序',value:'wxapp'},
-        {name:'支付宝小程序',value:'aliapp'},
-        {name:'未知',value:'unknow'},
-        {name:'店务端',value:'dianwu'},
+      sourceFromList: [
+        { name: 'pc', value: 'pc' },
+        { name: 'h5', value: 'h5' },
+        { name: '微信小程序', value: 'wxapp' },
+        { name: '支付宝小程序', value: 'aliapp' },
+        { name: '未知', value: 'unknow' },
+        { name: '店务端', value: 'dianwu' }
       ],
       source_id: '',
       order_class: '',
@@ -1127,8 +1127,8 @@ export default {
         }
       })
     },
-    getSourceFrom({source_from}){
-      return getSourceFromNameByValue(this.sourceFromList,source_from)
+    getSourceFrom({ source_from }) {
+      return getSourceFromNameByValue(this.sourceFromList, source_from)
     }
   }
 }

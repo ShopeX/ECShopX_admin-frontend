@@ -1,5 +1,8 @@
 <style lang="scss">
 .sp-input {
+  display: inline-flex;
+  align-items: center;
+  width: 100%;
   .el-input {
     margin: 0 8px;
   }
@@ -7,9 +10,16 @@
 </style>
 <template>
   <div class="sp-input">
-    <span class="prefix">{{ prefix }}</span>
-    <el-input v-model="val" :style="styleName" type="text" @change="onChangeInput" />
-    <span class="suffix">{{ suffix }}</span>
+    <span v-if="prefix" class="prefix">{{ prefix }}</span>
+    <el-input
+      v-model="val"
+      :placeholder="placeHolder"
+      :style="styleName"
+      :disabled="disabled"
+      type="text"
+      @change="onChangeInput"
+    />
+    <span v-if="suffix" class="suffix">{{ suffix }}</span>
   </div>
 </template>
 
@@ -32,6 +42,14 @@ export default {
     width: {
       type: String,
       default: ''
+    },
+    placeholder: {
+      type: String,
+      default: ''
+    },
+    disabled: {
+      type: Boolean,
+      default: false
     }
   },
   data() {
@@ -44,6 +62,9 @@ export default {
       return {
         width: this.width
       }
+    },
+    placeHolder() {
+      return this.placeholder
     }
   },
   watch: {

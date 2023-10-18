@@ -116,6 +116,7 @@
           <div class="option-btns">
             <span class="btn" @click="editTemplate(item.pages_template_id)">编辑</span>
             <span class="btn" @click="copyTemplate(item.pages_template_id)">复制</span>
+            <span class="btn" @click="copyTemplate(item.pages_template_id)">导航</span>
             <span class="btn" @click="abandonTemplate(item.pages_template_id)">废弃</span>
           </div>
           <div

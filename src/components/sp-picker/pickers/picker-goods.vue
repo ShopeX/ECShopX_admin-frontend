@@ -6,6 +6,9 @@
   .sp-finder-hd {
     display: none;
   }
+  .sp-finder-hd {
+    display: none;
+  }
   .item-info {
     display: flex;
     .item-image {

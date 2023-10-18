@@ -52,7 +52,7 @@
 import BasePicker from './base'
 import PageMixin from '../mixins/page'
 export default {
-  name: 'PickerPages',
+  name: 'PickerPlanting',
   extends: BasePicker,
   mixins: [PageMixin],
   config: {

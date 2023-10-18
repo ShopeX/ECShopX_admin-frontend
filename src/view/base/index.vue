@@ -865,92 +865,59 @@
             </section>
           </el-col>
         </el-row>
-        <el-row
-          v-if="system_is_saas == 'false'"
-          :gutter="20"
-        >
+        <el-row v-if="system_is_saas == 'false'" :gutter="20">
           <el-col :span="24">
             <section class="section-card">
               <div class="section-card-header">
-                <div class="section-card-title">
-                  系统信息
-                </div>
+                <div class="section-card-title">系统信息</div>
               </div>
-              <el-descriptions
-                :column="3"
-                border
-                size="mini"
-              >
+              <el-descriptions :column="3" border size="mini">
                 <el-descriptions-item>
-                  <template slot="label">
-                    company_id
-                  </template>
+                  <template slot="label"> company_id </template>
                   <el-tag>{{ activateInfo.company_id }}</el-tag>
                 </el-descriptions-item>
                 <el-descriptions-item>
-                  <template slot="label">
-                    到期时间
-                  </template>
+                  <template slot="label"> 到期时间 </template>
                   <el-tag>{{ activateInfo.expired_at | datetime('YYYY-MM-DD HH:mm:ss') }}</el-tag>
                 </el-descriptions-item>
                 <el-descriptions-item>
-                  <template slot="label">
-                    管理后台
-                  </template>
+                  <template slot="label"> 管理后台 </template>
                   <el-tag>{{ activateInfo.vue_ecshopx_verion }}</el-tag>
                 </el-descriptions-item>
                 <el-descriptions-item>
-                  <template slot="label">
-                    API端
-                  </template>
+                  <template slot="label"> API端 </template>
                   <el-tag>{{ activateInfo.version }}</el-tag>
                 </el-descriptions-item>
                 <el-descriptions-item>
-                  <template slot="label">
-                    PHP版本
-                  </template>
+                  <template slot="label"> PHP版本 </template>
                   {{ activateInfo.php_version }}
                 </el-descriptions-item>
                 <el-descriptions-item>
-                  <template slot="label">
-                    Lumen框架
-                  </template>
+                  <template slot="label"> Lumen框架 </template>
                   {{ activateInfo.lumen_version }}
                 </el-descriptions-item>
                 <el-descriptions-item>
-                  <template slot="label">
-                    OS
-                  </template>
+                  <template slot="label"> OS </template>
                   {{ activateInfo.os }}
                 </el-descriptions-item>
                 <el-descriptions-item>
-                  <template slot="label">
-                    web服务器
-                  </template>
+                  <template slot="label"> web服务器 </template>
                   {{ activateInfo.web_server }}
                 </el-descriptions-item>
                 <el-descriptions-item>
-                  <template slot="label">
-                    数据库版本
-                  </template>
+                  <template slot="label"> 数据库版本 </template>
                   {{ activateInfo.db_version }}
                 </el-descriptions-item>
                 <el-descriptions-item>
-                  <template slot="label">
-                    REDIS版本
-                  </template>
+                  <template slot="label"> REDIS版本 </template>
                   {{ activateInfo.redis_version }}
                 </el-descriptions-item>
                 <el-descriptions-item>
-                  <template slot="label">
-                    API域名
-                  </template>
+                  <template slot="label"> API域名 </template>
                   {{ activateInfo.app_url }}
                 </el-descriptions-item>
                 <el-descriptions-item>
-                  <template slot="label">
-                    存储驱动
-                  </template>
+                  <template slot="label"> 存储驱动 </template>
                   {{ activateInfo.disk_driver }}
                 </el-descriptions-item>
               </el-descriptions>

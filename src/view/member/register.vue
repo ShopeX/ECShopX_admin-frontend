@@ -636,7 +636,6 @@ export default {
 
 <style lang="scss">
 .content-container {
-  height: 100%;
   box-sizing: border-box;
 
   .content-wrapper {

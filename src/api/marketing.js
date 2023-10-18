@@ -538,3 +538,141 @@ export function getAftersales(params) {
     params
   })
 }
+
+// 获取内购活动列表
+// export function getPurchaseActivity(params) {
+//   return fetch({
+//     url: '/employeepurchase/activity',
+//     method: 'get',
+//     params
+//   })
+// }
+
+// 创建内购活动
+export function createPurchaseActivity(params) {
+  return fetch({
+    url: '/employeepurchase/activity',
+    method: 'post',
+    params
+  })
+}
+
+// 更新内购活动
+export function updatePurchaseActivity(activityId, params) {
+  return fetch({
+    url: `/employeepurchase/activity/${activityId}`,
+    method: 'put',
+    params
+  })
+}
+
+// 内购活动添加商品
+export function addGoodsInActivity(params) {
+  return fetch({
+    url: '/employeepurchase/activity/items',
+    method: 'post',
+    params
+  })
+}
+
+// 内购活动商品选择规格
+export function selectSkuOfItems(params) {
+  return fetch({
+    url: '/employeepurchase/activity/specitems',
+    method: 'post',
+    params
+  })
+}
+
+// 内购活动列表
+export function getPurchaseActivity(params) {
+  return fetch({
+    url: '/employeepurchase/activities',
+    method: 'get',
+    params
+  })
+}
+
+// 获取活动商品列表
+export function getActivityItems(params) {
+  return fetch({
+    url: '/employeepurchase/activity/items',
+    method: 'get',
+    params
+  })
+}
+
+// 获取内购活动详情
+export function getActivityItemDetail(activityId) {
+  return fetch({
+    url: `/employeepurchase/activity/${activityId}`,
+    method: 'get'
+  })
+}
+
+// 删除内购活动商品
+export function deleteActivityItem(activityId, itemId, params) {
+  return fetch({
+    url: `/employeepurchase/activity/${activityId}/item/${itemId}`,
+    method: 'delete',
+    params
+  })
+}
+
+// 修改活动商品价格、库存
+export function updateActivityItem(params) {
+  return fetch({
+    url: `/employeepurchase/activity/items`,
+    method: 'put',
+    params
+  })
+}
+
+// 设置活动是否共享库存
+export function setActivityShareStore(params) {
+  return fetch({
+    url: `/employeepurchase/activity/if_share_store`,
+    method: 'post',
+    params
+  })
+}
+
+// 取消内购活动
+export function cancelPurchaseActivity(activityId) {
+  return fetch({
+    url: `/employeepurchase/activity/cancel/${activityId}`,
+    method: 'post'
+  })
+}
+
+// 暂停内购活动
+export function pendingPurchaseActivity(activityId) {
+  return fetch({
+    url: `/employeepurchase/activity/suspend/${activityId}`,
+    method: 'post'
+  })
+}
+
+// 重新开始内购活动
+export function activePurchaseActivity(activityId) {
+  return fetch({
+    url: `/employeepurchase/activity/active/${activityId}`,
+    method: 'post'
+  })
+}
+
+// 结束内购活动
+export function endPurchaseActivity(activityId) {
+  return fetch({
+    url: `/employeepurchase/activity/end/${activityId}`,
+    method: 'post'
+  })
+}
+
+// 提前开始内购活动
+export function aheadPurchaseActivity(activityId) {
+  return fetch({
+    url: `/employeepurchase/activity/ahead/${activityId}`,
+    method: 'post'
+  })
+}

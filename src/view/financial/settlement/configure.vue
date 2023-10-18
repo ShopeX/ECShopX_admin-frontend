@@ -148,7 +148,7 @@ export default {
       },
       addFormList: [
         {
-          label: '店铺:',
+          label: '店铺',
           key: 'distributor_id',
           component: () => (
             <SpSelectShop v-model={this.addForm.distributor_id} clearable placeholder='请选择' />
@@ -165,7 +165,7 @@ export default {
           isShow: true
         },
         {
-          label: '店铺:',
+          label: '店铺',
           key: 'distributor_name',
           type: 'text',
           isShow: false

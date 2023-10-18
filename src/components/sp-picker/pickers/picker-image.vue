@@ -549,6 +549,7 @@ export default {
     async getImageAllCatgory() {
       const { list } = await this.$api.picker.getImageAllCatgory({ image_cat_id: 0 })
       this.catgoryList = [{ image_cat_id: -1, image_cat_name: '全部图片' }, ...list.reverse()]
+      console.log('catgoryList:', this.catgoryList)
       this.editFormList[0].options = this.catgoryList.map((item) => {
         return {
           title: item.image_cat_name,

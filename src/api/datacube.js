@@ -1,6 +1,6 @@
 import fetch from '../utils/fetch'
 
-export function getSourcesList (query) {
+export function getSourcesList(query) {
   return fetch({
     url: '/datacube/sources',
     method: 'get',
@@ -8,14 +8,14 @@ export function getSourcesList (query) {
   })
 }
 
-export function getSourcesDetail (sourceId) {
+export function getSourcesDetail(sourceId) {
   return fetch({
     url: '/datacube/sources/' + sourceId,
     method: 'get'
   })
 }
 
-export function createSources (query) {
+export function createSources(query) {
   return fetch({
     url: '/datacube/sources',
     method: 'post',
@@ -23,7 +23,7 @@ export function createSources (query) {
   })
 }
 
-export function updateSources (sourceId, query) {
+export function updateSources(sourceId, query) {
   return fetch({
     url: '/datacube/sources/' + sourceId,
     method: 'put',
@@ -31,14 +31,14 @@ export function updateSources (sourceId, query) {
   })
 }
 
-export function deleteSources (sourceId) {
+export function deleteSources(sourceId) {
   return fetch({
     url: '/datacube/sources/' + sourceId,
     method: 'delete'
   })
 }
 
-export function listMonitors (query) {
+export function listMonitors(query) {
   return fetch({
     url: '/datacube/monitors',
     method: 'get',
@@ -46,7 +46,7 @@ export function listMonitors (query) {
   })
 }
 
-export function addMonitors (query) {
+export function addMonitors(query) {
   return fetch({
     url: '/datacube/monitors',
     method: 'post',
@@ -54,7 +54,7 @@ export function addMonitors (query) {
   })
 }
 
-export function updateMonitors (monitorId, query) {
+export function updateMonitors(monitorId, query) {
   return fetch({
     url: '/datacube/monitors/' + monitorId,
     method: 'put',
@@ -62,14 +62,14 @@ export function updateMonitors (monitorId, query) {
   })
 }
 
-export function deleteMonitors (monitorId) {
+export function deleteMonitors(monitorId) {
   return fetch({
     url: '/datacube/monitors/' + monitorId,
     method: 'delete'
   })
 }
 
-export function getMonitorsWxaCode64 (query) {
+export function getMonitorsWxaCode64(query) {
   return fetch({
     url: '/datacube/monitorsWxaCode64',
     method: 'get',
@@ -77,7 +77,7 @@ export function getMonitorsWxaCode64 (query) {
   })
 }
 
-export function getMonitorsWxaCodeStream (query) {
+export function getMonitorsWxaCodeStream(query) {
   return fetch({
     url: '/datacube/monitorsWxaCodeStream',
     method: 'get',
@@ -85,14 +85,14 @@ export function getMonitorsWxaCodeStream (query) {
   })
 }
 
-export function getMonitorsDetail (monitorId) {
+export function getMonitorsDetail(monitorId) {
   return fetch({
     url: '/datacube/monitors/' + monitorId,
     method: 'get'
   })
 }
 
-export function getMonitorsStats (query) {
+export function getMonitorsStats(query) {
   return fetch({
     url: '/datacube/monitorsstats',
     method: 'get',
@@ -100,7 +100,7 @@ export function getMonitorsStats (query) {
   })
 }
 
-export function saveSources (query) {
+export function saveSources(query) {
   return fetch({
     url: '/datacube/monitorsRelSources/',
     method: 'post',
@@ -108,21 +108,21 @@ export function saveSources (query) {
   })
 }
 
-export function getRelSources (monitorId) {
+export function getRelSources(monitorId) {
   return fetch({
     url: '/datacube/monitorsRelSources/' + monitorId,
     method: 'get'
   })
 }
 
-export function deleteRelSources (monitorId, sourceId) {
+export function deleteRelSources(monitorId, sourceId) {
   return fetch({
     url: '/datacube/monitorsRelSources/' + monitorId + '/' + sourceId,
     method: 'delete'
   })
 }
 
-export function getWxappPages (query) {
+export function getWxappPages(query) {
   return fetch({
     url: '/datacube/miniprogram/pages',
     method: 'get',
@@ -130,7 +130,7 @@ export function getWxappPages (query) {
   })
 }
 
-export function getCompanyData (query) {
+export function getCompanyData(query) {
   return fetch({
     url: '/datacube/companydata',
     method: 'get',
@@ -138,7 +138,7 @@ export function getCompanyData (query) {
   })
 }
 
-export function getDistributorData (query) {
+export function getDistributorData(query) {
   return fetch({
     url: '/datacube/distributordata',
     method: 'get',
@@ -146,15 +146,15 @@ export function getDistributorData (query) {
   })
 }
 
-export function getGoodsData (query) {
+export function getGoodsData(params) {
   return fetch({
     url: '/datacube/goodsdata',
     method: 'get',
-    params: query
+    params
   })
 }
 
-export function saveTags (query) {
+export function saveTags(query) {
   return fetch({
     url: '/datacube/savetags',
     method: 'post',
@@ -162,7 +162,7 @@ export function saveTags (query) {
   })
 }
 
-export function GetAccountStatisList (query) {
+export function GetAccountStatisList(query) {
   return fetch({
     url: '/hfpay/statistics/orderList',
     method: 'get',
@@ -170,14 +170,14 @@ export function GetAccountStatisList (query) {
   })
 }
 
-export function GetOrderInfoList (orderId) {
+export function GetOrderInfoList(orderId) {
   return fetch({
     url: '/hfpay/statistics/orderDetail/' + orderId,
     method: 'get'
   })
 }
 
-export function onOrderExportData (query) {
+export function onOrderExportData(query) {
   return fetch({
     url: '/hfpay/statistics/orderExportData',
     method: 'get',
@@ -185,7 +185,7 @@ export function onOrderExportData (query) {
   })
 }
 
-export function withdrawgetList (query) {
+export function withdrawgetList(query) {
   return fetch({
     url: '/hfpay/withdraw/getList',
     method: 'get',
@@ -193,7 +193,7 @@ export function withdrawgetList (query) {
   })
 }
 
-export function onSumbitsData (query) {
+export function onSumbitsData(query) {
   return fetch({
     url: '/hfpay/withdraw',
     method: 'post',
@@ -201,7 +201,7 @@ export function onSumbitsData (query) {
   })
 }
 
-export function onCashExportData (query) {
+export function onCashExportData(query) {
   return fetch({
     url: '/hfpay/withdraw/exportData',
     method: 'get',

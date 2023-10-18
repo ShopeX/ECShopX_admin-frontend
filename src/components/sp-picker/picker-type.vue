@@ -5,6 +5,8 @@ import {
   PickerCoupon,
   PickerCouponPackage,
   PickerGoods,
+  PickerGoodsList,
+  PickerGoodsSku,
   PickerGoodsParams,
   PickerShop,
   PickerSeckill,
@@ -13,7 +15,9 @@ import {
   PickerShopTag,
   PickerVideo,
   PickerZitiList,
-  PickerAftersalesList,
+  PickerAfterSalesList,
+  PickerTemplate,
+  PickerCompany,
   PickerEditBoard,
   PickerPlanting
 } from './pickers'
@@ -32,6 +36,10 @@ function resolvePicker(type) {
       return PickerVideo
     case 'pickerGoods':
       return PickerGoods
+    case 'pickerGoodsList':
+      return PickerGoodsList
+    case 'pickerGoodsSku':
+      return PickerGoodsSku
     case 'pickerGoodsParams':
       return PickerGoodsParams
     case 'pickerShop':
@@ -46,8 +54,12 @@ function resolvePicker(type) {
       return PickerShopTag
     case 'pickerZitiList':
       return PickerZitiList
-    case 'pickerAftersalesList':
-      return PickerAftersalesList
+    case 'pickerAfterSalesList':
+      return PickerAfterSalesList
+    case 'pickerTemplate':
+      return PickerTemplate
+    case 'pickerCompany':
+      return PickerCompany
     case 'pickerEditBoard':
       return PickerEditBoard
     case 'pickerPlanting':

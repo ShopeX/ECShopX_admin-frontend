@@ -69,7 +69,7 @@ export default {
       this.$emit('onSubmit')
     },
     resetForm() {
-      this.$refs['form'] && this.$refs['form'].resetFields()
+      this.$refs['form'] && this.$refs['form'].resetForm()
     }
   },
   render() {

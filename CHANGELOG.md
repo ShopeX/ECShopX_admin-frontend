@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [3.13.8](https://git.ishopex.cn/ecshopx/ecshopx-admin/compare/v3.13.7...v3.13.8) (2023-10-10)
+
+
+### Bug Fixes
+
+* ECX-5188，ECX-5102 ([192e46a](https://git.ishopex.cn/ecshopx/ecshopx-admin/commit/192e46a5b815ee07df45e9f1d71eab35286fb834))
+
 ### [3.13.7](https://git.ishopex.cn/ecshopx/ecshopx-admin/compare/v3.13.6...v3.13.7) (2023-09-18)
 
 ### [3.13.6](https://git.ishopex.cn/ecshopx/ecshopx-admin/compare/v3.13.5...v3.13.6) (2023-09-11)

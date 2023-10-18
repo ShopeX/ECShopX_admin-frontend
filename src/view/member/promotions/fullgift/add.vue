@@ -314,6 +314,7 @@ import SkuSelector from '@/components/function/skuSelector'
 import { getItemsList, getCategory, getTagList, getGoodsAttr } from '@/api/goods'
 import { handleUploadFile, exportUploadTemplate } from '../../../../api/common'
 import store from '@/store'
+import { transformTree } from '@/utils'
 export default {
   inject: ['refresh'],
   components: {
@@ -717,7 +718,11 @@ export default {
     },
     fetchMainCate: function () {
       getCategory({ is_main_category: true, ignore_none: true }).then((response) => {
-        this.categoryList = response.data.data
+        this.categoryList = transformTree(response.data.data, {
+          id: 'category_id',
+          label: 'category_name',
+          children: 'children'
+        })
       })
     },
     addItemTag: function () {

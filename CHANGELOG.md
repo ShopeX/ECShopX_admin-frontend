@@ -2,12 +2,9 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
-### [3.13.9](https://git.ishopex.cn/ecshopx/ecshopx-admin/compare/v3.13.8...v3.13.9) (2023-10-30)
+### [3.13.10](https://git.ishopex.cn/ecshopx/ecshopx-admin/compare/v3.13.9...v3.13.10) (2023-10-30)
 
-
-### Bug Fixes
-
-* 积分商城商品分类展示bug ([d8740dc](https://git.ishopex.cn/ecshopx/ecshopx-admin/commit/d8740dcffc51b64b0b554a114117b85f4d4e8b8e))
+### [3.13.9](https://git.ishopex.cn/ecshopx/ecshopx-admin/compare/v3.13.8...v3.13.9) (2023-10-26)
 
 ### [3.13.8](https://git.ishopex.cn/ecshopx/ecshopx-admin/compare/v3.13.7...v3.13.8) (2023-10-10)
 

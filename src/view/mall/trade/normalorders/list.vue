@@ -191,7 +191,7 @@
                 />
               </el-tooltip>
             </div>
-            <div v-if="scope.row.distributor_id !== '0'" class="order-store">
+            <div class="order-store">
               <el-tooltip effect="dark" content="店铺名" placement="top-start">
                 <i class="el-icon-office-building" />
               </el-tooltip>

@@ -65,7 +65,7 @@ export default {
           title: 'title',
           subtitle: 'subtitle',
           padded: 'padded',
-          proportions: 'proportions'
+          proportion: 'proportion'
         })
       },
       data: ({ data }) => {

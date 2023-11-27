@@ -30,6 +30,15 @@
         <SpFilterFormItem prop="distributor_id" label="店铺:">
           <SpSelectShop v-model="params.distributor_id" clearable placeholder="请选择" />
         </SpFilterFormItem>
+        <SpFilterFormItem prop="main_cat_id" label="管理分类:">
+          <el-cascader
+            v-model="params.main_cat_id"
+            placeholder="请选择"
+            clearable
+            :options="itemCategoryList"
+            :props="{ value: 'category_id', label: 'category_name', checkStrictly: true }"
+          />
+        </SpFilterFormItem>
       </SpFilterForm>
 
       <div class="action-container">
@@ -178,6 +187,7 @@ import district from '@/common/district.json'
 import { getItemsList, auditItems, updateItemsStatus } from '@/api/goods'
 import { pageMixin } from '@/mixins'
 import { SALES_STATUS } from '@/consts'
+import { isArray } from '@/utils'
 
 export default {
   mixins: [pageMixin],
@@ -203,13 +213,15 @@ export default {
       ItemsList: [],
       goods_id: [],
       loading: false,
+      itemCategoryList: [],
       params: {
         keywords: '',
         item_bn: '',
         regions_id: [],
         approve_status: '',
         distributor_id: 'all_distributor',
-        audit_status: ''
+        audit_status: '',
+        main_cat_id: ''
       },
       salesStatus: SALES_STATUS
     }
@@ -217,10 +229,22 @@ export default {
   computed: {
     ...mapGetters(['wheight'])
   },
+  created() {
+    this.getMainCategory()
+  },
   mounted() {
+    const { main_cat_id } = this.$route.query
+    if (main_cat_id) {
+      this.params.main_cat_id = main_cat_id
+    }
     this.fetchList()
   },
   methods: {
+    async getMainCategory() {
+      //管理分类
+      const res = await this.$api.goods.getCategory({ is_main_category: true })
+      this.itemCategoryList = res
+    },
     // 导出
     async exportItemsWxappCode(exportType) {
       let params
@@ -295,6 +319,14 @@ export default {
         item_type: 'normal',
         ...this.params
       }
+      if (this.params.main_cat_id) {
+        if (isArray(this.params.main_cat_id)) {
+          params.main_cat_id = this.params.main_cat_id[this.params.main_cat_id.length - 1]
+        } else {
+          params.main_cat_id = this.params.main_cat_id
+        }
+      }
+
       const { list, total_count } = await this.$api.goods.getItemsList(params)
       list.forEach((item) => {
         item.price = item.price / 100

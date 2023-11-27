@@ -288,11 +288,11 @@ export default {
     imgPicker,
     linkSetter
   },
+  props: ['activeName'],
   data() {
     return {
       isGetImage: false,
       imgDialog: false,
-      activeName: 'first',
       total_count: 0,
       goodsList: [],
       params: {
@@ -339,8 +339,8 @@ export default {
     }
   },
   watch: {
-    getStatus(newVal, oldVal) {
-      if (newVal) {
+    activeName(newVal, oldVal) {
+      if (newVal != oldVal) {
         this.getRegisterData()
         this.getGoodsList()
       }

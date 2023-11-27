@@ -172,6 +172,8 @@ function export_open(tab) {
     const login_type = store.getters.login_type
     if (login_type == 'distributor') {
       window.open(`/shopadmin/shopsetting/baseexport?tab=${tab}`)
+    } else if (login_type == 'merchant') {
+      window.open(`/merchant/setting/baseexport?tab=${tab}`)
     } else {
       window.open(`/setting/baseexport?tab=${tab}`)
     }
@@ -311,6 +313,31 @@ export function hex2rgb(hex) {
     return num
   }
   return rgb
+}
+
+// 递归处理字段
+export const transformTree = (tree, obj = {}) => {
+  if (!tree || tree.length === 0) {
+    return []
+  }
+  const transformedTree = []
+  for (const node of tree) {
+    const newNode = {}
+    for (const key in node) {
+      for (const o in obj) {
+        if (obj[o] == key) {
+          if (isArray(node[key])) {
+            newNode[o] = transformTree(node[key], obj)
+          } else {
+            newNode[o] = node[key]
+          }
+        }
+      }
+    }
+    transformedTree.push(newNode)
+  }
+
+  return transformedTree
 }
 
 export { log, export_open, isEmpty }

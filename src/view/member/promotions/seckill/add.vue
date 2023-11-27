@@ -1,24 +1,10 @@
 <template>
-  <el-form
-    ref="form"
-    :model="form"
-    class="box-set"
-    label-width="120px"
-  >
-    <el-card
-      header="基础信息"
-      shadow="naver"
-    >
+  <el-form ref="form" :model="form" class="box-set" label-width="120px">
+    <el-card header="基础信息" shadow="naver">
       <el-form-item label="活动封面">
-        <div class="frm-tips">
-          只能上传jpg/png文件，且不超过2M （建议尺寸：400px * 450px）
-        </div>
+        <div class="frm-tips">只能上传jpg/png文件，且不超过2M （建议尺寸：400px * 450px）</div>
         <div>
-          <imgBox
-            :img-url="wximageurl + form.ad_pic"
-            inline
-            @click="handleImgChange"
-          />
+          <imgBox :img-url="wximageurl + form.ad_pic" inline @click="handleImgChange" />
         </div>
         <imgPicker
           :dialog-visible="imgDialog"
@@ -33,17 +19,10 @@
         :rules="{ required: true, message: '活动名称必填', trigger: 'blur' }"
       >
         <el-col :span="20">
-          <el-input
-            v-model="form.activity_name"
-            :maxlength="30"
-            placeholder="活动名称"
-          />
+          <el-input v-model="form.activity_name" :maxlength="30" placeholder="活动名称" />
         </el-col>
       </el-form-item>
-      <el-form-item
-        label="预告时间"
-        prop="activity_release_time"
-      >
+      <el-form-item label="预告时间" prop="activity_release_time">
         <el-col :span="20">
           <el-date-picker
             v-model="form.activity_release_time"
@@ -67,96 +46,46 @@
       </el-form-item>
       <el-form-item label="活动描述">
         <el-col :span="20">
-          <el-input
-            v-model="form.description"
-            type="textarea"
-            :rows="2"
-            placeholder=""
-          />
+          <el-input v-model="form.description" type="textarea" :rows="2" placeholder="" />
         </el-col>
       </el-form-item>
       <el-form-item label="是否返佣">
         <el-col :span="20">
           <!-- <el-radio v-model="form.is_activity_rebate" label="true" disabled="true">返佣</el-radio> -->
-          <el-radio
-            v-model="form.is_activity_rebate"
-            label="false"
-          >
-            不返佣
-          </el-radio>
+          <el-radio v-model="form.is_activity_rebate" label="false"> 不返佣 </el-radio>
         </el-col>
       </el-form-item>
       <el-form-item label="是否包邮">
         <el-col :span="20">
-          <el-radio
-            v-model="form.is_free_shipping"
-            label="true"
-          >
-            包邮
-          </el-radio>
-          <el-radio
-            v-model="form.is_free_shipping"
-            label="false"
-          >
-            商品自身运费模板
-          </el-radio>
+          <el-radio v-model="form.is_free_shipping" label="true"> 包邮 </el-radio>
+          <el-radio v-model="form.is_free_shipping" label="false"> 商品自身运费模板 </el-radio>
         </el-col>
       </el-form-item>
-      <el-form-item
-        label="订单取消"
-        prop="validity_period"
-      >
+      <el-form-item label="订单取消" prop="validity_period">
         <el-row :gutter="10">
+          <el-col :span="2"> 客户下单 </el-col>
           <el-col :span="2">
-            客户下单
+            <el-input v-model="form.validity_period" placeholder="15" width="10" />
           </el-col>
-          <el-col :span="2">
-            <el-input
-              v-model="form.validity_period"
-              placeholder="15"
-              width="10"
-            />
-          </el-col>
-          <el-col :span="12">
-            分钟后未支付的订单，将自动取消
-          </el-col>
+          <el-col :span="12"> 分钟后未支付的订单，将自动取消 </el-col>
         </el-row>
       </el-form-item>
       <el-form-item label="活动商品类型">
-        <el-radio
-          v-model="form.item_type"
-          label="normal"
-        >
-          实体类商品
-        </el-radio>
+        <el-radio v-model="form.item_type" label="normal"> 实体类商品 </el-radio>
         <!-- <el-radio v-model="form.item_type" label="services">服务类商品</el-radio> -->
       </el-form-item>
     </el-card>
-    <el-card
-      header="绑定商品"
-      shadow="naver"
-    >
+    <el-card header="绑定商品" shadow="naver">
       <el-form-item label="适用商品">
-        <el-radio-group
-          v-model="form.use_bound"
-          @change="itemTypeChange"
-        >
-          <el-radio label="goods">
-            指定商品适用
-          </el-radio>
+        <el-radio-group v-model="form.use_bound" @change="itemTypeChange">
+          <el-radio label="goods"> 指定商品适用 </el-radio>
           <!-- <el-radio label="category">指定分类适用</el-radio>
                   <el-radio label="tag">指定商品标签适用</el-radio>
                   <el-radio label="brand">指定品牌适用</el-radio> -->
         </el-radio-group>
       </el-form-item>
-      <div
-        v-if="!zdItemHidden"
-        style="position: relative"
-      >
-        <SkuSelector
-          :data="relItems"
-          @change="getItems"
-        />
+      <div v-if="!zdItemHidden" style="position: relative">
+        <SkuSelector :data="relItems" @change="getItems" />
         <div style="position: absolute; bottom: 0px; left: 112px">
           <el-upload
             style="display: inline-block; height: 0"
@@ -165,28 +94,15 @@
             :auto-upload="false"
             :show-file-list="false"
           >
-            <el-button type="primary">
-              批量上传
-            </el-button>
+            <el-button type="primary"> 批量上传 </el-button>
           </el-upload>
-          <el-button
-            style="margin-left: 10px"
-            type="primary"
-            @click="uploadHandleTemplate()"
-          >
+          <el-button style="margin-left: 10px" type="primary" @click="uploadHandleTemplate()">
             下载模板
           </el-button>
         </div>
       </div>
-      <el-col
-        :xs="12"
-        :sm="12"
-        :md="12"
-      >
-        <div
-          v-if="!categoryHidden"
-          style="height: 350px"
-        >
+      <el-col :xs="12" :sm="12" :md="12">
+        <div v-if="!categoryHidden" style="height: 350px">
           <treeselect
             v-model="form.item_category"
             :options="categoryList"
@@ -201,9 +117,7 @@
       </el-col>
       <template v-if="!tagHidden">
         <div class="selected-tags view-flex">
-          <div class="label">
-            已选中标签：
-          </div>
+          <div class="label">已选中标签：</div>
           <div class="view-flex-item">
             <el-tag
               v-for="(tag, index) in tag.currentTags"
@@ -233,9 +147,7 @@
       </template>
       <template v-if="!brandHidden">
         <div class="selected-tags view-flex">
-          <div class="label">
-            已选中品牌：
-          </div>
+          <div class="label">已选中品牌：</div>
           <div class="view-flex-item">
             <el-tag
               v-for="(brand, index) in brand.currentBrands"
@@ -264,77 +176,31 @@
         </div>
       </template>
     </el-card>
-    <el-card
-      header="设置商品"
-      shadow="naver"
-    >
-      <el-table
-        v-if="form.items.length > 0"
-        :data="form.items"
-        style="line-height: normal"
-      >
-        <el-table-column
-          label="ID"
-          prop="item_id"
-          width="60"
-        />
-        <el-table-column
-          label="名称"
-          prop="item_title"
-        />
-        <el-table-column
-          label="规格"
-          prop="item_spec_desc"
-        />
-        <el-table-column
-          label="活动价"
-          width="100"
-        >
+    <el-card header="设置商品" shadow="naver">
+      <el-table v-if="form.items.length > 0" :data="form.items" style="line-height: normal">
+        <el-table-column label="ID" prop="item_id" width="60" />
+        <el-table-column label="名称" prop="item_title" />
+        <el-table-column label="规格" prop="item_spec_desc" />
+        <el-table-column label="活动价" width="100">
           <template slot-scope="scope">
-            <el-input
-              v-model="scope.row.activity_price"
-              min="0.01"
-              size="mini"
-            >
-              <i
-                slot="prefix"
-                class="el-input__icon"
-              >{{ cursymbol }}</i>
+            <el-input v-model="scope.row.activity_price" min="0.01" size="mini">
+              <i slot="prefix" class="el-input__icon">{{ cursymbol }}</i>
             </el-input>
           </template>
         </el-table-column>
-        <el-table-column
-          label="库存"
-          width="90"
-        >
+        <el-table-column label="库存" width="90">
           <template slot-scope="scope">
-            <el-input
-              v-model="scope.row.activity_store"
-              width="90"
-              size="mini"
-            />
+            <el-input v-model="scope.row.activity_store" width="90" size="mini" />
           </template>
         </el-table-column>
-        <el-table-column
-          label="每人限购"
-          width="80"
-        >
+        <el-table-column label="每人限购" width="80">
           <template slot-scope="scope">
-            <el-input
-              v-model="scope.row.limit_num"
-              size="mini"
-            />
+            <el-input v-model="scope.row.limit_num" size="mini" />
           </template>
         </el-table-column>
-        <el-table-column
-          label="排序"
-          width="80"
-        >
+        <el-table-column label="排序" width="80">
           <template slot-scope="scope">
-            <el-input
-              v-model="scope.row.sort"
-              size="mini"
-            />
+            <el-input v-model="scope.row.sort" size="mini" />
           </template>
         </el-table-column>
         <!-- <el-table-column label="操作" width="50">
@@ -374,15 +240,8 @@
       </el-table>
     </el-card> -->
     <div class="content-center">
-      <el-button @click.native="handleCancel">
-        返回
-      </el-button>
-      <el-button
-        type="primary"
-        @click="submitActivityAction()"
-      >
-        保存
-      </el-button>
+      <el-button @click.native="handleCancel"> 返回 </el-button>
+      <el-button type="primary" @click="submitActivityAction()"> 保存 </el-button>
     </div>
   </el-form>
 </template>
@@ -401,6 +260,7 @@ import imgPicker from '@/components/imageselect'
 import imgBox from '@/components/element/imgBox'
 import { getItemsList, getCategory, getTagList, getGoodsAttr } from '@/api/goods'
 import { handleUploadFile, exportUploadTemplate } from '../../../../api/common'
+import { transformTree } from '@/utils'
 
 export default {
   inject: ['refresh'],
@@ -410,7 +270,7 @@ export default {
     imgBox,
     Treeselect
   },
-  data () {
+  data() {
     return {
       cursymbol: '￥',
       goodsVisible: false,
@@ -489,7 +349,7 @@ export default {
       }
     }
   },
-  mounted () {
+  mounted() {
     if (this.$route.params.seckill_id) {
       this.getActivityDetail(this.$route.params.seckill_id)
     }
@@ -498,7 +358,7 @@ export default {
     this.getBrandList('', true)
   },
   methods: {
-    getItems (data) {
+    getItems(data) {
       let arr = []
       data.forEach((item, index) => {
         let newData = ''
@@ -521,18 +381,18 @@ export default {
       })
       this.form.items = arr
     },
-    handleImgChange () {
+    handleImgChange() {
       this.imgDialog = true
       this.isGetImage = true
     },
-    pickImg (data) {
+    pickImg(data) {
       this.form.ad_pic = data.url
       this.imgDialog = false
     },
-    closeImgDialog () {
+    closeImgDialog() {
       this.imgDialog = false
     },
-    communityChange (val) {
+    communityChange(val) {
       if (val == 1) {
         this.form.community = []
       }
@@ -543,7 +403,7 @@ export default {
       this.setItemStatus = false
       this.relItemsIds.splice(index, 1)
     },
-    submitActivityAction () {
+    submitActivityAction() {
       const that = this
       if (this.activity_date.length > 0) {
         this.form.activity_start_time = this.activity_date[0]
@@ -561,7 +421,7 @@ export default {
               message: '更新成功',
               type: 'success',
               duration: 2 * 1000,
-              onClose () {
+              onClose() {
                 that.refresh()
                 that.$router.go(-1)
               }
@@ -579,7 +439,7 @@ export default {
               message: '添加成功',
               type: 'success',
               duration: 2 * 1000,
-              onClose () {
+              onClose() {
                 that.refresh()
                 that.$router.go(-1)
               }
@@ -591,7 +451,7 @@ export default {
         })
       }
     },
-    getTaskTime (strDate) {
+    getTaskTime(strDate) {
       let date = new Date(strDate)
       let y = date.getFullYear()
       let m = date.getMonth() + 1
@@ -601,7 +461,7 @@ export default {
       let str = y + '-' + m + '-' + d
       return str
     },
-    getActivityDetail (id) {
+    getActivityDetail(id) {
       seckillActivityGetInfo({ seckill_id: id }).then((res) => {
         let response = res.data.data
         let data = {
@@ -661,7 +521,7 @@ export default {
     handleCancel: function () {
       this.$router.go(-1)
     },
-    itemTypeChange (val) {
+    itemTypeChange(val) {
       this.params.main_cat_id = ''
       this.params.tag_id = ''
       this.params.brand_id = ''
@@ -693,12 +553,16 @@ export default {
         this.showBrands()
       }
     },
-    fetchMainCate () {
+    fetchMainCate() {
       getCategory({ is_main_category: true }).then((response) => {
-        this.categoryList = response.data.data
+        this.categoryList = transformTree(response.data.data, {
+          id: 'category_id',
+          label: 'category_name',
+          children: 'children'
+        })
       })
     },
-    addItemTag () {
+    addItemTag() {
       this.tag.currentTags = []
       if (this.item_id.length) {
         this.showTags()
@@ -710,14 +574,14 @@ export default {
         })
       }
     },
-    showTags () {
+    showTags() {
       this.tag.tags = [...this.tag.list]
       this.tag.tags.forEach((item, index) => {
         let isInArr = this.tag.currentTags.findIndex((n) => n.tag_id == item.tag_id)
         if (isInArr != -1) this.tag.tags.splice(index, 1)
       })
     },
-    tagRemove (index) {
+    tagRemove(index) {
       this.tag.tags.unshift(this.tag.currentTags[index])
       this.tag.currentTags.splice(index, 1)
       this.form.tag_ids = []
@@ -741,7 +605,7 @@ export default {
       this.invalidItemsList = tagInvalidItems
       this.getItems(this.ItemsList)
     },
-    tagAdd (item, index) {
+    tagAdd(item, index) {
       if (this.form.activity_release_time == '') {
         this.$message({
           type: 'error',
@@ -768,7 +632,7 @@ export default {
       this.params.tag_id = item.tag_id
       this.getGoodsList()
     },
-    getAllTagLists () {
+    getAllTagLists() {
       let params = {
         page: 1,
         pageSize: 500
@@ -778,7 +642,7 @@ export default {
       })
     },
     // 获取品牌列表
-    getBrandList (searchVal = '', isInit = false) {
+    getBrandList(searchVal = '', isInit = false) {
       const list = []
       getGoodsAttr({
         page: 1,
@@ -793,14 +657,14 @@ export default {
         this.brand.list = list
       })
     },
-    showBrands () {
+    showBrands() {
       this.brand.brands = [...this.brand.list]
       this.brand.brands.forEach((item, index) => {
         let isInArr = this.brand.currentBrands.findIndex((n) => n.attribute_id == item.attribute_id)
         if (isInArr != -1) this.brand.brands.splice(index, 1)
       })
     },
-    brandAdd (item, index) {
+    brandAdd(item, index) {
       if (this.form.activity_release_time == '') {
         this.$message({
           type: 'error',
@@ -827,7 +691,7 @@ export default {
       this.params.brand_id = item.attribute_id
       this.getGoodsList()
     },
-    brandRemove (index) {
+    brandRemove(index) {
       let items = []
       this.ItemsList.forEach((item) => {
         if (this.brand.currentBrands[index].attribute_id != item.brand_id) items.push(item)
@@ -848,7 +712,7 @@ export default {
         this.form.brand_ids.push(item.attribute_id)
       })
     },
-    getGoodsList () {
+    getGoodsList() {
       let params = JSON.parse(JSON.stringify(this.params))
       if (this.$route.params.seckill_id) {
         params.activity_id = this.$route.params.seckill_id
@@ -894,11 +758,11 @@ export default {
         this.getItems(this.ItemsList)
       })
     },
-    categorySelect (node, instanceId) {
+    categorySelect(node, instanceId) {
       this.params.main_cat_id = node.category_id
       this.getGoodsList()
     },
-    categoryDeselect (node, instanceId) {
+    categoryDeselect(node, instanceId) {
       let items = []
       this.ItemsList.forEach((item, index) => {
         if (node.category_id != item.item_main_cat_id) items.push(item)
@@ -912,7 +776,7 @@ export default {
       this.ItemsList = items
       this.getItems(this.ItemsList)
     },
-    generateSku () {
+    generateSku() {
       let noSkuItem = []
       let response = []
       let goodsList = JSON.parse(JSON.stringify(this.relItems))
@@ -959,7 +823,7 @@ export default {
     /**
      * 下载模板
      * */
-    uploadHandleTemplate () {
+    uploadHandleTemplate() {
       let params = { file_type: 'marketing_goods', file_name: '商品模板' }
       exportUploadTemplate(params).then((response) => {
         let { data } = response.data
@@ -981,7 +845,7 @@ export default {
     /**
      * 上传模板
      * */
-    uploadHandleChange (file, fileList) {
+    uploadHandleChange(file, fileList) {
       let params = { isUploadFile: true, file_type: 'marketing_goods', file: file.raw }
       handleUploadFile(params).then((response) => {
         this.$message({

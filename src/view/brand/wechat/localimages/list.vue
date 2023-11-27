@@ -183,6 +183,7 @@
           class="btn-upload"
           action=""
           accept="image/jpeg,image/png,image/gif"
+          :multiple="true"
           :show-file-list="false"
           :data="localpostData"
           :http-request="handleUpload"
@@ -323,7 +324,7 @@ export default {
   },
   props: ['value'],
   data() {
-    let { multiple = false, data } = this.value || {}
+    let { multiple = true, data } = this.value || {}
     if (!data) {
       data = multiple ? [] : ''
     }
@@ -340,7 +341,7 @@ export default {
       },
       groupFormList: [
         {
-          label: '分组名称:',
+          label: '分组名称',
           key: 'groupName',
           type: 'input',
           maxlength: 150,
@@ -355,7 +356,7 @@ export default {
       },
       editFormList: [
         {
-          label: '图片分组:',
+          label: '图片分组',
           key: 'groupId',
           placeholder: '请选择图片分组',
           type: 'select',
@@ -553,14 +554,7 @@ export default {
         if (fdx > -1) {
           this.selected.splice(fdx, 1)
         } else {
-          // 默认最多可选20
-          const { num = 20 } = this.value
-          if (this.selected.length < num) {
-            this.selected.push(_item)
-          } else {
-            this.$message.error(`最多选择${num}张图片`)
-            return
-          }
+          this.selected.push(_item)
         }
       } else {
         this.selected = _item

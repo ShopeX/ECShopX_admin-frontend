@@ -2,6 +2,51 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [3.13.10](https://git.ishopex.cn/ecshopx/ecshopx-admin/compare/v3.13.9...v3.13.10) (2023-10-30)
+
+
+### Bug Fixes
+
+* ECX-5037 ([a913c34](https://git.ishopex.cn/ecshopx/ecshopx-admin/commit/a913c347fda220a47f01d608750a82481798d9c9))
+
+### [3.13.10](https://git.ishopex.cn/ecshopx/ecshopx-admin/compare/v3.13.9...v3.13.10) (2023-10-30)
+
+### [3.13.9](https://git.ishopex.cn/ecshopx/ecshopx-admin/compare/v3.13.8...v3.13.9) (2023-10-26)
+
+### [3.13.8](https://git.ishopex.cn/ecshopx/ecshopx-admin/compare/v3.13.7...v3.13.8) (2023-10-10)
+
+
+### Bug Fixes
+
+* ECX-5188，ECX-5102 ([192e46a](https://git.ishopex.cn/ecshopx/ecshopx-admin/commit/192e46a5b815ee07df45e9f1d71eab35286fb834))
+
+### [3.13.7](https://git.ishopex.cn/ecshopx/ecshopx-admin/compare/v3.13.6...v3.13.7) (2023-09-18)
+
+### [3.13.6](https://git.ishopex.cn/ecshopx/ecshopx-admin/compare/v3.13.5...v3.13.6) (2023-09-11)
+
+
+### Bug Fixes
+
+* 绑定第三方开发平台添加隐私协议 ([01bf272](https://git.ishopex.cn/ecshopx/ecshopx-admin/commit/01bf272fd90b173802503da509aad76bd9ffc564))
+
+### [3.13.5](https://git.ishopex.cn/ecshopx/ecshopx-admin/compare/v3.13.4...v3.13.5) (2023-09-04)
+
+
+### Bug Fixes
+
+* 修复商户端导出 ([527d285](https://git.ishopex.cn/ecshopx/ecshopx-admin/commit/527d285c64d95e6896448d3656e820e5184e3e09))
+* 素材中心支持多图上传 ([e529e3a](https://git.ishopex.cn/ecshopx/ecshopx-admin/commit/e529e3af67e12ad3d40d695453699ae465d23b63))
+
+### [3.13.4](https://git.ishopex.cn/ecshopx/ecshopx-admin/compare/v3.13.3...v3.13.4) (2023-08-23)
+
+
+### Bug Fixes
+
+* ecx管理分类添加跳转店铺商品 ([e054d91](https://git.ishopex.cn/ecshopx/ecshopx-admin/commit/e054d9177b79d2f1f87f576716a72307936d7d1e))
+* 修复商品详情自定规格名称 ([d5b742b](https://git.ishopex.cn/ecshopx/ecshopx-admin/commit/d5b742bd497836894b13d83435418efaedf76bbe))
+
+### [3.13.3](https://git.ishopex.cn/ecshopx/ecshopx-admin/compare/v3.13.2...v3.13.3) (2023-07-18)
+
 ### [3.13.2](https://git.ishopex.cn/ecshopx/ecshopx-admin/compare/v3.13.1...v3.13.2) (2023-06-16)
 
 

@@ -1,41 +1,19 @@
 <template>
-  <el-form
-    ref="form"
-    :model="form"
-    class="box-set"
-    label-width="120px"
-  >
-    <el-card
-      header="设置规则名称"
-      shadow="naver"
-    >
+  <el-form ref="form" :model="form" class="box-set" label-width="120px">
+    <el-card header="设置规则名称" shadow="naver">
       <el-form-item
         label="名称"
         prop="limit_name"
         :rules="{ required: true, message: '请填写规则名称', trigger: 'blur' }"
       >
         <el-col :span="20">
-          <el-input
-            v-model="form.limit_name"
-            :maxlength="30"
-            placeholder="最多30个字"
-          />
+          <el-input v-model="form.limit_name" :maxlength="30" placeholder="最多30个字" />
         </el-col>
       </el-form-item>
       <el-form-item label="购买规则">
-        <el-input
-          v-model="rule.day"
-          :maxlength="30"
-          class="inline-input"
-          style="width: 100px"
-        />
+        <el-input v-model="rule.day" :maxlength="30" class="inline-input" style="width: 100px" />
         天，购买
-        <el-input
-          v-model="rule.limit"
-          :maxlength="30"
-          class="inline-input"
-          style="width: 100px"
-        />
+        <el-input v-model="rule.limit" :maxlength="30" class="inline-input" style="width: 100px" />
         件
         <p class="frm-tips">
           天数设置0视为此次活动有效期内，例如：0天，购买1件是指活动有效期内只能购买一件商品
@@ -43,18 +21,10 @@
       </el-form-item>
       <el-form-item label="适用会员">
         <el-checkbox-group v-model="validGrade">
-          <el-checkbox
-            v-for="grade in memberGrade"
-            :key="grade.grade_id"
-            :label="grade.grade_id"
-          >
+          <el-checkbox v-for="grade in memberGrade" :key="grade.grade_id" :label="grade.grade_id">
             {{ grade.grade_name }}
           </el-checkbox>
-          <el-checkbox
-            v-for="vipdata in vipGrade"
-            :key="vipdata.lv_type"
-            :label="vipdata.lv_type"
-          >
+          <el-checkbox v-for="vipdata in vipGrade" :key="vipdata.lv_type" :label="vipdata.lv_type">
             付费{{ vipdata.grade_name }}
           </el-checkbox>
         </el-checkbox-group>
@@ -73,37 +43,17 @@
         </el-col>
       </el-form-item>
     </el-card>
-    <el-card
-      header="选择限购商品"
-      shadow="naver"
-    >
+    <el-card header="选择限购商品" shadow="naver">
       <el-form-item label="适用商品">
-        <el-radio-group
-          v-model="form.use_bound"
-          @change="itemTypeChange"
-        >
-          <el-radio label="goods">
-            指定商品适用
-          </el-radio>
-          <el-radio label="category">
-            指定分类适用
-          </el-radio>
-          <el-radio label="tag">
-            指定商品标签适用
-          </el-radio>
-          <el-radio label="brand">
-            指定品牌适用
-          </el-radio>
+        <el-radio-group v-model="form.use_bound" @change="itemTypeChange">
+          <el-radio label="goods"> 指定商品适用 </el-radio>
+          <el-radio label="category"> 指定分类适用 </el-radio>
+          <el-radio label="tag"> 指定商品标签适用 </el-radio>
+          <el-radio label="brand"> 指定品牌适用 </el-radio>
         </el-radio-group>
       </el-form-item>
-      <div
-        v-if="!zdItemHidden"
-        style="position: relative"
-      >
-        <SkuSelector
-          :data="relItems"
-          @change="getItems"
-        />
+      <div v-if="!zdItemHidden" style="position: relative">
+        <SkuSelector :data="relItems" @change="getItems" />
         <div style="position: absolute; bottom: 0px; left: 112px">
           <el-upload
             style="display: inline-block; height: 0"
@@ -112,28 +62,15 @@
             :auto-upload="false"
             :show-file-list="false"
           >
-            <el-button type="primary">
-              批量上传
-            </el-button>
+            <el-button type="primary"> 批量上传 </el-button>
           </el-upload>
-          <el-button
-            style="margin-left: 10px"
-            type="primary"
-            @click="uploadHandleTemplate()"
-          >
+          <el-button style="margin-left: 10px" type="primary" @click="uploadHandleTemplate()">
             下载模板
           </el-button>
         </div>
       </div>
-      <el-col
-        :xs="12"
-        :sm="12"
-        :md="12"
-      >
-        <div
-          v-if="!categoryHidden"
-          style="height: 350px"
-        >
+      <el-col :xs="12" :sm="12" :md="12">
+        <div v-if="!categoryHidden" style="height: 350px">
           <treeselect
             v-model="form.item_category"
             no-results-text="暂无结果"
@@ -149,9 +86,7 @@
       </el-col>
       <template v-if="!tagHidden">
         <div class="selected-tags view-flex">
-          <div class="label">
-            已选中标签：
-          </div>
+          <div class="label">已选中标签：</div>
           <div class="view-flex-item">
             <el-tag
               v-for="(tag, index) in tag.currentTags"
@@ -181,9 +116,7 @@
       </template>
       <template v-if="!brandHidden">
         <div class="selected-tags view-flex">
-          <div class="label">
-            已选中品牌：
-          </div>
+          <div class="label">已选中品牌：</div>
           <div class="view-flex-item">
             <el-tag
               v-for="(brand, index) in brand.currentBrands"
@@ -242,16 +175,10 @@
       </el-table>
     </el-card> -->
     <div class="content-center">
-      <el-button
-        v-if="hasSaveButton"
-        type="primary"
-        @click="submitActivityAction()"
-      >
+      <el-button v-if="hasSaveButton" type="primary" @click="submitActivityAction()">
         保存
       </el-button>
-      <el-button @click.native="handleCancel">
-        返回
-      </el-button>
+      <el-button @click.native="handleCancel"> 返回 </el-button>
     </div>
   </el-form>
 </template>
@@ -270,6 +197,7 @@ import {
 } from '../../../../api/promotions'
 import { getItemsList, getCategory, getTagList, getGoodsAttr } from '@/api/goods'
 import { handleUploadFile, exportUploadTemplate } from '../../../../api/common'
+import { transformTree } from '@/utils'
 
 export default {
   components: {
@@ -277,7 +205,7 @@ export default {
     Treeselect
   },
   inject: ['refresh'],
-  data () {
+  data() {
     return {
       relItems: [],
       activity_date: '',
@@ -342,7 +270,7 @@ export default {
       }
     }
   },
-  mounted () {
+  mounted() {
     this.getListVipGrade()
     this.getGradeList()
     if (this.$route.query.isshow) {
@@ -356,7 +284,7 @@ export default {
     this.getBrandList('', true)
   },
   methods: {
-    submitActivityAction () {
+    submitActivityAction() {
       const that = this
       if (this.activity_date.length > 0) {
         this.form.start_time = this.activity_date[0]
@@ -376,7 +304,7 @@ export default {
               message: '修改成功',
               type: 'success',
               duration: 2 * 1000,
-              onClose () {
+              onClose() {
                 that.refresh()
                 that.$router.go(-1)
               }
@@ -391,7 +319,7 @@ export default {
               message: '添加成功',
               type: 'success',
               duration: 2 * 1000,
-              onClose () {
+              onClose() {
                 that.refresh()
                 that.$router.go(-1)
               }
@@ -400,7 +328,7 @@ export default {
           .catch()
       }
     },
-    getItems (data) {
+    getItems(data) {
       let items = []
       data.forEach((item) => {
         items.push(item.itemId)
@@ -408,7 +336,7 @@ export default {
       this.form.items = items
       console.log(this.form.items)
     },
-    getLimitPromotionsInfo (id) {
+    getLimitPromotionsInfo(id) {
       getLimitPromotionsInfo(id).then((response) => {
         let res = response.data.data
         let data = {
@@ -459,17 +387,17 @@ export default {
         }
       })
     },
-    handleCancel () {
+    handleCancel() {
       this.$router.back(-1)
     },
-    getListVipGrade () {
+    getListVipGrade() {
       listVipGrade().then((response) => {
         if (response != undefined && response.data.data && response.data.data.length > 0) {
           this.vipGrade = response.data.data
         }
       })
     },
-    getGradeList () {
+    getGradeList() {
       getGradeList().then((response) => {
         if (response != undefined && response.data.data && response.data.data.length > 0) {
           var result = response.data.data
@@ -513,8 +441,11 @@ export default {
     },
     fetchMainCate: function () {
       getCategory({ is_main_category: true, ignore_none: true }).then((response) => {
-        this.categoryList = response.data.data
-        console.log(this.categoryList)
+        this.categoryList = transformTree(response.data.data, {
+          id: 'category_id',
+          label: 'category_name',
+          children: 'children'
+        })
       })
     },
     addItemTag: function () {
@@ -719,7 +650,7 @@ export default {
       this.ItemsList = items
       this.getItems(this.ItemsList)
     },
-    generateSku () {
+    generateSku() {
       let noSkuItem
       noSkuItem = []
       let response = []
@@ -767,7 +698,7 @@ export default {
     /**
      * 下载模板
      * */
-    uploadHandleTemplate () {
+    uploadHandleTemplate() {
       let params = { file_type: 'marketing_goods', file_name: '商品模板' }
       exportUploadTemplate(params).then((response) => {
         let { data } = response.data
@@ -789,7 +720,7 @@ export default {
     /**
      * 上传模板
      * */
-    uploadHandleChange (file, fileList) {
+    uploadHandleChange(file, fileList) {
       let params = { isUploadFile: true, file_type: 'marketing_goods', file: file.raw }
       handleUploadFile(params).then((response) => {
         this.$message({

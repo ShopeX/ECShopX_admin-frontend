@@ -1,6 +1,7 @@
 const path = require('path')
-const QiniuPlugin = require( 'qiniu-webpack-plugin' );
+const QiniuPlugin = require('qiniu-webpack-plugin');
 const CopyWebpackPlugin = require('copy-webpack-plugin')
+const WebpackAliyunOss = require('webpack-aliyun-oss');
 const SRC_PATH = path.resolve(__dirname, 'src')
 const envVars = process.env
 
@@ -37,22 +38,32 @@ module.exports = {
     }
   },
   configureWebpack: config => {
-    if(process.env.NODE_ENV !== 'production') {
+    if (process.env.NODE_ENV !== 'production') {
       config.devtool = 'eval-source-map'
     }
-    if ( process.env.VUE_APP_OSS_CDN == 'true' ) {
+    if (process.env.VUE_APP_OSS_CDN == 'true') {
       config.plugins.push(
-        new QiniuPlugin({
-          ACCESS_KEY: process.env.VUE_APP_QINIU_ACCESS_KEY,
-          SECRET_KEY: process.env.VUE_APP_QINIU_SECRET_KEY,
-          bucket: process.env.VUE_APP_QINIU_BUCKET,
-          path: process.env.VUE_APP_QINIU_PATH
+        // new QiniuPlugin({
+        //   ACCESS_KEY: process.env.VUE_APP_QINIU_ACCESS_KEY,
+        //   SECRET_KEY: process.env.VUE_APP_QINIU_SECRET_KEY,
+        //   bucket: process.env.VUE_APP_QINIU_BUCKET,
+        //   path: process.env.VUE_APP_QINIU_PATH
+        // })
+
+        new WebpackAliyunOss({
+          from: ['./dist/**', '!./dist/**/*.html', '!./dist/**/*.ico'], // build目录下除html之外的所有文件
+          dist: '/ecshopx-admin', // oss上传目录
+          region: process.env.VUE_APP_ALIOSS_REGION,
+          accessKeyId: process.env.VUE_APP_ALIOSS_ACCESS_KEY_ID,
+          accessKeySecret: process.env.VUE_APP_ALIOSS_ACCESS_KEY_SECRET,
+          bucket: process.env.VUE_APP_ALIOSS_BUCKET,
         })
+
       )
     }
     config.plugins.push(
       new CopyWebpackPlugin([{
-        from: path.resolve(__dirname, process.env.VUE_APP_PRODUCT_MODEL == 'platform' ? "./newpc_bbc" : './newpc_b2c' ),
+        from: path.resolve(__dirname, process.env.VUE_APP_PRODUCT_MODEL == 'platform' ? "./newpc_bbc" : './newpc_b2c'),
         to: path.resolve(__dirname, "./dist/newpc"),
         ignore: [".*"],
       }])
@@ -67,8 +78,8 @@ module.exports = {
     }
   },
   chainWebpack: config => {
-    config.plugins.delete('preload') 
-    config.plugins.delete('prefetch') 
+    config.plugins.delete('preload')
+    config.plugins.delete('prefetch')
   },
   // devServer: {
   //   port: 10086,

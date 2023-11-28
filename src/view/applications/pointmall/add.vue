@@ -847,10 +847,8 @@
 <script>
 import store from '@/store'
 import { mapGetters } from 'vuex'
-// import the component
 import Treeselect from '@riophae/vue-treeselect'
 import draggable from 'vuedraggable'
-// import the styles
 import '@riophae/vue-treeselect/dist/vue-treeselect.css'
 import { getItemsDetail, createItems, updateItems } from '@/api/pointsmall'
 import { getGoodsAttr, getCategory, getCategoryInfo } from '@/api/goods'
@@ -862,6 +860,8 @@ import richTextEditor from '@/components/function/richTextEditor'
 import imgBox from '@/components/element/imgBox'
 import district from '@/common/district.json'
 import { getOrigincountry } from '@/api/crossborder'
+import { transformTree } from '@/utils'
+
 export default {
   inject: ['refresh'],
   components: {
@@ -1731,7 +1731,11 @@ export default {
       })
 
       getCategory({ is_show: false }).then((response) => {
-        this.categoryList = response.data.data
+        this.categoryList = transformTree(response.data.data, {
+          id: 'category_id',
+          label: 'category_name',
+          children: 'children'
+        })
       })
     },
     // profitStatusChange(val) {

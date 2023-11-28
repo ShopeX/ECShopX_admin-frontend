@@ -31,6 +31,7 @@ import exportTip from '@/utils/components'
 import { export_open } from '@/utils'
 import { SYSTEM_CONFIG } from '@/consts'
 import { SpPickerPlugin } from '@/components/sp-picker'
+import pkg from '../package.json'
 Vue.use(exportTip)
 initFinder(Vue, {
   fetchLibrary: fetch,
@@ -137,6 +138,8 @@ new Vue({
     console.log(theme)
     document.body.style.setProperty('--themeColor', theme)
     document.body.style.setProperty('--themeColorRgb', [red, green, blue].join(','))
+
+    window.ecshopxVersion = pkg.version
   },
   render: (h) => h(App)
 }).$mount('#app')

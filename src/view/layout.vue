@@ -322,6 +322,7 @@ export default {
     async logout() {
       const loginType = this.login_type
       await this.$api.login.getAuthorizelogout()
+      await this.$api.login.invalidateToken()
       await this.SYSTEM_EXIT()
       if (loginType == 'distributor') {
         window.location.href = `/shopadmin/login`

@@ -64,7 +64,8 @@ export default {
         return pickBy(v, {
           title: 'title',
           subtitle: 'subtitle',
-          padded: 'padded'
+          padded: 'padded',
+          proportion: 'proportion'
         })
       },
       data: ({ data }) => {

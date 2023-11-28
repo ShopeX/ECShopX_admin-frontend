@@ -84,3 +84,11 @@ export function getAuthorizeLeve() {
     method: 'post'
   })
 }
+
+export function invalidateToken() {
+  return fetch({
+    url: '/api/token/invalidate',
+    method: 'get',
+    params
+  })
+}

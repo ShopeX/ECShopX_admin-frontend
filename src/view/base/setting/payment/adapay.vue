@@ -2,57 +2,46 @@
   <el-form
     ref="form"
     :model="form"
-    label-width="100px"
+    label-width="150px"
     :rules="rules"
   >
     <el-form-item
-      label="API_KEY"
-      prop="api_key"
+      label="App_ID"
+      prop="app_id"
     >
       <el-input
-        v-model="form.api_key"
+        v-model="form.app_id"
         style="width: 500px"
       />
     </el-form-item>
     <el-form-item
-      label="接口RSA公钥"
-      prop="agent_public_key"
+      label="mock模式API_KEY"
+      prop="test_api_key"
     >
       <el-input
-        v-model="form.agent_public_key"
+        v-model="form.test_api_key"
+        style="width: 500px"
+      />
+    </el-form-item>
+    <el-form-item
+      label="prod模式API_KEY"
+      prop="live_api_key"
+    >
+      <el-input
+        v-model="form.live_api_key"
+        style="width: 500px"
+      />
+    </el-form-item>
+    <el-form-item
+      label="商户RSA私钥"
+      prop="rsa_private_key"
+    >
+      <el-input
+        v-model="form.rsa_private_key"
         style="width: 880px"
         type="textarea"
         :rows="5"
-        placeholder="请输入内容"
       />
-      <br>
-      <span class="frm-tips">请确保您上传的RSA公钥的正确性，以免影响交易</span>
-    </el-form-item>
-    <el-form-item
-      label="商户RSA公钥"
-      prop="public_key"
-    >
-      <div class="flex">
-        <el-input
-          v-model="form.public_key"
-          style="width: 880px"
-          type="textarea"
-          :rows="5"
-        />
-        <br>
-        <span class="frm-tips">请确保您上传的RSA公钥的正确性，以免影响交易</span>
-      </div>
-    </el-form-item>
-    <el-form-item>
-      <el-button
-        type="primary"
-        @click="createKey"
-      >
-        生成RSA秘钥
-      </el-button>
-      <p class="tips">
-        您可以选择直接生成RSA密钥
-      </p>
     </el-form-item>
     <el-form-item
       label="是否启用"
@@ -83,20 +72,20 @@ import { getPaymentSetting } from '@/api/trade'
 export default {
   data () {
     return {
-      activeName: 'alipay',
+      activeName: 'adapay',
       loading: false,
       form: {
-        api_key: '',
-        agent_public_key: '',
-        public_key: '',
-        private_key: '',
+        app_id: '',
+        test_api_key: '',
+        live_api_key: '',
+        rsa_private_key: '',
         is_open: false
       },
       rules: {
-        api_key: { required: true, message: '请输入API_KEY', trigger: 'blur' },
-        agent_public_key: { required: true, message: '请输入接口RSA公钥', trigger: 'blur' },
-        public_key: { required: true, message: '请输入商户RSA公钥', trigger: 'blur' },
-        private_key: { required: true, message: '请生成', trigger: 'blur' },
+        app_id: { required: true, message: '请输入App_ID', trigger: 'blur' },
+        test_api_key: { required: true, message: '请输入mock模式API_KEY', trigger: 'blur' },
+        live_api_key: { required: true, message: '请输入prod模式API_KEY', trigger: 'blur' },
+        rsa_private_key: { required: true, message: '请输入商户RSA私钥', trigger: 'blur' },
         is_open: { required: true, message: '请选择', trigger: 'blur' }
       }
     }
@@ -105,18 +94,6 @@ export default {
     this.getConfig()
   },
   methods: {
-    async createKey () {
-      const { private_key, public_key } = await this.$api.adapay.getAdapayPaySettingKey()
-      if (private_key && public_key) {
-        this.form.public_key = public_key
-        this.form.private_key = private_key
-        this.$notify({
-          title: '成功',
-          type: 'success',
-          duration: 2000
-        })
-      }
-    },
     async onSubmit (formName) {
       this.$refs[formName].validate(async (valid) => {
         if (valid) {

@@ -1,100 +1,244 @@
 <template>
-  <el-form
-    ref="form"
-    :model="form"
-    label-width="150px"
-    :rules="rules"
-  >
-    <el-form-item
-      label="App_ID"
-      prop="app_id"
-    >
-      <el-input
-        v-model="form.app_id"
-        style="width: 500px"
-      />
-    </el-form-item>
-    <el-form-item
-      label="mock模式API_KEY"
-      prop="test_api_key"
-    >
-      <el-input
-        v-model="form.test_api_key"
-        style="width: 500px"
-      />
-    </el-form-item>
-    <el-form-item
-      label="prod模式API_KEY"
-      prop="live_api_key"
-    >
-      <el-input
-        v-model="form.live_api_key"
-        style="width: 500px"
-      />
-    </el-form-item>
-    <el-form-item
-      label="商户RSA私钥"
-      prop="rsa_private_key"
-    >
-      <el-input
-        v-model="form.rsa_private_key"
-        style="width: 880px"
-        type="textarea"
-        :rows="5"
-      />
-    </el-form-item>
-    <el-form-item
-      label="是否启用"
-      prop="is_open"
-    >
-      <el-switch
-        v-model="form.is_open"
-        active-color="#13ce66"
-        inactive-color="#ff4949"
-        :active-value="true"
-        :inactive-value="false"
-      />
-    </el-form-item>
-    <div class="section-footer with-border content-center">
-      <el-button
-        v-loading="loading"
-        type="primary"
-        @click="onSubmit('form')"
-      >
-        保存
-      </el-button>
-    </div>
-  </el-form>
+  <div>
+    <SpForm v-model="form" label-width="220px" :form-list="formList" @onSubmit="onSaveConfig" />
+    <!-- <el-form ref="form" :model="form" label-width="150px" :rules="rules">
+      <el-form-item label="App_ID" prop="app_id">
+        <el-input v-model="form.app_id" style="width: 500px" />
+      </el-form-item>
+      <el-form-item label="mock模式API_KEY" prop="test_api_key">
+        <el-input v-model="form.test_api_key" style="width: 500px" />
+      </el-form-item>
+      <el-form-item label="prod模式API_KEY" prop="live_api_key">
+        <el-input v-model="form.live_api_key" style="width: 500px" />
+      </el-form-item>
+      <el-form-item label="商户RSA私钥" prop="rsa_private_key">
+        <el-input v-model="form.rsa_private_key" style="width: 880px" type="textarea" :rows="5" />
+      </el-form-item>
+      <el-form-item label="是否启用" prop="is_open">
+        <el-switch
+          v-model="form.is_open"
+          active-color="#13ce66"
+          inactive-color="#ff4949"
+          :active-value="true"
+          :inactive-value="false"
+        />
+      </el-form-item>
+      <div class="section-footer with-border content-center">
+        <el-button v-loading="loading" type="primary" @click="onSubmit('form')"> 保存 </el-button>
+      </div>
+    </el-form> -->
+  </div>
 </template>
 <script>
-import { getPaymentSetting } from '@/api/trade'
+import { refundResubmit } from '../../../../api/trade'
 
 export default {
-  data () {
+  data() {
     return {
-      activeName: 'adapay',
-      loading: false,
       form: {
         app_id: '',
         test_api_key: '',
         live_api_key: '',
         rsa_private_key: '',
+        wxpay_fee_type: 'online',
+        wx_pub_online: '',
+        wx_pub_offline: '',
+        wx_lite_online: '',
+        wx_lite_offline: '',
+        wx_scan: '',
+        alipay_fee_type: 'online',
+        alipay_qr_online: '',
+        alipay_qr_offline: '',
+        alipay_scan: '',
+        alipay_lite_online: '',
+        alipay_lite_offline: '',
+        alipay_call: '',
+        ali_pub_off_b2b: '',
+        ali_pub_online_b2b: '',
         is_open: false
       },
-      rules: {
-        app_id: { required: true, message: '请输入App_ID', trigger: 'blur' },
-        test_api_key: { required: true, message: '请输入mock模式API_KEY', trigger: 'blur' },
-        live_api_key: { required: true, message: '请输入prod模式API_KEY', trigger: 'blur' },
-        rsa_private_key: { required: true, message: '请输入商户RSA私钥', trigger: 'blur' },
-        is_open: { required: true, message: '请选择', trigger: 'blur' }
-      }
+      formList: [
+        {
+          label: '基础配置',
+          type: 'group'
+        },
+        {
+          label: 'App_ID',
+          key: 'app_id',
+          type: 'input',
+          required: true,
+          inline: true,
+          width: '480px'
+        },
+        {
+          label: 'mock模式API_KEY',
+          key: 'test_api_key',
+          type: 'input',
+          required: true,
+          inline: true,
+          width: '480px'
+        },
+        {
+          label: 'prod模式API_KEY',
+          key: 'live_api_key',
+          type: 'input',
+          required: true,
+          inline: true,
+          width: '480px'
+        },
+        {
+          label: '商户RSA私钥',
+          key: 'rsa_private_key',
+          type: 'textarea',
+          required: true,
+          inline: true,
+          width: '960px'
+        },
+        {
+          label: '微信支付',
+          type: 'group'
+        },
+        {
+          label: '渠道类型',
+          key: 'wxpay_fee_type',
+          type: 'radio',
+          options: [
+            { name: '线上', label: 'online' },
+            { name: '线下', label: 'offline' }
+          ]
+        },
+        {
+          label: '微信公众号支付（线上）',
+          key: 'wx_pub_online',
+          type: 'input',
+          inline: true,
+          width: '480px'
+        },
+        {
+          label: '微信公众号支付（线下）',
+          key: 'wx_pub_offline',
+          type: 'input',
+          inline: true,
+          width: '480px'
+        },
+        {
+          label: '微信小程序支付（线上）',
+          key: 'wx_lite_online',
+          type: 'input',
+          inline: true,
+          width: '480px'
+        },
+        {
+          label: '微信小程序支付（线下）',
+          key: 'wx_lite_offline',
+          type: 'input',
+          inline: true,
+          width: '480px'
+        },
+        {
+          label: '微信扫码支付（被扫-线下）',
+          key: 'wx_scan',
+          type: 'input',
+          inline: true,
+          width: '480px'
+        },
+        {
+          label: '支付宝支付',
+          type: 'group'
+        },
+        {
+          label: '渠道类型',
+          key: 'alipay_fee_type',
+          type: 'radio',
+          options: [
+            { name: '线上', label: 'online' },
+            { name: '线下', label: 'offline' }
+          ]
+        },
+        {
+          label: '支付宝扫码支付（主扫-线上）',
+          key: 'alipay_qr_online',
+          type: 'input',
+          inline: true,
+          width: '480px'
+        },
+        {
+          label: '支付宝扫码支付（主扫-线下）',
+          key: 'alipay_qr_offline',
+          type: 'input',
+          inline: true,
+          width: '480px'
+        },
+        {
+          label: '支付宝扫码支付（被扫-线下）',
+          key: 'alipay_scan',
+          type: 'input',
+          inline: true,
+          width: '480px'
+        },
+        {
+          label: '支付宝小程序支付（线上）',
+          key: 'alipay_lite_online',
+          type: 'input',
+          inline: true,
+          width: '480px'
+        },
+        {
+          label: '支付宝小程序支付（线下）',
+          key: 'alipay_lite_offline',
+          type: 'input',
+          inline: true,
+          width: '480px'
+        },
+        {
+          label: '支付宝唤起支付（线上）',
+          key: 'alipay_call',
+          type: 'input',
+          inline: true,
+          width: '480px'
+        },
+        {
+          label: '支付宝生活号（线下）',
+          key: 'ali_pub_off_b2b',
+          type: 'input',
+          inline: true,
+          width: '480px'
+        },
+        {
+          label: '支付宝生活号（线上）',
+          key: 'ali_pub_online_b2b',
+          type: 'input',
+          inline: true,
+          width: '480px'
+        },
+        {
+          label: '启用',
+          type: 'group'
+        },
+        {
+          label: '是否启用',
+          key: 'is_open',
+          type: 'switch'
+        }
+      ]
     }
   },
-  mounted () {
+  mounted() {
     this.getConfig()
   },
   methods: {
-    async onSubmit (formName) {
+    async onSaveConfig() {
+      const { status } = await this.$api.adapay.postAdapayPaySetting({
+        ...this.form,
+        pay_type: 'adapay'
+      })
+      if (status) {
+        this.$message.success('保存成功')
+      } else {
+        this.$message.error('保存失败')
+      }
+    },
+    async onSubmit(formName) {
       this.$refs[formName].validate(async (valid) => {
         if (valid) {
           const { status } = await this.$api.adapay.postAdapayPaySetting({
@@ -113,15 +257,35 @@ export default {
         }
       })
     },
-    getConfig () {
-      let query = { pay_type: 'adapay' }
-      getPaymentSetting(query).then((response) => {
-        if (response.data.data.length == 0) {
-          return
-        } else {
-          this.form = { ...this.form, ...response.data.data }
+    async getConfig() {
+      const res = await this.$api.trade.getPaymentSetting({ pay_type: 'adapay' })
+      Object.keys(res).forEach((key) => {
+        if (typeof this.form[key]) {
+          this.form[key] = res[key]
         }
       })
+
+      console.log(this.form)
+      // this.from.app_id = typeof res.app_id
+      // this.from.test_api_key = res.test_api_key
+      // this.from.live_api_key = res.live_api_key
+      // this.from.rsa_private_key = res.rsa_private_key
+      // this.from.wxpay_fee_type = res.wxpay_fee_type
+      // this.from.wx_pub_online = res.wx_pub_online
+      // this.from.wx_pub_offline = res.wx_pub_offline
+      // this.from.wx_lite_online = res.wx_lite_online
+      // this.from.wx_lite_offline = res.wx_lite_offline
+      // this.from.wx_scan = res.wx_scan
+      // this.from.alipay_fee_type = res.alipay_fee_type
+      // this.from.alipay_qr_online = res.alipay_qr_online
+      // this.from.alipay_qr_offline = res.alipay_qr_offline
+      // this.from.alipay_scan = res.alipay_scan
+      // this.from.alipay_lite_online = res.alipay_lite_online
+      // this.from.alipay_lite_offline = res.alipay_lite_offline
+      // this.from.alipay_call = res.alipay_call
+      // this.from.ali_pub_off_b2b = res.ali_pub_off_b2b
+      // this.from.ali_pub_online_b2b = res.ali_pub_online_b2b
+      // this.from.is_open = res.is_open
     }
   }
 }

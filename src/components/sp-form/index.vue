@@ -357,7 +357,8 @@ export default {
                   {
                     'no-label': typeof item.label == 'undefined',
                     'custom-error': typeof item.component != 'undefined',
-                    'is-required': item.required || item.validator
+                    'is-required': item.required || item.validator,
+                    'inline': typeof item.inline != 'undefined' ? item.inline : false
                   }
                 ]}
                 style={{

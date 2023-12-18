@@ -68,7 +68,7 @@ export default {
           type: 'input',
           required: true,
           inline: true,
-          width: '480px'
+          width: '960px'
         },
         {
           label: 'mock模式API_KEY',
@@ -76,7 +76,7 @@ export default {
           type: 'input',
           required: true,
           inline: true,
-          width: '480px'
+          width: '960px'
         },
         {
           label: 'prod模式API_KEY',
@@ -84,7 +84,7 @@ export default {
           type: 'input',
           required: true,
           inline: true,
-          width: '480px'
+          width: '960px'
         },
         {
           label: '商户RSA私钥',
@@ -95,16 +95,33 @@ export default {
           width: '960px'
         },
         {
-          label: '微信支付',
+          label: '支付渠道设置',
           type: 'group'
         },
         {
-          label: '渠道类型',
+          label: '微信渠道费率类型',
+          key: 'pay_channel',
+          type: 'checkbox',
+          options: [
+            { name: '微信小程序支付', label: 'wx_lite' },
+            { name: '微信公众号支付', label: 'wx_pub' },
+            { name: '微信公众号支付', label: 'wx_pub' },
+            { name: '支付宝H5支付', label: 'alipay_wap' },
+            { name: '支付宝app支付', label: 'alipay' },
+            { name: '支付宝扫码', label: 'alipay_qr' }
+          ]
+        },
+        {
+          label: '费率设置',
+          type: 'group'
+        },
+        {
+          label: '微信渠道费率类型',
           key: 'wxpay_fee_type',
           type: 'radio',
           options: [
-            { name: '线上', label: 'online' },
-            { name: '线下', label: 'offline' }
+            { name: '标准费率线上', label: 'online' },
+            { name: '标准费率线下', label: 'offline' }
           ]
         },
         {
@@ -140,19 +157,15 @@ export default {
           key: 'wx_scan',
           type: 'input',
           inline: true,
-          width: '480px'
+          width: '960px'
         },
         {
-          label: '支付宝支付',
-          type: 'group'
-        },
-        {
-          label: '渠道类型',
+          label: '支付宝渠道费率类型',
           key: 'alipay_fee_type',
           type: 'radio',
           options: [
-            { name: '线上', label: 'online' },
-            { name: '线下', label: 'offline' }
+            { name: '标准费率线上', label: 'online' },
+            { name: '标准费率线下', label: 'offline' }
           ]
         },
         {
@@ -210,10 +223,6 @@ export default {
           type: 'input',
           inline: true,
           width: '480px'
-        },
-        {
-          label: '启用',
-          type: 'group'
         },
         {
           label: '是否启用',

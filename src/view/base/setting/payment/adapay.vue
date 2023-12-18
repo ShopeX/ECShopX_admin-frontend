@@ -40,6 +40,7 @@ export default {
         test_api_key: '',
         live_api_key: '',
         rsa_private_key: '',
+        pay_channel: [],
         wxpay_fee_type: 'online',
         wx_pub_online: '',
         wx_pub_offline: '',
@@ -99,12 +100,11 @@ export default {
           type: 'group'
         },
         {
-          label: '微信渠道费率类型',
+          label: '支付渠道',
           key: 'pay_channel',
           type: 'checkbox',
           options: [
             { name: '微信小程序支付', label: 'wx_lite' },
-            { name: '微信公众号支付', label: 'wx_pub' },
             { name: '微信公众号支付', label: 'wx_pub' },
             { name: '支付宝H5支付', label: 'alipay_wap' },
             { name: '支付宝app支付', label: 'alipay' },

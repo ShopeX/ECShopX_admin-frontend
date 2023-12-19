@@ -261,30 +261,116 @@
           </template>
         </el-row>
       </el-card>
-      <el-card v-if="tradeInfo.tradeId && tradeInfo.tradeState != 'NOTPAY'" shadow="never">
+      <!--      <el-card v-if="tradeInfo.tradeId && tradeInfo.tradeState != 'NOTPAY'" shadow="never">-->
+      <!--        <div slot="header" class="clearfix">-->
+      <!--          <h3>支付信息</h3>-->
+      <!--        </div>-->
+      <!--        <div class="section-body">-->
+      <!--          <el-row>-->
+      <!--            <el-col :span="3" class="content-right">-->
+      <!--              <h4>交易单号：</h4>-->
+      <!--            </el-col>-->
+      <!--            <el-col :span="5">-->
+      <!--              {{ tradeInfo.tradeId }}-->
+      <!--            </el-col>-->
+      <!--            <el-col :span="3" class="content-right">-->
+      <!--              <h4>支付状态：</h4>-->
+      <!--            </el-col>-->
+      <!--            <el-col :span="5">-->
+      <!--              <span v-if="tradeInfo.tradeState == 'SUCCESS'"> 支付成功</span>-->
+      <!--              <span v-else-if="tradeInfo.tradeState == 'REFUND'">转入退款</span>-->
+      <!--              <span v-else-if="tradeInfo.tradeState == 'CANCEL_CLOSED'">已取消</span>-->
+      <!--              <span v-else-if="tradeInfo.tradeState == 'REFUND_SUCCESS'">退款成功</span>-->
+      <!--              <span v-else-if="tradeInfo.tradeState == 'NOTPAY'">未支付</span>-->
+      <!--              <span v-if="tradeInfo.tradeState == 'CLOSED'"> 已关闭</span>-->
+      <!--              <span v-else-if="tradeInfo.tradeState == 'REVOKED'">已撤销</span>-->
+      <!--              <span v-else-if="tradeInfo.tradeState == 'PAYERROR'"-->
+      <!--                >支付失败(其他原因，如银行返回失败)</span-->
+      <!--              >-->
+      <!--            </el-col>-->
+      <!--            <el-col :span="3" class="content-right">-->
+      <!--              <h4>交易流水号：</h4>-->
+      <!--            </el-col>-->
+      <!--            <el-col :span="5">-->
+      <!--              {{ tradeInfo.transactionId }}-->
+      <!--            </el-col>-->
+      <!--          </el-row>-->
+      <!--          <el-row>-->
+      <!--            <el-col :span="3" class="content-right">-->
+      <!--              <h4>实付金额(RMB)：</h4>-->
+      <!--            </el-col>-->
+      <!--            <el-col v-if="tradeInfo.payType == 'point'" :span="5"> 0 </el-col>-->
+      <!--            <el-col v-else :span="5"> ￥{{ tradeInfo.payFee / 100 }} </el-col>-->
+      <!--            <div v-if="tradeInfo.payType == 'point'">-->
+      <!--              <el-col :span="3" class="content-right">-->
+      <!--                <h4>支付积分：</h4>-->
+      <!--              </el-col>-->
+      <!--              <el-col :span="5">-->
+      <!--                {{ tradeInfo.payFee }}-->
+      <!--              </el-col>-->
+      <!--            </div>-->
+      <!--            <el-col :span="3" class="content-right">-->
+      <!--              <h4>支付类型：</h4>-->
+      <!--            </el-col>-->
+      <!--            <el-col :span="5">-->
+      <!--              <span v-if="tradeInfo.payType == 'amorepay'"> 微信支付</span>-->
+      <!--              <span v-if="tradeInfo.payType == 'wxpaypc'"> 微信PC支付</span>-->
+      <!--              <span v-if="tradeInfo.payType == 'wxpay'"> 微信支付</span>-->
+      <!--              <span v-if="tradeInfo.payType == 'wxpayh5'"> 微信H5支付</span>-->
+      <!--              <span v-if="tradeInfo.payType == 'alipay'"> 支付宝支付</span>-->
+      <!--              <span v-if="tradeInfo.payType == 'alipayh5'"> 支付宝H5支付</span>-->
+      <!--              <span v-else-if="tradeInfo.payType == 'deposit'"> 余额支付</span>-->
+      <!--              <span v-else-if="tradeInfo.payType == 'point'"> 积分支付</span>-->
+      <!--              <span v-else-if="tradeInfo.payType == 'pos'"> POS银行卡支付</span>-->
+      <!--            </el-col>-->
+      <!--          </el-row>-->
+      <!--          <el-row>-->
+      <!--            <el-col v-if="tradeInfo.couponFee > 0" :span="3" class="content-right">-->
+      <!--              <h4>微信卡包代金券：</h4>-->
+      <!--            </el-col>-->
+      <!--            <el-col v-if="tradeInfo.couponFee > 0" :span="5">-->
+      <!--              ¥{{ tradeInfo.couponFee / 100 }}-->
+      <!--            </el-col>-->
+      <!--            <el-col :span="3" class="content-right">-->
+      <!--              <h4>交易时间：</h4>-->
+      <!--            </el-col>-->
+      <!--            <el-col :span="5">-->
+      <!--              {{ tradeInfo.timeStart | datetime('YYYY-MM-DD HH:mm:ss') }}-->
+      <!--            </el-col>-->
+      <!--            <el-col :span="3" class="content-right">-->
+      <!--              <h4>交易结束时间：</h4>-->
+      <!--            </el-col>-->
+      <!--            <el-col :span="5">-->
+      <!--              {{ tradeInfo.timeExpire | datetime('YYYY-MM-DD HH:mm:ss') }}-->
+      <!--            </el-col>-->
+      <!--          </el-row>-->
+      <!--        </div>-->
+      <!--      </el-card>-->
+
+      <el-card v-if="tradeList.length > 0" shadow="never">
         <div slot="header" class="clearfix">
           <h3>支付信息</h3>
         </div>
-        <div class="section-body">
+        <div v-for="(item, index) in tradeList" :key="index" class="section-body">
           <el-row>
             <el-col :span="3" class="content-right">
               <h4>交易单号：</h4>
             </el-col>
             <el-col :span="5">
-              {{ tradeInfo.tradeId }}
+              {{ item.tradeId }}
             </el-col>
             <el-col :span="3" class="content-right">
               <h4>支付状态：</h4>
             </el-col>
             <el-col :span="5">
-              <span v-if="tradeInfo.tradeState == 'SUCCESS'"> 支付成功</span>
-              <span v-else-if="tradeInfo.tradeState == 'REFUND'">转入退款</span>
-              <span v-else-if="tradeInfo.tradeState == 'CANCEL_CLOSED'">已取消</span>
-              <span v-else-if="tradeInfo.tradeState == 'REFUND_SUCCESS'">退款成功</span>
-              <span v-else-if="tradeInfo.tradeState == 'NOTPAY'">未支付</span>
-              <span v-if="tradeInfo.tradeState == 'CLOSED'"> 已关闭</span>
-              <span v-else-if="tradeInfo.tradeState == 'REVOKED'">已撤销</span>
-              <span v-else-if="tradeInfo.tradeState == 'PAYERROR'"
+              <span v-if="item.tradeState == 'SUCCESS'"> 支付成功</span>
+              <span v-else-if="item.tradeState == 'REFUND'">转入退款</span>
+              <span v-else-if="item.tradeState == 'CANCEL_CLOSED'">已取消</span>
+              <span v-else-if="item.tradeState == 'REFUND_SUCCESS'">退款成功</span>
+              <span v-else-if="item.tradeState == 'NOTPAY'">未支付</span>
+              <span v-if="item.tradeState == 'CLOSED'"> 已关闭</span>
+              <span v-else-if="item.tradeState == 'REVOKED'">已撤销</span>
+              <span v-else-if="item.tradeState == 'PAYERROR'"
                 >支付失败(其他原因，如银行返回失败)</span
               >
             </el-col>
@@ -292,56 +378,54 @@
               <h4>交易流水号：</h4>
             </el-col>
             <el-col :span="5">
-              {{ tradeInfo.transactionId }}
+              {{ item.transactionId }}
             </el-col>
           </el-row>
           <el-row>
             <el-col :span="3" class="content-right">
               <h4>实付金额(RMB)：</h4>
             </el-col>
-            <el-col v-if="tradeInfo.payType == 'point'" :span="5"> 0 </el-col>
-            <el-col v-else :span="5"> ￥{{ tradeInfo.payFee / 100 }} </el-col>
-            <div v-if="tradeInfo.payType == 'point'">
+            <el-col v-if="item.payType == 'point'" :span="5"> 0 </el-col>
+            <el-col v-else :span="5"> ￥{{ item.payFee / 100 }} </el-col>
+            <div v-if="item.payType == 'point'">
               <el-col :span="3" class="content-right">
                 <h4>支付积分：</h4>
               </el-col>
               <el-col :span="5">
-                {{ tradeInfo.payFee }}
+                {{ item.payFee }}
               </el-col>
             </div>
             <el-col :span="3" class="content-right">
               <h4>支付类型：</h4>
             </el-col>
             <el-col :span="5">
-              <span v-if="tradeInfo.payType == 'amorepay'"> 微信支付</span>
-              <span v-if="tradeInfo.payType == 'wxpaypc'"> 微信PC支付</span>
-              <span v-if="tradeInfo.payType == 'wxpay'"> 微信支付</span>
-              <span v-if="tradeInfo.payType == 'wxpayh5'"> 微信H5支付</span>
-              <span v-if="tradeInfo.payType == 'alipay'"> 支付宝支付</span>
-              <span v-if="tradeInfo.payType == 'alipayh5'"> 支付宝H5支付</span>
-              <span v-else-if="tradeInfo.payType == 'deposit'"> 余额支付</span>
-              <span v-else-if="tradeInfo.payType == 'point'"> 积分支付</span>
-              <span v-else-if="tradeInfo.payType == 'pos'"> POS银行卡支付</span>
+              <span v-if="item.payType == 'amorepay'"> 微信支付</span>
+              <span v-if="item.payType == 'wxpaypc'"> 微信PC支付</span>
+              <span v-if="item.payType == 'wxpay'"> 微信支付</span>
+              <span v-if="item.payType == 'wxpayh5'"> 微信H5支付</span>
+              <span v-if="item.payType == 'alipay'"> 支付宝支付</span>
+              <span v-if="item.payType == 'alipayh5'"> 支付宝H5支付</span>
+              <span v-else-if="item.payType == 'deposit'"> 余额支付</span>
+              <span v-else-if="item.payType == 'point'"> 积分支付</span>
+              <span v-else-if="item.payType == 'pos'"> POS银行卡支付</span>
             </el-col>
           </el-row>
           <el-row>
-            <el-col v-if="tradeInfo.couponFee > 0" :span="3" class="content-right">
+            <el-col v-if="item.couponFee > 0" :span="3" class="content-right">
               <h4>微信卡包代金券：</h4>
             </el-col>
-            <el-col v-if="tradeInfo.couponFee > 0" :span="5">
-              ¥{{ tradeInfo.couponFee / 100 }}
-            </el-col>
+            <el-col v-if="item.couponFee > 0" :span="5"> ¥{{ item.couponFee / 100 }} </el-col>
             <el-col :span="3" class="content-right">
               <h4>交易时间：</h4>
             </el-col>
             <el-col :span="5">
-              {{ tradeInfo.timeStart | datetime('YYYY-MM-DD HH:mm:ss') }}
+              {{ item.timeStart | datetime('YYYY-MM-DD HH:mm:ss') }}
             </el-col>
             <el-col :span="3" class="content-right">
               <h4>交易结束时间：</h4>
             </el-col>
             <el-col :span="5">
-              {{ tradeInfo.timeExpire | datetime('YYYY-MM-DD HH:mm:ss') }}
+              {{ item.timeExpire | datetime('YYYY-MM-DD HH:mm:ss') }}
             </el-col>
           </el-row>
         </div>
@@ -869,6 +953,7 @@ export default {
       orderInfo: {},
       distributor: {},
       tradeInfo: {},
+      tradeList: [],
       cancelData: {},
       profit: {},
       resource: '',
@@ -957,6 +1042,7 @@ export default {
       getOrderDetail(this.order_id).then((response) => {
         this.orderInfo = response.data.data.orderInfo
         this.tradeInfo = response.data.data.tradeInfo
+        this.tradeList = response.data.data.tradeList
         this.distributor = response.data.data.distributor
         this.cancelData = response.data.data.cancelData
         this.profit = response.data.data.profit

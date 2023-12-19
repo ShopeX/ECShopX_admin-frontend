@@ -2,6 +2,72 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [3.13.14](https://git.ishopex.cn/ecshopx/ecshopx-admin/compare/v3.13.13...v3.13.14) (2023-12-19)
+
+
+### Bug Fixes
+
+* 积分商城 ([517fa79](https://git.ishopex.cn/ecshopx/ecshopx-admin/commit/517fa79e91b0d123e09c973ed86c5e2227600882))
+* 腾讯mapkey移入.env变量 ([2dc461b](https://git.ishopex.cn/ecshopx/ecshopx-admin/commit/2dc461bef800e3f1d4374fe29c0ebfdc71f992d5))
+
+### [3.13.13](https://git.ishopex.cn/ecshopx/ecshopx-admin/compare/v3.13.10...v3.13.13) (2023-12-11)
+
+
+### Features
+
+* 添加token失效 ([46b1818](https://git.ishopex.cn/ecshopx/ecshopx-admin/commit/46b1818d5d4e6ad88bc3e4fd3dce7da9bb52bff1))
+
+
+### Bug Fixes
+
+* exit ([d3f5349](https://git.ishopex.cn/ecshopx/ecshopx-admin/commit/d3f534950fc7baf38ab1a35c3fd11f341383645b))
+* 修改视频挂件视频比例 ([586f9fd](https://git.ishopex.cn/ecshopx/ecshopx-admin/commit/586f9fdacab0a0011732c862d80e57bebc6dc731))
+* 修改视频挂件视频比例 ([59ee314](https://git.ishopex.cn/ecshopx/ecshopx-admin/commit/59ee314476d694e8cf11e7b42216385571f96187))
+* 删除package引入 ([3d37357](https://git.ishopex.cn/ecshopx/ecshopx-admin/commit/3d37357e4469649ccdc19cc34f2e961191c63815))
+* 退出登录 ([74e4142](https://git.ishopex.cn/ecshopx/ecshopx-admin/commit/74e41427cbfece650f7ba88c7941764ab2ebea89))
+
+### [3.13.12](https://git.ishopex.cn/ecshopx/ecshopx-admin/compare/v3.13.11...v3.13.12) (2023-11-28)
+
+
+### Features
+
+* 添加token失效 ([46b1818](https://git.ishopex.cn/ecshopx/ecshopx-admin/commit/46b1818d5d4e6ad88bc3e4fd3dce7da9bb52bff1))
+
+
+### Bug Fixes
+
+* 删除package引入 ([3d37357](https://git.ishopex.cn/ecshopx/ecshopx-admin/commit/3d37357e4469649ccdc19cc34f2e961191c63815))
+* 修改视频挂件视频比例 ([586f9fd](https://git.ishopex.cn/ecshopx/ecshopx-admin/commit/586f9fdacab0a0011732c862d80e57bebc6dc731))
+* 修改视频挂件视频比例 ([59ee314](https://git.ishopex.cn/ecshopx/ecshopx-admin/commit/59ee314476d694e8cf11e7b42216385571f96187))
+
+### [3.13.12](https://git.ishopex.cn/ecshopx/ecshopx-admin/compare/v3.13.11...v3.13.12) (2023-11-28)
+
+
+### Features
+
+* 添加token失效 ([46b1818](https://git.ishopex.cn/ecshopx/ecshopx-admin/commit/46b1818d5d4e6ad88bc3e4fd3dce7da9bb52bff1))
+
+
+### Bug Fixes
+
+* 修改视频挂件视频比例 ([586f9fd](https://git.ishopex.cn/ecshopx/ecshopx-admin/commit/586f9fdacab0a0011732c862d80e57bebc6dc731))
+* 修改视频挂件视频比例 ([59ee314](https://git.ishopex.cn/ecshopx/ecshopx-admin/commit/59ee314476d694e8cf11e7b42216385571f96187))
+
+### [3.13.12](https://git.ishopex.cn/ecshopx/ecshopx-admin/compare/v3.13.11...v3.13.12) (2023-11-28)
+
+
+### Features
+
+* 添加token失效 ([46b1818](https://git.ishopex.cn/ecshopx/ecshopx-admin/commit/46b1818d5d4e6ad88bc3e4fd3dce7da9bb52bff1))
+
+
+### Bug Fixes
+
+* 修改视频挂件视频比例 ([586f9fd](https://git.ishopex.cn/ecshopx/ecshopx-admin/commit/586f9fdacab0a0011732c862d80e57bebc6dc731))
+* 修改视频挂件视频比例 ([59ee314](https://git.ishopex.cn/ecshopx/ecshopx-admin/commit/59ee314476d694e8cf11e7b42216385571f96187))
+
+### [3.13.11](https://git.ishopex.cn/ecshopx/ecshopx-admin/compare/v3.13.10...v3.13.11) (2023-11-24)
+
 ### [3.13.10](https://git.ishopex.cn/ecshopx/ecshopx-admin/compare/v3.13.9...v3.13.10) (2023-10-30)
 
 

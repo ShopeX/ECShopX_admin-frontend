@@ -146,7 +146,7 @@
                     </router-link>
                   </el-button>
                   <el-button
-                    v-if="scope.row.edit_btn == 'Y' && parseInt(scope.row.source_id) <= 0"
+                    v-if="scope.row.edit_btn == 'Y' && (!isShopadmin?parseInt(scope.row.source_id) <= 0:parseInt(scope.row.source_id) > 0)" 
                     type="text"
                   >
                     <router-link
@@ -291,6 +291,7 @@ export default {
         { name: '待生效', activeName: '1' },
         { name: '已过期', activeName: '3' }
       ],
+      isShopadmin: /\/shopadmin/.test(document.location.pathname),
       appID: '',
       appCodeUrl: '',
       curPageUrl: '',

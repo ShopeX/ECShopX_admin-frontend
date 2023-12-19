@@ -229,12 +229,12 @@ export default {
       ],
       publicKeyDialog: false,
       publicKeyDialogForm: {
-        publicKey: ''
+        rsa_public_key: ''
       },
       publicKeyDialogFormList: [
         {
           label: 'RSA公钥',
-          key: 'publicKey',
+          key: 'rsa_public_key',
           type: 'textarea',
           width: '480px'
         }
@@ -284,9 +284,9 @@ export default {
       })
     },
     async createKey() {
-      // await this.$api.adapay.createAdapayKey()
-      this.form.rsa_private_key = '私钥内容'
-      this.publicKeyDialogForm.publicKey = '公钥内容'
+      const { rsa_private_key, rsa_public_key } = await this.$api.adapay.createAdapayKey()
+      this.form.rsa_private_key = rsa_private_key
+      this.publicKeyDialogForm.rsa_public_key = rsa_public_key
       this.publicKeyDialog = true
     },
     onClose() {

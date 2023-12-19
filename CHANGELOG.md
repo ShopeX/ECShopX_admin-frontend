@@ -2,6 +2,14 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [3.13.14](https://git.ishopex.cn/ecshopx/ecshopx-admin/compare/v3.13.13...v3.13.14) (2023-12-19)
+
+
+### Bug Fixes
+
+* 积分商城 ([517fa79](https://git.ishopex.cn/ecshopx/ecshopx-admin/commit/517fa79e91b0d123e09c973ed86c5e2227600882))
+* 腾讯mapkey移入.env变量 ([2dc461b](https://git.ishopex.cn/ecshopx/ecshopx-admin/commit/2dc461bef800e3f1d4374fe29c0ebfdc71f992d5))
+
 ### [3.13.13](https://git.ishopex.cn/ecshopx/ecshopx-admin/compare/v3.13.10...v3.13.13) (2023-12-11)
 
 

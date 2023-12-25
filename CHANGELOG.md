@@ -2,6 +2,8 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [3.13.15](https://git.ishopex.cn/ecshopx/ecshopx-admin/compare/v3.13.14...v3.13.15) (2023-12-25)
+
 ### [3.13.14](https://git.ishopex.cn/ecshopx/ecshopx-admin/compare/v3.13.13...v3.13.14) (2023-12-19)
 
 

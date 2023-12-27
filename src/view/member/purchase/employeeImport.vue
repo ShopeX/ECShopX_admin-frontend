@@ -96,12 +96,12 @@ import {
 export default {
   data() {
     return {
-      pane_list: [{ name: 'whitelist_create', label: '上传新白名单' }],
+      pane_list: [{ name: 'employee_purchase_employees', label: '上传员工' }],
       loading: false,
       total_count: 0,
       pageSize: 20,
       page: 1,
-      activeName: 'whitelist_create',
+      activeName: 'employee_purchase_employees',
       uploadList: []
     }
   },
@@ -126,8 +126,8 @@ export default {
       })
     },
     uploadHandleTemplate() {
-      if (this.activeName == 'whitelist_create') {
-        var fileName = '新增白名单'
+      if (this.activeName == 'employee_purchase_employees') {
+        var fileName = '新增员工'
       }
       let params = { file_type: this.activeName, file_name: fileName }
       exportUploadTemplate(params).then((response) => {

@@ -1,6 +1,6 @@
 import fetch from '../utils/fetch'
 
-export function createRechargeRule (query) {
+export function createRechargeRule(query) {
   return fetch({
     url: '/deposit/rechargerule',
     method: 'post',
@@ -8,7 +8,7 @@ export function createRechargeRule (query) {
   })
 }
 
-export function getRechargeRuleList (query) {
+export function getRechargeRuleList(query) {
   return fetch({
     url: '/deposit/rechargerules',
     method: 'get',
@@ -16,14 +16,14 @@ export function getRechargeRuleList (query) {
   })
 }
 
-export function deleteRechargeRuleById (id) {
+export function deleteRechargeRuleById(id) {
   return fetch({
     url: '/deposit/rechargerule/' + id,
     method: 'delete'
   })
 }
 
-export function editRechargeRuleById (query) {
+export function editRechargeRuleById(query) {
   return fetch({
     url: '/deposit/rechargerule',
     method: 'put',
@@ -31,7 +31,7 @@ export function editRechargeRuleById (query) {
   })
 }
 
-export function setRechargeAgreement (query) {
+export function setRechargeAgreement(query) {
   return fetch({
     url: '/deposit/recharge/agreement',
     method: 'post',
@@ -39,14 +39,14 @@ export function setRechargeAgreement (query) {
   })
 }
 
-export function getRechargeAgreementByCompanyId () {
+export function getRechargeAgreementByCompanyId() {
   return fetch({
     url: '/deposit/recharge/agreement',
     method: 'get'
   })
 }
 
-export function setRechargeMultiple (query) {
+export function setRechargeMultiple(query) {
   return fetch({
     url: '/deposit/recharge/multiple',
     method: 'post',
@@ -54,14 +54,14 @@ export function setRechargeMultiple (query) {
   })
 }
 
-export function getRechargeMultipleByCompanyId () {
+export function getRechargeMultipleByCompanyId() {
   return fetch({
     url: '/deposit/recharge/multiple',
     method: 'get'
   })
 }
 
-export function getDepositTradeList (query) {
+export function getDepositTradeList(query) {
   return fetch({
     url: '/deposit/trades',
     method: 'get',
@@ -69,9 +69,18 @@ export function getDepositTradeList (query) {
   })
 }
 
-export function getDepositCountIndex () {
+export function getDepositCountIndex() {
   return fetch({
     url: '/deposit/count/index',
     method: 'get'
+  })
+}
+
+// 添加储值
+export function rechargeDeposit(params) {
+  return fetch({
+    url: '/deposit/recharge',
+    method: 'post',
+    params
   })
 }

@@ -6,7 +6,7 @@
           <div
             class="member-card"
             :style="{
-              backgroundColor: member.cardInfo.color,
+              backgroundColor: member.cardInfo.color || '',
               backgroundImage: 'url(' + (wximageurl + member.gradeInfo.background_pic_url) + ')',
               backgroundPosition: 'center center'
             }"
@@ -124,7 +124,7 @@
         <el-button type="primary" @click="goBack"> 返回 </el-button>
       </div>
     </div>
-    <el-tabs v-model="activeName" type="border-card" @tab-click="handleClick">
+    <el-tabs v-model="activeName" type="card" @tab-click="handleClick">
       <el-tab-pane label="会员详情" name="info">
         <member-info :user-info="member" :register-setting="registerSetting" :is-load="infoLoad" />
       </el-tab-pane>
@@ -172,14 +172,18 @@
         />
       </el-tab-pane> -->
       <el-tab-pane v-if="!VERSION_IN_PURCHASE" label="付费会员卡记录" name="membercard">
-        <membercard-list
+        <!-- <membercard-list
           :user-id="user_id"
           :user-mobile="member.mobile"
           :is-load="membercardLoad"
-        />
+        /> -->
+        <membercardList :info="member" />
       </el-tab-pane>
       <el-tab-pane v-if="!VERSION_IN_PURCHASE" label="积分记录" name="point">
-        <point-list :user-id="user_id" :user-mobile="member.mobile" :is-load="pointLoad" />
+        <pointList />
+      </el-tab-pane>
+      <el-tab-pane v-if="VUE_APP_CHUZHI" label="充值记录" name="chuzhi">
+        <chuZhiList />
       </el-tab-pane>
       <!-- <el-tab-pane
         v-if="!isMicorMall"
@@ -204,9 +208,12 @@ import orderList from './orderlist.vue'
 import depositList from './depositlist.vue'
 import transferList from './transferlist.vue'
 import rightslogList from './rightsloglist.vue'
-import membercardList from './membercardlist.vue'
+
 import salespersonLogsList from './salespersonLogsList.vue'
-import pointList from './pointlist.vue'
+// import membercardList from './membercardlist.vue'
+import membercardList from './comps/memberCardList'
+import pointList from './comps/pointList'
+import chuZhiList from './comps/chuZhiList'
 import memberInfo from './memberinfo.vue'
 import { VERSION_PLATFORM } from '@/utils'
 export default {
@@ -218,6 +225,7 @@ export default {
     membercardList,
     rightslogList,
     pointList,
+    chuZhiList,
     salespersonLogsList,
     memberInfo
   },

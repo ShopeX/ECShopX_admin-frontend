@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [3.13.18](https://git.ishopex.cn/ecshopx/ecshopx-admin/compare/v3.13.17...v3.13.18) (2024-01-11)
+
+
+### Bug Fixes
+
+* 权限审批添加详情 ([52f6dbf](https://git.ishopex.cn/ecshopx/ecshopx-admin/commit/52f6dbf8f0006439fe39ae6d77f7587dc60fd200))
+
 ### [3.13.17](https://git.ishopex.cn/ecshopx/ecshopx-admin/compare/v3.13.16...v3.13.17) (2024-01-10)
 
 

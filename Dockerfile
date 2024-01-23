@@ -41,6 +41,7 @@ ENV VUE_APP_ALIOSS_BUCKET ${VUE_APP_ALIOSS_BUCKET}
 
 WORKDIR /app
 COPY package*.json ./
+RUN echo '192.30.255.112               github.com' >> /etc/hosts
 RUN npm config set registry https://registry.npmmirror.com && npm config set @shopex:registry http://registry.npm.ishopex.cn && npm ci
 
 COPY . .

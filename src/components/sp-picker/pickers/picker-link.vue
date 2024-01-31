@@ -79,7 +79,9 @@ export default {
       },
       list: [
         { id: 'vipgrades', title: '会员开通' },
-        { id: 'applyChief', title: '社区团长申请' }
+        { id: 'applyChief', title: '社区团长申请' },
+        { id: 'recharge', title: '储值卡' },
+        { id: 'purchase', title: '内购' }
       ],
       multiple: this.value?.multiple ?? true
     }

@@ -158,6 +158,7 @@ export default {
         name: '',
         title: '',
         linkHome: null,
+        share_pic: '',
         pic: ''
       },
       formBaseList: [
@@ -208,19 +209,32 @@ export default {
         },
         {
           label: '分享活动',
-          key: 'pic',
+          key: 'share_pic',
           component: () => (
             <div class='activity-pic-field'>
               <div class='form-item-tip'>
                 员工通过小程序卡片分享活动时展示，建议尺寸300*240，支持 png、jpg 格式，文件大小为 2M
                 内
               </div>
-              <SpImagePicker v-model={this.formBase.pic} />
+              <SpImagePicker v-model={this.formBase.share_pic} />
             </div>
           ),
           validator: (rule, value, callback) => {
-            if (isEmpty(this.formBase.pic)) {
+            if (isEmpty(this.formBase.share_pic)) {
               callback(new Error('请选择活动图片'))
+            } else {
+              callback()
+            }
+          }
+        },
+        {
+          label: '活动海报',
+          key: 'pic',
+          component: () => <SpImagePicker v-model={this.formBase.pic} />,
+          tip: '建议尺寸:（宽度640px，高度自适应）',
+          validator: (rule, value, callback) => {
+            if (isEmpty(this.formBase.pic)) {
+              callback(new Error('请选择活动海报'))
             } else {
               callback()
             }
@@ -481,7 +495,8 @@ export default {
         name: res.name,
         title: res.title,
         linkHome,
-        pic: res.share_pic
+        share_pic: res.share_pic,
+        pic: res.pic
       }
 
       // 进行中、已暂停
@@ -573,6 +588,7 @@ export default {
         name,
         title,
         linkHome: { pages_template_id },
+        share_pic,
         pic
       } = this.formBase
       const {
@@ -587,7 +603,8 @@ export default {
         name,
         title,
         pages_template_id,
-        share_pic: pic,
+        share_pic: share_pic,
+        pic: pic,
         enterprise_id: companyList.map((item) => item.id),
         display_time: moment(preheatTime).unix(),
         employee_begin_time: moment(employeeDateTime[0]).unix(),

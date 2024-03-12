@@ -323,20 +323,9 @@ export default {
       this.getSub_account()
     },
     goDetail(id) {
-      const path = this.$route.matched[0].path.match(/\/\w+/g)
-      if (path[0] == '/shopadmin') {
-        this.$router.push({
-          path: `/shopadmin/order/adapay_trades/detail/${id}`
-        })
-      } else if (path[0] == '/dealer') {
-        this.$router.push({
-          path: `/dealer/trades/adapay_trades/detail/${id}`
-        })
-      } else {
-        this.$router.push({
-          path: `/applications/adapay/adapay_trades/detail/${id}`
-        })
-      }
+      this.$router.push({
+        path: `${this.$route.path}/detail/${id}`
+      })
     },
     async getSub_account() {
       this.loading = true

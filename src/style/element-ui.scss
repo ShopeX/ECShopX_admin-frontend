@@ -6,14 +6,17 @@ $color-secondary: rgba(var(--themeColorRgb), 0.8);
 
 .el-button {
   padding: 10px 16px;
+
   .ecx-icon {
     font-size: 14px;
     margin-right: 4px;
   }
+
   .icon-zhankai {
     transform: scale(0.8);
     display: inline-block;
   }
+
   &--mini {
     padding: 7px 15px;
     font-size: 12px;
@@ -22,42 +25,50 @@ $color-secondary: rgba(var(--themeColorRgb), 0.8);
   &--primary {
     background-color: $color-primary;
     border-color: $color-primary;
+
     &:hover {
       color: #fff !important;
       border-color: $color-secondary !important;
       background-color: $color-secondary !important;
     }
+
     &:focus {
       color: #fff !important;
       border-color: $color-primary !important;
       background-color: $color-primary !important;
     }
   }
+
   &.is-plain {
     color: $color-primary;
     border-color: $color-primary;
     background-color: #fff;
+
     &:hover {
       color: $color-secondary;
       border-color: $color-secondary;
       background-color: #fff;
     }
+
     &:focus {
       color: $color-primary;
       border-color: $color-primary;
       background-color: #fff;
     }
   }
+
   &.is-disabled {
     &.is-plain {
       background-color: #fff;
       border-color: #ebeef5;
       color: #c0c4cc;
+
       &:hover {
         background-color: #fff;
         border-color: #ebeef5;
         color: #c0c4cc;
       }
+
       &:focus {
         background-color: #fff;
         border-color: #ebeef5;
@@ -65,21 +76,26 @@ $color-secondary: rgba(var(--themeColorRgb), 0.8);
       }
     }
   }
+
   &--text {
     padding: 0;
     color: $color-primary;
+
     &:hover {
       color: $color-secondary !important;
       border-color: transparent !important;
     }
+
     &:focus {
       color: $color-primary !important;
       border-color: transparent !important;
     }
+
     a {
       color: $color-primary;
     }
   }
+
   & + .el-button {
     margin-left: 8px;
   }
@@ -89,6 +105,7 @@ $color-secondary: rgba(var(--themeColorRgb), 0.8);
     border-color: inherit;
     color: inherit;
   }
+
   &:focus {
     background-color: inherit;
     border-color: inherit;
@@ -102,12 +119,38 @@ $color-secondary: rgba(var(--themeColorRgb), 0.8);
     border: 1px solid #d9d9d9;
     height: 36px;
     padding: 0 12px;
+
     &:focus {
       border-color: $color-secondary;
     }
+
     &::-webkit-input-placeholder {
       color: #bbb;
       font-size: 14px;
+    }
+  }
+}
+
+.el-input-number {
+  &.is-controls-right {
+    .el-input-number__decrease {
+      bottom: 2px;
+      height: 18px;
+    }
+
+    .el-input-number__increase {
+      top: 2px;
+      height: 18px;
+
+      &:hover ~ .el-input {
+        .el-input__inner {
+          border-color: #d9d9d9;
+        }
+      }
+    }
+
+    .el-input__inner {
+      text-align: left;
     }
   }
 }
@@ -120,23 +163,27 @@ $color-secondary: rgba(var(--themeColorRgb), 0.8);
 
 .el-cascader {
   line-height: 36px;
+
   .el-input {
     &__inner {
       &:focus {
         border-color: $color-secondary;
       }
     }
+
     &.is-focus {
       .el-input__inner {
         border-color: $color-secondary;
       }
     }
+
     .el-input__inner {
       &:focus {
         border-color: $color-secondary;
       }
     }
   }
+
   &-panel {
     .el-cascader-node.in-active-path,
     .el-cascader-node.is-active,
@@ -153,6 +200,7 @@ $color-secondary: rgba(var(--themeColorRgb), 0.8);
         border-color: $color-secondary;
       }
     }
+
     &.is-focus {
       .el-input__inner {
         border-color: $color-secondary;
@@ -167,6 +215,7 @@ $color-secondary: rgba(var(--themeColorRgb), 0.8);
       border-bottom-width: 0;
       margin-bottom: 8px;
     }
+
     .el-tabs__nav {
       height: 36px;
       background: #f0f2f5;
@@ -174,12 +223,14 @@ $color-secondary: rgba(var(--themeColorRgb), 0.8);
       padding: 4px;
       border-width: 0 !important;
     }
+
     .el-tabs__item {
       height: 28px;
       line-height: 28px;
       font-size: 13px;
       color: #545d7a;
       border-left-width: 0 !important;
+
       &.is-active {
         background: #fff;
         color: $color-primary;
@@ -199,9 +250,11 @@ $color-secondary: rgba(var(--themeColorRgb), 0.8);
         border-left: 1px solid #e8e8e8;
       }
     }
+
     .el-table__cell {
       border-right-width: 0;
     }
+
     td {
       border-right-width: 0;
     }
@@ -212,6 +265,7 @@ $color-secondary: rgba(var(--themeColorRgb), 0.8);
   &--normal {
     box-shadow: none !important;
     border-width: 0;
+
     .el-card__header {
       padding: 0 0 0 10px;
       color: #333;
@@ -220,6 +274,7 @@ $color-secondary: rgba(var(--themeColorRgb), 0.8);
       position: relative;
       // border-width: 0;
       border-bottom: 1px solid #f1f2f5;
+
       &:before {
         position: absolute;
         top: 6px;
@@ -230,16 +285,20 @@ $color-secondary: rgba(var(--themeColorRgb), 0.8);
         content: '';
       }
     }
+
     .el-card__body {
       padding: 10px 6px;
     }
+
     .card-panel {
       &-item {
         margin-bottom: 6px;
       }
+
       &__label {
         color: #333;
       }
+
       &__value {
         color: #999;
         margin-left: 10px;
@@ -255,6 +314,7 @@ $color-secondary: rgba(var(--themeColorRgb), 0.8);
       border-color: $color-primary;
     }
   }
+
   .el-step__title {
     &.is-success {
       color: $color-primary;
@@ -270,6 +330,7 @@ $color-secondary: rgba(var(--themeColorRgb), 0.8);
           background-color: $color-primary;
           color: #fff !important;
         }
+
         &:hover {
           color: $color-primary;
         }
@@ -301,10 +362,12 @@ $color-secondary: rgba(var(--themeColorRgb), 0.8);
         background: $color-primary;
       }
     }
+
     &.is-checked + .el-radio__label {
       color: $color-primary;
     }
   }
+
   &__inner {
     &:hover {
       border-color: $color-secondary;
@@ -320,10 +383,12 @@ $color-secondary: rgba(var(--themeColorRgb), 0.8);
         background: $color-primary;
       }
     }
+
     &.is-checked + .el-checkbox__label {
       color: inherit;
     }
   }
+
   &__inner {
     &:hover {
       border-color: $color-secondary;
@@ -341,6 +406,7 @@ $color-secondary: rgba(var(--themeColorRgb), 0.8);
   .path {
     stroke: $color-primary;
   }
+
   .el-loading-text {
     color: $color-primary;
   }
@@ -358,6 +424,7 @@ $color-secondary: rgba(var(--themeColorRgb), 0.8);
   &__inner:hover {
     border-color: $color-primary;
   }
+
   &__input {
     &.is-focus {
       .el-checkbox__inner {

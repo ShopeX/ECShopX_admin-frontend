@@ -188,19 +188,37 @@ export default {
     },
     _renderNumber(item) {
       const { value } = this
-      const { className, placeholder, append, key, min, max, disabled = false } = item
+      const {
+        className,
+        placeholder,
+        append,
+        key,
+        min = 0,
+        max,
+        disabled = false,
+        precision = 0,
+        setp = 1
+      } = item
       return (
-        <el-input
-          class={className}
-          type='number'
+        // <el-input
+        //   class={className}
+        //   type='number'
+        //   min={min}
+        //   max={max}
+        //   disabled={disabled}
+        //   placeholder={placeholder || '请输入内容'}
+        //   v-model={value[key]}
+        // >
+        //   <template slot='append'>{append}</template>
+        // </el-input>
+        <el-input-number
+          v-model={value[key]}
+          controls-position='right'
           min={min}
           max={max}
-          disabled={disabled}
-          placeholder={placeholder || '请输入内容'}
-          v-model={value[key]}
-        >
-          <template slot='append'>{append}</template>
-        </el-input>
+          precision={precision}
+          setp={setp}
+        />
       )
     },
     _renderText(item) {

@@ -197,7 +197,13 @@
       </div>
     </template>
 
-    <template v-if="!aftersalesInfo.sendback_data && aftersalesInfo.aftersales_status == '1'">
+    <template
+      v-if="
+        !aftersalesInfo.sendback_data &&
+        aftersalesInfo.aftersales_status == '1' &&
+        aftersalesInfo.aftersales_type != 'ONLY_REFUND'
+      "
+    >
       <div class="section-header with-border">
         <h3>用户回寄物流信息</h3>
       </div>

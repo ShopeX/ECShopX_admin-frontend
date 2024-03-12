@@ -60,13 +60,13 @@ export default {
       setting: createSetting({
         actions: [
           {
-            name: '审批',
-            key: 'detail',
+            name: '详情',
+            key: 'apply',
             type: 'button',
             buttonType: 'text',
-            visible: (row) => {
-              return row.status == '0'
-            },
+            // visible: (row) => {
+            //   return row.status == '0'
+            // },
             action: {
               handler: async ([row]) => {
                 const { pass_id, operator_id } = row

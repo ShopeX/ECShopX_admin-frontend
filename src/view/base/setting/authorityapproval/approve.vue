@@ -8,13 +8,8 @@
       :role-data="roleData"
     />
     <el-card v-if="approvel_info.status == '1'">
-      <div class="cus-title">
-        操作日志
-      </div>
-      <el-timeline
-        :reverse="false"
-        class="cus-timeline"
-      >
+      <div class="cus-title">操作日志</div>
+      <el-timeline :reverse="false" class="cus-timeline">
         <el-timeline-item
           v-for="(item, index) in logList"
           :key="index"
@@ -25,14 +20,9 @@
       </el-timeline>
     </el-card>
     <el-card v-if="approvel_info.status == '2'">
-      <div class="cus-title">
-        驳回原因
-      </div>
+      <div class="cus-title">驳回原因</div>
       <el-row>
-        <el-col
-          :span="24"
-          style="margin-left: 20px"
-        >
+        <el-col :span="24" style="margin-left: 20px">
           <span>{{ approvel_info.remarks || '-' }}</span>
         </el-col>
       </el-row>
@@ -90,10 +80,7 @@
         :show-word-limit="true"
         placeholder="请填写审批意见"
       />
-      <div
-        slot="footer"
-        class="dialog-footer"
-      >
+      <div slot="footer" class="dialog-footer">
         <loading-btn
           ref="loadingBtn"
           size="medium"
@@ -120,7 +107,7 @@ import moment from 'moment'
 
 export default {
   components: { PersonInfo, loadingBtn },
-  data () {
+  data() {
     return {
       loading: true,
       activeName: 'first',
@@ -141,7 +128,7 @@ export default {
   computed: {
     ...mapGetters(['wheight'])
   },
-  mounted () {
+  mounted() {
     if (this.$route.query.pass_id) {
       const { pass_id, operator_id } = this.$route.query || {}
       this.getDetail(pass_id)
@@ -151,7 +138,7 @@ export default {
     }
   },
   methods: {
-    getDetail (pass_id) {
+    getDetail(pass_id) {
       encryptDetail(pass_id)
         .then((response) => {
           let data = response.data.data
@@ -173,7 +160,7 @@ export default {
           })
         })
     },
-    getLog (operator_id) {
+    getLog(operator_id) {
       datapassLog({ operator_id })
         .then((response) => {
           let data = response.data.data.list
@@ -191,7 +178,7 @@ export default {
           })
         })
     },
-    handleDialogOpen (status) {
+    handleDialogOpen(status) {
       // 打开审批弹框
       const { username, login_name } = this.operator_info
       this.approveType = status
@@ -206,7 +193,7 @@ export default {
       }
       this.visibleModal = true
     },
-    handleDialogChange (ref) {
+    handleDialogChange(ref) {
       // 点击审批弹框确定按钮
       let api = null
       let parmas = {}
@@ -234,20 +221,20 @@ export default {
         })
         this.getDetail(this.pass_id)
         this.getLog(this.operator_id)
-        this.$parent.fetchList()
+        // this.$parent.fetchList()
         this.$refs[ref].closeLoading()
         this.visibleModal = false
         this.visibleContent = ''
         this.remarks = ''
       })
     },
-    handleDialogClose () {
+    handleDialogClose() {
       // 关闭审批弹框
       this.visibleModal = false
       this.remarks = ''
       this.visibleContent = ''
     },
-    timeFilter (time) {
+    timeFilter(time) {
       return moment(time * 1000).format('YYYY-MM-DD HH:mm:ss')
     }
   }

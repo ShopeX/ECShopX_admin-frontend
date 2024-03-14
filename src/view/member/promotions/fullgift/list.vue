@@ -75,14 +75,14 @@
                   <span v-if="scope.row.condition_type == 'quantity'">
                     消费满{{ item.full }}件,赠送(<el-button
                       type="text"
-                      @click="viewGiftItemList(scope.row)"
+                      @click="viewGiftItemList(scope.row,item.full,scope.row.condition_value.length)"
                       >赠品</el-button
                     >)
                   </span>
                   <span v-if="scope.row.condition_type == 'totalfee'">
                     消费满{{ item.full }}元,赠送(<el-button
                       type="text"
-                      @click="viewGiftItemList(scope.row)"
+                      @click="viewGiftItemList(scope.row,item.full,scope.row.condition_value.length)"
                       >赠品</el-button
                     >)
                   </span>
@@ -398,10 +398,25 @@ export default {
     dateStrToTimeStamp(str) {
       return Date.parse(new Date(str)) / 1000
     },
-    viewGiftItemList(row) {
-      console.log(row)
+    viewGiftItemList(row,full,ele) {
+      console.log(row,full,ele)
       this.activityItemDialog = true
-      this.activityItemListsData = row.gifts
+      if(ele==1){
+        this.activityItemListsData = row.gifts
+      }else{
+        let activityItem = row.gifts.map(item=>{
+        if(item.filter_full == full){
+          return item
+        }else{
+          return {}
+        }
+      })
+      let filteredArr = activityItem.filter(function(obj) {
+        return Object.keys(obj).length > 0;
+    })
+      this.activityItemListsData = filteredArr
+      }
+      
     },
     async fetchList() {
       this.loading = true

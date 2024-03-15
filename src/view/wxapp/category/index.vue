@@ -507,6 +507,11 @@ $txt-placeholder: #f5f5f7;
   <transition name="el-fade-in-linear" mode="out-in">
     <div>
       <SpPlatformTip h5 app alipay />
+      <el-switch
+        v-model="customClassification"
+        @change="switchChange"
+        inactive-text="是否开启自定义分类">
+      </el-switch>
       <section
         class="section section-white category-view-warp"
         :style="'height: ' + (wheight - 160) + 'px;'"
@@ -825,7 +830,7 @@ $txt-placeholder: #f5f5f7;
                   <div class="bind-btn iconfont icon-link" @click="openPageDialog(fidx)">
                     {{ item.page_name ? item.page_name : '绑定自定义页面' }}
                   </div>
-                  <el-checkbox v-model="item.hot"> 热推 </el-checkbox>
+                  <el-checkbox v-model="item.hot"> 热推1 </el-checkbox>
                   <div class="control-bar move iconfont icon-stream" />
                   <div class="control-bar remove iconfont icon-trash" @click="remove(fidx)" />
                 </div>
@@ -1014,6 +1019,7 @@ export default {
   },
   data() {
     return {
+      customClassification: true,
       goodsCateValue: '',
       goodsCateValueKey: 0,
 
@@ -1108,6 +1114,7 @@ export default {
     ...mapGetters(['wheight', 'template_name'])
   },
   mounted() {
+    this.custom()
     let filter = { template_name: this.template_name, version: 'v1.0.1', page_name: 'category' }
     getParamByTempName(filter).then((res) => {
       if (res.data.data.list.length !== 0) {
@@ -1141,6 +1148,15 @@ export default {
     })
   },
   methods: {
+    async switchChange(ele){
+      const res =await this.$api.goods.postCategoryPageSetting({style:ele?'category':'items'})
+      this.$message.success('切换成功')
+      this.custom()
+    },
+    async custom(){
+      const res =await this.$api.goods.getCategoryPageSetting()
+      this.customClassification = res.style=='category'?true:false
+    },
     curCateTypeChange(val) {
       console.log(val)
       if (val == 'mainCate') {

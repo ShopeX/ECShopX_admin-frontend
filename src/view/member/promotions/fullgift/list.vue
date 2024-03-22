@@ -406,7 +406,7 @@ export default {
         this.activityItemTotalCount = row.gifts.length
       }else{
         let activityItem = row.gifts.map(item=>{
-        if(item.filter_full == full){
+        if(item.filter_full.split(".")[0] == full){
           return item
         }else{
           return {}

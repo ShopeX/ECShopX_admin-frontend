@@ -561,7 +561,6 @@ export default {
         giftData.push(itemdata)
       })
       thisform.gifts = JSON.stringify(giftData)
-
       this.use_bound = 0
       if (thisform.use_bound == 'goods') {
         if (thisform.item_ids && thisform.item_ids.length <= 0) {
@@ -623,7 +622,7 @@ export default {
           gift.forEach(item=>{
           item.relGifts = []
           response.gifts.forEach(val => {
-            if(item.full == val.filter_full){
+            if(item.full == val.filter_full.split(".")[0]){
               item.relGifts.push(val)
             }
           })

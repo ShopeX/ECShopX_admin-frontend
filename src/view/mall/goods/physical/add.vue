@@ -381,11 +381,13 @@ export default {
         pics: goodsDetail.pics,
         pics_create_qrcode: goodsDetail.pics_create_qrcode,
         item_main_cat_id: goodsDetail.item_main_cat_id,
+        distributor_id: goodsDetail.distributor_id,
         itemVideo: {
           media_id: goodsDetail.videos,
           url: goodsDetail.videos_url || goodsDetail.videos
         }
       }
+      console.log(this.baseData)
 
       this.deepMainCategory(goodsDetail.item_category_main[0], this.categoryNames)
 
@@ -739,7 +741,8 @@ export default {
         item_type,
         special_type,
         item_source,
-        item_main_cat_id
+        item_main_cat_id,
+        distributor_id
       } = this.baseData
       const { nospec, isShowSpecimg } = this.skuData
       const { is_new } = this.$route.query
@@ -763,6 +766,7 @@ export default {
         pics_create_qrcode: pics_create_qrcode,
         videos: itemVideo.media_id,
         videos_url: itemVideo.url,
+        distributor_id:distributor_id,
         nospec,
         is_show_specimg: isShowSpecimg,
         item_params: this.paramsData.map((item) => {

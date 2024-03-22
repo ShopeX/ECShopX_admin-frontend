@@ -135,7 +135,7 @@
               <el-input v-model="value.brief" :maxlength="30" placeholder="" />
             </el-form-item>
           </el-col>
-          <el-col :span="8">
+          <el-col :span="8" v-if="$store.getters.login_type !== 'merchant'">
             <el-form-item label="运费模板" required>
               <el-select v-model="value.templatesId" class="width-full" placeholder="请选择">
                 <el-option
@@ -149,7 +149,7 @@
           </el-col>
         </el-row>
         <el-row :gutter="20">
-          <el-col :span="8">
+          <el-col :span="8" v-if="$store.getters.login_type !== 'merchant'">
             <el-form-item label="品牌" required>
               <el-select
                 v-model="value.brandId"
@@ -226,7 +226,7 @@
           </el-col>
         </el-row>
         <el-row :gutter="20">
-          <el-col :span="16">
+          <el-col :span="16" v-if="$store.getters.login_type !== 'merchant'">
             <el-form-item label="商品销售分类" required label-width="120px">
               <treeselect
                 v-model="value.itemCategory"

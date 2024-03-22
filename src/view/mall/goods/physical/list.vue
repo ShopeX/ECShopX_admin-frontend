@@ -36,7 +36,7 @@
   <div class="page-body">
     <SpRouterView>
       <div class="action-container">
-        <el-button type="primary" icon="iconfont icon-xinzengcaozuo-01" @click="addItems">
+        <el-button type="primary" v-if="$store.getters.login_type != 'merchant'" icon="iconfont icon-xinzengcaozuo-01" @click="addItems">
           添加商品
         </el-button>
         <!-- <el-button
@@ -52,7 +52,7 @@
             导入<i class="el-icon-arrow-down el-icon--right" />
           </el-button>
           <el-dropdown-menu slot="dropdown">
-            <el-dropdown-item command="physicalupload"> 商品导入 </el-dropdown-item>
+            <el-dropdown-item v-if="$store.getters.login_type != 'merchant'" command="physicalupload"> 商品导入 </el-dropdown-item>
             <el-dropdown-item command="physicalstoreupload"> 库存导入 </el-dropdown-item>
           </el-dropdown-menu>
         </el-dropdown>
@@ -88,7 +88,7 @@
             :props="{ value: 'category_id', label: 'category_name', checkStrictly: true }"
           />
         </SpFilterFormItem>
-        <SpFilterFormItem prop="category" label="销售分类:">
+        <SpFilterFormItem v-if="$store.getters.login_type != 'merchant'" prop="category" label="销售分类:">
           <el-cascader
             v-model="params.category"
             placeholder="请选择"
@@ -97,7 +97,7 @@
             :props="{ value: 'category_id', label: 'category_name', checkStrictly: true }"
           />
         </SpFilterFormItem>
-        <SpFilterFormItem prop="templates_id" label="运费模板:">
+        <SpFilterFormItem v-if="$store.getters.login_type != 'merchant'" prop="templates_id" label="运费模板:">
           <el-select v-model="params.templates_id" placeholder="请选择" clearable>
             <el-option
               v-for="item in templatesList"
@@ -108,7 +108,7 @@
           </el-select>
         </SpFilterFormItem>
 
-        <SpFilterFormItem prop="tag_id" label="标签:">
+        <SpFilterFormItem v-if="$store.getters.login_type != 'merchant'" prop="tag_id" label="标签:">
           <el-select v-model="params.tag_id" clearable placeholder="商品标签关键词">
             <el-option
               v-for="item in tag.list"
@@ -120,7 +120,7 @@
           </el-select>
         </SpFilterFormItem>
 
-        <SpFilterFormItem prop="brand_id" label="品牌:">
+        <SpFilterFormItem v-if="$store.getters.login_type != 'merchant'" prop="brand_id" label="品牌:">
           <el-select
             v-model="params.brand_id"
             placeholder="商品/商标关键词"
@@ -147,19 +147,23 @@
           />
         </SpFilterFormItem>
 
-        <SpFilterFormItem prop="is_gift" label="赠品:">
+        <SpFilterFormItem v-if="$store.getters.login_type != 'merchant'" prop="is_gift" label="赠品:">
           <el-select v-model="params.is_gift">
             <el-option :value="undefined" label="全部" />
             <el-option :value="true" label="是" />
             <el-option :value="false" label="否" />
           </el-select>
         </SpFilterFormItem>
+
+        <SpFilterFormItem v-if="$store.getters.login_type == 'merchant'" prop="distributor_id" label="店铺:">
+          <SpSelectShop v-model="params.distributor_id" clearable placeholder="请选择" />
+        </SpFilterFormItem>
       </SpFilterForm>
 
       <div class="action-container">
-        <el-button type="primary" plain @click="addCategory"> 更改销售分类 </el-button>
-        <el-button type="primary" plain @click="addTemplates"> 更改运费模板 </el-button>
-        <el-button type="primary" plain @click="addItemTag"> 打标签 </el-button>
+        <el-button type="primary" v-if="$store.getters.login_type != 'merchant'" plain @click="addCategory"> 更改销售分类 </el-button>
+        <el-button type="primary" v-if="$store.getters.login_type != 'merchant'" plain @click="addTemplates"> 更改运费模板 </el-button>
+        <el-button type="primary" v-if="$store.getters.login_type != 'merchant'" plain @click="addItemTag"> 打标签 </el-button>
         <el-button type="primary" plain @click="batchItemsStore"> 统一库存 </el-button>
         <el-button type="primary" plain @click="batchChangeStore"> 更改状态 </el-button>
         <!-- <el-button
@@ -176,8 +180,8 @@
         >
           下架
         </el-button> -->
-        <el-button type="primary" plain @click="batchGifts('true')"> 设为赠品 </el-button>
-        <el-button type="primary" plain @click="batchGifts('false')"> 设为非赠品 </el-button>
+        <el-button type="primary" v-if="$store.getters.login_type != 'merchant'" plain @click="batchGifts('true')"> 设为赠品 </el-button>
+        <el-button type="primary" v-if="$store.getters.login_type != 'merchant'" plain @click="batchGifts('false')"> 设为非赠品 </el-button>
 
         <el-dropdown>
           <el-button type="primary" plain icon="iconfont icon-daorucaozuo-01">
@@ -932,7 +936,8 @@ export default {
         barcode: '',
         distributor_id: 0,
         regions_id: [],
-        brand_id: ''
+        brand_id: '',
+        distributor_id: ''
       },
       start_date: '',
       end_date: '',
@@ -1072,6 +1077,8 @@ export default {
       } else if (command == 'physicalstoreupload') {
         if (this.login_type == 'distributor') {
           this.$router.push({ path: `/shopadmin/entity/goodsphysical/physicalstoreupload` })
+        } else if (this.login_type == 'merchant') {
+          this.$router.push({ path: `/merchant/entity/goods/goodsphysical/physicalstoreupload` })
         } else {
           this.$router.push({ path: `/entity/goods/goodsphysical/physicalstoreupload` })
         }

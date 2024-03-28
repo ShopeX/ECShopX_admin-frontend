@@ -37,6 +37,29 @@ export default {
       component: () => import('@/view/base/account/normalroles')
     },
     {
+      path: 'staff/dealer_list',
+      name: `账号管理-经销商管理`,
+      component: () => import('@/view/mall/marketing/dealer'),
+      children: [
+        {
+          path: 'detail/:id?',
+          component: () => import('@/view/mall/marketing/dealer/detail'),
+          children: [
+            {
+              path: 'storelist/:id?',
+              component: () => import('@/view/mall/marketing/dealer/storelist'),
+              children: [
+                {
+                  path: 'relation/:id?',
+                  component: () => import('@/view/mall/marketing/dealer/relationstorelist')
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
       path: 'assetpayment',
       name: `支付配置`,
       component: () => import('@/view/base/setting/payment')

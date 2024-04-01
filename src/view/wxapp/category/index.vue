@@ -827,22 +827,22 @@ $txt-placeholder: #f5f5f7;
                   >
                     {{ item.category_name ? item.category_name : '绑定分类' }}
                   </div>
-                  <div class="bind-btn iconfont icon-link" @click="openPageDialog(fidx)">
+                  <!-- <div class="bind-btn iconfont icon-link" @click="openPageDialog(fidx)">
                     {{ item.page_name ? item.page_name : '绑定自定义页面' }}
-                  </div>
-                  <!-- <div
+                  </div> -->
+                  <div
                   class="bind-btn"
                   :class="{
                     ' iconfont icon-link': !item.main_category_id && !item.category_id
                   }"
-                  @click="showCategory(fidx, sidx, '', item)"
+                  @click="showCategory(fidx, '', '', item)"
                 >
                   <template v-if="item">
                     {{ item.main_category_id ? '管理分类：' : '' }}
                     {{ item.category_id ? '商品分类：' : '' }}
                     {{ item.category_name ? item.category_name : '绑定分类' }}
                   </template>
-                </div> -->
+                </div>
 
 
 
@@ -1559,7 +1559,6 @@ export default {
         this.form.data = this.series
       }
       console.log(this.form,'kkkkkkkkkkkkkkkkkkkkkkkkkk');
-      return
       let param = {
         template_name: this.template_name,
         config: JSON.stringify([this.form]),

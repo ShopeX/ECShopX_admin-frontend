@@ -76,7 +76,7 @@ export default {
       const ids = this.value.map(({ tag_id }) => tag_id)
       const { data } = await this.$picker.tag({
         data: ids,
-        scene:this.$route.query.scene
+        distributor_id:this.$route.query.distributor_id
       })
       this.$emit('input', data)
     },

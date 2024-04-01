@@ -804,7 +804,7 @@ export default {
       // window.open(`/wxapp/manage/decorate?id=${pages_template_id}`, '_blank')
       const { distributor_id } = this.$route.query
       if (distributor_id > 0) {
-        this.$router.push(`/wxapp/manage/decorate?id=${pages_template_id}&scene=1003`)
+        this.$router.push(`/wxapp/manage/decorate?id=${pages_template_id}&scene=1003&distributor_id=${distributor_id}`)
       } else {
         this.$router.push(`/wxapp/manage/decorate?id=${pages_template_id}`)
       }

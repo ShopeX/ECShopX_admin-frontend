@@ -507,11 +507,11 @@ $txt-placeholder: #f5f5f7;
   <transition name="el-fade-in-linear" mode="out-in">
     <div>
       <SpPlatformTip h5 app alipay />
-      <el-switch
+      <!-- <el-switch
         v-model="customClassification"
         @change="switchChange"
         inactive-text="是否开启自定义分类">
-      </el-switch>
+      </el-switch> -->
       <section
         class="section section-white category-view-warp"
         :style="'height: ' + (wheight - 160) + 'px;'"
@@ -827,10 +827,26 @@ $txt-placeholder: #f5f5f7;
                   >
                     {{ item.category_name ? item.category_name : '绑定分类' }}
                   </div>
-                  <div class="bind-btn iconfont icon-link" @click="openPageDialog(fidx)">
+                  <!-- <div class="bind-btn iconfont icon-link" @click="openPageDialog(fidx)">
                     {{ item.page_name ? item.page_name : '绑定自定义页面' }}
-                  </div>
-                  <el-checkbox v-model="item.hot"> 热推1 </el-checkbox>
+                  </div> -->
+                  <div
+                  class="bind-btn"
+                  :class="{
+                    ' iconfont icon-link': !item.main_category_id && !item.category_id
+                  }"
+                  @click="showCategory(fidx, '', '', item)"
+                >
+                  <template v-if="item">
+                    {{ item.main_category_id ? '管理分类：' : '' }}
+                    {{ item.category_id ? '商品分类：' : '' }}
+                    {{ item.category_name ? item.category_name : '绑定分类' }}
+                  </template>
+                </div>
+
+
+
+                  <el-checkbox v-model="item.hot"> 热推 </el-checkbox>
                   <div class="control-bar move iconfont icon-stream" />
                   <div class="control-bar remove iconfont icon-trash" @click="remove(fidx)" />
                 </div>
@@ -1542,6 +1558,7 @@ export default {
         this.series[this.curTabIndex].content = this.editableData
         this.form.data = this.series
       }
+      console.log(this.form,'kkkkkkkkkkkkkkkkkkkkkkkkkk');
       let param = {
         template_name: this.template_name,
         config: JSON.stringify([this.form]),

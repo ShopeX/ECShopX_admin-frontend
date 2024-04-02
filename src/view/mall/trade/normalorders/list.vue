@@ -281,7 +281,7 @@
           </template>
         </el-table-column>
 
-        <!-- <el-table-column prop="source_name" label="来源"></el-table-column> -->
+        <el-table-column prop="source_name" label="来源" />
         <el-table-column label="操作" fixed="left">
           <template slot-scope="scope">
             <el-button type="text" style="margin-right: 8px">

@@ -1130,7 +1130,7 @@ export default {
     ...mapGetters(['wheight', 'template_name'])
   },
   mounted() {
-    this.custom()
+    // this.custom()
     let filter = { template_name: this.template_name, version: 'v1.0.1', page_name: 'category' }
     getParamByTempName(filter).then((res) => {
       if (res.data.data.list.length !== 0) {
@@ -1167,12 +1167,12 @@ export default {
     async switchChange(ele){
       const res =await this.$api.goods.postCategoryPageSetting({style:ele?'category':'items'})
       this.$message.success('切换成功')
-      this.custom()
+      // this.custom()
     },
-    async custom(){
-      const res =await this.$api.goods.getCategoryPageSetting()
-      this.customClassification = res.style=='category'?true:false
-    },
+    // async custom(){
+    //   const res =await this.$api.goods.getCategoryPageSetting()
+    //   this.customClassification = res.style=='category'?true:false
+    // },
     curCateTypeChange(val) {
       console.log(val)
       if (val == 'mainCate') {

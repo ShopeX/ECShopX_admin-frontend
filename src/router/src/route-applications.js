@@ -113,6 +113,17 @@ export default {
           component: () => import('@/view/applications/plugin/appDetail.vue')
         }
       ]
-    }
+    },
+    {
+      path: 'bspay/user_audit',
+      name: `用户进件审批`,
+      component: () => import('@/view/mall/marketing/huifuBspay'),
+      children: [
+        {
+          path: 'approve/:id?',
+          component: () => import('@/view/mall/marketing/huifuBspay/approve')
+        }
+      ]
+    },
   ]
 }

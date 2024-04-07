@@ -31,6 +31,22 @@ export default {
       path: 'adapay/adapay_member_info',
       name: '进件信息',
       component: () => import('@/view/mall/marketing/distributor_details')
+    },
+    {
+      path: 'bspay/user',
+      name: '进件管理',
+      component: () => import('@/view/dealer/bspay_create_user')
+    },
+    {
+      path: 'bspay/trades',
+      name: '分账明细',
+      component: () => import('@/view/mall/sub_account/sub_account'),
+      children: [
+        {
+          path: 'detail/:order_id',
+          component: () => import('@/view/mall/sub_account/detail')
+        }
+      ]
     }
   ]
 }

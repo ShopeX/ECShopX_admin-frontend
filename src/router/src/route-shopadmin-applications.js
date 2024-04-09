@@ -31,6 +31,17 @@ export default {
       path: 'adapay/adapay_member_info',
       name: '进件信息',
       component: () => import('@/view/mall/marketing/distributor_details')
+    },
+    {
+      path: 'appsgroup/extapp',
+      name: `扩展应用`,
+      component: () => import('@/view/applications/plugin'),
+      children: [
+        {
+          path: 'detail/:id?',
+          component: () => import('@/view/applications/plugin/appDetail.vue')
+        }
+      ]
     }
   ]
 }

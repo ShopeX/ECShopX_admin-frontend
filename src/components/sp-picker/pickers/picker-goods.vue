@@ -6,6 +6,9 @@
   .sp-finder-hd {
     display: none;
   }
+  .sp-finder-hd {
+    display: none;
+  }
   .item-info {
     display: flex;
     .item-image {
@@ -38,7 +41,7 @@
 </style>
 <template>
   <div class="picker-goods">
-    <SpFilterForm :model="formData" size="small" @onSearch="onSearch" @onReset="onSearch">
+    <SpFilterForm :model="formData" size="small" @onSearch="onSearch" @onReset="onReset">
       <SpFilterFormItem prop="keywords">
         <el-input v-model="formData.keywords" clearable placeholder="请输入商品名称" />
       </SpFilterFormItem>
@@ -104,7 +107,7 @@
         columns: [
           { name: '商品ID', key: 'item_id', width: 80 },
           {
-            name: '商品名称',
+            name: '商品名称', 
             key: 'page_name',
             render: (h, { row }) =>
               h('div', { class: 'item-info' }, [
@@ -200,17 +203,22 @@ export default {
       return params
     },
     afterSearch(response) {
+      const ids = this.localSelection
       const { list } = response.data.data
-      if (this.localSelection.length > 0) {
-        const selectRows = list.filter((item) => this.localSelection.includes(item.item_id))
-        const { finderTable } = this.$refs.finder.$refs
-        setTimeout(() => {
-          finderTable.$refs.finderTable.setSelection(selectRows)
-        })
-      }
+      const selectRow = list.filter((f) => ids.includes(f.item_id))
+      this.$nextTick(() => {
+        const finderTable = this.$refs.finder.$refs.finderTable.$refs.finderTable
+        const sids = finderTable.selection.map((m) => m.item_id)
+        
+        finderTable.setSelection(selectRow.filter((f) => !sids.includes(f.item_id)))
+        console.log(selectRow.filter((f) => !sids.includes(f.item_id)),'33333333========');
+      })
     },
-    onSearch() {
+    onReset() {
       this.$refs.finder.refresh(true)
+    },
+    onSearch(){
+      this.$refs.finder.initData(true)
     },
     onSelect(selection, row) {
       if (!this.multiple) {
@@ -223,8 +231,17 @@ export default {
       }
     },
     onSelectionChange(selection) {
-      this.localSelection = []
-      this.updateVal(selection)
+      let localVals = this.localVal.data.length>0?this.localVal.data:[]
+        let objArray = [...selection]
+          let uniqueMap = new Map();
+          let result = objArray.reduce((unique, item) => {
+            if(!uniqueMap.has(item.item_id)) {
+              uniqueMap.set(item.item_id, true); // 将 item_id 添加到 Map 中
+              unique.push(item); // 将当前对象添加到结果数组中
+            }
+            return unique;
+          }, []);
+      this.updateVal(result)  //存储点击的数据
     },
     isShowFormItem(key) {
       const { paramsFieldExclude = [] } = this.value

@@ -724,6 +724,7 @@ export default {
         // paramsFieldExclude: ['distributor_id'],
         multiple: true
       })
+      this.conditionValue[key].relGifts = []
       this.chooseGiftsAction(data)
     
     },

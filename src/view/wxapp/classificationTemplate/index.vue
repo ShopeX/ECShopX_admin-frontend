@@ -4,7 +4,7 @@
       <SpPlatformTip h5 app alipay />
       <el-row :gutter="20">
         <el-col :span="4">
-          <el-button type="primary" icon="plus" @click="openDialog()"> 添加页面 </el-button>
+          <el-button type="primary" icon="plus" @click="openDialog()"> 添加分类模版页面 </el-button>
         </el-col>
       </el-row>
       <el-table v-loading="loading" :data="list" :height="wheight - 140">
@@ -162,7 +162,8 @@ export default {
       curPageUrl: '',
       params: {
         page: 1,
-        pageSize: 10
+        pageSize: 10,
+        page_type:'category'
       },
       pageForm: {
         id: '',
@@ -267,6 +268,7 @@ export default {
         id
       } = this.pageForm
       const params = {
+        page_type:'category',
         page_name,
         page_description,
         is_open,

@@ -226,7 +226,8 @@ export const LINK_PATH = {
   'seckill': '秒杀',
   'custom_page': '自定义页面',
   'liverooms': '直播',
-  'other_wxapp': '外部小程序'
+  'other_wxapp': '外部小程序',
+  'shop_tag':'商家'
 }
 
 export const CARD_TYPE = {

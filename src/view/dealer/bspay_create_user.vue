@@ -73,11 +73,11 @@
                       <el-cascader
                       v-model="form.license_regions_id"
                       style="width: 100%"
-                      :options="regions"
+                      :options="regionsThird"
                       clearable
                       :props="{
-                        value: 'value',
-                        label: 'label',
+                        value: 'area_code',
+                        label: 'area_name',
                         // children: 'cities'
                       }"
                     />
@@ -208,12 +208,12 @@
                     <el-cascader
                       v-model="form.card_regions_id"
                       style="width: 100%"
-                      :options="AllArea"
+                      :options="regions"
                       clearable
                       :props="{
-                        value: 'value',
-                        label: 'title',
-                        children: 'cities'
+                        value: 'area_code',
+                        label: 'area_name',
+                        // children: 'cities'
                       }"
                     />
                   </el-form-item>
@@ -433,8 +433,9 @@ export default {
       ent_type_options: [],
       allShow: true,
       // 全部地区
-      AllArea: areaData,
-      regions: [],
+      // AllArea: areaData,
+      regions: [],// 二级地区
+      regionsThird: [], // 三级地区
       processed: '',
       currentStatus: {
         resultStatus: '',
@@ -531,7 +532,12 @@ export default {
     }
   },
   async created() {
-    const res = await this.$api.common.getAddress()
+    const resThird = await this.$api.bspay.getRegionsThird()
+    // const res = await this.$api.common.getAddress()
+    this.regionsThird = resThird
+
+    const res = await this.$api.bspay.getRegions()
+    // const res = await this.$api.common.getAddress()
     this.regions = res
   },
   mounted() {
@@ -574,7 +580,7 @@ export default {
       this.ent_type_options = ent_type_options
     },
     RegionChangeSearch (value) {
-      var vals = this.getCascaderObj(value, this.regions)
+      var vals = this.getCascaderObj(value, this.regionsThird)
       console.log(1, vals)
     },
 

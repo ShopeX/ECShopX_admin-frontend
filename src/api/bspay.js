@@ -108,3 +108,19 @@ export function setApproveAudit (params) {
     params
   })
 }
+
+// 获取二级地区
+export function getRegions () {
+  return fetch({
+    url: '/bspay/regions',
+    method: 'get'
+  })
+}
+
+// 获取三级地区
+export function getRegionsThird () {
+  return fetch({
+    url: '/bspay/regions/third',
+    method: 'get'
+  })
+}

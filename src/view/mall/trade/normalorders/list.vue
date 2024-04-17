@@ -358,6 +358,7 @@
       ref="deliverGoodsDialogRef"
       v-model="deliverGoodsDialog"
       width="1000px"
+      :confirmStatus="confirmStatus"
       :title="`发货【订单:${deliverGoodsForm.order_id}】`"
       :form="deliverGoodsForm"
       :form-list="deliverGoodsFormList"
@@ -436,6 +437,7 @@ export default {
   mixins: [mixin, pageMixin],
   data() {
     return {
+      confirmStatus:false,
       loading: false,
       defaultTime: ['00:00:00', '23:59:59'],
       params: {
@@ -560,7 +562,7 @@ export default {
       deliverGoodsDialog: false,
       deliverGoodsFormList: [
         {
-          label: '发货类型:',
+          label: '发货类型',
           key: 'delivery_type',
           type: 'radio',
           disabled: false,
@@ -608,7 +610,7 @@ export default {
           ]
         },
         {
-          label: '快递公司:',
+          label: '快递公司',
           key: 'delivery_corp',
           placeholder: '请选择快递公司',
           type: 'select',
@@ -617,7 +619,7 @@ export default {
           message: '不能为空'
         },
         {
-          label: '物流单号:',
+          label: '物流单号',
           key: 'delivery_code',
           type: 'input',
           placeholder: '物流公司单号',
@@ -1037,6 +1039,9 @@ export default {
           }
         })
         this.deliverGoodsForm.type = delivery_type
+        this.deliverGoodsForm.delivery_type = 'batch'
+        this.deliverGoodsForm.delivery_corp = ''
+        this.deliverGoodsForm.delivery_code = ''
         // 部分发货
         if (delivery_status == 'PARTAIL') {
           this.deliverGoodsForm.delivery_type = 'sep'
@@ -1224,7 +1229,9 @@ export default {
       if (delivery_type == 'sep') {
         params['sepInfo'] = JSON.stringify(items.filter((item) => item.delivery_num))
       }
+      this.confirmStatus = true
       const { delivery_status } = await this.$api.trade.delivery(params)
+      this.confirmStatus = false
       this.deliverGoodsDialog = false
       this.fetchList()
       if (delivery_status && delivery_status != 'PENDING') {

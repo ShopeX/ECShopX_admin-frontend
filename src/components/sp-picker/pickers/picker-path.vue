@@ -54,9 +54,9 @@
       <el-tab-pane label="外部小程序" name="other_wxapp">
         <PickerWxApp v-if="tabValue == 'other_wxapp'" ref="other_wxapp" :value="value" />
       </el-tab-pane>
-      <el-tab-pane label="商家" name="shop_tag">
+      <!-- <el-tab-pane label="商家" name="shop_tag">
         <PickerShopTag v-if="tabValue == 'shop_tag'" ref="shop_tag" :value="value" />
-      </el-tab-pane>
+      </el-tab-pane> -->
     </el-tabs>
   </div>
 </template>

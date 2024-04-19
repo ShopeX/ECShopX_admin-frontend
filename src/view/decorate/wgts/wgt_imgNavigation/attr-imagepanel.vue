@@ -15,7 +15,7 @@
               "
             />
           </div>
-          <div class="cell-value-tip">
+          <div class="cell-value-tip" v-if="isBusinessShow">
             商家：   
             <CompButton
             placeholder="选择店铺签"
@@ -42,7 +42,8 @@ export default {
   name: 'AttrNavItem',
   components: { CompPickerLink, CompTodoList ,CompButton},
   props: {
-    value: [Object, Array]
+    value: [Object, Array],
+    isBusinessShow: Boolean
   },
   methods: {
     handleClickAdd() {

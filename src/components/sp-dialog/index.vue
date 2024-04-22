@@ -51,7 +51,11 @@ export default {
     labelWidth: {
       type: String,
       default: '120px'
-    }
+    },
+    confirmStatus:{
+      type: Boolean,
+      default: false
+    },
   },
   data() {
     return {
@@ -73,7 +77,7 @@ export default {
     }
   },
   render() {
-    const { title, value, form, formList, width, labelWidth } = this
+    const { title, value, form, formList, width, labelWidth ,confirmStatus} = this
 
     if (!value) {
       return null
@@ -99,6 +103,7 @@ export default {
         <div slot='footer' class='dialog-footer'>
           <el-button onClick={this.handleCancel}>取 消</el-button>
           <el-button
+            loading={confirmStatus}
             type='primary'
             onClick={() => {
               this.$refs['form'].handleSubmit()

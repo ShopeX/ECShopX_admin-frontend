@@ -1,7 +1,7 @@
 <template>
   <div>
     <el-card class="mycard">
-      <!-- <div slot="header">
+      <div slot="header">
         分帐信息
         <el-popover
           v-if="subTitle"
@@ -20,13 +20,13 @@
             {{ subTitle }}
           </pre>
         </el-popover>
-      </div> -->
+      </div>
       <el-form
         ref="form"
         :model="form"
       >
-        <!-- <el-row class="cus-row-form">
-          <el-col :span="12">
+        <el-row class="cus-row-form">
+          <!-- <el-col :span="12">
             <el-form-item
               label="手续费扣费方式"
               prop="adapay_fee_mode"
@@ -47,7 +47,7 @@
                 />
               </el-select>
             </el-form-item>
-          </el-col>
+          </el-col> -->
           <el-col :span="12">
             <el-form-item
               label="总部分账占比"
@@ -81,7 +81,7 @@
               </el-input>
             </el-form-item>
           </el-col>
-        </el-row> -->
+        </el-row>
         <el-form-item class="cus-el-form">
           <el-button
             type="primary"
@@ -141,17 +141,15 @@ export default {
   data () {
     return {
       form: {
-        // headquarters_proportion: '',
-        // adapay_fee_mode: '',
-        // dealer_proportion: ''
+        headquarters_proportion: '',
+        dealer_proportion: ''
       },
-      // rules: {
-      //   headquarters_proportion: [
-      //     { required: true, validator: this.validateNumber, trigger: 'blur' }
-      //   ],
-      //   adapay_fee_mode: [{ required: true, message: '请选择', trigger: 'change' }],
-      //   dealer_proportion: [{ required: true, validator: this.validateNumber, trigger: 'blur' }]
-      // },
+      rules: {
+        headquarters_proportion: [
+          { required: true, validator: this.validateNumber, trigger: 'blur' }
+        ],
+        dealer_proportion: [{ required: true, validator: this.validateNumber, trigger: 'blur' }]
+      },
       dialogFormVisible: false,
       visibleContent: '',
       comments: '',
@@ -169,7 +167,7 @@ export default {
       // 点击审批弹框确定按钮
       const { entry_apply_info, dealer_info, distributor_info } = this.info
       this.$api.bspay.setApproveAudit({
-        // split_ledger_info: JSON.stringify(this.form),
+        split_ledger_info: JSON.stringify(this.form),
         operator_type: entry_apply_info.operator_type,
         status: this.approveType,
         id: entry_apply_info.id,

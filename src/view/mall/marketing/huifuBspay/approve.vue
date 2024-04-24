@@ -117,6 +117,13 @@
           :info="infoList"
           @handleClose="onChange"
         />
+        <RegisterInfo
+          v-if="status !== 'WAIT_APPROVE'"
+          :list="isBool ? enterSplitAccountList : splitAccountList"
+          :info="split_ledger_info"
+          :sub-title="subTitle"
+          title="分账信息"
+        />
       </div>
     </drawer>
     <el-dialog
@@ -223,14 +230,14 @@ export default {
       ],
       enterSplitAccountList: [
         // 企业分账信息
-        { name: '手续费扣费方式', field: 'adapay_fee_mode', filter: this.adapayFilter },
+        // { name: '手续费扣费方式', field: 'adapay_fee_mode', filter: this.adapayFilter },
         { name: '总部分账占比', field: 'headquarters_proportion', filter: this.headquartersFilter },
         { name: '审批状态', field: 'status', filter: this.statusFilter },
         { name: '审批备注', field: 'comments' }
       ],
       splitAccountList: [
         // 企业分账信息
-        { name: '手续费扣费方式', field: 'adapay_fee_mode', filter: this.adapayFilter },
+        // { name: '手续费扣费方式', field: 'adapay_fee_mode', filter: this.adapayFilter },
         { name: '总部分账占比', field: 'headquarters_proportion', filter: this.headquartersFilter },
         { name: '经销商分账占比', field: 'dealer_proportion', filter: this.dealerFilter },
         { name: '审批状态', field: 'status', filter: this.statusFilter },
@@ -295,24 +302,24 @@ export default {
               ...JSON.parse(dealer_info.split_ledger_info)
             }
           }
-          // let isBool = entry_apply_info.operator_type === 'distributor' && !is_rel_dealer
-          // this.subTitle = isBool
-          //   ? `分账金额计算公式内扣：
-          //   总部：（交易金额-手续费）*总部分账占比；
-          //   店铺：订单金额-手续费-总部分账金额。
-          //   外扣：
-          //   总部：交易金额*总部分账占比；
-          //   店铺：订单金额-总部分账金额。`
-          //   : ` 分账金额计算公式：
-          //   内扣：
-          //   总部：（交易金额-手续费）*总部分账占比；
-          //   经销商:（交易金额-手续费）*经销商分账占比；
-          //   店铺：订单金额-手续费-总部分账金额-经销商分账金额。
-          //   外扣：
-          //   总部：交易金额*总部分账占比；
-          //   经销商:交易金额*经销商分账占比；
-          //   店铺：订单金额-总部分账金额-经销商分账金额。`
-          // this.isBool = isBool
+          let isBool = entry_apply_info.operator_type === 'distributor' && !is_rel_dealer
+          this.subTitle = isBool
+            ? `分账金额计算公式内扣：
+            总部：（交易金额-手续费）*总部分账占比；
+            店铺：订单金额-手续费-总部分账金额。
+            外扣：
+            总部：交易金额*总部分账占比；
+            店铺：订单金额-总部分账金额。`
+            : ` 分账金额计算公式：
+            内扣：
+            总部：（交易金额-手续费）*总部分账占比；
+            经销商:（交易金额-手续费）*经销商分账占比；
+            店铺：订单金额-手续费-总部分账金额-经销商分账金额。
+            外扣：
+            总部：交易金额*总部分账占比；
+            经销商:交易金额*经销商分账占比；
+            店铺：订单金额-总部分账金额-经销商分账金额。`
+          this.isBool = isBool
           const { auto_sync_goods, is_ziti, is_delivery, company_dada_open } =
             distributor_info || {}
           if (auto_sync_goods) {
@@ -384,19 +391,19 @@ export default {
       let value = this.split_ledger_info.dealer_proportion
       return value ? value + '%' : '-'
     },
-    adapayFilter() {
-      let { adapay_fee_mode } = this.split_ledger_info
-      let returnValue = ''
-      switch (adapay_fee_mode) {
-        case 'I':
-          returnValue = '内扣'
-          break
-        case 'O':
-          returnValue = '外扣'
-          break
-      }
-      return returnValue
-    },
+    // adapayFilter() {
+    //   let { adapay_fee_mode } = this.split_ledger_info
+    //   let returnValue = ''
+    //   switch (adapay_fee_mode) {
+    //     case 'I':
+    //       returnValue = '内扣'
+    //       break
+    //     case 'O':
+    //       returnValue = '外扣'
+    //       break
+    //   }
+    //   return returnValue
+    // },
     bankFilter() {
       let { card_type } = this.entry_info
       let returnValue = ''

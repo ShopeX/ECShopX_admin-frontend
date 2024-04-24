@@ -125,5 +125,16 @@ export default {
         }
       ]
     },
+    {
+      path: 'bspay/trades',
+      name: '分账明细',
+      component: () => import('@/view/mall/bspay_sub_account/sub_account'),
+      children: [
+        {
+          path: 'detail/:order_id',
+          component: () => import('@/view/mall/bspay_sub_account/detail')
+        }
+      ]
+    },
   ]
 }

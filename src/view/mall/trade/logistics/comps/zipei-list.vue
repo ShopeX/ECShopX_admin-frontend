@@ -80,12 +80,10 @@ export default {
     async obtain() {
       let res = await this.$api.pickuplocation.getPickuplocationList()
       this.data = {
-        is_open: res.is_open,
         min_amount: res.min_amount,
         freight_fee: res.freight_fee,
         rule: res.rule
       }
-      console.log(res, 'src/view/mall/trade/logistics/comps/zipei-list.vue-第82行')
     },
     async save() {
       if (this.selected == 0) {
@@ -96,7 +94,6 @@ export default {
         this.rule[1].selected = true
       }
       let params = {
-        is_open: this.is_open,
         min_amount: this.min_amount,
         freight_fee: this.freight_fee,
         rule: this.rule

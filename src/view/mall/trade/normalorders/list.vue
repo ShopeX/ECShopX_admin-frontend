@@ -48,6 +48,17 @@
           />
         </el-select>
       </SpFilterFormItem>
+      <SpFilterFormItem v-if="!VERSION_IN_PURCHASE" prop="delivery_ersonnel" label="配送员:">
+        <el-select v-model="params.delivery_ersonnel" clearable placeholder="请选择">
+          <el-option
+            v-for="item in deliveryPersonnel"
+            :key="item.value"
+            size="mini"
+            :label="item.title"
+            :value="item.value"
+          />
+        </el-select>
+      </SpFilterFormItem>
       <SpFilterFormItem prop="create_time" label="下单时间:" size="max">
         <el-date-picker
           v-model="params.create_time"
@@ -126,6 +137,17 @@
           :options="subDistrictList"
         />
       </SpFilterFormItem>
+      <SpFilterFormItem prop="receipt_status" label="配送状态:">
+        <el-select v-model="params.receipt_status" clearable placeholder="请选择">
+          <el-option
+            v-for="item in distributionStatus"
+            :key="item.value"
+            size="mini"
+            :label="item.title"
+            :value="item.value"
+          />
+        </el-select>
+      </SpFilterFormItem>
     </SpFilterForm>
 
     <div class="action-container">
@@ -168,6 +190,15 @@
         :show-file-list="false"
       >
         <el-button type="primary" plain> 批量取消 </el-button>
+      </el-upload>
+      <el-upload
+        action=""
+        class="btn-upload"
+        :on-change="uploadHandlePatchCancel"
+        :auto-upload="false"
+        :show-file-list="false"
+      >
+        <el-button type="primary" plain> 取消配送 </el-button>
       </el-upload>
     </div>
 
@@ -278,6 +309,30 @@
         <el-table-column label="配送方式">
           <template slot-scope="scope">
             {{ getDistributionType(scope.row) }}
+          </template>
+        </el-table-column>
+
+        <el-table-column label="配送状态">
+          <template slot-scope="scope">
+            {{ getDistributionStatus(scope.row) }}
+          </template>
+        </el-table-column>
+
+        <el-table-column label="配送员">
+          <template slot-scope="scope">
+            {{ scope.row.order_status_msg }}
+          </template>
+        </el-table-column>
+
+        <el-table-column label="配送费">
+          <template slot-scope="scope">
+            {{ scope.row.order_status_msg }}
+          </template>
+        </el-table-column>
+
+        <el-table-column label="配送员电话">
+          <template slot-scope="scope">
+            {{ scope.row.order_status_msg }}
           </template>
         </el-table-column>
 
@@ -418,6 +473,7 @@ import CompReceiveInfo from './components/comp-receiveInfo'
 import moment from 'moment'
 import {
   DISTRIBUTION_TYPE,
+  DISTRIBUTION_STATUS,
   ORDER_STATUS,
   ORDER_B2C_STATUS,
   IN_PURCHASE_STATUS,
@@ -444,9 +500,11 @@ export default {
         order_class_exclude: 'drug,pointsmall,community',
         salesman_mobile: '',
         receipt_type: '', // 配送类型
+        receipt_status:'', //配送状态
         source: '', // 订单来源
         order_status: '', // 订单状态
         order_class: '', // 订单类型
+        delivery_ersonnel:'', //配送员
         is_invoiced: '', // 开票状态
         time_start_begin: '', //
         time_start_end: '',
@@ -454,9 +512,11 @@ export default {
         distributor_id: '', // 店铺
         subDistrict: []
       },
+      deliveryPersonnel:[],//配送员信息
       datapass_block: 1, // 是否为数据脱敏
       subDistrictList: [],
       distributionType: DISTRIBUTION_TYPE,
+      distributionStatus: DISTRIBUTION_STATUS,
       orderStatus: VERSION_B2C
         ? ORDER_B2C_STATUS
         : VERSION_IN_PURCHASE
@@ -974,6 +1034,14 @@ export default {
         return fd.title
       }
     },
+
+    getDistributionStatus({ receipt_type }) {
+      const fd = DISTRIBUTION_STATUS.find((item) => item.value == receipt_type)
+      if (fd) {
+        return fd.title
+      }
+    },
+
     async getOrderSourceList() {
       const { list } = await this.$api.datacube.getSourcesList({
         page: 1,

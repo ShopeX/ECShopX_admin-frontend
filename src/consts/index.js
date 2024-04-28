@@ -24,7 +24,16 @@ export const DISTRIBUTION_TYPE = [
   { title: '全部', value: '' },
   { title: '普通快递', value: 'logistics' },
   { title: '同城配', value: 'dada' },
-  { title: '客户自提', value: 'ziti' }
+  { title: '客户自提', value: 'ziti' },
+  { title: '自配送', value: 'nodistribution' }
+]
+
+export const DISTRIBUTION_STATUS = [
+  { title: '全部', value: '' },
+  { title: '已接单', value: '1' },
+  { title: '已打包', value: '2' },
+  { title: '配送中', value: '3' },
+  { title: '已送达', value: '4' }
 ]
 
 export const ORDER_STATUS = [

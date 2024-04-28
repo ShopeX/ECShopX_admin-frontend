@@ -183,6 +183,35 @@
             </template>
           </el-table-column>
           <el-table-column prop="source_name" label="来源" />
+          <el-table-column label="配送方式">
+            <template slot-scope="scope">
+              {{ getDistributionType(scope.row) }}
+            </template>
+          </el-table-column>
+  
+          <el-table-column label="配送状态">
+            <template slot-scope="scope">
+              {{ getDistributionStatus(scope.row) }}
+            </template>
+          </el-table-column>
+  
+          <el-table-column label="配送员">
+            <template slot-scope="scope">
+              {{ scope.row.order_status_msg }}
+            </template>
+          </el-table-column>
+  
+          <el-table-column label="配送费">
+            <template slot-scope="scope">
+              {{ scope.row.order_status_msg }}
+            </template>
+          </el-table-column>
+  
+          <el-table-column label="配送员电话">
+            <template slot-scope="scope">
+              {{ scope.row.order_status_msg }}
+            </template>
+          </el-table-column>
           <el-table-column label="操作" fixed="right">
             <template slot-scope="scope">
               <router-link
@@ -416,7 +445,7 @@
                 <el-select
                   v-model="deliveryForm.delivery_corp"
                   filterable
-                  placeholder="请选择快递公司，可搜索"
+                  placeholder="3请选择快递公司，可搜索"
                 >
                   <el-option
                     v-for="item in dlycorps"
@@ -426,6 +455,48 @@
                   />
                 </el-select>
               </el-col>
+            </el-form-item>
+            <el-form-item label="配送编号" width="200">
+              <template slot-scope="scope">
+                <el-input
+                  v-model="scope.row.delivery_code"
+                  :maxlength="20"
+                  placeholder="清填写配送编号"
+                />
+              </template>
+            </el-form-item>
+            <el-form-item label="配送编号" width="200">
+              <el-select v-model="deliveryForm.delivery_ersonnel" clearable placeholder="请选择">
+                <el-option
+                  v-for="item in deliveryPersonnel"
+                  :key="item.value"
+                  size="mini"
+                  :label="item.title"
+                  :value="item.value"
+                />
+              </el-select>
+            </el-form-item>
+            <el-form-item label="配送状态" width="200">
+              <el-select v-model="deliveryForm.delivery_status" clearable placeholder="请选择">
+                <el-option
+                  v-for="item in DISTRIBUTION_STATUS"
+                  :key="item.value"
+                  size="mini"
+                  :label="item.title"
+                  :value="item.value"
+                />
+              </el-select>
+            </el-form-item>
+            <el-form-item label="图片上传">
+              <template>
+                <div class="img-container">
+                  <SpImagePicker
+                    :src="deliveryForm.image_url"
+                    :width="48"
+                    :height="48"
+                  />
+                </div>
+              </template>
             </el-form-item>
             <el-form-item label="物流单号">
               <el-col :span="14">
@@ -646,6 +717,10 @@ import { getSourcesList } from '../../../../api/datacube'
 import shopSelect from '@/components/shopSelect'
 import RemarkModal from '@/components/remarkModal'
 import remarkMixin from '@/mixins/remarkMixin'
+import {
+  DISTRIBUTION_TYPE,
+  DISTRIBUTION_STATUS,
+} from '@/consts'
 
 export default {
   components: {
@@ -666,6 +741,7 @@ export default {
         distributor_id: 0,
         distributorIds: []
       },
+      deliveryPersonnel:[],//配送员
       order_class_array: [
         { name: '全部订单', value: '' },
         { name: '团购订单', value: 'groups' },
@@ -711,7 +787,10 @@ export default {
         order_id: '',
         delivery_corp: '',
         delivery_code: '',
-        sepInfo: {}
+        sepInfo: {},
+        delivery_ersonnel:'',
+        delivery_status:'',
+        image_url:''
       },
       dlycorps: [],
       cancelVisible: false,
@@ -766,6 +845,19 @@ export default {
     this.getAllSourcesList()
   },
   methods: {
+    getDistributionType({ receipt_type }) {
+      const fd = DISTRIBUTION_TYPE.find((item) => item.value == receipt_type)
+      if (fd) {
+        return fd.title
+      }
+    },
+
+    getDistributionStatus({ receipt_type }) {
+      const fd = DISTRIBUTION_STATUS.find((item) => item.value == receipt_type)
+      if (fd) {
+        return fd.title
+      }
+    },
     // 切换tab
     handleClick(tab, event) {
       this.activeName = tab.name

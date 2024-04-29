@@ -174,7 +174,7 @@ export default {
         staff_no: '',
         staff_attribute: 'part_time',
         payment_method: 'order',
-        payment_fee: '0',
+        payment_fee: 0.01,
         mobile: '',
         password: '',
         distributor_ids:[]
@@ -238,13 +238,42 @@ export default {
         {
           label: '结算费用',
           key: 'payment_fee',
-          type: 'number'
+          type: 'number',
+          precision: 2,
+          setp: 0.1,
+          tip:'元，每单',
+          validator: (rule, value, callback) => {
+            const { payment_fee } = this.addForm
+            if (!payment_fee) {
+              callback(new Error('不能为空'))
+            } else {
+                let res = /^(0|[1-9]\d*)(.\d{1,2})?$/.test(payment_fee)
+                if (!res) {
+                  callback(new Error('结算费用格式错误'))
+                } else {
+                    callback()
+                }
+            }
+          },
         },
         {
           label: '配送员手机号',
           key: 'mobile',
           type: 'input',
-          placeholder: '请输入配送员手机号'
+          placeholder: '请输入配送员手机号',
+          validator: (rule, value, callback) => {
+            const { mobile } = this.addForm
+            if (!mobile) {
+              callback(new Error('不能为空'))
+            } else {
+                let res = /^1[3-9]\d{9}$/.test(mobile)
+                if (!res) {
+                  callback(new Error('手机号格式错误'))
+                } else {
+                    callback()
+                }
+            }
+          },
         },
         {
           label: '配送员姓名',
@@ -255,7 +284,20 @@ export default {
         {
           label: '登录密码',
           key: 'password',
-          type: 'input'
+          type: 'input',
+          validator: (rule, value, callback) => {
+            const { password } = this.addForm
+            if (!password) {
+              callback(new Error('不能为空'))
+            } else {
+                let res = /^(?=.*[a-zA-Z0-9!@#$%^&*()-_+=])[a-zA-Z0-9!@#$%^&*()-_+=]{6,20}$/.test(password)
+                if (!res) {
+                  callback(new Error('密码不能是文字并且至少6位'))
+                } else {
+                    callback()
+                }
+            }
+          },
         },
         {
           label: '所属店铺',
@@ -307,6 +349,23 @@ export default {
     },
     addDeliveryman() {
       this.deliveryman = true
+      this.editTitle = '添加配送员'
+      this.addForm = {
+        operator_type: 'self_delivery_staff',
+        distributor_name: '',
+        staff_type: 'platform',
+        staff_no: '',
+        staff_attribute: 'part_time',
+        payment_method: 'order',
+        payment_fee: 0.01,
+        mobile: '',
+        password: '',
+        distributor_ids:[]
+      },
+      this.relDistributors = []
+    },
+    onAddCancel() {
+      this.deliveryman = false
     },
 
     async onAddSubmit() {

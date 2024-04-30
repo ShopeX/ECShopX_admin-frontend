@@ -79,10 +79,18 @@ export default {
   methods: {
     async obtain() {
       let res = await this.$api.pickuplocation.getPickuplocationList()
-      this.data = {
-        min_amount: res.min_amount,
-        freight_fee: res.freight_fee,
-        rule: res.rule
+      this.is_open = res.is_open.toLowerCase() === 'true';
+      this.min_amount = Number(res.min_amount),
+      this.freight_fee = Number(res.freight_fee),
+      this.rule = res.rule
+      this.rule.forEach((item, index) => {
+        item.freight_fee = Number(item.freight_fee)
+        item.full = Number(item.full)
+      });
+      if(this.rule[0].selected=='true'){
+        this.selected = '0'
+      }else{
+        this.selected = '1'
       }
     },
     async save() {
@@ -99,8 +107,8 @@ export default {
         freight_fee: this.freight_fee,
         rule: this.rule
       }
-      let res = await this.$api.pickuplocation.postPickuplocationList(params)
-      console.log(res, 'res777777')
+      await this.$api.pickuplocation.postPickuplocationList(params)
+      this.$message.success('保存成功')
     }
   }
 }

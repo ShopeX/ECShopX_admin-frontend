@@ -23,8 +23,8 @@
 
     <SpFinder
       ref="finder"
-      url="/roles/management"
-      :fixed-row-action="false"
+      url="/account/management"
+      no-selection
       :setting="setting"
       :hooks="{
         beforeSearch: beforeSearch
@@ -73,8 +73,8 @@ export default {
       isValid: true,
       oldData: [],
       relDistributors: [],
-      operator_id:'',
-      editTitle:'添加配送员',
+      operator_id: '',
+      editTitle: '添加配送员',
       params: {
         operator_type: 'self_delivery_staff',
         username: '',
@@ -96,29 +96,47 @@ export default {
           { name: '业务员姓名', key: 'username' },
           { name: '配送员编号', key: 'staff_no' },
           { name: '配送员手机号', key: 'mobile' },
-          { name: '配送员属性', key: 'staff_attribute' },
-          { name: '配送结算方式', key: 'payment_method' },
+          {
+            name: '配送员属性',
+            key: 'staff_attribute',
+            render: (h, { row }) => {
+              return <span>{row.staff_attribute === 'full_time' ? '全职' : '兼职'}</span>
+            }
+          },
+          {
+            name: '配送结算方式',
+            key: 'payment_method',
+            render: (h, { row }) => {
+              return <span>{row.payment_method === 'order' ? '按单笔订单' : '按订单金额比例'}</span>
+            }
+          },
           { name: '结算费用（¥/单）', key: 'payment_fee' },
           {
             name: '所属店铺',
-            key: 'permission_tree',
-            render: (h, { row }) => {
-              //permission_tree    distributor_ids
-              row.permission_tree.map((item) => {
-                return (
-                  <el-tag key='item.distributor_id' size='mini'>
-                    {item.name}
-                  </el-tag>
-                )
-              })
-            }
+            key: 'distributor_id'
+            // render: (h, { row }) => {
+            //   //permission_tree    distributor_ids
+            //   row.distributor_id.map((item) => {
+            //     return (
+            //       <el-tag key='item.distributor_id' size='mini'>
+            //         {item.name}
+            //       </el-tag>
+            //     )
+            //   })
+            // }
           },
           {
             name: '禁用',
             key: 'is_disable',
             render: (h, { row }) => {
+              console.log(row, 'src/view/base/account/delivery.vue-第120行')
               return (
-                <el-switch v-model={row.is_disable} active-color='#ff4949' inactive-color='#ccc' />
+                <el-switch
+                  onChange={this.acitonDisabled.bind(this, row)}
+                  v-model={row.is_disable}
+                  active-color='#ff4949'
+                  inactive-color='#ccc'
+                />
               )
             }
           }
@@ -131,20 +149,23 @@ export default {
             buttonType: 'text',
             action: {
               handler: ([row]) => {
+                this.operator_id = row.operator_id
+                this.relDistributors=[]
                 this.editTitle = '编辑配送员'
-                this.addForm= {
-                operator_type: row.operator_type,
-                distributor_name: row.distributor_name,
-                staff_type: row.staff_type,
-                staff_no: row.staff_no,
-                staff_attribute: row.staff_attribute,
-                payment_method: row.payment_method,
-                payment_fee: row.payment_fee,
-                mobile: row.mobile,
-                password: row.password,
-                distributor_ids:[]
-      },
-                console.log(row, 'src/view/base/account/delivery.vue-第78行')
+                this.deliveryman = true
+                this.addForm = {
+                    username:row.username,
+                  operator_type: row.operator_type,
+                  distributor_name: row.distributor_name,
+                  staff_type: row.staff_type,
+                  staff_no: row.staff_no,
+                  staff_attribute: row.staff_attribute,
+                  payment_method: row.payment_method,
+                  payment_fee: Number(row.payment_fee),
+                  mobile: row.mobile,
+                  distributor_ids: []
+                }
+                this.relDistributors=row.distributor_ids
               }
             }
           },
@@ -177,7 +198,7 @@ export default {
         payment_fee: 0.01,
         mobile: '',
         password: '',
-        distributor_ids:[]
+        distributor_ids: []
       },
       addFormList: [
         {
@@ -241,20 +262,20 @@ export default {
           type: 'number',
           precision: 2,
           setp: 0.1,
-          tip:'元，每单',
+          tip: '元，每单',
           validator: (rule, value, callback) => {
             const { payment_fee } = this.addForm
             if (!payment_fee) {
               callback(new Error('不能为空'))
             } else {
-                let res = /^(0|[1-9]\d*)(.\d{1,2})?$/.test(payment_fee)
-                if (!res) {
-                  callback(new Error('结算费用格式错误'))
-                } else {
-                    callback()
-                }
+              let res = /^(0|[1-9]\d*)(.\d{1,2})?$/.test(payment_fee)
+              if (!res) {
+                callback(new Error('结算费用格式错误'))
+              } else {
+                callback()
+              }
             }
-          },
+          }
         },
         {
           label: '配送员手机号',
@@ -266,14 +287,14 @@ export default {
             if (!mobile) {
               callback(new Error('不能为空'))
             } else {
-                let res = /^1[3-9]\d{9}$/.test(mobile)
-                if (!res) {
-                  callback(new Error('手机号格式错误'))
-                } else {
-                    callback()
-                }
+              let res = /^1[3-9]\d{9}$/.test(mobile)
+              if (!res) {
+                callback(new Error('手机号格式错误'))
+              } else {
+                callback()
+              }
             }
-          },
+          }
         },
         {
           label: '配送员姓名',
@@ -290,14 +311,16 @@ export default {
             if (!password) {
               callback(new Error('不能为空'))
             } else {
-                let res = /^(?=.*[a-zA-Z0-9!@#$%^&*()-_+=])[a-zA-Z0-9!@#$%^&*()-_+=]{6,20}$/.test(password)
-                if (!res) {
-                  callback(new Error('密码不能是文字并且至少6位'))
-                } else {
-                    callback()
-                }
+              let res = /^(?=.*[a-zA-Z0-9!@#$%^&*()-_+=])[a-zA-Z0-9!@#$%^&*()-_+=]{6,20}$/.test(
+                password
+              )
+              if (!res) {
+                callback(new Error('密码不能是文字并且至少6位'))
+              } else {
+                callback()
+              }
             }
-          },
+          }
         },
         {
           label: '所属店铺',
@@ -340,7 +363,6 @@ export default {
       this.$refs['finder'].refresh()
     },
     beforeSearch(params) {
-      console.log(params, 'src/view/base/account/delivery.vue-第115行')
       const _params = {
         ...params,
         ...this.params
@@ -360,16 +382,16 @@ export default {
         payment_fee: 0.01,
         mobile: '',
         password: '',
-        distributor_ids:[]
-      },
-      this.relDistributors = []
+        distributor_ids: []
+      }
+    this.relDistributors = []
     },
     onAddCancel() {
       this.deliveryman = false
     },
 
     async onAddSubmit() {
-        if (this.relDistributors.length > 0) {
+      if (this.relDistributors.length > 0) {
         this.relDistributors.forEach((distributor) => {
           this.addForm.distributor_ids.push({
             name: distributor.name,
@@ -382,16 +404,15 @@ export default {
       }
       if (this.operator_id) {
         await this.$api.company.updateAccountInfo(this.operator_id, this.addForm)
-          this.$message.success('保存成功')
-          this.deliveryman = false
-          this.onSearch()
+        this.$message.success('保存成功')
+        this.deliveryman = false
+        this.onSearch()
       } else {
         await this.$api.company.createAccount(this.addForm)
-          this.$message.success('保存成功')
-          this.deliveryman = false
-          this.onSearch()
+        this.$message.success('保存成功')
+        this.deliveryman = false
+        this.onSearch()
       }
-      console.log(this.addForm, 'src/view/base/account/delivery.vue-第234行')
     },
     addDistributoreAction() {
       this.DistributorStatus = true
@@ -412,6 +433,44 @@ export default {
     DistributoreHandleClose(index) {
       this.DistributorVisible = false
       this.relDistributors.splice(index, 1)
+    },
+    async acitonDisabled(row) {
+      console.log(row, row.is_disabled, 'src/view/base/account/delivery.vue-第430行')
+      if (row.is_disable) {
+        await this.$confirm('此操作将开启禁用, 是否继续?', '提示', {
+          confirmButtonText: '确定',
+          cancelButtonText: '取消',
+          type: 'warning'
+        })
+          .then(async () => {
+            // 点击确定的逻辑代码
+            let params = {
+              operator_id: row.operator_id,
+              is_disable: row.is_disable ? 1 : 0
+            }
+            await this.$api.login.changeOperatorStatus(params)
+            this.onSearch()
+            this.$message({
+              type: 'success',
+              message: '开启成功!'
+            })
+          })
+          .catch(() => {
+            // 点击取消或关闭（规定要加上这个）
+            row.is_disable = !row.is_disable
+          })
+      } else {
+        let params = {
+          operator_id: row.operator_id,
+          is_disable: row.is_disable ? 1 : 0
+        }
+        await this.$api.login.changeOperatorStatus(params)
+        this.onSearch()
+        this.$message({
+          type: 'success',
+          message: '关闭成功!'
+        })
+      }
     }
   }
 }

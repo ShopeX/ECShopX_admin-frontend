@@ -30,10 +30,10 @@ export const DISTRIBUTION_TYPE = [
 
 export const DISTRIBUTION_STATUS = [
   { title: '全部', value: '' },
-  { title: '已接单', value: '1' },
-  { title: '已打包', value: '2' },
-  { title: '配送中', value: '3' },
-  { title: '已送达', value: '4' }
+  { title: '已接单', value: 'RECEIVEORDER' },
+  { title: '已打包', value: 'PACKAGED' },
+  { title: '配送中', value: 'DELIVERING' },
+  { title: '已送达', value: 'DONE' }
 ]
 
 export const ORDER_STATUS = [

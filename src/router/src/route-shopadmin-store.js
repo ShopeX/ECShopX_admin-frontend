@@ -39,6 +39,11 @@ export default {
       component: () => import('@/view/mall/marketing/distributorCode')
     },
     {
+      path: 'marketingsalesman',
+      name: `店铺导购员`,
+      component: () => import('@/view/guide/salesman')
+    },
+    {
       path: 'tmpl/shopDecoration',
       name: `移动商城`,
       component: () => import('@/view/mall/marketing/shopDecoration'),

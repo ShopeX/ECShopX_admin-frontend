@@ -48,8 +48,8 @@
           />
         </el-select>
       </SpFilterFormItem>
-      <SpFilterFormItem v-if="!VERSION_IN_PURCHASE" prop="delivery_ersonnel" label="配送员:">
-        <el-select v-model="params.delivery_ersonnel" clearable placeholder="请选择">
+      <SpFilterFormItem v-if="!VERSION_IN_PURCHASE" prop="delivery_staff_id" label="配送员:">
+        <el-select v-model="params.delivery_staff_id" clearable placeholder="请选择">
           <el-option
             v-for="item in deliveryPersonnel"
             :key="item.value"
@@ -137,8 +137,8 @@
           :options="subDistrictList"
         />
       </SpFilterFormItem>
-      <SpFilterFormItem prop="receipt_status" label="配送状态:">
-        <el-select v-model="params.receipt_status" clearable placeholder="请选择">
+      <SpFilterFormItem prop="self_delivery_status" label="配送状态:">
+        <el-select v-model="params.self_delivery_status" clearable placeholder="请选择">
           <el-option
             v-for="item in distributionStatus"
             :key="item.value"
@@ -320,19 +320,19 @@
 
         <el-table-column label="配送员">
           <template slot-scope="scope">
-            {{ scope.row.order_status_msg }}
+            {{ scope.row.username }}
           </template>
         </el-table-column>
 
         <el-table-column label="配送费">
           <template slot-scope="scope">
-            {{ scope.row.order_status_msg }}
+            {{ scope.row.payment_fee }}
           </template>
         </el-table-column>
 
         <el-table-column label="配送员电话">
           <template slot-scope="scope">
-            {{ scope.row.order_status_msg }}
+            {{ scope.row.mobile }}
           </template>
         </el-table-column>
 
@@ -500,11 +500,11 @@ export default {
         order_class_exclude: 'drug,pointsmall,community',
         salesman_mobile: '',
         receipt_type: '', // 配送类型
-        receipt_status:'', //配送状态
+        self_delivery_status:'', //配送状态
         source: '', // 订单来源
         order_status: '', // 订单状态
         order_class: '', // 订单类型
-        delivery_ersonnel:'', //配送员
+        delivery_staff_id:'', //配送员
         is_invoiced: '', // 开票状态
         time_start_begin: '', //
         time_start_end: '',
@@ -881,12 +881,26 @@ export default {
     this.getLogisticsList()
     this.getSubDistrictList()
     this.getPickupcodeSetting()
-
+    this.delivery()
     this.$EventBus.$on('event.tradelist.refresh', () => {
       this.fetchList()
     })
   },
   methods: {
+    async delivery(){
+      let params= {
+        pageSize: 1000,
+        page: 1,
+        // finderId: 100,
+        operator_type: 'self_delivery_staff',
+      }
+      let {list} = await this.$api.company.getAccountList(params)
+      list.forEach(ele => {
+        ele.value = ele.operator_id,
+        ele.title = ele.username
+      });
+      this.deliveryPersonnel = list
+    },
     async fetchList() {
       this.loading = true
       const { pageIndex: page, pageSize } = this.page
@@ -1035,8 +1049,8 @@ export default {
       }
     },
 
-    getDistributionStatus({ receipt_type }) {
-      const fd = DISTRIBUTION_STATUS.find((item) => item.value == receipt_type)
+    getDistributionStatus({ self_delivery_status }) {
+      const fd = DISTRIBUTION_STATUS.find((item) => item.value == self_delivery_status)
       if (fd) {
         return fd.title
       }

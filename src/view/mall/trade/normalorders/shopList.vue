@@ -197,19 +197,19 @@
   
           <el-table-column label="配送员">
             <template slot-scope="scope">
-              {{ scope.row.order_status_msg }}
+              {{ scope.row.username }}
             </template>
           </el-table-column>
   
           <el-table-column label="配送费">
             <template slot-scope="scope">
-              {{ scope.row.order_status_msg }}
+              {{ scope.row.payment_fee }}
             </template>
           </el-table-column>
   
           <el-table-column label="配送员电话">
             <template slot-scope="scope">
-              {{ scope.row.order_status_msg }}
+              {{ scope.row.mobile }}
             </template>
           </el-table-column>
           <el-table-column label="操作" fixed="right">
@@ -408,7 +408,7 @@
             <el-form-item label="发货类型">
               <el-radio-group v-model="deliveryForm.delivery_type" :disabled="IsDisabled">
                 <el-radio label="batch"> 整单发货 </el-radio>
-                <el-radio label="sep"> 拆分发货 </el-radio>
+                <el-radio v-if="deliveryForm.delivery_type != 'merchant'" label="sep"> 拆分发货 </el-radio>
               </el-radio-group>
             </el-form-item>
             <el-form-item label="商品信息">
@@ -445,7 +445,7 @@
                 <el-select
                   v-model="deliveryForm.delivery_corp"
                   filterable
-                  placeholder="3请选择快递公司，可搜索"
+                  placeholder="请选择快递公司，可搜索"
                 >
                   <el-option
                     v-for="item in dlycorps"
@@ -456,48 +456,51 @@
                 </el-select>
               </el-col>
             </el-form-item>
-            <el-form-item label="配送编号" width="200">
-              <template slot-scope="scope">
-                <el-input
-                  v-model="scope.row.delivery_code"
-                  :maxlength="20"
-                  placeholder="清填写配送编号"
-                />
-              </template>
-            </el-form-item>
-            <el-form-item label="配送编号" width="200">
-              <el-select v-model="deliveryForm.delivery_ersonnel" clearable placeholder="请选择">
-                <el-option
-                  v-for="item in deliveryPersonnel"
-                  :key="item.value"
-                  size="mini"
-                  :label="item.title"
-                  :value="item.value"
-                />
-              </el-select>
-            </el-form-item>
-            <el-form-item label="配送状态" width="200">
-              <el-select v-model="deliveryForm.delivery_status" clearable placeholder="请选择">
-                <el-option
-                  v-for="item in DISTRIBUTION_STATUS"
-                  :key="item.value"
-                  size="mini"
-                  :label="item.title"
-                  :value="item.value"
-                />
-              </el-select>
-            </el-form-item>
-            <el-form-item label="图片上传">
-              <template>
-                <div class="img-container">
-                  <SpImagePicker
-                    :src="deliveryForm.image_url"
-                    :width="48"
-                    :height="48"
+            <template v-if="deliveryForm.delivery_type == 'merchant'">
+              <el-form-item label="配送编号" width="200">
+                <template slot-scope="scope">
+                  <el-input
+                    v-model="scope.row.delivery_code"
+                    :maxlength="20"
+                    placeholder="清填写配送编号"
                   />
-                </div>
-              </template>
-            </el-form-item>
+                </template>
+              </el-form-item>
+              <el-form-item label="配送员" width="200">
+                <el-select v-model="deliveryForm.delivery_ersonnel" clearable placeholder="请选择">
+                  <el-option
+                    v-for="item in deliveryPersonnel"
+                    :key="item.value"
+                    size="mini"
+                    :label="item.title"
+                    :value="item.value"
+                  />
+                </el-select>
+              </el-form-item>
+              <el-form-item label="配送状态" width="200">
+                <el-select v-model="deliveryForm.self_delivery_status" clearable placeholder="请选择">
+                  <el-option
+                    v-for="item in DISTRIBUTION_STATUS"
+                    :key="item.value"
+                    size="mini"
+                    :label="item.title"
+                    :value="item.value"
+                  />
+                </el-select>
+              </el-form-item>
+              <el-form-item label="图片上传">
+                <template>
+                  <div class="img-container">
+                    <SpImagePicker
+                      :src="deliveryForm.delivery_pics"
+                      :width="48"
+                      :height="48"
+                    />
+                  </div>
+                </template>
+              </el-form-item>
+            </template>
+            
             <el-form-item label="物流单号">
               <el-col :span="14">
                 <el-input
@@ -789,8 +792,8 @@ export default {
         delivery_code: '',
         sepInfo: {},
         delivery_ersonnel:'',
-        delivery_status:'',
-        image_url:''
+        self_delivery_status:'',
+        delivery_pics:[]
       },
       dlycorps: [],
       cancelVisible: false,
@@ -843,8 +846,23 @@ export default {
     this.params.order_type = this.order_type
     this.getOrders(this.params)
     this.getAllSourcesList()
+    this.delivery()
   },
   methods: {
+    async delivery(){
+      let params= {
+        pageSize: 1000,
+        page: 1,
+        // finderId: 100,
+        operator_type: 'self_delivery_staff',
+      }
+      let {list} = await this.$api.company.getAccountList(params)
+      list.forEach(ele => {
+        ele.value = ele.operator_id,
+        ele.title = ele.username
+      });
+      this.deliveryPersonnel = list
+    },
     getDistributionType({ receipt_type }) {
       const fd = DISTRIBUTION_TYPE.find((item) => item.value == receipt_type)
       if (fd) {
@@ -852,8 +870,8 @@ export default {
       }
     },
 
-    getDistributionStatus({ receipt_type }) {
-      const fd = DISTRIBUTION_STATUS.find((item) => item.value == receipt_type)
+    getDistributionStatus({ self_delivery_status }) {
+      const fd = DISTRIBUTION_STATUS.find((item) => item.value == self_delivery_status)
       if (fd) {
         return fd.title
       }

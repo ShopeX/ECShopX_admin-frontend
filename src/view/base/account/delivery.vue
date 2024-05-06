@@ -2,7 +2,7 @@
   <div>
     <el-button type="primary" @click="addDeliveryman">添加配送员</el-button>
 
-    <SpFilterForm :model="params" @onSearch="onSearch" @onReset="onSearch">
+    <SpFilterForm :model="params" size="small" @onSearch="onSearch" @onReset="onSearch">
       <SpFilterFormItem prop="username" label="配送员姓名:">
         <el-input v-model="params.username" placeholder="请输入配送员姓名" />
       </SpFilterFormItem>
@@ -113,17 +113,23 @@ export default {
           { name: '结算费用（¥/单）', key: 'payment_fee' },
           {
             name: '所属店铺',
-            key: 'distributor_id'
-            // render: (h, { row }) => {
-            //   //permission_tree    distributor_ids
-            //   row.distributor_id.map((item) => {
-            //     return (
-            //       <el-tag key='item.distributor_id' size='mini'>
-            //         {item.name}
-            //       </el-tag>
-            //     )
-            //   })
-            // }
+            key: 'distributor_ids',
+            width:300,
+            render: (h, { row }) => {
+              return (
+                <div>
+                  {
+                    row.distributor_ids.map((item) => {
+                      return (
+                        <el-tag key={item.distributor_ids} size='mini'>
+                          {item.name}
+                        </el-tag>
+                      )
+                    })
+                  }
+                </div>
+              )
+            }
           },
           {
             name: '禁用',
@@ -180,7 +186,7 @@ export default {
                   confirmButtonText: '确定',
                   cancelButtonText: '取消'
                 })
-                await this.$api.pickuplocation.deleteZitiLocation(row.id)
+                await this.$api.pickuplocation.deleteZitiLocation(row.operator_id)
                 this.$refs['finder'].refresh()
               }
             }

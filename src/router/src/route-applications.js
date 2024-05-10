@@ -113,6 +113,28 @@ export default {
           component: () => import('@/view/applications/plugin/appDetail.vue')
         }
       ]
-    }
+    },
+    {
+      path: 'bspay/user_audit',
+      name: `用户进件审批`,
+      component: () => import('@/view/mall/marketing/huifuBspay'),
+      children: [
+        {
+          path: 'approve/:id?',
+          component: () => import('@/view/mall/marketing/huifuBspay/approve')
+        }
+      ]
+    },
+    {
+      path: 'bspay/trades',
+      name: '分账明细',
+      component: () => import('@/view/mall/bspay_sub_account/sub_account'),
+      children: [
+        {
+          path: 'detail/:order_id',
+          component: () => import('@/view/mall/bspay_sub_account/detail')
+        }
+      ]
+    },
   ]
 }

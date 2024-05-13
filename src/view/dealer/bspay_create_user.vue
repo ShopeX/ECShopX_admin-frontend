@@ -368,12 +368,11 @@
                     <el-cascader
                       v-model="indvForm.card_regions_id"
                       style="width: 100%"
-                      :options="AllArea"
+                      :options="regions"
                       clearable
                       :props="{
-                        value: 'value',
-                        label: 'title',
-                        children: 'cities'
+                        value: 'area_code',
+                        label: 'area_name',
                       }"
                     />
                   </el-form-item>

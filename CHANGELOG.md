@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [3.14.7](https://git.ishopex.cn/ecshopx/ecshopx-admin/compare/v3.14.6...v3.14.7) (2024-05-14)
+
+
+### Bug Fixes
+
+* 赠品新增缺少filter_full参数 ([13e0e27](https://git.ishopex.cn/ecshopx/ecshopx-admin/commit/13e0e27cf0687091b9c32ceacdd51477ddababc2))
+
 ### [3.14.6](https://git.ishopex.cn/ecshopx/ecshopx-admin/compare/v3.14.5...v3.14.6) (2024-05-13)
 
 

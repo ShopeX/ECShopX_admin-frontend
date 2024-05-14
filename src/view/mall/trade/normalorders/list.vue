@@ -681,7 +681,7 @@ export default {
           ]
         },
         {
-          label: '快递公司:',
+          label: '快递公司',
           key: 'delivery_corp',
           placeholder: '请选择快递公司',
           type: 'select',

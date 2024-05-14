@@ -1,6 +1,8 @@
 <template>
   <div>
-    <el-button type="primary" @click="addDeliveryman">添加配送员</el-button>
+    <div class="action-container">
+      <el-button type="primary" @click="addDeliveryman">添加配送员</el-button>
+    </div>
 
     <SpFilterForm :model="params" size="small" @onSearch="onSearch" @onReset="onSearch">
       <SpFilterFormItem prop="username" label="配送员姓名:">
@@ -40,7 +42,7 @@
       @onSubmit="onAddSubmit"
     />
 
-    <DistributorSelect
+    <!-- <DistributorSelect
       :store-visible="DistributorVisible"
       :is-valid="isValid"
       :get-status="DistributorStatus"
@@ -50,7 +52,7 @@
       :distribution_type="distributionType"
       @chooseStore="DistributorChooseAction"
       @closeStoreDialog="closeDialogAction"
-    />
+    /> -->
   </div>
 </template>
 <script>
@@ -93,11 +95,12 @@ export default {
       ],
       setting: {
         columns: [
-          { name: '业务员姓名', key: 'username' },
-          { name: '配送员编号', key: 'staff_no' },
-          { name: '配送员手机号', key: 'mobile' },
+          { name: '业务员姓名', key: 'username', width: 110 },
+          { name: '配送员编号', key: 'staff_no', width: 110 },
+          { name: '配送员手机号', key: 'mobile', width: 150 },
           {
             name: '配送员属性',
+            width: 110,
             key: 'staff_attribute',
             render: (h, { row }) => {
               return <span>{row.staff_attribute === 'full_time' ? '全职' : '兼职'}</span>
@@ -105,12 +108,13 @@ export default {
           },
           {
             name: '配送结算方式',
+            width: 150,
             key: 'payment_method',
             render: (h, { row }) => {
               return <span>{row.payment_method === 'order' ? '按单笔订单' : '按订单金额比例'}</span>
             }
           },
-          { name: '结算费用（¥/单）', key: 'payment_fee' },
+          { name: '结算费用（¥/单）', key: 'payment_fee', width: 150 },
           {
             name: '所属店铺',
             key: 'distributor_ids',
@@ -133,7 +137,6 @@ export default {
             name: '禁用',
             key: 'is_disable',
             render: (h, { row }) => {
-              console.log(row, 'src/view/base/account/delivery.vue-第120行')
               return (
                 <el-switch
                   onChange={this.acitonDisabled.bind(this, row)}
@@ -165,15 +168,15 @@ export default {
                   staff_no: row.staff_no,
                   staff_attribute: row.staff_attribute,
                   payment_method: row.payment_method,
-                  payment_fee: row.payment_method == 'order'?Number(row.payment_fee):0.01,
-                  payment_fee1: row.payment_method == 'order'?1:Number(row.payment_fee),
+                  payment_fee: row.payment_method == 'order' ? Number(row.payment_fee) : 0.01,
+                  payment_fee1: row.payment_method == 'order' ? 1 : Number(row.payment_fee),
                   mobile: row.mobile,
                   distributor_ids: []
                 }
                 this.relDistributors = row.distributor_ids
               }
             }
-          },
+          }
           // {
           //   name: '删除',
           //   key: 'apply',
@@ -201,7 +204,7 @@ export default {
         staff_attribute: 'part_time',
         payment_method: 'order',
         payment_fee: 0.01,
-        payment_fee1:1,
+        payment_fee1: 1,
         mobile: '',
         password: '',
         distributor_ids: []
@@ -265,12 +268,19 @@ export default {
         {
           label: '结算费用',
           key: 'payment_fee',
-          type: 'number',
-          precision: 2,
-          setp: 0.1,
-          tip: '元，每单',
-          isShow:()=>{
+          // type: 'number',
+          // precision: 2,
+          // setp: 0.1,
+          // tip: '元，每单',
+          isShow: () => {
             return this.addForm.payment_method == 'order'
+          },
+          component: ({ key }, value) => {
+            return (
+              <div class="flex-box">
+                <el-input-number v-model={value[key]} controls-position="right" precision="2" step="0.01" /> <span>元，每单</span>
+              </div>
+            )
           },
           validator: (rule, value, callback) => {
             const { payment_fee } = this.addForm
@@ -289,10 +299,17 @@ export default {
         {
           label: '结算费用',
           key: 'payment_fee1',
-          type: 'number',
-          tip:'%,每单',
-          isShow:()=>{
+          // type: 'number',
+          // tip: '%,每单',
+          isShow: () => {
             return this.addForm.payment_method == 'amount'
+          },
+          component: ({ key }, value) => {
+            return (
+              <div class="flex-box">
+                <el-input-number v-model={value[key]} controls-position="right" precision="0" step="1"/> <span>%，每单</span>
+              </div>
+            )
           },
           validator: (rule, value, callback) => {
             const { payment_fee1 } = this.addForm
@@ -418,6 +435,7 @@ export default {
         password: '',
         distributor_ids: []
       }
+      this.operator_id = ""
       this.relDistributors = []
     },
     onAddCancel() {
@@ -425,27 +443,31 @@ export default {
     },
 
     async onAddSubmit() {
-      if (this.addForm.staff_type == 'distributor') {
-        if (this.relDistributors.length > 0) {
+      console.log(this.relDistributors,'llllll');
+      if (this.relDistributors.length > 0) {
           this.relDistributors.forEach((distributor) => {
             this.addForm.distributor_ids.push({
               name: distributor.name,
               distributor_id: distributor.distributor_id
             })
           })
-        } else {
-          this.$message({ type: 'error', message: '必须关联店铺' })
-          return false
         }
+
+      if(this.addForm.staff_type == 'distributor' && this.relDistributors.length == 0){
+        this.$message({ type: 'error', message: '店铺配送员必须关联店铺' })
+          return false
       }
       let params = {
         ...this.addForm,
-        payment_fee: this.addForm.payment_method == 'order'? this.addForm.payment_fee: this.addForm.payment_fee1
+        payment_fee:
+          this.addForm.payment_method == 'order'
+            ? this.addForm.payment_fee
+            : this.addForm.payment_fee1
       }
 
       if (this.operator_id) {
         await this.$api.company.updateAccountInfo(this.operator_id, params)
-        this.$message.success('保存成功')
+        this.$message.success('编辑成功')
         this.deliveryman = false
         this.onSearch()
       } else {
@@ -455,28 +477,42 @@ export default {
         this.onSearch()
       }
     },
-    addDistributoreAction() {
+    async addDistributoreAction() {
+      const { data } = await this.$picker.shop()
+      let arrObj = [...this.relDistributors, ...data]
+
+
+      for (let i = 0; i < arrObj.length; i++) {
+        for(let j=i+1;j<arrObj.length;j++){
+          if(arrObj[i].distributor_id==arrObj[j].distributor_id){
+            arrObj.splice(j,1);
+            j--;
+          }
+        }
+      }
+      console.log(arrObj,'tttt');
+
+      this.relDistributors = arrObj
       this.DistributorStatus = true
       this.DistributorVisible = true
     },
-    DistributorChooseAction(data) {
-      console.log(data)
-      this.DistributorVisible = false
-      if (data === null || data.length <= 0) return
-      this.relDistributors = data
-      this.oldData = data
-    },
-    closeDialogAction() {
-      this.DistributorVisible = false
-      this.relDistributors = this.oldData
-      this.DistributorStatus = false
-    },
+    // DistributorChooseAction(data) {
+    //   console.log(data)
+    //   this.DistributorVisible = false
+    //   if (data === null || data.length <= 0) return
+    //   this.relDistributors = data
+    //   this.oldData = data
+    // },
+    // closeDialogAction() {
+    //   this.DistributorVisible = false
+    //   this.relDistributors = this.oldData
+    //   this.DistributorStatus = false
+    // },
     DistributoreHandleClose(index) {
       this.DistributorVisible = false
       this.relDistributors.splice(index, 1)
     },
     async acitonDisabled(row) {
-      console.log(row, row.is_disabled, 'src/view/base/account/delivery.vue-第430行')
       if (row.is_disable) {
         await this.$confirm('此操作将开启禁用, 是否继续?', '提示', {
           confirmButtonText: '确定',
@@ -516,4 +552,12 @@ export default {
   }
 }
 </script>
-<style lang="" scoped></style>
+<style lang="scss" scoped>
+.flex-box{
+  display: flex;
+  align-items: center;
+  span{
+    margin-left: 10px;
+  }
+}
+</style>

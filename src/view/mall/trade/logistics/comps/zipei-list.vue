@@ -1,5 +1,7 @@
 <template>
   <div class="zipei-list">
+
+
     <div class="delivery-open">
       商家自配送是否开启：
       <el-switch v-model="is_open" active-color="#13ce66" inactive-color="#ff4949" />
@@ -28,14 +30,13 @@
         <span>元</span>
       </div>
     </div>
-    <GlobalFooter>
+    <div class="footer-container">
       <el-button type="primary" @click="save"> 保存配置 </el-button>
-    </GlobalFooter>
+    </div>
   </div>
 </template>
 
 <script>
-import GlobalFooter from '@/components/global_footer'
 
 /**
  * is_open  是否开启
@@ -50,9 +51,6 @@ import GlobalFooter from '@/components/global_footer'
  */
 export default {
   name: 'ZiPeiList',
-  components: {
-    GlobalFooter
-  },
   data() {
     return {
       is_open: false,

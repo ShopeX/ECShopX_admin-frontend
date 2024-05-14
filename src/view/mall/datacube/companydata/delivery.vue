@@ -59,9 +59,9 @@ export default {
       },
       setting: {
         columns: [
-          { name: '配送员编号', key: 'staff_no' },
-          { name: '配送员姓名', key: 'username' },
-          { name: '手机号', key: 'mobile' },
+          { name: '配送员编号', key: 'staff_no' ,width: 110,},
+          { name: '配送员姓名', key: 'username' ,width: 110,},
+          { name: '手机号', key: 'mobile' ,width: 130,},
           {
             name: '所属店铺',
             key: 'distributor_ids',
@@ -88,8 +88,8 @@ export default {
               return <span>{row.payment_method === 'order' ? '按单笔订单' : '按订单金额比例'}</span>
             }
           },
-          { name: '配送客户数', key: 'user_count' },
-          { name: '配送订单量', key: 'order_count' },
+          { name: '配送客户数', key: 'user_count' ,width: 110,},
+          { name: '配送订单量', key: 'order_count' ,width: 110,},
           {
             name: '配送单价',
             key: 'payment_method',
@@ -107,6 +107,7 @@ export default {
           { name: '配送费用', key: 'self_delivery_fee_count' },
           {
             name: '配送员类型',
+            width: 110,
             key: 'staff_type',
             render: (h, { row }) => {
               return (
@@ -122,6 +123,7 @@ export default {
           },
           {
             name: '配送员属性',
+            width: 110,
             key: 'staff_attribute',
             render: (h, { row }) => {
               return <span>{row.staff_attribute === 'full_time' ? '全职' : '兼职'}</span>

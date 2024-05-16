@@ -512,3 +512,19 @@ export function flowItems (query) {
     params: query
   })
 }
+
+// 获取商品佣金配置
+export function getGoodsCommission (id) {
+  return fetch({
+    url: 'goods/commission/' + id,
+    method: 'get',
+  })
+}
+// 保存商品佣金配置
+export function saveGoodsCommission (query) {
+  return fetch({
+    url: '/goods/commission/save',
+    method: 'post',
+    params: query
+  })
+}

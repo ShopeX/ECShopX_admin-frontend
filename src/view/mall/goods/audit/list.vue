@@ -124,8 +124,8 @@
                 <span v-else>不可销售</span>
               </template>
             </el-table-column>
-            <el-table-column label="操作">
-              <template slot-scope="scope">
+            <el-table-column label="操作" width="200">
+              <template slot-scope="scope" >
                 <el-button
                   type="text"
                   class="btn-gap"
@@ -141,6 +141,7 @@
                 >
                   审核
                 </el-button>
+                 <el-button v-if="VERSION_PLATFORM" type="text" @click="handleCommission(scope.row)" >佣金配置</el-button>
               </template>
             </el-table-column>
           </el-table>
@@ -176,6 +177,30 @@
           </el-form-item>
         </el-form>
       </el-dialog>
+
+      <el-dialog title="商品分销配置" :visible.sync="show_commission_dialog" width="30%">
+        <template>
+        <el-form ref="commissionForm" :model="commissionForm" label-width="80px">
+          <el-form-item label="商品名称">
+            {{current.item_name}}
+          </el-form-item>
+          <el-form-item label="佣金类型">
+            <el-radio-group v-model="commissionForm.commission_type">
+              <el-radio label="1"> 百分比 </el-radio>
+              <el-radio label="2"> 商品金额 </el-radio>
+            </el-radio-group>
+          </el-form-item>
+          <el-form-item label="佣金" label-width="80px">
+            <el-input size="medium" v-model="commissionForm.commission" type="number" style="width: 55%"/>
+            <span v-if="1 == commissionForm.commission_type"> %</span>
+          </el-form-item>
+          <el-form-item style="text-align: center; margin: 30px 130px 0 0;">
+            <el-button type="primary" @click="saveCommissionConf"> 确定 </el-button>
+            <el-button @click="show_commission_dialog = false"> 取消 </el-button>
+          </el-form-item>
+        </el-form>
+      </template>
+      </el-dialog>
     </div>
     <router-view />
   </div>
@@ -184,10 +209,11 @@
 import { mapGetters } from 'vuex'
 import '@riophae/vue-treeselect/dist/vue-treeselect.css'
 import district from '@/common/district.json'
-import { getItemsList, auditItems, updateItemsStatus } from '@/api/goods'
+import { getItemsList, auditItems, updateItemsStatus, getGoodsCommission, saveGoodsCommission } from '@/api/goods'
 import { pageMixin } from '@/mixins'
 import { SALES_STATUS } from '@/consts'
 import { isArray } from '@/utils'
+import { setPaymentSetting, getPaymentSetting } from '@/api/trade'
 
 export default {
   mixins: [pageMixin],
@@ -223,7 +249,16 @@ export default {
         audit_status: '',
         main_cat_id: ''
       },
-      salesStatus: SALES_STATUS
+      salesStatus: SALES_STATUS,
+      show_commission_dialog: false,
+      current: '',
+      commissionData: [],
+      commissionForm: {
+        item_id: 0,
+        goods_id: 0,
+        commission_type: '1',
+        commission: '',
+      },
     }
   },
   computed: {
@@ -367,7 +402,54 @@ export default {
         this.submitLoading = false
         this.skuLoading = false
       })
-    }
+    },
+    handleCommission(data) {
+      this.show_commission_dialog = true
+      this.current = data
+      this.getGoodsCommission(data.item_id)
+    },
+    getGoodsCommission(item_id) {
+      let that = this
+      getGoodsCommission(item_id).then((res) => {
+        let commissionData = res.data.data
+        if (commissionData.length == 0) {
+          that.commissionForm = {
+            item_id: 0,
+            goods_id: 0,
+            commission_type: '1',
+            commission: '',
+          }
+          return
+        }
+        that.commissionForm.item_id = item_id
+        that.commissionForm.goods_id = commissionData.goods_id
+        that.commissionForm.commission_type = commissionData.commission_type
+        if (commissionData.commission_type == '1') {
+          that.commissionForm.commission = commissionData.commission_conf.commission
+        } else {
+          that.commissionForm.commission = commissionData.commission_conf.commission / 100
+        }
+      })
+    },
+    saveCommissionConf() {
+      let params = {
+        'item_id': this.current.item_id,
+        'goods_id': this.current.goods_id,
+        'commission_type' : this.commissionForm.commission_type,
+      }
+      if (params.commission_type == '1') {
+        params.commission = this.commissionForm.commission
+      } else {
+        params.commission = this.commissionForm.commission * 100
+      }
+      saveGoodsCommission(params).then((res) => {
+        this.$message({
+          message: '保存成功',
+          type: 'success',
+          duration: 2 * 1000
+        })
+      })
+    },
   }
   // watch: {
   //   $route() {

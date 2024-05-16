@@ -37,6 +37,7 @@ import RouteMerchantSellers from '../merchant/route-sellers'
 import RouteMerchantCompanydata from '../merchant/route-companydata'
 import RouteMerchantSetting from '../merchant/route-setting'
 import RouteMerchantEntitygoods from '../merchant/route-entitygoods'
+import RouteMerchantApplications from '../merchant/route-applications'
 
 // dealer
 import RouteDealerInfomation from './route-dealer-infomation'
@@ -85,5 +86,6 @@ export default {
   RouteMerchantSellers,
   RouteMerchantCompanydata,
   RouteMerchantSetting,
-  RouteMerchantEntitygoods
+  RouteMerchantEntitygoods,
+  RouteMerchantApplications
 }

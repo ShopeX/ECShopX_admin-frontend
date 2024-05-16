@@ -1,7 +1,7 @@
 <template>
   <div>
     <el-card class="mycard">
-      <div slot="header">
+      <div v-if="info.entry_apply_info.operator_type === 'distributor'" slot="header">
         分帐信息
         <el-popover
           v-if="subTitle"
@@ -48,7 +48,7 @@
               </el-select>
             </el-form-item>
           </el-col> -->
-          <el-col :span="12">
+          <el-col v-if="info.entry_apply_info.operator_type === 'distributor'" :span="12">
             <el-form-item
               label="总部分账占比"
               prop="headquarters_proportion"
@@ -64,7 +64,7 @@
             </el-form-item>
           </el-col>
           <el-col
-            v-if="info.is_rel_dealer || info.entry_apply_info.operator_type === 'dealer'"
+            v-if="info.is_rel_dealer && info.entry_apply_info.operator_type === 'distributor'"
             :span="12"
           >
             <el-form-item
@@ -73,6 +73,24 @@
             >
               <el-input
                 v-model="form.dealer_proportion"
+                :clearable="true"
+                placeholder="请输入"
+                style="width: 100%"
+              >
+                <span slot="suffix">%</span>
+              </el-input>
+            </el-form-item>
+          </el-col>
+          <el-col
+            v-if="info.is_rel_merchant && info.entry_apply_info.operator_type === 'distributor'"
+            :span="12"
+          >
+            <el-form-item
+              label="商户分账占比"
+              prop="merchant_proportion"
+            >
+              <el-input
+                v-model="form.merchant_proportion"
                 :clearable="true"
                 placeholder="请输入"
                 style="width: 100%"
@@ -142,13 +160,15 @@ export default {
     return {
       form: {
         headquarters_proportion: '',
-        dealer_proportion: ''
+        dealer_proportion: '',
+        merchant_proportion: '',
       },
       rules: {
         headquarters_proportion: [
           { required: true, validator: this.validateNumber, trigger: 'blur' }
         ],
-        dealer_proportion: [{ required: true, validator: this.validateNumber, trigger: 'blur' }]
+        dealer_proportion: [{ required: true, validator: this.validateNumber, trigger: 'blur' }],
+        merchant_proportion: [{ required: true, validator: this.validateNumber, trigger: 'blur' }],
       },
       dialogFormVisible: false,
       visibleContent: '',
@@ -158,9 +178,9 @@ export default {
   },
   mounted () {
     const { entry_apply_info, dealer_info, distributor_info, is_rel_dealer } = this.info
-    if (entry_apply_info.operator_type === 'dealer' || is_rel_dealer) {
-      this.form = { ...JSON.parse(dealer_info.split_ledger_info) }
-    }
+    // if (entry_apply_info.operator_type === 'dealer' || is_rel_dealer) {
+    //   this.form = { ...JSON.parse(dealer_info.split_ledger_info) }
+    // }
   },
   methods: {
     handleDialogChange (ref) {
@@ -173,9 +193,9 @@ export default {
         id: entry_apply_info.id,
         comments: this.comments,
         save_id:
-          entry_apply_info.operator_type === 'dealer'
-            ? dealer_info.operator_id
-            : distributor_info.distributor_id
+          entry_apply_info.operator_type === 'distributor'
+            ? dealer_info.distributor_id
+            : 0
       }).then((res) => {
         this.dialogFormVisible = false
         this.$emit('handleClose', 'update')

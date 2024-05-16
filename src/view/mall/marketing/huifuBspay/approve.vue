@@ -107,7 +107,14 @@
           title="证件信息"
         />
         <RegisterInfo
-          :list="user_type === 'indv' ? accountList : enterAccountList"
+          v-if="user_type === 'indv'"
+          :list="accountList"
+          :info="entry_info"
+          title="结算账户信息"
+        />
+        <RegisterInfo
+          v-if="user_type === 'ent'"
+          :list="card_type == '1' ? enterPrivateAccountList : enterAccountList"
           :info="entry_info"
           title="结算账户信息"
         />
@@ -118,8 +125,22 @@
           @handleClose="onChange"
         />
         <RegisterInfo
-          v-if="status !== 'WAIT_APPROVE'"
-          :list="isBool ? enterSplitAccountList : splitAccountList"
+          v-if="status !== 'WAIT_APPROVE' && upDistributorFlag == 'dealer'"
+          :list="splitAccountList"
+          :info="split_ledger_info"
+          :sub-title="subTitle"
+          title="分账信息"
+        />
+        <RegisterInfo
+          v-if="status !== 'WAIT_APPROVE' && upDistributorFlag == 'merchant'"
+          :list="merchantSplitAccountList"
+          :info="split_ledger_info"
+          :sub-title="subTitle"
+          title="分账信息"
+        />
+        <RegisterInfo
+          v-if="status !== 'WAIT_APPROVE'  && upDistributorFlag == 'distributor' && isBool"
+          :list="enterSplitAccountList"
           :info="split_ledger_info"
           :sub-title="subTitle"
           title="分账信息"
@@ -157,6 +178,7 @@ export default {
       activeName: 'first',
       subTitle: '',
       isBool: false,
+      upDistributorFlag: 'distributor',
       params: {
         page: 1,
         pageSize: 20,
@@ -174,6 +196,7 @@ export default {
       id: '',
       operator_type: '',
       user_type: '',
+      card_type: '',
       status: '',
       infoList: {},
       visibleDrawer: true,
@@ -206,14 +229,16 @@ export default {
         // { name: '企业电话', field: 'telphone' },
         { name: '统一社会信用代码', field: 'license_code' },
         { name: '成立日期', field: 'license_begin_date' },
-        { name: '所在省市', field: 'area' },
+        { name: '营业期限是否为长期', field: 'license_validity_type', filter: this.legalCertTypeFilter },
+        { name: '营业期限', field: 'license_end_date' },
+        { name: '住所省市区', field: 'reg_area' },
         { name: '住所详细地址', field: 'reg_detail' },
 
         { name: '法人姓名', field: 'legal_name' },
         { name: '法人身份证号码', field: 'legal_cert_no' },
         { name: '法人证件开始有效期', field: 'legal_cert_begin_date' },
         { name: '有效期是否为长期', field: 'legal_cert_validity_type', filter: this.legalCertTypeFilter },
-        { name: '身份证结束有效期', field: 'cert_end_date' },
+        { name: '身份证结束有效期', field: 'legal_cert_end_date' },
         { name: '法人手机号码', field: 'contact_mobile' },
         { name: '企业类型', field: 'ent_type_value' },
         // { name: '企业地址', field: 'address' },
@@ -222,11 +247,18 @@ export default {
         // { name: '邮编', field: 'zip_code' }
       ],
       enterAccountList: [
-        // 企业结算信息
-        { name: '结算银行卡号', field: 'card_no' },
-        { name: '结算银行卡开户姓名', field: 'card_name' },
-        { name: '结算银行卡支行名称', field: 'branch_name' },
-        { name: '结算银行卡账户类型', field: 'card_type', filter: this.bankFilter }
+        // 企业对公结算信息
+        { name: '银行卡号', field: 'card_no' },
+        { name: '开户行所在省市', field: 'card_area' },
+        { name: '银行号', field: 'bank_code' },
+        { name: '支行名称', field: 'branch_name' },
+        { name: '银行卡绑定手机号', field: 'mp'}
+      ],
+      enterPrivateAccountList: [
+        // 企业对私法人结算信息
+        { name: '银行卡号', field: 'card_no' },
+        { name: '开户行所在省市', field: 'card_area' },
+        { name: '银行卡绑定手机号', field: 'mp'}
       ],
       enterSplitAccountList: [
         // 企业分账信息
@@ -240,6 +272,22 @@ export default {
         // { name: '手续费扣费方式', field: 'adapay_fee_mode', filter: this.adapayFilter },
         { name: '总部分账占比', field: 'headquarters_proportion', filter: this.headquartersFilter },
         { name: '经销商分账占比', field: 'dealer_proportion', filter: this.dealerFilter },
+        { name: '审批状态', field: 'status', filter: this.statusFilter },
+        { name: '审批备注', field: 'comments' }
+      ],
+      merchantSplitAccountList: [
+        // 企业分账信息
+        // { name: '手续费扣费方式', field: 'adapay_fee_mode', filter: this.adapayFilter },
+        { name: '总部分账占比', field: 'headquarters_proportion', filter: this.headquartersFilter },
+        { name: '商户分账占比', field: 'merchant_proportion', filter: this.merchartFilter },
+        { name: '审批状态', field: 'status', filter: this.statusFilter },
+        { name: '审批备注', field: 'comments' }
+      ],
+      adminSplitAccountList: [
+        // 企业分账信息
+        // { name: '手续费扣费方式', field: 'adapay_fee_mode', filter: this.adapayFilter },
+        // { name: '总部分账占比', field: 'headquarters_proportion', filter: this.headquartersFilter },
+        // { name: '商户分账占比', field: 'merchant_proportion', filter: this.merchartFilter },
         { name: '审批状态', field: 'status', filter: this.statusFilter },
         { name: '审批备注', field: 'comments' }
       ],
@@ -258,7 +306,7 @@ export default {
         { name: '银行预留手机号', field: 'mp' },
         { name: '结算银行卡号', field: 'card_no' },
         { name: '开户人证件号码', field: 'cert_no' },
-        { name: '开户行所在省市', field: 'prov_id' }
+        { name: '开户行所在省市', field: 'card_area' }
       ]
     }
   },
@@ -279,30 +327,41 @@ export default {
       this.$api.bspay.getSubApproveDetail(id)
         .then((response) => {
           console.log(1, response)
-          const { is_rel_dealer, distributor_info, entry_apply_info, entry_info, dealer_info } =
+          const { is_rel_dealer, is_rel_merchant, distributor_info, entry_apply_info, entry_info, dealer_info } =
             response || {}
           this.infoList = response
           this.status = entry_apply_info.status
           this.operator_type = entry_apply_info.operator_type
           this.user_type = entry_info.user_type || {}
+          this.card_type = entry_info.card_type || {}
+          console.log('11111', this.user_type, this.card_type)
           this.distributor_info = distributor_info || {}
           this.entry_apply_info = entry_apply_info || {}
           this.entry_info = entry_info || {}
           this.dealer_info = dealer_info || {}
+          let upDistributorFlag = 'distributor'
+          if (is_rel_dealer) {
+            upDistributorFlag = 'dealer'
+          } else if (is_rel_merchant) {
+            upDistributorFlag = 'merchant'
+          }
+          this.upDistributorFlag = upDistributorFlag
           if (entry_apply_info.operator_type === 'distributor') {
             this.split_ledger_info = {
               status: entry_apply_info.status,
               comments: entry_apply_info.comments,
-              ...JSON.parse(distributor_info.split_ledger_info)
-            }
-          } else {
-            this.split_ledger_info = {
-              status: entry_apply_info.status,
-              comments: entry_apply_info.comments,
-              ...JSON.parse(dealer_info.split_ledger_info)
+              ...JSON.parse(distributor_info.bspay_split_ledger_info)
             }
           }
-          let isBool = entry_apply_info.operator_type === 'distributor' && !is_rel_dealer
+          console.log('2222', this.split_ledger_info)
+          //  else {
+          //   this.split_ledger_info = {
+          //     status: entry_apply_info.status,
+          //     comments: entry_apply_info.comments,
+          //     ...JSON.parse(dealer_info.split_ledger_info)
+          //   }
+          // }
+          let isBool = entry_apply_info.operator_type === 'distributor' && !is_rel_dealer && !is_rel_merchant
           this.subTitle = isBool
             ? `分账金额计算公式内扣：
             总部：（交易金额-手续费）*总部分账占比；
@@ -389,6 +448,12 @@ export default {
       // 经销商分账占比过滤
       let { dealer_proportion } = this.split_ledger_info
       let value = this.split_ledger_info.dealer_proportion
+      return value ? value + '%' : '-'
+    },
+    merchartFilter() {
+      // 商户分账占比过滤
+      let { merchant_proportion } = this.split_ledger_info
+      let value = this.split_ledger_info.merchant_proportion
       return value ? value + '%' : '-'
     },
     // adapayFilter() {

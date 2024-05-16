@@ -604,12 +604,10 @@ export default {
     submitForm(isSubmit, ref) {
       this.form.submit_review = isSubmit
       this.form.isUploadFile = true
-      console.log('22222',this.form)
       this.$refs['ruleForm'].validate(async (valid) => {
         if (valid) {
           if (this.form.id) {
             // 更新
-            console.log(33333, this.form)
             const { status } = await this.$api.bspay.modifyUserEnt(this.form)
             if (status) {
               this.$message.success('提交成功')
@@ -626,7 +624,6 @@ export default {
           } else {
             // 创建
             try {
-              console.log(1)
               const { status } = await this.$api.bspay.createUserEnt(this.form)
               if (status) {
                 this.$message.success('提交成功')
@@ -726,17 +723,16 @@ export default {
     async processedHandle() {
       if (this.user_type == 'ent') {
         this.form = await this.$api.bspay.getUserEnt()
-        console.log(11111, this.form)
         this.processed = '未填'
         this.form.license_regions_id = [this.form.reg_prov_id, this.form.reg_area_id, this.form.reg_district_id]
         this.form.card_regions_id = [this.form.prov_id, this.form.area_id]
-        console.log(this.form)
+        console.log('ent---------', this.form)
       } else {
         this.indvForm = await this.$api.bspay.getUserIndv()
         this.processed = '未填'
         this.activeName = 'indv'
         this.indvForm.card_regions_id = [this.indvForm.prov_id, this.indvForm.area_id]
-        console.log(this.indvForm)
+        console.log('indv---------', this.indvForm)
       }
     },
 

@@ -52,14 +52,14 @@ export default {
           inline: true,
           width: '960px'
         },
-        {
-          label: '商户的汇付ID',
-          key: 'upper_huifu_id',
-          type: 'input',
-          required: true,
-          inline: true,
-          width: '960px'
-        },
+        // {
+        //   label: '商户的汇付ID',
+        //   key: 'upper_huifu_id',
+        //   type: 'input',
+        //   required: true,
+        //   inline: true,
+        //   width: '960px'
+        // },
         {
           label: '商户私钥',
           key: 'rsa_merch_private_key',
@@ -102,7 +102,7 @@ export default {
           type: 'radio',
           options: [
             { name: '标准费率线上', label: 'online' },
-            { name: '标准费率线下', label: 'offline' }
+            // { name: '标准费率线下', label: 'offline' }
           ]
         },
         // {
@@ -126,13 +126,13 @@ export default {
           inline: true,
           width: '480px'
         },
-        {
-          label: '微信小程序支付（线下）',
-          key: 'wx_lite_offline',
-          type: 'input',
-          inline: true,
-          width: '480px'
-        },
+        // {
+        //   label: '微信小程序支付（线下）',
+        //   key: 'wx_lite_offline',
+        //   type: 'input',
+        //   inline: true,
+        //   width: '480px'
+        // },
         // {
         //   label: '微信扫码支付（被扫-线下）',
         //   key: 'wx_scan',
@@ -146,7 +146,7 @@ export default {
           type: 'radio',
           options: [
             { name: '标准费率线上', label: 'online' },
-            { name: '标准费率线下', label: 'offline' }
+            // { name: '标准费率线下', label: 'offline' }
           ]
         },
         // {

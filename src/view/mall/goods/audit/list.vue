@@ -178,14 +178,14 @@
         </el-form>
       </el-dialog>
 
-      <SideBar :visible.sync="show_commission_sideBar" title="平台结算佣金配置" width="60">
+      <SideBar :visible.sync="show_commission_sideBar" title="总部结算佣金配置" width="60">
         <slot>
           <el-card class="box-card">
             <div slot="header" class="clearfix">
               <span>
                 <el-alert
-                  title="返佣计算类型: 【按利润分佣】"
-                  description="计算方式：商品利润 ×  百分比，其中商品利润为【支付金额-运费-商品成本价】，如果设置的返佣为固定金额，则不会按利润返佣，返佣金额就是设置的固定金额。如果不填则使用通用配置返佣"
+                  title="佣金结算类型: 【百分比】"
+                  description="计算方式：商品最终金额 ×  百分比，其中计算方式：商品最终金额为【支付金额-运费】"
                   type="info"
                   close-text=" "
                   class="alert-text"
@@ -194,8 +194,8 @@
               </span>
               <span>
                 <el-alert
-                  title="返佣计算类型: 【按订单金额分佣】"
-                  description="计算方式： 订单金额 × 百分比，其中订单金额为【支付金额-运费】，如果设置的返佣为固定金额，则不会按订单金额分佣，返佣金额就是设置的固定金额。如果不填则使用通用配置返佣"
+                  title="佣金结算类型: 【固定金额】"
+                  description="计算方式： 固定金额结算佣金"
                   type="info"
                   close-text=" "
                   class="alert-text"
@@ -207,7 +207,7 @@
               <el-form-item label="商品名称">
                 {{ current.item_name }}
               </el-form-item>
-              <el-form-item label="佣金类型">
+              <el-form-item label="佣金结算类型">
                 <el-radio-group v-model="commissionSpecItems.commission_type">
                   <el-radio label="1"> 百分比 </el-radio>
                   <el-radio label="2"> 固定金额 </el-radio>

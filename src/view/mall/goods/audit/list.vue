@@ -141,7 +141,7 @@
                 >
                   审核
                 </el-button>
-                 <el-button v-if="VERSION_PLATFORM" type="text" @click="handleCommission(scope.row)" >佣金配置</el-button>
+                 <el-button v-if="VERSION_PLATFORM" type="text" @click="handleCommissionConf(scope.row)" >佣金配置</el-button>
               </template>
             </el-table-column>
           </el-table>
@@ -178,29 +178,82 @@
         </el-form>
       </el-dialog>
 
-      <el-dialog title="商品分销配置" :visible.sync="show_commission_dialog" width="30%">
-        <template>
-        <el-form ref="commissionForm" :model="commissionForm" label-width="80px">
-          <el-form-item label="商品名称">
-            {{current.item_name}}
-          </el-form-item>
-          <el-form-item label="佣金类型">
-            <el-radio-group v-model="commissionForm.commission_type">
-              <el-radio label="1"> 百分比 </el-radio>
-              <el-radio label="2"> 商品金额 </el-radio>
-            </el-radio-group>
-          </el-form-item>
-          <el-form-item label="佣金" label-width="80px">
-            <el-input size="medium" v-model="commissionForm.commission" type="number" style="width: 55%"/>
-            <span v-if="1 == commissionForm.commission_type"> %</span>
-          </el-form-item>
-          <el-form-item style="text-align: center; margin: 30px 130px 0 0;">
-            <el-button type="primary" @click="saveCommissionConf"> 确定 </el-button>
-            <el-button @click="show_commission_dialog = false"> 取消 </el-button>
-          </el-form-item>
-        </el-form>
-      </template>
-      </el-dialog>
+      <SideBar :visible.sync="show_commission_sideBar" title="平台结算佣金配置" width="60">
+        <slot>
+          <el-card class="box-card">
+            <div slot="header" class="clearfix">
+              <span>
+                <el-alert
+                  title="返佣计算类型: 【按利润分佣】"
+                  description="计算方式：商品利润 ×  百分比，其中商品利润为【支付金额-运费-商品成本价】，如果设置的返佣为固定金额，则不会按利润返佣，返佣金额就是设置的固定金额。如果不填则使用通用配置返佣"
+                  type="info"
+                  close-text=" "
+                  class="alert-text"
+                  show-icon
+                />
+              </span>
+              <span>
+                <el-alert
+                  title="返佣计算类型: 【按订单金额分佣】"
+                  description="计算方式： 订单金额 × 百分比，其中订单金额为【支付金额-运费】，如果设置的返佣为固定金额，则不会按订单金额分佣，返佣金额就是设置的固定金额。如果不填则使用通用配置返佣"
+                  type="info"
+                  close-text=" "
+                  class="alert-text"
+                  show-icon
+                />
+              </span>
+            </div>
+            <el-form ref="form" label-width="100px">
+              <el-form-item label="商品名称">
+                {{ current.item_name }}
+              </el-form-item>
+              <el-form-item label="佣金类型">
+                <el-radio-group v-model="commissionSpecItems.commission_type">
+                  <el-radio label="1"> 百分比 </el-radio>
+                  <el-radio label="2"> 固定金额 </el-radio>
+                </el-radio-group>
+              </el-form-item>
+              <el-form-item label="SPU结算佣金">
+                <el-input v-model="commissionSpecItems.commission" size="mini" type="number" style="width: 200px">
+                  <template v-if="1 == commissionSpecItems.commission_type" slot="append"> % </template>
+                </el-input>
+                <div class="form-item-tip">SKU未设置佣金时，按SPU设置的佣金结算</div>
+              </el-form-item>
+            </el-form>
+            <el-table v-loading="skuLoading" :data="commissionSpecItems.sku_commission">
+              <el-table-column label="规格" prop="item_spec_desc" min-width="120">
+                <template slot-scope="scope">
+                  <span v-if="scope.row.item_spec_desc">{{ scope.row.item_spec_desc }}</span
+                  ><span v-else>单规格</span>
+                </template>
+              </el-table-column>
+              <el-table-column label="销售价" min-width="80">
+                <template slot-scope="scope"> ¥{{ scope.row.price / 100 }} </template>
+              </el-table-column>
+              <el-table-column label="成本价" min-width="80">
+                <template slot-scope="scope"> ¥{{ scope.row.cost_price / 100 }} </template>
+              </el-table-column>
+              <el-table-column label="SKU结算佣金">
+                <template slot-scope="scope">
+                  <div v-if="0 == commissionSpecItems.commission_type">
+                    <el-input :disabled="true" size="mini" type="number" value="0" />
+                  </div>
+                  <div v-else>
+                    <el-input v-model="scope.row.commission" size="mini" type="number">
+                      <template v-if="1 == commissionSpecItems.commission_type" slot="append"> % </template>
+                    </el-input>
+                  </div>
+                </template>
+              </el-table-column>
+            </el-table>
+          </el-card>
+        </slot>
+        <div slot="footer">
+          <el-button type="primary" :loading="submitLoading" @click="saveCommissionConf">
+            保存
+          </el-button>
+        </div>
+      </SideBar>
     </div>
     <router-view />
   </div>
@@ -209,6 +262,7 @@
 import { mapGetters } from 'vuex'
 import '@riophae/vue-treeselect/dist/vue-treeselect.css'
 import district from '@/common/district.json'
+import SideBar from '@/components/element/sideBar'
 import { getItemsList, auditItems, updateItemsStatus, getGoodsCommission, saveGoodsCommission } from '@/api/goods'
 import { pageMixin } from '@/mixins'
 import { SALES_STATUS } from '@/consts'
@@ -216,6 +270,9 @@ import { isArray } from '@/utils'
 import { setPaymentSetting, getPaymentSetting } from '@/api/trade'
 
 export default {
+  components: {
+    SideBar
+  },
   mixins: [pageMixin],
   props: ['getStatus'],
   provide() {
@@ -250,15 +307,11 @@ export default {
         main_cat_id: ''
       },
       salesStatus: SALES_STATUS,
-      show_commission_dialog: false,
+      submitLoading: false,
+      show_commission_sideBar: false,
+      skuLoading: false,
+      commissionSpecItems: [],
       current: '',
-      commissionData: [],
-      commissionForm: {
-        item_id: 0,
-        goods_id: 0,
-        commission_type: '1',
-        commission: '',
-      },
     }
   },
   computed: {
@@ -403,45 +456,35 @@ export default {
         this.skuLoading = false
       })
     },
-    handleCommission(data) {
-      this.show_commission_dialog = true
+    handleCommissionConf(data) {
+      this.show_commission_sideBar = true
+      this.skuLoading = true
       this.current = data
-      this.getGoodsCommission(data.item_id)
-    },
-    getGoodsCommission(item_id) {
-      let that = this
-      getGoodsCommission(item_id).then((res) => {
-        let commissionData = res.data.data
-        if (commissionData.length == 0) {
-          that.commissionForm = {
-            item_id: 0,
-            goods_id: 0,
-            commission_type: '1',
-            commission: '',
-          }
-          return
-        }
-        that.commissionForm.item_id = item_id
-        that.commissionForm.goods_id = commissionData.goods_id
-        that.commissionForm.commission_type = commissionData.commission_type
-        if (commissionData.commission_type == '1') {
-          that.commissionForm.commission = commissionData.commission_conf.commission
-        } else {
-          that.commissionForm.commission = commissionData.commission_conf.commission / 100
-        }
+      getGoodsCommission(data.item_id).then((res) => {
+        var commissionSpecItems = res.data.data
+        this.commissionSpecItems = commissionSpecItems
+        this.skuLoading = false
       })
     },
     saveCommissionConf() {
+      var rebateConf = []
       let params = {
         'item_id': this.current.item_id,
         'goods_id': this.current.goods_id,
-        'commission_type' : this.commissionForm.commission_type,
+        'commission_type' : this.commissionSpecItems.commission_type,
       }
       if (params.commission_type == '1') {
-        params.commission = this.commissionForm.commission
+        params.commission = this.commissionSpecItems.commission
       } else {
-        params.commission = this.commissionForm.commission * 100
+        params.commission = this.commissionSpecItems.commission * 100
       }
+      this.commissionSpecItems.sku_commission.forEach((item) => {
+        if (this.commissionSpecItems.commission_type == '2') {
+          item.commission = item.commission * 100
+        }
+        rebateConf.push(item)
+      })
+      params.sku_commission = JSON.stringify(rebateConf)
       saveGoodsCommission(params).then((res) => {
         this.$message({
           message: '保存成功',
@@ -547,6 +590,11 @@ export default {
     bottom: 0;
     visibility: hidden;
   }
+}
+.form-item-tip {
+  font-size: 13px;
+  color: #999;
+  line-height: initial;
 }
 </style>
 <style lang="scss">

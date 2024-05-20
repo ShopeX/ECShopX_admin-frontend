@@ -53,13 +53,13 @@
       <el-button v-if="currentStatus.resultStatus == 'succeeded'" type="primary" @click="next">
         下一步
       </el-button>
-      <el-button
+      <!-- <el-button
         v-if="currentStatus.resultStatus == 'netin' && $store.getters.login_type != 'distributor'"
         type="primary"
         @click="nextCenter"
       >
         进入结算信息
-      </el-button>
+      </el-button> -->
     </div>
   </div>
 </template>

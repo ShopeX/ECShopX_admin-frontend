@@ -177,7 +177,7 @@ export default {
     }
   },
   mounted () {
-    const { entry_apply_info, dealer_info, distributor_info, is_rel_dealer } = this.info
+    const { entry_apply_info, dealer_info, distributor_info, is_rel_dealer, is_rel_merchant, merchant_info } = this.info
     // if (entry_apply_info.operator_type === 'dealer' || is_rel_dealer) {
     //   this.form = { ...JSON.parse(dealer_info.split_ledger_info) }
     // }
@@ -194,7 +194,7 @@ export default {
         comments: this.comments,
         save_id:
           entry_apply_info.operator_type === 'distributor'
-            ? dealer_info.distributor_id
+            ? distributor_info.distributor_id
             : 0
       }).then((res) => {
         this.dialogFormVisible = false

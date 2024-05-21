@@ -120,9 +120,9 @@
               :auto-upload="false"
               :show-file-list="false"
             >
-              <el-button type="primary">
+              <!-- <el-button type="primary">
                 导入<i class="el-icon-upload el-icon--right" />
-              </el-button>
+              </el-button> -->
             </el-upload>
             <export-tip @exportHandle="exportFile">
               <el-button type="primary" size="medium"> 导出文件 </el-button>

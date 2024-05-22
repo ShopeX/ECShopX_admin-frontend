@@ -469,10 +469,10 @@ export default {
     saveCommissionConf() {
       if (this.commissionSpecItems.commission == "") {
         this.$message({
-            type: 'error',
-            message: 'SPU结算佣金不能为空'
-          })
-        return
+          type: 'error',
+          message: 'SPU结算佣金不能为空'
+        })
+        return false
       }
       var rebateConf = []
       let params = {

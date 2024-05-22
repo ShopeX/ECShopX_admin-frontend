@@ -29,10 +29,10 @@
         /> -->
         <el-tab-pane label="实体主订单导出" name="normal_master_order" />
         <el-tab-pane label="实体子订单导出" name="normal_order" />
-        <!-- <el-tab-pane
+        <el-tab-pane
           label="社区团购销售数据导出"
           name="normal_community_order"
-        /> -->
+        />
         <el-tab-pane v-if="!VERSION_IN_PURCHASE" label="发票信息导出" name="invoice" />
         <!-- <el-tab-pane
           v-if="!VERSION_IN_PURCHASE"

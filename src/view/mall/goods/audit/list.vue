@@ -203,7 +203,7 @@
                 />
               </span>
             </div>
-            <el-form ref="form" label-width="100px">
+            <el-form ref="form" label-width="120px">
               <el-form-item label="商品名称">
                 {{ current.item_name }}
               </el-form-item>
@@ -213,7 +213,7 @@
                   <el-radio label="2"> 固定金额 </el-radio>
                 </el-radio-group>
               </el-form-item>
-              <el-form-item label="SPU结算佣金">
+              <el-form-item label="SPU结算佣金" :rules="[{ required: true, message: '请输入SPU结算佣金', trigger: 'blur' }]">
                 <el-input v-model="commissionSpecItems.commission" size="mini" type="number" style="width: 200px">
                   <template v-if="1 == commissionSpecItems.commission_type" slot="append"> % </template>
                 </el-input>
@@ -467,6 +467,13 @@ export default {
       })
     },
     saveCommissionConf() {
+      if (this.commissionSpecItems.commission == "") {
+        this.$message({
+            type: 'error',
+            message: 'SPU结算佣金不能为空'
+          })
+        return
+      }
       var rebateConf = []
       let params = {
         'item_id': this.current.item_id,
@@ -479,10 +486,13 @@ export default {
         params.commission = this.commissionSpecItems.commission * 100
       }
       this.commissionSpecItems.sku_commission.forEach((item) => {
+        var sku_commission = {'item_id': item.item_id}
         if (this.commissionSpecItems.commission_type == '2') {
-          item.commission = item.commission * 100
+          sku_commission.commission = item.commission * 100
+        } else {
+          sku_commission.commission = item.commission
         }
-        rebateConf.push(item)
+        rebateConf.push(sku_commission)
       })
       params.sku_commission = JSON.stringify(rebateConf)
       saveGoodsCommission(params).then((res) => {

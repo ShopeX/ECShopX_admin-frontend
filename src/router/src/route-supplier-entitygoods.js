@@ -43,26 +43,9 @@ export default {
       component: () => import('@/view/mall/goods/physical/normalGoodsUpload')
     },
     {
-      path: 'goods_qa',
-      name: `商品咨询`,
-      component: () => import('@/view/mall/supplier/goods_qa_list'),
-    },
-    {
       path: 'itemtags',
       name: `商品标签`,
       component: () => import('@/view/mall/goods/tags')
-    },
-    {
-      path: 'goodsnotice',
-      name: `商品公告`,
-      component: () => import('@/view/mall/goods/physical/notice'),
-      children: [
-        {
-          path: 'detail',
-          name: `公告详情`,
-          component: () => import('@/view/goods/noticeDetail')
-        }
-      ]
     },
     {
       path: 'brandmaterial',

@@ -338,9 +338,9 @@ export default {
         {
           label: 'SPU编码',
           key: 'goods_bn',
-          disabled: () => {
-            return !!this.form.item_id
-          },
+          // disabled: () => {
+          //   return !!this.form.item_id
+          // },
           type: 'input',
           display: 'inline'
         },

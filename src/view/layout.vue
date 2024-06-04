@@ -16,7 +16,9 @@
               class="brand-link"
               :to="`${
                 login_type == 'distributor' || login_type == 'dealer'
-                  ? $store.getters.menus[0].children[0].url
+                  ? typeof $store.getters.menus[0].children == 'undefined'
+                    ? $store.getters.menus[0].url
+                    : $store.getters.menus[0].children[0].url
                   : '/'
               }`"
             >
@@ -34,7 +36,6 @@
                 :index="item.url"
               >
                 <router-link :to="getMenuUrl(item)">
-                  <!-- <i class="iconfont" :class="`icon-${item.icon}`" /> -->
                   <i :class="['ecx-icon', `icon-${getIconName(item.icon)}`]" />
                   <span>{{ item.name }}</span>
                 </router-link>
@@ -213,8 +214,8 @@ export default {
         const { menus } = state.menu
         if (store.getters.login_type == 'distributor') {
           menus.forEach((menu) => {
-            const paths = menu.url.match(/\/\w+/g)
-            menu.url = `${paths[0]}${paths[1]}`
+            const [path1, path2] = menu.url.match(/\/\w+/g)
+            menu.url = `${path1}${path2 || ''}`
           })
         }
         return menus

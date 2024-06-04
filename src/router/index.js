@@ -100,7 +100,11 @@ router.beforeEach((to, from, next) => {
               }
               _route.children = route.children.filter((item) => {
                 if (item.name == 'dashboard') {
-                  return customRouterUrls.includes(`/`) || customRouterUrls.includes(`/merchant`)
+                  return (
+                    customRouterUrls.includes(`/`) ||
+                    customRouterUrls.includes(`/merchant`) ||
+                    customRouterUrls.includes(`/shopadmin`)
+                  )
                 } else {
                   return customRouterUrls.includes(`${route.path}/${item.path}`)
                 }
@@ -134,8 +138,7 @@ router.beforeEach((to, from, next) => {
             redirect: '/404'
           }
         )
-        // log.debug(`newRouter: `, newRouter)
-
+        log.debug(`newRouter: `, newRouter)
         router.addRoutes(newRouter)
         if (to.path == '/') {
           next(customRouterUrls[0])

@@ -55,3 +55,23 @@ export function getLogisticsList (query) {
     params: query
   })
 }
+
+export function getShansongInfo (query) {
+  return fetch({
+    url: '/company/shansong/info',
+    method: 'get',
+    params: query
+  })
+}
+
+/** 保存同城配 */
+export function saveShansongInfo (params) {
+  return fetch({
+    url: '/company/shansong/info',
+    method: 'post',
+    headers: {
+      'Content-Type': 'application/x-www-form-urlencoded'
+    },
+    params: params
+  })
+}

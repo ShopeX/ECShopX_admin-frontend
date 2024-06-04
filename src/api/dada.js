@@ -8,3 +8,11 @@ export function getDadaInfo(params = {}) {
     params: params
   })
 }
+
+export function getShansongInfo(params = {}) {
+  return fetch({
+    url: '/company/shansong/info',
+    method: 'get',
+    params: params
+  })
+}

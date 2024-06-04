@@ -70,7 +70,7 @@
       />
     </div>
 
-    <!-- 添加省代 -->
+    <!-- 审核供应商 -->
     <el-dialog
         title="审核供应商"
         :visible.sync="editDialog"
@@ -187,6 +187,7 @@
         editDialog: false,
         editForm: {
           id: '',
+          is_check: '0',
           agent_name: '',
           wx_openid: '',
           province: [],
@@ -218,12 +219,20 @@
         this.loading = false
       },
       async editFormSubmit() {
+        if (!parseInt(this.editForm.is_check)) {
+          this.$message.error('请选择审核结果')
+          return false;
+        }
         this.loading = true
-        const {status} = await this.$api.supplier.checkSupplier(this.editForm)
-        this.$message.success('保存成功')
+        try {
+          const {status} = await this.$api.supplier.checkSupplier(this.editForm)
+          this.$message.success('保存成功')
+          this.editDialog = false
+          this.fetchList()
+        } catch (e) {
+          
+        }
         this.loading = false
-        this.editDialog = false
-        this.fetchList()
       },
     }
   }

@@ -103,11 +103,25 @@
         }
         .name {
           font-size: 15px;
+          display: flex;
+          justify-content: space-between;
+          span:nth-child(2){
+            display: block;
+            font-size: 12px;
+            border: 1px solid #888;
+            height: 22px;
+            padding: 2px 4px;
+          }
         }
-        .free-shipping {
-          color: #666666;
+        .free-shipping{
+          font-weight: 400;
           font-size: 12px;
-          margin-bottom: 12px;
+          color: #666;
+          &-money{
+            color: #999;
+            margin-left: 4px;
+            text-decoration-line: line-through;
+          }
         }
         .product-details {
           display: flex;

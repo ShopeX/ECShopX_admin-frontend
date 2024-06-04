@@ -140,7 +140,7 @@
             </div>
           </template>
         </el-table-column>
-        <el-table-column min-width="150" label="收货手机号">
+        <el-table-column min-width="150" label="手机号">
           <template slot-scope="scope">
             <div
               v-if="!scope.row.user_delete && $store.getters.login_type !== 'merchant'"
@@ -182,7 +182,7 @@
         </el-table-column>
         <el-table-column v-if="IS_SUPPLIER()" min-width="100" label="金额">
           <template slot-scope="scope">
-            <span>{{ scope.row.detail[0].refund_fee }}</span>
+            <span>{{ scope.row.detail[0].refund_fee / 100 }}</span>
           </template>
         </el-table-column>
         <el-table-column v-if="IS_SUPPLIER()" min-width="100" label="售后原因" prop="reason" />

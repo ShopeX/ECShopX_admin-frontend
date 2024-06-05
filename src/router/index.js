@@ -100,7 +100,11 @@ router.beforeEach((to, from, next) => {
               }
               _route.children = route.children.filter((item) => {
                 if (item.name == 'dashboard') {
-                  return customRouterUrls.includes(`/`) || customRouterUrls.includes(`/merchant`)
+                  return (
+                    customRouterUrls.includes(`/`) ||
+                    customRouterUrls.includes(`/merchant`) ||
+                    customRouterUrls.includes(`/shopadmin`)
+                  )
                 } else {
                   return customRouterUrls.includes(`${route.path}/${item.path}`)
                 }

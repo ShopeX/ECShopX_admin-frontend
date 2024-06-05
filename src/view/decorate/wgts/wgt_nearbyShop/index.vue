@@ -54,8 +54,19 @@
                   <span v-if="item.selfDeliveryRule.is_open">商家自配送</span>
                 </div>
                 <div v-if="item.selfDeliveryRule.is_open" class="free-shipping">
-                  <span>起送¥20 ｜ 满¥39元免运费</span>
-                  <span class="free-shipping-money">¥5</span>
+                  <span
+                    >起送¥{{ item.selfDeliveryRule.min_amount }} ｜
+                    {{
+                      item.selfDeliveryRule.rule[0].selected=='true'
+                        ? item.selfDeliveryRule.rule[0].freight_fee == '0'
+                          ? `满¥${item.selfDeliveryRule.rule[0].full}元免运费`
+                          : `满¥${item.selfDeliveryRule.rule[0].full}元运费${item.selfDeliveryRule.rule[0].freight_fee}元`
+                        : item.selfDeliveryRule.rule[1].freight_fee == '0'
+                        ? `满¥${item.selfDeliveryRule.rule[1].full}元免运费`
+                        : `满¥${item.selfDeliveryRule.rule[1].full}元运费${item.selfDeliveryRule.rule[1].freight_fee}元`
+                    }}</span
+                  >
+                  <span class="free-shipping-money">¥{{ item.selfDeliveryRule.freight_fee }}</span>
                 </div>
                 <!-- 商品数据 -->
                 <div v-if="item.itemList" class="product-details">

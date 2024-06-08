@@ -24,7 +24,7 @@
           icon="plus"
           @click="handleAddSalesmanAction"
         >
-          添加导购员
+          添加
         </el-button>
       </el-col>
     </el-row>
@@ -34,11 +34,11 @@
       @tab-click="handleClick"
     >
       <el-tab-pane
-        label="导购员列表"
+        label="列表"
         name="admin"
       />
       <el-tab-pane
-        label="禁用导购员"
+        label="禁用"
         name="invalid"
       />
       <el-table
@@ -74,7 +74,8 @@
             />
           </template>
         </el-table-column>
-        <el-table-column
+        <!-- 
+        <el-table-column v-if=" '1' == '0' " 
           prop="distributor_name"
           label="所属店铺"
         >
@@ -86,7 +87,10 @@
               查看店铺
             </el-button>
           </template>
-        </el-table-column>
+        </el-table-column> 
+        -->
+        <!-- 
+
         <el-table-column label="导购角色">
           <template slot-scope="scope">
             {{ scope.row.role_name }}
@@ -96,9 +100,9 @@
             />
           </template>
         </el-table-column>
+
         <el-table-column label="绑定关系">
           <template slot-scope="scope">
-            <!-- <router-link :to="{ path: '/store/storemanager/salesmanRelationship', query: {salesperson_id: scope.row.salespersonId, is_bind: 1}}">绑定关系</router-link> -->
             <el-button
               type="text"
               @click.stop="handleShowSideBar(scope.row.salespersonId)"
@@ -107,6 +111,9 @@
             </el-button>
           </template>
         </el-table-column>
+      -->
+            <!-- <router-link :to="{ path: '/store/storemanager/salesmanRelationship', query: {salesperson_id: scope.row.salespersonId, is_bind: 1}}">绑定关系</router-link> -->
+
         <el-table-column label="操作">
           <template slot-scope="scope">
             <div class="operating-icons">
@@ -136,16 +143,16 @@
       />
     </el-tabs>
 
-    <el-dialog
+    <el-dialog v-show="false" 
       title="编辑导购员角色"
       :visible.sync="dialog_role"
       :close-on-click-modal="false"
     >
       <el-form
-        v-model="form"
+        v-model="form" 
         label-width="160px"
       >
-        <el-form-item label="角色">
+        <el-form-item label="角色" >
           <el-radio-group v-model="roleForm.role">
             <el-radio
               v-for="(item, index) in roleList"
@@ -170,7 +177,7 @@
       </div>
     </el-dialog>
     <el-dialog
-      title="添加/编辑导购员"
+      title="添加/编辑"
       :visible.sync="dialog"
       :close-on-click-modal="false"
     >
@@ -178,7 +185,7 @@
         v-model="form"
         label-width="160px"
       >
-        <el-form-item label="管理店铺">
+        <el-form-item label="管理店铺" >
           <shop-select
             distributors
             :shop-id-default="form.distributor_id"
@@ -200,7 +207,7 @@
             style="width: 193px"
           />
         </el-form-item>
-        <el-form-item label="角色">
+        <el-form-item label="角色" v-show="false">
           <el-radio-group v-model="form.role">
             <el-radio
               v-for="(item, index) in roleList"
@@ -211,10 +218,10 @@
             </el-radio>
           </el-radio-group>
         </el-form-item>
-        <el-form-item label="导购员姓名">
+        <el-form-item label="姓名">
           <el-input
             v-model="form.salesman_name"
-            placeholder="请输入导购员姓名"
+            placeholder="请输入姓名"
             style="width: 193px"
           />
         </el-form-item>
@@ -500,7 +507,7 @@ export default {
       })
     },
     handleDeleteSalesman (index, row) {
-      this.$confirm('此操作将禁用该导购员, 是否继续?', '提示', {
+      this.$confirm('此操作将禁用, 是否继续?', '提示', {
         confirmButtonText: '确定',
         cancelButtonText: '取消',
         type: 'warning'

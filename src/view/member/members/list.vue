@@ -62,7 +62,11 @@
 
 <template>
   <div>
-    <div v-if="$route.path.indexOf('detail') === -1 && $route.path.indexOf('chiefupload') === -1">
+    <div
+      v-if="
+        $route.path.indexOf('detail') === -1 && $route.path.indexOf('chiefupload') === -1
+      "
+    >
       <SpFilterForm :model="params" @onSearch="onSearch" @onReset="onSearch">
         <SpFilterFormItem prop="mobile" label="手机号:">
           <el-input v-model="params.mobile" placeholder="请输入手机号" />
@@ -90,7 +94,11 @@
             />
           </el-select>
         </SpFilterFormItem>
-        <SpFilterFormItem v-if="!VERSION_IN_PURCHASE" prop="inviter_mobile" label="推荐人:">
+        <SpFilterFormItem
+          v-if="!VERSION_IN_PURCHASE"
+          prop="inviter_mobile"
+          label="推荐人:"
+        >
           <el-input v-model="params.inviter_mobile" placeholder="请输入推荐人手机号" />
         </SpFilterFormItem>
         <SpFilterFormItem prop="tag_id" label="标签:">
@@ -125,7 +133,11 @@
         <SpFilterFormItem prop="remarks" label="备注:">
           <el-input v-model="params.remarks" placeholder="备注" />
         </SpFilterFormItem>
-        <SpFilterFormItem v-if="!VERSION_IN_PURCHASE" prop="have_consume" label="购买记录:">
+        <SpFilterFormItem
+          v-if="!VERSION_IN_PURCHASE"
+          prop="have_consume"
+          label="购买记录:"
+        >
           <el-select v-model="params.have_consume" placeholder="请选择" clearable>
             <el-option label="有记录" value="true" />
             <el-option label="无记录" value="false" />
@@ -142,7 +154,9 @@
       </SpFilterForm>
 
       <div class="action-container">
-        <el-button type="primary" plain @click="batchActionDialog('rel_tag')"> 打标签 </el-button>
+        <el-button type="primary" plain @click="batchActionDialog('rel_tag')">
+          打标签
+        </el-button>
         <el-button
           v-if="!VERSION_IN_PURCHASE"
           type="primary"
@@ -234,7 +248,12 @@
           </template>
         </el-table-column>
 
-        <el-table-column v-if="!VERSION_IN_PURCHASE" prop="is_chief" label="是否团长" width="80">
+        <el-table-column
+          v-if="!VERSION_IN_PURCHASE"
+          prop="is_chief"
+          label="是否团长"
+          width="80"
+        >
           <template slot-scope="scope">
             <el-switch
               v-model="scope.row.is_chief"
@@ -258,14 +277,24 @@
           </template>
         </el-table-column> -->
 
-        <el-table-column v-if="!VERSION_IN_PURCHASE" prop="grade_id" label="会员等级" width="140">
+        <el-table-column
+          v-if="!VERSION_IN_PURCHASE"
+          prop="grade_id"
+          label="会员等级"
+          width="140"
+        >
           <template slot-scope="scope">
             <!-- <span v-if="scope.row.grade_id == '1'">女</span>
             <span v-else>{{ scope.row.grade_id }}</span> -->
             <span>{{ showGrade(scope.row.grade_id, scope.row.vip_grade) }}</span>
           </template>
         </el-table-column>
-        <el-table-column v-if="!VERSION_IN_PURCHASE" prop="inviter" label="推荐人" width="130" />
+        <el-table-column
+          v-if="!VERSION_IN_PURCHASE"
+          prop="inviter"
+          label="推荐人"
+          width="130"
+        />
         <el-table-column prop="disabled" label="禁用" width="80">
           <template slot-scope="scope">
             <el-switch
@@ -299,13 +328,18 @@
             </template>
           </template>
         </el-table-column>
-        <el-table-column v-if="false" prop="user_card_code" label="会员卡编号" width="130" />
+        <el-table-column
+          v-if="false"
+          prop="user_card_code"
+          label="会员卡编号"
+          width="130"
+        />
 
         <el-table-column v-if="false" prop="created" label="注册日期" width="120">
           <template slot-scope="scope">
             <el-tooltip placement="top">
               <div slot="content">
-                注册时间<br>{{ scope.row.created | datetime('YYYY-MM-DD HH:mm:ss') }}
+                注册时间<br />{{ scope.row.created | datetime("YYYY-MM-DD HH:mm:ss") }}
               </div>
               <span>{{ scope.row.created | datetime }}</span>
             </el-tooltip>
@@ -316,14 +350,26 @@
           <template slot-scope="scope">
             <span v-if="scope.row.remarks">{{ scope.row.remarks }}</span>
             <span v-else class="muted">暂无备注</span>
-            <el-tooltip class="item" effect="dark" content="编辑备注" placement="top-start">
-              <el-button class="el-icon-edit" type="text" size="mini" @click="isEdit(scope.row)" />
+            <el-tooltip
+              class="item"
+              effect="dark"
+              content="编辑备注"
+              placement="top-start"
+            >
+              <el-button
+                class="el-icon-edit"
+                type="text"
+                size="mini"
+                @click="isEdit(scope.row)"
+              />
             </el-tooltip>
           </template>
         </el-table-column>
         <el-table-column label="操作" width="250">
           <template slot-scope="scope">
-            <el-button type="text" @click="getDetail(scope.row.user_id)"> 详情 </el-button>
+            <el-button type="text" @click="getDetail(scope.row.user_id)">
+              详情
+            </el-button>
             <el-button
               v-if="$store.getters.login_type != 'distributor' && datapass_block == 0"
               type="text"
@@ -338,6 +384,14 @@
             >
               会员等级
             </el-button>
+            <el-button
+              icon="edit"
+              type="text"
+              @click="editSuperior(scope.row)"
+            >
+              调整上级
+            </el-button>
+
           </template>
         </el-table-column>
       </el-table>
@@ -354,7 +408,11 @@
         />
       </div>
 
-      <el-dialog title="会员下载" :visible.sync="downloadView" :close-on-click-modal="false">
+      <el-dialog
+        title="会员下载"
+        :visible.sync="downloadView"
+        :close-on-click-modal="false"
+      >
         <template v-if="downloadUrl">
           <a :href="downloadUrl" download>{{ downloadName }}</a>
         </template>
@@ -517,7 +575,9 @@
               </el-row>
             </el-form-item>
             <el-form-item class="content-center">
-              <el-button type="primary" @click="handleVipGradeDelay(true)"> 确定延期 </el-button>
+              <el-button type="primary" @click="handleVipGradeDelay(true)">
+                确定延期
+              </el-button>
             </el-form-item>
           </el-form>
         </template>
@@ -737,6 +797,107 @@
         </template>
       </el-dialog>
 
+      <!-- 调整上下级弹框 -->
+      <el-dialog
+        title="调整上级"
+        :visible.sync="editSuperiorVisible"
+        :before-close="handleCancelSuperior"
+      >
+        <el-row :gutter="10">
+          <el-col
+            :md="8"
+            :lg="10"
+          >
+            <el-input
+              v-model="identifierModal"
+              placeholder="请输入手机号"
+            >
+              <el-button
+                slot="append"
+                icon="el-icon-search"
+                @click="numberSearchModal"
+              />
+            </el-input>
+          </el-col>
+        </el-row>
+
+        <el-table
+          v-loading="modalLoading"
+          :data="modalList"
+          style="width: 100%"
+          :height="400"
+          element-loading-text="数据加载中..."
+          highlight-current-row
+          @current-change="handleCurrentChangeUpLV"
+        >
+          <el-table-column
+            type="index"
+            width="50"
+          />
+          <el-table-column
+            prop="username"
+            label="姓名"
+          />
+          <el-table-column
+            prop="mobile"
+            label="手机号"
+          />
+          <el-table-column
+            prop="promoter_grade_name"
+            label="推广员等级"
+          />
+          <el-table-column
+            prop="disabled"
+            label="状态"
+          >
+            <template slot-scope="scope">
+              <el-tag
+                v-if="scope.row.disabled == '0'"
+                type="success"
+                size="mini"
+              >
+                有效
+              </el-tag>
+              <el-tag
+                v-else
+                type="info"
+                size="mini"
+              >
+                无效
+              </el-tag>
+            </template>
+          </el-table-column>
+        </el-table>
+        <div
+          v-if="modal_total_count > paramsModal.pageSize"
+          class="content-padded content-center"
+        >
+          <el-pagination
+            layout="prev, pager, next"
+            :current-page.sync="paramsModal.page"
+            :total="modal_total_count"
+            :page-size="paramsModal.pageSize"
+            @current-change="handleModalPage"
+          />
+        </div>
+        <div
+          slot="footer"
+          class="dialog-footer content-center"
+        >
+          <el-button @click.native="handleCancelSuperior">
+            取消
+          </el-button>
+          <el-button
+            type="primary"
+            @click="submitSuperiorAction"
+          >
+            确定
+          </el-button>
+        </div>
+      </el-dialog>
+
+
+
       <template v-if="aliyunsmsDialogVisible">
         <aliyunsmsDialog
           :exterior="true"
@@ -752,10 +913,10 @@
 </template>
 
 <script>
-import store from '@/store'
-import exportTip from '@/components/export_tips'
-import aliyunsmsDialog from '@/view/base/shortmessage/cpn/sms_MassLog_edit.vue'
-import { mapGetters } from 'vuex'
+import store from "@/store";
+import exportTip from "@/components/export_tips";
+import aliyunsmsDialog from "@/view/base/shortmessage/cpn/sms_MassLog_edit.vue";
+import { mapGetters } from "vuex";
 import {
   getMembers,
   memberSmsSend,
@@ -771,49 +932,75 @@ import {
   batchOperating,
   getMemberRegisterSetting,
   updateMemberBasicInfo,
-  setCheif
-} from '../../../api/member'
-import { getaliSmsStatus } from '@/api/sms'
+  setCheif,
+} from "../../../api/member";
+import { getaliSmsStatus } from "@/api/sms";
 
-import { getSalesmanList, setMemberSalesman, getDistributorEasyList } from '../../../api/marketing'
-import { getEffectiveCardList } from '../../../api/cardticket'
-import { giveCoupons } from '../../../api/promotions'
-import { listVipGrade, batchReceiveMemberCard } from '../../../api/cardticket'
-import shopSelect from '@/components/shopSelect'
-import { forEach } from 'jszip'
+import {
+  addPromoter,
+  getPopularizeList,
+  editPopularizeRemove,
+  editPopularizeGrade,
+  editPopularizeDisabled,
+  getPromoterGradeConfig,
+  updatePromoterShop
+} from '../../../api/promotions'
+
+
+import {
+  getSalesmanList,
+  setMemberSalesman,
+  getDistributorEasyList,
+} from "../../../api/marketing";
+import { getEffectiveCardList } from "../../../api/cardticket";
+import { giveCoupons } from "../../../api/promotions";
+import { listVipGrade, batchReceiveMemberCard } from "../../../api/cardticket";
+import shopSelect from "@/components/shopSelect";
+import { forEach } from "jszip";
 
 export default {
   components: {
     shopSelect,
     exportTip,
-    aliyunsmsDialog
+    aliyunsmsDialog,
   },
   data() {
     return {
+      editSuperiorVisible: false,
+      modalLoading: false,
+      paramsModal: {
+        page: 1,
+        pageSize: 14,
+        mobile: ''
+      },
+      identifierModal: '',
+      modalList: [],
+      modal_total_count: 0,
+
       aliyunsms_status: false, //ali 短信状态
       aliyunsmsDialogVisible: false,
       aliyunsmsDialogInfo: {
-        type: 'add'
+        type: "add",
       },
 
       panel: {
-        search: false
+        search: false,
       },
       isEditRemarks: false,
       loading: false,
-      mobile: '',
+      mobile: "",
       total_count: 0,
       memberData: [],
       vipGradeDelay: {
-        vip_grade_id: '',
+        vip_grade_id: "",
         add_day: 0,
-        filter: 'users'
+        filter: "users",
       },
       levelData: [],
       user_id: [],
-      dialogTitle: '',
+      dialogTitle: "",
       dialogIsShow: false,
-      card_type: 'all',
+      card_type: "all",
       staffCoupons: {
         dialog: false,
         temp: [],
@@ -822,222 +1009,228 @@ export default {
         page: {
           pageSize: 20,
           currentPage: 1,
-          total: 0
-        }
+          total: 0,
+        },
       },
       remarksForm: {
-        user_id: '',
-        remarks: ''
+        user_id: "",
+        remarks: "",
       },
       gradeForm: {
-        user_id: '',
-        grade_id: '',
-        old_grade_id: '',
-        remarks: ''
+        user_id: "",
+        grade_id: "",
+        old_grade_id: "",
+        remarks: "",
       },
       smsUserData: [],
-      sms_content: '',
+      sms_content: "",
       tag: {
         dialog: false,
         editUser: [],
         list: [],
         form: {
           tag_ids: [],
-          user_ids: []
+          user_ids: [],
         },
         currentTags: [],
-        tags: []
+        tags: [],
       },
       editMobileDialog: false,
       form: {
-        oldMobile: '',
-        user_id: '',
-        newMobile: ''
+        oldMobile: "",
+        user_id: "",
+        newMobile: "",
       },
       page: {
         pageIndex: 1,
         pageSize: 20,
-        total: 0
+        total: 0,
       },
       params: {
-        vip_grade: '',
-        tag_id: '',
-        mobile: '',
-        have_consume: ''
+        vip_grade: "",
+        tag_id: "",
+        mobile: "",
+        have_consume: "",
       },
       operateLog: [],
-      currentShop: '',
+      currentShop: "",
       salesman: [],
       loadingSalesman: false,
       salesmanPaging: {
-        name: '',
-        mobile: '',
+        name: "",
+        mobile: "",
         page: 1,
         pageSize: 10,
-        total_count: 0
+        total_count: 0,
       },
-      salesperson_id: '',
-      salesperson_name: '',
-      salesperson_mobile: '',
+      salesperson_id: "",
+      salesperson_name: "",
+      salesperson_mobile: "",
       is_batch: false,
-      currentDistributor: '',
+      currentDistributor: "",
       downloadView: false,
-      downloadUrl: '',
-      downloadName: '',
+      downloadUrl: "",
+      downloadName: "",
       wxShopsList: [],
       distributorShopList: [],
       performInit: false,
-      created: '',
+      created: "",
       pickerOptions: {
         shortcuts: [
           {
-            text: '最近一周',
+            text: "最近一周",
             onClick(picker) {
-              const end = new Date()
-              const start = new Date()
-              start.setTime(start.getTime() - 3600 * 1000 * 24 * 7)
-              picker.$emit('pick', [start, end])
-            }
+              const end = new Date();
+              const start = new Date();
+              start.setTime(start.getTime() - 3600 * 1000 * 24 * 7);
+              picker.$emit("pick", [start, end]);
+            },
           },
           {
-            text: '最近一个月',
+            text: "最近一个月",
             onClick(picker) {
-              const end = new Date()
-              const start = new Date()
-              start.setTime(start.getTime() - 3600 * 1000 * 24 * 30)
-              picker.$emit('pick', [start, end])
-            }
+              const end = new Date();
+              const start = new Date();
+              start.setTime(start.getTime() - 3600 * 1000 * 24 * 30);
+              picker.$emit("pick", [start, end]);
+            },
           },
           {
-            text: '最近三个月',
+            text: "最近三个月",
             onClick(picker) {
-              const end = new Date()
-              const start = new Date()
-              start.setTime(start.getTime() - 3600 * 1000 * 24 * 90)
-              picker.$emit('pick', [start, end])
-            }
-          }
-        ]
+              const end = new Date();
+              const start = new Date();
+              start.setTime(start.getTime() - 3600 * 1000 * 24 * 90);
+              picker.$emit("pick", [start, end]);
+            },
+          },
+        ],
       },
       sexoption: [
         {
-          value: '0',
-          label: '未知'
+          value: "0",
+          label: "未知",
         },
         {
-          value: '1',
-          label: '男'
+          value: "1",
+          label: "男",
         },
         {
-          value: '2',
-          label: '女'
-        }
+          value: "2",
+          label: "女",
+        },
       ],
       membersSetting: [],
       basicInfo: {
-        user_id: '',
-        username: '',
-        sex: '',
-        birthday: '',
-        address: '',
-        email: '',
-        industry: '',
-        income: '',
-        edu_background: '',
-        habbit: []
+        user_id: "",
+        username: "",
+        sex: "",
+        birthday: "",
+        address: "",
+        email: "",
+        industry: "",
+        income: "",
+        edu_background: "",
+        habbit: [],
       },
       datapass_block: 1,
       gradeList: [], // 普通会员等级列表
-      vipGrade: [] // 付费会员等级列表
-    }
+      vipGrade: [], // 付费会员等级列表
+    };
   },
   computed: {
-    ...mapGetters(['wheight', 'isMicorMall', 'login_type'])
+    ...mapGetters(["wheight", "isMicorMall", "login_type"]),
   },
   mounted() {
-    const { salesman_mobile, wechat_nickname, mobile, orderRecords, grade_id, currentPage } =
-      this.$route.query
+    const {
+      salesman_mobile,
+      wechat_nickname,
+      mobile,
+      orderRecords,
+      grade_id,
+      currentPage,
+    } = this.$route.query;
 
-    this.params.salesman_mobile = salesman_mobile
+    this.params.salesman_mobile = salesman_mobile;
     if (wechat_nickname) {
-      this.params.wechat_nickname = wechat_nickname
+      this.params.wechat_nickname = wechat_nickname;
     }
     if (mobile) {
-      this.params.mobile = mobile
+      this.params.mobile = mobile;
     }
     if (orderRecords) {
-      this.params.have_consume = orderRecords
+      this.params.have_consume = orderRecords;
     }
     if (grade_id) {
-      this.params.grade_id = grade_id
+      this.params.grade_id = grade_id;
     }
     if (currentPage) {
-      this.page.pageIndex = Number(currentPage)
+      this.page.pageIndex = Number(currentPage);
     }
-    this.getMembers()
-    this.getAllTagLists()
-    this.getGradeList()
+    this.getMembers();
+    this.getAllTagLists();
+    this.getGradeList();
     // this.getVipList()
-    this.getShopsList()
+    this.getShopsList();
     getMemberRegisterSetting().then((response) => {
-      delete response.data.data.content_agreement
-      this.membersSetting = response.data.data.setting
-    })
+      delete response.data.data.content_agreement;
+      this.membersSetting = response.data.data.setting;
+    });
 
     // 获取短信type
-    this.getAliSMS()
+    this.getAliSMS();
   },
   methods: {
     chiefupload() {
-      if (this.login_type == 'distributor') {
-        this.$router.push({ path: `/shopadmin/member/member/chiefupload` })
+      if (this.login_type == "distributor") {
+        this.$router.push({ path: `/shopadmin/member/member/chiefupload` });
       } else {
-        this.$router.push({ path: `/member/member/chiefupload` })
+        this.$router.push({ path: `/member/member/chiefupload` });
       }
     },
     async getAliSMS() {
-      const { aliyunsms_status } = await this.$api.sms.getaliSmsStatus()
-      this.aliyunsms_status = aliyunsms_status
+      const { aliyunsms_status } = await this.$api.sms.getaliSmsStatus();
+      this.aliyunsms_status = aliyunsms_status;
     },
     gradeUpdate(row) {
-      this.params.action_type = 'set_grade'
-      this.dialogTitle = '修改指定会员等级'
-      this.dialogIsShow = true
-      this.gradeForm.user_id = row.user_id
-      this.gradeForm.grade_id = row.grade_id
-      this.gradeForm.old_grade_id = row.grade_id
-      this.gradeForm.remarks = row.remarks
-      this.is_batch = false
+      this.params.action_type = "set_grade";
+      this.dialogTitle = "修改指定会员等级";
+      this.dialogIsShow = true;
+      this.gradeForm.user_id = row.user_id;
+      this.gradeForm.grade_id = row.grade_id;
+      this.gradeForm.old_grade_id = row.grade_id;
+      this.gradeForm.remarks = row.remarks;
+      this.is_batch = false;
     },
     infoUpdate(value) {
-      this.params.action_type = 'basic_info'
-      this.dialogTitle = '修改会员基础信息'
-      this.dialogIsShow = true
-      this.basicInfo.user_id = value.user_id
-      this.basicInfo.username = value.username
-      this.basicInfo.mobile = value.mobile
-      this.basicInfo.sex = value.sex
-      this.basicInfo.birthday = value.birthday
-      this.basicInfo.address = value.address
-      this.basicInfo.email = value.email
-      this.basicInfo.industry = value.industry
-      this.basicInfo.income = value.income
-      this.basicInfo.edu_background = value.edu_background
-      let habbit = []
+      this.params.action_type = "basic_info";
+      this.dialogTitle = "修改会员基础信息";
+      this.dialogIsShow = true;
+      this.basicInfo.user_id = value.user_id;
+      this.basicInfo.username = value.username;
+      this.basicInfo.mobile = value.mobile;
+      this.basicInfo.sex = value.sex;
+      this.basicInfo.birthday = value.birthday;
+      this.basicInfo.address = value.address;
+      this.basicInfo.email = value.email;
+      this.basicInfo.industry = value.industry;
+      this.basicInfo.income = value.income;
+      this.basicInfo.edu_background = value.edu_background;
+      let habbit = [];
       value.habbit.forEach((data) => {
         if (data) {
-          if (data.ischecked == 'true') {
-            habbit.push(data.name)
+          if (data.ischecked == "true") {
+            habbit.push(data.name);
           }
         }
-      })
-      this.basicInfo.habbit = habbit
+      });
+      this.basicInfo.habbit = habbit;
       for (let setting in this.membersSetting) {
         for (let row in value) {
           if (setting == row) {
-            this.membersSetting[setting].value = value[row]
-            if (setting == 'habbit') {
-              this.membersSetting[setting].value = habbit
+            this.membersSetting[setting].value = value[row];
+            if (setting == "habbit") {
+              this.membersSetting[setting].value = habbit;
             }
           }
         }
@@ -1045,152 +1238,154 @@ export default {
     },
     infoUpdateSubmit() {
       updateMemberBasicInfo(this.basicInfo).then((res) => {
-        this.$message({ type: 'success', message: '修改成功' })
-        this.getMembers()
-        this.dialogIsShow = false
-      })
+        this.$message({ type: "success", message: "修改成功" });
+        this.getMembers();
+        this.dialogIsShow = false;
+      });
     },
     gradeUpdateSubmit() {
       if (!this.gradeForm.grade_id) {
         this.$message({
-          type: 'error',
-          message: '没有指定等级'
-        })
-        return
+          type: "error",
+          message: "没有指定等级",
+        });
+        return;
       }
       if (this.is_batch === false) {
         updateMemberGrade(this.gradeForm).then((res) => {
-          this.$message({ type: 'success', message: '修改成功' })
-          this.getMembers()
-          this.dialogIsShow = false
-        })
+          this.$message({ type: "success", message: "修改成功" });
+          this.getMembers();
+          this.dialogIsShow = false;
+        });
       } else {
-        this.params.grade_form = JSON.stringify(this.gradeForm)
-        this.batchAction('是否给全部会员指定会员等级?')
+        this.params.grade_form = JSON.stringify(this.gradeForm);
+        this.batchAction("是否给全部会员指定会员等级?");
       }
     },
     editRemarks() {
       updateMemberInfo({
         user_id: this.remarksForm.user_id,
-        remarks: this.remarksForm.remarks
+        remarks: this.remarksForm.remarks,
       }).then((res) => {
-        this.$message({ type: 'success', message: '更新成功' })
-        this.isEditRemarks = false
-        this.getMembers()
-      })
+        this.$message({ type: "success", message: "更新成功" });
+        this.isEditRemarks = false;
+        this.getMembers();
+      });
     },
     isEdit(row) {
-      this.isEditRemarks = true
-      this.remarksForm.user_id = row.user_id
-      this.remarksForm.remarks = row.remarks
+      this.isEditRemarks = true;
+      this.remarksForm.user_id = row.user_id;
+      this.remarksForm.remarks = row.remarks;
     },
     getRowKeys(row) {
-      return `${row.user_id}${row.shop_id}`
+      return `${row.user_id}${row.shop_id}`;
     },
     submitSelected() {
-      this.staffCoupons.dialog = false
-      this.staffCoupons.checked = this.staffCoupons.temp
-      console.log(this.staffCoupons.checked)
-      let cardIds = []
+      this.staffCoupons.dialog = false;
+      this.staffCoupons.checked = this.staffCoupons.temp;
+      console.log(this.staffCoupons.checked);
+      let cardIds = [];
       for (var i = 0; i < this.staffCoupons.checked.length; i++) {
-        cardIds.push(this.staffCoupons.checked[i].card_id)
+        cardIds.push(this.staffCoupons.checked[i].card_id);
       }
-      this.staffCoupons.temp = []
-      this.params.couponsids = cardIds
-      console.log(this.params)
-      this.params.action_type = 'give_coupon'
-      this.batchAction('是否给全部会员赠送优惠券?')
+      this.staffCoupons.temp = [];
+      this.params.couponsids = cardIds;
+      console.log(this.params);
+      this.params.action_type = "give_coupon";
+      this.batchAction("是否给全部会员赠送优惠券?");
     },
     handleCancelLabelsDialog() {
-      this.tag.dialog = false
-      this.editMobileDialog = false
-      this.isEditRemarks = false
-      this.dialogIsShow = false
+      this.tag.dialog = false;
+      this.editMobileDialog = false;
+      this.isEditRemarks = false;
+      this.dialogIsShow = false;
     },
     handleSalesmanChange(row) {
-      this.salesperson_id = row.salesperson_id
+      this.salesperson_id = row.salesperson_id;
     },
     handleSelectionChange(rows) {
-      this.user_id = []
+      this.user_id = [];
       if (rows) {
         rows.forEach((row) => {
           if (row) {
-            this.user_id.push(row.user_id)
+            this.user_id.push(row.user_id);
           }
-        })
+        });
       }
     },
     handleCurrentChange(pageIndex) {
-      this.page.pageIndex = pageIndex
-      this.getMembers()
+      this.page.pageIndex = pageIndex;
+      this.getMembers();
     },
     // 调整每页显示条数
     handleSizeChange(pageSize) {
-      this.page.pageSize = pageSize
-      this.getMembers()
+      this.page.pageSize = pageSize;
+      this.getMembers();
     },
 
     getParams() {
       if (this.currentShop) {
-        this.params.shop_id = this.currentShop
+        this.params.shop_id = this.currentShop;
       } else {
-        this.params.shop_id = ''
+        this.params.shop_id = "";
       }
 
       if (this.currentDistributor) {
-        this.params.distributor_id = this.currentDistributor
+        this.params.distributor_id = this.currentDistributor;
       } else {
-        this.params.distributor_id = ''
+        this.params.distributor_id = "";
       }
     },
     onSearch() {
-      this.page.pageIndex = 1
+      this.page.pageIndex = 1;
       this.$nextTick(() => {
-        this.getMembers()
-      })
+        this.getMembers();
+      });
     },
     async getMembers() {
-      this.loading = true
-      const { pageIndex: page, pageSize } = this.page
+      this.loading = true;
+      const { pageIndex: page, pageSize } = this.page;
       let params = {
         page,
         pageSize,
-        ...this.params
-      }
-      const { list, total_count, datapass_block } = await this.$api.member.getMembers(params)
-      this.memberData = list
-      this.datapass_block = datapass_block
-      this.page.total = total_count
-      this.loading = false
+        ...this.params,
+      };
+      const { list, total_count, datapass_block } = await this.$api.member.getMembers(
+        params
+      );
+      this.memberData = list;
+      this.datapass_block = datapass_block;
+      this.page.total = total_count;
+      this.loading = false;
     },
     async getGradeList() {
-      const gradeList = await this.$api.membercard.getGradeList()
-      const vipGradeList = await this.$api.cardticket.listVipGrade()
-      const _levelData = []
+      const gradeList = await this.$api.membercard.getGradeList();
+      const vipGradeList = await this.$api.cardticket.listVipGrade();
+      const _levelData = [];
       gradeList.forEach(({ grade_id, grade_name }) => {
         _levelData.push({
           grade_id,
-          grade_name
-        })
-      })
+          grade_name,
+        });
+      });
       vipGradeList.forEach(({ vip_grade_id, grade_name, lv_type }) => {
         _levelData.push({
           grade_id: lv_type,
-          grade_name
+          grade_name,
           // lv_type
-        })
-      })
-      this.gradeList = gradeList
-      this.vipGrade = vipGradeList
-      this.levelData = _levelData
+        });
+      });
+      this.gradeList = gradeList;
+      this.vipGrade = vipGradeList;
+      this.levelData = _levelData;
     },
     async getAllTagLists() {
       const params = {
         page: 1,
-        page_size: 500
-      }
-      const { list } = await this.$api.member.getTagList(params)
-      this.tag.list = list
+        page_size: 500,
+      };
+      const { list } = await this.$api.member.getTagList(params);
+      this.tag.list = list;
     },
     // async getVipList () {
     //   const res = await this.$api.cardticket.listVipGrade()
@@ -1200,384 +1395,384 @@ export default {
       const { list } = await this.$api.shop.getWxShopsList({
         page: 1,
         pageSize: 500,
-        is_disabled: false
-      })
-      this.wxShopsList = list
+        is_disabled: false,
+      });
+      this.wxShopsList = list;
     },
     showGrade(grade_id, vip_grade) {
       if (vip_grade) {
-        const filterList = this.levelData.find((item) => item.grade_id == vip_grade)
-        return filterList && filterList.grade_name
+        const filterList = this.levelData.find((item) => item.grade_id == vip_grade);
+        return filterList && filterList.grade_name;
       } else {
-        const filterList = this.levelData.find((item) => item.grade_id == grade_id)
-        return filterList && filterList.grade_name
+        const filterList = this.levelData.find((item) => item.grade_id == grade_id);
+        return filterList && filterList.grade_name;
       }
     },
     getDetail(userid) {
-      let isShopadmin = false
+      let isShopadmin = false;
       try {
-        isShopadmin = /\/shopadmin/.test(document.location.pathname)
+        isShopadmin = /\/shopadmin/.test(document.location.pathname);
       } catch (e) {}
       this.$router.push({
-        path: isShopadmin ? '/shopadmin/member/member/detail' : '/member/member/detail',
+        path: isShopadmin ? "/shopadmin/member/member/detail" : "/member/member/detail",
         query: {
           user_id: userid,
           mobile: this.params.mobile,
           orderRecords: this.params.have_consume,
           grade_id: this.params.grade_id,
-          currentPage: this.page.pageIndex
-        }
-      })
+          currentPage: this.page.pageIndex,
+        },
+      });
     },
     getCoupons() {
-      this.staffCoupons.loading = true
+      this.staffCoupons.loading = true;
       getEffectiveCardList({
         page_no: this.staffCoupons.page.currentPage,
         page_size: this.staffCoupons.page.pageSize,
-        card_type: this.card_type
+        card_type: this.card_type,
       }).then((res) => {
-        var data = res.data.data.list
+        var data = res.data.data.list;
         for (var i = 0; i < data.length; i++) {
           for (var j = 0; j < this.staffCoupons.temp.length; j++) {
             if (data[i].card_id === this.staffCoupons.temp[j].card_id) {
-              data[i].checked = true
+              data[i].checked = true;
             }
           }
         }
-        this.staffCoupons.list = data
-        this.staffCoupons.page.total = res.data.data.total_count
-        this.staffCoupons.loading = false
-      }) //addCouponsItems
+        this.staffCoupons.list = data;
+        this.staffCoupons.page.total = res.data.data.total_count;
+        this.staffCoupons.loading = false;
+      }); //addCouponsItems
     },
     salesmanSearch() {
-      this.loadingSalesman = true
+      this.loadingSalesman = true;
       getSalesmanList({
         salesman_name: this.salesmanPaging.name,
         mobile: this.salesmanPaging.mobile,
         page: this.salesmanPaging.page,
-        pageSize: this.salesmanPaging.pageSize
+        pageSize: this.salesmanPaging.pageSize,
       }).then((res) => {
-        this.salesman = res.data.data.list
-        this.salesperson_id = ''
-        this.salesmanPaging.total_count = res.data.data.total_count
-        this.loadingSalesman = false
-      })
+        this.salesman = res.data.data.list;
+        this.salesperson_id = "";
+        this.salesmanPaging.total_count = res.data.data.total_count;
+        this.loadingSalesman = false;
+      });
     },
     handleVipGradeDelay(isSubmit = false) {
       if (isSubmit) {
         if (this.vipGradeDelay.add_day <= 0) {
           this.$message({
-            type: 'error',
-            message: '请输入正确的延期天数'
-          })
-          return
+            type: "error",
+            message: "请输入正确的延期天数",
+          });
+          return;
         }
-        if (this.vipGradeDelay.filter == 'users') {
-          this.params.user_id = this.user_id
+        if (this.vipGradeDelay.filter == "users") {
+          this.params.user_id = this.user_id;
         }
-        this.params.vip_grade_form = JSON.stringify(this.vipGradeDelay)
-        this.batchAction('是否给全部会员进行付费会员延期?')
+        this.params.vip_grade_form = JSON.stringify(this.vipGradeDelay);
+        this.batchAction("是否给全部会员进行付费会员延期?");
       } else {
-        this.params.action_type = 'vip_delay'
-        this.dialogTitle = '付费会员延期'
+        this.params.action_type = "vip_delay";
+        this.dialogTitle = "付费会员延期";
         if (this.vipGrade.length <= 0) {
           this.$message({
-            type: 'error',
-            message: '无付费会员'
-          })
-          return
+            type: "error",
+            message: "无付费会员",
+          });
+          return;
         }
-        this.dialogIsShow = true
-        this.vipGradeDelay.vip_grade_id = this.vipGrade[0].vip_grade_id
+        this.dialogIsShow = true;
+        this.vipGradeDelay.vip_grade_id = this.vipGrade[0].vip_grade_id;
       }
     },
     checkNum() {
       if (this.sms_content.length > 67) {
-        this.$alert('当前短信内容字数超出67，将会分成多条发送', '', {
-          confirmButtonText: '确定'
-        })
+        this.$alert("当前短信内容字数超出67，将会分成多条发送", "", {
+          confirmButtonText: "确定",
+        });
       }
     },
     onSmsSends() {
       if (!this.sms_content) {
         this.$message({
-          type: 'error',
-          message: '短信内容不能为空'
-        })
-        return
+          type: "error",
+          message: "短信内容不能为空",
+        });
+        return;
       }
-      this.params.sms_content = this.sms_content
+      this.params.sms_content = this.sms_content;
 
       if (this.user_id.length > 0) {
-        this.$confirm('确定发送该条短信给会员?', '提示', {
-          confirmButtonText: '确定',
-          cancelButtonText: '取消',
-          type: 'warning'
+        this.$confirm("确定发送该条短信给会员?", "提示", {
+          confirmButtonText: "确定",
+          cancelButtonText: "取消",
+          type: "warning",
         })
           .then(() => {
-            this.params.action_type = 'send_sms'
-            this.batchAction('确定发送该条短信给会员?')
+            this.params.action_type = "send_sms";
+            this.batchAction("确定发送该条短信给会员?");
           })
           .catch(() => {
             this.$message({
-              type: 'info',
-              message: '已取消发送'
-            })
-          })
+              type: "info",
+              message: "已取消发送",
+            });
+          });
       } else {
-        this.params.action_type = 'send_sms'
-        this.batchAction('是否给全部会员发短信?')
+        this.params.action_type = "send_sms";
+        this.batchAction("是否给全部会员发短信?");
       }
     },
     addMemberTag() {
-      this.params.action_type = 'rel_tag'
+      this.params.action_type = "rel_tag";
 
-      this.tag.dialog = true
+      this.tag.dialog = true;
     },
     tagRemove(index) {
-      this.tag.tags.unshift(this.tag.currentTags[index])
-      this.tag.currentTags.splice(index, 1)
+      this.tag.tags.unshift(this.tag.currentTags[index]);
+      this.tag.currentTags.splice(index, 1);
     },
     tagAdd(item, index) {
-      let isInArr = this.tag.currentTags.findIndex((n) => n.tag_id == item.tag_id)
+      let isInArr = this.tag.currentTags.findIndex((n) => n.tag_id == item.tag_id);
       if (isInArr == -1) {
-        this.tag.currentTags.push(item)
-        this.tag.tags.splice(index, 1)
+        this.tag.currentTags.push(item);
+        this.tag.tags.splice(index, 1);
       }
     },
     submitMemberTag() {
-      this.params.tag_ids = []
-      this.params.user_id = []
+      this.params.tag_ids = [];
+      this.params.user_id = [];
       this.tag.currentTags.forEach((item) => {
-        this.params.tag_ids.push(item.tag_id)
-      })
+        this.params.tag_ids.push(item.tag_id);
+      });
       if (this.params.tag_ids.length <= 0) {
         this.$message({
-          type: 'error',
-          message: '没有选中标签'
-        })
-        return
+          type: "error",
+          message: "没有选中标签",
+        });
+        return;
       }
-      this.dialogIsShow = false
-      this.batchAction('是否给全部会员打标签?')
+      this.dialogIsShow = false;
+      this.batchAction("是否给全部会员打标签?");
     },
     clearParams() {
-      this.params.user_id = undefined
-      this.params.grade_form = undefined
-      this.params.action_type = undefined
+      this.params.user_id = undefined;
+      this.params.grade_form = undefined;
+      this.params.action_type = undefined;
     },
     batchAction(message) {
-      console.log(this.params)
+      console.log(this.params);
       if (this.user_id.length > 0) {
-        this.params.user_id = this.user_id
-        let params = JSON.parse(JSON.stringify(this.params))
-        console.log(this.params)
+        this.params.user_id = this.user_id;
+        let params = JSON.parse(JSON.stringify(this.params));
+        console.log(this.params);
         batchOperating(params).then((res) => {
           if (res.data.data.status) {
-            this.dialogIsShow = false
+            this.dialogIsShow = false;
             this.$message({
-              type: 'success',
-              message: res.data.data.msg
-            })
-            this.clearParams()
-            this.getGradeList()
-            this.getMembers()
+              type: "success",
+              message: res.data.data.msg,
+            });
+            this.clearParams();
+            this.getGradeList();
+            this.getMembers();
           }
-        })
+        });
       } else {
-        this.$confirm(message, '提示', {
-          confirmButtonText: '确定',
-          cancelButtonText: '取消',
-          type: 'warning'
+        this.$confirm(message, "提示", {
+          confirmButtonText: "确定",
+          cancelButtonText: "取消",
+          type: "warning",
         })
           .then(() => {
-            let params = JSON.parse(JSON.stringify(this.params))
+            let params = JSON.parse(JSON.stringify(this.params));
             batchOperating(params).then((res) => {
               if (res.data.data.status) {
-                this.dialogIsShow = false
+                this.dialogIsShow = false;
                 this.$message({
-                  type: 'success',
-                  message: res.data.data.msg
-                })
-                this.getGradeList()
-                this.getMembers()
+                  type: "success",
+                  message: res.data.data.msg,
+                });
+                this.getGradeList();
+                this.getMembers();
               }
-              this.params.tag_ids = []
-              this.params.couponsids = []
-              this.params.couponsids = []
-              this.params.user_id = []
-            })
+              this.params.tag_ids = [];
+              this.params.couponsids = [];
+              this.params.couponsids = [];
+              this.params.user_id = [];
+            });
           })
           .catch(() => {
             this.$message({
-              type: 'info',
-              message: '已取消'
-            })
-            this.params.tag_ids = []
-            this.params.couponsids = []
-            this.params.couponsids = []
-            this.params.user_id = []
-          })
+              type: "info",
+              message: "已取消",
+            });
+            this.params.tag_ids = [];
+            this.params.couponsids = [];
+            this.params.couponsids = [];
+            this.params.user_id = [];
+          });
       }
     },
 
     editMobile(row) {
-      this.editMobileDialog = true
-      this.form.oldMobile = row.mobile
-      this.form.user_id = row.user_id
-      this.form.username = row.username
-      this.form.newMobile = ''
-      this.getOperateLog(row.user_id)
+      this.editMobileDialog = true;
+      this.form.oldMobile = row.mobile;
+      this.form.user_id = row.user_id;
+      this.form.username = row.username;
+      this.form.newMobile = "";
+      this.getOperateLog(row.user_id);
     },
     onEditMobileSubmit() {
       if (!this.form.newMobile) {
         this.$message({
-          type: 'error',
-          message: '请填写手机号码'
-        })
-        return
+          type: "error",
+          message: "请填写手机号码",
+        });
+        return;
       }
-      this.$confirm('确定要修改该会员手机号？', '提示', {
-        cancelButtonText: '取消',
-        confirmButtonText: '确定',
-        type: 'warning',
+      this.$confirm("确定要修改该会员手机号？", "提示", {
+        cancelButtonText: "取消",
+        confirmButtonText: "确定",
+        type: "warning",
         beforeClose: (action, instance, done) => {
-          if (action === 'confirm') {
+          if (action === "confirm") {
             updateMemberMobile(this.form).then((res) => {
               this.$message({
-                type: 'success',
-                message: '修改手机号成功'
-              })
-              this.getMembers()
-              this.editMobileDialog = false
-            })
+                type: "success",
+                message: "修改手机号成功",
+              });
+              this.getMembers();
+              this.editMobileDialog = false;
+            });
           }
-          done()
-        }
-      })
+          done();
+        },
+      });
     },
     getOperateLog(userId) {
       var params = {
-        user_id: userId
-      }
+        user_id: userId,
+      };
       getMemberOperateLog(params).then((res) => {
-        this.operateLog = res.data.data.list
-      })
+        this.operateLog = res.data.data.list;
+      });
     },
     storeHandle(param) {
-      param && param.shop_id
-      this.currentDistributor = param.shop_id
-      this.currentShop = ''
-      this.currentPage = 1
-      this.getMembers()
+      param && param.shop_id;
+      this.currentDistributor = param.shop_id;
+      this.currentShop = "";
+      this.currentPage = 1;
+      this.getMembers();
     },
 
     init() {
-      this.params.mobile = ''
-      this.params.have_consume = ''
-      this.params.vip_grade = ''
-      this.params.grade_id = ''
-      this.params.tag_id = ''
-      this.params.inviter_mobile = ''
-      this.created = ''
-      this.params.remarks = ''
-      this.params.username = ''
-      this.params.salesman_mobile = ''
-      this.currentShop = ''
-      this.getMembers()
+      this.params.mobile = "";
+      this.params.have_consume = "";
+      this.params.vip_grade = "";
+      this.params.grade_id = "";
+      this.params.tag_id = "";
+      this.params.inviter_mobile = "";
+      this.created = "";
+      this.params.remarks = "";
+      this.params.username = "";
+      this.params.salesman_mobile = "";
+      this.currentShop = "";
+      this.getMembers();
     },
     shopHandle(val) {
-      this.performInit = true
-      this.currentStore = ''
-      this.currentShop = val
-      this.currentPage = 1
-      this.getMembers()
+      this.performInit = true;
+      this.currentStore = "";
+      this.currentShop = val;
+      this.currentPage = 1;
+      this.getMembers();
     },
 
     exportData() {
-      this.currentPage = 1
+      this.currentPage = 1;
       memberExport(this.params).then((response) => {
         if (response.data.data.status) {
           this.$message({
-            type: 'success',
-            message: '已加入执行队列，请在设置-导出列表中下载'
-          })
-          this.$export_open('member')
-          return
+            type: "success",
+            message: "已加入执行队列，请在设置-导出列表中下载",
+          });
+          this.$export_open("member");
+          return;
         } else if (response.data.data.url) {
-          this.downloadUrl = response.data.data.url
-          this.downloadName = response.data.filename
-          this.downloadView = true
+          this.downloadUrl = response.data.data.url;
+          this.downloadName = response.data.filename;
+          this.downloadView = true;
         } else {
           this.$message({
-            type: 'error',
-            message: '无内容可导出 或 执行失败，请检查重试'
-          })
-          return
+            type: "error",
+            message: "无内容可导出 或 执行失败，请检查重试",
+          });
+          return;
         }
-      })
+      });
     },
     dateChange(val) {
       if (val && val.length > 0) {
-        this.params.time_start_begin = this.dateStrToTimeStamp(val[0] + ' 00:00:00')
-        this.params.time_start_end = this.dateStrToTimeStamp(val[1] + ' 23:59:59')
+        this.params.time_start_begin = this.dateStrToTimeStamp(val[0] + " 00:00:00");
+        this.params.time_start_end = this.dateStrToTimeStamp(val[1] + " 23:59:59");
       } else {
-        this.params.time_start_begin = ''
-        this.params.time_start_end = ''
+        this.params.time_start_begin = "";
+        this.params.time_start_end = "";
       }
     },
     dateStrToTimeStamp(str) {
-      return Date.parse(new Date(str)) / 1000
+      return Date.parse(new Date(str)) / 1000;
     },
     panelCollapse(name) {
-      this.panel[name] = !this.panel[name]
+      this.panel[name] = !this.panel[name];
     },
     acitonDisabled(index, row) {
       if (row.is_disabled === true) {
-        var msg = '此操作将会禁用该会员，是否继续?'
-        this.$confirm(msg, '提示', {
-          confirmButtonText: '确定',
-          cancelButtonText: '取消',
-          type: 'warning'
+        var msg = "此操作将会禁用该会员，是否继续?";
+        this.$confirm(msg, "提示", {
+          confirmButtonText: "确定",
+          cancelButtonText: "取消",
+          type: "warning",
         }).then(() => {
           let params = {
-            'user_id': row.user_id,
-            'disabled': row.disabled
-          }
+            user_id: row.user_id,
+            disabled: row.disabled,
+          };
           updateMemberInfo(params).then((res) => {
-            this.getMembers()
-          })
-        })
+            this.getMembers();
+          });
+        });
       } else {
         let params = {
-          'user_id': row.user_id,
-          'disabled': row.disabled
-        }
+          user_id: row.user_id,
+          disabled: row.disabled,
+        };
         updateMemberInfo(params).then((res) => {
-          this.getMembers()
-        })
+          this.getMembers();
+        });
       }
     },
     switchChief(index, row) {
-      console.log(row.is_chief)
+      console.log(row.is_chief);
       if (row.is_chief == 1) {
-        var msg = '此操作将设置为团长，是否继续?'
-        this.$confirm(msg, '提示', {
-          confirmButtonText: '确定',
-          cancelButtonText: '取消',
-          type: 'warning'
+        var msg = "此操作将设置为团长，是否继续?";
+        this.$confirm(msg, "提示", {
+          confirmButtonText: "确定",
+          cancelButtonText: "取消",
+          type: "warning",
         }).then(() => {
           let params = {
-            'user_id': row.user_id,
-            'distributor_ids': [this.$store.getters.shopId]
-          }
+            user_id: row.user_id,
+            distributor_ids: [this.$store.getters.shopId],
+          };
           setCheif(params).then((res) => {
-            this.getMembers()
-          })
-        })
+            this.getMembers();
+          });
+        });
       } else {
-        this.$message({ type: 'error', message: '取消团长，请联系管理员' })
-        this.getMembers()
+        this.$message({ type: "error", message: "取消团长，请联系管理员" });
+        this.getMembers();
         // let params = {
         //   'user_id': row.user_id,
         //   'distributor_ids': [this.$store.getters.shopId]
@@ -1591,80 +1786,133 @@ export default {
     async relTagDelEvent(tagId, userId) {
       await this.$api.member.usersRelTagsDel({
         tag_id: tagId,
-        user_id: userId
-      })
-      this.$message({ type: 'success', message: '修改成功' })
-      this.getMembers()
+        user_id: userId,
+      });
+      this.$message({ type: "success", message: "修改成功" });
+      this.getMembers();
     },
     changeStaffCouponsPage(currentPage) {
-      this.staffCoupons.page.currentPage = currentPage
-      this.getCoupons()
+      this.staffCoupons.page.currentPage = currentPage;
+      this.getCoupons();
     },
     selectStaffItems(item) {
       if (item.checked) {
         for (var i = 0; i < this.staffCoupons.temp.length; i++) {
           if (this.staffCoupons.temp[i].card_id === item.card_id) {
-            this.staffCoupons.temp.splice(i, 1)
+            this.staffCoupons.temp.splice(i, 1);
           }
         }
         for (var i = 0; i < this.staffCoupons.list.length; i++) {
           if (this.staffCoupons.list[i].card_id === item.card_id) {
-            this.staffCoupons.list[i].checked = false
+            this.staffCoupons.list[i].checked = false;
           }
         }
       } else {
         for (var i = 0; i < this.staffCoupons.list.length; i++) {
           if (this.staffCoupons.list[i].card_id === item.card_id) {
-            this.staffCoupons.list[i].checked = true
+            this.staffCoupons.list[i].checked = true;
           }
         }
-        this.staffCoupons.temp.push(item)
+        this.staffCoupons.temp.push(item);
       }
     },
-    batchActionDialog(actiontype) {
-      this.params.action_type = actiontype
+    editSuperior (row) {
+      this.editSuperiorVisible = true
+      this.row = row
+      this.identifierModal = ''
+      this.numberSearchModal()
+    },    
+    submitSuperiorAction () {
+      this.editPopularizeRemoveFun()
+      this.editSuperiorVisible = false
+    },
+    handleCancelSuperior () {
+      this.editSuperiorVisible = false
+    },
 
-      if (actiontype == 'send_sms' && this.aliyunsms_status) {
+    numberSearchModal (e) {
+      this.paramsModal.page = 1
+      this.paramsModal.mobile = this.identifierModal
+      this.getPopularizeListModalFun(this.paramsModal)
+    },
+    getPopularizeListModalFun (filter) {
+      this.modalLoading = true
+      getPopularizeList(filter).then((res) => {
+        this.modalList = res.data.data.list
+        this.modal_total_count = Number(res.data.data.total_count)
+        this.modalLoading = false
+      })
+    },
+    handleCurrentChangeUpLV (val) {
+      console.log('handleCurrentChangeUpChange')
+      if (val && val.user_id) {
+        this.currentRow = val.user_id
+      }
+    },    
+    editPopularizeRemoveFun () {
+      editPopularizeRemove({ 'user_id': this.row.user_id, 'new_user_id': this.currentRow }).then(
+        (res) => {
+          this.message = '上下级'
+          this.loading = false
+          this.$message({
+            message: '调整' + this.message + '成功',
+            type: 'success',
+            duration: 5 * 1000
+          })
+          this.fetchList()
+        }
+      )
+    },
+    handleModalPage (page_num) {
+      this.paramsModal.page = page_num
+      this.getPopularizeListModalFun(this.paramsModal)
+    },
+
+
+    batchActionDialog(actiontype) {
+      this.params.action_type = actiontype;
+
+      if (actiontype == "send_sms" && this.aliyunsms_status) {
         // 展示阿里短信的
-        this.switchAliyunsmsDialog(true)
-        console.log(this.user_id)
-        return
+        this.switchAliyunsmsDialog(true);
+        console.log(this.user_id);
+        return;
       }
 
-      this.dialogIsShow = true
-      if (actiontype == 'rel_tag') {
-        this.dialogTitle = '为会员打标签'
-        this.tag.currentTags = []
-        this.tag.tags = [...this.tag.list]
+      this.dialogIsShow = true;
+      if (actiontype == "rel_tag") {
+        this.dialogTitle = "为会员打标签";
+        this.tag.currentTags = [];
+        this.tag.tags = [...this.tag.list];
         this.tag.tags.forEach((item, index) => {
-          let isInArr = this.tag.currentTags.findIndex((n) => n.tag_id == item.tag_id)
-          if (isInArr != -1) this.tag.tags.splice(index, 1)
-        })
-        this.tag.dialog = true
-      } else if (actiontype == 'give_coupon') {
-        this.getCoupons()
-        this.dialogTitle = '赠送优惠券'
-      } else if (actiontype == 'send_sms') {
-        this.sms_content = ''
-        this.dialogTitle = '群发短信'
-      } else if (actiontype == 'vip_delay') {
-        this.dialogTitle = '付费会员延期'
-      } else if (actiontype == 'set_grade') {
-        this.gradeForm.user_id = ''
-        this.gradeForm.grade_id = ''
-        this.gradeForm.old_grade_id = ''
-        this.gradeForm.remarks = ''
-        this.is_batch = true
-        this.dialogTitle = '修改会员等级'
-      } else if (actiontype == 'set_saleman') {
-        this.dialogTitle = '设置导购员'
+          let isInArr = this.tag.currentTags.findIndex((n) => n.tag_id == item.tag_id);
+          if (isInArr != -1) this.tag.tags.splice(index, 1);
+        });
+        this.tag.dialog = true;
+      } else if (actiontype == "give_coupon") {
+        this.getCoupons();
+        this.dialogTitle = "赠送优惠券";
+      } else if (actiontype == "send_sms") {
+        this.sms_content = "";
+        this.dialogTitle = "群发短信";
+      } else if (actiontype == "vip_delay") {
+        this.dialogTitle = "付费会员延期";
+      } else if (actiontype == "set_grade") {
+        this.gradeForm.user_id = "";
+        this.gradeForm.grade_id = "";
+        this.gradeForm.old_grade_id = "";
+        this.gradeForm.remarks = "";
+        this.is_batch = true;
+        this.dialogTitle = "修改会员等级";
+      } else if (actiontype == "set_saleman") {
+        this.dialogTitle = "设置导购员";
       }
     },
 
     /* ali短信 相关 */
     switchAliyunsmsDialog(val = false) {
-      this.aliyunsmsDialogVisible = val
-    }
-  }
-}
+      this.aliyunsmsDialogVisible = val;
+    },
+  },
+};
 </script>

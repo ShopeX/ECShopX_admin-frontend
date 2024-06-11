@@ -138,8 +138,8 @@ export default {
         regions_id: ['310000', '310100', '310104'],
         address: '',
         is_dada: false,
-        templatesId: 1,
-        templatesTime:1,
+        is_self_delivery: true,
+        freight_time:0.1,
         business: '',
         is_ziti: false,
         offline_aftersales: false,
@@ -442,23 +442,23 @@ export default {
         },
         {
           label: '送货方式',
-          key: 'templatesId',
+          key: 'is_self_delivery',
           type: 'radio',
           options: [
-            { name: '商家自配送', label: 1 },
-            { name: '达达同城配', label: 3 },
+            { name: '商家自配送', label: true },
+            { name: '达达同城配', label: false },
             // { name: '闪送', label: 6 }
           ],
           isShow: ({ key }, value) => value.is_dada && this.dadaEnable
         },
         {
-          key: 'templatesTime',
-          isShow: ({ key }, value) => value.templatesId == 1 && value.is_dada && this.dadaEnable,
+          key: 'freight_time',
+          isShow: ({ key }, value) => value.is_self_delivery && value.is_dada && this.dadaEnable,
           component: ({ key }, value) => {
             return (
               <div style="margin-left: 27px;display:flex">
                 立即配送，预计
-                <el-input-number v-model={value[key]} placeholder='请输入内容' step="0.1" precision="1" />
+                <el-input-number v-model={value[key]} placeholder='请输入内容' step={0.1} precision={1} min={0.1} />
                 小时后送达（下单时间往后延多少小时）
               </div>
             )
@@ -469,10 +469,10 @@ export default {
           key: 'business',
           type: 'select',
           options: [],
-          isShow: ({ key }, value) => value.templatesId == 3 && this.dadaEnable,
+          isShow: ({ key }, value) => !value.is_self_delivery && this.dadaEnable && value.is_dada,
           validator: (rule, value, callback) => {
             console.log('value:', value)
-            if (this.form.templatesId == 3) {
+            if (!this.form.is_self_delivery) {
               if (!value) {
                 callback(new Error('业务类型必填'))
               } else {
@@ -727,7 +727,9 @@ export default {
           regions_id: res.regions_id,
           address: res.address,
           house_number: res.house_number,
-          is_dada: res.is_dada,
+          is_dada: res.is_dada==1 || res.is_self_delivery,
+          is_self_delivery:res.is_self_delivery,
+          freight_time:res.freight_time,
           business: res.business,
           is_ziti: res.is_ziti,
           offline_aftersales: res.offline_aftersales === 1,
@@ -829,7 +831,7 @@ export default {
       const { regions_id, startTime, endTime } = offline_aftersales_address
       const [province, city, area] = getRegionNameById(regions_id, district)
 
-      const params = {
+      const params =  {
         ...this.form,
         distributor_self: this.distributor_self,
         regions: getRegionNameById(this.form.regions_id, district),
@@ -851,6 +853,21 @@ export default {
       } else {
         delete params.is_audit_goods
       }
+
+      if(this.form.is_dada){
+        if(this.form.is_self_delivery){
+        params.is_dada = 0
+        params.is_self_delivery = true
+      }else{
+        params.is_dada = 1
+        params.is_self_delivery = false
+      }
+      }else{
+        params.is_dada = 0
+        params.is_self_delivery = false
+
+      }
+
       try {
         if (distributor_id) {
           await this.$api.marketing.updateDistributorInfo(distributor_id, params)

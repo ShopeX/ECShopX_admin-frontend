@@ -25,7 +25,7 @@ export const DISTRIBUTION_TYPE = [
   { title: '普通快递', value: 'logistics' },
   { title: '同城配', value: 'dada' },
   { title: '客户自提', value: 'ziti' },
-  { title: '自配送', value: 'merchant' }
+  { title: '商家自配送', value: 'merchant' }
 ]
 
 export const DISTRIBUTION_STATUS = [

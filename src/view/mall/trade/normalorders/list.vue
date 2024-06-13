@@ -203,14 +203,14 @@
       <!-- </el-upload> -->
     </div>
 
-    <el-tabs v-model="params.order_status" type="card" @tab-click="onSearch">
+    <el-tabs v-model="params.order_status" type="card" @tab-click="onSearch" >
       <el-tab-pane
         v-for="item in orderStatus"
         :key="item.value"
         :label="item.title"
         :name="item.value"
       />
-      <el-table v-loading="loading" border :data="tableList">
+      <el-table v-loading="loading" border :data="tableList" @selection-change="handleSelectionChange">
         <el-table-column width="220" prop="order_id" label="订单信息">
           <template slot-scope="scope">
             <div class="order-num">
@@ -336,9 +336,13 @@
             {{ scope.row.mobile }}
           </template>
         </el-table-column>
-
+        <el-table-column
+          type="selection"
+          width="55"
+          fixed="left"
+        ></el-table-column>
         <!-- <el-table-column prop="source_name" label="来源"></el-table-column> -->
-        <el-table-column label="操作" fixed="left">
+        <el-table-column label="操作" fixed="right">
           <template slot-scope="scope">
             <el-button type="text" style="margin-right: 8px">
               <router-link
@@ -418,6 +422,17 @@
       :form="deliverGoodsForm"
       :form-list="deliverGoodsFormList"
       @onSubmit="deliverGoodsSubmit"
+    />
+
+     <!-- 更新发货 -->
+     <SpDialog
+      ref="updateDeliverGoodsDialogRef"
+      v-model="updateDeliverGoodsDialog"
+      width="1000px"
+      :title="`更新发货【订单:${updateDeliverGoodsForm.order_id}】`"
+      :form="updateDeliverGoodsForm"
+      :form-list="updateDeliverGoodsFormList"
+      @onSubmit="updateDeliverGoodsSubmit"
     />
 
     <!-- 核销 -->
@@ -631,9 +646,38 @@ export default {
         other_reason: ''
       },
       deliverGoodsDialog: false,
+
       deliverGoodsFormList: [
+      {
+          label: '发货方式',
+          key: 'delivery_way',
+          type: 'radio',
+          disabled: false,
+          options: [
+            { label: '1', name: '快递' },
+            { label: '2', name: '商家自配送' }
+          ],
+          onChange: (e) => {
+            if (e == '1') {
+              this.deliverGoodsFormList[1].options = [
+                { label: 'batch', name: '整单发货' },
+                { label: 'sep', name: '拆分发货' }
+              ]
+              this.deliverGoodsFormList[3].options =  this.logisticsList.filter(item=>item.value != 'SELF_DELIVERY')
+              this.deliverGoodsForm.delivery_corp = ''
+            } else {
+              this.deliverGoodsFormList[1].options = [
+                { label: 'batch', name: '整单发货' }
+              ];
+              this.deliverGoodsForm.delivery_type = 'batch'
+              this.deliverGoodsFormList[3].options =  this.logisticsList.filter(item=>item.value == 'SELF_DELIVERY')
+              this.deliverGoodsForm.delivery_corp = 'SELF_DELIVERY'
+
+            }
+          }
+        },
         {
-          label: '发货类型:',
+          label: '发货类型',
           key: 'delivery_type',
           type: 'radio',
           disabled: false,
@@ -643,9 +687,9 @@ export default {
           ],
           onChange: (e) => {
             if (e == 'sep') {
-              this.deliverGoodsFormList[1].options[4].isShow = true
+              this.deliverGoodsFormList[2].options[4].isShow = true
             } else {
-              this.deliverGoodsFormList[1].options[4].isShow = false
+              this.deliverGoodsFormList[2].options[4].isShow = false
             }
           }
         },
@@ -690,21 +734,102 @@ export default {
           message: '不能为空'
         },
         {
-          label: '物流单号:',
+          label: '物流单号',
           key: 'delivery_code',
           type: 'input',
           placeholder: '物流公司单号',
           required: true,
+          isShow: ({ key }, value) => {
+            return value['delivery_way'] == '1'
+          },
           message: '不能为空'
+        },
+        {
+          label: '配送员',
+          key: 'self_delivery_operator_id',
+          placeholder: '请选择配送员',
+          type: 'select',
+          options: [],
+          required: true,
+          isShow: ({ key }, value) => {
+            return value['delivery_way'] == '2'
+          },
+          message: '不能为空',
+          onChange: (e) => {
+           console.log(e);
+           let targetItem = this.deliverGoodsFormList[5].options.find(item=>item.operator_id == e) || {}
+           let {staff_no,mobile } = targetItem
+            this.deliverGoodsForm.self_delivery_operator_mobile = mobile
+            this.deliverGoodsForm.self_delivery_operator_staffno = staff_no
+          }
+        },
+        {
+          label: '配送员手机号',
+          key: 'self_delivery_operator_mobile',
+          type: 'input',
+          display: 'inline',
+          placeholder: ' ',
+          isShow: ({ key }, value) => {
+            return value['delivery_way'] == '2'
+          },
+          disabled:true,
+        },
+        {
+          label: '配送员编号',
+          key: 'self_delivery_operator_staffno',
+          display: 'inline',
+          type: 'input',
+          placeholder: ' ',
+          isShow: ({ key }, value) => {
+            return value['delivery_way'] == '2'
+          },
+          disabled:true,
+        },
+        {
+          label: '配送状态',
+          key: 'self_delivery_status',
+          placeholder: '请选择配送状态',
+          type: 'select',
+          options: [{ title: '配送中', value: 'DELIVERING' }],
+          required: true,
+          isShow: ({ key }, value) => {
+            return value['delivery_way'] == '2'
+          },
+          message: '不能为空'
+        },
+        {
+          label: '配送备注',
+          key: 'delivery_remark',
+          type: 'input',
+          isShow: ({ key }, value) => {
+            return value['delivery_way'] == '2'
+          },
+        },
+        {
+          label: '分类图片',
+          key: 'delivery_pics',
+          isShow: ({ key }, value) => {
+            return value['delivery_way'] == '2'
+          },
+          component: ({ key }, value) => <SpImagePicker v-model={value[key]} drag max={9} />,
+          tip: `1. 最多可上传9张图片，文件格式为bmp、png、jpeg、jpg或gif，大小不超过2M（建议尺寸：500px * 500px）<br />2. 相册图朋友圈分享是否生成小程序码`
         }
       ],
       deliverGoodsForm: {
         order_id: '',
+        receipt_type:'',
+        delivery_way:'1',
         delivery_type: 'batch',
         delivery_corp: '',
         delivery_code: '',
         type: '',
-        items: []
+        items: [],
+        self_delivery_operator_id:'',
+        self_delivery_operator_mobile:'',
+        self_delivery_operator_staffno:'',
+        self_delivery_status:'',
+        delivery_remark:'',
+        delivery_pics:[]
       },
       writeOffDialog: false,
       writeOffFormList: [
@@ -878,7 +1003,15 @@ export default {
         order_id:"",
         self_delivery_operator_id:''
       },
-      personnelFormList:[ {
+      personnelFormList:[{
+          label: '订单号',
+          key: 'order_id',
+          placeholder: '请输入订单号',
+          type: 'input',
+          disabled:true,
+          required: true,
+          message: '订单号不能为空'
+        }, {
           label: '配送员',
           key: 'self_delivery_operator_id',
           type: 'select',
@@ -889,23 +1022,119 @@ export default {
             return this.statusPersonnel
           }
         },
-        {
-          label: '订单号',
-          key: 'order_id',
-          placeholder: '请输入订单号',
-          type: 'input',
-          required: true,
-          message: '订单号不能为空'
+
+      ],
+      logisticsList:[],
+      //更新发货
+      updateDeliverGoodsDialog:false,
+      updateDeliverGoodsForm:{
+        order_id: '',
+        self_delivery_operator_id:'',
+        self_delivery_operator_mobile:'',
+        orders_delivery_id:'',
+        self_delivery_status:'',
+        delivery_remark:'',
+        delivery_pics:[],
+        delivery_code:''
+      },
+      updateDeliverGoodsFormList:[
+      {
+          label: '快递公司',
+          key: 'delivery_corp',
+          placeholder: '请选择快递公司',
+          type: 'select',
+          options: [],
+          disabled:true,
         },
-      ]
+        {
+          label: '发货单号',
+          key: 'orders_delivery_id',
+          type: 'input',
+          placeholder: ' ',
+          disabled:true,
+        },
+        {
+          label: '配送员',
+          key: 'self_delivery_operator_id',
+          placeholder: '请选择配送员',
+          type: 'select',
+          display: 'inline',
+          disabled:true,
+          options: [],
+          required: true,
+          message: '不能为空',
+          onChange: (e) => {
+           console.log(e);
+           let targetItem = this.updateDeliverGoodsFormList[2].options.find(item=>item.operator_id == e) || {}
+           let {staff_no,mobile } = targetItem
+            this.deliverGoodsForm.self_delivery_operator_mobile = mobile
+          }
+        },
+        {
+          label: '配送员手机号',
+          key: 'self_delivery_operator_mobile',
+          type: 'input',
+          display: 'inline',
+          placeholder: ' ',
+          disabled:true,
+        },
+        {
+          label: '配送状态',
+          key: 'self_delivery_status',
+          placeholder: '请选择配送状态',
+          type: 'select',
+          options: [],
+          required: true,
+          message: '不能为空'
+        },
+        {
+          label: '配送备注',
+          key: 'delivery_remark',
+          type: 'input',
+        },
+        {
+          label: '分类图片',
+          key: 'delivery_pics',
+          component: ({ key }, value) => <SpImagePicker v-model={value[key]} drag max={9} />,
+          tip: `1. 最多可上传9张图片，文件格式为bmp、png、jpeg、jpg或gif，大小不超过2M（建议尺寸：500px * 500px）<br />2. 相册图朋友圈分享是否生成小程序码`
+        }
+      ],
+      selectList:[]
+
     }
   },
+
   computed: {
     ...mapGetters(['login_type', 'isMicorMall'])
   },
   async created() {
     const { result } = await this.$api.trade.isBindOMS()
     this.isBindOMS = result
+  },
+  watch:{
+    'deliverGoodsForm.delivery_way'(e){
+      if (e == '1') {
+        this.deliverGoodsFormList[1].options = [
+          { label: 'batch', name: '整单发货' },
+          { label: 'sep', name: '拆分发货' }
+        ]
+        this.deliverGoodsFormList[3].options =  this.logisticsList.filter(item=>item.value != 'SELF_DELIVERY')
+        this.deliverGoodsForm.delivery_corp = ''
+        this.deliverGoodsFormList[5].required = false
+        this.deliverGoodsFormList[8].required = false
+        this.deliverGoodsFormList[4].required = true
+      } else {
+        this.deliverGoodsFormList[1].options = [
+          { label: 'batch', name: '整单发货' }
+        ];
+        this.deliverGoodsForm.delivery_type = 'batch'
+        this.deliverGoodsFormList[3].options =  this.logisticsList.filter(item=>item.value == 'SELF_DELIVERY')
+        this.deliverGoodsForm.delivery_corp = 'SELF_DELIVERY'
+        this.deliverGoodsFormList[5].required = true
+        this.deliverGoodsFormList[8].required = true
+        this.deliverGoodsFormList[4].required = false
+      }
+    }
   },
   mounted() {
     this.origin = window.location.origin
@@ -937,15 +1166,37 @@ export default {
         ele.value = ele.operator_id,
         ele.title = ele.username
       });
-      this.personnelFormList[0].options = res.list
+      this.personnelFormList[1].options = res.list
+      this.deliverGoodsFormList[5].options = res.list
+      this.updateDeliverGoodsFormList[2].options = res.list
     },
     // 分配配送员
     assignPersonnel(val){
+
+      if(this.selectList.length != 1){
+        return this.$message.error('请选择一个订单！')
+
+      }
+
+      const { order_id, self_delivery_status} = this.selectList[0]
+
+      if(!val){
+        // 已接单，配送中才能取消配送
+        this.personnelFormList[1].required = false
+        if(!['RECEIVEORDER','DELIVERING'].includes(self_delivery_status) ){
+          return this.$message.error('该订单无法取消配送！')
+        }
+      }else{
+        if(!['CONFIRMING'].includes(self_delivery_status) ){
+          return this.$message.error('该订单无法分配配送员！')
+        }
+      }
       this.personnelDialog = true
       this.statusPersonnel = val
+
       this.personnelForm = {
-        order_id:"",
-        self_delivery_operator_id: this.personnelFormList[0].options[0].operator_id
+        order_id:order_id,
+        self_delivery_operator_id:''
       }
     },
     async onPersonnelSubmit(){
@@ -964,6 +1215,8 @@ export default {
         });
         this.personnelDialog = false
       }
+      this.fetchList()
+
     },
     async delivery(){
       let params= {
@@ -1022,7 +1275,9 @@ export default {
           dada,
           delivery_status,
           pay_status,
-          can_apply_aftersales
+          can_apply_aftersales,
+          self_delivery_status
+
         } = item
         const isDada = receipt_type == 'dada'
         const isLogistics = receipt_type == 'logistics'
@@ -1066,6 +1321,11 @@ export default {
           ) {
             actionBtns.push({ name: '发货', key: 'deliverGoods' })
           }
+          console.log( 666,(isLogistics || is_logistics) ,
+            !isDada ,
+            order_status == 'PAYED' ,
+            delivery_status != 'DONE' ,
+            receipt_type != 'ziti')
 
           if (cancel_status == 'WAIT_PROCESS' && order_status == 'PAYED') {
             actionBtns.push({ name: '退款', key: 'refund' })
@@ -1094,6 +1354,10 @@ export default {
           } else if (!VERSION_IN_PURCHASE) {
             actionBtns.push({ name: '申请售后', key: 'salesAfter' })
           }
+        }
+
+        if(receipt_type == 'merchant' &&  order_status == 'WAIT_BUYER_CONFIRM' && self_delivery_status != 'DONE'){
+          actionBtns.push({ name: '更新发货', key: 'updatedelivery' })
         }
 
         return {
@@ -1149,12 +1413,17 @@ export default {
     },
     async getLogisticsList() {
       const { list } = await this.$api.trade.getLogisticsList()
-      this.deliverGoodsFormList[2].options = list.map((item) => {
+      this.logisticsList =  list.map((item) => {
         return {
           title: item.name,
           value: item.value
         }
       })
+      this.deliverGoodsFormList[3].options =  this.logisticsList
+      this.logisticsList.push({title:'商家自配送',value:'SELF_DELIVERY'})
+      this.updateDeliverGoodsFormList[0].options = this.logisticsList
+
+
     },
     async handleAction(
       {
@@ -1164,7 +1433,13 @@ export default {
         items,
         delivery_type,
         delivery_status,
-        receipt_type
+        receipt_type,
+        orders_delivery_id,
+        self_delivery_operator_id,
+        delivery_corp,
+        self_delivery_operator_mobile,
+        delivery_code,
+        self_delivery_status
       },
       { key }
     ) {
@@ -1187,9 +1462,12 @@ export default {
         if (this.isBindOMS && this.IS_ADMIN) {
           return this.$message.warning('请至OMS处理订单发货')
         }
-
+        if(receipt_type == 'merchant'){
+          this.deliverGoodsForm.delivery_way = '2'
+        }
         this.$refs['deliverGoodsDialogRef'].resetForm()
         this.deliverGoodsForm.order_id = order_id
+        this.deliverGoodsForm.receipt_type = receipt_type
         this.deliverGoodsForm.items = items.map((item) => {
           return {
             ...item,
@@ -1200,11 +1478,11 @@ export default {
         // 部分发货
         if (delivery_status == 'PARTAIL') {
           this.deliverGoodsForm.delivery_type = 'sep'
-          this.deliverGoodsFormList[0].disabled = true
-          this.deliverGoodsFormList[1].options[4].isShow = true
+          this.deliverGoodsFormList[1].disabled = true
+          this.deliverGoodsFormList[2].options[4].isShow = true
         } else {
-          this.deliverGoodsFormList[0].disabled = false
-          this.deliverGoodsFormList[1].options[4].isShow = false
+          this.deliverGoodsFormList[1].disabled = false
+          this.deliverGoodsFormList[2].options[4].isShow = false
         }
         this.deliverGoodsDialog = true
       } else if (key == 'writeOff') {
@@ -1346,6 +1624,28 @@ export default {
         } else {
           this.$router.push({ path: `/order/entitytrade/tradenormalorders/after-sale/${order_id}` })
         }
+      } else if (key == 'updatedelivery') {
+        //更新发货
+        this.$refs['updateDeliverGoodsDialogRef'].resetForm()
+        this.updateDeliverGoodsDialog = true
+        this.updateDeliverGoodsForm.order_id = order_id
+        this.updateDeliverGoodsForm.orders_delivery_id = orders_delivery_id
+        this.updateDeliverGoodsForm.self_delivery_operator_id = (self_delivery_operator_id == '0' || !self_delivery_operator_id) ? '' :  self_delivery_operator_id
+        this.updateDeliverGoodsForm.delivery_corp = delivery_corp
+        this.updateDeliverGoodsForm.self_delivery_operator_mobile = self_delivery_operator_mobile
+        this.updateDeliverGoodsForm.delivery_code = delivery_code
+        this.updateDeliverGoodsForm.self_delivery_status = ''
+        if(self_delivery_status == 'CONFIRMING'){
+          this.updateDeliverGoodsFormList[4].options = [{ title: '配送中', value: 'DELIVERING' }]
+          this.updateDeliverGoodsFormList[2].disabled = false
+        }else{
+          this.updateDeliverGoodsFormList[2].disabled = true
+          this.updateDeliverGoodsFormList[4].options = [
+          { title: '已送达', value: 'DONE' },
+          { title: '已取消', value: 'CONFIRMING' }]
+        }
+
+
       }
     },
     onLoadCancelOrderRef() {
@@ -1370,20 +1670,52 @@ export default {
       // })
       this.fetchList()
     },
+    async updateDeliverGoodsSubmit(){
+      const {orders_delivery_id,delivery_corp,self_delivery_status,self_delivery_operator_id,delivery_code,delivery_remark,delivery_pics} = this.updateDeliverGoodsForm
+
+      const params = {
+        delivery_corp,self_delivery_status,self_delivery_operator_id,delivery_remark,delivery_pics,delivery_code
+      }
+
+     const res =  await this.$api.trade.updateLogistics(orders_delivery_id,params)
+     this.$message.success('更新成功!')
+     this.updateDeliverGoodsDialog = false
+     this.fetchList()
+
+    },
     async deliverGoodsSubmit() {
-      const { order_id, delivery_type, delivery_corp, delivery_code, type, items } =
+      const { order_id, delivery_type, delivery_corp, delivery_code, type, items,receipt_type,delivery_way,self_delivery_operator_id,self_delivery_status,delivery_pics,delivery_remark } =
         this.deliverGoodsForm
-      let params = {
+      let params = {};
+
+      if(delivery_way == '2'){
+        params = {
         order_id,
         delivery_type,
         delivery_corp,
-        delivery_code,
-        type
+        type,
+        self_delivery_operator_id,
+        self_delivery_status,
+        delivery_pics,
+        delivery_remark
       }
+      }else{
+        params = {
+          order_id,
+          delivery_type,
+          delivery_corp,
+          delivery_code,
+          type
+        }
+      }
+
       // 拆单发货
       if (delivery_type == 'sep') {
         params['sepInfo'] = JSON.stringify(items.filter((item) => item.delivery_num))
       }
+
+      console.log(params);
+
       const { delivery_status } = await this.$api.trade.delivery(params)
       this.deliverGoodsDialog = false
       this.fetchList()
@@ -1439,6 +1771,10 @@ export default {
       await this.$api.trade.changePriceConfirm(params)
       this.changePriceDialog = false
       this.fetchList()
+    },
+    handleSelectionChange(val){
+      console.log(val)
+      this.selectList = val
     },
     async salesAfterSubmit() {},
     exportInvoice() {

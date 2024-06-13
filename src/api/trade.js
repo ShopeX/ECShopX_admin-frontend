@@ -600,3 +600,12 @@ export function salesAfterApply(params) {
     params
   })
 }
+
+// 修改物流信息
+export function updateLogistics(orders_delivery_id, query) {
+  return fetch({
+    url: `/delivery/${orders_delivery_id}`,
+    method: 'put',
+    params:query
+  })
+}

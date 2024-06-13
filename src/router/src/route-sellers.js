@@ -1,6 +1,6 @@
 // 会员路由
 const name = '商家'
-import Layout from '@/view/layout' // 主框架
+import Layout from '@/view/layout'; // 主框架
 
 export default {
   path: '/sellers',
@@ -44,6 +44,12 @@ export default {
           component: () => import('@/view/mall/marketing/merchantList/editor')
         }
       ]
+    },
+    //marketingsalesman
+    {
+      path: 'marketingsalesman',
+      name: `店铺导购员`,
+      component: () => import('@/view/guide/salesman')
     },
     {
       path: 'storemanager/distributortags',

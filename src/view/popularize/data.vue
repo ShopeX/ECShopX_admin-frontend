@@ -27,8 +27,9 @@
           />
         </SpFilterFormItem>
       </SpFilterForm>
-
       <div class="action-container">
+
+        <div class="action-container">
         <el-button-group>
           <export-tip @exportHandle="exportPopularizeData">
             <el-button
@@ -38,17 +39,36 @@
               导出业绩统计
             </el-button>
           </export-tip>
-          <export-tip @exportHandle="exportPopularizeOrder">
+
+        </el-button-group>
+      </div>
+
+        <export-tip @exportHandle="exportPopularizeOrder">
             <el-button
               type="primary"
               plain
             >
               导出业绩订单详细
-            </el-button>
+            </el-button>* 下载订单详细日期
           </export-tip>
+          <SpFilterFormItem prop="tag_id" label="下载日期:">
+          <el-date-picker
+            v-model="created"
+            unlink-panels
+            type="daterange"
+            align="right"
+            format="yyyy-MM-dd"
+            value-format="yyyy-MM-dd"
+            range-separator="至"
+            start-placeholder="开始日期"
+            end-placeholder="结束日期"
+            prefix-icon="null"
+            :picker-options="pickerOptions"
+            @change="dateChange"
+          /> 
+        </SpFilterFormItem>          
+        </div>
 
-        </el-button-group>
-      </div>
 
       <el-table
         v-loading="loading"
@@ -176,6 +196,40 @@ export default {
       row: {},
       username: '',
       total_count: 0,
+
+      created: "",
+      pickerOptions: {
+        shortcuts: [
+          {
+            text: "最近一周",
+            onClick(picker) {
+              const end = new Date();
+              const start = new Date();
+              start.setTime(start.getTime() - 3600 * 1000 * 24 * 7);
+              picker.$emit("pick", [start, end]);
+            },
+          },
+          {
+            text: "最近一个月",
+            onClick(picker) {
+              const end = new Date();
+              const start = new Date();
+              start.setTime(start.getTime() - 3600 * 1000 * 24 * 30);
+              picker.$emit("pick", [start, end]);
+            },
+          },
+          {
+            text: "最近三个月",
+            onClick(picker) {
+              const end = new Date();
+              const start = new Date();
+              start.setTime(start.getTime() - 3600 * 1000 * 24 * 90);
+              picker.$emit("pick", [start, end]);
+            },
+          },
+        ],
+      },
+            
       datapass_block: 1
     }
   },
@@ -206,10 +260,17 @@ export default {
     },
 
     exportPopularizeOrder () {
+      console.log(this.created)
+      console.log(this.created[0])
+      console.log(this.created[1])
+      let date_start = this.created[0]
+      let date_end   = this.created[1]
       const { pageIndex: page, pageSize } = this.page
       let params = {
         page,
         pageSize,
+        date_start,
+        date_end,
         ...this.params
       }
       exportPopularizeOrder(params).then((res) => {

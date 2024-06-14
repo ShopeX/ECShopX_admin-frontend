@@ -609,3 +609,12 @@ export function updateLogistics(orders_delivery_id, query) {
     params:query
   })
 }
+
+//已打包
+export function confirmpackag(params) {
+  return fetch({
+    url: '/order/deliverypackag/confirm',
+    method: 'post',
+    params
+  })
+}

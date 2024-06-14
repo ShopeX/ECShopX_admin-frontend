@@ -199,7 +199,7 @@
         :auto-upload="false"
         :show-file-list="false"
       > -->
-        <el-button v-if="IS_DISTRIBUTOR || IS_ADMIN" type="primary" plain @click="assignPersonnel(false)"> 取消配送（针对商家自配送订单，已分配业务员订单在未到达前，商家可取消配送员配送） </el-button>
+        <el-button v-if="IS_DISTRIBUTOR || IS_ADMIN" type="primary"  type="primary" plain @click="assignPersonnel(false)"> 取消配送（针对商家自配送订单，已分配业务员订单在未到达前，商家可取消配送员配送） </el-button>
       <!-- </el-upload> -->
     </div>
 
@@ -321,13 +321,13 @@
 
         <el-table-column label="配送员">
           <template slot-scope="scope">
-            {{ scope.row.username }}
+            {{ scope.row.self_delivery_operator_name }}
           </template>
         </el-table-column>
 
         <el-table-column label="配送费">
           <template slot-scope="scope">
-            {{ (scope.row.self_delivery_fee || 0) / 100 }}
+            {{ scope.row.self_delivery_fee /100  || 0  }}元
           </template>
         </el-table-column>
 
@@ -652,7 +652,7 @@ export default {
           label: '发货方式',
           key: 'delivery_way',
           type: 'radio',
-          disabled: false,
+          disabled: true,
           options: [
             { label: '1', name: '快递' },
             { label: '2', name: '商家自配送' }
@@ -1067,7 +1067,9 @@ export default {
            console.log(e);
            let targetItem = this.updateDeliverGoodsFormList[2].options.find(item=>item.operator_id == e) || {}
            let {staff_no,mobile } = targetItem
-            this.deliverGoodsForm.self_delivery_operator_mobile = mobile
+           console.log(targetItem);
+
+            this.updateDeliverGoodsForm.self_delivery_operator_mobile = mobile
           }
         },
         {
@@ -1187,7 +1189,7 @@ export default {
           return this.$message.error('该订单无法取消配送！')
         }
       }else{
-        if(!['CONFIRMING'].includes(self_delivery_status) ){
+        if(!['CONFIRMING','PACKAGED'].includes(self_delivery_status) ){
           return this.$message.error('该订单无法分配配送员！')
         }
       }
@@ -1322,11 +1324,7 @@ export default {
           ) {
             actionBtns.push({ name: '发货', key: 'deliverGoods' })
           }
-          console.log( 666,(isLogistics || is_logistics) ,
-            !isDada ,
-            order_status == 'PAYED' ,
-            delivery_status != 'DONE' ,
-            receipt_type != 'ziti')
+
 
           if (cancel_status == 'WAIT_PROCESS' && order_status == 'PAYED') {
             actionBtns.push({ name: '退款', key: 'refund' })
@@ -1334,6 +1332,14 @@ export default {
 
           if (is_invoiced == '0' && invoice) {
             actionBtns.push({ name: '待开票', key: 'waitInvoice' })
+          }
+
+          if(receipt_type == 'merchant' &&  order_status == 'WAIT_BUYER_CONFIRM' && self_delivery_status != 'DONE'){
+            actionBtns.push({ name: '更新发货', key: 'updatedelivery' })
+          }
+
+          if(receipt_type == 'merchant' && ['CONFIRMING','RECEIVEORDER'].includes(self_delivery_status) && order_status === "PAYED"){
+            actionBtns.push({ name: '已打包', key: 'confirmpackag' })
           }
 
           actionBtns.push({ name: '备注', key: 'remark' })
@@ -1357,9 +1363,7 @@ export default {
           }
         }
 
-        if(receipt_type == 'merchant' &&  order_status == 'WAIT_BUYER_CONFIRM' && self_delivery_status != 'DONE'){
-          actionBtns.push({ name: '更新发货', key: 'updatedelivery' })
-        }
+
 
         return {
           ...item,
@@ -1463,9 +1467,14 @@ export default {
         if (this.isBindOMS && this.IS_ADMIN) {
           return this.$message.warning('请至OMS处理订单发货')
         }
-        if(receipt_type == 'merchant'){
-          this.deliverGoodsForm.delivery_way = '2'
-        }
+        this.deliverGoodsForm.delivery_way = receipt_type == 'merchant' ? '2' : '1'
+        //已经分配配送员数据回显示
+        this.deliverGoodsForm.self_delivery_operator_id = self_delivery_status == "RECEIVEORDER" ? self_delivery_operator_id : '';
+        this.deliverGoodsForm.self_delivery_operator_mobile = self_delivery_status == "RECEIVEORDER" ?  self_delivery_operator_mobile : '';
+        let self_delivery_operator_staffno =  this.deliverGoodsFormList[5].options.find(item=>item.operator_id == self_delivery_operator_id)?.staff_no
+        this.deliverGoodsForm.self_delivery_operator_staffno = self_delivery_status == "RECEIVEORDER" ? self_delivery_operator_staffno : '';
+
+
         this.$refs['deliverGoodsDialogRef'].resetForm()
         this.deliverGoodsForm.order_id = order_id
         this.deliverGoodsForm.receipt_type = receipt_type
@@ -1628,6 +1637,7 @@ export default {
       } else if (key == 'updatedelivery') {
         //更新发货
         this.$refs['updateDeliverGoodsDialogRef'].resetForm()
+        this.updateDeliverGoodsForm.delivery_pics = []
         this.updateDeliverGoodsDialog = true
         this.updateDeliverGoodsForm.order_id = order_id
         this.updateDeliverGoodsForm.orders_delivery_id = orders_delivery_id
@@ -1645,8 +1655,15 @@ export default {
           { title: '已送达', value: 'DONE' },
           { title: '已取消', value: 'CONFIRMING' }]
         }
-
-
+      } else if (key == 'confirmpackag'){
+        this.$confirm('打包后待配送员配送', '已打包', {
+          confirmButtonText: '确定',
+          cancelButtonText: '取消'
+        }).then(async () => {
+          await this.$api.trade.confirmpackag({order_id})
+          this.$message.success('打包成功')
+          this.fetchList()
+        })
       }
     },
     onLoadCancelOrderRef() {

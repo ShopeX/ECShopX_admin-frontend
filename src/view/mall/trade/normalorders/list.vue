@@ -199,7 +199,7 @@
         :auto-upload="false"
         :show-file-list="false"
       > -->
-        <el-button v-if="IS_DISTRIBUTOR || IS_ADMIN" type="primary"  type="primary" plain @click="assignPersonnel(false)"> 取消配送（针对商家自配送订单，已分配业务员订单在未到达前，商家可取消配送员配送） </el-button>
+        <el-button v-if="IS_DISTRIBUTOR || IS_ADMIN"  type="primary" plain @click="assignPersonnel(false)"> 取消配送（针对商家自配送订单，已分配业务员订单在未到达前，商家可取消配送员配送） </el-button>
       <!-- </el-upload> -->
     </div>
 

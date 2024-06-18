@@ -107,46 +107,66 @@
             </el-tooltip>
           </template>
         </el-table-column>
-        <el-table-column label="可提现">
+        <el-table-column label="可提现"  v-if="loginType !== 'distributor'">
           <template slot-scope="scope">
             {{ scope.row.cashWithdrawalRebate / 100 }}元
           </template>
         </el-table-column>
-        <el-table-column label="已提现">
+        <el-table-column label="已提现"  v-if="loginType !== 'distributor'">
           <template slot-scope="scope">
             {{ scope.row.payedRebate / 100 }}元
           </template>
         </el-table-column>
-        <el-table-column label="申请提现">
+        <el-table-column label="申请提现"  v-if="loginType !== 'distributor'">
           <template slot-scope="scope">
             {{ scope.row.freezeCashWithdrawalRebate / 100 }}元
           </template>
         </el-table-column>
-        <el-table-column label="未结算">
+        <el-table-column label="未结算"  v-if="loginType !== 'distributor'">
           <template slot-scope="scope">
             {{ scope.row.noCloseRebate / 100 }}元
           </template>
         </el-table-column>
-        <el-table-column label="未结算积分">
+        <el-table-column label="未结算积分"  v-if="loginType !== 'distributor'">
           <template slot-scope="scope">
             {{ scope.row.noClosePoint || 0 }}积分
           </template>
         </el-table-column>
-        <el-table-column label="佣金总额">
+        <el-table-column label="佣金总额"  v-if="loginType !== 'distributor'">
           <template slot-scope="scope">
             {{ scope.row.rebateTotal / 100 }}元
           </template>
         </el-table-column>
-        <el-table-column label="积分总额">
+        <el-table-column label="积分总额"  v-if="loginType !== 'distributor'">
           <template slot-scope="scope">
             {{ scope.row.pointTotal || 0 }}积分
           </template>
         </el-table-column>
-        <el-table-column label="商品总额">
+        <el-table-column label="商品总额"  v-if="loginType !== 'distributor'">
           <template slot-scope="scope">
             {{ scope.row.itemTotalPrice / 100 }}元
           </template>
         </el-table-column>
+
+
+        <el-table-column label="未结算"  v-if="loginType == 'distributor'">
+          <template slot-scope="scope">
+            {{ scope.row.shopdata_rebate_sum_noclose / 100 }}元
+          </template>
+        </el-table-column>
+        <el-table-column label="佣金总额"  v-if="loginType == 'distributor'">
+          <template slot-scope="scope">
+            {{ scope.row.shopdata_rebate_sum / 100 }}元
+          </template>
+        </el-table-column>
+        <el-table-column label="商品总额"  v-if="loginType == 'distributor'">
+          <template slot-scope="scope">
+            {{ scope.row.shopdata_price_sum / 100 }}元
+          </template>
+        </el-table-column>
+
+
+        
         <el-table-column
           label="操作"
           width="90"
@@ -234,6 +254,7 @@ export default {
     }
   },
   mounted () {
+    this.loginType = this.$store.getters.login_type
     this.fetchList()
   },
   methods: {

@@ -14,7 +14,7 @@
 </style>
 <template>
   <div>
-    <div class="time-box basic"   v-if="loginType !== 'distributor'" >
+    <div class="time-box basic"   v-if="loginType !== 'distributor'  && $route.path.indexOf('detail') === -1" >
       <el-row>
         <el-col
           :span="3"
@@ -54,7 +54,7 @@
       </el-row>
     </div>
 
-    <div class="time-box basic"   v-if="loginType == 'distributor'" >
+    <div class="time-box basic"   v-if="loginType == 'distributor' || $route.path.indexOf('detail') !== -1" >
       <el-row>
         <!-- <el-col
           :span="3"
@@ -228,14 +228,23 @@ export default {
       params: {
         page: 1,
         pageSize: 20,
-        user_id: 0
+        user_id: 0,
+        pathSource: ''
+
       },
       list: [{}]
     }
   },
   mounted () {
     this.loginType = this.$store.getters.login_type
-
+    this.params.pathSource = this.$route.path
+    console.log(this.$route.path);
+    console.log(this.$route.path);
+    console.log(this.$route.path);
+    console.log(this.$route.path);
+    console.log(this.loginType);
+    console.log(this.loginType);
+    console.log(this.loginType);
     if (this.$route.query.user_id) {
       this.params.user_id = this.$route.query.user_id
     }

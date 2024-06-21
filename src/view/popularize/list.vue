@@ -1,7 +1,7 @@
 <template>
   <div>
     <div v-if="$route.path.indexOf('child') === -1 && $route.path.indexOf('detail') === -1">
-      <div class="action-container">
+      <div class="action-container"  v-if="loginType !== 'distributor'">
         <el-button
           type="primary"
           icon="el-icon-circle-plus"
@@ -622,6 +622,8 @@ export default {
     }
   },
   mounted () {
+    this.loginType = this.$store.getters.login_type
+
     this.fetchList(this.params),
       this.getPopularizeListModalFun(this.modalList),
       getPromoterGradeConfig().then((res) => {

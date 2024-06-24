@@ -114,7 +114,9 @@ export default {
               return <span>{row.payment_method === 'order' ? '按单笔订单' : '按订单金额比例'}</span>
             }
           },
-          { name: '结算费用（¥/单）', key: 'payment_fee', width: 150 },
+          { name: '结算费用（¥/单）', key: 'payment_fee', width: 150,  render: (h, { row }) => {
+              return <span>{row.payment_fee/100}</span>
+            } },
           {
             name: '所属店铺',
             key: 'distributor_ids',

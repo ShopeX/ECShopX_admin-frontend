@@ -212,6 +212,18 @@
             />
           </template>
         </el-table-column>
+
+        <el-table-column width="100" label="开启业务员">
+          <template v-if="scope.row.is_valid !== 'delete'" slot-scope="scope">
+            <el-switch
+              v-model="scope.row.is_open_salesman"
+              active-color="#13ce66"
+              inactive-color="#cccccc"
+              @change="switchChange(scope.$index, scope.row)"
+            />
+          </template>
+        </el-table-column>
+
         <el-table-column width="70" label="状态">
           <template slot-scope="scope">
             <el-button
@@ -1041,7 +1053,8 @@ export default {
       var params = {
         distributor_id: row.distributor_id,
         is_ziti: row.is_ziti,
-        is_delivery: row.is_delivery
+        is_delivery: row.is_delivery,
+        is_open_salesman: row.is_open_salesman
       }
       saveDistributor(params).then((response) => {
         this.detailDialog = false

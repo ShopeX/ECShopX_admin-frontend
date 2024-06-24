@@ -57,6 +57,7 @@
 </template>
 <script>
 import DistributorSelect from '@/components/function/distributorSelect'
+import { IS_DISTRIBUTOR } from '@/utils'
 
 export default {
   name: '',
@@ -409,7 +410,21 @@ export default {
   },
   computed: {},
   watch: {},
-  mounted() {},
+  mounted() {
+    if(IS_DISTRIBUTOR){
+      this.addForm.staff_type = 'shop'
+      this.addFormList[0].options = [
+            {
+              label: 'shop',
+              name: '商家配送员'
+            },
+            {
+              label: 'distributor',
+              name: '店铺配送员'
+            }
+      ]
+    }
+  },
   methods: {
     onSearch() {
       this.$refs['finder'].refresh()
@@ -427,7 +442,7 @@ export default {
       this.addForm = {
         operator_type: 'self_delivery_staff',
         distributor_name: '',
-        staff_type: 'platform',
+        staff_type: IS_DISTRIBUTOR ? 'shop' :'platform',
         staff_no: '',
         staff_attribute: 'part_time',
         payment_method: 'order',

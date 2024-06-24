@@ -818,7 +818,7 @@ export default {
       deliverGoodsForm: {
         order_id: '',
         receipt_type:'',
-        delivery_way:'1',
+        delivery_way:null,
         delivery_type: 'batch',
         delivery_corp: '',
         delivery_code: '',

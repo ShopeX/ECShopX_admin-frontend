@@ -45,7 +45,6 @@ export default {
         }
       ]
     },
-    //marketingsalesman
     {
       path: 'marketingsalesman',
       name: `业务员`,
@@ -58,16 +57,6 @@ export default {
       ]
 
     },
-
-    //marketingsalesman
-    // {
-    //   path: 'marketingsalesman/children',
-    //   name: `业务员会员列表`,
-    //   component: () => import('@/view/guide/children')
-
-    // },
-
-
     { 
       path: 'marketing/popularize/popularizedata',
       name: `业务员业绩`,

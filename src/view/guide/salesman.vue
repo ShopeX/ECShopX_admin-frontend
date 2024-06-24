@@ -499,10 +499,10 @@ export default {
         console.log(row.promoter_id)
         console.log(row.promoter_id)
         let routeData = this.$router.resolve({
-          path: "/sellers/marketingsalesman/children",
-          pathxxx: "/sellers/marketingsalesman/popularizelist/child",
+          // path: "/sellers/marketingsalesman/children",
+          // pathxxx: "/sellers/marketingsalesman/popularizelist/child",
           // path: "/marketing/popularize/popularizelist/child",
-          // pathBack: this.matchHidePage('child'),
+          path: this.matchHidePage('children'),
           query: { promoter_id: row.promoter_id }
         })
         console.log(routeData.href)

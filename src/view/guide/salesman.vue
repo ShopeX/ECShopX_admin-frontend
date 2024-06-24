@@ -1,4 +1,6 @@
 <template>
+  <SpRouterView>
+
   <div>
     <el-row :gutter="20">
       <el-col>
@@ -389,7 +391,10 @@
         </el-card>
       </div>
     </SideBar>
+
   </div>
+</SpRouterView>
+
 </template>
 <script>
 import { mapGetters } from 'vuex'

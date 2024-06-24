@@ -54,7 +54,7 @@
       </el-row>
     </div>
 
-    <div class="time-box basic"   v-if="loginType == 'distributor' || $route.path.indexOf('detail') !== -1" >
+    <div class="time-box basic"   v-if="loginType == 'distributor' || $route.path.indexOf('detail') !== -1 || $route.path.indexOf('sellers') !== -1" >
       <el-row>
         <!-- <el-col
           :span="3"
@@ -153,7 +153,7 @@
               <span> {{ scope.row.rebate / 100 }} </span> 元
             </template>
           </el-table-column>
-          <el-table-column
+          <el-table-column v-if="1==2"
             label="返佣积分"
             min-width="60"
           >
@@ -229,6 +229,7 @@ export default {
         page: 1,
         pageSize: 20,
         user_id: 0,
+        distributor_id: 0,
         pathSource: ''
 
       },
@@ -248,6 +249,10 @@ export default {
     if (this.$route.query.user_id) {
       this.params.user_id = this.$route.query.user_id
     }
+    if (this.$route.query.distributor_id) {
+      this.params.distributor_id = this.$route.query.distributor_id
+    }
+    console.log(this.params)
     this.getCount()
     this.getList()
   },
@@ -268,7 +273,7 @@ export default {
       this.getList()
     },
     getCount () {
-      withdrawalStatistics({ user_id: this.params.user_id }).then((response) => {
+      withdrawalStatistics({ user_id: this.params.user_id,distributor_id: this.params.distributor_id }).then((response) => {
         this.count = response.data.data
       })
     },

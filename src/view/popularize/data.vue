@@ -149,20 +149,24 @@
           </template>
         </el-table-column>
 
-
+        <el-table-column label="店铺"  v-if="loginType == 'distributor'  || $route.path.indexOf('sellers')  !== -1 ">
+          <template slot-scope="scope">
+            {{ scope.row.store_name}}
+          </template>
+        </el-table-column>
         <el-table-column label="未结算"  v-if="loginType == 'distributor'  || $route.path.indexOf('sellers')  !== -1 ">
           <template slot-scope="scope">
-            {{ scope.row.shopdata_rebate_sum_noclose / 100 }}元
+            {{ scope.row.rebate_sum_noclose / 100 }}元
           </template>
         </el-table-column>
         <el-table-column label="佣金总额"  v-if="loginType == 'distributor'  || $route.path.indexOf('sellers')  !== -1 ">
           <template slot-scope="scope">
-            {{ scope.row.shopdata_rebate_sum / 100 }}元
+            {{ scope.row.rebate_sum / 100 }}元
           </template>
         </el-table-column>
         <el-table-column label="商品总额"  v-if="loginType == 'distributor'  || $route.path.indexOf('sellers') !== -1 ">
           <template slot-scope="scope">
-            {{ scope.row.shopdata_price_sum / 100 }}元
+            {{ scope.row.price_sum / 100 }}元
           </template>
         </el-table-column>
 
@@ -329,7 +333,7 @@ export default {
       let routeData = this.$router.resolve({
         // path: '/marketing/popularize/popularizelist/detail',
         path: this.matchHidePage('detail'),
-        query: { user_id: row.user_id }
+        query: { user_id: row.user_id , distributor_id: row.distributor_id }
       })
       window.open(routeData.href, '_blank')
     },

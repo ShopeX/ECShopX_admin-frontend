@@ -53,9 +53,32 @@
           prop="mobile"
           label="手机号"
         />
+
+
+        <el-table-column
+          prop="children_count"
+          width="100"
+          label="会员数量"
+          
+        >
+        <!-- sortable -->
+          <template slot-scope="scope">
+            <el-button
+              size="mini"
+              icon="edit"
+              type="text"
+              @click="count(scope.$index, scope.row)"
+            >
+              {{ scope.row.children_count }}
+            </el-button>
+          </template>
+        </el-table-column>
+
+
+
         <el-table-column
           prop="child_count"
-          label="会员数量"
+          label="会员数量" v-if="1==2"
         >
           <template slot-scope="scope">
             <span v-if="scope.row.child_count > 0">{{ scope.row.child_count }}</span>
@@ -469,6 +492,25 @@ export default {
     addSelectStoreChange (data) {
       this.form.distributor_id = data.shop_id
     },
+    count (index, row) {
+      if (row.children_count > 0) {
+        console.log(this.matchHidePage('child'))
+        console.log(row.promoter_id)
+        console.log(row.promoter_id)
+        console.log(row.promoter_id)
+        let routeData = this.$router.resolve({
+          path: "/sellers/marketingsalesman/children",
+          pathxxx: "/sellers/marketingsalesman/popularizelist/child",
+          // path: "/marketing/popularize/popularizelist/child",
+          // pathBack: this.matchHidePage('child'),
+          query: { promoter_id: row.promoter_id }
+        })
+        console.log(routeData.href)
+        console.log(routeData.href)
+
+        window.open(routeData.href, '_blank')
+      }
+    },    
     storeChange (params) {
       params && params.shop_id
       this.params.distributor_id = params.shop_id

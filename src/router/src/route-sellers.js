@@ -48,9 +48,25 @@ export default {
     //marketingsalesman
     {
       path: 'marketingsalesman',
-      name: `店铺导购员`,
-      component: () => import('@/view/guide/salesman')
+      name: `业务员`,
+      component: () => import('@/view/guide/salesman'),
+      children: [
+        {
+          path: 'children',
+          component: () => import('@/view/guide/children')
+        }
+      ]
+
     },
+
+    //marketingsalesman
+    // {
+    //   path: 'marketingsalesman/children',
+    //   name: `业务员会员列表`,
+    //   component: () => import('@/view/guide/children')
+
+    // },
+
 
     { 
       path: 'marketing/popularize/popularizedata',

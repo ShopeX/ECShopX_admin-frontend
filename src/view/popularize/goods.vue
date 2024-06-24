@@ -26,9 +26,9 @@
       <el-row :gutter="20">
         <el-col :span="24">
           <el-button-group>
-            <el-button type="primary" size="mini" @click="showChangeRebateType()">
+            <!-- <el-button type="primary" size="mini" @click="showChangeRebateType()">
               批量设置返佣任务制
-            </el-button>
+            </el-button> -->
             <el-button size="mini" @click="handleBatchChangeStatus()"> 批量设置返佣状态 </el-button>
           </el-button-group>
         </el-col>
@@ -56,9 +56,9 @@
               <el-button type="text" class="btn-gap" @click="handleRebateConf(scope.row, 1)">
                 分销参数
               </el-button>
-              <el-button type="text" class="btn-gap" @click="handleRebateConf(scope.row, 2)">
+              <!-- <el-button type="text" class="btn-gap" @click="handleRebateConf(scope.row, 2)">
                 任务参数
-              </el-button>
+              </el-button> -->
             </template>
           </el-table-column>
           <el-table-column
@@ -163,9 +163,9 @@
             </span>
           </div>
           <el-radio-group v-model="current.rebate_type">
-            <el-radio label="default"> 不支持任务制 </el-radio>
+            <!-- <el-radio label="default"> 不支持任务制 </el-radio>
             <el-radio label="total_money"> 任务制-按总金额 </el-radio>
-            <el-radio label="total_num"> 任务制-按总数量 </el-radio>
+            <el-radio label="total_num"> 任务制-按总数量 </el-radio> -->
           </el-radio-group>
         </el-card>
         <el-card v-if="current.rebate_type != 'default'" class="box-card">
@@ -357,9 +357,9 @@
     </SideBar>
     <el-dialog title="更改商品返佣任务制支持" :visible.sync="changeRebateTypeVisible" width="30%">
       <el-radio-group v-model="changeRebateType">
-        <el-radio label="default"> 不支持任务制 </el-radio>
+        <!-- <el-radio label="default"> 不支持任务制 </el-radio>
         <el-radio label="total_money"> 任务制-按总金额 </el-radio>
-        <el-radio label="total_num"> 任务制-按总数量 </el-radio>
+        <el-radio label="total_num"> 任务制-按总数量 </el-radio> -->
       </el-radio-group>
       <span slot="footer" class="dialog-footer">
         <el-button @click="changeRebateTypeVisible = false">取 消</el-button>
@@ -425,10 +425,11 @@ export default {
         }
       },
       tabList: [
-        { name: '全部返佣商品', value: null, activeName: 'first' },
-        { name: '不支持任务制', value: 'true', activeName: 'default' },
-        { name: '任务制-按总金额', value: 'true', activeName: 'total_money' },
-        { name: '任务制-按总数量', value: 'true', activeName: 'total_num' }
+        { name: '全部返佣商品', value: null, activeName: 'first' }
+        // ,
+        // { name: '不支持任务制', value: 'true', activeName: 'default' },
+        // { name: '任务制-按总金额', value: 'true', activeName: 'total_money' },
+        // { name: '任务制-按总数量', value: 'true', activeName: 'total_num' }
       ],
       floorHead: [
         {

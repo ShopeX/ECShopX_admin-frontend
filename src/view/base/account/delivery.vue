@@ -115,9 +115,19 @@ export default {
               return <span>{row.payment_method === 'order' ? '按单笔订单' : '按订单金额比例'}</span>
             }
           },
-          { name: '结算费用', key: 'payment_fee', width: 150,  render: (h, { row }) => {
-              return <span> {row.payment_fee/100} （{row.payment_method == 'order' ? '元' :'%' }/单）  </span>
-            } },
+          {
+            name: '结算费用',
+            key: 'payment_fee',
+            width: 150,
+            render: (h, { row }) => {
+              return (
+                <span>
+                  {' '}
+                  {row.payment_fee / 100} （{row.payment_method == 'order' ? '元' : '%'}/单）{' '}
+                </span>
+              )
+            }
+          },
           {
             name: '所属店铺',
             key: 'distributor_ids',
@@ -174,7 +184,8 @@ export default {
                   payment_fee: row.payment_method == 'order' ? Number(row.payment_fee) : 0.01,
                   payment_fee1: row.payment_method == 'order' ? 1 : Number(row.payment_fee),
                   mobile: row.mobile,
-                  distributor_ids: []
+                  distributor_ids: [],
+                  password: ''
                 }
                 this.relDistributors = row.distributor_ids
               }
@@ -276,8 +287,14 @@ export default {
           },
           component: ({ key }, value) => {
             return (
-              <div class="flex-box">
-                <el-input-number v-model={value[key]} controls-position="right" precision="2" step="0.01" /> <span>元，每单</span>
+              <div class='flex-box'>
+                <el-input-number
+                  v-model={value[key]}
+                  controls-position='right'
+                  precision='2'
+                  step='0.01'
+                />{' '}
+                <span>元，每单</span>
               </div>
             )
           },
@@ -305,8 +322,14 @@ export default {
           },
           component: ({ key }, value) => {
             return (
-              <div class="flex-box">
-                <el-input-number v-model={value[key]} controls-position="right" precision="0" step="1"/> <span>%，每单</span>
+              <div class='flex-box'>
+                <el-input-number
+                  v-model={value[key]}
+                  controls-position='right'
+                  precision='0'
+                  step='1'
+                />{' '}
+                <span>%，每单</span>
               </div>
             )
           },
@@ -354,22 +377,22 @@ export default {
         {
           label: '登录密码',
           key: 'password',
-          type: 'input',
-          validator: (rule, value, callback) => {
-            const { password } = this.addForm
-            if (!password) {
-              callback(new Error('不能为空'))
-            } else {
-              let res = /^(?=.*[a-zA-Z0-9!@#$%^&*()-_+=])[a-zA-Z0-9!@#$%^&*()-_+=]{6,20}$/.test(
-                password
-              )
-              if (!res) {
-                callback(new Error('密码不能是文字并且至少6位'))
-              } else {
-                callback()
-              }
-            }
-          }
+          type: 'input'
+          // validator: (rule, value, callback) => {
+          //   const { password } = this.addForm
+          //   if (!password) {
+          //     callback(new Error('不能为空'))
+          //   } else {
+          //     let res = /^(?=.*[a-zA-Z0-9!@#$%^&*()-_+=])[a-zA-Z0-9!@#$%^&*()-_+=]{6,20}$/.test(
+          //       password
+          //     )
+          //     if (!res) {
+          //       callback(new Error('密码不能是文字并且至少6位'))
+          //     } else {
+          //       callback()
+          //     }
+          //   }
+          // }
         },
         {
           label: '所属店铺',
@@ -407,13 +430,13 @@ export default {
   computed: {},
   watch: {},
   mounted() {
-    if(IS_DISTRIBUTOR){
+    if (IS_DISTRIBUTOR) {
       this.addForm.staff_type = 'distributor'
       this.addFormList[0].options = [
-            {
-              label: 'distributor',
-              name: '店铺配送员'
-            }
+        {
+          label: 'distributor',
+          name: '店铺配送员'
+        }
       ]
     }
   },
@@ -434,7 +457,7 @@ export default {
       this.addForm = {
         operator_type: 'self_delivery_staff',
         distributor_name: '',
-        staff_type: IS_DISTRIBUTOR ? 'distributor' :'platform',
+        staff_type: IS_DISTRIBUTOR ? 'distributor' : 'platform',
         staff_no: '',
         staff_attribute: 'part_time',
         payment_method: 'order',
@@ -444,7 +467,7 @@ export default {
         password: '',
         distributor_ids: []
       }
-      this.operator_id = ""
+      this.operator_id = ''
       this.relDistributors = []
     },
     onAddCancel() {
@@ -452,20 +475,46 @@ export default {
     },
 
     async onAddSubmit() {
-      console.log(this.relDistributors,'llllll');
-      if (this.relDistributors.length > 0) {
-          this.relDistributors.forEach((distributor) => {
-            this.addForm.distributor_ids.push({
-              name: distributor.name,
-              distributor_id: distributor.distributor_id
-            })
-          })
+      if (this.operator_id) {
+        if (this.addForm.password) {
+          let res = /^(?=.*[a-zA-Z0-9!@#$%^&*()-_+=])[a-zA-Z0-9!@#$%^&*()-_+=]{6,20}$/.test(
+            this.addForm.password
+          )
+          if (!res) {
+            this.$message({ type: 'error', message: '密码不能是文字并且至少6位' })
+            return
+          }
         }
-
-      if(this.addForm.staff_type == 'distributor' && this.relDistributors.length == 0){
-        this.$message({ type: 'error', message: '店铺配送员必须关联店铺' })
-          return false
+      } else {
+        if (this.addForm.password) {
+          let res = /^(?=.*[a-zA-Z0-9!@#$%^&*()-_+=])[a-zA-Z0-9!@#$%^&*()-_+=]{6,20}$/.test(
+            this.addForm.password
+          )
+          if (!res) {
+            this.$message({ type: 'error', message: '密码不能是文字并且至少6位' })
+            return
+          }
+        } else {
+          this.$message({ type: 'error', message: '请输入密码' })
+          return
+        }
       }
+
+      if (this.addForm.staff_type == 'distributor' && this.relDistributors.length == 0) {
+        this.$message({ type: 'error', message: '店铺配送员必须关联店铺' })
+        return false
+      }
+
+      if (this.relDistributors.length > 0) {
+        this.addForm.distributor_ids = []
+        this.relDistributors.forEach((distributor) => {
+          this.addForm.distributor_ids.push({
+            name: distributor.name,
+            distributor_id: distributor.distributor_id
+          })
+        })
+      }
+
       let params = {
         ...this.addForm,
         payment_fee:
@@ -490,16 +539,15 @@ export default {
       const { data } = await this.$picker.shop()
       let arrObj = [...this.relDistributors, ...data]
 
-
       for (let i = 0; i < arrObj.length; i++) {
-        for(let j=i+1;j<arrObj.length;j++){
-          if(arrObj[i].distributor_id==arrObj[j].distributor_id){
-            arrObj.splice(j,1);
-            j--;
+        for (let j = i + 1; j < arrObj.length; j++) {
+          if (arrObj[i].distributor_id == arrObj[j].distributor_id) {
+            arrObj.splice(j, 1)
+            j--
           }
         }
       }
-      console.log(arrObj,'tttt');
+      console.log(arrObj, 'tttt')
 
       this.relDistributors = arrObj
       this.DistributorStatus = true
@@ -562,10 +610,10 @@ export default {
 }
 </script>
 <style lang="scss" scoped>
-.flex-box{
+.flex-box {
   display: flex;
   align-items: center;
-  span{
+  span {
     margin-left: 10px;
   }
 }

@@ -1475,7 +1475,8 @@ export default {
         this.deliverGoodsForm.self_delivery_operator_mobile = self_delivery_status == "RECEIVEORDER" ?  self_delivery_operator_mobile : '';
         let self_delivery_operator_staffno =  this.deliverGoodsFormList[5].options.find(item=>item.operator_id == self_delivery_operator_id)?.staff_no
         this.deliverGoodsForm.self_delivery_operator_staffno = self_delivery_status == "RECEIVEORDER" ? self_delivery_operator_staffno : '';
-
+        this.deliverGoodsForm.delivery_remark = ''
+        this.deliverGoodsForm.delivery_pics = []
 
         this.$refs['deliverGoodsDialogRef'].resetForm()
         this.deliverGoodsForm.order_id = order_id
@@ -1640,6 +1641,7 @@ export default {
         //更新发货
         this.$refs['updateDeliverGoodsDialogRef'].resetForm()
         this.updateDeliverGoodsForm.delivery_pics = []
+        this.updateDeliverGoodsForm.delivery_remark = ''
         this.updateDeliverGoodsDialog = true
         this.updateDeliverGoodsForm.order_id = order_id
         this.updateDeliverGoodsForm.orders_delivery_id = orders_delivery_id

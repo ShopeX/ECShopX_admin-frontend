@@ -51,9 +51,9 @@
               <div class="store-details">
                 <div class="name">
                   <span>{{ item.name }}</span>
-                  <span v-if="item.is_self_delivery && item.selfDeliveryRule.is_open">商家自配送</span>
+                  <span v-if="item.is_self_delivery && item.selfDeliveryRule.is_open == 'true'">商家自配送</span>
                 </div>
-                <div v-if="item.is_self_delivery && item.selfDeliveryRule.is_open" class="free-shipping">
+                <div v-if="item.is_self_delivery && item.selfDeliveryRule.is_open == 'true'" class="free-shipping">
                   <span
                     >起送¥{{ item.selfDeliveryRule.min_amount }} ｜
                     {{

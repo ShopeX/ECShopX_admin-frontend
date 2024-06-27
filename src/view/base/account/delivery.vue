@@ -135,7 +135,7 @@ export default {
             render: (h, { row }) => {
               return (
                 <div>
-                  {row.distributor_ids.map((item) => {
+                  {row?.distributor_ids?.map((item) => {
                     return (
                       <el-tag key={item.distributor_ids} size='mini'>
                         {item.name}
@@ -187,7 +187,7 @@ export default {
                   distributor_ids: [],
                   password: ''
                 }
-                this.relDistributors = row.distributor_ids
+                this.relDistributors = row.staff_type=="distributor"?row.distributor_ids:[]
               }
             }
           }
@@ -397,6 +397,9 @@ export default {
         {
           label: '所属店铺',
           key: 'distributor_name',
+          isShow: () => {
+            return this.addForm.staff_type == 'distributor'
+          },
           component: ({ key }, value) => {
             return (
               <div>
@@ -510,6 +513,10 @@ export default {
             distributor_id: distributor.distributor_id
           })
         })
+      }
+
+      if(this.addForm.staff_type == 'platform'){  //平台的后端自己给数据
+        this.addForm.distributor_ids = []
       }
 
       let params = {

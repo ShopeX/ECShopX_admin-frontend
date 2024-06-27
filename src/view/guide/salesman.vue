@@ -56,6 +56,15 @@
           label="手机号"
         />
 
+        <el-table-column  
+          prop="distributor_name"
+          label="所属店铺"
+        >
+          <template slot-scope="scope">
+            {{ scope.row.storeInfo.name }}
+
+          </template>
+        </el-table-column> 
 
         <el-table-column
           prop="children_count"
@@ -99,21 +108,8 @@
             />
           </template>
         </el-table-column>
-        <!-- 
-        <el-table-column v-if=" '1' == '0' " 
-          prop="distributor_name"
-          label="所属店铺"
-        >
-          <template slot-scope="scope">
-            <el-button
-              type="text"
-              @click="getSalepersonShopList(scope.row.salespersonId, 'distributor')"
-            >
-              查看店铺
-            </el-button>
-          </template>
-        </el-table-column> 
-        -->
+        
+       
         <!-- 
 
         <el-table-column label="导购角色">
@@ -146,11 +142,11 @@
                 class="iconfont icon-edit1"
                 @click="handleUpdateSalesman(scope.row)"
               />
-              <i
+              <!-- <i
                 v-if="activeName == 'admin'"
                 class="mark iconfont icon-trash-alt1"
                 @click="handleDeleteSalesman(scope.$index, scope.row)"
-              />
+              /> -->
             </div>
           </template>
         </el-table-column>

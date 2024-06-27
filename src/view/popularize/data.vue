@@ -1,6 +1,11 @@
 <template>
   <div>
     <div v-if="$route.path.indexOf('_child') === -1 && $route.path.indexOf('detail') === -1">
+      <shop-select
+          distributors
+          @update="storeChange"
+          @init="initChange"
+        />    
       <SpFilterForm
         :model="params"
         @onSearch="onSearch"
@@ -208,7 +213,13 @@
 import { mapGetters } from 'vuex'
 import { getPopularizeList, exportPopularizeData,exportPopularizeOrder } from '../../api/promotions'
 import { pageMixin } from '@/mixins'
+import shopSelect from '@/components/shopSelect'
+
 export default {
+  components: {
+    shopSelect
+    
+  },
   mixins: [pageMixin],
   data () {
     return {
@@ -293,6 +304,16 @@ export default {
           })
         }
       })
+    },
+    
+    storeChange (params) {
+      params && params.shop_id
+      this.params.distributor_id = params.shop_id
+      this.params.page = 1
+      this.getList()
+    },
+    initChange () {
+      this.shopId = ''
     },
 
     exportPopularizeOrder () {

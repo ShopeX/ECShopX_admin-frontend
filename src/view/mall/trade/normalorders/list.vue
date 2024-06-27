@@ -1162,7 +1162,8 @@ export default {
         pageSize: 999,
         page: 1,
         finderId: 100,
-        operator_type : 'self_delivery_staff'
+        operator_type : 'self_delivery_staff',
+        is_disable:0
       }
       if(distributor_id != '0'){
         params.distributor_id = distributor_id

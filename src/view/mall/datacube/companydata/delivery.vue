@@ -97,8 +97,8 @@ export default {
               return (
                 <span>
                   {row.payment_method === 'order'
-                    ? row.payment_method / 100
-                    : `${row.payment_method}%`}
+                    ? row.payment_fee / 100
+                    : `${row.payment_fee / 100}%`}
                 </span>
               )
             }

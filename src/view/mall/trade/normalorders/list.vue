@@ -1158,18 +1158,20 @@ export default {
   },
   methods: {
     async accountManagement(distributor_id){
-      let staff_type = IS_ADMIN?'platform': IS_DISTRIBUTOR ?'distributor': 'shop'
+
       let params = {
         pageSize: 999,
         page: 1,
         finderId: 100,
         operator_type : 'self_delivery_staff',
         is_disable:0,
-        staff_type
       }
-      if(distributor_id != '0'){
+      if(distributor_id == '0'){
+        params.staff_type = 'platform'
+      }else{
         params.distributor_id = distributor_id
       }
+
       let res = await this.$api.trade.accountManagement(params)
       res.list.forEach(ele => {
         ele.value = ele.operator_id,

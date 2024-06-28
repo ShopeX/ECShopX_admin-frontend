@@ -103,8 +103,20 @@ export default {
               )
             }
           },
-          { name: '订单金额', key: 'total_fee_count' },
-          { name: '配送费用', key: 'self_delivery_fee_count' },
+          { name: '订单金额', key: 'total_fee_count',render: (h, { row }) => {
+              return (
+                <span>
+                  {row.total_fee_count/100}
+                </span>
+              )
+            }  },
+          { name: '配送费用', key: 'self_delivery_fee_count',render: (h, { row }) => {
+              return (
+                <span>
+                  {row.self_delivery_fee_count/100}
+                </span>
+              )
+            } },
           {
             name: '配送员类型',
             width: 110,
@@ -195,8 +207,8 @@ export default {
       const _params = {
         ...params,
         ...this.params,
-        start: this.params.time[0],
-        end: this.params.time[1]
+        start: this.params.time[0]/1000,
+        end: this.params.time[1]/1000
       }
       return _params
     }

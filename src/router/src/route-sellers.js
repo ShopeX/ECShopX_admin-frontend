@@ -79,7 +79,11 @@ export default {
         }
       ]
     },
-
+    { 
+      path: 'marketing/popularize/salesman/withdraw',
+      name: `业务员提现`,
+      component: () => import('@/view/mall/marketing/salesmanwithdraw')
+    },
     {
       path: 'storemanager/distributortags',
       name: `商家标签`,

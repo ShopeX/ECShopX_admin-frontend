@@ -95,7 +95,7 @@
           </el-tag>
         </template>
       </el-table-column>
-      <el-table-column
+      <!-- <el-table-column
         label="打款记录"
         width="120"
       >
@@ -108,14 +108,14 @@
             打款记录
           </el-button>
         </template>
-      </el-table-column>
+      </el-table-column> -->
       <el-table-column
         label="操作"
-        width="160"
+        width="400"
       >
         <template slot-scope="scope">
           <el-button
-            v-if="scope.row.status == 'reject'"
+            v-if="scope.row.status !== 'apply'"
             v-popover:popover
             size="mini"
             type="info"
@@ -133,16 +133,25 @@
                 :value="scope.row.remarks"
               />
             </el-popover>
-            拒绝原因
+            操作备注
           </el-button>
-          <el-button
+          <!-- <el-button
             v-if="scope.row.status == 'apply'"
             size="mini"
-            type="primary"
             @click="dialogOpen(scope.row)"
           >
             打款完成
+          </el-button> -->
+          <el-button
+            v-if="scope.row.status == 'apply'"
+            size="mini"
+            @click="dialogfinish(scope.row)"
+          >
+          打款完成
           </el-button>
+
+          <!-- @click="dialogOpen(scope.row)" -->
+            <!-- type="primary" -->
           <el-button
             v-if="scope.row.status == 'apply'"
             size="mini"
@@ -258,6 +267,34 @@
       </div>
     </el-dialog>
     <el-dialog
+      title="输入转账信息"
+      :visible.sync="finishdialog"
+      :close-on-click-modal="false"
+      width="50%"
+    >
+      <el-input
+        v-model="textarea"
+        type="textarea"
+        :rows="6"
+        placeholder="请输入转账信息（账号 金额）"
+      />
+      <div
+        slot="footer"
+        class="dialog-footer content-center"
+      >
+        <el-button @click.native="finishdialog = false">
+          取消操作
+        </el-button>
+        <el-button
+          type="primary"
+          @click="actionProcessCashWithdrawal('success')"
+        >
+          确认完成
+        </el-button>
+      </div>
+    </el-dialog>
+
+    <el-dialog
       title="提现确认"
       :visible.sync="dialog"
       :close-on-click-modal="false"
@@ -327,6 +364,7 @@ export default {
       textarea: '',
       dialog: false,
       canceldialog: false,
+      finishdialog: false,
       applyText: '',
       pageLimit: 10,
       detail: {},
@@ -351,6 +389,10 @@ export default {
       this.params.page = page_num
       this.getList()
     },
+    dialogfinish (detail) {
+      this.finishdialog = true
+      this.detail = detail
+    },    
     dialogCancel (detail) {
       this.canceldialog = true
       this.detail = detail
@@ -374,6 +416,10 @@ export default {
       } else {
         var params = { process_type: processType }
       }
+
+      if (processType == 'success') {
+        var params = { process_type: processType, remarks: this.textarea }
+      }       
       processCashWithdrawal(this.detail.id, params).then((response) => {
         this.canceldialog = false
         this.dialog = false

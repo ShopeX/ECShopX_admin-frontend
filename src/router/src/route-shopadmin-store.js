@@ -86,6 +86,12 @@ export default {
       ]
     },
 
+    { 
+      path: 'marketing/popularize/salesman/withdraw',
+      name: `业务员提现`,
+      component: () => import('@/view/mall/marketing/salesmanwithdraw')
+    },
+
 
     {
       path: 'tmpl/shopDecoration',

@@ -57,7 +57,7 @@
 </template>
 <script>
 import DistributorSelect from '@/components/function/distributorSelect'
-import { IS_DISTRIBUTOR } from '@/utils'
+import { IS_DISTRIBUTOR,IS_MERCHANT } from '@/utils'
 
 export default {
   name: '',
@@ -433,7 +433,7 @@ export default {
   computed: {},
   watch: {},
   mounted() {
-    if (IS_DISTRIBUTOR) {
+    if (IS_DISTRIBUTOR || IS_MERCHANT) {
       this.addForm.staff_type = 'distributor'
       this.addFormList[0].options = [
         {
@@ -460,7 +460,7 @@ export default {
       this.addForm = {
         operator_type: 'self_delivery_staff',
         distributor_name: '',
-        staff_type: IS_DISTRIBUTOR ? 'distributor' : 'platform',
+        staff_type: (IS_DISTRIBUTOR || IS_MERCHANT) ? 'distributor' : 'platform',
         staff_no: '',
         staff_attribute: 'part_time',
         payment_method: 'order',

@@ -56,18 +56,6 @@ export default {
         }
       ]
     },
-    // http://localhost:8080/sellers/marketing/popularize/popularizelist/child?promoter_id=478
-    // {
-    //   path: 'marketing/popularize/popularizelist/child',
-    //   name: `业务员客户列表`,
-    //   component: () => import('@/view/guide/salesman'),
-    //   children: [
-    //     {
-    //       path: 'popularize/popularizelist/child', 
-    //       component: () => import('@/view/guide/children')
-    //     }
-    //   ]
-    // },    
     { 
       path: 'marketing/popularize/popularizedata',
       name: `业务员业绩`,

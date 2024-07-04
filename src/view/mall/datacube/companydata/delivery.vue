@@ -155,7 +155,9 @@ export default {
                   page: 1,
                   pageSize: 20,
                   type: 'delivery_staffdata',
-                  ...this.params
+                  ...this.params,
+                  start: this.params.time.length ? this.params.time[0]/1000 : '',
+                  end: this.params.time.length ? this.params.time[1]/1000 : ''
                 }
                 let response = await this.$api.trade.datacubeDeliverystaffdataExport(params)
                   if (response.status) {

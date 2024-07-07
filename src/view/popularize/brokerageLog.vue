@@ -181,6 +181,7 @@
               </el-tag>
             </template>
           </el-table-column>
+          <el-table-column v-if="loginType == 'distributor'" prop="store_name" label="店铺"></el-table-column>
           <el-table-column v-if="loginType == 'distributor'" prop="user_id" label="业务员ID"></el-table-column>
           <el-table-column v-if="loginType == 'distributor'" prop="title"   label="订单内容"></el-table-column>
         </el-table>

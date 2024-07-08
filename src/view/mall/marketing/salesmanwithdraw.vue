@@ -53,12 +53,20 @@
       />
       <el-table-column
         prop="distributor_mobile"
-        label="分销商手机号"
+        label="店铺手机"
       />
       <el-table-column
         prop="user_id"
         label="业务员会员ID"
-      />      
+      />   
+      <el-table-column
+        prop="alipay_name"
+        label="提现账号名"
+      />            
+      <el-table-column
+        prop="alipay_account"
+        label="提现账号"
+      />            
       <el-table-column label="申请提现金额">
         <template slot-scope="scope">
           <span> {{ scope.row.money / 100 }} </span> 元

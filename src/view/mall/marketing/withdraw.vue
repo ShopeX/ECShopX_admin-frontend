@@ -53,7 +53,7 @@
       />
       <el-table-column
         prop="distributor_mobile"
-        label="分销商手机号"
+        label="分销商手机"
       />
       <el-table-column label="申请提现金额">
         <template slot-scope="scope">

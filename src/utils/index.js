@@ -41,29 +41,37 @@ export const VERSION_B2C = store.getters.versionMode == 'b2c'
 export const VERSION_IN_PURCHASE = store.getters.versionMode == 'in_purchase'
 
 // 平台端
-export const IS_ADMIN = (() => {
+export const IS_ADMIN = () => {
   const login_type = store.getters.login_type
   return login_type == 'admin' || login_type == 'staff'
-})()
+}
 
 // 店铺端
-export const IS_DISTRIBUTOR = (() => {
+export const IS_DISTRIBUTOR = () => {
   const login_type = store.getters.login_type
   return login_type == 'distributor'
-})()
+}
 
 // 商户端
-export const IS_MERCHANT = (() => {
+export const IS_MERCHANT = () => {
   const login_type = store.getters.login_type
   return login_type == 'merchant'
-})()
+}
+
+// 商户端
+export const IS_SUPPLIER = () => {
+  const login_type = store.getters.login_type
+  return login_type == 'supplier'
+}
 
 // 平台端、店铺端、经销商端路由跳转封装
 export const getUrlPathByLoginType = (path) => {
-  if (IS_ADMIN) {
+  if (IS_ADMIN()) {
     return path
-  } else if (IS_DISTRIBUTOR) {
+  } else if (IS_DISTRIBUTOR()) {
     return `/shopadmin${path}`
+  } else if (IS_SUPPLIER()) {
+    return `/supplier${path}`
   }
 }
 
@@ -174,6 +182,8 @@ function export_open(tab) {
       window.open(`/shopadmin/shopsetting/baseexport?tab=${tab}`)
     } else if (login_type == 'merchant') {
       window.open(`/merchant/setting/baseexport?tab=${tab}`)
+    } else if (login_type == 'supplier') {
+      window.open(`/supplier/setting/baseexport?tab=${tab}`)
     } else {
       window.open(`/setting/baseexport?tab=${tab}`)
     }
@@ -313,6 +323,16 @@ export function hex2rgb(hex) {
     return num
   }
   return rgb
+}
+
+export function getSourceFromNameByValue(list, value) {
+  let sourceFromName = '-'
+  list.forEach((item) => {
+    if (item.value === value) {
+      sourceFromName = item.name
+    }
+  })
+  return sourceFromName
 }
 
 // 递归处理字段

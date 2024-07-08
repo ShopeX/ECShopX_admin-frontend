@@ -68,8 +68,13 @@ export default {
     },
     {
       path: 'storemanager/setting',
-      name: '商家设置',
+      name: '商户设置',
       component: () => import('@/view/mall/marketing/setting')
+    },
+    {
+      path: 'storemanager/supplier_list',
+      name: '供应商管理',
+      component: () => import('@/view/mall/supplier/supplier_list')
     }
   ]
 }

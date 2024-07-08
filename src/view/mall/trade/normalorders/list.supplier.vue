@@ -2,8 +2,11 @@
   <!-- <div v-if="$route.path.indexOf('detail') === -1 && $route.path.indexOf('process') === -1"> -->
   <SpRouterView>
     <SpFilterForm :model="params" @onSearch="onSearch" @onReset="onSearch">
-      <SpFilterFormItem prop="mobile" label="手机号:">
+      <SpFilterFormItem prop="mobile" label="客户手机号:">
         <el-input v-model="params.mobile" placeholder="请输入客户手机号码" />
+      </SpFilterFormItem>
+      <SpFilterFormItem prop="receiver_mobile" label="收货手机号:">
+        <el-input v-model="params.receiver_mobile" placeholder="请输入收货手机号码" />
       </SpFilterFormItem>
       <SpFilterFormItem prop="order_id" label="订单号:">
         <el-input v-model="params.order_id" placeholder="请输入订单号" />
@@ -26,7 +29,7 @@
           />
         </el-select>
       </SpFilterFormItem>
-      <SpFilterFormItem v-if="!VERSION_IN_PURCHASE" prop="source" label="订单来源:">
+      <!-- <SpFilterFormItem prop="source" label="订单来源:">
         <el-select v-model="params.source" clearable placeholder="请选择">
           <el-option
             v-for="item in orderSourceList"
@@ -36,11 +39,8 @@
             :value="item.value"
           />
         </el-select>
-      </SpFilterFormItem>
-      <SpFilterFormItem prop="supplier_name" label="供应商名称:">
-        <el-input v-model="params.supplier_name" placeholder="请输入供应商名称" />
-      </SpFilterFormItem>
-      <SpFilterFormItem v-if="!VERSION_IN_PURCHASE" prop="order_class" label="订单类型:">
+      </SpFilterFormItem> -->
+      <SpFilterFormItem prop="order_class" label="订单类型:">
         <el-select v-model="params.order_class" clearable placeholder="请选择">
           <el-option
             v-for="item in orderType"
@@ -51,6 +51,17 @@
           />
         </el-select>
       </SpFilterFormItem>
+      <!-- <SpFilterFormItem prop="source_from" label="渠道:">
+        <el-select v-model="params.source_from" placeholder="请选择渠道" clearable>
+          <el-option
+            v-for="(item, index) in sourceFromList"
+            :key="index"
+            :label="item.name"
+            :value="item.value"
+          />
+        </el-select>
+      </SpFilterFormItem> -->
+
       <SpFilterFormItem prop="create_time" label="下单时间:" size="max">
         <el-date-picker
           v-model="params.create_time"
@@ -118,7 +129,7 @@
       >
         <SpSelectShop v-model="params.distributor_id" clearable placeholder="请选择" />
       </SpFilterFormItem>
-      <SpFilterFormItem v-if="!VERSION_IN_PURCHASE" prop="subDistrict" label="选择街道:">
+      <!-- <SpFilterFormItem prop="subDistrict" label="选择街道:">
         <el-cascader
           v-model="params.subDistrict"
           clearable
@@ -128,7 +139,7 @@
           }"
           :options="subDistrictList"
         />
-      </SpFilterFormItem>
+      </SpFilterFormItem> -->
     </SpFilterForm>
 
     <div class="action-container">
@@ -137,19 +148,15 @@
           导出<i class="el-icon-arrow-down el-icon--right" />
         </el-button>
         <el-dropdown-menu slot="dropdown">
-          <el-dropdown-item>
-            <export-tip @exportHandle="exportInvoice"> 未开票订单 </export-tip>
-          </el-dropdown-item>
-          <el-dropdown-item>
+          <!-- <el-dropdown-item>
             <export-tip @exportHandle="exportDataMaster"> 主订单 </export-tip>
-          </el-dropdown-item>
+          </el-dropdown-item> -->
           <el-dropdown-item>
             <export-tip @exportHandle="exportDataNormal"> 子订单 </export-tip>
           </el-dropdown-item>
         </el-dropdown-menu>
       </el-dropdown>
       <!-- <el-tooltip
-        v-if="IS_SUPPLIER()"
         effect="light"
         content="请将从订单列表导出的主订单文件，删除不想批量发货的订单号，修改物流公司，物流单号后上传即可。"
         placement="top-start"
@@ -163,8 +170,8 @@
         >
           <el-button type="primary" plain> 批量发货 </el-button>
         </el-upload>
-      </el-tooltip> -->
-      <!-- <el-upload
+      </el-tooltip>
+      <el-upload
         action=""
         class="btn-upload"
         :on-change="uploadHandlePatchCancel"
@@ -190,164 +197,156 @@
         :label="item.title"
         :name="item.value"
       />
-      <el-table v-loading="loading" border :data="tableList">
-        <el-table-column width="180" prop="order_id" label="订单号">
-          <template slot-scope="scope">
-            <div class="order-num">
-              {{ scope.row.order_id }}
-              <el-tooltip effect="dark" content="复制" placement="top-start">
-                <i
-                  v-clipboard:copy="scope.row.order_id"
-                  v-clipboard:success="onCopySuccess"
-                  class="el-icon-document-copy"
-                />
-              </el-tooltip>
-            </div>
-            <!-- <div class="order-store">
-              <el-tooltip effect="dark" content="店铺名" placement="top-start">
-                <i class="el-icon-office-building" />
-              </el-tooltip>
-              {{ scope.row.distributor_name }}
-            </div> -->
-            <div class="order-time">
-              <el-tooltip effect="dark" content="下单时间" placement="top-start">
-                <i class="el-icon-time" />
-              </el-tooltip>
-              {{ scope.row.create_time | datetime('YYYY-MM-DD HH:mm:ss') }}
-            </div>
-          </template>
-        </el-table-column>
-<!--        <el-table-column prop="original_order_id" width="160" label="原单号" align="right" header-align="center">-->
-<!--          <template slot-scope="scope">-->
-<!--            {{ scope.row.original_order_id ? scope.row.original_order_id : scope.row.order_id }}-->
-<!--          </template>-->
-<!--        </el-table-column>-->
-<!--        <el-table-column width="160" label="所属供应商">-->
-<!--          <template slot-scope="scope">-->
-<!--            {{ scope.row.supplier_info.username }}-->
-<!--          </template>-->
-<!--        </el-table-column>-->
-        <el-table-column prop="total_fee" width="120" label="订单金额（¥）" align="right" header-align="center">
-          <template slot-scope="scope">
-            {{ (scope.row.total_fee / 100).toFixed(2) }}
-          </template>
-        </el-table-column>
-        <el-table-column prop="cost_price" width="120" label="结算价（¥）" align="right" header-align="center">
-          <template slot-scope="scope">
-            {{ (scope.row.cost_price / 100).toFixed(2) }}
-          </template>
-        </el-table-column>
-        <el-table-column width="100" label="运费（¥）" align="right" header-align="center">
-          <template slot-scope="scope">
-            {{ (scope.row.freight_fee || 0) / 100 }}
-          </template>
-        </el-table-column>
-        <el-table-column prop="mobile" width="130" label="收货人手机号">
-          <template slot-scope="scope">
-            <template v-if="!scope.row.user_delete && login_type !== 'merchant'">
-              <router-link
-                v-if=" login_type != 'distributor'&&login_type!='supplier'"
-                target="_blank"
-                :to="{
-                  path: `${
-                    login_type != 'distributor'
-                      ? '/member/member/detail'
-                      : '/shopadmin/member/member/detail'
-                  }`,
-                  query: { user_id: scope.row.user_id }
-                }"
-              >
-                {{ scope.row.receiver_mobile }}
-              </router-link>
-              <span v-else>
-                {{ scope.row.receiver_mobile }}
-              </span>
-              <el-tooltip
-                v-if="datapass_block == 0"
-                effect="dark"
-                content="复制"
-                placement="top-start"
-              >
-                <i
-                  v-clipboard:copy="scope.row.receiver_mobile"
-                  v-clipboard:success="onCopySuccess"
-                  class="el-icon-document-copy"
-                />
-              </el-tooltip>
-            </template>
-            <template v-else slot-scope="scope">
-              <span>{{ scope.row.receiver_mobile }}</span>
-              <el-tooltip
-                v-if="datapass_block == 0"
-                effect="dark"
-                content="复制"
-                placement="top-start"
-              >
-                <i
-                  v-clipboard:copy="scope.row.receiver_mobile"
-                  v-clipboard:success="onCopySuccess"
-                  class="el-icon-document-copy"
-                />
-              </el-tooltip>
-            </template>
-          </template>
-        </el-table-column>
-        <el-table-column prop="receiver_name" label="收货人" />
-        <template v-if="login_type != 'merchant'">
-          <el-table-column v-if="!isMicorMall" label="订单类型">
+
+      <div class="action-table">
+        <el-table
+          v-loading="loading"
+          :data="tableList"
+          :header-cell-style="{ background: '#fafafa' }"
+        >
+          <el-table-column label="商品编号" min-width="120px" align="right">
             <template slot-scope="scope">
-              {{ getOrderType(scope.row) }}
+              <div class="table-column-content">
+                <div v-for="(item, index) in scope.row.items" :key="index" class="goods_pn">
+                  <p class="goods_pn_price">{{ item.item_bn }}</p>
+                </div>
+              </div>
             </template>
           </el-table-column>
-        </template>
-        <el-table-column prop="order_status" label="订单状态">
-          <template slot-scope="scope">
-            {{ scope.row.order_status_msg }}
-          </template>
-        </el-table-column>
 
-        <el-table-column label="配送方式">
-          <template slot-scope="scope">
-            {{ getDistributionType(scope.row) }}
-          </template>
-        </el-table-column>
-
-        <!-- <el-table-column prop="source_name" label="来源"></el-table-column> -->
-        <el-table-column label="操作" fixed="left">
-          <template slot-scope="scope">
-            <el-button type="text" style="margin-right: 8px">
-              <router-link
-                :to="`${$route.path}/detail?orderId=${scope.row.order_id}&resource=${$route.path}`"
-              >
-                详情
-              </router-link>
-            </el-button>
-            <el-popover placement="right" trigger="hover">
-              <div class="operating-icons">
-                <el-button type="text">
-                  <router-link
-                    :to="`${$route.path}/process?orderId=${scope.row.order_id}&resource=${$route.path}`"
-                  >
-                    日志
-                  </router-link>
-                </el-button>
-                <template v-for="(btn, index) in scope.row.actionBtns">
-                  <el-button
-                    :key="`btn-item__${index}`"
-                    type="text"
-                    @click="handleAction(scope.row, btn)"
-                  >
-                    {{ btn.name }}
-                  </el-button>
-                </template>
+          <el-table-column label="商品名称" min-width="120px" align="right">
+            <template slot-scope="scope">
+              <div class="table-column-content">
+                <div v-for="(item, index) in scope.row.items" :key="index" class="goods_pn">
+                  <p class="goods_pn_price">{{ item.item_name }}</p>
+                </div>
               </div>
-              <el-button slot="reference" type="text">
-                更多<i class="iconfont icon-angle-double-right" />
+            </template>
+          </el-table-column>
+          <el-table-column label="规格" min-width="120px" align="right">
+            <template slot-scope="scope">
+              <div class="table-column-content">
+                <div v-for="(item, index) in scope.row.items" :key="index" class="goods_pn">
+                  <p class="goods_nd_desc">{{ item.item_spec_desc }}</p>
+                </div>
+              </div>
+            </template>
+          </el-table-column>
+          <el-table-column label="结算价" min-width="120px" align="right">
+            <template slot-scope="scope">
+              <div class="table-column-content">
+                <div v-for="(item, index) in scope.row.items" :key="index" class="goods_pn">
+                  <p class="goods_pn_price">{{ (item.cost_price / 100).toFixed(2) }}</p>
+                </div>
+              </div>
+            </template>
+          </el-table-column>
+          <el-table-column label="数量" min-width="120px" align="right">
+            <template slot-scope="scope">
+              <div class="table-column-content">
+                <div v-for="(item, index) in scope.row.items" :key="index" class="goods_pn">
+                  <p class="goods_pn_num">{{ item.num }}</p>
+                </div>
+              </div>
+            </template>
+          </el-table-column>
+          <el-table-column label="退款金额" min-width="120px" align="right">
+            <template slot-scope="scope">
+              <div class="table-column-content">
+                <div v-for="(item, index) in scope.row.items" :key="index" class="goods_pn">
+                  <p class="goods_pn_num">{{ (item.refunded_fee / 100).toFixed(2) }}</p>
+                </div>
+              </div>
+            </template>
+          </el-table-column>
+          <el-table-column label="结算金额" min-width="120px" align="right">
+            <template slot-scope="scope">
+              <div class="table-column-content">
+                <div v-for="(item, index) in scope.row.items" :key="index" class="goods_pn">
+                  <p>{{ (item.cost_fee / 100).toFixed(2) }}</p>
+                </div>
+              </div>
+            </template>
+          </el-table-column>
+          <el-table-column label="操作" min-width="120px" class-name="column-fixed">
+            <template slot-scope="scope">
+              <el-button type="text" style="margin-right: 8px">
+                <router-link
+                  :to="`${$route.path}/detail?orderId=${scope.row.order_id}&resource=${$route.path}`"
+                >
+                  详情
+                </router-link>
               </el-button>
-            </el-popover>
-          </template>
-        </el-table-column>
-      </el-table>
+              <el-button
+                v-for="(btn, index) in scope.row.actionBtns"
+                :key="`btn-item__${index}`"
+                type="text"
+                @click="handleAction(scope.row, btn)"
+              >
+                {{ btn.name }}
+              </el-button>
+              <el-button type="text">
+                <router-link
+                  :to="`${$route.path}/process?orderId=${scope.row.order_id}&resource=${$route.path}`"
+                >
+                  日志
+                </router-link>
+              </el-button>
+              <!-- <el-popover placement="right" trigger="hover">
+                <div class="operating-icons">
+                  <el-button type="text">
+                    <router-link
+                      :to="`${$route.path}/process?orderId=${scope.row.order_id}&resource=${$route.path}`"
+                    >
+                      日志
+                    </router-link>
+                  </el-button>
+                  <template>
+                    <el-button
+                      v-for="(btn, index) in scope.row.actionBtns"
+                      :key="`btn-item__${index}`"
+                      type="text"
+                      @click="handleAction(scope.row, btn)"
+                    >
+                      {{ btn.name }}
+                    </el-button>
+                  </template>
+                </div>
+                <el-button slot="reference" type="text">
+                  更多<i class="iconfont icon-angle-double-right" />
+                </el-button>
+              </el-popover> -->
+            </template>
+          </el-table-column>
+          <el-table-column width="1" class-name="action-table-column action-table-column-header">
+            <template slot-scope="scope">
+              <div class="action-table-header">
+                <p>订单编号： {{ scope.row.order_id }}</p>
+                <p>订单状态：{{ scope.row.order_status_msg }}</p>
+                <p>店铺：{{ scope.row.distributor_name }}</p>
+                <p>订单类型：{{ getOrderType(scope.row.order_type) }}</p>
+                <p>客户手机号： {{ scope.row.mobile }}</p>
+                <p>下单时间：{{ scope.row.create_time | datetime('YYYY-MM-DD HH:mm:ss') }}</p>
+                <p>结算金额：{{ (scope.row.cost_fee / 100).toFixed(2) }}</p>
+              </div>
+            </template>
+          </el-table-column>
+          <el-table-column width="1" class-name="action-table-column action-table-column-footer">
+            <template slot-scope="scope">
+              <div class="action-table-footer">
+                <p>
+                  收货信息：{{ scope.row.receiver_name }}{{ scope.row.receiver_mobile
+                  }}{{ scope.row.receiver_state }}{{ scope.row.receiver_city
+                  }}{{ scope.row.receiver_district }}{{ scope.row.receiver_address }}
+                </p>
+                <p style="padding-left: 20px">
+                  运费：{{ (scope.row.freight_fee / 100).toFixed(2) }}
+                </p>
+              </div>
+            </template>
+          </el-table-column>
+        </el-table>
+      </div>
       <div class="content-padded content-center">
         <el-pagination
           background
@@ -389,7 +388,6 @@
       ref="deliverGoodsDialogRef"
       v-model="deliverGoodsDialog"
       width="1000px"
-      :confirmStatus="confirmStatus"
       :title="`发货【订单:${deliverGoodsForm.order_id}】`"
       :form="deliverGoodsForm"
       :form-list="deliverGoodsFormList"
@@ -442,7 +440,9 @@ import {
   VERSION_B2C,
   VERSION_IN_PURCHASE,
   IS_ADMIN,
-  IS_DISTRIBUTOR
+  IS_DISTRIBUTOR,
+  IS_SUPPLIER,
+  getSourceFromNameByValue
 } from '@/utils'
 import { exportInvoice, orderExport } from '@/api/trade'
 import CompTableView from './components/comp-tableview'
@@ -464,19 +464,21 @@ import {
 } from '@/consts'
 
 export default {
+  filters: {
+    filterPayType(value) {
+      return value.pay_channel ? PAY_TYPE[value.pay_channel] : PAY_TYPE[value.pay_type]
+    }
+  },
   // components: { CompTableView },
   mixins: [mixin, pageMixin],
   data() {
     return {
-      confirmStatus:false,
       loading: false,
       defaultTime: ['00:00:00', '23:59:59'],
       params: {
-        receiver_mobile: '',
         mobile: '',
+        receiver_mobile: '',
         order_id: '',
-        original_order_id: '',
-        supplier_name: '',
         order_class_exclude: 'drug,pointsmall,community',
         salesman_mobile: '',
         receipt_type: '', // 配送类型
@@ -488,8 +490,17 @@ export default {
         time_start_end: '',
         distributor_type: '', // 订单分类
         distributor_id: '', // 店铺
-        subDistrict: []
+        subDistrict: [],
+        source_from: ''
       },
+      sourceFromList: [
+        { name: 'pc', value: 'pc' },
+        { name: 'h5', value: 'h5' },
+        { name: '微信小程序', value: 'wxapp' },
+        { name: '支付宝小程序', value: 'aliapp' },
+        { name: '未知', value: 'unknow' },
+        { name: '店务端', value: 'dianwu' }
+      ],
       datapass_block: 1, // 是否为数据脱敏
       subDistrictList: [],
       distributionType: DISTRIBUTION_TYPE,
@@ -506,7 +517,7 @@ export default {
       remarkDialog: false,
       remarkFormList: [
         {
-          label: '备注信息:',
+          label: '备注信息',
           key: 'remark',
           type: 'textarea',
           maxlength: 150,
@@ -539,7 +550,7 @@ export default {
           )
         },
         {
-          label: '取消原因:',
+          label: '取消原因',
           key: 'cancel_reason',
           placeholder: '请选择取消订单原因',
           type: 'select',
@@ -568,7 +579,7 @@ export default {
           }
         },
         {
-          label: '其他原因:',
+          label: '其他原因',
           key: 'other_reason',
           type: 'input',
           placeholder: '请填写取消订单原因',
@@ -606,9 +617,9 @@ export default {
           ],
           onChange: (e) => {
             if (e == 'sep') {
-              this.deliverGoodsFormList[1].options[4].isShow = true
+              this.deliverGoodsFormList[1].options[3].isShow = true
             } else {
-              this.deliverGoodsFormList[1].options[4].isShow = false
+              this.deliverGoodsFormList[1].options[3].isShow = false
             }
           }
         },
@@ -620,7 +631,7 @@ export default {
             { title: '商品名', key: 'item_name' },
             { title: '数量', key: 'num', width: 60 },
             { title: '已发货数量', key: 'delivery_item_num', width: 100 },
-            { title: '总支付价（¥）', key: 'price', width: 120 },
+            // { title: '总支付价（¥）', key: 'price', width: 120 },
             {
               title: '发货数量',
               key: 'item_num',
@@ -635,6 +646,7 @@ export default {
                       v-model={row.delivery_num}
                       min={1}
                       max={row.num - row.delivery_item_num}
+                      class='cel-input-num'
                     ></el-input-number>
                   )
                 }
@@ -678,8 +690,8 @@ export default {
           options: [
             { title: '商品名', key: 'item_name' },
             { title: '数量', key: 'num', width: 60 },
-            { title: '已发货数量', key: 'delivery_item_num', width: 100 },
-            { title: '总支付价（¥）', key: 'price', width: 120 }
+            { title: '已发货数量', key: 'delivery_item_num', width: 100 }
+            // { title: '总支付价（¥）', key: 'price', width: 120 }
           ]
         }
       ],
@@ -691,42 +703,42 @@ export default {
       refundDialog: false,
       refundFormList: [
         {
-          label: '取消来源:',
+          label: '取消来源',
           key: 'source',
           type: 'text'
         },
         {
-          label: '申请时间:',
+          label: '申请时间',
           key: 'applyTime',
           type: 'text'
         },
         {
-          label: '退款状态:',
+          label: '退款状态',
           key: 'refundStatus',
           type: 'text'
         },
         {
-          label: '处理进度:',
+          label: '处理进度',
           key: 'process',
           type: 'text'
         },
         {
-          label: '退款金额:',
+          label: '退款金额',
           key: 'refundPrice',
           type: 'text'
         },
         {
-          label: '支付方式:',
+          label: '支付方式',
           key: 'payType',
           type: 'text'
         },
         {
-          label: '取消原因:',
+          label: '取消原因',
           key: 'reason',
           type: 'text'
         },
         {
-          label: '处理结果:',
+          label: '处理结果',
           key: 'check_cancel',
           type: 'radio',
           options: [
@@ -742,7 +754,7 @@ export default {
           }
         },
         {
-          label: '拒绝原因:',
+          label: '拒绝原因',
           key: 'shop_reject_reason',
           type: 'input',
           placeholder: '请输入拒绝原因',
@@ -906,14 +918,10 @@ export default {
           dada,
           delivery_status,
           pay_status,
-          can_apply_aftersales,
-          items
+          can_apply_aftersales
         } = item
         const isDada = receipt_type == 'dada'
         const isLogistics = receipt_type == 'logistics'
-       const cost_price=  items.reduce((sum,item)=>{
-          return sum + item.cost_price
-        },0)
         if (VERSION_STANDARD || distributor_id == 0 || this.login_type == 'distributor') {
           if (
             !isDada &&
@@ -950,8 +958,7 @@ export default {
             !isDada &&
             order_status == 'PAYED' &&
             delivery_status != 'DONE' &&
-            receipt_type != 'ziti'&&
-            this.login_type == 'supplier'
+            receipt_type != 'ziti'
           ) {
             actionBtns.push({ name: '发货', key: 'deliverGoods' })
           }
@@ -963,12 +970,10 @@ export default {
           if (is_invoiced == '0' && invoice) {
             actionBtns.push({ name: '待开票', key: 'waitInvoice' })
           }
-
-          actionBtns.push({ name: '备注', key: 'remark' })
         }
         if (order_status == 'NOTPAY') {
           if (VERSION_PLATFORM) {
-            if ((this.IS_ADMIN() && distributor_id == 0) || this.IS_DISTRIBUTOR()) {
+            if ((this.IS_ADMIN && distributor_id == 0) || this.IS_DISTRIBUTOR) {
               actionBtns.push({ name: '改价', key: 'changePrice' })
             }
           } else if (!VERSION_IN_PURCHASE) {
@@ -977,7 +982,7 @@ export default {
         }
         if (can_apply_aftersales == 1) {
           if (VERSION_PLATFORM) {
-            if ((this.IS_ADMIN() && distributor_id == 0) || this.IS_DISTRIBUTOR()) {
+            if ((this.IS_ADMIN && distributor_id == 0) || this.IS_DISTRIBUTOR) {
               actionBtns.push({ name: '申请售后', key: 'salesAfter' })
             }
           } else if (!VERSION_IN_PURCHASE) {
@@ -987,7 +992,6 @@ export default {
 
         return {
           ...item,
-          cost_price,
           actionBtns
         }
       })
@@ -1000,12 +1004,8 @@ export default {
       console.log(`getSubDistrictList:`, res)
       this.subDistrictList = res
     },
-    getOrderType({ order_class, type }) {
-      if (order_class == 'normal') {
-        return type == '1' ? '跨境订单' : '普通订单'
-      }
-      const _orderType = this.VERSION_STANDARD ? ORDER_TYPE_STANDARD : ORDER_TYPE
-      const fd = _orderType.find((item) => item.value == order_class)
+    getOrderType(order_type) {
+      const fd = this.orderType.find((item) => item.value == order_type)
       if (fd) {
         return fd.title
       }
@@ -1066,7 +1066,7 @@ export default {
         this.cancelOrderForm.loading = true
         this.cancelOrderDialog = true
       } else if (key == 'deliverGoods') {
-        if (this.isBindOMS && this.IS_ADMIN()) {
+        if (this.isBindOMS && this.IS_ADMIN) {
           return this.$message.warning('请至OMS处理订单发货')
         }
 
@@ -1079,17 +1079,14 @@ export default {
           }
         })
         this.deliverGoodsForm.type = delivery_type
-        this.deliverGoodsForm.delivery_type = 'batch'
-        this.deliverGoodsForm.delivery_corp = ''
-        this.deliverGoodsForm.delivery_code = ''
         // 部分发货
         if (delivery_status == 'PARTAIL') {
           this.deliverGoodsForm.delivery_type = 'sep'
           this.deliverGoodsFormList[0].disabled = true
-          this.deliverGoodsFormList[1].options[4].isShow = true
+          this.deliverGoodsFormList[1].options[3].isShow = true
         } else {
           this.deliverGoodsFormList[0].disabled = false
-          this.deliverGoodsFormList[1].options[4].isShow = false
+          this.deliverGoodsFormList[1].options[3].isShow = false
         }
         this.deliverGoodsDialog = true
       } else if (key == 'writeOff') {
@@ -1228,9 +1225,9 @@ export default {
       } else if (key == 'salesAfter') {
         if (IS_DISTRIBUTOR()) {
           this.$router.push({ path: `/shopadmin/order/tradenormalorders/after-sale/${order_id}` })
-        } else if (this.$store.getters.login_type == 'supplier') {
+        } else if(IS_SUPPLIER()) {
           this.$router.push({ path: `/supplier/order/tradenormalorders/after-sale/${order_id}` })
-        } else {
+        }else{
           this.$router.push({ path: `/order/entitytrade/tradenormalorders/after-sale/${order_id}` })
         }
       }
@@ -1271,13 +1268,8 @@ export default {
       if (delivery_type == 'sep') {
         params['sepInfo'] = JSON.stringify(items.filter((item) => item.delivery_num))
       }
-      this.confirmStatus = true
       const { delivery_status } = await this.$api.trade.delivery(params)
       this.deliverGoodsDialog = false
-      this.$nextTick(()=>{
-        this.confirmStatus = false
-
-      })
       this.fetchList()
       if (delivery_status && delivery_status != 'PENDING') {
         this.$message.success('发货成功!')
@@ -1427,6 +1419,9 @@ export default {
         message: '不能为空'
       })
     },
+    getSourceFrom({ source_from }) {
+      return getSourceFromNameByValue(this.sourceFromList, source_from)
+    },
     onChangeTableView({ items, item_fee_new, freight_fee, total_fee, item_total_fee }) {
       // this.changePriceForm.itemFee = item_fee_new / 100
       this.changePriceForm.freightFee = freight_fee / 100
@@ -1466,6 +1461,7 @@ export default {
   .el-form {
     margin-right: 0 !important;
   }
+
   .tip-bar {
     border: 1px solid #7db3f2;
     border-radius: 4px;
@@ -1476,16 +1472,20 @@ export default {
     line-height: 36px;
     font-size: 13px;
   }
+
   .receive-info {
     line-height: 22px;
   }
+
   .receive-item {
     color: #7d7d7d;
   }
+
   .receive-label {
     color: #b8b8b8;
   }
 }
+
 .dialog-cancelorder {
   .el-form-item {
     &:nth-child(1) {
@@ -1493,6 +1493,7 @@ export default {
         margin-left: 0 !important;
       }
     }
+
     &:nth-child(2) {
       .el-form-item__content {
         margin-left: 26px !important;
@@ -1500,6 +1501,7 @@ export default {
     }
   }
 }
+
 .dialog-changeprice {
   .el-form-item {
     &:nth-child(1),
@@ -1511,6 +1513,7 @@ export default {
     }
   }
 }
+
 .dialog-salesafter {
   .el-form-item {
     &:nth-child(1) {
@@ -1518,6 +1521,173 @@ export default {
         margin-left: 0 !important;
       }
     }
+  }
+}
+
+.action-table {
+  width: 100%;
+
+  .el-table {
+    width: 100%;
+    margin-bottom: 20px;
+
+    thead {
+      .cell {
+        color: #000;
+        font-size: 12px;
+        font-weight: 600;
+      }
+    }
+
+    &::before {
+      display: none;
+    }
+
+    .el-table__body {
+      //-webkit-border-horizontal-spacing: 13px;  // 水平间距
+      -webkit-border-vertical-spacing: 10px; // 垂直间距 设置的是行间距
+    }
+
+    th.el-table__cell.is-leaf {
+      border: none !important;
+    }
+
+    .el-table__row td {
+      padding: 10px 0;
+      border-top: 1px solid rgba(0, 0, 0, 0.1) !important;
+      border-bottom: 1px solid rgba(0, 0, 0, 0.1) !important;
+
+      &:not(:nth-last-child(4)) {
+        border-right: 1px solid rgba(0, 0, 0, 0.1) !important;
+      }
+
+      &:first-child {
+        border-left: 1px solid rgba(0, 0, 0, 0.1) !important;
+      }
+    }
+
+    .el-table__row > td {
+      font-size: 12px;
+      color: #333333;
+    }
+  }
+
+  .el-table__body-wrapper {
+    .el-table__row {
+      position: relative;
+      overflow: hidden;
+    }
+
+    .action-table-column {
+      position: absolute !important;
+      width: calc(100% - 3px);
+      background: #fafafa;
+      height: 40px;
+      line-height: 40px;
+      padding-left: 10px;
+      padding: 0px !important;
+      left: 1px;
+      border-right: 1px solid rgba(0, 0, 0, 0.1) !important;
+
+      &-header {
+        top: 0px;
+      }
+
+      &-footer {
+        bottom: 0px;
+      }
+
+      .cell {
+        line-height: inherit;
+        padding-left: 9px;
+      }
+
+      .action-table-header {
+        width: 100%;
+        display: flex;
+        justify-content: space-between;
+      }
+
+      .action-table-footer {
+        width: 100%;
+        display: flex;
+      }
+    }
+  }
+
+  .table-column {
+    &-content {
+      padding: 30px 10px 30px 0;
+
+      .goods_pn {
+        display: flex;
+        flex-direction: column;
+        justify-content: flex-start;
+        min-height: 80px;
+      }
+
+      .good_fee {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+
+        &_freight {
+          color: #9c9c9c;
+        }
+      }
+
+      .remark_text {
+        overflow: hidden;
+        text-overflow: ellipsis;
+        display: -webkit-box;
+        -webkit-line-clamp: 2;
+        word-break: break-all;
+        -webkit-box-orient: vertical;
+      }
+    }
+
+    &-goodsinfo {
+      display: flex;
+
+      &:not(:first-child) {
+        padding-top: 10px;
+      }
+
+      .goods_nd {
+        width: 100%;
+        margin-left: 10px;
+        box-sizing: border-box;
+        padding: 5px 0;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+
+        &_hd {
+          flex-shrink: 0;
+        }
+
+        &_name {
+          font-size: 12px;
+          font-weight: 600;
+          text-align: left;
+        }
+      }
+    }
+  }
+
+  .column-fixed {
+    position: sticky;
+    width: 100%;
+    right: 0px;
+    background-color: #fff;
+    border-left: 1px solid rgba(0, 0, 0, 0.1) !important;
+  }
+}
+</style>
+<style lang="scss">
+.cel-input-num {
+  .el-input__inner {
+    padding: 0px 30px !important;
   }
 }
 </style>

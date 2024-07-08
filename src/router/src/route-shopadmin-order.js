@@ -22,6 +22,10 @@ export default {
         {
           path: 'after-sale/:id?',
           component: () => import('@/view/mall/trade/order/afterSale')
+        },
+        {
+          path: 'logistics/:itemId?',
+          component: () => import('@/view/mall/trade/order/logistics')
         }
       ]
     },

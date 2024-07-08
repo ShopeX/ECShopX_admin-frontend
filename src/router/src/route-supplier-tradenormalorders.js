@@ -1,0 +1,76 @@
+import { IS_SUPPLIER } from '@/utils'
+
+// 交易路由
+const name = '交易'
+import Layout from '@/view/layout' // 主框架
+
+export default {
+  path: '/supplier/order',
+  component: Layout,
+  children: [
+    {
+      path: 'tradenormalorders',
+      name: `全部订单`,
+      component: () => {
+        if (IS_SUPPLIER()) {
+          return import('@/view/mall/supplier/supplier_orders')
+        } else {
+          return import('@/view/mall/trade/normalorders/list')
+        }
+      },
+      children: [
+        {
+          path: 'detail/:itemId?',
+          component: () => import('@/view/mall/trade/order/detail'),
+          meta: {
+            footerFixed: true
+          }
+        },
+        {
+          path: 'process/:itemId?',
+          component: () => import('@/view/mall/trade/order/process')
+        },
+        {
+          path: 'after-sale/:id?',
+          component: () => import('@/view/mall/trade/order/afterSale')
+        },
+        {
+          path: 'logistics/:itemId?',
+          component: () => import('@/view/mall/trade/order/logistics')
+        }
+      ]
+    },
+    {
+      path: 'normalordersupload',
+      name: `批量发货`,
+      component: () => import('@/view/mall/trade/normalorders/ordersupload'),
+    },
+    {
+      path: 'aftersaleslist',
+      name: `售后列表`,
+      component: () => import('@/view/mall/aftersales/list'),
+      children: [
+        {
+          path: 'detail/:itemId?',
+          component: () => import('@/view/mall/aftersales/detail')
+        }
+      ]
+    },
+    {
+      path: 'shippingtemplates',
+      name: `运费模板`,
+      component: () => import('@/view/mall/trade/shipping/templates'),
+      children: [
+        {
+          path: 'editor/:itemId?',
+          component: () => import('@/view/mall/trade/shipping/add')
+        }
+      ]
+    },
+    {
+      path: 'logistics',
+      name: `配送管理`,
+      component: () => import('@/view/mall/trade/logistics/index'),
+    }
+  ]
+}

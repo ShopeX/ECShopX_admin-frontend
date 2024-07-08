@@ -34,7 +34,9 @@ export default {
   name: '',
   props: {
     itemId: String,
-    distributorId: String
+    distributorId: String,
+    itemShowSkuStore: Boolean,
+    itemShowSkuPrice: Boolean
   },
   data() {
     return {
@@ -71,30 +73,31 @@ export default {
                 return (
                   <div>
                     <span>{row.store}</span>
-                    <el-popover
-                      placement='top'
-                      trigger='hover'
-                      on-show={() => this.onShowPopover(row)}
-                    >
-                      <div class='popover-edit'>
-                        <el-input
-                          v-model={this.skuEditInput}
-                          class='edit-input'
-                          placeholder='请输入库存'
-                        />
-                        <el-button
-                          type='primary'
-                          size='mini'
-                          on-click={this.onModifyItemSku.bind(this, row)}
-                        >
-                          确定
+                    {this.itemShowSkuStore &&
+                      <el-popover
+                        placement='top'
+                        trigger='hover'
+                        on-show={() => this.onShowPopover(row, 'store')}
+                      >
+                        <div class='popover-edit'>
+                          <el-input
+                            v-model={this.skuEditInput}
+                            class='edit-input'
+                            placeholder='请输入库存'
+                          />
+                          <el-button
+                            type='primary'
+                            size='mini'
+                            on-click={this.onModifyItemSku.bind(this, row)}
+                          >
+                            确定
+                          </el-button>
+                        </div>
+                        <el-button slot='reference' type='text'>
+                          <i class='el-icon-edit' />
                         </el-button>
-                      </div>
-
-                      <el-button slot='reference' type='text'>
-                        <i class='el-icon-edit' />
-                      </el-button>
-                    </el-popover>
+                      </el-popover>
+                    }
                   </div>
                 )
               }
@@ -104,7 +107,43 @@ export default {
             name: '商品价格（¥）',
             key: 'price',
             width: 160,
-            render: (h, { row }) => h('span', {}, row.price / 100)
+            render: (h, { row }) => {
+              // if (row.is_total_store) {
+              //   return <span>{row.price / 100}</span>
+              // } else {
+                return (
+                  <div>
+                    <span>{row.price / 100}</span>
+                    {this.itemShowSkuPrice &&
+                      <el-popover
+                        placement='top'
+                        trigger='hover'
+                        on-show={() => this.onShowPopover(row, 'price')}
+                      >
+                        <div class='popover-edit'>
+                          <el-input
+                            v-model={this.skuPriceEditInput}
+                            class='edit-input'
+                            placeholder='请输入金额'
+                          />
+                          <el-button
+                            type='primary'
+                            size='mini'
+                            on-click={this.onModifyItemPrice.bind(this, row)}
+                          >
+                            确定
+                          </el-button>
+                        </div>
+  
+                        <el-button slot='reference' type='text'>
+                          <i class='el-icon-edit' />
+                        </el-button>
+                      </el-popover>
+                    }
+                  </div>
+                )
+              // }
+            }
           },
           {
             name: '状态',
@@ -134,7 +173,8 @@ export default {
           // }
         ]
       }),
-      skuEditInput: ''
+      skuEditInput: '',
+      skuPriceEditInput: ''
     }
   },
   created() {},
@@ -156,14 +196,26 @@ export default {
       }
       return approveStatus[status] || '不可销售'
     },
-    onShowPopover({ store }) {
-      this.skuEditInput = store
+    onShowPopover({ store }, type) {
+      if (type == 'store') {
+        this.skuEditInput = store
+      } else if (type == 'price') {
+        this.skuPriceEditInput = price
+      }
     },
     async onModifyItemSku({ item_id }) {
       await this.$api.marketing.updateDistributorItem({
         distributor_id: this.distributorId,
         item_id: item_id,
         store: this.skuEditInput
+      })
+      this.$refs.skuFinder.refresh()
+    },
+    async onModifyItemPrice({ item_id }) {
+      await this.$api.marketing.updateDistributorItem({
+        distributor_id: this.distributorId,
+        item_id: item_id,
+        price: this.skuPriceEditInput * 100
       })
       this.$refs.skuFinder.refresh()
     }

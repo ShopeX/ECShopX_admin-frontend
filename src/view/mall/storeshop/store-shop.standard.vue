@@ -93,8 +93,8 @@
       fixed-row-action
       :setting="setting"
       :hooks="{
-        beforeSearch: beforeSearch
-        // afterSearch: afterSearch
+        beforeSearch: beforeSearch,
+        afterSearch: afterSearch
       }"
       :data="finderData"
       :url="finderUrl"
@@ -123,6 +123,7 @@ import FileSaver from 'file-saver'
 import { createSetting } from '@shopex/finder'
 import { getFileBlob } from '@/api/common'
 import skuFinder from './comps/skuFinder'
+import { mapGetters } from 'vuex'
 export default {
   components: {
     skuFinder
@@ -140,7 +141,28 @@ export default {
       tabList: [{ name: '全部商品', value: 'all' }],
       activeTab: 'all',
       selectItems: [],
-      setting: createSetting({
+      itemSkuDialog: false,
+      itemSkuForm: {
+        itemName: '',
+        itemId: ''
+      },
+      itemSkuFormList: [
+        {
+          key: 'invitation_code',
+          component: () => (
+            <skuFinder
+              itemId={this.itemSkuForm.itemId}
+              distributorId={this.formData.distributor_id}
+            />
+          )
+        }
+      ]
+    }
+  },
+  computed: {
+    ...mapGetters(['login_type']),
+    setting() {
+      return createSetting({
         actions: [
           {
             name: '设置SKU',
@@ -191,7 +213,17 @@ export default {
           {
             name: '商品价格（¥）',
             key: 'price',
-            render: (h, { row }) => h('span', {}, row.price / 100)
+            showType: this.login_type == 'admin' ? 'editable' : '',
+            componentProps: {
+              change: async (v, row) => {
+                await this.$api.marketing.updateDistributorItem({
+                  distributor_id: row.distributor_id,
+                  item_id: row.item_id,
+                  price: v * 100
+                })
+                this.$refs.finder.refresh()
+              }
+            }
           },
           {
             name: '店铺库存',
@@ -217,28 +249,12 @@ export default {
           },
           {
             name: '状态',
-            key: 'approve_status',
+            key: 'is_market',
             width: 120,
-            render: (h, { row }) => h('span', {}, this.getApproveStatus(row.approve_status))
+            render: (h, { row }) => h('span', {}, this.getApproveStatus(row.is_market))
           }
         ]
-      }),
-      itemSkuDialog: false,
-      itemSkuForm: {
-        itemName: '',
-        itemId: ''
-      },
-      itemSkuFormList: [
-        {
-          key: 'invitation_code',
-          component: () => (
-            <skuFinder
-              itemId={this.itemSkuForm.itemId}
-              distributorId={this.formData.distributor_id}
-            />
-          )
-        }
-      ]
+      })
     }
   },
   created() {
@@ -269,15 +285,21 @@ export default {
       }
       return params
     },
+    afterSearch({ data }) {
+      data.data.list.forEach((item) => {
+        item.price = item.price / 100
+      })
+      return data
+    },
     onSelectionChange(val) {
       this.selectItems = val
     },
     getApproveStatus(status) {
       const approveStatus = {
-        onsale: '前台可销售',
-        offline_sale: '前台不展示'
+        1: '可售',
+        0: '不可售'
       }
-      return approveStatus[status] || '不可销售'
+      return approveStatus[status] || '不可售'
     },
     // 删除商品
     async removeItemFromShop() {
@@ -326,6 +348,7 @@ export default {
       const { status } = await this.$api.marketing.exportDistributorItems(exportParams)
       if (status) {
         this.$message.success('已加入执行队列，请在设置-导出列表中下载')
+        this.$export_open('distributor_items')
       }
     },
     onItemSkuFormSubmit() {

@@ -275,7 +275,7 @@ export default {
     },
     async getShopInfo() {
       const { distributor_id } = this.$route.query
-      if (distributor_id || IS_DISTRIBUTOR) {
+      if (distributor_id || IS_DISTRIBUTOR()) {
         const res = await this.$api.marketing.getDistributorInfo({ distributor_id })
         const [startTime, endTime] = res.hour.split('-')
         const [offline_startTime, offline_endTime] = res.offline_aftersales_address.hours
@@ -444,7 +444,7 @@ export default {
           this.submitLoading = false
           this.$message.success('保存店铺成功')
         }
-        if (!IS_DISTRIBUTOR) {
+        if (!IS_DISTRIBUTOR()) {
           this.$router.go(-1)
         }
       } catch (e) {

@@ -48,6 +48,15 @@ export function getItemsTypeList (query) {
   })
 }
 
+
+export function setCommissionRatio (query) {
+  return fetch({
+    url: '/goods/set_commission_ratio',
+    method: 'post',
+    params: query
+  })
+}
+
 export function getItemsTypeDetail (typeId) {
   return fetch({
     url: '/goods/itemstype/' + typeId,
@@ -97,6 +106,15 @@ export function getItemsList (query) {
   })
 }
 
+// 商品
+export function getDrawItemsList (query) {
+  return fetch({
+    url: '/goods/items',
+    method: 'get',
+    params: query
+  })
+}
+
 export function getSkuList (query) {
   return fetch({
     url: '/goods/sku',
@@ -105,10 +123,11 @@ export function getSkuList (query) {
   })
 }
 
-export function getItemsDetail (itemId) {
+export function getItemsDetail (itemId, params) {
   return fetch({
     url: '/goods/items/' + itemId,
-    method: 'get'
+    method: 'get',
+    params
   })
 }
 

@@ -157,6 +157,12 @@ export default {
     getLoginTitle(t) {
       let title
       switch (this.loginType) {
+        case 'supplier':
+          title = '供应商管理中心'
+          break
+        case 'agent':
+          title = '代理商管理中心'
+          break
         case 'distributor':
           title = '店铺管理中心'
           break
@@ -247,6 +253,12 @@ export default {
         this.$router.push({ path: '/dealer/index' })
       } else if (this.loginType == 'merchant') {
         this.$router.push({ path: '/merchant' })
+      }else if (this.loginType == 'supplier') {
+        if (userInfo.supplier_check_status == 1) {
+          this.$router.push({ path: '/supplier/order/tradenormalorders' })
+        } else {
+          this.$router.push({ path: '/supplier/setting/supplier_register' })
+        }
       } else {
         window.location.href = '/'
       }

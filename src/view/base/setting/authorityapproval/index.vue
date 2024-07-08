@@ -87,7 +87,7 @@ export default {
             name: '账户角色',
             key: 'operator_type',
             formatter: (value, row, col) => {
-              return value === 'staff' ? '平台管理员' : '店铺管理员'
+              return value === 'staff' ? '平台管理员' :value === 'distributor'? '店铺管理员':'供应商管理员'
             }
           },
           {

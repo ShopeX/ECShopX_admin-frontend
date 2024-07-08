@@ -75,6 +75,16 @@
               </el-tag>
             </template>
           </el-table-column>
+<!--          <el-table-column prop="item_spec_desc" label="SPU编码">-->
+<!--            <template slot-scope="scope">-->
+<!--              {{ scope.row.goods_bn }}-->
+<!--            </template>-->
+<!--          </el-table-column>-->
+          <el-table-column prop="item_spec_desc" label="SKU编码">
+            <template slot-scope="scope">
+              {{ scope.row.item_bn }}
+            </template>
+          </el-table-column>
           <el-table-column prop="item_spec_desc" label="规格">
             <template slot-scope="scope">
               {{ scope.row.item_spec_desc ? scope.row.item_spec_desc : '单规格' }}
@@ -177,7 +187,10 @@
         </el-table>
       </div>
     </el-card>
-    <el-card v-if="orderInfo && orderInfo._order_class != 'excard'" class="el-card--normal">
+    <el-card
+      v-if="orderInfo && orderInfo._order_class != 'excard' && !IS_SUPPLIER()"
+      class="el-card--normal"
+    >
       <div slot="header">支付清单</div>
       <el-row class="card-panel">
         <el-col
@@ -225,8 +238,8 @@
           </el-row>
         </div>
       </el-card>
-      <div slot="header">优惠明细</div>
-      <div class="card-panel">
+      <div slot="header" v-if="!IS_SUPPLIER()">优惠明细</div>
+      <div class="card-panel" v-if="!IS_SUPPLIER()">
         <el-table
           v-if="orderInfo"
           border
@@ -357,7 +370,7 @@ import {
   PAY_TYPE,
   PAY_STATUS
 } from '@/consts'
-import { VERSION_STANDARD, VERSION_IN_PURCHASE } from '@/utils'
+import { VERSION_STANDARD, VERSION_IN_PURCHASE, IS_SUPPLIER } from '@/utils'
 import moment from 'moment'
 
 export default {
@@ -417,7 +430,7 @@ export default {
       expressDialog: false,
       expressFormList: [
         {
-          label: '快递公司:',
+          label: '快递公司',
           key: 'delivery_corp',
           placeholder: '请选择快递公司',
           type: 'select',
@@ -426,7 +439,7 @@ export default {
           message: '不能为空'
         },
         {
-          label: '物流单号:',
+          label: '物流单号',
           key: 'delivery_code',
           type: 'input',
           placeholder: '物流公司单号',
@@ -481,6 +494,7 @@ export default {
                       v-model={row.delivery_num}
                       min={1}
                       max={row.num - row.delivery_item_num}
+                      class='cel-input-num'
                     ></el-input-number>
                   )
                 }
@@ -768,7 +782,8 @@ export default {
           !isDada &&
           order_status == 'PAYED' &&
           delivery_status != 'DONE' &&
-          receipt_type != 'ziti'
+          receipt_type != 'ziti'&&
+          this.login_type == 'supplier'
         ) {
           btnActions.push({ name: '发货', key: 'deliverGoods' })
         }
@@ -805,7 +820,7 @@ export default {
     handleAction({ key }) {
       const { order_id, items, delivery_type, delivery_status } = this.orderInfo
       if (key == 'deliverGoods') {
-        if (this.isBindOMS && this.IS_ADMIN) {
+        if (this.isBindOMS && this.IS_ADMIN()) {
           return this.$message.warning('请至OMS处理订单发货')
         }
         this.$refs['deliverGoodsDialogRef'].resetForm()

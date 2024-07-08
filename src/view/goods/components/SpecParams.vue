@@ -7,6 +7,7 @@
 </template>
 
 <script>
+import { GOODS_TAX_RATE } from '@/consts'
 export default {
   name: 'SpecParams',
   props: {
@@ -17,6 +18,14 @@ export default {
     isShowPoint: {
       type: Boolean,
       default: false
+    },
+    disabled: {
+      type: Boolean,
+      default: false
+    },
+    provinceList: {
+      type: Array,
+      default: () => []
     }
   },
   data() {
@@ -42,9 +51,12 @@ export default {
     }
     return {
       form: {
+        buy_limit_area:['all'],
+        item_id: '',
         approve_status: 'onsale',
         store: 1,
         item_bn: '',
+        supplier_goods_bn: '',
         weight: '',
         volume: '',
         price: '',

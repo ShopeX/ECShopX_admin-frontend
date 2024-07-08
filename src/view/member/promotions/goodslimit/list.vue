@@ -116,10 +116,10 @@ export default {
   methods: {
     cancelActionVisible({ status, source_id }) {
       if (status == 'ongoing') {
-        if (this.IS_ADMIN && source_id == '0') {
+        if (this.IS_ADMIN() && source_id == '0') {
           return true
         }
-        if (this.IS_DISTRIBUTOR) {
+        if (this.IS_DISTRIBUTOR()) {
           return true
         }
       }
@@ -127,10 +127,10 @@ export default {
     },
     editlActionVisible({ status, source_id }) {
       if (status == 'waiting') {
-        if (this.IS_ADMIN && source_id == '0') {
+        if (this.IS_ADMIN() && source_id == '0') {
           return true
         }
-        if (this.IS_DISTRIBUTOR) {
+        if (this.IS_DISTRIBUTOR()) {
           return true
         }
       }

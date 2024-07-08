@@ -11,10 +11,10 @@ import { actions } from '@/utils/micr-app'
 import constantRouterMap from './src'
 Vue.use(VueRouter)
 
-const { RouteAuth, RouteShopAdminShopList, RouteDealerIndex, RouteShopAdminBase } =
+const { RouteAuth, RouteShopAdminShopList, RouteDealerIndex, RouteShopAdminBase,RouteSupplierBase } =
   constantRouterMap
 const router = new VueRouter({
-  routes: [...RouteAuth, RouteShopAdminShopList, RouteDealerIndex, RouteShopAdminBase],
+  routes: [...RouteAuth, RouteShopAdminShopList, RouteDealerIndex, RouteShopAdminBase,RouteSupplierBase],
   mode: 'history'
 })
 
@@ -159,6 +159,8 @@ router.beforeEach((to, from, next) => {
         window.location.href = constantRouterMap.RouteAuth[1].path
       } else if (to.path.includes('/merchant')) {
         window.location.href = constantRouterMap.RouteAuth[2].path
+      }else if (to.path.includes('/supplier')) {
+        window.location.href = constantRouterMap.RouteAuth[10].path
       } else {
         // 登录
         window.location.href = constantRouterMap.RouteAuth[0].path

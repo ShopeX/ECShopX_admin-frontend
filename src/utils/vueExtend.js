@@ -6,6 +6,7 @@ import {
   VERSION_IN_PURCHASE,
   IS_ADMIN,
   IS_DISTRIBUTOR,
+  IS_SUPPLIER,
   IS_MERCHANT,
   getUrlPathByLoginType
 } from '@/utils'
@@ -244,6 +245,7 @@ Vue.prototype.VUE_APP_CHUZHI = process.env.VUE_APP_CHUZHI == 'true'
 
 Vue.prototype.IS_ADMIN = IS_ADMIN
 Vue.prototype.IS_DISTRIBUTOR = IS_DISTRIBUTOR
+Vue.prototype.IS_SUPPLIER = IS_SUPPLIER
 Vue.prototype.IS_MERCHANT = IS_MERCHANT
 
 Vue.prototype.path_prefixes = process.env.VUE_APP_PREFIXES

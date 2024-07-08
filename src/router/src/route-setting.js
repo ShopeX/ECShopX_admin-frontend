@@ -17,6 +17,11 @@ export default {
       component: () => import('@/view/base/account/storestaff')
     },
     {
+      path: 'staff/supplier',
+      name: `账号管理-供应商账号`,
+      component: () => import('@/view/base/account/suppliers')
+    },
+    {
       path: 'staff/storemanager',
       name: `账号管理-商户账号管理`,
       component: () => import('@/view/mall/marketing/merchantAccount')
@@ -220,6 +225,11 @@ export default {
       path: 'menumanage/merchantmenu',
       name: `商户菜单管理`,
       component: () => import('@/view/menus/merchantmenu')
+    },
+    {
+      path: 'menumanage/suppliermenus',
+      name: `供应商菜单管理`,
+      component: () => import('@/view/menus/supplier')
     },
     {
       path: 'menumanage/distributormenu',

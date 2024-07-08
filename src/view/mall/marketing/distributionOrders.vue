@@ -191,7 +191,8 @@
                 v-if="
                   scope.row.receipt_type == 'logistics' &&
                   scope.row.order_status == 'PAYED' &&
-                  scope.row.delivery_status != 'DONE'
+                  scope.row.delivery_status != 'DONE'&&
+                  !IS_ADMIN()
                 "
                 type="text"
                 @click="deliveryAction(scope.row.order_id)"
@@ -286,6 +287,7 @@ import { getSourcesList } from '../../../api/datacube'
 import hqbdlycorp from '../../../common/hqbdlycorp.json'
 import { getDistributorList } from '../../../api/marketing'
 import { ORDER_TYPE, ORDER_TYPE_STANDARD } from '@/consts'
+import { IS_ADMIN } from '../../../utils'
 
 export default {
   data() {

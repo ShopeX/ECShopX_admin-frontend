@@ -128,6 +128,7 @@ export const PROFIT_TYPE = {
 }
 
 export const PAY_TYPE = {
+  offline: '线下转账',
   wxpay: '微信支付',
   amorepay: '微信支付',
   wechat: '微信支付',
@@ -241,3 +242,20 @@ export const SECKILL_ACTIVITY_STATUS = {
   'in_sale': '进行中',
   'it_has_ended': '已结束'
 }
+
+// 商品审核状态
+export const GOODS_APPLY_STATUS = {
+  submitting: '待提交',
+  approved: '已审核',
+  processing: '审核中',
+  rejected: '已拒绝',
+}
+
+// 商品税率
+export const GOODS_TAX_RATE = [
+  { title: '1%', value: 1 },
+  { title: '6%', value: 6 },
+  { title: '9%', value: 9 },
+  { title: '13%', value: 13 },
+  { title: '免税', value: 0 }
+]

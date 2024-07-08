@@ -91,6 +91,7 @@ export default {
         width={width}
         append-to-body
         onclose={this.handleCancel}
+        close-on-click-modal={false}
       >
         <SpForm
           ref='form'

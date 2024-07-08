@@ -20,8 +20,10 @@
 }
 </style>
 <template>
-  <SpRouterView>
-    <div class="cus-dealer-page">
+  <div class="cus-dealer-page">
+    <div
+      v-if="$route.path.indexOf('detail') === -1 && $route.path.indexOf('detail/storelist') === -1"
+    >
       <el-card>
         <SpFinder
           ref="finder"
@@ -90,7 +92,8 @@
       </el-dialog>
       <AddModal :visible="addVisible" @handleClose="handleClose" />
     </div>
-  </SpRouterView>
+    <router-view />
+  </div>
 </template>
 <script>
 import { mapGetters } from 'vuex'

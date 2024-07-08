@@ -23,6 +23,10 @@ export default {
     }
   },
   created() {},
-  methods: {}
+  methods: {
+    onHooksRouteBack() {
+      this.$parent.onHooksRouteBack()
+    }
+  }
 }
 </script>

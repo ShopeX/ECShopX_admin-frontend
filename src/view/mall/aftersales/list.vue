@@ -55,6 +55,9 @@
             />
           </el-select>
         </SpFilterFormItem>
+        <SpFilterFormItem v-if="IS_SUPPLIER()" prop="item_bn" label="SKU编号:">
+          <el-input v-model="params.item_bn" placeholder="SKU编号" />
+        </SpFilterFormItem>
       </SpFilterForm>
 
       <div class="action-container">
@@ -76,6 +79,8 @@
                   path:
                     (`${$store.getters.login_type}` == 'distributor' &&
                       '/shopadmin/order/aftersaleslist/detail') ||
+                      (`${$store.getters.login_type}` == 'supplier' &&
+                      '/supplier/order/aftersaleslist/detail') ||
                     (`${$store.getters.login_type}` == 'merchant' &&
                       '/merchant/order/aftersaleslist/detail') ||
                     '/order/entitytrade/aftersaleslist/detail',
@@ -106,7 +111,7 @@
             </div>
           </template>
         </el-table-column>
-        <el-table-column min-width="150" label="订单">
+        <el-table-column min-width="150" label="订单号">
           <template slot-scope="scope">
             <div class="order-num">
               <router-link
@@ -115,6 +120,8 @@
                   path:
                     (`${$store.getters.login_type}` == 'distributor' &&
                       '/shopadmin/order/tradenormalorders/detail') ||
+                      (`${$store.getters.login_type}` == 'supplier' &&
+                      '/supplier/order/tradenormalorders/detail') ||
                     (`${$store.getters.login_type}` == 'merchant' &&
                       '/merchant/order/tradenormalorders/detail') ||
                     '/order/entitytrade/tradenormalorders/detail',
@@ -140,6 +147,7 @@
               class="order-num"
             >
               <router-link
+                v-if="$store.getters.login_type != 'supplier'&& $store.getters.login_type!= 'distributor'"
                 target="_blank"
                 :to="{
                   path:
@@ -156,6 +164,29 @@
             </template>
           </template>
         </el-table-column>
+        <el-table-column v-if="IS_SUPPLIER()" min-width="100" prop="contact" label="姓名" />
+        <el-table-column v-if="IS_SUPPLIER()" min-width="150" label="SKU编号">
+          <template slot-scope="scope">
+            <span>{{ scope.row.detail[0].item_bn }}</span>
+          </template>
+        </el-table-column>
+        <el-table-column v-if="IS_SUPPLIER()" min-width="100" label="商品名称">
+          <template slot-scope="scope">
+            <span>{{ scope.row.detail[0].item_name }}</span>
+          </template>
+        </el-table-column>
+        <el-table-column v-if="IS_SUPPLIER()" min-width="120" label="售后商品数量">
+          <template slot-scope="scope">
+            <span>{{ scope.row.detail[0].num }}</span>
+          </template>
+        </el-table-column>
+        <el-table-column v-if="IS_SUPPLIER()" min-width="100" label="金额">
+          <template slot-scope="scope">
+            <span>{{ scope.row.detail[0].refund_fee / 100 }}</span>
+          </template>
+        </el-table-column>
+        <el-table-column v-if="IS_SUPPLIER()" min-width="100" label="售后原因" prop="reason" />
+        <el-table-column v-if="IS_SUPPLIER()" min-width="100" label="修改时间" prop="update_time" />
         <el-table-column width="100" label="售后类型">
           <template slot-scope="scope">
             <el-tag v-if="scope.row.aftersales_type == 'ONLY_REFUND'" type="info" size="mini">
@@ -270,7 +301,7 @@
 import { mapGetters } from 'vuex'
 import RemarkModal from '@/components/remarkModal'
 import mixin, { pageMixin, remarkMixin } from '@/mixins'
-import { VERSION_B2C } from '@/utils'
+import { VERSION_B2C, IS_SUPPLIER } from '@/utils'
 export default {
   components: {
     RemarkModal
@@ -283,11 +314,14 @@ export default {
         name: undefined
       },
       create_time: '',
+      receiver_mobile: '',
       order_id: undefined,
       aftersales_bn: undefined,
       mobile: undefined,
       aftersales_status: undefined,
-      aftersales_type: undefined
+      aftersales_type: undefined,
+      original_order_id: undefined,
+      item_bn: undefined
     }
     return {
       loading: false,
@@ -376,6 +410,7 @@ export default {
         order_id: this.params.order_id || undefined,
         aftersales_bn: this.params.aftersales_bn || undefined,
         mobile: this.params.mobile || undefined,
+        receiver_mobile: this.params.receiver_mobile || undefined,
         aftersales_status: this.params.aftersales_status || undefined,
         aftersales_type: this.params.aftersales_type || undefined
       }

@@ -263,6 +263,7 @@
 </template>
 
 <script>
+import { GOODS_TAX_RATE } from '@/consts'
 export default {
   name: 'SkuParams',
   props: {
@@ -273,6 +274,14 @@ export default {
     isShowPoint: {
       type: Boolean,
       default: false
+    },
+    disabled:{
+      type: Boolean,
+      default: false
+    },
+    provinceList: {
+      type: Array,
+      default: () => []
     }
   },
   data() {
@@ -297,6 +306,7 @@ export default {
       })
     }
     return {
+      tax_rate_list: GOODS_TAX_RATE,
       bulkFilling: [
         {
           approve_status: '',
@@ -308,7 +318,9 @@ export default {
           barcode: '',
           point_num: '',
           weight: '',
-          volume: ''
+          volume: '',
+          supplier_goods_bn: '',
+          tax_rate: '',
         }
       ],
       statusOption,
@@ -411,7 +423,9 @@ export default {
             market_price,
             barcode,
             point_num,
-            item_spec
+            item_spec,
+            supplier_goods_bn,
+            tax_rate,
           }) => {
             const vKey = item_spec.map(({ spec_value_id }) => spec_value_id).join('_')
             const specName = item_spec.map(
@@ -432,7 +446,9 @@ export default {
               cost_price: isNaN(cost_price / 100) ? '' : cost_price / 100,
               market_price: isNaN(market_price / 100) ? '' : market_price / 100,
               barcode,
-              point_num
+              point_num,
+              supplier_goods_bn,
+              tax_rate,
             }
           }
         )
@@ -451,7 +467,9 @@ export default {
             cost_price,
             market_price,
             barcode,
-            point_num
+            point_num,
+            supplier_goods_bn,
+            tax_rate,
           } = item
           _specItems.push({
             sku_id: key,
@@ -466,7 +484,9 @@ export default {
             cost_price: isNaN(cost_price / 100) ? '' : cost_price / 100,
             market_price: isNaN(market_price / 100) ? '' : market_price / 100,
             barcode,
-            point_num
+            point_num,
+            supplier_goods_bn,
+            tax_rate,
           })
         }
       })
@@ -507,8 +527,11 @@ export default {
         cost_price,
         market_price,
         barcode,
-        point_num
+        point_num,
+        supplier_goods_bn,
+        tax_rate,
       } = this.bulkFilling[0]
+
       this.value.specItems.forEach((item) => {
         item.approve_status = approve_status
         item.store = store
@@ -520,6 +543,8 @@ export default {
         item.market_price = market_price
         item.barcode = barcode
         item.point_num = point_num
+        item.supplier_goods_bn = supplier_goods_bn
+        item.tax_rate = tax_rate
       })
     },
     // 清除
@@ -539,7 +564,9 @@ export default {
         cost_price: '',
         market_price: '',
         barcode: '',
-        point_num: ''
+        point_num: '',
+        supplier_goods_bn: '',
+        tax_rate: '',
       })
     }
   }

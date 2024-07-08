@@ -69,8 +69,8 @@ export default {
           },
           {
             name: '状态',
-            key: 'approve_status',
-            render: (h, { row }) => h('span', {}, this.getApproveStatus(row.approve_status))
+            key: 'is_market',
+            render: (h, { row }) => h('span', {}, this.getApproveStatus(row.is_market))
           },
           {
             name: '上下架操作',
@@ -118,10 +118,10 @@ export default {
     },
     getApproveStatus(status) {
       const approveStatus = {
-        onsale: '前台可销售',
-        offline_sale: '前台不展示'
+        1: '可售',
+        0: '不可售'
       }
-      return approveStatus[status] || '不可销售'
+      return approveStatus[status] || '不可售'
     }
   }
 }

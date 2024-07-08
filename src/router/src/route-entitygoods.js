@@ -39,6 +39,20 @@ export default {
       ]
     },
     {
+      path: 'goods/suppliergoods',
+      name: `供应商商品`,
+      component: () => import('@/view/mall/goods/physical/supplierList'),
+      children: [
+        {
+          path: 'editor/:itemId?',
+          component: () => import('@/view/goods/index'),
+          meta: {
+            footerFixed: true
+          }
+        }
+      ]
+    },
+    {
       path: 'goods/goodsaudit',
       name: `商家商品`,
       component: () => import('@/view/mall/goods/audit/list'),

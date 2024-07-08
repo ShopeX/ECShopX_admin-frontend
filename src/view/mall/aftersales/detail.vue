@@ -50,6 +50,18 @@
           {{ aftersalesInfo.refund_point }}
         </el-col>
       </el-row>
+      <el-row v-if="IS_SUPPLIER()">
+        <el-col :span="3" class="col-3 content-right"> 申请门店: </el-col>
+        <el-col :span="20">
+          {{ distributorInfo.name || '-' }}
+        </el-col>
+      </el-row>
+      <el-row v-if="IS_SUPPLIER()">
+        <el-col :span="3" class="col-3 content-right"> 申请人: </el-col>
+        <el-col :span="20">
+          {{ aftersalesInfo.contact || '-' }}
+        </el-col>
+      </el-row>
       <el-row>
         <el-col :span="3" class="col-3 content-right"> 申请时间: </el-col>
         <el-col :span="20">
@@ -119,7 +131,7 @@
                 <span>￥{{ scope.row.refund_fee / 100 }}</span>
               </template>
             </el-table-column>
-            <el-table-column label="应退总积分">
+            <el-table-column label="应退总积分" v-if="!IS_SUPPLIER()">
               <template slot-scope="scope">
                 <span>{{ scope.row.refund_point }}</span>
               </template>
@@ -702,7 +714,7 @@ import hqbdlycorp_kname from '../../../common/hqbdlycorp_kname.json'
 import district from '../../../common/district.json'
 import RemarkModal from '@/components/remarkModal'
 import remarkMixin from '@/mixins/remarkMixin'
-import { isArray, isObject } from '@/utils'
+import { isArray, isObject, IS_SUPPLIER } from '@/utils'
 import { getLogisticsLists } from '@/api/logistics'
 
 import { mapGetters } from 'vuex'
@@ -732,6 +744,7 @@ export default {
       refundInfo: {},
       // orderInfo: {},
       distributorInfo: {},
+      supplierInfo: {},
       radio: '1',
       agreen: false,
       loading: false,
@@ -811,7 +824,8 @@ export default {
         this.aftersalesInfo = data
         this.orderInfo = data.order_info
         this.order_id = data.order_id
-        // this.distributorInfo = data.distributorInfo
+        this.distributorInfo = data.distributor_info || {}
+        this.supplierInfo = data.supplier_info || {}
         // this.tradeInfo = data.tradeInfo
         this.refund_fee = data.refund_fee / 100
         this.refund_point = data.refund_point

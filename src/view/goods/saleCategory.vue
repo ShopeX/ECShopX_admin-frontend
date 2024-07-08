@@ -57,7 +57,7 @@
           <el-button type="text">
             <router-link
               :to="{
-                path: IS_DISTRIBUTOR
+                path: IS_DISTRIBUTOR()
                   ? '/shopadmin/entity/goodsphysical'
                   : '/entity/goods/goodsphysical',
                 query: { category: scope.row.path }

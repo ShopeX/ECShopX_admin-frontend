@@ -20,6 +20,13 @@
         <el-tab-pane label="结算单" name="statements" />
         <el-tab-pane label="结算单明细" name="statement_details" />
       </template>
+      <template v-else-if="$store.getters.login_type == 'supplier'">
+        <el-tab-pane label="实体主订单导出" name="normal_master_order" />
+        <el-tab-pane label="实体子订单导出" name="normal_order" />
+        <el-tab-pane label="商品导出" name="items" />
+        <el-tab-pane label="售后列表导出" name="aftersale_record_count" />
+        <el-tab-pane label="商品码导出" name="itemcode" />
+      </template>
       <template v-else>
         <el-tab-pane label="会员导出" name="member" />
         <!-- <el-tab-pane

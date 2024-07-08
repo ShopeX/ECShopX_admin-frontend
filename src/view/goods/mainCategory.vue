@@ -13,7 +13,7 @@
 
 <template>
   <div class="page-goods-maincategory">
-    <div v-if="!IS_DISTRIBUTOR" class="action-container">
+    <div v-if="!IS_DISTRIBUTOR()" class="action-container">
       <el-button type="primary" plain @click="addCategory"> 添加管理分类 </el-button>
     </div>
 

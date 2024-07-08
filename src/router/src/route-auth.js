@@ -82,10 +82,29 @@ export default [
       auth: false
     }
   },
-
   {
     path: '/wxapp/manage/decorate',
     name: `模板编辑`,
     component: () => import('@/view/decorate/index')
-  }
+  },
+  {
+    path: '/supplier/login',
+    component: () => import('@/view/auth/login'),
+    meta: {
+      auth: false,
+      type: 'supplier'
+    },
+    name: '供应商登录'
+  },
+  {
+    path: '/supplier/setting',
+    component: Layout,
+    children: [
+      {
+        path: 'supplier_register',
+        name: `供应商入驻`,
+        component: () => import('@/view/auth/certify'),
+      },
+    ]
+  },
 ]

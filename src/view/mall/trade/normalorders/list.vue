@@ -950,8 +950,8 @@ export default {
             !isDada &&
             order_status == 'PAYED' &&
             delivery_status != 'DONE' &&
-            receipt_type != 'ziti'&&
-            this.login_type == 'supplier'
+            receipt_type != 'ziti'
+            // && this.login_type == 'supplier'
           ) {
             actionBtns.push({ name: '发货', key: 'deliverGoods' })
           }

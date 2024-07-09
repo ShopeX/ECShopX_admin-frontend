@@ -12,13 +12,13 @@
             placeholder="请输入会员手机号"
           />
         </SpFilterFormItem>
-        <SpFilterFormItem prop="username" label="会员名称:">
+        <!-- <SpFilterFormItem prop="username" label="会员名称:">
           <el-input
             v-model="params.username"
             class="input-m"
             placeholder="请输入会员名称"
           />
-        </SpFilterFormItem>
+        </SpFilterFormItem> -->
       </SpFilterForm>
       <div class="action-container">
         <div class="action-container">
@@ -32,7 +32,8 @@
           </el-button-group>
         </div>
 
-        <export-tip @exportHandle="exportPopularizeStatic"
+        <export-tip
+          @exportHandle="exportPopularizeStatic"
           v-if="loginType == 'distributor' || $route.path.indexOf('sellers') !== -1"
         >
           <el-button type="primary" plain> 导出业绩订单统计 </el-button>

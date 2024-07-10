@@ -64,14 +64,14 @@
         $route.path.indexOf('physicalupload') === -1
       "
     >
-    <SpFilterForm :model="params" @onSearch="onSearch" @onReset="onSearch">
+      <SpFilterForm :model="params" @onSearch="onSearch" @onReset="onSearch">
         <SpFilterFormItem prop="keywords" label="商品标题:">
           <el-input v-model="params.keywords" placeholder="商品标题或副标题关键词" />
         </SpFilterFormItem>
         <SpFilterFormItem prop="supplier_goods_bn" label="供应商货号:">
           <el-input v-model="params.supplier_goods_bn" placeholder="请输入供应商货号" />
         </SpFilterFormItem>
-        <SpFilterFormItem prop="approve_status" label="商品状态:" v-if='!IS_DISTRIBUTOR()'>
+        <SpFilterFormItem v-if="!IS_DISTRIBUTOR()" prop="approve_status" label="商品状态:">
           <el-select v-model="params.approve_status" clearable placeholder="请选择">
             <el-option
               v-for="item in statusOption"
@@ -82,7 +82,7 @@
             />
           </el-select>
         </SpFilterFormItem>
-        <SpFilterFormItem prop="is_can_sale" label="商品状态:" v-else>
+        <SpFilterFormItem v-else prop="is_can_sale" label="商品状态:">
           <el-select v-model="params.is_can_sale" clearable placeholder="请选择">
             <el-option
               v-for="item in statusOption"
@@ -183,7 +183,6 @@
             </el-dropdown-item>
           </el-dropdown-menu>
         </el-dropdown>
-
       </div>
 
       <el-tabs v-model="activeName" type="card" @tab-click="handleClick">
@@ -207,7 +206,7 @@
             @selection-change="handleSelectionChange"
           >
             <el-table-column type="selection" align="center" label="全选" />
-            <el-table-column prop="goods_id" label="商品ID" align="right" header-align='center' />
+            <el-table-column prop="goods_id" label="商品ID" align="right" header-align="center" />
             <el-table-column prop="item_bn" label="SKU编号" width="150" />
             <el-table-column prop="itemName" label="商品" width="300">
               <template slot-scope="scope">
@@ -215,17 +214,14 @@
                   {{ scope.row.item_name }}
                   <el-tag
                     v-if="!scope.row.nospec"
-                    size='mini'
-                    effect='plain'
-                    type='primary'
-                    style='margin-left: 4px; cursor: default;'
+                    size="mini"
+                    effect="plain"
+                    type="primary"
+                    style="margin-left: 4px; cursor: default"
                     @click="handleViewSkuInfo(scope.row)"
                   >
                     多
-                    <i
-                      class='ecx-icon icon-sousuo'
-                      style='font-size: 12px; margin-left: 2px;'
-                    ></i>
+                    <i class="ecx-icon icon-sousuo" style="font-size: 12px; margin-left: 2px" />
                   </el-tag>
                 </div>
                 <div class="goods-code">
@@ -241,7 +237,13 @@
               </template>
             </el-table-column>
             <el-table-column label="所属供应商" prop="operator_name" width="120" />
-            <el-table-column label="供应商货号" prop="supplier_goods_bn" width="100" align="right" header-align='center' />
+            <el-table-column
+              label="供应商货号"
+              prop="supplier_goods_bn"
+              width="100"
+              align="right"
+              header-align="center"
+            />
             <!-- <el-table-column label="标签">
               <template slot-scope="scope">
                 <template>
@@ -258,7 +260,7 @@
                 </template>
               </template>
             </el-table-column> -->
-            <el-table-column label="排序编号" width="100" align="right" header-align='center'>
+            <el-table-column label="排序编号" width="100" align="right" header-align="center">
               <template slot-scope="scope">
                 <el-input
                   v-model="scope.row.sort"
@@ -268,7 +270,13 @@
                 />
               </template>
             </el-table-column>
-            <el-table-column prop="store" label="库存" width="120" align="right" header-align='center'>
+            <el-table-column
+              prop="store"
+              label="库存"
+              width="120"
+              align="right"
+              header-align="center"
+            >
               <template slot-scope="scope">
                 <span>{{ scope.row.store }}</span>
 
@@ -299,7 +307,7 @@
               </template>
             </el-table-column>
             <el-table-column prop="market_price" label="市场价（¥）" width="100" />
-            <el-table-column prop="price" label="销售价（¥）" width="100" />
+            <el-table-column prop="price" label="销售价（¥）" width="100">
               <template slot-scope="scope">
                 <span>{{ scope.row.price }}</span>
                 <el-popover
@@ -333,12 +341,12 @@
               </template>
             </el-table-column>
             <el-table-column
-              prop="gross_profit_rate"
               v-if="IS_DISTRIBUTOR()"
+              prop="gross_profit_rate"
               label="毛利率（%）"
               width="110"
               align="right"
-              header-align='center'
+              header-align="center"
             />
             <el-table-column label="状态" width="100">
               <template slot-scope="scope">
@@ -362,9 +370,7 @@
                 <el-button type="text" @click="updateItemStatus(scope.row)">
                   {{ scope.row.is_can_sale ? '下架' : '上架' }}
                 </el-button>
-                <el-button type="text" @click="onClickLink(scope.row)">
-                  复制链接
-                </el-button>
+                <el-button type="text" @click="onClickLink(scope.row)"> 复制链接 </el-button>
               </template>
             </el-table-column>
           </el-table>
@@ -748,11 +754,13 @@
         v-model="showItemSkuDrawer"
         :title="itemSkuDrawerTitle"
         :width="800"
-        @confirm="() => {
-          this.showItemSkuDrawer = false
-        }"
+        @confirm="
+          () => {
+            this.showItemSkuDrawer = false
+          }
+        "
       >
-        <el-table border v-loading="skuLoading" :data="itemSkuList" height="100%">
+        <el-table v-loading="skuLoading" border :data="itemSkuList" height="100%">
           <el-table-column label="规格" prop="item_spec_desc" min-width="120" />
           <el-table-column label="供应商货号" prop="supplier_goods_bn" min-width="120" />
           <el-table-column label="sku编码" prop="item_bn" min-width="120" />
@@ -1478,7 +1486,10 @@ export default {
           query: { is_new: true }
         })
       } else {
-        var routeData = this.$router.push({ path: this.matchHidePage('editor/') + row.itemId, query: { detail: true } })
+        var routeData = this.$router.push({
+          path: this.matchHidePage('editor/') + row.itemId,
+          query: { detail: true }
+        })
       }
     },
     saveRebateConf() {
@@ -1907,7 +1918,7 @@ export default {
       this.itemSkuList = list
       this.skuLoading = false
     },
-    onClickLink (row) {
+    onClickLink(row) {
       this.$copyText(
         `${process.env.VUE_APP_H5_HOST}/pages/item/espier-detail?id=${row.item_id}&dtid=${row.distributor_id}`
       ).then(() => {

@@ -546,3 +546,21 @@ export function saveGoodsCommission(query) {
     params: query
   })
 }
+
+// 自定义分类开关
+export function getCategoryPageSetting(query) {
+  return fetch({
+    url: '/categoryPage/setting',
+    method: 'get',
+    params: query
+  })
+}
+
+// 自定义分类开关
+export function postCategoryPageSetting(query) {
+  return fetch({
+    url: '/categoryPage/setting',
+    method: 'post',
+    params: query
+  })
+}

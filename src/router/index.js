@@ -11,10 +11,21 @@ import { actions } from '@/utils/micr-app'
 import constantRouterMap from './src'
 Vue.use(VueRouter)
 
-const { RouteAuth, RouteShopAdminShopList, RouteDealerIndex, RouteShopAdminBase,RouteSupplierBase } =
-  constantRouterMap
+const {
+  RouteAuth,
+  RouteShopAdminShopList,
+  RouteDealerIndex,
+  RouteShopAdminBase,
+  RouteSupplierBase
+} = constantRouterMap
 const router = new VueRouter({
-  routes: [...RouteAuth, RouteShopAdminShopList, RouteDealerIndex, RouteShopAdminBase,RouteSupplierBase],
+  routes: [
+    ...RouteAuth,
+    RouteShopAdminShopList,
+    RouteDealerIndex,
+    RouteShopAdminBase,
+    RouteSupplierBase
+  ],
   mode: 'history'
 })
 
@@ -138,8 +149,7 @@ router.beforeEach((to, from, next) => {
             redirect: '/404'
           }
         )
-        // log.debug(`newRouter: `, newRouter)
-
+        log.debug(`newRouter: `, newRouter)
         router.addRoutes(newRouter)
         if (to.path == '/') {
           next(customRouterUrls[0])
@@ -159,7 +169,7 @@ router.beforeEach((to, from, next) => {
         window.location.href = constantRouterMap.RouteAuth[1].path
       } else if (to.path.includes('/merchant')) {
         window.location.href = constantRouterMap.RouteAuth[2].path
-      }else if (to.path.includes('/supplier')) {
+      } else if (to.path.includes('/supplier')) {
         window.location.href = constantRouterMap.RouteAuth[10].path
       } else {
         // 登录

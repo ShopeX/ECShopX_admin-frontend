@@ -1,5 +1,6 @@
 import { pickBy } from '@/utils'
 import AttrCategory from './attr-category'
+import ProductLabel from './product-label'
 
 export default {
   name: 'nearbyShop',
@@ -7,6 +8,7 @@ export default {
     { label: '标题', key: 'title', component: 'input', value: '附近商家' },
     { label: '副标题', key: 'subtitle', component: 'input', value: '副标题' },
     { label: '组件间距', key: 'padded', component: 'switch', value: false },
+    { label: '直接加购', key: 'addCart', component: 'switch', value: false },
     {
       label: '商家',
       key: 'seletedTags',
@@ -14,6 +16,25 @@ export default {
         return <AttrCategory v-model={this.value[key]} />
       },
       value: []
+    },
+    {
+      label: '商品标签',
+      key: 'productLabel',
+      component: function (h, { key }) {
+        return <ProductLabel v-model={this.value[key]} />
+      },
+      value: []
+    },
+    {
+      label: '导航展示',
+      key: 'navigation_display',
+      component: 'radio',
+      options: [
+        { name: '全部', label: 'all' },
+        { name: '商家', label: 'business' },
+        { name: '商品标签', label: 'productLabels' }
+      ],
+      value: 'all'
     },
     { label: '显示优惠券', key: 'show_coupon', component: 'switch', value: false }
     // {
@@ -26,11 +47,12 @@ export default {
     // }
   ],
   transformIn: (v) => {
-    const { name, base, seletedTags = [] } = v
+    const { name, base, seletedTags = [], productLabel = [] } = v
     return {
       name,
       ...base,
-      seletedTags
+      seletedTags,
+      productLabel
     }
   },
   transformOut: (v) => {
@@ -41,10 +63,13 @@ export default {
           title: 'title',
           subtitle: 'subtitle',
           padded: 'padded',
-          show_coupon: 'show_coupon'
+          show_coupon: 'show_coupon',
+          navigation_display: 'navigation_display',
+          addCart: 'addCart'
         })
       },
-      seletedTags: 'seletedTags'
+      seletedTags: 'seletedTags',
+      productLabel: 'productLabel'
     })
   }
 }

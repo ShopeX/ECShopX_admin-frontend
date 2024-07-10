@@ -8,6 +8,7 @@ export default {
     { label: '标题', key: 'title', component: 'input', value: '爆品直邮' },
     { label: '副标题', key: 'subtitle', component: 'input', value: '宅家买遍全法' },
     { label: '组件间距', key: 'padded', component: 'switch', value: true },
+    { label: '直接加购', key: 'addCart', component: 'switch', value: false },
     {
       label: '样式',
       key: 'style',
@@ -99,7 +100,8 @@ export default {
           brand: 'brand',
           showPrice: 'showPrice',
           style: 'style',
-          moreLink: 'moreLink'
+          moreLink: 'moreLink',
+          addCart: 'addCart'
         })
       },
       data: 'data'

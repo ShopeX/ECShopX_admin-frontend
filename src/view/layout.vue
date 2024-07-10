@@ -36,7 +36,6 @@
                 :index="item.url"
               >
                 <router-link :to="getMenuUrl(item)">
-                  <!-- <i class="iconfont" :class="`icon-${item.icon}`" /> -->
                   <i :class="['ecx-icon', `icon-${getIconName(item.icon)}`]" />
                   <span>{{ item.name }}</span>
                 </router-link>

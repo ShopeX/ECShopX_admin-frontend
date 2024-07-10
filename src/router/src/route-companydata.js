@@ -49,6 +49,17 @@ export default {
         import(
           /* webpackChunkName: "companydata-memberstatistics" */ '@/view/mall/datacube/companydata/member'
         )
+    },
+    {
+      path: 'deliverystaffstatistics',
+      name: `deliverystaffstatistics`,
+      meta: {
+        title: `${name}-配送员业绩`
+      },
+      component: () =>
+        import(
+          /* webpackChunkName: "companydata-memberstatistics" */ '@/view/mall/datacube/companydata/delivery'
+        )
     }
   ]
 }

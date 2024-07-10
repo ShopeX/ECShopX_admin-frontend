@@ -243,7 +243,6 @@ export default {
       isSingle: false,
       oldData: [],
       isValid: true,
-      oldData: [],
       relDistributors: [],
       DistributorVisible: false,
       DistributorStatus: false,

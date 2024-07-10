@@ -33,7 +33,6 @@
           </div>
         </el-alert>
       </div>
-
       <div v-if="IS_MERCHANT()" style="margin-bottom: 10px">
         <el-alert type="info" title="" show-icon>
           <div>可在设置-店铺管理员添加店铺端账号，登录地址 【 {{ origin }}/shopadmin/login 】</div>
@@ -114,7 +113,7 @@
           打标签
         </el-button>
         <el-button
-          v-if="IS_ADMIN || IS_MERCHANT"
+          v-if="IS_ADMIN() || IS_MERCHANT"
           type="primary"
           plain
           @click="showSettingDistance('')"
@@ -356,7 +355,7 @@
                 query: { distributor_id: scope.row.distributor_id }
               }"
             >
-              <span style="margin-right: 5px">微信支付配置2</span>
+              <span style="margin-right: 5px">微信支付配置</span>
             </router-link> -->
             <!--<el-button type="text" @click="downDistributor(scope.row, 'scancode')">扫码购页面码(微商城)</el-button>-->
             <!-- <router-link :to="{  path: matchInternalRoute('Storeshopitemanagement'), query: {distributor_id: scope.row.distributor_id}}">商品码</router-link> -->
@@ -1224,17 +1223,17 @@ export default {
       this.keFuDialog = false
       this.$message.success('保存成功')
     },
-    showSettingDistance() {
+    showSettingDistance(distributor_id) {
       // 设置距离参数
       this.setDistanceVisible = true
       let that = this
-
-      // distributor_id
-      getDistance().then((response) => {
-        that.distanceForm.distance = response.data.data.distance
-      })
-      // console.log('this.distributor_id', that.distributor_id)
-      // console.log('showSettingDistance', that.distanceForm)
+      that.distributorIds = distributor_id
+      that.distanceForm.distance = 0
+      if (distributor_id) {
+        getDistance({ distributor_id }).then((response) => {
+          that.distanceForm.distance = response.data.data.distance
+        })
+      }
     },
     handleDistanceCancel() {
       // 距离设置窗口关闭

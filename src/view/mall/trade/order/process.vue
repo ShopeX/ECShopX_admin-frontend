@@ -21,6 +21,19 @@
               <span v-else> 未知 </span>
             </p>
             <p>操作详情：{{ key.detail }}</p>
+            <p v-if="key.delivery_remark">配送备注：{{ key.delivery_remark }}</p>
+            <div v-if="key.pics.length">
+              配送照片：
+              <div class="img-box">
+                <el-image
+                  v-for="(item, idx) in key.pics"
+                  :key="idx"
+                  :src="item"
+                  class="img-item"
+                  :preview-src-list="key.pics"
+                />
+              </div>
+            </div>
           </el-card>
         </el-timeline-item>
       </el-timeline>
@@ -49,7 +62,7 @@ h3.title {
   margin: 0 auto;
 }
 img {
-  max-width: 100px;
+  // max-width: 100px;
   margin: 0 auto;
 }
 .block {
@@ -57,6 +70,15 @@ img {
 }
 .radio {
   margin-bottom: 15px;
+}
+.img-box {
+  display: flex;
+  flex-wrap: wrap;
+}
+.img-item {
+  width: 150px;
+  height: 150px;
+  margin: 0 20px 20px 0;
 }
 </style>
 <script>

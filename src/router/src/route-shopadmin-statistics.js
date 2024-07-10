@@ -11,6 +11,17 @@ export default {
       name: `店铺统计`,
       component: () => import('@/view/mall/datacube/distributordata')
     },
+    {
+      path: 'deliverystaffstatistics',
+      name: `deliverystaffstatistics`,
+      meta: {
+        title: `${name}-配送员业绩`
+      },
+      component: () =>
+        import(
+          /* webpackChunkName: "companydata-memberstatistics" */ '@/view/mall/datacube/companydata/delivery'
+        )
+    },
     // {
     //   path: 'accountingStatistics',
     //   name: `店铺分账统计`,

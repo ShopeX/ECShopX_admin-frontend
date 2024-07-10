@@ -17,7 +17,7 @@
       </el-form-item>
       <el-form-item label="促销规则">
         <el-row :gutter="1">
-          <el-col :span="7">
+          <el-col :span="9">
             <el-radio
               v-model="form.condition_type"
               :disabled="form.status == 'waiting' ? false : true"
@@ -33,10 +33,80 @@
               按总金额
             </el-radio>
           </el-col>
-          <el-col :span="6">
-            <span
-              v-for="(item, key) in conditionValue"
-              v-if="form.condition_type == 'totalfee'"
+          <el-col class="add-gift">
+            <div v-for="(item, key) in conditionValue" :key="key">
+              <span
+                >消费满
+                <el-input
+                  v-model="item.full"
+                  :disabled="form.status == 'waiting' ? false : true"
+                  type="input"
+                  placeholder="0.00"
+                  style="width: 100px"
+                  size="mini"
+                />
+                {{ form.condition_type == 'quantity' ? '件' : '元' }}，送赠品&nbsp;&nbsp;<i
+                  v-if="key != 0"
+                  class="iconfont icon-trash-alt"
+                  @click="delRules(key)"
+                />
+              </span>
+              <el-button
+                type="primary"
+                class="el-icon-plus rel-gift"
+                size="mini"
+                round
+                @click="relGiftsClick(key)"
+              >
+                添加赠品
+              </el-button>
+              <div>
+                <el-table
+                  v-if="item.relGifts.length > 0"
+                  :data="item.relGifts"
+                  style="line-height: normal"
+                >
+                  <el-table-column label="ID" prop="item_id" width="60" />
+                  <el-table-column label="名称" prop="item_name" />
+                  <el-table-column label="规格" prop="item_spec_desc" />
+                  <el-table-column label="赠品数量" width="90">
+                    <template slot-scope="scope">
+                      <el-input
+                        v-model="scope.row.gift_num"
+                        width="90"
+                        size="mini"
+                        :disabled="form.status == 'waiting' ? false : true"
+                      />
+                    </template>
+                  </el-table-column>
+                  <!-- <el-table-column label="其他配置" width="200">
+                  <template slot-scope="scope">
+                    <el-checkbox v-model="scope.row.without_return">退货无需退回赠品</el-checkbox>
+                  </template>
+                </el-table-column> -->
+                  <el-table-column label="操作" width="50">
+                    <template slot-scope="scope">
+                      <i
+                        class="iconfont icon-trash-alt"
+                        @click="deleteGiftRow(scope.$index, key)"
+                      />
+                    </template>
+                  </el-table-column>
+                </el-table>
+                <GoodsSelect
+                  :unwanted-gift="true"
+                  :items-visible="giftVisible"
+                  :get-status="setGiftStatus"
+                  :rel-items-ids="relGifts"
+                  is-spec
+                  :item-type="form.item_type"
+                  @chooseStore="chooseGiftsAction"
+                  @closeStoreDialog="closeGiftsDialogAction"
+                />
+              </div>
+            </div>
+            <!-- <div v-for="(item, key) in conditionValue" v-if="form.condition_type == 'quantity'">
+              <span
               :key="key"
               >消费满
               <el-input
@@ -47,23 +117,26 @@
                 style="width: 100px"
                 size="mini"
               />
-              元，送赠品
+              件，送赠品&nbsp;&nbsp;<i
+              v-if="key != 0"
+              class="iconfont icon-trash-alt"
+              @click="delRules(key)"
+            />
             </span>
-            <span
-              v-for="(item, key) in conditionValue"
-              v-if="form.condition_type == 'quantity'"
-              :key="key"
-              >消费满
-              <el-input
-                v-model="item.full"
-                :disabled="form.status == 'waiting' ? false : true"
-                type="input"
-                placeholder="0.00"
-                style="width: 100px"
-                size="mini"
-              />
-              件，送赠品
-            </span>
+            <el-button type="primary" class="el-icon-plus" size="mini" round @click="relGiftsClick(key)">
+              选赠品
+            </el-button>
+            </div> -->
+            <el-button
+              type="primary"
+              class="el-icon-plus"
+              :disabled="form.status == 'waiting' ? false : true"
+              size="mini"
+              round
+              @click="addRules"
+            >
+              添加
+            </el-button>
           </el-col>
           <el-col>
             <el-checkbox
@@ -74,41 +147,6 @@
             </el-checkbox>
           </el-col>
         </el-row>
-        <div>
-          <el-button type="primary" class="el-icon-plus" size="mini" round @click="relGiftsClick">
-            选赠品
-          </el-button>
-          <el-table v-if="relGifts.length > 0" :data="relGifts" style="line-height: normal">
-            <el-table-column label="ID" prop="item_id" width="60" />
-            <el-table-column label="名称" prop="item_name" />
-            <el-table-column label="规格" prop="item_spec_desc" />
-            <el-table-column label="赠品数量" width="90">
-              <template slot-scope="scope">
-                <el-input v-model="scope.row.gift_num" width="90" size="mini" />
-              </template>
-            </el-table-column>
-            <!-- <el-table-column label="其他配置" width="200">
-              <template slot-scope="scope">
-                <el-checkbox v-model="scope.row.without_return">退货无需退回赠品</el-checkbox>
-              </template>
-            </el-table-column> -->
-            <el-table-column label="操作" width="50">
-              <template slot-scope="scope">
-                <i class="iconfont icon-trash-alt" @click="deleteGiftRow(scope.$index)" />
-              </template>
-            </el-table-column>
-          </el-table>
-          <GoodsSelect
-            :unwanted-gift="true"
-            :items-visible="giftVisible"
-            :get-status="setGiftStatus"
-            :rel-items-ids="relGifts"
-            is-spec
-            :item-type="form.item_type"
-            @chooseStore="chooseGiftsAction"
-            @closeStoreDialog="closeGiftsDialogAction"
-          />
-        </div>
       </el-form-item>
       <el-form-item label="规则描述">
         <el-col :span="20">
@@ -331,6 +369,7 @@ export default {
       relItems: [],
       relStores: [],
       setStatus: false,
+      addNum: '',
       form: {
         marketing_id: '',
         marketing_type: 'full_gift',
@@ -358,7 +397,7 @@ export default {
       },
       vipGrade: [],
       memberGrade: [],
-      conditionValue: [{ full: '' }],
+      conditionValue: [{ full: '', relGifts: [] }],
       validGrade: [],
       activity_date: '',
       selectItemType: 'normal',
@@ -463,7 +502,7 @@ export default {
       this.form.item_ids = ids
     },
     addRules() {
-      this.conditionValue.push({ full: '' })
+      this.conditionValue.push({ full: '', relGifts: [] })
     },
     delRules(index) {
       this.conditionValue.splice(index, 1)
@@ -507,13 +546,32 @@ export default {
           this.form.shop_ids.push(item.distributor_id)
         })
       }
-
-      if (this.relGifts.length <= 0) {
-        this.$message.error('请选择赠品!')
-        return false
+      for (let i = 0; i < this.conditionValue.length; i++) {
+        if (this.conditionValue[i].full == '') {
+          this.$message.error('请选择促销件数或金额!')
+          return
+        }
+        if (this.conditionValue[i].relGifts.length <= 0) {
+          this.$message.error('请选择赠品!')
+          return
+        }
       }
+
+      // if (this.relGifts.length <= 0) {
+      //   this.$message.error('请选择赠品!')
+      //   return false
+      // }
+      let giftGifts = []
       let giftData = []
-      this.relGifts.forEach((item) => {
+      this.conditionValue.forEach((item) => {
+        item.relGifts.forEach((val) => {
+          val.filter_full = item.full
+        })
+      })
+      this.conditionValue.forEach((item) => {
+        giftGifts = [...giftGifts, ...item.relGifts]
+      })
+      giftGifts.forEach((item) => {
         let itemdata = {
           item_id: item.item_id,
           item_name: item.item_name,
@@ -522,12 +580,12 @@ export default {
           without_return: item.without_return,
           gift_num: item.gift_num,
           pics: item.pics,
-          filter_full: this.conditionValue[0].full
+          // filter_full: this.conditionValue[0].full
+          filter_full: item.filter_full
         }
         giftData.push(itemdata)
       })
       thisform.gifts = JSON.stringify(giftData)
-
       this.use_bound = 0
       if (thisform.use_bound == 'goods') {
         if (thisform.item_ids && thisform.item_ids.length <= 0) {
@@ -584,6 +642,25 @@ export default {
     getActivityDetail(id) {
       getMarketingActivityInfo({ marketing_id: id }).then((res) => {
         let response = res.data.data
+        let gift = response.condition_value
+        if (gift.length > 1) {
+          gift.forEach((item) => {
+            item.relGifts = []
+            response.gifts.forEach((val) => {
+              if (item.full == val.filter_full.split('.')[0]) {
+                item.relGifts.push(val)
+              }
+            })
+          })
+        } else {
+          gift = [
+            {
+              full: response.condition_value[0].full,
+              relGifts: response.gifts
+            }
+          ]
+        }
+        // conditionValue
         let data = {
           marketing_type: 'full_gift',
           promotion_tag: '满赠',
@@ -613,12 +690,13 @@ export default {
           in_proportion: response.in_proportion
         }
         Object.assign(this.form, data)
-        this.conditionValue = response.condition_value
+        // this.conditionValue = response.condition_value
+        this.conditionValue = gift
         this.validGrade = response.valid_grade
         this.activity_date = [response.start_time, response.end_time]
         this.relItems = response.itemTreeLists || []
         this.relStores = response.storeLists || []
-        this.relGifts = response.gifts || []
+        // this.relGifts = response.gifts || []
         this.zdItemHidden = true
         this.categoryHidden = true
         this.tagHidden = true
@@ -659,30 +737,48 @@ export default {
     handleCancel: function () {
       this.$router.back(-1)
     },
-    relGiftsClick() {
-      this.giftVisible = true
-      this.setGiftStatus = true
+    async relGiftsClick(key) {
+      this.relGifts = []
+      this.addNum = key
+      const ids = this.conditionValue[key].relGifts.map(({ item_id }) => item_id)
+      const { data } = await this.$picker.goods()
+      let list = [...this.conditionValue[key].relGifts, ...data]
+
+      //去重
+      const seen = {}
+      const uniqueList = []
+      list.forEach((obj) => {
+        if (!seen[obj.item_id]) {
+          uniqueList.push(obj)
+          seen[obj.item_id] = true
+        }
+      })
+
+      this.chooseGiftsAction(uniqueList)
     },
     chooseGiftsAction(data) {
-      this.giftVisible = false
-      let list = JSON.parse(JSON.stringify(data))
       if (data === null || data.length <= 0) return
       if (data.length > 4) {
         this.$message.error('赠品最多4件商品!')
         return false
       }
+      let list = JSON.parse(JSON.stringify(data))
       list.forEach((item, index) => {
         item.gift_num = 1
         item.without_return = false
       })
-      this.relGifts = list
+      //每个数据单独存起来,并且带上自己的filter_ful
+      list.forEach((item) => {
+        item.filter_full = this.conditionValue[this.addNum].full
+      })
+      this.conditionValue[this.addNum].relGifts = list
     },
     closeGiftsDialogAction() {
       this.giftVisible = false
     },
-    deleteGiftRow: function (index) {
+    deleteGiftRow: function (index, key) {
       this.setGiftStatus = false
-      this.relGifts.splice(index, 1)
+      this.conditionValue[key].relGifts.splice(index, 1)
     },
     itemTypeChange: function (val) {
       this.params.main_cat_id = ''
@@ -1044,3 +1140,19 @@ export default {
   }
 }
 </script>
+
+<style lang="scss" scoped>
+.add-gift {
+  display: flex;
+  flex-direction: column;
+
+  .el-icon-plus {
+    margin-top: 10px;
+    width: 72px;
+  }
+  .rel-gift {
+    margin-left: 20px;
+    width: 90px;
+  }
+}
+</style>

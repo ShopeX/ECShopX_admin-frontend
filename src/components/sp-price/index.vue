@@ -52,16 +52,23 @@ export default {
       decimalValue: 0
     }
   },
-  // watch: {
-  //   value: function (val) {
-
-  //   }
-  // },
+  watch: {
+    value: {
+      handler(val, old) {
+        const priceVal = isNumber(val) ? val.toFixed(2) : val
+        const [int, decimal = '00'] = (priceVal || '').split('.')
+        this.intValue = int
+        this.decimalValue = decimal
+      },
+      deep: true,
+      immediate: true
+    }
+  },
   created() {
-    const priceVal = isNumber(this.value) ? this.value.toFixed(2) : this.value
-    const [int, decimal = '00'] = (priceVal || '').split('.')
-    this.intValue = int
-    this.decimalValue = decimal
+    // const priceVal = isNumber(this.value) ? this.value.toFixed(2) : this.value
+    // const [int, decimal = '00'] = (priceVal || '').split('.')
+    // this.intValue = int
+    // this.decimalValue = decimal
   },
   methods: {}
 }

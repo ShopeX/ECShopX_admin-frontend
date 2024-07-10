@@ -17,6 +17,11 @@ export default {
       component: () => import('@/view/base/account/storeroles')
     },
     {
+      path: 'staff/selfdeliverystaff',
+      name: `账号管理-店铺配送员`,
+      component: () => import('@/view/base/account/delivery')
+    },
+    {
       path: 'baseexport',
       name: `导出列表`,
       component: () => import('@/view/base/exportlog/index')

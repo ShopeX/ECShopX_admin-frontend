@@ -64,7 +64,9 @@ const SCENE_1003 = {
   WgtGoodsScroll,
   WgtMarquees,
   WgtFloorImg,
-  WgtImageNavigation
+  WgtImageNavigation,
+  WgtStore,
+  WgtNearbyShop
 }
 
 // 自定义页面装修

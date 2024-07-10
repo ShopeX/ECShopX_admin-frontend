@@ -424,7 +424,7 @@ export default {
           label: '销售分类',
           key: 'salesCategory',
           width: '720px',
-          required: true,
+          required: !this.IS_SUPPLIER(),
           message: '请选择销售分类',
           component: ({ key }, value) => (
             <el-cascader
@@ -950,7 +950,7 @@ export default {
     async getAddress() {
       const res = await this.$api.common.getAddress()
       this.regionsList = res
-      const _all_obj = { 
+      const _all_obj = {
         value: 'all',
         label: '全部'
       }

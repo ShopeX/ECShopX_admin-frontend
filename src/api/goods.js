@@ -104,6 +104,17 @@ export function getItemsList(query) {
     }
   })
 }
+// 商品
+export function getItemsListAll(query) {
+  return fetch({
+    url: '/goods/items',
+    method: 'get',
+    params: {
+      ...query
+      // distributor_id: !query.distributor_id ? 0 : query.distributor_id
+    }
+  })
+}
 
 // 商品
 export function getDrawItemsList(query) {

@@ -84,6 +84,11 @@ export default {
       component: () => import('@/view/member/register')
     },
     {
+      path: 'salemanprotocol',
+      name: `业务员协议`,
+      component: () => import('@/view/member/salemanprotocol')
+    },
+    {
       path: 'mallrecharge',
       name: `会员储值`,
       component: () => import('@/view/mall/storeddeposit/index')

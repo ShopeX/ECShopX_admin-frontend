@@ -130,6 +130,11 @@ export default {
   },
   mounted() {
     if (this.$route.query.promoter_id) {
+      console.log('this.$route----------------------------------')
+      console.log(this.$route.query.promoter_id)
+      console.log(this.$route.query.promoter_id)
+      console.log(this.$route.query.promoter_id)
+      console.log(this.$route.query.promoter_id)
       this.params.promoter_id = this.$route.query.promoter_id
     }
     this.getPopularizeChildrenFun()

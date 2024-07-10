@@ -98,7 +98,6 @@ export default {
   RouteSupplierTradenormalorders,
   RouteSupplierBase,
   RouteSupplierSetting,
-  RouteMerchantEntitygoods,
   RouteMerchantApplications,
   RouteMerchantEntityGoods
 }

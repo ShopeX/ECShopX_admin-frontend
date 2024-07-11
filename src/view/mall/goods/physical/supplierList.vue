@@ -655,15 +655,15 @@ export default {
               </div>
             )
           },
-          {
-            name: '商品税率',
-            key: 'tax_rate',
-            formatter: (value) => {
-              return value + '%'
-            },
-            align: "right",
-            headerAlign: 'center'
-          },
+          // {
+          //   name: '商品税率',
+          //   key: 'tax_rate',
+          //   formatter: (value) => {
+          //     return value + '%'
+          //   },
+          //   align: "right",
+          //   headerAlign: 'center'
+          // },
           {
             name: '排序编号',
             key: 'sort',

@@ -107,11 +107,8 @@ class UploadUtil {
               Bucket: tokenRes.bucket /* 填写自己的 bucket，必须字段 */,
               Region: tokenRes.region /* 存储桶所在地域，必须字段 */,
               Key: tokenRes.url /* 存储在桶里的对象键（例如1.jpg，a/b/test.txt），必须字段 */,
-              Body: file // 上传文件对象
-              // SliceSize:
-              //   1024 *
-              //   1024 *
-              //   5 /* 触发分块上传的阈值，超过5MB 使用分块上传，小于5MB使用简单上传。可自行设置，非必须 */
+              Body: file, // 上传文件对象
+              SliceSize: 1024 * 1024 * 20 /* 触发分块上传的阈值，超过20MB 使用分块上传，小于20MB使用简单上传。可自行设置，非必须 */
             },
             (err, data) => {
               if (data) {

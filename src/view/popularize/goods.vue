@@ -29,9 +29,7 @@
             <!-- <el-button type="primary" size="mini" @click="showChangeRebateType()">
               批量设置任务制
             </el-button> -->
-            <el-button size="mini" @click="handleBatchChangeStatus()">
-              批量设置开启
-            </el-button>
+            <el-button size="mini" @click="handleBatchChangeStatus()"> 批量设置开启 </el-button>
           </el-button-group>
         </el-col>
       </el-row>
@@ -55,11 +53,7 @@
           <el-table-column type="selection" width="55" />
           <el-table-column label="操作" width="160">
             <template slot-scope="scope">
-              <el-button
-                type="text"
-                class="btn-gap"
-                @click="handleRebateConf(scope.row, 1)"
-              >
+              <el-button type="text" class="btn-gap" @click="handleRebateConf(scope.row, 1)">
                 设置参数
               </el-button>
               <el-button
@@ -75,28 +69,20 @@
               </el-button>
             </template>
           </el-table-column>
-          <el-table-column
-            label="状态"
-            width="160"
-            column-key="rebate"
-            :filter-multiple="false"
-          >
+          <el-table-column label="状态" width="160" column-key="rebate" :filter-multiple="false">
             <template slot-scope="scope">
               <div v-if="allSelect && $store.getters.login_type != 'distributor'">
                 <el-switch v-model="allSelect" active-color="#13ce66" disabled />
               </div>
               <div v-else>
-                <el-tag v-if="scope.row.rebate_audit === 2" size="mini">
-                  等待审核
-                </el-tag>
+                <el-tag v-if="scope.row.rebate_audit === 2" size="mini"> 等待审核 </el-tag>
                 <el-tag v-if="scope.row.rebate_audit === 3" size="mini" type="warning">
                   审核拒绝
                 </el-tag>
                 <el-switch
                   v-if="
                     scope.row.rebate_audit === 2 ||
-                    (scope.row.rebate_audit === 1 &&
-                      $store.getters.login_type == 'distributor')
+                    (scope.row.rebate_audit === 1 && $store.getters.login_type == 'distributor')
                   "
                   v-model="scope.row.rebate"
                   disabled
@@ -347,20 +333,38 @@
               min-width="110"
             >
               <template slot-scope="scope">
-                <el-input
+                <div v-if="scope.row.rebate_conf.type == 'money'" :style="{ display: 'flex', alignItems: 'flex-end' }">
+                  <el-input-number
+                  v-model="scope.row.rebate_conf.value[key]"
+                  precision="3"
+                  step="0.001"
+                  size="mini"
+                />元
+                </div>
+                <div v-else :style="{ display: 'flex', alignItems: 'flex-end' }">
+                  <el-input-number
+                  v-model="scope.row.rebate_conf.value[key]"
+                  precision="3"
+                  step="0.001"
+                  size="mini"
+                />%
+                </div>
+                
+
+                <!-- <el-input
                   v-if="scope.row.rebate_conf.type == 'money'"
                   v-model="scope.row.rebate_conf.value[key]"
                   type="number"
                   size="mini"
                   suffix-icon="iconfont icon-yen-sign"
-                />
-                <el-input
+                /> -->
+                <!-- <el-input
                   v-else
                   v-model="scope.row.rebate_conf.value[key]"
                   size="mini"
                   type="number"
                   suffix-icon="iconfont icon-percent"
-                />
+                /> -->
               </template>
             </el-table-column>
           </el-table>
@@ -372,11 +376,7 @@
         </div>
       </slot>
     </SideBar>
-    <el-dialog
-      title="更改商任务制支持"
-      :visible.sync="changeRebateTypeVisible"
-      width="30%"
-    >
+    <el-dialog title="更改商任务制支持" :visible.sync="changeRebateTypeVisible" width="30%">
       <el-radio-group v-model="changeRebateType">
         <!-- <el-radio label="default"> 不支持任务制 </el-radio>
         <el-radio label="total_money"> 任务制-按总金额 </el-radio>
@@ -390,44 +390,42 @@
   </div>
 </template>
 <script>
-import axios from "axios";
-import store from "@/store";
-import { mapGetters } from "vuex";
-import SideBar from "@/components/element/sideBar";
-import { getPopularizeSetting } from "../../api/promotions";
-import { getItemsList, updateItemRebateConf, updateGoodsInfo } from "@/api/goods";
+import axios from 'axios'
+import store from '@/store'
+import { mapGetters } from 'vuex'
+import SideBar from '@/components/element/sideBar'
+import { getPopularizeSetting } from '../../api/promotions'
+import { getItemsList, updateItemRebateConf, updateGoodsInfo } from '@/api/goods'
 
 let changeRebateTypeMap = {
   default: {
-    title: "不支持任务制：商品不按任务制模式获得佣金",
-    description: "",
+    title: '不支持任务制：商品不按任务制模式获得佣金',
+    description: ''
   },
   total_money: {
-    title: "任务制：商品月度销售金额设置",
-    description:
-      "任务制说明：阶梯设置商品月度销售金额目标及对应业绩，每月月底达标后可获得业绩。",
+    title: '任务制：商品月度销售金额设置',
+    description: '任务制说明：阶梯设置商品月度销售金额目标及对应业绩，每月月底达标后可获得业绩。'
   },
   total_num: {
-    title: "任务制：商品月度销售数量设置",
-    description:
-      "任务制说明：阶梯设置商品月度销售数量目标及对应业绩，每月月底达标后可获得业绩。",
-  },
-};
+    title: '任务制：商品月度销售数量设置',
+    description: '任务制说明：阶梯设置商品月度销售数量目标及对应业绩，每月月底达标后可获得业绩。'
+  }
+}
 
 export default {
   components: {
-    SideBar,
+    SideBar
   },
   data() {
     return {
-      changeRebateType: "default",
+      changeRebateType: 'default',
       changeRebateTypeVisible: false,
       current: {},
       selectGoodsIds: [],
       rebateSpecItems: [],
       show_sideBar: false,
       show_task_sideBar: false,
-      activeName: "first",
+      activeName: 'first',
       submitLoading: false,
       allSelect: false,
       total_count: 0,
@@ -435,18 +433,18 @@ export default {
       itemsList: [],
       changeRebateTypeMap,
       params: {
-        item_type: "normal",
+        item_type: 'normal',
         page: 1,
         pageSize: 10,
-        keywords: "",
+        keywords: ''
       },
       popularizeSetting: {
         popularize_ratio: {
-          type: "profit",
-        },
+          type: 'profit'
+        }
       },
       tabList: [
-        { name: "全部商品", value: null, activeName: "first" },
+        { name: '全部商品', value: null, activeName: 'first' }
         // ,
         // { name: '不支持任务制', value: 'true', activeName: 'default' },
         // { name: '任务制-按总金额', value: 'true', activeName: 'total_money' },
@@ -454,189 +452,186 @@ export default {
       ],
       floorHead: [
         {
-          label: "第一阶梯",
-          property: "name",
+          label: '第一阶梯',
+          property: 'name'
         },
         {
-          label: "第二阶梯",
-          property: "name",
+          label: '第二阶梯',
+          property: 'name'
         },
         {
-          label: "第三阶梯",
-          property: "name",
-        },
+          label: '第三阶梯',
+          property: 'name'
+        }
       ],
       statusOptions: [
-        { value: 1, label: "启用" },
-        { value: 2, label: "未启用" },
+        { value: 1, label: '启用' },
+        { value: 2, label: '未启用' }
       ],
-      status: "",
+      status: '',
       alertTip: {
-        title: "",
-        description: "",
-      },
-    };
+        title: '',
+        description: ''
+      }
+    }
   },
   computed: {
-    ...mapGetters(["wheight"]),
+    ...mapGetters(['wheight'])
   },
   watch: {
     status: {
       handler: function (val) {
-        this.getGoodsList(val);
-      },
+        this.getGoodsList(val)
+      }
     },
-    "current.rebate_type": {
+    'current.rebate_type': {
       handler: function (val) {
-        val = val ? val : "default";
+        val = val ? val : 'default'
         this.alertTip = {
           title: changeRebateTypeMap[val].title,
-          description: changeRebateTypeMap[val].description,
-        };
+          description: changeRebateTypeMap[val].description
+        }
       },
-      immediate: true,
-    },
+      immediate: true
+    }
   },
   mounted() {
-    this.loginType = this.$store.getters.login_type;
-    this.params.pathSource = this.$route.path;
+    this.loginType = this.$store.getters.login_type
+    this.params.pathSource = this.$route.path
 
     getPopularizeSetting().then((res) => {
-      this.popularizeSetting = res.data.data;
-      if (res.data.data.goods == "all") {
-        this.allSelect = true;
+      this.popularizeSetting = res.data.data
+      if (res.data.data.goods == 'all') {
+        this.allSelect = true
       } else {
-        this.allSelect = false;
+        this.allSelect = false
       }
-      this.getGoodsList();
-    });
+      this.getGoodsList()
+    })
   },
   methods: {
     handleChangeRebate: function (e) {
-      console.log("===", e);
+      console.log('===', e)
     },
     filterHandler(filters) {
-      this.params.page = 1;
-      this.params.rebate = filters.rebate[0];
-      this.getGoodsList();
+      this.params.page = 1
+      this.params.rebate = filters.rebate[0]
+      this.getGoodsList()
     },
     handleClick() {
-      if (this.activeName != "first") {
-        this.params.rebate_type = this.activeName;
+      if (this.activeName != 'first') {
+        this.params.rebate_type = this.activeName
       } else {
-        this.params.rebate_type = "";
+        this.params.rebate_type = ''
       }
-      this.params.page = 1;
-      this.getGoodsList();
+      this.params.page = 1
+      this.getGoodsList()
     },
     handleSizeChange(pageSize) {
-      this.params.page = 1;
-      this.params.pageSize = pageSize;
-      this.getGoodsList();
+      this.params.page = 1
+      this.params.pageSize = pageSize
+      this.getGoodsList()
     },
     handleCurrentChange(page_num) {
-      this.params.page = page_num;
-      this.getGoodsList();
+      this.params.page = page_num
+      this.getGoodsList()
     },
     handleItemsSelectionChange(val) {
-      let goods_id = [];
+      let goods_id = []
       for (let i in val) {
-        goods_id.push(val[i].goods_id);
+        goods_id.push(val[i].goods_id)
       }
-      this.selectGoodsIds = goods_id;
+      this.selectGoodsIds = goods_id
     },
     showChangeRebateType() {
       if (this.selectGoodsIds.lenght == 0) {
         this.$message({
-          type: "success",
-          message: "未选择商品，无需更新",
-        });
+          type: 'success',
+          message: '未选择商品，无需更新'
+        })
       } else {
-        this.changeRebateTypeVisible = true;
-        this.changeRebateType = this.activeName;
+        this.changeRebateTypeVisible = true
+        this.changeRebateType = this.activeName
       }
     },
     goodsSearch() {
-      this.params.page = 1;
-      this.getGoodsList();
+      this.params.page = 1
+      this.getGoodsList()
     },
     switchStatusChange(data) {
-      var rebate = data.rebate ? 1 : 0;
+      var rebate = data.rebate ? 1 : 0
       updateGoodsInfo({ goods_id: data.goods_id, rebate: rebate }).then((res) => {
         this.$message({
-          type: "success",
-          message: "操作成功",
-        });
-        this.getGoodsList();
-      });
+          type: 'success',
+          message: '操作成功'
+        })
+        this.getGoodsList()
+      })
     },
     handleBatchChangeStatus() {
-      console.log("====handleBatchChangeStatus===>", this.selectGoodsIds);
+      console.log('====handleBatchChangeStatus===>', this.selectGoodsIds)
       if (this.selectGoodsIds.length == 0) {
         this.$message({
-          type: "success",
-          message: "未选择商品，无需更新",
-        });
+          type: 'success',
+          message: '未选择商品，无需更新'
+        })
       } else {
         updateGoodsInfo({ goods_id: this.selectGoodsIds, rebate: 1 }).then((res) => {
           this.$message({
-            type: "success",
-            message: "操作成功",
-          });
-          this.getGoodsList();
-        });
+            type: 'success',
+            message: '操作成功'
+          })
+          this.getGoodsList()
+        })
       }
     },
     handleBatchChange() {
       // console.log(rebate_task)
       if (this.selectGoodsIds.length == 0) {
         this.$message({
-          type: "success",
-          message: "未选择商品，无需更新",
-        });
-        this.changeRebateTypeVisible = false;
+          type: 'success',
+          message: '未选择商品，无需更新'
+        })
+        this.changeRebateTypeVisible = false
       } else {
         updateGoodsInfo({
           goods_id: this.selectGoodsIds,
-          rebate_type: this.changeRebateType,
+          rebate_type: this.changeRebateType
         }).then((res) => {
           this.$message({
-            type: "success",
-            message: "操作成功",
-          });
-          this.changeRebateTypeVisible = false;
-          this.getGoodsList();
-        });
+            type: 'success',
+            message: '操作成功'
+          })
+          this.changeRebateTypeVisible = false
+          this.getGoodsList()
+        })
       }
     },
     saveRebateConf() {
-      console.log(this.current.rebate_type);
-      var rebateConf = [];
-      var firstMoney, firstFilter;
-      var rebateTask = [];
+      console.log(this.current.rebate_type)
+      var rebateConf = []
+      var firstMoney, firstFilter
+      var rebateTask = []
       this.rebateSpecItems.forEach((item) => {
-        var rebate_conf = item.rebate_conf;
-        rebate_conf.ratio_type = this.popularizeSetting.popularize_ratio.type;
-        firstMoney = rebate_conf.rebate_task[0].money;
-        firstFilter = rebate_conf.rebate_task[0].filter;
-        rebateTask = rebate_conf.rebate_task;
+        var rebate_conf = item.rebate_conf
+        rebate_conf.ratio_type = this.popularizeSetting.popularize_ratio.type
+        firstMoney = rebate_conf.rebate_task[0].money
+        firstFilter = rebate_conf.rebate_task[0].filter
+        rebateTask = rebate_conf.rebate_task
 
-        rebateConf.push(rebate_conf);
-      });
-      var errorMsg = "";
-      var succCount = 0;
+        rebateConf.push(rebate_conf)
+      })
+      var errorMsg = ''
+      var succCount = 0
       rebateTask.forEach((item, index) => {
-        if (item.money != "" && item.filter != "") {
-          succCount++;
+        if (item.money != '' && item.filter != '') {
+          succCount++
         }
-      });
+      })
       rebateTask.forEach((item, index) => {
         if (succCount > 0) {
-          if (
-            (item.money != "" && item.filter == "") ||
-            (item.money == "" && item.filter != "")
-          ) {
-            errorMsg = "满足条件或金额不能为空";
+          if ((item.money != '' && item.filter == '') || (item.money == '' && item.filter != '')) {
+            errorMsg = '满足条件或金额不能为空'
           }
         }
         // else{
@@ -645,135 +640,134 @@ export default {
         //     errorMsg = '满足条件或金额不能为空'
         //   }
         // }
-      });
-      if (this.current.rebate_type != "default") {
-        if (errorMsg != "") {
+      })
+      if (this.current.rebate_type != 'default') {
+        if (errorMsg != '') {
           this.$message({
-            type: "error",
-            message: "满足条件或金额不能为空",
-          });
-          return;
+            type: 'error',
+            message: '满足条件或金额不能为空'
+          })
+          return
         }
       }
 
       updateItemRebateConf({
         rebateConf: JSON.stringify(rebateConf),
-        rebate_type: this.current.rebate_type,
+        rebate_type: this.current.rebate_type
       }).then((res) => {
-        this.$message({ message: "保存成功", type: "success", duration: 2 * 1000 });
-      });
+        this.$message({ message: '保存成功', type: 'success', duration: 2 * 1000 })
+      })
     },
     handleRebateConf(data, type) {
       if (type == 1) {
-        this.show_sideBar = true;
-        this.show_task_sideBar = false;
+        this.show_sideBar = true
+        this.show_task_sideBar = false
       } else {
-        this.show_sideBar = false;
-        this.show_task_sideBar = true;
+        this.show_sideBar = false
+        this.show_task_sideBar = true
       }
-      this.current = data;
+      this.current = data
       getItemsList({
         page: 1,
         pageSize: 1000,
         is_sku: true,
         item_id: data.item_id,
-        item_type: "normal",
+        item_type: 'normal'
       }).then((res) => {
-        var rebateSpecItems = [];
+        var rebateSpecItems = []
         res.data.data.list.forEach((item) => {
           if (!item.rebate_conf) {
-            item.rebate_conf = {};
-            item.rebate_conf.type = "money";
-            item.rebate_conf.rebate_task_type = "money";
-            item.rebate_conf.value = {};
+            item.rebate_conf = {}
+            item.rebate_conf.type = 'money'
+            item.rebate_conf.rebate_task_type = 'money'
+            item.rebate_conf.value = {}
             for (var key in this.popularizeSetting.popularize_ratio.profit) {
-              item.rebate_conf.value[key] = "";
+              item.rebate_conf.value[key] = ''
             }
           } else {
             if (
-              this.popularizeSetting.popularize_ratio.type !=
-                item.rebate_conf.ratio_type &&
-              item.rebate_conf.type != "money"
+              this.popularizeSetting.popularize_ratio.type != item.rebate_conf.ratio_type &&
+              item.rebate_conf.type != 'money'
             ) {
               for (var key in this.popularizeSetting.popularize_ratio.profit) {
-                item.rebate_conf.value[key] = "";
+                item.rebate_conf.value[key] = ''
               }
             }
           }
 
           if (!item.rebate_conf.rebate_task) {
-            item.rebate_conf.rebate_task = [];
+            item.rebate_conf.rebate_task = []
             for (var n in [0, 1, 2]) {
-              item.rebate_conf.rebate_task[n] = {};
-              item.rebate_conf.rebate_task[n].filter = "";
-              item.rebate_conf.rebate_task[n].ratio = "";
-              item.rebate_conf.rebate_task[n].money = "";
+              item.rebate_conf.rebate_task[n] = {}
+              item.rebate_conf.rebate_task[n].filter = ''
+              item.rebate_conf.rebate_task[n].ratio = ''
+              item.rebate_conf.rebate_task[n].money = ''
             }
           }
 
-          item.rebate_conf.item_id = item.item_id;
-          rebateSpecItems.push(item);
-        });
-        this.rebateSpecItems = rebateSpecItems;
-      });
+          item.rebate_conf.item_id = item.item_id
+          rebateSpecItems.push(item)
+        })
+        this.rebateSpecItems = rebateSpecItems
+      })
     },
     getGoodsList(status) {
-      this.loading = true;
+      this.loading = true
       if (status === 1 || status === 2 || !status) {
-        this.params.rebate = status ? (status === 1 ? 1 : 0) : undefined;
+        this.params.rebate = status ? (status === 1 ? 1 : 0) : undefined
       }
       getItemsList(this.params).then((response) => {
-        this.itemsList = response.data.data.list;
+        this.itemsList = response.data.data.list
         this.itemsList.forEach((item) => {
-          item.rebate_audit = "";
-          item.rebate_audit = item.rebate;
-          item.rebate = item.rebate === "1" ? true : false;
-        });
-        console.log(this.itemsList);
-        this.total_count = response.data.data.total_count;
-        this.loading = false;
-      });
+          item.rebate_audit = ''
+          item.rebate_audit = item.rebate
+          item.rebate = item.rebate === '1' ? true : false
+        })
+        console.log(this.itemsList)
+        this.total_count = response.data.data.total_count
+        this.loading = false
+      })
     },
 
     nextChange(value, key, row) {
-      let index = this.rebateSpecItems.findIndex((v) => v.itemId === row.itemId);
+      let index = this.rebateSpecItems.findIndex((v) => v.itemId === row.itemId)
       // 下一个的值
-      let next = this.rebateSpecItems[index].rebate_conf.rebate_task[key + 1].filter;
+      let next = this.rebateSpecItems[index].rebate_conf.rebate_task[key + 1].filter
       if (next <= Number(value)) {
-        row.rebate_conf.rebate_task[key + 1].filter = Number(value) + 1;
+        row.rebate_conf.rebate_task[key + 1].filter = Number(value) + 1
         this.$nextTick(() => {
-          row.rebate_conf.rebate_task[key + 1].filter = Number(value) + 1;
-        });
+          row.rebate_conf.rebate_task[key + 1].filter = Number(value) + 1
+        })
       }
     },
 
     // 变更限制
     changeLimit(value, key, row) {
-      console.log(value, key, row, "当前数据");
-      console.log(this.rebateSpecItems, "列表的数据");
+      console.log(value, key, row, '当前数据')
+      console.log(this.rebateSpecItems, '列表的数据')
       // 限制后级的最小值要大于上级
       if (key > 0) {
-        let index = this.rebateSpecItems.findIndex((v) => v.itemId === row.itemId);
+        let index = this.rebateSpecItems.findIndex((v) => v.itemId === row.itemId)
         // 上一个的值
-        let last = this.rebateSpecItems[index].rebate_conf.rebate_task[key - 1].filter;
-        if (last !== "") {
-          row.rebate_conf.rebate_task[key].filter = Number(value);
+        let last = this.rebateSpecItems[index].rebate_conf.rebate_task[key - 1].filter
+        if (last !== '') {
+          row.rebate_conf.rebate_task[key].filter = Number(value)
           this.$nextTick(() => {
-            let newVal = Math.max(Number(value), Number(last) + 1);
-            row.rebate_conf.rebate_task[key].filter = Number(newVal);
-          });
+            let newVal = Math.max(Number(value), Number(last) + 1)
+            row.rebate_conf.rebate_task[key].filter = Number(newVal)
+          })
         }
       }
       // 变更上级，下级小于等于上级时自动+1
       if (key === 0) {
-        this.nextChange(value, 0, row);
-        let index = this.rebateSpecItems.findIndex((v) => v.itemId === row.itemId);
-        let nextValue = this.rebateSpecItems[index].rebate_conf.rebate_task[1].filter;
-        this.nextChange(nextValue, 1, row);
+        this.nextChange(value, 0, row)
+        let index = this.rebateSpecItems.findIndex((v) => v.itemId === row.itemId)
+        let nextValue = this.rebateSpecItems[index].rebate_conf.rebate_task[1].filter
+        this.nextChange(nextValue, 1, row)
       } else if (key === 1) {
-        this.nextChange(value, key, row);
+        this.nextChange(value, key, row)
       }
-    },
-  },
-};
+    }
+  }
+}
 </script>

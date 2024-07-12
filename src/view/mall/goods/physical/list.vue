@@ -762,22 +762,22 @@ export default {
               }
             }
           },
-          {
-            name: '佣金',
-            key: 'set_commission',
-            type: 'button',
-            buttonType: 'text',
-            visible: (row) => !IS_SUPPLIER(),
-            action: {
-              type: 'link',
-              handler: async ([row]) => {
-                this.formLoading = false
-                this.commissionForm.goods_id = row.goods_id
-                this.commissionForm.commission_ratio = row.commission_ratio / 100
-                this.commissionDialog = true
-              }
-            }
-          },
+          // {
+          //   name: '佣金',
+          //   key: 'set_commission',
+          //   type: 'button',
+          //   buttonType: 'text',
+          //   visible: (row) => !IS_SUPPLIER(),
+          //   action: {
+          //     type: 'link',
+          //     handler: async ([row]) => {
+          //       this.formLoading = false
+          //       this.commissionForm.goods_id = row.goods_id
+          //       this.commissionForm.commission_ratio = row.commission_ratio / 100
+          //       this.commissionDialog = true
+          //     }
+          //   }
+          // },
           {
             name: '改价',
             key: 'setup_price',

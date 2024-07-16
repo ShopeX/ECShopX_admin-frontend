@@ -54,9 +54,9 @@
     />
 
     <div class="footer-container">
-      <el-button @click.native="handleCancel"> 取消 </el-button>
+      <el-button @click.native="handleCancel"> 取消</el-button>
       <el-button
-        v-if="(IS_SUPPLIER() || !form.supplier_id ) && !routerParams.detail"
+        v-if="(IS_SUPPLIER() || !form.supplier_id ) && !routerParams.detail && !routerParams.supplier"
         type="primary"
         @click="onFormSubmit('submitting')"
       >

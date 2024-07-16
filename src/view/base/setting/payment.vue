@@ -19,12 +19,6 @@
       <el-tab-pane label="银联商务支付配置" name="chinaumspay">
         <chinaumspayTemplates />
       </el-tab-pane>
-      <el-tab-pane label="汇付斗拱支付配置" name="bspay">
-        <bspayTemplates />
-      </el-tab-pane>
-      <el-tab-pane label="默认积分支付配置" name="point_pay">
-        <pointpayTemplates />
-      </el-tab-pane>
     </el-tabs>
   </div>
 </template>
@@ -35,8 +29,6 @@ import ebuypayTemplates from './payment/ebuypay'
 import hfpayTemplates from './payment/hfpay'
 import adapayTemplates from './payment/adapay'
 import chinaumspayTemplates from './payment/chinaumspay'
-import bspayTemplates from './payment/bspay'
-import pointpayTemplates from './payment/pointpay'
 
 import { hfpayVersionStatus } from '@/api/fenzhang'
 
@@ -47,9 +39,7 @@ export default {
     ebuypayTemplates,
     hfpayTemplates,
     adapayTemplates,
-    chinaumspayTemplates,
-    pointpayTemplates,
-    bspayTemplates
+    chinaumspayTemplates
   },
   data() {
     return {

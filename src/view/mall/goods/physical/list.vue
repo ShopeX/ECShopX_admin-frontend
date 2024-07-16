@@ -26,7 +26,7 @@
 <template>
   <div class="page-body">
     <SpRouterView>
-      <div v-if="IS_SUPPLIER()" class="action-container">
+      <div class="action-container">
         <el-button type="primary" icon="iconfont icon-xinzengcaozuo-01" @click="addItems">
           添加商品
         </el-button>
@@ -45,11 +45,11 @@
           </el-dropdown-menu>
         </el-dropdown>
       </div>
-      <div v-else class="action-container">
-        <el-button type="primary" icon="iconfont icon-xinzengcaozuo-01" @click="addItems">
-          添加商品
-        </el-button>
-      </div>
+<!--      <div v-else class="action-container">-->
+<!--        <el-button type="primary" icon="iconfont icon-xinzengcaozuo-01" @click="addItems">-->
+<!--          添加商品-->
+<!--        </el-button>-->
+<!--      </div>-->
 
       <SpFilterForm :model="searchParams" @onSearch="onSearch" @onReset="onSearch">
         <SpFilterFormItem prop="keywords" label="商品标题:">
@@ -762,22 +762,22 @@ export default {
               }
             }
           },
-          {
-            name: '佣金',
-            key: 'set_commission',
-            type: 'button',
-            buttonType: 'text',
-            visible: (row) => !IS_SUPPLIER(),
-            action: {
-              type: 'link',
-              handler: async ([row]) => {
-                this.formLoading = false
-                this.commissionForm.goods_id = row.goods_id
-                this.commissionForm.commission_ratio = row.commission_ratio / 100
-                this.commissionDialog = true
-              }
-            }
-          },
+          // {
+          //   name: '佣金',
+          //   key: 'set_commission',
+          //   type: 'button',
+          //   buttonType: 'text',
+          //   visible: (row) => !IS_SUPPLIER(),
+          //   action: {
+          //     type: 'link',
+          //     handler: async ([row]) => {
+          //       this.formLoading = false
+          //       this.commissionForm.goods_id = row.goods_id
+          //       this.commissionForm.commission_ratio = row.commission_ratio / 100
+          //       this.commissionDialog = true
+          //     }
+          //   }
+          // },
           {
             name: '改价',
             key: 'setup_price',

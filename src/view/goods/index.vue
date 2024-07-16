@@ -424,7 +424,7 @@ export default {
           label: '销售分类',
           key: 'salesCategory',
           width: '720px',
-          required: !this.IS_SUPPLIER(),
+          required: !this.IS_SUPPLIER() && !this.form.supplier_id,
           message: '请选择销售分类',
           component: ({ key }, value) => (
             <el-cascader
@@ -743,6 +743,7 @@ export default {
       this.routerParams = this.$route.query || {}
       const {
         item_id,
+        supplier_id,
         audit_status,
         item_name,
         brief,
@@ -804,6 +805,7 @@ export default {
       this.form.audit_reason = audit_reason
       this.form.itemName = is_new ? `${item_name}_复制` : item_name
       this.form.item_id = item_id
+      this.form.supplier_id = supplier_id
       this.form.brief = brief
       this.form.templatesId = templates_id.toString()
       this.form.brandId = brand_id
@@ -1039,6 +1041,7 @@ export default {
       const { is_new, supplier } = this.$route.query
       const {
         goods_bn,
+        supplier_id,
         itemType,
         specialType,
         itemSource,
@@ -1086,6 +1089,7 @@ export default {
       let params = {
         buy_limit_area,
         goods_bn,
+        supplier_id,
         item_type: itemType,
         operate_source: supplier ? 'supplier' : IS_SUPPLIER() ? 'supplier' : 'platform',
         audit_status: action, // submitting 待提交；processing 审核中

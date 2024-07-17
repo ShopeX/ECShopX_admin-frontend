@@ -195,7 +195,7 @@
       >
         <el-button type="primary" plain> 批量取消 </el-button>
       </el-upload>
-      <!-- v-if="IS_DISTRIBUTOR || IS_MERCHANT" -->
+       v-if="IS_DISTRIBUTOR || IS_MERCHANT" -->
       <el-button type="primary" plain @click="assignPersonnel(true)"> 分配配送员 </el-button>
       <!-- <el-upload
         action=""
@@ -267,14 +267,14 @@
           </template>
         </el-table-column>
         <el-table-column
-          prop="cost_price"
+          prop="cost_fee"
           width="120"
           label="结算价（¥）"
           align="right"
           header-align="center"
         >
           <template slot-scope="scope">
-            {{ (scope.row.cost_price / 100).toFixed(2) }}
+            {{ (scope.row.cost_fee / 100).toFixed(2) }}
           </template>
         </el-table-column>
         <el-table-column width="100" label="运费（¥）" align="right" header-align="center">
@@ -1440,7 +1440,7 @@ export default {
 
         return {
           ...item,
-          cost_price,
+          // cost_fee,
           actionBtns
         }
       })

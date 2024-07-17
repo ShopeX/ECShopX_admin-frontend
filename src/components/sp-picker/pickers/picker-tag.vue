@@ -23,7 +23,7 @@
       <SpFilterFormItem prop="keywords">
         <el-input v-model="formData.keywords" placeholder="请输入标签名称" />
       </SpFilterFormItem>
-      <SpFilterFormItem v-if="!IS_DISTRIBUTOR && !values" prop="distributor_id" label="店铺名称:">
+      <SpFilterFormItem v-if="!IS_DISTRIBUTOR() && !values" prop="distributor_id" label="店铺名称:">
         <el-select v-model="formData.distributor_id" clearable placeholder="请选择">
           <el-option
             v-for="item in salesStatus"
@@ -101,7 +101,7 @@ export default {
     },
     beforeSearch(params) {
       const { keywords, distributor_id } = this.formData
-      if (IS_DISTRIBUTOR || this.values) {
+      if (IS_DISTRIBUTOR() || this.values) {
         params = {
           ...params,
           isPlatform: true,
@@ -119,7 +119,7 @@ export default {
           ...params,
           tag_name: keywords,
           distributor_id: distributor_id ? distributor_id : this.values,
-          tag_source: IS_DISTRIBUTOR ? '' : 'all'
+          tag_source: IS_DISTRIBUTOR() ? '' : 'all'
         }
       }
       if (this.value.params) {

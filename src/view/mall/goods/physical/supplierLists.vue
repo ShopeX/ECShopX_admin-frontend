@@ -86,6 +86,14 @@
             clearable
           />
         </SpFilterFormItem>
+        <SpFilterFormItem prop="cat_id" label="销售分类:">
+          <el-cascader
+            v-model="searchParams.cat_id"
+            :options="categoryList"
+            :props="{ checkStrictly: true, label: 'category_name', value: 'category_id' }"
+            clearable
+          />
+        </SpFilterFormItem>
         <!-- <SpFilterFormItem prop="audit_status" label="审核状态:">
           <el-select v-model="searchParams.audit_status">
             <el-option value="processing" label="待审核" />
@@ -123,6 +131,14 @@
             />
           </el-select>
         </SpFilterFormItem>
+        <SpFilterFormItem prop="regions_id" label="商品产地:">
+          <el-cascader
+            v-model="searchParams.regions_id"
+            placeholder="请选择"
+            clearable
+            :options="regions"
+          />
+        </SpFilterFormItem>
         <!--        <SpFilterFormItem prop="regions_id" label="商品产地:">-->
         <!--          <el-cascader-->
         <!--            v-model="searchParams.regions_id"-->
@@ -151,12 +167,16 @@
             clearable
           />
         </SpFilterFormItem>
-        <!--        <SpFilterFormItem prop="goods_bn" label="SPU编码:">-->
-        <!--          <el-input v-model="searchParams.goods_bn" placeholder="请输入SPU编码" />-->
-        <!--        </SpFilterFormItem>-->
-        <!--        <SpFilterFormItem prop="operator_name" label="来源供应商:">-->
-        <!--          <el-input v-model="searchParams.operator_name" placeholder="请输入来源供应商" />-->
-        <!--        </SpFilterFormItem>-->
+
+        <SpFilterFormItem prop="goods_bn" label="SPU编码:">
+          <el-input v-model="searchParams.goods_bn" placeholder="请输入SPU编码" />
+        </SpFilterFormItem>
+        <SpFilterFormItem prop="supplier_name" label="所属供应商:">
+          <el-input v-model="searchParams.supplier_name" placeholder="请输入所属供应商" />
+        </SpFilterFormItem>
+        <!-- <SpFilterFormItem prop="operator_name" label="来源供应商:">
+          <el-input v-model="searchParams.operator_name" placeholder="请输入来源供应商" />
+        </SpFilterFormItem> -->
       </SpFilterForm>
 
       <div class="action-container">
@@ -242,17 +262,17 @@
       <!-- 设置会员价 -->
       <SpDrawer
         v-model="showMemberPriceDrawer"
-        title="改价"
+        title="设置价格"
         :width="800"
         confirm-text="保存"
         @confirm="onSaveMemberPrice"
       >
         <el-table v-loading="skuLoading" border :data="specItems" height="100%">
           <el-table-column label="规格" prop="item_spec_desc" min-width="120" />
-          <el-table-column label="原价" prop="market_price" width="100">
+          <el-table-column label="市场价" prop="market_price" width="100">
             <template slot-scope="scope"> ¥{{ scope.row.market_price }} </template>
           </el-table-column>
-          <el-table-column label="门店采购价" width="160">
+          <el-table-column label="销售价" width="160">
             <template slot-scope="scope">
               <el-input-number
                 v-model="scope.row.price"
@@ -260,7 +280,19 @@
                 :min="0"
                 :precision="2"
                 style="width: 120px"
-                @change="updateGoodsSkuPrice(scope.row)"
+                @change="updateGoodsSkuPrice(scope.row,'price')"
+              />
+            </template>
+          </el-table-column>
+          <el-table-column label="成本价" width="160">
+            <template slot-scope="scope">
+              <el-input-number
+                v-model="scope.row.cost_price"
+                controls-position="right"
+                :min="0"
+                :precision="2"
+                style="width: 120px"
+                @change="updateGoodsSkuPrice(scope.row,'cost_price')"
               />
             </template>
           </el-table-column>
@@ -512,6 +544,7 @@ export default {
         keywords: '',
         item_bn: '',
         supplier_goods_bn: '',
+        supplier_name:'',
         approve_status: '',
         category: 0,
         item_category: 0,
@@ -788,7 +821,7 @@ export default {
           //   }
           // },
           {
-            name: '改价',
+            name: '设置价格',
             key: 'setup_price',
             type: 'button',
             buttonType: 'text',
@@ -1037,13 +1070,13 @@ export default {
             align: 'right',
             headerAlign: 'center'
           },
-          // {
-          //   name: '毛利率（%)',
-          //   key: 'gross_profit_rate',
-          //   width: 100,
-          //   align: "right",
-          //   headerAlign: 'center'
-          // },
+          {
+            name: '毛利率（%)',
+            key: 'gross_profit_rate',
+            width: 100,
+            align: "right",
+            headerAlign: 'center'
+          },
           {
             name: '来源供应商',
             key: 'operator_name',
@@ -1159,6 +1192,7 @@ export default {
           is_edit: false,
           price: item.price / 100,
           market_price: item.market_price / 100,
+          cost_price:item.cost_price / 100,
           grade: this.generatePrice(item.memberGrade.grade),
           vipGrade: this.generatePrice(item.memberGrade.vipGrade)
         })
@@ -1499,10 +1533,10 @@ export default {
         this.$message.error('导出失败')
       }
     },
-    async updateGoodsSkuPrice({ item_id, price }) {
+    async updateGoodsSkuPrice({ item_id, price,cost_price },priceType) {
       await this.$api.goods.updateGoodsInfo({
         item_id,
-        price,
+        [priceType]:priceType == 'price' ? price :cost_price,
         operate_source: IS_SUPPLIER() ? 'supplier' : 'platform'
       })
       this.$message.success('操作成功')

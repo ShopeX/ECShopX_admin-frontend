@@ -90,6 +90,32 @@
             @change="searchByKey"
           />
         </el-col>
+        <el-col :span="6" class="last-col">
+          <el-input
+            v-model="params.supplier_name"
+            placeholder="所属供应商"
+            clearable
+            class="input-with-select"
+          >
+            <el-button slot="append" icon="el-icon-search" @click="searchByKey" />
+          </el-input>
+        </el-col>
+        <el-col :span="5" class="last-col">
+          <el-select
+            v-model="params.item_source"
+            placeholder="商品类型"
+            clearable
+            :disabled="setSearch"
+            @change="searchByKey"
+          >
+            <el-option
+              v-for="item in categoryOption"
+              :key="item.value"
+              :label="item.title"
+              :value="item.value"
+            />
+          </el-select>
+        </el-col>
       </el-row>
     </div>
     <el-table
@@ -115,6 +141,12 @@
       <el-table-column prop="itemId" label="商品ID" width="70" />
       <el-table-column prop="itemName" label="商品名称" />
       <el-table-column prop="item_spec_desc" label="规格" />
+      <el-table-column prop="supplier_name" label="所属供应商" />
+      <el-table-column label="商品类型" >
+        <template slot-scope="scope">
+         {{ itemSourceMap[scope.row.item_source] }}
+        </template>
+      </el-table-column>
       <el-table-column
         prop="price"
         label="价格"
@@ -144,6 +176,12 @@
       <el-table-column prop="itemId" label="商品ID" width="70" />
       <el-table-column prop="itemName" label="商品名称" />
       <el-table-column prop="item_spec_desc" label="规格" />
+      <el-table-column prop="supplier_name" label="所属供应商" />
+      <el-table-column label="商品类型" >
+        <template slot-scope="scope">
+         {{ itemSourceMap[scope.row.item_source] }}
+        </template>
+      </el-table-column>
       <el-table-column
         prop="price"
         label="价格"
@@ -276,7 +314,8 @@ export default {
         distributor_id: '',
         is_sku: false,
         audit_status: 'approved',
-        is_gift: false
+        is_gift: false,
+        supplier_name:''
       },
       categoryList: [],
       select_category_value: [],
@@ -292,6 +331,16 @@ export default {
       storeSelect: '',
       store_value: '',
       templatesList: [],
+      categoryOption: [
+        {
+          title: '自营商品',
+          value: 'platform'
+        },
+        {
+          title: '供应商商品',
+          value: 'supplier'
+        }
+      ],
       statusOption: [
         {
           title: '前台可销售',
@@ -310,6 +359,11 @@ export default {
           value: 'instock'
         }
       ],
+      itemSourceMap:{
+        'platform':'自营商品',
+        'supplier':'供应商商品',
+        'distributor':'商户商品'
+      },
       currency: {},
       cursymbol: '￥',
       templateRadio: ''

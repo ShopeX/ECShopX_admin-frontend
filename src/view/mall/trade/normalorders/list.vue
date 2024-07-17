@@ -125,7 +125,7 @@
       <SpFilterFormItem
         v-if="(!isMicorMall || login_type != 'distributor') && !VERSION_B2C && !VERSION_IN_PURCHASE"
         prop="distributor_id"
-        label="店铺:"
+        label="来源店铺:"
       >
         <SpSelectShop v-model="params.distributor_id" clearable placeholder="请选择" />
       </SpFilterFormItem>
@@ -170,7 +170,7 @@
           </el-dropdown-item>
         </el-dropdown-menu>
       </el-dropdown>
-      <!-- <el-tooltip
+      <el-tooltip
         v-if="IS_SUPPLIER()"
         effect="light"
         content="请将从订单列表导出的主订单文件，删除不想批量发货的订单号，修改物流公司，物流单号后上传即可。"
@@ -185,8 +185,8 @@
         >
           <el-button type="primary" plain> 批量发货 </el-button>
         </el-upload>
-      </el-tooltip> -->
-      <!-- <el-upload
+      </el-tooltip>
+      <el-upload
         action=""
         class="btn-upload"
         :on-change="uploadHandlePatchCancel"
@@ -195,7 +195,7 @@
       >
         <el-button type="primary" plain> 批量取消 </el-button>
       </el-upload>
-       v-if="IS_DISTRIBUTOR || IS_MERCHANT" -->
+       <!-- v-if="IS_DISTRIBUTOR || IS_MERCHANT" -->
       <el-button type="primary" plain @click="assignPersonnel(true)"> 分配配送员 </el-button>
       <!-- <el-upload
         action=""
@@ -218,7 +218,7 @@
         :label="item.title"
         :name="item.value"
       />
-      <el-table v-loading="loading" border :data="tableList">
+      <el-table v-loading="loading" border :data="tableList" @selection-change="handleSelectionChange">
         <el-table-column width="180" prop="order_id" label="订单号">
           <template slot-scope="scope">
             <div class="order-num">
@@ -231,12 +231,12 @@
                 />
               </el-tooltip>
             </div>
-            <!-- <div class="order-store">
-              <el-tooltip effect="dark" content="店铺名" placement="top-start">
+            <div class="order-store">
+              <el-tooltip effect="dark" content="来源店铺" placement="top-start">
                 <i class="el-icon-office-building" />
               </el-tooltip>
               {{ scope.row.distributor_name }}
-            </div> -->
+            </div>
             <div class="order-time">
               <el-tooltip effect="dark" content="下单时间" placement="top-start">
                 <i class="el-icon-time" />
@@ -255,6 +255,15 @@
         <!--            {{ scope.row.supplier_info.username }}-->
         <!--          </template>-->
         <!--        </el-table-column>-->
+        <el-table-column
+          width="120"
+          label="订单分类"
+          header-align="center"
+        >
+          <template slot-scope="scope">
+            {{ scope.row.distributor_info.distribution_type }}
+          </template>
+        </el-table-column>
         <el-table-column
           prop="total_fee"
           width="120"

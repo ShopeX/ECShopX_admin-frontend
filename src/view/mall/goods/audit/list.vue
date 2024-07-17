@@ -91,6 +91,11 @@
                 />
               </template>
             </el-table-column>
+            <el-table-column prop="distributor_name" label="来源店铺">
+              <template slot-scope="scope">
+                {{ scope.row.distributor_name.name }}
+              </template>
+            </el-table-column>
             <el-table-column label="规格">
               <template slot-scope="scope">
                 <el-tag v-if="!scope.row.nospec" effect="plain" size="mini" type="success">
@@ -141,14 +146,14 @@
                 >
                   审核
                 </el-button>
-                <el-button
+                <!-- <el-button
                   v-if="VERSION_PLATFORM"
                   type="text"
                   @click="handleCommissionConf(scope.row)"
                   >
 佣金配置
 </el-button
-                >
+                > -->
               </template>
             </el-table-column>
           </el-table>

@@ -109,7 +109,8 @@ export const INVOICE_STATUS = [
 export const ORDER_CATEGORY = [
   { title: '全部', value: '' },
   { title: '自营订单', value: 'self' },
-  { title: '商家订单', value: 'shop' }
+  { title: '商家订单', value: 'shop' },
+  { title: '供应商订单', value: 'supplier' }
 ]
 
 export const REFUND_STATUS = {

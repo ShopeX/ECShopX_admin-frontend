@@ -275,7 +275,19 @@
                 :min="0"
                 :precision="2"
                 style="width: 120px"
-                @change="updateGoodsSkuPrice(scope.row)"
+                @change="updateGoodsSkuPrice(scope.row,'price')"
+              />
+            </template>
+          </el-table-column>
+          <el-table-column label="成本价" width="160">
+            <template slot-scope="scope">
+              <el-input-number
+                v-model="scope.row.cost_price"
+                controls-position="right"
+                :min="0"
+                :precision="2"
+                style="width: 120px"
+                @change="updateGoodsSkuPrice(scope.row,'cost_price')"
               />
             </template>
           </el-table-column>
@@ -1003,6 +1015,14 @@ export default {
               )
             }
           },
+
+          {
+            name: 'sku编码',
+            key: 'item_bn',
+            width: 150,
+            align: 'right',
+            headerAlign: 'center'
+          },
           {
             name: '标签',
             width: 120,
@@ -1038,13 +1058,7 @@ export default {
             align: 'right',
             headerAlign: 'center'
           },
-          {
-            name: 'sku编码',
-            key: 'item_bn',
-            width: 150,
-            align: 'right',
-            headerAlign: 'center'
-          },
+
           // {
           //   name: '商品税率',
           //   key: 'tax_rate',
@@ -1088,7 +1102,7 @@ export default {
             headerAlign: 'center'
           },
           {
-            name: '成本价（¥）',
+            name: '结算价（¥）',
             key: 'cost_price',
             width: 100,
             formatter: (value, row, col) => {
@@ -1097,13 +1111,13 @@ export default {
             align: 'right',
             headerAlign: 'center'
           },
-          // {
-          //   name: '毛利率（%)',
-          //   key: 'gross_profit_rate',
-          //   width: 100,
-          //   align: "right",
-          //   headerAlign: 'center'
-          // },
+          {
+            name: '毛利率（%)',
+            key: 'gross_profit_rate',
+            width: 100,
+            align: "right",
+            headerAlign: 'center'
+          },
           {
             name: '来源供应商',
             key: 'operator_name',
@@ -1217,6 +1231,7 @@ export default {
           item_spec_desc: item.item_spec_desc || item.itemName,
           is_edit: false,
           price: item.price / 100,
+          cost_price:item.cost_price / 100,
           market_price: item.market_price / 100,
           grade: this.generatePrice(item.memberGrade.grade),
           vipGrade: this.generatePrice(item.memberGrade.vipGrade)
@@ -1624,10 +1639,10 @@ export default {
         this.$message.error('导出失败')
       }
     },
-    async updateGoodsSkuPrice({ item_id, price }) {
+    async updateGoodsSkuPrice({ item_id, price, cost_price },priceType) {
       await this.$api.goods.updateGoodsInfo({
         item_id,
-        price,
+        [priceType]:priceType == 'price' ? price :cost_price,
         operate_source: IS_SUPPLIER() ? 'supplier' : 'platform'
       })
       this.$message.success('操作成功')

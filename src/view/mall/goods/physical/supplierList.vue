@@ -116,7 +116,17 @@
         <SpFilterFormItem prop="item_bn" label="SKU编码:">
           <el-input v-model="searchParams.item_bn" />
         </SpFilterFormItem>
+        <SpFilterFormItem prop="goods_bn" label="SPU编码:">
+          <el-input v-model="searchParams.goods_bn" placeholder="请输入SPU编码" />
+        </SpFilterFormItem>
+        <SpFilterFormItem prop="supplier_name" label="所属供应商:">
+          <el-input v-model="searchParams.supplier_name" placeholder="请输入所属供应商" />
+        </SpFilterFormItem>
       </SpFilterForm>
+
+      <div class="action-container">
+        <el-button type="primary" plain @click="Examine"> 批量审核 </el-button>
+      </div>
 
       <el-tabs v-model="activeName" type="card" @tab-click="handleTabClick">
         <el-tab-pane
@@ -288,9 +298,11 @@
         v-model="showItemSkuDrawer"
         :title="itemSkuDrawerTitle"
         :width="800"
-        @confirm="() => {
-          this.showItemSkuDrawer = false
-        }"
+        @confirm="
+          () => {
+            this.showItemSkuDrawer = false
+          }
+        "
       >
         <el-table border v-loading="skuLoading" :data="itemSkuList" height="100%">
           <el-table-column label="规格" prop="item_spec_desc" min-width="120" />
@@ -303,6 +315,24 @@
           </el-table-column>
         </el-table>
       </SpDrawer>
+
+      <el-dialog title="批量审核供应商商品" :visible.sync="dialogVisibleExamine" width="30%">
+        <el-form ref="form" :model="examineForm" label-width="80px">
+          <el-form-item label="审核状态">
+            <el-radio-group v-model="examineForm.audit_status">
+              <el-radio label="approved"> 通过 </el-radio>
+              <el-radio label="rejected"> 拒绝 </el-radio>
+            </el-radio-group>
+          </el-form-item>
+          <el-form-item v-if="examineForm.audit_status == 'rejected'" label="拒绝原因">
+            <el-input v-model="examineForm.audit_reason" type="textarea" />
+          </el-form-item>
+          <el-form-item>
+            <el-button type="primary" @click="onSubmitExamine"> 确定 </el-button>
+            <el-button @click="dialogVisibleExamine = false"> 取消 </el-button>
+          </el-form-item>
+        </el-form>
+      </el-dialog>
     </SpRouterView>
   </div>
 </template>
@@ -345,7 +375,10 @@ export default {
     return {
       show_profit_sideBar: false,
       select_tags_value: [],
-
+      examineForm: {
+        audit_status: 'approved',
+        audit_reason: ''
+      },
       current: '',
       currentId: '',
       currentPrice: '',
@@ -401,11 +434,14 @@ export default {
         barcode: '',
         distributor_id: 0,
         regions_id: [],
-        brand_id: ''
+        brand_id: '',
+        goods_bn: '',
+        supplier_name: ''
       },
       start_date: '',
       end_date: '',
       addCategorydialogVisible: false,
+      dialogVisibleExamine: false,
       form: {},
       isGiftsData: {},
       exportData: {},
@@ -570,6 +606,9 @@ export default {
             key: 'edit',
             type: 'button',
             buttonType: 'text',
+            visible: (row) => {
+              return row.audit_status == 'processing'
+            },
             action: {
               type: 'link',
               handler: ([row]) => {
@@ -578,7 +617,25 @@ export default {
                   query: {
                     some_param: 'true',
                     supplier: true,
-                    prohibit:1
+                    prohibit: 1
+                  }
+                })
+              }
+            }
+          },
+          {
+            name: '查看',
+            key: 'edit',
+            type: 'button',
+            buttonType: 'text',
+            action: {
+              type: 'link',
+              handler: ([row]) => {
+                this.$router.push({
+                  path: `${this.$route.path}/editor/${row.item_id}`,
+                  query: {
+                    some_param: 'true',
+                    detail: true
                   }
                 })
               }
@@ -586,7 +643,7 @@ export default {
           }
         ],
         columns: [
-          { name: '商品ID', key: 'goods_id', width: 80, align: "right", headerAlign: 'center' },
+          { name: '商品ID', key: 'goods_id', width: 80, align: 'right', headerAlign: 'center' },
           {
             name: '商品',
             key: 'itemName',
@@ -677,7 +734,7 @@ export default {
               }
             }
           },
-          { name: '库存', key: 'store', align: "right", headerAlign: 'center' },
+          { name: '库存', key: 'store', align: 'right', headerAlign: 'center' },
           {
             name: '市场价（¥）',
             key: 'market_price',
@@ -685,7 +742,7 @@ export default {
             formatter: (value, row, col) => {
               return (value / 100).toFixed(2)
             },
-            align: "right",
+            align: 'right',
             headerAlign: 'center'
           },
           {
@@ -695,7 +752,7 @@ export default {
             formatter: (value, row, col) => {
               return (value / 100).toFixed(2)
             },
-            align: "right",
+            align: 'right',
             headerAlign: 'center'
           },
           {
@@ -705,7 +762,7 @@ export default {
             formatter: (value, row, col) => {
               return (value / 100).toFixed(2)
             },
-            align: "right",
+            align: 'right',
             headerAlign: 'center'
           },
           {
@@ -720,7 +777,7 @@ export default {
             width: 120,
             key: 'approve_status',
             formatter: (value, row, col) => {
-              return this.statusOption.find(item=>item.value===value)?.title
+              return this.statusOption.find((item) => item.value === value)?.title
             }
           },
           {
@@ -967,6 +1024,26 @@ export default {
       } else {
         this.$message.error('请选择至少一个商品')
       }
+    },
+    // 批量审批
+    Examine() {
+      if (this.selectionItems.length === 0) {
+        this.$message.error('请选择至少一个商品')
+        return false
+      }
+
+      this.dialogVisibleExamine = true
+    },
+    // 审核确定
+    onSubmitExamine() {
+      this.examineForm.goods_id = this.selectionItems.map((item) => item.item_id)
+      console.log(this.examineForm);
+
+      // auditItems(this.form).then((res) => {
+      //   this.$message.success('保存成功')
+      //   this.dialogVisibleExamine = false
+      //   this.fetchList()
+      // })
     },
     async onChangePriceSubmit() {},
     changeGoodsLabel() {

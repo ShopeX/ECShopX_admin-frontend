@@ -291,10 +291,10 @@ export default {
                 <el-input-number
                   v-model={value[key]}
                   controls-position='right'
-                  precision='2'
-                  step='0.01'
+                  precision='3'
+                  step='0.001'
                 />{' '}
-                <span>元，每单(费用包含运费)</span>
+                <span>元，每单</span>
               </div>
             )
           },
@@ -303,7 +303,7 @@ export default {
             if (!payment_fee) {
               callback(new Error('不能为空'))
             } else {
-              let res = /^(0|[1-9]\d*)(.\d{1,2})?$/.test(payment_fee)
+              let res = /^(0|[1-9]\d*)(.\d{1,3})?$/.test(payment_fee)
               if (!res) {
                 callback(new Error('结算费用格式错误'))
               } else {
@@ -326,8 +326,8 @@ export default {
                 <el-input-number
                   v-model={value[key]}
                   controls-position='right'
-                  precision='0'
-                  step='1'
+                  precision='3'
+                  step='0.001'
                 />{' '}
                 <span>%，每单</span>
               </div>
@@ -338,7 +338,7 @@ export default {
             if (!payment_fee1) {
               callback(new Error('不能为空'))
             } else {
-              let res = /^(0|[1-9]\d*)?$/.test(payment_fee1)
+              let res = /^(0|[1-9]\d*)(.\d{1,3})?$/.test(payment_fee1)
               if (!res) {
                 callback(new Error('结算费用格式错误'))
               } else {
@@ -464,8 +464,8 @@ export default {
         staff_no: '',
         staff_attribute: 'part_time',
         payment_method: 'order',
-        payment_fee: 0.01,
-        payment_fee1: 1,
+        payment_fee: 0.001,
+        payment_fee1: 0.001,
         mobile: '',
         password: '',
         distributor_ids: []

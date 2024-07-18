@@ -121,7 +121,7 @@ export const ORDER_CATEGORY = [
 ]
 
 export const SELF_ORDER_CATEGORY = [
-  // { title: '全部', value: '' },
+  { title: '全部', value: 'self,self_supplier' },
   { title: '自营订单', value: 'self' },
   { title: '自营+供应商订单', value: 'self_supplier' },
 ]

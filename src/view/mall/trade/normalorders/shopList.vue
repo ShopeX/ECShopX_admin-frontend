@@ -30,9 +30,9 @@
             :value="item.value"
           />
         </el-select>
-        <el-input v-model="supplier_name" clearable placeholder="来源供应商" >
+        <!-- <el-input v-model="supplier_name" clearable placeholder="来源供应商" >
           <el-button slot="append" icon="el-icon-search" @click="numberSearch" />
-        </el-input>
+        </el-input> -->
           <el-autocomplete
             v-model="source_name"
             class="inline-input"
@@ -445,7 +445,7 @@
                 <el-table-column prop="item_name" label="商品名" width="180" />
                 <el-table-column  label="商品类型" width="180">
                   <template slot-scope="scope">
-                    <span>{{ scope.row.item_resource }}</span>
+                    <span>{{ this.goodCategoryMap[scope.row.item_holder] }}</span>
                   </template>
                 </el-table-column>
                 <el-table-column prop="supplier_name" label="来源供应商" width="180" />
@@ -762,7 +762,7 @@ import { getSourceFromNameByValue } from '@/utils'
 import shopSelect from '@/components/shopSelect'
 import RemarkModal from '@/components/remarkModal'
 import remarkMixin from '@/mixins/remarkMixin'
-import { DISTRIBUTION_TYPE, DISTRIBUTION_STATUS, SELF_ORDER_CATEGORY } from '@/consts'
+import { DISTRIBUTION_TYPE, DISTRIBUTION_STATUS, SELF_ORDER_CATEGORY,GOOD_CATEGORY_MAP } from '@/consts'
 import { IS_ADMIN } from '../../../../utils'
 
 export default {
@@ -784,8 +784,9 @@ export default {
         distributor_id: 0,
         distributorIds: [],
         source_from: '',
-        order_holder:'self'
+        order_holder:'self,self_supplier'
       },
+      goodCategoryMap:GOOD_CATEGORY_MAP,
       deliveryPersonnel: [], //配送员
       order_class_array: [
         { name: '全部订单', value: '' },
@@ -829,7 +830,7 @@ export default {
       ],
       source_id: '',
       order_class: '',
-      order_holder:null,
+      order_holder:'self,self_supplier',
       supplier_name:'',
       cancel_order: '',
       deliveryVisible: false,

@@ -329,7 +329,7 @@ export default {
                   precision='3'
                   step='0.001'
                 />{' '}
-                <span>%，每单</span>
+                <span>%，每单（费用包含运费）</span>
               </div>
             )
           },

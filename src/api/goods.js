@@ -575,3 +575,13 @@ export function postCategoryPageSetting(query) {
     params: query
   })
 }
+
+
+//批量审核供应商商品
+export function batchReviewItems(query) {
+  return fetch({
+    url: '/supplier/batch_review_items',
+    method: 'post',
+    params: query
+  })
+}

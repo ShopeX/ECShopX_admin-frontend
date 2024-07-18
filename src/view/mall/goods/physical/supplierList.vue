@@ -328,7 +328,7 @@
             <el-input v-model="examineForm.audit_reason" type="textarea" />
           </el-form-item>
           <el-form-item>
-            <el-button type="primary" @click="onSubmitExamine"> 确定 </el-button>
+            <el-button type="primary" @click="onSubmitExamine" :loading="examineLoading"> 确定 </el-button>
             <el-button @click="dialogVisibleExamine = false"> 取消 </el-button>
           </el-form-item>
         </el-form>
@@ -340,6 +340,7 @@
 import moment from 'moment'
 import { IS_SUPPLIER } from '@/utils'
 import { GOODS_APPLY_STATUS } from '@/consts'
+import {batchReviewItems} from '@/api/goods'
 
 export default {
   data() {
@@ -442,6 +443,7 @@ export default {
       end_date: '',
       addCategorydialogVisible: false,
       dialogVisibleExamine: false,
+      examineLoading:false,
       form: {},
       isGiftsData: {},
       exportData: {},
@@ -1036,14 +1038,15 @@ export default {
     },
     // 审核确定
     onSubmitExamine() {
-      this.examineForm.goods_id = this.selectionItems.map((item) => item.item_id)
-      console.log(this.examineForm);
-
-      // auditItems(this.form).then((res) => {
-      //   this.$message.success('保存成功')
-      //   this.dialogVisibleExamine = false
-      //   this.fetchList()
-      // })
+      this.examineForm.item_ids = this.selectionItems.map((item) => item.item_id).join(',')
+      this.examineLoading = true
+      batchReviewItems(this.examineForm).then((res) => {
+        this.$message.success('保存成功')
+        this.dialogVisibleExamine = false
+        this.$refs['finder'].refresh()
+      }).finally(()=>{
+        this.examineLoading = false
+      })
     },
     async onChangePriceSubmit() {},
     changeGoodsLabel() {

@@ -90,10 +90,10 @@
           @change="onSearch"
         />
       </SpFilterFormItem>
-      <SpFilterFormItem prop="supplier_name" label="来源供应商:">
-        <el-input v-model="formData.supplier_name" placeholder="来源供应商" />
+      <SpFilterFormItem prop="supplier_name" >
+        <el-input v-model="formData.supplier_name" placeholder="所属供应商" />
       </SpFilterFormItem>
-      <SpFilterFormItem prop="item_holder" label="商品类型:">
+      <SpFilterFormItem prop="item_holder" >
         <el-select v-model="formData.item_holder" placeholder="请选择商品类型" clearable>
           <el-option
             v-for="item in goodCategory"
@@ -102,6 +102,14 @@
             :value="item.value"
           />
         </el-select>
+      </SpFilterFormItem>
+      <SpFilterFormItem prop="is_gift" >
+        <el-select v-model="formData.is_gift"
+            placeholder="是否为赠品"
+            clearable>
+            <el-option :value="true" label="是" />
+            <el-option :value="false" label="否" />
+          </el-select>
       </SpFilterFormItem>
     </SpFilterForm>
 
@@ -143,7 +151,13 @@
             width: 80,
             render: (h, { row }) => h('span', {}, this.goodCategoryMap[row.item_holder])
           },
-          { name: '来源供应商', key: 'supplier_name', width: 100 },
+          {
+            name: '是否赠品',
+            key: 'is_gift',
+            width: 80,
+            render: (h, { row }) => h('span', {}, row.is_gift == '1' ? '是' : '否' )
+          },
+          { name: '所属供应商', key: 'supplier_name', width: 100 },
 
           {
             name: '市场价（¥）',
@@ -197,7 +211,8 @@ export default {
       category: '',
       distributor_id: '',
       supplier_name: '',
-      item_holder: ''
+      item_holder: '',
+      is_gift:''
     }
     const formData = Object.assign(defaultParams, queryParams)
     return {

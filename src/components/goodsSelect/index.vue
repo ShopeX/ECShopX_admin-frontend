@@ -116,6 +116,16 @@
             />
           </el-select>
         </el-col>
+        <el-col :span="5" class="last-col">
+          <el-select v-model="params.is_gift"
+            placeholder="是否为赠品"
+            clearable
+            :disabled="setSearch"
+            @change="searchByKey">
+            <el-option :value="true" label="是" />
+            <el-option :value="false" label="否" />
+          </el-select>
+        </el-col>
       </el-row>
     </div>
     <el-table
@@ -141,6 +151,11 @@
       <el-table-column prop="itemId" label="商品ID" width="70" />
       <el-table-column prop="itemName" label="商品名称" />
       <el-table-column prop="item_spec_desc" label="规格" />
+      <el-table-column label="是否赠品" >
+        <template slot-scope="scope">
+         {{ scope.row.is_gift == '1' ? '是' : '否' }}
+        </template>
+      </el-table-column>
       <el-table-column prop="supplier_name" label="所属供应商" />
       <el-table-column label="商品类型" >
         <template slot-scope="scope">
@@ -154,7 +169,11 @@
         :formatter="priceformatter"
         show-overflow-tooltip
       />
-      <el-table-column prop="cost_price" label="成本价" />
+      <el-table-column prop="cost_price" label="成本价" >
+        <template slot-scope="scope">
+         {{ scope.row.cost_price /100 }}
+        </template>
+      </el-table-column>
       <el-table-column prop="store" label="库存" width="80" show-overflow-tooltip />
     </el-table>
     <el-table
@@ -177,6 +196,11 @@
       <el-table-column prop="itemId" label="商品ID" width="70" />
       <el-table-column prop="itemName" label="商品名称" />
       <el-table-column prop="item_spec_desc" label="规格" />
+      <el-table-column label="是否赠品" >
+        <template slot-scope="scope">
+         {{ scope.row.is_gift == '1' ? '是' : '否' }}
+        </template>
+      </el-table-column>
       <el-table-column prop="supplier_name" label="所属供应商" />
       <el-table-column label="商品类型" >
         <template slot-scope="scope">
@@ -319,9 +343,9 @@ export default {
         distributor_id: '',
         is_sku: false,
         audit_status: 'approved',
-        is_gift: false,
+        is_gift: '',
         supplier_name:'',
-        item_holder:''
+        item_holder:'',
       },
       categoryList: [],
       select_category_value: [],

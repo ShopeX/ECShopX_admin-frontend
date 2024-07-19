@@ -211,8 +211,15 @@ export default {
             width: 160
           },
           {
-            name: '商品价格（¥）',
+            name: '市场价（¥）',
+            key: 'market_price',
+            width: 120,
+            render: (h, { row }) => h('span', {}, row.market_price / 100)
+          },
+          {
+            name: '销售价（¥）',
             key: 'price',
+            width: 120,
             showType: this.login_type == 'admin' ? 'editable' : '',
             componentProps: {
               change: async (v, row) => {
@@ -224,6 +231,17 @@ export default {
                 this.$refs.finder.refresh()
               }
             }
+          },
+          {
+            name: '成本价（¥）',
+            key: 'cost_price',
+            width: 120,
+            render: (h, { row }) => h('span', {}, row.cost_price / 100)
+          },
+          {
+            name: '来源店铺',
+            key: 'distributor_name',
+            width: 160,
           },
           {
             name: '店铺库存',

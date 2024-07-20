@@ -559,26 +559,26 @@ export default {
         const category = [...this.select_category_value]
         param.category = category.pop()
 
-        //云店店铺走第二个接口
-        if (!(this.VERSION_STANDARD && this.IS_DISTRIBUTOR()) &&
-          (this.VERSION_PLATFORM ||
+        //云店店铺走DistributorItem
+        if ((this.VERSION_STANDARD && this.IS_DISTRIBUTOR()) ||
+          !(this.VERSION_PLATFORM ||
           !this.params.distributor_id ||
           this.params.distributor_id == '0')
         ) {
-          getItemsList(param).then((response) => {
+           getDistributorItems(param).then((response) => {
+            this.itemsData = response.data.data.list
+
+            this.total_count = parseInt(response.data.data.total_count)
+            this.loading = false
+          })
+        } else {
+         getItemsList(param).then((response) => {
             this.itemsData = response.data.data.list
             this.total_count = parseInt(response.data.data.total_count)
             this.loading = false
             // 回显
 
             this.toggleSelection(this.relItemsIds)
-          })
-        } else {
-          getDistributorItems(param).then((response) => {
-            this.itemsData = response.data.data.list
-
-            this.total_count = parseInt(response.data.data.total_count)
-            this.loading = false
           })
         }
       }

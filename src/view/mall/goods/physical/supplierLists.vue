@@ -86,14 +86,6 @@
             clearable
           />
         </SpFilterFormItem>
-        <SpFilterFormItem prop="cat_id" label="销售分类:">
-          <el-cascader
-            v-model="searchParams.cat_id"
-            :options="categoryList"
-            :props="{ checkStrictly: true, label: 'category_name', value: 'category_id' }"
-            clearable
-          />
-        </SpFilterFormItem>
         <!-- <SpFilterFormItem prop="audit_status" label="审核状态:">
           <el-select v-model="searchParams.audit_status">
             <el-option value="processing" label="待审核" />

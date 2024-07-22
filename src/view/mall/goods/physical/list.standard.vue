@@ -93,6 +93,16 @@
             />
           </el-select>
         </SpFilterFormItem>
+        <SpFilterFormItem prop="item_holder" label="商品类型:">
+        <el-select v-model="params.item_holder" placeholder="请选择商品类型" clearable>
+          <el-option
+            v-for="item in goodCategory"
+            :key="item.value"
+            :label="item.title"
+            :value="item.value"
+          />
+        </el-select>
+      </SpFilterFormItem>
         <SpFilterFormItem prop="main_cat_id" label="管理分类:">
           <el-cascader
             v-model="params.main_cat_id"
@@ -102,6 +112,15 @@
             :props="{ value: 'category_id', label: 'category_name', checkStrictly: true }"
           />
         </SpFilterFormItem>
+        <SpFilterFormItem prop="cat_id" label="销售分类:">
+          <el-cascader
+            v-model="params.cat_id"
+            :options="categoryList"
+            :props="{ checkStrictly: true, label: 'category_name', value: 'category_id' }"
+            clearable
+          />
+        </SpFilterFormItem>
+
         <!-- <SpFilterFormItem prop="audit_status" label="审核状态:">
           <el-select v-model="params.audit_status">
             <el-option value="processing" label="待审核" />
@@ -160,8 +179,18 @@
         <SpFilterFormItem prop="goods_bn" label="SPU编码:">
           <el-input v-model="params.goods_bn" placeholder="请输入SPU编码" />
         </SpFilterFormItem>
-        <SpFilterFormItem prop="operator_name" label="来源供应商:">
+        <!-- <SpFilterFormItem prop="operator_name" label="来源供应商:">
           <el-input v-model="params.operator_name" placeholder="请输入来源供应商" />
+        </SpFilterFormItem> -->
+        <SpFilterFormItem prop="supplier_name" label="所属供应商:">
+          <el-input v-model="params.supplier_name" placeholder="请输入所属供应商" />
+        </SpFilterFormItem>
+        <SpFilterFormItem prop="is_gift" label="赠品:">
+          <el-select v-model="params.is_gift">
+            <el-option :value="undefined" label="全部" />
+            <el-option :value="true" label="是" />
+            <el-option :value="false" label="否" />
+          </el-select>
         </SpFilterFormItem>
       </SpFilterForm>
 
@@ -236,7 +265,20 @@
                 </div>
               </template>
             </el-table-column>
-            <el-table-column label="所属供应商" prop="operator_name" width="120" />
+            <el-table-column label="是否赠品" >
+              <template slot-scope="scope">
+              {{ scope.row.is_gift == '1' ? '是' : '否' }}
+              </template>
+            </el-table-column>
+            <el-table-column prop="item_holder" label="商品类型" width="100">
+            <template slot-scope="scope">
+              <div class="ell3">
+                {{ goodCategoryMap[scope.row.item_holder] }}
+              </div>
+            </template>
+          </el-table-column>
+            <el-table-column label="所属供应商" prop="supplier_name" width="120" />
+
             <el-table-column
               label="供应商货号"
               prop="supplier_goods_bn"
@@ -500,9 +542,9 @@
               <el-table-column label="销售价" min-width="80">
                 <template slot-scope="scope"> ¥{{ scope.row.price / 100 }} </template>
               </el-table-column>
-              <el-table-column label="成本价" min-width="80">
+              <!-- <el-table-column label="成本价" min-width="80">
                 <template slot-scope="scope"> ¥{{ scope.row.cost_price / 100 }} </template>
-              </el-table-column>
+              </el-table-column> -->
               <el-table-column label="类型" width="160">
                 <template slot-scope="scope">
                   <el-switch
@@ -807,6 +849,7 @@ import mixins from '@/mixins'
 
 import GoodsSelect from './comps/goodsSelect'
 import skuFinder from './comps/skuFinder'
+import { GOOD_CATEGORY_MAP,GOOD_CATEGORY } from '@/consts'
 
 export default {
   components: {
@@ -926,7 +969,11 @@ export default {
         brand_id: '',
         goods_bn: '',
         operator_name: '',
-        is_can_sale: ''
+        is_can_sale: '',
+        supplier_name:'',
+        cat_id:'',
+        item_holder:'',
+        is_gift:''
       },
       start_date: '',
       end_date: '',
@@ -991,7 +1038,9 @@ export default {
       ],
       showItemSkuDrawer: false,
       itemSkuDrawerTitle: '',
-      itemSkuList: []
+      itemSkuList: [],
+      goodCategoryMap: GOOD_CATEGORY_MAP,
+      goodCategory: GOOD_CATEGORY,
     }
   },
   computed: {

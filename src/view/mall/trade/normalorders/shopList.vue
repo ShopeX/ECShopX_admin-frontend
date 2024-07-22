@@ -121,6 +121,11 @@
               {{ scope.row.fee_symbol }}{{ scope.row.total_fee / 100 }}
             </template>
           </el-table-column>
+          <el-table-column prop="point_fee" width="120" label="积分抵扣">
+            <template slot-scope="scope">
+              {{ scope.row.point_fee / 100 }}
+            </template>
+          </el-table-column>
           <el-table-column prop="mobile" width="110" label="手机号" />
           <el-table-column width="90" label="订单类型">
             <template slot-scope="scope">

@@ -691,6 +691,7 @@ export default {
               )
             }
           },
+          { name: '来源供应商', key: 'operator_name', width: 120 },
           {
             name: '标签',
             key: 'tagList',
@@ -766,7 +767,6 @@ export default {
             align: 'right',
             headerAlign: 'center'
           },
-          { name: '来源供应商', key: 'operator_name', width: 120 },
           {
             name: '毛利率（%)',
             key: 'gross_profit_rate',

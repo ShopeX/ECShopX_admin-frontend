@@ -15,7 +15,7 @@
       >
         <el-input v-model="params.salesman_mobile" placeholder="请输入导购手机号码" />
       </SpFilterFormItem> -->
-      <SpFilterFormItem v-if="!isMicorMall" prop="receipt_type" label="配送类型:">
+      <SpFilterFormItem v-if="!isMicorMall" prop="receipt_type" label="配送方式:">
         <el-select v-model="params.receipt_type" clearable placeholder="请选择">
           <el-option
             v-for="item in distributionType"
@@ -61,6 +61,9 @@
             :value="item.value"
           />
         </el-select>
+      </SpFilterFormItem>
+      <SpFilterFormItem prop="salespersonname " label="业务员:">
+        <el-input v-model="params.salespersonname " placeholder="请输入业务员" />
       </SpFilterFormItem>
       <SpFilterFormItem prop="create_time" label="下单时间:" size="max">
         <el-date-picker
@@ -152,6 +155,7 @@
         </el-select>
       </SpFilterFormItem>
     </SpFilterForm>
+
 
     <div class="action-container">
       <el-dropdown>
@@ -275,6 +279,17 @@
           </template>
         </el-table-column>
         <el-table-column
+          prop="point_fee"
+          width="120"
+          label="积分抵扣"
+          align="right"
+          header-align="center"
+        >
+          <template slot-scope="scope">
+            {{ (scope.row.point_fee / 100).toFixed(2) }}
+          </template>
+        </el-table-column>
+        <el-table-column
           prop="cost_fee"
           width="120"
           label="结算价（¥）"
@@ -372,7 +387,7 @@
             {{ scope.row.order_status_msg }}
           </template>
         </el-table-column>
-
+        <el-table-column prop="salespersonname " label="业务员"></el-table-column>
         <el-table-column label="配送方式">
           <template slot-scope="scope">
             {{ getDistributionType(scope.row) }}
@@ -607,7 +622,8 @@ export default {
         time_start_end: '',
         order_holder: '', // 订单分类
         distributor_id: '', // 店铺
-        subDistrict: []
+        subDistrict: [],
+        salespersonname:''
       },
       deliveryPersonnel: [], //配送员信息
       datapass_block: 1, // 是否为数据脱敏

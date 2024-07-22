@@ -26,7 +26,7 @@
 <template>
   <div class="page-body">
     <SpRouterView>
-      <div class="action-container">
+      <!-- <div class="action-container">
         <el-button type="primary" icon="iconfont icon-xinzengcaozuo-01" @click="addItems">
           添加商品
         </el-button>
@@ -44,7 +44,7 @@
             <el-dropdown-item command="physicalstoreupload"> 库存导入 </el-dropdown-item>
           </el-dropdown-menu>
         </el-dropdown>
-      </div>
+      </div> -->
 <!--      <div v-else class="action-container">-->
 <!--        <el-button type="primary" icon="iconfont icon-xinzengcaozuo-01" @click="addItems">-->
 <!--          添加商品-->
@@ -214,7 +214,7 @@
           </el-dropdown-menu>
         </el-dropdown>
 
-        <el-dropdown v-if="IS_ADMIN()">
+        <el-dropdown v-if=" VERSION_STANDARD && IS_ADMIN()">
           <el-button type="primary" plain icon="iconfont icon-daorucaozuo-01">
             同步商品<i class="el-icon-arrow-down el-icon--right" />
           </el-button>

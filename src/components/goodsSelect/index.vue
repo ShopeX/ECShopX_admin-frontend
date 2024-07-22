@@ -162,6 +162,12 @@
          {{ itemSourceMap[scope.row.item_holder] }}
         </template>
       </el-table-column>
+      <el-table-column prop="market_price"
+        show-overflow-tooltip label="市场价" >
+        <template slot-scope="scope">
+         ¥{{ scope.row.market_price /100 }}
+        </template>
+      </el-table-column>
       <el-table-column
         prop="price"
         label="销售价"
@@ -169,11 +175,12 @@
         :formatter="priceformatter"
         show-overflow-tooltip
       />
-      <el-table-column prop="cost_price" label="成本价" >
+      <el-table-column prop="cost_price" label="成本价" width="80"
+        show-overflow-tooltip >
         <template slot-scope="scope">
-         {{ scope.row.cost_price /100 }}
+         ¥{{ scope.row.cost_price /100 }}
         </template>
-      </el-table-column>
+        </el-table-column>
       <el-table-column prop="store" label="库存" width="80" show-overflow-tooltip />
     </el-table>
     <el-table
@@ -207,6 +214,12 @@
          {{ itemSourceMap[scope.row.item_holder] }}
         </template>
       </el-table-column>
+      <el-table-column prop="market_price"
+        show-overflow-tooltip label="市场价" >
+        <template slot-scope="scope">
+         ¥{{ scope.row.market_price /100 }}
+        </template>
+      </el-table-column>
       <el-table-column
         prop="price"
         label="销售价"
@@ -215,8 +228,11 @@
         show-overflow-tooltip
       />
       <el-table-column prop="cost_price" label="成本价" width="80"
-        :formatter="priceformatter"
-        show-overflow-tooltip />
+        show-overflow-tooltip >
+        <template slot-scope="scope">
+         ¥{{ scope.row.cost_price /100 }}
+        </template>
+        </el-table-column>
       <el-table-column prop="store" label="库存" width="80" show-overflow-tooltip />
     </el-table>
     <div v-if="total_count > params.pageSize" class="pager">

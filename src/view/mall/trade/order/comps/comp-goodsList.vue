@@ -67,6 +67,11 @@
           </div>
         </template>
       </el-table-column>
+      <el-table-column prop="point_fee" label="抵扣积分" width="120">
+        <template slot-scope="scope">
+          {{ scope.row.point_fee / 100 }}
+        </template>
+      </el-table-column>
       <el-table-column prop="pic" label="成本价(¥)" width="120">
         <template slot-scope="scope">
           {{ scope.row.fee_symbol }}{{ scope.row.cost_price / 100 }}

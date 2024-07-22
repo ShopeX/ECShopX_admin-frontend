@@ -163,6 +163,16 @@
         <SpFilterFormItem prop="operator_name" label="来源供应商:">
           <el-input v-model="params.operator_name" placeholder="请输入来源供应商" />
         </SpFilterFormItem>
+        <SpFilterFormItem prop="item_holder" label="商品类型:">
+          <el-select v-model="params.item_holder" placeholder="请选择商品类型" clearable>
+            <el-option
+              v-for="item in goodCategory"
+              :key="item.value"
+              :label="item.title"
+              :value="item.value"
+            />
+          </el-select>
+        </SpFilterFormItem>
       </SpFilterForm>
 
       <div class="action-container">
@@ -236,7 +246,13 @@
                 </div>
               </template>
             </el-table-column>
-            <el-table-column label="所属供应商" prop="operator_name" width="120" />
+            <el-table-column  label="商品类型" width="120">
+              <template slot-scope="scope">
+                {{ goodCategoryMap[scope.row.item_holder] }}
+              </template>
+            </el-table-column>
+
+            <el-table-column label="来源供应商" prop="operator_name" width="120" />
             <el-table-column
               label="供应商货号"
               prop="supplier_goods_bn"
@@ -244,6 +260,11 @@
               align="right"
               header-align="center"
             />
+            <el-table-column  label="供应状态" width="120">
+              <template slot-scope="scope">
+                {{ scope.row.is_market == '1' ? '可售' : '不可售' }}
+              </template>
+            </el-table-column>
             <!-- <el-table-column label="标签">
               <template slot-scope="scope">
                 <template>
@@ -804,6 +825,7 @@ import {
 import { getPageCode } from '@/api/marketing'
 import { VERSION_IN_PURCHASE } from '@/utils'
 import mixins from '@/mixins'
+import { GOOD_CATEGORY, GOOD_CATEGORY_MAP } from '@/consts'
 
 import GoodsSelect from './comps/goodsSelect'
 import skuFinder from './comps/skuFinder'
@@ -926,8 +948,11 @@ export default {
         brand_id: '',
         goods_bn: '',
         operator_name: '',
-        is_can_sale: ''
+        is_can_sale: '',
+        item_holder:''
       },
+      goodCategoryMap: GOOD_CATEGORY_MAP,
+      goodCategory: GOOD_CATEGORY,
       start_date: '',
       end_date: '',
       addTemplatesdialogVisible: false,

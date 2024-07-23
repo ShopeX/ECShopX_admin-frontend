@@ -579,7 +579,7 @@ export default {
 
       const { location } = await fetchJsonp({
         method: 'get',
-        url: `https://apis.map.qq.com/ws/geocoder/v1?address=${province}${city}${country}${address}&key=SIUBZ-AUDCR-XGWW2-WQ5BW-ZWYYJ-GJFR4&output=jsonp`
+        url: `https://apis.map.qq.com/ws/geocoder/v1?address=${province}${city}${country}${address}&key=${process.env.VUE_APP_MAP_KEY}&output=jsonp`
       })
       this.form.lng = location.lng
       this.form.lat = location.lat

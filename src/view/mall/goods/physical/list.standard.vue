@@ -1040,7 +1040,7 @@ export default {
       itemSkuDrawerTitle: '',
       itemSkuList: [],
       goodCategoryMap: GOOD_CATEGORY_MAP,
-      goodCategory: GOOD_CATEGORY,
+      goodCategory: GOOD_CATEGORY.filter(item=>item.value != 'distributor'),
     }
   },
   computed: {

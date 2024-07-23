@@ -175,7 +175,7 @@
         </el-dropdown-menu>
       </el-dropdown>
       <el-tooltip
-        v-if="IS_SUPPLIER()"
+        v-if="!IS_MERCHANT()"
         effect="light"
         content="请将从订单列表导出的主订单文件，删除不想批量发货的订单号，修改物流公司，物流单号后上传即可。"
         placement="top-start"
@@ -389,7 +389,7 @@
             {{ scope.row.order_status_msg }}
           </template>
         </el-table-column>
-        <el-table-column prop="salespersonname " label="业务员"></el-table-column>
+        <!-- <el-table-column prop="salespersonname " label="业务员"></el-table-column> -->
         <el-table-column label="配送方式">
           <template slot-scope="scope">
             {{ getDistributionType(scope.row) }}
@@ -593,7 +593,7 @@ import {
   PAY_TYPE,
   GOOD_CATEGORY_MAP
 } from '@/consts'
-import { IS_SUPPLIER } from '../../../../utils'
+import { IS_MERCHANT, IS_SUPPLIER } from '../../../../utils'
 
 export default {
   // components: { CompTableView },

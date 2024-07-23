@@ -51,8 +51,8 @@ export default {
         )
     },
     {
-      path: 'deliverystaffstatistics',
-      name: `deliverystaffstatistics`,
+      path: 'companydata_deliverystaffstatistics',
+      name: `companydata_deliverystaffstatistics`,
       meta: {
         title: `${name}-配送员业绩`
       },

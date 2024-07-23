@@ -1394,7 +1394,7 @@ export default {
         const isLogistics = receipt_type == 'logistics'
         const isSelfDelivery = receipt_type == 'merchant'
 
-        if (VERSION_STANDARD || (distributor_id == 0 && order_holder != 'supplier') || this.login_type == 'distributor') {
+        if ((VERSION_STANDARD && order_holder != 'supplier') || (distributor_id == 0 && order_holder != 'supplier') || this.login_type == 'distributor') {
           if (
             !isDada &&
             cancel_status == 'NO_APPLY_CANCEL' &&
@@ -1461,7 +1461,23 @@ export default {
           }
 
           actionBtns.push({ name: '备注', key: 'remark' })
+        }else if(order_holder == 'supplier'){
+          //供应商订单有取消和备注
+          if (
+            !isDada &&
+            cancel_status == 'NO_APPLY_CANCEL' &&
+            ['NOTPAY', 'PAYED'].includes(order_status) &&
+            ziti_status != 'DONE'
+          ) {
+            // 非同城配的取消订单按钮
+            if (!isDada || (isDada && ['0', '1'].includes(dada.data_status))) {
+              actionBtns.push({ name: '取消订单', key: 'cancel' })
+            }
+          }
+
+          actionBtns.push({ name: '备注', key: 'remark' })
         }
+
         if (order_status == 'NOTPAY') {
           if (VERSION_PLATFORM) {
             if ((this.IS_ADMIN() && distributor_id == 0) || this.IS_DISTRIBUTOR()) {
@@ -1480,6 +1496,7 @@ export default {
             actionBtns.push({ name: '申请售后', key: 'salesAfter' })
           }
         }
+
 
         return {
           ...item,

@@ -175,7 +175,7 @@
         </el-dropdown-menu>
       </el-dropdown>
       <el-tooltip
-        v-if="!IS_MERCHANT()"
+        v-if="IS_SUPPLIER()"
         effect="light"
         content="请将从订单列表导出的主订单文件，删除不想批量发货的订单号，修改物流公司，物流单号后上传即可。"
         placement="top-start"

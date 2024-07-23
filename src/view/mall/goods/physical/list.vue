@@ -245,6 +245,7 @@
         ref="finder"
         :url="IS_DISTRIBUTOR() ? '/distributor/items' : '/goods/items'"
         fixed-row-action
+        :row-actions-align="'left'"
         row-actions-width="200px"
         :other-config="{}"
         :setting="tableList"

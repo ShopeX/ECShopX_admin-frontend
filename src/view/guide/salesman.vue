@@ -22,6 +22,60 @@
               {{ scope.row.storeInfo.name }}
             </template>
           </el-table-column>
+  <div>
+    <el-row :gutter="20">
+      <el-col>
+        <shop-select
+          distributors
+          @update="storeChange"
+          @init="initChange"
+        />
+        <el-input
+          v-model="params.mobile"
+          placeholder="手机号"
+          class="input-m"
+          clearable
+        >
+          <el-button
+            slot="append"
+            icon="el-icon-search"
+            @click="numberSearch"
+          />
+        </el-input>
+        <el-button
+          type="primary"
+          icon="plus"
+          @click="handleAddSalesmanAction"
+        >
+          添加
+        </el-button>
+      </el-col>
+    </el-row>
+    <el-tabs
+      v-model="activeName"
+      type="border-card"
+      @tab-click="handleClick"
+    >
+      <el-tab-pane
+        label="列表"
+        name="admin"
+      />
+      <!-- <el-tab-pane
+        label="禁用"
+        name="invalid"
+      /> -->
+      <el-table
+        v-loading="loading"
+        :data="list"
+      >
+        <el-table-column
+          prop="salesman_name"
+          label="姓名"
+        />
+        <el-table-column
+          prop="mobile"
+          label="手机号"
+        />
 
           <el-table-column prop="children_count" width="100" label="会员数量">
             <!-- sortable -->

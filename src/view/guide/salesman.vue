@@ -24,8 +24,7 @@
           </el-table-column>
         </el-table>
         </el-tabs>
-        </div>
-  <div>
+
     <el-row :gutter="20">
       <el-col>
         <shop-select

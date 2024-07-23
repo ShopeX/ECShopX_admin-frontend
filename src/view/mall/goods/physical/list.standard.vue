@@ -865,7 +865,6 @@ import { GOOD_CATEGORY, GOOD_CATEGORY_MAP } from '@/consts'
 
 import GoodsSelect from './comps/goodsSelect'
 import skuFinder from './comps/skuFinder'
-import { GOOD_CATEGORY_MAP,GOOD_CATEGORY } from '@/consts'
 
 export default {
   components: {

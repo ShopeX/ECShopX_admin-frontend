@@ -148,6 +148,7 @@
             min="0"
             size="mini"
             placeholder=""
+            :disabled="disabled"
           />
         </template>
       </el-table-column>
@@ -235,7 +236,7 @@
       </el-table-column>
       <el-table-column prop="cost_price" label="成本价">
         <template slot-scope="scope">
-          <el-input v-model="scope.row.cost_price" type="number" min="0" size="mini" />
+          <el-input v-model="scope.row.cost_price" type="number" min="0" size="mini" :disabled="disabled" />
         </template>
       </el-table-column>
       <el-table-column prop="market_price" label="市场价">

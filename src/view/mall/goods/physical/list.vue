@@ -171,22 +171,22 @@
         <el-button v-if="!IS_SUPPLIER()" type="primary" plain @click="changeCategory">
           更改销售分类
         </el-button>
-        <el-button type="primary" plain @click="changeGoodsLabel"> 标签 </el-button>
+        <el-button type="primary" plain @click="changeGoodsLabel"> 打标签 </el-button>
         <el-button v-if="!IS_SUPPLIER()" type="primary" plain @click="changeFreightTemplate">
           更改运费模板
         </el-button>
         <el-button v-if="!IS_ADMIN()" type="primary" plain @click="onBatchSubmitItems">
-          批量提交
+          批量提交审核
         </el-button>
         <el-button type="primary" plain @click="changeItemsStore"> 统一库存 </el-button>
         <el-button type="primary" plain @click="batchChangeStore"> 更改状态 </el-button>
         <el-button type="primary" plain @click="batchGifts('true')"> 设为赠品 </el-button>
         <el-button type="primary" plain @click="batchGifts('false')"> 设为非赠品 </el-button>
 
-        <el-button type="primary" plain @click="() => changeHaltTheSales('stop')"> 停售 </el-button>
+        <!-- <el-button type="primary" plain @click="() => changeHaltTheSales('stop')"> 停售 </el-button>
         <el-button type="primary" plain @click="() => changeHaltTheSales('start')">
           开售
-        </el-button>
+        </el-button> -->
         <!-- <el-button type="primary" plain @click="changeGoodsPrice"> 批量改价 </el-button> -->
 
         <el-dropdown>
@@ -265,10 +265,10 @@
       >
         <el-table v-loading="skuLoading" border :data="specItems" height="100%">
           <el-table-column label="规格" prop="item_spec_desc" min-width="120" />
-          <el-table-column label="原价" prop="market_price" width="100">
+          <el-table-column label="市场价" prop="market_price" width="100">
             <template slot-scope="scope"> ¥{{ scope.row.market_price }} </template>
           </el-table-column>
-          <el-table-column label="门店采购价" width="160">
+          <el-table-column label="销售价" width="160">
             <template slot-scope="scope">
               <el-input-number
                 v-model="scope.row.price"
@@ -456,7 +456,7 @@
 <script>
 import moment from 'moment'
 import { exportItemsData, exportItemsTagData, saveIsGifts } from '@/api/goods'
-import { IS_ADMIN, IS_SUPPLIER } from '@/utils'
+import { IS_ADMIN, IS_SUPPLIER,IS_DISTRIBUTOR } from '@/utils'
 import { getPageCode } from '@/api/marketing'
 import { GOODS_APPLY_STATUS } from '@/consts'
 
@@ -808,8 +808,8 @@ export default {
             buttonType: 'text',
             visible: (row) => {
               const isShow =
-                IS_SUPPLIER() &&
-                (row.audit_status == 'submitting' || row.audit_status == 'rejected')
+                IS_ADMIN() || IS_DISTRIBUTOR() || (IS_SUPPLIER() &&
+                (row.audit_status == 'submitting' || row.audit_status == 'rejected'))
               return isShow
             },
             action: {
@@ -877,7 +877,7 @@ export default {
             key: 'label',
             type: 'button',
             buttonType: 'text',
-            visible: (row) => IS_ADMIN(),
+            visible: (row) => IS_ADMIN() || IS_DISTRIBUTOR(),
             action: {
               type: 'link',
               handler: async ([row]) => {
@@ -952,7 +952,8 @@ export default {
             type: 'button',
             buttonType: 'text',
             visible: (row) => {
-              const visible = row.approve_status == 'instock' && !IS_SUPPLIER() && !IS_ADMIN()
+              // const visible = row.approve_status == 'instock' && !IS_SUPPLIER() && !IS_ADMIN()
+              const visible = row.approve_status == 'instock' && !IS_SUPPLIER()
               return visible
             },
             action: {
@@ -1119,18 +1120,20 @@ export default {
             align: "right",
             headerAlign: 'center'
           },
-          {
-            name: '来源供应商',
-            key: 'operator_name',
-            width: 100
-          },
-          {
-            name: '可售状态',
-            key: 'is_market',
-            formatter: (value, row, col) => {
-              return value == '1' ? '可售' : '不可售'
-            }
-          },
+          // {
+          //   name: '来源供应商',
+          //   key: 'operator_name',
+          //   width: 100,
+          //   visible: !(this.IS_DISTRIBUTOR() && this.VERSION_PLATFORM)
+          // },
+          // {
+          //   name: '可售状态',
+          //   key: 'is_market',
+          //   formatter: (value, row, col) => {
+          //     return value == '1' ? '可售' : '不可售'
+          //   },
+          //   visible:!(this.IS_DISTRIBUTOR() && this.VERSION_PLATFORM)
+          // },
           {
             name: '商品状态',
             width: 120,
@@ -1161,14 +1164,14 @@ export default {
               return moment(value * 1000).format('YYYY-MM-DD HH:mm:ss')
             }
           },
-          {
-            name: '审核时间',
-            key: 'audit_date',
-            width: 160,
-            formatter: (value, row, col) => {
-              return value ? moment(value * 1000).format('YYYY-MM-DD HH:mm:ss') : ''
-            }
-          },
+          // {
+          //   name: '审核时间',
+          //   key: 'audit_date',
+          //   width: 160,
+          //   formatter: (value, row, col) => {
+          //     return value ? moment(value * 1000).format('YYYY-MM-DD HH:mm:ss') : ''
+          //   }
+          // },
           {
             name: '更新时间',
             key: 'updated',
@@ -1428,7 +1431,7 @@ export default {
     },
     async onBatchChangeStateSubmit() {
       await this.$api.marketing.updateDistributorItem({
-        // distributor_id: this.shopId,
+        distributor_id: this.shopId,
         goods_id: this.selectionItems.map((item) => item.item_id),
         is_can_sale: this.batchChangeStateForm.status
       })

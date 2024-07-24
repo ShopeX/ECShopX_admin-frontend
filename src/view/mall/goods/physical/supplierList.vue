@@ -691,6 +691,7 @@ export default {
               )
             }
           },
+          { name: 'sku编码', key: 'item_bn', width: 120 },
           { name: '来源供应商', key: 'operator_name', width: 120 },
           {
             name: '标签',

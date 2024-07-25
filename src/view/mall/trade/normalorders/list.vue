@@ -305,23 +305,43 @@
             {{ (scope.row.freight_fee || 0) / 100 }}
           </template>
         </el-table-column>
+
         <el-table-column prop="mobile" label="业务员">
           <template slot-scope="scope">
+            <div class="order-num">
+
             {{ scope.row.salesman_mobile }}
             <el-tooltip
-              v-if="datapass_block == 0"
-              effect="dark"
-              content="复制"
-              placement="top-start"
-            >
-              <i
-                v-clipboard:copy="scope.row.salesman_mobile"
-                v-clipboard:success="onCopySuccess"
-                class="el-icon-document-copy"
-              />
+                v-if="datapass_block == 0"
+                effect="dark"
+                content="复制"
+                placement="top-start"
+              >
+                <i
+                  v-clipboard:copy="scope.row.salesman_mobile"
+                  v-clipboard:success="onCopySuccess"
+                  class="el-icon-document-copy"
+                />
+            </el-tooltip>               
+          </div>
+            <div class="order-num">
+            {{ scope.row.salesman_name }}
+            <el-tooltip
+                v-if="datapass_block == 0"
+                effect="dark"
+                content="复制"
+                placement="top-start"
+              >
+                <i
+                  v-clipboard:copy="scope.row.salesman_name"
+                  v-clipboard:success="onCopySuccess"
+                  class="el-icon-document-copy"
+                />
             </el-tooltip>
+          </div>                           
           </template>
-        </el-table-column>
+
+        </el-table-column>        
         <el-table-column prop="mobile" label="客户手机号">
           <template slot-scope="scope">
             <template v-if="!scope.row.user_delete && login_type !== 'merchant'">

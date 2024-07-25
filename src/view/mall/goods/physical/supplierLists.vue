@@ -262,8 +262,17 @@
       >
         <el-table v-loading="skuLoading" border :data="specItems" height="100%">
           <el-table-column label="规格" prop="item_spec_desc" min-width="120" />
-          <el-table-column label="市场价" prop="market_price" width="100">
-            <template slot-scope="scope"> ¥{{ scope.row.market_price }} </template>
+          <el-table-column label="市场价" prop="market_price" width="160">
+            <template slot-scope="scope">
+              <el-input-number
+                v-model="scope.row.market_price"
+                controls-position="right"
+                :min="0"
+                :precision="2"
+                style="width: 120px"
+                @change="updateGoodsSkuPrice(scope.row,'market_price')"
+              />
+            </template>
           </el-table-column>
           <el-table-column label="销售价" width="160">
             <template slot-scope="scope">
@@ -285,7 +294,6 @@
                 :min="0"
                 :precision="2"
                 style="width: 120px"
-                disabled
                 @change="updateGoodsSkuPrice(scope.row,'cost_price')"
               />
             </template>
@@ -1558,10 +1566,16 @@ export default {
         this.$message.error('导出失败')
       }
     },
-    async updateGoodsSkuPrice({ item_id, price,cost_price },priceType) {
+    async updateGoodsSkuPrice({ item_id, price,cost_price,market_price },priceType) {
+      const priceMap = {
+        'price':price,
+        'cost_price':cost_price,
+        'market_price':market_price
+      }
+
       await this.$api.goods.updateGoodsInfo({
         item_id,
-        [priceType]:priceType == 'price' ? price :cost_price,
+        [priceType]:priceMap[priceType],
         operate_source: IS_SUPPLIER() ? 'supplier' : 'platform'
       })
       this.$message.success('操作成功')

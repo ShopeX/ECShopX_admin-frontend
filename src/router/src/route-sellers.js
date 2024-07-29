@@ -72,6 +72,13 @@ export default {
       name: `业务员提现`,
       component: () => import('@/view/mall/marketing/salesmanwithdraw')
     },
+
+    {
+      path: 'popularize/popularizegoods',
+      name: `业务员商品`,
+      component: () => import('@/view/popularize/goods')
+    },   
+
     {
       path: 'storemanager/distributortags',
       name: `商家标签`,

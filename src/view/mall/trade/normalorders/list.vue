@@ -62,8 +62,8 @@
           />
         </el-select>
       </SpFilterFormItem>
-      <SpFilterFormItem prop="salespersonname " label="业务员:">
-        <el-input v-model="params.salespersonname " placeholder="请输入业务员" />
+      <SpFilterFormItem prop="salespersonname" label="业务员:">
+        <el-input v-model="params.salespersonname" placeholder="请输入业务员" />
       </SpFilterFormItem>
       <SpFilterFormItem prop="create_time" label="下单时间:" size="max">
         <el-date-picker

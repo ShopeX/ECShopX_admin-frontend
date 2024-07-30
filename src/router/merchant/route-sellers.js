@@ -70,7 +70,7 @@ export default {
     {
       path: 'popularize/popularizegoods',
       name: `分销商品`,
-      component: () => import('@/view/popularize/goods')
+      component: () => import('@/view/popularize/goodsStore')
     },    
     {
       path: 'distributoraftersalesaddress',

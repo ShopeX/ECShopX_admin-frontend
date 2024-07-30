@@ -75,6 +75,16 @@
               </el-tag>
             </template>
           </el-table-column>
+          <el-table-column prop="item_holder" label="商品类型" width="100">
+            <template slot-scope="scope">
+              <div class="ell3">
+                {{ goodCategoryMap[scope.row.item_holder] }}
+              </div>
+
+            </template>
+          </el-table-column>
+
+
           <!--          <el-table-column prop="item_spec_desc" label="SPU编码">-->
           <!--            <template slot-scope="scope">-->
           <!--              {{ scope.row.goods_bn }}-->
@@ -90,9 +100,15 @@
               {{ scope.row.item_spec_desc ? scope.row.item_spec_desc : '单规格' }}
             </template>
           </el-table-column>
+          <el-table-column prop="supplier_name" label="来源供应商" width="120"></el-table-column>
           <el-table-column prop="price" label="单价（¥）" width="100">
             <template slot-scope="scope">
               {{ (scope.row.price / 100).toFixed(2) }}
+            </template>
+          </el-table-column>
+          <el-table-column prop="cost_price" label="成本价（¥）" width="100">
+            <template slot-scope="scope">
+              {{ (scope.row.cost_price / 100).toFixed(2) }}
             </template>
           </el-table-column>
           <el-table-column prop="num" label="数量" width="80" />
@@ -110,6 +126,11 @@
           <el-table-column label="小计（¥）" width="120">
             <template slot-scope="scope">
               {{ (scope.row.item_fee / 100).toFixed(2) }}
+            </template>
+          </el-table-column>
+          <el-table-column label="成本小计（¥）" width="120">
+            <template slot-scope="scope">
+              {{ (scope.row.cost_fee / 100).toFixed(2) }}
             </template>
           </el-table-column>
           <el-table-column v-if="!VERSION_IN_PURCHASE" label="会员优惠（¥）" width="120">
@@ -310,6 +331,46 @@
       </div>
     </el-card>
 
+    <el-card class="el-card--normal">
+      <div slot="header">订单追踪</div>
+      <div v-if="orderInfo.self_delivery_operator_name" class="card-panel">
+        <div class="card-panel-item">
+          <span>配送员姓名：{{ orderInfo.self_delivery_operator_name || '-' }}</span>
+          <span class="ml-16"
+            >配送员手机号：{{ orderInfo.self_delivery_operator_mobile || '-' }}</span
+          >
+          <span class="ml-16">配送费：{{ orderInfo.self_delivery_fee / 100 }}元</span>
+        </div>
+      </div>
+      <div class="delivery-log">
+        <el-timeline v-if="deliveryLog" :reverse="false">
+          <el-timeline-item
+            v-for="(key, index) in deliveryLog"
+            :key="index"
+            :timestamp="key.time | datetime('YYYY-MM-DD HH:mm:ss')"
+            placement="top"
+          >
+            <el-card>
+              <p>操作详情：{{ key.msg }}</p>
+              <p v-if="key.delivery_remark">配送备注：{{ key.delivery_remark }}</p>
+              <div v-if="key.pics.length">
+                配送照片：
+                <div class="img-box">
+                  <el-image
+                    v-for="(item, idx) in key.pics"
+                    :key="idx"
+                    :src="item"
+                    class="img-item"
+                    :preview-src-list="key.pics"
+                  />
+                </div>
+              </div>
+            </el-card>
+          </el-timeline-item>
+        </el-timeline>
+      </div>
+    </el-card>
+
     <!-- <el-card v-if="!VERSION_IN_PURCHASE && !VERSION_PLATFORM" class="el-card--normal">
       <div slot="header">分润信息</div>
       <el-row class="card-panel">
@@ -368,7 +429,8 @@ import {
   DISTRIBUTION_TYPE,
   PROFIT_TYPE,
   PAY_TYPE,
-  PAY_STATUS
+  PAY_STATUS,
+  GOOD_CATEGORY_MAP
 } from '@/consts'
 import { VERSION_STANDARD, VERSION_IN_PURCHASE, IS_SUPPLIER } from '@/utils'
 import moment from 'moment'
@@ -447,6 +509,7 @@ export default {
           message: '不能为空'
         }
       ],
+      goodCategoryMap:GOOD_CATEGORY_MAP,
       expressForm: {
         orders_delivery_id: '',
         delivery_corp: '',
@@ -548,7 +611,8 @@ export default {
         { label: '银行账号:', field: 'invoicedBankAccount', is_show: true },
         { label: '公司地址:', field: 'invoiceCompanyAddress', is_show: true }
       ],
-      isBindOMS: false
+      isBindOMS: false,
+      deliveryLog: []
     }
   },
   computed: {
@@ -747,6 +811,8 @@ export default {
         invoicedBankName,
         invoicedBankAccount
       }
+
+      this.deliveryLog = this.orderInfo?.app_info?.delivery_log
       this.memberRemark = orderInfo.remark || '暂无留言'
       this.merchantRemark = orderInfo.distributor_remark || '暂无备注'
       // debugger
@@ -871,4 +937,20 @@ export default {
 }
 </script>
 
-<style scoped lang="scss"></style>
+<style scoped lang="scss">
+.delivery-log {
+  margin-top: 16px;
+}
+.img-box {
+  display: flex;
+  flex-wrap: wrap;
+}
+.img-item {
+  width: 150px;
+  height: 150px;
+  margin: 0 20px 20px 0;
+}
+.ml-16 {
+  margin-left: 16px;
+}
+</style>

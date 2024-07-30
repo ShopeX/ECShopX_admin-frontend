@@ -58,7 +58,7 @@ export const IS_MERCHANT = () => {
   return login_type == 'merchant'
 }
 
-// 商户端
+// 供应商端
 export const IS_SUPPLIER = () => {
   const login_type = store.getters.login_type
   return login_type == 'supplier'

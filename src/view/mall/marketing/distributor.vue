@@ -33,7 +33,6 @@
           </div>
         </el-alert>
       </div>
-
       <div v-if="IS_MERCHANT()" style="margin-bottom: 10px">
         <el-alert type="info" title="" show-icon>
           <div>可在设置-店铺管理员添加店铺端账号，登录地址 【 {{ origin }}/shopadmin/login 】</div>
@@ -216,6 +215,18 @@
             />
           </template>
         </el-table-column>
+
+        <el-table-column width="100" label="开启业务员">
+          <template v-if="scope.row.is_valid !== 'delete'" slot-scope="scope">
+            <el-switch
+              v-model="scope.row.is_open_salesman"
+              active-color="#13ce66"
+              inactive-color="#cccccc"
+              @change="switchChange(scope.$index, scope.row)"
+            />
+          </template>
+        </el-table-column>
+
         <el-table-column width="70" label="状态">
           <template slot-scope="scope">
             <el-button
@@ -356,7 +367,7 @@
                 query: { distributor_id: scope.row.distributor_id }
               }"
             >
-              <span style="margin-right: 5px">微信支付配置2</span>
+              <span style="margin-right: 5px">微信支付配置</span>
             </router-link> -->
             <!--<el-button type="text" @click="downDistributor(scope.row, 'scancode')">扫码购页面码(微商城)</el-button>-->
             <!-- <router-link :to="{  path: matchInternalRoute('Storeshopitemanagement'), query: {distributor_id: scope.row.distributor_id}}">商品码</router-link> -->
@@ -1050,7 +1061,8 @@ export default {
       var params = {
         distributor_id: row.distributor_id,
         is_ziti: row.is_ziti,
-        is_delivery: row.is_delivery
+        is_delivery: row.is_delivery,
+        is_open_salesman: row.is_open_salesman
       }
       saveDistributor(params).then((response) => {
         this.detailDialog = false
@@ -1224,17 +1236,17 @@ export default {
       this.keFuDialog = false
       this.$message.success('保存成功')
     },
-    showSettingDistance() {
+    showSettingDistance(distributor_id) {
       // 设置距离参数
       this.setDistanceVisible = true
       let that = this
-
-      // distributor_id
-      getDistance().then((response) => {
-        that.distanceForm.distance = response.data.data.distance
-      })
-      // console.log('this.distributor_id', that.distributor_id)
-      // console.log('showSettingDistance', that.distanceForm)
+      that.distributorIds = distributor_id
+      that.distanceForm.distance = 0
+      if (distributor_id) {
+        getDistance({ distributor_id }).then((response) => {
+          that.distanceForm.distance = response.data.data.distance
+        })
+      }
     },
     handleDistanceCancel() {
       // 距离设置窗口关闭

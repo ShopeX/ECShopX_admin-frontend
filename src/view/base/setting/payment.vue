@@ -19,6 +19,10 @@
       <el-tab-pane label="银联商务支付配置" name="chinaumspay">
         <chinaumspayTemplates />
       </el-tab-pane>
+      <el-tab-pane label="默认积分抵扣配置" name="point">
+        <pointpay />
+      </el-tab-pane>
+
     </el-tabs>
   </div>
 </template>
@@ -29,6 +33,7 @@ import ebuypayTemplates from './payment/ebuypay'
 import hfpayTemplates from './payment/hfpay'
 import adapayTemplates from './payment/adapay'
 import chinaumspayTemplates from './payment/chinaumspay'
+import pointpay from './payment/pointpay'
 
 import { hfpayVersionStatus } from '@/api/fenzhang'
 
@@ -39,7 +44,8 @@ export default {
     ebuypayTemplates,
     hfpayTemplates,
     adapayTemplates,
-    chinaumspayTemplates
+    chinaumspayTemplates,
+    pointpay
   },
   data() {
     return {

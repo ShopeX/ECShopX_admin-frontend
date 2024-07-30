@@ -166,6 +166,40 @@ export function orderExport(query) {
   })
 }
 
+export function datacubeDeliverystaffdataExport(query) {
+  return fetch({
+    url: '/datacube/Deliverystaffdata/export',
+    method: 'get',
+    params: query
+  })
+}
+
+export function accountManagement(query) {
+  return fetch({
+    url: '/account/management',
+    method: 'get',
+    params: query
+  })
+}
+
+//取消配送员配送送
+export function orderCancelDeliverystaff(query) {
+  return fetch({
+    url: '/order/cancel/deliverystaff',
+    method: 'post',
+    params: query
+  })
+}
+
+//确认配送员配送送
+export function orderDeliverystaffConfirm(query) {
+  return fetch({
+    url: '/order/deliverystaff/confirm',
+    method: 'post',
+    params: query
+  })
+}
+
 export function orderNormalExport(query) {
   return fetch({
     url: '/orders/exportnormaldata',
@@ -562,6 +596,24 @@ export function changePriceConfirm(params) {
 export function salesAfterApply(params) {
   return fetch({
     url: '/aftersales/apply',
+    method: 'post',
+    params
+  })
+}
+
+// 修改物流信息
+export function updateLogistics(orders_delivery_id, query) {
+  return fetch({
+    url: `/delivery/${orders_delivery_id}`,
+    method: 'put',
+    params: query
+  })
+}
+
+//已打包
+export function confirmpackag(params) {
+  return fetch({
+    url: '/order/deliverypackag/confirm',
     method: 'post',
     params
   })

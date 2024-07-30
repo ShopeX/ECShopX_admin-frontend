@@ -90,6 +90,42 @@
             @change="searchByKey"
           />
         </el-col>
+        <el-col :span="6" class="last-col">
+          <el-input
+            v-model="params.supplier_name"
+            placeholder="所属供应商"
+            clearable
+            class="input-with-select"
+          >
+            <el-button slot="append" icon="el-icon-search" @click="searchByKey" />
+          </el-input>
+        </el-col>
+        <el-col :span="5" class="last-col">
+          <el-select
+            v-model="params.item_holder"
+            placeholder="商品类型"
+            clearable
+            :disabled="setSearch"
+            @change="searchByKey"
+          >
+            <el-option
+              v-for="item in categoryOption"
+              :key="item.value"
+              :label="item.title"
+              :value="item.value"
+            />
+          </el-select>
+        </el-col>
+        <el-col :span="5" class="last-col">
+          <el-select v-model="params.is_gift"
+            placeholder="是否为赠品"
+            clearable
+            :disabled="setSearch"
+            @change="searchByKey">
+            <el-option :value="true" label="是" />
+            <el-option :value="false" label="否" />
+          </el-select>
+        </el-col>
       </el-row>
     </div>
     <el-table
@@ -115,13 +151,36 @@
       <el-table-column prop="itemId" label="商品ID" width="70" />
       <el-table-column prop="itemName" label="商品名称" />
       <el-table-column prop="item_spec_desc" label="规格" />
+      <el-table-column label="是否赠品" >
+        <template slot-scope="scope">
+         {{ scope.row.is_gift == '1' ? '是' : '否' }}
+        </template>
+      </el-table-column>
+      <el-table-column prop="supplier_name" label="所属供应商" />
+      <el-table-column label="商品类型" >
+        <template slot-scope="scope">
+         {{ itemSourceMap[scope.row.item_holder] }}
+        </template>
+      </el-table-column>
+      <el-table-column prop="market_price"
+        show-overflow-tooltip label="市场价" >
+        <template slot-scope="scope">
+         ¥{{ scope.row.market_price /100 }}
+        </template>
+      </el-table-column>
       <el-table-column
         prop="price"
-        label="价格"
+        label="销售价"
         width="80"
         :formatter="priceformatter"
         show-overflow-tooltip
       />
+      <el-table-column prop="cost_price" label="成本价" width="80"
+        show-overflow-tooltip >
+        <template slot-scope="scope">
+         ¥{{ scope.row.cost_price /100 }}
+        </template>
+        </el-table-column>
       <el-table-column prop="store" label="库存" width="80" show-overflow-tooltip />
     </el-table>
     <el-table
@@ -144,13 +203,36 @@
       <el-table-column prop="itemId" label="商品ID" width="70" />
       <el-table-column prop="itemName" label="商品名称" />
       <el-table-column prop="item_spec_desc" label="规格" />
+      <el-table-column label="是否赠品" >
+        <template slot-scope="scope">
+         {{ scope.row.is_gift == '1' ? '是' : '否' }}
+        </template>
+      </el-table-column>
+      <el-table-column prop="supplier_name" label="所属供应商" />
+      <el-table-column label="商品类型" >
+        <template slot-scope="scope">
+         {{ itemSourceMap[scope.row.item_holder] }}
+        </template>
+      </el-table-column>
+      <el-table-column prop="market_price"
+        show-overflow-tooltip label="市场价" >
+        <template slot-scope="scope">
+         ¥{{ scope.row.market_price /100 }}
+        </template>
+      </el-table-column>
       <el-table-column
         prop="price"
-        label="价格"
+        label="销售价"
         width="80"
         :formatter="priceformatter"
         show-overflow-tooltip
       />
+      <el-table-column prop="cost_price" label="成本价" width="80"
+        show-overflow-tooltip >
+        <template slot-scope="scope">
+         ¥{{ scope.row.cost_price /100 }}
+        </template>
+        </el-table-column>
       <el-table-column prop="store" label="库存" width="80" show-overflow-tooltip />
     </el-table>
     <div v-if="total_count > params.pageSize" class="pager">
@@ -179,6 +261,7 @@ import { getItemsList, getCategory, getSkuList, getGoodsAttr } from '@/api/goods
 import { getShippingTemplatesList } from '@/api/shipping'
 import { getDefaultCurrency } from '@/api/company'
 import { getDistributorItems } from '@/api/marketing'
+import { GOOD_CATEGORY_MAP } from '../../consts'
 
 export default {
   components: {
@@ -276,7 +359,9 @@ export default {
         distributor_id: '',
         is_sku: false,
         audit_status: 'approved',
-        is_gift: false
+        is_gift: '',
+        supplier_name:'',
+        item_holder:'',
       },
       categoryList: [],
       select_category_value: [],
@@ -292,6 +377,20 @@ export default {
       storeSelect: '',
       store_value: '',
       templatesList: [],
+      categoryOption: [
+        {
+          title: '自营商品',
+          value: 'platform'
+        },
+        {
+          title: '商户商品',
+          value: 'distributor'
+        },
+        {
+          title: '供应商商品',
+          value: 'supplier'
+        }
+      ],
       statusOption: [
         {
           title: '前台可销售',
@@ -310,6 +409,7 @@ export default {
           value: 'instock'
         }
       ],
+      itemSourceMap:GOOD_CATEGORY_MAP,
       currency: {},
       cursymbol: '￥',
       templateRadio: ''
@@ -474,25 +574,27 @@ export default {
         param.brand_id = this.select_branch_value
         const category = [...this.select_category_value]
         param.category = category.pop()
-        if (
-          this.VERSION_PLATFORM ||
+
+        //云店店铺走DistributorItem
+        if ((this.VERSION_STANDARD && this.IS_DISTRIBUTOR()) ||
+          !(this.VERSION_PLATFORM ||
           !this.params.distributor_id ||
-          this.params.distributor_id == '0'
+          this.params.distributor_id == '0')
         ) {
-          getItemsList(param).then((response) => {
+           getDistributorItems(param).then((response) => {
+            this.itemsData = response.data.data.list
+
+            this.total_count = parseInt(response.data.data.total_count)
+            this.loading = false
+          })
+        } else {
+         getItemsList(param).then((response) => {
             this.itemsData = response.data.data.list
             this.total_count = parseInt(response.data.data.total_count)
             this.loading = false
             // 回显
 
             this.toggleSelection(this.relItemsIds)
-          })
-        } else {
-          getDistributorItems(param).then((response) => {
-            this.itemsData = response.data.data.list
-
-            this.total_count = parseInt(response.data.data.total_count)
-            this.loading = false
           })
         }
       }

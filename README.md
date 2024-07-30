@@ -1,4 +1,4 @@
-# ecshopx-admin
+# ecshopx-admin   1
 
 ## 安装依赖
 npm run install

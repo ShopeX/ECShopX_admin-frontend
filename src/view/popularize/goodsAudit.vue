@@ -93,11 +93,28 @@
           >
             <el-table-column type="selection" align="center" label="全选" />
             <el-table-column prop="goods_id" label="商品ID" width="90" />
+            <el-table-column prop="distributor_name.name" label="店铺名称" width="120" />
+            <el-table-column prop="distributor_id" label="店ID" width="70" />
+
             <el-table-column label="审核状态" width="100" fixed>
               <template slot-scope="scope">
-                <el-tag v-if="scope.row.rebate === 2" size="mini"> 等待审核 </el-tag>
-                <el-tag v-if="scope.row.rebate === 1" size="mini" type="success"> 通过审核 </el-tag>
-                <el-tag v-if="scope.row.rebate === 3" size="mini" type="warning"> 审核拒绝 </el-tag>
+                <el-tag v-if="scope.row.rebate === 2 || scope.row.rebate === '2'" size="mini">
+                  等待审核
+                </el-tag>
+                <el-tag
+                  v-if="scope.row.rebate === 1 || scope.row.rebate === '1'"
+                  size="mini"
+                  type="success"
+                >
+                  通过审核
+                </el-tag>
+                <el-tag
+                  v-if="scope.row.rebate === 3 || scope.row.rebate === '3'"
+                  size="mini"
+                  type="warning"
+                >
+                  审核拒绝
+                </el-tag>
               </template>
             </el-table-column>
             <el-table-column label="商品图片" width="80">
@@ -164,7 +181,7 @@ import '@riophae/vue-treeselect/dist/vue-treeselect.css'
 import { Message } from 'element-ui'
 import shopSelect from '@/components/shopSelect'
 import district from '@/common/district.json'
-import { getItemsList, updateGoodsInfo } from '@/api/goods'
+import { getItemsListAll, updateGoodsInfo } from '@/api/goods'
 
 export default {
   components: {
@@ -200,6 +217,7 @@ export default {
       loading: false,
       total_count: 0,
       params: {
+        from_page: 'goodsAudit',
         distributor_id: '',
         page: 1,
         pageSize: 20,
@@ -286,7 +304,7 @@ export default {
     },
     getGoodsList() {
       this.loading = true
-      getItemsList(this.params).then((response) => {
+      getItemsListAll(this.params).then((response) => {
         this.ItemsList = response.data.data.list
         this.total_count = response.data.data.total_count
         this.loading = false

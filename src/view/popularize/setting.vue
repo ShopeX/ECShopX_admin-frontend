@@ -647,7 +647,11 @@ export default {
     save() {
       let plusReg = /^[1-9](\d+)?$/
       let countReg = /^\d+$/
-
+      console.log(this.params.limit_rebate)
+      if (this.form.limit_rebate < 1) {
+        this.$message({ message: '提现限制需不低于1元', type: 'error' })
+        return
+      }
       if (this.form.isOpenPopularize) {
         if (this.form.change_promoter.type == 'vip_grade') {
           if (

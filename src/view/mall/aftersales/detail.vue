@@ -124,7 +124,9 @@
               </template>
             </el-table-column>
             <el-table-column prop="item_name" label="商品名称" width="180" />
+            <el-table-column prop="item_bn" label="sku编码" width="180" />
             <el-table-column prop="item_spec_desc" label="规格" width="180" />
+            <el-table-column prop="supplier_name" label="来源供应商" width="180" />
             <el-table-column prop="num" label="申请数量" width="180" />
             <el-table-column label="应退总金额(元)">
               <template slot-scope="scope">
@@ -134,6 +136,11 @@
             <el-table-column label="应退总积分" v-if="!IS_SUPPLIER()">
               <template slot-scope="scope">
                 <span>{{ scope.row.refund_point }}</span>
+              </template>
+            </el-table-column>
+            <el-table-column prop="cost_price" label="成本价" >
+              <template slot-scope="scope">
+              {{ scope.row.cost_price && (scope.row.cost_price / 100 ) }}
               </template>
             </el-table-column>
           </el-table>

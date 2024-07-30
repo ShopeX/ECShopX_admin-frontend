@@ -49,8 +49,8 @@
 <template>
   <div class="attr-category">
     <CompButton
-      placeholder="选择标签"
-      format="{0}个标签"
+      placeholder="选择店铺签"
+      format="{0}个店铺签"
       :value="value.length"
       :view-btn="false"
       @click="onAddLabel"

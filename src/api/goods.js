@@ -104,6 +104,17 @@ export function getItemsList(query) {
     }
   })
 }
+// 商品
+export function getItemsListAll(query) {
+  return fetch({
+    url: '/goods/items',
+    method: 'get',
+    params: {
+      ...query
+      // distributor_id: !query.distributor_id ? 0 : query.distributor_id
+    }
+  })
+}
 
 // 商品
 export function getDrawItemsList(query) {
@@ -542,6 +553,34 @@ export function getGoodsCommission(id) {
 export function saveGoodsCommission(query) {
   return fetch({
     url: '/goods/commission/save',
+    method: 'post',
+    params: query
+  })
+}
+
+// 自定义分类开关
+export function getCategoryPageSetting(query) {
+  return fetch({
+    url: '/categoryPage/setting',
+    method: 'get',
+    params: query
+  })
+}
+
+// 自定义分类开关
+export function postCategoryPageSetting(query) {
+  return fetch({
+    url: '/categoryPage/setting',
+    method: 'post',
+    params: query
+  })
+}
+
+
+//批量审核供应商商品
+export function batchReviewItems(query) {
+  return fetch({
+    url: '/supplier/batch_review_items',
     method: 'post',
     params: query
   })

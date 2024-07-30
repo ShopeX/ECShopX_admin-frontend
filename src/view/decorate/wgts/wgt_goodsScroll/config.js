@@ -8,6 +8,7 @@ export default {
     { label: '标题', key: 'title', component: 'input', value: '当地必买' },
     { label: '副标题', key: 'subtitle', component: 'input', value: '看看大家都在买什么' },
     { label: '组件间距', key: 'padded', component: 'switch', value: true },
+    { label: '直接加购', key: 'addCart', component: 'switch', value: false },
     { label: '显示价格', key: 'showPrice', component: 'switch', value: true },
     {
       label: '商品类型',
@@ -143,7 +144,8 @@ export default {
               return ''
             }
           },
-          type: 'goodsSetting.type'
+          type: 'goodsSetting.type',
+          addCart: 'addCart'
           // lastSeconds: 'goodsSetting.lastSeconds'
         })
       },

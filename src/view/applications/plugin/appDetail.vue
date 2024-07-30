@@ -55,7 +55,7 @@
       <div class="app-action">
         <el-button type="primary" plain @click="onClickItem">立即订购</el-button>
       </div>
-      <div v-if="id != 'miaosha'" class="app-image">
+      <div v-if="!['miaosha','supplier'].includes(id)" class="app-image">
         <el-image class="desc-image" :src="require(`@/assets/img/ectapp/${id}_detail.png`)" />
       </div>
     </div>
@@ -67,7 +67,7 @@
       width="500px"
     >
       <div class="dialog-app-content">
-        <div class="connect-icon">
+        <div class="connect-icon" >
           <el-image :src="require(`@/assets/img/ectapp/${id}_code.png`)" />
         </div>
         <div class="connect-desc">

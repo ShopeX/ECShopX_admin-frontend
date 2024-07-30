@@ -38,6 +38,39 @@ export default {
       name: `商家列表`,
       component: () => import('@/view/mall/marketing/merchantList/editor.vue')
     },
+
+    {
+      path: 'marketingsalesman',
+      name: `业务员`,
+      component: () => import('@/view/guide/salesman'),
+      children: [
+        {
+          path: 'children',
+          component: () => import('@/view/guide/children')
+        }
+      ]
+    },
+    {
+      path: 'marketing/popularize/popularizedata',
+      name: `业务员业绩`,
+      component: () => import('@/view/popularize/data'),
+      children: [
+        {
+          path: 'detail',
+          component: () => import('@/view/popularize/brokerageLog')
+        }
+      ]
+    },
+    {
+      path: 'marketing/popularize/salesman/withdraw',
+      name: `业务员提现`,
+      component: () => import('@/view/mall/marketing/salesmanwithdraw')
+    },
+    {
+      path: 'popularize/popularizegoods',
+      name: `分销商品`,
+      component: () => import('@/view/popularize/goodsStore')
+    },    
     {
       path: 'distributoraftersalesaddress',
       name: `售后地址`,

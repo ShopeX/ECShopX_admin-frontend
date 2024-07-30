@@ -1,62 +1,39 @@
 <template>
   <div>
     <div class="action-container">
-      <el-button
-        type="primary"
-        icon="el-icon-circle-plus"
-        @click="addTemplate"
-      >
+      <el-button type="primary" icon="el-icon-circle-plus" @click="addTemplate">
         添加商品标签
       </el-button>
     </div>
 
-    <SpFilterForm
-      :model="params"
-      @onSearch="onSearch"
-      @onReset="onSearch"
-    >
+    <SpFilterForm :model="params" @onSearch="onSearch" @onReset="onSearch">
+      <SpFilterFormItem prop="tag_name" label="标签名:">
+        <el-input v-model="params.tag_name" placeholder="请输入标签名" />
+      </SpFilterFormItem>
       <SpFilterFormItem
-        prop="tag_name"
-        label="标签名:"
+        v-if="this.$store.getters.login_type != 'distributor'"
+        prop="tag_source"
+        label="标签类型:"
       >
-        <el-input
-          v-model="params.tag_name"
-          placeholder="请输入标签名"
-        />
+        <el-select v-model="params.tag_source" placeholder="请选择" @change="selectSearch">
+          <el-option
+            v-for="item in options"
+            :key="item.value"
+            :label="item.label"
+            :value="item.value"
+          />
+        </el-select>
       </SpFilterFormItem>
     </SpFilterForm>
 
-    <el-table
-      v-loading="loading"
-      border
-      :data="tagsList"
-      element-loading-text="数据加载中"
-    >
-      <el-table-column
-        prop="tag_id"
-        label="操作"
-        width="100"
-      >
+    <el-table v-loading="loading" border :data="tagsList" element-loading-text="数据加载中">
+      <el-table-column prop="tag_id" label="操作" width="100">
         <template slot-scope="scope">
-          <el-button
-            type="text"
-            @click="editAction(scope.$index, scope.row)"
-          >
-            编辑
-          </el-button>
-          <el-button
-            type="text"
-            @click="deleteAction(scope.$index, scope.row)"
-          >
-            删除
-          </el-button>
+          <el-button type="text" @click="editAction(scope.$index, scope.row)"> 编辑 </el-button>
+          <el-button type="text" @click="deleteAction(scope.$index, scope.row)"> 删除 </el-button>
         </template>
       </el-table-column>
-      <el-table-column
-        prop="tag_name"
-        label="标签名称"
-        width="250"
-      >
+      <el-table-column prop="tag_name" label="标签名称" width="250">
         <template slot-scope="scope">
           <span
             class="tag"
@@ -66,10 +43,8 @@
           </span>
         </template>
       </el-table-column>
-      <el-table-column
-        prop="description"
-        label="标签描述"
-      />
+      <el-table-column prop="distributor_name" label="店铺名称" />
+      <el-table-column prop="description" label="标签描述" />
     </el-table>
     <div class="content-padded content-center">
       <el-pagination
@@ -83,31 +58,17 @@
         @size-change="onSizeChange"
       />
     </div>
-    <sideBar
-      :visible.sync="show_sideBar"
-      :title="'新增商品标签'"
-    >
-      <el-form
-        ref="form"
-        :model="form"
-        class="demo-ruleForm"
-        label-width="100px"
-      >
+    <sideBar :visible.sync="show_sideBar" :title="'新增商品标签'">
+      <el-form ref="form" :model="form" class="demo-ruleForm" label-width="100px">
         <el-form-item
           class="content-left"
           label="标签名称"
           prop="tag_name"
           :rules="[{ required: true, message: '请输入标签名称', trigger: 'blur' }]"
         >
-          <el-input
-            v-model="form.tag_name"
-            placeholder="请输入标签名称"
-          />
+          <el-input v-model="form.tag_name" placeholder="请输入标签名称" />
         </el-form-item>
-        <el-form-item
-          class="content-left"
-          label="标签说明"
-        >
+        <el-form-item class="content-left" label="标签说明">
           <el-input
             v-model="form.description"
             type="textarea"
@@ -115,47 +76,21 @@
             placeholder="请输入标签说明"
           />
         </el-form-item>
-        <el-form-item
-          class="content-left"
-          label="标签颜色"
-        >
-          <el-color-picker
-            v-model="form.tag_color"
-            show-alpha
-            :predefine="predefineColors"
-          />
+        <el-form-item class="content-left" label="标签颜色">
+          <el-color-picker v-model="form.tag_color" show-alpha :predefine="predefineColors" />
         </el-form-item>
-        <el-form-item
-          class="content-left"
-          label="字体颜色"
-        >
-          <el-color-picker
-            v-model="form.font_color"
-            show-alpha
-            :predefine="predefineColors"
-          />
+        <el-form-item class="content-left" label="字体颜色">
+          <el-color-picker v-model="form.font_color" show-alpha :predefine="predefineColors" />
         </el-form-item>
-        <el-form-item
-          class="content-left"
-          label="前台显示"
-        >
+        <el-form-item class="content-left" label="前台显示">
           <el-radio-group v-model="form.front_show">
-            <el-radio label="1">
-              显示
-            </el-radio>
-            <el-radio label="0">
-              隐藏
-            </el-radio>
+            <el-radio label="1"> 显示 </el-radio>
+            <el-radio label="0"> 隐藏 </el-radio>
           </el-radio-group>
         </el-form-item>
       </el-form>
       <div slot="footer">
-        <el-button
-          type="primary"
-          @click="saveTagData"
-        >
-          确定保存
-        </el-button>
+        <el-button type="primary" @click="saveTagData"> 确定保存 </el-button>
       </div>
     </sideBar>
   </div>
@@ -171,7 +106,7 @@ export default {
     sideBar
   },
   mixins: [pageMixin],
-  data () {
+  data() {
     return {
       show_sideBar: false,
       isEdit: false,
@@ -179,8 +114,23 @@ export default {
       loading: false,
       total_count: 0,
       params: {
-        tag_name: ''
+        tag_name: '',
+        tag_source: 'all' //全部就是 all  店铺 distributor 平台 platform
       },
+      options: [
+        {
+          value: 'all',
+          label: '全部'
+        },
+        {
+          value: 'distributor',
+          label: '店铺标签'
+        },
+        {
+          value: 'platform',
+          label: '平台标签'
+        }
+      ],
       form: {
         tag_id: '',
         tag_name: '',
@@ -195,11 +145,17 @@ export default {
   computed: {
     ...mapGetters(['wheight'])
   },
-  mounted () {
+  mounted() {
+    if (this.$store.getters.login_type == 'distributor') {
+      this.params.tag_source = ''
+    }
     this.fetchList()
   },
   methods: {
-    addTemplate () {
+    selectSearch(val) {
+      this.params.tag_source = val
+    },
+    addTemplate() {
       // 添加商品
       this.show_sideBar = true
       this.form = {
@@ -211,17 +167,17 @@ export default {
         front_show: '0'
       }
     },
-    editAction (index, row) {
+    editAction(index, row) {
       // 编辑商品弹框
       this.form = row
       this.show_sideBar = true
     },
-    preview (index, row) {
+    preview(index, row) {
       // 预览弹框
       this.dialogVisible = true
       this.dataInfo = row
     },
-    async fetchList () {
+    async fetchList() {
       this.loading = true
       const { pageIndex: page, pageSize } = this.page
       let params = {
@@ -234,7 +190,7 @@ export default {
       this.total_count = response.data.data.total_count
       this.loading = false
     },
-    deleteAction (index, row) {
+    deleteAction(index, row) {
       this.$confirm('此操作将删除数据, 是否继续?', '提示', {
         confirmButtonText: '确定',
         cancelButtonText: '取消',
@@ -264,7 +220,7 @@ export default {
           })
         })
     },
-    getTaskTime (strDate) {
+    getTaskTime(strDate) {
       let date = new Date(strDate)
       let y = date.getFullYear()
       let m = date.getMonth() + 1
@@ -274,10 +230,10 @@ export default {
       let str = y + '-' + m + '-' + d
       return str
     },
-    getTimeStr (date) {
+    getTimeStr(date) {
       return this.getTaskTime(new Date(parseInt(date) * 1000))
     },
-    saveTagData () {
+    saveTagData() {
       if (this.form.tag_id) {
         updateTag(this.form).then((res) => {
           if (res.data.data) {

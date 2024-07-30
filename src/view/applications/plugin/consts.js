@@ -40,5 +40,11 @@ export const APPLICATION_LIST = [
     key: 'yidongshouyin',
     desc: '面向轻库存管理类型的线下门店连锁客户，减少门店硬软件投入成本，并提升门店移动作业的便捷性，并实现线上线下门店一体化。',
     button: '订购咨询'
+  },
+  {
+    title: '供应商管理',
+    key: 'supplier',
+    desc: '通过供应链整合(S)，提供海量货源给到平台，赋能渠道（门店），结合互联网技术，打造全新的S2B2C平台。',
+    button: '订购咨询'
   }
 ]

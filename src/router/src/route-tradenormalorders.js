@@ -9,7 +9,7 @@ export default {
     {
       path: 'entitytrade/tradenormalorders',
       name: `全部订单`,
-      component: () => import('@/view/order/entitytrade/list'),
+      component: () => import('@/view/mall/trade/normalorders/list'),
       children: [
         {
           path: 'detail/:itemId?',

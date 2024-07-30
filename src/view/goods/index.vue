@@ -75,7 +75,7 @@
         type="primary"
         @click.native="onApplyConfirm"
       >
-        审核
+        保存并审核
       </el-button>
     </div>
 
@@ -277,7 +277,7 @@ export default {
           key: 'itemName',
           type: 'input',
           display: 'inline',
-          disabled,
+          // disabled,
           required: true,
           message: '请输入商品标题'
         },
@@ -285,7 +285,7 @@ export default {
           label: '副标题',
           key: 'brief',
           type: 'input',
-          disabled,
+          // disabled,
           display: 'inline'
         },
         {
@@ -339,6 +339,7 @@ export default {
         {
           label: 'SPU编码',
           key: 'goods_bn',
+          disabled,
           // disabled: () => {
           //   return !!this.form.item_id
           // },
@@ -421,6 +422,19 @@ export default {
         //   }
         // },
         {
+          label: '商品税率',
+          key: 'taxRate',
+          type: 'input',
+          display: 'inline'
+        },
+        {
+          label: '赠品',
+          key: 'isGift',
+          type: 'switch',
+          tip: '开启后前台不可购买'
+        },
+
+        {
           label: '销售分类',
           key: 'salesCategory',
           width: '720px',
@@ -448,7 +462,8 @@ export default {
           message: '请上传商品图片',
           component: ({ key }, value) => (
             <div>
-              {disabled ? (
+              {/* diabled */}
+              {false ? (
                 <div class='goods-img-list'>
                   {value[key].map((item) => (
                     <el-image
@@ -480,14 +495,15 @@ export default {
           key: 'videos',
           component: ({ key }, value) => (
             <div>
-              {disabled && value[key] && (
+              {/* {disabled && value[key] && (
                 <video-player
                   class='picker-video-player'
                   options={this.getOptions(value[key]?.url || value[key])}
                   style='width:180px;height:80px'
                 />
-              )}
-              {!disabled && <SpVideoPicker v-model={value[key]} disabled={disabled} />}
+              )} */}
+              {/* !disabled */}
+               <SpVideoPicker v-model={value[key]} disabled={disabled} />
             </div>
           )
         },
@@ -813,6 +829,7 @@ export default {
       this.form.sort = sort
       this.form.regionsId = regions_id
       this.form.isGift = is_gift
+      this.form.taxRate = tax_rate
       this.form.videos = videos
       this.form.isShowSpecimg = is_show_specimg
       this.form.aftersales_end_date = aftersales_end_date
@@ -1054,6 +1071,7 @@ export default {
         sort,
         regionsId,
         isGift,
+        taxRate,
         salesCategory,
         pics,
         picsQrcode,
@@ -1110,6 +1128,7 @@ export default {
         delivery_data_type: delivery_data_type,
         goods_notice: goods_notice,
         is_gift: isGift,
+        tax_rate:taxRate,
         item_category: _salesCategory,
         pics,
         pics_create_qrcode: _picsQrcode,

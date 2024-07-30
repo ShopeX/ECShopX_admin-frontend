@@ -86,8 +86,8 @@ export default {
                 this.supplierForm.login_name = row.login_name
                 this.supplierForm.username = row.username
                 this.supplierForm.password = ''
-                this.supplierFormList[0].disabled = true
                 this.supplierFormList[1].disabled = true
+                this.supplierFormList[2].disabled = true
                 this.supplierDialog = true
               }
             }
@@ -104,6 +104,13 @@ export default {
         password: ''
       },
       supplierFormList: [
+      {
+          label: '公司',
+          key: 'company',
+          type: 'input',
+          required: true,
+          message: '不能为空'
+        },
         {
           label: '账号',
           key: 'login_name',
@@ -155,8 +162,8 @@ export default {
     addSupplier() {
       this.id = ''
       this.supplierDialog = true
-      this.supplierFormList[0].disabled = false
       this.supplierFormList[1].disabled = false
+      this.supplierFormList[2].disabled = false
       this.supplierForm = {id: '',
         operator_type: 'supplier',
         mobile: '',

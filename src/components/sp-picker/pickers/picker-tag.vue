@@ -23,6 +23,17 @@
       <SpFilterFormItem prop="keywords">
         <el-input v-model="formData.keywords" placeholder="请输入标签名称" />
       </SpFilterFormItem>
+      <SpFilterFormItem v-if="!IS_DISTRIBUTOR() && !values" prop="distributor_id" label="店铺名称:">
+        <el-select v-model="formData.distributor_id" clearable placeholder="请选择">
+          <el-option
+            v-for="item in salesStatus"
+            :key="item.distributor_id"
+            :label="item.name"
+            size="mini"
+            :value="item.distributor_id"
+          />
+        </el-select>
+      </SpFilterFormItem>
     </SpFilterForm>
     <SpFinder
       ref="finder"
@@ -38,6 +49,7 @@
         columns: [
           { name: 'ID', key: 'tag_id', width: 80 },
           { name: '标签名称', key: 'tag_name' },
+          { name: '店铺名称', key: 'distributor_name' },
           { name: '描述', key: 'description' }
         ]
       }"
@@ -54,6 +66,8 @@
 <script>
 import BasePicker from './base'
 import PageMixin from '../mixins/page'
+import { IS_DISTRIBUTOR } from '@/utils'
+
 export default {
   name: 'PickerTag',
   extends: BasePicker,
@@ -65,25 +79,54 @@ export default {
   data() {
     return {
       formData: {
-        keywords: ''
+        keywords: '',
+        distributor_id: ''
       },
-      multiple: this.value?.multiple ?? true
+      salesStatus: [],
+      multiple: this.value?.multiple ?? true,
+      values: this.value?.distributor_id ?? null
     }
   },
-  created() {},
+  created() {
+    this.getDistributorList()
+  },
   methods: {
+    async getDistributorList() {
+      let params = {
+        page: 1,
+        pageSize: 500
+      }
+      const { list } = await this.$api.marketing.getDistributorList(params)
+      this.salesStatus = list
+    },
     beforeSearch(params) {
-      const { keywords } = this.formData
-      if (keywords) {
+      const { keywords, distributor_id } = this.formData
+      if (IS_DISTRIBUTOR() || this.values) {
         params = {
           ...params,
-          tag_name: keywords
+          isPlatform: true,
+          distributor_id: this.values
+        }
+      } else {
+        params = {
+          ...params,
+          tag_source: 'all'
+        }
+      }
+
+      if (keywords || distributor_id) {
+        params = {
+          ...params,
+          tag_name: keywords,
+          distributor_id: distributor_id ? distributor_id : this.values,
+          tag_source: IS_DISTRIBUTOR() ? '' : 'all'
         }
       }
       if (this.value.params) {
         params = {
           ...params,
-          ...this.value.params
+          ...this.value.params,
+          tag_source: 'all'
         }
       }
       return params

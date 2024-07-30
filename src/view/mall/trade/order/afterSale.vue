@@ -177,7 +177,7 @@ export default {
             if (!this.form.refund_fee) {
               callback('退款金额不能为空')
             } else if (
-              parseFloat(this.form.refund_fee) > paraseFloat(this.$refs['compRefundRef'].refundFee)
+              parseFloat(this.form.refund_fee) > parseFloat(this.$refs['compRefundRef'].refundFee)
             ) {
               callback('退款金额超过可退金额')
             } else {

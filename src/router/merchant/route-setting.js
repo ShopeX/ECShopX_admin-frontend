@@ -17,7 +17,11 @@ export default {
       name: `账号管理-商户账号管理`,
       component: () => import('@/view/mall/marketing/merchantAccount')
     },
-
+    {
+      path: 'staff/selfdeliverystaff',
+      name: `账号管理-商户配送员`,
+      component: () => import('@/view/base/account/delivery')
+    },
     {
       path: 'baseexport',
       name: `导出列表`,

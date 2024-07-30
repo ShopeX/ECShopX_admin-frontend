@@ -59,7 +59,7 @@
               <el-button
                 v-if="
                   $store.getters.login_type != 'distributor' &&
-                  $store.getters.login_type != 'merchant' 
+                  $store.getters.login_type != 'merchant' && false
                 "
                 type="text"
                 class="btn-gap"
@@ -499,7 +499,7 @@ export default {
     this.loginType = this.$store.getters.login_type
     this.params.pathSource = this.$route.path
 
-    getPopularizeSetting().then((res) => {
+    getPopularizeSettingStore(this.params).then((res) => {
       this.popularizeSetting = res.data.data
       if (res.data.data.goods == 'all') {
         this.allSelect = true

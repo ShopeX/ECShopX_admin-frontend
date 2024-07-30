@@ -59,7 +59,7 @@
               <el-button
                 v-if="
                   $store.getters.login_type != 'distributor' &&
-                  $store.getters.login_type != 'merchant'
+                  $store.getters.login_type != 'merchant' && false
                 "
                 type="text"
                 class="btn-gap"
@@ -332,7 +332,7 @@
               :label="item.name"
               min-width="110"
             >
-              <template slot-scope="scope">
+              <template slot-scope="scope" >
                 <div v-if="scope.row.rebate_conf.type == 'money'" :style="{ display: 'flex', alignItems: 'flex-end' }">
                   <el-input-number
                   v-model="scope.row.rebate_conf.value[key]"
@@ -394,7 +394,7 @@ import axios from 'axios'
 import store from '@/store'
 import { mapGetters } from 'vuex'
 import SideBar from '@/components/element/sideBar'
-import { getPopularizeSetting } from '../../api/promotions'
+import { getPopularizeSetting,getPopularizeSettingStore } from '../../api/promotions'
 import { getItemsList, updateItemRebateConf, updateGoodsInfo } from '@/api/goods'
 
 let changeRebateTypeMap = {
@@ -499,7 +499,7 @@ export default {
     this.loginType = this.$store.getters.login_type
     this.params.pathSource = this.$route.path
 
-    getPopularizeSetting().then((res) => {
+    getPopularizeSettingStore(this.params).then((res) => {
       this.popularizeSetting = res.data.data
       if (res.data.data.goods == 'all') {
         this.allSelect = true

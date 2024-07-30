@@ -76,7 +76,7 @@ export default {
     {
       path: 'popularize/popularizegoods',
       name: `业务员商品`,
-      component: () => import('@/view/popularize/goods')
+      component: () => import('@/view/popularize/goodsStore')
     },   
 
     {

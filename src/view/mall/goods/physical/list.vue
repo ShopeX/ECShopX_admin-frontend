@@ -1155,6 +1155,7 @@ export default {
             name: '审核状态',
             key: 'audit_status',
             width: 200,
+            visible:!IS_ADMIN(),
             render: (h, scope) => (
               <div>
                 <span>{GOODS_APPLY_STATUS[scope.row.audit_status]}</span>

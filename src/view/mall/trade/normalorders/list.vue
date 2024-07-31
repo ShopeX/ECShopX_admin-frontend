@@ -1306,7 +1306,7 @@ export default {
         return this.$message.error('请选择一个订单！')
       }
 
-      const { order_id, self_delivery_status, distributor_id } = this.selectList[0]
+      const { order_id, self_delivery_status, distributor_id,self_delivery_operator_id } = this.selectList[0]
 
       if (!val) {
         // 已接单，配送中才能取消配送
@@ -1315,7 +1315,10 @@ export default {
           return this.$message.error('该订单无法取消配送！')
         }
       } else {
-        if (!['CONFIRMING', 'PACKAGED'].includes(self_delivery_status)) {
+        // if (!['CONFIRMING', 'PACKAGED'].includes(self_delivery_status)) {
+        //   return this.$message.error('该订单无法分配配送员！')
+        // }
+        if(self_delivery_operator_id !== 0){
           return this.$message.error('该订单无法分配配送员！')
         }
       }

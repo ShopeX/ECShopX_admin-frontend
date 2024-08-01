@@ -36,7 +36,8 @@ export default {
       ],
       value: 'all'
     },
-    { label: '显示优惠券', key: 'show_coupon', component: 'switch', value: false }
+    { label: '显示优惠券', key: 'show_coupon', component: 'switch', value: false },
+    { label: '显示更多附近商家', key: 'show_nearby_merchants', component: 'switch', value: false },
     // {
     //   label: '商家排序',
     //   key: 'shopSort',
@@ -65,7 +66,8 @@ export default {
           padded: 'padded',
           show_coupon: 'show_coupon',
           navigation_display:'navigation_display',
-          addCart: 'addCart'
+          addCart: 'addCart',
+          show_nearby_merchants:'show_nearby_merchants'
         })
       },
       seletedTags: 'seletedTags',

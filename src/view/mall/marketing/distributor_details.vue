@@ -304,7 +304,7 @@ export default {
           const { is_openAccount, is_rel_dealer, adapayMemberInfo, dealer, datapass_block } =
             response.data.data || {}
           const {
-            basicInfo: { auto_sync_goods, is_ziti, is_delivery, company_dada_open }
+            basicInfo: { auto_sync_goods, is_ziti, is_delivery, is_local_delivery }
           } = adapayMemberInfo || {}
           this.infoList = response.data.data
           this.datapass_block = datapass_block
@@ -323,7 +323,7 @@ export default {
           if (is_delivery) {
             this.tagsList.push({ name: '支持快递', type: 'success' })
           }
-          if (company_dada_open) {
+          if (is_local_delivery) {
             this.tagsList.push({ name: '同城配', type: 'warning' })
           }
         })

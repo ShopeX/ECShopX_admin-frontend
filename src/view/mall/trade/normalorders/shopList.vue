@@ -183,6 +183,35 @@
             </template>
           </el-table-column>
           <el-table-column prop="source_name" label="来源" />
+          <el-table-column label="配送方式">
+            <template slot-scope="scope">
+              {{ getDistributionType(scope.row) }}
+            </template>
+          </el-table-column>
+  
+          <el-table-column label="配送状态">
+            <template slot-scope="scope">
+              {{ getDistributionStatus(scope.row) }}
+            </template>
+          </el-table-column>
+  
+          <el-table-column label="配送员">
+            <template slot-scope="scope">
+              {{ scope.row.username }}
+            </template>
+          </el-table-column>
+  
+          <el-table-column label="配送费">
+            <template slot-scope="scope">
+              {{ scope.row.payment_fee }}
+            </template>
+          </el-table-column>
+  
+          <el-table-column label="配送员电话">
+            <template slot-scope="scope">
+              {{ scope.row.mobile }}
+            </template>
+          </el-table-column>
           <el-table-column label="操作" fixed="right">
             <template slot-scope="scope">
               <router-link
@@ -379,7 +408,7 @@
             <el-form-item label="发货类型">
               <el-radio-group v-model="deliveryForm.delivery_type" :disabled="IsDisabled">
                 <el-radio label="batch"> 整单发货 </el-radio>
-                <el-radio label="sep"> 拆分发货 </el-radio>
+                <el-radio v-if="deliveryForm.delivery_type != 'merchant'" label="sep"> 拆分发货 </el-radio>
               </el-radio-group>
             </el-form-item>
             <el-form-item label="商品信息">
@@ -427,6 +456,51 @@
                 </el-select>
               </el-col>
             </el-form-item>
+            <template v-if="deliveryForm.delivery_type == 'merchant'">
+              <el-form-item label="配送编号" width="200">
+                <template slot-scope="scope">
+                  <el-input
+                    v-model="scope.row.delivery_code"
+                    :maxlength="20"
+                    placeholder="清填写配送编号"
+                  />
+                </template>
+              </el-form-item>
+              <el-form-item label="配送员" width="200">
+                <el-select v-model="deliveryForm.delivery_ersonnel" clearable placeholder="请选择">
+                  <el-option
+                    v-for="item in deliveryPersonnel"
+                    :key="item.value"
+                    size="mini"
+                    :label="item.title"
+                    :value="item.value"
+                  />
+                </el-select>
+              </el-form-item>
+              <el-form-item label="配送状态" width="200">
+                <el-select v-model="deliveryForm.self_delivery_status" clearable placeholder="请选择">
+                  <el-option
+                    v-for="item in DISTRIBUTION_STATUS"
+                    :key="item.value"
+                    size="mini"
+                    :label="item.title"
+                    :value="item.value"
+                  />
+                </el-select>
+              </el-form-item>
+              <el-form-item label="图片上传">
+                <template>
+                  <div class="img-container">
+                    <SpImagePicker
+                      :src="deliveryForm.delivery_pics"
+                      :width="48"
+                      :height="48"
+                    />
+                  </div>
+                </template>
+              </el-form-item>
+            </template>
+            
             <el-form-item label="物流单号">
               <el-col :span="14">
                 <el-input
@@ -646,6 +720,10 @@ import { getSourcesList } from '../../../../api/datacube'
 import shopSelect from '@/components/shopSelect'
 import RemarkModal from '@/components/remarkModal'
 import remarkMixin from '@/mixins/remarkMixin'
+import {
+  DISTRIBUTION_TYPE,
+  DISTRIBUTION_STATUS,
+} from '@/consts'
 
 export default {
   components: {
@@ -666,6 +744,7 @@ export default {
         distributor_id: 0,
         distributorIds: []
       },
+      deliveryPersonnel:[],//配送员
       order_class_array: [
         { name: '全部订单', value: '' },
         { name: '团购订单', value: 'groups' },
@@ -711,7 +790,10 @@ export default {
         order_id: '',
         delivery_corp: '',
         delivery_code: '',
-        sepInfo: {}
+        sepInfo: {},
+        delivery_ersonnel:'',
+        self_delivery_status:'',
+        delivery_pics:[]
       },
       dlycorps: [],
       cancelVisible: false,
@@ -764,8 +846,36 @@ export default {
     this.params.order_type = this.order_type
     this.getOrders(this.params)
     this.getAllSourcesList()
+    this.delivery()
   },
   methods: {
+    async delivery(){
+      let params= {
+        pageSize: 1000,
+        page: 1,
+        // finderId: 100,
+        operator_type: 'self_delivery_staff',
+      }
+      let {list} = await this.$api.company.getAccountList(params)
+      list.forEach(ele => {
+        ele.value = ele.operator_id,
+        ele.title = ele.username
+      });
+      this.deliveryPersonnel = list
+    },
+    getDistributionType({ receipt_type }) {
+      const fd = DISTRIBUTION_TYPE.find((item) => item.value == receipt_type)
+      if (fd) {
+        return fd.title
+      }
+    },
+
+    getDistributionStatus({ self_delivery_status }) {
+      const fd = DISTRIBUTION_STATUS.find((item) => item.value == self_delivery_status)
+      if (fd) {
+        return fd.title
+      }
+    },
     // 切换tab
     handleClick(tab, event) {
       this.activeName = tab.name

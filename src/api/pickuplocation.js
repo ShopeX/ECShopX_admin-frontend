@@ -59,3 +59,21 @@ export function unbindZitiLocation(params) {
     params
   })
 }
+
+// 保存商家自配送
+export function postPickuplocationList(params) {
+  return fetch({
+    url: `/distributor/selfdelivery/setting `,
+    method: 'post',
+    params
+  })
+}
+
+
+// 获取商家自配送
+export function getPickuplocationList() {
+  return fetch({
+    url: '/distributor/selfdelivery/setting ',
+    method: 'get',
+  })
+}

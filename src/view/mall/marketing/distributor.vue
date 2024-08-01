@@ -351,7 +351,7 @@
                 query: { distributor_id: scope.row.distributor_id }
               }"
             >
-              <span style="margin-right: 5px">微信支付配置2</span>
+              <span style="margin-right: 5px">微信支付配置</span>
             </router-link> -->
             <!--<el-button type="text" @click="downDistributor(scope.row, 'scancode')">扫码购页面码(微商城)</el-button>-->
             <!-- <router-link :to="{  path: matchInternalRoute('Storeshopitemanagement'), query: {distributor_id: scope.row.distributor_id}}">商品码</router-link> -->

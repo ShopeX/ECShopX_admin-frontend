@@ -84,6 +84,7 @@
         <el-tab-pane label="商品码导出" name="itemcode" />
         <el-tab-pane label="结算单" name="statements" />
         <el-tab-pane label="结算单明细" name="statement_details" />
+        <el-tab-pane label="配送员业绩导出" name="delivery_staffdata" />
       </template>
 
       <el-table v-loading="loading" :data="exportLogLists" :height="wheight - 220">

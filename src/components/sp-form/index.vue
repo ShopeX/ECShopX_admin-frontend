@@ -228,7 +228,7 @@ export default {
     },
     _renderSelect(item) {
       const { value } = this
-      const { key, placeholder, options, clearable, onChange = () => {} } = item
+      const { key, placeholder, options, clearable, onChange = () => {}, disabled = false } = item
       return (
         <el-select
           clearable={clearable ?? true}
@@ -236,6 +236,7 @@ export default {
           v-model={value[key]}
           placeholder={placeholder || '请选择'}
           onChange={onChange}
+          disabled={isFunction(disabled) ? disabled() : disabled}
         >
           {options.map((op) => (
             <el-option key={op.value} label={op.title} value={op.value} />

@@ -49,11 +49,32 @@
               </div>
               <!-- 店铺详情数据 -->
               <div class="store-details">
-                <div class="name">{{ item.name }}</div>
-                <!-- <div class="free-shipping">起送20 满20减运费</div> -->
+                <div class="name">
+                  <span>{{ item.name }}</span>
+                  <span v-if="item.is_self_delivery && item.selfDeliveryRule.is_open == 'true'">商家自配送</span>
+                </div>
+                <div v-if="item.is_self_delivery && item.selfDeliveryRule.is_open == 'true'" class="free-shipping">
+                  <span
+                    >起送¥{{ item.selfDeliveryRule.min_amount }} ｜
+                    {{
+                      item.selfDeliveryRule.rule[0].selected=='true'
+                        ? item.selfDeliveryRule.rule[0].freight_fee == '0'
+                          ? `满¥${item.selfDeliveryRule.rule[0].full}元免运费`
+                          : `满¥${item.selfDeliveryRule.rule[0].full}元运费${item.selfDeliveryRule.rule[0].freight_fee}元`
+                        : item.selfDeliveryRule.rule[1].freight_fee == '0'
+                        ? `满¥${item.selfDeliveryRule.rule[1].full}元免运费`
+                        : `满¥${item.selfDeliveryRule.rule[1].full}元运费${item.selfDeliveryRule.rule[1].freight_fee}元`
+                    }}</span
+                  >
+                  <span class="free-shipping-money">¥{{ item.selfDeliveryRule.freight_fee }}</span>
+                </div>
                 <!-- 商品数据 -->
-                <div class="product-details" v-if="item.itemList">
-                  <div v-for="items in item.itemList" class="product-details-list">
+                <div v-if="item.itemList" class="product-details">
+                  <div
+                    v-for="(items, index) in item.itemList"
+                    :key="index"
+                    class="product-details-list"
+                  >
                     <SpImage
                       :circle="8"
                       :src="items.pics[0] || defaultShopLogo"
@@ -62,7 +83,12 @@
                     />
                     <div class="name">{{ items.item_name }}</div>
                     <SpPrice class="item-price" :value="items.price / 100" :size="15" />
-                    <div v-if="items.market_price>0 && items.price>items.market_price" class="underlined-price">¥{{ items.market_price }}</div>
+                    <div
+                      v-if="items.market_price > 0 && items.price > items.market_price"
+                      class="underlined-price"
+                    >
+                      ¥{{ items.market_price }}
+                    </div>
                   </div>
                 </div>
                 <!-- 优惠券 -->
@@ -120,9 +146,9 @@ export default {
           let item_tag_id = this.value.productLabel.map((item) => item.tag_id)
           this.activeIndex = 0
           let params = {
-            tag_id:tag_id,
+            tag_id: tag_id,
             item_tag_id,
-            show_items:1
+            show_items: 1
           }
           this.getShopByTag(params)
         } else {
@@ -138,7 +164,7 @@ export default {
           let params = {
             tag_id: this.value.seletedTags[this.activeIndex].tag_id,
             item_tag_id,
-            show_items:1
+            show_items: 1
           }
           this.getShopByTag(params)
         }
@@ -150,14 +176,14 @@ export default {
   methods: {
     async getShopByTag(params) {
       const { list } = await this.$api.marketing.queryTagShop(params)
-      this.shopList = list.slice(0,2)
+      this.shopList = list.slice(0, 2)
     },
     handleClickTag(item, index) {
       let item_tag_id = this.value.productLabel.map((item) => item.tag_id)
       let params = {
-        tag_id:item.tag_id,
+        tag_id: item.tag_id,
         item_tag_id,
-        show_items:1
+        show_items: 1
       }
       this.activeIndex = index
       this.getShopByTag(params)

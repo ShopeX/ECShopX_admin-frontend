@@ -24,7 +24,18 @@ export const DISTRIBUTION_TYPE = [
   { title: '全部', value: '' },
   { title: '普通快递', value: 'logistics' },
   { title: '同城配', value: 'dada' },
-  { title: '客户自提', value: 'ziti' }
+  { title: '客户自提', value: 'ziti' },
+  { title: '商家自配送', value: 'merchant' }
+]
+
+export const DISTRIBUTION_STATUS = [
+  { title: '全部', value: '' },
+  { title: '待确认', value: 'CONFIRMING' },
+  { title: '已接单', value: 'RECEIVEORDER' },
+  { title: '已打包', value: 'PACKAGED' },
+  { title: '配送中', value: 'DELIVERING' },
+  { title: '已送达', value: 'DONE' },
+  // { title: '已取消', value: 'NOTMERCHANT' }
 ]
 
 export const ORDER_STATUS = [

@@ -275,6 +275,7 @@ Vue.prototype.theme = {
   $submenu_act_text: '#333',
   $submenu_text: '#666'
 }
+Vue.prototype.VUE_APP_LOCAL_DELIVERY_DIRVER = process.env.VUE_APP_LOCAL_DELIVERY_DIRVER
 
 Vue.prototype.companyBrand = '商派ECShopX'
 Vue.prototype.companyBrandImg = process.env.PRODUCT_MODEL === 'standard' ? 'onex' : 'ecshopx'

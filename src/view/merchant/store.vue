@@ -1,4 +1,8 @@
-<style lang="scss">
+<style lang="scss" scoped>
+.merchant-store  ::v-deep .el-input-number {
+  line-height: 34px !important;
+  margin: 0 10px;
+}
 .merchant-store {
   .el-form-item {
     width: 360px;
@@ -62,6 +66,7 @@
     width: 800px;
     height: 400px;
   }
+ 
 }
 </style>
 <template>
@@ -133,6 +138,8 @@ export default {
         regions_id: ['310000', '310100', '310104'],
         address: '',
         is_dada: false,
+        is_self_delivery: true,
+        freight_time:1,
         business: '',
         is_ziti: false,
         offline_aftersales: false,
@@ -392,6 +399,7 @@ export default {
                   ]}
                   placeholder='请输入详细地址（去除省市县）'
                 />
+                <el-input v-model={value['house_number']} placeholder='门牌号' />
                 <el-button type='primary' on-click={this.searchKeyword}>
                   搜索定位
                 </el-button>
@@ -419,30 +427,54 @@ export default {
           component: ({ key }, value) => <div id='qqmap_container' />
         },
         {
-          label: '同城配',
+          label: '送货上门',
           type: 'group',
-          tip: '（需先选择店铺地理位置，系统根据店铺位置判断该地区是否支持同城配）',
+          tip: '（需先选择店铺地理位置，系统根据店铺位置判断该地区是否支持送货上门）',
           isShow: this.dadaEnable
         },
         {
-          label: '达达同城配',
+          label: '送货上门',
           key: 'is_dada',
           type: 'switch',
           width: 'auto',
-          tip: '开启后有店铺订单时需要改店铺人员手动接单，接单后系统会自动在达达平台下单',
+          tip: '开启后有店铺订单时需要改店铺人员手动接单，接单后系统会自动在达达/闪送平台下单',
           isShow: this.dadaEnable
+        },
+        {
+          label: '送货方式',
+          key: 'is_self_delivery',
+          type: 'radio',
+          options: [
+            { name: '商家自配送', label: true },
+            { name: '达达同城配', label: false },
+            // { name: '闪送', label: 6 }
+          ],
+          isShow: ({ key }, value) => value.is_dada && this.dadaEnable
+        },
+        {
+          key: 'freight_time',
+          isShow: ({ key }, value) => value.is_self_delivery && value.is_dada && this.dadaEnable,
+          component: ({ key }, value) => {
+            return (
+              <div style="margin-left: 27px;display:flex">
+                立即配送，预计
+                <el-input-number v-model={value[key]} placeholder='请输入内容' step={1} min={1} />
+                小时后送达（下单时间往后延多少小时）
+              </div>
+            )
+          }
         },
         {
           label: '业务类型',
           key: 'business',
           type: 'select',
           options: [],
-          isShow: ({ key }, value) => value.is_dada && this.dadaEnable,
+          isShow: ({ key }, value) => !value.is_self_delivery && this.dadaEnable && value.is_dada,
           validator: (rule, value, callback) => {
             console.log('value:', value)
-            if (this.form.is_dada) {
+            if (!this.form.is_self_delivery) {
               if (!value) {
-                callback(new Error('达达业务类型必填'))
+                callback(new Error('业务类型必填'))
               } else {
                 callback()
               }
@@ -535,7 +567,12 @@ export default {
       fetch: this.getMerchantList
     })
     this.distributor_self = distributor_type === 'distributor_self' ? 1 : 0
-    this.getDadaInfo()
+    console.log(process.env.VUE_APP_LOCAL_DELIVERY_DIRVER)
+    if (process.env.VUE_APP_LOCAL_DELIVERY_DIRVER == 'shansong') {
+      this.getShansongInfo()
+    } else {
+      this.getDadaInfo()
+    }
     this.getStoreInfo()
   },
   mounted() {
@@ -627,6 +664,21 @@ export default {
       })
       this.dadaEnable = is_open === '1'
     },
+    async getShansongInfo() {
+      const { business_list, is_open } = await this.$api.dada.getShansongInfo()
+      const typeList = Object.keys(business_list).reduce((total, current, index) => {
+        return total.concat({
+          value: Number(current),
+          title: business_list[current]
+        })
+      }, [])
+      this.formList.forEach((item) => {
+        if (item.key == 'business') {
+          item.options = typeList
+        }
+      })
+      this.dadaEnable = is_open === '1'
+    },
     async getStoreInfo() {
       const { distributor_id } = this.$route.query
       if (distributor_id || this.IS_DISTRIBUTOR) {
@@ -674,7 +726,10 @@ export default {
           lat: res.lat,
           regions_id: res.regions_id,
           address: res.address,
-          is_dada: res.is_dada,
+          house_number: res.house_number,
+          is_dada: res.is_dada==1 || res.is_self_delivery,
+          is_self_delivery:res.is_self_delivery,
+          freight_time:res.freight_time,
           business: res.business,
           is_ziti: res.is_ziti,
           offline_aftersales: res.offline_aftersales === 1,
@@ -776,7 +831,7 @@ export default {
       const { regions_id, startTime, endTime } = offline_aftersales_address
       const [province, city, area] = getRegionNameById(regions_id, district)
 
-      const params = {
+      const params =  {
         ...this.form,
         distributor_self: this.distributor_self,
         regions: getRegionNameById(this.form.regions_id, district),
@@ -798,6 +853,21 @@ export default {
       } else {
         delete params.is_audit_goods
       }
+
+      if(this.form.is_dada){
+        if(this.form.is_self_delivery){
+        params.is_dada = 0
+        params.is_self_delivery = true
+      }else{
+        params.is_dada = 1
+        params.is_self_delivery = false
+      }
+      }else{
+        params.is_dada = 0
+        params.is_self_delivery = false
+
+      }
+
       try {
         if (distributor_id) {
           await this.$api.marketing.updateDistributorInfo(distributor_id, params)

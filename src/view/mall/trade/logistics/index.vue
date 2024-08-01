@@ -5,10 +5,14 @@
         <Normal />
       </el-tab-pane>
       <el-tab-pane v-if="!IS_DISTRIBUTOR && !VERSION_B2C" label="同城配" name="city">
-        <City />
+        <Shansong v-if="VUE_APP_LOCAL_DELIVERY_DIRVER == 'shansong'" />
+        <City v-else />
       </el-tab-pane>
       <el-tab-pane label="到店自提" name="ziti">
         <ZitiList />
+      </el-tab-pane>
+      <el-tab-pane label="商家自配送" name="zipei">
+        <ZiPeiList />
       </el-tab-pane>
     </el-tabs>
   </SpRouterView>
@@ -16,15 +20,19 @@
 
 <script>
 import City from './city'
+import Shansong from './shansong'
 import Normal from './normal'
 import ZitiList from './comps/ziti-list'
+import ZiPeiList from './comps/zipei-list'
 import { mapGetters } from 'vuex'
 import { VERSION_B2C } from '@/utils'
 export default {
   components: {
     Normal,
     City,
-    ZitiList
+    Shansong,
+    ZitiList,
+    ZiPeiList
   },
   data() {
     return {

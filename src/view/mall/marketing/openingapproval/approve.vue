@@ -322,7 +322,7 @@ export default {
             经销商:交易金额*经销商分账占比；
             店铺：订单金额-总部分账金额-经销商分账金额。`
           this.isBool = isBool
-          const { auto_sync_goods, is_ziti, is_delivery, company_dada_open } =
+          const { auto_sync_goods, is_ziti, is_delivery, is_local_delivery } =
             distributor_info || {}
           if (auto_sync_goods) {
             this.tagsList.push({ name: '自动上架商品', type: 'danger' })
@@ -333,7 +333,7 @@ export default {
           if (is_delivery) {
             this.tagsList.push({ name: '支持快递', type: 'success' })
           }
-          if (company_dada_open) {
+          if (is_local_delivery) {
             this.tagsList.push({ name: '同城配', type: 'warning' })
           }
         })

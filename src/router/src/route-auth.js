@@ -39,10 +39,10 @@ export default [
   //   },
   //   name:'授权-经销商登录'
   // },
-  {
-    path: '/shopadmin',
-    redirect: '/shopadmin/login'
-  },
+  // {
+  //   path: '/shopadmin',
+  //   redirect: '/shopadmin/login'
+  // },
   {
     path: '/dealer/login',
     // component:()=> import('@/view/auth/dealer_login'),

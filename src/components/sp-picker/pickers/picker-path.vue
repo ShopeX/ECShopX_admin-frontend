@@ -54,6 +54,9 @@
       <el-tab-pane label="外部小程序" name="other_wxapp">
         <PickerWxApp v-if="tabValue == 'other_wxapp'" ref="other_wxapp" :value="value" />
       </el-tab-pane>
+      <!-- <el-tab-pane label="商家" name="shop_tag">
+        <PickerShopTag v-if="tabValue == 'shop_tag'" ref="shop_tag" :value="value" />
+      </el-tab-pane> -->
     </el-tabs>
   </div>
 </template>
@@ -76,6 +79,7 @@ import PickerRegactivity from './picker-regactivity'
 import PickerPages from './picker-pages'
 import PickerLive from './picker-live'
 import PickerWxApp from './picker-wxapp'
+import PickerShopTag from './picker-shoptag'
 export default {
   name: 'PickerPath',
   components: {
@@ -92,7 +96,8 @@ export default {
     PickerRegactivity,
     PickerPages,
     PickerLive,
-    PickerWxApp
+    PickerWxApp,
+    PickerShopTag
   },
   // extends: BasePicker,
   config: {
@@ -211,6 +216,12 @@ export default {
           return pickBy(data, {
             id: 'wx_external_routes_id',
             title: 'route_info'
+          })
+        },
+        shop_tag: () => {
+          return pickBy(data, {
+            id: 'tag_id',
+            title: 'tag_name'
           })
         }
       }

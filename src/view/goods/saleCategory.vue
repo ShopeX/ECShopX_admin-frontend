@@ -52,6 +52,7 @@
           </div>
         </template>
       </el-table-column>
+      <!-- <el-table-column label="一级分类模版" width="200" prop="customize_page_name" /> -->
       <el-table-column label="操作">
         <template slot-scope="scope">
           <el-button type="text">
@@ -138,7 +139,8 @@ export default {
         sort: 0,
         parent_id: 0,
         parent_name: '',
-        image_url: ''
+        image_url: '',
+        customize_page_id:''
       },
       categoryFormList: [
         {
@@ -165,7 +167,15 @@ export default {
           label: '分类图片',
           key: 'image_url',
           component: ({ key }, value) => <SpImagePicker v-model={value[key]} />
-        }
+        },
+        // {
+        //   label: '一级分类模版',
+        //   key: 'customize_page_id',
+        //   type: 'select',
+        //   options: [],
+        //   placeholder: '请选择一级分类模版',
+        //   display: 'inline'
+        // }
       ]
     }
   },
@@ -175,8 +185,24 @@ export default {
   mounted() {
     this.init()
     this.fetchWechatList()
+    this.classification()
   },
   methods: {
+    async classification(){
+      let params= {
+        page: 1,
+        pageSize: 10,
+        page_type:'category',
+        template_name: 'yykweishop'
+      }
+      let {list} = await this.$api.wxa.getCustomPageList(params)
+      console.log(list, 'src/view/goods/saleCategory.vue-第197行')
+      list.forEach(element => {
+        element.title = element.page_name,
+        element.value = element.id
+      });
+      this.categoryFormList[4].options = list
+    },
     async init() {
       const list = await this.getCategory()
       this.categoryList = list
@@ -194,18 +220,20 @@ export default {
         sort: 0,
         parent_id: 0,
         parent_name: '',
-        image_url: ''
+        image_url: '',
+        customize_page_id:''
       }
       this.categoryDialog = true
     },
     // 编辑分类
-    editCategory({ parent_id, category_id, category_name, sort, image_url }) {
+    editCategory({ parent_id, category_id, category_name, sort, image_url,customize_page_id }) {
       this.categoryForm = {
         category_id,
         category_name,
         sort,
         parent_id,
-        image_url
+        image_url,
+        customize_page_id:customize_page_id==0?'':customize_page_id
       }
       this.categoryDialog = true
     },
@@ -219,7 +247,8 @@ export default {
         sort: 0,
         parent_id: category_id,
         parent_name: category_name,
-        image_url: ''
+        image_url: '',
+        customize_page_id:''
       }
       this.categoryDialog = true
     },
@@ -263,13 +292,14 @@ export default {
       resolve(list)
     },
     async onCategoryFormSubmit() {
-      const { category_name, sort, image_url, parent_id, category_id } = this.categoryForm
+      const { category_name, sort, image_url,customize_page_id, parent_id, category_id } = this.categoryForm
       if (category_id) {
         await this.$api.goods.editCategory({
           category_name,
           sort,
           image_url,
-          category_id
+          category_id,
+          customize_page_id
         })
         this.$message.success('编辑成功')
       } else {
@@ -277,6 +307,7 @@ export default {
           category_name,
           sort,
           image_url,
+          customize_page_id,
           parent_id: parent_id != '0' ? parent_id : undefined
         })
         this.$message.success('添加成功')

@@ -19,6 +19,11 @@ export default {
       component: () => import('@/view/wxapp/category')
     },
     {
+      path: 'manage/classificationTemplate',
+      name: `分类模版`,
+      component: () => import('@/view/wxapp/classificationTemplate')
+    },
+    {
       path: 'manage/custompage',
       name: `自定义页面`,
       component: () => import('@/view/wxapp/customPage')

@@ -180,7 +180,8 @@ export default {
         1001: '商城装修',
         1002: '商品详情',
         1003: '店铺装修',
-        1004: '自定义页装修'
+        1004: '自定义页装修',
+        1006: '分类模版装修'
       }
       this.localTitle = _title[scene]
     } else {
@@ -263,7 +264,7 @@ export default {
       const { id } = this.$route.query
       let list = []
       try {
-        if (this.localScene == '1004') {
+        if (this.localScene == '1004' || this.localScene == '1006') {
           const resTemplate = await this.$api.wxa.getParamByTempName({
             template_name: 'yykweishop',
             page_name: `custom_${id}`,
@@ -352,7 +353,7 @@ export default {
       })
       data.unshift(this.headerAttr.transformOut(this.headerData))
       const { id } = this.$route.query
-      if (this.localScene == '1004') {
+      if (this.localScene == '1004' || this.localScene == '1006') {
         await this.$api.wxa.savePageParams({
           template_name: 'yykweishop',
           page_name: `custom_${id}`,

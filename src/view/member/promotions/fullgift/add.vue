@@ -580,8 +580,7 @@ export default {
           without_return: item.without_return,
           gift_num: item.gift_num,
           pics: item.pics,
-          // filter_full: this.conditionValue[0].full
-          filter_full: item.filter_full
+          filter_full: this.conditionValue[0].full
         }
         giftData.push(itemdata)
       })

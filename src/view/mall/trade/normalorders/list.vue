@@ -1965,6 +1965,7 @@ export default {
 
       console.log(params)
 
+      this.confirmStatus = true
       const { delivery_status } = await this.$api.trade.delivery(params)
       this.deliverGoodsDialog = false
       this.$nextTick(() => {

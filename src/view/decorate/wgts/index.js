@@ -77,9 +77,21 @@ const SCENE_1005 = {
   WgtSlider
 }
 
+// ibs导航
+const SCENE_1006 = {
+  WgtSlider,
+  WgtHotZone,
+  WgtFilm,
+  WgtCoupon,
+  WgtShowCase,
+  WgtSearch,
+  WgtHeadline
+}
+
 export default {
   1001: SCENE_1001,
   1002: SCENE_1002,
   1003: SCENE_1003,
-  1004: SCENE_1004
+  1004: SCENE_1004,
+  1006: SCENE_1006,
 }

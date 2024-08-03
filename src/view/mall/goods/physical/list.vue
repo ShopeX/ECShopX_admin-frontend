@@ -1440,10 +1440,10 @@ export default {
       this.batchChangeStateDialog = true
     },
     async onBatchChangeStateSubmit() {
-      await this.$api.marketing.updateDistributorItem({
+      await this.$api.goods.updateGoodsInfo({  
         distributor_id: this.shopId,
-        goods_id: this.selectionItems.map((item) => item.item_id),
-        is_can_sale: this.batchChangeStateForm.status
+        items: JSON.parse(JSON.stringify(this.selectionItems.map((item) => item.item_id))),
+        status: this.batchChangeStateForm.status
       })
 
       this.$message.success('修改成功')

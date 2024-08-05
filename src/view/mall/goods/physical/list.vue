@@ -1199,8 +1199,17 @@ export default {
     this.getAddress()
     this.getShippingTemplatesList()
     this.searchParams.operator_name = this.$route.query.operator_name
+    this.fetchWechatList()
   },
   methods: {
+    async fetchWechatList() {
+      const { list } = await this.$api.minimanage.gettemplateweapplist()
+      list.forEach((item, i) => {
+        if (item.name == 'yykweishop') {
+          this.appID = item.authorizer.authorizer_appid
+        }
+      })
+    },
     onHooksRouteBack() {
       this.$refs['finder'].refresh()
     },
@@ -1266,6 +1275,7 @@ export default {
       }
       getPageCode(params).then((response) => {
         this.appCodeUrl = response.data.data.base64Image
+        this.$message.success('投放成功')
       })
     },
 

@@ -1440,9 +1440,13 @@ export default {
       this.batchChangeStateDialog = true
     },
     async onBatchChangeStateSubmit() {
-      await this.$api.goods.updateGoodsInfo({  
+      let data = []
+      this.selectionItems.map((item) => {
+          data.push({ goods_id: item.goods_id })
+        })
+      await this.$api.goods.updateItemsStatus({
         distributor_id: this.shopId,
-        items: JSON.parse(JSON.stringify(this.selectionItems.map((item) => item.item_id))),
+        items:JSON.stringify(data),
         status: this.batchChangeStateForm.status
       })
 

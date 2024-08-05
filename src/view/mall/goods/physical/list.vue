@@ -746,7 +746,7 @@ export default {
             type: 'button',
             buttonType: 'text',
             visible: (row) => {
-              return IS_SUPPLIER() || row.supplier_id == '0'
+              return IS_SUPPLIER() || row.supplier_id == 0 || IS_DISTRIBUTOR()
             },
             action: {
               type: 'link',

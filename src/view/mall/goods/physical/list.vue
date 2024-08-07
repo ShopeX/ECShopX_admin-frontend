@@ -175,7 +175,7 @@
         <el-button type="primary" plain @click="changeFreightTemplate">
           更改运费模板
         </el-button>
-        <el-button v-if="!IS_ADMIN()" type="primary" plain @click="onBatchSubmitItems">
+        <el-button v-if="!IS_ADMIN() && !IS_DISTRIBUTOR()" type="primary" plain @click="onBatchSubmitItems">
           批量提交审核
         </el-button>
         <el-button type="primary" plain @click="changeItemsStore"> 统一库存 </el-button>

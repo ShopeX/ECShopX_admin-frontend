@@ -141,7 +141,7 @@
         <SpFilterFormItem prop="item_bn" label="SKU编码:">
           <el-input v-model="searchParams.item_bn" placeholder="请输入SKU编码" />
         </SpFilterFormItem>
-        <SpFilterFormItem prop="item_bn" label="商品标签:">
+        <SpFilterFormItem v-if="!IS_SUPPLIER()" prop="tag_id" label="商品标签:">
           <el-cascader
             v-model="searchParams.tag_id"
             size="small"

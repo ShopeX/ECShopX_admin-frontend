@@ -183,10 +183,10 @@
           批量提交
         </el-button>
         <el-button type="primary" plain @click="changeItemsStore"> 统一库存 </el-button>
-        <el-button type="primary" plain @click="() => changeHaltTheSales('stop')"> 停售 </el-button>
+        <!-- <el-button type="primary" plain @click="() => changeHaltTheSales('stop')"> 停售 </el-button>
         <el-button type="primary" plain @click="() => changeHaltTheSales('start')">
           开售
-        </el-button>
+        </el-button> -->
         <el-button type="primary" plain @click="batchChangeStore"> 更改状态 </el-button>
         <!-- <el-button type="primary" plain @click="changeGoodsPrice"> 批量改价 </el-button> -->
 

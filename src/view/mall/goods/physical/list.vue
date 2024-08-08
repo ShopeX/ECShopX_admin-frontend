@@ -183,10 +183,10 @@
         <el-button type="primary" plain @click="batchGifts('true')"> 设为赠品 </el-button>
         <el-button type="primary" plain @click="batchGifts('false')"> 设为非赠品 </el-button>
 
-        <!-- <el-button type="primary" plain @click="() => changeHaltTheSales('stop')"> 停售 </el-button>
-        <el-button type="primary" plain @click="() => changeHaltTheSales('start')">
+        <el-button  v-if="IS_SUPPLIER()" type="primary" plain @click="() => changeHaltTheSales('stop')"> 停售 </el-button>
+        <el-button  v-if="IS_SUPPLIER()" type="primary" plain @click="() => changeHaltTheSales('start')">
           开售
-        </el-button> -->
+        </el-button>
         <!-- <el-button type="primary" plain @click="changeGoodsPrice"> 批量改价 </el-button> -->
 
         <el-dropdown>
@@ -1135,14 +1135,14 @@ export default {
           //   width: 100,
           //   visible: !(this.IS_DISTRIBUTOR() && this.VERSION_PLATFORM)
           // },
-          // {
-          //   name: '可售状态',
-          //   key: 'is_market',
-          //   formatter: (value, row, col) => {
-          //     return value == '1' ? '可售' : '不可售'
-          //   },
-          //   visible:!(this.IS_DISTRIBUTOR() && this.VERSION_PLATFORM)
-          // },
+          {
+            name: '供应状态',
+            key: 'is_market',
+            formatter: (value, row, col) => {
+              return value == '1' ? '可售' : '不可售'
+            },
+            visible:!(this.IS_DISTRIBUTOR() && this.VERSION_PLATFORM)
+          },
           {
             name: '商品状态',
             width: 120,

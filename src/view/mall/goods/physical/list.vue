@@ -1007,6 +1007,16 @@ export default {
                         ></i>
                       </el-tag>
                     )}
+                    {scope.row.is_gift == 1 && (
+                      <el-tag
+                        size='mini'
+                        effect='plain'
+                        type='primary'
+                        style='margin-left: 4px; cursor: default;'
+                      >
+                        赠
+                      </el-tag>
+                    )}
                   </div>
                   <div style='color: #666;'>
                     {`SPU编码：${scope.row.goods_bn}`}

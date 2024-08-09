@@ -73,7 +73,7 @@ export default {
     {
       path: 'goods/suppliergoods',
       name: `供应商商品审核`,
-      component: () => import('@/view/mall/goods/physical/supplierList'),
+      component: () => import('@/view/mall/goods/physical/supplier_goods'),
       children: [
         {
           path: 'editor/:itemId?',

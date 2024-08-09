@@ -8,6 +8,7 @@
 
 <script>
 import { GOODS_TAX_RATE } from '@/consts'
+import { IS_SUPPLIER } from '@/utils'
 export default {
   name: 'SpecParams',
   props: {
@@ -56,7 +57,6 @@ export default {
         approve_status: 'onsale',
         store: 1,
         item_bn: '',
-        supplier_goods_bn: '',
         weight: '',
         volume: '',
         price: '',
@@ -70,6 +70,7 @@ export default {
           label: '商品状态',
           key: 'approve_status',
           type: 'select',
+          isShow: !IS_SUPPLIER(),//非供应商
           options: statusOption,
           display: 'inline'
         },

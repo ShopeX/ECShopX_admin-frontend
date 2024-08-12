@@ -132,11 +132,11 @@
               <span> {{ scope.row.rebate / 100 }} </span> 元
             </template>
           </el-table-column>
-          <el-table-column v-if="1 == 2" label="返佣积分" min-width="60">
+          <!-- <el-table-column label="返佣积分" min-width="60">
             <template slot-scope="scope">
               <span> {{ scope.row.rebate_point }}积分 </span>
             </template>
-          </el-table-column>
+          </el-table-column> -->
           <el-table-column prop="is_close" label="是否已结算" min-width="50">
             <template slot-scope="scope">
               <el-tag v-if="scope.row.is_close == true" type="warning"> 已结算 </el-tag>

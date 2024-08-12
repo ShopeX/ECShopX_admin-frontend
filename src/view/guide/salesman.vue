@@ -68,8 +68,8 @@
 
         <el-table-column
           prop="children_count"
-          width="100"
-          label="会员数量"
+          width="130"
+          label="累计会员数量"
           
         >
         <!-- sortable -->
@@ -89,7 +89,7 @@
 
         <el-table-column
           prop="child_count"
-          label="会员数量" v-if="1==2"
+          label="累计会员数量" v-if="1==2"
         >
           <template slot-scope="scope">
             <span v-if="scope.row.child_count > 0">{{ scope.row.child_count }}</span>

@@ -1,6 +1,9 @@
 <template>
   <div>
+    <shop-select distributors @update="storeChange" @init="initChange" />
+
     <div class="content-bottom-padded">
+
       <el-row class="content-bottom-padded" :gutter="20">
         <el-col :span="6">
           <el-input
@@ -396,6 +399,14 @@ import { mapGetters } from 'vuex'
 import SideBar from '@/components/element/sideBar'
 import { getPopularizeSetting,getPopularizeSettingStore } from '../../api/promotions'
 import { getItemsList, updateItemRebateConf, updateGoodsInfo } from '@/api/goods'
+import shopSelect from "@/components/shopSelect";
+import {
+  getSalesmanList,
+  updateSalesman,
+  addSalesman,
+  getRoleList,
+  updateSalesmanRole
+} from '@/api/marketing'
 
 let changeRebateTypeMap = {
   default: {
@@ -414,6 +425,7 @@ let changeRebateTypeMap = {
 
 export default {
   components: {
+    shopSelect,
     SideBar
   },
   data() {
@@ -532,6 +544,30 @@ export default {
       this.params.pageSize = pageSize
       this.getGoodsList()
     },
+    getList () {
+      this.loading = true
+      this.getGoodsList()
+      this.loading = false
+
+      // getSalesmanList(this.params).then((response) => {
+      //   if (response.data.data.list) {
+      //     this.list = response.data.data.list
+      //     this.total_count = Number(response.data.data.total_count)
+      //   }
+      //   this.loading = false
+      // })
+    },
+
+    storeChange(params) {
+      params && params.shop_id;
+      this.params.distributor_id = params.shop_id;
+      this.params.page = 1;
+      this.getList();
+    },
+    initChange() {
+      this.shopId = "";
+    },
+
     handleCurrentChange(page_num) {
       this.params.page = page_num
       this.getGoodsList()

@@ -128,9 +128,9 @@
             prop="mobile"
             label="手机号"
           />
-          <el-table-column
+          <el-table-column v-if="1==2"
             prop="promoter_grade_name"
-            label="推广员等级"
+            label="推广员等级-"
           />
           <el-table-column
             prop="disabled"

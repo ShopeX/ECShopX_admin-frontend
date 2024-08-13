@@ -41,7 +41,7 @@
 </style>
 <template>
   <div class="picker-goods">
-    <SpFilterForm :model="formData" size="small" @onSearch="onSearch" @onReset="onReset">
+    <SpFilterForm :model="formData" @onSearch="onSearch" @onReset="onReset">
       <SpFilterFormItem prop="keywords">
         <el-input v-model="formData.keywords" clearable placeholder="请输入商品名称" />
       </SpFilterFormItem>

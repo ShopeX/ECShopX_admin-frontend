@@ -1163,7 +1163,7 @@ export default {
             formatter: (value, row, col) => {
               return value == '1' ? '可售' : '不可售'
             },
-            visible:!(this.IS_DISTRIBUTOR() && this.VERSION_PLATFORM)
+            visible: IS_SUPPLIER()
           },
           {
             name: '商品状态',

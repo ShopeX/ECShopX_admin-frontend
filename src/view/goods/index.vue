@@ -422,12 +422,12 @@ export default {
         //     }
         //   }
         // },
-        {
-          label: '商品税率',
-          key: 'taxRate',
-          type: 'input',
-          display: 'inline'
-        },
+        // {
+        //   label: '商品税率',
+        //   key: 'taxRate',
+        //   type: 'input',
+        //   display: 'inline'
+        // },
         {
           label: '供应状态',
           key: 'is_market',

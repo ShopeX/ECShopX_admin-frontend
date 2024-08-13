@@ -42,7 +42,7 @@ export default {
     {
       path: 'goods/supplier_goods_list',
       name: `供应商商品列表`,
-      component: () => import('@/view/mall/goods/physical/supplierLists'),
+      component: () => import('@/view/mall/goods/physical/supplier_goods_list'),
       children: [
         {
           path: 'editor/:itemId?',
@@ -73,7 +73,7 @@ export default {
     {
       path: 'goods/suppliergoods',
       name: `供应商商品审核`,
-      component: () => import('@/view/mall/goods/physical/supplier_goods'),
+      component: () => import('@/view/mall/goods/physical/supplier_goods_check'),
       children: [
         {
           path: 'editor/:itemId?',

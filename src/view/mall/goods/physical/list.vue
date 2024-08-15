@@ -847,19 +847,7 @@ export default {
             action: {
               type: 'link',
               handler: async ([row]) => {
-                this.handleShow(row, true)
-              }
-            }
-          },
-          {
-            name: '投放码',
-            key: 'puts',
-            type: 'button',
-            buttonType: 'text',
-            action: {
-              type: 'link',
-              handler: async ([row]) => {
-                this.handleShow(row, false)
+                this.handleShow(row)
               }
             }
           },
@@ -1350,7 +1338,7 @@ export default {
       this.specItems = specItems
       this.skuLoading = false
     },
-    handleShow({ goods_id, itemName }, val) {
+    handleShow({ goods_id, itemName }) {
       const page = 'pages/item/espier-detail'
       this.curPageUrl = `${page}?id=${goods_id}`
       let params = {
@@ -1360,12 +1348,9 @@ export default {
       }
       getPageCode(params).then((response) => {
         this.appCodeUrl = response.data.data.base64Image
-        if (val) {
-          this.$message.success('投放成功')
-        } else {
+          // this.$message.success('投放成功')
           this.sunCodeTitle = itemName + '---商品太阳码'
           this.sunCode = true
-        }
       })
     },
 

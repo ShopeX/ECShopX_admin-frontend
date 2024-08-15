@@ -16,6 +16,13 @@
     }
   }
 }
+.page-code {
+  text-align: center;
+}
+.page-code-img {
+  width: 200px;
+  height: 200px;
+}
 </style>
 <style lang="scss">
 .physical-cell-reason {
@@ -180,20 +187,39 @@
         <el-button v-if="!IS_SUPPLIER()" type="primary" plain @click="changeCategory">
           更改销售分类
         </el-button>
-        <el-button type="primary" v-if="!IS_SUPPLIER()" plain @click="changeGoodsLabel"> 打标签 </el-button>
-        <el-button type="primary" plain @click="changeFreightTemplate">
-          更改运费模板
+        <el-button type="primary" v-if="!IS_SUPPLIER()" plain @click="changeGoodsLabel">
+          打标签
         </el-button>
-        <el-button v-if="!IS_ADMIN() && !IS_DISTRIBUTOR()" type="primary" plain @click="onBatchSubmitItems">
+        <el-button type="primary" plain @click="changeFreightTemplate"> 更改运费模板 </el-button>
+        <el-button
+          v-if="!IS_ADMIN() && !IS_DISTRIBUTOR()"
+          type="primary"
+          plain
+          @click="onBatchSubmitItems"
+        >
           批量提交审核
         </el-button>
         <el-button type="primary" plain @click="changeItemsStore"> 统一库存 </el-button>
-        <el-button type="primary" plain v-if="!IS_SUPPLIER()" @click="batchChangeStore"> 更改状态 </el-button>
+        <el-button type="primary" plain v-if="!IS_SUPPLIER()" @click="batchChangeStore">
+          更改状态
+        </el-button>
         <el-button type="primary" plain @click="batchGifts('true')"> 设为赠品 </el-button>
         <el-button type="primary" plain @click="batchGifts('false')"> 设为非赠品 </el-button>
 
-        <el-button  v-if="IS_SUPPLIER()" type="primary" plain @click="() => changeHaltTheSales('stop')"> 停售 </el-button>
-        <el-button  v-if="IS_SUPPLIER()" type="primary" plain @click="() => changeHaltTheSales('start')">
+        <el-button
+          v-if="IS_SUPPLIER()"
+          type="primary"
+          plain
+          @click="() => changeHaltTheSales('stop')"
+        >
+          停售
+        </el-button>
+        <el-button
+          v-if="IS_SUPPLIER()"
+          type="primary"
+          plain
+          @click="() => changeHaltTheSales('start')"
+        >
           开售
         </el-button>
         <!-- <el-button type="primary" plain @click="changeGoodsPrice"> 批量改价 </el-button> -->
@@ -282,7 +308,7 @@
                 :min="0"
                 :precision="2"
                 style="width: 120px"
-                @change="updateGoodsSkuPrice(scope.row,'market_price')"
+                @change="updateGoodsSkuPrice(scope.row, 'market_price')"
               />
             </template>
           </el-table-column>
@@ -294,7 +320,7 @@
                 :min="0"
                 :precision="2"
                 style="width: 120px"
-                @change="updateGoodsSkuPrice(scope.row,'price')"
+                @change="updateGoodsSkuPrice(scope.row, 'price')"
               />
             </template>
           </el-table-column>
@@ -306,7 +332,7 @@
                 :min="0"
                 :precision="2"
                 style="width: 120px"
-                @change="updateGoodsSkuPrice(scope.row,'cost_price')"
+                @change="updateGoodsSkuPrice(scope.row, 'cost_price')"
               />
             </template>
           </el-table-column>
@@ -444,6 +470,22 @@
         @onSubmit="onBatchChangeStateSubmit"
       />
 
+      <el-dialog :title="sunCodeTitle" :visible.sync="sunCode" width='360px'>
+        <div class="page-code">
+          <img class="page-code-img" :src="appCodeUrl" />
+          <div class="page-btns">
+            <el-button type="primary" plain @click="handleDownload(sunCodeTitle)">
+              下载码
+            </el-button>
+            <el-button v-clipboard:copy="curPageUrl" type="primary" plain> 复制链接 </el-button>
+          </div>
+        </div>
+
+        <span slot="footer" class="dialog-footer">
+          <el-button type="primary" @click="sunCode = false">确 定</el-button>
+        </span>
+      </el-dialog>
+
       <!-- 查看多规格信息 -->
       <SpDrawer
         v-model="showItemSkuDrawer"
@@ -474,7 +516,7 @@
 <script>
 import moment from 'moment'
 import { exportItemsData, exportItemsTagData, saveIsGifts } from '@/api/goods'
-import { IS_ADMIN, IS_SUPPLIER,IS_DISTRIBUTOR } from '@/utils'
+import { IS_ADMIN, IS_SUPPLIER, IS_DISTRIBUTOR } from '@/utils'
 import { getPageCode } from '@/api/marketing'
 import { GOODS_APPLY_STATUS } from '@/consts'
 
@@ -551,6 +593,8 @@ export default {
       },
       goodsBranchList: [],
       appID: '',
+      sunCode: false,
+      sunCodeTitle: '',
       appCodeUrl: '',
       curPageUrl: '',
       goodsBranchParams: {
@@ -757,7 +801,12 @@ export default {
             type: 'button',
             buttonType: 'text',
             visible: (row) => {
-              return IS_SUPPLIER() || row.supplier_id == 0 || IS_DISTRIBUTOR() || (IS_ADMIN() && this.VERSION_STANDARD)
+              return (
+                IS_SUPPLIER() ||
+                row.supplier_id == 0 ||
+                IS_DISTRIBUTOR() ||
+                (IS_ADMIN() && this.VERSION_STANDARD)
+              )
             },
             action: {
               type: 'link',
@@ -798,11 +847,22 @@ export default {
             action: {
               type: 'link',
               handler: async ([row]) => {
-                this.handleShow(row.goods_id)
+                this.handleShow(row, true)
               }
             }
           },
-
+          {
+            name: '投放码',
+            key: 'puts',
+            type: 'button',
+            buttonType: 'text',
+            action: {
+              type: 'link',
+              handler: async ([row]) => {
+                this.handleShow(row, false)
+              }
+            }
+          },
           {
             name: '添加相似',
             key: 'similarity',
@@ -828,8 +888,10 @@ export default {
             buttonType: 'text',
             visible: (row) => {
               const isShow =
-                IS_ADMIN() || IS_DISTRIBUTOR() || (IS_SUPPLIER() &&
-                (row.audit_status == 'submitting' || row.audit_status == 'rejected'))
+                IS_ADMIN() ||
+                IS_DISTRIBUTOR() ||
+                (IS_SUPPLIER() &&
+                  (row.audit_status == 'submitting' || row.audit_status == 'rejected'))
               return isShow
             },
             action: {
@@ -1058,7 +1120,7 @@ export default {
           {
             name: '标签',
             width: 120,
-            visible:!IS_SUPPLIER(),
+            visible: !IS_SUPPLIER(),
             key: 'tagList',
             render: (h, scope) => (
               <div style='white-space: normal;'>
@@ -1148,7 +1210,7 @@ export default {
             name: '毛利率（%)',
             key: 'gross_profit_rate',
             width: 100,
-            align: "right",
+            align: 'right',
             headerAlign: 'center'
           },
           // {
@@ -1178,7 +1240,7 @@ export default {
             name: '审核状态',
             key: 'audit_status',
             width: 200,
-            visible:!IS_ADMIN(),            
+            visible: !IS_ADMIN(),
             render: (h, scope) => (
               <div>
                 <span>{GOODS_APPLY_STATUS[scope.row.audit_status]}</span>
@@ -1277,7 +1339,7 @@ export default {
           item_spec_desc: item.item_spec_desc || item.itemName,
           is_edit: false,
           price: item.price / 100,
-          cost_price:item.cost_price / 100,
+          cost_price: item.cost_price / 100,
           market_price: item.market_price / 100,
           grade: this.generatePrice(item.memberGrade.grade),
           vipGrade: this.generatePrice(item.memberGrade.vipGrade)
@@ -1288,17 +1350,22 @@ export default {
       this.specItems = specItems
       this.skuLoading = false
     },
-    handleShow(id) {
+    handleShow({ goods_id, itemName }, val) {
       const page = 'pages/item/espier-detail'
-      this.curPageUrl = `${page}?id=${id}`
+      this.curPageUrl = `${page}?id=${goods_id}`
       let params = {
         wxaAppId: this.appID,
         page,
-        id
+        id: goods_id
       }
       getPageCode(params).then((response) => {
         this.appCodeUrl = response.data.data.base64Image
-        this.$message.success('投放成功')
+        if (val) {
+          this.$message.success('投放成功')
+        } else {
+          this.sunCodeTitle = itemName + '---商品太阳码'
+          this.sunCode = true
+        }
       })
     },
 
@@ -1475,11 +1542,11 @@ export default {
     async onBatchChangeStateSubmit() {
       let data = []
       this.selectionItems.map((item) => {
-          data.push({ goods_id: item.goods_id })
-        })
+        data.push({ goods_id: item.goods_id })
+      })
       await this.$api.goods.updateItemsStatus({
         distributor_id: this.shopId,
-        items:JSON.stringify(data),
+        items: JSON.stringify(data),
         status: this.batchChangeStateForm.status
       })
 
@@ -1690,15 +1757,15 @@ export default {
         this.$message.error('导出失败')
       }
     },
-    async updateGoodsSkuPrice({ item_id, price, cost_price,market_price },priceType) {
+    async updateGoodsSkuPrice({ item_id, price, cost_price, market_price }, priceType) {
       const priceMap = {
-        'price':price,
-        'cost_price':cost_price,
-        'market_price':market_price
+        'price': price,
+        'cost_price': cost_price,
+        'market_price': market_price
       }
       await this.$api.goods.updateGoodsInfo({
         item_id,
-        [priceType]:priceMap[priceType],
+        [priceType]: priceMap[priceType],
         operate_source: IS_SUPPLIER() ? 'supplier' : 'platform'
       })
       this.$message.success('操作成功')

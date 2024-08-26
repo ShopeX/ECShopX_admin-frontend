@@ -51,7 +51,8 @@ export default {
       zitilist: (args) => fn({ value: { ...args }, type: 'pickerZitiList' }),
       aftersalesList: (args) => fn({ value: { ...args }, type: 'pickerAftersalesList' }),
       editBoard: (args) => fn({ value: { ...args }, type: 'pickerEditBoard', width: '892px' }),
-      planting: (args) => fn({ value: { ...args }, type: 'pickerPlanting' })
+      planting: (args) => fn({ value: { ...args }, type: 'pickerPlanting' }),
+      pages: (args) => fn({ value: { ...args }, type: 'pickerPages' })
     }
 
     Vue.prototype.$picker = $picker

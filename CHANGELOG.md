@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [3.15.3](https://git.ishopex.cn/ecshopx/ecshopx-admin/compare/v3.15.2...v3.15.3) (2024-08-28)
+
+
+### Bug Fixes
+
+* 更新商品详情，formlist放入computed动态计算导致select错误 ([195140e](https://git.ishopex.cn/ecshopx/ecshopx-admin/commit/195140e0c741c82e9d559ed5e79fa17dd016674f))
+
 ### [3.15.2](https://git.ishopex.cn/ecshopx/ecshopx-admin/compare/v3.15.1...v3.15.2) (2024-08-16)
 
 

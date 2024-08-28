@@ -87,7 +87,7 @@
           {{ scope.row.custom_attribute_value || scope.row.item_spec }}
         </template>
       </el-table-column>
-      <el-table-column label="状态">
+      <el-table-column label="状态" v-if="!IS_SUPPLIER()">
         <template slot-scope="scope">
           <el-select v-model="scope.row.approve_status" size="mini" placeholder="请选择">
             <el-option
@@ -108,23 +108,23 @@
             required
             min="0"
             size="mini"
-            placeholder=""
+            placeholder="库存"
           />
         </template>
       </el-table-column>
       <el-table-column label="货号">
         <template slot-scope="scope">
-          <el-input v-model="scope.row.item_bn" :maxlength="60" size="mini" placeholder="" />
+          <el-input v-model="scope.row.item_bn" :maxlength="60" size="mini" placeholder="货号" />
         </template>
       </el-table-column>
       <el-table-column label="重量">
         <template slot-scope="scope">
-          <el-input v-model="scope.row.weight" :maxlength="60" size="mini" placeholder="" />
+          <el-input v-model="scope.row.weight" :maxlength="60" size="mini" placeholder="重量" />
         </template>
       </el-table-column>
       <el-table-column label="体积">
         <template slot-scope="scope">
-          <el-input v-model="scope.row.volume" :maxlength="60" size="mini" placeholder="" />
+          <el-input v-model="scope.row.volume" :maxlength="60" size="mini" placeholder="体积" />
         </template>
       </el-table-column>
       <el-table-column label="销售价">
@@ -135,7 +135,7 @@
             required
             min="0"
             size="mini"
-            placeholder=""
+            placeholder="销售价"
           />
         </template>
       </el-table-column>
@@ -147,7 +147,7 @@
             required
             min="0"
             size="mini"
-            placeholder=""
+            placeholder="成本价"
             :disabled="disabled"
           />
         </template>
@@ -160,7 +160,7 @@
             required
             min="0"
             size="mini"
-            placeholder=""
+            placeholder="市场价"
           />
         </template>
       </el-table-column>
@@ -172,7 +172,7 @@
             required
             min="0"
             size="mini"
-            placeholder=""
+            placeholder="条形码"
           />
         </template>
       </el-table-column>
@@ -183,7 +183,7 @@
             type="number"
             min="0"
             size="mini"
-            placeholder=""
+            placeholder="获取积分"
           />
         </template>
       </el-table-column>

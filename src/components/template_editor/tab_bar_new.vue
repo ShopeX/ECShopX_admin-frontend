@@ -57,6 +57,11 @@
               />
             </el-select>
           </div>
+          <div v-if="item.pagePath == 'customPage'" class="uploader-setting">
+            <div class="btn-linkpath" @click="()=>handleCustomPageSelect(item)">
+              {{ getCustomPageName(item) }}
+            </div>
+          </div>
         </div>
         <div class="frm-tips">只能上传jpg/png文件，且不超过2M （建议尺寸：50px * 50px）</div>
         <el-button
@@ -131,6 +136,11 @@ export default {
           value: '/subpages/mdugc/index',
           name: 'ugc',
           label: '社区'
+        },
+        {
+          value: 'customPage',
+          name: 'customPage',
+          label: '自定义页面'
         }
       ]
     }
@@ -186,6 +196,10 @@ export default {
       if (n) {
         this.data[this.current].name = n.name
       }
+      if(value != 'customPage' && this.data[this.current]?.customPage){
+        this.$delete(this.data[this.current],'customPage')
+      }
+
     },
     handleIconChange(index) {
       this.$emit('bindImgs', index, 'default')
@@ -194,7 +208,25 @@ export default {
       this.$emit('bindImgs', index, 'selected')
     },
     handleSave() {
+      const emptyIndex = this.data.findIndex(item=>item.name == "customPage" && !item.customPage )
+      if(emptyIndex > -1){
+        return this.$message({
+          message: '请选择自定义页面',
+          type: 'error',
+          duration: 5 * 1000
+        })
+      }
       this.$emit('saveTab')
+    },
+    async handleCustomPageSelect(item){
+      const {data} = await this.$picker.pages({
+        multiple:false,
+        data:[item?.customPage?.id]
+      })
+      this.$set(item,'customPage',data[0])
+    },
+    getCustomPageName(item){
+      return item?.customPage?.page_name ?? '请选择自定义页面'
     }
   }
 }
@@ -214,4 +246,15 @@ export default {
     width: 50%;
   }
 }
+.btn-linkpath {
+    padding: 0 8px;
+    border: 1px solid #d9d9d9;
+    background-color: #fff;
+    height: 36px;
+    line-height: 36px;
+    border-radius: 3px;
+    max-width: 160px;
+    @include text-overflow();
+  }
+
 </style>

@@ -226,7 +226,11 @@
             />
           </template>
         </el-table-column>
-
+        <el-table-column width="100" label="商家自配送">
+          <template slot-scope="scope">
+            {{ scope.row.is_self_delivery ? '是' : '否' }}
+          </template>
+        </el-table-column>
         <el-table-column width="70" label="状态">
           <template slot-scope="scope">
             <el-button

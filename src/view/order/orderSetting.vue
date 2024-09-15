@@ -40,7 +40,8 @@ export default {
         latest_aftersale_time: 0,
         auto_refuse_time: 0,
         auto_aftersales: false,
-        offline_aftersales: false
+        offline_aftersales: false,
+        is_refund_freight:false
       },
       formList: [
         {
@@ -118,7 +119,19 @@ export default {
           ],
           isShow: () => this.VERSION_STANDARD,
           tip: '启用后，请前往店铺管理中设置到店退货信息，消费者申请退货退款时可选择到店退货。'
+        },
+        {
+          label: '退货退款时可退运费',
+          key: 'is_refund_freight',
+          type: 'radio',
+          options: [
+            { label: true, name: '启用' },
+            { label: false, name: '不启用' }
+          ],
+          // isShow: () => this.VERSION_STANDARD,
+          tip: '启用后，请前往店铺管理中设置退货退款时消费者可退运费。'
         }
+
       ]
     }
   },
@@ -134,12 +147,13 @@ export default {
         latest_aftersale_time: res.latest_aftersale_time,
         auto_refuse_time: res.auto_refuse_time,
         auto_aftersales: res.auto_aftersales,
-        offline_aftersales: res.offline_aftersales
+        offline_aftersales: res.offline_aftersales,
+        is_refund_freight: res.is_refund_freight == 1
       }
     },
     async onSaveConfig() {
       const params = this.form
-      await this.$api.trade.setOrderSetting(params)
+      await this.$api.trade.setOrderSetting({...params,is_refund_freight:params.is_refund_freight ?1:0})
       this.$message.success('保存成功')
     }
   }

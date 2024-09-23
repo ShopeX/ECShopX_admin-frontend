@@ -119,7 +119,7 @@
         <SpFilterFormItem prop="item_bn" label="SKU编码:">
           <el-input v-model="searchParams.item_bn" />
         </SpFilterFormItem>
-        
+
       </SpFilterForm>
 
       <div class="action-container">
@@ -617,7 +617,8 @@ export default {
                   query: {
                     some_param: 'true',
                     supplier: true,
-                    prohibit: 1
+                    prohibit: 1,
+                    isSupplierGoods:true
                   }
                 })
               }

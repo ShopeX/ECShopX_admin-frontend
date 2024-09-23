@@ -87,7 +87,7 @@
           {{ scope.row.custom_attribute_value || scope.row.item_spec }}
         </template>
       </el-table-column>
-      <el-table-column label="状态" v-if="!IS_SUPPLIER()">
+      <el-table-column label="状态" v-if="!IS_SUPPLIER() && !isSupplierGoods">
         <template slot-scope="scope">
           <el-select v-model="scope.row.approve_status" size="mini" placeholder="请选择">
             <el-option
@@ -195,8 +195,8 @@
     </el-table>
 
     <el-table :data="value.specItems" border style="line-height: initial; width: 100%">
-      <el-table-column prop="spec_name" label="规格" />
-      <el-table-column label="状态" :render-header="renderRequire" v-if="!IS_SUPPLIER()">
+      <el-table-column prop="spec_name" label="规格1" />
+      <el-table-column label="状态" :render-header="renderRequire" v-if="!IS_SUPPLIER() && !isSupplierGoods">
         <template slot-scope="scope">
           <el-select v-model="scope.row.approve_status" size="mini" placeholder="请选择">
             <el-option
@@ -284,7 +284,11 @@ export default {
     provinceList: {
       type: Array,
       default: () => []
-    }
+    },
+    isSupplierGoods: {
+      type: Boolean,
+      default: false
+    },
   },
   data() {
     let statusOption = [

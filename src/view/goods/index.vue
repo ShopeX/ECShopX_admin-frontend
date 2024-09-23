@@ -552,6 +552,7 @@ export default {
               <SkuParams
                 v-model={value[key]}
                 ref='skuParams'
+                isSupplierGoods={this.routerParams.isSupplierGoods}
                 is-show-point={this.isShowPoint}
                 disabled={disabled}
                 provinceList={this.provinceList}
@@ -565,10 +566,12 @@ export default {
           validator: async (rule, value, callback) => {
             if (this.form.isSpecs) {
               const { specItems } = value
+
               const approveStatus = specItems.find(({ approve_status }) => !!approve_status)
               const store = specItems.find(({ store }) => !!store)
               const price = specItems.find(({ price }) => !!price)
-              if (!approveStatus) {
+
+              if (!IS_SUPPLIER() && !this.routerParams.isSupplierGoods &&  !approveStatus) {
                 callback('请选择商品状态')
               } else if (!store) {
                 callback('请输入商品库存')
@@ -694,7 +697,9 @@ export default {
           }
         }
       ],
-      routerParams: {}
+      routerParams: {
+        isSupplierGoods:false
+      }
     }
   },
   computed: {},

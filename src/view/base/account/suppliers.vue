@@ -48,6 +48,7 @@ export default {
         ],
         columns: [
           { name: '账号', key: 'login_name' },
+          { name: '供应商名称', key: 'supplier_name' },
           { name: '手机号', key: 'mobile' },
           { name: '姓名', key: 'username' },
           {
@@ -104,13 +105,13 @@ export default {
         password: ''
       },
       supplierFormList: [
-      {
-          label: '公司',
-          key: 'company',
-          type: 'input',
-          required: true,
-          message: '不能为空'
-        },
+      // {
+      //     label: '公司',
+      //     key: 'company',
+      //     type: 'input',
+      //     required: true,
+      //     message: '不能为空'
+      //   },
         {
           label: '账号',
           key: 'login_name',

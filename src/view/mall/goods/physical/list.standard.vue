@@ -93,7 +93,7 @@
             />
           </el-select>
         </SpFilterFormItem>
-        <SpFilterFormItem prop="item_holder" label="商品类型:">
+        <!-- <SpFilterFormItem prop="item_holder" label="商品类型:">
         <el-select v-model="params.item_holder" placeholder="请选择商品类型" clearable>
           <el-option
             v-for="item in goodCategory"
@@ -102,7 +102,7 @@
             :value="item.value"
           />
         </el-select>
-      </SpFilterFormItem>
+      </SpFilterFormItem> -->
         <SpFilterFormItem prop="main_cat_id" label="管理分类:">
           <el-cascader
             v-model="params.main_cat_id"

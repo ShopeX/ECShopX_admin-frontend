@@ -58,6 +58,18 @@
       :form-list="companyFormList"
       @onSubmit="onCompanyFormSubmit"
     />
+
+    <el-dialog
+      :title="'企业二维码-'+qrcodeName"
+      :visible.sync="qrDialog"
+      width="30%"
+      >
+      <span>用户扫描该二维码打开小程序时会跳过白名单身份验证步骤，在继续完成授权手机号登录后即可获得相应企业的“员工”身份；已是该企业员工的用户不受影响。</span>
+      <span slot="footer" class="dialog-footer">
+        <el-button @click="qrDialog = false">取 消</el-button>
+        <el-button type="primary" @click="handleDownload">下载二维码</el-button>
+      </span>
+    </el-dialog>
   </div>
 </template>
 
@@ -82,6 +94,8 @@ export default {
     }
 
     return {
+      qrcodeUrl: '',
+      qrcodeName: '',
       queryForm: {
         name: '',
         enterprise_sn: '',
@@ -118,7 +132,23 @@ export default {
                 this.$message.success('邮件已发送')
               }
             }
-          }
+          },
+          {
+            name: '二维码',
+            key: 'modify',
+            type: 'button',
+            buttonType: 'text',
+            action: {
+              handler: async ([row]) => {
+                const { base64Image } = await this.$api.member.getEnterpriseQrcode({
+                  enterprise_id: row.id,
+                })
+                this.qrcodeUrl = base64Image
+                this.qrcodeName = row.name
+                this.qrDialog = true
+              }
+            }
+          },
         ],
         columns: [
           { name: 'ID', key: 'id' },
@@ -201,6 +231,7 @@ export default {
       }),
       validateTypeList: VALIDATE_TYPES,
       addDialog: false,
+      qrDialog: false,
       companyForm: {
         id: '',
         logo: '',
@@ -309,6 +340,19 @@ export default {
   },
   created() {},
   methods: {
+    // 下载二维码
+    handleDownload() {
+      var a = document.createElement('a')
+      var temp = this.qrcodeName
+      if (this.qrcodeUrl) {
+        a.href = this.qrcodeUrl
+        a.download = temp + '.png'
+        a.click()
+        setTimeout(() => {
+          this.qrDialog = false
+        },1000)
+      }
+    },
     beforeSearch(params) {
       return {
         ...params,

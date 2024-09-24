@@ -886,7 +886,15 @@ export default {
               type: 'link',
               handler: async ([row]) => {
                 await this.$confirm('此操作将删除该商品, 是否继续?', '提示')
-                await this.$api.goods.deleteItems(row.item_id)
+                try {
+                  await this.$api.goods.deleteItems(row.item_id)
+                } catch (error) {
+                  // 正常删除，不会返回
+                  if (error.data) {
+                    error.data.data.message
+                    return
+                  }
+                }
                 this.$message.success('删除商品成功')
                 setTimeout(() => {
                   this.$refs['finder'].refresh(true)

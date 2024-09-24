@@ -481,3 +481,12 @@ export function sendEmployeeEmail(params) {
     params
   })
 }
+
+
+// 邮件发送测试
+export function getEnterpriseQrcode({ enterprise_id }) {
+  return fetch({
+    url: `/enterprise/qrcode/${enterprise_id}`,
+    method: 'get',
+  })
+}

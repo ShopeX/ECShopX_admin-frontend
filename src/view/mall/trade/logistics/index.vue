@@ -11,9 +11,9 @@
       <el-tab-pane v-if="!IS_SUPPLIER()" label="到店自提" name="ziti">
         <ZitiList />
       </el-tab-pane>
-      <el-tab-pane label="商家自配送" name="zipei">
+      <!-- <el-tab-pane label="商家自配送" name="zipei">
         <ZiPeiList />
-      </el-tab-pane>
+      </el-tab-pane> -->
     </el-tabs>
   </SpRouterView>
 </template>
@@ -23,7 +23,7 @@ import City from './city'
 import Shansong from './shansong'
 import Normal from './normal'
 import ZitiList from './comps/ziti-list'
-import ZiPeiList from './comps/zipei-list'
+// import ZiPeiList from './comps/zipei-list'
 import { mapGetters } from 'vuex'
 import { VERSION_B2C } from '@/utils'
 export default {
@@ -32,7 +32,7 @@ export default {
     City,
     Shansong,
     ZitiList,
-    ZiPeiList
+    // ZiPeiList
   },
   data() {
     return {

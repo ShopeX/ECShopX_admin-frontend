@@ -88,7 +88,7 @@
       </SpFilterForm>
 
       <div class="action-container">
-        <el-button type="primary" plain> 导入商品 </el-button>
+        <el-button type="primary" plain @click="handleImport"> 导入商品 </el-button>
         <el-button type="primary" plain @click="onSelectGoods"> 选择商品 </el-button>
         <el-button type="primary" plain @click="handlePatchAction"> 批量设置 </el-button>
       </div>
@@ -433,6 +433,9 @@ export default {
     }).nextPage()
   },
   methods: {
+    handleImport() {
+      this.$router.push({ path: `/entity/goods/goodsphysical/physicalupload?file_type=employee_purchase_activity_items` })
+    },
     handlePatchAction() {
       const selectItems = this.tableData.filter((item) => !!item.checked)
       if (selectItems.length > 0) {

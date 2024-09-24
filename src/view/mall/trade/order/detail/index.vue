@@ -98,15 +98,19 @@
               {{ scope.row.item_spec_desc ? scope.row.item_spec_desc : '单规格' }}
             </template>
           </el-table-column>
-          <el-table-column prop="supplier_name" label="来源供应商" width="120" />
-          <el-table-column prop="cost_price" label="结算价（¥）" width="100">
+          <el-table-column prop="supplier_name" label="来源供应商" width="120">
             <template slot-scope="scope">
-              {{ (scope.row.cost_price / 100).toFixed(2) }}
+              {{ scope.row.supplier_name ? scope.row.supplier_name : '自营' }}
             </template>
           </el-table-column>
           <el-table-column prop="price" label="单价（¥）" width="100">
             <template slot-scope="scope">
               {{ (scope.row.price / 100).toFixed(2) }}
+            </template>
+          </el-table-column>
+          <el-table-column prop="cost_price" label="结算价（¥）" width="100">
+            <template slot-scope="scope">
+              {{ (scope.row.cost_price / 100).toFixed(2) }}
             </template>
           </el-table-column>
           <el-table-column prop="cost_price" label="成本价（¥）" width="100">

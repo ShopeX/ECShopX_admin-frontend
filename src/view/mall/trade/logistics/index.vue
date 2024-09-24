@@ -11,7 +11,7 @@
       <el-tab-pane v-if="!IS_SUPPLIER()" label="到店自提" name="ziti">
         <ZitiList />
       </el-tab-pane>
-      <el-tab-pane v-if="!IS_SUPPLIER()" label="商家自配送1" name="zipei">
+      <el-tab-pane v-if="!IS_SUPPLIER()" label="商家自配送" name="zipei">
         <ZiPeiList />
       </el-tab-pane>
     </el-tabs>

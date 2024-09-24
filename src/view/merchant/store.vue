@@ -96,6 +96,7 @@
 <script>
 import { isObject, isArray, isEmpty, getRegionNameById } from '@/utils'
 import Pages from '@/utils/pages'
+import { loadMap } from '@/utils/load-map'
 import district from '@/common/district.json'
 import fetchJsonp from '@/utils/axiosJsonp'
 import { axios } from '@/utils/fetch'
@@ -436,17 +437,21 @@ export default {
           key: 'is_self_delivery',
           // type: 'radio',
           // options: [
-            // { name: '商家自配送', label: true },
-            // { name: '达达同城配', label: false }
-            // { name: '闪送', label: 6 }
+          // { name: '商家自配送', label: true },
+          // { name: '达达同城配', label: false }
+          // { name: '闪送', label: 6 }
           // ],
           isShow: ({ key }, value) => value.is_dada,
           component: ({ key }, value) => {
             return (
-            <div style='margin-top: 14px;display:flex'>
-              <el-radio v-model={value[key]} label={true}>商家自配送</el-radio>
-              <el-radio v-model={value[key]} label={false} disabled={!this.dadaEnable}>达达同城配</el-radio>
-            </div>
+              <div style='margin-top: 14px;display:flex'>
+                <el-radio v-model={value[key]} label={true}>
+                  商家自配送
+                </el-radio>
+                <el-radio v-model={value[key]} label={false} disabled={!this.dadaEnable}>
+                  达达同城配
+                </el-radio>
+              </div>
             )
           }
         },
@@ -638,7 +643,7 @@ export default {
           item.options = typeList
         }
       })
-      this.dadaEnable = is_open === '1'    
+      this.dadaEnable = is_open === '1'
     },
     async getShansongInfo() {
       const { business_list, is_open } = await this.$api.dada.getShansongInfo()
@@ -653,7 +658,7 @@ export default {
           item.options = typeList
         }
       })
-      this.dadaEnable = is_open === '1'     
+      this.dadaEnable = is_open === '1'
     },
     async getStoreInfo() {
       const { distributor_id } = this.$route.query
@@ -725,9 +730,8 @@ export default {
           this.pageQuery.reset(res.merchant_name)
         }
       }
-      this.$nextTick(() => {
-        this.qqmapinit()
-      })
+      await loadMap()
+      this.qqmapinit()
     },
     async qqmapinit() {
       const { lat, lng } = this.form

@@ -91,9 +91,9 @@
             :props="{ value: 'category_id', label: 'category_name', checkStrictly: true }"
           />
         </SpFilterFormItem>
-        <SpFilterFormItem prop="cat_id" label="销售分类:">
+        <SpFilterFormItem prop="category" label="销售分类:">
           <el-cascader
-            v-model="searchParams.cat_id"
+            v-model="searchParams.category"
             :options="categoryList"
             :props="{ checkStrictly: true, label: 'category_name', value: 'category_id' }"
             clearable

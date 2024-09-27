@@ -1687,7 +1687,8 @@ export default {
     async init() {
       const { category, item_category, main_cat_id, tab } = this.$route.query
       if (category) {
-        this.searchParams.category = category.split(',')
+        const categoryArr = category.split(',')
+        this.searchParams.category = categoryArr[categoryArr.length-1]
       }
       if (item_category) {
         this.searchParams.item_category = item_category.split(',')

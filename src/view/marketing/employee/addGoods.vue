@@ -597,10 +597,12 @@ export default {
       this.pagesQuery.refresh()
     },
     handleSizeChange(val) {
-      this.pagesQuery.setPage(val)
+      this.pagesQuery.setPageSize(val)
+      this.pagesQuery.refresh()
     },
     handleCurrentChange(val) {
       this.pagesQuery.setPage(val)
+      this.pagesQuery.refresh()
     }
   }
 }

@@ -44,6 +44,10 @@ export default {
           {
             name: '姓名',
             key: 'username'
+          },
+          {
+            name: '供应商名称',
+            key: 'supplier_name'
           }
         ],
         columns: [

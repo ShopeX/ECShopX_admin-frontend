@@ -449,7 +449,6 @@ import {
 } from '@/consts'
 import { VERSION_STANDARD, VERSION_IN_PURCHASE, IS_SUPPLIER } from '@/utils'
 import moment from 'moment'
-import { IS_ADMIN } from '../../../../../utils';
 
 export default {
   data() {

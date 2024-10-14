@@ -983,32 +983,42 @@ export default {
           type: 'text'
         },
         {
-          label: '退款状态:',
+          label: '退款状态',
           key: 'refundStatus',
           type: 'text'
         },
         {
-          label: '处理进度:',
+          label: '处理进度',
           key: 'process',
           type: 'text'
         },
         {
-          label: '退款金额:',
+          label: '退款金额',
           key: 'refundPrice',
           type: 'text'
         },
         {
-          label: '支付方式:',
+          label: '是否退运费',
+          key: 'refundPrice',
+          type: 'text'
+        },
+        {
+          label: '退运费金额',
+          key: 'refundPrice',
+          type: 'text'
+        },
+        {
+          label: '支付方式',
           key: 'payType',
           type: 'text'
         },
         {
-          label: '取消原因:',
+          label: '取消原因',
           key: 'reason',
           type: 'text'
         },
         {
-          label: '处理结果:',
+          label: '处理结果',
           key: 'check_cancel',
           type: 'radio',
           options: [

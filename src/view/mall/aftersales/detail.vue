@@ -50,6 +50,18 @@
           {{ aftersalesInfo.refund_point }}
         </el-col>
       </el-row>
+      <el-row>
+        <el-col :span="3" class="col-3 content-right"> 是否退运费: </el-col>
+        <el-col :span="20">
+          {{ aftersalesInfo.refund_point }}
+        </el-col>
+      </el-row>
+      <el-row>
+        <el-col :span="3" class="col-3 content-right"> 退款运费: </el-col>
+        <el-col :span="20">
+          {{ aftersalesInfo.refund_point }}
+        </el-col>
+      </el-row>
       <el-row v-if="IS_SUPPLIER()">
         <el-col :span="3" class="col-3 content-right"> 申请门店: </el-col>
         <el-col :span="20">

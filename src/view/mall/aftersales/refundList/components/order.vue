@@ -218,6 +218,7 @@
             </div>
           </template>
         </el-table-column>
+        <el-table-column prop="aftersales_bn" width="180" label="退运费" />
 
         <!-- 退款方式 -->
         <el-table-column prop="refund_channel" width="80" label="退款方式">

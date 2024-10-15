@@ -71,6 +71,23 @@ export default {
       path: 'logistics',
       name: `配送管理`,
       component: () => import('@/view/mall/trade/logistics/index'),
+    },
+    {
+      path: 'aftersalesrefundlist',
+      name: `退款单`,
+      component: () => import('@/view/mall/aftersales/refundList'),
+      children: [
+        {
+          path: 'detail/:itemId?',
+          component: () => import('@/view/mall/aftersales/refundDetail')
+        }
+      ]
+    },
+    {
+      path: 'Refunderrorlogs',
+      name: `退款失败日志`,
+      component: () => import('@/view/mall/trade/refunderrorlogs')
     }
+
   ]
 }

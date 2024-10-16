@@ -116,8 +116,8 @@ export default {
       component: () => import('@/view/base/setting/goodsShareSetting')
     },
     {
-      path: 'certificate',
-      name: `授权绑定`,
+      path: 'saaserp/certificate',
+      name: `商派ERP`,
       component: () => import('@/view/base/setting/certificate/index')
     },
     {

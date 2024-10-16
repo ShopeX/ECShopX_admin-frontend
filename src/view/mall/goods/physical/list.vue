@@ -1807,7 +1807,7 @@ export default {
     },
     uploadWdtErpItems() {
 
-      if (this.item_id.length === 0) {
+      if (this.selectionItems.length === 0) {
         this.$message({
           type: 'error',
           message: '请选择需要同步的商品'
@@ -1816,7 +1816,7 @@ export default {
       }
       let params = {};
       params = {
-        item_id: this.item_id
+        item_id: this.selectionItems.map((item) => item.item_id)
       }
       this.$api.goods.uploadWdtErpItems(params).then(res => {
         if (res.status == true) {

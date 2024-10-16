@@ -1806,7 +1806,7 @@ export default {
       })
     },
     uploadWdtErpItems() {
-
+    console.log(this.selectionItems)
       if (this.selectionItems.length === 0) {
         this.$message({
           type: 'error',

@@ -155,6 +155,7 @@ export default {
         },
         offline_aftersales_other: false,
         is_refund_freight:false,
+        wdt_shop_no: '',
         introduce: ''
       },
       offline_freight_status:false,
@@ -546,6 +547,17 @@ export default {
           tip: '启用后本店订单买家发起退货退款时可退运费。'
         },
         {
+          label: '旺店通ERP',
+          type: 'group'
+        },
+        {
+          label: 'shopNo',
+          key: 'wdt_shop_no',
+          type: 'input',
+          display: 'inline',
+          placeholder: '',
+        },
+        {
           label: '店铺介绍',
           type: 'group'
         },
@@ -736,6 +748,7 @@ export default {
             startTime: offline_startTime,
             endTime: offline_endTime
           },
+          wdt_shop_no: res.wdt_shop_no,
           introduce: res.introduce
         }
         if (res.merchant_name) {

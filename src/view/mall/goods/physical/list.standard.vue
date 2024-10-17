@@ -222,6 +222,7 @@
             </el-dropdown-item>
           </el-dropdown-menu>
         </el-dropdown>
+        <el-button size="small" v-if="isBindWdtErp" type="primary" @click="uploadWdtErpItems()">上传商品到旺店通</el-button>
       </div>
 
       <el-tabs v-model="activeName" type="card" @tab-click="handleClick">
@@ -865,6 +866,7 @@ import { GOOD_CATEGORY, GOOD_CATEGORY_MAP } from '@/consts'
 
 import GoodsSelect from './comps/goodsSelect'
 import skuFinder from './comps/skuFinder'
+import { uploadWdtErpItems } from '@/api/goods'
 
 export default {
   components: {
@@ -1031,6 +1033,7 @@ export default {
       batchChangeStateForm: {
         status: ''
       },
+      isBindWdtErp: false,
       skuEditInput: '',
       skuPriceEditInput: '',
       itemSkuDialog: false,
@@ -1077,6 +1080,7 @@ export default {
     this.init()
     this.fetchWechatList()
     this.params.operator_name = this.$route.query.operator_name
+    this.checkWdtErpBind()
   },
 
   destroyed() {
@@ -1990,6 +1994,38 @@ export default {
       ).then(() => {
         this.$message.success('复制成功')
       })
+    },
+    checkWdtErpBind() {
+      this.$api.third.getWdtErpSetting().then(response => {
+        this.isBindWdtErp = response.is_open
+      })
+    },
+    uploadWdtErpItems() {
+    console.log(this.item_id)
+      if (this.item_id.length === 0) {
+        this.$message({
+          type: 'error',
+          message: '请选择需要同步的商品'
+        });
+        return;
+      }
+      let params = {};
+      params = {
+        item_id: this.item_id
+      }
+      this.$api.goods.uploadWdtErpItems(params).then(res => {
+        if (res.status == true) {
+          this.$message({
+            type: 'success',
+            message: '已加入执行队列'
+          });
+        } else {
+          this.$message({
+            type: 'error',
+            message: '执行失败'
+          });
+        }
+      });
     }
   }
 }

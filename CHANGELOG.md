@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [3.15.8](https://git.ishopex.cn/ecshopx/ecshopx-admin/compare/v3.15.7...v3.15.8) (2024-10-22)
+
+
+### Bug Fixes
+
+* 开启商家自配送 ([8caf8e2](https://git.ishopex.cn/ecshopx/ecshopx-admin/commit/8caf8e2db6e6dc90a981617b4d723291a34b2b8a))
+
 ### [3.15.7](https://git.ishopex.cn/ecshopx/ecshopx-admin/compare/v3.15.6...v3.15.7) (2024-10-21)
 
 

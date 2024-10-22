@@ -156,6 +156,7 @@ export default {
         offline_aftersales_other: false,
         is_refund_freight:false,
         wdt_shop_no: '',
+        jst_shop_no: '',
         introduce: ''
       },
       offline_freight_status:false,
@@ -558,6 +559,17 @@ export default {
           placeholder: '',
         },
         {
+          label: '聚水潭ERP',
+          type: 'group'
+        },
+        {
+          label: '店铺编号',
+          key: 'jst_shop_no',
+          type: 'input',
+          display: 'inline',
+          placeholder: '',
+        },
+        {
           label: '店铺介绍',
           type: 'group'
         },
@@ -749,6 +761,7 @@ export default {
             endTime: offline_endTime
           },
           wdt_shop_no: res.wdt_shop_no,
+          jst_shop_no: res.jst_shop_no,
           introduce: res.introduce
         }
         if (res.merchant_name) {

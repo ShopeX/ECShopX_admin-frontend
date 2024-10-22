@@ -223,6 +223,7 @@
           </el-dropdown-menu>
         </el-dropdown>
         <el-button size="small" v-if="isBindWdtErp" type="primary" @click="uploadWdtErpItems()">上传商品到旺店通</el-button>
+        <el-button size="small" v-if="isBindJstErp" type="primary" @click="uploadJstErpItems()">上传商品到聚水潭</el-button>
       </div>
 
       <el-tabs v-model="activeName" type="card" @tab-click="handleClick">
@@ -1034,6 +1035,7 @@ export default {
         status: ''
       },
       isBindWdtErp: false,
+      isBindJstErp: false,
       skuEditInput: '',
       skuPriceEditInput: '',
       itemSkuDialog: false,
@@ -1081,6 +1083,7 @@ export default {
     this.fetchWechatList()
     this.params.operator_name = this.$route.query.operator_name
     this.checkWdtErpBind()
+    this.checkJstErpBind()
   },
 
   destroyed() {
@@ -2014,6 +2017,37 @@ export default {
         item_id: this.item_id
       }
       this.$api.goods.uploadWdtErpItems(params).then(res => {
+        if (res.status == true) {
+          this.$message({
+            type: 'success',
+            message: '已加入执行队列'
+          });
+        } else {
+          this.$message({
+            type: 'error',
+            message: '执行失败'
+          });
+        }
+      });
+    },
+    checkJstErpBind() {
+      this.$api.third.getJushuitanSetting().then(response => {
+        this.isBindJstErp = response.is_open
+      })
+    },
+    uploadJstErpItems() {
+      if (this.item_id.length === 0) {
+        this.$message({
+          type: 'error',
+          message: '请选择需要同步的商品'
+        });
+        return;
+      }
+      let params = {};
+      params = {
+        item_id: this.item_id
+      }
+      this.$api.goods.uploadItems(params).then(res => {
         if (res.status == true) {
           this.$message({
             type: 'success',

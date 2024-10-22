@@ -239,7 +239,10 @@
             class="image-item-wrap"
             @click="handleClickItem(item)"
           >
-            <div class="image-item" :style="{ color: '#fff', backgroundImage: `url(${item.url})` }">
+            <div
+              class="image-item"
+              :style="{ color: '#fff', backgroundImage: `url('${item.url}')` }"
+            >
               <i class="iconfont icon-link" @click.stop="handleCopy(item.url)" />
               <!-- <span class="image-meta">800*800</span> -->
             </div>

@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [3.15.7](https://git.ishopex.cn/ecshopx/ecshopx-admin/compare/v3.15.6...v3.15.7) (2024-10-21)
+
+
+### Bug Fixes
+
+* 图片选择器路径优化 ([52af06c](https://git.ishopex.cn/ecshopx/ecshopx-admin/commit/52af06cb928949e1a3700b9f222e499c141fd83b))
+
 ### [3.15.6](https://git.ishopex.cn/ecshopx/ecshopx-admin/compare/v3.15.5...v3.15.6) (2024-10-17)
 
 ### [3.15.5](https://git.ishopex.cn/ecshopx/ecshopx-admin/compare/v3.15.4...v3.15.5) (2024-09-29)

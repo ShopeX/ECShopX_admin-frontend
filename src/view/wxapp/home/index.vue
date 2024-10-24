@@ -100,7 +100,7 @@
               <div>定时启用</div>
               <div class="picker-wrap">
                 <img class="time-img" src="@/assets/img/time-img.png">
-                <span>设置模板切换时间1</span>
+                <span>设置模板切换时间</span>
                 <el-date-picker
                   v-model="item.timer_time"
                   value-format="yyyy-MM-dd HH:mm:ss"

@@ -81,9 +81,8 @@ export default {
       this.getConfig()
     },
     getConfig () {
-      let query = { pay_type: 'ebuy' }
-      this.$api.third.getJstErpSetting(query).then((response) => {
-        this.form = response.data.data
+      this.$api.third.getJstErpSetting().then((response) => {
+        this.form = response
       })
     },
     onSubmit () {

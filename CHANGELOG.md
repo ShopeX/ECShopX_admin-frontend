@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [3.16.0](https://git.ishopex.cn/ecshopx/ecshopx-admin/compare/v3.15.8...v3.16.0) (2024-10-28)
+
+
+### Features
+
+* 添加公安备案 ([b8f9312](https://git.ishopex.cn/ecshopx/ecshopx-admin/commit/b8f93125b3469ef9e8c8280de7a9fbea2b09a152))
+
 ### [3.15.8](https://git.ishopex.cn/ecshopx/ecshopx-admin/compare/v3.15.7...v3.15.8) (2024-10-22)
 
 

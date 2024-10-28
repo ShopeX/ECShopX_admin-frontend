@@ -107,14 +107,14 @@ export const INVOICE_STATUS = [
 ]
 
 export const GOOD_CATEGORY = [
-  { title: '平台自营', value: 'self' },
+  { title: '自营', value: 'self' },
   { title: '商户商品', value: 'distributor' },
   { title: '供应商商品', value: 'supplier' }
 ]
 
 
 export const GOOD_CATEGORY_MAP = {
-  'self':'平台自营',
+  'self':'自营',
   'distributor':'商户商品',
   'supplier':'供应商商品'
 }

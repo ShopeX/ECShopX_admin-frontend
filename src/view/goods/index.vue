@@ -397,7 +397,7 @@ export default {
           key: 'salesCategory',
           width: '720px',
           // required: !this.IS_SUPPLIER() && !this.form.supplier_id,
-          required: !this.IS_SUPPLIER(),
+          required: true,
           message: '请选择销售分类',
           component: ({ key }, value) => (
             <el-cascader
@@ -552,6 +552,7 @@ export default {
               <SkuParams
                 v-model={value[key]}
                 ref='skuParams'
+                isSupplierGoods={this.routerParams.isSupplierGoods}
                 is-show-point={this.isShowPoint}
                 disabled={disabled}
                 provinceList={this.provinceList}
@@ -565,10 +566,12 @@ export default {
           validator: async (rule, value, callback) => {
             if (this.form.isSpecs) {
               const { specItems } = value
+
               const approveStatus = specItems.find(({ approve_status }) => !!approve_status)
               const store = specItems.find(({ store }) => !!store)
               const price = specItems.find(({ price }) => !!price)
-              if (!approveStatus) {
+
+              if (!IS_SUPPLIER() && !this.routerParams.isSupplierGoods &&  !approveStatus) {
                 callback('请选择商品状态')
               } else if (!store) {
                 callback('请输入商品库存')
@@ -694,7 +697,9 @@ export default {
           }
         }
       ],
-      routerParams: {}
+      routerParams: {
+        isSupplierGoods:false
+      }
     }
   },
   computed: {},
@@ -740,6 +745,13 @@ export default {
       } else {
         this.loading = false
       }
+
+      //供应商商品销售分类非必填
+      const salesCategoryIndex = this.formList.findIndex(item=>item.key == 'salesCategory')
+        if(salesCategoryIndex != -1){
+          this.formList[salesCategoryIndex].required = !(this.IS_SUPPLIER() || this.routerParams?.isSupplierGoods)
+        }
+
     },
     // 获取销售分类
     async getSaleCategory() {
@@ -765,6 +777,8 @@ export default {
       const { itemId } = this.$route.params
       const { is_new, supplier } = this.$route.query
       this.routerParams = this.$route.query || {}
+
+
       const {
         item_id,
         supplier_id,
@@ -819,7 +833,7 @@ export default {
         buy_limit_area = [],
         package_type = ''
       } = await this.$api.goods.getItemsDetail(itemId, {
-        operate_source: supplier ? 'supplier' : IS_SUPPLIER() ? 'supplier' : 'platform'
+       operate_source: supplier ? 'supplier' : IS_SUPPLIER() ? 'supplier' : this.routerParams?.isSupplierGoods ? 'supplier' : 'platform'
       })
       console.log(666, buy_limit_area)
       this.loading = false

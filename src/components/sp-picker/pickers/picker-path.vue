@@ -118,17 +118,19 @@ export default {
     getVal() {
       const { data } = this.$refs[this.tabValue].getVal()
       if (data.length > 0) {
-        const [{ id, title }] = this.resolveData(data)
+        const [{ id, title, extra }] = this.resolveData(data)
         return {
           linkPage: this.tabValue,
           title,
-          id
+          id,
+          extra
         }
       } else {
         return {
           linkPage: '',
           title: '',
-          id: ''
+          id: '',
+          extra: {}
         }
       }
     },
@@ -215,7 +217,13 @@ export default {
         other_wxapp: () => {
           return pickBy(data, {
             id: 'wx_external_routes_id',
-            title: 'route_info'
+            title: ({ app_name, route_name }) => `${app_name} - ${route_name}`,
+            extra: ({ app_id, route_info }) => {
+              return {
+                appid: app_id,
+                path: route_info
+              }
+            }
           })
         },
         shop_tag: () => {

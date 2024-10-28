@@ -20,8 +20,9 @@
         </p>
         <p>超过<strong>15天</strong>的错误描述文件将会删除，不再提供下载查看</p>
       </div>
-      <div v-for="item in pane_list">
+      <template v-for="item in pane_list">
         <el-tab-pane
+          :key="item.name"
           :label="item.label"
           :name="item.name"
         >
@@ -121,7 +122,7 @@
             </div>
           </el-form>
         </el-tab-pane>
-      </div>
+      </template>
     </el-tabs>
   </div>
 </template>
@@ -137,19 +138,24 @@ import {
 export default {
   data () {
     return {
-      pane_list: [{ name: 'normal_goods', label: '上传实体类商品' }],
+      pane_list: [
+        { name: 'normal_goods', label: '上传实体类商品' },
+        { name: 'employee_purchase_activity_items', label: '上传内购活动商品' }
+      ],
       loading: false,
       total_count: 0,
       pageSize: 20,
       page: 1,
-      activeName: 'normal_goods',
+      activeName: '',
       uploadList: []
     }
   },
   computed: {
     ...mapGetters(['wheight'])
   },
-  mounted () {
+  mounted() {
+    const {file_type='normal_goods'} = this.$route.query
+    this.activeName = file_type
     this.getUploadList()
   },
   methods: {
@@ -176,10 +182,11 @@ export default {
         this.getUploadList()
       })
     },
-    uploadHandleTemplate () {
-      if (this.activeName == 'normal_goods') {
-        var fileName = '新增商品'
-      }
+    uploadHandleTemplate() {
+      let fileName = '新增商品'
+      if (this.activeName == 'employee_purchase_activity_items') {
+        fileName = '新增内购活动商品'
+      } 
       let params = { file_type: this.activeName, file_name: fileName }
       exportUploadTemplate(params).then((response) => {
         if (response.data.data.file) {

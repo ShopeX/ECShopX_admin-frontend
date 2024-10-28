@@ -96,6 +96,7 @@
 <script>
 import { isObject, isArray, isEmpty, getRegionNameById } from '@/utils'
 import Pages from '@/utils/pages'
+import { loadMap } from '@/utils/load-map'
 import district from '@/common/district.json'
 import fetchJsonp from '@/utils/axiosJsonp'
 import { axios } from '@/utils/fetch'
@@ -154,8 +155,12 @@ export default {
           endTime: ''
         },
         offline_aftersales_other: false,
+        is_refund_freight:false,
+        wdt_shop_no: '',
+        jst_shop_id: '',
         introduce: ''
       },
+      offline_freight_status:false,
       formList: [
         {
           label: '店铺类型',
@@ -428,7 +433,7 @@ export default {
           key: 'is_dada',
           type: 'switch',
           width: 'auto',
-          tip: '开启后有店铺订单时需要改店铺人员手动接单，接单后系统会自动在达达/闪送平台下单',
+          tip: '开启后有店铺订单时需要该店铺人员手动接单，接单后系统会自动在达达/闪送平台下单',
           isShow: this.dadaEnable
         },
         {
@@ -436,17 +441,21 @@ export default {
           key: 'is_self_delivery',
           // type: 'radio',
           // options: [
-            // { name: '商家自配送', label: true },
-            // { name: '达达同城配', label: false }
-            // { name: '闪送', label: 6 }
+          // { name: '商家自配送', label: true },
+          // { name: '达达同城配', label: false }
+          // { name: '闪送', label: 6 }
           // ],
           isShow: ({ key }, value) => value.is_dada,
           component: ({ key }, value) => {
             return (
-            <div style='margin-top: 14px;display:flex'>
-              <el-radio v-model={value[key]} label={true}>商家自配送</el-radio>
-              <el-radio v-model={value[key]} label={false} disabled={!this.dadaEnable}>达达同城配</el-radio>
-            </div>
+              <div style='margin-top: 14px;display:flex'>
+                <el-radio v-model={value[key]} label={true}>
+                  商家自配送
+                </el-radio>
+                <el-radio v-model={value[key]} label={false} disabled={!this.dadaEnable}>
+                  达达同城配
+                </el-radio>
+              </div>
             )
           }
         },
@@ -534,6 +543,37 @@ export default {
           width: 'auto',
           tip: '启用后其他店铺在设置可退货店铺时可选择本店（即本店可接收其他店铺订单到店退货）；商家发起的售后订单不受此规则限制。'
         },
+        //平台开了才能操作，否则置灰
+        {
+          label: '消费者退货退款时可退运费',
+          key: 'is_refund_freight',
+          type: 'switch',
+          disabled: () => this.offline_freight_status,
+          width: 'auto',
+          tip: '启用后本店订单买家发起退货退款时可退运费。'
+        },
+        {
+          label: '旺店通ERP',
+          type: 'group'
+        },
+        {
+          label: 'shopNo',
+          key: 'wdt_shop_no',
+          type: 'input',
+          display: 'inline',
+          placeholder: '',
+        },
+        {
+          label: '聚水潭ERP',
+          type: 'group'
+        },
+        {
+          label: '店铺编号',
+          key: 'jst_shop_id',
+          type: 'input',
+          display: 'inline',
+          placeholder: '',
+        },
         {
           label: '店铺介绍',
           type: 'group'
@@ -572,9 +612,14 @@ export default {
       this.getDadaInfo()
     }
     this.getStoreInfo()
+    this.getOrderSetting()
   },
   mounted() {},
   methods: {
+    async getOrderSetting() {
+      const res = await this.$api.trade.getOrderSetting()
+      this.offline_freight_status = res.is_refund_freight != 1
+    },
     async getMerchantList({ page, pageSize }, keywords) {
       let params = {
         pageSize,
@@ -638,7 +683,7 @@ export default {
           item.options = typeList
         }
       })
-      this.dadaEnable = is_open === '1'    
+      this.dadaEnable = is_open === '1'
     },
     async getShansongInfo() {
       const { business_list, is_open } = await this.$api.dada.getShansongInfo()
@@ -653,7 +698,7 @@ export default {
           item.options = typeList
         }
       })
-      this.dadaEnable = is_open === '1'     
+      this.dadaEnable = is_open === '1'
     },
     async getStoreInfo() {
       const { distributor_id } = this.$route.query
@@ -710,6 +755,7 @@ export default {
           is_ziti: res.is_ziti,
           offline_aftersales: res.offline_aftersales === 1,
           offline_aftersales_other: res.offline_aftersales_other === 1,
+          is_refund_freight: res.is_refund_freight == 1,
           offline_aftersales_address: {
             name: res.offline_aftersales_address.name,
             regions_id: res.offline_aftersales_address.regions_id,
@@ -719,15 +765,16 @@ export default {
             startTime: offline_startTime,
             endTime: offline_endTime
           },
+          wdt_shop_no: res.wdt_shop_no,
+          jst_shop_id: res.jst_shop_id,
           introduce: res.introduce
         }
         if (res.merchant_name) {
           this.pageQuery.reset(res.merchant_name)
         }
       }
-      this.$nextTick(() => {
-        this.qqmapinit()
-      })
+      await loadMap()
+      this.qqmapinit()
     },
     async qqmapinit() {
       const { lat, lng } = this.form
@@ -761,6 +808,7 @@ export default {
 
       const params = {
         ...this.form,
+        is_refund_freight:this.form.is_refund_freight ? 1:0,
         distributor_self: this.distributor_self,
         regions: getRegionNameById(this.form.regions_id, district),
         hour: `${this.form.startTime}-${this.form.endTime}`,

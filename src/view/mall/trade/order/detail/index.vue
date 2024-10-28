@@ -80,10 +80,8 @@
               <div class="ell3">
                 {{ goodCategoryMap[scope.row.item_holder] }}
               </div>
-
             </template>
           </el-table-column>
-
 
           <!--          <el-table-column prop="item_spec_desc" label="SPU编码">-->
           <!--            <template slot-scope="scope">-->
@@ -100,10 +98,19 @@
               {{ scope.row.item_spec_desc ? scope.row.item_spec_desc : '单规格' }}
             </template>
           </el-table-column>
-          <el-table-column prop="supplier_name" label="来源供应商" width="120"></el-table-column>
+          <el-table-column prop="supplier_name" label="来源供应商" width="120">
+            <template slot-scope="scope">
+              {{ scope.row.supplier_name ? scope.row.supplier_name : '自营' }}
+            </template>
+          </el-table-column>
           <el-table-column prop="price" label="单价（¥）" width="100">
             <template slot-scope="scope">
               {{ (scope.row.price / 100).toFixed(2) }}
+            </template>
+          </el-table-column>
+          <el-table-column prop="cost_price" label="结算价（¥）" width="100">
+            <template slot-scope="scope">
+              {{ (scope.row.cost_price / 100).toFixed(2) }}
             </template>
           </el-table-column>
           <el-table-column prop="cost_price" label="成本价（¥）" width="100">
@@ -126,6 +133,11 @@
           <el-table-column label="小计（¥）" width="120">
             <template slot-scope="scope">
               {{ (scope.row.item_fee / 100).toFixed(2) }}
+            </template>
+          </el-table-column>
+          <el-table-column label="结算小计（¥）" width="120">
+            <template slot-scope="scope">
+              {{ (scope.row.cost_fee / 100).toFixed(2) }}
             </template>
           </el-table-column>
           <el-table-column label="成本小计（¥）" width="120">
@@ -164,7 +176,7 @@
                 <span>已发货</span>
               </template>
             </el-table-column>
-            <el-table-column label="快递公司" width="150px">
+            <!-- <el-table-column label="快递公司" width="150px">
               <template slot-scope="scope">
                 <span v-if="orderInfo.order_status == 'WAIT_BUYER_CONFIRM'">
                   <el-select v-model="scope.row.delivery_corp" placeholder="请选择快递公司">
@@ -178,8 +190,8 @@
                 </span>
                 <span v-else>{{ scope.row.delivery_corp_name }}</span>
               </template>
-            </el-table-column>
-            <el-table-column label="快递单号" width="200px">
+            </el-table-column> -->
+            <!-- <el-table-column label="快递单号" width="200px">
               <template slot-scope="scope">
                 <span v-if="orderInfo.order_status == 'WAIT_BUYER_CONFIRM'">
                   <el-input
@@ -190,8 +202,8 @@
                 </span>
                 <span v-else>{{ scope.row.delivery_code }}</span>
               </template>
-            </el-table-column>
-            <el-table-column v-if="orderInfo.order_status == 'WAIT_BUYER_CONFIRM'" label="操作">
+            </el-table-column> -->
+            <!-- <el-table-column v-if="orderInfo.order_status == 'WAIT_BUYER_CONFIRM'" label="操作">
               <template slot-scope="scope">
                 <el-button
                   type="text"
@@ -203,7 +215,7 @@
                   确认修改
                 </el-button>
               </template>
-            </el-table-column>
+            </el-table-column> -->
           </template>
         </el-table>
       </div>
@@ -315,16 +327,19 @@
           <el-table-column prop="delivery_time" label="发货时间" />
           <el-table-column prop="delivery_code" label="物流单号" />
           <el-table-column prop="delivery_corp_name" label="快递公司" />
+          <el-table-column prop="supplier_name" label="来源供应商" />
           <el-table-column prop="delivery_corp" label="物流编码" />
           <el-table-column label="操作">
             <template slot-scope="scope">
-              <el-button
+              <template v-if="(IS_ADMIN() && scope.row.supplier_id == '0') || !IS_ADMIN()">
+                <el-button
                 v-if="orderInfo.receipt_type === 'logistics' && orderInfo.order_status !== 'DONE'"
                 type="text"
                 @click="modifyExpress(scope.row)"
               >
                 编辑
               </el-button>
+              </template>
             </template>
           </el-table-column>
         </el-table>
@@ -333,7 +348,7 @@
 
     <el-card class="el-card--normal">
       <div slot="header">订单追踪</div>
-      <div v-if="orderInfo.self_delivery_operator_name" class="card-panel">
+      <div v-if="orderInfo?.self_delivery_operator_name" class="card-panel">
         <div class="card-panel-item">
           <span>配送员姓名：{{ orderInfo.self_delivery_operator_name || '-' }}</span>
           <span class="ml-16"
@@ -353,7 +368,7 @@
             <el-card>
               <p>操作详情：{{ key.msg }}</p>
               <p v-if="key.delivery_remark">配送备注：{{ key.delivery_remark }}</p>
-              <div v-if="key.pics.length">
+              <div v-if="key.pics?.length">
                 配送照片：
                 <div class="img-box">
                   <el-image
@@ -509,7 +524,8 @@ export default {
           message: '不能为空'
         }
       ],
-      goodCategoryMap:GOOD_CATEGORY_MAP,
+
+      goodCategoryMap: GOOD_CATEGORY_MAP,
       expressForm: {
         orders_delivery_id: '',
         delivery_corp: '',

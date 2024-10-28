@@ -77,6 +77,13 @@
             />
           </el-select>
         </SpFilterFormItem>
+        <SpFilterFormItem
+          v-if="IS_SUPPLIER()"
+          prop="distributor_id"
+          label="来源店铺:"
+        >
+          <SpSelectShop v-model="params.distributor_id" clearable placeholder="请选择" />
+        </SpFilterFormItem>
       </SpFilterForm>
 
       <div class="action-container">
@@ -183,12 +190,12 @@
           header-align="center"
           prop="refund_point"
         ></el-table-column>
-        <el-table-column label="配送员">
+        <el-table-column v-if="!IS_SUPPLIER()" label="配送员">
           <template slot-scope="scope">
             {{ scope.row.self_delivery_operator_name }}
           </template>
         </el-table-column>
-        <el-table-column prop="mobile" label="业务员">
+        <el-table-column v-if="!IS_SUPPLIER()" prop="mobile" label="业务员">
           <template slot-scope="scope">
             {{ scope.row.salesman_mobile }}
             <el-tooltip
@@ -205,7 +212,7 @@
             </el-tooltip>
           </template>
         </el-table-column>
-        <el-table-column min-width="150" label="手机号">
+        <el-table-column v-if="!IS_SUPPLIER()" min-width="150" label="手机号">
           <template slot-scope="scope">
             <div
               v-if="!scope.row.user_delete && $store.getters.login_type !== 'merchant'"
@@ -389,7 +396,8 @@ export default {
       original_order_id: undefined,
       item_bn: undefined,
       supplier_name:undefined,
-      order_holder:undefined
+      order_holder:undefined,
+      distributor_id:undefined
     }
     return {
       loading: false,
@@ -474,7 +482,6 @@ export default {
     },
     getParams() {
       let params = {
-        distributor_id: this.params.distributor.id || undefined,
         ...this.dateTransfer(this.params.create_time),
         order_id: this.params.order_id || undefined,
         aftersales_bn: this.params.aftersales_bn || undefined,
@@ -483,7 +490,8 @@ export default {
         aftersales_status: this.params.aftersales_status || undefined,
         aftersales_type: this.params.aftersales_type || undefined,
         supplier_name:this.params.supplier_name || undefined,
-        order_holder:this.params.order_holder || undefined
+        order_holder:this.params.order_holder || undefined,
+        distributor_id: this.params.distributor_id || undefined,
 
       }
       return params

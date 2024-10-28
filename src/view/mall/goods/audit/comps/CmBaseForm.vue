@@ -221,7 +221,7 @@
               <el-switch v-model="value.isGift" active-color="#13ce66" inactive-color="#ff4949" />
               <span class="tip-info">
                 <i class="el-alert__icon el-icon-info" />
-                开启后前台不可购买
+                开启后前台不可购买1
               </span>
             </el-form-item>
           </el-col>

@@ -8,7 +8,7 @@
       <SpFilterFormItem prop="order_id" label="订单号:">
         <el-input v-model="params.order_id" placeholder="请输入订单号" />
       </SpFilterFormItem>
-      
+
       <SpFilterFormItem prop="order_date" label="下单时间:" >
         <el-date-picker
           v-model="params.order_date"
@@ -24,8 +24,8 @@
           :picker-options="pickerOptions"
         />
       </SpFilterFormItem>
-      
-      <SpFilterFormItem
+
+      <!-- <SpFilterFormItem
         v-if="!VERSION_STANDARD && !VERSION_IN_PURCHASE"
         prop="distributor_type"
         label="订单分类:"
@@ -39,14 +39,14 @@
             :value="item.value"
           />
         </el-select>
-      </SpFilterFormItem>
-<!--      <SpFilterFormItem-->
-<!--        v-if="(!isMicorMall || login_type != 'distributor') && !VERSION_B2C && !VERSION_IN_PURCHASE"-->
-<!--        prop="distributor_id"-->
-<!--        label="店铺:"-->
-<!--      >-->
-<!--        <SpSelectShop v-model="params.distributor_id" clearable placeholder="请选择" />-->
-<!--      </SpFilterFormItem>-->
+      </SpFilterFormItem> -->
+     <SpFilterFormItem
+       v-if="(!isMicorMall || login_type != 'distributor') && !VERSION_B2C && !VERSION_IN_PURCHASE"
+       prop="distributor_id"
+       label="来源店铺:"
+     >
+       <SpSelectShop v-model="params.distributor_id" clearable placeholder="请选择" />
+     </SpFilterFormItem>
     </SpFilterForm>
 
     <div class="action-container">
@@ -96,9 +96,19 @@
             </div>
           </template>
         </el-table-column>
-        <el-table-column prop="total_fee" width="120" label="订单金额（¥）" align="right" header-align="center">
+        <!-- <el-table-column prop="pay_type" width="120" label="支付方式" align="right" header-align="center">
+          <template slot-scope="scope">
+            {{ payTypeList[scope.row.pay_type] }}
+          </template>
+        </el-table-column> -->
+        <!-- <el-table-column prop="total_fee" width="120" label="订单金额（¥）" align="right" header-align="center">
           <template slot-scope="scope">
             {{ (scope.row.total_fee / 100).toFixed(2) }}
+          </template>
+        </el-table-column> -->
+        <el-table-column prop="cost_fee" width="120" label="结算价（¥）" align="right" header-align="center">
+          <template slot-scope="scope">
+            {{ (scope.row.cost_fee / 100).toFixed(2) }}
           </template>
         </el-table-column>
         <el-table-column prop="cost_fee" width="120" label="商品金额（¥）" align="right" header-align="center">
@@ -130,7 +140,8 @@
         </el-table-column>
         <el-table-column prop="receiver_name" label="收货人" />
         <el-table-column prop="shop_name" label="采购门店" />
-<!--        <el-table-column prop="distributor_name" label="来源门店" width="150" />-->
+
+       <el-table-column prop="distributor_name" label="来源店铺" width="150" />
 <!--        <template v-if="login_type != 'merchant'">-->
 <!--          <el-table-column v-if="!isMicorMall" label="订单类型">-->
 <!--            <template slot-scope="scope">-->
@@ -312,6 +323,11 @@ export default {
         distributor_type: '', // 订单分类
         distributor_id: '', // 店铺
         subDistrict: []
+      },
+      payTypeList:{
+        wxpay: '微信支付',
+        point: '积分支付',
+        deposit: '储值支付'
       },
       datapass_block: 1, // 是否为数据脱敏
       subDistrictList: [],

@@ -16,6 +16,10 @@
     }
   }
 }
+.page-code-img {
+  width: 200px;
+  height: 200px;
+}
 </style>
 <style lang="scss">
 .physical-cell-reason {
@@ -200,6 +204,9 @@
             </el-dropdown-item>
             <el-dropdown-item v-if="$store.getters.login_type != 'supplier'">
               <export-tip @exportHandle="exportItemsTagData"> 商品标签 </export-tip>
+            </el-dropdown-item>
+            <el-dropdown-item v-if="!IS_SUPPLIER()">
+              <export-tip @exportHandle="exportItemsWxappCode('wxa')"> 小程序码 </export-tip>
             </el-dropdown-item>
             <el-dropdown-item>
               <export-tip @exportHandle="exportItemsWxappCode('h5')"> H5二维码 </export-tip>
@@ -456,6 +463,22 @@
           <el-table-column label="库存" prop="store" min-width="120" />
         </el-table>
       </SpDrawer>
+
+      <el-dialog :title="sunCodeTitle" :visible.sync="sunCode" width='360px'>
+        <div class="page-code">
+          <img class="page-code-img" :src="appCodeUrl" />
+          <div class="page-btns">
+            <el-button type="primary" plain @click="handleDownload(sunCodeTitle)">
+              下载码
+            </el-button>
+            <el-button v-clipboard:copy="curPageUrl" type="primary" plain> 复制链接 </el-button>
+          </div>
+        </div>
+
+        <span slot="footer" class="dialog-footer">
+          <el-button type="primary" @click="sunCode = false">确 定</el-button>
+        </span>
+      </el-dialog>
     </SpRouterView>
   </div>
 </template>
@@ -463,6 +486,7 @@
 import moment from 'moment'
 import { exportItemsData, exportItemsTagData } from '@/api/goods'
 import { IS_ADMIN, IS_SUPPLIER } from '@/utils'
+import { getPageCode } from '@/api/marketing'
 import { GOODS_APPLY_STATUS } from '@/consts'
 
 export default {
@@ -539,6 +563,8 @@ export default {
       },
       goodsBranchList: [],
       appID: '',
+      sunCode: false,
+      sunCodeTitle: '',
       appCodeUrl: '',
       curPageUrl: '',
       goodsBranchParams: {
@@ -770,7 +796,8 @@ export default {
                   path: `${this.$route.path}/editor/${row.item_id}`,
                   query: {
                     some_param: 'true',
-                    detail: true
+                    detail: true,
+                    isSupplierGoods:true
                   }
                 })
               }
@@ -899,12 +926,24 @@ export default {
             }
           },
           {
+            name: '投放',
+            key: 'put',
+            type: 'button',
+            buttonType: 'text',
+            action: {
+              type: 'link',
+              handler: async ([row]) => {
+                this.handleShow(row)
+              }
+            }
+          },
+          {
             name: '下架',
             key: 'offline',
             type: 'button',
             buttonType: 'text',
             visible: (row) => {
-              const visible = row.approve_status == 'onsale' && !IS_SUPPLIER() && !IS_ADMIN()
+              const visible = row.approve_status == 'onsale' && !IS_SUPPLIER()
               return visible
             },
             action: {
@@ -1168,11 +1207,20 @@ export default {
     this.init()
     this.getAddress()
     this.getShippingTemplatesList()
+    this.fetchWechatList()
     this.searchParams.operator_name = this.$route.query.operator_name
   },
   methods: {
     onHooksRouteBack() {
       this.$refs['finder'].refresh()
+    },
+    async fetchWechatList() {
+      const { list } = await this.$api.minimanage.gettemplateweapplist()
+      list.forEach((item, i) => {
+        if (item.name == 'yykweishop') {
+          this.appID = item.authorizer.authorizer_appid
+        }
+      })
     },
     beforeSearch(params) {
       params = {
@@ -1241,6 +1289,21 @@ export default {
       this.vipGrade = this.generatePrice(list[0].memberGrade.vipGrade)
       this.specItems = specItems
       this.skuLoading = false
+    },
+    handleShow({ goods_id, itemName }) {
+      const page = 'pages/item/espier-detail'
+      this.curPageUrl = `${page}?id=${goods_id}`
+      let params = {
+        wxaAppId: this.appID,
+        page,
+        id: goods_id
+      }
+      getPageCode(params).then((response) => {
+        this.appCodeUrl = response.data.data.base64Image
+          // this.$message.success('投放成功')
+          this.sunCodeTitle = itemName + '---商品太阳码'
+          this.sunCode = true
+      })
     },
     async getSkuStoreByGoods(item_id) {
       this.skuLoading = true

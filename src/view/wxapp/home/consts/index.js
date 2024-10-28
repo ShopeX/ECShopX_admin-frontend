@@ -38,5 +38,10 @@ export const NAVS = [
     value: '/subpages/mdugc/index',
     name: 'ugc',
     label: '社区'
+  },
+  {
+    value: 'customPage',
+    name: 'customPage',
+    label: '自定义页面'
   }
 ]

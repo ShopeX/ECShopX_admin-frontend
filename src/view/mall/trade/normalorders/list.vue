@@ -322,7 +322,7 @@
                   v-clipboard:success="onCopySuccess"
                   class="el-icon-document-copy"
                 />
-            </el-tooltip>               
+            </el-tooltip>
           </div>
             <div class="order-num">
             {{ scope.row.salesman_name }}
@@ -338,10 +338,10 @@
                   class="el-icon-document-copy"
                 />
             </el-tooltip>
-          </div>                           
+          </div>
           </template>
 
-        </el-table-column>        
+        </el-table-column>
         <el-table-column prop="mobile" label="客户手机号">
           <template slot-scope="scope">
             <template v-if="!scope.row.user_delete && login_type !== 'merchant'">
@@ -392,10 +392,10 @@
             </template>
           </template>
         </el-table-column>
-        <el-table-column prop="distributor_name" label="来源门店" >
+        <el-table-column prop="distributor_name" label="来源店铺" >
       </el-table-column>
-      <el-table-column prop="supplier_name" v-if="VERSION_STANDARD || IS_ADMIN()" label="来源供应商" >
-      </el-table-column>
+      <!-- <el-table-column prop="supplier_name" v-if="VERSION_STANDARD || IS_ADMIN()" label="来源供应商" >
+      </el-table-column> -->
         <el-table-column prop="receiver_name" label="收货人" />
         <template v-if="login_type != 'merchant'">
           <el-table-column v-if="!isMicorMall" label="订单类型">
@@ -973,42 +973,42 @@ export default {
       refundDialog: false,
       refundFormList: [
         {
-          label: '取消来源:',
+          label: '取消来源',
           key: 'source',
           type: 'text'
         },
         {
-          label: '申请时间:',
+          label: '申请时间',
           key: 'applyTime',
           type: 'text'
         },
         {
-          label: '退款状态:',
+          label: '退款状态',
           key: 'refundStatus',
           type: 'text'
         },
         {
-          label: '处理进度:',
+          label: '处理进度',
           key: 'process',
           type: 'text'
         },
         {
-          label: '退款金额:',
+          label: '退款金额',
           key: 'refundPrice',
           type: 'text'
         },
         {
-          label: '支付方式:',
+          label: '支付方式',
           key: 'payType',
           type: 'text'
         },
         {
-          label: '取消原因:',
+          label: '取消原因',
           key: 'reason',
           type: 'text'
         },
         {
-          label: '处理结果:',
+          label: '处理结果',
           key: 'check_cancel',
           type: 'radio',
           options: [
@@ -1024,7 +1024,7 @@ export default {
           }
         },
         {
-          label: '拒绝原因:',
+          label: '拒绝原因',
           key: 'shop_reject_reason',
           type: 'input',
           placeholder: '请输入拒绝原因',

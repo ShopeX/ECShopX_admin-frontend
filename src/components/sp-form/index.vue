@@ -298,8 +298,8 @@ export default {
     },
     _renderSwitch(item) {
       const { value } = this
-      const { key, onChange = () => {} } = item
-      return <el-switch v-model={value[key]} on-change={onChange} />
+      const { key,disabled=false, onChange = () => {} } = item
+      return <el-switch v-model={value[key]} on-change={onChange} disabled={isFunction(disabled) ? disabled() : disabled} />
     }
   },
   render() {

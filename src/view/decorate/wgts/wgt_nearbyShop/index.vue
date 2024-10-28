@@ -110,8 +110,7 @@
             </div>
           </div>
         </div>
-
-        <div class="goods-more">
+        <div v-if="showMore" class="goods-more">
           <p class="more-btn">查看更多</p>
         </div>
       </div>
@@ -140,7 +139,8 @@ export default {
       defaultShopBanner,
       defaultShopLogo,
       shopList: [],
-      activeIndex: 0
+      activeIndex: 0,
+      showMore: true
     }
   },
   watch: {
@@ -175,13 +175,22 @@ export default {
         }
       },
       deep: true
+    },
+    'value.merchantsNumber': {
+      handler: function (nVal, oVal) {
+        this.shopList = this.shopListAll.slice(0, nVal)
+        this.showMore = this.shopListAll.length > nVal
+      },
+      deep: true
     }
   },
   created() {},
   methods: {
     async getShopByTag(params) {
       const { list } = await this.$api.marketing.queryTagShop(params)
-      this.shopList = list.slice(0, 2)
+      this.showMore = list.length > this.value.merchantsNumber
+      this.shopListAll = list
+      this.shopList = list.slice(0, this.value.merchantsNumber)
     },
     handleClickTag(item, index) {
       let item_tag_id = this.value.productLabel.map((item) => item.tag_id)

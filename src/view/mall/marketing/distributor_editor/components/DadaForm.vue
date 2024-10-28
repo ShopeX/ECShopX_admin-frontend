@@ -33,7 +33,7 @@
       <el-form-item label="达达同城配">
         <el-switch v-model="content.baseForm.is_dada" />
         <div class="form-item-tip">
-          开启后有店铺订单时需要改店铺人员手动接单，接单后系统会自动在达达平台下单
+          开启后有店铺订单时需要该店铺人员手动接单，接单后系统会自动在达达平台下单
         </div>
       </el-form-item>
 

@@ -6,7 +6,7 @@
 
 <script>
 export default {
-  mounted () {
+  mounted() {
     const wheight = window.innerHeight
     const wwidth = window.innerWidth
     this.$store.dispatch('setHeight', wheight)

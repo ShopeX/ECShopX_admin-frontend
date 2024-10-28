@@ -22,7 +22,7 @@
             </p>
             <p>操作详情：{{ key.detail }}</p>
             <p v-if="key.delivery_remark">配送备注：{{ key.delivery_remark }}</p>
-            <div v-if="key.pics.length">
+            <div v-if="key?.pics?.length">
               配送照片：
               <div class="img-box">
                 <el-image

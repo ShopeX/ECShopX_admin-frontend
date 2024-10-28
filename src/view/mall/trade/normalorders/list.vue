@@ -392,7 +392,7 @@
             </template>
           </template>
         </el-table-column>
-        <el-table-column prop="distributor_name" label="来源门店" >
+        <el-table-column prop="distributor_name" label="来源店铺" >
       </el-table-column>
       <!-- <el-table-column prop="supplier_name" v-if="VERSION_STANDARD || IS_ADMIN()" label="来源供应商" >
       </el-table-column> -->

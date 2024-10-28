@@ -15,7 +15,7 @@
     display: flex;
     padding: 0 0 10px 10px;
     .lf-container {
-      width: 220px;
+      width: auto;
       background: #f5f5f5;
       height: 500px;
       margin-right: 8px;

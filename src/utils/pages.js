@@ -23,6 +23,10 @@ class Pages {
     // this.options.fetch({ page: this.options.page, pageSize: this.options.pageSize })
   }
 
+  setPageSize(pageSize) {
+    this.options.pageSize = pageSize
+  }
+
   reset() {
     this.options.page = 1
     this.options.total = 0

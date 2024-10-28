@@ -49,6 +49,20 @@
       <SpFilterFormItem prop="barcode" label="商品条码:">
         <el-input v-model="formData.barcode" placeholder="请输入商品条码" />
       </SpFilterFormItem>
+      <SpFilterFormItem prop="supplier_name" label="所属供应商:">
+        <el-input v-model="formData.supplier_name" placeholder="请输入所属供应商" />
+      </SpFilterFormItem>
+      <SpFilterFormItem prop="approve_status" label="商品状态:">
+        <el-select v-model="formData.approve_status" clearable placeholder="请选择">
+          <el-option
+            v-for="item in statusOption"
+            :key="item.value"
+            :label="item.title"
+            size="mini"
+            :value="item.value"
+          />
+        </el-select>
+      </SpFilterFormItem>
     </SpFilterForm>
 
     <div class="action-container">
@@ -129,13 +143,38 @@ export default {
     skuFinder
   },
   data() {
+    const loginType = this.$store.getters.login_type
+    let statusOption
+    let updateStatusOption = [
+      { title: '全部', value: '' },
+      { title: '前台可销售', value: 'onsale' },
+      { title: '前台不展示', value: 'offline_sale' },
+      { title: '前台仅展示', value: 'only_show' },
+      { title: '不可销售', value: 'instock' }
+    ]
+    if (loginType == 'distributor') {
+      statusOption = [
+        { title: '全部', value: '' },
+        { title: '审核驳回', value: 'rejected' },
+        { title: '等待审核', value: 'processing' },
+        { title: '前台可销售', value: 'onsale' },
+        { title: '前台不展示', value: 'offline_sale' },
+        { title: '前台仅展示', value: 'only_show' },
+        { title: '不可销售', value: 'instock' }
+      ]
+    } else {
+      statusOption = updateStatusOption
+    }
     return {
       formData: {
         distributor_id: '',
         keywords: '',
         item_bn: '',
-        barcode: ''
+        barcode: '',
+        supplier_name:'',
+        approve_status:''
       },
+      statusOption: statusOption,
       finderData: [],
       finderUrl: '',
       tabList: [{ name: '全部商品', value: 'all' }],
@@ -186,7 +225,8 @@ export default {
                 props: {
                   'value': row.goods_can_sale,
                   'active-value': true,
-                  'inactive-value': false
+                  'inactive-value': false,
+                  // 'disabled': this.IS_ADMIN() && row.is_market == '0'
                 },
                 on: {
                   change: async (e) => {
@@ -204,6 +244,36 @@ export default {
             name: '商品名称',
             key: 'item_name',
             width: 160
+          },
+          {
+            name: '标签',
+            width: 120,
+            key: 'tagList',
+            render: (h, scope) => (
+              <div style='white-space: normal;'>
+                {scope.row.tagList?.map((item) => (
+                  <span
+                    style={{
+                      'color': item.font_color,
+                      'background-color': item.tag_color,
+                      'font-size': '12px',
+                      'padding': '2px 5px',
+                      'border-radius': '2px',
+                      'margin': '0 8px 8px 0'
+                    }}
+                  >
+                    {item.tag_name}
+                  </span>
+                ))}
+              </div>
+            )
+          },
+          {
+            name: 'sku编码',
+            key: 'item_bn',
+            width: 150,
+            align: 'right',
+            headerAlign: 'center'
           },
           {
             name: '商品库存',
@@ -239,6 +309,28 @@ export default {
             render: (h, { row }) => h('span', {}, row.cost_price / 100)
           },
           {
+            name: '毛利率（%)',
+            key: 'gross_profit_rate',
+            width: 100,
+            align: 'right',
+            headerAlign: 'center'
+
+          },
+            {
+             name: '来源供应商',
+             key: 'operator_name',
+             width: 100,
+           },
+           {
+            name: '商品状态',
+            width: 120,
+            key: 'approve_status',
+            formatter: (value, row, col) => {
+              return this.statusOption.find((item) => item.value === value)?.title
+            }
+          },
+          { name: '销售分类', key: 'itemCatName', minWidth: 120 },
+          {
             name: '来源店铺',
             key: 'distributor_name',
             width: 160,
@@ -266,7 +358,7 @@ export default {
               })
           },
           {
-            name: '状态',
+            name: '店铺销售状态',
             key: 'is_market',
             width: 120,
             render: (h, { row }) => h('span', {}, this.getApproveStatus(row.is_market))

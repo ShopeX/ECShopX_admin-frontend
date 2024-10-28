@@ -405,7 +405,7 @@ export default {
         distributor_type: '', // 订单分类
         distributor_id: '', // 店铺
         subDistrict: [],
-        act_id: '',
+        act_id: [],
         enterprise_id: ''
       },
       datapass_block: 1, // 是否为数据脱敏
@@ -776,10 +776,14 @@ export default {
   },
   mounted() {
     this.origin = window.location.origin
-    const { tab } = this.$route.query
+    const { tab, activity_id} = this.$route.query
     if (tab) {
       this.params.order_status = tab
     }
+    if (activity_id) {
+      this.params.act_id.push(activity_id)
+    }
+    
     this.fetchList()
     this.getOrderSourceList()
     this.getLogisticsList()

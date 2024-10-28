@@ -636,6 +636,7 @@ export default {
                   path: `${this.$route.path}/editor/${row.item_id}`,
                   query: {
                     some_param: 'true',
+                    isSupplierGoods:true,
                     detail: true
                   }
                 })

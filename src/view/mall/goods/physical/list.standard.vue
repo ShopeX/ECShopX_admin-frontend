@@ -182,9 +182,9 @@
         <!-- <SpFilterFormItem prop="operator_name" label="来源供应商:">
           <el-input v-model="params.operator_name" placeholder="请输入来源供应商" />
         </SpFilterFormItem> -->
-<!--        <SpFilterFormItem prop="supplier_name" label="所属供应商:">-->
-<!--          <el-input v-model="params.supplier_name" placeholder="请输入所属供应商" />-->
-<!--        </SpFilterFormItem>-->
+       <SpFilterFormItem prop="supplier_name" label="所属供应商:">
+         <el-input v-model="params.supplier_name" placeholder="请输入所属供应商" />
+       </SpFilterFormItem>
         <SpFilterFormItem prop="is_gift" label="赠品:">
           <el-select v-model="params.is_gift">
             <el-option :value="undefined" label="全部" />

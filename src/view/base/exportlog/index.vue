@@ -92,6 +92,7 @@
         <el-tab-pane label="结算单明细" name="statement_details" />
         <el-tab-pane label="斗拱分账" name="bspay_tradedata" />
         <el-tab-pane label="配送员业绩导出" name="delivery_staffdata" />
+        <el-tab-pane v-if="IS_SUPPLIER()" label="主订单导出" name="supplier_order" />
       </template>
 
       <el-table v-loading="loading" :data="exportLogLists" :height="wheight - 220">

@@ -2,6 +2,42 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [3.15.8](https://git.ishopex.cn/ecshopx/ecshopx-admin/compare/v3.15.7...v3.15.8) (2024-10-22)
+
+
+### Bug Fixes
+
+* 开启商家自配送 ([8caf8e2](https://git.ishopex.cn/ecshopx/ecshopx-admin/commit/8caf8e2db6e6dc90a981617b4d723291a34b2b8a))
+
+### [3.15.7](https://git.ishopex.cn/ecshopx/ecshopx-admin/compare/v3.15.6...v3.15.7) (2024-10-21)
+
+
+### Bug Fixes
+
+* 图片选择器路径优化 ([52af06c](https://git.ishopex.cn/ecshopx/ecshopx-admin/commit/52af06cb928949e1a3700b9f222e499c141fd83b))
+
+### [3.15.6](https://git.ishopex.cn/ecshopx/ecshopx-admin/compare/v3.15.5...v3.15.6) (2024-10-17)
+
+### [3.15.5](https://git.ishopex.cn/ecshopx/ecshopx-admin/compare/v3.15.4...v3.15.5) (2024-09-29)
+
+
+### Features
+
+* 配送管理 隐藏 商家自配送 ([a768cc9](https://git.ishopex.cn/ecshopx/ecshopx-admin/commit/a768cc9179635515a948b2f26204b5623b67b979))
+* 企业二维码下载 ([675dacd](https://git.ishopex.cn/ecshopx/ecshopx-admin/commit/675dacd65559320ee7653b505a6fe98e8878962a))
+* 搜索分类字段更正 ([5fc9343](https://git.ishopex.cn/ecshopx/ecshopx-admin/commit/5fc9343f6b55f0f8bb9afefd7fdf06dae475edf6))
+* 新增内购活动商品导入 ([11709ce](https://git.ishopex.cn/ecshopx/ecshopx-admin/commit/11709ce247739583c83ec69217fed6ef012b7538))
+
+
+### Bug Fixes
+
+* 内购活动商品 翻页无效 ([bd51fcd](https://git.ishopex.cn/ecshopx/ecshopx-admin/commit/bd51fcdd524025234f6cf658b7acef4a876a2889))
+* 删除商品后页面不刷新 ([7a8c7a1](https://git.ishopex.cn/ecshopx/ecshopx-admin/commit/7a8c7a1dfd0368dd802a85073e13ea3c0d2eb0f1))
+* 外部小程序跳转 ([0356c07](https://git.ishopex.cn/ecshopx/ecshopx-admin/commit/0356c0722552c7fe0488f80cb9dcc7995690235f))
+* 销售分类筛选结果错误 ([f0b7586](https://git.ishopex.cn/ecshopx/ecshopx-admin/commit/f0b75869b9958a572c011e73a63d86443379b5f5))
+* 销售分类跳转查看商品传参 ([e0b146c](https://git.ishopex.cn/ecshopx/ecshopx-admin/commit/e0b146cf96bd09af973c2dd8f7b90399febfdf5b))
+* 营销活动进入内购订单，没有携带内购活动信息 ([c329da2](https://git.ishopex.cn/ecshopx/ecshopx-admin/commit/c329da2b4e34432583caabc667c7f13bd0534967))
+
 ### [3.15.4](https://git.ishopex.cn/ecshopx/ecshopx-admin/compare/v3.15.3...v3.15.4) (2024-09-03)
 
 

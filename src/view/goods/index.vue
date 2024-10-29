@@ -391,7 +391,6 @@ export default {
           type: 'switch',
           tip: '开启后前台不可购买'
         },
-
         {
           label: '销售分类',
           key: 'salesCategory',

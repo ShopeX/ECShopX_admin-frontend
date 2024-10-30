@@ -243,7 +243,9 @@
             </el-dropdown-item>
           </el-dropdown-menu>
         </el-dropdown>
-
+        <el-button size="small" v-if="isBindJstErp" type="primary" @click="uploadJstErpItems()">上传商品到聚水潭</el-button>
+        <!-- <el-button size="small" v-if="isBindJstErp" type="primary" @click="queryInventory()">同步聚水潭商品库存</el-button> -->
+        <el-button size="small" v-if="isBindWdtErp" type="primary" @click="uploadWdtErpItems()">上传商品到旺店通</el-button>
         <el-dropdown v-if="VERSION_STANDARD && IS_ADMIN()">
           <el-button type="primary" plain icon="iconfont icon-daorucaozuo-01">
             同步商品<i class="el-icon-arrow-down el-icon--right" />
@@ -515,7 +517,7 @@
 </template>
 <script>
 import moment from 'moment'
-import { exportItemsData, exportItemsTagData, saveIsGifts } from '@/api/goods'
+import { exportItemsData, exportItemsTagData, saveIsGifts, uploadWdtErpItems } from '@/api/goods'
 import { IS_ADMIN, IS_SUPPLIER, IS_DISTRIBUTOR } from '@/utils'
 import { getPageCode } from '@/api/marketing'
 import { GOODS_APPLY_STATUS } from '@/consts'
@@ -665,7 +667,8 @@ export default {
       batchChangeStateForm: {
         status: ''
       },
-
+      isBindWdtErp: false,
+      isBindJstErp: false,
       categoryList: [],
       templatesList: [],
       itemCategoryList: [],
@@ -1282,6 +1285,8 @@ export default {
     this.getShippingTemplatesList()
     this.searchParams.operator_name = this.$route.query.operator_name
     this.fetchWechatList()
+    this.checkWdtErpBind()
+    this.checkJstErpBind()
   },
   methods: {
     async fetchWechatList() {
@@ -1807,6 +1812,69 @@ export default {
       this.showItemSkuDrawer = true
       this.itemSkuList = list
       this.skuLoading = false
+    },
+    checkWdtErpBind() {
+      this.$api.third.getWdtErpSetting().then(response => {
+        this.isBindWdtErp = response.is_open
+      })
+    },
+    uploadWdtErpItems() {
+    console.log(this.selectionItems)
+      if (this.selectionItems.length === 0) {
+        this.$message({
+          type: 'error',
+          message: '请选择需要同步的商品'
+        });
+        return;
+      }
+      let params = {};
+      params = {
+        item_id: this.selectionItems.map((item) => item.item_id)
+      }
+      this.$api.goods.uploadWdtErpItems(params).then(res => {
+        if (res.status == true) {
+          this.$message({
+            type: 'success',
+            message: '已加入执行队列'
+          });
+        } else {
+          this.$message({
+            type: 'error',
+            message: '执行失败'
+          });
+        }
+      });
+    },
+    checkJstErpBind () {
+      this.$api.third.getJstErpSetting().then(response => {
+        this.isBindJstErp = response.is_open
+      })
+    },
+    uploadJstErpItems() {
+      if (this.selectionItems.length === 0) {
+        this.$message({
+          type: 'error',
+          message: '请选择需要同步的商品'
+        });
+        return;
+      }
+      let params = {};
+      params = {
+        item_id: this.selectionItems.map((item) => item.item_id)
+      }
+      this.$api.goods.uploadJstErpItems(params).then(res => {
+        if (res.status == true) {
+          this.$message({
+            type: 'success',
+            message: '已加入执行队列'
+          });
+        } else {
+          this.$message({
+            type: 'error',
+            message: '执行失败'
+          });
+        }
+      });
     }
   }
 }

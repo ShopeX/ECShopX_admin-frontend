@@ -110,6 +110,8 @@ export default {
           label: '成本价',
           key: 'cost_price',
           type: 'input',
+          required: true,
+          message: '请输入商品成本价',
           display: 'inline'
         },
         {

@@ -156,6 +156,8 @@ export default {
         },
         offline_aftersales_other: false,
         is_refund_freight:false,
+        wdt_shop_no: '',
+        jst_shop_id: '',
         introduce: ''
       },
       offline_freight_status:false,
@@ -431,7 +433,7 @@ export default {
           key: 'is_dada',
           type: 'switch',
           width: 'auto',
-          tip: '开启后有店铺订单时需要改店铺人员手动接单，接单后系统会自动在达达/闪送平台下单',
+          tip: '开启后有店铺订单时需要该店铺人员手动接单，接单后系统会自动在达达/闪送平台下单',
           isShow: this.dadaEnable
         },
         {
@@ -549,6 +551,28 @@ export default {
           disabled: () => this.offline_freight_status,
           width: 'auto',
           tip: '启用后本店订单买家发起退货退款时可退运费。'
+        },
+        {
+          label: '旺店通ERP',
+          type: 'group'
+        },
+        {
+          label: 'shopNo',
+          key: 'wdt_shop_no',
+          type: 'input',
+          display: 'inline',
+          placeholder: '',
+        },
+        {
+          label: '聚水潭ERP',
+          type: 'group'
+        },
+        {
+          label: '店铺编号',
+          key: 'jst_shop_id',
+          type: 'input',
+          display: 'inline',
+          placeholder: '',
         },
         {
           label: '店铺介绍',
@@ -741,6 +765,8 @@ export default {
             startTime: offline_startTime,
             endTime: offline_endTime
           },
+          wdt_shop_no: res.wdt_shop_no,
+          jst_shop_id: res.jst_shop_id,
           introduce: res.introduce
         }
         if (res.merchant_name) {

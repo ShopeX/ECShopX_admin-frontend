@@ -257,7 +257,7 @@ export default {
   methods: {
     async handleAddGoods() {
       const { data } = await this.$picker.goods({
-        data: 100,
+        data: [100],
         shopid: this.shopId
       })
       const goods_id = data.map((item) => item.item_id)

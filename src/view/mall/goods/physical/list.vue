@@ -95,7 +95,12 @@
           <el-cascader
             v-model="searchParams.category"
             :options="categoryList"
-            :props="{ checkStrictly: true, label: 'category_name', value: 'category_id', emitPath: false }"
+            :props="{
+              checkStrictly: true,
+              label: 'category_name',
+              value: 'category_id',
+              emitPath: false
+            }"
             clearable
           />
         </SpFilterFormItem>
@@ -243,9 +248,13 @@
             </el-dropdown-item>
           </el-dropdown-menu>
         </el-dropdown>
-        <el-button size="small" v-if="isBindJstErp" type="primary" @click="uploadJstErpItems()">上传商品到聚水潭</el-button>
+        <el-button size="small" v-if="isBindJstErp" type="primary" @click="uploadJstErpItems()"
+          >上传商品到聚水潭</el-button
+        >
         <!-- <el-button size="small" v-if="isBindJstErp" type="primary" @click="queryInventory()">同步聚水潭商品库存</el-button> -->
-        <el-button size="small" v-if="isBindWdtErp" type="primary" @click="uploadWdtErpItems()">上传商品到旺店通</el-button>
+        <el-button size="small" v-if="isBindWdtErp" type="primary" @click="uploadWdtErpItems()"
+          >上传商品到旺店通</el-button
+        >
         <el-dropdown v-if="VERSION_STANDARD && IS_ADMIN()">
           <el-button type="primary" plain icon="iconfont icon-daorucaozuo-01">
             同步商品<i class="el-icon-arrow-down el-icon--right" />
@@ -472,7 +481,7 @@
         @onSubmit="onBatchChangeStateSubmit"
       />
 
-      <el-dialog :title="sunCodeTitle" :visible.sync="sunCode" width='360px'>
+      <el-dialog :title="sunCodeTitle" :visible.sync="sunCode" width="360px">
         <div class="page-code">
           <img class="page-code-img" :src="appCodeUrl" />
           <div class="page-btns">
@@ -1211,7 +1220,6 @@ export default {
             width: 100,
             align: 'right',
             headerAlign: 'center'
-
           },
           // {
           //   name: '来源供应商',
@@ -1362,9 +1370,9 @@ export default {
       }
       getPageCode(params).then((response) => {
         this.appCodeUrl = response.data.data.base64Image
-          // this.$message.success('投放成功')
-          this.sunCodeTitle = itemName + '---商品太阳码'
-          this.sunCode = true
+        // this.$message.success('投放成功')
+        this.sunCodeTitle = itemName + '---商品太阳码'
+        this.sunCode = true
       })
     },
 
@@ -1601,9 +1609,20 @@ export default {
     changeGoodsLabel() {
       if (this.selectionItems.length > 0) {
         this.labelForm.item_id = this.selectionItems.map((item) => item.item_id)
-        this.tagList.forEach((item) => {
-          item.selected = false
+        let res = []
+        this.selectionItems.forEach(item=>{
+          res = [...res,...item.tagList]
         })
+        res.forEach((item) => {
+          this.tagList.forEach((tag) => {
+            if (item.tag_id == tag.tag_id) {
+              tag.selected = true
+            }
+          })
+        })
+        // this.tagList.forEach((item) => {
+        //   item.selected = false
+        // })
         this.labelDialog = true
       } else {
         this.$message.error('请选择至少一个商品')
@@ -1693,7 +1712,7 @@ export default {
       const { category, item_category, main_cat_id, tab } = this.$route.query
       if (category) {
         const categoryArr = category.split(',')
-        this.searchParams.category = categoryArr[categoryArr.length-1]
+        this.searchParams.category = categoryArr[categoryArr.length - 1]
       }
       if (item_category) {
         this.searchParams.item_category = item_category.split(',')
@@ -1814,39 +1833,39 @@ export default {
       this.skuLoading = false
     },
     checkWdtErpBind() {
-      this.$api.third.getWdtErpSetting().then(response => {
+      this.$api.third.getWdtErpSetting().then((response) => {
         this.isBindWdtErp = response.is_open
       })
     },
     uploadWdtErpItems() {
-    console.log(this.selectionItems)
+      console.log(this.selectionItems)
       if (this.selectionItems.length === 0) {
         this.$message({
           type: 'error',
           message: '请选择需要同步的商品'
-        });
-        return;
+        })
+        return
       }
-      let params = {};
+      let params = {}
       params = {
         item_id: this.selectionItems.map((item) => item.item_id)
       }
-      this.$api.goods.uploadWdtErpItems(params).then(res => {
+      this.$api.goods.uploadWdtErpItems(params).then((res) => {
         if (res.status == true) {
           this.$message({
             type: 'success',
             message: '已加入执行队列'
-          });
+          })
         } else {
           this.$message({
             type: 'error',
             message: '执行失败'
-          });
+          })
         }
-      });
+      })
     },
-    checkJstErpBind () {
-      this.$api.third.getJstErpSetting().then(response => {
+    checkJstErpBind() {
+      this.$api.third.getJstErpSetting().then((response) => {
         this.isBindJstErp = response.is_open
       })
     },
@@ -1855,26 +1874,26 @@ export default {
         this.$message({
           type: 'error',
           message: '请选择需要同步的商品'
-        });
-        return;
+        })
+        return
       }
-      let params = {};
+      let params = {}
       params = {
         item_id: this.selectionItems.map((item) => item.item_id)
       }
-      this.$api.goods.uploadJstErpItems(params).then(res => {
+      this.$api.goods.uploadJstErpItems(params).then((res) => {
         if (res.status == true) {
           this.$message({
             type: 'success',
             message: '已加入执行队列'
-          });
+          })
         } else {
           this.$message({
             type: 'error',
             message: '执行失败'
-          });
+          })
         }
-      });
+      })
     }
   }
 }

@@ -83,7 +83,7 @@
                 <span v-if="$route.query.type == 'detail' || $route.query.type == 'verify'">{{
                   form.legal_name
                 }}</span>
-                <el-input v-else v-model="form.legal_name" :disabled="disabled || editDisabled" />
+                <el-input v-else v-model="form.legal_name" :disabled="disabled" />
               </el-form-item>
             </el-col>
             <el-col :span="8">
@@ -97,7 +97,7 @@
                 <el-input
                   v-else
                   v-model="form.legal_cert_id"
-                  :disabled="disabled || editDisabled"
+                  :disabled="disabled"
                 />
               </el-form-item>
             </el-col>

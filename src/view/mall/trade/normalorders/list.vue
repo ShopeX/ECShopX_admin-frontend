@@ -999,13 +999,23 @@ export default {
         },
         {
           label: '是否退运费',
-          key: 'refundPrice',
-          type: 'text'
+          key: 'freight_fee',
+          type: 'text',
+          component: ({ key }, value) =>{
+            return (
+            <div>{value[key] > 0 ? '是' : '否'}</div>
+            )
+          }
         },
         {
           label: '退运费金额',
-          key: 'refundPrice',
-          type: 'text'
+          key: 'freight_fee',
+          type: 'text',
+          component: ({ key }, value) =>{
+            return (
+            <div>{value[key] >0? value[key] / 100 :0}</div>
+            )
+          }
         },
         {
           label: '支付方式',

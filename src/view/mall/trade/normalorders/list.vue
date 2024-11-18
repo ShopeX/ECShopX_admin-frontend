@@ -998,6 +998,26 @@ export default {
           type: 'text'
         },
         {
+          label: '是否退运费',
+          key: 'freight_fee',
+          type: 'text',
+          component: ({ key }, value) =>{
+            return (
+            <div>{value[key] > 0 ? '是' : '否'}</div>
+            )
+          }
+        },
+        {
+          label: '退运费金额',
+          key: 'freight_fee',
+          type: 'text',
+          component: ({ key }, value) =>{
+            return (
+            <div>{value[key] >0? value[key] / 100 :0}</div>
+            )
+          }
+        },
+        {
           label: '支付方式',
           key: 'payType',
           type: 'text'

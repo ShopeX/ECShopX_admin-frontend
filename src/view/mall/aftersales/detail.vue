@@ -53,13 +53,13 @@
       <el-row>
         <el-col :span="3" class="col-3 content-right"> 是否退运费: </el-col>
         <el-col :span="20">
-          {{ aftersalesInfo.freight_fee>0 ? '是' : '否' }}
+          {{ aftersalesInfo.freight>0 ? '是' : '否' }}
         </el-col>
       </el-row>
       <el-row>
         <el-col :span="3" class="col-3 content-right"> 退款运费: </el-col>
         <el-col :span="20">
-          {{ aftersalesInfo.freight_fee >0 ? aftersalesInfo.freight_fee / 100 : '0' }}
+          {{ aftersalesInfo.freight >0 ? aftersalesInfo.freight / 100 : '0' }}
         </el-col>
       </el-row>
       <el-row v-if="IS_SUPPLIER()">

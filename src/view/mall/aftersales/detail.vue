@@ -471,6 +471,17 @@
                 />
               </el-col>
             </el-row>
+            <el-row>
+              <el-col :span="3" class="col-3 content-right"> 退款运费: </el-col>
+              <el-col :span="8">
+                <el-input
+                  v-model="freight"
+                  type="number"
+                  min="0"
+                  :max="aftersalesInfo.freight"
+                />
+              </el-col>
+            </el-row>
           </template>
           <el-row v-if="this.is_approved == '0'">
             <el-col :span="2" class="col-3 agreen-right"> 拒绝原因: </el-col>
@@ -918,6 +929,7 @@ export default {
         this.reviewData.refund_fee = accMul(this.refund_fee, 100)
         //parseInt(this.refund_fee * 100)
         this.reviewData.refund_point = this.refund_point
+        this.reviewData.freight = accMul(this.freight, 100)
         //售后地址
         console.log(this.aftersalesInfo.aftersales_type)
         if (
@@ -941,7 +953,6 @@ export default {
       setTimeout(() => {
         this.submitDisabled = false
       }, 1000)
-
       reviewAftersales(this.reviewData).then((response) => {
         if (response.data.data) {
           this.$message({

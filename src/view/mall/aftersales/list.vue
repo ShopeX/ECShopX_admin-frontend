@@ -184,8 +184,13 @@
           header-align="center"
           prop="refund_fee"
         ></el-table-column>
+        <el-table-column width="120" label="退款运费（¥）" header-align="center">
+          <template slot-scope="scope">
+            {{ scope.row.freight/100 }}
+          </template>
+        </el-table-column>
         <el-table-column
-          width="120"
+          width="160"
           label="退款抵扣积分（¥）"
           header-align="center"
           prop="refund_point"

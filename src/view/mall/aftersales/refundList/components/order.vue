@@ -218,9 +218,9 @@
             </div>
           </template>
         </el-table-column>
-        <el-table-column prop="freight/100" width="180" label="退运费">
+        <el-table-column width="180" label="退运费">
           <template slot-scope="scope">
-            ￥{{ scope.row.refund_fee / 100 }}
+            ￥{{ scope.row.freight / 100 }}
           </template>
         </el-table-column>
 

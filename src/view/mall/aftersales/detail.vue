@@ -59,7 +59,7 @@
       <el-row>
         <el-col :span="3" class="col-3 content-right"> 退款运费: </el-col>
         <el-col :span="20">
-          {{ aftersalesInfo.freight >0 ? aftersalesInfo.freight / 100 : '0' }}
+          ￥{{ aftersalesInfo.freight >0 ? aftersalesInfo.freight / 100 : '0' }}
         </el-col>
       </el-row>
       <el-row v-if="IS_SUPPLIER()">

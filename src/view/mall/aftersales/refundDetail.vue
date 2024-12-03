@@ -200,7 +200,7 @@
         </el-col>
         <el-col :span="20">
           <el-tag
-            v-if="refundDetail.return_freight == '0'"
+            v-if="refundDetail.freight <= 0"
             effect="plain"
             type="warning"
             size="mini"
@@ -208,12 +208,23 @@
             不退运费
           </el-tag>
           <el-tag
-            v-else-if="refundDetail.return_freight == '1'"
+            v-else-if="refundDetail.freight > 0"
             effect="plain"
             size="mini"
           >
             退运费
           </el-tag>
+        </el-col>
+      </el-row>
+      <el-row>
+        <el-col
+          :span="3"
+          class="col-3 content-right"
+        >
+        退运费金额:
+        </el-col>
+        <el-col :span="20">
+          {{ refundDetail.freight/100 }}
         </el-col>
       </el-row>
       <el-row>
@@ -374,6 +385,7 @@ export default {
       getRefundsDetail(this.refund_bn).then((response) => {
         let data = response.data.data
         this.refundDetail = data
+        console.log(this.refundDetail,'refundDetail======')
         this.loading = false
       })
     },

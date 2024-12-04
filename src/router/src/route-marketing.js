@@ -556,6 +556,11 @@ export default {
       component: () => import('@/view/mall/community/setting')
     },
     {
+      path: 'community/subdistrict',
+      name: '街道社区配置',
+      component: () => import('@/view/mall/subdistrict/list')
+    },
+    {
       path: 'community/achievement',
       name: `团长业绩`,
       component: () => import('@/view/mall/community/achievement')

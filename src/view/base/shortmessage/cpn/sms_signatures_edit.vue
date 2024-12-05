@@ -46,8 +46,8 @@
       </el-form-item>
       <el-form-item label="签名用途" prop="third_party">
         <el-radio-group v-model="form.third_party" :disabled="disabled">
-          <el-radio label="true"> 自用（签名为本账号实名认证的网站、App等） </el-radio>
-          <el-radio label="false"> 他用（签名为菲本账号实名认证的企业、网站、产品名等） </el-radio>
+          <el-radio label="false"> 自用（签名为本账号实名认证的网站、App等） </el-radio>
+          <el-radio label="true"> 他用（签名为菲本账号实名认证的企业、网站、产品名等） </el-radio>
         </el-radio-group>
       </el-form-item>
       <el-form-item label="资质ID" prop="qualification_id">

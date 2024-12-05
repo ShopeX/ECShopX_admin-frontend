@@ -1,17 +1,8 @@
 <template>
   <div class="sms_signatures_edit">
     <h4>添加短信签名</h4>
-    <el-form
-      ref="form"
-      :model="form"
-      :rules="rules"
-      label-width="150px"
-      class="demo-ruleForm"
-    >
-      <el-form-item
-        label="签名名称"
-        prop="sign_name"
-      >
+    <el-form ref="form" :model="form" :rules="rules" label-width="150px" class="demo-ruleForm">
+      <el-form-item label="签名名称" prop="sign_name">
         <el-input
           v-model="form.sign_name"
           :disabled="disabled || disabled_edit"
@@ -27,42 +18,22 @@
             · 了解更多<a
               target="_blank"
               href="https://help.aliyun.com/document_detail/55324.html?spm=5176.12212999.0.0.4b2b1cbe7AQAyL"
-            >签名 / 模板申请规范</a>
+              >签名 / 模板申请规范</a
+            >
           </li>
         </ul>
       </el-form-item>
-      <el-form-item
-        label="签名来源"
-        prop="sign_source"
-      >
-        <el-radio-group
-          v-model="form.sign_source"
-          :disabled="disabled"
-        >
-          <el-radio label="0">
-            企事业单位的全称或简称
-          </el-radio>
-          <el-radio label="1">
-            工信部备案网站的全称或简称
-          </el-radio>
-          <el-radio label="2">
-            App 应用的全称或简称
-          </el-radio>
-          <el-radio label="3">
-            公众号或小程序的全称或简称
-          </el-radio>
-          <el-radio label="4">
-            电商平台店铺名的全称或简称
-          </el-radio>
-          <el-radio label="5">
-            商标名的全称或简称
-          </el-radio>
+      <el-form-item label="签名来源" prop="sign_source">
+        <el-radio-group v-model="form.sign_source" :disabled="disabled">
+          <el-radio label="0"> 企事业单位的全称或简称 </el-radio>
+          <el-radio label="1"> 工信部备案网站的全称或简称 </el-radio>
+          <el-radio label="2"> App 应用的全称或简称 </el-radio>
+          <el-radio label="3"> 公众号或小程序的全称或简称 </el-radio>
+          <el-radio label="4"> 电商平台店铺名的全称或简称 </el-radio>
+          <el-radio label="5"> 商标名的全称或简称 </el-radio>
         </el-radio-group>
       </el-form-item>
-      <el-form-item
-        label="申请说明"
-        prop="remark"
-      >
+      <el-form-item label="申请说明" prop="remark">
         <el-input
           v-model="form.remark"
           :disabled="disabled"
@@ -73,7 +44,21 @@
           placeholder="详细描述您的业务使用场景或签名用途，可填写企业官网链接，工信部备案网站域名，已上线应用在任一应用商店展示页链接，公众号或小程序全称，任一电商店铺展示页链接，已注册商标名等，可有效提升通过率，长度不超过 200 个字符。"
         />
       </el-form-item>
-      <el-form-item label="证明文件">
+      <el-form-item label="签名用途" prop="third_party">
+        <el-radio-group v-model="form.third_party" :disabled="disabled">
+          <el-radio label="true"> 自用（签名为本账号实名认证的网站、App等） </el-radio>
+          <el-radio label="false"> 他用（签名为菲本账号实名认证的企业、网站、产品名等） </el-radio>
+        </el-radio-group>
+      </el-form-item>
+      <el-form-item label="资质ID" prop="qualification_id">
+        <el-input
+          v-model="form.qualification_id"
+          :disabled="disabled"
+          placeholder="请输入整型数字"
+        />
+        <div class="form-tips">已审核通过或审核中的资质ID</div>
+      </el-form-item>
+      <!-- <el-form-item label="证明文件">
         <div
           class="upload-box"
           @click="handleImgPicker('sign_file')"
@@ -147,15 +132,10 @@
           </li>
           <li>支持 JPG、PNG、GIF 或 JPEG 格式的图片，图片不超过 2 MB。</li>
         </ul>
-      </el-form-item>
+      </el-form-item> -->
       <el-form-item v-if="$route.query.type !== 'detail'">
-        <loadingBtn
-          ref="loadingBtn"
-          @clickHandle="submitForm('form')"
-        />
-        <el-button @click="fnBack">
-          取消
-        </el-button>
+        <loadingBtn ref="loadingBtn" @clickHandle="submitForm('form')" />
+        <el-button @click="fnBack"> 取消 </el-button>
         <ul class="tips">
           <li>预计两小时完成审核，政企签名预计在 48 小时工作时间内审核</li>
           <li>审核工作时间：周一至周日 9:00-23:00（法定节日顺延）</li>
@@ -171,16 +151,8 @@
     />
 
     <!-- result -->
-    <el-dialog
-      :visible="resultVisible"
-      class="result"
-      :show-close="false"
-    >
-      <el-result
-        icon="success"
-        title="提交成功"
-        sub-title="请根据提示进行操作"
-      >
+    <el-dialog :visible="resultVisible" class="result" :show-close="false">
+      <el-result icon="success" title="提交成功" sub-title="请根据提示进行操作">
         <template slot="subTitle">
           <h5>签名已提交审核，审核结果可在签名列表中查看。</h5>
           <ul class="tips">
@@ -189,18 +161,8 @@
           </ul>
         </template>
         <template slot="extra">
-          <el-button
-            type="primary"
-            size="medium"
-            @click="fnBack"
-          >
-            返回列表
-          </el-button>
-          <el-button
-            v-if="!$route.query.type"
-            size="medium"
-            @click="fnAgain"
-          >
+          <el-button type="primary" size="medium" @click="fnBack"> 返回列表 </el-button>
+          <el-button v-if="!$route.query.type" size="medium" @click="fnAgain">
             再添加一个签名
           </el-button>
         </template>
@@ -220,7 +182,7 @@ export default {
     imgPicker,
     loadingBtn
   },
-  data () {
+  data() {
     return {
       // 页面状态
       disabled: false,
@@ -236,20 +198,24 @@ export default {
         sign_source: '',
         remark: '',
         sign_file: '', // 证明文件
-        delegate_file: '' //委托授权书
+        delegate_file: '', //委托授权书
+        third_party: 'true',
+        qualification_id: ''
       },
       rules: {
         sign_name: [requiredRules('签名名称'), MaxRules(12), MinRules(2)],
         sign_source: [requiredRules('签名来源', 'change')],
-        remark: [requiredRules('申请说明'), MaxRules(200)]
+        remark: [requiredRules('申请说明'), MaxRules(200)],
+        third_party: [requiredRules('签名用涂', 'change')],
+        qualification_id: [requiredRules('资质ID', 'blur')]
       }
     }
   },
-  mounted () {
+  mounted() {
     this.init()
   },
   methods: {
-    async init () {
+    async init() {
       const { type, id } = this.$route.query
       console.log(type, id)
 
@@ -265,18 +231,28 @@ export default {
         }
       }
     },
-    resultHandler (result) {
-      const { sign_name, sign_source, remark, sign_file, delegate_file } = result.data.data
+    resultHandler(result) {
+      const {
+        sign_name,
+        sign_source,
+        remark,
+        sign_file,
+        delegate_file,
+        third_party,
+        qualification_id
+      } = result.data.data
       console.log(sign_name)
       this.form = {
         sign_name,
         sign_source: sign_source + '',
         remark,
         sign_file,
-        delegate_file
+        delegate_file,
+        third_party,
+        qualification_id
       }
     },
-    submitForm (formName) {
+    submitForm(formName) {
       const { type, id } = this.$route.query
       this.$refs[formName].validate(async (valid) => {
         if (valid) {
@@ -298,43 +274,43 @@ export default {
         }
       })
     },
-    submitFormResult (result) {
+    submitFormResult(result) {
       if (result.data.data.status) {
         this.resultVisible = true
       }
       this.$refs['loadingBtn'].closeLoading()
     },
-    fnBack () {
+    fnBack() {
       this.$router.push({
         path: `/setting/datamessage/ali_sms/sms_signatures`
       })
     },
-    fnAgain () {
+    fnAgain() {
       this.resultVisible = false
       this.$refs['form'].resetFields()
       this.form.sign_file = ''
       this.form.delegate_file = ''
     },
     /* -------------------------图片选择------------------------- */
-    pickImg ({ url }) {
+    pickImg({ url }) {
       if (url && this.pickerImgType) {
         const that = this.form
         that[this.pickerImgType] = url
         this.imgDialog = false
       }
     },
-    closeImgDialog () {
+    closeImgDialog() {
       this.imgDialog = false
       this.isGetImage = false
     },
-    handleImgPicker (pickerImgType) {
+    handleImgPicker(pickerImgType) {
       if (!this.disabled) {
         this.pickerImgType = pickerImgType
         this.imgDialog = true
         this.isGetImage = true
       }
     },
-    deleteUrl (url) {
+    deleteUrl(url) {
       this.form[url] = ''
     }
     /* -------------------------图片选择------------------------- */
@@ -405,6 +381,10 @@ export default {
         color: #1480e3;
       }
     }
+  }
+  .form-tips {
+    color: #999;
+    font-size: 12px;
   }
   .tips {
     margin-top: 10px;

@@ -16,7 +16,7 @@ export default {
     {
       path: 'manage/editcategory',
       name: `自定义分类`,
-      component: () => import('@/view/wxapp/category')
+      component: () => import('@/view/wxapp/category/categorize')
     },
     {
       path: 'manage/classificationTemplate',

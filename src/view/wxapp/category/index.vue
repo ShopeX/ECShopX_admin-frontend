@@ -506,7 +506,7 @@ $txt-placeholder: #f5f5f7;
 <template>
   <transition name="el-fade-in-linear" mode="out-in">
     <div>
-      <SpPlatformTip h5 app alipay />
+      <!-- <SpPlatformTip h5 app alipay /> -->
       <!-- <el-switch
         v-model="customClassification"
         @change="switchChange"

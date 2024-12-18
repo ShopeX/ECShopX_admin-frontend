@@ -1558,6 +1558,8 @@ export default {
         this.series[this.curTabIndex].content = this.editableData
         this.form.data = this.series
       }
+      this.form.addCar= true
+      this.form.classify= false
       console.log(this.form, 'kkkkkkkkkkkkkkkkkkkkkkkkkk')
       let param = {
         template_name: this.template_name,

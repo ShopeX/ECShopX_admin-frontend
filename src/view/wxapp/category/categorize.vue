@@ -59,21 +59,26 @@ export default {
     async feath() {
       let filter = { template_name: this.template_name, version: 'v1.0.1', page_name: 'category' }
       const res = await this.$api.wxa.getParamByTempName(filter)
-      this.addCar = res.list[0].addCar || true
-      this.classify = res.list[0].classify || true
-      console.log(res.list[0], 'kkkkkfffff')
+      if (typeof res.list[0].params.addCar == 'boolean') {
+        this.addCar = res.list[0].params.addCar
+        this.classify = res.list[0].params.classify
+      }
     },
     async saveConfig() {
       if (!this.classify && this.addCar) { //平铺开启自定义分类
-        console.log('平铺要')
         this.$refs.indexTile.saveConfig()
       } else {
         let param = {
           template_name: this.template_name,
-          config: JSON.stringify([]),
+          config: JSON.stringify([{
+            name: 'base',
+            hasSeries: false,
+            data: [],
+            is_open: true,
+            addCar: this.addCar,
+            classify: this.classify
+          }]),
           page_name: 'category',
-          addCar: this.addCar,
-          classify: this.classify,
         }
         await this.$api.wxa.savePageParams(param)
         this.$message({

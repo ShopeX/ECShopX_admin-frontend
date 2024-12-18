@@ -59,6 +59,7 @@
       flex-direction: column;
       justify-content: center;
       margin-right: 18px;
+      text-align: center;
 
       &-img {
         border: 2px solid var(--themeColor);
@@ -67,10 +68,35 @@
       &-imgs {
         width: 40px !important;
         height: 40px !important;
+
+      }
+
+      &-imgs-span {
+        width: 40px !important;
+        height: 40px !important;
+        border-radius: 50%;
+        overflow: hidden;
+        line-height: 40px !important;
+        background-color: #fff;
+      }
+
+      &-img-span {
+        margin-top: 2px;
+        width: 40px !important;
+        height: 40px !important;
+        border-radius: 50%;
+        overflow: hidden;
+        line-height: 40px !important;
+        background-color: #fff;
+        border: 2px solid var(--themeColor);
       }
 
       &-titles {
         margin-top: 5px;
+        width: 50px;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
       }
 
       &-title {
@@ -81,6 +107,10 @@
         border-radius: 14px;
         text-align: center;
         color: #ffffff;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+        text-align: center;
       }
     }
 
@@ -112,6 +142,7 @@
 
   .level-box {
     display: flex;
+    height: 546px;
 
     &-left {
       height: 500px;
@@ -125,6 +156,7 @@
         display: flex;
         align-items: center;
         text-align: center;
+        justify-content: flex-start;
         line-height: 36px;
 
         .lone {
@@ -134,9 +166,13 @@
         }
 
         &-item-title {
-          width: 100px;
+          width: 90px;
           height: 36px;
           text-align: center;
+          overflow: hidden;
+          text-overflow: ellipsis;
+          white-space: nowrap;
+          padding-left: 10px;
         }
 
       }
@@ -236,6 +272,13 @@
       }
     }
 
+    .three-level-item-title {
+      margin-top: 20px;
+      font-size: 12px;
+      color: #666;
+      text-align: center;
+    }
+
   }
 
 }
@@ -253,7 +296,11 @@
       <!-- 一级分类 -->
       <div class="one-level" v-if="oneList.length > 0">
         <div v-for="(item, index) in oneList" :key="index" class="one-level-item" @click="oneCli(index)">
-          <img :class="{ 'one-level-item-imgs': index != oneIndex, 'one-level-item-img': index == oneIndex }"
+          <span v-if="!item.image_url"
+            :class="{ 'one-level-item-imgs-span': index != oneIndex, 'one-level-item-img-span': index == oneIndex }">{{
+              item.category_name }}</span>
+          <img v-if="item.image_url"
+            :class="{ 'one-level-item-imgs': index != oneIndex, 'one-level-item-img': index == oneIndex }"
             :src="item.image_url" alt="">
           <span :class="{ 'one-level-item-titles': index != oneIndex, 'one-level-item-title': index == oneIndex }">{{
             item.category_name }}</span>
@@ -295,6 +342,7 @@
                 </div>
               </div>
             </div>
+            <div v-if="goodsIndex.length == 0" class="three-level-item-title">暂无数据哟～</div>
           </div>
         </div>
       </div>
@@ -324,7 +372,7 @@ export default {
     async feath() {
       //获取ecshopx取平台配置，管理分类
       //获取云店/内购/官网取平台配置，销售分类分类
-      const res = await this.$api.goods.getCategory(this.VERSION_PLATFORM ? {} : { is_main_category: true })
+      const res = await this.$api.goods.getCategory(this.VERSION_PLATFORM ? { is_main_category: true } : {})
       res.forEach(element => {
         if (element?.children?.length > 0) {
           element?.children?.unshift({

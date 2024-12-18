@@ -951,9 +951,9 @@ $txt-placeholder: #f5f5f7;
           </div>
         </div>
       </section>
-      <section class="content-padded-s section-white content-center">
+      <!-- <section class="content-padded-s section-white content-center">
         <el-button class="btn-save" type="primary" @click="saveConfig"> 保存 </el-button>
-      </section>
+      </section> -->
       <!-- 分类选择器弹窗 -->
       <el-dialog title="绑定分类" :visible.sync="categoryDialog" :before-close="hideCategory">
         <el-form>

@@ -251,48 +251,45 @@
     </div>
     <div>
       <!-- 一级分类 -->
-      <div class="one-level">
+      <div class="one-level" v-if="oneList.length > 0">
         <div v-for="(item, index) in oneList" :key="index" class="one-level-item" @click="oneCli(index)">
           <img :class="{ 'one-level-item-imgs': index != oneIndex, 'one-level-item-img': index == oneIndex }"
-            src="https://img1.baidu.com/it/u=1344265042,937692021&fm=253&app=138&size=w931&n=0&f=JPEG&fmt=auto?sec=1734022800&t=81b6988ebf5fbe135bad56f38c516126"
-            alt="">
-          <span
-            :class="{ 'one-level-item-titles': index != oneIndex, 'one-level-item-title': index == oneIndex }">一级分类</span>
+            :src="item.image_url" alt="">
+          <span :class="{ 'one-level-item-titles': index != oneIndex, 'one-level-item-title': index == oneIndex }">{{
+            item.category_name }}</span>
         </div>
         <div class="all">
           <span>全</span><span>部</span> <img src="@/assets/imgs/classification.png" alt="">
         </div>
       </div>
 
-      <div class="level-box">
+      <div class="level-box" v-if="oneList.length > 0">
         <!-- 二级分类 -->
         <div class="level-box-left">
-          <div v-for="(item, index) in twoList" :key="index"
+          <div v-for="(item, index) in oneList?.[oneIndex]?.children" :key="index"
             :class="{ 'two-level': true, 'two-levels': twoIndex == index }" @click="twoCli(index)">
             <div v-if="twoIndex == index" class="lone" />
-            <div class="two-level-item-title">二级分类</div>
+            <div class="two-level-item-title">{{ item?.category_name || '' }}</div>
           </div>
         </div>
         <!-- 三级分类 -->
         <div class="level-box-right">
           <!-- 三级分类列表 -->
-          <div class="three-level-list">
-            <span v-for="(item, index) in threeList" :key="index"
+          <div v-if="oneList?.[oneIndex]?.children?.[twoIndex]?.children?.length > 0" class="three-level-list">
+            <span v-for="(item, index) in oneList?.[oneIndex]?.children?.[twoIndex]?.children" :key="index"
               :class="{ 'three-level-list-title': true, 'three-level-list-titles': index == threeIndex }"
-              @click="threeCli(index)">三级分类</span>
+              @click="threeCli(index)">{{ item?.category_name || '' }}</span>
           </div>
           <!-- 三级分类商品 -->
           <div class="three-level-item">
             <div v-for="(item, index) in goodsIndex" :key="index" class="three-list">
-              <img class="three-list-img"
-                src="https://img1.baidu.com/it/u=1344265042,937692021&fm=253&app=138&size=w931&n=0&f=JPEG&fmt=auto?sec=1734022800&t=81b6988ebf5fbe135bad56f38c516126"
-                alt="">
+              <img class="three-list-img" :src="item.pics[0]" alt="">
               <div class="three-list-title">
-                <span class="name">商品名称</span>
+                <span class="name">{{ item.itemName }}</span>
                 <div class="price">
                   <div>
-                    <span class="price1">19.<span class="price2">96</span></span>
-                    <span class="price3">99.00</span>
+                    <span class="price1">{{ item.cost_price / 100 }}.<span class="price2">96</span></span>
+                    <span class="price3">{{ item.cost_price / 100 }}</span>
                   </div>
                   <img class="cart" src="@/assets/imgs/shopping-cart.png" alt="">
                 </div>
@@ -306,27 +303,90 @@
 </template>
 
 <script>
+import { IS_ADMIN, IS_SUPPLIER, IS_DISTRIBUTOR } from '@/utils'
+
 export default {
   data() {
     return {
-      oneList: 9,
+      oneList: [],
       oneIndex: 0,
-      twoList: 2,
       twoIndex: 0,
-      threeList: 2,
       threeIndex: 0,
-      goodsIndex: 7,
+      goodsIndex: [],
+      main_cat_id: []
     }
   },
+  mounted() {
+    this.feath()
+
+  },
   methods: {
+    async feath() {
+      //获取ecshopx取平台配置，管理分类
+      //获取云店/内购/官网取平台配置，销售分类分类
+      const res = await this.$api.goods.getCategory(this.VERSION_PLATFORM ? {} : { is_main_category: true })
+      res.forEach(element => {
+        if (element?.children?.length > 0) {
+          element?.children?.unshift({
+            category_id: '',
+            category_name: '全部'
+          })
+          element?.children?.forEach(element1 => {
+            if (element1?.children?.length > 0) {
+              element1?.children?.unshift({
+                category_id: '',
+                category_name: '全部'
+              })
+            }
+          })
+
+        }
+      });
+      this.oneList = res
+      this.oneCli(0)
+    },
     oneCli(index) {
       this.oneIndex = index
+      this.twoIndex = 0
+      this.threeIndex = 0
+      this.main_cat_id = [this.oneList[this.oneIndex].category_id]
+      this.getItemsListAll()
     },
     twoCli(index) {
       this.twoIndex = index
+      this.threeIndex = 0
+      if (!this.oneList[this.oneIndex].children[this.twoIndex].category_id) {
+        this.main_cat_id = [this.oneList[this.oneIndex].category_id]
+      } else {
+        this.main_cat_id = [this.oneList[this.oneIndex].category_id, this.oneList[this.oneIndex].children[this.twoIndex].category_id]
+      }
+      this.getItemsListAll()
     },
     threeCli(index) {
       this.threeIndex = index
+      if (!this.oneList[this.oneIndex].children[this.twoIndex].children[this.threeIndex].category_id) {
+        this.main_cat_id = [this.oneList[this.oneIndex].category_id, this.oneList[this.oneIndex].children[this.twoIndex].category_id]
+      } else {
+        this.main_cat_id = [this.oneList[this.oneIndex].category_id, this.oneList[this.oneIndex].children[this.twoIndex].category_id, this.oneList[this.oneIndex].children[this.twoIndex].children[this.threeIndex].category_id]
+      }
+      this.getItemsListAll()
+    },
+    async getItemsListAll() {
+      let params = {
+        page: 1,
+        pageSize: 10,
+        item_type: 'normal',
+        operate_source: IS_SUPPLIER() ? 'supplier' : 'platform',
+        item_source: 'platform',
+      }
+      if (this.VERSION_PLATFORM) {
+        params.main_cat_id = this.main_cat_id
+      } else {
+        params.category = this.main_cat_id[this.main_cat_id.length - 1]
+        params.distributor_id = 0
+      }
+      const res = await this.$api.goods.getItemsListAll(params)
+      this.goodsIndex = res.list
     }
   }
 }

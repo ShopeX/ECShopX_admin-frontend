@@ -81,10 +81,12 @@ module.exports = {
     config.plugins.delete('preload')
     config.plugins.delete('prefetch')
   },
-  // devServer: {
-  //   port: 10086,
-  //   disableHostCheck: true
-  // }
+  devServer: {
+    port: 8080,
+    disableHostCheck: true,
+    hot: true, // 启用热更新
+    open: true, // 启动时自动打开浏览器
+  }
   // configureWebpack: {
   //   resolve: {
   //     alias: {

@@ -2,6 +2,11 @@
 .categorize {
   margin-bottom: 24px;
 }
+
+.btn-save {
+  width: 200px;
+  border-radius: 60px;
+}
 </style>
 
 <template>
@@ -20,13 +25,18 @@
     </div>
 
     <addCartas v-if="classify" />
-    <index v-if="!classify && addCar" />
+    <index v-if="!classify && addCar" ref="indexTile" />
+    <section class="content-padded-s section-white content-center">
+      <el-button class="btn-save" type="primary" @click="saveConfig"> 保存 </el-button>
+    </section>
   </div>
 </template>
 
 <script>
 import addCartas from './addCartas.vue'
 import index from './index.vue'
+import { mapGetters } from 'vuex'
+
 export default {
   components: {
     addCartas,
@@ -35,9 +45,43 @@ export default {
   data() {
     return {
       addCar: true,
-      classify: true
+      classify: true,
+
     }
   },
-  methods: {}
+  computed: {
+    ...mapGetters(['wheight', 'template_name'])
+  },
+  mounted() {
+    this.feath()
+  },
+  methods: {
+    async feath() {
+      let filter = { template_name: this.template_name, version: 'v1.0.1', page_name: 'category' }
+      const res = await this.$api.wxa.getParamByTempName(filter)
+      this.addCar = res.list[0].addCar || true
+      this.classify = res.list[0].classify || true
+      console.log(res.list[0], 'kkkkkfffff')
+    },
+    async saveConfig() {
+      if (!this.classify && this.addCar) { //平铺开启自定义分类
+        console.log('平铺要')
+        this.$refs.indexTile.saveConfig()
+      } else {
+        let param = {
+          template_name: this.template_name,
+          config: JSON.stringify([]),
+          page_name: 'category',
+          addCar: this.addCar,
+          classify: this.classify,
+        }
+        await this.$api.wxa.savePageParams(param)
+        this.$message({
+          message: '保存成功',
+          type: 'success'
+        })
+      }
+    }
+  }
 }
 </script>

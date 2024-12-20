@@ -32,11 +32,18 @@ export default {
       name: `售后单`,
       component: () => import('@/view/mall/aftersales/financial/list')
     },
+
     {
       path: 'financialManage/salesreportlist',
       name: `销售报表`,
       component: () => import('@/view/mall/trade/financial/list')
     },
+    {
+      path: 'examine/transfer',
+      name: `转账审核`,
+      component: () => import('@/view/mall/trade/examineTransfer')
+    },
+
     {
       path: 'splitBill/setting',
       name: `基础配置`,

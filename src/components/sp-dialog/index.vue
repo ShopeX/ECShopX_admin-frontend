@@ -55,7 +55,11 @@ export default {
     confirmStatus: {
       type: Boolean,
       default: false
-    }
+    },
+    isShowFooter: {
+      type: Boolean,
+      default: true
+    },
   },
   data() {
     return {
@@ -77,7 +81,7 @@ export default {
     }
   },
   render() {
-    const { title, value, form, formList, width, labelWidth, confirmStatus } = this
+    const { title, value, form, formList, width, labelWidth, confirmStatus, isShowFooter } = this
 
     if (!value) {
       return null
@@ -101,7 +105,7 @@ export default {
           labelWidth={labelWidth}
           on-onSubmit={this.onFormSubmit}
         />
-        <div slot='footer' class='dialog-footer'>
+       {isShowFooter && <div slot='footer' class='dialog-footer'>
           <el-button onClick={this.handleCancel}>取 消</el-button>
           <el-button
             loading={confirmStatus}
@@ -112,7 +116,7 @@ export default {
           >
             确 定
           </el-button>
-        </div>
+        </div>}
       </el-dialog>
     )
   }

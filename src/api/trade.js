@@ -618,3 +618,23 @@ export function confirmpackag(params) {
     params
   })
 }
+
+export function getOffLineInfo(query) {
+  return fetch({
+    url: '/order/offline_payment/get_info',
+    method: 'get',
+    params: query
+  })
+}
+
+
+export function offlineCheck(params) {
+  return fetch({
+    url: '/order/offline_payment/do_check',
+    method: 'post',
+    params
+  })
+}
+
+
+

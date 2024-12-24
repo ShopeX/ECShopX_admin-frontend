@@ -1,55 +1,58 @@
 <template>
   <div>
-    <SpFilterForm :model="params" size="small" @onSearch="onSearch" @onReset="onSearch">
-      <SpFilterFormItem prop="create_time" label="日期范围:">
-        <el-date-picker
-          v-model="params.create_time"
-          type="daterange"
-          value-format="yyyy/MM/dd"
-          placeholder="选择日期范围"
-        />
-      </SpFilterFormItem>
-      <SpFilterFormItem prop="mobile" label="单号:">
-        <el-input v-model="params.mobile" placeholder="手机号/交易单号" />
-      </SpFilterFormItem>
-      <SpFilterFormItem prop="mobile" label="订单号:">
-        <el-input v-model="params.mobile" placeholder="请输入订单号" />
-      </SpFilterFormItem>
-      <SpFilterFormItem prop="payment_method" label="状态:">
-        <el-select v-model="params.payment_method">
-          <el-option
-            v-for="item in options"
-            :key="item.value"
-            :label="item.label"
-            :value="item.value"
+    <SpRouterView>
+      <SpFilterForm :model="params" size="small" @onSearch="onSearch" @onReset="onSearch">
+        <SpFilterFormItem prop="create_time" label="日期范围:">
+          <el-date-picker
+            v-model="params.create_time"
+            type="daterange"
+            value-format="yyyy/MM/dd"
+            placeholder="选择日期范围"
           />
-        </el-select>
-      </SpFilterFormItem>
-    </SpFilterForm>
+        </SpFilterFormItem>
+        <SpFilterFormItem prop="mobile" label="单号:">
+          <el-input v-model="params.mobile" placeholder="手机号/交易单号" />
+        </SpFilterFormItem>
+        <SpFilterFormItem prop="order_id" label="订单号:">
+          <el-input v-model="params.order_id" placeholder="请输入订单号" />
+        </SpFilterFormItem>
+        <SpFilterFormItem prop="check_status" label="状态:">
+          <el-select v-model="params.check_status">
+            <el-option
+              v-for="item in checkStatusOptions"
+              :key="item.value"
+              :label="item.label"
+              :value="item.value"
+            />
+          </el-select>
+        </SpFilterFormItem>
+      </SpFilterForm>
 
-    <el-button type="primary" plain>导出</el-button>
+      <el-button type="primary" plain>导出</el-button>
 
-    <SpFinder
-      ref="finder"
-      url="/account/management"
-      :fixed-row-action="true"
-      no-selection
-      :setting="setting"
-      :hooks="{
-        beforeSearch: beforeSearch
-      }"
-    />
+      <SpFinder
+        ref="finder"
+        url="/order/offline_payment/get_list"
+        :fixed-row-action="true"
+        no-selection
+        :setting="setting"
+        :hooks="{
+          beforeSearch: beforeSearch
+        }"
+      />
 
-    <SpDialog
-      ref="addDialogRef"
-      v-model="deliveryman"
-      :title="editTitle"
-      :form="addForm"
-      :form-list="addFormList"
-      @onSubmit="onAddSubmit"
-    />
+      <SpDialog
+        ref="addDialogRef"
+        v-model="deliveryman"
+        :isShowFooter="!isLook"
+        :confirmStatus="confirmStatus"
+        :title="editTitle"
+        :form="addForm"
+        :form-list="addFormList"
+        @onSubmit="onAddSubmit"
+      />
 
-    <!-- <DistributorSelect
+      <!-- <DistributorSelect
         :store-visible="DistributorVisible"
         :is-valid="isValid"
         :get-status="DistributorStatus"
@@ -60,11 +63,13 @@
         @chooseStore="DistributorChooseAction"
         @closeStoreDialog="closeDialogAction"
       /> -->
+    </SpRouterView>
   </div>
 </template>
 <script>
 import DistributorSelect from '@/components/function/distributorSelect'
 import { IS_DISTRIBUTOR, IS_MERCHANT } from '@/utils'
+import moment from 'moment'
 
 export default {
   name: '',
@@ -85,74 +90,74 @@ export default {
       relDistributors: [],
       operator_id: '',
       editTitle: '',
+      isLook:false,
+      confirmStatus:false,
       params: {
-        operator_type: 'self_delivery_staff',
-        username: '',
+        create_time: [],
         mobile: '',
-        payment_method: ''
+        order_id: '',
+        check_status:''
       },
-      options: [
+      itemInfo:{},
+      checkStatusOptions: [
         {
-          value: 'order',
-          label: '按单笔订单'
+          value: '0',
+          label: '待处理'
         },
         {
-          value: 'amount',
-          label: '按订单金额比例'
-        }
+          value: '1',
+          label: '已审核'
+        },
+        {
+          value: '2',
+          label: '已拒绝'
+        },
+        {
+          value: '9',
+          label: '已取消'
+        },
       ],
       setting: {
         columns: [
-          { name: '收款账户名', key: 'username', width: 110 },
-          { name: '收款银行名称', key: 'staff_no', width: 110 },
-          { name: '订单支付金额', key: 'mobile', width: 150 },
+          { name: '收款账户名', key: 'bank_account_name', width: 110 },
+          { name: '收款银行名称', key: 'bank_name', width: 110 },
+          { name: '收款银行账号', key: 'bank_account_no', width: 110 },
           {
             name: '订单支付金额',
             width: 110,
-            key: 'staff_attribute',
+            key: 'total_fee',
             render: (h, { row }) => {
-              return <span>¥{(row.staff_attribute / 100).toFixed(2)}</span>
+              return <span>¥{(row.total_fee / 100).toFixed(2)}</span>
             }
           },
-          { name: '订单编号', key: 'mobile', width: 150 },
+          { name: '订单编号', key: 'order_id', width: 150 },
           {
             name: '审核意见',
             width: 150,
-            key: 'payment_method',
-            render: (h, { row }) => {
-              return <span>{row.payment_method === 'order' ? '按单笔订单' : '按订单金额比例'}</span>
-            }
-          },
-          {
-            name: '审核状态',
-            width: 150,
-            key: 'payment_method',
-            render: (h, { row }) => {
-              return <span>{row.payment_method === 'order' ? '按单笔订单' : '按订单金额比例'}</span>
-            }
+            key: 'remark'
           },
           {
             name: '审批状态',
             width: 150,
-            key: 'payment_method',
+            key: 'check_status',
             render: (h, { row }) => {
-              return <span>{row.payment_method === 'order' ? '按单笔订单' : '按订单金额比例'}</span>
+              return <span>{this.getCheckStatusLabel(row.check_status)}</span>
             }
           },
           {
             name: '创建时间',
             width: 150,
-            key: 'payment_method',
+            key: 'create_time',
             render: (h, { row }) => {
-              return <span>{row.payment_method === 'order' ? '按单笔订单' : '按订单金额比例'}</span>
+              return <span>{moment(row.create_time * 1000).format('YYYY-MM-DD HH:mm:ss')}</span>
             }
           },
           {
             name: '审核时间',
             width: 150,
-            key: 'payment_method',
+            key: 'update_time',
             render: (h, { row }) => {
-              return <span>{row.payment_method === 'order' ? '按单笔订单' : '按订单金额比例'}</span>
+              return <span>{moment(row.update_time * 1000).format('YYYY-MM-DD HH:mm:ss')}</span>
             }
           }
         ],
@@ -162,27 +167,32 @@ export default {
             key: 'detail',
             type: 'button',
             buttonType: 'text',
+            visible: (row) => {
+              return row.check_status == '0'
+            },
             action: {
               handler: ([row]) => {
-                this.operator_id = row.operator_id
-                this.relDistributors = []
                 this.editTitle = '转账确认审核'
+                this.getItemDetail(row)
                 this.deliveryman = true
-                this.addForm = {
-                  username: row.username,
-                  operator_type: row.operator_type,
-                  distributor_name: row.distributor_name,
-                  staff_type: row.staff_type,
-                  staff_no: row.staff_no,
-                  staff_attribute: row.staff_attribute,
-                  payment_method: row.payment_method,
-                  payment_fee: row.payment_method == 'order' ? Number(row.payment_fee) / 100 : 0.01,
-                  payment_fee1: row.payment_method == 'order' ? 1 : Number(row.payment_fee) / 100,
-                  mobile: row.mobile,
-                  distributor_ids: [],
-                  password: ''
-                }
-                this.relDistributors = row.staff_type == 'distributor' ? row.distributor_ids : []
+                this.isLook = false
+              }
+            }
+          },
+          {
+            name: '详情',
+            key: 'detail',
+            type: 'button',
+            buttonType: 'text',
+            visible: (row) => {
+              return row.check_status != '0'
+            },
+            action: {
+              handler: ([row]) => {
+                this.editTitle = '转账审核详情'
+                this.getItemDetail(row)
+                this.deliveryman = true
+                this.isLook = true
               }
             }
           },
@@ -192,51 +202,65 @@ export default {
             type: 'button',
             buttonType: 'text',
             action: {
-              handler: async ([row]) => {}
+              handler: async ([row]) => {
+                this.$router.push('/financial/examine/transfer/logs')
+              }
             }
           }
         ]
       },
 
       addForm: {
-        operator_type: 'self_delivery_staff',
-        distributor_name: '',
-        staff_type: 'platform',
-        staff_no: '',
-        staff_attribute: 'part_time',
-        payment_method: 'order',
-        payment_fee: 0.01,
-        payment_fee1: 1,
-        mobile: '',
-        password: '',
-        distributor_ids: []
+        id:'',
+        order_id:'',
+        pay_fee:0,
+        check_status: '1',
+        remark: '',
       },
       addFormList: [
         {
           component: () => (
             <div>
               <el-descriptions title='用户信息'>
-                <el-descriptions-item label='订单号'>kooriookami</el-descriptions-item>
-                <el-descriptions-item label='订单金额'>18100000000</el-descriptions-item>
-                <el-descriptions-item label='订单状态'>苏州市</el-descriptions-item>
-                <el-descriptions-item label='运费'>kooriookami</el-descriptions-item>
-                <el-descriptions-item label='订单备注'>18100000000</el-descriptions-item>
-                <el-descriptions-item label='收货地址'>苏州市</el-descriptions-item>
-                <el-descriptions-item label='收货人'>苏州市</el-descriptions-item>
+                <el-descriptions-item label='订单号'>{this.itemInfo?.order_info?.order_id}</el-descriptions-item>
+                <el-descriptions-item label='订单金额'>{(this.itemInfo?.order_info?.total_fee / 100).toFixed(2)}</el-descriptions-item>
+                <el-descriptions-item label='订单状态'>{this.itemInfo?.order_info?.order_status_msg}</el-descriptions-item>
+                <el-descriptions-item label='运费'>{(this.itemInfo?.order_info?.freight_fee /100).toFixed(2)}</el-descriptions-item>
+                <el-descriptions-item label='订单备注'>{this.itemInfo?.order_info?.remark}</el-descriptions-item>
+                <el-descriptions-item label='收货人'>{this.itemInfo?.order_info?.receiver_name}</el-descriptions-item>
+                <el-descriptions-item label='收货地址'>{this.itemInfo?.order_info?.receiver_state}{this.itemInfo?.order_info?.receiver_city}{this.itemInfo?.order_info?.receiver_district}{this.itemInfo?.order_info?.receiver_address}</el-descriptions-item>
+
               </el-descriptions>
-              <el-descriptions title='收款账户信息' column='2'>
-                <el-descriptions-item label='收款账户名'>kooriookami</el-descriptions-item>
-                <el-descriptions-item label='收款银行名称'>18100000000</el-descriptions-item>
-                <el-descriptions-item label='收款银行账号'>苏州市</el-descriptions-item>
-                <el-descriptions-item label='收款银联号'>kooriookami</el-descriptions-item>
+              <el-descriptions title='收款账户信息' column={2}>
+                <el-descriptions-item label='收款账户名'>{this.itemInfo?.bank_account_name}</el-descriptions-item>
+                <el-descriptions-item label='收款银行名称'>{this.itemInfo?.bank_name}</el-descriptions-item>
+                <el-descriptions-item label='收款银行账号'>{this.itemInfo?.bank_account_no}</el-descriptions-item>
+                <el-descriptions-item label='收款银联号'>{this.itemInfo?.china_ums_no}</el-descriptions-item>
               </el-descriptions>
-              <el-descriptions title='付款账户信息' column='2'>
-                <el-descriptions-item label='付款银行'>kooriookami</el-descriptions-item>
-                <el-descriptions-item label='付款卡号'>18100000000</el-descriptions-item>
-                <el-descriptions-item label='付款账户名'>苏州市</el-descriptions-item>
-                <el-descriptions-item label='订单支付金额'>kooriookami</el-descriptions-item>
-                <el-descriptions-item label='凭证图片集合'>18100000000</el-descriptions-item>
-                <el-descriptions-item label='支付备注'>苏州市</el-descriptions-item>
+              <el-descriptions title='付款账户信息' column={2}>
+                <el-descriptions-item label='付款银行'>{this.itemInfo?.pay_account_bank}</el-descriptions-item>
+                <el-descriptions-item label='付款卡号'>{this.itemInfo?.pay_account_no}</el-descriptions-item>
+                <el-descriptions-item label='付款账户名'>{this.itemInfo?.bank_name}</el-descriptions-item>
+                <el-descriptions-item label='订单支付金额'>{(this.itemInfo?.pay_fee / 100).toFixed(2)}</el-descriptions-item>
+                <el-descriptions-item label='凭证图片集合' span={3}>
+                  {/* {
+                    Array.isArray(this.itemInfo?.voucher_pic) && this.itemInfo?.voucher_pic.length > 0 && (
+                      this.itemInfo?.voucher_pic.map(urlitem=>(
+                        <SpImage
+                          src={urlitem}
+                          width="48"
+                          height="48"
+                        />
+                      ))
+                    )
+                  } */}
+                  <SpImage
+                    src={this.itemInfo?.voucher_pic}
+                    width="60"
+                    height="60"
+                  />
+                </el-descriptions-item>
+                <el-descriptions-item label='支付备注'>{this.itemInfo?.transfer_remark}</el-descriptions-item>
               </el-descriptions>
               <div class='modal-header el-descriptions__title'>订单信息</div>
             </div>
@@ -244,33 +268,41 @@ export default {
         },
         {
           label: '审核',
-          key: 'staff_type',
+          key: 'check_status',
           type: 'radio',
           required: true,
           options: [
             {
-              label: 'platform',
+              label: '1',
               name: '审核通过'
             },
             {
-              label: 'distributor',
+              label: '2',
               name: '审核拒绝'
             }
           ]
         },
         {
           label: '审核备注',
-          key: 'username',
+          key: 'remark',
           type: 'textarea',
           maxlength: 500,
-          required: true,
-          message: '审核备注不能为空'
+          required: false,
+
         }
       ]
     }
   },
   computed: {},
-  watch: {},
+  watch: {
+    'addForm.check_status'(val){
+      if (val == '1') {
+        this.addFormList[2].required = false
+      } else {
+        this.addFormList[2].required = true
+      }
+    }
+  },
   mounted() {},
   methods: {
     onSearch() {
@@ -279,81 +311,71 @@ export default {
     beforeSearch(params) {
       const _params = {
         ...params,
-        ...this.params
+        ...this.params,
+        // ...this.dateTransfer(this.params.create_time),
+        begin_date:this.params.create_time[0],
+        end_date:this.params.create_time[1]
       }
       return _params
     },
     onAddCancel() {
       this.deliveryman = false
     },
-
+    dateStrToTimeStamp(str) {
+      return Date.parse(new Date(str)) / 1000
+    },
+    dateTransfer(val) {
+      let time_start_begin = undefined
+      let time_start_end = undefined
+      if (val.length > 0) {
+        time_start_begin = this.dateStrToTimeStamp(val[0] + ' 00:00:00')
+        time_start_end = this.dateStrToTimeStamp(val[1] + ' 23:59:59')
+      }
+      return {
+        time_start_begin,
+        time_start_end
+      }
+    },
+    async getItemDetail({id}){
+      const res = await this.$api.trade.getOffLineInfo({id})
+      this.itemInfo = res
+      this.addForm = {
+        ...this.addForm,
+        id,
+        order_id:res?.order_info?.order_id,
+        pay_fee:res?.pay_fee
+      }
+      if(this.isLook){
+        this.addForm.check_status = res.check_status+''
+        this.addForm.remark = res.remark
+      }else{
+        this.addForm.check_status = '1'
+        this.addForm.remark = ''
+      }
+    },
+    getCheckStatusLabel(status){
+      return this.checkStatusOptions.find(item=>item.value == status)?.label
+    },
     async onAddSubmit() {
-      let res = /^(?=.*[a-zA-Z0-9!@#$%^&*()-_+=])[a-zA-Z0-9!@#$%^&*()-_+=]{6,20}$/.test(
-        this.addForm.password
-      )
-      if (this.operator_id) {
-        if (this.addForm.password) {
-          if (!res) {
-            this.$message({
-              type: 'error',
-              message: '密码不能是文字并且至少6位'
-            })
-            return
-          }
-        }
-      } else {
-        if (this.addForm.password) {
-          if (!res) {
-            this.$message({
-              type: 'error',
-              message: '密码不能是文字并且至少6位'
-            })
-            return
-          }
-        } else {
-          this.$message({ type: 'error', message: '请输入密码' })
-          return
-        }
-      }
 
-      if (this.addForm.staff_type == 'distributor' && this.relDistributors.length == 0) {
-        this.$message({ type: 'error', message: '店铺配送员必须关联店铺' })
-        return false
-      }
 
-      if (this.relDistributors.length > 0) {
-        this.addForm.distributor_ids = []
-        this.relDistributors.forEach((distributor) => {
-          this.addForm.distributor_ids.push({
-            name: distributor.name,
-            distributor_id: distributor.distributor_id
-          })
-        })
-      }
-
-      if (this.addForm.staff_type == 'platform') {
-        //平台的后端自己给数据
-        this.addForm.distributor_ids = []
-      }
+      this.confirmStatus = true
 
       let params = {
-        ...this.addForm,
-        payment_fee:
-          this.addForm.payment_method == 'order'
-            ? this.addForm.payment_fee
-            : this.addForm.payment_fee1
+        ...this.addForm
       }
 
-      if (this.operator_id) {
-        await this.$api.company.updateAccountInfo(this.operator_id, params)
-        this.$message.success('编辑成功')
+      console.log('params',params)
+
+      // return
+      try {
+        await this.$api.trade.offlineCheck(params)
+        this.$message.success('审核成功')
         this.deliveryman = false
+        this.confirmStatus = false
         this.onSearch()
-      } else {
-        await this.$api.company.createAccount(this.addForm)
-        this.$message.success('保存成功')
-        this.deliveryman = false
-        this.onSearch()
+      } catch (error) {
+        this.confirmStatus = false
       }
     },
     async addDistributoreAction() {

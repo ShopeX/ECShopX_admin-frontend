@@ -41,7 +41,14 @@ export default {
     {
       path: 'examine/transfer',
       name: `转账审核`,
-      component: () => import('@/view/mall/trade/examineTransfer')
+      component: () => import('@/view/mall/trade/examineTransfer'),
+      children: [
+        {
+          path: 'logs/:id?',
+          // path: 'logs',
+          component: () => import('@/view/mall/trade/examineTransferLogs')
+        }
+      ]
     },
 
     {

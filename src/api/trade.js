@@ -644,5 +644,13 @@ export function exportOffline(params) {
   })
 }
 
+export function getBankList(params) {
+  return fetch({
+    url: '/espier/offline/backaccount/lists',
+    method: 'get',
+    params
+  })
+}
+
 
 

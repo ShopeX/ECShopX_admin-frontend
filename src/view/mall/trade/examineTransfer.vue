@@ -5,10 +5,9 @@
         <SpFilterFormItem prop="bank_account_name" label="收款账户名:">
           <el-input v-model="params.bank_account_name" placeholder="请输入收款账户名" />
         </SpFilterFormItem>
-        <SpFilterFormItem prop="user_mobile" label="手机号:">
+        <!-- <SpFilterFormItem prop="user_mobile" label="手机号:">
           <el-input v-model="params.user_mobile" placeholder="请输入手机号" />
-        </SpFilterFormItem>
-
+        </SpFilterFormItem> -->
         <SpFilterFormItem prop="order_id" label="订单号:">
           <el-input v-model="params.order_id" placeholder="请输入订单号" />
         </SpFilterFormItem>
@@ -22,12 +21,22 @@
             />
           </el-select>
         </SpFilterFormItem>
-        <SpFilterFormItem prop="pay_account_bank" label="付款账户名:">
+        <SpFilterFormItem prop="bank_name" label="收款银行:">
+          <el-select v-model="params.bank_name">
+            <el-option
+              v-for="item in bankList"
+              :key="item.value"
+              :label="item.label"
+              :value="item.value"
+            />
+          </el-select>
+        </SpFilterFormItem>
+        <!-- <SpFilterFormItem prop="pay_account_bank" label="付款账户名:">
           <el-input v-model="params.pay_account_bank" placeholder="请输入付款账户名" />
         </SpFilterFormItem>
         <SpFilterFormItem prop="pay_account_no" label="付款卡号:">
           <el-input v-model="params.pay_account_no" placeholder="请输入付款卡号" />
-        </SpFilterFormItem>
+        </SpFilterFormItem> -->
         <SpFilterFormItem prop="create_time" label="日期范围:">
           <el-date-picker
             v-model="params.create_time"
@@ -92,8 +101,10 @@ export default {
         check_status: '',
         pay_account_no: '',
         pay_account_bank: '',
-        bank_account_name:''
+        bank_account_name:'',
+        bank_name:''
       },
+      bankList:[],
       downloadView: false,
       downloadUrl: '',
       downloadName: '',
@@ -267,7 +278,7 @@ export default {
                 </el-descriptions-item>
               </el-descriptions>
               <el-descriptions title='付款账户信息' column={2}>
-                <el-descriptions-item label='付款银行'>
+                {/* <el-descriptions-item label='付款银行'>
                   {this.itemInfo?.pay_account_bank}
                 </el-descriptions-item>
                 <el-descriptions-item label='付款卡号'>
@@ -275,17 +286,17 @@ export default {
                 </el-descriptions-item>
                 <el-descriptions-item label='付款账户名'>
                   {this.itemInfo?.bank_name}
-                </el-descriptions-item>
+                </el-descriptions-item> */}
                 <el-descriptions-item label='转账金额'>
                   {(this.itemInfo?.pay_fee / 100).toFixed(2)}
                 </el-descriptions-item>
                 <el-descriptions-item label='交易流水号'>
                   {this.itemInfo?.pay_sn}
                 </el-descriptions-item>
-                <el-descriptions-item label='支付备注'>
+                <el-descriptions-item label='支付备注' span={2}>
                   {this.itemInfo?.transfer_remark}
                 </el-descriptions-item>
-                <el-descriptions-item label='凭证图片集合' span={3}>
+                <el-descriptions-item label='凭证图片集合' span={2}>
                   {Array.isArray(this.itemInfo?.voucher_pic) &&
                     this.itemInfo?.voucher_pic.length > 0 &&
                     this.itemInfo?.voucher_pic.map((urlitem) => (
@@ -338,8 +349,20 @@ export default {
       }
     }
   },
-  mounted() {},
+  mounted() {
+    this.getBankList()
+  },
   methods: {
+    async getBankList(){
+      const {list} = await this.$api.trade.getBankList({
+        page:1,pageSize:999
+      })
+      this.bankList = list.map(item=>({
+        ...item,
+        label:`${item.bank_name}:${item.bank_account_no}`,
+        value:item.bank_name
+      }))
+    },
     onSearch() {
       this.$refs['finder'].refresh()
     },

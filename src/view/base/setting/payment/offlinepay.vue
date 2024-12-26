@@ -179,6 +179,8 @@ export default {
         bank_account_name: '',
         bank_account_no: '',
         bank_name: '',
+        bank_logo:'',
+        remark:'',
         china_ums_no: '',
         is_default: null
       },
@@ -214,6 +216,22 @@ export default {
           type: 'input',
           required: true,
           message: '银联号不能为空'
+        },
+        {
+          label: '银行LOGO',
+          key: 'bank_logo',
+          tip: '支持png、jpg、gif、jpeg等格式文件',
+          required: true,
+          message: '请上传银行LOGO',
+          component: ({ key }, value) => {
+            return <SpImagePicker v-model={value[key]} />
+          }
+        },
+        {
+          label: '备注',
+          key: 'remark',
+          placeholder: '请输入备注',
+          type: 'input',
         },
         {
           label: '是否默认',
@@ -273,6 +291,8 @@ export default {
         bank_account_no: '',
         bank_name: '',
         china_ums_no: '',
+        bank_logo:'',
+        remark:'',
         is_default: null
       }
     },

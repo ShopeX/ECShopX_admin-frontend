@@ -25,9 +25,9 @@
           <el-select v-model="params.bank_name">
             <el-option
               v-for="item in bankList"
-              :key="item.value"
+              :key="item.bank_name"
               :label="item.label"
-              :value="item.value"
+              :value="item.bank_name"
             />
           </el-select>
         </SpFilterFormItem>
@@ -101,10 +101,10 @@ export default {
         check_status: '',
         pay_account_no: '',
         pay_account_bank: '',
-        bank_account_name:'',
-        bank_name:''
+        bank_account_name: '',
+        bank_name: ''
       },
-      bankList:[],
+      bankList: [],
       downloadView: false,
       downloadUrl: '',
       downloadName: '',
@@ -227,7 +227,10 @@ export default {
         order_id: '',
         pay_fee: 0,
         check_status: '1',
-        remark: ''
+        remark: '',
+        bank_account_no: '',
+        bank_name: '',
+        china_ums_no: ''
       },
       addFormList: [
         {
@@ -314,6 +317,55 @@ export default {
           )
         },
         {
+          label: '收款账户名',
+          key: 'bank_account_name',
+          type: 'select',
+          required: true,
+          options: [
+            // { title: '可售', value: 1 },
+            // { title: '不可售', value: 0 }
+          ],
+          onChange: (e) => {
+            const targetItem =  this.bankList.find(item=>item.title == e)
+            this.addForm.bank_account_no = targetItem?.bank_account_no
+            this.addForm.bank_name = targetItem?.bank_name
+            this.addForm.china_ums_no = targetItem?.china_ums_no
+          },
+          validator: (rule, value, callback) => {
+            console.log(value,typeof value,!!value)
+            if (!value) {
+              callback(new Error('收款账户名不能为空'))
+            } else {
+              callback()
+            }
+          }
+        },
+        {
+          label: '收款银行名称',
+
+          component: () => (
+            <span>{this.addForm.bank_account_no}</span>
+          ),
+          display: 'inline'
+        },
+        {
+          label: '收款银行账号',
+          key: 'bank_name',
+          component: () => (
+            <span>{this.addForm.bank_name}</span>
+          ),
+          display: 'inline'
+        },
+        {
+          label: '收款银联号',
+          key: 'china_ums_no',
+          component: () => (
+            <span>{this.addForm.china_ums_no}</span>
+          ),
+          display: 'inline'
+        },
+
+        {
           label: '审核',
           key: 'check_status',
           type: 'radio',
@@ -334,7 +386,8 @@ export default {
           key: 'remark',
           type: 'textarea',
           maxlength: 500,
-          required: false
+          required: false,
+          message:'审核备注不能为空'
         }
       ]
     }
@@ -343,9 +396,9 @@ export default {
   watch: {
     'addForm.check_status'(val) {
       if (val == '1') {
-        this.addFormList[2].required = false
+        this.addFormList[6].required = false
       } else {
-        this.addFormList[2].required = true
+        this.addFormList[6].required = true
       }
     }
   },
@@ -353,15 +406,21 @@ export default {
     this.getBankList()
   },
   methods: {
-    async getBankList(){
-      const {list} = await this.$api.trade.getBankList({
-        page:1,pageSize:999
+    async getBankList() {
+      const { list } = await this.$api.trade.getBankList({
+        page: 1,
+        pageSize: 999
       })
-      this.bankList = list.map(item=>({
+      const _list = list.map((item) => ({
         ...item,
-        label:`${item.bank_name}:${item.bank_account_no}`,
-        value:item.bank_name
+        //搜索银行选项label，bank_name
+        label: `${item.bank_name}:${item.bank_account_no}`,
+        //弹框下拉选项value，title
+        value: item.bank_account_name,
+        title: item.bank_account_name
       }))
+      this.bankList = _list
+      this.addFormList[1].options = _list
     },
     onSearch() {
       this.$refs['finder'].refresh()
@@ -414,6 +473,10 @@ export default {
         this.addForm.check_status = '1'
         this.addForm.remark = ''
       }
+      this.addForm.bank_account_name = res.bank_account_name
+      this.addForm.bank_account_no = res.bank_account_no
+      this.addForm.bank_name= res.bank_name
+      this.addForm.china_ums_no= res.china_ums_no
     },
     getCheckStatusLabel(status) {
       return this.checkStatusOptions.find((item) => item.value == status)?.label

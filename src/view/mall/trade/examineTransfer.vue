@@ -430,7 +430,7 @@ export default {
         },
         {
           label: '收款账户名',
-          key: 'bank_account_name',
+          key: 'bank_account_id',
           type: 'select',
           required: true,
           message: '收款账户名不能为空',
@@ -439,7 +439,7 @@ export default {
             // { title: '不可售', value: 0 }
           ],
           onChange: (e) => {
-            const targetItem = this.bankList.find((item) => item.title == e)
+            const targetItem = this.bankList.find((item) => item.id == e)
             this.addForm.bank_account_no = targetItem?.bank_account_no
             this.addForm.bank_name = targetItem?.bank_name
             this.addForm.china_ums_no = targetItem?.china_ums_no
@@ -515,7 +515,7 @@ export default {
         //搜索银行选项label，bank_name
         label: `${item.bank_name}:${item.bank_account_no}`,
         //弹框下拉选项value，title
-        value: item.bank_account_name,
+        value: item.id,
         title: item.bank_account_name
       }))
       this.bankList = _list
@@ -572,7 +572,7 @@ export default {
         this.addForm.check_status = '1'
         this.addForm.remark = ''
       }
-      this.addForm.bank_account_name = res.bank_account_name
+      this.addForm.bank_account_id = res.bank_account_id
       this.addForm.bank_account_no = res.bank_account_no
       this.addForm.bank_name = res.bank_name
       this.addForm.china_ums_no = res.china_ums_no

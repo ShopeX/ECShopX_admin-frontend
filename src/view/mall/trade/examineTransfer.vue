@@ -448,13 +448,13 @@ export default {
         {
           label: '收款银行名称',
 
-          component: () => <span>{this.addForm.bank_account_no || '-'}</span>,
+          component: () => <span>{this.addForm.bank_name|| '-'}</span>,
           display: 'inline'
         },
         {
           label: '收款银行账号',
           key: 'bank_name',
-          component: () => <span>{this.addForm.bank_name || '-'}</span>,
+          component: () => <span>{this.addForm.bank_account_no || '-'}</span>,
           display: 'inline'
         },
         {

@@ -612,7 +612,7 @@ export default {
           key: 'pickupcode',
           type: 'input',
           placeholder: '请输入提货码',
-          required: true,
+          // required: true,
           message: '不能为空',
           isShow: ()=>{
             return this.params.order_class != 'community'
@@ -991,6 +991,7 @@ export default {
       this.fetchList()
     },
     async deliverGoodsSubmit() {
+      console.log('kkkkk11111')
       const { order_id, delivery_type, delivery_corp, delivery_code, type, items } =
         this.deliverGoodsForm
       let params = {

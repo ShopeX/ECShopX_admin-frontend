@@ -1462,10 +1462,10 @@ export default {
           }
           //待自提
           if (order_status == 'PAYED' && receipt_type == 'ziti' && ziti_status == 'PENDING' ) {
-              //商家自提订单只有在店铺端
-              if((order_holder == 'distributor' && IS_DISTRIBUTOR()) || (IS_ADMIN() && order_holder != 'distributor')){
+              //商家自提订单只有在店铺端（暂时与后端商量是去除这个判断，后续有问题在看具体怎么处理）
+              // if((order_holder == 'distributor' && IS_DISTRIBUTOR()) || (IS_ADMIN() && order_holder != 'distributor')){
                 actionBtns.push({ name: '核销', key: 'writeOff' })
-              }
+              // }
           }
 
           if (

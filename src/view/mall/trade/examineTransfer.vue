@@ -192,11 +192,11 @@ export default {
           { name: '收款银行名称', key: 'bank_name', width: 110 },
           { name: '收款银行账号', key: 'bank_account_no', width: 110 },
           {
-            name: '转账金额',
+            name: '订单总金额',
             width: 110,
-            key: 'pay_fee',
+            key: 'total_fee',
             render: (h, { row }) => {
-              return <span>¥{(row.pay_fee / 100).toFixed(2)}</span>
+              return <span>¥{(row.total_fee / 100).toFixed(2)}</span>
             }
           },
           { name: '订单编号', key: 'order_id', width: 150 },

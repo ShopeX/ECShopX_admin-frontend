@@ -179,7 +179,7 @@
           <el-button type="primary" plain icon="el-plus-circle"> 导出 </el-button>
         </export-tip>
 
-        <el-button v-if="!VERSION_IN_PURCHASE" type="primary" plain @click="chiefupload">
+        <el-button v-if="!VERSION_IN_PURCHASE && !IS_DISTRIBUTOR" type="primary" plain @click="chiefupload">
           团长导入
         </el-button>
       </div>

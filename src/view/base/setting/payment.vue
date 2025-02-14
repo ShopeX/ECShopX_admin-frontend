@@ -19,10 +19,12 @@
       <el-tab-pane label="银联商务支付配置" name="chinaumspay">
         <chinaumspayTemplates />
       </el-tab-pane>
+      <el-tab-pane label="线下转帐" name="offline">
+        <offlinePay />
+      </el-tab-pane>
       <el-tab-pane label="默认积分抵扣配置" name="point">
         <pointpay />
       </el-tab-pane>
-
     </el-tabs>
   </div>
 </template>
@@ -34,6 +36,7 @@ import hfpayTemplates from './payment/hfpay'
 import adapayTemplates from './payment/adapay'
 import chinaumspayTemplates from './payment/chinaumspay'
 import pointpay from './payment/pointpay'
+import offlinePay from './payment/offlinepay'
 
 import { hfpayVersionStatus } from '@/api/fenzhang'
 
@@ -45,7 +48,8 @@ export default {
     hfpayTemplates,
     adapayTemplates,
     chinaumspayTemplates,
-    pointpay
+    pointpay,
+    offlinePay
   },
   data() {
     return {

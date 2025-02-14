@@ -7,63 +7,31 @@
       border
       :height="wheight - 170"
     >
-      <el-table-column
-        width="50"
-        prop="template_id"
-        label="ID"
-      />
-      <el-table-column
-        width="150"
-        prop="name"
-        label="运费模板名称"
-      />
-      <el-table-column
-        width="200"
-        label="配送地区"
-      >
+      <el-table-column width="50" prop="template_id" label="ID" />
+      <el-table-column width="150" prop="name" label="运费模板名称" />
+      <el-table-column width="200" label="配送地区">
         <template slot-scope="scope">
           {{ scope.row.area | formatCityData(district) }}
         </template>
       </el-table-column>
-      <el-table-column
-        prop="up"
-        label="货款下限(元)"
-      />
-      <el-table-column
-        prop="down"
-        label="货款上限(元)"
-      />
-      <el-table-column
-        prop="basefee"
-        label="运费"
-      />
-      <el-table-column
-        width="70"
-        label="状态"
-      >
+      <el-table-column prop="up" label="金额下限(元)" />
+      <el-table-column prop="down" label="金额上限(元)" />
+      <el-table-column prop="basefee" label="运费" />
+      <el-table-column width="70" label="状态">
         <template slot-scope="scope">
           <span v-if="scope.row.status == true">启用</span>
           <span v-else>关闭</span>
         </template>
       </el-table-column>
-      <el-table-column
-        width="120"
-        label="最后修改时间"
-      >
+      <el-table-column width="120" label="最后修改时间">
         <template slot-scope="scope">
           <span>{{ scope.row.updated_at | datetime('YYYY-MM-DD') }}</span>
         </template>
       </el-table-column>
-      <el-table-column
-        label="操作"
-        width="100"
-      >
+      <el-table-column label="操作" width="100">
         <template slot-scope="scope">
           <div class="operating-icons">
-            <i
-              class="iconfont icon-edit1"
-              @click="editTemplatesAction(scope.$index, scope.row)"
-            />
+            <i class="iconfont icon-edit1" @click="editTemplatesAction(scope.$index, scope.row)" />
             <i
               class="mark iconfont icon-trash-alt1"
               @click="deleteTemplatesAction(scope.$index, scope.row)"
@@ -72,10 +40,7 @@
         </template>
       </el-table-column>
     </el-table>
-    <div
-      v-if="total_count > params.pageSize"
-      class="content-center content-top-padded"
-    >
+    <div v-if="total_count > params.pageSize" class="content-center content-top-padded">
       <el-pagination
         layout="prev, pager, next"
         :current-page.sync="params.page"
@@ -93,7 +58,7 @@ import { getShippingTemplatesList, deleteShippingTemplates } from '../../../../.
 import { getAddress } from '../../../../../api/common'
 export default {
   props: ['getStatus'],
-  data () {
+  data() {
     return {
       district: {},
       loading: false,
@@ -112,21 +77,21 @@ export default {
     ...mapGetters(['wheight'])
   },
   watch: {
-    getStatus (val) {
+    getStatus(val) {
       if (val) {
         this.getShippingTemplatesList()
       }
     }
   },
-  mounted () {
+  mounted() {
     this.getAddress()
     this.getShippingTemplatesList()
   },
   methods: {
-    handleCurrentChange (pageNum) {
+    handleCurrentChange(pageNum) {
       this.params.page = pageNum
     },
-    getShippingTemplatesList () {
+    getShippingTemplatesList() {
       this.loading = true
       getShippingTemplatesList(this.params).then((response) => {
         this.priceTemplatesList = []
@@ -165,10 +130,10 @@ export default {
         this.loading = false
       })
     },
-    editTemplatesAction (index, row) {
+    editTemplatesAction(index, row) {
       this.$router.push({ path: this.matchHidePage('editor/') + row.template_id })
     },
-    deleteTemplatesAction (index, row) {
+    deleteTemplatesAction(index, row) {
       this.$confirm('此操作将删除该运费模板, 是否继续?', '提示', {
         confirmButtonText: '确定',
         cancelButtonText: '取消',
@@ -191,7 +156,7 @@ export default {
           })
         })
     },
-    objectSpanMethod ({ row, column, rowIndex, columnIndex }) {
+    objectSpanMethod({ row, column, rowIndex, columnIndex }) {
       var arrCol = [0, 1, 6, 7, 8]
       if (arrCol.indexOf(columnIndex) > -1) {
         if (row.count > 0) {
@@ -207,7 +172,7 @@ export default {
         }
       }
     },
-    getAddress () {
+    getAddress() {
       getAddress().then((res) => {
         this.district = res.data.data
       })

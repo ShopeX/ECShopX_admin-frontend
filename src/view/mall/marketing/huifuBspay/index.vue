@@ -87,6 +87,12 @@
               <div class="cus-row-time">
                 <span>申请时间：{{ item.created ? createTimeFilter(item.created) : '-' }}</span>
                 <span>所属地区：{{ item.address || '-' }}</span>
+                <span
+                  >所属来源：
+                  <span v-if="item.operator_type === 'supplier'">供应商</span>
+                  <span v-if="item.operator_type === 'distributor'">店铺</span>
+                  <span v-if="item.operator_type === 'merchant'">商户</span>
+                </span>
               </div>
             </el-col>
             <el-col :span="5">
@@ -255,6 +261,9 @@ export default {
     &-time {
       margin-top: 30px;
       :nth-child(2) {
+        margin-left: 60px;
+      }
+      :nth-child(3) {
         margin-left: 60px;
       }
     }

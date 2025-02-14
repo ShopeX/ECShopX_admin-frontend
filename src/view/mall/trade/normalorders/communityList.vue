@@ -425,7 +425,6 @@ export default {
       params: {
         mobile: '',
         order_id: '',
-
         salesman_mobile: '',
         receipt_type: '', // 配送类型
         source: '', // 订单来源
@@ -609,12 +608,15 @@ export default {
           ]
         },
         {
-          label: '提货码:',
+          label: '提货码',
           key: 'pickupcode',
           type: 'input',
           placeholder: '请输入提货码',
-          required: true,
-          message: '不能为空'
+          // required: true,
+          message: '不能为空',
+          isShow: () => {
+            return this.params.order_class != 'community'
+          }
         }
       ],
       writeOffForm: {
@@ -989,6 +991,7 @@ export default {
       this.fetchList()
     },
     async deliverGoodsSubmit() {
+      console.log('kkkkk11111')
       const { order_id, delivery_type, delivery_corp, delivery_code, type, items } =
         this.deliverGoodsForm
       let params = {

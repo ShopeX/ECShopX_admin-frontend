@@ -178,8 +178,18 @@
         <export-tip @exportHandle="exportData">
           <el-button type="primary" plain icon="el-plus-circle"> 导出 </el-button>
         </export-tip>
-
-        <el-button v-if="!VERSION_IN_PURCHASE" type="primary" plain @click="chiefupload">
+        <!-- X：平台和店铺，会员里都有“团长导入”
+        云店：平台有，店铺没有 -->
+        <el-button
+          v-if="
+            (VERSION_PLATFORM && IS_ADMIN()) ||
+            (VERSION_PLATFORM && IS_DISTRIBUTOR()) ||
+            (VERSION_STANDARD && IS_ADMIN())
+          "
+          type="primary"
+          plain
+          @click="chiefupload"
+        >
           团长导入
         </el-button>
       </div>

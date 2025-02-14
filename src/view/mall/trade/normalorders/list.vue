@@ -37,7 +37,11 @@
           />
         </el-select>
       </SpFilterFormItem>
-      <SpFilterFormItem prop="supplier_name"  v-if="VERSION_STANDARD || IS_ADMIN()" label="来源供应商:">
+      <SpFilterFormItem
+        v-if="VERSION_STANDARD || IS_ADMIN()"
+        prop="supplier_name"
+        label="来源供应商:"
+      >
         <el-input v-model="params.supplier_name" placeholder="来源供应商" />
       </SpFilterFormItem>
       <SpFilterFormItem v-if="!VERSION_IN_PURCHASE" prop="order_class" label="订单类型:">
@@ -111,10 +115,7 @@
         />
       </SpFilterFormItem>
       <!-- v-if="!VERSION_STANDARD && !VERSION_IN_PURCHASE" -->
-      <SpFilterFormItem
-        prop="order_holder"
-        label="订单分类:"
-      >
+      <SpFilterFormItem prop="order_holder" label="订单分类:">
         <el-select v-model="params.order_holder" clearable placeholder="请选择">
           <el-option
             v-for="item in orderCategory"
@@ -155,7 +156,6 @@
         </el-select>
       </SpFilterFormItem>
     </SpFilterForm>
-
 
     <div class="action-container">
       <el-dropdown>
@@ -199,7 +199,7 @@
       >
         <el-button type="primary" plain> 批量取消 </el-button>
       </el-upload>
-       <!-- v-if="IS_DISTRIBUTOR() || IS_MERCHANT()" -->
+      <!-- v-if="IS_DISTRIBUTOR() || IS_MERCHANT()" -->
       <el-button type="primary" plain @click="assignPersonnel(true)"> 分配配送员 </el-button>
       <!-- <el-upload
         action=""
@@ -209,7 +209,7 @@
         :show-file-list="false"
       > -->
       <!-- v-if="IS_DISTRIBUTOR || IS_ADMIN" -->
-        <el-button  type="primary" plain @click="assignPersonnel(false)"> 取消配送 </el-button>
+      <el-button type="primary" plain @click="assignPersonnel(false)"> 取消配送 </el-button>
       <!-- </el-upload> -->
     </div>
 
@@ -220,7 +220,12 @@
         :label="item.title"
         :name="item.value"
       />
-      <el-table v-loading="loading" border :data="tableList" @selection-change="handleSelectionChange">
+      <el-table
+        v-loading="loading"
+        border
+        :data="tableList"
+        @selection-change="handleSelectionChange"
+      >
         <el-table-column width="180" prop="order_id" label="订单号">
           <template slot-scope="scope">
             <div class="order-num">
@@ -257,14 +262,9 @@
         <!--            {{ scope.row.supplier_info.username }}-->
         <!--          </template>-->
         <!--        </el-table-column>-->
-        <el-table-column
-          width="120"
-          label="订单分类"
-          header-align="center"
-          prop="order_holder"
-        >
-        <template slot-scope="scope">
-            {{  getOrderCategoryName(scope.row.order_holder) }}
+        <el-table-column width="120" label="订单分类" header-align="center" prop="order_holder">
+          <template slot-scope="scope">
+            {{ getOrderCategoryName(scope.row.order_holder) }}
           </template>
         </el-table-column>
         <el-table-column
@@ -309,9 +309,8 @@
         <el-table-column prop="mobile" label="业务员">
           <template slot-scope="scope">
             <div class="order-num">
-
-            {{ scope.row.salesman_mobile }}
-            <el-tooltip
+              {{ scope.row.salesman_mobile }}
+              <el-tooltip
                 v-if="datapass_block == 0"
                 effect="dark"
                 content="复制"
@@ -322,11 +321,11 @@
                   v-clipboard:success="onCopySuccess"
                   class="el-icon-document-copy"
                 />
-            </el-tooltip>
-          </div>
+              </el-tooltip>
+            </div>
             <div class="order-num">
-            {{ scope.row.salesman_name }}
-            <el-tooltip
+              {{ scope.row.salesman_name }}
+              <el-tooltip
                 v-if="datapass_block == 0"
                 effect="dark"
                 content="复制"
@@ -337,10 +336,9 @@
                   v-clipboard:success="onCopySuccess"
                   class="el-icon-document-copy"
                 />
-            </el-tooltip>
-          </div>
+              </el-tooltip>
+            </div>
           </template>
-
         </el-table-column>
         <el-table-column prop="mobile" label="客户手机号">
           <template slot-scope="scope">
@@ -392,9 +390,8 @@
             </template>
           </template>
         </el-table-column>
-        <el-table-column prop="distributor_name" label="来源店铺" >
-      </el-table-column>
-      <!-- <el-table-column prop="supplier_name" v-if="VERSION_STANDARD || IS_ADMIN()" label="来源供应商" >
+        <el-table-column prop="distributor_name" label="来源店铺" />
+        <!-- <el-table-column prop="supplier_name" v-if="VERSION_STANDARD || IS_ADMIN()" label="来源供应商" >
       </el-table-column> -->
         <!-- <el-table-column prop="receiver_name" label="收货人" /> -->
         <template v-if="login_type != 'merchant'">
@@ -645,7 +642,7 @@ export default {
         order_holder: '', // 订单分类
         distributor_id: '', // 店铺
         subDistrict: [],
-        salespersonname:''
+        salespersonname: ''
       },
       deliveryPersonnel: [], //配送员信息
       datapass_block: 1, // 是否为数据脱敏
@@ -659,7 +656,9 @@ export default {
         : ORDER_STATUS,
       orderType: this.VERSION_STANDARD ? ORDER_TYPE_STANDARD : ORDER_TYPE,
       invoiceStatus: INVOICE_STATUS,
-      orderCategory: this.VERSION_STANDARD ? ORDER_CATEGORY.filter(item=>item.value != 'distributor') :  ORDER_CATEGORY,
+      orderCategory: this.VERSION_STANDARD
+        ? ORDER_CATEGORY.filter((item) => item.value != 'distributor')
+        : ORDER_CATEGORY,
       pickerOptions: PICKER_DATE_OPTIONS,
       orderSourceList: [],
       remarkDialog: false,
@@ -807,18 +806,32 @@ export default {
           type: 'table',
           options: [
             { title: '商品名', key: 'item_name' },
-            { title: '商品类型', key: 'item_holder',render: (row, column, cell) => {
+            {
+              title: '商品类型',
+              key: 'item_holder',
+              render: (row, column, cell) => {
                 return this.goodCategoryMap[row.item_holder]
-            } },
-            { title: '来源供应商', key: 'supplier_name', width: 100,isShow: ({ key }, value) => {
-            return this.VERSION_STANDARD || this.IS_ADMIN()
-          }, },
+              }
+            },
+            {
+              title: '来源供应商',
+              key: 'supplier_name',
+              width: 100,
+              isShow: ({ key }, value) => {
+                return this.VERSION_STANDARD || this.IS_ADMIN()
+              }
+            },
             { title: '数量', key: 'num', width: 60 },
             { title: '已发货数量', key: 'delivery_item_num', width: 100 },
             { title: '总支付价（¥）', key: 'price', width: 120 },
-            { title: '成本价（¥）', key: 'cost_price', width: 100,render: (row, column, cell) => {
-              return row.cost_price / 100
-            } },
+            {
+              title: '成本价（¥）',
+              key: 'cost_price',
+              width: 100,
+              render: (row, column, cell) => {
+                return row.cost_price / 100
+              }
+            },
             {
               title: '发货数量',
               key: 'item_num',
@@ -969,7 +982,7 @@ export default {
         pickupcode: '',
         items: []
       },
-      goodCategoryMap:GOOD_CATEGORY_MAP,
+      goodCategoryMap: GOOD_CATEGORY_MAP,
       refundDialog: false,
       refundFormList: [
         {
@@ -1001,20 +1014,16 @@ export default {
           label: '是否退运费',
           key: 'freight_fee',
           type: 'text',
-          component: ({ key }, value) =>{
-            return (
-            <div>{value[key] > 0 ? '是' : '否'}</div>
-            )
+          component: ({ key }, value) => {
+            return <div>{value[key] > 0 ? '是' : '否'}</div>
           }
         },
         {
           label: '退运费金额',
           key: 'freight_fee',
           type: 'text',
-          component: ({ key }, value) =>{
-            return (
-            <div>{value[key] >0? value[key] / 100 :0}</div>
-            )
+          component: ({ key }, value) => {
+            return <div>{value[key] > 0 ? value[key] / 100 : 0}</div>
           }
         },
         {
@@ -1048,7 +1057,7 @@ export default {
           key: 'shop_reject_reason',
           type: 'input',
           placeholder: '请输入拒绝原因',
-          isShow: ()=>{
+          isShow: () => {
             return this.refundForm.check_cancel == '0'
           },
           validator: (rule, value, callback) => {
@@ -1328,7 +1337,8 @@ export default {
         return this.$message.error('请选择一个订单！')
       }
 
-      const { order_id, self_delivery_status, distributor_id,self_delivery_operator_id } = this.selectList[0]
+      const { order_id, self_delivery_status, distributor_id, self_delivery_operator_id } =
+        this.selectList[0]
 
       if (!val) {
         // 已接单，配送中才能取消配送
@@ -1340,7 +1350,7 @@ export default {
         // if (!['CONFIRMING', 'PACKAGED'].includes(self_delivery_status)) {
         //   return this.$message.error('该订单无法分配配送员！')
         // }
-        if(self_delivery_operator_id != 0){
+        if (self_delivery_operator_id != 0) {
           return this.$message.error('该订单无法分配配送员！')
         }
       }
@@ -1439,7 +1449,11 @@ export default {
         const isLogistics = receipt_type == 'logistics'
         const isSelfDelivery = receipt_type == 'merchant'
 
-        if ( (receipt_type == 'ziti' || (VERSION_STANDARD || distributor_id == 0) && order_holder != 'supplier') || this.login_type == 'distributor') {
+        if (
+          receipt_type == 'ziti' ||
+          ((VERSION_STANDARD || distributor_id == 0) && order_holder != 'supplier') ||
+          this.login_type == 'distributor'
+        ) {
           if (
             !isDada &&
             cancel_status == 'NO_APPLY_CANCEL' &&
@@ -1447,25 +1461,26 @@ export default {
             ziti_status != 'DONE'
           ) {
             // 非同城配的取消订单按钮
-            if (!isDada || (isDada && ['0', '1'].includes(dada.data_status)) ) {
-
-              if(receipt_type == 'ziti'){
+            if (!isDada || (isDada && ['0', '1'].includes(dada.data_status))) {
+              if (receipt_type == 'ziti') {
                 //如果是自提，商家订单店铺端才可以取消
-                if((order_holder == 'distributor' && IS_DISTRIBUTOR()) || (IS_ADMIN() && order_holder != 'distributor')){
+                if (
+                  (order_holder == 'distributor' && IS_DISTRIBUTOR()) ||
+                  (IS_ADMIN() && order_holder != 'distributor')
+                ) {
                   actionBtns.push({ name: '取消订单', key: 'cancel' })
                 }
-              }else{
-
+              } else {
                 actionBtns.push({ name: '取消订单', key: 'cancel' })
               }
             }
           }
           //待自提
-          if (order_status == 'PAYED' && receipt_type == 'ziti' && ziti_status == 'PENDING' ) {
-              //商家自提订单只有在店铺端
-              if((order_holder == 'distributor' && IS_DISTRIBUTOR()) || (IS_ADMIN() && order_holder != 'distributor')){
-                actionBtns.push({ name: '核销', key: 'writeOff' })
-              }
+          if (order_status == 'PAYED' && receipt_type == 'ziti' && ziti_status == 'PENDING') {
+            //商家自提订单只有在店铺端（暂时与后端商量是去除这个判断，后续有问题在看具体怎么处理）
+            // if((order_holder == 'distributor' && IS_DISTRIBUTOR()) || (IS_ADMIN() && order_holder != 'distributor')){
+            actionBtns.push({ name: '核销', key: 'writeOff' })
+            // }
           }
 
           if (
@@ -1487,8 +1502,8 @@ export default {
             !isDada &&
             order_status == 'PAYED' &&
             delivery_status != 'DONE' &&
-            receipt_type != 'ziti'
-            && cancel_status != 'WAIT_PROCESS' //待退款不展示发货按钮
+            receipt_type != 'ziti' &&
+            cancel_status != 'WAIT_PROCESS' //待退款不展示发货按钮
             // && this.login_type == 'supplier'
           ) {
             actionBtns.push({ name: '发货', key: 'deliverGoods' })
@@ -1519,7 +1534,7 @@ export default {
           }
 
           actionBtns.push({ name: '备注', key: 'remark' })
-        }else if(order_holder == 'supplier'){
+        } else if (order_holder == 'supplier') {
           //供应商订单有取消和备注
           if (
             !isDada &&
@@ -1555,7 +1570,6 @@ export default {
           }
         }
 
-
         return {
           ...item,
           // cost_fee,
@@ -1571,8 +1585,8 @@ export default {
       console.log(`getSubDistrictList:`, res)
       this.subDistrictList = res
     },
-    getOrderCategoryName(order_holder){
-      return this.orderCategory.find(item=>item.value == order_holder)?.title ?? ''
+    getOrderCategoryName(order_holder) {
+      return this.orderCategory.find((item) => item.value == order_holder)?.title ?? ''
     },
     getOrderType({ order_class, type }) {
       if (order_class == 'normal') {
@@ -1714,7 +1728,6 @@ export default {
           this.deliverGoodsFormList[1].disabled = false
           this.deliverGoodsFormList[2].options[7].isShow = false
         }
-
 
         this.deliverGoodsDialog = true
       } else if (key == 'writeOff') {

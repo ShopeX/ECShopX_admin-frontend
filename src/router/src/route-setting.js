@@ -71,6 +71,11 @@ export default {
       component: () => import('@/view/base/setting/payment')
     },
     {
+      path: 'offlineAccount',
+      name: `线下收款账户`,
+      component: () => import('@/view/base/setting/offlineAccount')
+    },
+    {
       path: 'shopexerp',
       name: `shopexerp`,
       component: () => import('@/view/base/setting/shopexerp')

@@ -959,7 +959,8 @@ export default {
     async getShippingTemplates() {
       const { list } = await this.$api.shipping.getShippingTemplatesList({
         page: 1,
-        pageSize: 99
+        pageSize: 99,
+        status: 1
       })
       if (list.length > 0) {
         this.formList[5].options = list.map((item) => {

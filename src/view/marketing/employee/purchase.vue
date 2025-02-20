@@ -153,6 +153,12 @@ import moment from 'moment'
 export default {
   name: '',
   data() {
+
+    const activePriceList = [
+        { name: '销售价', label: 'price',disabled:true },
+        { name: '市场价', label: 'market_price' },
+        { name: '活动价/到手价', label: 'activity_price' }
+      ]
     return {
       formBase: {
         name: '',
@@ -258,6 +264,7 @@ export default {
         orderMiniAmount: '',
         modifyReceiveAddress: ''
       },
+
       activityRuleList: [
         {
           label: '参与企业',
@@ -474,7 +481,35 @@ export default {
           ),
           disabled: false,
           tip: '请输入大于等于0的整数，从活动结束时间开始开始计算，例如24代表活动结束后24个小时(1天)内买家都可以修改收货地址；活动进行过程中允许买家修改地址'
-        }
+        },
+        {
+          label:'活动价格展示',
+          type: 'group',
+        },
+        {
+          label: '商品列表/商详页面',
+          key: 'modifyReceiveAddress',
+          type: 'checkbox',
+          options: activePriceList
+        },
+        {
+          label: '购物车',
+          key: 'modifyReceiveAddress',
+          type: 'checkbox',
+          options: activePriceList
+        },
+        {
+          label: '订单详情',
+          key: 'modifyReceiveAddress',
+          type: 'checkbox',
+          options: activePriceList
+        },
+        {
+          label: '结算页',
+          key: 'modifyReceiveAddress',
+          type: 'checkbox',
+          options: activePriceList
+        },
       ],
       activityStatus: ''
     }

@@ -82,7 +82,8 @@ export const ORDER_TYPE = [
   { title: '团购订单', value: 'groups' },
   { title: '秒杀订单', value: 'seckill' },
   { title: '普通订单', value: 'normal' },
-  { title: '社区团购订单', value: 'community' }
+  { title: '社区团购订单', value: 'community' },
+  { title: '内购订单', value: 'purchase' }
   // { title: "导购订单", value: "shopguide" },
   // { title: "跨境订单", value: "crossborder" },
   // { title: "助力订单", value: "bargain" },
@@ -97,7 +98,8 @@ export const ORDER_TYPE_STANDARD = [
   { title: '普通订单', value: 'normal' },
   { title: '社区团购订单', value: 'community' },
   { title: '兑换订单', value: 'excard' },
-  { title: '门店订单', value: 'shopadmin' }
+  { title: '门店订单', value: 'shopadmin' },
+  { title: '内购订单', value: 'purchase' }
 ]
 
 export const INVOICE_STATUS = [
@@ -256,6 +258,7 @@ export const LINK_PATH = {
   'link': '页面',
   'marketing': '营销',
   'regactivity': '活动报名',
+  'purchase_activity':'内购活动',
   'seckill': '秒杀',
   'custom_page': '自定义页面',
   'liverooms': '直播',
@@ -291,4 +294,10 @@ export const GOODS_TAX_RATE = [
   { title: '9%', value: 9 },
   { title: '13%', value: 13 },
   { title: '免税', value: 0 }
+]
+
+export const ROLE_LIST = [
+  { label: '普通用户', value: 1 },
+  { label: '企业员工', value: 6 },
+  { label: '员工亲友', value: 9 },
 ]

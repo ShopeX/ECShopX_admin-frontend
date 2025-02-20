@@ -142,6 +142,13 @@
             {{ scope.row.store }}
           </template>
         </el-table-column>
+        <el-table-column prop="price" label="销售（元）" width="120">
+          <template
+            slot-scope="scope"
+          >
+            {{ scope.row.price / 100 }}
+          </template>
+        </el-table-column>
         <el-table-column prop="price" label="商城价格（元）" width="120">
           <template
             v-if="(scope.row.nospec == 'false' && scope.row.is_sku) || scope.row.nospec == 'true'"

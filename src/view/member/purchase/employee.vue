@@ -128,6 +128,10 @@ export default {
             key: 'email'
           },
           {
+            name: '企业ID',
+            key: 'enterprise_name'
+          },
+          {
             name: '企业名称',
             key: 'enterprise_name'
           },

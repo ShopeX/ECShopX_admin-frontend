@@ -25,6 +25,24 @@ export default {
       path: 'Managetag',
       name: `会员标签`,
       component: () => import('@/view/member/members/tags')
+    },
+    {
+      path: 'purchase/employee',
+      name: '员工管理',
+      component: () => import('@/view/member/purchase/employee'),
+      children: [
+        {
+          path: 'import',
+          name: `白名单导入`,
+          component: () => import('@/view/member/purchase/employeeImport')
+        }
+      ]
+    },
+
+    {
+      path: 'purchase/company',
+      name: '企业管理',
+      component: () => import('@/view/member/purchase/company')
     }
   ]
 }

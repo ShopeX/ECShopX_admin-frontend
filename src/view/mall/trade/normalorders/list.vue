@@ -69,6 +69,11 @@
       <SpFilterFormItem prop="salespersonname" label="业务员:">
         <el-input v-model="params.salespersonname" placeholder="请输入业务员" />
       </SpFilterFormItem>
+      <SpFilterFormItem prop="role" label="角色:">
+          <el-select v-model="params.role" placeholder="请选择" clearable>
+            <el-option v-for="item in roleList" :key="item.value" :label="item.label" :value="item.value" />
+          </el-select>
+        </SpFilterFormItem>
       <SpFilterFormItem prop="create_time" label="下单时间:" size="max">
         <el-date-picker
           v-model="params.create_time"
@@ -602,6 +607,7 @@ import {
   IN_PURCHASE_STATUS,
   ORDER_TYPE,
   ORDER_TYPE_STANDARD,
+  ROLE_LIST,
   INVOICE_STATUS,
   ORDER_CATEGORY,
   PICKER_DATE_OPTIONS,
@@ -642,11 +648,13 @@ export default {
         order_holder: '', // 订单分类
         distributor_id: '', // 店铺
         subDistrict: [],
-        salespersonname: ''
+        salespersonname: '',
+        role:''
       },
       deliveryPersonnel: [], //配送员信息
       datapass_block: 1, // 是否为数据脱敏
       subDistrictList: [],
+      roleList:ROLE_LIST,
       distributionType: DISTRIBUTION_TYPE,
       distributionStatus: DISTRIBUTION_STATUS,
       orderStatus: VERSION_B2C

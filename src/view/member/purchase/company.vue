@@ -11,6 +11,13 @@
   }
 }
 </style>
+<style lang="scss" scoped>
+.qurcode-canvas{
+  position: fixed;
+  left: -300%;
+  right: -300%;
+}
+</style>
 <template>
   <div>
     <div class="action-container">
@@ -70,6 +77,21 @@
         <el-button type="primary" @click="handleDownload">下载二维码</el-button>
       </span>
     </el-dialog>
+
+    <SpDialog
+      ref="sendEmailRef"
+      v-model="sendEmailDialog"
+      class="dg-create-company"
+      title="发件测试"
+      confirmBtnText="发送验证码"
+      :confirmStatus="sendEmaiLoading"
+      :modal="false"
+      :form="sendEmailForm"
+      :form-list="sendEmailFormList"
+      @onSubmit="onSendEmailSubmit"
+    />
+
+    <canvas id="qurcodeCanvas" class="qurcode-canvas" />
   </div>
 </template>
 
@@ -101,6 +123,30 @@ export default {
         enterprise_sn: '',
         auth_type: ''
       },
+      sendEmailDialog:false,
+      sendEmaiLoading:false,
+      sendEmailForm:{
+        email:''
+      },
+      sendEmailFormList:[
+        {
+          component:()=>{
+            return  <el-alert
+                      title="请确保填写的邮箱可以正常接受邮件，若五分钟内未收到测试邮件，请检查邮箱配置后再尝试。"
+                      type="warning"
+                      closable={false}>
+                    </el-alert>
+          }
+        },
+      {
+          label: '收件地址',
+          key: 'email',
+          type: 'input',
+          placeholder: '用于接受验证码的邮箱地址',
+          required: true,
+          message: '收件地址不能为空'
+        },
+      ],
       setting: createSetting({
         actions: [
           {
@@ -116,7 +162,7 @@ export default {
             }
           },
           {
-            name: '邮件发送测试',
+            name: '发件测试',
             key: 'modify',
             type: 'button',
             buttonType: 'text',
@@ -125,11 +171,16 @@ export default {
             },
             action: {
               handler: async ([row]) => {
-                await this.$api.member.sendEmployeeEmail({
-                  enterprise_id: row.id,
-                  email: row.email_user
-                })
-                this.$message.success('邮件已发送')
+                this.sendEmailForm = {
+                  email:''
+                }
+                this.sendEmailDialog = true
+
+                // await this.$api.member.sendEmployeeEmail({
+                //   enterprise_id: row.id,
+                //   email: row.email_user
+                // })
+                // this.$message.success('邮件已发送')
               }
             }
           },
@@ -138,6 +189,9 @@ export default {
             key: 'modify',
             type: 'button',
             buttonType: 'text',
+            // visible: (row) => {
+            //   return row.auth_type == 'qrcode'
+            // },
             action: {
               handler: async ([row]) => {
                 const { base64Image } = await this.$api.member.getEnterpriseQrcode({
@@ -280,7 +334,8 @@ export default {
           options: [
             { label: 'mobile', name: '手机号' },
             { label: 'account', name: '账号' },
-            { label: 'email', name: '邮箱' }
+            { label: 'email', name: '邮箱' },
+            { label: 'qrcode', name: '二维码' }
           ],
           validator: (rule, value, callback) => {
             if (value) {
@@ -323,6 +378,28 @@ export default {
           validator
         },
         {
+          label: '员工收件邮箱后缀',
+          key: 'smtp_port',
+          type: 'input',
+          placeholder: '请输入员工收件邮箱后缀',
+          isShow,
+          validator
+        },
+        {
+          label: '企业二维码海报',
+          key: 'logo',
+          component: () => <SpImagePicker v-model={this.companyForm.logo} />,
+          isShow:()=>this.companyForm.auth_type == 'qrcode',
+          validator: (rule, value, callback) => {
+            if (value || this.companyForm.auth_type == 'qrcode') {
+              callback()
+            } else {
+              callback('请选择企业')
+            }
+          },
+          tip: '员工邀请亲友海报：建议上传尺寸300*300且格式为png、jpg图片，文件大小为2M内'
+        },
+        {
           label: '企业Logo',
           key: 'logo',
           component: () => <SpImagePicker v-model={this.companyForm.logo} />,
@@ -342,16 +419,103 @@ export default {
   methods: {
     // 下载二维码
     handleDownload() {
-      var a = document.createElement('a')
-      var temp = this.qrcodeName
-      if (this.qrcodeUrl) {
-        a.href = this.qrcodeUrl
-        a.download = temp + '.png'
-        a.click()
-        setTimeout(() => {
-          this.qrDialog = false
-        },1000)
-      }
+      const canvas = document.getElementById('qurcodeCanvas');
+      const ctx = canvas.getContext('2d');
+
+      // 定义两张图片的 URL
+      const image1Url = 'https://shopex-onex-yundian-image.oss-cn-shanghai.aliyuncs.com/demo-ecshopx/image/38/2025/02/08/1e17de690fa279a22650e4995b2c22f71738993351374.P6123.jpg';
+      const image2Url = 'https://shopex-onex-yundian-image.oss-cn-shanghai.aliyuncs.com/demo-ecshopx/image/38/2024/11/19/a3b4848ceadf59198db8d27bc2c8c2d91732000036513.screenshot_2024-11-19_13-43-11.png';
+
+      // 创建两个 Image 对象
+      const image1 = new Image();
+      const image2 = new Image();
+      console.log('image1',image1.width,image1.height)
+
+      // 当两张图片都加载完成后执行拼接操作
+      Promise.all([
+        new Promise((resolve, reject) => {
+          image1.src = image1Url;
+          // 防止跨域引起的 Failed to execute 'toDataURL' on 'HTMLCanvasElement': Tainted canvases may not be exported.
+          image1.setAttribute('crossOrigin', 'anonymous')
+          image1.onload = () => {
+            resolve();
+          };
+          image1.onerror = reject;
+        }),
+        new Promise((resolve, reject) => {
+          image2.src = image2Url;
+          // 防止跨域引起的 Failed to execute 'toDataURL' on 'HTMLCanvasElement': Tainted canvases may not be exported.
+          image2.setAttribute('crossOrigin', 'anonymous')
+          image2.onload = () => {
+            resolve();
+          };
+          image2.onerror = reject;
+        })
+      ]).then(() => {
+        // 设置 canvas 的宽度和高度为第一张图片的宽度和高度
+        canvas.width = image1.width;
+        canvas.height = image1.height;
+
+        // 在 canvas 上绘制第一张图片
+        ctx.drawImage(image1, 0, 0);
+
+        // 计算第二张图片的绘制位置，使其位于右下角
+        const x = canvas.width - 330;
+        const y = canvas.height - 360;
+
+        // 设置文字样式
+        ctx.font = '20px sans-serif';
+        ctx.fillStyle = '#F3B289';
+        ctx.textAlign = 'center';
+        ctx.textBaseline = 'alphabetic';
+
+        // 计算文字的位置，使其位于第二张图片下方居中
+        const textX = x + 150;
+        const textY = y + 300 + 30; // 30 是文字与图片的间距
+
+        // 确保文字位置在 canvas 范围内
+        if (textX >= 0 && textX <= canvas.width && textY >= 0 && textY <= canvas.height) {
+            // 绘制文字
+            ctx.fillText('扫码进入小程序', textX, textY);
+        } else {
+            console.error('文字位置超出 canvas 范围');
+        }
+
+        const radius = 150; // 半径为宽高的一半
+
+        // 保存当前绘图状态
+        ctx.save();
+
+        // 开始绘制圆角路径
+        ctx.beginPath();
+        ctx.arc(x + radius, y + radius, radius, 0, Math.PI * 2, true);
+        ctx.closePath();
+        ctx.clip();
+
+        // 在 canvas 上绘制第二张图片，位置在右下角，宽高设置为 300，并应用圆角裁剪
+        ctx.drawImage(image2, x, y, 300, 300);
+        ctx.restore();
+
+
+        const link = document.createElement('a');
+        link.href = canvas.toDataURL('image/jpeg');
+        link.download = this.qrcodeName + '.png';
+        link.click();
+
+      }).catch((error) => {
+        console.error('图片加载失败:', error);
+      });
+
+      // var a = document.createElement('a')
+      // var temp = this.qrcodeName
+      // if (this.qrcodeUrl) {
+      //   a.href = this.qrcodeUrl
+      //   a.download = temp + '.png'
+      //   a.click()
+      //   setTimeout(() => {
+      //     this.qrDialog = false
+      //   },1000)
+      // }
     },
     beforeSearch(params) {
       return {
@@ -365,6 +529,10 @@ export default {
     addCompany() {
       this.companyForm = this.$options.data().companyForm
       this.addDialog = true
+    },
+    async onSendEmailSubmit() {
+      console.log(this.sendEmailForm)
+      this.sendEmaiLoading = true
     },
     async onCompanyFormSubmit() {
       const {

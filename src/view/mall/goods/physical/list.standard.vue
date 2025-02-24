@@ -1822,7 +1822,8 @@ export default {
     async getShippingTemplatesList() {
       const { list } = await this.$api.shipping.getShippingTemplatesList({
         page: 1,
-        pageSize: 1000
+        pageSize: 1000,
+        status:1
       })
       this.templatesList = list
     },

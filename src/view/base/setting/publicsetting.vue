@@ -29,7 +29,10 @@ export default {
         dianwu_show_status: false,
         item_page: [0],
         cart_page: [0],
-        order_page: [0]
+        order_page: [0],
+        is_pharma_industry:false,
+        use_third_party_system:false,
+        use_third_party_system_value:'kuaizhen580'
       },
       formList: [
         {
@@ -207,42 +210,29 @@ export default {
         },
         {
           label: '是否为医药行业',
-          key: 'dianwu_show_status',
+          key: 'is_pharma_industry',
           type: 'switch',
           tip: '用于开启医药行业商品与处方药业务',
           // isShow: !VERSION_IN_PURCHASE,
-          onChange: async (e) => {
-            const { dianwu_show_status } = this.form
-            await this.$api.company.setDianwuShowStatus({
-              dianwu_show_status
-            })
-          }
+          onChange: this.primarySetting
         },
         {
           label: '是否继承第三方处方系统',
-          key: 'dianwu_show_status',
+          key: 'use_third_party_system',
           type: 'switch',
           // isShow: !VERSION_IN_PURCHASE,
-          onChange: async (e) => {
-            const { dianwu_show_status } = this.form
-            await this.$api.company.setDianwuShowStatus({
-              dianwu_show_status
-            })
-          }
+          onChange: this.primarySetting
         },
         {
           label: '',
-          key: 'dianwu_show_status',
+          key: 'use_third_party_system_value',
           type: 'radio',
+          isShow:() => this.form.use_third_party_system,
           options: [
             {
-              label: 'part_time',
+              label: 'kuaizhen580',
               name: '580处方业务集成'
             },
-            {
-              label: 'full_time',
-              name: '全职'
-            }
           ],
           // isShow: !VERSION_IN_PURCHASE,
           onChange: async (e) => {
@@ -330,7 +320,9 @@ export default {
         item_sales_status: res.item_sales_setting.item_sales_status,
         invoice_status: res.invoice_setting.invoice_status,
         distributor_param_status: res.share_parameters_setting.distributor_param_status,
-        dianwu_show_status: res.dianwu_setting.dianwu_show_status
+        dianwu_show_status: res.dianwu_setting.dianwu_show_status,
+        is_pharma_industry:res.medicine_setting.is_pharma_industry == '1',
+        use_third_party_system:!!res.medicine_setting.use_third_party_system
       }
       const { cart_page, order_page, item_page } = res.item_price_setting
       if (cart_page.market_price) {
@@ -365,6 +357,13 @@ export default {
         }
       }
       await this.$api.company.saveItemPriceSetting(params)
+    },
+    async primarySetting(){
+      const { is_pharma_industry,use_third_party_system } = this.form
+      await this.$api.company.setPharmaIndustry({
+        is_pharma_industry:is_pharma_industry ? '1' : '0',
+        use_third_party_system:use_third_party_system ? 'kuaizhen580' : ''
+      })
     }
   }
 }

@@ -452,7 +452,7 @@
       <el-dialog title="更改运费模板" :visible.sync="addTemplatesdialogVisible" width="30%">
         <el-select v-model="templates_new_id" placeholder="运费模板" style="width: 100%">
           <el-option
-            v-for="item in templatesList"
+            v-for="item in templatesListavailable"
             :key="item.template_id"
             :label="item.name"
             :value="item.template_id"
@@ -927,6 +927,7 @@ export default {
       goods_id: [],
       templates_new_id: '',
       templatesList: [],
+      templatesListavailable:[],
       category_id: [],
       categoryList: [],
       itemCategoryList: [],
@@ -1825,6 +1826,7 @@ export default {
         pageSize: 1000
       })
       this.templatesList = list
+      this.templatesListavailable = list.filter((item) => item.status)
     },
     getGoodsBranchList(searchVal = '') {
       // this.loading = true

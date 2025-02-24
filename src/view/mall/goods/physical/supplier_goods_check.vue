@@ -474,6 +474,7 @@ export default {
 
       categoryList: [],
       templatesList: [],
+      templatesListavailable:[],
       itemCategoryList: [],
       regions: [],
       showMemberPriceDrawer: false,
@@ -569,7 +570,7 @@ export default {
           key: 'templates_id',
           component: ({ key }, value) => (
             <el-select v-model={value[key]}>
-              {this.templatesList.map((item) => (
+              {this.templatesListavailable.map((item) => (
                 <el-option label={item.name} value={item.template_id} />
               ))}
             </el-select>
@@ -853,6 +854,7 @@ export default {
         pageSize: 1000
       })
       this.templatesList = list
+      this.templatesListavailable = list.filter((item) => item.status)
     },
     async getCategory() {
       //销售分类

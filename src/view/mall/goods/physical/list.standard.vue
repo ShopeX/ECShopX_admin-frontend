@@ -409,8 +409,8 @@
             />
             <el-table-column label="状态" width="100">
               <template slot-scope="scope">
-                <span v-if="scope.row.is_market == '0'">不可售</span>
-                <span v-else>可售</span>
+                <span v-if="scope.row.is_can_sale">可售</span>
+                <span v-else>不可售</span>
               </template>
             </el-table-column>
             <el-table-column label="上下架状态" width="120">

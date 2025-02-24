@@ -296,7 +296,7 @@
             </el-tag>
           </template>
         </el-table-column>
-        <el-table-column width="100" label="操作">
+        <el-table-column width="100" label="操作" fixed="right">
           <template slot-scope="scope">
             <router-link
               :to="{

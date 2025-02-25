@@ -64,7 +64,7 @@ export default {
         }
       })
       console.log(list,'ids')
-      const { data } = await this.$picker.pagesitem({
+      const { data } = await this.$picker.goodsitem({
         data:list
       })
       console.log(data)

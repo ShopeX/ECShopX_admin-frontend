@@ -1,0 +1,4 @@
+FROM registry.cn-zhangjiakou.aliyuncs.com/jst-shopex/openresty:1.19
+WORKDIR /app
+COPY ./dist .
+EXPOSE 80

@@ -215,11 +215,12 @@ export default {
                 this.itemSkuDialog = true
               }
             }
-          }
+          },
         ],
         columns: [
           {
             name: '上下架操作',
+            width: 120,
             render: (h, { row }) =>
               h('el-switch', {
                 props: {

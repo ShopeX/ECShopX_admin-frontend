@@ -694,7 +694,7 @@ export default {
         relative_limitfee: shareLimit * 100,
         minimum_amount: orderMiniAmount * 100,
         close_modify_hours_after_activity: modifyReceiveAddress,
-        price_display_config:this.priceShowData(this.activityRule)
+        price_display_config: JSON.stringify(this.priceShowData(this.activityRule))
       }
       if (relativesDateTime[0]) {
         params = {
@@ -709,12 +709,14 @@ export default {
         }
       }
       const { id } = this.$route.params
+      const resUrl = this.$route.path.split('create')[0] + 'result/'
       if (id) {
         await this.$api.marketing.updatePurchaseActivity(id, params)
-        this.$router.replace({ path: `/marketing/employee/purchase/result/${id}` })
+        this.$router.replace({ path: resUrl + id})
+
       } else {
         const { id: _id } = await this.$api.marketing.createPurchaseActivity(params)
-        this.$router.replace({ path: `/marketing/employee/purchase/result/${_id}` })
+        this.$router.replace({ path: resUrl + _id })
       }
     },
     onRadioChange(e) {

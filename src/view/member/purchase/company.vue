@@ -125,6 +125,7 @@ export default {
     return {
       qrcodeUrl: '',
       qrcodeName: '',
+      qrCodeBgImage:'',
       queryForm: {
         name: '',
         enterprise_sn: '',
@@ -134,7 +135,8 @@ export default {
       sendEmailDialog:false,
       sendEmaiLoading:false,
       sendEmailForm:{
-        email:''
+        email:'',
+        enterprise_id:''
       },
       sendEmailFormList:[
         {
@@ -165,6 +167,7 @@ export default {
             action: {
               handler: async ([row]) => {
                 Object.keys(this.companyForm).forEach((key) => (this.companyForm[key] = row[key]))
+                this.companyForm.is_employee_check_enabled = this.companyForm.is_employee_check_enabled == 'true'
                 this.addDialog = true
               }
             }
@@ -175,20 +178,17 @@ export default {
             type: 'button',
             buttonType: 'text',
             visible: (row) => {
-              return row.auth_type == 'email'
+              return row.auth_type == 'email' && !(this.IS_ADMIN() && row.distributor_id)
             },
             action: {
               handler: async ([row]) => {
                 this.sendEmailForm = {
-                  email:''
+                  email:'',
+                  enterprise_id:row.id
                 }
                 this.sendEmailDialog = true
 
-                // await this.$api.member.sendEmployeeEmail({
-                //   enterprise_id: row.id,
-                //   email: row.email_user
-                // })
-                // this.$message.success('邮件已发送')
+
               }
             }
           },
@@ -198,7 +198,6 @@ export default {
             type: 'button',
             buttonType: 'text',
             visible: (row) => {
-            //  auth_type == 'qr_code' && 平台端 来源店铺非平台则隐藏
               return row.auth_type == 'qr_code'
             },
             action: {
@@ -208,6 +207,9 @@ export default {
                 })
                 this.qrcodeUrl = base64Image
                 this.qrcodeName = row.name
+                if(row.qr_code_bg_image){
+                  this.qrCodeBgImage = row.qr_code_bg_image
+                }
                 this.qrDialog = true
               }
             }
@@ -222,13 +224,14 @@ export default {
             // },
             action: {
               handler: async ([row]) => {
+                window.open(`/member/purchase/employee?company_id=${row.id}`, '_blank')
 
               }
             }
           },
         ],
         columns: [
-          { name: 'ID', key: 'id' },
+          { name: '企业ID', key: 'id' },
           {
             name: '企业Logo',
             key: 'logo',
@@ -426,13 +429,13 @@ export default {
           key: 'qr_code_bg_image',
           component: () => <SpImagePicker v-model={this.companyForm.qr_code_bg_image} />,
           isShow:()=>this.companyForm.auth_type == 'qr_code',
-          validator: (rule, value, callback) => {
-            if (value || this.companyForm.auth_type != 'qr_code') {
-              callback()
-            } else {
-              callback('请选择企业')
-            }
-          },
+          // validator: (rule, value, callback) => {
+          //   if (value || this.companyForm.auth_type != 'qr_code') {
+          //     callback()
+          //   } else {
+          //     callback('请选择企业')
+          //   }
+          // },
           tip: '员工邀请亲友海报：建议上传尺寸300*300且格式为png、jpg图片，文件大小为2M内'
         },
         {
@@ -455,12 +458,28 @@ export default {
   methods: {
     // 下载二维码
     handleDownload() {
+      console.log('this.qrCodeBgImage',this.qrCodeBgImage)
+      if(!this.qrCodeBgImage){
+        var a = document.createElement('a')
+        var temp = this.qrcodeName
+        if (this.qrcodeUrl) {
+          a.href = this.qrcodeUrl
+          a.download = temp + '.png'
+          a.click()
+          setTimeout(() => {
+            this.qrDialog = false
+          },1000)
+        }
+        return
+      }
+
+      //有海报则拼接
       const canvas = document.getElementById('qurcodeCanvas');
       const ctx = canvas.getContext('2d');
 
       // 定义两张图片的 URL
-      const image1Url = 'https://shopex-onex-yundian-image.oss-cn-shanghai.aliyuncs.com/demo-ecshopx/image/38/2025/02/08/1e17de690fa279a22650e4995b2c22f71738993351374.P6123.jpg';
-      const image2Url = 'https://shopex-onex-yundian-image.oss-cn-shanghai.aliyuncs.com/demo-ecshopx/image/38/2024/11/19/a3b4848ceadf59198db8d27bc2c8c2d91732000036513.screenshot_2024-11-19_13-43-11.png';
+      const image1Url = this.qrCodeBgImage;
+      const image2Url = this.qrcodeUrl;
 
       // 创建两个 Image 对象
       const image1 = new Image();
@@ -542,16 +561,7 @@ export default {
         console.error('图片加载失败:', error);
       });
 
-      // var a = document.createElement('a')
-      // var temp = this.qrcodeName
-      // if (this.qrcodeUrl) {
-      //   a.href = this.qrcodeUrl
-      //   a.download = temp + '.png'
-      //   a.click()
-      //   setTimeout(() => {
-      //     this.qrDialog = false
-      //   },1000)
-      // }
+
     },
     beforeSearch(params) {
       return {
@@ -567,8 +577,20 @@ export default {
       this.addDialog = true
     },
     async onSendEmailSubmit() {
-      console.log(this.sendEmailForm)
+      const { email, enterprise_id } = this.sendEmailForm
       this.sendEmaiLoading = true
+      try {
+      await this.$api.member.sendEmployeeEmail({
+                enterprise_id,
+                email
+              })
+      this.sendEmaiLoading = false
+      this.$message.success('邮件已发送')
+      } catch (error) {
+        this.sendEmaiLoading = false
+      }
+
+
     },
     async onCompanyFormSubmit() {
       const {

@@ -199,5 +199,24 @@ export default {
         }
       ]
     },
+    {
+      path: 'purchase',
+      name: `员工内购`,
+      component: () => import('@/view/member/promotions/purchase/index'),
+      children: [
+        {
+          path: 'editor',
+          component: () => import('@/view/member/promotions/purchase/editor')
+        },
+        {
+          path: 'detail',
+          component: () => import('@/view/member/promotions/purchase/detail')
+        },
+        {
+          path: 'dependents',
+          component: () => import('@/view/member/promotions/purchase/dependents')
+        }
+      ]
+    },
   ]
 }

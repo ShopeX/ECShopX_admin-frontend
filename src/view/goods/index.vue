@@ -296,49 +296,49 @@ export default {
         // 处方药
         {
           label: '处方药',
-          key: 'brandId',
+          key: 'is_medicine',
           type: 'radio',
+          disabled:()=> !this.is_pharma_industry,
           options: [
             {
-              label: 'order',
+              label: '0',
               name: '实物商品'
             },
             {
-              label: 'amount',
+              label: '1',
               name: '医药商品'
             }
           ],
           required: true,
-          message: '请选择处方药'
+          message: '请选择是否是处方药'
         },
         {
           label: '药品分类',
-          key: 'templatesId',
+          key: 'medicine_type',
+          isShow:()=> this.form.is_medicine == '1',
           type: 'select',
-          options: [],
+          options: [
+            { title: '西药', value: '0' },
+            { title: '中成药', value: '1' },
+            { title: '其他', value: '3' },
+          ],
           required: true,
           message: '请选择药品分类',
           display: 'inline'
         },
         {
-          label: '第三方药品编码',
-          key: 'templatesId',
-          type: 'input',
-          required: true,
-          message: '请输入第三方药品编码',
-          display: 'inline'
-        },
-        {
           label: '生产厂家',
-          key: 'templatesId',
+          key: 'manufacturer',
           type: 'input',
+          isShow:()=> this.form.is_medicine == '1',
           required: true,
-          message: '请输入第三方药品编码',
+          message: '请输入生产厂家',
           display: 'inline'
         },
         {
           label: '通用别名',
-          key: 'templatesId',
+          key: 'common_name',
+          isShow:()=> this.form.is_medicine == '1',
           type: 'input',
           required: true,
           message: '请输入通用别名',
@@ -348,12 +348,14 @@ export default {
           label: '特殊通用名',
           key: 'templatesId',
           type: 'input',
+          isShow:()=> this.form.is_medicine == '1',
           required: true,
           display: 'inline'
         },
         {
           label: '批准文号',
-          key: 'templatesId',
+          key: 'approval_number',
+          isShow:()=> this.form.is_medicine == '1',
           type: 'input',
           required: true,
           message: '请输入批准文号',
@@ -361,7 +363,8 @@ export default {
         },
         {
           label: '最小售卖单位',
-          key: 'templatesId',
+          key: 'unit',
+          isShow:()=> this.form.is_medicine == '1',
           type: 'input',
           required: true,
           message: '请输入第三方药品编码',
@@ -369,32 +372,41 @@ export default {
         },
         {
           label: '包装规格',
-          key: 'templatesId',
+          key: 'packing_spec',
+          isShow:()=> this.form.is_medicine == '1',
           type: 'input',
           display: 'inline'
         },
         {
           label: '剂型',
-          key: 'templatesId',
+          key: 'dosage',
+          isShow:()=> this.form.is_medicine == '1',
           type: 'input',
           display: 'inline'
         },
         {
           label: '是否处方药',
-          key: 'isGift',
-          type: 'switch',
+          key: 'is_prescription',
+          isShow:()=> this.form.is_medicine == '1',
+          type: 'radio',
+          options: [
+            { label: '1', name: '是' },
+            { label: '2', name: '否' }
+          ],
           tip: '开启后前端走处方药下单流程'
         },
         {
           label: '处方药用药提示',
           key: 'isGift',
           type: 'input',
+          isShow:()=> this.form.is_medicine == '1' && this.form.is_prescription == '1',
           required: true,
           message: '请输入处方药用药提示',
         },
         {
           label: '处方药品症状',
           key: 'isGift',
+          isShow:()=> this.form.is_medicine == '1' && this.form.is_prescription == '1',
           type: 'input',
           required: true,
           message: '请输入处方药品症状',
@@ -763,6 +775,7 @@ export default {
       regionsList: [],
       provinceList: [],
       goodsSpec: [],
+      is_pharma_industry:true,
       submitLoading: false,
       loading: false,
       isLeave: false,
@@ -815,8 +828,14 @@ export default {
     this.getShippingTemplates()
     this.getBrandList()
     this.getAddress()
+    this.getBaseSetting()
   },
   methods: {
+    async getBaseSetting(){
+      const res = await this.$api.company.getGlobalSetting()
+      this.is_pharma_industry = res.medicine_setting.is_pharma_industry == '1'
+      console.log(777,this.is_pharma_industry)
+    },
     async getPointRule() {
       const pointRuleInfo = await this.$api.promotions.getPointRule()
       this.isShowPoint =

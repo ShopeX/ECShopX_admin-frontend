@@ -75,6 +75,8 @@
 <script>
 import { createSetting } from '@shopex/finder'
 import Pages from '@/utils/pages'
+import { VALIDATE_TYPES } from './consts'
+
 export default {
   name: '',
   data() {
@@ -97,7 +99,7 @@ export default {
             buttonType: 'text',
             visible: (row) => {
               //平台：来源店铺是非平台则隐藏
-              return 1
+              return !(this.IS_ADMIN() && row.distributor_id)
             },
             action: {
               handler: async ([row]) => {
@@ -113,7 +115,7 @@ export default {
             buttonType: 'text',
              //平台：来源店铺是非平台则隐藏
             visible: (row) => {
-              return 1
+              return !(this.IS_ADMIN() && row.distributor_id)
             },
             action: {
               handler: async ([row]) => {
@@ -136,7 +138,10 @@ export default {
           {
             name: '登录类型',
             key: 'auth_type',
-            visible:true
+            formatter: (value, { auth_type }, col) => {
+              const authType = VALIDATE_TYPES.find((item) => item.value == auth_type)?.name
+              return authType
+            }
           },
           {
             name: '账号',
@@ -307,6 +312,11 @@ export default {
     this.pagesQuery = new Pages({
       fetch: this.getEnterpriseList
     }).nextPage()
+
+    if (this.$route.query.company_id){
+      this.queryForm.enterprise_id = [Number(this.$route.query.company_id)]
+    }
+
   },
   methods: {
     beforeSearch(params) {

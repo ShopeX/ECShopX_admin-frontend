@@ -126,11 +126,11 @@ export default {
             buttonType: 'text',
             visible: (row) => {
               // 平台端 来源店铺非平台则隐藏
-              return row.status != 'cancel' && row.status != 'over'
+              return row.status != 'cancel' && row.status != 'over' && !(this.IS_ADMIN() && row.distributor_id)
             },
             action: {
               handler: async ([row]) => {
-                this.$router.push({ path: `/marketing/employee/purchase/create/${row.id}` })
+                this.$router.push({ path:  this.matchHidePage('create/') + row.id })
               }
             }
           },
@@ -144,7 +144,7 @@ export default {
             },
             action: {
               handler: async ([row]) => {
-                this.$router.push({ path: `/marketing/employee/purchase/create/${row.id}` })
+                this.$router.push({ path:  this.matchHidePage('create/') + row.id  })
               }
             }
           },
@@ -155,7 +155,7 @@ export default {
             buttonType: 'text',
             action: {
               handler: async ([row]) => {
-                this.$router.push({ path: `/marketing/employee/purchase/goods/${row.id}` })
+                this.$router.push({ path: this.matchHidePage('goods/') + `${row.id}?distributor_id=${row.distributor_id}` })
               }
             }
           },
@@ -166,7 +166,7 @@ export default {
             buttonType: 'text',
             action: {
               handler: async ([row]) => {
-                this.$router.push({ path: `/marketing/employee/purchase/dependents/${row.id}` })
+                this.$router.push({ path: this.matchHidePage('dependents/') + row.id  })
               }
             }
           },
@@ -177,7 +177,8 @@ export default {
             buttonType: 'text',
             action: {
               handler: async ([row]) => {
-                this.$router.push({ path: `/order/entitytrade/purchase?activity_id=${row.id}` })
+                const preUrl = this.$route.path.replace('/marketing/employee/purchase','')
+                this.$router.push({ path: `${preUrl}/order/entitytrade/purchase?activity_id=${row.id}` })
               }
             }
           },
@@ -236,7 +237,7 @@ export default {
             buttonType: 'text',
             visible: (row) => {
               // 平台端 来源店铺非平台则隐藏
-              return row.status == 'ongoing'
+              return row.status == 'ongoing' && !(this.IS_ADMIN() && row.distributor_id)
             },
             action: {
               handler: async ([row]) => {
@@ -253,7 +254,7 @@ export default {
             buttonType: 'text',
             visible: (row) => {
               // 平台端 来源店铺非平台则隐藏
-              return row.status == 'warm_up' || row.status == 'pending' || row.status == 'ongoing'
+              return (row.status == 'warm_up' || row.status == 'pending' || row.status == 'ongoing') && !(this.IS_ADMIN() && row.distributor_id)
             },
             action: {
               handler: async ([row]) => {
@@ -363,7 +364,8 @@ export default {
       this.$refs['finder'].refresh()
     },
     createActivity() {
-      this.$router.push({ path: '/marketing/employee/purchase/create' })
+      this.$router.push({ path:this.matchHidePage('create') })
+
     },
     async getEnterpriseList({ page, pageSize }) {
       const { list, total_count } = await this.$api.member.getPurchaseCompanyList({

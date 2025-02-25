@@ -217,7 +217,7 @@ export default {
           onChange: this.primarySetting
         },
         {
-          label: '是否继承第三方处方系统',
+          label: '是否集成第三方处方系统',
           key: 'use_third_party_system',
           type: 'switch',
           // isShow: !VERSION_IN_PURCHASE,

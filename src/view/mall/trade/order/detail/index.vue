@@ -469,10 +469,10 @@ export default {
         { label: '订单获取积分:', field: 'get_points', is_show: !this.VERSION_IN_PURCHASE },
         { label: '额外获取积分:', field: 'extra_points', is_show: !this.VERSION_IN_PURCHASE },
         { label: '积分抵扣:', field: 'point_use', is_show: !this.VERSION_IN_PURCHASE },
-        { label: '角色:', field: 'role', is_show: true },
-        { label: '员工姓名:', field: 'name', is_show: true },
-        { label: '员工所属企业:', field: 'memberGrade', is_show: true },
-        { label: '来源店铺:', field: 'memberGrade', is_show: true },
+        { label: '角色:', field: 'purchaseRole', is_show: true },
+        { label: '员工姓名:', field: 'employee_name', is_show: true },
+        { label: '员工所属企业:', field: 'enterprise_name', is_show: true },
+        { label: '来源店铺:', field: 'distributor_name', is_show: true },
       ],
       payList: [
         { label: '交易单号:', field: 'tradeId', is_show: true },
@@ -686,6 +686,7 @@ export default {
         receiver_address,
         receipt_type,
         distributor_id,
+        orders_purchase_info,
         order_status,
         delivery_status,
         community_info,
@@ -829,7 +830,10 @@ export default {
         invoiceCompanyAddress,
         invoicedCompanyPhone,
         invoicedBankName,
-        invoicedBankAccount
+        invoicedBankAccount,
+        purchaseRole:orders_purchase_info ? orders_purchase_info.type == 'employee' ? '员工' : '亲友' : '',
+        employee_name: orders_purchase_info ? orders_purchase_info.employee_name  : '',
+        enterprise_name: orders_purchase_info ? orders_purchase_info.enterprise_name  : '',
       }
 
       this.deliveryLog = this.orderInfo?.app_info?.delivery_log

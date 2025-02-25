@@ -190,7 +190,19 @@ export default {
         title: '', // pc页面标题
         mate_description: '', // pc页面标题
         mate_keywords: '', // pc页面标题
-        goods_notice: '' // 商品公告
+        goods_notice: '', // 商品公告
+        is_medicine:'0',
+        medicine_type:'',
+        manufacturer:'',
+        common_name:'',
+        special_common_name:'',
+        approval_number:'',
+        unit:'',
+        packing_spec:'',
+        dosage:'',
+        is_prescription:'1',
+        use_tip:'',
+        symptom:''
       },
       formList: [
         {
@@ -346,7 +358,7 @@ export default {
         },
         {
           label: '特殊通用名',
-          key: 'templatesId',
+          key: 'special_common_name',
           type: 'input',
           isShow:()=> this.form.is_medicine == '1',
           required: true,
@@ -397,7 +409,7 @@ export default {
         },
         {
           label: '处方药用药提示',
-          key: 'isGift',
+          key: 'use_tip',
           type: 'input',
           isShow:()=> this.form.is_medicine == '1' && this.form.is_prescription == '1',
           required: true,
@@ -405,7 +417,7 @@ export default {
         },
         {
           label: '处方药品症状',
-          key: 'isGift',
+          key: 'symptom',
           isShow:()=> this.form.is_medicine == '1' && this.form.is_prescription == '1',
           type: 'input',
           required: true,
@@ -1240,7 +1252,19 @@ export default {
         paramsData,
         aftersales_end_date,
         delivery_data: { delivery_data_type, delivery_desc },
-        goods_notice
+        goods_notice,
+        is_medicine,
+        medicine_type,
+        manufacturer,
+        common_name,
+        special_common_name,
+        approval_number,
+        unit,
+        packing_spec,
+        dosage,
+        is_prescription,
+        use_tip,
+        symptom
       } = this.form
       // 单规格销售区域
       let buy_limit_area = ''
@@ -1362,6 +1386,29 @@ export default {
           params = {
             ...params,
             item_bn: ''
+          }
+        }
+      }
+
+      //处方药
+      if(is_medicine == '1'){
+        params = {
+          ...params,
+          is_medicine,
+          medicine_type,
+          manufacturer,
+          common_name,
+          special_common_name,
+          approval_number,
+          unit,
+          packing_spec,
+          dosage
+        }
+        if(is_prescription == '1'){
+          params = {
+            ...params,
+            use_tip,
+            symptom
           }
         }
       }

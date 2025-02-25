@@ -246,29 +246,6 @@ export default {
             width: 160
           },
           {
-            name: '标签',
-            width: 120,
-            key: 'tagList',
-            render: (h, scope) => (
-              <div style='white-space: normal;'>
-                {scope.row.tagList?.map((item) => (
-                  <span
-                    style={{
-                      'color': item.font_color,
-                      'background-color': item.tag_color,
-                      'font-size': '12px',
-                      'padding': '2px 5px',
-                      'border-radius': '2px',
-                      'margin': '0 8px 8px 0'
-                    }}
-                  >
-                    {item.tag_name}
-                  </span>
-                ))}
-              </div>
-            )
-          },
-          {
             name: 'sku编码',
             key: 'item_bn',
             width: 150,
@@ -331,6 +308,29 @@ export default {
           },
           { name: '销售分类', key: 'itemCatName', minWidth: 120 },
           {
+            name: '标签',
+            width: 120,
+            key: 'tagList',
+            render: (h, scope) => (
+              <div style='white-space: normal;'>
+                {scope.row.tagList?.map((item) => (
+                  <span
+                    style={{
+                      'color': item.font_color,
+                      'background-color': item.tag_color,
+                      'font-size': '12px',
+                      'padding': '2px 5px',
+                      'border-radius': '2px',
+                      'margin': '0 8px 8px 0'
+                    }}
+                  >
+                    {item.tag_name}
+                  </span>
+                ))}
+              </div>
+            )
+          },
+          {
             name: '来源店铺',
             key: 'distributor_name',
             width: 160,
@@ -359,9 +359,9 @@ export default {
           },
           {
             name: '店铺销售状态',
-            key: 'is_market',
+            key: 'is_can_sale',
             width: 120,
-            render: (h, { row }) => h('span', {}, this.getApproveStatus(row.is_market))
+            render: (h, { row }) => h('span', {}, row.is_can_sale? '可销售' : '不可销售')
           }
         ]
       })

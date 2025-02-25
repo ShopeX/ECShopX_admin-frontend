@@ -68,9 +68,9 @@ export default {
             }
           },
           {
-            name: '状态',
-            key: 'is_market',
-            render: (h, { row }) => h('span', {}, this.getApproveStatus(row.is_market))
+            name: '店铺销售状态',
+            key: 'is_can_sale',
+            render: (h, { row }) => h('span', {}, row.is_can_sale? '可销售' : '不可销售')
           },
           {
             name: '上下架操作',

@@ -223,10 +223,10 @@ export default {
           key: 'mobile',
           type: 'input',
           isShow: () => {
-            return this.authType == 'mobile'
+            return this.authType == 'mobile' || this.authType == 'qr_code'
           },
           validator: (rule, value, callback) => {
-            if (this.authType == 'mobile') {
+            if (this.authType == 'mobile' || this.authType == 'qr_code') {
               if (value) {
                 callback()
               } else {

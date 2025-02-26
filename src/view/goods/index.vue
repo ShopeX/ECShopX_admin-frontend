@@ -163,6 +163,7 @@ export default {
         specParams: {
           approve_status: 'onsale',
           store: 1,
+          medicine_spec:'',
           item_bn: '',
           weight: '',
           volume: '',
@@ -334,8 +335,14 @@ export default {
             { title: '中成药', value: '1' },
             { title: '其他', value: '3' },
           ],
-          required: true,
-          message: '请选择药品分类',
+          // required: true,
+          validator: async (rule, value, callback) => {
+            if (!value && this.form.is_medicine == '1') {
+              callback('请选择药品分类')
+            } else {
+              callback()
+            }
+          },
           display: 'inline'
         },
         {
@@ -343,8 +350,13 @@ export default {
           key: 'manufacturer',
           type: 'input',
           isShow:()=> this.form.is_medicine == '1',
-          required: true,
-          message: '请输入生产厂家',
+          validator: async (rule, value, callback) => {
+            if (!value && this.form.is_medicine == '1') {
+              callback('请输入生产厂家')
+            } else {
+              callback()
+            }
+          },
           display: 'inline'
         },
         {
@@ -352,8 +364,13 @@ export default {
           key: 'common_name',
           isShow:()=> this.form.is_medicine == '1',
           type: 'input',
-          required: true,
-          message: '请输入通用别名',
+          validator: async (rule, value, callback) => {
+            if (!value && this.form.is_medicine == '1') {
+              callback('请输入通用别名')
+            } else {
+              callback()
+            }
+          },
           display: 'inline'
         },
         {
@@ -361,7 +378,13 @@ export default {
           key: 'special_common_name',
           type: 'input',
           isShow:()=> this.form.is_medicine == '1',
-          required: true,
+          validator: async (rule, value, callback) => {
+            if (!value && this.form.is_medicine == '1') {
+              callback('请输入特殊通用名')
+            } else {
+              callback()
+            }
+          },
           display: 'inline'
         },
         {
@@ -369,8 +392,13 @@ export default {
           key: 'approval_number',
           isShow:()=> this.form.is_medicine == '1',
           type: 'input',
-          required: true,
-          message: '请输入批准文号',
+          validator: async (rule, value, callback) => {
+            if (!value && this.form.is_medicine == '1') {
+              callback('请输入批准文号')
+            } else {
+              callback()
+            }
+          },
           display: 'inline'
         },
         {
@@ -378,8 +406,13 @@ export default {
           key: 'unit',
           isShow:()=> this.form.is_medicine == '1',
           type: 'input',
-          required: true,
-          message: '请输入第三方药品编码',
+          validator: async (rule, value, callback) => {
+            if (!value && this.form.is_medicine == '1') {
+              callback('请输入第三方药品编码')
+            } else {
+              callback()
+            }
+          },
           display: 'inline'
         },
         {
@@ -411,17 +444,27 @@ export default {
           label: '处方药用药提示',
           key: 'use_tip',
           type: 'input',
-          isShow:()=> this.form.is_medicine == '1' && this.form.is_prescription == '1',
-          required: true,
-          message: '请输入处方药用药提示',
+          isShow:()=> this.medicinePrescription,
+          validator: async (rule, value, callback) => {
+            if (!value && this.form.is_medicine == '1' && this.form.is_prescription == '1') {
+              callback('请输入处方药用药提示')
+            } else {
+              callback()
+            }
+          }
         },
         {
           label: '处方药品症状',
           key: 'symptom',
-          isShow:()=> this.form.is_medicine == '1' && this.form.is_prescription == '1',
+          isShow:()=> this.medicinePrescription,
           type: 'input',
-          required: true,
-          message: '请输入处方药品症状',
+          validator: async (rule, value, callback) => {
+            if (!value && this.form.is_medicine == '1' && this.form.is_prescription == '1') {
+              callback('请输入处方药品症状')
+            } else {
+              callback()
+            }
+          }
         },
 
         // {
@@ -652,6 +695,7 @@ export default {
                   v-model={value[key]}
                   ref='specParams'
                   is-show-point={this.isShowPoint}
+                  isMedicine={this.form.is_medicine == '1'}
                   disabled={disabled}
                   provinceList={this.provinceList}
                 />
@@ -683,6 +727,7 @@ export default {
                 v-model={value[key]}
                 ref='skuParams'
                 isSupplierGoods={this.routerParams.isSupplierGoods}
+                medicinePrescription={this.medicinePrescription}
                 is-show-point={this.isShowPoint}
                 disabled={disabled}
                 provinceList={this.provinceList}
@@ -700,6 +745,7 @@ export default {
               const approveStatus = specItems.find(({ approve_status }) => !!approve_status)
               const store = specItems.find(({ store }) => !!store)
               const price = specItems.find(({ price }) => !!price)
+              const max_num = specItems.find(({ max_num }) => !!max_num)
 
               if (!IS_SUPPLIER() && !this.routerParams.isSupplierGoods &&  !approveStatus) {
                 callback('请选择商品状态')
@@ -707,6 +753,8 @@ export default {
                 callback('请输入商品库存')
               } else if (!price) {
                 callback('请输入商品销售价格')
+              } else if(!max_num && this.medicinePrescription){
+                callback('请输入最大开方数量')
               } else {
                 callback()
               }
@@ -833,7 +881,11 @@ export default {
       }
     }
   },
-  computed: {},
+  computed: {
+    medicinePrescription(){
+      return this.form.is_medicine == '1' && this.form.is_prescription == '1'
+    }
+  },
   created() {
     this.getPointRule()
     this.getMainCategory()
@@ -937,6 +989,7 @@ export default {
         approve_status,
         store,
         item_bn,
+        medicine_spec,
         weight,
         volume,
         price,
@@ -968,10 +1021,24 @@ export default {
         audit_reason,
         package_num,
         buy_limit_area = [],
-        package_type = ''
+        package_type = '',
+        is_medicine,
+        medicine_data
       } = await this.$api.goods.getItemsDetail(itemId, {
        operate_source: supplier ? 'supplier' : IS_SUPPLIER() ? 'supplier' : this.routerParams?.isSupplierGoods ? 'supplier' : 'platform'
       })
+
+      const { medicine_type,
+        manufacturer,
+        common_name,
+        special_common_name,
+        approval_number,
+        unit,
+        packing_spec,
+        dosage,
+        is_prescription,
+        use_tip,
+        symptom} = medicine_data || {};
       console.log(666, buy_limit_area)
       this.loading = false
       let mainCategory = []
@@ -1002,6 +1069,23 @@ export default {
       }
       this.form.salesCategory = this.deepSalesCategory(item_category)
       this.form.pics = pics
+
+      //处方药
+      this.form.is_medicine = is_medicine + ''
+      if(Object.keys(medicine_data).length){
+        this.form.medicine_type = medicine_type
+        this.form.manufacturer = manufacturer
+        this.form.common_name = common_name
+        this.form.special_common_name = special_common_name
+        this.form.approval_number = approval_number
+        this.form.unit = unit
+        this.form.packing_spec = packing_spec
+        this.form.dosage = dosage
+        this.form.is_prescription = is_prescription + ''
+        this.form.use_tip = use_tip
+        this.form.symptom = symptom
+      }
+
       pics_create_qrcode.forEach((v, index) => {
         if (v) {
           this.form.picsQrcode.push(index)
@@ -1015,6 +1099,7 @@ export default {
         store,
         item_id,
         item_bn: is_new ? '' : item_bn,
+        medicine_spec,
         weight,
         volume,
         price: isNaN(price / 100) ? '' : price / 100,
@@ -1407,10 +1492,15 @@ export default {
         if(is_prescription == '1'){
           params = {
             ...params,
+            is_prescription,
             use_tip,
             symptom
           }
+        }else{
+          params.is_prescription = is_prescription
         }
+      }else{
+        params.is_medicine = is_medicine
       }
 
       this.submitLoading = true

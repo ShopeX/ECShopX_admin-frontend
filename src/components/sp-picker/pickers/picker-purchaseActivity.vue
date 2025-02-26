@@ -47,12 +47,17 @@
       :other-config="{
         'max-height': 460
       }"
-      url="/selfhelp/registrationActivity/easylist"
+      url="/employeepurchase/activities"
       :fixed-row-action="true"
       :setting="{
         columns: [
-          { name: 'ID', key: 'activity_id', width: 80 },
-          { name: '活动名称', key: 'activity_name' }
+          { name: 'ID', key: 'id', width: 80 },
+          { name: '内购活动名称', key: 'name' },
+          { name: '来源店铺', key: 'distributor_name' },
+          { name: '购买时间', key: 'employee_end_time',formatter: (value, { employee_end_time, employee_begin_time }, col) => {
+              return `${momentFunc(employee_begin_time)} ~ ${momentFunc(employee_end_time)}`
+            } },
+          { name: '状态', key: 'status_desc' }
         ]
       }"
       :hooks="{
@@ -68,6 +73,7 @@
 <script>
 import BasePicker from './base'
 import PageMixin from '../mixins/page'
+import moment from 'moment'
 export default {
   name: 'PickerPages',
   extends: BasePicker,
@@ -89,14 +95,14 @@ export default {
     beforeSearch(params) {
       params = {
         ...params,
-        is_valid: true
       }
       return params
     },
     afterSearch(response) {
       const { list } = response.data.data
       if (this.value.data) {
-        const selectRows = list.filter((item) => this.value.data.includes(item.activity_id))
+        const valueData = this.multiple ? valueData : this.value.data + ''
+        const selectRows = list.filter((item) => valueData.includes(item.id))
         const { finderTable } = this.$refs.finder.$refs
         setTimeout(() => {
           finderTable.$refs.finderTable.setSelection(selectRows)
@@ -105,6 +111,9 @@ export default {
     },
     onSearch() {
       this.$refs.finder.refresh(true)
+    },
+    momentFunc(val){
+      return moment(val * 1000).format('YYYY-MM-DD HH:mm:ss')
     },
     onSelect(selection, row) {
       if (this.multiple) {

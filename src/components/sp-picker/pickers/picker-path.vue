@@ -203,8 +203,8 @@ export default {
         },
         purchase_activity: () => {
           return pickBy(data, {
-            id: 'activity_id',
-            title: 'activity_name'
+            id: 'id',
+            title: 'name'
           })
         },
         seckill: () => {

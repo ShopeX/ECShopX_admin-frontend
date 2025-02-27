@@ -248,7 +248,7 @@ export default {
       const { value } = this
       const { key, disabled = false, options, onChange = () => {} } = item
       return (
-        <el-radio-group v-model={value[key]} onChange={onChange} disabled={disabled}>
+        <el-radio-group v-model={value[key]} onChange={onChange} disabled={isFunction(disabled) ? disabled() : disabled}>
           {options.map((op) => (
             <el-radio label={op.label}>{op.name}</el-radio>
           ))}

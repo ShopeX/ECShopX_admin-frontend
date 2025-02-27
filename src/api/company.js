@@ -489,6 +489,15 @@ export function detectVersion () {
   })
 }
 
+//处方药开关
+export function setPharmaIndustry (query) {
+  return fetch({
+    url: '/pharmaIndustry/setting',
+    method: 'post',
+    params: query
+  })
+}
+
 export function setDianwuShowStatus (query) {
   return fetch({
     url: '/dianwu/setting',

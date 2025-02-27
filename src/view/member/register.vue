@@ -142,6 +142,31 @@
           </div>
         </div>
       </el-tab-pane>
+      <el-tab-pane label="互联网诊疗风险告知及知情同意书配置" class="paneSecond" name="third">
+        <div class="mainSecond">
+          <el-form ref="privacy" :model="medicineForm" :rles="rules" label-width="100px">
+            <div class="section-white content-padded">
+              <el-card class="box-card">
+                <div class="text item">
+                  <el-form-item label="互联网诊疗风险告及知情同意书">
+                    <el-input
+                      v-model="medicineForm.title"
+                      placeholder="互联网诊疗风险告及知情同意书"
+                      style="width: 500px"
+                    />
+                  </el-form-item>
+                  <el-form-item label="互联网诊疗风险告及知情同意书">
+                    <SpRichText v-model="medicineForm.content" />
+                  </el-form-item>
+                </div>
+              </el-card>
+            </div>
+          </el-form>
+          <div class="section-footer with-border content-center">
+            <el-button type="primary" @click="saveMedicineContent"> 保存 </el-button>
+          </div>
+        </div>
+      </el-tab-pane>
     </el-tabs>
     <el-dialog :visible.sync="showAdd" :title="modalTitle" @close="cancelEdit">
       <el-form
@@ -337,7 +362,11 @@ export default {
         'privacy.content': [{ required: true, message: '请输入充值协议', trigger: 'blur' }],
         'member_register.content': [{ required: true, message: '请输入注册协议', trigger: 'blur' }]
       },
-      modalTitle: ''
+      modalTitle: '',
+      medicineForm:{
+        title:'',
+        content:''
+      }
     }
   },
   computed: {
@@ -355,6 +384,9 @@ export default {
     pageChange(val) {
       this.pageParam.page = val
       this.getFormItems()
+    },
+    async saveMedicineContent(){
+      console.log(this.medicineForm)
     },
     // 获取配置表单
     async getFormItems(isInit = false) {

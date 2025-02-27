@@ -84,6 +84,20 @@
         >
           <SpSelectShop v-model="params.distributor_id" clearable placeholder="请选择" />
         </SpFilterFormItem>
+        <SpFilterFormItem prop="order_class" label="订单类型:">
+          <el-select v-model="params.order_class" clearable placeholder="请选择">
+            <el-option
+              v-for="item in orderType"
+              :key="item.value"
+              size="mini"
+              :label="item.title"
+              :value="item.value"
+            />
+          </el-select>
+      </SpFilterFormItem>
+      <SpFilterFormItem prop="yyrname" label="用药人姓名:">
+        <el-input v-model="params.yyrname" placeholder="请输入用药人姓名" />
+      </SpFilterFormItem>
       </SpFilterForm>
 
       <div class="action-container">
@@ -296,7 +310,7 @@
             </el-tag>
           </template>
         </el-table-column>
-        <el-table-column width="100" label="操作" fixed="left">
+        <el-table-column width="100" label="操作">
           <template slot-scope="scope">
             <router-link
               :to="{
@@ -379,7 +393,7 @@ import { mapGetters } from 'vuex'
 import RemarkModal from '@/components/remarkModal'
 import mixin, { pageMixin, remarkMixin } from '@/mixins'
 import { VERSION_B2C, IS_SUPPLIER } from '@/utils'
-import { ORDER_CATEGORY} from '@/consts'
+import { ORDER_CATEGORY,  ORDER_TYPE, ORDER_TYPE_STANDARD,} from '@/consts'
 export default {
   components: {
     RemarkModal
@@ -402,7 +416,9 @@ export default {
       item_bn: undefined,
       supplier_name:undefined,
       order_holder:undefined,
-      distributor_id:undefined
+      distributor_id:undefined,
+      order_class:undefined,
+      yyrname:undefined
     }
     return {
       loading: false,
@@ -410,6 +426,7 @@ export default {
       params: {
         ...initialParams
       },
+      orderType: this.VERSION_STANDARD ? ORDER_TYPE_STANDARD : ORDER_TYPE,
       orderCategory: ORDER_CATEGORY,
       shopList: [],
       aftersalesStatusList: [
@@ -497,7 +514,8 @@ export default {
         supplier_name:this.params.supplier_name || undefined,
         order_holder:this.params.order_holder || undefined,
         distributor_id: this.params.distributor_id || undefined,
-
+        order_class:this.params.order_class || undefined,
+        yyrname:this.params.yyrname || undefined,
       }
       return params
     },

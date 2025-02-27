@@ -55,6 +55,7 @@
           />
         </el-select>
       </SpFilterFormItem>
+
       <SpFilterFormItem v-if="!VERSION_IN_PURCHASE" prop="delivery_staff_id" label="配送员:">
         <el-select v-model="params.delivery_staff_id" clearable placeholder="请选择">
           <el-option
@@ -69,6 +70,11 @@
       <SpFilterFormItem prop="salespersonname" label="业务员:">
         <el-input v-model="params.salespersonname" placeholder="请输入业务员" />
       </SpFilterFormItem>
+      <SpFilterFormItem prop="role" label="角色:">
+          <el-select v-model="params.role" placeholder="请选择" clearable>
+            <el-option v-for="item in roleList" :key="item.value" :label="item.label" :value="item.value" />
+          </el-select>
+        </SpFilterFormItem>
       <SpFilterFormItem prop="create_time" label="下单时间:" size="max">
         <el-date-picker
           v-model="params.create_time"
@@ -438,7 +444,7 @@
         </el-table-column>
         <el-table-column type="selection" width="55" fixed="left" />
         <!-- <el-table-column prop="source_name" label="来源"></el-table-column> -->
-        <el-table-column label="操作" fixed="left">
+        <el-table-column label="操作" fixed="right">
           <template slot-scope="scope">
             <el-button type="text" style="margin-right: 8px">
               <router-link
@@ -602,6 +608,7 @@ import {
   IN_PURCHASE_STATUS,
   ORDER_TYPE,
   ORDER_TYPE_STANDARD,
+  ROLE_LIST,
   INVOICE_STATUS,
   ORDER_CATEGORY,
   PICKER_DATE_OPTIONS,
@@ -642,11 +649,13 @@ export default {
         order_holder: '', // 订单分类
         distributor_id: '', // 店铺
         subDistrict: [],
-        salespersonname: ''
+        salespersonname: '',
+        role:''
       },
       deliveryPersonnel: [], //配送员信息
       datapass_block: 1, // 是否为数据脱敏
       subDistrictList: [],
+      roleList:ROLE_LIST,
       distributionType: DISTRIBUTION_TYPE,
       distributionStatus: DISTRIBUTION_STATUS,
       orderStatus: VERSION_B2C

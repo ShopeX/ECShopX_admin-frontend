@@ -68,6 +68,7 @@
           <el-table-column prop="item_name" label="商品名称" width="180">
             <template slot-scope="scope">
               <div class="ell3">
+                <el-tag v-if="true" type="primary" size="mini" style="background-color: #fff;">处方药</el-tag>
                 {{ scope.row.item_name }}
               </div>
               <el-tag v-if="scope.row.order_item_type == 'gift'" size="mini" type="success">
@@ -98,6 +99,7 @@
               {{ scope.row.item_spec_desc ? scope.row.item_spec_desc : '单规格' }}
             </template>
           </el-table-column>
+          <el-table-column v-if="true" prop="item_id" label="症状" width="160" />
           <el-table-column prop="supplier_name" label="来源供应商" width="120">
             <template slot-scope="scope">
               {{ scope.row.supplier_name ? scope.row.supplier_name : '自营' }}
@@ -288,6 +290,55 @@
       </div>
     </el-card>
 
+    <!-- 处方药 -->
+    <template v-if="true">
+      <el-card class="el-card--normal">
+        <div slot="header">问诊信息</div>
+        <div v-if="orderInfo" class="card-panel">
+          <el-row>
+            <el-col
+            v-for="(item, index) in interrogationInfoList"
+            v-if="item.is_show"
+            :key="`item__${index}`"
+            class="card-panel-item"
+            :span="6"
+          >
+            <span class="card-panel__label">{{ item.label }}</span>
+            <span class="card-panel__value">{{ getFiledValue(item.field) }}</span>
+          </el-col>
+          </el-row>
+        </div>
+      </el-card>
+
+      <el-card class="el-card--normal">
+        <div slot="header">处方信息</div>
+        <div v-if="orderInfo" class="card-panel">
+          <el-row>
+            <el-col
+            v-for="(item, index) in prescriptionInfoList"
+            v-if="item.is_show"
+            :key="`item__${index}`"
+            class="card-panel-item"
+            :span="6"
+          >
+            <span class="card-panel__label">{{ item.label }}</span>
+            <span v-if="!item.special" class="card-panel__value">{{ getFiledValue(item.field) }}</span>
+            <span v-if="item.special" class="card-panel__value">
+              <!-- <el-image
+                v-for="(item, idx) in key.pics"
+                :key="idx"
+                :src="item"
+                class="img-item"
+                :preview-src-list="key.pics"
+              /> -->
+            </span>
+          </el-col>
+          </el-row>
+        </div>
+      </el-card>
+    </template>
+
+
     <el-card class="el-card--normal">
       <div slot="header">物流信息</div>
       <div v-if="orderInfo" class="card-panel">
@@ -468,7 +519,11 @@ export default {
         { label: '购物赠送积分:', field: 'bonus_points', is_show: !this.VERSION_IN_PURCHASE },
         { label: '订单获取积分:', field: 'get_points', is_show: !this.VERSION_IN_PURCHASE },
         { label: '额外获取积分:', field: 'extra_points', is_show: !this.VERSION_IN_PURCHASE },
-        { label: '积分抵扣:', field: 'point_use', is_show: !this.VERSION_IN_PURCHASE }
+        { label: '积分抵扣:', field: 'point_use', is_show: !this.VERSION_IN_PURCHASE },
+        { label: '角色:', field: 'purchaseRole', is_show: true },
+        { label: '员工姓名:', field: 'employee_name', is_show: true },
+        { label: '员工所属企业:', field: 'enterprise_name', is_show: true },
+        { label: '来源店铺:', field: 'distributor_name', is_show: true },
       ],
       payList: [
         { label: '交易单号:', field: 'tradeId', is_show: true },
@@ -494,6 +549,45 @@ export default {
         { label: '活动名称:', field: 'community_activity_name', is_show: true },
         { label: '所属团长:', field: 'community_chief_name', is_show: true },
         { label: '跟团号:', field: 'community_activity_trade_no', is_show: true }
+      ],
+      interrogationInfoList: [
+        { label: '用药人姓名:', field: 'community_activity_name', is_show: true },
+        { label: '身份证号:', field: 'community_chief_name', is_show: true },
+        { label: '手机号:', field: 'community_activity_trade_no', is_show: true },
+        { label: '用药人年龄:', field: 'community_activity_name', is_show: true },
+        { label: '用药人性别:', field: 'community_chief_name', is_show: true },
+        { label: '与您关系:', field: 'community_activity_trade_no', is_show: true },
+        { label: '用药人是否孕妇:', field: 'community_activity_name', is_show: true },
+        { label: '用药人是否哺乳期:', field: 'community_chief_name', is_show: true },
+        { label: '是否使用过此类药物:', field: 'community_activity_trade_no', is_show: true },
+        { label: '是否有药物过敏史:', field: 'community_activity_name', is_show: true },
+        { label: '药物过敏说明:', field: 'community_chief_name', is_show: true },
+        { label: '肝肾功能是否有异常:', field: 'community_activity_trade_no', is_show: true },
+      ],
+      prescriptionInfoList: [
+        { label: '处方ID:', field: 'community_activity_name', is_show: true },
+        { label: '互联网医院名称:', field: 'community_chief_name', is_show: true },
+        { label: '580门店ID:', field: 'community_activity_trade_no', is_show: true },
+        { label: '580门店名称:', field: 'community_activity_trade_no', is_show: true },
+        { label: '处方编号:', field: 'community_activity_name', is_show: true },
+        { label: '医生签署时间:', field: 'community_chief_name', is_show: true },
+        { label: '医生科室:', field: 'community_activity_trade_no', is_show: true },
+        { label: '医生ID:', field: 'community_activity_name', is_show: true },
+        { label: '开方医生:', field: 'community_chief_name', is_show: true },
+        { label: '诊断标签:', field: 'community_activity_trade_no', is_show: true },
+        { label: '处方状态:', field: 'community_activity_name', is_show: true },
+        { label: '通用名:', field: 'community_activity_name', is_show: true },
+        { label: '创建时间:', field: 'community_chief_name', is_show: true },
+        { label: '更改时间:', field: 'community_activity_trade_no', is_show: true },
+        { label: '备注:', field: 'community_activity_name', is_show: true },
+        { label: '补充说明:', field: 'community_activity_name', is_show: true },
+        { label: '药品用量说明:', field: 'community_chief_name', is_show: true },
+        { label: '处方审核状态:', field: 'community_activity_trade_no', is_show: true },
+        { label: '审方时间:', field: 'community_activity_trade_no', is_show: true },
+        { label: '审核不通过理由:', field: 'community_activity_trade_no', is_show: true },
+        { label: '审方药师名称:', field: 'community_activity_name', is_show: true },
+        { label: '问诊单ID:', field: 'community_chief_name', is_show: true },
+        { label: '电子处方单:', field: 'community_activity_trade_no', is_show: true },
       ],
 
       memberRemark: '暂无留言',
@@ -682,6 +776,7 @@ export default {
         receiver_address,
         receipt_type,
         distributor_id,
+        orders_purchase_info,
         order_status,
         delivery_status,
         community_info,
@@ -825,7 +920,10 @@ export default {
         invoiceCompanyAddress,
         invoicedCompanyPhone,
         invoicedBankName,
-        invoicedBankAccount
+        invoicedBankAccount,
+        purchaseRole:orders_purchase_info ? orders_purchase_info.type == 'employee' ? '员工' : '亲友' : '',
+        employee_name: orders_purchase_info ? orders_purchase_info.employee_name  : '',
+        enterprise_name: orders_purchase_info ? orders_purchase_info.enterprise_name  : '',
       }
 
       this.deliveryLog = this.orderInfo?.app_info?.delivery_log

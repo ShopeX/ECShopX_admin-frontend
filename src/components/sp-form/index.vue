@@ -239,7 +239,7 @@ export default {
           disabled={isFunction(disabled) ? disabled() : disabled}
         >
           {options.map((op) => (
-            <el-option key={op.value} label={op.title} value={op.value} />
+            <el-option key={op.value} label={op.title} value={op.value} disabled={isFunction(op.disabled) ? op.disabled() : op.disabled} />
           ))}
         </el-select>
       )

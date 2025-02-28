@@ -2,6 +2,31 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [3.17.12](https://git.ishopex.cn/ecshopx/ecshopx-admin/compare/v3.17.0...v3.17.12) (2025-02-28)
+
+
+### Bug Fixes
+
+* 编辑/新增商品则不应该出现禁用的模版 ([1d15ab0](https://git.ishopex.cn/ecshopx/ecshopx-admin/commit/1d15ab0ce3c42d554f3d67bb56514baadaf54208))
+* 操作位置放在左侧 ([0685bbb](https://git.ishopex.cn/ecshopx/ecshopx-admin/commit/0685bbbe006d9cdad4bad4e5a8e9890788d3be58))
+* 店铺数据 ([5ee5e6b](https://git.ishopex.cn/ecshopx/ecshopx-admin/commit/5ee5e6b9a0b7c0dc87484ad7b3343435a52185f2))
+* 店铺销售状态" ([5ff9bcc](https://git.ishopex.cn/ecshopx/ecshopx-admin/commit/5ff9bccfdbd2205cd91f88a7cd79d89ba0285fbf))
+* 店铺销售状态" ([5fabb2f](https://git.ishopex.cn/ecshopx/ecshopx-admin/commit/5fabb2f161a0dadfec663fb718abf45305142921))
+* 固定侧边 状态显示 ([06dae90](https://git.ishopex.cn/ecshopx/ecshopx-admin/commit/06dae90079abbf50a334c02b366f1205d2946fca))
+* 固定列 ([5bbba31](https://git.ishopex.cn/ecshopx/ecshopx-admin/commit/5bbba31d3336e198d23a6cb7e4177d6365c38e36))
+* 筛选 ([b669005](https://git.ishopex.cn/ecshopx/ecshopx-admin/commit/b6690055a2de779b9c3fb3a4cad8ed50ed693d28))
+* 移动端模版放开到20个 ([0573965](https://git.ishopex.cn/ecshopx/ecshopx-admin/commit/05739654c44df89db9d9371844ad3b6666690239))
+* ecx logo 替换 ([f5bec4e](https://git.ishopex.cn/ecshopx/ecshopx-admin/commit/f5bec4ed91c9677281676d5290f67e8c199adf4f))
+* ECX-5805 ([14173be](https://git.ishopex.cn/ecshopx/ecshopx-admin/commit/14173becfe7632a243f3f8c0931cc2c83e96de2d))
+* ECX-5960 ([f3aa36a](https://git.ishopex.cn/ecshopx/ecshopx-admin/commit/f3aa36ae2738855d10a3d9cc125bae4559a76a0e))
+* ECX-5960 ([6b756b0](https://git.ishopex.cn/ecshopx/ecshopx-admin/commit/6b756b0340b732221a329719f5b60d9b86530044))
+* ECX-5960 ([df33c33](https://git.ishopex.cn/ecshopx/ecshopx-admin/commit/df33c33b53d467315cab6e5a106956ea5e92379b))
+* ECX-5960 ([ae25d6b](https://git.ishopex.cn/ecshopx/ecshopx-admin/commit/ae25d6bdb3d1be4c2bb54486598a0400bd0020a2))
+* ECX-6124 ([782a42e](https://git.ishopex.cn/ecshopx/ecshopx-admin/commit/782a42ea6d0c4103e2606aeefa2aa7fc5f76e897))
+* ECX-6128 ([123a35e](https://git.ishopex.cn/ecshopx/ecshopx-admin/commit/123a35ead528b4d50d6529ec7c718d3c64f75dcf))
+* ECX-6132 ([915e6ec](https://git.ishopex.cn/ecshopx/ecshopx-admin/commit/915e6ecb6d4ee72927a14f92e8bdd7a31bd83529))
+* ECX-6134 ([d7172a7](https://git.ishopex.cn/ecshopx/ecshopx-admin/commit/d7172a715fecb861490ce73896170d6cfb52ab8e))
+
 ## [3.17.0](https://git.ishopex.cn/ecshopx/ecshopx-admin/compare/v3.16.1...v3.17.0) (2025-02-14)
 
 

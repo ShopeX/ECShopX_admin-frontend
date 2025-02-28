@@ -74,7 +74,7 @@
                 alt=""
               >
               <img
-                v-if="item.operator_type === 'dealer'"
+                v-if="item.operator_type === 'merchant'"
                 class="cus-row-img"
                 src="@/assets/img/adapay/dealer.png"
                 alt=""

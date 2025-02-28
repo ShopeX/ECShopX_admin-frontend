@@ -427,6 +427,19 @@ export default {
           isShow:()=>this.companyForm.auth_type == 'qr_code'
         },
         {
+          label: '企业Logo',
+          key: 'logo',
+          component: () => <SpImagePicker v-model={this.companyForm.logo} />,
+          validator: (rule, value, callback) => {
+            if (value) {
+              callback()
+            } else {
+              callback('请选择企业')
+            }
+          },
+          tip: '建议尺寸300*300，支持 png、jpg 格式，不超过2M'
+        },
+        {
           label: '企业二维码海报',
           key: 'qr_code_bg_image',
           component: () => <SpImagePicker v-model={this.companyForm.qr_code_bg_image} />,
@@ -439,19 +452,6 @@ export default {
           //   }
           // },
           tip: '员工邀请亲友海报：建议上传尺寸300*300且格式为png、jpg图片，文件大小为2M内'
-        },
-        {
-          label: '企业Logo',
-          key: 'logo',
-          component: () => <SpImagePicker v-model={this.companyForm.logo} />,
-          validator: (rule, value, callback) => {
-            if (value) {
-              callback()
-            } else {
-              callback('请选择企业')
-            }
-          },
-          tip: '建议尺寸100*100，支持 png、jpg 格式，不超过2M'
         }
       ]
     }

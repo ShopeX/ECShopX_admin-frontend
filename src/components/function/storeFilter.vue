@@ -12,7 +12,7 @@
       <!-- <div class="view-flex-item default-store" v-else >总店</div>  -->
       <template v-if="!lock">
         <div
-          v-if="checked.id && checked.id != '0'"
+          v-if="checked.id && checked.id != '0'&&isChangeStore"
           class="iconfont icon-times"
           @click="handleResetClick"
         />
@@ -56,10 +56,6 @@ export default {
     lock: {
       type: Boolean,
       default: false
-    },
-    isChangeStore: {
-      type: Boolean,
-      default: true
     }
   },
   data () {
@@ -76,7 +72,8 @@ export default {
       list: [],
       regions: district,
       checked: {},
-      currentStoreName: ''
+      currentStoreName: '',
+      storeList:null
     }
   },
   watch: {
@@ -104,6 +101,7 @@ export default {
       this.$emit('change', {})
     },
     handleChange (val) {
+      console.log('==valvalvalval', val, val)
       this.$emit('change', val)
       this.visible = false
     },
@@ -114,6 +112,10 @@ export default {
       //如果返回只有一个则为店铺端
       this.currentStoreName = list.length === 1 ? list[0].name : '总店'
       console.log('==currentStoreName', list, this.currentStoreName)
+      this.storeList = list
+      if(!this.isChangeStore&&list.length === 1){
+        this.$emit('change', list[0])
+      }
     }
   }
 }

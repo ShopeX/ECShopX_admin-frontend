@@ -222,7 +222,6 @@ export default {
       this.params.page += 1
       const { list, total_count } = await api.marketing.getDistributorList(this.params)
       let _list = []
-      this.$emit('changeStore', list)
       list.map((item) => {
         let tags = []
         item.tagList.map((tag) => {
@@ -239,6 +238,7 @@ export default {
           tags
         })
       })
+      this.$emit('changeStore', _list)
       this.list = [...this.list, ..._list]
       this.total = total_count
       this.loading = false

@@ -32,7 +32,10 @@ export default {
         order_page: [0],
         is_pharma_industry:false,
         use_third_party_system:false,
-        use_third_party_system_value:'kuaizhen580'
+        use_third_party_system_value:'kuaizhen580',
+        clientId:'',
+        clientSecret:'',
+        storeId:''
       },
       formList: [
         {
@@ -220,14 +223,14 @@ export default {
           label: '是否集成第三方处方系统',
           key: 'use_third_party_system',
           type: 'switch',
-          // isShow: !VERSION_IN_PURCHASE,
+          isShow: ()=>this.form.is_pharma_industry,
           onChange: this.primarySetting
         },
         {
           label: '',
           key: 'use_third_party_system_value',
           type: 'radio',
-          isShow:() => this.form.use_third_party_system,
+          isShow:() => this.form.use_third_party_system && this.form.is_pharma_industry,
           options: [
             {
               label: 'kuaizhen580',
@@ -241,6 +244,31 @@ export default {
               dianwu_show_status
             })
           }
+        },
+        {
+          label: 'COPIED',
+          key: 'clientId',
+          type: 'input',
+          isShow:() => this.form.use_third_party_system && this.form.is_pharma_industry,
+        },
+        {
+          label: 'clientSecret',
+          key: 'clientSecret',
+          type: 'input',
+          isShow:() => this.form.use_third_party_system && this.form.is_pharma_industry,
+        },
+        {
+          label: '门店ID',
+          key: 'storeId',
+          type: 'input',
+          isShow:() => this.form.use_third_party_system && this.form.is_pharma_industry,
+        },
+        {
+          label: '',
+          component:()=>(
+            <elButton type='primary' onClick={()=>this.primarySetting('button')}>保存</elButton>
+          ),
+          isShow:() => this.form.use_third_party_system && this.form.is_pharma_industry,
         },
         {
           label: '商品价格展示',
@@ -322,7 +350,10 @@ export default {
         distributor_param_status: res.share_parameters_setting.distributor_param_status,
         dianwu_show_status: res.dianwu_setting.dianwu_show_status,
         is_pharma_industry:res.medicine_setting.is_pharma_industry == '1',
-        use_third_party_system:!!res.medicine_setting.use_third_party_system
+        use_third_party_system:!!res.medicine_setting.use_third_party_system,
+        clientId:res.medicine_setting.kuaizhen580_config?.client_id,
+        clientSecret:res.medicine_setting.kuaizhen580_config?.client_secret,
+        storeId:res.medicine_setting.kuaizhen580_config?.kuaizhen_store_id
       }
       const { cart_page, order_page, item_page } = res.item_price_setting
       if (cart_page.market_price) {
@@ -358,12 +389,16 @@ export default {
       }
       await this.$api.company.saveItemPriceSetting(params)
     },
-    async primarySetting(){
-      const { is_pharma_industry,use_third_party_system } = this.form
+    async primarySetting(isBtn){
+      const { is_pharma_industry,use_third_party_system,clientId,clientSecret,storeId } = this.form
       await this.$api.company.setPharmaIndustry({
         is_pharma_industry:is_pharma_industry ? '1' : '0',
-        use_third_party_system:use_third_party_system ? 'kuaizhen580' : ''
+        use_third_party_system:use_third_party_system ? 'kuaizhen580' : '',
+        kuaizhen580_config:{clientId,clientSecret,storeId}
       })
+      if(isBtn){
+        this.$message.success('保存成功')
+      }
     }
   }
 }

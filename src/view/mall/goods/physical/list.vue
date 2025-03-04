@@ -186,11 +186,11 @@
         <!--        <SpFilterFormItem prop="operator_name" label="来源供应商:">-->
         <!--          <el-input v-model="searchParams.operator_name" placeholder="请输入来源供应商" />-->
         <!--        </SpFilterFormItem>-->
-        <SpFilterFormItem prop="is_gift" label="处方药:">
-          <el-select v-model="searchParams.is_gift">
-            <el-option :value="undefined" label="全部" />
-            <el-option :value="true" label="处方药" />
-            <el-option :value="false" label="非处方药" />
+        <SpFilterFormItem v-if="is_pharma_industry" prop="is_prescription" label="处方药:">
+          <el-select v-model="searchParams.is_prescription">
+            <el-option value="" label="全部" />
+            <el-option value="1" label="处方药" />
+            <el-option value="0" label="非处方药" />
           </el-select>
         </SpFilterFormItem>
       </SpFilterForm>
@@ -504,6 +504,14 @@
         </span>
       </el-dialog>
 
+
+      <el-dialog title="错误信息" :visible.sync="errMessageVis" width="560px">
+        <div class="page-code">
+          {{errMessage}}
+        </div>
+      </el-dialog>
+
+
       <!-- 查看多规格信息 -->
       <SpDrawer
         v-model="showItemSkuDrawer"
@@ -563,23 +571,25 @@ export default {
       statusOption = updateStatusOption
     }
 
-    let tabList = []
-    if (IS_SUPPLIER()) {
-      tabList = [
-        { name: '全部商品', value: 'all', activeName: 'first' },
-        { name: '待提交', value: 'submitting', activeName: 'submitting' },
-        { name: '待审核', value: 'processing', activeName: 'processing' },
-        { name: '已通过', value: 'approved', activeName: 'approved' },
-        { name: '已拒绝', value: 'rejected', activeName: 'rejected' },
-        { name: '库存预警商品', value: 'true', activeName: 'second' }
-      ]
-    } else {
-      tabList = [
-        { name: '全部商品', value: 'all', activeName: 'first' },
-        {name: '处方商品', value: 'chufang', activeName: 'third'},
-        { name: '库存预警商品', value: 'true', activeName: 'second' }
-      ]
-    }
+    // let tabList = []
+    // if (IS_SUPPLIER()) {
+    //   tabList = [
+    //     { name: '全部商品', value: 'all', activeName: 'first' },
+    //     { name: '待提交', value: 'submitting', activeName: 'submitting' },
+    //     { name: '待审核', value: 'processing', activeName: 'processing' },
+    //     { name: '已通过', value: 'approved', activeName: 'approved' },
+    //     { name: '已拒绝', value: 'rejected', activeName: 'rejected' },
+    //     { name: '库存预警商品', value: 'true', activeName: 'second' }
+    //   ]
+    // } else {
+    //   tabList = [
+    //     { name: '全部商品', value: 'all', activeName: 'first' },
+    //     {name: '处方商品', value: 'chufang', activeName: 'third'},
+    //     { name: '库存预警商品', value: 'true', activeName: 'second' }
+    //   ]
+    // }
+
+
     return {
       formLoading: false,
       commissionDialog: false,
@@ -590,7 +600,7 @@ export default {
       current: '',
       currentId: '',
       currentPrice: '',
-      tabList,
+      // tabList,
       activeName: 'first',
       goodsName: '',
       isEdit: false,
@@ -638,11 +648,13 @@ export default {
         category: 0,
         item_category: 0,
         is_warning: false,
+        is_medicine:'',
         audit_status: '',
         delivery_data_type: '',
         tag_id: '',
         tax_rate_code: '',
         is_gift: undefined,
+        is_prescription:'',
         type: 0,
         barcode: '',
         distributor_id: 0,
@@ -659,7 +671,8 @@ export default {
       isGiftsData: {},
       exportData: {},
       exportTagData: {},
-
+      errMessage:'',
+      errMessageVis: false,
       tagList: [],
       grade: [],
       vipGrade: [],
@@ -684,6 +697,7 @@ export default {
       batchChangeStateForm: {
         status: ''
       },
+      is_pharma_industry:false,
       isBindWdtErp: false,
       isBindJstErp: false,
       categoryList: [],
@@ -1166,7 +1180,15 @@ export default {
             name: '审核结果',
             key: 'item_bn',
             width: 150,
-            render: (h, scope) =>  '是'
+            render: (h, {row}) =>  '是'
+          },
+          {
+            name: '错误信息',
+            key: 'item_bn',
+            width: 150,
+            render: (h, {row}) => <div onClick={()=>this.handleErrDetail('1dwadawdwadwafwafwwafwafwafwfwefweafewfefewfwef23')}>
+              '1dwadawdwadwafwafwwafwafwafwfwefweafewfefewfwef23'
+              </div>
           },
           // {
           //   name: '供应商货号',
@@ -1306,6 +1328,33 @@ export default {
       }
     }
   },
+  computed:{
+    tabList(){
+      let tabList = []
+        if (IS_SUPPLIER()) {
+        tabList = [
+          { name: '全部商品', value: 'all', activeName: 'first' },
+          { name: '待提交', value: 'submitting', activeName: 'submitting' },
+          { name: '待审核', value: 'processing', activeName: 'processing' },
+          { name: '已通过', value: 'approved', activeName: 'approved' },
+          { name: '已拒绝', value: 'rejected', activeName: 'rejected' },
+          { name: '库存预警商品', value: 'true', activeName: 'second' }
+        ]
+      } else {
+        tabList = [
+          { name: '全部商品', value: 'all', activeName: 'first' },
+
+          { name: '库存预警商品', value: 'true', activeName: 'second' }
+        ]
+      }
+
+      if(this.is_pharma_industry){
+        tabList.splice(1,0, {name: '医药商品', value: 'is_medicine', activeName: 'third'})
+      }
+
+      return tabList
+    }
+  },
   mounted() {
     this.init()
     this.getAddress()
@@ -1314,8 +1363,14 @@ export default {
     this.fetchWechatList()
     this.checkWdtErpBind()
     this.checkJstErpBind()
+    this.getBaseSetting()
   },
   methods: {
+    async getBaseSetting(){
+      const res = await this.$api.company.getGlobalSetting()
+      this.is_pharma_industry = res.medicine_setting.is_pharma_industry == '1'
+      console.log(777,this.is_pharma_industry)
+    },
     async fetchWechatList() {
       const { list } = await this.$api.minimanage.gettemplateweapplist()
       list.forEach((item, i) => {
@@ -1356,6 +1411,10 @@ export default {
       //管理分类
       const itemCategoryList = await this.$api.goods.getCategory({ is_main_category: true })
       this.itemCategoryList = itemCategoryList
+    },
+    handleErrDetail(val){
+      this.errMessage = val
+      this.errMessageVis = true
     },
     async getMemberPriceByGoods(item_id) {
       this.currentId = item_id
@@ -1475,6 +1534,12 @@ export default {
       } else {
         this.searchParams.is_warning = false
         this.searchParams.audit_status = this.activeName
+      }
+
+      if(this.activeName == 'third'){
+        this.searchParams.is_medicine = 1
+      }else{
+        this.searchParams.is_medicine = ''
       }
       this.$refs['finder'].refresh()
     },

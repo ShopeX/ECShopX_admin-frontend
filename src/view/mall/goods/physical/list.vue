@@ -23,6 +23,7 @@
   width: 200px;
   height: 200px;
 }
+
 </style>
 <style lang="scss">
 .physical-cell-reason {
@@ -664,6 +665,11 @@ export default {
         operator_name: '',
         cat_id: ''
       },
+      auditStatusMap:{
+        1:'未审核',
+        2:'审核通过',
+        3:'审核不通过'
+      },
       start_date: '',
       end_date: '',
       addCategorydialogVisible: false,
@@ -1143,7 +1149,7 @@ export default {
             name: '是否处方',
             key: 'item_bn',
             width: 150,
-            render: (h, scope) =>  '是'
+            render: (h, {row}) => row.is_prescription == '1' ? '是' : '否'
           },
           {
             name: 'sku编码',
@@ -1178,16 +1184,17 @@ export default {
           },
           {
             name: '审核结果',
-            key: 'item_bn',
+            key: 'audit_status',
             width: 150,
-            render: (h, {row}) =>  '是'
+            render: (h, {row}) => row.medicine_data ? this.auditStatusMap[row.medicine_data.audit_status] : ''
           },
           {
             name: '错误信息',
-            key: 'item_bn',
+            key: 'audit_reason',
             width: 150,
-            render: (h, {row}) => <div onClick={()=>this.handleErrDetail('1dwadawdwadwafwafwwafwafwafwfwefweafewfefewfwef23')}>
-              '1dwadawdwadwafwafwwafwafwafwfwefweafewfefewfwef23'
+            render: (h, {row}) => <div onClick={()=>this.handleErrDetail(row.medicine_data)}>
+              {this.handleAuditReason(row.medicine_data)}
+              {row.medicine_data?.audit_reason && <i class="el-icon-info"></i>}
               </div>
           },
           // {
@@ -1413,7 +1420,8 @@ export default {
       this.itemCategoryList = itemCategoryList
     },
     handleErrDetail(val){
-      this.errMessage = val
+      if(!val || !val.audit_reason) return
+      this.errMessage = val.audit_reason
       this.errMessageVis = true
     },
     async getMemberPriceByGoods(item_id) {
@@ -1538,6 +1546,7 @@ export default {
 
       if(this.activeName == 'third'){
         this.searchParams.is_medicine = 1
+        this.searchParams.audit_status = ''
       }else{
         this.searchParams.is_medicine = ''
       }
@@ -1571,6 +1580,10 @@ export default {
       } else {
         this.$message.error('请选择至少一个商品')
       }
+    },
+    handleAuditReason(data){
+      const {audit_reason = ''} = data || {}
+      return audit_reason.length > 10 ? audit_reason.slice(0,10)+'...' :audit_reason
     },
     async onFreightTemplateSubmit() {
       const { item_id, templates_id } = this.freightTemplateForm

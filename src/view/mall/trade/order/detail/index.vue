@@ -76,6 +76,7 @@
               </el-tag>
             </template>
           </el-table-column>
+          <el-table-column v-if="orderInfo.prescription_status" prop="instructions" label="用法用量" width="160" />
           <el-table-column prop="item_holder" label="商品类型" width="100">
             <template slot-scope="scope">
               <div class="ell3">
@@ -99,7 +100,7 @@
               {{ scope.row.item_spec_desc ? scope.row.item_spec_desc : '单规格' }}
             </template>
           </el-table-column>
-          <el-table-column v-if="orderInfo.prescription_status" prop="instructions" label="用法用量" width="160" />
+
           <el-table-column v-if="orderInfo.prescription_status" prop="user_symptom" label="症状" width="160" />
           <el-table-column prop="supplier_name" label="来源供应商" width="120">
             <template slot-scope="scope">
@@ -583,7 +584,7 @@ export default {
         { label: '更改时间:', field: 'prescription_updated', is_show: true },
         { label: '备注:', field: 'prescription_memo', is_show: true },
         { label: '补充说明:', field: 'prescription_remarks', is_show: true },
-        { label: '药品用量说明:', field: 'drug_rsp_list', is_show: true },
+        // { label: '药品用量说明:', field: 'drug_rsp_list', is_show: true },
         { label: '处方审核状态:', field: 'audit_status', is_show: true },
         { label: '审方时间:', field: 'audit_time', is_show: true },
         { label: '审核不通过理由:', field: 'audit_reason', is_show: true },

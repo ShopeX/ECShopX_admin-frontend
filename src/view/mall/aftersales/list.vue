@@ -182,6 +182,16 @@
         </el-table-column>
         <el-table-column
           width="120"
+          label="订单类型"
+          header-align="center"
+          prop="order_holder"
+        >
+        <template slot-scope="scope">
+            {{  getOrderCategoryName(scope.row.order_holder) }}
+          </template>
+        </el-table-column>
+        <el-table-column
+          width="120"
           label="订单分类"
           header-align="center"
           prop="order_holder"

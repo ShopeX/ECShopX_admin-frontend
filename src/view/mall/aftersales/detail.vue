@@ -19,99 +19,158 @@
         备注
       </el-button>
     </div>
-    <div class="section-body">
-      <el-row>
-        <el-col :span="3" class="col-3 content-right"> 售后单号: </el-col>
-        <el-col :span="20">
-          {{ aftersalesInfo.aftersales_bn }}
-        </el-col>
-      </el-row>
-      <el-row>
-        <el-col :span="3" class="col-3 content-right"> 订单号: </el-col>
-        <el-col :span="20">
-          {{ aftersalesInfo.order_id }}
-        </el-col>
-      </el-row>
-      <el-row>
-        <el-col :span="3" class="col-3 content-right"> 售后类型: </el-col>
-        <el-col :span="20">
-          <span v-if="aftersalesInfo.aftersales_type == 'ONLY_REFUND'">仅退款 </span>
-          <span v-if="aftersalesInfo.aftersales_type == 'REFUND_GOODS'">退货退款 </span>
-          <span v-if="aftersalesInfo.aftersales_type == 'EXCHANGING_GOODS'">换货 </span>
-        </el-col>
-      </el-row>
-      <el-row>
-        <el-col :span="3" class="col-3 content-right"> 应退总金额: </el-col>
-        <el-col :span="20"> ￥{{ aftersalesInfo.refund_fee / 100 }} </el-col>
-      </el-row>
-      <el-row>
-        <el-col :span="3" class="col-3 content-right"> 应退总积分: </el-col>
-        <el-col :span="20">
-          {{ aftersalesInfo.refund_point }}
-        </el-col>
-      </el-row>
-      <el-row>
-        <el-col :span="3" class="col-3 content-right"> 是否退运费: </el-col>
-        <el-col :span="20">
-          {{ aftersalesInfo.freight>0 ? '是' : '否' }}
-        </el-col>
-      </el-row>
-      <el-row>
-        <el-col :span="3" class="col-3 content-right"> 退款运费: </el-col>
-        <el-col :span="20">
-          ￥{{ aftersalesInfo.freight >0 ? aftersalesInfo.freight / 100 : '0' }}
-        </el-col>
-      </el-row>
-      <el-row v-if="IS_SUPPLIER()">
-        <el-col :span="3" class="col-3 content-right"> 申请门店: </el-col>
-        <el-col :span="20">
-          {{ distributorInfo.name || '-' }}
-        </el-col>
-      </el-row>
-      <el-row v-if="IS_SUPPLIER()">
-        <el-col :span="3" class="col-3 content-right"> 申请人: </el-col>
-        <el-col :span="20">
-          {{ aftersalesInfo.contact || '-' }}
-        </el-col>
-      </el-row>
-      <el-row>
-        <el-col :span="3" class="col-3 content-right"> 申请时间: </el-col>
-        <el-col :span="20">
-          {{ aftersalesInfo.create_time | datetime('YYYY-MM-DD HH:mm:ss') }}
-        </el-col>
-      </el-row>
-      <el-row>
-        <el-col :span="3" class="col-3 content-right"> 售后状态: </el-col>
-        <el-col :span="20">
-          <span v-if="aftersalesInfo.aftersales_status == '0'"> 等待商家处理</span>
-          <span v-else-if="aftersalesInfo.aftersales_status == '1'"> 商家处理中</span>
-          <span v-else-if="aftersalesInfo.aftersales_status == '2'"> 已处理</span>
-          <span v-else-if="aftersalesInfo.aftersales_status == '3'"> 已驳回</span>
-          <span v-else-if="aftersalesInfo.aftersales_status == '4'"> 已撤销</span>
-        </el-col>
-      </el-row>
-      <el-row>
-        <el-col :span="3" class="col-3 content-right"> 处理进度: </el-col>
-        <el-col v-if="aftersalesInfo && aftersalesInfo.app_info" :span="20">
-          {{ aftersalesInfo.app_info.progress_msg }}
-          <!-- <span v-if="aftersalesInfo.progress == '0'"> 等待商家处理</span>
-          <span v-else-if="aftersalesInfo.progress == '1'">商家接受申请，等待消费者回寄</span>
-          <span v-else-if="aftersalesInfo.progress == '2'">消费者回寄，等待商家收货确认</span>
-          <span v-else-if="aftersalesInfo.progress == '3'">售后已驳回</span>
-          <span v-else-if="aftersalesInfo.progress == '4'">售后已处理</span>
-          <span v-else-if="aftersalesInfo.progress == '5'">退款驳回</span>
-          <span v-else-if="aftersalesInfo.progress == '6'">退款已处理</span>
-          <span v-else-if="aftersalesInfo.progress == '7'">售后关闭</span>
-          <span v-else-if="aftersalesInfo.progress == '8'">商家确认收货</span>
-          <span v-else-if="aftersalesInfo.progress == '9'">退款处理中</span> -->
-        </el-col>
-      </el-row>
-      <el-row v-if="aftersalesInfo.refuse_reason">
-        <el-col :span="3" class="col-3 content-right"> 商家处理申请说明: </el-col>
-        <el-col :span="20">
-          {{ aftersalesInfo.refuse_reason }}
-        </el-col>
-      </el-row>
+    <div class="section-body flex-row">
+      <div style="flex:1;">
+        <el-row>
+          <el-col :span="3" class="col-3 content-right"> 售后单号: </el-col>
+          <el-col :span="20">
+            {{ aftersalesInfo.aftersales_bn }}
+          </el-col>
+        </el-row>
+        <el-row>
+          <el-col :span="3" class="col-3 content-right"> 订单号: </el-col>
+          <el-col :span="20">
+            {{ aftersalesInfo.order_id }}
+          </el-col>
+        </el-row>
+        <el-row>
+          <el-col :span="3" class="col-3 content-right"> 售后类型: </el-col>
+          <el-col :span="20">
+            <span v-if="aftersalesInfo.aftersales_type == 'ONLY_REFUND'">仅退款 </span>
+            <span v-if="aftersalesInfo.aftersales_type == 'REFUND_GOODS'">退货退款 </span>
+            <span v-if="aftersalesInfo.aftersales_type == 'EXCHANGING_GOODS'">换货 </span>
+          </el-col>
+        </el-row>
+        <el-row>
+          <el-col :span="3" class="col-3 content-right"> 应退总金额: </el-col>
+          <el-col :span="20"> ￥{{ aftersalesInfo.refund_fee / 100 }} </el-col>
+        </el-row>
+        <el-row>
+          <el-col :span="3" class="col-3 content-right"> 应退总积分: </el-col>
+          <el-col :span="20">
+            {{ aftersalesInfo.refund_point }}
+          </el-col>
+        </el-row>
+        <el-row>
+          <el-col :span="3" class="col-3 content-right"> 是否退运费: </el-col>
+          <el-col :span="20">
+            {{ aftersalesInfo.freight>0 ? '是' : '否' }}
+          </el-col>
+        </el-row>
+        <el-row>
+          <el-col :span="3" class="col-3 content-right"> 退款运费: </el-col>
+          <el-col :span="20">
+            ￥{{ aftersalesInfo.freight >0 ? aftersalesInfo.freight / 100 : '0' }}
+          </el-col>
+        </el-row>
+        <el-row v-if="IS_SUPPLIER()">
+          <el-col :span="3" class="col-3 content-right"> 申请门店: </el-col>
+          <el-col :span="20">
+            {{ distributorInfo.name || '-' }}
+          </el-col>
+        </el-row>
+        <el-row v-if="IS_SUPPLIER()">
+          <el-col :span="3" class="col-3 content-right"> 申请人: </el-col>
+          <el-col :span="20">
+            {{ aftersalesInfo.contact || '-' }}
+          </el-col>
+        </el-row>
+        <el-row>
+          <el-col :span="3" class="col-3 content-right"> 申请时间: </el-col>
+          <el-col :span="20">
+            {{ aftersalesInfo.create_time | datetime('YYYY-MM-DD HH:mm:ss') }}
+          </el-col>
+        </el-row>
+        <el-row>
+          <el-col :span="3" class="col-3 content-right"> 售后状态: </el-col>
+          <el-col :span="20">
+            <span v-if="aftersalesInfo.aftersales_status == '0'"> 等待商家处理</span>
+            <span v-else-if="aftersalesInfo.aftersales_status == '1'"> 商家处理中</span>
+            <span v-else-if="aftersalesInfo.aftersales_status == '2'"> 已处理</span>
+            <span v-else-if="aftersalesInfo.aftersales_status == '3'"> 已驳回</span>
+            <span v-else-if="aftersalesInfo.aftersales_status == '4'"> 已撤销</span>
+          </el-col>
+        </el-row>
+        <el-row>
+          <el-col :span="3" class="col-3 content-right"> 处理进度: </el-col>
+          <el-col v-if="aftersalesInfo && aftersalesInfo.app_info" :span="20">
+            {{ aftersalesInfo.app_info.progress_msg }}
+            <!-- <span v-if="aftersalesInfo.progress == '0'"> 等待商家处理</span>
+            <span v-else-if="aftersalesInfo.progress == '1'">商家接受申请，等待消费者回寄</span>
+            <span v-else-if="aftersalesInfo.progress == '2'">消费者回寄，等待商家收货确认</span>
+            <span v-else-if="aftersalesInfo.progress == '3'">售后已驳回</span>
+            <span v-else-if="aftersalesInfo.progress == '4'">售后已处理</span>
+            <span v-else-if="aftersalesInfo.progress == '5'">退款驳回</span>
+            <span v-else-if="aftersalesInfo.progress == '6'">退款已处理</span>
+            <span v-else-if="aftersalesInfo.progress == '7'">售后关闭</span>
+            <span v-else-if="aftersalesInfo.progress == '8'">商家确认收货</span>
+            <span v-else-if="aftersalesInfo.progress == '9'">退款处理中</span> -->
+          </el-col>
+        </el-row>
+        <el-row v-if="aftersalesInfo.refuse_reason">
+          <el-col :span="3" class="col-3 content-right"> 商家处理申请说明: </el-col>
+          <el-col :span="20">
+            {{ aftersalesInfo.refuse_reason }}
+          </el-col>
+        </el-row>
+      </div>
+      <div style="flex:1;">
+        <el-row>
+          <el-col :span="3" class="col-3 content-right"> 订单类型: </el-col>
+          <el-col :span="20">
+            {{ aftersalesInfo.aftersales_bn }}
+            <!-- getOrderType -->
+          </el-col>
+        </el-row>
+        <el-row>
+          <el-col :span="3" class="col-3 content-right">  会员手机号: </el-col>
+          <el-col :span="20">
+            {{ orderInfo.mobile }}
+          </el-col>
+        </el-row>
+        <el-row>
+          <el-col :span="3" class="col-3 content-right"> 配送类型: </el-col>
+          <el-col :span="20">
+            {{ aftersalesInfo.aftersales_bn }}
+          </el-col>
+        </el-row>
+        <el-row>
+          <el-col :span="3" class="col-3 content-right"> 下单时间: </el-col>
+          <el-col :span="20">
+            {{ orderInfo.create_time }}
+          </el-col>
+        </el-row>
+        <el-row>
+          <el-col :span="3" class="col-3 content-right"> 开票状态: </el-col>
+          <el-col :span="20">
+            {{ orderInfo.is_invoiced ? '已开票' : '未开票' }}
+          </el-col>
+        </el-row>
+        <el-row>
+          <el-col :span="3" class="col-3 content-right"> 来源店铺: </el-col>
+          <el-col :span="20">
+            {{ orderInfo.distributor_name }}
+          </el-col>
+        </el-row>
+        <el-row>
+          <el-col :span="3" class="col-3 content-right"> 姓名: </el-col>
+          <el-col :span="20">
+            {{ aftersalesInfo.distributor_id }}
+          </el-col>
+        </el-row>
+        <el-row>
+          <el-col :span="3" class="col-3 content-right"> 角色: </el-col>
+          <el-col :span="20">
+            {{ aftersalesInfo.aftersales_bn }}
+          </el-col>
+        </el-row>
+        <el-row>
+          <el-col :span="3" class="col-3 content-right"> 所属企业: </el-col>
+          <el-col :span="20">
+            {{ aftersalesInfo.aftersales_bn }}
+          </el-col>
+        </el-row>
+      </div>
     </div>
     <div class="remark_footer">
       <el-row style="width: 100%">
@@ -135,9 +194,18 @@
                 <span><img :src="scope.row.item_pic" :alt="scope.row.item_name"></span>
               </template>
             </el-table-column>
-            <el-table-column prop="item_name" label="商品名称" width="180" />
+            <el-table-column prop="item_name" label="商品名称" width="180">
+              <template slot-scope="scope">
+              <div class="ell3">
+                <el-tag v-if="scope.row.is_prescription == 1" type="primary" size="mini" style="background-color: #fff;">处方药</el-tag>
+                {{ scope.row.item_name }}
+              </div>
+            </template>
+            </el-table-column>
+            <el-table-column v-if="orderInfo.prescription_status" prop="instructions" label="用法用量" width="160" />
             <el-table-column prop="item_bn" label="sku编码" width="180" />
             <el-table-column prop="item_spec_desc" label="规格" width="180" />
+            <el-table-column v-if="orderInfo.prescription_status" prop="user_symptom" label="症状" width="160" />
             <el-table-column prop="supplier_name" label="来源供应商" width="180" >
               <template slot-scope="scope">
                 {{ scope.row.supplier_name?.supplier_name }}
@@ -163,6 +231,55 @@
         </template>
       </el-row>
     </div>
+
+    <!-- 处方药 -->
+    <template v-if="'orderInfo.prescription_status'">
+      <div class="section-header with-border">
+        <h3>问诊信息</h3>
+      </div>
+      <div class="section-body"  v-if="orderInfo">
+        <el-row>
+            <el-col
+            v-for="(item, index) in interrogationInfoList"
+            v-if="item.is_show"
+            :key="`item__${index}`"
+            class="card-panel-item"
+            :span="6"
+          >
+            <span class="card-panel__label">{{ item.label }}</span>
+            <span class="card-panel__value">{{ getFiledValue(item.field) }}</span>
+          </el-col>
+        </el-row>
+      </div>
+
+      <div class="section-header with-border">
+        <h3>问诊信息</h3>
+      </div>
+      <div class="section-body"  v-if="orderInfo">
+        <el-row>
+            <el-col
+            v-for="(item, index) in prescriptionInfoList"
+            v-if="item.is_show"
+            :key="`item__${index}`"
+            class="card-panel-item"
+            :span="6"
+          >
+            <span class="card-panel__label">{{ item.label }}</span>
+            <span v-if="!item.special" class="card-panel__value">{{ getFiledValue(item.field) }}</span>
+            <span v-if="item.special" class="card-panel__value">
+              <span v-if="item.field == 'dst_file_path'">
+                <el-image
+                :src="getFiledValue(item.field)"
+                class="img-item"
+                :preview-src-list="[getFiledValue(item.field)]"
+              />
+              </span>
+
+            </span>
+          </el-col>
+        </el-row>
+      </div>
+    </template>
 
     <div class="section-header with-border">
       <h3>售后申请信息</h3>
@@ -738,6 +855,12 @@ img {
   height: 120px;
   object-fit: container;
 }
+.flex-row{
+  display:flex;
+  .el-row{
+    display:flex;
+  }
+}
 </style>
 
 <script>
@@ -838,6 +961,45 @@ export default {
       },
       logisticsList: [],
       isJuishuitan: false,
+      interrogationInfoList: [
+        { label: '用药人姓名:', field: 'user_family_name', is_show: true },
+        { label: '身份证号:', field: 'user_family_id_card', is_show: true },
+        { label: '手机号:', field: 'user_family_phone', is_show: true },
+        { label: '用药人年龄:', field: 'user_family_age', is_show: true },
+        { label: '用药人性别:', field: 'user_family_gender', is_show: true },
+        { label: '与您关系:', field: 'relationship', is_show: true },
+        { label: '用药人是否孕妇:', field: 'is_pregnant_woman', is_show: true },
+        { label: '用药人是否哺乳期:', field: 'is_lactation', is_show: true },
+        { label: '是否使用过此类药物:', field: 'before_ai_result_used_medicine', is_show: true },
+        { label: '是否有药物过敏史:', field: 'is_before_ai_result_allergy_history', is_show: true },
+        { label: '药物过敏说明:', field: 'before_ai_result_allergy_history', is_show: true },
+        { label: '肝肾功能是否有异常:', field: 'before_ai_result_body_abnormal', is_show: true },
+      ],
+      prescriptionInfoList: [
+        { label: '处方ID:', field: 'prescription_id', is_show: true },
+        { label: '互联网医院名称:', field: 'hospital_name', is_show: true },
+        { label: '580门店ID:', field: 'kuaizhen_store_id', is_show: true },
+        { label: '580门店名称:', field: 'kuaizhen_store_name', is_show: true },
+        { label: '处方编号:', field: 'serial_no', is_show: true },
+        { label: '医生签署时间:', field: 'doctor_sign_time', is_show: true },
+        { label: '医生科室:', field: 'doctor_office', is_show: true },
+        { label: '医生ID:', field: 'doctor_id', is_show: true },
+        { label: '开方医生:', field: 'doctor_name', is_show: true },
+        { label: '诊断标签:', field: 'tags', is_show: true },
+        { label: '处方状态:', field: 'prescription_in_status', is_show: true },
+        // { label: '通用名:', field: 'community_activity_name', is_show: false },
+        { label: '创建时间:', field: 'prescription_created', is_show: true },
+        { label: '更改时间:', field: 'prescription_updated', is_show: true },
+        { label: '备注:', field: 'prescription_memo', is_show: true },
+        { label: '补充说明:', field: 'prescription_remarks', is_show: true },
+        // { label: '药品用量说明:', field: 'drug_rsp_list', is_show: true },
+        { label: '处方审核状态:', field: 'audit_status', is_show: true },
+        { label: '审方时间:', field: 'audit_time', is_show: true },
+        { label: '审核不通过理由:', field: 'audit_reason', is_show: true },
+        { label: '审方药师名称:', field: 'audit_apothecary_name', is_show: true },
+        { label: '问诊单ID:', field: 'diagnosis_id', is_show: true },
+        { label: '电子处方单:', field: 'dst_file_path', is_show: true, special:true },
+      ],
     }
   },
   computed: {
@@ -915,6 +1077,16 @@ export default {
         }
       })
     },
+    getOrderType({ order_class, type }) {
+      if (order_class == 'normal') {
+        return type == '1' ? '跨境订单' : '普通订单'
+      }
+      const _orderType = this.VERSION_STANDARD ? ORDER_TYPE_STANDARD : ORDER_TYPE
+      const fd = _orderType.find((item) => item.value == order_class)
+      if (fd) {
+        return fd.title
+      }
+    },
     reviewSubmit() {
       this.reviewData.aftersales_bn = this.aftersales_bn
       this.reviewData.is_approved = this.is_approved
@@ -982,6 +1154,12 @@ export default {
           return false
         }
       })
+    },
+    getFiledValue(key) {
+      const { aftersalesInfo } = this
+      if (aftersalesInfo) {
+        return aftersalesInfo[key]
+      }
     },
     refundAction() {
       this.refundData.aftersales_bn = this.aftersales_bn

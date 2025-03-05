@@ -156,7 +156,7 @@ export default {
 
     const activePriceList = [
         { name: '销售价', label: 'sale_price',disabled:true },
-        { name: '市场价', label: 'market_price' },
+        // { name: '市场价', label: 'market_price' },
         { name: '活动价/到手价', label: 'activity_price' }
       ]
     return {

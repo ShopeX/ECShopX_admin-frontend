@@ -201,7 +201,7 @@ export default {
         unit:'',
         packing_spec:'',
         dosage:'',
-        is_prescription:'1',
+        is_prescription:true,
         use_tip:'',
         symptom:''
       },
@@ -434,11 +434,11 @@ export default {
           key: 'is_prescription',
           isShow:()=> this.form.is_medicine == '1' ,
           disabled:()=> this.$route.params.itemId,
-          type: 'radio',
-          options: [
-            { label: '1', name: '是' },
-            { label: '2', name: '否' }
-          ],
+          type: 'switch',
+          // options: [
+          //   { label: '1', name: '是' },
+          //   { label: '2', name: '否' }
+          // ],
           tip: '开启后前端走处方药下单流程'
         },
         {
@@ -447,7 +447,7 @@ export default {
           type: 'input',
           isShow:()=> this.medicinePrescription,
           validator: async (rule, value, callback) => {
-            if (!value && this.form.is_medicine == '1' && this.form.is_prescription == '1') {
+            if (!value && this.form.is_medicine == '1' && this.form.is_prescription) {
               callback('请输入处方药用药提示')
             } else {
               callback()
@@ -460,7 +460,7 @@ export default {
           isShow:()=> this.medicinePrescription,
           type: 'input',
           validator: async (rule, value, callback) => {
-            if (!value && this.form.is_medicine == '1' && this.form.is_prescription == '1') {
+            if (!value && this.form.is_medicine == '1' && this.form.is_prescription) {
               callback('请输入处方药品症状')
             } else {
               callback()
@@ -697,6 +697,7 @@ export default {
                   ref='specParams'
                   is-show-point={this.isShowPoint}
                   isMedicine={this.form.is_medicine == '1'}
+                  medicinePrescription={this.medicinePrescription}
                   disabled={disabled}
                   provinceList={this.provinceList}
                 />
@@ -742,7 +743,6 @@ export default {
           validator: async (rule, value, callback) => {
             if (this.form.isSpecs) {
               const { specItems } = value
-
               const approveStatus = specItems.find(({ approve_status }) => !!approve_status)
               const store = specItems.find(({ store }) => !!store)
               const price = specItems.find(({ price }) => !!price)
@@ -884,7 +884,7 @@ export default {
   },
   computed: {
     medicinePrescription(){
-      return this.form.is_medicine == '1' && this.form.is_prescription == '1'
+      return this.form.is_medicine == '1' && this.form.is_prescription
     }
   },
   created() {
@@ -1082,7 +1082,7 @@ export default {
         this.form.unit = unit
         this.form.packing_spec = packing_spec
         this.form.dosage = dosage
-        this.form.is_prescription = is_prescription + ''
+        this.form.is_prescription = is_prescription == 1
         this.form.use_tip = use_tip
         this.form.symptom = symptom
       }
@@ -1490,15 +1490,15 @@ export default {
           packing_spec,
           dosage
         }
-        if(is_prescription == '1'){
+        if(is_prescription){
           params = {
             ...params,
-            is_prescription,
+            is_prescription:'1',
             use_tip,
             symptom
           }
         }else{
-          params.is_prescription = is_prescription
+          params.is_prescription = is_prescription ? '1' : '2'
         }
       }else{
         params.is_medicine = is_medicine

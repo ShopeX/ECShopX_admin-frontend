@@ -356,7 +356,23 @@ export default {
       ],
       statusOption,
       cacheSpecImages: [],
-      cacheSpecItems: []
+      cacheSpecItems: [],
+      isFirst:true
+    }
+  },
+  watch:{
+    medicinePrescription(nval){
+      if(nval){
+        if(this.isFirst){
+          //解决第一次渲染改数据时触发组件的验证报错
+          this.isFirst = false
+        }else{
+          this.bulkFilling.forEach(item=>item.approve_status = 'instock')
+        }
+        if(this.value.specItems.length){
+          this.value.specItems.forEach(item=>item.approve_status = 'instock')
+        }
+      }
     }
   },
   created() {},

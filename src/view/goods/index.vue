@@ -437,7 +437,7 @@ export default {
           type: 'switch',
           // options: [
           //   { label: '1', name: '是' },
-          //   { label: '2', name: '否' }
+          //   { label: '0', name: '否' }
           // ],
           tip: '开启后前端走处方药下单流程'
         },
@@ -1498,7 +1498,7 @@ export default {
             symptom
           }
         }else{
-          params.is_prescription = is_prescription ? '1' : '2'
+          params.is_prescription = is_prescription ? '1' : '0'
         }
       }else{
         params.is_medicine = is_medicine

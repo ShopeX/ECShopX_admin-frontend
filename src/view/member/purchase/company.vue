@@ -517,18 +517,18 @@ export default {
         ctx.drawImage(image1, 0, 0);
 
         // 计算第二张图片的绘制位置，使其位于右下角
-        const x = canvas.width - 330;
-        const y = canvas.height - 360;
+        const x = canvas.width - 350;
+        const y = canvas.height - 420;
 
         // 设置文字样式
-        ctx.font = '20px sans-serif';
+        ctx.font = '22px sans-serif';
         ctx.fillStyle = '#F3B289';
         ctx.textAlign = 'center';
         ctx.textBaseline = 'alphabetic';
 
         // 计算文字的位置，使其位于第二张图片下方居中
         const textX = x + 150;
-        const textY = y + 300 + 30; // 30 是文字与图片的间距
+        const textY = y + 300 + 35; // 30 是文字与图片的间距
 
         // 确保文字位置在 canvas 范围内
         if (textX >= 0 && textX <= canvas.width && textY >= 0 && textY <= canvas.height) {

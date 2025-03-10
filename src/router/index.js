@@ -170,7 +170,7 @@ router.beforeEach((to, from, next) => {
       } else if (to.path.includes('/merchant')) {
         window.location.href = constantRouterMap.RouteAuth[2].path
       } else if (to.path.includes('/supplier')) {
-        window.location.href = constantRouterMap.RouteAuth[10].path
+        window.location.href = constantRouterMap.RouteAuth[9].path
       } else {
         // 登录
         window.location.href = constantRouterMap.RouteAuth[0].path

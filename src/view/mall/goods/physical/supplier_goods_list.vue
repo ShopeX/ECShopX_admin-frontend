@@ -799,7 +799,8 @@ export default {
                   query: {
                     some_param: 'true',
                     detail: true,
-                    isSupplierGoods:true
+                    isSupplierGoods:true,
+                    islist:1
                   }
                 })
               }

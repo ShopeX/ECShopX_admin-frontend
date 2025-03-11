@@ -774,7 +774,7 @@ export default {
     },
     async fetchDetail() {
       const { itemId } = this.$route.params
-      const { is_new, supplier } = this.$route.query
+      const { is_new, supplier,islist } = this.$route.query
       this.routerParams = this.$route.query || {}
 
 
@@ -833,7 +833,7 @@ export default {
         package_type = ''
       } = await this.$api.goods.getItemsDetail(itemId, {
        operate_source: supplier ? 'supplier' : IS_SUPPLIER() ? 'supplier' : this.routerParams?.isSupplierGoods ? 'supplier' : 'platform',
-       page_from:"supplier_items"
+       page_from:islist?"supplier_items":''
       })
       console.log(666, buy_limit_area)
       this.loading = false

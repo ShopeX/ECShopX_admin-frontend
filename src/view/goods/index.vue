@@ -832,7 +832,8 @@ export default {
         buy_limit_area = [],
         package_type = ''
       } = await this.$api.goods.getItemsDetail(itemId, {
-       operate_source: supplier ? 'supplier' : IS_SUPPLIER() ? 'supplier' : this.routerParams?.isSupplierGoods ? 'supplier' : 'platform'
+       operate_source: supplier ? 'supplier' : IS_SUPPLIER() ? 'supplier' : this.routerParams?.isSupplierGoods ? 'supplier' : 'platform',
+       page_from:"supplier_items"
       })
       console.log(666, buy_limit_area)
       this.loading = false

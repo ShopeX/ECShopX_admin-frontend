@@ -164,7 +164,7 @@ export default {
               callback()
             }
           },
-          isShow:()=>this.isMedicine,
+          isShow:()=>this.medicinePrescription,
           display: 'inline'
         }
       ]

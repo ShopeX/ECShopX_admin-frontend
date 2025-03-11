@@ -266,7 +266,9 @@ export default {
         items_page:['sale_price','activity_price'],
         cart_page:['sale_price','activity_price'],
         order_detail_page:['sale_price','activity_price'],
-        checkout_page:['sale_price','activity_price']
+        checkout_page:['sale_price','activity_price'],
+        is_discount_description_enabled:false,
+        discount_description:''
       },
 
       activityRuleList: [
@@ -514,6 +516,18 @@ export default {
           type: 'checkbox',
           options: activePriceList
         },
+        {
+          label: '优惠说明',
+          key: 'is_discount_description_enabled',
+          type: 'switch',
+          tip:'开启优惠说明展示在结算页，关闭不展示'
+        },
+        {
+          label: '结算页价格优惠说说明',
+          key: 'discount_description',
+          type: 'input',
+        },
+
       ],
       activityStatus: ''
     }
@@ -606,7 +620,9 @@ export default {
         },
         orderMiniAmount: res.minimum_amount / 100,
         modifyReceiveAddress: res.close_modify_hours_after_activity,
-        ...priceData
+        ...priceData,
+        is_discount_description_enabled:res.is_discount_description_enabled == 'true',
+        discount_description:res.discount_description
 
       }
       this.onRadioChange(res.if_share_limitfee ? '2' : '1')
@@ -675,7 +691,9 @@ export default {
         employee: { datetime: employeeDateTime, quota },
         relatives: { join, num, datetime: relativesDateTime, type, shareLimit },
         orderMiniAmount,
-        modifyReceiveAddress
+        modifyReceiveAddress,
+        is_discount_description_enabled,
+        discount_description
       } = this.activityRule
       let params = {
         name,
@@ -694,7 +712,9 @@ export default {
         relative_limitfee: shareLimit * 100,
         minimum_amount: orderMiniAmount * 100,
         close_modify_hours_after_activity: modifyReceiveAddress,
-        price_display_config: JSON.stringify(this.priceShowData(this.activityRule))
+        price_display_config: JSON.stringify(this.priceShowData(this.activityRule)),
+        is_discount_description_enabled,
+        discount_description
       }
       if (relativesDateTime[0]) {
         params = {

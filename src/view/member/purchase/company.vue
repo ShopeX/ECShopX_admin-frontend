@@ -14,8 +14,8 @@
 <style lang="scss" scoped>
 .qurcode-canvas{
   position: fixed;
-  left: -300%;
-  right: -300%;
+  left: -1000%;
+  right: -1000%;
 }
 </style>
 <template>

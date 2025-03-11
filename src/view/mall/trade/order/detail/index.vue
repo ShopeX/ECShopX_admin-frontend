@@ -330,6 +330,12 @@
             :span="6"
           >
             <span class="card-panel__label">{{ item.label }}</span>
+            <div v-if="item.type == 'cycle' ">
+              <div class="card-panel__value" v-for='(item1,index1) in orderInfo.prescription_data[item.field]' :key='index1'>
+                <div>{{ item1.drugCommonName }}</div>
+                <div>用法：{{ item1.instructions }}</div>
+              </div>
+            </div>
             <span v-if="!item.special" class="card-panel__value">{{ getFiledValue(item.field) }}</span>
             <span v-if="item.special" class="card-panel__value">
               <span v-if="item.field == 'dst_file_path'">
@@ -339,7 +345,6 @@
                 :preview-src-list="[getFiledValue(item.field)]"
               />
               </span>
-
             </span>
           </el-col>
           </el-row>
@@ -596,7 +601,7 @@ export default {
         { label: '审核不通过理由:', field: 'audit_reason', is_show: true },
         { label: '审方药师名称:', field: 'audit_apothecary_name', is_show: true },
         { label: '问诊单ID:', field: 'diagnosis_id', is_show: true },
-        // { label: '药品用法用量说明:', field: 'diagnosis_id', is_show: true },
+        { label: '药品用法用量说明:', field: 'drug_rsp_list',type:'cycle',special:true, is_show: true },
         { label: '电子处方单:', field: 'dst_file_path', is_show: true, special:true },
       ],
 

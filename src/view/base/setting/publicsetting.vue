@@ -246,7 +246,7 @@ export default {
           }
         },
         {
-          label: 'COPIED',
+          label: 'clientId',
           key: 'clientId',
           type: 'input',
           isShow:() => this.form.use_third_party_system && this.form.is_pharma_industry,

@@ -953,7 +953,7 @@ export default {
         volume: '',
         price: '',
         market_price: '',
-        pay_class: '',
+        pay_class: 'point',
         cost_price: 0,
         point: 0,
         barcode: '',

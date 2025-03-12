@@ -144,7 +144,7 @@
             </template>
             </el-table-column>
             <el-table-column prop="item_bn" label="sku编码" width="180" />
-            <el-table-column prop="item_spec_desc" label="规格" width="180" />
+            <el-table-column prop="orderItem.item_spec_desc" label="规格" width="180" />
             <el-table-column prop="supplier_name" label="来源供应商" width="180" >
               <template slot-scope="scope">
                 {{ scope.row.supplier_name?.supplier_name }}
@@ -923,7 +923,11 @@ export default {
       })
     },
     handleOrderClick(order_id){
-      window.open(`/order/entitytrade/tradenormalorders?order_id=${order_id}`,'_blank')
+      if(this.IS_ADMIN()){
+        window.open(`/order/entitytrade/tradenormalorders?order_id=${order_id}`,'_blank')
+      }else{
+        window.open(`/shopadmin/order/tradenormalorders?order_id=${order_id}`,'_blank')
+      }
     },
     reviewSubmit() {
       this.reviewData.aftersales_bn = this.aftersales_bn

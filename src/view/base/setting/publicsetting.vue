@@ -391,6 +391,7 @@ export default {
     },
     async primarySetting(isBtn){
       const { is_pharma_industry,use_third_party_system,clientId,clientSecret,storeId } = this.form
+     try {
       await this.$api.company.setPharmaIndustry({
         is_pharma_industry:is_pharma_industry ? '1' : '0',
         use_third_party_system:use_third_party_system ? 'kuaizhen580' : '',
@@ -399,6 +400,9 @@ export default {
       if(isBtn){
         this.$message.success('保存成功')
       }
+     } catch (error) {
+      this.form.is_pharma_industry = !this.form.is_pharma_industry
+     }
     }
   }
 }

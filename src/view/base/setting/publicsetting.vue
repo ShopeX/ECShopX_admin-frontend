@@ -401,7 +401,7 @@ export default {
         this.$message.success('保存成功')
       }
      } catch (error) {
-      this.form.is_pharma_industry = !this.form.is_pharma_industry
+      this.fetch()
      }
     }
   }

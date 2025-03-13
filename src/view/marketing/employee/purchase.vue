@@ -157,7 +157,7 @@ export default {
     const activePriceList = [
         { name: '销售价', label: 'sale_price',disabled:true },
         // { name: '市场价', label: 'market_price' },
-        { name: '活动价/到手价', label: 'activity_price' }
+        { name: '活动价', label: 'activity_price' }
       ]
     return {
       formBase: {
@@ -386,66 +386,72 @@ export default {
                   <span class='form-item-tip'>亲友参与活/亲友不参与活动</span>
                 </div>
               </div>
-              <div class='form-item-content'>
-                <div class='content-item'>
-                  <label>邀请亲友</label>
-                  <SpInput
-                    v-model={this.activityRule.relatives.num}
-                    width='120px'
-                    disabled={num}
-                    placeholder='大于0的整数'
-                    prefix='每名员工最多可邀请'
-                    suffix='名亲友'
-                  />
-                </div>
-              </div>
-              <div class='form-item-content'>
-                <div class='content-item'>
-                  <label>购买时间</label>
-                  <el-date-picker
-                    v-model={this.activityRule.relatives.datetime}
-                    disabled={datetime}
-                    type='daterange'
-                    range-separator='至'
-                    start-placeholder='开始时间'
-                    end-placeholder='结束时间'
-                  />
-                </div>
-              </div>
-              <div class='form-item-content'>
-                <div class='content-item'>
-                  <label>购买额度</label>
-                  <div class='content-item-field'>
-                    <div class='item-wrap'>
-                      <el-radio
-                        v-model={this.activityRule.relatives.type}
-                        disabled={type}
-                        label='1'
-                        onChange={this.onRadioChange}
-                      >
+              {
+                this.activityRule.relatives.join ? (
+                  <div>
+                    <div class='form-item-content'>
+                      <div class='content-item'>
+                        <label>邀请亲友</label>
                         <SpInput
-                          v-model={this.activityRule.relatives.shareLimit}
+                          v-model={this.activityRule.relatives.num}
                           width='120px'
-                          disabled={shareLimit}
+                          disabled={num}
                           placeholder='大于0的整数'
-                          prefix='每人最多可购买额度'
-                          suffix='元'
+                          prefix='每名员工最多可邀请'
+                          suffix='名亲友'
                         />
-                      </el-radio>
+                      </div>
                     </div>
-                    <div class='item-wrap'>
-                      <el-radio
-                        v-model={this.activityRule.relatives.type}
-                        disabled={type}
-                        label='2'
-                        onChange={this.onRadioChange}
-                      >
-                        共享员工额度
-                      </el-radio>
+                    <div class='form-item-content'>
+                      <div class='content-item'>
+                        <label>购买时间</label>
+                        <el-date-picker
+                          v-model={this.activityRule.relatives.datetime}
+                          disabled={datetime}
+                          type='daterange'
+                          range-separator='至'
+                          start-placeholder='开始时间'
+                          end-placeholder='结束时间'
+                        />
+                      </div>
+                    </div>
+                    <div class='form-item-content'>
+                      <div class='content-item'>
+                        <label>购买额度</label>
+                        <div class='content-item-field'>
+                          <div class='item-wrap'>
+                            <el-radio
+                              v-model={this.activityRule.relatives.type}
+                              disabled={type}
+                              label='1'
+                              onChange={this.onRadioChange}
+                            >
+                              <SpInput
+                                v-model={this.activityRule.relatives.shareLimit}
+                                width='120px'
+                                disabled={shareLimit}
+                                placeholder='大于0的整数'
+                                prefix='每人最多可购买额度'
+                                suffix='元'
+                              />
+                            </el-radio>
+                          </div>
+                          <div class='item-wrap'>
+                            <el-radio
+                              v-model={this.activityRule.relatives.type}
+                              disabled={type}
+                              label='2'
+                              onChange={this.onRadioChange}
+                            >
+                              共享员工额度
+                            </el-radio>
+                          </div>
+                        </div>
+                      </div>
                     </div>
                   </div>
-                </div>
-              </div>
+                ):''
+              }
             </div>
           ),
           disabled: {
@@ -504,12 +510,12 @@ export default {
           type: 'checkbox',
           options: activePriceList
         },
-        {
-          label: '订单详情',
-          key: 'order_detail_page',
-          type: 'checkbox',
-          options: activePriceList
-        },
+        // {
+        //   label: '订单列表/订单详情',
+        //   key: 'order_detail_page',
+        //   type: 'checkbox',
+        //   options: activePriceList
+        // },
         {
           label: '结算页',
           key: 'checkout_page',

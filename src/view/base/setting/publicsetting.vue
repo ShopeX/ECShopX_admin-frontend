@@ -212,7 +212,7 @@ export default {
           }
         },
         {
-          label: '是否为医药行业',
+          label: '医药行业',
           key: 'is_pharma_industry',
           type: 'switch',
           tip: '用于开启医药行业商品与处方药业务',
@@ -220,7 +220,7 @@ export default {
           onChange: this.primarySetting
         },
         {
-          label: '是否集成第三方处方系统',
+          label: '第三方处方系统',
           key: 'use_third_party_system',
           type: 'switch',
           isShow: ()=>this.form.is_pharma_industry,

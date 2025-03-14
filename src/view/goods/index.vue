@@ -311,6 +311,7 @@ export default {
           label: '商品类型',
           key: 'is_medicine',
           type: 'radio',
+          isShow:()=> this.is_pharma_industry,
           disabled:()=> !this.is_pharma_industry || this.$route.params.itemId,
           options: [
             {
@@ -442,26 +443,26 @@ export default {
           tip: '开启后前端走处方药下单流程'
         },
         {
-          label: '处方药用药提示',
+          label: '用药提示',
           key: 'use_tip',
           type: 'input',
           isShow:()=> this.medicinePrescription,
           validator: async (rule, value, callback) => {
             if (!value && this.form.is_medicine == '1' && this.form.is_prescription) {
-              callback('请输入处方药用药提示')
+              callback('请输入用药提示')
             } else {
               callback()
             }
           }
         },
         {
-          label: '处方药品症状',
+          label: '药品症状',
           key: 'symptom',
           isShow:()=> this.medicinePrescription,
           type: 'input',
           validator: async (rule, value, callback) => {
             if (!value && this.form.is_medicine == '1' && this.form.is_prescription) {
-              callback('请输入处方药品症状')
+              callback('请输入药品症状')
             } else {
               callback()
             }

@@ -143,7 +143,7 @@
         :hooks="{
           beforeSearch: beforeSearch
         }"
-        url="/goods/items"
+        :url="goodsUrl"
         @selection-change="onSelectionChange"
       />
     </div>
@@ -352,6 +352,19 @@ export default {
       })
     }
   },
+  computed:{
+    goodsUrl(){
+      if ((this.VERSION_STANDARD && this.IS_DISTRIBUTOR()) ||
+        !(this.VERSION_PLATFORM ||
+        !this.value?.distributor_id ||
+        this.value?.distributor_id == '0')
+      ) {
+        return 'distributor/items'
+      }else{
+        return '/goods/items'
+      }
+    }
+  },
   async created() {
     await this.getCategoryInfo()
     this.getGoodsBranchList()
@@ -373,7 +386,8 @@ export default {
       return {
         ...params,
         item_type: 'normal',
-        ...this.queryForm
+        ...this.queryForm,
+        distributor_id:this.value?.distributor_id
       }
     },
     onSearch() {

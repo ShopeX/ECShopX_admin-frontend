@@ -519,6 +519,7 @@ export default {
       } = await this.$picker.goodsList({
         // data: 100,
         // shopid: this.shopId
+        distributor_id:this.distributor_id
       })
 
       const { id } = this.$route.params

@@ -1171,6 +1171,11 @@ export default {
       }
     },
     async fetchMainCate() {
+      if(this.is_distributor){
+        const res = await this.$api.goods.getCategory({ is_show: false })
+        this.categoryList = res
+        return
+      }
       const res = await this.$api.goods.getCategory({ is_main_category: true, ignore_none: true })
       this.categoryList = res
     },

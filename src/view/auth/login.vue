@@ -107,7 +107,7 @@ const login_bg_shopadmin = require(`@/assets/imgs/login-shopadmin.jpg`)
 const login_bg_yundian = require(`@/assets/imgs/login-yundian.jpg`)
 const login_bg_b2c = require(`@/assets/imgs/login-b2c.jpg`)
 const login_bg_inpurchase = require(`@/assets/imgs/login-inpurchase.jpg`)
-const login_bg_ecshopx = require(`@/assets/imgs/login-ecshopx.jpg`)
+const login_bg_ecshopx = require(`@/assets/imgs/login-b2b2c.jpg`)
 const login_bg_free_ecshopx = require(`@/assets/imgs/login-free-ecshopx.jpg`)
 import { mapMutations } from 'vuex'
 import { requiredRules, MinRules } from '@/utils/validate'

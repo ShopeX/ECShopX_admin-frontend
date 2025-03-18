@@ -55,6 +55,28 @@ export default {
       ]
     },
     {
+      path: 'entitytrade/prescriptionorders',
+      name: `处方药订单`,
+      component: () => import('@/view/mall/trade/normalorders/prepList'),
+      children: [
+        {
+          path: 'detail/:itemId?',
+          component: () => import('@/view/mall/trade/order/detail'),
+          meta: {
+            footerFixed: true
+          }
+        },
+        {
+          path: 'process/:itemId?',
+          component: () => import('@/view/mall/trade/order/process')
+        },
+        {
+          path: 'after-sale/:id?',
+          component: () => import('@/view/mall/trade/order/afterSale')
+        }
+      ]
+    },
+    {
       path: 'entitytrade/tradenormalshoporders',
       name: `自营订单`,
       component: () => import('@/view/mall/trade/normalorders/shopList'),

@@ -78,7 +78,7 @@
           </el-col>
         </el-row>
         <el-form-item class="cus-el-form">
-          <el-button type="primary" @click="handleDialogOpen('form', 'APPROVED')"> 通过 </el-button>
+          <el-button type="primary" :disabled="isdisabled" @click="handleDialogOpen('form', 'APPROVED')"> 通过 </el-button>
           <el-button type="danger" @click="handleDialogOpen('form', 'REJECT')"> 驳回 </el-button>
         </el-form-item>
       </el-form>
@@ -140,6 +140,15 @@ export default {
       approveType: ''
     }
   },
+  computed: {
+    isdisabled() {
+      // 判断分账比例是否填写，未填写则禁用提交按钮
+      return this.info.entry_apply_info.operator_type === 'distributor' && 
+        (!this.form.headquarters_proportion ||
+        (this.info.is_rel_dealer && !this.form.dealer_proportion) ||
+        (this.info.is_rel_merchant && !this.form.merchant_proportion))
+    }
+},
   mounted() {
     const {
       entry_apply_info,
@@ -246,6 +255,12 @@ export default {
 .cus-el-form {
   justify-content: center;
   margin-top: 30px;
+}
+
+.el-button--primary.is-disabled {
+  background-color: var(--themeColor) !important;
+  opacity: 0.5;
+  border-color: var(--themeColor);
 }
 .cus-row-form {
   .el-col-12 {

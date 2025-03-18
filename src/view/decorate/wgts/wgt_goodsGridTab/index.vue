@@ -37,7 +37,10 @@
               <div v-if="value.brand" class="brand-logo">
                 <SpImage :src="item.brand" :width="60" :height="60" circle />
               </div>
-              <div class="name">{{ item.title }}</div>
+              <div class="name">
+                <el-tag v-if="item.medicine_data?.is_prescription == 1" type="primary" size="mini" style="background-color: #fff;">处方药</el-tag>
+                {{ item.title }}
+              </div>
               <div v-if="value.showPrice" class="price">
                 <SpPrice class="item-price" :value="item.price / 100" :size="15" />
                 <SpPrice
@@ -61,7 +64,10 @@
               <div v-if="value.brand" class="brand-logo">
                 <SpImage :src="item.brand" :width="60" :height="60" circle />
               </div>
-              <div class="name">{{ item.title }}</div>
+              <div class="name">
+                <el-tag v-if="item.medicine_data?.is_prescription == 1" type="primary" size="mini" style="background-color: #fff;">处方药</el-tag>
+                {{ item.title }}
+              </div>
               <div v-if="value.showPrice" class="price">
                 <SpPrice class="item-price" :value="item.price / 100" :size="15" />
                 <SpPrice

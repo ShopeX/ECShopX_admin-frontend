@@ -13,7 +13,7 @@
             <div class="goods-sku">
               <template v-if="!item.nospec">
                 {{ item.spec_items.length > 0 ? '已选' + item.spec_items.length : '全规格' }}
-                <div class="goods-sku-check" @click="handleSkuDialogShow(index)">选择规格</div>
+                <div v-if="!isHidenSku" class="goods-sku-check" @click="handleSkuDialogShow(index)">选择规格</div>
               </template>
             </div>
           </div>
@@ -74,6 +74,10 @@ export default {
     single: {
       type: Boolean,
       default: false
+    },
+    isHidenSku:{
+      type: Boolean,
+      default:false
     }
   },
   data() {

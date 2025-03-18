@@ -227,6 +227,9 @@ export default {
 //       }
 //   }
 // }
+.el-form-item{
+  flex-direction: column;
+}
 
 .setting-view {
   position: relative;

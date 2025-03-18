@@ -29,7 +29,7 @@
       <el-row>
         <el-col :span="3" class="col-3 content-right"> 订单号: </el-col>
         <el-col :span="20">
-          {{ aftersalesInfo.order_id }}
+          <el-button type="text" @click="()=>handleOrderClick(aftersalesInfo.order_id)">{{ aftersalesInfo.order_id }}</el-button>
         </el-col>
       </el-row>
       <el-row>
@@ -135,9 +135,16 @@
                 <span><img :src="scope.row.item_pic" :alt="scope.row.item_name"></span>
               </template>
             </el-table-column>
-            <el-table-column prop="item_name" label="商品名称" width="180" />
+            <el-table-column prop="item_name" label="商品名称" width="180">
+              <template slot-scope="scope">
+              <div class="ell3">
+                <el-tag v-if="scope.row.orderItem.is_prescription === 1" type="primary" size="mini" style="background-color: #fff;">处方药</el-tag>
+                {{ scope.row.item_name }}
+              </div>
+            </template>
+            </el-table-column>
             <el-table-column prop="item_bn" label="sku编码" width="180" />
-            <el-table-column prop="item_spec_desc" label="规格" width="180" />
+            <el-table-column prop="orderItem.item_spec_desc" label="规格" width="180" />
             <el-table-column prop="supplier_name" label="来源供应商" width="180" >
               <template slot-scope="scope">
                 {{ scope.row.supplier_name?.supplier_name }}
@@ -914,6 +921,13 @@ export default {
           this.aftersalesInfo.sendconfirm_data = null
         }
       })
+    },
+    handleOrderClick(order_id){
+      if(this.IS_ADMIN()){
+        window.open(`/order/entitytrade/tradenormalorders?order_id=${order_id}`,'_blank')
+      }else{
+        window.open(`/shopadmin/order/tradenormalorders?order_id=${order_id}`,'_blank')
+      }
     },
     reviewSubmit() {
       this.reviewData.aftersales_bn = this.aftersales_bn

@@ -84,6 +84,27 @@
         >
           <SpSelectShop v-model="params.distributor_id" clearable placeholder="请选择" />
         </SpFilterFormItem>
+        <SpFilterFormItem prop="order_class" label="订单类型:">
+          <el-select v-model="params.order_class" clearable placeholder="请选择">
+            <el-option
+              v-for="item in orderType"
+              :key="item.value"
+              size="mini"
+              :label="item.title"
+              :value="item.value"
+            />
+          </el-select>
+      </SpFilterFormItem>
+      <SpFilterFormItem v-if="is_pharma_industry" prop="is_prescription_order" label="是否处方药:">
+        <el-select v-model="params.is_prescription_order" clearable placeholder="请选择">
+          <el-option label="全部" value="" />
+          <el-option label="是" value="1" />
+          <el-option label="否" value="0" />
+        </el-select>
+      </SpFilterFormItem>
+      <!-- <SpFilterFormItem v-if="is_pharma_industry" prop="user_family_name" label="用药人姓名:">
+        <el-input v-model="params.user_family_name" placeholder="请输入用药人姓名" />
+      </SpFilterFormItem> -->
       </SpFilterForm>
 
       <div class="action-container">
@@ -379,7 +400,7 @@ import { mapGetters } from 'vuex'
 import RemarkModal from '@/components/remarkModal'
 import mixin, { pageMixin, remarkMixin } from '@/mixins'
 import { VERSION_B2C, IS_SUPPLIER } from '@/utils'
-import { ORDER_CATEGORY} from '@/consts'
+import { ORDER_CATEGORY,  ORDER_TYPE, ORDER_TYPE_STANDARD,} from '@/consts'
 export default {
   components: {
     RemarkModal
@@ -402,7 +423,11 @@ export default {
       item_bn: undefined,
       supplier_name:undefined,
       order_holder:undefined,
-      distributor_id:undefined
+      distributor_id:undefined,
+      order_class:undefined,
+      yyrname:undefined,
+      is_prescription_order:undefined,
+      user_family_name:undefined
     }
     return {
       loading: false,
@@ -410,6 +435,8 @@ export default {
       params: {
         ...initialParams
       },
+      is_pharma_industry:false,
+      orderType: this.VERSION_STANDARD ? ORDER_TYPE_STANDARD : ORDER_TYPE,
       orderCategory: ORDER_CATEGORY,
       shopList: [],
       aftersalesStatusList: [
@@ -462,11 +489,16 @@ export default {
     if (this.$route.query.aftersales_status) {
       this.params.aftersales_status = this.$route.query.aftersales_status
     }
+    this.getBaseSetting()
     //获取所有店铺
     this.getStoreList()
     this.fetchList()
   },
   methods: {
+    async getBaseSetting(){
+      const res = await this.$api.company.getGlobalSetting()
+      this.is_pharma_industry = res.medicine_setting.is_pharma_industry == '1'
+    },
     handleSelectStore(storeItem) {
       this.params.distributor.id = storeItem.distributor_id
     },
@@ -497,7 +529,10 @@ export default {
         supplier_name:this.params.supplier_name || undefined,
         order_holder:this.params.order_holder || undefined,
         distributor_id: this.params.distributor_id || undefined,
-
+        order_class:this.params.order_class || undefined,
+        yyrname:this.params.yyrname || undefined,
+        is_prescription_order:this.params.is_prescription_order || undefined,
+        user_family_name:this.params.user_family_name || undefined
       }
       return params
     },

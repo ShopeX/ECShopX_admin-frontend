@@ -98,6 +98,68 @@
           :height="wheight - 190"
           element-loading-text="数据加载中"
         >
+
+        <el-table-column label="操作" fixed="left">
+          <template slot-scope="scope">
+            <router-link
+              :to="{
+                path: matchHidePage('detail'),
+                query: { orderId: scope.row.order_id, resource: $route.path }
+              }"
+              style="margin-right: 5px"
+            >
+              详情
+            </router-link>
+            <el-button
+              v-if="
+                scope.row.cancel_status == 'NO_APPLY_CANCEL' &&
+                (scope.row.order_status == 'NOTPAY' || scope.row.order_status == 'PAYED')
+              "
+              type="text"
+              style="margin-right: 5px"
+              @click="cancelOrderAction(scope.row.order_id)"
+            >
+              取消订单
+            </el-button>
+            <el-button
+              v-if="
+                scope.row.receipt_type == 'logistics' &&
+                scope.row.order_status == 'PAYED' &&
+                scope.row.delivery_status != 'DONE'
+              "
+              type="text"
+              style="margin-right: 5px"
+              @click="deliveryAction(scope.row)"
+            >
+              发货
+            </el-button>
+            <el-button
+              v-if="
+                scope.row.receipt_type == 'ziti' &&
+                scope.row.ziti_status == 'PENDING' &&
+                scope.row.order_status == 'PAYED'
+              "
+              type="text"
+              style="margin-right: 5px"
+              @click="writeoffOrderAction(scope.row.order_id)"
+            >
+              核销
+            </el-button>
+            <el-button
+              v-if="
+                scope.row.cancel_status == 'WAIT_PROCESS' && scope.row.order_status == 'PAYED'
+              "
+              type="text"
+              style="margin-right: 5px"
+              @click="confirmCancelOrderAction(scope.row.order_id)"
+            >
+              退款
+            </el-button>
+            <el-button type="text" @click="clickShowRemark(scope.row, 'normalList2')">
+              备注
+            </el-button>
+          </template>
+        </el-table-column>
           <el-table-column prop="order_id" width="150" label="订单号" fixed />
           <el-table-column prop="create_time" width="160" label="创建时间">
             <template slot-scope="scope">
@@ -242,67 +304,6 @@
           <el-table-column label="配送员电话">
             <template slot-scope="scope">
               {{ scope.row.mobile }}
-            </template>
-          </el-table-column>
-          <el-table-column label="操作" fixed="right">
-            <template slot-scope="scope">
-              <router-link
-                :to="{
-                  path: matchHidePage('detail'),
-                  query: { orderId: scope.row.order_id, resource: $route.path }
-                }"
-                style="margin-right: 5px"
-              >
-                详情
-              </router-link>
-              <el-button
-                v-if="
-                  scope.row.cancel_status == 'NO_APPLY_CANCEL' &&
-                  (scope.row.order_status == 'NOTPAY' || scope.row.order_status == 'PAYED')
-                "
-                type="text"
-                style="margin-right: 5px"
-                @click="cancelOrderAction(scope.row.order_id)"
-              >
-                取消订单
-              </el-button>
-              <el-button
-                v-if="
-                  scope.row.receipt_type == 'logistics' &&
-                  scope.row.order_status == 'PAYED' &&
-                  scope.row.delivery_status != 'DONE'
-                "
-                type="text"
-                style="margin-right: 5px"
-                @click="deliveryAction(scope.row)"
-              >
-                发货
-              </el-button>
-              <el-button
-                v-if="
-                  scope.row.receipt_type == 'ziti' &&
-                  scope.row.ziti_status == 'PENDING' &&
-                  scope.row.order_status == 'PAYED'
-                "
-                type="text"
-                style="margin-right: 5px"
-                @click="writeoffOrderAction(scope.row.order_id)"
-              >
-                核销
-              </el-button>
-              <el-button
-                v-if="
-                  scope.row.cancel_status == 'WAIT_PROCESS' && scope.row.order_status == 'PAYED'
-                "
-                type="text"
-                style="margin-right: 5px"
-                @click="confirmCancelOrderAction(scope.row.order_id)"
-              >
-                退款
-              </el-button>
-              <el-button type="text" @click="clickShowRemark(scope.row, 'normalList2')">
-                备注
-              </el-button>
             </template>
           </el-table-column>
         </el-table>

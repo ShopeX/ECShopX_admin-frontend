@@ -625,7 +625,8 @@ export default {
       const { distributor_id } = this.$route.query
       let params = {
         ...this.params,
-        distributor_id
+        distributor_id,
+        page_size:20
       }
       const { list, total_count } = await this.$api.template.getPagesTemplateList(params)
       this.templateList = list.map((item) => {

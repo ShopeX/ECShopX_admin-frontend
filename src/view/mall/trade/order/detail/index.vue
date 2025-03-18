@@ -68,6 +68,7 @@
           <el-table-column prop="item_name" label="商品名称" width="180">
             <template slot-scope="scope">
               <div class="ell3">
+                <el-tag v-if="scope.row.is_prescription == 1" type="primary" size="mini" style="background-color: #fff;">处方药</el-tag>
                 {{ scope.row.item_name }}
               </div>
               <el-tag v-if="scope.row.order_item_type == 'gift'" size="mini" type="success">
@@ -75,6 +76,7 @@
               </el-tag>
             </template>
           </el-table-column>
+          <!-- <el-table-column v-if="orderInfo.prescription_status" prop="instructions" label="处方用量" width="160" /> -->
           <el-table-column prop="item_holder" label="商品类型" width="100">
             <template slot-scope="scope">
               <div class="ell3">
@@ -96,6 +98,14 @@
           <el-table-column prop="item_spec_desc" label="规格">
             <template slot-scope="scope">
               {{ scope.row.item_spec_desc ? scope.row.item_spec_desc : '单规格' }}
+            </template>
+          </el-table-column>
+
+          <el-table-column v-if="orderInfo.prescription_status" prop="medicine_symptom_set" label="症状" width="160" >
+            <template slot-scope="scope">
+              <div v-for="item in scope.row.medicine_symptom_set" :key="item.id">
+                {{ item }}
+              </div>
             </template>
           </el-table-column>
           <el-table-column prop="supplier_name" label="来源供应商" width="120">
@@ -288,6 +298,61 @@
       </div>
     </el-card>
 
+    <!-- 处方药 -->
+    <template v-if="orderInfo.prescription_status">
+      <el-card v-if="orderInfo.diagnosis_data && Object.keys(orderInfo.diagnosis_data).length" class="el-card--normal">
+        <div slot="header">问诊信息</div>
+        <div class="card-panel">
+          <el-row>
+            <el-col
+            v-for="(item, index) in interrogationInfoList"
+            v-if="item.is_show"
+            :key="`item__${index}`"
+            class="card-panel-item"
+            :span="6"
+          >
+            <span class="card-panel__label">{{ item.label }}</span>
+            <span class="card-panel__value">{{ getFiledValue(item.field) }}</span>
+          </el-col>
+          </el-row>
+        </div>
+      </el-card>
+
+      <el-card class="el-card--normal"  v-if="orderInfo.prescription_data && Object.keys(orderInfo.prescription_data).length">
+        <div slot="header">处方信息</div>
+        <div class="card-panel">
+          <el-row>
+            <el-col
+            v-for="(item, index) in prescriptionInfoList"
+            v-if="item.is_show"
+            :key="`item__${index}`"
+            class="card-panel-item"
+            :span="6"
+          >
+            <span class="card-panel__label">{{ item.label }}</span>
+            <div v-if="item.type == 'cycle' ">
+              <div class="card-panel__value" v-for='(item1,index1) in orderInfo.prescription_data[item.field]' :key='index1'>
+                <div>{{ item1.drugCommonName }}</div>
+                <div>用法：{{ item1.instructions }}</div>
+              </div>
+            </div>
+            <span v-if="!item.special" class="card-panel__value">{{ getFiledValue(item.field) }}</span>
+            <span v-if="item.special" class="card-panel__value">
+              <span v-if="item.field == 'dst_file_path'">
+                <el-image
+                :src="getFiledValue(item.field)"
+                class="img-item"
+                :preview-src-list="[getFiledValue(item.field)]"
+              />
+              </span>
+            </span>
+          </el-col>
+          </el-row>
+        </div>
+      </el-card>
+    </template>
+
+
     <el-card class="el-card--normal">
       <div slot="header">物流信息</div>
       <div v-if="orderInfo" class="card-panel">
@@ -468,7 +533,11 @@ export default {
         { label: '购物赠送积分:', field: 'bonus_points', is_show: !this.VERSION_IN_PURCHASE },
         { label: '订单获取积分:', field: 'get_points', is_show: !this.VERSION_IN_PURCHASE },
         { label: '额外获取积分:', field: 'extra_points', is_show: !this.VERSION_IN_PURCHASE },
-        { label: '积分抵扣:', field: 'point_use', is_show: !this.VERSION_IN_PURCHASE }
+        { label: '积分抵扣:', field: 'point_use', is_show: !this.VERSION_IN_PURCHASE },
+        { label: '用户身份:', field: 'purchaseRole', is_show: true },
+        { label: '姓名:', field: 'employee_name', is_show: true },
+        { label: '所属企业:', field: 'enterprise_name', is_show: true },
+        { label: '来源店铺:', field: 'distributor_name', is_show: true },
       ],
       payList: [
         { label: '交易单号:', field: 'tradeId', is_show: true },
@@ -494,6 +563,46 @@ export default {
         { label: '活动名称:', field: 'community_activity_name', is_show: true },
         { label: '所属团长:', field: 'community_chief_name', is_show: true },
         { label: '跟团号:', field: 'community_activity_trade_no', is_show: true }
+      ],
+      interrogationInfoList: [
+        { label: '用药人姓名:', field: 'user_family_name', is_show: true },
+        { label: '身份证号:', field: 'user_family_id_card', is_show: true },
+        { label: '手机号:', field: 'user_family_phone', is_show: true },
+        { label: '用药人年龄:', field: 'user_family_age', is_show: true },
+        { label: '用药人性别:', field: 'user_family_gender', is_show: true },
+        { label: '与您关系:', field: 'relationship', is_show: true },
+        { label: '用药人是否孕妇:', field: 'is_pregnant_woman', is_show: true },
+        { label: '用药人是否哺乳期:', field: 'is_lactation', is_show: true },
+        { label: '是否使用过此类药物:', field: 'before_ai_result_used_medicine', is_show: true },
+        { label: '是否有药物过敏史:', field: 'is_before_ai_result_allergy_history', is_show: true },
+        { label: '药物过敏说明:', field: 'before_ai_result_allergy_history', is_show: true },
+        { label: '肝肾功能是否有异常:', field: 'before_ai_result_body_abnormal', is_show: true },
+      ],
+      prescriptionInfoList: [
+        { label: '处方ID:', field: 'prescription_id', is_show: true },
+        { label: '互联网医院名称:', field: 'hospital_name', is_show: true },
+        { label: '580门店ID:', field: 'kuaizhen_store_id', is_show: true },
+        { label: '580门店名称:', field: 'kuaizhen_store_name', is_show: true },
+        { label: '处方编号:', field: 'serial_no', is_show: true },
+        { label: '医生签署时间:', field: 'doctor_sign_time', is_show: true },
+        { label: '医生科室:', field: 'doctor_office', is_show: true },
+        { label: '医生ID:', field: 'doctor_id', is_show: true },
+        { label: '开方医生:', field: 'doctor_name', is_show: true },
+        { label: '诊断标签:', field: 'tags', is_show: true },
+        { label: '处方状态:', field: 'prescription_in_status', is_show: true },
+        // { label: '通用名:', field: 'community_activity_name', is_show: false },
+        { label: '创建时间:', field: 'prescription_created', is_show: true },
+        { label: '更改时间:', field: 'prescription_updated', is_show: true },
+        { label: '备注:', field: 'prescription_memo', is_show: true },
+        { label: '补充说明:', field: 'prescription_remarks', is_show: true },
+        // { label: '药品用量说明:', field: 'drug_rsp_list', is_show: true },
+        { label: '处方审核状态:', field: 'audit_status', is_show: true },
+        { label: '审方时间:', field: 'audit_time', is_show: true },
+        { label: '审核不通过理由:', field: 'audit_reason', is_show: true },
+        { label: '审方药师名称:', field: 'audit_apothecary_name', is_show: true },
+        { label: '问诊单ID:', field: 'diagnosis_id', is_show: true },
+        { label: '药品用法用量说明:', field: 'drug_rsp_list',type:'cycle',special:true, is_show: true },
+        { label: '电子处方单:', field: 'dst_file_path', is_show: true, special:true },
       ],
 
       memberRemark: '暂无留言',
@@ -628,7 +737,17 @@ export default {
         { label: '公司地址:', field: 'invoiceCompanyAddress', is_show: true }
       ],
       isBindOMS: false,
-      deliveryLog: []
+      deliveryLog: [],
+      relationshipMap:{
+        1:'本人',
+        2:'父母',
+        3:'配偶',
+        4:'子女',
+        5:'其他'
+      },
+      auditStatusMap:{
+        1:'未审核',2:'审核通过',3:'审核不通过',4:'不需要审方'
+      }
     }
   },
   computed: {
@@ -682,12 +801,15 @@ export default {
         receiver_address,
         receipt_type,
         distributor_id,
+        orders_purchase_info,
         order_status,
         delivery_status,
         community_info,
         invoice, // 发票信息对象
         is_invoiced,
-        ziti_info
+        ziti_info,
+        prescription_data = {},//处方单信息
+        diagnosis_data = {}//问诊单信息
       } = orderInfo
 
       let invoiceType,
@@ -721,7 +843,8 @@ export default {
         this.is_community = true
       }
       const _orderType = this.VERSION_STANDARD ? ORDER_TYPE_STANDARD : ORDER_TYPE
-      const fd = _orderType.find((k) => k.value == order_class)
+      let fd = _orderType.find((k) => k.value == order_class)
+
       let crossOrderTxt = ''
       if (order_class == 'normal' && orderInfo.type == '1') {
         crossOrderTxt = `（跨境订单）`
@@ -825,8 +948,55 @@ export default {
         invoiceCompanyAddress,
         invoicedCompanyPhone,
         invoicedBankName,
-        invoicedBankAccount
+        invoicedBankAccount,
+        purchaseRole:orders_purchase_info ? orders_purchase_info.type == 'employee' ? '员工' : '亲友' : '',
+        employee_name: orders_purchase_info ? orders_purchase_info.employee_name  : '',
+        enterprise_name: orders_purchase_info ? orders_purchase_info.enterprise_name  : '',
+        //处方药
+        user_family_name:diagnosis_data.user_family_name,
+        user_family_id_card:diagnosis_data.user_family_id_card,
+        user_family_phone:diagnosis_data.user_family_phone,
+        user_family_age:diagnosis_data.user_family_age,
+        user_family_gender:diagnosis_data.user_family_gender == 1 ? '男' : '女',
+        relationship:this.relationshipMap[diagnosis_data.relationship],
+        is_pregnant_woman:diagnosis_data.is_pregnant_woman == 1 ? '是' : '否',
+        is_lactation:diagnosis_data.is_lactation == 1 ? '是' : '否',
+        before_ai_result_used_medicine:diagnosis_data?.before_ai_data_list?.before_ai_result_used_medicine == 1 ? '是' : '否',
+        is_before_ai_result_allergy_history:diagnosis_data?.before_ai_data_list?.before_ai_result_allergy_history ? '是' : '否',
+        before_ai_result_allergy_history:diagnosis_data?.before_ai_data_list?.before_ai_result_allergy_history,
+        before_ai_result_body_abnormal:diagnosis_data?.before_ai_data_list?.before_ai_result_body_abnormal == 1 ? '是' : '否',
+
+        prescription_id:prescription_data.id,
+        hospital_name:prescription_data.hospital_name,
+        kuaizhen_store_id:prescription_data.kuaizhen_store_id,
+        kuaizhen_store_name:prescription_data.kuaizhen_store_name,
+        doctor_sign_time:prescription_data.doctor_sign_time
+          ? moment(prescription_data.doctor_sign_time * 1000).format('YYYY-MM-DD HH:mm:ss')
+          : '',
+        doctor_office:prescription_data.doctor_office,
+        doctor_id:prescription_data.doctor_id,
+        doctor_name:prescription_data.doctor_name,
+        tags:prescription_data.tags,
+        prescription_in_status:prescription_data.status == 1 ? '正常' : '废弃',
+        prescription_created:prescription_data.created
+          ? moment(prescription_data.created * 1000).format('YYYY-MM-DD HH:mm:ss')
+          : '',
+        prescription_updated:prescription_data.updated
+          ? moment(prescription_data.updated * 1000).format('YYYY-MM-DD HH:mm:ss')
+          : '',
+        prescription_remarks:prescription_data.remarks,
+        drug_rsp_list:prescription_data.drug_rsp_list,//
+        audit_status:this.auditStatusMap[prescription_data.audit_status],
+        audit_reason:prescription_data.audit_reason,
+        audit_apothecary_name:prescription_data.audit_apothecary_name,
+        diagnosis_id:prescription_data.diagnosis_id,
+        serial_no:prescription_data.serial_no,
+        audit_time:prescription_data.audit_time ? moment(prescription_data.audit_time * 1000).format('YYYY-MM-DD HH:mm:ss')
+        : '',
+        dst_file_path:prescription_data.dst_file_path
       }
+
+
 
       this.deliveryLog = this.orderInfo?.app_info?.delivery_log
       this.memberRemark = orderInfo.remark || '暂无留言'

@@ -96,7 +96,7 @@
           class="cus-list"
         >
           <el-row class="cus-row">
-            <el-col :span="3">
+            <!-- <el-col :span="3">
               <img
                 v-if="item.settled_type === 'soletrader'"
                 class="cus-row-img"
@@ -110,7 +110,7 @@
                 src="@/assets/img/adapay/dealer.png"
                 alt=""
               >
-            </el-col>
+            </el-col> -->
             <el-col :span="13">
               <router-link
                 :to="{

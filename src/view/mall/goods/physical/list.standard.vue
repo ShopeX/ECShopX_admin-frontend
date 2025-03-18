@@ -289,20 +289,6 @@
               </div>
             </template>
           </el-table-column>
-            <el-table-column label="所属供应商" prop="supplier_name" width="120" />
-
-            <el-table-column
-              label="供应商货号"
-              prop="supplier_goods_bn"
-              width="100"
-              align="right"
-              header-align="center"
-            />
-            <el-table-column  label="供应状态" width="120">
-              <template slot-scope="scope">
-                {{ scope.row.is_market == '1' ? '可售' : '不可售' }}
-              </template>
-            </el-table-column>
             <!-- <el-table-column label="标签">
               <template slot-scope="scope">
                 <template>
@@ -407,10 +393,10 @@
               align="right"
               header-align="center"
             />
-            <el-table-column label="状态" width="100">
+            <el-table-column label="店铺销售状态" width="110">
               <template slot-scope="scope">
-                <span v-if="scope.row.is_market == '0'">不可售</span>
-                <span v-else>可售</span>
+                <span v-if="scope.row.is_can_sale">可售</span>
+                <span v-else>不可售</span>
               </template>
             </el-table-column>
             <el-table-column label="上下架状态" width="120">
@@ -420,6 +406,19 @@
               </template>
             </el-table-column>
             <el-table-column prop="itemCatName" label="销售分类" width="150" />
+            <el-table-column label="所属供应商" prop="supplier_name" width="120" />
+            <el-table-column
+              label="供应商货号"
+              prop="supplier_goods_bn"
+              width="100"
+              align="right"
+              header-align="center"
+            />
+            <el-table-column  label="供应状态" width="120">
+              <template slot-scope="scope">
+                {{ scope.row.is_market == '1' ? '可售' : '不可售' }}
+              </template>
+            </el-table-column>
 
             <el-table-column fixed="left" label="操作" width="180">
               <template slot-scope="scope">
@@ -452,7 +451,7 @@
       <el-dialog title="更改运费模板" :visible.sync="addTemplatesdialogVisible" width="30%">
         <el-select v-model="templates_new_id" placeholder="运费模板" style="width: 100%">
           <el-option
-            v-for="item in templatesList"
+            v-for="item in templatesListavailable"
             :key="item.template_id"
             :label="item.name"
             :value="item.template_id"
@@ -927,6 +926,7 @@ export default {
       goods_id: [],
       templates_new_id: '',
       templatesList: [],
+      templatesListavailable:[],
       category_id: [],
       categoryList: [],
       itemCategoryList: [],
@@ -1825,6 +1825,7 @@ export default {
         pageSize: 1000
       })
       this.templatesList = list
+      this.templatesListavailable = list.filter((item) => item.status)
     },
     getGoodsBranchList(searchVal = '') {
       // this.loading = true

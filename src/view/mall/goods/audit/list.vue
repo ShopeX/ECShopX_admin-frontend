@@ -136,7 +136,7 @@
                 <span v-else>不可销售</span>
               </template>
             </el-table-column>
-            <el-table-column label="操作" width="200">
+            <el-table-column label="操作" width="200" fixed="left">
               <template slot-scope="scope">
                 <el-button
                   type="text"

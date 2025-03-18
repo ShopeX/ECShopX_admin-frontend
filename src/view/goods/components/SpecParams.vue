@@ -27,17 +27,27 @@ export default {
     provinceList: {
       type: Array,
       default: () => []
-    }
+    },
+    isMedicine:{
+      type: Boolean,
+      default: false
+    },
+    medicinePrescription:{
+      type: Boolean,
+      default: false
+    },
   },
   data() {
     let statusOption = [
       {
         title: '前台可销售',
-        value: 'onsale'
+        value: 'onsale',
+        disabled:()=>this.medicinePrescription
       },
       {
         title: '前台仅展示',
-        value: 'only_show'
+        value: 'only_show',
+        disabled:()=>this.medicinePrescription
       },
       {
         title: '不可销售',
@@ -47,7 +57,8 @@ export default {
     if (!this.VERSION_IN_PURCHASE) {
       statusOption.push({
         title: '前台不展示',
-        value: 'offline_sale'
+        value: 'offline_sale',
+        disabled:()=>this.medicinePrescription
       })
     }
     return {
@@ -57,6 +68,8 @@ export default {
         approve_status: 'onsale',
         store: 1,
         item_bn: '',
+        medicine_spec:'',
+        max_num: '',
         weight: '',
         volume: '',
         price: '',
@@ -125,6 +138,34 @@ export default {
           key: 'barcode',
           type: 'input',
           display: 'inline'
+        },
+        {
+          label: '药品规格',
+          key: 'medicine_spec',
+          type: 'input',
+          validator: async (rule, value, callback) => {
+            if (!value && this.medicinePrescription) {
+              callback('请输入药品规格')
+            } else {
+              callback()
+            }
+          },
+          isShow:()=>this.medicinePrescription,
+          display: 'inline'
+        },
+        {
+          label: '最大开方数',
+          key: 'max_num',
+          type: 'input',
+          validator: async (rule, value, callback) => {
+            if (!value && this.medicinePrescription) {
+              callback('请输入最大开方数量')
+            } else {
+              callback()
+            }
+          },
+          isShow:()=>this.medicinePrescription,
+          display: 'inline'
         }
       ]
     }
@@ -149,6 +190,11 @@ export default {
             display: 'inline'
           })
         }
+      }
+    },
+    medicinePrescription(nval){
+      if(nval){
+        this.form.approve_status = 'instock'
       }
     }
   },

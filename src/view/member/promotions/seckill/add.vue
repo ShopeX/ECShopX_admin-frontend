@@ -85,7 +85,7 @@
         </el-radio-group>
       </el-form-item>
       <div v-if="!zdItemHidden" style="position: relative">
-        <SkuSelector :data="relItems" @change="getItems" />
+        <SkuSelector :data="relItems" :is-hiden-sku="true" @change="getItems" />
         <div style="position: absolute; bottom: 0px; left: 112px">
           <el-upload
             style="display: inline-block; height: 0"

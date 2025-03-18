@@ -23,6 +23,7 @@
   width: 200px;
   height: 200px;
 }
+
 </style>
 <style lang="scss">
 .physical-cell-reason {
@@ -186,6 +187,13 @@
         <!--        <SpFilterFormItem prop="operator_name" label="来源供应商:">-->
         <!--          <el-input v-model="searchParams.operator_name" placeholder="请输入来源供应商" />-->
         <!--        </SpFilterFormItem>-->
+        <SpFilterFormItem v-if="is_pharma_industry" prop="is_prescription" label="处方药:">
+          <el-select v-model="searchParams.is_prescription">
+            <el-option value="" label="全部" />
+            <el-option value="1" label="处方药" />
+            <el-option value="0" label="非处方药" />
+          </el-select>
+        </SpFilterFormItem>
       </SpFilterForm>
 
       <div class="action-container">
@@ -497,6 +505,14 @@
         </span>
       </el-dialog>
 
+
+      <el-dialog title="错误信息" :visible.sync="errMessageVis" width="560px">
+        <div class="page-code">
+          {{errMessage}}
+        </div>
+      </el-dialog>
+
+
       <!-- 查看多规格信息 -->
       <SpDrawer
         v-model="showItemSkuDrawer"
@@ -556,22 +572,25 @@ export default {
       statusOption = updateStatusOption
     }
 
-    let tabList = []
-    if (IS_SUPPLIER()) {
-      tabList = [
-        { name: '全部商品', value: 'all', activeName: 'first' },
-        { name: '待提交', value: 'submitting', activeName: 'submitting' },
-        { name: '待审核', value: 'processing', activeName: 'processing' },
-        { name: '已通过', value: 'approved', activeName: 'approved' },
-        { name: '已拒绝', value: 'rejected', activeName: 'rejected' },
-        { name: '库存预警商品', value: 'true', activeName: 'second' }
-      ]
-    } else {
-      tabList = [
-        { name: '全部商品', value: 'all', activeName: 'first' },
-        { name: '库存预警商品', value: 'true', activeName: 'second' }
-      ]
-    }
+    // let tabList = []
+    // if (IS_SUPPLIER()) {
+    //   tabList = [
+    //     { name: '全部商品', value: 'all', activeName: 'first' },
+    //     { name: '待提交', value: 'submitting', activeName: 'submitting' },
+    //     { name: '待审核', value: 'processing', activeName: 'processing' },
+    //     { name: '已通过', value: 'approved', activeName: 'approved' },
+    //     { name: '已拒绝', value: 'rejected', activeName: 'rejected' },
+    //     { name: '库存预警商品', value: 'true', activeName: 'second' }
+    //   ]
+    // } else {
+    //   tabList = [
+    //     { name: '全部商品', value: 'all', activeName: 'first' },
+    //     {name: '处方商品', value: 'chufang', activeName: 'third'},
+    //     { name: '库存预警商品', value: 'true', activeName: 'second' }
+    //   ]
+    // }
+
+
     return {
       formLoading: false,
       commissionDialog: false,
@@ -582,7 +601,7 @@ export default {
       current: '',
       currentId: '',
       currentPrice: '',
-      tabList,
+      // tabList,
       activeName: 'first',
       goodsName: '',
       isEdit: false,
@@ -630,11 +649,13 @@ export default {
         category: 0,
         item_category: 0,
         is_warning: false,
+        is_medicine:'',
         audit_status: '',
         delivery_data_type: '',
         tag_id: '',
         tax_rate_code: '',
         is_gift: undefined,
+        is_prescription:'',
         type: 0,
         barcode: '',
         distributor_id: 0,
@@ -644,6 +665,11 @@ export default {
         operator_name: '',
         cat_id: ''
       },
+      auditStatusMap:{
+        1:'未审核',
+        2:'审核通过',
+        3:'审核不通过'
+      },
       start_date: '',
       end_date: '',
       addCategorydialogVisible: false,
@@ -651,7 +677,8 @@ export default {
       isGiftsData: {},
       exportData: {},
       exportTagData: {},
-
+      errMessage:'',
+      errMessageVis: false,
       tagList: [],
       grade: [],
       vipGrade: [],
@@ -676,6 +703,7 @@ export default {
       batchChangeStateForm: {
         status: ''
       },
+      is_pharma_industry:false,
       isBindWdtErp: false,
       isBindJstErp: false,
       categoryList: [],
@@ -848,6 +876,23 @@ export default {
                     detail: true
                   }
                 })
+              }
+            }
+          },
+          {
+            name: '重推',
+            key: 'repush',
+            type: 'button',
+            buttonType: 'text',
+            visible: (row) => row.medicine_data?.audit_status == 3,
+            action: {
+              type: 'link',
+              handler: async([row]) => {
+                await this.$api.goods.medicineItemsSync({goods_id: row.goods_id})
+                this.$message.success('操作成功')
+                setTimeout(() => {
+                  this.$refs['finder'].refresh(true)
+                }, 200)
               }
             }
           },
@@ -1117,7 +1162,12 @@ export default {
               )
             }
           },
-
+          {
+            name: '是否处方',
+            key: 'item_bn',
+            width: 150,
+            render: (h, {row}) => row.is_prescription == '1' ? '是' : '否'
+          },
           {
             name: 'sku编码',
             key: 'item_bn',
@@ -1148,6 +1198,25 @@ export default {
                 ))}
               </div>
             )
+          },
+          {
+            name: '审核结果',
+            key: 'audit_status',
+            width: 150,
+            render: (h, {row}) => row.medicine_data ? this.auditStatusMap[row.medicine_data.audit_status] : ''
+          },
+          {
+            name: '错误信息',
+            key: 'audit_reason',
+            width: 150,
+            render: (h, {row}) => <div>
+              {row.medicine_data?.audit_reason && row.medicine_data?.audit_status == 3 && (
+                <div onClick={()=>this.handleErrDetail(row.medicine_data)}>
+                  {this.handleAuditReason(row.medicine_data)}
+                  <i class="el-icon-info"></i>
+                </div>
+              )}
+              </div>
           },
           // {
           //   name: '供应商货号',
@@ -1287,6 +1356,33 @@ export default {
       }
     }
   },
+  computed:{
+    tabList(){
+      let tabList = []
+        if (IS_SUPPLIER()) {
+        tabList = [
+          { name: '全部商品', value: 'all', activeName: 'first' },
+          { name: '待提交', value: 'submitting', activeName: 'submitting' },
+          { name: '待审核', value: 'processing', activeName: 'processing' },
+          { name: '已通过', value: 'approved', activeName: 'approved' },
+          { name: '已拒绝', value: 'rejected', activeName: 'rejected' },
+          { name: '库存预警商品', value: 'true', activeName: 'second' }
+        ]
+      } else {
+        tabList = [
+          { name: '全部商品', value: 'all', activeName: 'first' },
+
+          { name: '库存预警商品', value: 'true', activeName: 'second' }
+        ]
+      }
+
+      if(this.is_pharma_industry){
+        tabList.splice(1,0, {name: '医药商品', value: 'is_medicine', activeName: 'third'})
+      }
+
+      return tabList
+    }
+  },
   mounted() {
     this.init()
     this.getAddress()
@@ -1295,8 +1391,13 @@ export default {
     this.fetchWechatList()
     this.checkWdtErpBind()
     this.checkJstErpBind()
+    this.getBaseSetting()
   },
   methods: {
+    async getBaseSetting(){
+      const res = await this.$api.company.getGlobalSetting()
+      this.is_pharma_industry = res.medicine_setting.is_pharma_industry == '1'
+    },
     async fetchWechatList() {
       const { list } = await this.$api.minimanage.gettemplateweapplist()
       list.forEach((item, i) => {
@@ -1324,7 +1425,8 @@ export default {
     async getShippingTemplatesList() {
       const { list } = await this.$api.shipping.getShippingTemplatesList({
         page: 1,
-        pageSize: 1000
+        pageSize: 1000,
+        status: 1
       })
       this.templatesList = list
     },
@@ -1336,6 +1438,11 @@ export default {
       //管理分类
       const itemCategoryList = await this.$api.goods.getCategory({ is_main_category: true })
       this.itemCategoryList = itemCategoryList
+    },
+    handleErrDetail(val){
+      if(!val || !val.audit_reason) return
+      this.errMessage = val.audit_reason
+      this.errMessageVis = true
     },
     async getMemberPriceByGoods(item_id) {
       this.currentId = item_id
@@ -1456,6 +1563,13 @@ export default {
         this.searchParams.is_warning = false
         this.searchParams.audit_status = this.activeName
       }
+
+      if(this.activeName == 'third'){
+        this.searchParams.is_medicine = 1
+        this.searchParams.audit_status = ''
+      }else{
+        this.searchParams.is_medicine = ''
+      }
       this.$refs['finder'].refresh()
     },
     onSelectionChange(selection) {
@@ -1486,6 +1600,10 @@ export default {
       } else {
         this.$message.error('请选择至少一个商品')
       }
+    },
+    handleAuditReason(data){
+      const {audit_reason = ''} = data || {}
+      return audit_reason.length > 8 ? audit_reason.slice(0,8)+'...' :audit_reason
     },
     async onFreightTemplateSubmit() {
       const { item_id, templates_id } = this.freightTemplateForm

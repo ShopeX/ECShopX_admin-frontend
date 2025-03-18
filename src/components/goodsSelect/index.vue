@@ -418,7 +418,7 @@ export default {
   mounted() {},
 
   methods: {
-    onOpen() {
+   async onOpen() {
       if (this.filter) {
         let filters = this.filter
         let params = this.params
@@ -428,11 +428,13 @@ export default {
         Object.assign(params, filters)
         this.params = params
       }
-      this.getShippingTemplatesList()
-      this.getCurrencyInfo()
-      this.getGoodsBranchList()
-      this.getCategory()
-      this.getNewsList()
+     await this.getShippingTemplatesList()
+     await this.getCurrencyInfo()
+     await this.getGoodsBranchList()
+     await this.getCategory()
+     if(this.isChangeStore){
+      await this.getNewsList()
+     }
     },
     handleTabClick() {
       this.getNewsList()

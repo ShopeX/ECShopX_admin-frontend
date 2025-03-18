@@ -611,3 +611,12 @@ export function queryInventory(data) {
     data
   })
 }
+
+export function medicineItemsSync(data) {
+  return fetch({
+    url: '/goods/medicineItems/sync',
+    method: 'post',
+    data
+  })
+}
+

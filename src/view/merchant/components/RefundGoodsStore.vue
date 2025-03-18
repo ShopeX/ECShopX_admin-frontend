@@ -78,7 +78,7 @@ export default {
     async onSelectShop() {
       const { distributor_id } = this.$route.query
       const ids = this.finderData.map((item) => item.distributor_id)
-      const { data } = await this.$picker.aftersalesList({
+      const { data } = await this.$picker.afterSalesList({
         data: ids,
         distributor_id: distributor_id
         // merchant_id: this.content.baseForm.merchant_id

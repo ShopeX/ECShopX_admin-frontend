@@ -8,6 +8,12 @@
       <SpFilterFormItem prop="order_id" label="订单号:">
         <el-input v-model="params.order_id" placeholder="请输入订单号" />
       </SpFilterFormItem>
+      <SpFilterFormItem prop="order_id" label="用药人:">
+        <el-input v-model="params.order_id" placeholder="请输入用药人" />
+      </SpFilterFormItem>
+      <SpFilterFormItem prop="order_id" label="身份证号:">
+        <el-input v-model="params.order_id" placeholder="请输入身份证号" />
+      </SpFilterFormItem>
       <!-- <SpFilterFormItem
         v-if="login_type != 'merchant' && !VERSION_B2C && !VERSION_IN_PURCHASE"
         prop="salesman_mobile"
@@ -44,7 +50,7 @@
       >
         <el-input v-model="params.supplier_name" placeholder="来源供应商" />
       </SpFilterFormItem>
-      <SpFilterFormItem v-if="!VERSION_IN_PURCHASE" prop="order_class" label="订单类型:">
+      <!-- <SpFilterFormItem v-if="!VERSION_IN_PURCHASE" prop="order_class" label="订单类型:">
         <el-select v-model="params.order_class" clearable placeholder="请选择">
           <el-option
             v-for="item in orderType"
@@ -54,21 +60,32 @@
             :value="item.value"
           />
         </el-select>
+      </SpFilterFormItem> -->
+      <SpFilterFormItem prop="order_id" label="就诊人手机号:">
+        <el-input v-model="params.order_id" placeholder="请输入就诊人手机号" />
       </SpFilterFormItem>
-      <!-- 是否处方药 -->
-      <SpFilterFormItem v-if="is_pharma_industry" prop="is_prescription_order" label="是否处方药:">
-        <el-select v-model="params.is_prescription_order" clearable placeholder="请选择">
-          <el-option label="全部" value="" />
-          <el-option label="是" value="1" />
-          <el-option label="否" value="0" />
+      <SpFilterFormItem prop="order_id" label="开方医生:">
+        <el-input v-model="params.order_id" placeholder="请输入开方医生" />
+      </SpFilterFormItem>
+      <SpFilterFormItem prop="order_id" label="处方编号:">
+        <el-input v-model="params.order_id" placeholder="请输入处方编号" />
+      </SpFilterFormItem>
+      <SpFilterFormItem prop="order_id" label="审方药师:">
+        <el-input v-model="params.order_id" placeholder="请输入审方药师" />
+      </SpFilterFormItem>
+      <SpFilterFormItem prop="delivery_staff_id" label="处方审核状态:">
+        <el-select v-model="params.delivery_staff_id" clearable placeholder="请选择">
+          <el-option
+            v-for="item in deliveryPersonnel"
+            :key="item.value"
+            size="mini"
+            :label="item.title"
+            :value="item.value"
+          />
         </el-select>
       </SpFilterFormItem>
-      <SpFilterFormItem v-if="is_pharma_industry" prop="serial_no" label="处方编号:">
-        <el-input v-model="params.serial_no" placeholder="请输入处方编号" />
-      </SpFilterFormItem>
-      <SpFilterFormItem v-if="is_pharma_industry" prop="user_family_name" label="就诊人:">
-        <el-input v-model="params.user_family_name" placeholder="请输入就诊人" />
-      </SpFilterFormItem>
+
+
       <SpFilterFormItem v-if="!VERSION_IN_PURCHASE" prop="delivery_staff_id" label="配送员:">
         <el-select v-model="params.delivery_staff_id" clearable placeholder="请选择">
           <el-option
@@ -374,10 +391,10 @@
                   query: { user_id: scope.row.user_id }
                 }"
               >
-                {{ scope.row.mobile }}
+                {{ scope.row.receiver_mobile }}
               </router-link>
               <span v-else>
-                {{ scope.row.mobile }}
+                {{ scope.row.receiver_mobile }}
               </span>
               <el-tooltip
                 v-if="datapass_block == 0"
@@ -386,14 +403,14 @@
                 placement="top-start"
               >
                 <i
-                  v-clipboard:copy="scope.row.mobile"
+                  v-clipboard:copy="scope.row.receiver_mobile"
                   v-clipboard:success="onCopySuccess"
                   class="el-icon-document-copy"
                 />
               </el-tooltip>
             </template>
             <template v-else slot-scope="scope">
-              <span>{{ scope.row.mobile }}</span>
+              <span>{{ scope.row.receiver_mobile }}</span>
               <el-tooltip
                 v-if="datapass_block == 0"
                 effect="dark"
@@ -401,7 +418,7 @@
                 placement="top-start"
               >
                 <i
-                  v-clipboard:copy="scope.row.mobile"
+                  v-clipboard:copy="scope.row.receiver_mobile"
                   v-clipboard:success="onCopySuccess"
                   class="el-icon-document-copy"
                 />
@@ -425,6 +442,16 @@
             {{ scope.row.order_status_msg }}
           </template>
         </el-table-column>
+        <el-table-column prop="order_status" label="用药人" />
+        <el-table-column prop="order_status" label="处方编号" />
+        <el-table-column prop="order_status" label="处方审方状态">
+          <template slot-scope="scope">
+            {{ scope.row.order_status_msg }}
+          </template>
+        </el-table-column>
+        <el-table-column prop="order_status" label="开方医生" />
+
+
         <!-- <el-table-column prop="salespersonname " label="业务员"></el-table-column> -->
         <el-table-column label="配送方式">
           <template slot-scope="scope">
@@ -579,7 +606,7 @@
       class="dialog-changeprice"
       :loading="changePriceForm.loading"
       :destroy-on-close="true"
-      :title="`订单改价【订单:${changePriceForm.order_id}】`"
+      :title="`申请售后【订单:${changePriceForm.order_id}】`"
       :form="changePriceForm"
       :form-list="changePriceFormList"
       @onSubmit="changePriceSubmit"
@@ -656,9 +683,6 @@ export default {
         order_status: '', // 订单状态
         order_class: '', // 订单类型
         delivery_staff_id: '', //配送员
-        is_prescription_order:'',
-        serial_no:'',
-        user_family_name:'',
         is_invoiced: '', // 开票状态
         time_start_begin: '', //
         time_start_end: '',
@@ -848,11 +872,7 @@ export default {
             },
             { title: '数量', key: 'num', width: 60 },
             { title: '已发货数量', key: 'delivery_item_num', width: 100 },
-            { title: '总支付价（¥）', key: 'total_fee',
-            render: (row, column, cell) => {
-              return (row.total_fee / 100).toFixed(2)
-            },
-            width: 120 },
+            { title: '总支付价（¥）', key: 'price', width: 120 },
             {
               title: '成本价（¥）',
               key: 'cost_price',
@@ -1283,8 +1303,7 @@ export default {
           tip: `1. 最多可上传9张图片，文件格式为bmp、png、jpeg、jpg或gif，大小不超过2M（建议尺寸：500px * 500px）<br />2. 相册图朋友圈分享是否生成小程序码`
         }
       ],
-      selectList: [],
-      is_pharma_industry:false
+      selectList: []
     }
   },
 
@@ -1324,14 +1343,10 @@ export default {
   },
   mounted() {
     this.origin = window.location.origin
-    const { tab,order_id } = this.$route.query
+    const { tab } = this.$route.query
     if (tab) {
       this.params.order_status = tab
     }
-    if(order_id){
-      this.params.order_id = order_id
-    }
-    this.getBaseSetting()
     this.fetchList()
     this.getOrderSourceList()
     this.getLogisticsList()
@@ -1343,10 +1358,6 @@ export default {
     })
   },
   methods: {
-    async getBaseSetting(){
-      const res = await this.$api.company.getGlobalSetting()
-      this.is_pharma_industry = res.medicine_setting.is_pharma_industry == '1'
-    },
     async accountManagement(distributor_id) {
       let params = {
         pageSize: 999,

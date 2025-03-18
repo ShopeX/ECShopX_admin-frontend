@@ -113,6 +113,7 @@
       :data="finderData"
       :url="finderUrl"
       @selection-change="onSelectionChange"
+       row-actions-fixed-align='left'
     />
 
     <!-- 商品sku配置 -->
@@ -215,11 +216,12 @@ export default {
                 this.itemSkuDialog = true
               }
             }
-          }
+          },
         ],
         columns: [
           {
             name: '上下架操作',
+            width: 120,
             render: (h, { row }) =>
               h('el-switch', {
                 props: {
@@ -246,29 +248,6 @@ export default {
             width: 160
           },
           {
-            name: '标签',
-            width: 120,
-            key: 'tagList',
-            render: (h, scope) => (
-              <div style='white-space: normal;'>
-                {scope.row.tagList?.map((item) => (
-                  <span
-                    style={{
-                      'color': item.font_color,
-                      'background-color': item.tag_color,
-                      'font-size': '12px',
-                      'padding': '2px 5px',
-                      'border-radius': '2px',
-                      'margin': '0 8px 8px 0'
-                    }}
-                  >
-                    {item.tag_name}
-                  </span>
-                ))}
-              </div>
-            )
-          },
-          {
             name: 'sku编码',
             key: 'item_bn',
             width: 150,
@@ -278,7 +257,36 @@ export default {
           {
             name: '商品库存',
             key: 'store',
-            width: 160
+            width: 90
+          },
+
+          {
+            name: '店铺库存',
+            // key: 'order_num',
+            render: (h, { row }) =>
+              h('el-switch', {
+                props: {
+                  'value': !row.is_total_store,
+                  'active-value': true,
+                  'inactive-value': false
+                },
+                on: {
+                  change: async (e) => {
+                    await this.$api.marketing.updateDistributorItem({
+                      distributor_id: this.formData.distributor_id,
+                      goods_id: row.goods_id,
+                      is_total_store: !e
+                    })
+                    this.$refs.finder.refresh(true)
+                  }
+                }
+              })
+          },
+          {
+            name: '店铺销售状态',
+            key: 'is_can_sale',
+            width: 120,
+            render: (h, { row }) => h('span', {}, row.is_can_sale? '可销售' : '不可销售')
           },
           {
             name: '市场价（¥）',
@@ -318,7 +326,7 @@ export default {
           },
             {
              name: '来源供应商',
-             key: 'operator_name',
+             key: 'supplier_name',
              width: 100,
            },
            {
@@ -331,38 +339,33 @@ export default {
           },
           { name: '销售分类', key: 'itemCatName', minWidth: 120 },
           {
+            name: '标签',
+            width: 120,
+            key: 'tagList',
+            render: (h, scope) => (
+              <div style='white-space: normal;'>
+                {scope.row.tagList?.map((item) => (
+                  <span
+                    style={{
+                      'color': item.font_color,
+                      'background-color': item.tag_color,
+                      'font-size': '12px',
+                      'padding': '2px 5px',
+                      'border-radius': '2px',
+                      'margin': '0 8px 8px 0'
+                    }}
+                  >
+                    {item.tag_name}
+                  </span>
+                ))}
+              </div>
+            )
+          },
+          {
             name: '来源店铺',
             key: 'distributor_name',
             width: 160,
           },
-          {
-            name: '店铺库存',
-            // key: 'order_num',
-            render: (h, { row }) =>
-              h('el-switch', {
-                props: {
-                  'value': !row.is_total_store,
-                  'active-value': true,
-                  'inactive-value': false
-                },
-                on: {
-                  change: async (e) => {
-                    await this.$api.marketing.updateDistributorItem({
-                      distributor_id: this.formData.distributor_id,
-                      goods_id: row.goods_id,
-                      is_total_store: !e
-                    })
-                    this.$refs.finder.refresh(true)
-                  }
-                }
-              })
-          },
-          {
-            name: '店铺销售状态',
-            key: 'is_market',
-            width: 120,
-            render: (h, { row }) => h('span', {}, this.getApproveStatus(row.is_market))
-          }
         ]
       })
     }

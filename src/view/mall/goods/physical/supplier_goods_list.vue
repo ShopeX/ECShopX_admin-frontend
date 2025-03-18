@@ -127,13 +127,8 @@
             />
           </el-select>
         </SpFilterFormItem>
-        <SpFilterFormItem prop="regions_id" label="商品产地:">
-          <el-cascader
-            v-model="searchParams.regions_id"
-            placeholder="请选择"
-            clearable
-            :options="regions"
-          />
+        <SpFilterFormItem prop="goods_bn" label="SPU编码:">
+          <el-input v-model="searchParams.goods_bn" placeholder="请输入SPU编码" />
         </SpFilterFormItem>
         <!--        <SpFilterFormItem prop="regions_id" label="商品产地:">-->
         <!--          <el-cascader-->
@@ -164,8 +159,13 @@
           />
         </SpFilterFormItem>
 
-        <SpFilterFormItem prop="goods_bn" label="SPU编码:">
-          <el-input v-model="searchParams.goods_bn" placeholder="请输入SPU编码" />
+        <SpFilterFormItem prop="regions_id" label="商品产地:">
+          <el-cascader
+            v-model="searchParams.regions_id"
+            placeholder="请选择"
+            clearable
+            :options="regions"
+          />
         </SpFilterFormItem>
         <SpFilterFormItem prop="supplier_name" label="所属供应商:">
           <el-input v-model="searchParams.supplier_name" placeholder="请输入所属供应商" />
@@ -256,6 +256,7 @@
         :hooks="{
           beforeSearch: beforeSearch
         }"
+        row-actions-fixed-align="left"
         @selection-change="onSelectionChange"
       />
 
@@ -638,6 +639,7 @@ export default {
 
       categoryList: [],
       templatesList: [],
+      templatesListavailable:[],
       itemCategoryList: [],
       regions: [],
       showMemberPriceDrawer: false,
@@ -733,7 +735,7 @@ export default {
           key: 'templates_id',
           component: ({ key }, value) => (
             <el-select v-model={value[key]}>
-              {this.templatesList.map((item) => (
+              {this.templatesListavailable.map((item) => (
                 <el-option label={item.name} value={item.template_id} />
               ))}
             </el-select>
@@ -797,7 +799,8 @@ export default {
                   query: {
                     some_param: 'true',
                     detail: true,
-                    isSupplierGoods:true
+                    isSupplierGoods:true,
+                    islist:1
                   }
                 })
               }
@@ -1241,6 +1244,7 @@ export default {
         pageSize: 1000
       })
       this.templatesList = list
+      this.templatesListavailable = list.filter((item) => item.status)
     },
     async getCategory() {
       //销售分类

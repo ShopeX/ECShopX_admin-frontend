@@ -480,7 +480,7 @@ export default {
           isShow: ({ key }, value) => !value.is_self_delivery && value.is_dada,
           validator: (rule, value, callback) => {
             console.log('value:', value)
-            if (!this.form.is_self_delivery && value.is_dada) {
+            if (!this.form.is_self_delivery && value?.is_dada) {
               if (!value) {
                 callback(new Error('业务类型必填'))
               } else {

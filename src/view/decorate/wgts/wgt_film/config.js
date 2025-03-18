@@ -49,8 +49,9 @@ export default {
     const {
       name,
       base,
-      data: [_data]
+      data
     } = v
+    let _data = data.flat()[0] || {}
     return {
       name,
       ...base,

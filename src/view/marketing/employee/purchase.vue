@@ -529,9 +529,10 @@ export default {
           tip:'开启优惠说明展示在结算页，关闭不展示'
         },
         {
-          label: '结算页价格优惠说说明',
+          label: '结算页价格优惠说明',
           key: 'discount_description',
           type: 'input',
+          maxlength: 50,
         },
 
       ],

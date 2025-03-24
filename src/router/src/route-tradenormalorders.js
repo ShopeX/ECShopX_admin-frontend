@@ -29,32 +29,6 @@ export default {
       ]
     },
     {
-      path: 'entitytrade/purchase',
-      name: `内购订单`,
-      component: () => import('@/view/order/entitytrade/purchase'),
-      children: [
-        {
-          path: 'detail/:itemId?',
-          component: () => import('@/view/mall/trade/order/detail'),
-          meta: {
-            footerFixed: true
-          }
-        },
-        {
-          path: 'process/:itemId?',
-          component: () => import('@/view/mall/trade/order/process')
-        },
-        {
-          path: 'after-sale/:id?',
-          component: () => import('@/view/mall/trade/order/afterSale')
-        },
-        {
-          path: 'logistics/:itemId?',
-          component: () => import('@/view/mall/trade/order/logistics')
-        }
-      ]
-    },
-    {
       path: 'entitytrade/prescriptionorders',
       name: `处方药订单`,
       component: () => import('@/view/mall/trade/normalorders/prepList'),
@@ -88,6 +62,17 @@ export default {
       ]
     },
     {
+      path: 'entitytrade/marketingdistribution_orders',
+      name: `店铺订单`,
+      component: () => import('@/view/mall/marketing/distributionOrders'),
+      children: [
+        {
+          path: 'detail',
+          component: () => import('@/view/mall/trade/order/detail')
+        }
+      ]
+    },
+    {
       path: 'entitytrade/tradecommunityorders',
       name: `社区团购订单`,
       component: () => import('@/view/mall/trade/normalorders/communityList'),
@@ -103,7 +88,7 @@ export default {
       ]
     },
     {
-      path: 'entitytrade/aftersaleslist',
+      path: 'aftersales/aftersaleslist',
       name: `售后列表`,
       component: () => import('@/view/mall/aftersales/list'),
       children: [
@@ -118,21 +103,6 @@ export default {
       path: 'entitytrade/normalordersupload',
       name: `批量发货`,
       component: () => import('@/view/mall/trade/normalorders/ordersupload')
-    },
-    {
-      path: 'entitytrade/logistics',
-      name: `物流公司`,
-      component: () => import('@/view/mall/trade/logistics/index'),
-      children: [
-        {
-          path: 'addziti/:id?',
-          component: () => import('@/view/mall/trade/logistics/add-ziti'),
-          beforeEnter: ({ params, meta }, from, next) => {
-            meta.title = params.id ? '编辑自提点' : '新增自提点'
-            next()
-          }
-        }
-      ]
     },
     {
       path: 'servicepayment',
@@ -198,33 +168,18 @@ export default {
       component: () => import('@/view/mall/reservation/resourcesetting/reservation')
     },
     {
-      path: 'Ordersetting',
+      path: 'ordersetting/ordersettingdetail',
       name: `订单时效配置`,
       component: () => import('@/view/order/orderSetting.vue')
     },
     {
-      path: 'kdniao',
-      name: `快递跟踪配置`,
-      component: () => import('@/view/base/setting/kdniao')
-    },
-    {
-      path: 'sfbsp',
-      name: `顺丰物流跟踪设置`,
-      component: () => import('@/view/base/setting/sfbsp')
-    },
-    {
-      path: 'Yilianyun',
-      name: `易联云配置`,
-      component: () => import('@/view/base/setting/yilianyun/index')
-    },
-    {
-      path: 'aftersalesreason',
+      path: 'ordersetting/aftersalesreason',
       name: `售后原因`,
       component: () => import('@/view/mall/aftersales/reason')
     },
     {
-      path: 'tradesetting',
-      name: `订单包装`,
+      path: 'ordersetting/tradesetting',
+      name: `礼品包装`,
       component: () => import('@/view/order/tradeSetting')
     },
     // {
@@ -238,6 +193,22 @@ export default {
     //     }
     //   ]
     // },
+    {
+      path: 'ordersetting/cartremind',
+      name: `购物车提醒`,
+      component: () => import('@/view/wxapp/cartremind')
+    },
+    {
+      path: 'ordersetting/goodslimit',
+      name: `商品限购`,
+      component: () => import('@/view/member/promotions/goodslimit/list'),
+      children: [
+        {
+          path: 'editor/:limit_id?',
+          component: () => import('@/view/member/promotions/goodslimit/add')
+        }
+      ]
+    },
     {
       path: 'adapay_cash',
       name: '提现',

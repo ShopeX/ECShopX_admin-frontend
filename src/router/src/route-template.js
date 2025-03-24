@@ -48,6 +48,11 @@ export default {
       name: `商城信息`,
       component: () => import('@/view/wxapp/shopInfo')
     },
+    {
+      path: 'manage/openscreenad',
+      name: `开屏广告`,
+      component: () => import('@/view/base/screen/openScreenAD')
+    },
     // 小程序模板装修
     // {
     //   path: 'manage/decorate',
@@ -136,11 +141,6 @@ export default {
       path: 'manage/cartremind',
       name: `购物车提醒`,
       component: () => import('@/view/wxapp/cartremind')
-    },
-    {
-      path: 'manage/salespersonshelfindex',
-      name: `导购货架首页`,
-      component: () => import('@/view/wxapp/salespersonshelfindex')
     },
     {
       path: 'aliapp/template',

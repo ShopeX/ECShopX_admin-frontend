@@ -31,7 +31,7 @@ export default {
       ]
     },
     {
-      path: 'planting',
+      path: 'article/planting',
       name: `软文`,
       component: () => import('@/view/base/planting/index'),
       children: [
@@ -63,12 +63,12 @@ export default {
       component: () => import('@/view/shopscreen/searchKeyWords')
     },
     {
-      path: 'articlecolumns',
+      path: 'article/articlecolumns',
       name: `软文栏目`,
       component: () => import('@/view/base/article/columns')
     },
     {
-      path: 'basearticle',
+      path: 'text/basearticle',
       name: `文章管理`,
       component: () => import('@/view/base/article/index'),
       children: [
@@ -80,57 +80,72 @@ export default {
       ]
     },
     {
-      path: 'articlegeneralcolumns',
+      path: 'text/articlegeneralcolumns',
       name: `文章栏目`,
       component: () => import('@/view/base/article/generalcolumns')
     },
     {
-      path: 'sharesetting',
+      path: 'ugc/ugcindex',
+      name: `笔记管理`,
+      component: () => import('@/view/member/ugc/ugcIndex'),
+      children: [
+        {
+          path: 'editor',
+          component: () => import('@/view/member/ugc/ugcNotesEditor')
+        }
+      ]
+    },
+    {
+      path: 'ugc/ugcflags',
+      name: `角标管理`,
+      component: () => import('@/view/member/ugc/ugcFlags')
+    },
+    {
+      path: 'ugc/ugctags',
+      name: `TAG管理`,
+      component: () => import('@/view/member/ugc/ugcTags')
+    },
+    {
+      path: 'ugc/ugctopic',
+      name: `笔记话题设置`,
+      component: () => import('@/view/member/ugc/ugcTopic')
+    },
+    {
+      path: 'ugc/ugcreview',
+      name: `评论管理`,
+      component: () => import('@/view/member/ugc/ugcReview')
+    },
+    {
+      path: 'ugc/ugcpoint',
+      name: `积分管理`,
+      component: () => import('@/view/member/ugc/ugcPoint')
+    },
+    {
+      path: 'share/sharesetting',
       name: `分享设置`,
       component: () => import('@/view/base/setting/sharesetting')
+    },
+    {
+      path: 'evaluate/rate',
+      name: `商品评价`,
+      component: () => import('@/view/goods/rate')
+    },
+    {
+      path: 'material/brandmaterial',
+      name: `素材管理`,
+      component: () => import('@/view/brand/wechat/aterialmanagement'),
+      children: [
+        {
+          path: 'editor/:id?',
+          component: () => import('@/view/brand/wechat/artical/new_artical')
+        }
+      ]
     },
     // {
     //   path: 'wxshopsetting',
     //   name: `商城基本信息`,
     //   component: () => import('@/view/base/shop/shopsetting')
     // },
-    //{
-    //  path: 'wechat/wxaindex',
-    //  name: `服务号管理-授权管理`,
-    //  component: () => import( '@/view/base/wxa/index')
-    //},
-    {
-      path: 'wechat/wxaindex',
-      name: `服务号管理-小程序管理`,
-      component: () => import('@/view/wxapp/wxappmanage/list'),
-      children: [
-        {
-          path: 'policy',
-          component: () => import('@/view/wxapp/authorize/policy')
-        },
-        {
-          path: 'policy/editdashboard',
-          component: () => import('@/view/wxapp/statistics/dataanalysis/index')
-        },
-        {
-          path: 'policy/editsourcemanagement',
-          component: () => import('@/view/wxapp/statistics/sourcemanagement/index')
-        },
-        {
-          path: 'policy/editsourcemanagement/detail',
-          component: () => import('@/view/wxapp/statistics/sourcemanagement/monito_detail')
-        },
-        {
-          path: 'policy/noticemessage',
-          component: () => import('@/view/wxapp/messages')
-        }
-      ]
-    },
-    {
-      path: 'wechat/brand',
-      name: `服务号管理-公众号授权`,
-      component: () => import('@/view/brand/wechat/open')
-    },
     {
       path: 'wechat/brandmenu',
       name: `服务号管理-自定义菜单`,
@@ -150,39 +165,6 @@ export default {
       path: 'aliminiapp',
       name: `支付宝小程序设置`,
       component: () => import('@/view/wxapp/aliminiapp/setting')
-    },
-    {
-      path: 'cs/wxappchat',
-      name: `客服-小程序客服`,
-      component: () => import('@/view/base/setting/im/wxappchat')
-      // component: () => import('@/view/brand/wechat/wxapp')
-    },
-    {
-      path: 'cs/brandcustomer',
-      name: `客服-微信客服`,
-      component: () => import('@/view/brand/wechat/customservice')
-    },
-    {
-      path: 'cs/echat',
-      name: `客服-一洽客服`,
-      component: () => import('@/view/base/setting/im/echat')
-    },
-    {
-      path: 'cs/meiqia',
-      name: `客服-美洽客服`,
-      component: () => import('@/view/site/meiqia')
-    },
-    {
-      path: 'site/extminilink',
-      name: `外部小程序配置`,
-      component: () => import('@/view/base/wxa/extMiniLink'),
-      children: [
-        {
-          path: 'editor',
-          name: '外部小程序配置-页面路径',
-          component: () => import('@/view/base/wxa/extMiniLinkDetail')
-        }
-      ]
     }
   ]
 }

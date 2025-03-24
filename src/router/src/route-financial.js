@@ -72,11 +72,6 @@ export default {
       name: `商户提现设置`,
       component: () => import('@/view/mall/splitbill/storesetting')
     },
-    {
-      path: 'distribution/dada',
-      name: `达达账户`,
-      component: () => import('@/view/mall/distribution/account')
-    },
     // {
     //   path: 'adapay_merchant_info',
     //   name: `开户信息`,

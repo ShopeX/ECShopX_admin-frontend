@@ -171,25 +171,6 @@ export default {
     //   component: () => import('@/view/member/promotions/purchase/index')
     // },
     {
-      path: 'purchase',
-      name: `员工内购`,
-      component: () => import('@/view/member/promotions/purchase/index'),
-      children: [
-        {
-          path: 'editor',
-          component: () => import('@/view/member/promotions/purchase/editor')
-        },
-        {
-          path: 'detail',
-          component: () => import('@/view/member/promotions/purchase/detail')
-        },
-        {
-          path: 'dependents',
-          component: () => import('@/view/member/promotions/purchase/dependents')
-        }
-      ]
-    },
-    {
       path: 'wheel',
       name: `大转盘配置`,
       component: () => import('@/view/member/promotions/wheel/index')
@@ -233,7 +214,7 @@ export default {
       ]
     },
     {
-      path: 'Marketingspluspricebuy',
+      path: 'promotion/Marketingspluspricebuy',
       name: `加价购管理`,
       component: () => import('@/view/member/promotions/pluspricebuy/list'),
       children: [
@@ -244,7 +225,7 @@ export default {
       ]
     },
     {
-      path: 'marketingpackage',
+      path: 'promotion/marketingpackage',
       name: `组合商品管理`,
       component: () => import('@/view/member/promotions/package/list'),
       children: [
@@ -255,7 +236,7 @@ export default {
       ]
     },
     {
-      path: 'limitedtimesale',
+      path: 'promotion/limitedtimesale',
       name: `限时特惠`,
       component: () => import('@/view/member/promotions/limitedtimesale/list'),
       children: [
@@ -277,17 +258,6 @@ export default {
       ]
     },
     {
-      path: 'goodslimit',
-      name: `商品限购`,
-      component: () => import('@/view/member/promotions/goodslimit/list'),
-      children: [
-        {
-          path: 'editor/:limit_id?',
-          component: () => import('@/view/member/promotions/goodslimit/add')
-        }
-      ]
-    },
-    {
       path: 'marketingseckill',
       name: `限时秒杀`,
       component: () => import('@/view/member/promotions/seckill/list'),
@@ -299,7 +269,7 @@ export default {
       ]
     },
     {
-      path: 'marketingsfulldiscount',
+      path: 'promotion/marketingsfulldiscount',
       name: `满折管理`,
       component: () => import('@/view/member/promotions/fulldiscount/list'),
       children: [
@@ -310,7 +280,7 @@ export default {
       ]
     },
     {
-      path: 'Marketingsfullminus',
+      path: 'promotion/Marketingsfullminus',
       name: `满减管理`,
       component: () => import('@/view/member/promotions/fullminus/list'),
       children: [
@@ -321,7 +291,7 @@ export default {
       ]
     },
     {
-      path: 'Marketingsfullgift',
+      path: 'promotion/Marketingsfullgift',
       name: `满赠管理`,
       component: () => import('@/view/member/promotions/fullgift/list'),
       children: [
@@ -347,7 +317,7 @@ export default {
       ]
     },
     {
-      path: 'groupsindex',
+      path: 'fissionmarketing/groupsindex',
       name: `拼团活动`,
       component: () => import('@/view/member/groups/index'),
       children: [
@@ -369,7 +339,7 @@ export default {
       ]
     },
     {
-      path: 'marketingbargain',
+      path: 'fissionmarketing/marketingbargain',
       name: `微信助力`,
       component: () => import('@/view/member/bargain/index'),
       children: [
@@ -569,47 +539,6 @@ export default {
       path: 'community/withdraw',
       name: `提现申请`,
       component: () => import('@/view/mall/community/withdraw')
-    },
-    {
-      path: 'ugc/ugcindex',
-      name: `笔记管理`,
-      component: () => import('@/view/member/ugc/ugcIndex'),
-      children: [
-        {
-          path: 'editor',
-          component: () => import('@/view/member/ugc/ugcNotesEditor')
-        }
-      ]
-    },
-    {
-      path: 'ugc/ugcflags',
-      name: `角标管理`,
-      component: () => import('@/view/member/ugc/ugcFlags')
-    },
-    {
-      path: 'ugc/ugctags',
-      name: `TAG管理`,
-      component: () => import('@/view/member/ugc/ugcTags')
-    },
-    {
-      path: 'ugc/ugctopic',
-      name: `笔记话题设置`,
-      component: () => import('@/view/member/ugc/ugcTopic')
-    },
-    {
-      path: 'ugc/ugcreview',
-      name: `评论管理`,
-      component: () => import('@/view/member/ugc/ugcReview')
-    },
-    {
-      path: 'ugc/ugcpoint',
-      name: `积分管理`,
-      component: () => import('@/view/member/ugc/ugcPoint')
-    },
-    {
-      path: 'ugc/ugctpos',
-      name: `第三方审核`,
-      component: () => import('@/view/member/ugc/ugcTPOS')
     }
   ]
 }

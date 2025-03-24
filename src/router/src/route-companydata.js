@@ -7,7 +7,7 @@ export default {
   component: Layout,
   children: [
     {
-      path: 'goodsstatistics',
+      path: 'statistics/goodsstatistics',
       name: `goodsstatistics`,
       meta: {
         title: `${name}-商品统计`
@@ -18,7 +18,7 @@ export default {
         )
     },
     {
-      path: 'orderstatistics',
+      path: 'statistics/orderstatistics',
       name: `orderstatistics`,
       meta: {
         title: `${name}-交易统计`
@@ -29,7 +29,7 @@ export default {
         )
     },
     {
-      path: 'distributordata',
+      path: 'statistics/distributordata',
       name: `distributordata`,
       meta: {
         title: `${name}-店铺统计`
@@ -40,7 +40,7 @@ export default {
         )
     },
     {
-      path: 'memberstatistics',
+      path: 'statistics/memberstatistics',
       name: `memberstatistics`,
       meta: {
         title: `${name}-会员统计`
@@ -51,15 +51,9 @@ export default {
         )
     },
     {
-      path: 'deliverystaffstatistics',
-      name: `deliverystaffstatistics`,
-      meta: {
-        title: `${name}-配送员业绩`
-      },
-      component: () =>
-        import(
-          /* webpackChunkName: "companydata-memberstatistics" */ '@/view/mall/datacube/companydata/delivery'
-        )
+      path: 'report/baseexport',
+      name: `导出列表`,
+      component: () => import('@/view/base/exportlog/index')
     }
   ]
 }

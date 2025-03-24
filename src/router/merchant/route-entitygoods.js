@@ -114,12 +114,6 @@ export default {
       ]
     },
     {
-      path: 'service/arrivalnotice',
-      name: `到货通知`,
-      component: () => import('@/view/goods/arrivalNotice')
-    },
-
-    {
       path: 'goods/itemstagupload',
       name: `批量打标签`,
       component: () => import('@/view/mall/goods/physical/normalGoodsTagUpload')

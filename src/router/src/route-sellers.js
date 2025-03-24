@@ -35,7 +35,7 @@ export default {
       ]
     },
     {
-      path: 'storemanager/list',
+      path: 'salesorganization/list',
       name: `商家列表`,
       component: () => import('@/view/mall/marketing/merchantList/index'),
       children: [
@@ -101,7 +101,7 @@ export default {
       ]
     },
     {
-      path: 'storemanager/setting',
+      path: 'salesetting/setting',
       name: '商户设置',
       component: () => import('@/view/mall/marketing/setting')
     },

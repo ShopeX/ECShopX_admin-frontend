@@ -46,23 +46,6 @@ export default {
       ]
     },
     {
-      path: 'storemanager/storeshopitemanagement',
-      name: `店铺商品`,
-      // component: () => import('@/view/mall/storeshop/itemlist')
-      component: () => import('@/view/mall/storeshop/store-shop.standard')
-    },
-    {
-      path: 'storemanager/marketingdistribution_orders',
-      name: `店铺订单`,
-      component: () => import('@/view/mall/marketing/distributionOrders'),
-      children: [
-        {
-          path: 'detail',
-          component: () => import('@/view/mall/trade/order/detail')
-        }
-      ]
-    },
-    {
       path: 'storemanager/distributoraftersalesaddress',
       name: `售后地址`,
       component: () => import('@/view/mall/marketing/distributorAftersalesAddress')

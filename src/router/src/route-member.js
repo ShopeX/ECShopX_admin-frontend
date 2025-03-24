@@ -8,7 +8,7 @@ export default {
   component: Layout,
   children: [
     {
-      path: 'member',
+      path: 'member/memberlist',
       name: `会员列表`,
       component: () => import('@/view/member/members/list'),
       children: [
@@ -54,12 +54,12 @@ export default {
       component: () => import('@/view/member/whitelist/uploadeindex')
     },
     {
-      path: 'pointrule',
+      path: 'card/pointrule',
       name: `积分规则`,
       component: () => import('@/view/member/point/index.vue')
     },
     {
-      path: 'pointoverview',
+      path: 'card/pointoverview',
       name: `积分总览`,
       component: () => import('@/view/member/point/overview.vue')
     },
@@ -69,17 +69,22 @@ export default {
       component: () => import('@/view/member/members/rightsList')
     },
     {
-      path: 'Managetag',
+      path: 'member/Managetag',
       name: `会员标签`,
       component: () => import('@/view/member/members/tags')
     },
     {
-      path: 'smssend',
+      path: 'membertouch/smssend',
       name: `群发短信`,
       component: () => import('@/view/member/members/list')
     },
     {
-      path: 'Manageinfomation',
+      path: 'membertouch/arrivalnotice',
+      name: `到货通知`,
+      component: () => import('@/view/goods/arrivalNotice')
+    },
+    {
+      path: 'membersetting/Manageinfomation',
       name: `会员注册信息`,
       component: () => import('@/view/member/register')
     },
@@ -94,17 +99,17 @@ export default {
       component: () => import('@/view/mall/storeddeposit/index')
     },
     {
-      path: 'managecustomer',
+      path: 'member/managecustomer',
       name: `会员信息导入`,
       component: () => import('@/view/member/members/uploade')
     },
     {
-      path: 'trustlogin',
+      path: 'membersetting/trustlogin',
       name: `信任登录`,
       component: () => import('@/view/member/trustlogin/list')
     },
     {
-      path: 'closeAccount',
+      path: 'membersetting/closeAccount',
       name: '会员注销',
       component: () => import('@/view/member/logout')
     },
@@ -113,23 +118,5 @@ export default {
     //   name: '内购企业列表',
     //   component: () => import('@/view/member/members/enterprise')
     // },
-    {
-      path: 'purchase/employee',
-      name: '员工管理',
-      component: () => import('@/view/member/purchase/employee'),
-      children: [
-        {
-          path: 'import',
-          name: `白名单导入`,
-          component: () => import('@/view/member/purchase/employeeImport')
-        }
-      ]
-    },
-
-    {
-      path: 'purchase/company',
-      name: '企业管理',
-      component: () => import('@/view/member/purchase/company')
-    }
   ]
 }

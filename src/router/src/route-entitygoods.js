@@ -38,6 +38,12 @@ export default {
         }
       ]
     },
+    {
+      path: 'goods/storeshopitemanagement',
+      name: `店铺商品`,
+      // component: () => import('@/view/mall/storeshop/itemlist')
+      component: () => import('@/view/mall/storeshop/store-shop.standard')
+    },
     // 供应商商品列表
     {
       path: 'goods/supplier_goods_list',
@@ -98,19 +104,25 @@ export default {
         }
       ]
     },
-    // 基础配置
+    // 商品分类
     {
-      path: 'goodsbase/goodscategory',
+      path: 'goodsgroup/goodscategory',
       name: `销售分类`,
       // component: () => import('@/view/mall/goods/category')
       component: () => import('@/view/goods/saleCategory')
     },
     {
-      path: 'goodsbase/goodsmaincategory',
+      path: 'goodsgroup/goodsmaincategory',
       name: `管理分类`,
       // component: () => import('@/view/mall/goods/maincategory')
       component: () => import('@/view/goods/mainCategory')
     },
+    {
+      path: 'goodsgroup/itemtags',
+      name: `商品标签`,
+      component: () => import('@/view/mall/goods/tags')
+    },
+    // 基础设置
     {
       path: 'goodsbase/goodsattributes',
       name: `商品规格`,
@@ -126,45 +138,6 @@ export default {
       name: `商品参数`,
       component: () => import('@/view/mall/goods/attributes/params')
     },
-    {
-      path: 'goodsbase/itemtags',
-      name: `商品标签`,
-      component: () => import('@/view/mall/goods/tags')
-    },
-    {
-      path: 'goodsbase/shippingtemplates',
-      name: `运费模板`,
-      component: () => import('@/view/mall/trade/shipping/templates'),
-      children: [
-        {
-          path: 'editor/:itemId?',
-          component: () => import('@/view/mall/trade/shipping/add')
-        }
-      ]
-    },
-    // 其他服务
-    {
-      path: 'service/rate',
-      name: `商品评价`,
-      component: () => import('@/view/goods/rate')
-    },
-    {
-      path: 'service/brandmaterial',
-      name: `素材管理`,
-      component: () => import('@/view/brand/wechat/aterialmanagement'),
-      children: [
-        {
-          path: 'editor/:id?',
-          component: () => import('@/view/brand/wechat/artical/new_artical')
-        }
-      ]
-    },
-    {
-      path: 'service/arrivalnotice',
-      name: `到货通知`,
-      component: () => import('@/view/goods/arrivalNotice')
-    },
-
     {
       path: 'goods/itemstagupload',
       name: `批量打标签`,

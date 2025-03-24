@@ -255,7 +255,7 @@ export default {
   methods: {
     ...mapMutations(['SYSTEM_EXIT']),
     getIconName(icon) {
-      return ICON_MAP[icon] || ''
+      return ICON_MAP[icon] || icon
     },
     isShowHeader() {
       return !isInSalesCenter()

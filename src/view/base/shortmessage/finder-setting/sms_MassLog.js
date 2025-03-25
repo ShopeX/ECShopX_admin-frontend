@@ -95,7 +95,7 @@ export default (vm) => {
               on: {
                 click: () => {
                   vm.$router.push({
-                    path: '/setting/datamessage/ali_sms/sms_sendLog',
+                    path: '/systemsetting/datamessage/ali_sms/sms_sendLog',
                     query: {
                       task_name: row.task_name
                     }

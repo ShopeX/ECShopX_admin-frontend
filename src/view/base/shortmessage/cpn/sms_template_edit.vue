@@ -282,7 +282,7 @@ export default {
     },
     fnBack() {
       this.$router.push({
-        path: `/setting/datamessage/ali_sms/sms_template`
+        path: `/systemsetting/datamessage/ali_sms/sms_template`
       })
     },
     fnAgain() {

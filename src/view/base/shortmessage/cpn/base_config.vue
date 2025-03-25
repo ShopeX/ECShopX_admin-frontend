@@ -257,7 +257,7 @@ export default {
       this.init()
     },
     fnGo (tabName) {
-      this.$router.push({ path: `/setting/datamessage/ali_sms/${tabName}` })
+      this.$router.push({ path: `/setting/systemsetting/datamessage/ali_sms/${tabName}` })
     }
   }
 }

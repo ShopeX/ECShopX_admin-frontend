@@ -3,7 +3,7 @@
     <div class="btn">
       <router-link
         class="link"
-        to="/setting/datamessage"
+        to="/setting/systemsetting/datamessage"
       >
         切换短信商
       </router-link>
@@ -59,9 +59,9 @@ export default {
     handleClick (tab, event) {
       this.activeName = tab.name
       if (tab.name == 'base_config') {
-        this.$router.push({ path: `/setting/datamessage/ali_sms` })
+        this.$router.push({ path: `/setting/systemsetting/datamessage/ali_sms` })
       } else {
-        this.$router.push({ path: `/setting/datamessage/ali_sms/${tab.name}` })
+        this.$router.push({ path: `/setting/systemsetting/datamessage/ali_sms/${tab.name}` })
       }
     },
     switchSMS () {

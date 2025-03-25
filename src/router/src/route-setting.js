@@ -118,11 +118,6 @@ export default {
       ]
     },
     {
-      path: 'systemsetting/assetpayment',
-      name: `支付配置`,
-      component: () => import('@/view/base/setting/payment')
-    },
-    {
       path: 'offlineAccount',
       name: `线下收款账户`,
       component: () => import('@/view/base/setting/offlineAccount')
@@ -137,107 +132,21 @@ export default {
       name: `数据分析配置`,
       component: () => import('@/view/base/setting/dataAnalysis')
     },
-    {
-      path: 'systemsetting/mapsetting',
-      name: `地图配置`,
-      component: () => import('@/view/base/setting/mapsetting')
-    },
-    {
-      path: 'systemsetting/Yilianyun',
-      name: `易联云配置`,
-      component: () => import('@/view/base/setting/yilianyun/index')
-    },
-    {
-      path: 'systemsetting/ugctpos',
-      name: `第三方审核`,
-      component: () => import('@/view/member/ugc/ugcTPOS')
-    },
-    {
-      path: 'systemsetting/wxaindex',
-      name: `服务号管理-授权管理`,
-      component: () => import( '@/view/wxapp/wxappmanage/list')
-    },
-    {
-      path: 'systemsetting/brand',
-      name: `服务号管理-公众号授权`,
-      component: () => import('@/view/brand/wechat/open')
-    },
-    {
-      path: 'systemsetting/wxappchat',
-      name: `客服-小程序客服`,
-      component: () => import('@/view/base/setting/im/wxappchat')
-      // component: () => import('@/view/brand/wechat/wxapp')
-    },
-    {
-      path: 'systemsetting/brandcustomer',
-      name: `客服-微信客服`,
-      component: () => import('@/view/brand/wechat/customservice')
-    },
-    {
-      path: 'systemsetting/echat',
-      name: `客服-一洽客服`,
-      component: () => import('@/view/base/setting/im/echat')
-    },
-    {
-      path: 'systemsetting/meiqia',
-      name: `客服-美洽客服`,
-      component: () => import('@/view/site/meiqia')
-    },
-    {
-      path: 'systemsetting/extminilink',
-      name: `外部小程序配置`,
-      component: () => import('@/view/base/wxa/extMiniLink'),
-      children: [
-        {
-          path: 'editor',
-          name: '外部小程序配置-页面路径',
-          component: () => import('@/view/base/wxa/extMiniLinkDetail')
-        }
-      ]
-    },
-    {
-      path: 'systemsetting/domain_setting',
-      name: `域名设置`,
-      component: () => import('@/view/base/setting/companys/domain')
-    },
-    {
-      path: 'openapi',
-      name: `开发接口配置`,
-      component: () => import('@/view/base/setting/opendev/index')
-    },
-    {
-      path: 'Regionauth',
-      name: `区域管理`,
-      component: () => import('@/view/regionauth/list')
-    },
+
+    /** 系统配置 */
     {
       path: 'systemsetting/publicsetting',
       name: `通用设置`,
       component: () => import('@/view/base/setting/publicsetting')
     },
     {
-      path: 'GoodsShareSetting',
-      name: `商品分享设置`,
-      component: () => import('@/view/base/setting/goodsShareSetting')
-    },
-    {
-      path: 'saaserp/certificate',
-      name: `商派ERP`,
-      component: () => import('@/view/base/setting/certificate/index')
-    },
-    {
-      path: 'saaserp/wdtSetting',
-      name: `旺店通ERP`,
-      component: () => import('@/view/base/setting/saaserp/wdtSetting')
-    },
-    {
-      path: 'saaserp/jstSetting',
-      name: '聚水潭ERP',
-      component: () => import('@/view/base/setting/saaserp/jstSetting')
+      path: 'systemsetting/assetpayment',
+      name: `支付配置`,
+      component: () => import('@/view/base/setting/payment')
     },
     {
       path: 'systemsetting/datamessage',
-      name: `短信账户`,
+      name: `短信服务`,
       component: () => import('@/view/base/shortmessage/index'),
       children: [
         {
@@ -311,6 +220,123 @@ export default {
         }
       ]
     },
+    {
+      path: 'systemsetting/mapsetting',
+      name: `地图服务`,
+      component: () => import('@/view/base/setting/mapsetting')
+    },
+    {
+      path: 'systemsetting/Yilianyun',
+      name: `小票打印`,
+      component: () => import('@/view/base/setting/yilianyun/index')
+    },
+    {
+      path: 'systemsetting/ugctpos',
+      name: `UGC审核配置`,
+      component: () => import('@/view/member/ugc/ugcTPOS')
+    },
+    {
+      path: 'systemsetting/wxaindex',
+      name: `小程序管理`,
+      component: () => import('@/view/wxapp/wxappmanage/list')
+    },
+    {
+      path: 'systemsetting/brand',
+      name: `公众号授权`,
+      component: () => import('@/view/brand/wechat/open')
+    },
+    {
+      path: 'systemsetting/wxappchat',
+      name: `小程序客服`,
+      component: () => import('@/view/base/setting/im/wxappchat')
+      // component: () => import('@/view/brand/wechat/wxapp')
+    },
+    {
+      path: 'systemsetting/echat',
+      name: `一洽客服`,
+      component: () => import('@/view/base/setting/im/echat')
+    },
+    {
+      path: 'systemsetting/meiqia',
+      name: `美洽客服`,
+      component: () => import('@/view/site/meiqia')
+    },
+    {
+      path: 'systemsetting/brandcustomer',
+      name: `客服-微信客服`,
+      component: () => import('@/view/brand/wechat/customservice')
+    },
+    {
+      path: 'systemsetting/wdtSetting',
+      name: `旺店通`,
+      component: () => import('@/view/base/setting/saaserp/wdtSetting')
+    },
+    {
+      path: 'systemsetting/jstSetting',
+      name: '聚水潭',
+      component: () => import('@/view/base/setting/saaserp/jstSetting')
+    },
+    {
+      path: 'systemsetting/certificate',
+      name: `商派ERP`,
+      component: () => import('@/view/base/setting/certificate/index')
+    },
+    {
+      path: 'systemsetting/domain_setting',
+      name: `域名设置`,
+      component: () => import('@/view/base/setting/companys/domain')
+    },
+    {
+      path: 'systemsetting/approve',
+      name: '脱敏数据申请',
+      component: () => import('@/view/base/encrypt/authAdmin.vue')
+    },
+    {
+      path: 'systemsetting/apply',
+      name: `脱敏申请审批`,
+      component: () => import('@/view/base/setting/authorityapproval'),
+      children: [
+        {
+          path: 'approve/:id?',
+          component: () => import('@/view/base/setting/authorityapproval/approve')
+        }
+      ]
+    },
+    {
+      path: 'systemsetting/extminilink',
+      name: `外部小程序配置`,
+      component: () => import('@/view/base/wxa/extMiniLink'),
+      children: [
+        {
+          path: 'editor',
+          name: '外部小程序配置-页面路径',
+          component: () => import('@/view/base/wxa/extMiniLinkDetail')
+        }
+      ]
+    },
+    {
+      path: 'systeminfo/agreement',
+      name: '软件使用协议',
+      component: () => import('@/view/base/setting/agreement')
+    },
+    /** 系统配置 */
+
+    {
+      path: 'openapi',
+      name: `开发接口配置`,
+      component: () => import('@/view/base/setting/opendev/index')
+    },
+    {
+      path: 'Regionauth',
+      name: `区域管理`,
+      component: () => import('@/view/regionauth/list')
+    },
+
+    {
+      path: 'GoodsShareSetting',
+      name: `商品分享设置`,
+      component: () => import('@/view/base/setting/goodsShareSetting')
+    },
 
     {
       path: 'basecurrency',
@@ -379,27 +405,6 @@ export default {
       path: 'adapay_cash_setting',
       name: '提现设置',
       component: () => import('@/view/mall/withdraw/withdraw_setting.vue')
-    },
-    {
-      path: 'systemsetting/approve',
-      name: '权限申请',
-      component: () => import('@/view/base/encrypt/authAdmin.vue')
-    },
-    {
-      path: 'systemsetting/apply',
-      name: `权限审批`,
-      component: () => import('@/view/base/setting/authorityapproval'),
-      children: [
-        {
-          path: 'approve/:id?',
-          component: () => import('@/view/base/setting/authorityapproval/approve')
-        }
-      ]
-    },
-    {
-      path: 'systeminfo/agreement',
-      name: '软件使用协议',
-      component: () => import('@/view/base/setting/agreement')
     }
   ]
 }

@@ -86,6 +86,58 @@ export default {
         }
       ]
     },
+
+    /** 会员营销 */
+    {
+      path: 'membermarket/marketingindex',
+      name: `新客营销`,
+      component: () => import('@/view/member/promotions/index')
+    },
+    {
+      path: 'membermarket/specificcrowddiscount',
+      name: `定向促销`,
+      component: () => import('@/view/member/promotions/specificcrowd/specificcrowddiscount'),
+      children: [
+        {
+          path: 'detail/:id',
+          component: () => import('@/view/member/promotions/specificcrowd/userdiscoutlog')
+        }
+      ]
+    },
+    {
+      path: 'membermarket/memberpreference',
+      name: `会员优选购`,
+      component: () => import('@/view/member/promotions/memberpreference/list'),
+      children: [
+        {
+          path: 'editor/:marketing_id?',
+          component: () => import('@/view/member/promotions/memberpreference/add')
+        }
+      ]
+    },
+    {
+      path: 'membermarket/marketingactivity',
+      name: `自动化营销`,
+      component: () => import('@/view/member/activity/index'),
+      children: [
+        {
+          path: 'editor/:type?',
+          component: () => import('@/view/member/activity/add')
+        },
+        {
+          path: 'templ',
+          component: () => import('@/view/member/activity/templ')
+        }
+      ]
+    },
+    {
+      path: 'membermarket/recommendlike',
+      name: `热门推荐`,
+      component: () => import('@/view/member/promotions/recommendlike')
+    },
+
+    /** 会员营销 */
+
     {
       path: 'member/pointupvaluation',
       name: `积分升值`,
@@ -175,27 +227,7 @@ export default {
       name: `大转盘配置`,
       component: () => import('@/view/member/promotions/wheel/index')
     },
-    {
-      path: 'recommendlike',
-      name: `热门推荐`,
-      component: () => import('@/view/member/promotions/recommendlike')
-    },
-    {
-      path: 'specificcrowddiscount',
-      name: `定向促销`,
-      component: () => import('@/view/member/promotions/specificcrowd/specificcrowddiscount'),
-      children: [
-        {
-          path: 'detail/:id',
-          component: () => import('@/view/member/promotions/specificcrowd/userdiscoutlog')
-        }
-      ]
-    },
-    {
-      path: 'marketingindex',
-      name: `新客营销`,
-      component: () => import('@/view/member/promotions/index')
-    },
+
     {
       path: 'liveroomlist',
       name: `直播`,
@@ -246,17 +278,7 @@ export default {
         }
       ]
     },
-    {
-      path: 'memberpreference',
-      name: `会员优选购`,
-      component: () => import('@/view/member/promotions/memberpreference/list'),
-      children: [
-        {
-          path: 'editor/:marketing_id?',
-          component: () => import('@/view/member/promotions/memberpreference/add')
-        }
-      ]
-    },
+
     {
       path: 'marketingseckill',
       name: `限时秒杀`,
@@ -301,21 +323,7 @@ export default {
         }
       ]
     },
-    {
-      path: 'marketingactivity',
-      name: `自动化营销`,
-      component: () => import('@/view/member/activity/index'),
-      children: [
-        {
-          path: 'editor/:type?',
-          component: () => import('@/view/member/activity/add')
-        },
-        {
-          path: 'templ',
-          component: () => import('@/view/member/activity/templ')
-        }
-      ]
-    },
+
     {
       path: 'fissionmarketing/groupsindex',
       name: `拼团活动`,

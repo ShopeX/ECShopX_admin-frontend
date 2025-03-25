@@ -221,17 +221,17 @@ export default {
       component: () => import('@/view/base/setting/goodsShareSetting')
     },
     {
-      path: 'saaserp/certificate',
+      path: 'certificate',
       name: `商派ERP`,
       component: () => import('@/view/base/setting/certificate/index')
     },
     {
-      path: 'saaserp/wdtSetting',
+      path: 'wdtSetting',
       name: `旺店通ERP`,
       component: () => import('@/view/base/setting/saaserp/wdtSetting')
     },
     {
-      path: 'saaserp/jstSetting',
+      path: 'jstSetting',
       name: '聚水潭ERP',
       component: () => import('@/view/base/setting/saaserp/jstSetting')
     },

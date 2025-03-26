@@ -8,6 +8,9 @@
       <el-button type="primary" icon="iconfont icon-daorucaozuo-01" @click="handleImportEmployee">
         导入员工
       </el-button>
+      <el-button type="primary" plain @click="handleExport">
+        导出
+      </el-button>
     </div>
 
     <SpFilterForm :model="queryForm" @onSearch="onSearch" @onReset="onSearch">
@@ -38,6 +41,12 @@
           />
         </el-select>
       </SpFilterFormItem>
+      <SpFilterFormItem
+        prop="distributor_id"
+        label="来源店铺:"
+      >
+        <SpSelectShop v-model="queryForm.distributor_id" clearable placeholder="请选择" />
+      </SpFilterFormItem>
     </SpFilterForm>
 
     <SpFinder
@@ -58,6 +67,7 @@
       :modal="false"
       :form="employeeForm"
       :form-list="employeeFormList"
+      :confirmStatus="addDialogLoading"
       @onSubmit="onEmployeeFormSubmit"
     />
   </SpRouterView>
@@ -66,6 +76,8 @@
 <script>
 import { createSetting } from '@shopex/finder'
 import Pages from '@/utils/pages'
+import { VALIDATE_TYPES } from './consts'
+
 export default {
   name: '',
   data() {
@@ -75,6 +87,7 @@ export default {
         account: '',
         email: '',
         member_mobile: '',
+        distributor_id:'',
         enterprise_id: []
       },
       enterpriseList: [],
@@ -85,6 +98,10 @@ export default {
             key: 'edit',
             type: 'button',
             buttonType: 'text',
+            visible: (row) => {
+              //平台：来源店铺是非平台则隐藏
+              return !(this.IS_ADMIN() && row.distributor_id)
+            },
             action: {
               handler: async ([row]) => {
                 Object.keys(this.employeeForm).forEach((key) => (this.employeeForm[key] = row[key]))
@@ -97,6 +114,10 @@ export default {
             key: 'delete',
             type: 'button',
             buttonType: 'text',
+             //平台：来源店铺是非平台则隐藏
+            visible: (row) => {
+              return !(this.IS_ADMIN() && row.distributor_id)
+            },
             action: {
               handler: async ([row]) => {
                 await this.$confirm(`确认是否删除？`, '提示', {
@@ -116,6 +137,14 @@ export default {
             key: 'name'
           },
           {
+            name: '登录类型',
+            key: 'auth_type',
+            formatter: (value, { auth_type }, col) => {
+              const authType = VALIDATE_TYPES.find((item) => item.value == auth_type)?.name
+              return authType
+            }
+          },
+          {
             name: '账号',
             key: 'account'
           },
@@ -126,6 +155,14 @@ export default {
           {
             name: '邮箱',
             key: 'email'
+          },
+          {
+            name: '来源店铺',
+            key: 'distributor_name'
+          },
+          {
+            name: '企业ID',
+            key: 'enterprise_id'
           },
           {
             name: '企业名称',
@@ -143,6 +180,7 @@ export default {
       }),
       addDialog: false,
       companyList: [],
+      addDialogLoading:false,
       employeeForm: {
         id: '',
         enterprise_id: '',
@@ -187,10 +225,10 @@ export default {
           key: 'mobile',
           type: 'input',
           isShow: () => {
-            return this.authType == 'mobile'
+            return this.authType == 'mobile' || this.authType == 'qr_code'
           },
           validator: (rule, value, callback) => {
-            if (this.authType == 'mobile') {
+            if (this.authType == 'mobile' || this.authType == 'qr_code') {
               if (value) {
                 callback()
               } else {
@@ -276,6 +314,11 @@ export default {
     this.pagesQuery = new Pages({
       fetch: this.getEnterpriseList
     }).nextPage()
+
+    if (this.$route.query.company_id){
+      this.queryForm.enterprise_id = [Number(this.$route.query.company_id)]
+    }
+
   },
   methods: {
     beforeSearch(params) {
@@ -287,8 +330,34 @@ export default {
     onSearch() {
       this.$refs['finder'].refresh()
     },
+    async handleExport(){
+      let params = {
+        page: 1,
+        pageSize: 20,
+        ...this.queryForm
+      }
+      let response = await this.$api.member.exportEmployees(params)
+      if (response.status) {
+        this.$message({
+          type: 'success',
+          message: '已加入执行队列，请在设置-导出列表中下载'
+        })
+        this.$export_open('employee_purchase_employees')
+        return
+      } else if (response.url) {
+        this.downloadUrl = response.url
+        this.downloadName = response.filename
+        this.downloadView = true
+      } else {
+        this.$message({
+          type: 'error',
+          message: '无内容可导出 或 执行失败，请检查重试'
+        })
+        return
+      }
+    },
     handleImportEmployee() {
-      this.$router.push({ path: '/member/purchase/employee/import' })
+      this.$router.push({ path: `${this.IS_DISTRIBUTOR() ? '/shopadmin' : ''}/member/purchase/employee/import` })
     },
     addEmployee() {
       this.employeeForm = this.$options.data().employeeForm
@@ -296,20 +365,32 @@ export default {
     },
     async onEmployeeFormSubmit() {
       let params = JSON.parse(JSON.stringify(this.employeeForm))
-      if (params.id) {
-        await this.$api.member.updateEmployee(params.id, params)
-      } else {
-        // delete params.id
-        await this.$api.member.addEmployee(params)
+      this.addDialogLoading = true
+      try {
+        if (params.id) {
+          await this.$api.member.updateEmployee(params.id, params)
+        } else {
+          // delete params.id
+          await this.$api.member.addEmployee(params)
+        }
+        this.addDialog = false
+        this.addDialogLoading = false
+        this.$refs['finder'].refresh()
+      } catch (error) {
+        this.addDialogLoading = false
       }
-      this.addDialog = false
-      this.$refs['finder'].refresh()
+
     },
     async getCompanyList({ page, pageSize }) {
-      const { list, total_count } = await this.$api.member.getPurchaseCompanyList({
+      const params = {
         page,
-        pageSize
-      })
+        pageSize,
+        is_employee_check_enabled:'true'
+      }
+      if(this.IS_ADMIN()){
+        params.distributor_id = 0
+      }
+      const { list, total_count } = await this.$api.member.getPurchaseCompanyList(params)
       this.pages.setTotal(total_count)
       this.companyList = this.companyList.concat(list)
     },

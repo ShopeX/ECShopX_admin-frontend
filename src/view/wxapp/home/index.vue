@@ -383,6 +383,7 @@ export default {
         }
       ],
       template_name: 'yykweishop',
+      isTemplateNavList:true,
       templateDialog: false,
       templateForm: {
         pages_template_id: '',
@@ -522,7 +523,7 @@ export default {
                         placeholder='请选择页面'
                         on-change={this.onChangePagePath.bind(this, index)}
                       >
-                        {NAVS.map((item, index) => (
+                        {this.templateNavList.map((item, index) => (
                           <el-option label={item.label} value={item.value} />
                         ))}
                       </el-select>
@@ -578,7 +579,11 @@ export default {
     isDistributorTemplate() {
       const { distributor_id } = this.$route.query
       return distributor_id > 0
+    },
+    templateNavList(){
+      return this.isTemplateNavList ? NAVS.filter(item=>item.name != 'purchase') : NAVS
     }
+
   },
   mounted() {
     this.getTemplateSetInfo()
@@ -596,6 +601,7 @@ export default {
         this.navForm.theme = config
         this.navForm.tabList = data
       }
+      this.isTemplateNavList = true
       this.navDrawerShow = true
     },
     async getTemplateSetInfo() {
@@ -853,6 +859,7 @@ export default {
         },
         tabList: data
       }
+      this.isTemplateNavList = false
       this.navDrawerShow = true
     },
     removeTabItem(index) {
@@ -869,7 +876,7 @@ export default {
       this.navForm.tabList.push(item)
     },
     onChangePagePath(index, value) {
-      const { label, name } = NAVS.find((item) => item.value == value)
+      const { label, name } = this.templateNavList.find((item) => item.value == value)
       this.navForm.tabList[index].text = label
       this.navForm.tabList[index].name = name
       if(value != 'customPage' && this.navForm.tabList[index]?.customPage){

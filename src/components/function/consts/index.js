@@ -44,9 +44,9 @@ export const NAVS = [
     name: 'customPage',
     label: '自定义页面'
   },
-  {
-    value: 'purchase',
-    name: 'purchase',
-    label: '内购'
-  },
+  // {
+  //   value: 'purchase',
+  //   name: 'purchase',
+  //   label: '内购'
+  // },
 ]

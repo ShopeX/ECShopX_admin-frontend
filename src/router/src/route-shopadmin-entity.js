@@ -44,8 +44,13 @@ export default {
           //     return import('@/view/mall/goods/physical/add')
           //   }
           // }
-        }
-      ]
+        },
+        {
+          path: 'physicalupload',
+          name: `商品导入`,
+          component: () => import('@/view/mall/goods/physical/normalGoodsUpload')
+        },
+      ],
     },
     {
       path: 'rate',

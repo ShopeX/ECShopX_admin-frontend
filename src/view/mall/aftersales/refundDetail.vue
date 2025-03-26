@@ -258,7 +258,9 @@
           退款渠道:
         </el-col>
         <el-col :span="20">
-          <span v-if="refundDetail.refund_channel == 'offline'">线下退款</span>
+          <span v-if="refundDetail.refund_channel == 'offline'">线下退款
+            <el-button v-if="refundDetail.refund_status == 'SUCCESS'" type="text" @click="handleAccountView">查看账户</el-button>
+          </span>
           <span v-else-if="refundDetail.refund_channel == 'original'">原路返回</span>
         </el-col>
       </el-row>
@@ -327,6 +329,15 @@
         返回
       </el-button>
     </div>
+
+    <SpDialog
+      ref="refundDialogRef"
+      v-model="refundDialog"
+      :title="`退款【订单：${refundForm.order_id}】`"
+      :form="refundForm"
+      :form-list="refundFormList"
+      :isShowFooter="false"
+    />
   </div>
 </template>
 
@@ -370,7 +381,78 @@ export default {
     return {
       isOpenErp: false,
       refund_bn: '',
-      refundDetail: {}
+      refundDetail: {},
+      refundDialog:false,
+      refundForm:{
+        bank_account_name:'',
+        bank_account_no:'',
+        bank_name:'',
+        refund_account_name:'',
+        refund_account_bank:'',
+        refund_account_no:'',
+        pay_type:'',
+        order_id:'',
+        refund_fee:''
+      },
+      refundFormList:[
+      {
+          label: '退款方式',
+          key: 'pay_type',
+          type: 'radio',
+          required: true,
+          options: [
+            { label: 'offline_pay', name: '线下转账' }
+          ]
+        },
+        {
+          label: '收款人户名',
+          key: 'bank_account_name',
+          type: 'input',
+          required: true,
+          message: '请输入收款人户名'
+        },
+        {
+          label: '收款银行账号',
+          key: 'bank_account_no',
+          type: 'input',
+          required: true,
+          message: '请输入银行账号'
+        },
+        {
+          label: '开户银行',
+          key: 'bank_name',
+          type: 'input',
+          required: true,
+          message: '请输入开户银行'
+        },
+        {
+          label: '退款人户名',
+          key: 'refund_account_name',
+          type: 'input',
+          required: true,
+          message: '请输入退款人户名'
+        },
+        {
+          label: '退款银行账号',
+          key: 'refund_account_bank',
+          type: 'input',
+          required: true,
+          message: '请输入退款银行账号'
+        },
+        {
+          label: '退款开户银行',
+          key: 'refund_account_no',
+          type: 'input',
+          required: true,
+          message: '请输入退款开户银行'
+        },
+        {
+          label: '退款金额',
+          key: 'refund_fee',
+          type: 'input',
+          disabled:true
+        },
+      ]
     }
   },
   mounted () {
@@ -391,6 +473,11 @@ export default {
     },
     handleCancel: function () {
       this.$router.back(-1)
+    },
+    async handleAccountView(){
+      const { offline_refund, pay_type } = this.refundDetail
+      this.refundForm = {...offline_refund, pay_type}
+      this.refundDialog = true
     }
   }
 }

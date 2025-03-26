@@ -82,7 +82,8 @@ export const ORDER_TYPE = [
   { title: '团购订单', value: 'groups' },
   { title: '秒杀订单', value: 'seckill' },
   { title: '普通订单', value: 'normal' },
-  { title: '社区团购订单', value: 'community' }
+  { title: '社区团购订单', value: 'community' },
+  { title: '内购订单', value: 'employee_purchase' }
   // { title: "导购订单", value: "shopguide" },
   // { title: "跨境订单", value: "crossborder" },
   // { title: "助力订单", value: "bargain" },
@@ -97,7 +98,8 @@ export const ORDER_TYPE_STANDARD = [
   { title: '普通订单', value: 'normal' },
   { title: '社区团购订单', value: 'community' },
   { title: '兑换订单', value: 'excard' },
-  { title: '门店订单', value: 'shopadmin' }
+  { title: '门店订单', value: 'shopadmin' },
+  { title: '内购订单', value: 'employee_purchase' }
 ]
 
 export const INVOICE_STATUS = [
@@ -160,7 +162,7 @@ export const PROFIT_TYPE = {
 
 export const PAY_TYPE = {
   offline: '线下转账',
-  offline_pay: '线下支付',
+  offline_pay: '线下转账',
   wxpay: '微信支付',
   amorepay: '微信支付',
   wechat: '微信支付',

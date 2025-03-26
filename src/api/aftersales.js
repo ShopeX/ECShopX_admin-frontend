@@ -168,3 +168,19 @@ export function setAftersalesRemind (data) {
     params: data
   })
 }
+
+export function getOfflineInfo (query) {
+  return fetch({
+    url: '/refund/offline/bank',
+    method: 'get',
+    params: query
+  })
+}
+
+export function refundOffline (data) {
+  return fetch({
+    url: '/refund/offline',
+    method: 'post',
+    params: data
+  })
+}

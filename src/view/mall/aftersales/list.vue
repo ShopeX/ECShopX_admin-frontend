@@ -317,7 +317,7 @@
             </el-tag>
           </template>
         </el-table-column>
-        <el-table-column width="100" label="操作">
+        <el-table-column width="100" label="操作" fixed="left">
           <template slot-scope="scope">
             <router-link
               :to="{
@@ -459,7 +459,8 @@ export default {
         is_open: false
       },
       aftersalesRemindVisible: false,
-      aftersalesRemindTitle: '售后提醒内容'
+      aftersalesRemindTitle: '售后提醒内容',
+      orderType: this.VERSION_STANDARD ? ORDER_TYPE_STANDARD : ORDER_TYPE,
     }
   },
   computed: {

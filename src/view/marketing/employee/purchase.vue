@@ -153,6 +153,12 @@ import moment from 'moment'
 export default {
   name: '',
   data() {
+
+    const activePriceList = [
+        { name: '销售价', label: 'sale_price',disabled:true },
+        // { name: '市场价', label: 'market_price' },
+        { name: '活动价', label: 'activity_price' }
+      ]
     return {
       formBase: {
         name: '',
@@ -256,8 +262,15 @@ export default {
           shareLimit: ''
         },
         orderMiniAmount: '',
-        modifyReceiveAddress: ''
+        modifyReceiveAddress: '',
+        items_page:['sale_price','activity_price'],
+        cart_page:['sale_price','activity_price'],
+        order_detail_page:['sale_price','activity_price'],
+        checkout_page:['sale_price','activity_price'],
+        is_discount_description_enabled:false,
+        discount_description:''
       },
+
       activityRuleList: [
         {
           label: '参与企业',
@@ -373,66 +386,72 @@ export default {
                   <span class='form-item-tip'>亲友参与活/亲友不参与活动</span>
                 </div>
               </div>
-              <div class='form-item-content'>
-                <div class='content-item'>
-                  <label>邀请亲友</label>
-                  <SpInput
-                    v-model={this.activityRule.relatives.num}
-                    width='120px'
-                    disabled={num}
-                    placeholder='大于0的整数'
-                    prefix='每名员工最多可邀请'
-                    suffix='名亲友'
-                  />
-                </div>
-              </div>
-              <div class='form-item-content'>
-                <div class='content-item'>
-                  <label>购买时间</label>
-                  <el-date-picker
-                    v-model={this.activityRule.relatives.datetime}
-                    disabled={datetime}
-                    type='daterange'
-                    range-separator='至'
-                    start-placeholder='开始时间'
-                    end-placeholder='结束时间'
-                  />
-                </div>
-              </div>
-              <div class='form-item-content'>
-                <div class='content-item'>
-                  <label>购买额度</label>
-                  <div class='content-item-field'>
-                    <div class='item-wrap'>
-                      <el-radio
-                        v-model={this.activityRule.relatives.type}
-                        disabled={type}
-                        label='1'
-                        onChange={this.onRadioChange}
-                      >
+              {
+                this.activityRule.relatives.join ? (
+                  <div>
+                    <div class='form-item-content'>
+                      <div class='content-item'>
+                        <label>邀请亲友</label>
                         <SpInput
-                          v-model={this.activityRule.relatives.shareLimit}
+                          v-model={this.activityRule.relatives.num}
                           width='120px'
-                          disabled={shareLimit}
+                          disabled={num}
                           placeholder='大于0的整数'
-                          prefix='每人最多可购买额度'
-                          suffix='元'
+                          prefix='每名员工最多可邀请'
+                          suffix='名亲友'
                         />
-                      </el-radio>
+                      </div>
                     </div>
-                    <div class='item-wrap'>
-                      <el-radio
-                        v-model={this.activityRule.relatives.type}
-                        disabled={type}
-                        label='2'
-                        onChange={this.onRadioChange}
-                      >
-                        共享员工额度
-                      </el-radio>
+                    <div class='form-item-content'>
+                      <div class='content-item'>
+                        <label>购买时间</label>
+                        <el-date-picker
+                          v-model={this.activityRule.relatives.datetime}
+                          disabled={datetime}
+                          type='daterange'
+                          range-separator='至'
+                          start-placeholder='开始时间'
+                          end-placeholder='结束时间'
+                        />
+                      </div>
+                    </div>
+                    <div class='form-item-content'>
+                      <div class='content-item'>
+                        <label>购买额度</label>
+                        <div class='content-item-field'>
+                          <div class='item-wrap'>
+                            <el-radio
+                              v-model={this.activityRule.relatives.type}
+                              disabled={type}
+                              label='1'
+                              onChange={this.onRadioChange}
+                            >
+                              <SpInput
+                                v-model={this.activityRule.relatives.shareLimit}
+                                width='120px'
+                                disabled={shareLimit}
+                                placeholder='大于0的整数'
+                                prefix='每人最多可购买额度'
+                                suffix='元'
+                              />
+                            </el-radio>
+                          </div>
+                          <div class='item-wrap'>
+                            <el-radio
+                              v-model={this.activityRule.relatives.type}
+                              disabled={type}
+                              label='2'
+                              onChange={this.onRadioChange}
+                            >
+                              共享员工额度
+                            </el-radio>
+                          </div>
+                        </div>
+                      </div>
                     </div>
                   </div>
-                </div>
-              </div>
+                ):''
+              }
             </div>
           ),
           disabled: {
@@ -474,7 +493,48 @@ export default {
           ),
           disabled: false,
           tip: '请输入大于等于0的整数，从活动结束时间开始开始计算，例如24代表活动结束后24个小时(1天)内买家都可以修改收货地址；活动进行过程中允许买家修改地址'
-        }
+        },
+        {
+          label:'活动价格展示',
+          type: 'group',
+        },
+        {
+          label: '商品列表/商详页面',
+          key: 'items_page',
+          type: 'checkbox',
+          options: activePriceList
+        },
+        {
+          label: '购物车',
+          key: 'cart_page',
+          type: 'checkbox',
+          options: activePriceList
+        },
+        // {
+        //   label: '订单列表/订单详情',
+        //   key: 'order_detail_page',
+        //   type: 'checkbox',
+        //   options: activePriceList
+        // },
+        {
+          label: '结算页',
+          key: 'checkout_page',
+          type: 'checkbox',
+          options: activePriceList
+        },
+        {
+          label: '优惠说明',
+          key: 'is_discount_description_enabled',
+          type: 'switch',
+          tip:'开启优惠说明展示在结算页，关闭不展示'
+        },
+        {
+          label: '结算页价格优惠说明',
+          key: 'discount_description',
+          type: 'input',
+          maxlength: 50,
+        },
+
       ],
       activityStatus: ''
     }
@@ -542,6 +602,12 @@ export default {
         enterprise_id: res.enterprise_id
       })
 
+      // res.price_display_config = {"cart_page": {"sale_price": "true", "market_price": "false", "activity_price": "false"}, "items_page": {"sale_price": "true", "market_price": "true", "activity_price": "false"}, "checkout_page": {"sale_price": "true", "market_price": "false", "activity_price": "false"}, "order_detail_page": {"sale_price": "true", "market_price": "false", "activity_price": "true"}}
+      //价格展示处理
+      const priceData = this.priceShowData(res.price_display_config,'detail')
+
+      console.log('priceData',priceData)
+
       this.activityRule = {
         companyList: list,
         preheatTime: res.display_time * 1000,
@@ -560,7 +626,11 @@ export default {
           shareLimit: res.relative_limitfee / 100
         },
         orderMiniAmount: res.minimum_amount / 100,
-        modifyReceiveAddress: res.close_modify_hours_after_activity
+        modifyReceiveAddress: res.close_modify_hours_after_activity,
+        ...priceData,
+        is_discount_description_enabled:res.is_discount_description_enabled == 'true',
+        discount_description:res.discount_description
+
       }
       this.onRadioChange(res.if_share_limitfee ? '2' : '1')
     },
@@ -573,13 +643,48 @@ export default {
     },
     async onPickerCompany() {
       const ids = this.activityRule.companyList.map((item) => item.id)
-      const { data } = await this.$picker.company({
+      const params = {
         data: ids
-      })
+      }
+      if(this.IS_ADMIN()){
+        params.distributor_id = 0
+      }
+      const { data } = await this.$picker.company(params)
       this.activityRule.companyList = data
     },
     closeCompany(index) {
       this.activityRule.companyList.splice(index, 1)
+    },
+    priceShowData(form,isDetail){
+      //接口需要
+      // cart_page: {sale_price: "true", market_price: "false", activity_price: "false"},
+      // items_page: {sale_price: "true", market_price: "false", activity_price: "false"},
+      // checkout_page: {sale_price: "true", market_price: "false", activity_price: "false"},
+      // order_detail_page: {sale_price: "true", market_price: "false", activity_price: "false"}
+
+      let keys= ['items_page','cart_page','order_detail_page','checkout_page']
+      let prices = ['sale_price','market_price','activity_price']
+      if(isDetail){
+        //编辑获取详情数据处理
+        return keys.reduce((prev,cur)=>{
+          let _arr = []
+          prices.forEach(item=>{
+            _arr = Object.keys(form[cur]).filter(item2=>form[cur][item2] == 'true')
+            console.log(Object.keys(form[cur]));
+
+          })
+          prev[cur] = _arr
+          return prev
+        },{})
+      }
+      return keys.reduce((prev,cur)=>{
+        let _obj = {}
+        prices.forEach(item=>{
+          _obj[item] = form[cur].includes(item) + ''
+        })
+        prev[cur] = _obj
+        return prev
+      },{})
     },
     async onSubmitForm() {
       await this.$refs['formBase'].handleSubmit()
@@ -597,7 +702,9 @@ export default {
         employee: { datetime: employeeDateTime, quota },
         relatives: { join, num, datetime: relativesDateTime, type, shareLimit },
         orderMiniAmount,
-        modifyReceiveAddress
+        modifyReceiveAddress,
+        is_discount_description_enabled,
+        discount_description
       } = this.activityRule
       let params = {
         name,
@@ -615,7 +722,10 @@ export default {
         if_share_limitfee: type == '2',
         relative_limitfee: shareLimit * 100,
         minimum_amount: orderMiniAmount * 100,
-        close_modify_hours_after_activity: modifyReceiveAddress
+        close_modify_hours_after_activity: modifyReceiveAddress,
+        price_display_config: JSON.stringify(this.priceShowData(this.activityRule)),
+        is_discount_description_enabled,
+        discount_description
       }
       if (relativesDateTime[0]) {
         params = {
@@ -630,12 +740,14 @@ export default {
         }
       }
       const { id } = this.$route.params
+      const resUrl = this.$route.path.split('create')[0] + 'result/'
       if (id) {
         await this.$api.marketing.updatePurchaseActivity(id, params)
-        this.$router.replace({ path: `/marketing/employee/purchase/result/${id}` })
+        this.$router.replace({ path: resUrl + id})
+
       } else {
         const { id: _id } = await this.$api.marketing.createPurchaseActivity(params)
-        this.$router.replace({ path: `/marketing/employee/purchase/result/${_id}` })
+        this.$router.replace({ path: resUrl + _id })
       }
     },
     onRadioChange(e) {

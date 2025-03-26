@@ -490,3 +490,12 @@ export function getEnterpriseQrcode({ enterprise_id }) {
     method: 'get',
   })
 }
+
+//导出内购员工列表
+export function exportEmployees(params) {
+  return fetch({
+    url: `/employees/export`,
+    method: 'get',
+    params
+  })
+}

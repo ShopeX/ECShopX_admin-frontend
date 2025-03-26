@@ -53,7 +53,7 @@
     </div>
 
     <div v-show="typeSelect == 1">
-      <SpFilterForm :model="queryForm" size="small" @onSearch="onSearch" @onReset="onSearch">
+      <SpFilterForm :model="queryForm" @onSearch="onSearch" @onReset="onSearch">
         <SpFilterFormItem prop="main_cat_id">
           <el-cascader
             v-model="queryForm.main_cat_id"
@@ -78,6 +78,62 @@
         <SpFilterFormItem prop="item_bn">
           <el-input v-model="queryForm.item_bn" placeholder="请输入货号" />
         </SpFilterFormItem>
+        <SpFilterFormItem prop="approve_status">
+          <el-select
+            v-model="queryForm.approve_status"
+            placeholder="选择状态"
+            clearable
+          >
+            <el-option
+              v-for="item in statusOption"
+              :key="item.value"
+              :label="item.title"
+              :value="item.value"
+            />
+          </el-select>
+        </SpFilterFormItem>
+       <SpFilterFormItem prop="supplier_name">
+          <el-input v-model="queryForm.supplier_name" placeholder="所属供应商" />
+        </SpFilterFormItem>
+        <SpFilterFormItem prop="item_holder">
+          <el-select
+            v-model="queryForm.item_holder"
+            placeholder="商品类型"
+            clearable
+          >
+            <el-option
+              v-for="item in categoryOption"
+              :key="item.value"
+              :label="item.title"
+              :value="item.value"
+            />
+          </el-select>
+        </SpFilterFormItem>
+        <SpFilterFormItem prop="is_gift">
+          <el-select v-model="queryForm.is_gift"
+            placeholder="是否为赠品"
+            clearable>
+            <el-option :value="true" label="是" />
+            <el-option :value="false" label="否" />
+          </el-select>
+        </SpFilterFormItem>
+        <SpFilterFormItem prop="brand_id">
+          <el-select
+            v-model="queryForm.brand_id"
+            placeholder="选择品牌"
+            remote
+            filterable
+            :remote-method="getGoodsBranchList"
+            clearable
+          >
+            <el-option
+              v-for="item in goodsBranchList"
+              :key="item.attribute_id"
+              :label="item.attribute_name"
+              :value="item.attribute_id"
+            />
+          </el-select>
+        </SpFilterFormItem>
       </SpFilterForm>
 
       <SpFinder
@@ -87,7 +143,7 @@
         :hooks="{
           beforeSearch: beforeSearch
         }"
-        url="/goods/items"
+        :url="goodsUrl"
         @selection-change="onSelectionChange"
       />
     </div>
@@ -141,6 +197,9 @@ import { SALES_STATUS } from '@/consts'
 import BasePicker from './base'
 import PageMixin from '../mixins/page'
 import { createSetting } from '@shopex/finder'
+import { GOOD_CATEGORY_MAP } from '@/consts'
+import { getGoodsAttr } from '@/api/goods'
+
 export default {
   name: 'PickerGoods',
   extends: BasePicker,
@@ -157,8 +216,54 @@ export default {
         main_cat_id: [],
         item_name: '',
         item_bn: '',
-        sn: ''
+        sn: '',
+
+        supplier_name:'',
+        item_holder:'',
+        is_gift:'',
+        approve_status:'',
+        brand_id:'',
       },
+      goodsBranchParams: {
+        page: 1,
+        pageSize: 1000,
+        attribute_type: 'brand',
+        attribute_name: ''
+      },
+      goodsBranchList: [],
+      itemSourceMap:GOOD_CATEGORY_MAP,
+      categoryOption: [
+        {
+          title: '自营商品',
+          value: 'platform'
+        },
+        {
+          title: '商户商品',
+          value: 'distributor'
+        },
+        {
+          title: '供应商商品',
+          value: 'supplier'
+        }
+      ],
+      statusOption: [
+        {
+          title: '前台可销售',
+          value: 'onsale'
+        },
+        {
+          title: '前台不展示',
+          value: 'offline_sale'
+        },
+        {
+          title: '前台仅展示',
+          value: 'only_show'
+        },
+        {
+          title: '不可销售',
+          value: 'instock'
+        }
+      ],
       salevalue: '唇膏',
       categoryList: [],
       salesCategoryList: [],
@@ -168,6 +273,7 @@ export default {
           {
             name: '商品名称',
             key: 'name',
+             width: '220',
             render: (h, { row }) =>
               h(
                 'div',
@@ -187,8 +293,51 @@ export default {
               )
           },
           {
-            name: '价格（¥）',
+            name: '规格',
+            key: 'item_spec_desc',
+            width: '120'
+          },
+          {
+            name: '是否赠品',
+            key: 'is_gift',
+            formatter: (value, row, col) => {
+              return value == '1' ? '是' : '否'
+            },
+            width: '120'
+          },
+          {
+            name: '所属供应商',
+            key: 'supplier_name',
+            width: '120'
+          },
+          {
+            name: '商品类型',
+            key: 'item_holder',
+            formatter: (value, row, col) => {
+              return this.itemSourceMap[value]
+            },
+            width: '120'
+          },
+
+          {
+            name: '市场价',
+            key: 'market_price',
+            formatter: (value, row, col) => {
+              return value / 100
+            },
+            width: '120'
+          },
+          {
+            name: '销售价',
             key: 'price',
+            formatter: (value, row, col) => {
+              return value / 100
+            },
+            width: '120'
+          },
+          {
+            name: '成本价',
+            key: 'cost_price',
             formatter: (value, row, col) => {
               return value / 100
             },
@@ -203,8 +352,22 @@ export default {
       })
     }
   },
+  computed:{
+    goodsUrl(){
+      if ((this.VERSION_STANDARD && this.IS_DISTRIBUTOR()) ||
+        !(this.VERSION_PLATFORM ||
+        !this.value?.distributor_id ||
+        this.value?.distributor_id == '0')
+      ) {
+        return 'distributor/items'
+      }else{
+        return '/goods/items'
+      }
+    }
+  },
   async created() {
     await this.getCategoryInfo()
+    this.getGoodsBranchList()
   },
   mounted() {
     // this.refresh(true)
@@ -223,11 +386,19 @@ export default {
       return {
         ...params,
         item_type: 'normal',
-        ...this.queryForm
+        ...this.queryForm,
+        distributor_id:this.value?.distributor_id
       }
     },
     onSearch() {
       this.refresh(true)
+    },
+    getGoodsBranchList(searchVal = '') {
+      this.goodsBranchParams.attribute_name = searchVal
+      getGoodsAttr(this.goodsBranchParams).then((response) => {
+        this.goodsBranchList = response.data.data.list
+        console.log(111,this.goodsBranchList )
+      })
     },
     async fetch({ page_no, page_size }) {
       const { category, main_cat_id } = this.queryForm

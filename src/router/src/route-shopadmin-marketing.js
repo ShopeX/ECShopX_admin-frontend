@@ -1,6 +1,7 @@
 // 商品路由
 const name = '营销'
 import Layout from '@/view/layout' // 主框架
+import SubLayout from '@/view/sublayout'
 
 export default {
   path: '/shopadmin/marketing',
@@ -170,6 +171,52 @@ export default {
       path: 'community/withdraw',
       name: `提现申请`,
       component: () => import('@/view/mall/community/withdraw')
-    }
+    },
+    {
+      path: 'employee/purchase',
+      name: `内购`,
+      component: SubLayout,
+      children: [
+        {
+          path: '/',
+          component: () => import('@/view/marketing/employee/list')
+        },
+        {
+          path: 'create/:id?',
+          component: () => import('@/view/marketing/employee/purchase')
+        },
+        {
+          path: 'result/:id',
+          component: () => import('@/view/marketing/employee/result')
+        },
+        {
+          path: 'goods/:id',
+          component: () => import('@/view/marketing/employee/addGoods')
+        },
+        {
+          path: 'dependents/:id',
+          component: () => import('@/view/marketing/employee/dependents')
+        }
+      ]
+    },
+    {
+      path: 'purchase',
+      name: `员工内购`,
+      component: () => import('@/view/member/promotions/purchase/index'),
+      children: [
+        {
+          path: 'editor',
+          component: () => import('@/view/member/promotions/purchase/editor')
+        },
+        {
+          path: 'detail',
+          component: () => import('@/view/member/promotions/purchase/detail')
+        },
+        {
+          path: 'dependents',
+          component: () => import('@/view/member/promotions/purchase/dependents')
+        }
+      ]
+    },
   ]
 }

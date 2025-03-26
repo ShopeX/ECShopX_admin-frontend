@@ -59,6 +59,10 @@ export default {
     isShowFooter: {
       type: Boolean,
       default: true
+    },
+    confirmBtnText:{
+      type: String,
+      default: '确定'
     }
   },
   data() {
@@ -81,7 +85,7 @@ export default {
     }
   },
   render() {
-    const { title, value, form, formList, width, labelWidth, confirmStatus, isShowFooter } = this
+    const { title, value, form, formList, width, labelWidth, confirmStatus, isShowFooter, confirmBtnText } = this
 
     if (!value) {
       return null
@@ -115,7 +119,7 @@ export default {
                 this.$refs['form'].handleSubmit()
               }}
             >
-              确 定
+              {confirmBtnText}
             </el-button>
           </div>
         )}

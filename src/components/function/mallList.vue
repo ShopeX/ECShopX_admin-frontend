@@ -116,7 +116,7 @@
           <div class="option-btns">
             <span class="btn" @click="editTemplate(item.pages_template_id)">编辑</span>
             <span class="btn" @click="copyTemplate(item.pages_template_id)">复制</span>
-            <span class="btn" @click="copyTemplate(item.pages_template_id)">导航</span>
+            <span class="btn" @click="handleClickNav(item.pages_template_id)">导航</span>
             <span class="btn" @click="abandonTemplate(item.pages_template_id)">废弃</span>
           </div>
           <div
@@ -297,6 +297,29 @@
       </div>
       <tabsEditor :res="editorData" @bindImgs="showImgs" @saveTab="handelSaveTab" />
     </sideBar>
+
+
+    <SpDrawer
+      v-model="navDrawerShow"
+      class="nav-drawer"
+      :title="'导航设置'"
+      :width="650"
+      @confirm="
+        () => {
+          this.$refs['navForm'].handleSubmit()
+        }
+      "
+    >
+      <SpForm
+        ref="navForm"
+        v-model="navForm"
+        class="nav-form"
+        :label-width="'0'"
+        :form-list="navFormList"
+        :submit="false"
+        @onSubmit="onSubmitTabList"
+      />
+    </SpDrawer>
   </div>
 </template>
 
@@ -324,6 +347,7 @@ import {
   syncPagesTemplate,
   modifyPagesTemplateStatus
 } from '@/api/template'
+import { NAVS } from './consts'
 
 export default {
   components: {
@@ -378,6 +402,168 @@ export default {
         page_size: 10
       },
       total_count: 0,
+      navDrawerShow: false,
+      navForm: {
+        pages_template_id: '',
+        theme: {
+          backgroundColor: '#ffffff',
+          color: '#333333',
+          selectedColor: '#1f82e0'
+        },
+        tabList: [
+          {
+            pagePath: '/pages/index',
+            text: '首页',
+            name: 'home',
+            iconPath: '',
+            selectedIconPath: ''
+          },
+          {
+            pagePath: '/pages/category/index',
+            text: '分类',
+            name: 'category',
+            iconPath: '',
+            selectedIconPath: ''
+          },
+          {
+            pagePath: '/pages/cart/espier-index',
+            text: '购物车',
+            name: 'cart',
+            iconPath: '',
+            selectedIconPath: ''
+          },
+          {
+            pagePath: '/pages/member/index',
+            text: '我的',
+            name: 'member',
+            iconPath: '',
+            selectedIconPath: ''
+          }
+        ]
+      },
+      navFormList: [
+        {
+          label: '',
+          key: 'name',
+          component: () => (
+            <div class='tablist'>
+              {this.navForm?.tabList?.map((item, index) => (
+                <div
+                  class='tab-item'
+                  style={{
+                    color: index == 0 ? this.navForm.theme.selectedColor : this.navForm.theme.color
+                  }}
+                  key={`tab-item__${index}`}
+                >
+                  {!item.iconPath && !item.selectedIconPath && (
+                    <i class={`icon-${item.name} iconfont`} />
+                  )}
+                  {(item.iconPath || item.selectedIconPath) && (
+                    <el-image
+                      class='tab-image'
+                      src={item.selectedIconPath || item.iconPath}
+                      fit='cover'
+                    />
+                  )}
+                  <div class='tab-text'>{item.text}</div>
+                </div>
+              ))}
+            </div>
+          )
+        },
+        {
+          label: '',
+          key: 'theme',
+          component: () => (
+            <el-row>
+              <el-col span={8}>
+                <div class='theme-item'>
+                  <el-color-picker v-model={this.navForm.theme.backgroundColor}></el-color-picker>
+                  背景色
+                </div>
+              </el-col>
+              <el-col span={8}>
+                <div class='theme-item'>
+                  <el-color-picker v-model={this.navForm.theme.color}></el-color-picker>
+                  默认颜色
+                </div>
+              </el-col>
+              <el-col span={8}>
+                <div class='theme-item'>
+                  <el-color-picker v-model={this.navForm.theme.selectedColor}></el-color-picker>
+                  选中颜色
+                </div>
+              </el-col>
+            </el-row>
+          )
+        },
+        {
+          label: '',
+          key: 'tabList',
+          component: () => (
+            <div class='nav-list'>
+              <div class='nav-list-body'>
+                {this.navForm?.tabList?.map((item, index) => (
+                  <div class='nav-item'>
+                    <div class='nav-item-hd'>
+                      <SpImagePicker v-model={item.iconPath} />
+                      <SpImagePicker v-model={item.selectedIconPath} />
+                      <SpInput v-model={item.text} width={'120px'} placeholder='导航名称' />
+                      <el-select
+                        v-model={item.pagePath}
+                        placeholder='请选择页面'
+                        on-change={this.onChangePagePath.bind(this, index)}
+                      >
+                        {NAVS.map((item, index) => (
+                          <el-option label={item.label} value={item.value} />
+                        ))}
+                      </el-select>
+                      {item.pagePath == 'customPage' && (
+                        <div  class="uploader-setting">
+                          <div class="btn-linkpath" onClick={this.handleCustomPageSelect.bind(this,item)}>
+                            {item?.customPage?.page_name ?? '请选择自定义页面' }
+                          </div>
+                        </div>
+                      )}
+                    </div>
+                    <div class='nav-item-bd'>
+                      {index > 1 && (
+                        <el-button type='text' on-click={this.removeTabItem.bind(this, index)}>
+                          删除
+                        </el-button>
+                      )}
+                    </div>
+                  </div>
+                ))}
+              </div>
+              <div></div>
+            </div>
+          ),
+          tip: '只能上传jpg/png文件，且不超过2M （建议尺寸：50px * 50px）',
+          validator: (rule, value, callback) => {
+            const fd = value.find((item) => !item.pagePath || !item.name)
+            if (fd) {
+              callback('请设置导航名称以及导航页面')
+            } else {
+              callback()
+            }
+          }
+        },
+        {
+          label: '',
+          component: () => (
+            <el-button
+              type='primary'
+              disabled={this.navForm?.tabList?.length >= 5}
+              plain
+              class='iconfont icon-plus-circle'
+              on-click={this.addTabItem}
+            >
+              添加菜单项
+            </el-button>
+          )
+        }
+      ],
       show_sideBar: false,
       show_tab_sideBar: false,
       tabIcon: '',
@@ -812,6 +998,76 @@ export default {
         this.$router.push(`/wxapp/manage/decorate?id=${pages_template_id}`)
       }
     },
+    async handleClickNav(templateId){
+      const { tab_bar } = await this.$api.template.getPagesTemplateSetInfo({
+        pages_template_id: templateId
+      })
+      this.navForm = this.$options.data().navForm
+      this.navForm.pages_template_id = templateId
+      if (tab_bar) {
+        const { config, data } = JSON.parse(tab_bar)
+        this.navForm.theme = config
+        this.navForm.tabList = data
+      }
+      this.navDrawerShow = true
+    },
+    async onSubmitTabList() {
+      const { pages_template_id, theme, tabList } = this.navForm
+
+      const emptyIndex = tabList.findIndex(item=>item.name == "customPage" && !item.customPage )
+      if(emptyIndex > -1){
+        return this.$message({
+          message: '请选择自定义页面',
+          type: 'error',
+          duration: 5 * 1000
+        })
+      }
+
+      let params = {
+        tab_bar: JSON.stringify({
+          name: 'tabs',
+          config: theme,
+          data: tabList
+        })
+      }
+      if (pages_template_id) {
+        params = {
+          ...params,
+          pages_template_id
+        }
+      }
+      await this.$api.template.setPagesTemplate(params)
+      this.navDrawerShow = false
+      this.$message.success('操作成功')
+    },
+    onChangePagePath(index, value) {
+      const { label, name } = NAVS.find((item) => item.value == value)
+      this.navForm.tabList[index].text = label
+      this.navForm.tabList[index].name = name
+      if(value != 'customPage' && this.navForm.tabList[index]?.customPage){
+        this.$delete(this.navForm.tabList[index],'customPage')
+      }
+    },
+    async handleCustomPageSelect(item){
+      const {data} = await this.$picker.pages({
+        multiple:false,
+        data:[item?.customPage?.id]
+      })
+      this.$set(item,'customPage',data[0])
+    },
+    removeTabItem(index) {
+      this.navForm.tabList.splice(index, 1)
+    },
+    addTabItem() {
+      const item = {
+        pagePath: '',
+        text: '',
+        name: '',
+        iconPath: '',
+        selectedIconPath: ''
+      }
+      this.navForm.tabList.push(item)
+    },
     copyTemplate(pages_template_id) {
       let params = {
         pages_template_id: pages_template_id
@@ -1153,4 +1409,73 @@ export default {
 .el-button + .el-button {
   margin-left: 10px !important;
 }
+.nav-drawer {
+  .tablist {
+    display: flex;
+    border: 1px solid #d8d8d8;
+    height: 52px;
+    padding: 6px 0;
+    .tab-item {
+      text-align: center;
+      flex: 1;
+      line-height: 20px;
+    }
+    .tab-image {
+      width: 16px;
+      height: 16px;
+    }
+    .tab-text {
+      font-size: 13px;
+    }
+  }
+  .theme-item {
+    display: flex;
+    font-size: 13px;
+    .el-color-picker {
+      margin-right: 4px;
+    }
+  }
+  .nav-list {
+    &-body {
+    }
+    .nav-item {
+      display: flex;
+      margin-bottom: 10px;
+      .sp-input {
+        margin-right: 10px;
+        width: 120px;
+        .el-input {
+          margin: 0;
+        }
+      }
+      &-hd {
+        display: flex;
+        align-items: center;
+        flex: 1;
+      }
+      &-bd {
+        width: 60px;
+        display: flex;
+        align-items: center;
+        padding-left: 10px;
+      }
+    }
+  }
+  .image-item {
+    width: 64px;
+    height: 64px;
+    line-height: 26px;
+    margin-bottom: 0;
+  }
+}
+.btn-linkpath {
+    padding: 0 8px;
+    border: 1px solid #d9d9d9;
+    background-color: #fff;
+    height: 36px;
+    line-height: 36px;
+    border-radius: 3px;
+    max-width: 160px;
+    @include text-overflow();
+  }
 </style>

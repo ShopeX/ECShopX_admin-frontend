@@ -88,9 +88,10 @@
       </SpFilterForm>
 
       <div class="action-container">
-        <el-button type="primary" plain @click="handleImport"> 导入商品 </el-button>
-        <el-button type="primary" plain @click="onSelectGoods"> 选择商品 </el-button>
-        <el-button type="primary" plain @click="handlePatchAction"> 批量设置 </el-button>
+        <!-- 平台端 来源店铺非平台则隐藏 -->
+        <el-button type="primary" :disabled="adminDisabled" plain @click="handleImport"> 导入商品 </el-button>
+        <el-button type="primary" :disabled="adminDisabled" plain @click="onSelectGoods"> 选择商品 </el-button>
+        <el-button type="primary" :disabled="adminDisabled" plain @click="handlePatchAction"> 批量设置 </el-button>
       </div>
 
       <el-table
@@ -119,7 +120,7 @@
                 <div class="item-bn">
                   货号：{{ scope.row.item_bn }}
                   <el-button
-                    v-if="scope.row.nospec != 'true'"
+                    v-if="scope.row.nospec != 'true' && !(adminDisabled)"
                     style="margin-left: 4px"
                     type="text"
                     @click="onSelectSku(scope.row)"
@@ -142,6 +143,13 @@
             {{ scope.row.store }}
           </template>
         </el-table-column>
+        <el-table-column prop="price" label="销售价（元）" width="120">
+          <template
+            slot-scope="scope"
+          >
+            {{ scope.row.price / 100 }}
+          </template>
+        </el-table-column>
         <el-table-column prop="price" label="商城价格（元）" width="120">
           <template
             v-if="(scope.row.nospec == 'false' && scope.row.is_sku) || scope.row.nospec == 'true'"
@@ -157,6 +165,7 @@
           >
             <span>{{ scope.row.activity_price }}</span>
             <el-popover
+              v-if="!(adminDisabled)"
               placement="top"
               trigger="click"
               @show="
@@ -188,6 +197,7 @@
           >
             <span>{{ formBase.value == '1' ? 0 : scope.row.activity_store }}</span>
             <el-popover
+              v-if="!(adminDisabled)"
               placement="top"
               trigger="click"
               @show="
@@ -216,6 +226,7 @@
           <template slot-scope="scope">
             <span>{{ scope.row.sort }}</span>
             <el-popover
+              v-if="!(adminDisabled)"
               placement="top"
               trigger="click"
               @show="
@@ -247,6 +258,7 @@
           >
             <span>{{ scope.row.limit_num }}</span>
             <el-popover
+              v-if="!(adminDisabled)"
               placement="top"
               trigger="click"
               @show="
@@ -278,6 +290,7 @@
           >
             <span>{{ scope.row.limit_fee }}</span>
             <el-popover
+              v-if="!(adminDisabled)"
               placement="top"
               trigger="click"
               @show="
@@ -304,7 +317,8 @@
         </el-table-column>
         <el-table-column fixed="right" label="操作" width="120px">
           <template slot-scope="scope">
-            <el-button type="text" @click="removeActivityItem(scope.row)">移除</el-button>
+            <!-- 平台端 来源店铺非平台则隐藏 -->
+            <el-button v-if="!(adminDisabled)" type="text" @click="removeActivityItem(scope.row)">移除</el-button>
           </template>
         </el-table-column>
       </el-table>
@@ -347,6 +361,7 @@ export default {
           label: '商品库存',
           key: 'value',
           type: 'radio',
+          disabled:()=>(this.IS_ADMIN() && this.distributor_id != '0'),
           options: [
             { name: '共享商城库存', label: '1' },
             { name: '活动独立库存', label: '2' }
@@ -361,6 +376,7 @@ export default {
           }
         }
       ],
+      distributor_id:null,
       patchDialog: false,
       patchForm: {
         item_id: [],
@@ -419,6 +435,11 @@ export default {
       }
     }
   },
+  computed:{
+    adminDisabled(){
+      return this.IS_ADMIN() && this.distributor_id != '0'
+    }
+  },
   async created() {
     this.getActivityItemDetail()
     // 管理分类
@@ -427,6 +448,7 @@ export default {
     const salesCategory = await this.$api.goods.getCategory()
     this.categoryList = category
     this.salesCategoryList = salesCategory
+    this.distributor_id = this.$route.query.distributor_id || '0'
     this.pagesQuery = new Pages({
       pageSize: this.pageSize,
       fetch: this.getActivityItems
@@ -434,7 +456,13 @@ export default {
   },
   methods: {
     handleImport() {
-      this.$router.push({ path: `/entity/goods/goodsphysical/physicalupload?file_type=employee_purchase_activity_items` })
+      let path;
+      if(this.IS_DISTRIBUTOR()){
+        path = '/shopadmin/entity/storeshopproductanagement/physicalupload?file_type=employee_purchase_activity_items'
+      }else{
+        path = '/entity/goods/goodsphysical/physicalupload?file_type=employee_purchase_activity_items'
+      }
+      this.$router.push({ path })
     },
     handlePatchAction() {
       const selectItems = this.tableData.filter((item) => !!item.checked)
@@ -497,6 +525,7 @@ export default {
       } = await this.$picker.goodsList({
         // data: 100,
         // shopid: this.shopId
+        distributor_id:this.distributor_id
       })
 
       const { id } = this.$route.params

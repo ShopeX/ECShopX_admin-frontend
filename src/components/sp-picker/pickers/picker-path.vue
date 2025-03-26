@@ -42,6 +42,9 @@
       <el-tab-pane label="活动报名" name="regactivity">
         <PickerRegactivity v-if="tabValue == 'regactivity'" ref="regactivity" :value="value" />
       </el-tab-pane>
+      <el-tab-pane label="内购活动" name="purchase_activity">
+        <PickerPurchaseActivity v-if="tabValue == 'purchase_activity'" ref="purchase_activity" :value="value" />
+      </el-tab-pane>
       <el-tab-pane label="秒杀" name="seckill">
         <PickerSeckill v-if="tabValue == 'seckill'" ref="seckill" :value="value" />
       </el-tab-pane>
@@ -76,6 +79,7 @@ import PickerMarketing from './picker-marketing'
 import PickerShop from './picker-shop'
 import PickerSeckill from './picker-seckill'
 import PickerRegactivity from './picker-regactivity'
+import PickerPurchaseActivity from './picker-purchaseActivity'
 import PickerPages from './picker-pages'
 import PickerLive from './picker-live'
 import PickerWxApp from './picker-wxapp'
@@ -94,6 +98,7 @@ export default {
     PickerShop,
     PickerSeckill,
     PickerRegactivity,
+    PickerPurchaseActivity,
     PickerPages,
     PickerLive,
     PickerWxApp,
@@ -194,6 +199,12 @@ export default {
           return pickBy(data, {
             id: 'activity_id',
             title: 'activity_name'
+          })
+        },
+        purchase_activity: () => {
+          return pickBy(data, {
+            id: 'id',
+            title: 'name'
           })
         },
         seckill: () => {

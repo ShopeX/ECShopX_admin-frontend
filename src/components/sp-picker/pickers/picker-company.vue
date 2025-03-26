@@ -100,6 +100,9 @@ export default {
         ...params,
         ...this.formData
       }
+      if('distributor_id' in this.value){
+        params.distributor_id = this.value.distributor_id
+      }
       return params
     },
     afterSearch(response) {

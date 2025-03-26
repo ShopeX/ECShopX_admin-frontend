@@ -84,6 +84,10 @@ export default {
           value: 'regactivity'
         },
         {
+          label: '内购活动',
+          value: 'purchase_activity'
+        },
+        {
           label: '秒杀',
           value: 'seckill'
         },

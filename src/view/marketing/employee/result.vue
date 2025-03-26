@@ -18,7 +18,9 @@ export default {
   methods: {
     addGoods() {
       const { id } = this.$route.params
-      this.$router.push({ path: `/marketing/employee/purchase/goods/${id}` })
+      const resUrl = this.$route.path.split('result')[0] + 'goods/' + id
+      this.$router.push({ path:resUrl})
+
     },
     goActivityList() {
       this.$router.go(-1)

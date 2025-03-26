@@ -199,6 +199,7 @@
             <span v-if="scope.row.pay_type == 'pos'">POS银行卡支付</span>
             <span v-if="scope.row.pay_type == 'hfpay'">汇付支付</span>
             <span v-if="scope.row.pay_type == 'chinaums'">微信支付-银联</span>
+            <span v-if="scope.row.pay_type == 'offline_pay'">线下转账</span>
           </template>
         </el-table-column>
         <el-table-column width="180" label="退款金额">
@@ -308,6 +309,9 @@
             >
               详情
             </router-link>
+            <el-button v-if="scope.row.refund_status == 'AUDIT_SUCCESS' && scope.row.refund_channel == 'offline'" style="color:#459ae9" type="text" @click="()=>handleRefund(scope.row)">
+              确认退款
+            </el-button>
           </template>
         </el-table-column>
       </el-table>
@@ -324,6 +328,16 @@
         />
       </div>
     </el-form>
+
+    <SpDialog
+      ref="refundDialogRef"
+      v-model="refundDialog"
+      :title="`退款【订单：${refundForm.order_id}】`"
+      :confirmStatus="refundLoading"
+      :form="refundForm"
+      :form-list="refundFormList"
+      @onSubmit="onrefundSubmit"
+    />
   </div>
 </template>
 <script>
@@ -373,6 +387,79 @@ export default {
         { name: '已发起退款等待到账', value: 'PROCESSING' },
         { name: '退款异常', value: 'CHANGE' },
         { name: '退款关闭', value: 'REFUNDCLOSE' }
+      ],
+      refundDialog:false,
+      refundLoading:false,
+      refundForm:{
+        refund_bn:'',
+        bank_account_name:'',
+        bank_account_no:'',
+        bank_name:'',
+        refund_account_name:'',
+        refund_account_bank:'',
+        refund_account_no:'',
+        pay_type:'',
+        order_id:'',
+        refund_fee:''
+      },
+      refundFormList:[
+      {
+          label: '退款方式',
+          key: 'pay_type',
+          type: 'radio',
+          required: true,
+          options: [
+            { label: 'offline_pay', name: '线下转账' }
+          ]
+        },
+        {
+          label: '收款人户名',
+          key: 'bank_account_name',
+          type: 'input',
+          required: true,
+          message: '请输入收款人户名'
+        },
+        {
+          label: '收款银行账号',
+          key: 'bank_account_no',
+          type: 'input',
+          required: true,
+          message: '请输入银行账号'
+        },
+        {
+          label: '开户银行',
+          key: 'bank_name',
+          type: 'input',
+          required: true,
+          message: '请输入开户银行'
+        },
+        {
+          label: '退款人户名',
+          key: 'refund_account_name',
+          type: 'input',
+          required: true,
+          message: '请输入退款人户名'
+        },
+        {
+          label: '退款银行账号',
+          key: 'refund_account_bank',
+          type: 'input',
+          required: true,
+          message: '请输入退款银行账号'
+        },
+        {
+          label: '退款开户银行',
+          key: 'refund_account_no',
+          type: 'input',
+          required: true,
+          message: '请输入退款开户银行'
+        },
+        {
+          label: '退款金额',
+          key: 'refund_fee',
+          type: 'input',
+          disabled:true
+        },
       ]
     }
   },
@@ -491,6 +578,33 @@ export default {
           type: 'error',
           message: '没有相关数据可导出'
         })
+      }
+    },
+    async handleRefund({order_id,refund_bn,refund_fee}){
+      const {bank_account_name,bank_account_no,bank_name,} = await this.$api.aftersales.getOfflineInfo({order_id})
+      this.refundForm = {
+        order_id,
+        refund_bn,
+        bank_account_name:'',
+        bank_account_no:'',
+        bank_name:'',
+        refund_account_name:bank_account_name,
+        refund_account_bank:bank_account_no,
+        refund_account_no:bank_name,
+        pay_type:'offline_pay',
+        refund_fee: refund_fee/ 100
+      }
+      this.refundDialog = true
+    },
+    async onrefundSubmit(){
+      this.refundLoading = true
+      try {
+        await this.$api.aftersales.refundOffline({...this.refundForm})
+        this.refundLoading = false
+        this.refundDialog = false
+        this.fetchList()
+      } catch (error) {
+        this.refundLoading = false
       }
     },
     async getDistributorList() {

@@ -602,7 +602,7 @@ export default {
         this.enterprise_list = this.form.enterprise_list
         this.distributor_list = this.form.distributor_list
         if (this.form.mode == 'component') {
-          this.content = JSON.parse(this.form.content)
+          this.content = this.form.content
         } else {
           this.introInfo = this.form.content
         }
@@ -672,7 +672,7 @@ export default {
       params['use_all_distributor'] = this.useAllDistributor
       params['pics'] = this.picsList.join(',')
       if (this.mode === 'component') {
-        params['content'] = JSON.stringify(this.content)
+        params['content'] = this.content
       } else {
         params['content'] = this.introInfo
       }

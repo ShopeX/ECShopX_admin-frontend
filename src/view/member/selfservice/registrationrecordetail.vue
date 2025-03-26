@@ -23,9 +23,9 @@
         <el-form-item label="活动状态：">
           {{ recorddata.status_name }}
         </el-form-item>
-        <el-form-item label="活动城市：">
+        <!-- <el-form-item label="活动城市：">
           {{ recorddata.area_name }}
-        </el-form-item>
+        </el-form-item> -->
         <el-form-item label="活动地址：">
           {{ recorddata.place }}
         </el-form-item>
@@ -38,7 +38,7 @@
         <el-form-item label="获取积分：">
           {{ recorddata.get_points }}
         </el-form-item>
-        <el-form-item label="可重复报名：">
+        <!-- <el-form-item label="可重复报名：">
           {{ recorddata.is_allow_duplicate == 1 ? '是' : '否'}}
         </el-form-item>
         <el-form-item label="是否审核：">
@@ -49,7 +49,7 @@
         </el-form-item>
         <el-form-item label="允许取消报名：">
           {{ recorddata.is_allow_cancel == 1 ? '是' : '否'}}
-        </el-form-item>
+        </el-form-item> -->
         <el-form-item label="活动群组编号：">
           {{ recorddata.group_no }}
         </el-form-item>
@@ -148,7 +148,7 @@
           </el-card>
         </el-form-item>
       </div>
-      <div class="section-header with-border" v-if="recorddata.status == 'pending' ">
+      <div class="section-header with-border" v-if="recorddata.status == 'pending' && !IS_DISTRIBUTOR()">
         活动报名审核
       </div>
       <div class="section-body">
@@ -170,7 +170,7 @@
       </div>
       <el-form-item>
         <el-button
-          v-if="recorddata.status == 'pending'"
+          v-if="recorddata.status == 'pending'&& !IS_DISTRIBUTOR()"
           type="primary"
           @click="submitAction"
         >

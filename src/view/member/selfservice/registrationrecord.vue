@@ -220,13 +220,12 @@
             >
               <template slot-scope="scope">
                 <router-link
-                  v-if="scope.row.status == 'pending'"
+                  v-if="scope.row.status == 'pending' && !IS_DISTRIBUTOR()"
                   :to="{ path: matchHidePage('detail'), query: { id: scope.row.record_id, activity_id: scope.row.activity_id } }"
                 >
                   审核
                 </router-link>
                 <router-link
-                  v-if="scope.row.status != 'pending'"
                   :to="{ path: matchHidePage('detail'), query: { id: scope.row.record_id,activity_id: scope.row.activity_id} }"
                 >
                   详情

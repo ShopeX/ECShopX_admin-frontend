@@ -170,6 +170,32 @@ export default {
       path: 'community/withdraw',
       name: `提现申请`,
       component: () => import('@/view/mall/community/withdraw')
-    }
+    },
+    {
+      path: 'apply/registrationactivity',
+      name: `全部活动`,
+      component: () => import('@/view/member/selfservice/registrationactivity'),
+      children: [
+        {
+          path: 'editor',
+          component: () => import('@/view/member/selfservice/registrationactivityadd')
+        }
+      ]
+    },
+    {
+      path: 'apply/Registrationrecord',
+      name: `报名记录`,
+      component: () => import('@/view/member/selfservice/registrationrecord'),
+      children: [
+        {
+          path: 'detail',
+          component: () => import('@/view/member/selfservice/registrationrecordetail')
+        },
+        {
+          path: 'editor',
+          component: () => import('@/view/member/selfservice/regRecordUpload')
+        }
+      ]
+    },
   ]
 }

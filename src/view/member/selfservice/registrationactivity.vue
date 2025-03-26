@@ -65,12 +65,12 @@
       </el-table-column>
       <el-table-column prop="status_name" label="状态" width="120" />
       <el-table-column prop="distributor_name" label="店铺" width="120" />
-      <el-table-column label="操作" fixed="right" width="250">
+      <el-table-column label="操作" fixed="right" :width="IS_DISTRIBUTOR() ? 150: 250">
         <template slot-scope="scope">
-          <el-button v-if="scope.row.status === 'ongoing' || scope.row.status === 'waiting'" type="text" @click="onOperationChange(scope.row, 'edit')">编辑</el-button>
-          <el-button v-if="scope.row.status === 'end'" type="text" @click="onOperationChange(scope.row, 'detail')">查看</el-button>
-          <el-button v-if="scope.row.status === 'waiting'" type="text" @click="onStopChange(scope.row)">终止</el-button>
-          <el-button v-if="scope.row.status === 'ongoing'" type="text" @click="onShowChange(scope.row)">企业</el-button>
+          <el-button v-if="(scope.row.status === 'ongoing' || scope.row.status === 'waiting') && !IS_DISTRIBUTOR()" type="text" @click="onOperationChange(scope.row, 'edit')">编辑</el-button>
+          <el-button v-if="scope.row.status === 'end' || IS_DISTRIBUTOR()" type="text" @click="onOperationChange(scope.row, 'detail')">查看</el-button>
+          <el-button v-if="scope.row.status === 'waiting' && !IS_DISTRIBUTOR()" type="text" @click="onStopChange(scope.row)">终止</el-button>
+          <el-button v-if="scope.row.status === 'ongoing' && !IS_DISTRIBUTOR()" type="text" @click="onShowChange(scope.row)">企业</el-button>
           <el-button type="text" @click="onOperationChange(scope.row, 'record')">报名记录</el-button>
         </template>
       </el-table-column>
@@ -92,6 +92,7 @@
 </template>
 <script>
 import mixin, { pageMixin } from '@/mixins'
+import { IS_DISTRIBUTOR } from '@/utils'
 import { regActivityInvalid } from '@/api/selfhelpform'
 import EnterpriseDialog from './components/enterpriseDialog'
 export default {
@@ -221,7 +222,7 @@ export default {
       } else if (type == 'detail') {
         this.$router.push({ path: this.matchHidePage('editor'), query: { id: row.activity_id, type: 'detail'} })
       } else if (type == 'record') {
-        this.$router.push({ path: '/marketing/marketing/apply/Registrationrecord', query: { id: row.activity_id} })
+        this.$router.push({ path: `${this.IS_DISTRIBUTOR() ? '/shopadmin' : ''}/marketing/apply/Registrationrecord`, query: { id: row.activity_id} })
       }
     },
     onStopChange(row) {

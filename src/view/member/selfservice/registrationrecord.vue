@@ -144,8 +144,12 @@
             element-loading-text="数据加载中"
           >
             <el-table-column
-              prop="record_id"
+              prop="record_no"
               label="报名编号"
+            />
+            <el-table-column
+              prop="group_no"
+              label="活动群组编号"
             />
             <el-table-column
               prop="activity_name"

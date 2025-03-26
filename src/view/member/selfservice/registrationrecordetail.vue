@@ -26,6 +26,12 @@
         <!-- <el-form-item label="活动城市：">
           {{ recorddata.area_name }}
         </el-form-item> -->
+        <el-form-item
+          label="申请时间"
+          prop="created"
+        >
+          {{ recorddata.created | datetime('YYYY-MM-DD HH:mm:ss') }}
+        </el-form-item>
         <el-form-item label="活动地址：">
           {{ recorddata.place }}
         </el-form-item>
@@ -214,8 +220,8 @@ export default {
         columns: [
           { name: '企业ID', key: 'id'  },
           { name: '企业名称', key: 'enterprise_sn' },
-          { name: '登录类型', key: 'enterprise_sn' },
-          { name: '来源店铺', key: 'enterprise_sn' },
+          { name: '登录类型', key: 'login_type' },
+          { name: '来源店铺', key: 'distributor_name' },
         ]
       },
       vipGrade: [],

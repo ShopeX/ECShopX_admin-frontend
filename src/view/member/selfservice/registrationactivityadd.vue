@@ -390,7 +390,7 @@
       <div class="section-body" style="margin-left: 50px;">
         <el-radio-group v-model="mode">
           <el-radio :label="'richText'"> 富文本 </el-radio>
-          <el-radio :label="'component'"> 组件式 </el-radio>
+          <!-- <el-radio :label="'component'"> 组件式 </el-radio> -->
         </el-radio-group>
         <div v-if="mode === 'richText'" style="margin-top: 20px;">
           <div>

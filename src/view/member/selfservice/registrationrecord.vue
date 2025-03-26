@@ -221,13 +221,13 @@
               <template slot-scope="scope">
                 <router-link
                   v-if="scope.row.status == 'pending'"
-                  :to="{ path: matchHidePage('detail'), query: { id: scope.row.record_id } }"
+                  :to="{ path: matchHidePage('detail'), query: { id: scope.row.record_id, activity_id: scope.row.activity_id } }"
                 >
                   审核
                 </router-link>
                 <router-link
                   v-if="scope.row.status != 'pending'"
-                  :to="{ path: matchHidePage('detail'), query: { id: scope.row.record_id } }"
+                  :to="{ path: matchHidePage('detail'), query: { id: scope.row.record_id,activity_id: scope.row.activity_id} }"
                 >
                   详情
                 </router-link>

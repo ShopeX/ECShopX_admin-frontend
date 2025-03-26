@@ -99,13 +99,14 @@ export default {
         multiple: true
       })
       if (data) {
-        this.localValue.data = data.map(({ pics, itemName, itemId, price, market_price }) => {
+        this.localValue.data = data.map(({ pics, itemName, itemId, price, market_price,is_prescription }) => {
           return {
             imgUrl: pics[0],
             title: itemName,
             goodsId: itemId,
             price,
-            market_price
+            market_price,
+            isPrescription:is_prescription
           }
         })
       }

@@ -397,7 +397,7 @@ export default {
         use_third_party_system:use_third_party_system ? 'kuaizhen580' : '',
         kuaizhen580_config:{clientId,clientSecret,storeId}
       })
-      if(isBtn){
+      if(isBtn == 'button'){
         this.$message.success('保存成功')
       }
      } catch (error) {

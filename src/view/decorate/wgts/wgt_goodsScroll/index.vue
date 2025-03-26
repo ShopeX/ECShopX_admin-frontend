@@ -32,7 +32,9 @@
           <div class="goods-imgs">
             <SpImage :src="item.imgUrl" :width="130" :height="130" />
           </div>
-          <div class="goods-title">{{ item.title }}</div>
+          <div class="goods-title">
+            <el-tag v-if="item.isPrescription" type="primary" size="mini" style="background-color: #fff;">处方药</el-tag>
+            {{ item.title }}</div>
           <div v-if="value.showPrice" class="goods-caption">
             <template v-if="value.goodsSetting.type == 'goods'">
               <SpPrice class="item-price" :size="15" :value="item.price / 100" />
@@ -100,6 +102,8 @@ export default {
   watch: {
     'value': {
       handler(newVal) {
+        console.log(newVal,'llllkkkkkkk');
+
         const { type, data, secKillGoods, limitTimeSaleGoods } = newVal.goodsSetting
         if (type == 'goods') {
           this.goodsList = data

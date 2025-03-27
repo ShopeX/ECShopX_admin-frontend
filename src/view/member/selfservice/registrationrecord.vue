@@ -93,13 +93,13 @@
       </SpFilterForm>
 
       <div class="action-container">
-        <el-button
+        <!-- <el-button
           plain
           type="primary"
           @click="uploadHandleTemplate()"
         >
           下载模版
-        </el-button>
+        </el-button> -->
 
         <export-tip @exportHandle="exportData">
           <el-button
@@ -110,7 +110,7 @@
           </el-button>
         </export-tip>
 
-        <el-upload
+        <!-- <el-upload
           class="fl"
           action=""
           :on-change="uploadHandleChange"
@@ -123,7 +123,7 @@
           >
             点击上传
           </el-button>
-        </el-upload>
+        </el-upload> -->
       </div>
 
       <el-tabs

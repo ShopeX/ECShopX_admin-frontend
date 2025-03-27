@@ -47,6 +47,68 @@ export default {
           component: () => import('@/view/mall/bspay_sub_account/detail')
         }
       ]
-    }
+    },
+    {
+      path: 'ec/purchaseactivity',
+      name: `员工内购`,
+      component: () => import('@/view/member/promotions/purchase/index'),
+      children: [
+        {
+          path: 'editor',
+          component: () => import('@/view/member/promotions/purchase/editor')
+        },
+        {
+          path: 'detail',
+          component: () => import('@/view/member/promotions/purchase/detail')
+        },
+        {
+          path: 'dependents',
+          component: () => import('@/view/member/promotions/purchase/dependents')
+        }
+      ]
+    },
+     {
+      path: 'ec/employee',
+      name: '员工管理',
+      component: () => import('@/view/member/purchase/employee'),
+      children: [
+        {
+          path: 'import',
+          name: `白名单导入`,
+          component: () => import('@/view/member/purchase/employeeImport')
+        }
+      ]
+    },
+    {
+      path: 'ec/company',
+      name: '企业管理',
+      component: () => import('@/view/member/purchase/company')
+    },
+    {
+      path: 'ec/purchaseorder',
+      name: `内购订单`,
+      component: () => import('@/view/order/entitytrade/purchase'),
+      children: [
+        {
+          path: 'detail/:itemId?',
+          component: () => import('@/view/mall/trade/order/detail'),
+          meta: {
+            footerFixed: true
+          }
+        },
+        {
+          path: 'process/:itemId?',
+          component: () => import('@/view/mall/trade/order/process')
+        },
+        {
+          path: 'after-sale/:id?',
+          component: () => import('@/view/mall/trade/order/afterSale')
+        },
+        {
+          path: 'logistics/:itemId?',
+          component: () => import('@/view/mall/trade/order/logistics')
+        }
+      ]
+    },
   ]
 }

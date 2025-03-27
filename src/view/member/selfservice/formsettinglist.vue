@@ -311,7 +311,9 @@ export default {
         { name: '下拉选择框', value: 'select' },
         { name: '日期选择', value: 'date' },
         { name: '地区地址选择', value: 'area' },
-        { name: '数字', value: 'number' }
+        { name: '数字', value: 'number' },
+        { name: '上传身份证', value: 'idcard' },
+        { name: '上传其他附件', value: 'otherfile' },
       ],
       options: [
         {

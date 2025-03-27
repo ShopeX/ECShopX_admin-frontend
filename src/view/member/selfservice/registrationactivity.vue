@@ -8,14 +8,17 @@
     </div>
 
     <SpFilterForm :model="params" @onSearch="onSearch" @onReset="onReset">
-      <SpFilterFormItem prop="field_title" label="标题:">
-        <el-input v-model="params.field_title" placeholder="标题" />
+      <SpFilterFormItem prop="field_title" label="活动名称:">
+        <el-input v-model="params.field_title" placeholder="活动名称" />
       </SpFilterFormItem>
-      <SpFilterFormItem prop="状态" label="标题:">
+      <SpFilterFormItem prop="status" label="状态:">
         <el-select v-model="params.status" placeholder="状态">
-          <el-option key="waiting" label="未开始" value="waiting" />
-          <el-option key="ongoing" label="进行中" value="ongoing" />
-          <el-option key="end" label="已结束" value="end" />
+          <el-option
+            v-for="(item, index) in statusOption"
+            :key="index"
+            :label="item.name"
+            :value="item.value"
+          />
         </el-select>
       </SpFilterFormItem>
       <SpFilterFormItem prop="create_time" label="时间:">
@@ -26,33 +29,49 @@
           placeholder="根据添加时间筛选"
         />
       </SpFilterFormItem>
+      <SpFilterFormItem prop="distributor" label="店铺名称:">
+        <el-autocomplete
+          v-model="params.distributor.name"
+          :fetch-suggestions="queryStoreSearch"
+          placeholder="请输入店铺名称"
+          @select="handleSelectStore"
+        />
+      </SpFilterFormItem>
     </SpFilterForm>
 
-    <el-table v-loading="loading" border :data="tableList">
-      <el-table-column prop="activity_id" label="编号" width="50" />
-      <el-table-column prop="activity_name" label="活动名称" width="300" />
-      <el-table-column prop="start_time" label="活动有效期" width="300">
+    <el-table v-loading="loading" border :data="tableList" style="width: 100%">
+      <el-table-column prop="activity_id" label="编号" width="100" />
+      <el-table-column prop="activity_name" label="活动名称" width="200" />
+      <el-table-column label="是否核销" width="120">
+        <template slot-scope="scope">
+          {{ scope.row.is_offline_verify ? '是' : '否'}}
+        </template>
+      </el-table-column>
+      <el-table-column prop="gift_points" label="获取积分" width="120" />
+      <el-table-column label="进白名单" width="120">
+        <template slot-scope="scope">
+          {{ scope.row.is_white_list ? '是' : '否'}}
+        </template>
+      </el-table-column>
+      <el-table-column label="活动时间" width="300">
         <template slot-scope="scope">
           {{ scope.row.start_date }} ~ {{ scope.row.end_date }}
         </template>
       </el-table-column>
-      <el-table-column prop="total_join_num" label="报名人数" width="100">
+      <el-table-column label="报名人数" width="120">
         <template slot-scope="scope">
           {{ scope.row.total_join_num || 0 }}
         </template>
       </el-table-column>
-      <el-table-column label="操作">
+      <el-table-column prop="status_name" label="状态" width="120" />
+      <el-table-column prop="distributor_name" label="店铺" width="120" />
+      <el-table-column label="操作" fixed="right" :width="IS_DISTRIBUTOR() ? 150: 250">
         <template slot-scope="scope">
-          <router-link
-            class="iconfont icon-edit1"
-            :to="{ path: matchHidePage('editor'), query: { id: scope.row.activity_id } }"
-          />
-          <i class="iconfont icon-search-plus" @click="preview(scope.$index, scope.row)" />
-          <i
-            v-if="scope.row.status == 1"
-            class="mark iconfont icon-trash-alt1"
-            @click="deleteAction(scope.$index, scope.row)"
-          />
+          <el-button v-if="(scope.row.status === 'ongoing' || scope.row.status === 'waiting') && !IS_DISTRIBUTOR()" type="text" @click="onOperationChange(scope.row, 'edit')">编辑</el-button>
+          <el-button v-if="scope.row.status === 'end' || IS_DISTRIBUTOR()" type="text" @click="onOperationChange(scope.row, 'detail')">查看</el-button>
+          <el-button v-if="scope.row.status === 'waiting' && !IS_DISTRIBUTOR()" type="text" @click="onStopChange(scope.row)">终止</el-button>
+          <!-- <el-button v-if="scope.row.status === 'ongoing' && !IS_DISTRIBUTOR()" type="text" @click="onShowChange(scope.row)">企业</el-button> -->
+          <el-button type="text" @click="onOperationChange(scope.row, 'record')">报名记录</el-button>
         </template>
       </el-table-column>
     </el-table>
@@ -68,233 +87,62 @@
         @size-change="onSizeChange"
       />
     </div>
-
-    <el-dialog :visible.sync="dialogVisible" title="活动详情">
-      <el-descriptions :column="1">
-        <el-descriptions-item label="活动名称">{{ dataInfo.activity_name }}</el-descriptions-item>
-        <el-descriptions-item label="活动有效时间">
-          {{ dataInfo.start_date }}-{{ dataInfo.end_date }}
-        </el-descriptions-item>
-        <el-descriptions-item label="报名问卷模板">
-          {{ dataInfo.temp_id | formatterLable(temp_options) }}
-        </el-descriptions-item>
-        <el-descriptions-item label="提交报名次数">
-          {{ dataInfo.join_limit }}
-        </el-descriptions-item>
-        <el-descriptions-item label="是否开启短信通知">
-          {{ dataInfo.is_sms_notice == 1 ? '是' : '否' }}
-        </el-descriptions-item>
-        <el-descriptions-item label="是否开启小程序通知">
-          {{ dataInfo.is_wxapp_notice == 1 ? '是' : '否' }}
-        </el-descriptions-item>
-      </el-descriptions>
-      <!-- <el-form ref="dataInfo" label-width="200px" label-position="left" class="demo-ruleForm">
-        <el-form-item :label="dataInfo.field_title">
-          <el-col v-if="dataInfo.form_element == 'text'" :span="12">
-            <el-input placeholder="text预览" />
-          </el-col>
-          <el-col v-if="dataInfo.form_element == 'textarea'" :span="12">
-            <el-input type="textarea" placeholder="textarea预览" />
-          </el-col>
-          <el-col v-if="dataInfo.form_element == 'number'" :span="12">
-            <el-input-number type="textarea" placeholder="55.55" />
-          </el-col>
-          <el-col v-if="dataInfo.form_element == 'image'" :span="12">
-            <el-upload class="avatar-uploader" action="" :show-file-list="false">
-              <img v-if="imageUrl" :src="imageUrl" class="avatar">
-              <i v-else class="el-icon-plus avatar-uploader-icon" />
-            </el-upload>
-          </el-col>
-          <el-col v-if="dataInfo.form_element == 'radio'" :span="12">
-            <el-radio-group>
-              <el-radio v-for="(item, index) in dataInfo.options" :key="index" :label="3">
-                {{ item.value }}
-              </el-radio>
-            </el-radio-group>
-          </el-col>
-          <el-col v-if="dataInfo.form_element == 'checkbox'" :span="12">
-            <el-checkbox-group>
-              <el-checkbox
-                v-for="(item, index) in dataInfo.options"
-                :key="index"
-                label="item.value"
-              >
-                {{ item.value }}
-              </el-checkbox>
-            </el-checkbox-group>
-          </el-col>
-          <el-col v-if="dataInfo.form_element == 'select'" :span="12">
-            <el-select placeholder="请选择">
-              <el-option
-                v-for="item in dataInfo.options"
-                :key="item.value"
-                :label="item.value"
-                :value="item.value"
-              />
-            </el-select>
-          </el-col>
-          <el-col v-if="dataInfo.form_element == 'date'" :span="12">
-            <el-date-picker v-model="value1" type="date" placeholder="选择日期" />
-          </el-col>
-          <el-col v-if="dataInfo.form_element == 'time'" :span="12">
-            <el-time-picker
-              v-model="value2"
-              arrow-control
-              :picker-options="{
-                selectableRange: '18:30:00 - 20:30:00'
-              }"
-              placeholder="任意时间点"
-            />
-          </el-col>
-          <el-col v-if="dataInfo.form_element == 'area'" :span="12">
-            <el-cascader
-              v-model="value"
-              :options="options"
-              :props="{ expandTrigger: 'hover' }"
-              @change="handleChange"
-            />
-          </el-col>
-        </el-form-item>
-      </el-form> -->
-    </el-dialog>
+    <EnterpriseDialog :visible.sync="dialogVisible" @closeDialog="closeDialog"/>
   </SpRouterView>
 </template>
 <script>
-import { regActivityDel, regActivityInvalid, getTemplateList } from '@/api/selfhelpform'
 import mixin, { pageMixin } from '@/mixins'
+import { IS_DISTRIBUTOR } from '@/utils'
+import { regActivityInvalid } from '@/api/selfhelpform'
+import EnterpriseDialog from './components/enterpriseDialog'
 export default {
-  filters: {
-    formatterLable(value, options) {
-      return options.find((item) => item.value == value)?.label
-    }
-  },
   mixins: [mixin, pageMixin],
   provide() {
     return {
       refresh: this.fetchList
     }
   },
+  components: {
+    EnterpriseDialog
+  },
   data() {
     const initialParams = {
       field_title: undefined,
-      status: 'ongoing',
-      create_time: []
+      status: '',
+      create_time: [],
+      distributor_id: '',
+      distributor: {
+        id: undefined,
+        name: undefined
+      }
     }
     return {
       initialParams,
       params: {
         ...initialParams
       },
-      templateParams: {
-        page: 1,
-        pageSize: 10,
-        tem_name: '',
-        // tem_type: 'ask_answer_paper',
-        is_valid: 1
-      },
-      temp_options: [],
-      imageUrl: '',
       loading: false,
-      dialogVisible: false,
-      dataInfo: {},
-      options: [
-        {
-          value: 'ziyuan',
-          label: '资源',
-          children: [
-            {
-              value: 'axure',
-              label: 'Axure Components'
-            },
-            {
-              value: 'sketch',
-              label: 'Sketch Templates'
-            },
-            {
-              value: 'jiaohu',
-              label: '组件交互文档'
-            }
-          ]
-        }
-      ]
+      statusOption: [
+        { name: '全部', value: '' },
+        { name: '待开始', value: 'waiting' },
+        { name: '进行中', value: 'ongoing' },
+        { name: '已结束', value: 'end' }
+      ],
+      shopList: [],
+      dialogData: {},
+      dialogVisible: false
     }
   },
   watch: {
-    getStatus(val) {
-      if (val) {
-        this.fetchList()
-      }
-    }
   },
   mounted() {
-    this.getTemplateList()
     this.fetchList()
+    this.getStoreList()
   },
   methods: {
-    getTemplateList() {
-      this.loading = true
-      getTemplateList(this.templateParams).then((response) => {
-        response.data.data.list.map((item) => {
-          this.temp_options.push({
-            label: item.tem_name,
-            value: item.id
-          })
-        })
-        // this.temp_options = response.data.data.list
-        this.total_count = response.data.data.total_count
-        this.loading = false
-      })
-    },
     addElement() {
       // 添加商品
       this.$router.push({ path: this.matchHidePage('editor') })
-    },
-    delData(index, row) {
-      var msg = '此操作将删除该活动, 是否继续?'
-      this.$confirm(msg, '提示', {
-        cancelButtonText: '取消',
-        confirmButtonText: '确定',
-        type: 'warning',
-        beforeClose: (action, instance, done) => {
-          if (action === 'confirm') {
-            regActivityDel({ activity_id: row.activity_id }).then((response) => {
-              this.getDataList()
-              this.$message({
-                message: '删除完成',
-                type: 'success',
-                duration: 5 * 1000
-              })
-            })
-          }
-          done()
-        }
-      })
-    },
-    invalidData(index, row) {
-      var msg = '此操作将永久终止该活动, 是否继续?'
-      this.$confirm(msg, '提示', {
-        cancelButtonText: '取消',
-        confirmButtonText: '确定',
-        type: 'warning',
-        beforeClose: (action, instance, done) => {
-          if (action === 'confirm') {
-            regActivityInvalid({ activity_id: row.activity_id }).then((response) => {
-              this.getDataList()
-              this.$message({
-                message: '终止该活动成功',
-                type: 'success',
-                duration: 5 * 1000
-              })
-            })
-          }
-          done()
-        }
-      })
-    },
-    preview(index, row) {
-      // 预览弹框
-      this.dialogVisible = true
-      this.dataInfo = row
     },
     onSearch() {
       this.page.pageIndex = 1
@@ -304,6 +152,13 @@ export default {
     },
     onReset() {
       this.params = { ...this.initialParams }
+      this.params = {
+        ...this.params,
+        distributor: {
+          id: undefined,
+          name: undefined
+        }
+      }
       this.onSearch()
     },
     getParams() {
@@ -318,6 +173,7 @@ export default {
         create_time: [],
         ...time
       }
+      delete params.distributor
       return params
     },
     async fetchList() {
@@ -333,51 +189,70 @@ export default {
       this.page.total = total_count
       this.loading = false
     },
-    deleteAction(index, row) {
-      this.$confirm('此操废弃该元素, 是否继续?', '提示', {
-        confirmButtonText: '确定',
-        cancelButtonText: '取消',
-        type: 'warning'
-      })
-        .then(() => {
-          deleteSetting(row.activity_id)
-            .then((response) => {
-              this.tableList.splice(index, 1)
-              this.$message({
-                message: '废弃成功',
-                type: 'success',
-                duration: 5 * 1000
-              })
-            })
-            .catch(() => {
-              this.$message({
-                type: 'error',
-                message: '废弃失败'
-              })
-            })
-        })
-        .catch(() => {
-          this.$message({
-            type: 'info',
-            message: '已取消'
-          })
-        })
-    },
-    getTaskTime(strDate) {
-      let date = new Date(strDate)
-      let y = date.getFullYear()
-      let m = date.getMonth() + 1
-      m = m < 10 ? '0' + m : m
-      let d = date.getDate()
-      d = d < 10 ? '0' + d : d
-      let str = y + '-' + m + '-' + d
-      return str
-    },
-    getTimeStr(date) {
-      return this.getTaskTime(new Date(parseInt(date) * 1000))
-    },
     dateStrToTimeStamp(str) {
       return Date.parse(new Date(str)) / 1000
+    },
+    queryStoreSearch(queryString, cb) {
+      var restaurants = this.shopList
+      var results = queryString ? restaurants.filter(this.createFilter(queryString)) : restaurants
+      // 调用 callback 返回建议列表的数据
+      cb(results)
+    },
+    createFilter(queryString) {
+      return (restaurant) => {
+        return restaurant.value.toLowerCase().indexOf(queryString.toLowerCase()) === 0
+      }
+    },
+    handleSelectStore(storeItem) {
+      this.params.distributor_id = storeItem.distributor_id
+      this.params.distributor.id = storeItem.distributor_id
+    },
+    async getStoreList() {
+      let params = { page: 1, pageSize: 500 }
+      const { list } = await this.$api.marketing.getDistributorList(params)
+      if (list) {
+        list.forEach((row) => {
+          this.shopList.push({ 'value': row.name, 'distributor_id': row.distributor_id })
+        })
+      }
+    },
+    onOperationChange (row, type) {
+      if (type == 'edit') {
+        this.$router.push({ path: this.matchHidePage('editor'), query: { id: row.activity_id, type: 'edit'} })
+      } else if (type == 'detail') {
+        this.$router.push({ path: this.matchHidePage('editor'), query: { id: row.activity_id, type: 'detail'} })
+      } else if (type == 'record') {
+        this.$router.push({ path: `${this.IS_DISTRIBUTOR() ? '/shopadmin' : ''}/marketing/marketing/apply/Registrationrecord`, query: { id: row.activity_id} })
+      }
+    },
+    onStopChange(row) {
+      var msg = '此操作将永久终止该活动, 是否继续?'
+      this.$confirm(msg, '提示', {
+        cancelButtonText: '取消',
+        confirmButtonText: '确定',
+        type: 'warning',
+        beforeClose: (action, instance, done) => {
+          if (action === 'confirm') {
+            regActivityInvalid({ activity_id: row.activity_id }).then((res) => {
+                this.fetchList()
+                this.$message({
+                  message: '修改活动状态成功',
+                  type: 'success',
+                  duration: 5 * 1000
+                })
+              }
+            )
+          }
+          done()
+        }
+      })
+    },
+    onShowChange (row) {
+      this.dialogData = row
+      this.closeDialog(true)
+    },
+    closeDialog (visible) {
+      this.dialogVisible = visible
     }
   }
 }

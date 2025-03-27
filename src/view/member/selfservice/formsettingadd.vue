@@ -59,6 +59,12 @@
               <el-radio label="area">
                 地区选择
               </el-radio>
+              <el-radio label="idcard">
+                上传身份证
+              </el-radio>
+              <el-radio label="otherfile">
+                上传其他附件
+              </el-radio>
             </el-radio-group>
           </el-col>
         </el-form-item>
@@ -155,8 +161,12 @@
           </el-col>
         </el-form-item>
         <el-form-item>
-          需填写姓名请选择字符username、生日为birthday、
-          身份证号码为idcard、手机号码为mobile、银行卡号为bankcard、地址为address，若都不是，选其他。
+          <div style="line-height: 24px;">英文标识填写说明：</div>
+          <div style="line-height: 24px;">
+            需填写姓名请选择字符username、生日为birthday、 身份证号码为idcard、手机号码为mobile、银行卡号为bankcard、地址为address、
+            公司名称为Company name、统一社会信用代码为Unified Social Credit Code、出席人身份证号为Attendance IDCard、帐号为account number、
+            类型为type、提示信息为Reminder information、上传附件为Attachment upload，若都不是，选其他。
+          </div>
         </el-form-item>
         <el-form-item
           v-if="defalutFileName == 'other'"
@@ -172,7 +182,7 @@
             />
           </el-col>
         </el-form-item>
-        <el-form-item
+        <!-- <el-form-item
           label="图片"
           prop="image_url"
         >
@@ -192,6 +202,20 @@
               :sc-status="isGetImage"
               @chooseImg="pickImg"
               @closeImgDialog="closeImgDialog"
+            />
+          </el-col>
+        </el-form-item> -->
+        <el-form-item
+          label="证照名称"
+          prop="pic_name"
+          v-if="form.form_element == 'idcard' || form.form_element == 'otherfile'"
+          :rules="[{ required: form.form_element == 'idcard' || form.form_element == 'otherfile', message: '请输入证照名称', trigger: 'blur' }]"
+        >
+          <el-col :span="15">
+            <el-input
+              v-model.trim="form.pic_name"
+              :maxlength="30"
+              placeholder="请输入证照名称"
             />
           </el-col>
         </el-form-item>
@@ -234,7 +258,8 @@ export default {
           { value: '', image_url: '' },
           { value: '', image_url: '' }
         ],
-        image_url: ''
+        image_url: '',
+        pic_name: ''
       },
       formText: false,
       formTextarea: false,
@@ -253,7 +278,13 @@ export default {
         { name: 'mobile', value: 'mobile' },
         { name: 'bankcard', value: 'bankcard' },
         { name: 'address', value: 'address' },
-        { name: 'other', value: 'other' }
+        { name: 'other', value: 'other' },
+        { name: 'type', value: 'type' },
+        { name: 'account number', value: 'account number' },
+        { name: 'Attendance IDCard', value: 'Attendance IDCard' },
+        { name: 'Company name', value: 'Company name' },
+        { name: 'Unified Social Credit Code', value: 'Unified Social Credit Code' },
+        { name: 'Attachment upload', value: 'Attachment upload' },
       ],
       defalutFileName: 'username'
     }

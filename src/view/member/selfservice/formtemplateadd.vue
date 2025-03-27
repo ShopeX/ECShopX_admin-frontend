@@ -4,14 +4,14 @@
       <el-form
         ref="form"
         :model="form"
-        label-width="100px"
+        label-width="150px"
         label-position="right"
         class="demo-ruleForm"
       >
         <div v-if="!form.id" class="content-center content-bottom-padded">
           <el-radio-group v-model="form.tem_type" @change="handleTypeChange">
-            <el-radio-button label="basic_entry"> 基础录入(统计报表) </el-radio-button>
             <el-radio-button label="ask_answer_paper"> 问卷调查 </el-radio-button>
+            <el-radio-button label="basic_entry"> 基础录入(统计报表) </el-radio-button>
           </el-radio-group>
         </div>
         <el-form-item
@@ -35,13 +35,13 @@
               <!-- <el-radio v-model="form.form_style" label="multiple">多页问卷(每页一项)</el-radio> -->
             </el-col>
             <el-col :span="10">
-              <el-alert
+              <!-- <el-alert
                 v-if="form.form_style == 'single'"
                 show-icon
                 :closable="false"
                 title="单页问卷方式不支持图片显示"
                 type="warning"
-              />
+              /> -->
               <el-alert
                 v-if="form.form_style == 'multiple'"
                 show-icon
@@ -167,6 +167,39 @@
             </el-col>
           </el-row>
         </el-form-item>
+        <el-form-item
+          label="填写表单图片背景"
+          prop="header_bg_pic"
+          v-if="form.tem_type == 'ask_answer_paper'"
+        >
+          <el-col :span="20">
+            <div>
+              <imgBox
+                :img-url="wximageurl + form.header_bg_pic"
+                inline
+                @click="handleImgBChange"
+              />
+            </div>
+            <div class="frm-tips">
+              只能上传jpg/png文件，且不超过2M （建议尺寸：640px，高度自适应）
+            </div>
+            <imgPicker
+              :dialog-visible="imgDialog"
+              :sc-status="isGetImage"
+              @chooseImg="pickImg"
+              @closeImgDialog="closeImgDialog"
+            />
+          </el-col>
+        </el-form-item>
+        <el-form-item
+          label="表单距离顶部高度"
+          prop="header_height"
+          v-if="form.tem_type == 'ask_answer_paper'"
+        >
+          <el-col :span="20">
+            <el-input v-model.trim="form.header_height" placeholder="请输入数字" style="width:50%" />
+          </el-col>
+        </el-form-item>
         <el-form-item>
           <el-button @click.native="handleCancel"> 取消 </el-button>
           <el-button type="primary" @click="submitAction"> 保存 </el-button>
@@ -244,11 +277,15 @@ import {
   getSettingList
 } from '../../../api/selfhelpform'
 import SideBar from '@/components/element/sideBar'
+import imgPicker from '@/components/imageselect'
+import imgBox from '@/components/element/imgBox'
 
 export default {
   inject: ['refresh'],
   components: {
-    SideBar
+    SideBar,
+    imgPicker,
+    imgBox
   },
   data() {
     return {
@@ -260,9 +297,11 @@ export default {
         header_title: '',
         bottom_title: '',
         content: [{ title: '', sort: 1, formdata: [] }],
-        tem_type: 'basic_entry',
+        tem_type: 'ask_answer_paper',
         status: 1,
-        key_index: []
+        key_index: [],
+        header_bg_pic: '',
+        header_height: ''
       },
       params: {
         page: 1,
@@ -283,11 +322,15 @@ export default {
         { name: '下拉选择框', value: 'select' },
         { name: '日期选择', value: 'date' },
         { name: '地区地址选择', value: 'area' },
-        { name: '数字', value: 'number' }
+        { name: '数字', value: 'number' },
+        { name: '上传身份证', value: 'idcard' },
+        { name: '上传其他附件', value: 'otherfile' },
       ],
       templateRadio: '',
       formcontentindex: 0,
-      selectdata: []
+      selectdata: [],
+      imgDialog: false,
+      isGetImage: false,
     }
   },
   mounted() {
@@ -427,7 +470,9 @@ export default {
           { name: '下拉选择框', value: 'select' },
           { name: '日期选择', value: 'date' },
           { name: '地区地址选择', value: 'area' },
-          { name: '数字', value: 'number' }
+          { name: '数字', value: 'number' },
+          { name: '上传身份证', value: 'idcard' },
+          { name: '上传其他附件', value: 'otherfile' },
         ]
       }
       this.showElementList = true
@@ -502,7 +547,18 @@ export default {
     },
     delCard(index) {
       this.form.content.splice(index, 1)
-    }
+    },
+    handleImgBChange () {
+      this.imgDialog = true
+      this.isGetImage = true
+    },
+    pickImg (data) {
+      this.form.header_bg_pic = data.url
+      this.imgDialog = false
+    },
+    closeImgDialog () {
+      this.imgDialog = false
+    },
   }
 }
 </script>

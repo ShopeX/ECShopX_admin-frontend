@@ -216,6 +216,11 @@ export default {
         }
       ]
     },
+    {
+      path: 'marketing/apply/activityverifylist',
+      name: `活动核销记录`,
+      component: () => import('@/view/member/selfservice/activityverifylist'),
+    },
 
     // {
     //   path: 'purchase',

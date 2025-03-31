@@ -2,6 +2,21 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [3.19.1](https://git.ishopex.cn/ecshopx/ecshopx-admin/compare/v3.19.0...v3.19.1) (2025-03-28)
+
+
+### Bug Fixes
+
+* 内购路由跳转 ([f1aac53](https://git.ishopex.cn/ecshopx/ecshopx-admin/commit/f1aac5388047f8eff81d2836f04a620bc67ee88b))
+
+## [3.19.0](https://git.ishopex.cn/ecshopx/ecshopx-admin/compare/v3.18.9...v3.19.0) (2025-03-27)
+
+
+### Bug Fixes
+
+* 导出问题修复 ([e484294](https://git.ishopex.cn/ecshopx/ecshopx-admin/commit/e484294008118da3f3c1cfa00bae486e03f1c6b9))
+* 会员详情path调整 ([5fc223b](https://git.ishopex.cn/ecshopx/ecshopx-admin/commit/5fc223b07d6b8d6cf8a571d1abe11786a7fbf774))
+
 ### [3.18.9](https://git.ishopex.cn/ecshopx/ecshopx-admin/compare/v3.18.8...v3.18.9) (2025-03-26)
 
 ### [3.18.8](https://git.ishopex.cn/ecshopx/ecshopx-admin/compare/v3.18.6...v3.18.8) (2025-03-26)

@@ -181,11 +181,11 @@ function export_open(tab) {
     if (login_type == 'distributor') {
       window.open(`/shopadmin/shopsetting/baseexport?tab=${tab}`)
     } else if (login_type == 'merchant') {
-      window.open(`/merchant/setting/baseexport?tab=${tab}`)
+      window.open(`/merchant/companydata/repor/baseexport?tab=${tab}`)
     } else if (login_type == 'supplier') {
-      window.open(`/supplier/setting/baseexport?tab=${tab}`)
+      window.open(`/supplier/companydata/repor/baseexport?tab=${tab}`)
     } else {
-      window.open(`/setting/baseexport?tab=${tab}`)
+      window.open(`/companydata/report/baseexport?tab=${tab}`)
     }
   }, 1000)
 }

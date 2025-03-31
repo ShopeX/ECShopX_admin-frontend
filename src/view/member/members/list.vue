@@ -141,7 +141,12 @@
         </SpFilterFormItem> -->
         <SpFilterFormItem prop="role" label="角色:">
           <el-select v-model="params.role" placeholder="请选择" clearable>
-            <el-option v-for="item in roleList" :key="item.value" :label="item.label" :value="item.value" />
+            <el-option
+              v-for="item in roleList"
+              :key="item.value"
+              :label="item.label"
+              :value="item.value"
+            />
           </el-select>
         </SpFilterFormItem>
       </SpFilterForm>
@@ -242,7 +247,7 @@
         <el-table-column prop="username" label="昵称" width="140" />
         <el-table-column prop="role" label="角色" width="70">
           <template slot-scope="scope">
-            {{roleList.find(item=>item.value == scope.row.role)?.label}}
+            {{ roleList.find((item) => item.value == scope.row.role)?.label }}
           </template>
         </el-table-column>
         <el-table-column v-if="!VERSION_IN_PURCHASE" prop="sex" label="性别" width="70">
@@ -890,7 +895,7 @@ export default {
       aliyunsmsDialogInfo: {
         type: 'add'
       },
-      roleList:ROLE_LIST,
+      roleList: ROLE_LIST,
       panel: {
         search: false
       },
@@ -959,7 +964,7 @@ export default {
         tag_id: '',
         mobile: '',
         have_consume: '',
-        role:''
+        role: ''
       },
       operateLog: [],
       currentShop: '',
@@ -1321,7 +1326,9 @@ export default {
         isShopadmin = /\/shopadmin/.test(document.location.pathname)
       } catch (e) {}
       this.$router.push({
-        path: isShopadmin ? '/shopadmin/member/member/detail' : '/member/member/detail',
+        path: isShopadmin
+          ? '/shopadmin/member/member/memberlist/detail'
+          : '/member/member/memberlist/detail',
         query: {
           user_id: userid,
           mobile: this.params.mobile,

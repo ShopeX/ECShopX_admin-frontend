@@ -1,6 +1,7 @@
 // 商品路由
 const name = '应用'
 import Layout from '@/view/layout' // 主框架
+import SubLayout from '@/view/sublayout' //
 
 export default {
   path: '/applications',
@@ -139,23 +140,46 @@ export default {
     {
       path: 'ec/purchaseactivity',
       name: `员工内购`,
-      component: () => import('@/view/member/promotions/purchase/index'),
+      component: SubLayout,
       children: [
         {
-          path: 'editor',
-          component: () => import('@/view/member/promotions/purchase/editor')
+          path: '/',
+          component: () => import('@/view/marketing/employee/list')
         },
         {
-          path: 'detail',
-          component: () => import('@/view/member/promotions/purchase/detail')
+          path: 'create/:id?',
+          component: () => import('@/view/marketing/employee/purchase')
         },
         {
-          path: 'dependents',
-          component: () => import('@/view/member/promotions/purchase/dependents')
+          path: 'result/:id',
+          component: () => import('@/view/marketing/employee/result')
+        },
+        {
+          path: 'goods/:id',
+          component: () => import('@/view/marketing/employee/addGoods')
+        },
+        {
+          path: 'dependents/:id',
+          component: () => import('@/view/marketing/employee/dependents')
         }
       ]
+      // component: () => import('@/view/member/promotions/purchase/index'),
+      // children: [
+      //   {
+      //     path: 'editor',
+      //     component: () => import('@/view/member/promotions/purchase/editor')
+      //   },
+      //   {
+      //     path: 'detail',
+      //     component: () => import('@/view/member/promotions/purchase/detail')
+      //   },
+      //   {
+      //     path: 'dependents',
+      //     component: () => import('@/view/member/promotions/purchase/dependents')
+      //   }
+      // ]
     },
-     {
+    {
       path: 'ec/employee',
       name: '员工管理',
       component: () => import('@/view/member/purchase/employee'),
@@ -362,6 +386,6 @@ export default {
       path: 'community/chiefupload',
       name: `团长导入`,
       component: () => import('@/view/member/members/upload_chief')
-    },
+    }
   ]
 }

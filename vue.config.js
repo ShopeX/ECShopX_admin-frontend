@@ -2,6 +2,7 @@ const path = require('path')
 const QiniuPlugin = require('qiniu-webpack-plugin');
 const CopyWebpackPlugin = require('copy-webpack-plugin')
 const WebpackAliyunOss = require('webpack-aliyun-oss');
+const TerserPlugin = require('terser-webpack-plugin');
 const SRC_PATH = path.resolve(__dirname, 'src')
 const envVars = process.env
 
@@ -24,6 +25,7 @@ module.exports = {
   lintOnSave: false,
   publicPath: process.env.VUE_APP_PUBLIC_PATH,
   runtimeCompiler: true,
+  productionSourceMap: false,
   css: {
     loaderOptions: {
       sass: {
@@ -61,6 +63,20 @@ module.exports = {
 
       )
     }
+    if (process.env.NODE_ENV === 'production') {
+      config.optimization.minimize = true
+      config.optimization.minimizer[0].options.terserOptions = {
+        compress: {
+          drop_console: true,    // 移除所有 console.*
+          drop_debugger: true,   // 移除 debugger
+          pure_funcs: ['console.log'] // 可选：指定移除的纯函数
+        },
+        output: {
+          comments: false        // 移除所有注释
+        }
+      }
+    }
+
     config.plugins.push(
       new CopyWebpackPlugin([{
         from: path.resolve(__dirname, process.env.VUE_APP_PRODUCT_MODEL == 'platform' ? "./newpc_bbc" : './newpc_b2c'),

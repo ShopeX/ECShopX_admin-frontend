@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [3.19.2](https://git.ishopex.cn/ecshopx/ecshopx-admin/compare/v3.19.1...v3.19.2) (2025-04-01)
+
+
+### Bug Fixes
+
+* 生产环境添加js压缩以及移除console ([6659cab](https://git.ishopex.cn/ecshopx/ecshopx-admin/commit/6659cabf197454fa577e2feeb37bd104d346b561))
+
 ### [3.19.1](https://git.ishopex.cn/ecshopx/ecshopx-admin/compare/v3.19.0...v3.19.1) (2025-03-28)
 
 

@@ -49,7 +49,11 @@
             <span>{{ scope.row.distributor_info.map(item=>item.name).join(',') }}</span>
           </template>
         </el-table-column>
-        <el-table-column width="100" prop="shop_code" label="店铺号" />
+        <el-table-column prop="distributor_info" label="店铺号">
+          <template slot-scope="scope">
+            <span>{{ scope.row.distributor_info.map(item=>item.shop_code).join(',') }}</span>
+          </template>
+        </el-table-column>
         <el-table-column label="操作">
           <template slot-scope="scope">
             <el-button type="text" @click="editShopWhite(scope.row)">

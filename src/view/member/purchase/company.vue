@@ -247,7 +247,7 @@ export default {
             // },
             action: {
               handler: async ([row]) => {
-                window.open(`${this.IS_DISTRIBUTOR() ? '/shopadmin' : ''}/member/purchase/employee?company_id=${row.id}`, '_blank')
+                window.open(`${this.IS_DISTRIBUTOR() ? '/shopadmin' : ''}/applications/ec/employee?company_id=${row.id}`, '_blank')
 
               }
             }

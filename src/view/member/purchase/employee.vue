@@ -357,7 +357,8 @@ export default {
       }
     },
     handleImportEmployee() {
-      this.$router.push({ path: `${this.IS_DISTRIBUTOR() ? '/shopadmin' : ''}/member/purchase/employee/import` })
+      this.$router.push({ path: this.matchHidePage('import') })
+
     },
     addEmployee() {
       this.employeeForm = this.$options.data().employeeForm

@@ -46,12 +46,15 @@
         <el-table-column prop="username" label="姓名" />
         <el-table-column prop="distributor_info" label="所属店铺">
           <template slot-scope="scope">
-            <span>{{ scope.row.distributor_info.map(item=>item.name).join(',') }}</span>
+            <!-- 店铺端 需要只展示自己的店铺名称 -->
+            <span v-if="IS_DISTRIBUTOR()">{{ scope.row.distributor_info.find(item=>item.distributor_id === shopId)?.name }}</span>
+            <span v-else>{{ scope.row.distributor_info.map(item=>item.name).join(',') }}</span>
           </template>
         </el-table-column>
         <el-table-column prop="distributor_info" label="店铺号">
           <template slot-scope="scope">
-            <span>{{ scope.row.distributor_info.map(item=>item.shop_code).join(',') }}</span>
+            <span v-if="IS_DISTRIBUTOR()">{{ scope.row.distributor_info.find(item=>item.distributor_id === shopId)?.shop_code }}</span>
+            <span v-else>{{ scope.row.distributor_info.map(item=>item.shop_code).join(',') }}</span>
           </template>
         </el-table-column>
         <el-table-column label="操作">
@@ -86,7 +89,7 @@ import {
   handleUploadFile
 } from '../../../api/common'
 import { isMobile } from '@/utils/validate'
-
+import { IS_DISTRIBUTOR } from '@/utils'
 export default {
   mixins: [mixin, pageMixin],
   data() {
@@ -162,6 +165,9 @@ export default {
         {
           label: '选择店铺',
           key: 'num',
+          isShow: () => {
+            return this.editType !== 'edit'
+          },
           component: () => (
             <div class='distributor-tags'>
               {this.whitelistForm.distributors.map((item, index) => (
@@ -190,6 +196,9 @@ export default {
       ],
       selectMobile: '', // 已选中row
     }
+  },
+  computed: {
+    ...mapGetters(['shopId'])
   },
   mounted() {
     this.fetchList()
@@ -292,7 +301,8 @@ export default {
       const id = this.editType === 'delAll' ? distributorsId : [row.id]
       const params = {
         type,
-        id
+        id,
+        login_type: this.IS_DISTRIBUTOR() ? 'distributor' : ''
       }
       const { status } = await this.$api.company.delShopWhite(params)
       if (status) {

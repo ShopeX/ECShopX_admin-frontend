@@ -166,7 +166,7 @@ export default {
           label: '选择店铺',
           key: 'num',
           isShow: () => {
-            return this.editType !== 'edit'
+            return this.editType !== 'edit' || !this.IS_DISTRIBUTOR() // 店铺端编辑不能选择店铺
           },
           component: () => (
             <div class='distributor-tags'>

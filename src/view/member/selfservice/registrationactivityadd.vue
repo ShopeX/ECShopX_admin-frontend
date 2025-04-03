@@ -260,6 +260,18 @@
           </el-radio-group>
           <div>开启后报名人员名单进入店铺企业员工白名单</div>
         </el-form-item>
+        <el-form-item label="选择企业" v-if="form.is_white_list == 1">
+          <el-button type="primary" @click="onShowChange"> 选择企业 </el-button>
+          <SpFinder
+            ref="finder"
+            :noSelection='true'
+            :setting="setting"
+            :data="enterprise_list"
+            url=""
+            v-if="enterprise_list.length > 0"
+            style="width:80%"
+          />
+        </el-form-item>
         <el-form-item label="适用会员">
           <el-checkbox-group v-model="memberLevelList">
             <el-checkbox v-for="grade in memberGrade" :key="grade.grade_id" :label="grade.grade_id+''">
@@ -289,18 +301,6 @@
               style="width:80%"
             />
           </div>
-        </el-form-item>
-        <el-form-item label="选择企业" v-if="form.is_white_list == 1">
-          <el-button type="primary" @click="onShowChange"> 选择企业 </el-button>
-          <SpFinder
-            ref="finder"
-            :noSelection='true'
-            :setting="setting"
-            :data="enterprise_list"
-            url=""
-            v-if="enterprise_list.length > 0"
-            style="width:80%"
-          />
         </el-form-item>
         <el-form-item
           label="选择报名问卷模板"

@@ -281,7 +281,7 @@
             {{ scope.row.is_self_delivery ? '是' : '否' }}
           </template>
         </el-table-column>
-        <el-table-column width="100" label="进店白名单" v-if="!IS_DISTRIBUTOR()">
+        <el-table-column width="100" label="进店白名单" v-if="VERSION_STANDARD && $store.getters.login_type == 'admin'">
           <template v-if="scope.row.is_valid !== 'delete'" slot-scope="scope">
             <el-switch
               v-model="scope.row.open_divided"

@@ -27,6 +27,31 @@ All notable changes to this project will be documented in this file. See [standa
 * 内购活动订单404 ([aae25e1](https://git.ishopex.cn/ecshopx/ecshopx-admin/commit/aae25e17d5f78687a93a725266fbf921a7af489b))
 * ECshopX端入驻商户隐藏进店白名单开关 ([e9bef3b](https://git.ishopex.cn/ecshopx/ecshopx-admin/commit/e9bef3bd810f4bd26273fda82b282c4881f56f3f))
 
+### [3.14.1](https://git.ishopex.cn/ecshopx/ecshopx-admin/compare/v3.19.3...v3.14.1) (2025-04-08)
+
+
+### Features
+
+* 店铺白名单页 ([41a56ee](https://git.ishopex.cn/ecshopx/ecshopx-admin/commit/41a56ee986480d373c715b3ec16d2fc52d9836e2))
+* 店铺导入，白名单导入 ([91d7a3c](https://git.ishopex.cn/ecshopx/ecshopx-admin/commit/91d7a3cdab7f2b7c01b1c633c0b908afd926551c))
+* 店铺端增加 店铺白名单 路由 ([ea102ac](https://git.ishopex.cn/ecshopx/ecshopx-admin/commit/ea102ac6929e0387b2fa53362b3bb66bff8d3ea4))
+* 店铺列表修改 ([051ad7c](https://git.ishopex.cn/ecshopx/ecshopx-admin/commit/051ad7c09a927945bc043ec149dbed591cf56ff2))
+* 店铺选择器，支持多选。增加 店铺号筛选 ([7b9eb74](https://git.ishopex.cn/ecshopx/ecshopx-admin/commit/7b9eb74223e20a4fdc1ba94d2294c126e70d3318))
+
+
+### Bug Fixes
+
+* 阿里云提示文案错别字 ([9429589](https://git.ishopex.cn/ecshopx/ecshopx-admin/commit/9429589720ab670bcb2c702e6f7e335cce35ab40))
+* 白名单编辑店铺 ([7f3312a](https://git.ishopex.cn/ecshopx/ecshopx-admin/commit/7f3312a8164be76451c56d9c1b0026bde0f49286))
+* 白名单页店铺查找字段修正 ([1e8b8cd](https://git.ishopex.cn/ecshopx/ecshopx-admin/commit/1e8b8cda0bb1d3ff748132dabe262c2e19989e87))
+* 店铺白名单开关只有在云店版 平台端有 ([4f844e3](https://git.ishopex.cn/ecshopx/ecshopx-admin/commit/4f844e3ed9ea207502fe1429c9e6b4c3c336b21c))
+* 店铺端，只展示自己店铺下的白名单 ([ec4c217](https://git.ishopex.cn/ecshopx/ecshopx-admin/commit/ec4c2178dc394810e008f444758aa3fd6bfc7981))
+* 店铺号不展示 ([953a542](https://git.ishopex.cn/ecshopx/ecshopx-admin/commit/953a542e5cfb21e0f38fce2643eb332b8aa6eb5d))
+* 翻页后丢失已选店铺 ([d474841](https://git.ishopex.cn/ecshopx/ecshopx-admin/commit/d474841c51edfceed6ee7320f6350c2f60735a14))
+* 内购订单url ([022c2f0](https://git.ishopex.cn/ecshopx/ecshopx-admin/commit/022c2f0f10be9b5bb00479e2e178efdb81b464c1))
+* 内购活动订单404 ([aae25e1](https://git.ishopex.cn/ecshopx/ecshopx-admin/commit/aae25e17d5f78687a93a725266fbf921a7af489b))
+* ECshopX端入驻商户隐藏进店白名单开关 ([e9bef3b](https://git.ishopex.cn/ecshopx/ecshopx-admin/commit/e9bef3bd810f4bd26273fda82b282c4881f56f3f))
+
 ### [3.19.3](https://git.ishopex.cn/ecshopx/ecshopx-admin/compare/v3.19.2...v3.19.3) (2025-04-01)
 
 ### [3.19.2](https://git.ishopex.cn/ecshopx/ecshopx-admin/compare/v3.19.1...v3.19.2) (2025-04-01)

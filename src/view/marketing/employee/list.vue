@@ -14,7 +14,7 @@
   <div>
     <div class="action-container">
       <el-button type="primary" icon="iconfont icon-xinzengcaozuo-01" @click="createActivity">
-        新建活动
+        新建活动1
       </el-button>
     </div>
     <SpFilterForm :model="queryForm" @onSearch="onSearch" @onReset="onSearch">
@@ -53,10 +53,7 @@
           />
         </el-select>
       </SpFilterFormItem>
-      <SpFilterFormItem
-        prop="distributor_id"
-        label="来源店铺:"
-      >
+      <SpFilterFormItem prop="distributor_id" label="来源店铺:">
         <SpSelectShop v-model="queryForm.distributor_id" clearable placeholder="请选择" />
       </SpFilterFormItem>
     </SpFilterForm>
@@ -92,6 +89,7 @@
 import { PICKER_DATE_OPTIONS } from '@/consts'
 import Pages from '@/utils/pages'
 import { createSetting } from '@shopex/finder'
+import { IS_DISTRIBUTOR } from '@/utils'
 import moment from 'moment'
 export default {
   name: '',
@@ -103,7 +101,7 @@ export default {
         datetime: [],
         enterprise_id: [],
         activityState: 'all',
-        distributor_id:''
+        distributor_id: ''
       },
       defaultTime: ['00:00:00', '23:59:59'],
       pickerOptions: PICKER_DATE_OPTIONS,
@@ -126,11 +124,15 @@ export default {
             buttonType: 'text',
             visible: (row) => {
               // 平台端 来源店铺非平台则隐藏
-              return row.status != 'cancel' && row.status != 'over' && !(this.IS_ADMIN() && row.distributor_id)
+              return (
+                row.status != 'cancel' &&
+                row.status != 'over' &&
+                !(this.IS_ADMIN() && row.distributor_id)
+              )
             },
             action: {
               handler: async ([row]) => {
-                this.$router.push({ path:  this.matchHidePage('create/') + row.id })
+                this.$router.push({ path: this.matchHidePage('create/') + row.id })
               }
             }
           },
@@ -144,7 +146,7 @@ export default {
             },
             action: {
               handler: async ([row]) => {
-                this.$router.push({ path:  this.matchHidePage('create/') + row.id  })
+                this.$router.push({ path: this.matchHidePage('create/') + row.id })
               }
             }
           },
@@ -155,7 +157,10 @@ export default {
             buttonType: 'text',
             action: {
               handler: async ([row]) => {
-                this.$router.push({ path: this.matchHidePage('goods/') + `${row.id}?distributor_id=${row.distributor_id}` })
+                this.$router.push({
+                  path:
+                    this.matchHidePage('goods/') + `${row.id}?distributor_id=${row.distributor_id}`
+                })
               }
             }
           },
@@ -166,7 +171,7 @@ export default {
             buttonType: 'text',
             action: {
               handler: async ([row]) => {
-                this.$router.push({ path: this.matchHidePage('dependents/') + row.id  })
+                this.$router.push({ path: this.matchHidePage('dependents/') + row.id })
               }
             }
           },
@@ -177,8 +182,13 @@ export default {
             buttonType: 'text',
             action: {
               handler: async ([row]) => {
-                const preUrl = this.$route.path.replace('/marketing/employee/purchase','')
-                this.$router.push({ path: `${preUrl}/order/entitytrade/purchase?activity_id=${row.id}` })
+                // const preUrl = this.$route.path.replace('/marketing/employee/purchase','')
+                // this.$router.push({ path: `${preUrl}/order/entitytrade/purchase?activity_id=${row.id}` })
+                this.$router.push({
+                  path: `${
+                    IS_DISTRIBUTOR ? '/shopadmin' : ''
+                  }/applications/ec/purchaseorder?activity_id=${row.id}`
+                })
               }
             }
           },
@@ -254,7 +264,10 @@ export default {
             buttonType: 'text',
             visible: (row) => {
               // 平台端 来源店铺非平台则隐藏
-              return (row.status == 'warm_up' || row.status == 'pending' || row.status == 'ongoing') && !(this.IS_ADMIN() && row.distributor_id)
+              return (
+                (row.status == 'warm_up' || row.status == 'pending' || row.status == 'ongoing') &&
+                !(this.IS_ADMIN() && row.distributor_id)
+              )
             },
             action: {
               handler: async ([row]) => {
@@ -364,8 +377,7 @@ export default {
       this.$refs['finder'].refresh()
     },
     createActivity() {
-      this.$router.push({ path:this.matchHidePage('create') })
-
+      this.$router.push({ path: this.matchHidePage('create') })
     },
     async getEnterpriseList({ page, pageSize }) {
       const { list, total_count } = await this.$api.member.getPurchaseCompanyList({

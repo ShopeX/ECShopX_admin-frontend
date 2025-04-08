@@ -302,6 +302,7 @@
         <el-form-item
           label="选择报名问卷模板"
           prop="temp_id"
+          :rules="{ required: form.temp_id == '0' ? false : true, message: '请选择报名问卷模板', trigger: 'blur' }"
         >
           <el-col :span="15">
             <el-select v-model="form.temp_id" placeholder="请选择" @change="selectTempId">
@@ -605,7 +606,6 @@ export default {
         is_offline_verify: [{ required: true, message: '请选择', trigger: 'change' }],
         is_allow_cancel: [{ required: true, message: '请选择', trigger: 'blur' }],
         is_white_list: [{ required: true, message: '请选择', trigger: 'blur' }],
-        temp_id: [{ required: true, message: '请选择报名问卷模板', trigger: 'blur' }],
         join_limit: [{ required: true, message: '请输入报名次数', trigger: 'blur' }],
       }
     }
@@ -758,7 +758,10 @@ export default {
             value: item.id
           })
         })
-        this.total_count = response.data.data.total_count
+        this.temp_options.unshift({
+          label: '无',
+          value: '0'
+        })
         this.loading = false
       })
     },

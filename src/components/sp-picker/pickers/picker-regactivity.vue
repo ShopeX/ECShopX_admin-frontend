@@ -89,10 +89,15 @@ export default {
   created() {},
   methods: {
     beforeSearch(params) {
-      params = {
-        ...params,
-        is_valid: true
-      }
+    const urlParams = new URLSearchParams(window.location.search)
+    const distributor_id = urlParams.get('distributor_id')
+    params = {
+      ...params,
+      is_valid: true
+    }
+    if (distributor_id) {
+        params['distributor_id'] = distributor_id
+    }
       return params
     },
     afterSearch(response) {

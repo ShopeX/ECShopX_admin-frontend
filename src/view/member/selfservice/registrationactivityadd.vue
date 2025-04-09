@@ -690,7 +690,7 @@ export default {
       } else {
         params['content'] = this.introInfo
       }
-      params['area'] = this.form.areaList.join(',')
+      params['area'] = this.form.areaList ? this.form.areaList.join(',') : ''
 
       console.log('submitAction', params)
       delete params.distributor_list

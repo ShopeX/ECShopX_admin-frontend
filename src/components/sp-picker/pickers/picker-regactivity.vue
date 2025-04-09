@@ -54,7 +54,7 @@
           { name: 'ID', key: 'activity_id', width: 80 },
           { name: '活动名称', key: 'activity_name' },
           { name: '模板名称', key: 'template_name' },
-          { name: '店铺', key: 'shop_name' },
+          { name: '店铺', key: 'distributor_name' },
         ]
       }"
       :hooks="{

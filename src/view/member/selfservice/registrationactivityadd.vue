@@ -621,23 +621,21 @@ export default {
         this.enterprise_list = this.form.enterprise_list
         this.distributor_list = this.form.distributor_list
         if (this.form.mode == 'component') {
-          this.content = this.form.content
+          this.content = this.form.content || []
         } else {
-          this.introInfo = this.form.content
+          this.introInfo = this.form.content || ''
         }
         let json = []
         if (this.form.show_fields) {
           json = JSON.parse(this.form.show_fields)
         }
-        if (this.form.pics) {
-          this.picsList = this.form.pics.split(',')
-        }
+        this.picsList = this.form.pics ? this.form.pics.split(',') : []
         this.is_activitytime_show = json.time
         this.is_activitycity_show = json.city
         this.is_activityplace_show = json.place
         this.is_activityaddress_show = json.address
-        this.form.areaList = res.data.data.area && res.data.data.area.split(',')
-        this.memberLevelList =res.data.data.member_level && res.data.data.member_level.split(',')
+        this.form.areaList = res.data.data.area ? res.data.data.area.split(',') : []
+        this.memberLevelList =res.data.data.member_level ? res.data.data.member_level.split(',') : []
         if (res.data.data.distributor_list.length == 0) {
           this.useAllDistributor = true
         }

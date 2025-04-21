@@ -127,7 +127,7 @@ export default {
               return (
                 row.status != 'cancel' &&
                 row.status != 'over' &&
-                !(this.IS_ADMIN() && row.distributor_id)
+                !(this.IS_ADMIN() && row.distributor_id != '0')
               )
             },
             action: {
@@ -246,7 +246,7 @@ export default {
             buttonType: 'text',
             visible: (row) => {
               // 平台端 来源店铺非平台则隐藏
-              return row.status == 'ongoing' && !(this.IS_ADMIN() && row.distributor_id)
+              return row.status == 'ongoing' && !(this.IS_ADMIN() && row.distributor_id != '0')
             },
             action: {
               handler: async ([row]) => {
@@ -265,7 +265,7 @@ export default {
               // 平台端 来源店铺非平台则隐藏
               return (
                 (row.status == 'warm_up' || row.status == 'pending' || row.status == 'ongoing') &&
-                !(this.IS_ADMIN() && row.distributor_id)
+                !(this.IS_ADMIN() && row.distributor_id != '0')
               )
             },
             action: {

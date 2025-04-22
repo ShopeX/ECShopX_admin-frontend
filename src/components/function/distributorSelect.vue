@@ -144,7 +144,7 @@ export default {
         page: 1,
         pageSize: 10,
         is_valid: 'true',
-        is_app: 1,
+        is_app: 0,
         distribution_type: ''
       },
       name: '',

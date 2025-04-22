@@ -141,8 +141,7 @@
             >
               <el-col style="display: flex;">
                 <div>{{ item.field_title }}: </div>
-                <div v-if="item.field_name != 'Attendance IDCard' && item.field_name != 'Attachment upload'" style="margin-left: 10px;">{{ item.answer }}</div>
-                <div v-if="(item.field_name == 'Attendance IDCard' || item.field_name == 'Attachment upload') && !Array.isArray(item.answer)" style="display: flex;">
+                <div v-if="(item.field_name == 'Attendance IDCard' || item.field_name == 'Attachment upload') && (item.form_element == 'idcard' || item.form_element == 'otherfile') && !Array.isArray(item.answer)" style="display: flex;">
                   <div v-for="(itemv, idx) in (item.answer ? item.answer?.split(',') : [])" :key="idx">
                     <el-image
                       style="width: 100px; height: 100px;border-radius: 5px;margin: 10px;"
@@ -151,6 +150,7 @@
                     </el-image>
                   </div>
                 </div>
+                <div v-else style="margin-left: 10px;">{{ item.answer }}</div>
               </el-col>
             </div>
           </el-card>

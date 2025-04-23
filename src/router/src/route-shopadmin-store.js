@@ -36,7 +36,13 @@ export default {
     {
       path: 'storewhitelist',
       name: `店铺白名单`,
-      component: () => import('@/view/mall/marketing/storewhitelist')
+      component: () => import('@/view/mall/marketing/storewhitelist'),
+      children: [
+        {
+          path: 'storewhitelistUpload',
+          component: () => import('@/view/mall/marketing/storewhitelistUpload')
+        }
+      ]
     },
     {
       path: 'distributorCode',
@@ -94,7 +100,7 @@ export default {
       ]
     },
 
-    { 
+    {
       path: 'popularizewithdraw',
       name: `业务员提现`,
       component: () => import('@/view/mall/marketing/salesmanwithdraw')

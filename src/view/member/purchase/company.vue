@@ -12,7 +12,7 @@
 }
 </style>
 <style lang="scss" scoped>
-.qurcode-canvas{
+.qurcode-canvas {
   position: fixed;
   left: -1000%;
   right: -1000%;
@@ -42,10 +42,7 @@
           />
         </el-select>
       </SpFilterFormItem>
-      <SpFilterFormItem
-        prop="distributor_id"
-        label="来源店铺:"
-      >
+      <SpFilterFormItem prop="distributor_id" label="来源店铺:">
         <SpSelectShop v-model="queryForm.distributor_id" clearable placeholder="请选择" />
       </SpFilterFormItem>
     </SpFilterForm>
@@ -69,17 +66,15 @@
       :modal="false"
       :form="companyForm"
       :form-list="companyFormList"
-      :confirmStatus="addDialogLoading"
-      :isShowFooter="isShowFooter"
+      :confirm-status="addDialogLoading"
+      :is-show-footer="isShowFooter"
       @onSubmit="onCompanyFormSubmit"
     />
 
-    <el-dialog
-      :title="'企业二维码-'+qrcodeName"
-      :visible.sync="qrDialog"
-      width="30%"
+    <el-dialog :title="'企业二维码-' + qrcodeName" :visible.sync="qrDialog" width="30%">
+      <span
+        >用户扫描该二维码打开小程序时会跳过白名单身份验证步骤，在继续完成授权手机号登录后即可获得相应企业的“员工”身份；已是该企业员工的用户不受影响。</span
       >
-      <span>用户扫描该二维码打开小程序时会跳过白名单身份验证步骤，在继续完成授权手机号登录后即可获得相应企业的“员工”身份；已是该企业员工的用户不受影响。</span>
       <span slot="footer" class="dialog-footer">
         <el-button @click="qrDialog = false">取 消</el-button>
         <el-button type="primary" @click="handleDownload">下载二维码</el-button>
@@ -91,8 +86,8 @@
       v-model="sendEmailDialog"
       class="dg-create-company"
       title="发件测试"
-      confirmBtnText="发送验证码"
-      :confirmStatus="sendEmaiLoading"
+      confirm-btn-text="发送验证码"
+      :confirm-status="sendEmaiLoading"
       :modal="false"
       :form="sendEmailForm"
       :form-list="sendEmailFormList"
@@ -100,7 +95,6 @@
     />
 
     <canvas id="qurcodeCanvas" class="qurcode-canvas" />
-
   </div>
 </template>
 
@@ -127,37 +121,39 @@ export default {
     return {
       qrcodeUrl: '',
       qrcodeName: '',
-      qrCodeBgImage:'',
+      qrCodeBgImage: '',
       queryForm: {
         name: '',
         enterprise_sn: '',
         auth_type: '',
-        distributor_id:''
+        distributor_id: ''
       },
-      sendEmailDialog:false,
-      sendEmaiLoading:false,
-      sendEmailForm:{
-        email:'',
-        enterprise_id:''
+      sendEmailDialog: false,
+      sendEmaiLoading: false,
+      sendEmailForm: {
+        email: '',
+        enterprise_id: ''
       },
-      sendEmailFormList:[
+      sendEmailFormList: [
         {
-          component:()=>{
-            return  <el-alert
-                      title="请确保填写的邮箱可以正常接受邮件，若五分钟内未收到测试邮件，请检查邮箱配置后再尝试。"
-                      type="warning"
-                      closable={false}>
-                    </el-alert>
+          component: () => {
+            return (
+              <el-alert
+                title='请确保填写的邮箱可以正常接受邮件，若五分钟内未收到测试邮件，请检查邮箱配置后再尝试。'
+                type='warning'
+                closable={false}
+              ></el-alert>
+            )
           }
         },
-      {
+        {
           label: '收件地址',
           key: 'email',
           type: 'input',
           placeholder: '用于接受验证码的邮箱地址',
           required: true,
           message: '收件地址不能为空'
-        },
+        }
       ],
       setting: createSetting({
         actions: [
@@ -167,12 +163,13 @@ export default {
             type: 'button',
             buttonType: 'text',
             visible: (row) => {
-              return !(this.IS_ADMIN() && row.distributor_id)
+              return !(this.IS_ADMIN() && row.distributor_id != '0')
             },
             action: {
               handler: async ([row]) => {
                 Object.keys(this.companyForm).forEach((key) => (this.companyForm[key] = row[key]))
-                this.companyForm.is_employee_check_enabled = this.companyForm.is_employee_check_enabled == 'true'
+                this.companyForm.is_employee_check_enabled =
+                  this.companyForm.is_employee_check_enabled == 'true'
                 this.isShowFooter = true
                 this.addDialog = true
               }
@@ -184,12 +181,13 @@ export default {
             type: 'button',
             buttonType: 'text',
             visible: (row) => {
-              return (this.IS_ADMIN() && row.distributor_id)
+              return this.IS_ADMIN() && row.distributor_id != '0'
             },
             action: {
               handler: async ([row]) => {
                 Object.keys(this.companyForm).forEach((key) => (this.companyForm[key] = row[key]))
-                this.companyForm.is_employee_check_enabled = this.companyForm.is_employee_check_enabled == 'true'
+                this.companyForm.is_employee_check_enabled =
+                  this.companyForm.is_employee_check_enabled == 'true'
                 this.isShowFooter = false
                 this.addDialog = true
               }
@@ -201,17 +199,15 @@ export default {
             type: 'button',
             buttonType: 'text',
             visible: (row) => {
-              return row.auth_type == 'email' && !(this.IS_ADMIN() && row.distributor_id)
+              return row.auth_type == 'email' && !(this.IS_ADMIN() && row.distributor_id != '0')
             },
             action: {
               handler: async ([row]) => {
                 this.sendEmailForm = {
-                  email:'',
-                  enterprise_id:row.id
+                  email: '',
+                  enterprise_id: row.id
                 }
                 this.sendEmailDialog = true
-
-
               }
             }
           },
@@ -226,11 +222,11 @@ export default {
             action: {
               handler: async ([row]) => {
                 const { base64Image } = await this.$api.member.getEnterpriseQrcode({
-                  enterprise_id: row.id,
+                  enterprise_id: row.id
                 })
                 this.qrcodeUrl = base64Image
                 this.qrcodeName = row.name
-                if(row.qr_code_bg_image){
+                if (row.qr_code_bg_image) {
                   this.qrCodeBgImage = row.qr_code_bg_image
                 }
                 this.qrDialog = true
@@ -247,11 +243,15 @@ export default {
             // },
             action: {
               handler: async ([row]) => {
-                window.open(`${this.IS_DISTRIBUTOR() ? '/shopadmin' : ''}/applications/ec/employee?company_id=${row.id}`, '_blank')
-
+                window.open(
+                  `${
+                    this.IS_DISTRIBUTOR() ? '/shopadmin' : ''
+                  }/applications/ec/employee?company_id=${row.id}`,
+                  '_blank'
+                )
               }
             }
-          },
+          }
         ],
         columns: [
           { name: '企业ID', key: 'id' },
@@ -315,9 +315,9 @@ export default {
             render: (h, { row }) =>
               h('el-switch', {
                 props: {
-                  'value': row.disabled,
-                  'active-value': 0,
-                  'inactive-value': 1
+                  'value': row.disabled + '',
+                  'active-value': '0',
+                  'inactive-value': '1'
                 },
                 on: {
                   change: async (e) => {
@@ -333,14 +333,14 @@ export default {
           {
             name: '来源店铺',
             key: 'distributor_name'
-          },
+          }
         ]
       }),
       validateTypeList: VALIDATE_TYPES,
       addDialog: false,
       qrDialog: false,
-      addDialogLoading:false,
-      isShowFooter:true,
+      addDialogLoading: false,
+      isShowFooter: true,
       companyForm: {
         id: '',
         logo: '',
@@ -352,9 +352,9 @@ export default {
         smtp_port: '',
         email_user: '',
         email_password: '',
-        email_suffix:'',
-        is_employee_check_enabled:false,
-        qr_code_bg_image:''
+        email_suffix: '',
+        is_employee_check_enabled: false,
+        qr_code_bg_image: ''
       },
       companyFormList: [
         {
@@ -447,7 +447,7 @@ export default {
           label: '是否验证白名单',
           key: 'is_employee_check_enabled',
           type: 'switch',
-          isShow:()=>this.companyForm.auth_type == 'qr_code'
+          isShow: () => this.companyForm.auth_type == 'qr_code'
         },
         {
           label: '企业Logo',
@@ -466,7 +466,7 @@ export default {
           label: '企业二维码海报',
           key: 'qr_code_bg_image',
           component: () => <SpImagePicker v-model={this.companyForm.qr_code_bg_image} />,
-          isShow:()=>this.companyForm.auth_type == 'qr_code',
+          isShow: () => this.companyForm.auth_type == 'qr_code',
           // validator: (rule, value, callback) => {
           //   if (value || this.companyForm.auth_type != 'qr_code') {
           //     callback()
@@ -483,8 +483,8 @@ export default {
   methods: {
     // 下载二维码
     handleDownload() {
-      console.log('this.qrCodeBgImage',this.qrCodeBgImage)
-      if(!this.qrCodeBgImage){
+      console.log('this.qrCodeBgImage', this.qrCodeBgImage)
+      if (!this.qrCodeBgImage) {
         var a = document.createElement('a')
         var temp = this.qrcodeName
         if (this.qrcodeUrl) {
@@ -493,100 +493,98 @@ export default {
           a.click()
           setTimeout(() => {
             this.qrDialog = false
-          },1000)
+          }, 1000)
         }
         return
       }
 
       //有海报则拼接
-      const canvas = document.getElementById('qurcodeCanvas');
-      const ctx = canvas.getContext('2d');
+      const canvas = document.getElementById('qurcodeCanvas')
+      const ctx = canvas.getContext('2d')
 
       // 定义两张图片的 URL
-      const image1Url = this.qrCodeBgImage;
-      const image2Url = this.qrcodeUrl;
+      const image1Url = this.qrCodeBgImage
+      const image2Url = this.qrcodeUrl
 
       // 创建两个 Image 对象
-      const image1 = new Image();
-      const image2 = new Image();
-      console.log('image1',image1.width,image1.height)
+      const image1 = new Image()
+      const image2 = new Image()
+      console.log('image1', image1.width, image1.height)
 
       // 当两张图片都加载完成后执行拼接操作
       Promise.all([
         new Promise((resolve, reject) => {
-          image1.src = image1Url;
+          image1.src = image1Url
           // 防止跨域引起的 Failed to execute 'toDataURL' on 'HTMLCanvasElement': Tainted canvases may not be exported.
           image1.setAttribute('crossOrigin', 'anonymous')
           image1.onload = () => {
-            resolve();
-          };
-          image1.onerror = reject;
+            resolve()
+          }
+          image1.onerror = reject
         }),
         new Promise((resolve, reject) => {
-          image2.src = image2Url;
+          image2.src = image2Url
           // 防止跨域引起的 Failed to execute 'toDataURL' on 'HTMLCanvasElement': Tainted canvases may not be exported.
           image2.setAttribute('crossOrigin', 'anonymous')
           image2.onload = () => {
-            resolve();
-          };
-          image2.onerror = reject;
+            resolve()
+          }
+          image2.onerror = reject
         })
-      ]).then(() => {
-        // 设置 canvas 的宽度和高度为第一张图片的宽度和高度
-        canvas.width = image1.width;
-        canvas.height = image1.height;
+      ])
+        .then(() => {
+          // 设置 canvas 的宽度和高度为第一张图片的宽度和高度
+          canvas.width = image1.width
+          canvas.height = image1.height
 
-        // 在 canvas 上绘制第一张图片
-        ctx.drawImage(image1, 0, 0);
+          // 在 canvas 上绘制第一张图片
+          ctx.drawImage(image1, 0, 0)
 
-        // 计算第二张图片的绘制位置，使其位于右下角
-        const x = canvas.width - 350;
-        const y = canvas.height - 430;
+          // 计算第二张图片的绘制位置，使其位于右下角
+          const x = canvas.width - 350
+          const y = canvas.height - 430
 
-        // 设置文字样式
-        ctx.font = '22px sans-serif';
-        ctx.fillStyle = '#F3B289';
-        ctx.textAlign = 'center';
-        ctx.textBaseline = 'alphabetic';
+          // 设置文字样式
+          ctx.font = '22px sans-serif'
+          ctx.fillStyle = '#F3B289'
+          ctx.textAlign = 'center'
+          ctx.textBaseline = 'alphabetic'
 
-        // 计算文字的位置，使其位于第二张图片下方居中
-        const textX = x + 150;
-        const textY = y + 300 + 35; // 30 是文字与图片的间距
+          // 计算文字的位置，使其位于第二张图片下方居中
+          const textX = x + 150
+          const textY = y + 300 + 35 // 30 是文字与图片的间距
 
-        // 确保文字位置在 canvas 范围内
-        if (textX >= 0 && textX <= canvas.width && textY >= 0 && textY <= canvas.height) {
+          // 确保文字位置在 canvas 范围内
+          if (textX >= 0 && textX <= canvas.width && textY >= 0 && textY <= canvas.height) {
             // 绘制文字
-            ctx.fillText('扫码进入小程序', textX, textY);
-        } else {
-            console.error('文字位置超出 canvas 范围');
-        }
+            ctx.fillText('扫码进入小程序', textX, textY)
+          } else {
+            console.error('文字位置超出 canvas 范围')
+          }
 
-        const radius = 150; // 半径为宽高的一半
+          const radius = 150 // 半径为宽高的一半
 
-        // 保存当前绘图状态
-        ctx.save();
+          // 保存当前绘图状态
+          ctx.save()
 
-        // 开始绘制圆角路径
-        ctx.beginPath();
-        ctx.arc(x + radius, y + radius, radius, 0, Math.PI * 2, true);
-        ctx.closePath();
-        ctx.clip();
+          // 开始绘制圆角路径
+          ctx.beginPath()
+          ctx.arc(x + radius, y + radius, radius, 0, Math.PI * 2, true)
+          ctx.closePath()
+          ctx.clip()
 
-        // 在 canvas 上绘制第二张图片，位置在右下角，宽高设置为 300，并应用圆角裁剪
-        ctx.drawImage(image2, x, y, 300, 300);
-        ctx.restore();
+          // 在 canvas 上绘制第二张图片，位置在右下角，宽高设置为 300，并应用圆角裁剪
+          ctx.drawImage(image2, x, y, 300, 300)
+          ctx.restore()
 
-
-        const link = document.createElement('a');
-        link.href = canvas.toDataURL('image/jpeg');
-        link.download = this.qrcodeName + '.png';
-        link.click();
-
-      }).catch((error) => {
-        console.error('图片加载失败:', error);
-      });
-
-
+          const link = document.createElement('a')
+          link.href = canvas.toDataURL('image/jpeg')
+          link.download = this.qrcodeName + '.png'
+          link.click()
+        })
+        .catch((error) => {
+          console.error('图片加载失败:', error)
+        })
     },
     beforeSearch(params) {
       return {
@@ -595,7 +593,6 @@ export default {
       }
     },
     onSearch() {
-
       this.$refs['finder'].refresh()
     },
     addCompany() {
@@ -606,17 +603,15 @@ export default {
       const { email, enterprise_id } = this.sendEmailForm
       this.sendEmaiLoading = true
       try {
-      await this.$api.member.sendEmployeeEmail({
-                enterprise_id,
-                email
-              })
-      this.sendEmaiLoading = false
-      this.$message.success('邮件已发送')
+        await this.$api.member.sendEmployeeEmail({
+          enterprise_id,
+          email
+        })
+        this.sendEmaiLoading = false
+        this.$message.success('邮件已发送')
       } catch (error) {
         this.sendEmaiLoading = false
       }
-
-
     },
     async onCompanyFormSubmit() {
       const {

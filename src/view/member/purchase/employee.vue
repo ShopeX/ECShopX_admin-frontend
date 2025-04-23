@@ -100,7 +100,7 @@ export default {
             buttonType: 'text',
             visible: (row) => {
               //平台：来源店铺是非平台则隐藏
-              return !(this.IS_ADMIN() && row.distributor_id)
+              return !(this.IS_ADMIN() && row.distributor_id != '0')
             },
             action: {
               handler: async ([row]) => {
@@ -116,7 +116,7 @@ export default {
             buttonType: 'text',
              //平台：来源店铺是非平台则隐藏
             visible: (row) => {
-              return !(this.IS_ADMIN() && row.distributor_id)
+              return !(this.IS_ADMIN() && row.distributor_id != '0')
             },
             action: {
               handler: async ([row]) => {

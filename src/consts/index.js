@@ -243,7 +243,7 @@ export const FORM_COMP = {
 export const SYSTEM_CONFIG = {
   platform: { name: 'Powered By ShopeX', theme: '#CB060F' },
   standard: { name: '商派Onex云店', theme: '#FF9D00' },
-  b2c: { name: '商派官方商城', theme: '#157FE3' },
+  b2c: { name: '官方商城', theme: '#157FE3' },
   in_purchase: { name: '商派Onex内购', theme: '#EC442E' }
 }
 
@@ -258,7 +258,7 @@ export const LINK_PATH = {
   'link': '页面',
   'marketing': '营销',
   'regactivity': '活动报名',
-  'purchase_activity':'内购活动',
+  'purchase_activity': '内购活动',
   'seckill': '秒杀',
   'custom_page': '自定义页面',
   'liverooms': '直播',
@@ -299,5 +299,5 @@ export const GOODS_TAX_RATE = [
 export const ROLE_LIST = [
   { label: '普通用户', value: 1 },
   { label: '企业员工', value: 6 },
-  { label: '员工亲友', value: 9 },
+  { label: '员工亲友', value: 9 }
 ]

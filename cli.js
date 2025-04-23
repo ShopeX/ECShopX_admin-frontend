@@ -6,7 +6,7 @@ const chalk = require('chalk')
 const PRODUCT_LIST = [
   { name: '商派Ecshopx', value: 'platform', model: 'platform', saas: false },
   { name: '商派Onex云店', value: 'standard', model: 'standard', saas: false },
-  { name: '商派官方商城', value: 'b2c', model: 'b2c', saas: false },
+  { name: '官方商城', value: 'b2c', model: 'b2c', saas: false },
   { name: '商派Onex内购', value: 'in_purchase', model: 'in_purchase', saas: false }
   // { name: '商派ECShopX平台标准版', model: 'platform', saas: false },
   // { name: '商派ECShopX平台专业版', model: 'platform', saas: false },

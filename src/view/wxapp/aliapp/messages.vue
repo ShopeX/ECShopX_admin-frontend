@@ -50,7 +50,8 @@
                   :value="item"
                 />
               </el-select>
-              分钟{{ currentTemplate.send_time_desc.end_title }}
+              {{ currentTemplate?.send_time_desc?.time_unit || '分钟' }}
+              {{ currentTemplate.send_time_desc.end_title }}
             </span>
           </el-form-item>
           <el-form-item label="内容">
@@ -84,7 +85,7 @@
             v-if="row.send_time_desc.value"
             class="item-content"
           >
-            {{ row.send_time_desc.title }}{{ row.send_time_desc.value }}分钟{{
+            {{ row.send_time_desc.title }}{{ row.send_time_desc.value }}{{ row?.send_time_desc?.time_unit || '分钟' }}{{
               row.send_time_desc.end_title
             }}
           </div>

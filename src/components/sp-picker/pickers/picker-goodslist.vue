@@ -383,12 +383,15 @@ export default {
       this.salesCategoryList = salesCategory
     },
     beforeSearch(params) {
-      return {
+      const _params = {
         ...params,
         item_type: 'normal',
         ...this.queryForm,
-        distributor_id:this.value?.distributor_id
+        distributor_id:this.value?.distributor_id,
+        keywords:this.queryForm.item_name.trim()
       }
+      delete _params.item_name
+      return _params
     },
     onSearch() {
       this.refresh(true)

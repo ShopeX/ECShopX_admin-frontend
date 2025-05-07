@@ -246,6 +246,8 @@ export default {
     clickAddWhiteList() {
       this.whitelistForm.id = undefined
       this.whitelistForm.distributors = []
+      this.whitelistForm.username = ''
+      this.whitelistForm.mobile = ''
       this.editType = 'add'
       this.dialogTitle = '添加白名单'
       this.whitelistDialog = true

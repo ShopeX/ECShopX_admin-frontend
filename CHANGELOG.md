@@ -2,6 +2,28 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [3.20.2](https://git.ishopex.cn/ecshopx/ecshopx-admin/compare/v3.20.1...v3.20.2) (2025-05-08)
+
+
+### Bug Fixes
+
+* 【ECX-6638】 添加白名单问题 ([cb2d0b4](https://git.ishopex.cn/ecshopx/ecshopx-admin/commit/cb2d0b4fe87d70d1759fd9f69e188acdcbd103bf))
+
+### [3.20.1](https://git.ishopex.cn/ecshopx/ecshopx-admin/compare/v3.20.0...v3.20.1) (2025-05-06)
+
+## [3.20.0](https://git.ishopex.cn/ecshopx/ecshopx-admin/compare/v3.19.10...v3.20.0) (2025-04-27)
+
+### [3.19.10](https://git.ishopex.cn/ecshopx/ecshopx-admin/compare/v3.19.8...v3.19.10) (2025-04-23)
+
+### [3.19.8](https://git.ishopex.cn/ecshopx/ecshopx-admin/compare/v3.19.7...v3.19.8) (2025-04-23)
+
+
+### Bug Fixes
+
+* 导出404 ([b936b6c](https://git.ishopex.cn/ecshopx/ecshopx-admin/commit/b936b6c7751fb601333cbcbb1f1538705edff347))
+* 修复导出路由 ([c39c1b9](https://git.ishopex.cn/ecshopx/ecshopx-admin/commit/c39c1b919ccaee85ed7f10e01a9d9dd7a1cb8033))
+* 修改官方商城title ([b5da168](https://git.ishopex.cn/ecshopx/ecshopx-admin/commit/b5da168eebe9a1e46672d65d1df00146c1d2ae22))
+
 ### [3.19.7](https://git.ishopex.cn/ecshopx/ecshopx-admin/compare/v3.19.6...v3.19.7) (2025-04-15)
 
 ### [3.19.6](https://git.ishopex.cn/ecshopx/ecshopx-admin/compare/v3.19.5...v3.19.6) (2025-04-09)

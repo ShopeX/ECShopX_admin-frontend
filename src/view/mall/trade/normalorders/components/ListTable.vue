@@ -92,7 +92,7 @@
                 :to="{
                   path: `${
                     $store.getters.login_type != 'distributor'
-                      ? '/member/member/detail'
+                      ? '/member/member/memberlist/detail'
                       : '/shopadmin/member/member/detail'
                   }`,
                   query: { user_id: scope.row.user_id }

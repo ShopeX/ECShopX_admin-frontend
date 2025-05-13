@@ -163,7 +163,7 @@ export default {
             type: 'button',
             buttonType: 'text',
             visible: (row) => {
-              return !(this.IS_ADMIN() && row.distributor_id)
+              return !(this.IS_ADMIN() && row.distributor_id != '0')
             },
             action: {
               handler: async ([row]) => {
@@ -181,7 +181,7 @@ export default {
             type: 'button',
             buttonType: 'text',
             visible: (row) => {
-              return this.IS_ADMIN() && row.distributor_id
+              return this.IS_ADMIN() && row.distributor_id != '0'
             },
             action: {
               handler: async ([row]) => {
@@ -199,7 +199,7 @@ export default {
             type: 'button',
             buttonType: 'text',
             visible: (row) => {
-              return row.auth_type == 'email' && !(this.IS_ADMIN() && row.distributor_id)
+              return row.auth_type == 'email' && !(this.IS_ADMIN() && row.distributor_id != '0')
             },
             action: {
               handler: async ([row]) => {

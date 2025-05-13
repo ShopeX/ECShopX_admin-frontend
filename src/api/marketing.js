@@ -677,3 +677,13 @@ export function aheadPurchaseActivity(activityId) {
     method: 'post'
   })
 }
+
+
+// 修改活动记录备注
+export function updateRegistrationRecord(params) {
+  return fetch({
+    url: `/selfhelp/registrationRecord/update`,
+    method: 'post',
+    params
+  })
+}

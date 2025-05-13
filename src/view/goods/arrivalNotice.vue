@@ -43,7 +43,7 @@
               <router-link
                 target="_blank"
                 :to="{
-                  path: '/member/member/detail',
+                  path: '/member/member/memberlist/detail',
                   query: { user_id: scope.row.user_id }
                 }"
                 >{{ scope.row.username }}</router-link

@@ -1324,10 +1324,10 @@ export default {
       let isShopadmin = false
       try {
         isShopadmin = /\/shopadmin/.test(document.location.pathname)
-      } catch (e) {}
+      } catch (e) {}   
       this.$router.push({
         path: isShopadmin
-          ? '/shopadmin/member/member/memberlist/detail'
+          ? '/shopadmin/member/member/detail'
           : '/member/member/memberlist/detail',
         query: {
           user_id: userid,

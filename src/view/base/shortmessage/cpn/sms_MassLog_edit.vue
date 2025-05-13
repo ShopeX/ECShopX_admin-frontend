@@ -52,7 +52,7 @@
           <div class="subtitle">
             没有需要的签名，马上
             <router-link
-              to="/systemsetting/datamessage/ali_sms/sms_signatures/edit"
+              to="/setting/systemsetting/datamessage/ali_sms/sms_signatures/edit"
             >
               添加签名
             </router-link>

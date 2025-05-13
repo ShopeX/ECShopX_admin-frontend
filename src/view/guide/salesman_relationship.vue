@@ -13,7 +13,7 @@
       <el-table-column label="会员">
         <template slot-scope="scope">
           <router-link
-            :to="{ path: '/member/member/detail', query: { user_id: scope.row.user_id } }"
+            :to="{ path: '/member/member/memberlist/detail', query: { user_id: scope.row.user_id } }"
           >
             {{ scope.row.user_info.username }}
           </router-link>

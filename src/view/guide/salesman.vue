@@ -65,7 +65,7 @@
               </el-button>
             </template>
           </el-table-column>
-          
+
           <el-table-column label="是否启用">
             <template slot-scope="scope">
               <el-switch
@@ -79,7 +79,7 @@
             </template>
           </el-table-column>
 
-          <!-- 
+          <!--
 
         <el-table-column label="导购角色">
           <template slot-scope="scope">
@@ -257,7 +257,7 @@
                 <template slot-scope="scope">
                   <router-link
                     :to="{
-                      path: '/member/member/detail',
+                      path: '/member/member/memberlist/detail',
                       query: { user_id: scope.row.user_id }
                     }"
                   >

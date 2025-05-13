@@ -250,7 +250,7 @@
                 :to="{
                   path:
                     `${$store.getters.login_type != 'distributor' ? '' : '/shopadmin'}` +
-                    '/member/member/detail',
+                    '/member/member/memberlist/detail',
                   query: { user_id: scope.row.user_id }
                 }"
               >

@@ -48,11 +48,10 @@ export default {
       path: (args) => fn({ value: { ...args }, type: 'pickerPath' }),
       tag: (args) => fn({ value: { ...args }, type: 'pickerTag' }),
       shopTag: (args) => fn({ value: { ...args }, type: 'pickerShopTag' }),
-      zitilist: (args) => fn({ value: { ...args }, type: 'pickerZitiList' }),
       editBoard: (args) => fn({ value: { ...args }, type: 'pickerEditBoard', width: '892px' }),
       planting: (args) => fn({ value: { ...args }, type: 'pickerPlanting' }),
       pages: (args) => fn({ value: { ...args }, type: 'pickerPages' }),
-      goodsitem: (args) => fn({ value: { ...args }, type: 'pickerGoodsItem' }),
+      goodsitem: (args) => fn({ value: { ...args }, type: 'pickerGoodsItem' })
     }
 
     Vue.prototype.$picker = $picker

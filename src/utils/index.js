@@ -179,7 +179,7 @@ function export_open(tab) {
   setTimeout(() => {
     const login_type = store.getters.login_type
     if (login_type == 'distributor') {
-      window.open(`/shopadmin/setting/baseexport?tab=${tab}`)
+      window.open(`/shopadmin/shopsetting/baseexport?tab=${tab}`)
     } else if (login_type == 'merchant') {
       window.open(`/merchant/setting/baseexport?tab=${tab}`)
     } else if (login_type == 'supplier') {

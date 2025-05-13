@@ -308,7 +308,7 @@ export default {
       activityParams: {
         page: 1,
         pageSize: 10,
-        is_valid: true
+        // is_valid: true
       },
       loading: false,
       activity_options: [],

@@ -172,6 +172,12 @@
                 {{ scope.row.is_white_list == 1 ? '是' : '否'}}
               </template>
             </el-table-column>
+            <el-table-column label="备注" width="180">
+              <template slot-scope="scope">
+                <el-input v-model="scope.row.remark" @blur="()=>hanldeRemarkBlur(scope.row)" />
+              </template>
+            </el-table-column>
+
             <el-table-column
               prop="create_date"
               label="申请时间"
@@ -308,7 +314,7 @@ export default {
       activityParams: {
         page: 1,
         pageSize: 10,
-        is_valid: true
+        // is_valid: true
       },
       loading: false,
       activity_options: [],
@@ -391,6 +397,11 @@ export default {
       this.tableList = list
       this.page.total = total_count
       this.loading = false
+    },
+    async hanldeRemarkBlur({record_id, remark}){
+      console.log(record_id,remark)
+      await this.$api.marketing.updateRegistrationRecord({record_id, remark})
+      this.fetchList()
     },
     // 切换tab
     handleClick (tab, event) {

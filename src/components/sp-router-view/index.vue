@@ -1,4 +1,3 @@
-<style lang="scss"></style>
 <template>
   <div class="sp-router-view">
     <div v-show="!showRouterView">
@@ -30,3 +29,5 @@ export default {
   }
 }
 </script>
+
+<style lang="scss" scoped></style>

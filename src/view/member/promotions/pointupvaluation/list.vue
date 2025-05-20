@@ -3,15 +3,8 @@
     <div v-if="$route.path.indexOf('editor') === -1">
       <el-row :gutter="20">
         <el-col :span="4">
-          <el-input
-            v-model="params.title"
-            placeholder="活动名称"
-          >
-            <el-button
-              slot="append"
-              icon="el-icon-search"
-              @click="dataSearch"
-            />
+          <el-input v-model="params.title" placeholder="活动名称">
+            <el-button slot="append" icon="el-icon-search" @click="dataSearch" />
           </el-input>
         </el-col>
         <el-col :span="4">
@@ -22,22 +15,10 @@
             style="width: 100%"
             @change="dataSearch"
           >
-            <el-option
-              label="全部"
-              value="0"
-            />
-            <el-option
-              label="未开始"
-              value="waiting"
-            />
-            <el-option
-              label="进行中"
-              value="ongoing"
-            />
-            <el-option
-              label="已结束"
-              value="it_has_ended"
-            />
+            <el-option label="全部" value="0" />
+            <el-option label="未开始" value="waiting" />
+            <el-option label="进行中" value="ongoing" />
+            <el-option label="已结束" value="it_has_ended" />
           </el-select>
         </el-col>
         <el-col :span="4">
@@ -51,57 +32,28 @@
           />
         </el-col>
         <el-col :span="4">
-          <el-button
-            type="primary"
-            icon="plus"
-            @click="addActivityData"
-          >
-            添加活动
-          </el-button>
+          <el-button type="primary" icon="plus" @click="addActivityData"> 添加活动 </el-button>
         </el-col>
       </el-row>
-      <el-table
-        v-loading="loading"
-        :data="activityLists"
-        :height="wheight - 150"
-      >
-        <el-table-column
-          prop="activity_id"
-          label="ID"
-          width="50"
-        />
-        <el-table-column
-          label="活动名称"
-          width="150"
-        >
-          <template slot-scope="scope">
-            {{ scope.row.title }}<br>
-          </template>
+      <el-table v-loading="loading" :data="activityLists" :height="wheight - 150">
+        <el-table-column prop="activity_id" label="ID" width="50" />
+        <el-table-column label="活动名称" width="150">
+          <template slot-scope="scope"> {{ scope.row.title }}<br> </template>
         </el-table-column>
-        <el-table-column
-          label="活动时间"
-          width="190"
-        >
+        <el-table-column label="活动时间" width="190">
           <template slot-scope="scope">
             {{ scope.row.begin_date }} <span class="text-muted">~</span> {{ scope.row.end_date }}
             <span class="text-muted" />
           </template>
         </el-table-column>
-        <el-table-column
-          prop="activity_status"
-          label="活动状态"
-          width="150"
-        >
+        <el-table-column prop="activity_status" label="活动状态" width="150">
           <template slot-scope="scope">
             <span v-if="scope.row.activity_status == 'waiting'">待开始</span>
             <span v-else-if="scope.row.activity_status == 'ongoing'">进行中</span>
             <span v-else-if="scope.row.activity_status == 'it_has_ended'">已结束</span>
           </template>
         </el-table-column>
-        <el-table-column
-          label="操作"
-          width="200"
-        >
+        <el-table-column label="操作" width="200">
           <template slot-scope="scope">
             <el-button
               v-if="scope.row.activity_status !== 'it_has_ended'"
@@ -120,10 +72,7 @@
           </template>
         </el-table-column>
       </el-table>
-      <div
-        v-if="total_count > params.pageSize"
-        class="content-center content-top-padded"
-      >
+      <div v-if="total_count > params.pageSize" class="content-center content-top-padded">
         <el-pagination
           layout="prev, pager, next"
           :current-page.sync="params.page"
@@ -141,13 +90,13 @@ import { mapGetters } from 'vuex'
 import { Message } from 'element-ui'
 import { getPointupvaluationList, pointupvaluationUpdateStatus } from '../../../../api/promotions'
 export default {
-  props: ['getStatus'],
-  provide () {
+  provide() {
     return {
       refresh: this.refresh
     }
   },
-  data () {
+  props: ['getStatus'],
+  data() {
     return {
       create_time: '',
       activeName: 'first',
@@ -176,39 +125,39 @@ export default {
     ...mapGetters(['wheight'])
   },
   watch: {
-    getStatus (val) {
+    getStatus(val) {
       if (val) {
         this.getList(this.params)
       }
     }
   },
-  mounted () {
+  mounted() {
     if (this.$route.query.status) {
       this.params.status = this.$route.query.status
     }
     this.getList(this.params)
   },
   methods: {
-    handleCurrentChange (page_num) {
+    handleCurrentChange(page_num) {
       this.params.page = page_num
       this.getList(this.params)
     },
-    addActivityData () {
+    addActivityData() {
       // 添加物料弹框
-      this.$router.push({ path: this.matchHidePage('editor') })
+      this.$router.push({ path: this.matchRoutePath('editor') })
     },
-    editCommunityAction (index, row) {
+    editCommunityAction(index, row) {
       // 编辑物料弹框
-      this.$router.push({ path: this.matchHidePage('editor/') + row.activity_id })
+      this.$router.push({ path: this.matchRoutePath('editor/') + row.activity_id })
     },
-    dataSearch () {
+    dataSearch() {
       this.params.begin_time = ''
       this.params.end_time = ''
       this.create_time = ''
       this.params.page = 1
       this.getList(this.params)
     },
-    getList (params) {
+    getList(params) {
       this.loading = true
       getPointupvaluationList(params).then((response) => {
         this.activityLists = response.data.data.list
@@ -216,7 +165,7 @@ export default {
         this.loading = false
       })
     },
-    updateStatusCommunityAction (row) {
+    updateStatusCommunityAction(row) {
       console.log(row, 1)
       var msg = '此操作将永久终止该活动, 是否继续?'
       this.$confirm(msg, '提示', {
@@ -238,7 +187,7 @@ export default {
         }
       })
     },
-    dateChange (val) {
+    dateChange(val) {
       this.params.status = ''
       if (val && val.length > 0) {
         this.params.begin_time = this.dateStrToTimeStamp(val[0] + ' 00:00:00')
@@ -250,21 +199,21 @@ export default {
       this.params.page = 1
       this.getList(this.params)
     },
-    dateStrToTimeStamp (str) {
+    dateStrToTimeStamp(str) {
       return Date.parse(new Date(str)) / 1000
     },
-    viewCouponList (ids) {
+    viewCouponList(ids) {
       this.couponVisible = true
     },
-    handleCancel () {
+    handleCancel() {
       this.communityVisible = false
       this.couponVisible = false
       this.goodsVisible = false
     },
-    updateActivityData (params) {
+    updateActivityData(params) {
       updateActivityItemData(params).then((res) => {})
     },
-    editItemPrice (row) {
+    editItemPrice(row) {
       let form = {
         'id': row.id,
         'item_id': row.item_id,
@@ -276,7 +225,7 @@ export default {
       }
       this.updateActivityData(form)
     },
-    refresh () {
+    refresh() {
       this.getList(this.params)
     }
   }

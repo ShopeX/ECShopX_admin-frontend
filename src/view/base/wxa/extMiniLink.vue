@@ -93,15 +93,12 @@
 </template>
 
 <script>
-import { 
-  createWxLinkSetting,
-  updateWxLinkSetting,
-  removeWxLinkSetting
-} from '@/api/wxa.js'
+import { createWxLinkSetting, updateWxLinkSetting, removeWxLinkSetting } from '@/api/wxa.js'
 import mixin, { pageMixin } from '@/mixins'
 
 export default {
   name: 'ExtMiniLink',
+  mixins: [mixin, pageMixin],
   data() {
     return {
       // 查询参数
@@ -124,7 +121,7 @@ export default {
             trigger: 'blur'
           }
         ]
-      },  
+      },
       // modal title
       modalTitle: '添加小程序',
       // 是否显示modal
@@ -141,7 +138,6 @@ export default {
       }
     }
   },
-  mixins: [mixin, pageMixin],
   mounted() {
     this.init()
   },
@@ -192,7 +188,7 @@ export default {
     },
     // 跳转详情
     jumpDetail(info) {
-      const path = this.matchHidePage('editor')
+      const path = this.matchRoutePath('editor')
       // return false
       this.$router.push({
         path,
@@ -211,7 +207,10 @@ export default {
               message: '删除成功',
               type: 'success',
               onClose() {
-                if (_self.page.total_count % _self.page.pageIndex == 1 && _self.page.pageIndex > 1) {
+                if (
+                  _self.page.total_count % _self.page.pageIndex == 1 &&
+                  _self.page.pageIndex > 1
+                ) {
                   //当前页只有一条数据被删除, 删除后跳回上一页
                   _self.page.pageIndex -= 1
                   _self.fetchList(true)
@@ -237,7 +236,7 @@ export default {
         ...this.params
       }
       const { total_count, list } = await this.$api.wxa.getWxLinkListSetting(params)
- 
+
       this.tableList = list
       this.page.total_count = total_count
       this.tableLoading = false

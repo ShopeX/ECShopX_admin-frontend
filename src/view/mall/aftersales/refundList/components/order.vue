@@ -92,7 +92,7 @@
               <router-link
                 target="_blank"
                 :to="{
-                  path: matchHidePage('detail'),
+                  path: matchRoutePath('detail'),
                   query: { refund_bn: scope.row.refund_bn }
                 }"
               >
@@ -220,9 +220,7 @@
           </template>
         </el-table-column>
         <el-table-column width="180" label="退运费">
-          <template slot-scope="scope">
-            ￥{{ scope.row.freight / 100 }}
-          </template>
+          <template slot-scope="scope"> ￥{{ scope.row.freight / 100 }} </template>
         </el-table-column>
 
         <!-- 退款方式 -->
@@ -303,13 +301,20 @@
           <template slot-scope="scope">
             <router-link
               :to="{
-                path: matchHidePage('detail'),
+                path: matchRoutePath('detail'),
                 query: { refund_bn: scope.row.refund_bn }
               }"
             >
               详情
             </router-link>
-            <el-button v-if="scope.row.refund_status == 'AUDIT_SUCCESS' && scope.row.refund_channel == 'offline'" style="color:#459ae9" type="text" @click="()=>handleRefund(scope.row)">
+            <el-button
+              v-if="
+                scope.row.refund_status == 'AUDIT_SUCCESS' && scope.row.refund_channel == 'offline'
+              "
+              style="color: #459ae9"
+              type="text"
+              @click="() => handleRefund(scope.row)"
+            >
               确认退款
             </el-button>
           </template>
@@ -333,7 +338,7 @@
       ref="refundDialogRef"
       v-model="refundDialog"
       :title="`退款【订单：${refundForm.order_id}】`"
-      :confirmStatus="refundLoading"
+      :confirm-status="refundLoading"
       :form="refundForm"
       :form-list="refundFormList"
       @onSubmit="onrefundSubmit"
@@ -388,29 +393,27 @@ export default {
         { name: '退款异常', value: 'CHANGE' },
         { name: '退款关闭', value: 'REFUNDCLOSE' }
       ],
-      refundDialog:false,
-      refundLoading:false,
-      refundForm:{
-        refund_bn:'',
-        bank_account_name:'',
-        bank_account_no:'',
-        bank_name:'',
-        refund_account_name:'',
-        refund_account_bank:'',
-        refund_account_no:'',
-        pay_type:'',
-        order_id:'',
-        refund_fee:''
+      refundDialog: false,
+      refundLoading: false,
+      refundForm: {
+        refund_bn: '',
+        bank_account_name: '',
+        bank_account_no: '',
+        bank_name: '',
+        refund_account_name: '',
+        refund_account_bank: '',
+        refund_account_no: '',
+        pay_type: '',
+        order_id: '',
+        refund_fee: ''
       },
-      refundFormList:[
-      {
+      refundFormList: [
+        {
           label: '退款方式',
           key: 'pay_type',
           type: 'radio',
           required: true,
-          options: [
-            { label: 'offline_pay', name: '线下转账' }
-          ]
+          options: [{ label: 'offline_pay', name: '线下转账' }]
         },
         {
           label: '收款人户名',
@@ -458,8 +461,8 @@ export default {
           label: '退款金额',
           key: 'refund_fee',
           type: 'input',
-          disabled:true
-        },
+          disabled: true
+        }
       ]
     }
   },
@@ -580,26 +583,27 @@ export default {
         })
       }
     },
-    async handleRefund({order_id,refund_bn,refund_fee}){
-      const {bank_account_name,bank_account_no,bank_name,} = await this.$api.aftersales.getOfflineInfo({order_id})
+    async handleRefund({ order_id, refund_bn, refund_fee }) {
+      const { bank_account_name, bank_account_no, bank_name } =
+        await this.$api.aftersales.getOfflineInfo({ order_id })
       this.refundForm = {
         order_id,
         refund_bn,
-        bank_account_name:'',
-        bank_account_no:'',
-        bank_name:'',
-        refund_account_name:bank_account_name,
-        refund_account_bank:bank_account_no,
-        refund_account_no:bank_name,
-        pay_type:'offline_pay',
-        refund_fee: refund_fee/ 100
+        bank_account_name: '',
+        bank_account_no: '',
+        bank_name: '',
+        refund_account_name: bank_account_name,
+        refund_account_bank: bank_account_no,
+        refund_account_no: bank_name,
+        pay_type: 'offline_pay',
+        refund_fee: refund_fee / 100
       }
       this.refundDialog = true
     },
-    async onrefundSubmit(){
+    async onrefundSubmit() {
       this.refundLoading = true
       try {
-        await this.$api.aftersales.refundOffline({...this.refundForm})
+        await this.$api.aftersales.refundOffline({ ...this.refundForm })
         this.refundLoading = false
         this.refundDialog = false
         this.fetchList()

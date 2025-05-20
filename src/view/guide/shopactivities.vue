@@ -1,31 +1,19 @@
 <template>
   <div>
     <div v-if="$route.path.indexOf('editor') === -1">
-      <el-button
-        type="primary"
-        @click="handleClickAddActivity"
-      >
-        新增活动
-      </el-button>
+      <el-button type="primary" @click="handleClickAddActivity"> 新增活动 </el-button>
       <div class="articles">
         <el-row :gutter="10">
-          <el-col
-            v-for="(item, index) in list"
-            :key="index"
-            :xs="12"
-            :sm="8"
-            :md="6"
-            :lg="4"
-          >
+          <el-col v-for="(item, index) in list" :key="index" :xs="12" :sm="8" :md="6" :lg="4">
             <div class="article-item">
-              <router-link :to="{ path: matchHidePage('editor'), query: { id: item.id } }">
+              <router-link :to="{ path: matchRoutePath('editor'), query: { id: item.id } }">
                 <div
                   class="thumbnail"
                   :style="
                     'background: url(' +
-                      (item.article_cover ||
-                        'https://fakeimg.pl/200x180/EFEFEF/CCC/?text=image&font=lobster') +
-                      ') 0% 0% / cover no-repeat;'
+                    (item.article_cover ||
+                      'https://fakeimg.pl/200x180/EFEFEF/CCC/?text=image&font=lobster') +
+                    ') 0% 0% / cover no-repeat;'
                   "
                 />
                 <div class="caption">
@@ -44,54 +32,27 @@
                 </div>
               </router-link>
               <div class="footer">
-                <div
-                  class="footer-item"
-                  @click="handleClikPublish(item)"
-                >
+                <div class="footer-item" @click="handleClikPublish(item)">
                   <template v-if="item.is_show === '1'">
                     <i class="iconfont icon-undo-alt" />撤回
                   </template>
-                  <template v-else>
-                    <i class="iconfont icon-broadcast-tower" />发布
-                  </template>
+                  <template v-else> <i class="iconfont icon-broadcast-tower" />发布 </template>
                 </div>
-                <el-popover
-                  v-model="item.visible"
-                  class="footer-item"
-                  placement="top"
-                  width="160"
-                >
+                <el-popover v-model="item.visible" class="footer-item" placement="top" width="160">
                   <div class="content-bottom-padded">
-                    <el-input
-                      v-model="item.sort"
-                      size="mini"
-                      placeholder="请输入排序"
-                    />
+                    <el-input v-model="item.sort" size="mini" placeholder="请输入排序" />
                   </div>
                   <div style="text-align: right; margin: 0">
-                    <el-button
-                      size="mini"
-                      type="text"
-                      @click="item.visible = false"
-                    >
+                    <el-button size="mini" type="text" @click="item.visible = false">
                       取消
                     </el-button>
-                    <el-button
-                      type="primary"
-                      size="mini"
-                      @click="handleClickSort(item)"
-                    >
+                    <el-button type="primary" size="mini" @click="handleClickSort(item)">
                       确定
                     </el-button>
                   </div>
-                  <div slot="reference">
-                    <i class="iconfont icon-sort-amount-up" />排序
-                  </div>
+                  <div slot="reference"><i class="iconfont icon-sort-amount-up" />排序</div>
                 </el-popover>
-                <div
-                  class="footer-item"
-                  @click="handleClickDel(item)"
-                >
+                <div class="footer-item" @click="handleClickDel(item)">
                   <i class="iconfont icon-trash-alt" />删除
                 </div>
               </div>
@@ -120,7 +81,7 @@ import {
   putActivearticle
 } from '@/api/promotions'
 export default {
-  data () {
+  data() {
     return {
       paging: {
         page: 1,
@@ -130,22 +91,22 @@ export default {
       list: []
     }
   },
-  mounted () {
+  mounted() {
     this._getActivearticleList()
   },
   methods: {
-    handleClickAddActivity () {
-      this.$router.push({ path: this.matchHidePage('editor') })
+    handleClickAddActivity() {
+      this.$router.push({ path: this.matchRoutePath('editor') })
     },
-    handleChangeSize (e) {},
-    handleChangeCurrent (e) {
+    handleChangeSize(e) {},
+    handleChangeCurrent(e) {
       this.paging.page = e
       this._getActivearticleList()
     },
     /**
      * 获取列表
      * */
-    async _getActivearticleList () {
+    async _getActivearticleList() {
       let params = {
         page: this.paging.page,
         page_size: this.paging.pageSize
@@ -162,12 +123,12 @@ export default {
     /**
      * 撤回
      * */
-    handlePublish () {},
+    handlePublish() {},
 
     /**
      * 排序
      * */
-    async handleClickSort (row) {
+    async handleClickSort(row) {
       let params = JSON.parse(JSON.stringify(row))
 
       delete params.created
@@ -181,7 +142,7 @@ export default {
     /**
      * 删除
      * */
-    handleClickDel (row) {
+    handleClickDel(row) {
       this.$confirm('确认是否删除?', '提示', {
         confirmButtonText: '确定',
         cancelButtonText: '取消',
@@ -203,7 +164,7 @@ export default {
     /**
      * 回测 || 发布
      * */
-    async handleClikPublish (row) {
+    async handleClikPublish(row) {
       let params = JSON.parse(JSON.stringify(row))
       params.is_show = params.is_show === '1' ? 0 : 1
 
@@ -215,7 +176,7 @@ export default {
       this._getActivearticleList()
     },
     // 时间戳转日期格式
-    timestampToTime (timestamp) {
+    timestampToTime(timestamp) {
       var date = new Date(timestamp * 1000) //时间戳为10位需*1000，时间戳为13位的话不需乘1000
       var YY = date.getFullYear() + '-'
       var MM = (date.getMonth() + 1 < 10 ? '0' + (date.getMonth() + 1) : date.getMonth() + 1) + '-'

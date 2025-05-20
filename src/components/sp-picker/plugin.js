@@ -37,6 +37,7 @@ export default {
       video: (args) => fn({ value: { ...args }, type: 'pickerVideo', width: '855px' }),
       goods: (args) => fn({ value: { ...args }, type: 'pickerGoods', width: '1110px' }),
       goodsList: (args) => fn({ value: { ...args }, type: 'pickerGoodsList', width: '1110px' }),
+      goodsitem: (args) => fn({ value: { ...args }, type: 'pickerGoodsItem' }),
       goodsSku: (args) => fn({ value: { ...args }, type: 'pickerGoodsSku' }),
       goodsParams: (args) => fn({ value: { ...args }, type: 'pickerGoodsParams' }),
       zitiList: (args) => fn({ value: { ...args }, type: 'pickerZitiList' }),
@@ -50,8 +51,7 @@ export default {
       shopTag: (args) => fn({ value: { ...args }, type: 'pickerShopTag' }),
       editBoard: (args) => fn({ value: { ...args }, type: 'pickerEditBoard', width: '892px' }),
       planting: (args) => fn({ value: { ...args }, type: 'pickerPlanting' }),
-      pages: (args) => fn({ value: { ...args }, type: 'pickerPages' }),
-      goodsitem: (args) => fn({ value: { ...args }, type: 'pickerGoodsItem' })
+      pages: (args) => fn({ value: { ...args }, type: 'pickerPages' })
     }
 
     Vue.prototype.$picker = $picker

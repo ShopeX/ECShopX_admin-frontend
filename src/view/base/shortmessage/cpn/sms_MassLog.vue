@@ -57,7 +57,7 @@ export default {
   },
   methods: {
     addTemplate() {
-      this.$router.push({ path: this.matchHidePage('edit') })
+      this.$router.push({ path: this.matchRoutePath('edit') })
     },
     beforeSearch(params) {
       return { ...params }

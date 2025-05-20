@@ -436,13 +436,13 @@ mark,
 .preview-mask-wrap {
   display: none;
 }
-.el-button .iconfont {
-  font-size: 18px;
-  line-height: 0;
-}
-.el-button + .el-button {
-  margin-left: 0;
-}
+// .el-button .iconfont {
+//   font-size: 18px;
+//   line-height: 0;
+// }
+// .el-button + .el-button {
+//   margin-left: 0;
+// }
 
 /* 投放 */
 .sendout-item {
@@ -769,22 +769,22 @@ a.link {
 .el-tabs__active-bar {
   background-color: $dominant_hue;
 }
-.el-button:focus,
-.el-button:hover {
-  // border-color: #ff5000;
-  // color: #ff5000;
-}
-.el-button--primary {
-  background-color: $dominant_hue;
-  border-color: $dominant_hue;
-  transition: all 0.3s ease;
-}
-.el-button--primary:focus,
-.el-button--primary:hover {
-  background: $primary_active;
-  border-color: $primary_active;
-  color: #fff;
-}
+// .el-button:focus,
+// .el-button:hover {
+//   // border-color: #ff5000;
+//   // color: #ff5000;
+// }
+// .el-button--primary {
+//   background-color: $dominant_hue;
+//   border-color: $dominant_hue;
+//   transition: all 0.3s ease;
+// }
+// .el-button--primary:focus,
+// .el-button--primary:hover {
+//   background: $primary_active;
+//   border-color: $primary_active;
+//   color: #fff;
+// }
 .el-pager li:hover {
   color: $dominant_hue;
 }

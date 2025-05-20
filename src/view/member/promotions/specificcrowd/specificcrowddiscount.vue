@@ -73,7 +73,7 @@
                   >
                     编辑
                   </el-button>
-                  <router-link :to="{ path: matchHidePage('detail/') + scope.row.id }">
+                  <router-link :to="{ path: matchRoutePath('detail/') + scope.row.id }">
                     查看优惠日志
                   </router-link>
                   <!--<i class="iconfont icon-trash-alt" @click="deleteActivityAction(scope.row)"></i> -->

@@ -142,6 +142,7 @@
           {
             name: '商品名称',
             key: 'page_name',
+            width: 200,
             render: (h, { row }) =>
               h('div', { class: 'item-info' }, [
                 h('div', { class: 'item-image' }, [
@@ -161,7 +162,7 @@
             name: '商品类型',
             key: 'item_holder',
             width: 80,
-            render: (h, { row }) => h('span', {}, this.goodCategoryMap[row.item_holder])
+            render: (h, { row }) => h('span', {}, goodCategoryMap[row.item_holder])
           },
           {
             name: '是否赠品',

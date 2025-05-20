@@ -96,6 +96,26 @@ $color-secondary: rgba(var(--themeColorRgb), 0.8);
     }
   }
 
+  &--text-default {
+    padding: 0;
+    color: #9ca3af;
+    border-width: 0;
+
+    &:hover {
+      color: #374151 !important;
+      border-color: transparent !important;
+    }
+
+    &:focus {
+      color: #9ca3af !important;
+      border-color: transparent !important;
+    }
+
+    a {
+      color: #9ca3af;
+    }
+  }
+
   & + .el-button {
     margin-left: 8px;
   }
@@ -439,6 +459,11 @@ $color-secondary: rgba(var(--themeColorRgb), 0.8);
   color: rgba(0, 0, 0, 0.45);
   font-size: 14px;
 }
+
 .el-image {
   display: block;
+}
+
+.el-link {
+  line-height: initial;
 }

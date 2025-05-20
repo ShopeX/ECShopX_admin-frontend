@@ -298,7 +298,7 @@ export default {
     },
     // 导入店铺
     uploadHandleChange(file, fileList) {
-      this.$router.push({ path: this.matchHidePage('storewhitelistUpload') })
+      this.$router.push({ path: this.matchRoutePath('storewhitelistUpload') })
     },
     // 编辑白名单
     editShopWhite(row) {

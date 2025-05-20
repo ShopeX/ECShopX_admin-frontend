@@ -78,11 +78,14 @@ module.exports = {
     }
 
     config.plugins.push(
-      new CopyWebpackPlugin([{
-        from: path.resolve(__dirname, process.env.VUE_APP_PRODUCT_MODEL == 'platform' ? "./newpc_bbc" : './newpc_b2c'),
-        to: path.resolve(__dirname, "./dist/newpc"),
-        ignore: [".*"],
-      }])
+      new CopyWebpackPlugin({
+        patterns: [
+          {
+            from: path.resolve(__dirname, process.env.VUE_APP_PRODUCT_MODEL == 'platform' ? "./newpc_bbc" : './newpc_b2c'),
+            to: path.resolve(__dirname, "./dist/newpc")
+          }
+        ]
+      })
     )
     return {
       resolve: {
@@ -99,7 +102,6 @@ module.exports = {
   },
   devServer: {
     port: 8080,
-    disableHostCheck: true,
     hot: true, // 启用热更新
     open: true, // 启动时自动打开浏览器
   }

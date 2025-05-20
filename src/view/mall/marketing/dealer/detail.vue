@@ -1,100 +1,115 @@
- 
 <template>
   <div>
-    <div v-if="$route.path.indexOf('storelist') === -1" class='cus-details'>
+    <div v-if="$route.path.indexOf('storelist') === -1" class="cus-details">
       <el-card>
         <el-row>
           <el-col :span="3">
             <img class="cus-details-img" src="@/assets/img/adapay/dealer.png" alt="">
           </el-col>
-          <el-col :span='20'>
-            <div class='cus-details-flex'>
-              <p class='cus-details-row'>{{infoList.basicInfo ? infoList.basicInfo.name : '-'}}</p>
-              <div class='cus-details-pfonts cus-margin-40'>
-                <i class='el-icon-location-outline cus-icon' />
-                <span>{{infoList.basicInfo ? infoList.basicInfo.area : '-'}}</span>
+          <el-col :span="20">
+            <div class="cus-details-flex">
+              <p class="cus-details-row">
+                {{ infoList.basicInfo ? infoList.basicInfo.name : '-' }}
+              </p>
+              <div class="cus-details-pfonts cus-margin-40">
+                <i class="el-icon-location-outline cus-icon" />
+                <span>{{ infoList.basicInfo ? infoList.basicInfo.area : '-' }}</span>
               </div>
             </div>
-            <p class='cus-details-pfonts'>
-              <i class='el-icon-s-custom cus-icon'></i>
-              <span>{{infoList.basicInfo ? infoList.basicInfo.contact : '-'}}</span>
+            <p class="cus-details-pfonts">
+              <i class="el-icon-s-custom cus-icon" />
+              <span>{{ infoList.basicInfo ? infoList.basicInfo.contact : '-' }}</span>
             </p>
-            <div class='cus-details-flex'>
-              <div class='cus-details-pfonts'>
-                <i class='el-icon-phone cus-icon'></i>
-                <span>{{infoList.basicInfo ? infoList.basicInfo.tel_no + '（企业电话）' : '-'}}</span>
+            <div class="cus-details-flex">
+              <div class="cus-details-pfonts">
+                <i class="el-icon-phone cus-icon" />
+                <span>{{
+                  infoList.basicInfo ? infoList.basicInfo.tel_no + '（企业电话）' : '-'
+                }}</span>
               </div>
-              <div class='cus-details-pfonts cus-margin-50'>
-                <i class='el-icon-message cus-icon'></i>
-                <span>{{(infoList.basicInfo ? infoList.basicInfo.email + '（企业邮箱）' : '-')}}</span>
+              <div class="cus-details-pfonts cus-margin-50">
+                <i class="el-icon-message cus-icon" />
+                <span>{{
+                  infoList.basicInfo ? infoList.basicInfo.email + '（企业邮箱）' : '-'
+                }}</span>
               </div>
             </div>
           </el-col>
         </el-row>
       </el-card>
       <el-card>
-        <el-tabs v-model='activeName' class='cus-details-tabs' @tab-click='tabChange'>
-          <el-tab-pane v-if='infoList.member_id' label='开户信息' name='first'>
+        <el-tabs v-model="activeName" class="cus-details-tabs" @tab-click="tabChange">
+          <el-tab-pane v-if="infoList.member_id" label="开户信息" name="first">
             <BaseModal
-              :span='7'
-              :labelList="infoList.member_type === 'corp' ? enterPriseList :  personInfo"
-              :info='infoList'
+              :span="7"
+              :label-list="infoList.member_type === 'corp' ? enterPriseList : personInfo"
+              :info="infoList"
               :title="infoList.member_type === 'corp' ? '企业信息' : '个人信息'"
             />
             <BaseModal
-              :span='7'
+              :span="7"
               :label-list="infoList.member_type === 'corp' ? enterAccountInfo : accountList"
               :info="infoList"
               title="结算账户信息"
             />
             <BaseModal
               :span="7"
-              :label-list="infoList.member_type === 'corp' ? enterSplitAccountList : splitAccountList"
+              :label-list="
+                infoList.member_type === 'corp' ? enterSplitAccountList : splitAccountList
+              "
               :info="split_ledger_info"
               title="分账信息"
             />
             <el-card>
-              <div slot='header'>其他信息</div>
-              <div class='body'>
-                <el-row class='load-btn'>
-                  <el-col :span='4' style='text-align:right;padding-right:10px'>附件信息：</el-col>
-                  <el-col :span='20' class='cus-btn' v-if="infoList.member_type === 'corp'">
-                    <el-button @click='dowloadFile(infoList.attach_file)' type='text'>附件</el-button>
+              <div slot="header">其他信息</div>
+              <div class="body">
+                <el-row class="load-btn">
+                  <el-col :span="4" style="text-align: right; padding-right: 10px"
+                    >
+附件信息：
+</el-col
+                  >
+                  <el-col v-if="infoList.member_type === 'corp'" :span="20" class="cus-btn">
+                    <el-button type="text" @click="dowloadFile(infoList.attach_file)"
+                      >
+附件
+</el-button
+                    >
                   </el-col>
                   <span v-else>-</span>
                 </el-row>
               </div>
             </el-card>
           </el-tab-pane>
-          <el-tab-pane v-else label='开户信息' name='first'>
-            <el-row style='height:350px' type='flex' justify='center' align='middle'>
-              <span style='color:#ccc'>--暂无开户信息--</span>
+          <el-tab-pane v-else label="开户信息" name="first">
+            <el-row style="height: 350px" type="flex" justify="center" align="middle">
+              <span style="color: #ccc">--暂无开户信息--</span>
             </el-row>
           </el-tab-pane>
-          <el-tab-pane label='操作记录' name='second'>
-            <el-timeline :reverse='false' class='cus-timeline'>
+          <el-tab-pane label="操作记录" name="second">
+            <el-timeline :reverse="false" class="cus-timeline">
               <el-timeline-item
-                v-for='(item, index) in logList'
-                :key='index'
-                :timestamp='item.create_date'>
-                {{item.content}}
+                v-for="(item, index) in logList"
+                :key="index"
+                :timestamp="item.create_date"
+              >
+                {{ item.content }}
               </el-timeline-item>
             </el-timeline>
             <el-pagination
-              layout='total, sizes, prev, pager, next'
-              :current-page.sync='params.page'
+              layout="total, sizes, prev, pager, next"
+              :current-page.sync="params.page"
               :page-sizes="[10, 20, 50]"
-              :page-size='params.page_size'
-              :total='total_count'
-              @current-change='handleCurrentChange'
+              :page-size="params.page_size"
+              :total="total_count"
+              @current-change="handleCurrentChange"
               @size-change="handleSizeChange"
-            >
-            </el-pagination>
+            />
           </el-tab-pane>
         </el-tabs>
       </el-card>
       <!-- <el-row class='cus-details-bot'>
-        <router-link :to='{ path: matchHidePage('storelist'), query: { operator_id: this.operator_id}}'>
+        <router-link :to='{ path: matchRoutePath('storelist'), query: { operator_id: this.operator_id}}'>
           <el-button type='primary' size='small' plain>查看关联店铺</el-button>
         </router-link>
         <el-button @click='handleOpenOpeartion(true, '开启')' type='success' plain size='mini'>开启</el-button>
@@ -112,8 +127,12 @@
           {{ modalContent }}
         </el-row>
         <el-row style="text-align: right">
-          <el-button @click="handleModalConfirm(false)" type="primary" size="small" plain>取消</el-button>
-          <el-button @click="handleModalConfirm(true)" type="primary" size="small">确认</el-button>
+          <el-button type="primary" size="small" plain @click="handleModalConfirm(false)"
+            >
+取消
+</el-button
+          >
+          <el-button type="primary" size="small" @click="handleModalConfirm(true)">确认</el-button>
         </el-row>
       </el-dialog>
     </div>
@@ -127,7 +146,7 @@ import { getAdapayLogList } from '@/api/adapay/dealer'
 
 export default {
   components: { BaseModal },
-  data () {
+  data() {
     return {
       activeName: 'first',
       operator_id: 0,
@@ -144,7 +163,8 @@ export default {
         page: 1,
         page_size: 10
       },
-      enterPriseList: [ // 企业信息
+      enterPriseList: [
+        // 企业信息
         { name: '法人姓名', field: 'legal_person' },
         { name: '法人身份证号码', field: 'legal_cert_id' },
         { name: '法人证件有效期', field: 'legal_cert_id_expires' },
@@ -155,23 +175,27 @@ export default {
         { name: '企业地址', field: 'address' },
         { name: '邮编', field: 'zip_code' }
       ],
-      enterAccountInfo: [ // 企业结算账户信息
+      enterAccountInfo: [
+        // 企业结算账户信息
         { name: '结算银行卡号', field: 'card_no' },
         { name: '结算银行卡开户姓名', field: 'card_name' },
         { name: '结算银行卡所属银行', field: 'bank_name' },
         { name: '结算银行账户类型', field: 'bank_acct_type', filter: this.bankFilter }
       ],
-      enterSplitAccountList: [ // 企业分帐
+      enterSplitAccountList: [
+        // 企业分帐
         { name: '总部分账占比', field: 'headquarters_proportion', filter: this.headquartersFilter },
         { name: '经销商分账占比', field: 'dealer_proportion', filter: this.dealerFilter },
         { name: '手续费扣费方式', field: 'adapay_fee_mode', filter: this.adapayFilter }
       ],
-      personInfo: [ // 个人信息
+      personInfo: [
+        // 个人信息
         { name: '用户姓名', field: 'user_name' },
         { name: '用户手机号码', field: 'tel_no' },
         { name: '法人身份证号码', field: 'cert_id' }
       ],
-      accountList: [ // 个人结算信息
+      accountList: [
+        // 个人结算信息
         { name: '开户人姓名', field: 'bank_card_name' },
         { name: '银行预留手机号', field: 'bank_tel_no' },
         { name: '银行账号', field: 'bank_card_id' },
@@ -182,18 +206,18 @@ export default {
       ]
     }
   },
-  mounted () {
+  mounted() {
     if (this.$route.query.operator_id) {
       this.operator_id = this.$route.query.operator_id
       this.getTabDetail(this.operator_id)
     }
   },
   methods: {
-    addressFilter () {
+    addressFilter() {
       const { lat, lng } = this.infoList
       return lng + ' - ' + lat
     },
-    getTabDetail (id) {
+    getTabDetail(id) {
       getDealerDetail(id)
         .then((response) => {
           this.infoList = response.data.data
@@ -207,7 +231,7 @@ export default {
           })
         })
     },
-    getLogList () {
+    getLogList() {
       getAdapayLogList({ log_type: 'dealer', ...this.params, operator_id: this.operator_id })
         .then((response) => {
           this.logList = response.data.data.list || {}
@@ -221,12 +245,15 @@ export default {
           })
         })
     },
-    handleOpenOpeartion (visivle, type) {
-      this.modalContent = type === '开启' ? '如开启该经销商，与之关联的已入网成功的店铺也将被开启，总部将参与分账，请确认是否开启该经销商。' : '如禁用该经销商，与之关联的已入网成功的店铺也将被禁用，总部不在参与分账，请确认是否禁用该经销商。'
+    handleOpenOpeartion(visivle, type) {
+      this.modalContent =
+        type === '开启'
+          ? '如开启该经销商，与之关联的已入网成功的店铺也将被开启，总部将参与分账，请确认是否开启该经销商。'
+          : '如禁用该经销商，与之关联的已入网成功的店铺也将被禁用，总部不在参与分账，请确认是否禁用该经销商。'
       this.visibleModal = visivle
       this.modalType = type
     },
-    handleModalConfirm (type) {
+    handleModalConfirm(type) {
       if (!type) {
         this.visibleModal = false
         this.modalType = ''
@@ -243,7 +270,7 @@ export default {
         // })
       }
     },
-    dowloadFile (url) {
+    dowloadFile(url) {
       let link = document.createElement('a')
       link.style.display = 'none'
       link.href = url
@@ -254,7 +281,7 @@ export default {
         message: '下载成功'
       })
     },
-    bankFilter () {
+    bankFilter() {
       let { bank_acct_type } = this.infoList
       let returnValue = ''
       switch (bank_acct_type) {
@@ -267,7 +294,7 @@ export default {
       }
       return returnValue
     },
-    adapayFilter () {
+    adapayFilter() {
       let { adapay_fee_mode } = this.split_ledger_info
       let returnValue = ''
       switch (adapay_fee_mode) {
@@ -280,12 +307,14 @@ export default {
       }
       return returnValue
     },
-    headquartersFilter () { // 总部分账占比过滤
+    headquartersFilter() {
+      // 总部分账占比过滤
       let { headquarters_proportion } = this.split_ledger_info
       let value = this.split_ledger_info.headquarters_proportion
       return value ? value + '%' : '-'
     },
-    dealerFilter () { // 经销商分账占比过滤
+    dealerFilter() {
+      // 经销商分账占比过滤
       let { dealer_proportion } = this.split_ledger_info
       let value = this.split_ledger_info.dealer_proportion
       return value ? value + '%' : '-'
@@ -294,7 +323,7 @@ export default {
       this.params.page = page_num
       this.getLogList()
     },
-    handleSizeChange (pageSize) {
+    handleSizeChange(pageSize) {
       this.params.page = 1
       this.params.page_size = pageSize
       this.getLogList()
@@ -310,7 +339,7 @@ export default {
 }
 </script>
 
-<style lang='scss'>
+<style lang="scss">
 .cus-details {
   &-img {
     width: 90px;
@@ -331,7 +360,7 @@ export default {
     }
     :nth-child(3) {
       color: #ccc;
-      margin-left: 50px
+      margin-left: 50px;
     }
   }
   &-flex {

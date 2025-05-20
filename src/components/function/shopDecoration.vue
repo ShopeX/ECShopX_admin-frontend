@@ -370,7 +370,6 @@ import { savePageParams, getParamByTempName } from '@/api/wxa'
 import { getItemsList } from '@/api/goods'
 import { getRecommendLikeItemList } from '@/api/promotions'
 import { forEach } from 'jszip'
-import { constants } from 'fs'
 
 export default {
   components: {

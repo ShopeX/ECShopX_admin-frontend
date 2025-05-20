@@ -4,18 +4,10 @@
       <div class="content-bottom-padded">
         <el-row>
           <el-col :span="12">
-            <el-button
-              type="primary"
-              @click="addMonitors"
-            >
-              新增监控链接
-            </el-button>
+            <el-button type="primary" @click="addMonitors"> 新增监控链接 </el-button>
           </el-col>
           <el-col :span="12">
-            <div
-              v-if="monitorsParams.total_count > monitorsParams.pageSize"
-              class="f_r"
-            >
+            <div v-if="monitorsParams.total_count > monitorsParams.pageSize" class="f_r">
               <el-pagination
                 layout="prev, pager, next"
                 :total="monitorsParams.total_count"
@@ -26,33 +18,18 @@
           </el-col>
         </el-row>
       </div>
-      <el-table
-        v-loading="loading"
-        :data="monitorsList"
-        style="width: 100%"
-      >
-        <el-table-column
-          prop="monitorPath"
-          label="监控页面"
-        >
+      <el-table v-loading="loading" :data="monitorsList" style="width: 100%">
+        <el-table-column prop="monitorPath" label="监控页面">
           <template slot-scope="scope">
-            <span>{{ scope.row.monitorPath }}</span><span
-              v-show="scope.row.monitorPathParams != ''"
-            >?{{ scope.row.monitorPathParams }}</span>
+            <span>{{ scope.row.monitorPath }}</span
+            ><span v-show="scope.row.monitorPathParams != ''"
+              >?{{ scope.row.monitorPathParams }}</span
+            >
           </template>
         </el-table-column>
-        <el-table-column
-          prop="pageName"
-          label="页面描述"
-        />
-        <el-table-column
-          prop="nickName"
-          label="小程序"
-        />
-        <el-table-column
-          prop="created"
-          label="创建时间"
-        >
+        <el-table-column prop="pageName" label="页面描述" />
+        <el-table-column prop="nickName" label="小程序" />
+        <el-table-column prop="created" label="创建时间">
           <template slot-scope="scope">
             <span>{{ scope.row.created | datetime('YYYY-MM-DD HH:mm:ss') }}</span>
           </template>
@@ -62,7 +39,7 @@
             <a @click="removeMinotor(scope.$index, scope.row)">删除</a> &nbsp;
             <a @click="manageSources(scope.row.monitorId)">管理来源</a> &nbsp;
             <router-link
-              :to="{ path: matchHidePage('detail'), query: { monitorId: scope.row.monitorId } }"
+              :to="{ path: matchRoutePath('detail'), query: { monitorId: scope.row.monitorId } }"
             >
               监控详情
             </router-link>
@@ -76,16 +53,8 @@
         :close-on-click-modal="false"
         :before-close="cancelMonitorsDialog"
       >
-        <el-form
-          ref="monitorForm"
-          :model="monitorForm"
-          :rules="monitorFormRules"
-        >
-          <el-form-item
-            prop="monitor_path"
-            label="页面"
-            :label-width="formLabelWidth"
-          >
+        <el-form ref="monitorForm" :model="monitorForm" :rules="monitorFormRules">
+          <el-form-item prop="monitor_path" label="页面" :label-width="formLabelWidth">
             <el-select
               v-model="monitorForm.monitor_path"
               filterable
@@ -101,11 +70,7 @@
               />
             </el-select>
           </el-form-item>
-          <el-form-item
-            prop="monitor_path"
-            label="页面描述"
-            :label-width="formLabelWidth"
-          >
+          <el-form-item prop="monitor_path" label="页面描述" :label-width="formLabelWidth">
             <el-col :span="10">
               <el-input v-model="monitorForm.page_name" />
             </el-col>
@@ -119,40 +84,25 @@
           >
             <el-col :span="10">
               <span v-if="item.option && item.option.length > 0">
-                <el-radio-group
-                  v-model="item.value"
-                  @change="optionChange"
-                >
+                <el-radio-group v-model="item.value" @change="optionChange">
                   <el-radio
                     v-for="item in item.option"
                     :key="item.value"
                     :label="item.value"
                     :value="item.value"
-                  >{{ item.label }}</el-radio>
+                    >{{ item.label }}</el-radio
+                  >
                 </el-radio-group>
               </span>
               <span v-else>
-                <el-input
-                  v-model="item.value"
-                  :disabled="item.disabled ? true : false"
-                />
+                <el-input v-model="item.value" :disabled="item.disabled ? true : false" />
               </span>
             </el-col>
           </el-form-item>
         </el-form>
-        <div
-          slot="footer"
-          class="dialog-footer"
-        >
-          <el-button @click="resetMonitorsForm">
-            重 置
-          </el-button>
-          <el-button
-            type="primary"
-            @click="saveMonitor"
-          >
-            确 定
-          </el-button>
+        <div slot="footer" class="dialog-footer">
+          <el-button @click="resetMonitorsForm"> 重 置 </el-button>
+          <el-button type="primary" @click="saveMonitor"> 确 定 </el-button>
         </div>
       </el-dialog>
 
@@ -170,10 +120,7 @@
             :props="{ key: 'sourceId', label: 'sourceName' }"
             :data="sourceList"
           >
-            <div
-              slot="left-footer"
-              class="transfer-footer view-flex view-flex-center"
-            >
+            <div slot="left-footer" class="transfer-footer view-flex view-flex-center">
               <el-pagination
                 v-if="sourcesParams.total_count > sourcesParams.pageSize"
                 small
@@ -183,24 +130,11 @@
                 @current-change="handleCurrentSourceChange"
               />
             </div>
-            <div
-              slot="right-footer"
-              class="transfer-footer"
-            />
+            <div slot="right-footer" class="transfer-footer" />
           </el-transfer>
-          <div
-            slot="footer"
-            class="dialog-footer"
-          >
-            <el-button @click="dialogVisibleSources = false">
-              取 消
-            </el-button>
-            <el-button
-              type="primary"
-              @click="saveSources"
-            >
-              确 定
-            </el-button>
+          <div slot="footer" class="dialog-footer">
+            <el-button @click="dialogVisibleSources = false"> 取 消 </el-button>
+            <el-button type="primary" @click="saveSources"> 确 定 </el-button>
           </div>
         </template>
       </el-dialog>
@@ -228,7 +162,7 @@ export default {
   components: {
     timeChoose
   },
-  data () {
+  data() {
     return {
       formLabelWidth: '120px',
       loading: false,
@@ -269,7 +203,7 @@ export default {
   computed: {
     ...mapGetters(['template_name'])
   },
-  mounted () {
+  mounted() {
     if (this.$route.query && this.$route.query.app_id) {
       this.wxappid = this.$route.query.app_id
     }
@@ -488,7 +422,6 @@ export default {
       this.getSourcesLists()
     },
     getMonitorsList: function () {
-
       this.loading = true
       let params = {
         page: this.monitorsParams.page,

@@ -190,8 +190,6 @@ export default {
   top: 20%;
   left: 45%;
   z-index: 1000;
-  background: url(/mpres/zh_CN/htmledition/comm_htmledition/style/page/cardticket/member_card_control_z331295.png)
-    0 -2807px no-repeat;
   width: 38px;
   height: 38px;
   vertical-align: middle;

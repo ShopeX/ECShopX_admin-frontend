@@ -1,46 +1,18 @@
 <template>
   <div>
-    <el-tabs
-      v-if="$route.path.indexOf('editor') === -1"
-      v-model="activeName"
-      type="border-card"
-    >
-      <el-tab-pane
-        label="门店管理"
-        name="first"
-      >
+    <el-tabs v-if="$route.path.indexOf('editor') === -1" v-model="activeName" type="border-card">
+      <el-tab-pane label="门店管理" name="first">
         <el-row>
           <el-col :span="12">
             店铺类型：
-            <el-select
-              v-model="store_type"
-              @change="storeChange"
-            >
-              <el-option
-                label="直营店"
-                :value="1"
-              >
-                直营店
-              </el-option>
-              <el-option
-                label="非直营店"
-                :value="2"
-              >
-                非直营店
-              </el-option>
+            <el-select v-model="store_type" @change="storeChange">
+              <el-option label="直营店" :value="1"> 直营店 </el-option>
+              <el-option label="非直营店" :value="2"> 非直营店 </el-option>
             </el-select>
           </el-col>
-          <el-col
-            :span="12"
-            class="content-right"
-          >
-            <router-link :to="matchHidePage('editor')">
-              <el-button
-                type="primary"
-                icon="el-icon-plus"
-              >
-                添加门店
-              </el-button>
+          <el-col :span="12" class="content-right">
+            <router-link :to="matchRoutePath('editor')">
+              <el-button type="primary" icon="el-icon-plus"> 添加门店 </el-button>
             </router-link>
           </el-col>
         </el-row>
@@ -50,38 +22,18 @@
           style="width: 100%"
           :height="wheight - 305"
         >
-          <el-table-column
-            prop="storeName"
-            label="门店名称"
-            width="240"
-          />
-          <el-table-column
-            prop="isDirectStore"
-            label="直营店"
-          >
+          <el-table-column prop="storeName" label="门店名称" width="240" />
+          <el-table-column prop="isDirectStore" label="直营店">
             <template slot-scope="scope">
               <div v-if="scope.row.isDirectStore === 1">
-                <el-tag
-                  type="success"
-                  size="mini"
-                >
-                  直营
-                </el-tag>
+                <el-tag type="success" size="mini"> 直营 </el-tag>
               </div>
               <div v-if="scope.row.isDirectStore === 2">
-                <el-tag
-                  type="gray"
-                  size="mini"
-                >
-                  非直营
-                </el-tag>
+                <el-tag type="gray" size="mini"> 非直营 </el-tag>
               </div>
             </template>
           </el-table-column>
-          <el-table-column
-            width="240"
-            label="地理位置"
-          >
+          <el-table-column width="240" label="地理位置">
             <template slot-scope="scope">
               <div v-if="scope.row.isDomestic == 2">
                 {{ scope.row.country }} {{ scope.row.city }} {{ scope.row.address }}
@@ -91,10 +43,7 @@
               </div>
             </template>
           </el-table-column>
-          <el-table-column
-            label="状态"
-            width="80"
-          >
+          <el-table-column label="状态" width="80">
             <template slot-scope="scope">
               <el-switch
                 v-model="scope.row.is_valid"
@@ -113,10 +62,7 @@
             <span v-else> -- </span>
           </template>
           </el-table-column> -->
-          <el-table-column
-            label="设为默认"
-            width="80"
-          >
+          <el-table-column label="设为默认" width="80">
             <template slot-scope="scope">
               <el-switch
                 v-model="scope.row.is_default"
@@ -127,17 +73,10 @@
               />
             </template>
           </el-table-column>
-          <el-table-column
-            label="操作"
-            width="170"
-          >
+          <el-table-column label="操作" width="170">
             <template slot-scope="scope">
               <!-- <el-button size="mini" type="text" v-if="!scope.row.is_valid" @click="getRes(scope.row)">激活</el-button> -->
-              <el-button
-                size="mini"
-                type="text"
-                @click="shopsEdit(scope.$index, scope.row)"
-              >
+              <el-button size="mini" type="text" @click="shopsEdit(scope.$index, scope.row)">
                 编辑
               </el-button>
               <el-button
@@ -151,10 +90,7 @@
             </template>
           </el-table-column>
         </el-table>
-        <div
-          v-if="total_count > pageLimit"
-          class="content-padded content-center"
-        >
+        <div v-if="total_count > pageLimit" class="content-padded content-center">
           <el-pagination
             layout="prev, pager, next"
             :total="total_count"
@@ -232,12 +168,12 @@ import {
 } from '@/api/marketing'
 import { getResourceList } from '@/api/company'
 export default {
-  provide () {
+  provide() {
     return {
       refresh: this.getShopsList
     }
   },
-  data () {
+  data() {
     return {
       fileList: [],
       activeName: 'first',
@@ -260,25 +196,25 @@ export default {
   computed: {
     ...mapGetters(['wheight'])
   },
-  mounted () {
+  mounted() {
     this.params = { page: 1, pageSize: this.pageLimit }
     let resparams = { page_no: 1, page_size: this.pageLimit, is_valid: true }
     this.getShopsList()
     this.getResourceList(resparams)
   },
   methods: {
-    handleCurrentChange (page_num) {
+    handleCurrentChange(page_num) {
       this.params = { page: page_num, pageSize: this.pageLimit }
       this.getShopsList()
     },
-    reshandleCurrentChange (page_num) {
+    reshandleCurrentChange(page_num) {
       let resparams = { page_no: page_num, page_size: this.pageLimit, is_valid: true }
       this.getResourceList(resparams)
     },
-    shopsEdit (index, row) {
-      this.$router.push({ path: this.matchHidePage('editor/') + row.distributor_id })
+    shopsEdit(index, row) {
+      this.$router.push({ path: this.matchRoutePath('editor/') + row.distributor_id })
     },
-    distributorShopsDetail (index, row) {
+    distributorShopsDetail(index, row) {
       this.distributorShopsDetailVisible = true
       getDistributorShopDetail(row.distributor_id)
         .then((response) => {
@@ -292,7 +228,7 @@ export default {
           })
         })
     },
-    getShopsList () {
+    getShopsList() {
       this.loading = true
       getDistributorShopList(this.params)
         .then((response) => {
@@ -308,13 +244,13 @@ export default {
           })
         })
     },
-    getResourceList (filter) {
+    getResourceList(filter) {
       getResourceList(filter).then((response) => {
         this.resourceList = response.data.list
         this.resourceCount = response.data.total_count
       })
     },
-    setDefault (row) {
+    setDefault(row) {
       let params = { 'distributor_id': row.distributor_id }
       setDefaultDistributorShop(params)
         .then((response) => {
@@ -332,15 +268,15 @@ export default {
           })
         })
     },
-    getRes (row) {
+    getRes(row) {
       this.bindShopId = row.distributor_id
       this.dialogTableVisible = true
       this.currentRow = null
     },
-    resCurrentChange (val) {
+    resCurrentChange(val) {
       this.currentRow = val
     },
-    deleteDistributorShopAction (index, row) {
+    deleteDistributorShopAction(index, row) {
       this.$confirm('此操作将删除该门店, 是否继续?', '提示', {
         confirmButtonText: '确定',
         cancelButtonText: '取消',
@@ -370,7 +306,7 @@ export default {
           })
         })
     },
-    syncWxShops () {
+    syncWxShops() {
       this.$confirm('确定同步微信门店到本系统吗？', '提示', {
         confirmButtonText: '确定',
         cancelButtonText: '取消',
@@ -393,11 +329,11 @@ export default {
           })
         })
     },
-    storeChange (val) {
+    storeChange(val) {
       this.params.is_direct_store = val
       this.getShopsList()
     },
-    setStatus (row) {
+    setStatus(row) {
       let params = { 'distributor_id': row.distributor_id, 'status': row.is_valid }
       setDistributorShopStatus(params)
         .then((res) => {})

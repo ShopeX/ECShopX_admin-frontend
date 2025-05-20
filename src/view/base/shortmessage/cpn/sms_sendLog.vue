@@ -14,7 +14,7 @@
         }"
         url="/aliyunsms/record/list"
       >
-        <template v-slot:task_name>
+        <template #task_name>
           <el-input v-model="task_name" placeholder="请输入任务名称" clearable />
         </template>
       </SpFinder>
@@ -55,7 +55,7 @@ export default {
   },
   methods: {
     addTemplate() {
-      this.$router.push({ path: this.matchHidePage('edit') })
+      this.$router.push({ path: this.matchRoutePath('edit') })
     },
     beforeSearch(params) {
       return { ...params, task_name: this.task_name }

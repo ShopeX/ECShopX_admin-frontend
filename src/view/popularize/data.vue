@@ -360,7 +360,7 @@ export default {
     detail(row) {
       let routeData = this.$router.resolve({
         // path: '/marketing/popularize/popularizelist/detail',
-        path: this.matchHidePage('detail'),
+        path: this.matchRoutePath('detail'),
         query: { user_id: row.user_id, distributor_id: row.distributor_id }
       })
       window.open(routeData.href, '_blank')

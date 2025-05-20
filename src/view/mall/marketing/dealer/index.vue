@@ -37,14 +37,14 @@
           url="/adapay/dealer/list"
           @reset="onFinderReset"
         >
-          <template v-slot:tableTop>
+          <template #tableTop>
             <el-row class="cus-btn">
               <el-button type="primary" plain size="mini" @click="handleClose(true)">
                 新增经销商
               </el-button>
             </el-row>
           </template>
-          <template v-slot:create_time>
+          <template #create_time>
             <el-date-picker
               v-model="create_time"
               class="input-m"
@@ -56,7 +56,7 @@
               @change="(val) => dateChange('create', val)"
             />
           </template>
-          <template v-slot:open_time>
+          <template #open_time>
             <el-date-picker
               v-model="open_time"
               class="input-m"
@@ -146,7 +146,7 @@ export default {
               type: 'link',
               handler: (row) => {
                 this.$router.push({
-                  path: this.matchHidePage('detail'),
+                  path: this.matchRoutePath('detail'),
                   query: { operator_id: row[0].operator_id }
                 })
               }
@@ -163,7 +163,7 @@ export default {
             action: {
               handler: (row) => {
                 this.$router.push({
-                  path: this.matchHidePage('storelist'),
+                  path: this.matchRoutePath('storelist'),
                   query: { dealer_id: row[0].operator_id, username: row[0].username }
                 })
               }

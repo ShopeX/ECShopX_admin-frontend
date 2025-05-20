@@ -36,13 +36,13 @@
 import groupsList from './list/groupsList'
 
 export default {
+  components: {
+    groupsList
+  },
   provide() {
     return {
       refresh: this.refresh
     }
-  },
-  components: {
-    groupsList
   },
   data() {
     return {
@@ -65,7 +65,7 @@ export default {
   methods: {
     addGroups() {
       // 添加运费模板
-      this.$router.push({ path: this.matchHidePage('editor') })
+      this.$router.push({ path: this.matchRoutePath('editor') })
     },
     refresh() {
       this.$refs.getGroupsList

@@ -1,14 +1,8 @@
 <template>
   <div class="section floorStyle">
-    <div class="section-header with-border">
-      楼层
-    </div>
+    <div class="section-header with-border">楼层</div>
     <div class="section-body">
-      <el-form
-        ref="data"
-        v-model="data"
-        label-position="top"
-      >
+      <el-form ref="data" v-model="data" label-position="top">
         <!-- 标题 -->
         <el-form-item label="标题：">
           <el-input v-model="base.title" />
@@ -17,10 +11,7 @@
           <el-input v-model="base.subtitle" />
         </el-form-item>
         <el-form-item label="组件间距">
-          <el-input
-            v-model="base.padded"
-            type="number"
-          />
+          <el-input v-model="base.padded" type="number" />
         </el-form-item>
         <el-row :gutter="10">
           <el-col :span="12">
@@ -39,60 +30,24 @@
         <!-- 类型导航项 -->
         <el-form-item label="左上快链">
           <template v-if="data.leftNavList">
-            <div
-              v-for="(item, index) in data.leftNavList"
-              class="setting-item"
-            >
-              <div
-                class="setting-remove"
-                @click="delTypeNav(index)"
-              >
+            <div v-for="(item, index) in data.leftNavList" class="setting-item">
+              <div class="setting-remove" @click="delTypeNav(index)">
                 <i class="iconfont icon-trash-alt" />
               </div>
-              <div
-                class="uploader-setting"
-                style="padding-left: 0"
-              >
-                <el-input
-                  v-model="item.titleName"
-                  placeholder="请输入快链名称"
-                />
-                <div
-                  class="goods-select"
-                  @click="setTypeNavLink(index)"
-                >
-                  <div
-                    v-if="item.id"
-                    class="link-content"
-                  >
-                    <template v-if="item.linkPage === 'goods'">
-                      商品：
-                    </template>
-                    <template v-if="item.linkPage === 'category'">
-                      分类：
-                    </template>
-                    <template v-if="item.linkPage === 'article'">
-                      文章：
-                    </template>
-                    <template v-if="item.linkPage === 'planting'">
-                      软文：
-                    </template>
-                    <template v-if="item.linkPage === 'link'">
-                      页面：
-                    </template>
-                    <template v-if="item.linkPage === 'marketing'">
-                      营销：
-                    </template>
+              <div class="uploader-setting" style="padding-left: 0">
+                <el-input v-model="item.titleName" placeholder="请输入快链名称" />
+                <div class="goods-select" @click="setTypeNavLink(index)">
+                  <div v-if="item.id" class="link-content">
+                    <template v-if="item.linkPage === 'goods'"> 商品： </template>
+                    <template v-if="item.linkPage === 'category'"> 分类： </template>
+                    <template v-if="item.linkPage === 'article'"> 文章： </template>
+                    <template v-if="item.linkPage === 'planting'"> 软文： </template>
+                    <template v-if="item.linkPage === 'link'"> 页面： </template>
+                    <template v-if="item.linkPage === 'marketing'"> 营销： </template>
                     {{ item.title }}
                   </div>
-                  <div
-                    v-else
-                    class="content-center"
-                  >
-                    <i
-                      class="iconfont icon-link"
-                      @click="setTypeNavLink(index)"
-                    />设置路径
+                  <div v-else class="content-center">
+                    <i class="iconfont icon-link" @click="setTypeNavLink(index)" />设置路径
                   </div>
                 </div>
               </div>
@@ -105,9 +60,7 @@
             >
               添加快链
             </el-button>
-            <div class="frm-tips">
-              最多添加9个快链
-            </div>
+            <div class="frm-tips">最多添加9个快链</div>
           </template>
         </el-form-item>
         <!-- 左侧图片挂件 -->
@@ -122,11 +75,7 @@
                     class="img-pendant__uploader"
                     @click="handleImgChange(0)"
                   >
-                  <div
-                    v-else
-                    class="banner-uploader"
-                    @click="handleImgChange(0)"
-                  >
+                  <div v-else class="banner-uploader" @click="handleImgChange(0)">
                     <i class="iconfont icon-camera" />上传图片
                   </div>
                 </div>
@@ -134,56 +83,32 @@
               </div>
               <div class="view-flex-item">
                 <div class="uploader-setting">
-                  <div
-                    class="goods-select"
-                    @click="setTypeNavLink(-1, 0)"
-                  >
-                    <div
-                      v-if="data.leftImg.children"
-                      class="link-content"
-                    >
-                      <template
-                        v-if="data.leftImg.children.data.linkPage === 'goods'"
-                      >
+                  <div class="goods-select" @click="setTypeNavLink(-1, 0)">
+                    <div v-if="data.leftImg.children" class="link-content">
+                      <template v-if="data.leftImg.children.data.linkPage === 'goods'">
                         商品：
                       </template>
-                      <template
-                        v-if="data.leftImg.children.data.linkPage === 'category'"
-                      >
+                      <template v-if="data.leftImg.children.data.linkPage === 'category'">
                         分类：
                       </template>
-                      <template
-                        v-if="data.leftImg.children.data.linkPage === 'article'"
-                      >
+                      <template v-if="data.leftImg.children.data.linkPage === 'article'">
                         文章：
                       </template>
-                      <template
-                        v-if="data.leftImg.children.data.linkPage === 'planting'"
-                      >
+                      <template v-if="data.leftImg.children.data.linkPage === 'planting'">
                         软文：
                       </template>
-                      <template
-                        v-if="data.leftImg.children.data.linkPage === 'link'"
-                      >
+                      <template v-if="data.leftImg.children.data.linkPage === 'link'">
                         页面：
                       </template>
-                      <template
-                        v-if="data.leftImg.children.data.linkPage === 'marketing'"
-                      >
+                      <template v-if="data.leftImg.children.data.linkPage === 'marketing'">
                         营销：
                       </template>
-                      <template
-                        v-if="data.leftImg.children.data.linkPage === 'custom_page'"
-                      >
+                      <template v-if="data.leftImg.children.data.linkPage === 'custom_page'">
                         自定义页面：
                       </template>
                       {{ data.leftImg.children.data.title }}
                     </div>
-                    <div
-                      v-else
-                      class="content-center"
-                      @click="setTypeNavLink(-1, 0)"
-                    >
+                    <div v-else class="content-center" @click="setTypeNavLink(-1, 0)">
                       <i class="iconfont icon-link" />设置路径
                     </div>
                   </div>
@@ -205,11 +130,7 @@
                       @click="handleImgChange(1)"
                     >
                   </div>
-                  <div
-                    v-else
-                    class="banner-uploader"
-                    @click="handleImgChange(1)"
-                  >
+                  <div v-else class="banner-uploader" @click="handleImgChange(1)">
                     <i class="iconfont icon-camera" />上传图片
                   </div>
                 </div>
@@ -217,56 +138,32 @@
               </div>
               <div class="view-flex-item">
                 <div class="uploader-setting">
-                  <div
-                    class="goods-select"
-                    @click="setTypeNavLink(-1, 1)"
-                  >
-                    <div
-                      v-if="data.rightImg1.children"
-                      class="link-content"
-                    >
-                      <template
-                        v-if="data.rightImg1.children.data.linkPage === 'goods'"
-                      >
+                  <div class="goods-select" @click="setTypeNavLink(-1, 1)">
+                    <div v-if="data.rightImg1.children" class="link-content">
+                      <template v-if="data.rightImg1.children.data.linkPage === 'goods'">
                         商品：
                       </template>
-                      <template
-                        v-if="data.rightImg1.children.data.linkPage === 'category'"
-                      >
+                      <template v-if="data.rightImg1.children.data.linkPage === 'category'">
                         分类：
                       </template>
-                      <template
-                        v-if="data.rightImg1.children.data.linkPage === 'article'"
-                      >
+                      <template v-if="data.rightImg1.children.data.linkPage === 'article'">
                         文章：
                       </template>
-                      <template
-                        v-if="data.rightImg1.children.data.linkPage === 'planting'"
-                      >
+                      <template v-if="data.rightImg1.children.data.linkPage === 'planting'">
                         软文：
                       </template>
-                      <template
-                        v-if="data.rightImg1.children.data.linkPage === 'link'"
-                      >
+                      <template v-if="data.rightImg1.children.data.linkPage === 'link'">
                         页面：
                       </template>
-                      <template
-                        v-if="data.rightImg1.children.data.linkPage === 'marketing'"
-                      >
+                      <template v-if="data.rightImg1.children.data.linkPage === 'marketing'">
                         营销：
                       </template>
-                      <template
-                        v-if="data.rightImg1.children.data.linkPage === 'custom_page'"
-                      >
+                      <template v-if="data.rightImg1.children.data.linkPage === 'custom_page'">
                         自定义页面：
                       </template>
                       {{ data.rightImg1.children.data.title }}
                     </div>
-                    <div
-                      v-else
-                      class="content-center"
-                      @click="setTypeNavLink(-1, 1)"
-                    >
+                    <div v-else class="content-center" @click="setTypeNavLink(-1, 1)">
                       <i class="iconfont icon-link" />设置路径
                     </div>
                   </div>
@@ -288,11 +185,7 @@
                       @click="handleImgChange(2)"
                     >
                   </div>
-                  <div
-                    v-else
-                    class="banner-uploader"
-                    @click="handleImgChange(2)"
-                  >
+                  <div v-else class="banner-uploader" @click="handleImgChange(2)">
                     <i class="iconfont icon-camera" />上传图片
                   </div>
                 </div>
@@ -300,56 +193,32 @@
               </div>
               <div class="view-flex-item">
                 <div class="uploader-setting">
-                  <div
-                    class="goods-select"
-                    @click="setTypeNavLink(-1, 2)"
-                  >
-                    <div
-                      v-if="data.rightImg2.children"
-                      class="link-content"
-                    >
-                      <template
-                        v-if="data.rightImg2.children.data.linkPage === 'goods'"
-                      >
+                  <div class="goods-select" @click="setTypeNavLink(-1, 2)">
+                    <div v-if="data.rightImg2.children" class="link-content">
+                      <template v-if="data.rightImg2.children.data.linkPage === 'goods'">
                         商品：
                       </template>
-                      <template
-                        v-if="data.rightImg2.children.data.linkPage === 'category'"
-                      >
+                      <template v-if="data.rightImg2.children.data.linkPage === 'category'">
                         分类：
                       </template>
-                      <template
-                        v-if="data.rightImg2.children.data.linkPage === 'article'"
-                      >
+                      <template v-if="data.rightImg2.children.data.linkPage === 'article'">
                         文章：
                       </template>
-                      <template
-                        v-if="data.rightImg2.children.data.linkPage === 'planting'"
-                      >
+                      <template v-if="data.rightImg2.children.data.linkPage === 'planting'">
                         软文：
                       </template>
-                      <template
-                        v-if="data.rightImg2.children.data.linkPage === 'link'"
-                      >
+                      <template v-if="data.rightImg2.children.data.linkPage === 'link'">
                         页面：
                       </template>
-                      <template
-                        v-if="data.rightImg2.children.data.linkPage === 'marketing'"
-                      >
+                      <template v-if="data.rightImg2.children.data.linkPage === 'marketing'">
                         营销：
                       </template>
-                      <template
-                        v-if="data.rightImg2.children.data.linkPage === 'custom_page'"
-                      >
+                      <template v-if="data.rightImg2.children.data.linkPage === 'custom_page'">
                         自定义页面：
                       </template>
                       {{ data.rightImg2.children.data.title }}
                     </div>
-                    <div
-                      v-else
-                      class="content-center"
-                      @click="setTypeNavLink(-1, 2)"
-                    >
+                    <div v-else class="content-center" @click="setTypeNavLink(-1, 2)">
                       <i class="iconfont icon-link" />设置路径
                     </div>
                   </div>
@@ -361,24 +230,12 @@
         <!-- Tab类型切换 -->
         <el-form-item label="组件导航">
           <template v-if="data.leftNavList">
-            <div
-              v-for="(item, index) in data.tabList"
-              class="setting-item"
-            >
-              <div
-                class="setting-remove"
-                @click="delTabList(index)"
-              >
+            <div v-for="(item, index) in data.tabList" class="setting-item">
+              <div class="setting-remove" @click="delTabList(index)">
                 <i class="iconfont icon-trash-alt" />
               </div>
-              <div
-                class="uploader-setting"
-                style="padding-left: 0"
-              >
-                <el-input
-                  v-model="item.title"
-                  placeholder="请输入导航名称"
-                />
+              <div class="uploader-setting" style="padding-left: 0">
+                <el-input v-model="item.title" placeholder="请输入导航名称" />
               </div>
             </div>
             <el-button
@@ -389,18 +246,13 @@
             >
               添加导航
             </el-button>
-            <div class="frm-tips">
-              最多添加9个导航
-            </div>
+            <div class="frm-tips">最多添加9个导航</div>
           </template>
         </el-form-item>
         <!-- 选择商品 -->
         <el-form-item label="导航关联商品">
           <template v-if="data.tabList && data.tabList.length > 0">
-            <el-tabs
-              v-model="data.activeName"
-              type="card"
-            >
+            <el-tabs v-model="data.activeName" type="card">
               <el-tab-pane
                 v-for="(items, index) in data.tabList"
                 :key="items.uuid"
@@ -418,24 +270,14 @@
                     :key="item.id"
                     class="setting-item item-selected"
                   >
-                    <img
-                      class="thumbnail"
-                      :src="wximageurl + item.pics[0]"
-                      alt=""
-                    >
+                    <img class="thumbnail" :src="wximageurl + item.pics[0]" alt="">
                     <div class="">
                       {{ item.item_name }}
                     </div>
-                    <div
-                      class="setting-remove"
-                      @click="editGoods(i)"
-                    >
+                    <div class="setting-remove" @click="editGoods(i)">
                       <i class="el-icon-s-tool" />
                     </div>
-                    <div
-                      class="setting-remove"
-                      @click="delGoods(i)"
-                    >
+                    <div class="setting-remove" @click="delGoods(i)">
                       <i class="el-icon-delete" />
                     </div>
                   </div>
@@ -453,12 +295,7 @@
               </el-tab-pane>
             </el-tabs>
           </template>
-          <div
-            v-else
-            class="frm-tips"
-          >
-            <i class="el-icon-warning mark" /> 请先设置导航
-          </div>
+          <div v-else class="frm-tips"><i class="el-icon-warning mark" /> 请先设置导航</div>
         </el-form-item>
       </el-form>
     </div>
@@ -494,7 +331,6 @@ import linkSetter from '@/components/template_links' //添加导航连接
 import goodsPicker from '@/components/goods_picker' //添加商品
 import marqueesEditor from '@/components/template_editor/marquees'
 import { getItemsList } from '@/api/goods'
-import { setTimeout } from 'timers'
 
 export default {
   name: 'FloorStyle',
@@ -509,7 +345,7 @@ export default {
       type: Object
     }
   },
-  data () {
+  data() {
     return {
       temp: '',
       linksArr: ['goods', 'store', 'custom_page', 'category'],
@@ -537,18 +373,18 @@ export default {
   watch: {
     res: {
       deep: true,
-      handler (value) {
+      handler(value) {
         if (value) {
           this.setData(value)
         }
       }
     }
   },
-  mounted () {
+  mounted() {
     this.setData(this.res)
   },
   methods: {
-    setData (val) {
+    setData(val) {
       this.name = val.name
       this.base = val.base
       this.config = val.config
@@ -557,7 +393,7 @@ export default {
     /**
      * 添加 tab类型
      */
-    addTabList () {
+    addTabList() {
       this.data.tabList.push({
         uuid: Date.now(),
         uuid2: Date.now() + 1,
@@ -568,13 +404,13 @@ export default {
     /**
      *删除选中的 Tab类型
      */
-    delTabList (index) {
+    delTabList(index) {
       this.data.tabList.splice(index, 1)
     },
     /**
      * 添加类型导航项
      */
-    addTypeNav () {
+    addTypeNav() {
       this.data.leftNavList.push({
         uuid: Date.now(),
         uuid2: Date.now() + 1,
@@ -586,13 +422,13 @@ export default {
     /**
      *删除选中的类型导航项
      */
-    delTypeNav (index) {
+    delTypeNav(index) {
       this.data.leftNavList.splice(index, 1)
     },
     /**
      * 调用 添加类型导航设置路径 组建
      */
-    setTypeNavLink (index, i) {
+    setTypeNavLink(index, i) {
       this.typeNavIndex = index
       this.imgIndex = i
 
@@ -601,7 +437,7 @@ export default {
     /**
      * 添加类型导航设置路径 || 添加图片挂件路径
      */
-    setLink (data, type) {
+    setLink(data, type) {
       console.log('setLink---')
       console.log(data)
       console.log(type)
@@ -644,7 +480,7 @@ export default {
     /**
      * 显示上传图片组建
      */
-    handleImgChange (index) {
+    handleImgChange(index) {
       this.imgIndex = index
       this.imgsVisible = true
       this.isGetImage = true
@@ -652,7 +488,7 @@ export default {
     /**
      * 显示上传图片组建 回调
      */
-    pickImg (data) {
+    pickImg(data) {
       console.log('pickImg---')
       console.log(data)
       console.log(this.imgIndex)
@@ -674,14 +510,14 @@ export default {
     /**
      * 添加商品
      */
-    addGoods () {
+    addGoods() {
       this.editItemStatus = true
       this.goodsVisible = true
     },
     /**
      * 删除选中的商品
      */
-    delGoods (index) {
+    delGoods(index) {
       let i = Number(this.data.activeName)
       this.data.tabList[i].children.splice(index, 1)
     },
@@ -689,7 +525,7 @@ export default {
     /**
      * 修改选中的商品
      */
-    editGoods (index) {
+    editGoods(index) {
       this.editGoodsIndex = index
       this.editItemStatus = false
       this.goodsVisible = true
@@ -697,7 +533,7 @@ export default {
     /**
      * 选择商品组建回调
      * */
-    pickGoods (row) {
+    pickGoods(row) {
       let data = row.map((v) => {
         return { ...v, item_name: v.title, item_id: v.goodsId, pics: [v.imgUrl] }
       })
@@ -713,7 +549,7 @@ export default {
       }
       this.goodsVisible = false
     },
-    onEnd (evt) {
+    onEnd(evt) {
       this.temp = this.data.tabList[this.data.activeName].children[evt.oldIndex]
       this.data.tabList[this.data.activeName].children.splice(evt.oldIndex, 1)
       this.data.tabList[this.data.activeName].children.splice(evt.newIndex, 0, this.temp)

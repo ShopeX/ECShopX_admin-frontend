@@ -18,7 +18,7 @@
   >
     <span class="symbol" :style="{ 'font-size': `${size}px` }">{{ symbol }}</span>
     <span class="int-value" :style="{ 'font-size': `${size}px` }">{{ intValue }}</span>
-    <span class="decimal-value" :style="{ 'font-size': `${size - 2}px` }">{{
+    <span class="decimal-value" :style="{ 'font-size': `${size}px` }">{{
       `.${decimalValue}`
     }}</span>
   </div>

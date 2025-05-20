@@ -3,69 +3,29 @@
     <div v-if="$route.path.indexOf('detail') === -1">
       <el-row :gutter="10">
         <el-col :span="4">
-          <el-input
-            v-model="order_id"
-            placeholder="订单号"
-            size="mini"
-          >
-            <el-button
-              slot="append"
-              icon="el-icon-search"
-              @click="numberSearch"
-            />
+          <el-input v-model="order_id" placeholder="订单号" size="mini">
+            <el-button slot="append" icon="el-icon-search" @click="numberSearch" />
           </el-input>
         </el-col>
       </el-row>
-      <el-tabs
-        v-model="activeName"
-        type="border-card"
-        @tab-click="handleClick"
-      >
-        <el-tab-pane
-          label="全部"
-          name="all"
-        />
+      <el-tabs v-model="activeName" type="border-card" @tab-click="handleClick">
+        <el-tab-pane label="全部" name="all" />
         <!-- <el-tab-pane label="电子" name="success"></el-tab-pane> -->
         <!-- <el-tab-pane label="已开票" name="notpay"></el-tab-pane>
       <el-tab-pane label="未开票" name="notpay"></el-tab-pane> -->
-        <el-table
-          v-loading="loading"
-          :data="list"
-          style="width: 100%"
-          :height="wheight - 140"
-        >
-          <el-table-column
-            type="selection"
-            width="55"
-          />
-          <el-table-column
-            prop="order_id"
-            label="订单号"
-            min-width="84"
-          />
-          <el-table-column
-            prop="user_id"
-            label="会员ID"
-            min-width="84"
-          />
-          <el-table-column
-            prop="type_hz"
-            label="开票方式"
-          />
-          <el-table-column
-            prop="amount"
-            label="开票金额"
-          >
+        <el-table v-loading="loading" :data="list" style="width: 100%" :height="wheight - 140">
+          <el-table-column type="selection" width="55" />
+          <el-table-column prop="order_id" label="订单号" min-width="84" />
+          <el-table-column prop="user_id" label="会员ID" min-width="84" />
+          <el-table-column prop="type_hz" label="开票方式" />
+          <el-table-column prop="amount" label="开票金额">
             <!-- <template slot-scope="scope">
             <span>￥{{scope.row.amount/100}}</span>
           </template> -->
           </el-table-column>
           <el-table-column label="开票人信息">
             <template slot-scope="scope">
-              <div
-                v-for="(item, index) in scope.row.fapiaoinfo_query"
-                :key="index"
-              >
+              <div v-for="(item, index) in scope.row.fapiaoinfo_query" :key="index">
                 <a v-if="item.c_buyername != ''">{{ item.c_buyername }}</a>
                 <!-- <a v-if="item.c_bhsje != '' " >金额：{{item.c_bhsje}}</a> -->
               </div>
@@ -74,10 +34,7 @@
 
           <el-table-column label="商品信息">
             <template slot-scope="scope">
-              <div
-                v-for="(item, index) in scope.row.fapiaoinfo"
-                :key="index"
-              >
+              <div v-for="(item, index) in scope.row.fapiaoinfo" :key="index">
                 <a v-if="item.item_name != ''">{{ item.item_name }}</a>
                 <a v-if="item.num != ''"> X {{ item.num }} </a>
                 <!-- <a v-if="item.c_bhsje != '' " >金额：{{item.c_bhsje}}</a> -->
@@ -87,36 +44,23 @@
 
           <el-table-column label="下载">
             <template slot-scope="scope">
-              <div
-                v-for="(item, index) in scope.row.fapiaoinfo_query"
-                :key="index"
-              >
-                <a
-                  v-if="item.c_url != ''"
-                  :href="item.c_url"
-                  target="_blank"
-                >发票PDF{{ index + 1 }}</a>
+              <div v-for="(item, index) in scope.row.fapiaoinfo_query" :key="index">
+                <a v-if="item.c_url != ''" :href="item.c_url" target="_blank"
+                  >发票PDF{{ index + 1 }}</a
+                >
                 <!-- <a v-if="item.c_jpg_url != '' " :href="'http://' + item.c_jpg_url" target="_blank" >发票图片{{index + 1}}</a> -->
               </div>
 
-              <div
-                v-for="(item, index) in scope.row.fapiaoinfo_query_red"
-                :key="index"
-              >
-                <a
-                  v-if="item.c_url != ''"
-                  :href="item.c_url"
-                  target="_blank"
-                >冲红票{{ index + 1 }}</a>
+              <div v-for="(item, index) in scope.row.fapiaoinfo_query_red" :key="index">
+                <a v-if="item.c_url != ''" :href="item.c_url" target="_blank"
+                  >冲红票{{ index + 1 }}</a
+                >
               </div>
             </template>
           </el-table-column>
           <el-table-column label="状态">
             <template slot-scope="scope">
-              <div
-                v-for="(item, index) in scope.row.fapiaoinfo_query"
-                :key="index"
-              >
+              <div v-for="(item, index) in scope.row.fapiaoinfo_query" :key="index">
                 <a v-if="item.c_msg != ''">{{ item.c_msg }}</a>
               </div>
             </template>
@@ -154,7 +98,7 @@
                 冲红
               </el-button>
               <!-- <el-button type="text" v-if="scope.row.status == 2" @click="downloadpop(scope.row,scope.$index,2)">下载</el-button> -->
-              <!-- <router-link :to="{ path: matchHidePage('detail'), query: { id: scope.row.id, resource: $route.path }}">编辑</router-link> -->
+              <!-- <router-link :to="{ path: matchRoutePath('detail'), query: { id: scope.row.id, resource: $route.path }}">编辑</router-link> -->
               <el-button
                 v-if="scope.row.status == 1"
                 type="text"
@@ -192,7 +136,7 @@ export default {
   components: {
     shopSelect
   },
-  data () {
+  data() {
     return {
       activeName: 'all',
       loading: false,
@@ -216,45 +160,45 @@ export default {
   computed: {
     ...mapGetters(['wheight'])
   },
-  mounted () {
+  mounted() {
     this.getList(this.params)
   },
   methods: {
     // 切换tab
-    handleClick (tab, event) {
+    handleClick(tab, event) {
       this.activeName = tab.name
       this.params.status = tab.name == 'all' ? '' : tab.name
       this.params.page = 1
       this.getParams()
       this.getList(this.params)
     },
-    shopHandle (val) {
+    shopHandle(val) {
       val && val.shop_id
       this.currentShop = val.shop_id
       this.params.page = 1
       this.getParams()
       this.getList(this.params)
     },
-    numberSearch (e) {
+    numberSearch(e) {
       this.params.page = 1
       this.getParams()
       this.getList(this.params)
     },
-    handleCurrentChange (val) {
+    handleCurrentChange(val) {
       this.params.page = val
       this.getParams()
       this.getList(this.params)
     },
-    handleSizeChange (pageSize) {
+    handleSizeChange(pageSize) {
       this.params.page = 1
       this.params.pageSize = pageSize
       this.getParams()
       this.getList(this.params)
     },
-    getParams () {
+    getParams() {
       this.params.order_id = this.order_id
     },
-    getList (filter) {
+    getList(filter) {
       this.loading = true
       getFapiaoList(filter).then((response) => {
         this.list = response.data.data.list
@@ -263,7 +207,7 @@ export default {
         console.warn(this.list)
       })
     },
-    cancelFapiao (item, index) {
+    cancelFapiao(item, index) {
       let params = { id: 0, delete: 1 }
       params.id = item.id
       this.$confirm('确定作废吗？？', '提示', {
@@ -290,11 +234,11 @@ export default {
         })
     },
 
-    downloadpop (item) {
+    downloadpop(item) {
       console.log(item.fapiaoinfo_query)
     },
 
-    handleChangeStatus (item, index, status_change) {
+    handleChangeStatus(item, index, status_change) {
       let query = { id: 0 }
       let _text = ''
       query.id = item.id

@@ -2,6 +2,7 @@
 .sp-image {
   display: flex;
   align-items: center;
+  display: block;
 }
 </style>
 
@@ -18,6 +19,11 @@ export default {
     fit: {
       type: String,
       default: 'cover'
+    }
+  },
+  methods: {
+    handleImageClick() {
+      this.$emit('click')
     }
   },
   render() {
@@ -39,7 +45,13 @@ export default {
     }
 
     return (
-      <el-image class={'sp-image'} style={styleNames} src={src || dImage} fit={this.fit}>
+      <el-image
+        class={'sp-image'}
+        style={styleNames}
+        src={src || dImage}
+        fit={this.fit}
+        onClick={this.handleImageClick}
+      >
         <template slot='error'>
           <img src={dImage} width='100%' />
         </template>

@@ -355,12 +355,12 @@ export default {
     Treeselect,
     SideBar
   },
-  props: ['getStatus'],
   provide() {
     return {
       refresh: this.getGoodsList
     }
   },
+  props: ['getStatus'],
   data() {
     return {
       login_type: 'default',
@@ -638,7 +638,7 @@ export default {
     },
     addItems() {
       // 添加商品
-      this.$router.push({ path: this.matchHidePage('editor') })
+      this.$router.push({ path: this.matchRoutePath('editor') })
     },
     addTemplates() {
       if (this.item_id.length) {
@@ -665,11 +665,11 @@ export default {
       this.show_itemStore = false
       if (isNew) {
         var routeData = this.$router.push({
-          path: this.matchHidePage('editor/') + row.itemId,
+          path: this.matchRoutePath('editor/') + row.itemId,
           query: { is_new: true }
         })
       } else {
-        var routeData = this.$router.push({ path: this.matchHidePage('editor/') + row.itemId })
+        var routeData = this.$router.push({ path: this.matchRoutePath('editor/') + row.itemId })
       }
     },
 
@@ -766,9 +766,9 @@ export default {
     },
     handleImport(command) {
       if (command == 'physicalupload') {
-        this.$router.push({ path: this.matchHidePage('physicalupload') })
+        this.$router.push({ path: this.matchRoutePath('physicalupload') })
       } else if (command == 'physicalstoreupload') {
-        this.$router.push({ path: this.matchHidePage('physicalstoreupload') })
+        this.$router.push({ path: this.matchRoutePath('physicalstoreupload') })
       }
     },
     batchItemsStatus(status) {

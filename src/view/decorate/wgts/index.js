@@ -74,7 +74,9 @@ const SCENE_1004 = SCENE_1001
 
 // 软文
 const SCENE_1005 = {
-  WgtSlider
+  WgtSlider,
+  WgtFilm
+  // WgtHeadline
 }
 
 // ibs导航
@@ -93,5 +95,6 @@ export default {
   1002: SCENE_1002,
   1003: SCENE_1003,
   1004: SCENE_1004,
-  1006: SCENE_1006,
+  1005: SCENE_1005,
+  1006: SCENE_1006
 }

@@ -81,7 +81,7 @@
               >
             </el-col>
             <el-col :span="13">
-              <router-link :to="{ path: matchHidePage('approve'), query: { id: item.id } }">
+              <router-link :to="{ path: matchRoutePath('approve'), query: { id: item.id } }">
                 <span class="cus-row-name">{{ item.user_name }}</span>
               </router-link>
               <div class="cus-row-time">
@@ -112,7 +112,7 @@
             <el-col class="cus-row-btn" :span="3" :offset="item.status === 'WAIT_APPROVE' ? 5 : 0">
               <router-link
                 v-if="item.status === 'WAIT_APPROVE'"
-                :to="{ path: matchHidePage('approve'), query: { id: item.id } }"
+                :to="{ path: matchRoutePath('approve'), query: { id: item.id } }"
               >
                 <el-button type="primary"> 审批 </el-button>
               </router-link>

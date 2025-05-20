@@ -4,7 +4,7 @@
       <SpFilterForm :model="params" @onSearch="onSearch" @onReset="onSearch">
         <SpFilterFormItem prop="keywords" label="商品名称:">
           <el-input v-model="params.keywords" placeholder="请输入商品名称" />
-        </SpFilterFormItem>        
+        </SpFilterFormItem>
         <SpFilterFormItem prop="goods_bn" label="SPU编码:">
           <el-input v-model="params.goods_bn" placeholder="请输入SPU编码" />
         </SpFilterFormItem>
@@ -83,9 +83,7 @@
                 {{ scope.row.item_name }}
                 <el-tag v-if="scope.row.special_type == 'drug'" type="danger"> 处方药 </el-tag>
 
-                <div style='color: #888;font-size: 12px;'>
-                  SPU编码：{{ scope.row.goods_bn }}
-                </div>
+                <div style="color: #888; font-size: 12px">SPU编码：{{ scope.row.goods_bn }}</div>
               </template>
             </el-table-column>
             <el-table-column label="排序编号">
@@ -308,12 +306,12 @@ export default {
     SideBar
   },
   mixins: [pageMixin],
-  props: ['getStatus'],
   provide() {
     return {
       refresh: this.fetchList
     }
   },
+  props: ['getStatus'],
   data() {
     return {
       dialogVisible: false,
@@ -429,7 +427,7 @@ export default {
     editItemsAction(index, row) {
       // 编辑商品弹框
       var routeData = this.$router.push({
-        path: this.matchHidePage('editor/') + row.itemId
+        path: this.matchRoutePath('editor/') + row.itemId
       })
     },
 

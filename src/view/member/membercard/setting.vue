@@ -1,10 +1,7 @@
 <template>
   <div class="clearfix">
     <div class="form-view clearfix">
-      <section
-        id="formView"
-        class="section section-white card_preview_area member_card"
-      >
+      <section id="formView" class="section section-white card_preview_area member_card">
         <div class="msg_card_section shop">
           <div
             class="shop_panel"
@@ -19,10 +16,7 @@
                 <img :src="wximageurl + form.logo_url">
               </span>
               <p>{{ form.brand_name }}</p>
-              <p
-                id="js_title_preview"
-                class="card_name"
-              >
+              <p id="js_title_preview" class="card_name">
                 {{ form.title }}
               </p>
               <span class="qrcode" />
@@ -37,20 +31,11 @@
     </div>
     <div class="form-wrapper">
       <section class="section section-white">
-        <el-form
-          ref="form"
-          :rules="rules"
-          :model="form"
-          label-width="110px"
-          label-position="left"
-        >
+        <el-form ref="form" :rules="rules" :model="form" label-width="110px" label-position="left">
           <!-- <div class="section-header with-border">
             <h3>会员卡基本信息</h3>
           </div> -->
-          <div
-            class="section-body"
-            prop="logo_url"
-          >
+          <div class="section-body" prop="logo_url">
             <!-- <el-form-item label="商户logo">
               <div class="logo-box">
                 <div class="bran-img">
@@ -73,24 +58,11 @@
             </el-form-item> -->
             <el-form-item label="商户logo">
               <div>
-                <div
-                  class="upload-box"
-                  @click="handleImgChange"
-                >
-                  <HoverDelete
-                    v-if="form.logo_url"
-                    @delete="form.logo_url = ''"
-                  >
-                    <img
-                      v-if="form.logo_url"
-                      :src="wximageurl + form.logo_url"
-                      class="avatar"
-                    >
+                <div class="upload-box" @click="handleImgChange">
+                  <HoverDelete v-if="form.logo_url" @delete="form.logo_url = ''">
+                    <img v-if="form.logo_url" :src="wximageurl + form.logo_url" class="avatar">
                   </HoverDelete>
-                  <i
-                    v-else
-                    class="el-icon-plus avatar-uploader-icon"
-                  />
+                  <i v-else class="el-icon-plus avatar-uploader-icon" />
                 </div>
               </div>
               <imgPicker
@@ -103,23 +75,14 @@
 
             <el-form-item label="商户自定义会员卡背景图">
               <div>
-                <div
-                  class="upload-box"
-                  @click="handleImgBgChange"
-                >
+                <div class="upload-box" @click="handleImgBgChange">
                   <HoverDelete
                     v-if="form.background_pic_url"
                     @delete="form.background_pic_url = ''"
                   >
-                    <img
-                      :src="wximageurl + form.background_pic_url"
-                      class="avatar"
-                    >
+                    <img :src="wximageurl + form.background_pic_url" class="avatar">
                   </HoverDelete>
-                  <i
-                    v-else
-                    class="el-icon-plus avatar-uploader-icon"
-                  />
+                  <i v-else class="el-icon-plus avatar-uploader-icon" />
                 </div>
                 （建议尺寸：400px * 250px）
               </div>
@@ -131,10 +94,7 @@
               />
             </el-form-item>
 
-            <el-form-item
-              label="商户名称"
-              prop="brand_name"
-            >
+            <el-form-item label="商户名称" prop="brand_name">
               <el-input
                 v-model="form.brand_name"
                 placeholder="字数上限为12个汉字"
@@ -142,25 +102,16 @@
                 :maxlength="12"
               />&nbsp;<span class="frm-tips">{{ form.brand_name.length }}/12</span>
             </el-form-item>
-            <el-form-item
-              label="会员卡标题"
-              prop="title"
-            >
+            <el-form-item label="会员卡标题" prop="title">
               <el-input
                 v-model="form.title"
                 placeholder="字数上限为9个汉字"
                 style="width: 240px"
                 :maxlength="9"
               />&nbsp;<span class="frm-tips">{{ form.title.length }}/9</span>
-              <p class="frm-tips">
-                卡券名，字数上限为9个汉字(建议涵盖卡券属性、服务及金额)。
-              </p>
+              <p class="frm-tips">卡券名，字数上限为9个汉字(建议涵盖卡券属性、服务及金额)。</p>
             </el-form-item>
-            <el-form-item
-              label="卡券颜色"
-              prop="color"
-              style="margin-bottom: 0"
-            >
+            <el-form-item label="卡券颜色" prop="color" style="margin-bottom: 0">
               <el-color-picker v-model="form.color" />
             </el-form-item>
             <!-- <el-form-item label="券面码型">
@@ -196,12 +147,7 @@
             </el-form-item> -->
           </div>
           <div class="section-footer with-border">
-            <el-button
-              type="primary"
-              @click="submitForm('form')"
-            >
-              保存
-            </el-button>
+            <el-button type="primary" @click="submitForm('form')"> 保存 </el-button>
           </div>
         </el-form>
       </section>
@@ -221,7 +167,7 @@ export default {
   components: {
     imgPicker
   },
-  data () {
+  data() {
     return {
       logo_url: '',
       submitDisabled: false,
@@ -257,7 +203,7 @@ export default {
       isGetImageBg: false
     }
   },
-  mounted () {
+  mounted() {
     getMemberCardDetail().then((res) => {
       if (res.data.data.brand_name) {
         this.form = res.data.data
@@ -265,7 +211,7 @@ export default {
     })
   },
   methods: {
-    submitForm (formName) {
+    submitForm(formName) {
       this.$refs[formName].validate((valid) => {
         if (valid) {
           this.submitDisabled = true
@@ -318,27 +264,27 @@ export default {
     //   })
     // },
     //商户logo
-    handleImgChange () {
+    handleImgChange() {
       this.imgDialog = true
       this.isGetImage = true
     },
-    pickImg (data) {
+    pickImg(data) {
       this.form.logo_url = data.url
       this.imgDialog = false
     },
-    closeImgDialog () {
+    closeImgDialog() {
       this.imgDialog = false
     },
     //商户自定义会员卡背景图
-    handleImgBgChange () {
+    handleImgBgChange() {
       this.imgBgDialog = true
       this.isGetImageBg = true
     },
-    pickBgImg (data) {
+    pickBgImg(data) {
       this.form.background_pic_url = data.url
       this.imgBgDialog = false
     },
-    closeBgImgDialog () {
+    closeBgImgDialog() {
       this.imgBgDialog = false
     }
   }
@@ -503,8 +449,6 @@ export default {
 .member_card .shop .qrcode {
   width: 36px;
   height: 36px;
-  background: url(/mpres/zh_CN/htmledition/comm_htmledition/style/page/cardticket/member_card_control_z331295.png)
-    0 -147px no-repeat;
   position: absolute;
   top: 26px;
   right: 20px;

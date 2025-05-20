@@ -134,7 +134,7 @@
                   <el-button type="text">
                     <router-link
                       :to="{
-                        path: matchHidePage('detail'),
+                        path: matchRoutePath('detail'),
                         query: {
                           chooseCardtype: scope.row.card_type,
                           cardId: scope.row.card_id,
@@ -156,7 +156,7 @@
                   >
                     <router-link
                       :to="{
-                        path: matchHidePage('editor'),
+                        path: matchRoutePath('editor'),
                         query: { chooseCardtype: scope.row.card_type, cardId: scope.row.card_id }
                       }"
                     >
@@ -417,7 +417,7 @@ export default {
       this.onSearch()
     },
     addCoupon() {
-      this.$router.push({ path: this.matchHidePage('editor') })
+      this.$router.push({ path: this.matchRoutePath('editor') })
     },
     sendoutShowAction(id) {
       this.sendoutVisible = true

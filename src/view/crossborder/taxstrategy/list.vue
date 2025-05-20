@@ -10,17 +10,9 @@
             placeholder="策略名称"
             @change="origincountrySearch"
           >
-            <el-button
-              slot="append"
-              icon="el-icon-search"
-              @click="origincountrySearch"
-            />
+            <el-button slot="append" icon="el-icon-search" @click="origincountrySearch" />
           </el-input>
-          <el-button
-            type="primary"
-            icon="el-icon-circle-plus"
-            @click="handleNew"
-          >
+          <el-button type="primary" icon="el-icon-circle-plus" @click="handleNew">
             新增策略
           </el-button>
         </el-col>
@@ -33,30 +25,15 @@
           :height="wheight - 300"
           element-loading-text="数据加载中"
         >
-          <el-table-column
-            label="操作"
-            width="150"
-          >
+          <el-table-column label="操作" width="150">
             <template slot-scope="scope">
-              <el-button
-                type="text"
-                @click="handleEdit(scope.$index, scope.row, true)"
-              >
+              <el-button type="text" @click="handleEdit(scope.$index, scope.row, true)">
                 编辑
               </el-button>
-              <el-button
-                type="text"
-                @click="handleDelete(scope)"
-              >
-                删除
-              </el-button>
+              <el-button type="text" @click="handleDelete(scope)"> 删除 </el-button>
             </template>
           </el-table-column>
-          <el-table-column
-            prop="attribute_name"
-            label="策略名称"
-            width="300"
-          >
+          <el-table-column prop="attribute_name" label="策略名称" width="300">
             <template slot-scope="scope">
               <div>{{ scope.row.taxstrategy_name }}</div>
             </template>
@@ -88,12 +65,12 @@ import { getTaxstrategyList, delTaxstrategy } from '../../../api/crossborder'
 
 export default {
   components: {},
-  provide () {
+  provide() {
     return {
       refresh: this.handleCurrentChange
     }
   },
-  data () {
+  data() {
     return {
       loading: false,
       imgDialog: false,
@@ -110,25 +87,25 @@ export default {
       list: []
     }
   },
-  mounted () {
+  mounted() {
     this.handleCurrentChange(1)
   },
   methods: {
     // 搜索
-    origincountrySearch () {
+    origincountrySearch() {
       this.handleCurrentChange(1)
     },
     // 编辑
-    handleEdit (index, row) {
-      this.$router.push({ path: this.matchHidePage('editor/') + row.id })
+    handleEdit(index, row) {
+      this.$router.push({ path: this.matchRoutePath('editor/') + row.id })
     },
     // 新增编辑
-    handleNew () {
-      this.$router.push({ path: this.matchHidePage('editor') })
+    handleNew() {
+      this.$router.push({ path: this.matchRoutePath('editor') })
     },
 
     // 删除
-    handleDelete (data) {
+    handleDelete(data) {
       this.$confirm('确认删除该策略么？')
         .then((_) => {
           delTaxstrategy(data.row.id, []).then((res) => {
@@ -139,17 +116,17 @@ export default {
         .catch((_) => {})
     },
     // 分页
-    handleCurrentChange (page_num = 1) {
+    handleCurrentChange(page_num = 1) {
       this.params.page = page_num
       this.getList()
     },
-    handleSizeChange (pageSize) {
+    handleSizeChange(pageSize) {
       this.params.page = 1
       this.params.pageSize = pageSize
       this.getList()
     },
     // 获取列表
-    getList () {
+    getList() {
       console.log('获取数据')
       this.loading = true
       getTaxstrategyList(this.params).then((res) => {

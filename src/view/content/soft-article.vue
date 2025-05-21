@@ -97,6 +97,7 @@ export default {
         author_type: '运动达人',
         sport_fanatic: '',
         fashion_trend: '',
+        industry_presets: '',
         topic_type: '产品测评',
         product_review: '',
         seasonal_recommend: ''
@@ -110,6 +111,17 @@ export default {
           required: true,
           placeholder: '请选择软文频道',
           options: []
+        },
+        {
+          label: '行业',
+          key: 'industry_presets',
+          type: 'select',
+          required: true,
+          placeholder: '请选择软文频道',
+          options: [
+            { title: '运动服饰', value: '面料、透气性、款式、舒适性' },
+            { title: '护肤', value: '原料、质地、主要功能、解决肌肤问题、使用效果' }
+          ]
         },
         {
           label: '推广商品',
@@ -289,25 +301,25 @@ export default {
             name: item.item_name,
             price: item.price / 100,
             category: item.itemCatName.toString(),
+            item_image_url: item.pics?.[0],
             sales: item.sales
           }
         }),
         is_image: true,
         is_article: true,
-        category_id: '',
+        category_id: this.aiArticleForm.channel,
         author_persona: this.aiArticleForm.author_type,
-        industry_presets: {
-          fabric: '',
-          breathability: '',
-          industry_presets: ''
-        },
+        author_name:
+          this.aiArticleForm.author_type == '运动达人'
+            ? this.aiArticleForm.sport_fanatic
+            : this.aiArticleForm.fashion_trend,
+        industry_presets: this.aiArticleForm.industry_presets,
         subject_desc: this.aiArticleForm.topic_type,
         detial_desc:
           this.aiArticleForm.topic_type == '产品测评'
             ? this.aiArticleForm.product_review
             : this.aiArticleForm.seasonal_recommend
       }
-
       await this.$api.article.createArticleByAI(params)
       this.drawerShow = false
       this.$message.success('提交成功，AI生成软文预计需要3分钟，请稍后在待发布中查看。')

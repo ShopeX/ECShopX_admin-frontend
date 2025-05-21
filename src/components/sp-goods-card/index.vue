@@ -8,9 +8,7 @@
       </div>
     </div>
 
-    <span class="sp-goods-card__delete">
-      <i class="iconfont icon-trash-alt1" />
-    </span>
+    <slot name="delete" />
   </div>
 </template>
 
@@ -22,7 +20,8 @@ export default {
       type: Object,
       default: () => {}
     }
-  }
+  },
+  methods: {}
 }
 </script>
 

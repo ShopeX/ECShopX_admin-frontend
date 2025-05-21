@@ -131,7 +131,7 @@
                       '/shopadmin/order/aftersaleslist/detail') ||
                     (`${$store.getters.login_type}` == 'merchant' &&
                       '/merchant/order/aftersaleslist/detail') ||
-                    '/order/entitytrade/aftersaleslist/detail',
+                    '/order/aftersales/aftersaleslist/detail',
 
                   query: { aftersales_bn: scope.row.aftersales_bn }
                 }"

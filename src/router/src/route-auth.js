@@ -23,7 +23,6 @@ export default [
   },
   {
     path: '/merchant/login',
-    // component: () => import( '@/view/merchantlogin' ),
     component: () => import('@/view/auth/login'),
     meta: {
       auth: false,
@@ -31,21 +30,8 @@ export default [
     },
     name: '授权-商户登录'
   },
-  // {
-  //   path:'/dealer/login',
-  //   component:()=> import('@/view/auth/login'),
-  //   meta:{
-  //     auth:false
-  //   },
-  //   name:'授权-经销商登录'
-  // },
-  // {
-  //   path: '/shopadmin',
-  //   redirect: '/shopadmin/login'
-  // },
   {
     path: '/dealer/login',
-    // component:()=> import('@/view/auth/dealer_login'),
     component: () => import('@/view/auth/login'),
     meta: {
       auth: false,
@@ -53,11 +39,6 @@ export default [
     },
     name: '授权-经销商登录'
   },
-  // {
-  //   path: '/shopadmin/shoplist',
-  //   component: () => import( '@/view/shoplist' )
-  // },
-  // 激活
   {
     path: '/activelicense',
     component: () => import('@/view/base/asset/accountactivation/index')
@@ -103,8 +84,8 @@ export default [
       {
         path: 'supplier_register',
         name: `供应商入驻`,
-        component: () => import('@/view/auth/certify'),
-      },
+        component: () => import('@/view/auth/certify')
+      }
     ]
-  },
+  }
 ]

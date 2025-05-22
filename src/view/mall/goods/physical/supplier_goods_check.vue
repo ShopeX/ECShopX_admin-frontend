@@ -648,7 +648,7 @@ export default {
         ],
         columns: [
           { name: '供应商品ID', key: 'item_id', width: 120, align: 'right', headerAlign: 'center' },
-          { name: '平台商品ID', key: 'man_item_id', width: 120, align: 'right', headerAlign: 'center' },
+          { name: '平台商品ID', key: 'main_item_id', width: 120, align: 'right', headerAlign: 'center' },
           {
             name: '商品',
             key: 'itemName',

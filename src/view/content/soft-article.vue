@@ -42,6 +42,12 @@
       <el-button icon="plus" @click="createArticleByAI"> AI创作 </el-button>
     </div>
 
+    <el-tabs v-model="activeTab" type="card" @tab-click="onTabChange">
+      <el-tab-pane label="全部" name="all" />
+      <el-tab-pane label="待发布" name="wait" />
+      <el-tab-pane label="已发布" name="published" />
+    </el-tabs>
+
     <SpPagination ref="paginationRef" auto-fetch :fetch="fetchList">
       <div class="grid grid-cols-5 gap-4">
         <SpContentCard
@@ -90,18 +96,16 @@
 export default {
   data() {
     return {
+      activeTab: 'all',
       articleList: [],
       aiArticleForm: {
         channel: '',
         goods: [],
         author_type: '运动达人',
-        sport_fanatic: '',
-        fashion_trend: '',
+        author_type_customer: '',
         industry_presets: '',
         topic_type: '产品测评',
-        product_review: '',
-        seasonal_recommend: ''
-        // topic_content: ''
+        topic_type_customer: ''
       },
       aiArticleFormList: [
         {
@@ -142,48 +146,36 @@ export default {
         {
           label: '作者人设',
           key: 'author_type',
-          type: 'radio',
+          type: 'select',
           options: [
-            { label: '运动达人', name: '运动达人' },
-            { label: '潮流小主', name: '潮流小主' }
+            { title: '运动达人', value: '运动达人' },
+            { title: '潮流小主', value: '潮流小主' },
+            { title: '自定义', value: '自定义' }
           ]
         },
         {
           label: '',
-          key: 'sport_fanatic',
+          key: 'author_type_customer',
           type: 'input',
-          placeholder: '请输入运动达人',
-          isShow: ({ key }, form) => form.author_type === '运动达人'
-        },
-        {
-          label: '',
-          key: 'fashion_trend',
-          type: 'input',
-          placeholder: '请输入潮流小主',
-          isShow: ({ key }, form) => form.author_type === '潮流小主'
+          placeholder: '请输入',
+          isShow: ({ key }, form) => form.author_type === '自定义'
         },
         {
           label: '创作主题描述',
           key: 'topic_type',
-          type: 'radio',
+          type: 'select',
           options: [
-            { label: '产品测评', name: '产品测评' },
-            { label: '季节性推荐', name: '季节性推荐' }
+            { title: '产品测评', value: '产品测评' },
+            { title: '季节性推荐', value: '季节性推荐' },
+            { title: '自定义', value: '自定义' }
           ]
         },
         {
           label: '',
-          key: 'product_review',
+          key: 'topic_type_customer',
           type: 'textarea',
-          placeholder: '请输入内容',
-          isShow: ({ key }, form) => form.topic_type === '产品测评'
-        },
-        {
-          label: '',
-          key: 'seasonal_recommend',
-          type: 'textarea',
-          placeholder: '请输入内容',
-          isShow: ({ key }, form) => form.topic_type === '季节性推荐'
+          placeholder: '请输入',
+          isShow: ({ key }, form) => form.topic_type === '自定义'
         }
       ],
       channelOptions: [],
@@ -259,12 +251,21 @@ export default {
     handleClick(item) {
       this.$router.push({ path: this.matchRoutePath('editor'), query: { id: item.article_id } })
     },
+    onTabChange() {
+      this.$refs['paginationRef'].refresh()
+    },
     async fetchList({ page, pageSize }) {
+      const releaseStatus = {
+        'all': '2',
+        'wait': '0',
+        'published': '1'
+      }
       const params = {
         page,
         pageSize,
         article_type: 'bring',
-        title: this.searchForm.title
+        title: this.searchForm.title,
+        release_status: releaseStatus[this.activeTab]
       }
       const { list, total_count } = await this.$api.article.getArticleList(params)
       this.articleList = list
@@ -308,17 +309,15 @@ export default {
         is_image: true,
         is_article: true,
         category_id: this.aiArticleForm.channel,
-        author_persona: this.aiArticleForm.author_type,
-        author_name:
-          this.aiArticleForm.author_type == '运动达人'
-            ? this.aiArticleForm.sport_fanatic
-            : this.aiArticleForm.fashion_trend,
+        author_persona:
+          this.aiArticleForm.author_type == '自定义'
+            ? this.aiArticleForm.author_type_customer
+            : this.aiArticleForm.author_type,
         industry_presets: this.aiArticleForm.industry_presets,
-        subject_desc: this.aiArticleForm.topic_type,
-        detial_desc:
-          this.aiArticleForm.topic_type == '产品测评'
-            ? this.aiArticleForm.product_review
-            : this.aiArticleForm.seasonal_recommend
+        subject_desc:
+          this.aiArticleForm.topic_type == '自定义'
+            ? this.aiArticleForm.topic_type_customer
+            : this.aiArticleForm.topic_type
       }
       await this.$api.article.createArticleByAI(params)
       this.drawerShow = false

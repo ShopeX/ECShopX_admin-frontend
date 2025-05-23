@@ -4,14 +4,10 @@ import ElementUI from 'element-ui'
 import 'element-ui/lib/theme-chalk/index.css'
 
 import { install as apiInstall } from '@/api'
-// import { micrApp } from '@/utils/micr-app'
 import VueClipboard from 'vue-clipboard2'
-import { VueMasonryPlugin } from 'vue-masonry'
 
 import VueVideoPlayer from 'vue-video-player'
 import 'video.js/dist/video-js.css'
-
-// import { install as H5EditorInstall } from '@/utils/vue-h5-editor'
 
 import App from './App'
 import router from './router'
@@ -23,7 +19,6 @@ import { install as Filter } from '@/filters'
 import './style/common.scss'
 import './style/index.scss'
 
-// import fetch from '@/api/req'
 import fetch from '@/utils/fetch'
 import { initFinder } from '@shopex/finder'
 import '@shopex/finder/lib/finder.css'
@@ -73,8 +68,6 @@ Vue.use(Vuex)
 Vue.use(VueClipboard)
 Vue.use(Directives)
 
-Vue.use(VueMasonryPlugin)
-
 Vue.use(VueVideoPlayer)
 
 Vue.use(Filter)
@@ -118,12 +111,7 @@ const installPlugin = (Vue) => {
 
 installComponent(Vue)
 installPlugin(Vue)
-// micrApp.init()
 
-// import fetch from './utils/fetch'
-
-// import { Base64 } from 'js-base64';
-// Vue.use( Base64 )
 Vue.config.productionTip = false
 Vue.prototype.$export_open = export_open
 new Vue({

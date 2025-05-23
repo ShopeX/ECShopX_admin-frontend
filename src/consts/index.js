@@ -242,7 +242,7 @@ export const FORM_COMP = {
 
 export const SYSTEM_CONFIG = {
   platform: { name: 'Powered By ShopeX', theme: '#CB060F' },
-  standard: { name: '商派Onex云店', theme: '#FF9D00' },
+  standard: { name: '新零售云店', theme: '#FF9D00' },
   b2c: { name: '官方商城', theme: '#157FE3' },
   in_purchase: { name: '商派Onex内购', theme: '#EC442E' }
 }

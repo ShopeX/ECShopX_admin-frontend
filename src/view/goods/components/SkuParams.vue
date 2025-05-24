@@ -177,6 +177,18 @@
           />
         </template>
       </el-table-column>
+      <el-table-column label="起订量">
+        <template slot-scope="scope">
+          <el-input
+            v-model="scope.row.start_num"
+            type="number"
+            required
+            min="0"
+            size="mini"
+            placeholder="起订量"
+          />
+        </template>
+      </el-table-column>
       <el-table-column label="条形码">
         <template slot-scope="scope">
           <el-input
@@ -264,6 +276,11 @@
           <el-input v-model="scope.row.market_price" type="number" min="0" size="mini" />
         </template>
       </el-table-column>
+      <el-table-column prop="start_num" label="起订量">
+        <template slot-scope="scope">
+          <el-input v-model="scope.row.start_num" type="number" min="0" size="mini" />
+        </template>
+      </el-table-column>
       <el-table-column prop="barcode" label="条形码">
         <template slot-scope="scope">
           <el-input v-model="scope.row.barcode" size="mini" />
@@ -346,6 +363,7 @@ export default {
           price: '',
           cost_price: '',
           market_price: '',
+          start_num: 0,
           barcode: '',
           point_num: '',
           weight: '',
@@ -475,6 +493,7 @@ export default {
             price,
             cost_price,
             market_price,
+            start_num,
             barcode,
             point_num,
             item_spec,
@@ -500,6 +519,7 @@ export default {
               price: isNaN(price / 100) ? '' : price / 100,
               cost_price: isNaN(cost_price / 100) ? '' : cost_price / 100,
               market_price: isNaN(market_price / 100) ? '' : market_price / 100,
+              start_num,
               barcode,
               point_num,
               supplier_goods_bn,
@@ -522,6 +542,7 @@ export default {
             price,
             cost_price,
             market_price,
+            start_num,
             barcode,
             point_num,
             supplier_goods_bn,
@@ -540,6 +561,7 @@ export default {
             price: isNaN(price / 100) ? '' : price / 100,
             cost_price: isNaN(cost_price / 100) ? '' : cost_price / 100,
             market_price: isNaN(market_price / 100) ? '' : market_price / 100,
+            start_num,
             barcode,
             point_num,
             supplier_goods_bn,
@@ -584,6 +606,7 @@ export default {
         price,
         cost_price,
         market_price,
+        start_num,
         barcode,
         point_num,
         supplier_goods_bn,
@@ -600,6 +623,7 @@ export default {
         item.price = price
         item.cost_price = cost_price
         item.market_price = market_price
+        item.start_num = start_num
         item.barcode = barcode
         item.point_num = point_num
         item.supplier_goods_bn = supplier_goods_bn
@@ -623,6 +647,7 @@ export default {
         price: '',
         cost_price: '',
         market_price: '',
+        start_num : 0,
         barcode: '',
         point_num: '',
         supplier_goods_bn: '',

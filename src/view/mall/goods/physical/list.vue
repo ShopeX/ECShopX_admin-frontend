@@ -1288,6 +1288,7 @@ export default {
             )
           },
           { name: '销售分类', key: 'itemCatName', minWidth: 120 },
+          { name: '起订量', key: 'start_num', minWidth: 120 },
           {
             name: '是否处方',
             key: 'item_bn',

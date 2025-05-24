@@ -175,7 +175,8 @@ export default {
           tax_rate: '',
           tax_rate_code: '',
           buy_limit_area: ['all'],
-          package_type: 'sku' // 后端要求单规格传sku/spu
+          package_type: 'sku', // 后端要求单规格传sku/spu
+          start_num: 0, //起订量
         },
         skuParams: {
           skus: [],
@@ -992,6 +993,7 @@ export default {
         store,
         item_bn,
         medicine_spec,
+        start_num,
         weight,
         volume,
         price,
@@ -1104,6 +1106,7 @@ export default {
         item_id,
         item_bn: is_new ? '' : item_bn,
         medicine_spec,
+        start_num,
         weight,
         volume,
         price: isNaN(price / 100) ? '' : price / 100,

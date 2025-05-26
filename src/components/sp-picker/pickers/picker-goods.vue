@@ -112,6 +112,7 @@
           </el-select>
       </SpFilterFormItem>
     </SpFilterForm>
+    <!-- 嘉实多只有一个店 -->
     <SpFinder
       ref="finder"
       reserve-selection
@@ -120,7 +121,7 @@
         'max-height': 416,
         'header-cell-class-name': cellClass
       }"
-      :url="IS_DISTRIBUTOR()||VERSION_STANDARD ? 'distributor/items' : '/goods/items'"
+      :url="urls"
       show-pager-text="已选中：${n}"
       :fixed-row-action="true"
       :setting="{
@@ -230,7 +231,8 @@ export default {
       },
       categoryList: [],
       multiple: this.value?.multiple ?? true,
-      localSelection: []
+      localSelection: [],
+      urls:'/goods/items'
     }
   },
   created() {
@@ -243,6 +245,8 @@ export default {
   methods: {
     beforeSearch(params) {
       const { category } = this.formData
+      //嘉实多需求，嘉实多只有一个虚拟店
+      this.urls = this.formData.distributor_id ? 'distributor/items' : '/goods/items'
       params = {
         ...params,
         item_type: 'normal',

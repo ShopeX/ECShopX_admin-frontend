@@ -12,7 +12,7 @@ export default {
       component: () => import('@/view/base/exportlog/index')
     },
     {
-      path: 'datapass/apply',
+      path: 'datapass',
       name: '权限申请',
       component: () => import('@/view/base/encrypt/authAdmin.vue')
     }

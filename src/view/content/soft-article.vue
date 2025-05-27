@@ -93,6 +93,7 @@
 </template>
 
 <script>
+import { INDUSTRY } from './consts'
 export default {
   data() {
     return {
@@ -103,6 +104,7 @@ export default {
         goods: [],
         author_type: '运动达人',
         author_type_customer: '',
+        industry: '',
         industry_presets: '',
         topic_type: '产品测评',
         topic_type_customer: ''
@@ -118,13 +120,13 @@ export default {
         },
         {
           label: '行业',
-          key: 'industry_presets',
+          key: 'industry',
           type: 'select',
           required: true,
           placeholder: '请选择软文频道',
           options: [
-            { title: '运动服饰', value: '面料、透气性、款式、舒适性' },
-            { title: '护肤', value: '原料、质地、主要功能、解决肌肤问题、使用效果' }
+            { title: '运动服饰', value: '运动服饰' },
+            { title: '护肤', value: '护肤' }
           ]
         },
         {
@@ -313,7 +315,8 @@ export default {
           this.aiArticleForm.author_type == '自定义'
             ? this.aiArticleForm.author_type_customer
             : this.aiArticleForm.author_type,
-        industry_presets: this.aiArticleForm.industry_presets,
+        industry: this.aiArticleForm.industry,
+        industry_presets: INDUSTRY[this.aiArticleForm.industry],
         subject_desc:
           this.aiArticleForm.topic_type == '自定义'
             ? this.aiArticleForm.topic_type_customer

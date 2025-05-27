@@ -95,8 +95,6 @@
 </template>
 <script>
 import { getWechatMaterial, deleteWechatMaterial } from '../../../../api/wechat'
-import Vue from 'vue'
-import VueMasonryPlugin from 'vue-masonry'
 export default {
   provide() {
     return {

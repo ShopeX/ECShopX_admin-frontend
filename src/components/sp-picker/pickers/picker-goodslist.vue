@@ -79,11 +79,7 @@
           <el-input v-model="queryForm.item_bn" placeholder="请输入货号" />
         </SpFilterFormItem>
         <SpFilterFormItem prop="approve_status">
-          <el-select
-            v-model="queryForm.approve_status"
-            placeholder="选择状态"
-            clearable
-          >
+          <el-select v-model="queryForm.approve_status" placeholder="选择状态" clearable>
             <el-option
               v-for="item in statusOption"
               :key="item.value"
@@ -92,15 +88,11 @@
             />
           </el-select>
         </SpFilterFormItem>
-       <SpFilterFormItem prop="supplier_name">
+        <SpFilterFormItem prop="supplier_name">
           <el-input v-model="queryForm.supplier_name" placeholder="所属供应商" />
         </SpFilterFormItem>
         <SpFilterFormItem prop="item_holder">
-          <el-select
-            v-model="queryForm.item_holder"
-            placeholder="商品类型"
-            clearable
-          >
+          <el-select v-model="queryForm.item_holder" placeholder="商品类型" clearable>
             <el-option
               v-for="item in categoryOption"
               :key="item.value"
@@ -110,9 +102,7 @@
           </el-select>
         </SpFilterFormItem>
         <SpFilterFormItem prop="is_gift">
-          <el-select v-model="queryForm.is_gift"
-            placeholder="是否为赠品"
-            clearable>
+          <el-select v-model="queryForm.is_gift" placeholder="是否为赠品" clearable>
             <el-option :value="true" label="是" />
             <el-option :value="false" label="否" />
           </el-select>
@@ -218,11 +208,11 @@ export default {
         item_bn: '',
         sn: '',
 
-        supplier_name:'',
-        item_holder:'',
-        is_gift:'',
-        approve_status:'',
-        brand_id:'',
+        supplier_name: '',
+        item_holder: '',
+        is_gift: '',
+        approve_status: '',
+        brand_id: ''
       },
       goodsBranchParams: {
         page: 1,
@@ -231,7 +221,7 @@ export default {
         attribute_name: ''
       },
       goodsBranchList: [],
-      itemSourceMap:GOOD_CATEGORY_MAP,
+      itemSourceMap: GOOD_CATEGORY_MAP,
       categoryOption: [
         {
           title: '自营商品',
@@ -273,7 +263,7 @@ export default {
           {
             name: '商品名称',
             key: 'name',
-             width: '220',
+            width: '220',
             render: (h, { row }) =>
               h(
                 'div',
@@ -352,15 +342,18 @@ export default {
       })
     }
   },
-  computed:{
-    goodsUrl(){
-      if ((this.VERSION_STANDARD && this.IS_DISTRIBUTOR()) ||
-        !(this.VERSION_PLATFORM ||
-        !this.value?.distributor_id ||
-        this.value?.distributor_id == '0')
+  computed: {
+    goodsUrl() {
+      if (
+        (this.VERSION_STANDARD() && this.IS_DISTRIBUTOR()) ||
+        !(
+          this.VERSION_PLATFORM() ||
+          !this.value?.distributor_id ||
+          this.value?.distributor_id == '0'
+        )
       ) {
         return 'distributor/items'
-      }else{
+      } else {
         return '/goods/items'
       }
     }
@@ -387,8 +380,8 @@ export default {
         ...params,
         item_type: 'normal',
         ...this.queryForm,
-        distributor_id:this.value?.distributor_id,
-        keywords:this.queryForm.item_name.trim()
+        distributor_id: this.value?.distributor_id,
+        keywords: this.queryForm.item_name.trim()
       }
       delete _params.item_name
       return _params
@@ -400,7 +393,7 @@ export default {
       this.goodsBranchParams.attribute_name = searchVal
       getGoodsAttr(this.goodsBranchParams).then((response) => {
         this.goodsBranchList = response.data.data.list
-        console.log(111,this.goodsBranchList )
+        console.log(111, this.goodsBranchList)
       })
     },
     async fetch({ page_no, page_size }) {

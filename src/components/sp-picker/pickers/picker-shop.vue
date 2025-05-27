@@ -77,7 +77,7 @@ export default {
       formData: {
         region: [],
         keywords: '',
-        shop_code: '',
+        shop_code: ''
       },
       district,
       regionArea: [],
@@ -100,7 +100,7 @@ export default {
               return '自营'
             }
           },
-          visible: this.VERSION_PLATFORM
+          visible: this.VERSION_PLATFORM()
         },
         { name: '店铺号', key: 'shop_code' },
         { name: '店铺地址', key: 'store_address' }

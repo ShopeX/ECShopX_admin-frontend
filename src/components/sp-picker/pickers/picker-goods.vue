@@ -118,7 +118,7 @@
         'max-height': 416,
         'header-cell-class-name': cellClass
       }"
-      :url="IS_DISTRIBUTOR() || VERSION_STANDARD ? 'distributor/items' : '/goods/items'"
+      :url="IS_DISTRIBUTOR() || VERSION_STANDARD() ? 'distributor/items' : '/goods/items'"
       show-pager-text="已选中：${n}"
       :fixed-row-action="true"
       :setting="{

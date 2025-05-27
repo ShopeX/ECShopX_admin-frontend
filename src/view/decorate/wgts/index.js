@@ -37,7 +37,7 @@ let SCENE_1001 = {
   WgtImageNavigation
 }
 
-if (VERSION_PLATFORM) {
+if (VERSION_PLATFORM()) {
   SCENE_1001 = {
     ...SCENE_1001,
     WgtStore,

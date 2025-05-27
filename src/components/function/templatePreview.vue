@@ -38,7 +38,7 @@
               <headline v-if="item.name === 'headline'" :res="item" />
               <hotTopic v-if="item.name === 'hotTopic'" :res="item" />
               <imgGif v-if="item.name === 'img-gif'" :res="item" />
-              <store v-if="item.name === 'store' && VERSION_PLATFORM" :res="item" />
+              <store v-if="item.name === 'store' && VERSION_PLATFORM()" :res="item" />
             </div>
             <goodsGrid v-if="showLike == 1 && faverite.data.length" :res="faverite" />
           </div>
@@ -450,7 +450,7 @@ export default {
       this.$emit('closeDialog')
     },
     async getData() {
-      if (this.VERSION_PLATFORM) {
+      if (this.VERSION_PLATFORM()) {
         this.initData = [
           ...this.initData,
           {

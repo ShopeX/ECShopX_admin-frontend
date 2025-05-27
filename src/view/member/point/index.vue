@@ -82,7 +82,7 @@
               :max="9999999"
             />天，获取积分
           </el-form-item>
-          <template v-if="!VERSION_IN_PURCHASE">
+          <template v-if="!VERSION_IN_PURCHASE()">
             <el-form-item label="积分抵扣：">
               <el-switch
                 v-model="form.isOpenDeductPoint"
@@ -168,8 +168,8 @@ export default {
         access: 'order',
         include_freight: 'true',
         rule_desc: '',
-        point_pay_first: "1",
-        can_deduct_freight: "1"
+        point_pay_first: '1',
+        can_deduct_freight: '1'
       },
       access: 'order',
       include_freight: 'true'

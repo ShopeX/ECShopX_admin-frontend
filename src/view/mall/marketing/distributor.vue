@@ -73,7 +73,7 @@
   <div class="page-body">
     <SpRouterView>
       <SpPlatformTip h5 app alipay />
-      <!-- <div v-if="VERSION_STANDARD" class="content-bottom-padded">
+      <!-- <div v-if="VERSION_STANDARD()" class="content-bottom-padded">
         <el-alert type="info" title="操作说明" show-icon>
           <div>
             自动同步：开启自动同步后，总部添加编辑商品会自动同步上架到到店铺，保留开启前的商品状态。关闭同步后将保留已同步的商品数据
@@ -113,7 +113,7 @@
             />
           </el-select>
         </SpFilterFormItem>
-        <SpFilterFormItem v-if="VERSION_PLATFORM" prop="tag_id" label="标签:">
+        <SpFilterFormItem v-if="VERSION_PLATFORM()" prop="tag_id" label="标签:">
           <el-cascader
             v-model="params.tag_id"
             placeholder="选择标签"
@@ -125,14 +125,14 @@
         <SpFilterFormItem prop="mobile" label="联系手机:">
           <el-input v-model="params.mobile" placeholder="联系人手机号" />
         </SpFilterFormItem>
-        <SpFilterFormItem v-if="!VERSION_STANDARD" prop="distribution_type" label="店铺类型:">
+        <SpFilterFormItem v-if="!VERSION_STANDARD()" prop="distribution_type" label="店铺类型:">
           <el-select v-model="params.distribution_type" clearable placeholder="选择店铺类型">
             <el-option label="加盟" value="1"> 加盟 </el-option>
             <el-option label="自营" value="0"> 自营 </el-option>
           </el-select>
         </SpFilterFormItem>
         <SpFilterFormItem
-          v-if="!VERSION_STANDARD && $store.getters.login_type == 'admin'"
+          v-if="!VERSION_STANDARD() && $store.getters.login_type == 'admin'"
           prop="merchant_name"
           label="所属商家:"
         >
@@ -142,7 +142,7 @@
 
       <div class="action-container">
         <!-- <el-button
-          v-if="VERSION_PLATFORM && !is_distributor && !IS_MERCHANT()"
+          v-if="VERSION_PLATFORM() && !is_distributor && !IS_MERCHANT()"
           plain
           type="primary"
           @click="addDistributorTag"
@@ -150,7 +150,7 @@
           打标签
         </el-button> -->
         <el-button
-          v-if="VERSION_PLATFORM && !is_distributor && !IS_MERCHANT()"
+          v-if="VERSION_PLATFORM() && !is_distributor && !IS_MERCHANT()"
           plain
           type="primary"
           @click="addDistributorTag"
@@ -196,7 +196,7 @@
         @selection-change="handleSelectionChange"
       >
         <el-table-column
-          v-if="VERSION_PLATFORM && !is_distributor && $store.getters.login_type != 'merchant'"
+          v-if="VERSION_PLATFORM() && !is_distributor && $store.getters.login_type != 'merchant'"
           type="selection"
           align="center"
           label="全选"
@@ -215,7 +215,7 @@
         </el-table-column>
         <el-table-column width="100" prop="shop_code" label="店铺号" />
         <el-table-column
-          v-if="VERSION_STANDARD"
+          v-if="VERSION_STANDARD()"
           width="200"
           label="自动同步商品"
           :render-header="renderHeader"
@@ -229,7 +229,7 @@
             />
           </template>
         </el-table-column>
-        <!-- <el-table-column v-if="VERSION_STANDARD" width="200" label="商品自动上架且总部发货">
+        <!-- <el-table-column v-if="VERSION_STANDARD()" width="200" label="商品自动上架且总部发货">
           <template v-if="scope.row.is_valid !== 'delete'" slot-scope="scope">
             <el-switch
               v-model="scope.row.auto_sync_goods"
@@ -295,7 +295,7 @@
           </template>
         </el-table-column>
         <el-table-column
-          v-if="VERSION_STANDARD && $store.getters.login_type == 'admin'"
+          v-if="VERSION_STANDARD() && $store.getters.login_type == 'admin'"
           width="100"
           label="进店白名单"
         >
@@ -332,7 +332,7 @@
           </template>
         </el-table-column>
         <el-table-column
-          v-if="!VERSION_STANDARD && $store.getters.login_type == 'admin'"
+          v-if="!VERSION_STANDARD() && $store.getters.login_type == 'admin'"
           label="店铺类型"
           width="80"
         >
@@ -354,7 +354,7 @@
             </el-tooltip>
           </template>
         </el-table-column>
-        <el-table-column v-if="VERSION_PLATFORM" prop="tagList" label="标签" class="tab">
+        <el-table-column v-if="VERSION_PLATFORM()" prop="tagList" label="标签" class="tab">
           <template slot-scope="scope">
             <el-tag
               v-for="taglist in scope.row.tagList"
@@ -371,7 +371,7 @@
           </template>
         </el-table-column>
         <el-table-column
-          v-if="!VERSION_STANDARD && $store.getters.login_type != 'merchant'"
+          v-if="!VERSION_STANDARD() && $store.getters.login_type != 'merchant'"
           label="所属商家"
           width="120"
         >
@@ -400,7 +400,7 @@
                   客服
                 </el-button>
                 <el-button
-                  v-if="VERSION_PLATFORM"
+                  v-if="VERSION_PLATFORM()"
                   type="text"
                   @click="downDistributor(scope.row, 'store')"
                 >
@@ -442,11 +442,9 @@
                   店铺范围配置
                 </el-button>
               </div>
-              <el-button slot="reference" type="text"
-                >
-更多<i class="el-icon-arrow-down more"
-              />
-</el-button>
+              <el-button slot="reference" type="text">
+                更多<i class="el-icon-arrow-down more" />
+              </el-button>
             </el-popover>
 
             <!-- <router-link
@@ -1016,7 +1014,7 @@ export default {
       const { list, total_count, distributor_self, datapass_block } =
         await this.$api.marketing.getDistributorList(params)
       this.tableList = list.map((item) => {
-        if (this.VERSION_PLATFORM) {
+        if (this.VERSION_PLATFORM()) {
           item.link = `${process.env.VUE_APP_H5_HOST}/subpages/store/index?id=${item.distributor_id}`
         } else {
           item.link = `${process.env.VUE_APP_H5_HOST}/${item.link}`

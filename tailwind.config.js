@@ -1,8 +1,19 @@
 module.exports = {
-  purge: [],
-  darkMode: false, // or 'media' or 'class'
+  content: [
+    './src/**/*.{vue,js,ts,jsx,tsx}',
+    './public/index.html',
+  ],
+  darkMode: 'media', // or 'class'
   theme: {
-    extend: {},
+    extend: {
+      colors: {
+        background: "hsl(var(--background))",
+        muted: {
+          DEFAULT: "hsl(var(--muted))",
+          foreground: "hsl(var(--muted-foreground))",
+        },
+      },
+    },
   },
   variants: {
     extend: {},

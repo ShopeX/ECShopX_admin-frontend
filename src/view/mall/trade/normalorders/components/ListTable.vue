@@ -222,7 +222,7 @@
             >
               <el-button
                 v-if="
-                  (VERSION_STANDARD || is_distributor || scope.row.distributor_id == 0) &&
+                  (VERSION_STANDARD() || is_distributor || scope.row.distributor_id == 0) &&
                   scope.row.receipt_type != 'dada' &&
                   scope.row.cancel_status == 'NO_APPLY_CANCEL' &&
                   (scope.row.order_status == 'NOTPAY' || scope.row.order_status == 'PAYED') &&
@@ -237,7 +237,7 @@
               <!-- 同城配的取消订单按钮 -->
               <el-button
                 v-if="
-                  (VERSION_STANDARD || is_distributor || scope.row.distributor_id == 0) &&
+                  (VERSION_STANDARD() || is_distributor || scope.row.distributor_id == 0) &&
                   scope.row.receipt_type == 'dada' &&
                   scope.row.cancel_status == 'NO_APPLY_CANCEL' &&
                   (scope.row.order_status == 'NOTPAY' || scope.row.order_status == 'PAYED') &&
@@ -262,7 +262,7 @@
               </el-button>
               <el-button
                 v-if="
-                  (VERSION_STANDARD || is_distributor || scope.row.distributor_id == 0) &&
+                  (VERSION_STANDARD() || is_distributor || scope.row.distributor_id == 0) &&
                   scope.row.order_status == 'PAYED' &&
                   scope.row.receipt_type == 'ziti' &&
                   scope.row.ziti_status == 'PENDING'
@@ -275,7 +275,7 @@
               </el-button>
               <el-button
                 v-if="
-                  (VERSION_STANDARD || is_distributor || scope.row.distributor_id == 0) &&
+                  (VERSION_STANDARD() || is_distributor || scope.row.distributor_id == 0) &&
                   scope.row.receipt_type == 'dada' &&
                   (scope.row.cancel_status == 'NO_APPLY_CANCEL' ||
                     scope.row.cancel_status == 'FAILS') &&
@@ -292,7 +292,7 @@
 
               <el-button
                 v-if="
-                  (VERSION_STANDARD || is_distributor || scope.row.distributor_id == 0) &&
+                  (VERSION_STANDARD() || is_distributor || scope.row.distributor_id == 0) &&
                   scope.row.receipt_type == 'dada' &&
                   scope.row.pay_status == 'PAYED' &&
                   scope.row.dada.dada_status == '9'
@@ -306,7 +306,7 @@
 
               <template
                 v-if="
-                  !IsBind && (VERSION_STANDARD || is_distributor || scope.row.distributor_id == 0)
+                  !IsBind && (VERSION_STANDARD() || is_distributor || scope.row.distributor_id == 0)
                 "
               >
                 <el-button

@@ -70,7 +70,7 @@
         <SpFilterFormItem prop="username" label="昵称:">
           <el-input v-model="params.username" placeholder="请输入昵称" />
         </SpFilterFormItem>
-        <SpFilterFormItem v-if="!VERSION_IN_PURCHASE" prop="vip_grade" label="会员身份:">
+        <SpFilterFormItem v-if="!VERSION_IN_PURCHASE()" prop="vip_grade" label="会员身份:">
           <el-select v-model="params.vip_grade" clearable placeholder="请选择">
             <el-option
               v-for="item in vipGrade"
@@ -80,7 +80,7 @@
             />
           </el-select>
         </SpFilterFormItem>
-        <SpFilterFormItem v-if="!VERSION_IN_PURCHASE" prop="grade_id" label="会员等级:">
+        <SpFilterFormItem v-if="!VERSION_IN_PURCHASE()" prop="grade_id" label="会员等级:">
           <el-select v-model="params.grade_id" clearable placeholder="请选择">
             <el-option
               v-for="item in levelData"
@@ -90,7 +90,7 @@
             />
           </el-select>
         </SpFilterFormItem>
-        <SpFilterFormItem v-if="!VERSION_IN_PURCHASE" prop="inviter_mobile" label="推荐人:">
+        <SpFilterFormItem v-if="!VERSION_IN_PURCHASE()" prop="inviter_mobile" label="推荐人:">
           <el-input v-model="params.inviter_mobile" placeholder="请输入推荐人手机号" />
         </SpFilterFormItem>
         <SpFilterFormItem prop="tag_id" label="标签:">
@@ -125,7 +125,7 @@
         <SpFilterFormItem prop="remarks" label="备注:">
           <el-input v-model="params.remarks" placeholder="备注" />
         </SpFilterFormItem>
-        <SpFilterFormItem v-if="!VERSION_IN_PURCHASE" prop="have_consume" label="购买记录:">
+        <SpFilterFormItem v-if="!VERSION_IN_PURCHASE()" prop="have_consume" label="购买记录:">
           <el-select v-model="params.have_consume" placeholder="请选择" clearable>
             <el-option label="有记录" value="true" />
             <el-option label="无记录" value="false" />
@@ -154,7 +154,7 @@
       <div class="action-container">
         <el-button type="primary" plain @click="batchActionDialog('rel_tag')"> 打标签 </el-button>
         <el-button
-          v-if="!VERSION_IN_PURCHASE"
+          v-if="!VERSION_IN_PURCHASE()"
           type="primary"
           plain
           @click="batchActionDialog('give_coupon')"
@@ -170,7 +170,7 @@
           群发短信
         </el-button>
         <el-button
-          v-if="$store.getters.login_type != 'distributor' && !VERSION_IN_PURCHASE"
+          v-if="$store.getters.login_type != 'distributor' && !VERSION_IN_PURCHASE()"
           type="primary"
           plain
           @click="handleVipGradeDelay(false)"
@@ -178,7 +178,7 @@
           付费会员延期
         </el-button>
         <el-button
-          v-if="$store.getters.login_type != 'distributor' && !VERSION_IN_PURCHASE"
+          v-if="$store.getters.login_type != 'distributor' && !VERSION_IN_PURCHASE()"
           type="primary"
           plain
           @click="batchActionDialog('set_grade')"
@@ -192,9 +192,9 @@
         云店：平台有，店铺没有 -->
         <!-- <el-button
           v-if="
-            (VERSION_PLATFORM && IS_ADMIN()) ||
-            (VERSION_PLATFORM && IS_DISTRIBUTOR()) ||
-            (VERSION_STANDARD && IS_ADMIN())
+            (VERSION_PLATFORM() && IS_ADMIN()) ||
+            (VERSION_PLATFORM() && IS_DISTRIBUTOR()) ||
+            (VERSION_STANDARD() && IS_ADMIN())
           "
           type="primary"
           plain
@@ -250,7 +250,7 @@
             {{ roleList.find((item) => item.value == scope.row.role)?.label }}
           </template>
         </el-table-column>
-        <el-table-column v-if="!VERSION_IN_PURCHASE" prop="sex" label="性别" width="70">
+        <el-table-column v-if="!VERSION_IN_PURCHASE()" prop="sex" label="性别" width="70">
           <template slot-scope="scope">
             <span v-if="scope.row.sex == '2'">女</span>
             <span v-else-if="scope.row.sex == '1'">男</span>
@@ -259,7 +259,7 @@
           </template>
         </el-table-column>
 
-        <el-table-column v-if="!VERSION_IN_PURCHASE" prop="is_chief" label="是否团长" width="80">
+        <el-table-column v-if="!VERSION_IN_PURCHASE()" prop="is_chief" label="是否团长" width="80">
           <template slot-scope="scope">
             <el-switch
               v-model="scope.row.is_chief"
@@ -283,7 +283,7 @@
           </template>
         </el-table-column> -->
 
-        <el-table-column v-if="!VERSION_IN_PURCHASE" prop="grade_id" label="会员等级" width="140">
+        <el-table-column v-if="!VERSION_IN_PURCHASE()" prop="grade_id" label="会员等级" width="140">
           <template slot-scope="scope">
             <!-- <span v-if="scope.row.grade_id == '1'">女</span>
             <span v-else>{{ scope.row.grade_id }}</span> -->
@@ -291,7 +291,7 @@
           </template>
         </el-table-column>
         <el-table-column prop="company" label="所属公司" width="80" />
-        <el-table-column v-if="!VERSION_IN_PURCHASE" prop="inviter" label="推荐人" width="130" />
+        <el-table-column v-if="!VERSION_IN_PURCHASE()" prop="inviter" label="推荐人" width="130" />
         <el-table-column prop="disabled" label="禁用" width="80">
           <template slot-scope="scope">
             <el-switch
@@ -358,7 +358,7 @@
               基础信息
             </el-button>
             <el-button
-              v-if="$store.getters.login_type != 'distributor' && !VERSION_IN_PURCHASE"
+              v-if="$store.getters.login_type != 'distributor' && !VERSION_IN_PURCHASE()"
               type="text"
               @click="gradeUpdate(scope.row)"
             >
@@ -400,7 +400,7 @@
             <el-radio-button label="all" value="all"> 全部 </el-radio-button>
             <el-radio-button label="cash" value="cash"> 满减券 </el-radio-button>
             <el-radio-button label="discount" value="discount"> 折扣券 </el-radio-button>
-            <el-radio-button v-if="VERSION_STANDARD" label="new_gift" value="new_gift">
+            <el-radio-button v-if="VERSION_STANDARD()" label="new_gift" value="new_gift">
               兑换券
             </el-radio-button>
           </el-radio-group>
@@ -1324,11 +1324,9 @@ export default {
       let isShopadmin = false
       try {
         isShopadmin = /\/shopadmin/.test(document.location.pathname)
-      } catch (e) {}   
+      } catch (e) {}
       this.$router.push({
-        path: isShopadmin
-          ? '/shopadmin/member/member/detail'
-          : '/member/member/memberlist/detail',
+        path: isShopadmin ? '/shopadmin/member/member/detail' : '/member/member/memberlist/detail',
         query: {
           user_id: userid,
           mobile: this.params.mobile,

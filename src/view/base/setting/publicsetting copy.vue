@@ -1,25 +1,17 @@
 <template>
   <div>
-    <div v-if="VERSION_STANDARD">
+    <div v-if="VERSION_STANDARD()">
       <div class="clearfix">
         <h2 class="f_l">
           <span>分享带门店参数设置：</span>
         </h2>
       </div>
       <hr style="border: 1px solid #efefef">
-      <el-form
-        v-model="form"
-        label-width="200px"
-      >
+      <el-form v-model="form" label-width="200px">
         <el-form-item label="是否带门店参数">
-          <el-switch
-            v-model="form.distributor_param_status"
-            @change="paramShareChange()"
-          />
+          <el-switch v-model="form.distributor_param_status" @change="paramShareChange()" />
           <div class="wrapper-tips">
-            <div class="margin-top-10">
-              已开启：
-            </div>
+            <div class="margin-top-10">已开启：</div>
             <div>
               1. 从小程序分享出去的 太阳码和小程序链接
               带店铺参，其他消费者通过此链接或者太阳码进入商城会切换成参数对应的店铺，同时本地缓存也会切换成参数对应的新店铺。
@@ -28,9 +20,7 @@
               2.
               顾客通过「管理后台-店铺-店铺商品」生成的商品二维码或其他带店铺参数的二维码进入商城时，其所在店铺将切换为二维码所带参数对应的店铺，同时本地缓存也会切换成参数对应的新店铺。
             </div>
-            <div class="margin-top-20">
-              已关闭：
-            </div>
+            <div class="margin-top-20">已关闭：</div>
             <div>
               1. 从小程序分享出去的 太阳码和小程序链接
               不带店铺参，其他消费者通过此链接或者太阳码进入商城不会切换成参数对应的店铺，本地缓存也不会切换成参数对应的新店铺，即按照商城原本的进店逻辑进入店铺。
@@ -43,42 +33,30 @@
         </el-form-item>
       </el-form>
     </div>
-    <div v-if="!VERSION_IN_PURCHASE">
+    <div v-if="!VERSION_IN_PURCHASE()">
       <div class="clearfix">
         <h2 class="f_l">
           <span>评论设置：</span>
         </h2>
       </div>
       <hr style="border: 1px solid #efefef">
-      <el-form
-        v-model="form"
-        label-width="200px"
-      >
+      <el-form v-model="form" label-width="200px">
         <el-form-item label="是否开启评论">
-          <el-switch
-            v-model="form.rate_status"
-            @change="rateStatusChange()"
-          />
+          <el-switch v-model="form.rate_status" @change="rateStatusChange()" />
         </el-form-item>
       </el-form>
     </div>
 
-    <div v-if="!isMicorMall && !VERSION_IN_PURCHASE">
+    <div v-if="!isMicorMall && !VERSION_IN_PURCHASE()">
       <div class="clearfix">
         <h2 class="f_l">
           <span>提货码设置：</span>
         </h2>
       </div>
       <hr style="border: 1px solid #efefef">
-      <el-form
-        v-model="form"
-        label-width="200px"
-      >
+      <el-form v-model="form" label-width="200px">
         <el-form-item label="是否开启提货码">
-          <el-switch
-            v-model="form.pickupcode_status"
-            @change="presaleStatusChange()"
-          />
+          <el-switch v-model="form.pickupcode_status" @change="presaleStatusChange()" />
         </el-form-item>
       </el-form>
     </div>
@@ -89,19 +67,13 @@
       </h2>
     </div>
     <hr style="border: 1px solid #efefef">
-    <el-form
-      v-model="form"
-      label-width="200px"
-    >
+    <el-form v-model="form" label-width="200px">
       <el-form-item label="是否开启白名单">
-        <el-switch
-          v-model="form.whitelist_status"
-          @change="whitelistStatusChange()"
-        />
+        <el-switch v-model="form.whitelist_status" @change="whitelistStatusChange()" />
       </el-form-item>
     </el-form>
 
-    <div v-if="!VERSION_IN_PURCHASE">
+    <div v-if="!VERSION_IN_PURCHASE()">
       <div class="clearfix">
         <h2 class="f_l">
           <span>赠品设置：</span>
@@ -116,10 +88,7 @@
           ></el-switch>
         </el-form-item>
       </el-form> -->
-      <el-form
-        v-model="form"
-        label-width="200px"
-      >
+      <el-form v-model="form" label-width="200px">
         <el-form-item label="赠品缺货是否能继续下单">
           <el-switch
             v-model="form.check_gift_store"
@@ -129,42 +98,30 @@
       </el-form>
     </div>
 
-    <div v-if="!VERSION_IN_PURCHASE">
+    <div v-if="!VERSION_IN_PURCHASE()">
       <div class="clearfix">
         <h2 class="f_l">
           <span>推单设置：</span>
         </h2>
       </div>
       <hr style="border: 1px solid #efefef">
-      <el-form
-        v-model="form"
-        label-width="200px"
-      >
+      <el-form v-model="form" label-width="200px">
         <el-form-item label="自提订单推oms">
-          <el-switch
-            v-model="form.ziti_send_oms"
-            @change="sendOmsChange('ziti_send_oms')"
-          />
+          <el-switch v-model="form.ziti_send_oms" @change="sendOmsChange('ziti_send_oms')" />
         </el-form-item>
       </el-form>
     </div>
 
-    <div v-if="VERSION_STANDARD">
+    <div v-if="VERSION_STANDARD()">
       <div class="clearfix">
         <h2 class="f_l">
           <span>前端店铺展示关闭：</span>
         </h2>
       </div>
       <hr style="border: 1px solid #efefef">
-      <el-form
-        v-model="form"
-        label-width="200px"
-      >
+      <el-form v-model="form" label-width="200px">
         <el-form-item label="是否关闭">
-          <el-switch
-            v-model="form.nostores_status"
-            @change="sendNoStoresChange"
-          />
+          <el-switch v-model="form.nostores_status" @change="sendNoStoresChange" />
           <span class="frm-tips">用于关闭前端店铺切换功能</span>
         </el-form-item>
       </el-form>
@@ -188,15 +145,9 @@
       </h2>
     </div>
     <hr style="border: 1px solid #efefef">
-    <el-form
-      v-model="form"
-      label-width="200px"
-    >
+    <el-form v-model="form" label-width="200px">
       <el-form-item label="拒绝后是否能再次发起申请">
-        <el-switch
-          v-model="form.repeat_cancel"
-          @change="repeatCancelChange()"
-        />
+        <el-switch v-model="form.repeat_cancel" @change="repeatCancelChange()" />
       </el-form-item>
     </el-form>
 
@@ -206,15 +157,9 @@
       </h2>
     </div>
     <hr style="border: 1px solid #efefef">
-    <el-form
-      v-model="form"
-      label-width="200px"
-    >
+    <el-form v-model="form" label-width="200px">
       <el-form-item label="商品详情页是否显示库存">
-        <el-switch
-          v-model="form.item_store_status"
-          @change="itemStoreChange()"
-        />
+        <el-switch v-model="form.item_store_status" @change="itemStoreChange()" />
       </el-form-item>
     </el-form>
 
@@ -224,34 +169,22 @@
       </h2>
     </div>
     <hr style="border: 1px solid #efefef">
-    <el-form
-      v-model="form"
-      label-width="200px"
-    >
+    <el-form v-model="form" label-width="200px">
       <el-form-item label="商品销量是否显示">
-        <el-switch
-          v-model="form.item_sales_status"
-          @change="itemSalesChange()"
-        />
+        <el-switch v-model="form.item_sales_status" @change="itemSalesChange()" />
       </el-form-item>
     </el-form>
 
-    <div v-if="!VERSION_IN_PURCHASE">
+    <div v-if="!VERSION_IN_PURCHASE()">
       <div class="clearfix">
         <h2 class="f_l">
           <span>发票设置：</span>
         </h2>
       </div>
       <hr style="border: 1px solid #efefef">
-      <el-form
-        v-model="form"
-        label-width="200px"
-      >
+      <el-form v-model="form" label-width="200px">
         <el-form-item label="结算页是否显示发票">
-          <el-switch
-            v-model="form.invoice_status"
-            @change="invoiceStatusChange()"
-          />
+          <el-switch v-model="form.invoice_status" @change="invoiceStatusChange()" />
         </el-form-item>
       </el-form>
     </div>
@@ -262,15 +195,9 @@
       </h2>
     </div>
     <hr style="border: 1px solid #efefef">
-    <el-form
-      v-model="form"
-      label-width="200px"
-    >
+    <el-form v-model="form" label-width="200px">
       <el-form-item label="移动端是否展示店务端入口">
-        <el-switch
-          v-model="form.dianwu_show_status"
-          @change="dianwuShowStatusChange()"
-        />
+        <el-switch v-model="form.dianwu_show_status" @change="dianwuShowStatusChange()" />
       </el-form-item>
     </el-form>
   </div>
@@ -325,7 +252,7 @@ export default {
   components: {
     imgPicker
   },
-  data () {
+  data() {
     return {
       imgDialog: false,
       isGetImage: false,
@@ -350,7 +277,7 @@ export default {
   computed: {
     ...mapGetters(['wheight', 'isMicorMall'])
   },
-  mounted () {
+  mounted() {
     getRateSetting().then((res) => {
       this.form.rate_status = Boolean(res.data.data.rate_status)
     })
@@ -405,7 +332,7 @@ export default {
     })
   },
   methods: {
-    rateStatusChange () {
+    rateStatusChange() {
       let msg = ''
       if (this.form.rate_status === true) {
         msg = '确定开启评价功能？'
@@ -444,7 +371,7 @@ export default {
           })
         })
     },
-    paramShareChange () {
+    paramShareChange() {
       let msg = ''
       if (this.form.distributor_param_status === true) {
         msg = '确定开启分享带门店参数功能？'
@@ -484,7 +411,7 @@ export default {
           })
         })
     },
-    whitelistStatusChange () {
+    whitelistStatusChange() {
       let msg = ''
       if (this.form.whitelist_status === true) {
         msg = '确定开启白名单功能？'
@@ -523,7 +450,7 @@ export default {
           })
         })
     },
-    presaleStatusChange () {
+    presaleStatusChange() {
       let msg = ''
       if (this.form.pickupcode_status === true) {
         msg = '确定开启预售提货码功能？'
@@ -562,7 +489,7 @@ export default {
           })
         })
     },
-    giftSettingChange (type) {
+    giftSettingChange(type) {
       let msg = ''
       if (this.form[type] == true) {
         msg = '确定开启'
@@ -611,7 +538,7 @@ export default {
           })
         })
     },
-    sendOmsChange (type) {
+    sendOmsChange(type) {
       let msg = ''
       if (this.form[type] == true) {
         msg = '确定开启'
@@ -657,7 +584,7 @@ export default {
           })
         })
     },
-    sendNoStoresChange () {
+    sendNoStoresChange() {
       let msg = ''
       if (this.form.nostores_status === true) {
         msg = '更改前端店铺切换功能，会影响前端消费者购物流程，请谨慎操作'
@@ -697,7 +624,7 @@ export default {
           })
         })
     },
-    rechargeStatusChange () {
+    rechargeStatusChange() {
       let msg = ''
       if (this.form.recharge_status === true) {
         msg = '确定开启储值功能？'
@@ -736,7 +663,7 @@ export default {
           })
         })
     },
-    repeatCancelChange () {
+    repeatCancelChange() {
       let msg = ''
       if (this.form.repeat_cancel === true) {
         msg = '确定开启重复发起取消订单功能？'
@@ -776,7 +703,7 @@ export default {
         })
     },
 
-    itemStoreChange () {
+    itemStoreChange() {
       let msg = ''
       if (this.form.item_store_status === true) {
         msg = '确定开启显示功能？'
@@ -816,7 +743,7 @@ export default {
         })
     },
 
-    itemSalesChange () {
+    itemSalesChange() {
       let msg = ''
       if (this.form.item_sales_status === true) {
         msg = '确定开启显示功能？'
@@ -856,7 +783,7 @@ export default {
         })
     },
 
-    invoiceStatusChange () {
+    invoiceStatusChange() {
       let msg = ''
       if (this.form.invoice_status === true) {
         msg = '确定开启显示功能？'
@@ -896,7 +823,7 @@ export default {
         })
     },
 
-    dianwuShowStatusChange () {
+    dianwuShowStatusChange() {
       let msg = ''
       if (this.form.dianwu_show_status === true) {
         msg = '确定开启显示店务端？'

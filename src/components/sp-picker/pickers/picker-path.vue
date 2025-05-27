@@ -15,7 +15,7 @@
       <el-tab-pane label="商品" name="goods">
         <PickerGoods v-if="tabValue == 'goods'" ref="goods" :value="value" />
       </el-tab-pane>
-      <el-tab-pane v-if="VERSION_PLATFORM" label="店铺" name="store">
+      <el-tab-pane v-if="VERSION_PLATFORM()" label="店铺" name="store">
         <PickerShop v-if="tabValue == 'store'" ref="store" :value="value" />
       </el-tab-pane>
       <el-tab-pane label="销售分类" name="sale_category">
@@ -43,7 +43,11 @@
         <PickerRegactivity v-if="tabValue == 'regactivity'" ref="regactivity" :value="value" />
       </el-tab-pane>
       <el-tab-pane label="内购活动" name="purchase_activity">
-        <PickerPurchaseActivity v-if="tabValue == 'purchase_activity'" ref="purchase_activity" :value="value" />
+        <PickerPurchaseActivity
+          v-if="tabValue == 'purchase_activity'"
+          ref="purchase_activity"
+          :value="value"
+        />
       </el-tab-pane>
       <el-tab-pane label="秒杀" name="seckill">
         <PickerSeckill v-if="tabValue == 'seckill'" ref="seckill" :value="value" />

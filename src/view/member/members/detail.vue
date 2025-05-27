@@ -86,7 +86,7 @@
             <span v-else>--</span>
           </div>
         </div>
-        <div v-if="!VERSION_IN_PURCHASE" class="f_r member-right">
+        <div v-if="!VERSION_IN_PURCHASE()" class="f_r member-right">
           <div class="right-item point-box">
             <div class="item-title">积分</div>
             <div>
@@ -95,7 +95,7 @@
             </div>
             <span class="item-footer" />
           </div>
-          <!-- <div class="right-item point-box" v-if="!VERSION_PLATFORM">
+          <!-- <div class="right-item point-box" v-if="!VERSION_PLATFORM()">
             <div class="item-title">
               储值
             </div>
@@ -144,7 +144,7 @@
       <!-- <el-tab-pane
         label="预存款交易"
         name="deposit"
-        v-if="!VERSION_IN_PURCHASE"
+        v-if="!VERSION_IN_PURCHASE()"
       >
         <deposit-list
           :user-id="user_id"
@@ -171,7 +171,7 @@
           :is-load="rightslogLoad"
         />
       </el-tab-pane> -->
-      <el-tab-pane v-if="!VERSION_IN_PURCHASE" label="付费会员卡记录" name="membercard">
+      <el-tab-pane v-if="!VERSION_IN_PURCHASE()" label="付费会员卡记录" name="membercard">
         <!-- <membercard-list
           :user-id="user_id"
           :user-mobile="member.mobile"
@@ -179,7 +179,7 @@
         /> -->
         <membercardList :info="member" />
       </el-tab-pane>
-      <el-tab-pane v-if="!VERSION_IN_PURCHASE" label="积分记录" name="point">
+      <el-tab-pane v-if="!VERSION_IN_PURCHASE()" label="积分记录" name="point">
         <pointList />
       </el-tab-pane>
       <el-tab-pane v-if="VUE_APP_CHUZHI" label="充值记录" name="chuzhi">
@@ -215,7 +215,6 @@ import membercardList from './comps/memberCardList'
 import pointList from './comps/pointList'
 import chuZhiList from './comps/chuZhiList'
 import memberInfo from './memberinfo.vue'
-import { VERSION_PLATFORM } from '@/utils'
 export default {
   components: {
     quanyiList,

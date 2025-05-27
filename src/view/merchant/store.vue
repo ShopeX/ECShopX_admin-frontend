@@ -82,7 +82,7 @@
     <div class="footer-container">
       <el-button @click.native="handleCancel"> 取消</el-button>
       <el-button
-        v-if="!VERSION_STANDARD || (!IS_DISTRIBUTOR() && VERSION_STANDARD)"
+        v-if="!VERSION_STANDARD() || (!IS_DISTRIBUTOR() && VERSION_STANDARD())"
         type="primary"
         :loading="submitLoading"
         @click="onFormSubmit"
@@ -111,7 +111,7 @@ export default {
         value: 0
       }
     ]
-    if (!this.VERSION_STANDARD) {
+    if (!this.VERSION_STANDARD()) {
       distributionTypeOptions.push({
         title: '加盟',
         value: 1
@@ -155,12 +155,12 @@ export default {
           endTime: ''
         },
         offline_aftersales_other: false,
-        is_refund_freight:false,
+        is_refund_freight: false,
         wdt_shop_no: '',
         jst_shop_id: '',
         introduce: ''
       },
-      offline_freight_status:false,
+      offline_freight_status: false,
       formList: [
         {
           label: '店铺类型',
@@ -322,7 +322,7 @@ export default {
           display: 'inline',
           width: '360px',
           tip: '开启后，店铺添加的自有商品，需要平台审核通过后才可以上架',
-          isShow: ({ key }, value) => !this.VERSION_STANDARD && value.distribution_type == 0
+          isShow: ({ key }, value) => !this.VERSION_STANDARD() && value.distribution_type == 0
         },
         {
           label: '同步商品',
@@ -331,7 +331,7 @@ export default {
           display: 'inline',
           tip: '自动同步商品至店铺',
           isShow: ({ key }, value) =>
-            this.VERSION_STANDARD && !this.IS_DISTRIBUTOR() && this.distributor_self == 0
+            this.VERSION_STANDARD() && !this.IS_DISTRIBUTOR() && this.distributor_self == 0
         },
         {
           label: '街道居委',
@@ -561,7 +561,7 @@ export default {
           key: 'wdt_shop_no',
           type: 'input',
           display: 'inline',
-          placeholder: '',
+          placeholder: ''
         },
         {
           label: '聚水潭ERP',
@@ -572,7 +572,7 @@ export default {
           key: 'jst_shop_id',
           type: 'input',
           display: 'inline',
-          placeholder: '',
+          placeholder: ''
         },
         {
           label: '店铺介绍',
@@ -808,7 +808,7 @@ export default {
 
       const params = {
         ...this.form,
-        is_refund_freight:this.form.is_refund_freight ? 1:0,
+        is_refund_freight: this.form.is_refund_freight ? 1 : 0,
         distributor_self: this.distributor_self,
         regions: getRegionNameById(this.form.regions_id, district),
         hour: `${this.form.startTime}-${this.form.endTime}`,

@@ -62,7 +62,7 @@ import { PICKER_DATE_OPTIONS } from '@/consts'
 import { createSetting } from '@shopex/finder'
 import moment from 'moment'
 import Pages from '@/utils/pages'
-import { VERSION_IN_PURCHASE } from '@/utils'
+import { VERSION_IN_PURCHASE() } from '@/utils'
 
 export default {
   data() {
@@ -149,7 +149,7 @@ export default {
       const { status, url } = await this.$api.datacube.getGoodsData({
         start: moment(display_time_begin).format('YYYY-MM-DD'),
         end: moment(display_time_end).format('YYYY-MM-DD'),
-        order_class: VERSION_IN_PURCHASE ? 'employee_purchase' : undefined,
+        order_class: VERSION_IN_PURCHASE() ? 'employee_purchase' : undefined,
         act_id: activity_id.toString(),
         export: 1
       })

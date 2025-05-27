@@ -117,7 +117,7 @@ export default {
             keywords: this.keywords,
             distributor_id: this.store.id || ''
           })
-          if (this.VERSION_PLATFORM || query.distributor_id == '0' || !query.distributor_id) {
+          if (this.VERSION_PLATFORM() || query.distributor_id == '0' || !query.distributor_id) {
             api.goods.getItemsList(query).then(({ list, total_count }) => {
               let _list = []
               list.map((item) => {
@@ -184,7 +184,7 @@ export default {
           })
           break
         case 'sale_category':
-          if (VERSION_PLATFORM) {
+          if (VERSION_PLATFORM()) {
             if (distributor_id) {
               Object.assign(query, {
                 distributor_id
@@ -340,7 +340,7 @@ export default {
               id: 'applyChief'
             }
           ]
-          // if (this.VERSION_PLATFORM) {
+          // if (this.VERSION_PLATFORM()) {
           //   list.push({
           //     title: '楼层引导',
           //     id: 'floorguide'

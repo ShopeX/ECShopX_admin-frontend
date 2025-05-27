@@ -262,7 +262,7 @@
         <el-button v-if="isBindWdtErp" size="small" type="primary" @click="uploadWdtErpItems()">
           上传商品到旺店通
         </el-button>
-        <el-dropdown v-if="VERSION_STANDARD && IS_ADMIN()">
+        <el-dropdown v-if="VERSION_STANDARD() && IS_ADMIN()">
           <el-button type="primary" plain icon="iconfont icon-daorucaozuo-01">
             同步商品<i class="el-icon-arrow-down el-icon--right" />
           </el-button>
@@ -843,7 +843,7 @@ export default {
                 IS_SUPPLIER() ||
                 row.supplier_id == 0 ||
                 IS_DISTRIBUTOR() ||
-                (IS_ADMIN() && this.VERSION_STANDARD)
+                (IS_ADMIN() && this.VERSION_STANDARD())
               )
             },
             action: {
@@ -1295,7 +1295,7 @@ export default {
           //   name: '来源供应商',
           //   key: 'operator_name',
           //   width: 100,
-          //   visible: !(this.IS_DISTRIBUTOR() && this.VERSION_PLATFORM)
+          //   visible: !(this.IS_DISTRIBUTOR() && this.VERSION_PLATFORM())
           // },
           {
             name: '供应状态',

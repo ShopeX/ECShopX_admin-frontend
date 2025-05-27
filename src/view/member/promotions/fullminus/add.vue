@@ -273,7 +273,7 @@
         </div>
       </template>
     </el-card>
-    <el-card v-if="VERSION_STANDARD && !is_distributor" header="绑定店铺" shadow="naver">
+    <el-card v-if="VERSION_STANDARD() && !is_distributor" header="绑定店铺" shadow="naver">
       <div :span="23">
         <el-button type="primary" @click="relStoresClick"> 选择店铺 </el-button>
         <el-table v-if="relStores.length > 0" :data="relStores" style="line-height: normal">
@@ -319,12 +319,12 @@ import { handleUploadFile, exportUploadTemplate } from '../../../../api/common'
 import store from '@/store'
 import { transformTree } from '@/utils'
 export default {
-  inject: ['refresh'],
   components: {
     StoreSelect,
     SkuSelector,
     Treeselect
   },
+  inject: ['refresh'],
   data() {
     return {
       is_distributor: false,

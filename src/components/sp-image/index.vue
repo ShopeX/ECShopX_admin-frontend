@@ -28,8 +28,8 @@ export default {
   },
   render() {
     const { src, width, height, circle } = this
-    // console.log('sp-image render src:', src);
-    let styleNames = {}
+    console.log('sp-image render src:', src, src || dImage)
+    const styleNames = {}
     if (width) {
       styleNames['width'] = `${width}px`
     }
@@ -51,11 +51,7 @@ export default {
         src={src || dImage}
         fit={this.fit}
         onClick={this.handleImageClick}
-      >
-        <template slot='error'>
-          <img src={dImage} width='100%' />
-        </template>
-      </el-image>
+      />
     )
   }
 }

@@ -9,7 +9,7 @@
           <el-input v-model="params.order_id" placeholder="请输入订单号" />
         </SpFilterFormItem>
         <!-- <SpFilterFormItem
-          v-if="login_type != 'merchant' && !VERSION_B2C && !VERSION_IN_PURCHASE"
+          v-if="login_type != 'merchant' && !VERSION_B2C() && !VERSION_IN_PURCHASE()"
           prop="salesman_mobile"
           label="导购手机号:"
         >
@@ -67,7 +67,7 @@
           />
         </SpFilterFormItem>
         <SpFilterFormItem
-          v-if="!isMicorMall && !VERSION_IN_PURCHASE"
+          v-if="!isMicorMall && !VERSION_IN_PURCHASE()"
           prop="is_invoiced"
           label="开票状态:"
         >
@@ -96,7 +96,7 @@
             :picker-options="pickerOptions"
           />
         </SpFilterFormItem>
-        <SpFilterFormItem v-if="!VERSION_STANDARD" prop="distributor_type" label="订单分类:">
+        <SpFilterFormItem v-if="!VERSION_STANDARD()" prop="distributor_type" label="订单分类:">
           <el-select v-model="params.distributor_type" clearable placeholder="请选择">
             <el-option
               v-for="item in orderCategory"
@@ -108,7 +108,7 @@
           </el-select>
         </SpFilterFormItem>
         <SpFilterFormItem
-          v-if="(!isMicorMall || login_type != 'distributor') && !VERSION_B2C"
+          v-if="(!isMicorMall || login_type != 'distributor') && !VERSION_B2C()"
           prop="distributor_id"
           label="店铺:"
         >
@@ -398,7 +398,7 @@
 import { mapGetters } from 'vuex'
 import mixin from '@/mixins'
 import { pageMixin } from '@/mixins'
-import { VERSION_STANDARD, isArray, VERSION_B2C, VERSION_IN_PURCHASE } from '@/utils'
+import { VERSION_STANDARD, isArray, VERSION_B2C(), VERSION_IN_PURCHASE() } from '@/utils'
 import { exportInvoice, orderExport } from '@/api/trade'
 import moment from 'moment'
 import {
@@ -440,9 +440,9 @@ export default {
       datapass_block: 1, // 是否为数据脱敏
       subDistrictList: [],
       distributionType: DISTRIBUTION_TYPE,
-      orderStatus: VERSION_B2C
+      orderStatus: VERSION_B2C()
         ? ORDER_B2C_STATUS
-        : VERSION_IN_PURCHASE
+        : VERSION_IN_PURCHASE()
         ? IN_PURCHASE_STATUS
         : ORDER_STATUS,
       orderType: ORDER_TYPE,
@@ -769,7 +769,7 @@ export default {
         } = item
         const isDada = receipt_type == 'dada'
         const isLogistics = receipt_type == 'logistics'
-        if (VERSION_STANDARD || distributor_id == 0 || this.login_type == 'distributor') {
+        if (VERSION_STANDARD() || distributor_id == 0 || this.login_type == 'distributor') {
           if (
             !isDada &&
             cancel_status == 'NO_APPLY_CANCEL' &&

@@ -18,7 +18,7 @@
           <el-input
             v-model="form.ad_title"
             :placeholder="
-              !VERSION_B2C ? '用于门店小程序注册引导入口标题' : '用于小程序注册引导入口标题'
+              !VERSION_B2C() ? '用于门店小程序注册引导入口标题' : '用于小程序注册引导入口标题'
             "
             style="width: 340px"
           />
@@ -184,7 +184,7 @@
         <el-radio-button label="all" value="all"> 全部 </el-radio-button>
         <el-radio-button label="cash" value="cash"> 满减券 </el-radio-button>
         <el-radio-button label="discount" value="discount"> 折扣券 </el-radio-button>
-        <el-radio-button v-if="VERSION_STANDARD" label="new_gift" value="new_gift">
+        <el-radio-button v-if="VERSION_STANDARD()" label="new_gift" value="new_gift">
           兑换券
         </el-radio-button>
       </el-radio-group>

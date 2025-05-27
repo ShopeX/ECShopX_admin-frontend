@@ -152,7 +152,7 @@
                   审核
                 </el-button>
                 <!-- <el-button
-                  v-if="VERSION_PLATFORM"
+                  v-if="VERSION_PLATFORM()"
                   type="text"
                   @click="handleCommissionConf(scope.row)"
                   >

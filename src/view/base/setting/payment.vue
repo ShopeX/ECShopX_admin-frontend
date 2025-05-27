@@ -4,16 +4,16 @@
       <el-tab-pane v-if="!isHfpay" label="微信支付配置" name="wxpay">
         <wxpayTemplates />
       </el-tab-pane>
-      <el-tab-pane v-if="!isHfpay && !VERSION_IN_PURCHASE" label="支付宝支付配置" name="alipay">
+      <el-tab-pane v-if="!isHfpay && !VERSION_IN_PURCHASE()" label="支付宝支付配置" name="alipay">
         <alipayTemplates />
       </el-tab-pane>
       <!-- <el-tab-pane label="ebuy支付配置" name="ebuypay" v-if="!isHfpay">
         <ebuypayTemplates></ebuypayTemplates>
       </el-tab-pane> -->
-      <el-tab-pane v-if="isHfpay && !VERSION_IN_PURCHASE" label="汇付天下支付配置" name="hfpay">
+      <el-tab-pane v-if="isHfpay && !VERSION_IN_PURCHASE()" label="汇付天下支付配置" name="hfpay">
         <hfpayTemplates />
       </el-tab-pane>
-      <el-tab-pane v-if="!isHfpay && !VERSION_IN_PURCHASE" label="Adapay支付配置" name="adapay">
+      <el-tab-pane v-if="!isHfpay && !VERSION_IN_PURCHASE()" label="Adapay支付配置" name="adapay">
         <adapayTemplates />
       </el-tab-pane>
       <el-tab-pane label="银联商务支付配置" name="chinaumspay">

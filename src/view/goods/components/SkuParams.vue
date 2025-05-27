@@ -87,7 +87,7 @@
           {{ scope.row.custom_attribute_value || scope.row.item_spec }}
         </template>
       </el-table-column>
-      <el-table-column label="状态" v-if="!IS_SUPPLIER() && !isSupplierGoods">
+      <el-table-column v-if="!IS_SUPPLIER() && !isSupplierGoods" label="状态">
         <template slot-scope="scope">
           <el-select v-model="scope.row.approve_status" size="mini" placeholder="请选择">
             <el-option
@@ -209,7 +209,11 @@
 
     <el-table :data="value.specItems" border style="line-height: initial; width: 100%">
       <el-table-column prop="spec_name" label="规格" />
-      <el-table-column label="状态" :render-header="renderRequire" v-if="!IS_SUPPLIER() && !isSupplierGoods">
+      <el-table-column
+        v-if="!IS_SUPPLIER() && !isSupplierGoods"
+        label="状态"
+        :render-header="renderRequire"
+      >
         <template slot-scope="scope">
           <el-select v-model="scope.row.approve_status" size="mini" placeholder="请选择">
             <el-option
@@ -229,7 +233,12 @@
         </template>
       </el-table-column>
 
-      <el-table-column v-if="medicinePrescription" prop="max_num" label="最大开方数" :render-header="renderRequire">
+      <el-table-column
+        v-if="medicinePrescription"
+        prop="max_num"
+        label="最大开方数"
+        :render-header="renderRequire"
+      >
         <template slot-scope="scope">
           <el-input v-model="scope.row.max_num" size="mini" />
         </template>
@@ -256,7 +265,13 @@
       </el-table-column>
       <el-table-column prop="cost_price" label="成本价">
         <template slot-scope="scope">
-          <el-input v-model="scope.row.cost_price" type="number" min="0" size="mini" :disabled="disabled" />
+          <el-input
+            v-model="scope.row.cost_price"
+            type="number"
+            min="0"
+            size="mini"
+            :disabled="disabled"
+          />
         </template>
       </el-table-column>
       <el-table-column prop="market_price" label="市场价">
@@ -297,7 +312,7 @@ export default {
       type: Boolean,
       default: false
     },
-    disabled:{
+    disabled: {
       type: Boolean,
       default: false
     },
@@ -309,7 +324,7 @@ export default {
       type: Boolean,
       default: false
     },
-    medicinePrescription:{
+    medicinePrescription: {
       type: Boolean,
       default: false
     }
@@ -329,7 +344,7 @@ export default {
         value: 'instock'
       }
     ]
-    if (!this.VERSION_IN_PURCHASE) {
+    if (!this.VERSION_IN_PURCHASE()) {
       statusOption.push({
         title: '前台不展示',
         value: 'offline_sale'
@@ -341,7 +356,7 @@ export default {
         {
           approve_status: '',
           store: '',
-          max_num:'',
+          max_num: '',
           item_bn: '',
           price: '',
           cost_price: '',
@@ -351,26 +366,26 @@ export default {
           weight: '',
           volume: '',
           supplier_goods_bn: '',
-          tax_rate: '',
+          tax_rate: ''
         }
       ],
       statusOption,
       cacheSpecImages: [],
       cacheSpecItems: [],
-      isFirst:true
+      isFirst: true
     }
   },
-  watch:{
-    medicinePrescription(nval){
-      if(nval){
-        if(this.isFirst){
+  watch: {
+    medicinePrescription(nval) {
+      if (nval) {
+        if (this.isFirst) {
           //解决第一次渲染改数据时触发组件的验证报错
           this.isFirst = false
-        }else{
-          this.bulkFilling.forEach(item=>item.approve_status = 'instock')
+        } else {
+          this.bulkFilling.forEach((item) => (item.approve_status = 'instock'))
         }
-        if(this.value.specItems.length){
-          this.value.specItems.forEach(item=>item.approve_status = 'instock')
+        if (this.value.specItems.length) {
+          this.value.specItems.forEach((item) => (item.approve_status = 'instock'))
         }
       }
     }
@@ -409,8 +424,8 @@ export default {
       }
       return result
     },
-    statusDisabled({value}){
-      if(this.medicinePrescription && value == 'instock' || !this.medicinePrescription){
+    statusDisabled({ value }) {
+      if ((this.medicinePrescription && value == 'instock') || !this.medicinePrescription) {
         return false
       }
       return true
@@ -479,7 +494,7 @@ export default {
             point_num,
             item_spec,
             supplier_goods_bn,
-            tax_rate,
+            tax_rate
           }) => {
             const vKey = item_spec.map(({ spec_value_id }) => spec_value_id).join('_')
             const specName = item_spec.map(
@@ -503,7 +518,7 @@ export default {
               barcode,
               point_num,
               supplier_goods_bn,
-              tax_rate,
+              tax_rate
             }
           }
         )
@@ -525,7 +540,7 @@ export default {
             barcode,
             point_num,
             supplier_goods_bn,
-            tax_rate,
+            tax_rate
           } = item
           _specItems.push({
             sku_id: key,
@@ -543,7 +558,7 @@ export default {
             barcode,
             point_num,
             supplier_goods_bn,
-            tax_rate,
+            tax_rate
           })
         }
       })
@@ -587,7 +602,7 @@ export default {
         barcode,
         point_num,
         supplier_goods_bn,
-        tax_rate,
+        tax_rate
       } = this.bulkFilling[0]
 
       this.value.specItems.forEach((item) => {
@@ -616,7 +631,7 @@ export default {
       Object.assign(this.value.specItems[index], {
         approve_status: '',
         store: '',
-        max_num:'',
+        max_num: '',
         item_bn: '',
         weight: '',
         volume: '',
@@ -626,7 +641,7 @@ export default {
         barcode: '',
         point_num: '',
         supplier_goods_bn: '',
-        tax_rate: '',
+        tax_rate: ''
       })
     }
   }

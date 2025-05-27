@@ -540,7 +540,7 @@ export default {
       picsDialog: false,
       isGetPics: false,
       multiple: false,
-      statusOption: this.VERSION_IN_PURCHASE
+      statusOption: this.VERSION_IN_PURCHASE()
         ? [
             {
               title: '前台可销售',

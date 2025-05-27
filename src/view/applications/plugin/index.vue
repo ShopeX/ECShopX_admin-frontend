@@ -22,7 +22,7 @@
 
 <template>
   <SpRouterView>
-    <el-row v-if="!VERSION_IN_PURCHASE" :gutter="20">
+    <el-row v-if="!VERSION_IN_PURCHASE()" :gutter="20">
       <el-col v-for="(item, index) in appList" :key="`app-item__${index}`" :span="8">
         <div class="app-item">
           <div class="app-logo">

@@ -304,7 +304,7 @@
         </div>
       </template>
     </el-card>
-    <el-card v-if="VERSION_STANDARD && !is_distributor" header="绑定店铺" shadow="naver">
+    <el-card v-if="VERSION_STANDARD() && !is_distributor" header="绑定店铺" shadow="naver">
       <el-button type="primary" @click="relStoresClick"> 选店铺 </el-button>
       <el-table v-if="relStores.length > 0" :data="relStores" style="line-height: normal">
         <el-table-column label="ID" prop="distributor_id" width="60" />
@@ -354,13 +354,13 @@ import { handleUploadFile, exportUploadTemplate } from '../../../../api/common'
 import store from '@/store'
 import { transformTree } from '@/utils'
 export default {
-  inject: ['refresh'],
   components: {
     GoodsSelect,
     StoreSelect,
     SkuSelector,
     Treeselect
   },
+  inject: ['refresh'],
   data() {
     return {
       is_distributor: false,
@@ -580,7 +580,7 @@ export default {
           without_return: item.without_return,
           gift_num: item.gift_num,
           pics: item.pics,
-          filter_full:item.filter_full
+          filter_full: item.filter_full
         }
         giftData.push(itemdata)
       })

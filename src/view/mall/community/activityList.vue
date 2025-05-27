@@ -1,25 +1,11 @@
 <template>
   <div class="page-body">
     <div v-if="$route.path.indexOf('detail') === -1 && $route.path.indexOf('process') === -1">
-      <SpFilterForm
-        :model="params"
-        @onSearch="onSearch"
-        @onReset="onSearch"
-      >
-        <SpFilterFormItem
-          prop="activity_name"
-          label="活动名称:"
-        >
-          <el-input
-            v-model="params.activity_name"
-            placeholder="请输入活动名称"
-          />
+      <SpFilterForm :model="params" @onSearch="onSearch" @onReset="onSearch">
+        <SpFilterFormItem prop="activity_name" label="活动名称:">
+          <el-input v-model="params.activity_name" placeholder="请输入活动名称" />
         </SpFilterFormItem>
-        <SpFilterFormItem
-          prop="create_time"
-          label="时间:"
-          size="max"
-        >
+        <SpFilterFormItem prop="create_time" label="时间:" size="max">
           <el-date-picker
             v-model="params.create_time"
             clearable
@@ -34,15 +20,8 @@
             :picker-options="pickerOptions"
           />
         </SpFilterFormItem>
-        <SpFilterFormItem
-          prop="is_success"
-          label="仅成团订单:"
-        >
-          <el-select
-            v-model="params.is_success"
-            clearable
-            placeholder="请选择"
-          >
+        <SpFilterFormItem prop="is_success" label="仅成团订单:">
+          <el-select v-model="params.is_success" clearable placeholder="请选择">
             <el-option
               v-for="item in processArr"
               :key="item.value"
@@ -56,21 +35,11 @@
 
       <div class="action-container">
         <export-tip @exportHandle="exportCommunityOrder">
-          <el-button
-            type="primary"
-            plain
-            icon="el-plus-circle"
-          >
-            导出活动销售数据
-          </el-button>
+          <el-button type="primary" plain icon="el-plus-circle"> 导出活动销售数据 </el-button>
         </export-tip>
       </div>
 
-      <el-tabs
-        v-model="params.activity_status"
-        type="card"
-        @tab-click="onSearch"
-      >
+      <el-tabs v-model="params.activity_status" type="card" @tab-click="onSearch">
         <el-tab-pane
           v-for="item in activity_status"
           :key="item.value"
@@ -83,36 +52,16 @@
           :data="tableList"
           @selection-change="handleSelectionChange"
         >
-          <el-table-column
-            type="selection"
-            align="center"
-            label="全选"
-          />
-          <el-table-column
-            width="100"
-            prop="activity_id"
-            label="ID"
-          />
+          <el-table-column type="selection" align="center" label="全选" />
+          <el-table-column width="100" prop="activity_id" label="ID" />
 
-          <el-table-column
-            width="220"
-            prop="activity_name"
-            label="活动名称"
-          />
-          <el-table-column
-            prop="total_fee"
-            width="120"
-            label="实际收入（¥）"
-          >
+          <el-table-column width="220" prop="activity_name" label="活动名称" />
+          <el-table-column prop="total_fee" width="120" label="实际收入（¥）">
             <template slot-scope="scope">
               {{ (scope.row.total_fee / 100).toFixed(2) }}
             </template>
           </el-table-column>
-          <el-table-column
-            prop="total_fee"
-            min-width="150"
-            label="有效期"
-          >
+          <el-table-column prop="total_fee" min-width="150" label="有效期">
             <template slot-scope="scope">
               <div>{{ scope.row.start_time }}</div>
               <div>~</div>
@@ -120,22 +69,11 @@
             </template>
           </el-table-column>
 
-          <el-table-column
-            width="220"
-            prop="activity_process_msg"
-            label="状态"
-          />
+          <el-table-column width="220" prop="activity_process_msg" label="状态" />
 
-          <el-table-column
-            width="200"
-            prop="activity_delivery_status_msg"
-            label="发货状态"
-          />
+          <el-table-column width="200" prop="activity_delivery_status_msg" label="发货状态" />
 
-          <el-table-column
-            label="操作"
-            min-width="150"
-          >
+          <el-table-column label="操作" min-width="150">
             <template slot-scope="scope">
               <div class="operating-icons">
                 <el-button
@@ -172,7 +110,7 @@
 import { mapGetters } from 'vuex'
 import mixin from '@/mixins'
 import { pageMixin } from '@/mixins'
-import { VERSION_STANDARD, isArray, VERSION_B2C, VERSION_IN_PURCHASE } from '@/utils'
+import { VERSION_STANDARD, isArray, VERSION_B2C(), VERSION_IN_PURCHASE() } from '@/utils'
 import { getCommunityActivity, communityDeliver, communityOrderExport } from '@/api/promotions'
 import moment from 'moment'
 import { DISTRIBUTION_TYPE, ORDER_STATUS, PICKER_DATE_OPTIONS } from '@/consts'

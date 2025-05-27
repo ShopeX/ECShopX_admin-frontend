@@ -19,7 +19,7 @@
             v-if="
               item.name === 'nearbyShop' &&
               relStore.id == '0' &&
-              VERSION_PLATFORM &&
+              VERSION_PLATFORM() &&
               $store.getters.login_type !== 'distributor'
             "
           >
@@ -28,7 +28,7 @@
             </svg>
             附近商家
           </template>
-          <template v-if="item.name === 'coupon' && !VERSION_IN_PURCHASE">
+          <template v-if="item.name === 'coupon' && !VERSION_IN_PURCHASE()">
             <svg class="svg-icon" aria-hidden="true">
               <use xlink:href="#icon-tag1" />
             </svg>
@@ -98,7 +98,7 @@
             v-if="
               item.name === 'store' &&
               relStore.id == '0' &&
-              VERSION_PLATFORM &&
+              VERSION_PLATFORM() &&
               $store.getters.login_type !== 'distributor'
             "
           >
@@ -160,7 +160,7 @@
           <div class="components-container">
             <div v-if="relStore.id != '0' && element_edit_status == 2">
               <div v-for="(item, index) in platformComponents" :key="index" class="component-item">
-                <nearbyShop v-if="item.name === 'nearbyShop' && VERSION_PLATFORM" :res="item" />
+                <nearbyShop v-if="item.name === 'nearbyShop' && VERSION_PLATFORM()" :res="item" />
                 <coupon v-if="item.name === 'coupon'" :res="item" />
                 <film v-if="item.name === 'film'" :res="item" />
                 <goodsGrid v-if="item.name === 'goodsGrid'" :res="item" />
@@ -177,7 +177,7 @@
                 <headline v-if="item.name === 'headline'" :res="item" />
                 <hotTopic v-if="item.name === 'hotTopic'" :res="item" />
                 <imgGif v-if="item.name === 'img-gif'" :res="item" />
-                <store v-if="item.name === 'store' && VERSION_PLATFORM" :res="item" />
+                <store v-if="item.name === 'store' && VERSION_PLATFORM()" :res="item" />
               </div>
             </div>
             <draggable
@@ -201,7 +201,7 @@
                   />
                 </transition>
                 <nearbyShop
-                  v-if="item.name === 'nearbyShop' && VERSION_PLATFORM"
+                  v-if="item.name === 'nearbyShop' && VERSION_PLATFORM()"
                   :res="item"
                   :active="index == editorIndex"
                 />
@@ -262,7 +262,7 @@
                 />
                 <imgGif v-if="item.name === 'img-gif'" :res="item" :active="index == editorIndex" />
                 <store
-                  v-if="item.name === 'store' && VERSION_PLATFORM"
+                  v-if="item.name === 'store' && VERSION_PLATFORM()"
                   :res="item"
                   :active="index == editorIndex"
                 />
@@ -507,6 +507,9 @@ export default {
     draggable,
     TemplatePageEditor
   },
+  provide() {
+    return {}
+  },
   props: {
     dialogVisible: {
       type: Boolean,
@@ -533,9 +536,6 @@ export default {
     templateName: {
       type: String
     }
-  },
-  provide() {
-    return {}
   },
   data() {
     return {
@@ -1136,7 +1136,7 @@ export default {
       // console.log(data)
 
       // 如果是平台版本推荐店铺组件且店铺为总店（店铺id 0）
-      if (this.editorData.name === 'store' && this.VERSION_PLATFORM && Number(store.id) === 0) {
+      if (this.editorData.name === 'store' && this.VERSION_PLATFORM() && Number(store.id) === 0) {
         this.$message({
           message: '推荐店铺不能为总店',
           type: 'error'
@@ -1334,7 +1334,7 @@ export default {
       // 只有平台版时&为编辑小程序模板时展示附近商家和推荐店铺
       const isHaveStore = this.initData.some((item) => item.name === 'store')
       if (
-        this.VERSION_PLATFORM &&
+        this.VERSION_PLATFORM() &&
         this.relStore.id == '0' &&
         !isHaveStore &&
         this.$store.getters.login_type !== 'distributor'
@@ -1362,7 +1362,7 @@ export default {
       }
       const isHaveNearbyShop = this.initData.some((item) => item.name === 'nearbyShop')
       if (
-        this.VERSION_PLATFORM &&
+        this.VERSION_PLATFORM() &&
         this.relStore.id == '0' &&
         !isHaveNearbyShop &&
         this.$store.getters.login_type !== 'distributor'
@@ -1379,7 +1379,7 @@ export default {
       }
 
       const isHaveCoupon = this.initData.some((item) => item.name === 'coupon')
-      if (!this.VERSION_IN_PURCHASE && !isHaveCoupon) {
+      if (!this.VERSION_IN_PURCHASE() && !isHaveCoupon) {
         this.initData.unshift({
           name: 'coupon',
           base: {

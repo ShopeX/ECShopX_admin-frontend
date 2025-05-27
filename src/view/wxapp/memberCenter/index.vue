@@ -8,11 +8,11 @@
       <el-tab-pane label="菜单隐藏显示设置" name="menuoption">
         <menuoptionTemplates />
       </el-tab-pane>
-      <el-tab-pane v-if="!VERSION_IN_PURCHASE" label="页面跳转设置" name="redirect">
+      <el-tab-pane v-if="!VERSION_IN_PURCHASE()" label="页面跳转设置" name="redirect">
         <redirectTemplates />
       </el-tab-pane>
       <!-- <el-tab-pane
-        v-if="!VERSION_IN_PURCHASE"
+        v-if="!VERSION_IN_PURCHASE()"
         label="微信分享"
         name="wechatshare"
       >

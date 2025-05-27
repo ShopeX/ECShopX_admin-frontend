@@ -299,7 +299,7 @@ export default {
         page: 1,
         pageSize: 20
       },
-      order_class_array: this.VERSION_STANDARD ? ORDER_TYPE_STANDARD : ORDER_TYPE,
+      order_class_array: this.VERSION_STANDARD() ? ORDER_TYPE_STANDARD : ORDER_TYPE,
       order_status: '',
       time_start_begin: '',
       time_start_end: '',
@@ -487,7 +487,7 @@ export default {
       if (order_class == 'normal') {
         return type == '1' ? '跨境订单' : '普通订单'
       }
-      const _orderType = this.VERSION_STANDARD ? ORDER_TYPE_STANDARD : ORDER_TYPE
+      const _orderType = this.VERSION_STANDARD() ? ORDER_TYPE_STANDARD : ORDER_TYPE
       const fd = _orderType.find((item) => item.value == order_class)
       if (fd) {
         return fd.title

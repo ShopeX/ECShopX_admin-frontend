@@ -190,7 +190,7 @@ import { mapGetters } from 'vuex'
 import mixin from '@/mixins'
 import moment from 'moment'
 import { pageMixin } from '@/mixins'
-import { VERSION_STANDARD, isArray, VERSION_B2C, VERSION_IN_PURCHASE } from '@/utils'
+import { VERSION_STANDARD, isArray, VERSION_B2C(), VERSION_IN_PURCHASE() } from '@/utils'
 import { getCommunityActivity, communityDeliver, communityOrderExport } from '@/api/promotions'
 import { SALES_STATUS, ORDER_STATUS, PICKER_DATE_OPTIONS } from '@/consts'
 

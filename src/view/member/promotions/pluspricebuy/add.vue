@@ -150,7 +150,7 @@
         </el-form-item>
         <el-form-item v-if="useShopVisible()" label="指定店铺">
           <el-radio v-model="form.use_shop" :label="0"> 全场可用 </el-radio>
-          <el-radio v-if="!VERSION_PLATFORM" v-model="form.use_shop" :label="1">
+          <el-radio v-if="!VERSION_PLATFORM()" v-model="form.use_shop" :label="1">
             指定店铺可用
           </el-radio>
           <el-col v-if="form.use_shop == 1" :span="23">
@@ -382,7 +382,6 @@ import { getItemsList, getCategory, getTagList, getGoodsAttr } from '@/api/goods
 import { transformTree } from '@/utils'
 import { handleUploadFile, exportUploadTemplate } from '../../../../api/common'
 export default {
-  inject: ['refresh'],
   components: {
     GoodsSelect,
     StoreSelect,
@@ -390,6 +389,7 @@ export default {
     imgPicker,
     Treeselect
   },
+  inject: ['refresh'],
   data() {
     return {
       cursymbol: '￥',

@@ -1,13 +1,6 @@
 <template>
-  <section
-    class="section section-white content-padded"
-    onload="init()"
-  >
-    <el-form
-      ref="form"
-      :model="form"
-      label-width="110px"
-    >
+  <section class="section section-white content-padded" onload="init()">
+    <el-form ref="form" :model="form" label-width="110px">
       <el-form-item label="是否是国内门店">
         <el-col :span="10">
           <el-radio-group
@@ -15,73 +8,31 @@
             v-model="form.is_domestic"
             @change="isDomesticChange"
           >
-            <el-radio
-              :label="1"
-              value="1"
-              disabled
-            >
-              国内
-            </el-radio>
-            <el-radio
-              :label="2"
-              value="2"
-              disabled
-            >
-              非国内
-            </el-radio>
+            <el-radio :label="1" value="1" disabled> 国内 </el-radio>
+            <el-radio :label="2" value="2" disabled> 非国内 </el-radio>
           </el-radio-group>
-          <el-radio-group
-            v-else
-            v-model="form.is_domestic"
-            @change="isDomesticChange"
-          >
-            <el-radio
-              :label="1"
-              value="1"
-            >
-              国内
-            </el-radio>
-            <el-radio
-              :label="2"
-              value="2"
-            >
-              非国内
-            </el-radio>
+          <el-radio-group v-else v-model="form.is_domestic" @change="isDomesticChange">
+            <el-radio :label="1" value="1"> 国内 </el-radio>
+            <el-radio :label="2" value="2"> 非国内 </el-radio>
           </el-radio-group>
         </el-col>
       </el-form-item>
       <el-form-item label="是否是直营店">
         <el-col :span="10">
           <el-radio-group v-model="form.is_direct_store">
-            <el-radio
-              :label="1"
-              value="1"
-            >
-              直营店
-            </el-radio>
-            <el-radio
-              :label="2"
-              value="2"
-            >
-              非直营店
-            </el-radio>
+            <el-radio :label="1" value="1"> 直营店 </el-radio>
+            <el-radio :label="2" value="2"> 非直营店 </el-radio>
           </el-radio-group>
         </el-col>
       </el-form-item>
       <el-form-item label="门店名称">
         <div>
           <el-col :span="8">
-            <el-input
-              v-model="form.name"
-              placeholder="请先完成下方地理位置的选择"
-            />
+            <el-input v-model="form.name" placeholder="请先完成下方地理位置的选择" />
           </el-col>
         </div>
       </el-form-item>
-      <el-form-item
-        v-if="form.is_domestic == 1"
-        label="地理位置"
-      >
+      <el-form-item v-if="form.is_domestic == 1" label="地理位置">
         <el-cascader
           v-model="form.regions_id"
           :options="regions"
@@ -94,104 +45,47 @@
           placeholder="请输入地址"
           style="width: 500px"
         />
-        <el-button
-          type="primary"
-          @click="searchKeyword()"
-        >
-          搜索定位
-        </el-button>
+        <el-button type="primary" @click="searchKeyword()"> 搜索定位 </el-button>
       </el-form-item>
-      <el-form-item
-        v-if="form.is_domestic == 1"
-        label="地图定位"
-      >
+      <el-form-item v-if="form.is_domestic == 1" label="地图定位">
         <div id="qqmap_container" />
       </el-form-item>
-      <el-form-item
-        v-if="form.is_domestic == '2'"
-        label="具体地址"
-      >
+      <el-form-item v-if="form.is_domestic == '2'" label="具体地址">
         <div>
           <el-col :span="4">
-            <el-input
-              v-model="form.country"
-              placeholder="国家"
-            />
+            <el-input v-model="form.country" placeholder="国家" />
           </el-col>
-          <el-col
-            :span="1"
-            class="content-center"
-          >
-            -
-          </el-col>
+          <el-col :span="1" class="content-center"> - </el-col>
           <el-col :span="4">
-            <el-input
-              v-model="form.city"
-              placeholder="城市"
-            />
+            <el-input v-model="form.city" placeholder="城市" />
           </el-col>
-          <el-col
-            :span="1"
-            class="content-center"
-          >
-            -
-          </el-col>
+          <el-col :span="1" class="content-center"> - </el-col>
           <el-col :span="10">
-            <el-input
-              v-model="form.address"
-              placeholder="详细地址"
-            />
+            <el-input v-model="form.address" placeholder="详细地址" />
           </el-col>
         </div>
       </el-form-item>
-      <el-form-item
-        inline="true"
-        class="demo-form-inline"
-        label="门店经纬度"
-      >
+      <el-form-item inline="true" class="demo-form-inline" label="门店经纬度">
         <el-col :span="3">
-          <el-input
-            v-model="form.lng"
-            readonly
-            placeholder="经度"
-          />
+          <el-input v-model="form.lng" readonly placeholder="经度" />
         </el-col>
-        <el-col
-          :span="1"
-          class="content-center"
-        >
-          -
-        </el-col>
+        <el-col :span="1" class="content-center"> - </el-col>
         <el-col :span="3">
-          <el-input
-            v-model="form.lat"
-            readonly
-            placeholder="纬度"
-          />
+          <el-input v-model="form.lat" readonly placeholder="纬度" />
         </el-col>
       </el-form-item>
       <el-form-item label="联系人">
-        <el-input
-          v-model="form.contact"
-          placeholder="联系人"
-          style="width: 55%"
-        />
+        <el-input v-model="form.contact" placeholder="联系人" style="width: 55%" />
       </el-form-item>
       <el-form-item label="联系方式">
-        <el-input
-          v-model="form.mobile"
-          placeholder="请输入手机号"
-          style="width: 55%"
-        />
+        <el-input v-model="form.mobile" placeholder="请输入手机号" style="width: 55%" />
       </el-form-item>
       <el-form-item label="客服电话">
         <el-col :span="8">
           <el-input v-model="form.contract_phone" />
         </el-col>
         <el-col>
-          <p class="frm-tips">
-            固定电话需加区号；区号、分机号均用“-”连接
-          </p>
+          <p class="frm-tips">固定电话需加区号；区号、分机号均用“-”连接</p>
         </el-col>
       </el-form-item>
       <el-form-item label="营业时间">
@@ -205,50 +99,21 @@
           placeholder="结束时间"
           :picker-options="{ start: '00:00', step: '00:30', end: '23:59', minTime: startTime }"
         />
-        <p class="frm-tips">
-          24小时制，如10：00-20：30
-        </p>
+        <p class="frm-tips">24小时制，如10：00-20：30</p>
       </el-form-item>
       <el-form-item label="门店LOGO">
-        <div
-          class="upload-box"
-          @click="handleImgPicker('logo')"
-        >
-          <img
-            v-if="form.logo"
-            :src="form.logo"
-            class="avatar"
-          >
-          <i
-            v-else
-            class="iconfont icon-camera avatar-uploader-icon"
-          />
+        <div class="upload-box" @click="handleImgPicker('logo')">
+          <img v-if="form.logo" :src="form.logo" class="avatar">
+          <i v-else class="iconfont icon-camera avatar-uploader-icon" />
         </div>
-        <div class="frm-tips">
-          只能上传jpg/png文件，且不超过2M
-        </div>
+        <div class="frm-tips">只能上传jpg/png文件，且不超过2M</div>
       </el-form-item>
-      <el-form-item
-        v-if="VERSION_PLATFORM"
-        label="门店横幅广告"
-      >
-        <div
-          class="upload-box"
-          @click="handleImgPicker('banner')"
-        >
-          <img
-            v-if="form.banner"
-            :src="form.banner"
-            class="avatar"
-          >
-          <i
-            v-else
-            class="iconfont icon-camera avatar-uploader-icon"
-          />
+      <el-form-item v-if="VERSION_PLATFORM()" label="门店横幅广告">
+        <div class="upload-box" @click="handleImgPicker('banner')">
+          <img v-if="form.banner" :src="form.banner" class="avatar">
+          <i v-else class="iconfont icon-camera avatar-uploader-icon" />
         </div>
-        <div class="frm-tips">
-          只能上传jpg/png文件，且不超过2M
-        </div>
+        <div class="frm-tips">只能上传jpg/png文件，且不超过2M</div>
       </el-form-item>
       <el-form-item label="是否启用">
         <el-switch
@@ -260,32 +125,15 @@
         />
       </el-form-item>
       <div class="section-footer with-border content-center">
-        <el-button
-          size="large"
-          @click.native.prevent
-        >
-          取消
-        </el-button>
-        <el-button
-          type="primary"
-          :loading="submitLoading"
-          @click="submitItemsActionConfirm"
-        >
+        <el-button size="large" @click.native.prevent> 取消 </el-button>
+        <el-button type="primary" :loading="submitLoading" @click="submitItemsActionConfirm">
           {{ submitLoading ? '提交中' : '保存' }}
         </el-button>
       </div>
     </el-form>
-    <div
-      v-show="qqmap_infowin_flag"
-      id="qqmap_infowin"
-    >
+    <div v-show="qqmap_infowin_flag" id="qqmap_infowin">
       <el-col>
-        <el-button
-          type="primary"
-          @click="imp_poi(poi_info)"
-        >
-          导入该位置信息
-        </el-button>
+        <el-button type="primary" @click="imp_poi(poi_info)"> 导入该位置信息 </el-button>
       </el-col>
       <el-col>{{ poi_info.name }}</el-col>
       <div class="frm-tips">
@@ -307,7 +155,7 @@ import { uploadMaterial, getAuthorizerInfo } from '@/api/wechat'
 import imgPicker from '@/components/imageselect'
 
 // 取选中地区的值
-function getCascaderObj (val, opt) {
+function getCascaderObj(val, opt) {
   return val.map(function (value, index, array) {
     for (var itm of opt) {
       if (itm.value === value) {
@@ -323,7 +171,7 @@ export default {
   components: {
     imgPicker
   },
-  data () {
+  data() {
     return {
       imgDialog: false,
       isGetImage: false,
@@ -347,7 +195,7 @@ export default {
       poi_info: []
     }
   },
-  mounted () {
+  mounted() {
     this.distributor_id = this.$route.query.distributor_id
     if (this.distributor_id || this.$store.getters.login_type == 'distributor') {
       getDistributorInfo({ distributor_id: this.distributor_id }).then((res) => {
@@ -372,7 +220,7 @@ export default {
     }
   },
   methods: {
-    pickImg (data) {
+    pickImg(data) {
       if (this.pickerImgType == 'logo') {
         this.form.logo = data.url
       } else {
@@ -381,16 +229,16 @@ export default {
       console.log(data)
       this.imgDialog = false
     },
-    handleImgPicker (pickerImgType) {
+    handleImgPicker(pickerImgType) {
       this.pickerImgType = pickerImgType
       this.imgDialog = true
       this.isGetImage = true
     },
-    closeImgDialog () {
+    closeImgDialog() {
       this.imgDialog = false
       this.isGetImage = false
     },
-    submitItemsActionConfirm () {
+    submitItemsActionConfirm() {
       this.submitLoading = true
       this.form.hour = this.startTime + '-' + this.endTime
       addDistributorShop(this.form)
@@ -531,7 +379,7 @@ export default {
       }
       return arr
     },
-    isDomesticChange (val) {
+    isDomesticChange(val) {
       if (val == 1) {
         this.qqmapinit(39.916527, 116.397128)
       }

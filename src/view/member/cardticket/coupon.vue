@@ -275,7 +275,7 @@ export default {
         value: 'cash'
       }
     ]
-    if (this.VERSION_STANDARD) {
+    if (this.VERSION_STANDARD()) {
       typeFilters.push({ text: '兑换券', value: 'new_gift' })
     }
     return {
@@ -339,7 +339,7 @@ export default {
   },
   mounted() {
     this.params.store_self = false
-    if (this.VERSION_PLATFORM && store.getters.login_type !== 'distributor') {
+    if (this.VERSION_PLATFORM() && store.getters.login_type !== 'distributor') {
       this.params.store_self = true
     }
     this.fetchList()

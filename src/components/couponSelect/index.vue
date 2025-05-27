@@ -131,7 +131,7 @@ export default {
         value: 'cash'
       }
     ]
-    if (this.VERSION_STANDARD) {
+    if (this.VERSION_STANDARD()) {
       options.push({
         label: '兑换券',
         value: 'new_gift'

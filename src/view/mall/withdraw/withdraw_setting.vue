@@ -6,8 +6,8 @@
       </div>
       <div class="content">
         <el-form
-          :model="form"
           ref="ruleForm"
+          :model="form"
           class="demo-ruleForm"
           label-width="140px"
           :rules="rules"
@@ -28,32 +28,29 @@
               </el-form-item>
               <el-form-item v-if="form.auto_type == 'month'" prop="auto_day" class="noBottom">
                 <el-date-picker
-                style="width:180px"
                   v-model="form.auto_day"
+                  style="width: 180px"
                   type="date"
                   format="dd"
                   value-format="dd"
                   placeholder="请选择每月日期"
-                >
-                </el-date-picker>
+                />
                 <el-time-picker
-                style="width:120px"
                   v-model="form.auto_time"
+                  style="width: 120px"
                   format="HH:mm"
                   value-format="HH:mm"
                   placeholder="选择时间"
-                >
-                </el-time-picker>
+                />
               </el-form-item>
               <el-form-item v-if="form.auto_type == 'day'" prop="auto_time" class="noBottom">
                 <el-time-picker
-                style="width:300px"
                   v-model="form.auto_time"
+                  style="width: 300px"
                   format="HH:mm"
                   value-format="HH:mm"
                   placeholder="请选择每日提取时间"
-                >
-                </el-time-picker>
+                />
               </el-form-item>
               <el-form-item>
                 <div class="tips">提现操作建议在10:00:00-22:00:00进行，以免影响操作时效。</div>
@@ -77,14 +74,14 @@
                     :key="item.value"
                     :label="item.label"
                     :value="item.value"
-                  ></el-option>
+                  />
                 </el-select>
               </el-form-item>
             </template>
             <el-form-item label="商户暂冻金额" prop="draw_limit">
               <el-input
-                placeholder="请输入"
                 v-model="form.draw_limit"
+                placeholder="请输入"
                 style="width: 300px"
                 type="number"
                 min="0"
@@ -101,13 +98,15 @@
             <template v-if="isAllShop == 'N'">
               <el-form-item>
                 <el-button type="primary" size="mini" @click="seletedShopHandle"
-                  >选择商户</el-button
+                  >
+选择商户
+</el-button
                 >
               </el-form-item>
               <selector-table
-                :seletedBusiness="form.draw_limit_list"
+                :seleted-business="form.draw_limit_list"
                 @deleteRowHandle="deleteRowHandle"
-              ></selector-table>
+              />
             </template>
           </div>
 
@@ -129,10 +128,10 @@
     <template v-if="visible">
       <withdraw-shop
         :visible="visible"
+        :seleted-business="form.draw_limit_list"
         @closeHandle="seletedShopHandle"
-        :seletedBusiness="form.draw_limit_list"
         @saveSeletedBusinessHandle="saveSeletedBusinessHandle"
-      ></withdraw-shop>
+      />
     </template>
   </div>
 </template>
@@ -181,7 +180,8 @@ export default {
   },
   methods: {
     async getConfig() {
-      const { cash_type_options, auto_config, draw_limit_list, draw_limit } = await this.$api.adapay.withDrawSetting()
+      const { cash_type_options, auto_config, draw_limit_list, draw_limit } =
+        await this.$api.adapay.withDrawSetting()
       this.cash_type_options = cash_type_options
       if (auto_config.length == 0) {
         return
@@ -190,12 +190,11 @@ export default {
       delete auto_config.draw_limit_list
       delete auto_config.next_time
 
-      this.form = {...this.form,...auto_config}
+      this.form = { ...this.form, ...auto_config }
       // if (auto_config.auto_draw_cash=='N') {
       //   this.form = auto_config
       // }
 
-     
       this.form.draw_limit_list = draw_limit_list
       if (this.form.draw_limit_list.length > 0) {
         this.isAllShop = 'N'
@@ -227,14 +226,13 @@ export default {
       this.$refs[formName].validate(async (valid) => {
         if (valid) {
           try {
-            if (this.isAllShop=='Y') {
-              this.form.draw_limit_list = [];
+            if (this.isAllShop == 'Y') {
+              this.form.draw_limit_list = []
             }
             const obj = {
               ...this.form,
               draw_limit_list: JSON.stringify(this.form.draw_limit_list)
             }
-            
 
             const { status } = await this.$api.adapay.saveDrawSetting(obj)
             if (status) {
@@ -262,7 +260,7 @@ export default {
   }
 }
 </script>
- <style lang="scss" scoped>
+<style lang="scss" scoped>
 .zyk_adapay_withdraw_setting {
   .clearfix span {
     font-weight: 700;
@@ -291,7 +289,7 @@ export default {
   }
 }
 </style>
- <style lang="scss">
+<style lang="scss">
 .zyk_adapay_withdraw_setting {
 }
 </style>

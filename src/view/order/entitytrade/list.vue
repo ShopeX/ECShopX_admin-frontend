@@ -9,7 +9,7 @@
         <el-input v-model="params.order_id" placeholder="请输入订单号" />
       </SpFilterFormItem>
       <!-- <SpFilterFormItem
-        v-if="login_type != 'merchant' && !VERSION_B2C && !VERSION_IN_PURCHASE"
+        v-if="login_type != 'merchant' && !VERSION_B2C() && !VERSION_IN_PURCHASE()"
         prop="salesman_mobile"
         label="导购手机号:"
       >
@@ -26,7 +26,7 @@
           />
         </el-select>
       </SpFilterFormItem>
-      <SpFilterFormItem v-if="!VERSION_IN_PURCHASE" prop="source" label="订单来源:">
+      <SpFilterFormItem v-if="!VERSION_IN_PURCHASE()" prop="source" label="订单来源:">
         <el-select v-model="params.source" clearable placeholder="请选择">
           <el-option
             v-for="item in orderSourceList"
@@ -37,7 +37,7 @@
           />
         </el-select>
       </SpFilterFormItem>
-      <SpFilterFormItem v-if="!VERSION_IN_PURCHASE" prop="order_class" label="订单类型:">
+      <SpFilterFormItem v-if="!VERSION_IN_PURCHASE()" prop="order_class" label="订单类型:">
         <el-select v-model="params.order_class" clearable placeholder="请选择">
           <el-option
             v-for="item in orderType"
@@ -64,7 +64,7 @@
         />
       </SpFilterFormItem>
       <SpFilterFormItem
-        v-if="!isMicorMall && !VERSION_IN_PURCHASE"
+        v-if="!isMicorMall && !VERSION_IN_PURCHASE()"
         prop="is_invoiced"
         label="开票状态:"
       >
@@ -94,7 +94,7 @@
         />
       </SpFilterFormItem>
       <SpFilterFormItem
-        v-if="!VERSION_STANDARD && !VERSION_IN_PURCHASE"
+        v-if="!VERSION_STANDARD() && !VERSION_IN_PURCHASE()"
         prop="distributor_type"
         label="订单分类:"
       >
@@ -109,13 +109,15 @@
         </el-select>
       </SpFilterFormItem>
       <SpFilterFormItem
-        v-if="(!isMicorMall || login_type != 'distributor') && !VERSION_B2C && !VERSION_IN_PURCHASE"
+        v-if="
+          (!isMicorMall || login_type != 'distributor') && !VERSION_B2C() && !VERSION_IN_PURCHASE()
+        "
         prop="distributor_id"
         label="店铺:"
       >
         <SpSelectShop v-model="params.distributor_id" clearable placeholder="请选择" />
       </SpFilterFormItem>
-      <SpFilterFormItem v-if="!VERSION_IN_PURCHASE" prop="subDistrict" label="选择街道:">
+      <SpFilterFormItem v-if="!VERSION_IN_PURCHASE()" prop="subDistrict" label="选择街道:">
         <el-cascader
           v-model="params.subDistrict"
           clearable
@@ -404,11 +406,11 @@ import { mapGetters } from 'vuex'
 import mixin from '@/mixins'
 import { pageMixin } from '@/mixins'
 import {
-  VERSION_STANDARD,
-  VERSION_PLATFORM,
+  VERSION_STANDARD(),
+  VERSION_PLATFORM(),
   isArray,
-  VERSION_B2C,
-  VERSION_IN_PURCHASE,
+  VERSION_B2C(),
+  VERSION_IN_PURCHASE(),
   IS_ADMIN,
   IS_DISTRIBUTOR
 } from '@/utils'
@@ -457,12 +459,12 @@ export default {
       datapass_block: 1, // 是否为数据脱敏
       subDistrictList: [],
       distributionType: DISTRIBUTION_TYPE,
-      orderStatus: VERSION_B2C
+      orderStatus: VERSION_B2C()
         ? ORDER_B2C_STATUS
-        : VERSION_IN_PURCHASE
+        : VERSION_IN_PURCHASE()
         ? IN_PURCHASE_STATUS
         : ORDER_STATUS,
-      orderType: this.VERSION_STANDARD ? ORDER_TYPE_STANDARD : ORDER_TYPE,
+      orderType: this.VERSION_STANDARD() ? ORDER_TYPE_STANDARD : ORDER_TYPE,
       invoiceStatus: INVOICE_STATUS,
       orderCategory: ORDER_CATEGORY,
       pickerOptions: PICKER_DATE_OPTIONS,
@@ -874,7 +876,7 @@ export default {
         } = item
         const isDada = receipt_type == 'dada'
         const isLogistics = receipt_type == 'logistics'
-        if (VERSION_STANDARD || distributor_id == 0 || this.login_type == 'distributor') {
+        if (VERSION_STANDARD() || distributor_id == 0 || this.login_type == 'distributor') {
           if (
             !isDada &&
             cancel_status == 'NO_APPLY_CANCEL' &&
@@ -926,20 +928,20 @@ export default {
           actionBtns.push({ name: '备注', key: 'remark' })
         }
         if (order_status == 'NOTPAY') {
-          if (VERSION_PLATFORM) {
+          if (VERSION_PLATFORM()) {
             if ((this.IS_ADMIN() && distributor_id == 0) || this.IS_DISTRIBUTOR()) {
               actionBtns.push({ name: '改价', key: 'changePrice' })
             }
-          } else if (!VERSION_IN_PURCHASE) {
+          } else if (!VERSION_IN_PURCHASE()) {
             actionBtns.push({ name: '改价', key: 'changePrice' })
           }
         }
         if (can_apply_aftersales == 1) {
-          if (VERSION_PLATFORM) {
+          if (VERSION_PLATFORM()) {
             if ((this.IS_ADMIN() && distributor_id == 0) || this.IS_DISTRIBUTOR()) {
               actionBtns.push({ name: '申请售后', key: 'salesAfter' })
             }
-          } else if (!VERSION_IN_PURCHASE) {
+          } else if (!VERSION_IN_PURCHASE()) {
             actionBtns.push({ name: '申请售后', key: 'salesAfter' })
           }
         }
@@ -962,7 +964,7 @@ export default {
       if (order_class == 'normal') {
         return type == '1' ? '跨境订单' : '普通订单'
       }
-      const _orderType = this.VERSION_STANDARD ? ORDER_TYPE_STANDARD : ORDER_TYPE
+      const _orderType = this.VERSION_STANDARD() ? ORDER_TYPE_STANDARD : ORDER_TYPE
       const fd = _orderType.find((item) => item.value == order_class)
       if (fd) {
         return fd.title

@@ -12,15 +12,11 @@
       <!-- <div class="view-flex-item default-store" v-else >总店</div>  -->
       <template v-if="!lock">
         <div
-          v-if="checked.id && checked.id != '0'&&isChangeStore"
+          v-if="checked.id && checked.id != '0' && isChangeStore"
           class="iconfont icon-times"
           @click="handleResetClick"
         />
-        <div
-          v-if="isChangeStore"
-          class="iconfont icon-sync-alt"
-          @click="handleClick"
-        />
+        <div v-if="isChangeStore" class="iconfont icon-sync-alt" @click="handleClick" />
       </template>
     </div>
     <storeList
@@ -58,7 +54,7 @@ export default {
       default: false
     }
   },
-  data () {
+  data() {
     return {
       visible: false,
       loading: false,
@@ -73,47 +69,47 @@ export default {
       regions: district,
       checked: {},
       currentStoreName: '',
-      storeList:null
+      storeList: null
     }
   },
   watch: {
-    data (val) {
+    data(val) {
       if (val.id) {
         this.checked = val
       } else {
         this.checked = {}
       }
     },
-    checked (val) {
+    checked(val) {
       console.log('---checked--->', val)
     }
   },
-  mounted () {
+  mounted() {
     if (this.data.id) {
       this.checked = this.data
     }
   },
   methods: {
-    handleClick () {
+    handleClick() {
       this.visible = true
     },
-    handleResetClick () {
+    handleResetClick() {
       this.$emit('change', {})
     },
-    handleChange (val) {
+    handleChange(val) {
       console.log('==valvalvalval', val, val)
       this.$emit('change', val)
       this.visible = false
     },
-    handleClose () {
+    handleClose() {
       this.visible = false
     },
-    handleChangeStore (list) {
+    handleChangeStore(list) {
       //如果返回只有一个则为店铺端
       this.currentStoreName = list.length === 1 ? list[0].name : '总店'
       console.log('==currentStoreName', list, this.currentStoreName)
       this.storeList = list
-      if(!this.isChangeStore&&list.length === 1){
+      if (!this.isChangeStore && list.length === 1) {
         this.$emit('change', list[0])
       }
     }
@@ -157,12 +153,12 @@ export default {
 .default-store {
   font-size: 18px;
   font-weight: 600;
-  color: $dominant_hue;
+  // color: $dominant_hue;
 }
 .store-name {
   @include text-overflow();
   font-size: 16px;
-  color: $dominant_hue;
+  // color: $dominant_hue;
 }
 .store-address {
   @include text-overflow();

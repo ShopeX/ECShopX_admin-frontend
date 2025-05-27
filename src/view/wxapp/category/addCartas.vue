@@ -36,7 +36,6 @@
     }
   }
 
-
   .one-level {
     position: relative;
     display: flex;
@@ -68,7 +67,6 @@
       &-imgs {
         width: 40px !important;
         height: 40px !important;
-
       }
 
       &-imgs-span {
@@ -174,9 +172,7 @@
           white-space: nowrap;
           padding-left: 10px;
         }
-
       }
-
     }
 
     &-right {
@@ -198,14 +194,13 @@
       }
 
       &-titles {
-        background: #FFEEED;
+        background: #ffeeed;
       }
-
     }
 
     .three-level-item {
       flex: 1;
-      background: #FFFFFF;
+      background: #ffffff;
       padding: 0 10px;
 
       .three-list {
@@ -257,7 +252,7 @@
               font-family: PingFangSC, PingFang SC;
               font-weight: 400;
               font-size: 11px;
-              color: #BBBBBB;
+              color: #bbbbbb;
               line-height: 30px;
               text-decoration-line: line-through;
               margin-left: 6px;
@@ -278,9 +273,7 @@
       color: #666;
       text-align: center;
     }
-
   }
-
 }
 </style>
 
@@ -294,27 +287,52 @@
     </div>
     <div>
       <!-- 一级分类 -->
-      <div class="one-level" v-if="oneList.length > 0">
-        <div v-for="(item, index) in oneList" :key="index" class="one-level-item" @click="oneCli(index)">
-          <span v-if="!item.image_url"
-            :class="{ 'one-level-item-imgs-span': index != oneIndex, 'one-level-item-img-span': index == oneIndex }">{{
-              item.category_name }}</span>
-          <img v-if="item.image_url"
-            :class="{ 'one-level-item-imgs': index != oneIndex, 'one-level-item-img': index == oneIndex }"
-            :src="item.image_url" alt="">
-          <span :class="{ 'one-level-item-titles': index != oneIndex, 'one-level-item-title': index == oneIndex }">{{
-            item.category_name }}</span>
+      <div v-if="oneList.length > 0" class="one-level">
+        <div
+          v-for="(item, index) in oneList"
+          :key="index"
+          class="one-level-item"
+          @click="oneCli(index)"
+        >
+          <span
+            v-if="!item.image_url"
+            :class="{
+              'one-level-item-imgs-span': index != oneIndex,
+              'one-level-item-img-span': index == oneIndex
+            }"
+            >{{ item.category_name }}</span
+          >
+          <img
+            v-if="item.image_url"
+            :class="{
+              'one-level-item-imgs': index != oneIndex,
+              'one-level-item-img': index == oneIndex
+            }"
+            :src="item.image_url"
+            alt=""
+          >
+          <span
+            :class="{
+              'one-level-item-titles': index != oneIndex,
+              'one-level-item-title': index == oneIndex
+            }"
+            >{{ item.category_name }}</span
+          >
         </div>
         <div class="all">
           <span>全</span><span>部</span> <img src="@/assets/imgs/classification.png" alt="">
         </div>
       </div>
 
-      <div class="level-box" v-if="oneList.length > 0">
+      <div v-if="oneList.length > 0" class="level-box">
         <!-- 二级分类 -->
         <div class="level-box-left">
-          <div v-for="(item, index) in oneList?.[oneIndex]?.children" :key="index"
-            :class="{ 'two-level': true, 'two-levels': twoIndex == index }" @click="twoCli(index)">
+          <div
+            v-for="(item, index) in oneList?.[oneIndex]?.children"
+            :key="index"
+            :class="{ 'two-level': true, 'two-levels': twoIndex == index }"
+            @click="twoCli(index)"
+          >
             <div v-if="twoIndex == index" class="lone" />
             <div class="two-level-item-title">{{ item?.category_name || '' }}</div>
           </div>
@@ -322,10 +340,20 @@
         <!-- 三级分类 -->
         <div class="level-box-right">
           <!-- 三级分类列表 -->
-          <div v-if="oneList?.[oneIndex]?.children?.[twoIndex]?.children?.length > 0" class="three-level-list">
-            <span v-for="(item, index) in oneList?.[oneIndex]?.children?.[twoIndex]?.children" :key="index"
-              :class="{ 'three-level-list-title': true, 'three-level-list-titles': index == threeIndex }"
-              @click="threeCli(index)">{{ item?.category_name || '' }}</span>
+          <div
+            v-if="oneList?.[oneIndex]?.children?.[twoIndex]?.children?.length > 0"
+            class="three-level-list"
+          >
+            <span
+              v-for="(item, index) in oneList?.[oneIndex]?.children?.[twoIndex]?.children"
+              :key="index"
+              :class="{
+                'three-level-list-title': true,
+                'three-level-list-titles': index == threeIndex
+              }"
+              @click="threeCli(index)"
+              >{{ item?.category_name || '' }}</span
+            >
           </div>
           <!-- 三级分类商品 -->
           <div class="three-level-item">
@@ -335,7 +363,9 @@
                 <span class="name">{{ item.itemName }}</span>
                 <div class="price">
                   <div>
-                    <span class="price1">{{ item.cost_price / 100 }}.<span class="price2">96</span></span>
+                    <span class="price1"
+                      >{{ item.cost_price / 100 }}.<span class="price2">96</span></span
+                    >
                     <span class="price3">{{ item.cost_price / 100 }}</span>
                   </div>
                   <img class="cart" src="@/assets/imgs/shopping-cart.png" alt="">
@@ -366,20 +396,21 @@ export default {
   },
   mounted() {
     this.feath()
-
   },
   methods: {
     async feath() {
       //获取ecshopx取平台配置，管理分类
       //获取云店/内购/官网取平台配置，销售分类分类
-      const res = await this.$api.goods.getCategory(this.VERSION_PLATFORM ? { is_main_category: true } : {})
-      res.forEach(element => {
+      const res = await this.$api.goods.getCategory(
+        this.VERSION_PLATFORM() ? { is_main_category: true } : {}
+      )
+      res.forEach((element) => {
         if (element?.children?.length > 0) {
           element?.children?.unshift({
             category_id: '',
             category_name: '全部'
           })
-          element?.children?.forEach(element1 => {
+          element?.children?.forEach((element1) => {
             if (element1?.children?.length > 0) {
               element1?.children?.unshift({
                 category_id: '',
@@ -387,9 +418,8 @@ export default {
               })
             }
           })
-
         }
-      });
+      })
       this.oneList = res
       this.oneCli(0)
     },
@@ -406,16 +436,28 @@ export default {
       if (!this.oneList[this.oneIndex].children[this.twoIndex].category_id) {
         this.main_cat_id = [this.oneList[this.oneIndex].category_id]
       } else {
-        this.main_cat_id = [this.oneList[this.oneIndex].category_id, this.oneList[this.oneIndex].children[this.twoIndex].category_id]
+        this.main_cat_id = [
+          this.oneList[this.oneIndex].category_id,
+          this.oneList[this.oneIndex].children[this.twoIndex].category_id
+        ]
       }
       this.getItemsListAll()
     },
     threeCli(index) {
       this.threeIndex = index
-      if (!this.oneList[this.oneIndex].children[this.twoIndex].children[this.threeIndex].category_id) {
-        this.main_cat_id = [this.oneList[this.oneIndex].category_id, this.oneList[this.oneIndex].children[this.twoIndex].category_id]
+      if (
+        !this.oneList[this.oneIndex].children[this.twoIndex].children[this.threeIndex].category_id
+      ) {
+        this.main_cat_id = [
+          this.oneList[this.oneIndex].category_id,
+          this.oneList[this.oneIndex].children[this.twoIndex].category_id
+        ]
       } else {
-        this.main_cat_id = [this.oneList[this.oneIndex].category_id, this.oneList[this.oneIndex].children[this.twoIndex].category_id, this.oneList[this.oneIndex].children[this.twoIndex].children[this.threeIndex].category_id]
+        this.main_cat_id = [
+          this.oneList[this.oneIndex].category_id,
+          this.oneList[this.oneIndex].children[this.twoIndex].category_id,
+          this.oneList[this.oneIndex].children[this.twoIndex].children[this.threeIndex].category_id
+        ]
       }
       this.getItemsListAll()
     },
@@ -425,9 +467,9 @@ export default {
         pageSize: 10,
         item_type: 'normal',
         operate_source: IS_SUPPLIER() ? 'supplier' : 'platform',
-        item_source: 'platform',
+        item_source: 'platform'
       }
-      if (this.VERSION_PLATFORM) {
+      if (this.VERSION_PLATFORM()) {
         params.main_cat_id = this.main_cat_id
       } else {
         params.category = this.main_cat_id[this.main_cat_id.length - 1]

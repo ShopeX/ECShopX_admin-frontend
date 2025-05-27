@@ -9,7 +9,7 @@
         @end="onEnd"
       >
         <div v-for="(item, index) in initData" :key="index" class="component-control">
-          <template v-if="item.name === 'nearbyShop' && pagetype == 'cuspage' && !VERSION_B2C">
+          <template v-if="item.name === 'nearbyShop' && pagetype == 'cuspage' && !VERSION_B2C()">
             <svg class="svg-icon" aria-hidden="true">
               <use xlink:href="#icon-fujinshangjia" />
             </svg>
@@ -81,7 +81,7 @@
             </svg>
             轮播
           </template>
-          <template v-if="item.name === 'store' && pagetype == 'cuspage' && !VERSION_B2C">
+          <template v-if="item.name === 'store' && pagetype == 'cuspage' && !VERSION_B2C()">
             <svg class="svg-icon" aria-hidden="true">
               <use xlink:href="#icon-store1" />
             </svg>
@@ -863,7 +863,7 @@ export default {
     async getData() {
       const isHaveStore = this.initData.some((item) => item.name === 'store')
       const isHaveNearbyShop = this.initData.some((item) => item.name === 'nearbyShop')
-      if (this.VERSION_PLATFORM && !isHaveStore) {
+      if (this.VERSION_PLATFORM() && !isHaveStore) {
         this.initData.push({
           name: 'store',
           base: {
@@ -885,7 +885,7 @@ export default {
           seletedTags: []
         })
       }
-      if (this.VERSION_PLATFORM && !isHaveNearbyShop) {
+      if (this.VERSION_PLATFORM() && !isHaveNearbyShop) {
         this.initData.unshift({
           name: 'nearbyShop',
           base: {
@@ -1066,7 +1066,7 @@ export default {
       }
     },
     pickGoods(data, store) {
-      if (this.editorData.name === 'store' && this.VERSION_PLATFORM && Number(store.id) == 0) {
+      if (this.editorData.name === 'store' && this.VERSION_PLATFORM() && Number(store.id) == 0) {
         this.$message({
           message: '推荐店铺不能为总店',
           type: 'error'

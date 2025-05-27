@@ -247,7 +247,7 @@ export default {
     this.distributor_id = distributor_id
   },
   mounted() {
-    if (!this.VERSION_STANDARD) {
+    if (!this.VERSION_STANDARD()) {
       this.distributionTypeList.push({ value: 1, label: '加盟' })
     }
 

@@ -83,4 +83,4 @@ function usePagination(
   }
 }
 
-export default usePagination
+export { usePagination }

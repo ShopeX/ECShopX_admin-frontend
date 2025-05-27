@@ -1,5 +1,5 @@
 <template>
-  <div class="cus-dealer" v-loading="loading">
+  <div v-loading="loading" class="cus-dealer">
     <template v-if="!isEdit">
       <el-card>
         <el-row>
@@ -9,13 +9,13 @@
               class="cus-dealer-img"
               src="@/assets/img/adapay/dealer.png"
               alt=""
-            />
+            >
             <img
               v-if="loginType === 'distributor'"
               class="cus-dealer-img"
               src="@/assets/img/adapay/store.png"
               alt=""
-            />
+            >
           </el-col>
           <el-col :span="20">
             <div class="cus-dealer-flex">
@@ -36,16 +36,26 @@
             <div class="cus-dealer-flex">
               <div class="cus-dealer-pfonts">
                 <i class="el-icon-phone cus-icon" />
-                <span>{{infoList.basicInfo ? infoList.basicInfo.tel_no + '（企业电话）' : '-'}}</span>
+                <span>{{
+                  infoList.basicInfo ? infoList.basicInfo.tel_no + '（企业电话）' : '-'
+                }}</span>
               </div>
               <div v-if="loginType === 'distributor'" class="cus-dealer-pfonts cus-margin-50">
                 <i class="el-icon-message cus-icon" />
-                <span>{{infoList.basicInfo && infoList.basicInfo.email ? infoList.basicInfo.email + '（企业邮箱）' : '-' }}</span>
+                <span>{{
+                  infoList.basicInfo && infoList.basicInfo.email
+                    ? infoList.basicInfo.email + '（企业邮箱）'
+                    : '-'
+                }}</span>
               </div>
             </div>
             <div v-if="loginType === 'dealer'" class="cus-dealer-pfonts">
               <i class="el-icon-message cus-icon" />
-              <span>{{infoList.basicInfo && infoList.basicInfo.email ? infoList.basicInfo.email + '（企业邮箱）' : '-' }}</span>
+              <span>{{
+                infoList.basicInfo && infoList.basicInfo.email
+                  ? infoList.basicInfo.email + '（企业邮箱）'
+                  : '-'
+              }}</span>
             </div>
           </el-col>
         </el-row>
@@ -65,14 +75,18 @@
         <el-tabs v-model="activeName" class="cus-dealer-tabs">
           <el-tab-pane label="开户信息" name="first">
             <BaseModal
-              :title="member_type === 'corp' ? `企业信息 ${infoList.audit_desc_1 || ''} ` : '个人信息 ' + `${infoList.audit_desc_1 || ''} `"
-              :labelList="member_type === 'corp' ? enterPriseInfo : personalInfo"
+              :title="
+                member_type === 'corp'
+                  ? `企业信息 ${infoList.audit_desc_1 || ''} `
+                  : '个人信息 ' + `${infoList.audit_desc_1 || ''} `
+              "
+              :label-list="member_type === 'corp' ? enterPriseInfo : personalInfo"
               :info="infoList"
               :span="7"
             />
             <BaseModal
-             :title="'结算账户信息' + `${infoList.audit_desc_2 ||  ''} `"
-              :labelList="member_type === 'corp' ? enterAccountInfo : personalAccountInfo"
+              :title="'结算账户信息' + `${infoList.audit_desc_2 || ''} `"
+              :label-list="member_type === 'corp' ? enterAccountInfo : personalAccountInfo"
               :info="infoList"
               :span="7"
             />
@@ -82,19 +96,23 @@
             :info='infoList'
             :span='7'
           /> -->
-            <el-card v-if="member_type=='corp'">
+            <el-card v-if="member_type == 'corp'">
               <div slot="header">其他信息</div>
               <div class="body">
                 <el-row class="load-btn">
                   <el-col :span="4" style="text-align: right; padding-right: 10px"
-                    >附件信息：</el-col
+                    >
+附件信息：
+</el-col
                   >
                   <el-col :span="20" class="cus-btn">
                     <el-button
-                      @click="dowloadFile(infoList.attach_file)"
                       v-if="member_type === 'corp'"
                       type="text"
-                      >附件</el-button
+                      @click="dowloadFile(infoList.attach_file)"
+                      >
+附件
+</el-button
                     >
                     <span v-else>-</span>
                   </el-col>
@@ -102,8 +120,10 @@
               </div>
             </el-card>
             <div class="btn">
-              <el-button type="primary" @click="editHandle(true)" v-if="infoList.audit_state != 'A'"
-                >编辑</el-button
+              <el-button v-if="infoList.audit_state != 'A'" type="primary" @click="editHandle(true)"
+                >
+编辑
+</el-button
               >
               <el-button v-if="infoList.audit_state == 'A'">审核中</el-button>
             </div>
@@ -112,7 +132,11 @@
       </el-card>
     </template>
     <template v-else>
-      <editAccount :activeName="infoList.member_type" :info="infoList" @back="editHandle(false)"></editAccount>
+      <editAccount
+        :active-name="infoList.member_type"
+        :info="infoList"
+        @back="editHandle(false)"
+      />
     </template>
     <!-- <el-row class="cus-dealer-bot">
       <el-button type='primary' @click="handleModalClick(true, '未开户')" size='small' plain>解除关联</el-button>
@@ -183,12 +207,12 @@ export default {
       ]
     }
   },
-  mounted () {
+  mounted() {
     this.loginType = this.$store.getters.login_type
     this.getDetail()
   },
   methods: {
-    addressFilter () {
+    addressFilter() {
       const { lat, lng } = this.infoList
       if (lat && lng) {
         return lng + ' - ' + lat
@@ -196,7 +220,7 @@ export default {
         return '-'
       }
     },
-    getDetail () {
+    getDetail() {
       getDealderInfo()
         .then((response) => {
           this.loading = false
@@ -233,11 +257,11 @@ export default {
     //     this.modalContent = '如解除关联，该店铺需重新设置店铺所占分帐比例。'
     //   }
     // },
-    bankAcctType () {
+    bankAcctType() {
       let { bank_acct_type } = this.infoList
       return (bank_acct_type === '1' && '对公') || (bank_acct_type === '2' && '对私') || '-'
     },
-    dowloadFile (url) {
+    dowloadFile(url) {
       let link = document.createElement('a')
       link.style.display = 'none'
       link.href = url
@@ -248,10 +272,10 @@ export default {
         message: '下载成功'
       })
     },
-    editHandle (isEdit) {
+    editHandle(isEdit) {
       this.isEdit = isEdit
     },
-    adapayFilter () {
+    adapayFilter() {
       let { div_fee_mode } = this.infoList
       let returnValue = ''
       switch (div_fee_mode) {
@@ -268,10 +292,9 @@ export default {
 }
 </script>
 <style lang="scss" scoped>
-  .tips{
-    margin: 10px 0;
-    
-  }
+.tips {
+  margin: 10px 0;
+}
 .btn {
   background: #f5f5f5;
   padding: 10px 0;

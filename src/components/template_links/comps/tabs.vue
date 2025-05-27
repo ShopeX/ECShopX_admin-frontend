@@ -12,7 +12,7 @@
           {{ item.label }}
         </li>
         <li
-          v-if="item.value === 'store' && VERSION_PLATFORM"
+          v-if="item.value === 'store' && VERSION_PLATFORM()"
           :key="item.value"
           class="links-item"
           :class="current === item.value && 'active'"

@@ -13,7 +13,9 @@
             <div class="goods-sku">
               <template v-if="!item.nospec">
                 {{ item.spec_items.length > 0 ? '已选' + item.spec_items.length : '全规格' }}
-                <div v-if="!isHidenSku" class="goods-sku-check" @click="handleSkuDialogShow(index)">选择规格</div>
+                <div v-if="!isHidenSku" class="goods-sku-check" @click="handleSkuDialogShow(index)">
+                  选择规格
+                </div>
               </template>
             </div>
           </div>
@@ -47,7 +49,7 @@
       :get-status="setItemStatus"
       :rel-items-ids="relItems"
       :item-type="item_type"
-      :is-change-store="VERSION_PLATFORM"
+      :is-change-store="VERSION_PLATFORM()"
       @chooseStore="handleGoodsSubmit"
       @closeStoreDialog="handleGoodsDialogHide"
     />
@@ -75,9 +77,9 @@ export default {
       type: Boolean,
       default: false
     },
-    isHidenSku:{
+    isHidenSku: {
       type: Boolean,
-      default:false
+      default: false
     }
   },
   data() {

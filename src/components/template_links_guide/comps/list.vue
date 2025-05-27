@@ -36,15 +36,8 @@
       :tree-props="{ children: 'children', hasChildren: 'hasChildren' }"
       @current-change="handleCurrentChange"
     >
-      <el-table-column
-        prop="id"
-        label="ID"
-        width="180"
-      />
-      <el-table-column
-        prop="title"
-        label="分类名"
-      />
+      <el-table-column prop="id" label="ID" width="180" />
+      <el-table-column prop="title" label="分类名" />
     </el-table>
   </div>
 </template>
@@ -74,7 +67,7 @@ export default {
       default: ''
     }
   },
-  data () {
+  data() {
     return {
       list: [],
       params: {
@@ -89,30 +82,30 @@ export default {
     ...mapGetters(['template_name'])
   },
   watch: {
-    type (val) {
+    type(val) {
       if (val) {
         this.params.page = 1
         this.fetch(val)
       }
     },
-    keywords (val) {
+    keywords(val) {
       this.params.page = 1
       this.fetch(this.type)
     },
-    store (val) {
+    store(val) {
       this.params.page = 1
       this.fetch(this.type)
     },
-    appid (val) {
+    appid(val) {
       this.params.page = 1
       this.fetch(this.type)
     }
   },
-  mounted () {
+  mounted() {
     this.fetch(this.type)
   },
   methods: {
-    fetch (type) {
+    fetch(type) {
       this.loading = true
       let query = JSON.parse(JSON.stringify(this.params))
       switch (type) {
@@ -122,7 +115,7 @@ export default {
             keywords: this.keywords,
             distributor_id: this.store.id || ''
           })
-          if (this.VERSION_PLATFORM || query.distributor_id == '0' || !query.distributor_id) {
+          if (this.VERSION_PLATFORM() || query.distributor_id == '0' || !query.distributor_id) {
             api.goods.getItemsList(query).then(({ list, total_count }) => {
               let _list = []
               list.map((item) => {
@@ -289,7 +282,7 @@ export default {
             //   id: 'pointitems'
             // }
           ]
-          // if (this.VERSION_PLATFORM) {
+          // if (this.VERSION_PLATFORM()) {
           //   list.push({
           //     title: '楼层引导',
           //     id: 'floorguide'
@@ -384,11 +377,11 @@ export default {
         default:
       }
     },
-    pageChange (val) {
+    pageChange(val) {
       this.params.page = val
       this.fetch(this.type)
     },
-    handleCurrentChange (val) {
+    handleCurrentChange(val) {
       this.$emit('onClick', val)
     }
   }

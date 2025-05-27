@@ -6,7 +6,7 @@
         <el-radio-group v-model="form.template_type" :disabled="disabled">
           <el-radio label="0"> 验证码（0.045元 / 条） </el-radio>
           <el-radio label="1"> 短信通知（0.045元 / 条） </el-radio>
-          <el-radio v-if="!VERSION_IN_PURCHASE" label="2"> 推广短信（0.055元 / 条） </el-radio>
+          <el-radio v-if="!VERSION_IN_PURCHASE()" label="2"> 推广短信（0.055元 / 条） </el-radio>
         </el-radio-group>
       </el-form-item>
       <el-form-item v-if="form.template_type" label="短信场景" prop="scene_id">
@@ -167,7 +167,7 @@ export default {
         template_type: '',
         scene_id: '',
         template_name: '',
-        related_sign_name:'',
+        related_sign_name: '',
         template_content: '',
         remark: ''
       },
@@ -222,10 +222,10 @@ export default {
 
       const { list, total_count } = await this.$api.sms.getSmsSignatureList({
         status: '1',
-        page:1,
-        pageSize:500
+        page: 1,
+        pageSize: 500
       })
-      this.signNameList = list.map(item=>({label:item.sign_name,value:item.sign_name}))
+      this.signNameList = list.map((item) => ({ label: item.sign_name, value: item.sign_name }))
 
       if (type) {
         const result = await SmsTemplateDetail({ id })
@@ -237,7 +237,14 @@ export default {
     },
     resultHandler(result) {
       console.log(result)
-      const { template_type, scene_id, template_name, template_content, remark,related_sign_name } = result.data.data
+      const {
+        template_type,
+        scene_id,
+        template_name,
+        template_content,
+        remark,
+        related_sign_name
+      } = result.data.data
       console.log(template_content)
       this.form = {
         template_type,

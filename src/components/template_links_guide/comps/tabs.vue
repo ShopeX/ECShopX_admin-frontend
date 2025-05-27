@@ -12,7 +12,7 @@
           {{ item.label }}
         </li>
         <li
-          v-if="item.value === 'store' && VERSION_PLATFORM"
+          v-if="item.value === 'store' && VERSION_PLATFORM()"
           :key="item.value"
           class="links-item"
           :class="current === item.value && 'active'"
@@ -40,7 +40,7 @@ export default {
       }
     }
   },
-  data () {
+  data() {
     return {
       links: [
         {
@@ -98,14 +98,14 @@ export default {
       current: ''
     }
   },
-  created () {
+  created() {
     if (this.showlinks.length) {
       this.links = this.links.filter((item) => {
         return this.showlinks.includes(item.value)
       })
     }
   },
-  mounted () {
+  mounted() {
     if (this.$route.path === '/store/storemanager/marketingdistributor') {
       let index = this.links.findIndex((n) => n.value == 'custom_page')
       this.links.splice(index, 1)
@@ -113,7 +113,7 @@ export default {
     this.current = this.type
   },
   methods: {
-    handleClick (val) {
+    handleClick(val) {
       this.$emit('onClick', val)
       this.current = val
     }

@@ -8,25 +8,25 @@
         <!--                 <el-form-item label="推广信息：">
                     <el-switch v-model="form.data.ext_info"></el-switch>
                 </el-form-item> -->
-        <el-form-item v-if="!VERSION_IN_PURCHASE" label="我的拼团：">
+        <el-form-item v-if="!VERSION_IN_PURCHASE()" label="我的拼团：">
           <el-switch v-model="form.data.group" />
         </el-form-item>
-        <el-form-item v-if="VERSION_STANDARD" label="助力活动：">
+        <el-form-item v-if="VERSION_STANDARD()" label="助力活动：">
           <el-switch v-model="form.data.boost_activity" />
         </el-form-item>
-        <el-form-item v-if="VERSION_STANDARD" label="助力订单：">
+        <el-form-item v-if="VERSION_STANDARD()" label="助力订单：">
           <el-switch v-model="form.data.boost_order" />
         </el-form-item>
         <!-- <el-form-item label="投诉记录：">
           <el-switch v-model="form.data.complaint"></el-switch>
         </el-form-item> -->
-        <el-form-item v-if="!VERSION_IN_PURCHASE" label="活动预约：">
+        <el-form-item v-if="!VERSION_IN_PURCHASE()" label="活动预约：">
           <el-switch v-model="form.data.activity" />
         </el-form-item>
         <!-- <el-form-item label="储值：">
                     <el-switch v-model="form.data.recharge"></el-switch>
                 </el-form-item> -->
-        <el-form-item v-if="!VERSION_IN_PURCHASE" label="会员二维码：">
+        <el-form-item v-if="!VERSION_IN_PURCHASE()" label="会员二维码：">
           <el-switch v-model="form.data.member_code" />
         </el-form-item>
         <!--  <el-form-item label="社区团购：">
@@ -39,7 +39,7 @@
           <el-switch v-model="form.data.offline_order"></el-switch>
         </el-form-item> -->
         <!-- <el-form-item
-          v-if="!VERSION_IN_PURCHASE"
+          v-if="!VERSION_IN_PURCHASE()"
           label="我要分享："
         >
           <el-switch v-model="form.data.share_enable" />

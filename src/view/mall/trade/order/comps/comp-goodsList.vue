@@ -72,7 +72,7 @@
           {{ scope.row.point_fee / 100 }}
         </template>
       </el-table-column>
-      <el-table-column v-if="!VERSION_STANDARD" prop="pic" label="成本价(¥)" width="120">
+      <el-table-column v-if="!VERSION_STANDARD()" prop="pic" label="成本价(¥)" width="120">
         <template slot-scope="scope">
           {{ scope.row.fee_symbol }}{{ scope.row.cost_price / 100 }}
         </template>
@@ -84,7 +84,7 @@
           </div>
         </template>
       </el-table-column>
-      <el-table-column prop="supplier_name" label="来源供应商" width="100"></el-table-column>
+      <el-table-column prop="supplier_name" label="来源供应商" width="100" />
     </el-table>
 
     <!-- <div v-for="(item, index) in items" :key="`goods-item-${index}`" class="goods-item">

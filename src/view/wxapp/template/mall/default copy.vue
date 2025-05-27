@@ -69,7 +69,7 @@
             </svg>
             轮播
           </template>
-          <template v-if="item.name === 'store' && VERSION_PLATFORM">
+          <template v-if="item.name === 'store' && VERSION_PLATFORM()">
             <svg class="svg-icon" aria-hidden="true">
               <use xlink:href="#icon-store1" />
             </svg>
@@ -152,7 +152,7 @@
               />
               <slider v-if="item.name === 'slider'" :res="item" :active="index == editorIndex" />
               <store
-                v-if="item.name === 'store' && VERSION_PLATFORM"
+                v-if="item.name === 'store' && VERSION_PLATFORM()"
                 :res="item"
                 :active="index == editorIndex"
               />
@@ -723,7 +723,7 @@ export default {
     ...mapGetters(['wheight', 'template_name'])
   },
   async mounted() {
-    if (this.VERSION_PLATFORM) {
+    if (this.VERSION_PLATFORM()) {
       this.initData = [
         ...this.initData,
         {

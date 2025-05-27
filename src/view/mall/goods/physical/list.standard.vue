@@ -222,16 +222,12 @@
             </el-dropdown-item>
           </el-dropdown-menu>
         </el-dropdown>
-        <el-button v-if="isBindWdtErp" size="small" type="primary" @click="uploadWdtErpItems()"
-          >
-上传商品到旺店通
-</el-button
-        >
-        <el-button v-if="isBindJstErp" size="small" type="primary" @click="uploadJstErpItems()"
-          >
-上传商品到聚水潭
-</el-button
-        >
+        <el-button v-if="isBindWdtErp" size="small" type="primary" @click="uploadWdtErpItems()">
+          上传商品到旺店通
+        </el-button>
+        <el-button v-if="isBindJstErp" size="small" type="primary" @click="uploadJstErpItems()">
+          上传商品到聚水潭
+        </el-button>
       </div>
 
       <el-tabs v-model="activeName" type="card" @tab-click="handleClick">
@@ -868,7 +864,7 @@ import {
   flowItems
 } from '@/api/goods'
 import { getPageCode } from '@/api/marketing'
-import { VERSION_IN_PURCHASE } from '@/utils'
+import { VERSION_IN_PURCHASE() } from '@/utils'
 import mixins from '@/mixins'
 import { GOOD_CATEGORY, GOOD_CATEGORY_MAP } from '@/consts'
 

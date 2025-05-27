@@ -1,7 +1,7 @@
 <template>
   <div>
     <div v-if="relStore.id == '0'" class="shop-header">
-      <div v-if="!VERSION_B2C && !VERSION_IN_PURCHASE" class="shop-left">
+      <div v-if="!VERSION_B2C() && !VERSION_IN_PURCHASE()" class="shop-left">
         <span class="text">小程序模版呈现：</span>
         <div class="option-item">
           <span class="option-item_text">总部首页</span>
@@ -13,7 +13,7 @@
             @change="changeShop('platform')"
           />
         </div>
-        <div v-if="VERSION_STANDARD" class="option-item">
+        <div v-if="VERSION_STANDARD()" class="option-item">
           <span class="option-item_text">店铺首页</span>
           <el-switch
             v-model="index_type"
@@ -23,8 +23,8 @@
             @change="changeShop('shop')"
           />
         </div>
-        <span v-if="!VERSION_PLATFORM" class="text">模版同步设置：</span>
-        <div v-if="!VERSION_PLATFORM" class="option-item">
+        <span v-if="!VERSION_PLATFORM()" class="text">模版同步设置：</span>
+        <div v-if="!VERSION_PLATFORM()" class="option-item">
           <span class="option-item_text">同步并启用</span>
           <el-switch
             v-model="is_enforce_sync"
@@ -48,7 +48,7 @@
     <el-row
       :gutter="20"
       class="template-list"
-      :class="{ 'is-shop': relStore.id != '0' || VERSION_B2C }"
+      :class="{ 'is-shop': relStore.id != '0' || VERSION_B2C() }"
     >
       <el-col
         v-for="(item, index) in templateList"
@@ -62,17 +62,17 @@
         <div class="template-item">
           <div class="img-wrap">
             <div class="preview-cover" @click="previewTemplate(item.pages_template_id)">
-              <img class="preview-cover_img" src="@/assets/img/preview.png" alt="预览">
+              <img class="preview-cover_img" src="@/assets/img/preview.png" alt="预览" />
               <span class="preview-cover_text">预览</span>
             </div>
-            <img class="template-pic" :src="item.template_pic">
+            <img class="template-pic" :src="item.template_pic" />
             <div v-if="item.template_type == 1" class="tag">同步模板</div>
           </div>
           <div class="template-name">
             <span>{{ item.template_title }}</span>
             <span class="el-icon-edit edit-css" @click="AddOrEditDialog('edit', item)" />
           </div>
-          <div v-if="relStore.id == '0' && !VERSION_B2C" class="template-common">
+          <div v-if="relStore.id == '0' && !VERSION_B2C()" class="template-common">
             <span class="temp-label">店铺可编辑挂件</span>
             <el-switch
               v-model="item.element_edit_status"
@@ -98,7 +98,7 @@
             <div v-if="!item.showTime" class="no-time">
               <div>定时启用</div>
               <div class="picker-wrap">
-                <img class="time-img" src="@/assets/img/time-img.png">
+                <img class="time-img" src="@/assets/img/time-img.png" />
                 <span>设置模板切换时间</span>
                 <el-date-picker
                   v-model="item.timer_time"
@@ -120,7 +120,7 @@
             <span class="btn" @click="abandonTemplate(item.pages_template_id)">废弃</span>
           </div>
           <div
-            v-if="relStore.id == '0' && !VERSION_B2C && !VERSION_IN_PURCHASE"
+            v-if="relStore.id == '0' && !VERSION_B2C() && !VERSION_IN_PURCHASE()"
             class="synchronize-btn"
             @click="synchronizeTemplateToShop(index)"
           >
@@ -134,12 +134,12 @@
             'template-item': true,
             'add-btn': true,
             'sync-template':
-              relStore.id == '0' && !VERSION_B2C && !VERSION_PLATFORM && !VERSION_IN_PURCHASE
+              relStore.id == '0' && !VERSION_B2C() && !VERSION_PLATFORM() && !VERSION_IN_PURCHASE()
           }"
           @click="AddOrEditDialog('add')"
         >
           <div class="template-wrap">
-            <img class="add-img" src="@/assets/img/add-template.png" alt="添加">
+            <img class="add-img" src="@/assets/img/add-template.png" alt="添加" />
             <div class="add-text">添加模板</div>
           </div>
         </div>
@@ -200,7 +200,7 @@
               :src="form.template_pic"
               class="banner-uploader"
               @click="handleImgChange"
-            >
+            />
             <div v-else class="banner-uploader" @click="handleImgChange">
               <i class="iconfont icon-camera" />
             </div>
@@ -223,7 +223,7 @@
             @change="toggleOpenRecommend"
           />
         </el-form-item>
-        <el-form-item v-if="VERSION_PLATFORM || VERSION_STANDARD" label="开启小程序定位">
+        <el-form-item v-if="VERSION_PLATFORM() || VERSION_STANDARD()" label="开启小程序定位">
           <el-switch
             v-model="is_open_wechatapp_location"
             :active-value="1"
@@ -283,12 +283,12 @@
               :src="
                 item.selectedIconPath || 'https://fakeimg.pl/60x60/EFEFEF/CCC/?text=icofont=lobster'
               "
-            >
+            />
             <img
               v-else
               class="svg-icon"
               :src="item.iconPath || 'https://fakeimg.pl/60x60/EFEFEF/CCC/?text=icon&font=lobster'"
-            >
+            />
           </template>
           <div class="tab-text">
             {{ item.text }}
@@ -297,7 +297,6 @@
       </div>
       <tabsEditor :res="editorData" @bindImgs="showImgs" @saveTab="handelSaveTab" />
     </sideBar>
-
 
     <SpDrawer
       v-model="navDrawerShow"
@@ -325,7 +324,7 @@
 
 <script>
 import { mapGetters } from 'vuex'
-import { VERSION_B2C } from '@/utils'
+import { VERSION_B2C() } from '@/utils'
 
 import DistributorSelect from '@/components/function/distributorSelect'
 import ShopDecoration from '@/components/function/shopDecoration'
@@ -796,7 +795,7 @@ export default {
       })
     },
     toggleOpenWechatappLocation(val) {
-      if (this.VERSION_PLATFORM && val == 2) {
+      if (this.VERSION_PLATFORM() && val == 2) {
         this.$confirm('关闭后附件商家组件将无法使用', '提示', {
           confirmButtonText: '确定',
           cancelButtonText: '取消',
@@ -1469,13 +1468,13 @@ export default {
   }
 }
 .btn-linkpath {
-    padding: 0 8px;
-    border: 1px solid #d9d9d9;
-    background-color: #fff;
-    height: 36px;
-    line-height: 36px;
-    border-radius: 3px;
-    max-width: 160px;
-    @include text-overflow();
-  }
+  padding: 0 8px;
+  border: 1px solid #d9d9d9;
+  background-color: #fff;
+  height: 36px;
+  line-height: 36px;
+  border-radius: 3px;
+  max-width: 160px;
+  @include text-overflow();
+}
 </style>

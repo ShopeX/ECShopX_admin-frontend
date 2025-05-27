@@ -130,7 +130,7 @@
       <div class="footer-container">
         <el-button @click.native="handleCancel"> 取消 </el-button>
         <el-button
-          v-if="!VERSION_STANDARD || (!IS_DISTRIBUTOR() && VERSION_STANDARD)"
+          v-if="!VERSION_STANDARD() || (!IS_DISTRIBUTOR() && VERSION_STANDARD())"
           type="primary"
           :loading="submitLoading"
           @click="handleSave"
@@ -155,6 +155,15 @@ import { getOrigincountry, getTaxstrategyList } from '../../../../api/crossborde
 import { getPointRule } from '../../../../api/promotions'
 
 export default {
+  components: {
+    richTextEditor,
+    imgBox,
+    imgPicker,
+    CmBaseForm,
+    CmGoodsParams,
+    CmSkuForm
+  },
+  inject: ['refresh'],
   beforeRouteLeave(to, from, next) {
     if (!this.isLeave) {
       this.$confirm('确定要离开当前页面，您将丢失已编辑的数据？！', '提示', {
@@ -171,15 +180,6 @@ export default {
     } else {
       next()
     }
-  },
-  inject: ['refresh'],
-  components: {
-    richTextEditor,
-    imgBox,
-    imgPicker,
-    CmBaseForm,
-    CmGoodsParams,
-    CmSkuForm
   },
   data() {
     return {

@@ -5,7 +5,7 @@
         <Normal />
       </el-tab-pane>
       <el-tab-pane
-        v-if="!IS_DISTRIBUTOR() && !VERSION_B2C && !IS_SUPPLIER()"
+        v-if="!IS_DISTRIBUTOR() && !VERSION_B2C() && !IS_SUPPLIER()"
         label="同城配"
         name="city"
       >
@@ -29,7 +29,7 @@ import Normal from './normal'
 import ZitiList from './comps/ziti-list'
 import ZiPeiList from './comps/zipei-list'
 import { mapGetters } from 'vuex'
-import { VERSION_B2C } from '@/utils'
+import { VERSION_B2C() } from '@/utils'
 export default {
   components: {
     Normal,

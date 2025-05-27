@@ -32,10 +32,10 @@ module.exports = {
         sassOptions: {
           includePaths: [SRC_PATH]
         },
-        additionalData: `@import "~@/style/imports.sass"`
+        additionalData: `@import "~@/styles/imports.sass"`
       },
       scss: {
-        additionalData: `@import "~@/style/imports.scss";`
+        additionalData: `@import "~@/styles/imports.scss";`
       }
     }
   },

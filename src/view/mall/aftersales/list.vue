@@ -8,7 +8,7 @@
   <div class="page-body">
     <template v-if="$route.path.indexOf('detail') === -1">
       <SpFilterForm :model="params" @onSearch="onSearch" @onReset="onReset">
-        <SpFilterFormItem v-if="!VERSION_B2C" prop="distributor" label="店铺名称:">
+        <SpFilterFormItem v-if="!VERSION_B2C()" prop="distributor" label="店铺名称:">
           <el-autocomplete
             v-model="params.distributor.name"
             :fetch-suggestions="queryStoreSearch"
@@ -60,14 +60,14 @@
         </SpFilterFormItem>
 
         <SpFilterFormItem
-          v-if="VERSION_STANDARD || IS_ADMIN()"
+          v-if="VERSION_STANDARD() || IS_ADMIN()"
           prop="supplier_name"
           label="来源供应商:"
         >
           <el-input v-model="params.supplier_name" placeholder="请输入来源供应商" />
         </SpFilterFormItem>
         <SpFilterFormItem
-          v-if="VERSION_STANDARD || IS_ADMIN()"
+          v-if="VERSION_STANDARD() || IS_ADMIN()"
           prop="order_holder"
           label="订单分类:"
         >
@@ -192,7 +192,7 @@
           </template>
         </el-table-column>
         <el-table-column
-          v-if="VERSION_STANDARD || IS_ADMIN()"
+          v-if="VERSION_STANDARD() || IS_ADMIN()"
           width="120"
           label="订单分类"
           header-align="center"
@@ -203,7 +203,7 @@
           </template>
         </el-table-column>
         <el-table-column
-          v-if="VERSION_STANDARD || IS_ADMIN()"
+          v-if="VERSION_STANDARD() || IS_ADMIN()"
           min-width="100"
           prop="supplier_name"
           label="来源供应商"
@@ -390,7 +390,7 @@
                 active-color="#13ce66"
                 inactive-color="#ff4949"
               />
-              <br>
+              <br />
               <span class="frm-tips"
                 >如开启展示，则后台所输入内容将会展示在前端消费者提交售后申请的页面上，内容不超过200字</span
               >
@@ -411,7 +411,7 @@
 import { mapGetters } from 'vuex'
 import RemarkModal from '@/components/remarkModal'
 import mixin, { pageMixin, remarkMixin } from '@/mixins'
-import { VERSION_B2C, IS_SUPPLIER } from '@/utils'
+import { VERSION_B2C(), IS_SUPPLIER } from '@/utils'
 import { ORDER_CATEGORY, ORDER_TYPE, ORDER_TYPE_STANDARD } from '@/consts'
 export default {
   components: {
@@ -448,7 +448,7 @@ export default {
         ...initialParams
       },
       is_pharma_industry: false,
-      orderType: this.VERSION_STANDARD ? ORDER_TYPE_STANDARD : ORDER_TYPE,
+      orderType: this.VERSION_STANDARD() ? ORDER_TYPE_STANDARD : ORDER_TYPE,
       orderCategory: ORDER_CATEGORY,
       shopList: [],
       aftersalesStatusList: [
@@ -472,7 +472,7 @@ export default {
       },
       aftersalesRemindVisible: false,
       aftersalesRemindTitle: '售后提醒内容',
-      orderType: this.VERSION_STANDARD ? ORDER_TYPE_STANDARD : ORDER_TYPE
+      orderType: this.VERSION_STANDARD() ? ORDER_TYPE_STANDARD : ORDER_TYPE
     }
   },
   computed: {

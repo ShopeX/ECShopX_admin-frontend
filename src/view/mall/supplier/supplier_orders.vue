@@ -9,7 +9,7 @@
         <el-input v-model="params.order_id" placeholder="请输入订单号" />
       </SpFilterFormItem>
 
-      <SpFilterFormItem prop="order_date" label="下单时间:" >
+      <SpFilterFormItem prop="order_date" label="下单时间:">
         <el-date-picker
           v-model="params.order_date"
           clearable
@@ -26,7 +26,7 @@
       </SpFilterFormItem>
 
       <!-- <SpFilterFormItem
-        v-if="!VERSION_STANDARD && !VERSION_IN_PURCHASE"
+        v-if="!VERSION_STANDARD() && !VERSION_IN_PURCHASE()"
         prop="distributor_type"
         label="订单分类:"
       >
@@ -40,13 +40,15 @@
           />
         </el-select>
       </SpFilterFormItem> -->
-     <SpFilterFormItem
-       v-if="(!isMicorMall || login_type != 'distributor') && !VERSION_B2C && !VERSION_IN_PURCHASE"
-       prop="distributor_id"
-       label="来源店铺:"
-     >
-       <SpSelectShop v-model="params.distributor_id" clearable placeholder="请选择" />
-     </SpFilterFormItem>
+      <SpFilterFormItem
+        v-if="
+          (!isMicorMall || login_type != 'distributor') && !VERSION_B2C() && !VERSION_IN_PURCHASE()
+        "
+        prop="distributor_id"
+        label="来源店铺:"
+      >
+        <SpSelectShop v-model="params.distributor_id" clearable placeholder="请选择" />
+      </SpFilterFormItem>
     </SpFilterForm>
 
     <div class="action-container">
@@ -106,12 +108,24 @@
             {{ (scope.row.total_fee / 100).toFixed(2) }}
           </template>
         </el-table-column> -->
-        <el-table-column prop="cost_fee" width="120" label="结算价（¥）" align="right" header-align="center">
+        <el-table-column
+          prop="cost_fee"
+          width="120"
+          label="结算价（¥）"
+          align="right"
+          header-align="center"
+        >
           <template slot-scope="scope">
             {{ (scope.row.cost_fee / 100).toFixed(2) }}
           </template>
         </el-table-column>
-        <el-table-column prop="cost_fee" width="120" label="商品金额（¥）" align="right" header-align="center">
+        <el-table-column
+          prop="cost_fee"
+          width="120"
+          label="商品金额（¥）"
+          align="right"
+          header-align="center"
+        >
           <template slot-scope="scope">
             {{ (scope.row.item_fee / 100).toFixed(2) }}
           </template>
@@ -125,15 +139,15 @@
           <template slot-scope="scope">
             <span>{{ scope.row.receiver_mobile }}</span>
             <el-tooltip
-                v-if="datapass_block == 0"
-                effect="dark"
-                content="复制"
-                placement="top-start"
+              v-if="datapass_block == 0"
+              effect="dark"
+              content="复制"
+              placement="top-start"
             >
               <i
-                  v-clipboard:copy="scope.row.receiver_mobile"
-                  v-clipboard:success="onCopySuccess"
-                  class="el-icon-document-copy"
+                v-clipboard:copy="scope.row.receiver_mobile"
+                v-clipboard:success="onCopySuccess"
+                class="el-icon-document-copy"
               />
             </el-tooltip>
           </template>
@@ -141,25 +155,25 @@
         <el-table-column prop="receiver_name" label="收货人" />
         <el-table-column prop="shop_name" label="采购门店" />
 
-       <el-table-column prop="distributor_name" label="来源店铺" width="150" />
-<!--        <template v-if="login_type != 'merchant'">-->
-<!--          <el-table-column v-if="!isMicorMall" label="订单类型">-->
-<!--            <template slot-scope="scope">-->
-<!--              {{ getOrderType(scope.row) }}-->
-<!--            </template>-->
-<!--          </el-table-column>-->
-<!--        </template>-->
+        <el-table-column prop="distributor_name" label="来源店铺" width="150" />
+        <!--        <template v-if="login_type != 'merchant'">-->
+        <!--          <el-table-column v-if="!isMicorMall" label="订单类型">-->
+        <!--            <template slot-scope="scope">-->
+        <!--              {{ getOrderType(scope.row) }}-->
+        <!--            </template>-->
+        <!--          </el-table-column>-->
+        <!--        </template>-->
         <el-table-column prop="order_status" label="订单状态">
           <template slot-scope="scope">
             {{ scope.row.order_status_msg }}
           </template>
         </el-table-column>
 
-<!--        <el-table-column label="配送方式">-->
-<!--          <template slot-scope="scope">-->
-<!--            {{ getDistributionType(scope.row) }}-->
-<!--          </template>-->
-<!--        </el-table-column>-->
+        <!--        <el-table-column label="配送方式">-->
+        <!--          <template slot-scope="scope">-->
+        <!--            {{ getDistributionType(scope.row) }}-->
+        <!--          </template>-->
+        <!--        </el-table-column>-->
 
         <!-- <el-table-column prop="source_name" label="来源"></el-table-column> -->
         <el-table-column label="操作" fixed="left">
@@ -263,8 +277,6 @@
       :form-list="refundFormList"
       @onSubmit="refundSubmit"
     />
-
-
   </SpRouterView>
 </template>
 <script>
@@ -272,11 +284,11 @@ import { mapGetters } from 'vuex'
 import mixin from '@/mixins'
 import { pageMixin } from '@/mixins'
 import {
-  VERSION_STANDARD,
-  VERSION_PLATFORM,
+  VERSION_STANDARD(),
+  VERSION_PLATFORM(),
   isArray,
-  VERSION_B2C,
-  VERSION_IN_PURCHASE,
+  VERSION_B2C(),
+  VERSION_IN_PURCHASE(),
   IS_DISTRIBUTOR
 } from '@/utils'
 import { exportInvoice, orderExport } from '@/api/trade'
@@ -332,12 +344,12 @@ export default {
       datapass_block: 1, // 是否为数据脱敏
       subDistrictList: [],
       distributionType: DISTRIBUTION_TYPE,
-      orderStatus: VERSION_B2C
+      orderStatus: VERSION_B2C()
         ? ORDER_B2C_STATUS
-        : VERSION_IN_PURCHASE
+        : VERSION_IN_PURCHASE()
         ? IN_PURCHASE_STATUS
         : ORDER_STATUS,
-      orderType: this.VERSION_STANDARD ? ORDER_TYPE_STANDARD : ORDER_TYPE,
+      orderType: this.VERSION_STANDARD() ? ORDER_TYPE_STANDARD : ORDER_TYPE,
       invoiceStatus: INVOICE_STATUS,
       orderCategory: ORDER_CATEGORY,
       pickerOptions: PICKER_DATE_OPTIONS,
@@ -747,7 +759,7 @@ export default {
         } = item
         const isDada = receipt_type == 'dada'
         const isLogistics = receipt_type == 'logistics'
-        if (VERSION_STANDARD || distributor_id == 0 || this.login_type == 'distributor') {
+        if (VERSION_STANDARD() || distributor_id == 0 || this.login_type == 'distributor') {
           if (
             !isDada &&
             cancel_status == 'NO_APPLY_CANCEL' &&
@@ -801,11 +813,11 @@ export default {
           actionBtns.push({ name: '确认收款', key: 'paidConfirm' })
         }
         if (can_apply_aftersales == 1) {
-          if (VERSION_PLATFORM) {
+          if (VERSION_PLATFORM()) {
             if ((this.IS_ADMIN() && distributor_id == 0) || this.IS_DISTRIBUTOR()) {
               actionBtns.push({ name: '申请售后', key: 'salesAfter' })
             }
-          } else if (!VERSION_IN_PURCHASE) {
+          } else if (!VERSION_IN_PURCHASE()) {
             actionBtns.push({ name: '申请售后', key: 'salesAfter' })
           }
         }
@@ -828,7 +840,7 @@ export default {
       if (order_class == 'normal') {
         return type == '1' ? '跨境订单' : '普通订单'
       }
-      const _orderType = this.VERSION_STANDARD ? ORDER_TYPE_STANDARD : ORDER_TYPE
+      const _orderType = this.VERSION_STANDARD() ? ORDER_TYPE_STANDARD : ORDER_TYPE
       const fd = _orderType.find((item) => item.value == order_class)
       if (fd) {
         return fd.title

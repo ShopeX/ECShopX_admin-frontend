@@ -21,7 +21,7 @@
       <SpFilterFormItem prop="orderId" label="订单号:">
         <el-input v-model="params.orderId" placeholder="订单号" />
       </SpFilterFormItem>
-      <SpFilterFormItem  prop="receipt_type" label="配送方式:">
+      <SpFilterFormItem prop="receipt_type" label="配送方式:">
         <el-select v-model="params.receipt_type" clearable placeholder="请选择">
           <el-option
             v-for="item in distributionType"
@@ -32,7 +32,6 @@
           />
         </el-select>
       </SpFilterFormItem>
-
     </SpFilterForm>
 
     <div class="action-container">
@@ -99,7 +98,7 @@
                 <el-form-item label="总金额：">
                   <span>{{ scope.row.curFeeSymbol }}{{ scope.row.totalFee / 100 }}</span>
                 </el-form-item>
-                <el-form-item v-if="!VERSION_IN_PURCHASE" label="优惠金额：">
+                <el-form-item v-if="!VERSION_IN_PURCHASE()" label="优惠金额：">
                   <el-popover v-if="scope.row.discountInfo" trigger="hover" placement="top">
                     <div v-for="item in scope.row.discountInfo" :key="item.orderId">
                       <div v-if="item.discount_fee">
@@ -237,40 +236,40 @@
             </template>
           </el-table-column>
           <el-table-column label="配送方式">
-          <template slot-scope="scope">
-            {{ getDistributionType(scope.row) }}
-          </template>
-        </el-table-column>
-        <el-table-column label="配送费">
-          <template slot-scope="scope">
-            {{ scope.row.self_delivery_fee && ( scope.row.self_delivery_fee / 100 + '元') }}
-          </template>
-        </el-table-column>
-        <el-table-column label="配送员">
-          <template slot-scope="scope">
-            {{ scope.row.self_delivery_operator_name }}
-          </template>
-        </el-table-column>
-        <el-table-column prop="mobile" label="业务员">
-          <template slot-scope="scope">
-            {{ scope.row.salesman_mobile }}
-            <el-tooltip
-              v-if="datapass_block == 0"
-              effect="dark"
-              content="复制"
-              placement="top-start"
-            >
-              <i
-                v-clipboard:copy="scope.row.salesman_mobile"
-                v-clipboard:success="onCopySuccess"
-                class="el-icon-document-copy"
-              />
-            </el-tooltip>
-          </template>
-        </el-table-column>
+            <template slot-scope="scope">
+              {{ getDistributionType(scope.row) }}
+            </template>
+          </el-table-column>
+          <el-table-column label="配送费">
+            <template slot-scope="scope">
+              {{ scope.row.self_delivery_fee && scope.row.self_delivery_fee / 100 + '元' }}
+            </template>
+          </el-table-column>
+          <el-table-column label="配送员">
+            <template slot-scope="scope">
+              {{ scope.row.self_delivery_operator_name }}
+            </template>
+          </el-table-column>
+          <el-table-column prop="mobile" label="业务员">
+            <template slot-scope="scope">
+              {{ scope.row.salesman_mobile }}
+              <el-tooltip
+                v-if="datapass_block == 0"
+                effect="dark"
+                content="复制"
+                placement="top-start"
+              >
+                <i
+                  v-clipboard:copy="scope.row.salesman_mobile"
+                  v-clipboard:success="onCopySuccess"
+                  class="el-icon-document-copy"
+                />
+              </el-tooltip>
+            </template>
+          </el-table-column>
 
           <el-table-column
-            v-if="$store.getters.login_type != 'merchant' && !VERSION_IN_PURCHASE"
+            v-if="$store.getters.login_type != 'merchant' && !VERSION_IN_PURCHASE()"
             width="60"
             label="汇率"
           >
@@ -324,7 +323,7 @@
 <script>
 import { mapGetters } from 'vuex'
 import mixin, { pageMixin } from '@/mixins'
-import { PAY_TYPE,DISTRIBUTION_TYPE } from '@/consts'
+import { PAY_TYPE, DISTRIBUTION_TYPE } from '@/consts'
 
 export default {
   mixins: [mixin, pageMixin],
@@ -333,7 +332,7 @@ export default {
       create_time: '',
       mobile: undefined,
       orderId: undefined,
-      receipt_type:undefined
+      receipt_type: undefined
     }
     return {
       initialParams,
@@ -351,7 +350,7 @@ export default {
       downloadView: false,
       downloadUrl: '',
       downloadName: '',
-      distributionType: DISTRIBUTION_TYPE,
+      distributionType: DISTRIBUTION_TYPE
     }
   },
   computed: {
@@ -412,7 +411,7 @@ export default {
         mobile: this.params.mobile || undefined,
         orderId: this.params.orderId || undefined,
         status: this.params.status,
-        receipt_type:this.params.receipt_type
+        receipt_type: this.params.receipt_type
       }
       return params
     },

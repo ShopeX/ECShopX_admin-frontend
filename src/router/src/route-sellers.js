@@ -77,7 +77,7 @@ export default {
       path: 'popularize/popularizegoods',
       name: `业务员商品`,
       component: () => import('@/view/popularize/goodsStore')
-    },   
+    },
 
     {
       path: 'storemanager/distributortags',
@@ -104,6 +104,6 @@ export default {
       path: 'salesetting/setting',
       name: '商户设置',
       component: () => import('@/view/mall/marketing/setting')
-    },
+    }
   ]
 }

@@ -5,7 +5,7 @@
     </div>
     <tips class="action-container">
       <ul>
-        <li v-if="VERSION_PLATFORM">
+        <li v-if="VERSION_PLATFORM()">
           平台管理后台仅可给平台自营店铺添加超级管理员，如需给入驻商户的店铺添加超级管理员，请使用商户超级管理员账号登录商户管理后台操作。前往：<el-link
             :href="origin + '/merchant/login'"
             target="_blank"

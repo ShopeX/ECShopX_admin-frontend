@@ -1,9 +1,6 @@
-import Cookies from 'js-cookie'
 import { getPermission } from '@/api/auth'
-// import agent from '../../../../dealer.json';
-// import agent from '../../../../shopadmin.json';
 
-function menuGet (key) {
+function menuGet(key) {
   var url = window.location.href
   var pathPrefix = process.env.PREFIXES
   if (url.indexOf('shopadmin') !== -1) {
@@ -50,32 +47,32 @@ const menu = {
   },
 
   actions: {
-    async getPermission ({ commit }, { distributor_id }) {
+    async getPermission({ commit }, { distributor_id }) {
       // console.log(2222222);
       const res = await getPermission({ distributor_id })
       commit('SET_MENU', { menus: res.data.data })
       // const res = agent
       // commit('SET_MENU', { menus: res.data })
     },
-    setMenu ({ commit }, menu) {
+    setMenu({ commit }, menu) {
       commit('setMenu', menu)
     },
-    setWidth ({ commit }, width) {
+    setWidth({ commit }, width) {
       commit('setWidth', width)
     },
-    setHeight ({ commit }, height) {
+    setHeight({ commit }, height) {
       commit('setHeight', height)
     }
   },
 
   getters: {
-    menus (state) {
+    menus(state) {
       return state.menus
     },
-    wheight (state) {
+    wheight(state) {
       return state.wheight
     },
-    wwidth (state) {
+    wwidth(state) {
       return state.wwidth
     }
   }

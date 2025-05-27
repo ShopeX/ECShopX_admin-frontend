@@ -251,7 +251,7 @@ export default {
   },
   computed: {
     url() {
-      return this.IS_DISTRIBUTOR() || (this.VERSION_STANDARD && this.formData.distributor_id)
+      return this.IS_DISTRIBUTOR() || (this.VERSION_STANDARD() && this.formData.distributor_id)
         ? 'distributor/items'
         : '/goods/items'
     }

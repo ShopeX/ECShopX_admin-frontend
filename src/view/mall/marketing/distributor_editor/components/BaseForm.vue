@@ -85,7 +85,7 @@
       </el-form-item>
 
       <el-form-item
-        v-if="content.baseForm.distribution_type != '1' && !VERSION_STANDARD"
+        v-if="content.baseForm.distribution_type != '1' && !VERSION_STANDARD()"
         label="审核商品"
       >
         <el-switch v-model="content.baseForm.is_audit_goods" />
@@ -94,8 +94,8 @@
 
       <el-form-item
         v-if="
-          VERSION_STANDARD &&
-          this.$store.getters.login_type != 'distributor' &&
+          VERSION_STANDARD() &&
+          $store.getters.login_type != 'distributor' &&
           !content.baseForm.distributor_self
         "
         label="同步商品"

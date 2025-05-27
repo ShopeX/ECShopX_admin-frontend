@@ -29,7 +29,11 @@
       <el-row>
         <el-col :span="3" class="col-3 content-right"> 订单号: </el-col>
         <el-col :span="20">
-          <el-button type="text" @click="()=>handleOrderClick(aftersalesInfo.order_id)">{{ aftersalesInfo.order_id }}</el-button>
+          <el-button type="text" @click="() => handleOrderClick(aftersalesInfo.order_id)">
+{{
+            aftersalesInfo.order_id
+          }}
+</el-button>
         </el-col>
       </el-row>
       <el-row>
@@ -53,13 +57,13 @@
       <el-row>
         <el-col :span="3" class="col-3 content-right"> 是否退运费: </el-col>
         <el-col :span="20">
-          {{ aftersalesInfo.freight>0 ? '是' : '否' }}
+          {{ aftersalesInfo.freight > 0 ? '是' : '否' }}
         </el-col>
       </el-row>
       <el-row>
         <el-col :span="3" class="col-3 content-right"> 退款运费: </el-col>
         <el-col :span="20">
-          ￥{{ aftersalesInfo.freight >0 ? aftersalesInfo.freight / 100 : '0' }}
+          ￥{{ aftersalesInfo.freight > 0 ? aftersalesInfo.freight / 100 : '0' }}
         </el-col>
       </el-row>
       <el-row v-if="IS_SUPPLIER()">
@@ -137,15 +141,23 @@
             </el-table-column>
             <el-table-column prop="item_name" label="商品名称" width="180">
               <template slot-scope="scope">
-              <div class="ell3">
-                <el-tag v-if="scope.row.orderItem.is_prescription === 1" type="primary" size="mini" style="background-color: #fff;">处方药</el-tag>
-                {{ scope.row.item_name }}
-              </div>
-            </template>
+                <div class="ell3">
+                  <el-tag
+                    v-if="scope.row.orderItem.is_prescription === 1"
+                    type="primary"
+                    size="mini"
+                    style="background-color: #fff"
+                    >
+处方药
+</el-tag
+                  >
+                  {{ scope.row.item_name }}
+                </div>
+              </template>
             </el-table-column>
             <el-table-column prop="item_bn" label="sku编码" width="180" />
             <el-table-column prop="orderItem.item_spec_desc" label="规格" width="180" />
-            <el-table-column prop="supplier_name" label="来源供应商" width="180" >
+            <el-table-column prop="supplier_name" label="来源供应商" width="180">
               <template slot-scope="scope">
                 {{ scope.row.supplier_name?.supplier_name }}
               </template>
@@ -156,14 +168,14 @@
                 <span>￥{{ scope.row.refund_fee / 100 }}</span>
               </template>
             </el-table-column>
-            <el-table-column label="应退总积分" v-if="!IS_SUPPLIER()">
+            <el-table-column v-if="!IS_SUPPLIER()" label="应退总积分">
               <template slot-scope="scope">
                 <span>{{ scope.row.refund_point }}</span>
               </template>
             </el-table-column>
-            <el-table-column prop="cost_price" label="成本价" >
+            <el-table-column prop="cost_price" label="成本价">
               <template slot-scope="scope">
-              {{ scope.row.cost_price && (scope.row.cost_price / 100 ) }}
+                {{ scope.row.cost_price && scope.row.cost_price / 100 }}
               </template>
             </el-table-column>
           </el-table>
@@ -320,7 +332,9 @@
     </template>
 
     <!-- 申请通过 -->
-    <template v-if="aftersalesInfo.progress == '2' || (isJuishuitan && aftersalesInfo.progress == '8')">
+    <template
+      v-if="aftersalesInfo.progress == '2' || (isJuishuitan && aftersalesInfo.progress == '8')"
+    >
       <!-- 换货商家发货信息填写 -->
       <template v-if="aftersalesInfo.aftersales_type == 'EXCHANGING_GOODS'">
         <div class="section-header with-border">
@@ -350,11 +364,11 @@
         v-else-if="
           (aftersalesInfo.aftersales_type == 'REFUND_GOODS' &&
             aftersalesInfo.distributor_id == '0' &&
-            VERSION_PLATFORM) ||
+            VERSION_PLATFORM()) ||
           (aftersalesInfo.aftersales_type == 'REFUND_GOODS' &&
             $store.getters.login_type == 'distributor' &&
-            VERSION_PLATFORM) ||
-          (aftersalesInfo.aftersales_type == 'REFUND_GOODS' && !VERSION_PLATFORM)
+            VERSION_PLATFORM()) ||
+          (aftersalesInfo.aftersales_type == 'REFUND_GOODS' && !VERSION_PLATFORM())
         "
       >
         <div class="section-header with-border">
@@ -402,11 +416,16 @@
               <el-row>
                 <el-col :span="3" class="col-3 content-right"> 退款运费: </el-col>
                 <el-col :span="8">
-                  <el-input v-model="freight" type="number" min="0" :max="orderInfo.freight_fee / 100" />
+                  <el-input
+                    v-model="freight"
+                    type="number"
+                    min="0"
+                    :max="orderInfo.freight_fee / 100"
+                  />
                 </el-col>
               </el-row>
             </template>
-            <el-row v-if="this.check_refund == '0'">
+            <el-row v-if="check_refund == '0'">
               <el-col :span="2" class="col-3 agreen-right"> 拒绝原因: </el-col>
               <el-col :span="12">
                 <el-input
@@ -429,11 +448,11 @@
       v-if="
         (aftersalesInfo.distributor_id == '0' &&
           aftersalesInfo.progress == '0' &&
-          VERSION_PLATFORM) ||
+          VERSION_PLATFORM()) ||
         ($store.getters.login_type == 'distributor' &&
           aftersalesInfo.progress == '0' &&
-          VERSION_PLATFORM) ||
-        (aftersalesInfo.progress == '0' && !VERSION_PLATFORM)
+          VERSION_PLATFORM()) ||
+        (aftersalesInfo.progress == '0' && !VERSION_PLATFORM())
       "
     >
       <div class="section-header with-border">
@@ -481,16 +500,11 @@
             <el-row>
               <el-col :span="3" class="col-3 content-right"> 退款运费: </el-col>
               <el-col :span="8">
-                <el-input
-                  v-model="freight"
-                  type="number"
-                  min="0"
-                  :max="aftersalesInfo.freight"
-                />
+                <el-input v-model="freight" type="number" min="0" :max="aftersalesInfo.freight" />
               </el-col>
             </el-row>
           </template>
-          <el-row v-if="this.is_approved == '0'">
+          <el-row v-if="is_approved == '0'">
             <el-col :span="2" class="col-3 agreen-right"> 拒绝原因: </el-col>
             <el-col :span="12">
               <el-input
@@ -508,7 +522,7 @@
     <template
       v-if="
         aftersalesInfo.aftersales_type == 'REFUND_GOODS' &&
-        ((aftersalesInfo.progress == '0' && this.is_approved == '1') ||
+        ((aftersalesInfo.progress == '0' && is_approved == '1') ||
           !isArray(aftersales_address)) &&
         aftersalesInfo.return_type == 'logistics'
       "
@@ -590,11 +604,11 @@
       v-if="
         (aftersalesInfo.distributor_id == '0' &&
           aftersalesInfo.progress == '0' &&
-          VERSION_PLATFORM) ||
+          VERSION_PLATFORM()) ||
         ($store.getters.login_type == 'distributor' &&
           aftersalesInfo.progress == '0' &&
-          VERSION_PLATFORM) ||
-        (aftersalesInfo.progress == '0' && !VERSION_PLATFORM)
+          VERSION_PLATFORM()) ||
+        (aftersalesInfo.progress == '0' && !VERSION_PLATFORM())
       "
       class="section-footer with-border content-center"
     >
@@ -809,7 +823,7 @@ export default {
       refuse_reason: '',
       refund_fee: 0,
       refund_point: 0,
-      freight:0,
+      freight: 0,
       corp_code: '', // 物流公司
       logi_no: '', // 快递单号
       reviewData: {},
@@ -844,7 +858,7 @@ export default {
         logi_no: ''
       },
       logisticsList: [],
-      isJuishuitan: false,
+      isJuishuitan: false
     }
   },
   computed: {
@@ -922,11 +936,11 @@ export default {
         }
       })
     },
-    handleOrderClick(order_id){
-      if(this.IS_ADMIN()){
-        window.open(`/order/entitytrade/tradenormalorders?order_id=${order_id}`,'_blank')
-      }else{
-        window.open(`/shopadmin/order/tradenormalorders?order_id=${order_id}`,'_blank')
+    handleOrderClick(order_id) {
+      if (this.IS_ADMIN()) {
+        window.open(`/order/entitytrade/tradenormalorders?order_id=${order_id}`, '_blank')
+      } else {
+        window.open(`/shopadmin/order/tradenormalorders?order_id=${order_id}`, '_blank')
       }
     },
     reviewSubmit() {

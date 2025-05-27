@@ -28,47 +28,47 @@ export default {
       type: Array,
       default: () => []
     },
-    isMedicine:{
+    isMedicine: {
       type: Boolean,
       default: false
     },
-    medicinePrescription:{
+    medicinePrescription: {
       type: Boolean,
       default: false
-    },
+    }
   },
   data() {
     let statusOption = [
       {
         title: '前台可销售',
         value: 'onsale',
-        disabled:()=>this.medicinePrescription
+        disabled: () => this.medicinePrescription
       },
       {
         title: '前台仅展示',
         value: 'only_show',
-        disabled:()=>this.medicinePrescription
+        disabled: () => this.medicinePrescription
       },
       {
         title: '不可销售',
         value: 'instock'
       }
     ]
-    if (!this.VERSION_IN_PURCHASE) {
+    if (!this.VERSION_IN_PURCHASE()) {
       statusOption.push({
         title: '前台不展示',
         value: 'offline_sale',
-        disabled:()=>this.medicinePrescription
+        disabled: () => this.medicinePrescription
       })
     }
     return {
       form: {
-        buy_limit_area:['all'],
+        buy_limit_area: ['all'],
         item_id: '',
         approve_status: 'onsale',
         store: 1,
         item_bn: '',
-        medicine_spec:'',
+        medicine_spec: '',
         max_num: '',
         weight: '',
         volume: '',
@@ -83,7 +83,7 @@ export default {
           label: '商品状态',
           key: 'approve_status',
           type: 'select',
-          isShow: !IS_SUPPLIER(),//非供应商
+          isShow: !IS_SUPPLIER(), //非供应商
           options: statusOption,
           display: 'inline'
         },
@@ -150,7 +150,7 @@ export default {
               callback()
             }
           },
-          isShow:()=>this.medicinePrescription,
+          isShow: () => this.medicinePrescription,
           display: 'inline'
         },
         {
@@ -164,7 +164,7 @@ export default {
               callback()
             }
           },
-          isShow:()=>this.medicinePrescription,
+          isShow: () => this.medicinePrescription,
           display: 'inline'
         }
       ]
@@ -192,8 +192,8 @@ export default {
         }
       }
     },
-    medicinePrescription(nval){
-      if(nval){
+    medicinePrescription(nval) {
+      if (nval) {
         this.form.approve_status = 'instock'
       }
     }

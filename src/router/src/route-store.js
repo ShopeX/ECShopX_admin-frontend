@@ -68,12 +68,12 @@ export default {
       path: 'storemanager/storewhitelist',
       name: `店铺白名单`,
       component: () => import('@/view/mall/marketing/storewhitelist'),
-      children: [ 
+      children: [
         {
           path: 'storewhitelistUpload',
           component: () => import('@/view/mall/marketing/storewhitelistUpload')
         }
       ]
-    },
+    }
   ]
 }

@@ -42,7 +42,7 @@
             {{ scope.row.created | datetime('YYYY-MM-DD HH:mm:ss') }}
           </template>
         </el-table-column>
-        <el-table-column v-if="!VERSION_IN_PURCHASE" prop="created" label="跨境税率" width="120">
+        <el-table-column v-if="!VERSION_IN_PURCHASE()" prop="created" label="跨境税率" width="120">
           <template slot-scope="scope">
             <span v-if="scope.row.crossborder_tax_rate">
               {{ scope.row.crossborder_tax_rate }}%</span
@@ -204,7 +204,7 @@
               layout="total, sizes, prev, pager, next"
               :current-page.sync="attrParams.page"
               :page-sizes="[10, 20, 50]"
-              :total="this.goodsAttrTotal"
+              :total="goodsAttrTotal"
               :page-size="attrParams.pageSize"
               @current-change="handleCurrentChange"
               @size-change="handleSizeChange"
@@ -215,7 +215,7 @@
           <el-table :data="checkGoodsAttr" style="width: 100%">
             <el-table-column
               prop="attribute_name"
-              :label="'已选择(' + this.checkGoodsAttr.length + ')'"
+              :label="'已选择(' + checkGoodsAttr.length + ')'"
             >
               <template slot-scope="props">
                 <span v-if="props.row.attribute_memo"

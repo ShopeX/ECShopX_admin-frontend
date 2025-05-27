@@ -3,7 +3,7 @@
     <el-row :gutter="20">
       <el-col :span="12">
         <el-button type="primary" icon="plus" @click="addData"> 添加白名单 </el-button>
-        <el-button v-if="!VERSION_IN_PURCHASE" type="primary" icon="plus" @click="setTips">
+        <el-button v-if="!VERSION_IN_PURCHASE()" type="primary" icon="plus" @click="setTips">
           白名单提示
         </el-button>
       </el-col>

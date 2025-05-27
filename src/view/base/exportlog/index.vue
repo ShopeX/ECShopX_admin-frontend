@@ -32,23 +32,23 @@
         <!-- <el-tab-pane
           label="服务订单导出"
           name="service_order"
-          v-if="!VERSION_IN_PURCHASE"
+          v-if="!VERSION_IN_PURCHASE()"
         /> -->
         <el-tab-pane label="实体主订单导出" name="normal_master_order" />
         <el-tab-pane label="实体子订单导出" name="normal_order" />
         <el-tab-pane label="社区团购销售数据导出" name="normal_community_order" />
-        <el-tab-pane v-if="!VERSION_IN_PURCHASE" label="发票信息导出" name="invoice" />
+        <el-tab-pane v-if="!VERSION_IN_PURCHASE()" label="发票信息导出" name="invoice" />
         <!-- <el-tab-pane
-          v-if="!VERSION_IN_PURCHASE"
+          v-if="!VERSION_IN_PURCHASE()"
           label="药品需求单"
           name="drug_order"
         /> -->
         <el-tab-pane label="商品统计导出" name="goods_data" />
         <el-tab-pane label="商品导出" name="items" />
         <el-tab-pane label="商品标签导出" name="normal_items_tag" />
-        <el-tab-pane v-if="!VERSION_IN_PURCHASE" label="店铺商品导出" name="distributor_items" />
+        <el-tab-pane v-if="!VERSION_IN_PURCHASE()" label="店铺商品导出" name="distributor_items" />
         <!-- <el-tab-pane
-          v-if="!VERSION_IN_PURCHASE"
+          v-if="!VERSION_IN_PURCHASE()"
           label="积分商品导出"
           name="pointsmallitems"
         /> -->
@@ -59,16 +59,16 @@
         <!-- <el-tab-pane
           label="权益核销记录导出"
           name="right_consume"
-          v-if="!VERSION_IN_PURCHASE"
+          v-if="!VERSION_IN_PURCHASE()"
         /> -->
         <el-tab-pane label="交易单导出" name="tradedata" />
         <!-- <el-tab-pane
           label="社区团购-积分提现记录导出"
           name="community_withdraw"
-          v-if="!VERSION_IN_PURCHASE"
+          v-if="!VERSION_IN_PURCHASE()"
         /> -->
         <el-tab-pane
-          v-if="!VERSION_IN_PURCHASE"
+          v-if="!VERSION_IN_PURCHASE()"
           label="报名导出"
           name="selform_registration_record"
         />

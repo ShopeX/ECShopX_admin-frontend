@@ -41,7 +41,7 @@ export default {
       path: 'whitelistlist',
       name: `白名单列表`,
       component: () => {
-        if (VERSION_IN_PURCHASE) {
+        if (VERSION_IN_PURCHASE()) {
           return import('@/view/member/whitelist/list.purchase')
         } else {
           return import('@/view/member/whitelist/list')
@@ -112,7 +112,7 @@ export default {
       path: 'membersetting/closeAccount',
       name: '会员注销',
       component: () => import('@/view/member/logout')
-    },
+    }
     // {
     //   path: 'enterpriselist',
     //   name: '内购企业列表',

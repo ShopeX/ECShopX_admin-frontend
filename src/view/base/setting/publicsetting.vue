@@ -6,7 +6,7 @@
 
 .isolate-set {
   cursor: pointer;
-  color: #409EFF;
+  color: #409eff;
   margin-left: 10px;
 }
 
@@ -23,7 +23,7 @@
 
 <script>
 import { mapGetters } from 'vuex'
-import { VERSION_STANDARD, VERSION_IN_PURCHASE, IS_ADMIN, VERSION_PLATFORM } from '@/utils'
+import { VERSION_STANDARD, VERSION_IN_PURCHASE(), IS_ADMIN, VERSION_PLATFORM() } from '@/utils'
 export default {
   name: '',
   data() {
@@ -64,7 +64,7 @@ export default {
           label: '分享带门店参数',
           key: 'distributor_param_status',
           type: 'switch',
-          isShow: VERSION_STANDARD,
+          isShow: VERSION_STANDARD(),
           tip: `<div><p>
               已开启：
             </p>
@@ -98,7 +98,7 @@ export default {
           label: '评论设置',
           key: 'rate_status',
           type: 'switch',
-          // isShow: !VERSION_IN_PURCHASE,
+          // isShow: !VERSION_IN_PURCHASE(),
           onChange: async (e) => {
             const { rate_status } = this.form
             await this.$api.company.setRateSetting({
@@ -134,7 +134,7 @@ export default {
           key: 'check_gift_store',
           type: 'switch',
           tip: '赠品缺货是否能继续下单',
-          isShow: !VERSION_IN_PURCHASE,
+          isShow: !VERSION_IN_PURCHASE(),
           onChange: async (e) => {
             const { check_gift_store } = this.form
             await this.$api.company.setGiftSetting({
@@ -147,7 +147,7 @@ export default {
           key: 'ziti_send_oms',
           type: 'switch',
           tip: '自提订单推oms',
-          isShow: !VERSION_IN_PURCHASE,
+          isShow: !VERSION_IN_PURCHASE(),
           onChange: async (e) => {
             const { ziti_send_oms } = this.form
             await this.$api.company.setSendOmsSetting({
@@ -160,7 +160,7 @@ export default {
           key: 'nostores_status',
           type: 'switch',
           tip: '用于开启前端店铺切换功能',
-          isShow: VERSION_STANDARD,
+          isShow: VERSION_STANDARD(),
           onChange: async (e) => {
             const { nostores_status } = this.form
             await this.$api.company.setNoStores({
@@ -173,7 +173,7 @@ export default {
           key: 'stores_isolate',
           type: 'switch',
           tip: '开启后需添加店铺白名单方能访问店铺页面',
-          isShow: VERSION_STANDARD && IS_ADMIN,
+          isShow: VERSION_STANDARD() && IS_ADMIN,
           component: () => (
             <div class='isolate-contanier'>
               <el-switch v-model={this.form.stores_isolate} onChange={() => { this.saveOpenDividedSetting() }} />
@@ -222,7 +222,7 @@ export default {
           key: 'invoice_status',
           type: 'switch',
           tip: '结算页是否显示发票',
-          isShow: !VERSION_IN_PURCHASE,
+          isShow: !VERSION_IN_PURCHASE(),
           onChange: async (e) => {
             const { invoice_status } = this.form
             await this.$api.company.setInvoiceStatus({
@@ -235,7 +235,7 @@ export default {
           key: 'dianwu_show_status',
           type: 'switch',
           tip: '移动端会员中心是否展示店务端入口',
-          // isShow: !VERSION_IN_PURCHASE,
+          // isShow: !VERSION_IN_PURCHASE(),
           onChange: async (e) => {
             const { dianwu_show_status } = this.form
             await this.$api.company.setDianwuShowStatus({
@@ -248,7 +248,7 @@ export default {
           key: 'is_pharma_industry',
           type: 'switch',
           tip: '用于开启医药行业商品与处方药业务',
-          // isShow: !VERSION_IN_PURCHASE,
+          // isShow: !VERSION_IN_PURCHASE(),
           onChange: this.primarySetting
         },
         {
@@ -269,7 +269,7 @@ export default {
               name: '580处方业务集成'
             },
           ],
-          // isShow: !VERSION_IN_PURCHASE,
+          // isShow: !VERSION_IN_PURCHASE(),
           onChange: async (e) => {
             const { dianwu_show_status } = this.form
             await this.$api.company.setDianwuShowStatus({
@@ -310,7 +310,7 @@ export default {
           label: '商品列表/商详页',
           key: 'item_page',
           type: 'checkbox',
-          options: VERSION_IN_PURCHASE
+          options: VERSION_IN_PURCHASE()
             ? [
               { label: 0, name: '销售价', disabled: true },
               { label: 1, name: '原价' }
@@ -329,7 +329,7 @@ export default {
           label: '购物车',
           key: 'cart_page',
           type: 'checkbox',
-          options: VERSION_IN_PURCHASE
+          options: VERSION_IN_PURCHASE()
             ? [{ label: 1, name: '原价' }]
             : [
               { label: 0, name: '销售价/会员等级价/付费会员价', disabled: true },
@@ -343,7 +343,7 @@ export default {
           label: '订单详情',
           key: 'order_page',
           type: 'checkbox',
-          options: VERSION_IN_PURCHASE
+          options: VERSION_IN_PURCHASE()
             ? [{ label: 1, name: '原价' }]
             : [
               { label: 0, name: '销售价/会员等级价/付费会员价', disabled: true },
@@ -444,7 +444,7 @@ export default {
         multiple: false,
         data: [Number(this.form?.stores_isolate_template)]
       })
-      
+
       data && (this.form.stores_isolate_template = data[0].id)
       this.saveOpenDividedSetting()
     },

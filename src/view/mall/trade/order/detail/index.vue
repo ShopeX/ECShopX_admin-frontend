@@ -68,7 +68,13 @@
           <el-table-column prop="item_name" label="商品名称" width="180">
             <template slot-scope="scope">
               <div class="ell3">
-                <el-tag v-if="scope.row.is_prescription == 1" type="primary" size="mini" style="background-color: #fff;">处方药</el-tag>
+                <el-tag
+                  v-if="scope.row.is_prescription == 1"
+                  type="primary"
+                  size="mini"
+                  style="background-color: #fff"
+                  >处方药</el-tag
+                >
                 {{ scope.row.item_name }}
               </div>
               <el-tag v-if="scope.row.order_item_type == 'gift'" size="mini" type="success">
@@ -101,7 +107,12 @@
             </template>
           </el-table-column>
 
-          <el-table-column v-if="orderInfo.prescription_status" prop="medicine_symptom_set" label="症状" width="160" >
+          <el-table-column
+            v-if="orderInfo.prescription_status"
+            prop="medicine_symptom_set"
+            label="症状"
+            width="160"
+          >
             <template slot-scope="scope">
               <div v-for="item in scope.row.medicine_symptom_set" :key="item.id">
                 {{ item }}
@@ -155,7 +166,7 @@
               {{ (scope.row.cost_fee / 100).toFixed(2) }}
             </template>
           </el-table-column>
-          <el-table-column v-if="!VERSION_IN_PURCHASE" label="会员优惠（¥）" width="120">
+          <el-table-column v-if="!VERSION_IN_PURCHASE()" label="会员优惠（¥）" width="120">
             <template slot-scope="scope">
               {{ (scope.row.member_discount / 100).toFixed(2) }}
             </template>
@@ -175,7 +186,7 @@
               {{ (scope.row.discount_fee / 100).toFixed(2) }}
             </template>
           </el-table-column>
-          <el-table-column v-if="!VERSION_IN_PURCHASE && !VERSION_STANDARD" label="货币汇率">
+          <el-table-column v-if="!VERSION_IN_PURCHASE() && !VERSION_STANDARD()" label="货币汇率">
             <template slot-scope="scope">
               <span>{{ scope.row.fee_rate }}</span>
             </template>
@@ -249,7 +260,7 @@
       </el-row>
     </el-card>
 
-    <el-card v-if="!VERSION_IN_PURCHASE" class="el-card--normal">
+    <el-card v-if="!VERSION_IN_PURCHASE()" class="el-card--normal">
       <el-card v-if="invoice" class="el-card--normal">
         <div slot="header">发票信息</div>
         <div v-if="invoice.title == 'individual'">
@@ -300,58 +311,69 @@
 
     <!-- 处方药 -->
     <template v-if="orderInfo.prescription_status">
-      <el-card v-if="orderInfo.diagnosis_data && Object.keys(orderInfo.diagnosis_data).length" class="el-card--normal">
+      <el-card
+        v-if="orderInfo.diagnosis_data && Object.keys(orderInfo.diagnosis_data).length"
+        class="el-card--normal"
+      >
         <div slot="header">问诊信息</div>
         <div class="card-panel">
           <el-row>
             <el-col
-            v-for="(item, index) in interrogationInfoList"
-            v-if="item.is_show"
-            :key="`item__${index}`"
-            class="card-panel-item"
-            :span="6"
-          >
-            <span class="card-panel__label">{{ item.label }}</span>
-            <span class="card-panel__value">{{ getFiledValue(item.field) }}</span>
-          </el-col>
+              v-for="(item, index) in interrogationInfoList"
+              v-if="item.is_show"
+              :key="`item__${index}`"
+              class="card-panel-item"
+              :span="6"
+            >
+              <span class="card-panel__label">{{ item.label }}</span>
+              <span class="card-panel__value">{{ getFiledValue(item.field) }}</span>
+            </el-col>
           </el-row>
         </div>
       </el-card>
 
-      <el-card class="el-card--normal"  v-if="orderInfo.prescription_data && Object.keys(orderInfo.prescription_data).length">
+      <el-card
+        class="el-card--normal"
+        v-if="orderInfo.prescription_data && Object.keys(orderInfo.prescription_data).length"
+      >
         <div slot="header">处方信息</div>
         <div class="card-panel">
           <el-row>
             <el-col
-            v-for="(item, index) in prescriptionInfoList"
-            v-if="item.is_show"
-            :key="`item__${index}`"
-            class="card-panel-item"
-            :span="6"
-          >
-            <span class="card-panel__label">{{ item.label }}</span>
-            <div v-if="item.type == 'cycle' ">
-              <div class="card-panel__value" v-for='(item1,index1) in orderInfo.prescription_data[item.field]' :key='index1'>
-                <div>{{ item1.drugCommonName }}</div>
-                <div>用法：{{ item1.instructions }}</div>
+              v-for="(item, index) in prescriptionInfoList"
+              v-if="item.is_show"
+              :key="`item__${index}`"
+              class="card-panel-item"
+              :span="6"
+            >
+              <span class="card-panel__label">{{ item.label }}</span>
+              <div v-if="item.type == 'cycle'">
+                <div
+                  class="card-panel__value"
+                  v-for="(item1, index1) in orderInfo.prescription_data[item.field]"
+                  :key="index1"
+                >
+                  <div>{{ item1.drugCommonName }}</div>
+                  <div>用法：{{ item1.instructions }}</div>
+                </div>
               </div>
-            </div>
-            <span v-if="!item.special" class="card-panel__value">{{ getFiledValue(item.field) }}</span>
-            <span v-if="item.special" class="card-panel__value">
-              <span v-if="item.field == 'dst_file_path'">
-                <el-image
-                :src="getFiledValue(item.field)"
-                class="img-item"
-                :preview-src-list="[getFiledValue(item.field)]"
-              />
+              <span v-if="!item.special" class="card-panel__value">{{
+                getFiledValue(item.field)
+              }}</span>
+              <span v-if="item.special" class="card-panel__value">
+                <span v-if="item.field == 'dst_file_path'">
+                  <el-image
+                    :src="getFiledValue(item.field)"
+                    class="img-item"
+                    :preview-src-list="[getFiledValue(item.field)]"
+                  />
+                </span>
               </span>
-            </span>
-          </el-col>
+            </el-col>
           </el-row>
         </div>
       </el-card>
     </template>
-
 
     <el-card class="el-card--normal">
       <div slot="header">物流信息</div>
@@ -398,12 +420,12 @@
             <template slot-scope="scope">
               <template v-if="(IS_ADMIN() && scope.row.supplier_id == '0') || !IS_ADMIN()">
                 <el-button
-                v-if="orderInfo.receipt_type === 'logistics' && orderInfo.order_status !== 'DONE'"
-                type="text"
-                @click="modifyExpress(scope.row)"
-              >
-                编辑
-              </el-button>
+                  v-if="orderInfo.receipt_type === 'logistics' && orderInfo.order_status !== 'DONE'"
+                  type="text"
+                  @click="modifyExpress(scope.row)"
+                >
+                  编辑
+                </el-button>
               </template>
             </template>
           </el-table-column>
@@ -451,7 +473,7 @@
       </div>
     </el-card>
 
-    <!-- <el-card v-if="!VERSION_IN_PURCHASE && !VERSION_PLATFORM" class="el-card--normal">
+    <!-- <el-card v-if="!VERSION_IN_PURCHASE() && !VERSION_PLATFORM()" class="el-card--normal">
       <div slot="header">分润信息</div>
       <el-row class="card-panel">
         <el-col
@@ -512,7 +534,7 @@ import {
   PAY_STATUS,
   GOOD_CATEGORY_MAP
 } from '@/consts'
-import { VERSION_STANDARD, VERSION_IN_PURCHASE, IS_SUPPLIER } from '@/utils'
+import { VERSION_STANDARD, VERSION_IN_PURCHASE(), IS_SUPPLIER } from '@/utils'
 import moment from 'moment'
 
 export default {
@@ -523,17 +545,17 @@ export default {
         { label: '订单编号:', field: 'order_id', is_show: true },
         { label: '订单类型:', field: 'order_class', is_show: true },
         { label: '订单状态:', field: 'order_status_msg', is_show: true },
-        { label: '开票状态:', field: 'is_invoiced', is_show: !this.VERSION_IN_PURCHASE },
+        { label: '开票状态:', field: 'is_invoiced', is_show: !this.VERSION_IN_PURCHASE() },
         { label: '配送类型:', field: 'receiptTypeTxt', is_show: true },
         { label: '会员昵称:', field: 'username', is_show: true },
         { label: '会员手机号:', field: 'mobile', is_show: true },
         { label: '会员等级:', field: 'memberGrade', is_show: true },
-        { label: '会员折扣:', field: 'memberDiscount', is_show: !this.VERSION_IN_PURCHASE },
+        { label: '会员折扣:', field: 'memberDiscount', is_show: !this.VERSION_IN_PURCHASE() },
         { label: '货币类型:', field: 'fee_type', is_show: true },
-        { label: '购物赠送积分:', field: 'bonus_points', is_show: !this.VERSION_IN_PURCHASE },
-        { label: '订单获取积分:', field: 'get_points', is_show: !this.VERSION_IN_PURCHASE },
-        { label: '额外获取积分:', field: 'extra_points', is_show: !this.VERSION_IN_PURCHASE },
-        { label: '积分抵扣:', field: 'point_use', is_show: !this.VERSION_IN_PURCHASE },
+        { label: '购物赠送积分:', field: 'bonus_points', is_show: !this.VERSION_IN_PURCHASE() },
+        { label: '订单获取积分:', field: 'get_points', is_show: !this.VERSION_IN_PURCHASE() },
+        { label: '额外获取积分:', field: 'extra_points', is_show: !this.VERSION_IN_PURCHASE() },
+        { label: '积分抵扣:', field: 'point_use', is_show: !this.VERSION_IN_PURCHASE() },
         { label: '用户身份:', field: 'purchaseRole', is_show: true },
         { label: '姓名:', field: 'employee_name', is_show: true },
         { label: '所属企业:', field: 'enterprise_name', is_show: true },
@@ -544,10 +566,10 @@ export default {
         { label: '交易流水号:', field: 'transactionId', is_show: true },
         { label: '商品总额:', field: 'goodsPrice', is_show: true },
         { label: '运费:', field: 'freightFee', is_show: true },
-        { label: '会员优惠:', field: 'memberDiscountPrice', is_show: !this.VERSION_IN_PURCHASE },
-        { label: '优惠券减免:', field: 'couponDiscount', is_show: !this.VERSION_IN_PURCHASE },
-        { label: '优惠总金额:', field: 'totalDiscount', is_show: !this.VERSION_IN_PURCHASE },
-        { label: '积分抵扣金额:', field: 'pointFee', is_show: !this.VERSION_IN_PURCHASE },
+        { label: '会员优惠:', field: 'memberDiscountPrice', is_show: !this.VERSION_IN_PURCHASE() },
+        { label: '优惠券减免:', field: 'couponDiscount', is_show: !this.VERSION_IN_PURCHASE() },
+        { label: '优惠总金额:', field: 'totalDiscount', is_show: !this.VERSION_IN_PURCHASE() },
+        { label: '积分抵扣金额:', field: 'pointFee', is_show: !this.VERSION_IN_PURCHASE() },
         { label: '应付总金额:', field: 'totalPrice', is_show: true },
         { label: '实付总金额:', field: 'realPrice', is_show: true },
         { label: '支付方式:', field: 'payTypeTxt', is_show: true },
@@ -842,7 +864,7 @@ export default {
         }
         this.is_community = true
       }
-      const _orderType = this.VERSION_STANDARD ? ORDER_TYPE_STANDARD : ORDER_TYPE
+      const _orderType = this.VERSION_STANDARD() ? ORDER_TYPE_STANDARD : ORDER_TYPE
       let fd = _orderType.find((k) => k.value == order_class)
 
       let crossOrderTxt = ''
@@ -1028,7 +1050,7 @@ export default {
       const isDada = receipt_type == 'dada'
       const isLogistics = receipt_type == 'logistics'
       let btnActions = []
-      if (VERSION_STANDARD || distributor_id == 0 || this.login_type == 'distributor') {
+      if (VERSION_STANDARD() || distributor_id == 0 || this.login_type == 'distributor') {
         if (
           isLogistics &&
           !isDada &&

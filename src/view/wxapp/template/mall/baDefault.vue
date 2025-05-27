@@ -450,7 +450,7 @@ export default {
     ...mapGetters(['wheight', 'template_name'])
   },
   async mounted() {
-    if (this.VERSION_PLATFORM) {
+    if (this.VERSION_PLATFORM()) {
       this.initData = [
         ...this.initData,
         {

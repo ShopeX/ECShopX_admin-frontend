@@ -19,7 +19,7 @@
         type="primary"
         @click="
           () => {
-            this.$refs['form'].handleSubmit()
+            $refs['form'].handleSubmit()
           }
         "
       >
@@ -41,7 +41,7 @@ export default {
         auto_refuse_time: 0,
         auto_aftersales: false,
         offline_aftersales: false,
-        is_refund_freight:false
+        is_refund_freight: false
       },
       formList: [
         {
@@ -87,7 +87,7 @@ export default {
               v-model={this.form.latest_aftersale_time}
             />
           ),
-          isShow: () => !this.VERSION_IN_PURCHASE
+          isShow: () => !this.VERSION_IN_PURCHASE()
         },
         {
           label: '售后自动驳回时效',
@@ -100,13 +100,13 @@ export default {
               v-model={this.form.auto_refuse_time}
             />
           ),
-          isShow: () => !this.VERSION_IN_PURCHASE
+          isShow: () => !this.VERSION_IN_PURCHASE()
         },
         {
           label: '自动审批同意',
           key: 'auto_aftersales',
           type: 'switch',
-          isShow: () => !this.VERSION_IN_PURCHASE,
+          isShow: () => !this.VERSION_IN_PURCHASE(),
           tip: '未发货订单申请退款是否自动审批同意'
         },
         {
@@ -117,7 +117,7 @@ export default {
             { label: true, name: '启用' },
             { label: false, name: '不启用' }
           ],
-          isShow: () => this.VERSION_STANDARD,
+          isShow: () => this.VERSION_STANDARD(),
           tip: '启用后，请前往店铺管理中设置到店退货信息，消费者申请退货退款时可选择到店退货。'
         },
         {
@@ -128,10 +128,9 @@ export default {
             { label: true, name: '启用' },
             { label: false, name: '不启用' }
           ],
-          // isShow: () => this.VERSION_STANDARD,
+          // isShow: () => this.VERSION_STANDARD(),
           tip: '启用后，请前往店铺管理中设置退货退款时消费者可退运费。'
         }
-
       ]
     }
   },
@@ -153,7 +152,10 @@ export default {
     },
     async onSaveConfig() {
       const params = this.form
-      await this.$api.trade.setOrderSetting({...params,is_refund_freight:params.is_refund_freight ?1:0})
+      await this.$api.trade.setOrderSetting({
+        ...params,
+        is_refund_freight: params.is_refund_freight ? 1 : 0
+      })
       this.$message.success('保存成功')
     }
   }

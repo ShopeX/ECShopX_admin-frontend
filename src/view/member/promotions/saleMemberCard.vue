@@ -18,7 +18,7 @@
           <el-input
             v-model="form.ad_title"
             :placeholder="
-              !VERSION_B2C ? '用于门店小程序注册引导入口标题' : '用于小程序注册引导入口标题'
+              !VERSION_B2C() ? '用于门店小程序注册引导入口标题' : '用于小程序注册引导入口标题'
             "
             style="width: 340px"
           />

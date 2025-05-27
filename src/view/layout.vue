@@ -134,15 +134,15 @@
           :class="{ 'footer-fixed': $route.meta && $route.meta.footerFixed }"
         />
         <div class="system-release flex justify-center items-center">
-          <img v-if="VERSION_B2C" :src="loginBottomB2c" alt="" class="system-image">
+          <img v-if="VERSION_B2C()" :src="loginBottomB2c" alt="" class="system-image">
           <img
-            v-if="VERSION_IN_PURCHASE"
+            v-if="VERSION_IN_PURCHASE()"
             :src="loginBottomInpurchase"
             alt=""
             class="system-image"
           >
-          <img v-if="VERSION_PLATFORM" :src="loginBottomPlatform" alt="" class="system-image">
-          <img v-if="VERSION_STANDARD" :src="loginBottomStandard" alt="" class="system-image">
+          <img v-if="VERSION_PLATFORM()" :src="loginBottomPlatform" alt="" class="system-image">
+          <img v-if="VERSION_STANDARD()" :src="loginBottomStandard" alt="" class="system-image">
           <!-- {{ VUE_APP_SYSTEM_NAME }} -->
         </div>
         <div id="design-view" />
@@ -277,15 +277,15 @@ export default {
       if (logo) {
         this.brandIco = logo
       } else {
-        if (this.VERSION_STANDARD) {
+        if (this.VERSION_STANDARD()) {
           this.brandIco = require(`@/assets/logo/logo_standard.png`)
-        } else if (this.VERSION_B2C) {
+        } else if (this.VERSION_B2C()) {
           this.brandIco = require(`@/assets/logo/logo_b2c.png`)
-        } else if (this.VERSION_IN_PURCHASE) {
+        } else if (this.VERSION_IN_PURCHASE()) {
           this.brandIco = require(`@/assets/logo/logo_inpurchase.png`)
-        } else if (this.VERSION_PLATFORM && this.VUE_APP_FREE) {
+        } else if (this.VERSION_PLATFORM() && this.VUE_APP_FREE) {
           this.brandIco = require(`@/assets/logo/logo_ecshopx.png`)
-        } else if (this.VERSION_PLATFORM && !this.VUE_APP_FREE) {
+        } else if (this.VERSION_PLATFORM() && !this.VUE_APP_FREE) {
           this.brandIco = require(`@/assets/logo/logo_ecshopx.png`)
         }
       }

@@ -51,7 +51,7 @@
 <script>
 import { createSetting } from '@shopex/finder'
 import district from '@/common/district.json'
-import { getRegionNameById, VERSION_PLATFORM, IS_ADMIN, IS_DISTRIBUTOR } from '@/utils'
+import { getRegionNameById, VERSION_PLATFORM(), IS_ADMIN, IS_DISTRIBUTOR } from '@/utils'
 export default {
   name: 'ZitiList',
   data() {
@@ -166,7 +166,7 @@ export default {
         data: [rel_distributor_id],
         multiple: false
       }
-      if (VERSION_PLATFORM && IS_ADMIN()) {
+      if (VERSION_PLATFORM() && IS_ADMIN()) {
         params = {
           ...params,
           distribution_type: 0

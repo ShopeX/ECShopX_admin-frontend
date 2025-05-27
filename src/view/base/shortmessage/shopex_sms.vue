@@ -150,7 +150,7 @@ import {
   getSmsSign,
   saveSmsSign
 } from '../../../api/promotions'
-import { VERSION_STANDARD, VERSION_PLATFORM } from '@/utils'
+import { VERSION_STANDARD, VERSION_PLATFORM() } from '@/utils'
 export default {
   data() {
     return {
@@ -180,7 +180,7 @@ export default {
     getSmsTemplateList().then((res) => {
       const { list } = res.data.data
       Object.keys(list).forEach((key) => {
-        if (VERSION_STANDARD) {
+        if (VERSION_STANDARD()) {
           if (key != 'merchant') {
             this.smsTemlateList[key] = list[key]
           }

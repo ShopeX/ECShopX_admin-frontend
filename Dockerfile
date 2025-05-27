@@ -1,4 +1,4 @@
-FROM node:12.19.1-alpine3.12 AS builder
+FROM reg.ishopex.cn/base-images/node:16.16.0-alpine AS builder
 
 ARG CMD
 ARG VUE_APP_IS_SAAS=false

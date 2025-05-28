@@ -1,4 +1,4 @@
-FROM reg.ishopex.cn/base-images/node:16.16.0-alpine AS builder
+FROM reg.ishopex.cn/base-images/node-python3:16.16.0-alpine3.16 AS builder
 
 ARG CMD
 ARG VUE_APP_IS_SAAS=false

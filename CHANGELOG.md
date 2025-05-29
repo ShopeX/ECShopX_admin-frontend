@@ -2,6 +2,18 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [3.21.0](https://git.ishopex.cn/ecshopx/ecshopx-admin/compare/v3.20.7...v3.21.0) (2025-05-29)
+
+
+### Bug Fixes
+
+* 更改title ([5cd66c0](https://git.ishopex.cn/ecshopx/ecshopx-admin/commit/5cd66c04461a6ee86e0275fe894333acff44e902))
+* 修改打包配置 ([15c1845](https://git.ishopex.cn/ecshopx/ecshopx-admin/commit/15c18457ad7f3225acb0345eeab4b2a50e3d511d))
+* 修改软文中提交参数 ([01815c4](https://git.ishopex.cn/ecshopx/ecshopx-admin/commit/01815c414ddb25ffdb0dfb6cfda14a98924748a2))
+* 修改图片组件 ([7a4d084](https://git.ishopex.cn/ecshopx/ecshopx-admin/commit/7a4d084e9458ef0a52d8f1c7bcf655945b826848))
+* 优化软文列表 ([d737eee](https://git.ishopex.cn/ecshopx/ecshopx-admin/commit/d737eee42b5490a610bcb2891e24305a256758b3))
+* 优化软文AI ([a586ced](https://git.ishopex.cn/ecshopx/ecshopx-admin/commit/a586ced2b62b48b974b3802ed1de91fbf7230225))
+
 ### [3.20.7](https://git.ishopex.cn/ecshopx/ecshopx-admin/compare/v3.20.6...v3.20.7) (2025-05-22)
 
 ### [3.20.6](https://git.ishopex.cn/ecshopx/ecshopx-admin/compare/v3.20.5...v3.20.6) (2025-05-21)

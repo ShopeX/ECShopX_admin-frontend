@@ -1,4 +1,4 @@
-FROM node:12.19.1-alpine3.12 AS builder
+FROM reg.ishopex.cn/base-images/node-python3:16.16.0-alpine3.16 AS builder
 
 ARG CMD
 ARG VUE_APP_IS_SAAS=false
@@ -43,7 +43,7 @@ ENV VUE_APP_H5_HOST ${VUE_APP_H5_HOST}
 
 WORKDIR /app
 COPY package*.json ./
-RUN npm config set registry https://registry.npmmirror.com && npm config set @shopex:registry http://registry.npm.ishopex.cn && npm ci
+RUN npm config set registry https://registry.npmmirror.com && npm config set @shopex:registry http://registry.npm.ishopex.cn && npm config set python /usr/bin/python && npm ci
 
 COPY . .
 COPY .env ./

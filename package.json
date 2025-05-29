@@ -9,7 +9,8 @@
     "build": "vue-cli-service build",
     "dev": "vue-cli-service serve",
     "sh": "node ./cli.js",
-    "lint": "prettier-eslint --write --list-different 'src/**/*.{js,vue}'"
+    "lint": "prettier-eslint --write --list-different 'src/**/*.{js,vue}'",
+    "preinstall": "mkdir -p .npm-cache && cp .npm-cache/* ~/.npm/_cacache/content-v2/sha512/ || true"
   },
   "dependencies": {
     "@antv/g2plot": "^2.4.31",

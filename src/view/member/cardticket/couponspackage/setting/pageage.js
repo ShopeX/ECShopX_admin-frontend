@@ -1,10 +1,24 @@
 import { createSetting } from '@shopex/finder'
+
+import moment from 'moment'
+
 export default (vm) => {
   return createSetting({
+    search: [
+      { key: 'title', name: '券包标题' },
+      { key: 'regionauth_id', name: '区域', type: 'select', options: vm?.areas }
+    ],
     columns: [
       { name: '券包标题	', key: 'title' },
       { name: '描述', key: 'package_describe', width: 130 },
-      { name: '领取量', key: 'get_num' }
+      { name: '领取量', key: 'get_num' },
+      { name: '区域', key: 'regionauth_name' },
+      {
+        name: '创建时间', key: 'created',
+        render(_, { row }) {
+          return moment(row.created * 1000).format('yyyy-MM-DD HH:mm:ss')
+        }
+      }
     ],
     actions: [
       {
@@ -40,6 +54,18 @@ export default (vm) => {
                 package_id: val[0].package_id
               }
             })
+          }
+        }
+      },
+      {
+        name: '投放',
+        key: 'push',
+        type: 'button',
+        buttonType: 'text',
+        action: {
+          type: 'link',
+          handler: (val) => {
+            vm.pushCouponHandle(val)
           }
         }
       },

@@ -6,24 +6,11 @@
 
 <template>
   <div class="page-body">
-    <SpFilterForm
-      :model="params"
-      @onSearch="onSearch"
-      @onReset="onReset"
-    >
-      <SpFilterFormItem
-        prop="order_id"
-        label="订单号:"
-      >
-        <el-input
-          v-model="params.order_id"
-          placeholder="请输入订单号"
-        />
+    <SpFilterForm :model="params" @onSearch="onSearch" @onReset="onReset">
+      <SpFilterFormItem prop="order_id" label="订单号:">
+        <el-input v-model="params.order_id" placeholder="请输入订单号" />
       </SpFilterFormItem>
-      <SpFilterFormItem
-        prop="create_time"
-        label="日期范围:"
-      >
+      <SpFilterFormItem prop="create_time" label="日期范围:">
         <el-date-picker
           v-model="params.create_time"
           type="daterange"
@@ -31,14 +18,8 @@
           placeholder="添加时间筛选"
         />
       </SpFilterFormItem>
-      <SpFilterFormItem
-        prop="status"
-        label="处理状态:"
-      >
-        <el-select
-          v-model="params.status"
-          placeholder="请选择处理状态"
-        >
+      <SpFilterFormItem prop="status" label="处理状态:">
+        <el-select v-model="params.status" placeholder="请选择处理状态">
           <el-option
             v-for="(item, index) in statusList"
             :key="index"
@@ -47,63 +28,53 @@
           />
         </el-select>
       </SpFilterFormItem>
+      <!-- 新增 商品订单号 -->
+      <SpFilterFormItem prop="oid" label="商品订单号:">
+        <el-input v-model="params.oid" placeholder="请输入商品订单号" />
+      </SpFilterFormItem>
+      <!-- 新增 区域 -->
+      <SpFilterFormItem prop="regionauth_id" label="区域:">
+        <el-select v-model="params.regionauth_id" clearable placeholder="请选择">
+          <el-option
+            v-for="item in areaOptions"
+            :key="item.value"
+            :label="item.label"
+            :value="item.value"
+          />
+        </el-select>
+      </SpFilterFormItem>
+      <!-- 新增 退款单号 -->
+      <SpFilterFormItem prop="refund_bn" label="退款单号:">
+        <el-input v-model="params.refund_bn" placeholder="请输入退款单号" />
+      </SpFilterFormItem>
     </SpFilterForm>
 
-    <el-table
-      v-loading="loading"
-      border
-      :data="tableList"
-      :height="wheight - 150"
-    >
-      <el-table-column
-        prop="order_id"
-        label="订单号"
-        width="180"
-      />
-      <el-table-column
-        prop="status"
-        label="错误状态"
-        width="120"
-      />
-      <el-table-column
-        prop="error_code"
-        label="错误码"
-        width="100"
-      />
-      <el-table-column
-        prop="error_desc"
-        label="错误描述"
-      />
-      <el-table-column
-        prop="create_time"
-        label="创建时间"
-        width="200"
-      >
+    <el-table v-loading="loading" border :data="tableList" :height="wheight - 150">
+      <el-table-column prop="order_id" label="订单号" width="180" />
+      <!-- 新增  退款单号 -->
+      <el-table-column prop="refund_bn" label="退款单号" width="180" />
+      <!-- 新增 商品订单号 -->
+      <el-table-column prop="oid" label="商品订单号" width="180" />
+      <!-- 新增 区域 -->
+      <el-table-column prop="regionauth_name" label="区域" width="180" />
+      <el-table-column prop="status" label="错误状态" width="120" />
+      <el-table-column prop="error_code" label="错误码" width="100" />
+      <el-table-column prop="error_desc" label="错误描述" />
+      <el-table-column prop="create_time" label="创建时间" width="200">
         <template slot-scope="scope">
           <span>{{ scope.row.create_time | datetime('YYYY-MM-DD HH:mm:ss') }}</span>
         </template>
       </el-table-column>
-      <el-table-column
-        prop="is_resubmit"
-        label="是否已重新提交"
-        width="120"
-      >
+      <el-table-column prop="is_resubmit" label="是否已重新提交" width="120">
         <template slot-scope="scope">
           <span v-if="scope.row.is_resubmit"> 已提交</span>
           <span v-else> 未提交</span>
         </template>
       </el-table-column>
-      <el-table-column
-        label="操作"
-        width="100"
-      >
+      <el-table-column label="操作" width="100">
         <template slot-scope="scope">
           <el-link v-if="scope.row.is_resubmit === false">
-            <el-button
-              type="primary"
-              size="mini"
-              @click="refundResubmit(scope.row)"
-            >
+            <el-button type="primary" size="mini" @click="refundResubmit(scope.row)">
               重新提交
             </el-button>
           </el-link>
@@ -128,14 +99,18 @@
 <script>
 import { mapGetters } from 'vuex'
 import mixin, { pageMixin } from '@/mixins'
+import api from '@/api'
 
 export default {
   mixins: [mixin, pageMixin],
-  data () {
+  data() {
     const initialParams = {
       create_time: '',
       order_id: undefined,
-      status: 'all'
+      status: 'all',
+      regionauth_id: undefined,
+      refund_bn: undefined,
+      oid: undefined
     }
     return {
       initialParams,
@@ -147,20 +122,28 @@ export default {
         { name: '全部', value: 'all' },
         { name: '已处理', value: 'is_resubmit' },
         { name: '未处理', value: 'waiting' }
-      ]
+      ],
+      areaOptions: []
     }
   },
   computed: {
     ...mapGetters(['wheight'])
   },
-  mounted () {
+  mounted() {
     this.fetchList()
+    api.regionauth.getRegionauth().then((res) => {
+      this.areaOptions = res?.list?.map((el) => ({
+        value: el.regionauth_id,
+        label: el.regionauth_name,
+        title: el.regionauth_name
+      }))
+    })
   },
   methods: {
-    dateStrToTimeStamp (str) {
+    dateStrToTimeStamp(str) {
       return Date.parse(new Date(str)) / 1000
     },
-    dateTransfer (val) {
+    dateTransfer(val) {
       let time_start_begin = undefined
       let time_start_end = undefined
       if (val.length > 0) {
@@ -172,15 +155,18 @@ export default {
         time_start_end
       }
     },
-    getParams () {
+    getParams() {
       let params = {
         ...this.dateTransfer(this.params.create_time),
         order_id: this.params.order_id || undefined,
-        status: this.params.status || undefined
+        status: this.params.status || undefined,
+        regionauth_id: this.params.regionauth_id || undefined,
+        refund_bn: this.params.refund_bn || undefined,
+        oid: this.params.oid || undefined
       }
       return params
     },
-    async fetchList () {
+    async fetchList() {
       this.loading = true
       const { pageIndex: page, pageSize } = this.page
       let params = {
@@ -193,17 +179,17 @@ export default {
       this.page.total = total_count
       this.loading = false
     },
-    async refundResubmit (row) {
+    async refundResubmit(row) {
       await this.$api.trade.refundResubmit(row.id)
       this.$message.success('提交成功!')
     },
-    onSearch () {
+    onSearch() {
       this.page.pageIndex = 1
       this.$nextTick(() => {
         this.fetchList()
       })
     },
-    onReset () {
+    onReset() {
       this.params = { ...this.initialParams }
       this.onSearch()
     }

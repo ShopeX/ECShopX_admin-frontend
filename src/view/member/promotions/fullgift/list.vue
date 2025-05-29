@@ -1,6 +1,9 @@
-<style scoped lang="scss">
+<style lang="scss">
 .sp-filter-form {
   margin-bottom: 16px;
+}
+.sp-filter-form-item.label .form-item__label {
+  white-space: nowrap !important;
 }
 </style>
 
@@ -14,12 +17,47 @@
         </el-button>
       </div>
       <SpFilterForm :model="params" @onSearch="onSearch" @onReset="onReset">
-        <SpFilterFormItem prop="create_time" label="时间:">
+        <SpFilterFormItem prop="regionauth_id" label="区域:">
+          <el-select v-model="params.regionauth_id" placeholder="请选择" clearable>
+            <el-option
+              v-for="item in areasList"
+              :key="item.template_id"
+              :label="item.label"
+              :value="item.value"
+            />
+          </el-select>
+        </SpFilterFormItem>
+        <SpFilterFormItem prop="marketing_name" label="活动名称:">
+          <el-input v-model="params.marketing_name" placeholder="请输入商品名称" />
+        </SpFilterFormItem>
+        <SpFilterFormItem prop="marketing_id" label="活动ID:">
+          <el-input v-model="params.marketing_id" placeholder="请输入活动ID" />
+        </SpFilterFormItem>
+        <SpFilterFormItem prop="create_time" label="创建时间:">
           <el-date-picker
             v-model="params.create_time"
             type="daterange"
             value-format="yyyy/MM/dd"
-            placeholder="根据添加时间筛选"
+            start-placeholder="开始日期"
+            ange-separator="至"
+            end-placeholder="结束日期"
+            style="width: 100%"
+          />
+        </SpFilterFormItem>
+        <!-- <SpFilterFormItem prop="po_code" label="PO编码:">
+          <el-input v-model="params.po_code" placeholder="请输入PO编码" />
+        </SpFilterFormItem>
+        <SpFilterFormItem prop="budget_code" label="Budget code:">
+          <el-input v-model="params.budget_code" placeholder="请输入Budget code" />
+        </SpFilterFormItem> -->
+        <SpFilterFormItem prop="activity_time" label="活动时间:">
+          <el-date-picker
+            v-model="params.activity_time"
+            type="daterange"
+            value-format="yyyy/MM/dd"
+            start-placeholder="开始日期"
+            ange-separator="至"
+            end-placeholder="结束日期"
             style="width: 100%"
           />
         </SpFilterFormItem>
@@ -67,7 +105,7 @@
                 </el-form>
               </template>
             </el-table-column>
-            <el-table-column prop="marketing_id" width="60" label="编号" />
+            <el-table-column prop="marketing_id" width="100" label="活动ID" />
             <el-table-column prop="marketing_name" min-width="150" label="促销名称" />
             <el-table-column label="规则" min-width="150">
               <template slot-scope="scope">
@@ -93,19 +131,35 @@
                 </div>
               </template>
             </el-table-column>
-            <el-table-column prop="used_platform" min-width="100" label="适用平台">
+            <el-table-column prop="regionauth_name" min-width="150" label="区域" />
+            <!-- <el-table-column prop="used_platform" min-width="100" label="适用平台">
               <template slot-scope="scope">
                 <span v-if="scope.row.used_platform == 0">全场可用</span>
                 <span v-if="scope.row.used_platform == 1">只用于pc端</span>
                 <span v-if="scope.row.used_platform == 2">小程序端</span>
                 <span v-if="scope.row.used_platform == 3">h5端</span>
               </template>
+            </el-table-column> -->
+            <!-- <el-table-column prop="po_code" width="120" label="PO编码">
+              <template slot-scope="scope">
+                {{ scope.row.finance_data?.po_code }}
+              </template>
             </el-table-column>
+            <el-table-column prop="budget_code" width="120" label="Budget code">
+              <template slot-scope="scope">
+                {{ scope.row.finance_data?.budget_code }}
+              </template>
+            </el-table-column> -->
             <el-table-column prop="total_fee" min-width="150" label="有效期">
               <template slot-scope="scope">
                 <div>{{ scope.row.start_date }}</div>
                 <div>~</div>
                 <div>{{ scope.row.end_date }}</div>
+              </template>
+            </el-table-column>
+            <el-table-column prop="created_date" width="150" label="创建时间">
+              <template slot-scope="scope">
+                <div>{{ scope.row.created_date }}</div>
               </template>
             </el-table-column>
             <el-table-column min-width="70" prop="source_name" label="店铺" />
@@ -248,10 +302,16 @@ export default {
   mixins: [mixin, pageMixin],
   data() {
     const initialParams = {
+      activity_time: [],
       create_time: [],
       status: 'all',
       marketing_type: 'full_gift',
-      item_type: undefined
+      item_type: undefined,
+      regionauth_id:undefined,
+      marketing_name:undefined,
+      marketing_id:undefined,
+      po_code:undefined,
+      budget_code:undefined,
     }
     return {
       initialParams,
@@ -273,7 +333,8 @@ export default {
         { name: '待开始', activeName: 'waiting' },
         { name: '进行中', activeName: 'ongoing' },
         { name: '已结束', activeName: 'end' }
-      ]
+      ],
+      areasList:[]
     }
   },
   computed: {
@@ -281,8 +342,17 @@ export default {
   },
   mounted() {
     this.fetchList()
+    this.getAreaList()
   },
   methods: {
+    async getAreaList(){
+      // 查询区域数据
+     const res = await this.$api.regionauth.getRegionauth()
+     this.areasList =  res?.list?.map((el) => ({
+          value: el.regionauth_id,
+          label: el.regionauth_name
+        }))
+    },
     onSearch() {
       this.page.pageIndex = 1
       this.$nextTick(() => {
@@ -291,14 +361,21 @@ export default {
     },
     getParams() {
       const time = {}
+      const activity_time = this.params.activity_time
+      if (activity_time && activity_time.length > 0) {
+        time.start_time = this.dateStrToTimeStamp(activity_time[0] + ' 00:00:00')
+        time.end_time = this.dateStrToTimeStamp(activity_time[1] + ' 23:59:59')
+      }
+
       const create_time = this.params.create_time
       if (create_time && create_time.length > 0) {
-        time.start_time = this.dateStrToTimeStamp(create_time[0] + ' 00:00:00')
-        time.end_time = this.dateStrToTimeStamp(create_time[1] + ' 23:59:59')
+        time.create_start_time = this.dateStrToTimeStamp(create_time[0] + ' 00:00:00')
+        time.create_end_time = this.dateStrToTimeStamp(create_time[1] + ' 23:59:59')
       }
       let params = {
         ...this.params,
         status: this.params.status === 'all' ? undefined : this.params.status,
+        activity_time: [],
         create_time: [],
         ...time
       }

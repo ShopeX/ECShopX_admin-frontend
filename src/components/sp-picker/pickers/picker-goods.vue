@@ -90,10 +90,10 @@
           @change="onSearch"
         />
       </SpFilterFormItem>
-      <SpFilterFormItem prop="supplier_name" >
+      <SpFilterFormItem prop="supplier_name">
         <el-input v-model="formData.supplier_name" placeholder="所属供应商" />
       </SpFilterFormItem>
-      <SpFilterFormItem prop="item_holder" >
+      <SpFilterFormItem prop="item_holder">
         <el-select v-model="formData.item_holder" placeholder="请选择商品类型" clearable>
           <el-option
             v-for="item in goodCategory"
@@ -103,13 +103,11 @@
           />
         </el-select>
       </SpFilterFormItem>
-      <SpFilterFormItem prop="is_gift" >
-        <el-select v-model="formData.is_gift"
-            placeholder="是否为赠品"
-            clearable>
-            <el-option :value="true" label="是" />
-            <el-option :value="false" label="否" />
-          </el-select>
+      <SpFilterFormItem prop="is_gift">
+        <el-select v-model="formData.is_gift" placeholder="是否为赠品" clearable>
+          <el-option :value="true" label="是" />
+          <el-option :value="false" label="否" />
+        </el-select>
       </SpFilterFormItem>
     </SpFilterForm>
     <SpFinder
@@ -120,7 +118,7 @@
         'max-height': 416,
         'header-cell-class-name': cellClass
       }"
-      :url="IS_DISTRIBUTOR()||VERSION_STANDARD ? 'distributor/items' : '/goods/items'"
+      :url="IS_DISTRIBUTOR() || VERSION_STANDARD ? 'distributor/items' : '/goods/items'"
       show-pager-text="已选中：${n}"
       :fixed-row-action="true"
       :setting="{
@@ -154,7 +152,7 @@
             name: '是否赠品',
             key: 'is_gift',
             width: 80,
-            render: (h, { row }) => h('span', {}, row.is_gift == '1' ? '是' : '否' )
+            render: (h, { row }) => h('span', {}, row.is_gift == '1' ? '是' : '否')
           },
           { name: '所属供应商', key: 'supplier_name', width: 100 },
 
@@ -193,6 +191,7 @@
 import { SALES_STATUS, GOOD_CATEGORY, GOOD_CATEGORY_MAP } from '@/consts'
 import BasePicker from './base'
 import PageMixin from '../mixins/page'
+import { getRegionauthId } from '@/utils'
 export default {
   name: 'PickerGoods',
   extends: BasePicker,
@@ -211,7 +210,7 @@ export default {
       distributor_id: '',
       supplier_name: '',
       item_holder: '',
-      is_gift:''
+      is_gift: ''
     }
     const formData = Object.assign(defaultParams, queryParams)
     return {
@@ -242,6 +241,7 @@ export default {
   },
   methods: {
     beforeSearch(params) {
+      console.log('this.value?.params', this.value?.params)
       const { category } = this.formData
       params = {
         ...params,
@@ -250,7 +250,9 @@ export default {
         audit_status: 'approved',
         is_sku: false,
         ...this.formData,
-        category: category[category.length - 1]
+        category: category[category.length - 1],
+        regionauth_id:getRegionauthId(),
+        ...(this.value?.params || {})
       }
       return params
     },
@@ -303,12 +305,22 @@ export default {
       return !paramsFieldExclude.includes(key)
     },
     async getGoodsBranchList(searchVal = '') {
-      this.goodsBranchParams.attribute_name = searchVal
+      this.goodsBranchParams={
+        ...this.goodsBranchParams,
+        attribute_name:searchVal,
+        regionauth_id: getRegionauthId(),
+        ...(this.value?.params || {})
+      }
       const { list } = await this.$api.goods.getGoodsAttr(this.goodsBranchParams)
       this.goodsBranchList = list
     },
     async getCategory() {
-      const res = await this.$api.goods.getCategory({ is_show: false })
+      const params = {
+        is_show: false,
+        regionauth_id: getRegionauthId(),
+        ...(this.value?.params || {})
+      }
+      const res = await this.$api.goods.getCategory(params)
       this.categoryList = res
     }
   }

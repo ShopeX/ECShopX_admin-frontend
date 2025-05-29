@@ -29,7 +29,9 @@
       <el-row>
         <el-col :span="3" class="col-3 content-right"> 订单号: </el-col>
         <el-col :span="20">
-          <el-button type="text" @click="()=>handleOrderClick(aftersalesInfo.order_id)">{{ aftersalesInfo.order_id }}</el-button>
+          <!-- <el-button type="text" @click="() => handleOrderClick(aftersalesInfo.order_id)">{{
+          }}</el-button> -->
+          {{ aftersalesInfo.order_id }}
         </el-col>
       </el-row>
       <el-row>
@@ -44,22 +46,37 @@
         <el-col :span="3" class="col-3 content-right"> 应退总金额: </el-col>
         <el-col :span="20"> ￥{{ aftersalesInfo.refund_fee / 100 }} </el-col>
       </el-row>
-      <el-row>
+      <!-- 隐藏 -->
+      <!-- <el-row>
         <el-col :span="3" class="col-3 content-right"> 应退总积分: </el-col>
         <el-col :span="20">
           {{ aftersalesInfo.refund_point }}
+        </el-col>
+      </el-row> -->
+      <!-- 新增 区域-->
+      <el-row>
+        <el-col :span="3" class="col-3 content-right"> 区域: </el-col>
+        <el-col :span="20">
+          {{ aftersalesInfo.regionauth_name }}
+        </el-col>
+      </el-row>
+      <!-- 新增 店铺-->
+      <el-row>
+        <el-col :span="3" class="col-3 content-right"> 店铺: </el-col>
+        <el-col :span="20">
+          {{ aftersalesInfo.distributor_name }}
         </el-col>
       </el-row>
       <el-row>
         <el-col :span="3" class="col-3 content-right"> 是否退运费: </el-col>
         <el-col :span="20">
-          {{ aftersalesInfo.freight>0 ? '是' : '否' }}
+          {{ aftersalesInfo.freight > 0 ? '是' : '否' }}
         </el-col>
       </el-row>
       <el-row>
         <el-col :span="3" class="col-3 content-right"> 退款运费: </el-col>
         <el-col :span="20">
-          ￥{{ aftersalesInfo.freight >0 ? aftersalesInfo.freight / 100 : '0' }}
+          ￥{{ aftersalesInfo.freight > 0 ? aftersalesInfo.freight / 100 : '0' }}
         </el-col>
       </el-row>
       <el-row v-if="IS_SUPPLIER()">
@@ -90,11 +107,27 @@
           <span v-else-if="aftersalesInfo.aftersales_status == '4'"> 已撤销</span>
         </el-col>
       </el-row>
+      <!-- 新增 退款状态 -->
       <el-row>
+        <el-col :span="3" class="col-3 content-right"> 退款状态: </el-col>
+        <el-col :span="20">
+          {{ aftersalesInfo.refund_status }}
+        </el-col>
+      </el-row>
+      <!-- 新增 退款时间 -->
+      <el-row>
+        <el-col :span="3" class="col-3 content-right"> 退款时间: </el-col>
+        <el-col :span="20">
+          {{ aftersalesInfo.refund_time }}
+        </el-col>
+      </el-row>
+
+      <!-- 隐藏 -->
+      <!-- <el-row>
         <el-col :span="3" class="col-3 content-right"> 处理进度: </el-col>
         <el-col v-if="aftersalesInfo && aftersalesInfo.app_info" :span="20">
-          {{ aftersalesInfo.app_info.progress_msg }}
-          <!-- <span v-if="aftersalesInfo.progress == '0'"> 等待商家处理</span>
+          {{ aftersalesInfo.app_info.progress_msg }} -->
+      <!-- <span v-if="aftersalesInfo.progress == '0'"> 等待商家处理</span>
           <span v-else-if="aftersalesInfo.progress == '1'">商家接受申请，等待消费者回寄</span>
           <span v-else-if="aftersalesInfo.progress == '2'">消费者回寄，等待商家收货确认</span>
           <span v-else-if="aftersalesInfo.progress == '3'">售后已驳回</span>
@@ -104,14 +137,15 @@
           <span v-else-if="aftersalesInfo.progress == '7'">售后关闭</span>
           <span v-else-if="aftersalesInfo.progress == '8'">商家确认收货</span>
           <span v-else-if="aftersalesInfo.progress == '9'">退款处理中</span> -->
-        </el-col>
-      </el-row>
-      <el-row v-if="aftersalesInfo.refuse_reason">
+      <!-- </el-col>
+      </el-row> -->
+
+      <!-- <el-row v-if="aftersalesInfo.refuse_reason">
         <el-col :span="3" class="col-3 content-right"> 商家处理申请说明: </el-col>
         <el-col :span="20">
           {{ aftersalesInfo.refuse_reason }}
         </el-col>
-      </el-row>
+      </el-row> -->
     </div>
     <div class="remark_footer">
       <el-row style="width: 100%">
@@ -130,42 +164,53 @@
       <el-row>
         <template>
           <el-table :data="aftersalesInfo.detail" style="width: 100%">
+            <!-- 新增 商品订单编号 -->
+            <el-table-column prop="order_item_id" label="商品订单编号" width="180" />
             <el-table-column class="goods-img" prop="pic" label="商品图片" width="180">
               <template slot-scope="scope">
-                <span><img :src="scope.row.item_pic" :alt="scope.row.item_name"></span>
+                <span><img :src="scope.row.item_pic" :alt="scope.row.item_name" /></span>
               </template>
             </el-table-column>
             <el-table-column prop="item_name" label="商品名称" width="180">
               <template slot-scope="scope">
-              <div class="ell3">
-                <el-tag v-if="scope.row.orderItem.is_prescription === 1" type="primary" size="mini" style="background-color: #fff;">处方药</el-tag>
-                {{ scope.row.item_name }}
-              </div>
-            </template>
+                <div class="ell3">
+                  <el-tag
+                    v-if="scope.row.orderItem.is_prescription === 1"
+                    type="primary"
+                    size="mini"
+                    style="background-color: #fff"
+                    >处方药</el-tag
+                  >
+                  {{ scope.row.item_name }}
+                </div>
+              </template>
             </el-table-column>
             <el-table-column prop="item_bn" label="sku编码" width="180" />
             <el-table-column prop="orderItem.item_spec_desc" label="规格" width="180" />
-            <el-table-column prop="supplier_name" label="来源供应商" width="180" >
+            <!-- 隐藏 -->
+            <!-- <el-table-column prop="supplier_name" label="来源供应商" width="180">
               <template slot-scope="scope">
                 {{ scope.row.supplier_name?.supplier_name }}
               </template>
-            </el-table-column>
+            </el-table-column> -->
             <el-table-column prop="num" label="申请数量" width="180" />
             <el-table-column label="应退总金额(元)">
               <template slot-scope="scope">
                 <span>￥{{ scope.row.refund_fee / 100 }}</span>
               </template>
             </el-table-column>
-            <el-table-column label="应退总积分" v-if="!IS_SUPPLIER()">
+            <!-- 隐藏 -->
+            <!-- <el-table-column label="应退总积分" v-if="!IS_SUPPLIER()">
               <template slot-scope="scope">
                 <span>{{ scope.row.refund_point }}</span>
               </template>
-            </el-table-column>
-            <el-table-column prop="cost_price" label="成本价" >
+            </el-table-column> -->
+            <!-- 隐藏 -->
+            <!-- <el-table-column prop="cost_price" label="成本价">
               <template slot-scope="scope">
-              {{ scope.row.cost_price && (scope.row.cost_price / 100 ) }}
+                {{ scope.row.cost_price && scope.row.cost_price / 100 }}
               </template>
-            </el-table-column>
+            </el-table-column> -->
           </el-table>
         </template>
       </el-row>
@@ -320,7 +365,9 @@
     </template>
 
     <!-- 申请通过 -->
-    <template v-if="aftersalesInfo.progress == '2' || (isJuishuitan && aftersalesInfo.progress == '8')">
+    <template
+      v-if="aftersalesInfo.progress == '2' || (isJuishuitan && aftersalesInfo.progress == '8')"
+    >
       <!-- 换货商家发货信息填写 -->
       <template v-if="aftersalesInfo.aftersales_type == 'EXCHANGING_GOODS'">
         <div class="section-header with-border">
@@ -402,7 +449,12 @@
               <el-row>
                 <el-col :span="3" class="col-3 content-right"> 退款运费: </el-col>
                 <el-col :span="8">
-                  <el-input v-model="freight" type="number" min="0" :max="orderInfo.freight_fee / 100" />
+                  <el-input
+                    v-model="freight"
+                    type="number"
+                    min="0"
+                    :max="orderInfo.freight_fee / 100"
+                  />
                 </el-col>
               </el-row>
             </template>
@@ -481,12 +533,7 @@
             <el-row>
               <el-col :span="3" class="col-3 content-right"> 退款运费: </el-col>
               <el-col :span="8">
-                <el-input
-                  v-model="freight"
-                  type="number"
-                  min="0"
-                  :max="aftersalesInfo.freight"
-                />
+                <el-input v-model="freight" type="number" min="0" :max="aftersalesInfo.freight" />
               </el-col>
             </el-row>
           </template>
@@ -809,7 +856,7 @@ export default {
       refuse_reason: '',
       refund_fee: 0,
       refund_point: 0,
-      freight:0,
+      freight: 0,
       corp_code: '', // 物流公司
       logi_no: '', // 快递单号
       reviewData: {},
@@ -844,7 +891,7 @@ export default {
         logi_no: ''
       },
       logisticsList: [],
-      isJuishuitan: false,
+      isJuishuitan: false
     }
   },
   computed: {
@@ -922,11 +969,11 @@ export default {
         }
       })
     },
-    handleOrderClick(order_id){
-      if(this.IS_ADMIN()){
-        window.open(`/order/entitytrade/tradenormalorders?order_id=${order_id}`,'_blank')
-      }else{
-        window.open(`/shopadmin/order/tradenormalorders?order_id=${order_id}`,'_blank')
+    handleOrderClick(order_id) {
+      if (this.IS_ADMIN()) {
+        window.open(`/order/entitytrade/tradenormalorders?order_id=${order_id}`, '_blank')
+      } else {
+        window.open(`/shopadmin/order/tradenormalorders?order_id=${order_id}`, '_blank')
       }
     },
     reviewSubmit() {

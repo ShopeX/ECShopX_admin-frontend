@@ -51,6 +51,7 @@
 <script>
 import BasePicker from './base'
 import PageMixin from '../mixins/page'
+import { getRegionauthId } from '@/utils'
 export default {
   name: 'PickerPlanting',
   extends: BasePicker,
@@ -72,7 +73,9 @@ export default {
     beforeSearch(params) {
       params = {
         ...params,
-        article_type: 'bring'
+        article_type: 'bring',
+        regionauth_id: getRegionauthId(),
+        ...(this.value?.params || {})
       }
       // const { keywords } = this.formData
       // if (keywords) {

@@ -1,6 +1,11 @@
 <template>
   <el-card shadow="never" header="账号信息">
     <el-form ref="form" :model="form" label-position="left" label-width="100px">
+      <div v-if="!hideTips" class="top-tips">
+        <!-- 警告符号 -->
+        <el-icon class="el-icon-warning-outline" />
+        <span> 为了确保您的账号安全，初次登录请修改密码 </span>
+      </div>
       <div class="section-body">
         <el-form-item label="账户">
           {{ id }}
@@ -34,6 +39,9 @@
                 @click="changeNewPass"
               />
             </el-input>
+            <span class="frm-tips">
+              密码至少8位以上，至少由数字、字母或特殊字符中两种及以上方式组成
+            </span>
           </el-form-item>
           <el-form-item label="确认密码">
             <el-input
@@ -97,7 +105,8 @@ export default {
       imgDialog: false,
       isGetImage: false,
       input_type: 'password',
-      new_input_type: 'password'
+      new_input_type: 'password',
+      hideTips: true
     }
   },
   mounted() {
@@ -113,23 +122,31 @@ export default {
       this.form.logintype = res.data.data.logintype
       this.id = res.data.data.mobile
     })
+    this.hideTips = this.$route.query?.hideTips || false
   },
   methods: {
     onSubmit() {
       const that = this
       this.loading = true
-      updateAdminInfo(this.form).then((response) => {
-        if (response.data.data) {
-          this.$message({
-            message: '更新成功',
-            type: 'success',
-            onClose() {
-              that.loading = false
-              that.$router.go(-1)
-            }
-          })
-        }
-      })
+      updateAdminInfo(this.form)
+        .then((response) => {
+          if (response.data.data?.relogin) {
+            this.$message({
+              message: '更新成功',
+              type: 'success',
+              onClose() {
+                that.loading = false
+                that.$router.go(-1)
+              }
+            })
+          } else {
+            window.location.href = '/'
+          }
+        })
+        .catch((err) => {
+          console.log(err)
+          this.loading = false
+        })
     },
     changeNewPass() {
       var new_type = this.new_input_type == 'text' ? 'password' : 'text'
@@ -170,4 +187,13 @@ export default {
 }
 </script>
 
-<style lang="scss"></style>
+<style lang="scss">
+.top-tips {
+  color: #d4023b;
+  padding: 10px;
+  background-color: #fce6de;
+  border-radius: 5px;
+  margin-bottom: 10px;
+  width: 50%;
+}
+</style>

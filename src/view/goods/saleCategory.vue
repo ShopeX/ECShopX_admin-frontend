@@ -13,6 +13,23 @@
 
 <template>
   <div class="page-goods-salecategory">
+    <div class="refund-address" style="margin-bottom: 10px">
+      <el-select
+        v-model="search.regionauth_id"
+        placeholder="请选择"
+        clearable
+        @change="handleRegionChange"
+      >
+        <el-option v-for="(el, index) in areas" :key="index" :label="el.label" :value="el.value" />
+      </el-select>
+      <SpSelectShop
+        v-if="IS_DISTRIBUTOR()"
+        v-model="search.distributor_id"
+        clearable
+        placeholder="请选择店铺"
+        @change="handleRegionChange"
+      />
+    </div>
     <div class="action-container">
       <el-button type="primary" plain @click="addCategory"> 添加销售分类 </el-button>
     </div>
@@ -26,34 +43,7 @@
       :tree-props="{ children: 'children', hasChildren: 'hasChildren' }"
       :load="load"
     >
-      <el-table-column label="分类名称" width="480">
-        <template slot-scope="scope">
-          <span
-            v-if="!scope.row.hasChildren && scope.row.category_level == '1'"
-            style="display: inline-block; width: 24px"
-          />
-          <span>{{ scope.row.category_name }}</span>
-        </template>
-      </el-table-column>
-      <el-table-column prop="sort" label="分类排序" width="140">
-        <template slot-scope="scope">
-          <div>{{ scope.row.sort }}</div>
-        </template>
-      </el-table-column>
-      <el-table-column label="分类图片" width="200">
-        <template slot-scope="scope">
-          <div class="img-container">
-            <SpImage
-              v-if="scope.row.image_url"
-              :src="scope.row.image_url"
-              :width="48"
-              :height="48"
-            />
-          </div>
-        </template>
-      </el-table-column>
-      <!-- <el-table-column label="一级分类模版" width="200" prop="customize_page_name" /> -->
-      <el-table-column label="操作">
+      <el-table-column label="操作" width="300">
         <template slot-scope="scope">
           <el-button type="text">
             <router-link
@@ -77,7 +67,7 @@
           <el-button type="text" @click="editCategory(scope.row)"> 编辑 </el-button>
           <el-popover v-if="appID" placement="top" width="200" trigger="click">
             <div>
-              <img class="page-code" :src="appCodeUrl">
+              <img class="page-code" :src="appCodeUrl" />
               <div class="page-btns">
                 <el-button
                   type="primary"
@@ -106,6 +96,32 @@
           </el-button>
         </template>
       </el-table-column>
+      <el-table-column label="销售分类名称" width="480">
+        <template slot-scope="scope">
+          <span
+            v-if="!scope.row.hasChildren && scope.row.category_level == '1'"
+            style="display: inline-block; width: 24px"
+          />
+          <span>{{ scope.row.category_name }}</span>
+        </template>
+      </el-table-column>
+      <el-table-column label="分类图片" width="200">
+        <template slot-scope="scope">
+          <div class="img-container">
+            <SpImage
+              v-if="scope.row.image_url"
+              :src="scope.row.image_url"
+              :width="48"
+              :height="48"
+            />
+          </div>
+        </template>
+      </el-table-column>
+      <el-table-column prop="sort" label="分类排序优先级" width="140" />
+      <el-table-column prop="main_category_name" label="关联管理分类" />
+      <el-table-column prop="distributor_names" label="关联店铺" />
+      <el-table-column prop="regionauth_name" label="所属区域" />
+      <!-- <el-table-column label="一级分类模版" width="200" prop="customize_page_name" /> -->
     </el-table>
 
     <!-- 添加分组 -->
@@ -121,7 +137,10 @@
   </div>
 </template>
 <script>
-import Vue from 'vue'
+import api from '@/api'
+
+import { categoryFormList, defaultFormValue } from './saleCategorySchema.js'
+
 export default {
   data() {
     return {
@@ -133,79 +152,87 @@ export default {
       mapData: null,
       cacheRowData: null,
       categoryDialog: false,
-      categoryForm: {
-        category_id: '',
-        category_name: '',
-        sort: 0,
-        parent_id: 0,
-        parent_name: '',
-        image_url: '',
-        customize_page_id:''
+      categoryForm: defaultFormValue(),
+      search: {
+        regionauth_id: '',
+        distributor_id: ''
       },
-      categoryFormList: [
-        {
-          label: '分类名称',
-          key: 'category_name',
-          type: 'input',
-          placeholder: '请输入分类名称',
-          required: true,
-          message: '不能为空'
-        },
-        {
-          label: '分类排序',
-          key: 'sort',
-          type: 'number'
-        },
-        {
-          label: '父级分类',
-          key: 'parent_name',
-          type: 'text',
-          isShow: ({ key }, value) =>
-            this.categoryForm.parent_id > 0 && !this.categoryForm.category_id
-        },
-        {
-          label: '分类图片',
-          key: 'image_url',
-          component: ({ key }, value) => <SpImagePicker v-model={value[key]} />
-        },
-        // {
-        //   label: '一级分类模版',
-        //   key: 'customize_page_id',
-        //   type: 'select',
-        //   options: [],
-        //   placeholder: '请选择一级分类模版',
-        //   display: 'inline'
-        // }
-      ]
+      areas: [],
+      manageCategory: []
+    }
+  },
+  computed: {
+    categoryFormList() {
+      return categoryFormList(this)
     }
   },
   created() {
     this.mapData = new Map()
   },
   mounted() {
+    api.regionauth.getRegionauth().then((res) => {
+      this.areas = res?.list?.map((el) => ({
+        value: el.regionauth_id,
+        label: el.regionauth_name
+      }))
+    })
     this.init()
     this.fetchWechatList()
     this.classification()
+    this.fetchManageCategory()
   },
+
   methods: {
-    async classification(){
-      let params= {
+    handleRegionChange() {
+      this.init()
+    },
+    async classification() {
+      let params = {
         page: 1,
         pageSize: 10,
-        page_type:'category',
+        page_type: 'category',
         template_name: 'yykweishop'
       }
-      let {list} = await this.$api.wxa.getCustomPageList(params)
-      console.log(list, 'src/view/goods/saleCategory.vue-第197行')
-      list.forEach(element => {
-        element.title = element.page_name,
+      let { list } = await this.$api.wxa.getCustomPageList(params)
+      list.forEach((element) => {
+        element.title = element.page_name
         element.value = element.id
-      });
-      this.categoryFormList[4].options = list
+      })
+      // this.categoryFormList[4].options = list
     },
     async init() {
       const list = await this.getCategory()
       this.categoryList = list
+    },
+    async fetchManageCategory() {
+      const list = await this.$api.goods.getCategory({ is_main_category: true })
+
+      // 遍历list 新增value和label属性和children属性,记录原有的children属性, 并递归children,children会有多层,需要递归处理,最后维护树结构
+      // 增加parent属性,记录父节点
+      this.manageCategoryPaths = [] // Array to store all category paths
+      const handleChildren = (children, currentPath = []) => {
+        const childrenList = []
+        if (!children || children.length === 0) {
+          return childrenList
+        }
+
+        children.forEach((item) => {
+          const nodePath = [...currentPath, item.category_id]
+          this.manageCategoryPaths.push(nodePath)
+
+          const now = {
+            value: item.category_id,
+            label: item.category_name,
+            parent: item.parent_id
+          }
+          if (item.children?.length) {
+            now.children = handleChildren(item.children, nodePath)
+          }
+          childrenList.push(now)
+        })
+        return childrenList
+      }
+      this.manageCategory = handleChildren(list)
     },
     async fetchWechatList() {
       const { list } = await this.$api.minimanage.gettemplateweapplist()
@@ -214,41 +241,53 @@ export default {
       this.appID = authorizer_appid
     },
     addCategory() {
-      this.categoryForm = {
-        category_id: '',
-        category_name: '',
-        sort: 0,
-        parent_id: 0,
-        parent_name: '',
-        image_url: '',
-        customize_page_id:''
-      }
+      this.categoryForm = defaultFormValue()
       this.categoryDialog = true
     },
     // 编辑分类
-    editCategory({ parent_id, category_id, category_name, sort, image_url,customize_page_id }) {
+    editCategory({
+      parent_id,
+      category_id,
+      category_name,
+      sort,
+      image_url,
+      regionauth_id,
+      main_category_ids,
+      distributor_ids,
+      category_level
+    }) {
+      const _res = []
+      // 递归这个数组,找到main_category_ids中的相同id的元素
+      const _main_category_ids = []
+      main_category_ids?.forEach((id) => {
+        const path = this.manageCategoryPaths.find((path) => path.includes(id))
+        if (path) {
+          _main_category_ids.push(path)
+        }
+      })
       this.categoryForm = {
         category_id,
         category_name,
         sort,
         parent_id,
         image_url,
-        customize_page_id:customize_page_id==0?'':customize_page_id
+        regionauth_id,
+        main_category_ids: _main_category_ids,
+        distributor_ids,
+        category_level
       }
       this.categoryDialog = true
     },
     // 添加子分类
     appendChildren(row) {
-      const { category_id, category_name } = row
+      const { category_id, category_name, category_level, regionauth_id } = row
       this.cacheRowData = row
       this.categoryForm = {
-        category_id: '',
-        category_name: '',
-        sort: 0,
+        ...defaultFormValue(),
         parent_id: category_id,
         parent_name: category_name,
-        image_url: '',
-        customize_page_id:''
+        category_level,
+        regionauth_id
       }
       this.categoryDialog = true
     },
@@ -275,7 +314,8 @@ export default {
     },
     async getCategory(pid = 0) {
       const res = await this.$api.goods.getCategory({
-        parent_id: pid
+        parent_id: pid,
+        regionauth_id: this.search.regionauth_id
       })
       const list = res.map((item) => {
         return {
@@ -292,14 +332,28 @@ export default {
       resolve(list)
     },
     async onCategoryFormSubmit() {
-      const { category_name, sort, image_url,customize_page_id, parent_id, category_id } = this.categoryForm
+      const {
+        regionauth_id,
+        category_name,
+        sort,
+        image_url,
+        category_id,
+        parent_id,
+        main_category_ids,
+        distributor_ids
+      } = this.categoryForm
+      const _distributor_ids =
+        typeof distributor_ids === 'string' ? distributor_ids.split(',') : distributor_ids
+      const _main_category_ids = main_category_ids?.map((el) => el[el?.length - 1])
       if (category_id) {
         await this.$api.goods.editCategory({
+          category_id,
           category_name,
           sort,
           image_url,
-          category_id,
-          customize_page_id
+          regionauth_id,
+          main_category_ids: _main_category_ids,
+          distributor_ids: _distributor_ids
         })
         this.$message.success('编辑成功')
       } else {
@@ -307,12 +361,14 @@ export default {
           category_name,
           sort,
           image_url,
-          customize_page_id,
+          regionauth_id,
+          main_category_ids: _main_category_ids,
+          distributor_ids: _distributor_ids,
           parent_id: parent_id != '0' ? parent_id : undefined
         })
         this.$message.success('添加成功')
       }
-      this.refreshNode(parent_id)
+      this.refreshNode(parent_id ? parent_id : '0')
       this.categoryDialog = false
     },
     async deleteCategory(row) {
@@ -353,7 +409,9 @@ export default {
         }
       } else {
         const store = this.$refs.tableTree.store
-        this.cacheRowData['hasChildren'] = true
+        if (this.cacheRowData) {
+          this.cacheRowData['hasChildren'] = true
+        }
         this.$nextTick(() => {
           store.loadOrToggle(this.cacheRowData)
         })

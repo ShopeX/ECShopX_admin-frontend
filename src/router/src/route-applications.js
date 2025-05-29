@@ -19,6 +19,17 @@ export default {
       ]
     },
     {
+      path: 'marketing/lottery',
+      name: '抽奖活动',
+      component: () => import('@/view/marketing/lottery/list.vue'),
+      children: [
+        {
+          path: 'editor/:id?',
+          component: () => import('@/view/marketing/lottery/editor.vue')
+        }
+      ]
+    },
+    {
       path: 'adapay/adapay_cash',
       name: '提现',
       component: () => import('@/view/mall/withdraw/withdraw')
@@ -386,6 +397,28 @@ export default {
       path: 'community/chiefupload',
       name: `团长导入`,
       component: () => import('@/view/member/members/upload_chief')
+    },
+    {
+      path: 'polyv/live/management',
+      name: `直播管理`,
+      component: () => import('@/view/live/liveRoom/index.vue'),
+      children: [
+        {
+          path: 'detail/:id?',
+          component: () => import('@/view/live/liveRoom/detail/index.vue')
+        }
+      ]
+    },
+    {
+      path: 'polyv/anchor/management',
+      name: `账号管理`,
+      component: () => import('@/view/live/anchor/index.vue'),
+      children: [
+        {
+          path: 'upload',
+          component: () => import('@/view/live/anchor/upload/index.vue')
+        }
+      ]
     }
   ]
 }

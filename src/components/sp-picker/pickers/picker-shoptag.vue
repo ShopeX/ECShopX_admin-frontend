@@ -54,6 +54,7 @@
 <script>
 import BasePicker from './base'
 import PageMixin from '../mixins/page'
+import { getRegionauthId } from '@/utils'
 export default {
   name: 'PickerTag',
   extends: BasePicker,
@@ -80,7 +81,7 @@ export default {
       if (keywords) {
         params = {
           ...params,
-          tag_name: keywords
+          tag_name: keywords,
         }
       }
       if (this.value.params) {
@@ -89,7 +90,10 @@ export default {
           ...this.value.params
         }
       }
-      return params
+      return {
+        ...params,
+         regionauth_id: getRegionauthId()
+      }
     },
     afterSearch(response) {
       const { list } = response.data.data

@@ -84,6 +84,17 @@ export default {
         { id: 'purchase', title: '内购' },
         { id: 'pointShop', title: '积分商城' },
         { id: 'registActivity', title: '报名活动' },
+        { id: 'liveList', title: '直播列表' },
+        { id: 'zitiOrder', title: '自提订单' },
+        { id: 'group', title: '我的拼团' },
+        { id: 'appointment', title: '活动预约' },
+        { id: 'shequGroup', title: '社区团购' },
+        { id: 'completeInfo', title: '完善资料' },
+        { id: 'couponCenter', title: '领券中心' },
+        { id: 'myCollect', title: '我的收藏' },
+        { id: 'myInvoice', title: '我的发票' },
+        { id: 'onlineService', title: '在线客服' },
+        { id: 'addressManage', title: '地址管理' },
       ],
       multiple: this.value?.multiple ?? true
     }

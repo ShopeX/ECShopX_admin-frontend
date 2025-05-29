@@ -7,23 +7,47 @@
 <template>
   <div class="page-body">
     <SpFilterForm :model="params" @onSearch="onSearch" @onReset="onReset">
-      <SpFilterFormItem prop="distributor" label="店铺名称:">
+      <!-- 隐藏 -->
+      <!-- <SpFilterFormItem prop="distributor" label="店铺名称:">
         <el-autocomplete
           v-model="params.distributor.name"
           :fetch-suggestions="queryStoreSearch"
           placeholder="请输入店铺名称"
           @select="handleSelectStore"
         />
+      </SpFilterFormItem> -->
+      <!-- 新增 区域 -->
+      <SpFilterFormItem prop="regionauth_id" label="区域:">
+        <el-select v-model="params.regionauth_id" clearable placeholder="请选择">
+          <el-option
+            v-for="item in areaOptions"
+            :key="item.value"
+            :label="item.label"
+            :value="item.value"
+          />
+        </el-select>
       </SpFilterFormItem>
-      <SpFilterFormItem prop="refund_bn" label="退款单号:">
-        <el-input v-model="params.refund_bn" placeholder="退款单号" />
+      <!-- 修改 店铺 -->
+      <SpFilterFormItem v-if="!VERSION_B2C" prop="distributor" label="店铺:">
+        <SpSelectShopV2
+          ref="selectShop"
+          v-model="params.distributor_id"
+          clearable
+          placeholder="请选择"
+        />
       </SpFilterFormItem>
-      <SpFilterFormItem prop="order_id" label="订单号:">
-        <el-input v-model="params.order_id" placeholder="订单号" />
+
+      <!-- 修改 -->
+      <SpFilterFormItem prop="order_id" label="订单编号:">
+        <el-input v-model="params.order_id" placeholder="订单编号" />
       </SpFilterFormItem>
+
+      <!-- 移动 -->
       <SpFilterFormItem prop="mobile" label="手机号:">
         <el-input v-model="params.mobile" placeholder="手机号" />
       </SpFilterFormItem>
+
+      <!-- 移动 -->
       <SpFilterFormItem prop="refund_type" label="退款类型:">
         <el-select v-model="params.refund_type" placeholder="退款类型">
           <el-option
@@ -34,7 +58,18 @@
           />
         </el-select>
       </SpFilterFormItem>
-      <SpFilterFormItem prop="refund_channel" label="退款方式:">
+
+      <SpFilterFormItem prop="refund_bn" label="退款单号:">
+        <el-input v-model="params.refund_bn" placeholder="退款单号" />
+      </SpFilterFormItem>
+
+      <!-- 新增 -->
+      <SpFilterFormItem prop="aftersales_bn" label="申请单号:">
+        <el-input v-model="params.aftersales_bn" placeholder="申请单号" />
+      </SpFilterFormItem>
+
+      <!-- 隐藏 -->
+      <!-- <SpFilterFormItem prop="refund_channel" label="退款方式:">
         <el-select v-model="params.refund_channel" placeholder="退款方式">
           <el-option
             v-for="(item, index) in refundChannelList"
@@ -43,7 +78,7 @@
             :value="item.value"
           />
         </el-select>
-      </SpFilterFormItem>
+      </SpFilterFormItem> -->
       <SpFilterFormItem prop="refund_status" label="退款状态:">
         <el-select v-model="params.refund_status" placeholder="退款状态">
           <el-option
@@ -61,6 +96,16 @@
           value-format="yyyy/MM/dd"
           placeholder="选择日期范围"
         />
+      </SpFilterFormItem>
+
+      <!-- 新增 商品订单号 -->
+      <SpFilterFormItem prop="goods_order_id" label="商品订单号:">
+        <el-input v-model="params.goods_order_id" placeholder="商品订单号" />
+      </SpFilterFormItem>
+
+      <!-- 新增 退款流水号 -->
+      <SpFilterFormItem prop="refund_id" label="退款流水号:">
+        <el-input v-model="params.refund_id" placeholder="退款流水号" />
       </SpFilterFormItem>
     </SpFilterForm>
 
@@ -120,7 +165,15 @@
             </div>
           </template>
         </el-table-column>
-        <el-table-column prop="aftersales_bn" width="180" label="售后单号">
+        <!-- 新增 区域-->
+        <el-table-column prop="area" width="180" label="区域">
+          <template slot-scope="scope">
+            {{ scope.row.regionauth_name }}
+          </template>
+        </el-table-column>
+
+        <!-- 修改 -->
+        <el-table-column prop="aftersales_bn" width="180" label="退款/售后申请单号">
           <template slot-scope="scope">
             <div>
               <router-link
@@ -153,7 +206,36 @@
             </div>
           </template>
         </el-table-column>
-        <el-table-column min-width="200" label="订单号">
+        <!-- 新增 -->
+        <el-table-column min-width="200" label="订单编号">
+          <template slot-scope="scope">
+            <div>
+              <router-link
+                target="_blank"
+                :to="{
+                  path:
+                    (`${$store.getters.login_type}` == 'distributor' &&
+                      '/shopadmin/order/tradenormalorders/detail') ||
+                    (`${$store.getters.login_type}` == 'merchant' &&
+                      '/merchant/order/tradenormalorders/detail') ||
+                    '/order/entitytrade/tradenormalorders/detail',
+                  query: { orderId: scope.row.order_id }
+                }"
+              >
+                {{ scope.row.order_id }}
+              </router-link>
+              <el-tooltip effect="dark" content="复制" placement="top-start">
+                <i
+                  v-clipboard:copy="scope.row.order_id"
+                  v-clipboard:success="onCopySuccess"
+                  class="el-icon-document-copy"
+                />
+              </el-tooltip>
+            </div>
+          </template>
+        </el-table-column>
+        <!-- 修改 -->
+        <el-table-column min-width="200" label="商品订单号">
           <template slot-scope="scope">
             <div>
               <router-link
@@ -220,11 +302,15 @@
           </template>
         </el-table-column>
         <el-table-column width="180" label="退运费">
-          <template slot-scope="scope">
-            ￥{{ scope.row.freight / 100 }}
-          </template>
+          <template slot-scope="scope"> ￥{{ scope.row.freight / 100 }} </template>
         </el-table-column>
 
+        <!-- 新增 退款流水号 -->
+        <el-table-column min-width="200" label="退款流水号">
+          <template slot-scope="scope">
+            {{ scope.row.refund_id }}
+          </template>
+        </el-table-column>
         <!-- 退款方式 -->
         <el-table-column prop="refund_channel" width="80" label="退款方式">
           <template slot-scope="scope">
@@ -309,7 +395,22 @@
             >
               详情
             </router-link>
-            <el-button v-if="scope.row.refund_status == 'AUDIT_SUCCESS' && scope.row.refund_channel == 'offline'" style="color:#459ae9" type="text" @click="()=>handleRefund(scope.row)">
+
+            <el-button
+              v-if="scope.row.refund_status == 'CHANGE'"
+              type="text"
+              @click="() => handleRefundOfflineFv(scope.row)"
+            >
+              强制交易完成
+            </el-button>
+            <el-button
+              v-if="
+                scope.row.refund_status == 'AUDIT_SUCCESS' && scope.row.refund_channel == 'offline'
+              "
+              style="color: #459ae9"
+              type="text"
+              @click="() => handleRefund(scope.row)"
+            >
               确认退款
             </el-button>
           </template>
@@ -338,12 +439,26 @@
       :form-list="refundFormList"
       @onSubmit="onrefundSubmit"
     />
+
+    <SpDialog
+      ref="refundOfflineFvDialogRef"
+      v-model="refundOfflineFvDialog"
+      :title="`将退款单强制标记为“线下退款-退款成功”`"
+      :form="refundOfflineFvForm"
+      :form-list="refundOfflineFvFormList"
+      @onSubmit="onRefundOfflineFvSubmit"
+    />
   </div>
 </template>
 <script>
 import { mapGetters } from 'vuex'
 import { exportRefundList } from '@/api/aftersales'
 import mixin, { pageMixin } from '@/mixins'
+
+import api from '@/api'
+
+import { createRefundOfflineFvFormList } from './schema'
+
 export default {
   mixins: [mixin, pageMixin],
   data() {
@@ -358,7 +473,10 @@ export default {
       mobile: undefined,
       refund_type: undefined,
       refund_channel: undefined,
-      refund_status: undefined
+      refund_status: undefined,
+      regionauth_id: undefined,
+      refund_id: undefined,
+      oid: undefined
     }
     return {
       initialParams,
@@ -367,12 +485,20 @@ export default {
       },
       loading: false,
       shopList: [],
+      areaOptions: [],
       refundTypeList: [
         { name: '全部', value: '' },
         { name: '售后', value: '0' },
         { name: '售前', value: '1' },
         { name: '拒单', value: '2' }
       ],
+      refundOfflineFvDialog: false,
+      refundOfflineFvForm: {
+        refund_bn: '',
+        refunds_memo: '',
+        offline_evidence: ''
+      },
+
       refundChannelList: [
         { name: '线下退款', value: 'offline' },
         { name: '原路返回', value: 'original' }
@@ -388,29 +514,27 @@ export default {
         { name: '退款异常', value: 'CHANGE' },
         { name: '退款关闭', value: 'REFUNDCLOSE' }
       ],
-      refundDialog:false,
-      refundLoading:false,
-      refundForm:{
-        refund_bn:'',
-        bank_account_name:'',
-        bank_account_no:'',
-        bank_name:'',
-        refund_account_name:'',
-        refund_account_bank:'',
-        refund_account_no:'',
-        pay_type:'',
-        order_id:'',
-        refund_fee:''
+      refundDialog: false,
+      refundLoading: false,
+      refundForm: {
+        refund_bn: '',
+        bank_account_name: '',
+        bank_account_no: '',
+        bank_name: '',
+        refund_account_name: '',
+        refund_account_bank: '',
+        refund_account_no: '',
+        pay_type: '',
+        order_id: '',
+        refund_fee: ''
       },
-      refundFormList:[
-      {
+      refundFormList: [
+        {
           label: '退款方式',
           key: 'pay_type',
           type: 'radio',
           required: true,
-          options: [
-            { label: 'offline_pay', name: '线下转账' }
-          ]
+          options: [{ label: 'offline_pay', name: '线下转账' }]
         },
         {
           label: '收款人户名',
@@ -458,13 +582,16 @@ export default {
           label: '退款金额',
           key: 'refund_fee',
           type: 'input',
-          disabled:true
-        },
+          disabled: true
+        }
       ]
     }
   },
   computed: {
-    ...mapGetters(['wheight'])
+    ...mapGetters(['wheight']),
+    refundOfflineFvFormList() {
+      return createRefundOfflineFvFormList(this)
+    }
   },
   watch: {
     $route(to, from) {},
@@ -484,6 +611,14 @@ export default {
     //获取店铺
     this.getDistributorList()
     this.fetchList()
+
+    api.regionauth.getRegionauth().then((res) => {
+      this.areaOptions = res?.list?.map((el) => ({
+        value: el.regionauth_id,
+        label: el.regionauth_name,
+        title: el.regionauth_name
+      }))
+    })
   },
   methods: {
     handleSelectStore(storeItem) {
@@ -513,7 +648,10 @@ export default {
         refund_type: this.params.refund_type || undefined,
         mobile: this.params.mobile || undefined,
         refund_channel: this.params.refund_channel || undefined,
-        refund_status: this.params.refund_status || undefined
+        refund_status: this.params.refund_status || undefined,
+        regionauth_id: this.params.regionauth_id || undefined,
+        refund_id: this.params.refund_id || undefined,
+        oid: this.params.oid || undefined
       }
       return params
     },
@@ -580,26 +718,27 @@ export default {
         })
       }
     },
-    async handleRefund({order_id,refund_bn,refund_fee}){
-      const {bank_account_name,bank_account_no,bank_name,} = await this.$api.aftersales.getOfflineInfo({order_id})
+    async handleRefund({ order_id, refund_bn, refund_fee }) {
+      const { bank_account_name, bank_account_no, bank_name } =
+        await this.$api.aftersales.getOfflineInfo({ order_id })
       this.refundForm = {
         order_id,
         refund_bn,
-        bank_account_name:'',
-        bank_account_no:'',
-        bank_name:'',
-        refund_account_name:bank_account_name,
-        refund_account_bank:bank_account_no,
-        refund_account_no:bank_name,
-        pay_type:'offline_pay',
-        refund_fee: refund_fee/ 100
+        bank_account_name: '',
+        bank_account_no: '',
+        bank_name: '',
+        refund_account_name: bank_account_name,
+        refund_account_bank: bank_account_no,
+        refund_account_no: bank_name,
+        pay_type: 'offline_pay',
+        refund_fee: refund_fee / 100
       }
       this.refundDialog = true
     },
-    async onrefundSubmit(){
+    async onrefundSubmit() {
       this.refundLoading = true
       try {
-        await this.$api.aftersales.refundOffline({...this.refundForm})
+        await this.$api.aftersales.refundOffline({ ...this.refundForm })
         this.refundLoading = false
         this.refundDialog = false
         this.fetchList()
@@ -615,6 +754,29 @@ export default {
           this.shopList.push({ 'value': row.name, 'distributor_id': row.distributor_id })
         })
       }
+    },
+    handleRefundOfflineFv(row) {
+      this.refundOfflineFvDialog = true
+      this.refundOfflineFvForm = {
+        refund_bn: row.refund_bn,
+        offline_evidence: row.offline_evidence,
+        refunds_memo: row.refunds_memo
+      }
+    },
+    async onRefundOfflineFvSubmit() {
+      this.$api.aftersales
+        .refundOfflineFv({
+          refund_bn: this.refundOfflineFvForm.refund_bn,
+          refunds_memo: this.refundOfflineFvForm.refunds_memo,
+          offline_evidence: this.refundOfflineFvForm.offline_evidence
+        })
+        .then((res) => {
+          if (res.status) {
+            this.$message.success('强制交易完成成功')
+            this.fetchList()
+            this.refundOfflineFvDialog = false
+          }
+        })
     }
   }
 }

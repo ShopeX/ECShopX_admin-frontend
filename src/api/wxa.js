@@ -346,3 +346,19 @@ export function setCartremindSetting (query) {
     params: query
   })
 }
+
+// 页面关联分类
+export function bindcategory (id, query) {
+  return fetch({
+    url: `/wxa/customizepage/${id}/bindcategory`,
+    method: 'put',
+    params: query
+  })
+}
+// 复制页面
+export function copyCustomPage (id) {
+  return fetch({
+    url: `/wxa/customizepage/copy/${id}`,
+    method: 'post'
+  })
+}

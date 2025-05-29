@@ -237,10 +237,17 @@ export default {
     // 添加白名单适用店铺
     async addStoreAction() {
       const distributor_ids = this.whitelistForm.distributors.map((item) => item.distributor_id)
-      const { data } = await this.$picker.shop({
-        data: distributor_ids
-      })
-      this.whitelistForm.distributors = JSON.parse(JSON.stringify(data))
+
+
+      const { data } = await this.$picker.shop()
+      // 合并数组并通过distributor_id去重
+      let arrObj = [...this.whitelistForm.distributors, ...data].reduce((unique, item) => {
+        return unique.some(existingItem => existingItem.distributor_id === item.distributor_id) 
+          ? unique 
+          : [...unique, item]
+      }, [])
+
+      this.whitelistForm.distributors = JSON.parse(JSON.stringify(arrObj))
     },
     storeClose(index) {
       this.whitelistForm.distributors.splice(index, 1)

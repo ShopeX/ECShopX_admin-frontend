@@ -1188,7 +1188,8 @@ export default {
       const { list } = await this.$api.shipping.getShippingTemplatesList({
         page: 1,
         pageSize: 99,
-        status: 1
+        status: 1,
+        supplier_id: this.form.supplier_id
       })
       if (list.length > 0) {
         this.formList[5].options = list.map((item) => {

@@ -125,6 +125,10 @@ export default {
     drag: {
       type: Boolean,
       default: false
+    },
+    disabled: {
+      type: Boolean,
+      default: false
     }
   },
   data() {
@@ -149,6 +153,7 @@ export default {
   methods: {
     // 图片添加
     async handleSelectImage() {
+      if (this.disabled) return
       const { data } = await this.$picker.image({
         multiple: this.max > 1,
         num: this.max > 1 ? this.max - this.localValue.length : 1
@@ -212,14 +217,18 @@ export default {
       return (
         <div class={['image-item', { 'drag': this.drag }]} key={`image-item__${index}`}>
           <i class='ecx-icon icon-tuozhuai' />
-          <i
-            class='ecx-icon icon-qingchuFilled'
-            on-click={this.handleDeleteItem.bind(this, index)}
-          />
+          {!this.disabled && (
+            <i
+              class='ecx-icon icon-qingchuFilled'
+              on-click={this.handleDeleteItem.bind(this, index)}
+            />
+          )}
           <el-image class='img-content' src={item?.url || item} fit='cover' />
-          <span class='image-meta' on-click={this.onUpdateImage.bind(this, index)}>
-            更换图片
-          </span>
+          {!this.disabled && (
+            <span class='image-meta' on-click={this.onUpdateImage.bind(this, index)}>
+              更换图片
+            </span>
+          )}
         </div>
       )
     }
@@ -240,7 +249,7 @@ export default {
           <draggable
             class='list-container'
             list={value}
-            disabled={!this.drag}
+            disabled={!this.drag || this.disabled}
             options={this.dragOptions}
             handle='.icon-tuozhuai'
           >

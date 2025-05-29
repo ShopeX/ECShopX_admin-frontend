@@ -4,7 +4,7 @@
       <div slot="header" class="clearfix">
         <span>适用店铺信息</span>
         <el-button
-          :disabled="listData.is_active"
+          :disabled="listData.is_active || disable"
           style="float: right"
           type="primary"
           size="mini"
@@ -62,12 +62,11 @@
               class="goods-input"
             >
               <el-button slot="append" icon="el-icon-search" @click="searchGoods" />
-            </el-input>
-</template
+            </el-input> </template
           >&nbsp;
 
           <el-button
-            :disabled="listData.is_active"
+            :disabled="listData.is_active || disable"
             type="primary"
             size="mini"
             @click="handleGoodsDialogShow"
@@ -75,7 +74,7 @@
             选择商品
           </el-button>
           <el-button
-            :disabled="listData.is_active"
+            :disabled="listData.is_active || disable"
             type="primary"
             size="mini"
             @click="showUpload = true"
@@ -93,7 +92,7 @@
                 <div>{{ item.itemId }}</div>
               </div>
               <div style="width: 50%" class="item goods-info">
-                <img v-if="item.pics" :src="item.pics[0]" alt="">
+                <img v-if="item.pics" :src="item.pics[0]" alt="" />
                 <div class="goods-sku">
                   <div>
                     {{ item.itemName }}
@@ -117,7 +116,7 @@
                 <div>
                   <el-input
                     v-model="item.limit"
-                    :disabled="listData.is_active"
+                    :disabled="listData.is_active || disable"
                     style="width: 80px"
                     size="small"
                     type="number"
@@ -144,7 +143,7 @@
       </div>
     </el-card>
 
-    <div class="content-center">
+    <div v-if="!disable" class="content-center">
       <el-button @click="cancelSubmit"> 取消 </el-button>
       <el-button v-loading="loading" type="primary" @click="submitDetail"> 提交 </el-button>
     </div>
@@ -190,6 +189,10 @@ export default {
     listData: {
       type: Object,
       defalut: {}
+    },
+    disable: {
+      type: Boolean,
+      default: false
     }
   },
   data() {

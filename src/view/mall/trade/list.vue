@@ -7,32 +7,63 @@
 <template>
   <div class="page-body">
     <SpFilterForm :model="params" @onSearch="onSearch" @onReset="onReset">
-      <SpFilterFormItem prop="create_time" label="日期范围:">
+      <!-- 新增 区域 -->
+      <SpFilterFormItem prop="regionauth_id" label="区域:">
+        <el-select v-model="params.regionauth_id" clearable placeholder="请选择">
+          <el-option
+            v-for="item in areaOptions"
+            :key="item.value"
+            :label="item.label"
+            :value="item.value"
+          />
+        </el-select>
+      </SpFilterFormItem>
+      <!-- 修改  订单流水号 -->
+      <SpFilterFormItem prop="oid" label="订单流水号:">
+        <el-input v-model="params.oid" placeholder="订单流水号" />
+      </SpFilterFormItem>
+      <!-- 修改 -->
+      <SpFilterFormItem prop="mobile" label="交易单号:">
+        <el-input v-model="params.mobile" placeholder="手机号/交易单号" />
+      </SpFilterFormItem>
+      <!-- 新增 订单编号 -->
+      <SpFilterFormItem prop="orderId" label="订单编号:">
+        <el-input v-model="params.orderId" placeholder="订单编号" />
+      </SpFilterFormItem>
+      <!-- 新增 会员卡号 -->
+      <SpFilterFormItem prop="user_card_code" label="会员卡号:">
+        <el-input v-model="params.user_card_code" placeholder="会员卡号" />
+      </SpFilterFormItem>
+      <!-- 新增 支付流水号 -->
+      <SpFilterFormItem prop="payFlow" label="支付流水号:">
+        <el-input v-model="params.payFlow" placeholder="支付流水号" />
+      </SpFilterFormItem>
+      <!-- 新增 商品订单号 -->
+      <SpFilterFormItem prop="goodsOrderId" label="商品订单号:">
+        <el-input v-model="params.goodsOrderId" placeholder="商品订单号" />
+      </SpFilterFormItem>
+      <!-- 新增 手机号 -->
+      <SpFilterFormItem prop="mobile" label="手机号:">
+        <el-input v-model="params.mobile" placeholder="手机号" />
+      </SpFilterFormItem>
+      <!-- 修改 交易时间 -->
+      <SpFilterFormItem prop="time_start" label="交易时间:">
         <el-date-picker
-          v-model="params.create_time"
+          v-model="params.time_start"
           type="daterange"
           value-format="yyyy/MM/dd"
           placeholder="选择日期范围"
         />
       </SpFilterFormItem>
-      <SpFilterFormItem prop="mobile" label="单号:">
-        <el-input v-model="params.mobile" placeholder="手机号/交易单号" />
+      <!-- 新增 交易完成时间 -->
+      <SpFilterFormItem prop="time_expire" label="交易完成时间:">
+        <el-date-picker
+          v-model="params.time_expire"
+          type="daterange"
+          value-format="yyyy/MM/dd"
+          placeholder="选择日期范围"
+        />
       </SpFilterFormItem>
-      <SpFilterFormItem prop="orderId" label="订单号:">
-        <el-input v-model="params.orderId" placeholder="订单号" />
-      </SpFilterFormItem>
-      <SpFilterFormItem  prop="receipt_type" label="配送方式:">
-        <el-select v-model="params.receipt_type" clearable placeholder="请选择">
-          <el-option
-            v-for="item in distributionType"
-            :key="item.value"
-            size="mini"
-            :label="item.title"
-            :value="item.value"
-          />
-        </el-select>
-      </SpFilterFormItem>
-
     </SpFilterForm>
 
     <div class="action-container">
@@ -61,7 +92,8 @@
           style="width: 100%"
           :height="wheight - 140"
         >
-          <el-table-column type="expand">
+          <!-- 隐藏 -->
+          <!-- <el-table-column type="expand">
             <template slot-scope="scope">
               <el-form label-position="left" inline class="demo-table-expand">
                 <el-form-item label="订单号：">
@@ -78,23 +110,6 @@
                 </el-form-item>
                 <el-form-item label="支付方式：">
                   <span>{{ fitlerPayType(scope.row.payChannel, scope.row.payType) }}</span>
-                  <!-- <span v-if="scope.row.payType == 'wxpay' || scope.row.payType == 'wxpayjs'"
-                    >微信支付</span
-                  >
-                  <span v-if="scope.row.payType == 'wxpayapp'">微信APP支付</span>
-                  <span v-if="scope.row.payType == 'wxpayh5'">微信H5支付</span>
-                  <span v-if="scope.row.payType == 'wxpaypc'">微信POS支付</span>
-                  <span v-if="scope.row.payType == 'wxpaypos'">微信扫码支付</span>
-                  <span v-if="scope.row.payType == 'alipayapp'">支付宝APP支付</span>
-                  <span v-if="scope.row.payType == 'alipay'">支付宝支付</span>
-                  <span v-if="scope.row.payType == 'alipayh5'">支付宝H5支付</span>
-                  <span v-if="scope.row.payType == 'alipaypos'">支付宝扫码支付</span>
-                  <span v-if="scope.row.payType == 'deposit'">余额支付</span>
-                  <span v-if="scope.row.payType == 'ebuy'">EBUY支付</span>
-                    <span v-if="scope.row.payType == 'point'">积分支付</span>
-                    <span v-if="scope.row.payType == 'pos'">现金支付</span>
-                    <span v-if="scope.row.payType == 'hfpay'">汇付支付</span>
-                    <span v-if="scope.row.payType == 'chinaums'">微信支付-银联</span> -->
                 </el-form-item>
                 <el-form-item label="总金额：">
                   <span>{{ scope.row.curFeeSymbol }}{{ scope.row.totalFee / 100 }}</span>
@@ -110,7 +125,7 @@
                         <p>
                           优惠金额：{{ scope.row.curFeeSymbol }}{{ item.discount_fee / 100 }} 元
                         </p>
-                        <hr>
+                        <hr />
                       </div>
                     </div>
                     <div slot="reference" class="name-wrapper">
@@ -120,7 +135,7 @@
                 </el-form-item>
               </el-form>
             </template>
-          </el-table-column>
+          </el-table-column> -->
           <el-table-column label="交易单" width="180">
             <template slot-scope="scope">
               <div class="order-num">
@@ -147,12 +162,14 @@
                 </div> -->
             </template>
           </el-table-column>
-          <el-table-column label="交易时间" width="160">
+          <!-- 新增 订单编号 -->
+          <el-table-column label="订单编号" width="160">
             <template slot-scope="scope">
-              {{ scope.row.timeStart | datetime('YYYY-MM-DD HH:mm:ss') }}
+              {{ scope.row.orderId }}
             </template>
           </el-table-column>
-          <el-table-column label="订单信息">
+
+          <el-table-column label="订单信息" width="220">
             <template slot-scope="scope">
               <div class="order-num">
                 <el-tooltip effect="dark" content="联系方式" placement="top-start">
@@ -175,48 +192,23 @@
               <div class="order-time">商品：{{ scope.row.body }}</div>
             </template>
           </el-table-column>
-          <el-table-column label="实付" width="180">
+
+          <!-- 新增 会员卡号 -->
+          <el-table-column label="会员卡号" width="160">
             <template slot-scope="scope">
-              <div>
-                实付：<span v-if="scope.row.payType == 'point'" class="mark"
-                  >{{ scope.row.payFee }} 积分</span
-                >
-                <span v-else class="mark"
-                  ><span class="cur">{{ scope.row.curFeeSymbol }}</span
-                  >{{ scope.row.payFee / 100 }}</span
-                >
-              </div>
+              {{ scope.row.user_card_code }}
             </template>
           </el-table-column>
+          <!-- 新增 区域 -->
+          <el-table-column label="区域" width="160">
+            <template slot-scope="scope">
+              {{ scope.row.regionauth_name }}
+            </template>
+          </el-table-column>
+
           <el-table-column label="支付方式">
             <template slot-scope="scope">
               <span>{{ fitlerPayType(scope.row.payChannel, scope.row.payType) }}</span>
-              <!-- <span v-if="scope.row.payType == 'wxpay' || scope.row.payType == 'wxpayjs'"
-                >微信支付</span
-              >
-              <span v-if="scope.row.payType == 'adapay' && scope.row.payChannel == 'wx_lite'"
-                >微信支付</span
-              >
-              <span v-if="scope.row.payType == 'adapay' && scope.row.payChannel == 'wx_pub'"
-                >微信支付</span
-              >
-              <span v-if="scope.row.payType == 'adapay' && scope.row.payChannel == 'alipay_wap'"
-                >支付宝支付</span
-              >
-              <span v-if="scope.row.payType == 'wxpayapp'">微信APP支付</span>
-              <span v-if="scope.row.payType == 'wxpayh5'">微信H5支付</span>
-              <span v-if="scope.row.payType == 'wxpaypc'">微信POS支付</span>
-              <span v-if="scope.row.payType == 'wxpaypos'">微信扫码支付</span>
-              <span v-if="scope.row.payType == 'alipayapp'">支付宝APP支付</span>
-              <span v-if="scope.row.payType == 'alipay'">支付宝支付</span>
-              <span v-if="scope.row.payType == 'alipayh5'">支付宝H5支付</span>
-              <span v-if="scope.row.payType == 'alipaypos'">支付宝扫码支付</span>
-              <span v-if="scope.row.payType == 'deposit'">余额支付</span>
-              <span v-if="scope.row.payType == 'ebuy'">EBUY支付</span>
-                <span v-if="scope.row.payType == 'point'">积分支付</span>
-                <span v-if="scope.row.payType == 'pos'">现金支付</span>
-                <span v-if="scope.row.payType == 'hfpay'">汇付支付</span>
-                <span v-if="scope.row.payType == 'chinaums'">微信支付-银联</span> -->
             </template>
           </el-table-column>
 
@@ -236,40 +228,86 @@
               </template>
             </template>
           </el-table-column>
-          <el-table-column label="配送方式">
-          <template slot-scope="scope">
-            {{ getDistributionType(scope.row) }}
-          </template>
-        </el-table-column>
-        <el-table-column label="配送费">
-          <template slot-scope="scope">
-            {{ scope.row.self_delivery_fee && ( scope.row.self_delivery_fee / 100 + '元') }}
-          </template>
-        </el-table-column>
-        <el-table-column label="配送员">
-          <template slot-scope="scope">
-            {{ scope.row.self_delivery_operator_name }}
-          </template>
-        </el-table-column>
-        <el-table-column prop="mobile" label="业务员">
-          <template slot-scope="scope">
-            {{ scope.row.salesman_mobile }}
-            <el-tooltip
-              v-if="datapass_block == 0"
-              effect="dark"
-              content="复制"
-              placement="top-start"
-            >
-              <i
-                v-clipboard:copy="scope.row.salesman_mobile"
-                v-clipboard:success="onCopySuccess"
-                class="el-icon-document-copy"
-              />
-            </el-tooltip>
-          </template>
-        </el-table-column>
 
-          <el-table-column
+          <el-table-column label="实付" width="180">
+            <template slot-scope="scope">
+              <div>
+                实付：<span v-if="scope.row.payType == 'point'" class="mark"
+                  >{{ scope.row.payFee }} 积分</span
+                >
+                <span v-else class="mark"
+                  ><span class="cur">{{ scope.row.curFeeSymbol }}</span
+                  >{{ scope.row.payFee / 100 }}</span
+                >
+              </div>
+            </template>
+          </el-table-column>
+
+          <!-- 新增 支付流水号 -->
+          <el-table-column label="支付流水号" width="160">
+            <template slot-scope="scope">
+              {{ scope.row.payFlow }}
+            </template>
+          </el-table-column>
+
+          <!-- 新增 订单流水号 -->
+          <el-table-column label="订单流水号" width="160">
+            <template slot-scope="scope">
+              {{ scope.row.orderId }}
+            </template>
+          </el-table-column>
+          <el-table-column label="交易时间" width="160">
+            <template slot-scope="scope">
+              {{ scope.row.timeStart | datetime('YYYY-MM-DD HH:mm:ss') }}
+            </template>
+          </el-table-column>
+          <!-- 新增 交易完成时间 -->
+          <el-table-column label="交易完成时间" width="160">
+            <template slot-scope="scope">
+              <span v-if="scope.row.timeEnd">
+                {{ scope.row.timeEnd | datetime('YYYY-MM-DD HH:mm:ss') }}
+              </span>
+              <span v-else> - </span>
+            </template>
+          </el-table-column>
+
+          <!-- 隐藏 -->
+          <!--           
+          <el-table-column label="配送方式">
+            <template slot-scope="scope">
+              {{ getDistributionType(scope.row) }}
+            </template>
+          </el-table-column>
+          <el-table-column label="配送费">
+            <template slot-scope="scope">
+              {{ scope.row.self_delivery_fee && scope.row.self_delivery_fee / 100 + '元' }}
+            </template>
+          </el-table-column>
+          <el-table-column label="配送员">
+            <template slot-scope="scope">
+              {{ scope.row.self_delivery_operator_name }}
+            </template>
+          </el-table-column>
+          <el-table-column prop="mobile" label="业务员">
+            <template slot-scope="scope">
+              {{ scope.row.salesman_mobile }}
+              <el-tooltip
+                v-if="datapass_block == 0"
+                effect="dark"
+                content="复制"
+                placement="top-start"
+              >
+                <i
+                  v-clipboard:copy="scope.row.salesman_mobile"
+                  v-clipboard:success="onCopySuccess"
+                  class="el-icon-document-copy"
+                />
+              </el-tooltip>
+            </template>
+          </el-table-column> -->
+
+          <!-- 隐藏 -->
+          <!-- <el-table-column
             v-if="$store.getters.login_type != 'merchant' && !VERSION_IN_PURCHASE"
             width="60"
             label="汇率"
@@ -277,7 +315,7 @@
             <template slot-scope="scope">
               <span>{{ scope.row.curFeeRate }}</span>
             </template>
-          </el-table-column>
+          </el-table-column> -->
           <el-table-column width="100" label="支付状态">
             <template slot-scope="scope">
               <el-tag v-if="scope.row.tradeState == 'SUCCESS'" type="success" size="mini">
@@ -324,7 +362,8 @@
 <script>
 import { mapGetters } from 'vuex'
 import mixin, { pageMixin } from '@/mixins'
-import { PAY_TYPE,DISTRIBUTION_TYPE } from '@/consts'
+import { PAY_TYPE, DISTRIBUTION_TYPE } from '@/consts'
+import api from '@/api'
 
 export default {
   mixins: [mixin, pageMixin],
@@ -333,7 +372,7 @@ export default {
       create_time: '',
       mobile: undefined,
       orderId: undefined,
-      receipt_type:undefined
+      receipt_type: undefined
     }
     return {
       initialParams,
@@ -352,6 +391,7 @@ export default {
       downloadUrl: '',
       downloadName: '',
       distributionType: DISTRIBUTION_TYPE,
+      areaOptions: []
     }
   },
   computed: {
@@ -359,6 +399,13 @@ export default {
   },
   mounted() {
     this.fetchList()
+    api.regionauth.getRegionauth().then((res) => {
+      this.areaOptions = res?.list?.map((el) => ({
+        value: el.regionauth_id,
+        label: el.regionauth_name,
+        title: el.regionauth_name
+      }))
+    })
   },
   methods: {
     fitlerPayType(payChannel, payType) {
@@ -412,7 +459,7 @@ export default {
         mobile: this.params.mobile || undefined,
         orderId: this.params.orderId || undefined,
         status: this.params.status,
-        receipt_type:this.params.receipt_type
+        receipt_type: this.params.receipt_type
       }
       return params
     },

@@ -59,16 +59,31 @@
       <div slot="header">商品清单</div>
       <div class="card-panel">
         <el-table v-if="orderInfo" border :data="orderInfo.items">
-          <el-table-column prop="item_id" label="商品ID" width="80" />
+          <!-- 修改 -->
+          <el-table-column prop="sub_order_id" label="商品订单编号" width="80" />
           <el-table-column prop="pic" label="商品图片" width="120">
             <template slot-scope="scope">
               <el-image class="item-image" fit="fill" :src="`${wximageurl}${scope.row.pic}`" />
             </template>
           </el-table-column>
+          <!-- 修改 -->
+          <el-table-column prop="item_spec_desc" label="SKU编号">
+            <template slot-scope="scope">
+              {{ scope.row.item_bn }}
+            </template>
+          </el-table-column>
+
           <el-table-column prop="item_name" label="商品名称" width="180">
             <template slot-scope="scope">
+              <!-- 判断是否隐藏 -->
               <div class="ell3">
-                <el-tag v-if="scope.row.is_prescription == 1" type="primary" size="mini" style="background-color: #fff;">处方药</el-tag>
+                <el-tag
+                  v-if="scope.row.is_prescription == 1"
+                  type="primary"
+                  size="mini"
+                  style="background-color: #fff"
+                  >处方药</el-tag
+                >
                 {{ scope.row.item_name }}
               </div>
               <el-tag v-if="scope.row.order_item_type == 'gift'" size="mini" type="success">
@@ -76,59 +91,53 @@
               </el-tag>
             </template>
           </el-table-column>
-          <!-- <el-table-column v-if="orderInfo.prescription_status" prop="instructions" label="处方用量" width="160" /> -->
-          <el-table-column prop="item_holder" label="商品类型" width="100">
-            <template slot-scope="scope">
-              <div class="ell3">
-                {{ goodCategoryMap[scope.row.item_holder] }}
-              </div>
-            </template>
-          </el-table-column>
 
-          <!--          <el-table-column prop="item_spec_desc" label="SPU编码">-->
-          <!--            <template slot-scope="scope">-->
-          <!--              {{ scope.row.goods_bn }}-->
-          <!--            </template>-->
-          <!--          </el-table-column>-->
-          <el-table-column prop="item_spec_desc" label="SKU编码">
-            <template slot-scope="scope">
-              {{ scope.row.item_bn }}
-            </template>
-          </el-table-column>
           <el-table-column prop="item_spec_desc" label="规格">
             <template slot-scope="scope">
               {{ scope.row.item_spec_desc ? scope.row.item_spec_desc : '单规格' }}
             </template>
           </el-table-column>
+          <el-table-column prop="num" label="数量" width="80" />
 
-          <el-table-column v-if="orderInfo.prescription_status" prop="medicine_symptom_set" label="症状" width="160" >
+          <!-- 判断需要隐藏 -->
+          <el-table-column
+            v-if="orderInfo?.prescription_status"
+            prop="medicine_symptom_set"
+            label="症状"
+            width="160"
+          >
             <template slot-scope="scope">
               <div v-for="item in scope.row.medicine_symptom_set" :key="item.id">
                 {{ item }}
               </div>
             </template>
           </el-table-column>
-          <el-table-column prop="supplier_name" label="来源供应商" width="120">
-            <template slot-scope="scope">
-              {{ scope.row.supplier_name ? scope.row.supplier_name : '自营' }}
-            </template>
-          </el-table-column>
-          <el-table-column prop="price" label="单价（¥）" width="100">
+
+          <!-- 修改 -->
+          <el-table-column prop="price" label="市场单价(划线价)" width="100">
             <template slot-scope="scope">
               {{ (scope.row.price / 100).toFixed(2) }}
             </template>
           </el-table-column>
-          <el-table-column prop="cost_price" label="结算价（¥）" width="100">
+          <!-- 修改  -->
+          <el-table-column prop="cost_price" label="销售单价(奥莱价)" width="100">
             <template slot-scope="scope">
               {{ (scope.row.cost_price / 100).toFixed(2) }}
             </template>
           </el-table-column>
-          <el-table-column prop="cost_price" label="成本价（¥）" width="100">
+          <!-- 修改 -->
+          <el-table-column prop="cost_price" label="活动价(¥)" width="100">
             <template slot-scope="scope">
               {{ (scope.row.cost_price / 100).toFixed(2) }}
             </template>
           </el-table-column>
-          <el-table-column prop="num" label="数量" width="80" />
+          <!-- 修改 移动 -->
+          <el-table-column label="小计（¥）" width="120">
+            <template slot-scope="scope">
+              {{ (scope.row.cost_fee / 100).toFixed(2) }}
+            </template>
+          </el-table-column>
+
           <el-table-column
             v-if="orderInfo.type == '1'"
             prop="price"
@@ -140,12 +149,8 @@
             </template>
           </el-table-column>
 
-          <el-table-column label="小计（¥）" width="120">
-            <template slot-scope="scope">
-              {{ (scope.row.item_fee / 100).toFixed(2) }}
-            </template>
-          </el-table-column>
-          <el-table-column label="结算小计（¥）" width="120">
+          <!-- 需要隐藏 -->
+          <!-- <el-table-column label="结算小计（¥）" width="120">
             <template slot-scope="scope">
               {{ (scope.row.cost_fee / 100).toFixed(2) }}
             </template>
@@ -154,78 +159,67 @@
             <template slot-scope="scope">
               {{ (scope.row.cost_fee / 100).toFixed(2) }}
             </template>
-          </el-table-column>
+          </el-table-column> -->
+          <!-- 判断是否需要隐藏 -->
           <el-table-column v-if="!VERSION_IN_PURCHASE" label="会员优惠（¥）" width="120">
             <template slot-scope="scope">
               {{ (scope.row.member_discount / 100).toFixed(2) }}
             </template>
           </el-table-column>
-          <el-table-column label="积分抵扣（¥）" width="120">
+          <!-- 需要隐藏 -->
+          <!-- <el-table-column label="积分抵扣（¥）" width="120">
             <template slot-scope="scope">
               {{ (scope.row.point_fee / 100).toFixed(2) }}
             </template>
-          </el-table-column>
-          <el-table-column label="总支付价（¥）" width="120">
+          </el-table-column> -->
+          <el-table-column label="总应付金额（¥）" width="120">
             <template slot-scope="scope">
               {{ (scope.row.total_fee / 100).toFixed(2) }}
             </template>
           </el-table-column>
-          <el-table-column label="总优惠（¥）" width="100">
+          <el-table-column label="已退款金额（¥）" width="100">
             <template slot-scope="scope">
               {{ (scope.row.discount_fee / 100).toFixed(2) }}
             </template>
           </el-table-column>
+
+          <!-- 新增  开票状态-->
+          <el-table-column label="开票状态" width="100">
+            <template slot-scope="scope">
+              {{ (scope.row.total_fee / 100).toFixed(2) }}
+            </template>
+          </el-table-column>
+
+          <!-- 新增 来源 -->
+          <el-table-column label="来源" width="100">
+            <template slot-scope="scope">
+              <span>{{
+                sourceFromList.find((item) => item.value === scope.row.source_from)?.name
+              }}</span>
+            </template>
+          </el-table-column>
+
+          <!-- 新增 微信场景 -->
+          <el-table-column label="微信场景" width="100">
+            <template slot-scope="scope">
+              <span>{{ scope.row.wechat_scene }}</span>
+            </template>
+          </el-table-column>
+
+          <!-- 判断需要隐藏 -->
           <el-table-column v-if="!VERSION_IN_PURCHASE && !VERSION_STANDARD" label="货币汇率">
             <template slot-scope="scope">
               <span>{{ scope.row.fee_rate }}</span>
             </template>
           </el-table-column>
+
+          <!-- 判断需要隐藏 -->
           <template v-if="orderInfo.delivery_status == 'DONE' && orderInfo.delivery_corp">
             <el-table-column label="发货状态">
               <template slot-scope="scope">
                 <span>已发货</span>
               </template>
             </el-table-column>
-            <!-- <el-table-column label="快递公司" width="150px">
-              <template slot-scope="scope">
-                <span v-if="orderInfo.order_status == 'WAIT_BUYER_CONFIRM'">
-                  <el-select v-model="scope.row.delivery_corp" placeholder="请选择快递公司">
-                    <el-option
-                      v-for="item in dlycorps"
-                      :key="item.name"
-                      :label="item.name"
-                      :value="item.value"
-                    />
-                  </el-select>
-                </span>
-                <span v-else>{{ scope.row.delivery_corp_name }}</span>
-              </template>
-            </el-table-column> -->
-            <!-- <el-table-column label="快递单号" width="200px">
-              <template slot-scope="scope">
-                <span v-if="orderInfo.order_status == 'WAIT_BUYER_CONFIRM'">
-                  <el-input
-                    v-model="scope.row.delivery_code"
-                    :maxlength="20"
-                    placeholder="物流公司单号"
-                  />
-                </span>
-                <span v-else>{{ scope.row.delivery_code }}</span>
-              </template>
-            </el-table-column> -->
-            <!-- <el-table-column v-if="orderInfo.order_status == 'WAIT_BUYER_CONFIRM'" label="操作">
-              <template slot-scope="scope">
-                <el-button
-                  type="text"
-                  size="small"
-                  @click.native.prevent="
-                    update(scope.row.delivery_corp, scope.row.delivery_code, scope.row)
-                  "
-                >
-                  确认修改
-                </el-button>
-              </template>
-            </el-table-column> -->
           </template>
         </el-table>
       </div>
@@ -281,7 +275,10 @@
           </el-row>
         </div>
       </el-card>
-      <div v-if="!IS_SUPPLIER()" slot="header">优惠明细</div>
+    </el-card>
+
+    <el-card>
+      <div slot="header">促销优惠明细</div>
       <div v-if="!IS_SUPPLIER()" class="card-panel">
         <el-table
           v-if="orderInfo"
@@ -291,67 +288,132 @@
           :data="orderInfo.discount_info"
           style="max-width: 1000px"
         >
-          <el-table-column prop="info" label="优惠名称" />
-          <el-table-column prop="discount_fee" label="优惠金额（¥）" />
-          <el-table-column prop="rule" label="优惠说明" />
+          <el-table-column prop="info" label="活动ID" />
+          <el-table-column prop="info" label="促销活动名称" />
+          <el-table-column prop="info" label="活动类型" />
+          <el-table-column prop="info" label="PO编码" />
+          <el-table-column prop="info" label="Budget code" />
+          <el-table-column prop="info" label="优惠金额" />
+          <el-table-column prop="info" label="平台分摊（¥）" />
+          <el-table-column prop="discount_fee" label="店铺金额（¥）" />
+        </el-table>
+      </div>
+    </el-card>
+
+    <el-card>
+      <div slot="header">平台立减优惠明细</div>
+      <div v-if="!IS_SUPPLIER()" class="card-panel">
+        <el-table
+          v-if="orderInfo"
+          border
+          show-summary
+          sum-text="总计优惠"
+          :data="orderInfo.discount_info"
+          style="max-width: 1000px"
+        >
+          <el-table-column prop="info" label="活动ID" />
+          <el-table-column prop="info" label="促销活动名称" />
+          <el-table-column prop="info" label="活动类型" />
+          <el-table-column prop="info" label="PO编码" />
+          <el-table-column prop="info" label="Budget code" />
+          <el-table-column prop="info" label="优惠金额" />
+          <el-table-column prop="info" label="平台分摊（¥）" />
+          <el-table-column prop="discount_fee" label="店铺金额（¥）" />
+        </el-table>
+      </div>
+    </el-card>
+
+    <el-card>
+      <div slot="header">优惠券使用明细</div>
+      <div v-if="!IS_SUPPLIER()" class="card-panel">
+        <el-table
+          v-if="orderInfo"
+          border
+          show-summary
+          sum-text="总计优惠"
+          :data="orderInfo.discount_info"
+          style="max-width: 1000px"
+        >
+          <el-table-column prop="info" label="优惠券券码" />
+          <el-table-column prop="info" label="优惠券模板ID" />
+          <el-table-column prop="info" label="券标题" />
+          <el-table-column prop="info" label="优惠券类型" />
+          <el-table-column prop="info" label="类型" />
+          <el-table-column prop="info" label="来源" />
+          <el-table-column prop="info" label="规则" />
+          <el-table-column prop="info" label="Budget code" />
+          <el-table-column prop="info" label="优惠金额" />
+          <el-table-column prop="info" label="平台分摊（¥）" />
+          <el-table-column prop="discount_fee" label="店铺金额（¥）" />
         </el-table>
       </div>
     </el-card>
 
     <!-- 处方药 -->
-    <template v-if="orderInfo.prescription_status">
-      <el-card v-if="orderInfo.diagnosis_data && Object.keys(orderInfo.diagnosis_data).length" class="el-card--normal">
+    <template v-if="orderInfo?.prescription_status">
+      <el-card
+        v-if="orderInfo.diagnosis_data && Object.keys(orderInfo.diagnosis_data).length"
+        class="el-card--normal"
+      >
         <div slot="header">问诊信息</div>
         <div class="card-panel">
           <el-row>
             <el-col
-            v-for="(item, index) in interrogationInfoList"
-            v-if="item.is_show"
-            :key="`item__${index}`"
-            class="card-panel-item"
-            :span="6"
-          >
-            <span class="card-panel__label">{{ item.label }}</span>
-            <span class="card-panel__value">{{ getFiledValue(item.field) }}</span>
-          </el-col>
+              v-for="(item, index) in interrogationInfoList"
+              v-if="item.is_show"
+              :key="`item__${index}`"
+              class="card-panel-item"
+              :span="6"
+            >
+              <span class="card-panel__label">{{ item.label }}</span>
+              <span class="card-panel__value">{{ getFiledValue(item.field) }}</span>
+            </el-col>
           </el-row>
         </div>
       </el-card>
 
-      <el-card class="el-card--normal"  v-if="orderInfo.prescription_data && Object.keys(orderInfo.prescription_data).length">
+      <el-card
+        class="el-card--normal"
+        v-if="orderInfo.prescription_data && Object.keys(orderInfo.prescription_data).length"
+      >
         <div slot="header">处方信息</div>
         <div class="card-panel">
           <el-row>
             <el-col
-            v-for="(item, index) in prescriptionInfoList"
-            v-if="item.is_show"
-            :key="`item__${index}`"
-            class="card-panel-item"
-            :span="6"
-          >
-            <span class="card-panel__label">{{ item.label }}</span>
-            <div v-if="item.type == 'cycle' ">
-              <div class="card-panel__value" v-for='(item1,index1) in orderInfo.prescription_data[item.field]' :key='index1'>
-                <div>{{ item1.drugCommonName }}</div>
-                <div>用法：{{ item1.instructions }}</div>
+              v-for="(item, index) in prescriptionInfoList"
+              v-if="item.is_show"
+              :key="`item__${index}`"
+              class="card-panel-item"
+              :span="6"
+            >
+              <span class="card-panel__label">{{ item.label }}</span>
+              <div v-if="item.type == 'cycle'">
+                <div
+                  class="card-panel__value"
+                  v-for="(item1, index1) in orderInfo.prescription_data[item.field]"
+                  :key="index1"
+                >
+                  <div>{{ item1.drugCommonName }}</div>
+                  <div>用法：{{ item1.instructions }}</div>
+                </div>
               </div>
-            </div>
-            <span v-if="!item.special" class="card-panel__value">{{ getFiledValue(item.field) }}</span>
-            <span v-if="item.special" class="card-panel__value">
-              <span v-if="item.field == 'dst_file_path'">
-                <el-image
-                :src="getFiledValue(item.field)"
-                class="img-item"
-                :preview-src-list="[getFiledValue(item.field)]"
-              />
+              <span v-if="!item.special" class="card-panel__value">{{
+                getFiledValue(item.field)
+              }}</span>
+              <span v-if="item.special" class="card-panel__value">
+                <span v-if="item.field == 'dst_file_path'">
+                  <el-image
+                    :src="getFiledValue(item.field)"
+                    class="img-item"
+                    :preview-src-list="[getFiledValue(item.field)]"
+                  />
+                </span>
               </span>
-            </span>
-          </el-col>
+            </el-col>
           </el-row>
         </div>
       </el-card>
     </template>
-
 
     <el-card class="el-card--normal">
       <div slot="header">物流信息</div>
@@ -363,7 +425,8 @@
           <span class="card-panel__value">{{ addressInfo }}</span>
         </div>
 
-        <div v-if="orderInfo.receipt_type == 'ziti' && orderInfo.ziti_info" class="card-panel-item">
+        <!-- 隐藏 -->
+        <!-- <div v-if="orderInfo.receipt_type == 'ziti' && orderInfo.ziti_info" class="card-panel-item">
           <span class="card-panel__label">提货人:</span>
           <span class="card-panel__value">{{ orderInfo.receiver_name }}</span>
         </div>
@@ -386,7 +449,7 @@
         <div v-if="orderInfo.subdistrict" class="card-panel-item">
           <span class="card-panel__label">社区:</span>
           <span class="card-panel__value">{{ orderInfo.subdistrict }}</span>
-        </div>
+        </div> -->
 
         <el-table border :data="deliveryData">
           <el-table-column prop="delivery_time" label="发货时间" />
@@ -394,23 +457,27 @@
           <el-table-column prop="delivery_corp_name" label="快递公司" />
           <el-table-column prop="supplier_name" label="来源供应商" />
           <el-table-column prop="delivery_corp" label="物流编码" />
+          <el-table-column prop="delivery_corp" label="发货方式" />
+          <el-table-column prop="delivery_corp" label="签到时间" />
           <el-table-column label="操作">
             <template slot-scope="scope">
-              <template v-if="(IS_ADMIN() && scope.row.supplier_id == '0') || !IS_ADMIN()">
-                <el-button
-                v-if="orderInfo.receipt_type === 'logistics' && orderInfo.order_status !== 'DONE'"
-                type="text"
-                @click="modifyExpress(scope.row)"
-              >
-                编辑
-              </el-button>
-              </template>
+              <el-popover placement="right" width="400" trigger="click">
+                <div>包裹商品明细</div>
+                <el-table :data="[]">
+                  <el-table-column width="150" property="date" label="sku编码" />
+                  <el-table-column width="150" property="name" label="商品名称" />
+                  <el-table-column width="150" property="address" label="规格" />
+                  <el-table-column width="150" property="address" label="发货数量" />
+                </el-table>
+                <el-button slot="reference">click 激活</el-button>
+              </el-popover>
             </template>
           </el-table-column>
         </el-table>
       </div>
     </el-card>
 
+    <!-- 订单追踪 -->
     <el-card class="el-card--normal">
       <div slot="header">订单追踪</div>
       <div v-if="orderInfo?.self_delivery_operator_name" class="card-panel">
@@ -520,34 +587,47 @@ export default {
     return {
       infoList: [
         { label: '下单时间:', field: 'create_time', is_show: true },
-        { label: '订单编号:', field: 'order_id', is_show: true },
+        { label: '订单流水号:', field: 'order_id', is_show: true },
         { label: '订单类型:', field: 'order_class', is_show: true },
         { label: '订单状态:', field: 'order_status_msg', is_show: true },
         { label: '开票状态:', field: 'is_invoiced', is_show: !this.VERSION_IN_PURCHASE },
         { label: '配送类型:', field: 'receiptTypeTxt', is_show: true },
-        { label: '会员昵称:', field: 'username', is_show: true },
+        { label: '会员卡号:', field: 'card_no', is_show: true },
         { label: '会员手机号:', field: 'mobile', is_show: true },
-        { label: '会员等级:', field: 'memberGrade', is_show: true },
-        { label: '会员折扣:', field: 'memberDiscount', is_show: !this.VERSION_IN_PURCHASE },
-        { label: '货币类型:', field: 'fee_type', is_show: true },
-        { label: '购物赠送积分:', field: 'bonus_points', is_show: !this.VERSION_IN_PURCHASE },
-        { label: '订单获取积分:', field: 'get_points', is_show: !this.VERSION_IN_PURCHASE },
-        { label: '额外获取积分:', field: 'extra_points', is_show: !this.VERSION_IN_PURCHASE },
-        { label: '积分抵扣:', field: 'point_use', is_show: !this.VERSION_IN_PURCHASE },
-        { label: '用户身份:', field: 'purchaseRole', is_show: true },
-        { label: '姓名:', field: 'employee_name', is_show: true },
-        { label: '所属企业:', field: 'enterprise_name', is_show: true },
-        { label: '来源店铺:', field: 'distributor_name', is_show: true },
+        // 新增
+        { label: '区域:', field: 'regionauth_name', is_show: true },
+        // 修改
+        { label: '店铺:', field: 'distributor_name', is_show: true },
+        // 新增
+        { label: '是否有售后:', field: 'is_aftersales', is_show: true }
+
+        // { label: '会员昵称:', field: 'username', is_show: false },
+        // { label: '会员等级:', field: 'memberGrade', is_show: false },
+        // { label: '会员折扣:', field: 'memberDiscount', is_show: false },
+        // { label: '货币类型:', field: 'fee_type', is_show: true },
+        // { label: '购物赠送积分:', field: 'bonus_points', is_show: !this.VERSION_IN_PURCHASE },
+        // { label: '订单获取积分:', field: 'get_points', is_show: !this.VERSION_IN_PURCHASE },
+        // { label: '额外获取积分:', field: 'extra_points', is_show: !this.VERSION_IN_PURCHASE },
+        // { label: '积分抵扣:', field: 'point_use', is_show: !this.VERSION_IN_PURCHASE },
+        // { label: '用户身份:', field: 'purchaseRole', is_show: true },
+        // { label: '姓名:', field: 'employee_name', is_show: true },
+        // { label: '所属企业:', field: 'enterprise_name', is_show: true },
       ],
       payList: [
         { label: '交易单号:', field: 'tradeId', is_show: true },
         { label: '交易流水号:', field: 'transactionId', is_show: true },
         { label: '商品总额:', field: 'goodsPrice', is_show: true },
         { label: '运费:', field: 'freightFee', is_show: true },
-        { label: '会员优惠:', field: 'memberDiscountPrice', is_show: !this.VERSION_IN_PURCHASE },
+        // 新增
+        { label: '商品立减:', field: 'goodsDiscount', is_show: true },
+        // 修改
+        { label: '促销优惠:', field: 'memberDiscountPrice', is_show: !this.VERSION_IN_PURCHASE },
         { label: '优惠券减免:', field: 'couponDiscount', is_show: !this.VERSION_IN_PURCHASE },
+        // 平台立减
+        { label: '平台立减:', field: 'couponDiscount1', is_show: true },
         { label: '优惠总金额:', field: 'totalDiscount', is_show: !this.VERSION_IN_PURCHASE },
-        { label: '积分抵扣金额:', field: 'pointFee', is_show: !this.VERSION_IN_PURCHASE },
+        // 隐藏
+        // { label: '积分抵扣金额:', field: 'pointFee', is_show: !this.VERSION_IN_PURCHASE },
         { label: '应付总金额:', field: 'totalPrice', is_show: true },
         { label: '实付总金额:', field: 'realPrice', is_show: true },
         { label: '支付方式:', field: 'payTypeTxt', is_show: true },
@@ -576,7 +656,7 @@ export default {
         { label: '是否使用过此类药物:', field: 'before_ai_result_used_medicine', is_show: true },
         { label: '是否有药物过敏史:', field: 'is_before_ai_result_allergy_history', is_show: true },
         { label: '药物过敏说明:', field: 'before_ai_result_allergy_history', is_show: true },
-        { label: '肝肾功能是否有异常:', field: 'before_ai_result_body_abnormal', is_show: true },
+        { label: '肝肾功能是否有异常:', field: 'before_ai_result_body_abnormal', is_show: true }
       ],
       prescriptionInfoList: [
         { label: '处方ID:', field: 'prescription_id', is_show: true },
@@ -601,10 +681,23 @@ export default {
         { label: '审核不通过理由:', field: 'audit_reason', is_show: true },
         { label: '审方药师名称:', field: 'audit_apothecary_name', is_show: true },
         { label: '问诊单ID:', field: 'diagnosis_id', is_show: true },
-        { label: '药品用法用量说明:', field: 'drug_rsp_list',type:'cycle',special:true, is_show: true },
-        { label: '电子处方单:', field: 'dst_file_path', is_show: true, special:true },
+        {
+          label: '药品用法用量说明:',
+          field: 'drug_rsp_list',
+          type: 'cycle',
+          special: true,
+          is_show: true
+        },
+        { label: '电子处方单:', field: 'dst_file_path', is_show: true, special: true }
       ],
-
+      sourceFromList: [
+        { name: 'pc', value: 'pc' },
+        { name: 'h5', value: 'h5' },
+        { name: '微信小程序', value: 'wxapp' },
+        { name: '支付宝小程序', value: 'aliapp' },
+        { name: '未知', value: 'unknow' },
+        { name: '店务端', value: 'dianwu' }
+      ],
       memberRemark: '暂无留言',
       merchantRemark: '暂无备注',
       loading: false,
@@ -738,15 +831,18 @@ export default {
       ],
       isBindOMS: false,
       deliveryLog: [],
-      relationshipMap:{
-        1:'本人',
-        2:'父母',
-        3:'配偶',
-        4:'子女',
-        5:'其他'
+      relationshipMap: {
+        1: '本人',
+        2: '父母',
+        3: '配偶',
+        4: '子女',
+        5: '其他'
       },
-      auditStatusMap:{
-        1:'未审核',2:'审核通过',3:'审核不通过',4:'不需要审方'
+      auditStatusMap: {
+        1: '未审核',
+        2: '审核通过',
+        3: '审核不通过',
+        4: '不需要审方'
       }
     }
   },
@@ -808,8 +904,8 @@ export default {
         invoice, // 发票信息对象
         is_invoiced,
         ziti_info,
-        prescription_data = {},//处方单信息
-        diagnosis_data = {}//问诊单信息
+        prescription_data = {}, //处方单信息
+        diagnosis_data = {} //问诊单信息
       } = orderInfo
 
       let invoiceType,
@@ -949,54 +1045,63 @@ export default {
         invoicedCompanyPhone,
         invoicedBankName,
         invoicedBankAccount,
-        purchaseRole:orders_purchase_info ? orders_purchase_info.type == 'employee' ? '员工' : '亲友' : '',
-        employee_name: orders_purchase_info ? orders_purchase_info.employee_name  : '',
-        enterprise_name: orders_purchase_info ? orders_purchase_info.enterprise_name  : '',
+        purchaseRole: orders_purchase_info
+          ? orders_purchase_info.type == 'employee'
+            ? '员工'
+            : '亲友'
+          : '',
+        employee_name: orders_purchase_info ? orders_purchase_info.employee_name : '',
+        enterprise_name: orders_purchase_info ? orders_purchase_info.enterprise_name : '',
         //处方药
-        user_family_name:diagnosis_data.user_family_name,
-        user_family_id_card:diagnosis_data.user_family_id_card,
-        user_family_phone:diagnosis_data.user_family_phone,
-        user_family_age:diagnosis_data.user_family_age,
-        user_family_gender:diagnosis_data.user_family_gender == 1 ? '男' : '女',
-        relationship:this.relationshipMap[diagnosis_data.relationship],
-        is_pregnant_woman:diagnosis_data.is_pregnant_woman == 1 ? '是' : '否',
-        is_lactation:diagnosis_data.is_lactation == 1 ? '是' : '否',
-        before_ai_result_used_medicine:diagnosis_data?.before_ai_data_list?.before_ai_result_used_medicine == 1 ? '是' : '否',
-        is_before_ai_result_allergy_history:diagnosis_data?.before_ai_data_list?.before_ai_result_allergy_history ? '是' : '否',
-        before_ai_result_allergy_history:diagnosis_data?.before_ai_data_list?.before_ai_result_allergy_history,
-        before_ai_result_body_abnormal:diagnosis_data?.before_ai_data_list?.before_ai_result_body_abnormal == 1 ? '是' : '否',
+        user_family_name: diagnosis_data.user_family_name,
+        user_family_id_card: diagnosis_data.user_family_id_card,
+        user_family_phone: diagnosis_data.user_family_phone,
+        user_family_age: diagnosis_data.user_family_age,
+        user_family_gender: diagnosis_data.user_family_gender == 1 ? '男' : '女',
+        relationship: this.relationshipMap[diagnosis_data.relationship],
+        is_pregnant_woman: diagnosis_data.is_pregnant_woman == 1 ? '是' : '否',
+        is_lactation: diagnosis_data.is_lactation == 1 ? '是' : '否',
+        before_ai_result_used_medicine:
+          diagnosis_data?.before_ai_data_list?.before_ai_result_used_medicine == 1 ? '是' : '否',
+        is_before_ai_result_allergy_history: diagnosis_data?.before_ai_data_list
+          ?.before_ai_result_allergy_history
+          ? '是'
+          : '否',
+        before_ai_result_allergy_history:
+          diagnosis_data?.before_ai_data_list?.before_ai_result_allergy_history,
+        before_ai_result_body_abnormal:
+          diagnosis_data?.before_ai_data_list?.before_ai_result_body_abnormal == 1 ? '是' : '否',
 
-        prescription_id:prescription_data.id,
-        hospital_name:prescription_data.hospital_name,
-        kuaizhen_store_id:prescription_data.kuaizhen_store_id,
-        kuaizhen_store_name:prescription_data.kuaizhen_store_name,
-        doctor_sign_time:prescription_data.doctor_sign_time
+        prescription_id: prescription_data.id,
+        hospital_name: prescription_data.hospital_name,
+        kuaizhen_store_id: prescription_data.kuaizhen_store_id,
+        kuaizhen_store_name: prescription_data.kuaizhen_store_name,
+        doctor_sign_time: prescription_data.doctor_sign_time
           ? moment(prescription_data.doctor_sign_time * 1000).format('YYYY-MM-DD HH:mm:ss')
           : '',
-        doctor_office:prescription_data.doctor_office,
-        doctor_id:prescription_data.doctor_id,
-        doctor_name:prescription_data.doctor_name,
-        tags:prescription_data.tags,
-        prescription_in_status:prescription_data.status == 1 ? '正常' : '废弃',
-        prescription_created:prescription_data.created
+        doctor_office: prescription_data.doctor_office,
+        doctor_id: prescription_data.doctor_id,
+        doctor_name: prescription_data.doctor_name,
+        tags: prescription_data.tags,
+        prescription_in_status: prescription_data.status == 1 ? '正常' : '废弃',
+        prescription_created: prescription_data.created
           ? moment(prescription_data.created * 1000).format('YYYY-MM-DD HH:mm:ss')
           : '',
-        prescription_updated:prescription_data.updated
+        prescription_updated: prescription_data.updated
           ? moment(prescription_data.updated * 1000).format('YYYY-MM-DD HH:mm:ss')
           : '',
-        prescription_remarks:prescription_data.remarks,
-        drug_rsp_list:prescription_data.drug_rsp_list,//
-        audit_status:this.auditStatusMap[prescription_data.audit_status],
-        audit_reason:prescription_data.audit_reason,
-        audit_apothecary_name:prescription_data.audit_apothecary_name,
-        diagnosis_id:prescription_data.diagnosis_id,
-        serial_no:prescription_data.serial_no,
-        audit_time:prescription_data.audit_time ? moment(prescription_data.audit_time * 1000).format('YYYY-MM-DD HH:mm:ss')
-        : '',
-        dst_file_path:prescription_data.dst_file_path
+        prescription_remarks: prescription_data.remarks,
+        drug_rsp_list: prescription_data.drug_rsp_list, //
+        audit_status: this.auditStatusMap[prescription_data.audit_status],
+        audit_reason: prescription_data.audit_reason,
+        audit_apothecary_name: prescription_data.audit_apothecary_name,
+        diagnosis_id: prescription_data.diagnosis_id,
+        serial_no: prescription_data.serial_no,
+        audit_time: prescription_data.audit_time
+          ? moment(prescription_data.audit_time * 1000).format('YYYY-MM-DD HH:mm:ss')
+          : '',
+        dst_file_path: prescription_data.dst_file_path
       }
-
-
 
       this.deliveryLog = this.orderInfo?.app_info?.delivery_log
       this.memberRemark = orderInfo.remark || '暂无留言'

@@ -1,6 +1,6 @@
 import fetch from '../utils/fetch'
 
-export function getCardList (query) {
+export function getCardList(query) {
   return fetch({
     url: '/discountcard/list',
     method: 'get',
@@ -8,7 +8,7 @@ export function getCardList (query) {
   })
 }
 
-export function getEffectiveCardList (query) {
+export function getEffectiveCardList(query) {
   return fetch({
     url: '/effectiveDiscountcard/list',
     method: 'get',
@@ -16,7 +16,7 @@ export function getEffectiveCardList (query) {
   })
 }
 
-export function getCardUserList (query) {
+export function getCardUserList(query) {
   return fetch({
     url: '/discountcard/detail/list',
     method: 'get',
@@ -24,7 +24,7 @@ export function getCardUserList (query) {
   })
 }
 
-export function getCardDetail (query) {
+export function getCardDetail(query) {
   return fetch({
     url: '/discountcard/get',
     method: 'get',
@@ -32,7 +32,7 @@ export function getCardDetail (query) {
   })
 }
 
-export function creatCard (query) {
+export function creatCard(query) {
   return fetch({
     url: '/discountcard',
     method: 'post',
@@ -40,7 +40,7 @@ export function creatCard (query) {
   })
 }
 
-export function updateCard (query) {
+export function updateCard(query) {
   return fetch({
     url: '/discountcard',
     method: 'PATCH',
@@ -48,7 +48,7 @@ export function updateCard (query) {
   })
 }
 
-export function removeCard (query) {
+export function removeCard(query) {
   return fetch({
     url: '/discountcard',
     method: 'delete',
@@ -56,14 +56,14 @@ export function removeCard (query) {
   })
 }
 
-export function getWechatColor () {
+export function getWechatColor() {
   return fetch({
     url: '/card/color',
     method: 'get'
   })
 }
 
-export function getCouponHtml (cardId) {
+export function getCouponHtml(cardId) {
   return fetch({
     url: '/card/html',
     method: 'get',
@@ -71,21 +71,21 @@ export function getCouponHtml (cardId) {
   })
 }
 
-export function getQRcode (cardId) {
+export function getQRcode(cardId) {
   return fetch({
     url: '/card/qrcode/' + cardId,
     method: 'get'
   })
 }
 
-export function pullWechatCard () {
+export function pullWechatCard() {
   return fetch({
     url: '/card/sync',
     method: 'get'
   })
 }
 
-export function updateStore (query) {
+export function updateStore(query) {
   return fetch({
     url: '/discountcard/updatestore',
     method: 'post',
@@ -93,7 +93,7 @@ export function updateStore (query) {
   })
 }
 
-export function pushToWechat (query) {
+export function pushToWechat(query) {
   return fetch({
     url: '/discountcard/uploadToWechat',
     method: 'post',
@@ -101,7 +101,7 @@ export function pushToWechat (query) {
   })
 }
 
-export function saveVipGrade (query) {
+export function saveVipGrade(query) {
   return fetch({
     url: '/membercard/vipgrade',
     method: 'put',
@@ -109,7 +109,7 @@ export function saveVipGrade (query) {
   })
 }
 
-export function listVipGrade (query) {
+export function listVipGrade(query) {
   return fetch({
     url: '/membercard/vipgrade',
     method: 'get',
@@ -117,7 +117,7 @@ export function listVipGrade (query) {
   })
 }
 
-export function getAllUserVipGrade (query) {
+export function getAllUserVipGrade(query) {
   return fetch({
     url: '/vipgrades/uselist',
     method: 'get',
@@ -125,7 +125,7 @@ export function getAllUserVipGrade (query) {
   })
 }
 
-export function receiveMemberCard (query) {
+export function receiveMemberCard(query) {
   return fetch({
     url: '/vipgrades/active_delay',
     method: 'put',
@@ -133,7 +133,7 @@ export function receiveMemberCard (query) {
   })
 }
 
-export function batchReceiveMemberCard (query) {
+export function batchReceiveMemberCard(query) {
   return fetch({
     url: '/vipgrades/batch_active_delay',
     method: 'put',
@@ -141,14 +141,14 @@ export function batchReceiveMemberCard (query) {
   })
 }
 
-export function getCouponGrantSet () {
+export function getCouponGrantSet() {
   return fetch({
     url: '/discountcard/couponGrantSetting',
     method: 'get'
   })
 }
 
-export function saveCouponGrantSet (data) {
+export function saveCouponGrantSet(data) {
   return fetch({
     url: '/discountcard/couponGrantSetting',
     method: 'post',
@@ -156,7 +156,7 @@ export function saveCouponGrantSet (data) {
   })
 }
 
-export function getSalepersonCouponList (query) {
+export function getSalepersonCouponList(query) {
   return fetch({
     url: '/salesperson/coupon',
     method: 'get',
@@ -164,7 +164,7 @@ export function getSalepersonCouponList (query) {
   })
 }
 
-export function createSalepersonCoupon (params) {
+export function createSalepersonCoupon(params) {
   return fetch({
     url: '/salesperson/coupon',
     method: 'post',
@@ -172,9 +172,73 @@ export function createSalepersonCoupon (params) {
   })
 }
 
-export function deleteSalepersonCoupon (id) {
+export function deleteSalepersonCoupon(id) {
   return fetch({
     url: '/salesperson/coupon/' + id,
     method: 'delete'
+  })
+}
+
+// 获取卡券变更日志
+export function getChangeLogs(query) {
+  return fetch({
+    url: '/discountcard/get_change_logs',
+    method: 'get',
+    params: query
+  })
+}
+
+export function batchReview(query) {
+  return fetch({
+    url: '/discountcard/batch_review',
+    method: 'post',
+    params: query
+  })
+}
+
+
+export function getUserCouponLogs(query) {
+  return fetch({
+    url: '/discountcard/get_coupon_change_logs',
+    method: 'get',
+    params: query
+  })
+}
+
+
+
+// 导出发券记录
+export function exportUserCouponList(query) {
+  return fetch({
+    url: '/discountcard/export_user_coupon',
+    method: 'post',
+    params: query
+  })
+}
+
+// 导出券核销记录
+export function exportCouponUseLogs(query) {
+  return fetch({
+    url: '/discountcard/export_coupon_use_logs',
+    method: 'post',
+    params: query
+  })
+}
+
+// 作废发券记录
+export function cancelUserCoupon(query) {
+  return fetch({
+    url: '/discountcard/cancel_user_coupon',
+    method: 'post',
+    params: query
+  })
+}
+
+// 更新卡券状态
+export function updateCardStatus(query) {
+  return fetch({
+    url: '/discountcard/update_card_status',
+    method: 'post',
+    params: query
   })
 }

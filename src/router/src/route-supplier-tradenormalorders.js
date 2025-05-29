@@ -87,6 +87,33 @@ export default {
       path: 'Refunderrorlogs',
       name: `退款失败日志`,
       component: () => import('@/view/mall/trade/refunderrorlogs')
+    },
+    {
+      path: 'settlement/summary_supplier',
+      name: `结算汇总`,
+      component: () => import('@/view/financial/settlement/summary_supplier'),
+      children: [
+        {
+          path: 'detail/:id?',
+          component: () => import('@/view/financial/settlement/detailed')
+        }
+      ]
+    },
+    {
+      path: 'bspay/user',
+      name: '斗拱进件',
+      component: () => import('@/view/dealer/bspay_create_user')
+    },
+    {
+      path: 'bspay/trades',
+      name: '斗拱分账明细',
+      component: () => import('@/view/mall/bspay_sub_account/sub_account'),
+      children: [
+        {
+          path: 'detail/:order_id',
+          component: () => import('@/view/mall/bspay_sub_account/detail')
+        }
+      ]
     }
 
   ]

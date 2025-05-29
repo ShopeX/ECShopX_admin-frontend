@@ -1,8 +1,24 @@
 <template>
   <div>
-    <el-table v-loading="loading" :data="groupList" :height="wheight - 240">
+    <el-table v-loading="loading" :data="groupList" border element-loading-text="数据加载中" :height="wheight - 240">
       <el-table-column prop="act_name" label="拼团名称" />
-      <el-table-column label="商品类型" width="150">
+      <el-table-column prop="regionauth_name" min-width="150" label="区域" />
+      <el-table-column prop="po_code" width="120" label="PO编码">
+        <template slot-scope="scope">
+          {{ scope.row.finance_data?.po_code }}
+        </template>
+      </el-table-column>
+      <el-table-column prop="budget_code" width="140" label="Budget code">
+        <template slot-scope="scope">
+          {{ scope.row.finance_data?.budget_code }}
+        </template>
+      </el-table-column>
+      <el-table-column prop="created_date" width="180" label="创建时间">
+        <template slot-scope="scope">
+          <div>{{ scope.row.created_date }}</div>
+        </template>
+      </el-table-column>
+      <!-- <el-table-column label="商品类型" width="150">
         <template slot-scope="scope">
           <el-tag v-if="scope.row.group_goods_type == 'services'" type="success">
             服务类商品
@@ -10,18 +26,18 @@
           <el-tag v-else> 实体类商品 </el-tag>
         </template>
       </el-table-column>
-      <el-table-column prop="goods_name" label="拼团商品" />
+      <el-table-column prop="goods_name" label="拼团商品" /> -->
       <el-table-column label="拼团有效期">
         <template slot-scope="scope">
           {{ scope.row.begin_time | datetime('YYYY-MM-DD HH:mm:ss') }} -
           {{ scope.row.end_time | datetime('YYYY-MM-DD HH:mm:ss') }}
         </template>
       </el-table-column>
-      <el-table-column prop="act_price" label="拼团价格" width="100">
+      <!-- <el-table-column prop="act_price" label="拼团价格" width="100">
         <template slot-scope="scope">
           <span>{{ cursymbol + scope.row.act_price / 100 }}</span>
         </template>
-      </el-table-column>
+      </el-table-column> -->
       <el-table-column prop="disabled" label="状态" width="100">
         <template slot-scope="scope">
           <span v-if="scope.row.activity_status == 1">未开始</span>
@@ -89,7 +105,16 @@ import { getDefaultCurrency } from '../../../../api/company'
 import { getGroupsList, finishGroupActivity, deleteGroupActivity } from '../../../../api/promotions'
 
 export default {
-  props: ['view'],
+  props:{
+    view:{
+      type: Number,
+      default: 0
+    },
+    searchParams:{
+      type: Object,
+      default: () => {}
+    }
+  },
   data() {
     return {
       loading: false,
@@ -126,7 +151,7 @@ export default {
     },
     getGroupsList() {
       this.loading = true
-      getGroupsList(this.params)
+      getGroupsList({...this.params, ...this.searchParams})
         .then((response) => {
           this.groupList = response.data.data.list
           this.total_count = response.data.data.total_count

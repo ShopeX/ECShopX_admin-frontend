@@ -1,0 +1,688 @@
+.wgt-shelves {
+    width: 100%;
+    box-sizing: border-box;
+
+    &-body {
+        width: 100%;
+        box-sizing: border-box;
+        display: flex;
+        justify-content: flex-start;
+        align-items: flex-start;
+        gap: 6px;
+        overflow: hidden;
+    }
+
+
+    &-header {
+        height: 21px;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+
+        &-title {
+            font-family: PingFang SC, PingFang SC;
+            font-weight: 600;
+            font-size: 15px;
+        }
+
+        .header-image {
+            height: 100%;
+        }
+
+        &-more {
+            display: flex;
+            align-items: center;
+            font-size: 13px;
+        }
+    }
+
+    .wgt-shelves-seckill-header {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        height: 100%;
+
+        &-time {
+            display: flex;
+            align-items: center;
+            gap: 2px;
+
+            &-text {
+                width: 20px;
+                height: 20px;
+                background: #FFFFFF;
+                border-radius: 3px 3px 3px 3px;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                font-family: D-DIN-PRO, D-DIN-PRO;
+                font-weight: 600;
+                font-size: 15px;
+                color: #D4003B;
+            }
+
+            &-unit {
+                font-family: PingFang SC, PingFang SC;
+                font-weight: 500;
+                font-size: 13px;
+                color: #FFFFFF;
+            }
+        }
+    }
+
+    &-normal {
+        flex: 1;
+        border-radius: 8px;
+        box-sizing: border-box;
+        overflow: hidden;
+
+        &-list {
+            display: flex;
+            gap: 5px;
+            overflow: hidden;
+            scroll-snap-type: x mandatory;
+        }
+
+        &-item {
+            // min-width: 77px;
+            width: 77px;
+            flex-shrink: 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+
+            &-img {
+                width: 77px;
+                height: 77px;
+                background: #FFFFFF;
+                border-radius: 4px 4px 4px 4px;
+                overflow: hidden;
+                position: relative;
+                display: flex;
+                align-items: flex-start;
+                justify-content: center;
+
+                .goods-image {
+                    width: 65px;
+                    height: 65px;
+                }
+
+                .goods-active {
+                    position: absolute;
+                    right: 0px;
+                    left: 0px;
+                    bottom: 0px;
+                    height: 20px;
+                    background: #FFFFFF;
+                    font-weight: 500;
+                    font-size: 10px;
+                    color: #F57231;
+                    text-align: center;
+                    line-height: 20px;
+                }
+            }
+
+            .goods-name {
+                width: 100%;
+                font-weight: 500;
+                font-size: 11px;
+                color: #404040;
+                text-overflow: ellipsis;
+                overflow: hidden;
+                white-space: nowrap;
+                text-align: center;
+                padding-top: 4px;
+            }
+
+            .goods-price {
+                width: 100%;
+                color: #1A1A1A;
+                display: flex;
+                justify-content: center;
+                align-items: flex-end;
+                gap: 2px;
+                height: 14px;
+
+                &-unit {
+                    font-family: D-DIN-PRO, D-DIN-PRO;
+                    font-size: 11px;
+                    font-weight: 500;
+                    line-height: 11px;
+                }
+
+                &-text {
+                    font-family: D-DIN-PRO, D-DIN-PRO;
+                    font-weight: 600;
+                    font-size: 14px;
+                    line-height: 14px;
+                }
+            }
+        }
+    }
+
+    &-limited {
+        width: 101px;
+        box-shadow: 0px 4px 12px 0px rgba(0, 0, 0, 0.03);
+        border-radius: 8px;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+
+        &-title {
+            height: 21px;
+            margin-bottom: 6px;
+            font-size: 13px;
+            margin-bottom: 6px;
+            font-weight: 600;
+            font-size: 15px;
+            color: #000000;
+        }
+
+        &-body {
+            width: 100%;
+            height: 100%;
+
+            &-img {
+                width: 77px;
+                height: 77px;
+                box-shadow: 0px 4px 12px 0px rgba(253, 201, 216, 0.25);
+                border-radius: 4px;
+                overflow: hidden;
+
+                .goods-image {
+                    width: 100%;
+                    height: 100%;
+                }
+            }
+
+            &-goods-name {
+                width: 100%;
+                font-weight: 500;
+                font-size: 11px;
+                color: #404040;
+                text-overflow: ellipsis;
+                overflow: hidden;
+                white-space: nowrap;
+                text-align: center;
+                padding-top: 4px;
+
+
+
+            }
+
+            &-goods-price {
+                width: 100%;
+                color: #1A1A1A;
+                display: flex;
+                justify-content: center;
+                align-items: flex-end;
+                gap: 2px;
+                height: 14px;
+
+                &-unit {
+                    font-family: D-DIN-PRO, D-DIN-PRO;
+                    font-size: 11px;
+                    font-weight: 500;
+                    line-height: 11px;
+                }
+
+                &-text {
+                    font-family: D-DIN-PRO, D-DIN-PRO;
+                    font-weight: 600;
+                    font-size: 14px;
+                    line-height: 14px;
+                }
+            }
+        }
+    }
+
+    &-seckill-list {
+        display: flex;
+        gap: 5px;
+        overflow: hidden;
+        scroll-snap-type: x mandatory;
+
+        .wgt-shelves-seckill-item {
+            width: 99px;
+            border-radius: 6px;
+            flex-shrink: 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            overflow: hidden;
+            background: #fff;
+
+            &-img {
+                width: 99px;
+                height: 99px;
+                background: #D6D6D6;
+                // overflow: hidden;
+                position: relative;
+
+                .goods-image {
+                    width: 100%;
+                    height: 100%;
+                }
+
+                .goods-active {
+                    position: absolute;
+                    left: 0;
+                    right: 0;
+                    bottom: 0;
+                    width: 100%;
+                    display: flex;
+                    align-items: center;
+                    justify-content: center;
+                    height: 16px;
+                    background: #FFAD42;
+                    font-family: PingFang SC, PingFang SC;
+                    font-weight: 500;
+                    font-size: 11px;
+                    color: #FFFFFF;
+                }
+
+                .goods-group-active {
+                    position: absolute;
+                    left: 0;
+                    top: 0;
+                    height: 14px;
+                    background: #D4003B;
+                    border-radius: 6px 0px 6px 0px;
+                    padding: 0px 6px;
+                    font-family: PingFang SC, PingFang SC;
+                    font-weight: 500;
+                    font-size: 10px;
+                    color: #FFFFFF;
+
+                }
+
+                .seckill-icon {
+                    position: absolute;
+                    left: 0;
+                    width: 13px;
+                    height: 22px;
+                }
+            }
+
+            .goods-seckill-info {
+                padding: 4px 6px 8px;
+                box-sizing: border-box;
+                width: 100%;
+
+
+                .goods-name {
+                    width: 100%;
+                    font-weight: 400;
+                    font-size: 12px;
+                    color: #1A1A1A;
+                    text-overflow: ellipsis;
+                    overflow: hidden;
+                    white-space: nowrap;
+                    text-align: center;
+                }
+
+                .goods-price {
+                    display: flex;
+                    justify-content: center;
+                    align-items: center;
+                    gap: 2px;
+                    height: 14px;
+                    width: 100%;
+
+                    &-seckill {
+                        font-weight: 400;
+                        font-size: 10px;
+                        color: #D4003B;
+                    }
+
+                    &-unit {
+                        font-family: D-DIN-PRO, D-DIN-PRO;
+                        font-weight: 500;
+                        font-size: 11px;
+                        color: #D4003B;
+                    }
+
+                    &-text {
+                        font-family: D-DIN-PRO, D-DIN-PRO;
+                        font-weight: 600;
+                        font-size: 15px;
+                        line-height: 15px;
+                        color: #D4003B;
+                    }
+                }
+            }
+        }
+    }
+
+    &-vertical {
+        width: 100%;
+        box-sizing: border-box;
+        overflow: hidden;
+
+        &-one {
+            display: flex;
+            flex-direction: column;
+            gap: 9px;
+
+            &-item {
+                width: 100%;
+                height: 114px;
+                border-radius: 8px;
+                display: flex;
+                align-items: center;
+                justify-content: space-between;
+                overflow: hidden;
+                background: #fff;
+
+                &-img {
+                    width: 114px;
+                    flex-shrink: 0;
+                    height: 114px;
+                    overflow: hidden;
+                    background: #EBEBEB;
+
+                    .goods-image {
+                        width: 100%;
+                        height: 100%;
+                    }
+                }
+
+                &-info {
+                    flex: 1;
+                    flex-shrink: 0;
+                    height: 100%;
+                    display: flex;
+                    flex-direction: column;
+                    justify-content: space-between;
+                    box-sizing: border-box;
+                    padding: 12px 12px 18px;
+                }
+
+                &-info-name {
+                    width: 100%;
+                    font-weight: 400;
+                    font-size: 13px;
+                    color: #1A1A1A;
+                    overflow: hidden;
+                    text-overflow: ellipsis;
+                    display: -webkit-box;
+                    -webkit-line-clamp: 2;
+                    -webkit-box-orient: vertical;
+                    height: 36px;
+                    line-height: 18px;
+                }
+
+                .goods-tags {
+                    display: flex;
+                    align-items: center;
+                    gap: 6px;
+
+                    .goods-tag {
+                        &-one {
+                            font-size: 9px;
+                            color: #D4003B;
+                            background: rgba(212, 0, 59, 0.1);
+                            border-radius: 3px 3px 3px 3px;
+                            border: 1px solid rgba(212, 0, 59, 0.15);
+                            padding: 0px 3px;
+                        }
+                    }
+                }
+
+                .goods-price-wrapper {
+                    display: flex;
+                    align-items: center;
+                    gap: 4px;
+                    height: 17px;
+
+                    .goods-price-unit {
+                        font-family: D-DIN-PRO, D-DIN-PRO;
+                        font-weight: 500;
+                        font-size: 13px;
+                        color: #1A1A1A;
+                    }
+
+                    .goods-price-text {
+                        font-family: D-DIN-PRO, D-DIN-PRO;
+                        font-weight: 600;
+                        font-size: 17px;
+                        color: #1A1A1A;
+                    }
+
+                    .goods-price-line {
+                        font-family: D-DIN-PRO, D-DIN-PRO;
+                        font-weight: 400;
+                        font-size: 12px;
+                        height: 17px;
+                        color: #BFBFBF;
+                        text-decoration-line: line-through;
+                    }
+
+                    .goods-price-discount {
+                        font-family: D-DIN-PRO, D-DIN-PRO;
+                        height: 17px;
+                        font-weight: 500;
+                        font-size: 12px;
+                        color: #D4003B;
+
+                        &-unit {
+                            font-weight: 500;
+                            font-size: 9px;
+                            color: #D4003B;
+                        }
+                    }
+                }
+            }
+
+        }
+
+        &-two {
+            display: flex;
+            gap: 9px;
+
+            .grid-container {
+                display: flex;
+                width: calc(50% - 4.5px);
+                flex-direction: column;
+                gap: 9px;
+            }
+
+            &-item {
+                width: 100%;
+                height: fit-content;
+                background: #fff;
+                border-radius: 6px;
+                overflow: hidden;
+            }
+
+            &-item-img {
+                width: 171px;
+                height: 171px;
+                overflow: hidden;
+                background: #BFBFBF;
+            }
+
+            &-item-info {
+                flex: 1;
+                flex-shrink: 0;
+                height: 100%;
+                display: flex;
+                flex-direction: column;
+                padding: 6px 8px 12px;
+                box-sizing: border-box;
+            }
+
+            &-item-info-name {
+                font-weight: 400;
+                font-size: 13px;
+                color: #1A1A1A;
+                overflow: hidden;
+                text-overflow: ellipsis;
+                display: -webkit-box;
+                -webkit-line-clamp: 2;
+                -webkit-box-orient: vertical;
+                max-height: 36px;
+                line-height: 18px;
+            }
+
+
+            .goods-tags {
+                display: flex;
+                align-items: center;
+                gap: 6px;
+                padding: 4px 0px 8px;
+
+                .goods-tag {
+                    &-one {
+                        font-size: 9px;
+                        color: #D4003B;
+                        background: rgba(212, 0, 59, 0.1);
+                        border-radius: 3px;
+                        border: 1px solid rgba(212, 0, 59, 0.15);
+                        padding: 0px 2px;
+                    }
+                }
+            }
+
+            .goods-price-wrapper {
+                display: flex;
+                align-items: center;
+                gap: 4px;
+                height: 17px;
+
+                .goods-price-unit {
+                    font-family: D-DIN-PRO, D-DIN-PRO;
+                    font-weight: 500;
+                    font-size: 13px;
+                    color: #1A1A1A;
+                }
+
+                .goods-price-text {
+                    font-family: D-DIN-PRO, D-DIN-PRO;
+                    font-weight: 600;
+                    font-size: 17px;
+                    color: #1A1A1A;
+                }
+
+                .goods-price-line {
+                    font-family: D-DIN-PRO, D-DIN-PRO;
+                    font-weight: 400;
+                    font-size: 12px;
+                    height: 17px;
+                    color: #BFBFBF;
+                    text-decoration-line: line-through;
+                }
+
+                .goods-price-discount {
+                    font-family: D-DIN-PRO, D-DIN-PRO;
+                    height: 17px;
+                    font-weight: 500;
+                    font-size: 12px;
+                    color: #D4003B;
+
+                    &-unit {
+                        font-weight: 500;
+                        font-size: 9px;
+                        color: #D4003B;
+                    }
+                }
+            }
+        }
+
+        &-three {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 9px;
+
+            &-item {
+                width: calc((100% - 18px) / 3);
+                flex-shrink: 0;
+                background: #FFFFFF;
+                box-shadow: 0px 4px 12px 0px rgba(0, 0, 0, 0.03);
+                border-radius: 6px;
+                overflow: hidden;
+
+                &-img {
+                    width: 100%;
+                    aspect-ratio: 1/1;
+                    overflow: hidden;
+
+                    .goods-image {
+                        width: 100%;
+                        height: 100%;
+                    }
+                }
+
+                &-info {
+                    padding: 6px 8px 12px;
+                    box-sizing: border-box;
+                }
+
+                &-info-name {
+                    height: 34px;
+                    line-height: 17px;
+                    font-weight: 400;
+                    font-size: 12px;
+                    color: #1A1A1A;
+                    overflow: hidden;
+                    text-overflow: ellipsis;
+                    display: -webkit-box;
+                    -webkit-line-clamp: 2;
+                    -webkit-box-orient: vertical;
+
+                    &-line {
+                        height: 17px;
+                        -webkit-line-clamp: 1;
+                    }
+                }
+
+                .goods-tags {
+                    display: flex;
+                    align-items: center;
+                    gap: 6px;
+                    padding-top: 4px;
+    
+                    .goods-tag {
+                        &-one {
+                            font-size: 9px;
+                            color: #D4003B;
+                            background: rgba(212, 0, 59, 0.1);
+                            border-radius: 3px;
+                            border: 1px solid rgba(212, 0, 59, 0.15);
+                            padding: 0px 2px;
+                        }
+                    }
+                }
+                .goods-price-wrapper {
+                    display: flex;
+                    gap: 4px;
+                    align-items: baseline;
+                    height: 15px;
+                    .goods-price-unit {
+                        font-family: D-DIN-PRO, D-DIN-PRO;
+                        font-weight: 500;
+                        font-size: 11px;
+                        color: #1A1A1A;
+                    }
+    
+                    .goods-price-text {
+                        font-family: D-DIN-PRO, D-DIN-PRO;
+                        font-weight: 600;
+                        font-size: 15px;
+                        color: #1A1A1A;
+                    }
+    
+                    .goods-price-line {
+                        font-family: D-DIN-PRO, D-DIN-PRO;
+                        font-weight: 400;
+                        font-size: 11px;
+                        color: #BFBFBF;
+                        text-decoration-line: line-through;
+                    }
+                }
+            }
+        }
+    }
+
+
+}

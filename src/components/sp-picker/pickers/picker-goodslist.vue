@@ -199,7 +199,7 @@ import PageMixin from '../mixins/page'
 import { createSetting } from '@shopex/finder'
 import { GOOD_CATEGORY_MAP } from '@/consts'
 import { getGoodsAttr } from '@/api/goods'
-
+import { getRegionauthId } from '@/utils'
 export default {
   name: 'PickerGoods',
   extends: BasePicker,
@@ -383,15 +383,13 @@ export default {
       this.salesCategoryList = salesCategory
     },
     beforeSearch(params) {
-      const _params = {
+      return {
         ...params,
         item_type: 'normal',
         ...this.queryForm,
         distributor_id:this.value?.distributor_id,
-        keywords:this.queryForm.item_name.trim()
+         regionauth_id: getRegionauthId()
       }
-      delete _params.item_name
-      return _params
     },
     onSearch() {
       this.refresh(true)

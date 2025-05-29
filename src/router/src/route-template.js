@@ -14,6 +14,12 @@ export default {
       component: () => import('@/view/wxapp/home')
     },
     {
+      path: 'manage/shoppublictemplate',
+      name: `店铺公共模板`,
+      // component: () => import('@/view/wxapp/management')
+      component: () => import('@/view/wxapp/shoppublictemplate')
+    },
+    {
       path: 'manage/editcategory',
       name: `自定义分类`,
       component: () => import('@/view/wxapp/category/categorize')
@@ -22,6 +28,17 @@ export default {
       path: 'manage/classificationTemplate',
       name: `分类模版`,
       component: () => import('@/view/wxapp/classificationTemplate')
+    },
+    {
+      path: 'manage/activitycollection',
+      name: `活动集合页`,
+      component: () => import('@/view/wxapp/activitycollection'),
+      children: [
+        {
+          path: 'editor/:itemId?',
+          component: () => import('@/view/wxapp/activitycollection/edit')
+        }
+      ]
     },
     {
       path: 'manage/custompage',
@@ -152,11 +169,21 @@ export default {
       path: 'aliapp/colorstyle',
       name: `风格配色`,
       component: () => import('@/view/wxapp/aliapp/color_style')
-    }
+    },
     // {
     //   path: 'aliapp/membercentersetting',
     //   name: `会员中心设置`,
     //   component: () => import('@/view/wxapp/aliapp/member_center_setting')
+    // // }
+    // {
+    //   path: 'manage/pictureAd',
+    //   name: `图片广告`,
+    //   component: () => import('@/view/wxapp/pictureAd/index.vue')
+    // },
+    // {
+    //   path: 'manage/dialogAd',
+    //   name: `弹窗广告`,
+    //   component: () => import('@/view/wxapp/dialogAd/index.vue')
     // }
   ]
 }

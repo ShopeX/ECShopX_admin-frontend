@@ -9,8 +9,10 @@ import {
   PickerGoodsSku,
   PickerGoodsParams,
   PickerShop,
+  PickerSupplier,
   PickerSeckill,
   PickerPath,
+  pickerPathV2,
   PickerTag,
   PickerShopTag,
   PickerVideo,
@@ -21,7 +23,19 @@ import {
   PickerEditBoard,
   PickerPlanting,
   PickerPages,
-  PickerGoodsItem
+  PickerGoodsItem,
+  PickerSaleCategory,
+  PickerShopV2,
+  PickerShopV3,
+  PickerGoodsLive,
+  PickerCouponV2,
+  PickerTotZone,
+  PickerWidget,
+  PickerGroups,
+  PickerWxapp,
+  PickerCrowds,
+  PickerActivity,
+  PickerCategory
 } from './pickers'
 
 function resolvePicker(type) {
@@ -32,12 +46,16 @@ function resolvePicker(type) {
       return PickerFilm
     case 'pickerCoupon':
       return PickerCoupon
+    case 'pickerCouponV2':
+      return PickerCouponV2
     case 'pickerCouponPackage':
       return PickerCouponPackage
     case 'pickerVideo':
       return PickerVideo
     case 'pickerGoods':
       return PickerGoods
+    case 'PickerGoodsLive':
+      return PickerGoodsLive
     case 'pickerGoodsList':
       return PickerGoodsList
     case 'pickerGoodsSku':
@@ -46,10 +64,18 @@ function resolvePicker(type) {
       return PickerGoodsParams
     case 'pickerShop':
       return PickerShop
+    case 'PickerShopV2':
+      return PickerShopV2
+    case 'PickerShopV3':
+      return PickerShopV3
+    case 'pickerSupplier':
+      return PickerSupplier
     case 'pickerSeckill':
       return PickerSeckill
     case 'pickerPath':
       return PickerPath
+    case 'pickerPathV2':
+      return pickerPathV2
     case 'pickerTag':
       return PickerTag
     case 'pickerShopTag':
@@ -68,8 +94,24 @@ function resolvePicker(type) {
       return PickerPlanting
     case 'pickerPages':
       return PickerPages
+    case 'pickerHotZone':
+      return PickerTotZone
     case 'pickerGoodsItem':
       return PickerGoodsItem
+    case 'pickerSaleCategory':
+      return PickerSaleCategory
+    case 'pickerWidget':
+      return PickerWidget
+    case 'pickerGroups':
+      return PickerGroups
+    case 'pickerWxapp':
+      return PickerWxapp
+    case 'pickerCrowds':
+      return PickerCrowds
+    case 'pickerActivity':
+      return PickerActivity
+    case 'pickerCategory':
+      return PickerCategory
     default:
       throw new Error(`picker: ${type} not registered`)
     // break

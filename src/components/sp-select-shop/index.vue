@@ -39,6 +39,10 @@ export default {
       type: Boolean,
       default: false
     },
+    params: {
+      type: Object,
+      default: () => ({})
+    }
   },
   provide() {
     return {
@@ -83,12 +87,25 @@ export default {
       } else {
         params.data = []
       }
-      const { data } = await this.$picker.shop({
-        ...params
-      })
+
+      let data
+      if (this.multiple) {
+        const result = await this.$picker.shop({
+          ...params,
+          params: this.params
+        })
+        data = result.data
+      } else {
+        const result = await this.$picker.shop({
+          ...params,
+          params: this.params
+        })
+        data = result.data
+      }
+
       if (data) {
         if (data.length > 1) {
-          const distributorIds = data.map(item => item.distributor_id)
+          const distributorIds = data.map((item) => item.distributor_id)
           this.onChange({
             name: `已选择${data.length}个店铺`,
             value: distributorIds

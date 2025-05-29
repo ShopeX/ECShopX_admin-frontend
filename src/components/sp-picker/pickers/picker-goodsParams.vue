@@ -45,6 +45,7 @@
 import { createSetting } from '@shopex/finder'
 import BasePicker from './base'
 import PageMixin from '../mixins/page'
+import { getRegionauthId } from '@/utils'
 export default {
   name: 'PickerShop',
   extends: BasePicker,
@@ -126,7 +127,8 @@ export default {
       const { queryParams } = this.value
       params = {
         ...params,
-        ...queryParams
+        ...queryParams,
+         regionauth_id: getRegionauthId()
       }
       return params
     },

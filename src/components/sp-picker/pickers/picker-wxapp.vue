@@ -61,14 +61,16 @@
         columns: [
           { name: '小程序名称', key: 'app_name' },
           { name: 'appid', key: 'app_id' },
-          { name: '页面名称', key: 'route_name' },
-          { name: '页面路径', key: 'route_info' }
+          { name: '描述', key: 'app_desc' }
+          // { name: '页面名称', key: 'route_name' },
+          // { name: '页面路径', key: 'route_info' }
         ]
       }"
       :hooks="{
         beforeSearch: beforeSearch,
         afterSearch: afterSearch
       }"
+      row-key="wx_external_config_id"
       @select="onSelect"
       @selection-change="onSelectionChange"
     />
@@ -76,12 +78,14 @@
 </template>
 
 <script>
+import { getRegionauthId } from '@/utils'
 import BasePicker from './base'
 import PageMixin from '../mixins/page'
 export default {
   name: 'PickerWxapp',
   extends: BasePicker,
   mixins: [PageMixin],
+  props: ['value'],
   data() {
     return {
       formData: {},
@@ -93,12 +97,18 @@ export default {
     this.getOtherWxapp()
   },
   methods: {
-    beforeSearch() {},
+    beforeSearch(params) {
+      return {
+        ...params,
+        regionauth_id: getRegionauthId(),
+        ...(this.value?.params || {})
+      }
+    },
     afterSearch(response) {
       const { list } = response.data.data
       if (this.value.data) {
         const selectRows = list.filter((item) =>
-          this.value.data.includes(item.wx_external_routes_id)
+          this.value.data.includes(item.wx_external_config_id)
         )
         const { finderTable } = this.$refs.finder.$refs
         setTimeout(() => {
@@ -126,7 +136,10 @@ export default {
       this.updateVal(selection)
     },
     async getOtherWxapp() {
-      const { list } = await this.$api.wxa.getWxLinkListSetting()
+      const { list } = await this.$api.wxa.getWxLinkListSetting({
+        regionauth_id: getRegionauthId(),
+        ...(this.value?.params || {})
+      })
       this.wxappList = list.map(({ app_id, app_name }) => {
         return {
           title: app_name,

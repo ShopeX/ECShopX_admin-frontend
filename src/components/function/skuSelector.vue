@@ -16,6 +16,13 @@
                 <div v-if="!isHidenSku" class="goods-sku-check" @click="handleSkuDialogShow(index)">选择规格</div>
               </template>
             </div>
+            <template v-if="isSort">
+              <div class="goods-spu">SPU：{{ item.goods_bn }} </div>
+              <!-- <div class="goods-sort">
+                排序：
+                <el-input v-model="item.sort" style="margin-left: 6px;" size="mini" onkeyup="this.value=this.value.replace(/\D/g,'')" @change="handleSortChange" />
+              </div> -->
+            </template>
           </div>
           <div class="goods-remove iconfont icon-trash-alt" @click="handleSkuRemove(index)" />
         </div>
@@ -48,6 +55,8 @@
       :rel-items-ids="relItems"
       :item-type="item_type"
       :is-change-store="VERSION_PLATFORM"
+      :all-distributor="true"
+      :filter="{regionauth_id:areaId}"
       @chooseStore="handleGoodsSubmit"
       @closeStoreDialog="handleGoodsDialogHide"
     />
@@ -78,7 +87,16 @@ export default {
     isHidenSku:{
       type: Boolean,
       default:false
-    }
+    },
+    isSort:{
+      type: Boolean,
+      default:false
+    },
+    filterArea:{
+      type: Boolean,
+      default:false
+    },
+    areaId:[String,Number],
   },
   data() {
     return {
@@ -138,6 +156,10 @@ export default {
       })
     },
     handleGoodsDialogShow() {
+      if(this.filterArea && !this.areaId) {
+        this.$message.warning('请选择区域')
+        return
+      }
       this.itemVisible = true
       this.setItemStatus = true
     },
@@ -172,7 +194,7 @@ export default {
       this.goods = list
       this.generateSku()
     },
-    generateSku() {
+    generateSku(isSort) {
       let noSkuItem = []
       let response = []
       let goodsList = JSON.parse(JSON.stringify(this.goods))
@@ -189,7 +211,7 @@ export default {
             if (!item.nospec) {
               res.data.data.list.forEach((sku) => {
                 if (item.item_id === sku.default_item_id) {
-                  item.spec_items.push(sku)
+                  item.spec_items.push({...sku,sort:item.sort})
                 }
               })
             }
@@ -201,7 +223,7 @@ export default {
               response = [...response, item]
             }
           })
-          this.$emit('change', response)
+          this.$emit('change', response,isSort)
         })
       } else {
         goodsList.forEach((item) => {
@@ -211,7 +233,7 @@ export default {
             response = [...response, item]
           }
         })
-        this.$emit('change', response)
+        this.$emit('change', response,isSort)
       }
     },
     handleGoodsDialogHide() {
@@ -221,6 +243,9 @@ export default {
       this.goods.splice(index, 1)
       this.relItems.splice(index, 1)
       this.generateSku()
+    },
+    handleSortChange(){
+      this.generateSku('isSort')
     }
   }
 }
@@ -231,7 +256,7 @@ export default {
   display: flex;
   position: relative;
   padding: 10px;
-  height: 80px;
+  // height: 80px;
   margin-bottom: 10px;
   transition: all 0.5s ease;
   &:hover {
@@ -294,5 +319,17 @@ export default {
   &:hover {
     color: #ff5000;
   }
+}
+.goods-sort{
+  display:flex;
+  align-items: center;
+  color: #888;
+  .el-input{
+    width:80px;
+  }
+}
+.goods-spu{
+  color:#999;
+  white-space: nowrap;
 }
 </style>

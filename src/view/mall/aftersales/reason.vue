@@ -1,13 +1,14 @@
 <template>
   <div>
+    <el-tabs v-model="activeName" @tab-click="handleTabClick">
+      <el-tab-pane label="仅退款" name="all" />
+      <el-tab-pane label="退货退款" name="refund_goods" />
+    </el-tabs>
+
     <!--搜索添加-->
     <el-row :gutter="40">
       <el-col>
-        <el-button
-          type="primary"
-          icon="el-icon-circle-plus"
-          @click="handleNew"
-        >
+        <el-button type="primary" icon="el-icon-circle-plus" @click="handleNew">
           新增原因
         </el-button>
       </el-col>
@@ -20,24 +21,12 @@
         :height="wheight - 300"
         element-loading-text="数据加载中"
       >
-        <el-table-column
-          label="操作"
-          width="150"
-        >
+        <el-table-column label="操作" width="150">
           <template slot-scope="scope">
-            <el-button
-              type="text"
-              @click="handleDelete(scope)"
-            >
-              删除
-            </el-button>
+            <el-button type="text" @click="handleDelete(scope)"> 删除 </el-button>
           </template>
         </el-table-column>
-        <el-table-column
-          prop="attribute_name"
-          label="原因"
-          width="150"
-        >
+        <el-table-column prop="attribute_name" label="原因" width="150">
           <template slot-scope="scope">
             <div>{{ scope.row }}</div>
           </template>
@@ -46,24 +35,13 @@
     </el-card>
 
     <!--新增修改-->
-    <sideBar
-      :visible.sync="show_sideBar"
-      :title="'添加售后原因'"
-    >
+    <sideBar :visible.sync="show_sideBar" :title="'添加售后原因'">
       <el-form>
         <el-form-item label="售后原因">
-          <el-input
-            v-model="form.reason"
-            maxlength="20"
-          />
+          <el-input v-model="form.reason" maxlength="20" />
         </el-form-item>
         <el-form-item>
-          <el-button
-            type="primary"
-            @click="add"
-          >
-            提交
-          </el-button>
+          <el-button type="primary" @click="add"> 提交 </el-button>
         </el-form-item>
       </el-form>
     </sideBar>
@@ -79,7 +57,7 @@ export default {
     sideBar
   },
 
-  data () {
+  data() {
     return {
       loading: false,
       imgDialog: false,
@@ -89,22 +67,23 @@ export default {
       form: {
         reason: ''
       },
+      activeName: 'all',
       // 列表数据
       list: [],
       reason_list: []
     }
   },
-  mounted () {
+  mounted() {
     this.getList() // 获取列表
   },
   methods: {
     // 新增编辑
-    handleNew () {
+    handleNew() {
       this.show_sideBar = true
       this.resetData()
     },
     // 删除
-    handleDelete (data) {
+    handleDelete(data) {
       this.$confirm('确认删除该原因么？')
         .then((_) => {
           this.reason_list.splice(data.$index, 1)
@@ -113,12 +92,12 @@ export default {
         .catch((_) => {})
     },
     // 初始化
-    resetData () {
+    resetData() {
       this.form = {
         reason: ''
       }
     },
-    add () {
+    add() {
       // this.form.reason
       if (this.form.reason !== '') {
         this.reason_list.push(this.form.reason)
@@ -128,18 +107,26 @@ export default {
       }
     },
     // 保存数据
-    save () {
-      addAftersalesReason({ reason: this.reason_list }).then((res) => {
+    save() {
+      addAftersalesReason({
+        reason: this.reason_list,
+        type: this.activeName == 'all' ? '' : 'refund_goods'
+      }).then((res) => {
         this.$message({ type: 'success', message: '操作成功' })
         this.resetData()
         this.getList()
       })
     },
+    handleTabClick() {
+      this.getList()
+    },
     // 获取列表
-    getList () {
+    getList() {
       // console.log('获取数据')
       // this.loading = true
-      getAftersalesReason([]).then((res) => {
+      getAftersalesReason({
+        type: this.activeName == 'all' ? '' : 'refund_goods'
+      }).then((res) => {
         console.log('返回数据', res)
         this.reason_list = res.data.data
       })

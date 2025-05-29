@@ -98,7 +98,7 @@ router.beforeEach((to, from, next) => {
 
         const newRouter = []
         // console.log(Object.keys(constantRouterMap))
-        // console.log('menu:', customRouterUrls)
+        console.log('customRouterUrls:', customRouterUrls)
 
         Object.keys(constantRouterMap).forEach((key) => {
           if (key != 'RouteAuth') {
@@ -114,7 +114,8 @@ router.beforeEach((to, from, next) => {
                   return (
                     customRouterUrls.includes(`/`) ||
                     customRouterUrls.includes(`/merchant`) ||
-                    customRouterUrls.includes(`/shopadmin`)
+                    customRouterUrls.includes(`/shopadmin`) ||
+                    customRouterUrls.includes(`/admininfo`)
                   )
                 } else {
                   return customRouterUrls.includes(`${route.path}/${item.path}`)

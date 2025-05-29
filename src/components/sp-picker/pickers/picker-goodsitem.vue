@@ -170,6 +170,7 @@ import { SALES_STATUS, GOOD_CATEGORY, GOOD_CATEGORY_MAP } from '@/consts'
 import { cloneDeep } from 'lodash'
 import BasePicker from './base'
 import PageMixin from '../mixins/page'
+import { getRegionauthId } from '@/utils'
 export default {
     name: 'PickerGoods',
     extends: BasePicker,
@@ -218,7 +219,6 @@ export default {
     },
     created() {
         this.localSelection = cloneDeep(this.value.data) || []
-        console.log("????")
         this.rowKey = this.value?.rowKey || 'item_id'
     },
     mounted() {
@@ -235,7 +235,9 @@ export default {
                 audit_status: 'approved',
                 is_sku: false,
                 ...this.formData,
-                category: category[category.length - 1]
+                regionauth_id:  getRegionauthId(),
+                category: category[category.length - 1],
+                ...(this.value?.params || {})
             }
             return params
         },

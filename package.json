@@ -1,6 +1,6 @@
 {
   "name": "ecshopx-admin",
-  "version": "3.20.0",
+  "version": "3.19.7",
   "description": "ecshopx admin",
   "author": "shopex",
   "private": true,
@@ -13,8 +13,9 @@
   },
   "dependencies": {
     "@antv/g2plot": "^2.4.31",
+    "@lucky-canvas/vue": "^0.1.11",
     "@riophae/vue-treeselect": "0.0.38",
-    "@shopex/finder": "^1.0.66",
+    "@shopex/finder": "^1.0.71",
     "ali-oss": "^6.5.1",
     "aws-sdk": "^2.824.0",
     "axios": "^0.19.2",

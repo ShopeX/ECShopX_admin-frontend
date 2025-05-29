@@ -244,5 +244,6 @@ export default {
         }
       ]
     },
+
   ]
 }

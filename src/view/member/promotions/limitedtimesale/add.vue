@@ -27,6 +27,22 @@
       header="基础信息"
       shadow="naver"
     >
+      <el-form-item
+        label="区域"
+        prop="regionauth_id"
+        :rules="{ required: true, message: '区域必填', trigger: 'change' }"
+      >
+        <el-col :span="20">
+          <el-select v-model="form.regionauth_id" placeholder="请选择" :disabled="!!form.seckill_id" clearable @change="changeRegion">
+            <el-option
+              v-for="item in areasList"
+              :key="item.value"
+              :label="item.label"
+              :value="item.value"
+            />
+          </el-select>
+        </el-col>
+      </el-form-item>
       <el-form-item label="活动封面">
         <div class="frm-tips">
           只能上传jpg/png文件，且不超过2M （建议尺寸：400px * 450px）
@@ -58,17 +74,40 @@
           />
         </el-col>
       </el-form-item>
-      <el-form-item label="活动时间">
+      <el-form-item label="活动时间" :rules="{ required: true, message: '请选择有效期', trigger: 'change' }">
         <el-col :span="20">
-          <el-date-picker
+          <!-- <el-date-picker
             v-model="activity_date"
+            :disabled="form.status == 'waiting' ? false : true"
             type="datetimerange"
             range-separator="至"
             start-placeholder="生效时间"
             end-placeholder="过期时间"
             value-format="yyyy-MM-dd HH:mm:ss"
             :default-time="['00:00:00', '23:59:59']"
-          />
+          /> -->
+          <div style="display: flex; align-items: center;">
+            <el-date-picker
+              v-model="activity_date[0]"
+              type="datetime"
+              placeholder="生效时间"
+              value-format="yyyy-MM-dd HH:mm:ss"
+              :default-time="'00:00:00'"
+              style="width: 200px;"
+              :disabled="form.status == 'waiting' ? false : true"
+              @change="(val)=>handleDateChange(val,'0')"
+            />
+            <span style="margin: 0 10px;">至</span>
+            <el-date-picker
+              v-model="activity_date[1]"
+              type="datetime"
+              placeholder="过期时间"
+              value-format="yyyy-MM-dd HH:mm:ss"
+              :default-time="'23:59:59'"
+              style="width: 200px;"
+              @change="(val)=>handleDateChange(val,'1')"
+            />
+          </div>
         </el-col>
       </el-form-item>
       <el-form-item label="活动描述">
@@ -107,6 +146,29 @@
           />
         </el-col>
       </el-form-item>
+      <el-form-item label="适用会员">
+        <el-checkbox-group v-model="validGrade">
+          <el-checkbox v-for="grade in memberGrade" :key="grade.grade_id" :label="grade.grade_id">
+            {{ grade.grade_name }}
+          </el-checkbox>
+          <el-checkbox v-for="vipdata in vipGrade" :key="vipdata.lv_type" :label="vipdata.lv_type">
+            付费{{ vipdata.grade_name }}
+          </el-checkbox>
+        </el-checkbox-group>
+      </el-form-item>
+
+      <el-form-item label="适用人群">
+        <CrowdSelect v-model="form.crowd_ids" />
+      </el-form-item>
+
+      <el-form-item label="是否支持叠加优惠券" :rules="{ required: true, message: '是否支持叠加优惠券', trigger: 'blur' }">
+        <el-radio-group v-model="form.is_use_coupon">
+          <el-radio :label="true"> 是 </el-radio>
+          <el-radio :label="false"> 否 </el-radio>
+        </el-radio-group>
+      </el-form-item>
+
+
       <!--el-form-item label="是否包邮">
               <el-col :span="20">
                 <el-radio v-model="form.is_free_shipping" label="true">包邮</el-radio>
@@ -124,6 +186,50 @@
               </el-row>
             </el-form-item-->
     </el-card>
+
+    <el-card header="财务配置" shadow="naver">
+      <el-form-item label="PO编码">
+        <el-col :span="6">
+          <el-input
+            v-model="form.finance_data.po_code"
+            placeholder="请输入"
+          />
+        </el-col>
+      </el-form-item>
+      <el-form-item label="Budget code">
+        <el-col :span="6">
+          <el-input
+            v-model="form.finance_data.budget_code"
+            placeholder="请输入"
+          />
+        </el-col>
+      </el-form-item>
+      <el-form-item label="承担比例">
+        <div style="display: flex;">
+          平台承担&nbsp;
+          <el-input
+            v-model="form.finance_data.platform_ratio"
+            type="number"
+            style="width: 120px;"
+            min="0"
+            max="100"
+            placeholder="请输入"
+            @change="handlePlatRatioChange"
+          /> &nbsp; %，店铺承担&nbsp;
+          <el-input
+            v-model="form.finance_data.shop_ratio"
+            type="number"
+            style="width: 120px;"
+            disabled
+            min="0"
+            max="100"
+            placeholder="请输入"
+          />
+          &nbsp; %
+        </div>
+      </el-form-item>
+    </el-card>
+
     <el-card
       header="绑定商品"
       shadow="naver"
@@ -147,6 +253,9 @@
       >
         <SkuSelector
           :data="relItems"
+          :filter-area="true"
+          :area-id="form.regionauth_id"
+          :is-sort="true"
           @change="getItems"
         />
         <div style="position: absolute; bottom: 0px; left: 112px">
@@ -266,9 +375,9 @@
         style="line-height: normal"
       >
         <el-table-column
-          label="ID"
-          prop="item_id"
-          width="60"
+          label="SKU编号"
+          prop="item_bn"
+          width="180"
         />
         <el-table-column
           label="名称"
@@ -278,6 +387,12 @@
           label="规格"
           prop="item_spec_desc"
         />
+        <el-table-column label="市场价">
+            <template slot-scope="scope"> ¥{{ scope.row.market_price }} </template>
+          </el-table-column>
+          <el-table-column label="销售价">
+            <template slot-scope="scope"> ¥{{ scope.row.price }} </template>
+          </el-table-column>
         <el-table-column
           label="活动价"
           width="100"
@@ -308,7 +423,7 @@
             />
           </template>
         </el-table-column>
-        <el-table-column
+        <!-- <el-table-column
           label="排序"
           width="80"
         >
@@ -319,7 +434,7 @@
               onkeyup="this.value=this.value.replace(/\D/g,'')"
             />
           </template>
-        </el-table-column>
+        </el-table-column> -->
         <!-- <el-table-column label="操作" width="50">
                   <template slot-scope="scope">
                     <i class="iconfont icon-trash-alt" @click="deleteItemRow(scope.$index, form.items)"></i>
@@ -365,17 +480,41 @@
       @closeStoreDialog="closeStoreDialogAction"
     />
     <div class="content-center">
-      <el-button @click.native="handleCancel">
-        返回
-      </el-button>
-      <el-button
-        v-if="form.status !== 'it_has_ended'"
-        type="primary"
-        @click="submitActivityAction()"
-      >
-        保存
-      </el-button>
+      <template v-if="!hasReviewButton">
+        <el-button @click.native="handleCancel">
+          返回
+        </el-button>
+        <!-- form.status !== 'it_has_ended' -->
+        <el-button
+          v-if="hasSaveButton"
+          type="primary"
+          :loading="saveLoading"
+          @click="submitActivityAction()"
+        >
+          保存
+        </el-button>
+      </template>
+
+
+      <template v-if="hasReviewButton">
+        <el-button @click.native="() => handleReview()"> 审批拒绝 </el-button>
+        <el-button :loading="saveLoading" type="primary" @click="() => handleReview(true)">
+          审批通过
+        </el-button>
+      </template>
     </div>
+    <CompConflictActivities v-model="cActivityVis" :list="cActivityList" />
+    <SpDialog
+      ref="rejectDialogRef"
+      v-model="rejectDialogShow"
+      title="审核拒绝"
+      :modal="false"
+      class="base-form"
+      :confirmStatus="rejectDialogConfirmStatus"
+      :form="rejectForm"
+      :form-list="rejectFormList"
+      @onSubmit="onRejectFormSubmit"
+    />
   </el-form>
 </template>
 <script>
@@ -384,9 +523,12 @@ import {
   seckillActivityCreate,
   seckillActivityGetInfo,
   seckillActivityUpdate,
-  seckillActivityGetItemsList
+  seckillActivityGetItemsList,
+  batchGetActivityList
 } from '../../../../api/promotions'
 import { getDefaultCurrency } from '../../../../api/company'
+import { listVipGrade } from '../../../../api/cardticket'
+import { getGradeList } from '../../../../api/membercard'
 import SkuSelector from '@/components/function/skuSelector'
 import StoreSelect from '@/components/function/distributorSelect'
 import imgPicker from '@/components/imageselect'
@@ -394,6 +536,9 @@ import imgBox from '@/components/element/imgBox'
 import store from '@/store'
 import { getItemsList, getCategory, getTagList, getGoodsAttr } from '@/api/goods'
 import { handleUploadFile, exportUploadTemplate } from '../../../../api/common'
+import CompConflictActivities from '../comps/comp-conflict-activities.vue'
+import CrowdSelect from '@/components/function/crowdSelect'
+import moment from 'moment'
 
 export default {
   inject: ['refresh'],
@@ -402,24 +547,48 @@ export default {
     SkuSelector,
     imgPicker,
     imgBox,
-    Treeselect
+    Treeselect,
+    CompConflictActivities,
+    CrowdSelect
   },
   data () {
     return {
+      saveLoading:false,
       is_distributor: false,
       cursymbol: '￥',
       goodsVisible: false,
+      hasReviewButton: false,
+      hasSaveButton:true,
       community: '1',
       communityList: [],
       communitycount: 0,
       goods: [],
       relItems: [],
       addedItems: [],
+      rejectDialogShow: false,
+      rejectDialogConfirmStatus: false,
+      rejectForm: {
+        reason: ''
+      },
+      rejectFormList: [
+        {
+          label: '拒绝理由',
+          key: 'reason',
+          type: 'input',
+          placeholder: '请输入拒绝理由'
+        }
+      ],
       communityParams: {
         page: 1,
         pageSize: 10,
         status: 'open'
       },
+      validGrade: [],
+      memberGrade: [],
+      vipGrade: [],
+      areasList:[],
+      cActivityVis:false,
+      cActivityList:[],
       form: {
         seckill_id: '',
         activity_name: '',
@@ -433,6 +602,7 @@ export default {
         distributor_id: [],
         items: [],
         ad_pic: '',
+        status:'waiting',
         seckill_type: 'limited_time_sale',
         item_type: 'normal',
         limit_total_money: '',
@@ -440,9 +610,18 @@ export default {
         use_bound: 'goods',
         item_category: [],
         tag_ids: [],
-        brand_ids: []
+        brand_ids: [],
+        crowd_ids: [],
+        regionauth_id:'',
+        is_use_coupon:true,
+        finance_data:{
+          po_code:'',
+          budget_code:'',
+          platform_ratio:100,
+          shop_ratio:0
+        }
       },
-      activity_date: '',
+      activity_date: [],
       relItemsIds: [],
       selectItemType: 'normal',
       itemVisible: false,
@@ -504,11 +683,39 @@ export default {
     if (this.$route.params.seckill_id) {
       this.getActivityDetail(this.$route.params.seckill_id)
     }
+    if (this.$route.query.isReview) {
+      this.hasReviewButton = true
+    }
+    if (this.$route.query.isnodata) {
+      this.hasSaveButton = false
+    }
+    listVipGrade().then((response) => {
+      if (response != undefined && response.data.data && response.data.data.length > 0) {
+        this.vipGrade = response.data.data
+      }
+    })
+    getGradeList().then((response) => {
+      if (response != undefined && response.data.data && response.data.data.length > 0) {
+        var result = response.data.data
+        if (result) {
+          this.memberGrade = result
+        }
+      }
+    })
     this.fetchMainCate()
     this.getAllTagLists()
     this.getBrandList('', true)
+    this.getAreaList()
   },
   methods: {
+    async getAreaList(){
+      // 查询区域数据
+     const res = await this.$api.regionauth.getRegionauth()
+     this.areasList =  res?.list?.map((el) => ({
+          value: el.regionauth_id,
+          label: el.regionauth_name
+        }))
+    },
     closeStoreDialogAction () {
       this.storeVisible = false
     },
@@ -526,7 +733,19 @@ export default {
       this.storeVisible = true
       this.setStatus = true
     },
-    getItems (data) {
+    handleDateChange(val,index) {
+      if (this.activity_date[0] && this.activity_date[1]) {
+        const startTime = new Date(this.activity_date[0]).getTime();
+        const endTime = new Date(this.activity_date[1]).getTime();
+        if (endTime <= startTime) {
+          this.$message.error('结束时间不能早于开始时间');
+          this.$nextTick(() => {
+            this.activity_date = index == '1' ?  [this.activity_date[0],''] : ['',this.activity_date[1]];
+          })
+        }
+      }
+    },
+    getItems (data,isSort) {
       let arr = []
       data.forEach((item, index) => {
         let newData = ''
@@ -534,8 +753,11 @@ export default {
         if (isInArr == -1) {
           newData = {
             item_id: item.itemId,
+            item_bn:item.itemBn,
             item_title: item.itemName,
             activity_store: item.store,
+            price:item.price / 100,
+            market_price:item.market_price / 100,
             activity_price: item.price / 100,
             item_spec_desc: item.item_spec_desc,
             sort: item.sort,
@@ -544,6 +766,10 @@ export default {
           }
         } else {
           newData = this.addedItems[isInArr]
+          // isSort，强制更新sort
+          if(isSort){
+            newData.sort = item.sort
+          }
         }
         if (newData) {
           arr.push(newData)
@@ -573,7 +799,70 @@ export default {
       this.setItemStatus = false
       this.relItemsIds.splice(index, 1)
     },
-    submitActivityAction () {
+    async handleReview(isThrough) {
+      // isThrough 审核通过 true 审核不通过 false
+      const that = this
+      if (isThrough) {
+        //审核通过
+        this.$confirm('是否确认审核通过', '', {
+          cancelButtonText: '取消',
+          confirmButtonText: '确定',
+          loading: false,
+          beforeClose: async (action, instance, done) => {
+            if (action === 'confirm') {
+              instance.confirmButtonLoading = true
+              try {
+                await that.$api.promotions.auditPromotion({
+                  relation_id: that.form.seckill_id,
+                  audit_status: 'approved',
+                  promotion_type: 'seckill'
+                })
+                that.refresh()
+                this.$message.success('审核通过!')
+                instance.confirmButtonLoading = false
+                setTimeout(() => {
+                  that.$router.go(-1)
+                },500)
+                done()
+              } catch (e) {
+                instance.confirmButtonLoading = false
+              }
+            }else{
+              done()
+            }
+          }
+        })
+      } else {
+        //审核拒绝
+        this.rejectDialogShow = true
+        this.rejectForm = {
+          reason: ''
+        }
+      }
+    },
+    async onRejectFormSubmit() {
+      this.rejectDialogConfirmStatus = true
+      try {
+        await this.$api.promotions.auditPromotion({
+          relation_id: this.form.seckill_id,
+          audit_status: 'rejected',
+          promotion_type: 'seckill',
+          rejected_reason: this.rejectForm.reason
+        })
+        this.refresh()
+        this.$message.success('审核拒绝!')
+        this.rejectDialogConfirmStatus = false
+        this.refresh()
+        this.rejectDialogShow = false
+        setTimeout(() => {
+          this.$router.go(-1)
+        },500)
+      } catch (e) {
+        this.rejectDialogConfirmStatus = false
+      }
+    },
+    async submitActivityAction () {
+      // await this.$refs['form'].validate()
       const that = this
       if (this.form.limit_total_money) {
         this.form.limit_total_money = this.form.limit_total_money
@@ -595,7 +884,20 @@ export default {
       params = JSON.parse(params)
       params.items = JSON.stringify(params.items)
       params.item_category = JSON.stringify(params.item_category)
+      params.finance_data = JSON.stringify(this.form.finance_data)
+      params.member_tag_ids = this.form.crowd_ids.map(item=>item.tag_id).join(',')
+      delete params.crowd_ids
+
+
+      if (this.validGrade.length > 0) {
+        params.valid_grade = this.validGrade
+      }
+
+      this.saveLoading = true
       if (this.form.seckill_id) {
+        params.audit_status = 'processing'
+        params.approve_status = ''
+        params.rejected_reason = ''
         seckillActivityUpdate(params).then((res) => {
           if (res.data.data.seckill_id) {
             this.loading = false
@@ -612,6 +914,15 @@ export default {
             this.$message.error('保存失败!')
             return false
           }
+        }).catch((err)=>{
+          console.log('err',err)
+          let marketing_ids = err.data?.data?.errors?.marketing_ids ?? []
+          if(marketing_ids.length){
+            marketing_ids = marketing_ids.join(',')
+            this.fetchGetActivityList(marketing_ids)
+          }
+        }).finally(()=>{
+          this.saveLoading = false
         })
       } else {
         seckillActivityCreate(params).then((res) => {
@@ -630,8 +941,41 @@ export default {
             this.$message.error('保存失败!')
             return false
           }
+        }).catch((err)=>{
+          console.log('err',err)
+          let marketing_ids = err.data?.data?.errors?.marketing_ids ?? []
+          if(marketing_ids.length){
+            marketing_ids = marketing_ids.join(',')
+            this.fetchGetActivityList(marketing_ids)
+          }
+        }).finally(()=>{
+          this.saveLoading = false
         })
       }
+    },
+    fetchGetActivityList(marketing_ids){
+      batchGetActivityList({ marketing_ids }).then(res=>{
+        let response = res.data.data
+        this.cActivityVis = true
+        this.cActivityList = response.map(item=>({
+          ...item,
+          start_date: moment(item.start_time * 1000).format('YYYY-MM-DD HH:mm:ss'),
+          end_date: moment(item.end_time * 1000).format('YYYY-MM-DD HH:mm:ss'),
+        }))
+      })
+    },
+    handlePlatRatioChange(val){
+      if(val>100){
+        this.form.finance_data.platform_ratio = 100
+        this.form.finance_data.shop_ratio = 0
+        return
+      }
+      if(val < 0 || !val){
+        this.form.finance_data.platform_ratio = 0
+        this.form.finance_data.shop_ratio = 100
+        return
+      }
+      this.form.finance_data.shop_ratio = 100 - val
     },
     getTaskTime (strDate) {
       let date = new Date(strDate)
@@ -671,7 +1015,12 @@ export default {
           brand_list: response.brand_list,
           rel_brand_ids: response.rel_brand_ids,
           rel_category_ids: response.rel_category_ids,
-          rel_tag_ids: response.rel_tag_ids
+          rel_tag_ids: response.rel_tag_ids,
+          finance_data: response.finance_data || {},
+          regionauth_id: response.regionauth_id + '',
+          crowd_ids: response.member_tag_data,
+          is_use_coupon: response.is_use_coupon,
+          finance_id: response.finance_id
         }
         if (response.distributor_info) {
           this.relStores = response.distributor_info
@@ -680,7 +1029,8 @@ export default {
         response.items.forEach((item) => {
           item.itemId = item.item_id
         })
-        this.addedItems = response.items
+        this.addedItems = response.items?.map((item) => ({...item,price:item.price / 100,market_price:item.market_price / 100}));
+        this.validGrade = response.valid_grade
         this.activity_date = [response.activity_start_date, response.activity_end_date]
         this.relItems = response.itemTreeLists || []
         this.zdItemHidden = true
@@ -745,6 +1095,19 @@ export default {
         this.brandHidden = false
         this.brand.currentBrands = []
         this.showBrands()
+      }
+    },
+    changeRegion(){
+      if(this.form.use_bound == 'goods'){
+        this.zdItemHidden = true 
+        this.form.item_ids = []
+        this.relItems = []
+        this.form.items = []
+        this.form.rel_item_ids = []
+        this.form.itemTreeLists = []
+        setTimeout(() => {
+          this.zdItemHidden = false
+        }, 400); 
       }
     },
     fetchMainCate () {

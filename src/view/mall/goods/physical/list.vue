@@ -66,7 +66,7 @@
         <!--        <SpFilterFormItem prop="supplier_goods_bn" label="供应商货号:">-->
         <!--          <el-input v-model="searchParams.supplier_goods_bn" placeholder="请输入供应商货号" />-->
         <!--        </SpFilterFormItem>-->
-        <SpFilterFormItem v-if="!IS_SUPPLIER()" prop="approve_status" label="商品状态:">
+        <SpFilterFormItem prop="approve_status" label="商品状态:" v-if="!IS_SUPPLIER()">
           <el-select v-model="searchParams.approve_status" clearable placeholder="请选择">
             <el-option
               v-for="item in statusOption"
@@ -77,7 +77,7 @@
             />
           </el-select>
         </SpFilterFormItem>
-        <SpFilterFormItem v-if="IS_SUPPLIER()" prop="is_market" label="供应状态:">
+        <SpFilterFormItem prop="is_market" label="供应状态:" v-if="IS_SUPPLIER()">
           <el-select v-model="searchParams.is_market" clearable placeholder="请选择">
             <el-option :key="1" label="可售" :value="1" />
             <el-option :key="0" label="不可售" :value="0" />
@@ -142,8 +142,13 @@
             />
           </el-select>
         </SpFilterFormItem>
-        <SpFilterFormItem prop="item_bn" label="SKU编码:">
-          <el-input v-model="searchParams.item_bn" placeholder="请输入SKU编码" />
+        <SpFilterFormItem prop="regions_id" label="商品产地:">
+          <el-cascader
+            v-model="searchParams.regions_id"
+            placeholder="请选择"
+            clearable
+            :options="regions"
+          />
         </SpFilterFormItem>
         <!--        <SpFilterFormItem prop="delivery_data_type" label="发货方式:">-->
         <!--          <el-select v-model="searchParams.delivery_data_type">-->
@@ -155,13 +160,8 @@
         <SpFilterFormItem prop="goods_bn" label="SPU编码:">
           <el-input v-model="searchParams.goods_bn" placeholder="请输入SPU编码" />
         </SpFilterFormItem>
-        <SpFilterFormItem prop="regions_id" label="商品产地:">
-          <el-cascader
-            v-model="searchParams.regions_id"
-            placeholder="请选择"
-            clearable
-            :options="regions"
-          />
+        <SpFilterFormItem prop="item_bn" label="SKU编码:">
+          <el-input v-model="searchParams.item_bn" placeholder="请输入SKU编码" />
         </SpFilterFormItem>
         <SpFilterFormItem v-if="!IS_SUPPLIER()" prop="tag_id" label="商品标签:">
           <el-cascader
@@ -200,7 +200,7 @@
         <el-button v-if="!IS_SUPPLIER()" type="primary" plain @click="changeCategory">
           更改销售分类
         </el-button>
-        <el-button v-if="!IS_SUPPLIER()" type="primary" plain @click="changeGoodsLabel">
+        <el-button type="primary" v-if="!IS_SUPPLIER()" plain @click="changeGoodsLabel">
           打标签
         </el-button>
         <el-button type="primary" plain @click="changeFreightTemplate"> 更改运费模板 </el-button>
@@ -213,7 +213,7 @@
           批量提交审核
         </el-button>
         <el-button type="primary" plain @click="changeItemsStore"> 统一库存 </el-button>
-        <el-button v-if="!IS_SUPPLIER()" type="primary" plain @click="batchChangeStore">
+        <el-button type="primary" plain v-if="!IS_SUPPLIER()" @click="batchChangeStore">
           更改状态
         </el-button>
         <el-button type="primary" plain @click="batchGifts('true')"> 设为赠品 </el-button>
@@ -256,16 +256,12 @@
             </el-dropdown-item>
           </el-dropdown-menu>
         </el-dropdown>
-        <el-button v-if="isBindJstErp" size="small" type="primary" @click="uploadJstErpItems()"
-          >
-上传商品到聚水潭
-</el-button
+        <el-button size="small" v-if="isBindJstErp" type="primary" @click="uploadJstErpItems()"
+          >上传商品到聚水潭</el-button
         >
         <!-- <el-button size="small" v-if="isBindJstErp" type="primary" @click="queryInventory()">同步聚水潭商品库存</el-button> -->
-        <el-button v-if="isBindWdtErp" size="small" type="primary" @click="uploadWdtErpItems()"
-          >
-上传商品到旺店通
-</el-button
+        <el-button size="small" v-if="isBindWdtErp" type="primary" @click="uploadWdtErpItems()"
+          >上传商品到旺店通</el-button
         >
         <el-dropdown v-if="VERSION_STANDARD && IS_ADMIN()">
           <el-button type="primary" plain icon="iconfont icon-daorucaozuo-01">
@@ -303,14 +299,13 @@
         ref="finder"
         :url="IS_DISTRIBUTOR() ? '/distributor/items' : '/goods/items'"
         fixed-row-action
-        :row-actions-align="'left'"
+        row-actions-fixed-align="left"
         row-actions-width="200px"
         :other-config="{}"
         :setting="tableList"
         :hooks="{
           beforeSearch: beforeSearch
         }"
-        row-actions-fixed-align="left"
         @selection-change="onSelectionChange"
       />
 
@@ -496,7 +491,7 @@
 
       <el-dialog :title="sunCodeTitle" :visible.sync="sunCode" width="360px">
         <div class="page-code">
-          <img class="page-code-img" :src="appCodeUrl">
+          <img class="page-code-img" :src="appCodeUrl" />
           <div class="page-btns">
             <el-button type="primary" plain @click="handleDownload(sunCodeTitle)">
               下载码
@@ -713,7 +708,6 @@ export default {
       isBindJstErp: false,
       categoryList: [],
       templatesList: [],
-      templatesListavailable:[],
       itemCategoryList: [],
       regions: [],
       showMemberPriceDrawer: false,
@@ -809,7 +803,7 @@ export default {
           key: 'templates_id',
           component: ({ key }, value) => (
             <el-select v-model={value[key]}>
-              {this.templatesListavailable.map((item) => (
+              {this.templatesList.map((item) => (
                 <el-option label={item.name} value={item.template_id} />
               ))}
             </el-select>
@@ -1431,10 +1425,10 @@ export default {
     async getShippingTemplatesList() {
       const { list } = await this.$api.shipping.getShippingTemplatesList({
         page: 1,
-        pageSize: 1000
+        pageSize: 1000,
+        status: 1
       })
       this.templatesList = list
-      this.templatesListavailable = list.filter((item) => item.status)
     },
     async getCategory() {
       //销售分类

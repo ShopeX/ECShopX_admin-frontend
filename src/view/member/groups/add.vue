@@ -1,6 +1,22 @@
 <template>
-  <el-form ref="form" :model="form" class="box-set" label-width="100px">
+  <el-form ref="form" :model="form" class="box-set" label-width="120px">
     <el-card header="活动商品信息" shadow="never">
+      <el-form-item
+        label="区域"
+        prop="regionauth_id"
+        :rules="{ required: true, message: '区域必填', trigger: 'change' }"
+      >
+        <el-col :span="20">
+          <el-select v-model="form.regionauth_id" placeholder="请选择" clearable>
+            <el-option
+              v-for="item in areasList"
+              :key="item.value"
+              :label="item.label"
+              :value="item.value"
+            />
+          </el-select>
+        </el-col>
+      </el-form-item>
       <el-form-item label="活动封面">
         <div class="frm-tips">
           文件格式为bmp、png、jpeg、jpg或gif，大小不超过2M（建议尺寸：500px * 500px）
@@ -15,7 +31,7 @@
           @closeImgDialog="closeImgDialog"
         />
       </el-form-item>
-      <el-form-item label="拼团商品">
+      <!-- <el-form-item label="拼团商品">
         <el-row :gutter="20">
           <el-col :span="20">
             <p class="frm-tips" />
@@ -33,17 +49,22 @@
                   <i class="el-icon-plus" />
                 </div>
               </div>
-              <!-- <el-button size="small" type="primary" @click="changeItem">选择商品</el-button> -->
+              <el-button size="small" type="primary" @click="changeItem">选择商品</el-button>
             </div>
           </el-col>
         </el-row>
-      </el-form-item>
+      </el-form-item> -->
       <el-form-item label="活动名称" prop="act_name" :rules="rules.act_name">
         <el-row :gutter="20">
           <el-col :span="12">
             <el-input v-model="form.act_name" :maxlength="30" placeholder="拼团活动名称" />
           </el-col>
         </el-row>
+      </el-form-item>
+      <el-form-item label="活动说明">
+        <el-col :span="20">
+          <el-input v-model="form.marketing_desc" placeholder="请输入" />
+        </el-col>
       </el-form-item>
       <el-form-item label="活动时间" prop="date" :rules="rules.date">
         <el-row :gutter="20">
@@ -60,7 +81,88 @@
           </el-col>
         </el-row>
       </el-form-item>
-      <el-form-item label="拼团库存" prop="store" :rules="rules.store">
+
+      <!-- 拼团商品 -->
+      <el-card header="拼团商品" shadow="naver">
+        <el-form-item label="适用商品">
+          <el-radio-group v-model="form.use_bound">
+            <el-radio label="goods"> 指定商品适用 </el-radio>
+          </el-radio-group>
+        </el-form-item>
+        <div style="position: relative">
+          <SkuSelector :data="relItems" :is-sort="true" @change="getItems" />
+          <div style="position: absolute; bottom: 0px; left: 112px">
+            <el-upload
+              style="display: inline-block; height: 0"
+              action=""
+              :on-change="uploadHandleChange"
+              :auto-upload="false"
+              :show-file-list="false"
+            >
+              <el-button type="primary"> 批量上传 </el-button>
+            </el-upload>
+            <el-button style="margin-left: 10px" type="primary" @click="uploadHandleTemplate()">
+              下载模板
+            </el-button>
+          </div>
+        </div>
+      </el-card>
+      <el-card header="设置商品" shadow="naver">
+        <el-table v-if="form.items.length > 0" :data="form.items" style="line-height: normal">
+          <el-table-column label="SKU编码" prop="item_bn" width="180" />
+          <el-table-column label="名称" prop="item_title" />
+          <el-table-column label="规格" prop="item_spec_desc" />
+          <el-table-column label="市场价（吊牌价）">
+            <template slot-scope="scope"> ¥{{ scope.row.market_price }} </template>
+          </el-table-column>
+          <el-table-column label="销售价（奥莱价）">
+            <template slot-scope="scope"> ¥{{ scope.row.price }} </template>
+          </el-table-column>
+          <el-table-column label="拼团价" width="100">
+            <template slot-scope="scope">
+              <el-input
+                v-model="scope.row.activity_price"
+                min="0.01"
+                size="mini"
+                onkeyup="value=value.replace(/[^\d{1,}\.\d{1,}|\d{1,}]/g,'')"
+              >
+                <i slot="prefix" class="el-input__icon">{{ cursymbol }}</i>
+              </el-input>
+            </template>
+          </el-table-column>
+          <!-- <el-table-column
+          label="每人限购"
+          width="80"
+        >
+          <template slot-scope="scope">
+            <el-input
+              v-model="scope.row.limit_num"
+              size="mini"
+              onkeyup="this.value=this.value.replace(/\D/g,'')"
+            />
+          </template>
+        </el-table-column> -->
+          <!-- <el-table-column
+          label="排序"
+          width="80"
+        >
+          <template slot-scope="scope">
+            <el-input
+              v-model="scope.row.sort"
+              size="mini"
+              onkeyup="this.value=this.value.replace(/\D/g,'')"
+            />
+          </template>
+        </el-table-column> -->
+          <!-- <el-table-column label="操作" width="50">
+                  <template slot-scope="scope">
+                    <i class="iconfont icon-trash-alt" @click="deleteItemRow(scope.$index, form.items)"></i>
+                  </template>
+                </el-table-column> -->
+        </el-table>
+      </el-card>
+
+      <!-- <el-form-item label="拼团库存" prop="store" :rules="rules.store">
         <el-row :gutter="20">
           <el-col :span="12">
             <el-input v-model="form.store" placeholder="" />
@@ -75,6 +177,53 @@
           </el-col>
           <el-col :span="2"> 元 </el-col>
         </el-row>
+      </el-form-item> -->
+      <el-form-item
+        label="PO编码"
+        prop="finance_data.po_code"
+        :rules="{ required: true, message: 'PO编码必填', trigger: 'blur' }"
+      >
+        <el-col :span="6">
+          <el-input v-model="form.finance_data.po_code" placeholder="请输入" />
+        </el-col>
+      </el-form-item>
+      <el-form-item
+        label="Budget code"
+        prop="finance_data.budget_code"
+        :rules="{ required: true, message: 'Budget code必填', trigger: 'blur' }"
+      >
+        <el-col :span="6">
+          <el-input v-model="form.finance_data.budget_code" placeholder="请输入" />
+        </el-col>
+      </el-form-item>
+      <el-form-item
+        label="承担比例"
+        prop="finance_data.platform_ratio"
+        :rules="{ required: true, message: 'platform_ratio必填', trigger: 'blur' }"
+      >
+        <div style="display: flex">
+          平台承担&nbsp;
+          <el-input
+            v-model="form.finance_data.platform_ratio"
+            type="number"
+            style="width: 120px"
+            min="0"
+            max="100"
+            placeholder="请输入"
+            @change="handlePlatRatioChange"
+          />
+          &nbsp; %，店铺承担&nbsp;
+          <el-input
+            v-model="form.finance_data.shop_ratio"
+            type="number"
+            style="width: 120px"
+            disabled
+            min="0"
+            max="100"
+            placeholder="请输入"
+          />
+          &nbsp; %
+        </div>
       </el-form-item>
       <el-form-item label="成团人数" prop="person_num" :rules="rules.person_num">
         <el-row :gutter="20">
@@ -143,7 +292,7 @@
     </el-card>
     <div class="content-center">
       <el-button @click.native="handleCancel"> 返回 </el-button>
-      <el-button v-if="true == show" type="primary" @click.prevent="submitItemsAction('form')">
+      <el-button v-if="true == show" type="primary" :loading="saveLoading" @click.prevent="submitItemsAction('form')">
         保存
       </el-button>
     </div>
@@ -173,7 +322,7 @@
         <el-table-column prop="itemName" label="商品名称" />
         <el-table-column label="缩略图">
           <template slot-scope="scope">
-            <img width="20" :src="wximageurl + scope.row.pics[0]">
+            <img width="20" :src="wximageurl + scope.row.pics[0]" />
           </template>
         </el-table-column>
         <el-table-column prop="price" label="销售价" :formatter="priceformatter" />
@@ -204,27 +353,41 @@
         <el-button type="primary" @click="goodsDialogVisible = false">确 定</el-button>
       </span>
     </el-dialog>
+
+    <CompConflictActivities v-model="cActivityVis" :list="cActivityList" />
   </el-form>
 </template>
 <script>
 import { uploadMaterial } from '../../../api/wechat'
 import { getItemsList } from '../../../api/goods'
 import { getDefaultCurrency } from '../../../api/company'
-import { createGroupActivity, updateGroupActivity, getGroupsInfo } from '../../../api/promotions'
+import SkuSelector from '@/components/function/skuSelector'
+import { createGroupActivity, updateGroupActivity, getGroupsInfo,batchGetActivityList } from '../../../api/promotions'
 import imgPicker from '../../../components/imageselect'
 import imgBox from '@/components/element/imgBox'
+import { handleUploadFile, exportUploadTemplate } from '@/api/common'
+import CompConflictActivities from '../promotions/comps/comp-conflict-activities.vue'
+import moment from 'moment'
 
 export default {
   inject: ['refresh'],
   components: {
     imgPicker,
-    imgBox
+    imgBox,
+    SkuSelector,
+    CompConflictActivities,
   },
   data() {
     return {
+      saveLoading:false,
       show: true,
       itemsLoading: false,
       groups_activity_id: '',
+      areasList: [],
+      relItems: [],
+      addedItems: [],
+      cActivityVis:false,
+      cActivityList:[],
       form: {
         pics: '',
         goods_id: '',
@@ -238,7 +401,17 @@ export default {
         robot: '1',
         rig_up: '1',
         free_post: '1',
-        share_desc: ''
+        regionauth_id: '',
+        share_desc: '',
+        marketing_desc: '',
+        use_bound: 'goods',
+        finance_data: {
+          po_code: '',
+          budget_code: '',
+          platform_ratio: 100,
+          shop_ratio: 0
+        },
+        items: []
       },
       goods: {},
       itemsList: [],
@@ -256,8 +429,8 @@ export default {
       dialogImageUrl: '',
       goodsDialogVisible: false,
       rules: {
-        act_name: [{ required: true, message: '请输入拼团活动名称' }],
-        date: [{ required: true, message: '请输入活动时间' }],
+        act_name: [{ required: true, message: '请输入拼团活动名称',  trigger: 'blur'}],
+        date: [{ required: true, message: '请输入活动时间', trigger: 'change' }],
         store: [
           { required: true, message: '请输入拼团库存' },
           { pattern: /^[1-9]\d{0,4}$/, message: '库存最少为1，最多99999' }
@@ -296,8 +469,49 @@ export default {
       this.getGroupsInfo()
     }
     this.getCurrencyInfo()
+    this.getAreaList()
   },
   methods: {
+    async getAreaList() {
+      // 查询区域数据
+      const res = await this.$api.regionauth.getRegionauth()
+      this.areasList = res?.list?.map((el) => ({
+        value: el.regionauth_id,
+        label: el.regionauth_name
+      }))
+    },
+    getItems(data,isSort) {
+      let arr = []
+      data.forEach((item, index) => {
+        let newData = ''
+        let isInArr = this.addedItems.findIndex((n) => n.item_id == item.itemId)
+        if (isInArr == -1) {
+          newData = {
+            item_id: item.itemId,
+            item_bn:item.itemBn,
+            item_title: item.itemName,
+            activity_store: item.store,
+            price:item.price / 100,
+            market_price:item.market_price / 100,
+            activity_price: item.price / 100,
+            item_spec_desc: item.item_spec_desc,
+            sort: item.sort,
+            limit_num: item.limit_num || 0,
+            item_type: item.item_type
+          }
+        } else {
+          newData = this.addedItems[isInArr]
+           // isSort，强制更新sort
+           if(isSort){
+            newData.sort = item.sort
+          }
+        }
+        if (newData) {
+          arr.push(newData)
+        }
+      })
+      this.form.items = arr
+    },
     submitItemsAction(formName) {
       const that = this
       this.$refs[formName].validate((valid) => {
@@ -306,12 +520,17 @@ export default {
             this.$message.error('请上传活动封面')
             return false
           }
-          if (!this.form.goods_id) {
+          if (!this.form.items.length) {
             this.$message.error('请选择商品')
             return false
           }
+
+          let params =  JSON.parse(JSON.stringify(this.form))
+          params.items = JSON.stringify(params.items)
+          console.log(params)
+          this.saveLoading = true
           if (this.groups_activity_id) {
-            updateGroupActivity(this.groups_activity_id, this.form).then((res) => {
+            updateGroupActivity(this.groups_activity_id, params).then((res) => {
               if (res.data.data) {
                 this.$message({
                   message: '更新成功',
@@ -323,9 +542,18 @@ export default {
                   }
                 })
               }
+            }).catch((err)=>{
+            console.log('err',err)
+            let marketing_ids = err.data?.data?.errors?.marketing_ids ?? []
+            if(marketing_ids.length){
+              marketing_ids = marketing_ids.join(',')
+              this.fetchGetActivityList(marketing_ids)
+            }
+          }).finally(()=>{
+              this.saveLoading = false
             })
           } else {
-            createGroupActivity(this.form).then((res) => {
+            createGroupActivity(params).then((res) => {
               if (res.data.data) {
                 this.$message({
                   message: '添加成功',
@@ -337,11 +565,31 @@ export default {
                   }
                 })
               }
+            }).catch((err)=>{
+          console.log('err',err)
+          let marketing_ids = err.data?.data?.errors?.marketing_ids ?? []
+          if(marketing_ids.length){
+            marketing_ids = marketing_ids.join(',')
+            this.fetchGetActivityList(marketing_ids)
+          }
+        }).finally(()=>{
+              this.saveLoading = false
             })
           }
         } else {
           return false
         }
+      })
+    },
+    fetchGetActivityList(marketing_ids){
+      batchGetActivityList({ marketing_ids }).then(res=>{
+        let response = res.data.data
+        this.cActivityVis = true
+        this.cActivityList = response.map(item=>({
+          ...item,
+          start_date: moment(item.start_time * 1000).format('YYYY-MM-DD HH:mm:ss'),
+          end_date: moment(item.end_time * 1000).format('YYYY-MM-DD HH:mm:ss'),
+        }))
       })
     },
     handleCancel() {
@@ -404,6 +652,63 @@ export default {
           })
         })
     },
+    handlePlatRatioChange(val) {
+      if (val > 100) {
+        this.form.finance_data.platform_ratio = 100
+        this.form.finance_data.shop_ratio = 0
+        return
+      }
+      if (val < 0 || !val) {
+        this.form.finance_data.platform_ratio = 0
+        this.form.finance_data.shop_ratio = 100
+        return
+      }
+      this.form.finance_data.shop_ratio = 100 - val
+    },
+    generateSku() {
+      let noSkuItem = []
+      let response = []
+      let goodsList = JSON.parse(JSON.stringify(this.relItems))
+      goodsList.forEach((item) => {
+        if (!item.nospec && item.spec_items.length === 0) {
+          noSkuItem.push(item.default_item_id)
+        }
+      })
+      if (noSkuItem.length > 0) {
+        let param = this.params
+        param.item_id = noSkuItem
+        getItemsList(this.params).then((res) => {
+          goodsList.forEach((item) => {
+            if (!item.nospec) {
+              res.data.data.list.forEach((sku) => {
+                if (item.item_id === sku.default_item_id) {
+                  item.spec_items.push(sku)
+                }
+              })
+            }
+          })
+          goodsList.forEach((item) => {
+            if (!item.nospec) {
+              response = [...response, ...item.spec_items]
+            } else {
+              response = [...response, item]
+            }
+          })
+          this.ItemsList = response
+          this.getItems(response)
+        })
+      } else {
+        goodsList.forEach((item) => {
+          if (!item.nospec) {
+            response = [...response, ...item.spec_items]
+          } else {
+            response = [...response, item]
+          }
+        })
+        this.ItemsList = response
+        this.getItems(response)
+      }
+    },
     getGroupsInfo() {
       getGroupsInfo(this.groups_activity_id)
         .then((response) => {
@@ -419,7 +724,9 @@ export default {
           this.form.rig_up = response.data.data.rig_up == 1 ? '1' : '0'
           this.form.free_post = response.data.data.free_post == 1 ? '1' : '0'
           this.logo_url = this.wximageurl + response.data.data.pics
-          this.goods = response.data.data.goods
+          // this.goods = response.data.data.goods
+          this.relItems = response.itemTreeLists || []
+          this.generateSku()
         })
         .catch((error) => {
           this.$message({
@@ -465,6 +772,64 @@ export default {
           break
       }
       this.getGoodsList()
+    },
+    /**
+     * 下载模板
+     * */
+    uploadHandleTemplate() {
+      let params = { file_type: 'marketing_goods', file_name: '商品模板' }
+      exportUploadTemplate(params).then((response) => {
+        let { data } = response.data
+        if (data.file) {
+          var a = document.createElement('a')
+          a.href = data.file
+          a.download = data.name
+          document.body.appendChild(a)
+          a.click()
+          a.remove()
+        } else {
+          this.$message({
+            type: 'error',
+            message: '没有相关数据可导出'
+          })
+        }
+      })
+    },
+    /**
+     * 上传模板
+     * */
+    uploadHandleChange(file, fileList) {
+      let params = { isUploadFile: true, file_type: 'marketing_goods', file: file.raw }
+      handleUploadFile(params).then((response) => {
+        this.$message({
+          type: 'success',
+          message: '上传成功'
+        })
+        let { data } = response.data
+        if (data.fail.length > 0) {
+          let str = data.fail.map((item) => {
+            return item.item_bn
+          })
+          setTimeout(() => {
+            this.$message({
+              showClose: true,
+              message: `以下商品编号不存在：${str}`,
+              type: 'error',
+              duration: 5000
+            })
+          }, 1500)
+        }
+        if (data.succ.length <= 0) return
+        this.relItems = data.succ
+        let list = []
+        data.succ.forEach((item) => {
+          if (!item.nospec) {
+            list.push(Object.assign(item, { spec_items: [] }))
+          } else {
+            list.push(item)
+          }
+        })
+      })
     }
   }
 }

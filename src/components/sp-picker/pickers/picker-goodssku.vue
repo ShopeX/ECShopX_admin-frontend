@@ -30,6 +30,7 @@ import { SALES_STATUS } from '@/consts'
 import BasePicker from './base'
 import PageMixin from '../mixins/page'
 import { createSetting } from '@shopex/finder'
+import { getRegionauthId } from '@/utils'
 export default {
   name: 'PickerGoods',
   extends: BasePicker,
@@ -70,7 +71,8 @@ export default {
         ...params,
         item_type: 'normal',
         is_sku: true,
-        item_id: this.value.itemId
+        item_id: this.value.itemId,
+         regionauth_id: getRegionauthId()
       }
     },
     afterSearch(response) {

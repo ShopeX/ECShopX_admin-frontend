@@ -90,9 +90,10 @@
 import config from './config'
 export default {
   name: 'Marquees',
-  wgtName: '文字轮播',
+  wgtName: '文本轮播',
   wgtDesc: '',
   wgtIcon: 'wgt-marquees',
+  wgtType: 1,
   config: config,
   props: {
     value: [Object, Array]

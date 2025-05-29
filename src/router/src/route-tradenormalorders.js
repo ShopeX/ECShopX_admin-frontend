@@ -29,6 +29,28 @@ export default {
       ]
     },
     {
+      path: 'entitytrade/orders',
+      name: `商品订单`,
+      component: () => import('@/view/mall/trade/prd_orders/list'),
+      children: [
+        {
+          path: 'detail/:itemId?',
+          component: () => import('@/view/mall/trade/order/detail'),
+          meta: {
+            footerFixed: true
+          }
+        },
+        {
+          path: 'process/:itemId?',
+          component: () => import('@/view/mall/trade/order/process')
+        },
+        {
+          path: 'after-sale/:id?',
+          component: () => import('@/view/mall/trade/order/afterSale')
+        }
+      ]
+    },
+    {
       path: 'entitytrade/prescriptionorders',
       name: `处方药订单`,
       component: () => import('@/view/mall/trade/normalorders/prepList'),
@@ -83,7 +105,17 @@ export default {
         }
       ]
     },
-
+    {
+      path: 'aftersales/preSaleRefundlist',
+      name: `售前列表`,
+      component: () => import('@/view/mall/aftersales/preSaleRefund/list'),
+      children: [
+        {
+          path: 'detail/:itemId?',
+          component: () => import('@/view/mall/aftersales/preSaleRefund/detail')
+        }
+      ]
+    },
     {
       path: 'entitytrade/normalordersupload',
       name: `批量发货`,

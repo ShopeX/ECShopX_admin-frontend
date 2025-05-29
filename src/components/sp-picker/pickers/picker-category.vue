@@ -39,6 +39,7 @@
 <script>
 import BasePicker from './base'
 import PageMixin from '../mixins/page'
+import { getRegionauthId } from '@/utils'
 export default {
   name: 'PickerSaleCategory',
   extends: BasePicker,
@@ -67,7 +68,8 @@ export default {
     async fetch() {
       const { data } = this.value
       const res = await this.$api.goods.getCategory({
-        is_main_category: true
+        is_main_category: true,
+         regionauth_id: getRegionauthId()
       })
       this.options = res
       this.localValue = this.findPathById(res, data)
@@ -95,15 +97,17 @@ export default {
       if (index < e.length - 1) {
         return this.getNodeInfo(node.children, e, ++index)
       } else {
-        const { category_id, category_name } = node
+        const { category_id, category_name,image_url } = node
         return {
           id: category_id,
-          title: category_name
+          title: category_name,
+          image_url
         }
       }
     },
     onChangeCascader(e) {
       const nodeInfo = this.getNodeInfo(this.options, e, 0)
+      console.log(nodeInfo, 'e')
       this.updateVal([nodeInfo])
     }
   }

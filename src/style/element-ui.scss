@@ -133,14 +133,14 @@ $color-secondary: rgba(var(--themeColorRgb), 0.8);
 
 .el-input-number {
   &.is-controls-right {
-    .el-input-number__decrease {
-      bottom: 2px;
-      height: 18px;
-    }
+    // .el-input-number__decrease {
+    //   bottom: 2px;
+    //   height: 18px;
+    // }
 
     .el-input-number__increase {
-      top: 2px;
-      height: 18px;
+      // top: 2px;
+      // height: 18px;
 
       &:hover ~ .el-input {
         .el-input__inner {

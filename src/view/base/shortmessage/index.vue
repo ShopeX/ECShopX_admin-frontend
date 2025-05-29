@@ -1,7 +1,11 @@
 <template>
   <div class="smsAccountPage">
     <div
-      v-if="$route.path.indexOf('shopex_sms') === -1 && $route.path.indexOf('ali_sms') === -1"
+      v-if="
+        $route.path.indexOf('shopex_sms') === -1 &&
+        $route.path.indexOf('ali_sms') === -1 &&
+        $route.path.indexOf('tmp_sms') === -1
+      "
       class="smsBox"
     >
       <section
@@ -10,22 +14,16 @@
         class="box-card"
         @click="tabClick(index)"
       >
-        <img
-          :src="item.img"
-          alt=""
-        >
+        <img :src="item.img" alt="">
         <span>{{ item.title }}</span>
-        <div
-          v-if="index == 0"
-          class="title"
-        >
+        <div v-if="index == 0" class="title">
           {{ aliyunsms_status ? '已启用' : '未启用' }}
         </div>
-        <div
-          v-else
-          class="title"
-        >
-          {{ aliyunsms_status ? '未启用' : '已启用' }}
+        <div v-else-if="index == 2" class="title">
+          {{ chuanglansms_status ? '已启用' : '未启用' }}
+        </div>
+        <div v-else class="title">
+          {{ aliyunsms_status || chuanglansms_status ? '未启用' : '已启用' }}
         </div>
       </section>
     </div>
@@ -37,9 +35,10 @@
 const ali = require('@/assets/img/aliNote/aliyun.png')
 const shopex = require('@/assets/img/aliNote/shopex.png')
 import { getaliSmsStatus } from '@/api/sms'
+import { getaliSmsStatus as getTempSmsStatus } from '@/api/tempSms.js'
 
 export default {
-  data () {
+  data() {
     return {
       sms: [
         {
@@ -49,25 +48,39 @@ export default {
         {
           title: '商派短信',
           img: shopex
+        },
+        {
+          title: '创蓝短信',
+          img: shopex
         }
       ],
-      aliyunsms_status: false
+      aliyunsms_status: false,
+      chuanglansms_status: false
     }
   },
-  async mounted () {
+  async mounted() {
     const result = await getaliSmsStatus()
+    const tempResult = await getTempSmsStatus()
     this.aliyunsms_status = result.data.data.aliyunsms_status
+    this.chuanglansms_status = tempResult.data.data?.status
   },
-  async updated () {
+  async updated() {
     const result = await getaliSmsStatus()
+    const tempResult = await getTempSmsStatus()
     this.aliyunsms_status = result.data.data.aliyunsms_status
+    this.chuanglansms_status = tempResult.data.data?.status
   },
   methods: {
-    tabClick (index) {
+    tabClick(index) {
       switch (index) {
         case 0:
           this.$router.push({
             path: this.matchHidePage('ali_sms')
+          })
+          break
+        case 2:
+          this.$router.push({
+            path: this.matchHidePage('tmp_sms')
           })
           break
         default:

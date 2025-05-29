@@ -76,6 +76,11 @@ export default {
       ]
     },
     {
+      path: 'coupon/writeOffRecord',
+      name: `核销记录`,
+      component: () => import('@/view/member/writeOff/list.vue')
+    },
+    {
       path: 'coupon/couponsend',
       name: `群发优惠券`,
       component: () => import('@/view/member/members/list'),
@@ -219,7 +224,7 @@ export default {
     {
       path: 'marketing/apply/activityverifylist',
       name: `活动核销记录`,
-      component: () => import('@/view/member/selfservice/activityverifylist'),
+      component: () => import('@/view/member/selfservice/activityverifylist')
     },
 
     // {
@@ -422,7 +427,7 @@ export default {
       path: 'popularize/popularizegoodsAudit',
       name: `分销池审核`,
       component: () => import('@/view/popularize/goodsAudit')
-    },
+    }
     // {
     //   path: 'popularize/popularizegoodsAudit',
     //   name: `商家分润`,

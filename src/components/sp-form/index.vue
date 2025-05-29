@@ -155,13 +155,14 @@ export default {
     },
     _renderTextArea(item) {
       const { value } = this
-      const { placeholder, maxlength, key } = item
+      const { placeholder, maxlength, key, disabled } = item
       return (
         <el-input
           clearable
           type='textarea'
           placeholder={placeholder || '请输入内容'}
           rows={5}
+          disabled={isFunction(disabled) ? disabled() : disabled}
           maxlength={maxlength}
           v-model={value[key]}
           show-word-limit
@@ -197,7 +198,8 @@ export default {
         max,
         disabled = false,
         precision = 0,
-        setp = 1
+        setp = 1,
+        size = 'normal'
       } = item
       return (
         // <el-input
@@ -218,6 +220,7 @@ export default {
           max={max}
           precision={precision}
           setp={setp}
+          size={size}
         />
       )
     },
@@ -239,7 +242,12 @@ export default {
           disabled={isFunction(disabled) ? disabled() : disabled}
         >
           {options.map((op) => (
-            <el-option key={op.value} label={op.title} value={op.value} disabled={isFunction(op.disabled) ? op.disabled() : op.disabled} />
+            <el-option
+              key={op.value}
+              label={op.title || op.label}
+              value={op.value}
+              disabled={isFunction(op.disabled) ? op.disabled() : op.disabled}
+            />
           ))}
         </el-select>
       )
@@ -248,7 +256,11 @@ export default {
       const { value } = this
       const { key, disabled = false, options, onChange = () => {} } = item
       return (
-        <el-radio-group v-model={value[key]} onChange={onChange} disabled={isFunction(disabled) ? disabled() : disabled}>
+        <el-radio-group
+          v-model={value[key]}
+          onChange={onChange}
+          disabled={isFunction(disabled) ? disabled() : disabled}
+        >
           {options.map((op) => (
             <el-radio label={op.label}>{op.name}</el-radio>
           ))}
@@ -298,8 +310,24 @@ export default {
     },
     _renderSwitch(item) {
       const { value } = this
-      const { key,disabled=false, onChange = () => {} } = item
-      return <el-switch v-model={value[key]} on-change={onChange} disabled={isFunction(disabled) ? disabled() : disabled} />
+      const { key, disabled = false, onChange = () => {} } = item
+      return (
+        <el-switch
+          v-model={value[key]}
+          on-change={onChange}
+          disabled={isFunction(disabled) ? disabled() : disabled}
+        />
+      )
+    },
+    _renderColor(item) {
+      const { value } = this
+      const { key, disabled = false, options } = item
+      return (
+        <el-color-picker
+          v-model={value[key]}
+          disabled={isFunction(disabled) ? disabled() : disabled}
+        />
+      )
     }
   },
   render() {
@@ -327,7 +355,8 @@ export default {
         'table': this._renderTable,
         'richText': this._renderRichText,
         'image': this._renderImage,
-        'switch': this._renderSwitch
+        'switch': this._renderSwitch,
+        'color': this._renderColor
       }
       return renderItem[item.type](item)
     }

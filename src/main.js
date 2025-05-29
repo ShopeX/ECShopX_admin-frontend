@@ -20,6 +20,8 @@ import vueExtend from './utils/vueExtend'
 import Directives from './directives'
 import { install as Filter } from '@/filters'
 
+import LuckyWheel from '@lucky-canvas/vue'
+
 import './style/common.scss'
 import './style/index.scss'
 
@@ -78,6 +80,8 @@ Vue.use(VueMasonryPlugin)
 Vue.use(VueVideoPlayer)
 
 Vue.use(Filter)
+
+Vue.use(LuckyWheel)
 
 const plugins = {
   SpPickerPlugin

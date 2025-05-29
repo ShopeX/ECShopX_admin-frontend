@@ -235,10 +235,10 @@
         </el-table-column>
       <el-table-column prop="store" label="库存" width="80" show-overflow-tooltip />
     </el-table>
-    <div v-if="total_count > params.pageSize" class="pager">
+    <div class="pager">
       <el-pagination
         background
-        layout="total, sizes, prev, pager, next"
+        layout="total, sizes, prev, pager, next, jumper"
         :current-page.sync="params.page"
         :page-sizes="[10, 20, 30, 50]"
         :total="total_count"
@@ -336,6 +336,10 @@ export default {
     setSearch: {
       type: Boolean,
       default: false
+    },
+    allDistributor: {
+      type: Boolean,
+      default: false
     }
   },
   data() {
@@ -350,7 +354,7 @@ export default {
       currentStore: {},
       params: {
         page: 1,
-        pageSize: 30,
+        pageSize: 10,
         keywords: '',
         item_type: 'normal',
         special_type: ['normal', 'drug'],
@@ -576,7 +580,11 @@ export default {
         param.brand_id = this.select_branch_value
         const category = [...this.select_category_value]
         param.category = category.pop()
-
+        if(this.allDistributor){
+          param.distributor_id = 'all_distributor'
+          if(!param.regionauth_id)return
+        }
+        
         //云店店铺走DistributorItem
         if ((this.VERSION_STANDARD && this.IS_DISTRIBUTOR()) ||
           !(this.VERSION_PLATFORM ||
@@ -877,6 +885,7 @@ export default {
 }
 .pager {
   margin-top: 20px;
+  text-align: right;
 }
 .tab-group {
   .tab-btn {

@@ -1,6 +1,6 @@
 import fetch from '../utils/fetch'
 
-export function setShopexErpSetting (query) {
+export function setShopexErpSetting(query) {
   return fetch({
     url: '/third/shopexerp/setting',
     method: 'post',
@@ -8,14 +8,14 @@ export function setShopexErpSetting (query) {
   })
 }
 
-export function getShopexErpSetting () {
+export function getShopexErpSetting() {
   return fetch({
     url: '/third/shopexerp/setting',
     method: 'get'
   })
 }
 
-export function itemPriceUpdate (query) {
+export function itemPriceUpdate(query) {
   return fetch({
     url: '/oms/goodsprice/update',
     method: 'put',
@@ -23,14 +23,14 @@ export function itemPriceUpdate (query) {
   })
 }
 
-export function getMapSetting () {
+export function getMapSetting() {
   return fetch({
     url: '/third/map/setting',
     method: 'get'
   })
 }
 
-export function setMapSetting (query) {
+export function setMapSetting(query) {
   return fetch({
     url: '/third/map/setting',
     method: 'post',
@@ -38,14 +38,14 @@ export function setMapSetting (query) {
   })
 }
 
-export function getWdtErpSetting () {
+export function getWdtErpSetting() {
   return fetch({
     url: '/third/wdterp/setting',
     method: 'get'
   })
 }
 
-export function setWdtErpSetting (query) {
+export function setWdtErpSetting(query) {
   return fetch({
     url: '/third/wdterp/setting',
     method: 'post',
@@ -68,3 +68,20 @@ export function getJstErpSetting() {
   })
 }
 
+// 设置oms配置
+export function setOmsSetting(query) {
+  return fetch({
+    url: '/third/oms/setting',
+    method: 'post',
+    params: query
+  })
+}
+
+
+// 获取oms配置
+export function getOmsSetting() {
+  return fetch({
+    url: '/third/oms/setting',
+    method: 'get'
+  })
+}

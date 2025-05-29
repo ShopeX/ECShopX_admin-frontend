@@ -77,6 +77,7 @@ import PickerPlanting from './picker-planting'
 import PickerLink from './picker-link'
 import PickerMarketing from './picker-marketing'
 import PickerShop from './picker-shop'
+import PickerSupplier from './picker-supplier'
 import PickerSeckill from './picker-seckill'
 import PickerRegactivity from './picker-regactivity'
 import PickerPurchaseActivity from './picker-purchaseActivity'
@@ -96,6 +97,7 @@ export default {
     PickerLink,
     PickerMarketing,
     PickerShop,
+    PickerSupplier,
     PickerSeckill,
     PickerRegactivity,
     PickerPurchaseActivity,
@@ -227,12 +229,13 @@ export default {
         },
         other_wxapp: () => {
           return pickBy(data, {
-            id: 'wx_external_routes_id',
-            title: ({ app_name, route_name }) => `${app_name} - ${route_name}`,
+            id: 'wx_external_config_id',
+            title: 'app_name',
             extra: ({ app_id, route_info }) => {
               return {
                 appid: app_id,
-                path: route_info
+                linkType: 'full_screen',
+                path: route_info,
               }
             }
           })

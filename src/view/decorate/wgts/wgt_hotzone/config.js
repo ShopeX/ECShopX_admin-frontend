@@ -1,12 +1,35 @@
 import { pickBy } from '@/utils'
 import AttrHotSetting from './attr-hotsetting'
+import CompStyle from '../../comps/comp_style.vue';
 
 export default {
   name: 'imgHotzone',
   setting: [
-    { label: '标题', key: 'title', component: 'input', value: '热区图' },
-    { label: '副标题', key: 'subtitle', component: 'input', value: '图上随意画块块' },
-    { label: '组件间距', key: 'padded', component: 'switch', value: true },
+    {
+      label: "埋点上报参数",
+      key: "track",
+      component: "input",
+      value: "",
+    },
+    {
+      label: '展示形式',
+      key: 'animation',
+      component: 'radiobutton',
+      options: [
+        { name: '横向排列', label: 'horizontal' },
+        { name: '纵向排列', label: 'vertical' }
+      ],
+      value: 'horizontal',
+    },
+    {
+      label: '图片高度',
+      key: 'imgHeight',
+      component: 'number',
+      value: 156,
+      isShow: function (v) {
+        return this.value.animation === 'vertical'
+      }
+    },
     {
       label: '热区设置',
       key: 'data',
@@ -14,7 +37,27 @@ export default {
         return <AttrHotSetting v-model={this.value[key]} />
       },
       value: { imgUrl: '', data: [] }
-    }
+    },
+    {
+      label: '组件外边距',
+      key: 'outerMargin',
+      component: function (h, { key }) {
+          return (
+              <CompStyle
+                  showBgsetting={false}
+                  v-model={this.value[key]}
+                  uuid={this.value.uuid}
+                  showLabel={false}
+              />
+          );
+      },
+      value: {
+          paddedt: 12,
+          paddedb: 12,
+          paddedl: 12,
+          paddedr: 12,
+      },
+  },
   ],
   transformIn: (v) => {
     const {
@@ -37,9 +80,10 @@ export default {
       name: 'name',
       base: (v) => {
         return pickBy(v, {
-          title: 'title',
-          subtitle: 'subtitle',
-          padded: 'padded'
+          track: 'track',
+          animation: 'animation',
+          imgHeight: 'imgHeight',
+          outerMargin: 'outerMargin'
         })
       },
       config: ({ data }) => {

@@ -2,10 +2,20 @@
   <div class="gift-coupon">
     <el-form v-if="!showGiftEdit" ref="form" :rules="rules" :model="form" label-width="140px">
       <el-card shadow="never" header="基础信息">
+        <el-form-item label="区域" prop="regionauth_id">
+          <el-select v-model="form.regionauth_id" placeholder="请选择区域" :disabled="disable">
+            <el-option
+              v-for="(item, index) in areas"
+              :key="index"
+              :label="item.label"
+              :value="item.value"
+            />
+          </el-select>
+        </el-form-item>
         <el-form-item label="优惠券名称" prop="title">
           <el-input
             v-model="form.title"
-            :disabled="form.card_id ? true : false"
+            :disabled="disable"
             :maxlength="15"
             placeholder="请输入优惠券名称"
             show-word-limit
@@ -16,7 +26,7 @@
         <el-form-item label="发放总量" prop="quantity">
           <el-input
             v-model.number="form.quantity"
-            :disabled="form.kq_status === 1 || form.kq_status === 2"
+            :disabled="form.kq_status === 1 || form.kq_status === 2 || !!form.card_id"
             placeholder="发放数量需大于0，且为整数"
             style="width: 400px"
           >
@@ -24,8 +34,18 @@
           </el-input>
         </el-form-item>
 
+        <el-form-item label="领取时间" prop="time">
+          <el-date-picker
+            v-model="form.time"
+            type="datetimerange"
+            :disabled="disable"
+            placeholder="选择日期范围"
+            format="yyyy-MM-dd HH:mm:ss"
+          />
+        </el-form-item>
+
         <el-form-item label="活动类型" prop="date_type">
-          <el-radio-group v-model="form.date_type" :disabled="form.card_id ? true : false">
+          <el-radio-group v-model="form.date_type" :disabled="disable">
             <el-radio label="DATE_TYPE_LONG"> 长期活动 </el-radio>
             <el-radio label="DATE_TYPE_SHORT"> 短期活动 </el-radio>
           </el-radio-group>
@@ -33,7 +53,7 @@
             <el-form-item class="m-b-10" label-width="80px" label="开始时间" prop="begintime">
               <el-date-picker
                 v-model="form.begintime"
-                :disabled="form.card_id ? true : false"
+                :disabled="disable"
                 type="datetime"
                 placeholder="选择日期时间"
                 value-format="yyyy-MM-dd HH:mm:ss"
@@ -53,7 +73,7 @@
               <template>
                 <el-select
                   v-model="form.limit"
-                  :disabled="form.card_id ? true : false"
+                  :disabled="disable"
                   size="small"
                   style="width: 100px"
                 >
@@ -68,13 +88,13 @@
                 <el-input
                   v-model.number="form.days"
                   style="width: 120px; margin-top: 6px"
-                  :disabled="form.card_id ? true : false"
+                  :disabled="disable"
                   size="small"
                 >
                   <template slot="append"> 天 </template>
                 </el-input>
                 <!-- <el-select
-                  :disabled="form.card_id ? true : false"
+                  :disabled="disable"
                   v-model="form.days"
                   size="small"
                   style="width: 100px"
@@ -88,7 +108,7 @@
                 </el-select> -->
                 <span style="padding-left: 8px">内可用</span>
                 <!-- <el-input
-                  :disabled="form.card_id ? true : false"
+                  :disabled="disable"
                   v-model.number="form.days"
                   style="width: 60px"
                   size="small"
@@ -101,7 +121,7 @@
             <el-form-item class="m-b-10" label-width="80px" label="发放时间" prop="issuetime">
               <el-date-picker
                 v-model="form.issuetime"
-                :disabled="form.card_id ? true : false"
+                :disabled="disable"
                 type="datetimerange"
                 range-separator="至"
                 start-placeholder="开始日期"
@@ -113,7 +133,7 @@
             <el-form-item class="m-b-10" label-width="80px" label="使用时间" prop="usetime">
               <el-date-picker
                 v-model="form.usetime"
-                :disabled="form.card_id ? true : false"
+                :disabled="disable"
                 type="datetimerange"
                 range-separator="至"
                 start-placeholder="开始日期"
@@ -128,7 +148,7 @@
         <el-form-item label="卡券使用说明" prop="description">
           <el-input
             v-model="form.description"
-            :disabled="form.kq_status === 1 || form.kq_status === 2"
+            :disabled="form.kq_status === 1 || form.kq_status === 2 || !!form.card_id"
             required
             :maxlength="300"
             show-word-limit
@@ -140,17 +160,13 @@
         </el-form-item>
 
         <!-- <el-form-item label="优惠券主色" prop="color">
-          <el-color-picker v-model="form.color" :disabled="form.card_id ? true : false"></el-color-picker>
+          <el-color-picker v-model="form.color" :disabled="disable"></el-color-picker>
         </el-form-item> -->
       </el-card>
 
       <el-card shadow="never" header="领取和适用规则">
         <el-form-item label="领取限制" prop="get_limit">
-          <el-input
-            v-model.number="form.get_limit"
-            :disabled="form.card_id ? true : false"
-            style="width: 150px"
-          >
+          <el-input v-model.number="form.get_limit" :disabled="disable" style="width: 150px">
             <template slot="append"> 张 </template>
           </el-input>
           <span class="tips after-tips">每个用户领券上限，如不填，则默认为1。</span>
@@ -159,7 +175,7 @@
         <el-form-item label="前台直接领取">
           <el-switch
             v-model="form.receive"
-            :disabled="form.kq_status === 1 || form.kq_status === 2"
+            :disabled="form.kq_status === 1 || form.kq_status === 2 || !!form.card_id"
           />
           <span class="tips after-tips"
             >默认为开启。开启后用户可在卡券列表中领取，未开启需手动发放。</span
@@ -170,7 +186,7 @@
           <el-checkbox-group
             v-model="form.grade_ids"
             class="checkbox"
-            :disabled="form.kq_status === 1 || form.kq_status === 2"
+            :disabled="form.kq_status === 1 || form.kq_status === 2 || !!form.card_id"
           >
             <el-checkbox v-for="grade in memberGrade" :key="grade.grade_id" :label="grade.grade_id">
               {{ grade.grade_name }}
@@ -179,7 +195,7 @@
           <el-checkbox-group
             v-model="form.vip_grade_ids"
             class="checkbox"
-            :disabled="form.kq_status === 1 || form.kq_status === 2"
+            :disabled="form.kq_status === 1 || form.kq_status === 2 || !!form.card_id"
           >
             <el-checkbox
               v-for="vipdata in vipGrade"
@@ -217,7 +233,7 @@
         <el-form-item label="选定商品锁定时间" prop="lock_time">
           <el-input
             v-model.number="form.lock_time"
-            :disabled="form.kq_status === 1 || form.kq_status === 2"
+            :disabled="form.kq_status === 1 || form.kq_status === 2 || !!form.card_id"
             style="width: 100px"
           />&nbsp;小时
           <div class="tips">
@@ -226,7 +242,7 @@
         </el-form-item>
       </el-card>
 
-      <div class="content-center">
+      <div v-if="!form.card_id" class="content-center">
         <el-button v-if="form.kq_status !== 2" @click="cancelSubmit"> 取消 </el-button>
         <template v-if="form.card_id && form.kq_status === 0">
           <el-button type="danger" @click="editGift(2)"> 关闭 </el-button>
@@ -243,7 +259,13 @@
       </div>
     </el-form>
 
-    <GiftEdit v-else :list-data="form" @changeShowEdit="changeShowEdit" @submitList="submitGift" />
+    <GiftEdit
+      v-else
+      :list-data="form"
+      :disable="disable"
+      @changeShowEdit="changeShowEdit"
+      @submitList="submitGift"
+    />
 
     <!-- 标签选择器 -->
     <TagSelect v-model="dialogVisible" @selectTags="selectTags" />
@@ -262,6 +284,16 @@ export default {
   components: {
     GiftEdit,
     TagSelect
+  },
+  props: {
+    areas: {
+      type: Array,
+      default: () => []
+    },
+    disable: {
+      type: Boolean,
+      default: false
+    }
   },
   data() {
     function getTempDays(start = 0) {
@@ -304,6 +336,13 @@ export default {
         }
       }, 500)
     }
+
+    var useScenesChecked = (rule, value, callback) => {
+      if (value.length === 0) {
+        callback(new Error('请选择'))
+      }
+      callback()
+    }
     const params = {
       card_id: null,
       card_type: 'new_gift',
@@ -325,7 +364,9 @@ export default {
       distributor_ids: [],
       items: [],
       grade_ids: [],
-      vip_grade_ids: []
+      vip_grade_ids: [],
+      time: [],
+      regionauth_id: ''
     }
     return {
       form: Object.assign({}, params),
@@ -341,7 +382,9 @@ export default {
         description: [{ required: true, message: '请填写卡券使用说明', trigger: 'blur' }],
         // color: [{ required: true, message: '请选择优惠券主色', trigger: 'blur' }],
         lock_time: [{ required: true, validator: checkQuantity, trigger: 'blur' }],
-        get_limit: [{ validator: checkNumber, trigger: 'blur' }]
+        get_limit: [{ validator: checkNumber, trigger: 'blur' }],
+        regionauth_id: [{ required: true, trigger: 'blur' }],
+        time: [{ required: true, trigger: 'blur', validator: useScenesChecked }]
       },
       totalDays: getTempDays(),
       issueTotalDays: getTempDays(1),

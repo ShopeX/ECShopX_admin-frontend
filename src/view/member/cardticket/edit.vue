@@ -5,13 +5,35 @@
         <el-radio-group v-model="form.card_type" @change="handleTypeChange">
           <el-radio-button label="discount"> 折扣券 </el-radio-button>
           <el-radio-button label="cash"> 满减券 </el-radio-button>
-          <!-- <el-radio-button label="gift">兑换券</el-radio-button> -->
+          <el-radio-button label="minus"> 立减券 </el-radio-button>
           <el-radio-button label="new_gift"> 兑换券 </el-radio-button>
         </el-radio-group>
       </div>
-      <GiftCoupon v-if="form.card_type === 'new_gift'" @haddleShowTab="haddleShowTab" />
+      <GiftCoupon
+        v-if="form.card_type === 'new_gift'"
+        :areas="areas"
+        :disable="onlyShow"
+        @haddleShowTab="haddleShowTab"
+      />
+      <CouponEditV2
+        v-else-if="form.card_type === 'cash' || form.card_type === 'minus'"
+        :card_type="form.card_type"
+        :form_data="form"
+        :areas="areas"
+        :disable="onlyShow"
+      />
       <template v-else>
         <el-card shadow="never" header="基础信息">
+          <el-form-item label="区域" prop="regionauth_id">
+            <el-select v-model="form.regionauth_id" placeholder="请选择区域" :disabled="onlyShow">
+              <el-option
+                v-for="(item, index) in areas"
+                :key="index"
+                :label="item.label"
+                :value="item.value"
+              />
+            </el-select>
+          </el-form-item>
           <el-form-item v-if="form.card_type === 'gift'" label="兑换商品名称" prop="gift">
             <el-input
               v-model="form.gift"
@@ -26,7 +48,7 @@
           <el-form-item v-if="form.card_type === 'discount'" label="折扣额度" prop="discount">
             <el-input
               v-model="form.discount"
-              :disabled="form.card_id ? true : false"
+              :disabled="onlyShow"
               placeholder="只能是大于等于1,小于10的数字"
               style="width: 240px"
               max="9.9"
@@ -37,7 +59,7 @@
             <el-input
               v-model="form.reduce_cost"
               type="number"
-              :disabled="form.card_id ? true : false"
+              :disabled="onlyShow"
               placeholder="只能是大于0的数字"
               style="width: 240px"
             />&nbsp;元
@@ -46,7 +68,7 @@
             <el-input
               v-model.number="form.quantity"
               min="1"
-              :disabled="form.card_id ? true : false"
+              :disabled="onlyShow"
               type="number"
               oninput="value=value.replace(/[^\d.]/g,'')"
               placeholder="只能是大于0的数字"
@@ -56,7 +78,7 @@
           <el-form-item label="券名称" prop="title">
             <el-input
               v-model="form.title"
-              :disabled="form.card_id ? true : false"
+              :disabled="onlyShow"
               placeholder="字数上限为9个汉字"
               style="width: 240px"
               @change="titleChange"
@@ -72,7 +94,7 @@
           <el-form-item label="使用条件" prop="useCondition">
             <el-radio-group
               v-model="form.useCondition"
-              :disabled="form.card_id ? true : false"
+              :disabled="onlyShow"
               @change="conditionChange"
             >
               <template v-if="form.card_type != 'cash'">
@@ -84,13 +106,13 @@
                     v-model="form.least_cost"
                     type="number"
                     min="0"
-                    :disabled="form.card_id || form.useCondition == 1 ? true : false"
+                    :disabled="onlyShow || form.useCondition == 1 ? true : false"
                     style="width: 100px"
                   />&nbsp; 元可用&nbsp;&nbsp;
                   <template v-if="form.card_type === 'discount'">
                     最高限额&nbsp;<el-input
                       v-model="form.most_cost"
-                      :disabled="form.card_id || form.useCondition == 1 ? true : false"
+                      :disabled="onlyShow || form.useCondition == 1 ? true : false"
                       style="width: 100px"
                     />&nbsp; 元
                   </template>
@@ -120,7 +142,7 @@
                   value-format="timestamp"
                   :picker-options="form.card_id ? '' : pickerOptions"
                   style="width: 380px"
-                  :disabled="form.date_type == 'DATE_TYPE_FIX_TERM' ? true : false"
+                  :disabled="form.date_type == 'DATE_TYPE_FIX_TERM' || onlyShow"
                 />
               </div>
               <div
@@ -151,8 +173,7 @@
                       :key="item.value"
                       :label="item.text"
                       :value="item.value"
-                    />
-</el-select
+                    /> </el-select
                   >&nbsp;生效，有效天数&nbsp;
 
                   <el-input
@@ -203,6 +224,15 @@
               </div>
             </el-radio-group>
           </el-form-item>
+          <el-form-item label="领取时间" prop="time">
+            <el-date-picker
+              v-model="form.time"
+              type="datetimerange"
+              :disabled="onlyShow"
+              placeholder="选择日期范围"
+              format="yyyy-MM-dd HH:mm:ss"
+            />
+          </el-form-item>
           <el-form-item label="卡券使用说明" prop="description">
             <el-input
               v-model="form.description"
@@ -212,6 +242,7 @@
               resize="none"
               style="width: 600px"
               placeholder="请填写使用本优惠券的注意事项"
+              :disabled="onlyShow"
               @change="descriptionChange"
             />&nbsp;<span class="frm-tips"
               >{{ inputValue.description_length }}/{{ inputValue.description_max }}</span
@@ -226,13 +257,19 @@
         </el-card>
         <el-card shadow="never" header="适用规则">
           <el-form-item label="前台直接领取1">
-            <el-switch v-model="form.receive" active-color="#13ce66" inactive-color="#d2d4db" />
+            <el-switch
+              v-model="form.receive"
+              active-color="#13ce66"
+              inactive-color="#d2d4db"
+              :disabled="onlyShow"
+            />
           </el-form-item>
           <el-form-item label="领券限制">
             <el-input
               v-model="form.get_limit"
               type="number"
               style="width: 120px"
+              :disabled="onlyShow"
               min="1"
               oninput="value=value.replace(/[^\d.]/g,'')"
             />
@@ -241,7 +278,7 @@
           <el-form-item v-if="is_distributor == false && form.card_type == 'gift'" label="适用平台">
             <el-radio-group
               v-model="form.use_platform"
-              :disabled="form.card_id != ''"
+              :disabled="onlyShow"
               @change="usePlatformChange"
             >
               <el-radio v-if="is_distributor == false" label="store"> 门店专用 </el-radio>
@@ -253,7 +290,7 @@
             label="核销场景"
             prop="use_scenes"
           >
-            <el-radio-group v-model="form.use_scenes" :disabled="form.card_id != ''">
+            <el-radio-group v-model="form.use_scenes" :disabled="onlyShow">
               <el-radio
                 v-if="form.card_type != 'gift' && form.use_platform == 'mall'"
                 label="ONLINE"
@@ -276,7 +313,7 @@
               <el-radio label="1"> 启用验证码 </el-radio>
               <el-radio label="0"> 不启用验证码 </el-radio>
             </el-radio-group>
-            <br>
+            <br />
             <el-input
               v-if="self_rcode === '1'"
               v-model="form.self_consume_code"
@@ -293,10 +330,16 @@
           shadow="naver"
         >
           <el-form-item label="适用商品">
-            <el-radio-group v-model="form.use_all_items" @change="itemTypeChange">
+            <el-radio-group
+              v-model="form.use_all_items"
+              :disabled="onlyShow"
+              @change="itemTypeChange"
+            >
               <el-radio label="true"> 全部商品适用 </el-radio>
               <el-radio label="false"> 指定商品适用 </el-radio>
-              <el-radio label="category"> {{ is_distributor?'指定分类适用':'指定管理分类适用' }} </el-radio>
+              <el-radio label="category">
+                {{ is_distributor ? '指定分类适用' : '指定管理分类适用' }}
+              </el-radio>
               <el-radio label="tag"> 指定商品标签适用 </el-radio>
               <el-radio label="brand"> 指定品牌适用 </el-radio>
             </el-radio-group>
@@ -432,7 +475,11 @@
           shadow="naver"
         >
           <el-form-item label="适用店铺">
-            <el-radio-group v-model="form.use_all_shops" @change="shopTypeChange">
+            <el-radio-group
+              v-model="form.use_all_shops"
+              :disabled="onlyShow"
+              @change="shopTypeChange"
+            >
               <el-radio label="true"> 全部店铺适用 </el-radio>
               <el-radio label="false"> 指定店铺适用 </el-radio>
             </el-radio-group>
@@ -494,20 +541,30 @@ import '@riophae/vue-treeselect/dist/vue-treeselect.css'
 import StoreSelect from '@/components/function/shopSelect'
 import DistributorSelect from '@/components/storeListSelect'
 import SkuSelector from '@/components/function/skuSelector'
-import { getCardDetail, getWechatColor, creatCard, updateCard } from '@/api/cardticket'
-import { pushNewsImage, getAuthorizerInfo } from '@/api/wechat'
+import { getCardDetail, creatCard, updateCard } from '@/api/cardticket'
 import { getWxShopsList } from '@/api/shop'
-import { getItemsList, getCategory, getTagList, getGoodsAttr } from '@/api/goods'
+import { getTagList, getGoodsAttr } from '@/api/goods'
 import { handleUploadFile, exportUploadTemplate } from '../../../api/common'
 import GiftCoupon from './coupon/gift.vue'
+import CouponEditV2 from './coupon/editV2.vue'
+import api from '@/api'
+import moment from 'moment'
+
 export default {
   inject: ['refresh'],
+  provide() {
+    return {
+      areas: this.areas
+    }
+  },
   components: {
     StoreSelect,
     SkuSelector,
     DistributorSelect,
+    // eslint-disable-next-line vue/no-unused-components
     Treeselect,
-    GiftCoupon
+    GiftCoupon,
+    CouponEditV2
   },
   data() {
     let tempDays = [{ text: '当天', value: 0 }]
@@ -646,7 +703,7 @@ export default {
       form: {
         color: '#000000',
         card_id: '',
-        card_type: 'discount',
+        card_type: 'minus',
         title: '',
         least_cost: 0,
         reduce_cost: '',
@@ -675,7 +732,9 @@ export default {
         most_cost: 999999,
         item_category: [],
         tag_ids: [],
-        brand_ids: []
+        brand_ids: [],
+        time: [],
+        regionauth_id: ''
       },
       relItems: [],
       kqhjCheckedItem: '',
@@ -692,7 +751,9 @@ export default {
         useCondition: [{ required: true, validator: useConditionChecked, trigger: 'blur' }],
         description: [{ required: true, validator: descriptionChecked, trigger: 'blur' }],
         quantity: [{ required: true, validator: quantityChecked, trigger: 'blur' }],
-        use_scenes: [{ required: true, validator: useScenesChecked, trigger: 'blur' }]
+        use_scenes: [{ required: true, validator: useScenesChecked, trigger: 'blur' }],
+        time: [{ required: true, validator: useScenesChecked, trigger: 'blur' }],
+        regionauth_id: [{ required: true, trigger: 'blur' }]
       },
       inputValue: {
         title_length: 0,
@@ -746,10 +807,22 @@ export default {
         currentBrands: [],
         brands: []
       },
-      showTab: true
+      showTab: true,
+      areas: [],
+      onlyShow: false
     }
   },
   mounted() {
+    if (this.$route.query.onlyShow) {
+      this.onlyShow = true
+    }
+    api.regionauth.getRegionauth().then((res) => {
+      this.areas = res?.list?.map((el) => ({
+        value: el.regionauth_id,
+        label: el.regionauth_name,
+        title: el.regionauth_name
+      }))
+    })
     if (store.getters.login_type === 'distributor') {
       this.is_distributor = true
       this.form.is_distributor = true
@@ -787,6 +860,14 @@ export default {
             this.form.end_time = ''
           } else {
             this.form.end_time = this.form.end_time * 1000
+          }
+        }
+
+        for (var i in this.distributor_info) {
+          if (
+            this.form.distributor_id.indexOf(Number(this.distributor_info[i].distributor_id)) < 0
+          ) {
+            this.form.distributor_id.push(Number(this.distributor_info[i].distributor_id))
           }
         }
 
@@ -849,13 +930,13 @@ export default {
         let response = res.data.data
         this.distributor_info = response.distributor_info
         this.form.distributor_id = []
-        for (var i in this.distributor_info) {
-          if (
-            this.form.distributor_id.indexOf(Number(this.distributor_info[i].distributor_id)) < 0
-          ) {
-            this.form.distributor_id.push(Number(this.distributor_info[i].distributor_id))
-          }
-        }
+
+        this.form.time = [
+          moment(res?.send_begin_time).format('YYYY-MM-DD HH:mm:ss'),
+          moment(res?.send_end_time).format('YYYY-MM-DD HH:mm:ss')
+        ]
+        console.log(this.form)
+
         this.$nextTick(() => {
           this.relItems = response.itemTreeLists
         })
@@ -1001,6 +1082,11 @@ export default {
       params.rel_distributor_ids = JSON.stringify(this.form.rel_distributor_ids)
       params.rel_shops_ids = JSON.stringify(this.form.rel_shops_ids)
       params.distributor_info = []
+
+      if (params?.time?.length) {
+        params.send_begin_time = moment(this.form.time[0]).unix()
+        params.send_end_time = moment(this.form.time[1]).unix()
+      }
 
       if (params.date_type == 'DATE_TYPE_FIX_TIME_RANGE') {
         params.begin_time = params.begin_time / 1000
@@ -1171,7 +1257,7 @@ export default {
       }
     },
     async fetchMainCate() {
-      if(this.is_distributor){
+      if (this.is_distributor) {
         const res = await this.$api.goods.getCategory({ is_show: false })
         this.categoryList = res
         return

@@ -110,6 +110,7 @@
 import district from '@/common/district.json'
 import { CARD_TYPE } from '@/consts'
 import moment from 'moment'
+import { getRegionauthId } from '@/utils'
 import BasePicker from './base'
 import PageMixin from '../mixins/page'
 export default {
@@ -142,7 +143,8 @@ export default {
         page_no: params.page,
         page_size: params.pageSize,
         end_date: 1,
-        from: 'btn'
+        from: 'btn',
+         regionauth_id: getRegionauthId()
       }
       return params
     },

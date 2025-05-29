@@ -1,153 +1,110 @@
 <template>
   <div class="">
-    <el-table
-      v-loading="loading"
-      :data="logsList"
-      style="width: 100%"
-      border
-      height="500"
-    >
-      <el-table-column
-        prop="operator_name"
-        label="操作内容"
-        width="160"
-      />
-      <el-table-column
-        prop="username"
-        label="操作者"
-        width="160"
-      />
-      <el-table-column
-        prop="ip"
-        label="IP"
-        width="160"
-      />
-      <el-table-column
-        prop="created"
-        label="时间"
-        width="160"
-      >
-        <template slot-scope="scope">
-          <span>{{ scope.row.created | datetime('YYYY-MM-DD HH:mm:ss') }}</span>
-        </template>
-      </el-table-column>
-    </el-table>
-    <div
-      v-if="total_count > params.pageSize"
-      class="content-left content-top-padded"
-    >
-      <el-pagination
-        layout="prev, pager, next"
-        :current-page.sync="params.page"
-        :total="total_count"
-        :page-size="params.pageSize"
-        @current-change="handleCurrentChange"
-      />
-    </div>
+    <SpFinder
+      ref="finder"
+      :setting="setting"
+      :row-actions-align="'left'"
+      :hooks="{
+        beforeSearch: beforeSearch
+      }"
+      url="company/operatorlogs"
+      no-selection
+    />
+    <el-dialog title="操作日志详情" :visible.sync="dialogVisible" width="50%">
+      <div>
+        <pre style="white-space: pre-wrap; word-break: break-word"
+          >{{ row }}
+        </pre>
+      </div>
+    </el-dialog>
   </div>
 </template>
 <script>
-import { Message } from 'element-ui'
-import { getCompanysLogs } from '@/api/company'
+import moment from 'moment'
+import { createSetting } from '@shopex/finder'
+
+const tableSchema = (vm) =>
+  createSetting({
+    search: [
+      { key: 'operator_name', name: '操作内容', placeholder: '请输入' },
+      { key: 'username', name: '操作人名称', placeholder: '请输入' },
+      { key: 'login_name', name: '账号', placeholder: '请输入' }
+    ],
+    columns: [
+      {
+        name: '操作',
+        key: 'option',
+        width: '160',
+        render(h, scope) {
+          return (
+            <el-button className='actBtn' type='text' onClick={() => vm.handleDetail(scope.row)}>
+              详情
+            </el-button>
+          )
+        }
+      },
+      { name: '操作内容', key: 'operator_name', width: '160' },
+      { name: '操作者', key: 'username' },
+      { name: 'IP', key: 'ip', width: '160' },
+      { name: '操作人账号', key: 'login_name', width: '160' },
+      {
+        name: '角色',
+        key: 'role_name',
+        width: '160',
+        render(h, { row }) {
+          return row?.role_name?.map((item) => {
+            return (
+              <el-tag key={item} size='mini' type='warning'>
+                {item}
+              </el-tag>
+            )
+          })
+        }
+      },
+      {
+        name: '区域',
+        key: 'area',
+        render(_, { row }) {
+          return row?.regionauth_ids?.map((item) => {
+            return (
+              <el-tag key={item.regionauth_id} size='mini' type='warning'>
+                {item.regionauth_name}
+              </el-tag>
+            )
+          })
+        }
+      },
+      {
+        name: '时间',
+        key: 'created',
+        width: '160',
+        render(h, scope) {
+          return <span>{moment(scope?.row?.created * 1000).format('YYYY-MM-DD HH:mm:ss')}</span>
+        }
+      }
+    ]
+  })
 
 export default {
-  data () {
+  data() {
     return {
-      logsList: [],
-      companyList: [],
-      companyTotal: 0,
-      companyPageSize: 10,
-      companyName: '',
-      loading: false,
-      total_count: 0,
-      params: {
-        page: 1,
-        pageSize: 20
-      },
-      renderable: true
+      setting: tableSchema(this),
+      dialogVisible: false,
+      row: null
     }
   },
-  mounted () {
-    this.getDataList()
-  },
   methods: {
-    handleCurrentChange (page_num) {
-      this.params.page = page_num
-      this.getDataList()
+    beforeSearch(params) {
+      return {
+        ...params
+      }
     },
-    getDataList () {
-      this.loading = true
-      getCompanysLogs(this.params).then((response) => {
-        this.logsList = response.list
-        this.total_count = response.total_count
-        this.loading = false
-      })
+    handleDetail(row) {
+      console.log(row)
+      this.dialogVisible = true
+      this.row = JSON.stringify(row, null, 2)
     }
   }
 }
 </script>
-<style>
-.el-row {
-  margin-bottom: 20px;
-  &:last-child {
-    margin-bottom: 0;
-  }
-  img {
-    width: 90%;
-  }
-}
-.el-col {
-  border-radius: 4px;
-}
-.bg-purple-dark {
-  background: #99a9bf;
-}
-.bg-purple {
-  background: #d3dce6;
-}
-.bg-purple-light {
-  background: #e5e9f2;
-}
-.grid-content {
-  border-radius: 4px;
-  min-height: 10px;
-  img {
-    width: 90%;
-  }
-}
-.row-bg {
-  padding: 10px 20px;
-  background-color: #f9fafc;
-}
-.service-label .el-checkbox:first-child {
-  margin-left: 15px;
-}
-.service-label .el-input:first-child {
-  margin-left: 15px;
-}
-.grid-detail {
-  max-height: 300px;
-  overflow-y: scroll;
-  margin-bottom: 20px;
-}
-.el-carousel {
-  width: 375px;
-}
-</style>
-<style>
-.grid-detail {
-  table,
-  .detail-content-wrap,
-  .detail-content-item {
-    width: 100% !important;
-  }
-  img {
-    width: 100%;
-  }
-}
-.grid-attribute {
-  table {
-    width: 100% !important;
-  }
-}
-</style>
+<style></style>

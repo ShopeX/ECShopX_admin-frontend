@@ -4,9 +4,9 @@ import AttrItem from './attr-item'
 export default {
   name: 'slider',
   setting: [
-    { label: '标题', key: 'title', component: 'input', value: '分享拼单' },
-    { label: '副标题', key: 'subtitle', component: 'input', value: '分享有好礼，拼单更便宜' },
-    // { label: '标题颜色', key: 'WordColor', component: 'color', value: '#333333' },
+    // { label: '标题', key: 'title', component: 'input', value: '分享拼单' },
+    // { label: '副标题', key: 'subtitle', component: 'input', value: '分享有好礼，拼单更便宜' },
+    // // { label: '标题颜色', key: 'WordColor', component: 'color', value: '#333333' },
     {
       label: '轮播时间',
       key: 'interval',
@@ -16,7 +16,7 @@ export default {
       max: 50000,
       step: 1000
     },
-    { label: '组件间距', key: 'padded', component: 'switch', value: true },
+    // { label: '组件间距', key: 'padded', component: 'switch', value: true },
     { label: '圆角图片', key: 'rounded', component: 'switch', value: false },
     {
       label: '指示点样式',
@@ -87,7 +87,7 @@ export default {
     const { name, base, config, data } = v
     return {
       name,
-      ...base,
+      // ...base,
       ...config,
       data
     }
@@ -97,9 +97,9 @@ export default {
       name: 'name',
       base: (v) => {
         return pickBy(v, {
-          title: 'title',
-          subtitle: 'subtitle',
-          padded: 'padded'
+          // title: 'title',
+          // subtitle: 'subtitle',
+          // padded: 'padded'
         })
       },
       config: (v) => {

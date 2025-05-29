@@ -165,6 +165,16 @@ export default {
       path: 'aliminiapp',
       name: `支付宝小程序设置`,
       component: () => import('@/view/wxapp/aliminiapp/setting')
-    }
+    },  
+     {
+        path: 'sitead/pictureAd',
+        name: `图片广告`,
+        component: () => import('@/view/brand/sitead/pictureAd/index.vue')
+      },
+      {
+        path: 'sitead/dialogAd',
+        name: `弹窗广告`,
+        component: () => import('@/view/brand/sitead/dialogAd/index.vue')
+      }
   ]
 }

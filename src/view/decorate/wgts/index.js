@@ -15,6 +15,9 @@ import WgtMarquees from './wgt_marquees'
 import WgtFloorImg from './wgt_floorImg'
 import WgtNearbyShop from './wgt_nearbyShop'
 import WgtImageNavigation from './wgt_imgNavigation'
+import WgtGoodsCard from './wgt_goodsCard'
+import WgtWriting from './wgt_writing'
+import WgtHeading from './wgt_heading'
 
 // 首页装修
 let SCENE_1001 = {
@@ -74,7 +77,11 @@ const SCENE_1004 = SCENE_1001
 
 // 软文
 const SCENE_1005 = {
-  WgtSlider
+  WgtSlider,
+  WgtFilm,
+  WgtGoodsCard,
+  WgtWriting,
+  WgtHeading
 }
 
 // ibs导航
@@ -93,5 +100,6 @@ export default {
   1002: SCENE_1002,
   1003: SCENE_1003,
   1004: SCENE_1004,
-  1006: SCENE_1006,
+  1005: SCENE_1005,
+  1006: SCENE_1006
 }

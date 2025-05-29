@@ -102,18 +102,17 @@ import { SYSTEM_CONFIG } from '@/consts'
 import store from '@/store'
 import { hex2rgb } from '@/utils'
 import gWgts from './wgts'
-import comps from './comps'
 import attrPanel from './attr_panel'
 import Header from './wgts/wgt-page'
 export default {
-  async beforeRouteLeave(to, from, next) {
-    this.resetDecorateTheme()
-    next()
-  },
   components: {
     draggable,
     attrPanel,
     Header
+  },
+  async beforeRouteLeave(to, from, next) {
+    this.resetDecorateTheme()
+    next()
   },
   props: {
     value: {
@@ -203,7 +202,6 @@ export default {
   },
   methods: {
     regsiterWgts() {
-      console.log('wgts:', wgts, comps)
       // const { scene = '1001' } = this.$route.query
       const wgts = gWgts[this.localScene]
       Object.keys(wgts).forEach((index) => {

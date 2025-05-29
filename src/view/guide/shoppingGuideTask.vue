@@ -6,10 +6,7 @@
     >
       <el-row>
         <el-col>
-          <el-select
-            v-model="params.status"
-            placeholder="请选择"
-          >
+          <el-select v-model="params.status" placeholder="请选择">
             <el-option
               v-for="item in stateOptions"
               :key="item.value"
@@ -17,79 +14,42 @@
               :value="item.value"
             />
           </el-select>
-          <el-input
-            v-model="params.title"
-            class="input-b"
-            placeholder="请输入任务名称"
-          >
-            <el-button
-              slot="append"
-              icon="el-icon-search"
-              @click="handelClickSearch"
-            />
+          <el-input v-model="params.title" class="input-b" placeholder="请输入任务名称">
+            <el-button slot="append" icon="el-icon-search" @click="handelClickSearch" />
           </el-input>
-          <el-button
-            type="primary"
-            icon="el-icon-circle-plus-outline"
-            @click="handelClickAdd"
-          >
+          <el-button type="primary" icon="el-icon-circle-plus-outline" @click="handelClickAdd">
             新增任务
           </el-button>
         </el-col>
       </el-row>
       <!-- table -->
       <el-card>
-        <el-table
-          v-loading="loadingTable"
-          :data="list"
-          style="width: 100%"
-        >
-          <el-table-column
-            prop="task_name"
-            label="任务名称"
-          />
-          <el-table-column
-            prop="created"
-            label="任务时间"
-          >
-            <template
-              slot-scope="scope"
-            >
+        <el-table v-loading="loadingTable" :data="list" style="width: 100%">
+          <el-table-column prop="task_name" label="任务名称" />
+          <el-table-column prop="created" label="任务时间">
+            <template slot-scope="scope">
               {{ scope.row.start_time | datetime('YYYY-MM-DD HH:mm:ss') }}～{{
                 scope.row.end_time | datetime('YYYY-MM-DD HH:mm:ss')
               }}
             </template>
           </el-table-column>
-          <el-table-column
-            prop="withdraw"
-            label="任务状态"
-          >
+          <el-table-column prop="withdraw" label="任务状态">
             <template slot-scope="scope">
               {{ scope.row.status | sendingState }}
             </template>
           </el-table-column>
-          <el-table-column
-            fixed="right"
-            label="操作"
-            width="200"
-          >
+          <el-table-column fixed="right" label="操作" width="200">
             <template slot-scope="scope">
               <el-button
                 type="text"
-                @click="() => $router.push({ path: matchHidePage('editor/' + scope.row.task_id) })"
+                @click="() => $router.push({ path: matchRoutePath('editor/' + scope.row.task_id) })"
               >
                 编辑
               </el-button>
-              <el-button
-                type="text"
-                @click="cancleSalesperosnTaskAction(scope.row)"
-              >
+              <el-button type="text" @click="cancleSalesperosnTaskAction(scope.row)">
                 终止
               </el-button>
-              <el-button
-                type="text"
-                @click="salesperosnTaskStatisticsAction(scope.row)"
-              >
+              <el-button type="text" @click="salesperosnTaskStatisticsAction(scope.row)">
                 统计
               </el-button>
             </template>
@@ -117,13 +77,8 @@ import { mapGetters } from 'vuex'
 import { getSalesperosnTask, cancleSalesperosnTask } from '@/api/shop'
 
 export default {
-  provide () {
-    return {
-      refresh: this.refresh
-    }
-  },
   filters: {
-    sendingState (v) {
+    sendingState(v) {
       if (v == 'waiting') {
         return '未开始'
       }
@@ -136,7 +91,12 @@ export default {
       return '已终止'
     }
   },
-  data () {
+  provide() {
+    return {
+      refresh: this.refresh
+    }
+  },
+  data() {
     return {
       loadingTable: false,
       stateOptions: [
@@ -174,11 +134,11 @@ export default {
   computed: {
     ...mapGetters(['wheight'])
   },
-  mounted () {
+  mounted() {
     this.getList()
   },
   methods: {
-    getList () {
+    getList() {
       this.loadingTable = true
       getSalesperosnTask(this.params).then((response) => {
         this.list = response.data.data.list
@@ -186,22 +146,22 @@ export default {
         this.loadingTable = false
       })
     },
-    handelClickSearch () {
+    handelClickSearch() {
       this.getList()
     },
-    handleSizeChange (val) {
+    handleSizeChange(val) {
       this.params.page = 1
       this.params.pageSize = val
       this.getList()
     },
-    handleCurrentChange (val) {
+    handleCurrentChange(val) {
       this.paging.page = val
       this.getList()
     },
-    handelClickAdd () {
-      this.$router.push({ path: this.matchHidePage('editor') })
+    handelClickAdd() {
+      this.$router.push({ path: this.matchRoutePath('editor') })
     },
-    cancleSalesperosnTaskAction (row) {
+    cancleSalesperosnTaskAction(row) {
       this.$confirm('此操作将终止该任务, 是否继续?', '提示', {
         confirmButtonText: '确定',
         cancelButtonText: '取消',
@@ -222,10 +182,13 @@ export default {
           })
       })
     },
-    salesperosnTaskStatisticsAction (row) {
-      this.$router.push({ path: this.matchHidePage('statistics'), query: { task_id: row.task_id } })
+    salesperosnTaskStatisticsAction(row) {
+      this.$router.push({
+        path: this.matchRoutePath('statistics'),
+        query: { task_id: row.task_id }
+      })
     },
-    refresh () {
+    refresh() {
       this.getList()
     }
   }

@@ -85,13 +85,13 @@ import {
 import shopSelect from '@/components/shopSelect'
 
 export default {
+  components: {
+    shopSelect
+  },
   provide() {
     return {
       refresh: this.getActivityLists
     }
-  },
-  components: {
-    shopSelect
   },
   data() {
     return {
@@ -145,10 +145,10 @@ export default {
       this.getActivityLists()
     },
     addActivityData() {
-      this.$router.push({ path: this.matchHidePage('editor') })
+      this.$router.push({ path: this.matchRoutePath('editor') })
     },
     editActivityAction(index, row) {
-      this.$router.push({ path: this.matchHidePage('editor/') + row.marketing_id })
+      this.$router.push({ path: this.matchRoutePath('editor/') + row.marketing_id })
     },
     deleteActivityAction(row) {
       var msg = '你确定要删除该活动吗?'
@@ -172,11 +172,11 @@ export default {
       })
     },
     updateDetail(row) {
-      this.$router.push({ path: this.matchHidePage('editor/') + row.marketing_id })
+      this.$router.push({ path: this.matchRoutePath('editor/') + row.marketing_id })
     },
     viewDetail(row) {
       this.$router.push({
-        path: this.matchHidePage('editor/') + row.marketing_id,
+        path: this.matchRoutePath('editor/') + row.marketing_id,
         query: { isnodata: true }
       })
     },

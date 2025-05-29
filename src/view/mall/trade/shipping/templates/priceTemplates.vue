@@ -131,7 +131,7 @@ export default {
       })
     },
     editTemplatesAction(index, row) {
-      this.$router.push({ path: this.matchHidePage('editor/') + row.template_id })
+      this.$router.push({ path: this.matchRoutePath('editor/') + row.template_id })
     },
     deleteTemplatesAction(index, row) {
       this.$confirm('此操作将删除该运费模板, 是否继续?', '提示', {

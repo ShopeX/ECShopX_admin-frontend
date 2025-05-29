@@ -177,7 +177,6 @@
 </template>
 <script>
 import { mapGetters } from 'vuex'
-import '@riophae/vue-treeselect/dist/vue-treeselect.css'
 import { Message } from 'element-ui'
 import shopSelect from '@/components/shopSelect'
 import district from '@/common/district.json'
@@ -187,12 +186,12 @@ export default {
   components: {
     shopSelect
   },
-  props: ['getStatus'],
   provide() {
     return {
       refresh: this.getGoodsList
     }
   },
+  props: ['getStatus'],
   data() {
     return {
       dialogVisible: false,

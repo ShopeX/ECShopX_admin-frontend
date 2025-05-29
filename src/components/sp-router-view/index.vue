@@ -1,4 +1,3 @@
-<style lang="scss"></style>
 <template>
   <div class="sp-router-view">
     <div v-show="!showRouterView">
@@ -14,7 +13,9 @@
 export default {
   name: 'SpRouterView',
   data() {
-    return {}
+    return {
+      currentRoute: null
+    }
   },
   computed: {
     showRouterView() {
@@ -22,11 +23,15 @@ export default {
       return matched.length == 3
     }
   },
-  created() {},
+  created() {
+    this.currentRoute = this.$route
+  },
   methods: {
-    onHooksRouteBack() {
-      this.$parent.onHooksRouteBack()
+    onActivated() {
+      this.$parent.$activated(this.currentRoute, this.$route)
     }
   }
 }
 </script>
+
+<style lang="scss" scoped></style>

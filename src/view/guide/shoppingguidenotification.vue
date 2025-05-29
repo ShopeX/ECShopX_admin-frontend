@@ -1,15 +1,9 @@
 <template>
   <div>
-    <div
-      v-if="$route.path.indexOf('editor') === -1"
-      class="shoppingguidenotification"
-    >
+    <div v-if="$route.path.indexOf('editor') === -1" class="shoppingguidenotification">
       <el-row>
         <el-col>
-          <el-select
-            v-model="searchData.status"
-            placeholder="请选择"
-          >
+          <el-select v-model="searchData.status" placeholder="请选择">
             <el-option
               v-for="item in stateOptions"
               :key="item.value"
@@ -17,73 +11,41 @@
               :value="item.value"
             />
           </el-select>
-          <el-input
-            v-model="searchData.title"
-            class="input-b"
-            placeholder="请输入通知名称"
-          >
-            <el-button
-              slot="append"
-              icon="el-icon-search"
-              @click="handelClickSearch"
-            />
+          <el-input v-model="searchData.title" class="input-b" placeholder="请输入通知名称">
+            <el-button slot="append" icon="el-icon-search" @click="handelClickSearch" />
           </el-input>
-          <el-button
-            type="primary"
-            icon="el-icon-circle-plus-outline"
-            @click="handelClickAdd"
-          >
+          <el-button type="primary" icon="el-icon-circle-plus-outline" @click="handelClickAdd">
             新增通知
           </el-button>
         </el-col>
       </el-row>
       <!-- table -->
       <el-card>
-        <el-table
-          v-loading="loadingTable"
-          :data="tableData"
-          style="width: 100%"
-        >
-          <el-table-column
-            prop="title"
-            label="通知标题"
-          />
-          <el-table-column
-            prop="created"
-            label="创建时间"
-          >
+        <el-table v-loading="loadingTable" :data="tableData" style="width: 100%">
+          <el-table-column prop="title" label="通知标题" />
+          <el-table-column prop="created" label="创建时间">
             <template slot-scope="scope">
               {{ timestampToTime(scope.row.created) }}
             </template>
           </el-table-column>
-          <el-table-column
-            prop="updated"
-            label="最后一次发送时间"
-          >
+          <el-table-column prop="updated" label="最后一次发送时间">
             <template slot-scope="scope">
               {{ timestampToTime(scope.row.last_sent_time) }}
             </template>
           </el-table-column>
-          <el-table-column
-            prop="withdraw"
-            label="发送状态"
-          >
+          <el-table-column prop="withdraw" label="发送状态">
             <template slot-scope="scope">
               {{ scope.row.status | sendingState }}
             </template>
           </el-table-column>
-          <el-table-column
-            fixed="right"
-            label="操作"
-            width="200"
-          >
+          <el-table-column fixed="right" label="操作" width="200">
             <template slot-scope="scope">
               <el-button
                 type="text"
                 @click="
                   () =>
                     $router.push({
-                      path: matchHidePage('editor'),
+                      path: matchRoutePath('editor'),
                       query: { id: scope.row.notice_id }
                     })
                 "
@@ -147,35 +109,17 @@
           }
         "
       >
-        <el-form
-          v-loading="loading"
-          :model="seeDataForm"
-          label-width="100px"
-        >
-          <el-form-item
-            label="通知时间："
-          >
+        <el-form v-loading="loading" :model="seeDataForm" label-width="100px">
+          <el-form-item label="通知时间：">
             {{ seeDataForm.last_sent_time | formatDataTime }}
             {{ seeDataForm.status | sendingState }}
           </el-form-item>
-          <el-form-item
-            v-if="seeDataForm.all_distributor == 1"
-            label="通知店铺："
-          >
+          <el-form-item v-if="seeDataForm.all_distributor == 1" label="通知店铺：">
             全部
           </el-form-item>
-          <el-form-item
-            v-if="seeDataForm.all_distributor == 0"
-            label="通知店铺："
-          >
-            <el-tag
-              v-for="(item, index) in seeDataForm.distributors"
-              :key="index"
-              size="size"
-            >
-              {{
-                item.name
-              }}
+          <el-form-item v-if="seeDataForm.all_distributor == 0" label="通知店铺：">
+            <el-tag v-for="(item, index) in seeDataForm.distributors" :key="index" size="size">
+              {{ item.name }}
             </el-tag>
           </el-form-item>
         </el-form>
@@ -193,39 +137,19 @@
         "
       >
         <div class="flex">
-          <div class="label">
-            选择通知门店：
-          </div>
+          <div class="label">选择通知门店：</div>
           <div>
-            <el-radio
-              v-model="sendDataForm.radio"
-              label="1"
-            >
-              全部门店
-            </el-radio>
-            <el-radio
-              v-model="sendDataForm.radio"
-              label="2"
-            >
-              选择门店
-            </el-radio>
+            <el-radio v-model="sendDataForm.radio" label="1"> 全部门店 </el-radio>
+            <el-radio v-model="sendDataForm.radio" label="2"> 选择门店 </el-radio>
           </div>
         </div>
         <div class="flex ma-t">
-          <div class="label">
-            通知门店：
-          </div>
-          <div v-if="sendDataForm.radio == 1">
-            全部
-          </div>
+          <div class="label">通知门店：</div>
+          <div v-if="sendDataForm.radio == 1">全部</div>
           <div v-if="sendDataForm.radio == 2">
             <div>
               <ul class="flex">
-                <li
-                  v-for="item in distributor_info"
-                  :key="item.distributor_id"
-                  class="ma-r"
-                >
+                <li v-for="item in distributor_info" :key="item.distributor_id" class="ma-r">
                   <el-tag>{{ item.name }}</el-tag>
                 </li>
               </ul>
@@ -243,15 +167,9 @@
             </el-button>
           </div>
         </div>
-        <span
-          slot="footer"
-          class="dialog-footer"
-        >
+        <span slot="footer" class="dialog-footer">
           <el-button @click="showSendModule = false">取 消</el-button>
-          <el-button
-            type="primary"
-            @click="handelClickSendOut"
-          >确 定</el-button>
+          <el-button type="primary" @click="handelClickSendOut">确 定</el-button>
         </span>
       </el-dialog>
       <DistributorSelect
@@ -280,13 +198,8 @@ export default {
   components: {
     DistributorSelect
   },
-  provide () {
-    return {
-      refresh: this.fetchList
-    }
-  },
   filters: {
-    sendingState (v) {
+    sendingState(v) {
       if (v == 1) {
         return '未发送'
       }
@@ -296,7 +209,12 @@ export default {
       return '已撤回'
     }
   },
-  data () {
+  provide() {
+    return {
+      refresh: this.fetchList
+    }
+  },
+  data() {
     return {
       loadingTable: false,
       loading: false,
@@ -348,7 +266,7 @@ export default {
     }
   },
   watch: {
-    showSeeModule (val) {
+    showSeeModule(val) {
       if (val) {
         this._getSalespersonoticeDetail()
       }
@@ -358,11 +276,11 @@ export default {
   computed: {
     ...mapGetters(['wheight'])
   },
-  mounted () {
+  mounted() {
     this.handelClickSearch()
   },
   methods: {
-    resetPage () {
+    resetPage() {
       this.paging = {
         page: 1,
         page_size: 10,
@@ -370,7 +288,7 @@ export default {
       }
     },
 
-    fetchList () {
+    fetchList() {
       this.resetPage()
       this.handelClickSearch()
     },
@@ -378,7 +296,7 @@ export default {
     /**
      * 搜索
      * */
-    async handelClickSearch () {
+    async handelClickSearch() {
       let { page, page_size } = this.paging
       let { title, status } = this.searchData
 
@@ -402,12 +320,12 @@ export default {
     /**
      * 分页
      * */
-    handleCurrentChange (val) {
+    handleCurrentChange(val) {
       this.paging.page = val
       this.handelClickSearch()
     },
     // 时间戳转日期格式
-    timestampToTime (timestamp) {
+    timestampToTime(timestamp) {
       var date = new Date(timestamp * 1000) //时间戳为10位需*1000，时间戳为13位的话不需乘1000
       var YY = date.getFullYear() + '-'
       var MM = (date.getMonth() + 1 < 10 ? '0' + (date.getMonth() + 1) : date.getMonth() + 1) + '-'
@@ -422,14 +340,14 @@ export default {
      * 新增消息通知
      * */
 
-    handelClickAdd (id) {
-      this.$router.push({ path: this.matchHidePage('editor') })
+    handelClickAdd(id) {
+      this.$router.push({ path: this.matchRoutePath('editor') })
     },
 
     /**
      * 撤回发送
      * */
-    handelClickRevoke (row) {
+    handelClickRevoke(row) {
       let notice_id = row.notice_id
       this.checkWithdrawnotice(async () => {
         let data = await delSalespersonoticeWithdrawnotice({ notice_id })
@@ -444,7 +362,7 @@ export default {
         })
       })
     },
-    checkWithdrawnotice (callback) {
+    checkWithdrawnotice(callback) {
       this.$confirm('撤回后，对应店铺的导购将无法再看到次通知?', '提示', {
         confirmButtonText: '确定',
         cancelButtonText: '取消',
@@ -457,7 +375,7 @@ export default {
     /**
      * 选择店铺
      * */
-    handelClickDistributor (data) {
+    handelClickDistributor(data) {
       this.distributorVisible = false
       if (data === null || data.length <= 0) return
       this.distributor_info = data
@@ -473,7 +391,7 @@ export default {
     /**
      * 发送导购通知
      * */
-    async handelClickSendOut () {
+    async handelClickSendOut() {
       let params = {
         notice_id: this.temporary.notice_id,
         distributor_id:
@@ -507,7 +425,7 @@ export default {
     /**
      * 获取导购通知
      * */
-    async _getSalespersonoticeDetail () {
+    async _getSalespersonoticeDetail() {
       this.loading = true
 
       let { data } = await getSalespersonoticeDetail({
@@ -518,7 +436,7 @@ export default {
       this.loading = false
       console.log('_getSalespersonoticeDetail', data)
     },
-    handleSizeChange (val) {
+    handleSizeChange(val) {
       this.paging.page = 1
       this.paging.page_size = val
       this.handelClickSearch()

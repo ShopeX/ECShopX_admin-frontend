@@ -85,7 +85,7 @@ export default (vm) => {
           type: 'link',
           handler: async (val) => {
             vm.$router.push({
-              path: vm.matchHidePage('edit'),
+              path: vm.matchRoutePath('edit'),
               query: { type: 'detail', id: val[0].id }
             })
           }
@@ -100,7 +100,7 @@ export default (vm) => {
           type: 'link',
           handler: async (val) => {
             vm.$router.push({
-              path: vm.matchHidePage('edit'),
+              path: vm.matchRoutePath('edit'),
               query: { type: 'edit', id: val[0].id }
             })
           }

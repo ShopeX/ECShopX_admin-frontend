@@ -1,4 +1,4 @@
-{
+module.exports = {
   "root": true,
   "env": {
     "node": true
@@ -8,12 +8,18 @@
     "parser": "@babel/eslint-parser"
   },
   "rules": {
-    "vue/require-default-prop": 0,
-    "vue/max-attributes-per-line": 0,
-    "vue/singleline-html-element-content-newline": 0,
+    "vue/component-tags-order": 0,
     "vue/html-closing-bracket-newline": 0,
     "vue/html-indent": 0,
+    "vue/max-attributes-per-line": 0,
+    "vue/no-dupe-keys": 0,
+    "vue/no-lone-template": 0,
+    "vue/no-unused-components": 0,
+    "vue/require-default-prop": 0,
+    "vue/require-v-for-key": 0,
+    "vue/singleline-html-element-content-newline": 0,
     "no-unused-vars": 0,
+    "no-dupe-keys": 0,
     "vue/html-self-closing": [
       "error",
       {

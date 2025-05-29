@@ -21,7 +21,7 @@
       <el-row :gutter="10">
         <el-col v-for="(item, index) in tableList" :key="index" :xs="12" :sm="8" :md="6" :lg="4">
           <div class="article-item">
-            <router-link :to="{ path: matchHidePage('editor'), query: { id: item.article_id } }">
+            <router-link :to="{ path: matchRoutePath('editor'), query: { id: item.article_id } }">
               <div
                 class="thumbnail"
                 :style="
@@ -101,15 +101,15 @@ import { deleteArticle, updateArticleSortOrStatus } from '@/api/article'
 import DataPlaceholder from '@/components/element/dataPlaceholder'
 
 export default {
+  components: {
+    dataPlaceholder: DataPlaceholder
+  },
+  mixins: [mixin, pageMixin],
   provide() {
     return {
       refresh: this.fetchList
     }
   },
-  components: {
-    dataPlaceholder: DataPlaceholder
-  },
-  mixins: [mixin, pageMixin],
   data() {
     return {
       loading: false,
@@ -124,7 +124,7 @@ export default {
   },
   methods: {
     articleAdd(id) {
-      this.$router.push({ path: this.matchHidePage('editor') })
+      this.$router.push({ path: this.matchRoutePath('editor') })
     },
     articleDelete(id) {
       const _self = this

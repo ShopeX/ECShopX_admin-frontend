@@ -14,7 +14,7 @@
         }"
         url="/aliyunsms/sign/list"
       >
-        <template v-slot:tableTop>
+        <template #tableTop>
           <div style="text-align: right; margin-bottom: 20px">
             <el-button size="small" type="primary" @click="addSignature"> 新增签名 </el-button>
           </div>
@@ -46,7 +46,7 @@ export default {
   },
   methods: {
     addSignature() {
-      this.$router.push({ path: this.matchHidePage('edit') })
+      this.$router.push({ path: this.matchRoutePath('edit') })
     },
     beforeSearch(params) {
       return { ...params }

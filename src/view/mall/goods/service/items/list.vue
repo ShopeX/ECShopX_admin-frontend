@@ -2,43 +2,17 @@
   <div>
     <el-row :gutter="20">
       <el-col :span="12">
-        <el-button
-          type="primary"
-          icon="plus"
-          size="mini"
-          @click="addItems"
-        >
-          添加商品
-        </el-button>
+        <el-button type="primary" icon="plus" size="mini" @click="addItems"> 添加商品 </el-button>
       </el-col>
       <el-col :span="12">
-        <el-input
-          v-model="goodsName"
-          placeholder="商品名称"
-          size="mini"
-        >
-          <el-button
-            slot="append"
-            icon="el-icon-search"
-            @click="goodsSearch"
-          />
+        <el-input v-model="goodsName" placeholder="商品名称" size="mini">
+          <el-button slot="append" icon="el-icon-search" @click="goodsSearch" />
         </el-input>
       </el-col>
     </el-row>
-    <el-table
-      v-loading="loading"
-      :data="ItemsList"
-      :height="wheight - 220"
-    >
-      <el-table-column
-        prop="itemId"
-        label="商品ID"
-        width="70"
-      />
-      <el-table-column
-        label="排序编号"
-        width="100"
-      >
+    <el-table v-loading="loading" :data="ItemsList" :height="wheight - 220">
+      <el-table-column prop="itemId" label="商品ID" width="70" />
+      <el-table-column label="排序编号" width="100">
         <template slot-scope="scope">
           <el-input
             v-model="scope.row.sort"
@@ -47,40 +21,20 @@
           />
         </template>
       </el-table-column>
-      <el-table-column
-        prop="itemName"
-        label="商品名称"
-      />
-      <el-table-column
-        width="120"
-        prop="price"
-        label="价格"
-        :formatter="priceformatter"
-      />
-      <el-table-column
-        width="120"
-        label="核销类型"
-      >
+      <el-table-column prop="itemName" label="商品名称" />
+      <el-table-column width="120" prop="price" label="价格" :formatter="priceformatter" />
+      <el-table-column width="120" label="核销类型">
         <template slot-scope="scope">
           <span v-if="scope.row.consumeType == 'all'">团购券类型</span>
           <span v-else-if="scope.row.consumeType == 'every'">次卡类型</span>
           <span v-else>充值记录</span>
         </template>
       </el-table-column>
-      <el-table-column
-        width="120"
-        label="操作"
-      >
+      <el-table-column width="120" label="操作">
         <template slot-scope="scope">
           <div class="operating-icons">
-            <i
-              class="iconfont icon-search-plus"
-              @click="itemsDetail(scope.$index, scope.row)"
-            />
-            <i
-              class="iconfont icon-edit1"
-              @click="editItemsAction(scope.$index, scope.row)"
-            />
+            <i class="iconfont icon-search-plus" @click="itemsDetail(scope.$index, scope.row)" />
+            <i class="iconfont icon-edit1" @click="editItemsAction(scope.$index, scope.row)" />
             <i
               class="mark iconfont icon-trash-alt1"
               @click="deleteItemsAction(scope.$index, scope.row)"
@@ -89,10 +43,7 @@
         </template>
       </el-table-column>
     </el-table>
-    <div
-      v-if="total_count > params.pageSize"
-      class="content-center content-top-padded"
-    >
+    <div v-if="total_count > params.pageSize" class="content-center content-top-padded">
       <el-pagination
         background
         layout="total, sizes, prev, pager, next"
@@ -114,35 +65,19 @@
       <template>
         <el-row class="row-bg">
           <el-col :span="3">
-            <div class="grid-content">
-              核销类型
-            </div>
+            <div class="grid-content">核销类型</div>
           </el-col>
           <el-col :span="21">
-            <div
-              v-if="itemsDetailData.consume_type == 'every'"
-              class="grid-content"
-            >
-              次卡类型
-            </div>
-            <div
-              v-if="itemsDetailData.consume_type == 'all'"
-              class="grid-content"
-            >
-              团购券类型
-            </div>
+            <div v-if="itemsDetailData.consume_type == 'every'" class="grid-content">次卡类型</div>
+            <div v-if="itemsDetailData.consume_type == 'all'" class="grid-content">团购券类型</div>
           </el-col>
         </el-row>
 
         <el-row class="row-bg">
           <el-col :span="3">
-            <div class="grid-content">
-              商品名称
-            </div>
+            <div class="grid-content">商品名称</div>
           </el-col>
-          <el-col
-            :span="21"
-          >
+          <el-col :span="21">
             <div class="grid-content">
               {{ itemsDetailData.item_name }}
             </div>
@@ -150,13 +85,9 @@
         </el-row>
         <el-row class="row-bg">
           <el-col :span="3">
-            <div class="grid-content">
-              简述
-            </div>
+            <div class="grid-content">简述</div>
           </el-col>
-          <el-col
-            :span="21"
-          >
+          <el-col :span="21">
             <div class="grid-content">
               {{ itemsDetailData.brief }}
             </div>
@@ -164,37 +95,23 @@
         </el-row>
         <el-row class="row-bg">
           <el-col :span="3">
-            <div class="grid-content">
-              价格
-            </div>
+            <div class="grid-content">价格</div>
           </el-col>
-          <el-col
-            :span="21"
-          >
-            <div class="grid-content">
-              ￥{{ itemsDetailData.price / 100 }}&nbsp;
-            </div>
+          <el-col :span="21">
+            <div class="grid-content">￥{{ itemsDetailData.price / 100 }}&nbsp;</div>
           </el-col>
         </el-row>
         <el-row class="row-bg">
           <el-col :span="3">
-            <div class="grid-content">
-              原价
-            </div>
+            <div class="grid-content">原价</div>
           </el-col>
-          <el-col
-            :span="21"
-          >
-            <div class="grid-content">
-              ￥{{ itemsDetailData.market_price / 100 }}&nbsp;
-            </div>
+          <el-col :span="21">
+            <div class="grid-content">￥{{ itemsDetailData.market_price / 100 }}&nbsp;</div>
           </el-col>
         </el-row>
         <el-row class="row-bg">
           <el-col :span="3">
-            <div class="grid-content">
-              图片
-            </div>
+            <div class="grid-content">图片</div>
           </el-col>
           <el-col :span="21">
             <div class="grid-content">
@@ -224,68 +141,40 @@
         </el-row>
         <el-row class="row-bg">
           <el-col :span="3">
-            <div class="grid-content">
-              基础物料
-            </div>
+            <div class="grid-content">基础物料</div>
           </el-col>
           <el-col :span="21">
-            <div
-              v-show="itemsDetailData.consume_type == 'all'"
-              class="grid-content grid-attribute"
-            >
-              <el-table
-                :data="itemsDetailData.type_labels"
-                style="width: 100%"
-              >
-                <el-table-column
-                  prop="labelName"
-                  label="物料名称"
-                />
+            <div v-show="itemsDetailData.consume_type == 'all'" class="grid-content grid-attribute">
+              <el-table :data="itemsDetailData.type_labels" style="width: 100%">
+                <el-table-column prop="labelName" label="物料名称" />
                 <el-table-column label="单价(元)">
                   <template slot-scope="scope">
                     <span>￥{{ scope.row.labelPrice / 100 }}</span>
                   </template>
                 </el-table-column>
-                <el-table-column
-                  prop="num"
-                  label="数量"
-                />
+                <el-table-column prop="num" label="数量" />
               </el-table>
             </div>
             <div
               v-show="itemsDetailData.consume_type == 'every'"
               class="grid-content grid-attribute"
             >
-              <el-table
-                :data="itemsDetailData.type_labels"
-                style="width: 100%"
-              >
-                <el-table-column
-                  prop="labelName"
-                  label="物料名称"
-                />
+              <el-table :data="itemsDetailData.type_labels" style="width: 100%">
+                <el-table-column prop="labelName" label="物料名称" />
                 <el-table-column label="单价(元)">
                   <template slot-scope="scope">
                     <span>￥{{ scope.row.labelPrice / 100 }}</span>
                   </template>
                 </el-table-column>
-                <el-table-column
-                  prop="limitTime"
-                  label="有效期"
-                />
-                <el-table-column
-                  prop="num"
-                  label="数量"
-                />
+                <el-table-column prop="limitTime" label="有效期" />
+                <el-table-column prop="num" label="数量" />
               </el-table>
             </div>
           </el-col>
         </el-row>
         <el-row class="row-bg">
           <el-col :span="3">
-            <div class="grid-content">
-              有效期
-            </div>
+            <div class="grid-content">有效期</div>
           </el-col>
           <el-col :span="21">
             <div
@@ -304,42 +193,22 @@
         </el-row>
         <el-row class="row-bg">
           <el-col :span="3">
-            <div class="grid-content">
-              详情
-            </div>
+            <div class="grid-content">详情</div>
           </el-col>
-          <el-col
-            :span="21"
-          >
-            <div
-              class="grid-content grid-detail"
-              v-html="itemsDetailData.intro"
-            />
+          <el-col :span="21">
+            <div class="grid-content grid-detail" v-html="itemsDetailData.intro" />
           </el-col>
         </el-row>
-        <el-row
-          v-if="itemsDetailData.enable_agreement"
-          class="row-bg"
-        >
+        <el-row v-if="itemsDetailData.enable_agreement" class="row-bg">
           <el-col :span="3">
-            <div class="grid-content">
-              购买协议
-            </div>
+            <div class="grid-content">购买协议</div>
           </el-col>
-          <el-col
-            :span="21"
-          >
-            <div
-              class="grid-content grid-detail"
-              v-html="itemsDetailData.purchase_agreement"
-            />
+          <el-col :span="21">
+            <div class="grid-content grid-detail" v-html="itemsDetailData.purchase_agreement" />
           </el-col>
         </el-row>
       </template>
-      <div
-        slot="footer"
-        class="dialog-footer content-center"
-      >
+      <div slot="footer" class="dialog-footer content-center">
         <el-button
           @click.native="
             ItemsDetailVisible = false
@@ -360,7 +229,7 @@ import { getDefaultCurrency } from '../../../../../api/company'
 import { getItemsList, getItemsDetail, deleteItems, setItemsSort } from '../../../../../api/goods'
 export default {
   props: ['getStatus'],
-  data () {
+  data() {
     return {
       goodsName: '',
       isEdit: false,
@@ -384,40 +253,40 @@ export default {
     ...mapGetters(['wheight'])
   },
   watch: {
-    getStatus (val) {
+    getStatus(val) {
       if (val) {
         this.getGoodsList()
       }
     }
   },
-  mounted () {
+  mounted() {
     this.getGoodsList()
     //this.getCurrencyInfo()
   },
   methods: {
-    handleCurrentChange (page_num) {
+    handleCurrentChange(page_num) {
       this.params.page = page_num
       this.getGoodsList()
     },
-    handleSizeChange (pageSize) {
+    handleSizeChange(pageSize) {
       this.params.page = 1
       this.params.pageSize = pageSize
       this.getGoodsList()
     },
-    addItems () {
+    addItems() {
       // 添加商品
-      this.$router.push({ path: this.matchHidePage('editor') })
+      this.$router.push({ path: this.matchRoutePath('editor') })
     },
-    editItemsSort (index, row) {
+    editItemsSort(index, row) {
       setItemsSort({ 'sort': row.sort, 'item_id': row.itemId }).then((response) => {
         this.getGoodsList()
       })
     },
-    editItemsAction (index, row) {
+    editItemsAction(index, row) {
       // 编辑商品弹框
-      this.$router.push({ path: this.matchHidePage('editor/') + row.itemId })
+      this.$router.push({ path: this.matchRoutePath('editor/') + row.itemId })
     },
-    itemsDetail (index, row) {
+    itemsDetail(index, row) {
       this.ItemsDetailVisible = true
       getItemsDetail(row.itemId).then((response) => {
         this.itemsDetailData = response.data.data
@@ -425,12 +294,12 @@ export default {
         this.end_date = this.getTimeStr(this.itemsDetailData.end_date)
       })
     },
-    goodsSearch () {
+    goodsSearch() {
       this.params.keywords = this.goodsName
       this.params.page = 1
       this.getGoodsList()
     },
-    getGoodsList () {
+    getGoodsList() {
       this.loading = true
       getItemsList(this.params).then((response) => {
         this.ItemsList = response.data.data.list
@@ -438,7 +307,7 @@ export default {
         this.loading = false
       })
     },
-    deleteItemsAction (index, row) {
+    deleteItemsAction(index, row) {
       this.$confirm('此操作将删除该商品, 是否继续?', '提示', {
         confirmButtonText: '确定',
         cancelButtonText: '取消',
@@ -461,10 +330,10 @@ export default {
           })
         })
     },
-    priceformatter (row, column) {
+    priceformatter(row, column) {
       return this.cursymbol + row.price / 100
     },
-    getTaskTime (strDate) {
+    getTaskTime(strDate) {
       let date = new Date(strDate)
       let y = date.getFullYear()
       let m = date.getMonth() + 1
@@ -474,10 +343,10 @@ export default {
       let str = y + '-' + m + '-' + d
       return str
     },
-    getTimeStr (date) {
+    getTimeStr(date) {
       return this.getTaskTime(new Date(parseInt(date) * 1000))
     },
-    getCurrencyInfo () {
+    getCurrencyInfo() {
       getDefaultCurrency().then((res) => {
         this.currency = res.data.data
         this.cursymbol = this.currency.symbol

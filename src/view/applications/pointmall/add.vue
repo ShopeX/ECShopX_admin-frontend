@@ -849,7 +849,6 @@ import store from '@/store'
 import { mapGetters } from 'vuex'
 import Treeselect from '@riophae/vue-treeselect'
 import draggable from 'vuedraggable'
-import '@riophae/vue-treeselect/dist/vue-treeselect.css'
 import { getItemsDetail, createItems, updateItems } from '@/api/pointsmall'
 import { getGoodsAttr, getCategory, getCategoryInfo } from '@/api/goods'
 import { getShippingTemplatesList } from '@/api/shipping'
@@ -863,7 +862,6 @@ import { getOrigincountry } from '@/api/crossborder'
 import { transformTree } from '@/utils'
 
 export default {
-  inject: ['refresh'],
   components: {
     imgPicker,
     videoPicker,
@@ -872,6 +870,7 @@ export default {
     richTextEditor,
     imgBox
   },
+  inject: ['refresh'],
   data() {
     return {
       // 跨境设置

@@ -2,6 +2,7 @@
 .sp-image {
   display: flex;
   align-items: center;
+  display: block;
 }
 </style>
 
@@ -20,10 +21,15 @@ export default {
       default: 'cover'
     }
   },
+  methods: {
+    handleImageClick() {
+      this.$emit('click')
+    }
+  },
   render() {
     const { src, width, height, circle } = this
-    // console.log('sp-image render src:', src);
-    let styleNames = {}
+    console.log('sp-image render src:', src, src || dImage)
+    const styleNames = {}
     if (width) {
       styleNames['width'] = `${width}px`
     }
@@ -39,11 +45,13 @@ export default {
     }
 
     return (
-      <el-image class={'sp-image'} style={styleNames} src={src || dImage} fit={this.fit}>
-        <template slot='error'>
-          <img src={dImage} width='100%' />
-        </template>
-      </el-image>
+      <el-image
+        class={'sp-image'}
+        style={styleNames}
+        src={src || dImage}
+        fit={this.fit}
+        onClick={this.handleImageClick}
+      />
     )
   }
 }

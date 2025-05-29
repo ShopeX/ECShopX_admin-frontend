@@ -336,7 +336,6 @@
 
 <script>
 import Treeselect from '@riophae/vue-treeselect'
-import '@riophae/vue-treeselect/dist/vue-treeselect.css'
 import {
   addMarketingActivity,
   updateMarketingActivity,
@@ -354,13 +353,13 @@ import { handleUploadFile, exportUploadTemplate } from '../../../../api/common'
 import store from '@/store'
 import { transformTree } from '@/utils'
 export default {
-  inject: ['refresh'],
   components: {
     GoodsSelect,
     StoreSelect,
     SkuSelector,
     Treeselect
   },
+  inject: ['refresh'],
   data() {
     return {
       is_distributor: false,
@@ -580,7 +579,7 @@ export default {
           without_return: item.without_return,
           gift_num: item.gift_num,
           pics: item.pics,
-          filter_full:item.filter_full
+          filter_full: item.filter_full
         }
         giftData.push(itemdata)
       })

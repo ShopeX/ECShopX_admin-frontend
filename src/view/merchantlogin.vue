@@ -3,14 +3,9 @@
     <div class="log-header">
       <div class="log-container">
         <div class="brand">
-          <img
-            :src="brand"
-            alt=""
-          >
+          <img :src="brand" alt="">
         </div>
-        <div class="log-welcome">
-          欢迎登录
-        </div>
+        <div class="log-welcome">欢迎登录</div>
       </div>
     </div>
     <div
@@ -23,16 +18,8 @@
       }"
     >
       <div class="log-container">
-        <el-tabs
-          type="border-card"
-          value="admin"
-          style="width: 400px"
-          class="login-type-tab"
-        >
-          <el-tab-pane
-            name="admin"
-            label="管理员登录"
-          >
+        <el-tabs type="border-card" value="admin" style="width: 400px" class="login-type-tab">
+          <el-tab-pane name="admin" label="管理员登录">
             <div class="log-img" />
             <el-form
               ref="ruleForm1"
@@ -62,13 +49,7 @@
                 />
               </el-form-item>
               <el-form-item class="log-opr clearfix">
-                <el-checkbox
-                  v-model="checked"
-                  checked
-                  class="remember f_l"
-                >
-                  记住密码
-                </el-checkbox>
+                <el-checkbox v-model="checked" checked class="remember f_l"> 记住密码 </el-checkbox>
               </el-form-item>
               <el-form-item style="width: 100%">
                 <el-button
@@ -91,20 +72,11 @@
     </div>
     <div class="log-footer">
       <span>友情链接：</span>
-      <a
-        href="https://www.shopex.cn"
-        target="_blank"
-      >商派</a>
+      <a href="https://www.shopex.cn" target="_blank">商派</a>
       <span>|</span>
-      <a
-        href="https://mp.weixin.qq.com"
-        target="_blank"
-      >微信公众平台</a>
+      <a href="https://mp.weixin.qq.com" target="_blank">微信公众平台</a>
       <span>|</span>
-      <a
-        href="https://open.weixin.qq.com"
-        target="_blank"
-      >微信开放平台</a>
+      <a href="https://open.weixin.qq.com" target="_blank">微信开放平台</a>
     </div>
   </div>
 </template>
@@ -117,7 +89,7 @@ import { VERSION_STANDARD } from '@/utils'
 import { login, getAdminInfo } from '../api/login'
 import { mapMutations } from 'vuex'
 export default {
-  data () {
+  data() {
     const validateEmail = (rule, value, callback) => {
       if (!isMobile(value)) {
         callback(new Error('请输入正确的合法手机号'))
@@ -156,7 +128,7 @@ export default {
   },
   methods: {
     ...mapMutations(['SET_TOKEN', 'SET_TOKEN_EXP', 'SET_USERINFO', 'SET_LOGIN_TYPE']),
-    setTokenAndGetRoute (token) {
+    setTokenAndGetRoute(token) {
       this.SET_TOKEN({ token })
       this.SET_TOKEN_EXP({ exp: new Date().getTime() })
       this.loading = false
@@ -183,7 +155,7 @@ export default {
               message: '登录成功',
               type: 'success',
               duration: 2 * 1000,
-              onClose () {
+              onClose() {
                 _self.SET_USERINFO(info.data.data)
                 _self.SET_LOGIN_TYPE({ loginType: _self.symbol })
                 _self.$router.push({ path: '/merchant' })
@@ -202,7 +174,7 @@ export default {
         }
       })
     },
-    handleSubmit1 () {
+    handleSubmit1() {
       this.$store.dispatch('setLoginType', this.symbol)
       this.$refs.ruleForm1.validate(async (valid) => {
         if (valid) {
@@ -226,7 +198,7 @@ export default {
       })
     }
   },
-  mounted () {
+  mounted() {
     this.$store.dispatch('setLoginType', this.symbol)
   }
 }
@@ -258,7 +230,6 @@ body {
 }
 .log-body {
   padding: 118px 0;
-  // background: url(./assets/img/login_bg.jpg) no-repeat center center;
   background-size: cover;
 }
 .log-img {

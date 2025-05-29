@@ -19,14 +19,11 @@
     <div
       v-if="
         $route.path.indexOf('editor') === -1 &&
-          $route.path.indexOf('detail') === -1 &&
-          $route.path.indexOf('_template') === -1
+        $route.path.indexOf('detail') === -1 &&
+        $route.path.indexOf('_template') === -1
       "
     >
-      <el-row
-        v-if="$store.getters.login_type !== 'distributor'"
-        :gutter="20"
-      >
+      <el-row v-if="$store.getters.login_type !== 'distributor'" :gutter="20">
         <!-- <el-col> -->
         <!-- <el-cascader
             placeholder="根据地区筛选"
@@ -37,35 +34,16 @@
             @change="RegionChangeSearch"
           ></el-cascader>
           <el-input class="input-m" placeholder="店铺名称" v-model="params.name"></el-input> -->
-        <shop-select
-          distributors
-          :shop-id-default="params.distributor_id"
-          @update="storeSearch"
-        />
-        <el-input
-          v-model="params.mobile"
-          class="input-m"
-          placeholder="联系人手机号"
-        >
-          <el-button
-            slot="append"
-            icon="el-icon-search"
-            @click="numberSearch"
-          />
+        <shop-select distributors :shop-id-default="params.distributor_id" @update="storeSearch" />
+        <el-input v-model="params.mobile" class="input-m" placeholder="联系人手机号">
+          <el-button slot="append" icon="el-icon-search" @click="numberSearch" />
         </el-input>
         <!-- </el-col> -->
       </el-row>
       <el-row :gutter="20" />
       <el-card>
-        <el-table
-          v-loading="loading"
-          :data="list"
-        >
-          <el-table-column
-            width="50"
-            prop="distributor_id"
-            label="ID"
-          />
+        <el-table v-loading="loading" :data="list">
+          <el-table-column width="50" prop="distributor_id" label="ID" />
           <el-table-column label="店铺">
             <template slot-scope="scope">
               <div class="store-name">
@@ -88,25 +66,14 @@
             </template>
           </el-table-column>
 
-          <el-table-column
-            prop="status"
-            label="状态"
-          >
+          <el-table-column prop="status" label="状态">
             <template slot-scope="scope">
               {{ scope.row.status_msg }}
             </template>
           </el-table-column>
-          <el-table-column
-            width="180"
-            label="操作"
-          >
+          <el-table-column width="180" label="操作">
             <template slot-scope="scope">
-              <el-button
-                type="text"
-                @click="handelClick(scope.row, '查看')"
-              >
-                查看
-              </el-button>
+              <el-button type="text" @click="handelClick(scope.row, '查看')"> 查看 </el-button>
               <el-button
                 v-if="scope.row.status == 1 || scope.row.status == 4"
                 type="text"
@@ -117,7 +84,7 @@
               <el-button
                 v-if="
                   $store.getters.login_type !== 'distributor' &&
-                    (scope.row.status == 1 || scope.row.status == 4)
+                  (scope.row.status == 1 || scope.row.status == 4)
                 "
                 type="text"
                 @click="handelClick(scope.row, '开户')"
@@ -174,7 +141,7 @@ import district from '@/common/district.json'
 
 import store from '@/store'
 // 取选中地区的值
-function getCascaderObj (val, opt) {
+function getCascaderObj(val, opt) {
   return val.map(function (value, index, array) {
     for (var itm of opt) {
       if (itm.value === value) {
@@ -190,7 +157,7 @@ export default {
   components: {
     shopSelect
   },
-  data () {
+  data() {
     return {
       dialogVisible: false,
       current: '', // 当前店铺id
@@ -220,12 +187,12 @@ export default {
   computed: {
     ...mapGetters(['wheight'])
   },
-  mounted () {
+  mounted() {
     this.getList()
     // this.getAllTagList()
   },
   methods: {
-    getList () {
+    getList() {
       this.loading = true
       if (this.$store.getters.login_type == 'distributor') {
         this.params.distributor_id = this.$store.getters.shopId
@@ -240,22 +207,22 @@ export default {
       })
     },
 
-    numberSearch (e) {
+    numberSearch(e) {
       this.params.page = 1
       this.getList()
     },
 
-    handelClick (row, type) {
+    handelClick(row, type) {
       switch (type) {
         case '查看':
           this.$router.push({
-            path: this.matchHidePage('editor'),
+            path: this.matchRoutePath('editor'),
             query: { id: row.distributor_id, type: '0' }
           })
           break
         case '编辑':
           this.$router.push({
-            path: this.matchHidePage('editor'),
+            path: this.matchRoutePath('editor'),
             query: { id: row.distributor_id, type: '1' }
           })
 
@@ -304,13 +271,13 @@ export default {
       //     //   })
       //     })
     },
-    storeSearch (val) {
+    storeSearch(val) {
       this.params.page = 1
       val && val.shop_id
       this.params.distributor_id = val.shop_id
       this.getList()
     },
-    RegionChangeSearch (value) {
+    RegionChangeSearch(value) {
       console.log(value)
       var vals = getCascaderObj(value, this.regions)
       if (vals.length == 1) {
@@ -334,17 +301,17 @@ export default {
       // this.getList()
     },
 
-    handleSizeChange (pageSize) {
+    handleSizeChange(pageSize) {
       this.params.page = 1
       this.params.pageSize = pageSize
       this.getList()
     },
-    handleCurrentChange (page) {
+    handleCurrentChange(page) {
       this.params.page = page
       this.getList()
     }
   },
-  beforeRouteUpdate (to, from, next) {
+  beforeRouteUpdate(to, from, next) {
     next()
     if (to.path.indexOf('editor') === -1 && to.path.indexOf('detail') === -1) {
       this.getList()

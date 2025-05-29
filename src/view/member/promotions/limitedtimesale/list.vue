@@ -128,12 +128,12 @@ import { seckillActivityUpdateStatus, seckillActivityWxcode } from '@/api/promot
 import { pageMixin } from '@/mixins'
 export default {
   mixins: [pageMixin],
-  props: ['getStatus'],
   provide() {
     return {
       refresh: this.refresh
     }
   },
+  props: ['getStatus'],
   data() {
     const initialParams = {
       create_time: [],
@@ -265,11 +265,11 @@ export default {
     },
     addActivityData() {
       // 添加物料弹框
-      this.$router.push({ path: this.matchHidePage('editor') })
+      this.$router.push({ path: this.matchRoutePath('editor') })
     },
     editAction(index, row) {
       // 编辑物料弹框
-      this.$router.push({ path: this.matchHidePage('editor/') + row.seckill_id })
+      this.$router.push({ path: this.matchRoutePath('editor/') + row.seckill_id })
     },
     updateStatusCommunityAction(row) {
       var msg = '此操作将永久终止该活动, 是否继续?'

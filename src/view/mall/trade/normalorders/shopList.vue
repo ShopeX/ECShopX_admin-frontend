@@ -21,16 +21,21 @@
               :value="item.value"
             />
           </el-select>
-          <el-select v-model="order_holder" clearable placeholder="请选择订单分类" @change="TypeHandle">
-          <el-option
-            v-for="item in orderCategory"
-            :key="item.value"
-            size="mini"
-            :label="item.title"
-            :value="item.value"
-          />
-        </el-select>
-        <!-- <el-input v-model="supplier_name" clearable placeholder="来源供应商" >
+          <el-select
+            v-model="order_holder"
+            clearable
+            placeholder="请选择订单分类"
+            @change="TypeHandle"
+          >
+            <el-option
+              v-for="item in orderCategory"
+              :key="item.value"
+              size="mini"
+              :label="item.title"
+              :value="item.value"
+            />
+          </el-select>
+          <!-- <el-input v-model="supplier_name" clearable placeholder="来源供应商" >
           <el-button slot="append" icon="el-icon-search" @click="numberSearch" />
         </el-input> -->
           <el-autocomplete
@@ -98,68 +103,67 @@
           :height="wheight - 190"
           element-loading-text="数据加载中"
         >
-
-        <el-table-column label="操作" fixed="left">
-          <template slot-scope="scope">
-            <router-link
-              :to="{
-                path: matchHidePage('detail'),
-                query: { orderId: scope.row.order_id, resource: $route.path }
-              }"
-              style="margin-right: 5px"
-            >
-              详情
-            </router-link>
-            <el-button
-              v-if="
-                scope.row.cancel_status == 'NO_APPLY_CANCEL' &&
-                (scope.row.order_status == 'NOTPAY' || scope.row.order_status == 'PAYED')
-              "
-              type="text"
-              style="margin-right: 5px"
-              @click="cancelOrderAction(scope.row.order_id)"
-            >
-              取消订单
-            </el-button>
-            <el-button
-              v-if="
-                scope.row.receipt_type == 'logistics' &&
-                scope.row.order_status == 'PAYED' &&
-                scope.row.delivery_status != 'DONE'
-              "
-              type="text"
-              style="margin-right: 5px"
-              @click="deliveryAction(scope.row)"
-            >
-              发货
-            </el-button>
-            <el-button
-              v-if="
-                scope.row.receipt_type == 'ziti' &&
-                scope.row.ziti_status == 'PENDING' &&
-                scope.row.order_status == 'PAYED'
-              "
-              type="text"
-              style="margin-right: 5px"
-              @click="writeoffOrderAction(scope.row.order_id)"
-            >
-              核销
-            </el-button>
-            <el-button
-              v-if="
-                scope.row.cancel_status == 'WAIT_PROCESS' && scope.row.order_status == 'PAYED'
-              "
-              type="text"
-              style="margin-right: 5px"
-              @click="confirmCancelOrderAction(scope.row.order_id)"
-            >
-              退款
-            </el-button>
-            <el-button type="text" @click="clickShowRemark(scope.row, 'normalList2')">
-              备注
-            </el-button>
-          </template>
-        </el-table-column>
+          <el-table-column label="操作" fixed="left">
+            <template slot-scope="scope">
+              <router-link
+                :to="{
+                  path: matchRoutePath('detail'),
+                  query: { orderId: scope.row.order_id, resource: $route.path }
+                }"
+                style="margin-right: 5px"
+              >
+                详情
+              </router-link>
+              <el-button
+                v-if="
+                  scope.row.cancel_status == 'NO_APPLY_CANCEL' &&
+                  (scope.row.order_status == 'NOTPAY' || scope.row.order_status == 'PAYED')
+                "
+                type="text"
+                style="margin-right: 5px"
+                @click="cancelOrderAction(scope.row.order_id)"
+              >
+                取消订单
+              </el-button>
+              <el-button
+                v-if="
+                  scope.row.receipt_type == 'logistics' &&
+                  scope.row.order_status == 'PAYED' &&
+                  scope.row.delivery_status != 'DONE'
+                "
+                type="text"
+                style="margin-right: 5px"
+                @click="deliveryAction(scope.row)"
+              >
+                发货
+              </el-button>
+              <el-button
+                v-if="
+                  scope.row.receipt_type == 'ziti' &&
+                  scope.row.ziti_status == 'PENDING' &&
+                  scope.row.order_status == 'PAYED'
+                "
+                type="text"
+                style="margin-right: 5px"
+                @click="writeoffOrderAction(scope.row.order_id)"
+              >
+                核销
+              </el-button>
+              <el-button
+                v-if="
+                  scope.row.cancel_status == 'WAIT_PROCESS' && scope.row.order_status == 'PAYED'
+                "
+                type="text"
+                style="margin-right: 5px"
+                @click="confirmCancelOrderAction(scope.row.order_id)"
+              >
+                退款
+              </el-button>
+              <el-button type="text" @click="clickShowRemark(scope.row, 'normalList2')">
+                备注
+              </el-button>
+            </template>
+          </el-table-column>
           <el-table-column prop="order_id" width="150" label="订单号" fixed />
           <el-table-column prop="create_time" width="160" label="创建时间">
             <template slot-scope="scope">
@@ -449,7 +453,7 @@
             <el-form-item label="商品信息">
               <el-table :data="deliveryData.orderInfo.items">
                 <el-table-column prop="item_name" label="商品名" width="180" />
-                <el-table-column  label="商品类型" width="120">
+                <el-table-column label="商品类型" width="120">
                   <template slot-scope="scope">
                     <span>{{ goodCategoryMap[scope.row.item_holder] }}</span>
                   </template>
@@ -768,7 +772,12 @@ import { getSourceFromNameByValue } from '@/utils'
 import shopSelect from '@/components/shopSelect'
 import RemarkModal from '@/components/remarkModal'
 import remarkMixin from '@/mixins/remarkMixin'
-import { DISTRIBUTION_TYPE, DISTRIBUTION_STATUS, SELF_ORDER_CATEGORY,GOOD_CATEGORY_MAP } from '@/consts'
+import {
+  DISTRIBUTION_TYPE,
+  DISTRIBUTION_STATUS,
+  SELF_ORDER_CATEGORY,
+  GOOD_CATEGORY_MAP
+} from '@/consts'
 import { IS_ADMIN } from '../../../../utils'
 
 export default {
@@ -790,9 +799,9 @@ export default {
         distributor_id: 0,
         distributorIds: [],
         source_from: '',
-        order_holder:'self,self_supplier'
+        order_holder: 'self,self_supplier'
       },
-      goodCategoryMap:GOOD_CATEGORY_MAP,
+      goodCategoryMap: GOOD_CATEGORY_MAP,
       deliveryPersonnel: [], //配送员
       order_class_array: [
         { name: '全部订单', value: '' },
@@ -836,8 +845,8 @@ export default {
       ],
       source_id: '',
       order_class: '',
-      order_holder:'self,self_supplier',
-      supplier_name:'',
+      order_holder: 'self,self_supplier',
+      supplier_name: '',
       cancel_order: '',
       deliveryVisible: false,
       deliveryTitle: '',
@@ -891,7 +900,7 @@ export default {
       // 选择发货订单的类型，老订单还是新订单
       selectItemType: '',
       deliveryVisibleNew: false,
-      orderCategory:SELF_ORDER_CATEGORY
+      orderCategory: SELF_ORDER_CATEGORY
     }
   },
   computed: {
@@ -1044,8 +1053,8 @@ export default {
         return restaurant.value.toLowerCase().indexOf(queryString.toLowerCase()) === 0
       }
     },
-    getOrderCategoryName(order_holder){
-      return this.orderCategory.find(item=>item.value == order_holder)?.title ?? ''
+    getOrderCategoryName(order_holder) {
+      return this.orderCategory.find((item) => item.value == order_holder)?.title ?? ''
     },
     deliveryAction(data) {
       // 编辑物料弹框
@@ -1070,10 +1079,13 @@ export default {
           this.deliveryVisibleNew = true
         }
         //已经拆分发货的和供应商自营订单 都需要拆分发货
-        if (this.deliveryData && this.deliveryData.orderInfo.delivery_status == 'PARTAIL' || this.deliveryData.orderInfo.order_holder == 'self_supplier') {
+        if (
+          (this.deliveryData && this.deliveryData.orderInfo.delivery_status == 'PARTAIL') ||
+          this.deliveryData.orderInfo.order_holder == 'self_supplier'
+        ) {
           this.IsDisabled = true
           this.deliveryForm.delivery_type = 'sep'
-        }else{
+        } else {
           this.IsDisabled = false
           this.deliveryForm.delivery_type = 'batch'
         }

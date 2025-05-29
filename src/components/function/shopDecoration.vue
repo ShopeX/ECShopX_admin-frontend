@@ -370,7 +370,6 @@ import { savePageParams, getParamByTempName } from '@/api/wxa'
 import { getItemsList } from '@/api/goods'
 import { getRecommendLikeItemList } from '@/api/promotions'
 import { forEach } from 'jszip'
-import { constants } from 'fs'
 
 export default {
   components: {
@@ -1507,121 +1506,10 @@ export default {
   width: 200px;
   border-radius: 60px;
 }
-</style>
-
-<style lang="scss">
-// .components-container {
-//   position: relative;
-//   padding-top: 80px;
-//   padding-bottom: 69px;
-//   overflow-y: overlay;
-//   height: calc(100vh - 170px);
-//   .components-wrap {
-//     height: 100%;
-//   }
-//   &.componentFixed {
-//     padding-top: 58.5px;
-//   }
-//   &.is-distributor {
-//     padding-top: 40px;
-//   }
-//   &.componentFixed.is-distributor {
-//     padding-top: 98.5px;
-//   }
-
-//   .component-item {
-//     position: relative;
-//     .icon-trash-alt {
-//       position: absolute;
-//       right: 20px;
-//       color: #ff5000;
-//       cursor: pointer;
-//     }
-//   }
-//   .component-wrap {
-//     position: relative;
-//     width: 320px;
-//     margin: 0 auto;
-//     cursor: pointer;
-//     background: #fff;
-//     &.component-padded {
-//       padding: 10px 0;
-//     }
-//     .current-active {
-//       position: absolute;
-//       left: -3px;
-//       top: -3px;
-//       right: -3px;
-//       bottom: -3px;
-//       border: 3px solid #ff5000;
-//       z-index: -1;
-//       opacity: 0;
-//       box-shadow: 0 0 5px rgba(255, 80, 0, 0.3);
-//       background: rgba(255, 80, 0, 0.2);
-//       transition: all 0.3s ease;
-//     }
-//     &.active .current-active {
-//       opacity: 1;
-//       z-index: 999;
-//     }
-//     .component-header {
-//       display: flex;
-//       align-items: center;
-//       padding: 0 10px 5px 10px;
-//       .component-title {
-//         display: flex;
-//         align-items: flex-end;
-//         flex: 1;
-//         font-size: 16px;
-//         &.middle {
-//           align-items: center;
-//         }
-//         .subtitle {
-//           padding-left: 5px;
-//           font-size: 12px;
-//           color: #999;
-//         }
-//       }
-//       .component-more {
-//         display: flex;
-//         justify-content: center;
-//         width: 25px;
-//         .three-dot {
-//           position: relative;
-//           width: 4px;
-//           height: 4px;
-//           background: #333;
-//           border-radius: 50%;
-//           &::before,
-//           &::after {
-//             position: absolute;
-//             width: 4px;
-//             height: 4px;
-//             background: #333;
-//             border-radius: 50%;
-//             content: '';
-//           }
-//           &::before {
-//             transform: translateX(-160%);
-//           }
-//           &::after {
-//             transform: translateX(160%);
-//           }
-//         }
-//       }
-//     }
-//     .component-body {
-//       &.with-padding {
-//         padding: 0 10px;
-//       }
-//     }
-//   }
-// }
 .components-container {
   position: relative;
   padding-top: 80px;
   padding-bottom: 69px;
-  // overflow-y: overlay;
   height: calc(100vh - 170px);
   .components-wrap {
     height: 100%;

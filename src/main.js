@@ -6,11 +6,11 @@ import 'element-ui/lib/theme-chalk/index.css'
 import { install as apiInstall } from '@/api'
 // import { micrApp } from '@/utils/micr-app'
 import VueClipboard from 'vue-clipboard2'
-import { VueMasonryPlugin } from 'vue-masonry'
 
 import VueVideoPlayer from 'vue-video-player'
 import 'video.js/dist/video-js.css'
-
+import 'nprogress/nprogress.css'
+import '@riophae/vue-treeselect/dist/vue-treeselect.css'
 // import { install as H5EditorInstall } from '@/utils/vue-h5-editor'
 
 import App from './App'
@@ -72,8 +72,6 @@ Vue.use(Vuex)
 
 Vue.use(VueClipboard)
 Vue.use(Directives)
-
-Vue.use(VueMasonryPlugin)
 
 Vue.use(VueVideoPlayer)
 

@@ -237,10 +237,10 @@ import { getCouponHtml } from '../../../../api/cardticket'
 import { createArtical, getArtical, updateArtical } from '../../../../api/wechat'
 
 export default {
-  inject: ['refresh'],
   components: {
     imgPicker
   },
+  inject: ['refresh'],
   data() {
     return {
       imgDialog: false,
@@ -897,7 +897,7 @@ export default {
       left: -1px;
       width: 297px;
       height: 5px;
-      background: url(../../../../assets/img/card_tpl_deco.png) repeat-x center;
+      background: url('~@/assets/img/card_tpl_deco.png') repeat-x center;
       border-left: 1px solid #e7e7eb;
       border-right: 1px solid #e7e7eb;
     }

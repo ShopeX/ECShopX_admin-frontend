@@ -3,14 +3,9 @@
     <div class="log-header">
       <div class="log-container">
         <div class="brand">
-          <img
-            :src="brand"
-            alt=""
-          >
+          <img :src="brand" alt="">
         </div>
-        <div class="log-welcome">
-          欢迎登录
-        </div>
+        <div class="log-welcome">欢迎登录</div>
       </div>
     </div>
     <div
@@ -23,16 +18,8 @@
       }"
     >
       <div class="log-container">
-        <el-tabs
-          type="border-card"
-          value="admin"
-          style="width: 400px"
-          class="login-type-tab"
-        >
-          <el-tab-pane
-            name="admin"
-            label="店铺账号登录"
-          >
+        <el-tabs type="border-card" value="admin" style="width: 400px" class="login-type-tab">
+          <el-tab-pane name="admin" label="店铺账号登录">
             <div class="log-img" />
             <el-form
               ref="ruleForm1"
@@ -82,20 +69,11 @@
     </div>
     <div class="log-footer">
       <span>友情链接：</span>
-      <a
-        href="https://www.shopex.cn"
-        target="_blank"
-      >商派</a>
+      <a href="https://www.shopex.cn" target="_blank">商派</a>
       <span>|</span>
-      <a
-        href="https://mp.weixin.qq.com"
-        target="_blank"
-      >微信公众平台</a>
+      <a href="https://mp.weixin.qq.com" target="_blank">微信公众平台</a>
       <span>|</span>
-      <a
-        href="https://open.weixin.qq.com"
-        target="_blank"
-      >微信开放平台</a>
+      <a href="https://open.weixin.qq.com" target="_blank">微信开放平台</a>
     </div>
   </div>
 </template>
@@ -106,7 +84,7 @@ import { isMobile } from '../utils/validate'
 import { mapMutations } from 'vuex'
 import { VERSION_STANDARD } from '@/utils'
 export default {
-  data () {
+  data() {
     const validatePass = (rule, value, callback) => {
       if (value.length < 6) {
         callback(new Error('密码不能小于6位'))
@@ -136,7 +114,7 @@ export default {
   },
   methods: {
     ...mapMutations(['SET_TOKEN', 'SET_TOKEN_EXP', 'SET_USERINFO', 'SET_LOGIN_TYPE']),
-    handleSubmit1 () {
+    handleSubmit1() {
       this.$store.dispatch('setLoginType', 'distributor')
       this.$refs.ruleForm1.validate(async (valid) => {
         if (valid) {
@@ -171,7 +149,7 @@ export default {
       })
     }
   },
-  mounted () {
+  mounted() {
     this.$store.dispatch('setLoginType', 'distributor')
   }
 }
@@ -203,7 +181,6 @@ body {
 }
 .log-body {
   padding: 118px 0;
-  // background: url(./assets/img/login_bg.jpg) no-repeat center center;
   background-size: cover;
 }
 .log-img {

@@ -10,21 +10,12 @@
         class="box-card"
         @click="tabClick(index)"
       >
-        <img
-          :src="item.img"
-          alt=""
-        >
+        <img :src="item.img" alt="">
         <span>{{ item.title }}</span>
-        <div
-          v-if="index == 0"
-          class="title"
-        >
+        <div v-if="index == 0" class="title">
           {{ aliyunsms_status ? '已启用' : '未启用' }}
         </div>
-        <div
-          v-else
-          class="title"
-        >
+        <div v-else class="title">
           {{ aliyunsms_status ? '未启用' : '已启用' }}
         </div>
       </section>
@@ -39,7 +30,7 @@ const shopex = require('@/assets/img/aliNote/shopex.png')
 import { getaliSmsStatus } from '@/api/sms'
 
 export default {
-  data () {
+  data() {
     return {
       sms: [
         {
@@ -54,25 +45,25 @@ export default {
       aliyunsms_status: false
     }
   },
-  async mounted () {
+  async mounted() {
     const result = await getaliSmsStatus()
     this.aliyunsms_status = result.data.data.aliyunsms_status
   },
-  async updated () {
+  async updated() {
     const result = await getaliSmsStatus()
     this.aliyunsms_status = result.data.data.aliyunsms_status
   },
   methods: {
-    tabClick (index) {
+    tabClick(index) {
       switch (index) {
         case 0:
           this.$router.push({
-            path: this.matchHidePage('ali_sms')
+            path: this.matchRoutePath('ali_sms')
           })
           break
         default:
           this.$router.push({
-            path: this.matchHidePage('shopex_sms')
+            path: this.matchRoutePath('shopex_sms')
           })
           break
       }

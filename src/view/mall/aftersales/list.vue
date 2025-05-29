@@ -59,13 +59,17 @@
           <el-input v-model="params.item_bn" placeholder="SKU编号" />
         </SpFilterFormItem>
 
-        <SpFilterFormItem v-if="VERSION_STANDARD || IS_ADMIN()" prop="supplier_name" label="来源供应商:">
+        <SpFilterFormItem
+          v-if="VERSION_STANDARD || IS_ADMIN()"
+          prop="supplier_name"
+          label="来源供应商:"
+        >
           <el-input v-model="params.supplier_name" placeholder="请输入来源供应商" />
         </SpFilterFormItem>
         <SpFilterFormItem
+          v-if="VERSION_STANDARD || IS_ADMIN()"
           prop="order_holder"
           label="订单分类:"
-          v-if="VERSION_STANDARD || IS_ADMIN()"
         >
           <el-select v-model="params.order_holder" clearable placeholder="请选择">
             <el-option
@@ -77,11 +81,7 @@
             />
           </el-select>
         </SpFilterFormItem>
-        <SpFilterFormItem
-          v-if="IS_SUPPLIER()"
-          prop="distributor_id"
-          label="来源店铺:"
-        >
+        <SpFilterFormItem v-if="IS_SUPPLIER()" prop="distributor_id" label="来源店铺:">
           <SpSelectShop v-model="params.distributor_id" clearable placeholder="请选择" />
         </SpFilterFormItem>
         <SpFilterFormItem prop="order_class" label="订单类型:">
@@ -94,15 +94,19 @@
               :value="item.value"
             />
           </el-select>
-      </SpFilterFormItem>
-      <SpFilterFormItem v-if="is_pharma_industry" prop="is_prescription_order" label="是否处方药:">
-        <el-select v-model="params.is_prescription_order" clearable placeholder="请选择">
-          <el-option label="全部" value="" />
-          <el-option label="是" value="1" />
-          <el-option label="否" value="0" />
-        </el-select>
-      </SpFilterFormItem>
-      <!-- <SpFilterFormItem v-if="is_pharma_industry" prop="user_family_name" label="用药人姓名:">
+        </SpFilterFormItem>
+        <SpFilterFormItem
+          v-if="is_pharma_industry"
+          prop="is_prescription_order"
+          label="是否处方药:"
+        >
+          <el-select v-model="params.is_prescription_order" clearable placeholder="请选择">
+            <el-option label="全部" value="" />
+            <el-option label="是" value="1" />
+            <el-option label="否" value="0" />
+          </el-select>
+        </SpFilterFormItem>
+        <!-- <SpFilterFormItem v-if="is_pharma_industry" prop="user_family_name" label="用药人姓名:">
         <el-input v-model="params.user_family_name" placeholder="请输入用药人姓名" />
       </SpFilterFormItem> -->
       </SpFilterForm>
@@ -126,7 +130,7 @@
                   path:
                     (`${$store.getters.login_type}` == 'distributor' &&
                       '/shopadmin/order/aftersaleslist/detail') ||
-                      (`${$store.getters.login_type}` == 'supplier' &&
+                    (`${$store.getters.login_type}` == 'supplier' &&
                       '/supplier/order/aftersaleslist/detail') ||
                     (`${$store.getters.login_type}` == 'merchant' &&
                       '/merchant/order/aftersaleslist/detail') ||
@@ -167,7 +171,7 @@
                   path:
                     (`${$store.getters.login_type}` == 'distributor' &&
                       '/shopadmin/order/tradenormalorders/detail') ||
-                      (`${$store.getters.login_type}` == 'supplier' &&
+                    (`${$store.getters.login_type}` == 'supplier' &&
                       '/supplier/order/tradenormalorders/detail') ||
                     (`${$store.getters.login_type}` == 'merchant' &&
                       '/merchant/order/tradenormalorders/detail') ||
@@ -188,26 +192,31 @@
           </template>
         </el-table-column>
         <el-table-column
+          v-if="VERSION_STANDARD || IS_ADMIN()"
           width="120"
           label="订单分类"
           header-align="center"
           prop="order_holder"
-          v-if="VERSION_STANDARD || IS_ADMIN()"
         >
-        <template slot-scope="scope">
-            {{  getOrderCategoryName(scope.row.order_holder) }}
+          <template slot-scope="scope">
+            {{ getOrderCategoryName(scope.row.order_holder) }}
           </template>
         </el-table-column>
-        <el-table-column min-width="100" v-if="VERSION_STANDARD || IS_ADMIN()" prop="supplier_name" label="来源供应商" />
+        <el-table-column
+          v-if="VERSION_STANDARD || IS_ADMIN()"
+          min-width="100"
+          prop="supplier_name"
+          label="来源供应商"
+        />
         <el-table-column
           width="120"
           label="退款金额（¥）"
           header-align="center"
           prop="refund_fee"
-        ></el-table-column>
+        />
         <el-table-column width="120" label="退款运费（¥）" header-align="center">
           <template slot-scope="scope">
-            {{ scope.row.freight/100 }}
+            {{ scope.row.freight / 100 }}
           </template>
         </el-table-column>
         <el-table-column
@@ -215,7 +224,7 @@
           label="退款抵扣积分（¥）"
           header-align="center"
           prop="refund_point"
-        ></el-table-column>
+        />
         <el-table-column v-if="!IS_SUPPLIER()" label="配送员">
           <template slot-scope="scope">
             {{ scope.row.self_delivery_operator_name }}
@@ -245,7 +254,10 @@
               class="order-num"
             >
               <router-link
-                v-if="$store.getters.login_type != 'supplier'&& $store.getters.login_type!= 'distributor'"
+                v-if="
+                  $store.getters.login_type != 'supplier' &&
+                  $store.getters.login_type != 'distributor'
+                "
                 target="_blank"
                 :to="{
                   path:
@@ -321,7 +333,7 @@
           <template slot-scope="scope">
             <router-link
               :to="{
-                path: matchHidePage('detail'),
+                path: matchRoutePath('detail'),
                 query: { aftersales_bn: scope.row.aftersales_bn, resource: $route.path }
               }"
             >
@@ -400,7 +412,7 @@ import { mapGetters } from 'vuex'
 import RemarkModal from '@/components/remarkModal'
 import mixin, { pageMixin, remarkMixin } from '@/mixins'
 import { VERSION_B2C, IS_SUPPLIER } from '@/utils'
-import { ORDER_CATEGORY,  ORDER_TYPE, ORDER_TYPE_STANDARD,} from '@/consts'
+import { ORDER_CATEGORY, ORDER_TYPE, ORDER_TYPE_STANDARD } from '@/consts'
 export default {
   components: {
     RemarkModal
@@ -421,13 +433,13 @@ export default {
       aftersales_type: undefined,
       original_order_id: undefined,
       item_bn: undefined,
-      supplier_name:undefined,
-      order_holder:undefined,
-      distributor_id:undefined,
-      order_class:undefined,
-      yyrname:undefined,
-      is_prescription_order:undefined,
-      user_family_name:undefined
+      supplier_name: undefined,
+      order_holder: undefined,
+      distributor_id: undefined,
+      order_class: undefined,
+      yyrname: undefined,
+      is_prescription_order: undefined,
+      user_family_name: undefined
     }
     return {
       loading: false,
@@ -435,7 +447,7 @@ export default {
       params: {
         ...initialParams
       },
-      is_pharma_industry:false,
+      is_pharma_industry: false,
       orderType: this.VERSION_STANDARD ? ORDER_TYPE_STANDARD : ORDER_TYPE,
       orderCategory: ORDER_CATEGORY,
       shopList: [],
@@ -460,7 +472,7 @@ export default {
       },
       aftersalesRemindVisible: false,
       aftersalesRemindTitle: '售后提醒内容',
-      orderType: this.VERSION_STANDARD ? ORDER_TYPE_STANDARD : ORDER_TYPE,
+      orderType: this.VERSION_STANDARD ? ORDER_TYPE_STANDARD : ORDER_TYPE
     }
   },
   computed: {
@@ -496,7 +508,7 @@ export default {
     this.fetchList()
   },
   methods: {
-    async getBaseSetting(){
+    async getBaseSetting() {
       const res = await this.$api.company.getGlobalSetting()
       this.is_pharma_industry = res.medicine_setting.is_pharma_industry == '1'
     },
@@ -527,13 +539,13 @@ export default {
         receiver_mobile: this.params.receiver_mobile || undefined,
         aftersales_status: this.params.aftersales_status || undefined,
         aftersales_type: this.params.aftersales_type || undefined,
-        supplier_name:this.params.supplier_name || undefined,
-        order_holder:this.params.order_holder || undefined,
+        supplier_name: this.params.supplier_name || undefined,
+        order_holder: this.params.order_holder || undefined,
         distributor_id: this.params.distributor_id || undefined,
-        order_class:this.params.order_class || undefined,
-        yyrname:this.params.yyrname || undefined,
-        is_prescription_order:this.params.is_prescription_order || undefined,
-        user_family_name:this.params.user_family_name || undefined
+        order_class: this.params.order_class || undefined,
+        yyrname: this.params.yyrname || undefined,
+        is_prescription_order: this.params.is_prescription_order || undefined,
+        user_family_name: this.params.user_family_name || undefined
       }
       return params
     },
@@ -593,8 +605,8 @@ export default {
       // 调用 callback 返回建议列表的数据
       cb(results)
     },
-    getOrderCategoryName(order_holder){
-      return this.orderCategory.find(item=>item.value == order_holder)?.title ?? ''
+    getOrderCategoryName(order_holder) {
+      return this.orderCategory.find((item) => item.value == order_holder)?.title ?? ''
     },
     async exportData() {
       const { status, url, filename } = await this.$api.aftersales.exportList(this.getParams())

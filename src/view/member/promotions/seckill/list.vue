@@ -22,10 +22,7 @@
           <el-select v-model="params.status" placeholder="活动状态" clearable style="width: 100%">
             <el-option label="全部" value="0" />
             <el-option label="待开始" value="waiting" />
-            <el-option
-              label="预热中"
-              value="in_the_notice"
-            />
+            <el-option label="预热中" value="in_the_notice" />
             <el-option label="进行中" value="in_sale" />
             <el-option label="已结束" value="it_has_ended" />
             <!-- <el-option
@@ -157,12 +154,12 @@ import mixin, { pageMixin } from '@/mixins'
 
 export default {
   mixins: [mixin, pageMixin],
-  props: ['getStatus'],
   provide() {
     return {
       refresh: this.refresh
     }
   },
+  props: ['getStatus'],
   data() {
     const initialParams = {
       name: undefined,
@@ -237,11 +234,11 @@ export default {
     },
     addActivityData() {
       // 添加物料弹框
-      this.$router.push({ path: this.matchHidePage('editor') })
+      this.$router.push({ path: this.matchRoutePath('editor') })
     },
     editCommunityAction(index, row) {
       // 编辑物料弹框
-      this.$router.push({ path: this.matchHidePage('editor/') + row.seckill_id })
+      this.$router.push({ path: this.matchRoutePath('editor/') + row.seckill_id })
     },
     getParams() {
       const time = {}

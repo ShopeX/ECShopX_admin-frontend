@@ -344,7 +344,7 @@ export default {
     },
     add() {
       this.$router.push({
-        path: this.matchHidePage('templ')
+        path: this.matchRoutePath('templ')
       })
     },
     getList(key) {

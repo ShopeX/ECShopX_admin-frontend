@@ -398,7 +398,7 @@ export default {
     },
     count(index, row) {
       if (row.children_count > 0) {
-        console.log(this.matchHidePage('child'))
+        console.log(this.matchRoutePath('child'))
         console.log(row.promoter_id)
         console.log(row.promoter_id)
         console.log(row.promoter_id)
@@ -406,7 +406,7 @@ export default {
           // path: "/sellers/marketingsalesman/children",
           // pathxxx: "/sellers/marketingsalesman/popularizelist/child",
           // path: "/marketing/popularize/popularizelist/child",
-          path: this.matchHidePage('children'),
+          path: this.matchRoutePath('children'),
           query: { promoter_id: row.promoter_id }
         })
         console.log(routeData.href)

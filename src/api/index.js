@@ -12,7 +12,7 @@ const callbackWrap = (fn) => {
   return _fn
 }
 importAll(require.context('./', false, /\.js$/), (key, r) => {
-  const keyPath = key.match(/\.\/(.+)\.js$/)[1]
+  const keyPath = key.match(/\.\/(.+)\.js$/)?.[1]
   if (!['index'].includes(keyPath)) {
     const fn = {}
     Object.keys(r(key)).forEach((n) => {
@@ -22,7 +22,7 @@ importAll(require.context('./', false, /\.js$/), (key, r) => {
   }
 })
 
-function install (Vue) {
+function install(Vue) {
   Vue.prototype.$api = api
   Vue.prototype.$http = req
 }

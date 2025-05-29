@@ -39,13 +39,13 @@
       <el-table-column prop="activity_name" label="活动名称" width="200" />
       <el-table-column label="是否核销" width="120">
         <template slot-scope="scope">
-          {{ scope.row.is_offline_verify == 1 ? '是' : '否'}}
+          {{ scope.row.is_offline_verify == 1 ? '是' : '否' }}
         </template>
       </el-table-column>
       <el-table-column prop="gift_points" label="获取积分" width="120" />
       <el-table-column label="进白名单" width="120">
         <template slot-scope="scope">
-          {{ scope.row.is_white_list == 1 ? '是' : '否'}}
+          {{ scope.row.is_white_list == 1 ? '是' : '否' }}
         </template>
       </el-table-column>
       <el-table-column label="活动时间" width="300">
@@ -60,13 +60,36 @@
       </el-table-column>
       <el-table-column prop="status_name" label="状态" width="120" />
       <el-table-column prop="distributor_name" label="店铺" width="120" />
-      <el-table-column label="操作" fixed="right" :width="IS_DISTRIBUTOR() ? 150: 250">
+      <el-table-column label="操作" fixed="right" :width="IS_DISTRIBUTOR() ? 150 : 250">
         <template slot-scope="scope">
-          <el-button v-if="(scope.row.status === 'ongoing' || scope.row.status === 'waiting') && !IS_DISTRIBUTOR()" type="text" @click="onOperationChange(scope.row, 'edit')">编辑</el-button>
-          <el-button v-if="scope.row.status === 'end' || IS_DISTRIBUTOR()" type="text" @click="onOperationChange(scope.row, 'detail')">查看</el-button>
-          <el-button v-if="scope.row.status === 'waiting' && !IS_DISTRIBUTOR()" type="text" @click="onStopChange(scope.row)">终止</el-button>
+          <el-button
+            v-if="
+              (scope.row.status === 'ongoing' || scope.row.status === 'waiting') &&
+              !IS_DISTRIBUTOR()
+            "
+            type="text"
+            @click="onOperationChange(scope.row, 'edit')"
+          >
+            编辑
+          </el-button>
+          <el-button
+            v-if="scope.row.status === 'end' || IS_DISTRIBUTOR()"
+            type="text"
+            @click="onOperationChange(scope.row, 'detail')"
+          >
+            查看
+          </el-button>
+          <el-button
+            v-if="scope.row.status === 'waiting' && !IS_DISTRIBUTOR()"
+            type="text"
+            @click="onStopChange(scope.row)"
+          >
+            终止
+          </el-button>
           <!-- <el-button v-if="scope.row.status === 'ongoing' && !IS_DISTRIBUTOR()" type="text" @click="onShowChange(scope.row)">企业</el-button> -->
-          <el-button type="text" @click="onOperationChange(scope.row, 'record')">报名记录</el-button>
+          <el-button type="text" @click="onOperationChange(scope.row, 'record')">
+            报名记录
+          </el-button>
         </template>
       </el-table-column>
     </el-table>
@@ -82,7 +105,7 @@
         @size-change="onSizeChange"
       />
     </div>
-    <EnterpriseDialog :visible.sync="dialogVisible" :data="dialogData" @closeDialog="closeDialog"/>
+    <EnterpriseDialog :visible.sync="dialogVisible" :data="dialogData" @closeDialog="closeDialog" />
   </SpRouterView>
 </template>
 <script>
@@ -91,21 +114,21 @@ import { IS_DISTRIBUTOR } from '@/utils'
 import { regActivityInvalid } from '@/api/selfhelpform'
 import EnterpriseDialog from './components/enterpriseDialog'
 export default {
+  components: {
+    EnterpriseDialog
+  },
   mixins: [mixin, pageMixin],
   provide() {
     return {
       refresh: this.fetchList
     }
   },
-  components: {
-    EnterpriseDialog
-  },
   data() {
     const initialParams = {
       field_title: undefined,
       status: '',
       create_time: [],
-      distributor_id: '',
+      distributor_id: ''
     }
     return {
       initialParams,
@@ -124,8 +147,7 @@ export default {
       dialogVisible: false
     }
   },
-  watch: {
-  },
+  watch: {},
   mounted() {
     this.fetchList()
     this.getStoreList()
@@ -133,7 +155,7 @@ export default {
   methods: {
     addElement() {
       // 添加商品
-      this.$router.push({ path: this.matchHidePage('editor') })
+      this.$router.push({ path: this.matchRoutePath('editor') })
     },
     onSearch() {
       this.page.pageIndex = 1
@@ -184,13 +206,24 @@ export default {
         })
       }
     },
-    onOperationChange (row, type) {
+    onOperationChange(row, type) {
       if (type == 'edit') {
-        this.$router.push({ path: this.matchHidePage('editor'), query: { id: row.activity_id, type: 'edit'} })
+        this.$router.push({
+          path: this.matchRoutePath('editor'),
+          query: { id: row.activity_id, type: 'edit' }
+        })
       } else if (type == 'detail') {
-        this.$router.push({ path: this.matchHidePage('editor'), query: { id: row.activity_id, type: 'detail'} })
+        this.$router.push({
+          path: this.matchRoutePath('editor'),
+          query: { id: row.activity_id, type: 'detail' }
+        })
       } else if (type == 'record') {
-        this.$router.push({ path: `${this.IS_DISTRIBUTOR() ? '/shopadmin' : ''}/marketing/marketing/apply/Registrationrecord`, query: { id: row.activity_id} })
+        this.$router.push({
+          path: `${
+            this.IS_DISTRIBUTOR() ? '/shopadmin' : ''
+          }/marketing/marketing/apply/Registrationrecord`,
+          query: { id: row.activity_id }
+        })
       }
     },
     onStopChange(row) {
@@ -202,24 +235,23 @@ export default {
         beforeClose: (action, instance, done) => {
           if (action === 'confirm') {
             regActivityInvalid({ activity_id: row.activity_id }).then((res) => {
-                this.fetchList()
-                this.$message({
-                  message: '修改活动状态成功',
-                  type: 'success',
-                  duration: 5 * 1000
-                })
-              }
-            )
+              this.fetchList()
+              this.$message({
+                message: '修改活动状态成功',
+                type: 'success',
+                duration: 5 * 1000
+              })
+            })
           }
           done()
         }
       })
     },
-    onShowChange (row) {
+    onShowChange(row) {
       this.dialogData = row
       this.closeDialog(true)
     },
-    closeDialog (visible) {
+    closeDialog(visible) {
       this.dialogVisible = visible
     }
   }

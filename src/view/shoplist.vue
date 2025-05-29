@@ -3,69 +3,32 @@
     <div class="log-header">
       <div class="log-container">
         <div class="brand">
-          <img
-            :src="brand"
-            alt=""
-          >
+          <img :src="brand" alt="">
         </div>
-        <div class="log-welcome">
-          选择店铺
-        </div>
+        <div class="log-welcome">选择店铺</div>
       </div>
     </div>
     <div class="log-container">
-      <el-table
-        :data="list"
-        border
-        style="width: 100%"
-      >
-        <el-table-column
-          prop="name"
-          label="店铺名称"
-          width="180"
-        />
+      <el-table :data="list" border style="width: 100%">
+        <el-table-column prop="name" label="店铺名称" width="180" />
         <el-table-column label="是否启用">
           <template slot-scope="scope">
-            <el-tag
-              v-if="scope.row.is_valid == 'true'"
-              type="success"
-            >
-              启用
-            </el-tag>
-            <el-tag
-              v-else-if="scope.row.is_valid == 'delete'"
-              type="danger"
-            >
-              废弃
-            </el-tag>
-            <el-tag
-              v-else
-              type="info"
-            >
-              禁用
-            </el-tag>
+            <el-tag v-if="scope.row.is_valid == 'true'" type="success"> 启用 </el-tag>
+            <el-tag v-else-if="scope.row.is_valid == 'delete'" type="danger"> 废弃 </el-tag>
+            <el-tag v-else type="info"> 禁用 </el-tag>
           </template>
         </el-table-column>
-        <el-table-column
-          prop="name"
-          label="店铺地址"
-        >
+        <el-table-column prop="name" label="店铺地址">
           <template slot-scope="scope">
             {{ scope.row.store_address }}
           </template>
         </el-table-column>
-        <el-table-column
-          prop="name"
-          label="创建时间"
-        >
+        <el-table-column prop="name" label="创建时间">
           <template slot-scope="scope">
             <span>{{ scope.row.created | datetime('YYYY-MM-DD') }}</span>
           </template>
         </el-table-column>
-        <el-table-column
-          label="操作"
-          min-width="100"
-        >
+        <el-table-column label="操作" min-width="100">
           <template slot-scope="scope">
             <el-button
               type="text"
@@ -87,7 +50,7 @@ import { getDistributorList } from '@/api/marketing'
 import { shopLoginSelectShopId } from '@/api/company'
 import { VERSION_STANDARD } from '@/utils'
 export default {
-  data () {
+  data() {
     const system = VERSION_STANDARD ? 'onex' : 'ecshopx'
     const brand = require(`@/assets/img/${system}/logo.jpg`)
     return {
@@ -97,7 +60,7 @@ export default {
       list: []
     }
   },
-  mounted () {
+  mounted() {
     console.log('-----2')
     getDistributorList({ page: 1, pageSize: 100, is_all: true }).then((response) => {
       if (response.data.data.total_count === 1) {
@@ -111,7 +74,7 @@ export default {
     // this.brand = require('@/assets/img/' + this.companyBrandImg + '/logo.svg')
   },
   methods: {
-    selectDistributor (data) {
+    selectDistributor(data) {
       shopLoginSelectShopId({ set_distributor_id: data.distributor_id }).then((res) => {
         if (res.data.data.status) {
           this.$store.dispatch('setShopId', data.distributor_id)
@@ -150,7 +113,6 @@ body {
 }
 .log-body {
   padding: 118px 0;
-  // background: url(./assets/img/login_bg.jpg) no-repeat center center;
   background-size: cover;
 }
 .log-img {

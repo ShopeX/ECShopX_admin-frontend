@@ -1,9 +1,10 @@
 <style lang="scss" scoped>
 .sp-decorate {
   width: 375px;
-  padding: 10px;
+  // padding: 10px;
   background-color: #f5f5f5;
   line-height: initial;
+  position: relative;
 
   .weapp-body {
     box-shadow: 0 0 14px 0 rgb(0 0 0 / 10%);
@@ -22,6 +23,13 @@
   .btn-edit {
     text-align: center;
     margin: 0 auto;
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 100;
+    background-color: rgba(0, 0, 0, 0.3);
+    padding: 10px 0;
   }
 }
 </style>
@@ -65,7 +73,7 @@
       <DecorateView
         v-if="dialogVisible"
         ref="decorateViewRef"
-        title="商品描述"
+        :title="title"
         mode="dialog"
         :value="localValue"
         :scene="scene"
@@ -79,13 +87,8 @@
 <script>
 import Vue from 'vue'
 import draggable from 'vuedraggable'
-import { SYSTEM_CONFIG } from '@/consts'
-import store from '@/store'
-import { hex2rgb } from '@/utils'
-import { cloneDeep } from 'lodash'
 import gWgts from '@/view/decorate/wgts'
 import DecorateView from '@/view/decorate'
-// import comps from './comps'
 export default {
   name: 'SpDecorate',
   components: {
@@ -99,7 +102,11 @@ export default {
     },
     scene: {
       type: String,
-      default: ''
+      default: '1001'
+    },
+    title: {
+      type: String,
+      default: '商品描述'
     }
   },
   data() {
@@ -111,14 +118,6 @@ export default {
     }
   },
   watch: {
-    // value: {
-    //   handler(nVal, oVal) {
-    //     this.localValue = this.getWgtsValue(nVal)
-    //   },
-    //   // deep: true,
-    //   // immediate: true
-    // }
-
     value: function (nVal, oVal) {
       this.localValue = this.getWgtsValue(nVal)
     }
@@ -128,22 +127,24 @@ export default {
   },
   methods: {
     getWgtsValue(val) {
-      return val.map((k) => {
+      const filterWidget = []
+      val.forEach((k) => {
         const wgt = this.widgets.find((item) => item.name.toLowerCase() == k.name.toLowerCase())
         if (wgt) {
           const wgtInitParams = this.cloneDefaultField(wgt)
           const params = wgt.config.transformIn(k)
-          return {
+          filterWidget.push({
             wgtName: wgt.wgtName,
             ...wgtInitParams,
             ...params
-          }
+          })
         }
       })
+      return filterWidget
     },
     registerWgts() {
-      const { scene = '1001' } = this.$route.query
-      const wgts = gWgts[scene]
+      // const { scene = '1001' } = this.$route.query
+      const wgts = gWgts[this.scene]
       Object.keys(wgts).forEach((index) => {
         this.widgets.push(wgts[index])
         Vue.component(wgts[index].name, wgts[index])

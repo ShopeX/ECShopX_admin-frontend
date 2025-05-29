@@ -74,7 +74,26 @@ export default {
   name: 'SpForm',
   props: {
     formList: Array,
-    value: [Number, String, Object],
+    labelWidth: {
+      type: String,
+      default: '160px'
+    },
+    resetBtn: {
+      type: Boolean,
+      default: true
+    },
+    resetBtnText: {
+      type: String,
+      default: '重置'
+    },
+    submitBtn: {
+      type: Boolean,
+      default: true
+    },
+    submitBtnText: {
+      type: String,
+      default: '确定'
+    },
     size: {
       type: String,
       default: 'normal'
@@ -83,14 +102,11 @@ export default {
       type: Boolean,
       default: true
     },
-    labelWidth: {
-      type: String,
-      default: '160px'
-    },
     showMessage: {
       type: Boolean,
       default: false
-    }
+    },
+    value: [Number, String, Object]
   },
   data() {
     // const _form = {}
@@ -152,6 +168,15 @@ export default {
       } else {
         return isShow !== false
       }
+    },
+    setField(data, key, value) {
+      data.forEach((item) => {
+        if (item.key === key) {
+          Object.keys(value).forEach((k) => {
+            item[k] = value[k]
+          })
+        }
+      })
     },
     _renderTextArea(item) {
       const { value } = this
@@ -239,7 +264,12 @@ export default {
           disabled={isFunction(disabled) ? disabled() : disabled}
         >
           {options.map((op) => (
-            <el-option key={op.value} label={op.title} value={op.value} disabled={isFunction(op.disabled) ? op.disabled() : op.disabled} />
+            <el-option
+              key={op.value}
+              label={op.title}
+              value={op.value}
+              disabled={isFunction(op.disabled) ? op.disabled() : op.disabled}
+            />
           ))}
         </el-select>
       )
@@ -248,7 +278,11 @@ export default {
       const { value } = this
       const { key, disabled = false, options, onChange = () => {} } = item
       return (
-        <el-radio-group v-model={value[key]} onChange={onChange} disabled={isFunction(disabled) ? disabled() : disabled}>
+        <el-radio-group
+          v-model={value[key]}
+          onChange={onChange}
+          disabled={isFunction(disabled) ? disabled() : disabled}
+        >
           {options.map((op) => (
             <el-radio label={op.label}>{op.name}</el-radio>
           ))}
@@ -298,8 +332,14 @@ export default {
     },
     _renderSwitch(item) {
       const { value } = this
-      const { key,disabled=false, onChange = () => {} } = item
-      return <el-switch v-model={value[key]} on-change={onChange} disabled={isFunction(disabled) ? disabled() : disabled} />
+      const { key, disabled = false, onChange = () => {} } = item
+      return (
+        <el-switch
+          v-model={value[key]}
+          on-change={onChange}
+          disabled={isFunction(disabled) ? disabled() : disabled}
+        />
+      )
     }
   },
   render() {
@@ -394,10 +434,16 @@ export default {
         })}
         {this.submit && (
           <el-form-item>
-            <el-button onClick={this.resetForm}>重置</el-button>
-            <el-button type='primary' onClick={this.onSubmit}>
-              确定
-            </el-button>
+            {this.resetBtn && (
+              <el-button class='mr-5' type='default' onClick={this.resetForm}>
+                {this.resetBtnText}
+              </el-button>
+            )}
+            {this.submitBtn && (
+              <el-button type='primary' onClick={this.onSubmit}>
+                {this.submitBtnText}
+              </el-button>
+            )}
           </el-form-item>
         )}
       </el-form>

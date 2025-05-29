@@ -190,17 +190,17 @@ import viewNotes from './comps/viewNotes'
 import flagModal from './comps/flagModal'
 import settingOfficial from './comps/settingOfficial'
 export default {
-  provide() {
-    return {
-      refresh: this.getDataList
-    }
-  },
   components: {
     noteslist,
     auditNote,
     viewNotes,
     flagModal,
     settingOfficial
+  },
+  provide() {
+    return {
+      refresh: this.getDataList
+    }
   },
   data() {
     return {
@@ -393,7 +393,7 @@ export default {
       }
     },
     addNote() {
-      this.$router.push({ path: this.matchHidePage('editor') })
+      this.$router.push({ path: this.matchRoutePath('editor') })
     },
     delNote() {
       const { id_set } = this.$data

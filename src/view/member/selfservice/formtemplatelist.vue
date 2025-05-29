@@ -8,99 +8,42 @@
   <div>
     <template v-if="$route.path.indexOf('detail') === -1 && $route.path.indexOf('editor') === -1">
       <div class="action-container">
-        <el-button
-          type="primary"
-          icon="iconfont icon-xinzengcaozuo-01"
-          @click="addTemplate"
-        >
+        <el-button type="primary" icon="iconfont icon-xinzengcaozuo-01" @click="addTemplate">
           添加模板
         </el-button>
       </div>
 
-      <SpFilterForm
-        :model="params"
-        @onSearch="onSearch"
-        @onReset="onReset"
-      >
-        <SpFilterFormItem
-          prop="tem_name"
-          label="模板名称:"
-        >
-          <el-input
-            v-model="params.tem_name"
-            placeholder="模板名称"
-          />
+      <SpFilterForm :model="params" @onSearch="onSearch" @onReset="onReset">
+        <SpFilterFormItem prop="tem_name" label="模板名称:">
+          <el-input v-model="params.tem_name" placeholder="模板名称" />
         </SpFilterFormItem>
-        <SpFilterFormItem
-          prop="tem_type"
-          label="模板类型:"
-        >
-          <el-select
-            v-model="params.tem_type"
-            placeholder="模板类型"
-            style="width: 100%"
-          >
-            <el-option
-              key="basic_entry"
-              label="基础录入"
-              value="basic_entry"
-            />
-            <el-option
-              key="ask_answer_paper"
-              label="问卷调查"
-              value="ask_answer_paper"
-            />
+        <SpFilterFormItem prop="tem_type" label="模板类型:">
+          <el-select v-model="params.tem_type" placeholder="模板类型" style="width: 100%">
+            <el-option key="basic_entry" label="基础录入" value="basic_entry" />
+            <el-option key="ask_answer_paper" label="问卷调查" value="ask_answer_paper" />
           </el-select>
         </SpFilterFormItem>
       </SpFilterForm>
 
-      <el-tabs
-        v-model="params.is_valid"
-        type="card"
-        @tab-click="handleTabClick"
-      >
+      <el-tabs v-model="params.is_valid" type="card" @tab-click="handleTabClick">
         <el-tab-pane
           v-for="(item, index) in tabList"
           :key="index"
           :label="item.name"
           :name="item.activeName"
         >
-          <el-table
-            v-loading="loading"
-            border
-            :data="tableList"
-            :height="wheight - 280"
-          >
-            <el-table-column
-              prop="id"
-              label="ID"
-              width="100"
-            />
-            <el-table-column
-              prop="tem_name"
-              label="模板名称"
-              width="300"
-            />
-            <el-table-column
-              prop="tem_type"
-              label="模板类型"
-              width="300"
-            />
-            <el-table-column
-              prop="status"
-              label="状态"
-              width="100"
-            />
+          <el-table v-loading="loading" border :data="tableList" :height="wheight - 280">
+            <el-table-column prop="id" label="ID" width="100" />
+            <el-table-column prop="tem_name" label="模板名称" width="300" />
+            <el-table-column prop="tem_type" label="模板类型" width="300" />
+            <el-table-column prop="status" label="状态" width="100" />
             <el-table-column label="操作">
               <template slot-scope="scope">
                 <router-link
                   class="iconfont icon-edit1"
-                  :to="{ path: matchHidePage('editor'), query: { id: scope.row.id } }"
+                  :to="{ path: matchRoutePath('editor'), query: { id: scope.row.id } }"
                 />
-                <i
-                  class="iconfont icon-search-plus"
-                  @click="preview(scope.$index, scope.row)"
-                />
+                <i class="iconfont icon-search-plus" @click="preview(scope.$index, scope.row)" />
                 <i
                   v-if="scope.row.status == 1"
                   class="mark iconfont icon-trash-alt1"
@@ -123,21 +66,9 @@
           </div>
         </el-tab-pane>
       </el-tabs>
-      <el-dialog
-        :visible.sync="dialogVisible"
-        :title="dialogTitle"
-        width="50"
-      >
-        <el-alert
-          v-if="headerTitle"
-          :title="headerTitle"
-          type="info"
-          :closable="false"
-        /><br>
-        <el-card
-          v-for="(carditem, index) in dialogContent"
-          :key="index"
-        >
+      <el-dialog :visible.sync="dialogVisible" :title="dialogTitle" width="50">
+        <el-alert v-if="headerTitle" :title="headerTitle" type="info" :closable="false" /><br>
+        <el-card v-for="(carditem, index) in dialogContent" :key="index">
           <div slot="header">
             {{ carditem.title }}
           </div>
@@ -152,56 +83,24 @@
               :key="index"
               :label="item.field_title"
             >
-              <el-col
-                v-if="item.form_element == 'text'"
-                :span="12"
-              >
-                <el-input
-                  placeholder="text预览"
-                  disabled
-                />
+              <el-col v-if="item.form_element == 'text'" :span="12">
+                <el-input placeholder="text预览" disabled />
               </el-col>
-              <el-col
-                v-if="item.form_element == 'number'"
-                :span="12"
-              >
-                <el-input
-                  placeholder="1"
-                  size="mini"
-                  disabled
-                  style="width: 120px"
-                />
+              <el-col v-if="item.form_element == 'number'" :span="12">
+                <el-input placeholder="1" size="mini" disabled style="width: 120px" />
                 <span class="frm-tips"> (只能是数字)</span>
               </el-col>
-              <el-col
-                v-if="item.form_element == 'textarea'"
-                :span="12"
-              >
-                <el-input
-                  type="textarea"
-                  placeholder="textarea预览"
-                  disabled
-                  :rows="5"
-                />
+              <el-col v-if="item.form_element == 'textarea'" :span="12">
+                <el-input type="textarea" placeholder="textarea预览" disabled :rows="5" />
               </el-col>
-              <el-col
-                v-if="item.form_element == 'radio'"
-                :span="12"
-              >
+              <el-col v-if="item.form_element == 'radio'" :span="12">
                 <el-radio-group disabled>
-                  <el-radio
-                    v-for="(item, index) in item.options"
-                    :key="index"
-                    :label="3"
-                  >
+                  <el-radio v-for="(item, index) in item.options" :key="index" :label="3">
                     {{ item.value }}
                   </el-radio>
                 </el-radio-group>
               </el-col>
-              <el-col
-                v-if="item.form_element == 'checkbox'"
-                :span="12"
-              >
+              <el-col v-if="item.form_element == 'checkbox'" :span="12">
                 <el-checkbox-group disabled>
                   <el-checkbox
                     v-for="(item, index) in item.options"
@@ -212,10 +111,7 @@
                   </el-checkbox>
                 </el-checkbox-group>
               </el-col>
-              <el-col
-                v-if="item.form_element == 'select'"
-                :span="12"
-              >
+              <el-col v-if="item.form_element == 'select'" :span="12">
                 <el-select placeholder="请选择">
                   <el-option
                     v-for="item in item.options"
@@ -229,18 +125,8 @@
             </el-form-item>
           </el-form>
         </el-card>
-        <el-alert
-          v-if="bottomTitle"
-          :title="bottomTitle"
-          type="info"
-          :closable="false"
-        />
-        <el-button
-          type="primary"
-          disabled
-        >
-          确认提交
-        </el-button>
+        <el-alert v-if="bottomTitle" :title="bottomTitle" type="info" :closable="false" />
+        <el-button type="primary" disabled> 确认提交 </el-button>
       </el-dialog>
     </template>
     <router-view />
@@ -252,12 +138,12 @@ import { deleteTemplate } from '@/api/selfhelpform'
 import { pageMixin } from '@/mixins'
 export default {
   mixins: [pageMixin],
-  provide () {
+  provide() {
     return {
       refresh: this.fetchList
     }
   },
-  data () {
+  data() {
     const initialParams = {
       tem_name: undefined,
       tem_type: undefined,
@@ -287,41 +173,41 @@ export default {
     ...mapGetters(['wheight'])
   },
   watch: {
-    getStatus (val) {
+    getStatus(val) {
       if (val) {
         this.fetchList()
       }
     }
   },
-  mounted () {
+  mounted() {
     this.fetchList()
   },
   methods: {
-    onSearch () {
+    onSearch() {
       this.page.pageIndex = 1
       this.$nextTick(() => {
         this.fetchList()
       })
     },
-    onReset () {
+    onReset() {
       this.params = { ...this.initialParams }
       this.onSearch()
     },
-    getParams () {
+    getParams() {
       let params = {
         ...this.params
       }
       return params
     },
-    addTemplate () {
+    addTemplate() {
       // 添加商品
-      this.$router.push({ path: this.matchHidePage('editor') })
+      this.$router.push({ path: this.matchRoutePath('editor') })
     },
-    editTemplateAction (index, row) {
+    editTemplateAction(index, row) {
       // 编辑商品弹框
       this.$router.push({ path: '/member/selfservice/formtemplateadd/' + row.id })
     },
-    preview (index, row) {
+    preview(index, row) {
       // 编辑商品弹框
       this.dialogVisible = true
       this.dialogTitle = row.tem_name + '( 预览模式 )'
@@ -329,7 +215,7 @@ export default {
       this.headerTitle = row.header_title
       this.bottomTitle = row.bottom_title
     },
-    async fetchList () {
+    async fetchList() {
       this.loading = true
       const { pageIndex: page, pageSize } = this.page
       let params = {
@@ -342,7 +228,7 @@ export default {
       this.page.total = total_count
       this.loading = false
     },
-    deleteAction (index, row) {
+    deleteAction(index, row) {
       this.$confirm('此操作将废弃该模板, 是否继续?', '提示', {
         confirmButtonText: '确定',
         cancelButtonText: '取消',
@@ -372,7 +258,7 @@ export default {
           })
         })
     },
-    getTaskTime (strDate) {
+    getTaskTime(strDate) {
       let date = new Date(strDate)
       let y = date.getFullYear()
       let m = date.getMonth() + 1
@@ -382,10 +268,10 @@ export default {
       let str = y + '-' + m + '-' + d
       return str
     },
-    getTimeStr (date) {
+    getTimeStr(date) {
       return this.getTaskTime(new Date(parseInt(date) * 1000))
     },
-    handleTabClick (tab, event) {
+    handleTabClick(tab, event) {
       this.onSearch()
     }
   }

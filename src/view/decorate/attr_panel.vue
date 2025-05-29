@@ -20,6 +20,21 @@ export default {
     onCompChange() {
       this.$emit('input', this.compValue)
     },
+
+    _renderSelect({ key, options }) {
+      return (
+        <el-select v-model={this.value[key]} size='small'>
+          {options.map((op) => (
+            <el-option label={op.label} value={op.value} />
+          ))}
+        </el-select>
+      )
+    },
+
+    _renderTextArea({ key, rows }) {
+      return <el-input type='textarea' v-model={this.value[key]} rows={rows} size='small' />
+    },
+
     _renderInput({ key }) {
       return <el-input type='text' v-model={this.value[key]} size='small' />
     },
@@ -70,12 +85,12 @@ export default {
       }
 
       const renderItem = {
-        // 'textarea': this._renderTextArea,
+        'textarea': this._renderTextArea,
         'input': this._renderInput,
         'color': this._renderColor,
         'number': this._renderNumber,
         // 'text': this._renderText,
-        // 'select': this._renderSelect,
+        'select': this._renderSelect,
         'radio': this._renderRadio,
         // 'checkbox': this._renderCheckbox,
         // 'table': this._renderTable,

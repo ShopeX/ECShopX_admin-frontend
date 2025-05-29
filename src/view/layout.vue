@@ -133,7 +133,7 @@
           class="content-container"
           :class="{ 'footer-fixed': $route.meta && $route.meta.footerFixed }"
         />
-        <div class="system-release">
+        <div class="system-release flex justify-center items-center">
           <img v-if="VERSION_B2C" :src="loginBottomB2c" alt="" class="system-image">
           <img
             v-if="VERSION_IN_PURCHASE"
@@ -521,8 +521,8 @@ export default {
     background-color: #fff;
     padding: 16px;
     border-radius: 0;
-    // min-height: calc(100vh - 70px);
-    min-height: 600px;
+    min-height: calc(100% - 38px);
+    // min-height: 600px;
     &.footer-fixed {
       margin-bottom: 57px;
     }

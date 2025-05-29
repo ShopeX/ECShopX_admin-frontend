@@ -518,7 +518,7 @@
         :width="800"
         @confirm="
           () => {
-            this.showItemSkuDrawer = false
+            showItemSkuDrawer = false
           }
         "
       >
@@ -1160,6 +1160,12 @@ export default {
             }
           },
           {
+            name: '是否处方',
+            key: 'item_bn',
+            width: 150,
+            render: (h, { row }) => (row.is_prescription == '1' ? '是' : '否')
+          },
+          {
             name: 'sku编码',
             key: 'item_bn',
             width: 150,
@@ -1190,6 +1196,28 @@ export default {
               </div>
             )
           },
+          {
+            name: '审核结果',
+            key: 'audit_status',
+            width: 150,
+            render: (h, { row }) =>
+              row.medicine_data ? this.auditStatusMap[row.medicine_data.audit_status] : ''
+          },
+          {
+            name: '错误信息',
+            key: 'audit_reason',
+            width: 150,
+            render: (h, { row }) => (
+              <div>
+                {row.medicine_data?.audit_reason && row.medicine_data?.audit_status == 3 && (
+                  <div onClick={() => this.handleErrDetail(row.medicine_data)}>
+                    {this.handleAuditReason(row.medicine_data)}
+                    <i class='el-icon-info'></i>
+                  </div>
+                )}
+              </div>
+            )
+          },
           // {
           //   name: '供应商货号',
           //   key: 'supplier_goods_bn',
@@ -1212,7 +1240,7 @@ export default {
           //   align: "right",
           //   headerAlign: 'center'
           // },
-          
+
           {
             name: '市场价（¥）',
             key: 'market_price',
@@ -1325,7 +1353,11 @@ export default {
             componentProps: {
               icon: 'el-icon-plus',
               change: async (v, row) => {
-                await this.$api.goods.setItemsSort({ 'sort': v, 'item_id': row.item_id ,'operate_source': this.IS_SUPPLIER()?'supplier':''})
+                await this.$api.goods.setItemsSort({
+                  'sort': v,
+                  'item_id': row.item_id,
+                  'operate_source': this.IS_SUPPLIER() ? 'supplier' : ''
+                })
                 this.$refs['finder'].refresh()
               }
             }
@@ -1395,6 +1427,10 @@ export default {
     this.checkWdtErpBind()
     this.checkJstErpBind()
     this.getBaseSetting()
+
+    this.$activated = () => {
+      this.$refs['finder'].refresh()
+    }
   },
   methods: {
     async getBaseSetting() {
@@ -1409,9 +1445,7 @@ export default {
         }
       })
     },
-    onHooksRouteBack() {
-      this.$refs['finder'].refresh()
-    },
+
     beforeSearch(params) {
       params = {
         ...params,

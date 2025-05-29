@@ -129,7 +129,7 @@ export default {
               type: 'link',
               handler: async (val) => {
                 this.$router.push({
-                  path: this.matchHidePage('editor'),
+                  path: this.matchRoutePath('editor'),
                   query: { type: 'detail', merchantId: val[0].id }
                 })
               }
@@ -144,7 +144,7 @@ export default {
               type: 'link',
               handler: async (val) => {
                 this.$router.push({
-                  path: this.matchHidePage('editor'),
+                  path: this.matchRoutePath('editor'),
                   query: { type: 'edit', merchantId: val[0].id }
                 })
               }
@@ -244,7 +244,7 @@ export default {
       })
     },
     addMerchant() {
-      this.$router.push({ path: this.matchHidePage('editor'), query: { type: 'add' } })
+      this.$router.push({ path: this.matchRoutePath('editor'), query: { type: 'add' } })
     }
   }
 }

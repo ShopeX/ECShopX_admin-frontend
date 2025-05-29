@@ -141,16 +141,16 @@ export default {
         })
     },
     showGroupsActivityDataAction(index, row) {
-      this.$router.push({ path: this.matchHidePage('team/') + row.groups_activity_id })
+      this.$router.push({ path: this.matchRoutePath('team/') + row.groups_activity_id })
     },
     showGroupsAction(index, row) {
       this.$router.push({
-        path: this.matchHidePage('editor/') + row.groups_activity_id,
+        path: this.matchRoutePath('editor/') + row.groups_activity_id,
         query: { show: '1' }
       })
     },
     editGroupsAction(index, row) {
-      this.$router.push({ path: this.matchHidePage('editor/') + row.groups_activity_id })
+      this.$router.push({ path: this.matchRoutePath('editor/') + row.groups_activity_id })
     },
     finishGroupsAction(index, row) {
       this.$confirm('此操作将终止该拼团活动, 是否继续?', '提示', {

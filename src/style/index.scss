@@ -1,8 +1,13 @@
+@import 'tailwindcss/base';
+@import 'tailwindcss/components';
+@import 'tailwindcss/utilities';
+
 html,
 body {
   margin: 0;
   height: 100%;
   background: #f0f2f5;
+
   #app {
     height: 100%;
   }
@@ -15,6 +20,7 @@ a {
 .view-flex {
   display: flex;
 }
+
 .view-flex-item {
   flex: 1;
 }
@@ -35,11 +41,13 @@ a {
     display: flex;
     align-items: center;
     color: #888;
+
     &:first-child {
       border-bottom: 1px solid #efefef;
       padding-bottom: 5px;
       margin-bottom: 10px;
     }
+
     .user-avatar {
       width: 40px;
       height: 40px;
@@ -50,14 +58,14 @@ a {
 }
 
 // el-css
-.el-button {
-  &-group {
-    margin-right: 5px;
-  }
-  & + .el-button {
-    margin-left: 5px;
-  }
-}
+// .el-button {
+//   &-group {
+//     margin-right: 5px;
+//   }
+//   & + .el-button {
+//     margin-left: 5px;
+//   }
+// }
 
 .el-row {
   margin-bottom: 10px !important;
@@ -82,9 +90,11 @@ a {
   .bar {
     background-color: $color-primary;
   }
+
   .peg {
     box-shadow: 0 0 10px $color-primary, 0 0 5px $color-primary;
   }
+
   .spinner-icon {
     border-top-color: $color-primary;
     border-left-color: $color-primary;
@@ -94,9 +104,11 @@ a {
 /***** action-container *****/
 .action-container {
   margin-bottom: 8px;
+
   button {
     margin: 0 8px 8px 0 !important;
   }
+
   .btn-upload {
     display: inline-block;
   }
@@ -119,6 +131,7 @@ a {
   padding: 10px;
   border-top: 1px solid #efefef;
   z-index: 2000;
+
   .el-button {
     margin: 0 20px;
   }
@@ -130,12 +143,14 @@ a {
     padding: 0px;
     margin-bottom: 8px;
   }
+
   .pop-edit-box-icon {
     .icon-edit {
       font-size: 13px;
       margin-left: 2px;
     }
   }
+
   &__popover-edit {
     // display: flex;
     // align-items: center;
@@ -146,60 +161,85 @@ a {
     //   margin: 0 0 0 10px !important;
     // }
   }
+
   .sp-finder-actions-item {
     // margin-bottom: 8px;
   }
+
   .sp-finder-actions__wrap {
     justify-content: flex-start !important;
   }
+
   .sp-finder-search {
     background-color: #f6f7f9;
     padding: 16px 0 0 0;
     border: none;
+
     .sp-finder-search-fields {
       margin-left: 0;
+
       .search-field {
         width: auto !important;
         padding: 0 8px 16px 0;
         flex-grow: 0 !important;
       }
     }
+
     .search-field-label {
       width: 90px;
     }
+
     .search-field-value {
       width: 214px;
     }
   }
+
   .sp-finder-bd {
     padding: 0;
+
     .el-pagination {
       text-align: center;
     }
+
+    .el-loading-spinner {
+      top: 50%;
+      left: 50%;
+      width: auto;
+      position: absolute;
+      transform: translate(-50%, -50%);
+    }
   }
+
   .sp-finder-footer-text {
     margin-left: 10px;
   }
+
   .sp-finder-actions {
     &-item {
     }
+
     &__wrap {
       justify-content: flex-start !important;
     }
   }
+
   .el-table--border .el-table__cell:last-of-type {
     border-right: 1px solid #ebeef5;
   }
+
   .el-table--border .el-table__cell:first-of-type {
     border-left: 1px solid #ebeef5;
   }
+
   .el-table thead tr th:first-child {
     border-right: none;
   }
+
   .el-table thead th {
     // border-left: none !important;
     background: #f0f2f5 !important;
   }
+
   .el-table__row--striped {
     .el-table__cell {
       background: #fff !important;

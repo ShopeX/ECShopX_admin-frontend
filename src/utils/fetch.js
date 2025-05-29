@@ -3,7 +3,14 @@ import Vue from 'vue'
 import qs from 'qs'
 import store from '../store'
 import Router from '../router'
-import { isInSalesCenter, goLink, isInMerchant, isObject, IS_DISTRIBUTOR, IS_SUPPLIER } from '@/utils'
+import {
+  isInSalesCenter,
+  goLink,
+  isInMerchant,
+  isObject,
+  IS_DISTRIBUTOR,
+  IS_SUPPLIER
+} from '@/utils'
 
 function resolveGetMethod(inst) {
   const origGetMethod = inst.get
@@ -82,7 +89,6 @@ function createAxios(inst, isJson = true) {
         }
       }
     } else {
-      console.log('xxx')
       if (isJson) {
         const { params } = config
         if (params) {

@@ -2,20 +2,13 @@
   <div>
     <section class="section section-white app_detail_overview">
       <div class="section-header">
-        <div class="section-title">
-          昨日概况
-        </div>
+        <div class="section-title">昨日概况</div>
       </div>
       <div class="section-body">
-        <div
-          v-loading="surveyLoading"
-          class="data_overview_list_wrp"
-        >
+        <div v-loading="surveyLoading" class="data_overview_list_wrp">
           <div class="data_overview_list js_YO_dataBox">
             <div class="data_overview_item">
-              <p class="data_overview_title">
-                打开次数
-              </p>
+              <p class="data_overview_title">打开次数</p>
               <p class="data_overview_desc">
                 {{ survey.session_cnt ? survey.session_cnt : '0' }}
               </p>
@@ -53,9 +46,7 @@
               </ul>
             </div>
             <div class="data_overview_item">
-              <p class="data_overview_title">
-                访问次数 /人数
-              </p>
+              <p class="data_overview_title">访问次数 /人数</p>
               <p class="data_overview_desc">
                 {{ survey.visit_pv ? survey.visit_pv : '0' }} /
                 {{ survey.visit_uv ? survey.visit_uv : '0' }}
@@ -106,9 +97,7 @@
               </ul>
             </div>
             <div class="data_overview_item">
-              <p class="data_overview_title">
-                新访问用户数
-              </p>
+              <p class="data_overview_title">新访问用户数</p>
               <p class="data_overview_desc">
                 {{ survey.visit_uv_new ? survey.visit_uv_new : '0' }}
               </p>
@@ -146,9 +135,7 @@
               </ul>
             </div>
             <div class="data_overview_item">
-              <p class="data_overview_title">
-                分享次数 /人数
-              </p>
+              <p class="data_overview_title">分享次数 /人数</p>
               <p class="data_overview_desc">
                 {{ share.share_pv ? share.share_pv : '0' }} /
                 {{ share.share_uv ? share.share_uv : '0' }}
@@ -206,33 +193,18 @@
       <div class="section-header">
         <div class="section-title">
           {{ chart.currentTabName }}
-          <el-popover
-            v-model="chart.tabPop"
-            placement="bottom"
-            trigger="click"
-          >
+          <el-popover v-model="chart.tabPop" placement="bottom" trigger="click">
             <ul class="tab-list">
-              <li
-                v-for="(item, index) in chart.tabCon"
-                :key="index"
-                @click="tabChartHandle(index)"
-              >
+              <li v-for="(item, index) in chart.tabCon" :key="index" @click="tabChartHandle(index)">
                 {{ item.label }}
               </li>
             </ul>
-            <i
-              slot="reference"
-              class="iconfont icon-chevron-down tab-handle"
-            />
+            <i slot="reference" class="iconfont icon-chevron-down tab-handle" />
           </el-popover>
         </div>
       </div>
       <div class="section-header">
-        <el-select
-          v-model="chart.date"
-          placeholder="请选择"
-          @change="chartHandle"
-        >
+        <el-select v-model="chart.date" placeholder="请选择" @change="chartHandle">
           <el-option
             v-for="item in date"
             :key="item.value"
@@ -241,25 +213,15 @@
           />
         </el-select>
       </div>
-      <div
-        v-loading="chart.chartLoading"
-        class="section-body"
-      >
-        <canvas
-          id="canvas"
-          height="100"
-        />
+      <div v-loading="chart.chartLoading" class="section-body">
+        <canvas id="canvas" height="100" />
       </div>
     </section>
     <section class="section section-white">
       <div class="section-header">
         <div class="section-title">
           {{ visitPage.currentTabName }}
-          <el-popover
-            v-model="visitPage.tabPop"
-            placement="bottom"
-            trigger="click"
-          >
+          <el-popover v-model="visitPage.tabPop" placement="bottom" trigger="click">
             <ul class="tab-list">
               <li
                 v-for="(item, index) in visitPage.tabCon"
@@ -269,19 +231,12 @@
                 {{ item.label }}
               </li>
             </ul>
-            <i
-              slot="reference"
-              class="iconfont icon-chevron-down tab-handle"
-            />
+            <i slot="reference" class="iconfont icon-chevron-down tab-handle" />
           </el-popover>
         </div>
       </div>
       <div class="section-header">
-        <el-select
-          v-model="visitPage.date"
-          placeholder="请选择"
-          @change="visitPageHandle"
-        >
+        <el-select v-model="visitPage.date" placeholder="请选择" @change="visitPageHandle">
           <el-option
             v-for="item in date"
             :key="item.value"
@@ -291,24 +246,10 @@
         </el-select>
       </div>
       <div class="section-body">
-        <el-table
-          v-loading="visitPage.visitLoading"
-          :data="visitPage.list"
-        >
-          <el-table-column
-            prop="page_path"
-            label="页面路径"
-          />
-          <el-table-column
-            prop="pv_num"
-            label="访问次数"
-            width="180"
-          />
-          <el-table-column
-            prop="percent"
-            label="占比"
-            width="180"
-          />
+        <el-table v-loading="visitPage.visitLoading" :data="visitPage.list">
+          <el-table-column prop="page_path" label="页面路径" />
+          <el-table-column prop="pv_num" label="访问次数" width="180" />
+          <el-table-column prop="percent" label="占比" width="180" />
         </el-table>
       </div>
     </section>
@@ -333,7 +274,7 @@ export default {
       default: ''
     }
   },
-  data () {
+  data() {
     return {
       wxAppId: '',
       value: '',
@@ -356,13 +297,13 @@ export default {
         shortcuts: [
           {
             text: '今天',
-            onClick (picker) {
+            onClick(picker) {
               picker.$emit('pick', new Date())
             }
           },
           {
             text: '昨天',
-            onClick (picker) {
+            onClick(picker) {
               const date = new Date()
               date.setTime(date.getTime() - 3600 * 1000 * 24)
               picker.$emit('pick', date)
@@ -370,7 +311,7 @@ export default {
           },
           {
             text: '一周前',
-            onClick (picker) {
+            onClick(picker) {
               const date = new Date()
               date.setTime(date.getTime() - 3600 * 1000 * 24 * 7)
               picker.$emit('pick', date)
@@ -463,7 +404,7 @@ export default {
     }
   },
   watch: {
-    wxapp (value) {
+    wxapp(value) {
       if (value) {
         this.setAppId(value)
         if (this.wxAppId) {
@@ -474,7 +415,7 @@ export default {
       }
     }
   },
-  mounted () {
+  mounted() {
     NProgress.start()
     this.setAppId(this.wxapp)
     if (this.wxAppId) {
@@ -485,7 +426,7 @@ export default {
     }
   },
   methods: {
-    chartInit () {
+    chartInit() {
       var config = {
         type: 'line',
         data: {
@@ -515,7 +456,7 @@ export default {
       var ctx = document.getElementById('canvas').getContext('2d')
       this.chartObj = new Chart(ctx, config)
     },
-    updateSurvey () {
+    updateSurvey() {
       this.surveyLoading = true
       summarybydate({
         wxaAppId: this.wxAppId,
@@ -526,29 +467,29 @@ export default {
         this.surveyLoading = false
       })
     },
-    chartHandle (val) {
+    chartHandle(val) {
       this.chart.date = val
       this.fetchChartData()
     },
-    tabChartHandle (index) {
+    tabChartHandle(index) {
       this.chart.currentTabName = this.chart.tabCon[index].label
       this.chart.currentTab = this.chart.tabCon[index].value
       this.chart.tabPop = false
       this.updateChart()
     },
-    tabVisitHandle (index) {
+    tabVisitHandle(index) {
       this.visitPage.currentTabName = this.chart.tabCon[index].label
       this.visitPage.currentTab = this.chart.tabCon[index].value
       this.visitPage.tabPop = false
       this.updateChart()
     },
-    updateChart () {
+    updateChart() {
       this.chartObj.chart.data.labels = this.chart.ref_date
       this.chartObj.chart.data.datasets[0].data = this.chart.data[this.chart.currentTab]
       this.chartObj.chart.data.datasets[0].label = this.chart.currentTabName
       this.chartObj.update()
     },
-    fetchChartData () {
+    fetchChartData() {
       this.chart.chartLoading = true
       getSummaryTrend({
         wxaAppId: this.wxAppId,
@@ -607,17 +548,17 @@ export default {
         this.chart.chartLoading = false
       })
     },
-    tabVisitHandle (index) {
+    tabVisitHandle(index) {
       this.visitPage.currentTabName = this.visitPage.tabCon[index].label
       this.visitPage.currentTab = this.visitPage.tabCon[index].value
       this.visitPage.tabPop = false
       this.visitPage.list = this.visitPage.data[this.visitPage.currentTab]
     },
-    visitPageHandle (val) {
+    visitPageHandle(val) {
       this.visitPage.date = val
       this.updateVisitPage()
     },
-    updateVisitPage () {
+    updateVisitPage() {
       this.visitPage.visitLoading = true
       getVisitPage({
         wxaAppId: this.wxAppId,
@@ -667,7 +608,7 @@ export default {
         }
       }
     },
-    setAppId (val) {
+    setAppId(val) {
       this.wxAppId = val
     }
   }
@@ -831,31 +772,6 @@ export default {
   height: 22px;
   cursor: pointer;
   margin-right: 5px;
-}
-
-.add_remove_opr.icon_add {
-  background: url(/wxopenres/zh_CN/htmledition/comm_htmledition/style/page/data/index_z_@all36dfb6.png)
-    0 0 no-repeat;
-}
-
-.add_remove_opr.icon_add:hover {
-  background: url(/wxopenres/zh_CN/htmledition/comm_htmledition/style/page/data/index_z_@all36dfb6.png)
-    0 -26px no-repeat;
-}
-
-.add_remove_opr.icon_add.without_hl:hover {
-  background: url(/wxopenres/zh_CN/htmledition/comm_htmledition/style/page/data/index_z_@all36dfb6.png)
-    0 -52px no-repeat;
-}
-
-.add_remove_opr.icon_remove {
-  background: url(/wxopenres/zh_CN/htmledition/comm_htmledition/style/page/data/index_z_@all36dfb6.png)
-    0 -78px no-repeat;
-}
-
-.add_remove_opr.icon_remove:hover {
-  background: url(/wxopenres/zh_CN/htmledition/comm_htmledition/style/page/data/index_z_@all36dfb6.png)
-    0 -104px no-repeat;
 }
 
 .add_config_opr_box {
@@ -1336,37 +1252,6 @@ tr > .table_cell:last-child {
 
   .app_detail_overview .data_overview_item:first-child {
     border-left-width: 0;
-  }
-}
-@media only screen and (-webkit-min-device-pixel-ratio: 2) {
-  .add_remove_opr.icon_add {
-    background: url(/wxopenres/zh_CN/htmledition/comm_htmledition/style/page/data/index_z_@236dfb6.png)
-      0 0 no-repeat;
-    background-size: 22px auto;
-  }
-
-  .add_remove_opr.icon_add:hover {
-    background: url(/wxopenres/zh_CN/htmledition/comm_htmledition/style/page/data/index_z_@236dfb6.png)
-      0 -26px no-repeat;
-    background-size: 22px auto;
-  }
-
-  .add_remove_opr.icon_add.without_hl:hover {
-    background: url(/wxopenres/zh_CN/htmledition/comm_htmledition/style/page/data/index_z_@236dfb6.png)
-      0 -52px no-repeat;
-    background-size: 22px auto;
-  }
-
-  .add_remove_opr.icon_remove {
-    background: url(/wxopenres/zh_CN/htmledition/comm_htmledition/style/page/data/index_z_@236dfb6.png)
-      0 -78px no-repeat;
-    background-size: 22px auto;
-  }
-
-  .add_remove_opr.icon_remove:hover {
-    background: url(/wxopenres/zh_CN/htmledition/comm_htmledition/style/page/data/index_z_@236dfb6.png)
-      0 -104px no-repeat;
-    background-size: 22px auto;
   }
 }
 </style>

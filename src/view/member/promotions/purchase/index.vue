@@ -66,7 +66,7 @@
               <el-button type="text">
                 <router-link
                   :to="{
-                    path: matchHidePage('detail'),
+                    path: matchRoutePath('detail'),
                     query: {
                       id: scope.row.purchase_id
                     }
@@ -78,7 +78,7 @@
               <el-button v-if="scope.row.activity_status == 'waiting'" type="text">
                 <router-link
                   :to="{
-                    path: matchHidePage('editor'),
+                    path: matchRoutePath('editor'),
                     query: { id: scope.row.purchase_id }
                   }"
                 >
@@ -95,7 +95,7 @@
               <el-button type="text">
                 <router-link
                   :to="{
-                    path: matchHidePage('dependents'),
+                    path: matchRoutePath('dependents'),
                     query: {
                       id: scope.row.purchase_id
                     }
@@ -212,7 +212,7 @@ export default {
       this.loading = false
     },
     addPurchase() {
-      this.$router.push({ path: this.matchHidePage('editor') })
+      this.$router.push({ path: this.matchRoutePath('editor') })
     },
     deleteCard(id, index) {
       const that = this

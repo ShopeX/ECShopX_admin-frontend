@@ -33,7 +33,7 @@
             <template slot-scope="scope">
               <router-link
                 :to="{
-                  path: matchHidePage('editor'),
+                  path: matchRoutePath('editor'),
                   query: { roomid: scope.row.roomid, wxapp_id: params.wxapp_id }
                 }"
               >

@@ -385,19 +385,18 @@ import imgBox from '@/components/element/imgBox'
 import imgPicker from '@/components/imageselect'
 import SkuSelector from '@/components/function/skuSelector'
 import Treeselect from '@riophae/vue-treeselect'
-import '@riophae/vue-treeselect/dist/vue-treeselect.css'
 import { handleUploadFile, exportUploadTemplate } from '@/api/common'
 import { getCategory, getTagList, getGoodsAttr } from '@/api/goods'
 import { createPurchase, editPurchase, getPurchaseInfo } from '@/api/purchase'
 
 export default {
-  inject: ['refresh'],
   components: {
     imgBox,
     imgPicker,
     SkuSelector,
     Treeselect
   },
+  inject: ['refresh'],
   data() {
     return {
       pickerOptions: {

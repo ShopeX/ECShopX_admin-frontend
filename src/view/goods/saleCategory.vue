@@ -140,7 +140,7 @@ export default {
         parent_id: 0,
         parent_name: '',
         image_url: '',
-        customize_page_id:''
+        customize_page_id: ''
       },
       categoryFormList: [
         {
@@ -167,7 +167,7 @@ export default {
           label: '分类图片',
           key: 'image_url',
           component: ({ key }, value) => <SpImagePicker v-model={value[key]} />
-        },
+        }
         // {
         //   label: '一级分类模版',
         //   key: 'customize_page_id',
@@ -188,20 +188,19 @@ export default {
     this.classification()
   },
   methods: {
-    async classification(){
-      let params= {
+    async classification() {
+      let params = {
         page: 1,
         pageSize: 10,
-        page_type:'category',
+        page_type: 'category',
         template_name: 'yykweishop'
       }
-      let {list} = await this.$api.wxa.getCustomPageList(params)
+      let { list } = await this.$api.wxa.getCustomPageList(params)
       console.log(list, 'src/view/goods/saleCategory.vue-第197行')
-      list.forEach(element => {
-        element.title = element.page_name,
-        element.value = element.id
-      });
-      this.categoryFormList[4].options = list
+      list.forEach((element) => {
+        (element.title = element.page_name), (element.value = element.id)
+      })
+      // this.categoryFormList[4].options = list
     },
     async init() {
       const list = await this.getCategory()
@@ -221,19 +220,19 @@ export default {
         parent_id: 0,
         parent_name: '',
         image_url: '',
-        customize_page_id:''
+        customize_page_id: ''
       }
       this.categoryDialog = true
     },
     // 编辑分类
-    editCategory({ parent_id, category_id, category_name, sort, image_url,customize_page_id }) {
+    editCategory({ parent_id, category_id, category_name, sort, image_url, customize_page_id }) {
       this.categoryForm = {
         category_id,
         category_name,
         sort,
         parent_id,
         image_url,
-        customize_page_id:customize_page_id==0?'':customize_page_id
+        customize_page_id: customize_page_id == 0 ? '' : customize_page_id
       }
       this.categoryDialog = true
     },
@@ -248,7 +247,7 @@ export default {
         parent_id: category_id,
         parent_name: category_name,
         image_url: '',
-        customize_page_id:''
+        customize_page_id: ''
       }
       this.categoryDialog = true
     },
@@ -292,7 +291,8 @@ export default {
       resolve(list)
     },
     async onCategoryFormSubmit() {
-      const { category_name, sort, image_url,customize_page_id, parent_id, category_id } = this.categoryForm
+      const { category_name, sort, image_url, customize_page_id, parent_id, category_id } =
+        this.categoryForm
       if (category_id) {
         await this.$api.goods.editCategory({
           category_name,

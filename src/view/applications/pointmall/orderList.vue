@@ -227,7 +227,7 @@
               <el-button type="text">
                 <router-link
                   :to="{
-                    path: matchHidePage('detail'),
+                    path: matchRoutePath('detail'),
                     query: { orderId: scope.row.order_id, resource: $route.path }
                   }"
                 >

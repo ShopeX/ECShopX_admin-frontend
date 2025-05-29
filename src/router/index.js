@@ -4,7 +4,6 @@ import qs from 'qs'
 import store from '@/store'
 import ErrorPage from '@/view/404'
 import NProgress from 'nprogress'
-import 'nprogress/nprogress.css'
 import { log, isBoolean, isInSalesCenter } from '@/utils'
 import { actions } from '@/utils/micr-app'
 

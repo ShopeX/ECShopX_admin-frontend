@@ -208,7 +208,7 @@ Vue.prototype.matchInternalRoute = function (name) {
   }
 }
 
-Vue.prototype.matchHidePage = function (name) {
+Vue.prototype.matchRoutePath = function (name) {
   // let componentName = this.$route.path.split( '/' )
   // debugger
   // componentName = componentName[componentName.length-1]

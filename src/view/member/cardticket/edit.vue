@@ -296,7 +296,9 @@
             <el-radio-group v-model="form.use_all_items" @change="itemTypeChange">
               <el-radio label="true"> 全部商品适用 </el-radio>
               <el-radio label="false"> 指定商品适用 </el-radio>
-              <el-radio label="category"> {{ is_distributor?'指定分类适用':'指定管理分类适用' }} </el-radio>
+              <el-radio label="category">
+                {{ is_distributor ? '指定分类适用' : '指定管理分类适用' }}
+              </el-radio>
               <el-radio label="tag"> 指定商品标签适用 </el-radio>
               <el-radio label="brand"> 指定品牌适用 </el-radio>
             </el-radio-group>
@@ -490,7 +492,6 @@
 <script>
 import Treeselect from '@riophae/vue-treeselect'
 import store from '@/store'
-import '@riophae/vue-treeselect/dist/vue-treeselect.css'
 import StoreSelect from '@/components/function/shopSelect'
 import DistributorSelect from '@/components/storeListSelect'
 import SkuSelector from '@/components/function/skuSelector'
@@ -501,7 +502,6 @@ import { getItemsList, getCategory, getTagList, getGoodsAttr } from '@/api/goods
 import { handleUploadFile, exportUploadTemplate } from '../../../api/common'
 import GiftCoupon from './coupon/gift.vue'
 export default {
-  inject: ['refresh'],
   components: {
     StoreSelect,
     SkuSelector,
@@ -509,6 +509,7 @@ export default {
     Treeselect,
     GiftCoupon
   },
+  inject: ['refresh'],
   data() {
     let tempDays = [{ text: '当天', value: 0 }]
     let tempRemainDays = []
@@ -1171,7 +1172,7 @@ export default {
       }
     },
     async fetchMainCate() {
-      if(this.is_distributor){
+      if (this.is_distributor) {
         const res = await this.$api.goods.getCategory({ is_show: false })
         this.categoryList = res
         return

@@ -14,7 +14,7 @@
         }"
         url="/aliyunsms/template/list"
       >
-        <template v-slot:tableTop>
+        <template #tableTop>
           <div style="text-align: right; margin-bottom: 20px">
             <el-button size="small" type="primary" @click="addTemplate"> 添加模板 </el-button>
           </div>
@@ -46,7 +46,7 @@ export default {
   },
   methods: {
     addTemplate() {
-      this.$router.push({ path: this.matchHidePage('edit') })
+      this.$router.push({ path: this.matchRoutePath('edit') })
     },
     beforeSearch(params) {
       return { ...params }

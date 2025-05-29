@@ -337,7 +337,6 @@ import { mapGetters } from 'vuex'
 // import the component
 import Treeselect from '@riophae/vue-treeselect'
 // import the styles
-import '@riophae/vue-treeselect/dist/vue-treeselect.css'
 import { Message } from 'element-ui'
 import { getShippingTemplatesList } from '@/api/shipping'
 import shopSelect from '@/components/shopSelect'
@@ -359,6 +358,11 @@ export default {
     shopSelect,
     Treeselect
   },
+  provide() {
+    return {
+      refresh: this.getGoodsList
+    }
+  },
   props: {
     distributorId: {
       type: String,
@@ -367,11 +371,6 @@ export default {
     isLoad: {
       type: Boolean,
       default: false
-    }
-  },
-  provide() {
-    return {
-      refresh: this.getGoodsList
     }
   },
   data() {

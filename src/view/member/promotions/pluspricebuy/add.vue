@@ -364,7 +364,6 @@
 <script>
 import { mapGetters } from 'vuex'
 import Treeselect from '@riophae/vue-treeselect'
-import '@riophae/vue-treeselect/dist/vue-treeselect.css'
 import imgPicker from '../../../../components/imageselect'
 import {
   addMarketingActivity,
@@ -382,7 +381,6 @@ import { getItemsList, getCategory, getTagList, getGoodsAttr } from '@/api/goods
 import { transformTree } from '@/utils'
 import { handleUploadFile, exportUploadTemplate } from '../../../../api/common'
 export default {
-  inject: ['refresh'],
   components: {
     GoodsSelect,
     StoreSelect,
@@ -390,6 +388,7 @@ export default {
     imgPicker,
     Treeselect
   },
+  inject: ['refresh'],
   data() {
     return {
       cursymbol: '￥',

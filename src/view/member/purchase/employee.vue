@@ -8,9 +8,7 @@
       <el-button type="primary" icon="iconfont icon-daorucaozuo-01" @click="handleImportEmployee">
         导入员工
       </el-button>
-      <el-button type="primary" plain @click="handleExport">
-        导出
-      </el-button>
+      <el-button type="primary" plain @click="handleExport"> 导出 </el-button>
     </div>
 
     <SpFilterForm :model="queryForm" @onSearch="onSearch" @onReset="onSearch">
@@ -41,10 +39,7 @@
           />
         </el-select>
       </SpFilterFormItem>
-      <SpFilterFormItem
-        prop="distributor_id"
-        label="来源店铺:"
-      >
+      <SpFilterFormItem prop="distributor_id" label="来源店铺:">
         <SpSelectShop v-model="queryForm.distributor_id" clearable placeholder="请选择" />
       </SpFilterFormItem>
     </SpFilterForm>
@@ -67,7 +62,7 @@
       :modal="false"
       :form="employeeForm"
       :form-list="employeeFormList"
-      :confirmStatus="addDialogLoading"
+      :confirm-status="addDialogLoading"
       @onSubmit="onEmployeeFormSubmit"
     />
   </SpRouterView>
@@ -87,7 +82,7 @@ export default {
         account: '',
         email: '',
         member_mobile: '',
-        distributor_id:'',
+        distributor_id: '',
         enterprise_id: []
       },
       enterpriseList: [],
@@ -114,7 +109,7 @@ export default {
             key: 'delete',
             type: 'button',
             buttonType: 'text',
-             //平台：来源店铺是非平台则隐藏
+            //平台：来源店铺是非平台则隐藏
             visible: (row) => {
               return !(this.IS_ADMIN() && row.distributor_id != '0')
             },
@@ -180,7 +175,7 @@ export default {
       }),
       addDialog: false,
       companyList: [],
-      addDialogLoading:false,
+      addDialogLoading: false,
       employeeForm: {
         id: '',
         enterprise_id: '',
@@ -315,10 +310,9 @@ export default {
       fetch: this.getEnterpriseList
     }).nextPage()
 
-    if (this.$route.query.company_id){
+    if (this.$route.query.company_id) {
       this.queryForm.enterprise_id = [Number(this.$route.query.company_id)]
     }
-
   },
   methods: {
     beforeSearch(params) {
@@ -330,7 +324,7 @@ export default {
     onSearch() {
       this.$refs['finder'].refresh()
     },
-    async handleExport(){
+    async handleExport() {
       let params = {
         page: 1,
         pageSize: 20,
@@ -357,8 +351,7 @@ export default {
       }
     },
     handleImportEmployee() {
-      this.$router.push({ path: this.matchHidePage('import') })
-
+      this.$router.push({ path: this.matchRoutePath('import') })
     },
     addEmployee() {
       this.employeeForm = this.$options.data().employeeForm
@@ -380,15 +373,14 @@ export default {
       } catch (error) {
         this.addDialogLoading = false
       }
-
     },
     async getCompanyList({ page, pageSize }) {
       const params = {
         page,
         pageSize,
-        is_employee_check_enabled:'true'
+        is_employee_check_enabled: 'true'
       }
-      if(this.IS_ADMIN()){
+      if (this.IS_ADMIN()) {
         params.distributor_id = 0
       }
       const { list, total_count } = await this.$api.member.getPurchaseCompanyList(params)

@@ -23,3 +23,11 @@ export function adjustmentPoint (query) {
     params: query
   })
 }
+
+export function pointMemberExport (query) {
+  return fetch({
+    url: '/point/member/export',
+    method: 'get',
+    params: query
+  })
+}

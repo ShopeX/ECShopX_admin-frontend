@@ -214,6 +214,14 @@ export function getCategory(params) {
   })
 }
 
+export function getItemParams(params) {
+  return fetch({
+    url: '/goods/items/params',
+    method: 'post',
+    params
+  })
+}
+
 export function addCategory(params) {
   return fetch({
     url: '/goods/createcategory',

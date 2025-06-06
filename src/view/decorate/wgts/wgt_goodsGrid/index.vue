@@ -158,8 +158,9 @@ export default {
   },
   computed: {
     leftGoodsList() {
-      const { data } = this.value
-      const leftFilterGoods = data.filter((item, index) => {
+      const { type, data, pointGoods } = this.value.goodsSetting
+      const list = type == 'point' ? pointGoods : data
+      const leftFilterGoods = list.filter((item, index) => {
         if (index % 2 == 0) {
           return item
         }
@@ -167,8 +168,9 @@ export default {
       return leftFilterGoods
     },
     rightGoodsList() {
-      const { data } = this.value
-      const rightFilterGoods = data.filter((item, index) => {
+      const { type, data, pointGoods } = this.value.goodsSetting
+      const list = type == 'point' ? pointGoods : data
+      const rightFilterGoods = list.filter((item, index) => {
         if (index % 2 == 1) {
           return item
         }

@@ -19,14 +19,8 @@
       <el-tab-pane label="银联商务支付配置" name="chinaumspay">
         <chinaumspayTemplates />
       </el-tab-pane>
-      <el-tab-pane label="工商银行支付配置" name="icbcpay">
-        <icbcpayTemplates />
-      </el-tab-pane>
       <el-tab-pane label="线下转帐" name="offline">
         <offlinePay />
-      </el-tab-pane>
-      <el-tab-pane label="汇付斗拱支付配置" name="bspay">
-        <bspayTemplates />
       </el-tab-pane>
       <!-- <el-tab-pane label="默认积分抵扣配置" name="point">
         <pointpay />
@@ -43,8 +37,6 @@ import adapayTemplates from './payment/adapay'
 import chinaumspayTemplates from './payment/chinaumspay'
 import pointpay from './payment/pointpay'
 import offlinePay from './payment/offlinepay'
-import bspayTemplates from './payment/bspay'
-import icbcpayTemplates from './payment/icbcpay'
 
 import { hfpayVersionStatus } from '@/api/fenzhang'
 
@@ -53,13 +45,11 @@ export default {
     alipayTemplates,
     wxpayTemplates,
     ebuypayTemplates,
-    bspayTemplates,
     hfpayTemplates,
     adapayTemplates,
     chinaumspayTemplates,
     pointpay,
-    offlinePay,
-    icbcpayTemplates
+    offlinePay
   },
   data() {
     return {

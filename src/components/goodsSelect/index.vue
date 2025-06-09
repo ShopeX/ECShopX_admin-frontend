@@ -120,7 +120,7 @@
           <el-select v-model="params.is_gift"
             placeholder="是否为赠品"
             clearable
-            :disabled="setSearch"
+            :disabled="gift?setSearch:gift"
             @change="searchByKey">
             <el-option :value="true" label="是" />
             <el-option :value="false" label="否" />
@@ -235,10 +235,10 @@
         </el-table-column>
       <el-table-column prop="store" label="库存" width="80" show-overflow-tooltip />
     </el-table>
-    <div class="pager">
+    <div v-if="total_count > params.pageSize" class="pager">
       <el-pagination
         background
-        layout="total, sizes, prev, pager, next, jumper"
+        layout="total, sizes, prev, pager, next"
         :current-page.sync="params.page"
         :page-sizes="[10, 20, 30, 50]"
         :total="total_count"
@@ -337,9 +337,9 @@ export default {
       type: Boolean,
       default: false
     },
-    allDistributor: {
+    gift: {
       type: Boolean,
-      default: false
+      default: true
     }
   },
   data() {
@@ -354,7 +354,7 @@ export default {
       currentStore: {},
       params: {
         page: 1,
-        pageSize: 10,
+        pageSize: 30,
         keywords: '',
         item_type: 'normal',
         special_type: ['normal', 'drug'],
@@ -419,7 +419,10 @@ export default {
       templateRadio: ''
     }
   },
-  mounted() {},
+  mounted() {
+    // if(!this.gift) this.params.is_gift = !this.gift
+    if(!this.gift) this.onOpen()
+  },
 
   methods: {
    async onOpen() {
@@ -580,11 +583,7 @@ export default {
         param.brand_id = this.select_branch_value
         const category = [...this.select_category_value]
         param.category = category.pop()
-        if(this.allDistributor){
-          param.distributor_id = 'all_distributor'
-          if(!param.regionauth_id)return
-        }
-        
+
         //云店店铺走DistributorItem
         if ((this.VERSION_STANDARD && this.IS_DISTRIBUTOR()) ||
           !(this.VERSION_PLATFORM ||
@@ -885,7 +884,6 @@ export default {
 }
 .pager {
   margin-top: 20px;
-  text-align: right;
 }
 .tab-group {
   .tab-btn {

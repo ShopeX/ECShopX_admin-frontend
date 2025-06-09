@@ -49,9 +49,4 @@ export const NAVS = [
     name: 'purchase',
     label: '内购'
   },
-  {
-    value: 'other_wxapp',
-    name: 'other_wxapp',
-    label: '外部小程序'
-  },
 ]

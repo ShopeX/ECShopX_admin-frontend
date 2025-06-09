@@ -3,17 +3,14 @@
   .sp-filter-form {
     padding: 8px 8px 0px 8px;
   }
-
   .sp-finder-hd {
     display: none;
   }
-
   .disableheadselection {
-    >.cell .el-checkbox__inner {
+    > .cell .el-checkbox__inner {
       display: none;
     }
   }
-
   .el-pagination {
     margin: 0;
     padding: 10px;
@@ -28,32 +25,48 @@
       </SpFilterFormItem>
       <SpFilterFormItem v-if="!IS_DISTRIBUTOR() && !values" prop="distributor_id" label="店铺名称:">
         <el-select v-model="formData.distributor_id" clearable placeholder="请选择">
-          <el-option v-for="item in salesStatus" :key="item.distributor_id" :label="item.name" size="mini"
-            :value="item.distributor_id" />
+          <el-option
+            v-for="item in salesStatus"
+            :key="item.distributor_id"
+            :label="item.name"
+            size="mini"
+            :value="item.distributor_id"
+          />
         </el-select>
       </SpFilterFormItem>
     </SpFilterForm>
-    <SpFinder ref="finder" :other-config="{
-      'max-height': 460,
-      'header-cell-class-name': cellClass
-    }" row-key="tag_id" reserve-selection url="/goods/tag" :fixed-row-action="true" :setting="{
+    <SpFinder
+      ref="finder"
+      :other-config="{
+        'max-height': 460,
+        'header-cell-class-name': cellClass
+      }"
+      row-key="tag_id"
+      reserve-selection
+      url="/goods/tag"
+      :fixed-row-action="true"
+      :setting="{
         columns: [
           { name: 'ID', key: 'tag_id', width: 80 },
           { name: '标签名称', key: 'tag_name' },
           { name: '店铺名称', key: 'distributor_name' },
           { name: '描述', key: 'description' }
         ]
-      }" :hooks="{
+      }"
+      :hooks="{
         beforeSearch: beforeSearch,
         afterSearch: afterSearch
-      }" @select="onSelect" @selection-change="onSelectionChange" />
+      }"
+      @select="onSelect"
+      @selection-change="onSelectionChange"
+    />
   </div>
 </template>
 
 <script>
 import BasePicker from './base'
 import PageMixin from '../mixins/page'
-import { IS_DISTRIBUTOR, getRegionauthId } from '@/utils'
+import { IS_DISTRIBUTOR } from '@/utils'
 
 export default {
   name: 'PickerTag',
@@ -81,9 +94,7 @@ export default {
     async getDistributorList() {
       let params = {
         page: 1,
-        pageSize: 500,
-        regionauth_id: getRegionauthId(),
-        ...(this.value?.params || {})
+        pageSize: 500
       }
       const { list } = await this.$api.marketing.getDistributorList(params)
       this.salesStatus = list
@@ -118,11 +129,7 @@ export default {
           tag_source: 'all'
         }
       }
-      return {
-        ...params,
-        regionauth_id:  getRegionauthId(),
-        ...(this.value?.params || {})
-      }
+      return params
     },
     afterSearch(response) {
       const { list } = response.data.data

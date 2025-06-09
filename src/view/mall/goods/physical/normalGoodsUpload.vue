@@ -134,12 +134,13 @@ import {
   exportUploadErrorFile,
   exportUploadTemplate
 } from '../../../../api/common'
+import { IS_ADMIN, IS_SUPPLIER } from '@/utils'
 
 export default {
   data () {
     return {
       pane_list: [
-        { name: 'normal_goods', label: '上传实体类商品' },
+        { name: 'supplier_goods', label: '上传实体类商品' },
         { name: 'employee_purchase_activity_items', label: '上传内购活动商品' }
       ],
       loading: false,
@@ -154,7 +155,7 @@ export default {
     ...mapGetters(['wheight'])
   },
   mounted() {
-    const {file_type='normal_goods'} = this.$route.query
+    const {file_type='supplier_goods'} = this.$route.query
     this.activeName = file_type
     this.getUploadList()
   },
@@ -187,7 +188,7 @@ export default {
       if (this.activeName == 'employee_purchase_activity_items') {
         fileName = '新增内购活动商品'
       } 
-      let params = { file_type: this.activeName, file_name: fileName }
+      let params = { file_type: IS_SUPPLIER()?'supplier_goods':'normal_goods', file_name: fileName }
       exportUploadTemplate(params).then((response) => {
         if (response.data.data.file) {
           var a = document.createElement('a')

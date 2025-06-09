@@ -2,20 +2,11 @@
   <div>
     <div v-if="$route.path.indexOf('approve') === -1">
       <el-card class="cus-card">
-        <el-form
-          ref="myForm"
-          :model="params"
-          :inline="true"
-          label-width="120px"
-        >
+        <el-form ref="myForm" :model="params" :inline="true" label-width="120px">
           <el-row>
             <el-col :span="8">
               <el-form-item label="审批状态">
-                <el-select
-                  v-model="params.status"
-                  placeholder="请选择审批状态"
-                  class="input-m"
-                >
+                <el-select v-model="params.status" placeholder="请选择审批状态" class="input-m">
                   <el-option
                     v-for="(item, index) in approveStatusList"
                     :key="index"
@@ -63,32 +54,17 @@
                 />
               </el-form-item>
             </el-col>
-            <el-col
-              :span="7"
-              :offset="9"
-              style="text-align: center"
-            >
+            <el-col :span="7" :offset="9" style="text-align: center">
               <el-form-item>
-                <el-button
-                  type="primary"
-                  @click="searchData"
-                >
-                  搜索
-                </el-button>
-                <el-button @click="resetForm('myForm')">
-                  重置
-                </el-button>
+                <el-button type="primary" @click="searchData"> 搜索 </el-button>
+                <el-button @click="resetForm('myForm')"> 重置 </el-button>
               </el-form-item>
             </el-col>
           </el-row>
         </el-form>
       </el-card>
       <el-card>
-        <div
-          v-for="item in list"
-          :key="item.id"
-          class="cus-list"
-        >
+        <div v-for="item in list" :key="item.id" class="cus-list">
           <el-row class="cus-row">
             <el-col :span="3">
               <img
@@ -105,11 +81,13 @@
               >
             </el-col>
             <el-col :span="13">
-              <router-link :to="{ path: matchHidePage('approve'), query: { id: item.id } }">
+              <router-link :to="{ path: matchRoutePath('approve'), query: { id: item.id } }">
                 <span class="cus-row-name">{{ item.user_name }}</span>
               </router-link>
               <div class="cus-row-time">
-                <span>申请时间：{{ item.create_time ? createTimeFilter(item.create_time) : '-' }}</span>
+                <span
+                  >申请时间：{{ item.create_time ? createTimeFilter(item.create_time) : '-' }}</span
+                >
                 <span>所属地区：{{ item.address || '-' }}</span>
               </div>
             </el-col>
@@ -127,27 +105,14 @@
                 style="width: 90px; height: 89px"
               >
             </el-col>
-            <el-col
-              class="cus-row-btn"
-              :span="3"
-              :offset="item.status === 'WAIT_APPROVE' ? 5 : 0"
-            >
+            <el-col class="cus-row-btn" :span="3" :offset="item.status === 'WAIT_APPROVE' ? 5 : 0">
               <router-link
                 v-if="item.status === 'WAIT_APPROVE'"
-                :to="{ path: matchHidePage('approve'), query: { id: item.id } }"
+                :to="{ path: matchRoutePath('approve'), query: { id: item.id } }"
               >
-                <el-button type="primary">
-                  审批
-                </el-button>
+                <el-button type="primary"> 审批 </el-button>
               </router-link>
-              <el-button
-                v-else
-                type="info"
-                plain
-                disabled
-              >
-                已审批
-              </el-button>
+              <el-button v-else type="info" plain disabled> 已审批 </el-button>
             </el-col>
           </el-row>
         </div>
@@ -180,7 +145,7 @@ import {
   setAftersalesRemind
 } from '@/api/aftersales'
 export default {
-  data () {
+  data() {
     return {
       loading: true,
       regions: district,
@@ -207,14 +172,14 @@ export default {
   computed: {
     ...mapGetters(['wheight'])
   },
-  mounted () {
+  mounted() {
     this.getAftersalesList(this.params)
   },
   methods: {
-    dateStrToTimeStamp (str) {
+    dateStrToTimeStamp(str) {
       return Date.parse(new Date(str)) / 1000
     },
-    dateChange (val) {
+    dateChange(val) {
       if (val.length > 0) {
         this.params.time_star = this.dateStrToTimeStamp(val[0] + ' 00:00:00')
         this.params.time_end = this.dateStrToTimeStamp(val[1] + ' 23:59:59')
@@ -224,22 +189,22 @@ export default {
       }
       this.params.page = 1
     },
-    searchData (e) {
+    searchData(e) {
       this.params.page = 1
       this.getAftersalesList(this.params)
     },
-    handleCurrentChange (val) {
+    handleCurrentChange(val) {
       this.params.page = val
       this.loading = false
       this.getAftersalesList(this.params)
     },
-    handleSizeChange (pageSize) {
+    handleSizeChange(pageSize) {
       this.loading = false
       this.params.page = 1
       this.params.pageSize = pageSize
       this.getAftersalesList(this.params)
     },
-    getAftersalesList (params) {
+    getAftersalesList(params) {
       this.loading = true
       getOpenApprovedList(params).then((response) => {
         this.list = response.data.data.list
@@ -247,7 +212,7 @@ export default {
         this.loading = false
       })
     },
-    RegionChangeSearch (value) {
+    RegionChangeSearch(value) {
       var vals = this.getCascaderObj(value, this.regions)
       if (vals.length == 1) {
         this.params.address = vals[0].label
@@ -260,7 +225,7 @@ export default {
       }
       this.params.page = 1
     },
-    getCascaderObj (val, opt) {
+    getCascaderObj(val, opt) {
       return val.map(function (value, index, array) {
         for (var itm of opt) {
           if (itm.value === value) {
@@ -271,10 +236,10 @@ export default {
         return null
       })
     },
-    resetForm (formName) {
+    resetForm(formName) {
       this.$refs[formName].resetFields()
     },
-    createTimeFilter (time) {
+    createTimeFilter(time) {
       return moment(time * 1000).format('YYYY-MM-DD HH:mm:ss')
     }
   }

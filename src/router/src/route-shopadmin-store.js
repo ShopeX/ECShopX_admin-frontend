@@ -120,11 +120,11 @@ export default {
     {
       path: 'planting',
       name: `软文`,
-      component: () => import('@/view/base/planting/index'),
+      component: () => import('@/view/content/soft-article'),
       children: [
         {
           path: 'editor/:itemId?',
-          component: () => import('@/view/base/planting/editor')
+          component: () => import('@/view/content/soft-article-id')
         }
       ]
     }

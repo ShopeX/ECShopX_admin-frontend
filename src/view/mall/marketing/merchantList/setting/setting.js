@@ -52,7 +52,7 @@ export default (vm) => {
             ]
           ),
 
-        renderHeader () {
+        renderHeader() {
           return (
             <div>
               <span>商品审核 </span>
@@ -82,7 +82,7 @@ export default (vm) => {
           type: 'link',
           handler: async (val) => {
             vm.$router.push({
-              path: vm.matchHidePage('editor'),
+              path: vm.matchRoutePath('editor'),
               query: { type: 'detail', merchantId: val[0].id }
             })
           }
@@ -97,7 +97,7 @@ export default (vm) => {
           type: 'link',
           handler: async (val) => {
             vm.$router.push({
-              path: vm.matchHidePage('editor'),
+              path: vm.matchRoutePath('editor'),
               query: { type: 'edit', merchantId: val[0].id }
             })
           }

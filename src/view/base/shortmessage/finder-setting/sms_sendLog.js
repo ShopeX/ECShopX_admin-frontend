@@ -14,13 +14,10 @@ export default (vm) => {
   const formatTemplate_type = (status) => {
     switch (status) {
       case '0':
-      case '153':
         return `验证码`
       case '1':
-      case '49':
         return `短信通知`
       case '2':
-      case '52':
         return `推广短信`
     }
   }

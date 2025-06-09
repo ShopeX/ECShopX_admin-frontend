@@ -8,29 +8,14 @@
   <div>
     <template v-if="$route.path.indexOf('detail') === -1 && $route.path.indexOf('editor') === -1">
       <div class="action-container">
-        <el-button
-          type="primary"
-          icon="iconfont icon-xinzengcaozuo-01"
-          @click="addElement"
-        >
+        <el-button type="primary" icon="iconfont icon-xinzengcaozuo-01" @click="addElement">
           表单元素添加
         </el-button>
       </div>
 
-      <SpFilterForm
-        :model="params"
-        @onSearch="onSearch"
-        @onReset="onReset"
-      >
-        <SpFilterFormItem
-          prop="form_element"
-          label="表单元素:"
-        >
-          <el-select
-            v-model="params.form_element"
-            placeholder="请选择表单元素"
-            style="width: 100%"
-          >
+      <SpFilterForm :model="params" @onSearch="onSearch" @onReset="onReset">
+        <SpFilterFormItem prop="form_element" label="表单元素:">
+          <el-select v-model="params.form_element" placeholder="请选择表单元素" style="width: 100%">
             <el-option
               v-for="item in formElement"
               :key="item.value"
@@ -40,77 +25,37 @@
           </el-select>
         </SpFilterFormItem>
 
-        <SpFilterFormItem
-          prop="field_title"
-          label="标题:"
-        >
-          <el-input
-            v-model="params.field_title"
-            placeholder="标题"
-            style="width: 100%"
-          />
+        <SpFilterFormItem prop="field_title" label="标题:">
+          <el-input v-model="params.field_title" placeholder="标题" style="width: 100%" />
         </SpFilterFormItem>
       </SpFilterForm>
 
-      <el-tabs
-        v-model="params.is_valid"
-        type="card"
-        @tab-click="handleTabClick"
-      >
+      <el-tabs v-model="params.is_valid" type="card" @tab-click="handleTabClick">
         <el-tab-pane
           v-for="(item, index) in tabList"
           :key="index"
           :label="item.name"
           :name="item.activeName"
         >
-          <el-table
-            v-loading="loading"
-            border
-            :data="tableList"
-            :height="wheight - 280"
-          >
-            <el-table-column
-              prop="id"
-              label="ID"
-              width="50"
-            />
-            <el-table-column
-              prop="field_title"
-              label="标题"
-              width="250"
-            />
-            <el-table-column
-              prop="field_name"
-              label="唯一标示(纯字母)"
-              width="200"
-            />
-            <el-table-column
-              prop="form_element"
-              label="元素类型"
-              width="100"
-            />
+          <el-table v-loading="loading" border :data="tableList" :height="wheight - 280">
+            <el-table-column prop="id" label="ID" width="50" />
+            <el-table-column prop="field_title" label="标题" width="250" />
+            <el-table-column prop="field_name" label="唯一标示(纯字母)" width="200" />
+            <el-table-column prop="form_element" label="元素类型" width="100" />
             <el-table-column label="元素选择项">
               <template slot-scope="scope">
-                <span
-                  v-for="(item, index) in scope.row.options"
-                  :key="index"
+                <span v-for="(item, index) in scope.row.options" :key="index">
+                  {{ item.value }}</span
                 >
-                  {{ item.value }}</span>
               </template>
             </el-table-column>
-            <el-table-column
-              label="操作"
-              width="100"
-            >
+            <el-table-column label="操作" width="100">
               <template slot-scope="scope">
                 <router-link
                   class="iconfont icon-edit1"
-                  :to="{ path: matchHidePage('editor'), query: { id: scope.row.id } }"
+                  :to="{ path: matchRoutePath('editor'), query: { id: scope.row.id } }"
                 />
-                <i
-                  class="iconfont icon-search-plus"
-                  @click="preview(scope.$index, scope.row)"
-                />
+                <i class="iconfont icon-search-plus" @click="preview(scope.$index, scope.row)" />
                 <i
                   v-if="scope.row.status == 1"
                   class="mark iconfont icon-trash-alt1"
@@ -135,77 +80,31 @@
       </el-tabs>
 
       <el-dialog :visible.sync="dialogVisible">
-        <el-form
-          ref="dataInfo"
-          label-width="200px"
-          label-position="left"
-          class="demo-ruleForm"
-        >
+        <el-form ref="dataInfo" label-width="200px" label-position="left" class="demo-ruleForm">
           <el-form-item :label="dataInfo.field_title">
-            <el-col
-              v-if="dataInfo.form_element == 'text'"
-              :span="12"
-            >
+            <el-col v-if="dataInfo.form_element == 'text'" :span="12">
               <el-input placeholder="text预览" />
             </el-col>
-            <el-col
-              v-if="dataInfo.form_element == 'textarea'"
-              :span="12"
-            >
-              <el-input
-                type="textarea"
-                placeholder="textarea预览"
-              />
+            <el-col v-if="dataInfo.form_element == 'textarea'" :span="12">
+              <el-input type="textarea" placeholder="textarea预览" />
             </el-col>
-            <el-col
-              v-if="dataInfo.form_element == 'number'"
-              :span="12"
-            >
-              <el-input-number
-                type="textarea"
-                placeholder="55.55"
-              />
+            <el-col v-if="dataInfo.form_element == 'number'" :span="12">
+              <el-input-number type="textarea" placeholder="55.55" />
             </el-col>
-            <el-col
-              v-if="dataInfo.form_element == 'image'"
-              :span="12"
-            >
-              <el-upload
-                class="avatar-uploader"
-                action=""
-                :show-file-list="false"
-              >
-                <img
-                  v-if="imageUrl"
-                  :src="imageUrl"
-                  class="avatar"
-                >
-                <i
-                  v-else
-                  class="el-icon-plus avatar-uploader-icon"
-                />
+            <el-col v-if="dataInfo.form_element == 'image'" :span="12">
+              <el-upload class="avatar-uploader" action="" :show-file-list="false">
+                <img v-if="imageUrl" :src="imageUrl" class="avatar">
+                <i v-else class="el-icon-plus avatar-uploader-icon" />
               </el-upload>
             </el-col>
-            <el-col
-              v-if="dataInfo.form_element == 'radio'"
-              :span="12"
-            >
+            <el-col v-if="dataInfo.form_element == 'radio'" :span="12">
               <el-radio-group>
-                <el-radio
-                  v-for="(item, index) in dataInfo.options"
-                  :key="index"
-                  :label="3"
-                >
-                  {{
-                    item.value
-                  }}
+                <el-radio v-for="(item, index) in dataInfo.options" :key="index" :label="3">
+                  {{ item.value }}
                 </el-radio>
               </el-radio-group>
             </el-col>
-            <el-col
-              v-if="dataInfo.form_element == 'checkbox'"
-              :span="12"
-            >
+            <el-col v-if="dataInfo.form_element == 'checkbox'" :span="12">
               <el-checkbox-group>
                 <el-checkbox
                   v-for="(item, index) in dataInfo.options"
@@ -216,10 +115,7 @@
                 </el-checkbox>
               </el-checkbox-group>
             </el-col>
-            <el-col
-              v-if="dataInfo.form_element == 'select'"
-              :span="12"
-            >
+            <el-col v-if="dataInfo.form_element == 'select'" :span="12">
               <el-select placeholder="请选择">
                 <el-option
                   v-for="item in dataInfo.options"
@@ -229,20 +125,10 @@
                 />
               </el-select>
             </el-col>
-            <el-col
-              v-if="dataInfo.form_element == 'date'"
-              :span="12"
-            >
-              <el-date-picker
-                v-model="value1"
-                type="date"
-                placeholder="选择日期"
-              />
+            <el-col v-if="dataInfo.form_element == 'date'" :span="12">
+              <el-date-picker v-model="value1" type="date" placeholder="选择日期" />
             </el-col>
-            <el-col
-              v-if="dataInfo.form_element == 'time'"
-              :span="12"
-            >
+            <el-col v-if="dataInfo.form_element == 'time'" :span="12">
               <el-time-picker
                 v-model="value2"
                 arrow-control
@@ -252,10 +138,7 @@
                 placeholder="任意时间点"
               />
             </el-col>
-            <el-col
-              v-if="dataInfo.form_element == 'area'"
-              :span="12"
-            >
+            <el-col v-if="dataInfo.form_element == 'area'" :span="12">
               <el-cascader
                 v-model="value"
                 :options="options"
@@ -276,12 +159,12 @@ import { deleteSetting } from '@/api/selfhelpform'
 import { pageMixin } from '@/mixins'
 export default {
   mixins: [pageMixin],
-  provide () {
+  provide() {
     return {
       refresh: this.fetchList
     }
   },
-  data () {
+  data() {
     const initialParams = {
       form_element: undefined,
       field_title: undefined,
@@ -313,7 +196,7 @@ export default {
         { name: '地区地址选择', value: 'area' },
         { name: '数字', value: 'number' },
         { name: '上传身份证', value: 'idcard' },
-        { name: '上传其他附件', value: 'otherfile' },
+        { name: '上传其他附件', value: 'otherfile' }
       ],
       options: [
         {
@@ -341,46 +224,46 @@ export default {
     ...mapGetters(['wheight'])
   },
   watch: {
-    getStatus (val) {
+    getStatus(val) {
       if (val) {
         this.fetchList()
       }
     }
   },
-  mounted () {
+  mounted() {
     this.fetchList()
   },
   methods: {
-    onSearch () {
+    onSearch() {
       this.page.pageIndex = 1
       this.$nextTick(() => {
         this.fetchList()
       })
     },
-    onReset () {
+    onReset() {
       this.params = { ...this.initialParams }
       this.onSearch()
     },
-    addElement () {
+    addElement() {
       // 添加商品
-      this.$router.push({ path: this.matchHidePage('editor') })
+      this.$router.push({ path: this.matchRoutePath('editor') })
     },
-    editAction (index, row) {
+    editAction(index, row) {
       // 编辑商品弹框
       this.$router.push({ path: '/member/selfservice/formsettingadd/' + row.id })
     },
-    preview (index, row) {
+    preview(index, row) {
       // 预览弹框
       this.dialogVisible = true
       this.dataInfo = row
     },
-    getParams () {
+    getParams() {
       let params = {
         ...this.params
       }
       return params
     },
-    async fetchList () {
+    async fetchList() {
       this.loading = true
       const { pageIndex: page, pageSize } = this.page
       let params = {
@@ -394,7 +277,7 @@ export default {
       this.loading = false
     },
 
-    deleteAction (index, row) {
+    deleteAction(index, row) {
       this.$confirm('此操废弃该元素, 是否继续?', '提示', {
         confirmButtonText: '确定',
         cancelButtonText: '取消',
@@ -424,7 +307,7 @@ export default {
           })
         })
     },
-    getTaskTime (strDate) {
+    getTaskTime(strDate) {
       let date = new Date(strDate)
       let y = date.getFullYear()
       let m = date.getMonth() + 1
@@ -434,10 +317,10 @@ export default {
       let str = y + '-' + m + '-' + d
       return str
     },
-    getTimeStr (date) {
+    getTimeStr(date) {
       return this.getTaskTime(new Date(parseInt(date) * 1000))
     },
-    handleTabClick (tab, event) {
+    handleTabClick(tab, event) {
       this.onSearch()
     }
   }

@@ -76,7 +76,8 @@ export default {
         cost_price: '',
         market_price: '',
         barcode: '',
-        point_num: 0
+        point_num: 0,
+        start_num: 0, //起订量
       },
       formList: [
         {
@@ -166,7 +167,13 @@ export default {
           },
           isShow:()=>this.medicinePrescription,
           display: 'inline'
-        }
+        },
+        {
+          label: '起订量',
+          key: 'start_num',
+          type: 'input',
+          display: 'inline'
+        },
       ]
     }
   },

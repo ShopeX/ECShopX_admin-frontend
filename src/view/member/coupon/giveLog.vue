@@ -1,170 +1,258 @@
 <template>
   <div>
-    <SpRouterView>
-      <SpFinder
-        ref="finder"
-        url="/discountcard/get_user_coupon_list"
-        fixed-row-action
-        row-actions-width="50px"
-        :setting="tableSchema"
-        :hooks="{
-          beforeSearch
-        }"
-        row-actions-fixed-align="left"
-        @select-all="handleSelectionChange"
-        @selection-change="handleSelectionChange"
-      >
-        <template v-slot:tableTop>
-          <!-- 操作按钮 -->
-          <div class="action-container">
-            <div style="height: 20px" />
-            <el-button type="primary" plain @click="exportHandle">导出</el-button>
-            <el-button type="primary" plain @click="loseHandle">作废发放</el-button>
-          </div>
-        </template>
-      </SpFinder>
-
-      <SpDrawer
-        v-model="showLogInfoDrawer"
-        class="config-drawer"
-        :title="'日志'"
-        :footer="false"
-        :width="800"
-      >
-        <SpFinder
-          ref="finder"
-          fixed-row-action
-          no-selection
-          :data="logInfoData"
-          :setting="logTableSchema"
-          row-actions-fixed-align="left"
-          :show-pager="false"
+    <template v-if="$route.path.indexOf('detail') === -1">
+      <el-table v-loading="loading" border :data="giveLogList" :height="wheight - 90">
+        <el-table-column width="180" label="发放时间">
+          <template slot-scope="scope">
+            <i class="el-icon-time" /> {{ scope.row.created | datetime('YYYY-MM-DD HH:mm:ss') }}
+          </template>
+        </el-table-column>
+        <el-table-column prop="sender" label="操作员">
+          <template slot-scope="scope">
+            <i class="el-icon-user" /> {{ scope.row.sender }}
+          </template>
+        </el-table-column>
+        <el-table-column prop="number" width="80" label="赠送数量" />
+        <el-table-column prop="error" width="80" label="失败数量" />
+        <el-table-column width="140" label="操作">
+          <template slot-scope="scope">
+            <router-link :to="{ path: matchRoutePath('detail/') + scope.row.give_id }">
+              发送失败详情
+            </router-link>
+          </template>
+        </el-table-column>
+      </el-table>
+      <div class="content-padded content-center">
+        <el-pagination
+          layout="prev, pager, next"
+          :current-page.sync="params.page"
+          :total="totalCount"
+          :page-size="params.pageSize"
+          @current-change="handleCurrentChange"
         />
-      </SpDrawer>
-
-      <SpDialog
-        ref="loseDialog"
-        v-model="loseDialogShow"
-        title="作废优惠券发放"
-        :modal="false"
-        class="base-form"
-        :form="loseForm"
-        :form-list="loseRuleList"
-        @onSubmit="onLoseFormSubmit"
-      />
-    </SpRouterView>
+      </div>
+    </template>
+    <router-view />
   </div>
 </template>
 
 <script>
-import { createTableSchema, createLogTableSchema, loseFormSchema } from './logSchema'
-import api from '@/api'
-import moment from 'moment'
-
+import { mapGetters } from 'vuex'
+import { getGiveLogList } from '../../../api/promotions'
 export default {
   data() {
     return {
-      areas: [],
-      showLogInfoDrawer: false, // 日志信息抽屉
-      logInfoData: [], // 日志信息
-      loseDialogShow: false, // 作废发放
-      loseForm: {
-        lose_reason: ''
-      },
-      selectedCouponIds: []
+      loading: false,
+      giveLogList: [],
+      totalCount: 0,
+      params: {
+        page: 1,
+        pageSize: 20
+      }
     }
   },
   computed: {
-    tableSchema() {
-      return createTableSchema(this)
-    },
-    logTableSchema() {
-      return createLogTableSchema(this)
-    },
-    loseRuleList() {
-      return loseFormSchema(this)
-    }
+    ...mapGetters(['wheight'])
   },
   mounted() {
-    api.regionauth.getRegionauth().then((res) => {
-      this.areas = res?.list?.map((el) => ({
-        value: el.regionauth_id,
-        label: el.regionauth_name,
-        title: el.regionauth_name
-      }))
-    })
+    this.getGiveLogList()
   },
   methods: {
-    refreshTable() {
-      this.$refs.finder.refresh()
+    handleCurrentChange(pageNum) {
+      this.params.page = pageNum
+      this.getGiveLogList()
     },
-    handleSelectionChange(selection) {
-      this.selectedCouponIds = selection
-    },
-    // 导出
-    exportHandle() {
-      api.cardticket.exportUserCouponList(this.searchParams).then((res) => {
-        const { status, url, filename } = res
-        if (status) {
-          this.$message.success('已加入执行队列，请在设置-导出列表中下载')
-          this.$export_open('user_coupon')
-          return
-        } else if (url) {
-          window.open(url)
-        } else {
-          this.$message.error('无内容可导出或执行失败，请检查重试')
-          return
-        }
-      })
-    },
-    // 作废
-    loseHandle() {
-      console.log(this.selectedCouponIds)
-      if (this.selectedCouponIds.length === 0) {
-        this.$message.warning('请选择要作废的优惠券')
-        return
-      }
-      this.loseDialogShow = true
-      this.loseForm.lose_reason = ''
-    },
-    // 查看日志
-    showLogInfo(row) {
-      api.cardticket
-        .getUserCouponLogs({
-          code: row.user_card_code,
-          page: 1,
-          page_size: 1000
+    getGiveLogList() {
+      this.loading = true
+      getGiveLogList(this.params)
+        .then((response) => {
+          this.giveLogList = response.data.data.list
+          this.totalCount = response.data.data.total_count
+          this.loading = false
         })
-        .then((res) => {
-          this.logInfoData = res?.list
-          this.showLogInfoDrawer = true
+        .catch((error) => {
+          this.loading = false
+          this.$message({
+            type: 'error',
+            message: '获取优惠券发放列表信息出错'
+          })
         })
-    },
-    onLoseFormSubmit() {
-      api.cardticket
-        .cancelUserCoupon({
-          coupon_ids: this.selectedCouponIds?.map((el) => el.card_id).join(','),
-          cancel_reason: this.loseForm.lose_reason
-        })
-        .then((res) => {
-          if (res.status) {
-            this.$message.success('作废成功')
-            this.loseDialogShow = false
-            this.refreshTable()
-          }
-        })
-    },
-    beforeSearch(query) {
-      console.log(query)
-      if (query.get_date?.length) {
-        query.start_time = moment(query?.get_date[0]).format('YYYY-MM-DD')
-        query.end_time = moment(query?.get_date[1]).format('YYYY-MM-DD')
-      }
-      this.searchParams = query
-      return query
     }
   }
 }
 </script>
+<style scoped lang="scss">
+.el-icon-edit {
+  cursor: pointer;
+}
+.coupon-list {
+  margin-top: 10px;
+}
+.coupon-item {
+  position: relative;
+  height: 130px;
+  padding: 25px 20px;
+  overflow: hidden;
+  background: #fff;
+  border: 1px solid #dadadd;
+  border-radius: 5px;
+  text-align: center;
+  font-size: 14px;
+  width: 19%;
+  float: left;
+  margin: 0.5%;
+  &.coupon-add {
+    padding-top: 20px;
+    cursor: pointer;
+    i {
+      font-size: 40px;
+    }
+    :last-child {
+      margin-top: 10px;
+    }
+  }
+  .price {
+    font-size: 24px;
+  }
+  .color-gray {
+    color: #99a9bf;
+  }
+  .color-gray-deep {
+    color: #8492a6;
+  }
+  .item-code {
+    display: inline-block;
+    width: 90%;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+  span.icon-triangle {
+    position: absolute;
+    top: 0;
+    right: 0;
+    width: 0;
+    height: 0;
+    border-top: 34px solid #20a0ff;
+    border-left: 34px solid transparent;
+    color: #fff;
+  }
+  label {
+    position: absolute;
+    top: -34px;
+    right: 0;
+    width: 20px;
+    height: 20px;
+    line-height: 20px;
+  }
+}
+.item-bg {
+  position: absolute;
+  left: 0;
+  bottom: -101%;
+  width: 100%;
+  height: 100%;
+  background: rgba(241, 244, 246, 0.9);
+  text-align: left;
+  border-radius: 5px;
+  padding-top: 8px;
+  transition: all 0.4s ease;
+  p {
+    padding: 0 10px;
+  }
+  .item-operate {
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, 0.4);
+    width: 100%;
+    padding: 4px 0;
+    text-align: center;
+    cursor: pointer;
+    a {
+      color: #fff;
+    }
+  }
+}
+.coupon-item:hover {
+  .item-bg {
+    bottom: 0;
+  }
+}
+.coupon-type-item {
+  position: relative;
+  padding: 30px 10px;
+  border: 1px solid #ff5000;
+  color: #ff5000;
+  border-radius: 5px;
+  text-align: center;
+  margin-bottom: 20px;
+  background: #fff;
+  overflow: hidden;
+  cursor: pointer;
+  &:first-child {
+    font-size: 18px;
+  }
+  .coupon-type-desc {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    bottom: -100%;
+    left: 0;
+    padding: 10px 0;
+    background: #ff5000;
+    color: #fff;
+    font-size: 18px;
+    transition: all 0.4s ease;
+    div:last-child {
+      width: 70%;
+      margin: 8px auto 0;
+      font-size: 12px;
+    }
+  }
+  &:hover {
+    .coupon-type-desc {
+      bottom: 0;
+    }
+  }
+}
 
-<style scoped lang="scss"></style>
+.coupon-type-item,
+.sendout-item {
+  overflow: hidden;
+  .icon-checked {
+    display: none;
+    width: 100px;
+    height: 25px;
+    transform: rotate(35deg);
+    position: absolute;
+    font-size: 14;
+    top: 5px;
+    right: -25px;
+    font-size: 20px;
+    color: #fff;
+    background: #ff5000;
+    i {
+      transform: rotate(-35deg);
+    }
+  }
+  &.checked {
+    .icon-checked {
+      display: block;
+    }
+  }
+
+  &:hover .icon-checked {
+    background: #fff;
+    i {
+      color: #ff5000;
+    }
+  }
+}
+.store-pop {
+  padding: 20px 15px;
+  .store-content {
+    margin-bottom: 15px;
+  }
+}
+</style>

@@ -8,7 +8,6 @@
       :height="wheight - 170"
     >
       <el-table-column width="50" prop="template_id" label="ID" />
-      <el-table-column width="100" prop="regionauth_name" label="适用区域" />
       <el-table-column prop="name" width="150" label="运费模板名称" />
       <el-table-column width="200" label="配送地区">
         <template slot-scope="scope">
@@ -19,16 +18,6 @@
       <el-table-column prop="start_fee" label="首费(元)" />
       <el-table-column prop="add_standard" label="续件(件)" />
       <el-table-column prop="add_fee" label="续费(元)" />
-      <el-table-column width="100" prop="distributor_names" label="适用店铺">
-        <template slot-scope="scope">
-          <span>{{ scope.row.distributor_names?.toString() }}</span>
-        </template>
-      </el-table-column>
-      <el-table-column width="100" prop="price_model" label="计费模式">
-        <template slot-scope="scope">
-          <span>{{ scope.row.price_model === 'single' ? '单店计费' : '合并计费' }}</span>
-        </template>
-      </el-table-column>
       <el-table-column width="70" label="状态">
         <template slot-scope="scope">
           <span v-if="scope.row.status == true">启用</span>
@@ -40,7 +29,7 @@
           <span>{{ scope.row.updated_at | datetime('YYYY-MM-DD') }}</span>
         </template>
       </el-table-column>
-      <el-table-column label="操作" width="140">
+      <el-table-column label="操作" width="100">
         <template slot-scope="scope">
           <div class="operating-icons">
             <i class="iconfont icon-edit1" @click="editTemplatesAction(scope.$index, scope.row)" />
@@ -48,7 +37,6 @@
               class="mark iconfont icon-trash-alt1"
               @click="deleteTemplatesAction(scope.$index, scope.row)"
             />
-            <span @click="linkHanlde(scope.$index, scope.row)">关联店铺</span>
           </div>
         </template>
       </el-table-column>
@@ -67,10 +55,10 @@
 
 <script>
 import { mapGetters } from 'vuex'
-import { getShippingTemplatesList, deleteShippingTemplates } from '@/api/shipping'
-import { getAddress } from '@/api/common'
+import { getShippingTemplatesList, deleteShippingTemplates } from '../../../../../api/shipping'
+import { getAddress } from '../../../../../api/common'
 export default {
-  props: ['getStatus', 'formData'],
+  props: ['getStatus'],
   data() {
     return {
       district: {},
@@ -85,7 +73,6 @@ export default {
       }
     }
   },
-  inject: ['linkShopHanlde'],
   computed: {
     ...mapGetters(['wheight'])
   },
@@ -106,33 +93,27 @@ export default {
     },
     getShippingTemplatesList() {
       this.loading = true
-      getShippingTemplatesList({ ...this.params, ...this.formData }).then((response) => {
+      getShippingTemplatesList(this.params).then((response) => {
         this.numberTemplatesList = []
         for (var item in response.data.data.list) {
           response.data.data.list[item].fee_conf = JSON.parse(
             response.data.data.list[item].fee_conf
           )
-          const _inner = response.data.data.list[item]
-          for (var conf_fee_item in _inner.fee_conf) {
-            const _innerConfig = _inner.fee_conf[conf_fee_item]
+          for (var conf_fee_item in response.data.data.list[item].fee_conf) {
             var temp = {
-              area: _innerConfig.area,
-              start_standard: _innerConfig.start_standard,
-              start_fee: _innerConfig.start_fee,
-              add_standard: _innerConfig.add_standard,
-              add_fee: _innerConfig.add_fee,
-              template_id: _inner.template_id,
-              name: _inner.name,
+              template_id: response.data.data.list[item].template_id,
+              name: response.data.data.list[item].name,
               count: '0',
-              status: _inner.status,
-              updated_at: _inner.update_time,
-              distributor_names: _inner.distributor_names,
-              price_model: _inner.price_model,
-              regionauth_name: _inner.regionauth_name,
-              regionauth_id: _inner.regionauth_id
+              area: response.data.data.list[item].fee_conf[conf_fee_item].area,
+              start_standard: response.data.data.list[item].fee_conf[conf_fee_item].start_standard,
+              start_fee: response.data.data.list[item].fee_conf[conf_fee_item].start_fee,
+              add_standard: response.data.data.list[item].fee_conf[conf_fee_item].add_standard,
+              add_fee: response.data.data.list[item].fee_conf[conf_fee_item].add_fee,
+              status: response.data.data.list[item].status,
+              updated_at: response.data.data.list[item].update_time
             }
             if (0 == conf_fee_item) {
-              temp.count = _inner.fee_conf.length
+              temp.count = response.data.data.list[item].fee_conf.length
             }
             this.numberTemplatesList.push(temp)
           }
@@ -142,7 +123,7 @@ export default {
       })
     },
     editTemplatesAction(index, row) {
-      this.$router.push({ path: this.matchHidePage('editor/') + row.template_id })
+      this.$router.push({ path: this.matchRoutePath('editor/') + row.template_id })
     },
     deleteTemplatesAction(index, row) {
       this.$confirm('此操作将删除该运费模板, 是否继续?', '提示', {
@@ -187,9 +168,6 @@ export default {
       getAddress().then((res) => {
         this.district = res.data.data
       })
-    },
-    linkHanlde(_, row) {
-      this.linkShopHanlde(row)
     }
   }
 }

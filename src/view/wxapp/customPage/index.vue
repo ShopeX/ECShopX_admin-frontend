@@ -1,49 +1,169 @@
 <template>
   <div>
-    <!-- <SpPlatformTip h5 app alipay /> -->
-    <el-tabs v-model="activeTab" type="card" @tab-click="handleTabClick">
-      <el-tab-pane label="自定义页面" name="normal" />
-      <el-tab-pane label="我的页面" name="my" />
-    </el-tabs>
-    <SpFinder
-      ref="finder"
-      :setting="setting"
-      :url="'/wxa/customizepage/list'"
-      :hooks="{ beforeSearch }"
-      reserve-selection
-      row-key="id"
-      :split-count="4"
-      :no-selection="true"
-    />
-    <SpDialog
-      ref="pageDialogRef"
-      v-model="showPageDialog"
-      :title="pageForm.id ? '编辑页面' : '新增页面'"
-      :form="pageForm"
-      :form-list="pageFormList"
-      @onSubmit="onPageFormSubmit"
-    />
-    <imgPicker
-      :dialog-visible="imgDialog"
-      :sc-status="isGetImage"
-      @chooseImg="pickImg"
-      @closeImgDialog="closeImgDialog"
-    />
+    <div v-if="$route.path.indexOf('detail') === -1">
+      <SpPlatformTip h5 app alipay />
+      <el-row :gutter="20">
+        <el-col :span="4">
+          <el-button type="primary" icon="plus" @click="openDialog()"> 添加页面 </el-button>
+        </el-col>
+      </el-row>
+      <el-table v-loading="loading" :data="list" :height="wheight - 140">
+        <el-table-column prop="id" label="页面id" />
+        <el-table-column prop="page_name" label="页面名称" />
+        <el-table-column label="是否启用">
+          <template slot-scope="scope">
+            <el-tag v-if="scope.row.is_open == '0'" type="info"> 禁用 </el-tag>
+            <el-tag v-else type="warning"> 启用 </el-tag>
+          </template>
+        </el-table-column>
+        <el-table-column label="操作" min-width="100">
+          <template slot-scope="scope">
+            <el-button type="primary" plain round size="mini" @click="temDialog(scope.row.id)">
+              页面装修
+            </el-button>
+            <el-button type="text">
+              <a href="javascript:void(0)" @click="openDialog(scope.row)"> 编辑 </a>
+            </el-button>
+            <el-popover v-if="appID" placement="top" width="200" trigger="click">
+              <div>
+                <img class="page-code" :src="appCodeUrl">
+                <div class="page-btns">
+                  <el-button
+                    type="primary"
+                    plain
+                    size="mini"
+                    @click="handleDownload(scope.row.page_name)"
+                  >
+                    下载码
+                  </el-button>
+                  <el-button v-clipboard:copy="curPageUrl" type="primary" plain size="mini">
+                    复制链接
+                  </el-button>
+                </div>
+              </div>
+              <el-button
+                slot="reference"
+                style="width: 45px"
+                type="text"
+                @click="handleClick(scope.row.id)"
+              >
+                投放
+              </el-button>
+            </el-popover>
+            <el-button type="text">
+              <a href="javascript:void(0)" @click="delPage(scope.row.id)"> 删除 </a>
+            </el-button>
+          </template>
+        </el-table-column>
+      </el-table>
+      <div class="content-padded content-center">
+        <el-pagination
+          background
+          layout="prev, pager, next"
+          :current-page.sync="params.page"
+          :total="total_count"
+          :page-size="params.pageSize"
+          @current-change="handleCurrentChange"
+        />
+      </div>
+      <el-dialog
+        :title="dialogTitle"
+        :visible.sync="page_dialog"
+        :close-on-click-modal="false"
+        :before-close="handleCancel"
+      >
+        <el-form v-model="pageForm" label-width="200px">
+          <el-form-item label="页面名称">
+            <el-input v-model="pageForm.page_name" placeholder="页面名称" style="width: 55%" />
+          </el-form-item>
+          <el-form-item label="页面描述">
+            <el-input
+              v-model="pageForm.page_description"
+              placeholder="页面描述"
+              style="width: 55%"
+            />
+          </el-form-item>
+          <el-form-item label="分享标题">
+            <el-input
+              v-model="pageForm.page_share_title"
+              placeholder="分享标题"
+              style="width: 55%"
+            />
+          </el-form-item>
+          <!-- <el-form-item label="分享描述">
+            <el-input v-model="pageForm.page_share_desc" placeholder="分享描述" style="width: 55%;"></el-input>
+          </el-form-item> -->
+          <el-form-item label="分享图片">
+            <div class="upload-box" @click="handleImgChange()">
+              <img
+                v-if="pageForm.page_share_imageUrl"
+                :src="wximageurl + pageForm.page_share_imageUrl"
+                class="avatar"
+              >
+              <i v-else class="el-icon-plus avatar-uploader-icon" />
+            </div>
+            <imgPicker
+              :dialog-visible="imgDialog"
+              :sc-status="isGetImage"
+              @chooseImg="pickImg"
+              @closeImgDialog="closeImgDialog"
+            />
+          </el-form-item>
+          <el-form-item label="是否启用">
+            <el-switch v-model="pageForm.is_open" />
+          </el-form-item>
+        </el-form>
+        <div slot="footer" class="dialog-footer content-center">
+          <el-button type="primary" @click="savePage"> 确认保存 </el-button>
+        </div>
+      </el-dialog>
+      <el-dialog
+        :visible.sync="template_dialog"
+        destroy-on-close
+        title="编辑页面"
+        fullscreen
+        lock-scroll
+      >
+        <shopDecoration
+          :id="pageForm.id"
+          usage="page"
+          pagetype="cuspage"
+          :rel-store="store"
+          :template_name="template_name"
+          @saved="closeDialog"
+        />
+      </el-dialog>
+    </div>
+    <router-view />
   </div>
 </template>
-
 <script>
-import { createSetting } from '@shopex/finder'
 import { mapGetters } from 'vuex'
+import { getCustomPageList, createCustomPage, delCustomPage, editCustomPage } from '@/api/wxa'
+import { getPageCode } from '@/api/marketing'
+import shopDecoration from '@/components/function/shopDecoration'
 import imgPicker from '@/components/imageselect'
-
 export default {
   components: {
+    shopDecoration,
     imgPicker
   },
   data() {
     return {
-      showPageDialog: false,
+      imgDialog: false,
+      isGetImage: false,
+      template_dialog: false,
+      page_dialog: false,
+      total_count: 0,
+      dialogTitle: '新增页面',
+      loading: false,
+      appID: '',
+      appCodeUrl: '',
+      curPageUrl: '',
+      params: {
+        page: 1,
+        pageSize: 10
+      },
       pageForm: {
         id: '',
         page_name: '',
@@ -51,296 +171,144 @@ export default {
         page_share_title: '',
         page_share_desc: '',
         page_share_imageUrl: '',
-        is_open: true,
-        page_type: 'normal',
-        regionauth_id: ''
+        is_open: true
       },
-      areas: [],
-      appID: '',
-      appCodeUrl: '',
-      curPageUrl: '',
-      activeTab: 'normal', // 添加activeTab
-      imgDialog: false,
-      isGetImage: false
+      list: [],
+      store: null
     }
   },
   computed: {
-    ...mapGetters(['template_name']),
-    setting() {
-      return createSetting({
-        search: [
-          {
-            key: 'regionauth_id',
-            name: '区域',
-            type: 'select',
-            options: this.areas
-          }
-        ],
-        columns: [
-          {
-            key: 'id',
-            name: '页面ID'
-          },
-          {
-            key: 'page_name',
-            name: '页面名称'
-          },
-          {
-            key: 'is_open',
-            name: '是否启用',
-            render: (h, { row }) => {
-              return h(
-                'el-tag',
-                {
-                  props: {
-                    type: row.is_open == '0' ? 'info' : 'warning'
-                  }
-                },
-                row.is_open == '0' ? '禁用' : '启用'
-              )
-            }
-          }
-        ],
-        actions: [
-          {
-            name: '添加页面',
-            key: 'add',
-            slot: 'header',
-            type: 'button',
-            buttonType: 'primary',
-            action: {
-              handler: () => {
-                this.showPageDialog = true
-                this.pageForm = {
-                  id: '',
-                  page_name: '',
-                  page_description: '',
-                  page_share_title: '',
-                  page_share_desc: '',
-                  page_share_imageUrl: '',
-                  is_open: true,
-                  page_type: 'normal',
-                  regionauth_id: ''
-                }
-              }
-            }
-          },
-          {
-            name: '页面装修',
-            key: 'decorate',
-            type: 'button',
-            buttonType: 'primary',
-            plain: true,
-            round: true,
-            size: 'mini',
-            action: {
-              handler: ([row]) => {
-                if (this.activeTab == 'normal') {
-                  this.$router.push(`/wxapp/manage/decorate?id=${row.id}&scene=1004`)
-                } else {
-                  this.$router.push(`/wxapp/manage/decorate?id=${row.id}&scene=1008`)
-                }
-              }
-            }
-          },
-          {
-            name: '编辑',
-            key: 'edit',
-            type: 'button',
-            buttonType: 'text',
-            action: {
-              handler: ([row]) => {
-                console.log(row)
-                this.showPageDialog = true
-                this.pageForm = { ...row }
-                this.pageForm.is_open = row.is_open == '1'
-              }
-            }
-          },
-          {
-            name: '投放',
-            key: 'deploy',
-            type: 'button',
-            buttonType: 'text',
-            width: 45,
-            vif: () => this.appID,
-            action: {
-              handler: ([row]) => {
-                this.handleClick(row.id)
-              },
-              popover: {
-                width: 200,
-                content: (h) => {
-                  return h('div', [
-                    h('img', {
-                      class: 'page-code',
-                      attrs: { src: this.appCodeUrl }
-                    }),
-                    h('div', { class: 'page-btns' }, [
-                      h(
-                        'el-button',
-                        {
-                          props: {
-                            type: 'primary',
-                            plain: true,
-                            size: 'mini'
-                          },
-                          on: {
-                            click: () => this.handleDownload(row.page_name)
-                          }
-                        },
-                        '下载码'
-                      ),
-                      h(
-                        'el-button',
-                        {
-                          props: {
-                            type: 'primary',
-                            plain: true,
-                            size: 'mini',
-                            'v-clipboard:copy': this.curPageUrl
-                          }
-                        },
-                        '复制链接'
-                      )
-                    ])
-                  ])
-                }
-              }
-            }
-          },
-          {
-            name: '删除',
-            key: 'delete',
-            type: 'button',
-            buttonType: 'text',
-            action: {
-              handler: async ([row]) => {
-                await this.$confirm('确认删除当前页面吗？')
-                await this.$api.wxa.delCustomPage(row.id)
-                this.$message.success('删除成功')
-                this.$refs.finder.refresh()
-              }
-            }
-          }
-        ]
-      })
-    },
-    pageFormList() {
-      const { page_share_imageUrl } = this.pageForm
-      const { wximageurl, handleImgChange } = this
-      return [
-        {
-          label: '页面名称',
-          key: 'page_name',
-          type: 'input',
-          required: true,
-          placeholder: '请输入页面名称',
-          style: { width: '55%' }
-        },
-        {
-          label: '页面类型',
-          key: 'page_type',
-          type: 'select',
-          options: [
-            { label: '自定义', value: 'normal' },
-            { label: '个人中心', value: 'my' }
-          ]
-        },
-        {
-          label: '页面描述',
-          key: 'page_description',
-          type: 'input',
-          placeholder: '请输入页面描述',
-          style: { width: '55%' }
-        },
-        {
-          label: '分享标题',
-          key: 'page_share_title',
-          type: 'input',
-          placeholder: '请输入分享标题',
-          style: { width: '55%' }
-        },
-        {
-          label: '区域',
-          key: 'regionauth_id',
-          type: 'select',
-          options: this.areas
-        },
-        {
-          label: '分享图片',
-          key: 'page_share_imageUrl',
-          component: () => {
-            return (
-              <div class='upload-box' onClick={handleImgChange}>
-                {page_share_imageUrl ? (
-                  <img src={`${wximageurl}${page_share_imageUrl}`} class='avatar' />
-                ) : (
-                  <i class='el-icon-plus avatar-uploader-icon' />
-                )}
-              </div>
-            )
-          }
-        },
-        {
-          label: '是否启用',
-          key: 'is_open',
-          type: 'switch'
-        }
-      ]
-    }
+    ...mapGetters(['wheight', 'template_name'])
   },
   mounted() {
+    this.fetchPageList()
     this.fetchWechatList()
-    this.fetchAreas()
+    this.store = { id: '0' }
   },
   methods: {
     async fetchWechatList() {
       const { list } = await this.$api.minimanage.gettemplateweapplist()
-      list.forEach((item) => {
+      list.forEach((item, i) => {
         if (item.name == 'yykweishop') {
           this.appID = item.authorizer.authorizer_appid
         }
       })
     },
-    async fetchAreas() {
-      const res = await this.$api.regionauth.getRegionauth()
-      this.areas = res.list.map((item) => ({
-        label: item.regionauth_name,
-        value: item.regionauth_id
-      }))
+    handleClick(id) {
+      const page = 'pages/custom/custom-page'
+      this.curPageUrl = `${page}?id=${id}`
+      let params = {
+        wxaAppId: this.appID,
+        page,
+        id
+      }
+      getPageCode(params).then((response) => {
+        this.appCodeUrl = response.data.data.base64Image
+      })
     },
-    // 添加tab切换处理方法
-    handleTabClick() {
-      this.$refs.finder.refresh()
-    },
-
-    beforeSearch(params) {
-      return {
-        ...params,
-        template_name: this.template_name,
-        page_type: this.activeTab // 添加页面类型筛选
+    handleDownload(name) {
+      var a = document.createElement('a')
+      var temp = name
+      if (this.appCodeUrl) {
+        a.href = this.appCodeUrl
+        a.download = temp + '.png'
+        a.click()
       }
     },
-    async onPageFormSubmit() {
-      const params = { ...this.pageForm, template_name: this.template_name }
-      if (this.pageForm.id) {
-        await this.$api.wxa.editCustomPage(this.pageForm.id, params)
-        this.showPageDialog = false
-        this.$message({
-          type: 'success',
-          message: '保存页面成功'
+    temDialog(id, type) {
+      // this.pageForm.id = id
+      // this.template_dialog = true
+      this.$router.push(`/wxapp/manage/decorate?id=${id}&scene=1004`)
+    },
+    closeDialog() {
+      this.template_dialog = false
+    },
+    handleCurrentChange(page_num) {
+      this.params.page = page_num
+      this.fetchPageList()
+    },
+    delPage(id) {
+      this.$confirm('确认删除当前页面吗？').then((_) => {
+        delCustomPage(id).then((res) => {
+          this.$message({ type: 'success', message: '操作成功！' })
+          this.fetchPageList()
         })
-        this.$refs.finder.refresh()
+      })
+    },
+    openDialog(detail = null) {
+      this.page_dialog = true
+      if (detail) {
+        this.pageForm = detail
+        if (detail.is_open == 1) {
+          this.pageForm.is_open = true
+        }
+        this.dialogTitle = '编辑页面'
       } else {
-        await this.$api.wxa.createCustomPage(params)
-        this.showPageDialog = false
-        this.$message({
-          type: 'success',
-          message: '保存页面成功'
-        })
-        this.$refs.finder.refresh()
+        this.dialogTitle = '新增页面'
+        this.pageForm = {
+          id: '',
+          page_name: '',
+          page_description: '',
+          page_share_title: '',
+          page_share_desc: '',
+          page_share_imageUrl: '',
+          is_open: true
+        }
       }
+    },
+    savePage() {
+      let {
+        page_name,
+        page_description,
+        page_share_title,
+        page_share_desc,
+        page_share_imageUrl,
+        is_open,
+        id
+      } = this.pageForm
+      const params = {
+        page_name,
+        page_description,
+        is_open,
+        page_share_title,
+        page_share_desc,
+        page_share_imageUrl,
+        template_name: this.template_name
+      }
+      if (this.dialogTitle == '编辑页面') {
+        editCustomPage(id, params).then((res) => {
+          this.page_dialog = false
+          this.fetchPageList()
+          this.$message({
+            type: 'success',
+            message: '保存页面成功'
+          })
+        })
+      }
+      if (this.dialogTitle == '新增页面') {
+        createCustomPage(params).then((res) => {
+          this.page_dialog = false
+          this.fetchPageList()
+          this.$message({
+            type: 'success',
+            message: '保存页面成功'
+          })
+        })
+      }
+    },
+    fetchPageList() {
+      this.loading = true
+      Object.assign(this.params, { template_name: this.template_name })
+      getCustomPageList(this.params).then((response) => {
+        if (response.data.data.list) {
+          this.list = response.data.data.list
+          this.total_count = response.data.data.total_count
+        }
+        this.loading = false
+      })
+    },
+    handleCancel() {
+      this.page_dialog = false
     },
     //上传卡封面
     handleImgChange() {
@@ -357,42 +325,18 @@ export default {
   }
 }
 </script>
-
 <style lang="scss" scoped>
 .upload-box {
   width: 230px;
-  cursor: pointer;
-
   img {
     display: block;
     width: 100%;
   }
-
-  .avatar-uploader-icon {
-    font-size: 28px;
-    color: #8c939d;
-    width: 100%;
-    height: 100px;
-    line-height: 100px;
-    text-align: center;
-    border: 1px dashed #d9d9d9;
-  }
 }
-
 .page-code {
   width: 100%;
 }
-
 .page-btns {
   text-align: center;
-  margin-top: 10px;
-}
-
-.page-tabs {
-  margin-bottom: 16px;
-
-  :deep(.el-tabs__header) {
-    margin-bottom: 0;
-  }
 }
 </style>

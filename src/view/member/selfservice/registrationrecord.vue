@@ -8,27 +8,12 @@
   <div>
     <template v-if="$route.path.indexOf('detail') === -1 && $route.path.indexOf('editor') === -1">
       <div class="action-container">
-        <el-button
-          type="primary"
-          @click="editorLog()"
-        >
-          上传日志
-        </el-button>
+        <el-button type="primary" @click="editorLog()"> 上传日志 </el-button>
       </div>
 
-      <SpFilterForm
-        :model="params"
-        @onSearch="onSearch"
-        @onReset="onReset"
-      >
-        <SpFilterFormItem
-          prop="activity_id"
-          label="活动:"
-        >
-          <el-select
-            v-model="params.activity_id"
-            placeholder="请选择活动"
-          >
+      <SpFilterForm :model="params" @onSearch="onSearch" @onReset="onReset">
+        <SpFilterFormItem prop="activity_id" label="活动:">
+          <el-select v-model="params.activity_id" placeholder="请选择活动">
             <el-option
               v-for="item in activity_options"
               :key="item.value"
@@ -37,19 +22,10 @@
             />
           </el-select>
         </SpFilterFormItem>
-        <SpFilterFormItem
-          prop="mobile"
-          label="手机号:"
-        >
-          <el-input
-            v-model="params.mobile"
-            placeholder="手机号"
-          />
+        <SpFilterFormItem prop="mobile" label="手机号:">
+          <el-input v-model="params.mobile" placeholder="手机号" />
         </SpFilterFormItem>
-        <SpFilterFormItem
-          prop="create_time"
-          label="时间:"
-        >
+        <SpFilterFormItem prop="create_time" label="时间:">
           <el-date-picker
             v-model="params.create_time"
             type="daterange"
@@ -57,14 +33,8 @@
             placeholder="根据添加时间筛选"
           />
         </SpFilterFormItem>
-        <SpFilterFormItem
-          prop="is_white_list"
-          label="进白名单:"
-        >
-          <el-select
-            v-model="params.is_white_list"
-            placeholder="请选择白名单"
-          >
+        <SpFilterFormItem prop="is_white_list" label="进白名单:">
+          <el-select v-model="params.is_white_list" placeholder="请选择白名单">
             <el-option
               v-for="item in whiteOptions"
               :key="item.value"
@@ -81,14 +51,8 @@
             @select="handleSelectStore"
           />
         </SpFilterFormItem>
-        <SpFilterFormItem
-          prop="true_name"
-          label="姓名:"
-        >
-          <el-input
-            v-model="params.true_name"
-            placeholder="姓名"
-          />
+        <SpFilterFormItem prop="true_name" label="姓名:">
+          <el-input v-model="params.true_name" placeholder="姓名" />
         </SpFilterFormItem>
       </SpFilterForm>
 
@@ -102,12 +66,7 @@
         </el-button> -->
 
         <export-tip @exportHandle="exportData">
-          <el-button
-            type="primary"
-            plain
-          >
-            导出
-          </el-button>
+          <el-button type="primary" plain> 导出 </el-button>
         </export-tip>
 
         <!-- <el-upload
@@ -126,60 +85,33 @@
         </el-upload> -->
       </div>
 
-      <el-tabs
-        v-model="params.status"
-        type="card"
-        @tab-click="onSearch"
-      >
+      <el-tabs v-model="params.status" type="card" @tab-click="onSearch">
         <el-tab-pane
           v-for="(item, index) in tabList"
           :key="index"
           :label="item.label"
           :name="item.name"
         >
-          <el-table
-            v-loading="loading"
-            border
-            :data="tableList"
-            element-loading-text="数据加载中"
-          >
-            <el-table-column
-              prop="record_no"
-              label="报名编号"
-            />
-            <el-table-column
-              prop="group_no"
-              label="活动群组编号"
-            />
-            <el-table-column
-              prop="activity_name"
-              label="活动名称"
-            />
-            <el-table-column
-              prop="tem_name"
-              label="报名表单"
-            />
-            <el-table-column
-              prop="mobile"
-              label="手机号"
-            />
-            <el-table-column
-              prop="get_points"
-              label="获取积分"
-            />
+          <el-table v-loading="loading" border :data="tableList" element-loading-text="数据加载中">
+            <el-table-column prop="record_no" label="报名编号" />
+            <el-table-column prop="group_no" label="活动群组编号" />
+            <el-table-column prop="activity_name" label="活动名称" />
+            <el-table-column prop="tem_name" label="报名表单" />
+            <el-table-column prop="mobile" label="手机号" />
+            <el-table-column prop="get_points" label="获取积分" />
             <el-table-column label="进白名单" width="120">
               <template slot-scope="scope">
-                {{ scope.row.is_white_list == 1 ? '是' : '否'}}
+                {{ scope.row.is_white_list == 1 ? '是' : '否' }}
               </template>
             </el-table-column>
-            <el-table-column
-              prop="create_date"
-              label="申请时间"
-            />
-            <el-table-column
-              prop="status_name"
-              label="状态"
-            >
+            <el-table-column label="备注" width="180">
+              <template slot-scope="scope">
+                <el-input v-model="scope.row.remark" @blur="() => hanldeRemarkBlur(scope.row)" />
+              </template>
+            </el-table-column>
+
+            <el-table-column prop="create_date" label="申请时间" />
+            <el-table-column prop="status_name" label="状态">
               <!-- <template slot-scope="scope">
                 <el-tag
                   v-if="scope.row.status == 'pending'"
@@ -218,23 +150,32 @@
                 </el-tag>
               </template> -->
             </el-table-column>
-            <el-table-column
-              prop="status"
-              label="操作"
-            >
+            <el-table-column prop="status" label="操作">
               <template slot-scope="scope">
                 <router-link
                   v-if="scope.row.status == 'pending' && !IS_DISTRIBUTOR()"
-                  :to="{ path: matchHidePage('detail'), query: { id: scope.row.record_id, activity_id: scope.row.activity_id } }"
+                  :to="{
+                    path: matchRoutePath('detail'),
+                    query: { id: scope.row.record_id, activity_id: scope.row.activity_id }
+                  }"
                 >
                   审核
                 </router-link>
                 <router-link
-                  :to="{ path: matchHidePage('detail'), query: { id: scope.row.record_id,activity_id: scope.row.activity_id} }"
+                  :to="{
+                    path: matchRoutePath('detail'),
+                    query: { id: scope.row.record_id, activity_id: scope.row.activity_id }
+                  }"
                 >
                   详情
                 </router-link>
-               <el-button type="text" v-if="scope.row.status == 'passed'" @click="onShowChange(scope.row)">核销</el-button>
+                <el-button
+                  v-if="scope.row.status == 'passed'"
+                  type="text"
+                  @click="onShowChange(scope.row)"
+                >
+                  核销
+                </el-button>
               </template>
             </el-table-column>
           </el-table>
@@ -278,7 +219,7 @@ export default {
       refresh: this.fetchList
     }
   },
-  data () {
+  data() {
     const initialParams = {
       activity_id: undefined,
       mobile: undefined,
@@ -290,7 +231,7 @@ export default {
         name: undefined,
         id: undefined
       },
-      is_white_list: '',
+      is_white_list: ''
     }
     return {
       initialParams,
@@ -303,12 +244,12 @@ export default {
         { label: '已报名', name: 'passed' },
         { label: '已拒绝', name: 'rejected' },
         { label: '已核销', name: 'verified' },
-        { label: '已取消', name: 'canceled' },
+        { label: '已取消', name: 'canceled' }
       ],
       activityParams: {
         page: 1,
-        pageSize: 10,
-        is_valid: true
+        pageSize: 10
+        // is_valid: true
       },
       loading: false,
       activity_options: [],
@@ -316,7 +257,7 @@ export default {
       whiteOptions: [
         { label: '全部', value: '' },
         { label: '是', value: 1 },
-        { label: '否', value: 2 },
+        { label: '否', value: 2 }
       ],
       dialogVisible: false,
       dialogForm: {
@@ -332,10 +273,10 @@ export default {
           required: true,
           message: '不能为空'
         }
-      ],
+      ]
     }
   },
-  mounted () {
+  mounted() {
     if (this.$route.query.id) {
       // this.params.record_id = this.$route.query.id
       this.params.activity_id = this.$route.query.id
@@ -345,13 +286,13 @@ export default {
     this.getStoreList()
   },
   methods: {
-    onSearch () {
+    onSearch() {
       this.page.pageIndex = 1
       this.$nextTick(() => {
         this.fetchList()
       })
     },
-    onReset () {
+    onReset() {
       this.params = { ...this.initialParams }
       this.params = {
         ...this.params,
@@ -362,7 +303,7 @@ export default {
       }
       this.onSearch()
     },
-    getParams () {
+    getParams() {
       const time = {}
       const create_time = this.params.create_time
       if (create_time.length) {
@@ -378,7 +319,7 @@ export default {
       delete params.distributor
       return params
     },
-    async fetchList () {
+    async fetchList() {
       this.loading = true
       const { pageIndex: page, pageSize } = this.page
       let params = {
@@ -392,12 +333,17 @@ export default {
       this.page.total = total_count
       this.loading = false
     },
+    async hanldeRemarkBlur({ record_id, remark }) {
+      console.log(record_id, remark)
+      await this.$api.marketing.updateRegistrationRecord({ record_id, remark })
+      this.fetchList()
+    },
     // 切换tab
-    handleClick (tab, event) {
+    handleClick(tab, event) {
       this.params.status = tab.name == 'all' ? '' : tab.name
       this.onSearch()
     },
-    regActivityEasylists () {
+    regActivityEasylists() {
       this.loading = true
       regActivityEasylist(this.activityParams).then((response) => {
         response.data.data.list.map((item) => {
@@ -410,10 +356,10 @@ export default {
         this.loading = false
       })
     },
-    dateStrToTimeStamp (str) {
+    dateStrToTimeStamp(str) {
       return Date.parse(new Date(str)) / 1000
     },
-    uploadHandleTemplate () {
+    uploadHandleTemplate() {
       var fileName = '报名批量审核'
       let params = { file_type: 'selform_registration_record', file_name: fileName }
       exportUploadTemplate(params).then((response) => {
@@ -432,20 +378,20 @@ export default {
         }
       })
     },
-    uploadHandleChange (file, fileList) {
+    uploadHandleChange(file, fileList) {
       let params = { isUploadFile: true, file_type: 'selform_registration_record', file: file.raw }
       handleUploadFile(params).then((response) => {
         this.$message({
           type: 'success',
           message: '上传成功，等待处理'
         })
-        this.$router.push({ path: this.matchHidePage('editor') })
+        this.$router.push({ path: this.matchRoutePath('editor') })
       })
     },
-    editorLog () {
-      this.$router.push({ path: this.matchHidePage('editor') })
+    editorLog() {
+      this.$router.push({ path: this.matchRoutePath('editor') })
     },
-    exportData () {
+    exportData() {
       this.currentPage = 1
       recordExport(this.params).then((response) => {
         if (response.data.data.status) {
@@ -498,7 +444,7 @@ export default {
       this.dialogForm = {}
       this.fetchList()
     },
-    onShowChange (row) {
+    onShowChange(row) {
       this.dialogForm.record_id = row.record_id
       this.dialogVisible = true
     }

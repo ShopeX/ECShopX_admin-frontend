@@ -49,11 +49,11 @@
           </el-dropdown-menu>
         </el-dropdown>
       </div> -->
-<!--      <div v-else class="action-container">-->
-<!--        <el-button type="primary" icon="iconfont icon-xinzengcaozuo-01" @click="addItems">-->
-<!--          添加商品-->
-<!--        </el-button>-->
-<!--      </div>-->
+      <!--      <div v-else class="action-container">-->
+      <!--        <el-button type="primary" icon="iconfont icon-xinzengcaozuo-01" @click="addItems">-->
+      <!--          添加商品-->
+      <!--        </el-button>-->
+      <!--      </div>-->
 
       <SpFilterForm :model="searchParams" @onSearch="onSearch" @onReset="onSearch">
         <SpFilterFormItem prop="keywords" label="商品标题:">
@@ -214,7 +214,7 @@
           </el-dropdown-menu>
         </el-dropdown>
 
-        <el-dropdown v-if=" VERSION_STANDARD && IS_ADMIN()">
+        <el-dropdown v-if="VERSION_STANDARD && IS_ADMIN()">
           <el-button type="primary" plain icon="iconfont icon-daorucaozuo-01">
             同步商品<i class="el-icon-arrow-down el-icon--right" />
           </el-button>
@@ -278,7 +278,7 @@
                 :min="0"
                 :precision="2"
                 style="width: 120px"
-                @change="updateGoodsSkuPrice(scope.row,'market_price')"
+                @change="updateGoodsSkuPrice(scope.row, 'market_price')"
               />
             </template>
           </el-table-column>
@@ -290,7 +290,7 @@
                 :min="0"
                 :precision="2"
                 style="width: 120px"
-                @change="updateGoodsSkuPrice(scope.row,'price')"
+                @change="updateGoodsSkuPrice(scope.row, 'price')"
               />
             </template>
           </el-table-column>
@@ -302,7 +302,7 @@
                 :min="0"
                 :precision="2"
                 style="width: 120px"
-                @change="updateGoodsSkuPrice(scope.row,'cost_price')"
+                @change="updateGoodsSkuPrice(scope.row, 'cost_price')"
               />
             </template>
           </el-table-column>
@@ -447,7 +447,7 @@
         :width="800"
         @confirm="
           () => {
-            this.showItemSkuDrawer = false
+            showItemSkuDrawer = false
           }
         "
       >
@@ -465,9 +465,9 @@
         </el-table>
       </SpDrawer>
 
-      <el-dialog :title="sunCodeTitle" :visible.sync="sunCode" width='360px'>
+      <el-dialog :title="sunCodeTitle" :visible.sync="sunCode" width="360px">
         <div class="page-code">
-          <img class="page-code-img" :src="appCodeUrl" />
+          <img class="page-code-img" :src="appCodeUrl">
           <div class="page-btns">
             <el-button type="primary" plain @click="handleDownload(sunCodeTitle)">
               下载码
@@ -511,9 +511,7 @@ export default {
         { title: '不可销售', value: 'instock' }
       ]
     } else {
-      statusOption = [
-        { title: '全部', value: '' }, ...updateStatusOption
-      ]
+      statusOption = [{ title: '全部', value: '' }, ...updateStatusOption]
     }
 
     let tabList = []
@@ -585,7 +583,7 @@ export default {
         keywords: '',
         item_bn: '',
         supplier_goods_bn: '',
-        supplier_name:'',
+        supplier_name: '',
         approve_status: '',
         category: 0,
         item_category: 0,
@@ -602,7 +600,7 @@ export default {
         brand_id: '',
         goods_bn: '',
         operator_name: '',
-        cat_id:''
+        cat_id: ''
       },
       start_date: '',
       end_date: '',
@@ -639,7 +637,7 @@ export default {
 
       categoryList: [],
       templatesList: [],
-      templatesListavailable:[],
+      templatesListavailable: [],
       itemCategoryList: [],
       regions: [],
       showMemberPriceDrawer: false,
@@ -772,7 +770,9 @@ export default {
             key: 'edit',
             type: 'button',
             buttonType: 'text',
-            visible: (row) => {return IS_SUPPLIER() || row.supplier_id == '0'},
+            visible: (row) => {
+              return IS_SUPPLIER() || row.supplier_id == '0'
+            },
             action: {
               type: 'link',
               handler: ([row]) => {
@@ -799,8 +799,8 @@ export default {
                   query: {
                     some_param: 'true',
                     detail: true,
-                    isSupplierGoods:true,
-                    islist:1
+                    isSupplierGoods: true,
+                    islist: 1
                   }
                 })
               }
@@ -986,7 +986,8 @@ export default {
           }
         ],
         columns: [
-          { name: '商品ID', key: 'goods_id', width: 80 },
+          { name: '供应商品ID', key: 'supplier_item_id', width: 120 },
+          { name: '平台商品ID', key: 'goods_id', width: 120 },
           {
             name: '商品',
             key: 'itemName',
@@ -1015,14 +1016,14 @@ export default {
                     )}
 
                     {scope.row.is_gift == 1 && (
-                    <el-tag
-                      size='mini'
-                      effect='plain'
-                      type='primary'
-                      style='margin-left: 4px; cursor: default;'
-                        >
+                      <el-tag
+                        size='mini'
+                        effect='plain'
+                        type='primary'
+                        style='margin-left: 4px; cursor: default;'
+                      >
                         赠
-                        </el-tag>
+                      </el-tag>
                     )}
                   </div>
                   <div style='color: #666;'>
@@ -1141,7 +1142,7 @@ export default {
             name: '毛利率（%)',
             key: 'gross_profit_rate',
             width: 100,
-            align: "right",
+            align: 'right',
             headerAlign: 'center'
           },
           {
@@ -1212,11 +1213,11 @@ export default {
     this.getShippingTemplatesList()
     this.fetchWechatList()
     this.searchParams.operator_name = this.$route.query.operator_name
+    this.$activated = () => {
+      this.$refs['finder'].refresh()
+    }
   },
   methods: {
-    onHooksRouteBack() {
-      this.$refs['finder'].refresh()
-    },
     async fetchWechatList() {
       const { list } = await this.$api.minimanage.gettemplateweapplist()
       list.forEach((item, i) => {
@@ -1231,7 +1232,7 @@ export default {
         item_type: 'normal',
         operate_source: IS_SUPPLIER() ? 'supplier' : 'platform',
         ...this.searchParams,
-        item_source:'supplier'
+        item_source: 'supplier'
       }
       return params
     },
@@ -1251,7 +1252,6 @@ export default {
       const categoryList = await this.$api.goods.getCategory({ is_show: false })
       this.categoryList = categoryList
 
-
       //管理分类
       const itemCategoryList = await this.$api.goods.getCategory({ is_main_category: true })
       this.itemCategoryList = itemCategoryList
@@ -1263,7 +1263,7 @@ export default {
       })
       await this.$api.goods.updateItemsStatus({
         distributor_id: this.shopId,
-        items:JSON.stringify(data),
+        items: JSON.stringify(data),
         status: this.batchChangeStateForm.status
       })
 
@@ -1284,7 +1284,7 @@ export default {
           is_edit: false,
           price: item.price / 100,
           market_price: item.market_price / 100,
-          cost_price:item.cost_price / 100,
+          cost_price: item.cost_price / 100,
           grade: this.generatePrice(item.memberGrade.grade),
           vipGrade: this.generatePrice(item.memberGrade.vipGrade)
         })
@@ -1304,9 +1304,9 @@ export default {
       }
       getPageCode(params).then((response) => {
         this.appCodeUrl = response.data.data.base64Image
-          // this.$message.success('投放成功')
-          this.sunCodeTitle = itemName + '---商品太阳码'
-          this.sunCode = true
+        // this.$message.success('投放成功')
+        this.sunCodeTitle = itemName + '---商品太阳码'
+        this.sunCode = true
       })
     },
     async getSkuStoreByGoods(item_id) {
@@ -1651,16 +1651,16 @@ export default {
         this.$message.error('导出失败')
       }
     },
-    async updateGoodsSkuPrice({ item_id, price,cost_price,market_price },priceType) {
+    async updateGoodsSkuPrice({ item_id, price, cost_price, market_price }, priceType) {
       const priceMap = {
-        'price':price,
-        'cost_price':cost_price,
-        'market_price':market_price
+        'price': price,
+        'cost_price': cost_price,
+        'market_price': market_price
       }
 
       await this.$api.goods.updateGoodsInfo({
         item_id,
-        [priceType]:priceMap[priceType],
+        [priceType]: priceMap[priceType],
         operate_source: IS_SUPPLIER() ? 'supplier' : 'platform'
       })
       this.$message.success('操作成功')

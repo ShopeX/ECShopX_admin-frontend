@@ -3,14 +3,9 @@
     <div class="log-header">
       <div class="log-container">
         <div class="brand">
-          <img
-            :src="brand"
-            alt=""
-          >
+          <img :src="brand" alt="">
         </div>
-        <div class="log-welcome">
-          欢迎登录供应商端
-        </div>
+        <div class="log-welcome">欢迎登录供应商端</div>
       </div>
     </div>
     <div
@@ -23,16 +18,8 @@
       }"
     >
       <div class="log-container">
-        <el-tabs
-          type="border-card"
-          value="admin"
-          style="width: 400px"
-          class="login-type-tab"
-        >
-          <el-tab-pane
-            name="admin"
-            label="应商端账号登录"
-          >
+        <el-tabs type="border-card" value="admin" style="width: 400px" class="login-type-tab">
+          <el-tab-pane name="admin" label="应商端账号登录">
             <div class="log-img" />
             <el-form
               ref="ruleForm1"
@@ -82,20 +69,11 @@
     </div>
     <div class="log-footer">
       <span>友情链接：</span>
-      <a
-        href="https://www.shopex.cn"
-        target="_blank"
-      >商派</a>
+      <a href="https://www.shopex.cn" target="_blank">商派</a>
       <span>|</span>
-      <a
-        href="https://mp.weixin.qq.com"
-        target="_blank"
-      >微信公众平台</a>
+      <a href="https://mp.weixin.qq.com" target="_blank">微信公众平台</a>
       <span>|</span>
-      <a
-        href="https://open.weixin.qq.com"
-        target="_blank"
-      >微信开放平台</a>
+      <a href="https://open.weixin.qq.com" target="_blank">微信开放平台</a>
     </div>
   </div>
 </template>
@@ -106,7 +84,7 @@ import { isMobile } from '../utils/validate'
 import fetch from '../utils/fetch'
 import { login, getAdminInfo } from '../api/login'
 export default {
-  data () {
+  data() {
     const validateEmail = (rule, value, callback) => {
       if (!isMobile(value)) {
         callback(new Error('请输入正确的合法手机号'))
@@ -138,14 +116,14 @@ export default {
       submitDisabled: false
     }
   },
-  mounted () {
+  mounted() {
     console.log('-----4')
     this.$store.dispatch('setLoginType', 'distributor')
     this.brand = require('@/assets/img/yyk/logo1.svg')
     this.login_bg = require('@/assets/img/yyk/login_bg.jpg')
   },
   methods: {
-    handleSubmit1 () {
+    handleSubmit1() {
       this.$store.dispatch('setLoginType', 'distributor')
       setTimeout(function () {}, 200)
 
@@ -172,7 +150,7 @@ export default {
                       message: '登录成功',
                       type: 'success',
                       duration: 2 * 1000,
-                      onClose () {
+                      onClose() {
                         if (res.data.data.length == 1) {
                           _self.$router.push({ path: res.data.data[0]['url'] })
                           _self.$router.go(0)
@@ -243,7 +221,6 @@ body {
 }
 .log-body {
   padding: 118px 0;
-  // background: url(./assets/img/login_bg.jpg) no-repeat center center;
   background-size: cover;
 }
 .log-img {

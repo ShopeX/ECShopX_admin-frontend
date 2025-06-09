@@ -53,11 +53,6 @@ export default {
       ]
     },
     {
-      path: 'oms/setting',
-      name: `oms设置`,
-      component: () => import('@/view/base/setting/oms/index')
-    },
-    {
       path: 'delivery/kdniao',
       name: `快递跟踪配置`,
       component: () => import('@/view/base/setting/kdniao')
@@ -237,70 +232,6 @@ export default {
           path: 'shopex_sms',
           name: '商派短信',
           component: () => import('@/view/base/shortmessage/shopex_sms')
-        },
-        {
-          path: 'tmp_sms',
-          name: '标品短信',
-          component: () => import('@/view/base/shortmessage/tmp_sms'),
-          children: [
-            {
-              path: '/',
-              name: '基础配置',
-              meta: 'base_config',
-              component: () => import('@/view/base/shortmessage/template/base_config')
-            },
-            {
-              path: 'send_sms',
-              name: '发送短信',
-              meta: 'send_sms',
-              component: () => import('@/view/base/shortmessage/template/send_sms')
-            },
-            {
-              path: 'sms_signatures',
-              name: '短信签名',
-              component: () => import('@/view/base/shortmessage/template/sms_signatures'),
-              meta: 'sms_signatures',
-              children: [
-                {
-                  path: 'edit',
-                  component: () => import('@/view/base/shortmessage/template/sms_signatures_edit'),
-                  meta: 'sms_signatures'
-                }
-              ]
-            },
-            {
-              path: 'sms_template',
-              name: '短信模板',
-              component: () => import('@/view/base/shortmessage/template/sms_template'),
-              meta: 'sms_template',
-              children: [
-                {
-                  path: 'edit',
-                  component: () => import('@/view/base/shortmessage/template/sms_template_edit'),
-                  meta: 'sms_template'
-                }
-              ]
-            },
-            {
-              path: 'sms_sendLog',
-              name: '短信发送记录',
-              component: () => import('@/view/base/shortmessage/template/sms_sendLog'),
-              meta: 'sms_sendLog'
-            },
-            {
-              path: 'sms_MassLog',
-              name: '短信群发送记录',
-              component: () => import('@/view/base/shortmessage/template/sms_MassLog'),
-              meta: 'sms_MassLog',
-              children: [
-                {
-                  path: 'edit',
-                  component: () => import('@/view/base/shortmessage/template/sms_MassLog_edit'),
-                  meta: 'sms_MassLog'
-                }
-              ]
-            }
-          ]
         }
       ]
     },
@@ -430,6 +361,11 @@ export default {
       path: 'openapi',
       name: `开发接口配置`,
       component: () => import('@/view/base/setting/opendev/index')
+    },
+    {
+      path: 'Regionauth',
+      name: `区域管理`,
+      component: () => import('@/view/regionauth/list')
     },
 
     {

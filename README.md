@@ -15,3 +15,9 @@ npx husky install
 npx husky add .husky/pre-commit "npx lint-staged --allow-empty"
 
 
+standard
+bbc
+s2b2c
+b2c
+inpurchase
+shuyun

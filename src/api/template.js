@@ -130,14 +130,3 @@ export function templateALiOpen (query) {
     params: query
   })
 }
-
-// 获取货架挂件商品
-// 数据类型 data_type  main_category-主类目 category-分类 seckill-限时特惠 group-拼团 sales-按销量 items-指定商品 distributor-指定店铺
-// 数据配置 data_value 可以是数组，可以是整数
-export function getShelvesGoods(params) {
-  return fetch({
-    url: '/pagestemplate/widget/items',
-    method: 'get',
-    params: params
-  })
-}

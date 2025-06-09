@@ -6,7 +6,7 @@
 
 .isolate-set {
   cursor: pointer;
-  color: #409eff;
+  color: #409EFF;
   margin-left: 10px;
 }
 
@@ -35,7 +35,6 @@ export default {
         minus_shop_gift_store: false,
         check_gift_store: false,
         ziti_send_oms: false,
-        shop_order_send_oms: false,
         nostores_status: false,
         recharge_status: false,
         repeat_cancel: false,
@@ -55,26 +54,11 @@ export default {
         storeId: '',
         stores_isolate: false,
         stores_isolate_template: '',
-        is_first_login_reset_password: false,
-        invoice_limit: 'item',
-        invoice_method: 'online',
-        invoice_open_term: 0
       },
       formList: [
         {
           label: '通用设置',
           type: 'group'
-        },
-        {
-          label: '是否启用首次登录必须重置密码',
-          key: 'is_first_login_reset_password',
-          type: 'switch',
-          onChange: async (e) => {
-            const { is_first_login_reset_password } = this.form
-            await this.$api.company.setForceResetPasswordSetting({
-              force_reset_password: is_first_login_reset_password
-            })
-          }
         },
         {
           label: '分享带门店参数',
@@ -159,7 +143,7 @@ export default {
           }
         },
         {
-          label: '自提订单推单',
+          label: '推单设置',
           key: 'ziti_send_oms',
           type: 'switch',
           tip: '自提订单推oms',
@@ -168,19 +152,6 @@ export default {
             const { ziti_send_oms } = this.form
             await this.$api.company.setSendOmsSetting({
               ziti_send_oms
-            })
-          }
-        },
-        {
-          label: '店铺订单推单',
-          key: 'shop_order_send_oms',
-          type: 'switch',
-          tip: '店铺订单推oms',
-          isShow: !VERSION_IN_PURCHASE,
-          onChange: async (e) => {
-            const { shop_order_send_oms } = this.form
-            await this.$api.company.setSendOmsSetting({
-              shop_order_send_oms
             })
           }
         },
@@ -205,30 +176,9 @@ export default {
           isShow: VERSION_STANDARD && IS_ADMIN,
           component: () => (
             <div class='isolate-contanier'>
-              <el-switch
-                v-model={this.form.stores_isolate}
-                onChange={() => {
-                  this.saveOpenDividedSetting()
-                }}
-              />
-              <span
-                class='isolate-set'
-                onClick={() => {
-                  this.onClickStoresIsolate()
-                }}
-              >
-                {this.form?.stores_isolate_template ? '已设置引导页模版' : '设置引导页模版'}
-              </span>
-              {this.form?.stores_isolate_template && (
-                <el-button
-                  class='isolate-clear'
-                  onClick={() => {
-                    this.onClickClear()
-                  }}
-                >
-                  清除
-                </el-button>
-              )}
+              <el-switch v-model={this.form.stores_isolate} onChange={() => { this.saveOpenDividedSetting() }} />
+              <span class='isolate-set' onClick={() => { this.onClickStoresIsolate() }}>{this.form?.stores_isolate_template ? '已设置引导页模版' : '设置引导页模版'}</span>
+              {this.form?.stores_isolate_template && <el-button class='isolate-clear' onClick={() => { this.onClickClear() }}>清除</el-button>}
             </div>
           )
         },
@@ -264,6 +214,19 @@ export default {
             const { item_sales_status } = this.form
             await this.$api.company.setItemSalesSetting({
               item_sales_status
+            })
+          }
+        },
+        {
+          label: '发票设置',
+          key: 'invoice_status',
+          type: 'switch',
+          tip: '结算页是否显示发票',
+          isShow: !VERSION_IN_PURCHASE,
+          onChange: async (e) => {
+            const { invoice_status } = this.form
+            await this.$api.company.setInvoiceStatus({
+              invoice_status
             })
           }
         },
@@ -304,7 +267,7 @@ export default {
             {
               label: 'kuaizhen580',
               name: '580处方业务集成'
-            }
+            },
           ],
           // isShow: !VERSION_IN_PURCHASE,
           onChange: async (e) => {
@@ -318,87 +281,26 @@ export default {
           label: 'clientId',
           key: 'clientId',
           type: 'input',
-          isShow: () => this.form.use_third_party_system && this.form.is_pharma_industry
+          isShow: () => this.form.use_third_party_system && this.form.is_pharma_industry,
         },
         {
           label: 'clientSecret',
           key: 'clientSecret',
           type: 'input',
-          isShow: () => this.form.use_third_party_system && this.form.is_pharma_industry
+          isShow: () => this.form.use_third_party_system && this.form.is_pharma_industry,
         },
         {
           label: '门店ID',
           key: 'storeId',
           type: 'input',
-          isShow: () => this.form.use_third_party_system && this.form.is_pharma_industry
+          isShow: () => this.form.use_third_party_system && this.form.is_pharma_industry,
         },
         {
           label: '',
           component: () => (
-            <elButton type='primary' onClick={() => this.primarySetting('button')}>
-              保存
-            </elButton>
+            <elButton type='primary' onClick={() => this.primarySetting('button')}>保存</elButton>
           ),
-          isShow: () => this.form.use_third_party_system && this.form.is_pharma_industry
-        },
-        {
-          label: '发票设置',
-          type: 'group'
-        },
-        {
-          label: '开票维度',
-          key: 'invoice_limit',
-          type: 'radio',
-          tip: '影响用户端开票申请页-开票申请的维度，「按SKU合并开票」支持路店按SKU合并开票；「按订单开票」按订单维度整单开票',
-          options: [
-            { label: 'item', name: '按SKU合并开票' },
-            { label: 'order', name: '按订单开票' }
-          ],
-          onChange: this.handleSaveInvoice
-        },
-        {
-          label: '开票方式',
-          key: 'invoice_method',
-          type: 'radio',
-          tip: '对接OMS线上开票，不支持人工修改后台开票信息；线下人工开票不支持查看发票文件和重发邮箱功能',
-          options: [
-            { label: 'online', name: '对接OMS线上开票' },
-            { label: 'offline', name: '线下人工开票' }
-          ],
-          onChange: this.handleSaveInvoice
-        },
-        {
-          label: '可开票期限',
-          key: 'invoice_open_term',
-          component: () => (
-            <div class='coupon-time'>
-              订单商品签收后，且在订单创建 &nbsp;
-              <el-input
-                vModel={this.form.invoice_open_term}
-                size='mini'
-                style='width: 100px'
-                type='number'
-                min={0}
-                onChange={this.handleInvoiceOpenTermChange}
-              />
-              &nbsp;（月）内支持申请开票
-              <el-button
-                style='margin-left: 10px'
-                type='primary'
-                onClick={() => this.handleSaveInvoice('button')}
-              >
-                保存
-              </el-button>
-            </div>
-          )
-        },
-        {
-          label: '发票设置',
-          key: 'invoice_status',
-          type: 'switch',
-          tip: '结算页是否显示发票信息填写',
-          // isShow: !VERSION_IN_PURCHASE,
-          onChange: this.handleSaveInvoice
+          isShow: () => this.form.use_third_party_system && this.form.is_pharma_industry,
         },
         {
           label: '商品价格展示',
@@ -410,15 +312,15 @@ export default {
           type: 'checkbox',
           options: VERSION_IN_PURCHASE
             ? [
-                { label: 0, name: '销售价', disabled: true },
-                { label: 1, name: '原价' }
-              ]
+              { label: 0, name: '销售价', disabled: true },
+              { label: 1, name: '原价' }
+            ]
             : [
-                { label: 0, name: '销售价', disabled: true },
-                { label: 1, name: '原价' },
-                { label: 2, name: '会员等级价' },
-                { label: 3, name: '付费会员价' }
-              ],
+              { label: 0, name: '销售价', disabled: true },
+              { label: 1, name: '原价' },
+              { label: 2, name: '会员等级价' },
+              { label: 3, name: '付费会员价' }
+            ],
           onChange: async (e) => {
             this.saveItemPriceSetting()
           }
@@ -430,9 +332,9 @@ export default {
           options: VERSION_IN_PURCHASE
             ? [{ label: 1, name: '原价' }]
             : [
-                { label: 0, name: '销售价/会员等级价/付费会员价', disabled: true },
-                { label: 1, name: '原价' }
-              ],
+              { label: 0, name: '销售价/会员等级价/付费会员价', disabled: true },
+              { label: 1, name: '原价' }
+            ],
           onChange: async (e) => {
             this.saveItemPriceSetting()
           }
@@ -444,9 +346,9 @@ export default {
           options: VERSION_IN_PURCHASE
             ? [{ label: 1, name: '原价' }]
             : [
-                { label: 0, name: '销售价/会员等级价/付费会员价', disabled: true },
-                { label: 1, name: '原价' }
-              ],
+              { label: 0, name: '销售价/会员等级价/付费会员价', disabled: true },
+              { label: 1, name: '原价' }
+            ],
           onChange: async (e) => {
             this.saveItemPriceSetting()
           }
@@ -463,7 +365,6 @@ export default {
   methods: {
     async fetch() {
       const res = await this.$api.company.getGlobalSetting()
-      const forceResetPasswordSetting = await this.$api.company.getForceResetPasswordSetting()
       this.form = {
         ...this.form,
         rate_status: res.traderate_setting.rate_status,
@@ -472,7 +373,6 @@ export default {
         minus_shop_gift_store: res.gift_setting.minus_shop_gift_store,
         check_gift_store: res.gift_setting.check_gift_store,
         ziti_send_oms: res.sendoms_setting.ziti_send_oms,
-        shop_order_send_oms: res.sendoms_setting.shop_order_send_oms,
         nostores_status: !res.nostores_setting.nostores_status,
         recharge_status: res.recharge_setting.recharge_status,
         repeat_cancel: res.cancel_setting.repeat_cancel,
@@ -488,10 +388,6 @@ export default {
         storeId: res.medicine_setting.kuaizhen580_config?.kuaizhen_store_id,
         stores_isolate: res.open_distributor_divided?.status || false, // 店铺隔离开关
         stores_isolate_template: res.open_distributor_divided?.template || '', // 店铺隔离模版
-        is_first_login_reset_password: forceResetPasswordSetting.force_reset_password || false,
-        invoice_limit: res.invoice_setting.invoice_limit,
-        invoice_method: res.invoice_setting.invoice_method,
-        invoice_open_term: res.invoice_setting.invoice_open_term
       }
       const { cart_page, order_page, item_page } = res.item_price_setting
       if (cart_page.market_price) {
@@ -528,8 +424,7 @@ export default {
       await this.$api.company.saveItemPriceSetting(params)
     },
     async primarySetting(isBtn) {
-      const { is_pharma_industry, use_third_party_system, clientId, clientSecret, storeId } =
-        this.form
+      const { is_pharma_industry, use_third_party_system, clientId, clientSecret, storeId } = this.form
       try {
         await this.$api.company.setPharmaIndustry({
           is_pharma_industry: is_pharma_industry ? '1' : '0',
@@ -547,9 +442,9 @@ export default {
     async onClickStoresIsolate() {
       const { data } = await this.$picker.pages({
         multiple: false,
-        data: [this.form?.stores_isolate_template]
+        data: [Number(this.form?.stores_isolate_template)]
       })
-
+      
       data && (this.form.stores_isolate_template = data[0].id)
       this.saveOpenDividedSetting()
     },
@@ -568,26 +463,6 @@ export default {
         }
       }
       await this.$api.company.saveOpenDividedSetting(params)
-    },
-    async handleSaveInvoice(isBtn) {
-      const { invoice_status, invoice_limit, invoice_method, invoice_open_term } = this.form
-
-      await this.$api.company.setInvoiceStatus({
-        invoice_status,
-        invoice_limit,
-        invoice_method,
-        invoice_open_term
-      })
-      if (isBtn == 'button') {
-        this.$message.success('保存成功')
-      }
-    },
-    handleInvoiceOpenTermChange(value) {
-      let numericValue = value.replace(/\D/g, '')
-
-      const numberValue = parseInt(numericValue, 10) || 0
-
-      this.form.invoice_open_term = Math.max(0, numberValue)
     }
   }
 }

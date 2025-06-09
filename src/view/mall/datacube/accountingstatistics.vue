@@ -4,13 +4,8 @@
     <div v-if="$route.path.indexOf('_detail') === -1">
       <el-card v-if="loginType === 'distributor'">
         <el-row style="marginbottom: 0px">
-          <el-col
-            :span="5"
-            class="admin-total-num-box"
-          >
-            <p class="admin-total-num-top-fonts">
-              ¥ {{ totalList.income }}
-            </p>
+          <el-col :span="5" class="admin-total-num-box">
+            <p class="admin-total-num-top-fonts">¥ {{ totalList.income }}</p>
             <p class="admin-total-num-bot-fonts">
               店铺总计收入(不含退款)
               <el-popover
@@ -27,13 +22,8 @@
               </el-popover>
             </p>
           </el-col>
-          <el-col
-            :span="5"
-            class="admin-total-num-box"
-          >
-            <p class="admin-total-num-top-fonts">
-              ¥ {{ totalList.refund }}
-            </p>
+          <el-col :span="5" class="admin-total-num-box">
+            <p class="admin-total-num-top-fonts">¥ {{ totalList.refund }}</p>
             <p class="admin-total-num-bot-fonts">
               店铺总退款金额
               <el-popover
@@ -50,13 +40,8 @@
               </el-popover>
             </p>
           </el-col>
-          <el-col
-            :span="5"
-            class="admin-total-num-box"
-          >
-            <p class="admin-total-num-top-fonts">
-              ¥ {{ totalList.unsettled_funds }}
-            </p>
+          <el-col :span="5" class="admin-total-num-box">
+            <p class="admin-total-num-top-fonts">¥ {{ totalList.unsettled_funds }}</p>
             <p class="admin-total-num-bot-fonts">
               店铺未结算金额
               <el-popover
@@ -73,13 +58,8 @@
               </el-popover>
             </p>
           </el-col>
-          <el-col
-            :span="5"
-            class="admin-total-num-box"
-          >
-            <p class="admin-total-num-top-fonts">
-              ¥ {{ totalList.settlement_funds }}
-            </p>
+          <el-col :span="5" class="admin-total-num-box">
+            <p class="admin-total-num-top-fonts">¥ {{ totalList.settlement_funds }}</p>
             <p class="admin-total-num-bot-fonts">
               店铺已结算金额
               <el-popover
@@ -96,13 +76,8 @@
               </el-popover>
             </p>
           </el-col>
-          <el-col
-            :span="4"
-            class="admin-total-num-box"
-          >
-            <p class="admin-total-num-top-fonts">
-              ¥ {{ totalList.withdrawal_balance }}
-            </p>
+          <el-col :span="4" class="admin-total-num-box">
+            <p class="admin-total-num-top-fonts">¥ {{ totalList.withdrawal_balance }}</p>
             <p class="admin-total-num-bot-fonts">
               当前可提现余额
               <el-popover
@@ -122,10 +97,7 @@
         </el-row>
       </el-card>
       <el-card>
-        <el-form
-          :model="formData"
-          label-width="100px"
-        >
+        <el-form :model="formData" label-width="100px">
           <el-row style="marginbottom: 0px">
             <el-col :span="12">
               <el-form-item label="选择日期范围">
@@ -149,11 +121,7 @@
             </el-col>
             <el-col :span="6">
               <el-form-item label="结算状态">
-                <el-select
-                  v-model="formData.profitsharing_status"
-                  style="width: 100%"
-                  size="small"
-                >
+                <el-select v-model="formData.profitsharing_status" style="width: 100%" size="small">
                   <el-option
                     v-for="item in profitOptions"
                     :key="item.value"
@@ -165,20 +133,12 @@
             </el-col>
             <el-col :span="6">
               <el-form-item label="订单编号">
-                <el-input
-                  v-model="formData.order_id"
-                  size="small"
-                  placeholder="请输入订单编号"
-                />
+                <el-input v-model="formData.order_id" size="small" placeholder="请输入订单编号" />
               </el-form-item>
             </el-col>
             <el-col :span="6">
               <el-form-item label="支付类型">
-                <el-select
-                  v-model="formData.app_pay_type"
-                  size="small"
-                  style="width: 100%"
-                >
+                <el-select v-model="formData.app_pay_type" size="small" style="width: 100%">
                   <el-option
                     v-for="item in payOptions"
                     :key="item.value"
@@ -188,10 +148,7 @@
                 </el-select>
               </el-form-item>
             </el-col>
-            <el-col
-              v-if="loginType !== 'distributor'"
-              :span="12"
-            >
+            <el-col v-if="loginType !== 'distributor'" :span="12">
               <el-form-item label="选择店铺">
                 <shop-select
                   ref="shopSelect"
@@ -223,42 +180,18 @@
               style="margin-left: 10px"
             >
               <div class="flex-right">
-                <el-button
-                  size="small"
-                  @click="handleReset"
-                >
-                  重置
-                </el-button>
-                <el-button
-                  size="small"
-                  type="primary"
-                  @click="getCompanyDataList"
-                >
+                <el-button size="small" @click="handleReset"> 重置 </el-button>
+                <el-button size="small" type="primary" @click="getCompanyDataList">
                   搜索
                 </el-button>
               </div>
             </el-col>
           </el-row>
-          <el-row
-            v-if="loginType !== 'distributor'"
-            :gutter="20"
-          >
-            <el-col
-              :span="4"
-              :push="20"
-            >
+          <el-row v-if="loginType !== 'distributor'" :gutter="20">
+            <el-col :span="4" :push="20">
               <div class="flex-right">
-                <el-button
-                  size="small"
-                  @click="handleReset"
-                >
-                  重置
-                </el-button>
-                <el-button
-                  size="small"
-                  type="primary"
-                  @click="getCompanyDataList"
-                >
+                <el-button size="small" @click="handleReset"> 重置 </el-button>
+                <el-button size="small" type="primary" @click="getCompanyDataList">
                   搜索
                 </el-button>
               </div>
@@ -268,90 +201,42 @@
       </el-card>
       <el-card>
         <el-row style="marginbottom: 0px">
-          <el-col
-            :span="3"
-            class="total-num-box"
-          >
+          <el-col :span="3" class="total-num-box">
             <p class="total-num-top-fonts">
               {{ allAccountList.order_count }}
             </p>
-            <p class="total-num-bot-fonts">
-              交易总笔数
-            </p>
+            <p class="total-num-bot-fonts">交易总笔数</p>
           </el-col>
-          <el-col
-            :span="3"
-            class="total-num-box"
-          >
-            <p class="total-num-top-fonts">
-              ¥ {{ allAccountList.order_total_fee }}
-            </p>
-            <p class="total-num-bot-fonts">
-              总计交易金额(含退款)
-            </p>
+          <el-col :span="3" class="total-num-box">
+            <p class="total-num-top-fonts">¥ {{ allAccountList.order_total_fee }}</p>
+            <p class="total-num-bot-fonts">总计交易金额(含退款)</p>
           </el-col>
-          <el-col
-            :span="3"
-            class="total-num-box"
-          >
+          <el-col :span="3" class="total-num-box">
             <p class="total-num-top-fonts">
               {{ allAccountList.order_refund_count }}
             </p>
-            <p class="total-num-bot-fonts">
-              已退款总笔数
-            </p>
+            <p class="total-num-bot-fonts">已退款总笔数</p>
           </el-col>
-          <el-col
-            :span="3"
-            class="total-num-box"
-          >
-            <p class="total-num-top-fonts">
-              ¥ {{ allAccountList.order_refund_total_fee }}
-            </p>
-            <p class="total-num-bot-fonts">
-              退款总金额(退款成功)
-            </p>
+          <el-col :span="3" class="total-num-box">
+            <p class="total-num-top-fonts">¥ {{ allAccountList.order_refund_total_fee }}</p>
+            <p class="total-num-bot-fonts">退款总金额(退款成功)</p>
           </el-col>
-          <el-col
-            :span="3"
-            class="total-num-box"
-          >
+          <el-col :span="3" class="total-num-box">
             <p class="total-num-top-fonts">
               {{ allAccountList.order_refunding_count }}
             </p>
-            <p class="total-num-bot-fonts">
-              在退总笔数
-            </p>
+            <p class="total-num-bot-fonts">在退总笔数</p>
           </el-col>
-          <el-col
-            :span="3"
-            class="total-num-box"
-          >
-            <p class="total-num-top-fonts">
-              ¥ {{ allAccountList.order_refunding_total_fee }}
-            </p>
-            <p class="total-num-bot-fonts">
-              在退总金额(退款中)
-            </p>
+          <el-col :span="3" class="total-num-box">
+            <p class="total-num-top-fonts">¥ {{ allAccountList.order_refunding_total_fee }}</p>
+            <p class="total-num-bot-fonts">在退总金额(退款中)</p>
           </el-col>
-          <el-col
-            :span="3"
-            class="total-num-box"
-          >
-            <p class="total-num-top-fonts">
-              ¥ {{ allAccountList.order_profit_sharing_charge }}
-            </p>
-            <p class="total-num-bot-fonts">
-              已结算手续费总额
-            </p>
+          <el-col :span="3" class="total-num-box">
+            <p class="total-num-top-fonts">¥ {{ allAccountList.order_profit_sharing_charge }}</p>
+            <p class="total-num-bot-fonts">已结算手续费总额</p>
           </el-col>
-          <el-col
-            :span="3"
-            class="total-num-box"
-          >
-            <p class="total-num-top-fonts">
-              ¥ {{ allAccountList.order_un_profit_sharing_charge }}
-            </p>
+          <el-col :span="3" class="total-num-box">
+            <p class="total-num-top-fonts">¥ {{ allAccountList.order_un_profit_sharing_charge }}</p>
             <p class="total-num-bot-fonts">
               未结算手续费总额
               <el-popover
@@ -390,45 +275,19 @@
         </el-row>
       </el-card>
       <el-card>
-        <el-row
-          type="flex"
-          justify="end"
-        >
-          <el-button
-            size="small"
-            type="primary"
-            @click="onExportExcel()"
-          >
-            导出
-          </el-button>
+        <el-row type="flex" justify="end">
+          <el-button size="small" type="primary" @click="onExportExcel()"> 导出 </el-button>
         </el-row>
-        <el-table
-          v-loading="loading"
-          :data="tableDataList"
-          stripe
-          border
-          style="width: 100%"
-        >
-          <el-table-column
-            prop="create_time"
-            label="日期"
-            width="180"
-          />
-          <el-table-column
-            prop="order_id"
-            label="订单号"
-            width="180"
-          />
+        <el-table v-loading="loading" :data="tableDataList" stripe border style="width: 100%">
+          <el-table-column prop="create_time" label="日期" width="180" />
+          <el-table-column prop="order_id" label="订单号" width="180" />
           <el-table-column
             v-if="loginType === 'distributor'"
             prop="app_pay_type_desc"
             label="支付类型"
             width="150"
           />
-          <el-table-column
-            prop="profitsharing_status"
-            label="结算状态"
-          >
+          <el-table-column prop="profitsharing_status" label="结算状态">
             <template slot-scope="scope">
               {{
                 scope.row.profitsharing_status === '1' || scope.row.profitsharing_status === 1
@@ -437,25 +296,13 @@
               }}
             </template>
           </el-table-column>
-          <el-table-column
-            label="交易金额(含退款)"
-            width="170"
-          >
-            <template
-              slot-scope="scope"
-            >
-              <p style="color: #67c23a">
-                ￥{{ (scope.row.total_fee / 100).toFixed(2) }}
-              </p>
+          <el-table-column label="交易金额(含退款)" width="170">
+            <template slot-scope="scope">
+              <p style="color: #67c23a">￥{{ (scope.row.total_fee / 100).toFixed(2) }}</p>
             </template>
           </el-table-column>
-          <el-table-column
-            label="平台手续费(含退款)"
-            width="170"
-          >
-            <template slot-scope="scope">
-              ￥{{ (scope.row.charge / 100).toFixed(2) }}
-            </template>
+          <el-table-column label="平台手续费(含退款)" width="170">
+            <template slot-scope="scope"> ￥{{ (scope.row.charge / 100).toFixed(2) }} </template>
           </el-table-column>
           <el-table-column
             v-if="loginType !== 'distributor'"
@@ -463,45 +310,31 @@
             label="店铺名称"
             width="180"
           />
-          <el-table-column
-            label="退款金额"
-            width="160"
-          >
-            <template
-              slot-scope="scope"
-            >
-              <p style="color: #d9001b">
-                ￥{{ (scope.row.refund_fee / 100).toFixed(2) }}
-              </p>
+          <el-table-column label="退款金额" width="160">
+            <template slot-scope="scope">
+              <p style="color: #d9001b">￥{{ (scope.row.refund_fee / 100).toFixed(2) }}</p>
             </template>
           </el-table-column>
-          <el-table-column
-            prop="order_status"
-            label="订单状态"
-          >
+          <el-table-column prop="order_status" label="订单状态">
             <template slot-scope="scope">
               {{
                 (scope.row.order_status === 'refunding' && '退款中') ||
-                  (scope.row.order_status === 'pay' && '支付成功  ') ||
-                  (scope.row.order_status === 'refundsuccess' && '退款成功') ||
-                  (scope.row.order_status === 'refundfail' && '退款失败') ||
-                  (scope.row.order_status === 'NOTPAY' && '未支付') ||
-                  (scope.row.order_status === 'PART_PAYMENT' && '部分付款') ||
-                  (scope.row.order_status === 'WAIT_GROUPS_SUCCESS' && '等待拼团成功') ||
-                  (scope.row.order_status === 'PAYED' && '已支付') ||
-                  (scope.row.order_status === 'CANCEL' && '已取消') ||
-                  (scope.row.order_status === 'WAIT_BUYER_CONFIRM' && '待用户收货')
+                (scope.row.order_status === 'pay' && '支付成功  ') ||
+                (scope.row.order_status === 'refundsuccess' && '退款成功') ||
+                (scope.row.order_status === 'refundfail' && '退款失败') ||
+                (scope.row.order_status === 'NOTPAY' && '未支付') ||
+                (scope.row.order_status === 'PART_PAYMENT' && '部分付款') ||
+                (scope.row.order_status === 'WAIT_GROUPS_SUCCESS' && '等待拼团成功') ||
+                (scope.row.order_status === 'PAYED' && '已支付') ||
+                (scope.row.order_status === 'CANCEL' && '已取消') ||
+                (scope.row.order_status === 'WAIT_BUYER_CONFIRM' && '待用户收货')
               }}
             </template>
           </el-table-column>
-          <el-table-column
-            fixed="right"
-            label="操作"
-            width="100"
-          >
+          <el-table-column fixed="right" label="操作" width="100">
             <template slot-scope="scope">
               <router-link
-                :to="{ path: matchHidePage('detail'), query: { orderId: scope.row.order_id } }"
+                :to="{ path: matchRoutePath('detail'), query: { orderId: scope.row.order_id } }"
               >
                 详情
               </router-link>
@@ -534,7 +367,7 @@ export default {
   components: {
     shopSelect
   },
-  data () {
+  data() {
     return {
       dateRange: [],
       loginType: this.$store.getters.login_type,
@@ -611,7 +444,7 @@ export default {
         shortcuts: [
           {
             text: '最近一个月',
-            onClick (picker) {
+            onClick(picker) {
               const start_date = new Date()
               const end_date = new Date()
               start_date.setTime(start_date.getTime() - 3600 * 1000 * 24 * 30)
@@ -620,7 +453,7 @@ export default {
           },
           {
             text: '最近三个月',
-            onClick (picker) {
+            onClick(picker) {
               const start_date = new Date()
               const end_date = new Date()
               start_date.setTime(start_date.getTime() - 3600 * 1000 * 24 * 90)
@@ -631,12 +464,12 @@ export default {
       }
     }
   },
-  mounted () {
+  mounted() {
     this.initDate()
     this.getCompanyDataList()
   },
   methods: {
-    getCompanyDataList () {
+    getCompanyDataList() {
       // 搜索
       this.dataSource.loading = true
       GetAccountStatisList({ ...this.formData, ...this.params })
@@ -662,10 +495,10 @@ export default {
           })
         })
     },
-    performInitChange () {
+    performInitChange() {
       this.performInit = false
     },
-    handleReset () {
+    handleReset() {
       this.formData = {
         start_date: '',
         end_date: '',
@@ -678,25 +511,25 @@ export default {
       this.performInit = true
       this.initDate()
     },
-    dateChange (val) {
+    dateChange(val) {
       if (val) {
         this.formData.start_date = val[0]
         this.formData.end_date = val[1]
       }
     },
-    storeSearch (val) {
+    storeSearch(val) {
       this.formData.distributor_id = val.shop_id
     },
-    handleSizeChange (pageSize) {
+    handleSizeChange(pageSize) {
       this.params.page = 1
       this.params.page_size = pageSize
       this.getCompanyDataList()
     },
-    handleCurrentChange (page_num) {
+    handleCurrentChange(page_num) {
       this.params.page = page_num
       this.getCompanyDataList()
     },
-    onExportExcel () {
+    onExportExcel() {
       // 表格导出
       onOrderExportData(this.formData).then((response) => {
         const { status, url, filename } = response.data.data
@@ -715,7 +548,7 @@ export default {
         }
       })
     },
-    initDate () {
+    initDate() {
       // 初始化日期
       var start = new Date()
       var end = new Date()

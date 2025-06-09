@@ -1,70 +1,274 @@
 <template>
   <div>
-    <SpFinder
-      ref="finder"
-      url="/account/management"
-      fixed-row-action
-      row-actions-width="80px"
-      :other-config="{}"
-      no-selection
-      :setting="tableSchema"
-      :hooks="{
-        beforeSearch
-      }"
-      row-actions-fixed-align="left"
-      @reset="resetAction"
+    <div class="action-container">
+      <el-button
+        type="primary"
+        icon="plus"
+        @click="addLabels"
+      >
+        添加账号
+      </el-button>
+    </div>
+
+    <SpFilterForm
+      :model="params"
+      @onSearch="onSearch"
+      @onReset="onSearch"
     >
-      <template v-slot:tableTop>
-        <div class="action-container">
-          <el-button type="primary" icon="plus" @click="addLabels"> 添加账号 </el-button>
-        </div>
-      </template>
-      <template v-slot:shop>
-        <SpSelectShopV2
-          ref="selectShop"
-          v-model="params.distributor_id"
-          clearable
-          placeholder="请选择"
+      <SpFilterFormItem
+        prop="login_name"
+        label="登录账号:"
+      >
+        <el-input
+          v-model="params.login_name"
+          placeholder="请输入账号名"
         />
-      </template>
-    </SpFinder>
+      </SpFilterFormItem>
+      <SpFilterFormItem
+        prop="mobile"
+        label="手机号:"
+      >
+        <el-input
+          v-model="params.mobile"
+          placeholder="请输入手机号"
+        />
+      </SpFilterFormItem>
+      <SpFilterFormItem
+        prop="username"
+        label="姓名:"
+      >
+        <el-input
+          v-model="params.username"
+          placeholder="请输入姓名"
+        />
+      </SpFilterFormItem>
+    </SpFilterForm>
 
+    <el-table
+      v-loading="loading"
+      border
+      :data="accountsList"
+      :height="wheight - 160"
+    >
+      <el-table-column
+        prop="login_name"
+        label="登录账号"
+      />
+      <el-table-column
+        prop="mobile"
+        label="手机号"
+      />
+      <el-table-column
+        prop="username"
+        label="姓名"
+      />
+      <el-table-column
+        prop="roles"
+        label="角色"
+      >
+        <template slot-scope="scope">
+          <el-tag
+            v-for="item in scope.row.role_data"
+            :key="item.role_id"
+            size="mini"
+            type="warning"
+          >
+            {{ item.role_name }}
+          </el-tag>
+        </template>
+      </el-table-column>
+      <el-table-column
+        prop="is_disable"
+        label="禁用"
+        width="80"
+      >
+        <template slot-scope="scope">
+          <el-switch
+            v-model="scope.row.is_disable"
+            active-value=1
+            inactive-value=0
+            active-color="#ff4949"
+            inactive-color="#ccc"
+            @change="acitonDisabled(scope.$index, scope.row)"
+          />
+        </template>
+      </el-table-column>
+      <el-table-column label="操作">
+        <template slot-scope="scope">
+          <el-button
+            size="mini"
+            @click="editAction(scope.$index, scope.row)"
+          >
+            编辑
+          </el-button>
+          <!--<el-button
+            size="mini"
+            @click="deleteAccountAction(scope.$index, scope.row)"
+          >
+            删除
+          </el-button>-->
+        </template>
+      </el-table-column>
+    </el-table>
+    <div class="content-center content-top-padded">
+      <el-pagination
+        layout="prev, pager, next"
+        :current-page.sync="page.pageIndex"
+        :total="total_count"
+        :page-size="page.pageSize"
+        @current-change="onCurrentChange"
+      />
+    </div>
     <!-- 添加、编辑标识-开始 -->
-    <SpDialog
-      ref="searchDialogRef"
-      v-model="editVisible"
-      :title="isEdit ? '编辑账号信息' : '添加账号信息'"
-      :modal="false"
-      :form="form"
-      :form-list="formBaseRuleList"
-      @onSubmit="submitAction"
-    />
-
+    <el-dialog
+      :title="editTitle"
+      :visible.sync="editVisible"
+      :before-close="handleCancel"
+    >
+      <template>
+        <el-form
+          ref="form"
+          :model="form"
+          class="demo-ruleForm"
+          label-width="120px"
+        >
+          <el-form-item label="登录账号">
+            <el-col :span="10">
+              <el-input
+                v-if="!editLoginName"
+                v-model="form.login_name"
+                :minlength="4"
+                :maxlength="16"
+                placeholder="请输入员工登录账号"
+              />
+              <el-input
+                v-else
+                v-model="form.login_name"
+                :disabled="true"
+              />
+            </el-col>
+            <p class="frm-tips">
+              账号名称4-16位，名称使用字母开头，字符有有字母，数字，下划线
+            </p>
+          </el-form-item>
+          <el-form-item label="手机号">
+            <el-col :span="10">
+              <el-input
+                v-if="!isEdit"
+                v-model="form.mobile"
+                :maxlength="11"
+                placeholder="请输入11位手机号"
+              />
+              <el-input
+                v-else
+                v-model="editMobile"
+                :disabled="true"
+              />
+            </el-col>
+          </el-form-item>
+          <el-form-item label="姓名">
+            <el-col :span="10">
+              <el-input
+                v-model="form.username"
+                required
+                placeholder="请填写姓名"
+              />
+            </el-col>
+          </el-form-item>
+          <el-form-item label="登录密码">
+            <el-col :span="10">
+              <el-input
+                v-model="form.password"
+                :maxlength="255"
+              />
+            </el-col>
+          </el-form-item>
+          <el-form-item label="所属店铺">
+            <el-tag
+              v-for="(item, index) in relDistributors"
+              :key="item.distributor_id"
+              class="new-tag"
+              closable
+              :disable-transitions="false"
+              @close="handleClose(index)"
+            >
+              {{ item.name }}
+            </el-tag>
+            <el-button
+              size="medium"
+              class="button-new-tag"
+              @click="addDistributoreAction"
+            >
+              + 点击搜索店铺
+            </el-button>
+          </el-form-item>
+          <el-form-item label="角色">
+            <el-checkbox-group v-model="form.role_id">
+              <el-checkbox
+                v-for="role in rolesListData"
+                :key="role.role_id"
+                :label="role.role_id"
+                :value="role.role_id"
+              >
+                {{ role.role_name }}
+              </el-checkbox>
+            </el-checkbox-group>
+          </el-form-item>
+        </el-form>
+      </template>
+      <div
+        slot="footer"
+        class="dialog-footer"
+      >
+        <el-button @click.native="handleCancel">
+          取消
+        </el-button>
+        <el-button
+          type="primary"
+          @click="submitAction"
+        >
+          保存
+        </el-button>
+      </div>
+    </el-dialog>
     <DistributorSelect
       :store-visible="DistributorVisible"
-      :is-valid="true"
+      :is-valid="isValid"
       :rel-data-ids="relDistributors"
       :get-status="DistributorStatus"
-      :parent-params="{
-        regionauth_id: form.regionauth_ids
-      }"
       @chooseStore="DistributorChooseAction"
+      @closeStoreDialog="closeDialogAction"
+    />
+    <ShopSelect
+      :store-visible="ShopVisible"
+      :is-valid="isValid"
+      :rel-data-ids="relShops"
+      :old-data="oldData"
+      :get-status="ShopStatus"
+      @chooseStore="ShopChooseAction"
       @closeStoreDialog="closeDialogAction"
     />
   </div>
 </template>
 <script>
 import { mapGetters } from 'vuex'
-import { createTableSchema, createFormSchema } from './normalstaffSchema'
+import {
+  createAccount,
+  getAccountInfo,
+  getAccountList,
+  updateAccountInfo,
+  deleteAccountInfo,
+  getRolesList
+} from '../../../api/company'
+import { getDistributorList } from '@/api/marketing'
+import { changeOperatorStatus } from '@/api/login'
 import { pageMixin } from '@/mixins'
 import DistributorSelect from '@/components/function/distributorSelect'
-import { generatorParams } from '@/utils/schemaHelper.js'
-
-import api from '@/api'
-
+import ShopSelect from '@/components/function/shopSelect'
 export default {
   components: {
-    DistributorSelect
+    DistributorSelect,
+    ShopSelect
   },
   mixins: [pageMixin],
   props: {
@@ -73,212 +277,277 @@ export default {
       default: false
     }
   },
-  data() {
+  data () {
     return {
+      oldData: [],
+      isValid: true,
       DistributorStatus: false,
+      ShopStatus: false,
       relDistributors: [],
+      relShops: [],
       DistributorVisible: false,
+      ShopVisible: false,
       isEdit: false,
       editVisible: false,
+      editTitle: '',
+
+      form: {
+        operator_type: 'staff',
+        mobile: '',
+        login_name: '',
+        username: '',
+        distributor_ids: [],
+        password: '',
+        role_id: []
+      },
       activeName: 'staff',
 
+      editLoginName: '',
+      editMobile: '',
+      accountsList: [],
       detailData: {},
+      loading: false,
+      total_count: 0,
       params: {
-        operator_type: 'staff',
-        distributor_id: ''
+        mobile: '',
+        operator_type: 'staff'
       },
       operator_id: 0,
       rolesListData: [],
-      areas: [],
-      form: {
-        ...generatorParams(createFormSchema(this)),
-        operator_type: 'staff'
-      }
+      datapass_block: 0
     }
   },
   computed: {
-    ...mapGetters(['wheight']),
-    tableSchema() {
-      return createTableSchema(this)
-    },
-    formBaseRuleList() {
-      return createFormSchema(this)
-    }
+    ...mapGetters(['wheight'])
   },
   watch: {
-    status(val) {
+    status (val) {
       if (val) {
         this.fetchList()
       }
     }
   },
-  mounted() {
-    // 查询区域数据 和 角色列表
-    const pros = [
-      api.regionauth.getRegionauth(),
-      api.company.getRolesList({ page: 1, pageSize: 100, version: 1 })
-    ]
-    Promise.all(pros).then((res) => {
-      this.areas = res?.[0]?.list?.map((el) => ({
-        value: el.regionauth_id,
-        label: el.regionauth_name,
-        title: el.regionauth_name
-      }))
-      this.rolesListData = res?.[1].list?.map((el) => ({
-        value: el.role_id,
-        label: el.role_name
-      }))
-      this.form = {
-        ...generatorParams(createFormSchema(this)),
-        operator_type: 'staff'
-      }
-    })
+  mounted () {
     this.fetchList()
+    this.getRolesListData()
   },
   methods: {
-    resetAction() {
-      this.params = {
-        operator_type: 'staff',
-        distributor_id: ''
-      }
-      this.fetchList()
+    handleClose (index) {
+      this.relDistributors.splice(index, 1)
+      this.form.distributor_ids.splice(index, 1)
+      //this.$forceUpdate()
     },
-    fetchList() {
-      this.$refs.finder.refresh(true)
+    storeHandleClose (index) {
+      this.DistributorStatus = false
+      this.form.shop_ids.splice(index, 1)
+      this.relShops.splice(index, 1)
+      //this.$forceUpdate()
     },
-    // 删除所选店铺
-    handleClose(item) {
-      this.relDistributors = this.relDistributors.filter(
-        (el) => el.distributor_id !== item.distributor_id
-      )
-      this.form.distributor_ids = this.relDistributors
-    },
-    // 选择店铺弹窗
-    addDistributoreAction() {
+    addDistributoreAction () {
       this.DistributorVisible = true
       this.DistributorStatus = true
     },
-    beforeSearch(params) {
-      params = {
-        ...params,
-        ...this.params
-      }
-      return params
+    addStoreAction () {
+      this.ShopVisible = true
+      this.ShopStatus = true
     },
-    // 添加账号
-    addLabels() {
+    getDistributor (ids) {
+      let param = { distributor_id: ids }
+      getDistributorList({ ...param, is_app: 1 }).then((res) => {
+        this.relDistributors = res.data.data.list
+        this.oldData = [...res.data.data.list]
+      })
+    },
+    handleCancel () {
+      this.editVisible = false
+      this.form.operator_type = 'staff'
+      this.operator_id = ''
+      this.form.login_name = ''
+      this.form.mobile = ''
+      this.form.username = ''
+      this.form.password = ''
+      this.form.role_id = []
+      this.form.distributor_ids = []
+      this.form.shop_ids = []
+      this.relDistributors = []
+      this.relShops = []
+    },
+    addLabels () {
+      // 添加物料弹框
+      this.handleCancel()
+      this.editTitle = '添加账号信息'
       this.editVisible = true
       this.isEdit = false
+      this.form.username = ''
+      this.form.login_name = ''
+      this.editLoginName = ''
+      this.editMobile = ''
       this.operator_id = ''
-      this.form = {
-        ...generatorParams(createFormSchema(this)),
-        operator_type: 'staff'
-      }
-      this.relDistributors = []
+      this.form.password = ''
+      this.form.role_id = []
     },
-    // 编辑账号
-    editAction(row) {
+    editAction (index, row) {
+      // 编辑物料弹框
+      this.handleCancel()
+      this.editTitle = '编辑账号信息'
       this.editVisible = true
       this.isEdit = true
+      this.form.username = row.username
+      this.form.login_name = row.login_name
+      this.editLoginName = row.login_name
+      this.editMobile = row.mobile
       this.operator_id = row.operator_id
+      this.form.password = ''
+      row.role_data.forEach((item) => {
+        this.form.role_id.push(item.role_id)
+      })
+      if (row.distributor_ids && row.distributor_ids.length > 0) {
+        let ids = []
+        row.distributor_ids.forEach((item) => {
+          ids.push(item.distributor_id)
+        })
+        this.getDistributor(ids)
+      }
+    },
+    submitAction () {
+      // 提交物料
+      this.form.shop_ids = []
+      this.form.distributor_ids = []
+      if (this.relShops.length > 0) {
+        this.relShops.forEach((shop) => {
+          this.form.shop_ids.push({ name: shop.storeName, shop_id: shop.wxShopId })
+        })
+      }
+      if (this.relDistributors.length > 0) {
+        this.relDistributors.forEach((distributor) => {
+          this.form.distributor_ids.push({
+            name: distributor.name,
+            distributor_id: distributor.distributor_id
+          })
+        })
+      }
 
-      this.form = {
-        ...generatorParams(createFormSchema(this), row),
-        password: '',
-        role_id: row.role_data?.map((el) => el.role_id),
-        distributor_ids: row?.distributor_ids?.map((el) =>
-          el.distributor_id ? el.distributor_id : el
-        ),
-        regionauth_ids: row?.regionauth_ids?.map((el) => (el.regionauth_id ? el.regionauth_id : el))
-      }
-      this.getDistributor(row)
-    },
-    getDistributor(row) {
-      let ids = row?.distributor_ids?.map((item) => item.distributor_id) || []
-      if (!ids?.length) {
-        this.relDistributors = []
-        return
-      }
-      api.marketing.getDistributorList({ distributor_id: ids, is_app: 1 }).then((res) => {
-        this.relDistributors = res.list
-      })
-    },
-    async submitAction() {
-      const _areaMap = this.areas?.reduce((pre, now) => {
-        return {
-          ...pre,
-          [now.value]: now
-        }
-      }, {})
-      const params = {
-        ...this.form,
-        distributor_ids: this.relDistributors?.map((distributor) => ({
-          name: distributor.name,
-          distributor_id: distributor.distributor_id
-        })),
-        regionauth_ids: this.form.regionauth_ids?.map((el) => {
-          const res = _areaMap[el]
-          return {
-            regionauth_id: res.value,
-            regionauth_name: res.label
-          }
-        }),
-        operator_type: 'staff'
-      }
-      let response = null
-      try {
-        if (this.operator_id) {
-          response = await api.company.updateAccountInfo(this.operator_id, params)
-        } else {
-          response = await api.company.createAccount(params)
-        }
-        this.detailData = response
-        this.editVisible = false
-        this.fetchList()
-      } catch (error) {
-        console.log(error)
+      if (this.operator_id) {
+        updateAccountInfo(this.operator_id, this.form).then((response) => {
+          this.detailData = response.data.data
+          this.editVisible = false
+          this.fetchList()
+        })
+      } else {
+        createAccount(this.form).then((response) => {
+          this.detailData = response.data.data
+          this.editVisible = false
+          this.fetchList()
+          this.handleCancel()
+        })
       }
     },
-    acitonDisabledAfter(row) {
+
+    fetchList () {
+      this.loading = true
+      const { pageIndex: page, pageSize } = this.page
       let params = {
-        'operator_id': row.operator_id,
-        'is_disable': row.is_disable ? 0 : 1
+        page,
+        pageSize,
+        ...this.params
       }
-      api.login.changeOperatorStatus(params).then((res) => {
-        this.fetchList()
+      getAccountList(params).then((response) => {
+        let list = response.data.data.list
+        list.forEach((item) => {
+          if (item.is_disable == 1) {
+            item.is_disable = '1';
+          } else {
+            item.is_disable = '0';
+          }
+        })
+
+        this.accountsList = list
+        this.total_count = response.data.data.total_count
+        this.datapass_block = response.data.data.datapass_block
+        this.loading = false
       })
     },
-    acitonDisabled(val, row) {
-      if (val == '1') {
+    deleteAccountAction (index, row) {
+      this.$confirm('此操作将删除该账号, 是否继续?', '提示', {
+        confirmButtonText: '确定',
+        cancelButtonText: '取消',
+        type: 'warning'
+      })
+        .then(() => {
+          deleteAccountInfo(row.operator_id)
+            .then((response) => {
+              this.accountsList.splice(index, 1)
+              this.$message({
+                message: '删除成功',
+                type: 'success',
+                duration: 5 * 1000
+              })
+            })
+            .catch(() => {
+              this.$message({
+                type: 'error',
+                message: '删除失败'
+              })
+            })
+        })
+        .catch(() => {
+          this.$message({
+            type: 'info',
+            message: '已取消'
+          })
+        })
+    },
+    acitonDisabled (index, row) {
+      if (row.is_disabled === true) {
         var msg = '此操作将会禁用该账号，是否继续?'
         this.$confirm(msg, '提示', {
           confirmButtonText: '确定',
           cancelButtonText: '取消',
           type: 'warning'
         }).then(() => {
-          this.acitonDisabledAfter(row)
+          let params = {
+            'operator_id': row.operator_id,
+            'is_disable': row.is_disable
+          }
+          changeOperatorStatus(params).then((res) => {
+            // this.fetchList()
+          })
         })
       } else {
-        this.acitonDisabledAfter(row)
+        let params = {
+          'operator_id': row.operator_id,
+          'is_disable': row.is_disable
+        }
+        changeOperatorStatus(params).then((res) => {
+          // this.fetchList()
+        })
       }
     },
-    DistributorChooseAction(data) {
+    getRolesListData () {
+      var params = { page: 1, pageSize: 100, version: 1 }
+      getRolesList(params).then((res) => {
+        this.rolesListData = res.data.data.list
+      })
+    },
+    DistributorChooseAction (data) {
       this.DistributorVisible = false
       this.DistributorStatus = false
       if (data === null || data.length <= 0) return
       this.relDistributors = data
     },
-    closeDialogAction() {
+    ShopChooseAction (data) {
+      this.ShopVisible = false
+      this.ShopStatus = false
+      if (data === null || data.length <= 0) return
+      this.relShops = data
+      this.relDistributors = data
+    },
+    closeDialogAction () {
+      this.ShopVisible = false
+      this.ShopStatus = false
+      this.relDistributors = this.oldData
       this.DistributorStatus = false
       this.DistributorVisible = false
-    },
-    handleRegionauthChange(val) {
-      // 区域变更 清空店铺选择
-      this.form = {
-        ...this.form,
-        distributor_ids: []
-      }
-      this.relDistributors = []
     }
   }
 }

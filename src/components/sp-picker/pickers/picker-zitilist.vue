@@ -53,7 +53,6 @@
 <script>
 import BasePicker from './base'
 import PageMixin from '../mixins/page'
-import { getRegionauthId } from '@/utils'
 export default {
   name: 'PickerZitiList',
   extends: BasePicker,
@@ -79,9 +78,7 @@ export default {
     beforeSearch(params) {
       params = {
         ...params,
-        name: this.formData.keywords,
-        regionauth_id: getRegionauthId(),
-        ...(this.value?.params || {})
+        name: this.formData.keywords
       }
       return params
     },

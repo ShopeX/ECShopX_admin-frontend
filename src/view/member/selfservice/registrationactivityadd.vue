@@ -10,10 +10,7 @@
     >
       <div class="section-header with-border">基础信息</div>
       <div class="section-body">
-        <el-form-item
-          label="活动名称"
-          prop="activity_name"
-        >
+        <el-form-item label="活动名称" prop="activity_name">
           <el-col :span="15">
             <el-input
               v-model.trim="form.activity_name"
@@ -22,10 +19,7 @@
             />
           </el-col>
         </el-form-item>
-        <el-form-item
-          label="活动有效时间"
-          prop="activity_time"
-        >
+        <el-form-item label="活动有效时间" prop="activity_time">
           <el-col :span="10">
             <el-date-picker
               v-model="activity_date"
@@ -55,7 +49,7 @@
               placeholder="请选择"
               clearable
               :options="regions"
-              style="width: 60%;"
+              style="width: 60%"
             />
           </el-col>
           <el-form-item label="前端是否展示" prop="is_activitycity_show">
@@ -68,13 +62,9 @@
             />
           </el-form-item>
         </el-form-item>
-        <el-form-item label="活动地点" prop="place" >
+        <el-form-item label="活动地点" prop="place">
           <el-col :span="10">
-            <el-input
-              v-model.trim="form.place"
-              :maxlength="30"
-              placeholder="请输入活动地点"
-            />
+            <el-input v-model.trim="form.place" :maxlength="30" placeholder="请输入活动地点" />
           </el-col>
           <el-form-item label="前端是否展示" prop="is_activityplace_show">
             <el-switch
@@ -86,13 +76,9 @@
             />
           </el-form-item>
         </el-form-item>
-        <el-form-item label="详细地址" prop="address" >
+        <el-form-item label="详细地址" prop="address">
           <el-col :span="10">
-            <el-input
-              v-model.trim="form.address"
-              :maxlength="30"
-              placeholder="请输入详细地址"
-            />
+            <el-input v-model.trim="form.address" :maxlength="30" placeholder="请输入详细地址" />
           </el-col>
           <el-form-item label="前端是否展示" prop="is_activityaddress_show">
             <el-switch
@@ -104,16 +90,12 @@
             />
           </el-form-item>
         </el-form-item>
-        <el-form-item label="列表活动简介" prop="intro" >
+        <el-form-item label="列表活动简介" prop="intro">
           <el-col :span="10">
-            <el-input
-              v-model.trim="form.intro"
-              :maxlength="30"
-              placeholder="请输入列表活动简介"
-            />
+            <el-input v-model.trim="form.intro" :maxlength="30" placeholder="请输入列表活动简介" />
           </el-col>
         </el-form-item>
-        <el-form-item label="活动轮播图" prop="picsList" >
+        <el-form-item label="活动轮播图" prop="picsList">
           <el-col>
             <!-- <div>
               <imgBox
@@ -134,24 +116,19 @@
                   >
                     <img :src="wximageurl + item">
                     <div class="goodspic-mask" :class="picsCurrent == index ? 'on' : ''">
-                      <div
-                        class="iconfont icon-trash-alt"
-                        @click="removePicsImg(index)"
-                      />
+                      <div class="iconfont icon-trash-alt" @click="removePicsImg(index)" />
                       <div class="iconfont icon-arrows-alt" />
                     </div>
                   </li>
                 </draggable>
               </ul>
-              <div
-                class="upload-box"
-                @click="handleActivityPicsChange"
-              >
+              <div class="upload-box" @click="handleActivityPicsChange">
                 <i class="iconfont icon-camera" />
               </div>
             </div>
             <div class="frm-tips">
-              建议尺寸:750*750，文件格式为：png、jpeg、bmp、 jpg大小不超 2M，小程序卡片分享与报名活动列表取详情第一张图展示
+              建议尺寸:750*750，文件格式为：png、jpeg、bmp、 jpg大小不超
+              2M，小程序卡片分享与报名活动列表取详情第一张图展示
             </div>
             <imgPicker
               :dialog-visible="activityPicsDialog"
@@ -161,14 +138,11 @@
               @closeImgDialog="closeImgDialog"
             />
           </el-col>
-      </el-form-item>
+        </el-form-item>
       </div>
       <div class="section-header with-border">活动规则</div>
       <div class="section-body">
-        <el-form-item
-          label="获取积分"
-          prop="gift_points_switch"
-        >
+        <el-form-item label="获取积分" prop="gift_points_switch">
           <el-switch
             v-model="form.gift_points_switch"
             active-color="#13ce66"
@@ -177,10 +151,7 @@
             :inactive-value="0"
           />
         </el-form-item>
-        <el-form-item
-          label="获取积分值"
-          prop="gift_points"
-        >
+        <el-form-item label="获取积分值" prop="gift_points">
           <el-col :span="10">
             <el-input
               v-model.trim="form.gift_points"
@@ -189,10 +160,7 @@
             />
           </el-col>
         </el-form-item>
-        <el-form-item
-          label="可重复报名"
-          prop="is_allow_duplicate"
-        >
+        <el-form-item label="可重复报名" prop="is_allow_duplicate">
           <el-switch
             v-model="form.is_allow_duplicate"
             active-color="#13ce66"
@@ -201,10 +169,7 @@
             :inactive-value="0"
           />
         </el-form-item>
-        <el-form-item
-          label="是否审核"
-          prop="is_need_check"
-        >
+        <el-form-item label="是否审核" prop="is_need_check">
           <el-switch
             v-model="form.is_need_check"
             active-color="#13ce66"
@@ -213,10 +178,7 @@
             :inactive-value="0"
           />
         </el-form-item>
-        <el-form-item
-          label="线下核销"
-          prop="is_offline_verify"
-        >
+        <el-form-item label="线下核销" prop="is_offline_verify">
           <el-switch
             v-model="form.is_offline_verify"
             active-color="#13ce66"
@@ -225,10 +187,7 @@
             :inactive-value="0"
           />
         </el-form-item>
-        <el-form-item
-          label="允许取消报名"
-          prop="is_allow_cancel"
-        >
+        <el-form-item label="允许取消报名" prop="is_allow_cancel">
           <el-switch
             v-model="form.is_allow_cancel"
             active-color="#13ce66"
@@ -237,43 +196,45 @@
             :inactive-value="0"
           />
         </el-form-item>
-        <el-form-item
-          label="活动群组编号"
-          prop="group_no"
-        >
+        <el-form-item label="活动群组编号" prop="group_no">
           <el-col :span="10">
             <el-input v-model.trim="form.group_no" placeholder="请输入活动群组编号" />
           </el-col>
         </el-form-item>
-        <el-form-item
-          label="进内购企业白名单"
-          prop="is_white_list"
-        >
+        <el-form-item label="进内购企业白名单" prop="is_white_list">
           <el-radio-group v-model="form.is_white_list" @change="whiteListChange">
             <el-radio :label="1">是</el-radio>
             <el-radio :label="0">否</el-radio>
           </el-radio-group>
           <div>开启后报名人员名单进入店铺企业员工白名单</div>
         </el-form-item>
-        <el-form-item label="选择企业" v-if="form.is_white_list == 1">
+        <el-form-item v-if="form.is_white_list == 1" label="选择企业">
           <el-button type="primary" @click="onShowChange"> 选择企业 </el-button>
           <SpFinder
+            v-if="enterprise_list.length > 0"
             ref="finder"
-            :noSelection='true'
+            :no-selection="true"
             :setting="setting"
             :data="enterprise_list"
             url=""
-            v-if="enterprise_list.length > 0"
-            style="width:80%"
+            style="width: 80%"
             :show-pager="false"
           />
         </el-form-item>
         <el-form-item label="适用会员">
           <el-checkbox-group v-model="memberLevelList">
-            <el-checkbox v-for="grade in memberGrade" :key="grade.grade_id" :label="grade.grade_id+''">
+            <el-checkbox
+              v-for="grade in memberGrade"
+              :key="grade.grade_id"
+              :label="grade.grade_id + ''"
+            >
               {{ grade.grade_name }}
             </el-checkbox>
-            <el-checkbox v-for="vipdata in vipGrade" :key="vipdata.lv_type" :label="vipdata.lv_type+''">
+            <el-checkbox
+              v-for="vipdata in vipGrade"
+              :key="vipdata.lv_type"
+              :label="vipdata.lv_type + ''"
+            >
               付费{{ vipdata.grade_name }}
             </el-checkbox>
           </el-checkbox-group>
@@ -288,13 +249,13 @@
           <div v-if="!useAllDistributor">
             <el-button type="primary" @click="addDistributorAction"> 选择店铺 </el-button>
             <SpFinder
+              v-if="distributor_list?.length > 0"
               ref="finder"
-              :noSelection='true'
+              :no-selection="true"
               :setting="shopSetting"
               :data="distributor_list"
               url=""
-              v-if="distributor_list?.length > 0"
-              style="width:80%"
+              style="width: 80%"
               :show-pager="false"
             />
           </div>
@@ -302,7 +263,11 @@
         <el-form-item
           label="选择报名问卷模板"
           prop="temp_id"
-          :rules="{ required: form.temp_id == '0' ? false : true, message: '请选择报名问卷模板', trigger: 'blur' }"
+          :rules="{
+            required: form.temp_id == '0' ? false : true,
+            message: '请选择报名问卷模板',
+            trigger: 'blur'
+          }"
         >
           <el-col :span="15">
             <el-select v-model="form.temp_id" placeholder="请选择" @change="selectTempId">
@@ -315,16 +280,9 @@
             </el-select>
           </el-col>
         </el-form-item>
-        <el-form-item
-          label="提交报名次数"
-          prop="join_limit"
-        >
+        <el-form-item label="提交报名次数" prop="join_limit">
           <el-col :span="10">
-            <el-input
-              v-model.trim="form.join_limit"
-              type="number"
-              placeholder="次数"
-            />
+            <el-input v-model.trim="form.join_limit" type="number" placeholder="次数" />
           </el-col>
         </el-form-item>
         <el-form-item label="报名结束语" prop="join_tips">
@@ -383,12 +341,12 @@
         </el-form-item>
       </div>
       <div class="section-header with-border">活动详情</div>
-      <div class="section-body" style="margin-left: 50px;">
+      <div class="section-body" style="margin-left: 50px">
         <el-radio-group v-model="mode">
           <el-radio :label="'richText'"> 富文本 </el-radio>
           <!-- <el-radio :label="'component'"> 组件式 </el-radio> -->
         </el-radio-group>
-        <div v-if="mode === 'richText'" style="margin-top: 20px;">
+        <div v-if="mode === 'richText'" style="margin-top: 20px">
           <div>
             <SpRichText v-model="introInfo" />
           </div>
@@ -396,8 +354,10 @@
             <i class="iconfont icon-image"></i>图片
           </span> -->
         </div>
-        <div v-else style="margin-top: 20px;">
-          <SpDecorate ref='decorateRef' v-model='content' scene='1002' />
+        <div v-else style="margin-top: 20px">
+          <SpIphone>
+            <SpDecorate ref="decorateRef" v-model="content" scene="1002" />
+          </SpIphone>
           <!-- <richTextEditor
             :data="content"
             :control="['film', 'slider', 'heading', 'writing']"
@@ -412,15 +372,19 @@
           /> -->
         </div>
       </div>
-      <div style="margin-top: 30px;margin-left: 50%;">
-        <el-button @click.native="handleCancel"> {{ pageType === 'edit' ? '取消' : '返回'}} </el-button>
-        <el-button type="primary" v-if="pageType != 'detail'" @click="submitAction"> 保存 </el-button>
+      <div style="margin-top: 30px; margin-left: 50%">
+        <el-button @click.native="handleCancel">
+          {{ pageType === 'edit' ? '取消' : '返回' }}
+        </el-button>
+        <el-button v-if="pageType != 'detail'" type="primary" @click="submitAction">
+          保存
+        </el-button>
       </div>
     </el-form>
     <EnterpriseDialog
       :visible.sync="dialogVisible"
       type="edit"
-      :dialogSelect="enterprise_list"
+      :dialog-select="enterprise_list"
       @closeDialog="closeDialog"
       @saveEnterprise="saveEnterprise"
     />
@@ -456,7 +420,6 @@ import DistributorSelect from '@/components/storeListSelect'
 import draggable from 'vuedraggable'
 
 export default {
-  inject: ['refresh'],
   components: {
     imgPicker,
     imgBox,
@@ -465,71 +428,7 @@ export default {
     DistributorSelect,
     draggable
   },
-  computed: {
-    shopSetting () {
-      return createSetting({
-        columns: [
-          { name: 'ID', key: 'distributor_id'  },
-          { name: '名称', key: 'name' },
-          { name: 'address', key: '地址' },
-        ],
-        actions: [
-          { name: '删除',
-            key: 'detete',
-            type: 'button',
-            buttonType: 'text',
-            action: {
-              handler: async ([row]) => {
-                const inChecked = this.distributor_list.findIndex(v => v.id == row.id)
-                if (inChecked > -1) {
-                  this.distributor_list.splice(inChecked, 1)
-                }
-              }
-            }
-          }
-        ]
-      })
-    },
-    setting () {
-      return createSetting({
-        columns: [
-          { name: '企业ID', key: 'id'  },
-          { name: '企业名称', key: 'name' },
-          {
-            name: '登录类型',
-            key: 'auth_type',
-            formatter: (value, { auth_type }, col) => {
-              const VALIDATE_TYPES = [
-                { name: '全部', value: '' },
-                { name: '手机号', value: 'mobile' },
-                { name: '账号密码', value: 'account' },
-                { name: '邮箱', value: 'email' },
-                { name: '二维码', value: 'qr_code' }
-              ]
-              const authType = VALIDATE_TYPES.find((item) => item.value == auth_type)?.name
-              return authType
-            }
-          },
-          { name: '来源店铺', key: 'distributor_name'  },
-        ],
-        actions: [
-          { name: '删除',
-            key: 'detete',
-            type: 'button',
-            buttonType: 'text',
-            action: {
-              handler: async ([row]) => {
-                const inChecked = this.enterprise_list.findIndex(v => v.id == row.id)
-                if (inChecked > -1) {
-                  this.enterprise_list.splice(inChecked, 1)
-                }
-              }
-            }
-          }
-        ]
-      })
-    }
-  },
+  inject: ['refresh'],
   data() {
     return {
       activity_date: [],
@@ -558,7 +457,7 @@ export default {
         distributor_ids: [], // 适用店铺
         join_tips: '', // 活动参与提示信息
         submit_form_tips: '', // 表单填写提示信息
-        use_all_distributor: false, // 适用店铺
+        use_all_distributor: false // 适用店铺
       },
       picsList: [],
       useAllDistributor: false, // 适用店铺
@@ -606,8 +505,75 @@ export default {
         is_offline_verify: [{ required: true, message: '请选择', trigger: 'change' }],
         is_allow_cancel: [{ required: true, message: '请选择', trigger: 'blur' }],
         is_white_list: [{ required: true, message: '请选择', trigger: 'blur' }],
-        join_limit: [{ required: true, message: '请输入报名次数', trigger: 'blur' }],
+        join_limit: [{ required: true, message: '请输入报名次数', trigger: 'blur' }]
       }
+    }
+  },
+  computed: {
+    shopSetting() {
+      return createSetting({
+        columns: [
+          { name: 'ID', key: 'distributor_id' },
+          { name: '名称', key: 'name' },
+          { name: 'address', key: '地址' }
+        ],
+        actions: [
+          {
+            name: '删除',
+            key: 'detete',
+            type: 'button',
+            buttonType: 'text',
+            action: {
+              handler: async ([row]) => {
+                const inChecked = this.distributor_list.findIndex((v) => v.id == row.id)
+                if (inChecked > -1) {
+                  this.distributor_list.splice(inChecked, 1)
+                }
+              }
+            }
+          }
+        ]
+      })
+    },
+    setting() {
+      return createSetting({
+        columns: [
+          { name: '企业ID', key: 'id' },
+          { name: '企业名称', key: 'name' },
+          {
+            name: '登录类型',
+            key: 'auth_type',
+            formatter: (value, { auth_type }, col) => {
+              const VALIDATE_TYPES = [
+                { name: '全部', value: '' },
+                { name: '手机号', value: 'mobile' },
+                { name: '账号密码', value: 'account' },
+                { name: '邮箱', value: 'email' },
+                { name: '二维码', value: 'qr_code' }
+              ]
+              const authType = VALIDATE_TYPES.find((item) => item.value == auth_type)?.name
+              return authType
+            }
+          },
+          { name: '来源店铺', key: 'distributor_name' }
+        ],
+        actions: [
+          {
+            name: '删除',
+            key: 'detete',
+            type: 'button',
+            buttonType: 'text',
+            action: {
+              handler: async ([row]) => {
+                const inChecked = this.enterprise_list.findIndex((v) => v.id == row.id)
+                if (inChecked > -1) {
+                  this.enterprise_list.splice(inChecked, 1)
+                }
+              }
+            }
+          }
+        ]
+      })
     }
   },
   mounted() {
@@ -635,7 +601,9 @@ export default {
         this.is_activityplace_show = json.place
         this.is_activityaddress_show = json.address
         this.form.areaList = res.data.data.area ? res.data.data.area.split(',') : []
-        this.memberLevelList =res.data.data.member_level ? res.data.data.member_level.split(',') : []
+        this.memberLevelList = res.data.data.member_level
+          ? res.data.data.member_level.split(',')
+          : []
         if (res.data.data.distributor_list.length == 0) {
           this.useAllDistributor = true
         }
@@ -647,7 +615,7 @@ export default {
     this.getGradeLevelList()
   },
   methods: {
-    getGradeLevelList () {
+    getGradeLevelList() {
       listVipGrade().then((response) => {
         if (response != undefined && response.data.data && response.data.data.length > 0) {
           this.vipGrade = response.data.data
@@ -658,7 +626,6 @@ export default {
           this.memberGrade = response.data.data
         }
       })
-      
     },
     dateStrToTimeStamp(str) {
       return Date.parse(new Date(str)) / 1000
@@ -670,15 +637,16 @@ export default {
         this.form.start_time = that.activity_date[0] / 1000
         this.form.end_time = that.activity_date[1] / 1000
       }
-      let params = {...this.form}
+      let params = { ...this.form }
       const obj = {
         time: this.is_activitytime_show,
         city: this.is_activitycity_show,
         place: this.is_activityplace_show,
-        address: this.is_activityaddress_show,
+        address: this.is_activityaddress_show
       }
       params['show_fields'] = JSON.stringify(obj)
-      params['distributor_ids'] = this.distributor_list?.map((item) => item.distributor_id).join(',') || ''
+      params['distributor_ids'] =
+        this.distributor_list?.map((item) => item.distributor_id).join(',') || ''
       params['enterprise_ids'] = this.enterprise_list?.map((item) => item.id).join(',') || ''
       params['member_level'] = this.memberLevelList ? this.memberLevelList.join(',') : ''
       // params['use_all_distributor'] = this.useAllDistributor
@@ -762,7 +730,7 @@ export default {
         this.loading = false
       })
     },
-    chooseActivityImg (data) {
+    chooseActivityImg(data) {
       if (data.length > 0) {
         data.forEach((data) => {
           if (data && data.url !== '') {
@@ -772,10 +740,10 @@ export default {
       }
       this.activityPicsDialog = false
     },
-    closeImgDialog () {
+    closeImgDialog() {
       this.activityPicsDialog = false
     },
-    handleActivityPicsChange () {
+    handleActivityPicsChange() {
       this.activityPicsDialog = true
       this.isGetActivityImage = true
     },
@@ -812,18 +780,18 @@ export default {
     handleContent(data) {
       this.content = data
     },
-    onShowChange () {
+    onShowChange() {
       this.closeDialog(true)
     },
-    closeDialog (visible) {
+    closeDialog(visible) {
       this.dialogVisible = visible
     },
-    saveEnterprise (select) {
+    saveEnterprise(select) {
       console.log(select)
       this.enterprise_list = select
       this.closeDialog(false)
     },
-    shopTypeChange (val) {
+    shopTypeChange(val) {
       this.useAllDistributor = val
       if (!val) {
         this.distributor_list = []
@@ -845,7 +813,7 @@ export default {
     closeDistributorDialogAction() {
       this.distributorVisible = false
     },
-    whiteListChange (val) {
+    whiteListChange(val) {
       if (!val) {
         this.enterprise_list = []
         this.form.enterprise_id = ''
@@ -859,7 +827,7 @@ export default {
     },
     removePicsImg: function (index) {
       this.picsList.splice(index, 1)
-    },
+    }
   }
 }
 </script>
@@ -946,4 +914,3 @@ export default {
   }
 }
 </style>
-

@@ -2,22 +2,6 @@
   <el-form ref="form" :model="form" class="box-set" label-width="120px">
     <el-card header="基础信息" shadow="naver">
       <el-form-item
-        label="区域"
-        prop="regionauth_id"
-        :rules="{ required: true, message: '区域必填', trigger: 'change' }"
-      >
-        <el-col :span="20">
-          <el-select v-model="form.regionauth_id" placeholder="请选择" clearable :disabled="form.marketing_id">
-            <el-option
-              v-for="item in areasList"
-              :key="item.value"
-              :label="item.label"
-              :value="item.value"
-            />
-          </el-select>
-        </el-col>
-      </el-form-item>
-      <el-form-item
         label="名称"
         prop="marketing_name"
         :rules="{ required: true, message: '活动名称必填', trigger: 'blur' }"
@@ -25,6 +9,7 @@
         <el-col :span="20">
           <el-input
             v-model="form.marketing_name"
+            :disabled="form.status == 'waiting' ? false : true"
             :maxlength="30"
             placeholder="最多30个字"
           />
@@ -163,10 +148,11 @@
           </el-col>
         </el-row>
       </el-form-item>
-      <el-form-item label="规则描述" prop="marketing_desc" :rules="{ required: true, message: '请输入规则描述', trigger: 'blur' }">
+      <el-form-item label="规则描述">
         <el-col :span="20">
           <el-input
             v-model="form.marketing_desc"
+            :disabled="form.status == 'waiting' ? false : true"
             type="textarea"
             :rows="3"
             placeholder="规则描述"
@@ -177,13 +163,14 @@
         <el-col :span="20">
           <el-input
             v-model="form.join_limit"
+            :disabled="form.status == 'waiting' ? false : true"
             type="input"
             placeholder="整数数字"
           />
         </el-col>
       </el-form-item>
       <el-form-item label="适用会员">
-        <el-checkbox-group v-model="validGrade">
+        <el-checkbox-group v-model="validGrade" :disabled="form.status == 'waiting' ? false : true">
           <el-checkbox v-for="grade in memberGrade" :key="grade.grade_id" :label="grade.grade_id">
             {{ grade.grade_name }}
           </el-checkbox>
@@ -192,27 +179,15 @@
           </el-checkbox>
         </el-checkbox-group>
       </el-form-item>
-      <!-- <el-form-item label="适用平台">
+      <el-form-item label="适用平台">
         <el-radio-group v-model="form.used_platform">
           <el-radio :label="0"> 全场可用 </el-radio>
-          <el-radio :label="1">只用于pc端</el-radio>
+          <!-- <el-radio :label="1">只用于pc端</el-radio>
           <el-radio :label="2">只用于小程序端</el-radio>
-          <el-radio :label="3">只用于h5端</el-radio>
-        </el-radio-group>
-      </el-form-item> -->
-
-      <el-form-item label="适用人群">
-        <CrowdSelect v-model="form.crowd_ids" />
-      </el-form-item>
-
-      <el-form-item label="是否支持叠加优惠券" :rules="{ required: true, message: '是否支持叠加优惠券', trigger: 'blur' }">
-        <el-radio-group v-model="form.is_use_coupon">
-          <el-radio :label="true"> 是 </el-radio>
-          <el-radio :label="false"> 否 </el-radio>
+          <el-radio :label="3">只用于h5端</el-radio> -->
         </el-radio-group>
       </el-form-item>
-
-      <el-form-item label="有效期" :rules="{ required: true, message: '前选择有效期', trigger: 'change' }">
+      <el-form-item label="有效期">
         <el-col :span="20">
           <el-date-picker
             v-model="activity_date"
@@ -227,62 +202,14 @@
         </el-col>
       </el-form-item>
     </el-card>
-
-    <!-- <el-card header="财务配置" shadow="naver">
-      <el-form-item label="PO编码">
-        <el-col :span="6">
-          <el-input
-            v-model="form.finance_data.po_code"
-            :disabled="form.status == 'waiting' ? false : true"
-            placeholder="请输入"
-          />
-        </el-col>
-      </el-form-item>
-      <el-form-item label="Budget code">
-        <el-col :span="6">
-          <el-input
-            v-model="form.finance_data.budget_code"
-            :disabled="form.status == 'waiting' ? false : true"
-            placeholder="请输入"
-          />
-        </el-col>
-      </el-form-item>
-      <el-form-item label="承担比例">
-        <div style="display: flex;">
-          平台承担&nbsp;
-          <el-input
-            v-model="form.finance_data.platform_ratio"
-            type="number"
-            style="width: 120px;"
-            min="0"
-            max="100"
-            :disabled="form.status == 'waiting' ? false : true"
-            placeholder="请输入"
-            @change="handlePlatRatioChange"
-          /> &nbsp; %，店铺承担&nbsp;
-          <el-input
-            v-model="form.finance_data.shop_ratio"
-            type="number"
-            style="width: 120px;"
-            disabled
-            min="0"
-            max="100"
-            placeholder="请输入"
-          />
-          &nbsp; %
-        </div>
-      </el-form-item>
-    </el-card> -->
-
-    <el-card header="适用范围" shadow="naver">
+    <el-card header="选择商品" shadow="naver">
       <el-form-item label="适用商品">
         <el-radio-group v-model="form.use_bound" @change="itemTypeChange">
-          <!-- <el-radio label="all"> 全部商品适用 </el-radio> -->
+          <el-radio label="all"> 全部商品适用 </el-radio>
           <el-radio label="goods"> 指定商品适用 </el-radio>
-          <!-- <el-radio label="category"> 指定分类适用 </el-radio>
+          <el-radio label="category"> 指定分类适用 </el-radio>
           <el-radio label="tag"> 指定商品标签适用 </el-radio>
-          <el-radio label="brand"> 指定品牌适用 </el-radio> -->
-          <el-radio label="store"> 指定店铺适用 </el-radio>
+          <el-radio label="brand"> 指定品牌适用 </el-radio>
         </el-radio-group>
       </el-form-item>
       <div v-if="!zdItemHidden" style="position: relative">
@@ -376,38 +303,6 @@
           </el-tag>
         </div>
       </template>
-
-      <template v-if="form.use_bound == 'store'">
-        <div :span="23">
-            <div style="display: flex;">
-              <el-button type="primary" @click="relStoresClick"> 选择店铺 </el-button>
-              <!-- <el-upload
-                style="margin-left: 10px"
-                action=""
-                :on-change="uploadStoreHandleChange"
-                :auto-upload="false"
-                :show-file-list="false"
-              >
-                <el-button type="primary"> 批量上传 </el-button>
-              </el-upload>
-              <el-button style="margin-left: 10px" type="primary" @click="uploadStoreHandleTemplate()">
-                下载模板
-              </el-button> -->
-            </div>
-
-
-          <el-table v-if="relStores.length > 0" :data="relStores" style="line-height: normal">
-            <el-table-column label="店铺ID" prop="distributor_id" width="120" />
-            <el-table-column label="店铺名称" prop="name" />
-            <el-table-column prop="address" label="店铺地址" show-overflow-tooltip />
-            <el-table-column label="操作" width="50">
-              <template slot-scope="scope">
-                <el-button type="text" @click="deleteStoreRow(scope.$index, form.items)">删除</el-button>
-              </template>
-            </el-table-column>
-          </el-table>
-        </div>
-      </template>
     </el-card>
     <el-card v-if="VERSION_STANDARD && !is_distributor" header="绑定店铺" shadow="naver">
       <el-button type="primary" @click="relStoresClick"> 选店铺 </el-button>
@@ -421,15 +316,7 @@
           </template>
         </el-table-column>
       </el-table>
-    </el-card>
-    <div class="content-center">
-      <el-button v-if="hasSaveButton" :loading="saveLoading" v-debounce="submitActivityAction" type="primary">
-        保存
-      </el-button>
-      <el-button @click.native="handleCancel"> 返回 </el-button>
-    </div>
-
-    <StoreSelect
+      <StoreSelect
         :store-visible="storeVisible"
         :is-valid="true"
         :rel-data-ids="relStores"
@@ -437,19 +324,23 @@
         @chooseStore="chooseStoreAction"
         @closeStoreDialog="closeStoreDialogAction"
       />
-      <CompConflictActivities v-model="cActivityVis" :list="cActivityList" />
+    </el-card>
+    <div class="content-center">
+      <el-button v-if="hasSaveButton" v-debounce="submitActivityAction" type="primary">
+        保存
+      </el-button>
+      <el-button @click.native="handleCancel"> 返回 </el-button>
+    </div>
   </el-form>
 </template>
 
 <script>
 import Treeselect from '@riophae/vue-treeselect'
-import '@riophae/vue-treeselect/dist/vue-treeselect.css'
 import {
   addMarketingActivity,
   updateMarketingActivity,
   getMarketingActivityInfo,
-  seckillActivityGetItemsList,
-  batchGetActivityList
+  seckillActivityGetItemsList
 } from '../../../../api/promotions'
 import { getGradeList } from '../../../../api/membercard'
 import { listVipGrade } from '../../../../api/cardticket'
@@ -457,35 +348,25 @@ import { getDefaultCurrency } from '../../../../api/company'
 import StoreSelect from '@/components/storeListSelect'
 import GoodsSelect from '@/components/goodsSelect'
 import SkuSelector from '@/components/function/skuSelector'
-import CrowdSelect from '@/components/function/crowdSelect'
-import CompConflictActivities from '../comps/comp-conflict-activities.vue'
 import { getItemsList, getCategory, getTagList, getGoodsAttr } from '@/api/goods'
 import { handleUploadFile, exportUploadTemplate } from '../../../../api/common'
 import store from '@/store'
 import { transformTree } from '@/utils'
-import moment from 'moment'
-
 export default {
-  inject: ['refresh'],
   components: {
     GoodsSelect,
     StoreSelect,
     SkuSelector,
-    Treeselect,
-    CrowdSelect,
-    CompConflictActivities
+    Treeselect
   },
+  inject: ['refresh'],
   data() {
     return {
-      saveLoading:false,
       is_distributor: false,
       cursymbol: '￥',
       storeVisible: false,
       relItems: [],
       relStores: [],
-      areasList:[],
-      cActivityVis:false,
-      cActivityList:[],
       setStatus: false,
       addNum: '',
       form: {
@@ -511,16 +392,7 @@ export default {
         item_category: [],
         tag_ids: [],
         brand_ids: [],
-        in_proportion: false,
-        crowd_ids: [],
-        regionauth_id:'',
-        is_use_coupon:true,
-        finance_data:{
-          po_code:'',
-          budget_code:'',
-          platform_ratio:100,
-          shop_ratio:0
-        }
+        in_proportion: false
       },
       vipGrade: [],
       memberGrade: [],
@@ -619,36 +491,14 @@ export default {
     this.fetchMainCate()
     this.getAllTagLists()
     this.getBrandList('', true)
-    this.getAreaList()
   },
   methods: {
-    async getAreaList(){
-      // 查询区域数据
-     const res = await this.$api.regionauth.getRegionauth()
-     this.areasList =  res?.list?.map((el) => ({
-          value: el.regionauth_id,
-          label: el.regionauth_name
-        }))
-    },
     getItems(data) {
       let ids = []
       data.forEach((item) => {
         ids.push(item.itemId)
       })
       this.form.item_ids = ids
-    },
-    handlePlatRatioChange(val){
-      if(val>100){
-        this.form.finance_data.platform_ratio = 100
-        this.form.finance_data.shop_ratio = 0
-        return
-      }
-      if(val < 0 || !val){
-        this.form.finance_data.platform_ratio = 0
-        this.form.finance_data.shop_ratio = 100
-        return
-      }
-      this.form.finance_data.shop_ratio = 100 - val
     },
     addRules() {
       this.conditionValue.push({ full: '', relGifts: [] })
@@ -663,7 +513,7 @@ export default {
     chooseStoreAction(data) {
       this.storeVisible = false
       this.form.shop_ids = []
-      // if (data === null || data.length <= 0) return
+      if (data === null || data.length <= 0) return
       this.relStores = data
     },
     closeStoreDialogAction() {
@@ -673,8 +523,7 @@ export default {
       this.setStatus = false
       this.relStores.splice(index, 1)
     },
-    async submitActivityAction() {
-      // await this.$refs['form'].validate()
+    submitActivityAction() {
       const that = this
       let thisform = JSON.stringify(this.form)
       thisform = JSON.parse(thisform)
@@ -730,7 +579,7 @@ export default {
           without_return: item.without_return,
           gift_num: item.gift_num,
           pics: item.pics,
-          filter_full:item.filter_full
+          filter_full: item.filter_full
         }
         giftData.push(itemdata)
       })
@@ -744,28 +593,12 @@ export default {
         this.use_bound = 1
       }
 
-      if (thisform.use_bound === 'store') {
-        if(this.form.shop_ids.length <= 0){
-          this.$message.error('指定店铺必填!')
-          return false
-        }
-        thisform.use_bound = 'all'
-      }
-
-
-
       thisform.tag_list = null
       thisform.brand_list = null
       thisform.brand_ids = JSON.stringify(thisform.brand_ids)
       thisform.tag_ids = JSON.stringify(thisform.tag_ids)
       thisform.item_ids = JSON.stringify(thisform.item_ids)
-      thisform.shop_ids = this.form.shop_ids
-      thisform.use_shop = thisform.shop_ids.length > 0 ? 1 : 0
-      thisform.finance_data = JSON.stringify(this.form.finance_data)
-      thisform.member_tag_ids = this.form.crowd_ids.map(item=>item.tag_id).join(',')
-      delete thisform.crowd_ids
-      console.log(thisform)
-      this.saveLoading = true
+      thisform.shop_ids = JSON.stringify(this.form.shop_ids)
       if (this.form.marketing_id) {
         updateMarketingActivity(thisform).then((res) => {
           if (res.data.data.marketing_id) {
@@ -783,15 +616,6 @@ export default {
             this.$message.error('保存失败!')
             return false
           }
-        }).catch((err)=>{
-          console.log('err',err)
-          let marketing_ids = err.data?.data?.errors?.marketing_ids ?? []
-          if(marketing_ids.length){
-            marketing_ids = marketing_ids.join(',')
-            this.fetchGetActivityList(marketing_ids)
-          }
-        }).finally(()=>{
-          this.saveLoading = false
         })
       } else {
         addMarketingActivity(thisform).then((res) => {
@@ -810,28 +634,8 @@ export default {
             this.$message.error('保存失败!')
             return false
           }
-        }).catch((err)=>{
-          console.log('err',err)
-          let marketing_ids = err.data?.data?.errors?.marketing_ids ?? []
-          if(marketing_ids.length){
-            marketing_ids = marketing_ids.join(',')
-            this.fetchGetActivityList(marketing_ids)
-          }
-        }).finally(()=>{
-          this.saveLoading = false
         })
       }
-    },
-    fetchGetActivityList(marketing_ids){
-      batchGetActivityList({ marketing_ids }).then(res=>{
-        let response = res.data.data
-        this.cActivityVis = true
-        this.cActivityList = response.map(item=>({
-          ...item,
-          start_date: moment(item.start_time * 1000).format('YYYY-MM-DD HH:mm:ss'),
-          end_date: moment(item.end_time * 1000).format('YYYY-MM-DD HH:mm:ss'),
-        }))
-      })
     },
     getActivityDetail(id) {
       getMarketingActivityInfo({ marketing_id: id }).then((res) => {
@@ -881,12 +685,7 @@ export default {
           rel_brand_ids: response.rel_brand_ids,
           rel_category_ids: response.rel_category_ids,
           rel_tag_ids: response.rel_tag_ids,
-          in_proportion: response.in_proportion,
-          finance_data: response.finance_data,
-          regionauth_id: response.regionauth_id + '',
-          crowd_ids: response.member_tag_data,
-          is_use_coupon: response.is_use_coupon,
-          finance_id: response.finance_id
+          in_proportion: response.in_proportion
         }
         Object.assign(this.form, data)
         // this.conditionValue = response.condition_value
@@ -902,7 +701,7 @@ export default {
         this.brandHidden = true
 
         if (response.use_bound == 0) {
-          this.form.use_bound = this.relStores.length > 0 ? 'store' : 'all'
+          this.form.use_bound = 'all'
         }
 
         if (response.use_bound == 1) {
@@ -994,8 +793,6 @@ export default {
       this.form.item_category = []
       this.form.item_category = []
       this.tag.currentTags = []
-      this.form.shop_ids = []
-      this.relStores = []
       if (val === 'goods') {
         this.zdItemHidden = false
       } else if (val === 'category') {
@@ -1303,67 +1100,6 @@ export default {
      * 上传模板
      * */
     uploadHandleChange(file, fileList) {
-      let params = { isUploadFile: true, file_type: 'marketing_goods', file: file.raw }
-      handleUploadFile(params).then((response) => {
-        this.$message({
-          type: 'success',
-          message: '上传成功'
-        })
-
-        let { data } = response.data
-
-        if (data.fail.length > 0) {
-          let str = data.fail.map((item) => {
-            return item.item_bn
-          })
-
-          setTimeout(() => {
-            this.$message({
-              showClose: true,
-              message: `以下商品编号不存在：${str}`,
-              type: 'error',
-              duration: 5000
-            })
-          }, 1500)
-        }
-        if (data.succ.length <= 0) return
-        this.relItems = data.succ
-        let list = []
-        data.succ.forEach((item) => {
-          if (!item.nospec) {
-            list.push(Object.assign(item, { spec_items: [] }))
-          } else {
-            list.push(item)
-          }
-        })
-      })
-    },
-     /**
-     * 下载模板
-     * */
-     uploadStoreHandleTemplate() {
-      let params = { file_type: 'marketing_goods', file_name: '商品模板' }
-      exportUploadTemplate(params).then((response) => {
-        let { data } = response.data
-        if (data.file) {
-          var a = document.createElement('a')
-          a.href = data.file
-          a.download = data.name
-          document.body.appendChild(a)
-          a.click()
-          a.remove()
-        } else {
-          this.$message({
-            type: 'error',
-            message: '没有相关数据可导出'
-          })
-        }
-      })
-    },
-    /**
-     * 上传模板
-     * */
-    uploadStoreHandleChange(file, fileList) {
       let params = { isUploadFile: true, file_type: 'marketing_goods', file: file.raw }
       handleUploadFile(params).then((response) => {
         this.$message({

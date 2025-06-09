@@ -1,6 +1,6 @@
 import fetch from '../utils/fetch'
 
-export function getArticleList (query) {
+export function getArticleList(query) {
   return fetch({
     url: '/article/management',
     method: 'get',
@@ -8,14 +8,14 @@ export function getArticleList (query) {
   })
 }
 
-export function getArticleInfo (id) {
+export function getArticleInfo(id) {
   return fetch({
     url: '/article/management/' + id,
     method: 'get'
   })
 }
 
-export function createArticle (query) {
+export function createArticle(query) {
   return fetch({
     url: '/article/management',
     method: 'post',
@@ -23,7 +23,7 @@ export function createArticle (query) {
   })
 }
 
-export function updateArticle (id, query) {
+export function updateArticle(id, query) {
   return fetch({
     url: '/article/management/' + id,
     method: 'put',
@@ -31,14 +31,14 @@ export function updateArticle (id, query) {
   })
 }
 
-export function deleteArticle (id) {
+export function deleteArticle(id) {
   return fetch({
     url: '/article/management/' + id,
     method: 'delete'
   })
 }
 
-export function updateArticleSortOrStatus (query) {
+export function updateArticleSortOrStatus(query) {
   return fetch({
     url: '/article/updatestatusorsort',
     method: 'put',
@@ -46,7 +46,7 @@ export function updateArticleSortOrStatus (query) {
   })
 }
 
-export function saveArticleCategory (query) {
+export function saveArticleCategory(query) {
   return fetch({
     url: '/article/category',
     method: 'post',
@@ -54,7 +54,7 @@ export function saveArticleCategory (query) {
   })
 }
 
-export function getArticleCategoryList (query) {
+export function getArticleCategoryList(query) {
   return fetch({
     url: '/article/category',
     method: 'get',
@@ -62,24 +62,32 @@ export function getArticleCategoryList (query) {
   })
 }
 
-export function getArticleCategoryInfo (id) {
+export function getArticleCategoryInfo(id) {
   return fetch({
     url: '/article/category/' + id,
     method: 'get'
   })
 }
 
-export function deleteArticleCategoryInfo (id) {
+export function deleteArticleCategoryInfo(id) {
   return fetch({
     url: '/article/category/' + id,
     method: 'delete'
   })
 }
 
-export function updateArticleCategoryInfo (id, query) {
+export function updateArticleCategoryInfo(id, query) {
   return fetch({
     url: '/article/category/' + id,
     method: 'put',
+    params: query
+  })
+}
+
+export function createArticleByAI(query) {
+  return fetch({
+    url: '/article/generate-direct',
+    method: 'post',
     params: query
   })
 }

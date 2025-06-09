@@ -31,50 +31,69 @@
 
       <div class="action-container">
         <export-tip params="distributor_white_list" @exportHandle="handleWhitelistExport">
-          <el-button type="primary" plain>
-            导出
-          </el-button>
+          <el-button type="primary" plain> 导出 </el-button>
         </export-tip>
-        <el-button type="primary" plain @click="clickDelAllWhiteList()">
-          清空白名单
-        </el-button>
+        <el-button type="primary" plain @click="clickDelAllWhiteList()"> 清空白名单 </el-button>
       </div>
 
-      <el-table v-loading="loading" :data="tableList" border @selection-change="handleSelectionChange">
+      <el-table
+        v-loading="loading"
+        :data="tableList"
+        border
+        @selection-change="handleSelectionChange"
+      >
         <el-table-column type="selection" align="center" label="全选" />
         <el-table-column prop="mobile" label="手机号" />
         <el-table-column prop="username" label="姓名" />
         <el-table-column prop="distributor_info" label="所属店铺">
           <template slot-scope="scope">
             <!-- 店铺端 需要只展示自己的店铺名称 -->
-            <span v-if="IS_DISTRIBUTOR()">{{ scope.row.distributor_info.find(item=>item.distributor_id === shopId)?.name }}</span>
-            <span v-else>{{ scope.row.distributor_info.map(item=>item.name).join(',') }}</span>
+            <span v-if="IS_DISTRIBUTOR()">{{
+              scope.row.distributor_info.find((item) => item.distributor_id === shopId)?.name
+            }}</span>
+            <span v-else>{{ scope.row.distributor_info.map((item) => item.name).join(',') }}</span>
           </template>
         </el-table-column>
         <el-table-column prop="distributor_info" label="店铺号">
           <template slot-scope="scope">
-            <span v-if="IS_DISTRIBUTOR()">{{ scope.row.distributor_info.find(item=>item.distributor_id === shopId)?.shop_code }}</span>
-            <span v-else>{{ scope.row.distributor_info.map(item=>item.shop_code).join(',') }}</span>
+            <span v-if="IS_DISTRIBUTOR()">{{
+              scope.row.distributor_info.find((item) => item.distributor_id === shopId)?.shop_code
+            }}</span>
+            <span v-else>{{
+              scope.row.distributor_info.map((item) => item.shop_code).join(',')
+            }}</span>
           </template>
         </el-table-column>
         <el-table-column label="操作">
           <template slot-scope="scope">
-            <el-button type="text" @click="editShopWhite(scope.row)">
-              编辑
-            </el-button>
+            <el-button type="text" @click="editShopWhite(scope.row)"> 编辑 </el-button>
             <el-button type="text" @click="delWhitelist(scope.row)"> 删除 </el-button>
           </template>
         </el-table-column>
       </el-table>
 
       <div class="content-padded content-center">
-        <el-pagination background :current-page.sync="page.pageIndex" :page-sizes="[10, 20, 50, 100]"
-          :page-size="page.pageSize" layout="total, sizes, prev, pager, next, jumper" :total="page.total"
-          @current-change="onCurrentChange" @size-change="onSizeChange" />
+        <el-pagination
+          background
+          :current-page.sync="page.pageIndex"
+          :page-sizes="[10, 20, 50, 100]"
+          :page-size="page.pageSize"
+          layout="total, sizes, prev, pager, next, jumper"
+          :total="page.total"
+          @current-change="onCurrentChange"
+          @size-change="onSizeChange"
+        />
       </div>
       <!-- 添加白名单 -->
-      <SpDialog ref="whitelistDialogRef" v-model="whitelistDialog" :title="dialogTitle" :modal="false"
-        :form="whitelistForm" :form-list="whitelistFormList" @onSubmit="onWhitelistFormSubmit" />
+      <SpDialog
+        ref="whitelistDialogRef"
+        v-model="whitelistDialog"
+        :title="dialogTitle"
+        :modal="false"
+        :form="whitelistForm"
+        :form-list="whitelistFormList"
+        @onSubmit="onWhitelistFormSubmit"
+      />
       <!-- 清空白名单 -->
     </SpRouterView>
   </div>
@@ -85,9 +104,7 @@ import shopDecoration from '@/components/function/shopDecoration'
 import pcDecoration from '@/view/pc/homePage/default'
 import shopSelect from '@/components/shopSelect'
 import mixin, { pageMixin } from '@/mixins'
-import {
-  handleUploadFile
-} from '../../../api/common'
+import { handleUploadFile } from '../../../api/common'
 import { isMobile } from '@/utils/validate'
 import { IS_DISTRIBUTOR } from '@/utils'
 export default {
@@ -96,7 +113,7 @@ export default {
     const initialParams = {
       username: undefined,
       distributor_id: undefined,
-      mobile: undefined,
+      mobile: undefined
     }
 
     return {
@@ -109,7 +126,7 @@ export default {
       editType: '',
       whitelistDialog: false,
       whitelistForm: {
-        id: undefined,
+        id: null,
         distributors: [],
         username: '',
         mobile: ''
@@ -125,7 +142,7 @@ export default {
           },
           validator: (rule, value, callback) => {
             const { mobile } = this.whitelistForm
-            if (this.editType === 'delAll') { 
+            if (this.editType === 'delAll') {
               callback()
               return
             }
@@ -151,7 +168,7 @@ export default {
           },
           validator: (rule, value, callback) => {
             const { username } = this.whitelistForm
-            if (this.editType === 'delAll') { 
+            if (this.editType === 'delAll') {
               callback()
               return
             }
@@ -171,11 +188,7 @@ export default {
           component: () => (
             <div class='distributor-tags'>
               {this.whitelistForm.distributors.map((item, index) => (
-                <el-tag
-                  key={item.name}
-                  closable
-                  on-close={this.storeClose.bind(this, index)}
-                >
+                <el-tag key={item.name} closable on-close={this.storeClose.bind(this, index)}>
                   {item.name}
                 </el-tag>
               ))}
@@ -192,9 +205,9 @@ export default {
               callback()
             }
           }
-        },
+        }
       ],
-      selectMobile: '', // 已选中row
+      selectMobile: '' // 已选中row
     }
   },
   computed: {
@@ -211,7 +224,10 @@ export default {
           search_mobile: this.selectMobile,
           ...this.getParams()
         }
-        console.log("🚀🚀🚀 ~ file: storewhitelist.vue:205 ~ whitelistExport ~ exportData:", exportData)
+        console.log(
+          '🚀🚀🚀 ~ file: storewhitelist.vue:205 ~ whitelistExport ~ exportData:',
+          exportData
+        )
         const { status } = await this.$api.company.whitelistExport(exportData)
         if (status) {
           this.$message.success('已加入执行队列，请在设置-导出列表中下载')
@@ -230,6 +246,8 @@ export default {
     clickAddWhiteList() {
       this.whitelistForm.id = undefined
       this.whitelistForm.distributors = []
+      this.whitelistForm.username = ''
+      this.whitelistForm.mobile = ''
       this.editType = 'add'
       this.dialogTitle = '添加白名单'
       this.whitelistDialog = true
@@ -237,17 +255,10 @@ export default {
     // 添加白名单适用店铺
     async addStoreAction() {
       const distributor_ids = this.whitelistForm.distributors.map((item) => item.distributor_id)
-
-
-      const { data } = await this.$picker.shop()
-      // 合并数组并通过distributor_id去重
-      let arrObj = [...this.whitelistForm.distributors, ...data].reduce((unique, item) => {
-        return unique.some(existingItem => existingItem.distributor_id === item.distributor_id) 
-          ? unique 
-          : [...unique, item]
-      }, [])
-
-      this.whitelistForm.distributors = JSON.parse(JSON.stringify(arrObj))
+      const { data } = await this.$picker.shop({
+        data: distributor_ids
+      })
+      this.whitelistForm.distributors = JSON.parse(JSON.stringify(data))
     },
     storeClose(index) {
       this.whitelistForm.distributors.splice(index, 1)
@@ -268,6 +279,12 @@ export default {
       } else {
         this.$message.error('添加失败')
       }
+      this.whitelistForm = {
+        id: null,
+        distributors: [],
+        username: '',
+        mobile: ''
+      }
       this.whitelistDialog = false
       this.fetchList()
     },
@@ -281,11 +298,11 @@ export default {
     },
     // 导入店铺
     uploadHandleChange(file, fileList) {
-      this.$router.push({ path: this.matchHidePage('storewhitelistUpload') })
+      this.$router.push({ path: this.matchRoutePath('storewhitelistUpload') })
     },
     // 编辑白名单
     editShopWhite(row) {
-      console.log("🚀🚀🚀 ~ file: storewhitelist.vue:225 ~ editShopWhite ~ row:", row)
+      console.log('🚀🚀🚀 ~ file: storewhitelist.vue:225 ~ editShopWhite ~ row:', row)
       const { distributor_info, mobile, username, id } = row
       const distributors = distributor_info.map((item) => ({
         distributor_id: item.distributor_id,
@@ -304,7 +321,7 @@ export default {
     // 删除白名单
     async delWhitelist(row) {
       const type = this.editType === 'delAll' ? 'distributor' : 'id' // 'distributor' 清空店铺白名单，id 清除一个店铺
-      const distributorsId = this.whitelistForm.distributors.map(item=>item.distributor_id)
+      const distributorsId = this.whitelistForm.distributors.map((item) => item.distributor_id)
       const id = this.editType === 'delAll' ? distributorsId : [row.id]
       const params = {
         type,
@@ -339,7 +356,7 @@ export default {
     },
     getParams() {
       let params = {
-        ...this.params,
+        ...this.params
       }
       return params
     },
@@ -353,11 +370,10 @@ export default {
       }
 
       // 如果distributor_id不是数组，则转换为数组
-      if(params.distributor_id && !Array.isArray(params.distributor_id)) {
+      if (params.distributor_id && !Array.isArray(params.distributor_id)) {
         params.distributor_id = [params.distributor_id]
       }
-      const { list, total_count } =
-        await this.$api.company.getShopWhiteList(params)
+      const { list, total_count } = await this.$api.company.getShopWhiteList(params)
       this.tableList = list
       this.page.total = total_count
       this.loading = false
@@ -368,7 +384,7 @@ export default {
         mobile.push(val[i].mobile)
       }
       this.selectMobile = mobile
-    },
+    }
   },
   beforeRouteUpdate(to, from, next) {
     next()

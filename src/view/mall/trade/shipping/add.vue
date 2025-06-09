@@ -7,48 +7,17 @@
             <el-form-item label="模板名称:">
               <el-input v-model="form.name" />
             </el-form-item>
-            <el-form-item label="规则说明:">
-              <el-input v-model="form.intro" maxlength="200" show-word-limit />
-            </el-form-item>
-            <!--  -->
             <el-form-item label="是否包邮:">
-              <!--  -->
               <el-radio v-if="templatesId" v-model="form.is_free" disabled label="0">
-                买家承担-自定义运费
+                自定义运费
               </el-radio>
-              <el-radio v-else v-model="form.is_free" label="0"> 买家承担-自定义运费 </el-radio>
-              <!--  -->
-              <el-radio v-if="templatesId" v-model="form.is_free" disabled label="2">
-                买家承担-到付
-              </el-radio>
-              <el-radio v-else v-model="form.is_free" label="2"> 买家承担-到付 </el-radio>
-              <!--  -->
+              <el-radio v-else v-model="form.is_free" label="0"> 自定义运费 </el-radio>
               <el-radio v-if="templatesId" v-model="form.is_free" disabled label="1">
-                卖家承担-免运费
+                卖家承担运费
               </el-radio>
-              <el-radio v-else v-model="form.is_free" label="1"> 卖家承担-免运费 </el-radio>
+              <el-radio v-else v-model="form.is_free" label="1"> 卖家承担运费 </el-radio>
               <p class="frm-tips">选择了卖家承担运费，运费计算和包邮规则设置将会丢失！</p>
             </el-form-item>
-            <!--  -->
-            <el-form-item label="计费模式:">
-              <el-radio v-model="form.price_model" label="single"> 单店计费 </el-radio>
-              <el-radio v-model="form.price_model" label="combine"> 合并计费 </el-radio>
-            </el-form-item>
-            <el-form-item label="适用区域:">
-              <el-select
-                v-model="form.regionauth_id"
-                :disabled="!!templatesId"
-                placeholder="请选择"
-              >
-                <el-option
-                  v-for="item in areas"
-                  :key="item.value"
-                  :label="item.label"
-                  :value="item.value"
-                />
-              </el-select>
-            </el-form-item>
-            <!--  -->
             <el-form-item v-show="form.is_free == 0" label="计价方式:">
               <el-radio v-if="templatesId" v-model="form.valuation" disabled label="1">
                 按重量
@@ -80,11 +49,7 @@
                 </p>
                 <p v-else class="font-bold nopost">暂无数据</p>
                 <div class="content-v-padded">
-                  <el-button
-                    type="primary"
-                    size="mini"
-                    @click="handleNoPostEditArea('nopost_self_conf')"
-                  >
+                  <el-button type="primary" size="mini" @click="handleSelfNoPostEditArea()">
                     编辑地区
                   </el-button>
                 </div>
@@ -125,7 +90,7 @@
                       size="mini"
                       icon="el-icon-edit"
                       type="primary"
-                      @click="handleFeeEditArea(scope.$index + 1, scope.row, 'fee_conf')"
+                      @click="handleWeightFeeEditArea(scope.$index, scope.row)"
                     >
                       编辑
                     </el-button>
@@ -157,7 +122,7 @@
                       size="mini"
                       icon="delete"
                       type="danger"
-                      @click="handleFeeDeleteArea(scope.$index, 'fee_conf')"
+                      @click="handleWeightFeeDeleteArea(scope.$index)"
                     >
                       删除
                     </el-button>
@@ -182,25 +147,18 @@
               </p>
               <p v-else class="font-bold nopost">暂无数据</p>
               <div class="content-v-padded">
-                <el-button type="primary" size="mini" @click="handleNoPostEditArea('nopost_conf')">
+                <el-button type="primary" size="mini" @click="handleWeightNoPostEditArea()">
                   编辑地区
                 </el-button>
               </div>
             </section>
-            <!--  -->
-            <el-checkbox v-model="priceFreeStatus" true-label="isFree" false-label=""
-              >指定条件包邮:</el-checkbox
-            >
-            <el-checkbox v-model="priceFreeStatus1" true-label="isAmount" false-label=""
-              >指定条件到付:</el-checkbox
-            >
-            <section
-              v-for="info in [priceFreeStatus, priceFreeStatus1].filter((v) => v)"
-              :key="info"
-              class="section section-white shipping-calc"
-            >
-              <p class="font-bold">为指定地区设置{{ getText(info) }}规则</p>
-              <el-table :data="getData('free_conf', info)" style="width: 100%" border>
+            <p class="font-bold">
+              <el-checkbox v-model="priceFreeStatus" :value="priceFreeStatus" />
+              指定条件包邮:
+            </p>
+            <section v-if="priceFreeStatus" class="section section-white shipping-calc">
+              <p class="font-bold">为指定地区设置包邮规则</p>
+              <el-table :data="free_conf" style="width: 100%" border>
                 <el-table-column label="地区设置" width="150">
                   <template slot-scope="scope">
                     {{ scope.row.area | formatCityData(district) }}
@@ -209,13 +167,13 @@
                       size="mini"
                       icon="el-icon-edit"
                       type="primary"
-                      @click="handleFreeEditArea(scope.$index, scope.row, 'free_conf', info)"
+                      @click="handleWeightFreeEditArea(scope.$index, scope.row)"
                     >
                       编辑
                     </el-button>
                   </template>
                 </el-table-column>
-                <el-table-column :label="`${getText(info)}条件(kg)`">
+                <el-table-column label="包邮条件(kg)">
                   <template slot-scope="scope">
                     <el-select
                       v-model="scope.row.freetype"
@@ -234,14 +192,14 @@
                         v-model="scope.row.inweight"
                         class="inline-input"
                         style="width: 100px"
-                      />&nbsp;kg以{{ info == 'isFree' ? '内' : '上' }}{{ getText(info) }}</span
+                      />&nbsp;kg内包邮</span
                     >
                     <span v-if="2 == scope.row.freetype || 3 == scope.row.freetype"
                       ><span v-if="3 == scope.row.freetype">,</span>&nbsp;<el-input
                         v-model="scope.row.upmoney"
                         class="inline-input"
                         style="width: 100px"
-                      />&nbsp;元以{{ info == 'isFree' ? '上' : '内' }}{{ getText(info) }}</span
+                      />&nbsp;元以上包邮</span
                     >
                   </template>
                 </el-table-column>
@@ -252,7 +210,7 @@
                       size="mini"
                       icon="delete"
                       type="danger"
-                      @click="handleFeeDeleteArea(scope.$index - 1, 'free_conf', info)"
+                      @click="handleWeightFreeDeleteArea(scope.$index)"
                     >
                       删除
                     </el-button>
@@ -264,13 +222,12 @@
                   type="primary"
                   icon="el-icon-circle-plus"
                   size="mini"
-                  @click="handleAddArea('free_conf', info)"
+                  @click="handleAddArea('free_conf')"
                 >
                   添加地区
                 </el-button>
               </div>
             </section>
-            <!--  -->
           </section>
           <section v-show="form.valuation == 2" class="section section-white">
             <p class="font-bold">运费计算:</p>
@@ -308,7 +265,7 @@
                       size="mini"
                       icon="el-icon-edit"
                       type="primary"
-                      @click="handleFeeEditArea(scope.$index + 1, scope.row, 'fee_number_conf')"
+                      @click="handleNumberFeeEditArea(scope.$index, scope.row)"
                     >
                       编辑
                     </el-button>
@@ -340,7 +297,7 @@
                       size="mini"
                       icon="delete"
                       type="danger"
-                      @click="handleFeeDeleteArea(scope.$index, 'fee_number_conf')"
+                      @click="handleNumberFeeDeleteArea(scope.$index)"
                     >
                       删除
                     </el-button>
@@ -368,29 +325,18 @@
               </p>
               <p v-else class="font-bold nopost">暂无数据</p>
               <div class="content-v-padded">
-                <el-button
-                  type="primary"
-                  size="mini"
-                  @click="handleNoPostEditArea('nopost_number_conf')"
-                >
+                <el-button type="primary" size="mini" @click="handleNumberNoPostEditArea()">
                   编辑地区
                 </el-button>
               </div>
             </section>
-            <!--  -->
-            <el-checkbox v-model="numberFreeStatus" true-label="isFree" false-label=""
-              >指定条件包邮:</el-checkbox
-            >
-            <el-checkbox v-model="numberFreeStatus1" true-label="isAmount" false-label=""
-              >指定条件到付:</el-checkbox
-            >
-            <section
-              v-for="info in [numberFreeStatus, numberFreeStatus1].filter((v) => v)"
-              :key="info"
-              class="section section-white shipping-calc"
-            >
-              <p class="font-bold">为指定地区设置{{ getText(info) }}规则</p>
-              <el-table :data="getData('free_number_conf', info)" style="width: 100%" border>
+            <p class="font-bold">
+              <el-checkbox v-model="numberFreeStatus" :value="numberFreeStatus" />
+              指定条件包邮:
+            </p>
+            <section v-if="numberFreeStatus" class="section section-white shipping-calc">
+              <p class="font-bold">为指定地区设置包邮规则</p>
+              <el-table :data="free_number_conf" style="width: 100%" border>
                 <el-table-column label="地区设置" width="120">
                   <template slot-scope="scope">
                     {{ scope.row.area | formatCityData(district) }}
@@ -399,13 +345,13 @@
                       size="mini"
                       icon="el-icon-edit"
                       type="primary"
-                      @click="handleFreeEditArea(scope.$index, scope.row, 'free_number_conf', info)"
+                      @click="handleNumberFreeEditArea(scope.$index, scope.row)"
                     >
                       编辑
                     </el-button>
                   </template>
                 </el-table-column>
-                <el-table-column :label="`${getText(info)}条件(件)`">
+                <el-table-column label="包邮条件(件)">
                   <template slot-scope="scope">
                     <el-select
                       v-model="scope.row.freetype"
@@ -420,18 +366,18 @@
                       />
                     </el-select>
                     <span v-if="1 == scope.row.freetype || 3 == scope.row.freetype"
-                      >{{ info == 'isFree' ? '满' : '在' }}&nbsp;<el-input
+                      >满&nbsp;<el-input
                         v-model="scope.row.upquantity"
                         class="inline-input"
                         style="width: 100px"
-                      />&nbsp;件{{ info == 'isFree' ? '' : '以内' }}{{ getText(info) }}</span
+                      />&nbsp;件包邮</span
                     >
                     <span v-if="2 == scope.row.freetype || 3 == scope.row.freetype"
                       ><span v-if="3 == scope.row.freetype">,</span>&nbsp;<el-input
                         v-model="scope.row.upmoney"
                         class="inline-input"
                         style="width: 100px"
-                      />&nbsp;元{{ info == 'isFree' ? '以上' : '以内' }}{{ getText(info) }}</span
+                      />&nbsp;元以上包邮</span
                     >
                   </template>
                 </el-table-column>
@@ -442,7 +388,7 @@
                       size="mini"
                       icon="delete"
                       type="danger"
-                      @click="handleNumberFreeDeleteArea(scope.$index, info)"
+                      @click="handleNumberFreeDeleteArea(scope.$index)"
                     >
                       删除
                     </el-button>
@@ -454,13 +400,12 @@
                   type="primary"
                   icon="el-icon-circle-plus"
                   size="mini"
-                  @click="handleAddArea('free_number_conf', info)"
+                  @click="handleAddArea('free_number_conf')"
                 >
                   添加地区
                 </el-button>
               </div>
             </section>
-            <!--  -->
           </section>
           <section v-show="form.valuation == 3" class="section section-white">
             <section class="section section-white shipping-calc">
@@ -474,7 +419,7 @@
                       size="mini"
                       icon="el-icon-edit"
                       type="primary"
-                      @click="handleFeeEditArea(scope.$index, scope.row, 'fee_money_conf')"
+                      @click="handleMoneyFeeEditArea(scope.$index, scope.row)"
                     >
                       编辑
                     </el-button>
@@ -484,7 +429,6 @@
                   <template slot-scope="scope">
                     <div
                       v-for="(money_key, money_index) in scope.row.rules"
-                      :key="money_index"
                       style="margin-top: 5px"
                     >
                       <el-input
@@ -514,71 +458,32 @@
                 </el-table-column>
                 <el-table-column label="运费(元)" width="200">
                   <template slot-scope="scope">
-                    <div style="display: flex">
-                      <div>
-                        <div
-                          v-for="(money_key, money_index) in scope.row.rules"
-                          :key="money_index"
-                          style="margin-top: 5px"
-                        >
-                          <el-input
-                            v-model="money_key.basefee"
-                            class="inline-input"
-                            :disabled="amountFeeStatus[scope.$index]?.[money_index]"
-                            style="width: 100px"
-                          />
-                        </div>
-                      </div>
-                      <div
-                        style="
-                          display: flex;
-                          flex-direction: column;
-                          justify-content: space-evenly;
-                          margin-left: 10px;
-                        "
-                      >
-                        <div
-                          v-for="(money_key, money_index) in scope.row.rules"
-                          :key="money_index + 'check'"
-                          style="margin-top: 5px"
-                        >
-                          <el-checkbox
-                            v-if="scope.$index != 0 || money_index != 0"
-                            :value="amountFeeStatus[scope.$index]?.[money_index]"
-                            false-label=""
-                            true-label="isAmount"
-                            @change="
-                              handleChangeCheck(
-                                scope.$index,
-                                money_index,
-                                'amountFeeStatus',
-                                'fee_money_conf'
-                              )
-                            "
-                            >到付</el-checkbox
-                          >
-                          <div v-else style="height: 23px" />
-                        </div>
-                      </div>
+                    <div v-for="money_key in scope.row.rules" style="margin-top: 5px">
+                      <el-input
+                        v-model="money_key.basefee"
+                        class="inline-input"
+                        style="width: 100px"
+                      />
                     </div>
                   </template>
                 </el-table-column>
                 <el-table-column prop="add_standard" label="操作" width="100">
                   <template slot-scope="scope">
-                    <div v-for="(money_key, money_index) in scope.row.rules" :key="money_index">
-                      <template v-if="scope.row.rules.length - 1 == money_index">
-                        <el-button
-                          v-if="scope.$index != 0 || money_index != 0"
-                          size="mini"
-                          icon="delete"
-                          type="danger"
-                          @click="handleMoneyFeeDeleteArea(scope.$index, money_index)"
-                        >
-                          删除
-                        </el-button>
-                      </template>
-                      <div v-else style="height: 45px" />
+                    <div
+                      v-for="(money_key, money_index) in scope.row.rules"
+                      v-if="scope.row.rules.length - 1 == money_index"
+                    >
+                      <el-button
+                        v-if="scope.$index != 0 || money_index != 0"
+                        size="mini"
+                        icon="delete"
+                        type="danger"
+                        @click="handleMoneyFeeDeleteArea(scope.$index, money_index)"
+                      >
+                        删除
+                      </el-button>
                     </div>
+                    <div v-else style="height: 45px" />
                   </template>
                 </el-table-column>
               </el-table>
@@ -600,11 +505,7 @@
               </p>
               <p v-else class="font-bold nopost">暂无数据</p>
               <div class="content-v-padded">
-                <el-button
-                  type="primary"
-                  size="mini"
-                  @click="handleNoPostEditArea('nopost_money_conf')"
-                >
+                <el-button type="primary" size="mini" @click="handleMoneyNoPostEditArea()">
                   编辑地区
                 </el-button>
               </div>
@@ -650,7 +551,7 @@
                       size="mini"
                       icon="el-icon-edit"
                       type="primary"
-                      @click="handleFeeEditArea(scope.$index + 1, scope.row, 'fee_volume_conf')"
+                      @click="handleVolumeFeeEditArea(scope.$index, scope.row)"
                     >
                       编辑
                     </el-button>
@@ -682,7 +583,7 @@
                       size="mini"
                       icon="delete"
                       type="danger"
-                      @click="handleFeeDeleteArea(scope.$index, 'fee_volume_conf')"
+                      @click="handleVolumeFeeDeleteArea(scope.$index)"
                     >
                       删除
                     </el-button>
@@ -710,29 +611,18 @@
               </p>
               <p v-else class="font-bold nopost">暂无数据</p>
               <div class="content-v-padded">
-                <el-button
-                  type="primary"
-                  size="mini"
-                  @click="handleNoPostEditArea('nopost_volume_conf')"
-                >
+                <el-button type="primary" size="mini" @click="handleVolumeNoPostEditArea()">
                   编辑地区
                 </el-button>
               </div>
             </section>
-            <!--  -->
-            <el-checkbox v-model="volumeFreeStatus" true-label="isFree" false-label=""
-              >指定条件包邮:</el-checkbox
-            >
-            <el-checkbox v-model="volumeFreeStatus1" true-label="isAmount" false-label=""
-              >指定条件到付:</el-checkbox
-            >
-            <section
-              v-for="info in [volumeFreeStatus, volumeFreeStatus1].filter((v) => v)"
-              :key="info"
-              class="section section-white shipping-calc"
-            >
-              <p class="font-bold">为指定地区设置{{ getText(info) }}规则</p>
-              <el-table :data="getData('free_volume_conf', info)" style="width: 100%" border>
+            <p class="font-bold">
+              <el-checkbox v-model="volumeFreeStatus" :value="volumeFreeStatus" />
+              指定条件包邮:
+            </p>
+            <section v-if="volumeFreeStatus" class="section section-white shipping-calc">
+              <p class="font-bold">为指定地区设置包邮规则</p>
+              <el-table :data="free_volume_conf" style="width: 100%" border>
                 <el-table-column label="地区设置" width="150">
                   <template slot-scope="scope">
                     {{ scope.row.area | formatCityData(district) }}
@@ -741,13 +631,13 @@
                       size="mini"
                       icon="el-icon-edit"
                       type="primary"
-                      @click="handleFreeEditArea(scope.$index, scope.row, 'free_volume_conf', info)"
+                      @click="handleVolumeFreeEditArea(scope.$index, scope.row)"
                     >
                       编辑
                     </el-button>
                   </template>
                 </el-table-column>
-                <el-table-column :label="`${getText(info)}条件(m³)`">
+                <el-table-column label="包邮条件(m³)">
                   <template slot-scope="scope">
                     <el-select
                       v-model="scope.row.freetype"
@@ -766,14 +656,14 @@
                         v-model="scope.row.upvolume"
                         class="inline-input"
                         style="width: 100px"
-                      />&nbsp;m³以{{ info == 'isFree' ? '内' : '上' }}{{ getText(info) }}</span
+                      />&nbsp;m³内包邮</span
                     >
                     <span v-if="2 == scope.row.freetype || 3 == scope.row.freetype"
                       ><span v-if="3 == scope.row.freetype">,</span>&nbsp;<el-input
                         v-model="scope.row.upmoney"
                         class="inline-input"
                         style="width: 100px"
-                      />&nbsp;元以{{ info == 'isFree' ? '上' : '内' }}{{ getText(info) }}</span
+                      />&nbsp;元以上包邮</span
                     >
                   </template>
                 </el-table-column>
@@ -784,7 +674,7 @@
                       size="mini"
                       icon="delete"
                       type="danger"
-                      @click="handleFeeDeleteArea(scope.$index - 1, free_volume_conf, info)"
+                      @click="handleVolumeFreeDeleteArea(scope.$index)"
                     >
                       删除
                     </el-button>
@@ -796,13 +686,12 @@
                   type="primary"
                   icon="el-icon-circle-plus"
                   size="mini"
-                  @click="handleAddArea('free_volume_conf', info)"
+                  @click="handleAddArea('free_volume_conf')"
                 >
                   添加地区
                 </el-button>
               </div>
             </section>
-            <!--  -->
           </section>
         </el-col>
       </el-row>
@@ -882,7 +771,7 @@
           <el-col :span="6">
             <el-row class="region-list">
               <el-col>
-                已选：<br />
+                已选：<br>
                 {{ conf_area | formatCityData(district, false) }}
               </el-col>
             </el-row>
@@ -898,16 +787,13 @@
 </template>
 
 <script>
-import { getAddress } from '@/api/common'
-import api from '@/api'
 import {
-  payForRule,
-  cityFeeConfig,
-  selectConfig,
-  feeStatuConfig,
-  fee_money_conf
-} from './constants'
-
+  getShippingTemplatesInfo,
+  createShippingTemplates,
+  updateShippingTemplates
+} from '../../../../api/shipping'
+import { getAddress } from '../../../../api/common'
+// import this.district from '../../../../common/this.district.json'
 //匹配省市区
 export default {
   inject: ['refresh'],
@@ -916,8 +802,9 @@ export default {
       loading: true,
       district: {},
       templatesId: '',
-      // 设置运费模式
-      ...feeStatuConfig,
+      numberFreeStatus: true,
+      priceFreeStatus: true,
+      volumeFreeStatus: true,
       dialogAreaFormVisible: false,
       areaInfoCount: [],
       childChoose: [],
@@ -927,6 +814,7 @@ export default {
       provinceInfoBackground: '',
       cityInfoBackground: '',
       regionInfoBackground: '',
+      areaInfoCount: [],
       form: {
         name: '',
         is_free: '0',
@@ -934,9 +822,16 @@ export default {
         status: '1',
         fee_conf: [],
         nopost_conf: [],
-        free_conf: [],
-        price_model: 'single'
+        free_conf: []
       },
+      fee_conf: [
+        {
+          start_standard: '',
+          start_fee: '',
+          add_standard: '',
+          add_fee: ''
+        }
+      ],
       nopost_conf: [],
       nopost_number_conf: [],
       nopost_money_conf: [],
@@ -944,152 +839,164 @@ export default {
       nopost_self_conf: [],
       conf_id: null,
       conf_name: '',
+      free_conf: [
+        {
+          area: '0',
+          freetype: '1',
+          inweight: '',
+          upmoney: ''
+        }
+      ],
       conf_area: [],
-      // 包邮或者到付规则默认值
-      ...payForRule,
-      // 城市运费默认值
-      ...cityFeeConfig,
-      ...selectConfig,
-      fee_money_conf,
+      fee_number_conf: [
+        {
+          start_standard: '',
+          start_fee: '',
+          add_standard: '',
+          add_fee: ''
+        }
+      ],
+      free_number_conf: [
+        {
+          area: '0',
+          freetype: '1',
+          upquantity: '',
+          upmoney: ''
+        }
+      ],
+      fee_volume_conf: [
+        {
+          start_standard: '',
+          start_fee: '',
+          add_standard: '',
+          add_fee: ''
+        }
+      ],
+      free_volume_conf: [
+        {
+          area: '0',
+          freetype: '1',
+          upvolume: '',
+          upmoney: ''
+        }
+      ],
+      fee_money_conf: [
+        {
+          area: '0',
+          rules: [
+            {
+              up: 0.0,
+              down: '',
+              basefee: ''
+            }
+          ]
+        }
+      ],
+      options: [
+        {
+          'label': '重量',
+          'value': '1'
+        },
+        {
+          'label': '金额',
+          'value': '2'
+        },
+        {
+          'label': '重量+金额',
+          'value': '3'
+        }
+      ],
+      options_number: [
+        {
+          'label': '件数',
+          'value': '1'
+        },
+        {
+          'label': '金额',
+          'value': '2'
+        },
+        {
+          'label': '件数+金额',
+          'value': '3'
+        }
+      ],
+      options_volume: [
+        {
+          'label': '体积',
+          'value': '1'
+        },
+        {
+          'label': '金额',
+          'value': '2'
+        },
+        {
+          'label': '体积+金额',
+          'value': '3'
+        }
+      ],
       rule: {
         name: [{ required: true, message: '请填写模板名称', trigger: 'change' }]
-      },
-      areas: []
+      }
     }
   },
   mounted() {
     this.getAddress()
-    const id = this.$route.params.itemId || this.$route.params.templatesId
-
-    api.regionauth.getRegionauth().then((res) => {
-      this.areas = res?.list?.map((el) => ({
-        value: el.regionauth_id,
-        label: el.regionauth_name
-      }))
-    })
-    id && this.queryTemplates(id)
-  },
-
-  methods: {
-    queryTemplates(id) {
+    const id = this.$route.params.itemId
+      ? this.$route.params.itemId
+      : this.$route.params.templatesId
+    if (id) {
       this.templatesId = id
-      api.shipping
-        .getShippingTemplatesInfo(this.templatesId)
-        .then((res) => {
-          if (!res) {
-            return
-          }
-          this.form = {
-            ...this.form,
-            name: res.name,
-            is_free: res.is_free,
-            intro: res?.intro,
-            regionauth_id: res.regionauth_id
-          }
-          res.nopost_conf = JSON.parse(res.nopost_conf)
-          if (this.form.is_free == 1) {
-            this.nopost_self_conf = res.nopost_conf
-            return
-          }
-          this.form.valuation = res.valuation
-          this.form.status = res.status ? '1' : '0'
-          this.form.price_model = res.price_model
-          res.fee_conf = JSON.parse(res.fee_conf)
-          res.free_conf = JSON.parse(res.free_conf)
-          res.cod_conf = JSON.parse(res.cod_conf)
-
-          let { nopost_conf = [], fee_conf = [], free_conf = [], cod_conf = [] } = res
-          if (!nopost_conf) {
-            nopost_conf = []
-          }
-          if (!fee_conf) {
-            fee_conf = cityFeeConfig?.fee_conf
-          }
-
-          if (!free_conf) {
-            free_conf = []
-          }
-
-          if (!cod_conf) {
-            cod_conf = []
-          }
-
-          switch (res.valuation) {
-            case '1':
-              this.fee_conf = fee_conf
-              this.free_conf_isFree = free_conf?.length ? free_conf : payForRule?.free_conf_isFree
-              this.free_conf_isAmount = cod_conf?.length ? cod_conf : payForRule?.free_conf_isAmount
-              this.nopost_conf = nopost_conf
-              this.priceFreeStatus = free_conf?.length ? 'isFree' : ''
-              this.priceFreeStatus1 = cod_conf?.length ? 'isAmount' : ''
-              break
-            case '2':
-              this.fee_number_conf = fee_conf
-              this.free_number_conf_isFree = free_conf?.length
-                ? free_conf
-                : payForRule?.free_number_conf_isFree
-              this.free_number_conf_isAmount = cod_conf?.length
-                ? cod_conf
-                : payForRule?.free_number_conf_isAmount
-              this.nopost_number_conf = nopost_conf
-              this.numberFreeStatus = free_conf?.length ? 'isFree' : ''
-              this.numberFreeStatus1 = cod_conf?.length ? 'isAmount' : ''
-              break
-            case '3':
-              this.fee_money_conf = fee_conf
-              this.nopost_money_conf = nopost_conf
-              for (var item in this.fee_money_conf) {
-                for (var rules_item in this.fee_money_conf[item].rules) {
-                  const _pre = this.fee_money_conf[item]
-                  _pre.rules[rules_item].now = _pre.rules[rules_item].down
-                  _pre.rules[rules_item].basefee =
-                    _pre.rules[rules_item].basefee == 'cod' ? '' : _pre.rules[rules_item].basefee
-
-                  this.$set(
-                    this.fee_money_conf[item].rules,
-                    rules_item,
-                    this.fee_money_conf[item].rules[rules_item]
-                  )
-                  if (item > 0) {
-                    this.handleChangeCheck(
-                      item,
+      getShippingTemplatesInfo(this.templatesId).then((res) => {
+        if (res.data.data) {
+          this.form.name = res.data.data.name
+          this.form.is_free = res.data.data.is_free
+          res.data.data.nopost_conf = JSON.parse(res.data.data.nopost_conf)
+          if (this.form.is_free != 1) {
+            this.form.valuation = res.data.data.valuation
+            this.form.status = res.data.data.status ? '1' : '0'
+            res.data.data.fee_conf = JSON.parse(res.data.data.fee_conf)
+            res.data.data.free_conf = JSON.parse(res.data.data.free_conf)
+            switch (res.data.data.valuation) {
+              case '1':
+                this.fee_conf = res.data.data.fee_conf
+                this.free_conf = res.data.data.free_conf
+                this.nopost_conf = res.data.data.nopost_conf
+                break
+              case '2':
+                this.fee_number_conf = res.data.data.fee_conf
+                this.free_number_conf = res.data.data.free_conf
+                this.nopost_number_conf = res.data.data.nopost_conf
+                break
+              case '3':
+                this.fee_money_conf = res.data.data.fee_conf
+                this.nopost_money_conf = res.data.data.nopost_conf
+                for (var item in this.fee_money_conf) {
+                  for (var rules_item in this.fee_money_conf[item].rules) {
+                    this.fee_money_conf[item].rules[rules_item].now =
+                      this.fee_money_conf[item].rules[rules_item].down
+                    this.$set(
+                      this.fee_money_conf[item].rules,
                       rules_item,
-                      'amountFeeStatus',
-                      'fee_money_conf',
-                      _pre.rules[rules_item].basefee == ''
+                      this.fee_money_conf[item].rules[rules_item]
                     )
                   }
                 }
-              }
-              break
-            case '4':
-              this.fee_volume_conf = fee_conf
-              this.free_volume_conf_isFree = free_conf?.length
-                ? free_conf
-                : payForRule?.free_volume_conf_isFree
-              this.free_volume_conf_isAmount = cod_conf?.length
-                ? cod_conf
-                : payForRule?.free_volume_conf_isAmount
-              this.nopost_volume_conf = nopost_conf
-              this.volumeFreeStatus = free_conf?.length ? 'isFree' : ''
-              this.volumeFreeStatus1 = cod_conf?.length ? 'isAmount' : ''
-              break
+                break
+              case '4':
+                this.fee_volume_conf = res.data.data.fee_conf
+                this.free_volume_conf = res.data.data.free_conf
+                this.nopost_volume_conf = res.data.data.nopost_conf
+                break
+            }
+          } else {
+            this.nopost_self_conf = res.data.data.nopost_conf
           }
-        })
-        .catch((err) => {
-          console.log(err)
-        })
-    },
-    getText(text) {
-      if (!text) {
-        return ''
-      }
-      return text == 'isFree' ? '包邮' : '到付'
-    },
-    getData(prefix, info) {
-      return this[`${prefix}_${info}`]
-    },
-    async submitSaveAction() {
+        }
+      })
+    }
+  },
+  methods: {
+    submitSaveAction() {
       const that = this
       if (!this.form.name) {
         this.$message.error('模板名称必填')
@@ -1098,14 +1005,12 @@ export default {
       switch (this.form.valuation) {
         case '1':
           this.form.fee_conf = this.fee_conf
-          this.form.free_conf = this.priceFreeStatus ? this.free_conf_isFree : []
-          this.form.cod_conf = this.priceFreeStatus1 ? this.free_conf_isAmount : []
+          this.form.free_conf = this.priceFreeStatus ? this.free_conf : []
           this.form.nopost_conf = this.nopost_conf
           break
         case '2':
           this.form.fee_conf = this.fee_number_conf
-          this.form.free_conf = this.numberFreeStatus ? this.free_number_conf_isFree : []
-          this.form.cod_conf = this.numberFreeStatus1 ? this.free_number_conf_isAmount : []
+          this.form.free_conf = this.numberFreeStatus ? this.free_number_conf : []
           this.form.nopost_conf = this.nopost_number_conf
           break
         case '3':
@@ -1114,8 +1019,7 @@ export default {
           break
         case '4':
           this.form.fee_conf = this.fee_volume_conf
-          this.form.free_conf = this.volumeFreeStatus ? this.free_volume_conf_isFree : []
-          this.form.cod_conf = this.volumeFreeStatus1 ? this.free_volume_conf_isAmount : []
+          this.form.free_conf = this.volumeFreeStatus ? this.free_volume_conf : []
           this.form.nopost_conf = this.nopost_volume_conf
           break
       }
@@ -1124,9 +1028,6 @@ export default {
         if (3 == this.form.valuation) {
           for (var i in this.form.fee_conf) {
             for (var j in this.form.fee_conf[i].rules) {
-              if (this.amountFeeStatus?.[i]?.[j]) {
-                this.form.fee_conf[i].rules[j].basefee = 'cod'
-              }
               if (this.form.fee_conf[i].rules[j].basefee === '') {
                 this.$message.error('运费金额不能为空')
                 return
@@ -1147,68 +1048,63 @@ export default {
       } else {
         this.form.nopost_conf = this.nopost_self_conf
       }
-
-      if (this.form?.cod_conf) {
-        this.form.cod_conf = JSON.stringify(this.form.cod_conf)
-      }
-      try {
-        let _res = null
-        if (this.templatesId) {
-          _res = await api.shipping.updateShippingTemplates(this.templatesId, this.form)
-        } else {
-          _res = await api.shipping.createShippingTemplates(this.form)
-        }
-        if (!_res || _res?.message) {
-          return
-        }
-        this.$message({
-          message: this.templatesId ? '更新成功' : '添加成功',
-          type: 'success',
-          duration: 2 * 1000,
-          onClose() {
-            that.refresh()
-            that.$router.go(-1)
+      if (this.templatesId) {
+        updateShippingTemplates(this.templatesId, this.form).then((res) => {
+          if (res.data.data) {
+            this.$message({
+              message: '更新成功',
+              type: 'success',
+              duration: 2 * 1000,
+              onClose() {
+                that.refresh()
+                that.$router.go(-1)
+              }
+            })
           }
         })
-      } catch (error) {
-        console.log(error)
-      }
-    },
-    handleChangeCheck(preIndex, curtindex, key, editName, defaultVal) {
-      this[key] = {
-        ...this[key],
-        [preIndex]: {
-          ...(this[key][preIndex] || {}),
-          [curtindex]: defaultVal !== undefined ? defaultVal : !this[key]?.[preIndex]?.[curtindex]
-        }
-      }
-      if (editName == 'fee_money_conf') {
-        if (this[key]?.[preIndex]?.[curtindex]) {
-          this[editName] = this[editName]?.map((pre, id) => {
-            if (id == preIndex) {
-              return {
-                ...pre,
-                rules: pre?.rules?.map((el, index) => {
-                  if (index == curtindex) {
-                    return {
-                      ...el,
-                      basefee: ''
-                    }
-                  }
-                  return el
-                })
+      } else {
+        createShippingTemplates(this.form).then((res) => {
+          if (res.data.data) {
+            this.$message({
+              message: '添加成功',
+              type: 'success',
+              duration: 2 * 1000,
+              onClose() {
+                that.refresh()
+                that.$router.go(-1)
               }
-            }
-            return pre
-          })
-        }
+            })
+          }
+        })
       }
     },
     // 选择地区
-    handleAddArea(type, info) {
-      const _key = info ? `${type}_${info}` : type
-      const conf = this[_key]
-      this.conf_name = _key
+    handleAddArea(type) {
+      var conf = []
+      switch (type) {
+        case 'fee_conf':
+          conf = this.fee_conf
+          break
+        case 'free_conf':
+          conf = this.free_conf
+          break
+        case 'fee_number_conf':
+          conf = this.fee_number_conf
+          break
+        case 'free_number_conf':
+          conf = this.free_number_conf
+          break
+        case 'fee_volume_conf':
+          conf = this.fee_volume_conf
+          break
+        case 'free_volume_conf':
+          conf = this.free_volume_conf
+          break
+        case 'fee_money_conf':
+          conf = this.fee_money_conf
+          break
+      }
+      this.conf_name = type
       this.formatCityDataClear(conf)
       this.conf_id = null
       this.conf_area = []
@@ -1216,34 +1112,111 @@ export default {
       this.cityIndex = -1
       this.dialogAreaFormVisible = true
     },
-    // 运费修改函数
-    handleFeeEditArea(index, row, key) {
-      this.formatCityDataEdit(this[key], row)
+    handleSelfNoPostEditArea() {
+      this.formatCityDataEdit([], this.nopost_self_conf)
+      this.conf_area = JSON.parse(JSON.stringify(this.nopost_self_conf))
+      this.conf_name = 'nopost_self_conf'
+      this.dialogAreaFormVisible = true
+    },
+    // 按重量运费修改
+    handleWeightFeeEditArea(index, row) {
+      this.formatCityDataEdit(this.fee_conf, row)
       this.conf_area = JSON.parse(JSON.stringify(row.area))
-      this.conf_name = key
+      this.conf_name = 'fee_conf'
+      this.conf_id = index + 1
+      this.dialogAreaFormVisible = true
+    },
+    handleWeightNoPostEditArea() {
+      this.formatCityDataEdit([], this.nopost_conf)
+      this.conf_area = JSON.parse(JSON.stringify(this.nopost_conf))
+      this.conf_name = 'nopost_conf'
+      this.dialogAreaFormVisible = true
+    },
+    // 按重量包邮修改
+    handleWeightFreeEditArea(index, row) {
+      this.formatCityDataEdit(this.free_conf, row)
+      this.conf_area = JSON.parse(JSON.stringify(row.area))
+      this.conf_name = 'free_conf'
       this.conf_id = index
       this.dialogAreaFormVisible = true
     },
-    // 包邮修改函数
-    handleFreeEditArea(index, row, prefix, info) {
-      const _key = info ? `${prefix}_${info}` : prefix
-      this.formatCityDataEdit(this[_key], row)
+    // 按重量运费修改
+    handleVolumeFeeEditArea(index, row) {
+      this.formatCityDataEdit(this.fee_volume_conf, row)
       this.conf_area = JSON.parse(JSON.stringify(row.area))
-      this.conf_name = _key
+      this.conf_name = 'fee_volume_conf'
+      this.conf_id = index + 1
+      this.dialogAreaFormVisible = true
+    },
+    handleVolumeNoPostEditArea() {
+      this.formatCityDataEdit([], this.nopost_volume_conf)
+      this.conf_area = JSON.parse(JSON.stringify(this.nopost_volume_conf))
+      this.conf_name = 'nopost_volume_conf'
+      this.dialogAreaFormVisible = true
+    },
+    // 按重量包邮修改
+    handleVolumeFreeEditArea(index, row) {
+      this.formatCityDataEdit(this.free_volume_conf, row)
+      this.conf_area = JSON.parse(JSON.stringify(row.area))
+      this.conf_name = 'free_volume_conf'
       this.conf_id = index
       this.dialogAreaFormVisible = true
     },
-    // no post修改函数
-    handleNoPostEditArea(key) {
-      this.formatCityDataEdit([], this[key])
-      this.conf_area = JSON.parse(JSON.stringify(this[key]))
-      this.conf_name = key
+    // 按件数运费修改
+    handleNumberFeeEditArea(index, row) {
+      this.formatCityDataEdit(this.fee_number_conf, row)
+      this.conf_area = JSON.parse(JSON.stringify(row.area))
+      this.conf_name = 'fee_number_conf'
+      this.conf_id = index + 1
+      this.dialogAreaFormVisible = true
+    },
+    handleNumberNoPostEditArea() {
+      this.formatCityDataEdit([], this.nopost_number_conf)
+      this.conf_area = JSON.parse(JSON.stringify(this.nopost_number_conf))
+      this.conf_name = 'nopost_number_conf'
+      this.dialogAreaFormVisible = true
+    },
+    // 按件数包邮修改
+    handleNumberFreeEditArea(index, row) {
+      this.formatCityDataEdit(this.free_number_conf, row)
+      this.conf_area = JSON.parse(JSON.stringify(row.area))
+      this.conf_name = 'free_number_conf'
+      this.conf_id = index
+      this.dialogAreaFormVisible = true
+    },
+    // 按金额运费修改
+    handleMoneyFeeEditArea(index, row) {
+      this.formatCityDataEdit(this.fee_money_conf, row)
+      this.conf_area = JSON.parse(JSON.stringify(row.area))
+      this.conf_name = 'fee_money_conf'
+      this.conf_id = index
+      this.dialogAreaFormVisible = true
+    },
+    handleMoneyNoPostEditArea() {
+      this.formatCityDataEdit([], this.nopost_money_conf)
+      this.conf_area = JSON.parse(JSON.stringify(this.nopost_money_conf))
+      this.conf_name = 'nopost_money_conf'
       this.dialogAreaFormVisible = true
     },
     // 按重量运费删除
-    handleFeeDeleteArea(index, key, info) {
-      const _key = info ? `${key}_${info}` : key
-      this[_key].splice(index, 1)
+    handleWeightFeeDeleteArea(index) {
+      this.fee_conf.splice(index + 1, 1)
+    },
+    // 按重量包邮删除
+    handleWeightFreeDeleteArea(index) {
+      this.free_conf.splice(index, 1)
+    },
+    // 按体积运费删除
+    handleVolumeFeeDeleteArea(index) {
+      this.fee_volume_conf.splice(index + 1, 1)
+    },
+    // 按体积包邮删除
+    handleVolumeFreeDeleteArea(index) {
+      this.free_volume_conf.splice(index, 1)
+    },
+    // 按件数运费删除
+    handleNumberFeeDeleteArea(index) {
+      this.fee_number_conf.splice(index + 1, 1)
     },
     // 按金额运费删除
     handleMoneyFeeDeleteArea(index, money_index) {
@@ -1273,42 +1246,110 @@ export default {
         })
         return false
       }
-      const fee_default_params = {
-        area: this.conf_area.sort(),
-        start_standard: '',
-        start_fee: '',
-        add_standard: '',
-        add_fee: ''
-      }
-      const free_default_params = {
-        area: this.conf_area.sort(),
-        freetype: '1',
-        upmoney: ''
-      }
       switch (this.conf_name) {
-        case 'nopost_number_conf':
-        case 'nopost_conf':
-        case 'nopost_self_conf':
-        case 'nopost_money_conf':
-        case 'nopost_volume_conf':
-          this[this.conf_name] = this.conf_area.sort()
-          break
         case 'fee_conf':
+          if (this.conf_id !== null) {
+            this.fee_conf[this.conf_id].area = this.conf_area
+            this.$set(this.fee_conf, this.conf_id, this.fee_conf[this.conf_id])
+          } else {
+            this.fee_conf.push({
+              area: this.conf_area.sort(),
+              start_standard: '',
+              start_fee: '',
+              add_standard: '',
+              add_fee: ''
+            })
+          }
+          break
+        case 'nopost_conf':
+          this.nopost_conf = this.conf_area.sort()
+          break
+        case 'nopost_self_conf':
+          this.nopost_self_conf = this.conf_area.sort()
+          break
+        case 'nopost_number_conf':
+          this.nopost_number_conf = this.conf_area.sort()
+          this.nopost_number_conf = this.conf_area.sort()
+          break
+        case 'nopost_money_conf':
+          this.nopost_money_conf = this.conf_area.sort()
+          break
+        case 'nopost_volume_conf':
+          this.nopost_volume_conf = this.conf_area.sort()
+          break
+        case 'free_conf':
+          if (this.conf_id !== null) {
+            this.free_conf[this.conf_id].area = this.conf_area
+            this.$set(this.free_conf, this.conf_id, this.free_conf[this.conf_id])
+          } else {
+            this.free_conf.push({
+              area: this.conf_area.sort(),
+              freetype: '1',
+              inweight: '',
+              upmoney: ''
+            })
+          }
+          break
         case 'fee_number_conf':
+          if (this.conf_id !== null) {
+            this.fee_number_conf[this.conf_id].area = this.conf_area
+            this.$set(this.fee_number_conf, this.conf_id, this.fee_number_conf[this.conf_id])
+          } else {
+            this.fee_number_conf.push({
+              area: this.conf_area.sort(),
+              start_standard: '',
+              start_fee: '',
+              add_standard: '',
+              add_fee: ''
+            })
+          }
+          break
+        case 'free_number_conf':
+          if (this.conf_id !== null) {
+            this.free_number_conf[this.conf_id].area = this.conf_area
+            this.$set(this.free_number_conf, this.conf_id, this.free_number_conf[this.conf_id])
+          } else {
+            this.free_number_conf.push({
+              area: this.conf_area.sort(),
+              freetype: '1',
+              upquantity: '',
+              upmoney: ''
+            })
+          }
+          break
         case 'fee_volume_conf':
           if (this.conf_id !== null) {
-            this[this.conf_name][this.conf_id].area = this.conf_area
-            this.$set(this[this.conf_name], this.conf_id, this[this.conf_name][this.conf_id])
+            this.fee_volume_conf[this.conf_id].area = this.conf_area
+            this.$set(this.fee_volume_conf, this.conf_id, this.fee_volume_conf[this.conf_id])
           } else {
-            this[this.conf_name].push(fee_default_params)
+            this.fee_volume_conf.push({
+              area: this.conf_area.sort(),
+              start_standard: '',
+              start_fee: '',
+              add_standard: '',
+              add_fee: ''
+            })
+          }
+          break
+        case 'free_volume_conf':
+          if (this.conf_id !== null) {
+            this.free_volume_conf[this.conf_id].area = this.conf_area
+            this.$set(this.free_volume_conf, this.conf_id, this.free_volume_conf[this.conf_id])
+          } else {
+            this.free_volume_conf.push({
+              area: this.conf_area.sort(),
+              freetype: '1',
+              upvolume: '',
+              upmoney: ''
+            })
           }
           break
         case 'fee_money_conf':
           if (this.conf_id !== null) {
-            this[this.conf_name][this.conf_id].area = this.conf_area
-            this.$set(this[this.conf_name], this.conf_id, this[this.conf_name][this.conf_id])
+            this.fee_money_conf[this.conf_id].area = this.conf_area
+            this.$set(this.fee_money_conf, this.conf_id, this.fee_money_conf[this.conf_id])
           } else {
-            this[this.conf_name].push({
+            this.fee_money_conf.push({
               area: this.conf_area.sort(),
               rules: [
                 {
@@ -1317,42 +1358,6 @@ export default {
                   basefee: ''
                 }
               ]
-            })
-          }
-          break
-        case 'free_number_conf_isAmount':
-        case 'free_number_conf_isFree':
-          if (this.conf_id !== null) {
-            this[this.conf_name][this.conf_id].area = this.conf_area
-            this.$set(this[this.conf_name], this.conf_id, this[this.conf_name][this.conf_id])
-          } else {
-            this[this.conf_name].push({
-              ...free_default_params,
-              upquantity: ''
-            })
-          }
-          break
-        case 'free_conf_isFree':
-        case 'free_conf_isAmount':
-          if (this.conf_id !== null) {
-            this[this.conf_name][this.conf_id].area = this.conf_area
-            this.$set(this[this.conf_name], this.conf_id, this[this.conf_name][this.conf_id])
-          } else {
-            this[this.conf_name].push({
-              ...free_default_params,
-              inweight: ''
-            })
-          }
-          break
-        case 'free_volume_conf_isFree':
-        case 'free_volume_conf_isAmount':
-          if (this.conf_id !== null) {
-            this[this.conf_name][this.conf_id].area = this.conf_area
-            this.$set(this[this.conf_name], this.conf_id, this[this.conf_name][this.conf_id])
-          } else {
-            this[this.conf_name].push({
-              ...free_default_params,
-              upvolume: ''
             })
           }
           break
@@ -1485,6 +1490,7 @@ export default {
           })
         }
       }
+      // console.log('city', this.conf_area)
     },
     handlechildCityChoose(index) {
       this.cityIndex = index
@@ -1545,6 +1551,7 @@ export default {
           })
         }
       }
+      console.log(this.conf_area)
     },
     // 城市数据清理
     formatCityDataClear(conf) {

@@ -185,7 +185,6 @@
 
 <script>
 import Treeselect from '@riophae/vue-treeselect'
-import '@riophae/vue-treeselect/dist/vue-treeselect.css'
 import SkuSelector from '@/components/function/skuSelector'
 import { getGradeList } from '../../../../api/membercard'
 import { listVipGrade } from '../../../../api/cardticket'
@@ -297,8 +296,8 @@ export default {
       this.form.day = this.rule.day
       this.form.limit = this.rule.limit
       let res = JSON.parse(JSON.stringify(this.form))
-      if(res.use_bound != 'goods'){
-      res.items = []
+      if (res.use_bound != 'goods') {
+        res.items = []
       }
       if (this.$route.params.limit_id) {
         updateLimitPromotions(this.$route.params.limit_id, res)

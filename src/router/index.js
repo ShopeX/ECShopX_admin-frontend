@@ -4,7 +4,6 @@ import qs from 'qs'
 import store from '@/store'
 import ErrorPage from '@/view/404'
 import NProgress from 'nprogress'
-import 'nprogress/nprogress.css'
 import { log, isBoolean, isInSalesCenter } from '@/utils'
 import { actions } from '@/utils/micr-app'
 
@@ -98,7 +97,7 @@ router.beforeEach((to, from, next) => {
 
         const newRouter = []
         // console.log(Object.keys(constantRouterMap))
-        console.log('customRouterUrls:', customRouterUrls)
+        // console.log('menu:', customRouterUrls)
 
         Object.keys(constantRouterMap).forEach((key) => {
           if (key != 'RouteAuth') {
@@ -114,8 +113,7 @@ router.beforeEach((to, from, next) => {
                   return (
                     customRouterUrls.includes(`/`) ||
                     customRouterUrls.includes(`/merchant`) ||
-                    customRouterUrls.includes(`/shopadmin`) ||
-                    customRouterUrls.includes(`/admininfo`)
+                    customRouterUrls.includes(`/shopadmin`)
                   )
                 } else {
                   return customRouterUrls.includes(`${route.path}/${item.path}`)

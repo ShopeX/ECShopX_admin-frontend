@@ -93,12 +93,6 @@ export default {
     distribution_type: {
       type: String,
       default: ''
-    },
-    parentParams: {
-      type: Object,
-      default: function () {
-        return {}
-      }
     }
   },
   data() {
@@ -163,10 +157,7 @@ export default {
     },
     getDistributor() {
       this.params.distribution_type = this.distribution_type
-      getDistributorList({
-        ...this.params,
-        ...(this.parentParams || {}),
-      }).then((response) => {
+      getDistributorList(this.params).then((response) => {
         if (this.storeData.length > 0) this.isFristLoad = false
         this.storeData = response.data.data.list
         this.total_count = parseInt(response.data.data.total_count)
@@ -206,7 +197,7 @@ export default {
     },
     handleSelectionChange(val) {
       if (val) {
-        console.log('handleSelectionChange', val)
+        // console.log('handleSelectionChange',val)
         this.multipleSelection = val
         val.forEach((item) => {
           let isInArr = this.selectRows.findIndex((n) => n.distributor_id == item.distributor_id)
@@ -239,8 +230,19 @@ export default {
 }
 </script>
 
-<style type="text/css">
-.store-dialog .el-checkbox {
-  display: inline;
+<style scoped lang="scss">
+.store-dialog {
+  .el-dialog {
+    width: 800px;
+  }
+
+  .el-checkbox {
+    display: inline;
+  }
+
+  .tr {
+    text-align: right;
+    margin-top: 10px;
+  }
 }
 </style>

@@ -108,7 +108,6 @@ export default {
       daijiesuan,
       yijiesuan,
       formQuery: {
-        merchant_type: 'distributor',
         distributor_id: '',
         merchant_id: '',
         statement_status: '',

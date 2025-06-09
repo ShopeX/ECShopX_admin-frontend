@@ -378,7 +378,7 @@ export default {
     },
     detail(row) {
       let routeData = this.$router.resolve({
-        path: this.matchHidePage('detail'),
+        path: this.matchRoutePath('detail'),
         query: { user_id: row.user_id }
       })
       window.open(routeData.href, '_blank')
@@ -398,7 +398,7 @@ export default {
     count(index, row) {
       if (row.children_count > 0) {
         let routeData = this.$router.resolve({
-          path: this.matchHidePage('child'),
+          path: this.matchRoutePath('child'),
           query: { promoter_id: row.promoter_id }
         })
         window.open(routeData.href, '_blank')

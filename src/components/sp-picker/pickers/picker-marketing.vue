@@ -55,6 +55,10 @@
           { name: '营销名称', key: 'title' }
         ]
       }"
+      :hooks="{
+        beforeSearch: beforeSearch,
+        afterSearch: afterSearch
+      }"
       @select="onSelect"
       @selection-change="onSelectionChange"
     />

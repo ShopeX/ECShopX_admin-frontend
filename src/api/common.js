@@ -33,15 +33,6 @@ export function exportUploadTemplate(query) {
   })
 }
 
-// 导出账号管理
-export function exportAnchorTemplate(query) {
-  return fetch({
-    url: 'polyv/anchor/export',
-    method: 'post',
-    params: query
-  })
-}
-
 export function getBrandLogo() {
   return fetch({
     url: '/companys/setting',

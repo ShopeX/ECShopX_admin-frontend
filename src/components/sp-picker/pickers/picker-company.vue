@@ -71,7 +71,6 @@
 <script>
 import BasePicker from './base'
 import PageMixin from '../mixins/page'
-import { getRegionauthId } from '@/utils'
 export default {
   name: 'PickerCompany',
   extends: BasePicker,
@@ -99,8 +98,7 @@ export default {
     beforeSearch(params) {
       params = {
         ...params,
-        ...this.formData,
-         regionauth_id: getRegionauthId()
+        ...this.formData
       }
       if('distributor_id' in this.value){
         params.distributor_id = this.value.distributor_id

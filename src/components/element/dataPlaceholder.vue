@@ -1,9 +1,5 @@
 <template>
-  <div
-    v-if="placeholderVisible"
-    class="data-placeholder"
-    :style="'height:' + height"
-  >
+  <div class="data-placeholder" :style="'height:' + height">
     <div class="placeholder-content">
       <i class="iconfont icon-route" />
       <div>暂无数据</div>
@@ -23,20 +19,20 @@ export default {
       default: ''
     }
   },
-  data () {
+  data() {
     return {
       placeholderVisible: false
     }
   },
   watch: {
-    visible (val) {
+    visible(val) {
       if (val) {
         this.setData(val)
       }
     }
   },
   methods: {
-    setData (val) {
+    setData(val) {
       this.placeholderVisible = val
     }
   }

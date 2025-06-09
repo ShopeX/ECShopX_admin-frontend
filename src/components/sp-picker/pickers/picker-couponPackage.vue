@@ -68,7 +68,6 @@ import { CARD_TYPE } from '@/consts'
 import moment from 'moment'
 import BasePicker from './base'
 import PageMixin from '../mixins/page'
-import { getRegionauthId } from '@/utils'
 export default {
   name: 'PickerCouponPackage',
   extends: BasePicker,
@@ -96,9 +95,7 @@ export default {
       params = {
         ...params,
         page: params.page,
-        pageSize: params.pageSize,
-        regionauth_id: getRegionauthId(),
-        ...(this.value?.params || {})
+        pageSize: params.pageSize
       }
       if (this.formData.keywords) {
         params = {
@@ -111,9 +108,7 @@ export default {
     afterSearch(response) {
       const { list } = response.data.data
       if (this.value.data) {
-        const selectRows = list.filter((item) =>
-          this.value?.data.includes(item.card_id || item.package_id)
-        )
+        const selectRows = list.filter((item) => this.value?.data.includes(item.card_id))
         const { finderTable } = this.$refs.finder.$refs
         setTimeout(() => {
           finderTable.$refs.finderTable.setSelection(selectRows)

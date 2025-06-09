@@ -24,10 +24,11 @@
 .el-button {
   &--success {
     &.is-plain {
-      color: #67C23A;
+      color: #67c23a;
       background: #f0f9eb;
       border-color: #c2e7b0;
-      &:hover,&:focus {
+      &:hover,
+      &:focus {
         background-color: inherit;
         border-color: inherit;
         color: inherit;
@@ -36,10 +37,11 @@
   }
   &--danger {
     &.is-plain {
-      color: #F56C6C;
+      color: #f56c6c;
       background: #fef0f0;
       border-color: #fbc4c4;
-      &:hover,&:focus {
+      &:hover,
+      &:focus {
         background-color: inherit;
         border-color: inherit;
         color: inherit;
@@ -52,7 +54,8 @@
       color: #909399;
       background: #f4f4f5;
       border-color: #d3d4d6;
-      &:hover,&:focus {
+      &:hover,
+      &:focus {
         background-color: inherit;
         border-color: inherit;
         color: inherit;
@@ -64,7 +67,6 @@
     margin-left: 10px;
   }
 }
-
 </style>
 
 <template>
@@ -163,7 +165,12 @@
         >
           设置店铺默认可见范围
         </el-button>
-        <el-button v-if="!IS_DISTRIBUTOR() && !distributor_self" type="primary" plain @click="addDistributorSelf()">
+        <el-button
+          v-if="!IS_DISTRIBUTOR() && !distributor_self"
+          type="primary"
+          plain
+          @click="addDistributorSelf()"
+        >
           新增默认虚拟店信息
         </el-button>
         <template v-else>
@@ -178,7 +185,8 @@
           v-for="(item, index) in isValidList"
           :key="index"
           :label="item.name"
-          :name="item.value" />
+          :name="item.value"
+        />
       </el-tabs>
 
       <el-table
@@ -206,7 +214,12 @@
           </template>
         </el-table-column>
         <el-table-column width="100" prop="shop_code" label="店铺号" />
-        <el-table-column v-if="VERSION_STANDARD" width="200" label="自动同步商品" :render-header="renderHeader">
+        <el-table-column
+          v-if="VERSION_STANDARD"
+          width="200"
+          label="自动同步商品"
+          :render-header="renderHeader"
+        >
           <template v-if="scope.row.is_valid !== 'delete'" slot-scope="scope">
             <el-switch
               v-model="scope.row.auto_sync_goods"
@@ -281,7 +294,11 @@
             {{ scope.row.is_self_delivery ? '是' : '否' }}
           </template>
         </el-table-column>
-        <el-table-column width="100" label="进店白名单" v-if="VERSION_STANDARD && $store.getters.login_type == 'admin'">
+        <el-table-column
+          v-if="VERSION_STANDARD && $store.getters.login_type == 'admin'"
+          width="100"
+          label="进店白名单"
+        >
           <template v-if="scope.row.is_valid !== 'delete'" slot-scope="scope">
             <el-switch
               v-model="scope.row.open_divided"
@@ -299,10 +316,14 @@
               @click="editValid(scope.row)"
             >
               <span v-if="scope.row.is_valid == 'true'" class="green">
-                <el-button type="success" size="mini" plain>启用<i class="el-icon-edit" /></el-button>
+                <el-button type="success" size="mini" plain
+                  >启用<i class="el-icon-edit"
+                /></el-button>
               </span>
               <span v-else class="red">
-                <el-button type="danger" size="mini" plain>禁用<i class="el-icon-edit" /></el-button>
+                <el-button type="danger" size="mini" plain
+                  >禁用<i class="el-icon-edit"
+                /></el-button>
               </span>
             </el-button>
             <span v-else class="muted">
@@ -364,7 +385,7 @@
               <router-link
                 v-if="scope.row.is_valid !== 'delete' && datapass_block == '0'"
                 :to="{
-                  path: matchHidePage('editor'),
+                  path: matchRoutePath('editor'),
                   query: { distributor_id: scope.row.distributor_id }
                 }"
               >
@@ -391,7 +412,7 @@
                 <router-link
                   v-if="scope.row.is_openAccount"
                   :to="{
-                    path: matchHidePage('details'),
+                    path: matchRoutePath('details'),
                     query: { distributor_id: scope.row.distributor_id }
                   }"
                 >
@@ -421,13 +442,15 @@
                   店铺范围配置
                 </el-button>
               </div>
-              <el-button slot="reference" type="text">更多<i class="el-icon-arrow-down more" /></el-button>
+              <el-button slot="reference" type="text">
+                更多<i class="el-icon-arrow-down more" />
+              </el-button>
             </el-popover>
 
             <!-- <router-link
               v-if="scope.row.is_valid !== 'delete' && datapass_block == '0'"
               :to="{
-                path: matchHidePage('wxpay'),
+                path: matchRoutePath('wxpay'),
                 query: { distributor_id: scope.row.distributor_id }
               }"
             >
@@ -435,7 +458,7 @@
             </router-link> -->
             <!--<el-button type="text" @click="downDistributor(scope.row, 'scancode')">扫码购页面码(微商城)</el-button>-->
             <!-- <router-link :to="{  path: matchInternalRoute('Storeshopitemanagement'), query: {distributor_id: scope.row.distributor_id}}">商品码</router-link> -->
-            <!--router-link :to="{ path: matchHidePage('detail'), query: { distributor_id: scope.row.distributor_id, distributor_name: scope.row.name,parentPath: '/mall/marketing/distributor'}}">商品码</router-link-->
+            <!--router-link :to="{ path: matchRoutePath('detail'), query: { distributor_id: scope.row.distributor_id, distributor_name: scope.row.name,parentPath: '/mall/marketing/distributor'}}">商品码</router-link-->
           </template>
         </el-table-column>
       </el-table>
@@ -665,9 +688,7 @@ import { getSetting } from '@/api/fenzhang'
 import { setPaymentSetting, getPaymentSetting } from '@/api/trade'
 import mixin, { pageMixin } from '@/mixins'
 import { IS_ADMIN } from '@/utils'
-import {
-  handleUploadFile
-} from '../../../api/common'
+import { handleUploadFile } from '../../../api/common'
 import store from '@/store'
 // 取选中地区的值
 function getCascaderObj(val, opt) {
@@ -750,7 +771,7 @@ export default {
       ],
       isOpenList: [
         { name: '开启白名单', value: true },
-        { name: '未开启白名单', value: false },
+        { name: '未开启白名单', value: false }
       ],
       changeStatus: true,
       activeName: 'first',
@@ -930,31 +951,39 @@ export default {
   methods: {
     // 导入店铺
     uploadHandleChange(file, fileList) {
-      this.$router.push({ path: this.matchHidePage('storeupload') })
+      this.$router.push({ path: this.matchRoutePath('storeupload') })
     },
     renderHeader(h, { column }) {
       return h('span', null, [
         column.label,
-        h('el-tooltip', {
-          props: {
-            placement: 'bottom',
-            effect: 'dark'
-          }
-        }, [
-          h('i', {
-            class: 'el-icon-warning-outline',
-            style: 'margin-left: 4px; cursor: pointer;'
-          }),
-          h('div', {
-            slot: 'content'
-          }, [
-            '自动同步：开启自动同步后，总部添加编辑商品会自动',
-            h('br'),
-            '同步上架到店铺，保留开启前的商品状态。',
-            h('br'),
-            '关闭同步后将保留已同步的商品数据'
-          ])
-        ])
+        h(
+          'el-tooltip',
+          {
+            props: {
+              placement: 'bottom',
+              effect: 'dark'
+            }
+          },
+          [
+            h('i', {
+              class: 'el-icon-warning-outline',
+              style: 'margin-left: 4px; cursor: pointer;'
+            }),
+            h(
+              'div',
+              {
+                slot: 'content'
+              },
+              [
+                '自动同步：开启自动同步后，总部添加编辑商品会自动',
+                h('br'),
+                '同步上架到店铺，保留开启前的商品状态。',
+                h('br'),
+                '关闭同步后将保留已同步的商品数据'
+              ]
+            )
+          ]
+        )
       ])
     },
     onSearch() {
@@ -969,7 +998,7 @@ export default {
     },
     getParams() {
       let params = {
-        ...this.params,
+        ...this.params
       }
       params.is_valid = this.params.is_valid === '0' ? undefined : this.params.is_valid
       return params
@@ -1012,21 +1041,21 @@ export default {
       const { distributor_id, address, name, distribution_type } = distributor
       this.$store.dispatch('setTemplateName', 'yykweishop')
       this.$router.push({
-        path: this.matchHidePage('template'),
+        path: this.matchRoutePath('template'),
         query: { distributor_id, address, name, distribution_type }
       })
     },
     linkWxpaysettting(distributor) {
       const { distributor_id, name } = distributor
       this.$router.push({
-        path: this.matchHidePage('wxpaysetting'),
+        path: this.matchRoutePath('wxpaysetting'),
         query: { distributor_id, name }
       })
     },
     linkAlipaysettting(distributor) {
       const { distributor_id, name } = distributor
       this.$router.push({
-        path: this.matchHidePage('alipaysetting'),
+        path: this.matchRoutePath('alipaysetting'),
         query: { distributor_id, name }
       })
     },
@@ -1039,7 +1068,7 @@ export default {
       this.pcDialogVisible = false
     },
     dialogOpen(detail = null) {
-      this.$router.push({ path: this.matchHidePage('editor') })
+      this.$router.push({ path: this.matchRoutePath('editor') })
     },
     handleDistance() {
       this.distanceForm.distance = ''
@@ -1049,13 +1078,13 @@ export default {
     },
     addDistributorSelf() {
       this.$router.push({
-        path: this.matchHidePage('editor'),
+        path: this.matchRoutePath('editor'),
         query: { distributor_type: 'distributor_self' }
       })
     },
     editDistributorSelf() {
       this.$router.push({
-        path: this.matchHidePage('editor'),
+        path: this.matchRoutePath('editor'),
         query: { distributor_type: 'distributor_self', distributor_id: this.distributor_self }
       })
     },

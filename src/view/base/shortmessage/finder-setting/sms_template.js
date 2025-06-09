@@ -15,13 +15,10 @@ export default (vm) => {
   const formatTemplate_type = (status) => {
     switch (status) {
       case '0':
-      case '153':
         return `验证码`
       case '1':
-      case '49':
         return `短信通知`
       case '2':
-      case '52':
         return `推广短信`
     }
   }
@@ -88,7 +85,7 @@ export default (vm) => {
           type: 'link',
           handler: async (val) => {
             vm.$router.push({
-              path: vm.matchHidePage('edit'),
+              path: vm.matchRoutePath('edit'),
               query: { type: 'detail', id: val[0].id }
             })
           }
@@ -103,7 +100,7 @@ export default (vm) => {
           type: 'link',
           handler: async (val) => {
             vm.$router.push({
-              path: vm.matchHidePage('edit'),
+              path: vm.matchRoutePath('edit'),
               query: { type: 'edit', id: val[0].id }
             })
           }

@@ -1,9 +1,6 @@
-<style  lang="scss">
+<style scoped lang="scss">
 .sp-filter-form {
   margin-bottom: 16px;
-}
-.sp-filter-form-item.label .form-item__label {
-  white-space: nowrap !important;
 }
 </style>
 
@@ -18,47 +15,12 @@
       </div>
 
       <SpFilterForm :model="params" @onSearch="onSearch" @onReset="onReset">
-        <SpFilterFormItem prop="regionauth_id" label="区域:">
-          <el-select v-model="params.regionauth_id" placeholder="请选择" clearable>
-            <el-option
-              v-for="item in areasList"
-              :key="item.template_id"
-              :label="item.label"
-              :value="item.value"
-            />
-          </el-select>
-        </SpFilterFormItem>
-        <SpFilterFormItem prop="marketing_name" label="活动名称:">
-          <el-input v-model="params.marketing_name" placeholder="请输入商品名称" />
-        </SpFilterFormItem>
-        <SpFilterFormItem prop="marketing_id" label="活动ID:">
-          <el-input v-model="params.marketing_id" placeholder="请输入活动ID" />
-        </SpFilterFormItem>
-        <SpFilterFormItem prop="create_time" label="创建时间:">
+        <SpFilterFormItem prop="create_time" label="时间:">
           <el-date-picker
             v-model="params.create_time"
             type="daterange"
             value-format="yyyy/MM/dd"
-            start-placeholder="开始日期"
-            ange-separator="至"
-            end-placeholder="结束日期"
-            style="width: 100%"
-          />
-        </SpFilterFormItem>
-        <SpFilterFormItem prop="po_code" label="PO编码:">
-          <el-input v-model="params.po_code" placeholder="请输入PO编码" />
-        </SpFilterFormItem>
-        <SpFilterFormItem prop="budget_code" label="Budget code:">
-          <el-input v-model="params.budget_code" placeholder="请输入Budget code" />
-        </SpFilterFormItem>
-        <SpFilterFormItem prop="activity_time" label="活动时间:">
-          <el-date-picker
-            v-model="params.activity_time"
-            type="daterange"
-            value-format="yyyy/MM/dd"
-            start-placeholder="开始日期"
-            ange-separator="至"
-            end-placeholder="结束日期"
+            placeholder="根据添加时间筛选"
             style="width: 100%"
           />
         </SpFilterFormItem>
@@ -106,7 +68,7 @@
                 </el-form>
               </template>
             </el-table-column>
-            <el-table-column prop="marketing_id" width="100" label="活动ID" />
+            <el-table-column prop="marketing_id" width="60" label="编号" />
             <el-table-column prop="marketing_name" min-width="150" label="满减促销名称" />
             <el-table-column label="规则" min-width="200">
               <template slot-scope="scope">
@@ -120,23 +82,12 @@
                 </div>
               </template>
             </el-table-column>
-            <el-table-column prop="regionauth_name" min-width="150" label="区域" />
-            <!-- <el-table-column prop="used_platform" min-width="100" label="适用平台">
+            <el-table-column prop="used_platform" min-width="100" label="适用平台">
               <template slot-scope="scope">
                 <span v-if="scope.row.used_platform == 0">全场可用</span>
                 <span v-if="scope.row.used_platform == 1">只用于pc端</span>
                 <span v-if="scope.row.used_platform == 2">小程序端</span>
                 <span v-if="scope.row.used_platform == 3">h5端</span>
-              </template>
-            </el-table-column> -->
-            <el-table-column prop="po_code" width="120" label="PO编码">
-              <template slot-scope="scope">
-                {{ scope.row.finance_data?.po_code }}
-              </template>
-            </el-table-column>
-            <el-table-column prop="budget_code" width="120" label="Budget code">
-              <template slot-scope="scope">
-                {{ scope.row.finance_data?.budget_code }}
               </template>
             </el-table-column>
             <el-table-column prop="total_fee" min-width="150" label="有效期">
@@ -146,49 +97,18 @@
                 <div>{{ scope.row.end_date }}</div>
               </template>
             </el-table-column>
-            <el-table-column prop="created_date" width="150" label="创建时间">
+            <el-table-column min-width="70" label="状态">
               <template slot-scope="scope">
-                <div>{{ scope.row.created_date }}</div>
-              </template>
-            </el-table-column>
-            <el-table-column min-width="140" label="状态">
-              <template slot-scope="scope">
-                <span
-                  v-if="scope.row.audit_status == 'processing' && scope.row.approve_status == ''"
-                  >待审核</span
-                >
-                <span v-if="scope.row.audit_status == 'rejected' && scope.row.approve_status == ''">
-                  <el-tooltip
-                    :content="scope.row.rejected_reason"
-                    placement="bottom"
-                    effect="light"
-                  >
-                    <span>审核拒绝</span>
-                  </el-tooltip>
-                </span>
-                <span v-if="scope.row.audit_status == 'approved' && scope.row.approve_status == ''"
-                  >审核通过</span
-                >
-                <span
-                  v-if="scope.row.audit_status == 'approved' && scope.row.approve_status == 'on'"
-                >
-                  已上架
-                  <div :style="{ color: scope.row.status == 'waiting' ? '#68A2F2' : '#009900' }">
-                    {{ scope.row.status == 'waiting' ? '活动未开始' : '活动进行中' }}
-                  </div>
-                </span>
-                <span
-                  v-if="scope.row.audit_status == 'approved' && scope.row.approve_status == 'down'"
-                  >已下架</span
-                >
+                <span v-if="scope.row.status == 'ongoing'">进行中</span>
+                <span v-if="scope.row.status == 'waiting'">未开始</span>
+                <span v-if="scope.row.status == 'end'">已结束</span>
               </template>
             </el-table-column>
             <el-table-column min-width="70" prop="source_name" label="店铺" />
             <el-table-column label="操作" min-width="150">
               <template slot-scope="scope">
                 <div class="operating-icons">
-                  <ActionListView :list="actionsList" :row="scope.row" />
-                  <!-- <el-button
+                  <el-button
                     v-if="scope.row.use_bound != 0"
                     type="text"
                     @click="viewItemList(scope.row.marketing_id)"
@@ -224,7 +144,7 @@
                     v-if="scope.row.status == 'waiting'"
                     class="iconfont icon-trash-alt"
                     @click="deleteActivityAction(scope.row)"
-                  /> -->
+                  />
                 </div>
               </template>
             </el-table-column>
@@ -291,8 +211,6 @@
           />
         </template>
       </el-dialog>
-
-      <compUpdateLogs v-model="updateLogsDialog" :list="updateLogsList" />
     </template>
     <router-view />
   </div>
@@ -302,33 +220,23 @@ import { mapGetters } from 'vuex'
 import { getMarketingActivityItemList, removeMarketingActivity } from '@/api/promotions'
 import shopSelect from '@/components/shopSelect'
 import mixin, { pageMixin } from '@/mixins'
-import ActionListView from '@/components/actionListView'
-import compUpdateLogs from '../comps/comp-update-logs'
 
 export default {
+  components: {
+    shopSelect
+  },
+  mixins: [mixin, pageMixin],
   provide() {
     return {
       refresh: this.fetchList
     }
   },
-  components: {
-    shopSelect,
-    ActionListView,
-    compUpdateLogs
-  },
-  mixins: [mixin, pageMixin],
   data() {
     const initialParams = {
-      activity_time: [],
-      create_time:[],
-      status: '0',
+      create_time: [],
+      status: 'all',
       marketing_type: 'full_minus',
-      item_type: undefined,
-      regionauth_id:undefined,
-      marketing_name:undefined,
-      marketing_id:undefined,
-      po_code:undefined,
-      budget_code:undefined,
+      item_type: undefined
     }
 
     return {
@@ -342,136 +250,16 @@ export default {
         page: 1,
         pageSize: 20
       },
-      updateLogsDialog:false,
-      updateLogsList:[],
       activityItemTotalCount: 0,
       activityItemListsData: [],
       total_count: 0,
       activityItemDialog: false,
       ItemLoading: false,
       tabList: [
-        { name: '全部', activeName: '0' },
-        { name: '待审核', activeName: '1' },
-        { name: '审核通过', activeName: '2' },
-        { name: '审核拒绝', activeName: '3' },
-        { name: '已上架', activeName: '4' },
-        { name: '已下架', activeName: '5' },
-      ],
-      areasList:[],
-      actionsList: [
-        {
-          name: '编辑',
-          type: 'button',
-          key: 'edit',
-          buttonType: 'text',
-          visible: (row) => {
-            //除了已上架，其他都展示
-            return !(row.audit_status == 'approved' && row.approve_status == 'on')
-          },
-          action: {
-            handler: ([row]) => {
-              this.editActivityAction(row)
-            }
-          }
-        },
-        {
-          name: '审核',
-          type: 'button',
-          key: 'review',
-          buttonType: 'text',
-          visible: (row) => {
-            //只有待审核展示
-            return (row.audit_status == 'processing' && row.approve_status == '')
-          },
-          action: {
-            handler: ([row]) => {
-              this.editActivityAction(row, 'isReview')
-            }
-          }
-        },
-        {
-          name: '上架',
-          type: 'button',
-          key: 'put',
-          buttonType: 'text',
-          visible: (row) => {
-            //审核通过和已下架展示
-            // scope.row.audit_status == 'approved' && scope.row.approve_status == ''
-            // scope.row.audit_status == 'approved' && scope.row.approve_status == 'down'
-            return (
-              row.audit_status == 'approved' &&
-              (row.approve_status == '' || row.approve_status == 'down')
-            )
-          },
-          action: {
-            handler: ([row]) => {
-              this.handleOnOff(row)
-            }
-          }
-        },
-        {
-          name: '下架',
-          type: 'button',
-          key: 'takeoff',
-          buttonType: 'text',
-          visible: (row) => {
-            //已上架展示
-            return row.audit_status == 'approved' && row.approve_status == 'on'
-          },
-          action: {
-            handler: ([row]) => {
-              this.handleOnOff(row, 'isOff')
-            }
-          }
-        },
-        {
-          name: '查看详情',
-          type: 'button',
-          key: 'detail',
-          buttonType: 'text',
-          visible: (row) => {
-            return 1
-          },
-          action: {
-            handler: ([row]) => {
-              this.editActivityAction(row,'isnodata')
-            }
-          }
-        },
-        {
-          name: '日志',
-          type: 'button',
-          key: 'logs',
-          buttonType: 'text',
-          visible: (row) => {
-            return 1
-          },
-          action: {
-            handler: ([row]) => {
-              this.logAction(row)
-            }
-          }
-        },
-        {
-          name: '删除',
-          type: 'button',
-          key: 'delete',
-          buttonType: 'text',
-          visible: (row) => {
-            //待审核和审核拒绝展示
-            // scope.row.audit_status == 'processing' && scope.row.approve_status == ''
-            // scope.row.audit_status == 'rejected' && scope.row.approve_status == ''
-            return (
-              (row.audit_status == 'processing' || row.audit_status == 'rejected') &&
-              row.approve_status == ''
-            )
-          },
-          action: {
-            handler: ([row]) => {
-              this.deleteActivityAction(row)
-            }
-          }
-        }
+        { name: '全部', activeName: 'all' },
+        { name: '待开始', activeName: 'waiting' },
+        { name: '进行中', activeName: 'ongoing' },
+        { name: '已结束', activeName: 'end' }
       ]
     }
   },
@@ -479,21 +267,9 @@ export default {
     ...mapGetters(['wheight'])
   },
   mounted() {
-   
-    this.getAreaList()
+    this.fetchList()
   },
   methods: {
-    async getAreaList(){
-      // 查询区域数据
-     const res = await this.$api.regionauth.getRegionauth()
-     this.areasList =  res?.list?.map((el) => ({
-          value: el.regionauth_id,
-          label: el.regionauth_name
-        }))
-        this.params.regionauth_id =  this.areasList[0]?.value
-
-        this.fetchList()
-    },
     onSearch() {
       this.page.pageIndex = 1
       this.$nextTick(() => {
@@ -502,42 +278,17 @@ export default {
     },
     getParams() {
       const time = {}
-      const activity_time = this.params.activity_time
-      if (activity_time && activity_time.length > 0) {
-        time.start_time = this.dateStrToTimeStamp(activity_time[0] + ' 00:00:00')
-        time.end_time = this.dateStrToTimeStamp(activity_time[1] + ' 23:59:59')
-      }
-
       const create_time = this.params.create_time
       if (create_time && create_time.length > 0) {
-        time.create_start_time = this.dateStrToTimeStamp(create_time[0] + ' 00:00:00')
-        time.create_end_time = this.dateStrToTimeStamp(create_time[1] + ' 23:59:59')
+        time.start_time = this.dateStrToTimeStamp(create_time[0] + ' 00:00:00')
+        time.end_time = this.dateStrToTimeStamp(create_time[1] + ' 23:59:59')
       }
-
       let params = {
         ...this.params,
-        // status: this.params.status === 'all' ? undefined : this.params.status,
-        activity_time: [],
-        create_time:[],
+        status: this.params.status === 'all' ? undefined : this.params.status,
+        create_time: [],
         ...time
       }
-      const statusMap =  {
-          0:{status:undefined},
-          1:{audit_status:'processing',approve_status:''},
-          2:{audit_status:'approved',approve_status:''},
-          3:{audit_status:'rejected',approve_status:''},
-          4:{audit_status:'approved',approve_status:'on'},
-          5:{audit_status:'approved',approve_status:'down'},
-        }
-      const statusParams = statusMap[this.params.status]
-      if(statusParams){
-        params = {
-          ...params,
-          ...statusParams
-        }
-      }
-      delete params.status
-
       return params
     },
     onReset() {
@@ -549,22 +300,10 @@ export default {
       this.onSearch()
     },
     addActivityData() {
-      this.$router.push({ path: this.matchHidePage('editor') })
+      this.$router.push({ path: this.matchRoutePath('editor') })
     },
-    async logAction({marketing_id}) {
-      this.updateLogsDialog = true
-      this.updateLogsList = []
-      const {result} = await this.$api.promotions.getLogInfo({
-        relation_id:marketing_id,
-        promotion_type:'full_minus'
-      })
-      this.updateLogsList = result
-    },
-    editActivityAction(row, type) {
-      let path = `${this.matchHidePage('editor/') + row.marketing_id}${
-        type ? `?${type}=1` : ''
-      }`
-      this.$router.push({ path })
+    editActivityAction(index, row) {
+      this.$router.push({ path: this.matchRoutePath('editor/') + row.marketing_id })
     },
     deleteActivityAction(row) {
       var msg = '你确定要删除该活动吗?'
@@ -589,7 +328,7 @@ export default {
     },
     viewDetail(row) {
       this.$router.push({
-        path: this.matchHidePage('editor/') + row.marketing_id,
+        path: this.matchRoutePath('editor/') + row.marketing_id,
         query: { isnodata: true }
       })
     },
@@ -612,36 +351,6 @@ export default {
           this.ItemLoading = false
         })
       }
-    },
-    async handleOnOff(row, isOff) {
-      const msg = `是否确认${isOff ? '下' : '上'}架该活动？`
-      this.$confirm(msg, '提示', {
-        cancelButtonText: '取消',
-        confirmButtonText: '确定',
-        beforeClose: (action, instance, done) => {
-          if (action === 'confirm') {
-            instance.confirmButtonLoading = true
-            this.$api.promotions
-              .approvePromotion({
-                relation_id: row.marketing_id,
-                approve_status: isOff ? 'down' : 'on',
-                promotion_type: 'full_minus'
-              })
-              .then((res) => {
-                this.$message({
-                  message: `${isOff ? '下' : '上'}架成功`,
-                  type: 'success',
-                  duration: 3 * 1000
-                })
-                done()
-                this.fetchList()
-              }).finally(() => {
-                instance.confirmButtonLoading = false
-              })
-          }
-          done()
-        }
-      })
     },
     handleGoodsCurrentChange(page_num) {
       this.ItemLoading = true

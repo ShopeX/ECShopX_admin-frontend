@@ -28,20 +28,6 @@ export const DISTRIBUTION_TYPE = [
   { title: '商家自配送', value: 'merchant' }
 ]
 
-export const DISTRIBUTION_TYPE_MAP = {
-  logistics: '物流',
-  dada: '达达同城配',
-  ziti: '店铺自提',
-  merchant: '商家自配送'
-}
-
-// 配送方式反向映射
-// key 转为 value
-// value 转为 label
-export const DISTRIBUTION_TYPE_MAP_REVERSE = Object.entries(DISTRIBUTION_TYPE_MAP).reduce((acc, [key, value]) => {
-  return [...acc, { title: value, value: key }]
-}, [])
-
 export const DISTRIBUTION_STATUS = [
   { title: '全部', value: '' },
   { title: '待确认', value: 'CONFIRMING' },
@@ -103,18 +89,6 @@ export const ORDER_TYPE = [
   // { title: "助力订单", value: "bargain" },
   // { title: "服务类订单", value: "services" },
   // { title: "兑换订单", value: "excard"}
-]
-
-export const ORDER_STATUS_STANDARD = [
-  { title: '全部', value: '' },
-  { title: '待支付', value: 'notpay' },
-  { title: '待成团', value: 'part' },
-  { title: '待发货', value: 'notship' },
-  { title: '部分发货', value: 'partship' },
-  { title: '待收货', value: 'shipping' },
-  { title: '待提货', value: 'partpick' },
-  { title: '已完成', value: 'finish' },
-  { title: '已取消', value: 'cancel' }
 ]
 
 export const ORDER_TYPE_STANDARD = [
@@ -268,7 +242,7 @@ export const FORM_COMP = {
 
 export const SYSTEM_CONFIG = {
   platform: { name: 'Powered By ShopeX', theme: '#CB060F' },
-  standard: { name: '商派Onex云店', theme: '#FF9D00' },
+  standard: { name: '新零售云店', theme: '#FF9D00' },
   b2c: { name: '官方商城', theme: '#157FE3' },
   in_purchase: { name: '商派Onex内购', theme: '#EC442E' }
 }
@@ -295,7 +269,6 @@ export const LINK_PATH = {
 export const CARD_TYPE = {
   'discount': '折扣券',
   'cash': '满减券',
-  'minus': '立减券',
   'new_gift': '兑换券'
 }
 
@@ -328,16 +301,3 @@ export const ROLE_LIST = [
   { label: '企业员工', value: 6 },
   { label: '员工亲友', value: 9 }
 ]
-
-
-export const PROMOTION_TYPE_MAP = {
-  'single_group' : '团购' ,
-  'full_minus':'满减',
-  'full_discount':'满折',
-  'full_gift':'满赠',
-  'normal':'秒杀',
-  'limited_time_sale':'限时特惠',
-  'plus_price_buy':'换购',
-  'specific_crowd':'定向营销'
-}
-

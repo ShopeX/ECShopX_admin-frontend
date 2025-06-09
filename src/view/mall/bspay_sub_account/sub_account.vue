@@ -22,7 +22,7 @@
               <el-input v-model="form.trade_id" />
             </el-form-item>
           </el-col>
-          <el-col v-if="$store.getters.login_type != 'distributor' && !IS_SUPPLIER()" :span="8">
+          <el-col v-if="$store.getters.login_type != 'distributor'" :span="8">
             <el-form-item label="店铺名称" prop="distributor_name">
               <el-input v-model="form.distributor_name" />
             </el-form-item>
@@ -257,7 +257,6 @@
 </template>
 
 <script>
-import { IS_SUPPLIER } from '@/utils'
 export default {
   data() {
     return {

@@ -132,7 +132,7 @@ export default {
             },
             action: {
               handler: async ([row]) => {
-                this.$router.push({ path: this.matchHidePage('create/') + row.id })
+                this.$router.push({ path: this.matchRoutePath('create/') + row.id })
               }
             }
           },
@@ -146,7 +146,7 @@ export default {
             },
             action: {
               handler: async ([row]) => {
-                this.$router.push({ path: this.matchHidePage('create/') + row.id })
+                this.$router.push({ path: this.matchRoutePath('create/') + row.id })
               }
             }
           },
@@ -159,7 +159,7 @@ export default {
               handler: async ([row]) => {
                 this.$router.push({
                   path:
-                    this.matchHidePage('goods/') + `${row.id}?distributor_id=${row.distributor_id}`
+                    this.matchRoutePath('goods/') + `${row.id}?distributor_id=${row.distributor_id}`
                 })
               }
             }
@@ -171,7 +171,7 @@ export default {
             buttonType: 'text',
             action: {
               handler: async ([row]) => {
-                this.$router.push({ path: this.matchHidePage('dependents/') + row.id })
+                this.$router.push({ path: this.matchRoutePath('dependents/') + row.id })
               }
             }
           },
@@ -376,7 +376,7 @@ export default {
       this.$refs['finder'].refresh()
     },
     createActivity() {
-      this.$router.push({ path: this.matchHidePage('create') })
+      this.$router.push({ path: this.matchRoutePath('create') })
     },
     async getEnterpriseList({ page, pageSize }) {
       const { list, total_count } = await this.$api.member.getPurchaseCompanyList({

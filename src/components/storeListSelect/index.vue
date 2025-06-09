@@ -1,13 +1,13 @@
 <template>
   <el-dialog
-    class="store-list-select"
+    class="store-dialog"
     title="选择店铺"
     :visible.sync="showDialog"
     :close-on-click-modal="false"
     :before-close="cancelAction"
   >
     <div style="margin-bottom: 15px">
-      <!-- <el-input
+      <el-input
         v-model="name"
         placeholder="输入店铺名称"
         clearable
@@ -17,17 +17,7 @@
           icon="el-icon-search"
           @click="handleIconClick"
         />
-      </el-input> -->
-
-      <SpFilterForm :model="formData" size="small" @onSearch="onSearch" @onReset="onSearch">
-        <SpFilterFormItem prop="distributor_id">
-          <el-input v-model="formData.distributor_id" placeholder="请输入店铺编号" />
-        </SpFilterFormItem>
-        <SpFilterFormItem prop="name">
-          <el-input v-model="formData.name" placeholder="请输入店铺名称" />
-        </SpFilterFormItem>
-      </SpFilterForm>
-
+      </el-input>
       <!-- <el-switch v-model="is_distributor" active-text="店铺" inactive-text="门店" @change="handleIconClick"></el-switch> -->
     </div>
     <div style="margin-bottom: 15px" />
@@ -41,44 +31,46 @@
       @select="handleSelectionChange"
       @select-all="selectAll"
     >
-      <el-table-column type="selection" :reserve-selection="true" width="50" />
-      <el-table-column prop="distributor_id" label="店铺ID" />
-      <el-table-column prop="regionauth_name" label="所属区域" />
-      <el-table-column prop="name" label="店铺名称" />
-      <el-table-column prop="address" label="店铺地址" show-overflow-tooltip />
-      <el-table-column prop="category_name" label="店铺分类" />
-      <el-table-column prop="contact" label="是否展示">
-        <template slot-scope="scope">
-          {{ scope.row.is_display == 1 ? '展示' : '不展示' }}
-        </template>
-      </el-table-column>
-      <el-table-column prop="contact" label="状态">
-        <template slot-scope="scope">
-          {{ statusMap[scope.row.status] }}
-        </template>
-      </el-table-column>
-      <!-- <el-table-column
+      <el-table-column
+        type="selection"
+        :reserve-selection="true"
+        width="50"
+      />
+      <el-table-column
+        prop="name"
+        label="名称"
+      />
+      <el-table-column
         prop="contact"
         label="联系人"
-      /> -->
+      />
       <!-- <el-table-column prop="store_name" label="门店"></el-table-column> -->
+      <el-table-column
+        prop="address"
+        label="地址"
+        show-overflow-tooltip
+      />
     </el-table>
-    <div class="tr">
-      <!-- v-if="total_count > params.pageSize" -->
+    <div
+      v-if="total_count > params.pageSize"
+      class="tr"
+    >
       <el-pagination
-        class="store-pagination is-background"
-        layout="total, sizes, prev, pager, next, jumper"
+        layout="prev, pager, next"
         :total="total_count"
-        :current-page="params.page"
-        :page-sizes="[10, 20, 30]"
         :page-size="pageLimit"
-        @size-change="handleSizeChange"
         @current-change="handleCurrentChange"
       />
     </div>
-    <span slot="footer" class="dialog-footer">
+    <span
+      slot="footer"
+      class="dialog-footer"
+    >
       <el-button @click="cancelAction">取 消</el-button>
-      <el-button type="primary" @click="saveStoreAction">确 定</el-button>
+      <el-button
+        type="primary"
+        @click="saveStoreAction"
+      >确 定</el-button>
     </span>
   </el-dialog>
 </template>
@@ -114,7 +106,7 @@ export default {
       default: 'selectRow'
     }
   },
-  data() {
+  data () {
     return {
       loading: false,
       storeData: [],
@@ -128,21 +120,11 @@ export default {
         is_valid: 'true'
       },
       name: '',
-      is_distributor: true,
-      formData: {
-        distributor_id: '',
-        name: ''
-      },
-      statusMap: {
-        0: '待审核',
-        1: '已上架',
-        2: '已下架',
-        9: '已撤柜'
-      }
+      is_distributor: true
     }
   },
   computed: {
-    showDialog() {
+    showDialog () {
       return this.storeVisible
     }
   },
@@ -150,7 +132,7 @@ export default {
     relDataIds: {
       handler: function (newVal, oldVal) {
         if (newVal) {
-          this.selectRows = JSON.parse(JSON.stringify(newVal))
+          this.selectRows = newVal
           this.getNewsList()
         } else {
           this.selectRows = []
@@ -159,41 +141,33 @@ export default {
       immediate: true,
       deep: true
     },
-    getStatus(newVal, oldVal) {
+    getStatus (newVal, oldVal) {
       if (newVal) {
         this.params.is_valid = this.isValid ? this.isValid : 'true'
         this.getNewsList()
       }
     },
-    sourceType(newVal, oldVal) {
+    sourceType (newVal, oldVal) {
       console.log(newVal)
       if (newVal) {
       }
     }
   },
   methods: {
-    onSearch() {
-      this.getNewsList()
-    },
-    getRowKeys(row) {
+    getRowKeys (row) {
       return row.distributor_id
     },
-    handleCurrentChange(page_num) {
+    handleCurrentChange (page_num) {
       this.params.page = page_num
       this.getNewsList()
     },
-    handleSizeChange(val) {
-      this.params.pageSize = val
-      this.params.page = 1
-      this.getNewsList()
-    },
-    handleIconClick() {
+    handleIconClick () {
       this.params.name = this.name
       this.params.is_distributor = this.is_distributor
       console.log(this.params)
       this.getNewsList()
     },
-    toggleSelection(rows) {
+    toggleSelection (rows) {
       if (rows) {
         rows.forEach((row) => {
           this.$refs.multipleTable.toggleRowSelection(row)
@@ -202,7 +176,7 @@ export default {
         this.$refs.multipleTable.clearSelection()
       }
     },
-    handleSelectionChange(val,row) {
+    handleSelectionChange (val) {
       if (val.length > 0) {
         this.multipleSelection = val
         const newVal = this.selectRows.filter((item) => {
@@ -231,7 +205,7 @@ export default {
       }
     },
     // 全选事件
-    selectAll(val) {
+    selectAll (val) {
       if (val.length > 0) {
         this.multipleSelection = val
         val.forEach((item) => {
@@ -257,20 +231,20 @@ export default {
         this.selectRows = list
       }
     },
-    cancelAction() {
+    cancelAction () {
       this.$emit('closeStoreDialog')
     },
-    saveStoreAction() {
+    saveStoreAction () {
       if (this.returnType === 'selectRow') {
-        this.$emit('chooseStore', JSON.parse(JSON.stringify(this.selectRows)))
+        this.$emit('chooseStore', this.selectRows)
       } else {
         this.$emit('chooseStore', this.multipleSelection)
       }
     },
-    getNewsList() {
+    getNewsList () {
       if (this.getStatus) {
         this.loading = true
-        getDistributorEasyList({ ...this.params, ...this.formData }).then((response) => {
+        getDistributorEasyList(this.params).then((response) => {
           this.storeData = response.data.data.list
           this.total_count = parseInt(response.data.data.total_count)
           this.loading = false
@@ -299,23 +273,8 @@ export default {
 }
 </script>
 
-<style lang="scss">
-.store-list-select {
-  .el-checkbox {
-    display: inline;
-  }
-  .store-pagination {
-    text-align: right;
-    margin-top: 10px;
-  }
-  .sp-filter-form {
-    padding: 8px 8px 0px 8px;
-  }
-  .sp-finder-hd {
-    display: none;
-  }
-  .el-dialog__body {
-    padding: 0 !important;
-  }
+<style type="text/css">
+.store-dialog .el-checkbox {
+  display: inline;
 }
 </style>

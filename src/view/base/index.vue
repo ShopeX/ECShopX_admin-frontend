@@ -263,18 +263,14 @@
         color: white;
       }
       &_s {
-        // background: url('@/assets/img/saas/try_1.png');
       }
       &_b {
-        // background: url('@/assets/img/saas/biaozun.png');
         color: white;
         h3 {
           color: white;
         }
       }
       &_l {
-        // background: url('@/assets/img/saas/liansuo.png');
-
         h3 {
           color: white;
         }
@@ -361,7 +357,6 @@
   }
 }
 .demo-img {
-  // background: url('@/assets/img/saas/bcg_1.png');
   width: 100%;
   text-align: center;
   // padding: 40px 0;
@@ -398,7 +393,6 @@
 }
 .sl-img {
   // padding: 0;
-  // background: url('@/assets/img/saas/bcg_2.png');
   width: 100%;
   text-align: center;
   // padding: 40px 0;

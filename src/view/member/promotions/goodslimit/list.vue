@@ -151,10 +151,10 @@ export default {
       this.onSearch()
     },
     addLimitPromotion() {
-      this.$router.push({ path: this.matchHidePage('editor') })
+      this.$router.push({ path: this.matchRoutePath('editor') })
     },
     updateLimitPromotion(row) {
-      this.$router.push({ path: this.matchHidePage('editor/') + row.limit_id })
+      this.$router.push({ path: this.matchRoutePath('editor/') + row.limit_id })
     },
     async fetchList() {
       this.loading = true
@@ -171,7 +171,7 @@ export default {
     },
     showLimitPromotion(row) {
       this.$router.push({
-        path: this.matchHidePage('editor/') + row.limit_id,
+        path: this.matchRoutePath('editor/') + row.limit_id,
         query: { isshow: true }
       })
     },

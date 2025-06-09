@@ -104,10 +104,6 @@ export default {
     size: {
       type: String,
       default: 'normal'
-    },
-    disabled: {
-      type: Boolean,
-      default: false
     }
   },
   watch: {
@@ -123,9 +119,6 @@ export default {
   methods: {
     // 图片添加
     async handleSelectImage() {
-      if(this.disabled) {
-        return ;
-      }
       const { data } = await this.$picker.video({
         multiple: this.max > 1,
         num: this.max > 1 ? this.max - this.localValue.length : 1

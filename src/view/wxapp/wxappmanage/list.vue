@@ -285,7 +285,7 @@
                   <router-link
                     v-if="scope.row.authorizer.is_direct == 0"
                     :to="{
-                      path: matchHidePage('policy'),
+                      path: matchRoutePath('policy'),
                       query: {
                         app_id: scope.row.authorizer.authorizer_appid,
                         nick_name: scope.row.authorizer.nick_name
@@ -654,12 +654,12 @@ export default {
   components: {
     sideBar
   },
+  mixins: [mixin, pageMixin],
   provide() {
     return {
       refresh: this.getDataList
     }
   },
-  mixins: [mixin, pageMixin],
   data() {
     return {
       activeName: 'miniprogram',

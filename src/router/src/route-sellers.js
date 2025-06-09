@@ -77,7 +77,7 @@ export default {
       path: 'popularize/popularizegoods',
       name: `业务员商品`,
       component: () => import('@/view/popularize/goodsStore')
-    },
+    },   
 
     {
       path: 'storemanager/distributortags',
@@ -105,20 +105,5 @@ export default {
       name: '商户设置',
       component: () => import('@/view/mall/marketing/setting')
     },
-    {
-      path: 'salesorganization/regionalManagement',
-      name: `区域管理`,
-      component: () => import('@/view/regionauth/list.vue'),
-      children: [
-        {
-          path: 'detail/:itemId?',
-          component: () => import('@/view/regionauth/detail/index.vue')
-        },
-        {
-          path: 'wechatPayConfig',
-          component: () => import('@/view/regionauth/wechatPayConfig')
-        }
-      ]
-    }
   ]
 }

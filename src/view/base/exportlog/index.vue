@@ -26,11 +26,6 @@
         <el-tab-pane label="业绩统计" name="popularizeStatic" />
         <el-tab-pane label="业绩订单" name="popularizeOrder" />
         <el-tab-pane label="配送员业绩导出" name="delivery_staffdata" />
-        <el-tab-pane label="抽奖报表" name="export_luckdraw_log" />
-        <el-tab-pane label="发券记录" name="user_coupon" />
-        <el-tab-pane label="券核销记录" name="coupon_use_logs" />
-        <el-tab-pane label="同义词导出" name="search_synonyms" />
-        <el-tab-pane label="主播账号导出" name="polyv_anchor" />
       </template>
       <template v-else>
         <el-tab-pane label="会员导出" name="member" />
@@ -50,9 +45,9 @@
         /> -->
         <el-tab-pane label="商品统计导出" name="goods_data" />
         <el-tab-pane label="商品导出" name="items" />
+        <el-tab-pane label="供应商商品导出" name="supplier_goods" />
         <el-tab-pane label="商品标签导出" name="normal_items_tag" />
         <el-tab-pane v-if="!VERSION_IN_PURCHASE" label="店铺商品导出" name="distributor_items" />
-        <el-tab-pane label="主播账号导出" name="polyv_anchor" />
         <!-- <el-tab-pane
           v-if="!VERSION_IN_PURCHASE"
           label="积分商品导出"
@@ -78,7 +73,6 @@
           label="报名导出"
           name="selform_registration_record"
         />
-        <el-tab-pane label="抽奖报表" name="export_luckdraw_log" />
         <el-tab-pane label="售后列表" name="aftersale_record_count" />
         <el-tab-pane label="退款单列表" name="refund_record_count" />
         <el-tab-pane label="银联分账单" name="chinaums_division" />
@@ -88,9 +82,6 @@
         <!-- <el-tab-pane label="财务售后单导出" name="aftersale_financial" /> -->
         <el-tab-pane label="财务销售报表导出" name="salesreport_financial" />
         <el-tab-pane label="交易统计导出" name="hfpay_trade_record" />
-        <el-tab-pane label="发券记录" name="user_coupon" />
-        <el-tab-pane label="券核销记录" name="coupon_use_logs" />
-        <el-tab-pane label="同义词导出" name="search_synonyms" />
         <!-- <el-tab-pane
           label="分账统计导出"
           name="hfpay_order_record"

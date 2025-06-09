@@ -33,12 +33,12 @@ export default {
     {
       path: 'article/planting',
       name: `软文`,
-      component: () => import('@/view/base/planting/index'),
+      component: () => import('@/view/content/soft-article'),
       children: [
         {
           path: 'editor/:itemId?',
           name: '软文-编辑',
-          component: () => import('@/view/base/planting/editor')
+          component: () => import('@/view/content/soft-article-id')
         }
       ]
     },
@@ -165,16 +165,6 @@ export default {
       path: 'aliminiapp',
       name: `支付宝小程序设置`,
       component: () => import('@/view/wxapp/aliminiapp/setting')
-    },  
-     {
-        path: 'sitead/pictureAd',
-        name: `图片广告`,
-        component: () => import('@/view/brand/sitead/pictureAd/index.vue')
-      },
-      {
-        path: 'sitead/dialogAd',
-        name: `弹窗广告`,
-        component: () => import('@/view/brand/sitead/dialogAd/index.vue')
-      }
+    }
   ]
 }

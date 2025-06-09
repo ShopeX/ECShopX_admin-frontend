@@ -211,7 +211,7 @@ export default {
     },
     save() {
       if (this.form.isOpenMemberPoint) {
-        if (this.form.gain_point <= 0 || this.form.gain_time <= 0) {
+        if (this.form.gain_point <= 0 || this.form.gain_time < 0) {
           this.$message({ message: '请配置获取积分参数', type: 'error' })
           return
         }

@@ -1,40 +1,76 @@
 <template>
   <div class="section-white">
-    <h3 class="title">退款单详情</h3>
+    <h3 class="title">
+      退款单详情
+    </h3>
     <div class="section-body">
       <el-row>
-        <el-col :span="3" class="col-3 content-right"> 退款单号: </el-col>
+        <el-col
+          :span="3"
+          class="col-3 content-right"
+        >
+          退款单号:
+        </el-col>
         <el-col :span="20">
           {{ refundDetail.refund_bn }}
         </el-col>
       </el-row>
       <el-row>
-        <el-col :span="3" class="col-3 content-right"> 订单号: </el-col>
+        <el-col
+          :span="3"
+          class="col-3 content-right"
+        >
+          订单号:
+        </el-col>
         <el-col :span="20">
           {{ refundDetail.order_id }}
         </el-col>
       </el-row>
       <el-row>
-        <el-col :span="3" class="col-3 content-right"> 售后单号: </el-col>
+        <el-col
+          :span="3"
+          class="col-3 content-right"
+        >
+          售后单号:
+        </el-col>
         <el-col :span="20">
           {{ refundDetail.aftersales_bn }}
         </el-col>
       </el-row>
       <el-row>
-        <el-col :span="3" class="col-3 content-right"> 对应支付单号: </el-col>
+        <el-col
+          :span="3"
+          class="col-3 content-right"
+        >
+          对应支付单号:
+        </el-col>
         <el-col :span="20">
           {{ refundDetail.trade_id }}
         </el-col>
       </el-row>
       <el-row>
-        <el-col :span="3" class="col-3 content-right"> 应退金额: </el-col>
-        <el-col :span="20"> ￥{{ refundDetail.refund_fee / 100 }} </el-col>
+        <el-col
+          :span="3"
+          class="col-3 content-right"
+        >
+          应退金额:
+        </el-col>
+        <el-col :span="20">
+          ￥{{ refundDetail.refund_fee / 100 }}
+        </el-col>
       </el-row>
       <el-row>
-        <el-col :span="3" class="col-3 content-right"> 实退金额: </el-col>
-        <el-col :span="20"> ￥{{ refundDetail.refunded_fee / 100 }} </el-col>
+        <el-col
+          :span="3"
+          class="col-3 content-right"
+        >
+          实退金额:
+        </el-col>
+        <el-col :span="20">
+          ￥{{ refundDetail.refunded_fee / 100 }}
+        </el-col>
       </el-row>
-      <!-- <el-row>
+      <el-row>
         <el-col
           :span="3"
           class="col-3 content-right"
@@ -55,24 +91,14 @@
         <el-col :span="20">
           {{ refundDetail.refunded_point }}
         </el-col>
-      </el-row> -->
-
-      <!-- 新增 区域 -->
-      <el-row>
-        <el-col :span="3" class="col-3 content-right"> 区域: </el-col>
-        <el-col :span="20">
-          {{ refundDetail.regionauth_name }}
-        </el-col>
-      </el-row>
-      <!-- 新增 店铺 -->
-      <el-row>
-        <el-col :span="3" class="col-3 content-right"> 店铺: </el-col>
-        <el-col :span="20">
-          {{ refundDetail.distributor_name }}
-        </el-col>
       </el-row>
       <el-row>
-        <el-col :span="3" class="col-3 content-right"> 退款单状态: </el-col>
+        <el-col
+          :span="3"
+          class="col-3 content-right"
+        >
+          退款单状态:
+        </el-col>
         <el-col :span="20">
           <el-tag
             v-if="refundDetail.refund_status == 'READY'"
@@ -133,12 +159,26 @@
         </el-col>
       </el-row>
       <el-row>
-        <el-col :span="3" class="col-3 content-right"> 退款类型: </el-col>
+        <el-col
+          :span="3"
+          class="col-3 content-right"
+        >
+          退款类型:
+        </el-col>
         <el-col :span="20">
-          <el-tag v-if="refundDetail.refund_type == '0'" effect="plain" type="warning" size="mini">
+          <el-tag
+            v-if="refundDetail.refund_type == '0'"
+            effect="plain"
+            type="warning"
+            size="mini"
+          >
             售后
           </el-tag>
-          <el-tag v-else-if="refundDetail.refund_type == '1'" effect="plain" size="mini">
+          <el-tag
+            v-else-if="refundDetail.refund_type == '1'"
+            effect="plain"
+            size="mini"
+          >
             售前
           </el-tag>
           <el-tag
@@ -152,22 +192,48 @@
         </el-col>
       </el-row>
       <el-row>
-        <el-col :span="3" class="col-3 content-right"> 是否退运费: </el-col>
+        <el-col
+          :span="3"
+          class="col-3 content-right"
+        >
+          是否退运费:
+        </el-col>
         <el-col :span="20">
-          <el-tag v-if="refundDetail.freight <= 0" effect="plain" type="warning" size="mini">
+          <el-tag
+            v-if="refundDetail.freight <= 0"
+            effect="plain"
+            type="warning"
+            size="mini"
+          >
             不退运费
           </el-tag>
-          <el-tag v-else-if="refundDetail.freight > 0" effect="plain" size="mini"> 退运费 </el-tag>
+          <el-tag
+            v-else-if="refundDetail.freight > 0"
+            effect="plain"
+            size="mini"
+          >
+            退运费
+          </el-tag>
         </el-col>
       </el-row>
       <el-row>
-        <el-col :span="3" class="col-3 content-right"> 退运费金额: </el-col>
+        <el-col
+          :span="3"
+          class="col-3 content-right"
+        >
+        退运费金额:
+        </el-col>
         <el-col :span="20">
-          {{ refundDetail.freight / 100 }}
+          {{ refundDetail.freight/100 }}
         </el-col>
       </el-row>
       <el-row>
-        <el-col :span="3" class="col-3 content-right"> 退款支付方式: </el-col>
+        <el-col
+          :span="3"
+          class="col-3 content-right"
+        >
+          退款支付方式:
+        </el-col>
         <el-col :span="20">
           <span v-if="refundDetail.pay_type == 'wxpay'">微信支付</span>
           <span v-if="refundDetail.pay_type == 'wxpayapp'">微信APP支付</span>
@@ -185,76 +251,83 @@
         </el-col>
       </el-row>
       <el-row>
-        <el-col :span="3" class="col-3 content-right"> 退款渠道: </el-col>
+        <el-col
+          :span="3"
+          class="col-3 content-right"
+        >
+          退款渠道:
+        </el-col>
         <el-col :span="20">
-          <span v-if="refundDetail.refund_channel == 'offline'"
-            >线下退款
-            <el-button
-              v-if="refundDetail.refund_status == 'SUCCESS'"
-              type="text"
-              @click="handleAccountView"
-              >查看账户</el-button
-            >
+          <span v-if="refundDetail.refund_channel == 'offline'">线下退款
+            <el-button v-if="refundDetail.refund_status == 'SUCCESS'" type="text" @click="handleAccountView">查看账户</el-button>
           </span>
           <span v-else-if="refundDetail.refund_channel == 'original'">原路返回</span>
         </el-col>
       </el-row>
       <el-row>
-        <el-col :span="3" class="col-3 content-right"> 备注: </el-col>
+        <el-col
+          :span="3"
+          class="col-3 content-right"
+        >
+          备注:
+        </el-col>
         <el-col :span="20">
           {{ refundDetail.refunds_memo }}
         </el-col>
       </el-row>
-      <!-- 新增 退款流水号 -->
       <el-row>
-        <el-col :span="3" class="col-3 content-right"> 退款流水号: </el-col>
-        <el-col :span="20">
-          {{ refundDetail.refund_flow_id }}
+        <el-col
+          :span="3"
+          class="col-3 content-right"
+        >
+          第三方退款单号:
         </el-col>
-      </el-row>
-      <el-row>
-        <el-col :span="3" class="col-3 content-right"> 第三方退款单号: </el-col>
         <el-col :span="20">
           {{ refundDetail.refund_id }}
         </el-col>
       </el-row>
       <el-row>
-        <el-col :span="3" class="col-3 content-right"> 申请时间: </el-col>
+        <el-col
+          :span="3"
+          class="col-3 content-right"
+        >
+          申请时间:
+        </el-col>
         <el-col :span="20">
           {{ refundDetail.create_time | datetime('YYYY-MM-DD HH:mm:ss') }}
         </el-col>
       </el-row>
       <el-row>
-        <el-col :span="3" class="col-3 content-right"> 退款成功时间: </el-col>
-        <el-col :span="20">
+        <el-col
+          :span="3"
+          class="col-3 content-right"
+        >
+          退款成功时间:
+        </el-col>
+        <el-col
+          :span="20"
+        >
           <span v-if="refundDetail.refund_success_time">{{
             refundDetail.refund_success_time | datetime('YYYY-MM-DD HH:mm:ss')
           }}</span>
         </el-col>
       </el-row>
-      <!-- 新增 打款凭证 -->
-      <el-row>
-        <el-col :span="3" class="col-3 content-right"> 打款凭证: </el-col>
-        <el-col :span="20">
-          <img :src="refundDetail.offline_evidence" alt="打款凭证" />
-        </el-col>
-      </el-row>
-      <!-- 新增 强制完成交易操作人 -->
-      <el-row>
-        <el-col :span="3" class="col-3 content-right"> 强制完成交易操作人: </el-col>
-        <el-col :span="20">
-          {{ refundDetail.operator_name }}
-        </el-col>
-      </el-row>
       <el-row v-if="refundDetail.refuse_reason">
-        <el-col :span="3" class="col-3 content-right"> 商家处理申请说明: </el-col>
+        <el-col
+          :span="3"
+          class="col-3 content-right"
+        >
+          商家处理申请说明:
+        </el-col>
         <el-col :span="20">
           {{ refundDetail.refuse_reason }}
         </el-col>
       </el-row>
     </div>
     <div class="content-center">
-      <el-button @click.native="handleCancel"> 返回 </el-button>
+      <el-button @click.native="handleCancel">
+        返回
+      </el-button>
     </div>
 
     <SpDialog
@@ -304,30 +377,32 @@ import {
   sendConfirm
 } from '../../../api/aftersales'
 export default {
-  data() {
+  data () {
     return {
       isOpenErp: false,
       refund_bn: '',
       refundDetail: {},
-      refundDialog: false,
-      refundForm: {
-        bank_account_name: '',
-        bank_account_no: '',
-        bank_name: '',
-        refund_account_name: '',
-        refund_account_bank: '',
-        refund_account_no: '',
-        pay_type: '',
-        order_id: '',
-        refund_fee: ''
+      refundDialog:false,
+      refundForm:{
+        bank_account_name:'',
+        bank_account_no:'',
+        bank_name:'',
+        refund_account_name:'',
+        refund_account_bank:'',
+        refund_account_no:'',
+        pay_type:'',
+        order_id:'',
+        refund_fee:''
       },
-      refundFormList: [
-        {
+      refundFormList:[
+      {
           label: '退款方式',
           key: 'pay_type',
           type: 'radio',
           required: true,
-          options: [{ label: 'offline_pay', name: '线下转账' }]
+          options: [
+            { label: 'offline_pay', name: '线下转账' }
+          ]
         },
         {
           label: '收款人户名',
@@ -375,12 +450,12 @@ export default {
           label: '退款金额',
           key: 'refund_fee',
           type: 'input',
-          disabled: true
-        }
+          disabled:true
+        },
       ]
     }
   },
-  mounted() {
+  mounted () {
     if (this.$route.query.refund_bn) {
       this.refund_bn = this.$route.query.refund_bn
     }
@@ -388,20 +463,20 @@ export default {
     this.refundsInfo()
   },
   methods: {
-    refundsInfo() {
+    refundsInfo () {
       getRefundsDetail(this.refund_bn).then((response) => {
         let data = response.data.data
         this.refundDetail = data
-        console.log(this.refundDetail, 'refundDetail======')
+        console.log(this.refundDetail,'refundDetail======')
         this.loading = false
       })
     },
     handleCancel: function () {
       this.$router.back(-1)
     },
-    async handleAccountView() {
+    async handleAccountView(){
       const { offline_refund, pay_type } = this.refundDetail
-      this.refundForm = { ...offline_refund, pay_type }
+      this.refundForm = {...offline_refund, pay_type}
       this.refundDialog = true
     }
   }

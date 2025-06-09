@@ -23,7 +23,6 @@
   width: 200px;
   height: 200px;
 }
-
 </style>
 <style lang="scss">
 .physical-cell-reason {
@@ -66,7 +65,7 @@
         <!--        <SpFilterFormItem prop="supplier_goods_bn" label="供应商货号:">-->
         <!--          <el-input v-model="searchParams.supplier_goods_bn" placeholder="请输入供应商货号" />-->
         <!--        </SpFilterFormItem>-->
-        <SpFilterFormItem prop="approve_status" label="商品状态:" v-if="!IS_SUPPLIER()">
+        <SpFilterFormItem v-if="!IS_SUPPLIER()" prop="approve_status" label="商品状态:">
           <el-select v-model="searchParams.approve_status" clearable placeholder="请选择">
             <el-option
               v-for="item in statusOption"
@@ -77,7 +76,7 @@
             />
           </el-select>
         </SpFilterFormItem>
-        <SpFilterFormItem prop="is_market" label="供应状态:" v-if="IS_SUPPLIER()">
+        <SpFilterFormItem v-if="IS_SUPPLIER()" prop="is_market" label="供应状态:">
           <el-select v-model="searchParams.is_market" clearable placeholder="请选择">
             <el-option :key="1" label="可售" :value="1" />
             <el-option :key="0" label="不可售" :value="0" />
@@ -142,13 +141,8 @@
             />
           </el-select>
         </SpFilterFormItem>
-        <SpFilterFormItem prop="regions_id" label="商品产地:">
-          <el-cascader
-            v-model="searchParams.regions_id"
-            placeholder="请选择"
-            clearable
-            :options="regions"
-          />
+        <SpFilterFormItem prop="item_bn" label="SKU编码:">
+          <el-input v-model="searchParams.item_bn" placeholder="请输入SKU编码" />
         </SpFilterFormItem>
         <!--        <SpFilterFormItem prop="delivery_data_type" label="发货方式:">-->
         <!--          <el-select v-model="searchParams.delivery_data_type">-->
@@ -160,8 +154,13 @@
         <SpFilterFormItem prop="goods_bn" label="SPU编码:">
           <el-input v-model="searchParams.goods_bn" placeholder="请输入SPU编码" />
         </SpFilterFormItem>
-        <SpFilterFormItem prop="item_bn" label="SKU编码:">
-          <el-input v-model="searchParams.item_bn" placeholder="请输入SKU编码" />
+        <SpFilterFormItem prop="regions_id" label="商品产地:">
+          <el-cascader
+            v-model="searchParams.regions_id"
+            placeholder="请选择"
+            clearable
+            :options="regions"
+          />
         </SpFilterFormItem>
         <SpFilterFormItem v-if="!IS_SUPPLIER()" prop="tag_id" label="商品标签:">
           <el-cascader
@@ -200,7 +199,7 @@
         <el-button v-if="!IS_SUPPLIER()" type="primary" plain @click="changeCategory">
           更改销售分类
         </el-button>
-        <el-button type="primary" v-if="!IS_SUPPLIER()" plain @click="changeGoodsLabel">
+        <el-button v-if="!IS_SUPPLIER()" type="primary" plain @click="changeGoodsLabel">
           打标签
         </el-button>
         <el-button type="primary" plain @click="changeFreightTemplate"> 更改运费模板 </el-button>
@@ -213,7 +212,7 @@
           批量提交审核
         </el-button>
         <el-button type="primary" plain @click="changeItemsStore"> 统一库存 </el-button>
-        <el-button type="primary" plain v-if="!IS_SUPPLIER()" @click="batchChangeStore">
+        <el-button v-if="!IS_SUPPLIER()" type="primary" plain @click="batchChangeStore">
           更改状态
         </el-button>
         <el-button type="primary" plain @click="batchGifts('true')"> 设为赠品 </el-button>
@@ -256,13 +255,13 @@
             </el-dropdown-item>
           </el-dropdown-menu>
         </el-dropdown>
-        <el-button size="small" v-if="isBindJstErp" type="primary" @click="uploadJstErpItems()"
-          >上传商品到聚水潭</el-button
-        >
+        <el-button v-if="isBindJstErp" size="small" type="primary" @click="uploadJstErpItems()">
+          上传商品到聚水潭
+        </el-button>
         <!-- <el-button size="small" v-if="isBindJstErp" type="primary" @click="queryInventory()">同步聚水潭商品库存</el-button> -->
-        <el-button size="small" v-if="isBindWdtErp" type="primary" @click="uploadWdtErpItems()"
-          >上传商品到旺店通</el-button
-        >
+        <el-button v-if="isBindWdtErp" size="small" type="primary" @click="uploadWdtErpItems()">
+          上传商品到旺店通
+        </el-button>
         <el-dropdown v-if="VERSION_STANDARD && IS_ADMIN()">
           <el-button type="primary" plain icon="iconfont icon-daorucaozuo-01">
             同步商品<i class="el-icon-arrow-down el-icon--right" />
@@ -299,13 +298,14 @@
         ref="finder"
         :url="IS_DISTRIBUTOR() ? '/distributor/items' : '/goods/items'"
         fixed-row-action
-        row-actions-fixed-align="left"
+        :row-actions-align="'left'"
         row-actions-width="200px"
         :other-config="{}"
         :setting="tableList"
         :hooks="{
           beforeSearch: beforeSearch
         }"
+        row-actions-fixed-align="left"
         @selection-change="onSelectionChange"
       />
 
@@ -491,7 +491,7 @@
 
       <el-dialog :title="sunCodeTitle" :visible.sync="sunCode" width="360px">
         <div class="page-code">
-          <img class="page-code-img" :src="appCodeUrl" />
+          <img class="page-code-img" :src="appCodeUrl">
           <div class="page-btns">
             <el-button type="primary" plain @click="handleDownload(sunCodeTitle)">
               下载码
@@ -505,13 +505,11 @@
         </span>
       </el-dialog>
 
-
       <el-dialog title="错误信息" :visible.sync="errMessageVis" width="560px">
         <div class="page-code">
-          {{errMessage}}
+          {{ errMessage }}
         </div>
       </el-dialog>
-
 
       <!-- 查看多规格信息 -->
       <SpDrawer
@@ -520,7 +518,7 @@
         :width="800"
         @confirm="
           () => {
-            this.showItemSkuDrawer = false
+            showItemSkuDrawer = false
           }
         "
       >
@@ -590,7 +588,6 @@ export default {
     //   ]
     // }
 
-
     return {
       formLoading: false,
       commissionDialog: false,
@@ -649,13 +646,13 @@ export default {
         category: 0,
         item_category: 0,
         is_warning: false,
-        is_medicine:'',
+        is_medicine: '',
         audit_status: '',
         delivery_data_type: '',
         tag_id: '',
         tax_rate_code: '',
         is_gift: undefined,
-        is_prescription:'',
+        is_prescription: '',
         type: 0,
         barcode: '',
         distributor_id: 0,
@@ -665,10 +662,10 @@ export default {
         operator_name: '',
         cat_id: ''
       },
-      auditStatusMap:{
-        1:'未审核',
-        2:'审核通过',
-        3:'审核不通过'
+      auditStatusMap: {
+        1: '未审核',
+        2: '审核通过',
+        3: '审核不通过'
       },
       start_date: '',
       end_date: '',
@@ -677,7 +674,7 @@ export default {
       isGiftsData: {},
       exportData: {},
       exportTagData: {},
-      errMessage:'',
+      errMessage: '',
       errMessageVis: false,
       tagList: [],
       grade: [],
@@ -703,11 +700,12 @@ export default {
       batchChangeStateForm: {
         status: ''
       },
-      is_pharma_industry:false,
+      is_pharma_industry: false,
       isBindWdtErp: false,
       isBindJstErp: false,
       categoryList: [],
       templatesList: [],
+      templatesListavailable: [],
       itemCategoryList: [],
       regions: [],
       showMemberPriceDrawer: false,
@@ -803,7 +801,7 @@ export default {
           key: 'templates_id',
           component: ({ key }, value) => (
             <el-select v-model={value[key]}>
-              {this.templatesList.map((item) => (
+              {this.templatesListavailable.map((item) => (
                 <el-option label={item.name} value={item.template_id} />
               ))}
             </el-select>
@@ -887,8 +885,8 @@ export default {
             visible: (row) => row.medicine_data?.audit_status == 3,
             action: {
               type: 'link',
-              handler: async([row]) => {
-                await this.$api.goods.medicineItemsSync({goods_id: row.goods_id})
+              handler: async ([row]) => {
+                await this.$api.goods.medicineItemsSync({ goods_id: row.goods_id })
                 this.$message.success('操作成功')
                 setTimeout(() => {
                   this.$refs['finder'].refresh(true)
@@ -1106,7 +1104,6 @@ export default {
           }
         ],
         columns: [
-          { name: '商品ID', key: 'goods_id', width: 80 },
           {
             name: '商品标题',
             key: 'itemName',
@@ -1166,7 +1163,7 @@ export default {
             name: '是否处方',
             key: 'item_bn',
             width: 150,
-            render: (h, {row}) => row.is_prescription == '1' ? '是' : '否'
+            render: (h, { row }) => (row.is_prescription == '1' ? '是' : '否')
           },
           {
             name: 'sku编码',
@@ -1203,20 +1200,23 @@ export default {
             name: '审核结果',
             key: 'audit_status',
             width: 150,
-            render: (h, {row}) => row.medicine_data ? this.auditStatusMap[row.medicine_data.audit_status] : ''
+            render: (h, { row }) =>
+              row.medicine_data ? this.auditStatusMap[row.medicine_data.audit_status] : ''
           },
           {
             name: '错误信息',
             key: 'audit_reason',
             width: 150,
-            render: (h, {row}) => <div>
-              {row.medicine_data?.audit_reason && row.medicine_data?.audit_status == 3 && (
-                <div onClick={()=>this.handleErrDetail(row.medicine_data)}>
-                  {this.handleAuditReason(row.medicine_data)}
-                  <i class="el-icon-info"></i>
-                </div>
-              )}
+            render: (h, { row }) => (
+              <div>
+                {row.medicine_data?.audit_reason && row.medicine_data?.audit_status == 3 && (
+                  <div onClick={() => this.handleErrDetail(row.medicine_data)}>
+                    {this.handleAuditReason(row.medicine_data)}
+                    <i class='el-icon-info'></i>
+                  </div>
+                )}
               </div>
+            )
           },
           // {
           //   name: '供应商货号',
@@ -1240,19 +1240,7 @@ export default {
           //   align: "right",
           //   headerAlign: 'center'
           // },
-          {
-            name: '排序编号',
-            key: 'sort',
-            width: 120,
-            showType: 'editable',
-            componentProps: {
-              icon: 'el-icon-plus',
-              change: async (v, row) => {
-                await this.$api.goods.setItemsSort({ 'sort': v, 'item_id': row.itemId })
-                this.$refs['finder'].refresh()
-              }
-            }
-          },
+
           {
             name: '市场价（¥）',
             key: 'market_price',
@@ -1328,6 +1316,53 @@ export default {
             )
           },
           { name: '销售分类', key: 'itemCatName', minWidth: 120 },
+          { name: '起订量', key: 'start_num', minWidth: 120 },
+          {
+            name: '是否处方',
+            key: 'item_bn',
+            width: 150,
+            render: (h, { row }) => (row.is_prescription == '1' ? '是' : '否')
+          },
+          {
+            name: '审核结果',
+            key: 'audit_status',
+            width: 150,
+            render: (h, { row }) =>
+              row.medicine_data ? this.auditStatusMap[row.medicine_data.audit_status] : ''
+          },
+          {
+            name: '错误信息',
+            key: 'audit_reason',
+            width: 150,
+            render: (h, { row }) => (
+              <div>
+                {row.medicine_data?.audit_reason && row.medicine_data?.audit_status == 3 && (
+                  <div onClick={() => this.handleErrDetail(row.medicine_data)}>
+                    {this.handleAuditReason(row.medicine_data)}
+                    <i class='el-icon-info'></i>
+                  </div>
+                )}
+              </div>
+            )
+          },
+          {
+            name: '排序编号',
+            key: 'sort',
+            width: 120,
+            showType: 'editable',
+            componentProps: {
+              icon: 'el-icon-plus',
+              change: async (v, row) => {
+                await this.$api.goods.setItemsSort({
+                  'sort': v,
+                  'item_id': row.item_id,
+                  'operate_source': this.IS_SUPPLIER() ? 'supplier' : ''
+                })
+                this.$refs['finder'].refresh()
+              }
+            }
+          },
+          { name: '商品ID', key: 'goods_id', width: 80 },
           {
             name: '创建时间',
             key: 'created',
@@ -1356,10 +1391,10 @@ export default {
       }
     }
   },
-  computed:{
-    tabList(){
+  computed: {
+    tabList() {
       let tabList = []
-        if (IS_SUPPLIER()) {
+      if (IS_SUPPLIER()) {
         tabList = [
           { name: '全部商品', value: 'all', activeName: 'first' },
           { name: '待提交', value: 'submitting', activeName: 'submitting' },
@@ -1376,8 +1411,8 @@ export default {
         ]
       }
 
-      if(this.is_pharma_industry){
-        tabList.splice(1,0, {name: '医药商品', value: 'is_medicine', activeName: 'third'})
+      if (this.is_pharma_industry) {
+        tabList.splice(1, 0, { name: '医药商品', value: 'is_medicine', activeName: 'third' })
       }
 
       return tabList
@@ -1392,9 +1427,13 @@ export default {
     this.checkWdtErpBind()
     this.checkJstErpBind()
     this.getBaseSetting()
+
+    this.$activated = () => {
+      this.$refs['finder'].refresh()
+    }
   },
   methods: {
-    async getBaseSetting(){
+    async getBaseSetting() {
       const res = await this.$api.company.getGlobalSetting()
       this.is_pharma_industry = res.medicine_setting.is_pharma_industry == '1'
     },
@@ -1406,9 +1445,7 @@ export default {
         }
       })
     },
-    onHooksRouteBack() {
-      this.$refs['finder'].refresh()
-    },
+
     beforeSearch(params) {
       params = {
         ...params,
@@ -1425,10 +1462,10 @@ export default {
     async getShippingTemplatesList() {
       const { list } = await this.$api.shipping.getShippingTemplatesList({
         page: 1,
-        pageSize: 1000,
-        status: 1
+        pageSize: 1000
       })
       this.templatesList = list
+      this.templatesListavailable = list.filter((item) => item.status)
     },
     async getCategory() {
       //销售分类
@@ -1439,8 +1476,8 @@ export default {
       const itemCategoryList = await this.$api.goods.getCategory({ is_main_category: true })
       this.itemCategoryList = itemCategoryList
     },
-    handleErrDetail(val){
-      if(!val || !val.audit_reason) return
+    handleErrDetail(val) {
+      if (!val || !val.audit_reason) return
       this.errMessage = val.audit_reason
       this.errMessageVis = true
     },
@@ -1564,10 +1601,10 @@ export default {
         this.searchParams.audit_status = this.activeName
       }
 
-      if(this.activeName == 'third'){
+      if (this.activeName == 'third') {
         this.searchParams.is_medicine = 1
         this.searchParams.audit_status = ''
-      }else{
+      } else {
         this.searchParams.is_medicine = ''
       }
       this.$refs['finder'].refresh()
@@ -1601,9 +1638,9 @@ export default {
         this.$message.error('请选择至少一个商品')
       }
     },
-    handleAuditReason(data){
-      const {audit_reason = ''} = data || {}
-      return audit_reason.length > 8 ? audit_reason.slice(0,8)+'...' :audit_reason
+    handleAuditReason(data) {
+      const { audit_reason = '' } = data || {}
+      return audit_reason.length > 8 ? audit_reason.slice(0, 8) + '...' : audit_reason
     },
     async onFreightTemplateSubmit() {
       const { item_id, templates_id } = this.freightTemplateForm
@@ -1728,8 +1765,8 @@ export default {
       if (this.selectionItems.length > 0) {
         this.labelForm.item_id = this.selectionItems.map((item) => item.item_id)
         let res = []
-        this.selectionItems.forEach(item=>{
-          res = [...res,...item.tagList]
+        this.selectionItems.forEach((item) => {
+          res = [...res, ...item.tagList]
         })
         res.forEach((item) => {
           this.tagList.forEach((tag) => {
@@ -1813,6 +1850,7 @@ export default {
         audit_status: 'processing'
       })
       this.$message.success('操作成功')
+      this.$refs['finder'].refresh()
     },
     handleDownload(name) {
       var a = document.createElement('a')
@@ -1856,7 +1894,7 @@ export default {
       const { status } = await this.$api.goods.exportItemsData(exportParams)
       if (status) {
         this.$message.success('已加入执行队列，请在设置-导出列表中下载')
-        this.$export_open('items')
+        this.$export_open(IS_SUPPLIER() ? 'supplier_goods' : 'items')
       } else {
         this.$message.error('导出失败')
       }

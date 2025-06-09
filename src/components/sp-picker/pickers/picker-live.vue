@@ -68,7 +68,6 @@
 <script>
 import BasePicker from './base'
 import PageMixin from '../mixins/page'
-import { getRegionauthId } from '@/utils'
 export default {
   name: 'PickerPages',
   extends: BasePicker,
@@ -90,9 +89,7 @@ export default {
     beforeSearch(params) {
       params = {
         ...params,
-        template_name: 'yykweishop',
-        regionauth_id: getRegionauthId(),
-        ...(this.value?.params || {})
+        template_name: 'yykweishop'
       }
       return params
     },

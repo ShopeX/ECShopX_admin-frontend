@@ -44,7 +44,6 @@
 <script>
 import BasePicker from './base'
 import PageMixin from '../mixins/page'
-import { getRegionauthId } from '@/utils'
 export default {
   name: 'PickerAfterSalesList',
   extends: BasePicker,
@@ -72,8 +71,7 @@ export default {
         ...params,
         name: this.formData.keywords,
         merchant_id: this.value.merchant_id,
-        distributor_id: this.value.distributor_id,
-         regionauth_id: getRegionauthId()
+        distributor_id: this.value.distributor_id
       }
       return params
     },

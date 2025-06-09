@@ -11,52 +11,52 @@
     </div>
     <div class="decorate-bd">
       <div class="left-container">
-        <div class="wgt-group">
-          <div class="wgt-group-title">通用挂件</div>
-          <draggable class="wgts-view" :chosen-class="'wgts-chosen'" :list="initWidgets" :group="{
+        <draggable
+          class="wgts-view"
+          :chosen-class="'wgts-chosen'"
+          :list="widgets"
+          :group="{
             name: 'easyview',
             pull: 'clone',
             put: false
-          }" :sort="false" :clone="cloneDefaultField">
-            <div v-for="(wgt, index) in initWidgets" :key="`wgt-item__${index}`" class="wgt-item" :data-name="wgt.name">
-              <div :class="['wgt-icon', wgt.wgtIcon]" />
-              <div class="wgt-name">
-                {{ wgt.wgtName }}
-              </div>
-              <div class="wgt-placeholder">
-                <div class="placholder-txt">放置区域</div>
-              </div>
+          }"
+          :sort="false"
+          :clone="cloneDefaultField"
+        >
+          <div
+            v-for="(wgt, index) in widgets"
+            :key="`wgt-item__${index}`"
+            class="wgt-item"
+            :data-name="wgt.name"
+          >
+            <!-- <i
+              class="wgt-icon iconfont"
+              :class="wgt.wgtIcon"
+                      /> -->
+            <div :class="['wgt-icon', wgt.wgtIcon]" />
+            <div class="wgt-name">
+              {{ wgt.wgtName }}
             </div>
-          </draggable>
-        </div>
-        <div v-if="wgtsList?.length > 0" class="wgt-group">
-          <div class="wgt-group-title">功能挂件</div>
-          <draggable class="wgts-view" :chosen-class="'wgts-chosen'" :list="wgtsList" :group="{
-            name: 'easyview',
-            pull: 'clone',
-            put: false
-          }" :sort="false" :clone="cloneDefaultField">
-            <div v-for="(wgt, index) in wgtsList" :key="`wgt-item__${index}`" class="wgt-item" :data-name="wgt.name">
-              <div :class="['wgt-icon', wgt.wgtIcon]" />
-              <div class="wgt-name">
-                {{ wgt.wgtName }}
-              </div>
-              <div class="wgt-placeholder">
-                <div class="placholder-txt">放置区域</div>
-              </div>
+            <div class="wgt-placeholder">
+              <div class="placholder-txt">放置区域</div>
             </div>
-          </draggable>
-        </div>
+          </div>
+        </draggable>
       </div>
       <div class="center-container">
         <!-- {{ contentComps }} -->
         <!-- {{ headerData }} -->
         <div class="weapp-template">
           <Header v-if="headerVisible" :value="headerData" @change="handleClickHeader" />
-          <div :class="['weapp-body', { 'weapp-body-classify': localScene == 1007 }]" :style="weappBodyStyle">
-            <draggable :list="contentComps" group="easyview" class="components-design-wrap" @change="handleDragChange">
-              <div v-for="(wgt, index) in contentComps" :key="`wgt-render-item__${index}`" class="wgt-render-item"
-                :class="{ active: activeCompIndex == index }" @click="handleClickWgtItem(index)">
+          <div class="weapp-body" :style="weappBodyStyle">
+            <draggable :list="contentComps" group="easyview" class="components-design-wrap">
+              <div
+                v-for="(wgt, index) in contentComps"
+                :key="`wgt-render-item__${index}`"
+                class="wgt-render-item"
+                :class="{ active: activeCompIndex == index }"
+                @click="handleClickWgtItem(index)"
+              >
                 <div class="wgt-tip">
                   {{ wgt.wgtName }}
                 </div>
@@ -77,8 +77,11 @@
           <div class="wgt-name">
             {{ getComponentAttr(contentComps[activeCompIndex]).wgtName }}
           </div>
-          <attrPanel v-model="contentComps[activeCompIndex]" :class="`wgt-attr-${contentComps[activeCompIndex].name}`"
-            :info="getComponentAttr(contentComps[activeCompIndex])" @change="handleChangeWgtAttr" />
+          <attrPanel
+            v-model="contentComps[activeCompIndex]"
+            :class="`wgt-attr-${contentComps[activeCompIndex].name}`"
+            :info="getComponentAttr(contentComps[activeCompIndex])"
+          />
         </div>
         <div v-if="activeCompIndex == null && hackReset && headerAttr">
           <div class="wgt-name">{{ headerAttr.wgtName }}</div>
@@ -99,18 +102,17 @@ import { SYSTEM_CONFIG } from '@/consts'
 import store from '@/store'
 import { hex2rgb } from '@/utils'
 import gWgts from './wgts'
-import comps from './comps'
 import attrPanel from './attr_panel'
 import Header from './wgts/wgt-page'
 export default {
-  async beforeRouteLeave(to, from, next) {
-    this.resetDecorateTheme()
-    next()
-  },
   components: {
     draggable,
     attrPanel,
     Header
+  },
+  async beforeRouteLeave(to, from, next) {
+    this.resetDecorateTheme()
+    next()
   },
   props: {
     value: {
@@ -165,31 +167,6 @@ export default {
       } else {
         return false
       }
-    },
-
-    initWidgets() {
-      //通用挂件
-      let list = []
-      const wgts = gWgts[this.localScene]
-      Object.keys(wgts).forEach((index) => {
-        Vue.component(wgts[index].name, wgts[index])
-        if (wgts[index].wgtType == 1) {
-          list.push(wgts[index])
-        }
-      })
-      return list
-    },
-    wgtsList() {
-      // 功能挂件
-      let list = []
-      const wgts = gWgts[this.localScene]
-      Object.keys(wgts).forEach((index) => {
-        Vue.component(wgts[index].name, wgts[index])
-        if (wgts[index].wgtType == 2) {
-          list.push(wgts[index])
-        }
-      })
-      return list
     }
   },
   created() {
@@ -203,9 +180,7 @@ export default {
         1002: '商品详情',
         1003: '店铺装修',
         1004: '自定义页装修',
-        1006: '分类模版装修',
-        1007: '分类页模版装修',
-        1008: '个人中心模版装修'
+        1006: '分类模版装修'
       }
       this.localTitle = _title[scene]
     } else {
@@ -226,23 +201,7 @@ export default {
     document.body.style.setProperty('--appThemeColorRgb', hex2rgb(primary))
   },
   methods: {
-    handleDragChange(e) {
-      console.log('handleDragChange:', e, this.contentComps)
-      if (e.added) {
-        const shopAlphabet = this.contentComps.find((item) => item.name == 'shop' && item.displayType == 'alphabet')
-        if (shopAlphabet) {
-          this.contentComps =[shopAlphabet]
-        }
-      }
-    },
-    handleChangeWgtAttr(e) {
-      const onlyShop = this.contentComps.length == 1 && this.contentComps[0].name == 'shop'
-      if (e.name == 'shop' && e.displayType == 'alphabet' && !onlyShop) {
-        this.contentComps = [e]
-      }
-    },
     regsiterWgts() {
-      console.log('wgts:', wgts, comps)
       // const { scene = '1001' } = this.$route.query
       const wgts = gWgts[this.localScene]
       Object.keys(wgts).forEach((index) => {
@@ -303,7 +262,7 @@ export default {
       const { id } = this.$route.query
       let list = []
       try {
-        if (this.localScene == '1004' || this.localScene == '1006' || this.localScene == '1007' || this.localScene == '1008') {
+        if (this.localScene == '1004' || this.localScene == '1006') {
           const resTemplate = await this.$api.wxa.getParamByTempName({
             template_name: 'yykweishop',
             page_name: `custom_${id}`,
@@ -333,7 +292,7 @@ export default {
       })
       const wgtHeader = list.find((item) => item.name == 'page')
       if (wgtHeader) {
-        const headParams = Header.config.transformIn(wgtHeader.params, this.getWgtsList())
+        const headParams = Header.config.transformIn(wgtHeader.params)
         headerData = {
           // 初始数据
           ...headerData,
@@ -350,8 +309,9 @@ export default {
         // 是否存在挂件
         const wgt = this.widgets.find((item) => item.name.toLowerCase() == li.name.toLowerCase())
         if (wgt) {
+          // console.log('getTemplateDetial wgt:', wgt)
           const wgtInitParams = this.cloneDefaultField(wgt)
-          const params = wgt.config.transformIn(li.params, this.getWgtsList())
+          const params = wgt.config.transformIn(li.params)
           this.contentComps.push({
             wgtName: wgt.wgtName,
             ...wgtInitParams,
@@ -364,7 +324,7 @@ export default {
     onMoveUpComp(index) {
       this.contentComps
     },
-    onMoveDownComp(index) { },
+    onMoveDownComp(index) {},
     onCopyComp(index, wgt) {
       this.contentComps.splice(index + 1, 0, cloneDeep(wgt))
     },
@@ -375,9 +335,6 @@ export default {
         }, 20)
       }
       this.contentComps.splice(index, 1)
-    },
-    getWgtsList() {
-      return Object.values(gWgts[this.localScene])
     },
     async onSaveTemplate() {
       // console.log('onSaveTemplate:', JSON.stringify(data))
@@ -390,11 +347,11 @@ export default {
         const { transformOut } = this.widgets.find(
           (wgt) => wgt.name.toLowerCase() == item.name.toLowerCase()
         )?.config
-        return transformOut(item, this.getWgtsList())
+        return transformOut(item)
       })
       data.unshift(this.headerAttr.transformOut(this.headerData))
       const { id } = this.$route.query
-      if (this.localScene == '1004' || this.localScene == '1006' || this.localScene == '1007' || this.localScene == '1008') {
+      if (this.localScene == '1004' || this.localScene == '1006') {
         await this.$api.wxa.savePageParams({
           template_name: 'yykweishop',
           page_name: `custom_${id}`,

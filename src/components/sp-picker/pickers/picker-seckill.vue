@@ -67,7 +67,6 @@
 import { SECKILL_ACTIVITY_STATUS } from '@/consts'
 import BasePicker from './base'
 import PageMixin from '../mixins/page'
-import { getRegionauthId } from '@/utils'
 export default {
   name: 'PickerPages',
   extends: BasePicker,
@@ -93,9 +92,7 @@ export default {
     beforeSearch(params) {
       params = {
         ...params,
-        ...this.formData,
-        regionauth_id: getRegionauthId(),
-        ...(this.value?.params || {})
+        ...this.formData
         // status: 'valid'
       }
       return params

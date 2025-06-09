@@ -118,7 +118,7 @@
         'max-height': 416,
         'header-cell-class-name': cellClass
       }"
-      :url="IS_DISTRIBUTOR() || VERSION_STANDARD ? 'distributor/items' : '/goods/items'"
+      :url="urls"
       show-pager-text="已选中：${n}"
       :fixed-row-action="true"
       :setting="{
@@ -146,7 +146,7 @@
             name: '商品类型',
             key: 'item_holder',
             width: 80,
-            render: (h, { row }) => h('span', {}, this.goodCategoryMap[row.item_holder])
+            render: (h, { row }) => h('span', {}, goodCategoryMap[row.item_holder])
           },
           {
             name: '是否赠品',
@@ -191,7 +191,6 @@
 import { SALES_STATUS, GOOD_CATEGORY, GOOD_CATEGORY_MAP } from '@/consts'
 import BasePicker from './base'
 import PageMixin from '../mixins/page'
-import { getRegionauthId } from '@/utils'
 export default {
   name: 'PickerGoods',
   extends: BasePicker,
@@ -229,7 +228,8 @@ export default {
       },
       categoryList: [],
       multiple: this.value?.multiple ?? true,
-      localSelection: []
+      localSelection: [],
+      urls: '/goods/items'
     }
   },
   created() {
@@ -241,8 +241,9 @@ export default {
   },
   methods: {
     beforeSearch(params) {
-      console.log('this.value?.params', this.value?.params)
       const { category } = this.formData
+      //嘉实多需求，嘉实多只有一个虚拟店
+      this.urls = this.formData.distributor_id ? 'distributor/items' : '/goods/items'
       params = {
         ...params,
         item_type: 'normal',
@@ -250,9 +251,7 @@ export default {
         audit_status: 'approved',
         is_sku: false,
         ...this.formData,
-        category: category[category.length - 1],
-        regionauth_id:getRegionauthId(),
-        ...(this.value?.params || {})
+        category: category[category.length - 1]
       }
       return params
     },
@@ -305,22 +304,12 @@ export default {
       return !paramsFieldExclude.includes(key)
     },
     async getGoodsBranchList(searchVal = '') {
-      this.goodsBranchParams={
-        ...this.goodsBranchParams,
-        attribute_name:searchVal,
-        regionauth_id: getRegionauthId(),
-        ...(this.value?.params || {})
-      }
+      this.goodsBranchParams.attribute_name = searchVal
       const { list } = await this.$api.goods.getGoodsAttr(this.goodsBranchParams)
       this.goodsBranchList = list
     },
     async getCategory() {
-      const params = {
-        is_show: false,
-        regionauth_id: getRegionauthId(),
-        ...(this.value?.params || {})
-      }
-      const res = await this.$api.goods.getCategory(params)
+      const res = await this.$api.goods.getCategory({ is_show: false })
       this.categoryList = res
     }
   }

@@ -44,7 +44,6 @@
               <template v-else-if="scope.row.card_type == 'gift'"> 兑换券 </template>
               <template v-else-if="scope.row.card_type == 'discount'"> 折扣卷 </template>
               <template v-else-if="scope.row.card_type == 'cash'"> 满减券 </template>
-              <template v-else-if="scope.row.card_type == 'minus'"> 立减券 </template>
             </template>
           </el-table-column>
           <el-table-column prop="title" label="卡劵名称" width="120" />
@@ -124,22 +123,18 @@ export default {
       },
 
       {
-        label: '满减券',
-        value: 'cash'
+        label: '折扣卷',
+        value: 'discount'
       },
       {
-        label: '立减券',
-        value: 'minus'
+        label: '满减券',
+        value: 'cash'
       }
     ]
     if (this.VERSION_STANDARD) {
       options.push({
         label: '兑换券',
         value: 'new_gift'
-      })
-      options.push({
-        label: '折扣卷',
-        value: 'discount'
       })
     }
 

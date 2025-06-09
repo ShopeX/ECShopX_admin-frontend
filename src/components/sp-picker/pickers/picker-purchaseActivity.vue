@@ -54,13 +54,9 @@
           { name: 'ID', key: 'id', width: 80 },
           { name: '内购活动名称', key: 'name' },
           { name: '来源店铺', key: 'distributor_name' },
-          {
-            name: '购买时间',
-            key: 'employee_end_time',
-            formatter: (value, { employee_end_time, employee_begin_time }, col) => {
+          { name: '购买时间', key: 'employee_end_time',formatter: (value, { employee_end_time, employee_begin_time }, col) => {
               return `${momentFunc(employee_begin_time)} ~ ${momentFunc(employee_end_time)}`
-            }
-          },
+            } },
           { name: '状态', key: 'status_desc' }
         ]
       }"
@@ -78,7 +74,6 @@
 import BasePicker from './base'
 import PageMixin from '../mixins/page'
 import moment from 'moment'
-import { getRegionauthId } from '@/utils'
 export default {
   name: 'PickerPages',
   extends: BasePicker,
@@ -100,8 +95,6 @@ export default {
     beforeSearch(params) {
       params = {
         ...params,
-        regionauth_id: getRegionauthId(),
-        ...(this.value?.params || {})
       }
       return params
     },
@@ -119,7 +112,7 @@ export default {
     onSearch() {
       this.$refs.finder.refresh(true)
     },
-    momentFunc(val) {
+    momentFunc(val){
       return moment(val * 1000).format('YYYY-MM-DD HH:mm:ss')
     },
     onSelect(selection, row) {

@@ -74,7 +74,26 @@ export default {
   name: 'SpForm',
   props: {
     formList: Array,
-    value: [Number, String, Object],
+    labelWidth: {
+      type: String,
+      default: '160px'
+    },
+    resetBtn: {
+      type: Boolean,
+      default: true
+    },
+    resetBtnText: {
+      type: String,
+      default: '重置'
+    },
+    submitBtn: {
+      type: Boolean,
+      default: true
+    },
+    submitBtnText: {
+      type: String,
+      default: '确定'
+    },
     size: {
       type: String,
       default: 'normal'
@@ -83,14 +102,11 @@ export default {
       type: Boolean,
       default: true
     },
-    labelWidth: {
-      type: String,
-      default: '160px'
-    },
     showMessage: {
       type: Boolean,
       default: false
-    }
+    },
+    value: [Number, String, Object]
   },
   data() {
     // const _form = {}
@@ -153,16 +169,24 @@ export default {
         return isShow !== false
       }
     },
+    setField(data, key, value) {
+      data.forEach((item) => {
+        if (item.key === key) {
+          Object.keys(value).forEach((k) => {
+            item[k] = value[k]
+          })
+        }
+      })
+    },
     _renderTextArea(item) {
       const { value } = this
-      const { placeholder, maxlength, key, disabled } = item
+      const { placeholder, maxlength, key } = item
       return (
         <el-input
           clearable
           type='textarea'
           placeholder={placeholder || '请输入内容'}
           rows={5}
-          disabled={isFunction(disabled) ? disabled() : disabled}
           maxlength={maxlength}
           v-model={value[key]}
           show-word-limit
@@ -198,8 +222,7 @@ export default {
         max,
         disabled = false,
         precision = 0,
-        setp = 1,
-        size = 'normal'
+        setp = 1
       } = item
       return (
         // <el-input
@@ -220,7 +243,6 @@ export default {
           max={max}
           precision={precision}
           setp={setp}
-          size={size}
         />
       )
     },
@@ -244,7 +266,7 @@ export default {
           {options.map((op) => (
             <el-option
               key={op.value}
-              label={op.title || op.label}
+              label={op.title}
               value={op.value}
               disabled={isFunction(op.disabled) ? op.disabled() : op.disabled}
             />
@@ -318,16 +340,6 @@ export default {
           disabled={isFunction(disabled) ? disabled() : disabled}
         />
       )
-    },
-    _renderColor(item) {
-      const { value } = this
-      const { key, disabled = false, options } = item
-      return (
-        <el-color-picker
-          v-model={value[key]}
-          disabled={isFunction(disabled) ? disabled() : disabled}
-        />
-      )
     }
   },
   render() {
@@ -355,8 +367,7 @@ export default {
         'table': this._renderTable,
         'richText': this._renderRichText,
         'image': this._renderImage,
-        'switch': this._renderSwitch,
-        'color': this._renderColor
+        'switch': this._renderSwitch
       }
       return renderItem[item.type](item)
     }
@@ -423,10 +434,16 @@ export default {
         })}
         {this.submit && (
           <el-form-item>
-            <el-button onClick={this.resetForm}>重置</el-button>
-            <el-button type='primary' onClick={this.onSubmit}>
-              确定
-            </el-button>
+            {this.resetBtn && (
+              <el-button class='mr-5' type='default' onClick={this.resetForm}>
+                {this.resetBtnText}
+              </el-button>
+            )}
+            {this.submitBtn && (
+              <el-button type='primary' onClick={this.onSubmit}>
+                {this.submitBtnText}
+              </el-button>
+            )}
           </el-form-item>
         )}
       </el-form>

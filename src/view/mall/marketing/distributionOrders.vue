@@ -180,7 +180,7 @@
               <el-button type="text">
                 <router-link
                   :to="{
-                    path: matchHidePage('detail'),
+                    path: matchRoutePath('detail'),
                     query: { orderId: scope.row.order_id, resource: '/mall/trade/normalorders' }
                   }"
                 >
@@ -191,7 +191,7 @@
                 v-if="
                   scope.row.receipt_type == 'logistics' &&
                   scope.row.order_status == 'PAYED' &&
-                  scope.row.delivery_status != 'DONE'&&
+                  scope.row.delivery_status != 'DONE' &&
                   !IS_ADMIN()
                 "
                 type="text"

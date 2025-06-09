@@ -13,14 +13,6 @@ export default {
       compValue: null
     }
   },
-  watch: {
-    compValue: {
-      handler(newVal) {
-        this.$emit('change', newVal)
-      },
-      deep: true
-    }
-  },
   created() {
     this.compValue = this.value
   },
@@ -28,6 +20,21 @@ export default {
     onCompChange() {
       this.$emit('input', this.compValue)
     },
+
+    _renderSelect({ key, options }) {
+      return (
+        <el-select v-model={this.value[key]} size='small'>
+          {options.map((op) => (
+            <el-option label={op.label} value={op.value} />
+          ))}
+        </el-select>
+      )
+    },
+
+    _renderTextArea({ key, rows }) {
+      return <el-input type='textarea' v-model={this.value[key]} rows={rows} size='small' />
+    },
+
     _renderInput({ key }) {
       return <el-input type='text' v-model={this.value[key]} size='small' />
     },
@@ -66,31 +73,11 @@ export default {
           ))}
         </el-radio-group>
       )
-    },
-    _renderRadioButton({ key, options,tips, onchange = () => { } }) {
-      return (
-        <div>
-          <el-radio-group v-model={this.value[key]} size="mini" onChange={(e) => onchange(e, this)}>
-            {options.map((op) => (
-              <el-radio-button label={op.label}>{op.name}</el-radio-button>
-          ))}
-          </el-radio-group>
-          {tips && <div class='cell-value-tip' domPropsInnerHTML={tips} />}
-        </div>
-      )
-    },
-    _renderSelect({ key, options, onchange = () => { } }) {
-      return (
-        <el-select v-model={this.value[key]} size="mini" onChange={(e) => onchange(e, this)}>
-          {options.map((op) => (
-            <el-option label={op.label} value={op.value} />
-          ))}
-        </el-select>
-      )
-    },
+    }
   },
   render(h) {
     const { wgtName, setting } = this.info
+
     const renderComp = (item) => {
       if (isFunction(item.component)) {
         return item.component.call(this, h, item)
@@ -98,7 +85,7 @@ export default {
       }
 
       const renderItem = {
-        // 'textarea': this._renderTextArea,
+        'textarea': this._renderTextArea,
         'input': this._renderInput,
         'color': this._renderColor,
         'number': this._renderNumber,
@@ -109,8 +96,7 @@ export default {
         // 'table': this._renderTable,
         // 'richText': this._renderRichText,
         // 'image': this._renderImage,
-        'switch': this._renderSwitch,
-        'radiobutton': this._renderRadioButton
+        'switch': this._renderSwitch
       }
       return renderItem[item.component](item)
     }

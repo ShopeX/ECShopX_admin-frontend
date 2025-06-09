@@ -208,18 +208,14 @@
         color: white;
       }
       &_s {
-        // background: url('@/assets/img/saas/try_1.png');
       }
       &_b {
-        // background: url('@/assets/img/saas/biaozun.png');
         color: white;
         h3 {
           color: white;
         }
       }
       &_l {
-        // background: url('@/assets/img/saas/liansuo.png');
-
         h3 {
           color: white;
         }
@@ -306,7 +302,6 @@
   }
 }
 .demo-img {
-  // background: url('@/assets/img/saas/bcg_1.png');
   width: 100%;
   text-align: center;
   // padding: 40px 0;
@@ -323,7 +318,6 @@
 }
 .sl-img {
   // padding: 0;
-  // background: url('@/assets/img/saas/bcg_2.png');
   width: 100%;
   text-align: center;
   // padding: 40px 0;
@@ -360,17 +354,13 @@
 </style>
 
 <template>
-  <div
-    v-if="bool"
-    class="main"
-  >
+  <div v-if="bool" class="main">
     <!-- v-if="activateInfo.due_reminder" -->
-    <div
-      v-if="activateInfo.due_reminder"
-      class="to-become"
-    >
+    <div v-if="activateInfo.due_reminder" class="to-become">
       <div class="text-icon">
-        <i class="el-icon-warning icon-wr" /><span>店铺使用期限即将到期，如需继续使用请点击购买订购产品</span>
+        <i class="el-icon-warning icon-wr" /><span
+          >店铺使用期限即将到期，如需继续使用请点击购买订购产品</span
+        >
       </div>
       <!-- <div class="btn">
         <el-button @click="handleBuy" size="mini" type="danger"
@@ -382,14 +372,9 @@
       <el-col :span="20">
         <el-row :gutter="20">
           <el-col :span="24">
-            <section
-              v-loading="userloading"
-              class="section-card realtime-statics"
-            >
+            <section v-loading="userloading" class="section-card realtime-statics">
               <div class="section-card-header">
-                <div class="section-card-title">
-                  实时概况
-                </div>
+                <div class="section-card-title">实时概况</div>
                 <div class="header-small">
                   更新时间：{{ (Date.now() / 1000) | datetime('YYYY-MM-DD HH:mm:ss') }}
                 </div>
@@ -400,35 +385,22 @@
 									</ul> -->
               </div>
               <div>
-                <el-row
-                  class="analysis"
-                  :gutter="20"
-                >
+                <el-row class="analysis" :gutter="20">
                   <el-col :span="12">
                     <div class="view-flex">
                       <div class="view-flex-item">
-                        <div class="label">
-                          实付金额(元)
-                        </div>
-                        <div
-                          v-if="staticsData"
-                          class="real-data"
-                        >
+                        <div class="label">实付金额(元)</div>
+                        <div v-if="staticsData" class="real-data">
                           {{ (staticsData.today_data.real_payed_fee / 100) | keepTwoDecimalFull }}
                         </div>
-                        <div
-                          v-if="staticsData"
-                          class="history-data"
-                        >
+                        <div v-if="staticsData" class="history-data">
                           昨日：{{
                             (staticsData.yesterday_data.real_payed_fee / 100) | keepTwoDecimalFull
                           }}
                         </div>
                       </div>
                       <div class="view-flex-item">
-                        <div class="label">
-                          支付订单数
-                        </div>
+                        <div class="label">支付订单数</div>
                         <div class="real-data">
                           {{ staticsData && staticsData.today_data.real_payed_orders }}
                         </div>
@@ -441,9 +413,7 @@
                   <el-col :span="12">
                     <div class="view-flex">
                       <div class="view-flex-item">
-                        <div class="label">
-                          实付会员数
-                        </div>
+                        <div class="label">实付会员数</div>
                         <div class="real-data">
                           {{ staticsData && staticsData.today_data.real_payed_members }}
                         </div>
@@ -452,19 +422,11 @@
                         </div>
                       </div>
                       <div class="view-flex-item">
-                        <div class="label">
-                          客单价(元)
-                        </div>
-                        <div
-                          v-if="staticsData"
-                          class="real-data"
-                        >
+                        <div class="label">客单价(元)</div>
+                        <div v-if="staticsData" class="real-data">
                           {{ (staticsData.today_data.real_atv / 100) | keepTwoDecimalFull }}
                         </div>
-                        <div
-                          v-if="staticsData"
-                          class="history-data"
-                        >
+                        <div v-if="staticsData" class="history-data">
                           昨日：{{
                             (staticsData.yesterday_data.real_atv / 100) | keepTwoDecimalFull
                           }}
@@ -473,28 +435,17 @@
                     </div>
                   </el-col>
                 </el-row>
-                <el-row
-                  class="analysis"
-                  :gutter="20"
-                >
+                <el-row class="analysis" :gutter="20">
                   <el-col :span="12">
                     <div class="view-flex">
                       <div class="view-flex-item">
-                        <div class="label">
-                          退款金额(元)
-                        </div>
-                        <div
-                          v-if="staticsData"
-                          class="real-data"
-                        >
+                        <div class="label">退款金额(元)</div>
+                        <div v-if="staticsData" class="real-data">
                           {{
                             (staticsData.today_data.real_refunded_fee / 100) | keepTwoDecimalFull
                           }}
                         </div>
-                        <div
-                          v-if="staticsData"
-                          class="history-data"
-                        >
+                        <div v-if="staticsData" class="history-data">
                           昨日：{{
                             (staticsData.yesterday_data.real_refunded_fee / 100)
                               | keepTwoDecimalFull
@@ -502,9 +453,7 @@
                         </div>
                       </div>
                       <div class="view-flex-item">
-                        <div class="label">
-                          售后订单数
-                        </div>
+                        <div class="label">售后订单数</div>
                         <div class="real-data">
                           {{ staticsData && staticsData.today_data.real_aftersale_count }}
                         </div>
@@ -521,52 +470,26 @@
         </el-row>
         <el-row :gutter="20">
           <el-col :span="10">
-            <section
-              v-loading="userloading"
-              class="section-card"
-            >
+            <section v-loading="userloading" class="section-card">
               <div class="section-card-header">
-                <div class="section-card-title">
-                  重要提醒
-                </div>
+                <div class="section-card-title">重要提醒</div>
               </div>
               <div class="notices">
                 <div class="notices-group">
-                  <div class="subtitle">
-                    订单相关
-                  </div>
+                  <div class="subtitle">订单相关</div>
                   <el-row>
-                    <el-col
-                      class="notice-item"
-                      :span="12"
-                    >
-                      <router-link
-                        to="/merchant/order/tradenormalorders?tab=notship"
-                      >
-                        待发货订单：{{
-                          staticsData && staticsData.notice_data.wait_delivery_count
-                        }}
+                    <el-col class="notice-item" :span="12">
+                      <router-link to="/merchant/order/tradenormalorders?tab=notship">
+                        待发货订单：{{ staticsData && staticsData.notice_data.wait_delivery_count }}
                       </router-link>
                     </el-col>
-                    <el-col
-                      class="notice-item"
-                      :span="12"
-                    >
-                      <router-link
-                        to="/merchant/order/aftersaleslist"
-                      >
-                        待处理退款：{{
-                          staticsData && staticsData.notice_data.aftersales_count
-                        }}
+                    <el-col class="notice-item" :span="12">
+                      <router-link to="/merchant/order/aftersaleslist">
+                        待处理退款：{{ staticsData && staticsData.notice_data.aftersales_count }}
                       </router-link>
                     </el-col>
-                    <el-col
-                      class="notice-item"
-                      :span="12"
-                    >
-                      <router-link
-                        to="/merchant/order/aftersalesrefundlist"
-                      >
+                    <el-col class="notice-item" :span="12">
+                      <router-link to="/merchant/order/aftersalesrefundlist">
                         退款失败待处理：{{
                           staticsData && staticsData.notice_data.refund_errorlogs_count
                         }}
@@ -580,31 +503,21 @@
         </el-row>
       </el-col>
       <el-col :span="4">
-        <section
-          v-show="activateInfo.source != 'demo'"
-          class="section-card fn-b-20 card-right"
-        >
+        <section v-show="activateInfo.source != 'demo'" class="section-card fn-b-20 card-right">
           <div class="phone-card">
-            <img
-              class="phone-icon"
-              :src="img.phone"
-              alt="客服电话"
-            >
+            <img class="phone-icon" :src="img.phone" alt="客服电话">
             <span class="phone-text">客服电话 </span>
           </div>
-          <h4 class="phone-num">
-            400-921-3522 转 3
-          </h4>
+          <h4 class="phone-num">400-921-3522 转 3</h4>
           <div class="phone-btn">
-            <img
-              class="phone-icon"
-              :src="img.qq"
-              alt="在线客服"
+            <img class="phone-icon" :src="img.qq" alt="在线客服">
+            <span
+              ><a
+                href="https://wpa.b.qq.com/cgi/wpa.php?ln=1&key=XzgwMDA1ODI4Ml80OTM4NjNfODAwMDU4MjgyXw"
+                target="_blank"
+                >在线客服</a
+              ></span
             >
-            <span><a
-              href="https://wpa.b.qq.com/cgi/wpa.php?ln=1&key=XzgwMDA1ODI4Ml80OTM4NjNfODAwMDU4MjgyXw"
-              target="_blank"
-            >在线客服</a></span>
           </div>
         </section>
         <!-- <section class="section-card fn-b-20"><a href="http://wpa.qq.com/msgrd?v=3&uin=714165655&site=qq&menu=yes" target="_blank">QQ客服</a></section> -->
@@ -613,14 +526,8 @@
           class="section-card fn-b-20 sl-img"
           :style="'background:  url(' + img.bcg_2 + ')'"
         >
-          <div class="sl-img-hd">
-            <i class="el-icon-user-solid" />售前客户经理
-          </div>
-          <img
-            :src="img.customerService"
-            alt=""
-            class="img-demo"
-          >
+          <div class="sl-img-hd"><i class="el-icon-user-solid" />售前客户经理</div>
+          <img :src="img.customerService" alt="" class="img-demo">
         </section>
       </el-col>
     </el-row>
@@ -632,10 +539,7 @@
       </span>
     </el-dialog> -->
   </div>
-  <div
-    v-else
-    class="main"
-  >
+  <div v-else class="main">
     <!-- <div>
       <el-button size="medium" @click="bool = true">暂不订购</el-button>
     </div> -->
@@ -645,97 +549,45 @@
     </div>
     <div class="buy">
       <div class="buy-item section-card">
-        <div
-          class="buy-item-hd buy-item-hd_s"
-          :style="'background:  url(' + img.try_1 + ')'"
-        >
+        <div class="buy-item-hd buy-item-hd_s" :style="'background:  url(' + img.try_1 + ')'">
           <h3>试用版</h3>
           <span>免费试用15天</span>
         </div>
         <div class="buy-item-ft">
           <div class="buy-item-ft-text">
-            <img
-              :src="img.suo"
-              alt=""
-              class="suo"
-            >
+            <img :src="img.suo" alt="" class="suo">
             <p>当前版本为免费试用版本</p>
             <p>升级解锁享受更多服务</p>
           </div>
           <div class="buy-item-btn">
-            <el-button
-              size="medium"
-              disabled
-            >
-              {{
-                activateInfo.source == 'demo' ? '使用中' : '已体验'
-              }}
+            <el-button size="medium" disabled>
+              {{ activateInfo.source == 'demo' ? '使用中' : '已体验' }}
             </el-button>
           </div>
         </div>
       </div>
       <div class="buy-item section-card">
-        <div
-          class="buy-item-hd buy-item-hd_b"
-          :style="'background:  url(' + img.biaozun + ')'"
-        >
+        <div class="buy-item-hd buy-item-hd_b" :style="'background:  url(' + img.biaozun + ')'">
           <h3>商城</h3>
         </div>
         <div class="buy-item-ft">
           <div>
             <p>适用于搭建线上社交零售商城的商家,快速开店</p>
-            <p>
-              <img
-                :src="img.check"
-                alt=""
-                class="check-icon"
-              >小程序、公众号、PC一体化商城
-            </p>
-            <p>
-              <img
-                :src="img.check"
-                alt=""
-                class="check-icon"
-              >种草粉丝内容点赞、分享传播
-            </p>
-            <p>
-              <img
-                :src="img.check"
-                alt=""
-                class="check-icon"
-              >粉丝、员工、网红分销卖货
-            </p>
-            <p>
-              <img
-                :src="img.check"
-                alt=""
-                class="check-icon"
-              >拼团/砍价/秒杀丰富的营销玩法
-            </p>
-            <p>
-              <img
-                :src="img.check"
-                alt=""
-                class="check-icon"
-              >直播预约、点赞、分享、互动
-            </p>
+            <p><img :src="img.check" alt="" class="check-icon">小程序、公众号、PC一体化商城</p>
+            <p><img :src="img.check" alt="" class="check-icon">种草粉丝内容点赞、分享传播</p>
+            <p><img :src="img.check" alt="" class="check-icon">粉丝、员工、网红分销卖货</p>
+            <p><img :src="img.check" alt="" class="check-icon">拼团/砍价/秒杀丰富的营销玩法</p>
+            <p><img :src="img.check" alt="" class="check-icon">直播预约、点赞、分享、互动</p>
           </div>
           <div>
-            <el-button
-              size="medium"
-              type="danger"
-              @click="dingHandel('商城')"
-            >
+            <el-button size="medium" type="danger" @click="dingHandel('商城')">
               立即订购
             </el-button>
           </div>
         </div>
       </div>
       <div class="buy-item section-card">
-        <div
-          class="buy-item-hd buy-item-hd_l"
-          :style="'background:  url(' + img.liansuo + ')'"
-        >
+        <div class="buy-item-hd buy-item-hd_l" :style="'background:  url(' + img.liansuo + ')'">
           <div>
             <h3>连锁</h3>
           </div>
@@ -744,48 +596,16 @@
           <div>
             <p>适用于有门店的商家构建私域流量中心，打造门店&云店运营闭环，赋能实体门店业务</p>
             <p>
-              <img
-                :src="img.check"
-                alt=""
-                class="check-icon"
-              >
+              <img :src="img.check" alt="" class="check-icon">
               千店千面，门店运营线上化
             </p>
-            <p>
-              <img
-                :src="img.check"
-                alt=""
-                class="check-icon"
-              >实现门店差异化促销及服务
-            </p>
-            <p>
-              <img
-                :src="img.check"
-                alt=""
-                class="check-icon"
-              >门店导购拉新、服务、激励数字化
-            </p>
-            <p>
-              <img
-                :src="img.check"
-                alt=""
-                class="check-icon"
-              >建立门店触达私域用户渠道与方式
-            </p>
-            <p>
-              <img
-                :src="img.check"
-                alt=""
-                class="check-icon"
-              >多维度进行全链路经营数据跟踪
-            </p>
+            <p><img :src="img.check" alt="" class="check-icon">实现门店差异化促销及服务</p>
+            <p><img :src="img.check" alt="" class="check-icon">门店导购拉新、服务、激励数字化</p>
+            <p><img :src="img.check" alt="" class="check-icon">建立门店触达私域用户渠道与方式</p>
+            <p><img :src="img.check" alt="" class="check-icon">多维度进行全链路经营数据跟踪</p>
           </div>
           <div>
-            <el-button
-              size="medium"
-              type="danger"
-              @click="dingHandel('连锁')"
-            >
+            <el-button size="medium" type="danger" @click="dingHandel('连锁')">
               立即订购
             </el-button>
           </div>
@@ -793,80 +613,34 @@
       </div>
     </div>
 
-    <el-dialog
-      title=""
-      :visible.sync="dialogVisible"
-      width="580px"
-    >
-      <div
-        slot="title"
-        class="title"
-      >
-        申请订购版本
-      </div>
+    <el-dialog title="" :visible.sync="dialogVisible" width="580px">
+      <div slot="title" class="title">申请订购版本</div>
       <p class="title-span">
         您所提交的信息仅用于您的专属顾问与您沟通，不会透露给任何第三方机构或个人
       </p>
       <div>
-        <el-form
-          ref="dingInfo"
-          :model="dingInfo"
-          label-width="100px"
-          class="demo-dingInfo"
-        >
-          <el-form-item
-            label="订购版本"
-            prop="goods_name"
-          >
+        <el-form ref="dingInfo" :model="dingInfo" label-width="100px" class="demo-dingInfo">
+          <el-form-item label="订购版本" prop="goods_name">
             <span style="font-weight: bold">{{ dingInfo.goods_name }}</span>
           </el-form-item>
-          <el-form-item
-            label="姓名"
-            prop="call_name"
-          >
-            <el-input
-              v-model="dingInfo.call_name"
-              placeholder="请输入姓名"
-            />
+          <el-form-item label="姓名" prop="call_name">
+            <el-input v-model="dingInfo.call_name" placeholder="请输入姓名" />
           </el-form-item>
 
-          <el-form-item
-            label="性别"
-            prop="sex"
-          >
+          <el-form-item label="性别" prop="sex">
             <el-radio-group v-model="dingInfo.sex">
               <el-radio label="男" />
               <el-radio label="女" />
             </el-radio-group>
           </el-form-item>
-          <el-form-item
-            label="手机号码"
-            prop="mobile"
-          >
-            <el-input
-              v-model="dingInfo.mobile"
-              placeholder="请输入电话号码"
-            />
+          <el-form-item label="手机号码" prop="mobile">
+            <el-input v-model="dingInfo.mobile" placeholder="请输入电话号码" />
           </el-form-item>
         </el-form>
       </div>
-      <div
-        slot="footer"
-        class="dialog-footer"
-      >
-        <el-button
-          class="btn-ft"
-          @click="dialogVisible = false"
-        >
-          取 消
-        </el-button>
-        <el-button
-          class="btn-ft"
-          type="danger"
-          @click="submit"
-        >
-          确 定
-        </el-button>
+      <div slot="footer" class="dialog-footer">
+        <el-button class="btn-ft" @click="dialogVisible = false"> 取 消 </el-button>
+        <el-button class="btn-ft" type="danger" @click="submit"> 确 定 </el-button>
       </div>
     </el-dialog>
   </div>
@@ -904,7 +678,7 @@ const demo = require('@/assets/img/saas/demo.png')
 const biaozun = require('@/assets/img/saas/biaozun.png')
 
 export default {
-  data () {
+  data() {
     return {
       img: {
         phone,
@@ -1073,11 +847,11 @@ export default {
   },
   methods: {
     ...mapMutations(['SET_PRODUCTION_CODE']),
-    dingHandel (type) {
+    dingHandel(type) {
       this.dialogVisible = true
       this.dingInfo.goods_name = type
     },
-    submit () {
+    submit() {
       let obj = JSON.parse(JSON.stringify(this.dingInfo))
       ydleadsInfo(obj).then((res) => {
         this.$message({
@@ -1089,13 +863,13 @@ export default {
         this.dingInfo = {}
       })
     },
-    toLink (link) {
+    toLink(link) {
       this.$router.push({ path: this.matchInternalRoute(link) })
     },
-    handleBuy () {
+    handleBuy() {
       this.bool = false
     },
-    handleBind () {
+    handleBind() {
       if (this.url) {
         var metadata = document.getElementsByTagName('meta')
         for (var i = 0; i < metadata.length; i++) {
@@ -1106,7 +880,7 @@ export default {
         window.open(this.url, '_blank')
       }
     },
-    accountactivate () {
+    accountactivate() {
       this.$router.push({
         path: this.matchInternalRoute('assetaccountactivation')
       })
@@ -1169,11 +943,11 @@ export default {
         window.open(this.url, '_blank')
       }
     },
-    unBind () {
+    unBind() {
       this.industryVisible = false
       this.waitingDialog = false
     },
-    chartInit () {
+    chartInit() {
       window.chartColors = {
         red: 'rgb(255, 99, 132)',
         orange: 'rgb(255, 159, 64)',
@@ -1249,12 +1023,12 @@ export default {
       var ctx = document.getElementById('canvas').getContext('2d')
       window.myLine = new Chart(ctx, config)
     },
-    isSassAndInCenter () {
+    isSassAndInCenter() {
       const isInSaleCenter = isInSalesCenter()
       const isSass = this.system_is_saas
       return isInSaleCenter && isSass
     },
-    mountedFunc () {
+    mountedFunc() {
       getActivateInfo().then((res) => {
         this.activateInfo = res.data.data
         if (!res.data.data.is_valid) {
@@ -1300,7 +1074,7 @@ export default {
       }
     }
   },
-  mounted () {
+  mounted() {
     this.mountedFunc()
   }
 }

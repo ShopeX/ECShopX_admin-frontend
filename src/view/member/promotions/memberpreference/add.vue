@@ -2,22 +2,6 @@
   <el-form ref="form" :model="form" class="box-set" label-width="120px">
     <el-card header="基础信息" shadow="naver">
       <el-form-item
-        label="区域"
-        prop="regionauth_id"
-        :rules="{ required: true, message: '区域必填', trigger: 'change' }"
-      >
-        <el-col :span="20">
-          <el-select v-model="form.regionauth_id" placeholder="请选择" clearable :disabled="form.status == 'waiting' ? false : true">
-            <el-option
-              v-for="item in areasList"
-              :key="item.value"
-              :label="item.label"
-              :value="item.value"
-            />
-          </el-select>
-        </el-col>
-      </el-form-item>
-      <el-form-item
         label="名称"
         prop="marketing_name"
         :rules="{ required: true, message: '活动名称必填', trigger: 'blur' }"
@@ -31,17 +15,6 @@
           />
         </el-col>
       </el-form-item>
-      <el-form-item label="活动说明">
-        <el-col :span="20">
-          <el-input
-            v-model="form.marketing_desc"
-            :disabled="form.status == 'waiting' ? false : true"
-            type="textarea"
-            :rows="3"
-            placeholder="请输入"
-          />
-        </el-col>
-      </el-form-item>
       <el-form-item label="适用会员">
         <el-checkbox-group v-model="validGrade" :disabled="form.status == 'waiting' ? false : true">
           <el-checkbox v-for="grade in memberGrade" :key="grade.grade_id" :label="grade.grade_id">
@@ -52,10 +25,6 @@
           </el-checkbox>
         </el-checkbox-group>
       </el-form-item>
-      <el-form-item label="适用人群">
-        <CrowdSelect v-model="form.crowd_ids" :disabled="form.status == 'waiting' ? false : true" />
-      </el-form-item>
-
       <el-form-item label="有效期">
         <el-col :span="20">
           <el-date-picker
@@ -70,20 +39,14 @@
           />
         </el-col>
       </el-form-item>
-      <el-form-item label="是否支持叠加优惠券" :rules="{ required: true, message: '是否支持叠加优惠券', trigger: 'blur' }">
-        <el-radio-group v-model="form.is_use_coupon" :disabled="form.status == 'waiting' ? false : true">
-          <el-radio :label="true"> 是 </el-radio>
-          <el-radio :label="false"> 否 </el-radio>
-        </el-radio-group>
-      </el-form-item>
     </el-card>
     <el-card header="选择商品" shadow="naver">
       <el-form-item label="适用商品">
         <el-radio-group v-model="form.use_bound" @change="itemTypeChange">
           <el-radio label="goods"> 指定商品适用 </el-radio>
           <el-radio label="category"> 指定分类适用 </el-radio>
-          <!-- <el-radio label="tag"> 指定商品标签适用 </el-radio>
-          <el-radio label="brand"> 指定品牌适用 </el-radio> -->
+          <el-radio label="tag"> 指定商品标签适用 </el-radio>
+          <el-radio label="brand"> 指定品牌适用 </el-radio>
         </el-radio-group>
       </el-form-item>
       <div v-if="!zdItemHidden" style="position: relative">
@@ -180,24 +143,21 @@
       </template>
     </el-card>
     <div class="content-center">
-      <el-button v-if="hasSaveButton" :loading="saveLoading" type="primary" @click="submitActivityAction()">
+      <el-button v-if="hasSaveButton" type="primary" @click="submitActivityAction()">
         保存
       </el-button>
       <el-button @click.native="handleCancel"> 返回 </el-button>
     </div>
-    <CompConflictActivities v-model="cActivityVis" :list="cActivityList" />
   </el-form>
 </template>
 
 <script>
 import Treeselect from '@riophae/vue-treeselect'
-import '@riophae/vue-treeselect/dist/vue-treeselect.css'
 import {
   addMarketingActivity,
   updateMarketingActivity,
   getMarketingActivityInfo,
-  seckillActivityGetItemsList,
-  batchGetActivityList
+  seckillActivityGetItemsList
 } from '../../../../api/promotions'
 import { getGradeList } from '../../../../api/membercard'
 import { listVipGrade } from '../../../../api/cardticket'
@@ -207,21 +167,14 @@ import { getItemsList, getCategory, getTagList, getGoodsAttr } from '@/api/goods
 import { handleUploadFile, exportUploadTemplate } from '../../../../api/common'
 import store from '@/store'
 import { transformTree } from '@/utils'
-import CrowdSelect from '@/components/function/crowdSelect'
-import CompConflictActivities from '../comps/comp-conflict-activities.vue'
-import moment from 'moment'
-
 export default {
   inject: ['refresh'],
   components: {
     SkuSelector,
-    Treeselect,
-    CompConflictActivities,
-    CrowdSelect
+    Treeselect
   },
   data() {
     return {
-      saveLoading:false,
       is_distributor: false,
       cursymbol: '￥',
       storeVisible: false,
@@ -232,7 +185,7 @@ export default {
         marketing_id: '',
         marketing_type: 'member_preference',
         marketing_name: '',
-        marketing_desc: '',
+        marketing_desc: '会员优先购',
         start_time: '',
         end_time: '',
         used_platform: 0,
@@ -250,14 +203,8 @@ export default {
         status: 'waiting',
         item_category: [],
         tag_ids: [],
-        brand_ids: [],
-        crowd_ids: [],
-        regionauth_id:'',
-        is_use_coupon:true,
+        brand_ids: []
       },
-      areasList:[],
-      cActivityVis:false,
-      cActivityList:[],
       vipGrade: [],
       memberGrade: [],
       conditionValue: [{ full: '', discount: '' }],
@@ -354,17 +301,8 @@ export default {
     this.fetchMainCate()
     this.getAllTagLists()
     this.getBrandList('', true)
-    this.getAreaList()
   },
   methods: {
-    async getAreaList(){
-      // 查询区域数据
-     const res = await this.$api.regionauth.getRegionauth()
-     this.areasList =  res?.list?.map((el) => ({
-          value: el.regionauth_id,
-          label: el.regionauth_name
-        }))
-    },
     getItems(data) {
       let ids = []
       data.forEach((item) => {
@@ -427,13 +365,8 @@ export default {
       // }
       //this.use_bound = 1
 
-      const thisform = JSON.parse(JSON.stringify(this.form))
-      thisform.member_tag_ids = this.form.crowd_ids.map(item=>item.tag_id).join(',')
-      delete thisform.crowd_ids
-      console.log(thisform)
-      this.saveLoading = true
       if (this.form.marketing_id) {
-        updateMarketingActivity(thisform).then((res) => {
+        updateMarketingActivity(this.form).then((res) => {
           if (res.data.data.marketing_id) {
             this.loading = false
             this.$message({
@@ -449,18 +382,9 @@ export default {
             this.$message.error('保存失败!')
             return false
           }
-        }).catch((err)=>{
-          console.log('err',err)
-          let marketing_ids = err.data?.data?.errors?.marketing_ids ?? []
-          if(marketing_ids.length){
-            marketing_ids = marketing_ids.join(',')
-            this.fetchGetActivityList(marketing_ids)
-          }
-        }).finally(()=>{
-          this.saveLoading = false
         })
       } else {
-        addMarketingActivity(thisform).then((res) => {
+        addMarketingActivity(this.form).then((res) => {
           if (res.data.data.marketing_id) {
             this.loading = false
             this.$message({
@@ -476,28 +400,8 @@ export default {
             this.$message.error('保存失败!')
             return false
           }
-        }).catch((err)=>{
-          console.log('err',err)
-          let marketing_ids = err.data?.data?.errors?.marketing_ids ?? []
-          if(marketing_ids.length){
-            marketing_ids = marketing_ids.join(',')
-            this.fetchGetActivityList(marketing_ids)
-          }
-        }).finally(()=>{
-          this.saveLoading = false
         })
       }
-    },
-    fetchGetActivityList(marketing_ids){
-      batchGetActivityList({ marketing_ids }).then(res=>{
-        let response = res.data.data
-        this.cActivityVis = true
-        this.cActivityList = response.map(item=>({
-          ...item,
-          start_date: moment(item.start_time * 1000).format('YYYY-MM-DD HH:mm:ss'),
-          end_date: moment(item.end_time * 1000).format('YYYY-MM-DD HH:mm:ss'),
-        }))
-      })
     },
     getActivityDetail(id) {
       getMarketingActivityInfo({ marketing_id: id }).then((res) => {
@@ -527,11 +431,7 @@ export default {
           brand_list: response.brand_list,
           rel_brand_ids: response.rel_brand_ids,
           rel_category_ids: response.rel_category_ids,
-          rel_tag_ids: response.rel_tag_ids,
-          regionauth_id: response.regionauth_id + '',
-          crowd_ids: response.member_tag_data,
-          is_use_coupon: response.is_use_coupon,
-          finance_id: response.finance_id
+          rel_tag_ids: response.rel_tag_ids
         }
         Object.assign(this.form, data)
         this.conditionValue = response.condition_value
@@ -574,7 +474,6 @@ export default {
           this.showBrands()
           this.generateSku()
         }
-
       })
     },
     handleCancel: function () {

@@ -3,9 +3,6 @@ import ElementUI from 'element-ui'
 Vue.use(ElementUI)
 import 'element-ui/lib/theme-chalk/index.css'
 
-import { VueMasonryPlugin } from 'vue-masonry'
-Vue.use(VueMasonryPlugin)
-
 import 'es6-promise/auto'
 
 import Directives from '../directives'

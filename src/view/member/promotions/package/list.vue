@@ -162,15 +162,15 @@ export default {
       this.onSearch()
     },
     addPackagePromotion() {
-      this.$router.push({ path: this.matchHidePage('editor') })
+      this.$router.push({ path: this.matchRoutePath('editor') })
     },
     updatePackagePromotion(row) {
-      this.$router.push({ path: this.matchHidePage('editor/') + row.package_id })
+      this.$router.push({ path: this.matchRoutePath('editor/') + row.package_id })
     },
 
     showPackagePromotion(row) {
       this.$router.push({
-        path: this.matchHidePage('editor/') + row.package_id,
+        path: this.matchRoutePath('editor/') + row.package_id,
         query: { isshow: true }
       })
     },

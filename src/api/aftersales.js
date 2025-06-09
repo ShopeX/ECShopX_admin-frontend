@@ -1,6 +1,6 @@
 import fetch from '../utils/fetch'
 
-export function getAftersalesList(query) {
+export function getAftersalesList (query) {
   return fetch({
     url: '/aftersales',
     method: 'get',
@@ -8,7 +8,7 @@ export function getAftersalesList(query) {
   })
 }
 
-export function exportList(query) {
+export function exportList (query) {
   return fetch({
     url: '/aftersales/logExport',
     method: 'get',
@@ -16,14 +16,14 @@ export function exportList(query) {
   })
 }
 
-export function getAftersalesDetail(aftersalesBn) {
+export function getAftersalesDetail (aftersalesBn) {
   return fetch({
     url: '/aftersales/' + aftersalesBn,
     method: 'get'
   })
 }
 
-export function reviewAftersales(query) {
+export function reviewAftersales (query) {
   return fetch({
     url: '/aftersales/review',
     method: 'post',
@@ -31,7 +31,7 @@ export function reviewAftersales(query) {
   })
 }
 
-export function refundCheck(query) {
+export function refundCheck (query) {
   return fetch({
     url: '/aftersales/refundCheck',
     method: 'post',
@@ -39,7 +39,7 @@ export function refundCheck(query) {
   })
 }
 
-export function sendConfirm(query) {
+export function sendConfirm (query) {
   return fetch({
     url: '/aftersales/sendConfirm',
     method: 'post',
@@ -47,7 +47,7 @@ export function sendConfirm(query) {
   })
 }
 
-export function getAftersalesAddressList(query) {
+export function getAftersalesAddressList (query) {
   return fetch({
     url: '/distributors/aftersalesaddress',
     method: 'get',
@@ -55,7 +55,7 @@ export function getAftersalesAddressList(query) {
   })
 }
 
-export function getRefundsList(query) {
+export function getRefundsList (query) {
   return fetch({
     url: '/refund',
     method: 'get',
@@ -63,14 +63,14 @@ export function getRefundsList(query) {
   })
 }
 
-export function getRefundsDetail(refundBn) {
+export function getRefundsDetail (refundBn) {
   return fetch({
     url: '/refund/detail/' + refundBn,
     method: 'get'
   })
 }
 
-export function exportRefundList(query) {
+export function exportRefundList (query) {
   return fetch({
     url: '/refund/logExport',
     method: 'get',
@@ -78,7 +78,7 @@ export function exportRefundList(query) {
   })
 }
 
-export function createAftersalesAddress(data) {
+export function createAftersalesAddress (data) {
   return fetch({
     url: '/distributors/aftersalesaddress',
     method: 'post',
@@ -86,7 +86,7 @@ export function createAftersalesAddress(data) {
   })
 }
 
-export function updateAftersalesAddress(data) {
+export function updateAftersalesAddress (data) {
   return fetch({
     url: '/distributors/aftersalesaddress',
     method: 'put',
@@ -94,14 +94,14 @@ export function updateAftersalesAddress(data) {
   })
 }
 
-export function deleteAftersalesAddress(id) {
+export function deleteAftersalesAddress (id) {
   return fetch({
     url: '/distributors/aftersalesaddress/' + id,
     method: 'delete'
   })
 }
 
-export function getInvoiceList(query) {
+export function getInvoiceList (query) {
   return fetch({
     url: '/distributors/invoice',
     method: 'get',
@@ -109,7 +109,7 @@ export function getInvoiceList(query) {
   })
 }
 
-export function getInvoiceInfo(id, query) {
+export function getInvoiceInfo (id, query) {
   return fetch({
     url: '/distributors/invoice/' + id,
     method: 'get',
@@ -117,7 +117,7 @@ export function getInvoiceInfo(id, query) {
   })
 }
 
-export function createInvoice(params) {
+export function createInvoice (params) {
   return fetch({
     url: '/distributors/invoice',
     method: 'post',
@@ -125,7 +125,7 @@ export function createInvoice(params) {
   })
 }
 
-export function updateInvoice(id, params) {
+export function updateInvoice (id, params) {
   return fetch({
     url: '/distributors/invoice/' + id,
     method: 'put',
@@ -133,20 +133,20 @@ export function updateInvoice(id, params) {
   })
 }
 
-export function deleteInvoice(id) {
+export function deleteInvoice (id) {
   return fetch({
     url: '/distributors/invoice/' + id,
     method: 'delete'
   })
 }
-export function setDefaultAftersalesAddress(id) {
+export function setDefaultAftersalesAddress (id) {
   return fetch({
     url: '/distributors/aftersalesaddress/' + id,
     method: 'post'
   })
 }
 
-export function exportAftersalesFinancialList(query) {
+export function exportAftersalesFinancialList (query) {
   return fetch({
     url: '/aftersales/financial/export',
     method: 'get',
@@ -154,14 +154,14 @@ export function exportAftersalesFinancialList(query) {
   })
 }
 
-export function getAftersalesRemind() {
+export function getAftersalesRemind () {
   return fetch({
     url: '/aftersales/remind/detail',
     method: 'get'
   })
 }
 
-export function setAftersalesRemind(data) {
+export function setAftersalesRemind (data) {
   return fetch({
     url: '/aftersales/remind',
     method: 'post',
@@ -169,7 +169,7 @@ export function setAftersalesRemind(data) {
   })
 }
 
-export function getOfflineInfo(query) {
+export function getOfflineInfo (query) {
   return fetch({
     url: '/refund/offline/bank',
     method: 'get',
@@ -177,18 +177,9 @@ export function getOfflineInfo(query) {
   })
 }
 
-export function refundOffline(data) {
+export function refundOffline (data) {
   return fetch({
     url: '/refund/offline',
-    method: 'post',
-    params: data
-  })
-}
-
-// 强制交易完成
-export function refundOfflineFv(data) {
-  return fetch({
-    url: '/refund/offline/fv',
     method: 'post',
     params: data
   })

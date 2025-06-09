@@ -232,15 +232,15 @@ import shopSelect from '@/components/shopSelect'
 import mixin, { pageMixin } from '@/mixins'
 
 export default {
+  components: {
+    shopSelect
+  },
+  mixins: [mixin, pageMixin],
   provide() {
     return {
       refresh: this.fetchList
     }
   },
-  components: {
-    shopSelect
-  },
-  mixins: [mixin, pageMixin],
   data() {
     const initialParams = {
       create_time: [],
@@ -337,10 +337,10 @@ export default {
       this.fetchList()
     },
     addActivityData() {
-      this.$router.push({ path: this.matchHidePage('editor') })
+      this.$router.push({ path: this.matchRoutePath('editor') })
     },
     editActivityAction(index, row) {
-      this.$router.push({ path: this.matchHidePage('editor/') + row.marketing_id })
+      this.$router.push({ path: this.matchRoutePath('editor/') + row.marketing_id })
     },
     deleteActivityAction(row) {
       removeMarketingActivity({ marketing_id: row.marketing_id }).then((res) => {
@@ -414,7 +414,7 @@ export default {
     },
     viewDetail(row) {
       this.$router.push({
-        path: this.matchHidePage('editor/') + row.marketing_id,
+        path: this.matchRoutePath('editor/') + row.marketing_id,
         query: { isnodata: true }
       })
     }

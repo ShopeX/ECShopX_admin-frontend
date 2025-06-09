@@ -4,6 +4,7 @@ import _pickBy from 'lodash/pickBy'
 import _get from 'lodash/get'
 import store from '@/store'
 import { isEmpty } from 'lodash'
+
 const isPrimitiveType = (val, type) => Object.prototype.toString.call(val) === type
 
 export function isFunction(val) {
@@ -178,7 +179,7 @@ function export_open(tab) {
   setTimeout(() => {
     const login_type = store.getters.login_type
     if (login_type == 'distributor') {
-      window.open(`/shopadmin/setting/baseexport?tab=${tab}`)
+      window.open(`/shopadmin/shopsetting/baseexport?tab=${tab}`)
     } else if (login_type == 'merchant') {
       window.open(`/merchant/setting/baseexport?tab=${tab}`)
     } else if (login_type == 'supplier') {
@@ -357,30 +358,6 @@ export const transformTree = (tree, obj = {}) => {
   }
 
   return transformedTree
-}
-
-// 查找对应name的value
-export const getCascaderObj = (val, opt) => {
-  return val.map(function (value, index, array) {
-    for (var itm of opt) {
-      if (itm.value === value) {
-        opt = itm.children
-        return itm
-      }
-    }
-    return null
-  })
-}
-// 手机号加密
-export function maskPhone(phone) {
-  return String(phone).replace(/^(\d{3})\d{4}(\d{4})$/, '$1****$2')
-}
-
-export function getRegionauthId() {
-  // 获取当前路由的regionauth_id
-  const urlParams = new URLSearchParams(window.location.search)
-  const regionauth_id = urlParams.get('regionauth_id')
-  return regionauth_id
 }
 
 export { log, export_open, isEmpty }

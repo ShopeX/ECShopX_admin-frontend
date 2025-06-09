@@ -113,13 +113,13 @@ import { listBargins, deleteBargains, terminateBargains } from '../../../api/pro
 import util from '../../../common/js/util'
 import { setPageParams, getParamByTempName, updateParamsById } from '../../../api/wxa'
 export default {
+  components: {
+    imgPicker
+  },
   provide() {
     return {
       refresh: this.refresh
     }
-  },
-  components: {
-    imgPicker
   },
   data() {
     return {
@@ -198,10 +198,10 @@ export default {
       this.imgDialog = false
     },
     addBargains() {
-      this.$router.push({ path: this.matchHidePage('editor') })
+      this.$router.push({ path: this.matchRoutePath('editor') })
     },
     editBargains(index, row) {
-      this.$router.push({ path: this.matchHidePage('editor/') + row.bargain_id })
+      this.$router.push({ path: this.matchRoutePath('editor/') + row.bargain_id })
     },
     getAdPic() {
       let filter = { template_name: 'yykcutdown', name: 'banner', page_name: 'pages/kanjia' }

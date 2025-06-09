@@ -70,7 +70,6 @@ export default {
   wgtName: '视频',
   wgtDesc: '',
   wgtIcon: 'wgt-film',
-  wgtType: 1,
   config: config,
   props: {
     value: [Object, Array]

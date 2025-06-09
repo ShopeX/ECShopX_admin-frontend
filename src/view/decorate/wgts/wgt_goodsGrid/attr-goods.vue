@@ -64,9 +64,11 @@ export default {
           medicine_data:item.medicine_data
         }
       })
+      console.log(list,'ids')
       const { data } = await this.$picker.goodsitem({
         data:list
       })
+      console.log(data)
       const values = []
       data.forEach((item) => {
         if (item.itemId) {

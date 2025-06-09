@@ -10,7 +10,7 @@
         >
           <el-card>
             <h2>{{ key.remarks }}</h2>
-            <p>操作人员：{{ filterOperatorName(key.operator_name) }}</p>
+            <p>操作人员：{{ key.operator_name }}</p>
             <p>
               人员类型：
               <span v-if="'user' == key.operator_type"> 用户 </span>
@@ -83,7 +83,6 @@ img {
 </style>
 <script>
 import { getProcessLog } from '@/api/trade'
-import { maskPhone } from '@/utils'
 export default {
   data() {
     return {
@@ -108,12 +107,6 @@ export default {
         this.list = response.data.data
         this.loading = false
       })
-    },
-    filterOperatorName(text) {
-      if (text == '系统') {
-        return text
-      }
-      return maskPhone(text)
     }
   }
 }

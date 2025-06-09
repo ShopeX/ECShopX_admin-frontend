@@ -21,22 +21,14 @@
   <div class="picker-shop">
     <SpFilterForm :model="formData" size="small" @onSearch="onSearch" @onReset="onSearch">
       <SpFilterFormItem prop="region">
-        <el-select v-model="formData.regionauth_id" placeholder="请选择" disabled>
-          <el-option
-            v-for="item in regionauthList"
-            :key="item.regionauth_id"
-            :label="item.label"
-            :value="item.value"
-          />
-        </el-select>
-        <!-- <el-cascader
+        <el-cascader
           ref="region"
           v-model="formData.region"
           filterable
           clearable
           placeholder="选择地区筛选店铺"
-          :options="district" -->
-        <!-- /> -->
+          :options="district"
+        />
       </SpFilterFormItem>
       <SpFilterFormItem prop="keywords">
         <el-input v-model="formData.keywords" placeholder="请输入店铺名称" />
@@ -72,7 +64,6 @@ import { createSetting } from '@shopex/finder'
 import district from '@/common/district.json'
 import BasePicker from './base'
 import PageMixin from '../mixins/page'
-import { getRegionauthId } from '@/utils'
 export default {
   name: 'PickerShop',
   extends: BasePicker,
@@ -83,11 +74,10 @@ export default {
   props: ['value'],
   data() {
     return {
-      regionauthList: [],
       formData: {
-        regionauth_id: '',
+        region: [],
         keywords: '',
-        shop_code: ''
+        shop_code: '',
       },
       district,
       regionArea: [],
@@ -122,47 +112,31 @@ export default {
   },
   created() {
     // this.fetch()
-    this.getRegionauth()
-    this.formData.regionauth_id = this.value?.params?.regionauth_id || getRegionauthId()
   },
   methods: {
-    async getRegionauth() {
-      try {
-        const res = await this.$api.regionauth.getRegionauth()
-        this.regionauth_id = res.list[0].regionauth_id
-        this.regionauthList = res.list.map((item) => ({
-          label: item.regionauth_name,
-          value: item.regionauth_id
-        }))
-      } catch (error) {
-        console.error('获取区域列表失败', error)
-      }
-    },
     beforeSearch(params) {
-      // const regionLabels = []
-      // const getRegionLabel = (district, i) => {
-      //   if (this.formData.region[i]) {
-      //     const fd = district.find((item) => item.value == this.formData.region[i])
-      //     regionLabels.push(fd.label)
-      //     if (fd.children) {
-      //       getRegionLabel(fd.children, ++i)
-      //     }
-      //   }
-      // }
-      // if (this.formData.region.length > 0) {
-      //   getRegionLabel(this.district, 0)
-      // }
-      // const [province = '', city = '', area = ''] = regionLabels
+      const regionLabels = []
+      const getRegionLabel = (district, i) => {
+        if (this.formData.region[i]) {
+          const fd = district.find((item) => item.value == this.formData.region[i])
+          regionLabels.push(fd.label)
+          if (fd.children) {
+            getRegionLabel(fd.children, ++i)
+          }
+        }
+      }
+      if (this.formData.region.length > 0) {
+        getRegionLabel(this.district, 0)
+      }
+      const [province = '', city = '', area = ''] = regionLabels
       params = {
         ...params,
         name: this.formData.keywords,
         shop_code: this.formData.shop_code,
-        regionauth_id: this.formData.regionauth_id || getRegionauthId(),
-        // province: province,
-        // city: city,
-        // area: area,
-        distribution_type: this.value?.distribution_type,
-        ...(this.value?.params || {})
+        province: province,
+        city: city,
+        area: area,
+        distribution_type: this.value?.distribution_type
       }
       return params
     },

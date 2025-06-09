@@ -32,7 +32,7 @@
             <template slot-scope="scope">
               <router-link
                 :to="{
-                  path: matchHidePage('detail'),
+                  path: matchRoutePath('detail'),
                   query: {
                     distributor_id: scope.row.distributor_id,
                     distributor_name: scope.row.name,

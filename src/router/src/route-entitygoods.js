@@ -38,39 +38,6 @@ export default {
         }
       ]
     },
-    // 搜索配置
-    {
-      path: 'goodsbase/search',
-      name: '底纹词配置',
-      component: () => import('@/view/mall/goods/search/index.vue'),
-      children: [
-        {
-          path: '/',
-          name: '底纹词配置',
-          component: () => import('@/view/mall/goods/search/shadedWordManagement/index.vue')
-        },
-        {
-          path: 'hotWordManagement',
-          name: '热词配置',
-          component: () => import('@/view/mall/goods/search/hotWordManagement/index.vue')
-        },
-        {
-          path: 'synonymManagement',
-          name: '同义词配置',
-          component: () => import('@/view/mall/goods/search/synonymManagement/index.vue')
-        },
-        {
-          path: 'noResultPageManagement',
-          name: '无结果页配置',
-          component: () => import('@/view/mall/goods/search/noResultPageManagement/index.vue')
-        },
-      ]
-    },
-    {
-      path: 'goodsbase/searchListManagement',
-      name: '榜单配置',
-      component: () => import('@/view/mall/goods/search/searchListManagement/index.vue')
-    },
     {
       path: 'goods/storeshopitemanagement',
       name: `店铺商品`,
@@ -114,6 +81,11 @@ export default {
       path: 'goodsbase/goodsattributes',
       name: `商品规格`,
       component: () => import('@/view/mall/goods/attributes/attributes')
+    },
+    {
+      path: 'goodsbase/goodsstartnum',
+      name: `起订量`,
+      component: () => import('@/view/mall/goods/attributes/goodsattributes')
     },
     {
       path: 'goodsbase/goodsbrand',

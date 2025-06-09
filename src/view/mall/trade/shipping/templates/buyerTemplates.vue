@@ -15,17 +15,6 @@
         </template>
       </el-table-column>
       <el-table-column width="100" prop="fee" label="运费" />
-      <el-table-column width="100" prop="regionauth_name" label="适用区域" />
-      <el-table-column width="100" prop="distributor_names" label="适用店铺">
-        <template slot-scope="scope">
-          <span>{{ scope.row.distributor_names?.toString() }}</span>
-        </template>
-      </el-table-column>
-      <el-table-column width="100" prop="price_model" label="计费模式">
-        <template slot-scope="scope">
-          <span>{{ scope.row.price_model === 'single' ? '单店计费' : '合并计费' }}</span>
-        </template>
-      </el-table-column>
       <el-table-column width="70" label="状态">
         <template slot-scope="scope">
           <span v-if="scope.row.status == true">启用</span>
@@ -37,7 +26,7 @@
           <span>{{ scope.row.updated_at | datetime('YYYY-MM-DD') }}</span>
         </template>
       </el-table-column>
-      <el-table-column label="操作" width="150">
+      <el-table-column label="操作" width="100">
         <template slot-scope="scope">
           <div class="operating-icons">
             <i class="iconfont icon-edit1" @click="editTemplatesAction(scope.$index, scope.row)" />
@@ -45,7 +34,6 @@
               class="mark iconfont icon-trash-alt1"
               @click="deleteTemplatesAction(scope.$index, scope.row)"
             />
-            <span @click="linkHanlde(scope.$index, scope.row)">关联店铺</span>
           </div>
         </template>
       </el-table-column>
@@ -64,9 +52,9 @@
 
 <script>
 import { mapGetters } from 'vuex'
-import { getShippingTemplatesList, deleteShippingTemplates } from '@/api/shipping'
+import { getShippingTemplatesList, deleteShippingTemplates } from '../../../../../api/shipping'
 export default {
-  props: ['getStatus', 'formData'],
+  props: ['getStatus'],
   data() {
     return {
       loading: false,
@@ -79,7 +67,6 @@ export default {
       }
     }
   },
-  inject: ['linkShopHanlde'],
   computed: {
     ...mapGetters(['wheight'])
   },
@@ -99,21 +86,16 @@ export default {
     },
     getShippingTemplatesList() {
       this.loading = true
-      getShippingTemplatesList({ ...this.params, ...this.formData }).then((response) => {
+      getShippingTemplatesList(this.params).then((response) => {
         this.buyerTemplatesList = []
         for (var item in response.data.data.list) {
-          const _inner = response.data.data.list[item]
           this.buyerTemplatesList.push({
-            template_id: _inner.template_id,
-            name: _inner.name,
+            template_id: response.data.data.list[item].template_id,
+            name: response.data.data.list[item].name,
             area: '0',
             fee: '包邮',
-            status: _inner.status,
-            updated_at: _inner.update_time,
-            distributor_names: _inner.distributor_names,
-            price_model: _inner.price_model,
-            regionauth_name: _inner.regionauth_name,
-            regionauth_id: _inner.regionauth_id
+            status: response.data.data.list[item].status,
+            updated_at: response.data.data.list[item].update_time
           })
         }
         this.total_count = response.data.data.total_count
@@ -121,7 +103,7 @@ export default {
       })
     },
     editTemplatesAction(index, row) {
-      this.$router.push({ path: this.matchHidePage('editor/') + row.template_id })
+      this.$router.push({ path: this.matchRoutePath('editor/') + row.template_id })
     },
     deleteTemplatesAction(index, row) {
       this.$confirm('此操作将删除该运费模板, 是否继续?', '提示', {
@@ -145,9 +127,6 @@ export default {
             message: '已取消'
           })
         })
-    },
-    linkHanlde(_, row) {
-      this.linkShopHanlde(row)
     }
   }
 }

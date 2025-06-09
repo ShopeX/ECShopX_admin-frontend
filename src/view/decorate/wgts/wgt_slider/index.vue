@@ -1,6 +1,11 @@
 <style lang="scss" src="./index.scss"></style>
 <template>
-  <div class="wgt-slider">
+  <div
+    :class="{
+      'wgt-slider': true,
+      'padded': value.padded
+    }"
+  >
     <div v-if="value.title || value.subtitle" class="wgt-hd">
       <span class="title">{{ value.title }}</span>
       <span class="sub-title">{{ value.subtitle }}</span>
@@ -86,7 +91,6 @@ export default {
   wgtName: '轮播',
   wgtDesc: '',
   wgtIcon: 'wgt-slider',
-  wgtType: 1,
   config: config,
   props: {
     value: [Object, Array]

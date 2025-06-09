@@ -310,7 +310,6 @@
 
 <script>
 import Treeselect from '@riophae/vue-treeselect'
-import '@riophae/vue-treeselect/dist/vue-treeselect.css'
 import draggable from 'vuedraggable'
 import imgPicker from '@/components/imageselect'
 import videoPicker from '@/components/videoselect'

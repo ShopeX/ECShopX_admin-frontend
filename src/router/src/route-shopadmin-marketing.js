@@ -129,6 +129,10 @@ export default {
         {
           path: 'detail/:apply_id',
           component: () => import('@/view/mall/community/chiefDetail')
+        },
+        {
+          path: 'approve',
+          component: () => import('@/view/mall/community/chiefApprove')
         }
       ]
     },
@@ -243,7 +247,6 @@ export default {
           component: () => import('@/view/member/selfservice/regRecordUpload')
         }
       ]
-    },
-
+    }
   ]
 }

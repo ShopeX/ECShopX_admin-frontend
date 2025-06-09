@@ -65,7 +65,7 @@
               </el-button>
             </template>
           </el-table-column>
-          
+
           <el-table-column label="是否启用">
             <template slot-scope="scope">
               <el-switch
@@ -79,7 +79,7 @@
             </template>
           </el-table-column>
 
-          <!-- 
+          <!--
 
         <el-table-column label="导购角色">
           <template slot-scope="scope">
@@ -257,7 +257,7 @@
                 <template slot-scope="scope">
                   <router-link
                     :to="{
-                      path: '/member/member/detail',
+                      path: '/member/member/memberlist/detail',
                       query: { user_id: scope.row.user_id }
                     }"
                   >
@@ -398,7 +398,7 @@ export default {
     },
     count(index, row) {
       if (row.children_count > 0) {
-        console.log(this.matchHidePage('child'))
+        console.log(this.matchRoutePath('child'))
         console.log(row.promoter_id)
         console.log(row.promoter_id)
         console.log(row.promoter_id)
@@ -406,7 +406,7 @@ export default {
           // path: "/sellers/marketingsalesman/children",
           // pathxxx: "/sellers/marketingsalesman/popularizelist/child",
           // path: "/marketing/popularize/popularizelist/child",
-          path: this.matchHidePage('children'),
+          path: this.matchRoutePath('children'),
           query: { promoter_id: row.promoter_id }
         })
         console.log(routeData.href)

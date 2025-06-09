@@ -8,36 +8,27 @@
   <div class="page-body">
     <template v-if="$route.path.indexOf('detail') === -1">
       <SpFilterForm :model="params" @onSearch="onSearch" @onReset="onReset">
-        <!-- 新增 -->
-        <SpFilterFormItem prop="regionauth_id" label="区域:">
-          <el-select v-model="params.regionauth_id" clearable placeholder="请选择">
-            <el-option
-              v-for="item in areas"
-              :key="item.value"
-              :label="item.label"
-              :value="item.value"
-            />
-          </el-select>
-        </SpFilterFormItem>
-        <!-- 修改 -->
-        <SpFilterFormItem v-if="!VERSION_B2C" prop="distributor" label="店铺:">
-          <SpSelectShopV2
-            ref="selectShop"
-            v-model="params.distributor_id"
-            clearable
-            placeholder="请选择"
+        <SpFilterFormItem v-if="!VERSION_B2C" prop="distributor" label="店铺名称:">
+          <el-autocomplete
+            v-model="params.distributor.name"
+            :fetch-suggestions="queryStoreSearch"
+            placeholder="请输入店铺名称"
+            @select="handleSelectStore"
           />
         </SpFilterFormItem>
-
-        <SpFilterFormItem prop="order_id" label="订单编号:">
+        <SpFilterFormItem prop="create_time" label="日期范围:">
+          <el-date-picker
+            v-model="params.create_time"
+            type="daterange"
+            value-format="yyyy/MM/dd"
+            placeholder="选择日期范围"
+          />
+        </SpFilterFormItem>
+        <SpFilterFormItem prop="order_id" label="订单号:">
           <el-input v-model="params.order_id" placeholder="订单号" />
         </SpFilterFormItem>
         <SpFilterFormItem prop="aftersales_bn" label="售后单号:">
           <el-input v-model="params.aftersales_bn" placeholder="请填写售后单号" />
-        </SpFilterFormItem>
-        <!-- 新增 会员卡号 -->
-        <SpFilterFormItem prop="user_card_code" label="会员卡号:">
-          <el-input v-model="params.user_card_code" placeholder="请填写会员卡号" />
         </SpFilterFormItem>
         <SpFilterFormItem prop="mobile" label="手机号:">
           <el-input v-model="params.mobile" placeholder="手机号" />
@@ -52,30 +43,7 @@
             />
           </el-select>
         </SpFilterFormItem>
-
-        <!-- 来源 -->
-        <SpFilterFormItem prop="aftersales_status" label="来源:">
-          <el-select v-model="params.aftersales_status" clearable placeholder="来源">
-            <el-option
-              v-for="(item, index) in aftersalesStatusList"
-              :key="index"
-              :label="item.name"
-              :value="item.value"
-            />
-          </el-select>
-        </SpFilterFormItem>
-
-        <!-- 修改 -->
-        <SpFilterFormItem prop="create_time" label="创建时间:">
-          <el-date-picker
-            v-model="params.create_time"
-            type="daterange"
-            value-format="yyyy/MM/dd"
-            placeholder="选择日期范围"
-          />
-        </SpFilterFormItem>
-        <!-- 隐藏 -->
-        <!-- <SpFilterFormItem prop="aftersales_type" label="售后类型:">
+        <SpFilterFormItem prop="aftersales_type" label="售后类型:">
           <el-select v-model="params.aftersales_type" placeholder="请选择售后类型">
             <el-option
               v-for="(item, index) in $store.getters.login_type == 'merchant'
@@ -86,23 +54,9 @@
               :value="item.value"
             />
           </el-select>
-        </SpFilterFormItem> -->
+        </SpFilterFormItem>
         <SpFilterFormItem prop="item_bn" label="SKU编号:">
           <el-input v-model="params.item_bn" placeholder="SKU编号" />
-        </SpFilterFormItem>
-        <!-- 新增 商品订单号 -->
-        <SpFilterFormItem prop="oid" label="商品订单号:">
-          <el-input v-model="params.oid" placeholder="商品订单号" />
-        </SpFilterFormItem>
-        <!-- 新增 退款时间 -->
-        <SpFilterFormItem prop="refund_time" label="退款时间:">
-          <el-date-picker
-            v-model="params.refund_time"
-            type="daterange"
-            value-format="yyyy/MM/dd"
-            placeholder="选择日期范围"
-            @change="onRefundTimeChange"
-          />
         </SpFilterFormItem>
 
         <SpFilterFormItem
@@ -113,9 +67,9 @@
           <el-input v-model="params.supplier_name" placeholder="请输入来源供应商" />
         </SpFilterFormItem>
         <SpFilterFormItem
+          v-if="VERSION_STANDARD || IS_ADMIN()"
           prop="order_holder"
           label="订单分类:"
-          v-if="VERSION_STANDARD || IS_ADMIN()"
         >
           <el-select v-model="params.order_holder" clearable placeholder="请选择">
             <el-option
@@ -130,8 +84,7 @@
         <SpFilterFormItem v-if="IS_SUPPLIER()" prop="distributor_id" label="来源店铺:">
           <SpSelectShop v-model="params.distributor_id" clearable placeholder="请选择" />
         </SpFilterFormItem>
-        <!-- 隐藏 -->
-        <!-- <SpFilterFormItem prop="order_class" label="订单类型:">
+        <SpFilterFormItem prop="order_class" label="订单类型:">
           <el-select v-model="params.order_class" clearable placeholder="请选择">
             <el-option
               v-for="item in orderType"
@@ -141,7 +94,7 @@
               :value="item.value"
             />
           </el-select>
-        </SpFilterFormItem> -->
+        </SpFilterFormItem>
         <SpFilterFormItem
           v-if="is_pharma_industry"
           prop="is_prescription_order"
@@ -181,7 +134,7 @@
                       '/supplier/order/aftersaleslist/detail') ||
                     (`${$store.getters.login_type}` == 'merchant' &&
                       '/merchant/order/aftersaleslist/detail') ||
-                    '/order/entitytrade/aftersaleslist/detail',
+                    '/order/aftersales/aftersaleslist/detail',
                   query: { aftersales_bn: scope.row.aftersales_bn }
                 }"
               >
@@ -209,7 +162,7 @@
             </div>
           </template>
         </el-table-column>
-        <el-table-column min-width="150" label="订单编号">
+        <el-table-column min-width="150" label="订单号">
           <template slot-scope="scope">
             <div class="order-num">
               <router-link
@@ -238,63 +191,23 @@
             </div>
           </template>
         </el-table-column>
-        <!-- 新增 -->
-        <el-table-column min-width="150" label="商品订单号">
-          <template slot-scope="scope">
-            <div class="order-num">
-              <router-link
-                target="_blank"
-                :to="{
-                  path:
-                    (`${$store.getters.login_type}` == 'distributor' &&
-                      '/shopadmin/order/tradenormalorders/detail') ||
-                    (`${$store.getters.login_type}` == 'supplier' &&
-                      '/supplier/order/tradenormalorders/detail') ||
-                    (`${$store.getters.login_type}` == 'merchant' &&
-                      '/merchant/order/tradenormalorders/detail') ||
-                    '/order/entitytrade/tradenormalorders/detail',
-                  query: { orderId: scope.row.oid }
-                }"
-              >
-                {{ scope.row.oid }}
-              </router-link>
-              <el-tooltip effect="dark" content="复制" placement="top-start">
-                <i
-                  v-clipboard:copy="scope.row.oid"
-                  v-clipboard:success="onCopySuccess"
-                  class="el-icon-document-copy"
-                />
-              </el-tooltip>
-            </div>
-          </template>
-        </el-table-column>
-        <!-- 新增 店铺 -->
-        <el-table-column min-width="150" label="店铺">
-          <template slot-scope="scope">
-            {{ scope.row.distributor_info.name }}
-          </template>
-        </el-table-column>
-        <!-- 隐藏 -->
-        <!-- <el-table-column
+        <el-table-column
+          v-if="VERSION_STANDARD || IS_ADMIN()"
           width="120"
           label="订单分类"
           header-align="center"
           prop="order_holder"
-          v-if="VERSION_STANDARD || IS_ADMIN()"
         >
           <template slot-scope="scope">
             {{ getOrderCategoryName(scope.row.order_holder) }}
           </template>
-        </el-table-column> -->
-        <!-- 隐藏 -->
-        <!-- <el-table-column
-          min-width="100"
+        </el-table-column>
+        <el-table-column
           v-if="VERSION_STANDARD || IS_ADMIN()"
+          min-width="100"
           prop="supplier_name"
           label="来源供应商"
         />
-        -->
-        <!-- 新增 -->
         <el-table-column
           width="120"
           label="退款金额（¥）"
@@ -306,20 +219,18 @@
             {{ scope.row.freight / 100 }}
           </template>
         </el-table-column>
-        <!-- 隐藏 -->
-        <!-- <el-table-column
+        <el-table-column
           width="160"
           label="退款抵扣积分（¥）"
           header-align="center"
           prop="refund_point"
-        ></el-table-column>
+        />
         <el-table-column v-if="!IS_SUPPLIER()" label="配送员">
           <template slot-scope="scope">
             {{ scope.row.self_delivery_operator_name }}
           </template>
-        </el-table-column> -->
-        <!-- 隐藏 -->
-        <!-- <el-table-column v-if="!IS_SUPPLIER()" prop="mobile" label="业务员">
+        </el-table-column>
+        <el-table-column v-if="!IS_SUPPLIER()" prop="mobile" label="业务员">
           <template slot-scope="scope">
             {{ scope.row.salesman_mobile }}
             <el-tooltip
@@ -335,43 +246,34 @@
               />
             </el-tooltip>
           </template>
-        </el-table-column> -->
-        <el-table-column v-if="!IS_SUPPLIER()" min-width="150" label="会员手机号">
+        </el-table-column>
+        <el-table-column v-if="!IS_SUPPLIER()" min-width="150" label="手机号">
           <template slot-scope="scope">
             <div
-              @click="
-                () => {
-                  showMobileMap[scope.$index] = !showMobileMap[scope.$index]
-                  showMobileMap = [...showMobileMap]
-                }
-              "
+              v-if="!scope.row.user_delete && $store.getters.login_type !== 'merchant'"
+              class="order-num"
             >
-              {{
-                showMobileMap[scope.$index] ? scope.row['mobile'] : maskPhone(scope.row['mobile'])
-              }}
-              <el-icon class="el-icon-view" />
+              <router-link
+                v-if="
+                  $store.getters.login_type != 'supplier' &&
+                  $store.getters.login_type != 'distributor'
+                "
+                target="_blank"
+                :to="{
+                  path:
+                    `${$store.getters.login_type != 'distributor' ? '' : '/shopadmin'}` +
+                    '/member/member/memberlist/detail',
+                  query: { user_id: scope.row.user_id }
+                }"
+              >
+                {{ scope.row.mobile }}
+              </router-link>
             </div>
+            <template v-else>
+              {{ scope.row.mobile }}
+            </template>
           </template>
         </el-table-column>
-        <!-- 新增 会员卡号 -->
-        <el-table-column min-width="150" label="会员卡号">
-          <template slot-scope="scope">
-            {{ scope.row.user_card_code }}
-          </template>
-        </el-table-column>
-        <!-- 新增 区域 -->
-        <el-table-column min-width="150" label="区域">
-          <template slot-scope="scope">
-            {{ scope.row.regionauth_name }}
-          </template>
-        </el-table-column>
-        <!-- 新增 来源 -->
-        <el-table-column min-width="150" label="来源">
-          <template slot-scope="scope">
-            {{ scope.row.source }}
-          </template>
-        </el-table-column>
-
         <el-table-column v-if="IS_SUPPLIER()" min-width="100" prop="contact" label="姓名" />
         <el-table-column v-if="IS_SUPPLIER()" min-width="150" label="SKU编号">
           <template slot-scope="scope">
@@ -427,17 +329,11 @@
             </el-tag>
           </template>
         </el-table-column>
-        <!-- 新增 退款时间 -->
-        <el-table-column min-width="150" label="退款时间">
-          <template slot-scope="scope">
-            {{ scope.row.refund_time }}
-          </template>
-        </el-table-column>
         <el-table-column width="100" label="操作" fixed="left">
           <template slot-scope="scope">
             <router-link
               :to="{
-                path: matchHidePage('detail'),
+                path: matchRoutePath('detail'),
                 query: { aftersales_bn: scope.row.aftersales_bn, resource: $route.path }
               }"
             >
@@ -494,7 +390,7 @@
                 active-color="#13ce66"
                 inactive-color="#ff4949"
               />
-              <br />
+              <br>
               <span class="frm-tips"
                 >如开启展示，则后台所输入内容将会展示在前端消费者提交售后申请的页面上，内容不超过200字</span
               >
@@ -517,9 +413,6 @@ import RemarkModal from '@/components/remarkModal'
 import mixin, { pageMixin, remarkMixin } from '@/mixins'
 import { VERSION_B2C, IS_SUPPLIER } from '@/utils'
 import { ORDER_CATEGORY, ORDER_TYPE, ORDER_TYPE_STANDARD } from '@/consts'
-import moment from 'moment'
-import { maskPhone } from '@/utils'
-import api from '@/api'
 export default {
   components: {
     RemarkModal
@@ -579,9 +472,7 @@ export default {
       },
       aftersalesRemindVisible: false,
       aftersalesRemindTitle: '售后提醒内容',
-      showMobileMap: [],
-      maskPhone,
-      areas: []
+      orderType: this.VERSION_STANDARD ? ORDER_TYPE_STANDARD : ORDER_TYPE
     }
   },
   computed: {
@@ -615,14 +506,6 @@ export default {
     //获取所有店铺
     this.getStoreList()
     this.fetchList()
-
-    api.regionauth.getRegionauth().then((res) => {
-      this.areas = res?.list?.map((el) => ({
-        value: el.regionauth_id,
-        label: el.regionauth_name,
-        title: el.regionauth_name
-      }))
-    })
   },
   methods: {
     async getBaseSetting() {
@@ -662,10 +545,7 @@ export default {
         order_class: this.params.order_class || undefined,
         yyrname: this.params.yyrname || undefined,
         is_prescription_order: this.params.is_prescription_order || undefined,
-        user_family_name: this.params.user_family_name || undefined,
-        refund_start_begin: this.params.refund_start_begin || undefined,
-        refund_start_end: this.params.refund_start_end || undefined,
-        oid: this.params.oid || undefined
+        user_family_name: this.params.user_family_name || undefined
       }
       return params
     },
@@ -692,7 +572,6 @@ export default {
       let params = {
         page,
         pageSize,
-        aftersales_type: 'REFUND_GOODS',
         ...this.getParams()
       }
       const { list, total_count } = await this.$api.aftersales.getAftersalesList(params)
@@ -778,10 +657,6 @@ export default {
         message: '保存成功'
       })
       this.aftersalesRemindVisible = false
-    },
-    onRefundTimeChange(e) {
-      this.params.refund_start_begin = moment(e[0]).unix()
-      this.params.refund_start_end = moment(e[1]).unix()
     }
   }
 }

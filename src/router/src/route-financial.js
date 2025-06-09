@@ -23,17 +23,6 @@ export default {
       ]
     },
     {
-      path: 'invoiceManagement',
-      name: `发票管理`,
-      component: () => import('@/view/mall/trade/invoice/list'),
-      children: [
-        {
-          path: 'detail',
-          component: () => import('@/view/mall/trade/invoice/detail.vue')
-        }
-      ]
-    },
-    {
       path: 'financialManage/Refunderrorlogs',
       name: `退款失败日志`,
       component: () => import('@/view/mall/trade/refunderrorlogs')
@@ -114,22 +103,6 @@ export default {
       path: 'settlement/configure',
       name: `结算配置`,
       component: () => import('@/view/financial/settlement/configure')
-    },
-    {
-      path: 'settlement_supplier/configure_supplier',
-      name: `供应商结算配置`,
-      component: () => import('@/view/financial/settlement/configure_supplier')
-    },
-    {
-      path: 'settlement_supplier/summary_supplier',
-      name: `供应商结算汇总`,
-      component: () => import('@/view/financial/settlement/summary_supplier'),
-      children: [
-        {
-          path: 'detail/:id?',
-          component: () => import('@/view/financial/settlement/detailed')
-        }
-      ]
     }
   ]
 }

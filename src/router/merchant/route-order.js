@@ -32,7 +32,6 @@ export default {
         }
       ]
     },
-
     {
       path: 'tradepayment',
       name: `交易单`,

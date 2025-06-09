@@ -2,10 +2,7 @@
   <div>
     <div v-if="$route.path.indexOf('detail') === -1">
       <el-row :gutter="10">
-        <el-col
-          :md="8"
-          :lg="6"
-        >
+        <el-col :md="8" :lg="6">
           <el-select
             v-model="currentCommunity"
             clearable
@@ -21,10 +18,7 @@
             />
           </el-select>
         </el-col>
-        <el-col
-          :md="10"
-          :lg="8"
-        >
+        <el-col :md="10" :lg="8">
           <el-date-picker
             v-model="create_time"
             type="daterange"
@@ -34,27 +28,13 @@
             @change="dateChange"
           />
         </el-col>
-        <el-col
-          :md="8"
-          :lg="6"
-        >
-          <el-input
-            v-model="identifier"
-            placeholder="手机号/订单号"
-          >
-            <el-button
-              slot="append"
-              icon="el-icon-search"
-              @click="numberSearch"
-            />
+        <el-col :md="8" :lg="6">
+          <el-input v-model="identifier" placeholder="手机号/订单号">
+            <el-button slot="append" icon="el-icon-search" @click="numberSearch" />
           </el-input>
         </el-col>
       </el-row>
-      <el-tabs
-        v-model="activeName"
-        type="border-card"
-        @tab-click="handleClick"
-      >
+      <el-tabs v-model="activeName" type="border-card" @tab-click="handleClick">
         <el-tab-pane
           v-for="(item, index) in orderStatusList"
           :key="index"
@@ -62,88 +42,42 @@
           :name="item.value"
         />
 
-        <el-table
-          v-loading="loading"
-          :data="list"
-          style="width: 100%"
-          :height="wheight - 220"
-        >
+        <el-table v-loading="loading" :data="list" style="width: 100%" :height="wheight - 220">
           <el-table-column type="expand">
             <template slot-scope="props">
-              <el-card
-                shadow="always"
-                class="section-body"
-              >
-                <div
-                  slot="header"
-                  class="clearfix"
-                >
-                  <el-row
-                    v-if="communityObj[props.row.shop_id]"
-                    :gutter="24"
-                  >
-                    <el-col
-                      :md="8"
-                      :lg="6"
-                    >
+              <el-card shadow="always" class="section-body">
+                <div slot="header" class="clearfix">
+                  <el-row v-if="communityObj[props.row.shop_id]" :gutter="24">
+                    <el-col :md="8" :lg="6">
                       社区名称：{{ communityObj[props.row.shop_id].community_name }}
                     </el-col>
-                    <el-col
-                      :md="8"
-                      :lg="6"
-                    >
+                    <el-col :md="8" :lg="6">
                       团长名称：{{ communityObj[props.row.shop_id].leader_name }}
                     </el-col>
-                    <el-col
-                      :md="8"
-                      :lg="6"
-                    >
+                    <el-col :md="8" :lg="6">
                       团长手机号：{{ communityObj[props.row.shop_id].leader_mobile }}
                     </el-col>
                   </el-row>
                 </div>
-                <el-table
-                  :data="props.row.items"
-                  style="width: 100%"
-                >
-                  <el-table-column
-                    class="goods-img"
-                    prop="pic"
-                    label="图片"
-                    min-width="50"
-                  >
+                <el-table :data="props.row.items" style="width: 100%">
+                  <el-table-column class="goods-img" prop="pic" label="图片" min-width="50">
                     <template slot-scope="scope">
-                      <span><img
-                        width="50"
-                        :src="wximageurl + scope.row.pic"
-                        :alt="scope.row.item_name"
+                      <span
+                        ><img
+                          width="50"
+                          :src="wximageurl + scope.row.pic"
+                          :alt="scope.row.item_name"
                       ></span>
                     </template>
                   </el-table-column>
-                  <el-table-column
-                    prop="item_name"
-                    min-width="200"
-                    label="名称"
-                  />
-                  <el-table-column
-                    prop="num"
-                    min-width="50"
-                    label="数量"
-                  />
-                  <el-table-column
-                    prop="price"
-                    min-width="50"
-                    label="原价"
-                  >
+                  <el-table-column prop="item_name" min-width="200" label="名称" />
+                  <el-table-column prop="num" min-width="50" label="数量" />
+                  <el-table-column prop="price" min-width="50" label="原价">
                     <template slot-scope="scope">
                       {{ scope.row.fee_symbol }}{{ scope.row.price / 100 }}
                     </template>
                   </el-table-column>
-                  <el-table-column
-                    prop="total_fee"
-                    min-width="100"
-                    label="支付金额"
-                  >
+                  <el-table-column prop="total_fee" min-width="100" label="支付金额">
                     <template slot-scope="scope">
                       {{ scope.row.fee_symbol }}{{ scope.row.total_fee / 100 }}
                     </template>
@@ -152,63 +86,28 @@
               </el-card>
             </template>
           </el-table-column>
-          <el-table-column
-            prop="create_time"
-            width="160"
-            label="创建时间"
-          >
+          <el-table-column prop="create_time" width="160" label="创建时间">
             <template slot-scope="scope">
               <span>{{ scope.row.create_time | datetime('YYYY-MM-DD HH:mm:ss') }}</span>
             </template>
           </el-table-column>
-          <el-table-column
-            prop="order_id"
-            width="160"
-            label="订单号"
-          />
-          <el-table-column
-            prop="total_fee"
-            label="金额"
-          >
+          <el-table-column prop="order_id" width="160" label="订单号" />
+          <el-table-column prop="total_fee" label="金额">
             <template slot-scope="scope">
               {{ scope.row.fee_symbol }}{{ scope.row.total_fee / 100 }}
             </template>
           </el-table-column>
-          <el-table-column
-            prop="mobile"
-            width="110"
-            label="会员手机号"
-          />
-          <el-table-column
-            prop="order_status"
-            label="订单状态"
-          >
+          <el-table-column prop="mobile" width="110" label="会员手机号" />
+          <el-table-column prop="order_status" label="订单状态">
             <template slot-scope="scope">
-              <el-tag
-                v-if="scope.row.order_status == 'DONE'"
-                type="success"
-                size="mini"
-              >
+              <el-tag v-if="scope.row.order_status == 'DONE'" type="success" size="mini">
                 已完成
               </el-tag>
-              <el-tag
-                v-else-if="scope.row.order_status == 'PAYED'"
-                type="primary"
-                size="mini"
-              >
+              <el-tag v-else-if="scope.row.order_status == 'PAYED'" type="primary" size="mini">
                 待提货
               </el-tag>
-              <el-tag
-                v-else-if="scope.row.order_status == 'NOTPAY'"
-                size="mini"
-              >
-                未支付
-              </el-tag>
-              <el-tag
-                v-else-if="scope.row.order_status == 'CANCEL'"
-                type="danger"
-                size="mini"
-              >
+              <el-tag v-else-if="scope.row.order_status == 'NOTPAY'" size="mini"> 未支付 </el-tag>
+              <el-tag v-else-if="scope.row.order_status == 'CANCEL'" type="danger" size="mini">
                 已取消
               </el-tag>
               <el-tag
@@ -225,11 +124,7 @@
               >
                 退款成功
               </el-tag>
-              <el-tag
-                v-else-if="scope.row.order_status == 'REFUND_FAIL'"
-                type="danger"
-                size="mini"
-              >
+              <el-tag v-else-if="scope.row.order_status == 'REFUND_FAIL'" type="danger" size="mini">
                 退款失败
               </el-tag>
               <el-tag
@@ -241,22 +136,14 @@
               </el-tag>
             </template>
           </el-table-column>
-          <el-table-column
-            prop="order_id"
-            width="160"
-            label="社区名称"
-          >
+          <el-table-column prop="order_id" width="160" label="社区名称">
             <template slot-scope="scope">
               <span v-if="communityObj[scope.row.shop_id]">{{
                 communityObj[scope.row.shop_id].community_name
               }}</span>
             </template>
           </el-table-column>
-          <el-table-column
-            prop="order_id"
-            width="100"
-            label="团长姓名"
-          >
+          <el-table-column prop="order_id" width="100" label="团长姓名">
             <template slot-scope="scope">
               <span v-if="communityObj[scope.row.shop_id]">{{
                 communityObj[scope.row.shop_id].leader_name
@@ -267,7 +154,7 @@
             <template slot-scope="scope">
               <router-link
                 :to="{
-                  path: matchHidePage('detail'),
+                  path: matchRoutePath('detail'),
                   query: {
                     orderId: scope.row.order_id,
                     resource: '/member/marketing/communityactivity/order',
@@ -280,10 +167,7 @@
             </template>
           </el-table-column>
         </el-table>
-        <div
-          v-if="total_count > params.pageSize"
-          class="content-padded content-center"
-        >
+        <div v-if="total_count > params.pageSize" class="content-padded content-center">
           <el-pagination
             background
             layout="prev, pager, next, total"
@@ -305,7 +189,7 @@ import { getOrderList, orderExport } from '../../../../../api/trade'
 import { getSourcesList } from '../../../../../api/datacube'
 
 export default {
-  data () {
+  data() {
     return {
       activeName: 'all',
       loading: false,
@@ -351,7 +235,7 @@ export default {
   computed: {
     ...mapGetters(['wheight'])
   },
-  mounted () {
+  mounted() {
     this.getOrders(this.params)
     let param = { page: 1, pageSize: 100, status: 'all' }
     this.communityList(param)
@@ -359,7 +243,7 @@ export default {
   },
   methods: {
     // 切换tab
-    handleClick (tab, event) {
+    handleClick(tab, event) {
       this.activeName = tab.name
       this.params.page = 1
       if (this.activeName !== 'all') {
@@ -369,30 +253,30 @@ export default {
       }
       this.getOrders(this.params)
     },
-    communityHandle (val) {
+    communityHandle(val) {
       this.currentCommunity = val
       this.getParams()
       this.params.page = 1
       this.params.shop_id = val
       this.getOrders(this.params)
     },
-    TypeHandle () {
+    TypeHandle() {
       this.getParams()
       this.params.page = 1
       this.getOrders(this.params)
     },
-    orderStatusSelectHandle () {
+    orderStatusSelectHandle() {
       this.getParams()
       this.params.order_status = this.order_status
       this.params.page = 1
       this.getOrders(this.params)
     },
-    numberSearch (e) {
+    numberSearch(e) {
       this.getParams()
       this.params.page = 1
       this.getOrders(this.params)
     },
-    dateChange (val) {
+    dateChange(val) {
       if (val && val.length > 0) {
         this.time_start_begin = this.dateStrToTimeStamp(val[0] + ' 00:00:00')
         this.time_start_end = this.dateStrToTimeStamp(val[1] + ' 23:59:59')
@@ -404,19 +288,19 @@ export default {
       this.params.page = 1
       this.getOrders(this.params)
     },
-    sourceSearch (item) {
+    sourceSearch(item) {
       this.getParams()
       this.params.source_id = item.source_id
       this.params.page = 1
       this.getOrders(this.params)
     },
-    handleCurrentChange (val) {
+    handleCurrentChange(val) {
       this.getParams()
       this.params.page = val
       this.loading = false
       this.getOrders(this.params)
     },
-    getParams () {
+    getParams() {
       this.params.time_start_begin = this.time_start_begin
       this.params.time_start_end = this.time_start_end
       if (this.identifier.length == 11) {
@@ -426,10 +310,10 @@ export default {
         this.params.order_id = this.identifier
       }
     },
-    dateStrToTimeStamp (str) {
+    dateStrToTimeStamp(str) {
       return Date.parse(new Date(str)) / 1000
     },
-    getOrders (filter) {
+    getOrders(filter) {
       this.loading = true
       getOrderList(filter).then((response) => {
         var list = response.data.data.list
@@ -450,7 +334,7 @@ export default {
         this.loading = false
       })
     },
-    communityList (filter) {
+    communityList(filter) {
       this.loading = true
       getCommunityList(filter).then((response) => {
         this.communityData = response.data.data.list
@@ -465,7 +349,7 @@ export default {
         this.loading = false
       })
     },
-    getAllSourcesList () {
+    getAllSourcesList() {
       let params = { page: 1, pageSize: 1000 }
       getSourcesList(params).then((response) => {
         if (response.data.data.list) {
@@ -475,18 +359,18 @@ export default {
         }
       })
     },
-    querySearch (queryString, cb) {
+    querySearch(queryString, cb) {
       var restaurants = this.source_list
       var results = queryString ? restaurants.filter(this.createFilter(queryString)) : restaurants
       // 调用 callback 返回建议列表的数据
       cb(results)
     },
-    createFilter (queryString) {
+    createFilter(queryString) {
       return (restaurant) => {
         return restaurant.value.toLowerCase().indexOf(queryString.toLowerCase()) === 0
       }
     },
-    exportData () {
+    exportData() {
       this.getParams()
       this.params.page = 1
       orderExport(this.params).then((response) => {

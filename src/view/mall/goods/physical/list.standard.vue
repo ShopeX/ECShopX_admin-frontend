@@ -68,9 +68,9 @@
         <SpFilterFormItem prop="keywords" label="商品标题:">
           <el-input v-model="params.keywords" placeholder="商品标题或副标题关键词" />
         </SpFilterFormItem>
-<!--        <SpFilterFormItem prop="supplier_goods_bn" label="供应商货号:">-->
-<!--          <el-input v-model="params.supplier_goods_bn" placeholder="请输入供应商货号" />-->
-<!--        </SpFilterFormItem>-->
+        <!--        <SpFilterFormItem prop="supplier_goods_bn" label="供应商货号:">-->
+        <!--          <el-input v-model="params.supplier_goods_bn" placeholder="请输入供应商货号" />-->
+        <!--        </SpFilterFormItem>-->
         <SpFilterFormItem v-if="!IS_DISTRIBUTOR()" prop="approve_status" label="商品状态:">
           <el-select v-model="params.approve_status" clearable placeholder="请选择">
             <el-option
@@ -138,9 +138,9 @@
             />
           </el-select>
         </SpFilterFormItem>
-<!--        <SpFilterFormItem prop="tax_rate_code" label="税率编码:">-->
-<!--          <el-input v-model="params.tax_rate_code" placeholder="商品编号或条形码" />-->
-<!--        </SpFilterFormItem>-->
+        <!--        <SpFilterFormItem prop="tax_rate_code" label="税率编码:">-->
+        <!--          <el-input v-model="params.tax_rate_code" placeholder="商品编号或条形码" />-->
+        <!--        </SpFilterFormItem>-->
         <SpFilterFormItem prop="brand_id" label="品牌:">
           <el-select
             v-model="params.brand_id"
@@ -166,13 +166,13 @@
             :options="regions"
           />
         </SpFilterFormItem>
-<!--        <SpFilterFormItem prop="delivery_data_type" label="发货方式:">-->
-<!--          <el-select v-model="params.delivery_data_type">-->
-<!--            <el-option value="fixed_date" label="指定发货日期" />-->
-<!--            <el-option value="relative_date" label="相对发货日期" />-->
-<!--            <el-option value="default_date" label="默认发货日期" />-->
-<!--          </el-select>-->
-<!--        </SpFilterFormItem>-->
+        <!--        <SpFilterFormItem prop="delivery_data_type" label="发货方式:">-->
+        <!--          <el-select v-model="params.delivery_data_type">-->
+        <!--            <el-option value="fixed_date" label="指定发货日期" />-->
+        <!--            <el-option value="relative_date" label="相对发货日期" />-->
+        <!--            <el-option value="default_date" label="默认发货日期" />-->
+        <!--          </el-select>-->
+        <!--        </SpFilterFormItem>-->
         <SpFilterFormItem prop="item_bn" label="SKU编码:">
           <el-input v-model="params.item_bn" placeholder="请输入SKU编码" />
         </SpFilterFormItem>
@@ -182,9 +182,9 @@
         <!-- <SpFilterFormItem prop="operator_name" label="来源供应商:">
           <el-input v-model="params.operator_name" placeholder="请输入来源供应商" />
         </SpFilterFormItem> -->
-       <SpFilterFormItem prop="supplier_name" label="所属供应商:">
-         <el-input v-model="params.supplier_name" placeholder="请输入所属供应商" />
-       </SpFilterFormItem>
+        <SpFilterFormItem prop="supplier_name" label="所属供应商:">
+          <el-input v-model="params.supplier_name" placeholder="请输入所属供应商" />
+        </SpFilterFormItem>
         <SpFilterFormItem prop="is_gift" label="赠品:">
           <el-select v-model="params.is_gift">
             <el-option :value="undefined" label="全部" />
@@ -222,8 +222,12 @@
             </el-dropdown-item>
           </el-dropdown-menu>
         </el-dropdown>
-        <el-button size="small" v-if="isBindWdtErp" type="primary" @click="uploadWdtErpItems()">上传商品到旺店通</el-button>
-        <el-button size="small" v-if="isBindJstErp" type="primary" @click="uploadJstErpItems()">上传商品到聚水潭</el-button>
+        <el-button v-if="isBindWdtErp" size="small" type="primary" @click="uploadWdtErpItems()">
+          上传商品到旺店通
+        </el-button>
+        <el-button v-if="isBindJstErp" size="small" type="primary" @click="uploadJstErpItems()">
+          上传商品到聚水潭
+        </el-button>
       </div>
 
       <el-tabs v-model="activeName" type="card" @tab-click="handleClick">
@@ -277,18 +281,18 @@
                 </div>
               </template>
             </el-table-column>
-            <el-table-column label="是否赠品" >
+            <el-table-column label="是否赠品">
               <template slot-scope="scope">
-              {{ scope.row.is_gift == '1' ? '是' : '否' }}
+                {{ scope.row.is_gift == '1' ? '是' : '否' }}
               </template>
             </el-table-column>
             <el-table-column prop="item_holder" label="商品类型" width="100">
-            <template slot-scope="scope">
-              <div class="ell3">
-                {{ goodCategoryMap[scope.row.item_holder] }}
-              </div>
-            </template>
-          </el-table-column>
+              <template slot-scope="scope">
+                <div class="ell3">
+                  {{ goodCategoryMap[scope.row.item_holder] }}
+                </div>
+              </template>
+            </el-table-column>
             <!-- <el-table-column label="标签">
               <template slot-scope="scope">
                 <template>
@@ -414,7 +418,7 @@
               align="right"
               header-align="center"
             />
-            <el-table-column  label="供应状态" width="120">
+            <el-table-column label="供应状态" width="120">
               <template slot-scope="scope">
                 {{ scope.row.is_market == '1' ? '可售' : '不可售' }}
               </template>
@@ -814,7 +818,7 @@
         :width="800"
         @confirm="
           () => {
-            this.showItemSkuDrawer = false
+            showItemSkuDrawer = false
           }
         "
       >
@@ -832,7 +836,6 @@
 import { mapGetters } from 'vuex'
 import Treeselect from '@riophae/vue-treeselect'
 import SideBar from '@/components/element/sideBar'
-import '@riophae/vue-treeselect/dist/vue-treeselect.css'
 import { getDefaultCurrency } from '@/api/company'
 import district from '@/common/district.json'
 import {
@@ -876,12 +879,12 @@ export default {
     skuFinder
   },
   mixins: [mixins],
-  props: ['getStatus'],
   provide() {
     return {
       refresh: this.getGoodsList
     }
   },
+  props: ['getStatus'],
   data() {
     const loginType = this.$store.getters.login_type
 
@@ -926,7 +929,7 @@ export default {
       goods_id: [],
       templates_new_id: '',
       templatesList: [],
-      templatesListavailable:[],
+      templatesListavailable: [],
       category_id: [],
       categoryList: [],
       itemCategoryList: [],
@@ -988,10 +991,10 @@ export default {
         goods_bn: '',
         operator_name: '',
         is_can_sale: '',
-        supplier_name:'',
-        cat_id:'',
-        item_holder:'',
-        is_gift:''
+        supplier_name: '',
+        cat_id: '',
+        item_holder: '',
+        is_gift: ''
       },
       goodCategoryMap: GOOD_CATEGORY_MAP,
       goodCategory: GOOD_CATEGORY,
@@ -1062,7 +1065,7 @@ export default {
       itemSkuDrawerTitle: '',
       itemSkuList: [],
       goodCategoryMap: GOOD_CATEGORY_MAP,
-      goodCategory: GOOD_CATEGORY.filter(item=>item.value != 'distributor'),
+      goodCategory: GOOD_CATEGORY.filter((item) => item.value != 'distributor')
     }
   },
   computed: {
@@ -1526,7 +1529,7 @@ export default {
     },
     addItems() {
       // 添加商品
-      this.$router.push({ path: this.matchHidePage('editor') })
+      this.$router.push({ path: this.matchRoutePath('editor') })
     },
     addTemplates() {
       if (this.item_id.length) {
@@ -1555,12 +1558,12 @@ export default {
       this.show_itemStore = false
       if (isNew) {
         var routeData = this.$router.push({
-          path: this.matchHidePage('editor/') + row.itemId,
+          path: this.matchRoutePath('editor/') + row.itemId,
           query: { is_new: true }
         })
       } else {
         var routeData = this.$router.push({
-          path: this.matchHidePage('editor/') + row.itemId,
+          path: this.matchRoutePath('editor/') + row.itemId,
           query: { detail: true }
         })
       }
@@ -2000,39 +2003,39 @@ export default {
       })
     },
     checkWdtErpBind() {
-      this.$api.third.getWdtErpSetting().then(response => {
+      this.$api.third.getWdtErpSetting().then((response) => {
         this.isBindWdtErp = response.is_open
       })
     },
     uploadWdtErpItems() {
-    console.log(this.item_id)
+      console.log(this.item_id)
       if (this.item_id.length === 0) {
         this.$message({
           type: 'error',
           message: '请选择需要同步的商品'
-        });
-        return;
+        })
+        return
       }
-      let params = {};
+      let params = {}
       params = {
         item_id: this.item_id
       }
-      this.$api.goods.uploadWdtErpItems(params).then(res => {
+      this.$api.goods.uploadWdtErpItems(params).then((res) => {
         if (res.status == true) {
           this.$message({
             type: 'success',
             message: '已加入执行队列'
-          });
+          })
         } else {
           this.$message({
             type: 'error',
             message: '执行失败'
-          });
+          })
         }
-      });
+      })
     },
     checkJstErpBind() {
-      this.$api.third.getJstErpSetting().then(response => {
+      this.$api.third.getJstErpSetting().then((response) => {
         this.isBindJstErp = response.is_open
       })
     },
@@ -2041,26 +2044,26 @@ export default {
         this.$message({
           type: 'error',
           message: '请选择需要同步的商品'
-        });
-        return;
+        })
+        return
       }
-      let params = {};
+      let params = {}
       params = {
         item_id: this.item_id
       }
-      this.$api.goods.uploadJstErpItems(params).then(res => {
+      this.$api.goods.uploadJstErpItems(params).then((res) => {
         if (res.status == true) {
           this.$message({
             type: 'success',
             message: '已加入执行队列'
-          });
+          })
         } else {
           this.$message({
             type: 'error',
             message: '执行失败'
-          });
+          })
         }
-      });
+      })
     }
   }
 }

@@ -226,7 +226,19 @@ export default {
           })
         },
         other_wxapp: () => {
-          return pickBy(data, {
+          if(this.VERSION_SHUYUN){
+            return pickBy(data, {
+              id: 'app_id',//数云修改
+              title: ({ app_name, route_name }) => `${app_name} - ${route_name}`,
+              extra: ({ app_id, route_info }) => {
+                return {
+                  appid: app_id,
+                  path: route_info
+                }
+              }
+            })
+          }else{
+            return pickBy(data, {
             id: 'wx_external_routes_id',
             title: ({ app_name, route_name }) => `${app_name} - ${route_name}`,
             extra: ({ app_id, route_info }) => {
@@ -236,6 +248,8 @@ export default {
               }
             }
           })
+          }
+
         },
         shop_tag: () => {
           return pickBy(data, {

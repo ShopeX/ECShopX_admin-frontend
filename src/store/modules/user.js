@@ -11,6 +11,7 @@ const user = {
     wxapp_id: '',
     template_name: 'yykweishop',
     login_type: '',
+    login_from:'',
     nick_name: '',
     avatar: '',
     shopid: '',
@@ -74,6 +75,10 @@ const user = {
       const { loginType } = payload
       state.login_type = loginType
     },
+    SET_LOGIN_FROM: (state, payload) => {
+      const { loginFrom } = payload
+      state.login_from = loginFrom
+    },
     SET_PRODUCTION_CODE: (state, payload) => {
       const { productionCode } = payload
       state.product_code = productionCode
@@ -114,6 +119,9 @@ const user = {
     },
     setLoginType: (state, loginType) => {
       state.login_type = loginType
+    },
+    setLoginFrom: (state, login_from) => {
+      state.login_from = login_from
     },
     setCompanyType: (state, companyType) => {
       state.company_type = companyType
@@ -187,6 +195,9 @@ const user = {
     },
     setLoginType({ commit }, login_type) {
       commit('setLoginType', login_type)
+    },
+    setLoginFrom({ commit }, login_from) {
+      commit('setLoginFrom', login_from)
     },
     setShopId({ commit }, id) {
       commit('setShopId', id)

@@ -581,7 +581,10 @@ export default {
       return distributor_id > 0
     },
     templateNavList(){
-      return this.isTemplateNavList ? NAVS.filter(item=>item.name != 'purchase') : NAVS
+      let res = this.isTemplateNavList ? NAVS.filter(item=>item.name != 'purchase') : NAVS
+      //数云隐藏社区
+      res = this.VERSION_SHUYUN ? res.filter(item=>item.name != 'ugc') : res
+      return res
     }
 
   },

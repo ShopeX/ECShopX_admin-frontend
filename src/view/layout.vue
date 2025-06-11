@@ -120,7 +120,7 @@
                   <small class="muted">账号信息</small>
                 </div>
               </div>
-              <div class="popover-row exit-system" @click="logout">退出登录</div>
+              <div v-if="!VERSION_SHUYUN" class="popover-row exit-system" @click="logout">退出登录</div>
 
               <img v-if="avatar" slot="reference" class="user-avatar" :src="avatar">
               <i v-else slot="reference" class="iconfont icon-user-circle1" />

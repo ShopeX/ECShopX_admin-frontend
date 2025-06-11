@@ -997,7 +997,7 @@
           </el-row>
         </section>
         <section
-          v-if="activateInfo.source == 'demo' && !VUE_APP_FREE"
+          v-if="activateInfo.source == 'demo' && !VUE_APP_FREE && !VERSION_SHUYUN"
           class="section-card fn-b-20 sl-img"
           :style="'background:  url(' + img.bcg_2 + ')'"
         >

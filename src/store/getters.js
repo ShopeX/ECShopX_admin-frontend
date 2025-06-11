@@ -9,6 +9,7 @@ const getters = {
   wxapp_id: (state) => state.user.wxapp_id,
   template_name: (state) => state.user.template_name,
   login_type: (state) => state.user.login_type,
+  login_from: (state) => state.user.login_from,
   shopId: (state) => state.user.shopid,
   isInFrame: (state) => state.user.isInFrame,
   productionCode: (state) => state.user.product_code,

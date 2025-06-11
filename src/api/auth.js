@@ -36,3 +36,12 @@ export function getAgreementContent() {
     method: 'post'
   })
 }
+
+//shuyunlogin
+export function shunyunLogin(query) {
+  return fetch({
+    url: '/operator/shuyun/login',
+    method: 'post',
+    params: query
+  })
+}

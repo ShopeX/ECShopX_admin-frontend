@@ -5,6 +5,7 @@
       <div class="section-body">
         <el-form-item label="商城名称">
           <el-input v-model="form.brand_name" type="text" style="width: 300px" />
+          {{ VERSION_SHUYUN ? '（注：商城名称展示到小程序端）' : '' }}
         </el-form-item>
         <el-form-item label="商城简介">
           <el-row>

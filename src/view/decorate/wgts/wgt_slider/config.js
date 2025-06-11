@@ -110,6 +110,7 @@ export default {
           dotColor: 'dotColor',
           shape: 'shape',
           dotCover: 'dotCover',
+          itemPadded:'itemPadded',
           rounded: 'rounded',
           content: 'content'
         })

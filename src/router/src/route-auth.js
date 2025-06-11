@@ -53,6 +53,16 @@ export default [
     },
     name: '授权-经销商登录'
   },
+  {
+    path: '/shuyunLogin',
+    component: () => import('@/view/base/shuyunLogin'),
+    meta: {
+      auth: false,
+      from: 'shuyun'
+    },
+    name: 'shuyun登录'
+  },
+
   // {
   //   path: '/shopadmin/shoplist',
   //   component: () => import( '@/view/shoplist' )

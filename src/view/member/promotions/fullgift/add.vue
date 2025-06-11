@@ -94,7 +94,7 @@
                   </el-table-column>
                 </el-table>
                 <GoodsSelect
-                  :unwanted-gift="true"
+                  :unwanted-gift="!VERSION_SHUYUN"
                   :items-visible="giftVisible"
                   :get-status="setGiftStatus"
                   :rel-items-ids="relGifts"

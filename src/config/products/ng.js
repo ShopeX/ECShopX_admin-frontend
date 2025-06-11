@@ -2,9 +2,11 @@
  * 内购产品配置
  */
 export default {
-  productName: 'B2C',
+  productName: 'ng',
+  systemTitle: '内购管理后台',
   logo: 'logo-ng.png',
   loginBackground: 'login-ng.jpg',
+  footerBackground: 'footer-ng.png',
 
   // 主题配置
   themeConfig: {

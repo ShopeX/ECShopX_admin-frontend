@@ -7,6 +7,8 @@ import { isEmpty } from 'lodash'
 
 export * from './src/type-helper'
 
+export * from './src/utils'
+
 export { install as VuePrototype } from './prototype'
 
 // 云店

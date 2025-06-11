@@ -293,10 +293,15 @@
             {{ getOrderCategoryName(scope.row.order_holder) }}
           </template>
         </el-table-column>
+        <el-table-column width="160" label="订单总金额（¥）" align="right" header-align="center">
+          <template slot-scope="scope">
+            {{ (scope.row.total_fee / 100 + scope.row.freight_fee / 100).toFixed(2) }}
+          </template>
+        </el-table-column>
         <el-table-column
           prop="total_fee"
           width="120"
-          label="订单金额（¥）"
+          label="实付金额（¥）"
           align="right"
           header-align="center"
         >
@@ -663,9 +668,9 @@ export default {
         order_status: '', // 订单状态
         order_class: '', // 订单类型
         delivery_staff_id: '', //配送员
-        is_prescription_order:'',
-        serial_no:'',
-        user_family_name:'',
+        is_prescription_order: '',
+        serial_no: '',
+        user_family_name: '',
         is_invoiced: '', // 开票状态
         time_start_begin: '', //
         time_start_end: '',
@@ -673,12 +678,12 @@ export default {
         distributor_id: '', // 店铺
         subDistrict: [],
         salespersonname: '',
-        role:''
+        role: ''
       },
       deliveryPersonnel: [], //配送员信息
       datapass_block: 1, // 是否为数据脱敏
       subDistrictList: [],
-      roleList:ROLE_LIST,
+      roleList: ROLE_LIST,
       distributionType: DISTRIBUTION_TYPE,
       distributionStatus: DISTRIBUTION_STATUS,
       orderStatus: VERSION_B2C()
@@ -855,11 +860,14 @@ export default {
             },
             { title: '数量', key: 'num', width: 60 },
             { title: '已发货数量', key: 'delivery_item_num', width: 100 },
-            { title: '总支付价（¥）', key: 'total_fee',
-            render: (row, column, cell) => {
-              return (row.total_fee / 100).toFixed(2)
+            {
+              title: '总支付价（¥）',
+              key: 'total_fee',
+              render: (row, column, cell) => {
+                return (row.total_fee / 100).toFixed(2)
+              },
+              width: 120
             },
-            width: 120 },
             {
               title: '成本价（¥）',
               key: 'cost_price',
@@ -1291,7 +1299,7 @@ export default {
         }
       ],
       selectList: [],
-      is_pharma_industry:false
+      is_pharma_industry: false
     }
   },
 
@@ -1331,11 +1339,11 @@ export default {
   },
   mounted() {
     this.origin = window.location.origin
-    const { tab,order_id } = this.$route.query
+    const { tab, order_id } = this.$route.query
     if (tab) {
       this.params.order_status = tab
     }
-    if(order_id){
+    if (order_id) {
       this.params.order_id = order_id
     }
     this.getBaseSetting()
@@ -1350,7 +1358,7 @@ export default {
     })
   },
   methods: {
-    async getBaseSetting(){
+    async getBaseSetting() {
       const res = await this.$api.company.getGlobalSetting()
       this.is_pharma_industry = res.medicine_setting.is_pharma_industry == '1'
     },

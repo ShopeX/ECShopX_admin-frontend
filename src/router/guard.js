@@ -44,7 +44,7 @@ function setupAccessGuard(router) {
     }
 
     // 生成菜单和路由
-    const { accessibleRoutes } = await generateAccess({
+    const { accessibleMenus, accessibleRoutes } = await generateAccess({
       router,
       routes: accessRoutes
     })

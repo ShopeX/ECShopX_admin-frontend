@@ -1,29 +1,9 @@
 <template>
-  <svg
-    :class="['sp-icon', customClass]"
-    :style="{
-      width: `${size}px`,
-      height: `${size}px`,
-      color: color
-    }"
-    aria-hidden="true"
-  >
-    <use :xlink:href="iconName" />
-    <!-- 开发环境下显示调试信息 -->
-    <text
-      v-if="isDev && !iconExists"
-      x="50%"
-      y="50%"
-      text-anchor="middle"
-      font-size="12"
-      fill="red"
-    >
-      {{ name }}
-    </text>
-  </svg>
+  <component :is="icon" :size="size" />
 </template>
 
 <script>
+import * as icons from 'lucide-vue'
 export default {
   name: 'SpIcon',
   props: {
@@ -33,26 +13,19 @@ export default {
     },
     size: {
       type: [Number, String],
-      default: 24
+      default: 16
     },
     color: {
       type: String,
       default: 'currentColor'
-    },
-    customClass: {
-      type: String,
-      default: ''
     }
   },
   data() {
-    return {
-      iconExists: true,
-      isDev: process.env.NODE_ENV === 'development'
-    }
+    return {}
   },
   computed: {
-    iconName() {
-      return `#icon-${this.name}`
+    icon() {
+      return icons[this.name.replace(/(?:^|-)([a-z])/g, (_, letter) => letter.toUpperCase())]
     }
   },
   mounted() {}

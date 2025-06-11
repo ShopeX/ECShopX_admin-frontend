@@ -51,7 +51,7 @@ export default {
   },
   computed: {
     resetText() {
-      return (row) => {
+      return row => {
         var text = '审核'
         if (row.status == '1') {
           text = '拒绝'
@@ -90,7 +90,7 @@ export default {
       var checkList = []
       var auditdiff = false
       var status = null
-      val.forEach((item) => {
+      val.forEach(item => {
         checkList.push(item.topic_id)
         if (status == null) {
           status = item.status
@@ -116,9 +116,6 @@ export default {
   width: 900px;
 }
 .comps-flaglist .f-info .el-button {
-  margin-left: 20px;
-}
-.el-button + .el-button {
   margin-left: 20px;
 }
 </style>

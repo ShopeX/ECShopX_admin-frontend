@@ -54,7 +54,7 @@ export default {
     },
     checkChange(val) {
       var checkList = []
-      val.forEach((item) => {
+      val.forEach(item => {
         checkList.push(item.id)
       })
       this.$emit('selectNotes', { id_set: checkList })
@@ -63,8 +63,4 @@ export default {
   }
 }
 </script>
-<style scoped lang="css">
-.el-button + .el-button {
-  margin-left: 20px;
-}
-</style>
+<style scoped lang="css"></style>

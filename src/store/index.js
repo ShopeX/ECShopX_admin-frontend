@@ -3,6 +3,7 @@ import Vuex from 'vuex'
 import VuexPersistence from 'vuex-persist'
 import accessStore from './modules/access'
 import userStore from './modules/user'
+import systemStore from './modules/system'
 
 import sku from './modules/sku'
 import getters from './getters'
@@ -23,6 +24,7 @@ const store = new Vuex.Store({
   modules: {
     access: accessStore,
     user: userStore,
+    system: systemStore,
     sku
   },
   getters,

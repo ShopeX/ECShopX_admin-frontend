@@ -2,9 +2,6 @@
 .goods-title {
   padding-bottom: 5px;
 }
-.sp-filter-form {
-  margin-bottom: 16px;
-}
 .goods-code {
   color: #888;
   font-size: 13px;

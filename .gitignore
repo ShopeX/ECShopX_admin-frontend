@@ -14,3 +14,9 @@ selenium-debug.log
 .idea/
 release.*
 .husky
+
+.npm-cache/_cacache/
+.npm-cache/_locks/
+.npm-cache/_logs/
+.npm-cache/node-sass/
+.npm-cache/_update-notifier-last-checked

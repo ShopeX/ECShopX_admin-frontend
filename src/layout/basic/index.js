@@ -1,3 +1,4 @@
 export { default as BasicLayout } from './layout.vue'
+export { default as BasicToolbar } from './layout-toolbar.vue'
 // export { default as LayoutSidebar } from './layout-sidebar.vue'
 // export { default as LayoutHeader } from './layout-header.vue'

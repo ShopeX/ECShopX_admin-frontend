@@ -247,7 +247,7 @@
         <el-table-column prop="username" label="昵称" width="140" />
         <el-table-column prop="role" label="角色" width="70">
           <template slot-scope="scope">
-            {{ roleList.find((item) => item.value == scope.row.role)?.label }}
+            {{ roleList.find(item => item.value == scope.row.role)?.label }}
           </template>
         </el-table-column>
         <el-table-column v-if="!VERSION_IN_PURCHASE()" prop="sex" label="性别" width="70">
@@ -304,7 +304,7 @@
             />
           </template>
         </el-table-column>
-        <el-table-column label="会员标签">
+        <el-table-column label="会员标签" width="130">
           <template slot-scope="scope">
             <template v-if="scope.row.tagList.length > 0">
               <el-tag
@@ -337,13 +337,31 @@
             </el-tooltip>
           </template>
         </el-table-column>
-
-        <el-table-column label="备注">
+        <el-table-column label="用户名" width="130">
+          <template slot-scope="scope">
+            <span v-if="scope.row.name">{{ scope.row.name }}</span>
+            <span v-else class="muted">暂无用户名</span>
+            <el-tooltip class="item" effect="dark" content="编辑用户名" placement="top-start">
+              <el-button
+                class="el-icon-edit"
+                type="text"
+                size="mini"
+                @click="isEdit(scope.row, 'name')"
+              />
+            </el-tooltip>
+          </template>
+        </el-table-column>
+        <el-table-column label="备注" width="130">
           <template slot-scope="scope">
             <span v-if="scope.row.remarks">{{ scope.row.remarks }}</span>
             <span v-else class="muted">暂无备注</span>
             <el-tooltip class="item" effect="dark" content="编辑备注" placement="top-start">
-              <el-button class="el-icon-edit" type="text" size="mini" @click="isEdit(scope.row)" />
+              <el-button
+                class="el-icon-edit"
+                type="text"
+                size="mini"
+                @click="isEdit(scope.row, 'remarks')"
+              />
             </el-tooltip>
           </template>
         </el-table-column>
@@ -749,15 +767,15 @@
       </el-dialog>
 
       <el-dialog
-        title="修改会员备注"
+        :title="remarksForm.title"
         class="right-dialog"
         :visible.sync="isEditRemarks"
         :before-close="handleCancelLabelsDialog"
       >
         <template>
           <el-form>
-            <el-form-item label-width="100px" label="备注">
-              <el-input v-model="remarksForm.remarks" placeholder="输入备注" />
+            <el-form-item label-width="100px" :label="remarksForm.label">
+              <el-input v-model="remarksForm.input" :placeholder="remarksForm.placeholder" />
             </el-form-item>
             <el-form-item class="content-center">
               <el-button type="primary" @click="editRemarks()"> 确定 </el-button>
@@ -927,7 +945,11 @@ export default {
       },
       remarksForm: {
         user_id: '',
-        remarks: ''
+        title: '',
+        label: '',
+        placeholder: '',
+        type: '',
+        input: ''
       },
       gradeForm: {
         user_id: '',
@@ -1080,7 +1102,7 @@ export default {
     this.getGradeList()
     // this.getVipList()
     this.getShopsList()
-    getMemberRegisterSetting().then((response) => {
+    getMemberRegisterSetting().then(response => {
       delete response.data.data.content_agreement
       this.membersSetting = response.data.data.setting
     })
@@ -1125,7 +1147,7 @@ export default {
       this.basicInfo.income = value.income
       this.basicInfo.edu_background = value.edu_background
       let habbit = []
-      value.habbit.forEach((data) => {
+      value.habbit.forEach(data => {
         if (data) {
           if (data.ischecked == 'true') {
             habbit.push(data.name)
@@ -1145,7 +1167,7 @@ export default {
       }
     },
     infoUpdateSubmit() {
-      updateMemberBasicInfo(this.basicInfo).then((res) => {
+      updateMemberBasicInfo(this.basicInfo).then(res => {
         this.$message({ type: 'success', message: '修改成功' })
         this.getMembers()
         this.dialogIsShow = false
@@ -1160,7 +1182,7 @@ export default {
         return
       }
       if (this.is_batch === false) {
-        updateMemberGrade(this.gradeForm).then((res) => {
+        updateMemberGrade(this.gradeForm).then(res => {
           this.$message({ type: 'success', message: '修改成功' })
           this.getMembers()
           this.dialogIsShow = false
@@ -1171,19 +1193,41 @@ export default {
       }
     },
     editRemarks() {
-      updateMemberInfo({
-        user_id: this.remarksForm.user_id,
-        remarks: this.remarksForm.remarks
-      }).then((res) => {
+      let params = {
+        user_id: this.remarksForm.user_id
+      }
+      if (this.remarksForm.type == 'remarks') {
+        params.remarks = this.remarksForm.input
+      } else {
+        params.name = this.remarksForm.input
+      }
+      updateMemberInfo({ ...params }).then(res => {
         this.$message({ type: 'success', message: '更新成功' })
         this.isEditRemarks = false
         this.getMembers()
       })
     },
-    isEdit(row) {
+    isEdit(row, val) {
       this.isEditRemarks = true
-      this.remarksForm.user_id = row.user_id
-      this.remarksForm.remarks = row.remarks
+      if (val == 'remarks') {
+        this.remarksForm = {
+          user_id: row.user_id,
+          title: '修改会员备注',
+          label: '备注',
+          placeholder: '请输入备注',
+          type: 'remarks',
+          input: row.remarks
+        }
+      } else {
+        this.remarksForm = {
+          user_id: row.user_id,
+          title: '修改会员用户名',
+          label: '用户名',
+          placeholder: '请输入用户名',
+          type: 'name',
+          input: row.name
+        }
+      }
     },
     getRowKeys(row) {
       return `${row.user_id}${row.shop_id}`
@@ -1214,7 +1258,7 @@ export default {
     handleSelectionChange(rows) {
       this.user_id = []
       if (rows) {
-        rows.forEach((row) => {
+        rows.forEach(row => {
           if (row) {
             this.user_id.push(row.user_id)
           }
@@ -1313,10 +1357,10 @@ export default {
     },
     showGrade(grade_id, vip_grade) {
       if (vip_grade) {
-        const filterList = this.levelData.find((item) => item.grade_id == vip_grade)
+        const filterList = this.levelData.find(item => item.grade_id == vip_grade)
         return filterList && filterList.grade_name
       } else {
-        const filterList = this.levelData.find((item) => item.grade_id == grade_id)
+        const filterList = this.levelData.find(item => item.grade_id == grade_id)
         return filterList && filterList.grade_name
       }
     },
@@ -1342,7 +1386,7 @@ export default {
         page_no: this.staffCoupons.page.currentPage,
         page_size: this.staffCoupons.page.pageSize,
         card_type: this.card_type
-      }).then((res) => {
+      }).then(res => {
         var data = res.data.data.list
         for (var i = 0; i < data.length; i++) {
           for (var j = 0; j < this.staffCoupons.temp.length; j++) {
@@ -1363,7 +1407,7 @@ export default {
         mobile: this.salesmanPaging.mobile,
         page: this.salesmanPaging.page,
         pageSize: this.salesmanPaging.pageSize
-      }).then((res) => {
+      }).then(res => {
         this.salesman = res.data.data.list
         this.salesperson_id = ''
         this.salesmanPaging.total_count = res.data.data.total_count
@@ -1446,7 +1490,7 @@ export default {
       this.tag.currentTags.splice(index, 1)
     },
     tagAdd(item, index) {
-      let isInArr = this.tag.currentTags.findIndex((n) => n.tag_id == item.tag_id)
+      let isInArr = this.tag.currentTags.findIndex(n => n.tag_id == item.tag_id)
       if (isInArr == -1) {
         this.tag.currentTags.push(item)
         this.tag.tags.splice(index, 1)
@@ -1455,7 +1499,7 @@ export default {
     submitMemberTag() {
       this.params.tag_ids = []
       this.params.user_id = []
-      this.tag.currentTags.forEach((item) => {
+      this.tag.currentTags.forEach(item => {
         this.params.tag_ids.push(item.tag_id)
       })
       if (this.params.tag_ids.length <= 0) {
@@ -1479,7 +1523,7 @@ export default {
         this.params.user_id = this.user_id
         let params = JSON.parse(JSON.stringify(this.params))
         console.log(this.params)
-        batchOperating(params).then((res) => {
+        batchOperating(params).then(res => {
           if (res.data.data.status) {
             this.dialogIsShow = false
             this.$message({
@@ -1499,7 +1543,7 @@ export default {
         })
           .then(() => {
             let params = JSON.parse(JSON.stringify(this.params))
-            batchOperating(params).then((res) => {
+            batchOperating(params).then(res => {
               if (res.data.data.status) {
                 this.dialogIsShow = false
                 this.$message({
@@ -1550,7 +1594,7 @@ export default {
         type: 'warning',
         beforeClose: (action, instance, done) => {
           if (action === 'confirm') {
-            updateMemberMobile(this.form).then((res) => {
+            updateMemberMobile(this.form).then(res => {
               this.$message({
                 type: 'success',
                 message: '修改手机号成功'
@@ -1567,7 +1611,7 @@ export default {
       var params = {
         user_id: userId
       }
-      getMemberOperateLog(params).then((res) => {
+      getMemberOperateLog(params).then(res => {
         this.operateLog = res.data.data.list
       })
     },
@@ -1603,7 +1647,7 @@ export default {
 
     exportData() {
       this.currentPage = 1
-      memberExport(this.params).then((response) => {
+      memberExport(this.params).then(response => {
         if (response.data.data.status) {
           this.$message({
             type: 'success',
@@ -1651,7 +1695,7 @@ export default {
             user_id: row.user_id,
             disabled: row.disabled
           }
-          updateMemberInfo(params).then((res) => {
+          updateMemberInfo(params).then(res => {
             this.getMembers()
           })
         })
@@ -1660,7 +1704,7 @@ export default {
           user_id: row.user_id,
           disabled: row.disabled
         }
-        updateMemberInfo(params).then((res) => {
+        updateMemberInfo(params).then(res => {
           this.getMembers()
         })
       }
@@ -1678,7 +1722,7 @@ export default {
             user_id: row.user_id,
             distributor_ids: [this.$store.getters.shopId]
           }
-          setCheif(params).then((res) => {
+          setCheif(params).then(res => {
             this.getMembers()
           })
         })
@@ -1749,7 +1793,7 @@ export default {
     },
     getPopularizeListModalFun(filter) {
       this.modalLoading = true
-      getPopularizeList(filter).then((res) => {
+      getPopularizeList(filter).then(res => {
         this.modalList = res.data.data.list
         this.modal_total_count = Number(res.data.data.total_count)
         this.modalLoading = false
@@ -1762,8 +1806,8 @@ export default {
       }
     },
     editPopularizeRemoveFun() {
-      editPopularizeRemove({ 'user_id': this.row.user_id, 'new_user_id': this.currentRow }).then(
-        (res) => {
+      editPopularizeRemove({ user_id: this.row.user_id, new_user_id: this.currentRow }).then(
+        res => {
           this.message = '上下级'
           this.loading = false
           this.$message({
@@ -1796,7 +1840,7 @@ export default {
         this.tag.currentTags = []
         this.tag.tags = [...this.tag.list]
         this.tag.tags.forEach((item, index) => {
-          let isInArr = this.tag.currentTags.findIndex((n) => n.tag_id == item.tag_id)
+          let isInArr = this.tag.currentTags.findIndex(n => n.tag_id == item.tag_id)
           if (isInArr != -1) this.tag.tags.splice(index, 1)
         })
         this.tag.dialog = true

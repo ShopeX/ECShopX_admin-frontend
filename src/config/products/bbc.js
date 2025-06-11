@@ -5,6 +5,7 @@ export default {
   productName: 'B2B2C',
   logo: 'logo-b2b2c.png',
   loginBackground: 'login-b2b2c.jpg',
+  footerBackground: 'footer-b2b2c.png',
 
   // 主题配置
   themeConfig: {

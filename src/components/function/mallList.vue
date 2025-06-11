@@ -1405,9 +1405,6 @@ export default {
 .el-checkbox__input.is-checked + .el-checkbox__label {
   color: #606272;
 }
-.el-button + .el-button {
-  margin-left: 10px !important;
-}
 .nav-drawer {
   .tablist {
     display: flex;

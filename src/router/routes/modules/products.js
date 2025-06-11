@@ -4,6 +4,7 @@ const routes = [
   {
     component: BasicLayout,
     meta: {
+      aliasName: 'entity',
       icon: 'icon-products',
       keepAlive: true,
       title: '商品'
@@ -12,26 +13,19 @@ const routes = [
     path: '/products',
     children: [
       {
+        name: 'self-products',
+        path: 'self-products',
+        component: () => import('@/view/mall/goods/physical/list'),
         meta: {
+          aliasName: 'goodsphysical',
           icon: 'icon-products',
-          title: '商品管理'
+          title: '自营商品',
+          permissions: ['entity.goods.goodsphysical']
         },
-        name: 'management',
-        path: 'management',
         children: [
           {
-            name: 'self-products',
-            path: 'self-products',
-            component: () => import('@/view/mall/goods/physical/list'),
-            meta: {
-              icon: 'icon-products',
-              title: '自营商品',
-              permissions: ['entity.goods.goodsphysical']
-            }
-          },
-          {
             name: 'self-products_create',
-            path: 'self-products/create',
+            path: 'editor/:itemId?',
             component: () => import('@/view/goods/index'),
             meta: {
               title: '新增商品',
@@ -40,7 +34,7 @@ const routes = [
           },
           {
             name: 'self-products_stock-import',
-            path: 'self-products/stock-import',
+            path: 'stock-import',
             component: () => import('@/view/mall/goods/physical/normalGoodsStoreUpload'),
             meta: {
               title: '库存导入',
@@ -49,7 +43,7 @@ const routes = [
           },
           {
             name: 'self-products_profit-sharing-import',
-            path: 'self-products/profit-sharing-import',
+            path: 'profit-sharing-import',
             component: () => import('@/view/mall/goods/physical/normalGoodsProfitUpload'),
             meta: {
               title: '分润导入',
@@ -58,43 +52,44 @@ const routes = [
           },
           {
             name: 'self-products_product-import',
-            path: 'self-products/product-import',
+            path: 'product-import',
             component: () => import('@/view/mall/goods/physical/normalGoodsUpload'),
             meta: {
               title: '商品导入',
               hidden: true
             }
-          },
-          {
-            name: 'store-products',
-            path: 'store-products',
-            component: () => import('@/view/mall/storeshop/store-shop.standard'),
-            meta: {
-              icon: 'icon-products',
-              title: '店铺商品',
-              permissions: ['entity.goods.storeshopitemanagement']
-            }
-          },
-          {
-            name: 'merchant-products',
-            path: 'merchant-products',
-            component: () => import('@/view/mall/goods/audit/list'),
-            meta: {
-              icon: 'icon-products',
-              title: '商户商品'
-            }
-          },
-          {
-            name: 'merchant-products_edit',
-            path: 'merchant-products/edtior:itemId?',
-            component: () => import('@/view/mall/goods/audit/add'),
-            meta: {
-              icon: 'icon-products',
-              title: '商品编辑',
-              hidden: true
-            }
           }
         ]
+      },
+      {
+        name: 'store-products',
+        path: 'store-products',
+        component: () => import('@/view/mall/storeshop/store-shop.standard'),
+        meta: {
+          aliasName: 'storeshopitemanagement',
+          icon: 'icon-products',
+          title: '店铺商品',
+          permissions: ['entity.goods.storeshopitemanagement']
+        }
+      },
+      {
+        name: 'merchant-products',
+        path: 'merchant-products',
+        component: () => import('@/view/mall/goods/audit/list'),
+        meta: {
+          icon: 'icon-products',
+          title: '商户商品'
+        }
+      },
+      {
+        name: 'merchant-products_edit',
+        path: 'merchant-products/edtior:itemId?',
+        component: () => import('@/view/mall/goods/audit/add'),
+        meta: {
+          icon: 'icon-products',
+          title: '商品编辑',
+          hidden: true
+        }
       },
       {
         name: 'category',

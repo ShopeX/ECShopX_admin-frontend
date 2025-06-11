@@ -5,11 +5,13 @@ import store from '@/store'
 import App from '@/App.vue'
 import { SYSTEM_CONFIG } from '@/config'
 import ElementUI from 'element-ui'
+import VueClipboard from 'vue-clipboard2'
 import { install as API } from '@/api'
 import { install as Filter } from '@/filters'
 import { install as Directives } from '@/directives'
 import { VuePrototype } from '@/utils'
 import { install as Component } from './component'
+import { install as Finder } from './finder'
 
 async function bootstrap() {
   Vue.use(API)
@@ -23,6 +25,10 @@ async function bootstrap() {
   Vue.use(Component)
 
   Vue.use(VuePrototype)
+
+  Vue.use(Finder)
+
+  Vue.use(VueClipboard)
 
   new Vue({
     router,

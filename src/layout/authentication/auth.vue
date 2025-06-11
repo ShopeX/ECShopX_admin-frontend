@@ -3,7 +3,7 @@
     <!-- 头部logo和应用名称 -->
     <div class="absolute top-0 left-0 flex items-center gap-2 px-4 py-4">
       <SpImage :src="logo" height="30" fit="contain" />
-      <p class="text-2xl">后台管理系统</p>
+      <p class="text-2xl">{{ systemTitle }}</p>
     </div>
 
     <!-- 系统介绍 -->
@@ -30,6 +30,9 @@ export default {
   computed: {
     logo: () => {
       return require(`@/assets/images/${DEFAULT_CONFIG.logo}`)
+    },
+    systemTitle: () => {
+      return DEFAULT_CONFIG.systemTitle
     },
     loginBackGroundStyle: () => {
       return {

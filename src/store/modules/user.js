@@ -1,11 +1,11 @@
 import api from '@/api'
-import { getUserInfo } from '@/api/auth'
 
 const userStore = {
   namespaced: true,
   state: {
     accessMenus: [],
     token: '',
+    accountInfo: null,
 
     exp: '',
     name: '',
@@ -43,6 +43,10 @@ const userStore = {
     // 设置菜单
     setAccessMenus(state, { accessMenus }) {
       state.accessMenus = accessMenus
+    },
+    // 设置帐户信息
+    setAccountInfo(state, { accountInfo }) {
+      state.accountInfo = accountInfo
     },
 
     setUserInfo(state, payload) {
@@ -106,6 +110,10 @@ const userStore = {
     async fetchAccessMenus({ commit }) {
       const accessMenus = await api.auth.getPermission()
       commit('setAccessMenus', { accessMenus })
+    },
+    async fetchAccountInfo({ commit }) {
+      const accountInfo = await api.login.getAdminInfo()
+      commit('setAccountInfo', { accountInfo })
     },
 
     setIsFrame({ commit }, isInFrame) {

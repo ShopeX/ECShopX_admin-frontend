@@ -1,24 +1,24 @@
 <style lang="scss" scope>
 .sp-filter-form-item {
   margin: 0 8px 16px 0;
-  &.label {
-    .form-item__label {
-      display: block;
-    }
-    .form-item__content {
-      margin-left: 90px;
-    }
-  }
+  display: flex;
+  align-items: center;
+  // &.label {
+  //   .form-item__label {
+  //     display: block;
+  //   }
+  //   .form-item__content {
+  //     margin-left: 90px;
+  //   }
+  // }
 }
 .form-item {
   &__label {
-    float: left;
     width: 90px;
-    line-height: 36px;
     padding-right: 8px;
     text-align: right;
     color: #666;
-    display: none;
+    font-size: 14px;
   }
   &__content {
     margin-left: 0;
@@ -64,7 +64,7 @@
 }
 </style>
 <template>
-  <div class="sp-filter-form-item" :class="{ 'label': label }">
+  <div class="sp-filter-form-item" :class="{ label: label }">
     <div class="form-item__label">
       {{ label }}
     </div>

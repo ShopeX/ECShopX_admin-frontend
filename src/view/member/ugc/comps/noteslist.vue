@@ -75,7 +75,7 @@ export default {
   },
   computed: {
     resetText() {
-      return (row) => {
+      return row => {
         var text = '审核'
         if (row.status == '1') {
           text = '下架'
@@ -116,7 +116,7 @@ export default {
       var auditdiff = false
       var status = null
 
-      val.forEach((item) => {
+      val.forEach(item => {
         checkList.push(item.post_id)
         if (status == null) {
           status = item.status
@@ -136,8 +136,4 @@ export default {
   }
 }
 </script>
-<style scoped lang="css">
-.el-button + .el-button {
-  margin-left: 20px;
-}
-</style>
+<style scoped lang="css"></style>

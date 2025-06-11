@@ -3,8 +3,10 @@
  */
 export default {
   productName: '数云',
+  systemTitle: '数云管理后台',
   logo: 'logo-b2c.png',
   loginBackground: 'login-b2c.jpg',
+  footerBackground: 'footer-b2c.png',
 
   // 主题配置
   themeConfig: {

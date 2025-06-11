@@ -16,13 +16,6 @@ export function getPermission(query) {
   })
 }
 
-export function getUserInfo() {
-  return fetch({
-    url: '/operator/getinfo',
-    method: 'get'
-  })
-}
-
 export function refreshToken(params) {
   return fetch({
     url: '/token/refresh',

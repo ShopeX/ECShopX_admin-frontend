@@ -3,8 +3,10 @@
  */
 export default {
   productName: 'B2C',
+  systemTitle: 'B2C管理后台',
   logo: 'logo-b2c.png',
   loginBackground: 'login-b2c.jpg',
+  footerBackground: 'footer-b2c.png',
 
   // 主题配置
   themeConfig: {

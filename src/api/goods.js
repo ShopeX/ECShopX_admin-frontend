@@ -214,6 +214,14 @@ export function getCategory(params) {
   })
 }
 
+export function getItemParams(params) {
+  return fetch({
+    url: '/goods/items/params',
+    method: 'post',
+    params
+  })
+}
+
 export function addCategory(params) {
   return fetch({
     url: '/goods/createcategory',
@@ -576,7 +584,6 @@ export function postCategoryPageSetting(query) {
   })
 }
 
-
 //批量审核供应商商品
 export function batchReviewItems(query) {
   return fetch({
@@ -619,4 +626,3 @@ export function medicineItemsSync(data) {
     data
   })
 }
-

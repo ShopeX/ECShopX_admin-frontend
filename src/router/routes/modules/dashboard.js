@@ -36,7 +36,8 @@ const routes = [
       {
         name: 'dashboard',
         path: 'dashboard',
-        component: () => import('@/view/base/index'),
+        // component: () => import('@/view/base/index'),
+        component: () => import('@/views/dashboard/index'),
         meta: {
           icon: 'icon-products',
           title: '概览',

@@ -116,6 +116,7 @@ export default {
           this.$store.commit('user/setToken', { token })
           this.$message.success('登录成功')
           await this.$store.dispatch('user/fetchAccessMenus')
+          await this.$store.dispatch('user/fetchAccountInfo')
           // this.$router.push('/')
           setTimeout(() => {
             window.location.href = '/'

@@ -1,7 +1,4 @@
 <style scoped lang="scss">
-.sp-filter-form {
-  margin-bottom: 16px;
-}
 .tab-tools {
   text-align: right;
   @include clearfix();
@@ -33,38 +30,10 @@
 <template>
   <div class="page-body">
     <SpRouterView>
-      <div class="action-container">
-        <el-button type="primary" icon="iconfont icon-xinzengcaozuo-01" @click="addItems">
-          添加商品
-        </el-button>
-        <el-dropdown @command="handleImport">
-          <el-button type="primary" plain icon="iconfont icon-daorucaozuo-01">
-            导入<i class="el-icon-arrow-down el-icon--right" />
-          </el-button>
-          <el-dropdown-menu slot="dropdown">
-            <el-dropdown-item
-              v-if="$store.getters.login_type != 'merchant'"
-              command="physicalupload"
-            >
-              商品导入
-            </el-dropdown-item>
-            <el-dropdown-item command="physicalstoreupload"> 库存导入 </el-dropdown-item>
-          </el-dropdown-menu>
-        </el-dropdown>
-      </div>
-      <!--      <div v-else class="action-container">-->
-      <!--        <el-button type="primary" icon="iconfont icon-xinzengcaozuo-01" @click="addItems">-->
-      <!--          添加商品-->
-      <!--        </el-button>-->
-      <!--      </div>-->
-
       <SpFilterForm :model="searchParams" @onSearch="onSearch" @onReset="onSearch">
         <SpFilterFormItem prop="keywords" label="商品标题:">
           <el-input v-model="searchParams.keywords" placeholder="商品标题或副标题关键词" />
         </SpFilterFormItem>
-        <!--        <SpFilterFormItem prop="supplier_goods_bn" label="供应商货号:">-->
-        <!--          <el-input v-model="searchParams.supplier_goods_bn" placeholder="请输入供应商货号" />-->
-        <!--        </SpFilterFormItem>-->
         <SpFilterFormItem v-if="!IS_SUPPLIER()" prop="approve_status" label="商品状态:">
           <el-select v-model="searchParams.approve_status" clearable placeholder="请选择">
             <el-option
@@ -104,13 +73,6 @@
             clearable
           />
         </SpFilterFormItem>
-        <!-- <SpFilterFormItem prop="audit_status" label="审核状态:">
-          <el-select v-model="searchParams.audit_status">
-            <el-option value="processing" label="待审核" />
-            <el-option value="approved" label="审核通过" />
-            <el-option value="rejected" label="审核拒绝" />
-          </el-select>
-        </SpFilterFormItem> -->
         <SpFilterFormItem prop="templates_id" label="运费模板:">
           <el-select v-model="searchParams.templates_id" placeholder="请选择" clearable>
             <el-option
@@ -121,9 +83,6 @@
             />
           </el-select>
         </SpFilterFormItem>
-        <!--        <SpFilterFormItem prop="tax_rate_code" label="税率编码:">-->
-        <!--          <el-input v-model="searchParams.tax_rate_code" placeholder="商品编号或条形码" />-->
-        <!--        </SpFilterFormItem>-->
         <SpFilterFormItem prop="brand_id" label="品牌:">
           <el-select
             v-model="searchParams.brand_id"
@@ -144,13 +103,6 @@
         <SpFilterFormItem prop="item_bn" label="SKU编码:">
           <el-input v-model="searchParams.item_bn" placeholder="请输入SKU编码" />
         </SpFilterFormItem>
-        <!--        <SpFilterFormItem prop="delivery_data_type" label="发货方式:">-->
-        <!--          <el-select v-model="searchParams.delivery_data_type">-->
-        <!--            <el-option value="fixed_date" label="指定发货日期" />-->
-        <!--            <el-option value="relative_date" label="相对发货日期" />-->
-        <!--            <el-option value="default_date" label="默认发货日期" />-->
-        <!--          </el-select>-->
-        <!--        </SpFilterFormItem>-->
         <SpFilterFormItem prop="goods_bn" label="SPU编码:">
           <el-input v-model="searchParams.goods_bn" placeholder="请输入SPU编码" />
         </SpFilterFormItem>
@@ -179,13 +131,6 @@
             <el-option :value="false" label="否" />
           </el-select>
         </SpFilterFormItem>
-
-        <!--        <SpFilterFormItem prop="goods_bn" label="SPU编码:">-->
-        <!--          <el-input v-model="searchParams.goods_bn" placeholder="请输入SPU编码" />-->
-        <!--        </SpFilterFormItem>-->
-        <!--        <SpFilterFormItem prop="operator_name" label="来源供应商:">-->
-        <!--          <el-input v-model="searchParams.operator_name" placeholder="请输入来源供应商" />-->
-        <!--        </SpFilterFormItem>-->
         <SpFilterFormItem v-if="is_pharma_industry" prop="is_prescription" label="处方药:">
           <el-select v-model="searchParams.is_prescription">
             <el-option value="" label="全部" />
@@ -196,48 +141,52 @@
       </SpFilterForm>
 
       <div class="action-container">
-        <el-button v-if="!IS_SUPPLIER()" type="primary" plain @click="changeCategory">
+        <el-button type="primary" @click="addItems"> 添加商品 </el-button>
+
+        <el-button v-if="!IS_SUPPLIER()" type="primary" @click="changeCategory">
           更改销售分类
         </el-button>
-        <el-button v-if="!IS_SUPPLIER()" type="primary" plain @click="changeGoodsLabel">
+        <el-button v-if="!IS_SUPPLIER()" type="primary" @click="changeGoodsLabel">
           打标签
         </el-button>
-        <el-button type="primary" plain @click="changeFreightTemplate"> 更改运费模板 </el-button>
+        <el-button type="primary" @click="changeFreightTemplate"> 更改运费模板 </el-button>
         <el-button
           v-if="!IS_ADMIN() && !IS_DISTRIBUTOR()"
           type="primary"
-          plain
           @click="onBatchSubmitItems"
         >
           批量提交审核
         </el-button>
-        <el-button type="primary" plain @click="changeItemsStore"> 统一库存 </el-button>
-        <el-button v-if="!IS_SUPPLIER()" type="primary" plain @click="batchChangeStore">
+        <el-button type="primary" @click="changeItemsStore"> 统一库存 </el-button>
+        <el-button v-if="!IS_SUPPLIER()" type="primary" @click="batchChangeStore">
           更改状态
         </el-button>
-        <el-button type="primary" plain @click="batchGifts('true')"> 设为赠品 </el-button>
-        <el-button type="primary" plain @click="batchGifts('false')"> 设为非赠品 </el-button>
+        <el-button type="primary" @click="batchGifts('true')"> 设为赠品 </el-button>
+        <el-button type="primary" @click="batchGifts('false')"> 设为非赠品 </el-button>
 
-        <el-button
-          v-if="IS_SUPPLIER()"
-          type="primary"
-          plain
-          @click="() => changeHaltTheSales('stop')"
-        >
+        <el-button v-if="IS_SUPPLIER()" type="primary" @click="() => changeHaltTheSales('stop')">
           停售
         </el-button>
-        <el-button
-          v-if="IS_SUPPLIER()"
-          type="primary"
-          plain
-          @click="() => changeHaltTheSales('start')"
-        >
+        <el-button v-if="IS_SUPPLIER()" type="primary" @click="() => changeHaltTheSales('start')">
           开售
         </el-button>
         <!-- <el-button type="primary" plain @click="changeGoodsPrice"> 批量改价 </el-button> -->
-
+        <el-dropdown @command="handleImport">
+          <el-button type="primary">
+            导入<i class="el-icon-arrow-down el-icon--right" />
+          </el-button>
+          <el-dropdown-menu slot="dropdown">
+            <el-dropdown-item
+              v-if="$store.getters.login_type != 'merchant'"
+              command="physicalupload"
+            >
+              商品导入
+            </el-dropdown-item>
+            <el-dropdown-item command="physicalstoreupload"> 库存导入 </el-dropdown-item>
+          </el-dropdown-menu>
+        </el-dropdown>
         <el-dropdown>
-          <el-button type="primary" plain icon="iconfont icon-daorucaozuo-01">
+          <el-button type="primary">
             导出<i class="el-icon-arrow-down el-icon--right" />
           </el-button>
           <el-dropdown-menu slot="dropdown">
@@ -263,7 +212,7 @@
           上传商品到旺店通
         </el-button>
         <el-dropdown v-if="VERSION_STANDARD() && IS_ADMIN()">
-          <el-button type="primary" plain icon="iconfont icon-daorucaozuo-01">
+          <el-button type="primary">
             同步商品<i class="el-icon-arrow-down el-icon--right" />
           </el-button>
           <el-dropdown-menu slot="dropdown">
@@ -286,7 +235,7 @@
         >
           <div v-if="activeName == 'second'" class="tab-tools">
             <div class="warn-input">
-              <label class="label">预警数量:</label>
+              <label class="label text-sm text-normary">预警数量:</label>
               <el-input v-model="warning_store" size="small" value="warning_store" />
               <el-button type="text" @click="setWarningStore"> 保存 </el-button>
             </div>
@@ -299,7 +248,7 @@
         :url="IS_DISTRIBUTOR() ? '/distributor/items' : '/goods/items'"
         fixed-row-action
         :row-actions-align="'left'"
-        row-actions-width="200px"
+        row-actions-width="160px"
         :other-config="{}"
         :setting="tableList"
         :hooks="{
@@ -1168,13 +1117,13 @@ export default {
           {
             name: 'sku编码',
             key: 'item_bn',
-            width: 150,
+            width: 160,
             align: 'right',
             headerAlign: 'center'
           },
           {
             name: '标签',
-            width: 120,
+            width: 180,
             visible: !IS_SUPPLIER(),
             key: 'tagList',
             render: (h, scope) => (

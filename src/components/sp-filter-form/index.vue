@@ -4,8 +4,11 @@
   padding: 16px 0 0;
   display: flex;
   box-sizing: content-box;
+  transition: all 0.8s ease-in-out;
+  // max-height: 1000px; // 设置一个足够大的初始高度
+  overflow: hidden;
   &.shouqi {
-    max-height: 104px;
+    max-height: 96px;
     overflow: hidden;
   }
   &.small {
@@ -13,7 +16,7 @@
       margin-bottom: 8px;
     }
     &.shouqi {
-      // max-height: 80px;
+      max-height: 80px;
     }
   }
 }
@@ -31,8 +34,14 @@
       text-align: right;
     }
     .extend-wrap {
-      margin-top: 24px;
+      margin-top: 16px;
       padding-left: 15px;
+      text-align: right;
+    }
+    .extend-icon {
+      &.extend-active {
+        transform: rotate(180deg);
+      }
     }
   }
 }
@@ -44,16 +53,28 @@
     </div>
     <div class="filter-form__ft">
       <div class="btns-wrap">
-        <el-button type="primary" icon="ecx-icon icon-sousuo" @click="onSearch"> 查询 </el-button>
-        <el-button type="primary" plain icon="ecx-icon icon-zhongzhi" @click="onReset">
-          重置
+        <el-button type="primary" @click="onSearch">
+          <div class="flex items-center">
+            <SpIcon name="search" size="14" />
+            <span class="ml-1">查询</span>
+          </div>
+        </el-button>
+        <el-button type="primary" plain @click="onReset">
+          <div class="flex items-center">
+            <SpIcon name="rotate-ccw" size="14" />
+            <span class="ml-1">重置</span>
+          </div>
         </el-button>
       </div>
       <div v-if="showExtend" class="extend-wrap">
         <el-button type="text" @click="toggleExtend">
-          <i class="ecx-icon" :class="extend ? 'icon-quanbushouqi' : 'icon-quanbuzhankai'" />{{
-            `${extend ? '收起' : '展开'}`
-          }}
+          <div class="flex items-center">
+            <span>{{ `${extend ? '收起' : '展开'}` }}</span>
+            <SpIcon
+              :class="{ 'extend-icon': true, 'extend-active': extend }"
+              name="chevrons-down"
+            />
+          </div>
         </el-button>
       </div>
     </div>
@@ -89,14 +110,14 @@ export default {
     formClass() {
       const size = this.size
       return {
-        'shouqi': !this.extend,
-        'normal': size == 'normal',
-        'small': size == 'small'
+        shouqi: !this.extend,
+        normal: size == 'normal',
+        small: size == 'small'
       }
     }
   },
   created() {
-    this.$on('sp.filterForm.addField', (field) => {
+    this.$on('sp.filterForm.addField', field => {
       if (field) {
         this.fields.push(field)
       }
@@ -152,7 +173,7 @@ export default {
         console.warn('[Sp Warn][sp-filter-form]model is required for resetFields to work.')
         return
       }
-      this.fields.forEach((field) => {
+      this.fields.forEach(field => {
         field.resetField()
       })
       this.$emit('onReset')

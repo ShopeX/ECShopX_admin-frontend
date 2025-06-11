@@ -1,4 +1,4 @@
-<template>
+<!-- <template>
   <div class="sp-router-view">
     <div v-show="!showRouterView">
       <slot />
@@ -7,7 +7,7 @@
       <router-view />
     </div>
   </div>
-</template>
+</template> -->
 
 <script>
 export default {
@@ -29,6 +29,29 @@ export default {
   methods: {
     onActivated() {
       this.$parent.$activated(this.currentRoute, this.$route)
+    }
+  },
+  render(h) {
+    if (!this.showRouterView) {
+      return h(
+        'div',
+        {
+          class: {
+            'sp-router-view': true
+          }
+        },
+        this.$slots.default
+      )
+    } else {
+      return h(
+        'div',
+        {
+          class: {
+            'sp-router-view': true
+          }
+        },
+        <router-view />
+      )
     }
   }
 }

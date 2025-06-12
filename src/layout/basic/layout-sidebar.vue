@@ -77,7 +77,6 @@ export default {
       return DEFAULT_CONFIG.systemTitle
     },
     activeMainMenu() {
-      // console.log('activeMainMenu', this.$route)
       return this.$route.matched[0]?.meta?.aliasName
     },
     activeSubIndex() {
@@ -86,6 +85,9 @@ export default {
   },
   mounted() {
     this.mainMenus = this.$store.state.user.accessMenus || []
+    const [mainRoute] = this.$route.matched
+    this.subMenus =
+      this.mainMenus.find(item => item.alias_name === mainRoute?.meta?.aliasName)?.children || []
   },
   methods: {
     computedMenuIcon(item) {
@@ -95,7 +97,6 @@ export default {
     },
     handleMainMenuClick(item) {
       this.subMenus = item.children || []
-      // this.$router.push({ path: item.path })
     },
     handleSubMenuClick(item) {
       const allRoutes = this.$router.getRoutes()

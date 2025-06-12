@@ -46,7 +46,7 @@
         width: 30px;
         color: #999;
         position: relative;
-        top: 1px;
+        top: -4px;
       }
       .el-range__icon {
         display: none !important;

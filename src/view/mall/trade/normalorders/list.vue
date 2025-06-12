@@ -214,18 +214,12 @@
 
       <el-button type="primary" @click="assignPersonnel(false)"> 取消配送 </el-button>
 
-      <el-dropdown>
+      <el-dropdown @command="handleExport">
         <el-button type="primary"> 导出<i class="el-icon-arrow-down el-icon--right" /> </el-button>
         <el-dropdown-menu slot="dropdown">
-          <el-dropdown-item>
-            <export-tip @exportHandle="exportInvoice"> 未开票订单 </export-tip>
-          </el-dropdown-item>
-          <el-dropdown-item>
-            <export-tip @exportHandle="exportDataMaster"> 主订单 </export-tip>
-          </el-dropdown-item>
-          <el-dropdown-item>
-            <export-tip @exportHandle="exportDataNormal"> 子订单 </export-tip>
-          </el-dropdown-item>
+          <el-dropdown-item command="invoice_order">未开票订单 </el-dropdown-item>
+          <el-dropdown-item command="master_order"> 主订单 </el-dropdown-item>
+          <el-dropdown-item command="normal_order">子订单 </el-dropdown-item>
         </el-dropdown-menu>
       </el-dropdown>
     </div>
@@ -241,9 +235,10 @@
         v-loading="loading"
         border
         :data="tableList"
+        max-height="600"
         @selection-change="handleSelectionChange"
       >
-        <el-table-column width="180" prop="order_id" label="订单号">
+        <el-table-column width="200" prop="order_id" label="订单号">
           <template slot-scope="scope">
             <div class="order-num">
               {{ scope.row.order_id }}
@@ -255,12 +250,12 @@
                 />
               </el-tooltip>
             </div>
-            <div class="order-store">
+            <!-- <div class="order-store">
               <el-tooltip effect="dark" content="来源店铺" placement="top-start">
                 <i class="el-icon-office-building" />
               </el-tooltip>
               {{ scope.row.distributor_name }}
-            </div>
+            </div> -->
             <div class="order-time">
               <el-tooltip effect="dark" content="下单时间" placement="top-start">
                 <i class="el-icon-time" />
@@ -269,6 +264,7 @@
             </div>
           </template>
         </el-table-column>
+        <el-table-column prop="distributor_name" label="来源店铺" width="200" />
         <!--        <el-table-column prop="original_order_id" width="160" label="原单号" align="right" header-align="center">-->
         <!--          <template slot-scope="scope">-->
         <!--            {{ scope.row.original_order_id ? scope.row.original_order_id : scope.row.order_id }}-->
@@ -322,13 +318,13 @@
             {{ (scope.row.cost_fee / 100).toFixed(2) }}
           </template>
         </el-table-column>
-        <el-table-column width="100" label="运费（¥）" align="right" header-align="center">
+        <el-table-column width="120" label="运费（¥）" align="right" header-align="center">
           <template slot-scope="scope">
             {{ (scope.row.freight_fee || 0) / 100 }}
           </template>
         </el-table-column>
 
-        <el-table-column prop="mobile" label="业务员">
+        <el-table-column prop="mobile" label="业务员" width="160">
           <template slot-scope="scope">
             <div class="order-num">
               {{ scope.row.salesman_mobile }}
@@ -362,7 +358,7 @@
             </div>
           </template>
         </el-table-column>
-        <el-table-column prop="mobile" label="客户手机号">
+        <el-table-column prop="mobile" label="客户手机号" width="160">
           <template slot-scope="scope">
             <template v-if="!scope.row.user_delete && login_type !== 'merchant'">
               <router-link
@@ -412,7 +408,7 @@
             </template>
           </template>
         </el-table-column>
-        <el-table-column prop="distributor_name" label="来源店铺" />
+
         <!-- <el-table-column prop="supplier_name" v-if="VERSION_STANDARD() || IS_ADMIN()" label="来源供应商" >
       </el-table-column> -->
         <!-- <el-table-column prop="receiver_name" label="收货人" /> -->
@@ -429,7 +425,7 @@
           </template>
         </el-table-column>
         <!-- <el-table-column prop="salespersonname " label="业务员"></el-table-column> -->
-        <el-table-column label="配送方式">
+        <el-table-column label="配送方式" width="100">
           <template slot-scope="scope">
             {{ getDistributionType(scope.row) }}
           </template>
@@ -447,13 +443,13 @@
           </template>
         </el-table-column>
 
-        <el-table-column label="配送费">
+        <el-table-column label="配送费（¥）" width="110">
           <template slot-scope="scope">
-            {{ scope.row.self_delivery_operator_name && scope.row.self_delivery_fee / 100 + '元' }}
+            {{ scope.row.self_delivery_operator_name && scope.row.self_delivery_fee / 100 }}
           </template>
         </el-table-column>
 
-        <el-table-column label="配送员电话">
+        <el-table-column label="配送员电话" width="160">
           <template slot-scope="scope">
             {{ scope.row.self_delivery_operator_mobile }}
           </template>
@@ -1620,6 +1616,7 @@ export default {
           actionBtns
         }
       })
+
       this.page.total = pager ? pager.count : 0
       this.datapass_block = datapass_block
       this.loading = false
@@ -2108,7 +2105,15 @@ export default {
       console.log(val)
       this.selectList = val
     },
-    async salesAfterSubmit() {},
+    handleExport(commond) {
+      if (commond == 'invoice_order') {
+        this.exportInvoice()
+      } else if (commond == 'master_order') {
+        this.exportDataMaster()
+      } else if (commond == 'normal_order') {
+        this.exportDataNormal()
+      }
+    },
     exportInvoice() {
       let type = 'normal'
       this.$emit('onChangeData', 'params', { type })

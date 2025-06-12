@@ -1,5 +1,7 @@
 <template>
   <SpRouterView>
+    <SearchForm />
+
     <el-row class="filter-header" :gutter="20">
       <el-col>
         <el-date-picker
@@ -34,9 +36,6 @@
             :value="item.value"
           />
         </el-select>
-        <!-- <el-input v-model="supplier_name" clearable placeholder="来源供应商" >
-          <el-button slot="append" icon="el-icon-search" @click="numberSearch" />
-        </el-input> -->
         <el-autocomplete
           v-model="source_name"
           class="inline-input"
@@ -95,13 +94,7 @@
       <el-tab-pane label="未支付" name="notpay" />
       <el-tab-pane label="已取消/已关闭" name="cancel" />
       <el-tab-pane label="已完成" name="done" />
-      <el-table
-        v-loading="loading"
-        :data="list"
-        style="width: 100%"
-        :height="wheight - 190"
-        element-loading-text="数据加载中"
-      >
+      <el-table v-loading="loading" border :data="list" style="width: 100%" :height="wheight - 190">
         <el-table-column label="操作" fixed="left">
           <template slot-scope="scope">
             <router-link
@@ -713,6 +706,7 @@
         <el-button type="primary" @click="submitWriteoffOrderConfirmAction"> 确定 </el-button>
       </div>
     </el-dialog>
+
     <!-- 自提订单核销完成 -->
     <el-dialog
       title="自提核销"
@@ -756,12 +750,55 @@ import {
   SELF_ORDER_CATEGORY,
   GOOD_CATEGORY_MAP
 } from '@/consts'
+import { useForm } from '@/composables'
 import { IS_ADMIN } from '../../../../utils'
+
+const [Form, FormApi] = useForm({
+  formItems: [
+    {
+      label: '订单时间',
+      component: 'Input',
+      componentProps: {
+        placeholder: '请输入订单号'
+      },
+      value: ''
+    },
+    {
+      component: 'Select',
+      componentProps: {
+        placeholder: '请选择订单状态',
+        options: [
+          { label: '全部订单', value: '' },
+          { label: '团购订单', value: 'groups' },
+          { label: '秒杀订单', value: 'seckill' },
+          { label: '社区订单', value: 'community' },
+          { label: '导购订单', value: 'shopguide' }
+        ]
+      },
+      value: ''
+    },
+    {
+      component: 'Select',
+      componentProps: {
+        placeholder: '请选择订单状态',
+        options: [
+          { label: '全部订单', value: '' },
+          { label: '团购订单', value: 'groups' },
+          { label: '秒杀订单', value: 'seckill' },
+          { label: '社区订单', value: 'community' },
+          { label: '导购订单', value: 'shopguide' }
+        ]
+      },
+      value: ''
+    }
+  ]
+})
 
 export default {
   components: {
     shopSelect,
-    RemarkModal
+    RemarkModal,
+    SearchForm: Form
   },
   mixins: [remarkMixin],
   data() {

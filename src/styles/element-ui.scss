@@ -151,3 +151,11 @@ $--font-path: '~element-ui/lib/theme-chalk/fonts';
     }
   }
 }
+
+.el-loading-spinner {
+  top: 50%;
+  left: 50%;
+  width: auto;
+  position: absolute;
+  transform: translate(-50%, -50%);
+}

@@ -125,7 +125,7 @@
     </el-table>
 
     <el-pagination
-      class="content-padded content-center"
+      class="mt-4 text-right"
       background
       layout="total, sizes, prev, pager, next, jumper"
       :current-page.sync="page.pageIndex"
@@ -383,8 +383,8 @@ export default {
     // },
     rateDelete(id) {
       const _self = this
-      this.$confirm('确认删除当前评价吗？').then((_) => {
-        deleteRate(id).then((res) => {
+      this.$confirm('确认删除当前评价吗？').then(_ => {
+        deleteRate(id).then(res => {
           if (res.data.data.status) {
             this.$message({
               message: '删除成功',
@@ -408,7 +408,7 @@ export default {
       this.replyDialogVisible = true
     },
     replySubmit() {
-      replyTradeRate(this.form).then((res) => {
+      replyTradeRate(this.form).then(res => {
         this.$message({
           type: 'success',
           message: '回复成功'
@@ -418,7 +418,7 @@ export default {
       })
     },
     detailsDialog(row) {
-      getTradeRateDetails(row.rate_id).then((res) => {
+      getTradeRateDetails(row.rate_id).then(res => {
         this.details = res.data.data
         console.log(this.details)
       })
@@ -462,9 +462,9 @@ export default {
         pageSize,
         ...this.params
       }
-      getTradeRateList(params).then((response) => {
+      getTradeRateList(params).then(response => {
         this.list = response.data.data.list
-        this.list.forEach((item) => {
+        this.list.forEach(item => {
           item.star = Number(item.star)
         })
         this.total_count = Number(response.data.data.total_count)

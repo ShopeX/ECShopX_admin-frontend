@@ -117,17 +117,18 @@
             </template>
           </el-table-column>
         </el-table>
-        <el-pagination
-          class="content-padded content-center"
-          background
-          :current-page="params.page"
-          :page-sizes="[10, 20, 50, 100]"
-          :page-size="params.pageSize"
-          layout="total, sizes, prev, pager, next, jumper"
-          :total="total_count"
-          @size-change="handleSizeChange"
-          @current-change="handleCurrentChange"
-        />
+        <div class="mt-4 text-right">
+          <el-pagination
+            background
+            :current-page="params.page"
+            :page-sizes="[10, 20, 50, 100]"
+            :page-size="params.pageSize"
+            layout="total, sizes, prev, pager, next, jumper"
+            :total="total_count"
+            @size-change="handleSizeChange"
+            @current-change="handleCurrentChange"
+          />
+        </div>
       </el-tabs>
 
       <el-dialog
@@ -278,17 +279,18 @@
                 </template>
               </el-table-column>
             </el-table>
-            <el-pagination
-              class="content-padded content-center"
-              background
-              :current-page="relationship.params.page"
-              :page-sizes="[10, 20, 50, 100]"
-              :page-size="relationship.params.pageSize"
-              layout="total, sizes, prev, pager, next, jumper"
-              :total="relationship.total_count"
-              @size-change="handleRelaSizeChange"
-              @current-change="handleRelaCurrentChange"
-            />
+            <div class="mt-4 text-right">
+              <el-pagination
+                background
+                :current-page="relationship.params.page"
+                :page-sizes="[10, 20, 50, 100]"
+                :page-size="relationship.params.pageSize"
+                layout="total, sizes, prev, pager, next, jumper"
+                :total="relationship.total_count"
+                @size-change="handleRelaSizeChange"
+                @current-change="handleRelaCurrentChange"
+              />
+            </div>
           </el-card>
         </div>
       </SideBar>
@@ -437,7 +439,7 @@ export default {
       this.dialog = true
       this.salesman_id = row.salespersonId
       var params = { salesperson_id: row.salespersonId }
-      getSalespersonInfo(params).then((res) => {
+      getSalespersonInfo(params).then(res => {
         this.form = {
           salesman_name: res.data.data.name,
           mobile: res.data.data.mobile,
@@ -459,7 +461,7 @@ export default {
         type: 'warning'
       })
         .then(() => {
-          updateSalesman(row.salespersonId, { is_valid: 'delete' }).then((response) => {
+          updateSalesman(row.salespersonId, { is_valid: 'delete' }).then(response => {
             this.list.splice(index, 1)
             this.$message({
               type: 'success',
@@ -475,7 +477,7 @@ export default {
         })
     },
     defaultSwitchChange(row) {
-      updateSalesman(row.salesperson_id, { is_valid: row.is_valid }).then((response) => {
+      updateSalesman(row.salesperson_id, { is_valid: row.is_valid }).then(response => {
         this.$message({ type: 'success', message: '操作成功' })
       })
     },
@@ -487,7 +489,7 @@ export default {
       }
     },
     updateSalesmanAction() {
-      updateSalesman(this.salesman_id, this.form).then((res) => {
+      updateSalesman(this.salesman_id, this.form).then(res => {
         this.form = {
           distributor_id: '',
           mobile: '',
@@ -500,14 +502,14 @@ export default {
       })
     },
     handleAddSalesmanRole() {
-      updateSalesmanRole(this.salesman_id, this.roleForm).then((res) => {
+      updateSalesmanRole(this.salesman_id, this.roleForm).then(res => {
         this.dialog_role = false
         this.getList()
         this.$message({ type: 'success', message: '操作成功' })
       })
     },
     addSalesmanAction() {
-      addSalesman(this.form).then((res) => {
+      addSalesman(this.form).then(res => {
         this.form = {
           distributor_id: '',
           mobile: '',
@@ -521,7 +523,7 @@ export default {
     },
     getList() {
       this.loading = true
-      getSalesmanList(this.params).then((response) => {
+      getSalesmanList(this.params).then(response => {
         if (response.data.data.list) {
           this.list = response.data.data.list
           this.total_count = Number(response.data.data.total_count)
@@ -530,7 +532,7 @@ export default {
       })
     },
     getRoleList() {
-      getRoleList().then((response) => {
+      getRoleList().then(response => {
         if (response.data.data.list) {
           this.roleList = response.data.data.list
         }
@@ -542,7 +544,7 @@ export default {
       if (storetype) {
         this.relShop.params.store_type = storetype
       }
-      getRelShopList(this.relShop.params).then((res) => {
+      getRelShopList(this.relShop.params).then(res => {
         this.relShop.list = res.data.data.list
         this.relShop.total_count = res.data.data.total_count
       })
@@ -623,7 +625,7 @@ export default {
     getWorkWechatRelList() {
       if (!this.relationship.saleId) return
       this.relationship.loading = true
-      getWorkWechatRelList(this.relationship.saleId, this.relationship.params).then((res) => {
+      getWorkWechatRelList(this.relationship.saleId, this.relationship.params).then(res => {
         this.relationship.list = res.data.data.list
         this.relationship.total_count = res.data.data.total_count
         this.relationship.loading = false

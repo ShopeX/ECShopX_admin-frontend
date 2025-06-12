@@ -52,7 +52,7 @@
         </template>
       </el-table-column>
     </el-table>
-    <div class="content-padded content-center">
+    <div class="mt-4 text-right">
       <el-pagination
         background
         layout="total, sizes, prev, pager, next, jumper"
@@ -100,7 +100,7 @@ export default {
       this.params.start_time = ''
       this.params.end_time = ''
       this.onSearch()
-    }, 
+    },
     dateChange(val) {
       if (val) {
         this.params.start_time = this.dateStrToTimeStamp(val[0] + ' 00:00:00')
@@ -111,9 +111,9 @@ export default {
       }
       this.page.pageIndex = 1
     },
-    fetchList() { 
+    fetchList() {
       this.loading = true
-      specificcrowddiscountList(this.params).then((response) => {
+      specificcrowddiscountList(this.params).then(response => {
         this.tableList = response.data.data.list
         this.total_count = response.data.data.total_count
         this.loading = false

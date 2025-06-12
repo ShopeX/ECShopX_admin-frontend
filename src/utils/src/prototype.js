@@ -11,6 +11,7 @@ import {
 } from '@/utils'
 import { SYSTEM_CONFIG } from '@/consts'
 import store from '@/store'
+import { export_open } from './utils'
 // import moment from 'moment'
 // import district from '@/common/district.json'
 
@@ -115,6 +116,8 @@ function install(Vue) {
   Vue.prototype.companyBrand = '商派ECShopX'
   Vue.prototype.companyBrandImg = process.env.PRODUCT_MODEL === 'standard' ? 'onex' : 'ecshopx'
   Vue.prototype.$EventBus = new Vue()
+  Vue.prototype.$export_open = export_open
+
   // 动态改变页面的title
   document.title = Vue.prototype.VUE_APP_SYSTEM_NAME
 

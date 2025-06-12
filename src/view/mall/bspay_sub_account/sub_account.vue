@@ -124,9 +124,7 @@
                 导入<i class="el-icon-upload el-icon--right" />
               </el-button> -->
             </el-upload>
-            <export-tip @exportHandle="exportFile">
-              <el-button type="primary" size="medium"> 导出文件 </el-button>
-            </export-tip>
+            <el-button type="primary" size="medium" @click="exportFile"> 导出文件 </el-button>
           </el-row>
           <el-table v-loading="loading" :data="list" style="width: 100%">
             <el-table-column label="订单号" prop="orderId" />

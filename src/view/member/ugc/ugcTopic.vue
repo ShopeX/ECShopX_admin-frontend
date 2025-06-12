@@ -84,7 +84,7 @@
         />
       </el-tab-pane>
     </el-tabs>
-    <div class="content-padded content-center">
+    <div class="mt-4 text-right">
       <el-pagination
         layout="total, sizes, prev, pager, next, jumper"
         :total="pagers.total"
@@ -264,14 +264,14 @@ export default {
       }
       that.$data.loading = true
       getTopics(params).then(
-        (res) => {
+        res => {
           var { list, total_count } = res.data.data
           //console.log('res',params.page,res)
           that.$data.topicList = list
           that.$data.pagers = { total: total_count }
           that.$data.loading = false
         },
-        (err) => {
+        err => {
           that.$data.loading = false
         }
       )
@@ -310,7 +310,7 @@ export default {
       }
       params.topic_id = id_set
       //console.log('进行审核 auditNote',params);
-      topicVerify(params).then((res) => {
+      topicVerify(params).then(res => {
         //console.log('res',res)
         var msg = res.data.data.message
         this.cancelAuditDialog(false)
@@ -332,11 +332,11 @@ export default {
     topicModalHandle(checkTopic) {
       //console.log('topicModalHandle 排序',checkTopic)
       var topic_id = []
-      checkTopic.forEach((item) => {
+      checkTopic.forEach(item => {
         topic_id.push(item.topic_id)
       })
 
-      topicSettop({ topic_id }).then((res) => {
+      topicSettop({ topic_id }).then(res => {
         var { message } = res.data.data
         this.$message({
           type: 'success',
@@ -368,9 +368,9 @@ export default {
       const that = this
       const { topicForm } = this.$data
       //console.log('话题',this.$data.topicForm)
-      this.$refs['topicForm'].validate((valid) => {
+      this.$refs['topicForm'].validate(valid => {
         if (valid) {
-          createTopics(topicForm).then((res) => {
+          createTopics(topicForm).then(res => {
             var { message } = res.data.data
             this.$message({
               type: 'success',
@@ -403,7 +403,7 @@ export default {
         cancelButtonText: '取消',
         type: 'warning'
       }).then(() => {
-        topicDelete(params).then((res) => {
+        topicDelete(params).then(res => {
           //console.log('notesDelete',res)
           var msg = res.data.data.message
           this.cancelAuditDialog(false)

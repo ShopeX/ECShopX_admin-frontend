@@ -17,25 +17,29 @@
       <div class="action-container">
         <div class="action-container">
           <el-button-group>
-            <export-tip
+            <el-button
+              type="primary"
+              plain
               v-if="loginType !== 'distributor' && $route.path.indexOf('sellers') === -1"
-              @exportHandle="exportPopularizeData"
+              @click="exportPopularizeData"
             >
-              <el-button type="primary" plain> 导出业绩统计 </el-button>
-            </export-tip>
+              导出业绩统计
+            </el-button>
           </el-button-group>
         </div>
 
-        <export-tip
+        <el-button
+          type="primary"
+          plain
           v-if="loginType == 'distributor' || $route.path.indexOf('sellers') !== -1"
-          @exportHandle="exportPopularizeStatic"
+          @click="exportPopularizeStatic"
         >
-          <el-button type="primary" plain> 导出业绩订单统计 </el-button>
-        </export-tip>
+          导出业绩订单统计
+        </el-button>
 
-        <export-tip @exportHandle="exportPopularizeOrder">
-          <el-button type="primary" plain> 导出业绩订单详细 </el-button>* 下载订单详细日期
-        </export-tip>
+        <el-button type="primary" plain @click="exportPopularizeOrder"> 导出业绩订单详细 </el-button
+        >* 下载订单详细日期
+
         <SpFilterFormItem prop="tag_id" label="下载日期:">
           <el-date-picker
             v-model="created"
@@ -168,7 +172,7 @@
           </template>
         </el-table-column>
       </el-table>
-      <div class="content-padded content-center">
+      <div class="mt-4 text-right">
         <el-pagination
           background
           layout="total, sizes, prev, pager, next"
@@ -269,7 +273,7 @@ export default {
         pageSize,
         ...this.params
       }
-      exportPopularizeData(params).then((res) => {
+      exportPopularizeData(params).then(res => {
         if (res.data.data.status == true) {
           this.$message({
             type: 'success',
@@ -308,7 +312,7 @@ export default {
         date_end,
         ...this.params
       }
-      exportPopularizeStatic(params).then((res) => {
+      exportPopularizeStatic(params).then(res => {
         if (res.data.data.status == true) {
           this.$message({
             type: 'success',
@@ -337,7 +341,7 @@ export default {
         date_end,
         ...this.params
       }
-      exportPopularizeOrder(params).then((res) => {
+      exportPopularizeOrder(params).then(res => {
         if (res.data.data.status == true) {
           this.$message({
             type: 'success',
@@ -373,7 +377,7 @@ export default {
         pageSize,
         ...this.params
       }
-      getPopularizeList(params).then((res) => {
+      getPopularizeList(params).then(res => {
         this.list = res.data.data.list
         this.total_count = Number(res.data.data.total_count)
         this.datapass_block = res.data.data.datapass_block

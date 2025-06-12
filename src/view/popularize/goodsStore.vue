@@ -3,7 +3,6 @@
     <shop-select distributors @update="storeChange" @init="initChange" />
 
     <div class="content-bottom-padded">
-
       <el-row class="content-bottom-padded" :gutter="20">
         <el-col :span="6">
           <el-input
@@ -62,7 +61,8 @@
               <el-button
                 v-if="
                   $store.getters.login_type != 'distributor' &&
-                  $store.getters.login_type != 'merchant' && false
+                  $store.getters.login_type != 'merchant' &&
+                  false
                 "
                 type="text"
                 class="btn-gap"
@@ -135,7 +135,7 @@
             </template>
           </el-table-column>
         </el-table>
-        <div class="content-padded content-center">
+        <div class="mt-4 text-right">
           <el-pagination
             background
             layout="total, sizes, prev, pager, next"
@@ -335,24 +335,26 @@
               :label="item.name"
               min-width="110"
             >
-              <template slot-scope="scope" >
-                <div v-if="scope.row.rebate_conf.type == 'money'" :style="{ display: 'flex', alignItems: 'flex-end' }">
+              <template slot-scope="scope">
+                <div
+                  v-if="scope.row.rebate_conf.type == 'money'"
+                  :style="{ display: 'flex', alignItems: 'flex-end' }"
+                >
                   <el-input-number
-                  v-model="scope.row.rebate_conf.value[key]"
-                  precision="3"
-                  step="0.001"
-                  size="mini"
-                />元
+                    v-model="scope.row.rebate_conf.value[key]"
+                    precision="3"
+                    step="0.001"
+                    size="mini"
+                  />元
                 </div>
                 <div v-else :style="{ display: 'flex', alignItems: 'flex-end' }">
                   <el-input-number
-                  v-model="scope.row.rebate_conf.value[key]"
-                  precision="3"
-                  step="0.001"
-                  size="mini"
-                />%
+                    v-model="scope.row.rebate_conf.value[key]"
+                    precision="3"
+                    step="0.001"
+                    size="mini"
+                  />%
                 </div>
-                
 
                 <!-- <el-input
                   v-if="scope.row.rebate_conf.type == 'money'"
@@ -397,9 +399,9 @@ import axios from 'axios'
 import store from '@/store'
 import { mapGetters } from 'vuex'
 import SideBar from '@/components/element/sideBar'
-import { getPopularizeSetting,getPopularizeSettingStore } from '../../api/promotions'
+import { getPopularizeSetting, getPopularizeSettingStore } from '../../api/promotions'
 import { getItemsList, updateItemRebateConf, updateGoodsInfo } from '@/api/goods'
-import shopSelect from "@/components/shopSelect";
+import shopSelect from '@/components/shopSelect'
 import {
   getSalesmanList,
   updateSalesman,
@@ -511,7 +513,7 @@ export default {
     this.loginType = this.$store.getters.login_type
     this.params.pathSource = this.$route.path
 
-    getPopularizeSettingStore(this.params).then((res) => {
+    getPopularizeSettingStore(this.params).then(res => {
       this.popularizeSetting = res.data.data
       if (res.data.data.goods == 'all') {
         this.allSelect = true
@@ -544,7 +546,7 @@ export default {
       this.params.pageSize = pageSize
       this.getGoodsList()
     },
-    getList () {
+    getList() {
       this.loading = true
       this.getGoodsList()
       this.loading = false
@@ -559,13 +561,13 @@ export default {
     },
 
     storeChange(params) {
-      params && params.shop_id;
-      this.params.distributor_id = params.shop_id;
-      this.params.page = 1;
-      this.getList();
+      params && params.shop_id
+      this.params.distributor_id = params.shop_id
+      this.params.page = 1
+      this.getList()
     },
     initChange() {
-      this.shopId = "";
+      this.shopId = ''
     },
 
     handleCurrentChange(page_num) {
@@ -596,7 +598,7 @@ export default {
     },
     switchStatusChange(data) {
       var rebate = data.rebate ? 1 : 0
-      updateGoodsInfo({ goods_id: data.goods_id, rebate: rebate }).then((res) => {
+      updateGoodsInfo({ goods_id: data.goods_id, rebate: rebate }).then(res => {
         this.$message({
           type: 'success',
           message: '操作成功'
@@ -612,7 +614,7 @@ export default {
           message: '未选择商品，无需更新'
         })
       } else {
-        updateGoodsInfo({ goods_id: this.selectGoodsIds, rebate: 1 }).then((res) => {
+        updateGoodsInfo({ goods_id: this.selectGoodsIds, rebate: 1 }).then(res => {
           this.$message({
             type: 'success',
             message: '操作成功'
@@ -633,7 +635,7 @@ export default {
         updateGoodsInfo({
           goods_id: this.selectGoodsIds,
           rebate_type: this.changeRebateType
-        }).then((res) => {
+        }).then(res => {
           this.$message({
             type: 'success',
             message: '操作成功'
@@ -648,7 +650,7 @@ export default {
       var rebateConf = []
       var firstMoney, firstFilter
       var rebateTask = []
-      this.rebateSpecItems.forEach((item) => {
+      this.rebateSpecItems.forEach(item => {
         var rebate_conf = item.rebate_conf
         rebate_conf.ratio_type = this.popularizeSetting.popularize_ratio.type
         firstMoney = rebate_conf.rebate_task[0].money
@@ -690,7 +692,7 @@ export default {
       updateItemRebateConf({
         rebateConf: JSON.stringify(rebateConf),
         rebate_type: this.current.rebate_type
-      }).then((res) => {
+      }).then(res => {
         this.$message({ message: '保存成功', type: 'success', duration: 2 * 1000 })
       })
     },
@@ -709,9 +711,9 @@ export default {
         is_sku: true,
         item_id: data.item_id,
         item_type: 'normal'
-      }).then((res) => {
+      }).then(res => {
         var rebateSpecItems = []
-        res.data.data.list.forEach((item) => {
+        res.data.data.list.forEach(item => {
           if (!item.rebate_conf) {
             item.rebate_conf = {}
             item.rebate_conf.type = 'money'
@@ -752,9 +754,9 @@ export default {
       if (status === 1 || status === 2 || !status) {
         this.params.rebate = status ? (status === 1 ? 1 : 0) : undefined
       }
-      getItemsList(this.params).then((response) => {
+      getItemsList(this.params).then(response => {
         this.itemsList = response.data.data.list
-        this.itemsList.forEach((item) => {
+        this.itemsList.forEach(item => {
           item.rebate_audit = ''
           item.rebate_audit = item.rebate
           item.rebate = item.rebate === '1' ? true : false
@@ -766,7 +768,7 @@ export default {
     },
 
     nextChange(value, key, row) {
-      let index = this.rebateSpecItems.findIndex((v) => v.itemId === row.itemId)
+      let index = this.rebateSpecItems.findIndex(v => v.itemId === row.itemId)
       // 下一个的值
       let next = this.rebateSpecItems[index].rebate_conf.rebate_task[key + 1].filter
       if (next <= Number(value)) {
@@ -783,7 +785,7 @@ export default {
       console.log(this.rebateSpecItems, '列表的数据')
       // 限制后级的最小值要大于上级
       if (key > 0) {
-        let index = this.rebateSpecItems.findIndex((v) => v.itemId === row.itemId)
+        let index = this.rebateSpecItems.findIndex(v => v.itemId === row.itemId)
         // 上一个的值
         let last = this.rebateSpecItems[index].rebate_conf.rebate_task[key - 1].filter
         if (last !== '') {
@@ -797,7 +799,7 @@ export default {
       // 变更上级，下级小于等于上级时自动+1
       if (key === 0) {
         this.nextChange(value, 0, row)
-        let index = this.rebateSpecItems.findIndex((v) => v.itemId === row.itemId)
+        let index = this.rebateSpecItems.findIndex(v => v.itemId === row.itemId)
         let nextValue = this.rebateSpecItems[index].rebate_conf.rebate_task[1].filter
         this.nextChange(nextValue, 1, row)
       } else if (key === 1) {

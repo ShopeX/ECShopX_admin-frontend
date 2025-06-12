@@ -96,7 +96,7 @@
         </template>
       </el-table-column>
     </el-table>
-    <div v-if="total_count > params.pageSize" class="content-padded content-center">
+    <div v-if="total_count > params.pageSize" class="mt-4 text-right">
       <el-pagination
         background
         layout="prev, pager, next"
@@ -284,7 +284,7 @@ export default {
       if (processType == 'success') {
         var params = { process_type: processType, remarks: this.textarea }
       }
-      processCashWithdrawal(this.detail.id, params).then((response) => {
+      processCashWithdrawal(this.detail.id, params).then(response => {
         this.canceldialog = false
         this.dialog = false
         this.getList()
@@ -299,20 +299,20 @@ export default {
       this.dialog = true
       this.detail = detail
       this.applyText = '分销商申请提现佣金' + detail.money / 100 + '元'
-      getDistributorCount(detail.distributor_id).then((response) => {
+      getDistributorCount(detail.distributor_id).then(response => {
         this.cashWithdrawalRebate = response.data.data.cashWithdrawalRebate
       })
     },
     dialogPayInfo(detail) {
       this.payDialog = true
       this.detail = detail
-      getCashWithdrawalPayInfo(detail.id).then((response) => {
+      getCashWithdrawalPayInfo(detail.id).then(response => {
         this.payList = response.data.data.list
       })
     },
     getList() {
       this.loading = true
-      getCashWithdrawals(this.params).then((response) => {
+      getCashWithdrawals(this.params).then(response => {
         if (response.data.data.list) {
           this.list = response.data.data.list
           this.total_count = response.data.data.total_count

@@ -3,77 +3,33 @@
     <div v-if="$route.path.indexOf('detail') === -1">
       <el-row :gutter="20">
         <el-col :span="4">
-          <el-button
-            type="primary"
-            icon="plus"
-            @click="openDialog()"
-          >
-            添加页面
-          </el-button>
+          <el-button type="primary" icon="plus" @click="openDialog()"> 添加页面 </el-button>
         </el-col>
       </el-row>
-      <el-table
-        v-loading="loading"
-        :data="list"
-        :height="wheight - 140"
-      >
-        <el-table-column
-          prop="id"
-          label="页面id"
-        />
-        <el-table-column
-          prop="page_name"
-          label="页面名称"
-        />
+      <el-table v-loading="loading" :data="list" :height="wheight - 140">
+        <el-table-column prop="id" label="页面id" />
+        <el-table-column prop="page_name" label="页面名称" />
         <el-table-column label="是否启用">
           <template slot-scope="scope">
-            <el-tag
-              v-if="scope.row.is_open == '0'"
-              type="info"
-            >
-              禁用
-            </el-tag>
-            <el-tag
-              v-else
-              type="warning"
-            >
-              启用
-            </el-tag>
+            <el-tag v-if="scope.row.is_open == '0'" type="info"> 禁用 </el-tag>
+            <el-tag v-else type="warning"> 启用 </el-tag>
           </template>
         </el-table-column>
-        <el-table-column
-          label="操作"
-          min-width="100"
-        >
+        <el-table-column label="操作" min-width="100">
           <template slot-scope="scope">
             <el-button type="text">
-              <a
-                href="javascript:void(0)"
-                @click="delPage(scope.row.id)"
-              > 删除 </a>
+              <a href="javascript:void(0)" @click="delPage(scope.row.id)"> 删除 </a>
             </el-button>
             <el-button type="text">
-              <a
-                href="javascript:void(0)"
-                @click="openDialog(scope.row)"
-              > 编辑 </a>
+              <a href="javascript:void(0)" @click="openDialog(scope.row)"> 编辑 </a>
             </el-button>
-            <el-button
-              type="primary"
-              plain
-              round
-              size="mini"
-              @click="temDialog(scope.row.id)"
-            >
+            <el-button type="primary" plain round size="mini" @click="temDialog(scope.row.id)">
               页面装修
             </el-button>
           </template>
         </el-table-column>
       </el-table>
-      <div
-        v-if="total_count > params.pageSize"
-        class="content-padded content-center"
-      >
+      <div v-if="total_count > params.pageSize" class="mt-4 text-right">
         <el-pagination
           background
           layout="prev, pager, next"
@@ -89,16 +45,9 @@
         :close-on-click-modal="false"
         :before-close="handleCancel"
       >
-        <el-form
-          v-model="pageForm"
-          label-width="200px"
-        >
+        <el-form v-model="pageForm" label-width="200px">
           <el-form-item label="页面名称">
-            <el-input
-              v-model="pageForm.page_name"
-              placeholder="页面名称"
-              style="width: 55%"
-            />
+            <el-input v-model="pageForm.page_name" placeholder="页面名称" style="width: 55%" />
           </el-form-item>
           <el-form-item label="页面描述">
             <el-input
@@ -118,19 +67,13 @@
             <el-input v-model="pageForm.page_share_desc" placeholder="分享描述" style="width: 55%;"></el-input>
           </el-form-item> -->
           <el-form-item label="分享图片">
-            <div
-              class="upload-box"
-              @click="handleImgChange()"
-            >
+            <div class="upload-box" @click="handleImgChange()">
               <img
                 v-if="pageForm.page_share_imageUrl"
                 :src="wximageurl + pageForm.page_share_imageUrl"
                 class="avatar"
               >
-              <i
-                v-else
-                class="el-icon-plus avatar-uploader-icon"
-              />
+              <i v-else class="el-icon-plus avatar-uploader-icon" />
             </div>
             <imgPicker
               :dialog-visible="imgDialog"
@@ -143,16 +86,8 @@
             <el-switch v-model="pageForm.is_open" />
           </el-form-item>
         </el-form>
-        <div
-          slot="footer"
-          class="dialog-footer content-center"
-        >
-          <el-button
-            type="primary"
-            @click="savePage"
-          >
-            确认保存
-          </el-button>
+        <div slot="footer" class="dialog-footer content-center">
+          <el-button type="primary" @click="savePage"> 确认保存 </el-button>
         </div>
       </el-dialog>
       <el-dialog
@@ -183,7 +118,7 @@ export default {
     shopDecoration,
     imgPicker
   },
-  data () {
+  data() {
     return {
       imgDialog: false,
       isGetImage: false,
@@ -211,30 +146,30 @@ export default {
   computed: {
     ...mapGetters(['wheight', 'template_name'])
   },
-  mounted () {
+  mounted() {
     this.fetchPageList()
   },
   methods: {
-    temDialog (id, type) {
+    temDialog(id, type) {
       this.pageForm.id = id
       this.template_dialog = true
     },
-    closeDialog () {
+    closeDialog() {
       this.template_dialog = false
     },
-    handleCurrentChange (page_num) {
+    handleCurrentChange(page_num) {
       this.params.page = page_num
       this.fetchPageList()
     },
-    delPage (id) {
-      this.$confirm('确认删除当前页面吗？').then((_) => {
-        delCustomPage(id).then((res) => {
+    delPage(id) {
+      this.$confirm('确认删除当前页面吗？').then(_ => {
+        delCustomPage(id).then(res => {
           this.$message({ type: 'success', message: '操作成功！' })
           this.fetchPageList()
         })
       })
     },
-    openDialog (detail = null) {
+    openDialog(detail = null) {
       this.page_dialog = true
       if (detail) {
         this.pageForm = detail
@@ -255,7 +190,7 @@ export default {
         }
       }
     },
-    savePage () {
+    savePage() {
       let {
         page_name,
         page_description,
@@ -275,7 +210,7 @@ export default {
         template_name: this.template_name
       }
       if (this.dialogTitle == '编辑页面') {
-        editCustomPage(id, params).then((res) => {
+        editCustomPage(id, params).then(res => {
           this.page_dialog = false
           this.fetchPageList()
           this.$message({
@@ -285,7 +220,7 @@ export default {
         })
       }
       if (this.dialogTitle == '新增页面') {
-        createCustomPage(params).then((res) => {
+        createCustomPage(params).then(res => {
           this.page_dialog = false
           this.fetchPageList()
           this.$message({
@@ -295,10 +230,10 @@ export default {
         })
       }
     },
-    fetchPageList () {
+    fetchPageList() {
       this.loading = true
       Object.assign(this.params, { template_name: this.template_name })
-      getCustomPageList(this.params).then((response) => {
+      getCustomPageList(this.params).then(response => {
         if (response.data.data.list) {
           this.list = response.data.data.list
           this.total_count = response.data.data.total_count
@@ -306,19 +241,19 @@ export default {
         this.loading = false
       })
     },
-    handleCancel () {
+    handleCancel() {
       this.page_dialog = false
     },
     //上传卡封面
-    handleImgChange () {
+    handleImgChange() {
       this.imgDialog = true
       this.isGetImage = true
     },
-    pickImg (data) {
+    pickImg(data) {
       this.pageForm.page_share_imageUrl = data.url
       this.imgDialog = false
     },
-    closeImgDialog () {
+    closeImgDialog() {
       this.imgDialog = false
     }
   }

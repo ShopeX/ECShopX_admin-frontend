@@ -185,22 +185,20 @@
             <el-dropdown-item command="physicalstoreupload"> 库存导入 </el-dropdown-item>
           </el-dropdown-menu>
         </el-dropdown>
-        <el-dropdown>
+        <el-dropdown @command="handleExport">
           <el-button type="primary">
             导出<i class="el-icon-arrow-down el-icon--right" />
           </el-button>
           <el-dropdown-menu slot="dropdown">
-            <el-dropdown-item>
-              <export-tip @exportHandle="exportItemsData"> 商品信息 </export-tip>
+            <el-dropdown-item command="product-info"> 商品信息 </el-dropdown-item>
+            <el-dropdown-item v-if="!IS_SUPPLIER()" command="product-tag">
+              商品标签
             </el-dropdown-item>
-            <el-dropdown-item v-if="!IS_SUPPLIER()">
-              <export-tip @exportHandle="exportItemsTagData"> 商品标签 </export-tip>
+            <el-dropdown-item v-if="!IS_SUPPLIER()" command="wxapp-qrcode">
+              小程序码
             </el-dropdown-item>
-            <el-dropdown-item v-if="!IS_SUPPLIER()">
-              <export-tip @exportHandle="exportItemsWxappCode('wxa')"> 小程序码 </export-tip>
-            </el-dropdown-item>
-            <el-dropdown-item v-if="!IS_SUPPLIER()">
-              <export-tip @exportHandle="exportItemsWxappCode('h5')"> H5二维码 </export-tip>
+            <el-dropdown-item v-if="!IS_SUPPLIER()" command="h5-qrcode">
+              H5二维码
             </el-dropdown-item>
           </el-dropdown-menu>
         </el-dropdown>
@@ -1831,6 +1829,18 @@ export default {
       this.getCategory()
       this.getAllTagLists()
       this.getGoodsBranchList()
+    },
+    handleExport(command) {
+      debugger
+      if (command === 'product-info') {
+        this.exportItemsData()
+      } else if (command === 'product-tag') {
+        this.exportItemsTagData()
+      } else if (command === 'wxapp-qrcode') {
+        this.exportItemsWxappCode('wxa')
+      } else if (command === 'h5-qrcode') {
+        this.exportItemsWxappCode('h5')
+      }
     },
     async exportItemsData() {
       const exportParams = {

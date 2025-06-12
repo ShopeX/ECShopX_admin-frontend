@@ -73,7 +73,9 @@
                   type="primary"
                   size="mini"
                   style="background-color: #fff"
-                  >处方药</el-tag
+                  >
+处方药
+</el-tag
                 >
                 {{ scope.row.item_name }}
               </div>
@@ -534,7 +536,7 @@ import {
   PAY_STATUS,
   GOOD_CATEGORY_MAP
 } from '@/consts'
-import { VERSION_STANDARD, VERSION_IN_PURCHASE(), IS_SUPPLIER } from '@/utils'
+import { VERSION_STANDARD, VERSION_IN_PURCHASE, IS_SUPPLIER } from '@/utils'
 import moment from 'moment'
 
 export default {
@@ -559,7 +561,7 @@ export default {
         { label: '用户身份:', field: 'purchaseRole', is_show: true },
         { label: '姓名:', field: 'employee_name', is_show: true },
         { label: '所属企业:', field: 'enterprise_name', is_show: true },
-        { label: '来源店铺:', field: 'distributor_name', is_show: true },
+        { label: '来源店铺:', field: 'distributor_name', is_show: true }
       ],
       payList: [
         { label: '交易单号:', field: 'tradeId', is_show: true },
@@ -598,7 +600,7 @@ export default {
         { label: '是否使用过此类药物:', field: 'before_ai_result_used_medicine', is_show: true },
         { label: '是否有药物过敏史:', field: 'is_before_ai_result_allergy_history', is_show: true },
         { label: '药物过敏说明:', field: 'before_ai_result_allergy_history', is_show: true },
-        { label: '肝肾功能是否有异常:', field: 'before_ai_result_body_abnormal', is_show: true },
+        { label: '肝肾功能是否有异常:', field: 'before_ai_result_body_abnormal', is_show: true }
       ],
       prescriptionInfoList: [
         { label: '处方ID:', field: 'prescription_id', is_show: true },
@@ -623,8 +625,14 @@ export default {
         { label: '审核不通过理由:', field: 'audit_reason', is_show: true },
         { label: '审方药师名称:', field: 'audit_apothecary_name', is_show: true },
         { label: '问诊单ID:', field: 'diagnosis_id', is_show: true },
-        { label: '药品用法用量说明:', field: 'drug_rsp_list',type:'cycle',special:true, is_show: true },
-        { label: '电子处方单:', field: 'dst_file_path', is_show: true, special:true },
+        {
+          label: '药品用法用量说明:',
+          field: 'drug_rsp_list',
+          type: 'cycle',
+          special: true,
+          is_show: true
+        },
+        { label: '电子处方单:', field: 'dst_file_path', is_show: true, special: true }
       ],
 
       memberRemark: '暂无留言',
@@ -673,7 +681,7 @@ export default {
             { label: 'batch', name: '整单发货' },
             { label: 'sep', name: '拆分发货' }
           ],
-          onChange: (e) => {
+          onChange: e => {
             if (e == 'sep') {
               this.deliverGoodsFormList[1].options[4].isShow = true
             } else {
@@ -700,11 +708,11 @@ export default {
                 } else {
                   return (
                     <el-input-number
-                      size='mini'
+                      size="mini"
                       v-model={row.delivery_num}
                       min={1}
                       max={row.num - row.delivery_item_num}
-                      class='cel-input-num'
+                      class="cel-input-num"
                     ></el-input-number>
                   )
                 }
@@ -760,15 +768,18 @@ export default {
       ],
       isBindOMS: false,
       deliveryLog: [],
-      relationshipMap:{
-        1:'本人',
-        2:'父母',
-        3:'配偶',
-        4:'子女',
-        5:'其他'
+      relationshipMap: {
+        1: '本人',
+        2: '父母',
+        3: '配偶',
+        4: '子女',
+        5: '其他'
       },
-      auditStatusMap:{
-        1:'未审核',2:'审核通过',3:'审核不通过',4:'不需要审方'
+      auditStatusMap: {
+        1: '未审核',
+        2: '审核通过',
+        3: '审核不通过',
+        4: '不需要审方'
       }
     }
   },
@@ -830,8 +841,8 @@ export default {
         invoice, // 发票信息对象
         is_invoiced,
         ziti_info,
-        prescription_data = {},//处方单信息
-        diagnosis_data = {}//问诊单信息
+        prescription_data = {}, //处方单信息
+        diagnosis_data = {} //问诊单信息
       } = orderInfo
 
       let invoiceType,
@@ -865,14 +876,14 @@ export default {
         this.is_community = true
       }
       const _orderType = this.VERSION_STANDARD() ? ORDER_TYPE_STANDARD : ORDER_TYPE
-      let fd = _orderType.find((k) => k.value == order_class)
+      let fd = _orderType.find(k => k.value == order_class)
 
       let crossOrderTxt = ''
       if (order_class == 'normal' && orderInfo.type == '1') {
         crossOrderTxt = `（跨境订单）`
       }
 
-      const fdReceiptType = DISTRIBUTION_TYPE.find((k) => k.value == receipt_type)
+      const fdReceiptType = DISTRIBUTION_TYPE.find(k => k.value == receipt_type)
       let receiptTypeTxt = '普通快递'
       if (fdReceiptType) {
         receiptTypeTxt = fdReceiptType.title
@@ -906,8 +917,8 @@ export default {
         memberDiscount,
         discount_info: discount_info
           ? discount_info
-              .filter((item) => item.discount_fee > 0)
-              .map((item) => {
+              .filter(item => item.discount_fee > 0)
+              .map(item => {
                 return {
                   ...item,
                   discount_fee: item.discount_fee / 100
@@ -971,54 +982,63 @@ export default {
         invoicedCompanyPhone,
         invoicedBankName,
         invoicedBankAccount,
-        purchaseRole:orders_purchase_info ? orders_purchase_info.type == 'employee' ? '员工' : '亲友' : '',
-        employee_name: orders_purchase_info ? orders_purchase_info.employee_name  : '',
-        enterprise_name: orders_purchase_info ? orders_purchase_info.enterprise_name  : '',
+        purchaseRole: orders_purchase_info
+          ? orders_purchase_info.type == 'employee'
+            ? '员工'
+            : '亲友'
+          : '',
+        employee_name: orders_purchase_info ? orders_purchase_info.employee_name : '',
+        enterprise_name: orders_purchase_info ? orders_purchase_info.enterprise_name : '',
         //处方药
-        user_family_name:diagnosis_data.user_family_name,
-        user_family_id_card:diagnosis_data.user_family_id_card,
-        user_family_phone:diagnosis_data.user_family_phone,
-        user_family_age:diagnosis_data.user_family_age,
-        user_family_gender:diagnosis_data.user_family_gender == 1 ? '男' : '女',
-        relationship:this.relationshipMap[diagnosis_data.relationship],
-        is_pregnant_woman:diagnosis_data.is_pregnant_woman == 1 ? '是' : '否',
-        is_lactation:diagnosis_data.is_lactation == 1 ? '是' : '否',
-        before_ai_result_used_medicine:diagnosis_data?.before_ai_data_list?.before_ai_result_used_medicine == 1 ? '是' : '否',
-        is_before_ai_result_allergy_history:diagnosis_data?.before_ai_data_list?.before_ai_result_allergy_history ? '是' : '否',
-        before_ai_result_allergy_history:diagnosis_data?.before_ai_data_list?.before_ai_result_allergy_history,
-        before_ai_result_body_abnormal:diagnosis_data?.before_ai_data_list?.before_ai_result_body_abnormal == 1 ? '是' : '否',
+        user_family_name: diagnosis_data.user_family_name,
+        user_family_id_card: diagnosis_data.user_family_id_card,
+        user_family_phone: diagnosis_data.user_family_phone,
+        user_family_age: diagnosis_data.user_family_age,
+        user_family_gender: diagnosis_data.user_family_gender == 1 ? '男' : '女',
+        relationship: this.relationshipMap[diagnosis_data.relationship],
+        is_pregnant_woman: diagnosis_data.is_pregnant_woman == 1 ? '是' : '否',
+        is_lactation: diagnosis_data.is_lactation == 1 ? '是' : '否',
+        before_ai_result_used_medicine:
+          diagnosis_data?.before_ai_data_list?.before_ai_result_used_medicine == 1 ? '是' : '否',
+        is_before_ai_result_allergy_history: diagnosis_data?.before_ai_data_list
+          ?.before_ai_result_allergy_history
+          ? '是'
+          : '否',
+        before_ai_result_allergy_history:
+          diagnosis_data?.before_ai_data_list?.before_ai_result_allergy_history,
+        before_ai_result_body_abnormal:
+          diagnosis_data?.before_ai_data_list?.before_ai_result_body_abnormal == 1 ? '是' : '否',
 
-        prescription_id:prescription_data.id,
-        hospital_name:prescription_data.hospital_name,
-        kuaizhen_store_id:prescription_data.kuaizhen_store_id,
-        kuaizhen_store_name:prescription_data.kuaizhen_store_name,
-        doctor_sign_time:prescription_data.doctor_sign_time
+        prescription_id: prescription_data.id,
+        hospital_name: prescription_data.hospital_name,
+        kuaizhen_store_id: prescription_data.kuaizhen_store_id,
+        kuaizhen_store_name: prescription_data.kuaizhen_store_name,
+        doctor_sign_time: prescription_data.doctor_sign_time
           ? moment(prescription_data.doctor_sign_time * 1000).format('YYYY-MM-DD HH:mm:ss')
           : '',
-        doctor_office:prescription_data.doctor_office,
-        doctor_id:prescription_data.doctor_id,
-        doctor_name:prescription_data.doctor_name,
-        tags:prescription_data.tags,
-        prescription_in_status:prescription_data.status == 1 ? '正常' : '废弃',
-        prescription_created:prescription_data.created
+        doctor_office: prescription_data.doctor_office,
+        doctor_id: prescription_data.doctor_id,
+        doctor_name: prescription_data.doctor_name,
+        tags: prescription_data.tags,
+        prescription_in_status: prescription_data.status == 1 ? '正常' : '废弃',
+        prescription_created: prescription_data.created
           ? moment(prescription_data.created * 1000).format('YYYY-MM-DD HH:mm:ss')
           : '',
-        prescription_updated:prescription_data.updated
+        prescription_updated: prescription_data.updated
           ? moment(prescription_data.updated * 1000).format('YYYY-MM-DD HH:mm:ss')
           : '',
-        prescription_remarks:prescription_data.remarks,
-        drug_rsp_list:prescription_data.drug_rsp_list,//
-        audit_status:this.auditStatusMap[prescription_data.audit_status],
-        audit_reason:prescription_data.audit_reason,
-        audit_apothecary_name:prescription_data.audit_apothecary_name,
-        diagnosis_id:prescription_data.diagnosis_id,
-        serial_no:prescription_data.serial_no,
-        audit_time:prescription_data.audit_time ? moment(prescription_data.audit_time * 1000).format('YYYY-MM-DD HH:mm:ss')
-        : '',
-        dst_file_path:prescription_data.dst_file_path
+        prescription_remarks: prescription_data.remarks,
+        drug_rsp_list: prescription_data.drug_rsp_list, //
+        audit_status: this.auditStatusMap[prescription_data.audit_status],
+        audit_reason: prescription_data.audit_reason,
+        audit_apothecary_name: prescription_data.audit_apothecary_name,
+        diagnosis_id: prescription_data.diagnosis_id,
+        serial_no: prescription_data.serial_no,
+        audit_time: prescription_data.audit_time
+          ? moment(prescription_data.audit_time * 1000).format('YYYY-MM-DD HH:mm:ss')
+          : '',
+        dst_file_path: prescription_data.dst_file_path
       }
-
-
 
       this.deliveryLog = this.orderInfo?.app_info?.delivery_log
       this.memberRemark = orderInfo.remark || '暂无留言'
@@ -1082,7 +1102,7 @@ export default {
     },
     async getLogisticsList() {
       const { list } = await this.$api.trade.getLogisticsList()
-      const options = list.map((item) => {
+      const options = list.map(item => {
         return {
           title: item.name,
           value: item.value
@@ -1099,7 +1119,7 @@ export default {
         }
         this.$refs['deliverGoodsDialogRef'].resetForm()
         this.deliverGoodsForm.order_id = order_id
-        this.deliverGoodsForm.items = items.map((item) => {
+        this.deliverGoodsForm.items = items.map(item => {
           return {
             ...item,
             price: item.price / 100
@@ -1130,7 +1150,7 @@ export default {
       }
       // 拆单发货
       if (delivery_type == 'sep') {
-        params['sepInfo'] = JSON.stringify(items.filter((item) => item.delivery_num))
+        params['sepInfo'] = JSON.stringify(items.filter(item => item.delivery_num))
       }
       const { delivery_status } = await this.$api.trade.delivery(params)
       this.deliverGoodsDialog = false

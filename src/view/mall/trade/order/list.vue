@@ -199,17 +199,18 @@
             </template>
           </el-table-column>
         </el-table>
-        <el-pagination
-          class="content-padded content-center"
-          background
-          layout="total, sizes, prev, pager, next, jumper"
-          :current-page.sync="params.page"
-          :page-sizes="[10, 20, 50]"
-          :total="total_count"
-          :page-size="params.pageSize"
-          @current-change="handleCurrentChange"
-          @size-change="handleSizeChange"
-        />
+        <div class="mt-4 text-right">
+          <el-pagination
+            background
+            layout="total, sizes, prev, pager, next, jumper"
+            :current-page.sync="params.page"
+            :page-sizes="[10, 20, 50]"
+            :total="total_count"
+            :page-size="params.pageSize"
+            @current-change="handleCurrentChange"
+            @size-change="handleSizeChange"
+          />
+        </div>
       </el-tabs>
     </div>
     <router-view />
@@ -350,9 +351,9 @@ export default {
     },
     getOrders(filter) {
       this.loading = true
-      getOrderList(filter).then((response) => {
+      getOrderList(filter).then(response => {
         let list = response.data.data.list
-        list.forEach((item) => {
+        list.forEach(item => {
           let operator = ''
           if (item.operator_desc) {
             let saler = item.operator_desc.split(':')
@@ -374,10 +375,10 @@ export default {
     },
     getAllSourcesList() {
       let params = { page: 1, pageSize: 1000 }
-      getSourcesList(params).then((response) => {
+      getSourcesList(params).then(response => {
         if (response.data.data.list) {
-          response.data.data.list.forEach((row) => {
-            this.source_list.push({ 'value': row.sourceName, 'source_id': row.sourceId })
+          response.data.data.list.forEach(row => {
+            this.source_list.push({ value: row.sourceName, source_id: row.sourceId })
           })
         }
       })
@@ -389,7 +390,7 @@ export default {
       cb(results)
     },
     createFilter(queryString) {
-      return (restaurant) => {
+      return restaurant => {
         return restaurant.value.toLowerCase().indexOf(queryString.toLowerCase()) === 0
       }
     },
@@ -403,7 +404,7 @@ export default {
         })
         return
       }
-      orderExport(this.params).then((response) => {
+      orderExport(this.params).then(response => {
         if (response.data.data.status) {
           this.$message({
             type: 'success',

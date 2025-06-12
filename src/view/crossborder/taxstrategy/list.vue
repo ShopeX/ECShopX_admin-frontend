@@ -42,7 +42,7 @@
       </el-card>
 
       <!--分页-->
-      <div class="content-padded content-center">
+      <div class="mt-4 text-right">
         <el-pagination
           background
           layout="total, sizes, prev, pager, next"
@@ -107,13 +107,13 @@ export default {
     // 删除
     handleDelete(data) {
       this.$confirm('确认删除该策略么？')
-        .then((_) => {
-          delTaxstrategy(data.row.id, []).then((res) => {
+        .then(_ => {
+          delTaxstrategy(data.row.id, []).then(res => {
             this.list.splice(data.$index, 1)
             this.$message({ type: 'success', message: '操作成功' })
           })
         })
-        .catch((_) => {})
+        .catch(_ => {})
     },
     // 分页
     handleCurrentChange(page_num = 1) {
@@ -129,7 +129,7 @@ export default {
     getList() {
       console.log('获取数据')
       this.loading = true
-      getTaxstrategyList(this.params).then((res) => {
+      getTaxstrategyList(this.params).then(res => {
         console.log('返回数据', res)
         this.list = res.data.data.list
         this.total_count = res.data.data.total_count

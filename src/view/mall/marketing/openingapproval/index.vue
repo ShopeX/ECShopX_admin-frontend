@@ -116,7 +116,7 @@
             </el-col>
           </el-row>
         </div>
-        <div class="content-padded content-center">
+        <div class="mt-4 text-right">
           <el-pagination
             background
             layout="total, sizes, prev, pager, next, jumper"
@@ -206,7 +206,7 @@ export default {
     },
     getAftersalesList(params) {
       this.loading = true
-      getOpenApprovedList(params).then((response) => {
+      getOpenApprovedList(params).then(response => {
         this.list = response.data.data.list
         this.total_count = Number(response.data.data.total_count)
         this.loading = false

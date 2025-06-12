@@ -2,10 +2,7 @@
   <div>
     <el-row :gutter="20">
       <el-col>
-        <el-select
-          v-model="params.profitType"
-          placeholder="请选择"
-        >
+        <el-select v-model="params.profitType" placeholder="请选择">
           <el-option
             v-for="item in profitType"
             :key="item.value"
@@ -25,11 +22,7 @@
           class="input-m"
           placeholder="请输入导购"
         >
-          <el-button
-            slot="append"
-            icon="el-icon-search"
-            @click="listSearch"
-          />
+          <el-button slot="append" icon="el-icon-search" @click="listSearch" />
         </el-input>
         <el-input
           v-if="2 == params.profitType"
@@ -37,11 +30,7 @@
           class="input-m"
           placeholder="请输入店铺"
         >
-          <el-button
-            slot="append"
-            icon="el-icon-search"
-            @click="listSearch"
-          />
+          <el-button slot="append" icon="el-icon-search" @click="listSearch" />
         </el-input>
         <!-- <el-input v-if="3 == params.profitType" class="input-m" v-model="params.dealer" placeholder="请输入区域经销商">
           <el-button slot="append" icon="el-icon-search" @click="listSearch"></el-button>
@@ -51,21 +40,11 @@
     <el-row :gutter="20">
       <el-col :span="24">
         <el-button-group>
-          <export-tip
-            params="profit_salesperson"
-            @exportHandle="exportData"
-          >
-            <el-button type="primary">
-              导出导购分润
-            </el-button>
+          <export-tip params="profit_salesperson" @exportHandle="exportData">
+            <el-button type="primary"> 导出导购分润 </el-button>
           </export-tip>
-          <export-tip
-            params="profit_distributor"
-            @exportHandle="exportData"
-          >
-            <el-button type="primary">
-              导出门店分润
-            </el-button>
+          <export-tip params="profit_distributor" @exportHandle="exportData">
+            <el-button type="primary"> 导出门店分润 </el-button>
           </export-tip>
           <!-- <el-button  type="primary" @click="exportData('profit_agent')">导出经销商分润</el-button> -->
         </el-button-group>
@@ -73,37 +52,23 @@
     </el-row>
 
     <el-card>
-      <el-table
-        v-loading="loading"
-        :data="list"
-      >
-        <el-table-column
-          prop="name"
-          label="分润对象名称"
-          min-width="240"
-        />
-        <el-table-column
-          prop="withdrawals_fee"
-          label="分润金额"
-          min-width="240"
-        />
-        <el-table-column
-          prop="date"
-          label="分润时间"
-          min-width="240"
-        />
+      <el-table v-loading="loading" :data="list">
+        <el-table-column prop="name" label="分润对象名称" min-width="240" />
+        <el-table-column prop="withdrawals_fee" label="分润金额" min-width="240" />
+        <el-table-column prop="date" label="分润时间" min-width="240" />
       </el-table>
-      <el-pagination
-        class="content-padded content-center"
-        background
-        :current-page="params.page"
-        :page-sizes="[10, 20, 50, 100]"
-        :page-size="params.pageSize"
-        layout="total, sizes, prev, pager, next, jumper"
-        :total="total_count"
-        @size-change="handleSizeChange"
-        @current-change="handleCurrentChange"
-      />
+      <div class="mt-4 text-right">
+        <el-pagination
+          background
+          :current-page="params.page"
+          :page-sizes="[10, 20, 50, 100]"
+          :page-size="params.pageSize"
+          layout="total, sizes, prev, pager, next, jumper"
+          :total="total_count"
+          @size-change="handleSizeChange"
+          @current-change="handleCurrentChange"
+        />
+      </div>
     </el-card>
   </div>
 </template>
@@ -116,17 +81,17 @@ export default {
   components: {
     shopSelect
   },
-  data () {
+  data() {
     return {
       loading: false,
       profitType: [
         {
-          'value': 1,
-          'label': '导购'
+          value: 1,
+          label: '导购'
         },
         {
-          'value': 2,
-          'label': '店铺'
+          value: 2,
+          label: '店铺'
         }
         // {
         //   "value": 3,
@@ -149,32 +114,32 @@ export default {
   computed: {
     ...mapGetters(['wheight'])
   },
-  mounted () {
+  mounted() {
     this.getList()
   },
   methods: {
-    handleCurrentChange (page_num) {
+    handleCurrentChange(page_num) {
       this.params.page = page_num
       this.getList()
     },
-    handleSizeChange (pageSize) {
+    handleSizeChange(pageSize) {
       this.params.page = 1
       this.params.pageSize = pageSize
       this.getList()
     },
-    listSearch () {
+    listSearch() {
       this.params.page = 1
       this.getList()
     },
-    getList () {
+    getList() {
       this.loading = true
-      getProfitStatistics(this.params).then((response) => {
+      getProfitStatistics(this.params).then(response => {
         this.list = response.data.data.list
         this.total_count = response.data.data.total_count
         this.loading = false
       })
     },
-    exportData (type) {
+    exportData(type) {
       this.params.type = type
       if ('profit_distributor' == type) {
         this.params.profit_user_type = 2
@@ -184,7 +149,7 @@ export default {
         this.params.profit_user_type = 3
       }
       this.params.page = 1
-      profitExport(this.params).then((response) => {
+      profitExport(this.params).then(response => {
         if (response.data.data.status) {
           this.$message({
             type: 'success',
@@ -205,7 +170,7 @@ export default {
         }
       })
     },
-    handleSizeChange (val) {
+    handleSizeChange(val) {
       this.params.page = 1
       this.params.pageSize = val
       this.getList()

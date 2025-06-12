@@ -84,7 +84,7 @@
             </template>
           </el-table-column>
         </el-table>
-        <div class="content-padded content-center">
+        <div class="mt-4 text-right">
           <el-pagination
             background
             layout="total, sizes, prev, pager, next"
@@ -152,18 +152,18 @@ import {
   getDistributorInfo
 } from '../../../api/marketing'
 import sideBar from '@/components/element/sideBar'
-const getWxaCodeImg = (url) => {
+const getWxaCodeImg = url => {
   return new Promise((resolve, reject) => {
     axios({
       method: 'get',
       url,
       responseType: 'arraybuffer',
-      headers: { 'Authorization': 'bearer ' + store.getters.token }
+      headers: { Authorization: 'bearer ' + store.getters.token }
     })
-      .then((data) => {
+      .then(data => {
         resolve(data.data)
       })
-      .catch((error) => {
+      .catch(error => {
         reject(error.toString())
       })
   })
@@ -223,14 +223,14 @@ export default {
       }
 
       var goodsIds = []
-      this.itemsChecked.forEach((item) => {
+      this.itemsChecked.forEach(item => {
         goodsIds.push(item.goods_id)
       })
 
       var form = {
-        'distributor_id': this.itemsChecked[0].distributor_id,
-        'goods_id': JSON.stringify(goodsIds),
-        'is_can_sale': goods_can_sale
+        distributor_id: this.itemsChecked[0].distributor_id,
+        goods_id: JSON.stringify(goodsIds),
+        is_can_sale: goods_can_sale
       }
       this.updateDistributorItem(form)
     },
@@ -243,7 +243,7 @@ export default {
       this.show_sideBar = true
       this.itemSkuParam.item_id = row.item_id
       this.itemSkuParam.distributor_id = row.distributor_id
-      getDistributorItems(this.itemSkuParam).then((res) => {
+      getDistributorItems(this.itemSkuParam).then(res => {
         this.itemSkuList = res.data.data.list
       })
     },
@@ -268,7 +268,7 @@ export default {
       this.getList()
     },
     getList() {
-      getDistributorItems(this.params).then((response) => {
+      getDistributorItems(this.params).then(response => {
         if (response.data.data.list) {
           this.list = response.data.data.list
           for (var i = 0; i < this.list.length; i++) {
@@ -295,14 +295,14 @@ export default {
       const cache = {}
       const promises = []
       var that = this
-      that.itemsChecked.forEach((item) => {
+      that.itemsChecked.forEach(item => {
         var url =
           process.env.VUE_APP_BASE_API +
           '/goods/distributionGoodsWxaCodeStream?item_id=' +
           item.itemId +
           '&distributor_id=' +
           item.distributor_id
-        const promise = getWxaCodeImg(url).then((result_file) => {
+        const promise = getWxaCodeImg(url).then(result_file => {
           // 下载文件, 并存成ArrayBuffer对象
           const file_name = item.itemName + '.png' // 获取文件名
           zip.file(file_name, result_file, { binary: true }) // 逐个添加文件
@@ -311,14 +311,14 @@ export default {
         promises.push(promise)
       })
       Promise.all(promises).then(() => {
-        zip.generateAsync({ type: 'blob' }).then((content) => {
+        zip.generateAsync({ type: 'blob' }).then(content => {
           // 生成二进制流
           FileSaver.saveAs(content, '店铺的商品小程序码(批量).zip') // 利用file-saver保存文件
         })
       })
     },
     updateDistributorItem(params) {
-      updateDistributorItem(params).then((res) => {
+      updateDistributorItem(params).then(res => {
         this.getList()
         this.$message({
           type: 'success',
@@ -331,15 +331,15 @@ export default {
       let form = {}
       if (isDefault) {
         form = {
-          'distributor_id': row.distributor_id,
-          'goods_id': row.goods_id,
-          'is_can_sale': row.goods_can_sale
+          distributor_id: row.distributor_id,
+          goods_id: row.goods_id,
+          is_can_sale: row.goods_can_sale
         }
       } else {
         form = {
-          'distributor_id': row.distributor_id,
-          'item_id': row.item_id,
-          'is_can_sale': row.is_can_sale
+          distributor_id: row.distributor_id,
+          item_id: row.item_id,
+          is_can_sale: row.is_can_sale
         }
       }
       this.updateDistributorItem(form)

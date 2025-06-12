@@ -463,7 +463,7 @@
         </el-table-column>
       </el-table>
 
-      <div class="content-padded content-center">
+      <div class="mt-4 text-right">
         <el-pagination
           background
           :current-page.sync="page.pageIndex"
@@ -735,8 +735,8 @@ export default {
           component: () => (
             <div>
               <el-input
-                placeholder='输入大于等于0的数字，为0则显示所有店铺'
-                width='60%'
+                placeholder="输入大于等于0的数字，为0则显示所有店铺"
+                width="60%"
                 v-model={this.distanceForm.distance}
               />
               &nbsp;km
@@ -860,9 +860,9 @@ export default {
           label: '客服链接',
           key: 'common',
           component: () => (
-            <div class='kf-link'>
-              <el-input type='text' placeholder='请输入客服链接' v-model={this.keFuForm.common} />
-              <div class='tips'>
+            <div class="kf-link">
+              <el-input type="text" placeholder="请输入客服链接" v-model={this.keFuForm.common} />
+              <div class="tips">
                 如实际运营中有多个客服人员接待咨询，建议配置为美洽客服组链接，在美洽客服组内添加客服人员坐席。
               </div>
             </div>
@@ -943,7 +943,7 @@ export default {
     }
     this.fetchList()
     this.getAllTagList()
-    getSetting().then((res) => {
+    getSetting().then(res => {
       let data = res.data.data
       this.isOpen = data.is_open == 'true'
     })
@@ -1013,7 +1013,7 @@ export default {
       }
       const { list, total_count, distributor_self, datapass_block } =
         await this.$api.marketing.getDistributorList(params)
-      this.tableList = list.map((item) => {
+      this.tableList = list.map(item => {
         if (this.VERSION_PLATFORM()) {
           item.link = `${process.env.VUE_APP_H5_HOST}/subpages/store/index?id=${item.distributor_id}`
         } else {
@@ -1094,7 +1094,7 @@ export default {
       if (template_name) {
         params.template_name = template_name
       }
-      getWxaDristributorCodeStream(params).then((response) => {
+      getWxaDristributorCodeStream(params).then(response => {
         var a = document.createElement('a')
         var temp = '微商城'
         a.href = response.data.data.base64Image
@@ -1138,7 +1138,7 @@ export default {
       var params = {
         distributor_id: row.distributor_id
       }
-      setDefaultDistributor(params).then((response) => {
+      setDefaultDistributor(params).then(response => {
         if (response.data.data.status) {
           for (var i = this.list.length - 1; i >= 0; i--) {
             if (this.list[i].distributor_id != row.distributor_id) {
@@ -1154,7 +1154,7 @@ export default {
         distributor_id: row.distributor_id,
         is_audit_goods: row.is_audit_goods
       }
-      saveDistributor(params).then((response) => {
+      saveDistributor(params).then(response => {
         this.detailDialog = false
         this.fetchList()
         this.$message({
@@ -1168,7 +1168,7 @@ export default {
         distributor_id: row.distributor_id,
         auto_sync_goods: row.auto_sync_goods
       }
-      saveDistributor(params).then((response) => {
+      saveDistributor(params).then(response => {
         this.detailDialog = false
         this.fetchList()
         this.$message({
@@ -1182,7 +1182,7 @@ export default {
         distributor_id: row.distributor_id,
         is_open: row.is_open
       }
-      saveOpen(params).then((response) => {
+      saveOpen(params).then(response => {
         this.detailDialog = false
         this.fetchList()
         this.$message({
@@ -1199,7 +1199,7 @@ export default {
         is_open_salesman: row.is_open_salesman,
         open_divided: row.open_divided
       }
-      saveDistributor(params).then((response) => {
+      saveDistributor(params).then(response => {
         this.detailDialog = false
         this.fetchList()
         this.$message({
@@ -1220,7 +1220,7 @@ export default {
         page: 1,
         pageSize: 500
       }
-      getTagList(params).then((response) => {
+      getTagList(params).then(response => {
         this.tag.list = response.data.data.list
       })
     },
@@ -1239,14 +1239,14 @@ export default {
       this.tag.currentTags = []
       if (this.distributor_id.length) {
         let res = []
-        this.tableList.forEach((item) => {
-          this.distributor_id.forEach((n) => {
+        this.tableList.forEach(item => {
+          this.distributor_id.forEach(n => {
             if (item.distributor_id == n) {
               res = [...res, ...item.tagList]
             }
           })
         })
-        res = Array.from(new Map(res.map((item) => [item.tag_id, item])).values())
+        res = Array.from(new Map(res.map(item => [item.tag_id, item])).values())
         this.tag.currentTags = res
         this.showTags()
         this.tag.form.distributor_id = this.distributor_id
@@ -1260,7 +1260,7 @@ export default {
     showTags() {
       this.tag.tags = [...this.tag.list]
       this.tag.tags.forEach((item, index) => {
-        let isInArr = this.tag.currentTags.findIndex((n) => n.tag_id == item.tag_id)
+        let isInArr = this.tag.currentTags.findIndex(n => n.tag_id == item.tag_id)
         if (isInArr != -1) this.tag.tags.splice(index, 1)
       })
       this.tag.dialog = true
@@ -1270,7 +1270,7 @@ export default {
       this.tag.currentTags.splice(index, 1)
     },
     tagAdd(item, index) {
-      let isInArr = this.tag.currentTags.findIndex((n) => n.tag_id == item.tag_id)
+      let isInArr = this.tag.currentTags.findIndex(n => n.tag_id == item.tag_id)
       if (isInArr == -1) {
         this.tag.currentTags.push(item)
         this.tag.tags.splice(index, 1)
@@ -1278,7 +1278,7 @@ export default {
     },
     submitItemTag() {
       this.tag.form.tag_ids = []
-      this.tag.currentTags.forEach((item) => {
+      this.tag.currentTags.forEach(item => {
         this.tag.form.tag_ids.push(item.tag_id)
       })
       if (this.tag.form.tag_ids.length <= 0) {
@@ -1289,7 +1289,7 @@ export default {
         return false
       }
       this.tag.dialog = false
-      distributorRelTags(this.tag.form).then((res) => {
+      distributorRelTags(this.tag.form).then(res => {
         if (res.data.data.status) {
           this.$message({
             type: 'success',
@@ -1330,7 +1330,7 @@ export default {
             distributor_id: this.editValidData.distributor_id,
             is_valid: this.editValidData.is_valid
           }
-          saveDistributor(params).then((response) => {
+          saveDistributor(params).then(response => {
             this.detailDialog = false
             this.fetchList()
             this.$message({
@@ -1388,7 +1388,7 @@ export default {
       that.distributorIds = distributor_id
       that.distanceForm.distance = 0
       if (distributor_id) {
-        getDistance({ distributor_id }).then((response) => {
+        getDistance({ distributor_id }).then(response => {
           that.distanceForm.distance = response.data.data.distance
         })
       }
@@ -1404,7 +1404,7 @@ export default {
         distance: this.distanceForm.distance,
         distributor_id: this.distributorIds
       }
-      setDistance(params).then((response) => {
+      setDistance(params).then(response => {
         this.$message({
           type: 'success',
           message: '提交成功'
@@ -1417,7 +1417,7 @@ export default {
       this.setChinaumspayVisible = true
       let that = this
       let query = { pay_type: 'chinaumspay', distributor_id: distributor_id }
-      getPaymentSetting(query).then((response) => {
+      getPaymentSetting(query).then(response => {
         that.chinaumspayForm = response.data.data
         that.chinaumspayForm.distributor_id = query.distributor_id
       })
@@ -1438,7 +1438,7 @@ export default {
         tid: this.chinaumspayForm.tid,
         enterpriseid: this.chinaumspayForm.enterpriseid
       }
-      setPaymentSetting(params).then((response) => {
+      setPaymentSetting(params).then(response => {
         this.$message({
           type: 'success',
           message: '提交成功'

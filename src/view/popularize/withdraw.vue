@@ -2,7 +2,12 @@
   <div>
     <el-row :gutter="20">
       <el-col>
-        <el-select clearable v-model="params.status" @change="statusSelectHandle" placeholder="提现状态 ">
+        <el-select
+          clearable
+          v-model="params.status"
+          @change="statusSelectHandle"
+          placeholder="提现状态 "
+        >
           <el-option
             v-for="(item, index) in statusList"
             :key="index"
@@ -11,17 +16,37 @@
           />
         </el-select>
         <el-input class="input-m" placeholder="手机号" v-model="params.mobile">
-          <el-button slot="append" icon="el-icon-search" @click="numberSearch"></el-button>
+          <el-button slot="append" icon="el-icon-search" @click="numberSearch" />
         </el-input>
       </el-col>
     </el-row>
     <el-card>
       <div class="time-box basic">
         <el-row>
-          <el-col :span="6"><div>佣金总额</div>&nbsp;<span>¥{{ count.all / 100 }}</span></el-col>
-          <el-col :span="6"><div>已提现总额</div>&nbsp;<span>¥{{ count.success / 100 }}</span></el-col>
-          <el-col :span="6"><div>待处理金额</div>&nbsp;<span>¥{{ count.apply / 100 }}</span></el-col>
-          <el-col :span="6"><div>申请提现人数</div>&nbsp;<span>{{ count.userCount }}</span></el-col>
+          <el-col :span="6"
+            >
+<div>佣金总额</div>
+            &nbsp;<span>¥{{ count.all / 100 }}</span>
+</el-col
+          >
+          <el-col :span="6"
+            >
+<div>已提现总额</div>
+            &nbsp;<span>¥{{ count.success / 100 }}</span>
+</el-col
+          >
+          <el-col :span="6"
+            >
+<div>待处理金额</div>
+            &nbsp;<span>¥{{ count.apply / 100 }}</span>
+</el-col
+          >
+          <el-col :span="6"
+            >
+<div>申请提现人数</div>
+            &nbsp;<span>{{ count.userCount }}</span>
+</el-col
+          >
         </el-row>
       </div>
       <el-table :data="list" :height="wheight - 150" v-loading="loading">
@@ -35,7 +60,11 @@
             <el-tag size="mini" v-if="scope.row.pay_type === 'wechat'" type="success">微信</el-tag>
             <el-tag size="mini" v-if="scope.row.pay_type === 'alipay'">支付宝</el-tag>
             <el-tag size="mini" v-if="scope.row.pay_type === 'hfpay'" type="warning">汇付</el-tag>
-            <el-tag size="mini" v-if="scope.row.pay_type === 'bankcard'" type="warning">银行卡</el-tag>
+            <el-tag size="mini" v-if="scope.row.pay_type === 'bankcard'" type="warning"
+              >
+银行卡
+</el-tag
+            >
           </template>
         </el-table-column>
         <el-table-column prop="mobile" label="推广员手机号">
@@ -50,9 +79,20 @@
         </el-table-column>
         <el-table-column prop="status" label="提现状态">
           <template slot-scope="scope">
-            <el-tag type="primary" v-if="scope.row.status == 'apply'" size="mini">提现待处理 </el-tag>
-            <el-tag type="warning" v-if="scope.row.status == 'process'" size="mini">提现处理中</el-tag>
-            <el-tag type="success" v-if="scope.row.status == 'success'" size="mini">提现完成</el-tag>
+            <el-tag type="primary" v-if="scope.row.status == 'apply'" size="mini"
+              >
+提现待处理
+            </el-tag>
+            <el-tag type="warning" v-if="scope.row.status == 'process'" size="mini"
+              >
+提现处理中
+</el-tag
+            >
+            <el-tag type="success" v-if="scope.row.status == 'success'" size="mini"
+              >
+提现完成
+</el-tag
+            >
             <el-tag type="info" v-if="scope.row.status == 'reject'" size="mini">提现拒绝</el-tag>
             <el-tag type="danger" v-if="scope.row.status == 'failed'" size="mini">提现失败</el-tag>
           </template>
@@ -63,7 +103,11 @@
               size="mini"
               icon="el-icon-document"
               type="text"
-              @click="dialogPayInfo(scope.row)">打款记录</el-button>
+              @click="dialogPayInfo(scope.row)"
+              >
+打款记录
+</el-button
+            >
           </template>
         </el-table-column>
         <el-table-column label="操作" width="160">
@@ -75,8 +119,7 @@
               v-popover:popover
             >
               <el-popover ref="popover" placement="top" width="400" trigger="click">
-                <el-input type="textarea" :rows="6" :disabled="true" :value="scope.row.remarks">
-                </el-input>
+                <el-input type="textarea" :rows="6" :disabled="true" :value="scope.row.remarks" />
               </el-popover>
               <i class="el-icon-warning mark" /> 拒绝原因
             </el-button>
@@ -87,29 +130,32 @@
               v-popover:popover
             >
               <el-popover ref="popover" placement="top" width="400" trigger="click">
-                <el-input type="textarea" :rows="6" :disabled="true" :value="scope.row.remarks">
-                </el-input>
+                <el-input type="textarea" :rows="6" :disabled="true" :value="scope.row.remarks" />
               </el-popover>
-              <i class="el-icon-warning mark"></i> 失败原因
+              <i class="el-icon-warning mark" /> 失败原因
             </el-button>
             <el-button
               size="mini"
               type="primary"
               v-if="scope.row.status == 'apply'"
               @click="dialogOpen(scope.row)"
-              >打款</el-button
+              >
+打款
+</el-button
             >
             <el-button
               size="mini"
               type="warning"
               v-if="scope.row.status == 'apply'"
               @click="dialogCancel(scope.row)"
-              >拒绝</el-button
+              >
+拒绝
+</el-button
             >
           </template>
         </el-table-column>
       </el-table>
-      <div class="content-padded content-center">
+      <div class="mt-4 text-right">
         <el-pagination
           background
           layout="total, sizes, prev, pager, next, jumper"
@@ -118,8 +164,7 @@
           :current-page.sync="params.page"
           :total="total_count"
           :page-size.sync="params.pageSize"
-        >
-        </el-pagination>
+        />
       </div>
     </el-card>
     <el-dialog title="打款记录" :visible.sync="payDialog" :close-on-click-modal="false" width="50%">
@@ -159,12 +204,13 @@
       :close-on-click-modal="false"
       width="50%"
     >
-      <el-input type="textarea" :rows="6" placeholder="请输入拒绝原因" v-model="textarea">
-      </el-input>
+      <el-input type="textarea" :rows="6" placeholder="请输入拒绝原因" v-model="textarea" />
       <div slot="footer" class="dialog-footer content-center">
         <el-button @click.native="canceldialog = false">取消操作</el-button>
         <el-button type="primary" @click="actionProcessCashWithdrawal('reject')"
-          >确认拒绝</el-button
+          >
+确认拒绝
+</el-button
         >
       </div>
     </el-dialog>
@@ -197,19 +243,20 @@
         <div slot="header" class="clearfix">
           <el-tag v-if="detail.pay_type === 'wechat'">微信打款</el-tag>
           <el-tag v-if="detail.pay_type === 'alipay'">支付宝线下打款</el-tag>
-          <span style="font-size: 20px;">{{ detail.account_name }} - {{ detail.mobile }}</span>
+          <span style="font-size: 20px">{{ detail.account_name }} - {{ detail.mobile }}</span>
         </div>
         <div v-if="detail.pay_type === 'alipay'" class="text item">
-          <span>支付宝账号姓名</span><span style="font-size: 26px;">{{ detail.account_name }}</span>
+          <span>支付宝账号姓名</span><span style="font-size: 26px">{{ detail.account_name }}</span>
         </div>
         <div v-if="detail.pay_type === 'alipay'" class="text item">
-          <span>支付宝账号</span><span style="font-size: 26px;">{{ detail.pay_account }}</span>
+          <span>支付宝账号</span><span style="font-size: 26px">{{ detail.pay_account }}</span>
         </div>
         <div class="text item">
-          <span>可提现佣金 </span><span style="font-size: 26px; color:red">{{ cashWithdrawalRebate / 100 }}</span> 元
+          <span>可提现佣金 </span
+          ><span style="font-size: 26px; color: red">{{ cashWithdrawalRebate / 100 }}</span> 元
         </div>
         <div class="text item">
-          申请提现 <span style="font-size: 26px; color:red">{{ detail.money / 100 }}</span> 元
+          申请提现 <span style="font-size: 26px; color: red">{{ detail.money / 100 }}</span> 元
         </div>
       </el-card>
       <div slot="footer" class="dialog-footer content-center">
@@ -218,7 +265,9 @@
           v-if="detail.money <= cashWithdrawalRebate"
           type="primary"
           @click="actionProcessCashWithdrawal('argee')"
-          >打款到推广员</el-button
+          >
+打款到推广员
+</el-button
         >
       </div>
     </el-dialog>
@@ -234,14 +283,14 @@ import {
 } from '../../api/promotions'
 
 export default {
-  data () {
+  data() {
     return {
       statusList: [
         { name: '提现待处理', value: 'apply' },
         { name: '提现拒绝', value: 'reject' },
         { name: '提现成功', value: 'success' },
         { name: '提现处理中', value: 'process' },
-        { name: '提现失败', value: 'failed' },
+        { name: '提现失败', value: 'failed' }
       ],
       activeName: 'first',
       total_count: 0,
@@ -273,27 +322,27 @@ export default {
   computed: {
     ...mapGetters(['wheight'])
   },
-  mounted () {
+  mounted() {
     this.getList()
   },
   methods: {
-    handleCurrentChange (page_num) {
+    handleCurrentChange(page_num) {
       this.params.page = page_num
       this.getList()
     },
-    dialogCancel (detail) {
+    dialogCancel(detail) {
       this.canceldialog = true
       this.detail = detail
     },
-    numberSearch (e) {
+    numberSearch(e) {
       this.params.page = 1
       this.getList()
     },
-    statusSelectHandle () {
+    statusSelectHandle() {
       this.params.page = 1
       this.getList()
     },
-    actionProcessCashWithdrawal (processType) {
+    actionProcessCashWithdrawal(processType) {
       if (processType == 'reject' && !this.textarea) {
         this.$message({ type: 'error', message: '请输入拒绝提现原因' })
         return
@@ -304,7 +353,7 @@ export default {
       } else {
         var params = { process_type: processType }
       }
-      checkWithdrawal(this.detail.id, params).then((response) => {
+      checkWithdrawal(this.detail.id, params).then(response => {
         this.canceldialog = false
         this.dialog = false
         this.getList()
@@ -315,26 +364,26 @@ export default {
         }
       })
     },
-    dialogOpen (detail) {
+    dialogOpen(detail) {
       this.dialog = true
       this.detail = detail
       this.applyText = '推广员申请提现佣金' + detail.money / 100 + '元'
-      withdrawalStatistics({ user_id: detail.user_id }).then((response) => {
+      withdrawalStatistics({ user_id: detail.user_id }).then(response => {
         this.cashWithdrawalRebate =
           Number(response.data.data.cashWithdrawalRebate) +
           Number(response.data.data.freezeCashWithdrawalRebate)
       })
     },
-    dialogPayInfo (detail) {
+    dialogPayInfo(detail) {
       this.payDialog = true
       this.detail = detail
-      withdrawalPayinfo(detail.id).then((response) => {
+      withdrawalPayinfo(detail.id).then(response => {
         this.payList = response.data.data.list
       })
     },
-    getList () {
+    getList() {
       this.loading = true
-      withdrawalApplications(this.params).then((response) => {
+      withdrawalApplications(this.params).then(response => {
         if (response.data.data.list) {
           this.list = response.data.data.list
           this.total_count = response.data.data.total_count

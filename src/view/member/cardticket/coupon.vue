@@ -201,7 +201,7 @@
               </template>
             </el-table-column>
           </el-table>
-          <div class="content-padded content-center">
+          <div class="mt-4 text-right">
             <el-pagination
               layout="total, sizes, prev, pager, next, jumper"
               :total="page.total"
@@ -218,7 +218,7 @@
           v-for="(item, index) in sedoutList"
           :key="index"
           class="sendout-item"
-          :class="{ 'checked': currSendout === index }"
+          :class="{ checked: currSendout === index }"
           @click="chooseSendout(index)"
         >
           <div>{{ item.name }}</div>
@@ -322,7 +322,7 @@ export default {
           type: 'input',
           placeholder: '请输入数量',
           validator: (rule, value, callback) => {
-            const fd = this.tableList.find((item) => item.card_id == this.editForm.card_id)
+            const fd = this.tableList.find(item => item.card_id == this.editForm.card_id)
             if (this.editForm.type == 'reduce') {
               if (this.editForm.quantity > fd.quantity - fd.get_num) {
                 callback(new Error('减少数量不能大于可领取库存'))
@@ -362,7 +362,7 @@ export default {
         page,
         card_id
       }
-      getPageCode(params).then((response) => {
+      getPageCode(params).then(response => {
         this.appCodeUrl = response.data.data.base64Image
       })
     },
@@ -427,7 +427,7 @@ export default {
     sendoutAction() {
       if (this.currSendout == 0) {
         if (this.typeId) {
-          getQRcode(this.typeId).then((res) => {
+          getQRcode(this.typeId).then(res => {
             var a = document.createElement('a')
             a.href = res.data.data.show_qrcode_url
             a.download = true
@@ -444,7 +444,7 @@ export default {
         type: 'warning',
         beforeClose: (action, instance, done) => {
           if (action === 'confirm') {
-            removeCard({ 'card_id': id }).then((res) => {
+            removeCard({ card_id: id }).then(res => {
               this.tableList.splice(index, 1)
             })
           }
@@ -462,7 +462,7 @@ export default {
         type: 'warning'
       })
         .then(() => {
-          pullWechatCard().then((response) => {
+          pullWechatCard().then(response => {
             this.$message({
               message: '同步成功',
               type: 'success',
@@ -515,7 +515,7 @@ export default {
         type: this.tableList[index].operationType,
         quantity: this.tableList[index].storeValue
       }
-      updateStore(param).then((response) => {
+      updateStore(param).then(response => {
         setTimeout(() => {
           this.loadingbtn = false
         }, 1000)

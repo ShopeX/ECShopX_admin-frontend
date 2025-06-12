@@ -29,7 +29,7 @@ import Normal from './normal'
 import ZitiList from './comps/ziti-list'
 import ZiPeiList from './comps/zipei-list'
 import { mapGetters } from 'vuex'
-import { VERSION_B2C() } from '@/utils'
+import { VERSION_B2C } from '@/utils'
 export default {
   components: {
     Normal,

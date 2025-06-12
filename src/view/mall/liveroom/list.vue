@@ -60,7 +60,7 @@
           </el-table-column>
         </el-table>
       </el-card>
-      <div v-if="page.total > page.pageSize" class="content-padded content-center">
+      <div v-if="page.total > page.pageSize" class="mt-4 text-right">
         <el-pagination
           background
           layout="total, sizes, prev, pager, next, jumper"
@@ -150,7 +150,7 @@ export default {
       this.loading = false
     },
     getWxaList() {
-      getWxaAuthList().then((response) => {
+      getWxaAuthList().then(response => {
         this.wxaList = response.data.data.list
       })
     }

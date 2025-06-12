@@ -14,7 +14,7 @@
 <template>
   <div class="page-goods-maincategory">
     <div v-if="!IS_DISTRIBUTOR()" class="action-container">
-      <el-button type="primary" plain @click="addCategory"> 添加管理分类 </el-button>
+      <el-button type="primary" @click="addCategory"> 添加管理分类 </el-button>
     </div>
 
     <el-table
@@ -53,7 +53,7 @@
         </template>
       </el-table-column>
       <el-table-column label="一级分类模版" width="200" prop="customize_page_name" />
-      <el-table-column label="操作">
+      <el-table-column label="操作" width="280">
         <template slot-scope="scope">
           <el-button type="text">
             <router-link
@@ -202,12 +202,12 @@ export default {
         {
           component: () => (
             <div>
-              <div style='margin-left: 8px; line-height: initial;'>导购分润计算方式: </div>
-              <div class='form-item-tip'>
+              <div style="margin-left: 8px; line-height: initial;">导购分润计算方式: </div>
+              <div class="form-item-tip">
                 【按比例分佣】商品最终金额 ×
                 百分比（其中商品最终金额为【支付金额-运费-商品优惠金额】）
               </div>
-              <div class='form-item-tip'>【按金额分佣】固定金额分佣</div>
+              <div class="form-item-tip">【按金额分佣】固定金额分佣</div>
             </div>
           )
         },
@@ -246,8 +246,8 @@ export default {
       }
       let { list } = await this.$api.wxa.getCustomPageList(params)
       console.log(list, 'src/view/goods/saleCategory.vue-第197行')
-      list.forEach((element) => {
-        (element.title = element.page_name), (element.value = element.id)
+      list.forEach(element => {
+        ;(element.title = element.page_name), (element.value = element.id)
       })
       this.categoryFormList[4].options = list
     },
@@ -338,7 +338,7 @@ export default {
         num: 5
       })
       await this.$api.goods.updateCategory(category_id, {
-        goods_params: JSON.stringify(data.map((item) => item.attribute_id))
+        goods_params: JSON.stringify(data.map(item => item.attribute_id))
       })
       this.refreshNode(parent_id)
     },
@@ -353,7 +353,7 @@ export default {
         islimitImgType: true
       })
       await this.$api.goods.updateCategory(category_id, {
-        goods_spec: JSON.stringify(data.map((item) => item.attribute_id))
+        goods_spec: JSON.stringify(data.map(item => item.attribute_id))
       })
       this.refreshNode(parent_id)
     },
@@ -362,7 +362,7 @@ export default {
         parent_id: pid,
         is_main_category: true
       })
-      const list = res.map((item) => {
+      const list = res.map(item => {
         return {
           ...item,
           image_url: item.image_url || '',

@@ -202,7 +202,7 @@
             </template>
           </el-table-column>
         </el-table>
-        <div class="content-padded content-center">
+        <div class="mt-4 text-right">
           <el-pagination
             layout="prev, pager, next"
             :current-page.sync="params.page"
@@ -419,7 +419,7 @@ export default {
     },
     getOrders(filter) {
       this.loading = true
-      getOrderList(filter).then((response) => {
+      getOrderList(filter).then(response => {
         this.list = response.data.data.list
         this.total_count = Number(response.data.data.pager.count)
         this.datapass_block = response.data.data.datapass_block
@@ -428,10 +428,10 @@ export default {
     },
     getAllSourcesList() {
       let params = { page: 1, pageSize: 1000 }
-      getSourcesList(params).then((response) => {
+      getSourcesList(params).then(response => {
         if (response.data.data.list) {
-          response.data.data.list.forEach((row) => {
-            this.source_list.push({ 'value': row.sourceName, 'source_id': row.sourceId })
+          response.data.data.list.forEach(row => {
+            this.source_list.push({ value: row.sourceName, source_id: row.sourceId })
           })
         }
       })
@@ -443,7 +443,7 @@ export default {
       cb(results)
     },
     createFilter(queryString) {
-      return (restaurant) => {
+      return restaurant => {
         return restaurant.value.toLowerCase().indexOf(queryString.toLowerCase()) === 0
       }
     },
@@ -451,7 +451,7 @@ export default {
       // 编辑物料弹框
       this.deliveryTitle = '发货'
       this.deliveryVisible = true
-      getOrderDetail(order_id).then((response) => {
+      getOrderDetail(order_id).then(response => {
         this.deliveryData = response.data.data
       })
       this.deliveryForm.order_id = order_id
@@ -464,7 +464,7 @@ export default {
     },
     submitDeliveryAction() {
       // 提交物料
-      delivery(this.deliveryForm).then((response) => {
+      delivery(this.deliveryForm).then(response => {
         if (response.data.data.delivery_status == 'DONE') {
           this.handleCancel()
           this.$message.success('发货成功!')
@@ -477,7 +477,7 @@ export default {
     },
     getDistributor() {
       var params = { page: 1, pageSize: 500 }
-      getDistributorList(params).then((response) => {
+      getDistributorList(params).then(response => {
         if (response.data.data.list) {
           this.distributorList = response.data.data.list
         }
@@ -488,7 +488,7 @@ export default {
         return type == '1' ? '跨境订单' : '普通订单'
       }
       const _orderType = this.VERSION_STANDARD() ? ORDER_TYPE_STANDARD : ORDER_TYPE
-      const fd = _orderType.find((item) => item.value == order_class)
+      const fd = _orderType.find(item => item.value == order_class)
       if (fd) {
         return fd.title
       }

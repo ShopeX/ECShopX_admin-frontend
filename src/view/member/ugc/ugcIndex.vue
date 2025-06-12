@@ -128,7 +128,7 @@
           />
         </el-tab-pane>
       </el-tabs>
-      <div class="content-padded content-center">
+      <div class="mt-4 text-right">
         <el-pagination
           layout="total, sizes, prev, pager, next, jumper"
           :total="pagers.total"
@@ -322,14 +322,14 @@ export default {
 
       that.$data.loading = true
       getNotes(params).then(
-        (res) => {
+        res => {
           var { list, total_count } = res.data.data
           //console.log('res',res)
           that.$data.noteList = list
           that.$data.pagers = { total: total_count }
           that.$data.loading = false
         },
-        (err) => {
+        err => {
           that.$data.loading = false
         }
       )
@@ -338,13 +338,13 @@ export default {
     },
     getFlagsList() {
       const that = this
-      getBadge({}).then((res) => {
+      getBadge({}).then(res => {
         var { list, total_count } = res.data.data
         that.$data.flagList = list
       })
     },
     getVideoSetting() {
-      getUGCSetting({ type: 'video' }).then((res) => {
+      getUGCSetting({ type: 'video' }).then(res => {
         var { data } = res.data
         var video_enable = data['video_enable'] == '1'
         this.$data.video_enable = video_enable
@@ -352,9 +352,9 @@ export default {
     },
     setUGCSetting() {
       const { video_enable } = this.$data
-      var params = { type: 'video', setting: { 'video_enable': video_enable ? '1' : '0' } }
+      var params = { type: 'video', setting: { video_enable: video_enable ? '1' : '0' } }
       params.setting = JSON.stringify(params.setting)
-      setUGCSetting(params).then((res) => {
+      setUGCSetting(params).then(res => {
         var { message } = res.data.data
         this.$message({
           type: 'success',
@@ -411,7 +411,7 @@ export default {
         cancelButtonText: '取消',
         type: 'warning'
       }).then(() => {
-        notesDelete(params).then((res) => {
+        notesDelete(params).then(res => {
           //console.log('notesDelete',res)
           var msg = res.data.data.message
           this.clearAudioData()
@@ -462,7 +462,7 @@ export default {
       }
       params.post_id = id_set
       //console.log('进行审核 auditNote',params);
-      notesVerify(params).then((res) => {
+      notesVerify(params).then(res => {
         //console.log('res',res)
         var msg = res.data.data.message
         this.cancelAuditDialog(false)
@@ -494,7 +494,7 @@ export default {
       const { id_set } = this.$data
       var params = { post_id: id_set, badges: [flag.badge_id] }
       //console.log('更新笔记角标flagModalHandle',flag,id_set)
-      batchSetBadges(params).then((res) => {
+      batchSetBadges(params).then(res => {
         //console.log('res',res)
         var msg = res.data.data.message
         this.flagModalHide(false)

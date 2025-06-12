@@ -30,31 +30,20 @@
 
 <template>
   <div>
-    <el-table
-      v-loading="loading"
-      :data="list"
-      :height="wheight - 150"
-    >
+    <el-table v-loading="loading" :data="list" :height="wheight - 150">
       <el-table-column label="类型">
         <template slot-scope="scope">
           {{ scope.row.log_type }}
         </template>
       </el-table-column>
-      <el-table-column
-        prop="remarks"
-        label="信息"
-        min-width="90"
-      />
+      <el-table-column prop="remarks" label="信息" min-width="90" />
       <el-table-column label="日志时间">
         <template slot-scope="scope">
           {{ scope.row.created | datetime('YYYY-MM-DD HH:mm:ss') }}
         </template>
       </el-table-column>
     </el-table>
-    <div
-      v-if="total_count > params.pageSize"
-      class="content-padded content-center"
-    >
+    <div v-if="total_count > params.pageSize" class="mt-4 text-right">
       <el-pagination
         :current-page.sync="params.page"
         :total="total_count"
@@ -69,7 +58,7 @@
 import { getWorkWechatRelLogsList } from '@/api/wechat'
 import { mapGetters } from 'vuex'
 export default {
-  data () {
+  data() {
     return {
       loading: false,
       activeName: 'salespersonlogs',
@@ -85,17 +74,17 @@ export default {
   computed: {
     ...mapGetters(['wheight'])
   },
-  mounted () {
+  mounted() {
     this.user_id = this.$route.query.user_id
     this.getWorkWechatRelLogsList()
   },
   methods: {
-    handleCurrentChange () {
+    handleCurrentChange() {
       this.getWorkWechatRelLogsList()
     },
-    getWorkWechatRelLogsList () {
+    getWorkWechatRelLogsList() {
       this.loading = true
-      getWorkWechatRelLogsList(this.user_id, this.params).then((res) => {
+      getWorkWechatRelLogsList(this.user_id, this.params).then(res => {
         this.list = res.data.data.list
         this.total_count = res.data.data.total_count
         this.loading = false

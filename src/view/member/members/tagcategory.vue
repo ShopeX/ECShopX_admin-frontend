@@ -2,12 +2,7 @@
   <div>
     <el-row :gutter="40">
       <el-col :span="3">
-        <el-button
-          type="primary"
-          icon="el-icon-plus"
-          size="mini"
-          @click="handleNew"
-        >
+        <el-button type="primary" icon="el-icon-plus" size="mini" @click="handleNew">
           新增标签分类
         </el-button>
       </el-col>
@@ -18,11 +13,7 @@
           size="mini"
           @change="categorySearch"
         >
-          <el-button
-            slot="append"
-            icon="el-icon-search"
-            @click="categorySearch"
-          />
+          <el-button slot="append" icon="el-icon-search" @click="categorySearch" />
         </el-input>
       </el-col>
     </el-row>
@@ -33,49 +24,25 @@
       element-loading-text="数据加载中"
       :default-sort="{ prop: 'bind_date', order: 'descending' }"
     >
-      <el-table-column
-        label="操作"
-        width="150"
-      >
+      <el-table-column label="操作" width="150">
         <template slot-scope="scope">
-          <el-button
-            type="text"
-            @click="handleEdit(scope.row)"
-          >
-            编辑
-          </el-button>
-          <el-button
-            type="text"
-            @click="handleDelete(scope)"
-          >
-            删除
-          </el-button>
+          <el-button type="text" @click="handleEdit(scope.row)"> 编辑 </el-button>
+          <el-button type="text" @click="handleDelete(scope)"> 删除 </el-button>
         </template>
       </el-table-column>
-      <el-table-column
-        prop="category_name"
-        label="分类名称"
-        width="250"
-      >
+      <el-table-column prop="category_name" label="分类名称" width="250">
         <template slot-scope="scope">
           <div v-if="!scope.row.category_id">
-            <el-input
-              v-model="scope.row.category_name"
-              placeholder="请输入分类名称"
-            />
+            <el-input v-model="scope.row.category_name" placeholder="请输入分类名称" />
           </div>
           <div v-else>
             {{ scope.row.category_name }}
           </div>
         </template>
       </el-table-column>
-      <el-table-column
-        prop="sort"
-        label="分类排序"
-        width="150"
-      />
+      <el-table-column prop="sort" label="分类排序" width="150" />
     </el-table>
-    <div class="content-padded content-center">
+    <div class="mt-4 text-right">
       <el-pagination
         background
         layout="total, sizes, prev, pager, next"
@@ -87,10 +54,7 @@
         @size-change="handleSizeChange"
       />
     </div>
-    <sideBar
-      :visible.sync="show_sideBar"
-      :title="'新增分类'"
-    >
+    <sideBar :visible.sync="show_sideBar" :title="'新增分类'">
       <el-form>
         <el-form-item label="分类名">
           <el-input v-model="form.category_name" />
@@ -104,12 +68,7 @@
           </el-checkbox-group>
         </el-form-item> -->
         <el-form-item>
-          <el-button
-            type="primary"
-            @click="save"
-          >
-            提交
-          </el-button>
+          <el-button type="primary" @click="save"> 提交 </el-button>
         </el-form-item>
       </el-form>
     </sideBar>
@@ -129,7 +88,7 @@ export default {
   components: {
     sideBar
   },
-  data () {
+  data() {
     return {
       form: {
         category_id: '',
@@ -148,34 +107,34 @@ export default {
       show_sideBar: false
     }
   },
-  mounted () {
+  mounted() {
     this.getList()
   },
   methods: {
-    handleCurrentChange (page_num) {
+    handleCurrentChange(page_num) {
       this.params.page = page_num
       this.getList()
     },
-    handleSizeChange (pageSize) {
+    handleSizeChange(pageSize) {
       this.params.page = 1
       this.params.pageSize = pageSize
       this.getList()
     },
-    handleDelete (data) {
+    handleDelete(data) {
       this.$confirm('确认删除该分类？')
-        .then((_) => {
-          deleteTagCategory(data.row.category_id).then((res) => {
+        .then(_ => {
+          deleteTagCategory(data.row.category_id).then(res => {
             this.list.splice(data.$index, 1)
             this.$message({ type: 'success', message: '操作成功' })
           })
         })
-        .catch((_) => {})
+        .catch(_ => {})
     },
-    handleNew () {
+    handleNew() {
       this.show_sideBar = true
       this.resetData()
     },
-    resetData () {
+    resetData() {
       this.form = {
         category_id: '',
         attribute_type: 'brand',
@@ -183,7 +142,7 @@ export default {
         sort: ''
       }
     },
-    handleEdit (data) {
+    handleEdit(data) {
       this.show_sideBar = true
       this.form = {
         category_id: data.category_id,
@@ -191,38 +150,38 @@ export default {
         sort: data.sort
       }
     },
-    save () {
+    save() {
       // 如果没有id，则表示为新增
       if (!this.form.category_id) {
-        createTagCategory(this.form).then((res) => {
+        createTagCategory(this.form).then(res => {
           this.$message({ type: 'success', message: '操作成功' })
           this.params.page = 1
           this.resetData()
           this.getList()
         })
       } else {
-        updateTagCategory(this.form.category_id, this.form).then((res) => {
+        updateTagCategory(this.form.category_id, this.form).then(res => {
           this.$message({ type: 'success', message: '操作成功' })
           this.getList()
         })
       }
     },
-    getList () {
+    getList() {
       this.loading = true
-      getTagCategoryList(this.params).then((res) => {
+      getTagCategoryList(this.params).then(res => {
         this.list = res.data.data.list
         this.total_count = res.data.data.total_count
         this.loading = false
       })
     },
-    getTagList () {
+    getTagList() {
       let param = {
         category_id: '0',
         tag_status: 'online'
       }
-      getTagList(param).then((res) => {})
+      getTagList(param).then(res => {})
     },
-    categorySearch () {
+    categorySearch() {
       this.getList()
     }
   },

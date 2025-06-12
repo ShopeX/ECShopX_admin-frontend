@@ -37,7 +37,7 @@
         </template>
       </el-table-column>
     </el-table>
-    <div v-if="page.page > page.pageSize" class="content-padded content-center">
+    <div v-if="page.page > page.pageSize" class="mt-4 text-right">
       <el-pagination
         background
         layout="total, sizes, prev, pager, next, jumper"
@@ -193,7 +193,7 @@ export default {
     },
     AddRecommendLikeItem() {
       this.show_sideBar = true
-      getRecommendLikeItems().then((res) => {
+      getRecommendLikeItems().then(res => {
         if (res.data.data.list) {
           this.relItemsIds = res.data.data.list
         }
@@ -216,7 +216,7 @@ export default {
           type: 'warning'
         })
           .then(() => {
-            deleteRecommendLikeItem(param).then((response) => {
+            deleteRecommendLikeItem(param).then(response => {
               this.fetchList()
               this.$message({
                 type: 'success',
@@ -245,7 +245,7 @@ export default {
       this.show_sideBar = false
     },
     submitActivityAction() {
-      saveRecommendLikeItem(this.form).then((res) => {
+      saveRecommendLikeItem(this.form).then(res => {
         this.fetchList()
         this.$message({
           type: 'success',
@@ -262,7 +262,7 @@ export default {
       let arr = []
       data.forEach((item, index) => {
         let newData = ''
-        let isInArr = this.form.items.findIndex((n) => n.item_id == item.itemId)
+        let isInArr = this.form.items.findIndex(n => n.item_id == item.itemId)
         if (isInArr == -1) {
           newData = {
             distributor_id: item.distributor_id,
@@ -292,7 +292,7 @@ export default {
         item_id: rows.item_id,
         sort: rows.sort
       }
-      updateRecommendLikeSort(params).then((res) => {
+      updateRecommendLikeSort(params).then(res => {
         if (res.data.data) {
           this.$message({
             type: 'success',
@@ -310,10 +310,10 @@ export default {
         return
       }
       let form = {
-        'distributor_id': row.distributor_id,
-        'item_id': row.item_id,
-        'is_total_store': row.is_total_store,
-        'store': row.store
+        distributor_id: row.distributor_id,
+        item_id: row.item_id,
+        is_total_store: row.is_total_store,
+        store: row.store
       }
       this.updateDistributorItem(form)
     },

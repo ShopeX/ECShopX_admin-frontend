@@ -2,13 +2,7 @@
   <div>
     <!--添加-->
     <div class="action-container">
-      <el-button
-        type="primary"
-        icon="el-icon-circle-plus"
-        @click="handleNew"
-      >
-        新增区域
-      </el-button>
+      <el-button type="primary" icon="el-icon-circle-plus" @click="handleNew"> 新增区域 </el-button>
     </div>
 
     <el-table
@@ -20,31 +14,16 @@
     >
       <el-table-column label="操作">
         <template slot-scope="scope">
-          <el-button
-            type="text"
-            @click="handleEdit(scope.row)"
-          >
-            编辑
-          </el-button>
-          <el-button
-            type="text"
-            @click="handleDelete(scope)"
-          >
-            删除
-          </el-button>
+          <el-button type="text" @click="handleEdit(scope.row)"> 编辑 </el-button>
+          <el-button type="text" @click="handleDelete(scope)"> 删除 </el-button>
         </template>
       </el-table-column>
-      <el-table-column
-        prop="attribute_name"
-        label="区域"
-      >
+      <el-table-column prop="attribute_name" label="区域">
         <template slot-scope="scope">
           <div>{{ scope.row.regionauth_name }}</div>
         </template>
-      </el-table-column><el-table-column
-        prop="attribute_name"
-        label="状态"
-      >
+</el-table-column
+      ><el-table-column prop="attribute_name" label="状态">
         <template slot-scope="scope">
           <el-switch
             v-model="scope.row.state === '1' ? true : false"
@@ -55,7 +34,7 @@
     </el-table>
 
     <!--分页-->
-    <div class="content-padded content-center">
+    <div class="mt-4 text-right">
       <el-pagination
         background
         layout="total, sizes, prev, pager, next"
@@ -69,24 +48,13 @@
     </div>
 
     <!--新增修改-->
-    <sideBar
-      :visible.sync="show_sideBar"
-      :title="'区域编辑'"
-    >
+    <sideBar :visible.sync="show_sideBar" :title="'区域编辑'">
       <el-form>
         <el-form-item label="区域名称">
-          <el-input
-            v-model="form.regionauth_name"
-            maxlength="20"
-          />
+          <el-input v-model="form.regionauth_name" maxlength="20" />
         </el-form-item>
         <el-form-item>
-          <el-button
-            type="primary"
-            @click="save"
-          >
-            提交
-          </el-button>
+          <el-button type="primary" @click="save"> 提交 </el-button>
         </el-form-item>
       </el-form>
     </sideBar>
@@ -110,7 +78,7 @@ export default {
     imgPicker
   },
 
-  data () {
+  data() {
     return {
       loading: false,
       imgDialog: false,
@@ -131,17 +99,17 @@ export default {
       list: []
     }
   },
-  mounted () {
+  mounted() {
     this.handleCurrentChange()
   },
   methods: {
     // 新增编辑
-    handleNew () {
+    handleNew() {
       this.show_sideBar = true
       this.resetData()
     },
     // 编辑
-    handleEdit (data) {
+    handleEdit(data) {
       this.show_sideBar = true
       this.form = {
         regionauth_id: data.regionauth_id,
@@ -149,19 +117,19 @@ export default {
       }
     },
     // 删除
-    handleDelete (data) {
+    handleDelete(data) {
       this.$confirm('确认删除该区域么？')
-        .then((_) => {
-          delRegionauth(data.row.regionauth_id, []).then((res) => {
+        .then(_ => {
+          delRegionauth(data.row.regionauth_id, []).then(res => {
             this.list.splice(data.$index, 1)
             this.$message({ type: 'success', message: '操作成功' })
           })
         })
-        .catch((_) => {})
+        .catch(_ => {})
     },
 
     // 启用&禁用
-    handleEnable (data) {
+    handleEnable(data) {
       let tip = ''
       let query = {}
       if (data.state === '1') {
@@ -173,52 +141,52 @@ export default {
       }
 
       this.$confirm('确认' + tip + '该区域么？')
-        .then((_) => {
-          enableRegionauth(data.regionauth_id, query).then((res) => {
+        .then(_ => {
+          enableRegionauth(data.regionauth_id, query).then(res => {
             this.$message({ type: 'success', message: '操作成功' })
             this.getList()
           })
         })
-        .catch((_) => {})
+        .catch(_ => {})
     },
     // 初始化
-    resetData () {
+    resetData() {
       this.form = {
         regionauth_id: '',
         regionauth_name: ''
       }
     },
     // 保存数据
-    save () {
+    save() {
       if (!this.form.regionauth_id) {
-        addRegionauth(this.form).then((res) => {
+        addRegionauth(this.form).then(res => {
           this.$message({ type: 'success', message: '操作成功' })
           this.params.page = 1
           this.resetData()
           this.getList()
         })
       } else {
-        updateRegionauth(this.form.regionauth_id, this.form).then((res) => {
+        updateRegionauth(this.form.regionauth_id, this.form).then(res => {
           this.$message({ type: 'success', message: '操作成功' })
           this.getList()
         })
       }
     },
     // 分页
-    handleCurrentChange (page_num = 1) {
+    handleCurrentChange(page_num = 1) {
       this.params.page = page_num
       this.getList()
     },
-    handleSizeChange (pageSize) {
+    handleSizeChange(pageSize) {
       this.params.page = 1
       this.params.pageSize = pageSize
       this.getList()
     },
     // 获取列表
-    getList () {
+    getList() {
       console.log('获取数据')
       this.loading = true
-      getRegionauth(this.params).then((res) => {
+      getRegionauth(this.params).then(res => {
         console.log('返回数据', res)
         this.list = res.data.data.list
         this.total_count = res.data.data.total_count

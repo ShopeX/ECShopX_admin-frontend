@@ -2,64 +2,23 @@
   <div>
     <el-row :gutter="20">
       <el-col :span="4">
-        <el-radio-group
-          v-model="params.api_type"
-          size="small"
-          @change="searchDate"
-        >
-          <el-radio
-            label="request"
-            border
-          >
-            请求
-          </el-radio>
-          <el-radio
-            label="response"
-            border
-          >
-            响应
-          </el-radio>
+        <el-radio-group v-model="params.api_type" size="small" @change="searchDate">
+          <el-radio label="request" border> 请求 </el-radio>
+          <el-radio label="response" border> 响应 </el-radio>
         </el-radio-group>
       </el-col>
       <el-col :span="10">
-        <el-radio-group
-          v-model="params.status"
-          size="small"
-          @change="searchDate"
-        >
-          <el-radio
-            label="running"
-            border
-          >
-            执行中
-          </el-radio>
-          <el-radio
-            label="success"
-            border
-          >
-            成功
-          </el-radio>
-          <el-radio
-            label="fail"
-            border
-          >
-            失败
-          </el-radio>
+        <el-radio-group v-model="params.status" size="small" @change="searchDate">
+          <el-radio label="running" border> 执行中 </el-radio>
+          <el-radio label="success" border> 成功 </el-radio>
+          <el-radio label="fail" border> 失败 </el-radio>
         </el-radio-group>
       </el-col>
     </el-row>
     <el-row :gutter="20">
       <el-col :span="10">
-        <el-input
-          v-model="params.content"
-          placeholder="请输入内容"
-          class="input-with-select"
-        >
-          <el-button
-            slot="append"
-            icon="el-icon-search"
-            @click="searchDate"
-          />
+        <el-input v-model="params.content" placeholder="请输入内容" class="input-with-select">
+          <el-button slot="append" icon="el-icon-search" @click="searchDate" />
         </el-input>
       </el-col>
       <el-col :span="10">
@@ -76,11 +35,7 @@
         />
       </el-col>
     </el-row>
-    <el-table
-      v-loading="loading"
-      :data="dataList"
-      :height="wheight - 150"
-    >
+    <el-table v-loading="loading" :data="dataList" :height="wheight - 150">
       <el-table-column type="expand">
         <template slot-scope="props">
           <!-- <el-collapse>
@@ -105,28 +60,13 @@
           </el-row>
         </template>
       </el-table-column>
-      <el-table-column
-        prop="api_type"
-        label="类型"
-      />
-      <el-table-column
-        prop="status"
-        label="状态"
-      />
-      <el-table-column
-        prop="worker"
-        label="接口名称"
-      />
-      <el-table-column
-        prop="created_date"
-        label="创建时间"
-      />
-      <el-table-column
-        prop="updated_date"
-        label="更新时间"
-      />
+      <el-table-column prop="api_type" label="类型" />
+      <el-table-column prop="status" label="状态" />
+      <el-table-column prop="worker" label="接口名称" />
+      <el-table-column prop="created_date" label="创建时间" />
+      <el-table-column prop="updated_date" label="更新时间" />
     </el-table>
-    <div class="content-padded content-center">
+    <div class="mt-4 text-right">
       <el-pagination
         background
         layout="total, sizes, prev, pager, next"
@@ -145,7 +85,7 @@
 import { mapGetters } from 'vuex'
 import { OmsQueueLogList } from '@/api/trade'
 export default {
-  data () {
+  data() {
     return {
       loading: false,
       total_count: 0,
@@ -162,7 +102,7 @@ export default {
         shortcuts: [
           {
             text: '最近一周',
-            onClick (picker) {
+            onClick(picker) {
               const end = new Date()
               const start = new Date()
               start.setTime(start.getTime() - 3600 * 1000 * 24 * 7)
@@ -171,7 +111,7 @@ export default {
           },
           {
             text: '最近一个月',
-            onClick (picker) {
+            onClick(picker) {
               const end = new Date()
               const start = new Date()
               start.setTime(start.getTime() - 3600 * 1000 * 24 * 30)
@@ -180,7 +120,7 @@ export default {
           },
           {
             text: '最近三个月',
-            onClick (picker) {
+            onClick(picker) {
               const end = new Date()
               const start = new Date()
               start.setTime(start.getTime() - 3600 * 1000 * 24 * 90)
@@ -194,28 +134,28 @@ export default {
   computed: {
     ...mapGetters(['wheight'])
   },
-  mounted () {
+  mounted() {
     this.getDataList()
   },
   methods: {
-    getDataList () {
+    getDataList() {
       this.loading = true
-      OmsQueueLogList(this.params).then((response) => {
+      OmsQueueLogList(this.params).then(response => {
         this.dataList = response.data.data.list
         this.total_count = response.data.data.total_count
         this.loading = false
       })
     },
-    handleCurrentChange (page_num) {
+    handleCurrentChange(page_num) {
       this.params.page = page_num
       this.getDataList()
     },
-    handleSizeChange (pageSize) {
+    handleSizeChange(pageSize) {
       this.params.page = 1
       this.params.pageSize = pageSize
       this.getDataList()
     },
-    searchDate () {
+    searchDate() {
       this.params.page = 1
       this.getDataList()
     }

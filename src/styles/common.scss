@@ -1,9 +1,16 @@
 /* action-container */
 .action-container {
-  margin-top: 16px;
+  margin-bottom: 16px;
+  display: flex;
+  gap: 8px;
 
-  & + .el-tabs {
-    margin-top: 16px;
+  .btn-upload {
+    display: inline-block;
+  }
+
+  .el-button,
+  .el-dropdown {
+    margin-left: 0;
   }
 }
 

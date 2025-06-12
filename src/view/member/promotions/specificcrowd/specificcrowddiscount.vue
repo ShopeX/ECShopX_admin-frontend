@@ -81,7 +81,7 @@
               </template>
             </el-table-column>
           </el-table>
-          <div class="content-padded content-center">
+          <div class="mt-4 text-right">
             <el-pagination
               background
               layout="total, sizes, prev, pager, next, jumper"
@@ -218,7 +218,7 @@ export default {
         pageSize: 20
       },
       mount: '3',
-      memberTagList: [{ 'value': '---无----', 'tag_id': 0 }],
+      memberTagList: [{ value: '---无----', tag_id: 0 }],
       activity_date: '',
       form: {
         specific_type: 'member_tag',
@@ -308,16 +308,16 @@ export default {
     },
     getAllMemberTagList() {
       let params = { page: 1, page_size: 1000 }
-      getTagList(params).then((response) => {
+      getTagList(params).then(response => {
         if (response.data.data.list) {
-          response.data.data.list.forEach((row) => {
-            this.memberTagList.push({ 'value': row.tag_name, 'tag_id': row.tag_id })
+          response.data.data.list.forEach(row => {
+            this.memberTagList.push({ value: row.tag_name, tag_id: row.tag_id })
           })
         }
       })
     },
     createFilter(queryString) {
-      return (restaurant) => {
+      return restaurant => {
         return restaurant.value.toLowerCase().indexOf(queryString.toLowerCase()) === 0
       }
     },
@@ -333,12 +333,12 @@ export default {
       }
 
       if (this.form.id) {
-        updateSpecificcrowddiscount({ ...this.form, ...obj }).then((res) => {
+        updateSpecificcrowddiscount({ ...this.form, ...obj }).then(res => {
           this.fetchList()
           this.activityItemDialog = false
         })
       } else {
-        createSpecificcrowddiscount({ ...this.form, ...obj }).then((res) => {
+        createSpecificcrowddiscount({ ...this.form, ...obj }).then(res => {
           this.$message.success('创建成功')
           this.fetchList()
           this.activityItemDialog = false
@@ -405,7 +405,7 @@ export default {
         beforeClose: (action, instance, done) => {
           if (action === 'confirm') {
             removeMarketingActivity({ marketing_id: row.marketing_id, isEnd: true }).then(
-              (response) => {
+              response => {
                 this.fetchList()
                 this.$message({
                   message: '修改活动状态成功',

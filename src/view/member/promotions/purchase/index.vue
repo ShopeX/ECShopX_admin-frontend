@@ -108,7 +108,7 @@
           </template>
         </el-table-column>
       </el-table>
-      <div class="content-padded content-center">
+      <div class="mt-4 text-right">
         <el-pagination
           background
           layout="total, sizes, prev, pager, next, jumper"
@@ -200,7 +200,7 @@ export default {
       }
       const { list, total_count } = await this.$api.purchase.getPurchaseList(params)
       if (list.length > 0) {
-        this.tableList = list.map((item) => {
+        this.tableList = list.map(item => {
           item.dependents_limitfee = (item.dependents_limitfee / 100).toFixed(2)
           item.employee_limitfee = (item.employee_limitfee / 100).toFixed(2)
           return item
@@ -222,7 +222,7 @@ export default {
         type: 'warning',
         beforeClose: (action, instance, done) => {
           if (action === 'confirm') {
-            endPurchase({ 'purchase_id': id })
+            endPurchase({ purchase_id: id })
             this.$message({
               type: 'success',
               message: '终止成功',

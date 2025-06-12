@@ -13,7 +13,7 @@ import 'video.js/dist/video-js.css'
 import App from './App'
 import router from './router'
 import store from './store'
-import vueExtend from './utils/prototype'
+import vueExtend from './utils/src/prototype'
 import Directives from './directives'
 import { install as Filter } from '@/filters'
 

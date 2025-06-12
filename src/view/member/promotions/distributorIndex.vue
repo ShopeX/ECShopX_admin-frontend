@@ -1,64 +1,22 @@
 <template>
   <div>
     <div class="content-bottom-padded">
-      <el-tooltip
-        class="item"
-        effect="light"
-        content="创建分销商注册促销"
-        placement="right-start"
-      >
-        <el-button
-          type="primary"
-          icon="plus"
-          @click="actionCouponAdd"
-        >
+      <el-tooltip class="item" effect="light" content="创建分销商注册促销" placement="right-start">
+        <el-button type="primary" icon="plus" @click="actionCouponAdd">
           创建分销商注册促销
         </el-button>
       </el-tooltip>
     </div>
-    <el-table
-      v-loading="loading"
-      :data="dataList"
-      style="width: 100%"
-      height="580"
-      border
-    >
-      <el-table-column
-        prop="id"
-        label="编号"
-        width="60"
-      />
-      <el-table-column
-        prop="ad_title"
-        label="标题"
-        width="200"
-      />
-      <el-table-column
-        prop="is_open"
-        label="是否开启"
-        width="80"
-      >
+    <el-table v-loading="loading" :data="dataList" style="width: 100%" height="580" border>
+      <el-table-column prop="id" label="编号" width="60" />
+      <el-table-column prop="ad_title" label="标题" width="200" />
+      <el-table-column prop="is_open" label="是否开启" width="80">
         <template slot-scope="scope">
-          <el-tag
-            v-if="scope.row.is_open == 'true'"
-            type="success"
-            size="mini"
-          >
-            是
-          </el-tag>
-          <el-tag
-            v-else
-            type="success"
-            size="mini"
-          >
-            否
-          </el-tag>
+          <el-tag v-if="scope.row.is_open == 'true'" type="success" size="mini"> 是 </el-tag>
+          <el-tag v-else type="success" size="mini"> 否 </el-tag>
         </template>
       </el-table-column>
-      <el-table-column
-        prop="distributor"
-        label="参与的分销商"
-      >
+      <el-table-column prop="distributor" label="参与的分销商">
         <template slot-scope="scope">
           <el-tag
             v-for="(item, index) in scope.row.distributor_id.list"
@@ -67,28 +25,18 @@
             size="mini"
           >
             {{ item.label }}
-          </el-tag>&nbsp;&nbsp;&nbsp;&nbsp;
+</el-tag
+          >&nbsp;&nbsp;&nbsp;&nbsp;
         </template>
       </el-table-column>
       <!-- <el-table-column prop="distributor" label="参与的商品"> </el-table-column>
       <el-table-column prop="distributor" label="参与的优惠券"> </el-table-column> -->
-      <el-table-column
-        label="操作"
-        width="250"
-      >
+      <el-table-column label="操作" width="250">
         <template slot-scope="scope">
-          <el-button
-            size="mini"
-            icon="view"
-            @click="itemsDetail(scope.$index, scope.row)"
-          >
+          <el-button size="mini" icon="view" @click="itemsDetail(scope.$index, scope.row)">
             详情
           </el-button>
-          <el-button
-            size="mini"
-            icon="edit"
-            @click="editAction(scope.$index, scope.row)"
-          >
+          <el-button size="mini" icon="edit" @click="editAction(scope.$index, scope.row)">
             编辑
           </el-button>
           <el-button
@@ -102,7 +50,7 @@
         </template>
       </el-table-column>
     </el-table>
-    <div class="content-padded content-center">
+    <div class="mt-4 text-right">
       <el-pagination
         layout="prev, pager, next"
         :total="pagers.total"
@@ -111,46 +59,29 @@
       />
     </div>
 
-    <el-dialog
-      title="查看详情"
-      :visible.sync="detailVisible"
-    >
+    <el-dialog title="查看详情" :visible.sync="detailVisible">
       <el-row :gutter="20">
-        <el-col :span="6">
-          注册引导广告标题
-        </el-col>
+        <el-col :span="6"> 注册引导广告标题 </el-col>
         <el-col :span="6">
           {{ dateDetail.ad_title }}
         </el-col>
       </el-row>
       <el-row :gutter="20">
-        <el-col :span="6">
-          注册引导图片
-        </el-col>
+        <el-col :span="6"> 注册引导图片 </el-col>
         <el-col :span="6">
           {{ dateDetail.ad_pic }}
         </el-col>
       </el-row>
-      <el-row
-        v-if="dateDetail.discributor_id"
-        :gutter="20"
-      >
-        <el-col :span="6">
-          参与的分销商
-        </el-col>
+      <el-row v-if="dateDetail.discributor_id" :gutter="20">
+        <el-col :span="6"> 参与的分销商 </el-col>
         <el-col :span="6">
           <div v-for="item in dateDetail.discributor_id.list">
             {{ item.label }}
           </div>
         </el-col>
       </el-row>
-      <el-row
-        v-if="dateDetail.promotions_value"
-        :gutter="20"
-      >
-        <el-col :span="6">
-          参与的优惠券
-        </el-col>
+      <el-row v-if="dateDetail.promotions_value" :gutter="20">
+        <el-col :span="6"> 参与的优惠券 </el-col>
         <div v-for="item in dateDetail.promotions_value.coupons">
           {{ item.title }}
         </div>
@@ -160,13 +91,8 @@
         <el-col :span="6"></el-col>
         <el-col :span="6"></el-col>
       </el-row> -->
-      <div
-        slot="footer"
-        class="dialog-footer"
-      >
-        <el-button @click.native="addCouponVisible = false">
-          关闭
-        </el-button>
+      <div slot="footer" class="dialog-footer">
+        <el-button @click.native="addCouponVisible = false"> 关闭 </el-button>
       </div>
     </el-dialog>
   </div>
@@ -177,7 +103,7 @@ import util from '../../../common/js/util'
 import { getRegisterList, getRegisterInfo, deleteRegister } from '../../../api/promotions'
 
 export default {
-  data () {
+  data() {
     return {
       loading: false,
       detailVisible: false,
@@ -194,23 +120,23 @@ export default {
       }
     }
   },
-  mounted () {
+  mounted() {
     this.getDataList()
   },
   methods: {
-    handleCurrentChange (page_num) {
+    handleCurrentChange(page_num) {
       this.params.page = page_num
       this.getDataList()
     },
-    actionCouponAdd () {
+    actionCouponAdd() {
       this.$router.push({ path: '/member/marketing/register/' })
     },
-    editAction (index, row) {
+    editAction(index, row) {
       this.$router.push({ path: '/member/marketing/register/' + row.id })
     },
-    itemsDetail (index, row) {
+    itemsDetail(index, row) {
       this.loading = true
-      getRegisterInfo(row.id).then((res) => {
+      getRegisterInfo(row.id).then(res => {
         console.log(res.data.data)
         if (res.data.data) {
           this.dateDetail = res.data.data
@@ -222,7 +148,7 @@ export default {
       })
       this.detailVisible = true
     },
-    deleteAction (index, row) {
+    deleteAction(index, row) {
       this.$confirm('此操作将删除该促销, 是否继续?', '提示', {
         confirmButtonText: '确定',
         cancelButtonText: '取消',
@@ -230,7 +156,7 @@ export default {
       })
         .then(() => {
           deleteRegister(row.id)
-            .then((response) => {
+            .then(response => {
               this.dataList.splice(index, 1)
               this.$message({
                 message: '删除成功',
@@ -252,10 +178,10 @@ export default {
           })
         })
     },
-    getDataList () {
+    getDataList() {
       this.loading = true
       getRegisterList(this.params)
-        .then((res) => {
+        .then(res => {
           if (res.data.data.list.length > 0) {
             this.dataList = res.data.data.list
             this.pagers.total = res.data.data.pagers.total
@@ -265,7 +191,7 @@ export default {
             this.loading = false
           }
         })
-        .catch((error) => {
+        .catch(error => {
           this.loading = false
         })
     }

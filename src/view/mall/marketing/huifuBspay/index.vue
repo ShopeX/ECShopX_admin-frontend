@@ -120,7 +120,7 @@
             </el-col>
           </el-row>
         </div>
-        <div class="content-padded content-center">
+        <div class="mt-4 text-right">
           <el-pagination
             background
             layout="total, sizes, prev, pager, next, jumper"
@@ -204,7 +204,7 @@ export default {
     },
     getList(params) {
       this.loading = true
-      this.$api.bspay.getSubApproveList(params).then((response) => {
+      this.$api.bspay.getSubApproveList(params).then(response => {
         this.list = response.list
         this.total_count = Number(response.total_count)
         this.loading = false

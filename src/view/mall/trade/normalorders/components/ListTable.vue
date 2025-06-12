@@ -351,7 +351,7 @@
           </template>
         </el-table-column>
       </el-table>
-      <div class="content-padded content-center">
+      <div class="mt-4 text-right">
         <el-pagination
           background
           layout="total, sizes, prev, pager, next"
@@ -430,13 +430,13 @@ export default {
       })
     },
     getStatus() {
-      isBind().then((response) => {
+      isBind().then(response => {
         this.IsBind = response.data.data.result
       })
     },
     writeoffOrderAction(order_id) {
       //自提订单核销
-      getWriteoff(order_id).then((response) => {
+      getWriteoff(order_id).then(response => {
         let writeoffOrderData = response.data.data
         if (writeoffOrderData.ziti_status == 'DONE') {
           this.$message.error('该订单已核销!')
@@ -454,7 +454,7 @@ export default {
         type: 'warning'
       })
         .then(() => {
-          confirmBack(row.order_id).then((response) => {
+          confirmBack(row.order_id).then(response => {
             this.$message({
               message: '退回成功',
               type: 'success',
@@ -477,7 +477,7 @@ export default {
         type: 'warning'
       })
         .then(() => {
-          doBusinessReceipt(row.order_id).then((response) => {
+          doBusinessReceipt(row.order_id).then(response => {
             this.$message({
               message: '接单成功',
               type: 'success',
@@ -507,11 +507,11 @@ export default {
       let selectItemType = data.delivery_type
       this.$emit('onChangeData', 'selectItemType', selectItemType)
 
-      getLogisticsList().then((res) => {
+      getLogisticsList().then(res => {
         this.dlycorps = res.data.data.list
         this.$emit('onChangeData', 'dlycorps', res.data.data.list)
       })
-      getOrderDetail(order_id).then((response) => {
+      getOrderDetail(order_id).then(response => {
         let deliveryData = response.data.data
         this.$emit('onChangeData', 'deliveryData', deliveryData)
         if (deliveryData.orderInfo.cancel_status == 'WAIT_PROCESS') {
@@ -555,7 +555,7 @@ export default {
               order_id: row.order_id,
               status: status
             }
-            isInvoiced(params).then((response) => {
+            isInvoiced(params).then(response => {
               if (response.data.data.success) {
                 this.$message({
                   type: 'success',
@@ -577,7 +577,7 @@ export default {
     confirmCancelOrderAction(order_id) {
       // 已支付订单的取消订单审核
       let params = { order_type: 'normal' }
-      getCancelOrderInfo(order_id, params).then((response) => {
+      getCancelOrderInfo(order_id, params).then(response => {
         this.$emit('onChangeData', 'cancelVisible', true)
         this.$emit('onChangeData', 'cancelData', response.data.data)
       })
@@ -585,7 +585,7 @@ export default {
     },
     cancelOrderAction(order_id) {
       //取消订单
-      getOrderDetail(order_id).then((response) => {
+      getOrderDetail(order_id).then(response => {
         let cancelOrderData = response.data.data
         if (cancelOrderData.orderInfo.cancel_status == 'SUCCESS') {
           this.$message.error('该订单已取消!')

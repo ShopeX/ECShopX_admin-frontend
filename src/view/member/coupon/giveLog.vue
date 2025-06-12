@@ -22,7 +22,7 @@
           </template>
         </el-table-column>
       </el-table>
-      <div class="content-padded content-center">
+      <div class="mt-4 text-right">
         <el-pagination
           layout="prev, pager, next"
           :current-page.sync="params.page"
@@ -65,12 +65,12 @@ export default {
     getGiveLogList() {
       this.loading = true
       getGiveLogList(this.params)
-        .then((response) => {
+        .then(response => {
           this.giveLogList = response.data.data.list
           this.totalCount = response.data.data.total_count
           this.loading = false
         })
-        .catch((error) => {
+        .catch(error => {
           this.loading = false
           this.$message({
             type: 'error',

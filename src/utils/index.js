@@ -9,7 +9,7 @@ export * from './src/type-helper'
 
 export * from './src/utils'
 
-export { install as VuePrototype } from './prototype'
+export { install as VuePrototype } from './src/prototype'
 
 // 云店
 export const VERSION_STANDARD = () => store.getters.versionMode === 'standard'
@@ -159,21 +159,6 @@ export function getPropByPath(obj, path, strict) {
     k: keyArr[i],
     v: tempObj ? tempObj[keyArr[i]] : null
   }
-}
-
-function export_open(tab) {
-  setTimeout(() => {
-    const login_type = store.getters.login_type
-    if (login_type == 'distributor') {
-      window.open(`/shopadmin/shopsetting/baseexport?tab=${tab}`)
-    } else if (login_type == 'merchant') {
-      window.open(`/merchant/setting/baseexport?tab=${tab}`)
-    } else if (login_type == 'supplier') {
-      window.open(`/supplier/setting/baseexport?tab=${tab}`)
-    } else {
-      window.open(`/companydata/report/baseexport?tab=${tab}`)
-    }
-  }, 1000)
 }
 
 export function unescape(html) {
@@ -346,6 +331,6 @@ export const transformTree = (tree, obj = {}) => {
   return transformedTree
 }
 
-export { log, export_open, isEmpty }
+export { log, isEmpty }
 
 export default {}

@@ -818,7 +818,7 @@
             </template>
           </el-table-column>
         </el-table>
-        <div v-if="modal_total_count > paramsModal.pageSize" class="content-padded content-center">
+        <div v-if="modal_total_count > paramsModal.pageSize" class="mt-4 text-right">
           <el-pagination
             layout="prev, pager, next"
             :current-page.sync="paramsModal.page"

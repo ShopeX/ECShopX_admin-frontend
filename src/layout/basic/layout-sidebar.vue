@@ -13,14 +13,14 @@
           :class="{ 'main-menu-item--active': activeMainMenu === item.alias_name }"
           @click="handleMainMenuClick(item)"
         >
-          <SpIcon class="menu-icon" name="layout-dashboard" :size="16" />
-          <span class="text-xs mt-1">{{ item.name }}</span>
+          <SpIcon class="menu-icon" :name="computedMenuIcon(item)" :size="16" />
+          <span class="text-sm mt-1">{{ item.name }}</span>
         </li>
       </ul>
     </div>
 
     <div class="sub-menu-list w-[180px] border-border border-l border-r h-full">
-      activeSubIndex: {{ activeSubIndex }}
+      <!-- activeSubIndex: {{ activeSubIndex }} -->
       <div class="h-[50px] pl-2">
         <div class="light flex h-full items-center text-lg px-3">
           <span>{{ systemTitle }}</span>
@@ -29,9 +29,9 @@
       <el-menu class="!border-none w-full" :default-active="activeSubIndex" unique-opened>
         <template v-for="item in subMenus">
           <template v-if="item.children">
-            <el-submenu :key="item.alias_name">
+            <el-submenu :key="item.alias_name" :index="item.alias_name">
               <template slot="title">
-                <span class="text-sm inline-block">{{ item.name }}</span>
+                <span>{{ item.name }}</span>
               </template>
               <!-- 三级菜单 -->
               <el-menu-item
@@ -50,7 +50,7 @@
               :index="item.alias_name"
               @click="handleSubMenuClick(item)"
             >
-              <span class="text-sm inline-block">{{ item.name }}</span>
+              <span>{{ item.name }}</span>
             </el-menu-item>
           </template>
         </template>
@@ -77,7 +77,7 @@ export default {
       return DEFAULT_CONFIG.systemTitle
     },
     activeMainMenu() {
-      console.log('activeMainMenu', this.$route)
+      // console.log('activeMainMenu', this.$route)
       return this.$route.matched[0]?.meta?.aliasName
     },
     activeSubIndex() {
@@ -88,14 +88,24 @@ export default {
     this.mainMenus = this.$store.state.user.accessMenus || []
   },
   methods: {
+    computedMenuIcon(item) {
+      const allRoutes = this.$router.getRoutes()
+      const route = allRoutes.find(route => route.meta?.aliasName === item.alias_name)
+      return route?.meta?.icon || 'layout-dashboard'
+    },
     handleMainMenuClick(item) {
       this.subMenus = item.children || []
       // this.$router.push({ path: item.path })
     },
     handleSubMenuClick(item) {
       const allRoutes = this.$router.getRoutes()
+      console.log('allRoutes:', allRoutes)
       const route = allRoutes.find(route => route.meta?.permissions?.includes(item.permission))
+
       if (route) {
+        if (this.$route.path == route?.path) {
+          return
+        }
         this.$router.push({ path: route.path })
       } else {
         console.log('没有权限', item)
@@ -118,8 +128,8 @@ export default {
       }
     }
     &--active {
-      color: hsl(var(--primary-foreground));
-      background: var(--primary);
+      color: hsl(var(--primary-foreground)) !important;
+      background: var(--primary) !important;
       border-radius: 6px;
     }
   }
@@ -131,7 +141,14 @@ export default {
   line-height: 42px;
   margin: 0 8px 2px;
   padding-right: 12px !important;
+  padding-left: 34px !important;
   min-width: auto;
+  color: #666;
+}
+
+:deep(.el-menu-item.is-active) {
+  color: var(--primary) !important;
+  background: color-mix(in srgb, #ffffff 90%, var(--primary)) !important;
 }
 
 :deep(.el-submenu__title) {
@@ -140,5 +157,6 @@ export default {
   line-height: 42px;
   margin: 0 8px 2px;
   background: 216 14% 93% !important;
+  color: #666;
 }
 </style>

@@ -5,7 +5,7 @@ const routes = [
     component: BasicLayout,
     meta: {
       aliasName: 'entity',
-      icon: 'icon-products',
+      icon: 'shopping-bag',
       keepAlive: true,
       title: '商品'
     },
@@ -13,8 +13,8 @@ const routes = [
     path: '/products',
     children: [
       {
-        name: 'self-products',
-        path: 'self-products',
+        name: 'selfProducts',
+        path: 'product-manage/self-products',
         component: () => import('@/view/mall/goods/physical/list'),
         meta: {
           aliasName: 'goodsphysical',
@@ -24,7 +24,6 @@ const routes = [
         },
         children: [
           {
-            name: 'self-products_create',
             path: 'editor/:itemId?',
             component: () => import('@/view/goods/index'),
             meta: {
@@ -33,7 +32,6 @@ const routes = [
             }
           },
           {
-            name: 'self-products_stock-import',
             path: 'stock-import',
             component: () => import('@/view/mall/goods/physical/normalGoodsStoreUpload'),
             meta: {
@@ -42,7 +40,6 @@ const routes = [
             }
           },
           {
-            name: 'self-products_profit-sharing-import',
             path: 'profit-sharing-import',
             component: () => import('@/view/mall/goods/physical/normalGoodsProfitUpload'),
             meta: {
@@ -51,7 +48,6 @@ const routes = [
             }
           },
           {
-            name: 'self-products_product-import',
             path: 'product-import',
             component: () => import('@/view/mall/goods/physical/normalGoodsUpload'),
             meta: {
@@ -62,117 +58,98 @@ const routes = [
         ]
       },
       {
-        name: 'store-products',
-        path: 'store-products',
+        name: 'storeProducts',
+        path: 'product-manage/store-products',
         component: () => import('@/view/mall/storeshop/store-shop.standard'),
         meta: {
           aliasName: 'storeshopitemanagement',
           icon: 'icon-products',
-          title: '店铺商品',
+          title: '门店商品',
           permissions: ['entity.goods.storeshopitemanagement']
         }
       },
       {
-        name: 'merchant-products',
-        path: 'merchant-products',
+        name: 'merchantProducts',
+        path: 'product-manage/merchant-products',
         component: () => import('@/view/mall/goods/audit/list'),
         meta: {
           icon: 'icon-products',
           title: '商户商品'
-        }
-      },
-      {
-        name: 'merchant-products_edit',
-        path: 'merchant-products/edtior:itemId?',
-        component: () => import('@/view/mall/goods/audit/add'),
-        meta: {
-          icon: 'icon-products',
-          title: '商品编辑',
-          hidden: true
-        }
-      },
-      {
-        name: 'category',
-        path: 'category',
-        meta: {
-          icon: 'icon-products',
-          title: '商品分类'
         },
         children: [
           {
-            name: 'sale-category',
-            path: 'sale-category',
-            component: () => import('@/view/goods/saleCategory'),
+            path: 'edtior:itemId?',
+            component: () => import('@/view/mall/goods/audit/add'),
             meta: {
-              title: '销售分类',
-              permissions: ['entity.goodsgroup.goodsmaincategory']
-            }
-          },
-          {
-            path: 'management-category',
-            name: 'management-category',
-            component: () => import('@/view/goods/mainCategory'),
-            meta: {
-              title: '管理分类',
-              permissions: ['entity.goodsgroup.goodscategory']
-            }
-          },
-          {
-            path: 'product-tag',
-            name: 'product-tag',
-            component: () => import('@/view/mall/goods/tags'),
-            meta: {
-              title: '商品标签',
-              permissions: ['entity.goodsgroup.itemtags']
+              icon: 'icon-products',
+              title: '商品编辑',
+              hidden: true
             }
           }
         ]
       },
       {
-        name: 'base-config',
-        path: 'base-config',
+        name: 'managementCategory',
+        path: 'product-category/management-category',
+        component: () => import('@/view/goods/mainCategory'),
         meta: {
-          icon: 'icon-products',
-          title: '基础配置'
-        },
-        children: [
-          {
-            name: 'product-sku',
-            path: 'product-sku',
-            component: () => import('@/view/mall/goods/attributes/attributes'),
-            meta: {
-              title: '商品规格',
-              permissions: ['entity.goodsbase.goodsattributes']
-            }
-          },
-          {
-            path: 'minimum-order-quantity',
-            name: 'minimum-order-quantity',
-            component: () => import('@/view/mall/goods/attributes/goodsattributes'),
-            meta: {
-              title: '起订量',
-              permissions: ['entity.goodsbase.goodsstartnum']
-            }
-          },
-          {
-            path: 'product-brand',
-            name: 'product-brand',
-            component: () => import('@/view/mall/goods/attributes/brand'),
-            meta: {
-              title: '商品品牌',
-              permissions: ['entity.goodsbase.goodsbrand']
-            }
-          },
-          {
-            path: 'product-params',
-            name: 'product-params',
-            component: () => import('@/view/mall/goods/attributes/params'),
-            meta: {
-              title: '商品参数',
-              permissions: ['entity.goodsbase.goodsparams']
-            }
-          }
-        ]
+          title: '管理分类',
+          permissions: ['entity.goodsgroup.goodsmaincategory']
+        }
+      },
+      {
+        name: 'saleCategory',
+        path: 'product-category/sale-category',
+        component: () => import('@/view/goods/saleCategory'),
+        meta: {
+          title: '销售分类',
+          permissions: ['entity.goodsgroup.goodscategory']
+        }
+      },
+      {
+        name: 'productTag',
+        path: 'product-category/product-tag',
+        component: () => import('@/view/mall/goods/tags'),
+        meta: {
+          title: '商品标签',
+          permissions: ['entity.goodsgroup.itemtags']
+        }
+      },
+      {
+        name: 'productSku',
+        path: 'base-config/product-sku',
+        component: () => import('@/view/mall/goods/attributes/attributes'),
+        meta: {
+          title: '商品规格',
+          permissions: ['entity.goodsbase.goodsattributes']
+        }
+      },
+      {
+        name: 'minimumOrderQuantity',
+        path: 'base-config/minimum-order-quantity',
+        component: () => import('@/view/mall/goods/attributes/goodsattributes'),
+        meta: {
+          title: '起订量',
+          permissions: ['entity.goodsbase.goodsstartnum']
+        }
+      },
+      {
+        name: 'productBrand',
+        path: 'base-config/product-brand',
+        component: () => import('@/view/mall/goods/attributes/brand'),
+        meta: {
+          title: '商品品牌',
+          permissions: ['entity.goodsbase.goodsbrand']
+        }
+      },
+      {
+        name: 'productParams',
+        path: 'base-config/product-params',
+        component: () => import('@/view/mall/goods/attributes/params'),
+        meta: {
+          title: '商品参数',
+          permissions: ['entity.goodsbase.goodsparams']
+        }
       }
     ]
   }

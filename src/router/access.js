@@ -8,13 +8,7 @@ import store from '@/store'
  * @param parentPath 父节点路径，用于递归
  * @returns 所有叶子节点路径的数组
  */
-function getAllPermissions(
-  tree,
-  fieldName,
-  childrenKey = 'children',
-  parentPath = [],
-  parentName = []
-) {
+function getAllPermissions(tree, fieldName, childrenKey = 'children', parentPath = []) {
   let paths = []
 
   for (const node of tree) {
@@ -22,7 +16,6 @@ function getAllPermissions(
     const currentValue = String(node[fieldName] || '')
     // 当前路径
     const currentPath = currentValue != '' ? [...parentPath, currentValue] : parentPath
-    const currentName = String(node['name'] || '')
 
     // 判断是否有子节点
     const hasChildren =
@@ -31,17 +24,10 @@ function getAllPermissions(
     if (!hasChildren) {
       // 如果是叶子节点（没有子节点），才添加到结果中
       node.permission = currentPath.join('.')
-      node.names = parentName
       paths.push(currentPath.join('.'))
     } else {
       // 如果有子节点，递归处理
-      const childPaths = getAllPermissions(
-        node[childrenKey],
-        fieldName,
-        childrenKey,
-        currentPath,
-        currentName
-      )
+      const childPaths = getAllPermissions(node[childrenKey], fieldName, childrenKey, currentPath)
       paths = [...paths, ...childPaths]
     }
   }
@@ -59,11 +45,6 @@ function filterTreeByLeafPermissions(treeData, permissions, childrenKey = 'child
 
       // 如果有子节点，递归处理
       if (newNode[childrenKey] && newNode[childrenKey].length > 0) {
-        newNode[childrenKey] = filterTreeByLeafPermissions(
-          newNode[childrenKey],
-          permissions,
-          childrenKey
-        )
         // 如果处理后子节点为空数组，且当前节点在权限列表中，则保留该节点
         if (
           // newNode[childrenKey].length === 0 &&
@@ -71,6 +52,12 @@ function filterTreeByLeafPermissions(treeData, permissions, childrenKey = 'child
         ) {
           return newNode
         }
+
+        newNode[childrenKey] = filterTreeByLeafPermissions(
+          newNode[childrenKey],
+          permissions,
+          childrenKey
+        )
 
         // 返回处理后的非空节点
         return newNode[childrenKey].length > 0 ? newNode : undefined

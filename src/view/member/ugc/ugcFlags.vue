@@ -27,7 +27,7 @@
       />
     </el-card>
 
-    <div class="content-padded content-center">
+    <div class="mt-4 text-right">
       <el-pagination
         layout="total, sizes, prev, pager, next, jumper"
         :total="pagers.total"
@@ -147,14 +147,14 @@ export default {
       //console.log('getDataList',params.status)
       that.$data.loading = true
       getBadge(params).then(
-        (res) => {
+        res => {
           var { list, total_count } = res.data.data
           //console.log('res',res)
           that.$data.flagList = list
           that.$data.pagers = { total: total_count }
           that.$data.loading = false
         },
-        (err) => {
+        err => {
           that.$data.loading = false
         }
       )
@@ -189,9 +189,9 @@ export default {
       const that = this
       const { ruleForm } = this.$data
       //console.log('updataFalg',ruleForm)
-      this.$refs['ruleForm'].validate((valid) => {
+      this.$refs['ruleForm'].validate(valid => {
         if (valid) {
-          createBadge(ruleForm).then((res) => {
+          createBadge(ruleForm).then(res => {
             var { message } = res.data.data
             this.$message({
               type: 'success',
@@ -217,7 +217,7 @@ export default {
         cancelButtonText: '取消',
         type: 'warning'
       }).then(() => {
-        badgeDelete(params).then((res) => {
+        badgeDelete(params).then(res => {
           // console.log('notesDelete',res)
           var msg = res.data.data.message
           this.getDataList()
@@ -257,7 +257,7 @@ export default {
       const { id_set } = this.$data
       params.badge_id = id_set
       //console.log('进行审核 auditNote',params);
-      badgeVerify(params).then((res) => {
+      badgeVerify(params).then(res => {
         //console.log('res',res)
         var msg = res.data.data.message
         this.cancelAuditDialog(false)

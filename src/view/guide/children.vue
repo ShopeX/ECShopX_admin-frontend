@@ -31,7 +31,7 @@
         </template>
       </el-table-column>
     </el-table>
-    <div v-if="total_count > params.pageSize" class="content-padded content-center">
+    <div v-if="total_count > params.pageSize" class="mt-4 text-right">
       <el-pagination
         layout="total, sizes, prev, pager, next"
         :page-sizes="[params.pageSize]"
@@ -103,7 +103,7 @@
           </template>
         </el-table-column>
       </el-table>
-      <div v-if="modal_total_count > paramsModal.pageSize" class="content-padded content-center">
+      <div v-if="modal_total_count > paramsModal.pageSize" class="mt-4 text-right">
         <el-pagination
           layout="prev, pager, next"
           :current-page.sync="paramsModal.page"
@@ -192,7 +192,7 @@ export default {
     },
     getPopularizeListModalFun(filter) {
       this.modalLoading = true
-      getPopularizeList(filter).then((res) => {
+      getPopularizeList(filter).then(res => {
         this.modalList = res.data.data.list
         this.modal_total_count = Number(res.data.data.total_count)
         this.modalLoading = false
@@ -205,8 +205,8 @@ export default {
       }
     },
     editPopularizeRemoveFun() {
-      editPopularizeRemove({ 'user_id': this.row.user_id, 'new_user_id': this.currentRow }).then(
-        (res) => {
+      editPopularizeRemove({ user_id: this.row.user_id, new_user_id: this.currentRow }).then(
+        res => {
           this.message = '上下级'
           this.loading = false
           this.$message({
@@ -220,7 +220,7 @@ export default {
     },
 
     getPopularizeChildrenFun() {
-      getPopularizeChildren(this.params).then((res) => {
+      getPopularizeChildren(this.params).then(res => {
         this.list = res.data.data.list
         this.total_count = res.data.data.total_count
         this.loading = false

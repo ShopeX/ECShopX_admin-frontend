@@ -61,7 +61,7 @@
         />
       </el-tab-pane>
     </el-tabs>
-    <div class="content-padded content-center">
+    <div class="mt-4 text-right">
       <el-pagination
         layout="total, sizes, prev, pager, next, jumper"
         :total="pagers.total"
@@ -177,14 +177,14 @@ export default {
       }
       that.$data.loading = true
       getTags(params).then(
-        (res) => {
+        res => {
           var { list, total_count } = res.data.data
           //console.log('res',res)
           that.$data.tagsList = list
           that.$data.pagers = { total: total_count }
           that.$data.loading = false
         },
-        (err) => {
+        err => {
           that.$data.loading = false
         }
       )
@@ -248,7 +248,7 @@ export default {
       }
       params.tag_id = id_set
       // console.log('进行审核 auditNote',params);
-      tagVerify(params).then((res) => {
+      tagVerify(params).then(res => {
         //console.log('res',res)
         var msg = res.data.data.message
         this.cancelAuditDialog(false)

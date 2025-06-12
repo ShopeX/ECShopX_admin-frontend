@@ -1,9 +1,7 @@
 <template>
   <div>
     <div class="action-container">
-      <export-tip @exportHandle="exportData">
-        <el-button v-loading="exportloading" type="primary"> 导出 </el-button>
-      </export-tip>
+      <el-button v-loading="exportloading" type="primary" @click="exportData"> 导出 </el-button>
       <el-popover
         placement="top-start"
         width="200"

@@ -1,34 +1,13 @@
 <template>
   <div>
-    <el-table
-      v-loading="loading"
-      :data="giveErrorLogList"
-      style="width: 100%"
-      height="580"
-      border
-    >
-      <el-table-column
-        prop="username"
-        label="用户姓名"
-      />
-      <el-table-column
-        prop="mobile"
-        label="手机号码"
-      />
-      <el-table-column
-        prop="card_id"
-        label="优惠券id"
-      />
-      <el-table-column
-        prop="title"
-        label="优惠券名称"
-      />
-      <el-table-column
-        prop="note"
-        label="失败原因"
-      />
+    <el-table v-loading="loading" :data="giveErrorLogList" style="width: 100%" height="580" border>
+      <el-table-column prop="username" label="用户姓名" />
+      <el-table-column prop="mobile" label="手机号码" />
+      <el-table-column prop="card_id" label="优惠券id" />
+      <el-table-column prop="title" label="优惠券名称" />
+      <el-table-column prop="note" label="失败原因" />
     </el-table>
-    <div class="content-padded content-center">
+    <div class="mt-4 text-right">
       <el-pagination
         layout="prev, pager, next"
         :current-page.sync="params.page"
@@ -43,7 +22,7 @@
 <script>
 import { getGiveErrorLogList } from '../../../api/promotions'
 export default {
-  data () {
+  data() {
     return {
       loading: false,
       giveErrorLogList: [],
@@ -54,23 +33,23 @@ export default {
       }
     }
   },
-  mounted () {
+  mounted() {
     this.getGiveErrorLogList()
   },
   methods: {
-    handleCurrentChange (pageNum) {
+    handleCurrentChange(pageNum) {
       this.params.page = pageNum
       this.getGiveErrorLogList()
     },
-    getGiveErrorLogList () {
+    getGiveErrorLogList() {
       this.loading = true
       getGiveErrorLogList(this.$route.params.id, this.params)
-        .then((response) => {
+        .then(response => {
           this.giveErrorLogList = response.data.data.list
           this.totalCount = response.data.data.total_count
           this.loading = false
         })
-        .catch((error) => {
+        .catch(error => {
           this.loading = false
           this.$message({
             type: 'error',

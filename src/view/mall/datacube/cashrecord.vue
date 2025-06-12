@@ -3,26 +3,11 @@
   <div>
     <el-card v-if="loginType === 'distributor'">
       <el-row style="marginbottom: 0px">
-        <el-form
-          ref="topforms"
-          :model="topforms"
-          :rules="topformsrules"
-        >
-          <el-row
-            type="flex"
-            justify="space-around"
-            style="marginbottom: 0px"
-          >
-            <el-col
-              :span="5"
-              class="left-cols-css"
-            >
-              <p class="title-fonts">
-                当前可提现金额
-              </p>
-              <p class="title-fonts title-fonts-fs">
-                ¥ {{ withdrawal_balance }}
-              </p>
+        <el-form ref="topforms" :model="topforms" :rules="topformsrules">
+          <el-row type="flex" justify="space-around" style="marginbottom: 0px">
+            <el-col :span="5" class="left-cols-css">
+              <p class="title-fonts">当前可提现金额</p>
+              <p class="title-fonts title-fonts-fs">¥ {{ withdrawal_balance }}</p>
               <el-form-item
                 v-if="distributormoneyList.withdraw_method === 2"
                 prop="withdrawal_amount"
@@ -37,15 +22,12 @@
                 />
                 元
               </el-form-item>
-              <p
-                v-if="distributormoneyList.withdraw_method === 2"
-                style="margin-bottom: 15px"
-              >
+              <p v-if="distributormoneyList.withdraw_method === 2" style="margin-bottom: 15px">
                 提现限额：满
-                <span
-                  style="color: red"
-                >¥ {{ distributormoneyList.distributor_money
-                }}<span style="color: #000"> 元，可提现</span></span>
+                <span style="color: red"
+                  >¥ {{ distributormoneyList.distributor_money
+                  }}<span style="color: #000"> 元，可提现</span></span
+                >
               </p>
               <el-button
                 v-if="distributormoneyList.withdraw_method === 2"
@@ -55,10 +37,7 @@
                 提现
               </el-button>
             </el-col>
-            <el-col
-              :span="16"
-              class="right-cols-css"
-            >
+            <el-col :span="16" class="right-cols-css">
               <p>1、当前可提现金额需大于或等于提现限额才可进行提现；</p>
               <p>2、提现操作请在10:00:00-23:59:59进行(仅可提现金额大于或等于提现限额)；</p>
               <p>
@@ -70,10 +49,7 @@
       </el-row>
     </el-card>
     <el-card>
-      <el-form
-        :model="formData"
-        label-width="100px"
-      >
+      <el-form :model="formData" label-width="100px">
         <el-row style="marginbottom: 0px">
           <el-col :span="12">
             <el-form-item label="选择日期范围">
@@ -97,11 +73,7 @@
           </el-col>
           <el-col :span="6">
             <el-form-item label="提现状态">
-              <el-select
-                v-model="formData.cash_status"
-                size="small"
-                style="width: 100%"
-              >
+              <el-select v-model="formData.cash_status" size="small" style="width: 100%">
                 <el-option
                   v-for="item in options"
                   :key="item.value"
@@ -121,10 +93,7 @@
               />
             </el-form-item>
           </el-col>
-          <el-col
-            v-if="loginType !== 'distributor'"
-            :span="12"
-          >
+          <el-col v-if="loginType !== 'distributor'" :span="12">
             <el-form-item label="选择店铺">
               <shop-select
                 ref="shopSelect"
@@ -136,47 +105,20 @@
               />
             </el-form-item>
           </el-col>
-          <el-col
-            v-if="loginType !== 'distributor'"
-            :span="4"
-            :push="8"
-            style="margin-left: 10px"
-          >
+          <el-col v-if="loginType !== 'distributor'" :span="4" :push="8" style="margin-left: 10px">
             <div class="flex-right">
-              <el-button
-                size="small"
-                @click="handleReset"
-              >
-                重置
-              </el-button>
-              <el-button
-                size="small"
-                type="primary"
-                @click="getCompanyDataList()"
-              >
+              <el-button size="small" @click="handleReset"> 重置 </el-button>
+              <el-button size="small" type="primary" @click="getCompanyDataList()">
                 搜索
               </el-button>
             </div>
           </el-col>
         </el-row>
-        <el-row
-          v-if="loginType === 'distributor'"
-          :gutter="20"
-        >
-          <el-col
-            :span="4"
-            :push="20"
-          >
+        <el-row v-if="loginType === 'distributor'" :gutter="20">
+          <el-col :span="4" :push="20">
             <div class="flex-right">
-              <el-button @click="handleReset">
-                重置
-              </el-button>
-              <el-button
-                type="primary"
-                @click="getCompanyDataList()"
-              >
-                搜索
-              </el-button>
+              <el-button @click="handleReset"> 重置 </el-button>
+              <el-button type="primary" @click="getCompanyDataList()"> 搜索 </el-button>
             </div>
           </el-col>
         </el-row>
@@ -184,102 +126,44 @@
     </el-card>
     <el-card>
       <el-row style="marginbottom: 0px">
-        <el-col
-          :span="4"
-          class="total-num-box"
-        >
+        <el-col :span="4" class="total-num-box">
           <p class="total-num-top-fonts">
             {{ allAccountList.count }}
           </p>
-          <p class="total-num-bot-fonts">
-            提现笔数
-          </p>
+          <p class="total-num-bot-fonts">提现笔数</p>
         </el-col>
-        <el-col
-          :span="4"
-          class="total-num-box"
-        >
-          <p class="total-num-top-fonts">
-            ¥ {{ (allAccountList.total_amt / 100).toFixed(2) }}
-          </p>
-          <p class="total-num-bot-fonts">
-            提现总金额
-          </p>
+        <el-col :span="4" class="total-num-box">
+          <p class="total-num-top-fonts">¥ {{ (allAccountList.total_amt / 100).toFixed(2) }}</p>
+          <p class="total-num-bot-fonts">提现总金额</p>
         </el-col>
-        <el-col
-          :span="4"
-          class="total-num-box"
-        >
+        <el-col :span="4" class="total-num-box">
           <p class="total-num-top-fonts">
             ¥ {{ (allAccountList.finish_total_amt / 100).toFixed(2) }}
           </p>
-          <p class="total-num-bot-fonts">
-            提现成功金额
-          </p>
+          <p class="total-num-bot-fonts">提现成功金额</p>
         </el-col>
-        <el-col
-          :span="4"
-          class="total-num-box"
-        >
-          <p class="total-num-top-fonts">
-            ¥ {{ (allAccountList.total_amting / 100).toFixed(2) }}
-          </p>
-          <p class="total-num-bot-fonts">
-            提现中金额
-          </p>
+        <el-col :span="4" class="total-num-box">
+          <p class="total-num-top-fonts">¥ {{ (allAccountList.total_amting / 100).toFixed(2) }}</p>
+          <p class="total-num-bot-fonts">提现中金额</p>
         </el-col>
-        <el-col
-          :span="4"
-          class="total-num-box"
-        >
+        <el-col :span="4" class="total-num-box">
           <p class="total-num-top-fonts">
             ¥ {{ (allAccountList.fail_total_amt / 100).toFixed(2) }}
           </p>
-          <p class="total-num-bot-fonts">
-            提现失败金额
-          </p>
+          <p class="total-num-bot-fonts">提现失败金额</p>
         </el-col>
       </el-row>
     </el-card>
     <el-card>
-      <el-row
-        type="flex"
-        justify="end"
-      >
-        <el-button
-          type="primary"
-          size="small"
-          @click="onExportExcel()"
-        >
-          导出
-        </el-button>
+      <el-row type="flex" justify="end">
+        <el-button type="primary" size="small" @click="onExportExcel()"> 导出 </el-button>
       </el-row>
-      <el-table
-        v-loading="loading"
-        :data="allListData"
-        stripe
-        border
-        style="width: 100%"
-      >
-        <el-table-column
-          prop="created_at"
-          label="日期"
-          width="170"
-        />
-        <el-table-column
-          prop="order_id"
-          label="提现订单号"
-          width="180"
-        />
-        <el-table-column
-          prop="bind_card_id"
-          label="到账银行卡号"
-          width="180"
-        />
+      <el-table v-loading="loading" :data="allListData" stripe border style="width: 100%">
+        <el-table-column prop="created_at" label="日期" width="170" />
+        <el-table-column prop="order_id" label="提现订单号" width="180" />
+        <el-table-column prop="bind_card_id" label="到账银行卡号" width="180" />
         <el-table-column label="提现金额">
-          <template slot-scope="scope">
-            ￥{{ (scope.row.trans_amt / 100).toFixed(2) }}
-          </template>
+          <template slot-scope="scope"> ￥{{ (scope.row.trans_amt / 100).toFixed(2) }} </template>
         </el-table-column>
         <el-table-column
           v-if="loginType !== 'distributor'"
@@ -287,29 +171,18 @@
           label="店铺名称"
           width="180"
         />
-        <el-table-column
-          prop="login_name"
-          label="操作人"
-          width="160"
-        />
-        <el-table-column
-          prop="cash_status"
-          label="提现状态"
-        >
+        <el-table-column prop="login_name" label="操作人" width="160" />
+        <el-table-column prop="cash_status" label="提现状态">
           <template slot-scope="scope">
             {{
               (scope.row.cash_status === '0' && '提现中') ||
-                (scope.row.cash_status === '1' && '提现中') ||
-                (scope.row.cash_status === '2' && '提现成功') ||
-                (scope.row.cash_status === '3' && '提现失败')
+              (scope.row.cash_status === '1' && '提现中') ||
+              (scope.row.cash_status === '2' && '提现成功') ||
+              (scope.row.cash_status === '3' && '提现失败')
             }}
           </template>
         </el-table-column>
-        <el-table-column
-          prop="resp_desc"
-          label="备注"
-          width="400"
-        >
+        <el-table-column prop="resp_desc" label="备注" width="400">
           <template slot-scope="scope">
             <p style="color: #027db4">
               {{ scope.row.resp_desc }}
@@ -317,7 +190,7 @@
           </template>
         </el-table-column>
       </el-table>
-      <div class="content-padded content-center">
+      <div class="mt-4 text-right">
         <el-pagination
           background
           layout="total, sizes, prev, pager, next, jumper"
@@ -341,7 +214,7 @@ export default {
   components: {
     shopSelect
   },
-  data () {
+  data() {
     return {
       dateRange: [],
       loginType: this.$store.getters.login_type,
@@ -391,7 +264,7 @@ export default {
           if (minDate && !maxDate) this.dateRange[0] = minDate
           if (maxDate) this.dateRange[1] = maxDate
         },
-        disabledDate: (time) => {
+        disabledDate: time => {
           if (this.dateRange) {
             let currentTime = this.dateRange[0]
             let threeMonths = 60 * 60 * 1000 * 24 * 90
@@ -406,7 +279,7 @@ export default {
         shortcuts: [
           {
             text: '最近一个月',
-            onClick (picker) {
+            onClick(picker) {
               const start_date = new Date()
               const end_date = new Date()
               start_date.setTime(start_date.getTime() - 3600 * 1000 * 24 * 30)
@@ -416,7 +289,7 @@ export default {
           },
           {
             text: '最近三个月',
-            onClick (picker) {
+            onClick(picker) {
               const start_date = new Date()
               const end_date = new Date()
               start_date.setTime(start_date.getTime() - 3600 * 1000 * 24 * 90)
@@ -428,26 +301,26 @@ export default {
       }
     }
   },
-  mounted () {
+  mounted() {
     this.initDate()
     this.getCompanyDataList()
   },
   methods: {
-    validator (rule, value, callback) {
+    validator(rule, value, callback) {
       if (Number(value) > Number(this.withdrawal_balance)) {
         callback(new Error('提现金额不能大于当前可提现金额'))
       } else {
         callback()
       }
     },
-    onSumbit () {
+    onSumbit() {
       // 设置提现金额
       if (Number(this.withdrawal_balance) < Number(this.distributormoneyList.distributor_money)) {
         this.$message.error('不满足提现条件')
         return
       }
       const { withdrawal_amount } = this.topforms
-      this.$refs.topforms.validate((valid) => {
+      this.$refs.topforms.validate(valid => {
         if (valid) {
           this.$confirm(
             `<div style='margin-left:45px'>
@@ -461,7 +334,7 @@ export default {
               dangerouslyUseHTMLString: true
             }
           ).then(() => {
-            onSumbitsData({ withdrawal_amount }).then((res) => {
+            onSumbitsData({ withdrawal_amount }).then(res => {
               this.$message({ type: 'success', message: '提现成功!' })
             })
           })
@@ -470,7 +343,7 @@ export default {
         }
       })
     },
-    oninput (value) {
+    oninput(value) {
       // 过滤小数点后两位
       if (value) {
         value.replace(/[^0-9.]/g, '')
@@ -479,9 +352,9 @@ export default {
         // }
       }
     },
-    getCompanyDataList () {
+    getCompanyDataList() {
       this.dataSource.loading = true
-      withdrawgetList({ ...this.formData, ...this.params }).then((res) => {
+      withdrawgetList({ ...this.formData, ...this.params }).then(res => {
         // 列表和统计
         this.allListData = res.data.data.list.data
         this.allAccountList = res.data.data.total
@@ -492,19 +365,19 @@ export default {
         }
         this.loading = false
       })
-      getStoreAccount({ ...this.formData, ...this.params }).then((res) => {
+      getStoreAccount({ ...this.formData, ...this.params }).then(res => {
         // 获取当前可提现金额
         this.withdrawal_balance = res.data.data.totle.withdrawal_balance
       })
-      getWithdrawset().then((res) => {
+      getWithdrawset().then(res => {
         // 获取提现限额和提现方式
         this.distributormoneyList = res.data.data
       })
     },
-    performInitChange () {
+    performInitChange() {
       this.performInit = false
     },
-    handleReset () {
+    handleReset() {
       this.formData = {
         start_date: '',
         end_date: '',
@@ -515,27 +388,27 @@ export default {
       this.performInit = true
       this.initDate()
     },
-    dateChange (val) {
+    dateChange(val) {
       if (val) {
         this.formData.start_date = val[0]
         this.formData.end_date = val[1]
       }
     },
-    storeSearch (val) {
+    storeSearch(val) {
       this.formData.distributor_id = val.shop_id
     },
-    handleSizeChange (pageSize) {
+    handleSizeChange(pageSize) {
       this.params.page = 1
       this.params.page_size = pageSize
       this.getCompanyDataList()
     },
-    handleCurrentChange (page_num) {
+    handleCurrentChange(page_num) {
       this.params.page = page_num
       this.getCompanyDataList()
     },
-    onExportExcel () {
+    onExportExcel() {
       // 导出
-      onCashExportData(this.formData).then((response) => {
+      onCashExportData(this.formData).then(response => {
         const { status, url, filename } = response.data.data
         if (status) {
           this.$message({
@@ -552,7 +425,7 @@ export default {
         }
       })
     },
-    initDate () {
+    initDate() {
       var start = new Date()
       var end = new Date()
       start.setTime(start.getTime() - 3600 * 1000 * 24 * 30)

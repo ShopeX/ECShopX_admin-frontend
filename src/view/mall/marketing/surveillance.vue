@@ -48,10 +48,7 @@
       <el-table-column prop="mobile" label="手机号" />
       <el-table-column prop="address" label="地址" />
     </el-table>
-    <div
-      v-if="distributors.total_count > distributors.params.pageSize"
-      class="content-padded content-center"
-    >
+    <div v-if="distributors.total_count > distributors.params.pageSize" class="mt-4 text-right">
       <el-pagination
         layout="prev, pager, next"
         :total="distributors.total_count"
@@ -74,18 +71,18 @@ import {
   getDistributionGoodsWxaCode
 } from '../../../api/goods'
 import { getDistributorList, getDistributorCount } from '../../../api/marketing'
-const getWxaCodeImg = (url) => {
+const getWxaCodeImg = url => {
   return new Promise((resolve, reject) => {
     axios({
       method: 'get',
       url,
       responseType: 'arraybuffer',
-      headers: { 'Authorization': 'bearer ' + store.getters.token }
+      headers: { Authorization: 'bearer ' + store.getters.token }
     })
-      .then((data) => {
+      .then(data => {
         resolve(data.data)
       })
-      .catch((error) => {
+      .catch(error => {
         reject(error.toString())
       })
   })
@@ -147,7 +144,7 @@ export default {
     getItemsList: function () {
       // 分销商列表
       this.items.loading = true
-      getItemsList(this.items.params).then((response) => {
+      getItemsList(this.items.params).then(response => {
         this.items.list = response.data.data.list
         this.items.total_count = response.data.data.total_count
         this.items.loading = false
@@ -173,7 +170,7 @@ export default {
     getDistributorsList: function () {
       // 分销商列表
       this.distributors.loading = true
-      getDistributorList(this.distributors.params).then((response) => {
+      getDistributorList(this.distributors.params).then(response => {
         this.distributors.list = response.data.data.list
         this.distributors.total_count = response.data.data.total_count
         this.distributors.loading = false
@@ -213,15 +210,15 @@ export default {
       const cache = {}
       const promises = []
       var that = this
-      that.items.itemsChecked.forEach((item1) => {
-        that.distributors.distributorsChecked.forEach((item2) => {
+      that.items.itemsChecked.forEach(item1 => {
+        that.distributors.distributorsChecked.forEach(item2 => {
           var url =
             this.BASE_API +
             '/goods/distributionGoodsWxaCodeStream?item_id=' +
             item1.itemId +
             '&distributor_id=' +
             item2.distributor_id
-          const promise = getWxaCodeImg(url).then((result_file) => {
+          const promise = getWxaCodeImg(url).then(result_file => {
             // 下载文件, 并存成ArrayBuffer对象
             const file_name =
               item1.itemName +
@@ -245,7 +242,7 @@ export default {
       this.distributors.distributorsChecked = []
       this.$refs.multipleDistributorsTable.clearSelection()
       Promise.all(promises).then(() => {
-        zip.generateAsync({ type: 'blob' }).then((content) => {
+        zip.generateAsync({ type: 'blob' }).then(content => {
           // 生成二进制流
           FileSaver.saveAs(content, '分销商品小程序码(批量).zip') // 利用file-saver保存文件
         })

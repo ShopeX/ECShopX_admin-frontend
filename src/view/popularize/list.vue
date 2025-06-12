@@ -171,7 +171,7 @@
           <template slot-scope="scope"> ￥{{ scope.row.noCloseRebate / 100 }} </template>
         </el-table-column>
       </el-table>
-      <div class="content-padded content-center">
+      <div class="mt-4 text-right">
         <el-pagination
           background
           layout="total, sizes, prev, pager, next, jumper"
@@ -217,7 +217,7 @@
             </template>
           </el-table-column>
         </el-table>
-        <div v-if="modal_total_count > paramsModal.pageSize" class="content-padded content-center">
+        <div v-if="modal_total_count > paramsModal.pageSize" class="mt-4 text-right">
           <el-pagination
             layout="prev, pager, next"
             :current-page.sync="paramsModal.page"
@@ -365,7 +365,7 @@ export default {
 
     this.fetchList(this.params),
       this.getPopularizeListModalFun(this.modalList),
-      getPromoterGradeConfig().then((res) => {
+      getPromoterGradeConfig().then(res => {
         this.gradeList = res.data.data
       })
   },
@@ -384,7 +384,7 @@ export default {
       window.open(routeData.href, '_blank')
     },
     addPromoter() {
-      addPromoter({ mobile: this.promoter_mobile }).then((res) => {
+      addPromoter({ mobile: this.promoter_mobile }).then(res => {
         this.promoter_mobile = ''
         this.addVisible = false
         this.$message({
@@ -405,8 +405,8 @@ export default {
       }
     },
     editPopularizeRemoveFun() {
-      editPopularizeRemove({ 'user_id': this.row.user_id, 'new_user_id': this.currentRow }).then(
-        (res) => {
+      editPopularizeRemove({ user_id: this.row.user_id, new_user_id: this.currentRow }).then(
+        res => {
           this.message = '上下级'
           this.loading = false
           this.$message({
@@ -452,7 +452,7 @@ export default {
       if (this.currentRow.reason && this.shop_status == 4) {
         data.reason = this.currentRow.reason
       }
-      updatePromoterShop(data).then((res) => {
+      updatePromoterShop(data).then(res => {
         this.$message({ type: 'success', message: '操作成功' })
         this.fetchList()
         this.updateShopVisible = false
@@ -492,8 +492,8 @@ export default {
       this.editGradeVisible = false
     },
     submitGradeAction() {
-      editPopularizeGrade({ 'user_id': this.row.user_id, 'grade_level': this.newGradeName }).then(
-        (res) => {
+      editPopularizeGrade({ user_id: this.row.user_id, grade_level: this.newGradeName }).then(
+        res => {
           if (this.newGradeName == '') {
             this.$message({ message: '请选择调整后的等级', type: 'error' })
             return
@@ -510,7 +510,7 @@ export default {
     },
     freeze(row) {
       let active = !row.disabled ? false : true
-      editPopularizeDisabled({ 'user_id': row.user_id, 'active': active }).then((res) => {
+      editPopularizeDisabled({ user_id: row.user_id, active: active }).then(res => {
         row.disabled = active ? 0 : 1
         console.log(7, row.disabled, active)
         this.$message({
@@ -530,7 +530,7 @@ export default {
     },
     getPopularizeListModalFun(filter) {
       this.modalLoading = true
-      getPopularizeList(filter).then((res) => {
+      getPopularizeList(filter).then(res => {
         this.modalList = res.data.data.list
         this.modal_total_count = Number(res.data.data.total_count)
         this.modalLoading = false
@@ -544,7 +544,7 @@ export default {
         pageSize,
         ...this.params
       }
-      getPopularizeList(params).then((res) => {
+      getPopularizeList(params).then(res => {
         this.list = res.data.data.list
         this.total_count = Number(res.data.data.total_count)
         this.datapass_block = res.data.data.datapass_block

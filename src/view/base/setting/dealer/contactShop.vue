@@ -1,31 +1,18 @@
 <template>
   <div class="zyk_page_register_Info_contactShop">
     <div class="part1">
-      <el-form
-        ref="form"
-        :model="form"
-      >
+      <el-form ref="form" :model="form">
         <div class="top">
           <div class="left">
             <el-form-item>
               <el-select v-model="selectStatus">
-                <el-option
-                  label="按状态筛选"
-                  value="1"
-                />
-                <el-option
-                  label="按地区筛选"
-                  value="2"
-                />
+                <el-option label="按状态筛选" value="1" />
+                <el-option label="按地区筛选" value="2" />
               </el-select>
             </el-form-item>
             <template v-if="selectStatus == '1'">
               <el-form-item>
-                <el-select
-                  v-model="form.is_valid"
-                  placeholder="全部状态"
-                  @change="getList()"
-                >
+                <el-select v-model="form.is_valid" placeholder="全部状态" @change="getList()">
                   <el-option
                     v-for="item in statusList"
                     :key="item.value"
@@ -49,66 +36,32 @@
           <div class="right">
             <el-form-item>
               <el-select v-model="nameSelect">
-                <el-option
-                  label="店铺名称"
-                  value="1"
-                />
-                <el-option
-                  label="联系人手机号"
-                  value="2"
-                />
+                <el-option label="店铺名称" value="1" />
+                <el-option label="联系人手机号" value="2" />
               </el-select>
             </el-form-item>
             <el-form-item v-if="nameSelect == '1'">
-              <el-input
-                v-model="form.name"
-                placeholder="请输入店铺名称"
-                @change="getList()"
-              >
-                <el-button
-                  slot="append"
-                  @click="getList"
-                >
-                  搜索
-                </el-button>
+              <el-input v-model="form.name" placeholder="请输入店铺名称" @change="getList()">
+                <el-button slot="append" @click="getList"> 搜索 </el-button>
               </el-input>
             </el-form-item>
             <el-form-item v-else>
-              <el-input
-                v-model="form.mobile"
-                placeholder="请输入联系人手机号"
-                @change="getList()"
-              >
-                <el-button
-                  slot="append"
-                  @click="getList"
-                >
-                  搜索
-                </el-button>
+              <el-input v-model="form.mobile" placeholder="请输入联系人手机号" @change="getList()">
+                <el-button slot="append" @click="getList"> 搜索 </el-button>
               </el-input>
             </el-form-item>
           </div>
         </div>
         <el-form-item style="text-align: right">
-          <el-button @click="resetForm('form')">
-            重置
-          </el-button>
+          <el-button @click="resetForm('form')"> 重置 </el-button>
         </el-form-item>
       </el-form>
       <div class="bottom">
         <span>快捷操作</span>
-        <el-button
-          size="mini"
-          @click="dialogOpen()"
-        >
-          关联店铺
-        </el-button>
+        <el-button size="mini" @click="dialogOpen()"> 关联店铺 </el-button>
       </div>
     </div>
-    <el-card
-      class="box-card"
-      shadow="never"
-    >
+    <el-card class="box-card" shadow="never">
       <el-table
         ref="multipleTable"
         v-loading="loading"
@@ -116,18 +69,12 @@
         tooltip-effect="dark"
         style="width: 100%"
       >
-        <el-table-column
-          label="店铺编号"
-          width="120"
-        >
+        <el-table-column label="店铺编号" width="120">
           <template slot-scope="scope">
             {{ scope.row.distributor_id }}
           </template>
         </el-table-column>
-        <el-table-column
-          prop="name"
-          label="店铺名/联系人/手机号"
-        >
+        <el-table-column prop="name" label="店铺名/联系人/手机号">
           <template slot-scope="scope">
             <div class="store-name">
               {{ scope.row.name }}
@@ -142,32 +89,23 @@
                 {{ scope.row.mobile }}
               </span>
             </div>
-            <div
-              v-if="scope.row.store_address"
-              class="store-address"
-            >
+            <div v-if="scope.row.store_address" class="store-address">
               <i class="el-icon-place" />
               {{ scope.row.store_address }}
             </div>
           </template>
         </el-table-column>
-        <el-table-column
-          prop="address"
-          label="地址"
-        />
+        <el-table-column prop="address" label="地址" />
         <el-table-column label="店铺状态">
           <template slot-scope="scope">
             <span>{{
               (scope.row.is_valid === 'true' && '启用') ||
-                (scope.row.is_valid === 'false' && '禁用') ||
-                (scope.row.is_valid === 'delete' && '废弃')
+              (scope.row.is_valid === 'false' && '禁用') ||
+              (scope.row.is_valid === 'delete' && '废弃')
             }}</span>
           </template>
         </el-table-column>
-        <el-table-column
-          label="操作"
-          width="150"
-        >
+        <el-table-column label="操作" width="150">
           <template slot-scope="scope">
             <el-button
               :style="{ color: 'red' }"
@@ -177,17 +115,13 @@
             >
               取消关联
             </el-button>
-            <el-button
-              type="text"
-              size="mini"
-              @click="checkHandle(scope.row.distributor_id)"
-            >
+            <el-button type="text" size="mini" @click="checkHandle(scope.row.distributor_id)">
               查看
             </el-button>
           </template>
         </el-table-column>
       </el-table>
-      <div class="content-padded content-center">
+      <div class="mt-4 text-right">
         <el-pagination
           background
           layout="total, sizes, prev, pager, next, jumper"
@@ -216,7 +150,7 @@ import newShopSelects from '@/components/newShopSelects'
 
 export default {
   components: { newShopSelects },
-  data () {
+  data() {
     return {
       selectStatus: '1',
       nameSelect: '1',
@@ -246,11 +180,11 @@ export default {
       list: []
     }
   },
-  mounted () {
+  mounted() {
     this.getList()
   },
   methods: {
-    getCascaderObj (val, opt) {
+    getCascaderObj(val, opt) {
       return val.map(function (value, index, array) {
         for (var itm of opt) {
           if (itm.value === value) {
@@ -261,7 +195,7 @@ export default {
         return null
       })
     },
-    async getList () {
+    async getList() {
       this.loading = true
       if (this.selectStatus == '1') {
         delete this.form.province
@@ -294,7 +228,7 @@ export default {
         })
       }
     },
-    RegionChangeSearch (value) {
+    RegionChangeSearch(value) {
       var vals = this.getCascaderObj(value, this.regions)
       if (vals.length == 1) {
         this.form.province = vals[0].label
@@ -312,33 +246,33 @@ export default {
       this.form.page = 1
       this.getList()
     },
-    handleCurrentChange (page) {
+    handleCurrentChange(page) {
       this.form.page = page
       this.getList()
     },
-    handleSizeChange (pageSize) {
+    handleSizeChange(pageSize) {
       this.form.page = 1
       this.form.pageSize = pageSize
       this.getList()
     },
-    resetForm (form) {
+    resetForm(form) {
       this.$refs.form.resetFields()
       this.form.is_valid = ''
       this.form.name = ''
       this.form.mobile = ''
       this.form.address = ''
     },
-    closeStoreDialogAction () {
+    closeStoreDialogAction() {
       this.storeVisible = false
       this.ShopStatus = false
       this.getList()
     },
-    dialogOpen () {
+    dialogOpen() {
       this.storeVisible = true
       this.ShopStatus = true
     },
     // 取消关联
-    cancelHandle (id) {
+    cancelHandle(id) {
       const h = this.$createElement
       this.$msgbox({
         title: '提示',
@@ -383,12 +317,12 @@ export default {
             done()
           }
         }
-      }).then((action) => {
+      }).then(action => {
         console.log(123)
       })
     },
     // 查看
-    checkHandle (id) {
+    checkHandle(id) {
       this.$router.push({
         path: '/store/storemanager/marketingdistributor/marketingdistributor_editor',
         query: {

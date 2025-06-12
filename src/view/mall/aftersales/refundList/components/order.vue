@@ -65,9 +65,7 @@
     </SpFilterForm>
 
     <div class="action-container">
-      <export-tip @exportHandle="exportData">
-        <el-button type="primary" plain> 导出 </el-button>
-      </export-tip>
+      <el-button type="primary" plain @click="exportData"> 导出 </el-button>
     </div>
 
     <el-form ref="form" label-width="100px">
@@ -320,7 +318,7 @@
           </template>
         </el-table-column>
       </el-table>
-      <div v-if="page.total > page.pageSize" class="content-padded content-center">
+      <div v-if="page.total > page.pageSize" class="mt-4 text-right">
         <el-pagination
           background
           layout="total, sizes, prev, pager, next, jumper"

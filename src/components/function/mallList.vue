@@ -62,10 +62,10 @@
         <div class="template-item">
           <div class="img-wrap">
             <div class="preview-cover" @click="previewTemplate(item.pages_template_id)">
-              <img class="preview-cover_img" src="@/assets/img/preview.png" alt="预览" />
+              <img class="preview-cover_img" src="@/assets/img/preview.png" alt="预览">
               <span class="preview-cover_text">预览</span>
             </div>
-            <img class="template-pic" :src="item.template_pic" />
+            <img class="template-pic" :src="item.template_pic">
             <div v-if="item.template_type == 1" class="tag">同步模板</div>
           </div>
           <div class="template-name">
@@ -98,7 +98,7 @@
             <div v-if="!item.showTime" class="no-time">
               <div>定时启用</div>
               <div class="picker-wrap">
-                <img class="time-img" src="@/assets/img/time-img.png" />
+                <img class="time-img" src="@/assets/img/time-img.png">
                 <span>设置模板切换时间</span>
                 <el-date-picker
                   v-model="item.timer_time"
@@ -139,7 +139,7 @@
           @click="AddOrEditDialog('add')"
         >
           <div class="template-wrap">
-            <img class="add-img" src="@/assets/img/add-template.png" alt="添加" />
+            <img class="add-img" src="@/assets/img/add-template.png" alt="添加">
             <div class="add-text">添加模板</div>
           </div>
         </div>
@@ -200,7 +200,7 @@
               :src="form.template_pic"
               class="banner-uploader"
               @click="handleImgChange"
-            />
+            >
             <div v-else class="banner-uploader" @click="handleImgChange">
               <i class="iconfont icon-camera" />
             </div>
@@ -283,12 +283,12 @@
               :src="
                 item.selectedIconPath || 'https://fakeimg.pl/60x60/EFEFEF/CCC/?text=icofont=lobster'
               "
-            />
+            >
             <img
               v-else
               class="svg-icon"
               :src="item.iconPath || 'https://fakeimg.pl/60x60/EFEFEF/CCC/?text=icon&font=lobster'"
-            />
+            >
           </template>
           <div class="tab-text">
             {{ item.text }}
@@ -324,7 +324,7 @@
 
 <script>
 import { mapGetters } from 'vuex'
-import { VERSION_B2C() } from '@/utils'
+import { VERSION_B2C } from '@/utils'
 
 import DistributorSelect from '@/components/function/distributorSelect'
 import ShopDecoration from '@/components/function/shopDecoration'
@@ -445,10 +445,10 @@ export default {
           label: '',
           key: 'name',
           component: () => (
-            <div class='tablist'>
+            <div class="tablist">
               {this.navForm?.tabList?.map((item, index) => (
                 <div
-                  class='tab-item'
+                  class="tab-item"
                   style={{
                     color: index == 0 ? this.navForm.theme.selectedColor : this.navForm.theme.color
                   }}
@@ -459,12 +459,12 @@ export default {
                   )}
                   {(item.iconPath || item.selectedIconPath) && (
                     <el-image
-                      class='tab-image'
+                      class="tab-image"
                       src={item.selectedIconPath || item.iconPath}
-                      fit='cover'
+                      fit="cover"
                     />
                   )}
-                  <div class='tab-text'>{item.text}</div>
+                  <div class="tab-text">{item.text}</div>
                 </div>
               ))}
             </div>
@@ -476,19 +476,19 @@ export default {
           component: () => (
             <el-row>
               <el-col span={8}>
-                <div class='theme-item'>
+                <div class="theme-item">
                   <el-color-picker v-model={this.navForm.theme.backgroundColor}></el-color-picker>
                   背景色
                 </div>
               </el-col>
               <el-col span={8}>
-                <div class='theme-item'>
+                <div class="theme-item">
                   <el-color-picker v-model={this.navForm.theme.color}></el-color-picker>
                   默认颜色
                 </div>
               </el-col>
               <el-col span={8}>
-                <div class='theme-item'>
+                <div class="theme-item">
                   <el-color-picker v-model={this.navForm.theme.selectedColor}></el-color-picker>
                   选中颜色
                 </div>
@@ -500,17 +500,17 @@ export default {
           label: '',
           key: 'tabList',
           component: () => (
-            <div class='nav-list'>
-              <div class='nav-list-body'>
+            <div class="nav-list">
+              <div class="nav-list-body">
                 {this.navForm?.tabList?.map((item, index) => (
-                  <div class='nav-item'>
-                    <div class='nav-item-hd'>
+                  <div class="nav-item">
+                    <div class="nav-item-hd">
                       <SpImagePicker v-model={item.iconPath} />
                       <SpImagePicker v-model={item.selectedIconPath} />
-                      <SpInput v-model={item.text} width={'120px'} placeholder='导航名称' />
+                      <SpInput v-model={item.text} width={'120px'} placeholder="导航名称" />
                       <el-select
                         v-model={item.pagePath}
-                        placeholder='请选择页面'
+                        placeholder="请选择页面"
                         on-change={this.onChangePagePath.bind(this, index)}
                       >
                         {NAVS.map((item, index) => (
@@ -518,16 +518,19 @@ export default {
                         ))}
                       </el-select>
                       {item.pagePath == 'customPage' && (
-                        <div  class="uploader-setting">
-                          <div class="btn-linkpath" onClick={this.handleCustomPageSelect.bind(this,item)}>
-                            {item?.customPage?.page_name ?? '请选择自定义页面' }
+                        <div class="uploader-setting">
+                          <div
+                            class="btn-linkpath"
+                            onClick={this.handleCustomPageSelect.bind(this, item)}
+                          >
+                            {item?.customPage?.page_name ?? '请选择自定义页面'}
                           </div>
                         </div>
                       )}
                     </div>
-                    <div class='nav-item-bd'>
+                    <div class="nav-item-bd">
                       {index > 1 && (
-                        <el-button type='text' on-click={this.removeTabItem.bind(this, index)}>
+                        <el-button type="text" on-click={this.removeTabItem.bind(this, index)}>
                           删除
                         </el-button>
                       )}
@@ -540,7 +543,7 @@ export default {
           ),
           tip: '只能上传jpg/png文件，且不超过2M （建议尺寸：50px * 50px）',
           validator: (rule, value, callback) => {
-            const fd = value.find((item) => !item.pagePath || !item.name)
+            const fd = value.find(item => !item.pagePath || !item.name)
             if (fd) {
               callback('请设置导航名称以及导航页面')
             } else {
@@ -552,10 +555,10 @@ export default {
           label: '',
           component: () => (
             <el-button
-              type='primary'
+              type="primary"
               disabled={this.navForm?.tabList?.length >= 5}
               plain
-              class='iconfont icon-plus-circle'
+              class="iconfont icon-plus-circle"
               on-click={this.addTabItem}
             >
               添加菜单项
@@ -627,7 +630,7 @@ export default {
       //   page_type: this.app_page_type[this.app_type]
       // }
       // getPagesTemplateSetInfo(params).then((res) => {
-      getPagesTemplateSetInfo().then((res) => {
+      getPagesTemplateSetInfo().then(res => {
         let data = res.data.data
         this.index_type = data.index_type
         this.is_enforce_sync = data.is_enforce_sync
@@ -652,10 +655,10 @@ export default {
         distributor_id: this.relStore.id
         // page_type: this.app_page_type[this.app_type]
       }
-      getPagesTemplateList(params).then((res) => {
+      getPagesTemplateList(params).then(res => {
         // this.te·mplateList = res.data.data.list
         let list = []
-        res.data.data.list.map((item) => {
+        res.data.data.list.map(item => {
           list.push({
             ...item,
             element_edit_status: item.element_edit_status || 2,
@@ -715,7 +718,7 @@ export default {
         return
       }
       this.relDistributors = data
-      let shop_ids = data.map((item) => {
+      let shop_ids = data.map(item => {
         return item.distributor_id
       })
       this.syncTemplate(2, shop_ids)
@@ -731,7 +734,7 @@ export default {
       if (is_all_distributor == 2) {
         params.distributor_ids = JSON.stringify(shop_ids)
       }
-      syncPagesTemplate(params).then((res) => {
+      syncPagesTemplate(params).then(res => {
         this.distributorVisible = false
         this.distributorStatus = false
         this.$message({
@@ -759,7 +762,7 @@ export default {
         index_type: this.index_type
         // page_type: this.app_page_type[this.app_type]
       }
-      setPagesTemplate(params).then((res) => {
+      setPagesTemplate(params).then(res => {
         this.$message({
           message: '操作成功',
           type: 'success'
@@ -771,7 +774,7 @@ export default {
         is_enforce_sync: val
         // page_type: this.app_page_type[this.app_type]
       }
-      setPagesTemplate(params).then((res) => {
+      setPagesTemplate(params).then(res => {
         this.$message({
           message: '操作成功',
           type: 'success'
@@ -787,7 +790,7 @@ export default {
         is_open_recommend: val
         // page_type: this.app_page_type[this.app_type]
       }
-      setPagesTemplate(params).then((res) => {
+      setPagesTemplate(params).then(res => {
         this.$message({
           message: '操作成功',
           type: 'success'
@@ -816,7 +819,7 @@ export default {
         is_open_wechatapp_location: val
         // page_type: this.app_page_type[this.app_type]
       }
-      setPagesTemplate(params).then((res) => {
+      setPagesTemplate(params).then(res => {
         this.$message({
           message: '操作成功',
           type: 'success'
@@ -828,7 +831,7 @@ export default {
         is_open_scan_qrcode: val
         // page_type: this.app_page_type[this.app_type]
       }
-      setPagesTemplate(params).then((res) => {
+      setPagesTemplate(params).then(res => {
         this.$message({
           message: '操作成功',
           type: 'success'
@@ -840,7 +843,7 @@ export default {
         is_open_official_account: val
         // page_type: this.app_page_type[this.app_type]
       }
-      setPagesTemplate(params).then((res) => {
+      setPagesTemplate(params).then(res => {
         this.$message({
           message: '操作成功',
           type: 'success'
@@ -864,7 +867,7 @@ export default {
       this.resetForm('form')
     },
     addTemplate(formName) {
-      this.$refs[formName].validate((valid) => {
+      this.$refs[formName].validate(valid => {
         if (valid) {
           let params = this.form
           let requestApi
@@ -876,7 +879,7 @@ export default {
             requestApi = savePagesTemplate
             params.pages_template_id = this.dialogData.pages_template_id
           }
-          requestApi(params).then((res) => {
+          requestApi(params).then(res => {
             this.getList()
             this.resetForm(formName)
           })
@@ -997,7 +1000,7 @@ export default {
         this.$router.push(`/wxapp/manage/decorate?id=${pages_template_id}`)
       }
     },
-    async handleClickNav(templateId){
+    async handleClickNav(templateId) {
       const { tab_bar } = await this.$api.template.getPagesTemplateSetInfo({
         pages_template_id: templateId
       })
@@ -1013,8 +1016,8 @@ export default {
     async onSubmitTabList() {
       const { pages_template_id, theme, tabList } = this.navForm
 
-      const emptyIndex = tabList.findIndex(item=>item.name == "customPage" && !item.customPage )
-      if(emptyIndex > -1){
+      const emptyIndex = tabList.findIndex(item => item.name == 'customPage' && !item.customPage)
+      if (emptyIndex > -1) {
         return this.$message({
           message: '请选择自定义页面',
           type: 'error',
@@ -1040,19 +1043,19 @@ export default {
       this.$message.success('操作成功')
     },
     onChangePagePath(index, value) {
-      const { label, name } = NAVS.find((item) => item.value == value)
+      const { label, name } = NAVS.find(item => item.value == value)
       this.navForm.tabList[index].text = label
       this.navForm.tabList[index].name = name
-      if(value != 'customPage' && this.navForm.tabList[index]?.customPage){
-        this.$delete(this.navForm.tabList[index],'customPage')
+      if (value != 'customPage' && this.navForm.tabList[index]?.customPage) {
+        this.$delete(this.navForm.tabList[index], 'customPage')
       }
     },
-    async handleCustomPageSelect(item){
-      const {data} = await this.$picker.pages({
-        multiple:false,
-        data:[item?.customPage?.id]
+    async handleCustomPageSelect(item) {
+      const { data } = await this.$picker.pages({
+        multiple: false,
+        data: [item?.customPage?.id]
       })
-      this.$set(item,'customPage',data[0])
+      this.$set(item, 'customPage', data[0])
     },
     removeTabItem(index) {
       this.navForm.tabList.splice(index, 1)
@@ -1077,7 +1080,7 @@ export default {
         cancelButtonText: '取消'
       })
         .then(() => {
-          copyPagesTemplate(params).then((res) => {
+          copyPagesTemplate(params).then(res => {
             this.$message({
               message: '操作成功',
               type: 'success'
@@ -1094,7 +1097,7 @@ export default {
         cancelButtonText: '取消'
       })
         .then(() => {
-          deletePagesTemplate(pages_template_id).then((res) => {
+          deletePagesTemplate(pages_template_id).then(res => {
             this.$message({
               message: '操作成功',
               type: 'success'
@@ -1142,7 +1145,7 @@ export default {
         tab_bar: param
         // page_type: this.app_page_type[this.app_type]
       }
-      setPagesTemplate(params).then((res) => {
+      setPagesTemplate(params).then(res => {
         this.$message({
           message: '操作成功',
           type: 'success'

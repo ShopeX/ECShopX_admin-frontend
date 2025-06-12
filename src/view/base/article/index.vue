@@ -79,7 +79,7 @@
         </el-col>
       </el-row>
       <dataPlaceholder :visible.sync="showPlaceholder" height="100%" />
-      <div v-if="page.total > page.pageSize" class="content-padded content-center">
+      <div v-if="page.total > page.pageSize" class="mt-4 text-right">
         <el-pagination
           background
           layout="total, sizes, prev, pager, next, jumper"
@@ -128,8 +128,8 @@ export default {
     },
     articleDelete(id) {
       const _self = this
-      this.$confirm('确认删除当前文章吗？').then((_) => {
-        deleteArticle(id).then((res) => {
+      this.$confirm('确认删除当前文章吗？').then(_ => {
+        deleteArticle(id).then(res => {
           if (res.data.data.status) {
             this.$message({
               message: '删除成功',
@@ -144,7 +144,7 @@ export default {
     },
     handleSort(id) {
       const _self = this
-      let index = this.tableList.findIndex((item) => item.article_id === id)
+      let index = this.tableList.findIndex(item => item.article_id === id)
       this.tableList[index].visible = false
       let param = {
         inputdata: [
@@ -154,7 +154,7 @@ export default {
           }
         ]
       }
-      updateArticleSortOrStatus(param).then((res) => {
+      updateArticleSortOrStatus(param).then(res => {
         _self.fetchList()
       })
     },
@@ -167,7 +167,7 @@ export default {
       }
       const _self = this
       this.$confirm(msg)
-        .then((res) => {
+        .then(res => {
           let param = {
             inputdata: [
               {
@@ -176,7 +176,7 @@ export default {
               }
             ]
           }
-          updateArticleSortOrStatus(param).then((res) => {
+          updateArticleSortOrStatus(param).then(res => {
             _self.fetchList()
           })
         })
@@ -190,7 +190,7 @@ export default {
       if (total_count === 0) {
         this.showPlaceholder = true
       }
-      list.forEach((item) => {
+      list.forEach(item => {
         item.link = `pages/article/index?id=${item.article_id}`
       })
       this.tableList = list

@@ -34,9 +34,9 @@
       </SpFilterForm>
 
       <div class="action-container">
-        <export-tip @exportHandle="exportCommunityOrder">
-          <el-button type="primary" plain icon="el-plus-circle"> 导出活动销售数据 </el-button>
-        </export-tip>
+        <el-button type="primary" plain icon="el-plus-circle" @click="exportCommunityOrder">
+          导出活动销售数据
+        </el-button>
       </div>
 
       <el-tabs v-model="params.activity_status" type="card" @tab-click="onSearch">
@@ -89,7 +89,7 @@
             </template>
           </el-table-column>
         </el-table>
-        <div class="content-padded content-center">
+        <div class="mt-4 text-right">
           <el-pagination
             background
             layout="total, sizes, prev, pager, next, jumper"

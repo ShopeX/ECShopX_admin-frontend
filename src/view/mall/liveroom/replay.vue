@@ -1,9 +1,6 @@
 <template>
   <div class="section-white">
-    <div
-      v-loading="loading"
-      class="video_pick"
-    >
+    <div v-loading="loading" class="video_pick">
       <ul class="clearfix">
         <li
           v-for="(videoitem, index) in videoList"
@@ -11,10 +8,7 @@
           class="video_item"
           style="width:20%; !important; margin:0 50px 50px 0;"
         >
-          <div
-            class="video_item_bd"
-            width="150 !important"
-          >
+          <div class="video_item_bd" width="150 !important">
             <video
               class="video-html"
               :src="videoitem.media_url"
@@ -24,19 +18,15 @@
               您的浏览器不支持 video 标签。
             </video>
             <div class="check_content">
-              <span
-                class="video_name"
-                :title="videoitem.name"
-              >过期时间：{{ videoitem.expire_time }}</span>
+              <span class="video_name" :title="videoitem.name"
+                >过期时间：{{ videoitem.expire_time }}</span
+              >
             </div>
           </div>
         </li>
       </ul>
     </div>
-    <div
-      v-if="total_count > params.pageSize"
-      class="content-padded content-center"
-    >
+    <div v-if="total_count > params.pageSize" class="mt-4 text-right">
       <el-pagination
         background
         layout="total, sizes, prev, pager, next"
@@ -55,7 +45,7 @@
 import { getLiverooms } from '@/api/promotions'
 
 export default {
-  data () {
+  data() {
     return {
       loading: false,
       isLoadData: false,
@@ -70,7 +60,7 @@ export default {
       }
     }
   },
-  mounted () {
+  mounted() {
     if (this.$route.query.roomid && this.$route.query.wxapp_id) {
       this.params.roomid = this.$route.query.roomid
       this.params.wxapp_id = this.$route.query.wxapp_id
@@ -78,21 +68,21 @@ export default {
     }
   },
   methods: {
-    handleCurrentChange (page_num) {
+    handleCurrentChange(page_num) {
       this.isLoadData = false
       this.params.page = page_num
       this.getList()
     },
-    handleSizeChange (pageSize) {
+    handleSizeChange(pageSize) {
       this.isLoadData = false
       this.params.page = 1
       this.params.pageSize = pageSize
       this.getList()
     },
-    getList () {
+    getList() {
       if (!this.isLoadData) {
         this.isLoadData = true
-        getLiverooms(this.params).then((response) => {
+        getLiverooms(this.params).then(response => {
           this.videoList = response.data.data.list
           this.total_count = response.data.data.total_count
           this.isLoadData = false

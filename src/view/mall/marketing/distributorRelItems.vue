@@ -51,10 +51,7 @@
           <el-table-column prop="contact" label="联系人" />
           <el-table-column prop="mobile" label="联系方式" />
         </el-table>
-        <div
-          v-if="distributors.total_count > distributors.params.pageSize"
-          class="content-padded content-center"
-        >
+        <div v-if="distributors.total_count > distributors.params.pageSize" class="mt-4 text-right">
           <el-pagination
             background
             layout="prev, pager, next"
@@ -210,7 +207,7 @@ export default {
     getItemsList: function () {
       // 店铺列表
       this.items.loading = true
-      getItemsList(this.items.params).then((response) => {
+      getItemsList(this.items.params).then(response => {
         this.items.list = response.data.data.list
         this.items.total_count = response.data.data.total_count
         this.items.loading = false
@@ -235,7 +232,7 @@ export default {
     getDistributorsList: function () {
       // 店铺列表
       this.distributors.loading = true
-      getDistributorList(this.distributors.params).then((response) => {
+      getDistributorList(this.distributors.params).then(response => {
         this.distributors.list = response.data.data.list
         this.distributors.total_count = response.data.data.total_count
         this.distributors.loading = false
@@ -251,7 +248,7 @@ export default {
         })
           .then(() => {
             saveDistributorItems({ item_ids: isAll, distributor_ids: [distributor_ids] }).then(
-              (response) => {
+              response => {
                 this.distributor_ids = []
                 this.item_ids = []
                 this.$message({
@@ -299,15 +296,15 @@ export default {
         return
       }
 
-      this.items.itemsChecked.forEach((item) => {
+      this.items.itemsChecked.forEach(item => {
         this.item_ids.push(item.itemId)
       })
-      this.distributors.distributorsChecked.forEach((item) => {
+      this.distributors.distributorsChecked.forEach(item => {
         this.distributor_ids.push(item.distributor_id)
       })
 
       saveDistributorItems({ item_ids: this.item_ids, distributor_ids: this.distributor_ids }).then(
-        (response) => {
+        response => {
           this.distributor_ids = []
           this.item_ids = []
           this.$message({
@@ -318,7 +315,7 @@ export default {
       )
     },
     getCurrencyInfo() {
-      getDefaultCurrency().then((res) => {
+      getDefaultCurrency().then(res => {
         this.currency = res.data.data
         this.cursymbol = this.currency.symbol
       })

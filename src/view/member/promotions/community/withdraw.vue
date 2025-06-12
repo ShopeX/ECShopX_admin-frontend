@@ -7,11 +7,7 @@
       type="warning"
       show-icon
     />
-    <el-tabs
-      v-model="newActivieName"
-      type="border-card"
-      @tab-click="newHandleClick"
-    >
+    <el-tabs v-model="newActivieName" type="border-card" @tab-click="newHandleClick">
       <el-tab-pane
         v-for="(item, index) in bankType"
         :key="index"
@@ -20,26 +16,12 @@
       />
       <el-row :gutter="20">
         <el-col :span="6">
-          <el-input
-            v-model="params.account_name"
-            size="mini"
-            placeholder="提现账号姓名"
-          >
-            <el-button
-              slot="append"
-              size="mini"
-              icon="el-icon-search"
-              @click="numberSearch"
-            />
+          <el-input v-model="params.account_name" size="mini" placeholder="提现账号姓名">
+            <el-button slot="append" size="mini" icon="el-icon-search" @click="numberSearch" />
           </el-input>
         </el-col>
         <el-col :span="4">
-          <el-select
-            v-model="activeName"
-            size="small"
-            clearable
-            @change="handleClick"
-          >
+          <el-select v-model="activeName" size="small" clearable @change="handleClick">
             <el-option
               v-for="item in statusOption"
               :key="item.value"
@@ -60,18 +42,9 @@
             @change="dateChange"
           />
         </el-col>
-        <el-col
-          :md="2"
-          :lg="2"
-        >
+        <el-col :md="2" :lg="2">
           <el-button-group>
-            <el-button
-              size="mini"
-              type="primary"
-              @click="exportData"
-            >
-              导出
-            </el-button>
+            <el-button size="mini" type="primary" @click="exportData"> 导出 </el-button>
           </el-button-group>
           <el-popover
             placement="top-start"
@@ -79,23 +52,12 @@
             trigger="hover"
             content="导出任务会以队列执行，点击导出后，请至‘设置-导出列表’页面中查看及下载数据"
           >
-            <i
-              slot="reference"
-              class="el-icon-question"
-            />
+            <i slot="reference" class="el-icon-question" />
           </el-popover>
         </el-col>
-        <el-col
-          v-if="activeName == 'apply' && newActivieName != 'wechatpay'"
-          :span="6"
-        >
+        <el-col v-if="activeName == 'apply' && newActivieName != 'wechatpay'" :span="6">
           <el-button-group>
-            <el-button
-              size="mini"
-              type="primary"
-              icon="plus"
-              @click="batchPaymentOpen"
-            >
+            <el-button size="mini" type="primary" icon="plus" @click="batchPaymentOpen">
               批量确认
             </el-button>
           </el-button-group>
@@ -108,28 +70,14 @@
         :height="wheight - 360"
         @selection-change="handleSelectionChange"
       >
-        <el-table-column
-          type="selection"
-          align="center"
-          label="全选"
-        />
-        <el-table-column
-          prop="created"
-          label="申请时间"
-          min-width="120"
-        >
+        <el-table-column type="selection" align="center" label="全选" />
+        <el-table-column prop="created" label="申请时间" min-width="120">
           <template slot-scope="scope">
             <span>{{ scope.row.created | datetime('YYYY-MM-DD HH:mm:ss') }}</span>
           </template>
         </el-table-column>
-        <el-table-column
-          prop="bank_name"
-          label="打款方式"
-        />
-        <el-table-column
-          prop="account_mobile"
-          label="手机号"
-        >
+        <el-table-column prop="bank_name" label="打款方式" />
+        <el-table-column prop="account_mobile" label="手机号">
           <template slot-scope="scope">
             <span>{{ scope.row.account_mobile }}</span>
           </template>
@@ -144,41 +92,15 @@
             <span> {{ scope.row.point }} </span>
           </template>
         </el-table-column>
-        <el-table-column
-          prop="status"
-          label="提现状态"
-        >
+        <el-table-column prop="status" label="提现状态">
           <template slot-scope="scope">
-            <el-tag
-              v-if="scope.row.status == 'apply'"
-              type="primary"
-            >
-              待处理
-            </el-tag>
-            <el-tag
-              v-if="scope.row.status == 'process'"
-              type="danger"
-            >
-              付款异常
-            </el-tag>
-            <el-tag
-              v-if="scope.row.status == 'success'"
-              type="warning"
-            >
-              提现完成
-            </el-tag>
-            <el-tag
-              v-if="scope.row.status == 'reject'"
-              type="info"
-            >
-              已拒绝
-            </el-tag>
+            <el-tag v-if="scope.row.status == 'apply'" type="primary"> 待处理 </el-tag>
+            <el-tag v-if="scope.row.status == 'process'" type="danger"> 付款异常 </el-tag>
+            <el-tag v-if="scope.row.status == 'success'" type="warning"> 提现完成 </el-tag>
+            <el-tag v-if="scope.row.status == 'reject'" type="info"> 已拒绝 </el-tag>
           </template>
         </el-table-column>
-        <el-table-column
-          label="操作"
-          width="240"
-        >
+        <el-table-column label="操作" width="240">
           <template slot-scope="scope">
             <el-button
               v-if="scope.row.status == 'reject'"
@@ -186,25 +108,15 @@
               size="mini"
               type="info"
             >
-              <el-popover
-                ref="popover"
-                placement="top"
-                width="400"
-                trigger="click"
-              >
-                <el-input
-                  type="textarea"
-                  :rows="6"
-                  :disabled="true"
-                  :value="scope.row.remarks"
-                />
+              <el-popover ref="popover" placement="top" width="400" trigger="click">
+                <el-input type="textarea" :rows="6" :disabled="true" :value="scope.row.remarks" />
               </el-popover>
               拒绝原因
             </el-button>
             <el-button
               v-if="
                 scope.row.bank_type == 'wechatpay' &&
-                  (scope.row.status == 'process' || scope.row.status == 'success')
+                (scope.row.status == 'process' || scope.row.status == 'success')
               "
               size="mini"
               type="warning"
@@ -231,10 +143,7 @@
           </template>
         </el-table-column>
       </el-table>
-      <div
-        v-if="total_count > params.pageSize"
-        class="content-padded content-center"
-      >
+      <div v-if="total_count > params.pageSize" class="mt-4 text-right">
         <el-pagination
           background
           layout="prev, pager, next, total"
@@ -246,67 +155,34 @@
       </div>
     </el-tabs>
 
-    <el-dialog
-      title="打款记录"
-      :visible.sync="payDialog"
-      :close-on-click-modal="false"
-      width="50%"
-    >
-      <el-table
-        :data="payList"
-        border
-        style="width: 100%"
-      >
-        <el-table-column
-          prop="update_time"
-          label="日期"
-          width="180"
-        >
+    <el-dialog title="打款记录" :visible.sync="payDialog" :close-on-click-modal="false" width="50%">
+      <el-table :data="payList" border style="width: 100%">
+        <el-table-column prop="update_time" label="日期" width="180">
           <template slot-scope="scope">
             <span>{{ scope.row.update_time | datetime('YYYY-MM-DD HH:mm:ss') }}</span>
           </template>
         </el-table-column>
-        <el-table-column
-          prop="amount"
-          label="提现金额"
-          width="180"
-        >
+        <el-table-column prop="amount" label="提现金额" width="180">
           <template slot-scope="scope">
             <span> {{ scope.row.amount / 100 }} </span> 元
           </template>
         </el-table-column>
-        <el-table-column
-          prop="status"
-          label="付款状态"
-        >
+        <el-table-column prop="status" label="付款状态">
           <template slot-scope="scope">
             <span v-if="scope.row.status == 'NOT_PAY'"> 未付款 </span>
-            <el-tag
-              v-if="scope.row.status == 'SUCCESS'"
-              type="success"
-            >
-              付款成功
-            </el-tag>
+            <el-tag v-if="scope.row.status == 'SUCCESS'" type="success"> 付款成功 </el-tag>
             <span v-if="scope.row.status == 'FAIL'"> 付款失败 </span>
           </template>
         </el-table-column>
-        <el-table-column
-          prop="error_desc"
-          label="付款失败原因"
-        >
+        <el-table-column prop="error_desc" label="付款失败原因">
           <template slot-scope="scope">
             <span v-if="scope.row.error_desc">{{ scope.row.error_desc }}</span>
             <span v-else> - </span>
           </template>
         </el-table-column>
       </el-table>
-      <div
-        slot="footer"
-        class="dialog-footer content-center"
-      >
-        <el-button @click.native="payDialog = false">
-          关闭
-        </el-button>
+      <div slot="footer" class="dialog-footer content-center">
+        <el-button @click.native="payDialog = false"> 关闭 </el-button>
       </div>
     </el-dialog>
     <el-dialog
@@ -315,33 +191,15 @@
       :close-on-click-modal="false"
       width="50%"
     >
-      <el-input
-        v-model="textarea"
-        type="textarea"
-        :rows="6"
-        placeholder="请输入拒绝原因"
-      />
-      <div
-        slot="footer"
-        class="dialog-footer content-center"
-      >
-        <el-button @click.native="canceldialog = false">
-          取消操作
-        </el-button>
-        <el-button
-          type="primary"
-          @click="actionProcessCashWithdrawal('reject')"
-        >
+      <el-input v-model="textarea" type="textarea" :rows="6" placeholder="请输入拒绝原因" />
+      <div slot="footer" class="dialog-footer content-center">
+        <el-button @click.native="canceldialog = false"> 取消操作 </el-button>
+        <el-button type="primary" @click="actionProcessCashWithdrawal('reject')">
           确认拒绝
         </el-button>
       </div>
     </el-dialog>
-    <el-dialog
-      title="提现确认"
-      :visible.sync="dialog"
-      :close-on-click-modal="false"
-      width="50%"
-    >
+    <el-dialog title="提现确认" :visible.sync="dialog" :close-on-click-modal="false" width="50%">
       <el-alert
         v-if="detail.bank_type === 'wechatpay'"
         title="微信打款"
@@ -359,56 +217,37 @@
         show-icon
       />
       <el-card class="box-card">
-        <div
-          slot="header"
-          class="clearfix"
-        >
-          <el-tag v-if="detail.bank_type === 'wechatpay'">
-            微信打款
-          </el-tag>
-          <el-tag v-if="detail.bank_type === 'alipay'">
-            支付宝线下打款
-          </el-tag>
-          <el-tag v-if="detail.bank_type === 'bankpay'">
-            银行卡线下打款
-          </el-tag>
+        <div slot="header" class="clearfix">
+          <el-tag v-if="detail.bank_type === 'wechatpay'"> 微信打款 </el-tag>
+          <el-tag v-if="detail.bank_type === 'alipay'"> 支付宝线下打款 </el-tag>
+          <el-tag v-if="detail.bank_type === 'bankpay'"> 银行卡线下打款 </el-tag>
         </div>
         <el-row v-if="detail.bank_type === 'bankpay'">
-          <el-col :span="4">
-            银行名称
-          </el-col>
+          <el-col :span="4"> 银行名称 </el-col>
           <el-col :span="8">
             {{ detail.bank_name }}
           </el-col>
         </el-row>
         <el-row v-if="detail.bank_type !== 'wechatpay'">
-          <el-col :span="4">
-            账户
-          </el-col>
+          <el-col :span="4"> 账户 </el-col>
           <el-col :span="8">
             {{ detail.bank_account }}
           </el-col>
         </el-row>
         <el-row v-if="detail.bank_type !== 'wechatpay'">
-          <el-col :span="4">
-            账户姓名
-          </el-col>
+          <el-col :span="4"> 账户姓名 </el-col>
           <el-col :span="8">
             {{ detail.account_name }}
           </el-col>
         </el-row>
         <el-row v-if="detail.bank_type === 'bankpay'">
-          <el-col :span="4">
-            预留手机号
-          </el-col>
+          <el-col :span="4"> 预留手机号 </el-col>
           <el-col :span="8">
             {{ detail.account_mobile }}
           </el-col>
         </el-row>
         <el-row v-if="detail.bank_type === 'bankpay'">
-          <el-col :span="4">
-            开户行信息
-          </el-col>
+          <el-col :span="4"> 开户行信息 </el-col>
           <el-col :span="8">
             {{ detail.bank_address }}
           </el-col>
@@ -417,17 +256,9 @@
           申请提现 <span style="font-size: 26px; color: red">{{ detail.money / 100 }}</span> 元
         </div>
       </el-card>
-      <div
-        slot="footer"
-        class="dialog-footer content-center"
-      >
-        <el-button @click.native="dialog = false">
-          取消操作
-        </el-button>
-        <el-button
-          type="primary"
-          @click="actionProcessCashWithdrawal('argee')"
-        >
+      <div slot="footer" class="dialog-footer content-center">
+        <el-button @click.native="dialog = false"> 取消操作 </el-button>
+        <el-button type="primary" @click="actionProcessCashWithdrawal('argee')">
           同意提现
         </el-button>
       </div>
@@ -454,24 +285,13 @@
         type="info"
         show-icon
       />
-      <el-table
-        v-loading="loading"
-        :data="selectData"
-        :height="wheight - 220"
-      >
-        <el-table-column
-          prop="created"
-          label="申请时间"
-          min-width="120"
-        >
+      <el-table v-loading="loading" :data="selectData" :height="wheight - 220">
+        <el-table-column prop="created" label="申请时间" min-width="120">
           <template slot-scope="scope">
             <span>{{ scope.row.created | datetime('YYYY-MM-DD HH:mm:ss') }}</span>
           </template>
         </el-table-column>
-        <el-table-column
-          prop="account_mobile"
-          label="手机号"
-        >
+        <el-table-column prop="account_mobile" label="手机号">
           <template slot-scope="scope">
             <span>{{ scope.row.account_mobile }}</span>
           </template>
@@ -487,19 +307,9 @@
           </template>
         </el-table-column>
       </el-table>
-      <div
-        slot="footer"
-        class="dialog-footer content-center"
-      >
-        <el-button @click.native="newDialog = false">
-          取消操作
-        </el-button>
-        <el-button
-          type="primary"
-          @click="batchPayment('argee')"
-        >
-          同意提现
-        </el-button>
+      <div slot="footer" class="dialog-footer content-center">
+        <el-button @click.native="newDialog = false"> 取消操作 </el-button>
+        <el-button type="primary" @click="batchPayment('argee')"> 同意提现 </el-button>
       </div>
     </el-dialog>
   </div>
@@ -515,7 +325,7 @@ import {
 } from '../../../../api/community'
 
 export default {
-  data () {
+  data() {
     return {
       create_time: '',
       bankType: [
@@ -562,36 +372,36 @@ export default {
   computed: {
     ...mapGetters(['wheight'])
   },
-  mounted () {
+  mounted() {
     this.params.status = this.activeName
     this.getList()
   },
   methods: {
-    newHandleClick (tab, event) {
+    newHandleClick(tab, event) {
       this.newActivieName = tab.name
       this.params.page = 1
       this.params.bank_type = tab.name
       this.batchfilter.bank_type = tab.name
       this.getList()
     },
-    getRowKeys (row) {
+    getRowKeys(row) {
       return row.id
     },
-    handleClick (val) {
+    handleClick(val) {
       this.activeName = val
       this.params.page = 1
       this.params.status = val
       this.getList()
     },
-    handleCurrentChange (page_num) {
+    handleCurrentChange(page_num) {
       this.params.page = page_num
       this.getList()
     },
-    dialogCancel (detail) {
+    dialogCancel(detail) {
       this.canceldialog = true
       this.detail = detail
     },
-    dateChange (val) {
+    dateChange(val) {
       this.params.status = ''
       if (val && val.length > 0) {
         this.params.start_time = this.dateStrToTimeStamp(val[0] + ' 00:00:00')
@@ -603,14 +413,14 @@ export default {
       this.params.page = 1
       this.getList()
     },
-    dateStrToTimeStamp (str) {
+    dateStrToTimeStamp(str) {
       return Date.parse(new Date(str)) / 1000
     },
-    numberSearch (e) {
+    numberSearch(e) {
       this.params.page = 1
       this.getList()
     },
-    actionProcessCashWithdrawal (processType) {
+    actionProcessCashWithdrawal(processType) {
       if (processType == 'reject' && !this.textarea) {
         this.$message({ type: 'error', message: '请输入拒绝提现原因' })
         return
@@ -621,7 +431,7 @@ export default {
       } else {
         var params = { process_type: processType }
       }
-      processCashWithdrawal(this.detail.id, params).then((response) => {
+      processCashWithdrawal(this.detail.id, params).then(response => {
         this.canceldialog = false
         this.dialog = false
         this.getList()
@@ -632,20 +442,20 @@ export default {
         }
       })
     },
-    dialogOpen (detail) {
+    dialogOpen(detail) {
       this.dialog = true
       this.detail = detail
     },
-    dialogPayInfo (detail) {
+    dialogPayInfo(detail) {
       this.payDialog = true
       this.detail = detail
-      getMerchantTradeList(detail.id).then((response) => {
+      getMerchantTradeList(detail.id).then(response => {
         this.payList = response.data.data.list
       })
     },
-    getList () {
+    getList() {
       this.loading = true
-      getCashWithdrawalList(this.params).then((response) => {
+      getCashWithdrawalList(this.params).then(response => {
         if (response.data.data.list) {
           this.list = response.data.data.list
           this.total_count = response.data.data.total_count
@@ -653,9 +463,9 @@ export default {
         this.loading = false
       })
     },
-    exportData (type) {
+    exportData(type) {
       this.params.page = 1
-      withdrawExport(this.params).then((response) => {
+      withdrawExport(this.params).then(response => {
         if (response.data.data.status) {
           this.$message({
             type: 'success',
@@ -675,11 +485,11 @@ export default {
         }
       })
     },
-    handleSelectionChange (rows) {
+    handleSelectionChange(rows) {
       this.batchfilter.cash_withdrawal_id = []
       this.selectData = []
       if (rows) {
-        rows.forEach((row) => {
+        rows.forEach(row => {
           if (row) {
             this.batchfilter.cash_withdrawal_id.push(row.id)
             this.selectData.push(row)
@@ -687,11 +497,11 @@ export default {
         })
       }
     },
-    batchPaymentOpen () {
+    batchPaymentOpen() {
       this.newDialog = true
     },
-    batchPayment (type) {
-      batchProcessCashWithdrawal(this.batchfilter).then((res) => {
+    batchPayment(type) {
+      batchProcessCashWithdrawal(this.batchfilter).then(res => {
         this.newDialog = false
         this.$message({ type: 'success', message: '打款成功' })
         this.getList()

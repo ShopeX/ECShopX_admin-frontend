@@ -1,9 +1,3 @@
-<style scoped lang="scss">
-.sp-filter-form {
-  margin-bottom: 16px;
-}
-</style>
-
 <template>
   <div class="page-body">
     <template v-if="$route.path.indexOf('detail') === -1">
@@ -112,10 +106,8 @@
       </SpFilterForm>
 
       <div class="action-container">
-        <export-tip @exportHandle="exportData">
-          <el-button type="primary" plain> 导出 </el-button>
-        </export-tip>
-        <el-button v-if="showAftersale" type="primary" plain @click="aftersalesRemindAction">
+        <el-button type="primary" @click="exportData"> 导出 </el-button>
+        <el-button v-if="showAftersale" type="primary" @click="aftersalesRemindAction">
           售后提醒内容
         </el-button>
       </div>
@@ -124,22 +116,24 @@
         <el-table-column prop="create_time" width="200" label="售后单">
           <template slot-scope="scope">
             <div class="order-num">
-              <router-link
-                target="_blank"
-                :to="{
-                  path:
-                    (`${$store.getters.login_type}` == 'distributor' &&
-                      '/shopadmin/order/aftersaleslist/detail') ||
-                    (`${$store.getters.login_type}` == 'supplier' &&
-                      '/supplier/order/aftersaleslist/detail') ||
-                    (`${$store.getters.login_type}` == 'merchant' &&
-                      '/merchant/order/aftersaleslist/detail') ||
-                    '/order/aftersales/aftersaleslist/detail',
-                  query: { aftersales_bn: scope.row.aftersales_bn }
-                }"
-              >
-                {{ scope.row.aftersales_bn }}
-              </router-link>
+              <el-button type="text">
+                <router-link
+                  target="_blank"
+                  :to="{
+                    path:
+                      (`${$store.getters.login_type}` == 'distributor' &&
+                        '/shopadmin/order/aftersaleslist/detail') ||
+                      (`${$store.getters.login_type}` == 'supplier' &&
+                        '/supplier/order/aftersaleslist/detail') ||
+                      (`${$store.getters.login_type}` == 'merchant' &&
+                        '/merchant/order/aftersaleslist/detail') ||
+                      '/order/aftersales/aftersaleslist/detail',
+                    query: { aftersales_bn: scope.row.aftersales_bn }
+                  }"
+                >
+                  {{ scope.row.aftersales_bn }}
+                </router-link>
+              </el-button>
               <el-tooltip effect="dark" content="复制" placement="top-start">
                 <i
                   v-clipboard:copy="scope.row.aftersales_bn"
@@ -162,25 +156,27 @@
             </div>
           </template>
         </el-table-column>
-        <el-table-column min-width="150" label="订单号">
+        <el-table-column min-width="180" label="订单号">
           <template slot-scope="scope">
             <div class="order-num">
-              <router-link
-                target="_blank"
-                :to="{
-                  path:
-                    (`${$store.getters.login_type}` == 'distributor' &&
-                      '/shopadmin/order/tradenormalorders/detail') ||
-                    (`${$store.getters.login_type}` == 'supplier' &&
-                      '/supplier/order/tradenormalorders/detail') ||
-                    (`${$store.getters.login_type}` == 'merchant' &&
-                      '/merchant/order/tradenormalorders/detail') ||
-                    '/order/entitytrade/tradenormalorders/detail',
-                  query: { orderId: scope.row.order_id }
-                }"
-              >
-                {{ scope.row.order_id }}
-              </router-link>
+              <el-button type="text">
+                <router-link
+                  target="_blank"
+                  :to="{
+                    path:
+                      (`${$store.getters.login_type}` == 'distributor' &&
+                        '/shopadmin/order/tradenormalorders/detail') ||
+                      (`${$store.getters.login_type}` == 'supplier' &&
+                        '/supplier/order/tradenormalorders/detail') ||
+                      (`${$store.getters.login_type}` == 'merchant' &&
+                        '/merchant/order/tradenormalorders/detail') ||
+                      '/order/entitytrade/tradenormalorders/detail',
+                    query: { orderId: scope.row.order_id }
+                  }"
+                >
+                  {{ scope.row.order_id }}
+                </router-link>
+              </el-button>
               <el-tooltip effect="dark" content="复制" placement="top-start">
                 <i
                   v-clipboard:copy="scope.row.order_id"
@@ -331,14 +327,18 @@
         </el-table-column>
         <el-table-column width="100" label="操作" fixed="left">
           <template slot-scope="scope">
-            <router-link
-              :to="{
-                path: matchRoutePath('detail'),
-                query: { aftersales_bn: scope.row.aftersales_bn, resource: $route.path }
-              }"
+            <el-button type="text"
+              >
+<router-link
+                :to="{
+                  path: matchRoutePath('detail'),
+                  query: { aftersales_bn: scope.row.aftersales_bn, resource: $route.path }
+                }"
+              >
+                详情
+              </router-link>
+</el-button
             >
-              详情
-            </router-link>
             <template
               v-if="scope.row.distributor_id == '0' || $store.getters.login_type == 'distributor'"
             >
@@ -349,7 +349,7 @@
           </template>
         </el-table-column>
       </el-table>
-      <div class="content-padded content-center">
+      <div class="mt-4 text-right">
         <el-pagination
           background
           layout="total, sizes, prev, pager, next, jumper"
@@ -390,7 +390,7 @@
                 active-color="#13ce66"
                 inactive-color="#ff4949"
               />
-              <br />
+              <br>
               <span class="frm-tips"
                 >如开启展示，则后台所输入内容将会展示在前端消费者提交售后申请的页面上，内容不超过200字</span
               >
@@ -411,7 +411,7 @@
 import { mapGetters } from 'vuex'
 import RemarkModal from '@/components/remarkModal'
 import mixin, { pageMixin, remarkMixin } from '@/mixins'
-import { VERSION_B2C(), IS_SUPPLIER } from '@/utils'
+import { VERSION_B2C, IS_SUPPLIER } from '@/utils'
 import { ORDER_CATEGORY, ORDER_TYPE, ORDER_TYPE_STANDARD } from '@/consts'
 export default {
   components: {
@@ -586,7 +586,7 @@ export default {
       cb(results)
     },
     createFilter(queryString) {
-      return (restaurant) => {
+      return restaurant => {
         return restaurant.value.toLowerCase().indexOf(queryString.toLowerCase()) === 0
       }
     },
@@ -594,8 +594,8 @@ export default {
       let params = { page: 1, pageSize: 500 }
       const { list } = await this.$api.marketing.getDistributorList(params)
       if (list) {
-        list.forEach((row) => {
-          this.shopList.push({ 'value': row.name, 'distributor_id': row.distributor_id })
+        list.forEach(row => {
+          this.shopList.push({ value: row.name, distributor_id: row.distributor_id })
         })
       }
     },
@@ -606,7 +606,7 @@ export default {
       cb(results)
     },
     getOrderCategoryName(order_holder) {
-      return this.orderCategory.find((item) => item.value == order_holder)?.title ?? ''
+      return this.orderCategory.find(item => item.value == order_holder)?.title ?? ''
     },
     async exportData() {
       const { status, url, filename } = await this.$api.aftersales.exportList(this.getParams())

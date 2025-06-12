@@ -18,6 +18,7 @@ function setupCommonGuard(router) {
 
 function setupAccessGuard(router) {
   router.beforeEach(async (to, from, next) => {
+    console.log('setupAccessGuard beforeEach', to, from)
     const hasToken = store.state.user.token
     if (!hasToken) {
       // return {

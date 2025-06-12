@@ -48,7 +48,7 @@
         </template>
       </el-table-column>
     </el-table>
-    <div class="content-padded content-center">
+    <div class="mt-4 text-right">
       <el-pagination
         background
         layout="total, sizes, prev, pager, next"
@@ -149,7 +149,6 @@ export default {
           type: 'success',
           message: '已加入执行队列，请在设置-导出列表中下载'
         })
-        // this.$export_open('chinaums_division')
         return
       } else if (url) {
         this.downloadUrl = url

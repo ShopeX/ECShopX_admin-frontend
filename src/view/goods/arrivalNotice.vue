@@ -85,18 +85,18 @@
       <!--</template>-->
       <!--</el-table-column>-->
     </el-table>
-
-    <el-pagination
-      class="content-padded content-center"
-      background
-      layout="total, sizes, prev, pager, next, jumper"
-      :current-page.sync="page.pageIndex"
-      :page-sizes="[10, 20, 50]"
-      :total="total_count"
-      :page-size="page.pageSize"
-      @current-change="onCurrentChange"
-      @size-change="onSizeChange"
-    />
+    <div class="mt-4 text-right">
+      <el-pagination
+        background
+        layout="total, sizes, prev, pager, next, jumper"
+        :current-page.sync="page.pageIndex"
+        :page-sizes="[10, 20, 50]"
+        :total="total_count"
+        :page-size="page.pageSize"
+        @current-change="onCurrentChange"
+        @size-change="onSizeChange"
+      />
+    </div>
 
     <el-dialog
       title="评价详情"
@@ -300,8 +300,8 @@ export default {
     },
     noticeDelete(id) {
       const _self = this
-      this.$confirm('确认删除当前通知吗？').then((_) => {
-        deleteRate(id).then((res) => {
+      this.$confirm('确认删除当前通知吗？').then(_ => {
+        deleteRate(id).then(res => {
           if (res.data.data.status) {
             this.$message({
               message: '删除成功',
@@ -323,7 +323,7 @@ export default {
       this.form.rate_id = row.rate_id
     },
     detailsDialog(row) {
-      getTradeRateDetails(row.rate_id).then((res) => {
+      getTradeRateDetails(row.rate_id).then(res => {
         this.details = res.data.data
         console.log(this.details)
       })
@@ -354,7 +354,7 @@ export default {
         pageSize,
         ...this.params
       }
-      getSubscribeList(params).then((response) => {
+      getSubscribeList(params).then(response => {
         this.list = response.data.data.list
         this.total_count = Number(response.data.data.total_count)
         this.loading = false

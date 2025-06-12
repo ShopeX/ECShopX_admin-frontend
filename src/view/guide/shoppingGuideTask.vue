@@ -55,17 +55,18 @@
             </template>
           </el-table-column>
         </el-table>
-        <el-pagination
-          class="content-padded content-center"
-          background
-          :current-page="params.page"
-          :page-sizes="[10, 20, 50, 100]"
-          :page-size="params.page_size"
-          layout="total, sizes, prev, pager, next, jumper"
-          :total="total_count"
-          @size-change="handleSizeChange"
-          @current-change="handleCurrentChange"
-        />
+        <div class="mt-4 text-right">
+          <el-pagination
+            background
+            :current-page="params.page"
+            :page-sizes="[10, 20, 50, 100]"
+            :page-size="params.page_size"
+            layout="total, sizes, prev, pager, next, jumper"
+            :total="total_count"
+            @size-change="handleSizeChange"
+            @current-change="handleCurrentChange"
+          />
+        </div>
       </el-card>
     </div>
     <router-view />
@@ -140,7 +141,7 @@ export default {
   methods: {
     getList() {
       this.loadingTable = true
-      getSalesperosnTask(this.params).then((response) => {
+      getSalesperosnTask(this.params).then(response => {
         this.list = response.data.data.list
         this.total_count = response.data.data.total_count
         this.loadingTable = false
@@ -168,7 +169,7 @@ export default {
         type: 'warning'
       }).then(() => {
         cancleSalesperosnTask(row.task_id)
-          .then((response) => {
+          .then(response => {
             this.$message({
               type: 'success',
               message: '终止任务成功'

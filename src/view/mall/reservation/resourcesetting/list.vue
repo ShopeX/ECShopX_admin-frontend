@@ -59,7 +59,7 @@
         </template>
       </el-table-column>
     </el-table>
-    <div v-if="total_count > params.pageSize" class="content-padded content-center">
+    <div v-if="total_count > params.pageSize" class="mt-4 text-right">
       <el-pagination
         layout="prev, pager, next"
         :current-page.sync="params.page"
@@ -191,7 +191,7 @@ export default {
               resource_level_id: resourceLevelId,
               shop_id: shopId
             }
-            deleteResourceLevel(params).then((res) => {
+            deleteResourceLevel(params).then(res => {
               if (res.data.data.status) {
                 this.$message({
                   type: 'success',
@@ -208,7 +208,7 @@ export default {
     getDetail(resourceLevelId) {
       if (resourceLevelId) {
         this.detailDialog = true
-        getResourceLevel(resourceLevelId).then((res) => {
+        getResourceLevel(resourceLevelId).then(res => {
           this.detailForm = res.data.data
           var materialIds = res.data.data.materialIds
           this.getLabelsList(materialIds)
@@ -222,7 +222,7 @@ export default {
     },
     getLevelList() {
       this.loading = true
-      getListResourceLevel(this.params).then((res) => {
+      getListResourceLevel(this.params).then(res => {
         if (res.data.data.list) {
           this.resourceLevelList = res.data.data.list
           this.total_count = res.data.data.total_count
@@ -236,7 +236,7 @@ export default {
       this.storeList = []
       this.loading = true
       var shopFilter = { page: 1, pageSize: 500 }
-      getWxShopsList(shopFilter).then((response) => {
+      getWxShopsList(shopFilter).then(response => {
         this.shopListData = response.data.data.list
         if (this.shopId == '' && this.shopListData[0].wxShopId) {
           this.shopId = this.shopListData[0].wxShopId
@@ -249,7 +249,7 @@ export default {
       this.serverproject = []
       var params = { page: 1, pageSize: 100 }
       params.service_type = 'timescard'
-      getServiceLabelsList(params).then((response) => {
+      getServiceLabelsList(params).then(response => {
         var labelsList = response.data.data.list
         var index
         for (var j = 0; j < labelsList.length; j++) {
@@ -273,7 +273,7 @@ export default {
         type: 'warning',
         beforeClose: (action, instance, done) => {
           if (action === 'confirm') {
-            updateResourceLevelStatus(params).then((res) => {
+            updateResourceLevelStatus(params).then(res => {
               this.$message({
                 type: 'success',
                 message: '修改成功'

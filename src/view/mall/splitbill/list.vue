@@ -94,7 +94,7 @@
             </template>
           </el-table-column>
         </el-table>
-        <div class="content-padded content-center">
+        <div class="mt-4 text-right">
           <el-pagination
             background
             :current-page="params.page"
@@ -197,7 +197,7 @@ export default {
       if (this.$store.getters.login_type == 'distributor') {
         this.params.distributor_id = this.$store.getters.shopId
       }
-      getEnterapplyList(this.params).then((res) => {
+      getEnterapplyList(this.params).then(res => {
         console.log(res, 'res')
         if (res.data.data.list) {
           this.list = res.data.data.list
@@ -235,7 +235,7 @@ export default {
               type: 'warning'
             })
               .then(() => {
-                upHfkaihu({ distributor_id: row.distributor_id }).then((res) => {
+                upHfkaihu({ distributor_id: row.distributor_id }).then(res => {
                   this.$message({
                     type: 'success',
                     message: '提交成功!'

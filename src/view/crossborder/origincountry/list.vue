@@ -10,10 +10,7 @@
       </el-col>
     </el-row> -->
 
-    <el-row
-      class="filter-header"
-      :gutter="20"
-    >
+    <el-row class="filter-header" :gutter="20">
       <el-col>
         <el-input
           v-model="params.keywords"
@@ -21,52 +18,23 @@
           placeholder="国家名称"
           @change="origincountrySearch"
         >
-          <el-button
-            slot="append"
-            icon="el-icon-search"
-            @click="origincountrySearch"
-          />
+          <el-button slot="append" icon="el-icon-search" @click="origincountrySearch" />
         </el-input>
-        <el-button
-          type="primary"
-          icon="el-icon-circle-plus"
-          @click="handleNew"
-        >
+        <el-button type="primary" icon="el-icon-circle-plus" @click="handleNew">
           新增国家
         </el-button>
       </el-col>
     </el-row>
 
     <el-card>
-      <el-table
-        v-loading="loading"
-        :data="list"
-        element-loading-text="数据加载中"
-      >
-        <el-table-column
-          label="操作"
-          width="150"
-        >
+      <el-table v-loading="loading" :data="list" element-loading-text="数据加载中">
+        <el-table-column label="操作" width="150">
           <template slot-scope="scope">
-            <el-button
-              type="text"
-              @click="handleEdit(scope.row)"
-            >
-              编辑
-            </el-button>
-            <el-button
-              type="text"
-              @click="handleDelete(scope)"
-            >
-              删除
-            </el-button>
+            <el-button type="text" @click="handleEdit(scope.row)"> 编辑 </el-button>
+            <el-button type="text" @click="handleDelete(scope)"> 删除 </el-button>
           </template>
         </el-table-column>
-        <el-table-column
-          prop="attribute_name"
-          label="国家"
-          width="150"
-        >
+        <el-table-column prop="attribute_name" label="国家" width="150">
           <template slot-scope="scope">
             <div>{{ scope.row.origincountry_name }}</div>
           </template>
@@ -84,7 +52,7 @@
     </el-card>
 
     <!--分页-->
-    <div class="content-padded content-center">
+    <div class="mt-4 text-right">
       <el-pagination
         background
         layout="total, sizes, prev, pager, next"
@@ -104,43 +72,24 @@
       @chooseImg="pickImg"
       @closeImgDialog="closeImgDialog"
     />
-    <sideBar
-      :visible.sync="show_sideBar"
-      :title="'新增产地国家'"
-    >
+    <sideBar :visible.sync="show_sideBar" :title="'新增产地国家'">
       <el-form>
         <el-form-item label="国家名称">
-          <el-input
-            v-model="form.origincountry_name"
-            maxlength="20"
-          />
+          <el-input v-model="form.origincountry_name" maxlength="20" />
         </el-form-item>
         <el-form-item label="国旗">
-          <div class="frm-tips">
-            只能上传jpg/png文件，且不超过2M （建议尺寸：200px * 200px）
-          </div>
-          <div
-            class="upload-box"
-            @click="handleImgPicker"
-          >
+          <div class="frm-tips">只能上传jpg/png文件，且不超过2M （建议尺寸：200px * 200px）</div>
+          <div class="upload-box" @click="handleImgPicker">
             <img
               v-if="form.origincountry_img_url"
               :src="form.origincountry_img_url"
               class="avatar"
             >
-            <i
-              v-else
-              class="iconfont icon-camera avatar-uploader-icon"
-            />
+            <i v-else class="iconfont icon-camera avatar-uploader-icon" />
           </div>
         </el-form-item>
         <el-form-item>
-          <el-button
-            type="primary"
-            @click="save"
-          >
-            提交
-          </el-button>
+          <el-button type="primary" @click="save"> 提交 </el-button>
         </el-form-item>
       </el-form>
     </sideBar>
@@ -163,7 +112,7 @@ export default {
     imgPicker
   },
 
-  data () {
+  data() {
     return {
       loading: false,
       imgDialog: false,
@@ -186,21 +135,21 @@ export default {
       list: []
     }
   },
-  mounted () {
+  mounted() {
     this.handleCurrentChange()
   },
   methods: {
     // 搜索
-    origincountrySearch () {
+    origincountrySearch() {
       this.handleCurrentChange()
     },
     // 新增编辑
-    handleNew () {
+    handleNew() {
       this.show_sideBar = true
       this.resetData()
     },
     // 编辑
-    handleEdit (data) {
+    handleEdit(data) {
       this.show_sideBar = true
       this.form = {
         origincountry_id: data.origincountry_id,
@@ -209,18 +158,18 @@ export default {
       }
     },
     // 删除
-    handleDelete (data) {
+    handleDelete(data) {
       this.$confirm('确认删除该国家么？')
-        .then((_) => {
-          delOrigincountry(data.row.origincountry_id, []).then((res) => {
+        .then(_ => {
+          delOrigincountry(data.row.origincountry_id, []).then(res => {
             this.list.splice(data.$index, 1)
             this.$message({ type: 'success', message: '操作成功' })
           })
         })
-        .catch((_) => {})
+        .catch(_ => {})
     },
     // 初始化
-    resetData () {
+    resetData() {
       this.form = {
         origincountry_id: '',
         origincountry_name: '',
@@ -228,45 +177,45 @@ export default {
       }
     },
     // 上传图片
-    handleImgPicker () {
+    handleImgPicker() {
       this.imgDialog = true
       this.isGetImage = true
     },
     // 保存数据
-    save () {
+    save() {
       if (!this.form.origincountry_name) {
         this.$message({ type: 'error', message: '请填写国家名称' })
       }
 
       if (!this.form.origincountry_id) {
-        addOrigincountry(this.form).then((res) => {
+        addOrigincountry(this.form).then(res => {
           this.$message({ type: 'success', message: '操作成功' })
           this.params.page = 1
           this.resetData()
           this.getList()
         })
       } else {
-        updateOrigincountry(this.form.origincountry_id, this.form).then((res) => {
+        updateOrigincountry(this.form.origincountry_id, this.form).then(res => {
           this.$message({ type: 'success', message: '操作成功' })
           this.getList()
         })
       }
     },
     // 分页
-    handleCurrentChange (page_num = 1) {
+    handleCurrentChange(page_num = 1) {
       this.params.page = page_num
       this.getList()
     },
-    handleSizeChange (pageSize) {
+    handleSizeChange(pageSize) {
       this.params.page = 1
       this.params.pageSize = pageSize
       this.getList()
     },
     // 获取列表
-    getList () {
+    getList() {
       console.log('获取数据')
       this.loading = true
-      getOrigincountry(this.params).then((res) => {
+      getOrigincountry(this.params).then(res => {
         console.log('返回数据', res)
         this.list = res.data.data.list
         this.total_count = res.data.data.total_count
@@ -274,11 +223,11 @@ export default {
       })
     },
     // 上传图片
-    pickImg (data) {
+    pickImg(data) {
       this.form.origincountry_img_url = data.url
       this.imgDialog = false
     },
-    closeImgDialog () {
+    closeImgDialog() {
       this.imgDialog = false
       this.isGetImage = false
     }

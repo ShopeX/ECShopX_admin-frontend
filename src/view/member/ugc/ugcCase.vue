@@ -27,7 +27,7 @@
       />
     </el-card>
 
-    <div class="content-padded content-center">
+    <div class="mt-4 text-right">
       <el-pagination
         layout="total, sizes, prev, pager, next, jumper"
         :total="pagers.total"
@@ -160,7 +160,7 @@ export default {
       const { ruleForm } = this.$data
       var message = ruleForm.id ? '更新成功' : '创建成功'
       console.log('编辑更新敏感词', this.$data.ruleForm)
-      this.$refs['ruleForm'].validate((valid) => {
+      this.$refs['ruleForm'].validate(valid => {
         if (valid) {
           this.$message({
             type: 'success',

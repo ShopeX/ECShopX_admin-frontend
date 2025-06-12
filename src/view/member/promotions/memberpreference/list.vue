@@ -61,7 +61,7 @@
             </template>
           </el-table-column>
         </el-table>
-        <div v-if="total_count > params.pageSize" class="content-padded content-center">
+        <div v-if="total_count > params.pageSize" class="mt-4 text-right">
           <el-pagination
             layout="prev, pager, next"
             :current-page.sync="params.page"
@@ -158,7 +158,7 @@ export default {
         type: 'warning',
         beforeClose: (action, instance, done) => {
           if (action === 'confirm') {
-            removeMarketingActivity({ marketing_id: row.marketing_id }).then((res) => {
+            removeMarketingActivity({ marketing_id: row.marketing_id }).then(res => {
               this.getActivityLists()
               this.$message({
                 message: '删除活动成功',
@@ -191,7 +191,7 @@ export default {
         this.ItemLoading = true
         this.activityItemDialog = true
         this.activityItemParams.marketing_id = id
-        getMarketingActivityItemList(this.activityItemParams).then((res) => {
+        getMarketingActivityItemList(this.activityItemParams).then(res => {
           if (res != undefined && res.data.data && res.data.data.total_count > 0) {
             this.activityItemListsData = res.data.data.list
             this.activityItemTotalCount = res.data.data.total_count
@@ -204,7 +204,7 @@ export default {
       this.ItemLoading = true
       this.activityItemDialog = true
       this.activityItemParams.page = page_num
-      getMarketingActivityItemList(this.activityItemParams).then((res) => {
+      getMarketingActivityItemList(this.activityItemParams).then(res => {
         if (res != undefined && res.data.data && res.data.data.total_count > 0) {
           this.activityItemListsData = res.data.data.list
           this.activityItemTotalCount = res.data.data.total_count
@@ -217,7 +217,7 @@ export default {
       this.activityItemDialog = true
       this.activityItemParams.page = 1
       this.activityItemParams.pageSize = pageSize
-      getMarketingActivityItemList(this.activityItemParams).then((res) => {
+      getMarketingActivityItemList(this.activityItemParams).then(res => {
         if (res != undefined && res.data.data && res.data.data.total_count > 0) {
           this.activityItemListsData = res.data.data.list
           this.activityItemTotalCount = res.data.data.total_count
@@ -252,7 +252,7 @@ export default {
     getActivityLists() {
       this.loading = true
       var filter = this.params
-      getMarketingActivityList(filter).then((response) => {
+      getMarketingActivityList(filter).then(response => {
         this.list = response.data.data.list
         this.total_count = Number(response.data.data.total_count)
         this.loading = false
@@ -267,7 +267,7 @@ export default {
         beforeClose: (action, instance, done) => {
           if (action === 'confirm') {
             removeMarketingActivity({ marketing_id: row.marketing_id, isEnd: true }).then(
-              (response) => {
+              response => {
                 this.getActivityLists()
                 this.$message({
                   message: '修改活动状态成功',

@@ -61,7 +61,7 @@
         </template>
       </el-table-column>
     </el-table>
-    <div class="content-padded content-center">
+    <div class="mt-4 text-right">
       <el-pagination
         background
         layout="total, sizes, prev, pager, next"

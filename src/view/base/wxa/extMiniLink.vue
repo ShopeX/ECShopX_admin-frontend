@@ -35,7 +35,7 @@
           </template>
         </el-table-column>
       </el-table>
-      <div v-if="page.total > page.pageSize" class="content-padded content-center">
+      <div v-if="page.total > page.pageSize" class="mt-4 text-right">
         <el-pagination
           background
           layout="total, sizes, prev, pager, next, jumper"
@@ -201,8 +201,8 @@ export default {
     removeCurrent(info) {
       const _self = this
       this.$confirm('确认删除当前设置？')
-        .then((_) => {
-          removeWxLinkSetting({ id: info.wx_external_config_id }).then((response) => {
+        .then(_ => {
+          removeWxLinkSetting({ id: info.wx_external_config_id }).then(response => {
             this.$message({
               message: '删除成功',
               type: 'success',
@@ -221,7 +221,7 @@ export default {
             })
           })
         })
-        .catch((_) => {})
+        .catch(_ => {})
     },
     // 获取列表
     async fetchList(isInit = true) {

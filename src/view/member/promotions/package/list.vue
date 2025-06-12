@@ -68,7 +68,7 @@
               </template>
             </el-table-column>
           </el-table>
-          <div v-if="page.total > page.pageSize" class="content-padded content-center">
+          <div v-if="page.total > page.pageSize" class="mt-4 text-right">
             <el-pagination
               background
               layout="total, sizes, prev, pager, next"
@@ -183,7 +183,7 @@ export default {
         type: 'warning',
         beforeClose: (action, instance, done) => {
           if (action === 'confirm') {
-            cancelPackagePromotions(row.package_id).then((res) => {
+            cancelPackagePromotions(row.package_id).then(res => {
               this.$message({
                 message: '取消成功',
                 type: 'success',

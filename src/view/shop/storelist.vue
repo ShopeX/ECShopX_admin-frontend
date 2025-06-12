@@ -72,7 +72,7 @@
           </template>
         </el-table-column>
       </el-table>
-      <div v-if="total_count > pageLimit" class="content-padded content-center">
+      <div v-if="total_count > pageLimit" class="mt-4 text-right">
         <el-pagination
           layout="prev, pager, next"
           :total="total_count"
@@ -147,21 +147,21 @@ export default {
     },
     wxShopsDetail(index, row) {
       this.wxShopsDetailVisible = true
-      getWxShopsDetail(row.wxShopId).then((response) => {
+      getWxShopsDetail(row.wxShopId).then(response => {
         this.wxShopsDetailData = response.data.data
       })
     },
     getShopsList() {
       this.loading = true
-      getWxShopsList(this.params).then((response) => {
+      getWxShopsList(this.params).then(response => {
         this.wxShopsList = response.data.data.list
         this.total_count = response.data.data.total_count
         this.loading = false
       })
     },
     setDefault(row) {
-      let params = { 'wx_shop_id': row.wxShopId }
-      setDefaultShop(params).then((response) => {
+      let params = { wx_shop_id: row.wxShopId }
+      setDefaultShop(params).then(response => {
         for (var i = this.wxShopsList.length - 1; i >= 0; i--) {
           if (this.wxShopsList[i].wxShopId != row.wxShopId) {
             this.wxShopsList[i].isDefault = false
@@ -173,8 +173,8 @@ export default {
       this.currentRow = val
     },
     setResource() {
-      let params = { 'wx_shop_id': this.bindShopId, resource_id: this.bindResId }
-      setResource(params).then((response) => {
+      let params = { wx_shop_id: this.bindShopId, resource_id: this.bindResId }
+      setResource(params).then(response => {
         for (var i = this.wxShopsList.length - 1; i >= 0; i--) {
           if (this.wxShopsList[i].wxShopId == this.bindShopId) {
             this.wxShopsList[i].is_valid = true
@@ -196,7 +196,7 @@ export default {
       })
         .then(() => {
           deleteWxShops(row.wxShopId)
-            .then((response) => {
+            .then(response => {
               this.wxShopsList.splice(index, 1)
               this.$message({
                 message: '删除门店成功',
@@ -225,7 +225,7 @@ export default {
         type: 'warning'
       })
         .then(() => {
-          syncWxShops().then((response) => {
+          syncWxShops().then(response => {
             this.$message({
               message: '同步成功',
               type: 'success',
@@ -246,8 +246,8 @@ export default {
       this.getShopsList()
     },
     setStatus(row) {
-      let params = { 'wx_shop_id': row.wxShopId, 'status': row.isOpen }
-      setShopStatus(params).then((res) => {})
+      let params = { wx_shop_id: row.wxShopId, status: row.isOpen }
+      setShopStatus(params).then(res => {})
     }
   }
 }

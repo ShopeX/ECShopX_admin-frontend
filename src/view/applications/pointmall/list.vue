@@ -100,9 +100,7 @@
         <el-button type="primary" plain @click="batchItemsStatus('onsale')"> 批量上架 </el-button>
         <el-button type="primary" plain @click="batchItemsStatus('instock')"> 批量下架 </el-button>
 
-        <export-tip @exportHandle="exportItemsData()">
-          <el-button type="primary" plain> 导出商品信息 </el-button>
-        </export-tip>
+        <el-button type="primary" plain @click="exportItemsData"> 导出商品信息 </el-button>
       </div>
 
       <el-tabs v-model="activeName" type="card" @tab-click="handleClick">

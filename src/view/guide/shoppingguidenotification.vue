@@ -86,17 +86,18 @@
             </template>
           </el-table-column>
         </el-table>
-        <el-pagination
-          class="content-padded content-center"
-          background
-          :current-page="paging.page"
-          :page-sizes="[10, 20, 50, 100]"
-          :page-size="paging.page_size"
-          layout="total, sizes, prev, pager, next, jumper"
-          :total="paging.total_count"
-          @size-change="handleSizeChange"
-          @current-change="handleCurrentChange"
-        />
+        <div class="mt-4 text-right">
+          <el-pagination
+            background
+            :current-page="paging.page"
+            :page-sizes="[10, 20, 50, 100]"
+            :page-size="paging.page_size"
+            layout="total, sizes, prev, pager, next, jumper"
+            :total="paging.total_count"
+            @size-change="handleSizeChange"
+            @current-change="handleCurrentChange"
+          />
+        </div>
       </el-card>
       <!-- 查看 -->
       <el-dialog

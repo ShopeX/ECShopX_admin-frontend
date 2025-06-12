@@ -1,9 +1,7 @@
 <template>
   <div>
     <div class="action-container">
-      <el-button type="primary" icon="el-icon-circle-plus" @click="addTemplate">
-        添加商品标签
-      </el-button>
+      <el-button type="primary" @click="addTemplate"> 添加商品标签 </el-button>
     </div>
 
     <SpFilterForm :model="params" @onSearch="onSearch" @onReset="onSearch">
@@ -46,7 +44,7 @@
       <el-table-column prop="distributor_name" label="店铺名称" />
       <el-table-column prop="description" label="标签描述" />
     </el-table>
-    <div class="content-padded content-center">
+    <div class="mt-4 text-right">
       <el-pagination
         background
         layout="total, sizes, prev, pager, next, jumper"
@@ -198,7 +196,7 @@ export default {
       })
         .then(() => {
           deleteTag(row.tag_id)
-            .then((response) => {
+            .then(response => {
               this.tagsList.splice(index, 1)
               this.$message({
                 message: '删除成功',
@@ -235,7 +233,7 @@ export default {
     },
     saveTagData() {
       if (this.form.tag_id) {
-        updateTag(this.form).then((res) => {
+        updateTag(this.form).then(res => {
           if (res.data.data) {
             this.$message({
               type: 'success',
@@ -245,7 +243,7 @@ export default {
           }
         })
       } else {
-        saveTag(this.form).then((res) => {
+        saveTag(this.form).then(res => {
           if (res.data.data) {
             this.$message({
               type: 'success',

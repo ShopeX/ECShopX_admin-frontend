@@ -40,12 +40,10 @@
       <el-row>
         <el-col>
           <el-button-group>
-            <export-tip params="normal_master_order" @exportHandle="exportData">
-              <el-button type="primary"> 导出主订单 </el-button>
-            </export-tip>
-            <export-tip params="normal_order" @exportHandle="exportData">
-              <el-button type="primary"> 导出子订单 </el-button>
-            </export-tip>
+            <el-button type="primary" @click="exportData('normal_master_order')">
+              导出主订单
+            </el-button>
+            <el-button type="primary" @click="exportData('normal_order')"> 导出子订单 </el-button>
           </el-button-group>
           <el-popover
             placement="top-start"
@@ -293,7 +291,7 @@
             </template>
           </el-table-column>
         </el-table>
-        <div class="content-padded content-center">
+        <div class="mt-4 text-right">
           <el-pagination
             background
             layout="total, sizes, prev, pager, next"
@@ -902,7 +900,7 @@ export default {
     },
     getOrders(filter) {
       this.loading = true
-      getOrderList(filter).then((response) => {
+      getOrderList(filter).then(response => {
         this.list = response.data.data.list
         this.total_count = Number(response.data.data.pager.count)
         this.datapass_block = response.data.data.datapass_block
@@ -910,16 +908,16 @@ export default {
       })
     },
     getStatus() {
-      isBind().then((response) => {
+      isBind().then(response => {
         this.IsBind = response.data.data.result
       })
     },
     getAllSourcesList() {
       let params = { page: 1, pageSize: 1000 }
-      getSourcesList(params).then((response) => {
+      getSourcesList(params).then(response => {
         if (response.data.data.list) {
-          response.data.data.list.forEach((row) => {
-            this.source_list.push({ 'value': row.sourceName, 'source_id': row.sourceId })
+          response.data.data.list.forEach(row => {
+            this.source_list.push({ value: row.sourceName, source_id: row.sourceId })
           })
         }
       })
@@ -931,7 +929,7 @@ export default {
       cb(results)
     },
     createFilter(queryString) {
-      return (restaurant) => {
+      return restaurant => {
         return restaurant.value.toLowerCase().indexOf(queryString.toLowerCase()) === 0
       }
     },
@@ -942,10 +940,10 @@ export default {
       this.selectItemType = data.delivery_type
       // this.selectItemType = 'new'
       this.deliveryTitle = '发货'
-      getLogisticsList().then((res) => {
+      getLogisticsList().then(res => {
         this.dlycorps = res.data.data.list
       })
-      getOrderDetail(order_id).then((response) => {
+      getOrderDetail(order_id).then(response => {
         this.deliveryData = response.data.data
         if (this.deliveryData.orderInfo.cancel_status == 'WAIT_PROCESS') {
           this.$message.error('客户已经申请退款，请先处理退款操作再决定是否发货!')
@@ -967,7 +965,7 @@ export default {
     confirmCancelOrderAction(order_id) {
       // 已支付订单的取消订单审核
       let params = { order_type: 'normal' }
-      getCancelOrderInfo(order_id, params).then((response) => {
+      getCancelOrderInfo(order_id, params).then(response => {
         this.cancelData = response.data.data
         this.cancelVisible = true
         console.log(response)
@@ -983,7 +981,7 @@ export default {
     },
     submitCancelConfirmAction() {
       // 提交取消订单审核结果
-      cancelConfirm(this.cancelForm.order_id, this.cancelForm).then((response) => {
+      cancelConfirm(this.cancelForm.order_id, this.cancelForm).then(response => {
         var cancelOrderStatus = response.data.data.refund_status
         if (cancelOrderStatus == 'SUCCESS' || cancelOrderStatus == 'AUDIT_SUCCESS') {
           this.handleCancelOrderCancel()
@@ -1022,14 +1020,14 @@ export default {
         } else {
           this.deliveryForm.sepInfo = JSON.stringify(
             JSON.parse(JSON.stringify(this.deliveryData.orderInfo.items)).filter(
-              (item) => item.delivery_num && item.delivery_num != ''
+              item => item.delivery_num && item.delivery_num != ''
             )
           )
         }
       } else {
         this.deliveryForm.sepInfo = {}
       }
-      delivery(this.deliveryForm).then((response) => {
+      delivery(this.deliveryForm).then(response => {
         var deliveryStatus = response.data.data.delivery_status
         if (deliveryStatus && deliveryStatus != 'PENDING') {
           this.handleCancel()
@@ -1044,7 +1042,7 @@ export default {
     cancelOrderAction(order_id) {
       //取消订单
       let params = { order_type: 'normal' }
-      getOrderDetail(order_id).then((response) => {
+      getOrderDetail(order_id).then(response => {
         this.cancelOrderData = response.data.data
         console.log(this.cancelOrderData)
         if (this.cancelOrderData.orderInfo.cancel_status == 'SUCCESS') {
@@ -1080,7 +1078,7 @@ export default {
         this.$message.error('请输入取消原因!')
         return false
       }
-      cancelOrderConfirm(this.cancelOrderForm.order_id, this.cancelOrderForm).then((response) => {
+      cancelOrderConfirm(this.cancelOrderForm.order_id, this.cancelOrderForm).then(response => {
         var cancelOrderStatus = response.data.data.refund_status
         if (cancelOrderStatus == 'WAIT_CHECK' || cancelOrderStatus == 'SUCCESS') {
           this.handleCancelOrder()
@@ -1095,7 +1093,7 @@ export default {
     },
     writeoffOrderAction(order_id) {
       //自提订单核销
-      getWriteoff(order_id).then((response) => {
+      getWriteoff(order_id).then(response => {
         this.writeoffOrderData = response.data.data
         if (this.writeoffOrderData.ziti_status == 'DONE') {
           this.$message.error('该订单已核销!')
@@ -1120,7 +1118,7 @@ export default {
         this.$message.error('请输入提货码!')
         return false
       }
-      doWriteoff(this.writeoffOrderForm.order_id, this.writeoffOrderForm).then((response) => {
+      doWriteoff(this.writeoffOrderForm.order_id, this.writeoffOrderForm).then(response => {
         var writeoffStatus = response.data.data.ziti_status
         var order_id = response.data.data.order_id
         if (writeoffStatus == 'DONE') {
@@ -1151,7 +1149,7 @@ export default {
         })
         return
       }
-      orderExport(this.params).then((response) => {
+      orderExport(this.params).then(response => {
         if (response.data.data.status) {
           this.$message({
             type: 'success',
@@ -1175,7 +1173,7 @@ export default {
     exportInvoice() {
       this.getParams()
       ;(this.params.type = 'normal'),
-        exportInvoice(this.params).then((response) => {
+        exportInvoice(this.params).then(response => {
           if (response.data.data.status) {
             this.$message({
               type: 'success',
@@ -1211,10 +1209,10 @@ export default {
         beforeClose: (action, instance, done) => {
           if (action === 'confirm') {
             var params = {
-              'order_id': row.order_id,
-              'status': status
+              order_id: row.order_id,
+              status: status
             }
-            isInvoiced(params).then((response) => {
+            isInvoiced(params).then(response => {
               if (response.data.data.success) {
                 this.$message({
                   type: 'success',
@@ -1235,7 +1233,7 @@ export default {
     },
     uploadHandleChange(file, fileList) {
       let params = { isUploadFile: true, file_type: 'normal_orders', file: file.raw }
-      handleUploadFile(params).then((response) => {
+      handleUploadFile(params).then(response => {
         this.$message({
           type: 'success',
           message: '上传成功，等待处理'

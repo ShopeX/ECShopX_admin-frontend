@@ -23,7 +23,7 @@
 
 <script>
 import { mapGetters } from 'vuex'
-import { VERSION_STANDARD, VERSION_IN_PURCHASE(), IS_ADMIN, VERSION_PLATFORM() } from '@/utils'
+import { VERSION_STANDARD, VERSION_IN_PURCHASE, IS_ADMIN, VERSION_PLATFORM } from '@/utils'
 export default {
   name: '',
   data() {
@@ -53,7 +53,7 @@ export default {
         clientSecret: '',
         storeId: '',
         stores_isolate: false,
-        stores_isolate_template: '',
+        stores_isolate_template: ''
       },
       formList: [
         {
@@ -87,7 +87,7 @@ export default {
               2.
               顾客通过「管理后台-店铺-店铺商品」生成的商品二维码或其他带店铺参数的二维码进入商城时，其所在店铺将切换为二维码所带参数对应的店铺，同时本地缓存也会切换成参数对应的新店铺。
             </p></div>`,
-          onChange: async (e) => {
+          onChange: async e => {
             const { distributor_param_status } = this.form
             await this.$api.system.saveShareParams({
               distributor_param_status
@@ -99,7 +99,7 @@ export default {
           key: 'rate_status',
           type: 'switch',
           // isShow: !VERSION_IN_PURCHASE(),
-          onChange: async (e) => {
+          onChange: async e => {
             const { rate_status } = this.form
             await this.$api.company.setRateSetting({
               rate_status
@@ -111,7 +111,7 @@ export default {
           key: 'pickupcode_status',
           type: 'switch',
           isShow: !this.isMicorMall,
-          onChange: async (e) => {
+          onChange: async e => {
             const { pickupcode_status } = this.form
             await this.$api.company.setPickupcodeSetting({
               pickupcode_status
@@ -122,7 +122,7 @@ export default {
           label: '会员白名单',
           key: 'whitelist_status',
           type: 'switch',
-          onChange: async (e) => {
+          onChange: async e => {
             const { whitelist_status } = this.form
             await this.$api.company.setWhitelistSetting({
               whitelist_status
@@ -135,7 +135,7 @@ export default {
           type: 'switch',
           tip: '赠品缺货是否能继续下单',
           isShow: !VERSION_IN_PURCHASE(),
-          onChange: async (e) => {
+          onChange: async e => {
             const { check_gift_store } = this.form
             await this.$api.company.setGiftSetting({
               check_gift_store
@@ -148,7 +148,7 @@ export default {
           type: 'switch',
           tip: '自提订单推oms',
           isShow: !VERSION_IN_PURCHASE(),
-          onChange: async (e) => {
+          onChange: async e => {
             const { ziti_send_oms } = this.form
             await this.$api.company.setSendOmsSetting({
               ziti_send_oms
@@ -161,7 +161,7 @@ export default {
           type: 'switch',
           tip: '用于开启前端店铺切换功能',
           isShow: VERSION_STANDARD(),
-          onChange: async (e) => {
+          onChange: async e => {
             const { nostores_status } = this.form
             await this.$api.company.setNoStores({
               nostores_status: !nostores_status
@@ -175,10 +175,31 @@ export default {
           tip: '开启后需添加店铺白名单方能访问店铺页面',
           isShow: VERSION_STANDARD() && IS_ADMIN,
           component: () => (
-            <div class='isolate-contanier'>
-              <el-switch v-model={this.form.stores_isolate} onChange={() => { this.saveOpenDividedSetting() }} />
-              <span class='isolate-set' onClick={() => { this.onClickStoresIsolate() }}>{this.form?.stores_isolate_template ? '已设置引导页模版' : '设置引导页模版'}</span>
-              {this.form?.stores_isolate_template && <el-button class='isolate-clear' onClick={() => { this.onClickClear() }}>清除</el-button>}
+            <div class="isolate-contanier">
+              <el-switch
+                v-model={this.form.stores_isolate}
+                onChange={() => {
+                  this.saveOpenDividedSetting()
+                }}
+              />
+              <span
+                class="isolate-set"
+                onClick={() => {
+                  this.onClickStoresIsolate()
+                }}
+              >
+                {this.form?.stores_isolate_template ? '已设置引导页模版' : '设置引导页模版'}
+              </span>
+              {this.form?.stores_isolate_template && (
+                <el-button
+                  class="isolate-clear"
+                  onClick={() => {
+                    this.onClickClear()
+                  }}
+                >
+                  清除
+                </el-button>
+              )}
             </div>
           )
         },
@@ -187,7 +208,7 @@ export default {
           key: 'repeat_cancel',
           type: 'switch',
           tip: '拒绝后是否能再次发起申请',
-          onChange: async (e) => {
+          onChange: async e => {
             const { repeat_cancel } = this.form
             await this.$api.company.setRepeatCancelSetting({
               repeat_cancel
@@ -199,7 +220,7 @@ export default {
           key: 'item_store_status',
           type: 'switch',
           tip: '商品详情页是否显示库存',
-          onChange: async (e) => {
+          onChange: async e => {
             const { item_store_status } = this.form
             await this.$api.company.setItemStoreSetting({
               item_store_status
@@ -210,7 +231,7 @@ export default {
           label: '商品销量显示',
           key: 'item_sales_status',
           type: 'switch',
-          onChange: async (e) => {
+          onChange: async e => {
             const { item_sales_status } = this.form
             await this.$api.company.setItemSalesSetting({
               item_sales_status
@@ -223,7 +244,7 @@ export default {
           type: 'switch',
           tip: '结算页是否显示发票',
           isShow: !VERSION_IN_PURCHASE(),
-          onChange: async (e) => {
+          onChange: async e => {
             const { invoice_status } = this.form
             await this.$api.company.setInvoiceStatus({
               invoice_status
@@ -236,7 +257,7 @@ export default {
           type: 'switch',
           tip: '移动端会员中心是否展示店务端入口',
           // isShow: !VERSION_IN_PURCHASE(),
-          onChange: async (e) => {
+          onChange: async e => {
             const { dianwu_show_status } = this.form
             await this.$api.company.setDianwuShowStatus({
               dianwu_show_status
@@ -267,10 +288,10 @@ export default {
             {
               label: 'kuaizhen580',
               name: '580处方业务集成'
-            },
+            }
           ],
           // isShow: !VERSION_IN_PURCHASE(),
-          onChange: async (e) => {
+          onChange: async e => {
             const { dianwu_show_status } = this.form
             await this.$api.company.setDianwuShowStatus({
               dianwu_show_status
@@ -281,26 +302,28 @@ export default {
           label: 'clientId',
           key: 'clientId',
           type: 'input',
-          isShow: () => this.form.use_third_party_system && this.form.is_pharma_industry,
+          isShow: () => this.form.use_third_party_system && this.form.is_pharma_industry
         },
         {
           label: 'clientSecret',
           key: 'clientSecret',
           type: 'input',
-          isShow: () => this.form.use_third_party_system && this.form.is_pharma_industry,
+          isShow: () => this.form.use_third_party_system && this.form.is_pharma_industry
         },
         {
           label: '门店ID',
           key: 'storeId',
           type: 'input',
-          isShow: () => this.form.use_third_party_system && this.form.is_pharma_industry,
+          isShow: () => this.form.use_third_party_system && this.form.is_pharma_industry
         },
         {
           label: '',
           component: () => (
-            <elButton type='primary' onClick={() => this.primarySetting('button')}>保存</elButton>
+            <elButton type="primary" onClick={() => this.primarySetting('button')}>
+              保存
+            </elButton>
           ),
-          isShow: () => this.form.use_third_party_system && this.form.is_pharma_industry,
+          isShow: () => this.form.use_third_party_system && this.form.is_pharma_industry
         },
         {
           label: '商品价格展示',
@@ -312,16 +335,16 @@ export default {
           type: 'checkbox',
           options: VERSION_IN_PURCHASE()
             ? [
-              { label: 0, name: '销售价', disabled: true },
-              { label: 1, name: '原价' }
-            ]
+                { label: 0, name: '销售价', disabled: true },
+                { label: 1, name: '原价' }
+              ]
             : [
-              { label: 0, name: '销售价', disabled: true },
-              { label: 1, name: '原价' },
-              { label: 2, name: '会员等级价' },
-              { label: 3, name: '付费会员价' }
-            ],
-          onChange: async (e) => {
+                { label: 0, name: '销售价', disabled: true },
+                { label: 1, name: '原价' },
+                { label: 2, name: '会员等级价' },
+                { label: 3, name: '付费会员价' }
+              ],
+          onChange: async e => {
             this.saveItemPriceSetting()
           }
         },
@@ -332,10 +355,10 @@ export default {
           options: VERSION_IN_PURCHASE()
             ? [{ label: 1, name: '原价' }]
             : [
-              { label: 0, name: '销售价/会员等级价/付费会员价', disabled: true },
-              { label: 1, name: '原价' }
-            ],
-          onChange: async (e) => {
+                { label: 0, name: '销售价/会员等级价/付费会员价', disabled: true },
+                { label: 1, name: '原价' }
+              ],
+          onChange: async e => {
             this.saveItemPriceSetting()
           }
         },
@@ -346,10 +369,10 @@ export default {
           options: VERSION_IN_PURCHASE()
             ? [{ label: 1, name: '原价' }]
             : [
-              { label: 0, name: '销售价/会员等级价/付费会员价', disabled: true },
-              { label: 1, name: '原价' }
-            ],
-          onChange: async (e) => {
+                { label: 0, name: '销售价/会员等级价/付费会员价', disabled: true },
+                { label: 1, name: '原价' }
+              ],
+          onChange: async e => {
             this.saveItemPriceSetting()
           }
         }
@@ -387,7 +410,7 @@ export default {
         clientSecret: res.medicine_setting.kuaizhen580_config?.client_secret,
         storeId: res.medicine_setting.kuaizhen580_config?.kuaizhen_store_id,
         stores_isolate: res.open_distributor_divided?.status || false, // 店铺隔离开关
-        stores_isolate_template: res.open_distributor_divided?.template || '', // 店铺隔离模版
+        stores_isolate_template: res.open_distributor_divided?.template || '' // 店铺隔离模版
       }
       const { cart_page, order_page, item_page } = res.item_price_setting
       if (cart_page.market_price) {
@@ -424,7 +447,8 @@ export default {
       await this.$api.company.saveItemPriceSetting(params)
     },
     async primarySetting(isBtn) {
-      const { is_pharma_industry, use_third_party_system, clientId, clientSecret, storeId } = this.form
+      const { is_pharma_industry, use_third_party_system, clientId, clientSecret, storeId } =
+        this.form
       try {
         await this.$api.company.setPharmaIndustry({
           is_pharma_industry: is_pharma_industry ? '1' : '0',

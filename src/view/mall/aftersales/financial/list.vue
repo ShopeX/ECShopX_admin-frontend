@@ -1,10 +1,7 @@
 <template>
   <div>
     <div v-if="$route.path.indexOf('detail') === -1">
-      <el-row
-        class="filter-header"
-        :gutter="20"
-      >
+      <el-row class="filter-header" :gutter="20">
         <el-col>
           <el-date-picker
             v-model="create_time"
@@ -14,65 +11,30 @@
             placeholder="选择日期范围"
             @change="dateChange"
           />
-          <el-input
-            v-model="identifier"
-            class="input-m"
-            placeholder="订单号"
-          >
-            <el-button
-              slot="append"
-              icon="el-icon-search"
-              @click="search"
-            />
+          <el-input v-model="identifier" class="input-m" placeholder="订单号">
+            <el-button slot="append" icon="el-icon-search" @click="search" />
           </el-input>
-          <el-input
-            v-model="aftersales_bn"
-            class="input-m"
-            placeholder="售后单号"
-          >
-            <el-button
-              slot="append"
-              icon="el-icon-search"
-              @click="search2"
-            />
+          <el-input v-model="aftersales_bn" class="input-m" placeholder="售后单号">
+            <el-button slot="append" icon="el-icon-search" @click="search2" />
           </el-input>
-          <export-tip @exportHandle="exportData">
-            <el-button type="primary">
-              导出
-            </el-button>
-          </export-tip>
+          <el-button type="primary" @click="exportData"> 导出 </el-button>
           <el-popover
             placement="top-start"
             width="200"
             trigger="hover"
             content="导出任务会以队列执行，点击导出后，请至‘设置-导出列表’页面中查看及下载数据"
           >
-            <i
-              slot="reference"
-              class="el-icon-question"
-            />
+            <i slot="reference" class="el-icon-question" />
           </el-popover>
         </el-col>
       </el-row>
       <el-card>
-        <el-table
-          v-loading="loading"
-          :data="list"
-          element-loading-text="数据加载中"
-        >
-          <el-table-column
-            prop="create_time"
-            width="220"
-            label="售后单"
-          >
+        <el-table v-loading="loading" :data="list" element-loading-text="数据加载中">
+          <el-table-column prop="create_time" width="220" label="售后单">
             <template slot-scope="scope">
               <div class="order-num">
                 {{ scope.row.aftersales_bn }}
-                <el-tooltip
-                  effect="dark"
-                  content="复制"
-                  placement="top-start"
-                >
+                <el-tooltip effect="dark" content="复制" placement="top-start">
                   <i
                     v-clipboard:copy="scope.row.aftersales_bn"
                     v-clipboard:success="onCopy"
@@ -82,18 +44,11 @@
               </div>
             </template>
           </el-table-column>
-          <el-table-column
-            min-width="300"
-            label="订单"
-          >
+          <el-table-column min-width="300" label="订单">
             <template slot-scope="scope">
               <div class="order-num">
                 {{ scope.row.order_id }}
-                <el-tooltip
-                  effect="dark"
-                  content="复制"
-                  placement="top-start"
-                >
+                <el-tooltip effect="dark" content="复制" placement="top-start">
                   <i
                     v-clipboard:copy="scope.row.order_id"
                     v-clipboard:success="onCopy"
@@ -103,32 +58,23 @@
               </div>
             </template>
           </el-table-column>
-          <el-table-column
-            min-width="80"
-            label="退款金额"
-          >
+          <el-table-column min-width="80" label="退款金额">
             <template slot-scope="scope">
               <span>￥{{ scope.row.refund_fee / 100 }}</span>
             </template>
           </el-table-column>
-          <el-table-column
-            min-width="100"
-            label="退款原因"
-          >
+          <el-table-column min-width="100" label="退款原因">
             <template slot-scope="scope">
               <span>{{ scope.row.reason }}</span>
             </template>
           </el-table-column>
-          <el-table-column
-            min-width="300"
-            label="售后描述"
-          >
+          <el-table-column min-width="300" label="售后描述">
             <template slot-scope="scope">
               <span>{{ scope.row.description }}</span>
             </template>
           </el-table-column>
         </el-table>
-        <div class="content-padded content-center">
+        <div class="mt-4 text-right">
           <el-pagination
             background
             layout="total, sizes, prev, pager, next, jumper"
@@ -149,7 +95,7 @@
 import { mapGetters } from 'vuex'
 import { getAftersalesList, exportAftersalesFinancialList } from '../../../../api/aftersales'
 export default {
-  data () {
+  data() {
     return {
       currentShop: '',
       loading: false,
@@ -170,22 +116,22 @@ export default {
   computed: {
     ...mapGetters(['wheight'])
   },
-  mounted () {
+  mounted() {
     this.getAftersalesList(this.params)
   },
   methods: {
-    onCopy () {
+    onCopy() {
       this.$notify.success({
         message: '复制成功',
         showClose: true
       })
     },
-    search (e) {
+    search(e) {
       this.params.page = 1
       this.getParams()
       this.getAftersalesList(this.params)
     },
-    search2 () {
+    search2() {
       this.params.page = 1
       this.params.time_start_begin = this.time_start_begin
       this.params.time_start_end = this.time_start_end
@@ -193,7 +139,7 @@ export default {
       this.params.order_id = ''
       this.getAftersalesList(this.params)
     },
-    dateChange (val) {
+    dateChange(val) {
       if (val && val.length > 0) {
         this.time_start_begin = this.dateStrToTimeStamp(val[0] + ' 00:00:00')
         this.time_start_end = this.dateStrToTimeStamp(val[1] + ' 23:59:59')
@@ -205,51 +151,51 @@ export default {
       this.getParams()
       this.getAftersalesList(this.params)
     },
-    handleCurrentChange (val) {
+    handleCurrentChange(val) {
       this.params.page = val
       this.loading = false
       this.getParams()
       this.getAftersalesList(this.params)
     },
-    handleSizeChange (pageSize) {
+    handleSizeChange(pageSize) {
       this.loading = false
       this.params.page = 1
       this.params.pageSize = pageSize
       this.getParams()
       this.getAftersalesList(this.params)
     },
-    getParams () {
+    getParams() {
       this.params.time_start_begin = this.time_start_begin
       this.params.time_start_end = this.time_start_end
       this.params.order_id = this.identifier
       this.params.aftersales_bn = ''
     },
-    dateStrToTimeStamp (str) {
+    dateStrToTimeStamp(str) {
       return Date.parse(new Date(str)) / 1000
     },
-    getAftersalesList (filter) {
+    getAftersalesList(filter) {
       this.loading = true
-      getAftersalesList(filter).then((response) => {
+      getAftersalesList(filter).then(response => {
         this.list = response.data.data.list
         this.total_count = Number(response.data.data.total_count)
         this.loading = false
       })
     },
-    querySearch (queryString, cb) {
+    querySearch(queryString, cb) {
       var restaurants = this.source_list
       var results = queryString ? restaurants.filter(this.createFilter(queryString)) : restaurants
       // 调用 callback 返回建议列表的数据
       cb(results)
     },
-    createFilter (queryString) {
-      return (restaurant) => {
+    createFilter(queryString) {
+      return restaurant => {
         return restaurant.value.toLowerCase().indexOf(queryString.toLowerCase()) === 0
       }
     },
-    exportData () {
+    exportData() {
       this.getParams()
       this.params.page = 1
-      exportAftersalesFinancialList(this.params).then((response) => {
+      exportAftersalesFinancialList(this.params).then(response => {
         if (response.data.data.status) {
           this.$message({
             type: 'success',

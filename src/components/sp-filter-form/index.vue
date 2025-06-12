@@ -2,6 +2,7 @@
 .sp-filter-form {
   background-color: #f6f7f9;
   padding: 16px 0 0;
+  margin-bottom: 16px;
   display: flex;
   box-sizing: content-box;
   transition: all 0.8s ease-in-out;
@@ -55,13 +56,13 @@
       <div class="btns-wrap">
         <el-button type="primary" @click="onSearch">
           <div class="flex items-center">
-            <SpIcon name="search" size="14" />
+            <SpIcon name="search" :size="14" />
             <span class="ml-1">查询</span>
           </div>
         </el-button>
         <el-button type="primary" plain @click="onReset">
           <div class="flex items-center">
-            <SpIcon name="rotate-ccw" size="14" />
+            <SpIcon name="rotate-ccw" :size="14" />
             <span class="ml-1">重置</span>
           </div>
         </el-button>

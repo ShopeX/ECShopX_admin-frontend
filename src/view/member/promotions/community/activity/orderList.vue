@@ -167,7 +167,7 @@
             </template>
           </el-table-column>
         </el-table>
-        <div v-if="total_count > params.pageSize" class="content-padded content-center">
+        <div v-if="total_count > params.pageSize" class="mt-4 text-right">
           <el-pagination
             background
             layout="prev, pager, next, total"
@@ -315,10 +315,10 @@ export default {
     },
     getOrders(filter) {
       this.loading = true
-      getOrderList(filter).then((response) => {
+      getOrderList(filter).then(response => {
         var list = response.data.data.list
         var newlist = []
-        list.forEach((row) => {
+        list.forEach(row => {
           if (row.order_status == 'CANCEL_WAIT_PROCESS') {
             row.order_status = 'REFUND_PROCESS'
           } else if (row.order_status === 'CANCEL' && row.cancel_status === 'SUCCESS') {
@@ -336,11 +336,11 @@ export default {
     },
     communityList(filter) {
       this.loading = true
-      getCommunityList(filter).then((response) => {
+      getCommunityList(filter).then(response => {
         this.communityData = response.data.data.list
         if (this.communityData) {
           var obj = {}
-          this.communityData.forEach((row) => {
+          this.communityData.forEach(row => {
             var key = row.community_id
             obj[key] = row
           })
@@ -351,10 +351,10 @@ export default {
     },
     getAllSourcesList() {
       let params = { page: 1, pageSize: 1000 }
-      getSourcesList(params).then((response) => {
+      getSourcesList(params).then(response => {
         if (response.data.data.list) {
-          response.data.data.list.forEach((row) => {
-            this.source_list.push({ 'value': row.sourceName, 'source_id': row.sourceId })
+          response.data.data.list.forEach(row => {
+            this.source_list.push({ value: row.sourceName, source_id: row.sourceId })
           })
         }
       })
@@ -366,14 +366,14 @@ export default {
       cb(results)
     },
     createFilter(queryString) {
-      return (restaurant) => {
+      return restaurant => {
         return restaurant.value.toLowerCase().indexOf(queryString.toLowerCase()) === 0
       }
     },
     exportData() {
       this.getParams()
       this.params.page = 1
-      orderExport(this.params).then((response) => {
+      orderExport(this.params).then(response => {
         this.downloadUrl = response.data.url
         this.downloadName = response.data.filename
         this.downloadView = true

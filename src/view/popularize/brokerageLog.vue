@@ -143,23 +143,11 @@
               <el-tag v-else type="info"> 未结算 </el-tag>
             </template>
           </el-table-column>
-          <el-table-column
-            v-if="loginType == 'distributor'"
-            prop="store_name"
-            label="店铺"
-          />
-          <el-table-column
-            v-if="loginType == 'distributor'"
-            prop="user_id"
-            label="业务员ID"
-          />
-          <el-table-column
-            v-if="loginType == 'distributor'"
-            prop="title"
-            label="订单内容"
-          />
+          <el-table-column v-if="loginType == 'distributor'" prop="store_name" label="店铺" />
+          <el-table-column v-if="loginType == 'distributor'" prop="user_id" label="业务员ID" />
+          <el-table-column v-if="loginType == 'distributor'" prop="title" label="订单内容" />
         </el-table>
-        <div v-if="total_count > params.pageSize" class="content-padded content-center">
+        <div v-if="total_count > params.pageSize" class="mt-4 text-right">
           <el-pagination
             background
             layout="total, sizes, prev, pager, next"
@@ -247,13 +235,13 @@ export default {
       withdrawalStatistics({
         user_id: this.params.user_id,
         distributor_id: this.params.distributor_id
-      }).then((response) => {
+      }).then(response => {
         this.count = response.data.data
       })
     },
     getList() {
       this.loading = true
-      getBrokerageLog(this.params).then((response) => {
+      getBrokerageLog(this.params).then(response => {
         if (response.data.data.list) {
           this.list = response.data.data.list
           this.total_count = response.data.data.total_count

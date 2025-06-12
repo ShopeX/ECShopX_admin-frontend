@@ -1,5 +1,4 @@
 <template>
-  <!-- <div v-if="$route.path.indexOf('detail') === -1 && $route.path.indexOf('process') === -1"> -->
   <SpRouterView>
     <SpFilterForm :model="params" @onSearch="onSearch" @onReset="onSearch">
       <SpFilterFormItem prop="mobile" label="手机号:">
@@ -184,22 +183,6 @@
     </SpFilterForm>
 
     <div class="action-container">
-      <el-dropdown>
-        <el-button type="primary" plain>
-          导出<i class="el-icon-arrow-down el-icon--right" />
-        </el-button>
-        <el-dropdown-menu slot="dropdown">
-          <el-dropdown-item>
-            <export-tip @exportHandle="exportInvoice"> 未开票订单 </export-tip>
-          </el-dropdown-item>
-          <el-dropdown-item>
-            <export-tip @exportHandle="exportDataMaster"> 主订单 </export-tip>
-          </el-dropdown-item>
-          <el-dropdown-item>
-            <export-tip @exportHandle="exportDataNormal"> 子订单 </export-tip>
-          </el-dropdown-item>
-        </el-dropdown-menu>
-      </el-dropdown>
       <el-tooltip
         v-if="IS_SUPPLIER()"
         effect="light"
@@ -213,9 +196,10 @@
           :auto-upload="false"
           :show-file-list="false"
         >
-          <el-button type="primary" plain> 批量发货 </el-button>
+          <el-button type="primary"> 批量发货 </el-button>
         </el-upload>
       </el-tooltip>
+
       <el-upload
         action=""
         class="btn-upload"
@@ -223,20 +207,27 @@
         :auto-upload="false"
         :show-file-list="false"
       >
-        <el-button type="primary" plain> 批量取消 </el-button>
+        <el-button type="primary"> 批量取消 </el-button>
       </el-upload>
-      <!-- v-if="IS_DISTRIBUTOR() || IS_MERCHANT()" -->
-      <el-button type="primary" plain @click="assignPersonnel(true)"> 分配配送员 </el-button>
-      <!-- <el-upload
-        action=""
-        class="btn-upload"
-        :on-change="uploadHandlePatchCancel"
-        :auto-upload="false"
-        :show-file-list="false"
-      > -->
-      <!-- v-if="IS_DISTRIBUTOR || IS_ADMIN" -->
-      <el-button type="primary" plain @click="assignPersonnel(false)"> 取消配送 </el-button>
-      <!-- </el-upload> -->
+
+      <el-button type="primary" @click="assignPersonnel(true)"> 分配配送员 </el-button>
+
+      <el-button type="primary" @click="assignPersonnel(false)"> 取消配送 </el-button>
+
+      <el-dropdown>
+        <el-button type="primary"> 导出<i class="el-icon-arrow-down el-icon--right" /> </el-button>
+        <el-dropdown-menu slot="dropdown">
+          <el-dropdown-item>
+            <export-tip @exportHandle="exportInvoice"> 未开票订单 </export-tip>
+          </el-dropdown-item>
+          <el-dropdown-item>
+            <export-tip @exportHandle="exportDataMaster"> 主订单 </export-tip>
+          </el-dropdown-item>
+          <el-dropdown-item>
+            <export-tip @exportHandle="exportDataNormal"> 子订单 </export-tip>
+          </el-dropdown-item>
+        </el-dropdown-menu>
+      </el-dropdown>
     </div>
 
     <el-tabs v-model="params.order_status" type="card" @tab-click="onSearch">
@@ -469,7 +460,7 @@
         </el-table-column>
         <el-table-column type="selection" width="55" fixed="left" />
         <!-- <el-table-column prop="source_name" label="来源"></el-table-column> -->
-        <el-table-column label="操作" fixed="left">
+        <el-table-column label="操作" fixed="left" width="120">
           <template slot-scope="scope">
             <el-button type="text" style="margin-right: 8px">
               <router-link
@@ -504,7 +495,7 @@
           </template>
         </el-table-column>
       </el-table>
-      <div class="content-padded content-center">
+      <div class="mt-4 text-right">
         <el-pagination
           background
           layout="total, sizes, prev, pager, next, jumper"
@@ -613,11 +604,11 @@ import { mapGetters } from 'vuex'
 import mixin from '@/mixins'
 import { pageMixin } from '@/mixins'
 import {
-  VERSION_STANDARD(),
-  VERSION_PLATFORM(),
+  VERSION_STANDARD,
+  VERSION_PLATFORM,
   isArray,
-  VERSION_B2C(),
-  VERSION_IN_PURCHASE(),
+  VERSION_B2C,
+  VERSION_IN_PURCHASE,
   IS_ADMIN,
   IS_DISTRIBUTOR
 } from '@/utils'
@@ -694,7 +685,7 @@ export default {
       orderType: this.VERSION_STANDARD() ? ORDER_TYPE_STANDARD : ORDER_TYPE,
       invoiceStatus: INVOICE_STATUS,
       orderCategory: this.VERSION_STANDARD()
-        ? ORDER_CATEGORY.filter((item) => item.value != 'distributor')
+        ? ORDER_CATEGORY.filter(item => item.value != 'distributor')
         : ORDER_CATEGORY,
       pickerOptions: PICKER_DATE_OPTIONS,
       orderSourceList: [],
@@ -719,7 +710,7 @@ export default {
       cancelOrderFormList: [
         {
           component: () => (
-            <div class='tip-bar'>
+            <div class="tip-bar">
               订单取消后，消费者在商城中看到的订单状态将变更为已取消，无法对其进行支付操作。
             </div>
           )
@@ -754,7 +745,7 @@ export default {
           ],
           required: true,
           message: '不能为空',
-          onChange: (e) => {
+          onChange: e => {
             if (e == 12) {
               this.cancelOrderFormList[3].isShow = true
             } else {
@@ -800,21 +791,21 @@ export default {
             { label: '1', name: '快递' },
             { label: '2', name: '商家自配送' }
           ],
-          onChange: (e) => {
+          onChange: e => {
             if (e == '1') {
               this.deliverGoodsFormList[1].options = [
                 { label: 'batch', name: '整单发货' },
                 { label: 'sep', name: '拆分发货' }
               ]
               this.deliverGoodsFormList[3].options = this.logisticsList.filter(
-                (item) => item.value != 'SELF_DELIVERY'
+                item => item.value != 'SELF_DELIVERY'
               )
               this.deliverGoodsForm.delivery_corp = ''
             } else {
               this.deliverGoodsFormList[1].options = [{ label: 'batch', name: '整单发货' }]
               this.deliverGoodsForm.delivery_type = 'batch'
               this.deliverGoodsFormList[3].options = this.logisticsList.filter(
-                (item) => item.value == 'SELF_DELIVERY'
+                item => item.value == 'SELF_DELIVERY'
               )
               this.deliverGoodsForm.delivery_corp = 'SELF_DELIVERY'
             }
@@ -829,7 +820,7 @@ export default {
             { label: 'batch', name: '整单发货' },
             { label: 'sep', name: '拆分发货' }
           ],
-          onChange: (e) => {
+          onChange: e => {
             if (e == 'sep') {
               this.deliverGoodsFormList[2].options[7].isShow = true
             } else {
@@ -886,7 +877,7 @@ export default {
                 } else {
                   return (
                     <el-input-number
-                      size='mini'
+                      size="mini"
                       v-model={row.delivery_num}
                       min={1}
                       disabled={IS_ADMIN() && row.supplier_id > 0}
@@ -930,10 +921,10 @@ export default {
             return value['delivery_way'] == '2'
           },
           message: '不能为空',
-          onChange: (e) => {
+          onChange: e => {
             console.log(e)
             let targetItem =
-              this.deliverGoodsFormList[5].options.find((item) => item.operator_id == e) || {}
+              this.deliverGoodsFormList[5].options.find(item => item.operator_id == e) || {}
             let { staff_no, mobile } = targetItem
             this.deliverGoodsForm.self_delivery_operator_mobile = mobile
             this.deliverGoodsForm.self_delivery_operator_staffno = staff_no
@@ -1088,7 +1079,7 @@ export default {
             { label: '0', name: '不同意' },
             { label: '1', name: '同意' }
           ],
-          onChange: (e) => {
+          onChange: e => {
             if (e == '0') {
               this.refundFormList[8].isShow = true
             } else {
@@ -1129,26 +1120,26 @@ export default {
       changePriceFormList: [
         {
           component: () => (
-            <div class='tip-bar'>
+            <div class="tip-bar">
               仅未支付订单可修改价格，改价后请联系买家刷新订单并核实订单金额后再支付。
             </div>
           )
         },
         {
           component: () => (
-            <div class='receive-info'>
-              <div class='receive-item'>
-                <label class='item-label'>买家：</label>
+            <div class="receive-info">
+              <div class="receive-item">
+                <label class="item-label">买家：</label>
                 {`${this.changePriceForm.buy_member} | ${this.changePriceForm.buy_mobile}`}
               </div>
-              <div class='receive-item'>
-                <label class='item-label'>{`${
+              <div class="receive-item">
+                <label class="item-label">{`${
                   this.changePriceForm.isZiti ? '提货人：' : '收货人：'
                 }`}</label>
                 {`${this.changePriceForm.receive_name} | ${this.changePriceForm.receive_mobile}`}
               </div>
-              <div class='receive-item'>
-                <label class='item-label'>
+              <div class="receive-item">
+                <label class="item-label">
                   {`${this.changePriceForm.isZiti ? '自提地址：' : '收货地址：'}`}
                 </label>
                 {this.changePriceForm.receive_address}
@@ -1259,10 +1250,10 @@ export default {
           options: [],
           required: true,
           message: '不能为空',
-          onChange: (e) => {
+          onChange: e => {
             console.log(e)
             let targetItem =
-              this.updateDeliverGoodsFormList[2].options.find((item) => item.operator_id == e) || {}
+              this.updateDeliverGoodsFormList[2].options.find(item => item.operator_id == e) || {}
             let { staff_no, mobile } = targetItem
             console.log(targetItem)
 
@@ -1314,7 +1305,7 @@ export default {
           { label: 'sep', name: '拆分发货' }
         ]
         this.deliverGoodsFormList[3].options = this.logisticsList.filter(
-          (item) => item.value != 'SELF_DELIVERY'
+          item => item.value != 'SELF_DELIVERY'
         )
         this.deliverGoodsForm.delivery_corp = ''
         this.deliverGoodsFormList[5].required = false
@@ -1324,7 +1315,7 @@ export default {
         this.deliverGoodsFormList[1].options = [{ label: 'batch', name: '整单发货' }]
         this.deliverGoodsForm.delivery_type = 'batch'
         this.deliverGoodsFormList[3].options = this.logisticsList.filter(
-          (item) => item.value == 'SELF_DELIVERY'
+          item => item.value == 'SELF_DELIVERY'
         )
         this.deliverGoodsForm.delivery_corp = 'SELF_DELIVERY'
         this.deliverGoodsFormList[5].required = true
@@ -1377,8 +1368,8 @@ export default {
       }
 
       let res = await this.$api.trade.accountManagement(params)
-      res.list.forEach((ele) => {
-        (ele.value = ele.operator_id), (ele.title = ele.username)
+      res.list.forEach(ele => {
+        ;(ele.value = ele.operator_id), (ele.title = ele.username)
       })
       this.personnelFormList[1].options = res.list
       this.deliverGoodsFormList[5].options = res.list
@@ -1446,8 +1437,8 @@ export default {
         operator_type: 'self_delivery_staff'
       }
       let { list } = await this.$api.company.getAccountList(params)
-      list.forEach((ele) => {
-        (ele.value = ele.operator_id), (ele.title = ele.username)
+      list.forEach(ele => {
+        ;(ele.value = ele.operator_id), (ele.title = ele.username)
       })
       this.deliveryPersonnel = list
     },
@@ -1479,7 +1470,7 @@ export default {
 
       const { list, pager, datapass_block } = await this.$api.trade.getOrderList(params)
 
-      this.tableList = list.map((item) => {
+      this.tableList = list.map(item => {
         const actionBtns = []
         const {
           distributor_id,
@@ -1639,27 +1630,27 @@ export default {
       this.subDistrictList = res
     },
     getOrderCategoryName(order_holder) {
-      return this.orderCategory.find((item) => item.value == order_holder)?.title ?? ''
+      return this.orderCategory.find(item => item.value == order_holder)?.title ?? ''
     },
     getOrderType({ order_class, type }) {
       if (order_class == 'normal') {
         return type == '1' ? '跨境订单' : '普通订单'
       }
       const _orderType = this.VERSION_STANDARD() ? ORDER_TYPE_STANDARD : ORDER_TYPE
-      const fd = _orderType.find((item) => item.value == order_class)
+      const fd = _orderType.find(item => item.value == order_class)
       if (fd) {
         return fd.title
       }
     },
     getDistributionType({ receipt_type }) {
-      const fd = DISTRIBUTION_TYPE.find((item) => item.value == receipt_type)
+      const fd = DISTRIBUTION_TYPE.find(item => item.value == receipt_type)
       if (fd) {
         return fd.title
       }
     },
 
     getDistributionStatus({ self_delivery_status }) {
-      const fd = DISTRIBUTION_STATUS.find((item) => item.value == self_delivery_status)
+      const fd = DISTRIBUTION_STATUS.find(item => item.value == self_delivery_status)
       if (fd) {
         return fd.title
       }
@@ -1680,7 +1671,7 @@ export default {
     },
     async getLogisticsList() {
       const { list } = await this.$api.trade.getLogisticsList()
-      this.logisticsList = list.map((item) => {
+      this.logisticsList = list.map(item => {
         return {
           title: item.name,
           value: item.value
@@ -1747,7 +1738,7 @@ export default {
 
         let self_delivery_operator_staffno =
           this.deliverGoodsFormList[5].options.find(
-            (item) => item.operator_id == self_delivery_operator_id
+            item => item.operator_id == self_delivery_operator_id
           )?.staff_no ?? ''
         this.deliverGoodsForm.self_delivery_operator_staffno = [
           'PACKAGED',
@@ -1761,7 +1752,7 @@ export default {
         this.$refs['deliverGoodsDialogRef'].resetForm()
         this.deliverGoodsForm.order_id = order_id
         this.deliverGoodsForm.receipt_type = receipt_type
-        this.deliverGoodsForm.items = items.map((item) => {
+        this.deliverGoodsForm.items = items.map(item => {
           return {
             ...item,
             price: item.price / 100
@@ -1786,7 +1777,7 @@ export default {
       } else if (key == 'writeOff') {
         this.$refs['writeOffDialogRef'].resetForm()
         this.writeOffForm.order_id = order_id
-        this.writeOffForm.items = items.map((item) => {
+        this.writeOffForm.items = items.map(item => {
           return {
             ...item,
             price: item.price / 100
@@ -1907,7 +1898,7 @@ export default {
         // 运费积分抵扣
         this.changePriceForm.pointFreightFee = point_freight_fee / 100
 
-        this.changePriceForm.items = items.map((item) => {
+        this.changePriceForm.items = items.map(item => {
           return {
             ...item,
             change_discount: '',
@@ -2048,7 +2039,7 @@ export default {
 
       // 拆单发货
       if (delivery_type == 'sep') {
-        params['sepInfo'] = JSON.stringify(items.filter((item) => item.delivery_num))
+        params['sepInfo'] = JSON.stringify(items.filter(item => item.delivery_num))
       }
 
       console.log(params)
@@ -2102,7 +2093,7 @@ export default {
         params['freight_fee'] = (freightFee - pointFreightFee) * 100
       }
       if (items.length > 0) {
-        params['items'] = items.map((item) => {
+        params['items'] = items.map(item => {
           return {
             item_id: item.item_id,
             total_fee: item.total_fee
@@ -2125,7 +2116,7 @@ export default {
         ...this.params,
         type,
         order_type: 'normal'
-      }).then((response) => {
+      }).then(response => {
         const { status, url, filename } = response.data.data
         if (status) {
           this.$message.success('已加入执行队列，请在设置-导出列表中下载')
@@ -2166,7 +2157,7 @@ export default {
       delete params.create_time
       delete params.delivery_time
 
-      orderExport(params).then((response) => {
+      orderExport(params).then(response => {
         const { status, url, filename } = response.data.data
         if (status) {
           this.$message.success('已加入执行队列，请在设置-导出列表中下载')
@@ -2217,7 +2208,7 @@ export default {
       this.changePriceForm.freightFee = freight_fee / 100
       this.changePriceForm.orderFee = total_fee / 100
       this.changePriceForm.itemTotalFee = item_total_fee / 100
-      this.changePriceForm.items = items.map((item) => {
+      this.changePriceForm.items = items.map(item => {
         return {
           ...item,
           change_discount: '',

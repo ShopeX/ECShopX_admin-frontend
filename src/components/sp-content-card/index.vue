@@ -13,11 +13,11 @@
       <div class="text-sm text-gray-600 overflow-ellipsis h-10 px-2">{{ data.title }}</div>
       <div class="text-sm text-gray-500 px-2 flex justify-end gap-2">
         <div class="flex items-center gap-1">
-          <SpIcon class="text-gray-400" name="icon-eye" size="14" />
+          <SpIcon class="text-gray-400" name="icon-eye" :size="14" />
           <span class="text-xs text-gray-400">{{ data.articleFocusNum?.count || 0 }}</span>
         </div>
         <div class="flex items-center gap-1">
-          <SpIcon class="text-gray-400" name="icon-heart" size="12" />
+          <SpIcon class="text-gray-400" name="icon-heart" :size="12" />
           <span class="text-xs text-gray-400">{{ data.articlePraiseNum?.count || 0 }}</span>
         </div>
       </div>

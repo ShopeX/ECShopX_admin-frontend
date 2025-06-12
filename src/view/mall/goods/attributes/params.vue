@@ -1,13 +1,14 @@
 <template>
   <div>
-    <div class="action-container">
-      <el-button type="primary" icon="el-icon-circle-plus" @click="handleNew"> 新增参数 </el-button>
-    </div>
     <SpFilterForm :model="params" @onSearch="onSearch" @onReset="onSearch">
       <SpFilterFormItem prop="attribute_name" label="参数名称:">
         <el-input v-model="params.attribute_name" placeholder="请输入参数名称" />
       </SpFilterFormItem>
     </SpFilterForm>
+
+    <div class="action-container">
+      <el-button type="primary" @click="handleNew"> 新增参数 </el-button>
+    </div>
 
     <el-table
       v-loading="loading"
@@ -41,7 +42,7 @@
       <el-table-column prop="attribute_name" label="参数名称" width="200" />
       <el-table-column prop="attribute_memo" label="参数备注" />
     </el-table>
-    <div class="content-padded content-center">
+    <div class="mt-4 text-right">
       <el-pagination
         background
         layout="total, sizes, prev, pager, next"
@@ -129,13 +130,13 @@ export default {
   methods: {
     handleDelete(data) {
       this.$confirm('确认删除该参数？')
-        .then((_) => {
-          deleteGoodsAttr(data.row.attribute_id).then((res) => {
+        .then(_ => {
+          deleteGoodsAttr(data.row.attribute_id).then(res => {
             this.list.splice(data.$index, 1)
             this.$message({ type: 'success', message: '操作成功' })
           })
         })
-        .catch((_) => {})
+        .catch(_ => {})
     },
     handleNew() {
       this.show_sideBar = true
@@ -176,10 +177,10 @@ export default {
 
     removeItem(index) {
       this.$confirm('确认删除当前值？')
-        .then((_) => {
+        .then(_ => {
           this.form.attribute_values.splice(index, 1)
         })
-        .catch((_) => {})
+        .catch(_ => {})
     },
     save() {
       let params = JSON.parse(JSON.stringify(this.form))
@@ -191,14 +192,14 @@ export default {
       console.log(params)
       // 如果没有id，则表示为新增
       if (!this.form.attribute_id) {
-        addGoodsAttr(params).then((res) => {
+        addGoodsAttr(params).then(res => {
           this.$message({ type: 'success', message: '操作成功' })
           this.page.pageIndex = 1
           this.resetData()
           this.fetchList()
         })
       } else {
-        updateGoodsAttr(params.attribute_id, params).then((res) => {
+        updateGoodsAttr(params.attribute_id, params).then(res => {
           this.$message({ type: 'success', message: '操作成功' })
           this.fetchList()
         })
@@ -213,7 +214,7 @@ export default {
         pageSize,
         ...this.params
       }
-      getGoodsAttr(params).then((res) => {
+      getGoodsAttr(params).then(res => {
         this.list = res.data.data.list
         this.total_count = res.data.data.total_count
         this.loading = false

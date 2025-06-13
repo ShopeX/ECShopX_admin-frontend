@@ -1,15 +1,5 @@
 <template>
   <div>
-    <div class="action-container">
-      <el-button
-        type="primary"
-        icon="plus"
-        @click="addLabels"
-      >
-        添加账号
-      </el-button>
-    </div>
-
     <SpFilterForm
       :model="params"
       @onSearch="onSearch"
@@ -43,6 +33,16 @@
         />
       </SpFilterFormItem>
     </SpFilterForm>
+
+    <div class="action-container">
+      <el-button
+        type="primary"
+        icon="plus"
+        @click="addLabels"
+      >
+        添加账号
+      </el-button>
+    </div>
 
     <el-table
       v-loading="loading"

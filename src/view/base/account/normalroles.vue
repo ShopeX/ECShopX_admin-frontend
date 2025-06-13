@@ -1,13 +1,14 @@
 <template>
   <div>
-    <div class="action-container">
-      <el-button type="primary" icon="plus" @click="addRoleLabels"> 添加角色 </el-button>
-    </div>
     <SpFilterForm :model="params" @onSearch="onSearch" @onReset="onSearch">
       <SpFilterFormItem prop="role_name" label="角色名称:">
         <el-input v-model="params.role_name" placeholder="请输入角色名称" />
       </SpFilterFormItem>
     </SpFilterForm>
+
+    <div class="action-container">
+      <el-button type="primary" icon="plus" @click="addRoleLabels"> 添加角色 </el-button>
+    </div>
 
     <el-table v-loading="loading" border :data="rolesList" :height="wheight - 160">
       <el-table-column prop="role_name" label="角色名称" />

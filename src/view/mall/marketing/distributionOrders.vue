@@ -4,7 +4,9 @@
 
     <SearchForm />
 
-    <el-row class="filter-header" :gutter="20">
+    <SpFinder />
+
+    <!-- <el-row class="filter-header" :gutter="20">
       <el-col>
         <el-date-picker
           v-model="create_time"
@@ -37,7 +39,7 @@
           />
         </el-select>
       </el-col>
-    </el-row>
+    </el-row> -->
 
     <el-tabs v-model="activeName" type="card" @tab-click="handleClick">
       <el-tab-pane label="全部" name="all" />
@@ -270,7 +272,8 @@ const [Form, FormApi] = useForm({
       },
       fieldName: 'create_time',
       formItemClass: 'col-span-2',
-      label: '订单时间'
+      label: '订单时间',
+      value: []
     },
     {
       component: 'Input',

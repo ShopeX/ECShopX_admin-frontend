@@ -1,5 +1,6 @@
 import { isString } from '@/utils'
 import { h } from 'vue'
+import { PICKER_DATE_OPTIONS } from '@/consts'
 import './form-field.scss'
 
 export default {
@@ -173,16 +174,46 @@ export default {
     },
     // 渲染 datetime-range 组件
     renderDateTimePicker(props = {}) {
-      return h('el-date-picker', {
-        attrs: {
-          ...this.componentProps
-        },
-        props: {
-          startPlaceholder: '开始日期',
-          endPlaceholder: '结束日期',
-          value: this.modelValue
-        }
-      })
+      return (
+        <div class="el-date-picker__wrapper">
+          <el-date-picker
+            style="width: 100%"
+            type={this.componentProps.type}
+            startPlaceholder="开始日期/结束时间"
+            // endPlaceholder="结束日期"
+            rangeSeparator={`${this.modelValue.length > 1 ? '至' : ''}`}
+            value={this.modelValue}
+            pickerOptions={PICKER_DATE_OPTIONS}
+            onInput={this.handleInput}
+          />
+        </div>
+      )
+      // return h('div', { class: 'el-date-picker__wrapper' }, [h('el-date-picker', {
+      //   style: {
+      //     width: '100%'
+      //   },
+      //   attrs: {
+      //     ...this.componentProps
+      //   },
+      //   props: {
+      //     startPlaceholder: '开始日期',
+      //     endPlaceholder: '结束日期',
+      //     rangeSeparator: '/',
+      //     value: this.modelValue,
+      //     pickerOptions: PICKER_DATE_OPTIONS
+      //   },
+      //   on: {
+      //     change: () => {
+      //       debugger
+      //     },
+      //     focus: () => {
+      //       debugger
+      //     },
+      //     input: () => {
+      //       debugger
+      //     }
+      //   }
+      // })])
     },
     // 获取组件渲染函数
     getComponentRender() {

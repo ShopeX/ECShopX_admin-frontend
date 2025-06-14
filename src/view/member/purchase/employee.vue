@@ -1,16 +1,6 @@
 <style lang="scss"></style>
 <template>
   <SpRouterView>
-    <div class="action-container">
-      <el-button type="primary" icon="iconfont icon-xinzengcaozuo-01" @click="addEmployee">
-        添加员工
-      </el-button>
-      <el-button type="primary" icon="iconfont icon-daorucaozuo-01" @click="handleImportEmployee">
-        导入员工
-      </el-button>
-      <el-button type="primary" plain @click="handleExport"> 导出 </el-button>
-    </div>
-
     <SpFilterForm :model="queryForm" @onSearch="onSearch" @onReset="onSearch">
       <SpFilterFormItem prop="mobile" label="手机号:">
         <el-input v-model="queryForm.mobile" placeholder="请输入手机号码" />
@@ -43,6 +33,16 @@
         <SpSelectShop v-model="queryForm.distributor_id" clearable placeholder="请选择" />
       </SpFilterFormItem>
     </SpFilterForm>
+
+    <div class="action-container">
+      <el-button type="primary" icon="iconfont icon-xinzengcaozuo-01" @click="addEmployee">
+        添加员工
+      </el-button>
+      <el-button type="primary" icon="iconfont icon-daorucaozuo-01" @click="handleImportEmployee">
+        导入员工
+      </el-button>
+      <el-button type="primary" plain @click="handleExport"> 导出 </el-button>
+    </div>
 
     <SpFinder
       ref="finder"

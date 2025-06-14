@@ -383,7 +383,39 @@ const routes = [
         },
         component: () => import('@/view/mall/distribution/account'),
       },
-
+      {
+        name: 'activation',
+        path: 'renewal/activation',
+        component: () => import('@/view/base/asset/accountactivation/index'),
+        meta: {
+            aliasName: 'assetaccountactivation',
+            icon: 'icon-products',
+          title: '续费激活',
+          permissions: ['setting.systeminfo.assetaccountactivation']
+        }
+      },
+      {
+        name: 'protocol',
+        path: 'software/protocol',
+        component: () => import('@/view/base/setting/agreement'),
+        meta: {
+          aliasName: 'agreement',
+          icon: 'icon-products',
+          title: '软件协议',
+          permissions: ['setting.systeminfo.agreement']
+        }
+      },
+      {
+        name: 'operatorLogs',
+        path: 'operator/logs',
+        component: () => import('@/view/base/setting/companys/logs'),
+        meta: {
+            aliasName: 'operatLorogs',
+          icon: 'icon-products',
+          title: '操作日志',
+          permissions: ['setting.systeminfo.operator-logs']
+        }
+      }
     ]
   }
 ]

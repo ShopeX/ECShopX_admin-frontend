@@ -863,7 +863,7 @@ import {
   flowItems
 } from '@/api/goods'
 import { getPageCode } from '@/api/marketing'
-import { VERSION_IN_PURCHASE() } from '@/utils'
+import { VERSION_IN_PURCHASE } from '@/utils'
 import mixins from '@/mixins'
 import { GOOD_CATEGORY, GOOD_CATEGORY_MAP } from '@/consts'
 

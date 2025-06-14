@@ -1,14 +1,5 @@
 <template>
   <div>
-    <div class="action-container">
-      <el-button
-        type="primary"
-        plain
-        @click="appendTop(categoryList)"
-      >
-        新增街道
-      </el-button>
-    </div>
     <SpFilterForm
       :model="params"
       @onSearch="onSearch"
@@ -24,6 +15,15 @@
         />
       </SpFilterFormItem>
     </SpFilterForm>
+    <div class="action-container">
+      <el-button
+        type="primary"
+        plain
+        @click="appendTop(categoryList)"
+      >
+        新增街道
+      </el-button>
+    </div>
     <el-card>
       <el-dialog
         :title="dialog.type === 'add' ? `新增${dialog.title}` : `编辑${dialog.title}`"

@@ -141,7 +141,7 @@ export default {
   }
   .btn {
     width: 120px;
-    background: $primary_active;
+    background: #53a3e8;
     color: #fff;
   }
 }

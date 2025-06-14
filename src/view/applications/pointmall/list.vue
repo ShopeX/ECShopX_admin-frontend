@@ -13,22 +13,6 @@
 <template>
   <div class="page-body">
     <SpRouterView>
-      <div class="action-container">
-        <el-button type="primary" icon="iconfont icon-xinzengcaozuo-01" @click="addItems">
-          添加商品
-        </el-button>
-
-        <el-dropdown @command="handleImport">
-          <el-button type="primary" plain icon="iconfont icon-daorucaozuo-01">
-            导入<i class="el-icon-arrow-down el-icon--right" />
-          </el-button>
-          <el-dropdown-menu slot="dropdown">
-            <el-dropdown-item command="physicalupload"> 商品导入 </el-dropdown-item>
-            <el-dropdown-item command="physicalstoreupload"> 库存导入 </el-dropdown-item>
-          </el-dropdown-menu>
-        </el-dropdown>
-      </div>
-
       <SpFilterForm :model="params" @onSearch="onSearch" @onReset="onSearch">
         <SpFilterFormItem prop="keywords" label="商品名称:">
           <el-input v-model="params.keywords" placeholder="请输入商品名称" />
@@ -92,6 +76,23 @@
           />
         </SpFilterFormItem>
       </SpFilterForm>
+
+      <div class="action-container">
+        <el-button type="primary" icon="iconfont icon-xinzengcaozuo-01" @click="addItems">
+          添加商品
+        </el-button>
+
+        <el-dropdown @command="handleImport">
+          <el-button type="primary" plain icon="iconfont icon-daorucaozuo-01">
+            导入<i class="el-icon-arrow-down el-icon--right" />
+          </el-button>
+          <el-dropdown-menu slot="dropdown">
+            <el-dropdown-item command="physicalupload"> 商品导入 </el-dropdown-item>
+            <el-dropdown-item command="physicalstoreupload"> 库存导入 </el-dropdown-item>
+          </el-dropdown-menu>
+        </el-dropdown>
+      </div>
+
 
       <div class="action-container">
         <el-button type="primary" plain @click="addCategory"> 更改销售分类 </el-button>

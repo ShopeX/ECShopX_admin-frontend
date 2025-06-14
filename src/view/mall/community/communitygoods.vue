@@ -5,10 +5,6 @@
 </style>
 <template>
   <div class="page-mall-communitygoods">
-    <div class="action-container">
-      <el-button type="primary" @click="handleAddGoods"> 选择活动商品 </el-button>
-    </div>
-
     <SpFilterForm :model="params" @onSearch="onSearch" @onReset="onSearch">
       <SpFilterFormItem prop="keywords" label="商品名称:">
         <el-input v-model="params.keywords" placeholder="请输入商品名称" />
@@ -60,6 +56,11 @@
         <el-input v-model="params.activity_name" placeholder="请输入商品名称" />
       </SpFilterFormItem>
     </SpFilterForm>
+
+    <div class="action-container">
+      <el-button type="primary" @click="handleAddGoods"> 选择活动商品 </el-button>
+    </div>
+
 
     <el-tabs v-model="params.activity_status" type="card" @tab-click="onSearch">
       <el-tab-pane
@@ -190,7 +191,7 @@ import { mapGetters } from 'vuex'
 import mixin from '@/mixins'
 import moment from 'moment'
 import { pageMixin } from '@/mixins'
-import { VERSION_STANDARD, isArray, VERSION_B2C(), VERSION_IN_PURCHASE() } from '@/utils'
+import { VERSION_STANDARD, isArray, VERSION_B2C, VERSION_IN_PURCHASE } from '@/utils'
 import { getCommunityActivity, communityDeliver, communityOrderExport } from '@/api/promotions'
 import { SALES_STATUS, ORDER_STATUS, PICKER_DATE_OPTIONS } from '@/consts'
 

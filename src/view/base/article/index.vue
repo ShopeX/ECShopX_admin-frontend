@@ -294,7 +294,7 @@ export default {
           content: none;
         }
         &:hover {
-          color: $dominant_hue;
+          color: var(--primary);
         }
         i {
           margin-right: 3px;

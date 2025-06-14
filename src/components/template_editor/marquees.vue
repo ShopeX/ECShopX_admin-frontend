@@ -275,7 +275,7 @@ export default {
     }
     .drag-handler {
       padding-right: 5px;
-      color: $dominant_hue;
+      color: var(--primary);
       cursor: move;
     }
     span {

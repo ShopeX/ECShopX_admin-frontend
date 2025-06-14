@@ -20,11 +20,6 @@
 </style>
 <template>
   <div>
-    <div class="action-container">
-      <el-button type="primary" icon="iconfont icon-xinzengcaozuo-01" @click="addCompany">
-        添加企业
-      </el-button>
-    </div>
     <SpFilterForm :model="queryForm" @onSearch="onSearch" @onReset="onSearch">
       <SpFilterFormItem prop="name" label="企业名称:">
         <el-input v-model="queryForm.name" placeholder="请输入企业名称" />
@@ -46,6 +41,12 @@
         <SpSelectShop v-model="queryForm.distributor_id" clearable placeholder="请选择" />
       </SpFilterFormItem>
     </SpFilterForm>
+
+    <div class="action-container">
+      <el-button type="primary" icon="iconfont icon-xinzengcaozuo-01" @click="addCompany">
+        添加企业
+      </el-button>
+    </div>
 
     <SpFinder
       ref="finder"

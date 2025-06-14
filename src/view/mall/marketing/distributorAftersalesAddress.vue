@@ -7,11 +7,6 @@
 <template>
   <div class="distributorAftersalesAddress">
     <SpPlatformTip h5 app alipay />
-    <div class="action-container">
-      <el-button icon="el-icon-circle-plus" type="primary" @click="handleCreate">
-        添加售后地址
-      </el-button>
-    </div>
 
     <SpFilterForm :model="params" @onSearch="onSearch" @onReset="onSearch">
       <SpFilterFormItem prop="distributor_id" label="店铺:">
@@ -30,6 +25,12 @@
         />
       </SpFilterFormItem>
     </SpFilterForm>
+
+    <div class="action-container">
+      <el-button icon="el-icon-circle-plus" type="primary" @click="handleCreate">
+        添加售后地址
+      </el-button>
+    </div>
 
     <el-row :gutter="20">
       <el-col>

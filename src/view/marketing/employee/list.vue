@@ -12,11 +12,6 @@
 </style>
 <template>
   <div>
-    <div class="action-container">
-      <el-button type="primary" icon="iconfont icon-xinzengcaozuo-01" @click="createActivity">
-        新建活动
-      </el-button>
-    </div>
     <SpFilterForm :model="queryForm" @onSearch="onSearch" @onReset="onSearch">
       <SpFilterFormItem prop="name" label="活动名称:">
         <el-input v-model="queryForm.name" placeholder="活动名称关键词" />
@@ -57,6 +52,12 @@
         <SpSelectShop v-model="queryForm.distributor_id" clearable placeholder="请选择" />
       </SpFilterFormItem>
     </SpFilterForm>
+
+    <div class="action-container">
+      <el-button type="primary" icon="iconfont icon-xinzengcaozuo-01" @click="createActivity">
+        新建活动
+      </el-button>
+    </div>
 
     <el-tabs
       v-model="queryForm.activityState"

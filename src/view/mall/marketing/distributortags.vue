@@ -6,16 +6,6 @@
 
 <template>
   <div class="page-body">
-    <div class="action-container">
-      <el-button
-        type="primary"
-        icon="iconfont icon-xinzengcaozuo-01"
-        @click="addTemplate"
-      >
-        添加标签
-      </el-button>
-    </div>
-
     <SpFilterForm
       :model="params"
       @onSearch="onSearch"
@@ -31,6 +21,16 @@
         />
       </SpFilterFormItem>
     </SpFilterForm>
+
+    <div class="action-container">
+      <el-button
+        type="primary"
+        icon="iconfont icon-xinzengcaozuo-01"
+        @click="addTemplate"
+      >
+        添加标签
+      </el-button>
+    </div>
 
     <el-table
       v-loading="loading"

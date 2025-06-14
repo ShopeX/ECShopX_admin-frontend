@@ -20,7 +20,12 @@
   color: #777;
   line-height: initial;
 }
-
+.distributor-btn{
+  display: flex;
+}
+.action-container{
+  margin-right: 8px;
+}
 .el-button {
   &--success {
     &.is-plain {
@@ -86,16 +91,6 @@
         </el-alert>
       </div>
 
-      <div v-if="!IS_DISTRIBUTOR()" class="action-container">
-        <el-button type="primary" icon="ecx-icon icon-xinzeng" @click="dialogOpen()">
-          添加店铺
-        </el-button>
-
-        <el-button type="primary" icon="ecx-icon icon-xinzeng" @click="uploadHandleChange()">
-          导入店铺
-        </el-button>
-      </div>
-
       <SpFilterForm :model="params" @onSearch="onSearch" @onReset="onReset">
         <SpFilterFormItem prop="distributor_id" label="店铺:">
           <SpSelectShop v-model="params.distributor_id" clearable placeholder="请选择" />
@@ -140,7 +135,18 @@
         </SpFilterFormItem>
       </SpFilterForm>
 
-      <div class="action-container">
+      <div class="distributor-btn">
+        <div v-if="!IS_DISTRIBUTOR()" class="action-container">
+        <el-button type="primary" icon="ecx-icon icon-xinzeng" @click="dialogOpen()">
+          添加店铺
+        </el-button>
+
+        <el-button type="primary" icon="ecx-icon icon-xinzeng" @click="uploadHandleChange()">
+          导入店铺
+        </el-button>
+      </div>
+      
+      <div>
         <!-- <el-button
           v-if="VERSION_PLATFORM() && !is_distributor && !IS_MERCHANT()"
           plain
@@ -178,6 +184,7 @@
             编辑默认虚拟店信息
           </el-button>
         </template>
+      </div>
       </div>
 
       <el-tabs v-model="params.is_valid" type="card" @tab-click="onSearch">

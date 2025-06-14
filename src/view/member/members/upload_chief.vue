@@ -6,6 +6,9 @@
   border-left: 5px solid #ff7800;
   margin: 11px 0;
 }
+.content-bottom-padded{
+  display: flex;
+}
 </style>
 <template>
   <div>

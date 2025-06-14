@@ -1,17 +1,5 @@
 <template>
   <div>
-    <div class="action-container">
-      <el-button v-loading="exportloading" type="primary" @click="exportData"> 导出 </el-button>
-      <el-popover
-        placement="top-start"
-        width="200"
-        trigger="hover"
-        content="导出任务会以队列执行，点击导出后，请至‘设置-导出列表’页面中查看及下载数据"
-      >
-        <i slot="reference" class="el-icon-question" />
-      </el-popover>
-    </div>
-
     <SpFilterForm :model="queryForm" @onSearch="onSearch" @onReset="onSearch">
       <SpFilterFormItem prop="datetime" label="查询日期:">
         <el-date-picker
@@ -43,6 +31,18 @@
         </el-select>
       </SpFilterFormItem>
     </SpFilterForm>
+
+    <div class="action-container">
+      <el-button v-loading="exportloading" type="primary" @click="exportData"> 导出 </el-button>
+      <el-popover
+        placement="top-start"
+        width="200"
+        trigger="hover"
+        content="导出任务会以队列执行，点击导出后，请至‘设置-导出列表’页面中查看及下载数据"
+      >
+        <i slot="reference" class="el-icon-question" />
+      </el-popover>
+    </div>
     <SpFinder
       ref="finder"
       no-selection
@@ -60,7 +60,7 @@ import { PICKER_DATE_OPTIONS } from '@/consts'
 import { createSetting } from '@shopex/finder'
 import moment from 'moment'
 import Pages from '@/utils/pages'
-import { VERSION_IN_PURCHASE() } from '@/utils'
+import { VERSION_IN_PURCHASE } from '@/utils'
 
 export default {
   data() {

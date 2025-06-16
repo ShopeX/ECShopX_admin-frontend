@@ -95,11 +95,21 @@ const SCENE_1006 = {
   WgtHeadline
 }
 
+// 个人中心
+const SCENE_1008 = {
+  WgtSlider,
+  WgtHotZone,
+  WgtFilm,
+  WgtMarquees,
+}
+
+
 export default {
   1001: SCENE_1001,
   1002: SCENE_1002,
   1003: SCENE_1003,
   1004: SCENE_1004,
   1005: SCENE_1005,
-  1006: SCENE_1006
+  1006: SCENE_1006,
+  1008: SCENE_1008
 }

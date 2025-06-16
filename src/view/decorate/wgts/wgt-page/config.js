@@ -103,7 +103,17 @@ export default {
       isShow: function () {
         return this.value.pageBackgroundStyle == '2'
       }
-    }
+    },
+    {
+      label: '开启沉浸式',
+      key: 'isImmersive',
+      component: 'radio',
+      options: [
+        { name: '是', label: 1 },
+        { name: '否', label: 0 }
+      ],
+      value: 0
+    },
   ],
   transformIn: (v) => {
     const { name, base } = v
@@ -163,7 +173,8 @@ export default {
           titlePosition: 'titlePosition',
           pageBackgroundStyle: 'pageBackgroundStyle',
           pageBackgroundColor: 'pageBackgroundColor',
-          pageBackgroundImage: 'pageBackgroundImage'
+          pageBackgroundImage: 'pageBackgroundImage',
+          isImmersive: 'isImmersive'
         })
       }
     })

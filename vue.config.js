@@ -6,6 +6,14 @@ const TerserPlugin = require('terser-webpack-plugin')
 const MiniCssExtractPlugin = require('mini-css-extract-plugin')
 const CssMinimizerPlugin = require('css-minimizer-webpack-plugin')
 const ImageMinimizerPlugin = require('image-minimizer-webpack-plugin')
+const webpackPluginsAutoI18n = require('webpack-auto-i18n-plugin')
+const { BaiduTranslator } = require('webpack-auto-i18n-plugin')
+const i18nPlugin = new webpackPluginsAutoI18n.default({
+  translator: new BaiduTranslator({
+    appId: '20240823002130819',
+    appKey: 'QJ9R65g8iL0kFJuh3SLm'
+  })
+})
 
 const SRC_PATH = path.resolve(__dirname, 'src')
 const envVars = process.env
@@ -232,6 +240,7 @@ module.exports = {
     config.plugins.delete('preload')
     config.plugins.delete('prefetch')
 
+    config.plugin('i18n').use(i18nPlugin)
 
     config.plugin('define').tap(args => {
       args[0]['process.env'] = {

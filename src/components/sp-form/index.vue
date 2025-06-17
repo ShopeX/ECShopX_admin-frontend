@@ -340,7 +340,31 @@ export default {
           disabled={isFunction(disabled) ? disabled() : disabled}
         />
       )
-    }
+    },
+    _renderColor(item) {
+      const { value } = this
+      const { key, initValue = "#fff" } = item
+      return (
+        <div class='el-color-picker-wrap'>
+          <el-color-picker v-model={value[key]} size='small' />
+          <el-button
+            class='button-reset'
+            type='text'
+            on-click={() => {
+              value[key] = initValue
+            }}
+          >
+            重置
+          </el-button>
+        </div>)
+    },
+    _renderSlider(item) {
+      const { value } = this
+      const { key, showInput = false } = item
+      return (
+        <el-slider v-model={value[key]} show-input={showInput} />
+      )
+    },
   },
   render() {
     const { title, value, formList, width, labelWidth } = this
@@ -367,7 +391,9 @@ export default {
         'table': this._renderTable,
         'richText': this._renderRichText,
         'image': this._renderImage,
-        'switch': this._renderSwitch
+        'switch': this._renderSwitch,
+        'color': this._renderColor,
+        'slider': this._renderSlider,
       }
       return renderItem[item.type](item)
     }

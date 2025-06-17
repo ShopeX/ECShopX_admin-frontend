@@ -18,6 +18,7 @@ import WgtImageNavigation from './wgt_imgNavigation'
 import WgtGoodsCard from './wgt_goodsCard'
 import WgtWriting from './wgt_writing'
 import WgtHeading from './wgt_heading'
+import WgtFullSlider from './wgt_fullSlider'
 
 // 首页装修
 let SCENE_1001 = {
@@ -34,7 +35,8 @@ let SCENE_1001 = {
   WgtGoodsScroll,
   WgtMarquees,
   WgtFloorImg,
-  WgtImageNavigation
+  WgtImageNavigation,
+  WgtFullSlider
 }
 
 if (VERSION_PLATFORM) {

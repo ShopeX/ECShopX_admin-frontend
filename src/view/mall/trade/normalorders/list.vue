@@ -139,7 +139,7 @@
         />
       </SpFilterFormItem>
       <!-- v-if="!VERSION_STANDARD && !VERSION_IN_PURCHASE" -->
-      <SpFilterFormItem prop="order_holder" label="订单分类:">
+      <SpFilterFormItem v-if="!(VERSION_SHUYUN || VERSION_B2C)" prop="order_holder" label="订单分类:">
         <el-select v-model="params.order_holder" clearable placeholder="请选择">
           <el-option
             v-for="item in orderCategory"
@@ -157,7 +157,7 @@
       >
         <SpSelectShop v-model="params.distributor_id" clearable placeholder="请选择" />
       </SpFilterFormItem>
-      <SpFilterFormItem v-if="!VERSION_IN_PURCHASE" prop="subDistrict" label="选择街道:">
+      <SpFilterFormItem v-if="!VERSION_SHUYUN && !VERSION_B2C && !VERSION_IN_PURCHASE" prop="subDistrict" label="选择街道:">
         <el-cascader
           v-model="params.subDistrict"
           clearable
@@ -615,6 +615,7 @@ import {
   VERSION_PLATFORM,
   isArray,
   VERSION_B2C,
+  VERSION_SHUYUN,
   VERSION_IN_PURCHASE,
   IS_ADMIN,
   IS_DISTRIBUTOR
@@ -684,7 +685,7 @@ export default {
       roleList: ROLE_LIST,
       distributionType: DISTRIBUTION_TYPE,
       distributionStatus: DISTRIBUTION_STATUS,
-      orderStatus: VERSION_B2C
+      orderStatus: (VERSION_B2C || VERSION_SHUYUN)
         ? ORDER_B2C_STATUS
         : VERSION_IN_PURCHASE
         ? IN_PURCHASE_STATUS

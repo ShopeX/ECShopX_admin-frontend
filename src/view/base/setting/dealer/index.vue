@@ -1,6 +1,6 @@
 <template>
   <div class="dealer_index">
-    <SpPlatformTip h5 app />
+    <SpPlatformTip  v-if="!VERSION_SHUYUN" h5 app />
     <div class="step">
       <el-steps :active="active" align-center finish-status="success">
         <!-- <el-step title="提交开户资料" :description="active!=0?'完成':'已提交审核，请耐心等待～'"></el-step>

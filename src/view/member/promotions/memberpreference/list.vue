@@ -1,7 +1,7 @@
 <template>
   <div>
     <div v-if="$route.path.indexOf('editor') === -1">
-      <SpPlatformTip h5 app alipay />
+      <SpPlatformTip v-if="!VERSION_SHUYUN" h5 app alipay />
       <el-row :gutter="20">
         <el-col :md="4" :lg="8">
           <el-button size="mini" type="primary" icon="plus" @click="addActivityData">

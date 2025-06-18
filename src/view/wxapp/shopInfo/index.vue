@@ -1,6 +1,6 @@
 <template>
   <div>
-    <SpPlatformTip h5 app alipay />
+    <SpPlatformTip v-if="!VERSION_SHUYUN" h5 app alipay />
     <el-form ref="form" :model="form" label-position="left" label-width="100px">
       <div class="section-body">
         <el-form-item label="商城名称">

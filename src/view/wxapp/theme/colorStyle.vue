@@ -40,7 +40,7 @@
 
 <template>
   <div class="color-style-warp">
-    <SpPlatformTip h5 app alipay />
+    <SpPlatformTip v-if="!VERSION_SHUYUN" h5 app alipay />
     <div class="form-color">
       <el-form class="view-flex-item" :inline="true" label-width="80px">
         <el-form-item label="主色调">

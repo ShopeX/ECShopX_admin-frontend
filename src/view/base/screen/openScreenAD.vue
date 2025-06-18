@@ -1,6 +1,6 @@
 <template>
   <div>
-    <SpPlatformTip h5 app alipay />
+    <SpPlatformTip  v-if="!VERSION_SHUYUN" h5 app alipay />
     <el-card>
       <div style="width: 70%">
         <el-form v-loading="loading" label-width="180px" :model="form">

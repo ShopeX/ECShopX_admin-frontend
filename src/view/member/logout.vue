@@ -1,6 +1,6 @@
 <template>
   <div class="closeAccount">
-    <SpPlatformTip h5 app alipay />
+    <SpPlatformTip v-if="!VERSION_SHUYUN" h5 app alipay />
     <el-tabs v-model="activeName" type="card">
       <el-tab-pane label="注销配置" name="first">
         <el-form ref="form" class="form" :model="form" :rules="rules" label-width="320px">

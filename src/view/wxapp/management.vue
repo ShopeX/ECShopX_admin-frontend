@@ -4,7 +4,7 @@
     mode="out-in"
   > -->
   <div>
-    <SpPlatformTip h5 app alipay />
+    <SpPlatformTip v-if="!VERSION_SHUYUN" h5 app alipay />
     <!-- <storeDefault v-if="template_name === 'yykmembership'"></storeDefault>
     <storeSport v-if="template_name === 'yykmendian'"></storeSport>
     <storeUniversal v-if="template_name === 'yykuniversal'"></storeUniversal> -->

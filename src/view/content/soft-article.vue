@@ -29,7 +29,7 @@
 
 <template>
   <SpRouterView>
-    <SpPlatformTip h5 app alipay />
+    <SpPlatformTip  v-if="!VERSION_SHUYUN" h5 app alipay />
 
     <SpFilterForm :model="searchForm" @onSearch="onSearch" @onReset="onSearch">
       <SpFilterFormItem prop="title" label="软文标题:">

@@ -6,7 +6,7 @@
 
 <template>
   <div class="distributorAftersalesAddress">
-    <SpPlatformTip h5 app alipay/>
+    <SpPlatformTip v-if="!VERSION_SHUYUN" h5 app alipay/>
 
     <el-form :model="searchParams" :inline="true">
       <el-form-item label="供应商名称">
@@ -116,7 +116,7 @@
             客服二维码
           </template>
           <a :href="editForm.wechat_qrcode" target="_blank"><img :src="editForm.wechat_qrcode" height="100"/></a>
-        </el-descriptions-item>        
+        </el-descriptions-item>
         <el-descriptions-item>
           <template slot="label">
             收款银行
@@ -230,7 +230,7 @@
           this.editDialog = false
           this.fetchList()
         } catch (e) {
-          
+
         }
         this.loading = false
       },

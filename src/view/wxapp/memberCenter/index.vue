@@ -1,6 +1,6 @@
 <template>
   <div>
-    <SpPlatformTip h5 app alipay />
+    <SpPlatformTip v-if="!VERSION_SHUYUN" h5 app alipay />
     <el-tabs v-model="activeName" type="card">
       <el-tab-pane label="会员中心BANNER" name="banner">
         <bannerTemplates />

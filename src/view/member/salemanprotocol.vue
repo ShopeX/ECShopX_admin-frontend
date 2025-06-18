@@ -1,6 +1,6 @@
 <template>
   <div class="memberReg">
-    <SpPlatformTip h5 app alipay />
+    <SpPlatformTip v-if="!VERSION_SHUYUN" h5 app alipay />
     <el-tabs v-model="activeName" type="card" @tab-click="handleClick">
       <el-tab-pane label="业务员服务协议与隐私协议" class="paneSecond" name="second">
         <div class="mainSecond">

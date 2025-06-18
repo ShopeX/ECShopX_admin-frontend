@@ -1,6 +1,6 @@
 <template>
   <div>
-    <SpPlatformTip h5 app alipay />
+    <SpPlatformTip v-if="!VERSION_SHUYUN" h5 app alipay />
     <el-tabs v-model="activeName" type="card" @tab-click="handleClick">
       <el-tab-pane label="基础配置" name="base">
         <el-form ref="form" label-width="200px">

@@ -12,7 +12,7 @@
         <Shansong v-if="VUE_APP_LOCAL_DELIVERY_DIRVER == 'shansong'" />
         <City v-else />
       </el-tab-pane>
-      <el-tab-pane v-if="!IS_SUPPLIER()" label="到店自提" name="ziti">
+      <el-tab-pane v-if="!(VERSION_SHUYUN || VERSION_B2C ) && !IS_SUPPLIER()" label="到店自提" name="ziti">
         <ZitiList />
       </el-tab-pane>
       <el-tab-pane label="商家自配送" name="zipei">

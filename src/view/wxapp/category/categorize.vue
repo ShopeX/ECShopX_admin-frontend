@@ -11,7 +11,7 @@
 
 <template>
   <div>
-    <SpPlatformTip h5 app alipay />
+    <SpPlatformTip v-if="!VERSION_SHUYUN" h5 app alipay />
     <div class="categorize">
       分类样式：
       <el-radio-group v-model="classify">

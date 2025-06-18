@@ -1,6 +1,6 @@
 <template>
   <div class="wxapp-home">
-    <SpPlatformTip h5 app alipay />
+    <SpPlatformTip v-if="!VERSION_SHUYUN" h5 app alipay />
     <div v-if="!isDistributorTemplate" class="shop-header">
       <div v-if="!VERSION_B2C && !VERSION_IN_PURCHASE" class="shop-left">
         <span class="text">小程序模版呈现：</span>

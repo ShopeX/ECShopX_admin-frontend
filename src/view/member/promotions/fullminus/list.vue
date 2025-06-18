@@ -7,7 +7,7 @@
 <template>
   <div>
     <template v-if="$route.path.indexOf('editor') === -1">
-      <SpPlatformTip h5 app pc alipay />
+      <SpPlatformTip v-if="!VERSION_SHUYUN" h5 app pc alipay />
       <div class="action-container">
         <el-button type="primary" icon="iconfont icon-xinzengcaozuo-01" @click="addActivityData">
           添加满减促销

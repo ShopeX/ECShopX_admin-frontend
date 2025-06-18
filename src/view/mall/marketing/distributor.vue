@@ -72,7 +72,7 @@
 <template>
   <div class="page-body">
     <SpRouterView>
-      <SpPlatformTip h5 app alipay />
+      <SpPlatformTip v-if="!VERSION_SHUYUN" h5 app alipay />
       <!-- <div v-if="VERSION_STANDARD" class="content-bottom-padded">
         <el-alert type="info" title="操作说明" show-icon>
           <div>

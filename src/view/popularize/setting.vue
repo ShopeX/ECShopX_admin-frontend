@@ -1,6 +1,6 @@
 <template>
   <div class="section section-white">
-    <SpPlatformTip />
+    <SpPlatformTip v-if="!VERSION_SHUYUN" />
     <el-form ref="form" :model="form" label-position="left" label-width="120px">
       <div class="section-body">
         <el-form-item label="推广员计划">

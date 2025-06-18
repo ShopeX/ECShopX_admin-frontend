@@ -110,7 +110,7 @@ export default {
           label: '提货码设置',
           key: 'pickupcode_status',
           type: 'switch',
-          isShow: !this.isMicorMall,
+          isShow: !this.VERSION_SHUYUN && !this.VERSION_B2C  && !this.isMicorMall,
           onChange: async (e) => {
             const { pickupcode_status } = this.form
             await this.$api.company.setPickupcodeSetting({
@@ -147,7 +147,7 @@ export default {
           key: 'ziti_send_oms',
           type: 'switch',
           tip: '自提订单推oms',
-          isShow: !VERSION_IN_PURCHASE,
+          isShow: !this.VERSION_SHUYUN && !VERSION_IN_PURCHASE,
           onChange: async (e) => {
             const { ziti_send_oms } = this.form
             await this.$api.company.setSendOmsSetting({
@@ -444,7 +444,7 @@ export default {
         multiple: false,
         data: [Number(this.form?.stores_isolate_template)]
       })
-      
+
       data && (this.form.stores_isolate_template = data[0].id)
       this.saveOpenDividedSetting()
     },

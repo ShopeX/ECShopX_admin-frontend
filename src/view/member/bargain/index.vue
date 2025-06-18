@@ -16,7 +16,7 @@
 
 <template>
   <div>
-    <SpPlatformTip />
+    <SpPlatformTip v-if="!VERSION_SHUYUN" />
     <el-tabs v-if="$route.path.indexOf('editor') === -1" v-model="activeName" type="card">
       <el-tab-pane label="助力活动管理" name="list">
         <div class="content-bottom-padded">

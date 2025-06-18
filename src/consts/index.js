@@ -61,7 +61,7 @@ export const ORDER_B2C_STATUS = [
   { title: '待发货', value: 'notship' },
   { title: '待收货', value: 'shipping' },
   { title: '待退款', value: 'cancelapply' },
-  { title: '待自提', value: 'ziti' },
+  // { title: '待自提', value: 'ziti' },
   { title: '已取消', value: 'cancel' },
   { title: '已完成', value: 'finish' }
 ]

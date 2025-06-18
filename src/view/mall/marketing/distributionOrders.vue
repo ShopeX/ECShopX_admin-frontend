@@ -1,7 +1,7 @@
 <template>
   <div>
     <div v-if="$route.path.indexOf('detail') === -1">
-      <SpPlatformTip h5 app alipay />
+      <SpPlatformTip v-if="!VERSION_SHUYUN" h5 app alipay />
       <el-row class="filter-header" :gutter="20">
         <el-col>
           <el-date-picker

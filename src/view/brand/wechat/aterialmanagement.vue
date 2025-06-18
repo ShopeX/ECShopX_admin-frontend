@@ -60,7 +60,7 @@
           />
         </el-tab-pane>
 
-        <el-tab-pane
+        <!-- <el-tab-pane
           v-if="$store.getters.login_type != 'distributor' && $store.getters.login_type != 'supplier'"
           label="图文消息"
           name="imagetext"
@@ -79,7 +79,7 @@
             :active-name="activeName"
             :get-status="newsStatus"
           />
-        </el-tab-pane>
+        </el-tab-pane> -->
 
         <!-- <el-tab-pane
           v-if="$store.getters.login_type != 'distributor'"

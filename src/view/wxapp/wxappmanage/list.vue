@@ -308,7 +308,7 @@
             />
           </div>
         </el-tab-pane>
-        <el-tab-pane label="微信服务号" name="offiaccount">
+        <el-tab-pane v-if="false" label="微信服务号" name="offiaccount">
           <el-table
             v-loading="loading"
             :data="authorizerData"
@@ -737,7 +737,7 @@ export default {
       submitWeappForm: {},
       tabList: [
         { name: '微信小程序', activeName: 'miniprogram' },
-        { name: '微信服务号', activeName: 'offiaccount' }
+        // { name: '微信服务号', activeName: 'offiaccount' }
       ],
       authorizerData: [
         {

@@ -1,7 +1,7 @@
 <template>
   <div>
     <div v-if="$route.path.indexOf('detail') === -1">
-      <SpPlatformTip h5 app alipay />
+      <SpPlatformTip v-if="!VERSION_SHUYUN" h5 app alipay />
       <el-row :gutter="20">
         <el-col :span="4">
           <el-button type="primary" icon="plus" @click="openDialog()"> 添加分类模版页面 </el-button>

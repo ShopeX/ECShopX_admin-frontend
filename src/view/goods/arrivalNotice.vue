@@ -1,6 +1,6 @@
 <template>
   <div>
-    <SpPlatformTip />
+    <SpPlatformTip v-if="!VERSION_SHUYUN" />
 
     <SpFilterForm :model="params" @onSearch="onSearch" @onReset="onReset">
       <SpFilterFormItem prop="create_time" label="日期范围:">

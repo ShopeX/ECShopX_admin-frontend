@@ -85,7 +85,7 @@
                     />&nbsp;折
                   </div>
                 </template>
-                <SpPlatformTip h5 app alipay />
+                <SpPlatformTip v-if="!VERSION_SHUYUN" h5 app alipay />
               </div>
             </div>
             <div class="clearfix">

@@ -8,7 +8,7 @@
 
 <template>
   <div>
-    <SpPlatformTip h5 app alipay />
+    <SpPlatformTip v-if="!VERSION_SHUYUN" h5 app alipay />
     <SpForm
       ref="form"
       v-model="form"

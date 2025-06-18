@@ -1,6 +1,6 @@
 <template>
   <div class="container">
-    <SpPlatformTip />
+    <SpPlatformTip  v-if="!VERSION_SHUYUN" />
 
     <div class="info">
       <div class="text">

@@ -125,8 +125,8 @@ const routes = [
         component: () => import('@/view/goods/arrivalNotice')
       },
       {
-        name: 'configuration',
-        path: 'registration/configuration',
+        name: 'registrySetting',
+        path: 'member-setting/registry-setting',
         meta: {
           aliasName: 'manageinfomation',
           icon: 'pay-circle',
@@ -136,8 +136,8 @@ const routes = [
         component: () => import('@/view/member/register')
       },
       {
-        name: 'configuration',
-        path: 'cancel/configuration',
+        name: 'logoutSetting',
+        path: 'member-setting/logout-setting',
         meta: {
           aliasName: 'closeAccount',
           icon: 'pay-circle',
@@ -147,8 +147,8 @@ const routes = [
         component: () => import('@/view/member/logout')
       },
       {
-        name: 'login',
-        path: 'trust/login',
+        name: 'trustLogin',
+        path: 'member-setting/trust-login',
         meta: {
           aliasName: 'trustlogin',
           icon: 'pay-circle',
@@ -158,8 +158,8 @@ const routes = [
         component: () => import('@/view/member/trustlogin/list')
       },
       {
-        name: 'whitelist',
-        path: 'member/whitelist',
+        name: 'memberWhitelist',
+        path: 'member-whitelist',
         meta: {
           aliasName: 'whitelistlist',
           icon: 'pay-circle',
@@ -175,8 +175,8 @@ const routes = [
         }
       },
       {
-        name: 'import',
-        path: 'whitelist/import',
+        name: 'memberWhitelistImport',
+        path: 'member-whitelist-import',
         meta: {
           aliasName: 'whitelistuploade',
           icon: 'pay-circle',
@@ -196,6 +196,8 @@ const routes = [
       //   },
       //   component: () => import('@/'),
       // },
+
+      // TODO: 补充会员路由
       {
         name: 'rights',
         path: 'add/rights',

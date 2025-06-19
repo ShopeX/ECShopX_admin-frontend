@@ -1,8 +1,13 @@
 <template>
   <div class="flex h-full">
-    <div class="w-[70px] h-full">
-      <div class="flex h-12 items-center">
-        <SpImage :src="$store.state.system?.logo" height="50" fit="contain" />
+    <div class="w-[70px] h-full bg-[#353439]">
+      <div class="flex items-center mt-1">
+        <SpImage
+          class="w-[60px] bg-white mx-auto rounded-full"
+          :src="$store.state.system?.logo"
+          height="60"
+          fit="contain"
+        />
       </div>
 
       <ul class="main-menu-list mt-2">
@@ -13,8 +18,8 @@
           :class="{ 'main-menu-item--active': activeMainMenu === item.alias_name }"
           @click="handleMainMenuClick(item)"
         >
-          <SpIcon class="menu-icon" :name="computedMenuIcon(item)" :size="16" />
-          <span class="text-sm mt-1">{{ item.name }}</span>
+          <SpIcon class="menu-icon" :name="computedMenuIcon(item)" :size="16" fill="#fff" />
+          <span class="text-sm mt-1 text-white">{{ item.name }}</span>
         </li>
       </ul>
     </div>
@@ -37,20 +42,23 @@
                 <span>{{ item.name }}</span>
               </template>
               <!-- 三级菜单 -->
-              <el-menu-item
-                class="third-menu-item"
-                v-for="child in item.children"
-                :key="child.alias_name"
-                :index="child.alias_name"
-                @click="handleSubMenuClick(child)"
-              >
-                <span>{{ child.name }}</span>
-              </el-menu-item>
+              <template v-for="child in item.children">
+                <el-menu-item
+                  class="third-menu-item"
+                  v-if="child.is_menu"
+                  :key="child.alias_name"
+                  :index="child.alias_name"
+                  @click="handleSubMenuClick(child)"
+                >
+                  <span>{{ child.name }}</span>
+                </el-menu-item>
+              </template>
             </el-submenu>
           </template>
           <template v-else>
             <el-menu-item
               class="second-menu-item"
+              v-if="item.is_menu"
               :key="item.alias_name"
               :index="item.alias_name"
               @click="handleSubMenuClick(item)"
@@ -146,7 +154,7 @@ export default {
   .main-menu-item {
     &:hover {
       color: var(--primary);
-      background: hsl(var(--background-deep));
+      background: rgba(255, 255, 255, 0.2);
       border-radius: 6px;
       .menu-icon {
         transform: scale(1.2);

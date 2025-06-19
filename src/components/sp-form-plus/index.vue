@@ -17,8 +17,11 @@
         :component-props="item.componentProps"
         :field-name="item.fieldName"
         :form-item-class="item.formItemClass"
+        :form-data="formData"
+        :is-show="item.isShow"
         :label="`${item.label}${colon ? ':' : ''}`"
-        :rules="item.rules"
+        :rules="item?.rules"
+        :size="formType === 'searchForm' ? 'small' : ''"
         :value="formData[item.fieldName]"
         @input="val => handleFieldChange(item.fieldName, val)"
       />
@@ -33,7 +36,7 @@
           </el-button>
           <el-button @click="handleReset">
             <div class="flex items-center">
-              <SpIcon name="rotate-ccw" :size="14" />
+              <SpIcon name="refresh" :size="14" />
               <span class="ml-1">重置</span>
             </div>
           </el-button>
@@ -94,6 +97,10 @@ export default {
     showDefaultActions: {
       type: Boolean,
       default: true
+    },
+    value: {
+      type: Object,
+      default: () => ({})
     }
   },
   data() {
@@ -102,24 +109,15 @@ export default {
       extend: false
     }
   },
-  watch: {
-    formItems: {
-      handler() {
-        this.formData = this.initFormData()
-      },
-      deep: true
-    }
-  },
-  created() {
-    console.log('initial formItems:', this.formItems)
-  },
+  created() {},
   methods: {
     // 初始化表单数据
     initFormData() {
       const formData = {}
       this.formItems.forEach(item => {
-        formData[item.fieldName] = item.value || ''
+        formData[item.fieldName] = this.value?.[item.fieldName] || item.value || ''
       })
+      this.$emit('input', formData)
       return formData
     },
     // 处理字段值变化
@@ -129,12 +127,15 @@ export default {
       this.$emit('field-change', { fieldName, value })
     },
     // 提交表单
-    handleSubmit() {
-      this.$refs.form.validate(valid => {
-        if (valid) {
-          this.$emit('submit', this.formData)
-        }
-      })
+    async handleSubmit() {
+      await this.validate()
+      this.$emit('submit', this.formData)
+      // this.$refs.form.validate(valid => {
+      //   debugger
+      //   if (valid) {
+      //     this.$emit('submit', this.formData)
+      //   }
+      // })
     },
     // 重置表单
     handleReset() {
@@ -143,10 +144,13 @@ export default {
     },
     // 验证表单
     validate() {
-      debugger
       return new Promise((resolve, reject) => {
-        this.$refs.form.validate(valid => {
-          valid ? resolve(this.formData) : reject(new Error('表单验证失败'))
+        this.$refs.form.validate((valid, object) => {
+          if (valid) {
+            resolve(this.formData)
+          } else {
+            reject(object)
+          }
         })
       })
     },
@@ -171,8 +175,8 @@ export default {
   &--inline {
     .sp-form-plus__wapper {
       display: grid;
-      gap: 16px;
-      grid-template-columns: repeat(3, minmax(0, 1fr));
+      grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+      gap: 8px;
       .form-field {
         margin-bottom: 0;
       }

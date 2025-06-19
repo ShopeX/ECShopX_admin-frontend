@@ -13,8 +13,8 @@ const routes = [
     path: '/financial',
     children: [
       {
-        name: 'form',
-        path: 'transaction/form',
+        name: 'transactionList',
+        path: 'transaction-flow/transaction-list',
         meta: {
           aliasName: 'financialManageservicepayment',
           icon: 'pay-circle',
@@ -24,8 +24,8 @@ const routes = [
         component: () => import('@/view/mall/trade/list')
       },
       {
-        name: 'form',
-        path: 'refund/form',
+        name: 'refundList',
+        path: 'transaction-flow/refund-list',
         meta: {
           aliasName: 'financialFinancialManageAftersalesrefundlist',
           icon: 'pay-circle',
@@ -41,8 +41,8 @@ const routes = [
         ]
       },
       {
-        name: 'failed',
-        path: 'refund/failed',
+        name: 'refundFailed',
+        path: 'transaction-flow/refund-failed',
         meta: {
           aliasName: 'Refunderrorlogs',
           icon: 'pay-circle',
@@ -51,34 +51,34 @@ const routes = [
         },
         component: () => import('@/view/mall/trade/refunderrorlogs')
       },
-      {
-        name: 'summary',
-        path: 'settlement/summary',
-        meta: {
-          aliasName: 'summary',
-          icon: 'pay-circle',
-          title: '结算汇总',
-          permissions: ['financial.settlement.summary']
-        },
-        component: () => import('@/view/financial/settlement/summary'),
-        children: [
-          {
-            path: 'detail/:id?',
-            component: () => import('@/view/financial/settlement/detailed')
-          }
-        ]
-      },
-      {
-        name: 'configuration',
-        path: 'settlement/configuration',
-        meta: {
-          aliasName: 'configure',
-          icon: 'pay-circle',
-          title: '结算配置',
-          permissions: ['financial.settlement.configure']
-        },
-        component: () => import('@/view/financial/settlement/configure')
-      },
+      // {
+      //   name: 'summary',
+      //   path: 'settlement/summary',
+      //   meta: {
+      //     aliasName: 'summary',
+      //     icon: 'pay-circle',
+      //     title: '结算汇总',
+      //     permissions: ['financial.settlement.summary']
+      //   },
+      //   component: () => import('@/view/financial/settlement/summary'),
+      //   children: [
+      //     {
+      //       path: 'detail/:id?',
+      //       component: () => import('@/view/financial/settlement/detailed')
+      //     }
+      //   ]
+      // },
+      // {
+      //   name: 'configuration',
+      //   path: 'settlement/configuration',
+      //   meta: {
+      //     aliasName: 'configure_supplier',
+      //     icon: 'pay-circle',
+      //     title: '结算配置',
+      //     permissions: ['financial.settlement_supplier.configure_supplier']
+      //   },
+      //   component: () => import('@/view/financial/settlement/configure')
+      // },
       // {
       //     name: 'configuration',
       //     path: 'supplier-settlement/configuration',
@@ -101,8 +101,8 @@ const routes = [
       //     component: () => import('@/'),
       // },
       {
-        name: 'voucher-review',
-        path: 'transfer/voucher-review',
+        name: 'voucherReview',
+        path: 'offline-transfer/voucher-review',
         meta: {
           aliasName: 'transfer',
           icon: 'pay-circle',
@@ -113,7 +113,6 @@ const routes = [
         children: [
           {
             path: 'logs/:id?',
-            // path: 'logs',
             component: () => import('@/view/mall/trade/examineTransferLogs')
           }
         ]

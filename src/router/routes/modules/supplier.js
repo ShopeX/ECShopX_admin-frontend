@@ -9,12 +9,12 @@ const routes = [
       keepAlive: true,
       title: '供应'
     },
-    name: 'supply',
-    path: '/supply',
+    name: 'supplier',
+    path: '/supplier',
     children: [
       {
-        name: 'management',
-        path: 'commodity/management',
+        name: 'productList',
+        path: 'product-manage/product-list',
         meta: {
           aliasName: 'supplier_goods_list',
           icon: 'pay-circle',
@@ -49,8 +49,8 @@ const routes = [
         ]
       },
       {
-        name: 'review',
-        path: 'product/review',
+        name: 'productReview',
+        path: 'product-manage/product-review',
         meta: {
           aliasName: 'goods_suppliergoods',
           icon: 'pay-circle',
@@ -69,8 +69,8 @@ const routes = [
         ]
       },
       {
-        name: 'list',
-        path: 'supplier/list',
+        name: 'supplierList',
+        path: 'supplier-manage/supplier-list',
         meta: {
           aliasName: 'supplier_list',
           icon: 'pay-circle',
@@ -80,8 +80,8 @@ const routes = [
         component: () => import('@/view/mall/supplier/supplier_list')
       },
       {
-        name: 'account',
-        path: 'supplier/account',
+        name: 'supplierAccount',
+        path: 'supplier-manage/supplier-account',
         meta: {
           aliasName: 'supplier',
           icon: 'pay-circle',

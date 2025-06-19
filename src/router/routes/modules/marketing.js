@@ -35,8 +35,8 @@ const routes = [
         ]
       },
       {
-        name: 'management',
-        path: 'coupon-package/management',
+        name: 'couponPackage',
+        path: 'coupon/coupon-package',
         meta: {
           aliasName: 'couponspackage',
           icon: 'pay-circle',
@@ -56,8 +56,8 @@ const routes = [
         ]
       },
       {
-        name: 'record',
-        path: 'voucher-issuance/record',
+        name: 'couponUseRecord',
+        path: 'coupon/use-record',
         meta: {
           aliasName: 'coupongive',
           icon: 'pay-circle',
@@ -72,6 +72,7 @@ const routes = [
           }
         ]
       },
+      // TODO: 补充营销路由
       {
         name: 'distribution',
         path: 'mass-coupon/distribution',
@@ -90,8 +91,8 @@ const routes = [
         ]
       },
       {
-        name: 'discount',
-        path: 'full/discount',
+        name: 'fullDiscount',
+        path: 'promotion/full-discount',
         meta: {
           aliasName: 'marketingsfulldiscount',
           icon: 'pay-circle',
@@ -107,8 +108,8 @@ const routes = [
         ]
       },
       {
-        name: 'reduction',
-        path: 'full/reduction',
+        name: 'fullReduction',
+        path: 'promotion/full-reduction',
         meta: {
           aliasName: 'Marketingsfullminus',
           icon: 'pay-circle',
@@ -124,8 +125,8 @@ const routes = [
         ]
       },
       {
-        name: 'gift',
-        path: 'full/gift',
+        name: 'fullGift',
+        path: 'promotion/full-gift',
         meta: {
           aliasName: 'Marketingsfullgift',
           icon: 'pay-circle',
@@ -141,8 +142,8 @@ const routes = [
         ]
       },
       {
-        name: 'specialOffer',
-        path: 'limited-time/special-offer',
+        name: 'limitedTime',
+        path: 'promotion/limited-time',
         meta: {
           aliasName: 'limitedtimesale',
           icon: 'pay-circle',
@@ -158,8 +159,8 @@ const routes = [
         ]
       },
       {
-        name: 'purchase',
-        path: 'increase/purchase',
+        name: 'increasePurchase',
+        path: 'promotion/increase-purchase',
         meta: {
           aliasName: 'marketingspluspricebuy',
           icon: 'pay-circle',
@@ -175,8 +176,8 @@ const routes = [
         ]
       },
       {
-        name: 'purchase',
-        path: 'combination/purchase',
+        name: 'combinationPurchase',
+        path: 'promotion/combination-purchase',
         meta: {
           aliasName: 'marketingpackage',
           icon: 'pay-circle',
@@ -192,8 +193,8 @@ const routes = [
         ]
       },
       {
-        name: 'marketing',
-        path: 'new-customer/marketing',
+        name: 'newCustomerMarketing',
+        path: 'member-marketing/new-customer-marketing',
         meta: {
           aliasName: 'marketingindex',
           icon: 'pay-circle',
@@ -203,8 +204,8 @@ const routes = [
         component: () => import('@/view/member/promotions/index')
       },
       {
-        name: 'marketing',
-        path: 'targeted/marketing',
+        name: 'targetMarketing',
+        path: 'member-marketing/target-marketing',
         meta: {
           aliasName: 'SpecificCrowdDiscount',
           icon: 'pay-circle',
@@ -220,8 +221,8 @@ const routes = [
         ]
       },
       {
-        name: 'purchase',
-        path: 'priority/purchase',
+        name: 'priorityPurchase',
+        path: 'member-marketing/priority-purchase',
         meta: {
           aliasName: 'memberpreference',
           icon: 'pay-circle',
@@ -237,8 +238,8 @@ const routes = [
         ]
       },
       {
-        name: 'automation',
-        path: 'marketing/automation',
+        name: 'autoMarketing',
+        path: 'member-marketing/auto-marketing',
         meta: {
           aliasName: 'marketingactivity',
           icon: 'pay-circle',
@@ -258,8 +259,8 @@ const routes = [
         ]
       },
       {
-        name: 'recommendation',
-        path: 'product/recommendation',
+        name: 'productRecommend',
+        path: 'member-marketing/product-recommend',
         meta: {
           aliasName: 'recommendlike',
           icon: 'pay-circle',
@@ -269,8 +270,8 @@ const routes = [
         component: () => import('@/view/member/promotions/recommendlike')
       },
       {
-        name: 'buying',
-        path: 'group/buying',
+        name: 'groupBuying',
+        path: 'fission-marketing/group-buying',
         meta: {
           aliasName: 'groupsindex',
           icon: 'pay-circle',
@@ -297,8 +298,8 @@ const routes = [
         ]
       },
       {
-        name: 'assistance',
-        path: 'wx/assistance',
+        name: 'wx-assist',
+        path: 'fission-marketing/wx-assist',
         meta: {
           aliasName: 'marketingbargain',
           icon: 'pay-circle',
@@ -314,8 +315,8 @@ const routes = [
         ]
       },
       {
-        name: 'settings',
-        path: 'basic/settings',
+        name: 'basicSettings',
+        path: 'distribution/basic-settings',
         meta: {
           aliasName: 'popularizesetting',
           icon: 'pay-circle',
@@ -325,8 +326,8 @@ const routes = [
         component: () => import('@/view/popularize/setting')
       },
       {
-        name: 'management',
-        path: 'promotion-management',
+        name: 'promoterManagement',
+        path: 'distribution/promoter-management',
         meta: {
           aliasName: 'popularizelist',
           icon: 'pay-circle',
@@ -346,8 +347,8 @@ const routes = [
         ]
       },
       {
-        name: 'management',
-        path: 'level/management',
+        name: 'levelManagement',
+        path: 'distribution/level-management',
         meta: {
           aliasName: 'promotersetting',
           icon: 'pay-circle',
@@ -357,8 +358,8 @@ const routes = [
         component: () => import('@/view/popularize/promoterSetting')
       },
       {
-        name: 'promoters',
-        path: 'performance/promoters',
+        name: 'promotionPerformance',
+        path: 'distribution/promotion-performance',
         meta: {
           aliasName: 'popularizedata',
           icon: 'pay-circle',
@@ -374,8 +375,8 @@ const routes = [
         ]
       },
       {
-        name: 'application',
-        path: 'withdrawal/application',
+        name: 'withdrawalApply',
+        path: 'distribution/withdrawal-apply',
         meta: {
           aliasName: 'popularizewithdraw',
           icon: 'pay-circle',
@@ -385,8 +386,8 @@ const routes = [
         component: () => import('@/view/popularize/withdraw')
       },
       {
-        name: 'goods',
-        path: 'distribution/goods',
+        name: 'goodsList',
+        path: 'distribution/goods-list',
         meta: {
           aliasName: 'popularizegoods',
           icon: 'pay-circle',
@@ -396,8 +397,8 @@ const routes = [
         component: () => import('@/view/popularize/goods')
       },
       {
-        name: 'details',
-        path: 'task-commission/details',
+        name: 'commissionDetails',
+        path: 'distribution/commission-details',
         meta: {
           aliasName: 'taskbrokerage',
           icon: 'pay-circle',
@@ -407,8 +408,8 @@ const routes = [
         component: () => import('@/view/popularize/taskBrokerage')
       },
       {
-        name: 'statistics',
-        path: 'task-commission/statistics',
+        name: 'commissionStatistics',
+        path: 'distribution/commissionStatistics',
         meta: {
           aliasName: 'taskbrokeragecount',
           icon: 'pay-circle',
@@ -418,8 +419,8 @@ const routes = [
         component: () => import('@/view/popularize/taskBrokerageCount')
       },
       {
-        name: 'streaming',
-        path: 'program/streaming',
+        name: 'wxappStreamingList',
+        path: 'wxapp-streaming/list',
         meta: {
           aliasName: 'liveroomlist',
           icon: 'pay-circle',
@@ -441,8 +442,8 @@ const routes = [
         ]
       },
       {
-        name: 'activities',
-        path: 'all/activities',
+        name: 'applyActivityList',
+        path: 'activity-apply/activity-list',
         meta: {
           aliasName: 'Registrationactivity',
           icon: 'pay-circle',
@@ -458,8 +459,8 @@ const routes = [
         ]
       },
       {
-        name: 'record',
-        path: 'registration/record',
+        name: 'activityRecord',
+        path: 'activity-apply/activity-record',
         meta: {
           aliasName: 'Registrationrecord',
           icon: 'pay-circle',
@@ -479,8 +480,8 @@ const routes = [
         ]
       },
       {
-        name: 'element',
-        path: 'form/element',
+        name: 'formElement',
+        path: 'activity-apply/form-element',
         meta: {
           aliasName: 'formattrs',
           icon: 'pay-circle',
@@ -497,8 +498,8 @@ const routes = [
         ]
       },
       {
-        name: 'template',
-        path: 'form/template',
+        name: 'formTemplate',
+        path: 'activity-apply/form-template',
         meta: {
           aliasName: 'formtemplate',
           icon: 'pay-circle',
@@ -515,8 +516,8 @@ const routes = [
         ]
       },
       {
-        name: 'wheel',
-        path: 'big/wheel',
+        name: 'wheelList',
+        path: 'big-wheel/wheel-list',
         meta: {
           aliasName: 'wheel',
           icon: 'pay-circle',

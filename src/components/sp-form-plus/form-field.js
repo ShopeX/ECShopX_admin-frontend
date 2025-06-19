@@ -23,6 +23,10 @@ export default {
       type: String,
       default: ''
     },
+    formData: Object,
+    isShow: {
+      type: Function
+    },
     label: {
       type: String,
       default: ''
@@ -30,6 +34,10 @@ export default {
     rules: {
       type: Array,
       default: () => []
+    },
+    size: {
+      type: String,
+      default: '' // medium, small, mini
     },
     value: {
       type: [String, Number, Boolean, Array, Object],
@@ -51,7 +59,8 @@ export default {
     renderInput() {
       return h('el-input', {
         attrs: {
-          ...this.componentProps
+          ...this.componentProps,
+          size: this.size
         },
         props: {
           value: this.modelValue
@@ -73,10 +82,12 @@ export default {
           }
         })
       )
-
       return h(
         'el-select',
         {
+          attrs: {
+            size: this.size
+          },
           props: {
             value: this.modelValue,
             placeholder: `请选择${this.label}`,
@@ -180,6 +191,7 @@ export default {
             style="width: 100%"
             type={this.componentProps.type}
             startPlaceholder="开始日期/结束时间"
+            default-time={['00:00:00', '23:59:59']}
             // endPlaceholder="结束日期"
             rangeSeparator={`${this.modelValue.length > 1 ? '至' : ''}`}
             value={this.modelValue}
@@ -236,7 +248,8 @@ export default {
             value: this.modelValue,
             props: this.componentProps,
             onInput: this.handleInput,
-            h
+            h,
+            formData: this.formData
           })
       }
 
@@ -264,7 +277,13 @@ export default {
             labelWidth: this.label ? '100px' : 'auto',
             prop: this.fieldName,
             rules: this.rules
-          }
+          },
+          directives: [
+            {
+              name: 'show',
+              value: this.isShow ? this.isShow(this.modelValue) : true
+            }
+          ]
         },
         [renderComponent(this.componentProps)]
       )

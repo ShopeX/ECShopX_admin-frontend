@@ -55,6 +55,26 @@ export const ORDER_STATUS = [
   { title: '未妥投', value: 'dada_9' }
 ]
 
+export const ORDER_ZITI_STATUS_MAP = {
+  PENDING: { lable: '待自提', type: 'danger' },
+  DONE: { lable: '已自提', type: 'success' }
+}
+
+export const ORDER_DELIVERY_STATUS_MAP = {
+  DONE: { lable: '已发货', type: 'success' },
+  PARTAIL: { lable: '部分发货', type: 'success' }
+}
+
+export const ORDER_STATUS_MAP = {
+  PAYED: { lable: '已支付', type: 'warning' },
+  NOTPAY: { lable: '未支付', type: 'info' },
+  CANCEL: { lable: '已取消', type: 'info' },
+  WAIT_BUYER_CONFIRM: { lable: '待收货', type: 'danger' }
+  // DONE: '已发货',
+  // PARTAIL: '部分发货',
+  // PENDING: '待自提',
+}
+
 export const ORDER_B2C_STATUS = [
   { title: '全部', value: '' },
   { title: '待支付', value: 'notpay' },

@@ -1,8 +1,14 @@
-.form-field {
-  margin-bottom: 18px;
+.sp-form-plus {
+  .form-field {
+    margin-bottom: 18px;
 
-  // 可以添加更多样式
-  .el-form-item {
-    margin-bottom: 0;
+    // 可以添加更多样式
+    .el-form-item {
+      margin-bottom: 0;
+
+      &__label {
+        padding-right: 8px;
+      }
+    }
   }
 }

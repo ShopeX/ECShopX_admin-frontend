@@ -3,6 +3,7 @@
     <span>{{ content }}</span>
     <i
       class="el-icon-document-copy ml-1"
+      v-if="enable"
       v-clipboard:copy="content"
       v-clipboard:success="
         () =>
@@ -21,6 +22,10 @@ export default {
     content: {
       type: String,
       default: ''
+    },
+    enable: {
+      type: Boolean,
+      default: true
     }
   }
 }

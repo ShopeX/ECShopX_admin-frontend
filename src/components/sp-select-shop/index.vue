@@ -14,7 +14,7 @@
 
 <template>
   <div ref="reference" class="sp-select-shop" @click="onSelectShop(true)">
-    <el-input readonly :value="selectValue" :placeholder="placeholder">
+    <el-input readonly :size="size" :value="selectValue" :placeholder="placeholder">
       <template slot="suffix">
         <i
           v-if="clearBtnVisible"
@@ -39,6 +39,7 @@ export default {
       type: Boolean,
       default: false
     },
+    size: String
   },
   provide() {
     return {
@@ -110,7 +111,7 @@ export default {
     onChange({ name, value }) {
       this.selectValue = name
       this.$emit('input', value)
-      this.$emit('change')
+      this.$emit('change', value)
     },
     handleClear() {
       this.onChange({

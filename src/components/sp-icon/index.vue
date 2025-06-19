@@ -1,5 +1,5 @@
 <template>
-  <component :is="icon" :size="size" />
+  <component :is="icon" :size="size" :fill="fill" />
 </template>
 
 <script>
@@ -16,7 +16,7 @@ export default {
       type: [Number, String],
       default: 16
     },
-    color: {
+    fill: {
       type: String,
       default: 'currentColor'
     }

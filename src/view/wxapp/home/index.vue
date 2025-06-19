@@ -51,17 +51,22 @@
       </div>
     </div>
 
-    <el-row :gutter="20" class="template-list">
-      <el-col
-        v-for="(item, index) in templateList"
-        :key="index"
-        class="template-col"
-        :xs="12"
-        :sm="12"
-        :md="8"
-        :lg="6"
-        :xl="4"
-      >
+    <div class="template-list grid gap-4">
+      <div class="template-col">
+        <div
+          :class="{
+            'template-item': true,
+            'add-btn': true
+          }"
+          @click="addTemplate"
+        >
+          <div class="template-wrap">
+            <img class="add-img" src="@/assets/img/add-template.png" alt="添加">
+            <div class="add-text">添加模板</div>
+          </div>
+        </div>
+      </div>
+      <div v-for="(item, index) in templateList" :key="index" class="template-col">
         <div class="template-item">
           <div class="img-wrap">
             <div class="preview-cover" @click="previewTemplate(item.pages_template_id)">
@@ -133,22 +138,8 @@
             同步模板至店铺
           </div>
         </div>
-      </el-col>
-      <el-col class="template-col" :xs="12" :sm="12" :md="8" :lg="6" :xl="4">
-        <div
-          :class="{
-            'template-item': true,
-            'add-btn': true
-          }"
-          @click="addTemplate"
-        >
-          <div class="template-wrap">
-            <img class="add-img" src="@/assets/img/add-template.png" alt="添加">
-            <div class="add-text">添加模板</div>
-          </div>
-        </div>
-      </el-col>
-    </el-row>
+      </div>
+    </div>
 
     <DistributorSelect
       :store-visible="distributorVisible"
@@ -806,10 +797,16 @@ export default {
       // this.templateVisible = true
       // this.currTemplateId = pages_template_id
       const { distributor_id } = this.$route.query
+      const routeParams = {
+        path: `${this.$route.path}/edit`,
+        query: {
+          id: pages_template_id
+        }
+      }
       if (distributor_id > 0) {
-        this.$router.push(`/wxapp/manage/decorate?id=${pages_template_id}&scene=1003`)
+        routeParams.query.scene = 1003
       } else {
-        this.$router.push(`/wxapp/manage/decorate?id=${pages_template_id}`)
+        this.$router.push(routeParams)
       }
     },
     async copyTemplate(pages_template_id) {
@@ -1003,12 +1000,7 @@ export default {
   }
 }
 .template-list {
-  display: flex;
-  flex-wrap: wrap;
-  .template-col {
-    margin-bottom: 20px;
-    // width: 300px;
-  }
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
   .template-item {
     border-radius: 10px;
     border: 1px solid #eee;

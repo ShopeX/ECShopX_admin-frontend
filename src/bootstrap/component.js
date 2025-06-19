@@ -1,8 +1,10 @@
 import { SpPickerPlugin } from '@/components/sp-picker'
+import { SpDialogPlusPlugin } from '@/components/sp-dialog-plus'
 
 function install(Vue) {
   const plugins = {
-    SpPickerPlugin
+    SpPickerPlugin,
+    SpDialogPlusPlugin
   }
 
   const baseContext = require.context('./../components', true, /index(\.vue|\.js)$/)

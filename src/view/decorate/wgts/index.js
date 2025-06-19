@@ -19,6 +19,7 @@ import WgtGoodsCard from './wgt_goodsCard'
 import WgtWriting from './wgt_writing'
 import WgtHeading from './wgt_heading'
 import WgtFullSlider from './wgt_fullSlider'
+import wgtOrderNavigation from './wgt_orderNavigation'
 
 // 首页装修
 let SCENE_1001 = {
@@ -36,7 +37,8 @@ let SCENE_1001 = {
   WgtMarquees,
   WgtFloorImg,
   WgtImageNavigation,
-  WgtFullSlider
+  WgtFullSlider,
+  wgtOrderNavigation
 }
 
 if (VERSION_PLATFORM) {
@@ -103,6 +105,7 @@ const SCENE_1008 = {
   WgtHotZone,
   WgtFilm,
   WgtMarquees,
+  wgtOrderNavigation
 }
 
 

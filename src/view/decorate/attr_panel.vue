@@ -79,6 +79,15 @@ export default {
         </el-radio-group>
       )
     },
+    _renderRadioButton({ key, options, onchange = () => { } }) {
+      return (
+        <el-radio-group v-model={this.value[key]} size="mini" onChange={(e) => onchange(e, this)}>
+          {options.map((op) => (
+            <el-radio-button label={op.label}>{op.name}</el-radio-button>
+          ))}
+        </el-radio-group>
+      )
+    },
     _renderCheckbox({ key, options, min = 0, onchange = () => { } }) {
       return (
         <el-checkbox-group min={min} v-model={this.value[key]} onChange={(e) => onchange(e, this)}>
@@ -106,6 +115,7 @@ export default {
         // 'text': this._renderText,
         'select': this._renderSelect,
         'radio': this._renderRadio,
+        'radiobutton': this._renderRadioButton,
         // 'checkbox': this._renderCheckbox,
         // 'table': this._renderTable,
         // 'richText': this._renderRichText,

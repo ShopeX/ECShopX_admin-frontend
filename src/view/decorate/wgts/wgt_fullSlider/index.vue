@@ -57,10 +57,10 @@
 import config from './config'
 
 export default {
-  name: 'fullSlider',
+  name: 'FullSlider',
   wgtName: '整屏滑动',
   wgtDesc: '',
-  wgtIcon: 'wgt-slider',
+  wgtIcon: 'wgt-full-slider',
   wgtType: 1,
   wgtTem: 1, //0代表微信和抖音小程序都可以配置,1代表只能配置微信
   config: config,

@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <SpPage>
     <el-tabs
       v-model="activeName"
       type="border-card"
@@ -18,7 +18,7 @@
         <point-record :get-status="trade" />
       </el-tab-pane>
     </el-tabs>
-  </div>
+  </SpPage>
 </template>
 
 <script>

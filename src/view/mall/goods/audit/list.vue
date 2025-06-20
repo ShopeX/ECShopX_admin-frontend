@@ -1,6 +1,7 @@
 <template>
   <div>
-    <div v-if="$route.path.indexOf('editor') === -1">
+    <SpPage>
+      <div v-if="$route.path.indexOf('editor') === -1">
       <SpFilterForm :model="params" @onSearch="onSearch" @onReset="onSearch">
         <SpFilterFormItem prop="keywords" label="商品名称:">
           <el-input v-model="params.keywords" placeholder="请输入商品名称" />
@@ -282,6 +283,7 @@
       </SideBar>
     </div>
     <router-view />
+    </SpPage>
   </div>
 </template>
 <script>

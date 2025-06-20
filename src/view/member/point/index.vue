@@ -1,5 +1,5 @@
 <template>
-  <div class="section section-white point-rule">
+  <SpPage class="section section-white point-rule">
     <div class="section-header with-border">
       <div class="section-title">积分配置</div>
     </div>
@@ -183,7 +183,7 @@
         <el-button type="primary" @click="save"> 保 存 </el-button>
       </div>
     </el-form>
-  </div>
+  </SpPage>
 </template>
 <script>
 import { savePointRule, getPointRule } from '../../../api/promotions'

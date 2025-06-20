@@ -1,15 +1,20 @@
 <template>
-  <div>
+  <SpPage>
+    <SpFilterForm :model="formData" @onSearch="dataSearch" @onReset="dataSearch">
+      <SpFilterFormItem prop="mobile" label="手机号:">
+        <el-input v-model="formData.mobile" placeholder="请输入手机号" />
+      </SpFilterFormItem>
+    </SpFilterForm>
     <el-row :gutter="20">
       <el-col :span="12">
         <el-button type="primary" icon="plus" @click="addData"> 添加白名单 </el-button>
         <el-button type="primary" icon="plus" @click="setTips"> 白名单提示 </el-button>
       </el-col>
-      <el-col :span="12">
+      <!-- <el-col :span="12">
         <el-input v-model="mobile" placeholder="手机号">
           <el-button slot="append" icon="el-icon-search" @click="dataSearch" />
         </el-input>
-      </el-col>
+      </el-col> -->
     </el-row>
     <el-table v-loading="loading" :data="whitelistList" :height="wheight - 160">
       <el-table-column prop="mobile" label="手机号" />
@@ -78,7 +83,7 @@
         <el-button type="primary" @click="submitTipsAction"> 保存 </el-button>
       </div>
     </el-dialog>
-  </div>
+  </SpPage>
 </template>
 <script>
 import { mapGetters } from 'vuex'
@@ -90,8 +95,10 @@ import {
   deleteMembersWhitelist
 } from '@/api/member'
 import { getWhitelistSetting, setWhitelistSetting } from '@/api/company'
+import { pageMixin } from '@/mixins'
 
 export default {
+  mixins: [pageMixin],
   props: {
     status: {
       type: Boolean,
@@ -122,7 +129,10 @@ export default {
         pageSize: 20
       },
       whitelist_id: 0,
-      datapass_block: 1
+      datapass_block: 1,
+      formData:{
+        mobile:''
+      }
     }
   },
   computed: {
@@ -193,7 +203,7 @@ export default {
       }
     },
     dataSearch() {
-      this.params.mobile = this.mobile
+      this.params.mobile = this.formData.mobile
       this.params.page = 1
       this.getListData()
     },

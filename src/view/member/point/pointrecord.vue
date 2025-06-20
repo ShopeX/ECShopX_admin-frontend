@@ -41,7 +41,7 @@
       </SpFilterFormItem>
     </SpFilterForm>
 
-    <el-button type="primary" plain @click="exportData"> 导出 </el-button>
+    <el-button type="primary" @click="exportData"> 导出 </el-button>
     <div class="record-list">
       <el-table
         v-loading="loading"

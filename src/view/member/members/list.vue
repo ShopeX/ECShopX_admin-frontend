@@ -58,10 +58,14 @@
     top: 0;
   }
 }
+.c-pagination{
+  text-align: right;
+  margin-top: 20px;
+}
 </style>
 
 <template>
-  <div>
+  <SpPage>
     <div v-if="$route.path.indexOf('detail') === -1 && $route.path.indexOf('chiefupload') === -1">
       <SpFilterForm :model="params" @onSearch="onSearch" @onReset="onSearch">
         <SpFilterFormItem prop="mobile" label="手机号:">
@@ -152,11 +156,10 @@
       </SpFilterForm>
 
       <div class="action-container">
-        <el-button type="primary" plain @click="batchActionDialog('rel_tag')"> 打标签 </el-button>
+        <el-button type="primary" @click="batchActionDialog('rel_tag')"> 打标签 </el-button>
         <el-button
           v-if="!VERSION_IN_PURCHASE()"
           type="primary"
-          plain
           @click="batchActionDialog('give_coupon')"
         >
           赠送优惠券
@@ -164,7 +167,6 @@
         <el-button
           v-if="$store.getters.login_type != 'distributor'"
           type="primary"
-          plain
           @click="batchActionDialog('send_sms')"
         >
           群发短信
@@ -172,7 +174,6 @@
         <el-button
           v-if="$store.getters.login_type != 'distributor' && !VERSION_IN_PURCHASE()"
           type="primary"
-          plain
           @click="handleVipGradeDelay(false)"
         >
           付费会员延期
@@ -180,13 +181,12 @@
         <el-button
           v-if="$store.getters.login_type != 'distributor' && !VERSION_IN_PURCHASE()"
           type="primary"
-          plain
           @click="batchActionDialog('set_grade')"
         >
           会员等级设置
         </el-button>
         <export-tip @exportHandle="exportData">
-          <el-button type="primary" plain icon="el-plus-circle"> 导出 </el-button>
+          <el-button type="primary" icon="el-plus-circle"> 导出 </el-button>
         </export-tip>
         <!-- X：平台和店铺，会员里都有“团长导入”
         云店：平台有，店铺没有 -->
@@ -389,7 +389,7 @@
           </template>
         </el-table-column>
       </el-table>
-      <div class="content-center content-top-padded">
+      <div class="content-center content-top-padded c-pagination">
         <el-pagination
           background
           layout="total, sizes, prev, pager, next, jumper"
@@ -845,7 +845,7 @@
       </template>
     </div>
     <router-view />
-  </div>
+  </SpPage>
 </template>
 
 <script>

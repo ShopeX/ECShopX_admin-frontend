@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <SpPage>
     <SpFilterForm :model="params" @onSearch="onSearch" @onReset="onSearch">
       <SpFilterFormItem prop="attribute_name" label="参数名称:">
         <el-input v-model="params.attribute_name" placeholder="请输入参数名称" />
@@ -87,7 +87,7 @@
         <el-button type="primary" @click="save"> 提交 </el-button>
       </div>
     </sideBar>
-  </div>
+  </SpPage>
 </template>
 <script>
 import { mapGetters } from 'vuex'

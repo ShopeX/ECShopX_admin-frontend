@@ -26,7 +26,7 @@ export function export_open(tab) {
     } else if (login_type == 'supplier') {
       window.open(`/supplier/setting/baseexport?tab=${tab}`)
     } else {
-      window.open(`/companydata/report/baseexport?tab=${tab}`)
+      window.open(`/data/report/export-record?tab=${tab}`)
     }
   }, 1000)
 }

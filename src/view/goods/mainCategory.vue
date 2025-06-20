@@ -12,127 +12,129 @@
 </style>
 
 <template>
-  <div class="page-goods-maincategory">
-    <div v-if="!IS_DISTRIBUTOR()" class="action-container">
-      <el-button type="primary" @click="addCategory"> 添加管理分类 </el-button>
-    </div>
+  <SpPage>
+    <div class="page-goods-maincategory">
+      <div v-if="!IS_DISTRIBUTOR()" class="action-container">
+        <el-button type="primary" @click="addCategory"> 添加管理分类 </el-button>
+      </div>
 
-    <el-table
-      ref="tableTree"
-      :data="categoryList"
-      row-key="category_id"
-      border
-      lazy
-      :tree-props="{ children: 'children', hasChildren: 'hasChildren' }"
-      :load="load"
-    >
-      <el-table-column label="分类名称" width="480">
-        <template slot-scope="scope">
-          <span
-            v-if="!scope.row.hasChildren && scope.row.category_level == '1'"
-            style="display: inline-block; width: 24px"
-          />
-          <span>{{ scope.row.category_name }}</span>
-        </template>
-      </el-table-column>
-      <el-table-column prop="sort" label="分类排序" width="140">
-        <template slot-scope="scope">
-          <div>{{ scope.row.sort }}</div>
-        </template>
-      </el-table-column>
-      <el-table-column label="分类图片" width="200">
-        <template slot-scope="scope">
-          <div class="img-container">
-            <SpImage
-              v-if="scope.row.image_url"
-              :src="scope.row.image_url"
-              :width="48"
-              :height="48"
+      <el-table
+        ref="tableTree"
+        :data="categoryList"
+        row-key="category_id"
+        border
+        lazy
+        :tree-props="{ children: 'children', hasChildren: 'hasChildren' }"
+        :load="load"
+      >
+        <el-table-column label="分类名称" width="480">
+          <template slot-scope="scope">
+            <span
+              v-if="!scope.row.hasChildren && scope.row.category_level == '1'"
+              style="display: inline-block; width: 24px"
             />
-          </div>
-        </template>
-      </el-table-column>
-      <el-table-column label="一级分类模版" width="200" prop="customize_page_name" />
-      <el-table-column label="操作" width="280">
-        <template slot-scope="scope">
-          <el-button type="text">
-            <router-link
-              :to="{
-                path: '/entity/goods/goodsphysical',
-                query: { main_cat_id: scope.row.category_id }
-              }"
+            <span>{{ scope.row.category_name }}</span>
+          </template>
+        </el-table-column>
+        <el-table-column prop="sort" label="分类排序" width="140">
+          <template slot-scope="scope">
+            <div>{{ scope.row.sort }}</div>
+          </template>
+        </el-table-column>
+        <el-table-column label="分类图片" width="200">
+          <template slot-scope="scope">
+            <div class="img-container">
+              <SpImage
+                v-if="scope.row.image_url"
+                :src="scope.row.image_url"
+                :width="48"
+                :height="48"
+              />
+            </div>
+          </template>
+        </el-table-column>
+        <el-table-column label="一级分类模版" width="200" prop="customize_page_name" />
+        <el-table-column label="操作">
+          <template slot-scope="scope">
+            <el-button type="text">
+              <router-link
+                :to="{
+                  path: '/products/product-manage/self-products',
+                  query: { main_cat_id: scope.row.category_id }
+                }"
+              >
+                {{ VERSION_PLATFORM() ? '平台商品' : '查看商品' }}
+              </router-link>
+            </el-button>
+            <el-button v-if="VERSION_PLATFORM()" type="text">
+              <router-link
+                :to="{
+                  path: '/entity/goods/goodsaudit',
+                  query: { main_cat_id: scope.row.category_id }
+                }"
+              >
+                店铺商品
+              </router-link>
+            </el-button>
+            <el-button
+              v-if="scope.row.category_level == 3"
+              type="text"
+              @click="onLinkGoodsParams(scope.row)"
             >
-              {{ VERSION_PLATFORM() ? '平台商品' : '查看商品' }}
-            </router-link>
-          </el-button>
-          <el-button v-if="VERSION_PLATFORM()" type="text">
-            <router-link
-              :to="{
-                path: '/entity/goods/goodsaudit',
-                query: { main_cat_id: scope.row.category_id }
-              }"
+              关联参数
+            </el-button>
+            <el-button
+              v-if="scope.row.category_level == 3"
+              type="text"
+              @click="onLinkGoodsSku(scope.row)"
             >
-              店铺商品
-            </router-link>
-          </el-button>
-          <el-button
-            v-if="scope.row.category_level == 3"
-            type="text"
-            @click="onLinkGoodsParams(scope.row)"
-          >
-            关联参数
-          </el-button>
-          <el-button
-            v-if="scope.row.category_level == 3"
-            type="text"
-            @click="onLinkGoodsSku(scope.row)"
-          >
-            关联规格
-          </el-button>
-          <el-button
-            v-if="scope.row.category_level == 3"
-            type="text"
-            @click="handleProfitPrice(scope.row)"
-          >
-            分润配置
-          </el-button>
-          <el-button
-            v-if="scope.row.category_level < 3"
-            type="text"
-            @click="appendChildren(scope.row)"
-          >
-            新增子类
-          </el-button>
-          <el-button type="text" @click="editCategory(scope.row)"> 编辑 </el-button>
-          <el-button type="text" @click.native.prevent="deleteCategory(scope.row)">
-            删除
-          </el-button>
-        </template>
-      </el-table-column>
-    </el-table>
+              关联规格
+            </el-button>
+            <el-button
+              v-if="scope.row.category_level == 3"
+              type="text"
+              @click="handleProfitPrice(scope.row)"
+            >
+              分润配置
+            </el-button>
+            <el-button
+              v-if="scope.row.category_level < 3"
+              type="text"
+              @click="appendChildren(scope.row)"
+            >
+              新增子类
+            </el-button>
+            <el-button type="text" @click="editCategory(scope.row)"> 编辑 </el-button>
+            <el-button type="text" @click.native.prevent="deleteCategory(scope.row)">
+              删除
+            </el-button>
+          </template>
+        </el-table-column>
+      </el-table>
 
-    <!-- 添加分组 -->
-    <SpDialog
-      ref="categoryDialogRef"
-      v-model="categoryDialog"
-      :title="categoryForm.category_id > 0 ? '编辑分类' : '添加分类'"
-      :modal="false"
-      :form="categoryForm"
-      :form-list="categoryFormList"
-      @onSubmit="onCategoryFormSubmit"
-    />
+      <!-- 添加分组 -->
+      <SpDialog
+        ref="categoryDialogRef"
+        v-model="categoryDialog"
+        :title="categoryForm.category_id > 0 ? '编辑分类' : '添加分类'"
+        :modal="false"
+        :form="categoryForm"
+        :form-list="categoryFormList"
+        @onSubmit="onCategoryFormSubmit"
+      />
 
-    <!-- 分润配置 -->
-    <SpDialog
-      ref="profitDialogRef"
-      v-model="profitDialog"
-      :title="`分润配置`"
-      :modal="false"
-      :form="profitForm"
-      :form-list="profitFormList"
-      @onSubmit="onProfitFormSubmit"
-    />
-  </div>
+      <!-- 分润配置 -->
+      <SpDialog
+        ref="profitDialogRef"
+        v-model="profitDialog"
+        :title="`分润配置`"
+        :modal="false"
+        :form="profitForm"
+        :form-list="profitFormList"
+        @onSubmit="onProfitFormSubmit"
+      />
+    </div>
+  </SpPage>
 </template>
 <script>
 export default {

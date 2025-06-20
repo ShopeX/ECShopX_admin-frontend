@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <SpPage>
     <SpFilterForm :model="params" @onSearch="onSearch" @onReset="onSearch">
       <SpFilterFormItem prop="tag_name" label="标签名:">
         <el-input v-model="params.tag_name" placeholder="请输入标签名" />
@@ -91,7 +91,7 @@
         <el-button type="primary" @click="saveTagData"> 确定保存 </el-button>
       </div>
     </sideBar>
-  </div>
+  </SpPage>
 </template>
 <script>
 import { mapGetters } from 'vuex'
@@ -239,6 +239,7 @@ export default {
               type: 'success',
               message: '保存成功'
             })
+            this.show_sideBar = false
             this.fetchList()
           }
         })
@@ -249,6 +250,7 @@ export default {
               type: 'success',
               message: '保存成功'
             })
+            this.show_sideBar = false
             this.fetchList()
           }
         })

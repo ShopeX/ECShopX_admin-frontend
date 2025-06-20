@@ -11,7 +11,7 @@
 }
 </style>
 <template>
-  <div>
+  <SpPage>
     <el-tabs v-model="activeName" type="border-card" @tab-click="handleClick">
       <el-tab-pane v-for="item in pane_list" :key="item.name" :label="item.label" :name="item.name">
         <div class="tip-info">
@@ -85,7 +85,7 @@
         </el-form>
       </el-tab-pane>
     </el-tabs>
-  </div>
+  </SpPage>
 </template>
 <script>
 import { mapGetters } from 'vuex'

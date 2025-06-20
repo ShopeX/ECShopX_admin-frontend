@@ -1,42 +1,44 @@
 <template>
-  <el-tabs
-    v-model="activeName"
-    type="border-card"
-    @tab-click="handleClick"
-  >
-    <el-tab-pane
-      label="购物车提醒配置"
-      name="cartremind"
+  <SpPage>
+    <el-tabs
+      v-model="activeName"
+      type="border-card"
+      @tab-click="handleClick"
     >
-      <el-form
-        ref="form"
-        label-width="180px"
+      <el-tab-pane
+        label="购物车提醒配置"
+        name="cartremind"
       >
-        <el-form-item label="购物车是否展示">
-          <el-switch
-            v-model="form.is_open"
-            active-color="#13ce66"
-            inactive-color="#ff4949"
-          />
-        </el-form-item>
-        <el-form-item label="提醒内容">
-          <el-input
-            v-model="form.remind_content"
-            style="width: 550px"
-          />
-        </el-form-item>
-        <div class="section-footer with-border content-center">
-          <el-button
-            v-loading="loading"
-            type="primary"
-            @click="onSubmit"
-          >
-            保存
-          </el-button>
-        </div>
-      </el-form>
-    </el-tab-pane>
-  </el-tabs>
+        <el-form
+          ref="form"
+          label-width="180px"
+        >
+          <el-form-item label="购物车是否展示">
+            <el-switch
+              v-model="form.is_open"
+              active-color="#13ce66"
+              inactive-color="#ff4949"
+            />
+          </el-form-item>
+          <el-form-item label="提醒内容">
+            <el-input
+              v-model="form.remind_content"
+              style="width: 550px"
+            />
+          </el-form-item>
+          <div class="section-footer with-border content-center">
+            <el-button
+              v-loading="loading"
+              type="primary"
+              @click="onSubmit"
+            >
+              保存
+            </el-button>
+          </div>
+        </el-form>
+      </el-tab-pane>
+    </el-tabs>
+  </SpPage>
 </template>
 <script>
 import { getCartremindSetting, setCartremindSetting } from '../../api/wxa'

@@ -1,5 +1,13 @@
 <template>
-  <div>
+  <SpPage>
+    <SpFilterForm :model="formData" @onSearch="dataSearch" @onReset="dataSearch">
+      <SpFilterFormItem prop="mobile" label="手机号:">
+        <el-input v-model="formData.mobile" placeholder="请输入手机号" />
+      </SpFilterFormItem>
+      <SpFilterFormItem prop="account" label="账号:">
+        <el-input v-model="formData.account" placeholder="请输入账号" />
+      </SpFilterFormItem>
+    </SpFilterForm>
     <el-row :gutter="20">
       <el-col :span="12">
         <el-button type="primary" icon="plus" @click="addData"> 添加白名单 </el-button>
@@ -7,14 +15,14 @@
           白名单提示
         </el-button>
       </el-col>
-      <el-col :span="6">
+      <!-- <el-col :span="6">
         <el-input v-model="account" placeholder="账号" clearable />
       </el-col>
       <el-col :span="6">
         <el-input v-model="mobile" placeholder="手机号" clearable>
           <el-button slot="append" icon="el-icon-search" @click="dataSearch" />
         </el-input>
-      </el-col>
+      </el-col> -->
     </el-row>
     <el-table v-loading="loading" :data="whitelistList" :height="wheight - 160">
       <el-table-column prop="mobile" label="手机号" />
@@ -123,7 +131,7 @@
         <el-button type="primary" @click="submitTipsAction"> 保存 </el-button>
       </div>
     </el-dialog>
-  </div>
+  </SpPage>
 </template>
 <script>
 import { mapGetters } from 'vuex'
@@ -175,7 +183,11 @@ export default {
       datapass_block: 1,
       enterpriseList: [],
       login_type: '',
-      enterprise_sn_data: ''
+      enterprise_sn_data: '',
+      formData:{
+        mobile:'',
+        account:''
+      }
     }
   },
   computed: {
@@ -277,8 +289,8 @@ export default {
       }
     },
     dataSearch() {
-      this.params.account = this.account
-      this.params.mobile = this.mobile
+      this.params.account = this.formData.account
+      this.params.mobile = this.formData.mobile
       this.params.page = 1
       this.getListData()
     },

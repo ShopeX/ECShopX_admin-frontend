@@ -1,26 +1,28 @@
 <template>
-  <SpRouterView>
-    <SpPlatformTip h5 app alipay />
+    <SpPage>
+      <SpRouterView>
+        <SpPlatformTip h5 app alipay />
 
-    <SearchForm class="mb-4" @submit="handleSearch" />
+        <SearchForm class="mb-4" @submit="handleSearch" />
 
-    <SpTabs :tab-list="tabList" v-model="activeTab" @change="handleTabChange" />
+        <SpTabs :tab-list="tabList" v-model="activeTab" @change="handleTabChange" />
 
-    <SpFinder
-      no-selection
-      ref="finder"
-      url="/orders"
-      row-actions-align="left"
-      row-actions-fixed-align="left"
-      row-actions-width="120px"
-      :fixed-row-action="true"
-      :setting="finderSetting"
-      :hooks="{
-        beforeSearch: beforeSearch,
-        afterSearch: afterSearch
-      }"
-    />
-  </SpRouterView>
+        <SpFinder
+          no-selection
+          ref="finder"
+          url="/orders"
+          row-actions-align="left"
+          row-actions-fixed-align="left"
+          row-actions-width="120px"
+          :fixed-row-action="true"
+          :setting="finderSetting"
+          :hooks="{
+            beforeSearch: beforeSearch,
+            afterSearch: afterSearch
+          }"
+        />
+      </SpRouterView>
+    </SpPage>
 </template>
 
 <script>

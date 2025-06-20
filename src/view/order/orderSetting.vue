@@ -6,7 +6,7 @@
 }
 </style>
 <template>
-  <div class="page-order-order-setting">
+  <SpPage class="page-order-order-setting">
     <SpForm
       ref="form"
       v-model="form"
@@ -26,7 +26,7 @@
         保存
       </el-button>
     </div>
-  </div>
+  </SpPage>
 </template>
 
 <script>

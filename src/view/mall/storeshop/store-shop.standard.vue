@@ -29,107 +29,109 @@
 }
 </style>
 <template>
-  <div class="">
-    <SpPlatformTip h5 app alipay />
-    <SpFilterForm :model="formData" @onSearch="onSearch" @onReset="onSearch">
-      <SpFilterFormItem prop="distributor_id" label="店铺:">
-        <SpSelectShop
-          ref="selectShop"
-          v-model="formData.distributor_id"
-          clearable
-          placeholder="请选择"
-        />
-      </SpFilterFormItem>
-      <SpFilterFormItem prop="keywords" label="商品名称:">
-        <el-input v-model="formData.keywords" placeholder="请输入商品名称" />
-      </SpFilterFormItem>
-      <SpFilterFormItem prop="item_bn" label="商品货号:">
-        <el-input v-model="formData.item_bn" placeholder="请输入商品货号" />
-      </SpFilterFormItem>
-      <SpFilterFormItem prop="barcode" label="商品条码:">
-        <el-input v-model="formData.barcode" placeholder="请输入商品条码" />
-      </SpFilterFormItem>
-      <SpFilterFormItem prop="supplier_name" label="所属供应商:">
-        <el-input v-model="formData.supplier_name" placeholder="请输入所属供应商" />
-      </SpFilterFormItem>
-      <SpFilterFormItem prop="approve_status" label="商品状态:">
-        <el-select v-model="formData.approve_status" clearable placeholder="请选择">
-          <el-option
-            v-for="item in statusOption"
-            :key="item.value"
-            :label="item.title"
-            size="mini"
-            :value="item.value"
+  <SpPage>
+    <div>
+      <SpPlatformTip h5 app alipay />
+      <SpFilterForm :model="formData" @onSearch="onSearch" @onReset="onSearch">
+        <SpFilterFormItem prop="distributor_id" label="店铺:">
+          <SpSelectShop
+            ref="selectShop"
+            v-model="formData.distributor_id"
+            clearable
+            placeholder="请选择"
           />
-        </el-select>
-      </SpFilterFormItem>
-    </SpFilterForm>
+        </SpFilterFormItem>
+        <SpFilterFormItem prop="keywords" label="商品名称:">
+          <el-input v-model="formData.keywords" placeholder="请输入商品名称" />
+        </SpFilterFormItem>
+        <SpFilterFormItem prop="item_bn" label="商品货号:">
+          <el-input v-model="formData.item_bn" placeholder="请输入商品货号" />
+        </SpFilterFormItem>
+        <SpFilterFormItem prop="barcode" label="商品条码:">
+          <el-input v-model="formData.barcode" placeholder="请输入商品条码" />
+        </SpFilterFormItem>
+        <SpFilterFormItem prop="supplier_name" label="所属供应商:">
+          <el-input v-model="formData.supplier_name" placeholder="请输入所属供应商" />
+        </SpFilterFormItem>
+        <SpFilterFormItem prop="approve_status" label="商品状态:">
+          <el-select v-model="formData.approve_status" clearable placeholder="请选择">
+            <el-option
+              v-for="item in statusOption"
+              :key="item.value"
+              :label="item.title"
+              size="mini"
+              :value="item.value"
+            />
+          </el-select>
+        </SpFilterFormItem>
+      </SpFilterForm>
 
-    <div class="action-container">
-      <el-button type="primary" @click="removeItemFromShop"> 从店铺移除 </el-button>
-      <!-- <el-button type="primary" plain> 变更状态 </el-button> -->
-      <el-button type="primary" @click="handleBatchDownload"> 商品码下载 </el-button>
+      <div class="action-container">
+        <el-button type="primary" @click="removeItemFromShop"> 从店铺移除 </el-button>
+        <!-- <el-button type="primary" plain> 变更状态 </el-button> -->
+        <el-button type="primary" @click="handleBatchDownload"> 商品码下载 </el-button>
 
-      <el-button type="primary" @click="handleExport"> 导出 </el-button>
+        <el-button type="primary" @click="handleExport"> 导出 </el-button>
 
-      <el-dropdown @command="onPatchAction">
-        <el-button type="primary">
-          批量操作<i class="el-icon-arrow-down el-icon--right" />
-        </el-button>
-        <el-dropdown-menu slot="dropdown">
-          <el-dropdown-item command="1">
-            <span>批量上架</span>
-          </el-dropdown-item>
-          <el-dropdown-item command="2">
-            <span>批量下架</span>
-          </el-dropdown-item>
-          <el-dropdown-item command="3">
-            <span>总部库存</span>
-          </el-dropdown-item>
-          <el-dropdown-item command="4">
-            <span>店铺库存</span>
-          </el-dropdown-item>
-        </el-dropdown-menu>
-      </el-dropdown>
-    </div>
+        <el-dropdown @command="onPatchAction">
+          <el-button type="primary">
+            批量操作<i class="el-icon-arrow-down el-icon--right" />
+          </el-button>
+          <el-dropdown-menu slot="dropdown">
+            <el-dropdown-item command="1">
+              <span>批量上架</span>
+            </el-dropdown-item>
+            <el-dropdown-item command="2">
+              <span>批量下架</span>
+            </el-dropdown-item>
+            <el-dropdown-item command="3">
+              <span>总部库存</span>
+            </el-dropdown-item>
+            <el-dropdown-item command="4">
+              <span>店铺库存</span>
+            </el-dropdown-item>
+          </el-dropdown-menu>
+        </el-dropdown>
+      </div>
 
-    <el-tabs v-model="activeTab" type="card">
-      <el-tab-pane
-        v-for="(item, index) in tabList"
-        :key="`tab-pane__${index}`"
-        :label="item.name"
-        :name="item.value"
+      <el-tabs v-model="activeTab" type="card">
+        <el-tab-pane
+          v-for="(item, index) in tabList"
+          :key="`tab-pane__${index}`"
+          :label="item.name"
+          :name="item.value"
+        />
+      </el-tabs>
+
+      <SpFinder
+        ref="finder"
+        fixed-row-action
+        :setting="setting"
+        :hooks="{
+          beforeSearch: beforeSearch,
+          afterSearch: afterSearch
+        }"
+        :data="finderData"
+        :url="finderUrl"
+        @selection-change="onSelectionChange"
+        row-actions-fixed-align="left"
       />
-    </el-tabs>
 
-    <SpFinder
-      ref="finder"
-      fixed-row-action
-      :setting="setting"
-      :hooks="{
-        beforeSearch: beforeSearch,
-        afterSearch: afterSearch
-      }"
-      :data="finderData"
-      :url="finderUrl"
-      @selection-change="onSelectionChange"
-      row-actions-fixed-align="left"
-    />
-
-    <!-- 商品sku配置 -->
-    <SpDialog
-      v-if="itemSkuDialog"
-      ref="itemSkuRef"
-      v-model="itemSkuDialog"
-      class="sku-dialog"
-      width="1100px"
-      destroy-on-close
-      :title="`编辑商品【${itemSkuForm.itemName}】`"
-      :form="itemSkuForm"
-      :form-list="itemSkuFormList"
-      @onSubmit="onItemSkuFormSubmit"
-    />
-  </div>
+      <!-- 商品sku配置 -->
+      <SpDialog
+        v-if="itemSkuDialog"
+        ref="itemSkuRef"
+        v-model="itemSkuDialog"
+        class="sku-dialog"
+        width="1100px"
+        destroy-on-close
+        :title="`编辑商品【${itemSkuForm.itemName}】`"
+        :form="itemSkuForm"
+        :form-list="itemSkuFormList"
+        @onSubmit="onItemSkuFormSubmit"
+      />
+    </div>
+  </SpPage>
 </template>
 
 <script>

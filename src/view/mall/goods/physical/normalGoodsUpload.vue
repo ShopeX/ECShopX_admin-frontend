@@ -30,7 +30,7 @@
               >
                 <el-button size="small" type="primary"> 点击上传 </el-button>
               </el-upload>
-              <el-button size="small" type="primary" @click="uploadHandleTemplate()">
+              <el-button size="small" type="primary" style="margin-top: 10px" @click="uploadHandleTemplate()">
                 下载模版
               </el-button>
             </div>

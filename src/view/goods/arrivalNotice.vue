@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <SpPage>
     <SpPlatformTip />
 
     <SpFilterForm :model="params" @onSearch="onSearch" @onReset="onReset">
@@ -238,7 +238,7 @@
         </div>
       </div>
     </el-dialog>
-  </div>
+  </SpPage>
 </template>
 <script>
 import { mapGetters } from 'vuex'

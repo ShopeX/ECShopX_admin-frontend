@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <SpPage>
     <!--搜索添加-->
     <el-row :gutter="40">
       <el-col class="action-container">
@@ -38,7 +38,7 @@
         </el-form-item>
       </el-form>
     </sideBar>
-  </div>
+  </SpPage>
 </template>
 <script>
 import { mapGetters } from 'vuex'

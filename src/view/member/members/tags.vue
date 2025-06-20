@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <SpPage>
     <!-- <el-row :gutter="20">
       <el-col :span="3">
         <el-button
@@ -117,7 +117,7 @@
         </template>
       </el-table-column>
     </el-table>
-    <div v-if="total_count > params.page_size" class="content-center content-top-padded">
+    <div v-if="total_count > params.page_size" class="content-center content-top-padded" style="text-align: right">
       <el-pagination
         layout="prev, pager, next"
         :current-page.sync="params.page"
@@ -190,7 +190,7 @@
         </el-form>
       </template>
     </el-dialog>
-  </div>
+  </SpPage>
 </template>
 <script>
 import { mapGetters } from 'vuex'

@@ -1,5 +1,5 @@
 <template>
-  <div class="closeAccount">
+  <SpPage class="closeAccount">
     <SpPlatformTip h5 app alipay />
     <el-tabs v-model="activeName" type="card">
       <el-tab-pane label="注销配置" name="first">
@@ -84,7 +84,7 @@
         </div>
       </el-tab-pane>
     </el-tabs>
-  </div>
+  </SpPage>
 </template>
 
 <script>

@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <SpPage>
     <SpPlatformTip h5 app alipay />
     <el-tabs v-model="activeName" type="card" @tab-click="handleClick">
       <el-tab-pane label="基础配置" name="base">
@@ -23,7 +23,7 @@
         </el-form>
       </el-tab-pane>
     </el-tabs>
-  </div>
+  </SpPage>
 </template>
 <script>
 import { getTeadeSetting, setTradeSetting } from '@/api/trade'

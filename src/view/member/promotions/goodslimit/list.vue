@@ -1,5 +1,6 @@
 <template>
-  <SpRouterView>
+  <SpPage>
+    <SpRouterView>
     <SpPlatformTip h5 app alipay />
     <div class="action-container">
       <el-button type="primary" @click="addLimitPromotion"> 添加限购商品活动 </el-button>
@@ -75,7 +76,8 @@
         </div>
       </el-tab-pane>
     </el-tabs>
-  </SpRouterView>
+    </SpRouterView>
+  </SpPage>
 </template>
 <script>
 import { cancelLimitPromotions, getLimitPromotions } from '@/api/promotions'

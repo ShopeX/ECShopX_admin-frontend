@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <SpPage>
     <SpFilterForm :model="params" @onSearch="onSearch" @onReset="onSearch">
       <SpFilterFormItem prop="attribute_name" label="品牌名称:">
         <el-input v-model="params.attribute_name" placeholder="请输入品牌名称" />
@@ -84,7 +84,7 @@
         </el-form-item>
       </el-form>
     </sideBar>
-  </div>
+  </SpPage>
 </template>
 <script>
 import { mapGetters } from 'vuex'

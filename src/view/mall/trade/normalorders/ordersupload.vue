@@ -8,7 +8,7 @@
 }
 </style>
 <template>
-  <div>
+  <SpPage>
     <el-tabs v-model="activeName" type="border-card" @tab-click="handleClick">
       <div style="display: flex">
         <el-button type="primary" style="margin-right: 20px" @click="downloadtemplate">
@@ -97,7 +97,7 @@
         </el-tab-pane>
       </div>
     </el-tabs>
-  </div>
+  </SpPage>
 </template>
 <script>
 import { mapGetters } from 'vuex'

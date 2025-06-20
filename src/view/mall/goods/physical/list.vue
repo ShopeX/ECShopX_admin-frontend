@@ -178,11 +178,11 @@
           <el-dropdown-menu slot="dropdown">
             <el-dropdown-item
               v-if="$store.getters.login_type != 'merchant'"
-              command="physicalupload"
+              command="product-import"
             >
               商品导入
             </el-dropdown-item>
-            <el-dropdown-item command="physicalstoreupload"> 库存导入 </el-dropdown-item>
+            <el-dropdown-item command="stock-import"> 库存导入 </el-dropdown-item>
           </el-dropdown-menu>
         </el-dropdown>
         <el-dropdown @command="handleExport">

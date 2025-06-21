@@ -1,13 +1,13 @@
 <template>
-  <SpPage class="closeAccount">
-    <!-- <div slot="page-header" class="text-right">
+  <SpPage :title="activeName == 'first' ? '注销配置' : '注销协议'" class="closeAccount">
+    <div slot="page-header" class="text-right">
       <el-button v-if="activeName == 'first'" type="primary" @click="issuehandle('form', 'member_logout_config', '')">
         提交
       </el-button>
       <el-button v-if="activeName == 'second'" type="primary" @click="issuehandle('privacyForm', 'member_logout')">
         提交
       </el-button>
-    </div> -->
+    </div>
 
     <SpPlatformTip h5 app alipay />
     <el-tabs v-model="activeName" type="card">
@@ -25,14 +25,14 @@
               <el-option label="否" value="0"> 否 </el-option>
             </el-select>
           </el-form-item>
-          <el-form-item style="margin-top: 100px; text-align: center" label-width="0px">
-            <!-- <el-button type="primary" @click="issuehandle('form', 'member_logout_config', 'draft')"
+          <!-- <el-form-item style="margin-top: 100px; text-align: center" label-width="0px">
+            <el-button type="primary" @click="issuehandle('form', 'member_logout_config', 'draft')"
               >保存</el-button
-            > -->
+            >
             <el-button type="primary" @click="issuehandle('form', 'member_logout_config', '')">
               提交
             </el-button>
-          </el-form-item>
+          </el-form-item> -->
 
         </el-form>
       </el-tab-pane>
@@ -59,11 +59,11 @@
                   </el-form-item>
                 </div>
               </el-card>
-              <el-form-item style="margin-top: 40px; text-align: center; margin-right: 200px">
+              <!-- <el-form-item style="margin-top: 40px; text-align: center; margin-right: 200px">
                 <el-button type="primary" @click="issuehandle('privacyForm', 'member_logout')">
                   提交
                 </el-button>
-              </el-form-item>
+              </el-form-item> -->
 
             </div>
           </el-form>

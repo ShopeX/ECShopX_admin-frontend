@@ -34,6 +34,10 @@
     margin-right: 10px;
   }
 }
+.sp-router-view{
+  background-color: hsl(var(--background-deep))
+}
+
 </style>
 <template>
   <SpPage title="商品详情" class="goods-index">

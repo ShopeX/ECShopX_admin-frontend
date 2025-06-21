@@ -2,6 +2,21 @@
 .sp-filter-form {
   margin-bottom: 16px;
 }
+.demo-table-expand {
+  font-size: 0;
+  padding: 0 20px;
+}
+
+.demo-table-expand label {
+  width: 90px;
+  color: #99a9bf;
+}
+
+.demo-table-expand .el-form-item {
+  margin-right: 0;
+  margin-bottom: 0;
+  width: 50%;
+}
 </style>
 
 <template>
@@ -36,9 +51,9 @@
     </SpFilterForm>
 
     <div class="action-container">
-      <export-tip @exportHandle="exportData">
-        <el-button type="primary" plain> 导出 </el-button>
-      </export-tip>
+      <!-- <export-tip @exportHandle="exportData"> -->
+        <el-button type="primary" plain @click="exportData"> 导出 </el-button>
+      <!-- </export-tip> -->
     </div>
 
     <el-dialog title="交易单下载" :visible.sync="downloadView" :close-on-click-modal="false">
@@ -471,20 +486,3 @@ export default {
 }
 </script>
 
-<style scoped lang="scss">
-.demo-table-expand {
-  font-size: 0;
-  padding: 0 20px;
-}
-
-.demo-table-expand label {
-  width: 90px;
-  color: #99a9bf;
-}
-
-.demo-table-expand .el-form-item {
-  margin-right: 0;
-  margin-bottom: 0;
-  width: 50%;
-}
-</style>

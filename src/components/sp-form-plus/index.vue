@@ -19,7 +19,7 @@
         :form-item-class="item.formItemClass"
         :form-data="formData"
         :is-show="item.isShow"
-        :label="`${item.label}${colon ? ':' : ''}`"
+        :label="`${item.label ? item.label + (colon ? ':' : '') : ''}`"
         :rules="item?.rules"
         :size="formType === 'searchForm' ? 'small' : ''"
         :tip="item.tip"

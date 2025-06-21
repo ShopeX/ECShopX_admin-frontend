@@ -31,14 +31,7 @@ const userStore = {
 
   mutations: {
     setToken(state, { token }) {
-      // const tokenArray = token.split('.')
-      // const user = JSON.parse(atob(tokenArray[1]))
-      // console.log('userInfo: ', user)
       state.token = token
-      // state.exp = user.exp
-      // state.mobile = user.mobile
-      // state.is_authorizer = user.is_authorizer
-      // state.license_authorize = user.license_authorize
     },
     // 设置菜单
     setAccessMenus(state, { accessMenus }) {
@@ -47,6 +40,12 @@ const userStore = {
     // 设置帐户信息
     setAccountInfo(state, { accountInfo }) {
       state.accountInfo = accountInfo
+    },
+    logout(state) {
+      debugger
+      state.token = ''
+      state.accountInfo = null
+      state.accessMenus = []
     },
 
     CLEAR_TOKEN(state) {
@@ -158,7 +157,6 @@ const userStore = {
   actions: {
     async fetchAccessMenus({ commit }) {
       const accessMenus = await api.auth.getPermission()
-      debugger
       commit('setAccessMenus', { accessMenus })
     },
     async fetchAccountInfo({ commit }) {

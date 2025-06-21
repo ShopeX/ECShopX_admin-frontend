@@ -255,7 +255,7 @@ export default {
         'el-form-item',
         {
           props: {
-            label: this.label,
+            label: this.label || '',
             labelWidth: this.label ? '100px' : 'auto',
             prop: this.fieldName,
             rules: this.rules

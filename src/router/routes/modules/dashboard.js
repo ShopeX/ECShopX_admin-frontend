@@ -1,34 +1,11 @@
 import { BasicLayout } from '@/layout/basic' // 主框架
 
-// export default {
-//   path: '/',
-//   component: BasicLayout,
-//   children: [
-//     {
-//       path: 'dashboard',
-//       name: `dashboard`,
-//       meta: {
-//         // title: `${name}`,
-//         hidemenu: true
-//       },
-//       component: () => import('@/view/base/index')
-//     },
-//     {
-//       path: 'admininfo',
-//       name: `dashboard`,
-//       meta: {
-//         hidemenu: true
-//       },
-//       component: () => import('@/view/base/shop/admininfo')
-//     }
-//   ]
-// }
-
 const routes = [
   {
     component: BasicLayout,
     meta: {
-      icon: 'aiming',
+      aliasName: 'index',
+      icon: 'all-application',
       title: '概览'
     },
     path: '/',
@@ -39,7 +16,8 @@ const routes = [
         // component: () => import('@/view/base/index'),
         component: () => import('@/views/dashboard/index'),
         meta: {
-          icon: 'icon-products',
+          aliasName: 'index',
+          icon: 'all-application',
           title: '概览',
           permissions: ['index']
         }

@@ -1,5 +1,5 @@
 <template>
-  <div class="w-full">
+  <SpPage>
     <div class="grid grid-cols-3 gap-4">
       <div v-for="(item, index) in realTimeData" :key="index">
         <div class="flex flex-col bg-white rounded-lg border">
@@ -21,7 +21,7 @@
       </div>
       <div class="bg-white rounded-lg border p-4 notice-box">1</div>
     </div>
-  </div>
+  </SpPage>
 </template>
 
 <script>

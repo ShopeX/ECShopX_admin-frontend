@@ -10,6 +10,10 @@ const systemStore = {
     },
     setVersionMode(state, { versionMode }) {
       state.versionMode = versionMode
+    },
+    logout(state) {
+      state.logo = ''
+      state.versionMode = ''
     }
   }
 }

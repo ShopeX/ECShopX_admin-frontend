@@ -1,11 +1,11 @@
 <template>
   <div class="flex h-full">
     <div class="w-[70px] h-full bg-[#353439]">
-      <div class="flex items-center mt-1">
+      <div class="flex items-center mt-2">
         <SpImage
-          class="w-[60px] bg-white mx-auto rounded-full"
+          class="w-[56px] bg-white mx-auto rounded-full"
           :src="$store.state.system?.logo"
-          height="60"
+          height="56"
           fit="contain"
         />
       </div>
@@ -30,7 +30,7 @@
     >
       <!-- activeSubIndex: {{ activeSubIndex }} -->
       <div class="h-[50px] pl-2">
-        <div class="light flex h-full items-center text-lg px-3">
+        <div class="light flex h-full items-center text-xl px-3 text-[#333]">
           <span>{{ systemTitle }}</span>
         </div>
       </div>
@@ -96,6 +96,14 @@ export default {
       return this.$route.matched[1]?.meta?.aliasName
     }
   },
+  watch: {
+    subMenus: {
+      handler(val) {
+        this.$emit('change', val.length > 0)
+      },
+      immediate: true
+    }
+  },
   mounted() {
     this.mainMenus = this.$store.state.user.accessMenus || []
     const [mainRoute] = this.$route.matched
@@ -106,7 +114,7 @@ export default {
     computedMenuIcon(item) {
       const allRoutes = this.$router.getRoutes()
       const route = allRoutes.find(route => route.meta?.aliasName === item.alias_name)
-      return route?.meta?.icon || 'layout-dashboard'
+      return route?.meta?.icon
     },
     handleMainMenuClick(item) {
       if (item.alias_name == this.$route.matched?.[0]?.meta?.aliasName) {

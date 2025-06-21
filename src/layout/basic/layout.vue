@@ -1,13 +1,20 @@
 <template>
   <div class="relative flex min-h-full w-full">
     <el-container>
-      <el-aside width="230px">
-        <LayoutSidebar />
+      <el-aside class="!w-auto">
+        <LayoutSidebar @change="handleSidebarChange" />
       </el-aside>
 
       <el-container>
         <el-header height="50px">
-          <LayoutHeader />
+          <LayoutHeader>
+            <div
+              class="light flex h-full items-center text-xl px-3 text-[#333]"
+              v-if="!showSubMenu"
+            >
+              {{ systemTitle }}
+            </div>
+          </LayoutHeader>
           <!-- <div class="flex justify-between items-center">
             <div></div>
             <div>
@@ -57,9 +64,17 @@ export default {
     LayoutHeader,
     BasicToolbar
   },
+  data() {
+    return {
+      showSubMenu: false
+    }
+  },
   computed: {
     footerBackground: () => {
       return require(`@/assets/images/${DEFAULT_CONFIG.footerBackground}`)
+    },
+    systemTitle: () => {
+      return DEFAULT_CONFIG.systemTitle
     }
   },
   mounted() {
@@ -69,6 +84,9 @@ export default {
     async getSystemSetting() {
       const { logo } = await this.$api.system.getBrandLogo()
       this.$store.commit('system/setSystemLogo', { logo })
+    },
+    handleSidebarChange(val) {
+      this.showSubMenu = val
     }
   }
 }

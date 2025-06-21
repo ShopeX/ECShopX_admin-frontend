@@ -16,7 +16,7 @@
       </el-button>
     </div>
 
-    <div class="absolute -bottom-0.5 left-0 w-full text-center text-xs text-muted-foreground">
+    <div class="absolute -bottom-0.5 left-0 w-full text-center text-sm text-muted-foreground">
       <a href="https://beian.miit.gov.cn/#/Integrated/index" target="_blank">沪ICP备05002918号</a>
     </div>
   </div>
@@ -24,7 +24,6 @@
 
 <script>
 import { useForm } from '@/composables'
-import Test from './test.vue'
 
 const [Form, FormApi] = useForm({
   formItems: [
@@ -44,21 +43,6 @@ const [Form, FormApi] = useForm({
       },
       fieldName: 'pwd',
       rules: [{ required: true, message: '请输入密码' }]
-    },
-    {
-      component: ({ value, props, onInput, h }) => {
-        return h(Test, {
-          props: {
-            type: 'primary',
-            class: 'w-full'
-          }
-        })
-      },
-      componentProps: {
-        type: 'primary',
-        class: 'w-full'
-      },
-      fieldName: 'login'
     }
   ],
   showDefaultActions: false

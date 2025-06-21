@@ -1,24 +1,40 @@
 <template>
   <div class="flex h-[50px] items-center justify-between">
     <div class="flex items-center gap-2">
-      <!-- 菜单控制 -->
-
-      <!-- 刷新 -->
+      <slot />
       <!-- <Menu /> -->
       <!-- <ExIcon type="button" name="Menu" :size="20" /> -->
 
       <!-- 面包屑 -->
-      <el-breadcrumb>
+      <el-breadcrumb class="ml-2" v-if="!$slots.default">
         <el-breadcrumb-item>首页</el-breadcrumb-item>
         <el-breadcrumb-item>promotion list</el-breadcrumb-item>
       </el-breadcrumb>
     </div>
 
     <div class="flex items-center gap-2 px-3">
-      <SpIcon name="store" :size="20" />
-      <SpIcon name="briefcase-business" :size="20" />
+      <!-- <SpIcon name="store" :size="20" />
+      <SpIcon name="briefcase-business" :size="20" /> -->
 
-      <el-avatar :size="36" :src="accountAvatar" />
+      <el-dropdown @command="handleCommand">
+        <div class="h-[44px] w-[44px] hover:bg-gray-100 rounded-full" style="padding: 6px">
+          <el-avatar :size="32" :src="accountAvatar" />
+        </div>
+        <el-dropdown-menu slot="dropdown" style="width: 200px">
+          <el-dropdown-item>
+            <div class="flex items-center gap-2">
+              <SpIcon name="user" :size="16" />
+              <span>个人中心</span>
+            </div>
+          </el-dropdown-item>
+          <el-dropdown-item divided command="logout">
+            <div class="flex items-center gap-2">
+              <SpIcon name="logout" :size="16" />
+              <span>退出登录</span>
+            </div>
+          </el-dropdown-item>
+        </el-dropdown-menu>
+      </el-dropdown>
 
       <!-- <GlobalSearch :menus="accessStore.accessMenus" />
 
@@ -44,50 +60,20 @@ export default {
     accountAvatar() {
       return this.$store.state.user?.accountInfo?.head_portrait
     }
+  },
+  methods: {
+    async handleCommand(command) {
+      if (command === 'logout') {
+        await this.$confirm('确定退出登录吗？', '提示')
+        await this.$api.login.getAuthorizelogout()
+        await this.$api.login.invalidateToken()
+        this.$store.commit('user/logout')
+        this.$store.commit('system/logout')
+        this.$router.push('/login')
+      }
+    }
   }
 }
-// interface Props {
-//   /**
-//    * 横屏
-//    */
-//   fullWidth: boolean
-//   /**
-//    * 高度
-//    */
-//   height: number
-//   /**
-//    * 是否显示
-//    */
-//   show: boolean
-//   /**
-//    * 侧边菜单宽度
-//    */
-//   sidebarWidth: number
-//   theme: string
-// }
-
-// const props = withDefaults(defineProps<Props>(), {})
-
-// const slots = useSlots()
-
-// const accessStore = useAccessStore()
-
-// const style = computed((): CSSProperties => {
-//   const { fullWidth, height, show } = props
-//   const right = !show || !fullWidth ? undefined : 0
-
-//   return {
-//     height: `${height}px`,
-//     marginTop: show ? 0 : `-${height}px`,
-//     right
-//   }
-// })
-
-// const logoStyle = computed((): CSSProperties => {
-//   return {
-//     minWidth: `${props.isM}`
-//   }
-// })
 </script>
 
 <style scoped></style>

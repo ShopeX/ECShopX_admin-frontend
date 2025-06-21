@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <SpPage>
     <div class="content-bottom-padded">
       <el-alert type="info" title="下载提示" show-icon>
         <div>已经生成的文件只保留一天，请及时下载</div>
@@ -129,7 +129,7 @@
         />
       </div>
     </el-tabs>
-  </div>
+  </SpPage>
 </template>
 <script>
 import { mapGetters } from 'vuex'

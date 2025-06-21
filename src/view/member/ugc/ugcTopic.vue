@@ -1,6 +1,6 @@
 <template>
-  <div>
-    <el-row :gutter="20">
+  <SpPage>
+    <el-row :gutter="20" class="action-container">
       <el-col :span="18">
         <el-button type="primary" @click="editTocicShow(true)"> 新建话题 </el-button>
 
@@ -135,7 +135,7 @@
         </el-form-item>
       </el-form>
     </el-dialog>
-  </div>
+  </SpPage>
 </template>
 <script>
 import { Message } from 'element-ui'

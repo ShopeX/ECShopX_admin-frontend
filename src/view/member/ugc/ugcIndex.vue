@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <SpPage>
     <div v-if="$route.path.indexOf('editor') === -1">
       <el-row>
         <el-col :span="2">
@@ -170,7 +170,7 @@
       />
     </div>
     <router-view />
-  </div>
+  </SpPage>
 </template>
 <script>
 import { Message } from 'element-ui'

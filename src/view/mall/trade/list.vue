@@ -5,7 +5,8 @@
 </style>
 
 <template>
-  <div class="page-body">
+  <SpPage>
+    <div class="page-body">
     <SpFilterForm :model="params" @onSearch="onSearch" @onReset="onReset">
       <SpFilterFormItem prop="create_time" label="日期范围:">
         <el-date-picker
@@ -319,6 +320,8 @@
       </el-tab-pane>
     </el-tabs>
   </div>
+  </SpPage>
+  
 </template>
 <script>
 import { mapGetters } from 'vuex'

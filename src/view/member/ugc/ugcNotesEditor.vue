@@ -1,6 +1,17 @@
 <template>
-  <div>
-    <div class="form-title">编辑品牌笔记</div>
+  <SpPage title="编辑品牌笔记">
+    <template slot="page-header">
+      <div class="text-right">
+        <el-button v-if="!ruleForm.post_id" type="primary" @click="confirmHandle('ruleForm')">
+          创建并发布
+        </el-button>
+
+        <el-button v-if="ruleForm.post_id" type="primary" @click="confirmHandle('ruleForm')">
+          确定
+        </el-button>
+        <el-button @click="handleBack"> 返回 </el-button>
+      </div>
+    </template>
     <el-form
       ref="dataForm"
       v-loading="formLoad"
@@ -127,17 +138,6 @@
           {{ post_info.status_text }}
         </span>
       </el-form-item>
-
-      <el-form-item>
-        <el-button v-if="!ruleForm.post_id" type="primary" @click="confirmHandle('ruleForm')">
-          创建并发布
-        </el-button>
-
-        <el-button v-if="ruleForm.post_id" type="primary" @click="confirmHandle('ruleForm')">
-          确定
-        </el-button>
-        <el-button @click="handleBack"> 返回 </el-button>
-      </el-form-item>
     </el-form>
 
     <flagModal
@@ -155,7 +155,7 @@
       @cancelLabelsDialog="topicModalHide"
       @modalHandle="topicModalHandle"
     />
-  </div>
+  </SpPage>
 </template>
 <script>
 import { Message } from 'element-ui'

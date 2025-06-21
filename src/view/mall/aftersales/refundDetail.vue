@@ -1,8 +1,13 @@
 <template>
-  <div class="section-white">
-    <h3 class="title">
-      退款单详情
-    </h3>
+  <SpPage title="退款单详情">
+    <template slot="page-header">
+      <div class="text-right">
+        <el-button @click.native="handleCancel">
+        返回
+      </el-button>
+      </div>
+    </template>
+    <div class="section-white">
     <div class="section-body">
       <el-row>
         <el-col
@@ -324,11 +329,6 @@
         </el-col>
       </el-row>
     </div>
-    <div class="content-center">
-      <el-button @click.native="handleCancel">
-        返回
-      </el-button>
-    </div>
 
     <SpDialog
       ref="refundDialogRef"
@@ -339,6 +339,8 @@
       :isShowFooter="false"
     />
   </div>
+  </SpPage>
+
 </template>
 
 <style scoped lang="scss" type="text/css">

@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <SpPage>
     <!-- <el-row :gutter="20">
       <el-col :span="6">
         <el-input v-model="params.order_id" placeholder="请输入订单号">
@@ -78,7 +78,7 @@
         />
       </div>
     </el-tabs>
-  </div>
+  </SpPage>
 </template>
 
 <script>

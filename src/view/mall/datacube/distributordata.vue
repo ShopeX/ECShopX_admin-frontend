@@ -1,6 +1,6 @@
 <template>
-  <div>
-    <el-form label-width="100px">
+  <SpPage>
+    <!-- <el-form label-width="100px">
       <el-form-item label="选择日期范围">
         <el-col :span="9">
           <el-date-picker
@@ -54,7 +54,58 @@
           <el-button type="primary" @click="getDistributorDataList(true)"> 搜索 </el-button>
         </el-col>
       </el-form-item>
-    </el-form>
+    </el-form> -->
+    <SpFilterForm :model="params" @onSearch="getDistributorDataList(true)" @onReset="onReset">
+      <SpFilterFormItem prop="vdate" label="选择日期范围:">
+        <el-date-picker
+            v-model="params.vdate"
+            type="daterange"
+            alue-format="yyyy-MM-dd"
+            align="right"
+            unlink-panels
+            range-separator="至"
+            start-placeholder="开始日期"
+            end-placeholder="结束日期"
+            style="width: 100%"
+            :picker-options="pickerOptions"
+            value-format="yyyy-MM-dd"
+            format="yyyy-MM-dd"
+            @change="dateChange"
+          />
+      </SpFilterFormItem>
+      <SpFilterFormItem prop="distributor" label="选择门店:">
+        <el-select
+            v-model="params.distributor"
+            placeholder="请选择门店"
+            @change="DistributorChange"
+          >
+            <el-option
+              v-if="$store.getters.login_type == 'merchant'"
+              key="2"
+              label="全部"
+              value="all"
+            >
+              全部
+            </el-option>
+            <el-option
+              v-if="$store.getters.login_type != 'merchant'"
+              key="0"
+              label="总店"
+              value="0"
+            >
+              总店
+            </el-option>
+
+            <el-option
+              v-for="item in distributorOption"
+              :key="item.distributor_id"
+              :label="item.name"
+              size="mini"
+              :value="item.distributor_id"
+            />
+          </el-select>
+      </SpFilterFormItem>
+    </SpFilterForm>
     <el-tabs
       v-if="$route.path.indexOf('editor') === -1"
       v-model="activeName"
@@ -190,7 +241,7 @@
         </template>
       </el-table>
     </template>
-  </div>
+  </SpPage>
 </template>
 <script>
 import store from '@/store'
@@ -210,7 +261,8 @@ export default {
       params: {
         start: '',
         end: '',
-        distributor: ''
+        distributor: '',
+        vdate: '',
       },
       is_distributor: false,
       distributorOption: [],
@@ -247,7 +299,8 @@ export default {
               const end = new Date()
               start.setTime(start.getTime() - 3600 * 1000 * 24 * 7)
               end.setTime(end.getTime() - 3600 * 1000 * 24 * 1)
-              picker.$emit('pick', [start, end])
+              const format = d => `${d.getFullYear()}-${(d.getMonth()+1).toString().padStart(2,'0')}-${d.getDate().toString().padStart(2,'0')}`
+              picker.$emit('pick', [format(start), format(end)])
             }
           },
           {
@@ -257,7 +310,8 @@ export default {
               const end = new Date()
               start.setTime(start.getTime() - 3600 * 1000 * 24 * 30)
               end.setTime(end.getTime() - 3600 * 1000 * 24 * 1)
-              picker.$emit('pick', [start, end])
+              const format = d => `${d.getFullYear()}-${(d.getMonth()+1).toString().padStart(2,'0')}-${d.getDate().toString().padStart(2,'0')}`
+              picker.$emit('pick', [format(start), format(end)])
             }
           },
           {
@@ -267,7 +321,8 @@ export default {
               const end = new Date()
               start.setTime(start.getTime() - 3600 * 1000 * 24 * 90)
               end.setTime(end.getTime() - 3600 * 1000 * 24 * 1)
-              picker.$emit('pick', [start, end])
+              const format = d => `${d.getFullYear()}-${(d.getMonth()+1).toString().padStart(2,'0')}-${d.getDate().toString().padStart(2,'0')}`
+              picker.$emit('pick', [format(start), format(end)])
             }
           }
         ]
@@ -283,15 +338,31 @@ export default {
         this.getDistributorData()
       })
     }
-    var start = new Date()
-    var end = new Date()
-    start.setTime(start.getTime() - 3600 * 1000 * 24 * 7)
-    end.setTime(end.getTime() - 3600 * 1000 * 24 * 1)
-    this.vdate = [start, end]
-    this.params.start = this.vdate[0]
-    this.params.end = this.vdate[1]
+  this.onReset()
   },
   methods: {
+    onReset(){
+      var start = new Date()
+      var end = new Date()
+      start.setTime(start.getTime() - 3600 * 1000 * 24 * 7)
+      end.setTime(end.getTime() - 3600 * 1000 * 24 * 1)
+      const format = d => `${d.getFullYear()}-${(d.getMonth()+1).toString().padStart(2,'0')}-${d.getDate().toString().padStart(2,'0')}`
+      this.params.vdate = [format(start), format(end)]
+      this.params.start = this.params.vdate[0]
+      this.params.end = this.params.vdate[1]
+      // this.allListDataallListData = []
+      this.activeName= this.$store.getters.login_type !== 'merchant' ? 'member' : 'order',
+      this.allListData = [],
+      this.list= {
+        memberData: [],
+        aftersalesData: [],
+        refundedData: [],
+        amountPayedData: [],
+        orderData: [],
+        orderPayedData: [],
+        gmvData: []
+      }
+    },
     handleClick(tab, event) {
       let params = {
         id: 'canvas_' + tab.name,

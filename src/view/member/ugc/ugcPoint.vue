@@ -1,5 +1,11 @@
 <template>
-  <div>
+  <SpPage title="评论设置">
+    <template slot="page-header">
+      <div class="text-right">
+        <el-button type="primary" @click="confirmHandle"> 确认 </el-button>
+      </div>
+    </template>
+
     <el-form
       ref="dataForm"
       v-loading="formLoad"
@@ -199,13 +205,7 @@
         </el-row>
       </el-card>
     </el-form>
-
-    <el-row class="btn-bar">
-      <el-col>
-        <el-button type="primary" @click="confirmHandle"> 确认 </el-button>
-      </el-col>
-    </el-row>
-  </div>
+  </SpPage>
 </template>
 <script>
 import { Message } from 'element-ui'

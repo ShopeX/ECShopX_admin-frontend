@@ -1,12 +1,10 @@
 <template>
-  <div>
+  <SpPage>
     <SpFilterForm :model="queryForm" @onSearch="onSearch" @onReset="onSearch">
       <SpFilterFormItem prop="datetime" label="查询日期:">
         <el-date-picker
           v-model="queryForm.datetime"
-          clearable
           type="daterange"
-          align="right"
           format="yyyy-MM-dd"
           range-separator="至"
           start-placeholder="开始日期"
@@ -15,7 +13,7 @@
           :picker-options="pickerOptions"
         />
       </SpFilterFormItem>
-      <SpFilterFormItem prop="activity_id" label="内购活动:" size="max">
+      <SpFilterFormItem prop="activity_id" label="内购活动:">
         <el-select
           v-model="queryForm.activity_id"
           v-scroll="() => pagesQuery.nextPage()"
@@ -38,7 +36,7 @@
         placement="top-start"
         width="200"
         trigger="hover"
-        content="导出任务会以队列执行，点击导出后，请至‘设置-导出列表’页面中查看及下载数据"
+        content="导出任务会以队列执行，点击导出后，请至'设置-导出列表'页面中查看及下载数据"
       >
         <i slot="reference" class="el-icon-question" />
       </el-popover>
@@ -51,7 +49,7 @@
       :row-actions-align="'left'"
       :data="tableData"
     />
-  </div>
+  </SpPage>
 </template>
 <script>
 import json2csv from 'json2csv'
@@ -126,9 +124,9 @@ export default {
       } = this.queryForm
       const { list } = await this.$api.datacube.getGoodsData({
         start: moment(display_time_begin).format('YYYY-MM-DD'),
-        end: moment(display_time_end).format('YYYY-MM-DD')
-        // order_class: 'employee_purchase',
-        // act_id: activity_id.toString()
+        end: moment(display_time_end).format('YYYY-MM-DD'),
+        order_class: activity_id.length>0 ?'employee_purchase':'',
+        act_id: activity_id.length>0 ? activity_id.toString() : ''
       })
       this.tableData = list
       this.$nextTick(() => {

@@ -7,7 +7,7 @@
 }
 </style>
 <template>
-  <div>
+  <SpPage>
     <SpFilterForm :model="queryForm" @onSearch="onSearch" @onReset="onSearch">
       <SpFilterFormItem prop="datetime" label="查询日期:">
         <el-date-picker
@@ -22,7 +22,7 @@
           :picker-options="pickerOptions"
         />
       </SpFilterFormItem>
-      <SpFilterFormItem prop="enterprise_id" label="内购活动:" size="max">
+      <SpFilterFormItem prop="activity_id" label="内购活动:">
         <el-select
           v-model="queryForm.activity_id"
           v-scroll="() => pagesQuery.nextPage()"
@@ -64,7 +64,7 @@
         :data="tableData"
       />
     </div>
-  </div>
+  </SpPage>
 </template>
 <script>
 import { PICKER_DATE_OPTIONS } from '@/consts'
@@ -158,7 +158,7 @@ export default {
       const params = {
         start: moment(start).format('YYYY-MM-DD'),
         end: moment(end).format('YYYY-MM-DD'),
-        act_id: activity_id.toString()
+        act_id: activity_id.length>0 ? activity_id.toString() : ''
       }
      if(params.act_id){
       params.order_class= 'employee_purchase'

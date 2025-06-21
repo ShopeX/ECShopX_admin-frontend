@@ -28,68 +28,70 @@
 </style>
 
 <template>
-  <SpRouterView>
-    <SpPlatformTip h5 app alipay />
+  <SpPage>
+    <SpRouterView>
+      <SpPlatformTip h5 app alipay />
 
-    <SpFilterForm :model="searchForm" @onSearch="onSearch" @onReset="onSearch">
-      <SpFilterFormItem prop="title" label="软文标题:">
-        <el-input v-model="searchForm.title" placeholder="请输入软文标题" />
-      </SpFilterFormItem>
-    </SpFilterForm>
+      <SpFilterForm :model="searchForm" @onSearch="onSearch" @onReset="onSearch">
+        <SpFilterFormItem prop="title" label="软文标题:">
+          <el-input v-model="searchForm.title" placeholder="请输入软文标题" />
+        </SpFilterFormItem>
+      </SpFilterForm>
 
-    <div class="action-container">
-      <el-button icon="plus" @click="handleCreateArticle"> 添加软文 </el-button>
-      <el-button icon="plus" @click="createArticleByAI"> AI创作 </el-button>
-    </div>
-
-    <el-tabs v-model="activeTab" type="card" @tab-click="onTabChange">
-      <el-tab-pane label="全部" name="all" />
-      <el-tab-pane label="待发布" name="wait" />
-      <el-tab-pane label="已发布" name="published" />
-    </el-tabs>
-
-    <SpPagination ref="paginationRef" auto-fetch :fetch="fetchList">
-      <div class="grid grid-cols-5 gap-4">
-        <SpContentCard
-          v-for="(item, index) in articleList"
-          :key="index"
-          :data="item"
-          @onDelete="handleDeleteArticle"
-          @onChange="handlePublishOrWithdraw"
-          @onSort="handleSort"
-          @onClick="handleClick"
-        >
-          <template slot="head-slot">
-            <div class="flex justify-between">
-              <div v-if="item.is_ai" class="ai-tag">AI</div>
-              <div v-if="item.is_ai && !item.release_status" class="ai-publish" />
-            </div>
-          </template>
-        </SpContentCard>
+      <div class="action-container">
+        <el-button icon="plus" type="primary" @click="handleCreateArticle"> 添加软文 </el-button>
+        <el-button icon="plus" type="primary" @click="createArticleByAI"> AI创作 </el-button>
       </div>
-    </SpPagination>
 
-    <!-- AI创作 -->
-    <SpDrawer
-      v-model="drawerShow"
-      :title="'AI创作'"
-      :width="650"
-      @confirm="
-        () => {
-          $refs['aiArticleForm'].handleSubmit()
-        }
-      "
-    >
-      <SpForm
-        ref="aiArticleForm"
-        v-model="aiArticleForm"
-        label-width="120px"
-        :form-list="aiArticleFormList"
-        :submit="false"
-        @onSubmit="onSubmitCreateArticle"
-      />
-    </SpDrawer>
-  </SpRouterView>
+      <el-tabs v-model="activeTab" type="card" @tab-click="onTabChange">
+        <el-tab-pane label="全部" name="all" />
+        <el-tab-pane label="待发布" name="wait" />
+        <el-tab-pane label="已发布" name="published" />
+      </el-tabs>
+
+      <SpPagination ref="paginationRef" auto-fetch :fetch="fetchList">
+        <div class="grid grid-cols-5 gap-4">
+          <SpContentCard
+            v-for="(item, index) in articleList"
+            :key="index"
+            :data="item"
+            @onDelete="handleDeleteArticle"
+            @onChange="handlePublishOrWithdraw"
+            @onSort="handleSort"
+            @onClick="handleClick"
+          >
+            <template slot="head-slot">
+              <div class="flex justify-between">
+                <div v-if="item.is_ai" class="ai-tag">AI</div>
+                <div v-if="item.is_ai && !item.release_status" class="ai-publish" />
+              </div>
+            </template>
+          </SpContentCard>
+        </div>
+      </SpPagination>
+
+      <!-- AI创作 -->
+      <SpDrawer
+        v-model="drawerShow"
+        :title="'AI创作'"
+        :width="650"
+        @confirm="
+          () => {
+            $refs['aiArticleForm'].handleSubmit()
+          }
+        "
+      >
+        <SpForm
+          ref="aiArticleForm"
+          v-model="aiArticleForm"
+          label-width="120px"
+          :form-list="aiArticleFormList"
+          :submit="false"
+          @onSubmit="onSubmitCreateArticle"
+        />
+      </SpDrawer>
+    </SpRouterView>
+  </SpPage>
 </template>
 
 <script>

@@ -1,11 +1,15 @@
 <template>
-  <div>
-    <div class="clearfix">
-      <h2 class="f_l">
-        <span>分享设置：</span>
-      </h2>
-    </div>
-    <hr style="border: 1px solid #efefef">
+  <SpPage title="分享设置">
+        <template slot="page-header">
+      <div class="text-right">
+        <el-button
+            type="primary"
+            @click="saveShareSetting"
+          >
+            保存
+          </el-button>
+      </div>
+    </template>
     <div>
       <div class="level-item">
         <div class="clearfix">
@@ -252,17 +256,9 @@
             </div> -->
           </div>
         </div>
-        <div class="section-footer content-center">
-          <el-button
-            type="primary"
-            @click="saveShareSetting"
-          >
-            保存
-          </el-button>
-        </div>
       </div>
     </div>
-  </div>
+  </SpPage>
 </template>
 <script>
 import { mapGetters } from 'vuex'
@@ -409,7 +405,7 @@ export default {
   padding-top: 10px;
 }
 .level-item {
-  margin-bottom: 20px;
+  margin: 20px 40px;
   .el-icon-close {
     cursor: pointer;
   }

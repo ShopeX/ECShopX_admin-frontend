@@ -1,6 +1,6 @@
 <template>
-  <div>
-    <el-row :gutter="20">
+  <SpPage>
+    <el-row :gutter="20" class="action-container">
       <el-col :span="18">
         <el-button type="primary" @click="auditHandle"> 批量审核 </el-button>
       </el-col>
@@ -95,7 +95,7 @@
       @notesAuditHandle="selectNotes"
       @cancelLabelsDialog="cancelReviewDialog"
     />
-  </div>
+  </SpPage>
 </template>
 <script>
 import { Message } from 'element-ui'

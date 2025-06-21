@@ -1,4 +1,5 @@
 <template>
+   <SpPage>
   <div class="custom-tree-container">
     <div class="action-container">
       <el-button type="primary" icon="plus" @click="updateCategory"> 保存栏目 </el-button>
@@ -59,6 +60,7 @@
       @closeImgDialog="closeImgDialog"
     />
   </div>
+</SpPage>
 </template>
 <script>
 import {

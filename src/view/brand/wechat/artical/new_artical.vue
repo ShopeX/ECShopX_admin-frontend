@@ -1,5 +1,12 @@
 <template>
-  <section class="section-white">
+  <SpPage title="新增图文消息">
+    <template slot="page-header">
+      <div class="text-right">
+        <el-button type="primary" @click="onSubmit"> 保存 </el-button>
+        <el-button @click="onSubmit"> 预览 </el-button>
+      </div>
+    </template>
+    <section class="section-white">
     <div class="appmsg_preview_area">
       <div class="appmsg_preview_container">
         <div id="submitContent" />
@@ -220,15 +227,9 @@
         </div>
       </div>
     </div>
-    <div class="tool_area_wrp">
-      <div class="tool_area">
-        <div class="tool_bar content-center">
-          <el-button type="primary" @click="onSubmit"> 保存 </el-button>
-          <el-button @click="onSubmit"> 预览 </el-button>
-        </div>
-      </div>
-    </div>
   </section>
+  </SpPage>
+ 
 </template>
 
 <script>
@@ -486,6 +487,7 @@ export default {
 }
 .appmsg_input_area {
   margin: 0 211px 0 251px;
+  padding: 0 24px;
   position: relative;
 }
 

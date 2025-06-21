@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <SpPage>
     <SpRouterView>
       <SpFilterForm :model="params" @onSearch="onSearch" @onReset="onSearch">
         <SpFilterFormItem prop="bank_account_name" label="收款账户名:">
@@ -47,9 +47,12 @@
         </SpFilterFormItem>
       </SpFilterForm>
 
-      <export-tip class="action-container" @exportHandle="exportData">
+      <!-- <export-tip class="action-container" @exportHandle="exportData">
         <el-button type="primary" plain> 导出 </el-button>
-      </export-tip>
+      </export-tip> -->
+      <div class="action-container">
+        <el-button type="primary" plain @click="exportData"> 导出 </el-button>
+      </div>
 
       <SpFinder
         ref="finder"
@@ -80,7 +83,7 @@
         </template>
       </el-dialog>
     </SpRouterView>
-  </div>
+  </SpPage>
 </template>
 <script>
 import moment from 'moment'
@@ -273,7 +276,7 @@ export default {
             action: {
               handler: async ([row]) => {
                 this.$router.push(
-                  `/financial/examine/transfer/logs?orderId=${row.order_id}&resource=${this.$route.path}`
+                  `/financial/offline-transfer/voucher-review/logs?orderId=${row.order_id}&resource=${this.$route.path}`
                 )
               }
             }

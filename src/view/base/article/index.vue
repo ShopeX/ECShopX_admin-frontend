@@ -5,17 +5,18 @@
 </style>
 
 <template>
+  <SpPage>
   <SpRouterView>
     <SpPlatformTip h5 app alipay />
-    <div class="action-container">
-      <el-button type="primary" icon="plus" @click="articleAdd"> 添加文章 </el-button>
-    </div>
-
     <SpFilterForm :model="params" @onSearch="onSearch" @onReset="onSearch">
       <SpFilterFormItem prop="title" label="文章标题:">
         <el-input v-model="params.title" placeholder="请输入文章标题" />
       </SpFilterFormItem>
     </SpFilterForm>
+
+    <div class="action-container">
+      <el-button type="primary" icon="plus" @click="articleAdd"> 添加文章 </el-button>
+    </div>
 
     <section v-loading="loading" class="articles">
       <el-row :gutter="10">
@@ -93,6 +94,7 @@
       </div>
     </section>
   </SpRouterView>
+  </SpPage>
 </template>
 
 <script>

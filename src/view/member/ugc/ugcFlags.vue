@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <SpPage>
     <el-row :gutter="20">
       <el-col :span="2">
         <div class="p-title">笔记角标管理</div>
@@ -76,7 +76,7 @@
       @modalHandle="auditNote"
       @cancelLabelsDialog="cancelAuditDialog"
     />
-  </div>
+  </SpPage>
 </template>
 <script>
 import { Message } from 'element-ui'

@@ -1,6 +1,6 @@
 <template>
-  <div>
-    <el-form label-width="100px">
+  <SpPage>
+    <!-- <el-form label-width="100px">
       <el-form-item label="选择日期范围">
         <el-col :span="12">
           <el-date-picker
@@ -19,7 +19,26 @@
           />
         </el-col>
       </el-form-item>
-    </el-form>
+    </el-form> -->
+    <SpFilterForm :model="params" @onSearch="getCompanyDataList(activeName)" @onReset="onReset">
+      <SpFilterFormItem prop="vdate" label="选择日期:">
+        <el-date-picker
+            v-model="params.vdate"
+            type="daterange"
+            alue-format="yyyy-MM-dd"
+            align="right"
+            unlink-panels
+            range-separator="至"
+            start-placeholder="开始日期"
+            end-placeholder="结束日期"
+            style="width: 100%"
+            :picker-options="pickerOptions"
+            value-format="yyyy-MM-dd"
+            format="yyyy-MM-dd"
+            @change="dateChange"
+          />
+      </SpFilterFormItem>
+    </SpFilterForm>
     <el-tabs
       v-if="$route.path.indexOf('editor') === -1"
       v-model="activeName"
@@ -56,7 +75,7 @@
         />
       </el-table>
     </template>
-  </div>
+  </SpPage>
 </template>
 <script>
 import { mapGetters } from 'vuex'
@@ -65,12 +84,12 @@ import { getCompanyData } from '../../../../api/datacube'
 export default {
   data () {
     return {
-      vdate: '',
       loading: true,
       activeName: 'member_count',
       params: {
         start: '',
-        end: ''
+        end: '',
+        vdate: '',
       },
       allListData: [],
       dataTimeArr: [],
@@ -127,27 +146,31 @@ export default {
     }
   },
   mounted () {
-    var start = new Date()
+    this.onReset()
+  },
+  methods: {
+    onReset(){
+      var start = new Date()
     var end = new Date()
     start.setTime(start.getTime() - 3600 * 1000 * 24 * 7)
     end.setTime(end.getTime() - 3600 * 1000 * 24 * 1)
-    this.vdate = [start, end]
+    const format = d => `${d.getFullYear()}-${(d.getMonth()+1).toString().padStart(2,'0')}-${d.getDate().toString().padStart(2,'0')}`
+    this.params.vdate = [format(start), format(end)]
     this.getCompanyDataList(this.activeName)
-  },
-  methods: {
+    },
     handleClick (tab, event) {
       this.chartInit(tab.name)
     },
     dateChange (val) {
       this.params.start = val[0]
       this.params.end = val[1]
-      this.getCompanyDataList(this.activeName)
+      // this.getCompanyDataList(this.activeName)
     },
     getCompanyDataList (pane_name) {
       this.dataTimeArr = []
       this.dataInfo.member_count.data_list = []
       this.dataInfo.member_count.total_num = 0
-      let params = { start: this.params.start, end: this.params.end }
+      let params = { start: this.params.vdate[0], end: this.params.vdate[1] }
       getCompanyData(params)
         .then((res) => {
           this.allListData = res.data.data.list

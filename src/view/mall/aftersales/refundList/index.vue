@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <SpPage>
     <div v-if="$route.path.indexOf('detail') === -1">
       <el-tabs
         v-model="activeName"
@@ -18,7 +18,7 @@
       </el-tabs>
     </div>
     <router-view />
-  </div>
+  </SpPage>
 </template>
 <script>
 import order from './components/order'

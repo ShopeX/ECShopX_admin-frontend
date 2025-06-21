@@ -45,7 +45,7 @@
             <el-button v-if="scope.row.source == '2'" type="text">
               <router-link
                 :to="{
-                  path: '/site/ugc/ugcindex/editor',
+                  path: '/content/ugc/note-management/editor',
                   query: { id: scope.row.post_id }
                 }"
               >

@@ -179,7 +179,9 @@ export default {
         refunded_count: list.reduce((prev, next) => prev + parseInt(next.refunded_count), 0)
       }
       if (list.length > 0) {
-        this.renderChart(list)
+        this.$nextTick(() => {
+          this.renderChart(list)
+        })
       }
       this.$nextTick(() => {
         this.$refs.finder.refresh()

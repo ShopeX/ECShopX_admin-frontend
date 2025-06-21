@@ -172,6 +172,12 @@ const routes = [
       {
         path: 'entitytrade/marketingdistribution_orders',
         name: `店铺订单`,
+        meta: {
+          aliasName: 'marketingdistribution_orders',
+          icon: 'icon-products',
+          title: '店铺订单',
+          permissions: ['order.entitytrade.marketingdistribution_orders']
+        },
         component: () => import('@/view/mall/marketing/distributionOrders'),
         children: [
           {

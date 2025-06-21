@@ -5,7 +5,7 @@
 </style>
 
 <template>
-  <div class="page-body">
+  <SpPage class="store-wihitelist">
     <SpRouterView>
       <div class="action-container">
         <el-button type="primary" icon="ecx-icon icon-xinzeng" @click="clickAddWhiteList()">
@@ -96,7 +96,7 @@
       />
       <!-- 清空白名单 -->
     </SpRouterView>
-  </div>
+  </SpPage>
 </template>
 <script>
 import { mapGetters } from 'vuex'

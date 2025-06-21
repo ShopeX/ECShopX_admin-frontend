@@ -26,7 +26,7 @@
             <div class="content-bottom-padded">
               <el-upload
                 class="fl"
-                style="margin-right: 10px"
+                style="margin-right: 10px;float: left;"
                 action=""
                 :on-change="uploadHandleChange"
                 :auto-upload="false"

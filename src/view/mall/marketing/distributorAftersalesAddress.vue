@@ -5,9 +5,8 @@
 </style>
 
 <template>
-  <div class="distributorAftersalesAddress">
+  <SpPage class="distributorAftersalesAddress">
     <SpPlatformTip h5 app alipay />
-
     <SpFilterForm :model="params" @onSearch="onSearch" @onReset="onSearch">
       <SpFilterFormItem prop="distributor_id" label="店铺:">
         <SpSelectShop v-model="params.distributor_id" clearable placeholder="请选择" />
@@ -113,7 +112,7 @@
       :form-list="addressFormList"
       @onSubmit="onAddressFormSubmit"
     />
-  </div>
+  </SpPage>
 </template>
 
 <script>

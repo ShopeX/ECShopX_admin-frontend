@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <SpPage>
     <el-tabs
       v-model="activeName"
       type="border-card"
@@ -25,8 +25,7 @@
           >
             <div class="content-bottom-padded">
               <el-upload
-                class="fl"
-                style="margin-right: 10px"
+                style="margin-right: 10px;float: left;"
                 action=""
                 :on-change="uploadHandleChange"
                 :auto-upload="false"
@@ -118,7 +117,7 @@
         </el-tab-pane>
       </div>
     </el-tabs>
-  </div>
+  </SpPage>
 </template>
 <script>
 import { mapGetters } from 'vuex'

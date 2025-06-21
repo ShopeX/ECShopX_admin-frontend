@@ -75,8 +75,8 @@
 </style>
 
 <template>
-  <div class="page-body">
-    <SpRouterView>
+  <SpRouterView>
+    <SpPage>
       <SpPlatformTip h5 app alipay />
       <!-- <div v-if="VERSION_STANDARD()" class="content-bottom-padded">
         <el-alert type="info" title="操作说明" show-icon>
@@ -417,7 +417,6 @@
                   下载店铺码
                 </el-button>
                 <router-link
-                  v-if="scope.row.is_openAccount"
                   :to="{
                     path: matchRoutePath('details'),
                     query: { distributor_id: scope.row.distributor_id }
@@ -431,7 +430,8 @@
                   class="copy-btn"
                   type="text"
                 >
-                  <input v-model="scope.row.link" class="copy-link" type="text">复制店铺链接
+                  <!-- <input v-model="scope.row.link" class="copy-link" type="text"> -->
+                  复制店铺链接
                 </el-button>
                 <el-button type="text" @click="linkWxpaysettting(scope.row)">
                   微信支付配置
@@ -673,8 +673,8 @@
         :form-list="keFuFormList"
         @onSubmit="onKeFuFormSubmit"
       />
-    </SpRouterView>
-  </div>
+    </SpPage>
+  </SpRouterView>
 </template>
 <script>
 import { mapGetters } from 'vuex'

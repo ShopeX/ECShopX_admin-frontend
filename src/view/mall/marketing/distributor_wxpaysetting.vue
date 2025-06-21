@@ -1,116 +1,118 @@
 <template>
-  <el-form
-    ref="form"
-    label-width="100px"
-  >
-  <el-form-item label="当前店铺名称">
-      <span>{{name}}</span>
-    </el-form-item>
-    <el-form-item label="公众账号ID">
-      <el-input
-        v-model="form.app_id"
-        style="width: 300px"
-      />
-      <br>
-      <span class="frm-tips">微信支付分配的公众账号ID（企业号corpid即为此appId）</span>
-    </el-form-item>
-    <el-form-item label="APP应用ID">
-      <el-input
-        v-model="form.app_app_id"
-        style="width: 300px"
-      />
-      <br>
-      <span
-        class="frm-tips"
-      >微信开放平台审核通过的应用APPID（请登录open.weixin.qq.com查看，注意与公众号的APPID不同）</span>
-    </el-form-item>
-    <el-form-item label="商户号">
-      <el-input
-        v-model="form.merchant_id"
-        style="width: 300px"
-      />
-    </el-form-item>
-    <el-form-item label="API密钥">
-      <el-input
-        v-model="form.key"
-        style="width: 300px"
-      />
-    </el-form-item>
-    <el-form-item label="是否特约商户">
-      <el-switch
-        v-model="form.is_servicer"
-        active-color="#13ce66"
-        inactive-color="#ff4949"
-      />
-      <span class="frm-tips">如是特约商户，请联系您的服务商获取如下两个参数</span>
-    </el-form-item>
-    <el-form-item label="服务商APPID">
-      <el-input
-        v-model="form.servicer_app_id"
-        style="width: 300px"
-      />
-    </el-form-item>
-    <el-form-item label="服务商商户号">
-      <el-input
-        v-model="form.servicer_merchant_id"
-        style="width: 300px"
-      />
-    </el-form-item>
-    <el-form-item label="商户证书">
-      <span v-if="form.cert_name"> {{ form.cert_name }}</span>
-      <el-upload
-        class=""
-        action=""
-        :on-change="certHandleChange"
-        :auto-upload="false"
-      >
-        <el-button
-          size="small"
-          type="primary"
+  <SpPage class="wapay-setting">
+    <el-form
+      ref="form"
+      label-width="100px"
+    >
+    <el-form-item label="当前店铺名称">
+        <span>{{name}}</span>
+      </el-form-item>
+      <el-form-item label="公众账号ID">
+        <el-input
+          v-model="form.app_id"
+          style="width: 300px"
+        />
+        <br>
+        <span class="frm-tips">微信支付分配的公众账号ID（企业号corpid即为此appId）</span>
+      </el-form-item>
+      <el-form-item label="APP应用ID">
+        <el-input
+          v-model="form.app_app_id"
+          style="width: 300px"
+        />
+        <br>
+        <span
+          class="frm-tips"
+        >微信开放平台审核通过的应用APPID（请登录open.weixin.qq.com查看，注意与公众号的APPID不同）</span>
+      </el-form-item>
+      <el-form-item label="商户号">
+        <el-input
+          v-model="form.merchant_id"
+          style="width: 300px"
+        />
+      </el-form-item>
+      <el-form-item label="API密钥">
+        <el-input
+          v-model="form.key"
+          style="width: 300px"
+        />
+      </el-form-item>
+      <el-form-item label="是否特约商户">
+        <el-switch
+          v-model="form.is_servicer"
+          active-color="#13ce66"
+          inactive-color="#ff4949"
+        />
+        <span class="frm-tips">如是特约商户，请联系您的服务商获取如下两个参数</span>
+      </el-form-item>
+      <el-form-item label="服务商APPID">
+        <el-input
+          v-model="form.servicer_app_id"
+          style="width: 300px"
+        />
+      </el-form-item>
+      <el-form-item label="服务商商户号">
+        <el-input
+          v-model="form.servicer_merchant_id"
+          style="width: 300px"
+        />
+      </el-form-item>
+      <el-form-item label="商户证书">
+        <span v-if="form.cert_name"> {{ form.cert_name }}</span>
+        <el-upload
+          class=""
+          action=""
+          :on-change="certHandleChange"
+          :auto-upload="false"
         >
-          点击上传
-        </el-button>
-      </el-upload>
-      <span
-        class="frm-tips"
-      >微信商户平台(pay.weixin.qq.com)-->账户设置-->API安全-->证书下载 apiclient_cert.pem</span>
-    </el-form-item>
-    <el-form-item label="商户证书秘钥">
-      <span v-if="form.cert_key_url"> {{ form.cert_key_name }}</span>
-      <el-upload
-        class=""
-        action=""
-        :on-change="keyHandleChange"
-        :auto-upload="false"
-      >
-        <el-button
-          size="small"
-          type="primary"
+          <el-button
+            size="small"
+            type="primary"
+          >
+            点击上传
+          </el-button>
+        </el-upload>
+        <span
+          class="frm-tips"
+        >微信商户平台(pay.weixin.qq.com)-->账户设置-->API安全-->证书下载 apiclient_cert.pem</span>
+      </el-form-item>
+      <el-form-item label="商户证书秘钥">
+        <span v-if="form.cert_key_url"> {{ form.cert_key_name }}</span>
+        <el-upload
+          class=""
+          action=""
+          :on-change="keyHandleChange"
+          :auto-upload="false"
         >
-          点击上传
+          <el-button
+            size="small"
+            type="primary"
+          >
+            点击上传
+          </el-button>
+        </el-upload>
+        <span
+          class="frm-tips"
+        >微信商户平台(pay.weixin.qq.com)-->账户设置-->API安全-->证书下载 apiclient_key.pem</span>
+      </el-form-item>
+      <!-- <el-form-item label="是否启用">
+        <el-switch
+          v-model="form.is_open"
+          active-color="#13ce66"
+          inactive-color="#ff4949"
+        />
+      </el-form-item> -->
+      <div class="section-footer with-border content-center">
+        <el-button
+          v-loading="loading"
+          type="primary"
+          @click="onSubmit"
+        >
+          保存
         </el-button>
-      </el-upload>
-      <span
-        class="frm-tips"
-      >微信商户平台(pay.weixin.qq.com)-->账户设置-->API安全-->证书下载 apiclient_key.pem</span>
-    </el-form-item>
-    <!-- <el-form-item label="是否启用">
-      <el-switch
-        v-model="form.is_open"
-        active-color="#13ce66"
-        inactive-color="#ff4949"
-      />
-    </el-form-item> -->
-    <div class="section-footer with-border content-center">
-      <el-button
-        v-loading="loading"
-        type="primary"
-        @click="onSubmit"
-      >
-        保存
-      </el-button>
-    </div>
-  </el-form>
+      </div>
+    </el-form>
+  </SpPage>
 </template>
 <script>
 import { setPaymentSetting, getPaymentSetting } from '@/api/trade'
@@ -202,10 +204,17 @@ export default {
 }
 </script>
 <style scoped lang="scss">
-.el-row {
+.wapay-setting {
   margin-bottom: 10px;
   .frm-tips {
-    color: #ff0000;
+    color: #8d8d8d;
+    font-size: 12px;
+    line-height: 1.5;
+    padding: 10px 0;
+  }
+  a {
+    color: #459ae9;
+    text-decoration: none;
   }
 }
 </style>

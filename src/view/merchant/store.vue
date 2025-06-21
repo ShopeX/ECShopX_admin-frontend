@@ -3,13 +3,17 @@
   line-height: 34px !important;
   margin: 0 10px;
 }
+.merchant-store ::v-deep .el-form-item {
+  width: 360px;
+}
+.merchant-store ::v-deep .el-form-item__content {
+  min-width: 260px;
+}
+.qqmap-infowin ::v-deep .el-button {
+  float: right;
+  margin-top: 10px;
+}
 .merchant-store {
-  .el-form-item {
-    width: 360px;
-  }
-  .el-form-item__content {
-    min-width: 260px;
-  }
   .start-time,
   .end-time {
     width: 120px;
@@ -54,10 +58,6 @@
       color: #999;
       white-space: nowrap;
     }
-    .el-button {
-      float: right;
-      margin-top: 10px;
-    }
   }
   #qqmap_rslist {
     border-right: 1px solid #e7e7eb;
@@ -69,7 +69,7 @@
 }
 </style>
 <template>
-  <div class="merchant-store">
+  <SpPage class="merchant-store">
     <SpForm
       ref="form"
       v-model="form"
@@ -90,7 +90,7 @@
         {{ submitLoading ? '提交中' : '保存' }}
       </el-button>
     </div>
-  </div>
+  </SpPage>
 </template>
 
 <script>

@@ -1,5 +1,5 @@
 <template>
-  <div class="cus-details">
+  <SpPage class="cus-details">
     <template v-if="isEdit == false">
       <el-card>
         <el-row>
@@ -162,7 +162,7 @@
     <template v-else>
       <editAccount :active-name="accountInfo.member_type" :info="accountInfo" @back="back" />
     </template>
-  </div>
+  </SpPage>
 </template>
 <script>
 import { getDistributorInfo } from '@/api/marketing'

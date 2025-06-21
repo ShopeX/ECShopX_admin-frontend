@@ -8,7 +8,7 @@
 }
 </style>
 <template>
-  <div>
+  <SpPage>
     <el-tabs
       v-model="activeName"
       type="border-card"
@@ -20,7 +20,7 @@
         </p>
         <p>超过<strong>15天</strong>的错误描述文件将会删除，不再提供下载查看</p>
       </div>
-      <div v-for="item in pane_list">
+      <div v-for="(item, idx) in pane_list" :key="idx">
         <el-tab-pane
           :label="item.label"
           :name="item.name"
@@ -123,7 +123,7 @@
         </el-tab-pane>
       </div>
     </el-tabs>
-  </div>
+  </SpPage>
 </template>
 <script>
 import { mapGetters } from 'vuex'

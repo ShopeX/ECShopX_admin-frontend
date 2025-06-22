@@ -5,7 +5,7 @@
 </style>
 
 <template>
-  <div>
+  <SpPage>
     <template v-if="$route.path.indexOf('detail') === -1 && $route.path.indexOf('editor') === -1">
       <SpFilterForm :model="params" @onSearch="onSearch" @onReset="onReset">
         <SpFilterFormItem prop="form_element" label="表单元素:">
@@ -38,17 +38,6 @@
           :name="item.activeName"
         >
           <el-table v-loading="loading" border :data="tableList" :height="wheight - 280">
-            <el-table-column prop="id" label="ID" width="50" />
-            <el-table-column prop="field_title" label="标题" width="250" />
-            <el-table-column prop="field_name" label="唯一标示(纯字母)" width="200" />
-            <el-table-column prop="form_element" label="元素类型" width="100" />
-            <el-table-column label="元素选择项">
-              <template slot-scope="scope">
-                <span v-for="(item, index) in scope.row.options" :key="index">
-                  {{ item.value }}</span
-                >
-              </template>
-            </el-table-column>
             <el-table-column label="操作" width="100">
               <template slot-scope="scope">
                 <router-link
@@ -61,6 +50,17 @@
                   class="mark iconfont icon-trash-alt1"
                   @click="deleteAction(scope.$index, scope.row)"
                 />
+              </template>
+            </el-table-column>
+            <el-table-column prop="id" label="ID" width="50" />
+            <el-table-column prop="field_title" label="标题" width="250" />
+            <el-table-column prop="field_name" label="唯一标示(纯字母)" width="200" />
+            <el-table-column prop="form_element" label="元素类型" width="100" />
+            <el-table-column label="元素选择项">
+              <template slot-scope="scope">
+                <span v-for="(item, index) in scope.row.options" :key="index">
+                  {{ item.value }}</span
+                >
               </template>
             </el-table-column>
           </el-table>
@@ -151,7 +151,7 @@
       </el-dialog>
     </template>
     <router-view />
-  </div>
+  </SpPage>
 </template>
 <script>
 import { mapGetters } from 'vuex'

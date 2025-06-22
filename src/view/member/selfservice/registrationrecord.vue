@@ -5,7 +5,7 @@
 </style>
 
 <template>
-  <div>
+  <SpPage>
     <template v-if="$route.path.indexOf('detail') === -1 && $route.path.indexOf('editor') === -1">
       <SpFilterForm :model="params" @onSearch="onSearch" @onReset="onReset">
         <SpFilterFormItem prop="activity_id" label="活动:">
@@ -59,7 +59,7 @@
         </export-tip>
       </div>
 
-      <div class="action-container">
+      <!-- <div class="action-container"> -->
         <!-- <el-button
           plain
           type="primary"
@@ -82,7 +82,7 @@
             点击上传
           </el-button>
         </el-upload> -->
-      </div>
+      <!-- </div> -->
 
       <el-tabs v-model="params.status" type="card" @tab-click="onSearch">
         <el-tab-pane
@@ -92,8 +92,15 @@
           :name="item.name"
         >
           <el-table v-loading="loading" border :data="tableList" element-loading-text="数据加载中">
+            <el-table-column prop="status" label="操作" width="150">
+              <template slot-scope="scope">
+                <el-button type="text" v-if="scope.row.status == 'pending' && !IS_DISTRIBUTOR()" @click="onLinkChange(scope.row)">审核</el-button>
+                <el-button type="text" @click="onLinkChange(scope.row)">详情</el-button>
+                <el-button type="text" v-if="scope.row.status == 'passed'" @click="onShowChange(scope.row)">核销</el-button>
+              </template>
+            </el-table-column>
             <el-table-column prop="record_no" label="报名编号" />
-            <el-table-column prop="group_no" label="活动群组编号" />
+            <el-table-column prop="group_no" width="140" label="活动群组编号" />
             <el-table-column prop="activity_name" label="活动名称" />
             <el-table-column prop="tem_name" label="报名表单" />
             <el-table-column prop="mobile" label="手机号" />
@@ -149,34 +156,6 @@
                 </el-tag>
               </template> -->
             </el-table-column>
-            <el-table-column prop="status" label="操作">
-              <template slot-scope="scope">
-                <router-link
-                  v-if="scope.row.status == 'pending' && !IS_DISTRIBUTOR()"
-                  :to="{
-                    path: matchRoutePath('detail'),
-                    query: { id: scope.row.record_id, activity_id: scope.row.activity_id }
-                  }"
-                >
-                  审核
-                </router-link>
-                <router-link
-                  :to="{
-                    path: matchRoutePath('detail'),
-                    query: { id: scope.row.record_id, activity_id: scope.row.activity_id }
-                  }"
-                >
-                  详情
-                </router-link>
-                <el-button
-                  v-if="scope.row.status == 'passed'"
-                  type="text"
-                  @click="onShowChange(scope.row)"
-                >
-                  核销
-                </el-button>
-              </template>
-            </el-table-column>
           </el-table>
           <div class="mt-4 text-right">
             <el-pagination
@@ -203,7 +182,7 @@
       @onSubmit="onDialogFormSubmit"
     />
     <router-view />
-  </div>
+  </SpPage>
 </template>
 <script>
 import { mapGetters } from 'vuex'
@@ -446,6 +425,13 @@ export default {
     onShowChange(row) {
       this.dialogForm.record_id = row.record_id
       this.dialogVisible = true
+    },
+    onLinkChange (row) {
+      this.$router.push({
+        path: this.matchRoutePath('detail'),
+        query: { id: row.record_id, activity_id: row.activity_id }
+      })
+      
     }
   },
   computed: {

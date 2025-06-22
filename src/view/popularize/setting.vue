@@ -1,5 +1,5 @@
 <template>
-  <div class="section section-white">
+  <SpPage class="section section-white">
     <SpPlatformTip />
     <el-form ref="form" :model="form" label-position="left" label-width="120px">
       <div class="section-body">
@@ -331,7 +331,7 @@
         <el-button type="primary" @click="save"> 保 存 </el-button>
       </div>
     </el-form>
-  </div>
+  </SpPage>
 </template>
 <script>
 import { getPopularizeSetting, setPopularizeSetting } from '../../api/promotions'

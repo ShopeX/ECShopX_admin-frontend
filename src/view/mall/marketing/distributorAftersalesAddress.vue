@@ -39,6 +39,18 @@
 
     <!-- 数据表格 -->
     <el-table v-loading="tableLoading" :data="tableList" border>
+      <el-table-column label="操作" width="120">
+        <template slot-scope="scope">
+          <el-button
+            v-if="datapass_block == '0'"
+            type="text"
+            @click="onEditSalesAfterAddress(scope.row)"
+          >
+            编辑
+          </el-button>
+          <el-button type="text" @click="handleDelete(scope.row)"> 删除 </el-button>
+        </template>
+      </el-table-column>
       <el-table-column prop="name" label="店铺" />
       <el-table-column label="售后地址">
         <template slot-scope="scope">
@@ -73,18 +85,6 @@
             :disabled="scope.row.is_default == 1"
             @change="onSwitchChange(scope.row)"
           />
-        </template>
-      </el-table-column>
-      <el-table-column label="操作" width="250">
-        <template slot-scope="scope">
-          <el-button
-            v-if="datapass_block == '0'"
-            type="text"
-            @click="onEditSalesAfterAddress(scope.row)"
-          >
-            编辑
-          </el-button>
-          <el-button type="text" @click="handleDelete(scope.row)"> 删除 </el-button>
         </template>
       </el-table-column>
     </el-table>

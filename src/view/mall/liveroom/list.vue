@@ -5,7 +5,7 @@
 </style>
 
 <template>
-  <div class="zyk_video">
+  <SpPage class="zyk_video">
     <template v-if="$route.path.indexOf('editor') === -1">
       <SpPlatformTip />
       <SpFilterForm :model="params" @onSearch="onSearch" @onReset="onReset">
@@ -74,7 +74,7 @@
       </div>
     </template>
     <router-view />
-  </div>
+  </SpPage>
 </template>
 
 <script>

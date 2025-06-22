@@ -26,26 +26,6 @@
             style="width: 100%"
             element-loading-text="数据加载中"
           >
-            <el-table-column prop="package_id" width="60" label="编号" />
-            <el-table-column prop="package_name" label="组合促销名称" />
-            <el-table-column prop="source_name" label="店铺" />
-            <el-table-column label="开始时间" width="200">
-              <template slot-scope="scope">
-                <span>{{ scope.row.start_time | datetime('YYYY-MM-DD HH:mm:ss') }}</span>
-              </template>
-            </el-table-column>
-            <el-table-column label="结束时间" width="200">
-              <template slot-scope="scope">
-                <span>{{ scope.row.end_time | datetime('YYYY-MM-DD HH:mm:ss') }}</span>
-              </template>
-            </el-table-column>
-            <el-table-column label="类型" width="120">
-              <template slot-scope="scope">
-                <span v-if="scope.row.status == 'waiting'">待开始</span>
-                <span v-if="scope.row.status == 'ongoing'">进行中</span>
-                <span v-if="scope.row.status == 'end'">已结束</span>
-              </template>
-            </el-table-column>
             <el-table-column label="操作" width="150">
               <template slot-scope="scope">
                 <div class="operating-icons">
@@ -65,6 +45,26 @@
                     编辑
                   </el-button>
                 </div>
+              </template>
+            </el-table-column>
+            <el-table-column prop="package_id" width="60" label="编号" />
+            <el-table-column prop="package_name" label="组合促销名称" />
+            <el-table-column prop="source_name" label="店铺" />
+            <el-table-column label="开始时间" width="200">
+              <template slot-scope="scope">
+                <span>{{ scope.row.start_time | datetime('YYYY-MM-DD HH:mm:ss') }}</span>
+              </template>
+            </el-table-column>
+            <el-table-column label="结束时间" width="200">
+              <template slot-scope="scope">
+                <span>{{ scope.row.end_time | datetime('YYYY-MM-DD HH:mm:ss') }}</span>
+              </template>
+            </el-table-column>
+            <el-table-column label="类型" width="120">
+              <template slot-scope="scope">
+                <span v-if="scope.row.status == 'waiting'">待开始</span>
+                <span v-if="scope.row.status == 'ongoing'">进行中</span>
+                <span v-if="scope.row.status == 'end'">已结束</span>
               </template>
             </el-table-column>
           </el-table>

@@ -1,8 +1,7 @@
 <template>
-  <div>
+  <SpPage>
     <div v-if="$route.path.indexOf('_child') === -1 && $route.path.indexOf('detail') === -1">
-      <shop-select distributors @update="storeChange" @init="initChange" />
-      <SpFilterForm :model="params" @onSearch="onSearch" @onReset="onSearch">
+      <SpFilterForm :model="params" @onSearch="onSearch" @onReset="onReset">
         <SpFilterFormItem prop="mobile" label="会员手机号:">
           <el-input v-model="params.mobile" class="input-m" placeholder="请输入会员手机号" />
         </SpFilterFormItem>
@@ -13,32 +12,33 @@
             placeholder="请输入会员名称"
           />
         </SpFilterFormItem> -->
+        <shop-select distributors @update="storeChange" @init="initChange" />
       </SpFilterForm>
-      <div class="action-container">
-        <div class="action-container">
-          <el-button-group>
-            <el-button
-              type="primary"
-              plain
-              v-if="loginType !== 'distributor' && $route.path.indexOf('sellers') === -1"
-              @click="exportPopularizeData"
-            >
-              导出业绩统计
-            </el-button>
-          </el-button-group>
+      <div class="action-container" style="margin-bottom: 0px;">
+        <div>
+          <el-button
+            type="primary"
+            plain
+            v-if="loginType !== 'distributor' && $route.path.indexOf('sellers') === -1"
+            @click="exportPopularizeData"
+          >
+            导出业绩统计
+          </el-button>
         </div>
 
-        <el-button
-          type="primary"
-          plain
-          v-if="loginType == 'distributor' || $route.path.indexOf('sellers') !== -1"
-          @click="exportPopularizeStatic"
-        >
-          导出业绩订单统计
-        </el-button>
-
-        <el-button type="primary" plain @click="exportPopularizeOrder"> 导出业绩订单详细 </el-button
-        >* 下载订单详细日期
+        <div>
+          <el-button
+            type="primary"
+            plain
+            v-if="loginType == 'distributor' || $route.path.indexOf('sellers') !== -1"
+            @click="exportPopularizeStatic"
+          >
+            导出业绩订单统计
+          </el-button>
+  
+          <el-button type="primary" plain @click="exportPopularizeOrder"> 导出业绩订单详细 </el-button
+          >* 下载订单详细日期
+        </div>
 
         <SpFilterFormItem prop="tag_id" label="下载日期:">
           <el-date-picker
@@ -66,6 +66,13 @@
         element-loading-text="数据加载中"
         :default-sort="{ prop: 'bind_date', order: 'descending' }"
       >
+        <el-table-column label="操作" width="90">
+          <template slot-scope="scope">
+            <el-button icon="edit" type="text" class="btn-gap" @click="detail(scope.row)">
+              分佣详情
+            </el-button>
+          </template>
+        </el-table-column>
         <el-table-column prop="username" label="姓名" />
         <el-table-column prop="mobile" label="手机号" width="150">
           <template slot-scope="scope">
@@ -163,14 +170,6 @@
         >
           <template slot-scope="scope"> {{ scope.row.price_sum / 100 }}元 </template>
         </el-table-column>
-
-        <el-table-column label="操作" width="90">
-          <template slot-scope="scope">
-            <el-button icon="edit" type="text" class="btn-gap" @click="detail(scope.row)">
-              分佣详情
-            </el-button>
-          </template>
-        </el-table-column>
       </el-table>
       <div class="mt-4 text-right">
         <el-pagination
@@ -186,7 +185,7 @@
       </div>
     </div>
     <router-view />
-  </div>
+  </SpPage>
 </template>
 <script>
 import { mapGetters } from 'vuex'
@@ -266,6 +265,17 @@ export default {
     this.fetchList()
   },
   methods: {
+    onSearch () {
+      this.fetchList()
+    },
+    onReset () {
+      this.params = {
+        mobile: '',
+        username: '',
+        pathSource: ''
+      }
+      this.fetchList()
+    },
     exportPopularizeData() {
       const { pageIndex: page, pageSize } = this.page
       let params = {

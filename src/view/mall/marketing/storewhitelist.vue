@@ -38,6 +38,12 @@
         border
         @selection-change="handleSelectionChange"
       >
+        <el-table-column label="操作">
+          <template slot-scope="scope">
+            <el-button type="text" @click="editShopWhite(scope.row)"> 编辑 </el-button>
+            <el-button type="text" @click="delWhitelist(scope.row)"> 删除 </el-button>
+          </template>
+        </el-table-column>
         <el-table-column type="selection" align="center" label="全选" />
         <el-table-column prop="mobile" label="手机号" />
         <el-table-column prop="username" label="姓名" />
@@ -58,12 +64,6 @@
             <span v-else>{{
               scope.row.distributor_info.map(item => item.shop_code).join(',')
             }}</span>
-          </template>
-        </el-table-column>
-        <el-table-column label="操作">
-          <template slot-scope="scope">
-            <el-button type="text" @click="editShopWhite(scope.row)"> 编辑 </el-button>
-            <el-button type="text" @click="delWhitelist(scope.row)"> 删除 </el-button>
           </template>
         </el-table-column>
       </el-table>

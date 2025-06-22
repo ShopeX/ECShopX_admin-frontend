@@ -30,7 +30,7 @@
     </div>
 
     <el-table v-loading="loading" :data="tableList" :height="wheight - 150" border>
-      <el-table-column prop="order_id" label="订单号" width="150" />
+      <el-table-column prop="order_id" label="订单号" width="170" />
       <el-table-column prop="user_mobile" label="会员手机号" width="120" />
       <el-table-column prop="specific_name" label="针对人群" width="120" />
       <el-table-column prop="discount_fee" label="优惠金额" width="120">
@@ -38,13 +38,13 @@
           <span>{{ scope.row.discount_fee / 100 }}</span>
         </template>
       </el-table-column>
-      <el-table-column prop="action_type" label="增/减" width="200">
+      <el-table-column prop="action_type" label="增/减">
         <template slot-scope="scope">
           <span v-if="scope.row.action_type == 'plus'">+</span>
           <span v-else-if="scope.row.action_type == 'less'">-(订单已取消或已退款)</span>
         </template>
       </el-table-column>
-      <el-table-column prop="created" label="创建时间" width="100">
+      <el-table-column prop="created" label="创建时间">
         <template slot-scope="scope">
           <span>{{ scope.row.created | formatTimestamp }}</span>
         </template>

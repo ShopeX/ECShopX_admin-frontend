@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <SpPage>
     <div v-if="$route.path.indexOf('editor') === -1">
       <SpPlatformTip h5 app alipay />
       <!-- <el-row :gutter="20">
@@ -25,26 +25,7 @@
           style="width: 100%"
           element-loading-text="数据加载中"
         >
-          <el-table-column prop="marketing_id" width="60" label="编号" />
-          <el-table-column prop="marketing_name" label="活动名称" />
-          <el-table-column label="开始时间" width="200">
-            <template slot-scope="scope">
-              <span>{{ scope.row.start_time | datetime('YYYY-MM-DD HH:mm:ss') }}</span>
-            </template>
-          </el-table-column>
-          <el-table-column label="结束时间" width="200">
-            <template slot-scope="scope">
-              <span>{{ scope.row.end_time | datetime('YYYY-MM-DD HH:mm:ss') }}</span>
-            </template>
-          </el-table-column>
-          <el-table-column label="类型" width="120">
-            <template slot-scope="scope">
-              <span v-if="scope.row.status == 'waiting'">待开始</span>
-              <span v-if="scope.row.status == 'ongoing'">进行中</span>
-              <span v-if="scope.row.status == 'end'">已结束</span>
-            </template>
-          </el-table-column>
-          <el-table-column label="操作" width="150">
+          <el-table-column label="操作" width="180">
             <template slot-scope="scope">
               <div class="operating-icons">
                 <el-button
@@ -66,6 +47,25 @@
               </div>
             </template>
           </el-table-column>
+          <el-table-column prop="marketing_id" width="60" label="编号" />
+          <el-table-column prop="marketing_name" label="活动名称" />
+          <el-table-column label="开始时间" width="200">
+            <template slot-scope="scope">
+              <span>{{ scope.row.start_time | datetime('YYYY-MM-DD HH:mm:ss') }}</span>
+            </template>
+          </el-table-column>
+          <el-table-column label="结束时间" width="200">
+            <template slot-scope="scope">
+              <span>{{ scope.row.end_time | datetime('YYYY-MM-DD HH:mm:ss') }}</span>
+            </template>
+          </el-table-column>
+          <el-table-column label="类型" width="120">
+            <template slot-scope="scope">
+              <span v-if="scope.row.status == 'waiting'">待开始</span>
+              <span v-if="scope.row.status == 'ongoing'">进行中</span>
+              <span v-if="scope.row.status == 'end'">已结束</span>
+            </template>
+          </el-table-column>
         </el-table>
         <div v-if="total_count > params.pageSize" class="mt-4 text-right">
           <el-pagination
@@ -79,7 +79,7 @@
       </el-tabs>
     </div>
     <router-view />
-  </div>
+  </SpPage>
 </template>
 <script>
 import { mapGetters } from 'vuex'

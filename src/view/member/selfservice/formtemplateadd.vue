@@ -1,5 +1,5 @@
 <template>
-  <div class="section section-white">
+  <div class="section section-white page-formtemplateadd">
     <div class="section-body">
       <el-form
         ref="form"
@@ -563,6 +563,12 @@ export default {
 }
 </script>
 <style scoped lang="scss">
+.page-formtemplateadd {
+  .content-bottom-padded {
+    margin-bottom: 20px;
+    text-align: center;
+  }
+}
 .clearfix:before,
 .clearfix:after {
   display: table;

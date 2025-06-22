@@ -5,7 +5,7 @@
 </style>
 
 <template>
-  <div>
+  <SpPage>
     <template v-if="$route.path.indexOf('detail') === -1">
       <SpPlatformTip h5 app pc alipay />
 
@@ -40,6 +40,27 @@
             style="width: 100%"
             element-loading-text="数据加载中"
           >
+            <el-table-column label="操作" min-width="180">
+              <template slot-scope="scope">
+                <div class="operating-icons">
+                  <el-button
+                    style="margin-right: 20px"
+                    type="text"
+                    @click="editActivityAction(scope.$index, scope.row)"
+                  >
+                    编辑
+                  </el-button>
+                  <el-button
+                    style="margin-right: 20px"
+                    type="text"
+                    @click="viewDetail(scope.row)"
+                  >
+                    查看优惠日志
+                  </el-button>
+                  <!--<i class="iconfont icon-trash-alt" @click="deleteActivityAction(scope.row)"></i> -->
+                </div>
+              </template>
+            </el-table-column>
             <el-table-column prop="id" width="60" label="编号" />
             <el-table-column prop="specific_name" min-width="150" label="适用人群" />
             <el-table-column label="周期" min-width="200">
@@ -62,23 +83,6 @@
                 <span v-if="scope.row.status == '2'">已发布</span>
                 <span v-if="scope.row.status == '3'">停用</span>
                 <span v-if="scope.row.status == '4'">过期</span>
-              </template>
-            </el-table-column>
-            <el-table-column label="操作" min-width="150">
-              <template slot-scope="scope">
-                <div class="operating-icons">
-                  <el-button
-                    style="margin-right: 20px"
-                    type="text"
-                    @click="editActivityAction(scope.$index, scope.row)"
-                  >
-                    编辑
-                  </el-button>
-                  <router-link :to="{ path: matchRoutePath('detail/') + scope.row.id }">
-                    查看优惠日志
-                  </router-link>
-                  <!--<i class="iconfont icon-trash-alt" @click="deleteActivityAction(scope.row)"></i> -->
-                </div>
               </template>
             </el-table-column>
           </el-table>
@@ -179,7 +183,7 @@
       </el-dialog>
     </template>
     <router-view />
-  </div>
+  </SpPage>
 </template>
 <script>
 import { mapGetters } from 'vuex'
@@ -255,6 +259,11 @@ export default {
     this.fetchList()
   },
   methods: {
+    viewDetail (row) {
+      this.$router.push({
+        path: this.matchRoutePath('detail/') + row.id
+      })
+    },
     onSearch() {
       this.page.pageIndex = 1
       this.$nextTick(() => {

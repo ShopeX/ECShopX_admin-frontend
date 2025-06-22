@@ -1,5 +1,5 @@
 <template>
-  <div class="section section-white">
+  <div class="section section-white page-registrationactivityadd">
     <el-form
       ref="form"
       :model="form"
@@ -8,8 +8,10 @@
       class="demo-ruleForm"
       :rules="rules"
     >
-      <div class="section-header with-border">基础信息</div>
-      <div class="section-body">
+      <el-card
+        header="基础信息"
+        shadow="naver"
+      >
         <el-form-item label="活动名称" prop="activity_name">
           <el-col :span="15">
             <el-input
@@ -139,247 +141,248 @@
             />
           </el-col>
         </el-form-item>
-      </div>
-      <div class="section-header with-border">活动规则</div>
-      <div class="section-body">
-        <el-form-item label="获取积分" prop="gift_points_switch">
-          <el-switch
-            v-model="form.gift_points_switch"
-            active-color="#13ce66"
-            inactive-color="#ff4949"
-            :active-value="1"
-            :inactive-value="0"
+    </el-card>
+    <el-card header="活动规则" shadow="naver">
+      <el-form-item label="获取积分" prop="gift_points_switch">
+        <el-switch
+          v-model="form.gift_points_switch"
+          active-color="#13ce66"
+          inactive-color="#ff4949"
+          :active-value="1"
+          :inactive-value="0"
+        />
+      </el-form-item>
+      <el-form-item label="获取积分值" prop="gift_points">
+        <el-col :span="10">
+          <el-input
+            v-model.trim="form.gift_points"
+            :maxlength="30"
+            placeholder="请输入奖励积分"
           />
-        </el-form-item>
-        <el-form-item label="获取积分值" prop="gift_points">
-          <el-col :span="10">
-            <el-input
-              v-model.trim="form.gift_points"
-              :maxlength="30"
-              placeholder="请输入奖励积分"
-            />
-          </el-col>
-        </el-form-item>
-        <el-form-item label="可重复报名" prop="is_allow_duplicate">
-          <el-switch
-            v-model="form.is_allow_duplicate"
-            active-color="#13ce66"
-            inactive-color="#ff4949"
-            :active-value="1"
-            :inactive-value="0"
-          />
-        </el-form-item>
-        <el-form-item label="是否审核" prop="is_need_check">
-          <el-switch
-            v-model="form.is_need_check"
-            active-color="#13ce66"
-            inactive-color="#ff4949"
-            :active-value="1"
-            :inactive-value="0"
-          />
-        </el-form-item>
-        <el-form-item label="线下核销" prop="is_offline_verify">
-          <el-switch
-            v-model="form.is_offline_verify"
-            active-color="#13ce66"
-            inactive-color="#ff4949"
-            :active-value="1"
-            :inactive-value="0"
-          />
-        </el-form-item>
-        <el-form-item label="允许取消报名" prop="is_allow_cancel">
-          <el-switch
-            v-model="form.is_allow_cancel"
-            active-color="#13ce66"
-            inactive-color="#ff4949"
-            :active-value="1"
-            :inactive-value="0"
-          />
-        </el-form-item>
-        <el-form-item label="活动群组编号" prop="group_no">
-          <el-col :span="10">
-            <el-input v-model.trim="form.group_no" placeholder="请输入活动群组编号" />
-          </el-col>
-        </el-form-item>
-        <el-form-item label="进内购企业白名单" prop="is_white_list">
-          <el-radio-group v-model="form.is_white_list" @change="whiteListChange">
-            <el-radio :label="1">是</el-radio>
-            <el-radio :label="0">否</el-radio>
+        </el-col>
+      </el-form-item>
+      <el-form-item label="可重复报名" prop="is_allow_duplicate">
+        <el-switch
+          v-model="form.is_allow_duplicate"
+          active-color="#13ce66"
+          inactive-color="#ff4949"
+          :active-value="1"
+          :inactive-value="0"
+        />
+      </el-form-item>
+      <el-form-item label="是否审核" prop="is_need_check">
+        <el-switch
+          v-model="form.is_need_check"
+          active-color="#13ce66"
+          inactive-color="#ff4949"
+          :active-value="1"
+          :inactive-value="0"
+        />
+      </el-form-item>
+      <el-form-item label="线下核销" prop="is_offline_verify">
+        <el-switch
+          v-model="form.is_offline_verify"
+          active-color="#13ce66"
+          inactive-color="#ff4949"
+          :active-value="1"
+          :inactive-value="0"
+        />
+      </el-form-item>
+      <el-form-item label="允许取消报名" prop="is_allow_cancel">
+        <el-switch
+          v-model="form.is_allow_cancel"
+          active-color="#13ce66"
+          inactive-color="#ff4949"
+          :active-value="1"
+          :inactive-value="0"
+        />
+      </el-form-item>
+      <el-form-item label="活动群组编号" prop="group_no">
+        <el-col :span="10">
+          <el-input v-model.trim="form.group_no" placeholder="请输入活动群组编号" />
+        </el-col>
+      </el-form-item>
+      <el-form-item label="进内购企业白名单" prop="is_white_list">
+        <el-radio-group v-model="form.is_white_list" @change="whiteListChange">
+          <el-radio :label="1">是</el-radio>
+          <el-radio :label="0">否</el-radio>
+        </el-radio-group>
+        <div>开启后报名人员名单进入店铺企业员工白名单</div>
+      </el-form-item>
+      <el-form-item v-if="form.is_white_list == 1" label="选择企业">
+        <el-button type="primary" @click="onShowChange"> 选择企业 </el-button>
+        <SpFinder
+          v-if="enterprise_list.length > 0"
+          ref="finder"
+          :no-selection="true"
+          :setting="setting"
+          :data="enterprise_list"
+          url=""
+          style="width: 80%"
+          :show-pager="false"
+        />
+      </el-form-item>
+      <el-form-item label="适用会员">
+        <el-checkbox-group v-model="memberLevelList">
+          <el-checkbox
+            v-for="grade in memberGrade"
+            :key="grade.grade_id"
+            :label="grade.grade_id + ''"
+          >
+            {{ grade.grade_name }}
+          </el-checkbox>
+          <el-checkbox
+            v-for="vipdata in vipGrade"
+            :key="vipdata.lv_type"
+            :label="vipdata.lv_type + ''"
+          >
+            付费{{ vipdata.grade_name }}
+          </el-checkbox>
+        </el-checkbox-group>
+      </el-form-item>
+      <el-form-item label="适用店铺">
+        <el-form-item prop="useAllDistributor">
+          <el-radio-group v-model="useAllDistributor" @change="shopTypeChange">
+            <el-radio :label="true"> 全部店铺适用 </el-radio>
+            <el-radio :label="false"> 指定店铺适用 </el-radio>
           </el-radio-group>
-          <div>开启后报名人员名单进入店铺企业员工白名单</div>
         </el-form-item>
-        <el-form-item v-if="form.is_white_list == 1" label="选择企业">
-          <el-button type="primary" @click="onShowChange"> 选择企业 </el-button>
+        <div v-if="!useAllDistributor">
+          <el-button type="primary" @click="addDistributorAction"> 选择店铺 </el-button>
           <SpFinder
-            v-if="enterprise_list.length > 0"
+            v-if="distributor_list?.length > 0"
             ref="finder"
             :no-selection="true"
-            :setting="setting"
-            :data="enterprise_list"
+            :setting="shopSetting"
+            :data="distributor_list"
             url=""
             style="width: 80%"
             :show-pager="false"
           />
-        </el-form-item>
-        <el-form-item label="适用会员">
-          <el-checkbox-group v-model="memberLevelList">
-            <el-checkbox
-              v-for="grade in memberGrade"
-              :key="grade.grade_id"
-              :label="grade.grade_id + ''"
-            >
-              {{ grade.grade_name }}
-            </el-checkbox>
-            <el-checkbox
-              v-for="vipdata in vipGrade"
-              :key="vipdata.lv_type"
-              :label="vipdata.lv_type + ''"
-            >
-              付费{{ vipdata.grade_name }}
-            </el-checkbox>
-          </el-checkbox-group>
-        </el-form-item>
-        <el-form-item label="适用店铺">
-          <el-form-item prop="useAllDistributor">
-            <el-radio-group v-model="useAllDistributor" @change="shopTypeChange">
-              <el-radio :label="true"> 全部店铺适用 </el-radio>
-              <el-radio :label="false"> 指定店铺适用 </el-radio>
-            </el-radio-group>
-          </el-form-item>
-          <div v-if="!useAllDistributor">
-            <el-button type="primary" @click="addDistributorAction"> 选择店铺 </el-button>
-            <SpFinder
-              v-if="distributor_list?.length > 0"
-              ref="finder"
-              :no-selection="true"
-              :setting="shopSetting"
-              :data="distributor_list"
-              url=""
-              style="width: 80%"
-              :show-pager="false"
-            />
-          </div>
-        </el-form-item>
-        <el-form-item
-          label="选择报名问卷模板"
-          prop="temp_id"
-          :rules="{
-            required: form.temp_id == '0' ? false : true,
-            message: '请选择报名问卷模板',
-            trigger: 'blur'
-          }"
-        >
-          <el-col :span="15">
-            <el-select v-model="form.temp_id" placeholder="请选择" @change="selectTempId">
-              <el-option
-                v-for="item in temp_options"
-                :key="item.value"
-                :label="item.label"
-                :value="item.value"
-              />
-            </el-select>
-          </el-col>
-        </el-form-item>
-        <el-form-item label="提交报名次数" prop="join_limit">
-          <el-col :span="10">
-            <el-input v-model.trim="form.join_limit" type="number" placeholder="次数" />
-          </el-col>
-        </el-form-item>
-        <el-form-item label="报名结束语" prop="join_tips">
-          <el-col :span="10">
-            <el-input
-              v-model.trim="form.join_tips"
-              placeholder="报名结束语"
-              type="textarea"
-              :rows="2"
-            />
-          </el-col>
-        </el-form-item>
-        <el-form-item label="报名结束语说明" prop="submit_form_tips">
-          <el-col :span="10">
-            <el-input
-              v-model.trim="form.submit_form_tips"
-              placeholder="报名结束语说明"
-              type="textarea"
-              :rows="4"
-            />
-          </el-col>
-        </el-form-item>
-        <el-form-item label="是否开启短信通知" prop="is_sms_notice">
-          <el-col :span="15">
-            <div class="clearfix">
-              <el-switch
-                v-model="form.is_sms_notice"
-                active-color="#13ce66"
-                inactive-color="#ff4949"
-              />
-              <el-card v-if="form.is_sms_notice" class="box-card">
-                <div class="text item">
-                  您参与的"活动名称"活动，已经"审核结果"(允许参与 或 已拒绝)
-                </div>
-              </el-card>
-            </div>
-          </el-col>
-        </el-form-item>
-        <el-form-item label="是否开启小程序通知" prop="is_wxapp_notice">
-          <el-col :span="15">
-            <div class="clearfix">
-              <el-switch
-                v-model="form.is_wxapp_notice"
-                active-color="#13ce66"
-                inactive-color="#ff4949"
-              />
-              <el-card v-if="form.is_wxapp_notice" class="box-card">
-                <div slot="header" class="clearfix">
-                  <span>报名结果通知</span>
-                </div>
-                <div class="text item">活动名称：{{ form.activity_name }}</div>
-                <div class="text item">报名结果：报名已通过(或 报名被拒绝)</div>
-              </el-card>
-            </div>
-          </el-col>
-        </el-form-item>
-      </div>
-      <div class="section-header with-border">活动详情</div>
-      <div class="section-body" style="margin-left: 50px">
-        <el-radio-group v-model="mode">
-          <el-radio :label="'richText'"> 富文本 </el-radio>
-          <!-- <el-radio :label="'component'"> 组件式 </el-radio> -->
-        </el-radio-group>
-        <div v-if="mode === 'richText'" style="margin-top: 20px">
-          <div>
-            <SpRichText v-model="introInfo" />
-          </div>
-          <!-- <span class="tpl-btn" @click="addImgPreview" style="">
-            <i class="iconfont icon-image"></i>图片
-          </span> -->
         </div>
-        <div v-else style="margin-top: 20px">
-          <SpIphone>
-            <SpDecorate ref="decorateRef" v-model="content" scene="1002" />
-          </SpIphone>
-          <!-- <richTextEditor
-            :data="content"
-            :control="['film', 'slider', 'heading', 'writing']"
-            @change="handleContent"
-          /> -->
-          <!-- <imgPicker
-            :dialog-visible="thumbDialog"
-            :sc-status="isGetThumb"
-            :is-most="true"
-            @chooseImg="pickThumb"
-            @closeImgDialog="closeThumbDialog"
-          /> -->
+      </el-form-item>
+      <el-form-item
+        label="选择报名问卷模板"
+        prop="temp_id"
+        :rules="{
+          required: form.temp_id == '0' ? false : true,
+          message: '请选择报名问卷模板',
+          trigger: 'blur'
+        }"
+      >
+        <el-col :span="15">
+          <el-select v-model="form.temp_id" placeholder="请选择" @change="selectTempId">
+            <el-option
+              v-for="item in temp_options"
+              :key="item.value"
+              :label="item.label"
+              :value="item.value"
+            />
+          </el-select>
+        </el-col>
+      </el-form-item>
+      <el-form-item label="提交报名次数" prop="join_limit">
+        <el-col :span="10">
+          <el-input v-model.trim="form.join_limit" type="number" placeholder="次数" />
+        </el-col>
+      </el-form-item>
+      <el-form-item label="报名结束语" prop="join_tips">
+        <el-col :span="10">
+          <el-input
+            v-model.trim="form.join_tips"
+            placeholder="报名结束语"
+            type="textarea"
+            :rows="2"
+          />
+        </el-col>
+      </el-form-item>
+      <el-form-item label="报名结束语说明" prop="submit_form_tips">
+        <el-col :span="10">
+          <el-input
+            v-model.trim="form.submit_form_tips"
+            placeholder="报名结束语说明"
+            type="textarea"
+            :rows="4"
+          />
+        </el-col>
+      </el-form-item>
+      <el-form-item label="是否开启短信通知" prop="is_sms_notice">
+        <el-col :span="15">
+          <div class="clearfix">
+            <el-switch
+              v-model="form.is_sms_notice"
+              active-color="#13ce66"
+              inactive-color="#ff4949"
+            />
+            <el-card v-if="form.is_sms_notice" class="box-card">
+              <div class="text item">
+                您参与的"活动名称"活动，已经"审核结果"(允许参与 或 已拒绝)
+              </div>
+            </el-card>
+          </div>
+        </el-col>
+      </el-form-item>
+      <el-form-item label="是否开启小程序通知" prop="is_wxapp_notice">
+        <el-col :span="15">
+          <div class="clearfix">
+            <el-switch
+              v-model="form.is_wxapp_notice"
+              active-color="#13ce66"
+              inactive-color="#ff4949"
+            />
+            <el-card v-if="form.is_wxapp_notice" class="box-card">
+              <div slot="header" class="clearfix">
+                <span>报名结果通知</span>
+              </div>
+              <div class="text item">活动名称：{{ form.activity_name }}</div>
+              <div class="text item">报名结果：报名已通过(或 报名被拒绝)</div>
+            </el-card>
+          </div>
+        </el-col>
+      </el-form-item>
+    </el-card>
+    <el-card
+      header="活动详情"
+      shadow="naver"
+    >
+      <el-radio-group v-model="mode">
+        <el-radio :label="'richText'"> 富文本 </el-radio>
+        <!-- <el-radio :label="'component'"> 组件式 </el-radio> -->
+      </el-radio-group>
+      <div v-if="mode === 'richText'" style="margin-top: 20px">
+        <div>
+          <SpRichText v-model="introInfo" />
         </div>
+        <!-- <span class="tpl-btn" @click="addImgPreview" style="">
+          <i class="iconfont icon-image"></i>图片
+        </span> -->
       </div>
-      <div style="margin-top: 30px; margin-left: 50%">
-        <el-button @click.native="handleCancel">
-          {{ pageType === 'edit' ? '取消' : '返回' }}
-        </el-button>
-        <el-button v-if="pageType != 'detail'" type="primary" @click="submitAction">
-          保存
-        </el-button>
+      <div v-else style="margin-top: 20px">
+        <SpIphone>
+          <SpDecorate ref="decorateRef" v-model="content" scene="1002" />
+        </SpIphone>
+        <!-- <richTextEditor
+          :data="content"
+          :control="['film', 'slider', 'heading', 'writing']"
+          @change="handleContent"
+        /> -->
+        <!-- <imgPicker
+          :dialog-visible="thumbDialog"
+          :sc-status="isGetThumb"
+          :is-most="true"
+          @chooseImg="pickThumb"
+          @closeImgDialog="closeThumbDialog"
+        /> -->
       </div>
+    </el-card>
+    <div>
+      <el-button @click.native="handleCancel">
+        {{ pageType === 'edit' ? '取消' : '返回' }}
+      </el-button>
+      <el-button v-if="pageType != 'detail'" type="primary" @click="submitAction">
+        保存
+      </el-button>
+    </div>
     </el-form>
     <EnterpriseDialog
       :visible.sync="dialogVisible"
@@ -832,6 +835,9 @@ export default {
 }
 </script>
 <style scoped lang="scss">
+.page-registrationactivityadd ::v-deep .el-card {
+  margin-bottom: 20px;
+}
 .text {
   font-size: 14px;
 }

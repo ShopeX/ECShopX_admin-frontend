@@ -1,12 +1,7 @@
 <template>
-  <div>
+  <SpPage>
     <div v-if="$route.path.indexOf('child') === -1 && $route.path.indexOf('detail') === -1">
-      <div v-if="loginType !== 'distributor'" class="action-container">
-        <el-button type="primary" icon="el-icon-circle-plus" @click.native="addVisible = true">
-          添加推广员
-        </el-button>
-      </div>
-      <SpFilterForm :model="params" @onSearch="onSearch" @onReset="onSearch">
+      <SpFilterForm :model="params" @onSearch="onSearch" @onReset="onReset">
         <SpFilterFormItem prop="mobile" label="手机号:">
           <el-input v-model="params.mobile" placeholder="请输入手机号" />
         </SpFilterFormItem>
@@ -20,7 +15,11 @@
           </el-select>
         </SpFilterFormItem>
       </SpFilterForm>
-
+      <div v-if="loginType !== 'distributor'" class="action-container">
+        <el-button type="primary" icon="el-icon-circle-plus" @click.native="addVisible = true">
+          添加推广员
+        </el-button>
+      </div>
       <el-table
         v-loading="loading"
         border
@@ -312,7 +311,7 @@
       <!-- 修改推广员等级-结束 -->
     </div>
     <router-view />
-  </div>
+  </SpPage>
 </template>
 <script>
 import { mapGetters } from 'vuex'
@@ -370,6 +369,16 @@ export default {
       })
   },
   methods: {
+    onSearch () {
+      this.fetchList()
+    },
+    onReset () {
+      this.params = {
+        mobile: '',
+        store_status: ''
+      }
+      this.fetchList()
+    },
     onCopy() {
       this.$notify.success({
         message: '复制成功',

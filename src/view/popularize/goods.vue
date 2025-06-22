@@ -1,18 +1,17 @@
 <template>
-  <div>
+  <SpPage>
     <div class="content-bottom-padded">
-      <el-row class="content-bottom-padded" :gutter="20">
-        <el-col :span="6">
+      <SpFilterForm :model="params" @onSearch="onSearch" @onReset="onReset">
+        <SpFilterFormItem prop="keywords" label="商品名称">
           <el-input
             v-model="params.keywords"
             style="width: 100%"
             size="mini"
             placeholder="请输入商品名称"
           >
-            <el-button slot="append" icon="el-icon-search" @click="goodsSearch" />
           </el-input>
-        </el-col>
-        <el-col :span="6">
+        </SpFilterFormItem>
+        <SpFilterFormItem prop="status" label="状态">
           <el-select v-model="status" size="mini" clearable placeholder="请选择">
             <el-option
               v-for="item in statusOptions"
@@ -21,20 +20,16 @@
               :value="item.value"
             />
           </el-select>
-        </el-col>
-      </el-row>
-      <el-row :gutter="20">
-        <el-col :span="24">
-          <el-button-group>
-            <el-button type="primary" size="mini" @click="showChangeRebateType()">
-              批量设置返佣任务制
-            </el-button>
-            <el-button size="mini" @click="handleBatchChangeStatus()"> 批量设置返佣状态 </el-button>
-          </el-button-group>
-        </el-col>
-      </el-row>
+        </SpFilterFormItem>
+      </SpFilterForm>
+      <div class="action-container">
+        <el-button type="primary" size="mini" @click="showChangeRebateType()">
+          批量设置返佣任务制
+        </el-button>
+        <el-button size="mini" @click="handleBatchChangeStatus()"> 批量设置返佣状态 </el-button>
+      </div>
     </div>
-    <el-tabs v-model="activeName" type="border-card" @tab-click="handleClick">
+    <el-tabs v-model="activeName" type="card" @tab-click="handleClick">
       <el-tab-pane
         v-for="(item, index) in tabList"
         :key="index"
@@ -366,7 +361,7 @@
         <el-button type="primary" @click="handleBatchChange">确 定</el-button>
       </span>
     </el-dialog>
-  </div>
+  </SpPage>
 </template>
 <script>
 import axios from 'axios'
@@ -531,8 +526,16 @@ export default {
         this.changeRebateType = this.activeName
       }
     },
-    goodsSearch() {
+    onSearch() {
       this.params.page = 1
+      this.getGoodsList()
+    },
+    onReset () {
+      this.params = {
+        item_type: 'normal',
+        page: 1,
+        keywords: ''
+      }
       this.getGoodsList()
     },
     switchStatusChange(data) {

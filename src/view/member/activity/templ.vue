@@ -1,7 +1,7 @@
 <template lang="html">
-  <section class="section section-white">
+  <section class="section section-white page-activity-templ">
     <div v-for="item in list">
-      <div class="section-header with-border">
+      <div class="templ-title">
         {{ item.name }} &nbsp; <small>{{ item.desc }}</small>
       </div>
       <div class="content-padded">
@@ -75,10 +75,27 @@ export default {
 </script>
 
 <style scoped lang="scss">
-.tip {
-  padding: 16px;
-  background-color: #ecf8ff;
-  border-radius: 4px;
-  border-left: 5px solid #50bfff;
+.page-activity-templ {
+  .tip {
+    padding: 16px;
+    background-color: #ecf8ff;
+    border-radius: 4px;
+    border-left: 5px solid #50bfff;
+  }
+  .view-flex {
+    display: flex;
+  }
+  .view-flex-item {
+    flex:1;
+  }
+  .templ-title {
+    padding: 10px 15px;
+  }
+  .content-padded {
+    padding: 10px;
+  }
+}
+.page-activity-templ ::v-deep .el-row {
+  margin-bottom: 10px
 }
 </style>

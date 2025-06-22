@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <SpPage>
     <template
       v-if="
         $route.path.indexOf('detail') === -1 &&
@@ -29,7 +29,7 @@
       </el-tabs>
     </template>
     <router-view />
-  </div>
+  </SpPage>
 </template>
 
 <script>

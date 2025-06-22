@@ -86,9 +86,80 @@ const routes = [
           aliasName: 'datamessage',
           icon: 'icon-products',
           title: '短信服务',
-          permissions: ['setting.systemsetting.datamessage']
+        permissions: ['setting.systemsetting.datamessage']
         },
-        component: () => import('@/view/base/shortmessage/index')
+        component: () => import('@/view/base/shortmessage/index'),
+        children: [
+          {
+            path: 'ali_sms',
+            name: '阿里短信',
+            component: () => import('@/view/base/shortmessage/ali_sms'),
+            children: [
+              {
+                path: '/',
+                name: '基础配置',
+                meta: 'base_config',
+                component: () => import('@/view/base/shortmessage/cpn/base_config')
+              },
+              {
+                path: 'send_sms',
+                name: '发送短信',
+                meta: 'send_sms',
+                component: () => import('@/view/base/shortmessage/cpn/send_sms')
+              },
+              {
+                path: 'sms_signatures',
+                name: '短信签名',
+                component: () => import('@/view/base/shortmessage/cpn/sms_signatures'),
+                meta: 'sms_signatures',
+                children: [
+                  {
+                    path: 'edit',
+                    component: () => import('@/view/base/shortmessage/cpn/sms_signatures_edit'),
+                    meta: 'sms_signatures'
+                  }
+                ]
+              },
+              {
+                path: 'sms_template',
+                name: '短信模板',
+                component: () => import('@/view/base/shortmessage/cpn/sms_template'),
+                meta: 'sms_template',
+                children: [
+                  {
+                    path: 'edit',
+                    component: () => import('@/view/base/shortmessage/cpn/sms_template_edit'),
+                    meta: 'sms_template'
+                  }
+                ]
+              },
+              {
+                path: 'sms_sendLog',
+                name: '短信发送记录',
+                component: () => import('@/view/base/shortmessage/cpn/sms_sendLog'),
+                meta: 'sms_sendLog'
+              },
+              {
+                path: 'sms_MassLog',
+                name: '短信群发送记录',
+                component: () => import('@/view/base/shortmessage/cpn/sms_MassLog'),
+                meta: 'sms_MassLog',
+                children: [
+                  {
+                    path: 'edit',
+                    component: () => import('@/view/base/shortmessage/cpn/sms_MassLog_edit'),
+                    meta: 'sms_MassLog'
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            path: 'shopex_sms',
+            name: '商派短信',
+            component: () => import('@/view/base/shortmessage/shopex_sms')
+          }
+        ]
       },
       {
         name: `systemConfigPrinting`,

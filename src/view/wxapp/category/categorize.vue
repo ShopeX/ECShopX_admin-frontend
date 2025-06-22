@@ -1,5 +1,7 @@
 <style scoped lang="scss">
 .categorize {
+  display: flex;
+  justify-content: space-between;
   margin-bottom: 24px;
 }
 
@@ -10,14 +12,18 @@
 </style>
 
 <template>
-  <div>
+  <SpPage>
     <SpPlatformTip h5 app alipay />
-    <div class="categorize">
-      分类样式：
-      <el-radio-group v-model="classify">
-        <el-radio :label="true">直接加购</el-radio>
-        <el-radio :label="false">平铺</el-radio>
-      </el-radio-group>
+    <div class="categorize ">
+      <div> 分类样式：
+        <el-radio-group v-model="classify">
+          <el-radio :label="true">直接加购</el-radio>
+          <el-radio :label="false">平铺</el-radio>
+        </el-radio-group>
+      </div>
+      <section class="content-padded-s section-white content-center">
+        <el-button class="btn-save" type="primary" @click="saveConfig"> 保存 </el-button>
+      </section>
     </div>
     <div v-if="!classify">
       是否开启自定义分类：
@@ -26,10 +32,8 @@
 
     <addCartas v-if="classify" />
     <index v-if="!classify && addCar" ref="indexTile" />
-    <section class="content-padded-s section-white content-center">
-      <el-button class="btn-save" type="primary" @click="saveConfig"> 保存 </el-button>
-    </section>
-  </div>
+
+  </SpPage>
 </template>
 
 <script>
@@ -50,7 +54,7 @@ export default {
     }
   },
   computed: {
-    ...mapGetters(['wheight', 'template_name'])
+    ...mapGetters([ 'template_name'])
   },
   mounted() {
     this.feath()

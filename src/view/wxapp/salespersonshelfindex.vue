@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <SpPage>
     <div v-if="$route.path.indexOf('_detail') === -1">
       <el-dialog
         :visible.sync="template_dialog"
@@ -16,7 +16,7 @@
       </el-dialog>
     </div>
     <router-view />
-  </div>
+  </SpPage>
 </template>
 <script>
 import { mapGetters } from 'vuex'

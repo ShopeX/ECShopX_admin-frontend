@@ -5,13 +5,9 @@
 }
 </style>
 <template>
-  <div>
+  <SpRouterView>
+  <SpPage>
     <div
-      v-if="
-        $route.path.indexOf('detail') === -1 &&
-        $route.path.indexOf('approve') === -1 &&
-        $route.path.indexOf('info') === -1
-      "
     >
       <SpFilterForm :model="formQuery" @onSearch="onSearch" @onReset="onSearch">
         <SpFilterFormItem prop="name" label="团长姓名:">
@@ -53,8 +49,8 @@
         @onSubmit="onResloveSubmit"
       />
     </div>
-    <router-view />
-  </div>
+  </SpPage>
+  </SpRouterView> 
 </template>
 
 <script>

@@ -1,4 +1,5 @@
 <template>
+  <SpPage>
   <div class="container">
     <SpPlatformTip />
 
@@ -29,6 +30,7 @@
       </div>
     </div>
   </div>
+  </SpPage>
 </template>
 
 <script>

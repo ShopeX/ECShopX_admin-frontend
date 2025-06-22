@@ -1,7 +1,8 @@
 <template>
-  <div class="section-white">
-    <div v-loading="loading" class="detail-info">
-      <el-timeline v-if="list.length > 0" :reverse="false">
+  <SpPage title="物流信息">
+    <div class="section-white">
+      <div v-loading="loading" class="detail-info">
+        <el-timeline v-if="list.length > 0" :reverse="false">
         <el-timeline-item
           v-for="(key, index) in list"
           :key="index"
@@ -12,8 +13,9 @@
         </el-timeline-item>
       </el-timeline>
       <p v-else>目前暂无物流信息~</p>
+      </div>
     </div>
-  </div>
+  </SpPage>
 </template>
 
 <style scoped lang="scss" type="text/css">

@@ -1,4 +1,5 @@
 <template>
+  <SpPage>
   <div class="zyk_adapay_account_detail">
     <el-descriptions
       :column="2"
@@ -212,6 +213,7 @@
       </template>
     </el-descriptions>
   </div>
+</SpPage>
 </template>
 
 <script>

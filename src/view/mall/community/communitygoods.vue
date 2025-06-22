@@ -4,6 +4,7 @@
 }
 </style>
 <template>
+  <SpPage>
   <div class="page-mall-communitygoods">
     <SpFilterForm :model="params" @onSearch="onSearch" @onReset="onSearch">
       <SpFilterFormItem prop="keywords" label="商品名称:">
@@ -184,6 +185,7 @@
       @onSubmit="onSendNumSubmit"
     />
   </div>
+  </SpPage>
 </template>
 <script>
 import { mapGetters } from 'vuex'

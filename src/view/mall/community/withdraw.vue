@@ -11,7 +11,7 @@
 }
 </style>
 <template>
-  <div>
+  <SpPage>
     <div v-if="$route.path.indexOf('detail') === -1">
       <SpFilterForm :model="formQuery" @onSearch="onSearch" @onReset="onSearch">
         <SpFilterFormItem prop="status" label="提现状态:">
@@ -79,7 +79,7 @@
       />
     </div>
     <router-view />
-  </div>
+  </SpPage>
 </template>
 
 <script>

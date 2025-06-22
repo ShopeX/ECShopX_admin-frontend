@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <SpPage>
     <el-tabs v-model="activeName" type="card" @tab-click="handleClick">
       <el-tab-pane v-if="!isHfpay" label="微信支付配置" name="wxpay">
         <wxpayTemplates />
@@ -29,7 +29,7 @@
         <pointpay />
       </el-tab-pane> -->
     </el-tabs>
-  </div>
+  </SpPage>
 </template>
 <script>
 import alipayTemplates from './payment/alipay'

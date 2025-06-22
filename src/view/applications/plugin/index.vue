@@ -21,9 +21,10 @@
 </style>
 
 <template>
-  <SpRouterView>
-    <el-row v-if="!VERSION_IN_PURCHASE()" :gutter="20">
-      <el-col v-for="(item, index) in appList" :key="`app-item__${index}`" :span="8">
+  <SpPage>
+    <SpRouterView>
+      <el-row v-if="!VERSION_IN_PURCHASE()" :gutter="20">
+        <el-col v-for="(item, index) in appList" :key="`app-item__${index}`" :span="8">
         <div class="app-item">
           <div class="app-logo">
             <el-image :src="require(`@/assets/img/ectapp/${item.key}.png`)" />
@@ -45,8 +46,9 @@
           </div>
         </div>
       </el-col>
-    </el-row>
-  </SpRouterView>
+      </el-row>
+    </SpRouterView>
+  </SpPage>
 </template>
 
 <script>

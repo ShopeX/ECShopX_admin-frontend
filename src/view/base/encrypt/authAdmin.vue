@@ -1,5 +1,6 @@
 <template>
   <!-- 申请脱敏 -->
+   <SpPage>
   <div class="zyk_authAdmin">
     <el-row>
       <el-col :span="24">
@@ -84,6 +85,7 @@
       url="/datapass"
     />
   </div>
+</SpPage>
 </template>
 
 <script>

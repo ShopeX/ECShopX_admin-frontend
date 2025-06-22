@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <SpPage>
     <div v-if="$route.path.indexOf('detail') === -1">
       <SpPlatformTip h5 app alipay />
       <el-row :gutter="20">
@@ -7,7 +7,7 @@
           <el-button type="primary" icon="plus" @click="openDialog()"> 添加分类模版页面 </el-button>
         </el-col>
       </el-row>
-      <el-table v-loading="loading" :data="list" :height="wheight - 140">
+      <el-table v-loading="loading" :data="list" :height="- 140">
         <el-table-column prop="id" label="页面id" />
         <el-table-column prop="page_name" label="页面名称" />
         <el-table-column label="是否启用">
@@ -135,7 +135,7 @@
       </el-dialog>
     </div>
     <router-view />
-  </div>
+  </SpPage>
 </template>
 <script>
 import { mapGetters } from 'vuex'
@@ -179,7 +179,7 @@ export default {
     }
   },
   computed: {
-    ...mapGetters(['wheight', 'template_name'])
+    ...mapGetters([ 'template_name'])
   },
   mounted() {
     this.fetchPageList()
@@ -219,7 +219,7 @@ export default {
     temDialog(id, type) {
       // this.pageForm.id = id
       // this.template_dialog = true
-      this.$router.push(`/wxapp/manage/decorate?id=${id}&scene=1006`)
+      this.$router.push(`/decoration/mobile/home-template/edit?id=${id}&scene=1006`)
     },
     closeDialog() {
       this.template_dialog = false

@@ -1,4 +1,5 @@
 <template>
+  <SpPage>
   <div class="authory-box">
     <SpRouterView>
       <SpFilterForm :model="queryParams" @onSearch="onSearch" @onReset="onSearch">
@@ -39,6 +40,7 @@
       />
     </SpRouterView>
   </div>
+</SpPage>
 </template>
 <script>
 import moment from 'moment'

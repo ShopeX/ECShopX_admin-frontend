@@ -1,6 +1,8 @@
 <template>
-  <div>
-    <div v-if="$route.path.indexOf('editor') === -1">
+
+<SpRouterView>
+  <SpPage>
+    <div >
       <div class="action-container">
         <el-button type="primary" icon="plus" @click="addTemplates"> 新增运费模板 </el-button>
       </div>
@@ -22,8 +24,9 @@
         </el-tab-pane>
       </el-tabs>
     </div>
-    <router-view />
-  </div>
+  </SpPage>
+
+</SpRouterView>
 </template>
 
 <script>

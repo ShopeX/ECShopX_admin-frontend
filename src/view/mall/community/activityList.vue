@@ -1,4 +1,5 @@
 <template>
+  <SpPage>
   <div class="page-body">
     <div v-if="$route.path.indexOf('detail') === -1 && $route.path.indexOf('process') === -1">
       <SpFilterForm :model="params" @onSearch="onSearch" @onReset="onSearch">
@@ -104,7 +105,8 @@
       </el-tabs>
     </div>
     <router-view />
-  </div>
+    </div>
+  </SpPage>
 </template>
 <script>
 import { mapGetters } from 'vuex'

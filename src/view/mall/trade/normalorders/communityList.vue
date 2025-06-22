@@ -1,7 +1,9 @@
 <template>
-  <div class="page-body">
-    <div v-if="$route.path.indexOf('detail') === -1 && $route.path.indexOf('process') === -1">
-      <SpFilterForm :model="params" @onSearch="onSearch" @onReset="onSearch">
+  <SpPage>
+    <SpRouterView >
+    <div class="page-body">
+      <div>
+        <SpFilterForm :model="params" @onSearch="onSearch" @onReset="onSearch">
         <SpFilterFormItem prop="mobile" label="手机号:">
           <el-input v-model="params.mobile" placeholder="请输入客户手机号码" />
         </SpFilterFormItem>
@@ -137,13 +139,13 @@
           </el-button>
           <el-dropdown-menu slot="dropdown">
             <el-dropdown-item>
-              <export-tip @exportHandle="exportInvoice"> 未开票订单 </export-tip>
+              <div @click="exportInvoice"> 未开票订单 </div>
             </el-dropdown-item>
             <el-dropdown-item>
-              <export-tip @exportHandle="exportDataMaster"> 主订单 </export-tip>
+              <div @click="exportDataMaster"> 主订单 </div>
             </el-dropdown-item>
             <el-dropdown-item>
-              <export-tip @exportHandle="exportDataNormal"> 子订单 </export-tip>
+              <div @click="exportDataNormal"> 子订单 </div>
             </el-dropdown-item>
           </el-dropdown-menu>
         </el-dropdown>
@@ -391,8 +393,9 @@
         @onSubmit="refundSubmit"
       />
     </div>
-    <router-view />
   </div>
+  </SpRouterView>
+</SpPage>
 </template>
 <script>
 import { mapGetters } from 'vuex'

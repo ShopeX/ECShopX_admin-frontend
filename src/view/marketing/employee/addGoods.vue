@@ -51,6 +51,7 @@
 }
 </style>
 <template>
+  <SpPage title="添加活动商品">
   <div class="marketing-employee-addgoods">
     <el-card class="el-card--normal" header="活动商品">
       <SpForm
@@ -345,6 +346,7 @@
       @onSubmit="onPatchChangeSubmit"
     />
   </div>
+</SpPage>
 </template>
 
 <script>

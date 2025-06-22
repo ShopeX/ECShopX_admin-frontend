@@ -1,4 +1,5 @@
 <template>
+  <SpPage>
   <div class="zyk_adapay_withdraw">
     <el-card class="box-card" shadow="never">
       <div slot="header" class="clearfix">
@@ -105,6 +106,7 @@
       </div>
     </el-card>
   </div>
+</SpPage>
 </template>
 
 <script>

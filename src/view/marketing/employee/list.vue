@@ -11,7 +11,7 @@
 }
 </style>
 <template>
-  <div>
+  <SpPage>
     <SpFilterForm :model="queryForm" @onSearch="onSearch" @onReset="onSearch">
       <SpFilterFormItem prop="name" label="活动名称:">
         <el-input v-model="queryForm.name" placeholder="活动名称关键词" />
@@ -83,7 +83,7 @@
       }"
       url="/employeepurchase/activities"
     />
-  </div>
+  </SpPage>
 </template>
 
 <script>

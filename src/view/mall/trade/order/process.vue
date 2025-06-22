@@ -1,4 +1,5 @@
 <template>
+  <SpPage>
   <div class="section-white">
     <div v-loading="loading" class="detail-info">
       <el-timeline :reverse="false">
@@ -39,6 +40,7 @@
       </el-timeline>
     </div>
   </div>
+</SpPage>
 </template>
 
 <style scoped lang="scss" type="text/css">

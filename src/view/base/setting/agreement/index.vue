@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <SpPage>
     <div v-if="!VERSION_SHUYUN" class="agreement">
       <p>商派产品许可协议</p>
 
@@ -498,7 +498,7 @@
 
       <p>7.4 数云保留对此协议的最终解释权，任何站点使用本软件则表示默认接受此协议。</p>
     </div>
-  </div>
+  </SpPage>
 </template>
 
 <script>

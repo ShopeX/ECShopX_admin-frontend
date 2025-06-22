@@ -1,4 +1,5 @@
 <template>
+  <SpPage>
   <el-tabs
     v-model="activeName"
     type="card"
@@ -156,6 +157,7 @@
       </el-form>
     </el-tab-pane>
   </el-tabs>
+  </SpPage>
 </template>
 <script>
 import {

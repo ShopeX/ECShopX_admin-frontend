@@ -5,7 +5,7 @@
 }
 </style>
 <template>
-  <div>
+  <SpPage>
     <div v-if="$route.path.indexOf('detail') === -1">
       <SpFilterForm :model="formQuery" @onSearch="onSearch" @onReset="onSearch">
         <SpFilterFormItem prop="name" label="团长姓名:">
@@ -45,7 +45,7 @@
         @onSubmit="onResloveSubmit"
       />
     </div>
-  </div>
+  </SpPage>
 </template>
 
 <script>

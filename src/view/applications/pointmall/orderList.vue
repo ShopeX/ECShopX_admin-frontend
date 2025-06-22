@@ -1,8 +1,9 @@
 <template>
-  <div class="">
-    <div v-if="$route.path.indexOf('detail') === -1">
-      <el-row class="filter-header" :gutter="20">
-        <el-col>
+  <SpPage>
+    <div class="">
+      <div v-if="$route.path.indexOf('detail') === -1">
+        <el-row class="filter-header" :gutter="20">
+        <el-col :span="12">
           <!-- <shop-select v-if="$store.getters.login_type != 'distributor'" distributors  @update="storeSearch"></shop-select> -->
           <el-date-picker
             v-model="create_time"
@@ -32,6 +33,9 @@
           <!-- <el-input class="input-m" placeholder="导购员手机号" v-model="salesman_mobile">
             <el-button slot="append" icon="el-icon-search" @click="numberSearch"></el-button>
           </el-input> -->
+       
+        </el-col>
+        <el-col :span="12">
           <el-input v-model="identifier" class="input-m" placeholder="手机号/订单号">
             <el-button slot="append" icon="el-icon-search" @click="numberSearch" />
           </el-input>
@@ -679,6 +683,7 @@
     </div>
     <router-view />
   </div>
+</SpPage>
 </template>
 <script>
 import { mapGetters } from 'vuex'

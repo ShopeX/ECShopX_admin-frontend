@@ -1,4 +1,5 @@
 <template>
+  <SpPage>
   <el-tabs
     v-model="activeName"
     type="border-card"
@@ -91,6 +92,7 @@
       </div>
     </el-tab-pane>
   </el-tabs>
+</SpPage>
 </template>
 <script>
 import { getDomainH5Setting, setDomainSetting } from '@/api/company'

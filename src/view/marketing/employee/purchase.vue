@@ -105,9 +105,30 @@
 }
 </style>
 <template>
-  <div class="marketing-employee-purchase">
-    <el-card class="el-card--normal" header="基础信息">
-      <SpForm
+  <SpPage title="员工购买活动">
+    <template slot="page-header">
+      <div class="footer-container text-right">
+      <el-button
+        @click="
+          () => {
+            this.$router.go(-1)
+          }
+        "
+      >
+        取消
+      </el-button>
+      <el-button
+        type="primary"
+        :disabled="activityStatus == 'cancel' || activityStatus == 'over'"
+        @click="onSubmitForm"
+      >
+        保存
+      </el-button>
+    </div>
+    </template>
+    <div class="marketing-employee-purchase">
+      <el-card class="el-card--normal" header="基础信息">
+        <SpForm
         ref="formBase"
         v-model="formBase"
         class="base-form"
@@ -126,25 +147,9 @@
         :submit="false"
       />
     </el-card>
-    <div class="footer-container">
-      <el-button
-        @click="
-          () => {
-            this.$router.go(-1)
-          }
-        "
-      >
-        取消
-      </el-button>
-      <el-button
-        type="primary"
-        :disabled="activityStatus == 'cancel' || activityStatus == 'over'"
-        @click="onSubmitForm"
-      >
-        保存
-      </el-button>
-    </div>
+   
   </div>
+  </SpPage>
 </template>
 
 <script>

@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <SpPage>
     <SpPlatformTip h5 app alipay />
     <el-form ref="form" :model="form" label-position="left" label-width="100px">
       <div class="section-body">
@@ -47,7 +47,7 @@
         <el-button v-loading="loading" type="primary" @click="onSubmit"> 保存 </el-button>
       </div>
     </el-form>
-  </div>
+  </SpPage>
 </template>
 
 <script>

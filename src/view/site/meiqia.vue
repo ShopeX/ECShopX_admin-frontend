@@ -7,7 +7,7 @@
 </style>
 
 <template>
-  <div>
+  <SpPage>
     <SpPlatformTip h5 app alipay />
     <SpForm
       ref="form"
@@ -29,7 +29,7 @@
         保存
       </el-button>
     </div>
-  </div>
+  </SpPage>
 </template>
 
 <script>

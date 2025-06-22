@@ -5,7 +5,7 @@
       :data="priceTemplatesList"
       :span-method="objectSpanMethod"
       border
-      :height="wheight - 170"
+      :height=" - 170"
     >
       <el-table-column width="50" prop="template_id" label="ID" />
       <el-table-column width="150" prop="name" label="运费模板名称" />
@@ -72,9 +72,6 @@ export default {
         pageSize: 20
       }
     }
-  },
-  computed: {
-    ...mapGetters(['wheight'])
   },
   watch: {
     getStatus(val) {

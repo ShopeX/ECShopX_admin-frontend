@@ -21,18 +21,9 @@
 }
 </style>
 <template>
-  <div>
-    <!-- form: {{ form }} -->
-    <SpForm
-      ref="form"
-      v-model="form"
-      class="sale-after-form"
-      :form-list="formList"
-      :submit="false"
-      @onSubmit="onSubmit"
-    />
-
-    <div class="footer-container">
+  <SpPage title="售后申请">
+    <template slot="page-header">
+      <div class="text-right">
       <el-button
         @click="
           () => {
@@ -53,7 +44,19 @@
         保存
       </el-button>
     </div>
-  </div>
+    </template>
+    <!-- form: {{ form }} -->
+    <SpForm
+      ref="form"
+      v-model="form"
+      class="sale-after-form"
+      :form-list="formList"
+      :submit="false"
+      @onSubmit="onSubmit"
+    />
+
+
+  </SpPage>
 </template>
 
 <script>

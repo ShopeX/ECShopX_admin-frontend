@@ -513,7 +513,7 @@ $txt-placeholder: #f5f5f7;
       </el-switch> -->
       <section
         class="section section-white category-view-warp"
-        :style="'height: ' + (wheight - 160) + 'px;'"
+        :style="'height: ' + (160) + 'px;'"
       >
         <!-- 模板分类微缩展示 -->
         <div class="category-type-view">
@@ -1124,28 +1124,28 @@ export default {
     }
   },
   computed: {
-    ...mapGetters(['wheight', 'template_name'])
+    ...mapGetters(['template_name'])
   },
   mounted() {
     // this.custom()
     let filter = { template_name: this.template_name, version: 'v1.0.1', page_name: 'category' }
     getParamByTempName(filter).then(res => {
-      if (res.data.data.list.length !== 0) {
+      if (res.data.data?.list?.length !== 0) {
         let results = res.data.data.list[0].params
         if (!results.hasSeries) {
-          results.data.map(item => {
-            item.children.map(child => {
+          results.data?.map(item => {
+            item.children?.map(child => {
               if (!child.children) {
                 Object.assign(child, { children: [] })
               }
             })
           })
           this.form = results
-          this.editableData = results.data
+          this.editableData = results.data || []
         } else {
-          results.data.map(item => {
-            item.content.map(series => {
-              series.children.map(child => {
+          results.data?.map(item => {
+            item.content?.map(series => {
+              series.children?.map(child => {
                 if (!child.children) {
                   Object.assign(child, { children: [] })
                 }
@@ -1153,9 +1153,9 @@ export default {
             })
           })
           this.form = results
-          this.series = results.data
-          this.editableData = this.series[0].content
-          this.editableSeries = results.data[0].name
+          this.series = results.data || []
+          this.editableData = this.series[0]?.content || []
+          this.editableSeries = results.data[0]?.name || ''
         }
       }
     })
@@ -1498,21 +1498,21 @@ export default {
     },
     initCategory(data) {
       let categorys = []
-      data.map(item => {
+      data?.map(item => {
         let fitem = {
           value: item.category_id,
           label: item.category_name
         }
         if (item.children.length) {
           Object.assign(fitem, { children: [] })
-          item.children.map(child => {
+          item.children?.map(child => {
             let citem = {
               value: child.category_id,
               label: child.category_name
             }
             if (child.children.length) {
               Object.assign(citem, { children: [] })
-              child.children.map(grandson => {
+              child.children?.map(grandson => {
                 let gitem = {
                   value: grandson.category_id,
                   label: grandson.category_name

@@ -1,7 +1,9 @@
 <template>
+  <!-- <SpRouterView> -->
+  <SpPage>
   <div class="smsAccountPage">
     <div
-      v-if="$route.path.indexOf('shopex_sms') === -1 && $route.path.indexOf('ali_sms') === -1"
+     v-if="$route.path.indexOf('ali_sms') === -1 && $route.path.indexOf('shopex_sms') === -1"
       class="smsBox"
     >
       <section
@@ -19,9 +21,11 @@
           {{ aliyunsms_status ? '未启用' : '已启用' }}
         </div>
       </section>
+      </div>
+      <router-view />
     </div>
-    <router-view />
-  </div>
+  </SpPage>
+  <!-- </SpRouterView> -->
 </template>
 
 <script>
@@ -46,11 +50,11 @@ export default {
     }
   },
   created() {
-    if (this.VERSION_SHUYUN) {
-      this.$router.push({
-        path: this.matchRoutePath('shopex_sms')
-      })
-    }
+    // if (this.VERSION_SHUYUN) {
+    //   this.$router.push({
+    //     path: this.matchRoutePath('shopex_sms')
+    //   })
+    // }
   },
   async mounted() {
     const result = await getaliSmsStatus()

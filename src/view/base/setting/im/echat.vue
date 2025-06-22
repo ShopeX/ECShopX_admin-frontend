@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <SpPage>
     <SpPlatformTip h5 app alipay />
     <el-tabs v-model="activeName" type="card">
       <el-tab-pane
@@ -32,7 +32,7 @@
         </template>
       </el-tab-pane>
     </el-tabs>
-  </div>
+  </SpPage>
 </template>
 
 <script>

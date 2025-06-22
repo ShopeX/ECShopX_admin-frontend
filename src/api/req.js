@@ -91,7 +91,16 @@ function createAxios(inst) {
         config: { showError }
       } = res
       if (status === 200) {
+
+        console.log('data',data.data)
         if (data.data) {
+          console.log('data',data.data)
+          if(data.data.status_code){
+            if (showError) {
+              errorToast(data.data)
+            }
+            return Promise.reject(data)
+          }
           return data.data
         } else {
           if (showError) {

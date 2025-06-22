@@ -1,4 +1,5 @@
 <template>
+  <SpPage>
   <SpRouterView>
     <SpFilterForm :model="params" @onSearch="onSearch" @onReset="onSearch">
       <SpFilterFormItem prop="mobile" label="手机号:">
@@ -87,13 +88,13 @@
         </el-button>
         <el-dropdown-menu slot="dropdown">
           <el-dropdown-item>
-            <export-tip @exportHandle="exportInvoice"> 未开票订单 </export-tip>
+            <div @click="exportInvoice"> 未开票订单 </div>
           </el-dropdown-item>
           <el-dropdown-item>
-            <export-tip @exportHandle="exportDataMaster"> 主订单 </export-tip>
+            <div @click="exportDataMaster"> 主订单 </div>
           </el-dropdown-item>
           <el-dropdown-item>
-            <export-tip @exportHandle="exportDataNormal"> 子订单 </export-tip>
+            <div @click="exportDataNormal"> 子订单 </div>
           </el-dropdown-item>
         </el-dropdown-menu>
       </el-dropdown>
@@ -349,7 +350,8 @@
       :form-list="changePriceFormList"
       @onSubmit="changePriceSubmit"
     />
-  </SpRouterView>
+    </SpRouterView>
+  </SpPage>
 </template>
 <script>
 import { mapGetters } from 'vuex'

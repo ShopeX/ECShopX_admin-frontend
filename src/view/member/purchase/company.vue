@@ -19,7 +19,7 @@
 }
 </style>
 <template>
-  <div>
+  <SpPage>
     <SpFilterForm :model="queryForm" @onSearch="onSearch" @onReset="onSearch">
       <SpFilterFormItem prop="name" label="企业名称:">
         <el-input v-model="queryForm.name" placeholder="请输入企业名称" />
@@ -96,7 +96,7 @@
     />
 
     <canvas id="qurcodeCanvas" class="qurcode-canvas" />
-  </div>
+  </SpPage>
 </template>
 
 <script>

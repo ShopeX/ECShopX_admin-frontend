@@ -1,4 +1,5 @@
 <template>
+  <SpPage>
   <div v-loading="loading">
     <el-form
       ref="form"
@@ -47,6 +48,7 @@
       </div>
     </el-form>
   </div>
+</SpPage>
 </template>
 
 <script>

@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <SpPage>
     <SpFilterForm :model="params" @onSearch="onSearch" @onReset="onSearch">
       <SpFilterFormItem prop="role_name" label="角色名称:">
         <el-input v-model="params.role_name" placeholder="请输入角色名称" />
@@ -10,7 +10,7 @@
       <el-button type="primary" icon="plus" @click="addRoleLabels"> 添加角色 </el-button>
     </div>
 
-    <el-table v-loading="loading" border :data="rolesList" :height="wheight - 160">
+    <el-table v-loading="loading" border :data="rolesList" :height=" - 160">
       <el-table-column prop="role_name" label="角色名称" />
       <el-table-column prop="permission" label="角色权限">
         <template slot-scope="scope">
@@ -69,7 +69,7 @@
       </div>
     </el-dialog>
     <!-- 添加、编辑基础物料-结束 -->
-  </div>
+  </SpPage>
 </template>
 <script>
 import { mapGetters } from 'vuex'
@@ -107,10 +107,6 @@ export default {
         role_name: ''
       }
     }
-  },
-
-  computed: {
-    ...mapGetters(['wheight'])
   },
   mounted() {
     this.fetchList()

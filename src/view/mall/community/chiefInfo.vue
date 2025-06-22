@@ -106,7 +106,7 @@ export default {
     const { name, mobile, extraData, applyTime, source, approveTime } = this
     console.log('approve_status', name)
     return (
-      <div>
+      <SpPage>
         <el-card class='el-card--normal'>
           <div slot='header'>团长基本信息</div>
           <el-row class='card-panel'>
@@ -145,7 +145,7 @@ export default {
               </el-row>
             ))}
         </el-card>
-      </div>
+      </SpPage>
     )
   }
 }

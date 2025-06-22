@@ -39,6 +39,7 @@
 </style>
 
 <template>
+  <SpPage>
   <div class="color-style-warp">
     <SpPlatformTip h5 app alipay />
     <div class="form-color">
@@ -72,6 +73,7 @@
       </div>
     </div>
   </div>
+</SpPage> 
 </template>
 
 <script>

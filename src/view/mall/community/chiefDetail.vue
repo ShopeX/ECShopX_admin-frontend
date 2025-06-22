@@ -116,7 +116,7 @@ export default {
     const { name, mobile, extraData, btnActions, approve_status } = this
     console.log('approve_status', approve_status)
     return (
-      <div>
+      <SpPage>
         <el-card class='el-card--normal'>
           <div slot='header'>团长基本信息</div>
           <el-row class='card-panel'>
@@ -166,7 +166,7 @@ export default {
           form-list={this.resloveFormList}
           on-onSubmit={this.onResloveSubmit}
         />
-      </div>
+      </SpPage>
     )
   }
 }

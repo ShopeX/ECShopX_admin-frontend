@@ -1,5 +1,6 @@
 <template>
-  <div class="wxapp-home">
+  <SpRouterView>
+  <SpPage>
     <SpPlatformTip h5 app alipay />
     <div v-if="!isDistributorTemplate" class="shop-header">
       <div v-if="!VERSION_B2C() && !VERSION_IN_PURCHASE()" class="shop-left">
@@ -219,7 +220,8 @@
         @onSubmit="onSubmitTabList"
       />
     </SpDrawer>
-  </div>
+    </SpPage>
+  </SpRouterView>
 </template>
 
 <script>
@@ -1000,7 +1002,11 @@ export default {
   }
 }
 .template-list {
-  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  .template-col {
+    max-width: 250px;
+    min-height: 400px;
+  }
+  grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
   .template-item {
     border-radius: 10px;
     border: 1px solid #eee;

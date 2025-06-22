@@ -1,5 +1,5 @@
 <template>
-  <div class="section section-white">
+  <div class="section section-whit page-registrationrecordetail">
     <el-form
       ref="recorddata"
       :model="recorddata"
@@ -7,10 +7,10 @@
       label-position="right"
       class="demo-ruleForm"
     >
-      <div class="section-header with-border">
-        活动报名信息
-      </div>
-      <div class="section-body">
+      <el-card
+        header="活动报名信息"
+        shadow="naver"
+      > 
         <el-form-item label="活动名称：">
           {{ recorddata.activity_name }}
         </el-form-item>
@@ -90,11 +90,11 @@
             :show-pager="false"
           />
         </el-form-item>
-      </div>
-      <div class="section-header with-border">
-        报名登记信息
-      </div>
-      <div class="section-body">
+      </el-card>
+      <el-card
+        header="报名登记信息"
+        shadow="naver"
+      >
         <el-form-item
           label="审核结果："
           prop="status"
@@ -155,11 +155,12 @@
             </div>
           </el-card>
         </el-form-item>
-      </div>
-      <div class="section-header with-border" v-if="recorddata.status == 'pending' && !IS_DISTRIBUTOR()">
-        活动报名审核
-      </div>
-      <div class="section-body">
+      </el-card>
+      <el-card
+        header="活动报名审核"
+        shadow="naver"
+        v-if="recorddata.status == 'pending' && !IS_DISTRIBUTOR()"
+      >
         <el-form-item
           v-if="recorddata.status == 'pending'"
           label="是否同意："
@@ -175,19 +176,17 @@
             type="textarea"
           />
         </el-form-item>
-      </div>
-      <el-form-item>
-        <el-button
-          v-if="recorddata.status == 'pending'&& !IS_DISTRIBUTOR()"
-          type="primary"
-          @click="submitAction"
-        >
-          提交审核
-        </el-button>
-        <el-button @click="handleCancel">
-          取消
-        </el-button>
-      </el-form-item>
+      </el-card>
+      <el-button
+        v-if="recorddata.status == 'pending'&& !IS_DISTRIBUTOR()"
+        type="primary"
+        @click="submitAction"
+      >
+        提交审核
+      </el-button>
+      <el-button @click="handleCancel">
+        取消
+      </el-button>
     </el-form>
   </div>
 </template>
@@ -312,6 +311,9 @@ export default {
 }
 </script>
 <style scoped lang="scss">
+.page-registrationrecordetail ::v-deep .el-card {
+  margin-bottom: 20px;
+}
 .text {
   font-size: 14px;
 }

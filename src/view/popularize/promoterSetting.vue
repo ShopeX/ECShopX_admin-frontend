@@ -14,7 +14,7 @@
 }
 </style>
 <template>
-  <div class="section section-white">
+  <SpPage class="section section-white">
     <el-form ref="form" :model="form" label-position="right" label-width="82px">
       <div class="section-body">
         <el-form-item label="推广员等级">
@@ -155,7 +155,7 @@
         <el-button type="primary" @click="save"> 保 存 </el-button>
       </div>
     </el-form>
-  </div>
+  </SpPage>
 </template>
 <script>
 import { getPromoterGradeConfig, setPromoterGradeConfig } from '../../api/promotions'

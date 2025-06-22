@@ -5,17 +5,16 @@
 </style>
 
 <template>
-  <div class="distributorAftersalesAddress">
+  <SpPage class="distributorAftersalesAddress">
     <SpPlatformTip h5 app alipay/>
-
-    <el-form :model="searchParams" :inline="true">
-      <el-form-item label="供应商名称">
-        <el-input v-model="searchParams.supplier_name" clearable/>
-      </el-form-item>
-      <el-form-item label="手机号">
-        <el-input v-model="searchParams.mobile" clearable/>
-      </el-form-item>
-      <el-form-item label="审核状态">
+    <SpFilterForm :model="searchParams" @onSearch="onSearch" @onReset="onSearch">
+      <SpFilterFormItem label="供应商名称" prop="supplier_name">
+        <el-input v-model="searchParams.supplier_name" placeholder="请输入供应商名称" clearable/>
+      </SpFilterFormItem>
+      <SpFilterFormItem label="手机号" prop="mobile">
+        <el-input v-model="searchParams.mobile" placeholder="请输入手机号" clearable/>
+      </SpFilterFormItem>
+      <SpFilterFormItem label="审核状态" prop="is_check">
         <el-select v-model="searchParams.is_check" placeholder="请选择" clearable>
           <el-option
               v-for="item in check_options"
@@ -24,51 +23,22 @@
               :value="item.value">
           </el-option>
         </el-select>
-      </el-form-item>
-      <el-form-item>
-        <el-button type="primary" @click="onSearch">搜索</el-button>
-      </el-form-item>
-    </el-form>
+      </SpFilterFormItem>
+    </SpFilterForm>
 
-    <!-- 数据表格 -->
-    <el-table v-loading="tableLoading" :data="dataList" border>
-      <el-table-column prop="supplier_name" label="供应商名称"/>
-      <el-table-column prop="contact" label="负责人"/>
-      <el-table-column prop="mobile" label="手机号"/>
-      <el-table-column prop="login_name" label="登录账号"/>
-      <el-table-column prop="check_state" label="审核状态"/>
-      <el-table-column label="操作">
-        <template slot-scope="scope">
-          <el-button
-              v-if="scope.row.check_state == '审核通过'"
-              type="text"
-              @click="editRow(scope.row)"
-          >
-            修改
-          </el-button>
-          <el-button
-              v-else
-              type="text"
-              @click="editRow(scope.row)"
-          >
-            审核
-          </el-button>
-        </template>
-      </el-table-column>
-    </el-table>
-
-    <div class="content-center content-top-padded">
-      <el-pagination
-          background=""
-          layout="total, sizes, prev, pager, next"
-          :current-page="page.pageIndex"
-          :page-sizes="[10, 20, 50, 100]"
-          :total="page.total"
-          :page-size="page.pageSize"
-          @current-change="onCurrentChange"
-          @size-change="onSizeChange"
-      />
-    </div>
+    <SpFinder
+      ref="finder"
+      url="/supplier/get_supplier_list"
+      fixed-row-action
+      row-actions-width="200px"
+      :other-config="{}"
+      :setting="tableSetting"
+      :hooks="{
+        beforeSearch: beforeSearch
+      }"
+      no-selection
+      row-actions-fixed-align="left"
+    />
 
     <!-- 审核供应商 -->
     <el-dialog
@@ -161,7 +131,7 @@
       </el-form>
     </el-dialog>
 
-  </div>
+  </SpPage>
 </template>
 
 <script>
@@ -191,27 +161,61 @@
           agent_name: '',
           wx_openid: '',
           province: [],
+        },
+        tableSetting: {
+          columns: [
+            { name: '供应商名称', key: 'supplier_name' },
+            { name: '负责人', key: 'contact' },
+            { name: '手机号', key: 'mobile' },
+            { name: '登录账号', key: 'login_name' },
+            { name: '审核状态', key: 'check_state' },
+          ],
+          actions: [
+            {
+              name: '修改',
+              key: 'edit',
+              type: 'button',
+              buttonType: 'text',
+              visible: (row) => {
+                return row.check_state == '审核通过'
+              },
+              action: {
+                type: 'link',
+                handler: ([row]) => {
+                  this.editRow(row)
+                }
+              }
+            },
+            {
+              name: '审核',
+              key: 'review',
+              type: 'button',
+              buttonType: 'text',
+              visible: (row) => {
+                return row.check_state != '审核通过'
+              },
+              action: {
+                type: 'link',
+                handler: ([row]) => {
+                  this.editRow(row)
+                }
+              }
+            },
+          ]
         }
       }
     },
     mounted() {
-      this.fetchList()
     },
     methods: {
-      onSearch() {
-        this.page.pageIndex = 1
-        this.$nextTick(() => {
-          this.fetchList()
-        })
+      beforeSearch(params) {
+        return {
+          ...params,
+          ...this.searchParams
+        }
       },
-      async fetchList() {
-        this.tableLoading = true
-        const {pageIndex: page, pageSize: page_size} = this.page
-        this.searchParams = {...this.searchParams , page, page_size}
-        const {list, total_count} = await this.$api.supplier.getSupplierList(this.searchParams)
-        this.dataList = list
-        this.page.total = total_count
-        this.tableLoading = false
+      onSearch() {
+        this.$refs['finder'].refresh(true)
       },
       async editRow(row) {
         this.editForm = {...row}
@@ -228,7 +232,7 @@
           const {status} = await this.$api.supplier.checkSupplier(this.editForm)
           this.$message.success('保存成功')
           this.editDialog = false
-          this.fetchList()
+          this.$refs['finder'].refresh()
         } catch (e) {
           
         }

@@ -5,7 +5,7 @@
 </style>
 
 <template>
-  <div>
+  <SpPage>
     <template v-if="$route.path.indexOf('detail') === -1 && $route.path.indexOf('editor') === -1">
       <SpFilterForm :model="params" @onSearch="onSearch" @onReset="onReset">
         <SpFilterFormItem prop="tem_name" label="模板名称:">
@@ -33,24 +33,25 @@
           :name="item.activeName"
         >
           <el-table v-loading="loading" border :data="tableList" :height="wheight - 280">
-            <el-table-column prop="id" label="ID" width="100" />
-            <el-table-column prop="tem_name" label="模板名称" width="300" />
-            <el-table-column prop="tem_type" label="模板类型" width="300" />
-            <el-table-column prop="status" label="状态" width="100" />
-            <el-table-column label="操作">
+            <el-table-column label="操作" width="150">
               <template slot-scope="scope">
                 <router-link
-                  class="iconfont icon-edit1"
+                  class="el-icon-edit"
                   :to="{ path: matchRoutePath('editor'), query: { id: scope.row.id } }"
                 />
-                <i class="iconfont icon-search-plus" @click="preview(scope.$index, scope.row)" />
+                <i class="el-icon-zoom-in"  style="margin: 0px 10px;" @click="preview(scope.$index, scope.row)" />
                 <i
                   v-if="scope.row.status == 1"
-                  class="mark iconfont icon-trash-alt1"
+                  class="mark el-icon-delete"
+                  style="color: #ff5000;"
                   @click="deleteAction(scope.$index, scope.row)"
                 />
               </template>
             </el-table-column>
+            <el-table-column prop="id" label="ID" width="100" />
+            <el-table-column prop="tem_name" label="模板名称" width="300" />
+            <el-table-column prop="tem_type" label="模板类型" width="300" />
+            <el-table-column prop="status" label="状态" width="100" />
           </el-table>
           <div class="content-center content-top-padded">
             <el-pagination
@@ -130,7 +131,7 @@
       </el-dialog>
     </template>
     <router-view />
-  </div>
+  </SpPage>
 </template>
 <script>
 import { mapGetters } from 'vuex'

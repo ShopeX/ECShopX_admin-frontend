@@ -331,12 +331,12 @@
               <el-radio :label="3">只用于h5端</el-radio>
             </el-radio-group>
           </el-form-item> -->
-        <el-form-item label=" ">
+        <div>
           <el-button v-if="btnSaveVisible()" type="primary" @click="submitActivityAction()">
             保存
           </el-button>
           <el-button @click.native="handleCancel"> 返回 </el-button>
-        </el-form-item>
+        </div>
       </div>
     </el-form>
     <!--<GoodsSelect :items-visible="itemVisible" :get-status="setItemStatus" :rel-items-ids="relItems" :item-type="form.item_type" @chooseStore="chooseItemsAction" @closeStoreDialog="closeItemDialogAction"></GoodsSelect>-->

@@ -5,7 +5,7 @@
 </style>
 
 <template>
-  <div>
+  <SpPage>
     <template v-if="$route.path.indexOf('editor') === -1">
       <SpPlatformTip h5 app alipay />
 
@@ -224,7 +224,7 @@
       </el-dialog>
     </template>
     <router-view />
-  </div>
+  </SpPage>
 </template>
 <script>
 import { mapGetters } from 'vuex'

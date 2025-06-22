@@ -1,5 +1,5 @@
 <template>
-  <el-form ref="form" :model="form" class="box-set" label-width="120px">
+  <el-form ref="form" :model="form" class="box-set page-fulldiscount" label-width="120px">
     <el-card header="基础信息" shadow="naver">
       <el-form-item
         label="名称"
@@ -983,3 +983,9 @@ export default {
   }
 }
 </script>
+
+<style lang="scss" scoped>
+.page-fulldiscount ::v-deep .el-card {
+  margin-bottom: 20px
+}
+</style>

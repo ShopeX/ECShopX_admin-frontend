@@ -1,34 +1,6 @@
 <template>
   <div>
     <el-table v-loading="loading" :data="groupList" :height="wheight - 240">
-      <el-table-column prop="act_name" label="拼团名称" />
-      <el-table-column label="商品类型" width="150">
-        <template slot-scope="scope">
-          <el-tag v-if="scope.row.group_goods_type == 'services'" type="success">
-            服务类商品
-          </el-tag>
-          <el-tag v-else> 实体类商品 </el-tag>
-        </template>
-      </el-table-column>
-      <el-table-column prop="goods_name" label="拼团商品" />
-      <el-table-column label="拼团有效期">
-        <template slot-scope="scope">
-          {{ scope.row.begin_time | datetime('YYYY-MM-DD HH:mm:ss') }} -
-          {{ scope.row.end_time | datetime('YYYY-MM-DD HH:mm:ss') }}
-        </template>
-      </el-table-column>
-      <el-table-column prop="act_price" label="拼团价格" width="100">
-        <template slot-scope="scope">
-          <span>{{ cursymbol + scope.row.act_price / 100 }}</span>
-        </template>
-      </el-table-column>
-      <el-table-column prop="disabled" label="状态" width="100">
-        <template slot-scope="scope">
-          <span v-if="scope.row.activity_status == 1">未开始</span>
-          <span v-else-if="scope.row.activity_status == 2">进行中</span>
-          <span v-else>已结束</span>
-        </template>
-      </el-table-column>
       <el-table-column label="操作" width="250">
         <template slot-scope="scope">
           <el-button
@@ -68,6 +40,34 @@
           >
             删 除
           </el-button>
+        </template>
+      </el-table-column>
+      <el-table-column prop="act_name" label="拼团名称" />
+      <el-table-column label="商品类型" width="150">
+        <template slot-scope="scope">
+          <el-tag v-if="scope.row.group_goods_type == 'services'" type="success">
+            服务类商品
+          </el-tag>
+          <el-tag v-else> 实体类商品 </el-tag>
+        </template>
+      </el-table-column>
+      <el-table-column prop="goods_name" label="拼团商品" />
+      <el-table-column label="拼团有效期">
+        <template slot-scope="scope">
+          {{ scope.row.begin_time | datetime('YYYY-MM-DD HH:mm:ss') }} -
+          {{ scope.row.end_time | datetime('YYYY-MM-DD HH:mm:ss') }}
+        </template>
+      </el-table-column>
+      <el-table-column prop="act_price" label="拼团价格" width="100">
+        <template slot-scope="scope">
+          <span>{{ cursymbol + scope.row.act_price / 100 }}</span>
+        </template>
+      </el-table-column>
+      <el-table-column prop="disabled" label="状态" width="100">
+        <template slot-scope="scope">
+          <span v-if="scope.row.activity_status == 1">未开始</span>
+          <span v-else-if="scope.row.activity_status == 2">进行中</span>
+          <span v-else>已结束</span>
         </template>
       </el-table-column>
     </el-table>

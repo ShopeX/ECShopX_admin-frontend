@@ -137,11 +137,11 @@
 
       <div class="distributor-btn">
         <div v-if="!IS_DISTRIBUTOR()" class="action-container">
-          <el-button type="primary" icon="ecx-icon icon-xinzeng" @click="dialogOpen()">
+          <el-button type="primary" icon="el-icon-circle-plus" @click="dialogOpen()">
             添加店铺
           </el-button>
 
-          <el-button type="primary" icon="ecx-icon icon-xinzeng" @click="uploadHandleChange()">
+          <el-button type="primary" icon="el-icon-circle-plus" @click="uploadHandleChange()">
             导入店铺
           </el-button>
         </div>

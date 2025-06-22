@@ -1,29 +1,33 @@
 <style scoped lang="scss">
-.upload-box {
-  display: inline-block;
-  border: 1px dashed #c0ccda;
-  border-radius: 6px;
-  height: 107px;
-  width: 308px;
-  cursor: pointer;
-  overflow: hidden;
-}
-.setting_pic {
-  height: 107px;
-  width: 308px;
+.page-bargin {
+  .upload-box {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: 1px dashed #c0ccda;
+    border-radius: 6px;
+    height: 107px;
+    width: 308px;
+    cursor: pointer;
+    overflow: hidden;
+  }
+  .setting_pic {
+    height: 107px;
+    width: 308px;
+  }
 }
 </style>
 
 <template>
-  <div>
+  <SpPage class="page-bargin">
     <SpPlatformTip />
+    <div class="action-container" v-if="activeName == 'list'">
+      <el-button type="primary" icon="el-icon-plus" @click="addBargains">
+        添加助力活动
+      </el-button>
+    </div>
     <el-tabs v-if="$route.path.indexOf('editor') === -1" v-model="activeName" type="card">
       <el-tab-pane label="助力活动管理" name="list">
-        <div class="content-bottom-padded">
-          <el-button type="primary" icon="el-icon-plus" @click="addBargains">
-            添加助力活动
-          </el-button>
-        </div>
         <el-table v-loading="loading" :data="dataList" :height="wheight - 230">
           <el-table-column prop="title" label="活动名称" />
           <el-table-column label="活动时间" width="180">
@@ -55,17 +59,19 @@
             <template slot-scope="scope">
               <i
                 v-if="!scope.row.is_expired"
-                class="iconfont icon-edit1"
+                class="el-icon-edit"
                 @click="editBargains(scope.$index, scope.row)"
               />
               <i
                 v-if="!scope.row.is_expired"
-                class="iconfont icon-user-slash"
+                class="el-icon-delete"
+                style="margin-left: 10px;"
                 @click="terminateBargainsAction(scope.$index, scope.row)"
                 >废除</i
               >
               <i
-                class="mark iconfont icon-trash-alt1"
+                class="mark el-icon-delete"
+                style="margin-left: 10px;color: #ff5000;"
                 @click="deleteBargainsAction(scope.$index, scope.row)"
               />
             </template>
@@ -104,7 +110,7 @@
       </el-tab-pane>
     </el-tabs>
     <router-view />
-  </div>
+  </SpPage>
 </template>
 <script>
 import { mapGetters } from 'vuex'

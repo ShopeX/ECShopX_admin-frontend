@@ -1,5 +1,5 @@
 <template>
-  <el-form ref="form" :model="form" class="box-set" label-width="120px">
+  <el-form ref="form" :model="form" class="box-set page-fullgift" label-width="120px">
     <el-card header="基础信息" shadow="naver">
       <el-form-item
         label="名称"
@@ -1140,17 +1140,22 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.add-gift {
-  display: flex;
-  flex-direction: column;
-
-  .el-icon-plus {
-    margin-top: 10px;
-    width: 72px;
-  }
-  .rel-gift {
-    margin-left: 20px;
-    width: 90px;
+.page-fullgift ::v-deep .el-card {
+  margin-bottom: 20px
+}
+.page-fullgift {
+  .add-gift {
+    display: flex;
+    flex-direction: column;
+  
+    .el-icon-plus {
+      margin-top: 10px;
+      width: 72px;
+    }
+    .rel-gift {
+      margin-left: 20px;
+      width: 90px;
+    }
   }
 }
 </style>

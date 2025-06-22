@@ -1,5 +1,5 @@
 <template>
-  <div class="zyk_coupon">
+  <SpPage class="zyk_coupon">
     <SpRouterView>
       <!-- <div class="top">
         <div class="btn">
@@ -20,9 +20,7 @@
         </SpFilterFormItem>
       </SpFilterForm>
 
-      <div class="action-container">
-        <el-button type="primary" @click="createCoupon"> 创建劵包 </el-button>
-      </div>
+      <el-button type="primary" @click="createCoupon"> 创建劵包 </el-button>
 
       <SpFinder
         ref="finder"
@@ -31,10 +29,11 @@
         :setting="setting"
         no-selection
         :hooks="{ beforeSearch: beforeSearch }"
+        row-actions-fixed-align="left"
         url="/voucher/package/list"
       />
     </SpRouterView>
-  </div>
+  </SpPage>
 </template>
 
 <script>

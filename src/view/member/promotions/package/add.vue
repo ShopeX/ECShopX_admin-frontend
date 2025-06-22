@@ -2,7 +2,7 @@
   <el-form
     ref="form"
     :model="form"
-    class="box-set"
+    class="box-set page-package"
     label-width="120px"
   >
     <el-card
@@ -624,6 +624,9 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+.page-package ::v-deep .el-card {
+  margin-bottom: 20px
+}
 .goods {
   display: flex;
   position: relative;

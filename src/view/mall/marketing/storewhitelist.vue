@@ -7,16 +7,6 @@
 <template>
   <SpPage class="store-wihitelist">
     <SpRouterView>
-      <div class="action-container">
-        <el-button type="primary" icon="ecx-icon icon-xinzeng" @click="clickAddWhiteList()">
-          添加白名单
-        </el-button>
-
-        <el-button type="primary" icon="ecx-icon icon-xinzeng" @click="uploadHandleChange()">
-          导入白名单
-        </el-button>
-      </div>
-
       <SpFilterForm :model="params" @onSearch="onSearch" @onReset="onReset">
         <SpFilterFormItem prop="mobile" label="手机号:">
           <el-input v-model="params.mobile" placeholder="请输入手机号" />
@@ -30,10 +20,16 @@
       </SpFilterForm>
 
       <div class="action-container">
+        <el-button type="primary" icon="el-icon-circle-plus" @click="clickAddWhiteList()">
+          添加白名单
+        </el-button>
+        <el-button type="primary" icon="el-icon-circle-plus" @click="uploadHandleChange()">
+          导入白名单
+        </el-button>
         <export-tip params="distributor_white_list" @exportHandle="handleWhitelistExport">
           <el-button type="primary" plain> 导出 </el-button>
         </export-tip>
-        <el-button type="primary" plain @click="clickDelAllWhiteList()"> 清空白名单 </el-button>
+        <el-button type="primary" icon="el-icon-delete" plain @click="clickDelAllWhiteList()"> 清空白名单 </el-button>
       </div>
 
       <el-table
@@ -42,6 +38,12 @@
         border
         @selection-change="handleSelectionChange"
       >
+        <el-table-column label="操作">
+          <template slot-scope="scope">
+            <el-button type="text" @click="editShopWhite(scope.row)"> 编辑 </el-button>
+            <el-button type="text" @click="delWhitelist(scope.row)"> 删除 </el-button>
+          </template>
+        </el-table-column>
         <el-table-column type="selection" align="center" label="全选" />
         <el-table-column prop="mobile" label="手机号" />
         <el-table-column prop="username" label="姓名" />
@@ -62,12 +64,6 @@
             <span v-else>{{
               scope.row.distributor_info.map(item => item.shop_code).join(',')
             }}</span>
-          </template>
-        </el-table-column>
-        <el-table-column label="操作">
-          <template slot-scope="scope">
-            <el-button type="text" @click="editShopWhite(scope.row)"> 编辑 </el-button>
-            <el-button type="text" @click="delWhitelist(scope.row)"> 删除 </el-button>
           </template>
         </el-table-column>
       </el-table>

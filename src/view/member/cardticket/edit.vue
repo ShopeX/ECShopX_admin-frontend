@@ -1,7 +1,7 @@
 <template>
-  <div>
+  <div class="page-cardticket">
     <el-form ref="form" :rules="rules" :model="form" label-width="110px">
-      <div v-if="!form.card_id && showTab" class="content-center content-bottom-padded">
+      <div v-if="!form.card_id && showTab" style="margin-bottom: 20px;">
         <el-radio-group v-model="form.card_type" @change="handleTypeChange">
           <el-radio-button label="discount"> 折扣券 </el-radio-button>
           <el-radio-button label="cash"> 满减券 </el-radio-button>
@@ -1344,123 +1344,126 @@ export default {
 }
 </script>
 <style scoped lang="scss">
-.card-content {
-  &-head {
-    text-align: center;
-    color: #fff;
-    padding: 20px 15px;
-    font-size: 14px;
-    .price {
-      font-size: 32px;
-    }
-    .validity-date {
-      color: #efefef;
-      font-size: 12px;
-    }
-  }
-  &-body {
-    padding: 20px 15px;
-    min-height: 400px;
-    background: #fff;
-    .barcode-img {
-      width: 160px;
-      height: 80px;
-      margin: 0 auto 15px;
-      img {
-        width: 100%;
-        height: 100%;
-      }
-    }
-    .code-img {
-      width: 120px;
-      height: 118px;
-      margin: 0 auto 15px;
-      img {
-        width: 100%;
-        height: 100%;
-      }
-    }
+.page-cardticket ::v-deep .el-card {
+  margin-bottom: 20px;
+}
+// .card-content {
+//   &-head {
+//     text-align: center;
+//     color: #fff;
+//     padding: 20px 15px;
+//     font-size: 14px;
+//     .price {
+//       font-size: 32px;
+//     }
+//     .validity-date {
+//       color: #efefef;
+//       font-size: 12px;
+//     }
+//   }
+//   &-body {
+//     padding: 20px 15px;
+//     min-height: 400px;
+//     background: #fff;
+//     .barcode-img {
+//       width: 160px;
+//       height: 80px;
+//       margin: 0 auto 15px;
+//       img {
+//         width: 100%;
+//         height: 100%;
+//       }
+//     }
+//     .code-img {
+//       width: 120px;
+//       height: 118px;
+//       margin: 0 auto 15px;
+//       img {
+//         width: 100%;
+//         height: 100%;
+//       }
+//     }
 
-    .txt-title {
-      color: #333;
-      font-weight: bold;
-    }
-    .txt-content {
-      padding-left: 15px;
-      span {
-        margin: 0 5px;
-      }
-    }
-  }
-}
-.bd {
-  border-bottom: 1px dashed #ddd;
-}
-.mb {
-  margin-bottom: 10px;
-}
-.card-edit-detail {
-  background: #fff;
-  input {
-    width: 30%;
-  }
-}
-.affix {
-  position: fixed;
-  width: 320px;
-  overflow: hidden;
-}
-.section-footer {
-  padding: 15px 10px;
-  text-align: center;
-  .with-border {
-    border-top: 1px solid #f8f8f8;
-  }
-}
-.card_article_box .card_article_img {
-  background-color: #fff;
-}
-.media_edit {
-  display: block;
-  position: relative;
-  z-index: 2;
-  float: none;
-  min-width: 800px;
-  margin-left: 340px;
-}
-.tips {
-  margin-left: 2px;
-}
-.el-select {
-  width: 110px;
-}
+//     .txt-title {
+//       color: #333;
+//       font-weight: bold;
+//     }
+//     .txt-content {
+//       padding-left: 15px;
+//       span {
+//         margin: 0 5px;
+//       }
+//     }
+//   }
+// }
+// .bd {
+//   border-bottom: 1px dashed #ddd;
+// }
+// .mb {
+//   margin-bottom: 10px;
+// }
+// .card-edit-detail {
+//   background: #fff;
+//   input {
+//     width: 30%;
+//   }
+// }
+// .affix {
+//   position: fixed;
+//   width: 320px;
+//   overflow: hidden;
+// }
+// .section-footer {
+//   padding: 15px 10px;
+//   text-align: center;
+//   .with-border {
+//     border-top: 1px solid #f8f8f8;
+//   }
+// }
+// .card_article_box .card_article_img {
+//   background-color: #fff;
+// }
+// .media_edit {
+//   display: block;
+//   position: relative;
+//   z-index: 2;
+//   float: none;
+//   min-width: 800px;
+//   margin-left: 340px;
+// }
+// .tips {
+//   margin-left: 2px;
+// }
+// .el-select {
+//   width: 110px;
+// }
 </style>
 <style type="text/css" lang="scss">
-.color-group {
-  li {
-    width: 30px;
-    height: 30px;
-    float: left;
-    cursor: pointer;
-    &:hover {
-      border: 2px solid #fff;
-    }
-    &.active {
-      border: 2px solid #fff;
-    }
-  }
-}
-.el-radio-group {
-  .el-radio__input.is-checked + .el-radio__label,
-  .el-radio__input.is-checked .el-radio__inner {
-    color: #606272;
-  }
-}
-.el-checkbox-group {
-  .el-checkbox__input.is-checked + .el-checkbox__label {
-    color: #606272;
-  }
-}
-.custom_tree {
-}
+// .color-group {
+//   li {
+//     width: 30px;
+//     height: 30px;
+//     float: left;
+//     cursor: pointer;
+//     &:hover {
+//       border: 2px solid #fff;
+//     }
+//     &.active {
+//       border: 2px solid #fff;
+//     }
+//   }
+// }
+// .el-radio-group {
+//   .el-radio__input.is-checked + .el-radio__label,
+//   .el-radio__input.is-checked .el-radio__inner {
+//     color: #606272;
+//   }
+// }
+// .el-checkbox-group {
+//   .el-checkbox__input.is-checked + .el-checkbox__label {
+//     color: #606272;
+//   }
+// }
+// .custom_tree {
+// }
 </style>

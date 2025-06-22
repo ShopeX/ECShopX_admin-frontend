@@ -5,7 +5,7 @@
 </style>
 
 <template>
-  <div>
+  <SpPage>
     <template v-if="$route.path.indexOf('editor') === -1">
       <SpPlatformTip h5 app pc alipay />
 
@@ -230,7 +230,7 @@
       </el-dialog>
     </template>
     <router-view />
-  </div>
+  </SpPage>
 </template>
 <script>
 import { mapGetters } from 'vuex'
@@ -347,7 +347,7 @@ export default {
         query: { isnodata: true }
       })
     },
-    viewItemList(id, itemType) {
+    viewItemList(id, itemType) { // TODO:路由跳转
       if (id == 'all') {
         if (itemType == 'normal') {
           this.$router.push({

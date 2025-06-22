@@ -1,113 +1,115 @@
 <template>
-  <SpRouterView>
-    <SpPlatformTip h5 app alipay />
-
-    <SpFilterForm :model="params" @onSearch="onSearch" @onReset="onReset">
-      <SpFilterFormItem prop="field_title" label="活动名称:">
-        <el-input v-model="params.field_title" placeholder="活动名称" />
-      </SpFilterFormItem>
-      <SpFilterFormItem prop="status" label="状态:">
-        <el-select v-model="params.status" placeholder="状态">
-          <el-option
-            v-for="(item, index) in statusOption"
-            :key="index"
-            :label="item.name"
-            :value="item.value"
+  <SpPage>
+    <SpRouterView>
+      <SpPlatformTip h5 app alipay />
+  
+      <SpFilterForm :model="params" @onSearch="onSearch" @onReset="onReset">
+        <SpFilterFormItem prop="field_title" label="活动名称:">
+          <el-input v-model="params.field_title" placeholder="活动名称" />
+        </SpFilterFormItem>
+        <SpFilterFormItem prop="status" label="状态:">
+          <el-select v-model="params.status" placeholder="状态">
+            <el-option
+              v-for="(item, index) in statusOption"
+              :key="index"
+              :label="item.name"
+              :value="item.value"
+            />
+          </el-select>
+        </SpFilterFormItem>
+        <SpFilterFormItem prop="create_time" label="时间:">
+          <el-date-picker
+            v-model="params.create_time"
+            type="daterange"
+            value-format="yyyy/MM/dd"
+            placeholder="根据添加时间筛选"
           />
-        </el-select>
-      </SpFilterFormItem>
-      <SpFilterFormItem prop="create_time" label="时间:">
-        <el-date-picker
-          v-model="params.create_time"
-          type="daterange"
-          value-format="yyyy/MM/dd"
-          placeholder="根据添加时间筛选"
+        </SpFilterFormItem>
+        <SpFilterFormItem prop="distributor_id" label="店铺名称:">
+          <SpSelectShop v-model="params.distributor_id" clearable placeholder="请选择" />
+        </SpFilterFormItem>
+      </SpFilterForm>
+  
+      <div class="action-container">
+        <el-button type="primary" icon="iconfont icon-xinzengcaozuo-01" @click="addElement">
+          活动添加
+        </el-button>
+      </div>
+  
+      <el-table v-loading="loading" border :data="tableList" style="width: 100%">
+        <el-table-column label="操作" fixed="left" :width="IS_DISTRIBUTOR() ? 150 : 250">
+          <template slot-scope="scope">
+            <el-button
+              v-if="
+                (scope.row.status === 'ongoing' || scope.row.status === 'waiting') &&
+                !IS_DISTRIBUTOR()
+              "
+              type="text"
+              @click="onOperationChange(scope.row, 'edit')"
+            >
+              编辑
+            </el-button>
+            <el-button
+              v-if="scope.row.status === 'end' || IS_DISTRIBUTOR()"
+              type="text"
+              @click="onOperationChange(scope.row, 'detail')"
+            >
+              查看
+            </el-button>
+            <el-button
+              v-if="scope.row.status === 'waiting' && !IS_DISTRIBUTOR()"
+              type="text"
+              @click="onStopChange(scope.row)"
+            >
+              终止
+            </el-button>
+            <!-- <el-button v-if="scope.row.status === 'ongoing' && !IS_DISTRIBUTOR()" type="text" @click="onShowChange(scope.row)">企业</el-button> -->
+            <el-button type="text" @click="onOperationChange(scope.row, 'record')">
+              报名记录
+            </el-button>
+          </template>
+        </el-table-column>
+        <el-table-column prop="activity_id" label="编号" width="100" />
+        <el-table-column prop="activity_name" label="活动名称" width="200" />
+        <el-table-column label="是否核销" width="120">
+          <template slot-scope="scope">
+            {{ scope.row.is_offline_verify == 1 ? '是' : '否' }}
+          </template>
+        </el-table-column>
+        <el-table-column prop="gift_points" label="获取积分" width="120" />
+        <el-table-column label="进白名单" width="120">
+          <template slot-scope="scope">
+            {{ scope.row.is_white_list == 1 ? '是' : '否' }}
+          </template>
+        </el-table-column>
+        <el-table-column label="活动时间" width="300">
+          <template slot-scope="scope">
+            {{ scope.row.start_date }} ~ {{ scope.row.end_date }}
+          </template>
+        </el-table-column>
+        <el-table-column label="报名人数" width="120">
+          <template slot-scope="scope">
+            {{ scope.row.total_join_num || 0 }}
+          </template>
+        </el-table-column>
+        <el-table-column prop="status_name" label="状态" width="120" />
+        <el-table-column prop="distributor_name" label="店铺" width="120" />
+      </el-table>
+      <div class="content-center content-top-padded">
+        <el-pagination
+          background
+          layout="total, sizes, prev, pager, next, jumper"
+          :current-page.sync="page.pageIndex"
+          :page-sizes="[10, 20, 50]"
+          :total="page.total"
+          :page-size="page.pageSize"
+          @current-change="onCurrentChange"
+          @size-change="onSizeChange"
         />
-      </SpFilterFormItem>
-      <SpFilterFormItem prop="distributor_id" label="店铺名称:">
-        <SpSelectShop v-model="params.distributor_id" clearable placeholder="请选择" />
-      </SpFilterFormItem>
-    </SpFilterForm>
-
-    <div class="action-container">
-      <el-button type="primary" icon="iconfont icon-xinzengcaozuo-01" @click="addElement">
-        活动添加
-      </el-button>
-    </div>
-
-    <el-table v-loading="loading" border :data="tableList" style="width: 100%">
-      <el-table-column prop="activity_id" label="编号" width="100" />
-      <el-table-column prop="activity_name" label="活动名称" width="200" />
-      <el-table-column label="是否核销" width="120">
-        <template slot-scope="scope">
-          {{ scope.row.is_offline_verify == 1 ? '是' : '否' }}
-        </template>
-      </el-table-column>
-      <el-table-column prop="gift_points" label="获取积分" width="120" />
-      <el-table-column label="进白名单" width="120">
-        <template slot-scope="scope">
-          {{ scope.row.is_white_list == 1 ? '是' : '否' }}
-        </template>
-      </el-table-column>
-      <el-table-column label="活动时间" width="300">
-        <template slot-scope="scope">
-          {{ scope.row.start_date }} ~ {{ scope.row.end_date }}
-        </template>
-      </el-table-column>
-      <el-table-column label="报名人数" width="120">
-        <template slot-scope="scope">
-          {{ scope.row.total_join_num || 0 }}
-        </template>
-      </el-table-column>
-      <el-table-column prop="status_name" label="状态" width="120" />
-      <el-table-column prop="distributor_name" label="店铺" width="120" />
-      <el-table-column label="操作" fixed="right" :width="IS_DISTRIBUTOR() ? 150 : 250">
-        <template slot-scope="scope">
-          <el-button
-            v-if="
-              (scope.row.status === 'ongoing' || scope.row.status === 'waiting') &&
-              !IS_DISTRIBUTOR()
-            "
-            type="text"
-            @click="onOperationChange(scope.row, 'edit')"
-          >
-            编辑
-          </el-button>
-          <el-button
-            v-if="scope.row.status === 'end' || IS_DISTRIBUTOR()"
-            type="text"
-            @click="onOperationChange(scope.row, 'detail')"
-          >
-            查看
-          </el-button>
-          <el-button
-            v-if="scope.row.status === 'waiting' && !IS_DISTRIBUTOR()"
-            type="text"
-            @click="onStopChange(scope.row)"
-          >
-            终止
-          </el-button>
-          <!-- <el-button v-if="scope.row.status === 'ongoing' && !IS_DISTRIBUTOR()" type="text" @click="onShowChange(scope.row)">企业</el-button> -->
-          <el-button type="text" @click="onOperationChange(scope.row, 'record')">
-            报名记录
-          </el-button>
-        </template>
-      </el-table-column>
-    </el-table>
-    <div class="content-center content-top-padded">
-      <el-pagination
-        background
-        layout="total, sizes, prev, pager, next, jumper"
-        :current-page.sync="page.pageIndex"
-        :page-sizes="[10, 20, 50]"
-        :total="page.total"
-        :page-size="page.pageSize"
-        @current-change="onCurrentChange"
-        @size-change="onSizeChange"
-      />
-    </div>
-    <EnterpriseDialog :visible.sync="dialogVisible" :data="dialogData" @closeDialog="closeDialog" />
-  </SpRouterView>
+      </div>
+      <EnterpriseDialog :visible.sync="dialogVisible" :data="dialogData" @closeDialog="closeDialog" />
+    </SpRouterView>
+  </SpPage>
 </template>
 <script>
 import mixin, { pageMixin } from '@/mixins'
@@ -207,7 +209,7 @@ export default {
         })
       }
     },
-    onOperationChange(row, type) {
+    onOperationChange(row, type) { // TODO:路由跳转
       if (type == 'edit') {
         this.$router.push({
           path: this.matchRoutePath('editor'),

@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <SpPage>
     <SpPlatformTip h5 app pc alipay />
     <div class="action-container">
       <el-button type="primary" icon="iconfont icon-xinzengcaozuo-01" @click="AddRecommendLikeItem">
@@ -9,6 +9,11 @@
     </div>
 
     <el-table ref="multipleItemsTable" v-loading="loading" border :data="tableList">
+      <el-table-column label="操作" width="100">
+        <template slot-scope="scope">
+          <el-button type="text" @click="DelItemData('false', scope.row)"> 删除关联 </el-button>
+        </template>
+      </el-table-column>
       <el-table-column type="selection" width="55" />
       <!-- <el-table-column prop="itemName" label="商品图片" width="300"></el-table-column> -->
       <el-table-column prop="itemName" label="商品名称" width="300" />
@@ -29,11 +34,6 @@
             前台不展示
           </div>
           <div v-else class="grid-content">不可销售</div>
-        </template>
-      </el-table-column>
-      <el-table-column label="操作">
-        <template slot-scope="scope">
-          <el-button type="text" @click="DelItemData('false', scope.row)"> 删除关联 </el-button>
         </template>
       </el-table-column>
     </el-table>
@@ -108,7 +108,7 @@
       @chooseStore="chooseItemsAction"
       @closeStoreDialog="closeItemDialogAction"
     />
-  </div>
+  </SpPage>
 </template>
 <script>
 import { mapGetters } from 'vuex'

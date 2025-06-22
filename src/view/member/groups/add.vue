@@ -141,7 +141,7 @@
         </el-row>
       </el-form-item>
     </el-card>
-    <div class="content-center">
+    <div style="margin-top: 10px;">
       <el-button @click.native="handleCancel"> 返回 </el-button>
       <el-button v-if="true == show" type="primary" @click.prevent="submitItemsAction('form')">
         保存

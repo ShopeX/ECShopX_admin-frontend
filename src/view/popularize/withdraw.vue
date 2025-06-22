@@ -1,11 +1,10 @@
 <template>
-  <div>
-    <el-row :gutter="20">
-      <el-col>
+  <SpPage class="page-withdraw">
+    <SpFilterForm :model="params" @onSearch="onSearch" @onReset="onSearch">
+      <SpFilterFormItem prop="status" label="">
         <el-select
           clearable
           v-model="params.status"
-          @change="statusSelectHandle"
           placeholder="提现状态 "
         >
           <el-option
@@ -15,11 +14,11 @@
             :value="item.value"
           />
         </el-select>
-        <el-input class="input-m" placeholder="手机号" v-model="params.mobile">
-          <el-button slot="append" icon="el-icon-search" @click="numberSearch" />
-        </el-input>
-      </el-col>
-    </el-row>
+      </SpFilterFormItem>
+      <SpFilterFormItem prop="mobile" label="">
+        <el-input placeholder="手机号" v-model="params.mobile" />
+      </SpFilterFormItem>
+    </SpFilterForm>
     <el-card>
       <div class="time-box basic">
         <el-row>
@@ -271,7 +270,7 @@
         >
       </div>
     </el-dialog>
-  </div>
+  </SpPage>
 </template>
 <script>
 import { mapGetters } from 'vuex'
@@ -326,6 +325,19 @@ export default {
     this.getList()
   },
   methods: {
+    onSearch () {
+      this.params.page = 1
+      this.getList()
+    },
+    onReset () {
+      this.params = {
+        page: 1,
+        pageSize: 20,
+        mobile: '',
+        status: ''
+      }
+      this.getList()
+    },
     handleCurrentChange(page_num) {
       this.params.page = page_num
       this.getList()
@@ -396,15 +408,17 @@ export default {
 }
 </script>
 <style scoped lang="scss">
-.time-box {
-  margin: 10px 0;
-}
-.basic {
-  padding: 30px 0;
-  text-align: center;
-  span {
-    font-size: 30px;
-    font-weight: bold;
+.page-withdraw {
+  .time-box {
+    margin: 10px 0;
+  }
+  .basic {
+    padding: 30px 0;
+    text-align: center;
+    span {
+      font-size: 30px;
+      font-weight: bold;
+    }
   }
 }
 </style>

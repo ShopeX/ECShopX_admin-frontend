@@ -1,13 +1,16 @@
 <template>
-  <div>
-    <el-row :gutter="20">
-      <el-col :span="6">
-        <el-input v-model="params.order_id" placeholder="订单号" />
-      </el-col>
-      <el-col :span="6">
-        <el-input v-model="params.promoter_mobile" placeholder="推广员" />
-      </el-col>
-      <el-col :span="10">
+  <SpPage>
+    <SpFilterForm :model="params" @onSearch="handleClick" @onReset="onReset">
+      <SpFilterFormItem prop="order_id" label="订单号">
+        <el-input v-model="params.order_id" size="mini" placeholder="订单号" />
+      </SpFilterFormItem>
+      <SpFilterFormItem prop="promoter_mobile" label="推广员">
+        <el-input v-model="params.promoter_mobile" size="mini" placeholder="推广员" />
+      </SpFilterFormItem>
+      <SpFilterFormItem prop="item_name" label="商品">
+        <el-input v-model="params.item_name" size="mini" placeholder="商品" />
+      </SpFilterFormItem>
+      <SpFilterFormItem label="日期" prop="search_time">
         <el-date-picker
           v-model="search_time"
           type="daterange"
@@ -16,16 +19,8 @@
           start-placeholder="开始日期"
           end-placeholder="结束日期"
         />
-      </el-col>
-    </el-row>
-    <el-row :gutter="20">
-      <el-col :span="6">
-        <el-input v-model="params.item_name" placeholder="商品" />
-      </el-col>
-      <el-col :span="4">
-        <el-button type="primary" icon="el-icon-search" @click="handleClick"> 搜索 </el-button>
-      </el-col>
-    </el-row>
+      </SpFilterFormItem>
+    </SpFilterForm>
     <el-tabs v-model="params.status" type="border-card" @tab-click="handleClick">
       <el-tab-pane name="wait" label="待统计" />
       <el-tab-pane name="finish" label="已统计" />
@@ -76,7 +71,7 @@
         />
       </div>
     </el-tabs>
-  </div>
+  </SpPage>
 </template>
 <script>
 import { mapGetters } from 'vuex'
@@ -104,6 +99,9 @@ export default {
       if (this.search_time.length > 0) {
         this.params.time_start = this.search_time[0] / 1000
         this.params.time_end = this.search_time[1] / 1000
+      } else {
+        this.params.time_start = ''
+        this.params.time_end = ''
       }
       this.loading = true
       getTaskBrokerageLog(this.params).then(res => {
@@ -111,6 +109,12 @@ export default {
         this.list = res.data.data.list
         this.total_count = res.data.data.total_count
       })
+    },
+    onReset () {
+      this.search_time = []
+      this.params.page = 1
+      this.params.status = 'wait'
+      this.getList()
     },
     handleClick() {
       this.params.page = 1

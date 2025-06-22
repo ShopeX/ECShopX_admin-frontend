@@ -28,7 +28,7 @@
 }
 </style>
 <template>
-  <div class="page-body">
+  <SpPage class="page-body">
     <SpRouterView>
       <!-- <div class="action-container">
         <el-button type="primary" icon="iconfont icon-xinzengcaozuo-01" @click="addItems">
@@ -481,7 +481,7 @@
         </span>
       </el-dialog>
     </SpRouterView>
-  </div>
+  </SpPage>
 </template>
 <script>
 import moment from 'moment'

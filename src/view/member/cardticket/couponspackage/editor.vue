@@ -127,7 +127,7 @@
           </el-form-item>
         </div>
       </el-card>
-      <el-form-item>
+      <div>
         <el-button @click="back">
           返回
         </el-button>
@@ -135,9 +135,9 @@
           type="primary"
           @click="confirmHandle('ruleForm')"
         >
-          确定
+          提交
         </el-button>
-      </el-form-item>
+      </div>
     </el-form>
     <template v-if="visible">
       <coupon-select
@@ -272,6 +272,9 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+.zykCouponEditor ::v-deep .el-card {
+  margin-bottom: 20px;
+}
 .zykCouponEditor {
   padding-bottom: 50px;
   .tips {

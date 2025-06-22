@@ -2,7 +2,7 @@
   <el-form
     ref="form"
     :model="form"
-    class="box-set"
+    class="box-set page-limitedtimesale"
     label-width="120px"
   >
     <!-- <el-card header="绑定店铺" shadow="naver" v-if="!is_distributor">
@@ -1052,3 +1052,8 @@ export default {
   }
 }
 </script>
+<style lang="scss" scoped>
+.page-limitedtimesale ::v-deep .el-card {
+  margin-bottom: 20px
+}
+</style>

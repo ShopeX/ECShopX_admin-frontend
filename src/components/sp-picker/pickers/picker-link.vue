@@ -108,7 +108,7 @@ export default {
         { id: 'tenants', title: '商家入驻' },
       )
     }
-    if (!VERSION_IN_PURCHASE) {
+    if (!this.VERSION_IN_PURCHASE) {
       this.list.push(
         { id: 'community_group_enable', title: '社区团购（H5不支持）' },
       )

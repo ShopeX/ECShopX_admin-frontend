@@ -1,15 +1,15 @@
 <template>
-  <div class="flex h-[50px] items-center justify-between">
+  <div class="flex h-[50px] items-center justify-between bg-white">
     <div class="flex items-center gap-2">
       <slot />
       <!-- <Menu /> -->
       <!-- <ExIcon type="button" name="Menu" :size="20" /> -->
 
       <!-- 面包屑 -->
-      <el-breadcrumb class="ml-2" v-if="!$slots.default">
+      <!-- <el-breadcrumb class="ml-2" v-if="!$slots.default">
         <el-breadcrumb-item>首页</el-breadcrumb-item>
         <el-breadcrumb-item>promotion list</el-breadcrumb-item>
-      </el-breadcrumb>
+      </el-breadcrumb> -->
     </div>
 
     <div class="flex items-center gap-2 px-3">

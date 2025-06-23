@@ -19,14 +19,13 @@ const coreRoutes = [
     meta: {
       title: 'Authentication'
     },
-    name: 'Authentication',
+    name: 'authentication',
     path: '/',
-    // redirect: '/login',
     children: [
       {
-        component: () => import('@/views/core/authentication/login.vue'),
         name: 'Login',
-        path: 'login'
+        path: 'login',
+        component: () => import('@/views/core/authentication/login.vue')
       }
     ]
   },
@@ -35,16 +34,20 @@ const coreRoutes = [
     meta: {
       title: 'Authentication'
     },
-    name: 'ShopAdminAuthentication',
+    name: 'shopAdminAuthentication',
     path: '/shopadmin',
-    // redirect: '/shopadmin/login',
     children: [
       {
-        component: () => import('@/views/core/authentication/shop-login.vue'),
-        name: 'ShopAdminLogin',
-        path: 'login'
+        name: 'shopAdminLogin',
+        path: 'login',
+        component: () => import('@/views/core/authentication/shop-login.vue')
       }
     ]
+  },
+  {
+    name: 'shopAdminShopList',
+    path: '/shopadmin/shoplist',
+    component: () => import('@/views/store/shop-list.vue')
   }
 ]
 

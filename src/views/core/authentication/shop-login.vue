@@ -11,7 +11,7 @@
     </div>
 
     <div class="mt-16">
-      <el-button type="primary" class="w-full" :loading="loading" @click="handleLogin">
+      <el-button type="primary" class="w-full h-[40px]" :loading="loading" @click="handleLogin">
         登录
       </el-button>
     </div>
@@ -73,16 +73,22 @@ export default {
         const { token } = await this.$api.auth.login({
           username: formData.account,
           password: formData.pwd,
-          logintype: formData.loginType
+          logintype: 'distributor'
           // product_model: this.VUE_APP_PRODUCT_MODEL,
           // agreement_id
         })
         if (token) {
+          const tokenArray = token.split('.')
+          const { menu_type } = JSON.parse(atob(tokenArray[1]))
+          this.$store.commit('system/setVersionMode', { versionMode: menu_type })
           this.$store.commit('user/setToken', { token })
+          this.$store.commit('user/setLoginType', { login_type: 'distributor' })
           this.$message.success('登录成功')
-          await this.$store.dispatch('user/fetchPermissions')
-          debugger
-          // this.$router.push('/')
+          await this.$store.dispatch('user/fetchAccessMenus')
+          await this.$store.dispatch('user/fetchAccountInfo')
+          setTimeout(() => {
+            window.location.href = '/shopadmin/shoplist'
+          }, 700)
         }
       } catch (error) {
         // console.error('登录失败:', error)

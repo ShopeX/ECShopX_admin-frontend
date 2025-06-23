@@ -1,6 +1,14 @@
 import { coreRoutes, fallbackNotFoundRoute } from './core'
 
-const dynamicRouteFiles = require.context('./modules', false, /\.js$/)
+const dynamicRouteFiles = (() => {
+  const basePath = window.location.href.match(/\/(shopadmin|supplier|merchant)(\/.*)?$/)?.[1]
+
+  if (basePath == 'shopadmin') {
+    return require.context('./shopadmin', false, /\.js$/)
+  } else {
+    return require.context('./modules', false, /\.js$/)
+  }
+})()
 
 function mergeRouteModules(routeModules) {
   const mergedRoutes = []

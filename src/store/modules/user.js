@@ -3,10 +3,13 @@ import api from '@/api'
 const userStore = {
   namespaced: true,
   state: {
-    accessMenus: [],
-    token: '',
     accountInfo: null,
+    accessMenus: [],
+    login_type: '',
+    shopid: '',
+    token: '',
 
+    //TODO: 以下删除?
     exp: '',
     name: '',
     is_authorizer: false,
@@ -18,7 +21,6 @@ const userStore = {
     login_from: '',
     nick_name: '',
     avatar: '',
-    shopid: '',
     isInFrame: false,
     product_code: '',
     ali_appid: '',
@@ -42,10 +44,17 @@ const userStore = {
       state.accountInfo = accountInfo
     },
     logout(state) {
-      debugger
-      state.token = ''
       state.accountInfo = null
       state.accessMenus = []
+      state.login_type = ''
+      state.shopid = ''
+      state.token = ''
+    },
+    setShopId(state, { shopId }) {
+      state.shopid = shopId
+    },
+    setLoginType: (state, { login_type }) => {
+      state.login_type = login_type
     },
 
     CLEAR_TOKEN(state) {
@@ -104,9 +113,6 @@ const userStore = {
         avatar: head_portrait
       }
     },
-    setShopId: (state, id) => {
-      state.shopid = id
-    },
     setUserName: (state, name) => {
       state.name = name
     },
@@ -125,9 +131,7 @@ const userStore = {
     setWxappId: (state, wxappId) => {
       state.wxapp_id = wxappId
     },
-    setLoginType: (state, loginType) => {
-      state.login_type = loginType
-    },
+
     setLoginFrom: (state, login_from) => {
       state.login_from = login_from
     },
@@ -206,9 +210,6 @@ const userStore = {
     setTemplateName({ commit }, template_name) {
       commit('setTemplateName', template_name)
       commit('setALiTemplateName', '')
-    },
-    setLoginType({ commit }, login_type) {
-      commit('setLoginType', login_type)
     },
     setLoginFrom({ commit }, login_from) {
       commit('setLoginFrom', login_from)

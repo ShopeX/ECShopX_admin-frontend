@@ -40,10 +40,10 @@ const [Form, FormApi] = useForm({
             label: '员工',
             value: 'staff'
           }
-        ],
-        value: 'admin'
+        ]
       },
-      fieldName: 'loginType'
+      fieldName: 'loginType',
+      value: 'admin'
     },
     {
       component: 'Input',
@@ -100,12 +100,14 @@ export default {
           const { menu_type } = JSON.parse(atob(tokenArray[1]))
           this.$store.commit('system/setVersionMode', { versionMode: menu_type })
           this.$store.commit('user/setToken', { token })
+          this.$store.commit('user/setLoginType', { login_type: formData.loginType })
           this.$message.success('登录成功')
           await this.$store.dispatch('user/fetchAccessMenus')
           await this.$store.dispatch('user/fetchAccountInfo')
           // this.$router.push('/')
           setTimeout(() => {
             window.location.href = '/'
+            // this.$router.push('/')
           }, 700)
         }
       } catch (error) {

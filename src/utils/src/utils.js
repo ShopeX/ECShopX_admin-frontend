@@ -30,3 +30,15 @@ export function export_open(tab) {
     }
   }, 1000)
 }
+
+export function traverseTreeValues(tree, callback) {
+  const paths = []
+  tree.map(item => {
+    let tempPath = item.path
+    if (item.children) {
+      tempPath += (tempPath.endsWith('/') ? '' : '/') + traverseTreeValues(item.children, callback)
+    }
+    paths.push(tempPath)
+  })
+  return paths
+}

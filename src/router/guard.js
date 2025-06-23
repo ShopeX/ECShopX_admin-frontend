@@ -1,7 +1,10 @@
 import { useNProgress } from '@/composables'
 import store from '@/store'
 import { generateAccess } from './access'
-import { accessRoutes } from './routes'
+import { accessRoutes, routes as coreRoutes } from './routes'
+import { IS_ADMIN, IS_DISTRIBUTOR, IS_MERCHANT, IS_SUPPLIER, traverseTreeValues } from '@/utils'
+
+const coreRoutesNames = traverseTreeValues(coreRoutes, item => item.path)
 
 const { startProgress, stopProgress } = useNProgress()
 
@@ -18,21 +21,35 @@ function setupCommonGuard(router) {
 
 function setupAccessGuard(router) {
   router.beforeEach(async (to, from, next) => {
+    console.log('traverseTreeValues', coreRoutesNames)
+
+    if (coreRoutesNames.includes(to.path)) {
+      next()
+      return
+    }
+
     console.log('setupAccessGuard beforeEach', to, from)
     const hasToken = store.state.user.token
     if (!hasToken) {
-      // return {
-      //   path: '/login',
-      //   query: {
-      //     redirect: encodeURIComponent(to.fullPath)
-      //   },
-      //   replace: true
-      // }
-      if (/^\/(shopadmin|supplier|merchant)?\/?login$/.test(to.path)) {
+      if (/\/login$/.test(to.path)) {
         next()
+      } else if (
+        /^https?:\/\/[^/]+\/(shopadmin|supplier|merchant)(\/.*)?$/.test(location.origin + to.path)
+      ) {
+        const basePath = to.path.match(/\/(shopadmin|supplier|merchant)(\/.*)?$/)?.[1]
+        next(`/${basePath}/login`)
       } else {
         next('/login')
       }
+      return
+    }
+
+    const basePath = window.location.href.match(/\/(shopadmin|supplier|merchant)(\/.*)?$/)?.[1]
+    console.log('xxxxxxxxxxxx', store.state.user.login_type)
+    debugger
+    if ((basePath == null && !IS_ADMIN()) || (basePath == 'shopadmin' && !IS_DISTRIBUTOR())) {
+      store.commit('user/logout')
+      next(basePath ? `/${basePath}/login` : '/login')
       return
     }
     // 菜单已加载标志
@@ -56,22 +73,9 @@ function setupAccessGuard(router) {
     //   replace: true
     // }
 
-    // next('/dashboard')
     // 检查目标路径是否在可访问路由中
     const isPathAccessible = (path, routes, parentPath = '') => {
       return routes.some(route => route.path === path)
-      // for (const route of routes) {
-      //   // 拼接当前路径
-      //   parentPath = parentPath + route.path
-      //   // 递归检查子路由,传入当前拼接的路径作为父路径
-      //   if (route.children) {
-      //     return isPathAccessible(path, route.children, parentPath)
-      //   } else {
-      //     // 判断完整路径是否匹配
-      //     if (parentPath === path) return true
-      //   }
-      // }
-      // return false
     }
 
     // 获取第一个可访问路由的路径
@@ -90,6 +94,9 @@ function setupAccessGuard(router) {
     if (!isPathAccessible(to.path, router.getRoutes())) {
       const firstPath = getFirstRoutePath()
       next(firstPath)
+      return
+    } else if (to.path === '/shopadmin') {
+      next('/shopadmin/shoplist')
       return
     }
     next(to)

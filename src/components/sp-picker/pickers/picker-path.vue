@@ -36,9 +36,9 @@
       <el-tab-pane label="页面" name="link">
         <PickerLink v-if="tabValue == 'link'" ref="link" :value="value" />
       </el-tab-pane>
-      <el-tab-pane label="营销" name="marketing">
+      <!-- <el-tab-pane label="营销" name="marketing">
         <PickerMarketing v-if="tabValue == 'marketing'" ref="marketing" :value="value" />
-      </el-tab-pane>
+      </el-tab-pane> -->
       <el-tab-pane label="活动报名" name="regactivity">
         <PickerRegactivity v-if="tabValue == 'regactivity'" ref="regactivity" :value="value" />
       </el-tab-pane>

@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <SpPage>
     <div>
       <el-tabs
         v-model="activeName"
@@ -27,7 +27,7 @@
       </el-tabs>
     </div>
     <router-view />
-  </div>
+  </SpPage>
 </template>
 
 <script>

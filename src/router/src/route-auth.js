@@ -79,6 +79,9 @@ export default [
     }
   },
   {
+    meta: {
+      layout: 'empty'
+    },
     path: '/wxapp/manage/decorate',
     name: `模板编辑`,
     component: () => import('@/view/decorate/index')

@@ -1,7 +1,9 @@
 <template>
+  <SpRouterView>
+  <SpPage>
   <div class="zyk_bspay_account">
     <el-form
-      v-if="$route.path.indexOf('detail') === -1"
+     
       ref="ruleForm"
       :model="form"
       class="demo-ruleForm"
@@ -250,8 +252,9 @@
         </div>
       </el-card>
     </el-form>
-    <router-view />
   </div>
+  </SpPage>
+  </SpRouterView>
 </template>
 
 <script>

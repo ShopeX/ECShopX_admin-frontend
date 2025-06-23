@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <SpPage>
     <SpFilterForm class="sp-filter-form" :model="params" @onSearch="onSearch" @onReset="onSearch">
       <SpFilterFormItem prop="time" label="时间筛选:" size="max">
         <el-date-picker
@@ -41,7 +41,7 @@
         beforeSearch: beforeSearch
       }"
     />
-  </div>
+  </SpPage>
 </template>
 <script>
 export default {

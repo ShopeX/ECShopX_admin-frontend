@@ -1,4 +1,5 @@
 <template>
+  <SpPage>
   <section class="section section-white">
     <div class="section-header with-border">
       微信开放平台管理
@@ -31,6 +32,7 @@
       </div>
     </div>
   </section>
+</SpPage>
 </template>
 <script>
 import { openUserPlatform } from '../../../api/wechat'

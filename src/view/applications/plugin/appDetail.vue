@@ -45,6 +45,7 @@
 }
 </style>
 <template>
+  <SpPage>
   <div class="app-detail">
     <div class="container-lf">
       <el-image class="app-logo" :src="require(`@/assets/img/ectapp/${id}.png`)" />
@@ -78,9 +79,10 @@
       <div slot="footer" class="dialog-footer">
         <el-button @click="dialogVisible = false">取 消</el-button>
         <el-button type="primary" @click="dialogVisible = true">确定</el-button>
-      </div>
-    </el-dialog>
-  </div>
+        </div>
+      </el-dialog>
+    </div>
+  </SpPage>
 </template>
 
 <script>

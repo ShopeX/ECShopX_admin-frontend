@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <SpPage>
     <div v-if="$route.path.indexOf('policy') === -1">
       <el-tabs v-model="activeName" type="card" @tab-click="handleClick">
         <el-tab-pane label="微信小程序" name="miniprogram">
@@ -7,7 +7,7 @@
             v-loading="loading"
             :data="tableList"
             style="width: 100%"
-            :height="wheight - 200"
+            :height=" - 200"
             @expand-change="handleExpandChange"
           >
             <el-table-column label="绑定详情" width="80" type="expand" fixed="left">
@@ -313,7 +313,7 @@
             v-loading="loading"
             :data="authorizerData"
             style="width: 100%"
-            :height="wheight - 200"
+            :height=" - 200"
           >
             <el-table-column prop="nick_name" label="公众号昵称" width="180" />
             <el-table-column prop="authorizer_appid" label="公众号APPID" width="180" />
@@ -626,7 +626,7 @@
         <el-button type="primary" @click="setdomain">确 定</el-button>
       </span>
     </el-dialog>
-  </div>
+  </SpPage>
 </template>
 <script>
 import { mapGetters } from 'vuex'
@@ -759,9 +759,6 @@ export default {
       ]
     }
   },
-  computed: {
-    ...mapGetters(['wheight'])
-  },
   mounted() {
     this.params = { page: 1, pageSize: this.pageLimit }
     this.fetchList()
@@ -867,7 +864,8 @@ export default {
       }
     },
     showBindDetail(data) {
-      this.applet_detail = true
+      if(data.authorizer.authorizer_appid){
+        this.applet_detail = true
       getWxa(data.authorizer.authorizer_appid).then(response => {
         this.detail = response.data.data
         this.weappTemplate = this.detail.weappTemplate
@@ -875,6 +873,10 @@ export default {
         this.configForm.authorizer_appsecret = response.data.data.authorizer_appsecret
         console.log(this.detail)
       })
+      }else{
+        this.$message({message:'当前未绑定'})
+      }
+     
     },
     downloadWxaCode(rowdata) {
       this.getwxcodeloading = true

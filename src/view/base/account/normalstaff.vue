@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <SpPage>
     <SpFilterForm
       :model="params"
       @onSearch="onSearch"
@@ -48,7 +48,7 @@
       v-loading="loading"
       border
       :data="accountsList"
-      :height="wheight - 160"
+      :height=" - 160"
     >
       <el-table-column
         prop="login_name"
@@ -248,10 +248,9 @@
       @chooseStore="ShopChooseAction"
       @closeStoreDialog="closeDialogAction"
     />
-  </div>
+  </SpPage>
 </template>
 <script>
-import { mapGetters } from 'vuex'
 import {
   createAccount,
   getAccountInfo,
@@ -317,9 +316,7 @@ export default {
       datapass_block: 0
     }
   },
-  computed: {
-    ...mapGetters(['wheight'])
-  },
+
   watch: {
     status (val) {
       if (val) {

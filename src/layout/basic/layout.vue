@@ -56,13 +56,15 @@ import LayoutSidebar from './layout-sidebar.vue'
 import LayoutContent from './layout-content.vue'
 import LayoutHeader from './layout-header.vue'
 import BasicToolbar from './layout-toolbar.vue'
+import EmptyLayout from './layout-empty.vue'
 
 export default {
   components: {
     LayoutSidebar,
     LayoutContent,
     LayoutHeader,
-    BasicToolbar
+    BasicToolbar,
+    EmptyLayout
   },
   data() {
     return {

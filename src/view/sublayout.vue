@@ -1,5 +1,7 @@
 <style scoped lang="scss"></style>
 
 <template>
-  <router-view />
+  <SpPage>
+    <router-view />
+  </SpPage>
 </template>

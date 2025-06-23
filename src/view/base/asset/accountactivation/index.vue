@@ -1,4 +1,5 @@
 <template>
+  <SpPage>
   <div class="section-white">
     <div class="section-box view-flex view-flex-vertical view-flex-center view-flex-middle">
       <div class="slogn">
@@ -44,7 +45,8 @@
         </el-button>
       </div>
     </el-dialog>
-  </div>
+    </div>
+  </SpPage>
 </template>
 <script>
 import { activate, getActivateInfo } from '@/api/company'

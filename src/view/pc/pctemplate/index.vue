@@ -1,7 +1,10 @@
 <template>
+
+<SpRouterView >
+  <SpPage>
   <div class="website-template">
     <div v-if="$route.path.indexOf('editor') === -1">
-      <el-row>
+      <el-row class="mb-4">
         <el-button type="primary" @click="dialogVisible = true"> 添加页面 </el-button>
       </el-row>
       <el-row>
@@ -51,7 +54,7 @@
           </el-table>
         </el-tabs>
       </el-row>
-      <div class="content-center content-top-padded">
+      <div class="content-right mt-4 content-top-padded">
         <el-pagination
           background
           layout="total, sizes, prev, pager, next, jumper"
@@ -102,6 +105,10 @@
       </el-dialog>
     </div>
   </div>
+
+</SpPage>
+
+</SpRouterView>
 </template>
 
 <script>
@@ -195,10 +202,10 @@ export default {
       })
     },
     handleRenovation({ theme_pc_template_id }) {
-      // this.$router.push({ path: `/pc/design?id=${theme_pc_template_id}` });
-      this.$router.push({
-        path: '/wxapp/manage/decorate_pc?id=' + theme_pc_template_id
-      })
+      this.$router.push({ path: `/pc/design?id=${theme_pc_template_id}` });
+      // this.$router.push({
+      //   path: `${this.$route.path}/edit?id=` + theme_pc_template_id
+      // })
     },
     async handleDisable({ status, created, updated, deleted_at, ...rest }) {
       try {

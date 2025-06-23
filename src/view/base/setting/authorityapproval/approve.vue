@@ -1,4 +1,5 @@
 <template>
+  <SpPage>
   <div class="cus-authory-approve">
     <PersonInfo
       :info="approvel_info"
@@ -91,6 +92,7 @@
       </div>
     </el-dialog>
   </div>
+</SpPage>
 </template>
 <script>
 import { mapGetters } from 'vuex'

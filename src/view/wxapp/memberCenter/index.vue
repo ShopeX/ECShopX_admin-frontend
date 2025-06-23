@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <SpPage>
     <SpPlatformTip h5 app alipay />
     <el-tabs v-model="activeName" type="card">
       <el-tab-pane label="会员中心BANNER" name="banner">
@@ -19,7 +19,7 @@
         <wechatshareTemplates />
       </el-tab-pane> -->
     </el-tabs>
-  </div>
+  </SpPage>
 </template>
 
 <script>

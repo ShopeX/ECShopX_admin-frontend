@@ -1,5 +1,10 @@
 <template>
-  <div>
+  <SpPage title='运费模版编辑'>
+    <template slot='page-header'>
+      <div class="section-footer with-border content-center clearfix text-right">
+        <el-button type="primary" @click="submitSaveAction"> 保存 </el-button>
+      </div>
+    </template>
     <el-form ref="form" v-loading="loading" :model="form" class="box-set" label-width="90px">
       <el-row :gutter="20">
         <el-col :span="8">
@@ -695,9 +700,7 @@
           </section>
         </el-col>
       </el-row>
-      <div class="section-footer with-border content-center clearfix">
-        <el-button type="primary" @click="submitSaveAction"> 保存 </el-button>
-      </div>
+     
       <el-dialog title="选择区域1" :visible.sync="dialogAreaFormVisible" width="960px">
         <el-row>
           <el-col :span="6">
@@ -783,7 +786,7 @@
         </div>
       </el-dialog>
     </el-form>
-  </div>
+  </SpPage>
 </template>
 
 <script>

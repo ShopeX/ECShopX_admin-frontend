@@ -1,4 +1,5 @@
 <template>
+  <SpPage>
   <el-card class="box-card">
     <div slot="header" class="clearfix">
       <span>充值</span>
@@ -25,8 +26,9 @@
           </el-form-item>
         </el-form>
       </div>
-    </div>
-  </el-card>
+      </div>
+    </el-card>
+  </SpPage>
 </template>
 
 <script>

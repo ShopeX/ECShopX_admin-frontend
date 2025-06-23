@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <SpPage>
     <SpFilterForm :model="params" @onSearch="onSearch" @onReset="onSearch">
       <SpFilterFormItem prop="label" label="街道居委:">
         <el-input v-model="params.label" placeholder="请输入街道居委名称" />
@@ -53,7 +53,7 @@
         :data="categoryList"
         row-key="id"
         default-expand-all
-        :height="wheight - 180"
+        :height="- 180"
         :tree-props="{ children: 'children' }"
         style="width: 100%"
         size="small"
@@ -111,7 +111,7 @@
       @chooseImg="pickImg"
       @closeImgDialog="closeImgDialog"
     />
-  </div>
+  </SpPage>
 </template>
 <script>
 import { mapGetters } from 'vuex'
@@ -165,7 +165,7 @@ export default {
     }
   },
   computed: {
-    ...mapGetters(['wheight', 'login_type'])
+    ...mapGetters([ 'login_type'])
   },
 
   mounted() {

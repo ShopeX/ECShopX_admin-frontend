@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <SpPage>
     <SpFilterForm :model="params" size="small" @onSearch="onSearch" @onReset="onSearch">
       <SpFilterFormItem prop="username" label="配送员姓名:">
         <el-input v-model="params.username" placeholder="请输入配送员姓名" />
@@ -53,7 +53,7 @@
       @chooseStore="DistributorChooseAction"
       @closeStoreDialog="closeDialogAction"
     /> -->
-  </div>
+  </SpPage>
 </template>
 <script>
 import DistributorSelect from '@/components/function/distributorSelect'
@@ -615,11 +615,19 @@ export default {
 }
 </script>
 <style lang="scss" scoped>
+
 .flex-box {
   display: flex;
   align-items: center;
   span {
     margin-left: 10px;
   }
+}
+</style>
+<style lang="scss">
+.form-item__label {
+  width: 100px;
+  font-size: 14px;
+  color: #333;
 }
 </style>

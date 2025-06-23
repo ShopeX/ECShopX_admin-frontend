@@ -1,7 +1,7 @@
 <template>
-  <div>
+  <SpPage>
     <SpPlatformTip h5 app alipay />
-    <el-card>
+    <!-- <el-card> -->
       <div style="width: 70%">
         <el-form v-loading="loading" label-width="180px" :model="form">
           <el-form-item label="广告素材" prop="ad_pic">
@@ -132,8 +132,8 @@
         @setLink="setLink"
         @closeDialog="closeDialog"
       />
-    </el-card>
-  </div>
+    <!-- </el-card> -->
+  </SpPage>
 </template>
 <script>
 import linkSetter from '@/components/template_links' // 添加导航连接

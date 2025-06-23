@@ -74,7 +74,8 @@ export default {
   methods: {
     async obtain() {
       let res = await this.$api.pickuplocation.getPickuplocationList()
-      this.is_open = res.is_open.toLowerCase() === 'true'
+      console.log('res.is_open', res?.is_open)
+      this.is_open = res?.is_open
       ;(this.min_amount = Number(res.min_amount)),
         (this.freight_fee = Number(res.freight_fee)),
         (this.rule = res.rule)

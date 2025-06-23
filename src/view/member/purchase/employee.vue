@@ -1,5 +1,6 @@
 <style lang="scss"></style>
 <template>
+  <SpPage>
   <SpRouterView>
     <SpFilterForm :model="queryForm" @onSearch="onSearch" @onReset="onSearch">
       <SpFilterFormItem prop="mobile" label="手机号:">
@@ -66,6 +67,7 @@
       @onSubmit="onEmployeeFormSubmit"
     />
   </SpRouterView>
+</SpPage>
 </template>
 
 <script>

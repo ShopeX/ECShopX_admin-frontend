@@ -1,10 +1,11 @@
 <template>
-  <div>
-    <el-form
-      ref="dataForm"
-      v-loading="formLoad"
-      :model="ruleForm"
-      :rules="rules"
+  <SpPage>
+   
+      <el-form
+        ref="dataForm"
+        v-loading="formLoad"
+        :model="ruleForm"
+        :rules="rules"
       class="point-form"
       label-width="140px"
     >
@@ -50,7 +51,7 @@
         <el-button type="primary" @click="confirmHandle"> 确认 </el-button>
       </el-col>
     </el-row>
-  </div>
+  </SpPage>
 </template>
 <script>
 import { Message } from 'element-ui'

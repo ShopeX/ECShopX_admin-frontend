@@ -8,6 +8,7 @@ import {
   IS_DISTRIBUTOR,
   IS_SUPPLIER,
   IS_MERCHANT,
+  VERSION_SHUYUN,
   getUrlPathByLoginType
 } from '@/utils'
 import { SYSTEM_CONFIG } from '@/consts'
@@ -119,7 +120,7 @@ function install(Vue) {
   Vue.prototype.companyBrandImg = process.env.PRODUCT_MODEL === 'standard' ? 'onex' : 'ecshopx'
   Vue.prototype.$EventBus = new Vue()
   Vue.prototype.$export_open = export_open
-
+  Vue.prototype.VERSION_SHUYUN = VERSION_SHUYUN
   // 动态改变页面的title
   document.title = Vue.prototype.VUE_APP_SYSTEM_NAME
 

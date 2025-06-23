@@ -1,5 +1,5 @@
 <template>
-  <div class="">
+  <SpPage class="">
     <el-table
       v-loading="loading"
       :data="logsList"
@@ -44,7 +44,7 @@
         @current-change="handleCurrentChange"
       />
     </div>
-  </div>
+  </SpPage>
 </template>
 <script>
 import { Message } from 'element-ui'

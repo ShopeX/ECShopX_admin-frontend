@@ -11,6 +11,7 @@
 }
 </style>
 <template>
+  <SpPage>
   <div class="page-body">
     <SpRouterView>
       <SpFilterForm :model="params" @onSearch="onSearch" @onReset="onSearch">
@@ -239,7 +240,7 @@
             <!-- <el-table-column prop="itemMainCatName" label="管理分类" width="150"></el-table-column> -->
             <el-table-column prop="itemCatName" label="商品分类" width="150" />
           </el-table>
-          <div class="content-center content-top-padded">
+          <div class="content-center content-top-padded mt-4">
             <el-pagination
               background
               layout="total, sizes, prev, pager, next, jumper"
@@ -315,6 +316,7 @@
       </el-dialog>
     </SpRouterView>
   </div>
+</SpPage>
 </template>
 <script>
 import { mapGetters } from 'vuex'

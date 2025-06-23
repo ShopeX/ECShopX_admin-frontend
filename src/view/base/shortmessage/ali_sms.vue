@@ -1,9 +1,10 @@
 <template>
+  <SpPage>
   <div class="ali-sms-page">
     <div class="btn">
       <router-link
         class="link"
-        to="/setting/systemsetting/datamessage"
+        to="/setting/system-config/sms-service"
       >
         切换短信商
       </router-link>
@@ -40,6 +41,7 @@
 
     <router-view />
   </div>
+</SpPage>
 </template>
 
 <script>
@@ -51,6 +53,7 @@ export default {
   },
   mounted () {
     this.activeName = this.$route.meta
+    this.routePath = this.$route.path
   },
   updated () {
     this.activeName = this.$route.meta
@@ -59,9 +62,9 @@ export default {
     handleClick (tab, event) {
       this.activeName = tab.name
       if (tab.name == 'base_config') {
-        this.$router.push({ path: `/setting/systemsetting/datamessage/ali_sms` })
+        this.$router.push({ path: `/setting/system-config/sms-service/ali_sms` })
       } else {
-        this.$router.push({ path: `/setting/systemsetting/datamessage/ali_sms/${tab.name}` })
+        this.$router.push({ path: `${this.routePath}/${tab.name}` })
       }
     },
     switchSMS () {
@@ -75,7 +78,7 @@ export default {
 .ali-sms-page {
   .btn {
     position: absolute;
-    right: 20px;
+    right: 100px;
     text-align: right;
     z-index: 999;
     .link {

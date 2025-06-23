@@ -1,4 +1,5 @@
 <template>
+  <SpPage>
   <div class="shopex-sms-page">
     <div class="btn">
       <router-link v-if="!VERSION_SHUYUN" class="link" to="/setting/datamessage">
@@ -152,6 +153,7 @@
       </el-tab-pane>
     </el-tabs>
   </div>
+  </SpPage>
 </template>
 <script>
 import {
@@ -161,7 +163,7 @@ import {
   getSmsSign,
   saveSmsSign
 } from '../../../api/promotions'
-import { VERSION_STANDARD, VERSION_PLATFORM() } from '@/utils'
+import { VERSION_STANDARD, VERSION_PLATFORM } from '@/utils'
 export default {
   data() {
     return {
@@ -246,7 +248,7 @@ export default {
 .shopex-sms-page {
   .btn {
     position: absolute;
-    right: 40px;
+    right: 100px;
     text-align: right;
     z-index: 999;
     .link {

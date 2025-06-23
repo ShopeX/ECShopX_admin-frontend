@@ -16,9 +16,9 @@
 }
 </style>
 <template>
-  <div>
+  <SpPage>
     <SpForm v-model="form" size="min" :form-list="formList" :submit="false" />
-  </div>
+  </SpPage>
 </template>
 
 <script>

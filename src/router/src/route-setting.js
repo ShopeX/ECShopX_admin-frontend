@@ -170,7 +170,7 @@ export default {
           component: () => import('@/view/base/shortmessage/ali_sms'),
           children: [
             {
-              path: '/',
+            path: '/',
               name: '基础配置',
               meta: 'base_config',
               component: () => import('@/view/base/shortmessage/cpn/base_config')

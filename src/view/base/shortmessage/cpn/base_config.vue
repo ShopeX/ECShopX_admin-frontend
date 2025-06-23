@@ -1,4 +1,5 @@
 <template>
+  <SpPage>
   <div class="alisms_baseConfig">
     <tips>
       <p>
@@ -141,6 +142,7 @@
       </span>
     </el-dialog>
   </div>
+  </SpPage>
 </template>
 
 <script>

@@ -1,9 +1,9 @@
-import { BasicLayout } from '@/layout/basic'
+import { BasicLayout,LayoutDynamic } from '@/layout/basic'
 import SubLayout from '@/view/sublayout'
 
 const routes = [
   {
-    component: BasicLayout,
+    component: LayoutDynamic,
     meta: {
       aliasName: 'wxapp-template',
       icon: 'page-template',
@@ -25,6 +25,9 @@ const routes = [
         component: () => import('@/view/wxapp/home'),
         children: [
           {
+            meta: {
+              layout: 'empty'
+            },
             path: 'edit',
             component: () => import('@/view/decorate/index')
           }
@@ -116,7 +119,16 @@ const routes = [
           title: '模板列表',
           permissions: ['wxapp-template.pcmall.templatelist']
         },
-        component: () => import('@/view/pc/pctemplate')
+        component: () => import('@/view/pc/pctemplate'),
+        children: [
+          {
+            meta: {
+              layout: 'empty'
+            },
+            path: 'edit',
+            component: () => import('@/view/decorate/pc/index')
+          }
+        ]
       },
       // TODO: PC模板编辑
       // {

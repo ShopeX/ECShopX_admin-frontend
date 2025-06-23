@@ -1,4 +1,5 @@
 <template>
+  <SpPage>
   <SpRouterView class="zyk_adapay_account">
     <el-form ref="ruleForm" :model="form" class="demo-ruleForm" label-width="100px">
       <el-card class="box-card" shadow="never">
@@ -117,9 +118,9 @@
                 导入<i class="el-icon-upload el-icon--right" />
               </el-button>
             </el-upload>
-            <export-tip @exportHandle="exportFile">
+            <!-- <export-tip @exportHandle="exportFile">
               <el-button type="primary" size="medium"> 导出文件 </el-button>
-            </export-tip>
+            </export-tip> -->
           </el-row>
           <el-table v-loading="loading" :data="list" style="width: 100%">
             <el-table-column label="订单号" prop="orderId" />
@@ -241,6 +242,7 @@
       </el-card>
     </el-form>
   </SpRouterView>
+  </SpPage>
 </template>
 
 <script>

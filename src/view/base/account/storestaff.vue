@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <SpPage>
     <div class="action-container">
       <el-button type="primary" icon="plus" @click="addLabels"> 添加店铺员工 </el-button>
     </div>
@@ -206,7 +206,7 @@
         @closeStoreDialog="closeDialogAction"
       />
     </template>
-  </div>
+  </SpPage>
 </template>
 <script>
 import { mapGetters } from 'vuex'
@@ -281,9 +281,6 @@ export default {
       is_distributor_main: false,
       loginType: this.$store.getters.login_type
     }
-  },
-  computed: {
-    ...mapGetters(['wheight'])
   },
   watch: {
     status(val) {

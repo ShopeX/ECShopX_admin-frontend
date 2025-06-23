@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <SpPage>
     <div class="title">积分商城基础设置</div>
     <el-card>
       <div style="width: 90%">
@@ -62,7 +62,7 @@
     <GlobalFooter>
       <el-button type="primary" @click="save"> 保存 </el-button>
     </GlobalFooter>
-  </div>
+  </SpPage>
 </template>
 <script>
 import { mapGetters } from 'vuex'

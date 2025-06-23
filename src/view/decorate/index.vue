@@ -219,7 +219,7 @@ export default {
     },
     getComponentAttr(item) {
       const { wgtName, config } = this.widgets.find(wgt => {
-        return wgt.name.toLowerCase() == item.name.toLowerCase()
+        return wgt.name?.toLowerCase() == item.name?.toLowerCase()
       })
       return {
         wgtName,
@@ -307,7 +307,7 @@ export default {
 
       list.forEach(li => {
         // 是否存在挂件
-        const wgt = this.widgets.find(item => item.name.toLowerCase() == li.name.toLowerCase())
+        const wgt = this.widgets.find(item => item.name?.toLowerCase() == li.name?.toLowerCase())
         if (wgt) {
           // console.log('getTemplateDetial wgt:', wgt)
           const wgtInitParams = this.cloneDefaultField(wgt)
@@ -345,7 +345,7 @@ export default {
       }
       const data = this.contentComps.map(item => {
         const { transformOut } = this.widgets.find(
-          wgt => wgt.name.toLowerCase() == item.name.toLowerCase()
+          wgt => wgt.name?.toLowerCase() == item.name?.toLowerCase()
         )?.config
         return transformOut(item)
       })

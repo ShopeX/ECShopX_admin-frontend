@@ -1,4 +1,5 @@
 <template>
+  <SpPage>
   <el-form
     ref="form"
     label-width="100px"
@@ -58,6 +59,7 @@
       </el-button>
     </div>
   </el-form>
+</SpPage>
 </template>
 <script>
 export default {

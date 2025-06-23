@@ -1,7 +1,21 @@
 <template>
+  <SpPage title="订单基本信息">
+    <template slot="page-header">
+      <div v-if="btnActions.length > 0" class="text-right">
+      <el-button
+        v-for="(btn, index) in btnActions"
+        :key="`btn-item__${index}`"
+        type="primary"
+        plain
+        @click="handleAction(btn)"
+      >
+        {{ btn.name }}
+      </el-button>
+    </div>
+    </template>
   <div v-loading="loading" class="page-order-index">
     <el-card class="el-card--normal">
-      <div slot="header">订单基本信息</div>
+
       <el-row class="card-panel">
         <el-col
           v-for="(item, index) in infoList"
@@ -490,17 +504,7 @@
       </el-row>
     </el-card> -->
 
-    <div v-if="btnActions.length > 0" class="footer-container">
-      <el-button
-        v-for="(btn, index) in btnActions"
-        :key="`btn-item__${index}`"
-        type="primary"
-        plain
-        @click="handleAction(btn)"
-      >
-        {{ btn.name }}
-      </el-button>
-    </div>
+
 
     <!-- 修改物流 -->
     <SpDialog
@@ -522,7 +526,8 @@
       :form-list="deliverGoodsFormList"
       @onSubmit="deliverGoodsSubmit"
     />
-  </div>
+    </div>
+  </SpPage>
 </template>
 
 <script>

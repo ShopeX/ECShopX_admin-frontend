@@ -11,7 +11,7 @@
 }
 </style>
 <template>
-  <div>
+  <SpPage>
     <SpFilterForm :model="formQuery" @onSearch="onSearch" @onReset="onSearch">
       <SpFilterFormItem prop="chief_mobile" label="团长手机号:">
         <el-input v-model="formQuery.chief_mobile" placeholder="请输入团长手机号" />
@@ -31,7 +31,7 @@
       }"
       url="/community/rebate/count"
     />
-  </div>
+  </SpPage>
 </template>
 
 <script>

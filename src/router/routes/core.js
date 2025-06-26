@@ -34,6 +34,11 @@ const coreRoutes = [
         name: 'Login',
         path: 'login',
         component: () => import('@/views/core/authentication/login.vue')
+      },
+      {
+        name: 'shuyunLogin',
+        path: 'shuyunLogin',
+        component: () => import('@/views/core/authentication/shuyun-login.vue')
       }
     ]
   },

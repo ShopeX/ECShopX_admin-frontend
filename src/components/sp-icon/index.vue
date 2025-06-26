@@ -1,7 +1,9 @@
 <template>
   <div
     v-if="button"
-    class="w-[32px] h-[32px] rounded flex items-center justify-center hover:bg-gray-100 transition-all duration-300"
+    :class="buttonClass"
+    class="flex items-center justify-center hover:bg-gray-100 transition-all duration-300 cursor-pointer"
+    @click="onButtonClick"
   >
     <component :is="icon" :size="size" :fill="fill" />
   </div>
@@ -26,6 +28,10 @@ export default {
       type: [Number, String],
       default: 16
     },
+    radius: {
+      type: Boolean,
+      default: false
+    },
     fill: {
       type: String,
       default: 'currentColor'
@@ -38,9 +44,21 @@ export default {
     icon() {
       return icons[this.name.replace(/(?:^|-)([a-z])/g, (_, letter) => letter.toUpperCase())]
       // return icons[this.name]
+    },
+    buttonClass() {
+      return this.button
+        ? `w-[${this.size * 2}px] h-[${this.size * 2}px] rounded ${
+            this.radius ? 'rounded-full' : ''
+          }`
+        : ''
     }
   },
-  mounted() {}
+  mounted() {},
+  methods: {
+    onButtonClick() {
+      this.$emit('click')
+    }
+  }
 }
 </script>
 

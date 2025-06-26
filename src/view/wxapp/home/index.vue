@@ -1,73 +1,12 @@
 <template>
-  <SpPage>
-    <SpRouterView>
+  <SpRouterView>
+    <SpPage>
       <SpPlatformTip v-if="!VERSION_SHUYUN()" h5 app alipay />
       <div v-if="!isDistributorTemplate" class="shop-header">
         <div v-if="!VERSION_B2C() && !VERSION_IN_PURCHASE()" class="shop-left">
           <span class="text">小程序模版呈现：</span>
           <div class="option-item">
             <span class="option-item_text">总部首页</span>
-            <el-switch
-              v-model="index_type"
-              :active-value="1"
-              :inactive-value="2"
-              @change="changeHomeTemplate"
-            />
-          </div>
-          <div v-if="VERSION_STANDARD()" class="option-item">
-            <span class="option-item_text">店铺首页</span>
-            <el-switch
-              v-model="index_type"
-              :active-value="2"
-              :inactive-value="1"
-              @change="changeHomeTemplate"
-            />
-          </div>
-          <span v-if="!VERSION_PLATFORM()" class="text">模版同步设置：</span>
-          <div v-if="!VERSION_PLATFORM()" class="option-item">
-            <span class="option-item_text">同步并启用</span>
-            <el-switch
-              v-model="is_enforce_sync"
-              :active-value="1"
-              :inactive-value="2"
-              @change="toggleSynchronizeShop"
-            />
-          </div>
-        </div>
-        <div class="section-white mini-setting">
-          <el-button
-            type="text"
-            style="margin-right: 10px"
-            @click="
-              () => {
-                configDrawerShow = true
-              }
-            "
-          >
-            <i class="iconfont icon-cog" /> 小程序配置
-          </el-button>
-          <el-button type="text" @click="handleShowTabConfig">
-            <i class="iconfont icon-cog" /> 小程序导航配置
-          </el-button>
-        </div>
-      </div>
-
-      <div v-for="(item, index) in templateList" :key="index" class="template-col">
-        <div class="template-item">
-          <div class="img-wrap">
-            <div class="preview-cover" @click="previewTemplate(item.pages_template_id)">
-              <img class="preview-cover_img" src="@/assets/img/preview.png" alt="预览">
-              <span class="preview-cover_text">预览</span>
-            </div>
-            <el-image class="template-pic" :src="item.template_pic" fit="cover" />
-            <div v-if="item.template_type == 1" class="tag">同步模板</div>
-          </div>
-          <div class="template-name">
-            <span>{{ item.template_title }}</span>
-            <span class="el-icon-edit edit-css" @click="modifyTemplate(item)" />
-          </div>
-          <div v-if="!VERSION_B2C()" class="template-common">
-            <span class="temp-label">店铺可编辑挂件</span>
             <el-switch
               v-model="index_type"
               :active-value="1"
@@ -286,8 +225,8 @@
           @onSubmit="onSubmitTabList"
         />
       </SpDrawer>
-    </SpRouterView>
-  </SpPage>
+    </SpPage>
+  </SpRouterView>
 </template>
 
 <script>

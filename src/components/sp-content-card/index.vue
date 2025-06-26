@@ -6,11 +6,11 @@
       <slot name="head-slot" />
 
       <div class="relative w-full cursor-pointer" style="padding-bottom: 100%">
-        <SpImage :src="data.image_url" class="absolute top-0 left-0 w-full h-full" />
+        <SpImage :src="data.image_url" class="!absolute top-0 left-0 w-full h-full" />
       </div>
     </div>
     <div class="sp-content-card__body pt-1 pb-1">
-      <div class="text-sm text-gray-600 overflow-ellipsis h-10 px-2">{{ data.title }}</div>
+      <div class="text-sm text-gray-600 overflow-ellipsis px-2">{{ data.title }}</div>
       <div class="text-sm text-gray-500 px-2 flex justify-end gap-2">
         <div class="flex items-center gap-1">
           <SpIcon class="text-gray-400" name="icon-eye" :size="14" />

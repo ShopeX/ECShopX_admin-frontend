@@ -13,8 +13,15 @@
     </div>
 
     <div class="flex items-center gap-2 px-3">
-      <!-- <SpIcon name="store" :size="20" />
-      <SpIcon name="briefcase-business" :size="20" /> -->
+      <SpIcon
+        v-if="IS_DISTRIBUTOR()"
+        button
+        radius
+        name="shop"
+        :size="16"
+        @click="handleShopClick"
+      />
+      <!-- <SpIcon name="briefcase-business" :size="20" /> -->
 
       <el-dropdown @command="handleCommand">
         <div class="h-[44px] w-[44px] hover:bg-gray-100 rounded-full" style="padding: 6px">
@@ -54,12 +61,14 @@
 </template>
 
 <script>
-import { getBasePath } from '@/utils'
+import { getBasePath, IS_DISTRIBUTOR } from '@/utils'
+import DEFAULT_USER from '@/assets/images/default-user.png'
 export default {
   name: 'LayoutHeader',
   computed: {
     accountAvatar() {
-      return this.$store.state.user?.accountInfo?.head_portrait
+      return DEFAULT_USER
+      return this.$store.state.user?.accountInfo?.head_portrait || DEFAULT_USER
     }
   },
   methods: {
@@ -73,6 +82,10 @@ export default {
         const basePath = getBasePath()
         this.$router.push(basePath ? `/${basePath}/login` : '/login')
       }
+    },
+    handleShopClick() {
+      debugger
+      this.$router.push('/shopadmin/shoplist')
     }
   }
 }

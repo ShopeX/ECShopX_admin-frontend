@@ -1,5 +1,4 @@
 import { BasicLayout } from '@/layout/basic'
-import SubLayout from '@/view/sublayout'
 
 const routes = [
   {

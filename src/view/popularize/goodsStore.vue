@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <SpPage>
     <shop-select distributors @update="storeChange" @init="initChange" />
 
     <div class="content-bottom-padded">
@@ -392,7 +392,7 @@
         <el-button type="primary" @click="handleBatchChange">确 定</el-button>
       </span>
     </el-dialog>
-  </div>
+  </SpPage>
 </template>
 <script>
 import axios from 'axios'

@@ -17,8 +17,8 @@
 }
 </style>
 <template>
-  <div>
-    <div v-if="$route.path.indexOf('detail') === -1">
+  <SpPage>
+    <SpRouterView>
       <SpFilterForm :model="formQuery" @onSearch="onSearch" @onReset="onSearch">
         <SpFilterFormItem prop="distributor_id" label="店铺:">
           <SpSelectShop v-model="formQuery.distributor_id" clearable placeholder="请选择" />
@@ -90,9 +90,8 @@
         }"
         url="/statement/summarized"
       />
-    </div>
-    <router-view />
-  </div>
+    </SpRouterView>
+  </SpPage>
 </template>
 
 <script>
@@ -144,7 +143,7 @@ export default {
             key: 'settlement',
             type: 'button',
             buttonType: 'text',
-            visible: (row) => {
+            visible: row => {
               if (this.IS_ADMIN() && row.statement_status == 'confirmed') {
                 return true
               }

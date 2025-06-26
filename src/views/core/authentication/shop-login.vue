@@ -2,7 +2,7 @@
   <div class="bg-white h-full px-10 py-10 relative flex flex-col justify-center">
     <!-- form: {{ form }} -->
     <div>
-      <div class="text-3xl font-bold mb-3">店铺管理中心</div>
+      <div class="text-3xl font-bold mb-3">{{ systemTitle }}</div>
       <div class="text-sm text-muted-foreground">请输入您的帐户信息以开始管理您的项目</div>
     </div>
 
@@ -25,6 +25,7 @@
 <script>
 import { useForm } from '@/composables'
 import Config from '@/config'
+import { getSystemTitle } from '@/utils'
 
 const [Form, FormApi] = useForm({
   formItems: [
@@ -59,6 +60,11 @@ export default {
       formApi: FormApi,
       loading: false,
       recoderNumber: Config.recoder_number
+    }
+  },
+  computed: {
+    systemTitle: () => {
+      return getSystemTitle()
     }
   },
   async mounted() {

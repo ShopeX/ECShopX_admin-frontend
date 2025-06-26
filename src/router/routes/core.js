@@ -56,6 +56,36 @@ const coreRoutes = [
     name: 'shopAdminShopList',
     path: '/shopadmin/shoplist',
     component: () => import('@/views/store/shop-list.vue')
+  },
+  {
+    component: AuthPageLayout,
+    meta: {
+      title: 'Authentication'
+    },
+    name: 'supplierAuthentication',
+    path: '/supplier',
+    children: [
+      {
+        name: 'supplierLogin',
+        path: 'login',
+        component: () => import('@/views/core/authentication/supplier-login.vue')
+      }
+    ]
+  },
+  {
+    component: AuthPageLayout,
+    meta: {
+      title: 'Authentication'
+    },
+    name: 'merchantAuthentication',
+    path: '/merchant',
+    children: [
+      {
+        name: 'merchantLogin',
+        path: 'login',
+        component: () => import('@/views/core/authentication/merchant-login.vue')
+      }
+    ]
   }
 ]
 

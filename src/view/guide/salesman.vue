@@ -1,27 +1,30 @@
 <template>
-  <SpRouterView>
-    <div>
-      <el-row :gutter="20">
-        <el-col>
-          <shop-select distributors @update="storeChange" @init="initChange" />
-          <el-input v-model="params.mobile" placeholder="手机号" class="input-m" clearable>
-            <el-button slot="append" icon="el-icon-search" @click="numberSearch" />
-          </el-input>
-          <el-button type="primary" icon="plus" @click="handleAddSalesmanAction"> 添加 </el-button>
-        </el-col>
-      </el-row>
-      <el-tabs v-model="activeName" type="border-card" @tab-click="handleClick">
-        <el-tab-pane label="列表" name="admin" />
-        <!-- <el-tab-pane
+  <SpPage>
+    <SpRouterView>
+      <div>
+        <el-row :gutter="20">
+          <el-col>
+            <shop-select distributors @update="storeChange" @init="initChange" />
+            <el-input v-model="params.mobile" placeholder="手机号" class="input-m" clearable>
+              <el-button slot="append" icon="el-icon-search" @click="numberSearch" />
+            </el-input>
+            <el-button type="primary" icon="plus" @click="handleAddSalesmanAction">
+              添加
+            </el-button>
+          </el-col>
+        </el-row>
+        <el-tabs v-model="activeName" type="border-card" @tab-click="handleClick">
+          <el-tab-pane label="列表" name="admin" />
+          <!-- <el-tab-pane
         label="禁用"
         name="invalid"
       /> -->
-        <el-table v-loading="loading" :data="list">
-          <el-table-column prop="salesman_name" label="姓名" />
-          <el-table-column prop="mobile" label="手机号" />
-          <el-table-column prop="storeInfo.name" label="店铺" />
+          <el-table v-loading="loading" :data="list">
+            <el-table-column prop="salesman_name" label="姓名" />
+            <el-table-column prop="mobile" label="手机号" />
+            <el-table-column prop="storeInfo.name" label="店铺" />
 
-          <!-- <el-table-column prop="children_count" width="100" label="会员数量">
+            <!-- <el-table-column prop="children_count" width="100" label="会员数量">
             <template slot-scope="scope">
               <el-button
                 size="mini"
@@ -34,13 +37,13 @@
             </template>
           </el-table-column> -->
 
-          <!-- <el-table-column prop="child_count" label="会员数量">
+            <!-- <el-table-column prop="child_count" label="会员数量">
             <template slot-scope="scope">
               <span v-if="scope.row.child_count > 0">{{ scope.row.child_count }}</span>
               <span v-else>0</span>
             </template>
           </el-table-column> -->
-          <!-- <el-table-column label="是否启用">
+            <!-- <el-table-column label="是否启用">
             <template slot-scope="scope">
               <el-switch
                 v-model="scope.row.is_valid"
@@ -53,33 +56,33 @@
             </template>
           </el-table-column> -->
 
-          <el-table-column prop="children_count" width="130" label="累计会员数量">
-            <template slot-scope="scope">
-              <el-button
-                size="mini"
-                icon="edit"
-                type="text"
-                @click="count(scope.$index, scope.row)"
-              >
-                {{ scope.row.children_count }}
-              </el-button>
-            </template>
-          </el-table-column>
+            <el-table-column prop="children_count" width="130" label="累计会员数量">
+              <template slot-scope="scope">
+                <el-button
+                  size="mini"
+                  icon="edit"
+                  type="text"
+                  @click="count(scope.$index, scope.row)"
+                >
+                  {{ scope.row.children_count }}
+                </el-button>
+              </template>
+            </el-table-column>
 
-          <el-table-column label="是否启用">
-            <template slot-scope="scope">
-              <el-switch
-                v-model="scope.row.is_valid"
-                active-value="true"
-                inactive-value="false"
-                active-color="#13ce66"
-                inactive-color="#ccc"
-                @change="defaultSwitchChange(scope.row)"
-              />
-            </template>
-          </el-table-column>
+            <el-table-column label="是否启用">
+              <template slot-scope="scope">
+                <el-switch
+                  v-model="scope.row.is_valid"
+                  active-value="true"
+                  inactive-value="false"
+                  active-color="#13ce66"
+                  inactive-color="#ccc"
+                  @change="defaultSwitchChange(scope.row)"
+                />
+              </template>
+            </el-table-column>
 
-          <!--
+            <!--
 
         <el-table-column label="导购角色">
           <template slot-scope="scope">
@@ -102,200 +105,205 @@
           </template>
         </el-table-column>
       -->
-          <!-- <router-link :to="{ path: '/store/storemanager/salesmanRelationship', query: {salesperson_id: scope.row.salespersonId, is_bind: 1}}">绑定关系</router-link> -->
+            <!-- <router-link :to="{ path: '/store/storemanager/salesmanRelationship', query: {salesperson_id: scope.row.salespersonId, is_bind: 1}}">绑定关系</router-link> -->
 
-          <el-table-column label="操作" width="160px">
-            <template slot-scope="scope">
-              <div class="operating-icons">
-                <i class="iconfont icon-edit1" @click="handleUpdateSalesman(scope.row)" />
-                <!-- <i
+            <el-table-column label="操作" width="160px">
+              <template slot-scope="scope">
+                <div class="operating-icons">
+                  <i class="iconfont icon-edit1" @click="handleUpdateSalesman(scope.row)" />
+                  <!-- <i
                 v-if="activeName == 'admin'"
                 class="mark iconfont icon-trash-alt1"
                 @click="handleDeleteSalesman(scope.$index, scope.row)"
               /> -->
-              </div>
-            </template>
-          </el-table-column>
-        </el-table>
-        <div class="mt-4 text-right">
-          <el-pagination
-            background
-            :current-page="params.page"
-            :page-sizes="[10, 20, 50, 100]"
-            :page-size="params.pageSize"
-            layout="total, sizes, prev, pager, next, jumper"
-            :total="total_count"
-            @size-change="handleSizeChange"
-            @current-change="handleCurrentChange"
-          />
-        </div>
-      </el-tabs>
-
-      <el-dialog
-        v-show="false"
-        title="编辑导购员角色"
-        :visible.sync="dialog_role"
-        :close-on-click-modal="false"
-      >
-        <el-form v-model="form" label-width="160px">
-          <el-form-item label="角色">
-            <el-radio-group v-model="roleForm.role">
-              <el-radio
-                v-for="(item, index) in roleList"
-                :key="index"
-                :label="item.salesman_role_id"
-              >
-                {{ item.role_name }}
-              </el-radio>
-            </el-radio-group>
-          </el-form-item>
-        </el-form>
-        <div slot="footer" class="dialog-footer content-center">
-          <el-button type="primary" @click="handleAddSalesmanRole"> 确定 </el-button>
-        </div>
-      </el-dialog>
-      <el-dialog title="添加/编辑" :visible.sync="dialog" :close-on-click-modal="false">
-        <el-form v-model="form" label-width="160px">
-          <el-form-item label="管理店铺">
-            <shop-select
-              distributors
-              :shop-id-default="form.distributor_id"
-              @update="addSelectStoreChange"
-              @init="initChange"
+                </div>
+              </template>
+            </el-table-column>
+          </el-table>
+          <div class="mt-4 text-right">
+            <el-pagination
+              background
+              :current-page="params.page"
+              :page-sizes="[10, 20, 50, 100]"
+              :page-size="params.pageSize"
+              layout="total, sizes, prev, pager, next, jumper"
+              :total="total_count"
+              @size-change="handleSizeChange"
+              @current-change="handleCurrentChange"
             />
-            <!--distributors wxshops 需要哪个api传哪个-->
-            <!-- <div style="margin-left: 1.5%;">
+          </div>
+        </el-tabs>
+
+        <el-dialog
+          v-show="false"
+          title="编辑导购员角色"
+          :visible.sync="dialog_role"
+          :close-on-click-modal="false"
+        >
+          <el-form v-model="form" label-width="160px">
+            <el-form-item label="角色">
+              <el-radio-group v-model="roleForm.role">
+                <el-radio
+                  v-for="(item, index) in roleList"
+                  :key="index"
+                  :label="item.salesman_role_id"
+                >
+                  {{ item.role_name }}
+                </el-radio>
+              </el-radio-group>
+            </el-form-item>
+          </el-form>
+          <div slot="footer" class="dialog-footer content-center">
+            <el-button type="primary" @click="handleAddSalesmanRole"> 确定 </el-button>
+          </div>
+        </el-dialog>
+        <el-dialog title="添加/编辑" :visible.sync="dialog" :close-on-click-modal="false">
+          <el-form v-model="form" label-width="160px">
+            <el-form-item label="管理店铺">
+              <shop-select
+                distributors
+                :shop-id-default="form.distributor_id"
+                @update="addSelectStoreChange"
+                @init="initChange"
+              />
+              <!--distributors wxshops 需要哪个api传哪个-->
+              <!-- <div style="margin-left: 1.5%;">
             <template v-if="rel_distributor_ids">
               <el-tag v-for="(item, index) in rel_distributor_ids" :disable-transitions="false" :key="item.name" closable @close="storeClose(rel_distributor_ids, index)"> {{item.name}} </el-tag>
             </template>
             <el-button type="text" @click="addStoreAction">添加适用店铺</el-button>
           </div> -->
-          </el-form-item>
-          <el-form-item label="手机号">
-            <el-input
-              v-model="form.mobile"
-              placeholder="请输入手机号"
-              style="width: 193px"
-              :readonly="salesman_id > 0"
-            />
-            <div v-if="salesman_id">* 手机号不可修改</div>
-          </el-form-item>
-          <el-form-item v-show="false" label="角色">
-            <el-radio-group v-model="form.role">
-              <el-radio
-                v-for="(item, index) in roleList"
-                :key="index"
-                :label="item.salesman_role_id"
-              >
-                {{ item.role_name }}
-              </el-radio>
-            </el-radio-group>
-          </el-form-item>
-          <el-form-item label="姓名">
-            <el-input v-model="form.salesman_name" placeholder="请输入姓名" style="width: 193px" />
-          </el-form-item>
-          <el-form-item v-if="activeName == 'invalid'" label="是否启用">
-            <el-radio v-model="form.is_valid" label="true"> 启用 </el-radio>
-            <el-radio v-model="form.is_valid" label="delete"> 禁用 </el-radio>
-          </el-form-item>
-        </el-form>
-        <div slot="footer" class="dialog-footer content-center">
-          <el-button type="primary" @click="handleAddSalesman"> 确定 </el-button>
-        </div>
-      </el-dialog>
-      <el-dialog
-        title="店铺列表"
-        :visible.sync="relShop.relShopVisible"
-        :before-close="handleCancel"
-        width="70%"
-      >
-        <template>
-          <el-table v-loading="loading" :data="relShop.list">
-            <el-table-column prop="shop_id" label="id" width="60" />
-            <el-table-column prop="store_name" label="店铺名称" width="300" />
-            <el-table-column prop="address" label="店铺地址" />
-          </el-table>
-          <div
-            v-if="relShop.total_count > relShop.params.pageSize"
-            class="content-center content-top-padded"
-          >
-            <el-pagination
-              layout="prev, pager, next"
-              :current-page.sync="relShop.params.page"
-              :total="relShop.total_count"
-              :page-size="relShop.params.pageSize"
-              @current-change="handleRelShopCurrentChange"
-            />
+            </el-form-item>
+            <el-form-item label="手机号">
+              <el-input
+                v-model="form.mobile"
+                placeholder="请输入手机号"
+                style="width: 193px"
+                :readonly="salesman_id > 0"
+              />
+              <div v-if="salesman_id">* 手机号不可修改</div>
+            </el-form-item>
+            <el-form-item v-show="false" label="角色">
+              <el-radio-group v-model="form.role">
+                <el-radio
+                  v-for="(item, index) in roleList"
+                  :key="index"
+                  :label="item.salesman_role_id"
+                >
+                  {{ item.role_name }}
+                </el-radio>
+              </el-radio-group>
+            </el-form-item>
+            <el-form-item label="姓名">
+              <el-input
+                v-model="form.salesman_name"
+                placeholder="请输入姓名"
+                style="width: 193px"
+              />
+            </el-form-item>
+            <el-form-item v-if="activeName == 'invalid'" label="是否启用">
+              <el-radio v-model="form.is_valid" label="true"> 启用 </el-radio>
+              <el-radio v-model="form.is_valid" label="delete"> 禁用 </el-radio>
+            </el-form-item>
+          </el-form>
+          <div slot="footer" class="dialog-footer content-center">
+            <el-button type="primary" @click="handleAddSalesman"> 确定 </el-button>
           </div>
-        </template>
-      </el-dialog>
-      <StoreSelect
-        :store-visible="storeVisible"
-        :is-valid="true"
-        :rel-data-ids="relStores"
-        :get-status="setStoreStatus"
-        @chooseStore="chooseStoreAction"
-        @closeStoreDialog="closeStoreDialogAction"
-      />
-
-      <!-- 绑定关系 -->
-      <SideBar :visible.sync="showSideBar" title="绑定关系" width="50">
-        <div class="relationship">
-          <el-card v-loading="relationship.loading">
-            <el-table :data="relationship.list">
-              <el-table-column label="导购员">
-                <template slot-scope="scope">
-                  {{ scope.row.salesperson_info.salesman_name }}
-                </template>
-              </el-table-column>
-              <el-table-column prop="work_userid" label="导购员企业微信userid" />
-              <el-table-column label="手机号">
-                <template slot-scope="scope">
-                  {{ scope.row.user_info.mobile }}
-                </template>
-              </el-table-column>
-              <el-table-column label="会员">
-                <template slot-scope="scope">
-                  <router-link
-                    :to="{
-                      path: '/member/member/memberlist/detail',
-                      query: { user_id: scope.row.user_id }
-                    }"
-                  >
-                    {{ scope.row.user_info.username }}
-                  </router-link>
-                </template>
-              </el-table-column>
-              <el-table-column label="是否是朋友">
-                <template slot-scope="scope">
-                  <span v-if="scope.row.is_friend == 0">否</span>
-                  <span v-else>是</span>
-                </template>
-              </el-table-column>
-              <el-table-column label="是否绑定">
-                <template slot-scope="scope">
-                  <span v-if="scope.row.is_bind == 0">否</span>
-                  <span v-else>是</span>
-                </template>
-              </el-table-column>
+        </el-dialog>
+        <el-dialog
+          title="店铺列表"
+          :visible.sync="relShop.relShopVisible"
+          :before-close="handleCancel"
+          width="70%"
+        >
+          <template>
+            <el-table v-loading="loading" :data="relShop.list">
+              <el-table-column prop="shop_id" label="id" width="60" />
+              <el-table-column prop="store_name" label="店铺名称" width="300" />
+              <el-table-column prop="address" label="店铺地址" />
             </el-table>
-            <div class="mt-4 text-right">
+            <div
+              v-if="relShop.total_count > relShop.params.pageSize"
+              class="content-center content-top-padded"
+            >
               <el-pagination
-                background
-                :current-page="relationship.params.page"
-                :page-sizes="[10, 20, 50, 100]"
-                :page-size="relationship.params.pageSize"
-                layout="total, sizes, prev, pager, next, jumper"
-                :total="relationship.total_count"
-                @size-change="handleRelaSizeChange"
-                @current-change="handleRelaCurrentChange"
+                layout="prev, pager, next"
+                :current-page.sync="relShop.params.page"
+                :total="relShop.total_count"
+                :page-size="relShop.params.pageSize"
+                @current-change="handleRelShopCurrentChange"
               />
             </div>
-          </el-card>
-        </div>
-      </SideBar>
-    </div>
-  </SpRouterView>
+          </template>
+        </el-dialog>
+        <StoreSelect
+          :store-visible="storeVisible"
+          :is-valid="true"
+          :rel-data-ids="relStores"
+          :get-status="setStoreStatus"
+          @chooseStore="chooseStoreAction"
+          @closeStoreDialog="closeStoreDialogAction"
+        />
+
+        <!-- 绑定关系 -->
+        <SideBar :visible.sync="showSideBar" title="绑定关系" width="50">
+          <div class="relationship">
+            <el-card v-loading="relationship.loading">
+              <el-table :data="relationship.list">
+                <el-table-column label="导购员">
+                  <template slot-scope="scope">
+                    {{ scope.row.salesperson_info.salesman_name }}
+                  </template>
+                </el-table-column>
+                <el-table-column prop="work_userid" label="导购员企业微信userid" />
+                <el-table-column label="手机号">
+                  <template slot-scope="scope">
+                    {{ scope.row.user_info.mobile }}
+                  </template>
+                </el-table-column>
+                <el-table-column label="会员">
+                  <template slot-scope="scope">
+                    <router-link
+                      :to="{
+                        path: '/member/member/memberlist/detail',
+                        query: { user_id: scope.row.user_id }
+                      }"
+                    >
+                      {{ scope.row.user_info.username }}
+                    </router-link>
+                  </template>
+                </el-table-column>
+                <el-table-column label="是否是朋友">
+                  <template slot-scope="scope">
+                    <span v-if="scope.row.is_friend == 0">否</span>
+                    <span v-else>是</span>
+                  </template>
+                </el-table-column>
+                <el-table-column label="是否绑定">
+                  <template slot-scope="scope">
+                    <span v-if="scope.row.is_bind == 0">否</span>
+                    <span v-else>是</span>
+                  </template>
+                </el-table-column>
+              </el-table>
+              <div class="mt-4 text-right">
+                <el-pagination
+                  background
+                  :current-page="relationship.params.page"
+                  :page-sizes="[10, 20, 50, 100]"
+                  :page-size="relationship.params.pageSize"
+                  layout="total, sizes, prev, pager, next, jumper"
+                  :total="relationship.total_count"
+                  @size-change="handleRelaSizeChange"
+                  @current-change="handleRelaCurrentChange"
+                />
+              </div>
+            </el-card>
+          </div>
+        </SideBar>
+      </div>
+    </SpRouterView>
+  </SpPage>
 </template>
 <script>
 import { mapGetters } from 'vuex'

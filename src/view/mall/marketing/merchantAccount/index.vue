@@ -1,5 +1,5 @@
 <template>
-  <div class="merchantAccount">
+  <SpPage class="merchantAccount">
     <SpFinder
       ref="finder"
       :split-count="2"
@@ -12,16 +12,8 @@
       }"
       url="/merchant/operator"
     />
-    <el-dialog
-      title="编辑账号信息"
-      :visible.sync="visible"
-      width="30%"
-      :before-close="handleClose"
-    >
-      <el-form
-        :model="form"
-        label-width="60px"
-      >
+    <el-dialog title="编辑账号信息" :visible.sync="visible" width="30%" :before-close="handleClose">
+      <el-form :model="form" label-width="60px">
         <el-form-item label="登录账号">
           <span>{{ form.mobile }}</span>
           <!-- <el-input v-model="form.mobile" autocomplete="off"></el-input> -->
@@ -36,29 +28,19 @@
           <span style="color: #999"> 密码6-16位，支持字母、数字、下划线</span>
         </el-form-item>
       </el-form>
-      <span
-        slot="footer"
-        class="dialog-footer"
-      >
-        <el-button
-          size="small"
-          @click="handleClose"
-        >取 消</el-button>
-        <el-button
-          type="primary"
-          size="small"
-          @click="fnConfirm"
-        >确 定</el-button>
+      <span slot="footer" class="dialog-footer">
+        <el-button size="small" @click="handleClose">取 消</el-button>
+        <el-button type="primary" size="small" @click="fnConfirm">确 定</el-button>
       </span>
     </el-dialog>
-  </div>
+  </SpPage>
 </template>
 
 <script>
 import setting_ from './setting'
 import { setChangePassword, updateTheMerchantInfo } from '@/api/mall/marketing.js'
 export default {
-  data () {
+  data() {
     return {
       visible: false,
       form: {
@@ -71,12 +53,12 @@ export default {
     }
   },
   computed: {
-    setting () {
+    setting() {
       return setting_(this)
     }
   },
   methods: {
-    fnChangePassword (row) {
+    fnChangePassword(row) {
       const message = `<p>请确认是否重置【商户名称】的密码<br/><span class='tips'>（新密码将以短信形式发送至其手机号上，<br/>短信费用将从短信余额中扣除）</span></p>`
       this.$confirm(message, '提示', {
         confirmButtonText: '确定',
@@ -96,10 +78,10 @@ export default {
 
       console.log(row)
     },
-    beforeSearch (params) {
+    beforeSearch(params) {
       return { ...params }
     },
-    async fnConfirm () {
+    async fnConfirm() {
       const result = await updateTheMerchantInfo({
         operator_id: this.currentUser.id,
         password: this.form.password
@@ -109,13 +91,13 @@ export default {
         this.handleClose()
       }
     },
-    editHandler (row) {
+    editHandler(row) {
       console.log(row)
       this.visible = true
       this.form.mobile = row.mobile
       this.currentUser.id = row.operator_id
     },
-    handleClose () {
+    handleClose() {
       this.visible = false
       this.form.password = ''
       this.currentUser.id = ''

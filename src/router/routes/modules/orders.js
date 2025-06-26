@@ -190,13 +190,13 @@ const routes = [
       },
 
       {
+        name: `tradeOrder`,
         path: 'trade-order',
-        name: `交易单`,
         component: () => import('@/view/mall/trade/list')
       },
       {
+        name: `afterSalesRefundList`,
         path: 'aftersales-refund-list',
-        name: `退款单`,
         component: () => import('@/view/mall/aftersales/refundList'),
         children: [
           {
@@ -206,8 +206,8 @@ const routes = [
         ]
       },
       {
-        path: 'Refunderrorlogs',
-        name: `退款失败日志`,
+        name: `refundErrorLogs`,
+        path: 'refunderrorlogs',
         component: () => import('@/view/mall/trade/refunderrorlogs')
       },
       {

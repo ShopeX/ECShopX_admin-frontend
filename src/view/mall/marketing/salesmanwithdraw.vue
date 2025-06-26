@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <SpPage>
     <el-row class="content-bottom-padded" :gutter="20">
       <el-col :span="4">
         <el-select
@@ -204,7 +204,7 @@
         </el-button>
       </div>
     </el-dialog>
-  </div>
+  </SpPage>
 </template>
 <script>
 import {

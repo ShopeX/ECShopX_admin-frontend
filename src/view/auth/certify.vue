@@ -1,5 +1,5 @@
 <template>
-  <section class="section section-white content-padded" onload="init()">
+  <SpPage>
     <template>
       <el-alert
         v-if="is_check == '1'"
@@ -97,7 +97,7 @@
         <el-button type="primary" size="large" @click="createSupplier"> 提交审核 </el-button>
       </el-form-item>
     </el-form>
-  </section>
+  </SpPage>
 </template>
 <script>
 import imgPicker from '@/components/imageselect'

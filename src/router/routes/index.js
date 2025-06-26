@@ -5,6 +5,10 @@ const dynamicRouteFiles = (() => {
 
   if (basePath == 'shopadmin') {
     return require.context('./shopadmin', false, /\.js$/)
+  } else if (basePath == 'supplier') {
+    return require.context('./supplier', false, /\.js$/)
+  } else if (basePath == 'merchant') {
+    return require.context('./merchant', false, /\.js$/)
   } else {
     return require.context('./modules', false, /\.js$/)
   }

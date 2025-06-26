@@ -1,4 +1,5 @@
 import store from '@/store'
+import { getBasePath } from '@/utils'
 import { fallbackNotFoundRoute } from './routes/core'
 
 /**
@@ -94,7 +95,9 @@ async function generateAccess(options) {
     router.addRoute(route)
   })
 
-  fallbackNotFoundRoute.path = '/shopadmin'
+  const basePath = getBasePath()
+
+  fallbackNotFoundRoute.path = basePath ? `/${basePath}` : '/'
   console.log('fallbackNotFoundRoute', fallbackNotFoundRoute)
   router.addRoute(fallbackNotFoundRoute)
 

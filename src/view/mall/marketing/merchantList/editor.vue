@@ -1,5 +1,5 @@
 <template>
-  <div class="MerchantsEditor">
+  <SpPage class="MerchantsEditor">
     <h5>选择商户类型</h5>
     <el-divider />
     <span v-if="$route.query.type == 'detail' || $route.query.type == 'verify'">{{
@@ -94,11 +94,7 @@
                 <span v-if="$route.query.type == 'detail' || $route.query.type == 'verify'">{{
                   form.legal_cert_id
                 }}</span>
-                <el-input
-                  v-else
-                  v-model="form.legal_cert_id"
-                  :disabled="disabled"
-                />
+                <el-input v-else v-model="form.legal_cert_id" :disabled="disabled" />
               </el-form-item>
             </el-col>
             <el-col :span="8">
@@ -450,7 +446,7 @@
       :password="tip.password"
       @getInfo="getInfo"
     />
-  </div>
+  </SpPage>
 </template>
 
 <script>
@@ -749,7 +745,7 @@ export default {
       }
     },
     submitFn(formName) {
-      this.$refs[formName].validate(async (valid) => {
+      this.$refs[formName].validate(async valid => {
         if (valid) {
           const { type, merchantId } = this.$route.query
           const result = await addTheBusinessman(this.form, type == 'edit' ? merchantId : null)
@@ -844,7 +840,7 @@ export default {
       this.AllBank = await this.$api.adapay.getBank({
         bank_name: this.form.bank_name
       })
-      var restaurants = this.AllBank.map((item) => {
+      var restaurants = this.AllBank.map(item => {
         return {
           value: item.bank_name,
           bank_code: item.bank_code,
@@ -856,7 +852,7 @@ export default {
       cb(results)
     },
     createFilter(queryString) {
-      return (restaurant) => {
+      return restaurant => {
         return restaurant.value.toLowerCase().indexOf(queryString.toLowerCase()) === 0
       }
     },
@@ -909,7 +905,7 @@ export default {
         cancelButtonText: '取消',
         type: 'warning'
       })
-        .then((res) => {
+        .then(res => {
           next()
         })
         .catch(() => {

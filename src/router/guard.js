@@ -82,7 +82,12 @@ function setupAccessGuard(router) {
       return '/'
     }
     // 如果目标路径不可访问，重定向到第一个可访问路由
-    if (!isPathAccessible(to.path, router.getRoutes()) || to.path === '/shopadmin') {
+    if (
+      !isPathAccessible(to.path, router.getRoutes()) ||
+      to.path === '/shopadmin' ||
+      to.path === '/supplier' ||
+      to.path === '/merchant'
+    ) {
       const firstPath = getFirstRoutePath()
       next(firstPath)
       return

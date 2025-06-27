@@ -66,14 +66,21 @@
       color: #fff;
       float: left;
       margin-top: 40px;
-      margin-left: 30px;
+      margin-left: 20px;
     }
     .icon-arrows-alt {
       font-size: 18px;
       color: #fff;
       float: left;
       margin-top: 40px;
-      margin-left: 20px;
+      margin-left: 10px;
+    }
+    .icon-sousuo{
+      font-size: 18px;
+      color: #fff;
+      float: left;
+      margin-top: 40px;
+      margin-left: 12px;
     }
   }
 }
@@ -263,7 +270,8 @@
                         <el-image style="width: 100%; height: 100%" :src="item" fit="contain" />
                         <div class="goodspic-mask">
                           <div class="iconfont icon-trash-alt" @click="removePicsImg(index)" />
-                          <div class="iconfont icon-arrows-alt" @click="previewSrcList" />
+                          <div class="iconfont icon-arrows-alt" />
+                          <div class="ecx-icon icon-sousuo" @click="previewSrcList" />
                         </div>
                         <el-image-viewer
                           v-if="showViewer"

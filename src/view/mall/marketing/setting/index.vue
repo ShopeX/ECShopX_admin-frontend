@@ -1,9 +1,6 @@
 <template>
-  <div class="merchantsClassification">
-    <el-tabs
-      v-model="activeName"
-      type="card"
-    >
+  <SpPage class="merchantsClassification">
+    <el-tabs v-model="activeName" type="card">
       <el-tab-pane
         v-for="(item, index) in tabList"
         :key="index"
@@ -14,7 +11,7 @@
         <Base-cpn v-if="activeName == 'base'" />
       </el-tab-pane>
     </el-tabs>
-  </div>
+  </SpPage>
 </template>
 
 <script>
@@ -23,7 +20,7 @@ import BaseCpn from './cpn/base.vue'
 
 export default {
   components: { Classify, BaseCpn },
-  data () {
+  data() {
     return {
       activeName: 'class',
       tabList: [

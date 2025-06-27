@@ -1,46 +1,15 @@
-<style type="text/css" lang="scss">
-.tip-info {
-  padding: 8px 16px;
-  background-color: #fff6f7;
-  border-radius: 4px;
-  border-left: 5px solid #ff7800;
-  margin: 11px 0;
-}
-</style>
 <template>
   <div>
     <div>
-      <el-tabs
-        v-model="activeName"
-        type="border-card"
-        @tab-click="handleClick"
-      >
-        <el-tab-pane
-          label="企业"
-          name="show_corp"
-        >
-          <corp_template
-            v-if="show_corp"
-            :active-name="activeName"
-          />
+      <el-tabs v-model="activeName" type="border-card" @tab-click="handleClick">
+        <el-tab-pane label="企业" name="show_corp">
+          <corp_template v-if="show_corp" :active-name="activeName" />
         </el-tab-pane>
-        <el-tab-pane
-          label="个体户"
-          name="show_solo"
-        >
-          <solo_template
-            v-if="show_solo"
-            :active-name="activeName"
-          />
+        <el-tab-pane label="个体户" name="show_solo">
+          <solo_template v-if="show_solo" :active-name="activeName" />
         </el-tab-pane>
-        <el-tab-pane
-          label="个人"
-          name="show_user"
-        >
-          <user_template
-            v-if="show_user"
-            :active-name="activeName"
-          />
+        <el-tab-pane label="个人" name="show_user">
+          <user_template v-if="show_user" :active-name="activeName" />
         </el-tab-pane>
       </el-tabs>
     </div>
@@ -58,7 +27,7 @@ export default {
     solo_template,
     user_template
   },
-  data () {
+  data() {
     return {
       activeName: 'show_corp',
       show_corp: true,
@@ -67,7 +36,7 @@ export default {
     }
   },
   methods: {
-    handleClick () {
+    handleClick() {
       if (this.activeName == 'show_corp') {
         this.show_corp = true
         this.show_solo = false

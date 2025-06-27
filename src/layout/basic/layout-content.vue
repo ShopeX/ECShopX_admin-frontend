@@ -1,7 +1,7 @@
 <template>
   <el-container class="h-full">
     <el-container class="h-full">
-      <div class="w-full h-full bg-background-deep">
+      <div id="page-container" class="w-full h-full bg-background-deep overflow-y-auto">
         <slot />
       </div>
     </el-container>

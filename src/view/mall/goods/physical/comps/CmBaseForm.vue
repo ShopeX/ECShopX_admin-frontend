@@ -11,12 +11,6 @@
 .width-full {
   width: 100%;
 }
-.tip-info {
-  color: #1480e3;
-  position: relative;
-  top: 2px;
-  left: 6px;
-}
 .form-block-body {
   padding: 20px;
   .el-form-item {
@@ -218,7 +212,7 @@
           <el-col v-if="!isCross" :span="8">
             <el-form-item label="赠品">
               <el-switch v-model="value.isGift" active-color="#13ce66" inactive-color="#ff4949" />
-              <span class="tip-info">
+              <span>
                 <i class="el-alert__icon el-icon-info" />
                 开启后前台不可购买
               </span>

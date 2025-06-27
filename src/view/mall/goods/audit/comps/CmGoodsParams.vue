@@ -11,12 +11,6 @@
 .width-full {
   width: 100%;
 }
-.tip-info {
-  color: #1480e3;
-  position: relative;
-  top: 2px;
-  left: 6px;
-}
 .form-block-body {
   padding: 20px;
   .el-form-item {
@@ -41,7 +35,7 @@
                 clearable
                 placeholder="请选择"
                 @change="
-                  (e) => {
+                  e => {
                     paramsChange(e, item)
                   }
                 "
@@ -73,7 +67,7 @@ export default {
   methods: {
     paramsChange(e, item) {
       if (e) {
-        const fd = item.children.find((k) => k.value == e)
+        const fd = item.children.find(k => k.value == e)
         item.attribute_value_name = fd.label
         this.$emit('input', this.value)
       } else {

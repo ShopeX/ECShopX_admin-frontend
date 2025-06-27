@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <SpPage>
     <SpRouterView class="merchantList">
       <SpFilterForm :model="formParams" @onSearch="onSearch" @onReset="onSearch">
         <SpFilterFormItem prop="merchant_name" label="商户名称:">
@@ -45,7 +45,7 @@
         url="/merchant/list"
       />
     </SpRouterView>
-  </div>
+  </SpPage>
 </template>
 
 <script>

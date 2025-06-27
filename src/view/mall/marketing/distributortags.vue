@@ -5,7 +5,7 @@
 </style>
 
 <template>
-  <div class="page-body">
+  <SpPage class="page-body">
     <SpFilterForm :model="params" @onSearch="onSearch" @onReset="onReset">
       <SpFilterFormItem prop="tag_name" label="标签名:">
         <el-input v-model="params.tag_name" placeholder="标签名" />
@@ -100,7 +100,7 @@
         </el-form>
       </template>
     </el-dialog>
-  </div>
+  </SpPage>
 </template>
 <script>
 import { mapGetters } from 'vuex'

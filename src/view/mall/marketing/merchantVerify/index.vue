@@ -5,7 +5,7 @@
 </style>
 
 <template>
-  <div class="merchantVerify">
+  <SpPage class="merchantVerify">
     <div v-if="$route.path.indexOf('verify') === -1">
       <SpFilterForm :model="params" @onSearch="onSearch" @onReset="onReset">
         <SpFilterFormItem prop="audit_status" label="审批状态:">
@@ -127,7 +127,7 @@
       </el-card>
     </div>
     <router-view />
-  </div>
+  </SpPage>
 </template>
 <script>
 import { mapGetters } from 'vuex'

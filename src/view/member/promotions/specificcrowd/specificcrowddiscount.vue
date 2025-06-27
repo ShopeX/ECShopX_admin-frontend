@@ -8,11 +8,6 @@
   <SpPage>
     <SpRouterView>
       <SpPlatformTip v-if="!VERSION_SHUYUN()" h5 app pc alipay />
-      <div class="action-container">
-        <el-button type="primary" icon="iconfont icon-xinzengcaozuo-01" @click="addActivityData">
-          添加标签折扣
-        </el-button>
-      </div>
 
       <SpFilterForm :model="params" @onSearch="onSearch" @onReset="onReset">
         <SpFilterFormItem prop="specific" label="针对人群:">

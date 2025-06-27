@@ -34,7 +34,7 @@
           <span>{{ systemTitle }}</span>
         </div>
       </div>
-      <el-menu class="!border-none w-full" :default-active="activeSubIndex" unique-opened>
+      <el-menu class="!border-none w-full" :default-active="activeSubIndex">
         <template v-for="item in subMenus">
           <template v-if="resolveChildren(item.children)">
             <el-submenu :key="item.alias_name" :index="item.alias_name">

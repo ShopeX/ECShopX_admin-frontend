@@ -202,6 +202,50 @@ const routes = [
         component: () => import('@/view/wxapp/wxappmanage/list')
       },
       {
+        name: `systemInfoWxappManagementDataAnalysis`,
+        path: 'system-config/data-analysis',
+        meta: {
+          aliasName: 'editdashboard',
+          icon: 'icon-products',
+          title: '数据分析',
+          permissions: ['setting.systemsetting.editdashboard']
+        },
+        component: () => import('@/view/wxapp/statistics/dataanalysis/index')
+      },
+      {
+        name: `systemInfoWxappManagementDifferentCodes`,
+        path: 'system-config/different-codes',
+        meta: {
+          aliasName: 'editsourcemanagement',
+          icon: 'icon-products',
+          title: '千人千码',
+          permissions: ['setting.systemsetting.editsourcemanagement']
+        },
+        component: () => import('@/view/wxapp/statistics/sourcemanagement/index'),
+        children: [
+          {
+            path: 'detail/:monitorId?',
+            component: () => import('@/view/wxapp/statistics/sourcemanagement/monito_detail'),
+            meta: {
+              title: '新增千人千码',
+              hidden: true
+            }
+          }
+        ]
+      },
+      {
+        name: `systemInfoWxappManagementMessageTemplate`,
+        path: 'system-config/message-template',
+        meta: {
+          aliasName: 'noticemessage',
+          icon: 'icon-products',
+          title: '消息模板',
+          permissions: ['setting.systemsetting.noticemessage']
+        },
+        component: () => import('@/view/wxapp/messages')
+      },
+
+      {
         name: `systemConfigOfficialAccountAuth`,
         path: 'system-config/official-account-auth',
         meta: {
@@ -475,50 +519,6 @@ const routes = [
           permissions: ['setting.systemsetting.mapsetting']
         },
         component: () => import('@/view/base/setting/mapsetting')
-      },
-
-      {
-        name: `analysis`,
-        path: 'data-analysis',
-        meta: {
-          aliasName: 'editdashboard',
-          icon: 'icon-products',
-          title: '数据分析',
-          permissions: ['setting.systemsetting.editdashboard']
-        },
-        component: () => import('@/view/wxapp/statistics/dataanalysis/index')
-      },
-      {
-        name: `codes`,
-        path: 'different-codes',
-        meta: {
-          aliasName: 'editsourcemanagement',
-          icon: 'icon-products',
-          title: '千人千码',
-          permissions: ['setting.systemsetting.editsourcemanagement']
-        },
-        component: () => import('@/view/wxapp/statistics/sourcemanagement/index'),
-        children: [
-          {
-            path: 'detail/:monitorId?',
-            component: () => import('@/view/wxapp/statistics/sourcemanagement/monito_detail'),
-            meta: {
-              title: '新增千人千码',
-              hidden: true
-            }
-          }
-        ]
-      },
-      {
-        name: `template`,
-        path: 'message-template',
-        meta: {
-          aliasName: 'noticemessage',
-          icon: 'icon-products',
-          title: '消息模板',
-          permissions: ['setting.systemsetting.noticemessage']
-        },
-        component: () => import('@/view/wxapp/messages')
       },
 
       {

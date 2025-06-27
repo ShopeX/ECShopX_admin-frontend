@@ -2,22 +2,29 @@
   <el-dialog
     :visible.sync="isLocalShow"
     :title="title"
-    :width="width"
+    :width="dialogSize"
     :before-close="handleBeforeClose"
     @close="handleClose"
   >
     <slot />
 
     <span slot="footer" class="dialog-footer">
-      <el-button icon="el-icon-circle-close" @click="handleCancel"> 取消 </el-button>
+      <el-button
+        v-if="computedButtonCancel.visible"
+        icon="el-icon-circle-close"
+        @click="handleCancel"
+      >
+        {{ computedButtonCancel.text }}
+      </el-button>
 
       <el-button
+        v-if="computedButtonConfirm.visible"
         type="primary"
         icon="el-icon-circle-check"
         :loading="loading"
         @click="handleConfirm"
       >
-        确定
+        {{ computedButtonConfirm.text }}
       </el-button>
     </span>
   </el-dialog>
@@ -28,6 +35,20 @@ export default {
   name: 'SpDialogPlus',
 
   props: {
+    buttonCancel: {
+      type: Object,
+      default: () => ({
+        visible: true,
+        text: '取消'
+      })
+    },
+    buttonConfirm: {
+      type: Object,
+      default: () => ({
+        visible: true,
+        text: '确定'
+      })
+    },
     width: {
       type: String,
       default: '1008px'
@@ -36,7 +57,36 @@ export default {
       type: Object,
       default: () => ({})
     },
+    size: {
+      type: String,
+      default: ['medium', 'small', 'mini']
+    },
     isShow: Boolean
+  },
+
+  computed: {
+    dialogSize() {
+      const SIZE = {
+        medium: '1000px',
+        small: '800px',
+        mini: '600px'
+      }
+      return SIZE[this.size] || '1200px'
+    },
+    computedButtonCancel() {
+      return {
+        visible: true,
+        text: '取消',
+        ...this.buttonCancel
+      }
+    },
+    computedButtonConfirm() {
+      return {
+        visible: true,
+        text: '确定',
+        ...this.buttonConfirm
+      }
+    }
   },
 
   data() {
@@ -66,7 +116,6 @@ export default {
       this.$emit('close')
     },
     handleClose() {
-      debugger
       this.$emit('close')
     },
     handleCancel() {

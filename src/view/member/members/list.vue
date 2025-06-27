@@ -68,7 +68,7 @@
 
 <template>
   <SpPage>
-    <div v-if="$route.path.indexOf('detail') === -1 && $route.path.indexOf('chiefupload') === -1">
+    <SpRouterView>
       <SpFilterForm :model="params" @onSearch="onSearch" @onReset="onSearch">
         <SpFilterFormItem prop="mobile" label="手机号:">
           <el-input v-model="params.mobile" placeholder="请输入手机号" />
@@ -198,34 +198,7 @@
         <export-tip @exportHandle="exportData">
           <el-button type="primary" icon="el-plus-circle"> 导出 </el-button>
         </export-tip>
-        <!-- X：平台和店铺，会员里都有“团长导入”
-        云店：平台有，店铺没有 -->
-        <!-- <el-button
-          v-if="
-            (VERSION_PLATFORM() && IS_ADMIN()) ||
-            (VERSION_PLATFORM() && IS_DISTRIBUTOR()) ||
-            (VERSION_STANDARD() && IS_ADMIN())
-          "
-          type="primary"
-          plain
-          @click="chiefupload"
-        >
-          团长导入
-        </el-button> -->
       </div>
-
-      <!-- <el-row>
-        <el-col>
-          <el-popover
-            placement="top-start"
-            width="200"
-            trigger="hover"
-            content="导出任务会以队列执行，点击导出后，请至‘设置-导出列表’页面中查看及下载数据"
-          >
-            <i class="el-icon-question" slot="reference"></i>
-          </el-popover>
-        </el-col>
-      </el-row> -->
 
       <el-table
         v-loading="loading"
@@ -866,13 +839,11 @@
           @smsMassLogEditHandler="switchAliyunsmsDialog"
         />
       </template>
-    </div>
-    <router-view />
+    </SpRouterView>
   </SpPage>
 </template>
 
 <script>
-import store from '@/store'
 import exportTip from '@/components/export_tips'
 import aliyunsmsDialog from '@/view/base/shortmessage/cpn/sms_MassLog_edit.vue'
 import { mapGetters } from 'vuex'
@@ -1099,7 +1070,7 @@ export default {
     }
   },
   computed: {
-    ...mapGetters(['wheight', 'isMicorMall', 'login_type'])
+    ...mapGetters(['isMicorMall', 'login_type'])
   },
   mounted() {
     const { salesman_mobile, wechat_nickname, mobile, orderRecords, grade_id, currentPage } =
@@ -1135,13 +1106,6 @@ export default {
     this.getAliSMS()
   },
   methods: {
-    chiefupload() {
-      if (this.login_type == 'distributor') {
-        this.$router.push({ path: `/shopadmin/member/member/chiefupload` })
-      } else {
-        this.$router.push({ path: `/member/member/chiefupload` })
-      }
-    },
     async getAliSMS() {
       const { aliyunsms_status } = await this.$api.sms.getaliSmsStatus()
       this.aliyunsms_status = aliyunsms_status

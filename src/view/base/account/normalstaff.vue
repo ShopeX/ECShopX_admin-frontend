@@ -1,71 +1,26 @@
 <template>
   <SpPage>
-    <SpFilterForm
-      :model="params"
-      @onSearch="onSearch"
-      @onReset="onSearch"
-    >
-      <SpFilterFormItem
-        prop="login_name"
-        label="登录账号:"
-      >
-        <el-input
-          v-model="params.login_name"
-          placeholder="请输入账号名"
-        />
+    <SpFilterForm :model="params" @onSearch="onSearch" @onReset="onSearch">
+      <SpFilterFormItem prop="login_name" label="登录账号:">
+        <el-input v-model="params.login_name" placeholder="请输入账号名" />
       </SpFilterFormItem>
-      <SpFilterFormItem
-        prop="mobile"
-        label="手机号:"
-      >
-        <el-input
-          v-model="params.mobile"
-          placeholder="请输入手机号"
-        />
+      <SpFilterFormItem prop="mobile" label="手机号:">
+        <el-input v-model="params.mobile" placeholder="请输入手机号" />
       </SpFilterFormItem>
-      <SpFilterFormItem
-        prop="username"
-        label="姓名:"
-      >
-        <el-input
-          v-model="params.username"
-          placeholder="请输入姓名"
-        />
+      <SpFilterFormItem prop="username" label="姓名:">
+        <el-input v-model="params.username" placeholder="请输入姓名" />
       </SpFilterFormItem>
     </SpFilterForm>
 
     <div class="action-container">
-      <el-button
-        type="primary"
-        icon="plus"
-        @click="addLabels"
-      >
-        添加账号
-      </el-button>
+      <el-button type="primary" icon="plus" @click="addLabels"> 添加账号 </el-button>
     </div>
 
-    <el-table
-      v-loading="loading"
-      border
-      :data="accountsList"
-      :height=" - 160"
-    >
-      <el-table-column
-        prop="login_name"
-        label="登录账号"
-      />
-      <el-table-column
-        prop="mobile"
-        label="手机号"
-      />
-      <el-table-column
-        prop="username"
-        label="姓名"
-      />
-      <el-table-column
-        prop="roles"
-        label="角色"
-      >
+    <el-table v-loading="loading" border :data="accountsList">
+      <el-table-column prop="login_name" label="登录账号" />
+      <el-table-column prop="mobile" label="手机号" />
+      <el-table-column prop="username" label="姓名" />
+      <el-table-column prop="roles" label="角色">
         <template slot-scope="scope">
           <el-tag
             v-for="item in scope.row.role_data"
@@ -77,16 +32,12 @@
           </el-tag>
         </template>
       </el-table-column>
-      <el-table-column
-        prop="is_disable"
-        label="禁用"
-        width="80"
-      >
+      <el-table-column prop="is_disable" label="禁用" width="80">
         <template slot-scope="scope">
           <el-switch
             v-model="scope.row.is_disable"
-            active-value=1
-            inactive-value=0
+            active-value="1"
+            inactive-value="0"
             active-color="#ff4949"
             inactive-color="#ccc"
             @change="acitonDisabled(scope.$index, scope.row)"
@@ -95,12 +46,7 @@
       </el-table-column>
       <el-table-column label="操作">
         <template slot-scope="scope">
-          <el-button
-            size="mini"
-            @click="editAction(scope.$index, scope.row)"
-          >
-            编辑
-          </el-button>
+          <el-button size="mini" @click="editAction(scope.$index, scope.row)"> 编辑 </el-button>
           <!--<el-button
             size="mini"
             @click="deleteAccountAction(scope.$index, scope.row)"
@@ -120,18 +66,9 @@
       />
     </div>
     <!-- 添加、编辑标识-开始 -->
-    <el-dialog
-      :title="editTitle"
-      :visible.sync="editVisible"
-      :before-close="handleCancel"
-    >
+    <el-dialog :title="editTitle" :visible.sync="editVisible" :before-close="handleCancel">
       <template>
-        <el-form
-          ref="form"
-          :model="form"
-          class="demo-ruleForm"
-          label-width="120px"
-        >
+        <el-form ref="form" :model="form" class="demo-ruleForm" label-width="120px">
           <el-form-item label="登录账号">
             <el-col :span="10">
               <el-input
@@ -141,15 +78,9 @@
                 :maxlength="16"
                 placeholder="请输入员工登录账号"
               />
-              <el-input
-                v-else
-                v-model="form.login_name"
-                :disabled="true"
-              />
+              <el-input v-else v-model="form.login_name" :disabled="true" />
             </el-col>
-            <p class="frm-tips">
-              账号名称4-16位，名称使用字母开头，字符有有字母，数字，下划线
-            </p>
+            <p class="frm-tips">账号名称4-16位，名称使用字母开头，字符有有字母，数字，下划线</p>
           </el-form-item>
           <el-form-item label="手机号">
             <el-col :span="10">
@@ -159,28 +90,17 @@
                 :maxlength="11"
                 placeholder="请输入11位手机号"
               />
-              <el-input
-                v-else
-                v-model="editMobile"
-                :disabled="true"
-              />
+              <el-input v-else v-model="editMobile" :disabled="true" />
             </el-col>
           </el-form-item>
           <el-form-item label="姓名">
             <el-col :span="10">
-              <el-input
-                v-model="form.username"
-                required
-                placeholder="请填写姓名"
-              />
+              <el-input v-model="form.username" required placeholder="请填写姓名" />
             </el-col>
           </el-form-item>
           <el-form-item label="登录密码">
             <el-col :span="10">
-              <el-input
-                v-model="form.password"
-                :maxlength="255"
-              />
+              <el-input v-model="form.password" :maxlength="255" />
             </el-col>
           </el-form-item>
           <el-form-item label="所属店铺">
@@ -194,11 +114,7 @@
             >
               {{ item.name }}
             </el-tag>
-            <el-button
-              size="medium"
-              class="button-new-tag"
-              @click="addDistributoreAction"
-            >
+            <el-button size="medium" class="button-new-tag" @click="addDistributoreAction">
               + 点击搜索店铺
             </el-button>
           </el-form-item>
@@ -216,19 +132,9 @@
           </el-form-item>
         </el-form>
       </template>
-      <div
-        slot="footer"
-        class="dialog-footer"
-      >
-        <el-button @click.native="handleCancel">
-          取消
-        </el-button>
-        <el-button
-          type="primary"
-          @click="submitAction"
-        >
-          保存
-        </el-button>
+      <div slot="footer" class="dialog-footer">
+        <el-button @click.native="handleCancel"> 取消 </el-button>
+        <el-button type="primary" @click="submitAction"> 保存 </el-button>
       </div>
     </el-dialog>
     <DistributorSelect
@@ -276,7 +182,7 @@ export default {
       default: false
     }
   },
-  data () {
+  data() {
     return {
       oldData: [],
       isValid: true,
@@ -318,44 +224,44 @@ export default {
   },
 
   watch: {
-    status (val) {
+    status(val) {
       if (val) {
         this.fetchList()
       }
     }
   },
-  mounted () {
+  mounted() {
     this.fetchList()
     this.getRolesListData()
   },
   methods: {
-    handleClose (index) {
+    handleClose(index) {
       this.relDistributors.splice(index, 1)
       this.form.distributor_ids.splice(index, 1)
       //this.$forceUpdate()
     },
-    storeHandleClose (index) {
+    storeHandleClose(index) {
       this.DistributorStatus = false
       this.form.shop_ids.splice(index, 1)
       this.relShops.splice(index, 1)
       //this.$forceUpdate()
     },
-    addDistributoreAction () {
+    addDistributoreAction() {
       this.DistributorVisible = true
       this.DistributorStatus = true
     },
-    addStoreAction () {
+    addStoreAction() {
       this.ShopVisible = true
       this.ShopStatus = true
     },
-    getDistributor (ids) {
+    getDistributor(ids) {
       let param = { distributor_id: ids }
-      getDistributorList({ ...param, is_app: 1 }).then((res) => {
+      getDistributorList({ ...param, is_app: 1 }).then(res => {
         this.relDistributors = res.data.data.list
         this.oldData = [...res.data.data.list]
       })
     },
-    handleCancel () {
+    handleCancel() {
       this.editVisible = false
       this.form.operator_type = 'staff'
       this.operator_id = ''
@@ -369,7 +275,7 @@ export default {
       this.relDistributors = []
       this.relShops = []
     },
-    addLabels () {
+    addLabels() {
       // 添加物料弹框
       this.handleCancel()
       this.editTitle = '添加账号信息'
@@ -383,7 +289,7 @@ export default {
       this.form.password = ''
       this.form.role_id = []
     },
-    editAction (index, row) {
+    editAction(index, row) {
       // 编辑物料弹框
       this.handleCancel()
       this.editTitle = '编辑账号信息'
@@ -395,28 +301,28 @@ export default {
       this.editMobile = row.mobile
       this.operator_id = row.operator_id
       this.form.password = ''
-      row.role_data.forEach((item) => {
+      row.role_data.forEach(item => {
         this.form.role_id.push(item.role_id)
       })
       if (row.distributor_ids && row.distributor_ids.length > 0) {
         let ids = []
-        row.distributor_ids.forEach((item) => {
+        row.distributor_ids.forEach(item => {
           ids.push(item.distributor_id)
         })
         this.getDistributor(ids)
       }
     },
-    submitAction () {
+    submitAction() {
       // 提交物料
       this.form.shop_ids = []
       this.form.distributor_ids = []
       if (this.relShops.length > 0) {
-        this.relShops.forEach((shop) => {
+        this.relShops.forEach(shop => {
           this.form.shop_ids.push({ name: shop.storeName, shop_id: shop.wxShopId })
         })
       }
       if (this.relDistributors.length > 0) {
-        this.relDistributors.forEach((distributor) => {
+        this.relDistributors.forEach(distributor => {
           this.form.distributor_ids.push({
             name: distributor.name,
             distributor_id: distributor.distributor_id
@@ -425,13 +331,13 @@ export default {
       }
 
       if (this.operator_id) {
-        updateAccountInfo(this.operator_id, this.form).then((response) => {
+        updateAccountInfo(this.operator_id, this.form).then(response => {
           this.detailData = response.data.data
           this.editVisible = false
           this.fetchList()
         })
       } else {
-        createAccount(this.form).then((response) => {
+        createAccount(this.form).then(response => {
           this.detailData = response.data.data
           this.editVisible = false
           this.fetchList()
@@ -440,7 +346,7 @@ export default {
       }
     },
 
-    fetchList () {
+    fetchList() {
       this.loading = true
       const { pageIndex: page, pageSize } = this.page
       let params = {
@@ -448,13 +354,13 @@ export default {
         pageSize,
         ...this.params
       }
-      getAccountList(params).then((response) => {
+      getAccountList(params).then(response => {
         let list = response.data.data.list
-        list.forEach((item) => {
+        list.forEach(item => {
           if (item.is_disable == 1) {
-            item.is_disable = '1';
+            item.is_disable = '1'
           } else {
-            item.is_disable = '0';
+            item.is_disable = '0'
           }
         })
 
@@ -464,7 +370,7 @@ export default {
         this.loading = false
       })
     },
-    deleteAccountAction (index, row) {
+    deleteAccountAction(index, row) {
       this.$confirm('此操作将删除该账号, 是否继续?', '提示', {
         confirmButtonText: '确定',
         cancelButtonText: '取消',
@@ -472,7 +378,7 @@ export default {
       })
         .then(() => {
           deleteAccountInfo(row.operator_id)
-            .then((response) => {
+            .then(response => {
               this.accountsList.splice(index, 1)
               this.$message({
                 message: '删除成功',
@@ -494,7 +400,7 @@ export default {
           })
         })
     },
-    acitonDisabled (index, row) {
+    acitonDisabled(index, row) {
       if (row.is_disabled === true) {
         var msg = '此操作将会禁用该账号，是否继续?'
         this.$confirm(msg, '提示', {
@@ -503,43 +409,43 @@ export default {
           type: 'warning'
         }).then(() => {
           let params = {
-            'operator_id': row.operator_id,
-            'is_disable': row.is_disable
+            operator_id: row.operator_id,
+            is_disable: row.is_disable
           }
-          changeOperatorStatus(params).then((res) => {
+          changeOperatorStatus(params).then(res => {
             // this.fetchList()
           })
         })
       } else {
         let params = {
-          'operator_id': row.operator_id,
-          'is_disable': row.is_disable
+          operator_id: row.operator_id,
+          is_disable: row.is_disable
         }
-        changeOperatorStatus(params).then((res) => {
+        changeOperatorStatus(params).then(res => {
           // this.fetchList()
         })
       }
     },
-    getRolesListData () {
+    getRolesListData() {
       var params = { page: 1, pageSize: 100, version: 1 }
-      getRolesList(params).then((res) => {
+      getRolesList(params).then(res => {
         this.rolesListData = res.data.data.list
       })
     },
-    DistributorChooseAction (data) {
+    DistributorChooseAction(data) {
       this.DistributorVisible = false
       this.DistributorStatus = false
       if (data === null || data.length <= 0) return
       this.relDistributors = data
     },
-    ShopChooseAction (data) {
+    ShopChooseAction(data) {
       this.ShopVisible = false
       this.ShopStatus = false
       if (data === null || data.length <= 0) return
       this.relShops = data
       this.relDistributors = data
     },
-    closeDialogAction () {
+    closeDialogAction() {
       this.ShopVisible = false
       this.ShopStatus = false
       this.relDistributors = this.oldData

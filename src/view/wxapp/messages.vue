@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <SpPage>
     <el-dialog
       title="小程序消息模版详情"
       size="tiny"
@@ -41,14 +41,8 @@
             </span>
           </el-form-item>
           <el-form-item label="内容">
-            <el-card
-              class="box-card"
-              shadow="never"
-            >
-              <div
-                v-for="data in currentTemplate.content"
-                :key="data.column"
-              >
+            <el-card class="box-card" shadow="never">
+              <div v-for="data in currentTemplate.content" :key="data.column">
                 {{ data.title }}
               </div>
             </el-card>
@@ -64,48 +58,27 @@
           :class="row.is_open ? 'succ-open-sms' : 'not-open-sms'"
           @click="toDetail(row)"
         >
-          <div class="item-title clearfix">
-            {{ row.title }} <i class="el-icon-arrow-right" />
+          <div class="item-title clearfix">{{ row.title }} <i class="el-icon-arrow-right" /></div>
+          <div v-if="row.send_time_desc.value" class="item-content">
+            {{ row.send_time_desc.title }}{{ row.send_time_desc.value
+            }}{{ row?.send_time_desc?.time_unit || '分钟' }}{{ row.send_time_desc.end_title }}
           </div>
-          <div
-            v-if="row.send_time_desc.value"
-            class="item-content"
-          >
-            {{ row.send_time_desc.title }}{{ row.send_time_desc.value }}{{ row?.send_time_desc?.time_unit || '分钟' }}{{
-              row.send_time_desc.end_title
-            }}
-          </div>
-          <div
-            v-else
-            class="item-content"
-          >
+          <div v-else class="item-content">
             {{ row.send_time_desc.title }}
           </div>
           <div class="item-footer">
-            <el-button
-              v-if="row.is_open"
-              type="default"
-              size="small"
-            >
-              启用中
-            </el-button>
-            <el-button
-              v-else
-              type="default"
-              size="small"
-            >
-              未启用
-            </el-button>
+            <el-button v-if="row.is_open" type="default" size="small"> 启用中 </el-button>
+            <el-button v-else type="default" size="small"> 未启用 </el-button>
           </div>
         </div>
       </div>
     </div>
-  </div>
+  </SpPage>
 </template>
 <script>
 import { getWxaMessageTemplateList, openWxaMessageTemplate } from '@/api/wxa'
 export default {
-  data () {
+  data() {
     return {
       wxapp_id: '',
       template_name: '',
@@ -120,7 +93,7 @@ export default {
       }
     }
   },
-  mounted () {
+  mounted() {
     if (this.$route.query && this.$route.query.app_id) {
       this.wxapp_id = this.$route.query.app_id
     }
@@ -130,15 +103,15 @@ export default {
     getWxaMessageTemplateList({
       wxapp_appid: this.wxapp_id,
       template_name: this.template_name
-    }).then((res) => {
+    }).then(res => {
       this.temlateList = res.data.data.list
     })
   },
   methods: {
-    closeDialog () {
+    closeDialog() {
       this.detailDialog = false
     },
-    openChange () {
+    openChange() {
       let params = {
         template_name: this.template_name,
         wxapp_appid: this.wxapp_id,
@@ -148,11 +121,11 @@ export default {
       if (this.currentTemplate.send_time_desc.value) {
         params.send_time = this.currentTemplate.send_time_desc.value
       }
-      openWxaMessageTemplate(params).then((res) => {
+      openWxaMessageTemplate(params).then(res => {
         this.$message({ message: '保存成功', type: 'success' })
       })
     },
-    toDetail (params) {
+    toDetail(params) {
       this.detailDialog = true
       this.currentTemplate = params
     }

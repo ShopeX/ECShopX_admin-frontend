@@ -1,14 +1,3 @@
-<!--
- * @Author: Arvin
- * @GitHub: https://github.com/973749104
- * @Blog: https://liuhgxu.com
- * @Description: 小程序外链详情
- * @FilePath: /app/src/view/base/wxa/extMiniLinkDetail.vue
- * @Date: 2021-01-25 17:19:36
- * @LastEditors: Arvin
- * @LastEditTime: 2021-01-26 11:18:39
--->
-
 <template>
   <div class="extMiniLinkDetail">
     <el-card class="elCard">
@@ -18,70 +7,23 @@
       </div>
       <div class="search">
         <div class="left">
-          <el-input
-            v-model="params.route_name"
-            class="appName"
-            placeholder="请输入页面名称"
-          />
-          <el-button
-            class="button"
-            type="primary"
-            @click="getList"
-          >
-            查询
-          </el-button>
-          <el-button
-            class="button"
-            type="default"
-            @click="reset"
-          >
-            重置
-          </el-button>
+          <el-input v-model="params.route_name" class="appName" placeholder="请输入页面名称" />
+          <el-button class="button" type="primary" @click="getList"> 查询 </el-button>
+          <el-button class="button" type="default" @click="reset"> 重置 </el-button>
         </div>
-        <el-button
-          type="primary"
-          @click="showEditModal()"
-        >
-          新增
-        </el-button>
+        <el-button type="primary" @click="showEditModal()"> 新增 </el-button>
       </div>
-      <el-table
-        v-loading="tableLoading"
-        class="table"
-        stripe
-        border
-        :data="list"
-      >
-        <el-table-column
-          prop="created_at"
-          label="创建日期"
-        />
-        <el-table-column
-          prop="route_name"
-          label="页面名称"
-        />
-        <el-table-column
-          prop="route_info"
-          label="页面路径"
-        />
-        <el-table-column
-          prop="route_desc"
-          label="描述"
-        />
+      <el-table v-loading="tableLoading" stripe border :data="list">
+        <el-table-column prop="created_at" label="创建日期" />
+        <el-table-column prop="route_name" label="页面名称" />
+        <el-table-column prop="route_info" label="页面路径" />
+        <el-table-column prop="route_desc" label="描述" />
         <el-table-column label="操作">
           <template slot-scope="scope">
-            <el-button
-              class="actBtn"
-              type="text"
-              @click="showEditModal(scope.row)"
-            >
+            <el-button class="actBtn" type="text" @click="showEditModal(scope.row)">
               编辑
             </el-button>
-            <el-button
-              class="actBtn"
-              type="text"
-              @click="removeCurrent(scope.row)"
-            >
+            <el-button class="actBtn" type="text" @click="removeCurrent(scope.row)">
               删除
             </el-button>
           </template>
@@ -114,16 +56,10 @@
         :rules="rules"
         :model="editInfo"
       >
-        <el-form-item
-          label="页面名称"
-          prop="route_name"
-        >
+        <el-form-item label="页面名称" prop="route_name">
           <el-input v-model="editInfo.route_name" />
         </el-form-item>
-        <el-form-item
-          label="页面路径"
-          prop="route_info"
-        >
+        <el-form-item label="页面路径" prop="route_info">
           <el-input v-model="editInfo.route_info" />
         </el-form-item>
         <el-form-item label="描述">
@@ -139,18 +75,8 @@
         </el-form-item>
       </el-form>
       <div class="btns">
-        <el-button
-          class="btn"
-          @click="closeModal"
-        >
-          取 消
-        </el-button>
-        <el-button
-          class="btn"
-          type="primary"
-          :loading="isHttping"
-          @click.stop="editWxConfig"
-        >
+        <el-button class="btn" @click="closeModal"> 取 消 </el-button>
+        <el-button class="btn" type="primary" :loading="isHttping" @click.stop="editWxConfig">
           确 定
         </el-button>
       </div>
@@ -163,7 +89,7 @@ import { getWxLinkList, createWxLink, updateWxLink, removeWxLink } from '../../.
 
 export default {
   name: 'ExtMiniLinkDetail',
-  data () {
+  data() {
     return {
       // 查询参数
       params: {
@@ -209,28 +135,28 @@ export default {
       }
     }
   },
-  mounted () {
+  mounted() {
     this.init()
   },
   methods: {
     // 初始化
-    init () {
+    init() {
       const { id } = this.$route.query
       this.params.wx_external_config_id = Number(id)
       this.getList()
     },
     // 重置搜索
-    reset () {
+    reset() {
       this.params.route_name = ''
       this.getList()
     },
     // 切换page
-    handleCurrentChange (page) {
+    handleCurrentChange(page) {
       this.params.page = page
       this.getList(false)
     },
     // 显示modal事件
-    showEditModal (info = {}) {
+    showEditModal(info = {}) {
       if (info && info.wx_external_config_id) {
         this.modalTitle = '修改页面'
         this.editInfo = {
@@ -247,7 +173,7 @@ export default {
       this.showModal = true
     },
     // 关闭modal事件
-    closeModal () {
+    closeModal() {
       this.editInfo = {
         route_name: '',
         route_info: '',
@@ -257,15 +183,15 @@ export default {
       this.showModal = false
     },
     // 删除当前页面路径
-    removeCurrent (info) {
+    removeCurrent(info) {
       const _self = this
       this.$confirm('删除当前页面路径？')
-        .then((_) => {
-          removeWxLink({ id: info.wx_external_routes_id }).then((response) => {
+        .then(_ => {
+          removeWxLink({ id: info.wx_external_routes_id }).then(response => {
             this.$message({
               message: '删除成功',
               type: 'success',
-              onClose () {
+              onClose() {
                 if (_self.total_count % _self.params.page_size == 1 && _self.params.page > 1) {
                   //当前页只有一条数据被删除, 删除后跳回上一页
                   _self.params.page -= 1
@@ -277,10 +203,10 @@ export default {
             })
           })
         })
-        .catch((_) => {})
+        .catch(_ => {})
     },
     // 新增&编辑小程序配置
-    async editWxConfig () {
+    async editWxConfig() {
       if (this.isHttping) return false
       this.isHttping = true
       const params = this.editInfo
@@ -296,7 +222,7 @@ export default {
       this.isHttping = false
     },
     // 获取列表
-    async getList (isInit = true) {
+    async getList(isInit = true) {
       this.tableLoading = true
       if (isInit) {
         this.params.page = 1

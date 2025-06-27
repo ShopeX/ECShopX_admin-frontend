@@ -251,7 +251,7 @@
                 <span v-if="scope.row.authorizer && scope.row.authorizer.authorizer_appid">
                   <router-link
                     :to="{
-                      path: '/setting/systemsetting/editdashboard',
+                      path: '/setting/system-config/data-analysis',
                       query: { app_id: scope.row.authorizer.authorizer_appid }
                     }"
                     style="margin-left: 5px"
@@ -261,7 +261,7 @@
 
                   <router-link
                     :to="{
-                      path: '/setting/systemsetting/editsourcemanagement',
+                      path: '/setting/system-config/different-codes',
                       query: { app_id: scope.row.authorizer.authorizer_appid }
                     }"
                     style="margin-left: 5px"
@@ -271,7 +271,7 @@
 
                   <router-link
                     :to="{
-                      path: '/setting/systemsetting/noticemessage',
+                      path: '/setting/system-config/message-template',
                       query: {
                         app_id: scope.row.authorizer.authorizer_appid,
                         tmp_name: scope.row.key_name
@@ -624,7 +624,6 @@
   </SpPage>
 </template>
 <script>
-import { mapGetters } from 'vuex'
 import sideBar from '@/components/element/sideBar'
 import {
   getWxa,

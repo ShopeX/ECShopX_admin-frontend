@@ -8,9 +8,6 @@
   <SpPage>
     <SpRouterView>
       <SpPlatformTip v-if="!VERSION_SHUYUN()" h5 app alipay />
-      <div class="action-container">
-        <el-button type="primary" icon="plus" @click="articleAdd"> 添加文章 </el-button>
-      </div>
 
       <SpFilterForm :model="params" @onSearch="onSearch" @onReset="onSearch">
         <SpFilterFormItem prop="title" label="文章标题:">

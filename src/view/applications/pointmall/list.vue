@@ -12,17 +12,253 @@
 </style>
 <template>
   <SpPage>
-  <div class="page-body">
-    <SpRouterView>
-      <SpFilterForm :model="params" @onSearch="onSearch" @onReset="onSearch">
-        <SpFilterFormItem prop="keywords" label="商品名称:">
-          <el-input v-model="params.keywords" placeholder="请输入商品名称" />
-        </SpFilterFormItem>
-        <SpFilterFormItem prop="item_bn" label="商品编号:">
-          <el-input v-model="params.item_bn" placeholder="请输入商品编号" />
-        </SpFilterFormItem>
-        <SpFilterFormItem prop="templates_id" label="运费模板:">
-          <el-select v-model="params.templates_id" placeholder="请选择" clearable>
+    <div class="page-body">
+      <SpRouterView>
+        <SpFilterForm :model="params" @onSearch="onSearch" @onReset="onSearch">
+          <SpFilterFormItem prop="keywords" label="商品名称:">
+            <el-input v-model="params.keywords" placeholder="请输入商品名称" />
+          </SpFilterFormItem>
+          <SpFilterFormItem prop="item_bn" label="商品编号:">
+            <el-input v-model="params.item_bn" placeholder="请输入商品编号" />
+          </SpFilterFormItem>
+          <SpFilterFormItem prop="templates_id" label="运费模板:">
+            <el-select v-model="params.templates_id" placeholder="请选择" clearable>
+              <el-option
+                v-for="item in templatesList"
+                :key="item.template_id"
+                :label="item.name"
+                :value="item.template_id"
+              />
+            </el-select>
+          </SpFilterFormItem>
+          <SpFilterFormItem prop="regions_id" label="商品产地:">
+            <el-cascader
+              v-model="params.regions_id"
+              placeholder="请选择"
+              clearable
+              :options="regions"
+            />
+          </SpFilterFormItem>
+          <SpFilterFormItem prop="approve_status" label="商品状态:">
+            <el-select v-model="params.approve_status" clearable placeholder="请选择">
+              <el-option
+                v-for="item in statusOption"
+                :key="item.value"
+                :label="item.title"
+                size="mini"
+                :value="item.value"
+              />
+            </el-select>
+          </SpFilterFormItem>
+          <SpFilterFormItem prop="brand_id" label="品牌:">
+            <el-select
+              v-model="params.brand_id"
+              placeholder="请选择"
+              remote
+              filterable
+              clearable
+              :remote-method="getGoodsBranchList"
+            >
+              <el-option
+                v-for="item in goodsBranchList"
+                :key="item.attribute_id"
+                :label="item.attribute_name"
+                :value="item.attribute_id"
+              />
+            </el-select>
+          </SpFilterFormItem>
+          <SpFilterFormItem prop="category" label="商品分类:">
+            <el-cascader
+              v-model="params.category"
+              placeholder="请选择"
+              clearable
+              :options="categoryList"
+              :props="{ value: 'category_id', checkStrictly: true }"
+            />
+          </SpFilterFormItem>
+        </SpFilterForm>
+
+        <div class="action-container">
+          <el-button type="primary" icon="iconfont icon-xinzengcaozuo-01" @click="addItems">
+            添加商品
+          </el-button>
+
+          <el-dropdown @command="handleImport">
+            <el-button type="primary" plain icon="iconfont icon-daorucaozuo-01">
+              导入<i class="el-icon-arrow-down el-icon--right" />
+            </el-button>
+            <el-dropdown-menu slot="dropdown">
+              <el-dropdown-item command="physicalupload"> 商品导入 </el-dropdown-item>
+              <el-dropdown-item command="physicalstoreupload"> 库存导入 </el-dropdown-item>
+            </el-dropdown-menu>
+          </el-dropdown>
+          <el-button type="primary" plain @click="addCategory"> 更改销售分类 </el-button>
+          <el-button type="primary" plain @click="addTemplates"> 更改运费模板 </el-button>
+          <el-button type="primary" plain @click="batchItemsStore"> 统一库存 </el-button>
+          <el-button type="primary" plain @click="batchItemsStatus('onsale')"> 批量上架 </el-button>
+          <el-button type="primary" plain @click="batchItemsStatus('instock')">
+            批量下架
+          </el-button>
+
+          <el-button type="primary" plain @click="exportItemsData"> 导出商品信息 </el-button>
+        </div>
+
+        <el-tabs v-model="activeName" type="card" @tab-click="handleClick">
+          <el-tab-pane
+            v-for="(item, index) in tabList"
+            :key="index"
+            :label="item.name"
+            :name="item.activeName"
+          >
+            <div v-if="activeName == 'second'" style="margin-bottom: 15px; width: 280px">
+              <el-input v-model="warning_store" value="warning_store">
+                <template slot="prepend"> 预警数量 </template>
+                <el-button slot="append" @click="setWarningStore"> 保存 </el-button>
+              </el-input>
+            </div>
+            <el-table
+              v-loading="loading"
+              border
+              :data="ItemsList"
+              @selection-change="handleSelectionChange"
+            >
+              <el-table-column type="selection" align="center" label="全选" />
+              <el-table-column label="操作" width="80">
+                <template slot-scope="scope">
+                  <el-button
+                    type="text"
+                    class="btn-gap"
+                    @click="editItemsAction(scope.$index, scope.row, false)"
+                  >
+                    编辑
+                  </el-button>
+                  <el-popover placement="right" width="450" trigger="hover">
+                    <div class="operating-icons">
+                      <el-button
+                        type="text"
+                        class="btn-gap"
+                        @click="deleteItemsAction(scope.$index, scope.row)"
+                      >
+                        删除
+                      </el-button>
+                      <el-button
+                        type="text"
+                        class="btn-gap"
+                        @click="editItemsAction(scope.$index, scope.row, true)"
+                      >
+                        添加相似
+                      </el-button>
+                      <el-button type="text" class="btn-gap" @click="updateItemsStore(scope.row)">
+                        更改库存
+                      </el-button>
+                      <!-- <el-button class="copy-btn"
+                    type="text"
+                    v-clipboard:copy="scope.row.link"
+                    v-clipboard:success="onCopy">
+                    <input class="copy-link" type="text" v-model="scope.row.link"></input>复制链接
+                  </el-button> -->
+                      <el-button
+                        v-if="scope.row.approve_status == 'onsale'"
+                        type="text"
+                        class="btn-gap"
+                        @click="updateItemStatus(scope.row)"
+                      >
+                        下架
+                      </el-button>
+                      <el-button
+                        v-if="scope.row.approve_status == 'instock'"
+                        type="text"
+                        class="btn-gap"
+                        @click="updateItemStatus(scope.row)"
+                      >
+                        上架
+                      </el-button>
+                    </div>
+                    <el-button slot="reference" type="text">
+                      <i class="iconfont icon-angle-double-right" />
+                    </el-button>
+                  </el-popover>
+                </template>
+              </el-table-column>
+              <el-table-column prop="goods_id" label="商品ID" width="80" />
+              <el-table-column prop="itemName" label="商品">
+                <template slot-scope="scope">
+                  <div class="goods-title">
+                    {{ scope.row.item_name }}
+                    <el-tag v-if="!scope.row.nospec" size="mini" effect="plain" type="primary">
+                      多规格
+                    </el-tag>
+                  </div>
+                  <div class="goods-code">
+                    货号：{{ scope.row.itemBn }}
+                    <el-tooltip effect="dark" content="复制" placement="top-start">
+                      <i
+                        v-clipboard:copy="scope.row.itemBn"
+                        v-clipboard:success="onCopy"
+                        class="el-icon-document-copy"
+                      />
+                    </el-tooltip>
+                  </div>
+                </template>
+              </el-table-column>
+              <el-table-column label="排序编号" width="90">
+                <template slot-scope="scope">
+                  <el-input
+                    v-model="scope.row.sort"
+                    size="mini"
+                    @change="editItemsSort(scope.$index, scope.row)"
+                  />
+                </template>
+              </el-table-column>
+              <el-table-column prop="store" label="库存" width="80" />
+              <el-table-column label="市场价" width="80">
+                <template slot-scope="scope"> ¥{{ scope.row.market_price }} </template>
+              </el-table-column>
+              <el-table-column label="积分价格" width="150">
+                <template slot-scope="scope">
+                  {{ scope.row.point }}积分<span v-if="scope.row.price > 0">
+                    + ¥{{ scope.row.price }}</span
+                  >
+                </template>
+              </el-table-column>
+              <el-table-column label="状态" width="80">
+                <template slot-scope="scope">
+                  <span v-if="scope.row.audit_status == 'processing'">等待审核</span>
+                  <el-popover
+                    v-else-if="scope.row.audit_status == 'rejected'"
+                    placement="top-start"
+                    width="200"
+                    trigger="hover"
+                    :content="scope.row.audit_reason"
+                  >
+                    <el-button slot="reference" type="text"> 审核驳回 </el-button>
+                  </el-popover>
+                  <span v-else-if="scope.row.approve_status == 'onsale'">前台可销</span>
+                  <span v-else-if="scope.row.approve_status == 'offline_sale'">前台不展示 </span>
+                  <span v-else-if="scope.row.approve_status == 'only_show'">前台仅展示</span>
+                  <span v-else>不可销售</span>
+                </template>
+              </el-table-column>
+              <!-- <el-table-column prop="itemMainCatName" label="管理分类" width="150"></el-table-column> -->
+              <el-table-column prop="itemCatName" label="商品分类" width="150" />
+            </el-table>
+            <div class="content-center content-top-padded mt-4">
+              <el-pagination
+                background
+                layout="total, sizes, prev, pager, next, jumper"
+                :current-page.sync="params.page"
+                :page-sizes="[10, 20, 50]"
+                :total="total_count"
+                :page-size="params.pageSize"
+                @current-change="handleCurrentChange"
+                @size-change="handleSizeChange"
+              />
+            </div>
+          </el-tab-pane>
+        </el-tabs>
+        <!-- 选择运费模板-开始 -->
+        <el-dialog title="更改运费模板" :visible.sync="addTemplatesdialogVisible" width="30%">
+          <el-select v-model="templates_new_id" placeholder="运费模板" style="width: 100%">
             <el-option
               v-for="item in templatesList"
               :key="item.template_id"
@@ -30,293 +266,60 @@
               :value="item.template_id"
             />
           </el-select>
-        </SpFilterFormItem>
-        <SpFilterFormItem prop="regions_id" label="商品产地:">
+          <span slot="footer" class="dialog-footer">
+            <el-button @click="addTemplatesdialogVisible = false">取 消</el-button>
+            <el-button type="primary" @click="changeTemplates">确 定</el-button>
+          </span>
+        </el-dialog>
+        <!-- 选择运费模板-结束 -->
+        <!-- 选择商品分类-开始 -->
+        <el-dialog title="更改销售分类" :visible.sync="addCategorydialogVisible">
           <el-cascader
-            v-model="params.regions_id"
-            placeholder="请选择"
-            clearable
-            :options="regions"
-          />
-        </SpFilterFormItem>
-        <SpFilterFormItem prop="approve_status" label="商品状态:">
-          <el-select v-model="params.approve_status" clearable placeholder="请选择">
-            <el-option
-              v-for="item in statusOption"
-              :key="item.value"
-              :label="item.title"
-              size="mini"
-              :value="item.value"
-            />
-          </el-select>
-        </SpFilterFormItem>
-        <SpFilterFormItem prop="brand_id" label="品牌:">
-          <el-select
-            v-model="params.brand_id"
-            placeholder="请选择"
-            remote
-            filterable
-            clearable
-            :remote-method="getGoodsBranchList"
-          >
-            <el-option
-              v-for="item in goodsBranchList"
-              :key="item.attribute_id"
-              :label="item.attribute_name"
-              :value="item.attribute_id"
-            />
-          </el-select>
-        </SpFilterFormItem>
-        <SpFilterFormItem prop="category" label="商品分类:">
-          <el-cascader
-            v-model="params.category"
+            v-model="category_id"
+            style="width: 500px"
             placeholder="请选择"
             clearable
             :options="categoryList"
-            :props="{ value: 'category_id', checkStrictly: true }"
+            :props="{ value: 'category_id', label: 'category_name', checkStrictly: true }"
           />
-        </SpFilterFormItem>
-      </SpFilterForm>
-
-      <div class="action-container">
-        <el-button type="primary" icon="iconfont icon-xinzengcaozuo-01" @click="addItems">
-          添加商品
-        </el-button>
-
-        <el-dropdown @command="handleImport">
-          <el-button type="primary" plain icon="iconfont icon-daorucaozuo-01">
-            导入<i class="el-icon-arrow-down el-icon--right" />
-          </el-button>
-          <el-dropdown-menu slot="dropdown">
-            <el-dropdown-item command="physicalupload"> 商品导入 </el-dropdown-item>
-            <el-dropdown-item command="physicalstoreupload"> 库存导入 </el-dropdown-item>
-          </el-dropdown-menu>
-        </el-dropdown>
-        <el-button type="primary" plain @click="addCategory"> 更改销售分类 </el-button>
-        <el-button type="primary" plain @click="addTemplates"> 更改运费模板 </el-button>
-        <el-button type="primary" plain @click="batchItemsStore"> 统一库存 </el-button>
-        <el-button type="primary" plain @click="batchItemsStatus('onsale')"> 批量上架 </el-button>
-        <el-button type="primary" plain @click="batchItemsStatus('instock')"> 批量下架 </el-button>
-
-        <el-button type="primary" plain @click="exportItemsData"> 导出商品信息 </el-button>
-      </div>
-
-      <el-tabs v-model="activeName" type="card" @tab-click="handleClick">
-        <el-tab-pane
-          v-for="(item, index) in tabList"
-          :key="index"
-          :label="item.name"
-          :name="item.activeName"
+          <span slot="footer" class="dialog-footer">
+            <el-button @click="addCategorydialogVisible = false">取 消</el-button>
+            <el-button type="primary" @click="changeCategory">确 定</el-button>
+          </span>
+        </el-dialog>
+        <!-- 选择商品分类-结束 -->
+        <SideBar :visible.sync="show_itemStore" title="设置商品库存" width="60">
+          <slot>
+            <el-table v-loading="skuLoading" :data="storeItemsList" height="100%">
+              <el-table-column label="规格" prop="item_spec_desc" min-width="120" />
+              <el-table-column label="库存">
+                <template slot-scope="scope">
+                  <el-input v-model="scope.row.store" size="mini" type="number" />
+                </template>
+              </el-table-column>
+            </el-table>
+          </slot>
+          <div slot="footer">
+            <el-button type="primary" :loading="submitLoading" @click="saveItemsStore">
+              保存
+            </el-button>
+          </div>
+        </SideBar>
+        <el-dialog
+          title="批量修改库存"
+          :visible.sync="storeUpdate"
+          width="30%"
+          :close-on-click-modal="false"
         >
-          <div v-if="activeName == 'second'" style="margin-bottom: 15px; width: 280px">
-            <el-input v-model="warning_store" value="warning_store">
-              <template slot="prepend"> 预警数量 </template>
-              <el-button slot="append" @click="setWarningStore"> 保存 </el-button>
-            </el-input>
-          </div>
-          <el-table
-            v-loading="loading"
-            border
-            :data="ItemsList"
-            @selection-change="handleSelectionChange"
-          >
-            <el-table-column type="selection" align="center" label="全选" />
-            <el-table-column label="操作" width="80">
-              <template slot-scope="scope">
-                <el-button
-                  type="text"
-                  class="btn-gap"
-                  @click="editItemsAction(scope.$index, scope.row, false)"
-                >
-                  编辑
-                </el-button>
-                <el-popover placement="right" width="450" trigger="hover">
-                  <div class="operating-icons">
-                    <el-button
-                      type="text"
-                      class="btn-gap"
-                      @click="deleteItemsAction(scope.$index, scope.row)"
-                    >
-                      删除
-                    </el-button>
-                    <el-button
-                      type="text"
-                      class="btn-gap"
-                      @click="editItemsAction(scope.$index, scope.row, true)"
-                    >
-                      添加相似
-                    </el-button>
-                    <el-button type="text" class="btn-gap" @click="updateItemsStore(scope.row)">
-                      更改库存
-                    </el-button>
-                    <!-- <el-button class="copy-btn"
-                    type="text"
-                    v-clipboard:copy="scope.row.link"
-                    v-clipboard:success="onCopy">
-                    <input class="copy-link" type="text" v-model="scope.row.link"></input>复制链接
-                  </el-button> -->
-                    <el-button
-                      v-if="scope.row.approve_status == 'onsale'"
-                      type="text"
-                      class="btn-gap"
-                      @click="updateItemStatus(scope.row)"
-                    >
-                      下架
-                    </el-button>
-                    <el-button
-                      v-if="scope.row.approve_status == 'instock'"
-                      type="text"
-                      class="btn-gap"
-                      @click="updateItemStatus(scope.row)"
-                    >
-                      上架
-                    </el-button>
-                  </div>
-                  <el-button slot="reference" type="text">
-                    <i class="iconfont icon-angle-double-right" />
-                  </el-button>
-                </el-popover>
-              </template>
-            </el-table-column>
-            <el-table-column prop="goods_id" label="商品ID" width="80" />
-            <el-table-column prop="itemName" label="商品">
-              <template slot-scope="scope">
-                <div class="goods-title">
-                  {{ scope.row.item_name }}
-                  <el-tag v-if="!scope.row.nospec" size="mini" effect="plain" type="primary">
-                    多规格
-                  </el-tag>
-                </div>
-                <div class="goods-code">
-                  货号：{{ scope.row.itemBn }}
-                  <el-tooltip effect="dark" content="复制" placement="top-start">
-                    <i
-                      v-clipboard:copy="scope.row.itemBn"
-                      v-clipboard:success="onCopy"
-                      class="el-icon-document-copy"
-                    />
-                  </el-tooltip>
-                </div>
-              </template>
-            </el-table-column>
-            <el-table-column label="排序编号" width="90">
-              <template slot-scope="scope">
-                <el-input
-                  v-model="scope.row.sort"
-                  size="mini"
-                  @change="editItemsSort(scope.$index, scope.row)"
-                />
-              </template>
-            </el-table-column>
-            <el-table-column prop="store" label="库存" width="80" />
-            <el-table-column label="市场价" width="80">
-              <template slot-scope="scope"> ¥{{ scope.row.market_price }} </template>
-            </el-table-column>
-            <el-table-column label="积分价格" width="150">
-              <template slot-scope="scope">
-                {{ scope.row.point }}积分<span v-if="scope.row.price > 0">
-                  + ¥{{ scope.row.price }}</span
-                >
-              </template>
-            </el-table-column>
-            <el-table-column label="状态" width="80">
-              <template slot-scope="scope">
-                <span v-if="scope.row.audit_status == 'processing'">等待审核</span>
-                <el-popover
-                  v-else-if="scope.row.audit_status == 'rejected'"
-                  placement="top-start"
-                  width="200"
-                  trigger="hover"
-                  :content="scope.row.audit_reason"
-                >
-                  <el-button slot="reference" type="text"> 审核驳回 </el-button>
-                </el-popover>
-                <span v-else-if="scope.row.approve_status == 'onsale'">前台可销</span>
-                <span v-else-if="scope.row.approve_status == 'offline_sale'">前台不展示 </span>
-                <span v-else-if="scope.row.approve_status == 'only_show'">前台仅展示</span>
-                <span v-else>不可销售</span>
-              </template>
-            </el-table-column>
-            <!-- <el-table-column prop="itemMainCatName" label="管理分类" width="150"></el-table-column> -->
-            <el-table-column prop="itemCatName" label="商品分类" width="150" />
-          </el-table>
-          <div class="content-center content-top-padded mt-4">
-            <el-pagination
-              background
-              layout="total, sizes, prev, pager, next, jumper"
-              :current-page.sync="params.page"
-              :page-sizes="[10, 20, 50]"
-              :total="total_count"
-              :page-size="params.pageSize"
-              @current-change="handleCurrentChange"
-              @size-change="handleSizeChange"
-            />
-          </div>
-        </el-tab-pane>
-      </el-tabs>
-      <!-- 选择运费模板-开始 -->
-      <el-dialog title="更改运费模板" :visible.sync="addTemplatesdialogVisible" width="30%">
-        <el-select v-model="templates_new_id" placeholder="运费模板" style="width: 100%">
-          <el-option
-            v-for="item in templatesList"
-            :key="item.template_id"
-            :label="item.name"
-            :value="item.template_id"
-          />
-        </el-select>
-        <span slot="footer" class="dialog-footer">
-          <el-button @click="addTemplatesdialogVisible = false">取 消</el-button>
-          <el-button type="primary" @click="changeTemplates">确 定</el-button>
-        </span>
-      </el-dialog>
-      <!-- 选择运费模板-结束 -->
-      <!-- 选择商品分类-开始 -->
-      <el-dialog title="更改销售分类" :visible.sync="addCategorydialogVisible" width="30%">
-        <treeselect
-          v-model="category_id"
-          :options="categoryList"
-          :multiple="true"
-          :show-count="true"
-          :disable-branch-nodes="true"
-        />
-        <span slot="footer" class="dialog-footer">
-          <el-button @click="addCategorydialogVisible = false">取 消</el-button>
-          <el-button type="primary" @click="changeCategory">确 定</el-button>
-        </span>
-      </el-dialog>
-      <!-- 选择商品分类-结束 -->
-      <SideBar :visible.sync="show_itemStore" title="设置商品库存" width="60">
-        <slot>
-          <el-table v-loading="skuLoading" :data="storeItemsList" height="100%">
-            <el-table-column label="规格" prop="item_spec_desc" min-width="120" />
-            <el-table-column label="库存">
-              <template slot-scope="scope">
-                <el-input v-model="scope.row.store" size="mini" type="number" />
-              </template>
-            </el-table-column>
-          </el-table>
-        </slot>
-        <div slot="footer">
-          <el-button type="primary" :loading="submitLoading" @click="saveItemsStore">
-            保存
-          </el-button>
-        </div>
-      </SideBar>
-      <el-dialog
-        title="批量修改库存"
-        :visible.sync="storeUpdate"
-        width="30%"
-        :close-on-click-modal="false"
-      >
-        统一库存：<el-input v-model="itemstore" size="mini" type="number" />
-        <span slot="footer" class="dialog-footer">
-          <el-button @click="storeUpdate = false">取 消</el-button>
-          <el-button type="primary" @click="saveItemsStore">确 定</el-button>
-        </span>
-      </el-dialog>
-    </SpRouterView>
-  </div>
-</SpPage>
+          统一库存：<el-input v-model="itemstore" size="mini" type="number" />
+          <span slot="footer" class="dialog-footer">
+            <el-button @click="storeUpdate = false">取 消</el-button>
+            <el-button type="primary" @click="saveItemsStore">确 定</el-button>
+          </span>
+        </el-dialog>
+      </SpRouterView>
+    </div>
+  </SpPage>
 </template>
 <script>
 import { mapGetters } from 'vuex'

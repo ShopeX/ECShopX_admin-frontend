@@ -1,50 +1,50 @@
 <template>
   <SpPage>
-  <div class="section-white">
-    <div class="section-box view-flex view-flex-vertical view-flex-center view-flex-middle">
-      <div class="slogn">
-        <div class="logo-box">
-          <img :src="logoIcon" alt="">
+    <div class="section-white">
+      <div class="section-box view-flex view-flex-vertical view-flex-center view-flex-middle">
+        <div class="slogn">
+          <div class="logo-box">
+            <img :src="logoIcon" alt="">
+          </div>
+          <div v-if="companyBrand == '超新星'">
+            <h3>超新星因你而更好</h3>
+          </div>
         </div>
-        <div v-if="companyBrand == '超新星'">
-          <h3>超新星因你而更好</h3>
+        <div v-if="loginType != 'distributor'" class="content-center">
+          <el-input v-model="active_code" placeholder="请输入激活码" style="width: 300px" />
+          <p class="desc">购买或续费产品请联系：400-9213-522 &nbsp;&nbsp; QQ: 800058282</p>
+        </div>
+        <div v-if="loginType == 'distributor'" class="content-center">
+          <p class="desc">您的授权已过期，请联系平台管理员处理授权</p>
+        </div>
+        <div class="active-opr">
+          <el-button v-if="loginType != 'distributor'" type="primary" @click="activetionAction">
+            激活
+          </el-button>
+          <el-button type="default" @click="closeDialog"> 返回登录 </el-button>
         </div>
       </div>
-      <div v-if="loginType != 'distributor'" class="content-center">
-        <el-input v-model="active_code" placeholder="请输入激活码" style="width: 300px" />
-        <p class="desc">购买或续费产品请联系：400-9213-522 &nbsp;&nbsp; QQ: 800058282</p>
-      </div>
-      <div v-if="loginType == 'distributor'" class="content-center">
-        <p class="desc">您的授权已过期，请联系平台管理员处理授权</p>
-      </div>
-      <div class="active-opr">
-        <el-button v-if="loginType != 'distributor'" type="primary" @click="activetionAction">
-          激活
-        </el-button>
-        <el-button type="default" @click="closeDialog"> 返回登录 </el-button>
-      </div>
-    </div>
-    <el-dialog
-      title="提示"
-      :visible="dialogVisible"
-      :close-on-click-modal="false"
-      :before-close="closeDialog"
-    >
-      <div class="brand">
-        <div class="logo-box">
-          <img :src="logoIcon" alt="">
+      <el-dialog
+        title="提示"
+        :visible="dialogVisible"
+        :close-on-click-modal="false"
+        :before-close="closeDialog"
+      >
+        <div class="brand">
+          <div class="logo-box">
+            <img :src="logoIcon" alt="">
+          </div>
+          <span>{{ resultTxt }}</span>
         </div>
-        <span>{{ resultTxt }}</span>
-      </div>
-      <p class="frm-tips content-center" style="margin-top: 20px">
-        此资源包到期时间为&nbsp; <span>{{ expired_at | datetime('YYYY-MM-DD HH:mm:ss') }}</span>
-      </p>
-      <div slot="footer" class="dialog-footer content-center active-opr">
-        <el-button type="primary" @click="closeDialog">
-          {{ btnTxt }}
-        </el-button>
-      </div>
-    </el-dialog>
+        <p class="frm-tips content-center" style="margin-top: 20px">
+          此资源包到期时间为&nbsp; <span>{{ expired_at | datetime('YYYY-MM-DD HH:mm:ss') }}</span>
+        </p>
+        <div slot="footer" class="dialog-footer content-center active-opr">
+          <el-button type="primary" @click="closeDialog">
+            {{ btnTxt }}
+          </el-button>
+        </div>
+      </el-dialog>
     </div>
   </SpPage>
 </template>
@@ -98,7 +98,7 @@ export default {
       let params = {
         active_code: this.active_code
       }
-      activate(params).then((res) => {
+      activate(params).then(res => {
         if (res.data.data) {
           this.$store.dispatch('setLicenseValid', true)
           this.expired_at = res.data.data.expired_at
@@ -114,7 +114,7 @@ export default {
       })
     },
     getActivateInfo() {
-      getActivateInfo().then((res) => {
+      getActivateInfo().then(res => {
         this.activateInfo = res.data.data
         if (res.data.data.is_valid) {
           this.activateInfo = res.data.data

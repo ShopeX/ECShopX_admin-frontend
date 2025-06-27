@@ -1,11 +1,4 @@
 <style type="text/css" lang="scss">
-.tip-info {
-  padding: 8px 16px;
-  background-color: #fff6f7;
-  border-radius: 4px;
-  border-left: 5px solid #ff7800;
-  margin: 11px 0;
-}
 .content-bottom-padded {
   display: flex;
 }
@@ -35,12 +28,7 @@
             下载模版
           </el-button>
         </div>
-        <el-table
-          v-loading="loading"
-          :data="uploadList"
-          :height="wheight - 240"
-          element-loading-text="数据加载中"
-        >
+        <el-table v-loading="loading" :data="uploadList" element-loading-text="数据加载中">
           <el-table-column prop="file_name" label="上传文件" min-width="100" />
           <el-table-column prop="created_date" label="上传时间" min-width="80" />
           <el-table-column prop="file_size_format" label="文件大小" min-width="60" />
@@ -97,13 +85,6 @@ import {
 export default {
   data() {
     return {
-      // pane_list: [
-      //   { name: 'member_consume', label: '上传消费金额' },
-      //   { name: 'member_info', label: '上传新会员' },
-      //   { name: 'member_update', label: '更新会员' },
-      //   { name: 'selform_registration_record', label: '上传报名审核结果' },
-      //   { name: 'community_chief', label: '上传团长信息' },
-      // ],
       loading: false,
       total_count: 0,
       pageSize: 20,
@@ -111,9 +92,6 @@ export default {
       activeName: 'community_chief',
       uploadList: []
     }
-  },
-  computed: {
-    ...mapGetters(['wheight'])
   },
   mounted() {
     this.getUploadList()

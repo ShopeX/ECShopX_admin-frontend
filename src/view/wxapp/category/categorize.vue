@@ -1,7 +1,5 @@
 <style scoped lang="scss">
 .categorize {
-  display: flex;
-  justify-content: space-between;
   margin-bottom: 24px;
 }
 

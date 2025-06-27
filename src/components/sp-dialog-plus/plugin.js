@@ -1,3 +1,4 @@
+import { isFunction } from '@/utils'
 import Main from './main.vue'
 
 export default {
@@ -6,12 +7,19 @@ export default {
 
     const fn = value => {
       const data = {
+        buttonCancel: value.buttonCancel,
+        buttonConfirm: value.buttonConfirm,
+        isShow: true,
+        size: value.size,
         value: {
           title: value.title,
           content: value.content
         },
-        confirmBefore: value.confirmBefore || (() => true),
-        isShow: true
+        confirmBefore:
+          value.confirmBefore ||
+          (async () => {
+            return true
+          })
       }
       return new Promise((resolve, reject) => {
         const vm = new Ctor({
@@ -48,7 +56,7 @@ export default {
                   }
                 }
               },
-              [data.value.content]
+              [isFunction(data.value.content) ? h(data.value.content) : data.value.content]
             )
           }
         }).$mount()
@@ -57,8 +65,8 @@ export default {
     }
 
     const $dialog = {
-      open: ({ title = '', content = null, confirmBefore = () => {} }) =>
-        fn({ title, content, confirmBefore })
+      open: ({ title = '', content = null, confirmBefore, buttonCancel, buttonConfirm }) =>
+        fn({ title, content, confirmBefore, buttonCancel, buttonConfirm })
     }
 
     Vue.prototype.$dialog = $dialog

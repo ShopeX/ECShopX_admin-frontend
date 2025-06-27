@@ -225,7 +225,7 @@
         </el-form-item> -->
         </el-card>
         <el-card shadow="never" header="适用规则">
-          <el-form-item label="前台直接领取1">
+          <el-form-item label="前台直接领取">
             <el-switch v-model="form.receive" active-color="#13ce66" inactive-color="#d2d4db" />
           </el-form-item>
           <el-form-item label="领券限制">
@@ -324,13 +324,6 @@
 
           <el-col :xs="12" :sm="12" :md="12">
             <div v-if="!categoryHidden" style="height: 350px" class="custom_tree">
-              <!-- <treeselect
-                v-model="form.item_category"
-                :options="categoryList"
-                :show-count="true"
-                :multiple="true"
-                :disable-branch-nodes="true"
-              /> -->
               <el-cascader
                 v-model="form.item_category"
                 style="width: 500px"

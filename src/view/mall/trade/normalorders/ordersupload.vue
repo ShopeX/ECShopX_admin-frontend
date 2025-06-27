@@ -1,12 +1,3 @@
-<style type="text/css" lang="scss">
-.tip-info {
-  padding: 8px 16px;
-  background-color: #fff6f7;
-  border-radius: 4px;
-  border-left: 5px solid #ff7800;
-  margin: 11px 0;
-}
-</style>
 <template>
   <SpPage>
     <el-tabs v-model="activeName" type="border-card" @tab-click="handleClick">

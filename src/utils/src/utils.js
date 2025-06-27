@@ -67,3 +67,12 @@ export function parsehslTohsla(hsl, alpha = 0.5) {
   const [h, s, l] = hsl.match(/\(([^)]+)\)/)?.[1].split(' ')
   return `hsla(${h}, ${s}, ${l}, ${alpha})`
 }
+
+export function downloadFile(url, name) {
+  const a = document.createElement('a')
+  a.href = url
+  a.download = name
+  document.body.appendChild(a)
+  a.click()
+  document.body.removeChild(a)
+}

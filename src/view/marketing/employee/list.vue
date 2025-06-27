@@ -3,87 +3,87 @@
   margin-bottom: 8px;
 }
 </style>
-<style lang="scss">
-.activity-status-tabs {
-  .el-tabs__header {
-    margin-bottom: 0;
-  }
-}
-</style>
+
 <template>
-  <SpPage>
-    <SpFilterForm :model="queryForm" @onSearch="onSearch" @onReset="onSearch">
-      <SpFilterFormItem prop="name" label="活动名称:">
-        <el-input v-model="queryForm.name" placeholder="活动名称关键词" />
-      </SpFilterFormItem>
-      <SpFilterFormItem prop="display_time_begin" label="预热时间:">
-        <el-date-picker v-model="queryForm.display_time_begin" type="date" placeholder="选择日期" />
-      </SpFilterFormItem>
-      <SpFilterFormItem prop="datetime" label="购买时间:" size="max">
-        <el-date-picker
-          v-model="queryForm.datetime"
-          clearable
-          type="datetimerange"
-          align="right"
-          format="yyyy-MM-dd HH:mm:ss"
-          range-separator="至"
-          start-placeholder="开始日期"
-          end-placeholder="结束日期"
-          :default-time="defaultTime"
-          :picker-options="pickerOptions"
-        />
-      </SpFilterFormItem>
-      <SpFilterFormItem prop="enterprise_id" label="参与企业:" size="max">
-        <el-select
-          v-model="queryForm.enterprise_id"
-          v-scroll="() => pagesQuery.nextPage()"
-          multiple
-          placeholder="请选择"
-        >
-          <el-option
-            v-for="(item, index) in enterpriseList"
-            :key="`enterprise-item__${index}`"
-            :label="item.name"
-            :value="item.id"
+  <SpRouterView>
+    <SpPage>
+      <SpFilterForm :model="queryForm" @onSearch="onSearch" @onReset="onSearch">
+        <SpFilterFormItem prop="name" label="活动名称:">
+          <el-input v-model="queryForm.name" placeholder="活动名称关键词" />
+        </SpFilterFormItem>
+        <SpFilterFormItem prop="display_time_begin" label="预热时间:">
+          <el-date-picker
+            v-model="queryForm.display_time_begin"
+            type="date"
+            placeholder="选择日期"
           />
-        </el-select>
-      </SpFilterFormItem>
-      <SpFilterFormItem prop="distributor_id" label="来源店铺:">
-        <SpSelectShop v-model="queryForm.distributor_id" clearable placeholder="请选择" />
-      </SpFilterFormItem>
-    </SpFilterForm>
+        </SpFilterFormItem>
+        <SpFilterFormItem prop="datetime" label="购买时间:" size="max">
+          <el-date-picker
+            v-model="queryForm.datetime"
+            clearable
+            type="datetimerange"
+            align="right"
+            format="yyyy-MM-dd HH:mm:ss"
+            range-separator="至"
+            start-placeholder="开始日期"
+            end-placeholder="结束日期"
+            :default-time="defaultTime"
+            :picker-options="pickerOptions"
+          />
+        </SpFilterFormItem>
+        <SpFilterFormItem prop="enterprise_id" label="参与企业:" size="max">
+          <el-select
+            v-model="queryForm.enterprise_id"
+            v-scroll="() => pagesQuery.nextPage()"
+            multiple
+            placeholder="请选择"
+          >
+            <el-option
+              v-for="(item, index) in enterpriseList"
+              :key="`enterprise-item__${index}`"
+              :label="item.name"
+              :value="item.id"
+            />
+          </el-select>
+        </SpFilterFormItem>
+        <SpFilterFormItem prop="distributor_id" label="来源店铺:">
+          <SpSelectShop v-model="queryForm.distributor_id" clearable placeholder="请选择" />
+        </SpFilterFormItem>
+      </SpFilterForm>
 
-    <div class="action-container">
-      <el-button type="primary" icon="iconfont icon-xinzengcaozuo-01" @click="createActivity">
-        新建活动
-      </el-button>
-    </div>
+      <div class="action-container">
+        <el-button type="primary" icon="iconfont icon-xinzengcaozuo-01" @click="createActivity">
+          新建活动
+        </el-button>
+      </div>
 
-    <el-tabs
-      v-model="queryForm.activityState"
-      class="activity-status-tabs"
-      type="card"
-      @tab-click="onSearch"
-    >
-      <el-tab-pane
-        v-for="item in activityStatus"
-        :key="item.value"
-        :label="item.title"
-        :name="item.value"
+      <el-tabs
+        v-model="queryForm.activityState"
+        class="activity-status-tabs"
+        type="card"
+        @tab-click="onSearch"
+      >
+        <el-tab-pane
+          v-for="item in activityStatus"
+          :key="item.value"
+          :label="item.title"
+          :name="item.value"
+        />
+      </el-tabs>
+
+      <SpFinder
+        ref="finder"
+        no-selection
+        :setting="setting"
+        :row-actions-align="'left'"
+        :hooks="{
+          beforeSearch: beforeSearch
+        }"
+        url="/employeepurchase/activities"
       />
-    </el-tabs>
-
-    <SpFinder
-      ref="finder"
-      no-selection
-      :setting="setting"
-      :row-actions-align="'left'"
-      :hooks="{
-        beforeSearch: beforeSearch
-      }"
-      url="/employeepurchase/activities"
-    />
-  </SpPage>
+    </SpPage>
+  </SpRouterView>
 </template>
 
 <script>

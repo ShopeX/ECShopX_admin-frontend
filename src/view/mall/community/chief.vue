@@ -7,47 +7,41 @@
 <template>
   <SpRouterView>
     <SpPage>
-      <div>
-        <SpFilterForm :model="formQuery" @onSearch="onSearch" @onReset="onSearch">
-          <SpFilterFormItem prop="name" label="团长姓名:">
-            <el-input v-model="formQuery.name" placeholder="请输入团长姓名" />
-          </SpFilterFormItem>
-          <SpFilterFormItem prop="mobile" label="手机号:">
-            <el-input v-model="formQuery.mobile" placeholder="请输入团长手机号" />
-          </SpFilterFormItem>
-        </SpFilterForm>
-        <div class="action-container">
-          <el-button type="primary" icon="el-plus-circle" @click="chiefupload">
-            团长导入
-          </el-button>
-          <el-button type="primary" icon="el-plus-circle" @click="handleApprove">
-            团长审批
-          </el-button>
-        </div>
-        <!-- <el-tabs v-model="formQuery.approve_status" type="card" @tab-click="onSearch">
-        <el-tab-pane v-for="item in stateList" :key="item.value" :label="item.title" :name="item.value" /> -->
+      <SpFilterForm :model="formQuery" @onSearch="onSearch" @onReset="onSearch">
+        <SpFilterFormItem prop="name" label="团长姓名:">
+          <el-input v-model="formQuery.name" placeholder="请输入团长姓名" />
+        </SpFilterFormItem>
+        <SpFilterFormItem prop="mobile" label="手机号:">
+          <el-input v-model="formQuery.mobile" placeholder="请输入团长手机号" />
+        </SpFilterFormItem>
+      </SpFilterForm>
 
-        <SpFinder
-          ref="finder"
-          no-selection
-          :setting="setting"
-          :hooks="{
-            beforeSearch: beforeSearch,
-            afterSearch: afterSearch
-          }"
-          url="/community/chief/list"
-        />
-        <!-- </el-tabs> -->
-
-        <SpDialog
-          ref="resloveDialogRef"
-          v-model="resloveDialog"
-          :title="`审批`"
-          :form="resloveForm"
-          :form-list="resloveFormList"
-          @onSubmit="onResloveSubmit"
-        />
+      <div class="action-container">
+        <el-button type="primary" icon="el-plus-circle" @click="chiefupload"> 团长导入 </el-button>
+        <el-button type="primary" icon="el-plus-circle" @click="handleApprove">
+          团长审批
+        </el-button>
       </div>
+
+      <SpFinder
+        ref="finder"
+        no-selection
+        :setting="setting"
+        :hooks="{
+          beforeSearch: beforeSearch,
+          afterSearch: afterSearch
+        }"
+        url="/community/chief/list"
+      />
+
+      <SpDialog
+        ref="resloveDialogRef"
+        v-model="resloveDialog"
+        :title="`审批`"
+        :form="resloveForm"
+        :form-list="resloveFormList"
+        @onSubmit="onResloveSubmit"
+      />
     </SpPage>
   </SpRouterView>
 </template>
@@ -172,17 +166,22 @@ export default {
         path: `${path}/approve`
       })
     },
-    chiefupload() {
-      if (this.login_type == 'distributor') {
-        this.$router.push({ path: `/shopadmin/member/member/chiefupload` })
-      } else {
-        this.$router.push({ path: `/applications/community/chiefupload` })
-      }
+    async chiefupload() {
+      await this.$dialog.open({
+        title: '团长导入',
+        content: () => import('@/views/core/upload/upload-chief'),
+        buttonCancel: {
+          text: '关闭'
+        },
+        buttonConfirm: {
+          visible: false
+        }
+      })
     }
   },
 
   computed: {
-    ...mapGetters(['wheight', 'isMicorMall', 'login_type'])
+    ...mapGetters(['login_type'])
   }
 }
 </script>

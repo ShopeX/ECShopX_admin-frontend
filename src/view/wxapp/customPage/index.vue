@@ -7,7 +7,7 @@
           <el-button type="primary" icon="plus" @click="openDialog()"> 添加页面 </el-button>
         </el-col>
       </el-row>
-      <el-table v-loading="loading" :data="list" :height="140">
+      <el-table v-loading="loading" :data="list">
         <el-table-column prop="id" label="页面id" />
         <el-table-column prop="page_name" label="页面名称" />
         <el-table-column label="是否启用">

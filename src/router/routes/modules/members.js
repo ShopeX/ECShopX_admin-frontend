@@ -1,5 +1,4 @@
 import { BasicLayout } from '@/layout/basic'
-import SubLayout from '@/view/sublayout'
 import { VERSION_IN_PURCHASE } from '@/utils'
 
 const routes = [
@@ -118,7 +117,6 @@ const routes = [
             component: () => import('@/view/member/members/detail')
           }
         ]
-
       },
       {
         name: 'arrivalNotice',

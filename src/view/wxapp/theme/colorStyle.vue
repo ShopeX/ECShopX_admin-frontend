@@ -117,7 +117,7 @@ export default {
     }
   },
   computed: {
-    ...mapGetters(['wheight', 'wwidth', 'template_name'])
+    ...mapGetters(['wwidth', 'template_name'])
   },
   mounted() {
     let filter = { template_name: this.template_name, version: 'v1.0.1', page_name: 'color_style' }

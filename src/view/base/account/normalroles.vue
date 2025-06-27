@@ -10,7 +10,7 @@
       <el-button type="primary" icon="plus" @click="addRoleLabels"> 添加角色 </el-button>
     </div>
 
-    <el-table v-loading="loading" border :data="rolesList" :height=" - 160">
+    <el-table v-loading="loading" border :data="rolesList">
       <el-table-column prop="role_name" label="角色名称" />
       <el-table-column prop="permission" label="角色权限">
         <template slot-scope="scope">
@@ -20,11 +20,12 @@
       <el-table-column label="操作">
         <template slot-scope="scope">
           <div class="operating-icons">
-            <i class="iconfont icon-edit1" @click="editRoleAction(scope.$index, scope.row)" />
-            <i
-              class="mark iconfont icon-trash-alt1"
-              @click="deleteRoleAction(scope.$index, scope.row)"
-            />
+            <el-button type="text" @click="editRoleAction(scope.$index, scope.row)">编辑</el-button>
+            <el-button type="text" @click="deleteRoleAction(scope.$index, scope.row)"
+              >
+删除
+</el-button
+            >
           </div>
         </template>
       </el-table-column>
@@ -110,16 +111,7 @@ export default {
   },
   mounted() {
     this.fetchList()
-    const menu = this.$store.getters.menus
-    // menu.forEach((item) => {
-    //   if (item.alias_name == 'setting') {
-    //     item.children.forEach((itemy, indexy) => {
-    //       if (itemy.is_super == 'Y') { // N
-    //         item.children.splice(indexy, 1)
-    //       }
-    //     })
-    //   }
-    // })
+    const menu = this.$store.state.user.accessMenus
     this.menu = menu
   },
   methods: {
@@ -159,7 +151,7 @@ export default {
 
       var checkedNodes = this.$refs.tree.getCheckedNodes()
       var checkedKeys = []
-      checkedNodes.forEach((item) => {
+      checkedNodes.forEach(item => {
         if (!item.isChildrenMenu) {
           checkedKeys.push(item.alias_name)
         }
@@ -168,13 +160,13 @@ export default {
       var version = this.$store.getters.menus[0].version
       this.form.permission = { shopmenu_alias_name: checkedKeys, version: version }
       if (this.form.role_id) {
-        updateRolesInfo(this.form.role_id, this.form).then((response) => {
+        updateRolesInfo(this.form.role_id, this.form).then(response => {
           this.editRoleVisible = false
           this.fetchList()
           this.handleCancel()
         })
       } else {
-        createRoles(this.form).then((response) => {
+        createRoles(this.form).then(response => {
           this.editRoleVisible = false
           this.fetchList()
           this.handleCancel()
@@ -191,12 +183,12 @@ export default {
         ...this.params
       }
       getRolesList(params)
-        .then((response) => {
+        .then(response => {
           this.rolesList = response.data.data.list
           this.total_count = response.data.data.total_count
           this.loading = false
         })
-        .catch((error) => {
+        .catch(error => {
           this.loading = false
           this.$message({
             type: 'error',
@@ -211,7 +203,7 @@ export default {
         type: 'warning'
       })
         .then(() => {
-          deleteRole(row.role_id).then((response) => {
+          deleteRole(row.role_id).then(response => {
             this.rolesList.splice(index, 1)
             this.$message({
               message: '删除成功',

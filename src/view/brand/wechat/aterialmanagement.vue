@@ -1,21 +1,8 @@
-<style type="text/css" lang="scss">
-.tip-info {
-  padding: 8px 16px;
-  background-color: #fff6f7;
-  border-radius: 4px;
-  border-left: 5px solid #ff7800;
-  margin: 11px 0;
-}
-</style>
 <template>
   <SpPage>
     <div v-if="$route.path.indexOf('editor') === -1">
       <el-tabs v-model="activeName" type="border-card" @tab-click="handleClick">
         <el-tab-pane label="本地图片" name="local">
-          <!-- <div class="tip-info">
-              <p>当前本地图片已存储数量为<span style="font-size:20px;padding-left: 5px;">555张</span></p>
-              <p>当前本地图片剩余储<span style="font-size:20px;padding-left: 5px;">22张</span></p>
-          </div>-->
           <localimages-list :active-name="activeName" :get-status="localpicStatus" />
         </el-tab-pane>
 

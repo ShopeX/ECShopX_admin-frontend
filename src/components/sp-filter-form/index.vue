@@ -9,7 +9,7 @@
   // max-height: 1000px; // 设置一个足够大的初始高度
   overflow: hidden;
   &.shouqi {
-    max-height: 96px;
+    max-height: 110px;
     overflow: hidden;
   }
   &.small {

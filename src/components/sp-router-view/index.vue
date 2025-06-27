@@ -3,9 +3,7 @@
     <div v-show="!showRouterView">
       <slot />
     </div>
-    <div v-show="showRouterView">
-      <router-view />
-    </div>
+    <router-view v-show="showRouterView" />
   </div>
 </template>
 

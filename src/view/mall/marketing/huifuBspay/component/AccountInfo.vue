@@ -78,7 +78,13 @@
           </el-col>
         </el-row>
         <el-form-item class="cus-el-form">
-          <el-button type="primary" :disabled="isdisabled" @click="handleDialogOpen('form', 'APPROVED')"> 通过 </el-button>
+          <el-button
+            type="primary"
+            :disabled="isdisabled"
+            @click="handleDialogOpen('form', 'APPROVED')"
+          >
+            通过
+          </el-button>
           <el-button type="danger" @click="handleDialogOpen('form', 'REJECT')"> 驳回 </el-button>
         </el-form-item>
       </el-form>
@@ -143,12 +149,14 @@ export default {
   computed: {
     isdisabled() {
       // 判断分账比例是否填写，未填写则禁用提交按钮
-      return this.info.entry_apply_info.operator_type === 'distributor' && 
+      return (
+        this.info.entry_apply_info.operator_type === 'distributor' &&
         (!this.form.headquarters_proportion ||
-        (this.info.is_rel_dealer && !this.form.dealer_proportion) ||
-        (this.info.is_rel_merchant && !this.form.merchant_proportion))
+          (this.info.is_rel_dealer && !this.form.dealer_proportion) ||
+          (this.info.is_rel_merchant && !this.form.merchant_proportion))
+      )
     }
-},
+  },
   mounted() {
     const {
       entry_apply_info,
@@ -176,7 +184,7 @@ export default {
           save_id:
             entry_apply_info.operator_type === 'distributor' ? distributor_info.distributor_id : 0
         })
-        .then((res) => {
+        .then(res => {
           this.dialogFormVisible = false
           this.$emit('handleClose', 'update')
           // 跳转到列表页
@@ -196,7 +204,7 @@ export default {
       // 需要判断当时是店铺还是经销商 目前只判断了店铺
       this.approveType = status
       if (status === 'APPROVED') {
-        this.$refs['form'].validate(async (vaild) => {
+        this.$refs['form'].validate(async vaild => {
           if (vaild) {
             this.visibleContent = `请确认是否通过${user_name}的开户申请`
             this.dialogFormVisible = true
@@ -258,9 +266,9 @@ export default {
 }
 
 .el-button--primary.is-disabled {
-  background-color: var(--themeColor) !important;
+  background-color: var(--primary) !important;
   opacity: 0.5;
-  border-color: var(--themeColor);
+  border-color: var(--primary);
 }
 .cus-row-form {
   .el-col-12 {

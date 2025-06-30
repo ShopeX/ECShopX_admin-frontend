@@ -1,5 +1,14 @@
 <template>
-  <div class="section section-white">
+  <SpPage class="section section-white">
+    <template slot="page-common" slot-scope="{ isSticky }">
+      <div :class="isSticky ? 'text-center' : 'text-right'">
+        <el-button @click.native="handleCancel"> 取消 </el-button>
+        <el-button type="primary" :loading="submitLoading" @click="submitItemsActionConfirm">
+          {{ submitLoading ? '提交中' : '保存' }}
+        </el-button>
+      </div>
+    </template>
+
     <el-form
       ref="form"
       :model="form"
@@ -17,7 +26,7 @@
           />
         </el-card>
       </template>
-      <div v-else v-loading="loader" class="content-padded view-flex view-flex-middle">
+      <div v-else v-loading="loader" class="content-padded flex items-center">
         <div>管理分类：</div>
         <el-breadcrumb separator-class="el-icon-arrow-right" class="inline">
           <el-breadcrumb-item v-for="(item, index) in categoryNames" :key="index">
@@ -833,15 +842,9 @@
             @closeImgDialog="closeThumbDialog"
           />
         </el-card>
-        <div class="section-footer with-border content-center">
-          <el-button @click.native="handleCancel"> 取消 </el-button>
-          <el-button type="primary" :loading="submitLoading" @click="submitItemsActionConfirm">
-            {{ submitLoading ? '提交中' : '保存' }}
-          </el-button>
-        </div>
       </template>
     </el-form>
-  </div>
+  </SpPage>
 </template>
 
 <script>

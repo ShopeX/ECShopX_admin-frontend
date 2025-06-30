@@ -1,19 +1,10 @@
 <style lang="scss">
 .cm-sku-params {
-  .icon-edit1 {
-    font-size: 13px;
-    color: var(--color-theme);
-    margin: 0 30px 0 10px;
-    visibility: hidden;
-  }
   .sku-item {
     height: 100%;
-    display: inline-block;
-    &:hover {
-      .icon-edit1 {
-        visibility: visible;
-      }
-    }
+    display: inline-flex;
+    align-items: center;
+    margin-right: 10px;
   }
   .sku-image-table {
     .el-table__cell {
@@ -54,9 +45,7 @@
               <div class="popover-edit">
                 <el-input v-model="sku.custom_attribute_value" @change="onSkuChange" />
               </div>
-              <el-button slot="reference" type="text">
-                <i class="iconfont icon-edit1" />
-              </el-button>
+              <el-link class="leading-none mx-3" slot="reference" icon="el-icon-edit" />
             </el-popover>
           </span>
         </el-checkbox-group>

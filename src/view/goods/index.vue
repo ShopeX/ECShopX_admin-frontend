@@ -34,12 +34,41 @@
     margin-right: 10px;
   }
 }
-.sp-router-view {
-  background-color: hsl(var(--background-deep));
-}
 </style>
 <template>
   <SpPage title="商品详情" class="goods-index">
+    <template slot="page-common" slot-scope="{ isSticky }">
+      <div :class="isSticky ? 'text-center' : 'text-right'">
+        <el-button @click.native="handleCancel"> 取消 </el-button>
+        <el-button
+          v-if="
+            (IS_SUPPLIER() || !form.supplier_id) && !routerParams.detail && !routerParams.supplier
+          "
+          type="primary"
+          :loading="submitLoading"
+          @click="onFormSubmit('submitting')"
+        >
+          保存
+        </el-button>
+        <el-button
+          v-if="IS_SUPPLIER() && !routerParams.detail"
+          type="primary"
+          :loading="submitLoading"
+          @click.native="onFormSubmit('processing')"
+        >
+          提交审核
+        </el-button>
+        <el-button
+          v-if="IS_ADMIN() && form.audit_status == 'processing'"
+          type="primary"
+          :loading="submitLoading"
+          @click.native="onApplyConfirm"
+        >
+          保存并审核
+        </el-button>
+      </div>
+    </template>
+
     <el-alert
       v-if="form.audit_status == 'rejected' && IS_SUPPLIER()"
       :title="`审核失败：${form.audit_reason || ''}`"
@@ -56,7 +85,7 @@
       :submit="false"
     />
 
-    <template slot="page-header">
+    <!-- <template slot="page-header">
       <div class="text-right">
         <el-button @click.native="handleCancel"> 取消</el-button>
         <el-button
@@ -77,7 +106,6 @@
         >
           提交审核
         </el-button>
-        <!-- {{ form.audit_status }} -->
         <el-button
           v-if="IS_ADMIN() && form.audit_status == 'processing'"
           type="primary"
@@ -87,7 +115,7 @@
           保存并审核
         </el-button>
       </div>
-    </template>
+    </template> -->
 
     <SpDialog
       ref="sendNumDialogRef"

@@ -1,6 +1,6 @@
 <template>
-  <SpPage>
-    <SpRouterView>
+  <SpRouterView>
+    <SpPage>
       <el-tabs v-model="activeName" type="card" @tab-click="handleClick">
         <el-tab-pane label="普通快递" name="normal">
           <Normal />
@@ -24,8 +24,8 @@
           <ZiPeiList />
         </el-tab-pane>
       </el-tabs>
-    </SpRouterView>
-  </SpPage>
+    </SpPage>
+  </SpRouterView>
 </template>
 
 <script>

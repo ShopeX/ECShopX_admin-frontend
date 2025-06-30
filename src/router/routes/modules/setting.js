@@ -387,7 +387,7 @@ const routes = [
         component: () => import('@/view/mall/trade/logistics/index'),
         children: [
           {
-            path: 'editor/:itemId?',
+            path: 'editor/:id?',
             component: () => import('@/view/mall/trade/logistics/add-ziti'),
             meta: {
               title: '编辑自提点',

@@ -54,7 +54,7 @@
     }
     &.active {
       color: rgb(255, 255, 255);
-      background-color: var(--themeColor);
+      background-color: var(--primary);
     }
   }
   .image-item {
@@ -126,7 +126,7 @@
     left: 0;
     width: 120px;
     height: 120px;
-    border: 2px solid var(--themeColor);
+    border: 2px solid var(--primary);
     color: #fff;
     overflow: hidden;
     pointer-events: none;
@@ -138,7 +138,7 @@
       height: 42px;
       -webkit-transform: rotate(45deg);
       transform: rotate(45deg);
-      background: var(--themeColor);
+      background: var(--primary);
     }
     &__text {
       position: absolute;
@@ -416,11 +416,11 @@ export default {
   methods: {
     isActive({ image_id, url }) {
       if (this.multiple) {
-        return isArray(this.selected) ? this.selected.findIndex((item) => item.url == url) : false
+        return isArray(this.selected) ? this.selected.findIndex(item => item.url == url) : false
       } else {
         // return this.selected ? this.selected.image_id == image_id : false
         if (this.selected) {
-          const handleRegExp = (str) => {
+          const handleRegExp = str => {
             const regExp = /^(http|https):\/\/(.*)/g
             const [p1, p2, p3] = regExp.exec(str)
             return p3
@@ -534,7 +534,7 @@ export default {
     async getImageAllCatgory() {
       const { list } = await this.$api.picker.getImageAllCatgory({ image_cat_id: 0 })
       this.catgoryList = [{ image_cat_id: -1, image_cat_name: '全部图片' }, ...list.reverse()]
-      this.editFormList[0].options = this.catgoryList.map((item) => {
+      this.editFormList[0].options = this.catgoryList.map(item => {
         return {
           title: item.image_cat_name,
           value: item.image_cat_id
@@ -553,7 +553,7 @@ export default {
         url
       }
       if (this.multiple) {
-        const fdx = this.selected.findIndex((s) => s.image_id == item.image_id)
+        const fdx = this.selected.findIndex(s => s.image_id == item.image_id)
         if (fdx > -1) {
           this.selected.splice(fdx, 1)
         } else {
@@ -598,10 +598,10 @@ export default {
       upload
         .uploadImg(e.file, e.file.name)
         .then(
-          (res) => e.onSuccess(res),
-          (err) => e.onError(err)
+          res => e.onSuccess(res),
+          err => e.onError(err)
         )
-        .catch((err) => e.onError(err))
+        .catch(err => e.onError(err))
     },
     // 上传错误回调
     uploadError: function (e) {
@@ -621,7 +621,7 @@ export default {
         type: 'warning'
       })
         .then(() => {
-          deleteImage({ image_id: item.image_id }).then((response) => {
+          deleteImage({ image_id: item.image_id }).then(response => {
             this.refresh(true)
             this.$message({
               message: '删除成功',

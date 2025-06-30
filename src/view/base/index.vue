@@ -456,7 +456,7 @@
     padding: 2px;
     font-size: 14px;
     color: #fff;
-    background: var(--themeColor);
+    background: var(--primary);
     border-radius: 2px;
     font-weight: normal;
     margin-right: 5px;
@@ -492,7 +492,7 @@
     padding: 2px;
     font-size: 14px;
     color: #fff;
-    background: var(--themeColor);
+    background: var(--primary);
     border-radius: 2px;
     font-weight: normal;
     margin-right: 5px;

@@ -4,8 +4,7 @@
 }
 </style>
 <template>
-  <div>
-    <!-- form: {{ form }} -->
+  <SpPage>
     <SpForm
       ref="form"
       v-model="form"
@@ -15,7 +14,7 @@
       @onSubmit="onSubmit"
     />
 
-    <div class="footer-container">
+    <div class="text-center">
       <el-button
         @click="
           () => {
@@ -36,7 +35,7 @@
         保存
       </el-button>
     </div>
-  </div>
+  </SpPage>
 </template>
 
 <script>
@@ -85,7 +84,7 @@ export default {
           label: '自提点地址',
           key: 'zitiAddress',
           component: () => (
-            <FormItemZitiAddress ref='zitiaddress' v-model={this.form.zitiAddress} />
+            <FormItemZitiAddress ref="zitiaddress" v-model={this.form.zitiAddress} />
           ),
           validator: (rule, value, callback) => {
             try {
@@ -100,7 +99,7 @@ export default {
           label: '联系电话',
           key: 'connectPhone',
           component: () => (
-            <FormItemConnectPhone ref='connectphone' v-model={this.form.connectPhone} />
+            <FormItemConnectPhone ref="connectphone" v-model={this.form.connectPhone} />
           ),
           validator: (rule, value, callback) => {
             try {
@@ -114,7 +113,7 @@ export default {
         {
           label: '自提时间段',
           key: 'timeSlots',
-          component: () => <FormItemTimeSlot ref='timeslot' v-model={this.form.timeSlots} />,
+          component: () => <FormItemTimeSlot ref="timeslot" v-model={this.form.timeSlots} />,
           validator: (rule, value, callback) => {
             try {
               this.$refs['timeslot'].validator()

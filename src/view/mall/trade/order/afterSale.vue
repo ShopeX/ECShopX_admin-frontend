@@ -24,26 +24,26 @@
   <SpPage title="售后申请">
     <template slot="page-header">
       <div class="text-right">
-      <el-button
-        @click="
-          () => {
-            this.$router.go(-1)
-          }
-        "
-      >
-        取消
-      </el-button>
-      <el-button
-        type="primary"
-        @click="
-          () => {
-            this.$refs['form'].handleSubmit()
-          }
-        "
-      >
-        保存
-      </el-button>
-    </div>
+        <el-button
+          @click="
+            () => {
+              this.$router.go(-1)
+            }
+          "
+        >
+          取消
+        </el-button>
+        <el-button
+          type="primary"
+          @click="
+            () => {
+              this.$refs['form'].handleSubmit()
+            }
+          "
+        >
+          保存
+        </el-button>
+      </div>
     </template>
     <!-- form: {{ form }} -->
     <SpForm
@@ -54,8 +54,6 @@
       :submit="false"
       @onSubmit="onSubmit"
     />
-
-
   </SpPage>
 </template>
 
@@ -103,7 +101,7 @@ export default {
             { label: 'ONLY_REFUND', name: '仅退款（无需退货）' },
             { label: 'REFUND_GOODS', name: '退货退款' }
           ],
-          onChange: (e) => {
+          onChange: e => {
             if (e == 'REFUND_GOODS') {
               this.formList[6].isShow = true
             } else {
@@ -123,9 +121,9 @@ export default {
           key: 'items',
           component: () => (
             <CompGoodsList
-              ref='compGoodsRef'
+              ref="compGoodsRef"
               value={this.orderInfo}
-              on-onChange={(e) => {
+              on-onChange={e => {
                 this.form.items = e
                 this.$refs['compRefundRef'].getTotalFee()
               }}
@@ -145,7 +143,7 @@ export default {
           component: () => (
             <CompRefundPoint
               value={this.orderInfo}
-              on-onChange={(e) => {
+              on-onChange={e => {
                 this.form.refund_point = e
               }}
             />
@@ -163,12 +161,12 @@ export default {
           key: 'refund_fee',
           component: () => (
             <CompRefundAmount
-              ref='compRefundRef'
+              ref="compRefundRef"
               value={this.orderInfo}
-              on-onChangeFee={(e) => {
+              on-onChangeFee={e => {
                 this.form.refund_fee = e
               }}
-              on-onChange={(e) => {
+              on-onChange={e => {
                 this.$refs['compGoodsRef'].setSelectAllGoods()
                 {
                   /* this.form.refund_fee = e */
@@ -224,7 +222,7 @@ export default {
   created() {},
   methods: {
     onLoad({ orderInfo }) {
-      orderInfo.items = orderInfo.items.map((item) => {
+      orderInfo.items = orderInfo.items.map(item => {
         return {
           ...item,
           refundNum: item.left_aftersales_num,
@@ -240,7 +238,7 @@ export default {
         cancelButtonText: '取消'
       })
       const { id: order_id } = this.$route.params
-      const reason = REASONS.find((item) => item.value == this.form.reason).title
+      const reason = REASONS.find(item => item.value == this.form.reason).title
       const params = {
         order_id,
         aftersales_type: this.form.aftersales_type,
@@ -258,34 +256,6 @@ export default {
       setTimeout(() => {
         this.$router.go(-1)
       }, 1000)
-      // const h = this.$createElement
-      // let msgTxt = ''
-      // if (params.aftersales_type == 'ONLY_REFUND') {
-      //   msgTxt = '请耐心等待系统退款'
-      // } else if (params.aftersales_type == 'REFUND_GOODS' && !params.goods_returned) {
-      //   msgTxt = '请通知买家尽快寄回商品'
-      // } else if (params.aftersales_type == 'REFUND_GOODS' && params.goods_returned) {
-      //   msgTxt = '请耐心等待系统退款'
-      // }
-      // this.$msgbox({
-      //   title: '申请售后',
-      //   message: h('p', null, [
-      //     h('i', {
-      //       class: 'iconfont icon-check-circle',
-      //       style: 'color: var(--themeColor); margin-right: 4px;'
-      //     }),
-      //     h('span', { style: 'color: #333' }, '售后申请提交成功'),
-      //     h('div', { style: 'color: #999; font-size: 13px; margin-left: 20px;' }, msgTxt)
-      //   ]),
-      //   showCancelButton: true,
-      //   confirmButtonText: '确定',
-      //   cancelButtonText: '取消'
-      // }).then((action) => {
-      //   this.$EventBus.$emit('event.tradelist.refresh')
-      //   setTimeout(() => {
-      //     this.$router.go(-1)
-      //   }, 1000)
-      // })
     }
   }
 }

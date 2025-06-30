@@ -32,7 +32,7 @@
   .el-table__row {
     &.active {
       td {
-        color: var(--themeColor);
+        color: var(--primary);
       }
     }
   }
@@ -147,7 +147,7 @@ export default {
       const regionLabels = []
       const getRegionLabel = (district, i) => {
         if (this.region[i]) {
-          const fd = district.find((item) => item.value == this.region[i])
+          const fd = district.find(item => item.value == this.region[i])
           regionLabels.push(fd.label)
           if (fd.children) {
             getRegionLabel(fd.children, ++i)

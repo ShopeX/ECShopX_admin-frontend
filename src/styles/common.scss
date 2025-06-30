@@ -187,3 +187,32 @@
     }
   }
 }
+
+/* vue-html5-editor */
+.vue-html5-editor {
+  .toolbar {
+    ul {
+      li {
+        line-height: 26px;
+        height: 36px;
+      }
+
+      .icon {
+        display: inline !important;
+      }
+    }
+
+    .dashboard-font {
+      line-height: initial;
+    }
+  }
+
+  .content {
+    overflow-y: auto;
+    overflow-x: hidden;
+
+    img {
+      max-width: 100%;
+    }
+  }
+}

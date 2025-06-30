@@ -45,7 +45,7 @@ const coreRoutes = [
   {
     component: AuthPageLayout,
     meta: {
-      title: 'Authentication'
+      title: 'shopAdminAuthentication'
     },
     name: 'shopAdminAuthentication',
     path: '/shopadmin',
@@ -65,7 +65,7 @@ const coreRoutes = [
   {
     component: AuthPageLayout,
     meta: {
-      title: 'Authentication'
+      title: 'supplierAuthentication'
     },
     name: 'supplierAuthentication',
     path: '/supplier',
@@ -80,7 +80,7 @@ const coreRoutes = [
   {
     component: AuthPageLayout,
     meta: {
-      title: 'Authentication'
+      title: 'merchantAuthentication'
     },
     name: 'merchantAuthentication',
     path: '/merchant',

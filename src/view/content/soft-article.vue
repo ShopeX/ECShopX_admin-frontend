@@ -8,7 +8,7 @@
   top: 0;
   left: 0;
   z-index: 999;
-  background-color: var(--themeColor);
+  background-color: var(--primary);
   font-size: 12px;
   width: 24px;
   text-align: center;

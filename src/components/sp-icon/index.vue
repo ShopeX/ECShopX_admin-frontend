@@ -3,11 +3,12 @@
     v-if="button"
     :class="buttonClass"
     class="flex items-center justify-center hover:bg-gray-100 transition-all duration-300 cursor-pointer"
-    @click="onButtonClick"
+    @click.stop="onButtonClick"
   >
     <component :is="icon" :size="size" :fill="fill" />
   </div>
-  <component v-else :is="icon" :size="size" :fill="fill" />
+
+  <component v-else :is="icon" :size="size" :fill="fill" @click.stop="onButtonClick" />
 </template>
 
 <script>

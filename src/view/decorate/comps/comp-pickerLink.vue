@@ -15,8 +15,8 @@
   }
   .btn-linkpath {
     padding: 0 8px;
-    color: var(--themeColor);
-    border: 1px solid var(--themeColor);
+    color: var(--primary);
+    border: 1px solid var(--primary);
     background-color: #fff;
     font-size: 12px;
     height: 32px;

@@ -21,7 +21,7 @@
     border-radius: 30px;
     margin: 0 12px;
     padding: 0 12px;
-    border: 1px solid var(--themeColor);
+    border: 1px solid var(--primary);
 
     .search-input {
       color: #999999;
@@ -61,7 +61,7 @@
       text-align: center;
 
       &-img {
-        border: 2px solid var(--themeColor);
+        border: 2px solid var(--primary);
       }
 
       &-imgs {
@@ -86,7 +86,7 @@
         overflow: hidden;
         line-height: 40px !important;
         background-color: #fff;
-        border: 2px solid var(--themeColor);
+        border: 2px solid var(--primary);
       }
 
       &-titles {
@@ -101,7 +101,7 @@
         margin-top: 4px;
         width: 50px;
         height: 16px;
-        background: var(--themeColor);
+        background: var(--primary);
         border-radius: 14px;
         text-align: center;
         color: #ffffff;
@@ -160,7 +160,7 @@
         .lone {
           width: 5px;
           height: 12px;
-          background: var(--themeColor);
+          background: var(--primary);
         }
 
         &-item-title {
@@ -240,7 +240,7 @@
               font-family: PingFangSC, PingFang SC;
               font-weight: 600;
               font-size: 16px;
-              color: var(--themeColor);
+              color: var(--primary);
               line-height: 45px;
 
               .price2 {
@@ -404,13 +404,13 @@ export default {
       const res = await this.$api.goods.getCategory(
         this.VERSION_PLATFORM() ? { is_main_category: true } : {}
       )
-      res.forEach((element) => {
+      res.forEach(element => {
         if (element?.children?.length > 0) {
           element?.children?.unshift({
             category_id: '',
             category_name: '全部'
           })
-          element?.children?.forEach((element1) => {
+          element?.children?.forEach(element1 => {
             if (element1?.children?.length > 0) {
               element1?.children?.unshift({
                 category_id: '',

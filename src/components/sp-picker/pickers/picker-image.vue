@@ -17,7 +17,7 @@
     .lf-container {
       width: 220px;
       background: #f5f5f5;
-      height: 500px;
+      height: 522px;
       margin-right: 8px;
       padding: 8px;
       overflow: auto;
@@ -39,22 +39,16 @@
     }
   }
   .catgory-item {
-    height: 30px;
-    line-height: 30px;
+    height: 36px;
+    line-height: 36px;
     padding: 0 6px;
     &:hover {
-      color: rgb(255, 255, 255);
-      background-color: rgba(0, 0, 0, 0.4);
-      .icon-edit {
-        display: block;
-      }
-      .icon-trash-alt1 {
-        display: block;
-      }
+      color: var(--primary);
+      background-color: color-mix(in srgb, #ffffff 90%, var(--primary));
     }
     &.active {
       color: rgb(255, 255, 255);
-      background-color: var(--themeColor);
+      background-color: var(--primary);
     }
   }
   .image-item {
@@ -100,9 +94,10 @@
   }
   .image-title-wrap {
     width: 120px;
+    height: 36px;
     &__title {
       font-size: 12px;
-      @include text-overflow();
+      @include multi-ellipsis(2);
     }
   }
   .el-pagination {
@@ -116,7 +111,7 @@
     left: 0;
     width: 120px;
     height: 120px;
-    border: 2px solid var(--themeColor);
+    border: 2px solid var(--primary);
     color: #fff;
     overflow: hidden;
     pointer-events: none;
@@ -128,7 +123,7 @@
       height: 42px;
       -webkit-transform: rotate(45deg);
       transform: rotate(45deg);
-      background: var(--themeColor);
+      background: var(--primary);
     }
     &__text {
       position: absolute;
@@ -142,7 +137,7 @@
     }
   }
   .image-list {
-    height: 452px;
+    height: 485px;
   }
   .cropper-container {
     width: 498px;
@@ -219,16 +214,24 @@
         <div
           v-for="(item, index) in catgoryList"
           :key="`catgory-item__${index}`"
-          class="catgory-item"
+          class="catgory-item flex justify-between"
           :class="{
             active: selectCatgory == item.image_cat_id
           }"
           @click="handleClickCatgory(item)"
         >
-          <i class="iconfont icon-folder1" />
-          {{ item.image_cat_name }}
-          <i v-if="index > 0" class="iconfont icon-edit" @click.stop="onEditGroup(item)" />
-          <i v-if="index > 0" class="iconfont icon-trash-alt1" @click.stop="onDeleteGroup(item)" />
+          <div class="flex items-center">
+            <SpIcon name="folder-open" />
+            <span class="w-[140px] ml-1 overflow-x-hidden text-ellipsis whitespace-nowrap">{{
+              item.image_cat_name
+            }}</span>
+          </div>
+          <div class="flex items-center w-12 gap-1">
+            <SpIcon v-if="index > 0" name="edit-two" @click="onEditGroup(item)" />
+            <SpIcon v-if="index > 0" name="delete" @click="onDeleteGroup(item)" />
+          </div>
+          <!-- <i v-if="index > 0" class="iconfont icon-edit" @click.stop="onEditGroup(item)" />
+          <i v-if="index > 0" class="iconfont icon-trash-alt1" @click.stop="onDeleteGroup(item)" /> -->
         </div>
       </div>
       <div class="rg-container">
@@ -240,11 +243,12 @@
             @click="handleClickItem(item)"
           >
             <div
-              class="image-item"
+              class="image-item relative"
               :style="{ color: '#fff', backgroundImage: `url('${item.url}')` }"
             >
-              <i class="iconfont icon-link" @click.stop="handleCopy(item.url)" />
-              <!-- <span class="image-meta">800*800</span> -->
+              <div class="absolute bottom-0 right-0 left-0 bg-black/40">
+                <SpIcon name="link" @click="handleCopy(item.url)" size="20" />
+              </div>
             </div>
             <div class="image-title-wrap" :title="item.image_name">
               <p class="image-title-wrap__title">
@@ -255,7 +259,8 @@
               <div class="image-box-selected__right-angle" />
               <div class="image-box-selected__text">
                 <span v-if="multiple">{{ isActive(item) + 1 }}</span>
-                <i v-if="!multiple" class="iconfont icon-check" />
+                <!-- <i v-if="!multiple" class="iconfont icon-check" /> -->
+                <SpIcon v-if="!multiple" name="check" />
               </div>
             </div>
           </div>
@@ -431,11 +436,11 @@ export default {
   methods: {
     isActive({ image_id, url }) {
       if (this.multiple) {
-        return isArray(this.selected) ? this.selected.findIndex((item) => item.url == url) : false
+        return isArray(this.selected) ? this.selected.findIndex(item => item.url == url) : false
       } else {
         // return this.selected ? this.selected.image_id == image_id : false
         if (this.selected) {
-          const handleRegExp = (str) => {
+          const handleRegExp = str => {
             const regExp = /^(http|https):\/\/(.*)/g
             const [p1, p2, p3] = regExp.exec(str)
             return p3
@@ -553,7 +558,7 @@ export default {
       const { list } = await this.$api.picker.getImageAllCatgory({ image_cat_id: 0 })
       this.catgoryList = [{ image_cat_id: -1, image_cat_name: '全部图片' }, ...list.reverse()]
       console.log('catgoryList:', this.catgoryList)
-      this.editFormList[0].options = this.catgoryList.map((item) => {
+      this.editFormList[0].options = this.catgoryList.map(item => {
         return {
           title: item.image_cat_name,
           value: item.image_cat_id
@@ -572,7 +577,7 @@ export default {
         url
       }
       if (this.multiple) {
-        const fdx = this.selected.findIndex((s) => s.image_id == item.image_id)
+        const fdx = this.selected.findIndex(s => s.image_id == item.image_id)
         if (fdx > -1) {
           this.selected.splice(fdx, 1)
         } else {
@@ -624,10 +629,10 @@ export default {
       upload
         .uploadImg(e.file, e.file.name)
         .then(
-          (res) => e.onSuccess(res),
-          (err) => e.onError(err)
+          res => e.onSuccess(res),
+          err => e.onError(err)
         )
-        .catch((err) => e.onError(err))
+        .catch(err => e.onError(err))
     },
     // 上传错误回调
     uploadError: function (e) {
@@ -635,10 +640,7 @@ export default {
     },
     async handleCopy(url) {
       await this.$copyText(url)
-      this.$notify.success({
-        message: '链接复制成功',
-        showClose: true
-      })
+      this.$message.success('链接复制成功')
     },
     handleCancelAll() {
       const { multiple } = this

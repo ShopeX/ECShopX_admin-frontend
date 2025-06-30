@@ -121,7 +121,7 @@ const routes = [
         },
         children: [
           {
-            path: 'addziti/:id?',
+            path: 'editor/:id?',
             component: () => import('@/view/mall/trade/logistics/add-ziti'),
             meta: {
               title: '自提点管理',

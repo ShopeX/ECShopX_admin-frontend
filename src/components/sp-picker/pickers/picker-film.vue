@@ -35,7 +35,7 @@
     }
     &.active {
       color: rgb(255, 255, 255);
-      background-color: var(--themeColor);
+      background-color: var(--primary);
     }
   }
   .image-item {
@@ -111,7 +111,7 @@
     left: 0;
     width: 120px;
     height: 120px;
-    border: 2px solid var(--themeColor);
+    border: 2px solid var(--primary);
     color: #fff;
     overflow: hidden;
     pointer-events: none;
@@ -123,7 +123,7 @@
       height: 42px;
       -webkit-transform: rotate(45deg);
       transform: rotate(45deg);
-      background: var(--themeColor);
+      background: var(--primary);
     }
     &__text {
       position: absolute;
@@ -366,7 +366,7 @@ export default {
   methods: {
     isActive({ image_id, url }) {
       if (this.multiple) {
-        return this.selected.findIndex((item) => item.image_id == image_id)
+        return this.selected.findIndex(item => item.image_id == image_id)
       } else {
         // return this.selected ? this.selected.image_id == image_id : false
         return this.selected ? this.selected.url == url : false
@@ -405,7 +405,7 @@ export default {
     async getImageAllCatgory() {
       const { list } = await this.$api.picker.getImageAllCatgory({ image_cat_id: 0 })
       this.catgoryList = [{ image_cat_id: -1, image_cat_name: '默认分组' }, ...list.reverse()]
-      this.editFormList[0].options = this.catgoryList.map((item) => {
+      this.editFormList[0].options = this.catgoryList.map(item => {
         return {
           title: item.image_cat_name,
           value: item.image_cat_id
@@ -435,7 +435,7 @@ export default {
       if (!this.multiple) {
         this.selected = _item
       } else {
-        const fdx = this.selected.findIndex((s) => s.image_id == item.image_id)
+        const fdx = this.selected.findIndex(s => s.image_id == item.image_id)
         if (fdx > -1) {
           this.selected.splice(fdx, 1)
         } else {
@@ -478,10 +478,10 @@ export default {
       upload
         .uploadImg(e.file, e.file.name)
         .then(
-          (res) => e.onSuccess(res),
-          (err) => e.onError(err)
+          res => e.onSuccess(res),
+          err => e.onError(err)
         )
-        .catch((err) => e.onError(err))
+        .catch(err => e.onError(err))
     },
     // 上传错误回调
     uploadError: function (e) {

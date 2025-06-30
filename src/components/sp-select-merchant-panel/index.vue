@@ -32,7 +32,7 @@
   .el-table__row {
     &.active {
       td {
-        color: var(--themeColor);
+        color: var(--primary);
       }
     }
   }
@@ -42,17 +42,8 @@
 <template>
   <div class="sp-select-shop-panel">
     <div class="filter-tools">
-      <el-input
-        v-model="keywords"
-        placeholder="请输入商户名称搜索"
-        @change="fetch"
-      />
-      <el-button
-        type="text"
-        @click="reset"
-      >
-        重置
-      </el-button>
+      <el-input v-model="keywords" placeholder="请输入商户名称搜索" @change="fetch" />
+      <el-button type="text" @click="reset"> 重置 </el-button>
     </div>
     <div>
       <el-table
@@ -72,11 +63,7 @@
           </template>
         </el-table-column> -->
 
-        <el-table-column
-          prop="merchant_name"
-          label="商户名称"
-          width="500"
-        />
+        <el-table-column prop="merchant_name" label="商户名称" width="500" />
       </el-table>
     </div>
     <div>
@@ -112,7 +99,7 @@ export default {
   name: 'SpSelectMerchantPanel',
   props: {},
   inject: ['selectMerchant'],
-  data () {
+  data() {
     return {
       district,
       region: [],
@@ -126,11 +113,11 @@ export default {
       radio: 0
     }
   },
-  created () {
+  created() {
     this.fetch()
   },
   methods: {
-    getRowActive ({ row, rowIndex }) {
+    getRowActive({ row, rowIndex }) {
       if (!this.selectMerchant.selectValue) {
         return ''
       } else if (this.selectMerchant.selectValue.value == row.id) {
@@ -139,7 +126,7 @@ export default {
         return ''
       }
     },
-    async fetch () {
+    async fetch() {
       this.loading = true
       const params = {
         page: this.pageIndex,
@@ -154,16 +141,16 @@ export default {
       this.total = total_count
       this.loading = false
     },
-    reset () {
+    reset() {
       this.keywords = ''
       this.region = []
       this.fetch()
     },
-    onCurrentChange (pageIndex) {
+    onCurrentChange(pageIndex) {
       this.pageIndex = pageIndex
       this.fetch()
     },
-    onRowClick ({ id, merchant_name }) {
+    onRowClick({ id, merchant_name }) {
       let resValue = {
         name: merchant_name,
         value: id
@@ -173,7 +160,7 @@ export default {
       }
       this.$emit('change', resValue)
     },
-    getRadioValue ({ id }) {
+    getRadioValue({ id }) {
       if (!this.selectMerchant.selectValue) {
         return false
       } else if (this.selectMerchant.selectValue.value == id) {
@@ -183,7 +170,7 @@ export default {
       }
       // debugger
     },
-    async onChangeCascader () {
+    async onChangeCascader() {
       this.fetch()
     }
   }

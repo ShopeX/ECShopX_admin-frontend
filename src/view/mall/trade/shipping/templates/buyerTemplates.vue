@@ -1,12 +1,6 @@
 <template>
   <div>
-    <el-table
-      v-loading="loading"
-      :data="buyerTemplatesList"
-      border
-      style="width: 100%"
-      :height=" - 170"
-    >
+    <el-table v-loading="loading" :data="buyerTemplatesList" border style="width: 100%">
       <el-table-column width="50" prop="template_id" label="ID" />
       <el-table-column prop="name" label="运费模板名称" />
       <el-table-column prop="area" label="配送地区">
@@ -83,7 +77,7 @@ export default {
     },
     getShippingTemplatesList() {
       this.loading = true
-      getShippingTemplatesList(this.params).then((response) => {
+      getShippingTemplatesList(this.params).then(response => {
         this.buyerTemplatesList = []
         for (var item in response.data.data.list) {
           this.buyerTemplatesList.push({
@@ -109,7 +103,7 @@ export default {
         type: 'warning'
       })
         .then(() => {
-          deleteShippingTemplates(row.template_id).then((response) => {
+          deleteShippingTemplates(row.template_id).then(response => {
             this.buyerTemplatesList.splice(index, 1)
             this.$message({
               message: '删除运费模板成功',

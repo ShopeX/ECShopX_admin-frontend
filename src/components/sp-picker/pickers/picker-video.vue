@@ -35,7 +35,7 @@
     }
     &.active {
       color: rgb(255, 255, 255);
-      background-color: var(--themeColor);
+      background-color: var(--primary);
     }
   }
   .image-item {
@@ -106,7 +106,7 @@
     left: 0;
     width: 160px;
     height: 90px;
-    border: 2px solid var(--themeColor);
+    border: 2px solid var(--primary);
     color: #fff;
     overflow: hidden;
     pointer-events: none;
@@ -118,7 +118,7 @@
       height: 42px;
       -webkit-transform: rotate(45deg);
       transform: rotate(45deg);
-      background: var(--themeColor);
+      background: var(--primary);
     }
     &__text {
       position: absolute;
@@ -280,11 +280,11 @@ export default {
   methods: {
     isActive({ image_id, url }) {
       if (this.multiple) {
-        return isArray(this.selected) ? this.selected.findIndex((item) => item.url == url) : false
+        return isArray(this.selected) ? this.selected.findIndex(item => item.url == url) : false
       } else {
         // return this.selected ? this.selected.image_id == image_id : false
         if (this.selected) {
-          const handleRegExp = (str) => {
+          const handleRegExp = str => {
             const regExp = /^(http|https):\/\/(.*)/g
             const [p1, p2, p3] = regExp.exec(str)
             return p3
@@ -334,7 +334,7 @@ export default {
         url
       }
       if (this.multiple) {
-        const fdx = this.selected.findIndex((s) => s.image_id == item.image_id)
+        const fdx = this.selected.findIndex(s => s.image_id == item.image_id)
         if (fdx > -1) {
           this.selected.splice(fdx, 1)
         } else {
@@ -384,10 +384,10 @@ export default {
       upload
         .uploadImg(e.file, e.file.name)
         .then(
-          (res) => e.onSuccess(res),
-          (err) => e.onError(err)
+          res => e.onSuccess(res),
+          err => e.onError(err)
         )
-        .catch((err) => e.onError(err))
+        .catch(err => e.onError(err))
     },
     // 上传错误回调
     uploadError: function (e) {

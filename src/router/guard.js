@@ -66,7 +66,8 @@ function setupAccessGuard(router) {
 
     // 检查目标路径是否在可访问路由中
     const isPathAccessible = (path, routes, parentPath = '') => {
-      return routes.some(route => route.path === path)
+      return routes.some(route => route.regex.test(path) && route.path !== '')
+      // return routes.some(route => route.path === path)
     }
 
     // 获取第一个可访问路由的路径
@@ -81,6 +82,7 @@ function setupAccessGuard(router) {
 
       return '/'
     }
+
     // 如果目标路径不可访问，重定向到第一个可访问路由
     if (
       !isPathAccessible(to.path, router.getRoutes()) ||

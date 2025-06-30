@@ -248,7 +248,7 @@ export default {
       const red = parseInt(theme.replace('#', '').slice(0, 2), 16)
       const green = parseInt(theme.replace('#', '').slice(2, 4), 16)
       const blue = parseInt(theme.replace('#', '').slice(4, 6), 16)
-      document.body.style.setProperty('--themeColor', theme)
+      document.body.style.setProperty('--primary', theme)
       document.body.style.setProperty('--themeColorRgb', [red, green, blue].join(','))
     },
     getComponentAttr(item, pick) {

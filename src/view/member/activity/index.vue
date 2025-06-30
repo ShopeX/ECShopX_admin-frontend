@@ -14,6 +14,10 @@
         :name="item.activeName"
       >
         <template v-if="activeName === 'valid'">
+          <div class="action-container">
+            <el-button type="primary" @click="add"> 添加活动 </el-button>
+          </div>
+
           <el-table :data="activity" border style="width: 100%">
             <el-table-column type="expand">
               <template slot-scope="props">

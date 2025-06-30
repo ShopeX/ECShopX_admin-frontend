@@ -63,29 +63,6 @@
           />
         </el-select>
       </SpFilterFormItem>
-      <SpFilterFormItem prop="keywords" label="商品名称:">
-        <el-input v-model="formData.keywords" placeholder="请输入商品名称" />
-      </SpFilterFormItem>
-      <SpFilterFormItem prop="item_bn" label="商品货号:">
-        <el-input v-model="formData.item_bn" placeholder="请输入商品货号" />
-      </SpFilterFormItem>
-      <SpFilterFormItem prop="barcode" label="商品条码:">
-        <el-input v-model="formData.barcode" placeholder="请输入商品条码" />
-      </SpFilterFormItem>
-      <SpFilterFormItem prop="supplier_name" label="所属供应商:">
-        <el-input v-model="formData.supplier_name" placeholder="请输入所属供应商" />
-      </SpFilterFormItem>
-      <SpFilterFormItem prop="approve_status" label="商品状态:">
-        <el-select v-model="formData.approve_status" clearable placeholder="请选择">
-          <el-option
-            v-for="item in statusOption"
-            :key="item.value"
-            :label="item.title"
-            size="mini"
-            :value="item.value"
-          />
-        </el-select>
-      </SpFilterFormItem>
     </SpFilterForm>
 
     <div class="action-container">

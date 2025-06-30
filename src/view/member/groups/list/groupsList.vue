@@ -127,12 +127,12 @@ export default {
     getGroupsList() {
       this.loading = true
       getGroupsList(this.params)
-        .then((response) => {
+        .then(response => {
           this.groupList = response.data.data.list
           this.total_count = response.data.data.total_count
           this.loading = false
         })
-        .catch((error) => {
+        .catch(error => {
           this.loading = false
           this.$message({
             type: 'error',
@@ -159,7 +159,7 @@ export default {
         type: 'warning'
       })
         .then(() => {
-          finishGroupActivity(row.groups_activity_id).then((res) => {
+          finishGroupActivity(row.groups_activity_id).then(res => {
             this.getGroupsList()
           })
         })
@@ -171,13 +171,14 @@ export default {
         })
     },
     deleteGroupsAction(index, row) {
+      debugger
       this.$confirm('此操作将删除该拼团活动, 是否继续?', '提示', {
         confirmButtonText: '确定',
         cancelButtonText: '取消',
         type: 'warning'
       })
         .then(() => {
-          deleteGroupActivity(row.groups_activity_id).then((res) => {
+          deleteGroupActivity(row.groups_activity_id).then(res => {
             this.getGroupsList()
           })
         })
@@ -189,7 +190,7 @@ export default {
         })
     },
     getCurrencyInfo() {
-      getDefaultCurrency().then((res) => {
+      getDefaultCurrency().then(res => {
         this.currency = res.data.data
         this.cursymbol = this.currency.symbol
       })

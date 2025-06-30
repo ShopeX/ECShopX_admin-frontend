@@ -8,19 +8,15 @@
       append-to-body
       @close="closeDialog"
     >
-      <div class="view-flex">
-        <Tabs
-          :showlinks="links"
-          :type="type"
-          @onClick="handleTabsClick"
-        />
+      <div class="flex">
+        <Tabs :showlinks="links" :type="type" @onClick="handleTabsClick" />
         <div class="link-data">
           <Finder
             v-if="
               type !== 'category' &&
-                type !== 'marketing' &&
-                type !== 'link' &&
-                type !== 'other_wxapp'
+              type !== 'marketing' &&
+              type !== 'link' &&
+              type !== 'other_wxapp'
             "
             :type="type"
             @onSearch="handleSearch"
@@ -29,11 +25,7 @@
               v-if="type === 'goods' || type === 'article' || type === 'planting'"
               class="store view-flex-item"
             >
-              <StoreFilter
-                :data="store"
-                :lock="lockStore"
-                @change="handleStoreChange"
-              />
+              <StoreFilter :data="store" :lock="lockStore" @change="handleStoreChange" />
             </div>
           </Finder>
           <Wxalink
@@ -50,15 +42,9 @@
           />
         </div>
       </div>
-      <span
-        slot="footer"
-        class="dialog-footer"
-      >
+      <span slot="footer" class="dialog-footer">
         <el-button @click="closeDialog">取 消</el-button>
-        <el-button
-          type="primary"
-          @click="setComfirm"
-        >确 定</el-button>
+        <el-button type="primary" @click="setComfirm">确 定</el-button>
       </span>
     </el-dialog>
   </div>
@@ -102,7 +88,7 @@ export default {
       default: false
     }
   },
-  data () {
+  data() {
     return {
       linksVisible: false,
       type: 'goods',
@@ -115,7 +101,7 @@ export default {
     }
   },
   watch: {
-    visible (val) {
+    visible(val) {
       if (val) {
         this.linksVisible = val
         if (this.relStore) {
@@ -125,26 +111,26 @@ export default {
     }
   },
   methods: {
-    handleTabsClick (val) {
+    handleTabsClick(val) {
       if (this.type === val) return
       this.type = val
       this.keywords = ''
     },
-    handleSearch (val) {
+    handleSearch(val) {
       this.keywords = val
     },
-    handleRowClick (val) {
+    handleRowClick(val) {
       this.link = val
       console.log(val)
     },
-    handleStoreChange (val) {
+    handleStoreChange(val) {
       this.store = val
     },
-    closeDialog () {
+    closeDialog() {
       this.linksVisible = false
       this.$emit('closeDialog', 'link')
     },
-    setComfirm () {
+    setComfirm() {
       if (!this.link) {
         this.$message({
           message: '请选绑定内容',
@@ -155,7 +141,7 @@ export default {
       this.$emit('setLink', this.link, this.type)
       this.linksVisible = false
     },
-    selectChange (val) {
+    selectChange(val) {
       this.appid = val
     }
   }

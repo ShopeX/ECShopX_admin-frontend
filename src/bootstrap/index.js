@@ -6,6 +6,8 @@ import App from '@/App.vue'
 import { SYSTEM_CONFIG } from '@/config'
 import ElementUI from 'element-ui'
 import VueClipboard from 'vue-clipboard2'
+import VueVideoPlayer from 'vue-video-player'
+
 import { install as API } from '@/api'
 import { install as Filter } from '@/filters'
 import { install as Directives } from '@/directives'
@@ -29,6 +31,8 @@ async function bootstrap() {
   Vue.use(Finder)
 
   Vue.use(VueClipboard)
+
+  Vue.use(VueVideoPlayer)
 
   new Vue({
     router,

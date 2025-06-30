@@ -1148,6 +1148,12 @@ export default {
             )
           },
           {
+            name: '是否处方',
+            key: 'item_bn',
+            width: 150,
+            render: (h, { row }) => (row.is_prescription == '1' ? '是' : '否')
+          },
+          {
             name: '审核结果',
             key: 'audit_status',
             width: 150,
@@ -1159,12 +1165,9 @@ export default {
             key: 'audit_reason',
             width: 150,
             render: (h, { row }) => (
-              <div>
+              <div class="truncate">
                 {row.medicine_data?.audit_reason && row.medicine_data?.audit_status == 3 && (
-                  <div onClick={() => this.handleErrDetail(row.medicine_data)}>
-                    {this.handleAuditReason(row.medicine_data)}
-                    <i class="el-icon-info"></i>
-                  </div>
+                  <span>{row.medicine_data.audit_reason}</span>
                 )}
               </div>
             )
@@ -1194,7 +1197,7 @@ export default {
           {
             name: '市场价（¥）',
             key: 'market_price',
-            width: 100,
+            width: 120,
             formatter: (value, row, col) => {
               return (value / 100).toFixed(2)
             },
@@ -1204,7 +1207,7 @@ export default {
           {
             name: '销售价（¥）',
             key: 'price',
-            width: 100,
+            width: 120,
             formatter: (value, row, col) => {
               return (value / 100).toFixed(2)
             },
@@ -1214,7 +1217,7 @@ export default {
           {
             name: '成本价（¥）',
             key: 'cost_price',
-            width: 100,
+            width: 120,
             formatter: (value, row, col) => {
               return (value / 100).toFixed(2)
             },
@@ -1267,40 +1270,14 @@ export default {
           },
           { name: '销售分类', key: 'itemCatName', minWidth: 120 },
           { name: '起订量', key: 'start_num', minWidth: 120 },
-          {
-            name: '是否处方',
-            key: 'item_bn',
-            width: 150,
-            render: (h, { row }) => (row.is_prescription == '1' ? '是' : '否')
-          },
-          {
-            name: '审核结果',
-            key: 'audit_status',
-            width: 150,
-            render: (h, { row }) =>
-              row.medicine_data ? this.auditStatusMap[row.medicine_data.audit_status] : ''
-          },
-          {
-            name: '错误信息',
-            key: 'audit_reason',
-            width: 150,
-            render: (h, { row }) => (
-              <div>
-                {row.medicine_data?.audit_reason && row.medicine_data?.audit_status == 3 && (
-                  <div onClick={() => this.handleErrDetail(row.medicine_data)}>
-                    {this.handleAuditReason(row.medicine_data)}
-                    <i class="el-icon-info"></i>
-                  </div>
-                )}
-              </div>
-            )
-          },
+
           {
             name: '排序编号',
             key: 'sort',
             width: 120,
             showType: 'editable',
             componentProps: {
+              class: 'flex items-center',
               icon: 'el-icon-plus',
               change: async (v, row) => {
                 await this.$api.goods.setItemsSort({
@@ -1425,11 +1402,6 @@ export default {
       //管理分类
       const itemCategoryList = await this.$api.goods.getCategory({ is_main_category: true })
       this.itemCategoryList = itemCategoryList
-    },
-    handleErrDetail(val) {
-      if (!val || !val.audit_reason) return
-      this.errMessage = val.audit_reason
-      this.errMessageVis = true
     },
     async getMemberPriceByGoods(item_id) {
       this.currentId = item_id

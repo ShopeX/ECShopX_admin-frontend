@@ -50,6 +50,18 @@
       color: rgb(255, 255, 255);
       background-color: var(--primary);
     }
+
+    .i-icon-edit-two,
+    .i-icon-delete {
+      display: none;
+    }
+
+    &:hover {
+      .i-icon-edit-two,
+      .i-icon-delete {
+        display: block;
+      }
+    }
   }
   .image-item {
     &-wrap {

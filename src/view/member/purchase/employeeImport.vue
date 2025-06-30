@@ -9,10 +9,8 @@
           <p>超过<strong>15天</strong>的错误描述文件将会删除，不再提供下载查看</p>
         </div>
         <el-form ref="form" label-width="100px">
-          <div class="content-bottom-padded">
+          <div class="action-container">
             <el-upload
-              class="fl"
-              style="margin-right: 10px"
               action=""
               :on-change="uploadHandleChange"
               :auto-upload="false"
@@ -25,6 +23,7 @@
             </el-button>
           </div>
           <el-table
+            border
             v-loading="loading"
             :data="uploadList"
             :height="wheight - 240"

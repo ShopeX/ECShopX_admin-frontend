@@ -1,7 +1,8 @@
 import Vue from 'vue'
 import store from '@/store'
-import { RequestClient } from './request'
 import router from '@/router'
+import { isObject } from '@/utils'
+import { RequestClient } from './request'
 
 // 请求队列
 let requestQueue = []
@@ -64,9 +65,8 @@ function createRequestClient() {
       const { data: responseData, status } = response
       const {
         data: { status_code, message }
-      } = responseData
+      } = isObject(responseData) ? responseData : { data: {} }
       if (status >= 200 && status < 400 && typeof status_code === 'undefined') {
-        // return responseData.data
         return response
       }
       throw Object.assign({}, response, { response })

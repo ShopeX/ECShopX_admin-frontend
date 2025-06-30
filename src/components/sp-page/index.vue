@@ -41,7 +41,11 @@ export default {
   },
   computed: {
     hasHeader() {
-      return this.title || this.$scopedSlots['page-header'] || this.$scopedSlots['page-common']
+      console.log(
+        'xxxxxxxxxxxxxxxxxxx',
+        !!this.title || this.$scopedSlots['page-header'] || this.$scopedSlots['page-common']
+      )
+      return !!this.title || this.$scopedSlots['page-header'] || this.$scopedSlots['page-common']
     },
     hasFooter() {
       return this.$scopedSlots['page-footer'] || this.$scopedSlots['page-common']

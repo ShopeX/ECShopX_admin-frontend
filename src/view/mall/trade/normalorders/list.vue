@@ -190,12 +190,16 @@
       </SpFilterForm>
 
       <div class="action-container">
-        <el-dropdown>
+        <el-dropdown @command="handleExport">
           <el-button type="primary" plain>
             导出<i class="el-icon-arrow-down el-icon--right" />
           </el-button>
           <el-dropdown-menu slot="dropdown">
-            <el-dropdown-item>
+            <el-dropdown-item command="exportInvoice">未开票订单 </el-dropdown-item>
+            <el-dropdown-item command="exportDataMaster">主订单 </el-dropdown-item>
+            <el-dropdown-item command="exportDataNormal">子订单 </el-dropdown-item>
+
+            <!-- <el-dropdown-item>
               <export-tip @exportHandle="exportInvoice"> 未开票订单 </export-tip>
             </el-dropdown-item>
             <el-dropdown-item>
@@ -203,7 +207,7 @@
             </el-dropdown-item>
             <el-dropdown-item>
               <export-tip @exportHandle="exportDataNormal"> 子订单 </export-tip>
-            </el-dropdown-item>
+            </el-dropdown-item> -->
           </el-dropdown-menu>
         </el-dropdown>
         <el-tooltip
@@ -2156,6 +2160,11 @@ export default {
     exportDataMaster() {
       this.exportData('normal_master_order')
     },
+
+    async handleExport(command) {
+      debugger
+    },
+
     exportData(type) {
       console.log('====exportData', type)
       let params = {

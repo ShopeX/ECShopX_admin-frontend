@@ -162,21 +162,19 @@
                             >
                               <img :src="wximageurl + item">
                               <div class="goodspic-mask" :class="picsCurrent == index ? 'on' : ''">
-                                <div
-                                  class="iconfont icon-trash-alt"
-                                  @click="removePicsImg(index)"
-                                />
-                                <div class="iconfont icon-arrows-alt" />
+                                <!-- <div class="iconfont icon-trash-alt" /> -->
+                                <SpIcon name="delete" @click="removePicsImg(index)" />
+                                <!-- <div class="iconfont icon-arrows-alt" /> -->
                               </div>
                             </li>
                           </draggable>
                         </ul>
                         <div
                           v-if="form.pics.length < 9"
-                          class="upload-box"
+                          class="upload-box border border-dashed border-gray-300 flex items-center justify-center"
                           @click="handlePicsChange"
                         >
-                          <i class="iconfont icon-camera" />
+                          <SpIcon name="camera" size="24" />
                         </div>
                       </div>
                       <div class="frm-tips">
@@ -1905,7 +1903,6 @@ export default {
   }
 
   .upload-box {
-    display: inline-block;
     width: 120px;
     height: 120px;
     line-height: 120px;

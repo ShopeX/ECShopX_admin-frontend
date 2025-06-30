@@ -84,27 +84,23 @@
             <el-radio :label="true"> 图片 </el-radio>
           </el-radio-group>
         </el-form-item>
-        <el-form-item label="规格值"></el-form-item>
-        <div
-            v-for="(item, index) in form.attribute_values"
-            :key="index"
-            class="key-item"
-          >
-            <div v-if="form.is_image" class="upload-box" @click="handleImgPicker(index)">
-              <img v-if="item.image_url" :src="item.image_url" class="avatar">
-              <SpIcon v-else size="22" name="camera" />
-            </div>
-            <div
-              class="key-item-input"
-              :class="form.is_image ? 'content-h-padded' : 'content-padded-right'"
-            >
-              <el-input v-model="item.attribute_value" placeholder="规格值名称" />
-            </div>
-            <div @click="removeItem(index)">
-              <SpIcon size="22" name="delete" />
-            </div>
+        <el-form-item label="规格值" />
+        <div v-for="(item, index) in form.attribute_values" :key="index" class="key-item">
+          <div v-if="form.is_image" class="upload-box" @click="handleImgPicker(index)">
+            <img v-if="item.image_url" :src="item.image_url" class="avatar">
+            <SpIcon v-else size="22" name="camera" />
           </div>
-          <el-button type="default" size="small" @click="addItem"> 添加规格值 </el-button>
+          <div
+            class="key-item-input"
+            :class="form.is_image ? 'content-h-padded' : 'content-padded-right'"
+          >
+            <el-input v-model="item.attribute_value" placeholder="规格值名称" />
+          </div>
+          <div @click="removeItem(index)">
+            <SpIcon size="22" name="delete" />
+          </div>
+        </div>
+        <el-button type="default" size="small" @click="addItem"> 添加规格值 </el-button>
       </el-form>
       <div slot="footer">
         <el-button type="primary" @click="save"> 提交 </el-button>
@@ -186,7 +182,7 @@ export default {
     handleEdit(data) {
       this.show_sideBar = true
       this.form = {
-        is_image: JSON.parse(data.is_image),
+        is_image: data.is_image === 'true',
         attribute_id: data.attribute_id,
         attribute_type: data.attribute_type,
         attribute_name: data.attribute_name,
@@ -307,9 +303,9 @@ export default {
   padding-bottom: 10px;
   display: flex;
   align-items: center;
-  &-input{
+  &-input {
     flex: 1;
-    margin:0 10px;
+    margin: 0 10px;
   }
 
   .iconfont {

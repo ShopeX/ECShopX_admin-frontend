@@ -1,6 +1,6 @@
 <template>
   <div>
-    <div class="view-flex">
+    <div class="flex">
       <div v-for="item in checkedVideoList" :key="item.media_id" class="video-box">
         <video-player
           class="vjs-custom-skin"
@@ -20,8 +20,8 @@
           }"
         />
       </div>
-      <div class="upload-box" @click="showVideos">
-        <i class="iconfont icon-video" />
+      <div class="upload-box flex items-center justify-center" @click="showVideos">
+        <SpIcon name="video-two" size="24" />
       </div>
     </div>
     <el-dialog class="video_dialog" title="选择视频" :visible.sync="visible" append-to-body>
@@ -49,8 +49,8 @@
                 v-for="(item, index) in localvideoList"
                 :key="index"
                 :span="6"
-                class="media-item"
-                :class="{ 'checked': temp.includes(item.url) }"
+                class="media-item mb-2"
+                :class="{ checked: temp.includes(item.url) }"
               >
                 <video-player
                   class="vjs-custom-skin"
@@ -70,13 +70,13 @@
                   }"
                 />
                 <div
-                  class="video-caption view-flex view-flex-middle"
+                  class="video-caption flex items-center justify-between"
                   @click="checkLocalVideo(item)"
                 >
-                  <div class="view-flex-item video-name">
+                  <div class="view-flex-item video-name flex-1">
                     {{ item.image_name }}
                   </div>
-                  <div class="check-btn iconfont icon-check" />
+                  <div class="check-btn iconfont icon-check w-[18px] h-[18px]" />
                 </div>
               </el-col>
             </el-row>
@@ -149,7 +149,7 @@ export default {
   },
   computed: {
     checkedVideoList() {
-      return this.checked.filter((item) => item.media_id)
+      return this.checked.filter(item => item.media_id)
     }
   },
   watch: {
@@ -174,10 +174,10 @@ export default {
       upload
         .uploadImg(e.file, e.file.name)
         .then(
-          (res) => e.onSuccess(res),
-          (err) => e.onError(err)
+          res => e.onSuccess(res),
+          err => e.onError(err)
         )
-        .catch((err) => e.onError(err))
+        .catch(err => e.onError(err))
     },
     handleVideoSuccess(res, file) {
       let uploadParams = {
@@ -190,7 +190,7 @@ export default {
         storage: 'videos' //视频id必填
       }
       // if (res.key) {
-      uploadQiniuVideo(uploadParams).then((res) => {
+      uploadQiniuVideo(uploadParams).then(res => {
         this.$message({
           message: '上传成功',
           type: 'success',
@@ -217,7 +217,7 @@ export default {
     },
     showVideos() {
       this.visible = true
-      this.temp = this.checked.map((item) => item.media_id)
+      this.temp = this.checked.map(item => item.media_id)
       if (this.$store.getters.login_type == 'distributor') {
         this.activeName = 'localvideos'
         this.fetchLocalVideos()
@@ -257,7 +257,7 @@ export default {
     fetchLocalVideos() {
       this.localloading = true
       getQiniuVideoList(this.localparams)
-        .then((response) => {
+        .then(response => {
           this.localvideoList = response.data.data.list
           this.localloading = false
         })
@@ -308,7 +308,7 @@ export default {
       if (this.checked) {
         this.visible = false
         let arr = []
-        this.localvideoList.forEach((item) => {
+        this.localvideoList.forEach(item => {
           if (this.temp.indexOf(item.url) !== -1) {
             arr.push({
               desc: item.brief,

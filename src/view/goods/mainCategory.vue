@@ -90,13 +90,13 @@
             >
               关联规格
             </el-button>
-            <el-button
+            <!-- <el-button
               v-if="scope.row.category_level == 3"
               type="text"
               @click="handleProfitPrice(scope.row)"
             >
               分润配置
-            </el-button>
+            </el-button> -->
             <el-button
               v-if="scope.row.category_level < 3"
               type="text"

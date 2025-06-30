@@ -39,8 +39,9 @@
         <template slot-scope="scope">
           <router-link
             v-if="scope.row.order_id"
+            class="text-blue-400"
             :to="{
-              path: `/order/entitytrade/tradenormalorders/detail`,
+              path: `/orders/order-manage/order-list/detail`,
               query: { orderId: scope.row.order_id, resource: '/mall/trade/service' }
             }"
           >

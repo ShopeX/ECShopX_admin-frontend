@@ -86,7 +86,7 @@ export default {
         })
     },
     showTeamAction(index, row) {
-      this.$router.push({ path: '/marketing/fissionmarketing/groupsindex/detail/' + row.team_id })
+      this.$router.push({ path: '/marketing/fission-marketing/group-buying/detail/' + row.team_id })
     }
   }
 }

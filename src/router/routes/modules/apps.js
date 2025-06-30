@@ -321,7 +321,9 @@ const routes = [
           title: '活动配置',
           permissions: ['applications.community.communitysetting']
         },
-        component: () => import('@/view/member/promotions/community/setting')
+        // component: () => import('@/view/member/promotions/community/setting')
+        component: () => import('@/view/mall/community/setting')
+        
       },
       {
         name: 'groupPurchaseCommunityManagement',

@@ -65,7 +65,7 @@
 </style>
 <template>
   <div class="sp-filter-form-item" :class="{ label: label }">
-    <div class="form-item__label">
+    <div v-if="label" class="form-item__label">
       {{ label }}
     </div>
     <div class="form-item__content" :class="size">

@@ -1,10 +1,14 @@
 import { SpPickerPlugin } from '@/components/sp-picker'
 import { SpDialogPlusPlugin } from '@/components/sp-dialog-plus'
+import VueVideoPlayer from 'vue-video-player'
+import 'video.js/dist/video-js.css'
+
 
 function install(Vue) {
   const plugins = {
     SpPickerPlugin,
-    SpDialogPlusPlugin
+    SpDialogPlusPlugin,
+    VueVideoPlayer
   }
 
   const baseContext = require.context('./../components', true, /index(\.vue|\.js)$/)

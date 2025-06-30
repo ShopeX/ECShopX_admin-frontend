@@ -282,7 +282,7 @@ export default {
     },
     fnBack() {
       this.$router.push({
-        path: `/setting/systemsetting/datamessage/ali_sms/sms_signatures`
+        path: `/setting/system-config/sms-service/ali_sms/sms_signatures`
       })
     },
     fnAgain() {

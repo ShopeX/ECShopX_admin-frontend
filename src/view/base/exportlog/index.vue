@@ -22,9 +22,9 @@
         <el-tab-pane label="商品码导出" name="itemcode" />
         <el-tab-pane v-if="!VERSION_SHUYUN()" label="结算单" name="statements" />
         <el-tab-pane v-if="!VERSION_SHUYUN()" label="结算单明细" name="statement_details" />
-        <el-tab-pane label="推广员业绩导出" name="popularize" />
+        <!-- <el-tab-pane label="推广员业绩导出" name="popularize" />
         <el-tab-pane label="业绩统计" name="popularizeStatic" />
-        <el-tab-pane label="业绩订单" name="popularizeOrder" />
+        <el-tab-pane label="业绩订单" name="popularizeOrder" /> -->
         <el-tab-pane label="配送员业绩导出" name="delivery_staffdata" />
       </template>
       <template v-else>
@@ -77,9 +77,9 @@
         <el-tab-pane label="售后列表" name="aftersale_record_count" />
         <el-tab-pane label="退款单列表" name="refund_record_count" />
         <el-tab-pane v-if="!VERSION_SHUYUN()" label="银联分账单" name="chinaums_division" />
-        <el-tab-pane label="推广员业绩" name="popularize" />
+        <!-- <el-tab-pane label="推广员业绩" name="popularize" />
         <el-tab-pane label="业绩统计" name="popularizeStatic" />
-        <el-tab-pane label="业绩订单" name="popularizeOrder" />
+        <el-tab-pane label="业绩订单" name="popularizeOrder" /> -->
         <!-- <el-tab-pane label="财务售后单导出" name="aftersale_financial" /> -->
         <el-tab-pane
           v-if="!VERSION_SHUYUN()"
@@ -103,6 +103,10 @@
         <el-tab-pane label="员工列表" name="employee_purchase_employees" />
         <el-tab-pane label="店铺白名单导出" name="distributor_white_list" />
       </template>
+
+      <el-tab-pane label="推广员业绩导出" name="popularize" />
+      <el-tab-pane label="业绩统计" name="popularizeStatic" />
+      <el-tab-pane label="业绩订单" name="popularizeOrder" />
 
       <el-table v-loading="loading" :data="exportLogLists" :height="wheight - 220">
         <el-table-column prop="log_id" label="ID" width="80" />
@@ -162,7 +166,6 @@ export default {
     this.activeTabHandler()
     this.getExportLogLists(this.params)
   },
-
   computed: {
     ...mapGetters(['wheight'])
   },
@@ -170,17 +173,19 @@ export default {
     activeTabHandler() {
       const active = this.$store.getters.login_type
       const { tab } = this.$route.query
-      if (tab) {
-        this.activeName = tab
-      } else {
-        if (active == 'dealer') {
-          this.activeName = 'adapay_tradedata'
-        } else if (active == 'merchant') {
-          this.activeName = 'normal_master_order'
+      this.$nextTick(()=>{
+        if (tab) {
+          this.activeName = tab
         } else {
-          this.activeName = 'member'
+          if (active == 'dealer') {
+            this.activeName = 'adapay_tradedata'
+          } else if (active == 'merchant') {
+            this.activeName = 'normal_master_order'
+          } else {
+            this.activeName = 'member'
+          }
         }
-      }
+      })
     },
     // 切换tab
     handleClick(tab, event) {

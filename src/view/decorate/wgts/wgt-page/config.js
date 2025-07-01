@@ -2,6 +2,10 @@ import { pickBy, isObject } from '@/utils'
 import AttrItem from './attr-item'
 import AttrHotSetting from './attr-hotsetting'
 
+const queryString = window.location.search;
+const urlParams = new URLSearchParams(queryString);
+const scene = urlParams.get('scene') || '1001';
+
 export default {
   name: 'page',
   setting: [
@@ -61,9 +65,9 @@ export default {
         return <AttrHotSetting v-model={this.value[key]} />
       },
       value: { imgUrl: '', data: [] },
-      tip: '建议尺寸：220 * 70 像素',
+      tip: scene != '1001' ? '建议尺寸：138 * 65 像素' : '建议尺寸：174 * 64 像素',
       // isShow: function () {
-        // return this.localScene == '1004'
+      // return scene == '1001'
       // }
     },
     {

@@ -12,6 +12,7 @@
           :id="pageForm.id"
           usage="page"
           :template_name="template_name"
+          pagetype="guide"
         />
       </el-dialog>
     </div>

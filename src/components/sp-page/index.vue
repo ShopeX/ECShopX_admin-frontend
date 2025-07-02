@@ -4,7 +4,7 @@
     :class="{
       'sp-page--no-header': !hasHeader,
       'sp-page--no-footer': !hasFooter,
-      'sp-page--sticky': !noSticky
+      'sp-page--sticky': isSticky
     }"
     ref="pageContainer"
   >
@@ -41,7 +41,12 @@ export default {
     }
   },
   data() {
-    return {}
+    return {
+      isSticky: true
+    }
+  },
+  created() {
+    this.isSticky = !this.noSticky
   },
   computed: {
     hasHeader() {
@@ -53,28 +58,30 @@ export default {
   },
   created() {},
   mounted() {
-    // !this.noSticky && this.initStickyHeader()
+    !this.noSticky && this.initStickyHeader()
   },
   beforeDestroy() {
-    // this.removeScrollListener()
+    this.removeScrollListener()
   },
   methods: {
-    // initStickyHeader() {
-    //   document.getElementById('page-container').addEventListener('scroll', this.handleScroll)
-    // },
-    // handleScroll() {
-    //   if (!this.$refs.header) return
-    //   if (document.getElementById('page-container').scrollTop > 60) {
-    //     this.isSticky = true
-    //   } else {
-    //     this.isSticky = false
-    //   }
-    // },
-    // removeScrollListener() {
-    //   if (document.getElementById('page-container')) {
-    //     document.getElementById('page-container').removeEventListener('scroll', this.handleScroll)
-    //   }
-    // }
+    initStickyHeader() {
+      document.getElementById('page-container').addEventListener('scroll', this.handleScroll)
+    },
+    handleScroll() {
+      if (!this.$refs.header) return
+      const eleContainer = document.getElementById('page-container')
+      console.log(eleContainer.scrollHeight - eleContainer.scrollTop, eleContainer.clientHeight)
+      if (eleContainer.scrollHeight - eleContainer.scrollTop - 60 <= eleContainer.clientHeight) {
+        this.isSticky = false
+      } else {
+        this.isSticky = true
+      }
+    },
+    removeScrollListener() {
+      if (document.getElementById('page-container')) {
+        document.getElementById('page-container').removeEventListener('scroll', this.handleScroll)
+      }
+    }
   }
 }
 </script>
@@ -86,6 +93,9 @@ export default {
       position: sticky;
       bottom: 0;
       z-index: 100;
+      .footer-content {
+        background: color-mix(in srgb, var(--primary) 8%, transparent);
+      }
     }
   }
   &--no-header {
@@ -109,9 +119,6 @@ export default {
   &__footer {
     overflow: hidden;
     transition: all 0.3s ease;
-    .footer-content {
-      background: color-mix(in srgb, var(--primary) 8%, transparent);
-    }
   }
 }
 </style>

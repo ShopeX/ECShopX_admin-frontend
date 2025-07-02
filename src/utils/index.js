@@ -4,7 +4,7 @@ import _pickBy from 'lodash/pickBy'
 import _get from 'lodash/get'
 import store from '@/store'
 import { isEmpty } from 'lodash'
-import { isArray } from './src/type-helper'
+import { isArray, isString, isFunction, isObject } from './src/type-helper'
 
 export * from './src/type-helper'
 

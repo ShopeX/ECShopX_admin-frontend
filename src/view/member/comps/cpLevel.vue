@@ -197,6 +197,12 @@ export default {
           return '七'
         case 7:
           return '八'
+        case 8:
+          return '九'
+        case 9:
+          return '十'
+        case 10:
+          return '十一'
       }
     }
   },

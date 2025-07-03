@@ -180,9 +180,9 @@
       <el-tab-pane v-if="!VERSION_IN_PURCHASE() && !VERSION_SHUYUN()" label="积分记录" name="point">
         <pointList />
       </el-tab-pane>
-      <el-tab-pane v-if="VUE_APP_CHUZHI" label="充值记录" name="chuzhi">
+      <!-- <el-tab-pane v-if="VUE_APP_CHUZHI" label="充值记录" name="chuzhi">
         <chuZhiList />
-      </el-tab-pane>
+      </el-tab-pane> -->
       <!-- <el-tab-pane
         v-if="!isMicorMall"
         label="导购员关系变更"

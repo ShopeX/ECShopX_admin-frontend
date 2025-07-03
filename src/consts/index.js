@@ -66,7 +66,7 @@ export const ORDER_DELIVERY_STATUS_MAP = {
 }
 
 export const ORDER_STATUS_MAP = {
-  PAYED: { lable: '已支付', type: 'warning' },
+  PAYED: { lable: '已支付', type: 'success' },
   NOTPAY: { lable: '未支付', type: 'info' },
   CANCEL: { lable: '已取消', type: 'info' },
   WAIT_BUYER_CONFIRM: { lable: '待收货', type: 'danger' }

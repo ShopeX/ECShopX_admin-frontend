@@ -154,7 +154,8 @@ export default {
       const params = this.form
       await this.$api.trade.setOrderSetting({
         ...params,
-        is_refund_freight: params.is_refund_freight ? 1 : 0
+        is_refund_freight: params.is_refund_freight ? 1 : 0,
+        auto_aftersales: params.auto_aftersales ? 1 : 0
       })
       this.$message.success('保存成功')
     }

@@ -174,6 +174,7 @@ export default {
         return transformOut(item)
       })
       this.$emit('input', result)
+      this.$emit('change', result) // 导购货架，传change事件，为了点击保存直接调接口，页面不需要加保存按钮
       this.dialogVisible = false
     },
     onClose() {

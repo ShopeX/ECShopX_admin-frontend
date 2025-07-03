@@ -108,6 +108,13 @@ const SCENE_1008 = {
   wgtOrderNavigation
 }
 
+const SCENE_1009 = {
+  WgtSearch,
+  WgtSlider,
+  WgtHotZone,
+  WgtGoodsGrid,
+}
+
 
 export default {
   1001: SCENE_1001,
@@ -116,5 +123,6 @@ export default {
   1004: SCENE_1004,
   1005: SCENE_1005,
   1006: SCENE_1006,
-  1008: SCENE_1008
+  1008: SCENE_1008,
+  1009: SCENE_1009
 }

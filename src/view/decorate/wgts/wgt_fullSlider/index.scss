@@ -1,4 +1,5 @@
 .wgt-full-slider {
+  position: relative;
   &.padded {
     padding: 10px 0;
   }
@@ -196,5 +197,11 @@
       }
     }
   }
+  }
+  .indicator-item {
+    position: absolute;
+    right: 20px;
+    bottom: 0;
+    z-index: 100;
   }
 }

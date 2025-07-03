@@ -6,7 +6,7 @@
   }" ref="fullSlider">
     <div v-if="refresh" class="wgt-bd" :class="{ 'spaced': value.spaced }" :style="setCarouselHeight">
       <!-- 固定位置的叠层 -->
-      <el-carousel class="slider-container" arrow="never" indicator-position="none" :interval="value.interval"
+      <el-carousel class="slider-container" arrow="never" direction="vertical" indicator-position="none" :interval="value.interval"
         @change="changeSlider" :autoplay="value.autoplay">
         <el-carousel-item v-for="(item, index) in value.data" :key="`carousel_${index}`">
           <div class="slider-item">
@@ -40,15 +40,25 @@
             <SpImage :src="item.overlay" class="overlay-item" fit="contain" v-if="item.overlay"
               :style='overlayStyle(item, index)' />
           </div>
+
+          <!-- <div>{{ value.indicatorText }}</div> -->
+          <div v-for="(item, index) in value.data" :key="`overlay_${index}`" class='overlay-content'
+            v-if="item.overlay" :style='overlayStyle(item, index)'>
+            <SpImage :class="{
+              'transparent-transition': currentIndex !== index,
+              'transparent-transition-active': currentIndex == index
+            }" :src="item.overlay" class="over-lay" fit="contain" />
+          </div>
         </el-carousel-item>
       </el-carousel>
-      <div v-for="(item, index) in value.data" :key="`overlay_${index}`" class='overlay-content'
-        v-if="item.overlay" :style='overlayStyle(item, index)'>
-        <SpImage :class="{
-          'transparent-transition': currentIndex !== index,
-          'transparent-transition-active': currentIndex == index
-        }" :src="item.overlay" class="over-lay" fit="contain" />
       </div>
+    <div class="indicator-item" :style="`bottom: ${value.dotbottom}px;color: ${value.indicatorColor};font-size: ${value.indicatorFontSize}px`">
+      <div>
+        <span :style="`font-size: ${value.indicatorFontSize + 2}px`">{{ value.data.length < 10 ? '0' + (currentIndex + 1) : currentIndex + 1 }}</span>
+        <span> / </span>
+        <span>{{ value.data.length < 10 ? '0' + value.data.length : value.data.length }}</span>
+      </div>
+      <div>{{ value.indicatorText }}</div>
     </div>
   </div>
 </template>

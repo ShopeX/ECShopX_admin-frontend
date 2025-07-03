@@ -923,7 +923,7 @@ export default {
     }
   },
   computed: {
-    ...mapGetters(['wheight', 'app_type', 'template_name', 'ali_template_name']),
+    ...mapGetters(['app_type', 'template_name', 'ali_template_name']),
     showDialog() {
       return this.dialogVisible
     }
@@ -1027,13 +1027,13 @@ export default {
     // 删除当前组件
     removeCurrent() {
       this.$confirm('确认删除当前组件？')
-        .then((_) => {
+        .then(_ => {
           this.editorData = {}
           this.components.splice(this.editorIndex, 1)
           this.editorIndex = null
           this.editorDataIndex = null
         })
-        .catch((_) => {})
+        .catch(_ => {})
     },
     // 视频选择器绑定事件
     getVideo(data) {
@@ -1103,7 +1103,7 @@ export default {
         }
       }
       if (items.length > 0 && items[0].goodsId) {
-        items.forEach((item) => {
+        items.forEach(item => {
           ids.push(item.key || item.goodsId)
         })
         let itemParams = {
@@ -1116,7 +1116,7 @@ export default {
         if (index !== undefined) {
           Object(itemParams, { distributor_id: this.relStore.id })
         }
-        getItemsList(itemParams).then((res) => {
+        getItemsList(itemParams).then(res => {
           this.relItemsIds = res.data.data.list
           setTimeout(() => {
             this.setItemStatus = true
@@ -1174,7 +1174,7 @@ export default {
       let values = []
 
       if (data.length > 0) {
-        data.forEach((item) => {
+        data.forEach(item => {
           if (item.itemId) {
             let obj = {
               imgUrl: item.pics[0],
@@ -1332,7 +1332,7 @@ export default {
     },
     async getData() {
       // 只有平台版时&为编辑小程序模板时展示附近商家和推荐店铺
-      const isHaveStore = this.initData.some((item) => item.name === 'store')
+      const isHaveStore = this.initData.some(item => item.name === 'store')
       if (
         this.VERSION_PLATFORM() &&
         this.relStore.id == '0' &&
@@ -1360,7 +1360,7 @@ export default {
           seletedTags: []
         })
       }
-      const isHaveNearbyShop = this.initData.some((item) => item.name === 'nearbyShop')
+      const isHaveNearbyShop = this.initData.some(item => item.name === 'nearbyShop')
       if (
         this.VERSION_PLATFORM() &&
         this.relStore.id == '0' &&
@@ -1378,7 +1378,7 @@ export default {
         })
       }
 
-      const isHaveCoupon = this.initData.some((item) => item.name === 'coupon')
+      const isHaveCoupon = this.initData.some(item => item.name === 'coupon')
       if (!this.VERSION_IN_PURCHASE() && !isHaveCoupon) {
         this.initData.unshift({
           name: 'coupon',
@@ -1394,7 +1394,7 @@ export default {
 
       const faverite = await this.$api.promotions.getRecommendLikeItemList()
       let data = []
-      faverite.list.forEach((item) => {
+      faverite.list.forEach(item => {
         data.push({
           imgUrl: item.pics ? item.pics[0] : '',
           title: item.itemName,
@@ -1408,12 +1408,12 @@ export default {
       })
       let template = res.data.data
       this.element_edit_status = template.element_edit_status
-      this.pageData = template.template_content.config.find((item) => item.name == 'page')
-      let templateContent = template.template_content.config.filter((item) => item.name != 'page')
+      this.pageData = template.template_content.config.find(item => item.name == 'page')
+      let templateContent = template.template_content.config.filter(item => item.name != 'page')
       if (templateContent.length > 0) {
         let platformComponents = []
         let shopComponents = []
-        templateContent.map((item) => {
+        templateContent.map(item => {
           if (item.config && item.config.no_edit) {
             platformComponents.push(item)
           } else {

@@ -25,12 +25,7 @@
                 下载模版
               </el-button>
             </div>
-            <el-table
-              v-loading="loading"
-              :data="uploadList"
-              :height="wheight - 220"
-              element-loading-text="数据加载中"
-            >
+            <el-table v-loading="loading" :data="uploadList" element-loading-text="数据加载中">
               <el-table-column prop="file_name" label="上传文件" min-width="100" />
               <el-table-column prop="created_date" label="上传时间" min-width="80" />
               <el-table-column prop="file_size_format" label="文件大小" min-width="60" />
@@ -98,9 +93,7 @@ export default {
       uploadList: []
     }
   },
-  computed: {
-    ...mapGetters(['wheight'])
-  },
+  computed: {},
   mounted() {
     this.getUploadList()
   },

@@ -1,114 +1,120 @@
 <template>
-
-<SpRouterView >
-  <SpPage>
-  <div class="website-template">
-    <div v-if="$route.path.indexOf('editor') === -1">
-      <el-row class="mb-4">
-        <el-button type="primary" @click="dialogVisible = true"> 添加页面 </el-button>
-      </el-row>
-      <el-row>
-        <el-tabs v-model="page_type" type="border-card" @tab-click="handleTabClick">
-          <el-tab-pane
-            v-for="(item, index) of tabList"
-            :key="index"
-            :label="item.label"
-            :disabled="loading"
-            :name="item.name"
-          />
-          <el-table v-loading="loading" stripe style="width: 100%" :data="templateList">
-            <el-table-column prop="theme_pc_template_id" label="页面id" />
-            <el-table-column prop="template_title" label="页面名称" />
-            <el-table-column prop="template_description" label="页面描述" />
-            <el-table-column prop="page_type" label="页面类型">
-              <template slot-scope="scope">
-                <span>{{ scope.row.page_type === 'index' ? '首页' : '自定义页' }}</span>
-              </template>
-            </el-table-column>
-            <el-table-column prop="status" label="是否启用">
-              <template slot-scope="scope">
-                <div>
-                  <el-tag v-if="scope.row.status === '1'" type="success"> 启用 </el-tag>
-                  <el-tag v-else type="info"> 未启用 </el-tag>
-                </div>
-              </template>
-            </el-table-column>
-            <el-table-column label="操作" width="250px">
-              <template slot-scope="scope">
-                <div>
-                  <el-button type="text" size="mini" @click="handleDisable(scope.row)">
-                    {{ scope.row.status === '1' ? '禁用' : '启用' }}
-                  </el-button>
-                  <el-button type="text" size="mini" @click="handleDelete(scope.row)">
-                    删除
-                  </el-button>
-                  <el-button type="text" size="mini" @click="handleEdit(scope.row)">
-                    编辑
-                  </el-button>
-                  <el-button type="primary" round size="mini" @click="handleRenovation(scope.row)">
-                    页面装修
-                  </el-button>
-                </div>
-              </template>
-            </el-table-column>
-          </el-table>
-        </el-tabs>
-      </el-row>
-      <div class="content-right mt-4 content-top-padded">
-        <el-pagination
-          background
-          layout="total, sizes, prev, pager, next, jumper"
-          :current-page.sync="page.page_no"
-          :page-sizes="[10, 20, 50]"
-          :total="page.total"
-          :page-size="page.page_size"
-          @current-change="handleCurrentChange"
-          @size-change="handleSizeChange"
-        />
-      </div>
-      <el-dialog
-        title="添加/编辑页面"
-        :visible.sync="dialogVisible"
-        width="500px"
-        :before-close="handleDialogClose"
-      >
-        <el-form ref="myForm" :model="formData" :rules="formRule" label-width="80px">
-          <el-form-item label="页面名称" prop="template_title">
-            <el-input v-model="formData.template_title" clearable placeholder="请输入页面名称" />
-          </el-form-item>
-          <el-form-item label="页面描述" prop="template_description">
-            <el-input
-              v-model="formData.template_description"
-              clearable
-              placeholder="请输入页面描述"
-            />
-          </el-form-item>
-          <el-form-item label="页面类型" prop="page_type">
-            <el-select v-model="formData.page_type" style="width: 100%" clearable>
-              <el-option
+  <SpRouterView>
+    <SpPage>
+      <div class="website-template">
+        <div v-if="$route.path.indexOf('editor') === -1">
+          <el-row class="mb-4">
+            <el-button type="primary" @click="dialogVisible = true"> 添加页面 </el-button>
+          </el-row>
+          <el-row>
+            <el-tabs type="card" v-model="page_type" @tab-click="handleTabClick">
+              <el-tab-pane
                 v-for="(item, index) of tabList"
                 :key="index"
-                :value="item.name"
                 :label="item.label"
+                :disabled="loading"
+                :name="item.name"
               />
-            </el-select>
-          </el-form-item>
-          <el-form-item label="是否启用" prop="status">
-            <el-switch v-model="formData.status" />
-          </el-form-item>
-        </el-form>
-        <span slot="footer" class="dialog-footer">
-          <el-button type="primary" :loading="loading" @click="submitForm('myForm')"
-            >确认保存</el-button
+              <el-table border v-loading="loading" stripe style="width: 100%" :data="templateList">
+                <el-table-column prop="theme_pc_template_id" label="页面id" />
+                <el-table-column prop="template_title" label="页面名称" />
+                <el-table-column prop="template_description" label="页面描述" />
+                <el-table-column prop="page_type" label="页面类型">
+                  <template slot-scope="scope">
+                    <span>{{ scope.row.page_type === 'index' ? '首页' : '自定义页' }}</span>
+                  </template>
+                </el-table-column>
+                <el-table-column prop="status" label="是否启用">
+                  <template slot-scope="scope">
+                    <div>
+                      <el-tag v-if="scope.row.status === '1'" type="success"> 启用 </el-tag>
+                      <el-tag v-else type="info"> 未启用 </el-tag>
+                    </div>
+                  </template>
+                </el-table-column>
+                <el-table-column label="操作" width="250px">
+                  <template slot-scope="scope">
+                    <div>
+                      <el-button type="text" size="mini" @click="handleDisable(scope.row)">
+                        {{ scope.row.status === '1' ? '禁用' : '启用' }}
+                      </el-button>
+                      <el-button type="text" size="mini" @click="handleDelete(scope.row)">
+                        删除
+                      </el-button>
+                      <el-button type="text" size="mini" @click="handleEdit(scope.row)">
+                        编辑
+                      </el-button>
+                      <el-button
+                        type="primary"
+                        round
+                        size="mini"
+                        @click="handleRenovation(scope.row)"
+                      >
+                        页面装修
+                      </el-button>
+                    </div>
+                  </template>
+                </el-table-column>
+              </el-table>
+            </el-tabs>
+          </el-row>
+          <div class="content-right mt-4 content-top-padded">
+            <el-pagination
+              background
+              layout="total, sizes, prev, pager, next, jumper"
+              :current-page.sync="page.page_no"
+              :page-sizes="[10, 20, 50]"
+              :total="page.total"
+              :page-size="page.page_size"
+              @current-change="handleCurrentChange"
+              @size-change="handleSizeChange"
+            />
+          </div>
+          <el-dialog
+            title="添加/编辑页面"
+            :visible.sync="dialogVisible"
+            width="500px"
+            :before-close="handleDialogClose"
           >
-        </span>
-      </el-dialog>
-    </div>
-  </div>
-
-</SpPage>
-
-</SpRouterView>
+            <el-form ref="myForm" :model="formData" :rules="formRule" label-width="80px">
+              <el-form-item label="页面名称" prop="template_title">
+                <el-input
+                  v-model="formData.template_title"
+                  clearable
+                  placeholder="请输入页面名称"
+                />
+              </el-form-item>
+              <el-form-item label="页面描述" prop="template_description">
+                <el-input
+                  v-model="formData.template_description"
+                  clearable
+                  placeholder="请输入页面描述"
+                />
+              </el-form-item>
+              <el-form-item label="页面类型" prop="page_type">
+                <el-select v-model="formData.page_type" style="width: 100%" clearable>
+                  <el-option
+                    v-for="(item, index) of tabList"
+                    :key="index"
+                    :value="item.name"
+                    :label="item.label"
+                  />
+                </el-select>
+              </el-form-item>
+              <el-form-item label="是否启用" prop="status">
+                <el-switch v-model="formData.status" />
+              </el-form-item>
+            </el-form>
+            <span slot="footer" class="dialog-footer">
+              <el-button type="primary" :loading="loading" @click="submitForm('myForm')"
+                >确认保存</el-button
+              >
+            </span>
+          </el-dialog>
+        </div>
+      </div>
+    </SpPage>
+  </SpRouterView>
 </template>
 
 <script>
@@ -202,10 +208,7 @@ export default {
       })
     },
     handleRenovation({ theme_pc_template_id }) {
-      this.$router.push({ path: `/pc/design?id=${theme_pc_template_id}` });
-      // this.$router.push({
-      //   path: `${this.$route.path}/edit?id=` + theme_pc_template_id
-      // })
+      this.$router.push({ path: `/decoration/web/template-list/edit?id=${theme_pc_template_id}` })
     },
     async handleDisable({ status, created, updated, deleted_at, ...rest }) {
       try {

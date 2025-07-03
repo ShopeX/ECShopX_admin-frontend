@@ -75,6 +75,31 @@ export const ORDER_STATUS_MAP = {
   // PENDING: '待自提',
 }
 
+export const GLOBAL_ORDER_STATUS_MAP = {
+  WAIT_GROUPS_SUCCESS: { label: '等待成团', type: 'warning' },
+  NOTPAY: { label: '待支付', type: 'info' },
+  SUPPLY_PRESCRIPTION_INFO: { label: '待补充处方信息', type: 'info' },
+  WAIT_PRESCRIPTION: { label: '待医生开方', type: 'info' },
+  WAIT_PAID_CONFIRM: { label: '支付待确认', type: 'warning' },
+  PAYED_WAIT_PROCESS: { label: '退款处理中', type: 'warning' },
+  PAYED_PENDING: { label: '待自提', type: 'warning' },
+  PAYED_PARTAIL: { label: '部分发货', type: 'warning' },
+  WAIT_BUYER_CONFIRM: { label: '待收货', type: 'warning' },
+  PAYED: { label: '待发货', type: 'warning' },
+  REVIEW_PASS_PARTAIL: { label: '部分出库', type: 'warning' },
+  REVIEW_PASS: { label: '审核完成,待出库', type: 'warning' },
+  CLOSED: { label: '已关闭', type: 'info' },
+  CANCEL: { label: '已取消', type: 'info' },
+  CANCEL_WAIT_PROCESS: { label: '退款处理中', type: 'warning' },
+  CANCEL_REFUND_PROCESS: { label: '退款处理中', type: 'warning' },
+  CANCEL_REFUND_FAIL: { label: '等待退款', type: 'warning' },
+  DONE: { label: '已完成', type: 'success' },
+  REFUND_PROCESS: { label: '退款处理中', type: 'warning' },
+  REFUND_SUCCESS: { label: '已退款', type: 'info' },
+  PART_PAYMENT: { label: '部分付款', type: 'warning' },
+  ORDER_ABERRANT: { label: '订单异常', type: 'danger' }
+}
+
 export const ORDER_B2C_STATUS = [
   { title: '全部', value: '' },
   { title: '待支付', value: 'notpay' },

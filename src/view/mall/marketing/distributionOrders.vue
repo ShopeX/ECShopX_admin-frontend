@@ -34,7 +34,7 @@ import {
   ORDER_TYPE_STANDARD,
   ORDER_ZITI_STATUS_MAP,
   ORDER_DELIVERY_STATUS_MAP,
-  ORDER_STATUS_MAP
+  GLOBAL_ORDER_STATUS_MAP
 } from '@/consts'
 import { IS_ADMIN, VERSION_STANDARD, formatPrice } from '@/utils'
 import { useForm } from '@/composables'
@@ -85,7 +85,7 @@ const [SearchForm, SearchFormApi] = useForm({
       formItemClass: 'col-span-2',
       label: '订单时间',
       value: []
-    },
+    }
     // {
     //   component: ({ h, value, onInput }) => {
     //     return (
@@ -295,16 +295,11 @@ export default {
                 'el-tag',
                 {
                   props: {
-                    type:
-                      ORDER_STATUS_MAP[row.order_status]?.type ||
-                      ORDER_DELIVERY_STATUS_MAP[row.delivery_status]?.type ||
-                      ORDER_ZITI_STATUS_MAP[row.ziti_status]?.type,
+                    type: GLOBAL_ORDER_STATUS_MAP[row.order_status_des]?.type,
                     size: 'mini'
                   }
                 },
-                ORDER_STATUS_MAP[row.order_status]?.lable ||
-                  ORDER_DELIVERY_STATUS_MAP[row.delivery_status]?.lable ||
-                  ORDER_ZITI_STATUS_MAP[row.ziti_status]?.lable
+                row.order_status_msg
               )
             }
           }

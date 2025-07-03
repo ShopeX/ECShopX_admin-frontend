@@ -17,7 +17,48 @@
 
     <div class="mt-4 grid grid-cols-2 gap-4">
       <div class="bg-white rounded-lg p-6 notice-box">
-        <div>重要信息</div>
+        <div class="text-[18px] text-[#333]">重要信息</div>
+        <div class="flex flex-col gap-6 py-6">
+          <div class="rounded-[8px] bg-[#f5f5f5] p-6">
+            <div class="text-[16px] text-[#333]">订单相关</div>
+            <div class="flex gap-6 h-10 items-center">
+              <div>
+                <span class="text-[#718096]">待发货订单：</span>
+                <span class="text-[#333] text-[20px]">{{ wait_delivery_count }}</span>
+              </div>
+              <div>
+                <span class="text-[#718096]">待处理退款：</span>
+                <span class="text-[#333] text-[20px]">{{ aftersales_count }}</span>
+              </div>
+              <div>
+                <span class="text-[#718096]">退款失败待处理：</span>
+                <span class="text-[#333] text-[20px]">{{ refund_errorlogs_count }}</span>
+              </div>
+            </div>
+          </div>
+          <div class="rounded-[8px] bg-[#f5f5f5] p-6">
+            <div class="text-[16px] text-[#333]">商品相关</div>
+            <div class="flex gap-6 h-10 items-center">
+              <div>
+                <span class="text-[#718096]">库存预警商品：</span>
+                <span class="text-[#333] text-[20px]">{{ warning_goods_count }}</span>
+              </div>
+            </div>
+          </div>
+          <div class="rounded-[8px] bg-[#f5f5f5] p-6">
+            <div class="text-[16px] text-[#333]">营销相关</div>
+            <div class="flex gap-6 h-10 items-center">
+              <div>
+                <span class="text-[#718096]">进行中的秒杀：</span>
+                <span class="text-[#333] text-[20px]">{{ started_seckill_count }}</span>
+              </div>
+              <div>
+                <span class="text-[#718096]">进行中的拼团：</span>
+                <span class="text-[#333] text-[20px]">{{ started_gtoups_count }}</span>
+              </div>
+            </div>
+          </div>
+        </div>
       </div>
       <div class="bg-white rounded-lg p-6">
         <div class="flex justify-between items-center">
@@ -86,7 +127,13 @@ export default {
         { name: 'new_vip', label: '新增VIP' },
         { name: 'new_svip', label: '新增SVIP' }
       ],
-      themeColor: Config.themeConfig.primaryColor
+      themeColor: Config.themeConfig.primaryColor,
+      wait_delivery_count: 0,
+      aftersales_count: 0,
+      refund_errorlogs_count: 0,
+      warning_goods_count: 0,
+      started_seckill_count: 0,
+      started_gtoups_count: 0
     }
   },
   mounted() {
@@ -96,6 +143,7 @@ export default {
     async getCompanyStatistics() {
       const { member_data, notice_data, today_data, yesterday_data } =
         await this.$api.company.getCompanyStatistics()
+
       this.realTimeData.payed_fee.today = formatPrice(today_data.real_payed_fee, true, '')
       this.realTimeData.payed_fee.yesterday = formatPrice(yesterday_data.real_payed_fee, true, '')
       this.realTimeData.payed_orders.today = today_data.real_payed_orders
@@ -128,6 +176,13 @@ export default {
         })
       })
       this.drawChart('new_user')
+
+      this.wait_delivery_count = notice_data.wait_delivery_count
+      this.aftersales_count = notice_data.aftersales_count
+      this.refund_errorlogs_count = notice_data.refund_errorlogs_count
+      this.warning_goods_count = notice_data.warning_goods_count
+      this.started_seckill_count = notice_data.started_seckill_count
+      this.started_gtoups_count = notice_data.started_gtoups_count
     },
     drawChart(tab) {
       this.columnPlot = new Column(document.getElementById('member-chart'), {

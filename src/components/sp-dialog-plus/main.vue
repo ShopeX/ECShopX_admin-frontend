@@ -58,8 +58,7 @@ export default {
       default: () => ({})
     },
     size: {
-      type: String,
-      default: ['medium', 'small', 'mini']
+      type: String
     },
     isShow: Boolean
   },

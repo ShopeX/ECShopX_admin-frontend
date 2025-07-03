@@ -3,6 +3,7 @@ import store from '@/store'
 import { generateAccess } from './access'
 import { accessRoutes, routes as coreRoutes } from './routes'
 import { IS_ADMIN, IS_DISTRIBUTOR, IS_MERCHANT, IS_SUPPLIER, traverseTreeValues } from '@/utils'
+import { actions } from '@/utils/micr-app'
 
 const coreRoutesNames = traverseTreeValues(coreRoutes, item => item.path)
 
@@ -21,6 +22,17 @@ function setupCommonGuard(router) {
 
 function setupAccessGuard(router) {
   router.beforeEach(async (to, from, next) => {
+    if (to.path == '/decoration/web/template-list/edit') {
+      const { id } = to.query
+      console.log(`【shop】pageid is: ${id}`)
+      actions.setGlobalState({
+        mode: 'pc',
+        token: store.state.user.token,
+        pageid: id,
+        baseUrl: process.env.VUE_APP_BASE_API
+      })
+    }
+
     // 如果路径在核心路由中，直接放行
     if (coreRoutesNames.includes(to.path) || to.name === 'FallbackNotFound') {
       next()

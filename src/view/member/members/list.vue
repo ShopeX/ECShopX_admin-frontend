@@ -231,11 +231,7 @@
           </template>
         </el-table-column>
         <el-table-column prop="username" label="昵称" width="140" />
-        <el-table-column prop="role" label="角色" width="70">
-          <template slot-scope="scope">
-            {{ roleList.find(item => item.value == scope.row.role)?.label }}
-          </template>
-        </el-table-column>
+
         <el-table-column v-if="!VERSION_IN_PURCHASE()" prop="sex" label="性别" width="70">
           <template slot-scope="scope">
             <span v-if="scope.row.sex == '2'">女</span>
@@ -276,7 +272,6 @@
             <span>{{ showGrade(scope.row.grade_id, scope.row.vip_grade) }}</span>
           </template>
         </el-table-column>
-        <el-table-column prop="company" label="所属公司" width="80" />
         <el-table-column v-if="!VERSION_IN_PURCHASE()" prop="inviter" label="推荐人" width="130" />
         <el-table-column prop="disabled" label="禁用" width="80">
           <template slot-scope="scope">

@@ -65,8 +65,8 @@ export default {
     }
 
     const $dialog = {
-      open: ({ title = '', content = null, confirmBefore, buttonCancel, buttonConfirm }) =>
-        fn({ title, content, confirmBefore, buttonCancel, buttonConfirm })
+      open: ({ title = '', content = null, confirmBefore, buttonCancel, buttonConfirm, size }) =>
+        fn({ title, content, confirmBefore, buttonCancel, buttonConfirm, size })
     }
 
     Vue.prototype.$dialog = $dialog

@@ -19,7 +19,7 @@ const micrApp = {
           entry: process.env.VUE_APP_QIANKUN_ENTRY, //这是微应用的入口地址
           // entry: `http://localhost:8081/newpc/`,
           container: '#design-view', //这是在主应用中微应用的渲染承载容器
-          activeRule: '/wxapp/pcmall/design' //这是进行路由监听，一旦匹配，就会加载微应用并进行挂载，这里也要主要在微应用中需要设置路由base的时候要相互对应，后面会提到
+          activeRule: '/decoration/web/template-list/edit' //这是进行路由监听，一旦匹配，就会加载微应用并进行挂载，这里也要主要在微应用中需要设置路由base的时候要相互对应，后面会提到
           //   props: {
           //     sysConfig: {
           //       mode: "pc",
@@ -31,17 +31,17 @@ const micrApp = {
       ],
       {
         beforeLoad: [
-          (app) => {
+          app => {
             console.log('before load', app)
           }
         ], // 挂载前回调
         beforeMount: [
-          (app) => {
+          app => {
             console.log('before mount', app)
           }
         ], // 挂载后回调
         afterUnmount: [
-          (app) => {
+          app => {
             console.log('after unload', app)
           }
         ] // 卸载后回调

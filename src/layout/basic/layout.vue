@@ -32,10 +32,12 @@
         </el-main>
 
         <el-footer class="flex justify-center items-center" height="50px">
-          <SpImage :src="footerBackground" height="22" fit="contain" />
+          <SpImage :src="footerBackground" height="18" fit="contain" />
         </el-footer>
       </el-container>
     </el-container>
+
+    <div id="design-view" />
 
     <!--
     <div class="flex flex-1 flex-col overflow-hidden">
@@ -53,6 +55,7 @@
 <script>
 import DEFAULT_CONFIG from '@/config'
 import { getSystemTitle } from '@/utils'
+import { micrApp } from '@/utils/micr-app'
 import LayoutSidebar from './layout-sidebar.vue'
 import LayoutContent from './layout-content.vue'
 import LayoutHeader from './layout-header.vue'
@@ -82,6 +85,7 @@ export default {
   },
   mounted() {
     this.getSystemSetting()
+    micrApp.init()
   },
   methods: {
     async getSystemSetting() {

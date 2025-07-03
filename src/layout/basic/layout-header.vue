@@ -13,13 +13,15 @@
     </div>
 
     <div class="flex items-center gap-2 px-3">
+      <SpIcon class="p-2" button radius name="setting-two" :size="16" @click="handleSystemInfo" />
+
       <SpIcon
         v-if="IS_DISTRIBUTOR()"
         button
         radius
         name="shop"
         :size="16"
-        @click="handleShopClick"
+        @click="handleShopList"
       />
       <!-- <SpIcon name="briefcase-business" :size="20" /> -->
 
@@ -61,14 +63,39 @@
 </template>
 
 <script>
+import moment from 'moment'
 import { getBasePath, IS_DISTRIBUTOR } from '@/utils'
 import DEFAULT_USER from '@/assets/images/default-user.png'
+import config from '../../../package.json'
+
 export default {
   name: 'LayoutHeader',
+  data() {
+    return {
+      systemInfo: []
+    }
+  },
   computed: {
     accountAvatar() {
       return this.$store.state.user?.accountInfo?.head_portrait || DEFAULT_USER
     }
+  },
+  async mounted() {
+    const res = await this.$api.company.getActivateInfo()
+    this.systemInfo = [
+      { label: 'COMPANY_ID', value: res.company_id },
+      { label: '到期时间', value: moment(res.expired_at * 1000).format('YYYY-MM-DD HH:mm:ss') },
+      { label: '管理后台', value: config.version },
+      { label: 'API端', value: res.version },
+      { label: 'PHP版本', value: res.php_version },
+      { label: '服务器系统', value: res.os },
+      { label: 'web服务器', value: res.web_server },
+      { label: '数据库版本', value: res.db_version },
+      { label: 'REDIS版本', value: res.redis_version },
+      // { label: 'API域名', value: res.app_url },
+      { label: '存储驱动', value: res.disk_driver },
+      { label: 'Lumen框架', value: res.lumen_version }
+    ]
   },
   methods: {
     async handleCommand(command) {
@@ -82,9 +109,29 @@ export default {
         this.$router.push(basePath ? `/${basePath}/login` : '/login')
       }
     },
-    handleShopClick() {
-      debugger
+    handleShopList() {
       this.$router.push('/shopadmin/shoplist')
+    },
+    handleSystemInfo() {
+      this.$dialog.open({
+        buttonConfirm: {
+          visible: false
+        },
+        title: '系统信息',
+        content: (
+          <div>
+            <el-descriptions column={3} border size="medium">
+              {this.systemInfo.map(item => (
+                <el-descriptions-item>
+                  <template slot="label">{item.label}</template>
+                  <span>{item.value}</span>
+                </el-descriptions-item>
+              ))}
+            </el-descriptions>
+          </div>
+        ),
+        size: 'medium'
+      })
     }
   }
 }

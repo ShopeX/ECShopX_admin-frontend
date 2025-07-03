@@ -166,11 +166,11 @@ export default {
       children: [
         {
           path: 'ali_sms',
-          name: '阿里短信',
+          name: 'aliSms',
           component: () => import('@/view/base/shortmessage/ali_sms'),
           children: [
             {
-            path: '/',
+              path: '/',
               name: '基础配置',
               meta: 'base_config',
               component: () => import('@/view/base/shortmessage/cpn/base_config')

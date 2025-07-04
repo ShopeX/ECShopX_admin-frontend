@@ -57,6 +57,9 @@
       <el-tab-pane label="外部小程序" name="other_wxapp">
         <PickerWxApp v-if="tabValue == 'other_wxapp'" ref="other_wxapp" :value="value" />
       </el-tab-pane>
+      <el-tab-pane label="抽奖活动" name="lottery">
+        <PickerLottery v-if="tabValue == 'lottery'" ref="lottery" :value="value" />
+      </el-tab-pane>
       <!-- <el-tab-pane label="商家" name="shop_tag">
         <PickerShopTag v-if="tabValue == 'shop_tag'" ref="shop_tag" :value="value" />
       </el-tab-pane> -->
@@ -84,6 +87,7 @@ import PickerPages from './picker-pages'
 import PickerLive from './picker-live'
 import PickerWxApp from './picker-wxapp'
 import PickerShopTag from './picker-shoptag'
+import PickerLottery from './picker-lottery'
 export default {
   name: 'PickerPath',
   components: {
@@ -102,7 +106,8 @@ export default {
     PickerPages,
     PickerLive,
     PickerWxApp,
-    PickerShopTag
+    PickerShopTag,
+    PickerLottery
   },
   // extends: BasePicker,
   config: {
@@ -241,6 +246,12 @@ export default {
           return pickBy(data, {
             id: 'tag_id',
             title: 'tag_name'
+          })
+        },
+        lottery: () => {
+          return pickBy(data, {
+            id: 'id',
+            title: 'activity_name'
           })
         }
       }

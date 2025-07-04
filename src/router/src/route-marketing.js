@@ -50,6 +50,17 @@ export default {
       ]
     },
     {
+      path: 'interactive/lottery',
+      name: '抽奖活动',
+      component: () => import('@/view/marketing/lottery/list.vue'),
+      children: [
+        {
+          path: 'editor/:id?',
+          component: () => import('@/view/marketing/lottery/editor.vue')
+        }
+      ]
+    },
+    {
       path: 'coupon/couponspackage',
       name: '劵包管理',
       component: () => import('@/view/member/cardticket/couponspackage'),

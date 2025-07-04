@@ -263,7 +263,8 @@ export const LINK_PATH = {
   'custom_page': '自定义页面',
   'liverooms': '直播',
   'other_wxapp': '外部小程序',
-  'shop_tag': '商家'
+  'shop_tag': '商家',
+  'lottery': '抽奖活动'
 }
 
 export const CARD_TYPE = {

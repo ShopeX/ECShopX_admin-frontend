@@ -31,6 +31,7 @@ import exportTip from '@/utils/components'
 import { export_open } from '@/utils'
 import { SYSTEM_CONFIG } from '@/consts'
 import { SpPickerPlugin } from '@/components/sp-picker'
+import LuckyWheel from '@lucky-canvas/vue'
 Vue.use(exportTip)
 initFinder(Vue, {
   fetchLibrary: fetch,
@@ -76,6 +77,7 @@ Vue.use(Directives)
 Vue.use(VueVideoPlayer)
 
 Vue.use(Filter)
+Vue.use(LuckyWheel)
 
 const plugins = {
   SpPickerPlugin

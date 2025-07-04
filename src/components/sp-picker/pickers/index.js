@@ -20,3 +20,6 @@ export { default as PickerTemplate } from './picker-template'
 export { default as PickerEditBoard } from './picker-editboard'
 export { default as PickerPlanting } from './picker-planting'
 export { default as PickerPages } from './picker-pages'
+export { default as PickerLottery } from './picker-lottery'
+export { default as PickerCouponV2 } from './picker-coupon-v2.vue'
+

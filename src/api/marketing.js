@@ -678,12 +678,65 @@ export function aheadPurchaseActivity(activityId) {
   })
 }
 
-
 // 修改活动记录备注
 export function updateRegistrationRecord(params) {
   return fetch({
     url: `/selfhelp/registrationRecord/update`,
     method: 'post',
+    params
+  })
+}
+
+// 获取转盘详情
+export function getTurntableDetail(params) {
+  return fetch({
+    url: '/promotions/getturntable',
+    method: 'get',
+    params
+  })
+}
+
+// 编辑和新增转盘配置
+export function editTurntableConfig(params) {
+  return fetch({
+    url: '/promotions/turntableconfig',
+    method: 'post',
+    params
+  })
+}
+
+// 获取转盘日志
+export function getTurntableLogById(params) {
+  return fetch({
+    url: '/promotions/getturntable_log/byid',
+    method: 'get',
+    params
+  })
+}
+
+// 获取统计数量
+export function getTurntableCountById(params) {
+  return fetch({
+    url: '/promotions/getturntable_count/byid',
+    method: 'get',
+    params
+  })
+}
+
+// 终止转盘活动
+export function downLuckyDrawById(params) {
+  return fetch({
+    url: '/promotions/down_lucky_draw/byid',
+    method: 'get',
+    params
+  })
+}
+
+// 导出抽奖数据
+export function exportLuckyDrawData(params) {
+  return fetch({
+    url: '/promotions/down_lucky_draw/export',
+    method: 'get',
     params
   })
 }

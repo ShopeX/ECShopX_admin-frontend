@@ -128,6 +128,9 @@
                   <el-form-item label="*商品销售分类" label-width="110px">
                     <treeselect
                       v-model="form.item_category"
+                      noChildrenText="没有子选项"
+                      noOptionsText="等待加载..."
+                      noResultsText="没有匹配的结果"
                       :options="categoryList"
                       :show-count="true"
                       :multiple="true"
@@ -1059,7 +1062,7 @@ export default {
           item_source: itemsDetailData.item_source,
           item_type: itemsDetailData.item_type,
           special_type: itemsDetailData.special_type,
-          item_category:
+          item_category_temp:
             itemsDetailData.item_category.length > 0 ? itemsDetailData.item_category : [],
           item_name: itemsDetailData.item_name,
           sort: itemsDetailData.sort,
@@ -1736,6 +1739,11 @@ export default {
           label: 'category_name',
           children: 'children'
         })
+        if(this.$route.params.itemId){
+          this.form.item_category = this.form.item_category_temp
+          delete this.form.item_category_temp
+        }
+
       })
     },
     // profitStatusChange(val) {

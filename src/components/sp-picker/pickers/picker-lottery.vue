@@ -94,7 +94,6 @@
 <script>
 import BasePicker from './base'
 import PageMixin from '../mixins/page'
-import { getRegionauthId } from '@/utils'
 import api from '@/api'
 import moment from 'moment'
 
@@ -138,9 +137,6 @@ export default {
         ...params,
         ...this.formData,
         ...(this.value?.params || {})
-      }
-      if (getRegionauthId()) {
-        params.regionauth_id = getRegionauthId()
       }
       return params
     },

@@ -330,10 +330,8 @@ export default {
 }
 
 .lottery-editor-footer {
-  position: absolute;
-  bottom: 200px;
-  left: 50%;
-  transform: translateX(-25%);
+    display: flex;
+    justify-content: center;
 }
 
 .lottery-editor-content {

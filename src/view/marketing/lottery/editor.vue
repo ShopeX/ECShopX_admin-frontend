@@ -95,7 +95,7 @@ export default {
       form: {
         ...generatorParams(formList(this)),
         cost_value: 0,
-        limit_day: '',
+        limit_day: 1,
         quantity: "",
         prize_data: defaultValues.prize_data,
         background: "",
@@ -113,7 +113,7 @@ export default {
       recordForm: generatorParams(recordFormSchema(this)),
       hasSetHotArea: false,
       ruleFormConfig: null,
-      recordFormConfig: null,
+      hasSetRecord: null,
     }
   },
   computed: {
@@ -134,9 +134,9 @@ export default {
         prizeData: this.form['prize_data'],     // 奖品配置
         background: this.form['background'],// 页面背景
         backgroundColor: this.form['backgroundColor'],// 背景颜色
-        hotArea: this['recordForm'],// 抽奖区域
+        hotArea: this['hotArea'],// 抽奖区域
         // ruleBtnStyle: this['ruleFormConfig'],// 抽奖规则按钮
-        recordBtnStyle: this['recordFormConfig'],// 抽奖记录按钮
+        recordBtnStyle: this['recordForm'],// 抽奖记录按钮
       }
     }
   },
@@ -169,11 +169,13 @@ export default {
               if(el.prize_type == 'coupon'){
                 el.prize_value  = {
                   card_id:el.prize_detail?.card_id,
+                  title:el.prize_detail?.title,
                 }
               }
               if(el.prize_type == 'coupons'){
                 el.prize_value  = {
                   package_id:el.prize_detail?.package_id,
+                  title:el.prize_detail?.title,
                 }
               }
               return el
@@ -189,7 +191,8 @@ export default {
           } : generatorParams(lotteryAreaSchema(this))
           this.hasSetHotArea = !!blocks[0]?.imgs[0]?.src
 
-          this.recordFormConfig = recordFormConfig?.img ? recordFormConfig : generatorParams(recordFormSchema(this))
+          this.recordForm = recordFormConfig?.img ? recordFormConfig : generatorParams(recordFormSchema(this))
+          this.hasSetRecord = !!recordFormConfig?.img
         }).catch((err) => {
           console.log(err)
         })
@@ -247,7 +250,7 @@ export default {
               pointer: true,
               fonts: [{ text: '开始', top: '-10px' }]
             }] : [],
-            recordFormConfig:this.recordFormConfig
+            recordFormConfig:this.recordForm
           }
         })
       }
@@ -276,7 +279,7 @@ export default {
           return el
         })
       }
-
+console.log(this.form)
     },
     handleDateInput(val) {
       if (val?.length) {
@@ -322,8 +325,10 @@ export default {
       this.recordDialogShow = false
     },
     async onCouponSubmit(row, index, key) {
+      console.log(row)
       const { data } = await this.$picker.couponV2({
         multiple: false,
+        data:[row.prize_value?.card_id],
         params:{
          date_status:2,
          store_self:false
@@ -333,7 +338,8 @@ export default {
     },
     async onCouponPackSubmit(row, index, key) {
       const { data } = await this.$picker.couponPackage({
-        multiple: false
+        multiple: false,
+        data:[row.prize_value?.package_id],
       })
       this.handleInput(data[0], row, index, key)
     }

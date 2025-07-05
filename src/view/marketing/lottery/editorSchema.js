@@ -63,7 +63,22 @@ export const formList = (vm) =>
               <el-input
                 v-model={vm.form['cost_value']}
                 placeholder='请输入分值'
+                type='number'
                 style={{ width: '120px', marginLeft: '20px' }}
+                onBlur={(val) => {
+                  console.log(val.target.value)
+                  const _val = val.target.value
+                  let _num = 0
+                  if (_val <= 0) {
+                    _num = 0
+                  } else {
+                    _num = Number(_val)
+                  }
+                  vm.form = {
+                    ...vm.form,
+                    cost_value: _num
+                  }
+                }}
               />
             </div>
           )
@@ -74,15 +89,51 @@ export const formList = (vm) =>
         key: 'limit_total',
         type: 'input',
         placeholder: '请输入抽奖限额',
-        defaultValue: '',
+        defaultValue: 1,
         required: true,
         component() {
           return (
             <div>
-              <el-input v-model={vm.form['limit_total']} style={{ width: '120px' }} />
+              <el-input
+                v-model={vm.form['limit_total']}
+                style={{ width: '120px' }}
+                type='number'
+                onBlur={(val) => {
+                  console.log(val.target.value)
+                  const _val = val.target.value
+                  let _num = 1
+                  if (_val <= 0) {
+                    _num = 1
+                  } else {
+                    _num = Number(_val)
+                  }
+                  vm.form = {
+                    ...vm.form,
+                    limit_total: _num
+                  }
+                }}
+              />
               <div style={{ marginTop: '20px' }}>
                 每日可抽奖 &nbsp;
-                <el-input v-model={vm.form['limit_day']} style={{ width: '120px' }} />
+                <el-input
+                  v-model={vm.form['limit_day']}
+                  style={{ width: '120px' }}
+                  type='number'
+                  onBlur={(val) => {
+                    console.log(val.target.value)
+                    const _val = val.target.value
+                    let _num = 1
+                    if (_val <= 0) {
+                      _num = 1
+                    } else {
+                      _num = Number(_val)
+                    }
+                    vm.form = {
+                      ...vm.form,
+                      limit_day: _num
+                    }
+                  }}
+                />
                 &nbsp; 次
               </div>
             </div>
@@ -260,7 +311,7 @@ export const formList = (vm) =>
         component({ key }, value) {
           return (
             <div class='inputWrap'>
-              <div>{vm['recordFormConfig']?.img ? '已设置' : '未设置'}</div>
+              <div>{vm['hasSetRecord'] ? '已设置' : '未设置'}</div>
               <div style={{ display: 'flex' }}>
                 <div onClick={() => (vm.recordDialogShow = true)}>设置&nbsp;</div>
               </div>
@@ -354,7 +405,7 @@ export const innerSchema = (vm) =>
               {row['prize_type'] == 'coupon' && (
                 <div style={{ paddingLeft: '10px' }}>
                   {row['prize_value']?.title}
-                  {row['prize_detail']?.title}
+                  {/* {row['prize_detail']?.title} */}
                   <span
                     style={{ color: '#ff0000', marginLeft: '4px' }}
                     onClick={() => vm.onCouponSubmit(row, $index, 'prize_value')}
@@ -366,7 +417,7 @@ export const innerSchema = (vm) =>
               {row['prize_type'] == 'coupons' && (
                 <div style={{ paddingLeft: '10px' }}>
                   {row['prize_value']?.title}
-                  {row['prize_detail']?.title}
+                  {/* {row['prize_detail']?.title} */}
                   <span
                     style={{ color: '#ff0000', marginLeft: '4px' }}
                     onClick={() => vm.onCouponPackSubmit(row, $index, 'prize_value')}

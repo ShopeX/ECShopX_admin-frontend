@@ -50,7 +50,7 @@
 <script lang="js">
 import { formList, lotteryAreaSchema, ruleFormSchema, recordFormSchema } from './editorSchema.js'
 import { generatorParams } from "@/utils/schemaHelper.js";
-import LuckyWheel from '@/components/LuckyWheel/index.vue'
+// import LuckyWheel from '@/components/LuckyWheel/index.vue'
 import moment from 'moment'
 import api from '@/api'
 
@@ -88,7 +88,7 @@ const defaultValues = {
 export default {
   components: {
     // eslint-disable-next-line vue/no-unused-components
-    LuckyWheel
+    // LuckyWheel
   },
   data() {
     return {

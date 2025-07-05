@@ -146,10 +146,10 @@ export const formList = (vm) =>
         validator(rule, value, callback) {
           // 统计概率 必须 ==100
           const total = value?.reduce((acc, item) => acc + (item.prize_probability * 1 || 0), 0)
-          console.log("🚀 ~ validator ~ total:", total)
+          console.log('🚀 ~ validator ~ total:', total)
           if (total != 100) {
             callback(new Error('概率总和必须等于100'))
-          }else if (value?.filter((item) => item.prize_type).length <= 0) {
+          } else if (value?.filter((item) => item.prize_type).length <= 0) {
             callback(new Error('请设置奖品'))
           } else {
             callback()
@@ -267,19 +267,19 @@ export const formList = (vm) =>
             </div>
           )
         }
-      },
-      {
-        label: '',
-        key: 'lotteryMonitor',
-        defaultValue: '',
-        component(_) {
-          return (
-            <div class='lottery-editor-content'>
-              <LuckyWheel ref='luckyWheelRef' config={vm.lotteryConfig} />
-            </div>
-          )
-        }
       }
+      // {
+      //   label: '',
+      //   key: 'lotteryMonitor',
+      //   defaultValue: '',
+      //   component(_) {
+      //     return (
+      //       <div class='lottery-editor-content'>
+      //         <LuckyWheel ref='luckyWheelRef' config={vm.lotteryConfig} />
+      //       </div>
+      //     )
+      //   }
+      // }
     ],
     vm
   )
@@ -352,7 +352,7 @@ export const innerSchema = (vm) =>
                 })}
               </el-select>
               {row['prize_type'] == 'coupon' && (
-                <div style={{paddingLeft:"10px"}}>
+                <div style={{ paddingLeft: '10px' }}>
                   {row['prize_value']?.title}
                   {row['prize_detail']?.title}
                   <span
@@ -364,7 +364,7 @@ export const innerSchema = (vm) =>
                 </div>
               )}
               {row['prize_type'] == 'coupons' && (
-                <div style={{paddingLeft:"10px"}}>
+                <div style={{ paddingLeft: '10px' }}>
                   {row['prize_value']?.title}
                   {row['prize_detail']?.title}
                   <span

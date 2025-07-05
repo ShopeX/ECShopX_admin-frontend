@@ -91,11 +91,11 @@ export default {
     },
     // 新增抽奖活动，跳转到抽奖活动编辑页
     addHandle() {
-      this.$router.push('/marketing/interactive/lottery/editor')
+      this.$router.push('/marketing/wheel/editor')
     },
     // 编辑抽奖活动，跳转到编辑页并携带活动ID
     editConfigHandle(row) {
-      this.$router.push(`/marketing/interactive/lottery/editor/${row.id}`)
+      this.$router.push(`/marketing/wheel/editor/${row.id}`)
     },
     // 终止抽奖活动（接口调用待实现）
     stopHandle(row) {
@@ -110,7 +110,7 @@ export default {
     },
     // 复制抽奖活动，跳转时通过查询参数携带活动ID
     copyHandle(row) {
-      this.$router.push(`/marketing/interactive/lottery/editor?id=${row.id}`)
+      this.$router.push(`/marketing/wheel/editor?id=${row.id}`)
     },
     // 查询接口数据
     async statisticsHandle(row) {

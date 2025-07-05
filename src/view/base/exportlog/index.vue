@@ -24,6 +24,7 @@
         <el-tab-pane label="结算单明细" name="statement_details" />
         <el-tab-pane label="推广员业绩导出" name="popularize" />
         <el-tab-pane label="业绩统计" name="popularizeStatic" />
+        <el-tab-pane label="抽奖统计" name="export_luckdraw_log" />
         <el-tab-pane label="业绩订单" name="popularizeOrder" />
         <el-tab-pane label="配送员业绩导出" name="delivery_staffdata" />
       </template>
@@ -46,6 +47,7 @@
         <el-tab-pane label="商品统计导出" name="goods_data" />
         <el-tab-pane label="商品导出" name="items" />
         <el-tab-pane label="供应商商品导出" name="supplier_goods" />
+        <el-tab-pane label="抽奖统计" name="export_luckdraw_log" />
         <el-tab-pane label="商品标签导出" name="normal_items_tag" />
         <el-tab-pane label="积分记录导出" name="member_point_logs" />
         <el-tab-pane v-if="!VERSION_IN_PURCHASE" label="店铺商品导出" name="distributor_items" />

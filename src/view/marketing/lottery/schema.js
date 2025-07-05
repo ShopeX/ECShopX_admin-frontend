@@ -183,7 +183,7 @@ export const statisticsFormSchema = (vm) =>
 const outputSchema = {
   columns: [
     { name: 'ID', key: 'user_id', width: '60' },
-    { name: '会员编码', key: 'user_card_code' },
+    { name: '会员手机号', key: 'mobile' },
     { name: '获得奖品', key: 'prize_value' },
     {
       name: '奖品类型',

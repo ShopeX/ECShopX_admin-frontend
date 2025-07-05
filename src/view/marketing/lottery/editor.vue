@@ -321,7 +321,7 @@ console.log(this.form)
       this.ruleDialogShow = false
     },
     onRecordFormSubmit() {
-      this.recordFormConfig = this.recordForm
+      this.hasSetRecord = true
       this.recordDialogShow = false
     },
     async onCouponSubmit(row, index, key) {

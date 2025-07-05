@@ -111,7 +111,7 @@ export default {
       ruleForm: generatorParams(ruleFormSchema(this)),
       recordDialogShow: false,
       recordForm: generatorParams(recordFormSchema(this)),
-      hotAreaConfig: null,
+      hasSetHotArea: false,
       ruleFormConfig: null,
       recordFormConfig: null,
     }
@@ -134,7 +134,7 @@ export default {
         prizeData: this.form['prize_data'],     // 奖品配置
         background: this.form['background'],// 页面背景
         backgroundColor: this.form['backgroundColor'],// 背景颜色
-        hotArea: this['hotAreaConfig'],// 抽奖区域
+        hotArea: this['recordForm'],// 抽奖区域
         // ruleBtnStyle: this['ruleFormConfig'],// 抽奖规则按钮
         recordBtnStyle: this['recordFormConfig'],// 抽奖记录按钮
       }
@@ -187,7 +187,7 @@ export default {
             background: buttons[0]?.background,
             img: buttons[0]?.imgs[0]?.src,
           } : generatorParams(lotteryAreaSchema(this))
-          this.hotAreaConfig = !!blocks[0]?.imgs[0]?.src
+          this.hasSetHotArea = !!blocks[0]?.imgs[0]?.src
 
           this.recordFormConfig = recordFormConfig?.img ? recordFormConfig : generatorParams(recordFormSchema(this))
         }).catch((err) => {
@@ -310,7 +310,7 @@ export default {
       }
     },
     onHotAreaSubmit() {
-      this.hotAreaConfig = this.hotArea
+      this.hasSetHotArea = true
       this.hotAreasDialogShow = false
     },
     onRuleFormSubmit() {

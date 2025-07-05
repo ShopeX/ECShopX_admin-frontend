@@ -207,7 +207,7 @@ export const formList = (vm) =>
         component({ key }, value) {
           return (
             <div class='inputWrap'>
-              <div>{vm['hotAreaConfig'] ? '已设置' : '未设置'}</div>
+              <div>{vm['hasSetHotArea'] ? '已设置' : '未设置'}</div>
               <div style={{ display: 'flex', fontSize: '14px' }}>
                 <div onClick={() => (vm.hotAreasDialogShow = true)}>设置&nbsp;</div>
                 <div
@@ -218,6 +218,7 @@ export const formList = (vm) =>
                       background: '#ffffff',
                       img: ''
                     }
+                    vm.hasSetHotArea = false
                   }}
                 >
                   恢复默认

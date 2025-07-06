@@ -187,16 +187,7 @@ const outputSchema = {
     { name: '会员手机号', key: 'mobile' },
     {
       name: '获得奖品',
-      key: 'prize_value',
-      render(_, { row }) {
-        return (
-          <div>
-            {row.prize_type == 'points' && <span>{row.prize_value}积分</span>}
-            {row.prize_type == 'coupon' && <span>{row.prize_detail?.['title']}</span>}
-            {row.prize_type == 'goods' && <span>{row.prize_detail?.['title']}</span>}
-          </div>
-        )
-      }
+      key: 'prize_title'
     },
     {
       name: '奖品类型',

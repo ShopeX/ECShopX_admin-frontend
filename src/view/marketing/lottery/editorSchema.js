@@ -390,7 +390,7 @@ export const innerSchema = (vm) =>
                   } else if (val <= 0) {
                     vm.handleInput(0, row, $index, 'prize_probability')
                   } else {
-                    vm.handleInput(val, row, $index, 'prize_probability')
+                    vm.handleInput(Number(val)?.toFixed(0), row, $index, 'prize_probability')
                   }
                 }}
               />

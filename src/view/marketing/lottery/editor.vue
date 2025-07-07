@@ -99,7 +99,7 @@ export default {
         quantity: "",
         prize_data: defaultValues.prize_data,
         background: "",
-        backgroundColor: "",
+        backgroundColor: "#ffffff",
         area_id: 0
       },
       areas: [],

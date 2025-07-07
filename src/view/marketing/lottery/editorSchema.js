@@ -357,15 +357,17 @@ export const innerSchema = (vm) =>
       {
         name: '奖项名称',
         key: 'text',
-        width: '300px',
+        width: '240px',
         render(_, { row, $index }) {
           return (
             <div style={{ display: 'flex', justifyContent: 'center' }}>
               <el-input
                 value={row['text']}
-                style={{ width: '200px' }}
+                style={{ width: '220px' }}
                 maxLength={5}
                 on-input={(val) => vm.handleInput(val, row, $index, 'text')}
+                show-word-limit
+                placeholder='请输入奖项名称,长度为5'
               />
             </div>
           )
@@ -374,20 +376,21 @@ export const innerSchema = (vm) =>
       {
         name: '中奖概率',
         key: 'prize_probability',
-        width: '140px',
+        width: '190px',
         render(_, { row, $index }) {
           return (
             <div>
               <el-input
                 value={row['prize_probability']}
                 type='number'
+                placeholder='请输入0-100的整数'
                 on-input={(val) => {
                   if (val > 100) {
                     vm.handleInput(99, row, $index, 'prize_probability')
                   } else if (val <= 0) {
                     vm.handleInput(0, row, $index, 'prize_probability')
                   } else {
-                    vm.handleInput(val, row, $index, 'prize_probability')
+                    vm.handleInput(Number(val)?.toFixed(0), row, $index, 'prize_probability')
                   }
                 }}
               />
@@ -452,13 +455,14 @@ export const innerSchema = (vm) =>
       {
         name: '每日奖品库存',
         key: 'stock',
-        width: '140px',
+        width: '160px',
         render(_, { row, $index }) {
           if (row['prize_type'] == 'coupon' || row['prize_type'] == 'coupons') {
             return (
               <div>
                 <el-input
                   value={row['stock']}
+                  placeholder='请输入正整数'
                   on-input={(val) => {
                     // 必须是正整数
                     if (val <= 0) {
@@ -632,7 +636,7 @@ export const recordFormSchema = (vm) =>
         label: '按钮配色',
         key: 'rule',
         required: true,
-        defaultValue: ['#000000', '#000000'],
+        defaultValue: ['#ffffff', '#000000'],
         component(_) {
           return (
             <div style={{ display: 'flex', alignItems: 'center' }}>

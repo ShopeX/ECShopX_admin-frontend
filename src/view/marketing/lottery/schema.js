@@ -144,15 +144,25 @@ export const statisticsFormSchema = (vm) =>
         name: '',
         key: 'table',
         component() {
+          if (!vm.lotteryDialogShow) return null
           return (
             <SpFinder
               ref='finder'
-              data={vm.tableData}
+              url={'promotions/getturntable_log/byid?activity_id=' + vm.editRow?.id}
               fixed-row-action
               row-actions-width='200px'
               no-selection
+              attrs={{
+                hooks: {
+                  beforeSearch: (params) => {
+                    return {
+                      ...params,
+                      page_size:params.pageSize
+                    }
+                  }
+                }}
+              }
               setting={outputSchema}
-              front-paging
             >
               <div slot='tableTop'>
                 <div

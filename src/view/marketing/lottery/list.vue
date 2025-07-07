@@ -62,7 +62,6 @@ export default {
       lotteryDialogShow: false,
       form: {},
       dialogData:null,
-      tableData:[],
       editRow:null
     }
   },
@@ -124,11 +123,6 @@ export default {
         activity_id: row.id
       }).then((res) => {
         this.dialogData = res
-      })
-      api.marketing.getTurntableLogById({
-        activity_id: row.id
-      }).then((res) => {
-        this.tableData = res?.list ||[]
       })
       this.lotteryDialogShow = true
     },

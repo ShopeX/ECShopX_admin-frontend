@@ -61,3 +61,26 @@ export function exportDetialData (params) {
     params
   })
 }
+
+export function getInvoiceSetting (params) {
+  return fetch({
+    url: `/order/invoice/setting`,
+    method: 'get',
+    params
+  })
+}
+
+export function setInvoiceSetting (params) {
+  return fetch({
+    url: `/order/invoice/setting`,
+    method: 'post',
+    params
+  })
+}
+
+export function getInvoiceDetail (id) {
+  return fetch({
+    url: `/order/invoice/info/${id}`,
+    method: 'get'
+  })
+}

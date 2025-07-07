@@ -65,7 +65,7 @@ export default {
       }
     },
     getInvoice() {
-      api.order.getInvoice(this.id).then((res) => {
+      api.financial.getInvoiceDetail(this.id).then((res) => {
         this.form = {
           ...generatorParams(formSchema(this), res),
           invoice_file_url: res.invoice_file_url

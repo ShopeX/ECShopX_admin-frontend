@@ -36,6 +36,7 @@ export const open_status_map = {
 
 export const open_status_step_map = {
   online: '线上',
+  offline:'线下'
 }
 
 export const open_status_arr = [

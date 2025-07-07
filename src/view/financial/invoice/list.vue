@@ -52,7 +52,7 @@
     </SpFilterForm>
       <SpFinder
         ref="finder"
-        url="/order/offline_payment/get_list"
+        url="/order/invoice/list"
         fixed-row-action
         row-actions-width="200px"
         :setting="tableSchema"
@@ -135,8 +135,7 @@
 </template>
 
 <script lang="js">
-
-import { tableSchema, formSchema, remarkSchema, confirmSchema, logTableSchema, innerTableSchema } from './schema'
+import { tableSchema, formSchema, remarkSchema, confirmSchema, logTableSchema, innerTableSchema } from './listSchema'
 import moment from 'moment'
 import { status } from './constants'
 import { generatorParams } from '@/utils/schemaHelper'

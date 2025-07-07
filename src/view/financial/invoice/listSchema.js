@@ -156,7 +156,7 @@ export const tableSchema = (vm) =>
       },
       {
         name: '订单分类',
-        key: 'order_id',
+        key: 'order_holder',
         width: '120',
         render(_, { row }) {
           return <span> { vm.getOrderCategoryName(row.order_holder) } </span>
@@ -195,7 +195,6 @@ export const tableSchema = (vm) =>
         key: 'company_title',
         width: '120'
       },
-
       {
         name: '发票类型',
         key: 'invoice_method',

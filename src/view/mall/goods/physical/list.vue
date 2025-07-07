@@ -1611,6 +1611,13 @@ export default {
       } else {
         this.searchParams.is_medicine = ''
       }
+
+      //淘宝商品
+      if(this.activeName == 'taobao'){
+        this.searchParams.audit_status = ''
+      }
+      this.searchParams.is_taobao = this.activeName == 'taobao' ? 1 : ''
+
       this.$refs['finder'].refresh()
     },
     onSelectionChange(selection) {

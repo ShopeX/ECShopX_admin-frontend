@@ -25,6 +25,9 @@
         .icon-tuozhuai {
           display: block;
         }
+        .icon-sousuo {
+          display: block;
+        }
       }
     }
   }
@@ -85,7 +88,22 @@
     color: #fff;
     position: absolute;
     top: 50%;
-    left: 50%;
+    left: 30%;
+    transform: translate(-50%, -50%);
+    z-index: 99;
+  }
+  .icon-sousuo {
+    background: rgba(0, 0, 0, 0.7);
+    display: none;
+    width: 20px;
+    height: 20px;
+    line-height: 20px;
+    text-align: center;
+    border-radius: 50%;
+    color: #fff;
+    position: absolute;
+    top: 50%;
+    left: 70%;
     transform: translate(-50%, -50%);
     z-index: 99;
   }
@@ -133,7 +151,8 @@ export default {
         animation: 300,
         forceFallback: false,
         scroll: true
-      }
+      },
+      showViewer: ''
     }
   },
   watch: {
@@ -198,6 +217,10 @@ export default {
       this.$emit('input', val)
       this.$emit('onChange', val)
     },
+    previewSrcList(item, index) {
+      this.showViewer = [this.value[item]]
+      document.getElementById('imageRef').click()
+    },
 
     handleDeleteItem(index) {
       if (isArray(this.localValue)) {
@@ -210,14 +233,21 @@ export default {
 
     _renderImage(item, index = 0) {
       return (
-        <div class={['image-item', { 'drag': this.drag }]} key={`image-item__${index}`}>
-          <i class='ecx-icon icon-tuozhuai' />
+        <div class={['image-item', { drag: this.drag }]} key={`image-item__${index}`}>
+          <i class="ecx-icon icon-tuozhuai" />
+          <i class="ecx-icon icon-sousuo" on-click={this.previewSrcList.bind(item, index)} />
           <i
-            class='ecx-icon icon-qingchuFilled'
+            class="ecx-icon icon-qingchuFilled"
             on-click={this.handleDeleteItem.bind(this, index)}
           />
-          <el-image class='img-content' src={item?.url || item} fit='cover' />
-          <span class='image-meta' on-click={this.onUpdateImage.bind(this, index)}>
+          <el-image
+            class="img-content"
+            src={item?.url || item}
+            fit="cover"
+            id="imageRef"
+            preview-src-list={this.showViewer}
+          />
+          <span class="image-meta" on-click={this.onUpdateImage.bind(this, index)}>
             更换图片
           </span>
         </div>
@@ -232,33 +262,33 @@ export default {
           'sp-image-picker',
           size,
           {
-            'multiple': max > 1
+            multiple: max > 1
           }
         ]}
       >
         {max > 1 && (
           <draggable
-            class='list-container'
+            class="list-container"
             list={value}
             disabled={!this.drag}
             options={this.dragOptions}
-            handle='.icon-tuozhuai'
+            handle=".icon-tuozhuai"
           >
             {value.map((item, index) => this._renderImage(item, index))}
           </draggable>
         )}
         {max > 1 && value.length < max && (
-          <div class='image-item placeholder' on-click={this.handleSelectImage}>
-            <i class='iconfont icon-camera' />
-            <div class='add-text'>图片({`${value.length}/${max}`})</div>
+          <div class="image-item placeholder" on-click={this.handleSelectImage}>
+            <i class="iconfont icon-camera" />
+            <div class="add-text">图片({`${value.length}/${max}`})</div>
           </div>
         )}
 
         {max == 1 && !isEmpty(value) && this._renderImage(value)}
         {max == 1 && isEmpty(value) && (
-          <div class='image-item placeholder' on-click={this.handleSelectImage}>
-            <i class='iconfont icon-camera' />
-            <div class='add-text'>添加图片</div>
+          <div class="image-item placeholder" on-click={this.handleSelectImage}>
+            <i class="iconfont icon-camera" />
+            <div class="add-text">添加图片</div>
           </div>
         )}
       </div>

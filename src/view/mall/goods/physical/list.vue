@@ -1,32 +1,3 @@
-<style scoped lang="scss">
-.tab-tools {
-  text-align: right;
-  @include clearfix();
-  margin-bottom: 8px;
-  .warn-input {
-    display: flex;
-    align-items: center;
-    float: right;
-    .el-input {
-      width: 120px;
-      margin: 0 8px;
-    }
-  }
-}
-.page-code {
-  text-align: center;
-}
-.page-code-img {
-  width: 200px;
-  height: 200px;
-}
-</style>
-<style lang="scss">
-.physical-cell-reason {
-  @include text-overflow();
-  width: 180px;
-}
-</style>
 <template>
   <SpRouterView>
     <SpPage>

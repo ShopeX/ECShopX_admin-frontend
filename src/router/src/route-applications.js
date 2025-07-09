@@ -19,6 +19,17 @@ export default {
       ]
     },
     {
+      path: 'marketing/lottery',
+      name: '抽奖活动',
+      component: () => import('@/view/marketing/lottery/list.vue'),
+      children: [
+        {
+          path: 'editor/:id?',
+          component: () => import('@/view/marketing/lottery/editor.vue')
+        }
+      ]
+    },
+    {
       path: 'adapay/adapay_cash',
       name: '提现',
       component: () => import('@/view/mall/withdraw/withdraw')

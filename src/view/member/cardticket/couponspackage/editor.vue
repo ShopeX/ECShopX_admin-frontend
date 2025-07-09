@@ -1,29 +1,13 @@
 <template>
   <div class="zykCouponEditor">
-    <el-form
-      ref="ruleForm"
-      :model="ruleForm"
-      :rules="rules"
-      label-width="100px"
-    >
+    <el-form ref="ruleForm" :model="ruleForm" :rules="rules" label-width="100px">
       <el-card shadow="never">
-        <div
-          slot="header"
-          class="clearfix"
-        >
+        <div slot="header" class="clearfix">
           <span>基础信息</span>
         </div>
         <div class="content">
-          <el-form-item
-            label="劵包标题"
-            prop="title"
-          >
-            <el-input
-              v-model="ruleForm.title"
-              class="maxW"
-              maxlength="10"
-              show-word-limit
-            />
+          <el-form-item label="劵包标题" prop="title">
+            <el-input v-model="ruleForm.title" class="maxW" maxlength="10" show-word-limit />
           </el-form-item>
           <el-form-item label="描述">
             <el-input
@@ -37,25 +21,14 @@
         </div>
       </el-card>
       <el-card shadow="never">
-        <div
-          slot="header"
-          class="clearfix"
-        >
+        <div slot="header" class="clearfix">
           <span>劵包信息</span>
-          <div class="tips">
-            劵包一旦保存,劵包信息不可再修改
-          </div>
+          <div class="tips">劵包一旦保存,劵包信息不可再修改</div>
         </div>
         <div class="content">
           <el-form-item label-width="0px">
-            <el-tooltip
-              placement="top"
-              width="350"
-            >
-              <div
-                slot="content"
-                class="tips"
-              >
+            <el-tooltip placement="top" width="350">
+              <div slot="content" class="tips">
                 <p>1. 券包不区分优惠券发送渠道，所有种类优惠券都可以配置到同一券包内。</p>
                 <p>2. 券包可以设置限领，但限领规则优先由券包内优惠券设置及库存等决定。</p>
                 <p>3. 券包内优惠券规则根据优惠券本身规则所定。</p>
@@ -70,17 +43,9 @@
                 优惠劵包
               </el-button>
             </el-tooltip>
-            <el-button
-              :disabled="disabled"
-              @click="pickHanle"
-            >
-              选择优惠券
-            </el-button>
+            <el-button :disabled="disabled" @click="pickHanle"> 选择优惠券 </el-button>
           </el-form-item>
-          <el-form-item
-            v-if="seletedCoupon.length > 0"
-            label-width="20px"
-          >
+          <el-form-item v-if="seletedCoupon.length > 0" label-width="20px">
             <cpn-table
               :seleted-coupon="seletedCoupon"
               :type="type"
@@ -91,14 +56,8 @@
           <el-form-item label="发送规则">
             <span>券包内任一优惠券库存大于等于1时，券包都可继续发放 </span>
             <span>
-              <el-tooltip
-                placement="top"
-                width="250"
-              >
-                <div
-                  slot="content"
-                  class="tips"
-                >
+              <el-tooltip placement="top" width="250">
+                <div slot="content" class="tips">
                   <p>
                     例：选择券包内有5张优惠券，其中1张优惠券库存为零，用户可继续领取有库存的4张优惠券
                   </p>
@@ -108,7 +67,8 @@
                   class="btn"
                   type="text"
                   icon="el-icon-warning-outline"
-                /> </el-tooltip></span>
+                /> </el-tooltip
+            ></span>
           </el-form-item>
           <el-form-item label="限领次数">
             <el-input
@@ -117,26 +77,15 @@
               placeholder="请输入"
               :disabled="disabled"
             >
-              <el-button slot="append">
-                次
-              </el-button>
+              <el-button slot="append"> 次 </el-button>
             </el-input>
-            <p class="tips">
-              每个用户领券上限，如不填，则默认为1。
-            </p>
+            <p class="tips">每个用户领券上限，如不填，则默认为1。</p>
           </el-form-item>
         </div>
       </el-card>
       <div>
-        <el-button @click="back">
-          返回
-        </el-button>
-        <el-button
-          type="primary"
-          @click="confirmHandle('ruleForm')"
-        >
-          提交
-        </el-button>
+        <el-button @click="back"> 返回 </el-button>
+        <el-button type="primary" @click="confirmHandle('ruleForm')"> 提交 </el-button>
       </div>
     </el-form>
     <template v-if="visible">
@@ -159,7 +108,7 @@ export default {
     couponSelect,
     cpnTable
   },
-  data () {
+  data() {
     return {
       visible: false,
       disabled: false,
@@ -175,11 +124,11 @@ export default {
       }
     }
   },
-  mounted () {
+  mounted() {
     this.Config()
   },
   methods: {
-    async Config () {
+    async Config() {
       const { type, package_id } = this.$route.query
       this.type = type
 
@@ -198,26 +147,26 @@ export default {
       this.ruleForm.limit_count = limit_count
       this.seletedCoupon = discount_cards
     },
-    pickHanle () {
+    pickHanle() {
       this.visible = !this.visible
     },
-    back () {
+    back() {
       this.$router.push({
         path: this.$route.matched[1].path
       })
     },
-    seletedDataHandle (seletedCoupon) {
+    seletedDataHandle(seletedCoupon) {
       this.seletedCoupon = seletedCoupon
       console.log(this.seletedCoupon)
     },
-    deleteRowHandle (index) {
+    deleteRowHandle(index) {
       this.seletedCoupon.splice(index, 1)
     },
-    confirmHandle (formName) {
+    confirmHandle(formName) {
       console.log(this.$route)
       const { type, package_id } = this.$route.query
       if (type == 'edit') {
-        this.$refs[formName].validate(async (valid) => {
+        this.$refs[formName].validate(async valid => {
           if (valid) {
             const { status } = await this.$api.coupons_package.editCouponPackage({
               ...this.ruleForm,
@@ -238,11 +187,11 @@ export default {
           }
         })
       } else {
-        this.$refs[formName].validate(async (valid) => {
+        this.$refs[formName].validate(async valid => {
           if (valid) {
             let package_content = []
 
-            this.seletedCoupon.forEach((item) => {
+            this.seletedCoupon.forEach(item => {
               package_content.push({ card_id: item.card_id, give_num: item.give_num })
             })
 
@@ -259,7 +208,6 @@ export default {
             } else {
               this.$message.success('失败')
             }
-            console.log(result)
           } else {
             console.log('error submit!!')
             return false

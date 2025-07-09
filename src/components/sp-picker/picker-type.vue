@@ -22,7 +22,9 @@ import {
   PickerPlanting,
   PickerPages,
   PickerGoodsItem,
-  PickerWidget
+  PickerWidget,
+  PickerLottery,
+  PickerCouponV2
 } from './pickers'
 
 function resolvePicker(type) {
@@ -73,6 +75,10 @@ function resolvePicker(type) {
       return PickerGoodsItem
     case 'pickerWidget':
       return PickerWidget
+    case 'pickerLottery':
+      return PickerLottery
+    case 'pickerCouponV2':
+      return PickerCouponV2
     default:
       throw new Error(`picker: ${type} not registered`)
     // break

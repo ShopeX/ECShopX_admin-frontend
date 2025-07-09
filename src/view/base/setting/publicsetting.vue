@@ -1,7 +1,5 @@
 <style lang="scss" scoped>
 .isolate-contanier {
-  display: flex;
-  align-items: center;
 }
 
 .isolate-set {
@@ -53,7 +51,8 @@ export default {
         clientSecret: '',
         storeId: '',
         stores_isolate: false,
-        stores_isolate_template: ''
+        stores_isolate_template: '',
+        stores_isolate_type: 1
       },
       formList: [
         {
@@ -182,23 +181,46 @@ export default {
                   this.saveOpenDividedSetting()
                 }}
               />
-              <span
-                class="isolate-set"
-                onClick={() => {
-                  this.onClickStoresIsolate()
-                }}
-              >
-                {this.form?.stores_isolate_template ? '已设置引导页模版' : '设置引导页模版'}
-              </span>
-              {this.form?.stores_isolate_template && (
-                <el-button
-                  class="isolate-clear"
-                  onClick={() => {
-                    this.onClickClear()
-                  }}
-                >
-                  清除
-                </el-button>
+              {this.form.stores_isolate && (
+                <div>
+                  <el-radio-group
+                    value={this.form.stores_isolate_type}
+                    onInput={(e) => {
+                      console.log(e)
+                      this.form.stores_isolate_type = e
+                      this.saveOpenDividedSetting()
+                    }}
+                  >
+                    <el-radio-button label='1'>
+                      <span>虚拟店铺</span>
+                    </el-radio-button>
+                    <el-radio-button label='2'>
+                      <span>引导页</span>
+                    </el-radio-button>
+                  </el-radio-group>
+                  {this.form.stores_isolate_type == '2' && (
+                    <div>
+                      <span
+                        class='isolate-set'
+                        onClick={() => {
+                          this.onClickStoresIsolate()
+                        }}
+                      >
+                        {this.form?.stores_isolate_template ? '已设置引导页模版' : '设置引导页模版'}
+                      </span>
+                      {this.form?.stores_isolate_template && (
+                        <el-button
+                          class='isolate-clear'
+                          onClick={() => {
+                            this.onClickClear()
+                          }}
+                        >
+                          清除
+                        </el-button>
+                      )}
+                    </div>
+                  )}
+                </div>
               )}
             </div>
           )
@@ -410,7 +432,8 @@ export default {
         clientSecret: res.medicine_setting.kuaizhen580_config?.client_secret,
         storeId: res.medicine_setting.kuaizhen580_config?.kuaizhen_store_id,
         stores_isolate: res.open_distributor_divided?.status || false, // 店铺隔离开关
-        stores_isolate_template: res.open_distributor_divided?.template || '' // 店铺隔离模版
+        stores_isolate_template: res.open_distributor_divided?.template || '', // 店铺隔离模版
+        stores_isolate_type: res.open_distributor_divided?.type || 1, // 店铺隔离类型
       }
       const { cart_page, order_page, item_page } = res.item_price_setting
       if (cart_page.market_price) {
@@ -479,11 +502,12 @@ export default {
     },
     // 保存店铺隔离设置
     async saveOpenDividedSetting() {
-      const { stores_isolate, stores_isolate_template } = this.form
+      const { stores_isolate, stores_isolate_template, stores_isolate_type } = this.form
       const params = {
         open_distributor_divided: {
           status: stores_isolate,
-          template: stores_isolate_template
+          template: stores_isolate_template,
+          type: stores_isolate ? stores_isolate_type : ''
         }
       }
       await this.$api.company.saveOpenDividedSetting(params)

@@ -7,31 +7,31 @@ export const formSchema = (vm) => bindThisForFormSchema([
   },
   {
     label: '用户名',
-    key: 'alipay_fee_type1',
+    key: 'username',
     type: 'input',
     required: true
   },
   {
     label: '密码',
-    key: 'alipay_fee_type',
+    key: 'alipay_fee_ty',
     type: 'input',
     required: true
   },
   {
     label: 'appKey',
-    key: 'alipay_fee_type',
+    key: 'appKey',
     type: 'input',
     required: true
   },
   {
     label: 'appSecret',
-    key: 'alipay_fee_type',
+    key: 'appSecret',
     type: 'input',
     required: true
   },
   {
     label: '用户盐值',
-    key: 'alipay_fee_type',
+    key: 'alipay_fee_typ',
     type: 'input',
     required: true
   },

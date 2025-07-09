@@ -84,3 +84,21 @@ export function getInvoiceDetail (id) {
     method: 'get'
   })
 }
+
+
+export function getBaiInvoiceSetting (params) {
+  return fetch({
+    url: `/order/invoice/baiwangInvoiceSetting`,
+    method: 'get',
+    params
+  })
+}
+
+export function setBaiInvoiceSetting (params) {
+  return fetch({
+    url: `/order/invoice/baiwangInvoiceSetting`,
+    method: 'post',
+    params
+  })
+}
+

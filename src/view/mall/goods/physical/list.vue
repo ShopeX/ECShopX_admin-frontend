@@ -235,7 +235,7 @@
           开售
         </el-button>
         <!-- <el-button type="primary" plain @click="changeGoodsPrice"> 批量改价 </el-button> -->
-        <el-button type="primary" plain @click="()=>handleImport('physicalupload?file_type=taobao_goods')">
+        <el-button type="primary" plain @click="()=>handleImport('physicalupload?file_type=upload_tb_items')">
           同步淘宝商品
         </el-button>
         <el-dropdown>

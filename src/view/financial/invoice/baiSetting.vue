@@ -29,25 +29,23 @@ export default {
     this.getDeatl()
   },
   methods: {
-    // getDeatl() {
-    //   api.order.getInvoice(this.id).then((res) => {
-    //     this.form = {
-    //       ...generatorParams(formSchema(this), res),
-    //       invoice_file_url: res.invoice_file_url
-    //     }
-    //   })
-    // },
+    getDeatl() {
+      api.financial.getBaiInvoiceSetting(this.id).then((res) => {
+        this.form = {
+          ...generatorParams(formSchema(this), res)
+        }
+      })
+    },
     onSaveConfig() {
       console.log(this.form)
-      // api.order
-      //   .resendInvoiceEmail({
-      //     invoice_id: this.id,
-      //     confirm_email: this.confirmForm.email
-      //   })
-      //   .then((res) => {
-      //     this.$message.success('发送成功')
-      //     this.confirmDialogShow = false
-      //   })
+      api.financial
+        .setBaiInvoiceSetting({
+          ...this.form,
+        })
+        .then((res) => {
+          this.$message.success('发送成功')
+          this.confirmDialogShow = false
+        })
     }
   }
 }

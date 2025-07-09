@@ -100,7 +100,7 @@ export default {
   data() {
     return {
       pane_list: [
-      { name: 'taobao_goods', label: '上传淘宝链接' },
+      { name: 'upload_tb_items', label: '上传淘宝链接' },
         { name: 'supplier_goods', label: '上传实体类商品' },
         { name: 'employee_purchase_activity_items', label: '上传内购活动商品' }
       ],
@@ -136,6 +136,9 @@ export default {
         ...this.getDistributorId(),
         file_type: IS_SUPPLIER() ? 'supplier_goods' : 'normal_goods'
       }
+      if(this.activeName == 'upload_tb_items'){
+        params.file_type = 'upload_tb_items'
+      }
       handleUploadFile(params).then((response) => {
         this.$message({
           type: 'success',
@@ -152,6 +155,9 @@ export default {
       let params = {
         file_type: IS_SUPPLIER() ? 'supplier_goods' : 'normal_goods',
         file_name: fileName
+      }
+      if(this.activeName == 'upload_tb_items'){
+        params.file_type = 'upload_tb_items'
       }
       exportUploadTemplate(params).then((response) => {
         if (response.data.data.file) {

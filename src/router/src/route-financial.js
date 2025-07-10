@@ -129,6 +129,11 @@ export default {
       name: `开票信息`,
       component: () => import('@/view/financial/invoice/information')
     },
+    {
+      path: 'invoice/invoiceTax',
+      name: `发票配置`,
+      component: () => import('@/view/financial/invoice/invoiceTax')
+    },
 
 
   ]

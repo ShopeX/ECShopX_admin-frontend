@@ -12,7 +12,17 @@ export const formSchema = (vm) => bindThisForFormSchema([
     defaultValue: 'offline',
     options: [
       { name: '线下开票', label: 'offline' },
-      { name: '线上开票（对接第三方开票系统）', label: 'online' }
+      { name: '线上百望开票', label: 'online' }
+    ]
+  },
+  {
+    label: '开票方类型',
+    key: 'invoice_method',
+    type: 'radio',
+    defaultValue: 'offline',
+    options: [
+      { name: '平台', label: 'offline' },
+      // { name: '店铺', label: 'online' }
     ]
   },
   {
@@ -40,6 +50,11 @@ export const formSchema = (vm) => bindThisForFormSchema([
     key: 'freight_name',
     type: 'input',
     tip:'为空时默认运费开票名称，如果填写名称按填写名称展示在发票上'
+  },
+  {
+    label: '运费税率',
+    key: 'freight_name',
+    type: 'input'
   },
   {
     label: '开票维度',

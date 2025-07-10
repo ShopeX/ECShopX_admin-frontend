@@ -2,7 +2,7 @@
   <div class="page-body">
       <SpFinder
         ref="finder"
-        url="/order/invoice-seller/list"
+        url="/order/offline_payment/get_list"
         fixed-row-action
         row-actions-width="80px"
         :setting="tableSchema"
@@ -14,10 +14,11 @@
         @selection-change="handleSelectionChange"
       >
         <template v-slot:tableTop>
-          <el-button class="add-btn" type="primary" icon="iconfont icon-xinzengcaozuo-01" @click="handleAdd">添加销方信息</el-button>
+          <el-button class="add-btn" type="primary" icon="iconfont icon-xinzengcaozuo-01" @click="handleAdd">添加新配置</el-button>
         </template>
       </SpFinder>
 
+      <!-- 选择关联页面 -->
       <SpDialog
         ref="dialogRef"
         v-model="dialogShow"
@@ -36,7 +37,7 @@
 
 <script lang="js">
 
-import { tableSchema, formSchema } from './informationSchema'
+import { tableSchema, formSchema } from './invoiceTaxSchema'
 import moment from 'moment'
 import { status } from './constants'
 import { generatorParams } from '@/utils/schemaHelper'
@@ -56,7 +57,8 @@ export default {
       dialogShow: false,
       dialogTitle:'',
       confirmStatus:false,
-      itemCategoryList:[]
+      itemCategoryList:[],
+      invoiceSellerList:[]
     }
   },
   computed: {
@@ -68,9 +70,17 @@ export default {
     }
   },
   mounted() {
+    this.getInvoiceSellerList()
     this.getMainCategory()
   },
   methods: {
+    
+    async getInvoiceSellerList() {
+      //管理分类
+      const {list} = await this.$api.financial.getInvoiceSellerList()
+      console.log(list)
+      this.invoiceSellerList = list.map(item=>({value:item.id,title:item.seller_company_name}))
+    },
     async getMainCategory() {
       //管理分类
       const res = await this.$api.goods.getCategory({ is_main_category: true })
@@ -86,7 +96,7 @@ export default {
       return _params
     },
     editRowHandle(row) {
-      this.dialogTitle = '编辑销方信息'
+      this.dialogTitle = '管理分类税率配置'
       this.editRow = row
       this.dialogShow = true
       this.dialogForm = generatorParams(formSchema(this), row)
@@ -96,27 +106,14 @@ export default {
     },
     onDialogFormSubmit() {
       this.confirmStatus = true
-      if(this.editRow.id){
-        api.financial.updateInvoiceSeller(this.editRow.id, this.dialogForm).then((res) => {
-          this.$message.success('更新成功')
-          this.dialogShow = false
-          this.refresh()
-        }).finally(()=>{
-          this.confirmStatus = false
-        })
-      }else{
-        api.financial.createInvoiceSeller(this.dialogForm).then((res) => {
-          this.$message.success('创建成功')
-          this.dialogShow = false
-          this.refresh()
-        }).finally(()=>{
-          this.confirmStatus = false
-        })
-      }
+      api.order.updateInvoice(this.editRow.id, this.dialogForm).then((res) => {
+        this.$message.success('更新成功')
+        this.dialogShow = false
+        this.refresh()
+      })
     },
     handleAdd(){
-      this.dialogTitle = '添加销方信息'
-      this.editRow = {}
+      this.dialogTitle = '管理分类税率配置'
       this.dialogShow = true
       this.dialogForm = generatorParams(formSchema(this), {})
     }

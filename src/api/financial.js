@@ -126,4 +126,28 @@ export function getProcessLog (params) {
   })
 }
 
+export function updateInvoiceSeller (id,params) {
+  return fetch({
+    url: `/order/invoice-seller/update/${id}`,
+    method: 'post',
+    params
+  })
+}
+
+export function createInvoiceSeller (params) {
+  return fetch({
+    url: `/order/invoice-seller/create`,
+    method: 'post',
+    params
+  })
+}
+
+export function getInvoiceSellerList (params) {
+  return fetch({
+    url: `/order/invoice-seller/list`,
+    method: 'get',
+    params
+  })
+}
+
 

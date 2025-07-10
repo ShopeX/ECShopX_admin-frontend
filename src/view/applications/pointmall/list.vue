@@ -102,7 +102,9 @@
         <el-button type="primary" plain @click="batchItemsStore"> 统一库存 </el-button>
         <el-button type="primary" plain @click="batchItemsStatus('onsale')"> 批量上架 </el-button>
         <el-button type="primary" plain @click="batchItemsStatus('instock')"> 批量下架 </el-button>
-
+        <el-button  v-if="isBindJstErp" plain type="primary" @click="uploadJstErpItems()">
+          上传商品到聚水潭
+        </el-button>
         <export-tip @exportHandle="exportItemsData()">
           <el-button type="primary" plain> 导出商品信息 </el-button>
         </export-tip>
@@ -443,7 +445,8 @@ export default {
       storeItemsList: [],
       show_itemStore: false,
       itemstore: 0,
-      exportTab: 'pointsmallitems'
+      exportTab: 'pointsmallitems',
+      isBindJstErp:false,
     }
   },
   computed: {
@@ -463,8 +466,14 @@ export default {
     this.form.category = this.$route.query.category
     this.select_category_value = this.$route.query.category
     this.init()
+    this.checkJstErpBind()
   },
   methods: {
+    checkJstErpBind() {
+      this.$api.third.getJstErpSetting().then((response) => {
+        this.isBindJstErp = response.is_open
+      })
+    },
     onSearch() {
       this.params.pageIndex = 1
       this.$nextTick(() => {
@@ -542,6 +551,33 @@ export default {
       this.$notify.success({
         message: '复制成功',
         showClose: true
+      })
+    },
+    uploadJstErpItems() {
+      if (this.item_id.length === 0) {
+        this.$message({
+          type: 'error',
+          message: '请选择需要同步的商品'
+        })
+        return
+      }
+      let params = {}
+      params = {
+        item_id: this.item_id,
+        item_type:'pointsmall'
+      }
+      this.$api.goods.uploadJstErpItems(params).then((res) => {
+        if (res.status == true) {
+          this.$message({
+            type: 'success',
+            message: '已加入执行队列'
+          })
+        } else {
+          this.$message({
+            type: 'error',
+            message: '执行失败'
+          })
+        }
       })
     },
     handleClick(tab, event) {

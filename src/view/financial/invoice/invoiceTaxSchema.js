@@ -28,17 +28,17 @@ export const tableSchema = (vm) =>
       {
         name: '开票方名称',
         key: 'seller_company_name',
-        width: '120'
+        width: '160'
       },
       {
         name: '开票方税号',
         key: 'seller_tax_no',
-        width: '120'
+        width: '160'
       },
       {
         name: '开票方电话',
         key: 'seller_phone',
-        width: '120'
+        width: '160'
       },
       // {
       //   name: '开票渠道',
@@ -48,36 +48,53 @@ export const tableSchema = (vm) =>
       {
         name: '管理分类',
         key: 'invoice_apply_bn',
-        width: '120'
+        width: '300',
+        render(h, { row }) {
+          if(row.tax_rate_type == 'ALL'){
+            return '全部分类'
+          }
+          const categoryNames = (row.category_ids && vm.getCategoryPathsName(vm.itemCategoryList,JSON.parse(row.category_ids))) || []
+          return <div>
+            {
+              categoryNames.map(item=>(
+                <div>{item}</div>
+              ))
+            }
+          </div>
+        }
       },
       {
         name: '税率',
-        key: 'payee',
-        width: '80'
+        key: 'invoice_tax_rate',
+        width: '80',
+        render(h, { row }) {
+          return <span> {row.invoice_tax_rate} % </span>
+        }
       },
       {
         name: '开票人',
         key: 'seller_name',
-        width: '100'
+        width: '120'
       },
       {
         name: '收款人',
         key: 'payee',
-        width: '100'
+        width: '120'
       },
       {
         name: '复核人',
         key: 'reviewer',
-        width: '100'
+        width: '120'
       },
       {
         name: '开票方地址',
         key: 'seller_address',
-        width: '120'
+        width: '160'
       },
       {
         name: '添加时间',
         key: 'created',
+         width: '160',
         render(h, { row }) {
           return <span> {moment(row.created_at * 1000).format('yyyy-MM-DD HH:mm:ss')} </span>
         }
@@ -90,7 +107,7 @@ export const formSchema = (vm) =>
     [
       {
         label: '开票方名称',
-        key: 'alipay_fee_type',
+        key: 'sales_party_id',
         type: 'select',
         tip:'下拉选择配置销方开票信息',
         options:vm.invoiceSellerList,
@@ -98,30 +115,32 @@ export const formSchema = (vm) =>
       },
       {
         label: '配置税率分类',
-        key: 'category_type',
+        key: 'tax_rate_type',
         validator: (rule, value, callback) => {
           console.log(123,value,vm.dialogForm)
-          if(value == 2 &&  !vm.dialogForm.main_cat_id?.length){
+          if(value == 'SPECIFIED' &&  !vm.dialogForm.category_ids?.length){
             callback(new Error('指定分类不能为空'))
           }else{
             callback()
           }
         },
-        defaultValue: '1',
+        defaultValue: 'ALL',
         component({ key }, value) {
           return (
             <div>
-              <el-radio-group v-model={value['category_type']}>
-                <el-radio label='1'>全部分类</el-radio>
-                <el-radio label='2'>指定分类</el-radio>
+              <el-radio-group v-model={value['tax_rate_type']} onChange={()=>{
+                value['category_ids'] = ''
+              }}>
+                <el-radio label='ALL'>全部分类</el-radio>
+                <el-radio label='SPECIFIED'>指定分类</el-radio>
               </el-radio-group>
               <div>
-                {value['category_type'] == 2 && (
+                {value['tax_rate_type'] == 'SPECIFIED' && (
                   <el-cascader
-                    v-model={value['main_cat_id']}
+                    v-model={value['category_ids']}
                     placeholder='请选择'
-                    style={{width:'300px'}}
                     clearable
+                    class="invoice-cascader"
                     options={vm.itemCategoryList}
                     props={{
                       props: {
@@ -133,6 +152,24 @@ export const formSchema = (vm) =>
                       }
                     }}
                   />
+                  // <el-tree
+                  //   data={vm.itemCategoryList}
+                  //   show-checkbox
+                  //   default-expand-all
+                  //   node-key="category_id"
+                  //   ref="tree"
+                  //   highlight-current
+                  //   props={{
+                  //     props: {
+                  //       value: 'category_id',
+                  //       label: 'category_name',
+                  //       multiple: true,
+                  //       // checkStrictly: true,
+                  //       children: 'children'
+                  //     }
+                  //   }} 
+                  //   onCheck={vm.handleTreeCheck}>
+                  // </el-tree>
                 )}
               </div>
             </div>
@@ -141,7 +178,7 @@ export const formSchema = (vm) =>
       },
       {
         label: '发票税率',
-        key: 'alipay_fee_ty',
+        key: 'invoice_tax_rate',
         type: 'input',
         required: true,
         component({ key }, value) {

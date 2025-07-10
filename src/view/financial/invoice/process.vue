@@ -5,7 +5,7 @@
         <el-timeline-item
           v-for="(key, index) in list"
           :key="index"
-          :timestamp="key.create_time | datetime('YYYY-MM-DD HH:mm:ss')"
+          :timestamp="key.update_time | datetime('YYYY-MM-DD HH:mm:ss')"
           placement="top"
         >
           <el-card>
@@ -20,7 +20,7 @@
               <span v-else-if="'distributor' == key.operator_type"> 店铺管理员 </span>
               <span v-else> 未知 </span>
             </p>
-            <p>操作详情：{{ key.detail }}</p>
+            <p>操作详情：{{ key.content }}</p>
           </el-card>
         </el-timeline-item>
       </el-timeline>
@@ -73,13 +73,13 @@ export default {
   data() {
     return {
       loading: false,
-      order_id: '',
+      invoice_id: '',
       list: []
     }
   },
   mounted() {
     if (this.$route.query.id) {
-      this.order_id = this.$route.query.id
+      this.invoice_id = this.$route.query.id
     }
     this.getProcessLogInfo()
   },
@@ -89,9 +89,8 @@ export default {
     },
     getProcessLogInfo() {
       this.loading = true
-      this.$api.financial.getProcessLog(this.order_id).then((response) => {
-        this.list = [{},{},{}]
-        // response.data.data
+      this.$api.financial.getInvoiceLog({invoice_id:this.invoice_id}).then((response) => {
+        this.list = response.list
         this.loading = false
       })
     }

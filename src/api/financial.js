@@ -118,9 +118,9 @@ export function updateInvoiceRemark (params) {
   })
 }
 
-export function getProcessLog (params) {
+export function getInvoiceLog (params) {
   return fetch({
-    url: `/order/invoice/list`,
+    url: `/order/invoice/log/list`,
     method: 'get',
     params
   })
@@ -149,5 +149,23 @@ export function getInvoiceSellerList (params) {
     params
   })
 }
+
+export function updateInvoiceTax (id,params) {
+  return fetch({
+    url: `/order/category-taxrate/update/${id}`,
+    method: 'post',
+    params
+  })
+}
+
+export function createInvoiceTax (params) {
+  return fetch({
+    url: `/order/category-taxrate/create`,
+    method: 'post',
+    params
+  })
+}
+
+
 
 

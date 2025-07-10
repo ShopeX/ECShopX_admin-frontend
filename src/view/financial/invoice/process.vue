@@ -69,7 +69,6 @@ img {
 }
 </style>
 <script>
-import { getProcessLog } from '@/api/trade'
 export default {
   data() {
     return {
@@ -90,7 +89,7 @@ export default {
     },
     getProcessLogInfo() {
       this.loading = true
-      getProcessLog(this.order_id).then((response) => {
+      this.$api.financial.getProcessLog(this.order_id).then((response) => {
         this.list = [{},{},{}]
         // response.data.data
         this.loading = false

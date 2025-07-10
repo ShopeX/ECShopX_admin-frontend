@@ -102,3 +102,28 @@ export function setBaiInvoiceSetting (params) {
   })
 }
 
+export function resendInvoiceEmail (params) {
+  return fetch({
+    url: `/order/invoice/baiwangInvoiceSetting`,
+    method: 'post',
+    params
+  })
+}
+
+export function updateInvoiceRemark (params) {
+  return fetch({
+    url: `/order/invoice/baiwangInvoiceSetting`,
+    method: 'post',
+    params
+  })
+}
+
+export function getProcessLog (params) {
+  return fetch({
+    url: `/order/invoice/list`,
+    method: 'get',
+    params
+  })
+}
+
+

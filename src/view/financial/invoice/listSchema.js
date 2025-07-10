@@ -397,6 +397,8 @@ export const confirmSchema = (vm) =>
         label: '邮箱',
         type: 'input',
         defaultValue: '',
+        required:true,
+        message:'请输入邮箱',
         tip:'电子发票需要一定时间才能发送到您的邮箱,请耐心等待'
       }
     ],

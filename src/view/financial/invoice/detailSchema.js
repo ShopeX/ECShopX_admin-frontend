@@ -215,7 +215,7 @@ export const formSchema = (vm) => bindThisForFormSchema([
               <el-button type='primary' plain onClick={() => this.showPdHandle()}>
                 查看发票PDF
               </el-button>
-              {vm.form.invoice_status === 'invoice_success' && vm.form.invoice_method === 'online' && <el-button type='primary' plain onClick={() => this.sendEmailHandle()}>
+              { vm.form.invoice_status === 'invoice_success' && vm.form.invoice_method === 'online' && <el-button type='primary' plain onClick={() => this.sendEmailHandle()}>
                 重发至邮箱
               </el-button>}
             </div>

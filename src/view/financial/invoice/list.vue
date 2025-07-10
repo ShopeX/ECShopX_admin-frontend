@@ -94,6 +94,7 @@
         title="备注"
         :modal="false"
         class="base-form"
+        :confirm-status="confirmStatus"
         :form="remarkForm"
         :form-list="remarkRuleForm"
         @onSubmit="onRemarkFormSubmit"
@@ -107,6 +108,7 @@
         confirm-btn-text="邮箱正确并发送"
         :modal="false"
         class="base-form"
+        :confirm-status="confirmStatus"
         :form="confirmForm"
         :form-list="confirmRuleForm"
         @onSubmit="onConfirmFormSubmit"
@@ -160,6 +162,7 @@ export default {
       remarkRuleForm: remarkSchema(this),
       confirmDialogShow: false,
       confirmForm: generatorParams(confirmSchema(this)),
+      confirmStatus:false,
       confirmRuleForm: confirmSchema(this),
       showLogInfoDrawer: false,
       logListData: [],
@@ -280,20 +283,26 @@ export default {
       this.selectedRows = selection
     },
     onConfirmFormSubmit() {
-      api.order.resendInvoiceEmail({
+      this.confirmStatus = true
+      api.financial.resendInvoiceEmail({
         invoice_id: this.editRow.id,
         confirm_email: this.confirmForm.email,
       }).then((res) => {
         this.$message.success('发送成功')
         this.confirmDialogShow = false
         this.refresh()
+      }).finally(()=>{
+        this.confirmStatus = false
       })
     },
     onRemarkFormSubmit() {
-      api.order.updateInvoiceRemark(this.editRow.id, this.remarkForm).then((res) => {
+      this.confirmStatus = true
+      api.financial.updateInvoiceRemark(this.editRow.id, this.remarkForm).then((res) => {
         this.$message.success('更新成功')
         this.remarkDialogShow = false
         this.refresh()
+      }).finally(()=>{
+        this.confirmStatus = false
       })
     },
     onDialogFormSubmit() {

@@ -22,49 +22,94 @@ export default {
     { label: '显示价格', key: 'showPrice', component: 'switch', value: false },
     { label: '显示品牌', key: 'brand', component: 'switch', value: true },
     {
-      label: '选择商品',
-      key: 'data',
+      label: '商品类型',
+      key: 'goodsSetting',
       component: function (h, { key }) {
-        return <AttrGoods v-model={this.value[key]} />
+        return <AttrGoods v-model={this.value[key]} type={this.value[key].type} />
       },
-      value: [
-        {
-          imgUrl: '',
-          linkPage: '',
-          content: '',
-          title: '商品名称',
-          id: '',
-          price: 0,
-          market_price: 0
-        },
-        {
-          imgUrl: '',
-          linkPage: '',
-          content: '',
-          title: '商品名称',
-          id: '',
-          price: 0,
-          market_price: 0
-        },
-        {
-          imgUrl: '',
-          linkPage: '',
-          content: '',
-          title: '商品名称',
-          id: '',
-          price: 0,
-          market_price: 0
-        },
-        {
-          imgUrl: '',
-          linkPage: '',
-          content: '',
-          title: '商品名称',
-          id: '',
-          price: 0,
-          market_price: 0
-        }
-      ]
+      value: {
+        data: [
+          {
+            imgUrl: '',
+            linkPage: '',
+            content: '',
+            title: '商品名称',
+            id: '',
+            price: 0,
+            market_price: 0
+          },
+          {
+            imgUrl: '',
+            linkPage: '',
+            content: '',
+            title: '商品名称',
+            id: '',
+            price: 0,
+            market_price: 0
+          },
+          {
+            imgUrl: '',
+            linkPage: '',
+            content: '',
+            title: '商品名称',
+            id: '',
+            price: 0,
+            market_price: 0
+          },
+          {
+            imgUrl: '',
+            linkPage: '',
+            content: '',
+            title: '商品名称',
+            id: '',
+            price: 0,
+            market_price: 0
+          }
+        ],
+        pointGoods: [
+          {
+            imgUrl: '',
+            linkPage: '',
+            content: '',
+            title: '商品名称',
+            id: '',
+            price: 0,
+            market_price: 0,
+            point: 0
+          },
+          {
+            imgUrl: '',
+            linkPage: '',
+            content: '',
+            title: '商品名称',
+            id: '',
+            price: 0,
+            market_price: 0,
+            point: 0
+          },
+          {
+            imgUrl: '',
+            linkPage: '',
+            content: '',
+            title: '商品名称',
+            id: '',
+            price: 0,
+            market_price: 0,
+            point: 0
+          },
+          {
+            imgUrl: '',
+            linkPage: '',
+            content: '',
+            title: '商品名称',
+            id: '',
+            price: 0,
+            market_price: 0,
+            point: 0
+          }
+        ],
+        type: 'normal',
+      }
     },
     {
       label: '查看更多',
@@ -75,14 +120,27 @@ export default {
     }
   ],
   transformIn: (v) => {
-    const { name, base, config, data, list, distributor_id } = v
+    const { name, base, config, data, distributor_id } = v
+    const { type = 'normal' } = config
+    let list = []
+    let pointGoods = []
+    if (type == 'normal') {
+      list = data
+    } else if (type == 'point') {
+      pointGoods = data
+    }
     return {
       name,
       ...base,
       ...config,
       data,
       list,
-      distributor_id
+      distributor_id,
+      goodsSetting: {
+        type: type,
+        data: list,
+        pointGoods,
+      }
     }
   },
   transformOut: (v) => {
@@ -101,10 +159,17 @@ export default {
           showPrice: 'showPrice',
           style: 'style',
           moreLink: 'moreLink',
-          addCart: 'addCart'
+          addCart: 'addCart',
+          type: 'goodsSetting.type'
         })
       },
-      data: 'data'
+      data: ({ goodsSetting: { type, data, pointGoods } }) => {
+        if (type == 'point') {
+          return pointGoods
+        } else {
+          return data
+        }
+      }
     })
   }
 }

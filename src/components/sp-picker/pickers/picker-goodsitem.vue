@@ -54,7 +54,7 @@
       <SpFilterFormItem prop="keywords">
         <el-input v-model="formData.keywords" clearable placeholder="请输入商品名称" />
       </SpFilterFormItem>
-      <SpFilterFormItem prop="approve_status">
+      <SpFilterFormItem v-if="!value.isPointGoods" prop="approve_status">
         <el-select v-model="formData.approve_status" clearable placeholder="请选择">
           <el-option
             v-for="item in salesStatus"
@@ -65,7 +65,7 @@
           />
         </el-select>
       </SpFilterFormItem>
-      <SpFilterFormItem prop="brand_id">
+      <SpFilterFormItem v-if="!value.isPointGoods" prop="brand_id">
         <el-select
           v-model="formData.brand_id"
           placeholder="请选择品牌"
@@ -82,7 +82,7 @@
           />
         </el-select>
       </SpFilterFormItem>
-      <SpFilterFormItem prop="category">
+      <SpFilterFormItem v-if="!value.isPointGoods" prop="category">
         <el-cascader
           v-model="formData.category"
           placeholder="请选择分类"
@@ -91,7 +91,7 @@
           :props="{ value: 'category_id', label: 'category_name', checkStrictly: true }"
         />
       </SpFilterFormItem>
-      <SpFilterFormItem v-if="isShowFormItem('distributor_id')" prop="distributor_id">
+      <SpFilterFormItem v-if="isShowFormItem('distributor_id') && !value.isPointGoods" prop="distributor_id">
         <SpSelectShop
           v-model="formData.distributor_id"
           clearable
@@ -99,10 +99,10 @@
           @change="onSearch"
         />
       </SpFilterFormItem>
-      <SpFilterFormItem prop="supplier_name">
+      <SpFilterFormItem v-if="!value.isPointGoods" prop="supplier_name">
         <el-input v-model="formData.supplier_name" placeholder="所属供应商" />
       </SpFilterFormItem>
-      <SpFilterFormItem prop="item_holder">
+      <SpFilterFormItem v-if="!value.isPointGoods" prop="item_holder">
         <el-select v-model="formData.item_holder" placeholder="请选择商品类型" clearable>
           <el-option
             v-for="item in goodCategory"
@@ -112,13 +112,13 @@
           />
         </el-select>
       </SpFilterFormItem>
-      <SpFilterFormItem prop="is_gift">
+      <SpFilterFormItem v-if="!value.isPointGoods" prop="is_gift">
         <el-select v-model="formData.is_gift" placeholder="是否为赠品" clearable>
           <el-option :value="true" label="是" />
           <el-option :value="false" label="否" />
         </el-select>
       </SpFilterFormItem>
-      <SpFilterFormItem prop="is_prescription">
+      <SpFilterFormItem v-if="!value.isPointGoods" prop="is_prescription">
         <el-select v-model="formData.is_prescription" placeholder="是否处方药" clearable>
           <el-option :value="1" label="是" />
           <el-option :value="0" label="否" />
@@ -251,9 +251,15 @@ export default {
   },
   computed: {
     url() {
-      return this.IS_DISTRIBUTOR() || (this.VERSION_STANDARD && this.formData.distributor_id)
-        ? 'distributor/items'
-        : '/goods/items'
+      if (this.IS_DISTRIBUTOR() || (this.VERSION_STANDARD && this.formData.distributor_id)){
+        return '/distributor/items'
+      } else {
+        if (this.value.isPointGoods) {
+          return '/pointsmall/goods/items'
+        } else {
+          return '/goods/items'
+        }
+      }
     }
   },
   created() {
@@ -267,6 +273,16 @@ export default {
   methods: {
     beforeSearch(params) {
       const { category } = this.formData
+      if (this.value.isPointGoods) {
+        return {
+          ...params,
+          item_type: 'normal',
+          approve_status: 'onsale',
+          is_warning: false,
+          ...this.formData,
+          category: category[category.length - 1]
+        }
+      }
       params = {
         ...params,
         item_type: 'normal',

@@ -1,5 +1,5 @@
 <style lang="scss">
-.picker-coupon-package {
+.picker-coupon {
   .sp-filter-form {
     margin-bottom: 0;
     .filter-form__bd {
@@ -27,28 +27,54 @@
 }
 </style>
 <template>
-  <div class="picker-coupon-package">
-    <!-- multiple：{{ multiple }}, {{ value }} -->
-    <SpFilterForm :model="formData" @onSearch="onSearch" @onReset="onSearch">
-      <SpFilterFormItem prop="keywords">
-        <el-input v-model="formData.keywords" placeholder="请输入券包名称搜索" />
-      </SpFilterFormItem>
-    </SpFilterForm>
-
+  <div class="picker-coupon">
     <SpFinder
       ref="finder"
       :other-config="{
         'max-height': 460,
         'header-cell-class-name': cellClass
       }"
-      url="/voucher/package/list"
+      url="/discountcard/list"
       :fixed-row-action="true"
       :setting="{
+        search: [
+          { key: 'title', name: '', placeholder: '优惠券名称' },
+          { key: 'card_id', name: '', placeholder: '优惠券模板ID' }
+        ],
         columns: [
-          { name: '券包名称', key: 'title' },
           {
-            name: '券包描述',
-            key: 'package_describe'
+            name: '优惠券模板ID',
+            key: 'card_id'
+          },
+          { name: '优惠券名称', key: 'title' },
+          {
+            name: '券类型',
+            key: 'card_type',
+            width: '100px',
+            render: (h, { row }) =>
+              h(
+                'el-tag',
+                {
+                  props: {
+                    size: 'mini'
+                  }
+                },
+                cardTypeFormatter(row)
+              )
+          },
+          {
+            name: '卡券规则',
+            key: 'rule_text'
+          },
+          {
+            name: '卡券有效期',
+            formatter: (value, { takeEffect, begin_time, end_time }, col) => {
+              if (takeEffect) {
+                return takeEffect
+              } else {
+                return getCardValidate(begin_time, end_time)
+              }
+            }
           }
         ]
       }"
@@ -69,16 +95,17 @@ import moment from 'moment'
 import BasePicker from './base'
 import PageMixin from '../mixins/page'
 export default {
-  name: 'PickerCouponPackage',
+  name: 'PickerCoupon',
   extends: BasePicker,
   mixins: [PageMixin],
   config: {
-    title: '选择券包'
+    title: '选择优惠券'
   },
   props: ['value'],
   data() {
     return {
       formData: {
+        region: [],
         keywords: ''
       },
       district,
@@ -94,23 +121,16 @@ export default {
     beforeSearch(params) {
       params = {
         ...params,
-        page: params.page,
-        pageSize: params.pageSize
-      }
-      if (this.formData.keywords) {
-        params = {
-          ...params,
-          title: this.formData.keywords
-        }
+        page_no: params.page,
+        page_size: params.pageSize,
+        ...(this.value?.params || {})
       }
       return params
     },
     afterSearch(response) {
       const { list } = response.data.data
       if (this.value.data) {
-        const selectRows = list.filter(item =>
-          this.value?.data.includes(item.package_id || item.card_id)
-        )
+        const selectRows = list.filter(item => this.value?.data.includes(item.card_id))
         const { finderTable } = this.$refs.finder.$refs
         setTimeout(() => {
           finderTable.$refs.finderTable.setSelection(selectRows)
@@ -118,7 +138,7 @@ export default {
       }
     },
     onSearch() {
-      this.$refs.finder.refresh(true)
+      this.$refs.finder.refresh()
     },
     onSelect(selection, row) {
       if (this.multiple) {

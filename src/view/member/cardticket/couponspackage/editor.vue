@@ -208,7 +208,6 @@ export default {
             } else {
               this.$message.success('失败')
             }
-            console.log(result)
           } else {
             console.log('error submit!!')
             return false

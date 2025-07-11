@@ -91,6 +91,14 @@ const coreRoutes = [
         component: () => import('@/views/core/authentication/merchant-login.vue')
       }
     ]
+  },
+  {
+    meta: {
+      layout: 'empty',
+      title: 'decorate'
+    },
+    path: '/wxapp/manage/decorate',
+    component: () => import('@/view/decorate/index')
   }
 ]
 

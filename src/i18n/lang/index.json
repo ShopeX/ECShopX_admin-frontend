@@ -5011,7 +5011,7 @@
 	},
 	"fhed93": {
 		"zh-cn": "昨日：",
-		"en": "Yesterday",
+		"en": "Yesterday: ",
 		"zh-tw": "昨日："
 	},
 	"gqipvc5": {
@@ -5986,17 +5986,17 @@
 	},
 	"98eiok6": {
 		"zh-cn": "待发货订单：",
-		"en": "Pending shipment order",
+		"en": "Pending shipment order: ",
 		"zh-tw": "待發貨訂單："
 	},
 	"7y33w56": {
 		"zh-cn": "待处理退款：",
-		"en": "Pending refund",
+		"en": "Pending refund: ",
 		"zh-tw": "待處理退款："
 	},
 	"ayzbwb8": {
 		"zh-cn": "退款失败待处理：",
-		"en": "Refund failed pending processing",
+		"en": "Refund failed pending processing: ",
 		"zh-tw": "退款失敗待處理："
 	},
 	"b46kty4": {
@@ -6006,7 +6006,7 @@
 	},
 	"usv0d47": {
 		"zh-cn": "库存预警商品：",
-		"en": "Inventory warning items",
+		"en": "Inventory warning items: ",
 		"zh-tw": "庫存預警商品："
 	},
 	"haf03a4": {
@@ -6016,12 +6016,12 @@
 	},
 	"2q500s7": {
 		"zh-cn": "进行中的秒杀：",
-		"en": "Ongoing flash sale",
+		"en": "Ongoing flash sale: ",
 		"zh-tw": "進行中的秒殺："
 	},
 	"2tk74k7": {
 		"zh-cn": "进行中的拼团：",
-		"en": "Ongoing group buying",
+		"en": "Ongoing group buying: ",
 		"zh-tw": "進行中的拼團："
 	},
 	"yp1yut6": {
@@ -32468,5 +32468,40 @@
 		"zh-cn": "惊喜",
 		"en": "pleasantly surprised",
 		"zh-tw": "驚喜"
+	},
+	"cu3c0u4": {
+		"zh-cn": "抽奖记录",
+		"en": "Lottery draw record",
+		"zh-tw": "抽獎記錄"
+	},
+	"cty30m4": {
+		"zh-cn": "抽奖活动",
+		"en": "Lucky draw event",
+		"zh-tw": "抽獎活動"
+	},
+	"2p1kzt7": {
+		"zh-cn": "优惠券模板ID",
+		"en": "Coupon template ID",
+		"zh-tw": "優惠券模板ID"
+	},
+	"cn6w83": {
+		"zh-cn": "券类型",
+		"en": "Coupon type",
+		"zh-tw": "券類型"
+	},
+	"avaq6k4": {
+		"zh-cn": "卡券规则",
+		"en": "Coupon rules",
+		"zh-tw": "卡券規則"
+	},
+	"t7l4g66": {
+		"zh-cn": "选择抽奖活动",
+		"en": "Choose the lottery event",
+		"zh-tw": "選擇抽獎活動"
+	},
+	"cu1eaj4": {
+		"zh-cn": "抽奖统计",
+		"en": "Lottery draw statistics",
+		"zh-tw": "抽獎統計"
 	}
 }

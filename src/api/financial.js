@@ -104,15 +104,15 @@ export function setBaiInvoiceSetting (params) {
 
 export function resendInvoiceEmail (params) {
   return fetch({
-    url: `/order/invoice/baiwangInvoiceSetting`,
+    url: `/order/invoice/resend`,
     method: 'post',
     params
   })
 }
 
-export function updateInvoiceRemark (params) {
+export function updateInvoiceRemark (id,params) {
   return fetch({
-    url: `/order/invoice/baiwangInvoiceSetting`,
+    url: `/order/invoice/updateremark/${id}`,
     method: 'post',
     params
   })
@@ -165,6 +165,32 @@ export function createInvoiceTax (params) {
     params
   })
 }
+
+export function getInvoiceComfirmSetting (params) {
+  return fetch({
+    url: `/order/invoice/protocol`,
+    method: 'get',
+    params
+  })
+}
+
+export function setInvoiceComfirmSetting (params) {
+  return fetch({
+    url: `/order/invoice/protocol`,
+    method: 'post',
+    params
+  })
+}
+
+export function updateInvoice (id,params) {
+  return fetch({
+    url: `/order/invoice/update/${id}`,
+    method: 'post',
+    params
+  })
+}
+
+
 
 
 

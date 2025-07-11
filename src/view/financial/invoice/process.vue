@@ -5,22 +5,16 @@
         <el-timeline-item
           v-for="(key, index) in list"
           :key="index"
-          :timestamp="key.update_time | datetime('YYYY-MM-DD HH:mm:ss')"
+          :timestamp="key.create_time | datetime('YYYY-MM-DD HH:mm:ss')"
           placement="top"
         >
           <el-card>
-            <h2>{{ key.remarks }}</h2>
-            <p>操作人员：{{ key.operator_name }}</p>
+            <h2>{{ key.operator_content?.title }}</h2>
+            <p>操作人员：{{ key.operator_id ?? key.user_id }}</p>
             <p>
-              人员类型：
-              <span v-if="'user' == key.operator_type"> 用户 </span>
-              <span v-else-if="'salesperson' == key.operator_type"> 导购员 </span>
-              <span v-else-if="'admin' == key.operator_type"> 管理员 </span>
-              <span v-else-if="'system' == key.operator_type"> 系统 </span>
-              <span v-else-if="'distributor' == key.operator_type"> 店铺管理员 </span>
-              <span v-else> 未知 </span>
+              人员类型：{{ key.operator_id > 0 ? '管理员' : '-' }}
             </p>
-            <p>操作详情：{{ key.content }}</p>
+            <p>操作详情：{{ key.operator_content?.remark }}</p>
           </el-card>
         </el-timeline-item>
       </el-timeline>
@@ -90,7 +84,8 @@ export default {
     getProcessLogInfo() {
       this.loading = true
       this.$api.financial.getInvoiceLog({invoice_id:this.invoice_id}).then((response) => {
-        this.list = response.list
+        this.list = response.list.map(item=>({...item,operator_content:JSON.parse(item.operator_content)}))
+        console.log(this.list)
         this.loading = false
       })
     }

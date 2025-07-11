@@ -35,8 +35,13 @@ export const open_status_map = {
 
 
 export const open_status_step_map = {
-  online: '线上',
-  offline:'线下'
+  online: '线上百望开票',
+  offline:'线下开票'
+}
+
+export  const invoice_type_code_map = {
+  '01':'专业发票',
+  '02':'电子普通发票'
 }
 
 export const open_status_arr = [
@@ -57,8 +62,8 @@ export const open_status_arr = [
   },
   {
     value: 'waste',
-    label: '已作废',
-    title: '已作废'
+    label: '已红冲',
+    title: '已红冲'
   },
   {
     value: 'failed',

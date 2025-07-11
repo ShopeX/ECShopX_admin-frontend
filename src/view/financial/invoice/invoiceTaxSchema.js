@@ -28,17 +28,26 @@ export const tableSchema = (vm) =>
       {
         name: '开票方名称',
         key: 'seller_company_name',
-        width: '160'
+        width: '160',
+        render(h, { row }) {
+          return <span> {row.sales_party_info?.seller_company_name} </span>
+        }
       },
       {
         name: '开票方税号',
         key: 'seller_tax_no',
-        width: '160'
+        width: '160',
+        render(h, { row }) {
+          return <span> {row.sales_party_info?.seller_tax_no} </span>
+        }
       },
       {
         name: '开票方电话',
         key: 'seller_phone',
-        width: '160'
+        width: '160',
+        render(h, { row }) {
+          return <span> {row.sales_party_info?.seller_phone} </span>
+        }
       },
       // {
       //   name: '开票渠道',
@@ -74,22 +83,34 @@ export const tableSchema = (vm) =>
       {
         name: '开票人',
         key: 'seller_name',
-        width: '120'
+        width: '120',
+        render(h, { row }) {
+          return <span> {row.sales_party_info?.seller_name} </span>
+        }
       },
       {
         name: '收款人',
         key: 'payee',
-        width: '120'
+        width: '120',
+        render(h, { row }) {
+          return <span> {row.sales_party_info?.payee} </span>
+        }
       },
       {
         name: '复核人',
         key: 'reviewer',
-        width: '120'
+        width: '120',
+        render(h, { row }) {
+          return <span> {row.sales_party_info?.reviewer} </span>
+        }
       },
       {
         name: '开票方地址',
         key: 'seller_address',
-        width: '160'
+        width: '160',
+        render(h, { row }) {
+          return <span> {row.sales_party_info?.seller_address} </span>
+        }
       },
       {
         name: '添加时间',
@@ -184,7 +205,9 @@ export const formSchema = (vm) =>
         component({ key }, value) {
           return (
             <div>
-              <el-input v-model={value[key]} type='number' min={0} /> &nbsp;%
+              <el-input v-model={value[key]} type='number' min={0} > 
+                <template slot='append'>%</template>
+              </el-input>
             </div>
           )
         }

@@ -1,11 +1,11 @@
 <template>
   <div>
-    <SpForm v-model="form" :reset-btn="false" submit-btn-text="保存" :form-list="formList" @onSubmit="onSaveConfig" />
+    <SpForm v-model="form" :reset-btn="false" submit-btn-text="保存配置" :form-list="formList" @onSubmit="onSaveConfig" />
   </div>
 </template>
 
 <script>
-import { formSchema } from './settingSchema'
+import { formSchema } from './invoiceConfirmationSchema'
 import { generatorParams } from '@/utils/schemaHelper'
 import api from '@/api'
 export default {
@@ -30,22 +30,22 @@ export default {
   },
   methods: {
     getDeatl() {
-      api.financial.getInvoiceSetting(this.id).then((res) => {
+      api.financial.getInvoiceComfirmSetting(this.id).then((res) => {
         this.form = {
           ...generatorParams(formSchema(this), res),
-          invoice_status:res.invoice_status == 1
+          special_invoice_confirm_open:res.special_invoice_confirm_open == '1'
         }
       })
     },
     onSaveConfig() {
       console.log(this.form)
       api.financial
-        .setInvoiceSetting({
+        .setInvoiceComfirmSetting({
           ...this.form,
-          invoice_status:this.form.invoice_status ? 1 : 0
+          special_invoice_confirm_open:this.form.special_invoice_confirm_open ? 1 : 0
         })
         .then((res) => {
-          this.$message.success('保存成功')
+          this.$message.success('发送成功')
           this.confirmDialogShow = false
         })
     }

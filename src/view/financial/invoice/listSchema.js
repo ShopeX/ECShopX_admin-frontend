@@ -6,6 +6,7 @@ import {
   open_status_map,
   open_status_arr,
   open_status_step_map,
+  invoice_type_code_map,
   invoice_source_map,
   invoice_source_arr,
   invoice_log_type_map
@@ -53,7 +54,8 @@ export const tableSchema = (vm) =>
           )
         },
         visible: (val) => {
-          return val.invoice_method !== 'online'
+          //线下并且不能是开票失败才战死后
+          return val.invoice_method != 'online' && val.invoice_status != 'failed'
         }
       },
       {
@@ -73,7 +75,8 @@ export const tableSchema = (vm) =>
           )
         },
         visible: (val) => {
-          return true || val.invoice_status === 'success' && val.invoice_method === 'online'
+          //开票成功的线上  开票失败的线下 展示
+          return (val.invoice_status == 'success' && val.invoice_method == 'online') || (val.invoice_status == 'failed' && val.invoice_method != 'online')
         }
       },
       {
@@ -115,7 +118,7 @@ export const tableSchema = (vm) =>
       {
         name: '开票申请流水',
         key: 'invoice_apply_bn',
-        width: '120'
+        width: '200'
       },
       {
         name: '订单号',
@@ -165,7 +168,10 @@ export const tableSchema = (vm) =>
       {
         name: '开票金额（¥）',
         key: 'invoice_amount',
-        width: '120'
+        width: '120',
+        render(_, { row }) {
+          return <span> { row.invoice_amount / 100 } </span>
+        }
       },
       {
         name: '开票状态',
@@ -197,10 +203,10 @@ export const tableSchema = (vm) =>
       },
       {
         name: '发票类型',
-        key: 'invoice_method',
+        key: 'invoice_type_code',
         width: '120',
         render(h, { row }) {
-          return <span> {open_status_step_map[row.invoice_method]} </span>
+          return <span> {row.invoice_type == 'enterprise' ? invoice_type_code_map[row.invoice_type_code] : ''} </span>
         }
       },
       {
@@ -273,15 +279,15 @@ export const formSchema = (vm) =>
         }
       },
       {
-        key: 'invoice_type',
+        key: 'invoice_type_code',
         label: '发票类型',
-        defaultValue: 'individual',
+        defaultValue: '02',
         component({ key }, value) {
           return (
             <div>
-              <el-radio-group v-model={value['invoice_type']}>
-                <el-radio label='individual'>普通发票-电子</el-radio>
-                <el-radio label='enterprise'>专业发票</el-radio>
+              <el-radio-group v-model={value['invoice_type_code']}>
+                <el-radio label='02'>电子普通发票</el-radio>
+                <el-radio label='01'>专业发票</el-radio>
               </el-radio-group>
             </div>
           )

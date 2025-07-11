@@ -1,5 +1,5 @@
 import { bindThisForFormSchema } from '@/utils/schemaHelper'
-import { open_status_map, open_status_step_map, invoice_source_map } from './constants'
+import { open_status_map, open_status_step_map, invoice_source_map, invoice_type_code_map } from './constants'
 import moment from 'moment'
 export const formSchema = (vm) => bindThisForFormSchema([
   {
@@ -19,7 +19,7 @@ export const formSchema = (vm) => bindThisForFormSchema([
     label: '开票状态',
     display: 'inline',
     component(_, value) {
-      return <span> {open_status_map[value.status]} </span>
+      return <span> {open_status_map[value.invoice_status]} </span>
     }
   },
   {
@@ -68,7 +68,10 @@ export const formSchema = (vm) => bindThisForFormSchema([
     key: 'invoice_amount',
     label: '发票金额',
     type: 'text',
-    display: 'inline'
+    display: 'inline',
+    component(_, value) {
+      return <span> {value.invoice_amount/100} </span>
+    }
   },
   {
     key: 'remark',
@@ -96,11 +99,14 @@ export const formSchema = (vm) => bindThisForFormSchema([
     display: 'inline',
   },
   {
-    key: 'email',
+    key: 'invoice_type_code',
     label: '开票类型',
     type: 'text',
     isShow() {
       return vm.form.invoice_type === 'enterprise'
+    },
+    component(_, value) {
+      return value.invoice_type == 'enterprise' ? invoice_type_code_map[value.invoice_type_code] : ''
     }
   },
   {
@@ -160,7 +166,7 @@ export const formSchema = (vm) => bindThisForFormSchema([
     }
   },
   {
-    key: 'bank_account',
+    key: 'mobile',
     label: '开票手机号',
     type: 'text',
     isShow() {
@@ -168,7 +174,7 @@ export const formSchema = (vm) => bindThisForFormSchema([
     }
   },
   {
-    key: 'bank_account',
+    key: 'email',
     label: '开票邮箱',
     type: 'text',
     isShow() {
@@ -215,7 +221,12 @@ export const formSchema = (vm) => bindThisForFormSchema([
               <el-button type='primary' plain onClick={() => this.showPdHandle()}>
                 查看发票PDF
               </el-button>
-              { vm.form.invoice_status === 'invoice_success' && vm.form.invoice_method === 'online' && <el-button type='primary' plain onClick={() => this.sendEmailHandle()}>
+              {/* 开票成功的线上  开票失败的线下 展示 */}
+              { (
+                (vm.form.invoice_status == 'success' && vm.form.invoice_method == 'online') 
+                || 
+                (vm.form.invoice_status == 'failed' && vm.form.invoice_method != 'online')
+                ) && <el-button type='primary' plain onClick={() => this.sendEmailHandle()}>
                 重发至邮箱
               </el-button>}
             </div>
@@ -289,7 +300,10 @@ const infoTable = {
     {
       key: 'amount',
       name: '开票金额',
-      width: 120
+      width: 120,
+      render(_, { row }) {
+        return <span> { row.amount / 100 } </span>
+      }
     },
     {
       key: 'order_id',

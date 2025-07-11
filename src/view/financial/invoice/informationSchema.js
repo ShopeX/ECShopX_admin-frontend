@@ -134,6 +134,7 @@ export const formSchema = (vm) =>
         key: 'seller_address',
         type: 'input',
         required: true,
+        maxlength:'255',
         tip: '联系地址文字长度，请不要超过255个字'
       }
     ],

@@ -20,13 +20,21 @@
         <el-input v-model="formData.company_title" placeholder="请输入发票抬头" />
       </SpFilterFormItem>
       <SpFilterFormItem prop="invoice_source" label="开票来源:">
-        <el-input v-model="formData.invoice_source" placeholder="请输入开票来源" />
+        <el-select v-model="formData.invoice_source" clearable placeholder="请选择">
+          <el-option
+            v-for="item in invoiceSourceList"
+            :key="item.value"
+            :label="item.title"
+            size="mini"
+            :value="item.value"
+          />
+        </el-select>
       </SpFilterFormItem>
       <SpFilterFormItem prop="mobile" label="手机号:">
         <el-input v-model="formData.mobile" placeholder="请输入手机号" />
       </SpFilterFormItem>
-      <SpFilterFormItem prop="approve_status" label="发票类型:">
-        <el-select v-model="formData.approve_status" clearable placeholder="请选择">
+      <SpFilterFormItem prop="invoice_type_code" label="发票类型:">
+        <el-select v-model="formData.invoice_type_code" clearable placeholder="请选择">
           <el-option
             v-for="item in typeList"
             :key="item.value"
@@ -139,7 +147,7 @@
 <script lang="js">
 import { tableSchema, formSchema, remarkSchema, confirmSchema, logTableSchema, innerTableSchema } from './listSchema'
 import moment from 'moment'
-import { status } from './constants'
+import { status, invoice_source_arr } from './constants'
 import { generatorParams } from '@/utils/schemaHelper'
 import { pageMixin } from '@/mixins'
 import { VERSION_STANDARD } from '@/utils'
@@ -176,9 +184,11 @@ export default {
         company_title:'',
         invoice_source:'',
         mobile:'',
+        invoice_type_code:'',
         cycleTime:[]
       },
-      typeList:[],
+      invoiceSourceList:invoice_source_arr,
+      typeList:[{value:'01',title:'专用发票'},{value:'02',title:'电子普通发票'}],
       orderCategory: this.VERSION_STANDARD
         ? ORDER_CATEGORY.filter((item) => item.value != 'distributor')
         : ORDER_CATEGORY,
@@ -256,7 +266,7 @@ export default {
     pushEmailHandle(row) {
       this.editRow = row
       this.confirmDialogShow = true
-      this.confirmForm = generatorParams(confirmSchema(this), row)
+      this.confirmForm = generatorParams(confirmSchema(this), {})
     },
     // 日志
     showLogHandle(row) {
@@ -285,7 +295,7 @@ export default {
     onConfirmFormSubmit() {
       this.confirmStatus = true
       api.financial.resendInvoiceEmail({
-        invoice_id: this.editRow.id,
+        id: this.editRow.id,
         confirm_email: this.confirmForm.email,
       }).then((res) => {
         this.$message.success('发送成功')
@@ -306,7 +316,7 @@ export default {
       })
     },
     onDialogFormSubmit() {
-      api.order.updateInvoice(this.editRow.id, this.dialogForm).then((res) => {
+      api.financial.updateInvoice(this.editRow.id, this.dialogForm).then((res) => {
         this.$message.success('更新成功')
         this.dialogShow = false
         this.refresh()

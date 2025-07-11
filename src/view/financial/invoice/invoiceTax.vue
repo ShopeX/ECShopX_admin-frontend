@@ -160,7 +160,7 @@ export default {
     },
     editRowHandle(row) {
       console.log(row)
-      this.dialogTitle = '管理分类税率配置'
+      this.dialogTitle = '编辑管理分类税率配置'
       this.editRow = row
       this.dialogShow = true
       const {id,sales_party_id,tax_rate_type,category_ids,invoice_tax_rate} = row
@@ -198,7 +198,7 @@ export default {
      
     },
     handleAdd(){
-      this.dialogTitle = '管理分类税率配置'
+      this.dialogTitle = '新增管理分类税率配置'
       this.dialogShow = true
       this.editRow = {}
       this.dialogForm = {

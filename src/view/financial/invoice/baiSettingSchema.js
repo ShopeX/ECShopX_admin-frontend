@@ -13,7 +13,7 @@ export const formSchema = (vm) => bindThisForFormSchema([
   },
   {
     label: '密码',
-    key: 'alipay_fee_ty',
+    key: 'password',
     type: 'input',
     required: true
   },
@@ -31,13 +31,13 @@ export const formSchema = (vm) => bindThisForFormSchema([
   },
   {
     label: '用户盐值',
-    key: 'alipay_fee_typ',
+    key: 'orgAuthCode',
     type: 'input',
     required: true
   },
   {
     label: '机构税号',
-    key: 'alipay_fee_type',
+    key: 'taxNo',
     type: 'input',
     required: true
   }

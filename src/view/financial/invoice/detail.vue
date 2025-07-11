@@ -64,7 +64,8 @@ export default {
     sendEmailHandle() {
       this.confirmDialogShow = true
       this.confirmForm = {
-        email: this.form.email
+        // email: this.form.email
+        email:''
       }
     },
     getInvoice() {
@@ -80,7 +81,7 @@ export default {
       this.confirmStatus = true
       api.financial
         .resendInvoiceEmail({
-          invoice_id: this.id,
+          id: this.id,
           confirm_email: this.confirmForm.email
         })
         .then((res) => {

@@ -17,12 +17,13 @@ export const formSchema = (vm) => bindThisForFormSchema([
   },
   {
     label: '开票方类型',
-    key: 'invoice_method',
+    key: 'invoice_seller_type',
     type: 'radio',
-    defaultValue: 'offline',
+    defaultValue: '1',
     options: [
-      { name: '平台', label: 'offline' },
-      // { name: '店铺', label: 'online' }
+      { name: '平台', label: '1' },
+      // { name: '店铺', label: '2' },
+        // { name: '商城', label: '3' },
     ]
   },
   {
@@ -53,10 +54,23 @@ export const formSchema = (vm) => bindThisForFormSchema([
   },
   {
     label: '运费税率',
-    key: 'freight_name',
-    type: 'input'
+    key: 'freight_tax_rate',
+    type: 'input',
+    component({ key }, value){
+      return(
+        <el-input
+          clearable
+          type='number'
+          placeholder='请输入内容'
+          v-model={value[key]}
+          min="0"
+        >
+          <template slot='append'>%</template>
+        </el-input>
+      )
+    }
   },
-  {
+  { 
     label: '开票维度',
     key: 'invoice_limit',
     type: 'radio',

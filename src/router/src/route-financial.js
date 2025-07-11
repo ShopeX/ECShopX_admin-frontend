@@ -134,6 +134,11 @@ export default {
       name: `发票配置`,
       component: () => import('@/view/financial/invoice/invoiceTax')
     },
+    {
+      path: 'invoice/invoiceConfirmation',
+      name: '专票确认书',
+      component: () => import('@/view/financial/invoice/invoiceConfirmation')
+    },
 
 
   ]

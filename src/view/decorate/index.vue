@@ -29,10 +29,6 @@
             class="wgt-item"
             :data-name="wgt.name"
           >
-            <!-- <i
-              class="wgt-icon iconfont"
-              :class="wgt.wgtIcon"
-                      /> -->
             <div :class="['wgt-icon', wgt.wgtIcon]" />
             <div class="wgt-name">
               {{ wgt.wgtName }}
@@ -60,11 +56,12 @@
                 <div class="wgt-tip">
                   {{ wgt.wgtName }}
                 </div>
-                <div class="wgt-tools" :class="{ active: activeCompIndex == index }">
-                  <!-- <i class="iconfont icon-arrow-alt-circle-up1" @click="onMoveUpComp(index)" />
-                            <i class="iconfont icon-arrow-alt-circle-dow1" @click="onMoveDownComp(index)" /> -->
-                  <i class="iconfont icon-copy1" @click="onCopyComp(index, wgt)" />
-                  <i class="iconfont icon-trash-alt1" @click="onDeleteComp(index)" />
+                <div
+                  class="wgt-tools flex flex-col gap-1"
+                  :class="{ active: activeCompIndex == index }"
+                >
+                  <SpIcon name="copy" @click="onCopyComp(index, wgt)" />
+                  <SpIcon name="delete" @click="onDeleteComp(index)" />
                 </div>
                 <component :is="wgt.name" :value="wgt" />
               </div>

@@ -109,6 +109,13 @@
           <el-option :value="false" label="否" />
         </el-select>
       </SpFilterFormItem>
+
+      <SpFilterFormItem prop="item_bn">
+        <el-input v-model="formData.item_bn" placeholder="商品sku编码" />
+      </SpFilterFormItem>
+      <SpFilterFormItem prop="goods_bn">
+        <el-input v-model="formData.goods_bn" placeholder="商品spu编码" />
+      </SpFilterFormItem>
     </SpFilterForm>
     <SpFinder
       ref="finder"
@@ -142,6 +149,7 @@
               ])
           },
           { name: 'SKU编码', key: 'item_bn', width: 120 },
+          { name: 'SPU编码', key: 'goods_bn', width: 120 },
           {
             name: '商品类型',
             key: 'item_holder',
@@ -209,7 +217,9 @@ export default {
       distributor_id: '',
       supplier_name: '',
       item_holder: '',
-      is_gift: ''
+      is_gift: '',
+      item_bn: '',
+      goods_bn: ''
     }
     const formData = Object.assign(defaultParams, queryParams)
     return {
@@ -271,6 +281,18 @@ export default {
       })
     },
     onReset() {
+      this.formData = {
+        keywords: '',
+        approve_status: 'onsale',
+        brand_id: '',
+        category: '',
+        distributor_id: '',
+        supplier_name: '',
+        item_holder: '',
+        is_gift: '',
+        item_bn: '',
+        goods_bn: ''
+      }
       this.$refs.finder.refresh(true)
     },
     onSearch() {

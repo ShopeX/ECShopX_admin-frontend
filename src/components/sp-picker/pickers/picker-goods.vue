@@ -132,21 +132,21 @@
         columns: [
           { name: '商品ID', key: 'item_id', width: 80 },
           {
-            name: '商品名称',
-            key: 'page_name',
+            name: '商品主图',
+            key: 'pics',
+            width: 80,
             render: (h, { row }) =>
-              h('div', { class: 'item-info' }, [
-                h('div', { class: 'item-image' }, [
-                  h('SpImage', {
-                    props: {
-                      src: row.pics[0],
-                      width: 60,
-                      height: 60
-                    }
-                  })
-                ]),
-                h('div', { class: 'item-name' }, row.itemName)
-              ])
+              h('SpImage', {
+                props: {
+                  src: row.pics[0],
+                  width: 60,
+                  height: 60
+                }
+              })
+          },
+          {
+            name: '商品名称', 
+            key: 'item_name',
           },
           { name: 'SKU编码', key: 'item_bn', width: 120 },
           { name: 'SPU编码', key: 'goods_bn', width: 120 },

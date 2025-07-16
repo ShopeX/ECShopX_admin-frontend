@@ -11,7 +11,7 @@ const routes = [
       title: '供应'
     },
     name: 'supply',
-    path: '/supplier',
+    path: '/supply',
     children: [
       {
         name: 'productList',

@@ -4,25 +4,27 @@ const routes = [
   {
     component: BasicLayout,
     meta: {
-      aliasName: 'financial',
+      aliasName: 'supplierfinancial',
       icon: 'funds',
       keepAlive: true,
       title: '财务'
     },
-    name: 'financial',
+    name: 'supplierfinancial',
     path: '/financial',
     children: [
-      // {
-      //   name: 'summary',
-      //   path: 'supplier-settlement/summary',
-      //   meta: {
-      //     aliasName: 'summary_supplier',
-      //     icon: 'pay-circle',
-      //     title: '供应商结算汇总',
-      //     permissions: ['financial.settlement_supplier.summary_supplier']
-      //   },
-      //   component: () => import('@/'),
-      // }
+      {
+        name: 'supplierSettlementSummary',
+        path: 'supplier-settlement/summary',
+        meta: {
+          aliasName: 'supplierfinancialsettlementsummary_supplier',
+          icon: 'pay-circle',
+          title: '供应商结算汇总',
+          permissions: [
+            'supplierfinancial.supplierfinancialsettlement.supplierfinancialsettlementsummary_supplier'
+          ]
+        },
+        component: () => import('@/view/financial/settlement/configure')
+      }
     ]
   }
 ]

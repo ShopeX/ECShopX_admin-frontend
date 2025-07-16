@@ -23,10 +23,11 @@ function getAllPermissions(tree, fieldName, childrenKey = 'children', parentPath
     const hasChildren =
       node[childrenKey] && Array.isArray(node[childrenKey]) && node[childrenKey].length > 0
 
+    node.alias_name = node.alias_name.replace(/\//g, '')
     if (!hasChildren) {
       // 如果是叶子节点（没有子节点），才添加到结果中
-      node.permission = currentPath.join('.')
-      paths.push(currentPath.join('.'))
+      node.permission = currentPath.map(item => item.replace(/\//g, '')).join('.')
+      paths.push(currentPath.map(item => item.replace(/\//g, '')).join('.'))
     } else {
       // 如果有子节点，递归处理
       const childPaths = getAllPermissions(node[childrenKey], fieldName, childrenKey, currentPath)

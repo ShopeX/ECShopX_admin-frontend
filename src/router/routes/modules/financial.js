@@ -51,55 +51,58 @@ const routes = [
         },
         component: () => import('@/view/mall/trade/refunderrorlogs')
       },
-      // {
-      //   name: 'summary',
-      //   path: 'settlement/summary',
-      //   meta: {
-      //     aliasName: 'summary',
-      //     icon: 'pay-circle',
-      //     title: '结算汇总',
-      //     permissions: ['financial.settlement.summary']
-      //   },
-      //   component: () => import('@/view/financial/settlement/summary'),
-      //   children: [
-      //     {
-      //       path: 'detail/:id?',
-      //       component: () => import('@/view/financial/settlement/detailed')
-      //     }
-      //   ]
-      // },
-      // {
-      //   name: 'configuration',
-      //   path: 'settlement/configuration',
-      //   meta: {
-      //     aliasName: 'configure_supplier',
-      //     icon: 'pay-circle',
-      //     title: '结算配置',
-      //     permissions: ['financial.settlement_supplier.configure_supplier']
-      //   },
-      //   component: () => import('@/view/financial/settlement/configure')
-      // },
-      // {
-      //     name: 'configuration',
-      //     path: 'supplier-settlement/configuration',
-      //     meta: {
-      //         aliasName: 'configure_supplier',
-      //         icon: 'pay-circle',
-      //         title: '供应商结算配置',
-      //         permissions: ['financial.settlement_supplier.configure_supplier']
-      //     },
-      //     component: () => import('@/'),
-      // }, {
-      //     name: 'summary',
-      //     path: 'supplier-settlement/summary',
-      //     meta: {
-      //         aliasName: 'summary_supplier',
-      //         icon: 'pay-circle',
-      //         title: '供应商结算汇总',
-      //         permissions: ['financial.settlement_supplier.summary_supplier']
-      //     },
-      //     component: () => import('@/'),
-      // },
+      {
+        name: 'settlementConfiguration',
+        path: 'settlement/configuration',
+        meta: {
+          aliasName: 'configure',
+          icon: 'pay-circle',
+          title: '结算配置',
+          permissions: ['financial.settlement.configure']
+        },
+        component: () => import('@/view/financial/settlement/configure')
+      },
+      {
+        name: 'settlementSummary',
+        path: 'settlement/summary',
+        meta: {
+          aliasName: 'configure_supplier',
+          icon: 'pay-circle',
+          title: '结算汇总',
+          permissions: ['financial.settlement.summary']
+        },
+        component: () => import('@/view/financial/settlement/summary'),
+        children: [
+          {
+            path: 'detail/:id?',
+            component: () => import('@/view/financial/settlement/detailed')
+          }
+        ]
+      },
+
+      {
+        name: 'supplierSettlementConfiguration',
+        path: 'supplier-settlement/configuration',
+        meta: {
+          aliasName: 'configure_supplier',
+          icon: 'pay-circle',
+          title: '供应商结算配置',
+          permissions: ['financial.settlement_supplier.configure_supplier']
+        },
+        component: () => import('@/view/financial/settlement/summary')
+      },
+      {
+        name: 'supplierSettlementSummary',
+        path: 'supplier-settlement/summary',
+        meta: {
+          aliasName: 'summary_supplier',
+          icon: 'pay-circle',
+          title: '供应商结算汇总',
+          permissions: ['financial.settlement_supplier.summary_supplier']
+        },
+        component: () => import('@/view/financial/settlement/configure')
+      },
+
       {
         name: 'voucherReview',
         path: 'offline-transfer/voucher-review',

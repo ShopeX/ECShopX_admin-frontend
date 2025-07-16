@@ -93,13 +93,7 @@
               <div class="f_l">
                 <template>
                   <div style="margin-bottom: 5px">
-                    <el-input
-                      v-model="item.description"
-                      type="textarea"
-                      style="width: 400px"
-                      :rows="3"
-                      placeholder="请输入等级说明"
-                    />
+                    <SpRichText v-model="item.description" />
                   </div>
                 </template>
                 &nbsp;<span class="frm-tips">（注：等级说明在c端展示！）</span>

@@ -85,6 +85,7 @@ export default {
         { id: 'pointShop', title: '积分商城' },
         { id: 'registActivity', title: '报名活动' },
         { id: 'customerService', title: '客服' },
+        { id: 'search', title: '搜索' },
       ],
       multiple: this.value?.multiple ?? true
     }

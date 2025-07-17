@@ -8,6 +8,7 @@ import {
   PickerGoodsList,
   PickerGoodsSku,
   PickerGoodsParams,
+  PickerSupplier,
   PickerShop,
   PickerSeckill,
   PickerPath,
@@ -63,6 +64,8 @@ function resolvePicker(type) {
       return PickerAfterSalesList
     case 'pickerTemplate':
       return PickerTemplate
+      case 'pickerSupplier':
+      return PickerSupplier
     case 'pickerCompany':
       return PickerCompany
     case 'pickerEditBoard':

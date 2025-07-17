@@ -23,7 +23,13 @@ const routes = [
             'supplierfinancial.supplierfinancialsettlement.supplierfinancialsettlementsummary_supplier'
           ]
         },
-        component: () => import('@/view/financial/settlement/configure')
+        component: () => import('@/views/financial/summary_supplier'),
+        children: [
+          {
+            path: 'detail/:id?',
+            component: () => import('@/views/financial/detailed')
+          }
+        ]
       }
     ]
   }

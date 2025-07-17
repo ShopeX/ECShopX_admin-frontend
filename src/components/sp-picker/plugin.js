@@ -40,6 +40,7 @@ export default {
       goodsitem: args => fn({ value: { ...args }, type: 'pickerGoodsItem' }),
       goodsSku: args => fn({ value: { ...args }, type: 'pickerGoodsSku' }),
       goodsParams: args => fn({ value: { ...args }, type: 'pickerGoodsParams' }),
+      supplier: args => fn({ value: { ...args }, type: 'pickerSupplier' }),
       zitiList: args => fn({ value: { ...args }, type: 'pickerZitiList' }),
       afterSalesList: args => fn({ value: { ...args }, type: 'pickerAfterSalesList' }),
       template: args => fn({ value: { ...args }, type: 'pickerTemplate' }),

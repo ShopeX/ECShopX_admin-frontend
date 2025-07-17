@@ -89,7 +89,7 @@ const routes = [
           title: '供应商结算配置',
           permissions: ['financial.settlement_supplier.configure_supplier']
         },
-        component: () => import('@/view/financial/settlement/summary')
+        component: () => import('@/views/financial/configure_supplier')
       },
       {
         name: 'supplierSettlementSummary',
@@ -100,7 +100,13 @@ const routes = [
           title: '供应商结算汇总',
           permissions: ['financial.settlement_supplier.summary_supplier']
         },
-        component: () => import('@/view/financial/settlement/configure')
+        component: () => import('@/views/financial/summary_supplier'),
+        children: [
+          {
+            path: 'detail/:id?',
+            component: () => import('@/views/financial/detailed')
+          }
+        ]
       },
 
       {

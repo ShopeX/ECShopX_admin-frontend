@@ -86,6 +86,7 @@ import PickerMarketing from './picker-marketing'
 import PickerShop from './picker-shop'
 import PickerSeckill from './picker-seckill'
 import PickerRegactivity from './picker-regactivity'
+import PickerSupplier from './picker-supplier'
 import PickerPurchaseActivity from './picker-purchaseActivity'
 import PickerPages from './picker-pages'
 import PickerLive from './picker-live'
@@ -105,6 +106,7 @@ export default {
     PickerMarketing,
     PickerShop,
     PickerSeckill,
+    PickerSupplier,
     PickerRegactivity,
     PickerPurchaseActivity,
     PickerPages,

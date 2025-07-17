@@ -15,7 +15,7 @@
             </svg>
             附近商家
           </template>
-          <template v-if="item.name === 'coupon'">
+          <template v-if="item.name === 'coupon' && pagetype !== 'guide'">
             <svg class="svg-icon" aria-hidden="true">
               <use xlink:href="#icon-tag1" />
             </svg>
@@ -153,7 +153,7 @@
                   :res="item"
                   :active="index == editorIndex"
                 />
-                <coupon v-if="item.name === 'coupon'" :res="item" :active="index == editorIndex" />
+                <coupon v-if="item.name === 'coupon' && pagetype !== 'guide'" :res="item" :active="index == editorIndex" />
                 <film v-if="item.name === 'film'" :res="item" :active="index == editorIndex" />
                 <goodsGrid
                   v-if="item.name === 'goodsGrid'"
@@ -476,15 +476,6 @@ export default {
       },
       saveInit: '',
       initData: [
-        {
-          name: 'coupon',
-          base: {
-            title: '到店优惠',
-            subtitle: '游客专享福利',
-            padded: true
-          },
-          data: []
-        },
         {
           name: 'film',
           base: {
@@ -883,6 +874,17 @@ export default {
             }
           ],
           seletedTags: []
+        })
+      }
+      if (this.pagetype !== 'guide') {
+        this.initData.push({
+          name: 'coupon',
+          base: {
+            title: '到店优惠',
+            subtitle: '游客专享福利',
+            padded: true
+          },
+          data: []
         })
       }
       if (this.VERSION_PLATFORM && !isHaveNearbyShop) {

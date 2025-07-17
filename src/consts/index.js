@@ -256,7 +256,7 @@ export const LINK_PATH = {
   'article': '文章',
   'planting': '软文',
   'link': '页面',
-  'marketing': '营销',
+  // 'marketing': '营销',
   'regactivity': '活动报名',
   'purchase_activity': '内购活动',
   'seckill': '秒杀',

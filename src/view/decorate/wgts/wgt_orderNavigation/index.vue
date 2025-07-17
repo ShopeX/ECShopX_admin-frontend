@@ -1,0 +1,62 @@
+<style lang="scss" src="./index.scss"></style>
+<template>
+  <div
+    :class="{
+      'wgt-order-navigation': true,
+      'padded': value.padded
+    }"
+    :style="`background-color: ${value.backgroundColor};`"
+  >
+    <div v-if="value.title" :style="`color:${value.titleColor}`" class="wgt-hd">
+      <span class="title">{{ value.title }}</span>
+      <div class="morelink">
+        <span class="sub-title">全部订单</span>
+        <span class="ecx-icon icon-qianjin"></span>
+      </div>
+    </div>
+    <div class="wgt-bd">
+      <!-- 挂件自定义部分 -->
+      <div
+        v-for="(item, index) in value.data"
+        :key="`nav-item__${index}`"
+        class="nav-item"
+        :style="getNavItemStyle"
+      >
+        <div class="nav-image" :style="`border-radius: 50px;`">
+          <SpImage :src="item.imgUrl" :circle="0" :style="getNavItemImageStyle" />
+        </div>
+        <div v-if="item.content" class="nav-item--content">{{ item.content }}</div>
+      </div>
+      <!-- 挂件自定义部分 -->
+    </div>
+  </div>
+</template>
+<script>
+import config from './config'
+export default {
+  name: 'OrderNavigation',
+  wgtName: '订单导航',
+  wgtDesc: '',
+  wgtIcon: 'wgt-order-navigation',
+  config,
+  props: {
+    value: []
+  },
+  computed: {
+    getNavItemStyle() {
+      const { length } = this.value.data
+      return {
+        width: `${100 / length}%`
+      }
+    },
+    getNavItemImageStyle() {
+      // const { length } = this.value.data
+      // return {
+      //   // width: '100%',
+      //   height: `${(375 - (length + 1) * 8) / length}px`
+      // }
+    }
+  },
+  mounted() {}
+}
+</script>

@@ -34,7 +34,7 @@
         <div class="item-fd">
           <i v-if="isEdit" class="ecx-icon icon-paiban" @click="onEdit(item, index)" />
           <i class="ecx-icon icon-shoudongpaixu mover" />
-          <i v-if="index > min - 1" class="ecx-icon icon-guanbi" @click="onRemoveItem(index)" />
+          <i v-if="index > min - 1 && isShowDel" class="ecx-icon icon-guanbi" @click="onRemoveItem(index)" />
         </div>
       </div>
       <el-button slot="footer" type="text" @click="handleAddItem">{{ btnText }}</el-button>
@@ -69,6 +69,10 @@ export default {
     isEdit: {
       type: Boolean,
       default: false
+    },
+    isShowDel: {
+      type: Boolean,
+      default: true
     }
   },
   data() {

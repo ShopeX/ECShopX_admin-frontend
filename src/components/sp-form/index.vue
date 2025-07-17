@@ -289,6 +289,15 @@ export default {
         </el-radio-group>
       )
     },
+    _renderRadioButton({ key, options, onchange = () => { } }) {
+      return (
+        <el-radio-group v-model={this.value[key]} size="mini" onChange={(e) => onchange(e, this)}>
+          {options.map((op) => (
+            <el-radio-button label={op.label}>{op.name}</el-radio-button>
+          ))}
+        </el-radio-group>
+      )
+    },
     _renderCheckbox(item) {
       const { value } = this
       const { key, disabled = false, options, onChange = () => {} } = item
@@ -340,7 +349,31 @@ export default {
           disabled={isFunction(disabled) ? disabled() : disabled}
         />
       )
-    }
+    },
+    _renderColor(item) {
+      const { value } = this
+      const { key, initValue = "#fff" } = item
+      return (
+        <div class='el-color-picker-wrap'>
+          <el-color-picker v-model={value[key]} size='small' />
+          <el-button
+            class='button-reset'
+            type='text'
+            on-click={() => {
+              value[key] = initValue
+            }}
+          >
+            重置
+          </el-button>
+        </div>)
+    },
+    _renderSlider(item) {
+      const { value } = this
+      const { key, showInput = false } = item
+      return (
+        <el-slider v-model={value[key]} show-input={showInput} />
+      )
+    },
   },
   render() {
     const { title, value, formList, width, labelWidth } = this
@@ -363,11 +396,14 @@ export default {
         'text': this._renderText,
         'select': this._renderSelect,
         'radio': this._renderRadio,
+        'radiobutton': this._renderRadioButton,
         'checkbox': this._renderCheckbox,
         'table': this._renderTable,
         'richText': this._renderRichText,
         'image': this._renderImage,
-        'switch': this._renderSwitch
+        'switch': this._renderSwitch,
+        'color': this._renderColor,
+        'slider': this._renderSlider,
       }
       return renderItem[item.type](item)
     }

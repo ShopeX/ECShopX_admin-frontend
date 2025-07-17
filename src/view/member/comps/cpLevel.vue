@@ -60,6 +60,10 @@
                 placeholder="请输入内容"
               />
             </div>
+            <div style="display: flex;">
+              <span class="txt">等级背景</span>
+              <SpImagePicker v-model="item.grade_background" />
+            </div>
             <div class="clearfix">
               <span class="txt f_l">升级条件</span>
               <span v-if="item.default_grade" class="txt-none">无</span>
@@ -208,6 +212,7 @@ export default {
         {
           grade_id: '',
           grade_name: '',
+          grade_background: '',
           background_pic_url: '',
           promotion_condition: {
             total_consumption: 0
@@ -336,6 +341,7 @@ export default {
       this.levelData.push({
         grade_id: '',
         grade_name: '',
+        grade_background: '',
         background_pic_url: '',
         promotion_condition: { total_consumption: 0 },
         privileges: { discount: '' },
@@ -520,6 +526,7 @@ export default {
   width: 200px;
   margin-top: 15px;
   margin: 15px 20px 0 0;
+  text-align: center;
 }
 .item-content {
   // width: 500px;

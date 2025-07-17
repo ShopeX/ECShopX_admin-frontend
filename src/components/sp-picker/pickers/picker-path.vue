@@ -11,7 +11,21 @@
 <template>
   <div class="picker-path">
     <!-- {{ value }} -->
-    <el-tabs v-model="tabValue" :tab-position="'left'">
+    <el-tabs v-if="value.guide" v-model="tabValue" :tab-position="'left'">
+      <el-tab-pane label="商品" name="goods">
+        <PickerGoods v-if="tabValue == 'goods'" ref="goods" :value="value" />
+      </el-tab-pane>
+      <el-tab-pane label="管理分类" name="category">
+        <PickerCategory v-if="tabValue == 'category'" ref="category" :value="value" />
+      </el-tab-pane>
+      <el-tab-pane label="软文" name="planting">
+        <PickerPlanting v-if="tabValue == 'planting'" ref="planting" :value="value" />
+      </el-tab-pane>
+      <el-tab-pane label="自定义页面" name="custom_page">
+        <PickerPages v-if="tabValue == 'custom_page'" ref="custom_page" :value="value" />
+      </el-tab-pane>
+    </el-tabs>
+    <el-tabs v-else v-model="tabValue" :tab-position="'left'">
       <el-tab-pane label="商品" name="goods">
         <PickerGoods v-if="tabValue == 'goods'" ref="goods" :value="value" />
       </el-tab-pane>
@@ -36,9 +50,9 @@
       <el-tab-pane label="页面" name="link">
         <PickerLink v-if="tabValue == 'link'" ref="link" :value="value" />
       </el-tab-pane>
-      <el-tab-pane label="营销" name="marketing">
+      <!-- <el-tab-pane label="营销" name="marketing">
         <PickerMarketing v-if="tabValue == 'marketing'" ref="marketing" :value="value" />
-      </el-tab-pane>
+      </el-tab-pane> -->
       <el-tab-pane label="活动报名" name="regactivity">
         <PickerRegactivity v-if="tabValue == 'regactivity'" ref="regactivity" :value="value" />
       </el-tab-pane>

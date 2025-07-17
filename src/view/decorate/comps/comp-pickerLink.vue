@@ -102,12 +102,13 @@ export default {
   methods: {
     async onPickerPath() {
       const { linkPage, id } = this.localValue
+      const pathLink = ['/salespersonshelfindex', 'guide-assistant/home-template']
       const res = await this.$picker.path({
         data: id,
         tab: linkPage,
-        multiple: false
+        multiple: false,
+        guide: (this.$route.path.indexOf(pathLink[0]) > -1 || this.$route.path.indexOf(pathLink[1]) > -1) ? true : false, // 为了兼容导购装修模板
       })
-      debugger
       this.$emit('input', res)
       this.$emit('change', res)
     },

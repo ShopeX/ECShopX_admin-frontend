@@ -131,15 +131,26 @@ export default {
           }
     }
   },
+  watch: {
+    formData: {
+      handler(val) {
+        debugger
+        this.$emit('input', val)
+      }
+    }
+  },
   created() {},
   methods: {
     // 初始化表单数据
     initFormData() {
       const formData = {}
       this.formItems.forEach(item => {
-        formData[item.fieldName] = this.value?.[item.fieldName] || item.value || ''
+        formData[item.fieldName] =
+          typeof this.value?.[item.fieldName] === 'undefined'
+            ? item.value || ''
+            : this.value?.[item.fieldName]
       })
-      this.$emit('input', formData)
+      // this.$emit('input', formData)
       return formData
     },
     // 处理字段值变化
@@ -203,6 +214,9 @@ export default {
         margin-bottom: 0;
       }
     }
+    .sp-form-plus__actions {
+      padding-top: 0;
+    }
   }
   &--search-form {
     background-color: #f6f7f9;
@@ -210,6 +224,7 @@ export default {
     padding: 16px 16px 16px;
   }
   &__actions {
+    padding-top: 40px;
     display: flex;
     align-items: center;
     justify-content: flex-end;

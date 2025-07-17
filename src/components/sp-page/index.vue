@@ -1,6 +1,6 @@
 <template>
   <div
-    class="sp-page p-4 h-full flex flex-col"
+    class="sp-page p-4 flex flex-col"
     :class="{
       'sp-page--no-header': !hasHeader,
       'sp-page--no-footer': !hasFooter,

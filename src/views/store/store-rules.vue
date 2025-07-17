@@ -1,16 +1,13 @@
 <template>
-  <SpPage>
-    <div class="store-rules-container">
-      <SpFormPlus
-        ref="storeRulesForm"
-        form-type="normalForm"
-        :form-items="formItems"
-        :value="formData"
-        label-width="180px"
-        @submit="handleSubmit"
-        @field-change="handleFieldChange"
-      />
-    </div>
+  <SpPage title="进店规则">
+    <SpFormPlus
+      ref="storeRulesForm"
+      form-type="normalForm"
+      :form-items="formItems"
+      v-model="formData"
+      label-width="180px"
+      @submit="handleSubmit"
+    />
   </SpPage>
 </template>
 
@@ -19,300 +16,137 @@ export default {
   data() {
     return {
       formData: {
-        // 非自然流量配置
-        miniProgramAccess: true,
-        shareCardAccess: true,
-        guidanceEnabled: false,
-        guidanceWechatGroup: true,
-        guidanceMoments: true,
-
-        // 自然流量配置
-        exclusiveStoreEnabled: false,
-        exclusiveStoreAccess: true,
-        lbsWechatEnabled: false,
-        lbsWechatAccess: true,
-
-        // 免责条款
-        disclaimerEnabled: true,
-        defaultUser: '介绍值',
-        pageLimit: 1566,
-        additionalSettings: ''
+        enterStoreByshopCode: false,
+        enterStoreByGuideMaterial: false,
+        enterStoreByGuide: false,
+        enterStoreByLbs: false,
+        safetyStrategy: '1',
+        template: {
+          id: '',
+          name: ''
+        }
       },
       formItems: [
-        // 非自然流量分组标题
         {
-          fieldName: 'nonNaturalTrafficTitle',
+          label: '非自然流量（带参）',
+          component: 'group'
+        },
+        {
+          fieldName: 'enterStoreByshopCode',
           label: '店铺码进店',
           component: 'switch',
+          value: false,
           tip: () => (
-            <div>
+            <div class="text-sm text-[#999]">
               <p>通过带门店参小程序码扫码进入对应店铺</p>
               <p>通过分享小程序卡片进入对应店铺</p>
             </div>
           )
         },
-
-        // 店铺的过度
         {
-          fieldName: 'storeTransitionTitle',
+          fieldName: 'enterStoreByGuideMaterial',
+          label: '导购物料进店',
+          component: 'switch',
+          tip: () => (
+            <div class="text-sm text-[#999]">
+              <p>通过扫企微码添加导购加好友的欢迎语推送的小程序卡片进店</p>
+              <p>通过导购商城分享的小程序海报、小程序卡片进店</p>
+            </div>
+          )
+        },
+        {
+          label: '自然流量（不带参）',
+          component: 'group'
+        },
+        {
+          fieldName: 'enterStoreByGuide',
+          label: '进入专属导购所属店',
+          component: 'switch',
+          tip: () => (
+            <div class="text-sm text-[#999]">
+              <p>通过扫导购企业微信码加好友、进入导购归属店铺</p>
+              <p>通过导购商城分享的小程序海报、小程序卡片进店</p>
+            </div>
+          )
+        },
+        {
+          fieldName: 'enterStoreByLbs',
+          label: 'LBS就近进店',
+          component: 'switch',
+          tip: () => (
+            <div class="text-sm text-[#999]">
+              <p>通过扫导购企业微信码加好友、进入导购归属店铺</p>
+            </div>
+          )
+        },
+        {
+          label: '兜底策略',
+          component: 'group'
+        },
+        {
+          fieldName: 'safetyStrategy',
           label: '',
-          component: ({ h }) => {
-            return h(
-              'div',
-              {
-                class: 'form-sub-title'
-              },
-              [h('h4', '店铺的过度：')]
+          component: ({ h, value, onInput }) => {
+            return (
+              <div>
+                <el-radio-group v-model={value} onInput={onInput}>
+                  <el-radio-button label="1">默认店</el-radio-button>
+                  <el-radio-button label="2">介绍页</el-radio-button>
+                </el-radio-group>
+
+                {value === '2' && (
+                  <div class="mt-2 flex items-center">
+                    <el-button onClick={this.onSelectPage}>
+                      {this.formData.template.id
+                        ? `引导页名称：${this.formData.template.name}`
+                        : '选择页面'}
+                    </el-button>
+                    <el-button type="text" onClick={this.onClearPage}>
+                      删除
+                    </el-button>
+                  </div>
+                )}
+              </div>
             )
-          }
-        },
-
-        {
-          fieldName: 'miniProgramAccess',
-          label: '通过制7日售小程序用户进入对应店铺',
-          component: 'checkbox',
-          componentProps: {
-            options: [{ label: '启用', value: true }]
-          }
-        },
-
-        {
-          fieldName: 'shareCardAccess',
-          label: '通过分享小程序卡片进入对应店铺',
-          component: 'checkbox',
-          componentProps: {
-            options: [{ label: '启用', value: true }]
-          }
-        },
-
-        // 导购带料过度
-        {
-          fieldName: 'guidanceTitle',
-          label: '',
-          component: ({ h }) => {
-            return h(
-              'div',
-              {
-                class: 'form-sub-title'
-              },
-              [h('h4', '导购带料过度（需开通导购功能）：')]
-            )
-          }
-        },
-
-        {
-          fieldName: 'guidanceEnabled',
-          label: '开通导购功能',
-          component: 'radio',
-          componentProps: {
-            options: [
-              { label: '是', value: true },
-              { label: '否', value: false }
-            ]
-          }
-        },
-
-        {
-          fieldName: 'guidanceWechatGroup',
-          label: '通过日企微信群如导购加好友的过度建议降低的事来卡片过度',
-          component: 'checkbox',
-          componentProps: {
-            options: [{ label: '启用', value: true }]
           },
-          isShow: value => {
-            return this.formData.guidanceEnabled === true
-          }
-        },
-
-        {
-          fieldName: 'guidanceMoments',
-          label: '通过导购微信朋友圈的事来解决、小程序卡片过度',
-          component: 'checkbox',
-          componentProps: {
-            options: [{ label: '启用', value: true }]
-          },
-          isShow: value => {
-            return this.formData.guidanceEnabled === true
-          }
-        },
-
-        // 自然流量分组
-        {
-          fieldName: 'naturalTrafficTitle',
-          label: '',
-          component: ({ h }) => {
-            return h(
-              'div',
-              {
-                class: 'form-group-title'
-              },
-              [h('h3', '自然流量（不带参）')]
-            )
-          }
-        },
-
-        // 进入专属时所商店
-        {
-          fieldName: 'exclusiveStoreTitle',
-          label: '',
-          component: ({ h }) => {
-            return h(
-              'div',
-              {
-                class: 'form-sub-title'
-              },
-              [h('h4', '进入专属时所商店（需开通导购功能）')]
-            )
-          }
-        },
-
-        {
-          fieldName: 'exclusiveStoreEnabled',
-          label: '开通专属商店功能',
-          component: 'radio',
-          componentProps: {
-            options: [
-              { label: '是', value: true },
-              { label: '否', value: false }
-            ]
-          }
-        },
-
-        {
-          fieldName: 'exclusiveStoreAccess',
-          label: '通过日企微信群如导购加好友、进入专属时所商店',
-          component: 'checkbox',
-          componentProps: {
-            options: [{ label: '启用', value: true }]
-          },
-          isShow: value => {
-            return this.formData.exclusiveStoreEnabled === true
-          }
-        },
-
-        // LBS微信过度
-        {
-          fieldName: 'lbsWechatTitle',
-          label: '',
-          component: ({ h }) => {
-            return h(
-              'div',
-              {
-                class: 'form-sub-title'
-              },
-              [h('h4', 'LBS微信过度')]
-            )
-          }
-        },
-
-        {
-          fieldName: 'lbsWechatEnabled',
-          label: '开通LBS微信功能',
-          component: 'radio',
-          componentProps: {
-            options: [
-              { label: '是', value: true },
-              { label: '否', value: false }
-            ]
-          }
-        },
-
-        {
-          fieldName: 'lbsWechatAccess',
-          label: '通过日企微信群如导购加好友、进入专属时所商店',
-          component: 'checkbox',
-          componentProps: {
-            options: [{ label: '启用', value: true }]
-          },
-          isShow: value => {
-            return this.formData.lbsWechatEnabled === true
-          }
-        },
-
-        // 免责条款
-        {
-          fieldName: 'disclaimerTitle',
-          label: '',
-          component: ({ h }) => {
-            return h(
-              'div',
-              {
-                class: 'form-group-title'
-              },
-              [h('h3', '免责条款')]
-            )
-          }
-        },
-
-        {
-          fieldName: 'disclaimerEnabled',
-          label: '包含条款、导航界面、充值LBS到期条款',
-          component: 'checkbox',
-          componentProps: {
-            options: [{ label: '启用', value: true }]
-          }
-        },
-
-        {
-          fieldName: 'defaultUser',
-          label: '默认人',
-          component: 'input',
-          componentProps: {
-            placeholder: '请输入默认人'
-          },
-          rules: [{ required: true, message: '请输入默认人', trigger: 'blur' }]
-        },
-
-        {
-          fieldName: 'pageLimit',
-          label: '包含又页面',
-          component: 'input',
-          componentProps: {
-            type: 'number',
-            placeholder: '请输入页面数量'
-          },
-          rules: [{ required: true, message: '请输入页面数量', trigger: 'blur' }]
-        },
-
-        {
-          fieldName: 'additionalSettings',
-          label: '其他设置',
-          component: 'input',
-          componentProps: {
-            type: 'textarea',
-            placeholder: '请输入其他设置信息',
-            rows: 3
-          },
-          tip: '可以输入其他相关配置信息'
+          rules: [
+            {
+              validator: (rule, value, callback) => {
+                if (value === '2' && !this.formData.template.id) {
+                  callback(new Error('请选择引导页'))
+                } else {
+                  callback()
+                }
+              }
+            }
+          ]
         }
       ]
     }
   },
   methods: {
-    handleSubmit(formData) {
-      console.log('提交店铺规则配置:', formData)
+    async onSelectPage() {
+      const {
+        data: [page]
+      } = await this.$picker.pages({
+        multiple: false,
+        data: [this.formData.template.id]
+      })
 
-      // 这里可以调用API保存配置
-      this.saveStoreRules(formData)
+      this.formData.template.id = page.id
+      this.formData.template.name = page.page_name
     },
 
-    handleFieldChange({ fieldName, value }) {
-      console.log('字段变化:', fieldName, value)
-      this.formData[fieldName] = value
+    onClearPage() {
+      this.formData.template.id = ''
+      this.formData.template.name = ''
+    },
 
-      // 处理联动逻辑
-      if (fieldName === 'guidanceEnabled' && !value) {
-        this.formData.guidanceWechatGroup = false
-        this.formData.guidanceMoments = false
-      }
-
-      if (fieldName === 'exclusiveStoreEnabled' && !value) {
-        this.formData.exclusiveStoreAccess = false
-      }
-
-      if (fieldName === 'lbsWechatEnabled' && !value) {
-        this.formData.lbsWechatAccess = false
-      }
+    handleSubmit(formData) {
+      console.log('提交店铺规则配置:', formData)
+      debugger
+      // 这里可以调用API保存配置
+      this.saveStoreRules(formData)
     },
 
     async saveStoreRules(formData) {
@@ -329,40 +163,12 @@ export default {
         console.error('保存店铺规则失败:', error)
         this.$message.error('保存失败，请重试')
       }
-    },
-
-    // 验证表单
-    async validateForm() {
-      try {
-        const formData = await this.$refs.storeRulesForm.validate()
-        return formData
-      } catch (errors) {
-        console.error('表单验证失败:', errors)
-        throw errors
-      }
-    },
-
-    // 重置表单
-    resetForm() {
-      this.$refs.storeRulesForm.resetField()
-    },
-
-    async loadStoreRules() {
-      try {
-        const response = await this.$api.store.getRules()
-        if (response.success && response.data) {
-          // 更新表单数据
-          Object.assign(this.formData, response.data)
-        }
-      } catch (error) {
-        console.error('加载店铺规则失败:', error)
-      }
     }
   },
 
   mounted() {
     // 页面加载时获取现有配置
-    this.loadStoreRules()
+    // this.loadStoreRules()
   }
 }
 </script>

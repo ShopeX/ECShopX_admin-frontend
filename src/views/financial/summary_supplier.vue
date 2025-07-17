@@ -185,10 +185,10 @@ export default {
           { name: '现金实付（¥）', key: 'total_fee', width: 160 ,render: (h, { row }) => h('span', {}, row.total_fee / 100),visible: !IS_SUPPLIER() },
           { name: '积分抵扣', key: 'point_fee', width: 160,render: (h, { row }) => h('span', {}, row.point_fee / 100),visible: !IS_SUPPLIER() },
           { name: '运费（总）', key: 'freight_fee', width: 160,render: (h, { row }) => h('span', {}, row.freight_fee / 100) },
-          { name: '退款数量', key: 'refund_num', width: 160,visible: !IS_SUPPLIER() },
-          { name: '退款金额（¥）', key: 'refund_fee', width: 160,render: (h, { row }) => h('span', {}, row.refund_fee / 100) },
+          { name: '退款数量', key: 'refund_num', width: 160 },
+          { name: '退款金额（¥）', key: 'refund_fee', width: 160,render: (h, { row }) => h('span', {}, row.refund_fee / 100),visible: !IS_SUPPLIER() },
           { name: '退款积分', key: 'refund_point', width: 160 ,render: (h, { row }) => h('span', {}, row.refund_point / 100)},
-          { name: '退货结算价（¥）', key: 'refund_cost_fee', width: 160 ,render: (h, { row }) => h('span', {}, row.refund_cost_fee / 100),visible: !IS_SUPPLIER()},
+          { name: '退货结算价（¥）', key: 'refund_cost_fee', width: 160 ,render: (h, { row }) => h('span', {}, row.refund_cost_fee / 100)},
           {
             name: '结算实付（¥）',
             key: 'cost_fee',

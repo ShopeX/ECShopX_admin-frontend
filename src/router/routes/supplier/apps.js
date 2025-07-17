@@ -16,7 +16,7 @@ const routes = [
       {
         name: 'bspayUser',
         path: 'bspay/user',
-        component: () => import('@/view/dealer/bspay_create_user'),
+        component: () => import('@/view/mall/marketing/huifuBspay'),
         meta: {
           aliasName: 'supplierapplicationsbspayuser_audit',
           icon: 'icon-user',
@@ -24,7 +24,17 @@ const routes = [
           permissions: [
             'supplierapplications.supplierapplicationsbspay.supplierapplicationsbspayuser_audit'
           ]
-        }
+        },
+        children: [
+          {
+            path: 'approve/:order_id',
+            component: () => import('@/view/mall/marketing/huifuBspay/approve'),
+            meta: {
+              title: '进件管理详情',
+              hidden: true
+            }
+          }
+        ]
       },
       {
         name: 'bspayTrades',

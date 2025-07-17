@@ -73,8 +73,8 @@
         <SpFilterFormItem prop="mobile" label="手机号:">
           <el-input v-model="params.mobile" placeholder="请输入手机号" />
         </SpFilterFormItem>
-        <SpFilterFormItem v-if="!VERSION_SHUYUN()" prop="username" label="昵称:">
-          <el-input v-model="params.username" placeholder="请输入昵称" />
+        <SpFilterFormItem v-if="!VERSION_SHUYUN()" prop="username" label="微信昵称:">
+          <el-input v-model="params.username" placeholder="请输入微信昵称" />
         </SpFilterFormItem>
         <SpFilterFormItem
           v-if="!VERSION_IN_PURCHASE()"

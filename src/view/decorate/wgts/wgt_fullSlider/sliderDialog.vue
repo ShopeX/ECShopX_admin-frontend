@@ -79,7 +79,8 @@ export default {
         goods_id: '',
         rule_id: '0',
         CopyUrl: '',
-        CopyTitle: ''
+        CopyTitle: '',
+        moreLink: ''
       }
       if (type === 'overlay') {
         this.sliderForm.overlayHotData.push(item)
@@ -293,6 +294,13 @@ export default {
           tip: '单位为 %',
           type: 'slider',
           maxlength: 10,
+        },
+        {
+          label: '查看更多跳转地址',
+          key: 'moreLink',
+          component: ({ key }) => {
+            return <CompPickerLink v-model={this.sliderForm[key]} size="small" class="video-link" />
+          }
         }
       ]
     },

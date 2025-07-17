@@ -181,6 +181,7 @@ export default {
           overlaybuttom: 'overlaybuttom',
           overlayLeft: 'overlayLeft',
           overlayHotData: 'overlayHotData',
+          moreLink: 'moreLink',
           // loop: 'loop',
         })
       }

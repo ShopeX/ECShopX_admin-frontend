@@ -304,7 +304,7 @@
             />
           </template>
         </el-table-column>
-        <el-table-column label="会员标签">
+        <el-table-column label="会员标签" width="130">
           <template slot-scope="scope">
             <template v-if="scope.row.tagList.length > 0">
               <el-tag
@@ -337,13 +337,31 @@
             </el-tooltip>
           </template>
         </el-table-column>
-
-        <el-table-column label="备注">
+        <el-table-column label="用户名" width="130">
+          <template slot-scope="scope">
+            <span v-if="scope.row.name">{{ scope.row.name }}</span>
+            <span v-else class="muted">暂无用户名</span>
+            <el-tooltip class="item" effect="dark" content="编辑用户名" placement="top-start">
+              <el-button
+                class="el-icon-edit"
+                type="text"
+                size="mini"
+                @click="isEdit(scope.row, 'name')"
+              />
+            </el-tooltip>
+          </template>
+        </el-table-column>
+        <el-table-column label="备注" width="130">
           <template slot-scope="scope">
             <span v-if="scope.row.remarks">{{ scope.row.remarks }}</span>
             <span v-else class="muted">暂无备注</span>
             <el-tooltip class="item" effect="dark" content="编辑备注" placement="top-start">
-              <el-button class="el-icon-edit" type="text" size="mini" @click="isEdit(scope.row)" />
+              <el-button
+                class="el-icon-edit"
+                type="text"
+                size="mini"
+                @click="isEdit(scope.row, 'remarks')"
+              />
             </el-tooltip>
           </template>
         </el-table-column>
@@ -749,15 +767,15 @@
       </el-dialog>
 
       <el-dialog
-        title="修改会员备注"
+        :title="remarksForm.title"
         class="right-dialog"
         :visible.sync="isEditRemarks"
         :before-close="handleCancelLabelsDialog"
       >
         <template>
           <el-form>
-            <el-form-item label-width="100px" label="备注">
-              <el-input v-model="remarksForm.remarks" placeholder="输入备注" />
+            <el-form-item label-width="100px" :label="remarksForm.label">
+              <el-input v-model="remarksForm.input" :placeholder="remarksForm.placeholder" />
             </el-form-item>
             <el-form-item class="content-center">
               <el-button type="primary" @click="editRemarks()"> 确定 </el-button>
@@ -927,7 +945,11 @@ export default {
       },
       remarksForm: {
         user_id: '',
-        remarks: ''
+        title: '',
+        label: '',
+        placeholder: '',
+        type: '',
+        input: ''
       },
       gradeForm: {
         user_id: '',
@@ -1171,19 +1193,41 @@ export default {
       }
     },
     editRemarks() {
-      updateMemberInfo({
-        user_id: this.remarksForm.user_id,
-        remarks: this.remarksForm.remarks
-      }).then((res) => {
+      let params = {
+        user_id: this.remarksForm.user_id
+      }
+      if (this.remarksForm.type == 'remarks') {
+        params.remarks = this.remarksForm.input
+      } else {
+        params.name = this.remarksForm.input
+      }
+      updateMemberInfo({ ...params }).then((res) => {
         this.$message({ type: 'success', message: '更新成功' })
         this.isEditRemarks = false
         this.getMembers()
       })
     },
-    isEdit(row) {
+    isEdit(row, val) {
       this.isEditRemarks = true
-      this.remarksForm.user_id = row.user_id
-      this.remarksForm.remarks = row.remarks
+      if (val == 'remarks') {
+        this.remarksForm = {
+          user_id: row.user_id,
+          title: '修改会员备注',
+          label: '备注',
+          placeholder: '请输入备注',
+          type: 'remarks',
+          input: row.remarks
+        }
+      } else {
+        this.remarksForm = {
+          user_id: row.user_id,
+          title: '修改会员用户名',
+          label: '用户名',
+          placeholder: '请输入用户名',
+          type: 'name',
+          input: row.name
+        }
+      }
     },
     getRowKeys(row) {
       return `${row.user_id}${row.shop_id}`
@@ -1324,11 +1368,9 @@ export default {
       let isShopadmin = false
       try {
         isShopadmin = /\/shopadmin/.test(document.location.pathname)
-      } catch (e) {}   
+      } catch (e) {}
       this.$router.push({
-        path: isShopadmin
-          ? '/shopadmin/member/member/detail'
-          : '/member/member/memberlist/detail',
+        path: isShopadmin ? '/shopadmin/member/member/detail' : '/member/member/memberlist/detail',
         query: {
           user_id: userid,
           mobile: this.params.mobile,

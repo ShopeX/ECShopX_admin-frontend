@@ -653,7 +653,13 @@ export default {
         {
           key: 'paramsData',
           component: ({ key }, value) => {
-            return <GoodsParams v-model={value[key]} disabled={disabled} />
+            return (
+              <GoodsParams
+                v-model={value[key]}
+                disabled={disabled}
+                on-change={this.onChangeParamsData}
+              />
+            )
           },
           isShow: (item, { paramsData }) => {
             return paramsData.length > 0
@@ -883,7 +889,8 @@ export default {
       ],
       routerParams: {
         isSupplierGoods: false
-      }
+      },
+      customizeStatus: []
     }
   },
   computed: {
@@ -1067,7 +1074,7 @@ export default {
       this.form.supplier_id = supplier_id
       this.form.brief = brief
       this.form.templatesId = templates_id.toString()
-      this.form.brandId = brand_id
+      this.form.brandId = brand_id + ''
       this.form.itemUnit = item_unit
       this.form.sort = sort
       this.form.regionsId = regions_id
@@ -1136,6 +1143,7 @@ export default {
       )
       this.mainCategorySpec = goods_spec
       this.resolveParamsData(goods_params, item_params)
+      this.customizeStatus = item_params
       if (!nospec) {
         // 多规格
         const restParams = {
@@ -1319,6 +1327,52 @@ export default {
         console.error(err)
       }
     },
+    async onChangeParamsData(item) {
+      this.form.paramsData = []
+      let { goods_params, goods_spec = [] } = await this.$api.goods.getCategoryInfo(
+        this.form.mainCategory[this.form.mainCategory.length - 1]
+      )
+      let paprms = {}
+      goods_params.forEach((item11) => {
+        if (item11.attribute_id == item.id) {
+          console.log('item11ffff:', item11)
+          if (item11.attribute_values.total_count > 0) {
+            item11?.attribute_values?.list.forEach((item2) => {
+              if (item2.attribute_value == item.attr_id) {
+                paprms = item2
+              }
+            })
+          }
+        }
+      })
+      this.customizeStatus.push({
+        attribute_id: item.id,
+        attribute_name: item.label,
+        attribute_value_id: paprms.attribute_value_id,
+        atttribute_value_name: paprms.attribute_value
+      })
+
+      this.customizeStatus = this.uniqueArrayById(this.customizeStatus, 'attribute_id')
+
+      this.resolveParamsData(goods_params, this.customizeStatus)
+    },
+
+    uniqueArrayById(arr, idKey = 'id') {
+      const result = []
+      const seen = new Set()
+
+      // 从后向前遍历，这样相同id的对象会保留靠后的
+      for (let i = arr.length - 1; i >= 0; i--) {
+        const item = arr[i]
+        if (!seen.has(item[idKey])) {
+          seen.add(item[idKey])
+          result.unshift(item) // 使用 unshift 保持原有顺序
+        }
+      }
+
+      return result
+    },
+
     async onFormSave(action) {
       const { itemId } = this.$route.params
       const { is_new, supplier } = this.$route.query

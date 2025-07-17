@@ -103,6 +103,43 @@ export default {
       path: 'settlement/configure',
       name: `结算配置`,
       component: () => import('@/view/financial/settlement/configure')
-    }
+    },
+    {
+      path: 'invoice/invoiceManagement',
+      name: `发票列表`,
+      component: () => import('@/view/financial/invoice/list'),
+      children: [
+        {
+          path: 'detail/:id?',
+          component: () => import('@/view/financial/invoice/detail')
+        },
+        {
+          path: 'process/:itemId?',
+          component: () => import('@/view/financial/invoice/process')
+        }
+      ]
+    },
+    {
+      path: 'invoice/invoiceSetting',
+      name: `发票配置`,
+      component: () => import('@/view/financial/invoice/setting')
+    },
+    {
+      path: 'invoice/invoiceInfo',
+      name: `开票信息`,
+      component: () => import('@/view/financial/invoice/information')
+    },
+    {
+      path: 'invoice/invoiceTax',
+      name: `发票配置`,
+      component: () => import('@/view/financial/invoice/invoiceTax')
+    },
+    {
+      path: 'invoice/invoiceConfirmation',
+      name: '专票确认书',
+      component: () => import('@/view/financial/invoice/invoiceConfirmation')
+    },
+
+
   ]
 }

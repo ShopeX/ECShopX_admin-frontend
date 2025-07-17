@@ -776,17 +776,17 @@
                       </router-link>
                     </el-col>
                     <el-col class="notice-item" :span="12">
-                      <router-link to="order/entitytrade/aftersaleslist?aftersales_status=0">
+                      <router-link to="order/aftersales/aftersaleslist?aftersales_status=0">
                         待处理退款：{{ staticsData && staticsData.notice_data.aftersales_count }}
                       </router-link>
                     </el-col>
-                    <el-col class="notice-item" :span="12">
+                    <!-- <el-col class="notice-item" :span="12">
                       <router-link to="/order/Refunderrorlogs">
                         退款失败待处理：{{
                           staticsData && staticsData.notice_data.refund_errorlogs_count
                         }}
                       </router-link>
-                    </el-col>
+                    </el-col> -->
                   </el-row>
                 </div>
                 <div class="notices-group">
@@ -804,15 +804,15 @@
                 <div v-if="!VERSION_IN_PURCHASE" class="notices-group">
                   <div class="subtitle">营销相关</div>
                   <el-row>
-                    <el-col class="notice-item" :span="12">
+                    <!-- <el-col class="notice-item" :span="12">
                       <router-link to="/marketing/marketingseckill?status=in_sale">
                         进行中的秒杀：{{
                           staticsData && staticsData.notice_data.started_seckill_count
                         }}
                       </router-link>
-                    </el-col>
+                    </el-col> -->
                     <el-col class="notice-item" :span="12">
-                      <router-link to="/marketing/groupsindex?activeName=third">
+                      <router-link to="/marketing/fissionmarketing/groupsindex?activeName=third">
                         进行中的拼团：{{
                           staticsData && staticsData.notice_data.started_gtoups_count
                         }}
@@ -1681,7 +1681,7 @@ export default {
     if (!this.VERSION_IN_PURCHASE) {
       this.links.push(
         {
-          link: '/marketing/groupsindex/editor',
+          link: '/marketing/fissionmarketing/groupsindex/editor',
           icon: 'comments-dollar',
           color: '#fa9678',
           text: '新增拼团活动'
@@ -1692,14 +1692,14 @@ export default {
           color: '#fa8084',
           text: '新增优惠券'
         },
+        // {
+        //   link: '/marketing/marketingseckill/editor',
+        //   icon: 'stopwatch',
+        //   color: '#f9ca6b',
+        //   text: '新增秒杀活动'
+        // },
         {
-          link: '/marketing/marketingseckill/editor',
-          icon: 'stopwatch',
-          color: '#f9ca6b',
-          text: '新增秒杀活动'
-        },
-        {
-          link: '/order/entitytrade/aftersaleslist',
+          link: '/order/aftersales/aftersaleslist',
           icon: 'user-tie',
           color: '#fa8084',
           text: '售后处理'

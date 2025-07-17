@@ -2,11 +2,13 @@
   <div>
     <SpRouterView>
       <SpPlatformTip h5 app pc alipay />
-      <div class="action-container">
+      <SpPlatformTip class="damo-crm-tip" text-val="优惠券已被达摩CRM接管，维护请前往达摩CRM后台进行维护，此处仅作展示" />
+
+      <!-- <div class="action-container">
         <el-button type="primary" icon="iconfont icon-xinzengcaozuo-01" @click="addCoupon">
           创建优惠券
         </el-button>
-      </div>
+      </div> -->
 
       <el-tabs v-model="params.date_status" type="card" @tab-click="handleClick">
         <el-tab-pane
@@ -62,13 +64,13 @@
                   scope.row.quantity - scope.row.get_num
                 }}</span>
                 <span v-else>0</span>
-                <el-button
+                <!-- <el-button
                   v-if="scope.row.edit_btn === 'Y'"
                   type="text"
                   @click="editCouponStore(scope.row.card_id)"
                 >
                   <i class="el-icon-edit" />
-                </el-button>
+                </el-button> -->
                 <!-- <el-popover
                   v-if="scope.row.edit_btn === 'Y'"
                   :ref="`popover-${scope.row.card_id}`"
@@ -119,19 +121,19 @@
                 </el-popover> -->
               </template>
             </el-table-column>
-            <el-table-column width="80" prop="get_num" label="领取量">
-              <!-- <template v-if="scope.row.get_num">{{scope.row.get_num}}</template> -->
-              <!-- <template>0</template> -->
-            </el-table-column>
-            <el-table-column width="80" prop="use_num" label="使用量">
-              <!-- <template v-if="scope.row.use_num">{{scope.row.use_num}}</template> -->
-              <!-- <template>0</template> -->
-            </el-table-column>
+            <!-- <el-table-column width="80" prop="get_num" label="领取量">
+              <template v-if="scope.row.get_num">{{scope.row.get_num}}</template>
+              <template>0</template>
+            </el-table-column> -->
+            <!-- <el-table-column width="80" prop="use_num" label="使用量">
+              <template v-if="scope.row.use_num">{{scope.row.use_num}}</template>
+              <template>0</template>
+            </el-table-column> -->
             <el-table-column width="200" prop="source_name" label="店铺" />
             <el-table-column width="200" label="操作">
               <template slot-scope="scope">
                 <div class="operating-icons">
-                  <el-button type="text">
+                  <!-- <el-button type="text">
                     <router-link
                       :to="{
                         path: matchRoutePath('detail'),
@@ -162,7 +164,7 @@
                     >
                       编辑
                     </router-link>
-                  </el-button>
+                  </el-button> -->
                   <el-popover v-if="appID" placement="top" width="200" trigger="click">
                     <div>
                       <img class="page-code" :src="appCodeUrl">
@@ -189,13 +191,13 @@
                       投放
                     </el-button>
                   </el-popover>
-                  <el-button
+                  <!-- <el-button
                     v-if="scope.row.status != 'CARD_STATUS_DISPATCH'"
                     type="text"
                     @click="deleteCard(scope.row.card_id, scope.$index)"
                   >
                     删除
-                  </el-button>
+                  </el-button> -->
                 </div>
                 <!-- <a v-if="!scope.row.ifpass" href="#" @click="sendoutShowAction(scope.row.card_id, scope.$index)">投放</a> -->
               </template>
@@ -704,6 +706,9 @@ export default {
 }
 .page-btns {
   text-align: center;
+}
+.damo-crm-tip{
+  background: #FEF5EA !important;
 }
 </style>
 <style>

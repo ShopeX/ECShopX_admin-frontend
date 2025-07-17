@@ -49,7 +49,8 @@ if (VERSION_PLATFORM) {
 const SCENE_1002 = {
   WgtSlider,
   WgtFilm,
-  WgtHeadline
+  WgtHeadline,
+  WgtHotZone
 }
 
 // 店铺装修

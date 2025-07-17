@@ -61,3 +61,137 @@ export function exportDetialData (params) {
     params
   })
 }
+
+export function getInvoiceSetting (params) {
+  return fetch({
+    url: `/order/invoice/setting`,
+    method: 'get',
+    params
+  })
+}
+
+export function setInvoiceSetting (params) {
+  return fetch({
+    url: `/order/invoice/setting`,
+    method: 'post',
+    params
+  })
+}
+
+export function getInvoiceDetail (id) {
+  return fetch({
+    url: `/order/invoice/info/${id}`,
+    method: 'get'
+  })
+}
+
+
+export function getBaiInvoiceSetting (params) {
+  return fetch({
+    url: `/order/invoice/baiwangInvoiceSetting`,
+    method: 'get',
+    params
+  })
+}
+
+export function setBaiInvoiceSetting (params) {
+  return fetch({
+    url: `/order/invoice/baiwangInvoiceSetting`,
+    method: 'post',
+    params
+  })
+}
+
+export function resendInvoiceEmail (params) {
+  return fetch({
+    url: `/order/invoice/resend`,
+    method: 'post',
+    params
+  })
+}
+
+export function updateInvoiceRemark (id,params) {
+  return fetch({
+    url: `/order/invoice/updateremark/${id}`,
+    method: 'post',
+    params
+  })
+}
+
+export function getInvoiceLog (params) {
+  return fetch({
+    url: `/order/invoice/log/list`,
+    method: 'get',
+    params
+  })
+}
+
+export function updateInvoiceSeller (id,params) {
+  return fetch({
+    url: `/order/invoice-seller/update/${id}`,
+    method: 'post',
+    params
+  })
+}
+
+export function createInvoiceSeller (params) {
+  return fetch({
+    url: `/order/invoice-seller/create`,
+    method: 'post',
+    params
+  })
+}
+
+export function getInvoiceSellerList (params) {
+  return fetch({
+    url: `/order/invoice-seller/list`,
+    method: 'get',
+    params
+  })
+}
+
+export function updateInvoiceTax (id,params) {
+  return fetch({
+    url: `/order/category-taxrate/update/${id}`,
+    method: 'post',
+    params
+  })
+}
+
+export function createInvoiceTax (params) {
+  return fetch({
+    url: `/order/category-taxrate/create`,
+    method: 'post',
+    params
+  })
+}
+
+export function getInvoiceComfirmSetting (params) {
+  return fetch({
+    url: `/order/invoice/protocol`,
+    method: 'get',
+    params
+  })
+}
+
+export function setInvoiceComfirmSetting (params) {
+  return fetch({
+    url: `/order/invoice/protocol`,
+    method: 'post',
+    params
+  })
+}
+
+export function updateInvoice (id,params) {
+  return fetch({
+    url: `/order/invoice/update/${id}`,
+    method: 'post',
+    params
+  })
+}
+
+
+
+
+
+

@@ -235,7 +235,9 @@
           开售
         </el-button>
         <!-- <el-button type="primary" plain @click="changeGoodsPrice"> 批量改价 </el-button> -->
-
+        <el-button type="primary" plain @click="()=>handleImport('physicalupload?file_type=upload_tb_items')">
+          同步淘宝商品
+        </el-button>
         <el-dropdown>
           <el-button type="primary" plain icon="iconfont icon-daorucaozuo-01">
             导出<i class="el-icon-arrow-down el-icon--right" />
@@ -1415,6 +1417,8 @@ export default {
         tabList.splice(1, 0, { name: '医药商品', value: 'is_medicine', activeName: 'third' })
       }
 
+      tabList.splice(1, 0, { name: '淘宝商品', value: 'taobao', activeName: 'taobao' })
+
       return tabList
     }
   },
@@ -1607,6 +1611,13 @@ export default {
       } else {
         this.searchParams.is_medicine = ''
       }
+
+      //淘宝商品
+      if(this.activeName == 'taobao'){
+        this.searchParams.audit_status = ''
+      }
+      this.searchParams.is_taobao = this.activeName == 'taobao' ? 1 : ''
+
       this.$refs['finder'].refresh()
     },
     onSelectionChange(selection) {

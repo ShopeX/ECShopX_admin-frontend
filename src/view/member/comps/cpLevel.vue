@@ -53,6 +53,13 @@
                 @blur="nameblur"
               />&nbsp;<span class="frm-tips">{{ item.grade_name.length }}/9</span>
             </div>
+            <div>
+              <span class="txt">等级编码</span
+              ><el-input
+                v-model="item.dm_grade_code"
+                placeholder="请输入内容"
+              />
+            </div>
             <div class="clearfix">
               <span class="txt f_l">升级条件</span>
               <span v-if="item.default_grade" class="txt-none">无</span>
@@ -209,6 +216,7 @@ export default {
             discount: ''
           },
           default_grade: true,
+          dm_grade_code:'',
           discount_checked: true,
           member_count: 0,
           third_data: '',
@@ -332,6 +340,7 @@ export default {
         promotion_condition: { total_consumption: 0 },
         privileges: { discount: '' },
         default_grade: false,
+        dm_grade_code:'',
         member_count: 0,
         discount_checked: true,
         crm_open: crmopen,
@@ -382,7 +391,7 @@ export default {
           //   isflag = true
           //   this.$message({ message: '请输入会员折扣', type: 'error' })
           //   break
-          // } else 
+          // } else
           // if (!discountReg.test(this.levelData[i].privileges.discount)) {
           //   isflag = true
           //   this.$message({

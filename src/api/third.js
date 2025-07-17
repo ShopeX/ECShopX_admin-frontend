@@ -53,6 +53,21 @@ export function setWdtErpSetting (query) {
   })
 }
 
+export function getDmcrmSetting () {
+  return fetch({
+    url: '/third/dmcrm/setting',
+    method: 'get'
+  })
+}
+
+export function setDmcrmSetting (query) {
+  return fetch({
+    url: '/third/dmcrm/setting',
+    method: 'post',
+    params: query
+  })
+}
+
 export function setJstErpSetting(query) {
   return fetch({
     url: '/third/jushuitan/setting',

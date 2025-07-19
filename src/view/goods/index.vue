@@ -1081,7 +1081,7 @@ export default {
       this.form.regionsId = regions_id
       this.form.isGift = is_gift
       this.form.taxRate = tax_rate
-      this.form.videos = videos
+      this.form.videos = videos || ''
       this.form.isShowSpecimg = is_show_specimg
       this.form.is_market = is_market
       this.form.aftersales_end_date = aftersales_end_date

@@ -58,6 +58,8 @@ export default {
       this.modelValue = val
       this.$emit('input', val)
       this.$emit('change', val)
+
+      this.componentProps.onChange?.(val, this.formData)
     },
     // 渲染 input 组件
     renderInput() {
@@ -210,8 +212,14 @@ export default {
       return <SpImagePicker value={this.modelValue} {...props} on-onChange={this.handleInput} />
     },
 
-    renderSwitch(props = {}) {
-      return <el-switch value={this.modelValue} {...props} on-change={this.handleInput} />
+    renderSwitch() {
+      const props = {
+        ...this.componentProps,
+        disabled: isFunction(this.componentProps.disabled)
+          ? this.componentProps.disabled(this.formData)
+          : this.componentProps.disabled
+      }
+      return <el-switch value={this.modelValue} props={props} on-change={this.handleInput} />
     },
 
     // 获取组件渲染函数

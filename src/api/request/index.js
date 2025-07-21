@@ -134,7 +134,6 @@ function createRequestClient() {
             return Promise.reject(error)
           })
       }
-
       const responseData = error?.response?.data ?? {}
       Vue.prototype.$message.error(
         (responseData?.data?.error ?? responseData?.data?.message ?? '') || '请求失败'

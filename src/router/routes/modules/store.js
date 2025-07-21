@@ -109,13 +109,14 @@ const routes = [
       {
         name: 'storeManageRefundAddress',
         path: 'store-manage/refund-address',
-        component: () => import('@/view/mall/marketing/distributorAftersalesAddress'),
         meta: {
           aliasName: 'distributoraftersalesaddress',
           icon: 'icon-address',
           title: '退货地址',
           permissions: ['store.storemanager.distributoraftersalesaddress']
-        }
+        },
+        // component: () => import('@/view/mall/marketing/distributorAftersalesAddress'),
+        component: () => import('@/views/store/store-rules')
       }
     ]
   }

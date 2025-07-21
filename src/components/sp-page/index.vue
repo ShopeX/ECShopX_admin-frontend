@@ -70,7 +70,6 @@ export default {
     handleScroll() {
       if (!this.$refs.header) return
       const eleContainer = document.getElementById('page-container')
-      console.log(eleContainer.scrollHeight - eleContainer.scrollTop, eleContainer.clientHeight)
       if (eleContainer.scrollHeight - eleContainer.scrollTop - 60 <= eleContainer.clientHeight) {
         this.isSticky = false
       } else {

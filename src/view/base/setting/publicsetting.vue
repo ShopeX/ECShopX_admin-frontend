@@ -155,19 +155,19 @@ export default {
             })
           }
         },
-        {
-          label: '前端店铺展示',
-          key: 'nostores_status',
-          type: 'switch',
-          tip: '用于开启前端店铺切换功能',
-          isShow: VERSION_STANDARD(),
-          onChange: async e => {
-            const { nostores_status } = this.form
-            await this.$api.company.setNoStores({
-              nostores_status: !nostores_status
-            })
-          }
-        },
+        // {
+        //   label: '前端店铺展示',
+        //   key: 'nostores_status',
+        //   type: 'switch',
+        //   tip: '用于开启前端店铺切换功能',
+        //   isShow: VERSION_STANDARD(),
+        //   onChange: async e => {
+        //     const { nostores_status } = this.form
+        //     await this.$api.company.setNoStores({
+        //       nostores_status: !nostores_status
+        //     })
+        //   }
+        // },
         // {
         //   label: '店铺隔离',
         //   key: 'stores_isolate',

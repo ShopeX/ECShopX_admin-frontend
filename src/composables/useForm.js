@@ -126,9 +126,9 @@ export function useForm(options = {}) {
           value: this.value
         },
         on: {
-          'field-change': ({ fieldName, value }) => {
-            this.$set(this.formData, fieldName, value)
-          },
+          // 'field-change': ({ fieldName, value }) => {
+          //   this.$set(this.formData, fieldName, value)
+          // },
           submit: formData => {
             this.$emit('submit', formData)
           },

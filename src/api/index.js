@@ -12,14 +12,15 @@ const callbackWrap = fn => {
   }
   return _fn
 }
-importAll(require.context('./', false, /\.js$/), (key, r) => {
-  const keyPath = key.match(/\.\/(.+)\.js$/)?.[1]
+importAll(require.context('./', true, /\.js$/), (key, r) => {
+  // const keyPath = key.match(/\.\/(.+)\.js$/)?.[1]
+  const keyPath = key.match(/\/([^\/]+)\.js$/)?.[1]
   if (!['index'].includes(keyPath)) {
     const fn = {}
     Object.keys(r(key)).forEach(n => {
       fn[n] = callbackWrap(r(key)[n])
     })
-    api[keyPath] = fn
+    api[keyPath] = typeof api[keyPath] === 'undefined' ? fn : { ...api[keyPath], ...fn }
   }
 })
 

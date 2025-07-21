@@ -11,9 +11,9 @@ import VueVideoPlayer from 'vue-video-player'
 import { install as API } from '@/api'
 import { install as Filter } from '@/filters'
 import { install as Directives } from '@/directives'
-import { VuePrototype } from '@/utils'
-import { install as Component } from './component'
+import { VuePrototype, unmountGlobalLoading } from '@/utils'
 import { install as Finder } from './finder'
+import { install as Component } from './component'
 
 async function bootstrap() {
   Vue.use(API)
@@ -24,11 +24,11 @@ async function bootstrap() {
 
   Vue.use(Directives)
 
+  Vue.use(Finder)
+
   Vue.use(Component)
 
   Vue.use(VuePrototype)
-
-  Vue.use(Finder)
 
   Vue.use(VueClipboard)
 
@@ -40,6 +40,8 @@ async function bootstrap() {
     mounted() {},
     render: h => h(App)
   }).$mount('#app')
+
+  unmountGlobalLoading()
 }
 
 export { bootstrap }

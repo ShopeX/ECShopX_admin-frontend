@@ -1769,7 +1769,7 @@ export default {
   },
   beforeRouteLeave(to, from, next) {
     if (!this.isLeave) {
-      this.$confirm('确定要离开当前页面，您将丢失已编辑的数据？！', '提示', {
+      this.$confirm('确定要离开当前页面，您将丢失已编辑的数据？', '提示', {
         confirmButtonText: '确定',
         cancelButtonText: '取消',
         type: 'warning'

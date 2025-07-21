@@ -6,6 +6,7 @@
     @click.stop="onButtonClick"
   >
     <component :is="icon" :size="size" :fill="fill" />
+    <slot />
   </div>
 
   <component v-else :is="icon" :size="size" :fill="fill" v-on="$listeners" />

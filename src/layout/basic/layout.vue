@@ -27,7 +27,12 @@
 
         <el-main class="!px-0 !py-0" style="height: calc(100vh - 100px)">
           <LayoutContent v-if="!$route.path.includes('/decoration/web/template/edit')">
-            <RouterView />
+            <!-- <RouterView /> -->
+            <router-view v-slot="{ Component }">
+              <Transition name="fade" appear mode="out-in">
+                <component :is="Component" />
+              </Transition>
+            </router-view>
           </LayoutContent>
 
           <div id="design-view" v-else class="relative h-full" />
@@ -61,6 +66,7 @@ export default {
   },
   data() {
     return {
+      refresh: true,
       showSubMenu: false
     }
   },

@@ -13,6 +13,10 @@
     </div>
 
     <div class="flex items-center gap-2 px-3">
+      <!-- <SpIcon class="p-2" button radius name="translate" :size="16" @click="handleSystemInfo" /> -->
+
+      <SpLanguage />
+
       <SpIcon class="p-2" button radius name="setting-two" :size="16" @click="handleSystemInfo" />
 
       <SpIcon

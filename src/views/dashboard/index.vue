@@ -163,15 +163,15 @@ export default {
 
       Object.keys(member_data).forEach(key => {
         this.chartData['new_user'].push({
-          type: key.replace(/^\d{4}(\d{2})(\d{2})$/, '$1月$2日'),
+          type: key.replace(/^\d{4}(\d{2})(\d{2})$/, '$1/$2'),
           sales: member_data[key].newAddMember
         })
         this.chartData['new_vip'].push({
-          type: key.replace(/^\d{4}(\d{2})(\d{2})$/, '$1月$2日'),
+          type: key.replace(/^\d{4}(\d{2})(\d{2})$/, '$1/$2'),
           sales: member_data[key].vipMember
         })
         this.chartData['new_svip'].push({
-          type: key.replace(/^\d{4}(\d{2})(\d{2})$/, '$1月$2日'),
+          type: key.replace(/^\d{4}(\d{2})(\d{2})$/, '$1/$2'),
           sales: member_data[key].svipMember
         })
       })

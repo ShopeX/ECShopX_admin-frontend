@@ -1,23 +1,25 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <meta charset="utf-8">
-    <meta name="referrer" content="never">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=0">
+    <meta charset="utf-8" />
+    <meta name="referrer" content="never" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=0"
+    />
     <title></title>
-    <!-- <script charset="utf-8" src="https://map.qq.com/api/js?v=2.exp&key=${process.env.VUE_APP_MAP_KEY}"></script> -->
-    <!-- <script charset="utf-8" src="//at.alicdn.com/t/c/font_3832401_lyx1hsdvyee.js"></script> -->
-    <!-- <link rel="stylesheet" href="//at.alicdn.com/t/font_931661_95czcw673o9.css"> -->
-    <!-- <link rel="stylesheet" href="//at.alicdn.com/t/font_2240500_15ra6sl1z6xh.css"> -->
-
-    <!-- <link rel="stylesheet" href="//at.alicdn.com/t/font_606151_g143y5rkq0e.css"> -->
-    <!-- <link rel="stylesheet" href="//at.alicdn.com/t/font_606151_setf6cxma3l.css"> -->
-    <!-- <link rel="stylesheet" href="//at.alicdn.com/t/font_931661_f1vyhnojl8f.css"> -->
-    <!-- <link rel="stylesheet" href="https://b-img-cdn.yuanyuanke.cn/ecshopx-admin/iconfont/iconfont.css?t=1656850562"> -->
-    <link rel="stylesheet" href="//at.alicdn.com/t/c/font_3832401_lyx1hsdvyee.css">
-    <link rel="shortcut icon" href="<%= process.env.VUE_APP_PRODUCT_MODEL === 'shuyun' ? '/favicon-shuyun.ico' : '/favicon.ico' %>">
+    <link rel="stylesheet" href="//at.alicdn.com/t/c/font_3832401_lyx1hsdvyee.css" />
+    <link
+      rel="shortcut icon"
+      href="<%= process.env.VUE_APP_PRODUCT_MODEL === 'shuyun' ? '/favicon-shuyun.ico' : '/favicon.ico' %>"
+    />
+    <link rel="stylesheet" href="<%= BASE_URL %>loading.css" data-app-loading="inject-css" />
   </head>
   <body>
     <div id="app"></div>
+    <div class="global-loading" id="__app-loading__">
+      <div class="loader"></div>
+      <div class="title"><%= process.env.VUE_APP_SYSTEM_NAME %></div>
+    </div>
   </body>
 </html>

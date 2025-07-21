@@ -1,3 +1,4 @@
+import '@/i18n/lang/index.js'
 import '@/styles/index.scss'
 import 'nprogress/nprogress.css'
 // TODO:后续要优化掉
@@ -9,4 +10,9 @@ async function initApplication() {
   await bootstrap()
 }
 
-initApplication()
+import('@/composables/useTheme.js').then(res => {
+  const { updateThemeColor } = res.useTheme()
+  updateThemeColor()
+
+  initApplication()
+})

@@ -109,7 +109,7 @@ export default {
       this.$refs['decorateRef'].resetDecorateTheme()
       this.$refs['decorateRef'].onClose()
     } else if (!this.isLeave && !this.routerParams.detail) {
-      await this.$confirm('确定要离开当前页面，您将丢失已编辑的数据？！', '提示', {
+      await this.$confirm('确定要离开当前页面，您将丢失已编辑的数据？', '提示', {
         confirmButtonText: '确定',
         cancelButtonText: '取消',
         type: 'warning'
